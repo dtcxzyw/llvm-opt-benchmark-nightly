@@ -32,7 +32,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.std::ios_base::_Words" = type { ptr, i64 }
 %"class.std::locale" = type { ptr }
 %"struct.std::piecewise_construct_t" = type { i8 }
-%"struct.std::array.292" = type { [2 x ptr] }
 %"struct.std::array.362" = type { [3 x ptr] }
 %"class.testing::internal::GTestLog" = type { i32 }
 %"class.testing::AssertionResult" = type { i8, %"class.std::unique_ptr" }
@@ -435,7 +434,6 @@ begin_hunk_1
 @_ZZN4entt10type_indexIN8MetaFunc8functionEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexIN8MetaFunc8functionEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.249 = private unnamed_addr constant [74 x i8] c"const char *entt::internal::pretty_function() [Type = MetaFunc::function]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJRNS_14basic_registryINS_6entityESaIS3_EEES3_EEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.292" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryINS_6entityESaIS3_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_6entityEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryINS_6entityESaIS3_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryINS_6entityESaIS3_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt7type_idINS_14basic_registryINS_6entityESaIS2_EEEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
@@ -473,7 +471,6 @@ begin_hunk_1
 @_ZTVSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr dso_local constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTISt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @_ZTISt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr dso_local constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr dso_local constant [65 x i8] c"St23_Sp_counted_ptr_inplaceIcSaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJiRN8MetaFunc8functionEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.292" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaFunc8functionEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZTVSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr dso_local constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr @_ZTISt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
 @_ZTISt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr dso_local constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE, ptr @_ZTISt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE }, comdat, align 8
 @_ZTSSt23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr dso_local constant [65 x i8] c"St23_Sp_counted_ptr_inplaceIiSaIvELN9__gnu_cxx12_Lock_policyE2EE\00", comdat, align 1
@@ -876,9 +873,9 @@ bb.i:                                             ; preds = %_ZNK4entt9dense_map
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJRNS_14basic_registryINS_6entityESaIS3_EEES3_EEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #5 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJRNS_14basic_registryINS_6entityESaIS3_EEES3_EEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !126
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !1126
+  %.sroa.idx.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_6entityEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryINS_6entityESaIS3_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !1126
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1281,9 +1278,9 @@ _ZNKSt9type_infoeqERKS_.exit.thread8:             ; preds = %bb.c, %_ZNKSt9type_
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJRiRKN8MetaFunc8functionEEEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #5 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJiRN8MetaFunc8functionEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !126
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !1243
+  %.sroa.idx.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaFunc8functionEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !1243
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1686,9 +1683,9 @@ _ZN4entt8meta_anyD2Ev.exit36:                     ; preds = %_ZN4entt8meta_anyD2
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJiRN8MetaFunc8functionEEEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #5 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJiRN8MetaFunc8functionEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !126
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !1258
+  %.sroa.idx.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEN8MetaFunc8functionEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !1258
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert

@@ -30,7 +30,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"class.std::ios_base" = type { ptr, i64, i64, i32, i32, i32, ptr, %"struct.std::ios_base::_Words", [8 x %"struct.std::ios_base::_Words"], i32, ptr, %"class.std::locale" }
 %"struct.std::ios_base::_Words" = type { ptr, i64 }
 %"class.std::locale" = type { ptr }
-%"struct.std::array.276" = type { [2 x ptr] }
 %"class.testing::internal::GTestLog" = type { i32 }
 %"class.entt::meta_any" = type { %"class.entt::basic_any", ptr, ptr, ptr }
 %"class.entt::basic_any" = type <{ %"struct.entt::internal::basic_any_storage", ptr, ptr, i32, i8, [3 x i8] }>
@@ -433,7 +432,6 @@ begin_hunk_1
 @_ZZN4entt10type_indexINS_23meta_class_template_tagISt10unique_ptrEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexINS_23meta_class_template_tagISt10unique_ptrEEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.163 = private unnamed_addr constant [102 x i8] c"const char *entt::internal::pretty_function() [Type = entt::meta_class_template_tag<std::unique_ptr>]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJiSt14default_deleteIiEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.276" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedESt14default_deleteIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedESt14default_deleteIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedESt14default_deleteIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt7type_idISt14default_deleteIiEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
@@ -524,7 +522,6 @@ begin_hunk_1
 @.str.175 = private unnamed_addr constant [95 x i8] c"const char *entt::internal::pretty_function() [Type = std::unique_ptr<void, void (*)(void *)>]\00", align 1
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedESt10unique_ptrIvPFvPvEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedESt10unique_ptrIvPFvPvEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
-@__const._ZN4entt8internal13meta_arg_nodeIJvPFvPvEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array.276" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEvEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt7type_idIPFvPvEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
@@ -927,9 +924,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(128) ptr @_ZZN4entt8internal14setup_node_forISt10unique_ptrIiSt14default_deleteIiEEEEDavENUlRKNS0_12meta_contextEmE_8__invokeES8_m(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #7 comdat align 2 {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJiSt14default_deleteIiEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !111
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !812
+  %.sroa.idx.i.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i.i = select i1 %.sroa.idx.i.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedESt14default_deleteIiEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEiEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !812
   ret ptr %i.a
 }
 
@@ -1332,14 +1329,14 @@ _ZZN4entt8internal14setup_node_forISt10unique_ptrIvPFvPvEEEEDavENKUlRKNS_8meta_c
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(128) ptr @_ZZN4entt8internal14setup_node_forISt10unique_ptrIvPFvPvEEEEDavENUlRKNS0_12meta_contextEmE_8__invokeES9_m(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #7 comdat align 2 {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJvPFvPvEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !111
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !895
+  %.sroa.idx.i.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i.i = select i1 %.sroa.idx.i.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEvEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #26, !inline_history !895
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden noundef nonnull align 8 dereferenceable(128) ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE(ptr noundef nonnull align 8 dereferenceable(56) %0) #9 comdat personality ptr @__gxx_personality_v0 {
+define linkonce_odr hidden noundef nonnull align 8 dereferenceable(128) ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE(ptr noundef nonnull align 8 dereferenceable(56) %0) local_unnamed_addr #9 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedEPFvPvEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node acquire, align 8
   %i.b = icmp eq i8 %i.a, 0

@@ -204,14 +204,12 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @Curl_doh_take_result(ptr noundef %0, ptr nofree noundef captures(address_is_null) %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca i32, align 4                        ; 8 uses
-  %4 = alloca %struct.dohentry, align 8           ; 14 uses
-  %.sroa.0 = alloca i32, align 8                  ; 5 uses
-  %.sroa.6 = alloca i32, align 4                  ; 5 uses
+  %.sroa.0 = alloca i32, align 4                  ; 8 uses
+  %3 = alloca %struct.dohentry, align 8           ; 14 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !17   ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   store ptr null, ptr %2, align 8, !tbaa !131
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %Curl_doh_cleanup.exit, label %bb.b
@@ -245,23 +243,19 @@ bb.e:                                             ; preds = %bb.c, %bb.b
   br i1 %.not84, label %bb.f, label %Curl_doh_cleanup.exit
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store i32 0, ptr %.sroa.0, align 8
-  store i32 0, ptr %.sroa.6, align 4
   tail call fastcc void @doh_close(ptr noundef %0, ptr noundef nonnull %1)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(624) %4, i8 0, i64 624, i1 false)
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 612 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(624) %3, i8 0, i64 624, i1 false)
+  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 612 ; 3 uses
   store i32 2147483647, ptr %i.q, align 4, !tbaa !101
-  call void @curlx_dyn_init(ptr noundef nonnull %4, i64 noundef 256) #7
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 32
+  call void @curlx_dyn_init(ptr noundef nonnull %3, i64 noundef 256) #7
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32
   call void @curlx_dyn_init(ptr noundef nonnull %i.r, i64 noundef 256) #7
-  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 64
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 64
   call void @curlx_dyn_init(ptr noundef nonnull %i.s, i64 noundef 256) #7
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 96
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 96
   call void @curlx_dyn_init(ptr noundef nonnull %i.t, i64 noundef 256) #7
-  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 616 ; 3 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 608 ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 616 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 608 ; 3 uses
   %.not121 = icmp eq ptr %0, null                 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 2049 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 4296 ; 2 uses
@@ -269,9 +263,10 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.ba
-  %i.z = phi i1 [ true, %bb.f ], [ false, %bb.ba ]
-  %indvars.iv.sroa.phi289 = phi ptr [ %.sroa.0, %bb.f ], [ %.sroa.6, %bb.ba ] ; 2 uses
+  %i.z = phi i1 [ true, %bb.f ], [ false, %bb.ba ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %bb.f ], [ 1, %bb.ba ]
+  %.sroa.7.0174 = phi i32 [ 0, %bb.f ], [ %.sroa.7.1, %bb.ba ] ; 3 uses
+  %.sroa.0.0172 = phi i32 [ 0, %bb.f ], [ %.sroa.0.1, %bb.ba ] ; 3 uses
   %i.aa = getelementptr inbounds nuw [48 x i8], ptr %i.c, i64 %indvars.iv ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 40 ; 3 uses
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !94
@@ -283,7 +278,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = call ptr @curlx_dyn_uptr(ptr noundef nonnull %i.ad) #7 ; 28 uses
   %i.af = call i64 @curlx_dyn_len(ptr noundef nonnull %i.ad) #7 ; 25 uses
   %i.ag = load i32, ptr %i.ab, align 8, !tbaa !94
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0) #7
   %i.ah = icmp ult i64 %i.af, 12
   br i1 %i.ah, label %doh_resp_decode.exit, label %bb.i
 
@@ -520,7 +515,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.el, label %doh_resp_decode.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.em = call fastcc i32 @doh_rdata(ptr noundef %i.ae, i64 noundef %i.af, i16 noundef zeroext %i.eh, i16 noundef zeroext %i.cy, i32 noundef %i.dv, ptr noundef nonnull %4) ; 2 uses
+  %i.em = call fastcc i32 @doh_rdata(ptr noundef %i.ae, i64 noundef %i.af, i16 noundef zeroext %i.eh, i16 noundef zeroext %i.cy, i32 noundef %i.dv, ptr noundef nonnull %3) ; 2 uses
   %.not114.i = icmp eq i32 %i.em, 0
   br i1 %.not114.i, label %bb.t, label %doh_resp_decode.exit
 
@@ -531,7 +526,7 @@ bb.ai:                                            ; preds = %bb.ah
 ._crit_edge167.i:                                 ; preds = %._crit_edge167.loopexit.i, %._crit_edge.i
   %.promoted150 = phi i32 [ %.lcssa145147.lcssa.i, %._crit_edge.i ], [ %i.ej, %._crit_edge167.loopexit.i ] ; 3 uses
   %.083.lcssa.i = phi i1 [ true, %._crit_edge.i ], [ %i.en, %._crit_edge167.loopexit.i ]
-  store i32 %.promoted150, ptr %3, align 4
+  store i32 %.promoted150, ptr %.sroa.0, align 4
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ep = load i8, ptr %i.eo, align 1, !tbaa !97
   %i.eq = zext i8 %i.ep to i16
@@ -617,7 +612,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not103.i, label %._crit_edge174.i.loopexit, label %.lr.ph173.i, !llvm.loop !124
 
 ._crit_edge174.i.loopexit:                        ; preds = %bb.aq
-  store i32 %i.ga, ptr %3, align 4
+  store i32 %i.ga, ptr %.sroa.0, align 4
   br label %._crit_edge174.i
 
 ._crit_edge174.i:                                 ; preds = %._crit_edge174.i.loopexit, %._crit_edge167.i
@@ -639,12 +634,12 @@ bb.aq:                                            ; preds = %bb.ap
 
 .lr.ph178.i:                                      ; preds = %._crit_edge174.i, %bb.au
   %.081176.i = phi i16 [ %i.hi, %bb.au ], [ %i.gm, %._crit_edge174.i ]
-  %i.gn = call fastcc i32 @doh_skipqname(ptr noundef %i.ae, i64 noundef %i.af, ptr noundef %3) ; 2 uses
+  %i.gn = call fastcc i32 @doh_skipqname(ptr noundef %i.ae, i64 noundef %i.af, ptr noundef %.sroa.0) ; 2 uses
   %.not109.i = icmp eq i32 %i.gn, 0
   br i1 %.not109.i, label %bb.ar, label %doh_resp_decode.exit
 
 bb.ar:                                            ; preds = %.lr.ph178.i
-  %i.go = load i32, ptr %3, align 4, !tbaa !96    ; 3 uses
+  %i.go = load i32, ptr %.sroa.0, align 4, !tbaa !96 ; 3 uses
   %i.gp = add i32 %i.go, 8
   %i.gq = zext i32 %i.gp to i64                   ; 2 uses
   %i.gr = icmp ult i64 %i.af, %i.gq
@@ -673,7 +668,7 @@ bb.at:                                            ; preds = %bb.as
   br i1 %i.hh, label %doh_resp_decode.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  store i32 %i.hf, ptr %3, align 4, !tbaa !96
+  store i32 %i.hf, ptr %.sroa.0, align 4, !tbaa !96
   %i.hi = add i16 %.081176.i, -1                  ; 2 uses
   %.not104.i = icmp eq i16 %i.hi, 0
   br i1 %.not104.i, label %._crit_edge179.i, label %.lr.ph178.i, !llvm.loop !125
@@ -693,14 +688,16 @@ bb.av:                                            ; preds = %._crit_edge179.i
   br i1 %or.cond120, label %doh_resp_decode.exit, label %doh_resp_decode.exit.thread
 
 doh_resp_decode.exit.thread:                      ; preds = %bb.av
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  store i32 0, ptr %indvars.iv.sroa.phi289, align 4, !tbaa !96
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0) #7
+  %.sroa.0.0.123 = select i1 %i.z, i32 0, i32 %.sroa.0.0172
+  %..sroa.7.0124 = select i1 %i.z, i32 %.sroa.7.0174, i32 0
   br label %bb.ba
 
 doh_resp_decode.exit:                             ; preds = %bb.q, %doh_skipqname.exit.i, %bb.w, %doh_skipqname.exit120.i, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ag, %bb.ah, %bb.ai, %bb.al, %doh_skipqname.exit, %bb.ao, %bb.ap, %.lr.ph178.i, %bb.ar, %bb.as, %bb.at, %bb.o, %bb.p, %bb.r, %bb.u, %bb.v, %bb.x, %bb.ak, %bb.aj, %bb.am, %bb.av, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %._crit_edge179.i
-  %.2.i = phi i32 [ 7, %._crit_edge179.i ], [ 4, %bb.h ], [ 12, %bb.i ], [ 8, %bb.l ], [ 11, %bb.av ], [ 1, %bb.p ], [ 2, %bb.al ], [ 12, %bb.k ], [ 12, %bb.j ], [ 1, %bb.v ], [ 9, %bb.aa ], [ %i.gn, %.lr.ph178.i ], [ 1, %bb.ak ], [ 2, %bb.am ], [ 2, %bb.aj ], [ 2, %bb.u ], [ 2, %bb.x ], [ 2, %bb.o ], [ 2, %bb.r ], [ 2, %bb.as ], [ 2, %bb.at ], [ 2, %bb.ar ], [ 2, %bb.ap ], [ 2, %bb.ao ], [ 2, %doh_skipqname.exit ], [ 2, %bb.ag ], [ 2, %bb.ab ], [ 2, %bb.ah ], [ 2, %bb.w ], [ 2, %doh_skipqname.exit120.i ], [ %i.em, %bb.ai ], [ 10, %bb.ac ], [ 2, %bb.ad ], [ 2, %doh_skipqname.exit.i ], [ 2, %bb.q ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  store i32 %.2.i, ptr %indvars.iv.sroa.phi289, align 4, !tbaa !96
+  %.2.i = phi i32 [ 7, %._crit_edge179.i ], [ 4, %bb.h ], [ 12, %bb.i ], [ 8, %bb.l ], [ 11, %bb.av ], [ 1, %bb.p ], [ 2, %bb.al ], [ 12, %bb.k ], [ 12, %bb.j ], [ 1, %bb.v ], [ 9, %bb.aa ], [ %i.gn, %.lr.ph178.i ], [ 1, %bb.ak ], [ 2, %bb.am ], [ 2, %bb.aj ], [ 2, %bb.u ], [ 2, %bb.x ], [ 2, %bb.o ], [ 2, %bb.r ], [ 2, %bb.as ], [ 2, %bb.at ], [ 2, %bb.ar ], [ 2, %bb.ap ], [ 2, %bb.ao ], [ 2, %doh_skipqname.exit ], [ 2, %bb.ag ], [ 2, %bb.ab ], [ 2, %bb.ah ], [ 2, %bb.w ], [ 2, %doh_skipqname.exit120.i ], [ %i.em, %bb.ai ], [ 10, %bb.ac ], [ 2, %bb.ad ], [ 2, %doh_skipqname.exit.i ], [ 2, %bb.q ] ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0) #7
+  %.sroa.0.0. = select i1 %i.z, i32 %.2.i, i32 %.sroa.0.0172 ; 5 uses
+  %..sroa.7.0 = select i1 %i.z, i32 %.sroa.7.0174, i32 %.2.i ; 5 uses
   br i1 %.not121, label %bb.ba, label %bb.aw
 
 bb.aw:                                            ; preds = %doh_resp_decode.exit
@@ -742,13 +739,13 @@ doh_strerror.exit:                                ; preds = %bb.ay, %bb.az
   br label %bb.ba
 
 bb.ba:                                            ; preds = %doh_resp_decode.exit.thread, %doh_resp_decode.exit, %doh_strerror.exit, %bb.az, %bb.ay, %bb.aw, %bb.g
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0172, %bb.g ], [ %.sroa.0.0., %bb.aw ], [ %.sroa.0.0., %bb.ay ], [ %.sroa.0.0., %bb.az ], [ %.sroa.0.0., %doh_strerror.exit ], [ %.sroa.0.0., %doh_resp_decode.exit ], [ %.sroa.0.0.123, %doh_resp_decode.exit.thread ] ; 2 uses
+  %.sroa.7.1 = phi i32 [ %.sroa.7.0174, %bb.g ], [ %..sroa.7.0, %bb.aw ], [ %..sroa.7.0, %bb.ay ], [ %..sroa.7.0, %bb.az ], [ %..sroa.7.0, %doh_strerror.exit ], [ %..sroa.7.0, %doh_resp_decode.exit ], [ %..sroa.7.0124, %doh_resp_decode.exit.thread ] ; 2 uses
   br i1 %i.z, label %bb.g, label %bb.bb, !llvm.loop !126
 
 bb.bb:                                            ; preds = %bb.ba
-  %.sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 8, !tbaa !96
-  %i.hy = icmp ne i32 %.sroa.0.0..sroa.0.0., 0
-  %.sroa.6.0..sroa.6.4. = load i32, ptr %.sroa.6, align 4
-  %i.hz = icmp ne i32 %.sroa.6.0..sroa.6.4., 0
+  %i.hy = icmp ne i32 %.sroa.0.1, 0
+  %i.hz = icmp ne i32 %.sroa.7.1, 0
   %or.cond5 = select i1 %i.hy, i1 %i.hz, i1 false
   br i1 %or.cond5, label %bb.br, label %bb.bc
 
@@ -784,7 +781,7 @@ bb.bg:                                            ; preds = %bb.be
 bb.bh:                                            ; preds = %bb.bf, %bb.bg
   %i.ii = load ptr, ptr %i.y, align 8, !tbaa !25
   call void (ptr, ptr, ...) @Curl_trc_dns(ptr noundef nonnull %0, ptr noundef nonnull @.str.2, ptr noundef %i.ii) #7
-  call fastcc void @doh_show(ptr noundef %0, ptr noundef %4)
+  call fastcc void @doh_show(ptr noundef %0, ptr noundef %3)
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg, %bb.bf, %bb.bd, %bb.bc
@@ -802,7 +799,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg, %bb.
   br i1 %i.ip, label %.lr.ph.i98, label %.loopexit
 
 .lr.ph.i98:                                       ; preds = %.preheader.i
-  %i.iq = getelementptr inbounds nuw i8, ptr %4, i64 128
+  %i.iq = getelementptr inbounds nuw i8, ptr %3, i64 128
   %i.ir = add i64 %i.im, 49
   %rev.i.i = call i16 @llvm.bswap.i16(i16 %i.il)
   br label %bb.bj
@@ -913,15 +910,13 @@ bb.br:                                            ; preds = %bb.bb
 
 bb.bs:                                            ; preds = %doh2ai.exit.thread, %bb.br
   %.2 = phi i32 [ %.073, %doh2ai.exit.thread ], [ %i.jz, %bb.br ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %i.ka = load i32, ptr %i.u, align 8, !tbaa !105
   %i.kb = icmp sgt i32 %i.ka, 0
   br i1 %i.kb, label %.lr.ph.i100, label %de_cleanup.exit
 
 .lr.ph.i100:                                      ; preds = %bb.bs, %.lr.ph.i100
   %indvars.iv.i101 = phi i64 [ %indvars.iv.next.i102, %.lr.ph.i100 ], [ 0, %bb.bs ] ; 2 uses
-  %i.kc = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv.i101
+  %i.kc = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvars.iv.i101
   call void @curlx_dyn_free(ptr noundef nonnull %i.kc) #7
   %indvars.iv.next.i102 = add nuw nsw i64 %indvars.iv.i101, 1 ; 2 uses
   %i.kd = load i32, ptr %i.u, align 8, !tbaa !105
@@ -948,7 +943,7 @@ bb.bt:                                            ; preds = %de_cleanup.exit
 
 Curl_doh_cleanup.exit:                            ; preds = %bb.bt, %de_cleanup.exit, %bb.e, %bb.a, %bb.d
   %.075 = phi i32 [ %i.n, %bb.d ], [ 81, %bb.e ], [ 27, %bb.a ], [ %.2, %de_cleanup.exit ], [ %.2, %bb.bt ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   ret i32 %.075
 }
 

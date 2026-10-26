@@ -205,7 +205,6 @@ declare noundef float @_ZNK4pbrt22ExhaustiveLightSampler3PMFERKNS_18LightSampleC
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef float @_ZNK4pbrt15BVHLightSampler3PMFERKNS_18LightSampleContextENS_5LightE(ptr noundef nonnull align 8 dereferenceable(160) %0, ptr noundef nonnull align 4 dereferenceable(48) %1, ptr nofree noundef align 8 dead_on_return dereferenceable(8) %2) local_unnamed_addr #23 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca [2 x float], align 4                ; 5 uses
   %i.a = load i64, ptr %2, align 8, !tbaa !99     ; 4 uses
   %i.b = and i64 %i.a, 144115188075855871
   %i.c = mul i64 %i.b, -4132994306676758123       ; 2 uses
@@ -340,7 +339,6 @@ _ZNK4pbrt7HashMapINS_5LightEjSt4hashIS1_EN4pstd3pmr21polymorphic_allocatorINS4_8
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !130
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
@@ -355,20 +353,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.cp = getelementptr inbounds nuw [32 x i8], ptr %i.cm, i64 %i.co
   %i.cq = zext nneg i32 %i.ck to i64
   %i.cr = getelementptr inbounds nuw [32 x i8], ptr %i.cm, i64 %i.cq
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   %i.cs = tail call noundef float @_ZNK4pbrt18CompactLightBounds10ImportanceENS_6Point3IfEENS_7Normal3IfEERKNS_7Bounds3IfEE(ptr noundef nonnull align 4 dereferenceable(24) %i.cp, <2 x float> %i.bn, float %i.bp, <2 x float> %.sroa.025.0.copyload, float %.sroa.5.0.copyload, ptr noundef nonnull align 4 dereferenceable(24) %i.cj) ; 2 uses
-  store float %i.cs, ptr %3, align 4, !tbaa !437
   %i.ct = tail call noundef float @_ZNK4pbrt18CompactLightBounds10ImportanceENS_6Point3IfEENS_7Normal3IfEERKNS_7Bounds3IfEE(ptr noundef nonnull align 4 dereferenceable(24) %i.cr, <2 x float> %i.bn, float %i.bp, <2 x float> %.sroa.025.0.copyload, float %.sroa.5.0.copyload, ptr noundef nonnull align 4 dereferenceable(24) %i.cj) ; 2 uses
-  store float %i.ct, ptr %4, align 4, !tbaa !437
-  %i.cu = and i32 %.03962, 1                      ; 2 uses
-  %5 = zext nneg i32 %i.cu to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %5
-  %7 = load float, ptr %6, align 4, !tbaa !437
+  %i.cu = and i32 %.03962, 1
+  %.sroa.idx.not = icmp eq i32 %i.cu, 0           ; 2 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, float %i.cs, float %i.ct
   %i.cv = fadd float %i.cs, %i.ct
-  %i.cw = fdiv float %7, %i.cv
+  %i.cw = fdiv float %.sroa.speculated, %i.cv
   %i.cx = fmul float %.04161, %i.cw               ; 2 uses
-  %.not47 = icmp eq i32 %i.cu, 0
-  br i1 %.not47, label %bb.d, label %bb.c
+  br i1 %.sroa.idx.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.cy = load i32, ptr %i.cl, align 8
@@ -380,7 +373,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.pre-phi = phi i64 [ %.pre, %bb.c ], [ %i.co, %bb.b ]
   %i.da = phi i32 [ %i.cz, %bb.c ], [ %i.cn, %bb.b ]
   %i.db = lshr i32 %.03962, 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
   %i.dc = load ptr, ptr %i.cc, align 8, !tbaa !1195 ; 2 uses
   %i.dd = getelementptr inbounds nuw [32 x i8], ptr %i.dc, i64 %.pre-phi
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 24 ; 2 uses

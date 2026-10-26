@@ -205,7 +205,6 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
 .critedge.a:                                      ; preds = %.critedge.loopexit, %_ZNK3sat6solver8num_varsEv.exit.lr.ph, %.preheader
   %.074.lcssa = phi i64 [ 0, %.preheader ], [ 0, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %i.bo, %.critedge.loopexit ]
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 3208
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 3216
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !312 ; 4 uses
   %i.br = icmp eq ptr %i.bq, null
   br i1 %i.br, label %._crit_edge126, label %_ZNK6vectorIPN3sat6clauseELb0EjE3endEv.exit
@@ -382,7 +381,8 @@ _ZNK6vectorIPN3sat6clauseELb0EjE3endEv.exit:      ; preds = %.critedge.a
   %.4.lcssa = phi i32 [ %.082.lcssa, %_ZNK6vectorIPN3sat6clauseELb0EjE3endEv.exit ], [ %.082.lcssa, %.critedge.a ], [ %i.hx, %._crit_edge126.loopexit.unr-lcssa ], [ %i.fk, %.lr.ph125.epil.preheader ] ; 4 uses
   %.171.lcssa = phi i32 [ 0, %_ZNK6vectorIPN3sat6clauseELb0EjE3endEv.exit ], [ 0, %.critedge.a ], [ %.272.1175, %._crit_edge126.loopexit.unr-lcssa ], [ %.272.epil, %.lr.ph125.epil.preheader ] ; 4 uses
   %.168.lcssa = phi i32 [ 0, %_ZNK6vectorIPN3sat6clauseELb0EjE3endEv.exit ], [ 0, %.critedge.a ], [ %.269.1177, %._crit_edge126.loopexit.unr-lcssa ], [ %.269.epil, %.lr.ph125.epil.preheader ] ; 4 uses
-  %i.fl = load ptr, ptr %2, align 8, !tbaa !312   ; 6 uses
+  %.sroa.speculated.1 = getelementptr inbounds nuw i8, ptr %0, i64 3216
+  %i.fl = load ptr, ptr %.sroa.speculated.1, align 8, !tbaa !312 ; 6 uses
   %i.fm = icmp eq ptr %i.fl, null
   br i1 %i.fm, label %._crit_edge126.1, label %_ZNK6vectorIPN3sat6clauseELb0EjE3endEv.exit.1
 

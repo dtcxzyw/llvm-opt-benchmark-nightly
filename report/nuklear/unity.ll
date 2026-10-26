@@ -106,7 +106,6 @@ target triple = "x86_64-pc-linux-gnu"
 @__const.nk_draw_knob.direction_rads = private unnamed_addr constant [4 x float] [float f0x4096CBE4, float 0.000000e+00, float f0x3FC90FDB, float f0x40490FDB], align 16
 @.str.58 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 @.str.59 = private unnamed_addr constant [5 x i8] c"    \00", align 1
-@__const.nk_do_property.filters = private unnamed_addr constant [2 x ptr] [ptr @nk_filter_decimal, ptr @nk_filter_float], align 16
 @.str.60 = private unnamed_addr constant [2 x i8] c"x\00", align 1
 @.str.61 = private unnamed_addr constant [2 x i8] c"_\00", align 1
 @.str.62 = private unnamed_addr constant [2 x i8] c"+\00", align 1
@@ -509,9 +508,8 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv
   %.0287.i = phi i1 [ false, %bb.bv ], [ %i.rd, %bb.bu ] ; 3 uses
   %.1284.i = phi ptr [ %.0108, %bb.bv ], [ %.0283.i, %bb.bu ]
   %.1.i = phi ptr [ %.0107, %bb.bv ], [ %.0.i, %bb.bu ] ; 5 uses
-  %7 = zext nneg i32 %4 to i64
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @__const.nk_do_property.filters, i64 %7
-  %9 = load ptr, ptr %8, align 8, !tbaa !73       ; 2 uses
+  %.sroa.idx.not.i = icmp eq i32 %4, 0
+  %.sroa.speculated73.i = select i1 %.sroa.idx.not.i, ptr @nk_filter_decimal, ptr @nk_filter_float ; 2 uses
   %i.rk = getelementptr inbounds nuw i8, ptr %0, i64 18384
   store <4 x i16> <i16 0, i16 99, i16 0, i16 999>, ptr %i.rk, align 8, !tbaa !106
   %i.rl = getelementptr inbounds nuw i8, ptr %0, i64 13180 ; 3 uses
@@ -526,7 +524,7 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv
   store i8 1, ptr %i.rp, align 8, !tbaa !632
   %i.rq = getelementptr inbounds nuw i8, ptr %0, i64 13188
   %i.rr = getelementptr inbounds nuw i8, ptr %0, i64 13160
-  store ptr %9, ptr %i.rr, align 8, !tbaa !633
+  store ptr %.sroa.speculated73.i, ptr %i.rr, align 8, !tbaa !633
   %i.rs = getelementptr inbounds nuw i8, ptr %0, i64 13168
   store <2 x float> zeroinitializer, ptr %i.rs, align 8, !tbaa !54
   %i.rt = zext i1 %.0287.i to i8
@@ -564,7 +562,7 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv
   %i.sl = load i32, ptr %.0110, align 4, !tbaa !55
   %i.sm = icmp eq i32 %i.sl, 1
   %i.sn = select i1 %i.sm, ptr %i.bf, ptr null
-  %i.so = call fastcc i32 @nk_do_edit(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.bh, <2 x float> %.sroa.03.4.vec.insert.i, <2 x float> %i.gt, i32 noundef 610, ptr noundef %9, ptr noundef nonnull %i.aw, ptr noundef readonly %i.sk, ptr noundef %i.sn, ptr noundef nonnull %i.bj) ; 0 uses
+  %i.so = call fastcc i32 @nk_do_edit(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.bh, <2 x float> %.sroa.03.4.vec.insert.i, <2 x float> %i.gt, i32 noundef 610, ptr noundef nonnull %.sroa.speculated73.i, ptr noundef nonnull %i.aw, ptr noundef readonly %i.sk, ptr noundef %i.sn, ptr noundef nonnull %i.bj) ; 0 uses
   %i.sp = load i32, ptr %i.rw, align 8, !tbaa !627
   store i32 %i.sp, ptr %.1.i, align 4, !tbaa !55
   %i.sq = load i32, ptr %i.rn, align 8, !tbaa !630

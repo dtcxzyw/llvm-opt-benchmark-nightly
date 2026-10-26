@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cjson/original/parse_examples?download=true
-inline.NumInlined: 139
+inline.NumInlined: 137
 inline.NumDeleted: 25
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumUnrolled: 4
@@ -204,29 +204,25 @@ define internal void @test15_should_not_heap_buffer_overflow() #8 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(7) ptr @malloc(i64 noundef 7) #31 ; 4 uses
   %.not = icmp eq ptr %i.a, null
-  br i1 %.not, label %.split, label %.split12
+  br i1 %.not, label %.split.1, label %.split12
 
 .split12:                                         ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.a, ptr noundef nonnull align 1 dereferenceable(7) @.str.53, i64 7, i1 false)
   %i.b = tail call ptr @cJSON_ParseWithLengthOpts(ptr noundef nonnull %i.a, i64 noundef 7, ptr noundef null, i32 noundef 0)
   tail call void @cJSON_Delete(ptr noundef %i.b)
-  tail call void @free(ptr noundef %i.a) #28
+  tail call void @free(ptr noundef nonnull %i.a) #28
   %i.c = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #31 ; 4 uses
   %.not.1 = icmp eq ptr %i.c, null
   br i1 %.not.1, label %.split.1, label %.split12.1
-
-.split:                                           ; preds = %bb.a
-  tail call void @UnityFail(ptr noundef nonnull @.str.55, i64 noundef 270) #28
-  unreachable
 
 .split12.1:                                       ; preds = %.split12
   store i64 2318282033940472443, ptr %i.c, align 1
   %i.d = tail call ptr @cJSON_ParseWithLengthOpts(ptr noundef nonnull %i.c, i64 noundef 8, ptr noundef null, i32 noundef 0)
   tail call void @cJSON_Delete(ptr noundef %i.d)
-  tail call void @free(ptr noundef %i.c) #28
+  tail call void @free(ptr noundef nonnull %i.c) #28
   ret void
 
-.split.1:                                         ; preds = %.split12
+.split.1:                                         ; preds = %.split12, %bb.a
   tail call void @UnityFail(ptr noundef nonnull @.str.55, i64 noundef 270) #28
   unreachable
 }

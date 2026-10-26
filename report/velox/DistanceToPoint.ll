@@ -149,9 +149,8 @@ declare ptr @__dynamic_cast(ptr, ptr, ptr, i64) local_unnamed_addr #2
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9algorithm8distance15DistanceToPoint15computeDistanceERKNS_4geom10LineStringERKNS3_10CoordinateERNS1_17PointPairDistanceE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(57) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = alloca %"class.geos::geom::LineSegment", align 8 ; 9 uses
+  %3 = alloca %"class.geos::geom::LineSegment", align 8 ; 7 uses
   %4 = alloca %"class.geos::geom::Coordinate", align 16 ; 9 uses
-  %5 = alloca [2 x ptr], align 16                 ; 5 uses
   %i.a = tail call noundef ptr @_ZNK4geos4geom10LineString16getCoordinatesROEv(ptr noundef nonnull align 8 dereferenceable(48) %0) ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48
@@ -162,9 +161,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, i8 0, i64 16, i1 false)
-  store double +qnan, ptr %6, align 8, !tbaa !23
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, i8 0, i64 16, i1 false)
@@ -173,15 +169,11 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 16, i1 false)
   store double +qnan, ptr %i.h, align 16, !tbaa !23
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
-  store ptr %3, ptr %5, align 16, !tbaa !29
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %i.f, ptr %7, align 8, !tbaa !29
   %i.i = load ptr, ptr %i.a, align 8, !tbaa !10
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.k = load ptr, ptr %i.j, align 8
-  %8 = call noundef nonnull align 8 dereferenceable(24) ptr %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %8, i64 24, i1 false), !tbaa.struct !20
+  %5 = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false), !tbaa.struct !20
   %.not15 = icmp eq i64 %i.e, 1
   br i1 %.not15, label %._crit_edge, label %.lr.ph
 
@@ -192,7 +184,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZN4geos9algorithm8distance17PointPairDistance10setMinimumERKNS_4geom10CoordinateES6_.exit, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   br label %bb.g
@@ -204,9 +195,9 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN4geos9a
   %i.q = load ptr, ptr %i.p, align 8
   %i.r = call noundef nonnull align 8 dereferenceable(24) ptr %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef %.014)
   %i.s = and i64 %.014, 1
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.s
-  %10 = load ptr, ptr %9, align 8, !tbaa !29
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(24) %i.r, i64 24, i1 false), !tbaa.struct !20
+  %.sroa.idx.not = icmp eq i64 %i.s, 0
+  %.sroa.speculated.idx.sroa.sel = select i1 %.sroa.idx.not, ptr %3, ptr %i.f
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.speculated.idx.sroa.sel, ptr noundef nonnull align 8 dereferenceable(24) %i.r, i64 24, i1 false), !tbaa.struct !20
   call void @_ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %4)
   %i.t = load i8, ptr %i.l, align 8, !tbaa !15, !range !17, !noundef !18
   %i.u = trunc nuw i8 %i.t to i1
@@ -392,7 +383,4 @@ attributes #5 = { nounwind }
 !24 = distinct !{!24, !16}
 !25 = distinct !{null}
 !26 = distinct !{!26, !16}
-!27 = !{!"any pointer", !5, i64 0}
-!28 = !{!"p1 _ZTSN4geos4geom10CoordinateE", !27, i64 0}
-!29 = !{!28, !28, i64 0}
 end_hunk_0

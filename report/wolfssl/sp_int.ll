@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %.thread168
   %i.aj = icmp eq i32 %.2135, 0
   br i1 %i.aj, label %bb.d, label %.loopexit
 
-bb.d:                                             ; preds = %bb.c, %.thread188
+bb.d:                                             ; preds = %.thread188, %bb.c
   %.0153166185198 = phi i64 [ 0, %.thread188 ], [ %.neg19.i, %bb.c ] ; 6 uses
   %i.ak = add nsw i32 %1, -2
   %i.al = sext i32 %1 to i64
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %_sp_cmp.exit
   store volatile i64 0, ptr %i.ar, align 8, !tbaa !36
   br label %.critedge94
 
-.critedge94:                                      ; preds = %sp_count_bits.exit, %bb.f, %._crit_edge.i.i135
+.critedge94:                                      ; preds = %bb.f, %sp_count_bits.exit, %._crit_edge.i.i135
   %.4 = phi i32 [ %.3, %._crit_edge.i.i135 ], [ -98, %bb.f ], [ -98, %sp_count_bits.exit ]
   ret i32 %.4
 }

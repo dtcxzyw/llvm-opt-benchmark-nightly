@@ -204,7 +204,6 @@ bb.m:                                             ; preds = %bb.n, %bb.l
   unreachable
 
 bb.n:                                             ; preds = %bb.l
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 288
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bm, i64 48
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !111
@@ -212,7 +211,8 @@ bb.n:                                             ; preds = %bb.l
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !112
   call void @init_tree_desc(ptr noundef nonnull %4, ptr noundef nonnull %i.br, ptr noundef %i.bt, i64 noundef %i.bv) #15
   %i.bw = load ptr, ptr @the_repository, align 8, !tbaa !22
-  %i.bx = call ptr @repo_parse_tree_indirect(ptr noundef %i.bw, ptr noundef nonnull %11) #15 ; 4 uses
+  %.sroa.speculated39.1.i = getelementptr inbounds nuw i8, ptr %6, i64 288
+  %i.bx = call ptr @repo_parse_tree_indirect(ptr noundef %i.bw, ptr noundef nonnull %.sroa.speculated39.1.i) #15 ; 4 uses
   %i.by = load ptr, ptr @the_repository, align 8, !tbaa !22
   %i.bz = call i32 @repo_parse_tree_gently(ptr noundef %i.by, ptr noundef %i.bx, i32 noundef 0) #15
   %i.ca = icmp slt i32 %i.bz, 0

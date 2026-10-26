@@ -14,7 +14,6 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
 %"struct.std::array.48" = type { [256 x i16] }
 %"struct.std::array.49" = type { [512 x i8] }
-%"struct.std::array.54" = type { [2 x i32] }
 
 $_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz = comdat any
 
@@ -417,7 +416,6 @@ define hidden void @_ZN8rawspeed17KodakDecompressor10decompressEv(ptr nofree nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %1 = alloca %"struct.std::array.48", align 2    ; 4 uses
-  %2 = alloca %"struct.std::array.54", align 4    ; 5 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !18     ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 568
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !143, !noalias !144
@@ -446,7 +444,6 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.s = icmp eq i32 %i.i, 0
-  %.06.i.i.i.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 44
   br i1 %i.s, label %._crit_edge87.split, label %.preheader.preheader
@@ -481,9 +478,6 @@ bb.b:                                             ; preds = %.preheader, %._crit
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.ac, i32 256) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   call void @_ZN8rawspeed17KodakDecompressor13decodeSegmentEj(ptr dead_on_unwind nonnull writable sret(%"struct.std::array.48") align 2 %1, ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %.sroa.speculated)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  store i32 0, ptr %2, align 4, !tbaa !111
-  store i32 0, ptr %.06.i.i.i.i.ptr.1.i, align 4, !tbaa !111
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %.lr.ph.preheader, label %._crit_edge
 
@@ -498,7 +492,6 @@ bb.b:                                             ; preds = %.preheader, %._crit
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
   %.1.lcssa = phi i32 [ %.02083, %bb.b ], [ %i.af, %._crit_edge.loopexit ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   %i.ag = icmp slt i32 %.1.lcssa, %i.i
   br i1 %i.ag, label %bb.b, label %._crit_edge85, !llvm.loop !139
@@ -506,14 +499,17 @@ bb.b:                                             ; preds = %.preheader, %._crit
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
   %indvars.iv93 = phi i64 [ %i.ae, %.lr.ph.preheader ], [ %indvars.iv.next94, %bb.g ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.g ] ; 3 uses
+  %.sroa.5.095 = phi i32 [ 0, %.lr.ph.preheader ], [ %spec.select91, %bb.g ] ; 2 uses
+  %.sroa.0.094 = phi i32 [ 0, %.lr.ph.preheader ], [ %spec.select, %bb.g ] ; 2 uses
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !114
   %i.aj = sext i16 %i.ai to i32
   %i.ak = and i64 %indvars.iv, 1
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ak ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !111
-  %i.al = add nsw i32 %4, %i.aj                   ; 5 uses
-  store i32 %i.al, ptr %3, align 4, !tbaa !111
+  %.sroa.idx.not = icmp eq i64 %i.ak, 0           ; 3 uses
+  %.sroa.speculated34 = select i1 %.sroa.idx.not, i32 %.sroa.0.094, i32 %.sroa.5.095
+  %i.al = add nsw i32 %.sroa.speculated34, %i.aj  ; 6 uses
+  %spec.select = select i1 %.sroa.idx.not, i32 %i.al, i32 %.sroa.0.094
+  %spec.select91 = select i1 %.sroa.idx.not, i32 %.sroa.5.095, i32 %i.al
   %i.am = load i32, ptr %i.t, align 8, !tbaa !28  ; 3 uses
   %i.an = icmp ult i32 %i.am, 32
   call void @llvm.assume(i1 %i.an)

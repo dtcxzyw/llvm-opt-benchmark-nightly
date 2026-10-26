@@ -202,8 +202,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17: ; preds = %_ZN
 ; Function Attrs: mustprogress uwtable
 define internal void @"_ZNSt17_Function_handlerIFvP8FileTestEZN32ECDSATest_VerifyTestVectors_Test8TestBodyEvE3$_0E9_M_invokeERKSt9_Any_dataOS1_"(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i = alloca i8, align 1               ; 5 uses
-  %.sroa.5.i.i = alloca i8, align 1               ; 5 uses
   %i.a = alloca i8, align 1                       ; 7 uses
   %2 = alloca %"class.testing::ScopedTrace", align 1 ; 8 uses
   %3 = alloca %"class.std::unique_ptr.10", align 8 ; 9 uses
@@ -284,10 +282,6 @@ bb.a:
   %76 = alloca %"class.testing::Message", align 8 ; 7 uses
   %77 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %.val = load ptr, ptr %1, align 8, !tbaa !93    ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i.i)
-  store i8 0, ptr %.sroa.0.i.i, align 1, !tbaa !94
-  store i8 1, ptr %.sroa.5.i.i, align 1, !tbaa !94
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
@@ -326,11 +320,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit632.i.i.i, %bb.a
+  %.0145.ptr.sroa.idx.i.i.i = phi i8 [ 0, %bb.a ], [ 1, %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit632.i.i.i ]
   %.not.i.i.i = phi i1 [ false, %bb.a ], [ true, %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit632.i.i.i ]
-  %.0145.idx340.i.sroa.phi.i.i = phi ptr [ %.sroa.0.i.i, %bb.a ], [ %.sroa.5.i.i, %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit632.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %78 = load i8, ptr %.0145.idx340.i.sroa.phi.i.i, align 1, !tbaa !94, !range !66, !noundef !67
-  store i8 %78, ptr %i.a, align 1, !tbaa !94
+  store i8 %.0145.ptr.sroa.idx.i.i.i, ptr %i.a, align 1, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   call void @_ZN7testing11ScopedTraceC2IbEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull @.str.2, i32 noundef 353, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
@@ -733,8 +726,6 @@ bb.jq:                                            ; preds = %bb.jp, %bb.d
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i)
   resume { ptr, i32 } %.pn216.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.i.i.i
 
 bb.jr:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i313.i.i.i, %_ZN7testing7MessageD2Ev.exit310.i.i.i
@@ -783,8 +774,6 @@ bb.jw:                                            ; preds = %bb.jv
   br label %"_ZSt10__invoke_rIvRZN32ECDSATest_VerifyTestVectors_Test8TestBodyEvE3$_0JP8FileTestEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES6_E4typeEOS7_DpOS8_.exit"
 
 "_ZSt10__invoke_rIvRZN32ECDSATest_VerifyTestVectors_Test8TestBodyEvE3$_0JP8FileTestEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES6_E4typeEOS7_DpOS8_.exit": ; preds = %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit632.i.i.i, %.loopexit.sink.split.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i.i)
   ret void
 }
 
@@ -1187,8 +1176,6 @@ bb.b:                                             ; preds = %bb.a
 ; Function Attrs: inlinehint mustprogress uwtable
 define internal fastcc void @"_ZZN30ECDSATest_SignTestVectors_Test8TestBodyEvENK3$_0clEP8FileTest"(ptr noundef %0) unnamed_addr #14 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca i8, align 1                   ; 5 uses
-  %.sroa.5 = alloca i8, align 1                   ; 5 uses
   %i.a = alloca i8, align 1                       ; 7 uses
   %1 = alloca %"class.testing::ScopedTrace", align 1 ; 8 uses
   %2 = alloca %"class.std::unique_ptr.10", align 8 ; 9 uses
@@ -1283,10 +1270,6 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 5 uses
   %88 = alloca %"class.testing::Message", align 8 ; 7 uses
   %89 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  store i8 0, ptr %.sroa.0, align 1, !tbaa !94
-  store i8 1, ptr %.sroa.5, align 1, !tbaa !94
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
@@ -1332,11 +1315,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit736, %bb.a
+  %.0166.ptr.sroa.idx = phi i8 [ 0, %bb.a ], [ 1, %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit736 ]
   %.not = phi i1 [ false, %bb.a ], [ true, %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit736 ]
-  %.0166.idx526.sroa.phi = phi ptr [ %.sroa.0, %bb.a ], [ %.sroa.5, %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit736 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
-  %90 = load i8, ptr %.0166.idx526.sroa.phi, align 1, !tbaa !94, !range !66, !noundef !67
-  store i8 %90, ptr %i.a, align 1, !tbaa !94
+  store i8 %.0166.ptr.sroa.idx, ptr %i.a, align 1, !tbaa !94
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   call void @_ZN7testing11ScopedTraceC2IbEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull @.str.2, i32 noundef 395, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
@@ -1739,8 +1721,6 @@ bb.ls:                                            ; preds = %bb.lr, %bb.d
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   resume { ptr, i32 } %.pn249.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn
 
 bb.lt:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i353, %_ZN7testing7MessageD2Ev.exit350
@@ -1789,8 +1769,6 @@ bb.ly:                                            ; preds = %bb.lx
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZNSt10unique_ptrI11ec_group_stN4bssl8internal7DeleterEED2Ev.exit736, %.loopexit.sink.split
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   ret void
 }
 

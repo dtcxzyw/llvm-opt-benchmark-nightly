@@ -205,7 +205,6 @@ bb.bh:                                            ; preds = %bb.aq, %bb.ar, %.lo
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv(ptr noundef nonnull align 8 dereferenceable(112) %0) unnamed_addr #6 align 2 {
 bb.a:
-  %1 = alloca [2 x ptr], align 16                 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
   %.val34 = load i32, ptr %i.b, align 8, !tbaa !238
@@ -248,7 +247,7 @@ bb.f:                                             ; preds = %bb.d
   %.val40 = load ptr, ptr %i.k, align 8           ; 2 uses
   %i.l = tail call fastcc noundef i32 @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser20parse_node_test_typeERKNS1_18xpath_lexer_stringE(ptr %.val39, ptr %.val40)
   %.not22 = icmp eq i32 %i.l, 0
-  br i1 %.not22, label %.thread.thread171, label %bb.g
+  br i1 %.not22, label %.thread.thread181, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.m = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser19parse_location_pathEv(ptr noundef nonnull align 8 dereferenceable(112) %0)
@@ -651,15 +650,28 @@ _ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i66.i: ; preds = %b
   store double %.05.i.i.i, ptr %i.hk, align 8, !tbaa !86
   br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread82
 
-.thread.thread171:                                ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #49
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %1, i8 0, i64 16, i1 false)
+.thread.thread181:                                ; preds = %bb.f
   tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_111xpath_lexer4nextEv(ptr noundef nonnull align 8 dereferenceable(36) %i.a), !inline_history !668
   %.val35.i = load i32, ptr %i.b, align 8, !tbaa !238
   %.not.i50 = icmp eq i32 %.val35.i, 12
-  br i1 %.not.i50, label %bb.bd, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split
+  br i1 %.not.i50, label %bb.bd, label %.thread.thread171
 
-bb.bd:                                            ; preds = %.thread.thread171
+.thread.thread171:                                ; preds = %.thread.thread181
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %2 = load ptr, ptr %1, align 8, !tbaa !236      ; 2 uses
+  store ptr @.str.42, ptr %2, align 8, !tbaa !195
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val.i70.i = load ptr, ptr %3, align 8, !tbaa !239
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %5 = load ptr, ptr %4, align 8, !tbaa !234
+  %6 = ptrtoint ptr %.val.i70.i to i64
+  %7 = ptrtoint ptr %5 to i64
+  %8 = sub i64 %6, %7
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 %8, ptr %9, align 8, !tbaa !196
+  br label %.thread64
+
+bb.bd:                                            ; preds = %.thread.thread181
   tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_111xpath_lexer4nextEv(ptr noundef nonnull align 8 dereferenceable(36) %i.a), !inline_history !668
   %i.hl = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 6 uses
   %i.hm = load i64, ptr %i.hl, align 8, !tbaa !237 ; 2 uses
@@ -667,72 +679,72 @@ bb.bd:                                            ; preds = %.thread.thread171
   %.not25.i116 = icmp eq i32 %.val34.i115, 13
   br i1 %.not25.i116, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.bd, %bb.bi
-  %i.hn = phi i64 [ %4, %bb.bi ], [ %i.hm, %bb.bd ]
-  %.val34.i119 = phi i32 [ %.val34.i, %bb.bi ], [ %.val34.i115, %bb.bd ]
-  %.0.i118 = phi ptr [ %10, %bb.bi ], [ null, %bb.bd ]
-  %.017.i117 = phi i64 [ %i.hp, %bb.bi ], [ 0, %bb.bd ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.bd, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit
+  %i.hn = phi i64 [ %20, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ], [ %i.hm, %bb.bd ]
+  %.val34.i119 = phi i32 [ %.val34.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ], [ %.val34.i115, %bb.bd ]
+  %.0.i118 = phi ptr [ %33, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ], [ null, %bb.bd ]
+  %.017.i117 = phi i64 [ %38, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ], [ 0, %bb.bd ] ; 4 uses
+  %.sroa.5.0125 = phi ptr [ %.sroa.5.1, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ], [ null, %bb.bd ] ; 2 uses
+  %.sroa.058.0124 = phi ptr [ %.sroa.058.1, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ], [ null, %bb.bd ] ; 2 uses
   %.not26.i = icmp eq i64 %.017.i117, 0
-  br i1 %.not26.i, label %bb.bf, label %bb.be
+  br i1 %.not26.i, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a, label %bb.be
 
 bb.be:                                            ; preds = %.lr.ph
   %.not27.i = icmp eq i32 %.val34.i119, 21
-  br i1 %.not27.i, label %2, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split
+  br i1 %.not27.i, label %bb.bg, label %bb.bf
 
-2:                                                ; preds = %bb.be
+bb.bf:                                            ; preds = %bb.be
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %11 = load ptr, ptr %10, align 8, !tbaa !236    ; 2 uses
+  store ptr @.str.43, ptr %11, align 8, !tbaa !195
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val.i71.i = load ptr, ptr %12, align 8, !tbaa !239
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %14 = load ptr, ptr %13, align 8, !tbaa !234
+  %15 = ptrtoint ptr %.val.i71.i to i64
+  %16 = ptrtoint ptr %14 to i64
+  %17 = sub i64 %15, %16
+  %18 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  store i64 %17, ptr %18, align 8, !tbaa !196
+  br label %.thread64
+
+bb.bg:                                            ; preds = %bb.be
   tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_111xpath_lexer4nextEv(ptr noundef nonnull align 8 dereferenceable(36) %i.a), !inline_history !668
   %.pre = load i64, ptr %i.hl, align 8, !tbaa !237
-  br label %bb.bf
+  br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a
 
-bb.bf:                                            ; preds = %2, %.lr.ph
-  %3 = phi i64 [ %.pre, %2 ], [ %i.hn, %.lr.ph ]  ; 3 uses
-  %4 = add i64 %3, 1                              ; 4 uses
-  store i64 %4, ptr %i.hl, align 8, !tbaa !237
-  %5 = icmp ugt i64 %4, 1024
-  br i1 %5, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split, label %6
+_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a: ; preds = %bb.bg, %.lr.ph
+  %19 = phi i64 [ %.pre, %bb.bg ], [ %i.hn, %.lr.ph ] ; 3 uses
+  %20 = add i64 %19, 1                            ; 4 uses
+  store i64 %20, ptr %i.hl, align 8, !tbaa !237
+  %21 = icmp ugt i64 %20, 1024
+  br i1 %21, label %bb.bh, label %bb.bi
 
-6:                                                ; preds = %bb.bf
-  %7 = add nsw i64 %3, 2
-  store i64 %7, ptr %i.hl, align 8, !tbaa !237
-  %8 = icmp sgt i64 %3, 1022
-  br i1 %8, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split, label %bb.bg
+bb.bh:                                            ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %23 = load ptr, ptr %22, align 8, !tbaa !236    ; 2 uses
+  store ptr @.str.31, ptr %23, align 8, !tbaa !195
+  %24 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.val.i.i.i52 = load ptr, ptr %24, align 8, !tbaa !239
+  %25 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %26 = load ptr, ptr %25, align 8, !tbaa !234
+  %27 = ptrtoint ptr %.val.i.i.i52 to i64
+  %28 = ptrtoint ptr %26 to i64
+  %29 = sub i64 %27, %28
+  %i.ho = getelementptr inbounds nuw i8, ptr %23, i64 8
+  store i64 %29, ptr %i.ho, align 8, !tbaa !196
+  br label %.thread64
 
-bb.bg:                                            ; preds = %6
-  %9 = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv(ptr noundef nonnull align 8 dereferenceable(112) %0), !inline_history !670 ; 2 uses
-  %.not.i72.i = icmp eq ptr %9, null
-  br i1 %.not.i72.i, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a
+bb.bi:                                            ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a
+  %i.hp = add nsw i64 %19, 2
+  store i64 %i.hp, ptr %i.hl, align 8, !tbaa !237
+  %30 = icmp sgt i64 %19, 1022
+  br i1 %30, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split, label %31
 
-_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a: ; preds = %bb.bg
-  %10 = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser20parse_expression_recEPNS1_14xpath_ast_nodeEi(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef %9, i32 noundef 0), !inline_history !670 ; 4 uses
-  store i64 %4, ptr %i.hl, align 8, !tbaa !237
-  %.not28.not.i = icmp eq ptr %10, null
-  br i1 %.not28.not.i, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87, label %11
-
-11:                                               ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a
-  %12 = icmp ult i64 %.017.i117, 2
-  br i1 %12, label %13, label %bb.bh
-
-13:                                               ; preds = %11
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.017.i117
-  store ptr %10, ptr %14, align 8, !tbaa !249
-  br label %bb.bi
-
-bb.bh:                                            ; preds = %11
-  %i.ho = getelementptr inbounds nuw i8, ptr %.0.i118, i64 24
-  store ptr %10, ptr %i.ho, align 8, !tbaa !244
-  br label %bb.bi
-
-bb.bi:                                            ; preds = %bb.bh, %13
-  %i.hp = add i64 %.017.i117, 1                   ; 2 uses
-  %.val34.i = load i32, ptr %i.b, align 8, !tbaa !238 ; 2 uses
-  %.not25.i = icmp eq i32 %.val34.i, 13
-  br i1 %.not25.i, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit, label %.lr.ph, !llvm.loop !675
-
-_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split: ; preds = %6, %bb.bf, %bb.be, %.thread.thread171
-  %.str.42.sink = phi ptr [ @.str.42, %.thread.thread171 ], [ @.str.31, %6 ], [ @.str.43, %bb.be ], [ @.str.31, %bb.bf ]
+_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split: ; preds = %bb.bi
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !236 ; 2 uses
-  store ptr %.str.42.sink, ptr %i.hr, align 8, !tbaa !195
+  store ptr @.str.31, ptr %i.hr, align 8, !tbaa !195
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val.i70.i.a = load ptr, ptr %i.hs, align 8, !tbaa !239
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -742,31 +754,54 @@ _ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.threa
   %i.hx = sub i64 %i.hv, %i.hw
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hr, i64 8
   store i64 %i.hx, ptr %i.hy, align 8, !tbaa !196
-  br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87
-
-_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87: ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i.a, %bb.bg, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #49
   br label %.thread64
 
-_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit: ; preds = %bb.bi
-  %.val46.i.pre = load ptr, ptr %1, align 16
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val47.i.pre = load ptr, ptr %.phi.trans.insert, align 8
-  br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit
+31:                                               ; preds = %bb.bi
+  %32 = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser30parse_path_or_unary_expressionEv(ptr noundef nonnull align 8 dereferenceable(112) %0), !inline_history !670 ; 2 uses
+  %.not.i72.i = icmp eq ptr %32, null
+  br i1 %.not.i72.i, label %.thread64, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i
+
+_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i: ; preds = %31
+  %33 = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser20parse_expression_recEPNS1_14xpath_ast_nodeEi(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef %32, i32 noundef 0), !inline_history !670 ; 5 uses
+  store i64 %20, ptr %i.hl, align 8, !tbaa !237
+  %.not28.not.i = icmp eq ptr %33, null
+  br i1 %.not28.not.i, label %.thread64, label %34
+
+34:                                               ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i
+  %35 = icmp ult i64 %.017.i117, 2
+  br i1 %35, label %36, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87
+
+36:                                               ; preds = %34
+  %.sroa.idx = icmp eq i64 %.017.i117, 1          ; 2 uses
+  %spec.select = select i1 %.sroa.idx, ptr %.sroa.058.0124, ptr %33
+  %spec.select97 = select i1 %.sroa.idx, ptr %33, ptr %.sroa.5.0125
+  br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit
+
+_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87: ; preds = %34
+  %37 = getelementptr inbounds nuw i8, ptr %.0.i118, i64 24
+  store ptr %33, ptr %37, align 8, !tbaa !244
+  br label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit
+
+_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit: ; preds = %36, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87
+  %.sroa.058.1 = phi ptr [ %.sroa.058.0124, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87 ], [ %spec.select, %36 ] ; 2 uses
+  %.sroa.5.1 = phi ptr [ %.sroa.5.0125, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87 ], [ %spec.select97, %36 ] ; 2 uses
+  %38 = add i64 %.017.i117, 1                     ; 2 uses
+  %.val34.i = load i32, ptr %i.b, align 8, !tbaa !238 ; 2 uses
+  %.not25.i = icmp eq i32 %.val34.i, 13
+  br i1 %.not25.i, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit, label %.lr.ph, !llvm.loop !675
 
 _ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit: ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit, %bb.bd
-  %.val47.i = phi ptr [ null, %bb.bd ], [ %.val47.i.pre, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ]
-  %.val46.i = phi ptr [ null, %bb.bd ], [ %.val46.i.pre, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ]
-  %.017.i.lcssa = phi i64 [ 0, %bb.bd ], [ %i.hp, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ]
+  %.val47.i = phi ptr [ null, %bb.bd ], [ %.sroa.058.1, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ]
+  %.val46.i = phi ptr [ null, %bb.bd ], [ %.sroa.5.1, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ]
+  %.017.i.lcssa = phi i64 [ 0, %bb.bd ], [ %38, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.loopexit ]
   tail call fastcc void @_ZN4pugi4impl12_GLOBAL__N_111xpath_lexer4nextEv(ptr noundef nonnull align 8 dereferenceable(36) %i.a), !inline_history !668
   store i64 %i.hm, ptr %i.hl, align 8, !tbaa !237
-  %i.hz = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser14parse_functionERKNS1_18xpath_lexer_stringEmPPNS1_14xpath_ast_nodeE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr %.val39, ptr %.val40, i64 noundef %.017.i.lcssa, ptr %.val46.i, ptr %.val47.i), !inline_history !668 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #49
+  %i.hz = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser14parse_functionERKNS1_18xpath_lexer_stringEmPPNS1_14xpath_ast_nodeE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr %.val39, ptr %.val40, i64 noundef %.017.i.lcssa, ptr %.val47.i, ptr %.val46.i), !inline_history !668 ; 2 uses
   %.not.i = icmp eq ptr %i.hz, null
   br i1 %.not.i, label %.thread64, label %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread82
 
-_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread82: ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i.i, %bb.y, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i66.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i55.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit
-  %.9.i85 = phi ptr [ %i.hz, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit ], [ %.1.i.i.i.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i.i ], [ %i.db, %bb.y ], [ %.1.i.i.i67.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i66.i ], [ %.1.i.i.i56.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i55.i ] ; 2 uses
+_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread82: ; preds = %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i66.i, %bb.y, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i55.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit
+  %.9.i85 = phi ptr [ %i.hz, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit ], [ %.1.i.i.i67.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i66.i ], [ %i.db, %bb.y ], [ %.1.i.i.i.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i.i ], [ %.1.i.i.i56.i, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i55.i ] ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 6 uses
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !237
   %.val21.i120 = load i32, ptr %i.b, align 8, !tbaa !238 ; 2 uses
@@ -1110,8 +1145,8 @@ bb.cr:                                            ; preds = %bb.a
   %i.mw = tail call fastcc noundef ptr @_ZN4pugi4impl12_GLOBAL__N_112xpath_parser19parse_location_pathEv(ptr noundef nonnull align 8 dereferenceable(112) %0)
   br label %.thread64
 
-.thread64:                                        ; preds = %bb.bo, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit, %bb.ck, %bb.cj, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i, %bb.cp, %bb.co, %._crit_edge, %bb.ce, %bb.cf, %bb.bs, %bb.bt, %bb.bn, %bb.ad, %bb.ae, %bb.v, %bb.u, %bb.ba, %bb.bb, %_ZN4pugi4impl12_GLOBAL__N_132convert_string_to_number_scratchERA32_cPKcS5_Pd.exit.i, %bb.aj, %bb.r, %bb.s, %bb.n, %_ZN4pugi4impl12_GLOBAL__N_120get_variable_scratchERA32_cPNS_18xpath_variable_setEPKcS7_PPNS_14xpath_variableE.exit.i, %bb.x, %bb.ai, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit.i, %bb.h, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87, %bb.bw, %bb.bl, %bb.bj, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit, %bb.g, %bb.e, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit188, %bb.ch, %bb.ca, %bb.cr
-  %.4 = phi ptr [ %i.mw, %bb.cr ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit188 ], [ %.010.i.lcssa, %._crit_edge ], [ %i.i, %bb.e ], [ null, %bb.bs ], [ null, %bb.ca ], [ %i.lp, %bb.ch ], [ null, %bb.co ], [ %i.m, %bb.g ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit ], [ null, %bb.bj ], [ null, %bb.bl ], [ null, %bb.cf ], [ null, %bb.bw ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87 ], [ null, %bb.bt ], [ null, %bb.h ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit.i ], [ null, %bb.ai ], [ null, %bb.x ], [ null, %_ZN4pugi4impl12_GLOBAL__N_120get_variable_scratchERA32_cPNS_18xpath_variable_setEPKcS7_PPNS_14xpath_variableE.exit.i ], [ null, %bb.n ], [ null, %bb.s ], [ null, %bb.r ], [ null, %bb.aj ], [ null, %_ZN4pugi4impl12_GLOBAL__N_132convert_string_to_number_scratchERA32_cPKcS5_Pd.exit.i ], [ null, %bb.bb ], [ null, %bb.ba ], [ null, %bb.u ], [ null, %bb.v ], [ null, %bb.ae ], [ null, %bb.ad ], [ null, %bb.bn ], [ null, %bb.ce ], [ null, %bb.cj ], [ null, %bb.ck ], [ %.1.i.i.i190, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i ], [ null, %bb.cp ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit ], [ null, %bb.bo ]
+.thread64:                                        ; preds = %31, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i, %bb.bo, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit, %bb.ck, %bb.cj, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i, %bb.cp, %bb.co, %._crit_edge, %bb.ce, %bb.cf, %bb.bs, %bb.bt, %bb.bn, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split, %bb.ad, %bb.ae, %bb.v, %bb.u, %bb.bh, %bb.bf, %.thread.thread171, %bb.bb, %_ZN4pugi4impl12_GLOBAL__N_132convert_string_to_number_scratchERA32_cPKcS5_Pd.exit.i, %bb.aj, %bb.r, %bb.s, %bb.n, %_ZN4pugi4impl12_GLOBAL__N_120get_variable_scratchERA32_cPNS_18xpath_variable_setEPKcS7_PPNS_14xpath_variableE.exit.i, %bb.x, %bb.ai, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit.i, %bb.h, %bb.ba, %bb.bw, %bb.bl, %bb.bj, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit, %bb.g, %bb.e, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit188, %bb.ch, %bb.ca, %bb.cr
+  %.4 = phi ptr [ %i.mw, %bb.cr ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit188 ], [ %.010.i.lcssa, %._crit_edge ], [ %i.i, %bb.e ], [ null, %bb.bs ], [ null, %bb.ca ], [ %i.lp, %bb.ch ], [ null, %bb.co ], [ %i.m, %bb.g ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit ], [ null, %bb.bj ], [ null, %bb.bl ], [ null, %bb.cf ], [ null, %bb.bw ], [ null, %bb.cj ], [ null, %bb.ba ], [ null, %bb.h ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit.i ], [ null, %bb.ai ], [ null, %bb.x ], [ null, %_ZN4pugi4impl12_GLOBAL__N_120get_variable_scratchERA32_cPNS_18xpath_variable_setEPKcS7_PPNS_14xpath_variableE.exit.i ], [ null, %bb.n ], [ null, %bb.s ], [ null, %bb.r ], [ null, %bb.aj ], [ null, %_ZN4pugi4impl12_GLOBAL__N_132convert_string_to_number_scratchERA32_cPKcS5_Pd.exit.i ], [ null, %bb.bb ], [ null, %.thread.thread171 ], [ null, %bb.bf ], [ null, %bb.bh ], [ null, %bb.bt ], [ null, %bb.u ], [ null, %bb.v ], [ null, %bb.ae ], [ null, %bb.ad ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser24parse_primary_expressionEv.exit.thread87.sink.split ], [ null, %bb.ce ], [ null, %bb.bn ], [ null, %bb.ck ], [ null, %bb.cp ], [ null, %bb.bo ], [ %.1.i.i.i190, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser10alloc_nodeEv.exit.i ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit ], [ null, %_ZN4pugi4impl12_GLOBAL__N_112xpath_parser16parse_expressionEi.exit75.i ], [ null, %31 ]
   ret ptr %.4
 }
 
