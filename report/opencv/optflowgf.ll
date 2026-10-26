@@ -205,7 +205,7 @@ bb.dk:                                            ; preds = %bb.dg
   %i.ace = load i32, ptr %i.bw, align 8, !tbaa !26
   %i.acf = and i32 %i.ace, 256
   %.not88 = icmp eq i32 %i.acf, 0
-  %i.acg = load i32, ptr %i.gi, align 4, !tbaa !22 ; 12 uses
+  %i.acg = load i32, ptr %i.gi, align 4, !tbaa !22 ; 13 uses
   %i.ach = add nsw i32 %i.acd, -1
   %i.aci = icmp slt i32 %.245364, %i.ach          ; 2 uses
   %i.acj = load i32, ptr %i.gj, align 4, !tbaa !55 ; 12 uses
@@ -263,7 +263,7 @@ bb.dn:                                            ; preds = %_ZN2cv10AutoBufferI
 
 _ZN2cv10AutoBufferIfLm264EEC2Em.exit191.i:        ; preds = %.noexc.i209, %_ZN2cv10AutoBufferIfLm264EEC2Em.exit.i177
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
-  %i.adf = mul i32 %i.acl, 5                      ; 6 uses
+  %i.adf = mul i32 %i.acl, 5                      ; 5 uses
   %i.adg = add i32 %i.adf, 5
   %i.adh = add i32 %i.adf, 21                     ; 3 uses
   %i.adi = sext i32 %i.adh to i64                 ; 2 uses
@@ -461,7 +461,8 @@ middle.block567:                                  ; preds = %vector.body562
   %xtraiter704 = and i64 %wide.trip.count298.i, 3 ; 2 uses
   %lcmp.mod705.not = icmp eq i64 %xtraiter704, 0
   %xtraiter706 = and i64 %wide.trip.count309.i189, 1
-  %52 = icmp eq i32 %i.adf, 1
+  %.off = add i32 %i.acg, 1717986919
+  %52 = icmp ult i32 %.off, 2
   %unroll_iter710 = and i64 %wide.trip.count309.i189, 2147483646
   %lcmp.mod708.not = icmp eq i64 %xtraiter706, 0
   %lcmp.mod709 = trunc i32 %i.adf to i1
