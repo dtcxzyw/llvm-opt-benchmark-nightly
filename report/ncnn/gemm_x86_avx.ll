@@ -205,15 +205,12 @@ bb.bj:                                            ; preds = %bb.bh
   %i.xu = sitofp fast <8 x i32> %i.xt to <8 x float> ; 2 uses
   %i.xv = load <8 x i32>, ptr %.319203719.i, align 1, !tbaa !89
   %i.xw = sitofp fast <8 x i32> %i.xv to <8 x float> ; 2 uses
-  %12 = shufflevector <8 x float> %i.xu, <8 x float> %i.xw, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.xx = getelementptr inbounds nuw i8, ptr %.318963720.i, i64 32 ; 2 uses
   %i.xy = getelementptr inbounds nuw i8, ptr %.319203719.i, i64 32 ; 2 uses
-  %13 = shufflevector <8 x float> %12, <8 x float> poison, <8 x i32> <i32 0, i32 2, i32 1, i32 3, i32 4, i32 6, i32 5, i32 7> ; 2 uses
-  %14 = shufflevector <8 x float> %i.xu, <8 x float> %i.xw, <8 x i32> <i32 5, i32 7, i32 6, i32 4, i32 13, i32 15, i32 14, i32 12> ; 2 uses
-  %15 = shufflevector <8 x float> %13, <8 x float> %14, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %16 = shufflevector <8 x float> %14, <8 x float> %13, <8 x i32> <i32 3, i32 10, i32 2, i32 11, i32 7, i32 14, i32 6, i32 15>
-  %i.xz = fmul fast <8 x float> %15, %i.ct        ; 7 uses
-  %i.ya = fmul fast <8 x float> %16, %i.ct        ; 7 uses
+  %12 = shufflevector <8 x float> %i.xu, <8 x float> %i.xw, <8 x i32> <i32 0, i32 5, i32 2, i32 7, i32 8, i32 13, i32 10, i32 15>
+  %13 = shufflevector <8 x float> %i.xu, <8 x float> %i.xw, <8 x i32> <i32 4, i32 1, i32 6, i32 3, i32 12, i32 9, i32 14, i32 11>
+  %i.xz = fmul fast <8 x float> %12, %i.ct        ; 7 uses
+  %i.ya = fmul fast <8 x float> %13, %i.ct        ; 7 uses
   %.not2078.i = icmp eq ptr %.123721.i, null
   br i1 %.not2078.i, label %.thread3427.i, label %bb.bk
 
@@ -616,18 +613,14 @@ bb.gd:                                            ; preds = %bb.gb
   %i.bca = shufflevector <4 x float> %i.bbz, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
   %i.bcb = sitofp <4 x i32> %i.bby to <4 x float>
   %i.bcc = shufflevector <4 x float> %i.bcb, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
-  %17 = shufflevector <4 x float> %i.bbr, <4 x float> %i.bca, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %18 = shufflevector <4 x float> %i.bbr, <4 x float> %i.bca, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %19 = shufflevector <4 x float> %i.bbu, <4 x float> %i.bcc, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %20 = shufflevector <4 x float> %i.bbu, <4 x float> %i.bcc, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %21 = shufflevector <4 x float> %17, <4 x float> %18, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %22 = shufflevector <4 x float> %19, <4 x float> %20, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %23 = shufflevector <4 x float> %17, <4 x float> %18, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %24 = shufflevector <4 x float> %19, <4 x float> %20, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.bcd = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
-  %i.bce = shufflevector <4 x float> %24, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
-  %i.bcf = fmul fast <4 x float> %i.bar, %21      ; 6 uses
-  %i.bcg = fmul fast <4 x float> %i.bar, %22      ; 6 uses
+  %14 = shufflevector <4 x float> %i.bbr, <4 x float> %i.bca, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
+  %15 = shufflevector <4 x float> %i.bbu, <4 x float> %i.bcc, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
+  %16 = shufflevector <4 x float> %i.bbr, <4 x float> %i.bca, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
+  %17 = shufflevector <4 x float> %i.bbu, <4 x float> %i.bcc, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
+  %i.bcd = shufflevector <4 x float> %16, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
+  %i.bce = shufflevector <4 x float> %17, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
+  %i.bcf = fmul fast <4 x float> %i.bar, %14      ; 6 uses
+  %i.bcg = fmul fast <4 x float> %i.bar, %15      ; 6 uses
   %i.bch = fmul fast <4 x float> %i.bcd, %i.bas   ; 6 uses
   %i.bci = fmul fast <4 x float> %i.bce, %i.bas   ; 6 uses
   %.not2026.i = icmp eq ptr %.443802.i, null
@@ -828,12 +821,10 @@ bb.gt:                                            ; preds = %bb.gs, %bb.gr, %bb.
   %i.bez = getelementptr inbounds nuw i8, ptr %.1219053814.i, i64 16
   %i.bfa = load <4 x i32>, ptr %i.bez, align 16, !tbaa !89
   %i.bfb = sitofp fast <4 x i32> %i.bfa to <4 x float> ; 2 uses
-  %25 = shufflevector <4 x float> %i.bey, <4 x float> %i.bfb, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %26 = shufflevector <4 x float> %i.bey, <4 x float> %i.bfb, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %27 = shufflevector <4 x float> %25, <4 x float> %26, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %28 = shufflevector <4 x float> %26, <4 x float> %25, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.bfc = shufflevector <4 x float> %28, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
-  %i.bfd = fmul fast <4 x float> %i.bar, %27      ; 6 uses
+  %18 = shufflevector <4 x float> %i.bey, <4 x float> %i.bfb, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
+  %19 = shufflevector <4 x float> %i.bey, <4 x float> %i.bfb, <4 x i32> <i32 3, i32 7, i32 1, i32 5>
+  %i.bfc = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
+  %i.bfd = fmul fast <4 x float> %i.bar, %18      ; 6 uses
   %i.bfe = fmul fast <4 x float> %i.bfc, %i.bas   ; 6 uses
   %.not2024.i = icmp eq ptr %.473815.i, null
   br i1 %.not2024.i, label %.thread3602.i, label %bb.gu
@@ -1236,11 +1227,9 @@ bb.ka:                                            ; preds = %bb.jy, %bb.jz, %bb.
   %i.ceg = getelementptr inbounds nuw i8, ptr %.1227531913, i64 16
   %i.ceh = load <4 x float>, ptr %i.ceg, align 16, !tbaa !89 ; 2 uses
   %i.cei = getelementptr inbounds nuw i8, ptr %.1227531913, i64 32 ; 2 uses
-  %11 = shufflevector <4 x float> %i.cef, <4 x float> %i.ceh, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %12 = shufflevector <4 x float> %i.cef, <4 x float> %i.ceh, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %13 = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 6 uses
-  %14 = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.cej = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2> ; 6 uses
+  %11 = shufflevector <4 x float> %i.cef, <4 x float> %i.ceh, <4 x i32> <i32 0, i32 4, i32 2, i32 6> ; 6 uses
+  %12 = shufflevector <4 x float> %i.cef, <4 x float> %i.ceh, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
+  %i.cej = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2> ; 6 uses
   %.not2942 = icmp eq ptr %.471914, null
   br i1 %.not2942, label %.thread1669, label %bb.kb
 
@@ -1248,7 +1237,7 @@ bb.kb:                                            ; preds = %.lr.ph1915
   br i1 %i.asz, label %.thread1660, label %bb.kc
 
 .thread1660:                                      ; preds = %bb.kb
-  %i.cek = fadd fast <4 x float> %.612141908, %13
+  %i.cek = fadd fast <4 x float> %.612141908, %11
   %i.cel = fadd fast <4 x float> %i.cej, %.612141908
   br label %.thread1669
 
@@ -1256,7 +1245,7 @@ bb.kc:                                            ; preds = %bb.kb
   br i1 %or.cond21, label %bb.kd, label %bb.ke
 
 bb.kd:                                            ; preds = %bb.kc
-  %i.cem = fadd fast <4 x float> %.612141908, %13
+  %i.cem = fadd fast <4 x float> %.612141908, %11
   %i.cen = fadd fast <4 x float> %i.cej, %.512051909
   br label %.thread1669
 
@@ -1275,14 +1264,14 @@ bb.kf:                                            ; preds = %bb.ke
   %.pn = select i1 %i.atf, <4 x float> %i.ceo, <4 x float> %i.cer
   %.21166.v = select i1 %i.atf, <4 x float> %i.ceq, <4 x float> %i.ces
   %.21166 = fadd fast <4 x float> %.21166.v, %i.cej
-  %.21172 = fadd fast <4 x float> %.pn, %13
+  %.21172 = fadd fast <4 x float> %.pn, %11
   %i.cet = getelementptr inbounds nuw i8, ptr %.471914, i64 16
   br label %.thread1669
 
 bb.kg:                                            ; preds = %bb.ke
   %i.ceu = load <4 x float>, ptr %.471914, align 1, !tbaa !89
   %i.cev = fmul fast <4 x float> %i.ceu, %i.ate   ; 3 uses
-  %i.cew = fadd fast <4 x float> %i.cev, %13
+  %i.cew = fadd fast <4 x float> %i.cev, %11
   %i.cex = fadd fast <4 x float> %i.cev, %i.cej
   %i.cey = getelementptr inbounds nuw i8, ptr %.471914, i64 16
   br label %.thread1669
@@ -1290,7 +1279,7 @@ bb.kg:                                            ; preds = %bb.ke
 .thread1669:                                      ; preds = %bb.ke, %bb.kd, %.thread1660, %bb.kf, %bb.kg, %.lr.ph1915
   %.81216 = phi nsz <4 x float> [ %.612141908, %.lr.ph1915 ], [ %i.cev, %bb.kg ], [ %.612141908, %bb.ke ], [ %i.ceo, %bb.kf ], [ %.612141908, %.thread1660 ], [ %.612141908, %bb.kd ]
   %.71207 = phi nsz <4 x float> [ %.512051909, %.lr.ph1915 ], [ %.512051909, %bb.kg ], [ %.512051909, %bb.ke ], [ %i.ceq, %bb.kf ], [ %.512051909, %.thread1660 ], [ %.512051909, %bb.kd ]
-  %.41174 = phi nsz <4 x float> [ %13, %.lr.ph1915 ], [ %i.cew, %bb.kg ], [ %13, %bb.ke ], [ %.21172, %bb.kf ], [ %i.cek, %.thread1660 ], [ %i.cem, %bb.kd ] ; 2 uses
+  %.41174 = phi nsz <4 x float> [ %11, %.lr.ph1915 ], [ %i.cew, %bb.kg ], [ %11, %bb.ke ], [ %.21172, %bb.kf ], [ %i.cek, %.thread1660 ], [ %i.cem, %bb.kd ] ; 2 uses
   %.41168 = phi nsz <4 x float> [ %i.cej, %.lr.ph1915 ], [ %i.cex, %bb.kg ], [ %i.cej, %bb.ke ], [ %.21166, %bb.kf ], [ %i.cel, %.thread1660 ], [ %i.cen, %bb.kd ] ; 2 uses
   %.49 = phi ptr [ null, %.lr.ph1915 ], [ %i.cey, %bb.kg ], [ %.471914, %bb.ke ], [ %i.cet, %bb.kf ], [ %.471914, %.thread1660 ], [ %.471914, %bb.kd ] ; 2 uses
   %i.cez = fmul fast <4 x float> %.41174, %i.ati

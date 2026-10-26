@@ -204,12 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load <8 x float>, ptr %.037.lcssa.i, align 32, !tbaa !13 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.037.lcssa.i, i64 32
   %i.x = load <8 x float>, ptr %i.w, align 32, !tbaa !13 ; 2 uses
-  %6 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %7 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %8 = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %9 = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %8, ptr %.0.lcssa.i, align 32, !tbaa !13
-  store <8 x float> %9, ptr %.035.lcssa.i, align 32, !tbaa !13
+  %6 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %7 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %6, ptr %.0.lcssa.i, align 32, !tbaa !13
+  store <8 x float> %7, ptr %.035.lcssa.i, align 32, !tbaa !13
   %i.y = add nsw i32 %.039.lcssa.i, -16
   %i.z = getelementptr inbounds nuw i8, ptr %.037.lcssa.i, i64 64
   %i.aa = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 32
@@ -261,24 +259,20 @@ bb.b:                                             ; preds = %bb.a
   %i.av = load <8 x float>, ptr %.13849.i, align 32, !tbaa !13 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.13849.i, i64 32
   %i.ax = load <8 x float>, ptr %i.aw, align 32, !tbaa !13 ; 2 uses
-  %10 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %11 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %12 = shufflevector <8 x float> %10, <8 x float> %11, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %13 = shufflevector <8 x float> %10, <8 x float> %11, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %12, ptr %.151.i, align 32, !tbaa !13
-  store <8 x float> %13, ptr %.13650.i, align 32, !tbaa !13
+  %8 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %9 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %8, ptr %.151.i, align 32, !tbaa !13
+  store <8 x float> %9, ptr %.13650.i, align 32, !tbaa !13
   %i.ay = getelementptr inbounds nuw i8, ptr %.13849.i, i64 64
   %i.az = getelementptr inbounds nuw i8, ptr %.151.i, i64 32
   %i.ba = getelementptr inbounds nuw i8, ptr %.13650.i, i64 32
   %i.bb = load <8 x float>, ptr %i.ay, align 32, !tbaa !13 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.13849.i, i64 96
   %i.bd = load <8 x float>, ptr %i.bc, align 32, !tbaa !13 ; 2 uses
-  %14 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %15 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %16 = shufflevector <8 x float> %14, <8 x float> %15, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %17 = shufflevector <8 x float> %14, <8 x float> %15, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %16, ptr %i.az, align 32, !tbaa !13
-  store <8 x float> %17, ptr %i.ba, align 32, !tbaa !13
+  %10 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %11 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %10, ptr %i.az, align 32, !tbaa !13
+  store <8 x float> %11, ptr %i.ba, align 32, !tbaa !13
   %i.be = add nsw i32 %.14048.i, -32
   %i.bf = getelementptr inbounds nuw i8, ptr %.13849.i, i64 128
   %i.bg = getelementptr inbounds nuw i8, ptr %.151.i, i64 64
@@ -681,12 +675,10 @@ bb.b:                                             ; preds = %bb.a
   %i.v = load <8 x float>, ptr %.037.lcssa.i, align 32, !tbaa !13 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.037.lcssa.i, i64 32
   %i.x = load <8 x float>, ptr %i.w, align 32, !tbaa !13 ; 2 uses
-  %6 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %7 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %8 = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %9 = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %8, ptr %.0.lcssa.i, align 32, !tbaa !13
-  store <8 x float> %9, ptr %.035.lcssa.i, align 32, !tbaa !13
+  %6 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %7 = shufflevector <8 x float> %i.v, <8 x float> %i.x, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %6, ptr %.0.lcssa.i, align 32, !tbaa !13
+  store <8 x float> %7, ptr %.035.lcssa.i, align 32, !tbaa !13
   %i.y = add nsw i32 %.039.lcssa.i, -16
   %i.z = getelementptr inbounds nuw i8, ptr %.037.lcssa.i, i64 64
   %i.aa = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 32
@@ -738,24 +730,20 @@ bb.b:                                             ; preds = %bb.a
   %i.av = load <8 x float>, ptr %.13849.i, align 32, !tbaa !13 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.13849.i, i64 32
   %i.ax = load <8 x float>, ptr %i.aw, align 32, !tbaa !13 ; 2 uses
-  %10 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %11 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %12 = shufflevector <8 x float> %10, <8 x float> %11, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %13 = shufflevector <8 x float> %10, <8 x float> %11, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %12, ptr %.151.i, align 32, !tbaa !13
-  store <8 x float> %13, ptr %.13650.i, align 32, !tbaa !13
+  %8 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %9 = shufflevector <8 x float> %i.av, <8 x float> %i.ax, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %8, ptr %.151.i, align 32, !tbaa !13
+  store <8 x float> %9, ptr %.13650.i, align 32, !tbaa !13
   %i.ay = getelementptr inbounds nuw i8, ptr %.13849.i, i64 64
   %i.az = getelementptr inbounds nuw i8, ptr %.151.i, i64 32
   %i.ba = getelementptr inbounds nuw i8, ptr %.13650.i, i64 32
   %i.bb = load <8 x float>, ptr %i.ay, align 32, !tbaa !13 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.13849.i, i64 96
   %i.bd = load <8 x float>, ptr %i.bc, align 32, !tbaa !13 ; 2 uses
-  %14 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %15 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %16 = shufflevector <8 x float> %14, <8 x float> %15, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
-  %17 = shufflevector <8 x float> %14, <8 x float> %15, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %16, ptr %i.az, align 32, !tbaa !13
-  store <8 x float> %17, ptr %i.ba, align 32, !tbaa !13
+  %10 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %11 = shufflevector <8 x float> %i.bb, <8 x float> %i.bd, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  store <8 x float> %10, ptr %i.az, align 32, !tbaa !13
+  store <8 x float> %11, ptr %i.ba, align 32, !tbaa !13
   %i.be = add nsw i32 %.14048.i, -32
   %i.bf = getelementptr inbounds nuw i8, ptr %.13849.i, i64 128
   %i.bg = getelementptr inbounds nuw i8, ptr %.151.i, i64 64
@@ -1118,12 +1106,10 @@ bb.b:                                             ; preds = %bb.a
   %i.u = load <4 x double>, ptr %.037.lcssa.i, align 32, !tbaa !13 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.037.lcssa.i, i64 32
   %i.w = load <4 x double>, ptr %i.v, align 32, !tbaa !13 ; 2 uses
-  %6 = shufflevector <4 x double> %i.u, <4 x double> %i.w, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %7 = shufflevector <4 x double> %i.u, <4 x double> %i.w, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
-  %8 = shufflevector <4 x double> %6, <4 x double> %7, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
-  %9 = shufflevector <4 x double> %6, <4 x double> %7, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
-  store <4 x double> %8, ptr %.0.lcssa.i, align 32, !tbaa !13
-  store <4 x double> %9, ptr %.035.lcssa.i, align 32, !tbaa !13
+  %6 = shufflevector <4 x double> %i.u, <4 x double> %i.w, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %7 = shufflevector <4 x double> %i.u, <4 x double> %i.w, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x double> %6, ptr %.0.lcssa.i, align 32, !tbaa !13
+  store <4 x double> %7, ptr %.035.lcssa.i, align 32, !tbaa !13
   %i.x = add nsw i32 %.039.lcssa.i, -8
   %i.y = getelementptr inbounds nuw i8, ptr %.037.lcssa.i, i64 64
   %i.z = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 32
@@ -1173,24 +1159,20 @@ bb.b:                                             ; preds = %bb.a
   %i.as = load <4 x double>, ptr %.13849.i, align 32, !tbaa !13 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.13849.i, i64 32
   %i.au = load <4 x double>, ptr %i.at, align 32, !tbaa !13 ; 2 uses
-  %10 = shufflevector <4 x double> %i.as, <4 x double> %i.au, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %11 = shufflevector <4 x double> %i.as, <4 x double> %i.au, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
-  %12 = shufflevector <4 x double> %10, <4 x double> %11, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
-  %13 = shufflevector <4 x double> %10, <4 x double> %11, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
-  store <4 x double> %12, ptr %.151.i, align 32, !tbaa !13
-  store <4 x double> %13, ptr %.13650.i, align 32, !tbaa !13
+  %8 = shufflevector <4 x double> %i.as, <4 x double> %i.au, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %9 = shufflevector <4 x double> %i.as, <4 x double> %i.au, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x double> %8, ptr %.151.i, align 32, !tbaa !13
+  store <4 x double> %9, ptr %.13650.i, align 32, !tbaa !13
   %i.av = getelementptr inbounds nuw i8, ptr %.13849.i, i64 64
   %i.aw = getelementptr inbounds nuw i8, ptr %.151.i, i64 32
   %i.ax = getelementptr inbounds nuw i8, ptr %.13650.i, i64 32
   %i.ay = load <4 x double>, ptr %i.av, align 32, !tbaa !13 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.13849.i, i64 96
   %i.ba = load <4 x double>, ptr %i.az, align 32, !tbaa !13 ; 2 uses
-  %14 = shufflevector <4 x double> %i.ay, <4 x double> %i.ba, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %15 = shufflevector <4 x double> %i.ay, <4 x double> %i.ba, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
-  %16 = shufflevector <4 x double> %14, <4 x double> %15, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
-  %17 = shufflevector <4 x double> %14, <4 x double> %15, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
-  store <4 x double> %16, ptr %i.aw, align 32, !tbaa !13
-  store <4 x double> %17, ptr %i.ax, align 32, !tbaa !13
+  %10 = shufflevector <4 x double> %i.ay, <4 x double> %i.ba, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <4 x double> %i.ay, <4 x double> %i.ba, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x double> %10, ptr %i.aw, align 32, !tbaa !13
+  store <4 x double> %11, ptr %i.ax, align 32, !tbaa !13
   %i.bb = add nsw i32 %.14048.i, -16
   %i.bc = getelementptr inbounds nuw i8, ptr %.13849.i, i64 128
   %i.bd = getelementptr inbounds nuw i8, ptr %.151.i, i64 64

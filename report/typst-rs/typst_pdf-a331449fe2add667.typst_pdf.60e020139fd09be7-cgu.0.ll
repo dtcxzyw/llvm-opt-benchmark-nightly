@@ -205,15 +205,13 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsidf7BFzONoc_6krilla4geom13Quadr
   %i.arq = getelementptr inbounds nuw i8, ptr %i.arp, i64 8
   %i.arr = getelementptr inbounds nuw [32 x i8], ptr %.sroa.10.0.i.i.i.i.i, i64 %i.aro ; 4 uses
   %i.ars = load <2 x float>, ptr %i.arq, align 4, !alias.scope !18231, !noalias !18232 ; 2 uses
-  %6 = shufflevector <2 x float> %i.ars, <2 x float> poison, <3 x i32> <i32 poison, i32 1, i32 0>
   %.sroa.75.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.arr, i64 16
   %i.art = extractelement <2 x float> %i.ars, i64 0
   store float %i.art, ptr %.sroa.75.0..sroa_idx.i.i.i.i.i.i.i.i.i.i, align 4, !noalias !18233
   %.sroa.86.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.arr, i64 20
   %i.aru = load <2 x float>, ptr %i.arp, align 4, !alias.scope !18231, !noalias !18232 ; 3 uses
-  %7 = shufflevector <2 x float> %i.aru, <2 x float> poison, <3 x i32> <i32 0, i32 poison, i32 poison>
-  %8 = shufflevector <3 x float> %7, <3 x float> %6, <4 x i32> <i32 0, i32 4, i32 5, i32 4>
-  store <4 x float> %8, ptr %i.arr, align 4, !noalias !18233
+  %6 = shufflevector <2 x float> %i.aru, <2 x float> %i.ars, <4 x i32> <i32 0, i32 3, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.arr, align 4, !noalias !18233
   %i.arv = shufflevector <2 x float> %i.aru, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   store <2 x float> %i.arv, ptr %.sroa.86.0..sroa_idx.i.i.i.i.i.i.i.i.i.i, align 4, !noalias !18233
   %.sroa.108.0..sroa_idx.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.arr, i64 28

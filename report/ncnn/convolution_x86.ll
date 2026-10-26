@@ -205,18 +205,16 @@ bb.av:                                            ; preds = %bb.at, %bb.au
   br i1 %8, label %bb.aw, label %bb.az
 
 bb.aw:                                            ; preds = %._crit_edge2701
-  %11 = shufflevector <4 x float> %.11906.lcssa, <4 x float> %.01903.lcssa, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %12 = shufflevector <4 x float> %.11906.lcssa, <4 x float> %.01903.lcssa, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %13 = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %14 = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.dgo = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2> ; 2 uses
+  %11 = shufflevector <4 x float> %.11906.lcssa, <4 x float> %.01903.lcssa, <4 x i32> <i32 0, i32 4, i32 2, i32 6> ; 2 uses
+  %12 = shufflevector <4 x float> %.11906.lcssa, <4 x float> %.01903.lcssa, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
+  %i.dgo = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2> ; 2 uses
   br i1 %.not584, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   %i.dgp = load float, ptr %i.cmt, align 4, !tbaa !53
   %i.dgq = insertelement <4 x float> poison, float %i.dgp, i64 0
   %i.dgr = shufflevector <4 x float> %i.dgq, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.dgs = fadd fast <4 x float> %i.dgr, %13
+  %i.dgs = fadd fast <4 x float> %i.dgr, %11
   %i.dgt = load float, ptr %i.cmy, align 4, !tbaa !53
   %i.dgu = insertelement <4 x float> poison, float %i.dgt, i64 0
   %i.dgv = shufflevector <4 x float> %i.dgu, <4 x float> poison, <4 x i32> zeroinitializer
@@ -224,7 +222,7 @@ bb.ax:                                            ; preds = %bb.aw
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
-  %.21907 = phi nsz <4 x float> [ %13, %bb.aw ], [ %i.dgs, %bb.ax ] ; 10 uses
+  %.21907 = phi nsz <4 x float> [ %11, %bb.aw ], [ %i.dgs, %bb.ax ] ; 10 uses
   %.11904 = phi nsz <4 x float> [ %i.dgo, %bb.aw ], [ %i.dgw, %bb.ax ] ; 10 uses
   switch i32 %9, label %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit600 [
     i32 1, label %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit602.thread

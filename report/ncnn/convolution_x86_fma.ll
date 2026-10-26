@@ -205,20 +205,16 @@ bb.c:                                             ; preds = %.lr.ph394, %._crit_
   %i.av = load <8 x float>, ptr %i.au, align 1, !tbaa !114 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.0251273, i64 96
   %i.ax = load <8 x float>, ptr %i.aw, align 1, !tbaa !114 ; 2 uses
-  %7 = shufflevector <8 x float> %i.ar, <8 x float> %i.av, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %8 = shufflevector <8 x float> %i.ar, <8 x float> %i.av, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %9 = shufflevector <8 x float> %i.at, <8 x float> %i.ax, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %10 = shufflevector <8 x float> %i.at, <8 x float> %i.ax, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %11 = shufflevector <8 x float> %7, <8 x float> %8, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %12 = shufflevector <8 x float> %7, <8 x float> %8, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
-  %13 = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %14 = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
-  %i.ay = bitcast <8 x float> %11 to <4 x double> ; 2 uses
-  %i.az = bitcast <8 x float> %13 to <4 x double> ; 2 uses
+  %7 = shufflevector <8 x float> %i.ar, <8 x float> %i.av, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 8, i32 12, i32 9, i32 13>
+  %8 = shufflevector <8 x float> %i.ar, <8 x float> %i.av, <8 x i32> <i32 2, i32 6, i32 3, i32 7, i32 10, i32 14, i32 11, i32 15>
+  %9 = shufflevector <8 x float> %i.at, <8 x float> %i.ax, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 8, i32 12, i32 9, i32 13>
+  %10 = shufflevector <8 x float> %i.at, <8 x float> %i.ax, <8 x i32> <i32 2, i32 6, i32 3, i32 7, i32 10, i32 14, i32 11, i32 15>
+  %i.ay = bitcast <8 x float> %7 to <4 x double>  ; 2 uses
+  %i.az = bitcast <8 x float> %9 to <4 x double>  ; 2 uses
   %i.ba = shufflevector <4 x double> %i.ay, <4 x double> %i.az, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
   %i.bb = shufflevector <4 x double> %i.ay, <4 x double> %i.az, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
-  %i.bc = bitcast <8 x float> %12 to <4 x double> ; 2 uses
-  %i.bd = bitcast <8 x float> %14 to <4 x double> ; 2 uses
+  %i.bc = bitcast <8 x float> %8 to <4 x double>  ; 2 uses
+  %i.bd = bitcast <8 x float> %10 to <4 x double> ; 2 uses
   %i.be = shufflevector <4 x double> %i.bc, <4 x double> %i.bd, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
   %i.bf = shufflevector <4 x double> %i.bc, <4 x double> %i.bd, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
   store <4 x double> %i.ba, ptr %.1233274, align 1, !tbaa !114
@@ -621,27 +617,22 @@ bb.bu:                                            ; preds = %bb.bs, %bb.bt
   br label %._crit_edge4915
 
 ._crit_edge4915:                                  ; preds = %._crit_edge4915.loopexit, %bb.bu
-  %.13866.lcssa = phi <8 x float> [ %.03865, %bb.bu ], [ %i.erk, %._crit_edge4915.loopexit ] ; 3 uses
-  %.03864.lcssa = phi <8 x float> [ %storemerge872, %bb.bu ], [ %i.erl, %._crit_edge4915.loopexit ] ; 3 uses
+  %.13866.lcssa = phi <8 x float> [ %.03865, %bb.bu ], [ %i.erk, %._crit_edge4915.loopexit ] ; 4 uses
+  %.03864.lcssa = phi <8 x float> [ %storemerge872, %bb.bu ], [ %i.erl, %._crit_edge4915.loopexit ] ; 4 uses
   %.1779.lcssa = phi ptr [ %.07784921, %bb.bu ], [ %scevgep5119, %._crit_edge4915.loopexit ] ; 2 uses
   br i1 %8, label %bb.bv, label %bb.by
 
 bb.bv:                                            ; preds = %._crit_edge4915
   %i.erq = shufflevector <8 x float> %.13866.lcssa, <8 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
-  %11 = shufflevector <8 x float> %.13866.lcssa, <8 x float> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7> ; 2 uses
-  %12 = shufflevector <8 x float> %.03864.lcssa, <8 x float> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   %i.err = shufflevector <8 x float> %.03864.lcssa, <8 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
-  %14 = shufflevector <4 x float> %i.erq, <4 x float> %i.err, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %15 = shufflevector <4 x float> %i.erq, <4 x float> %i.err, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.ers = shufflevector <4 x float> %11, <4 x float> %13, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.ert = shufflevector <4 x float> %11, <4 x float> %13, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %i.eru = shufflevector <4 x float> %14, <4 x float> %15, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %16 = shufflevector <4 x float> %i.ers, <4 x float> %i.ert, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %i.erv = shufflevector <4 x float> %14, <4 x float> %15, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %17 = shufflevector <4 x float> %i.ers, <4 x float> %i.ert, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
+  %i.ers = shufflevector <4 x float> %i.erq, <4 x float> %i.err, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.ert = shufflevector <4 x float> %i.erq, <4 x float> %i.err, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.eru = shufflevector <4 x float> %i.ers, <4 x float> %i.ert, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
+  %11 = shufflevector <8 x float> %.13866.lcssa, <8 x float> %.03864.lcssa, <4 x i32> <i32 4, i32 13, i32 6, i32 15> ; 2 uses
+  %i.erv = shufflevector <4 x float> %i.ers, <4 x float> %i.ert, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
+  %12 = shufflevector <8 x float> %.13866.lcssa, <8 x float> %.03864.lcssa, <4 x i32> <i32 5, i32 12, i32 7, i32 14>
   %i.erw = shufflevector <4 x float> %i.erv, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
-  %i.erx = shufflevector <4 x float> %17, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
+  %i.erx = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
   br i1 %.not873, label %bb.bx, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
@@ -652,14 +643,14 @@ bb.bw:                                            ; preds = %bb.bv
   %i.esc = insertelement <4 x float> poison, float %i.esb, i64 0
   %i.esd = shufflevector <4 x float> %i.esc, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.ese = fadd fast <4 x float> %i.esa, %i.eru
-  %i.esf = fadd fast <4 x float> %i.esa, %16
+  %i.esf = fadd fast <4 x float> %i.esa, %11
   %i.esg = fadd fast <4 x float> %i.esd, %i.erw
   %i.esh = fadd fast <4 x float> %i.esd, %i.erx
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bv
   %.03850 = phi nsz <4 x float> [ %i.eru, %bb.bv ], [ %i.ese, %bb.bw ] ; 10 uses
-  %.03849 = phi nsz <4 x float> [ %16, %bb.bv ], [ %i.esf, %bb.bw ] ; 10 uses
+  %.03849 = phi nsz <4 x float> [ %11, %bb.bv ], [ %i.esf, %bb.bw ] ; 10 uses
   %.03848 = phi nsz <4 x float> [ %i.erw, %bb.bv ], [ %i.esg, %bb.bw ] ; 10 uses
   %.03847 = phi nsz <4 x float> [ %i.erx, %bb.bv ], [ %i.esh, %bb.bw ] ; 10 uses
   switch i32 %9, label %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit949 [
@@ -1062,18 +1053,16 @@ bb.cc:                                            ; preds = %bb.ca, %bb.cb
   br i1 %8, label %bb.cd, label %bb.cg
 
 bb.cd:                                            ; preds = %._crit_edge4936
-  %18 = shufflevector <4 x float> %.13845.lcssa, <4 x float> %.03842.lcssa, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %19 = shufflevector <4 x float> %.13845.lcssa, <4 x float> %.03842.lcssa, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %20 = shufflevector <4 x float> %18, <4 x float> %19, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
-  %21 = shufflevector <4 x float> %18, <4 x float> %19, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
-  %i.fpj = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2> ; 2 uses
+  %13 = shufflevector <4 x float> %.13845.lcssa, <4 x float> %.03842.lcssa, <4 x i32> <i32 0, i32 4, i32 2, i32 6> ; 2 uses
+  %14 = shufflevector <4 x float> %.13845.lcssa, <4 x float> %.03842.lcssa, <4 x i32> <i32 1, i32 5, i32 3, i32 7>
+  %i.fpj = shufflevector <4 x float> %14, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2> ; 2 uses
   br i1 %.not870, label %bb.cf, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
   %i.fpk = load float, ptr %i.eqp, align 4, !tbaa !56
   %i.fpl = insertelement <4 x float> poison, float %i.fpk, i64 0
   %i.fpm = shufflevector <4 x float> %i.fpl, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.fpn = fadd fast <4 x float> %i.fpm, %20
+  %i.fpn = fadd fast <4 x float> %i.fpm, %13
   %i.fpo = load float, ptr %i.eqt, align 4, !tbaa !56
   %i.fpp = insertelement <4 x float> poison, float %i.fpo, i64 0
   %i.fpq = shufflevector <4 x float> %i.fpp, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1081,7 +1070,7 @@ bb.ce:                                            ; preds = %bb.cd
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd
-  %.23846 = phi nsz <4 x float> [ %20, %bb.cd ], [ %i.fpn, %bb.ce ] ; 10 uses
+  %.23846 = phi nsz <4 x float> [ %13, %bb.cd ], [ %i.fpn, %bb.ce ] ; 10 uses
   %.13843 = phi nsz <4 x float> [ %i.fpj, %bb.cd ], [ %i.fpr, %bb.ce ] ; 10 uses
   switch i32 %9, label %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit945 [
     i32 1, label %_ZL14activation_sseDv4_fiRKN4ncnn3MatE.exit947.thread

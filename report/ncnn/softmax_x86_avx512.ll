@@ -204,11 +204,9 @@ bb.i:                                             ; preds = %._crit_edge.i100, %
   %i.bvt = shufflevector <8 x float> %i.bvn, <8 x float> %i.bvp, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
   %i.bvu = tail call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.bvq, <8 x float> nofpclass(nan inf) %i.bvr) ; 2 uses
   %i.bvv = tail call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.bvs, <8 x float> nofpclass(nan inf) %i.bvt) ; 2 uses
-  %7 = shufflevector <8 x float> %i.bvu, <8 x float> %i.bvv, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %8 = shufflevector <8 x float> %i.bvu, <8 x float> %i.bvv, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %9 = shufflevector <8 x float> %7, <8 x float> %8, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %10 = shufflevector <8 x float> %7, <8 x float> %8, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
-  %i.bvw = tail call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %9, <8 x float> nofpclass(nan inf) %10)
+  %7 = shufflevector <8 x float> %i.bvu, <8 x float> %i.bvv, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 8, i32 12, i32 9, i32 13>
+  %8 = shufflevector <8 x float> %i.bvu, <8 x float> %i.bvv, <8 x i32> <i32 2, i32 6, i32 3, i32 7, i32 10, i32 14, i32 11, i32 15>
+  %i.bvw = tail call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %7, <8 x float> nofpclass(nan inf) %8)
   %i.bvx = load <8 x float>, ptr %.1442758.i, align 1, !tbaa !49
   %i.bvy = tail call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.avx.max.ps.256(<8 x float> nofpclass(nan inf) %i.bvx, <8 x float> nofpclass(nan inf) %i.bvw)
   store <8 x float> %i.bvy, ptr %.1442758.i, align 1, !tbaa !49
@@ -611,13 +609,11 @@ begin_hunk_1_@_ZN4ncnnL7softmaxEPfiimiS0_S0_:bb.a
   %i.civ = shufflevector <8 x float> %i.chm, <8 x float> %i.cir, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
   %i.ciw = fadd fast <8 x float> %i.cis, %i.cit   ; 2 uses
   %i.cix = fadd fast <8 x float> %i.ciu, %i.civ   ; 2 uses
-  %11 = shufflevector <8 x float> %i.ciw, <8 x float> %i.cix, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %12 = shufflevector <8 x float> %i.ciw, <8 x float> %i.cix, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
-  %13 = shufflevector <8 x float> %11, <8 x float> %12, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
-  %14 = shufflevector <8 x float> %11, <8 x float> %12, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
+  %9 = shufflevector <8 x float> %i.ciw, <8 x float> %i.cix, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 8, i32 12, i32 9, i32 13>
+  %10 = shufflevector <8 x float> %i.ciw, <8 x float> %i.cix, <8 x i32> <i32 2, i32 6, i32 3, i32 7, i32 10, i32 14, i32 11, i32 15>
   %i.ciy = load <8 x float>, ptr %.1459789.i, align 1, !tbaa !49
-  %i.ciz = fadd fast <8 x float> %14, %i.ciy
-  %i.cja = fadd fast <8 x float> %i.ciz, %13
+  %i.ciz = fadd fast <8 x float> %10, %i.ciy
+  %i.cja = fadd fast <8 x float> %i.ciz, %9
   store <8 x float> %i.cja, ptr %.1459789.i, align 1, !tbaa !49
   %i.cjb = getelementptr inbounds nuw i8, ptr %.1451791.i, i64 128 ; 2 uses
   %i.cjc = getelementptr inbounds nuw i8, ptr %.1455790.i, i64 32 ; 2 uses

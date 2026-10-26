@@ -205,10 +205,8 @@ bb.hd:                                            ; preds = %bb.hc
   %i.clk = load <16 x float>, ptr %.571995, align 1, !tbaa !90 ; 2 uses
   %i.cll = getelementptr inbounds nuw i8, ptr %.571995, i64 64
   %i.clm = load <16 x float>, ptr %i.cll, align 1, !tbaa !90 ; 2 uses
-  %10 = shufflevector <16 x float> %i.clk, <16 x float> %i.clm, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11, i32 16, i32 17, i32 18, i32 19, i32 24, i32 25, i32 26, i32 27> ; 2 uses
-  %11 = shufflevector <16 x float> %i.clk, <16 x float> %i.clm, <16 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15, i32 20, i32 21, i32 22, i32 23, i32 28, i32 29, i32 30, i32 31> ; 2 uses
-  %12 = shufflevector <16 x float> %10, <16 x float> %11, <16 x i32> <i32 0, i32 2, i32 16, i32 18, i32 4, i32 6, i32 20, i32 22, i32 8, i32 10, i32 24, i32 26, i32 12, i32 14, i32 28, i32 30>
-  %13 = shufflevector <16 x float> %10, <16 x float> %11, <16 x i32> <i32 1, i32 3, i32 17, i32 19, i32 5, i32 7, i32 21, i32 23, i32 9, i32 11, i32 25, i32 27, i32 13, i32 15, i32 29, i32 31>
+  %10 = shufflevector <16 x float> %i.clk, <16 x float> %i.clm, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30>
+  %11 = shufflevector <16 x float> %i.clk, <16 x float> %i.clm, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31>
   %i.cln = getelementptr inbounds nuw i8, ptr %.571995, i64 128
   br label %.thread1429
 
@@ -221,15 +219,13 @@ bb.hf:                                            ; preds = %.lr.ph1997
   %i.clq = load <16 x float>, ptr %.1929491994, align 1, !tbaa !90 ; 2 uses
   %i.clr = getelementptr inbounds nuw i8, ptr %.1929491994, i64 64
   %i.cls = load <16 x float>, ptr %i.clr, align 1, !tbaa !90 ; 2 uses
-  %14 = shufflevector <16 x float> %i.clq, <16 x float> %i.cls, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11, i32 16, i32 17, i32 18, i32 19, i32 24, i32 25, i32 26, i32 27> ; 2 uses
-  %15 = shufflevector <16 x float> %i.clq, <16 x float> %i.cls, <16 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15, i32 20, i32 21, i32 22, i32 23, i32 28, i32 29, i32 30, i32 31> ; 2 uses
-  %16 = shufflevector <16 x float> %14, <16 x float> %15, <16 x i32> <i32 0, i32 2, i32 16, i32 18, i32 4, i32 6, i32 20, i32 22, i32 8, i32 10, i32 24, i32 26, i32 12, i32 14, i32 28, i32 30>
-  %17 = shufflevector <16 x float> %14, <16 x float> %15, <16 x i32> <i32 1, i32 3, i32 17, i32 19, i32 5, i32 7, i32 21, i32 23, i32 9, i32 11, i32 25, i32 27, i32 13, i32 15, i32 29, i32 31>
+  %12 = shufflevector <16 x float> %i.clq, <16 x float> %i.cls, <16 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24, i32 26, i32 28, i32 30>
+  %13 = shufflevector <16 x float> %i.clq, <16 x float> %i.cls, <16 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25, i32 27, i32 29, i32 31>
   br label %.thread1429
 
 .thread1429:                                      ; preds = %bb.hc, %bb.hb, %.thread1420, %bb.hd, %bb.gy, %bb.he, %bb.hf
-  %.3875 = phi nsz <16 x float> [ zeroinitializer, %bb.gy ], [ %i.clo, %bb.he ], [ zeroinitializer, %bb.hc ], [ %16, %bb.hf ], [ %12, %bb.hd ], [ %i.clc, %.thread1420 ], [ %i.clf, %bb.hb ] ; 3 uses
-  %.3870 = phi nsz <16 x float> [ zeroinitializer, %bb.gy ], [ %i.clo, %bb.he ], [ zeroinitializer, %bb.hc ], [ %17, %bb.hf ], [ %13, %bb.hd ], [ %i.clc, %.thread1420 ], [ %i.clj, %bb.hb ] ; 3 uses
+  %.3875 = phi nsz <16 x float> [ zeroinitializer, %bb.gy ], [ %i.clo, %bb.he ], [ zeroinitializer, %bb.hc ], [ %12, %bb.hf ], [ %10, %bb.hd ], [ %i.clc, %.thread1420 ], [ %i.clf, %bb.hb ] ; 3 uses
+  %.3870 = phi nsz <16 x float> [ zeroinitializer, %bb.gy ], [ %i.clo, %bb.he ], [ zeroinitializer, %bb.hc ], [ %13, %bb.hf ], [ %11, %bb.hd ], [ %i.clc, %.thread1420 ], [ %i.clj, %bb.hb ] ; 3 uses
   %.59 = phi ptr [ null, %bb.gy ], [ %i.clp, %bb.he ], [ %.571995, %bb.hc ], [ %.571995, %bb.hf ], [ %i.cln, %bb.hd ], [ %.571995, %.thread1420 ], [ %.571995, %bb.hb ] ; 2 uses
   br i1 %i.bpx, label %.lr.ph1986.preheader, label %._crit_edge1987
 

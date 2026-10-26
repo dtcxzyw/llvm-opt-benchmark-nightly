@@ -205,9 +205,7 @@ begin_hunk_0_@_ZN10btSoftBody22appendDeformableAnchorEiP23btMultiBodyLinkCollide
   %i.uu = extractelement <2 x float> %i.jx, i64 0
   %i.uv = extractelement <2 x float> %i.jw, i64 0
   %i.uw = shufflevector <2 x float> %i.jx, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 0, i32 0>
-  %12 = shufflevector <2 x float> %i.jw, <2 x float> poison, <3 x i32> <i32 poison, i32 0, i32 1>
-  %13 = shufflevector <2 x float> %i.kc, <2 x float> poison, <3 x i32> <i32 0, i32 poison, i32 poison>
-  %14 = shufflevector <3 x float> %13, <3 x float> %12, <4 x i32> <i32 0, i32 5, i32 4, i32 4>
+  %12 = shufflevector <2 x float> %i.kc, <2 x float> %i.jw, <4 x i32> <i32 0, i32 3, i32 2, i32 2>
   %i.ux = shufflevector <2 x float> %i.jy, <2 x float> %i.kc, <4 x i32> <i32 0, i32 3, i32 2, i32 2>
   %i.uy = extractelement <4 x float> %i.uj, i64 2 ; 2 uses
   %i.uz = fmul float %.08.lcssa.i26121126140151171188214.i, %i.uy
@@ -248,7 +246,7 @@ begin_hunk_0_@_ZN10btSoftBody22appendDeformableAnchorEiP23btMultiBodyLinkCollide
   %i.wi = shufflevector <2 x float> %i.vp, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.wj = shufflevector <4 x float> %i.wh, <4 x float> %i.wi, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
   %i.wk = fmul <4 x float> %i.wg, %i.wj
-  %i.wl = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.vs, <4 x float> %14, <4 x float> %i.wk) ; 2 uses
+  %i.wl = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.vs, <4 x float> %12, <4 x float> %i.wk) ; 2 uses
   %shift = shufflevector <2 x float> %i.vp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fmul <2 x float> %i.ka, %shift
   %i.wm = shufflevector <4 x float> %i.vs, <4 x float> poison, <4 x i32> <i32 3, i32 0, i32 poison, i32 poison>
@@ -262,10 +260,8 @@ begin_hunk_0_@_ZN10btSoftBody22appendDeformableAnchorEiP23btMultiBodyLinkCollide
   %i.wu = fmul <4 x float> %i.wt, %i.wj
   %i.wv = shufflevector <2 x float> %i.wc, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.ww = shufflevector <4 x float> %i.wv, <4 x float> %i.vs, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %15 = shufflevector <2 x float> %i.jy, <2 x float> poison, <3 x i32> <i32 poison, i32 0, i32 1>
-  %16 = shufflevector <2 x float> %i.kd, <2 x float> poison, <3 x i32> <i32 0, i32 poison, i32 poison>
-  %17 = shufflevector <3 x float> %16, <3 x float> %15, <4 x i32> <i32 0, i32 5, i32 4, i32 5>
-  %i.wx = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ww, <4 x float> %17, <4 x float> %i.wu) ; 2 uses
+  %13 = shufflevector <2 x float> %i.kd, <2 x float> %i.jy, <4 x i32> <i32 0, i32 3, i32 2, i32 3>
+  %i.wx = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ww, <4 x float> %13, <4 x float> %i.wu) ; 2 uses
   %i.wy = extractelement <2 x float> %i.vp, i64 0
   %i.wz = fmul float %i.kb, %i.wy
   %i.xa = shufflevector <4 x float> %i.vs, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 poison, i32 poison>
