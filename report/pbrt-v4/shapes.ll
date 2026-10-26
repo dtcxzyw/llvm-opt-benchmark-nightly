@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4pbrt13BilinearPatchC2EPKNS_17BilinearPatchMeshEii(ptr noundef nonnull align 4 dereferenceable(12) initializes((0, 8)) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) unnamed_addr #2 align 2 {
 bb.a:
-  %4 = alloca [4 x [4 x %"class.pbrt::Point3"]], align 16 ; 24 uses
+  %4 = alloca [4 x [4 x %"class.pbrt::Point3"]], align 16 ; 20 uses
   store i32 %2, ptr %0, align 4, !tbaa !215
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %3, ptr %i.a, align 4, !tbaa !216
@@ -276,138 +276,125 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader167:                                    ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(192) %4, i8 0, i64 192, i1 false), !tbaa !28
-  %i.av = insertelement <4 x float> poison, float %.sroa.4108.0.copyload, i64 0
-  %i.aw = insertelement <4 x float> %i.av, float %.sroa.5113.0.copyload, i64 1
+  %i.av = insertelement <4 x float> poison, float %.sroa.5.0.copyload, i64 0
+  %i.aw = insertelement <4 x float> %i.av, float %.sroa.6.0.copyload, i64 1
   %i.ax = shufflevector <4 x float> %i.aw, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
   %i.ay = fmul <4 x float> %i.ax, <float 0.000000e+00, float f0x3EAAAAAB, float 0.000000e+00, float f0x3F2AAAAB>
-  %i.az = insertelement <4 x float> poison, float %.sroa.5113.0.copyload, i64 0
-  %i.ba = insertelement <4 x float> %i.az, float %.sroa.4108.0.copyload, i64 1
+  %i.az = insertelement <4 x float> poison, float %.sroa.4108.0.copyload, i64 0
+  %i.ba = insertelement <4 x float> %i.az, float %.sroa.5113.0.copyload, i64 1
   %i.bb = shufflevector <4 x float> %i.ba, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
-  %i.bc = fmul <4 x float> %i.bb, <float 1.000000e+00, float f0x3F2AAAAA, float 1.000000e+00, float f0x3EAAAAAA>
-  %5 = fadd <4 x float> %i.ay, %i.bc              ; 4 uses
-  %i.bd = fmul <2 x float> %.sroa.0111.0.copyload, zeroinitializer
-  %i.be = fadd <2 x float> %.sroa.0107.0.copyload, %i.bd ; 4 uses
-  %i.bf = fmul <2 x float> %.sroa.0114.0.copyload, zeroinitializer
-  %i.bg = fadd <2 x float> %.sroa.0109.0.copyload, %i.bf ; 4 uses
-  %6 = insertelement <4 x float> poison, float %.sroa.5.0.copyload, i64 0
-  %7 = insertelement <4 x float> %6, float %.sroa.6.0.copyload, i64 1
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
-  %9 = fmul <4 x float> %8, <float 0.000000e+00, float f0x3EAAAAAB, float 0.000000e+00, float f0x3F2AAAAB>
-  %10 = insertelement <4 x float> poison, float %.sroa.6.0.copyload, i64 0
-  %11 = insertelement <4 x float> %10, float %.sroa.5.0.copyload, i64 1
-  %12 = shufflevector <4 x float> %11, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
-  %13 = fmul <4 x float> %12, <float 1.000000e+00, float f0x3F2AAAAA, float 1.000000e+00, float f0x3EAAAAAA>
-  %14 = fadd <4 x float> %9, %13                  ; 4 uses
-  %i.bh = fmul <2 x float> %.sroa.0107.0.copyload, splat (float f0x3F2AAAAB)
-  %i.bi = fmul <2 x float> %.sroa.0111.0.copyload, splat (float f0x3EAAAAAA)
-  %i.bj = fadd <2 x float> %i.bh, %i.bi           ; 4 uses
-  %i.bk = fmul <2 x float> %.sroa.0109.0.copyload, splat (float f0x3F2AAAAB)
-  %i.bl = fmul <2 x float> %.sroa.0114.0.copyload, splat (float f0x3EAAAAAA)
-  %i.bm = fadd <2 x float> %i.bk, %i.bl           ; 4 uses
-  %15 = fmul <2 x float> %.sroa.0107.0.copyload, splat (float f0x3EAAAAAB)
-  %i.bn = fmul <2 x float> %.sroa.0111.0.copyload, splat (float f0x3F2AAAAA)
-  %i.bo = fadd <2 x float> %15, %i.bn             ; 4 uses
-  %16 = fmul <2 x float> %.sroa.0109.0.copyload, splat (float f0x3EAAAAAB)
-  %17 = fmul <2 x float> %.sroa.0114.0.copyload, splat (float f0x3F2AAAAA)
-  %18 = fadd <2 x float> %16, %17                 ; 4 uses
-  %i.bp = fmul <2 x float> %.sroa.0107.0.copyload, zeroinitializer
-  %i.bq = fadd <2 x float> %i.bp, %.sroa.0111.0.copyload ; 4 uses
-  %i.br = fmul <2 x float> %.sroa.0109.0.copyload, zeroinitializer
-  %19 = fadd <2 x float> %i.br, %.sroa.0114.0.copyload ; 4 uses
-  %i.bs = fmul <2 x float> %i.bq, zeroinitializer
-  %i.bt = fadd <2 x float> %19, %i.bs
-  store <2 x float> %i.bt, ptr %4, align 16
+  %i.bc = fmul <4 x float> %i.bb, <float 0.000000e+00, float f0x3EAAAAAB, float 0.000000e+00, float f0x3F2AAAAB>
+  %i.bd = fmul <2 x float> %.sroa.0109.0.copyload, zeroinitializer
+  %i.be = fadd <2 x float> %i.bd, %.sroa.0114.0.copyload ; 4 uses
+  %i.bf = fmul <2 x float> %.sroa.0107.0.copyload, zeroinitializer
+  %i.bg = fadd <2 x float> %i.bf, %.sroa.0111.0.copyload ; 4 uses
+  %5 = fmul <2 x float> %i.bg, zeroinitializer
+  %6 = fadd <2 x float> %i.be, %5
+  store <2 x float> %6, ptr %4, align 16
   %.sroa.480.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.bu = fmul <2 x float> %i.bo, zeroinitializer
-  %i.bv = fadd <2 x float> %18, %i.bu
-  %i.bw = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store <2 x float> %i.bv, ptr %i.bw, align 4
-  %i.bx = fmul <2 x float> %i.bj, zeroinitializer
-  %i.by = fadd <2 x float> %i.bm, %i.bx
-  %20 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store <2 x float> %i.by, ptr %20, align 8
-  %i.bz = fmul <2 x float> %i.be, zeroinitializer
-  %i.ca = fadd <2 x float> %i.bg, %i.bz
+  %i.bh = fmul <2 x float> %.sroa.0114.0.copyload, splat (float f0x3F2AAAAA)
+  %i.bi = fmul <2 x float> %.sroa.0109.0.copyload, splat (float f0x3EAAAAAB)
+  %i.bj = fadd <2 x float> %i.bi, %i.bh           ; 4 uses
+  %i.bk = fmul <2 x float> %.sroa.0111.0.copyload, splat (float f0x3F2AAAAA)
+  %i.bl = fmul <2 x float> %.sroa.0107.0.copyload, splat (float f0x3EAAAAAB)
+  %i.bm = fadd <2 x float> %i.bl, %i.bk           ; 4 uses
+  %i.bn = fmul <2 x float> %i.bm, zeroinitializer
+  %i.bo = fadd <2 x float> %i.bj, %i.bn
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 12
+  store <2 x float> %i.bo, ptr %7, align 4
+  %8 = fmul <2 x float> %.sroa.0114.0.copyload, splat (float f0x3EAAAAAA)
+  %i.bp = fmul <2 x float> %.sroa.0109.0.copyload, splat (float f0x3F2AAAAB)
+  %i.bq = fadd <2 x float> %i.bp, %8              ; 4 uses
+  %i.br = fmul <2 x float> %.sroa.0111.0.copyload, splat (float f0x3EAAAAAA)
+  %i.bs = fmul <2 x float> %.sroa.0107.0.copyload, splat (float f0x3F2AAAAB)
+  %i.bt = fadd <2 x float> %i.bs, %i.br           ; 4 uses
+  %i.bu = fmul <2 x float> %i.bt, zeroinitializer
+  %i.bv = fadd <2 x float> %i.bq, %i.bu
+  %i.bw = getelementptr inbounds nuw i8, ptr %4, i64 24
+  store <2 x float> %i.bv, ptr %i.bw, align 8
+  %i.bx = fmul <2 x float> %.sroa.0114.0.copyload, zeroinitializer
+  %i.by = fadd <2 x float> %.sroa.0109.0.copyload, %i.bx ; 4 uses
+  %9 = fmul <2 x float> %.sroa.0111.0.copyload, zeroinitializer
+  %10 = fadd <2 x float> %.sroa.0107.0.copyload, %9 ; 4 uses
+  %i.bz = fmul <2 x float> %10, zeroinitializer
+  %i.ca = fadd <2 x float> %i.by, %i.bz
   %i.cb = getelementptr inbounds nuw i8, ptr %4, i64 36
   store <2 x float> %i.ca, ptr %i.cb, align 4
-  %21 = fmul <4 x float> %5, zeroinitializer
-  %22 = fadd <4 x float> %14, %21
-  %23 = shufflevector <4 x float> %22, <4 x float> poison, <10 x i32> <i32 0, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 2>
-  call void @llvm.masked.store.v10f32.p0(<10 x float> %23, ptr align 8 %.sroa.480.0..sroa_idx, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>)
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %i.cd = fmul <2 x float> %19, splat (float f0x3F2AAAAA)
-  %i.ce = fmul <2 x float> %i.bq, splat (float f0x3EAAAAAB)
+  %i.cd = fmul <2 x float> %i.be, splat (float f0x3F2AAAAA)
+  %i.ce = fmul <2 x float> %i.bg, splat (float f0x3EAAAAAB)
   %i.cf = fadd <2 x float> %i.cd, %i.ce
   store <2 x float> %i.cf, ptr %i.cc, align 16
-  %.sroa.480.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  %i.cg = fmul <2 x float> %18, splat (float f0x3F2AAAAA)
-  %i.ch = fmul <2 x float> %i.bo, splat (float f0x3EAAAAAB)
+  %i.cg = fmul <2 x float> %i.bj, splat (float f0x3F2AAAAA)
+  %i.ch = fmul <2 x float> %i.bm, splat (float f0x3EAAAAAB)
   %i.ci = fadd <2 x float> %i.cg, %i.ch
   %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 60
   store <2 x float> %i.ci, ptr %i.cj, align 4
-  %i.ck = fmul <2 x float> %i.bm, splat (float f0x3F2AAAAA)
-  %i.cl = fmul <2 x float> %i.bj, splat (float f0x3EAAAAAB)
+  %i.ck = fmul <2 x float> %i.bq, splat (float f0x3F2AAAAA)
+  %i.cl = fmul <2 x float> %i.bt, splat (float f0x3EAAAAAB)
   %i.cm = fadd <2 x float> %i.ck, %i.cl
   %i.cn = getelementptr inbounds nuw i8, ptr %4, i64 72
   store <2 x float> %i.cm, ptr %i.cn, align 8
-  %i.co = fmul <2 x float> %i.bg, splat (float f0x3F2AAAAA)
-  %i.cp = fmul <2 x float> %i.be, splat (float f0x3EAAAAAB)
+  %i.co = fmul <2 x float> %i.by, splat (float f0x3F2AAAAA)
+  %i.cp = fmul <2 x float> %10, splat (float f0x3EAAAAAB)
   %i.cq = fadd <2 x float> %i.co, %i.cp
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 84
   store <2 x float> %i.cq, ptr %i.cr, align 4
-  %24 = fmul <4 x float> %14, splat (float f0x3F2AAAAA)
-  %25 = fmul <4 x float> %5, splat (float f0x3EAAAAAB)
-  %26 = fadd <4 x float> %24, %25
-  %27 = shufflevector <4 x float> %26, <4 x float> poison, <10 x i32> <i32 0, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 2>
-  call void @llvm.masked.store.v10f32.p0(<10 x float> %27, ptr align 8 %.sroa.480.0..sroa_idx.1, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>)
-  %28 = getelementptr inbounds nuw i8, ptr %4, i64 96
-  %i.cs = fmul <2 x float> %19, splat (float f0x3EAAAAAA)
-  %i.ct = fmul <2 x float> %i.bq, splat (float f0x3F2AAAAB)
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 96
+  %12 = fmul <2 x float> %i.be, splat (float f0x3EAAAAAA)
+  %13 = fmul <2 x float> %i.bg, splat (float f0x3F2AAAAB)
+  %14 = fadd <2 x float> %12, %13
+  store <2 x float> %14, ptr %11, align 16
+  %i.cs = fmul <2 x float> %i.bj, splat (float f0x3EAAAAAA)
+  %i.ct = fmul <2 x float> %i.bm, splat (float f0x3F2AAAAB)
   %i.cu = fadd <2 x float> %i.cs, %i.ct
-  store <2 x float> %i.cu, ptr %28, align 16
-  %.sroa.480.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %4, i64 104
-  %i.cv = fmul <2 x float> %18, splat (float f0x3EAAAAAA)
-  %i.cw = fmul <2 x float> %i.bo, splat (float f0x3F2AAAAB)
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 108
+  store <2 x float> %i.cu, ptr %15, align 4
+  %i.cv = fmul <2 x float> %i.bq, splat (float f0x3EAAAAAA)
+  %i.cw = fmul <2 x float> %i.bt, splat (float f0x3F2AAAAB)
   %i.cx = fadd <2 x float> %i.cv, %i.cw
-  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 108
-  store <2 x float> %i.cx, ptr %i.cy, align 4
-  %i.cz = fmul <2 x float> %i.bm, splat (float f0x3EAAAAAA)
-  %i.da = fmul <2 x float> %i.bj, splat (float f0x3F2AAAAB)
+  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 120
+  store <2 x float> %i.cx, ptr %i.cy, align 8
+  %i.cz = fmul <2 x float> %i.by, splat (float f0x3EAAAAAA)
+  %i.da = fmul <2 x float> %10, splat (float f0x3F2AAAAB)
   %i.db = fadd <2 x float> %i.cz, %i.da
-  %i.dc = getelementptr inbounds nuw i8, ptr %4, i64 120
-  store <2 x float> %i.db, ptr %i.dc, align 8
-  %i.dd = fmul <2 x float> %i.bg, splat (float f0x3EAAAAAA)
-  %i.de = fmul <2 x float> %i.be, splat (float f0x3F2AAAAB)
-  %i.df = fadd <2 x float> %i.dd, %i.de
-  %i.dg = getelementptr inbounds nuw i8, ptr %4, i64 132
+  %i.dc = getelementptr inbounds nuw i8, ptr %4, i64 132
+  store <2 x float> %i.db, ptr %i.dc, align 4
+  %16 = getelementptr inbounds nuw i8, ptr %4, i64 144
+  %i.dd = fmul <2 x float> %i.be, zeroinitializer
+  %17 = fadd <2 x float> %i.dd, %i.bg
+  store <2 x float> %17, ptr %16, align 16
+  %i.de = fmul <2 x float> %i.bj, zeroinitializer
+  %i.df = fadd <2 x float> %i.de, %i.bm
+  %i.dg = getelementptr inbounds nuw i8, ptr %4, i64 156
   store <2 x float> %i.df, ptr %i.dg, align 4
-  %29 = fmul <4 x float> %14, splat (float f0x3EAAAAAA)
-  %30 = fmul <4 x float> %5, splat (float f0x3F2AAAAB)
-  %31 = fadd <4 x float> %29, %30
-  %32 = shufflevector <4 x float> %31, <4 x float> poison, <10 x i32> <i32 0, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 2>
-  call void @llvm.masked.store.v10f32.p0(<10 x float> %32, ptr align 8 %.sroa.480.0..sroa_idx.2, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>)
-  %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 144
-  %33 = fmul <2 x float> %19, zeroinitializer
-  %34 = fadd <2 x float> %33, %i.bq
-  store <2 x float> %34, ptr %i.dh, align 16
-  %.sroa.480.0..sroa_idx.3 = getelementptr inbounds nuw i8, ptr %4, i64 152
-  %35 = fmul <2 x float> %18, zeroinitializer
-  %36 = fadd <2 x float> %35, %i.bo
-  %37 = getelementptr inbounds nuw i8, ptr %4, i64 156
-  store <2 x float> %36, ptr %37, align 4
-  %38 = fmul <2 x float> %i.bm, zeroinitializer
-  %39 = fadd <2 x float> %38, %i.bj
-  %40 = getelementptr inbounds nuw i8, ptr %4, i64 168
-  store <2 x float> %39, ptr %40, align 8
-  %41 = fmul <2 x float> %i.bg, zeroinitializer
-  %42 = fadd <2 x float> %41, %i.be
-  %43 = getelementptr inbounds nuw i8, ptr %4, i64 180
-  store <2 x float> %42, ptr %43, align 4
-  %44 = fmul <4 x float> %14, zeroinitializer
-  %45 = fadd <4 x float> %44, %5
-  %46 = shufflevector <4 x float> %45, <4 x float> poison, <10 x i32> <i32 0, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 2>
-  call void @llvm.masked.store.v10f32.p0(<10 x float> %46, ptr align 8 %.sroa.480.0..sroa_idx.3, <10 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>)
+  %18 = fmul <2 x float> %i.bq, zeroinitializer
+  %19 = fadd <2 x float> %18, %i.bt
+  %20 = getelementptr inbounds nuw i8, ptr %4, i64 168
+  store <2 x float> %19, ptr %20, align 8
+  %21 = fmul <2 x float> %i.by, zeroinitializer
+  %22 = fadd <2 x float> %21, %10
+  %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 180
+  store <2 x float> %22, ptr %i.dh, align 4
+  %23 = insertelement <4 x float> poison, float %.sroa.6.0.copyload, i64 0
+  %24 = insertelement <4 x float> %23, float %.sroa.5.0.copyload, i64 1
+  %25 = shufflevector <4 x float> %24, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
+  %26 = fmul <4 x float> %25, <float 1.000000e+00, float f0x3F2AAAAA, float 1.000000e+00, float f0x3EAAAAAA>
+  %27 = insertelement <4 x float> poison, float %.sroa.5113.0.copyload, i64 0
+  %28 = insertelement <4 x float> %27, float %.sroa.4108.0.copyload, i64 1
+  %29 = shufflevector <4 x float> %28, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
+  %30 = fmul <4 x float> %29, <float 1.000000e+00, float f0x3F2AAAAA, float 1.000000e+00, float f0x3EAAAAAA>
+  %31 = fadd <4 x float> %i.ay, %26               ; 2 uses
+  %32 = fadd <4 x float> %i.bc, %30
+  %33 = shufflevector <4 x float> %32, <4 x float> poison, <16 x i32> <i32 0, i32 1, i32 3, i32 2, i32 0, i32 1, i32 3, i32 2, i32 0, i32 1, i32 3, i32 2, i32 0, i32 1, i32 3, i32 2>
+  %34 = fmul <16 x float> %33, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float f0x3EAAAAAB, float f0x3EAAAAAB, float f0x3EAAAAAB, float f0x3EAAAAAB, float f0x3F2AAAAB, float f0x3F2AAAAB, float f0x3F2AAAAB, float f0x3F2AAAAB, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>
+  %35 = shufflevector <4 x float> %31, <4 x float> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %36 = shufflevector <4 x float> %31, <4 x float> poison, <12 x i32> <i32 0, i32 1, i32 3, i32 2, i32 0, i32 1, i32 3, i32 2, i32 0, i32 1, i32 3, i32 2>
+  %37 = fmul <12 x float> %36, <float f0x3F2AAAAA, float f0x3F2AAAAA, float f0x3F2AAAAA, float f0x3F2AAAAA, float f0x3EAAAAAA, float f0x3EAAAAAA, float f0x3EAAAAAA, float f0x3EAAAAAA, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>
+  %38 = shufflevector <12 x float> %35, <12 x float> %37, <16 x i32> <i32 0, i32 1, i32 3, i32 2, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %39 = fadd <16 x float> %38, %34
+  %40 = shufflevector <16 x float> %39, <16 x float> poison, <46 x i32> <i32 0, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 2, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 4, i32 poison, i32 poison, i32 5, i32 poison, i32 poison, i32 6, i32 poison, i32 poison, i32 7, i32 poison, i32 poison, i32 8, i32 poison, i32 poison, i32 9, i32 poison, i32 poison, i32 10, i32 poison, i32 poison, i32 11, i32 poison, i32 poison, i32 12, i32 poison, i32 poison, i32 13, i32 poison, i32 poison, i32 14, i32 poison, i32 poison, i32 15>
+  call void @llvm.masked.store.v46f32.p0(<46 x float> %40, ptr align 8 %.sroa.480.0..sroa_idx, <46 x i1> <i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true, i1 false, i1 false, i1 true>)
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %.preheader
 
@@ -810,7 +797,7 @@ declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.masked.store.v10f32.p0(<10 x float>, ptr captures(none), <10 x i1>) #6
+declare void @llvm.masked.store.v46f32.p0(<46 x float>, ptr captures(none), <46 x i1>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #19
