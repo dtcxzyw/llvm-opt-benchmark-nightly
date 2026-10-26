@@ -205,53 +205,47 @@ bb.b:                                             ; preds = %_ZNSt6vectorIN2cv5R
   %i.w = load i32, ptr %i.v, align 4, !tbaa !273
   %i.x = sub nsw i32 %i.w, %i.r                   ; 3 uses
   %i.y = load i32, ptr %i.k, align 4, !tbaa !211  ; 4 uses
-  %i.z = sub nsw i32 %i.y, %i.p                   ; 4 uses
+  %i.z = sub nsw i32 %i.y, %i.p                   ; 3 uses
   %i.aa = load i32, ptr %i.c, align 4, !tbaa !210 ; 4 uses
   %i.ab = sub nsw i32 %i.aa, %i.r                 ; 2 uses
   %i.ac = icmp slt i32 %i.z, 1
   %i.ad = icmp slt i32 %i.ab, 1
   %i.ae = select i1 %i.ac, i1 true, i1 %i.ad
-  br i1 %i.ae, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i, label %1
+  br i1 %i.ae, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i, label %bb.c
 
-1:                                                ; preds = %bb.b
-  %2 = icmp slt i32 %i.y, 1
-  %3 = icmp slt i32 %i.aa, 1
-  %4 = select i1 %2, i1 true, i1 %3
-  br i1 %4, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i, label %bb.c
-
-bb.c:                                             ; preds = %1
-  %5 = tail call i32 @llvm.smin.i32(i32 %i.p, i32 0) ; 2 uses
-  %i.af = icmp slt i32 %i.p, 0                    ; 3 uses
-  %6 = tail call i32 @llvm.smax.i32(i32 %i.p, i32 0) ; 3 uses
-  %7 = add nsw i32 %i.z, %5
-  %i.ag = icmp slt i32 %7, %6
-  %or.cond.i.i.i = select i1 %i.af, i1 %i.ag, i1 false
+bb.c:                                             ; preds = %bb.b
+  %i.af = icmp slt i32 %i.y, 1
+  %i.ag = icmp slt i32 %i.aa, 1
+  %or.cond.i.i.i = select i1 %i.af, i1 true, i1 %i.ag
   br i1 %or.cond.i.i.i, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i, label %.cont35.i.i.i.i
 
 .cont35.i.i.i.i:                                  ; preds = %bb.c
+  %1 = icmp slt i32 %i.p, 0                       ; 2 uses
   %i.ah = icmp slt i64 %i.o, 0                    ; 2 uses
+  %2 = tail call i32 @llvm.smin.i32(i32 %i.p, i32 0)
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.p, i32 0) ; 2 uses
   %spec.select92.i.i.i = select i1 %i.ah, i32 0, i32 %i.r ; 2 uses
-  %.v.v.i.i.i.i = select i1 %i.af, i32 %i.z, i32 %i.y
-  %.v.i.i.i.i = sub i32 %5, %6
-  %i.ai = add i32 %.v.i.i.i.i, %.v.v.i.i.i.i
-  %i.aj = select i1 %i.af, i32 %i.y, i32 %i.z
-  %.sroa.speculated53.i.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.aj, i32 %i.ai) ; 2 uses
-  %i.ak = sub nsw i32 %i.aa, %spec.select92.i.i.i
+  %.v.v.i.i.i.i = select i1 %1, i32 %i.z, i32 %i.y
+  %.v.i.i.i.i = sub i32 %2, %3
+  %i.ai = add i32 %.v.v.i.i.i.i, %.v.i.i.i.i      ; 2 uses
+  %i.aj = select i1 %1, i32 %i.y, i32 %i.z
+  %.sroa.speculated53.i.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %i.aj, i32 %i.ai)
+  %i.ak = sub nsw i32 %i.aa, %spec.select92.i.i.i ; 2 uses
   %i.al = select i1 %i.ah, i32 %i.aa, i32 %i.ab
-  %.sroa.speculated.i.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.al, i32 %i.ak) ; 2 uses
-  %i.am = icmp slt i32 %.sroa.speculated53.i.i.i.i.i, 1
-  %i.an = icmp slt i32 %.sroa.speculated.i.i.i.i.i, 1
+  %.sroa.speculated.i.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %i.al, i32 %i.ak)
+  %i.am = icmp slt i32 %i.ai, 1
+  %i.an = icmp slt i32 %i.ak, 1
   %i.ao = select i1 %i.am, i1 true, i1 %i.an
   br i1 %i.ao, label %bb.d, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i
 
 bb.d:                                             ; preds = %.cont35.i.i.i.i
   br label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i
 
-_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i:    ; preds = %bb.d, %.cont35.i.i.i.i, %bb.c, %1, %bb.b
-  %.sroa.0.sroa.0.0.i.i.i.i = phi i32 [ %6, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %1 ], [ 0, %bb.c ] ; 3 uses
-  %.sroa.0.sroa.9.0.i.i.i.i = phi i32 [ %spec.select92.i.i.i, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %1 ], [ 0, %bb.c ] ; 4 uses
-  %.sroa.14.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.speculated53.i.i.i.i.i, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %1 ], [ 0, %bb.c ] ; 4 uses
-  %.sroa.14.sroa.12.0.i.i.i.i = phi i32 [ %.sroa.speculated.i.i.i.i.i, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %1 ], [ 0, %bb.c ] ; 3 uses
+_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit.i.i.i:    ; preds = %bb.d, %.cont35.i.i.i.i, %bb.c, %bb.b
+  %.sroa.0.sroa.0.0.i.i.i.i = phi i32 [ %3, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
+  %.sroa.0.sroa.9.0.i.i.i.i = phi i32 [ %spec.select92.i.i.i, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ] ; 4 uses
+  %.sroa.14.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.speculated53.i.i.i.i.i, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ] ; 4 uses
+  %.sroa.14.sroa.12.0.i.i.i.i = phi i32 [ %.sroa.speculated.i.i.i.i.i, %.cont35.i.i.i.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.ap = icmp slt i32 %i.u, 1
   %i.aq = icmp slt i32 %i.x, 1
   %i.ar = select i1 %i.ap, i1 true, i1 %i.aq
@@ -652,6 +646,9 @@ declare i32 @llvm.smax.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #27

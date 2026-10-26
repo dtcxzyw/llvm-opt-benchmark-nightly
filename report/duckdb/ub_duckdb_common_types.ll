@@ -205,15 +205,16 @@ _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i163: ; pr
 
 _ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit171: ; preds = %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i163
   %i.gi = icmp slt i32 %i.fi, %storemerge472
-  %2 = sub nsw i32 %storemerge472, %.sroa.speculated ; 2 uses
-  %3 = icmp sgt i32 %2, 0
-  %or.cond653 = select i1 %i.gi, i1 %3, i1 false
-  br i1 %or.cond653, label %.lr.ph.i.i.i172.a, label %_ZSt6fill_nISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEicET_S6_T0_RKT1_.exit185
+  br i1 %i.gi, label %.lr.ph.i.i.i172, label %_ZSt6fill_nISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEicET_S6_T0_RKT1_.exit185
 
-.lr.ph.i.i.i172.a:                                ; preds = %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit171, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178
-  %i.gj = phi ptr [ %i.hb, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178 ], [ %.pre5.i.i.i174, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit171 ] ; 2 uses
-  %i.gk = phi ptr [ %i.hc, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178 ], [ %.pre.i.i.i173, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit171 ] ; 2 uses
-  %.03.i.i.i175 = phi i32 [ %i.hd, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178 ], [ %2, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit171 ] ; 2 uses
+.lr.ph.i.i.i172:                                  ; preds = %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit171
+  %2 = sub nsw i32 %storemerge472, %.sroa.speculated
+  br label %.lr.ph.i.i.i172.a
+
+.lr.ph.i.i.i172.a:                                ; preds = %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178, %.lr.ph.i.i.i172
+  %i.gj = phi ptr [ %.pre5.i.i.i174, %.lr.ph.i.i.i172 ], [ %i.hb, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178 ] ; 2 uses
+  %i.gk = phi ptr [ %.pre.i.i.i173, %.lr.ph.i.i.i172 ], [ %i.hc, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178 ] ; 2 uses
+  %.03.i.i.i175 = phi i32 [ %2, %.lr.ph.i.i.i172 ], [ %i.hd, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i178 ] ; 2 uses
   %.not.i.i.i.i.i176 = icmp eq ptr %i.gk, %i.gj
   br i1 %.not.i.i.i.i.i176, label %bb.aw, label %bb.av
 
@@ -616,22 +617,20 @@ bb.e:                                             ; preds = %.peel.begin
 bb.f:                                             ; preds = %.peel.begin
   %i.ai = tail call i32 @llvm.umin.i32(i32 %spec.select, i32 %i.b) ; 2 uses
   %i.aj = zext nneg i32 %i.ai to i64
-  %.sroa.05.0.lcssa.i.i133.peel = add i64 %1, %i.aj ; 3 uses
+  %.sroa.05.0.lcssa.i.i133.peel = add i64 %1, %i.aj ; 2 uses
   %i.ak = icmp samesign ult i32 %i.b, %spec.select
   br i1 %i.ak, label %bb.g, label %.peel.next.preheader
 
 bb.g:                                             ; preds = %bb.f
-  %2 = sub nsw i32 %spec.select, %i.ai            ; 2 uses
-  %3 = icmp sgt i32 %2, 0
-  %i.al = add nsw i32 %2, -1
+  %2 = xor i32 %i.ai, -1
+  %i.al = add nsw i32 %spec.select, %2
   %i.am = zext nneg i32 %i.al to i64
   %i.an = add i64 %.sroa.05.0.lcssa.i.i133.peel, 1
   %i.ao = add i64 %i.an, %i.am
-  %.sroa.02.0.lcssa.i.i.i134.peel = select i1 %3, i64 %i.ao, i64 %.sroa.05.0.lcssa.i.i133.peel
   br label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %bb.e, %bb.f, %bb.g
-  %.sroa.0186.2231.ph = phi i64 [ %.sroa.02.0.lcssa.i.i.i134.peel, %bb.g ], [ %.sroa.05.0.lcssa.i.i133.peel, %bb.f ], [ %i.ah, %bb.e ]
+  %.sroa.0186.2231.ph = phi i64 [ %i.ao, %bb.g ], [ %.sroa.05.0.lcssa.i.i133.peel, %bb.f ], [ %i.ah, %bb.e ]
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.peel.next.preheader, %bb.k

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %_RINvNtNtNtNtCs3oUP
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.bm, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bn = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %i.bo = sub nuw i64 %.sroa.15.077115, %i.bn
+  %i.bo = sub nuw nsw i64 %.sroa.15.077115, %i.bn
   %i.bp = getelementptr inbounds nuw [64 x i8], ptr %.sroa.0.078114, i64 %i.bn
   br label %.backedge
 
@@ -608,7 +608,7 @@ _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCsdaEETE4Dqm
 
 bb.at:                                            ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCsdaEETE4DqmE_13typst_library6layout5point5PointNtNtB11_5frame9FrameItemEENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i
   %.sroa.7.0..sroa_idx3.i58.i.i.i = getelementptr inbounds nuw i8, ptr %i.fm, i64 24
-  %i.fo = add nuw i64 %.sroa.01.09.i5471.i.i.i, 1 ; 2 uses
+  %i.fo = add nuw nsw i64 %.sroa.01.09.i5471.i.i.i, 1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.55.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %.sroa.55.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(168) %.sroa.7.0..sroa_idx3.i58.i.i.i, i64 168, i1 false), !noalias !32864
   %i.fp = load ptr, ptr %i.dp, align 8, !noalias !32864, !nonnull !41, !noundef !41

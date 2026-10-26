@@ -206,7 +206,6 @@ $_ZZN2v88internal12RegisterNameENS0_11XMMRegisterEE5Names = comdat any
 @.str.18 = private unnamed_addr constant [3 x i8] c"s?\00", align 1
 @.str.19 = private unnamed_addr constant [26 x i8] c"start.value() >= position\00", align 1
 @.str.20 = private unnamed_addr constant [4 x i8] c"|%s\00", align 1
-@.str.21 = private unnamed_addr constant [24 x i8] c"end.value() >= position\00", align 1
 @.str.22 = private unnamed_addr constant [4 x i8] c"%s\0A\00", align 1
 @.str.23 = private unnamed_addr constant [57 x i8] c"Register allocator error: live v%d reached first block.\0A\00", align 1
 @.str.24 = private unnamed_addr constant [51 x i8] c"  (first use is at position %d in instruction %d)\0A\00", align 1
@@ -609,7 +608,7 @@ bb.d:                                             ; preds = %.lr.ph78, %._crit_e
   %.175 = phi i32 [ %.03982, %.lr.ph78 ], [ %.3.lcssa, %._crit_edge72 ] ; 4 uses
   %.sroa.0.0.copyload.i = load i32, ptr %.076, align 4 ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.076, i64 4
-  %.sroa.0.0.copyload.i41 = load i32, ptr %i.ai, align 4 ; 5 uses
+  %.sroa.0.0.copyload.i41 = load i32, ptr %i.ai, align 4 ; 4 uses
   %.not64 = icmp slt i32 %.sroa.0.0.copyload.i, %.175
   br i1 %.not64, label %bb.e, label %.preheader, !prof !51
 
@@ -684,25 +683,17 @@ _ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit: ; preds = %.s
   %i.bj = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #36
   %i.bk = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.d, i64 noundef %i.bj) #36 ; 0 uses
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.au, i32 %i.bi)
-  %i.bl = add nsw i32 %.sroa.speculated, %.2.lcssa ; 4 uses
-  %.not65 = icmp slt i32 %.sroa.0.0.copyload.i41, %i.bl
-  br i1 %.not65, label %3, label %4, !prof !51
+  %i.bl = add nsw i32 %.sroa.speculated, %.2.lcssa ; 3 uses
+  %3 = load i32, ptr %i.af, align 4
+  %4 = trunc i32 %3 to i1
+  %5 = select i1 %4, i8 45, i8 61                 ; 2 uses
+  %6 = icmp sgt i32 %.sroa.0.0.copyload.i41, %i.bl
+  br i1 %6, label %.lr.ph71, label %._crit_edge72
 
-3:                                                ; preds = %_ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.21) #35
-  unreachable
-
-4:                                                ; preds = %_ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit
-  %5 = load i32, ptr %i.af, align 4
-  %6 = trunc i32 %5 to i1
-  %7 = select i1 %6, i8 45, i8 61                 ; 2 uses
-  %8 = icmp sgt i32 %.sroa.0.0.copyload.i41, %i.bl
-  br i1 %8, label %.lr.ph71, label %._crit_edge72
-
-.lr.ph71:                                         ; preds = %4, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50
-  %.369 = phi i32 [ %i.bu, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50 ], [ %i.bl, %4 ]
+.lr.ph71:                                         ; preds = %_ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50
+  %.369 = phi i32 [ %i.bu, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50 ], [ %i.bl, %_ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i8 %7, ptr %i.a, align 1
+  store i8 %5, ptr %i.a, align 1
   %i.bm = load ptr, ptr %1, align 8
   %i.bn = getelementptr i8, ptr %i.bm, i64 -24
   %i.bo = load i64, ptr %i.bn, align 8
@@ -717,7 +708,7 @@ bb.i:                                             ; preds = %.lr.ph71
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50
 
 bb.j:                                             ; preds = %.lr.ph71
-  %i.bt = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %1, i8 noundef signext %7) #36 ; 0 uses
+  %i.bt = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %1, i8 noundef signext %5) #36 ; 0 uses
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50: ; preds = %bb.i, %bb.j
@@ -726,8 +717,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50: ; preds = %bb.i, %
   %exitcond88.not = icmp eq i32 %i.bu, %.sroa.0.0.copyload.i41
   br i1 %exitcond88.not, label %._crit_edge72, label %.lr.ph71, !llvm.loop !73
 
-._crit_edge72:                                    ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50, %4
-  %.3.lcssa = phi i32 [ %i.bl, %4 ], [ %.sroa.0.0.copyload.i41, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50 ] ; 2 uses
+._crit_edge72:                                    ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50, %_ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit
+  %.3.lcssa = phi i32 [ %i.bl, %_ZNK2v88internal8compiler17RegisterAllocator12RegisterNameEi.exit ], [ %.sroa.0.0.copyload.i41, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit50 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #36
   %i.bv = getelementptr inbounds nuw i8, ptr %.076, i64 8 ; 2 uses
   %.not40 = icmp eq ptr %i.bv, %i.ae

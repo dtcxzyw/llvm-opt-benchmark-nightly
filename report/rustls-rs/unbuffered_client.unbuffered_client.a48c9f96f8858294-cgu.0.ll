@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %_RNvXs4z_NtNtCs7ZUl
   %.sroa.018.0151.i.i.i.i.i.i = phi ptr [ %.val.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ %i.dp, %_RNvXs4z_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i ] ; 18 uses
   %.sroa.7.0148.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i ], [ %i.dq, %_RNvXs4z_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i ] ; 7 uses
   %.sroa.10.0147.i.i.i.i.i.i = phi i64 [ %i.cp, %.lr.ph.i.i.i.i.i.i ], [ %i.dn, %_RNvXs4z_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i ]
-  %i.dn = add i64 %.sroa.10.0147.i.i.i.i.i.i, -1  ; 2 uses
+  %i.dn = add nsw i64 %.sroa.10.0147.i.i.i.i.i.i, -1 ; 2 uses
   %i.do = icmp eq ptr %.sroa.018.0151.i.i.i.i.i.i, %i.cw
   br i1 %i.do, label %_RNvXsb_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16EchConfigPayloadENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCse7TjioWD9Jw_17unbuffered_client.exit.i.i.i.i, label %bb.q
 
@@ -431,7 +431,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7Tj
   %.sroa.013.049.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.gb, %_RNvXs4D_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_18EchConfigExtensionNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i.i.i.i.i ], [ %.val.i.i.i.i.i.i.i.i, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7TjioWD9Jw_17unbuffered_client.exit.i.i.i.i.i.i.i.i.i.i ] ; 8 uses
   %.sroa.7.048.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.gc, %_RNvXs4D_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_18EchConfigExtensionNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i.i.i.i.i ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7TjioWD9Jw_17unbuffered_client.exit.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %.sroa.10.047.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.fz, %_RNvXs4D_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_18EchConfigExtensionNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ft, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7TjioWD9Jw_17unbuffered_client.exit.i.i.i.i.i.i.i.i.i.i ]
-  %i.fz = add i64 %.sroa.10.047.i.i.i.i.i.i.i.i.i.i, -1 ; 2 uses
+  %i.fz = add nsw i64 %.sroa.10.047.i.i.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.ga = icmp eq ptr %.sroa.013.049.i.i.i.i.i.i.i.i.i.i, %i.fx
   br i1 %i.ga, label %_RNvXs4v_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i.i, label %bb.ae
 
@@ -834,7 +834,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7Tj
   %.sroa.012.023.i.i.i.i.i.i = phi ptr [ %i.mm, %bb.co ], [ %.val11.i.i.i.i, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7TjioWD9Jw_17unbuffered_client.exit.i.i31.i.i.i.i ] ; 3 uses
   %.sroa.7.022.i.i.i.i.i.i = phi i64 [ %i.ml, %bb.co ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7TjioWD9Jw_17unbuffered_client.exit.i.i31.i.i.i.i ] ; 3 uses
   %.sroa.10.021.i.i.i.i.i.i = phi i64 [ %i.mj, %bb.co ], [ %i.lz, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCse7TjioWD9Jw_17unbuffered_client.exit.i.i31.i.i.i.i ]
-  %i.mj = add i64 %.sroa.10.021.i.i.i.i.i.i, -1   ; 2 uses
+  %i.mj = add nsw i64 %.sroa.10.021.i.i.i.i.i.i, -1 ; 2 uses
   %i.mk = icmp eq ptr %.sroa.012.023.i.i.i.i.i.i, %i.mg
   br i1 %i.mk, label %.loopexit.i.i.i.i, label %bb.cn
 
@@ -962,7 +962,7 @@ bb.cz:                                            ; preds = %_RNvXsH_NtCs7ZUl82O
   %.sroa.013.039.i.i.i.i.i.i = phi ptr [ %.val15.i.i.i.i, %.lr.ph.i.i36.i.i.i.i ], [ %i.np, %_RNvXsH_NtCs7ZUl82OSlxp_6rustls5errorNtB5_18ExtendedKeyPurposeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i ] ; 5 uses
   %.sroa.7.038.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i36.i.i.i.i ], [ %i.nq, %_RNvXsH_NtCs7ZUl82OSlxp_6rustls5errorNtB5_18ExtendedKeyPurposeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i ] ; 3 uses
   %.sroa.10.037.i.i.i.i.i.i = phi i64 [ %i.nb, %.lr.ph.i.i36.i.i.i.i ], [ %i.nn, %_RNvXsH_NtCs7ZUl82OSlxp_6rustls5errorNtB5_18ExtendedKeyPurposeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i.i.i ]
-  %i.nn = add i64 %.sroa.10.037.i.i.i.i.i.i, -1   ; 2 uses
+  %i.nn = add nsw i64 %.sroa.10.037.i.i.i.i.i.i, -1 ; 2 uses
   %i.no = icmp eq ptr %.sroa.013.039.i.i.i.i.i.i, %i.ni
   br i1 %i.no, label %.loopexit50.i.i.i.i, label %bb.da
 

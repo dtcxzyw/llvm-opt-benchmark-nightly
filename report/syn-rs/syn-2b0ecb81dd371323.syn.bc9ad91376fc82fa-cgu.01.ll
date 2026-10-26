@@ -202,7 +202,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWe
   %.sroa.012.047.i = phi ptr [ %i.u, %_RNvXs1b_Cs3b5wA5ywLsd_10proc_macroNtB6_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i ], [ %i.e, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ] ; 14 uses
   %.sroa.7.045.i = phi i64 [ %i.v, %_RNvXs1b_Cs3b5wA5ywLsd_10proc_macroNtB6_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ] ; 3 uses
   %.sroa.10.044.i = phi i64 [ %i.s, %_RNvXs1b_Cs3b5wA5ywLsd_10proc_macroNtB6_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i ], [ %i.j, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ]
-  %i.s = add i64 %.sroa.10.044.i, -1              ; 2 uses
+  %i.s = add nsw i64 %.sroa.10.044.i, -1          ; 2 uses
   %i.t = icmp eq ptr %.sroa.012.047.i, %i.q
   br i1 %i.t, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtCs3b5wA5ywLsd_10proc_macro9TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsgbWeKYPjk8w_3syn.exit, label %bb.c
 
@@ -381,7 +381,7 @@ bb.c:                                             ; preds = %_RNvXsO_Cs6et67aoV1
   %.sroa.014.074.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.v, %_RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i ] ; 22 uses
   %.sroa.7.071.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %_RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i ] ; 3 uses
   %.sroa.10.070.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.t, %_RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i ]
-  %i.t = add i64 %.sroa.10.070.i, -1              ; 2 uses
+  %i.t = add nsw i64 %.sroa.10.070.i, -1          ; 2 uses
   %i.u = icmp eq ptr %.sroa.014.074.i, %i.r
   br i1 %i.u, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtCs6et67aoV1xO_11proc_macro29TokenTreeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsgbWeKYPjk8w_3syn.exit, label %bb.d
 
@@ -667,7 +667,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWe
   %.sroa.012.023.i = phi ptr [ %i.w, %bb.d ], [ %i.f, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ] ; 3 uses
   %.sroa.7.022.i = phi i64 [ %i.v, %bb.d ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.t, %bb.d ], [ %i.k, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ]
-  %i.t = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.t = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.u = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.u, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtNtCsgbWeKYPjk8w_3syn4attr9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBO_.exit, label %bb.c
 
@@ -750,7 +750,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWe
   %.sroa.012.023.i = phi ptr [ %i.w, %bb.d ], [ %i.f, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ] ; 3 uses
   %.sroa.7.022.i = phi i64 [ %i.v, %bb.d ], [ 0, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.t, %bb.d ], [ %i.k, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgbWeKYPjk8w_3syn.exit.i ]
-  %i.t = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.t = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.u = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.u, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inNtNtCsgbWeKYPjk8w_3syn5error12ErrorMessageNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBO_.exit, label %bb.c
 
@@ -838,7 +838,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn2ty4TypeNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -931,7 +931,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn2ty8NamedArgNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1024,7 +1024,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn4data5FieldNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1117,7 +1117,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn4data7VariantNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1210,7 +1210,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn4expr10FieldValueNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1303,7 +1303,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn4expr4ExprNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1396,7 +1396,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn4path11PathSegmentNtNtBP_5token7PathSepENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1489,7 +1489,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn4path15GenericArgumentNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1582,7 +1582,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn8generics12GenericParamNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1675,7 +1675,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn8generics14TypeParamBoundNtNtBP_5token4PlusENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1768,7 +1768,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn8generics14WherePredicateNtNtBP_5token5CommaENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
@@ -1861,7 +1861,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.i
   %.sroa.012.023.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.e ] ; 4 uses
   %.sroa.7.022.i = phi i64 [ 0, %.lr.ph.i ], [ %i.w, %bb.e ] ; 3 uses
   %.sroa.10.021.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.u, %bb.e ]
-  %i.u = add i64 %.sroa.10.021.i, -1              ; 2 uses
+  %i.u = add nsw i64 %.sroa.10.021.i, -1          ; 2 uses
   %i.v = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.v, label %_RINvXNvMNtCs4wP2HXfJTCR_5alloc5sliceSp9to_vec_inTNtNtCsgbWeKYPjk8w_3syn8lifetime8LifetimeNtNtBP_5token4PlusENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBP_.exit, label %bb.d
 
