@@ -204,7 +204,7 @@ _ZN15StringExtractor10SkipSpacesEv.exit:          ; preds = %bb.b, %bb.c, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph62, %bb.r
-  %.02861 = phi i32 [ 0, %.lr.ph62 ], [ %i.az, %bb.r ] ; 4 uses
+  %.02861 = phi i32 [ 0, %.lr.ph62 ], [ %i.az, %bb.r ] ; 2 uses
   %.03060 = phi i32 [ 0, %.lr.ph62 ], [ %i.ay, %bb.r ] ; 2 uses
   %.03259 = phi i32 [ 0, %.lr.ph62 ], [ %.133, %bb.r ] ; 2 uses
   %i.t = phi i64 [ %.promoted58, %.lr.ph62 ], [ %i.ax, %bb.r ] ; 3 uses
@@ -288,27 +288,25 @@ _ZL14xdigit_to_sintc.exit43:                      ; preds = %bb.m, %bb.o, %bb.p
   %.0.i42 = phi i32 [ %i.am, %bb.m ], [ %i.ao, %bb.o ], [ %spec.select.i41, %bb.p ]
   %i.ar = add nuw i64 %i.t, 2                     ; 2 uses
   store i64 %i.ar, ptr %i.c, align 8, !tbaa !20
-  %i.as = and i32 %.0.i, 255
-  %3 = add i32 %.02861, 4
-  %i.at = shl i32 %i.as, %3
-  %i.au = and i32 %.0.i42, 255
-  %4 = shl i32 %i.au, %.02861
-  %i.av = or i32 %i.at, %4
+  %i.as = and i32 %.0.i42, 255
+  %i.at = shl nsw i32 %.0.i, 4
+  %i.au = and i32 %i.at, 4080
+  %i.av = or i32 %i.as, %i.au
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.k, %_ZL14xdigit_to_sintc.exit
   %i.aw = and i32 %.0.i, 255
-  %5 = shl i32 %i.aw, %.02861
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %_ZL14xdigit_to_sintc.exit43
   %.sink82 = phi i32 [ 1, %bb.q ], [ 2, %_ZL14xdigit_to_sintc.exit43 ]
   %.sink = phi i32 [ 4, %bb.q ], [ 8, %_ZL14xdigit_to_sintc.exit43 ]
   %i.ax = phi i64 [ %i.af, %bb.q ], [ %i.ar, %_ZL14xdigit_to_sintc.exit43 ] ; 2 uses
-  %.pn.a = phi i32 [ %5, %bb.q ], [ %i.av, %_ZL14xdigit_to_sintc.exit43 ]
+  %.pn.a = phi i32 [ %i.aw, %bb.q ], [ %i.av, %_ZL14xdigit_to_sintc.exit43 ]
   %i.ay = add nuw nsw i32 %.03060, %.sink82
   %i.az = add i32 %.02861, %.sink
-  %.133 = or i32 %.pn.a, %.03259                  ; 2 uses
+  %.pn = shl i32 %.pn.a, %.02861
+  %.133 = or i32 %.pn, %.03259                    ; 2 uses
   %i.ba = icmp ult i64 %i.ax, %i.b
   br i1 %i.ba, label %bb.d, label %.critedge2, !llvm.loop !25
 

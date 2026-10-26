@@ -205,18 +205,14 @@ bb.g:                                             ; preds = %_ZNSt8optionalIjEaS
 _ZN5clang13ASTStmtWriter15PakedBitsWriter10updateBitsEv.exit: ; preds = %bb.f, %bb.g
   %i.ay = zext i1 %i.j to i32
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 2 uses
-  %i.ba = load i32, ptr %i.az, align 4, !tbaa !253 ; 4 uses
-  %2 = shl nuw i32 %i.ay, %i.ba
+  %i.ba = load i32, ptr %i.az, align 4, !tbaa !253 ; 2 uses
   %i.bb = load i32, ptr %i.x, align 8, !tbaa !251
-  %3 = or i32 %i.bb, %2
-  %4 = add i32 %i.ba, 1
-  %5 = zext i1 %i.r to i32
-  %6 = shl nuw i32 %5, %4
-  %i.bc = or i32 %3, %6
-  %7 = add i32 %i.ba, 2
-  %8 = zext i1 %i.w to i32
-  %i.bd = shl nuw i32 %8, %7
-  %i.be = or i32 %i.bc, %i.bd
+  %2 = select i1 %i.r, i32 2, i32 0
+  %i.bc = or disjoint i32 %2, %i.ay
+  %3 = select i1 %i.w, i32 4, i32 0
+  %4 = or disjoint i32 %i.bc, %3
+  %i.bd = shl i32 %4, %i.ba
+  %i.be = or i32 %i.bd, %i.bb
   store i32 %i.be, ptr %i.x, align 8, !tbaa !251
   %i.bf = add i32 %i.ba, 3
   store i32 %i.bf, ptr %i.az, align 4, !tbaa !253
@@ -619,12 +615,12 @@ _ZN5clang16StmtIteratorImplINS_12StmtIteratorERPNS_4StmtEEppEv.exit: ; preds = %
 define dso_local void @_ZN5clang13ASTStmtWriter15VisitMemberExprEPNS_10MemberExprE(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   tail call void @_ZN5clang13ASTStmtWriter9VisitExprEPNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr noundef %1)
-  %i.a = load i32, ptr %1, align 8                ; 5 uses
-  %i.b = and i32 %i.a, 1048576                    ; 2 uses
+  %i.a = load i32, ptr %1, align 8                ; 6 uses
+  %i.b = and i32 %i.a, 1048576
   %.not = icmp eq i32 %i.b, 0
-  %i.c = and i32 %i.a, 2097152                    ; 2 uses
+  %i.c = and i32 %i.a, 2097152
   %.not46 = icmp eq i32 %i.c, 0
-  %i.d = and i32 %i.a, 4194304                    ; 2 uses
+  %i.d = and i32 %i.a, 4194304
   %.not48 = icmp eq i32 %i.d, 0                   ; 2 uses
   br i1 %.not48, label %_ZNK5clang10MemberExpr18getNumTemplateArgsEv.exit, label %_ZNK5clang10MemberExpr23hasExplicitTemplateArgsEv.exit.i
 
@@ -710,20 +706,13 @@ bb.e:                                             ; preds = %_ZNSt8optionalIjEaS
   br label %_ZN5clang13ASTStmtWriter15PakedBitsWriter10updateBitsEv.exit
 
 _ZN5clang13ASTStmtWriter15PakedBitsWriter10updateBitsEv.exit: ; preds = %bb.d, %bb.e
-  %.lobit = lshr exact i32 %i.b, 20
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 8 uses
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !253 ; 4 uses
-  %2 = shl nuw i32 %.lobit, %i.at
+  %i.at = load i32, ptr %i.as, align 4, !tbaa !253 ; 2 uses
   %i.au = load i32, ptr %i.r, align 8, !tbaa !251
-  %3 = or i32 %i.au, %2
-  %4 = add i32 %i.at, 1
-  %.lobit45 = lshr exact i32 %i.c, 21
-  %5 = shl nuw i32 %.lobit45, %4
-  %6 = or i32 %3, %5
-  %7 = add i32 %i.at, 2
-  %.lobit47 = lshr exact i32 %i.d, 22
-  %i.av = shl nuw i32 %.lobit47, %7
-  %i.aw = or i32 %6, %i.av
+  %.lobit45 = lshr i32 %i.a, 20
+  %2 = and i32 %.lobit45, 7
+  %i.av = shl i32 %2, %i.at
+  %i.aw = or i32 %i.av, %i.au
   store i32 %i.aw, ptr %i.r, align 8, !tbaa !251
   %i.ax = add i32 %i.at, 3
   store i32 %i.ax, ptr %i.as, align 4, !tbaa !253
