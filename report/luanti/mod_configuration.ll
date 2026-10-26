@@ -204,8 +204,6 @@ $_ZSt19piecewise_construct = comdat any
 @.str.32 = private unnamed_addr constant [54 x i8] c"Impossible to depend on the mod specified by last_mod\00", align 1
 @.str.33 = private unnamed_addr constant [7 x i8] c"(null)\00", align 1
 @.str.34 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
-@.str.36 = private unnamed_addr constant [4 x i8] c"yes\00", align 1
-@.str.37 = private unnamed_addr constant [5 x i8] c"true\00", align 1
 @_ZTV8ModError = linkonce_odr dso_local constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTI8ModError, ptr @_ZN13BaseExceptionD2Ev, ptr @_ZN8ModErrorD0Ev, ptr @_ZNK13BaseException4whatEv] }, comdat, align 8
 @_ZTV13BaseException = linkonce_odr dso_local constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTI13BaseException, ptr @_ZN13BaseExceptionD2Ev, ptr @_ZN13BaseExceptionD0Ev, ptr @_ZNK13BaseException4whatEv] }, comdat, align 8
 @_ZTTNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE = external unnamed_addr constant [4 x ptr], align 8
@@ -608,8 +606,8 @@ _Z10my_tolowerc.exit.i:                           ; preds = %bb.e, %.lr.ph.i6
   br i1 %exitcond.not.i7, label %_Z9lowercaseB5cxx11St17basic_string_viewIcSt11char_traitsIcEE.exit, label %.lr.ph.i6, !llvm.loop !240
 
 _Z9lowercaseB5cxx11St17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %_Z10my_tolowerc.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i
-  %i.af = load i64, ptr %i.q, align 8, !tbaa !60  ; 3 uses
-  %.pre19 = load ptr, ptr %2, align 8, !tbaa !58  ; 7 uses
+  %i.af = load i64, ptr %i.q, align 8, !tbaa !60
+  %.pre19 = load ptr, ptr %2, align 8, !tbaa !58  ; 8 uses
   switch i64 %i.af, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11.thread17 [
     i64 1, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 3, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9
@@ -622,13 +620,23 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.ag, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11.thread17
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9: ; preds = %_Z9lowercaseB5cxx11St17basic_string_viewIcSt11char_traitsIcEE.exit
-  %bcmp.i8 = call i32 @bcmp(ptr %.pre19, ptr nonnull @.str.36, i64 %i.af)
-  %i.ah = icmp eq i32 %bcmp.i8, 0
+  %3 = load i16, ptr %.pre19, align 1
+  %4 = xor i16 %3, 25977
+  %5 = getelementptr i8, ptr %.pre19, i64 2
+  %6 = load i8, ptr %5, align 1
+  %7 = zext i8 %6 to i16
+  %8 = xor i16 %7, 115
+  %9 = or i16 %4, %8
+  %10 = icmp ne i16 %9, 0
+  %11 = zext i1 %10 to i32
+  %i.ah = icmp eq i32 %11, 0
   br i1 %i.ah, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11.thread17
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11: ; preds = %_Z9lowercaseB5cxx11St17basic_string_viewIcSt11char_traitsIcEE.exit
-  %bcmp.i10 = call i32 @bcmp(ptr %.pre19, ptr nonnull @.str.37, i64 %i.af)
-  %i.ai = icmp eq i32 %bcmp.i10, 0
+  %12 = load i32, ptr %.pre19, align 1
+  %13 = icmp ne i32 %12, 1702195828
+  %14 = zext i1 %13 to i32
+  %i.ai = icmp eq i32 %14, 0
   br i1 %i.ai, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11.thread17
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11.thread17: ; preds = %_Z9lowercaseB5cxx11St17basic_string_viewIcSt11char_traitsIcEE.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11

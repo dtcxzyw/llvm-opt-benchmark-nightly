@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %bb.ba
 
 bb.bd:                                            ; preds = %bb.bc
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.59) #33
-          to label %.noexc143 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a
+          to label %.noexc143 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc143:                                        ; preds = %bb.bd
   unreachable
@@ -220,7 +220,7 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.bc
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.kf = shl nuw nsw i64 %i.ke, 2
   %i.kg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kf) #34
-          to label %.noexc144 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a ; 4 uses
+          to label %.noexc144 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 4 uses
 
 .noexc144:                                        ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i
   %i.kh = getelementptr inbounds i8, ptr %i.kg, i64 %i.jy ; 2 uses
@@ -253,9 +253,19 @@ _ZNSt6vectorIfSaIfEE9push_backEOf.exit:           ; preds = %_ZNSt6vectorIfSaIfE
   %.not83 = icmp sgt i32 %.053272, %i.fo
   br i1 %.not83, label %._crit_edge275, label %bb.au, !llvm.loop !92
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a: ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i, %bb.bd
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit: ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bd
   %lpad.loopexit.split-lp716 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
+  %17 = phi i64 [ %i.jy, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ 9223372036854775804, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp716, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %.not.i.i.i153 = icmp eq ptr %.sroa.0180.2269, null
   br i1 %.not.i.i.i153, label %_ZNSt6vectorIfSaIfEED2Ev.exit154, label %bb.bp
 
@@ -399,11 +409,11 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   br label %bb.bg
 
 bb.bp:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0180.2269, i64 noundef %i.jy) #32
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0180.2269, i64 noundef %17) #32
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit154
 
 _ZNSt6vectorIfSaIfEED2Ev.exit154:                 ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a, %bb.bp, %bb.at
-  %.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.hb, %bb.at ], [ %lpad.loopexit.split-lp716, %bb.bp ], [ %lpad.loopexit.split-lp716, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a ] ; 2 uses
+  %.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.hb, %bb.at ], [ %lpad.phi, %bb.bp ], [ %lpad.phi, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.a ] ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN7nanovdb10GridHandleIN4pbrt13NanoVDBBufferEEE, i64 16), ptr %16, align 8, !tbaa !37
   %i.lz = load ptr, ptr %i.ct, align 8, !tbaa !42 ; 2 uses
   %.not.i.i.i.i.i155 = icmp eq ptr %i.lz, null
@@ -806,7 +816,7 @@ _ZNKSt6vectorIN7nanovdb2io12GridMetaDataESaIS2_EE12_M_check_lenEmPKc.exit: ; pre
 .lr.ph.i.i.i30.prol.loopexit:                     ; preds = %.lr.ph.i.i.i30.prol, %_ZNKSt6vectorIN7nanovdb2io12GridMetaDataESaIS2_EE12_M_check_lenEmPKc.exit
   %.013.i.i.i31.unr = phi ptr [ %i.bi, %_ZNKSt6vectorIN7nanovdb2io12GridMetaDataESaIS2_EE12_M_check_lenEmPKc.exit ], [ %i.br, %.lr.ph.i.i.i30.prol ]
   %.01012.i.i.i32.unr = phi i64 [ %1, %_ZNKSt6vectorIN7nanovdb2io12GridMetaDataESaIS2_EE12_M_check_lenEmPKc.exit ], [ %i.bq, %.lr.ph.i.i.i30.prol ]
-  %2 = icmp ult i64 %1, 4
+  %2 = icmp slt i64 %1, 4
   br i1 %2, label %_ZSt27__uninitialized_default_n_aIPN7nanovdb2io12GridMetaDataEmS2_ET_S4_T0_RSaIT1_E.exit41, label %.lr.ph.i.i.i30
 
 .lr.ph.i.i.i30:                                   ; preds = %.lr.ph.i.i.i30.prol.loopexit, %.lr.ph.i.i.i30

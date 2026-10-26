@@ -205,9 +205,6 @@ $_ZN9Stockfish3shm6detail12CleanupHooks14register_once_E = comdat any
 @.str.24 = private unnamed_addr constant [17 x i8] c"Syzygy50MoveRule\00", align 1
 @.str.25 = private unnamed_addr constant [17 x i8] c"SyzygyProbeLimit\00", align 1
 @.str.27 = private unnamed_addr constant [14 x i8] c"EvalFileSmall\00", align 1
-@.str.28 = private unnamed_addr constant [7 x i8] c"system\00", align 1
-@.str.29 = private unnamed_addr constant [9 x i8] c"hardware\00", align 1
-@.str.30 = private unnamed_addr constant [5 x i8] c"none\00", align 1
 @.str.31 = private unnamed_addr constant [17 x i8] c"Network replica \00", align 1
 @.str.32 = private unnamed_addr constant [3 x i8] c": \00", align 1
 @.str.33 = private unnamed_addr constant [15 x i8] c"No allocation.\00", align 1
@@ -610,7 +607,7 @@ bb.a:
   %4 = alloca %"class.Stockfish::NumaConfig", align 16 ; 17 uses
   %5 = alloca %"class.Stockfish::NumaConfig", align 16 ; 16 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !68   ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !68
   switch i64 %i.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread85 [
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 6, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit7
@@ -626,9 +623,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.g, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit7: ; preds = %bb.a
-  %.pre = load ptr, ptr %1, align 8, !tbaa !67
-  %bcmp.i6 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str.28, i64 %i.b)
-  %i.h = icmp eq i32 %bcmp.i6, 0
+  %.pre = load ptr, ptr %1, align 8, !tbaa !67    ; 2 uses
+  %6 = load i32, ptr %.pre, align 1
+  %7 = xor i32 %6, 1953724787
+  %8 = getelementptr i8, ptr %.pre, i64 4
+  %9 = load i16, ptr %8, align 1
+  %10 = zext i16 %9 to i32
+  %11 = xor i32 %10, 28005
+  %12 = or i32 %7, %11
+  %13 = icmp ne i32 %12, 0
+  %14 = zext i1 %13 to i32
+  %i.h = icmp eq i32 %14, 0
   br i1 %i.h, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread85
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit7, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
@@ -774,8 +779,10 @@ _ZN9Stockfish10NumaConfigD2Ev.exit:               ; preds = %_ZSt8_DestroyIPSt3s
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9: ; preds = %bb.a
   %.pre86 = load ptr, ptr %1, align 8, !tbaa !67
-  %bcmp.i8 = tail call i32 @bcmp(ptr %.pre86, ptr nonnull @.str.29, i64 %i.b)
-  %i.bl = icmp eq i32 %bcmp.i8, 0
+  %15 = load i64, ptr %.pre86, align 1
+  %16 = icmp ne i64 %15, 7310012310589956456
+  %17 = zext i1 %16 to i32
+  %i.bl = icmp eq i32 %17, 0
   br i1 %i.bl, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread85
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9
@@ -920,8 +927,10 @@ _ZN9Stockfish10NumaConfigD2Ev.exit23:             ; preds = %_ZSt8_DestroyIPSt3s
   br label %bb.n
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %bcmp.i24 = tail call i32 @bcmp(ptr nonnull %i.c, ptr nonnull @.str.30, i64 %i.b)
-  %i.dp = icmp eq i32 %bcmp.i24, 0
+  %18 = load i32, ptr %i.c, align 1
+  %19 = icmp ne i32 %18, 1701736302
+  %20 = zext i1 %19 to i32
+  %i.dp = icmp eq i32 %20, 0
   br i1 %i.dp, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread85
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25
@@ -1324,7 +1333,7 @@ bb.q:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 _ZN9Stockfish8L3DomainaSEOS0_.exit.i.i.i.i.i.i.i: ; preds = %bb.q, %.lr.ph.i.i.i.i.i.i.i
   %i.ec = getelementptr inbounds nuw i8, ptr %.0910.i.i.i.i.i.i.i, i64 56
   %i.ed = add nsw i64 %.012.i.i.i.i.i.i.i, -1
-  %6 = icmp sgt i64 %.012.i.i.i.i.i.i.i, 1
+  %6 = icmp samesign ugt i64 %.012.i.i.i.i.i.i.i, 1
   br i1 %6, label %.lr.ph.i.i.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN9Stockfish8L3DomainESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i, !llvm.loop !530
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN9Stockfish8L3DomainESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.loopexit.i.i: ; preds = %_ZN9Stockfish8L3DomainaSEOS0_.exit.i.i.i.i.i.i.i
@@ -1727,7 +1736,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i, i64 32
   %i.v = add nsw i64 %.052.i.i.i.i, -1
-  %1 = icmp sgt i64 %.052.i.i.i.i, 1
+  %1 = icmp samesign ugt i64 %.052.i.i.i.i, 1
   br i1 %1, label %bb.c, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !669
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.g

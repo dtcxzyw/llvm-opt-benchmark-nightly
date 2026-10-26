@@ -202,7 +202,7 @@ _Z14isAbsolutePathSt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %bb
 .lr.ph:                                           ; preds = %.lr.ph.outer, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12emplace_backIJRA3_KcEEERS3_DpOT_.exit.thread
   %.0178 = phi i64 [ %i.bt, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12emplace_backIJRA3_KcEEERS3_DpOT_.exit.thread ], [ %.0178.ph, %.lr.ph.outer ] ; 3 uses
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %.0178 ; 2 uses
-  %.sroa.0108.0.copyload = load i64, ptr %i.q, align 8, !tbaa !26 ; 3 uses
+  %.sroa.0108.0.copyload = load i64, ptr %i.q, align 8, !tbaa !26 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !27 ; 4 uses
   switch i64 %.sroa.0108.0.copyload, label %.thread [
@@ -340,11 +340,12 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph
   br i1 %i.az, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12emplace_backIJRA3_KcEEERS3_DpOT_.exit, label %.thread
 
 .thread:                                          ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %.lr.ph, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i
+  %.sroa.0108.0.copyload335 = phi i64 [ 1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ], [ %.sroa.0108.0.copyload, %.lr.ph ], [ 2, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ] ; 2 uses
   %.not.i36 = icmp eq ptr %.sroa.17.0176.ph, %.sroa.37.0175.ph
   br i1 %.not.i36, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.thread
-  store i64 %.sroa.0108.0.copyload, ptr %.sroa.17.0176.ph, align 8, !tbaa !26
+  store i64 %.sroa.0108.0.copyload335, ptr %.sroa.17.0176.ph, align 8, !tbaa !26
   %.sroa.9.0..sroa_idx111 = getelementptr inbounds nuw i8, ptr %.sroa.17.0176.ph, i64 8
   store ptr %.sroa.9.0.copyload, ptr %.sroa.9.0..sroa_idx111, align 8, !tbaa !27
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.17.0176.ph, i64 16
@@ -379,7 +380,7 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
 
 .noexc38:                                         ; preds = %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bd ; 2 uses
-  store i64 %.sroa.0108.0.copyload, ptr %i.bm, align 8, !tbaa !26
+  store i64 %.sroa.0108.0.copyload335, ptr %i.bm, align 8, !tbaa !26
   %.sroa.9.0..sroa_idx113 = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   store ptr %.sroa.9.0.copyload, ptr %.sroa.9.0..sroa_idx113, align 8, !tbaa !27
   %.not10.i.i.i.i.i = icmp eq ptr %.sroa.0115.0177.ph, %.sroa.17.0176.ph

@@ -202,7 +202,7 @@ bb.u:                                             ; preds = %bb.s
 .outer.outer:                                     ; preds = %.outer.outer.backedge, %bb.u
   %.sroa.872.0.ph.ph = phi i32 [ -1, %bb.u ], [ %.sroa.872.1, %.outer.outer.backedge ]
   %.sroa.066.0.ph.ph = phi i64 [ undef, %bb.u ], [ %.sroa.066.1, %.outer.outer.backedge ] ; 4 uses
-  %.sroa.958.0.ph.ph = phi i32 [ -1, %bb.u ], [ %.sroa.958.2, %.outer.outer.backedge ]
+  %.sroa.958.0.ph.ph = phi i32 [ -1, %bb.u ], [ %.sroa.958.2293, %.outer.outer.backedge ]
   %.sroa.051.0.ph.ph = phi i64 [ undef, %bb.u ], [ %.sroa.051.2201, %.outer.outer.backedge ]
   br label %.outer
 
@@ -329,7 +329,7 @@ bb.ab:                                            ; preds = %.lr.ph
   br i1 %.not123, label %bb.ad, label %bb.ac
 
 .loopexit:                                        ; preds = %.lr.ph, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx26sample6SampleNtNtNtBG_7service3ipc7ServiceSNtNtB1l_7builder19CustomPayloadMarkerNtB1N_18CustomHeaderMarkerEECsadSKrpJ73hd_12iox2_service.exit135
-  %.sroa.958.2 = phi i32 [ %i.em, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx26sample6SampleNtNtNtBG_7service3ipc7ServiceSNtNtB1l_7builder19CustomPayloadMarkerNtB1N_18CustomHeaderMarkerEECsadSKrpJ73hd_12iox2_service.exit135 ], [ %.sroa.958.1184, %.lr.ph ] ; 8 uses
+  %.sroa.958.2 = phi i32 [ %i.em, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx26sample6SampleNtNtNtBG_7service3ipc7ServiceSNtNtB1l_7builder19CustomPayloadMarkerNtB1N_18CustomHeaderMarkerEECsadSKrpJ73hd_12iox2_service.exit135 ], [ %.sroa.958.1184, %.lr.ph ] ; 6 uses
   %.sroa.051.2 = phi i64 [ %i.el, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx26sample6SampleNtNtNtBG_7service3ipc7ServiceSNtNtB1l_7builder19CustomPayloadMarkerNtB1N_18CustomHeaderMarkerEECsadSKrpJ73hd_12iox2_service.exit135 ], [ %.sroa.051.1185, %.lr.ph ] ; 5 uses
   %.sroa.041.0 = phi i1 [ true, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsg6ZEkMtNi4J_8iceoryx26sample6SampleNtNtNtBG_7service3ipc7ServiceSNtNtB1l_7builder19CustomPayloadMarkerNtB1N_18CustomHeaderMarkerEECsadSKrpJ73hd_12iox2_service.exit135 ], [ %.sroa.02.0.i131, %.lr.ph ]
   %i.en = call { i64, i32 } @_RNvMNtCsigunbJSLHCW_3std4timeNtB2_7Instant7elapsed(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.l) #23
@@ -434,8 +434,9 @@ bb.aj:                                            ; preds = %.loopexit
   br i1 %.not124, label %bb.al, label %bb.ak
 
 .loopexit151:                                     ; preds = %.loopexit, %.loopexit152
+  %.sroa.958.2293 = phi i32 [ %.sroa.958.2294, %.loopexit152 ], [ %.sroa.958.2, %.loopexit ] ; 4 uses
   %.sroa.051.2201 = phi i64 [ %.sroa.051.2202, %.loopexit152 ], [ %.sroa.051.2, %.loopexit ] ; 2 uses
-  %.sroa.872.1 = phi i32 [ %.sroa.958.2, %.loopexit152 ], [ %.sroa.872.0.ph, %.loopexit ] ; 5 uses
+  %.sroa.872.1 = phi i32 [ %.sroa.958.2294, %.loopexit152 ], [ %.sroa.872.0.ph, %.loopexit ] ; 5 uses
   %.sroa.066.1 = phi i64 [ %.sroa.051.2202, %.loopexit152 ], [ %.sroa.066.0.ph.ph, %.loopexit ] ; 2 uses
   br i1 %.sroa.041.0, label %bb.an, label %bb.am
 
@@ -455,6 +456,7 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %i.fv, label %bb.v, label %.loopexit152
 
 .loopexit152:                                     ; preds = %bb.al, %.split, %bb.ak
+  %.sroa.958.2294 = phi i32 [ %.sroa.958.2, %.split ], [ %.sroa.958.2, %bb.ak ], [ -1, %bb.al ] ; 2 uses
   %.sroa.051.2202 = phi i64 [ %.sroa.066.0.ph.ph, %.split ], [ %.sroa.051.2, %bb.ak ], [ %.sroa.051.2, %bb.al ] ; 2 uses
   %i.fw = call fastcc noundef ptr @_RNvNtNtCsadSKrpJ73hd_12iox2_service7command2hz11print_stats(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.m, i8 noundef %1) #23 ; 2 uses
   %.not126 = icmp eq ptr %i.fw, null
@@ -484,7 +486,7 @@ _RNvNtNtCsadSKrpJ73hd_12iox2_service7command2hz15reached_timeout.exit137: ; pred
   br label %.outer.outer.backedge
 
 bb.an:                                            ; preds = %.split143, %.loopexit151
-  %.not127 = icmp eq i32 %.sroa.958.2, -1
+  %.not127 = icmp eq i32 %.sroa.958.2293, -1
   br i1 %.not127, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
@@ -498,11 +500,11 @@ bb.ap:                                            ; preds = %bb.an
   br i1 %i.gd, label %.loopexit149, label %bb.aq
 
 .split144:                                        ; preds = %bb.ao
-  %i.ge = icmp ult i32 %.sroa.958.2, 1000000000
+  %i.ge = icmp ult i32 %.sroa.958.2293, 1000000000
   call void @llvm.assume(i1 %i.ge)
   %i.gf = icmp ult i32 %.sroa.872.1, 1000000000
   call void @llvm.assume(i1 %i.gf)
-  %i.gg = icmp eq i32 %.sroa.958.2, %.sroa.872.1
+  %i.gg = icmp eq i32 %.sroa.958.2293, %.sroa.872.1
   br i1 %i.gg, label %.loopexit149, label %bb.aq
 
 bb.aq:                                            ; preds = %.split144, %bb.ao, %bb.ap

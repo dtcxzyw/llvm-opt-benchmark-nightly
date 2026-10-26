@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.em = phi i64 [ %.lcssa492, %._crit_edge622 ], [ %i.eg, %bb.aj ]
   %i.en = phi i64 [ %i.dj, %._crit_edge622 ], [ %i.eh, %bb.aj ]
   %i.eo = phi ptr [ @14, %._crit_edge622 ], [ @15, %bb.aj ]
-  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.em, i64 noundef %i.en, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.eo) #28
+  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.em, i64 noundef %i.en, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.eo) #28
           to label %.cont986 unwind label %.loopexit.split-lp.loopexit.split-lp, !dbg !21202
 
 .cont986:                                         ; preds = %.invoke985
@@ -607,7 +607,7 @@ bb.bz:                                            ; preds = %bb.bb
   %i.gw = phi i64 [ %i.fc, %bb.ba ], [ %.sroa.04.0619, %bb.y ], [ %.sroa.04.0619, %bb.bb ]
   %i.gx = phi i64 [ %i.fg, %bb.ba ], [ %i.dn, %bb.y ], [ %i.fd, %bb.bb ]
   %i.gy = phi ptr [ @17, %bb.ba ], [ @16, %bb.y ], [ @20, %bb.bb ]
-  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.gw, i64 noundef %i.gx, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gy) #28
+  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.gw, i64 noundef %i.gx, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.gy) #28
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp, !dbg !21202
 
 .cont:                                            ; preds = %.invoke
@@ -1010,7 +1010,7 @@ bb.di:                                            ; preds = %bb.dh
 .invoke988:                                       ; preds = %bb.de, %.lr.ph618, %bb.cl, %bb.ck
   %i.kb = phi i64 [ %i.ie, %bb.cl ], [ %i.ia, %bb.ck ], [ %i.ho, %.lr.ph618 ], [ %i.js, %bb.de ]
   %i.kc = phi ptr [ @23, %bb.cl ], [ @22, %bb.ck ], [ @21, %.lr.ph618 ], [ @25, %bb.de ]
-  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %.sroa.022.0617, i64 noundef %i.kb, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.kc) #28
+  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %.sroa.022.0617, i64 noundef %i.kb, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.kc) #28
           to label %.cont989 unwind label %.thread395.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !20807
 
 .cont989:                                         ; preds = %.invoke988
@@ -1413,7 +1413,10 @@ bb.w:                                             ; preds = %bb.u
     i8 1, label %bb.z
   ], !dbg !22849, !prof !22719
 
-.loopexit178.i:                                   ; preds = %bb.az, %bb.w
+default.unreachable:                              ; preds = %bb.az
+  unreachable
+
+.loopexit178.i:                                   ; preds = %bb.w
   unreachable, !dbg !22850
 
 bb.x:                                             ; preds = %bb.w
@@ -1737,7 +1740,7 @@ bb.az:                                            ; preds = %bb.ay
     #dbg_value(i64 %spec.store.select1.i.i98.i, !22704, !DIExpression(), !22262)
     #dbg_value(ptr undef, !22689, !DIExpression(), !22250)
   %i.dk = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %spec.store.select1.i.i98.i, i64 0), !dbg !22922
-  switch i8 %i.dk, label %.loopexit178.i [
+  switch i8 %i.dk, label %default.unreachable [
     i8 -1, label %bb.ba
     i8 0, label %bb.be
     i8 1, label %bb.bf

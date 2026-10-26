@@ -205,7 +205,7 @@ bb.a:
 
 .preheader159:                                    ; preds = %bb.a, %bb.b
   %.090 = phi ptr [ %i.b, %bb.b ], [ %0, %bb.a ]  ; 16 uses
-  %i.a = load i8, ptr %.090, align 1, !tbaa !49   ; 2 uses
+  %i.a = load i8, ptr %.090, align 1, !tbaa !49   ; 4 uses
   switch i8 %i.a, label %.thread [
     i8 32, label %bb.b
     i8 104, label %bb.c
@@ -258,6 +258,7 @@ bb.h:                                             ; preds = %select.unfold
   br i1 %i.t, label %in_tld_set.exit.thread, label %.thread
 
 .thread:                                          ; preds = %.preheader159, %bb.e, %bb.g, %bb.f, %bb.h, %select.unfold
+  %2 = phi i8 [ %i.a, %select.unfold ], [ %i.a, %bb.h ], [ 104, %bb.e ], [ 102, %bb.f ], [ 109, %bb.g ], [ %i.a, %.preheader159 ]
   %.082142 = phi ptr [ %.082, %select.unfold ], [ %.082, %bb.h ], [ null, %bb.e ], [ null, %bb.f ], [ null, %bb.g ], [ null, %.preheader159 ]
   %.not98 = icmp eq i32 %1, 0                     ; 4 uses
   br i1 %.not98, label %bb.j, label %bb.i
@@ -272,7 +273,7 @@ bb.j:                                             ; preds = %.thread, %bb.i
   br i1 %.not.i, label %bb.k, label %validate_uri_ialpha.exit.thread
 
 bb.k:                                             ; preds = %bb.j
-  %i.w = zext i8 %i.a to i64
+  %i.w = zext i8 %2 to i64
   %i.x = getelementptr inbounds nuw i8, ptr @URI_alpha, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1, !tbaa !49
   %.not8.i = icmp eq i8 %i.y, 0

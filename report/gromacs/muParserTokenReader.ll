@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85: ; preds = %_ZN
   br i1 %i.bc, label %bb.k, label %bb.cu
 
 bb.k:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85
-  %i.bh = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
+  %i.bh = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
   switch i32 %i.bh, label %bb.cj [
     i32 16, label %bb.bz
     i32 17, label %bb.bp
@@ -605,6 +605,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit186: ; preds = %bb
   br label %bb.cv
 
 bb.cl:                                            ; preds = %_ZNSt5stackIiSt5dequeIiSaIiEEE3popEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit149, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit183, %bb.ci, %bb.by, %_ZNSt5stackIiSt5dequeIiSaIiEEE4pushEOi.exit, %bb.af
+  %13 = phi i32 [ 15, %_ZNSt5stackIiSt5dequeIiSaIiEEE3popEv.exit ], [ 15, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit149 ], [ %i.bh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit183 ], [ 16, %bb.ci ], [ 17, %bb.by ], [ 14, %_ZNSt5stackIiSt5dequeIiSaIiEEE4pushEOi.exit ], [ %i.bh, %bb.af ]
   %i.iy = trunc i64 %i.aa to i32
   %i.iz = load i32, ptr %i.s, align 8, !tbaa !130
   %i.ja = add nsw i32 %i.iz, %i.iy
@@ -664,7 +665,7 @@ bb.cq:                                            ; preds = %bb.cp, %bb.co, %._c
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jm, i64 %i.jk
   store i8 0, ptr %i.jn, align 1, !tbaa !19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.jo = invoke noundef nonnull align 8 dereferenceable(104) ptr @_ZN2mu11ParserTokenIdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3SetENS_8ECmdCodeERKS6_(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef %i.bh, ptr noundef nonnull align 8 dereferenceable(32) %12)
+  %i.jo = invoke noundef nonnull align 8 dereferenceable(104) ptr @_ZN2mu11ParserTokenIdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3SetENS_8ECmdCodeERKS6_(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef %13, ptr noundef nonnull align 8 dereferenceable(32) %12)
           to label %bb.cr unwind label %bb.ct     ; 0 uses
 
 bb.cr:                                            ; preds = %bb.cq

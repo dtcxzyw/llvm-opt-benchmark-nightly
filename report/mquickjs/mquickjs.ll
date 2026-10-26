@@ -204,6 +204,7 @@ bb.al:                                            ; preds = %JS_IsIntOrShortFloa
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
+  %4 = phi i32 [ 24, %bb.ak ], [ 25, %bb.al ]
   %.01605 = phi i32 [ %i.js, %bb.ak ], [ %i.jt, %bb.al ] ; 2 uses
   %i.ju = and i32 %.01605, 65535                  ; 2 uses
   %.not2503 = icmp eq i32 %i.ju, 0
@@ -260,7 +261,7 @@ js_reverse_val.exit:                              ; preds = %.lr.ph.i, %bb.am
 
 js_reverse_val.exit2169:                          ; preds = %.lr.ph.i2165, %.thread2248, %js_reverse_val.exit
   %.01763 = phi ptr [ %.531816, %js_reverse_val.exit ], [ %.41767, %.thread2248 ], [ %.531816, %.lr.ph.i2165 ]
-  %.01753 = phi i32 [ %i.cxk, %js_reverse_val.exit ], [ %.21755, %.thread2248 ], [ 26, %.lr.ph.i2165 ] ; 2 uses
+  %.01753 = phi i32 [ %4, %js_reverse_val.exit ], [ %.21755, %.thread2248 ], [ 26, %.lr.ph.i2165 ] ; 2 uses
   %.31695 = phi ptr [ %i.cxi, %js_reverse_val.exit ], [ %.81700, %.thread2248 ], [ %i.cxi, %.lr.ph.i2165 ] ; 2 uses
   %.01625 = phi i64 [ %.651690, %js_reverse_val.exit ], [ %.71632, %.thread2248 ], [ %.651690, %.lr.ph.i2165 ]
   %.61621 = phi ptr [ %i.ke, %js_reverse_val.exit ], [ %.12, %.thread2248 ], [ %.74, %.lr.ph.i2165 ] ; 3 uses
@@ -663,7 +664,7 @@ JS_IsIntOrShortFloat.exit.thread:                 ; preds = %JS_IsIntOrShortFloa
   %.74 = phi ptr [ %.74.ph, %JS_IsIntOrShortFloat.exit.thread.preheader ], [ %.74.be, %JS_IsIntOrShortFloat.exit.thread.backedge ] ; 283 uses
   %i.cxi = getelementptr inbounds nuw i8, ptr %.601752, i64 1 ; 145 uses
   %i.cxj = load i8, ptr %.601752, align 1, !tbaa !51 ; 6 uses
-  %i.cxk = zext i8 %i.cxj to i32                  ; 22 uses
+  %i.cxk = zext i8 %i.cxj to i32                  ; 21 uses
   switch i8 %i.cxj, label %bb.ma [
     i8 94, label %bb.d
     i8 95, label %bb.d
@@ -1066,7 +1067,7 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
   %i.l = load i64, ptr %i.k, align 8, !tbaa !46
-  %i.m = call fastcc i32 @string_buffer_concat(ptr noundef %0, ptr noundef %4, i64 noundef %i.l) #28
+  %i.m = call fastcc i32 @string_buffer_concat(ptr noundef nonnull %0, ptr noundef %4, i64 noundef %i.l) #28
   %.not19 = icmp ne i32 %i.m, 0
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -1074,7 +1075,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond24, label %.loopexit, label %.lr.ph, !llvm.loop !307
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.b
-  %i.n = call fastcc i64 @string_buffer_pop(ptr noundef %0, ptr noundef %4) #28
+  %i.n = call fastcc i64 @string_buffer_pop(ptr noundef nonnull %0, ptr noundef %4) #28
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %.loopexit
@@ -1477,7 +1478,7 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !39
   store ptr %4, ptr %i.y, align 8, !tbaa !36
   store i64 %.069, ptr %4, align 8, !tbaa !40
-  %i.ab = call fastcc i64 @JS_GetPropertyInternal(ptr noundef nonnull %0, i64 noundef %i.s, i64 noundef %i.v, i32 noundef 0) #28, !inline_history !5 ; 8 uses
+  %i.ab = call fastcc i64 @JS_GetPropertyInternal(ptr noundef nonnull %0, i64 noundef %i.s, i64 noundef %i.v, i32 noundef 0) #28, !inline_history !5 ; 6 uses
   %i.ac = load i64, ptr %4, align 8, !tbaa !40    ; 3 uses
   %i.ad = load ptr, ptr %i.aa, align 8, !tbaa !39
   store ptr %i.ad, ptr %i.y, align 8, !tbaa !36
@@ -1506,7 +1507,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %.split, %bb.f, %bb.e
   %.170 = phi i64 [ %i.ac, %bb.f ], [ %i.ac, %bb.h ], [ %.069, %bb.e ], [ %i.ac, %.split ] ; 2 uses
-  %.067 = phi i64 [ %i.ab, %bb.f ], [ %i.ab, %bb.h ], [ 11, %bb.e ], [ %i.ab, %.split ] ; 2 uses
+  %.067 = phi i64 [ 11, %bb.f ], [ %i.ab, %bb.h ], [ 11, %bb.e ], [ %i.ab, %.split ] ; 2 uses
   %.1 = phi i32 [ %i.x, %bb.f ], [ %i.x, %bb.h ], [ %.0, %bb.e ], [ %i.x, %.split ] ; 2 uses
   %i.al = load i64, ptr %i.b, align 8, !tbaa !46  ; 2 uses
   %.val87 = load ptr, ptr %i.m, align 8, !tbaa !42
@@ -1528,7 +1529,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %4, ptr %i.au, align 8, !tbaa !39
   store ptr %5, ptr %i.ar, align 8, !tbaa !36
   store i64 %.067, ptr %5, align 8, !tbaa !40
-  %i.av = call fastcc i64 @JS_GetPropertyInternal(ptr noundef nonnull %0, i64 noundef %i.al, i64 noundef %i.ao, i32 noundef 0) #28, !inline_history !5 ; 8 uses
+  %i.av = call fastcc i64 @JS_GetPropertyInternal(ptr noundef nonnull %0, i64 noundef %i.al, i64 noundef %i.ao, i32 noundef 0) #28, !inline_history !5 ; 6 uses
   %i.aw = load i64, ptr %5, align 8, !tbaa !40    ; 3 uses
   %i.ax = load i64, ptr %4, align 8, !tbaa !40    ; 3 uses
   %i.ay = load ptr, ptr %i.at, align 8, !tbaa !39
@@ -1563,7 +1564,7 @@ JS_IsFunction.exit.thread:                        ; preds = %.split116, %.split,
 bb.m:                                             ; preds = %bb.l, %.split116, %bb.j, %bb.i
   %.271 = phi i64 [ %i.ax, %bb.j ], [ %i.ax, %bb.l ], [ %.170, %bb.i ], [ %i.ax, %.split116 ]
   %.168 = phi i64 [ %i.aw, %bb.j ], [ %i.aw, %bb.l ], [ %.067, %bb.i ], [ %i.aw, %.split116 ]
-  %.066 = phi i64 [ %i.av, %bb.j ], [ %i.av, %bb.l ], [ 11, %bb.i ], [ %i.av, %.split116 ]
+  %.066 = phi i64 [ 11, %bb.j ], [ %i.av, %bb.l ], [ 11, %bb.i ], [ %i.av, %.split116 ]
   %.2 = phi i32 [ %i.aq, %bb.j ], [ %i.aq, %bb.l ], [ %.1, %bb.i ], [ %i.aq, %.split116 ] ; 3 uses
   %i.bh = and i32 %.2, 24
   %.not84 = icmp eq i32 %i.bh, 0
@@ -1592,7 +1593,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.j, %bb.f, %bb.p, %bb.d, %bb.b, %bb.q, %bb.o, %JS_IsFunction.exit.thread, %JS_IsObject.exit.thread
-  %.072 = phi i64 [ %i.i, %JS_IsObject.exit.thread ], [ 15, %bb.b ], [ 15, %bb.d ], [ %i.ab, %bb.f ], [ %i.bj, %bb.o ], [ %i.av, %bb.j ], [ %i.bo, %bb.q ], [ %i.bg, %JS_IsFunction.exit.thread ], [ 15, %bb.p ]
+  %.072 = phi i64 [ %i.i, %JS_IsObject.exit.thread ], [ 15, %bb.b ], [ 15, %bb.d ], [ 15, %bb.f ], [ %i.bj, %bb.o ], [ 15, %bb.j ], [ %i.bo, %bb.q ], [ %i.bg, %JS_IsFunction.exit.thread ], [ 15, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   ret i64 %.072
@@ -1995,7 +1996,7 @@ bb.b:                                             ; preds = %JS_IsError.exit
   %i.i = getelementptr inbounds nuw i8, ptr %.val34, i64 1200
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = add i64 %i.j, 1
-  %i.l = tail call fastcc i64 @JS_GetPropertyInternal(ptr noundef %0, i64 noundef %i.a, i64 noundef %i.k, i32 noundef 0) #28, !inline_history !5 ; 3 uses
+  %i.l = tail call fastcc i64 @JS_GetPropertyInternal(ptr noundef %0, i64 noundef %i.a, i64 noundef %i.k, i32 noundef 0) #28, !inline_history !5 ; 2 uses
   switch i64 %i.l, label %bb.d [
     i64 15, label %bb.i
     i64 11, label %bb.c
@@ -2054,7 +2055,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.b, %bb.e, %bb.h, %JS_IsError.exit.thread
-  %.029 = phi i64 [ %i.g, %JS_IsError.exit.thread ], [ %i.l, %bb.b ], [ %i.ah, %bb.h ], [ 15, %bb.e ]
+  %.029 = phi i64 [ %i.g, %JS_IsError.exit.thread ], [ 15, %bb.b ], [ %i.ah, %bb.h ], [ 15, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   ret i64 %.029
 }
@@ -2277,7 +2278,7 @@ define dso_local i64 @js_array_constructor(ptr noundef %0, ptr nofree noundef re
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
-  %i.b = and i32 %2, -65537                       ; 6 uses
+  %i.b = and i32 %2, -65537                       ; 4 uses
   %i.c = icmp eq i32 %i.b, 1
   br i1 %i.c, label %bb.b, label %JS_IsNumber.exit.thread
 
@@ -2312,7 +2313,7 @@ thread-pre-split:                                 ; preds = %JS_IsNumber.exit.th
   br label %JS_IsNumber.exit.thread
 
 JS_IsNumber.exit.thread:                          ; preds = %bb.a, %JS_IsNumber.exit, %bb.c, %thread-pre-split
-  %i.k = phi i32 [ %.pr, %thread-pre-split ], [ %i.b, %bb.c ], [ %i.b, %JS_IsNumber.exit ], [ %i.b, %bb.a ] ; 3 uses
+  %i.k = phi i32 [ %.pr, %thread-pre-split ], [ 1, %bb.c ], [ 1, %JS_IsNumber.exit ], [ %i.b, %bb.a ] ; 3 uses
   %.not29.not = phi i1 [ false, %thread-pre-split ], [ true, %bb.c ], [ true, %JS_IsNumber.exit ], [ true, %bb.a ]
   %or.cond = icmp ugt i32 %i.k, 1073741823
   br i1 %or.cond, label %bb.d, label %bb.e
@@ -2715,8 +2716,8 @@ bb.i:                                             ; preds = %bb.h
   br label %JS_ToInt32Clamp.exit80.thread
 
 JS_ToInt32Clamp.exit80.thread:                    ; preds = %bb.i, %bb.h, %.sink.split.i, %bb.f
-  %i.ab = phi i32 [ %2, %.sink.split.i ], [ %i.s, %bb.f ], [ %spec.select108, %bb.i ], [ 0, %bb.h ] ; 11 uses
-  %.064 = phi i32 [ %2, %.sink.split.i ], [ 0, %bb.f ], [ %i.t, %bb.i ], [ %i.t, %bb.h ] ; 8 uses
+  %i.ab = phi i32 [ 0, %.sink.split.i ], [ %i.s, %bb.f ], [ %spec.select108, %bb.i ], [ 0, %bb.h ] ; 11 uses
+  %.064 = phi i32 [ 0, %.sink.split.i ], [ 0, %bb.f ], [ %i.t, %bb.i ], [ %i.t, %bb.h ] ; 8 uses
   %i.ac = add nsw i32 %.064, %i.k
   %i.ad = sub i32 %i.ac, %i.ab
   %i.ae = tail call i64 @JS_NewArray(ptr noundef %0, i32 noundef %i.ab) #28 ; 4 uses
@@ -3119,7 +3120,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.i, %bb.e
   %.0 = phi i32 [ 0, %bb.e ], [ %i.af, %bb.i ]    ; 2 uses
-  %i.t = call i64 @js_regexp_exec(ptr noundef %0, ptr noundef nonnull %3, i32 poison, ptr noundef %1, i32 noundef 0) #28 ; 4 uses
+  %i.t = call i64 @js_regexp_exec(ptr noundef %0, ptr noundef nonnull %3, i32 poison, ptr noundef %1, i32 noundef 0) #28 ; 3 uses
   store i64 %i.t, ptr %5, align 8, !tbaa !46
   switch i64 %i.t, label %bb.g [
     i64 15, label %.loopexit
@@ -3162,7 +3163,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.g
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.h, %bb.i, %bb.f, %.loopexit.loopexit
-  %i.aj = phi i64 [ %.pre45, %.loopexit.loopexit ], [ 15, %bb.h ], [ 15, %bb.i ], [ %i.t, %bb.f ]
+  %i.aj = phi i64 [ %.pre45, %.loopexit.loopexit ], [ 15, %bb.f ], [ 15, %bb.i ], [ 15, %bb.h ]
   %i.ak = load ptr, ptr %i.r, align 8, !tbaa !39
   store ptr %i.ak, ptr %i.p, align 8, !tbaa !36
   br label %bb.j
@@ -3565,7 +3566,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.o = load i8, ptr %i.n, align 8, !tbaa !51    ; 6 uses
-  %i.p = zext i8 %i.o to i32
+  %i.p = zext nneg i8 %i.o to i32
   %i.q = icmp ult i8 %i.o, -64
   br i1 %i.q, label %utf8_char_len.exit, label %bb.f
 
@@ -3968,7 +3969,8 @@ bb.cc:                                            ; preds = %bb.cb
   unreachable
 
 bb.cd:                                            ; preds = %bb.by, %bb.bt, %bb.bd, %bb.ay, %bb.av, %bb.as, %bb.al, %bb.cb, %bb.bw, %bb.bp, %bb.bl, %bb.aq, %bb.af
-  %i.gy = zext nneg i8 %i.s to i32
+  %3 = phi i8 [ 124, %bb.by ], [ 38, %bb.bt ], [ 62, %bb.bd ], [ 60, %bb.ay ], [ 45, %bb.av ], [ 43, %bb.as ], [ 42, %bb.al ], [ %i.s, %bb.cb ], [ 94, %bb.bw ], [ 33, %bb.bp ], [ 61, %bb.bl ], [ 37, %bb.aq ], [ 46, %bb.af ]
+  %i.gy = zext nneg i8 %3 to i32
   store i32 %i.gy, ptr %i.h, align 8, !tbaa !119
   %i.gz = getelementptr inbounds nuw i8, ptr %storemerge86233, i64 1
   br label %bb.ce
@@ -4371,7 +4373,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
   %.126 = phi i32 [ %.025, %bb.b ], [ %i.g, %bb.g ], [ %i.i, %bb.h ], [ %.025, %bb.l ], [ %.025, %bb.m ], [ %.025, %bb.k ] ; 2 uses
   %.2 = phi i32 [ %.0, %bb.b ], [ %.0, %bb.g ], [ %.0, %bb.h ], [ %spec.select31, %bb.l ], [ %spec.select33, %bb.m ], [ %spec.select, %bb.k ] ; 2 uses
   tail call fastcc void @next_token(ptr noundef nonnull %0) #28
-  %2 = icmp slt i32 %.126, 2
+  %2 = icmp samesign ult i32 %.126, 2
   br i1 %2, label %bb.o, label %bb.b
 
 bb.o:                                             ; preds = %bb.n

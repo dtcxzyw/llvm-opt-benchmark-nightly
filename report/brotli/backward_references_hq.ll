@@ -205,7 +205,7 @@ bb.bd:                                            ; preds = %bb.bc, %FindMatchLe
 
 FindAllCompoundDictionaryMatches.exit:            ; preds = %bb.bd, %bb.bc, %bb.au
   %.3.i166 = phi i64 [ 0, %bb.au ], [ %i.ix, %bb.bc ], [ %.2.i169, %bb.bd ]
-  %i.mk = add i64 %.3.i166, %.0.i150457           ; 7 uses
+  %i.mk = add i64 %.3.i166, %.0.i150457           ; 4 uses
   switch i64 %i.mk, label %bb.be [
     i64 64, label %LookupAllCompoundDictionaryMatches.exit
     i64 0, label %bb.bf
@@ -226,7 +226,8 @@ bb.bf:                                            ; preds = %bb.be, %FindAllComp
   br i1 %exitcond587.not, label %LookupAllCompoundDictionaryMatches.exit, label %bb.as, !llvm.loop !6
 
 LookupAllCompoundDictionaryMatches.exit:          ; preds = %bb.bf, %FindAllCompoundDictionaryMatches.exit
-  %i.mr = icmp ne i64 %i.mk, 0
+  %.lcssa800 = phi i64 [ %i.mk, %bb.bf ], [ 64, %FindAllCompoundDictionaryMatches.exit ] ; 4 uses
+  %i.mr = icmp ne i64 %.lcssa800, 0
   %i.ms = icmp ne ptr %.8.i, %i.as
   %i.mt = and i1 %i.ms, %i.mr
   br i1 %i.mt, label %.lr.ph.i, label %.preheader36.i
@@ -234,7 +235,7 @@ LookupAllCompoundDictionaryMatches.exit:          ; preds = %bb.bf, %FindAllComp
 .preheader36.i:                                   ; preds = %bb.bk, %LookupAllCompoundDictionaryMatches.exit
   %.030.lcssa.i = phi ptr [ %i.m, %LookupAllCompoundDictionaryMatches.exit ], [ %.131.i, %bb.bk ] ; 5 uses
   %.027.lcssa.i = phi ptr [ %i.az, %LookupAllCompoundDictionaryMatches.exit ], [ %.128.i239, %bb.bk ] ; 4 uses
-  %.024.lcssa.i = phi i64 [ %i.mk, %LookupAllCompoundDictionaryMatches.exit ], [ %.125.i240, %bb.bk ] ; 6 uses
+  %.024.lcssa.i = phi i64 [ %.lcssa800, %LookupAllCompoundDictionaryMatches.exit ], [ %.125.i240, %bb.bk ] ; 6 uses
   %.021.lcssa.i = phi ptr [ %i.as, %LookupAllCompoundDictionaryMatches.exit ], [ %.122.i, %bb.bk ] ; 4 uses
   %.0.lcssa.i = phi i64 [ %i.io, %LookupAllCompoundDictionaryMatches.exit ], [ %.1.i241, %bb.bk ] ; 6 uses
   %.021.lcssa.i750 = ptrtoaddr ptr %.021.lcssa.i to i64
@@ -311,7 +312,7 @@ middle.block770:                                  ; preds = %vector.body763
 .lr.ph.i:                                         ; preds = %LookupAllCompoundDictionaryMatches.exit, %bb.bk
   %.041.i = phi i64 [ %.1.i241, %bb.bk ], [ %i.io, %LookupAllCompoundDictionaryMatches.exit ] ; 2 uses
   %.02140.i = phi ptr [ %.122.i, %bb.bk ], [ %i.as, %LookupAllCompoundDictionaryMatches.exit ] ; 5 uses
-  %.02439.i = phi i64 [ %.125.i240, %bb.bk ], [ %i.mk, %LookupAllCompoundDictionaryMatches.exit ] ; 2 uses
+  %.02439.i = phi i64 [ %.125.i240, %bb.bk ], [ %.lcssa800, %LookupAllCompoundDictionaryMatches.exit ] ; 2 uses
   %.02738.i = phi ptr [ %.128.i239, %bb.bk ], [ %i.az, %LookupAllCompoundDictionaryMatches.exit ] ; 5 uses
   %.03037.i = phi ptr [ %.131.i, %bb.bk ], [ %i.m, %LookupAllCompoundDictionaryMatches.exit ] ; 3 uses
   %i.nj = getelementptr inbounds nuw i8, ptr %.02738.i, i64 4
@@ -509,7 +510,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not35.i.7, label %MergeMatches.exit, label %.lr.ph56.i, !llvm.loop !124
 
 MergeMatches.exit:                                ; preds = %.lr.ph56.i.prol.loopexit, %.lr.ph56.i, %middle.block, %.preheader.i
-  %i.qq = add i64 %i.mk, %i.io
+  %i.qq = add i64 %.lcssa800, %i.io
   br label %bb.bl
 
 bb.bl:                                            ; preds = %MergeMatches.exit, %FindAllMatchesH10.exit
@@ -912,7 +913,7 @@ bb.bj:                                            ; preds = %bb.bi, %FindMatchLe
 
 FindAllCompoundDictionaryMatches.exit:            ; preds = %bb.bj, %bb.bi, %bb.ba
   %.3.i247 = phi i64 [ 0, %bb.ba ], [ %i.il, %bb.bi ], [ %.2.i250, %bb.bj ]
-  %i.ly = add i64 %.3.i247, %.0.i231555           ; 7 uses
+  %i.ly = add i64 %.3.i247, %.0.i231555           ; 4 uses
   switch i64 %i.ly, label %bb.bk [
     i64 64, label %LookupAllCompoundDictionaryMatches.exit
     i64 0, label %bb.bl
@@ -933,7 +934,8 @@ bb.bl:                                            ; preds = %bb.bk, %FindAllComp
   br i1 %exitcond683.not, label %LookupAllCompoundDictionaryMatches.exit, label %bb.ay, !llvm.loop !6
 
 LookupAllCompoundDictionaryMatches.exit:          ; preds = %bb.bl, %FindAllCompoundDictionaryMatches.exit
-  %i.mf = icmp ne i64 %i.ly, 0
+  %.lcssa927 = phi i64 [ %i.ly, %bb.bl ], [ 64, %FindAllCompoundDictionaryMatches.exit ] ; 4 uses
+  %i.mf = icmp ne i64 %.lcssa927, 0
   %i.mg = icmp ne ptr %.8.i, %i.cj
   %i.mh = and i1 %i.mg, %i.mf
   br i1 %i.mh, label %.lr.ph.i, label %.preheader36.i
@@ -941,7 +943,7 @@ LookupAllCompoundDictionaryMatches.exit:          ; preds = %bb.bl, %FindAllComp
 .preheader36.i:                                   ; preds = %bb.bq, %LookupAllCompoundDictionaryMatches.exit
   %.030.lcssa.i = phi ptr [ %i.ci, %LookupAllCompoundDictionaryMatches.exit ], [ %.131.i, %bb.bq ] ; 5 uses
   %.027.lcssa.i = phi ptr [ %i.ie, %LookupAllCompoundDictionaryMatches.exit ], [ %.128.i319, %bb.bq ] ; 4 uses
-  %.024.lcssa.i = phi i64 [ %i.ly, %LookupAllCompoundDictionaryMatches.exit ], [ %.125.i320, %bb.bq ] ; 6 uses
+  %.024.lcssa.i = phi i64 [ %.lcssa927, %LookupAllCompoundDictionaryMatches.exit ], [ %.125.i320, %bb.bq ] ; 6 uses
   %.021.lcssa.i = phi ptr [ %i.cj, %LookupAllCompoundDictionaryMatches.exit ], [ %.122.i, %bb.bq ] ; 4 uses
   %.0.lcssa.i = phi i64 [ %i.ib, %LookupAllCompoundDictionaryMatches.exit ], [ %.1.i321, %bb.bq ] ; 6 uses
   %.021.lcssa.i863 = ptrtoaddr ptr %.021.lcssa.i to i64
@@ -1018,7 +1020,7 @@ middle.block883:                                  ; preds = %vector.body876
 .lr.ph.i:                                         ; preds = %LookupAllCompoundDictionaryMatches.exit, %bb.bq
   %.041.i = phi i64 [ %.1.i321, %bb.bq ], [ %i.ib, %LookupAllCompoundDictionaryMatches.exit ] ; 2 uses
   %.02140.i = phi ptr [ %.122.i, %bb.bq ], [ %i.cj, %LookupAllCompoundDictionaryMatches.exit ] ; 5 uses
-  %.02439.i = phi i64 [ %.125.i320, %bb.bq ], [ %i.ly, %LookupAllCompoundDictionaryMatches.exit ] ; 2 uses
+  %.02439.i = phi i64 [ %.125.i320, %bb.bq ], [ %.lcssa927, %LookupAllCompoundDictionaryMatches.exit ] ; 2 uses
   %.02738.i = phi ptr [ %.128.i319, %bb.bq ], [ %i.ie, %LookupAllCompoundDictionaryMatches.exit ] ; 5 uses
   %.03037.i = phi ptr [ %.131.i, %bb.bq ], [ %i.ci, %LookupAllCompoundDictionaryMatches.exit ] ; 3 uses
   %i.mx = getelementptr inbounds nuw i8, ptr %.02738.i, i64 4
@@ -1216,7 +1218,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not35.i.7, label %MergeMatches.exit, label %.lr.ph56.i, !llvm.loop !205
 
 MergeMatches.exit:                                ; preds = %.lr.ph56.i.prol.loopexit, %.lr.ph56.i, %middle.block, %.preheader.i
-  %i.qe = add i64 %i.ly, %i.ib
+  %i.qe = add i64 %.lcssa927, %i.ib
   br label %bb.br
 
 bb.br:                                            ; preds = %MergeMatches.exit, %FindAllMatchesH10.exit

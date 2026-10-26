@@ -37,8 +37,6 @@ $_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev =
 @.str.3 = private unnamed_addr constant [12 x i8] c"fatal error\00", align 1
 @.str.4 = private unnamed_addr constant [31 x i8] c"model != nullptr || !per_layer\00", align 1
 @.str.5 = private unnamed_addr constant [25 x i8] c"n_values <= value.size()\00", align 1
-@.str.7 = private unnamed_addr constant [25 x i8] c"rope_factors_long.weight\00", align 1
-@.str.8 = private unnamed_addr constant [26 x i8] c"rope_factors_short.weight\00", align 1
 @.str.9 = private unnamed_addr constant [126 x i8] c"tensor_name == \22rope_freqs.weight\22 || tensor_name == \22rope_factors_long.weight\22 || tensor_name == \22rope_factors_short.weight\22\00", align 1
 @.str.10 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
 @.str.12 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
@@ -441,7 +439,7 @@ _ZSt6fill_nIPPKcmS1_ET_S3_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc15
 
 .lr.ph.preheader:                                 ; preds = %_ZSt6fill_nIPPKcmS1_ET_S3_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc15
   %.0.i.i.i.i.i.ph = phi ptr [ %i.l, %.noexc15 ], [ %i.o, %_ZSt6fill_nIPPKcmS1_ET_S3_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
-  %min.iters.check = icmp ult i64 %i.g, 5
+  %min.iters.check = icmp samesign ult i64 %i.g, 5
   br i1 %min.iters.check, label %.lr.ph.preheader43, label %vector.ph
 
 .lr.ph.preheader43:                               ; preds = %vector.body, %.lr.ph.preheader
@@ -452,7 +450,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.p = and i64 %i.g, 3                          ; 2 uses
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 4, i64 %i.p
-  %n.vec = sub nsw i64 %i.g, %i.r                 ; 2 uses
+  %n.vec = sub nuw nsw i64 %i.g, %i.r             ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -631,7 +629,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m
   store i8 0, ptr %i.p, align 1, !tbaa !106
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  %i.q = load i64, ptr %i.n, align 8, !tbaa !116  ; 4 uses
+  %i.q = load i64, ptr %i.n, align 8, !tbaa !116  ; 2 uses
   switch i64 %i.q, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12.thread18 [
     i64 17, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 24, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10
@@ -653,15 +651,30 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.ab, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12.thread18
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10: ; preds = %bb.f
-  %.pre = load ptr, ptr %2, align 8, !tbaa !105   ; 2 uses
-  %bcmp.i9 = call i32 @bcmp(ptr %.pre, ptr nonnull @.str.7, i64 %i.q)
-  %i.ac = icmp eq i32 %bcmp.i9, 0
+  %.pre = load ptr, ptr %2, align 8, !tbaa !105   ; 3 uses
+  %3 = load i128, ptr %.pre, align 1
+  %4 = xor i128 %3, 146793622550279865124257298565794131826
+  %5 = getelementptr i8, ptr %.pre, i64 16
+  %6 = load i64, ptr %5, align 1
+  %7 = zext i64 %6 to i128
+  %8 = xor i128 %7, 8388068008349085287
+  %9 = or i128 %4, %8
+  %10 = icmp ne i128 %9, 0
+  %11 = zext i1 %10 to i32
+  %i.ac = icmp eq i32 %11, 0
   br i1 %i.ac, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12.thread18
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12: ; preds = %bb.f
-  %.pre19 = load ptr, ptr %2, align 8, !tbaa !105 ; 2 uses
-  %bcmp.i11 = call i32 @bcmp(ptr %.pre19, ptr nonnull @.str.8, i64 %i.q)
-  %i.ad = icmp eq i32 %bcmp.i11, 0
+  %.pre19 = load ptr, ptr %2, align 8, !tbaa !105 ; 3 uses
+  %12 = load i128, ptr %.pre19, align 1
+  %13 = xor i128 %12, 148086646444922262765454359782528937842
+  %14 = getelementptr i8, ptr %.pre19, i64 9
+  %15 = load i128, ptr %14, align 1
+  %16 = xor i128 %15, 154732543822886170991434346154207441519
+  %17 = or i128 %13, %16
+  %18 = icmp ne i128 %17, 0
+  %19 = zext i1 %18 to i32
+  %i.ad = icmp eq i32 %19, 0
   br i1 %i.ad, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12.thread18
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12.thread18: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.f, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit12

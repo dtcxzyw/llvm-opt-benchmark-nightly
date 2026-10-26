@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.loopexit, %.lr.ph185
-  %i.l = phi i64 [ %.promoted186, %.lr.ph185 ], [ %i.k, %.loopexit ] ; 12 uses
+  %i.l = phi i64 [ %.promoted186, %.lr.ph185 ], [ %i.k, %.loopexit ] ; 13 uses
   %i.m = phi i8 [ %.promoted, %.lr.ph185 ], [ %i.p, %.loopexit ] ; 2 uses
   %i.n = trunc nuw i8 %i.m to i1                  ; 2 uses
   %i.o = and i8 %i.m, 1
@@ -310,7 +310,8 @@ _RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   unreachable
 
 _RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs3U9i7nQCKwt_15find_msvc_tools.exit.thread.i: ; preds = %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs3U9i7nQCKwt_15find_msvc_tools.exit.i, %bb.e, %.split.i.i
-  tail call void @_RNvNtCs3oUPovFnLWP_4core3str16slice_error_fail(ptr %i.h, i64 %i.j, i64 %i.l, i64 %i.j, ptr nonnull align 8 @32) #33, !noalias !92
+  %.lcssa354 = phi i64 [ 0, %_RNvXs9_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs3U9i7nQCKwt_15find_msvc_tools.exit.i ], [ %i.l, %bb.e ], [ %i.l, %.split.i.i ]
+  tail call void @_RNvNtCs3oUPovFnLWP_4core3str16slice_error_fail(ptr %i.h, i64 %i.j, i64 %.lcssa354, i64 %i.j, ptr nonnull align 8 @32) #33, !noalias !92
   unreachable
 
 bb.n:                                             ; preds = %bb.m, %bb.k, %bb.i, %bb.h

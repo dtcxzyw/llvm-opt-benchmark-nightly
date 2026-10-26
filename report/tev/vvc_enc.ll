@@ -202,14 +202,14 @@ _ZNSt3__110shared_ptrI3BoxED2B8ne180100Ev.exit:   ; preds = %.thread129, %bb.c, 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false)
   %i.an = load ptr, ptr %2, align 8, !tbaa !123   ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !71 ; 4 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !71 ; 3 uses
   %.not.i.i = icmp eq ptr %i.ap, null
   br i1 %.not.i.i, label %_ZNSt3__110shared_ptrI14HeifPixelImageEC2B8ne180100ERKS2_.exit.i.thread, label %_ZNSt3__110shared_ptrI14HeifPixelImageEC2B8ne180100ERKS2_.exit.i
 
 _ZNSt3__110shared_ptrI14HeifPixelImageEC2B8ne180100ERKS2_.exit.i.thread: ; preds = %_ZNSt3__110shared_ptrI3BoxED2B8ne180100Ev.exit
   store ptr %i.an, ptr %9, align 8, !tbaa !124
   %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  store ptr %i.ap, ptr %i.aq, align 8, !tbaa !72
+  store ptr null, ptr %i.aq, align 8, !tbaa !72
   br label %_ZNSt3__110shared_ptrI14HeifPixelImageEaSB8ne180100ERKS2_.exit
 
 _ZNSt3__110shared_ptrI14HeifPixelImageEC2B8ne180100ERKS2_.exit.i: ; preds = %_ZNSt3__110shared_ptrI3BoxED2B8ne180100Ev.exit
@@ -612,7 +612,7 @@ bb.b:                                             ; preds = %.lr.ph, %.critedge
   %i.w = load ptr, ptr %.sroa.017.023, align 8, !tbaa !65 ; 5 uses
   store ptr %i.w, ptr %4, align 8, !tbaa !65
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.017.023, i64 8
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !66   ; 11 uses
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !66   ; 10 uses
   store ptr %i.y, ptr %i.v, align 8, !tbaa !66
   %.not.i = icmp eq ptr %i.y, null
   br i1 %.not.i, label %bb.c, label %.thread
@@ -652,7 +652,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   store ptr %i.w, ptr %i.ah, align 8, !tbaa !65
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
-  store ptr %i.y, ptr %i.ar, align 8, !tbaa !66
+  store ptr null, ptr %i.ar, align 8, !tbaa !66
   br label %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i
 
 bb.f:                                             ; preds = %.thread32
@@ -664,6 +664,7 @@ bb.f:                                             ; preds = %.thread32
   br label %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i
 
 _ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i: ; preds = %bb.e, %bb.f
+  %5 = phi ptr [ %i.y, %bb.f ], [ null, %bb.e ]
   %i.av = phi ptr [ %i.al, %bb.f ], [ %i.af, %bb.e ]
   %i.aw = phi ptr [ %i.am, %bb.f ], [ %i.ag, %bb.e ]
   %i.ax = phi ptr [ %i.an, %bb.f ], [ %i.ah, %bb.e ]
@@ -684,7 +685,7 @@ bb.g:                                             ; preds = %.thread32, %bb.d
 bb.h:                                             ; preds = %._crit_edge, %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i
   %i.bd = phi ptr [ %i.aw, %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i ], [ %i.az, %._crit_edge ]
   %i.be = phi ptr [ %i.av, %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i ], [ %i.ba, %._crit_edge ]
-  %i.bf = phi ptr [ %i.y, %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i ], [ %.pre, %._crit_edge ] ; 5 uses
+  %i.bf = phi ptr [ %5, %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i ], [ %.pre, %._crit_edge ] ; 5 uses
   %.0.i.i = phi ptr [ %i.ay, %_ZNSt3__16vectorINS_10shared_ptrI3BoxEENS_9allocatorIS3_EEE22__construct_one_at_endB8ne180100IJRKS3_EEEvDpOT_.exit.i.i ], [ %i.bc, %._crit_edge ]
   store ptr %.0.i.i, ptr %i.bd, align 8, !tbaa !67
   store ptr %i.be, ptr %0, align 8, !tbaa !153

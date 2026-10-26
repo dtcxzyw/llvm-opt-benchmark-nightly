@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %bb.bo, %bb.br, %bb.
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
   %i.li = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !131 ; 4 uses
-  %i.lk = and i32 %i.km, %i.lj                    ; 4 uses
+  %i.lk = and i32 %i.km, %i.lj                    ; 6 uses
   %i.ll = zext i32 %i.lk to i64
   %.idx.i.i.i136 = shl nuw nsw i64 %i.ll, 3       ; 2 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %i.kn, i64 %.idx.i.i.i136 ; 3 uses
@@ -275,6 +275,7 @@ bb.by:                                            ; preds = %bb.bw
   br label %.loopexit332
 
 .loopexit332:                                     ; preds = %.preheader.i.i.i143, %bb.bx, %bb.by, %.loopexit334
+  %6 = phi i32 [ %i.lk, %bb.bx ], [ %i.lk, %.loopexit334 ], [ %i.lk, %bb.by ], [ 0, %.preheader.i.i.i143 ]
   %.sink = phi i32 [ %i.ln, %bb.bx ], [ %i.md, %.loopexit334 ], [ %i.ln, %bb.by ], [ %i.ln, %.preheader.i.i.i143 ]
   %i.me = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
   store i32 %.sink, ptr %i.kf, align 8, !tbaa !217
@@ -399,7 +400,7 @@ bb.cd:                                            ; preds = %_ZN14core_hashtable
 bb.ce:                                            ; preds = %.noexc214, %.loopexit332
   %.pre-phi500 = phi i64 [ %i.mm, %.noexc214 ], [ %i.ko, %.loopexit332 ]
   %.idx.i191.pre-phi = phi i64 [ %.pre499, %.noexc214 ], [ %.idx.i.i.i136, %.loopexit332 ]
-  %.pre-phi496 = phi i32 [ %.pre495, %.noexc214 ], [ %i.lk, %.loopexit332 ] ; 2 uses
+  %.pre-phi496 = phi i32 [ %.pre495, %.noexc214 ], [ %6, %.loopexit332 ] ; 2 uses
   %i.nm = phi i32 [ 0, %.noexc214 ], [ %i.mg, %.loopexit332 ] ; 2 uses
   %i.nn = phi ptr [ %i.mo, %.noexc214 ], [ %i.kn, %.loopexit332 ] ; 3 uses
   %i.no = phi i32 [ %.pre, %.noexc214 ], [ %i.lj, %.loopexit332 ] ; 2 uses

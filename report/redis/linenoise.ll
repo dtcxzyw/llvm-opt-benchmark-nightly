@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %i.cx, label %completeLine.exit.i.i, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cy = load i8, ptr %i.a, align 1, !tbaa !25   ; 2 uses
+  %i.cy = load i8, ptr %i.a, align 1, !tbaa !25   ; 3 uses
   switch i8 %i.cy, label %bb.ag [
     i8 9, label %bb.ac
     i8 27, label %bb.ae
@@ -256,7 +256,8 @@ bb.ah:                                            ; preds = %bb.ag
   br label %.critedge.loopexit.i.i.i
 
 .critedge.loopexit.i.i.i:                         ; preds = %bb.ah, %bb.ag, %bb.af, %bb.ae
-  %i.ds = sext i8 %i.cy to i32
+  %4 = phi i8 [ %i.cy, %bb.ah ], [ %i.cy, %bb.ag ], [ 27, %bb.af ], [ 27, %bb.ae ]
+  %i.ds = sext i8 %4 to i32
   br label %completeLine.exit.i.i
 
 completeLine.exit.i.i:                            ; preds = %bb.aa, %.critedge.loopexit.i.i.i, %bb.x

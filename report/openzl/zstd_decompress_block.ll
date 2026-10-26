@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.epil.preheader
   %.0120.i28.i = phi i64 [ %i.bq, %._crit_edge26.i ], [ 0, %._crit_edge.i ] ; 4 uses
   %.0121.i27.i = phi i64 [ %i.bp, %._crit_edge26.i ], [ 0, %._crit_edge.i ] ; 2 uses
   %i.aw = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv49.i
-  %i.ax = load i16, ptr %i.aw, align 2, !tbaa !27 ; 3 uses
+  %i.ax = load i16, ptr %i.aw, align 2, !tbaa !27 ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0121.i27.i ; 3 uses
   store i64 %.0120.i28.i, ptr %i.ay, align 1, !tbaa !55
   %i.az = icmp sgt i16 %i.ax, 8
@@ -214,15 +214,15 @@ bb.l:                                             ; preds = %.epil.preheader
 .lr.ph25.preheader.i:                             ; preds = %.lr.ph31.i
   %i.ba = zext nneg i16 %i.ax to i64              ; 2 uses
   %i.bb = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 16)
-  %i.bc = add nsw i64 %i.bb, -9                   ; 2 uses
+  %i.bc = add nsw i64 %i.bb, -9
   %i.bd = lshr i64 %i.bc, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bc, 24
+  %min.iters.check = icmp ult i16 %i.ax, 33
   br i1 %min.iters.check, label %.lr.ph25.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph25.preheader.i
   %n.vec = and i64 %i.be, 4611686018427387900     ; 3 uses
-  %i.bf = shl i64 %n.vec, 3
+  %i.bf = shl nuw nsw i64 %n.vec, 3
   %i.bg = or disjoint i64 %i.bf, 8
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.0120.i28.i, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -575,8 +575,8 @@ bb.j:                                             ; preds = %.epil.preheader
 
 .preheader7:                                      ; preds = %._crit_edge26, %.thread
   %.shrunk = phi i32 [ %i.i, %.thread ], [ %i.av, %._crit_edge26 ]
-  %i.aw = zext i32 %i.e to i64                    ; 3 uses
-  %i.ax = zext i32 %.shrunk to i64                ; 2 uses
+  %i.aw = zext nneg i32 %i.e to i64               ; 3 uses
+  %i.ax = zext nneg i32 %.shrunk to i64           ; 2 uses
   %i.ay = zext i32 %i.c to i64
   %i.az = shl nuw nsw i64 %i.ax, 1
   br label %.preheader
@@ -586,7 +586,7 @@ bb.j:                                             ; preds = %.epil.preheader
   %.0120.i28 = phi i64 [ 0, %.lr.ph31.preheader ], [ %i.bu, %._crit_edge26 ] ; 4 uses
   %.0121.i27 = phi i64 [ 0, %.lr.ph31.preheader ], [ %i.bt, %._crit_edge26 ] ; 2 uses
   %i.ba = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv49
-  %i.bb = load i16, ptr %i.ba, align 2, !tbaa !27 ; 3 uses
+  %i.bb = load i16, ptr %i.ba, align 2, !tbaa !27 ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 %.0121.i27 ; 3 uses
   store i64 %.0120.i28, ptr %i.bc, align 1, !tbaa !55
   %i.bd = icmp sgt i16 %i.bb, 8
@@ -595,15 +595,15 @@ bb.j:                                             ; preds = %.epil.preheader
 .lr.ph25.preheader:                               ; preds = %.lr.ph31
   %i.be = zext nneg i16 %i.bb to i64              ; 2 uses
   %i.bf = tail call i64 @llvm.umax.i64(i64 %i.be, i64 16)
-  %i.bg = add nsw i64 %i.bf, -9                   ; 2 uses
+  %i.bg = add nsw i64 %i.bf, -9
   %i.bh = lshr i64 %i.bg, 3
   %i.bi = add nuw nsw i64 %i.bh, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bg, 24
+  %min.iters.check = icmp ult i16 %i.bb, 33
   br i1 %min.iters.check, label %.lr.ph25.preheader2, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph25.preheader
   %n.vec = and i64 %i.bi, 4611686018427387900     ; 3 uses
-  %i.bj = shl i64 %n.vec, 3
+  %i.bj = shl nuw nsw i64 %n.vec, 3
   %i.bk = or disjoint i64 %i.bj, 8
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.0120.i28, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -1006,7 +1006,7 @@ default.unreachable48:                            ; preds = %bb.a
   %.046.epil = phi i64 [ %i.ar, %.epil.preheader ], [ %i.ak, %bb.h ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.epil.preheader ], [ 0, %bb.h ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.s, i64 %.046.epil
-  tail call void @llvm.prefetch.p0(ptr %i.aq, i32 0, i32 2, i32 1)
+  tail call void @llvm.prefetch.p0(ptr nonnull %i.aq, i32 0, i32 2, i32 1)
   %i.ar = add nuw nsw i64 %.046.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1
   %epil.iter.cmp.not = icmp eq i64 %epil.iter, 0
@@ -1409,6 +1409,7 @@ bb.bx:                                            ; preds = %ZSTD_decodeSequence
   br i1 %i.rf, label %.thread390.i, label %.thread238.i
 
 .thread390.i:                                     ; preds = %ZSTD_decodeSequence.exit189.i.thread.i, %bb.bx
+  %.0157.i288.i191 = phi i32 [ %.0157.i288.i, %bb.bx ], [ 1, %ZSTD_decodeSequence.exit189.i.thread.i ]
   %i.rg = phi ptr [ %i.nl, %bb.bx ], [ %i.la, %ZSTD_decodeSequence.exit189.i.thread.i ] ; 2 uses
   %i.rh = phi i32 [ %i.nm, %bb.bx ], [ %i.lm, %ZSTD_decodeSequence.exit189.i.thread.i ] ; 2 uses
   %i.ri = phi i64 [ %i.nn, %bb.bx ], [ %i.lc, %ZSTD_decodeSequence.exit189.i.thread.i ]
@@ -1811,7 +1812,7 @@ bb.cx:                                            ; preds = %bb.cx, %bb.cw
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.wv = icmp ult i64 %.0.i193.i.i, -119
   %i.ww = getelementptr inbounds nuw i8, ptr %.2136.i.i, i64 %.0.i193.i.i ; 2 uses
-  %i.wx = add nsw i32 %.0157.i288.i, -1           ; 2 uses
+  %i.wx = add nsw i32 %.0157.i288.i191, -1        ; 2 uses
   br i1 %i.wv, label %bb.cy, label %.thread238.i
 
 bb.cy:                                            ; preds = %.loopexit.i
@@ -2214,7 +2215,7 @@ bb.cj:                                            ; preds = %ZSTD_safecopyDstBef
 .critedge.i:                                      ; preds = %bb.cj
   %.val242 = load <2 x i64>, ptr %i.hw, align 4, !tbaa !28
   store <2 x i64> %.val242, ptr %.1231.i, align 1, !tbaa !28
-  %i.yt = icmp ugt i64 %.sroa.0.0.copyload, 16
+  %i.yt = icmp samesign ugt i64 %.sroa.0.0.copyload, 16
   br i1 %i.yt, label %bb.cl, label %ZSTD_wildcopy.exit178, !prof !58
 
 bb.ck:                                            ; preds = %bb.cj
@@ -2617,7 +2618,7 @@ bb.fd:                                            ; preds = %ZSTD_safecopyDstBef
 .critedge.i23:                                    ; preds = %bb.fd
   %.val240 = load <2 x i64>, ptr %i.aiq, align 4, !tbaa !28
   store <2 x i64> %.val240, ptr %.8238.i, align 1, !tbaa !28
-  %i.alu = icmp ugt i64 %.sroa.0188.0.copyload, 16
+  %i.alu = icmp samesign ugt i64 %.sroa.0188.0.copyload, 16
   br i1 %i.alu, label %bb.ff, label %ZSTD_wildcopy.exit136, !prof !58
 
 bb.fe:                                            ; preds = %bb.fd
@@ -3020,6 +3021,7 @@ bb.bv:                                            ; preds = %ZSTD_decodeSequence
   %i.rh = phi ptr [ %i.nm, %bb.bv ], [ %i.lb, %ZSTD_decodeSequence.exit189.i.thread ] ; 2 uses
   %i.ri = phi i32 [ %i.nn, %bb.bv ], [ %i.ln, %ZSTD_decodeSequence.exit189.i.thread ] ; 2 uses
   %i.rj = phi i64 [ %i.no, %bb.bv ], [ %i.ld, %ZSTD_decodeSequence.exit189.i.thread ]
+  %.0157.i288153 = phi i32 [ %.0157.i288, %bb.bv ], [ 1, %ZSTD_decodeSequence.exit189.i.thread ]
   %i.rk = phi i64 [ %i.mh, %bb.bv ], [ %i.he, %ZSTD_decodeSequence.exit189.i.thread ]
   %i.rl = phi i64 [ %i.mr, %bb.bv ], [ %i.hf, %ZSTD_decodeSequence.exit189.i.thread ]
   %i.rm = phi i64 [ %i.lx, %bb.bv ], [ %i.hg, %ZSTD_decodeSequence.exit189.i.thread ]
@@ -3422,7 +3424,7 @@ bb.cv:                                            ; preds = %bb.cv, %bb.cu
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %i.ww = icmp ult i64 %.0.i193.i, -119
   %i.wx = getelementptr inbounds nuw i8, ptr %.2136.i, i64 %.0.i193.i ; 2 uses
-  %i.wy = add nsw i32 %.0157.i288, -1             ; 2 uses
+  %i.wy = add nsw i32 %.0157.i288153, -1          ; 2 uses
   br i1 %i.ww, label %bb.cw, label %.thread238
 
 bb.cw:                                            ; preds = %.loopexit

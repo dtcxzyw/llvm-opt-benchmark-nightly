@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
 .lr.ph:                                           ; preds = %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 5 uses
   %xtraiter = and i64 %i.e, 3                     ; 3 uses
-  %5 = icmp ult i64 %i.e, 4
+  %5 = icmp slt i64 %i.e, 4
   br i1 %5, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
@@ -608,7 +608,11 @@ bb.t:                                             ; preds = %._crit_edge
   br i1 %exitcond.not, label %_ZL9Py_DECREFP7_object.exit, label %bb.d, !llvm.loop !54
 
 .loopexit152:                                     ; preds = %bb.k, %bb.p
-  br i1 %i.ac, label %bb.u, label %_ZL10Py_XDECREFP7_object.exit
+  %3 = phi i1 [ true, %bb.p ], [ %i.ac, %bb.k ]
+  %4 = phi i1 [ true, %bb.p ], [ %i.ad, %bb.k ]
+  %5 = phi i1 [ true, %bb.p ], [ %i.ae, %bb.k ]
+  %6 = phi i1 [ true, %bb.p ], [ %i.af, %bb.k ]
+  br i1 %3, label %bb.u, label %_ZL10Py_XDECREFP7_object.exit
 
 bb.u:                                             ; preds = %.loopexit152
   %i.bg = load i64, ptr %.186, align 8            ; 2 uses
@@ -627,7 +631,7 @@ bb.w:                                             ; preds = %bb.v
           to label %_ZL10Py_XDECREFP7_object.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZL10Py_XDECREFP7_object.exit:                    ; preds = %bb.v, %bb.u, %.loopexit152, %bb.w
-  br i1 %i.ad, label %bb.x, label %_ZL10Py_XDECREFP7_object.exit116
+  br i1 %4, label %bb.x, label %_ZL10Py_XDECREFP7_object.exit116
 
 bb.x:                                             ; preds = %_ZL10Py_XDECREFP7_object.exit
   %i.bk = load i64, ptr %i.z, align 8             ; 2 uses
@@ -646,7 +650,7 @@ bb.z:                                             ; preds = %bb.y
           to label %_ZL10Py_XDECREFP7_object.exit116 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZL10Py_XDECREFP7_object.exit116:                 ; preds = %bb.y, %bb.x, %_ZL10Py_XDECREFP7_object.exit, %bb.z
-  br i1 %i.af, label %bb.aa, label %_ZL10Py_XDECREFP7_object.exit120
+  br i1 %6, label %bb.aa, label %_ZL10Py_XDECREFP7_object.exit120
 
 bb.aa:                                            ; preds = %_ZL10Py_XDECREFP7_object.exit116
   %i.bo = load i64, ptr %.179, align 8            ; 2 uses
@@ -665,7 +669,7 @@ bb.ac:                                            ; preds = %bb.ab
           to label %_ZL10Py_XDECREFP7_object.exit120 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZL10Py_XDECREFP7_object.exit120:                 ; preds = %bb.ab, %bb.aa, %_ZL10Py_XDECREFP7_object.exit116, %bb.ac
-  br i1 %i.ae, label %bb.ad, label %_ZL10Py_XDECREFP7_object.exit124
+  br i1 %5, label %bb.ad, label %_ZL10Py_XDECREFP7_object.exit124
 
 bb.ad:                                            ; preds = %_ZL10Py_XDECREFP7_object.exit120
   %i.bs = load i64, ptr %i.x, align 8             ; 2 uses
@@ -1068,16 +1072,16 @@ bb.cq:                                            ; preds = %bb.cp
 .lr.ph:                                           ; preds = %bb.cq
   %i.mt = load ptr, ptr %i.bp, align 8            ; 5 uses
   %wide.trip.count = zext nneg i32 %i.mn to i64   ; 2 uses
-  %i.mu = sub nsw i64 %wide.trip.count, %i.bu     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.mu, 5
+  %i.mu = sub nuw nsw i64 %wide.trip.count, %i.bu ; 3 uses
+  %min.iters.check = icmp samesign ult i64 %i.mu, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
   %i.mv = and i64 %i.mu, 3                        ; 2 uses
   %i.mw = icmp eq i64 %i.mv, 0
   %i.mx = select i1 %i.mw, i64 4, i64 %i.mv
-  %n.vec = sub nsw i64 %i.mu, %i.mx               ; 2 uses
-  %i.my = add nsw i64 %n.vec, %i.bu
+  %n.vec = sub nuw nsw i64 %i.mu, %i.mx           ; 2 uses
+  %i.my = add nuw nsw i64 %n.vec, %i.bu
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1480,7 +1484,7 @@ _ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIPvS4_ELb1EEES
   %.lcssa.unr = phi ptr [ poison, %_ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIPvS4_ELb1EEESaIS6_EEC2EmRKS7_.exit.i ], [ %i.ad, %.lr.ph.i.i.i.i.i.prol ]
   %.08.i.i.i.i.i.unr = phi ptr [ %i.x, %_ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIPvS4_ELb1EEESaIS6_EEC2EmRKS7_.exit.i ], [ %i.ad, %.lr.ph.i.i.i.i.i.prol ]
   %.057.i.i.i.i.i.unr = phi i64 [ %.012.i.i, %_ZNSt12_Vector_baseIN3tsl17detail_robin_hash12bucket_entryISt4pairIPvS4_ELb1EEESaIS6_EEC2EmRKS7_.exit.i ], [ %i.ac, %.lr.ph.i.i.i.i.i.prol ]
-  %7 = icmp ult i64 %.012.i.i, 4
+  %7 = icmp slt i64 %.012.i.i, 4
   br i1 %7, label %.unr-lcssa, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ak = xor i32 %i.m, -1
   %i.al = add i32 %i.ak, %i.p
   %i.am = add nsw i32 %i.p, -2
-  %i.an = sub i32 %i.am, %i.m
+  %i.an = sub nsw i32 %i.am, %i.m
   %xtraiter = and i32 %i.al, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -412,7 +412,8 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %or.cond, label %bb.ad, label %.thread550
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %i.dr = zext i16 %i.cs to i32
+  %.lcssa = phi i16 [ %i.cs, %bb.ac ], [ 0, %bb.ab ]
+  %i.dr = zext i16 %.lcssa to i32
   %i.ds = zext i16 %i.dl to i32
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.du = load i64, ptr %i.dt, align 8            ; 2 uses

@@ -204,7 +204,7 @@ bb.be:                                            ; preds = %bb.bc
 
 bb.bf:                                            ; preds = %bb.be
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.5) #30
-          to label %.noexc343 unwind label %.loopexit.split-lp.loopexit.split-lp.a
+          to label %.noexc343 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc343:                                        ; preds = %bb.bf
   unreachable
@@ -220,7 +220,7 @@ _ZNKSt6vectorI16WallCycleCounterSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds 
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.iy = shl nuw nsw i64 %i.ix, 2
   %i.iz = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.iy) #26
-          to label %.noexc344 unwind label %.loopexit.split-lp.loopexit.split-lp.a ; 4 uses
+          to label %.noexc344 unwind label %.loopexit.split-lp.loopexit ; 4 uses
 
 .noexc344:                                        ; preds = %_ZNKSt6vectorI16WallCycleCounterSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.ja = getelementptr inbounds i8, ptr %i.iz, i64 %i.ir ; 2 uses
@@ -246,9 +246,19 @@ _ZNSt6vectorI16WallCycleCounterSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17
   %i.je = getelementptr inbounds nuw [4 x i8], ptr %i.iz, i64 %i.ix
   br label %_ZNSt6vectorI16WallCycleCounterSaIS0_EE9push_backEOS0_.exit
 
-.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %_ZNKSt6vectorI16WallCycleCounterSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.bf
+.loopexit.split-lp.loopexit:                      ; preds = %_ZNKSt6vectorI16WallCycleCounterSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %bb.bf
   %lpad.loopexit.split-lp684 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
+  br label %.loopexit.split-lp.loopexit.split-lp.a
+
+.loopexit.split-lp.loopexit.split-lp.a:           ; preds = %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit
+  %21 = phi i64 [ %i.ir, %.loopexit.split-lp.loopexit ], [ 9223372036854775804, %.loopexit.split-lp.loopexit.split-lp ]
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp684, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %.not.i.i.i345 = icmp eq ptr %.sroa.0438.0510, null
   br i1 %.not.i.i.i345, label %_ZNSt6vectorI16WallCycleCounterSaIS0_EED2Ev.exit346, label %bb.bn
 
@@ -297,7 +307,7 @@ bb.bm:                                            ; preds = %bb.bl
   br label %_ZNSt6vectorI16WallCycleCounterSaIS0_EED2Ev.exit
 
 bb.bn:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.a
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0438.0510, i64 noundef %i.ir) #28
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0438.0510, i64 noundef %21) #28
   br label %_ZNSt6vectorI16WallCycleCounterSaIS0_EED2Ev.exit346
 
 _ZNSt6vectorI16WallCycleCounterSaIS0_EED2Ev.exit: ; preds = %bb.bm, %bb.bl, %bb.ay
@@ -700,7 +710,7 @@ bb.dw:                                            ; preds = %bb.dr, %bb.ds, %_ZN
   ret void
 
 _ZNSt6vectorI16WallCycleCounterSaIS0_EED2Ev.exit346: ; preds = %_ZN3gmx14LogEntryWriterD2Ev.exit354, %_ZN3gmx14LogEntryWriterD2Ev.exit362, %_ZN3gmx14LogEntryWriterD2Ev.exit370, %_ZN3gmx14LogEntryWriterD2Ev.exit406, %_ZN3gmx14LogEntryWriterD2Ev.exit398, %_ZN3gmx14LogEntryWriterD2Ev.exit390, %_ZN3gmx14LogEntryWriterD2Ev.exit382, %.loopexit.split-lp.loopexit.split-lp.a, %bb.bn, %_ZN3gmx14LogEntryWriterD2Ev.exit340, %_ZN3gmx14LogEntryWriterD2Ev.exit331
-  %.pn327 = phi { ptr, i32 } [ %i.af, %_ZN3gmx14LogEntryWriterD2Ev.exit331 ], [ %i.bb, %_ZN3gmx14LogEntryWriterD2Ev.exit340 ], [ %i.qg, %_ZN3gmx14LogEntryWriterD2Ev.exit362 ], [ %i.vm, %_ZN3gmx14LogEntryWriterD2Ev.exit406 ], [ %i.th, %_ZN3gmx14LogEntryWriterD2Ev.exit390 ], [ %i.ul, %_ZN3gmx14LogEntryWriterD2Ev.exit398 ], [ %i.rv, %_ZN3gmx14LogEntryWriterD2Ev.exit382 ], [ %i.qz, %_ZN3gmx14LogEntryWriterD2Ev.exit370 ], [ %i.pp, %_ZN3gmx14LogEntryWriterD2Ev.exit354 ], [ %lpad.loopexit.split-lp684, %.loopexit.split-lp.loopexit.split-lp.a ], [ %lpad.loopexit.split-lp684, %bb.bn ]
+  %.pn327 = phi { ptr, i32 } [ %i.af, %_ZN3gmx14LogEntryWriterD2Ev.exit331 ], [ %i.bb, %_ZN3gmx14LogEntryWriterD2Ev.exit340 ], [ %i.qg, %_ZN3gmx14LogEntryWriterD2Ev.exit362 ], [ %i.vm, %_ZN3gmx14LogEntryWriterD2Ev.exit406 ], [ %i.th, %_ZN3gmx14LogEntryWriterD2Ev.exit390 ], [ %i.ul, %_ZN3gmx14LogEntryWriterD2Ev.exit398 ], [ %i.rv, %_ZN3gmx14LogEntryWriterD2Ev.exit382 ], [ %i.qz, %_ZN3gmx14LogEntryWriterD2Ev.exit370 ], [ %i.pp, %_ZN3gmx14LogEntryWriterD2Ev.exit354 ], [ %lpad.phi, %.loopexit.split-lp.loopexit.split-lp.a ], [ %lpad.phi, %bb.bn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #27
   resume { ptr, i32 } %.pn327
 }

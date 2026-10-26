@@ -204,7 +204,8 @@ bb.y:                                             ; preds = %bb.x
   unreachable
 
 .thread:                                          ; preds = %bb.w, %rsock_is_dgram.exit
-  call void @rb_str_set_len(i64 noundef %i.aj, i64 noundef %i.ay) #9
+  %5 = phi i64 [ 0, %rsock_is_dgram.exit ], [ %i.ay, %bb.w ]
+  call void @rb_str_set_len(i64 noundef %i.aj, i64 noundef %5) #9
   switch i32 %3, label %bb.ad [
     i32 0, label %bb.ae
     i32 1, label %bb.z

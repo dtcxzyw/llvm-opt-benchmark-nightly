@@ -109,7 +109,7 @@ _ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i:      ; preds = %_ZN16OpenColorIO_v2
 _ZN16OpenColorIO_v2_510IsNotSpaceEc.exit8.i:      ; preds = %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit9.i
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i, i64 4
   %i.r = add nsw i64 %.052.i.i.i.i, -1
-  %1 = icmp sgt i64 %.052.i.i.i.i, 1
+  %1 = icmp samesign ugt i64 %.052.i.i.i.i, 1
   br i1 %1, label %.lr.ph.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !15
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit8.i
@@ -263,7 +263,7 @@ _ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8:     ; preds = %_ZN16OpenColorIO_v2
 
 _ZN16OpenColorIO_v2_510IsNotSpaceEc.exit6.i9:     ; preds = %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8, %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit7.i8
   %i.at = add nsw i64 %.017.i.i.i.i, -1
-  %2 = icmp sgt i64 %.017.i.i.i.i, 1
+  %2 = icmp samesign ugt i64 %.017.i.i.i.i, 1
   br i1 %2, label %.lr.ph.i.i.i.i5, label %._crit_edge.i.i.i.i2, !llvm.loop !24
 
 ._crit_edge.i.i.i.i2:                             ; preds = %_ZN16OpenColorIO_v2_510IsNotSpaceEc.exit6.i9, %_ZN16OpenColorIO_v2_5L5LTrimERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
@@ -403,7 +403,7 @@ bb.f:                                             ; preds = %_ZN16OpenColorIO_v2
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
-  %.08.i18 = phi i64 [ %i.g, %bb.f ], [ %i.l, %bb.i ] ; 5 uses
+  %.08.i18 = phi i64 [ %i.g, %bb.f ], [ %i.l, %bb.i ] ; 3 uses
   %.0.i19 = phi ptr [ %i.h, %bb.f ], [ %i.k, %bb.i ] ; 2 uses
   %i.i = load i8, ptr %.0.i19, align 1, !tbaa !13
   switch i8 %i.i, label %_ZN16OpenColorIO_v2_521FindLastNonWhiteSpaceEPKcm.exit [
@@ -425,8 +425,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.g, !llvm.loop !33
 
 _ZN16OpenColorIO_v2_521FindLastNonWhiteSpaceEPKcm.exit: ; preds = %bb.g, %bb.h
-  store i64 %.08.i18, ptr %3, align 8, !tbaa !34
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.08.i18
+  %.08.i18.lcssa = phi i64 [ %.08.i18, %bb.g ], [ 0, %bb.h ] ; 3 uses
+  store i64 %.08.i18.lcssa, ptr %3, align 8, !tbaa !34
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.08.i18.lcssa
   %i.n = load i8, ptr %i.m, align 1, !tbaa !13
   switch i8 %i.n, label %_ZN16OpenColorIO_v2_57IsSpaceEc.exit [
     i8 32, label %_ZN16OpenColorIO_v2_57IsSpaceEc.exit.thread
@@ -438,7 +439,7 @@ _ZN16OpenColorIO_v2_521FindLastNonWhiteSpaceEPKcm.exit: ; preds = %bb.g, %bb.h
   ]
 
 _ZN16OpenColorIO_v2_57IsSpaceEc.exit:             ; preds = %_ZN16OpenColorIO_v2_521FindLastNonWhiteSpaceEPKcm.exit
-  %i.o = add i64 %.08.i18, 1
+  %i.o = add i64 %.08.i18.lcssa, 1
   br label %_ZN16OpenColorIO_v2_57IsSpaceEc.exit.thread.sink.split
 
 _ZN16OpenColorIO_v2_57IsSpaceEc.exit.thread.sink.split: ; preds = %bb.c, %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit.thread, %_ZN16OpenColorIO_v2_57IsSpaceEc.exit

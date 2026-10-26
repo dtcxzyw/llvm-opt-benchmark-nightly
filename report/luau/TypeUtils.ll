@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.bw, %bb.a
   %.promoted294 = phi ptr [ null, %bb.a ], [ %.lcssa245, %bb.bw ] ; 19 uses
   %.0185 = phi ptr [ %3, %bb.a ], [ %i.ne, %bb.bw ]
   %i.f = invoke noundef ptr @_ZN4Luau6followEPKNS_11TypePackVarE(ptr noundef %.0185)
-          to label %bb.c unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 14 uses
+          to label %bb.c unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 10 uses
 
 bb.c:                                             ; preds = %bb.b
   %.not.i.i = icmp eq ptr %i.f, null
@@ -519,7 +519,8 @@ _ZN4Luau3getINS_16VariadicTypePackEEEPKT_PKNS_11TypePackVarE.exit._crit_edge: ; 
   br label %.loopexit217
 
 .thread:                                          ; preds = %bb.c, %bb.d
-  %i.dy = invoke noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef %i.f)
+  %.lcssa731 = phi ptr [ null, %bb.c ], [ %i.f, %bb.d ] ; 5 uses
+  %i.dy = invoke noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef %.lcssa731)
           to label %.noexc101 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 .noexc101:                                        ; preds = %.thread
@@ -922,7 +923,7 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit136: ; preds = %_ZNSt6ve
   %.lcssa267 = phi ptr [ %.promoted290, %_ZN4Luau25trackInteriorFreeTypePackEPNS_5ScopeEPKNS_11TypePackVarE.exit ], [ %i.kq, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit136 ]
   store ptr %.lcssa267, ptr %i.b, align 8
   store ptr %.lcssa276, ptr %0, align 8
-  %i.ky = invoke noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef %i.f)
+  %i.ky = invoke noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef %.lcssa731)
           to label %bb.bi unwind label %.loopexit.split-lp205
 
 bb.bi:                                            ; preds = %._crit_edge
@@ -983,7 +984,7 @@ _ZN4Luau8TypePackD2Ev.exit140:                    ; preds = %bb.bl, %bb.bm
   br label %_ZN4Luau8TypePackD2Ev.exit88
 
 bb.bn:                                            ; preds = %bb.x, %.noexc101
-  %i.lq = invoke noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef %i.f)
+  %i.lq = invoke noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef %.lcssa731)
           to label %.noexc142 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc142:                                        ; preds = %bb.bn
@@ -1091,13 +1092,13 @@ _ZN4Luau10getMutableINS_9Unifiable5ErrorIPKNS_11TypePackVarEEEEEPT_S5_.exit._cri
   store ptr %.lcssa291, ptr %i.b, align 8
   store ptr %.lcssa295, ptr %0, align 8
   %i.nb = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.f, ptr %i.nb, align 8
+  store ptr %.lcssa731, ptr %i.nb, align 8
   store i8 1, ptr %i.a, align 8
   br label %.loopexit217
 
 bb.bv:                                            ; preds = %bb.bo, %.noexc142
   %i.nc = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.f, ptr %i.nc, align 8
+  store ptr %.lcssa731, ptr %i.nc, align 8
   store i8 1, ptr %i.a, align 8
   br label %.loopexit217
 
@@ -1500,7 +1501,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 32
   %i.bs = add nsw i64 %.052.i.i.i, -1
-  %4 = icmp sgt i64 %.052.i.i.i, 1
+  %4 = icmp samesign ugt i64 %.052.i.i.i, 1
   br i1 %4, label %bb.m, label %._crit_edge.loopexit.i.i.i, !llvm.loop !401
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.q
@@ -1782,7 +1783,7 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.al
   %i.ev = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i85, i64 32
   %i.ew = add nsw i64 %.052.i.i.i84, -1
-  %5 = icmp sgt i64 %.052.i.i.i84, 1
+  %5 = icmp samesign ugt i64 %.052.i.i.i84, 1
   br i1 %5, label %bb.ai, label %._crit_edge.loopexit.i.i.i86, !llvm.loop !401
 
 ._crit_edge.loopexit.i.i.i86:                     ; preds = %bb.am

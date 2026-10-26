@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj)
-  %.off = add i64 %i.ch, -1
+  %.off = add nsw i64 %i.ch, -1
   %switch = icmp ult i64 %.off, 2
   br i1 %switch, label %_RNvXsB_NtNtCsi68uqYEhoRA_5gimli4read8rnglistsINtB5_15RawRngListEntryjENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs4phXRVW1pDQ_9dwarfdump.exit, label %_RNvXsB_NtNtCsi68uqYEhoRA_5gimli4read8rnglistsINtB5_15RawRngListEntryjENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs4phXRVW1pDQ_9dwarfdump.exit.sink.split
 
@@ -607,7 +607,7 @@ bb.n:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj)
-  %.off = add i64 %i.ch, -1
+  %.off = add nsw i64 %i.ch, -1
   %switch = icmp ult i64 %.off, 2
   br i1 %switch, label %_RNvXsB_NtNtCsi68uqYEhoRA_5gimli4read8rnglistsINtB5_15RawRngListEntryjENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs4phXRVW1pDQ_9dwarfdump.exit, label %_RNvXsB_NtNtCsi68uqYEhoRA_5gimli4read8rnglistsINtB5_15RawRngListEntryjENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs4phXRVW1pDQ_9dwarfdump.exit.sink.split
 
@@ -1010,14 +1010,17 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !1909
   %i.bj = ptrtoint ptr %i.bi to i64               ; 2 uses
   %i.bk = and i64 %i.bj, 3
-  switch i64 %i.bk, label %default.unreachable832 [
+  switch i64 %i.bk, label %default.unreachable1597 [
     i64 2, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit
     i64 3, label %bb.e
     i64 0, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit
     i64 1, label %bb.f
   ], !prof !11
 
-default.unreachable832:                           ; preds = %bb.bh, %bb.dw, %bb.dt, %bb.cr, %bb.cm, %bb.cf, %bb.bz, %bb.bt, %bb.bm, %bb.bd, %bb.ay, %bb.at, %bb.ao, %bb.ac, %bb.v, %bb.r, %bb.d
+default.unreachable1597:                          ; preds = %bb.dw, %bb.dt, %bb.cr, %bb.cm, %bb.cf, %bb.bz, %bb.bt, %bb.bm, %bb.bd, %bb.ay, %bb.at, %bb.ao, %bb.ac, %bb.v, %bb.r, %bb.d
+  unreachable
+
+default.unreachable832:                           ; preds = %bb.bh
   unreachable
 
 bb.e:                                             ; preds = %bb.d
@@ -1169,7 +1172,7 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1911
   %i.cc = ptrtoint ptr %i.cb to i64               ; 2 uses
   %i.cd = and i64 %i.cc, 3
-  switch i64 %i.cd, label %default.unreachable832 [
+  switch i64 %i.cd, label %default.unreachable1597 [
     i64 2, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit254
     i64 3, label %bb.s
     i64 0, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit254
@@ -1212,7 +1215,7 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !1913
   %i.ck = ptrtoint ptr %i.cj to i64               ; 2 uses
   %i.cl = and i64 %i.ck, 3
-  switch i64 %i.cl, label %default.unreachable832 [
+  switch i64 %i.cl, label %default.unreachable1597 [
     i64 2, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit256
     i64 3, label %bb.w
     i64 0, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit256
@@ -1288,7 +1291,7 @@ bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !1915
   %i.cu = ptrtoint ptr %i.ct to i64               ; 2 uses
   %i.cv = and i64 %i.cu, 3
-  switch i64 %i.cv, label %default.unreachable832 [
+  switch i64 %i.cv, label %default.unreachable1597 [
     i64 2, label %bb.dm
     i64 3, label %bb.ad
     i64 0, label %bb.dm
@@ -1422,7 +1425,7 @@ bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !1918
   %i.dm = ptrtoint ptr %i.dk to i64               ; 2 uses
   %i.dn = and i64 %i.dm, 3
-  switch i64 %i.dn, label %default.unreachable832 [
+  switch i64 %i.dn, label %default.unreachable1597 [
     i64 2, label %bb.dh
     i64 3, label %bb.ap
     i64 0, label %bb.dh
@@ -1462,7 +1465,7 @@ bb.at:                                            ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !1920
   %i.du = ptrtoint ptr %i.dt to i64               ; 2 uses
   %i.dv = and i64 %i.du, 3
-  switch i64 %i.dv, label %default.unreachable832 [
+  switch i64 %i.dv, label %default.unreachable1597 [
     i64 2, label %bb.dg
     i64 3, label %bb.au
     i64 0, label %bb.dg
@@ -1502,7 +1505,7 @@ bb.ay:                                            ; preds = %bb.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1922
   %i.ec = ptrtoint ptr %i.eb to i64               ; 2 uses
   %i.ed = and i64 %i.ec, 3
-  switch i64 %i.ed, label %default.unreachable832 [
+  switch i64 %i.ed, label %default.unreachable1597 [
     i64 2, label %bb.df
     i64 3, label %bb.az
     i64 0, label %bb.df
@@ -1560,7 +1563,7 @@ bb.bd:                                            ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !1924
   %i.es = ptrtoint ptr %i.eq to i64               ; 2 uses
   %i.et = and i64 %i.es, 3
-  switch i64 %i.et, label %default.unreachable832 [
+  switch i64 %i.et, label %default.unreachable1597 [
     i64 2, label %bb.cv
     i64 3, label %bb.be
     i64 0, label %bb.cv
@@ -1633,7 +1636,7 @@ bb.bm:                                            ; preds = %bb.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1926
   %i.fh = ptrtoint ptr %i.fd to i64               ; 2 uses
   %i.fi = and i64 %i.fh, 3
-  switch i64 %i.fi, label %default.unreachable832 [
+  switch i64 %i.fi, label %default.unreachable1597 [
     i64 2, label %bb.bq
     i64 3, label %bb.bn
     i64 0, label %bb.bq
@@ -1685,7 +1688,7 @@ bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1928
   %i.fq = ptrtoint ptr %i.fp to i64               ; 2 uses
   %i.fr = and i64 %i.fq, 3
-  switch i64 %i.fr, label %default.unreachable832 [
+  switch i64 %i.fr, label %default.unreachable1597 [
     i64 2, label %bb.bw
     i64 3, label %bb.bu
     i64 0, label %bb.bw
@@ -1750,7 +1753,7 @@ bb.bz:                                            ; preds = %bb.by
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !1930
   %i.ge = ptrtoint ptr %i.fz to i64               ; 2 uses
   %i.gf = and i64 %i.ge, 3
-  switch i64 %i.gf, label %default.unreachable832 [
+  switch i64 %i.gf, label %default.unreachable1597 [
     i64 2, label %bb.cd
     i64 3, label %bb.ca
     i64 0, label %bb.cd
@@ -1794,7 +1797,7 @@ bb.cf:                                            ; preds = %bb.ce
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !1932
   %i.gl = ptrtoint ptr %i.gc to i64               ; 2 uses
   %i.gm = and i64 %i.gl, 3
-  switch i64 %i.gm, label %default.unreachable832 [
+  switch i64 %i.gm, label %default.unreachable1597 [
     i64 2, label %bb.cj
     i64 3, label %bb.cg
     i64 0, label %bb.cj
@@ -1846,7 +1849,7 @@ bb.cm:                                            ; preds = %bb.cl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1934
   %i.gu = ptrtoint ptr %i.gs to i64               ; 2 uses
   %i.gv = and i64 %i.gu, 3
-  switch i64 %i.gv, label %default.unreachable832 [
+  switch i64 %i.gv, label %default.unreachable1597 [
     i64 2, label %bb.cp
     i64 3, label %bb.cn
     i64 0, label %bb.cp
@@ -1883,7 +1886,7 @@ bb.cr:                                            ; preds = %bb.cq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1936
   %i.hb = ptrtoint ptr %i.gt to i64               ; 2 uses
   %i.hc = and i64 %i.hb, 3
-  switch i64 %i.hc, label %default.unreachable832 [
+  switch i64 %i.hc, label %default.unreachable1597 [
     i64 2, label %bb.cu
     i64 3, label %bb.cs
     i64 0, label %bb.cu
@@ -2074,7 +2077,7 @@ bb.dt:                                            ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1939
   %i.hx = ptrtoint ptr %i.bu to i64               ; 2 uses
   %i.hy = and i64 %i.hx, 3
-  switch i64 %i.hy, label %default.unreachable832 [
+  switch i64 %i.hy, label %default.unreachable1597 [
     i64 2, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit295
     i64 3, label %bb.du
     i64 0, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit295
@@ -2107,7 +2110,7 @@ bb.dw:                                            ; preds = %bb.ds
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1941
   %i.ie = ptrtoint ptr %i.hw to i64               ; 2 uses
   %i.if = and i64 %i.ie, 3
-  switch i64 %i.if, label %default.unreachable832 [
+  switch i64 %i.if, label %default.unreachable1597 [
     i64 2, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit297
     i64 3, label %bb.dx
     i64 0, label %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit297

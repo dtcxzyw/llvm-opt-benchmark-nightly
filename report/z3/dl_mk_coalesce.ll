@@ -204,7 +204,7 @@ _ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit: 
   %.0.i.i = phi i32 [ %i.ff, %bb.ad ], [ 0, %bb.ac ]
   %i.fk = load ptr, ptr %1, align 8, !tbaa !102
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 72
-  %i.fm = invoke noundef ptr @_ZN7datalog12rule_manager2mkEP3appjPKS2_PKbRK6symbolb(ptr noundef nonnull align 8 dereferenceable(1104) %i.fh, ptr noundef %i.fg, i32 noundef %.0.i.i, ptr noundef %i.fj, ptr noundef %i.fi, ptr noundef nonnull align 8 dereferenceable(8) %i.fl, i1 noundef zeroext true)
+  %i.fm = invoke noundef ptr @_ZN7datalog12rule_manager2mkEP3appjPKS2_PKbRK6symbolb(ptr noundef nonnull align 8 dereferenceable(1104) %i.fh, ptr noundef %i.fg, i32 noundef %.0.i.i, ptr noundef %i.fj, ptr noundef nonnull %i.fi, ptr noundef nonnull align 8 dereferenceable(8) %i.fl, i1 noundef zeroext true)
           to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 9 uses
 
 bb.ae:                                            ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
@@ -607,7 +607,7 @@ _ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit:   ; preds = %bb.d
   br i1 %i.y, label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEED2Ev.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit, %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE9push_backEPS1_.exit.i.i
-  %.sroa.10.1 = phi ptr [ %.sroa.10.2, %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE9push_backEPS1_.exit.i.i ], [ null, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit ] ; 7 uses
+  %.sroa.10.1 = phi ptr [ %.sroa.10.2, %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE9push_backEPS1_.exit.i.i ], [ null, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit ] ; 8 uses
   %.sroa.04.09.i.i = phi ptr [ %i.bq, %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEE9push_backEPS1_.exit.i.i ], [ %i.s, %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit ] ; 2 uses
   %i.z = load ptr, ptr %.sroa.04.09.i.i, align 8, !tbaa !325 ; 2 uses
   invoke void @_ZN7datalog12rule_manager7inc_refEPNS_4ruleE(ptr noundef nonnull align 8 dereferenceable(1104) %i.p, ptr noundef %i.z)
@@ -823,6 +823,7 @@ bb.s:                                             ; preds = %bb.a
   br label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEED2Ev.exit66
 
 bb.t:                                             ; preds = %bb.n, %bb.f, %.lr.ph.i.i
+  %.sroa.10.1.lcssa = phi ptr [ %.sroa.10.1, %bb.n ], [ null, %bb.f ], [ %.sroa.10.1, %.lr.ph.i.i ]
   %i.ck = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -1022,7 +1023,7 @@ _ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit56: ; preds = %bb.ae, %b
   br label %.body
 
 .body:                                            ; preds = %bb.t, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit56
-  %.sroa.10.0 = phi ptr [ %.sroa.10.2, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit56 ], [ %.sroa.10.1, %bb.t ] ; 2 uses
+  %.sroa.10.0 = phi ptr [ %.sroa.10.2, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit56 ], [ %.sroa.10.1.lcssa, %bb.t ] ; 2 uses
   %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit56 ], [ %i.ck, %bb.t ] ; 2 uses
   %i.ex = icmp eq ptr %.sroa.10.0, null
   br i1 %i.ex, label %_ZN15ref_vector_coreIN7datalog4ruleE19ref_manager_wrapperIS1_NS0_12rule_managerEEED2Ev.exit66, label %_ZNK6vectorIPN7datalog4ruleELb0EjE4sizeEv.exit.i57

@@ -205,12 +205,12 @@ bb.l:                                             ; preds = %_ZNKSt6vectorIPN4en
   %i.da = phi ptr [ %i.cz, %bb.l ], [ null, %_ZNKSt6vectorIPN4entt6entityEN4test18throwing_allocatorIS2_EEE12_M_check_lenEmPKc.exit ] ; 5 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.cy ; 3 uses
   %.pre.i81 = load ptr, ptr %3, align 8, !tbaa !227 ; 2 uses
-  %min.iters.check132 = icmp ult i64 %2, 4
+  %min.iters.check132 = icmp samesign ult i64 %2, 4
   br i1 %min.iters.check132, label %.lr.ph.i82.preheader, label %vector.ph133
 
 vector.ph133:                                     ; preds = %.lr.ph.preheader.i80
   %n.vec134 = and i64 %2, -4                      ; 3 uses
-  %i.dc = shl i64 %n.vec134, 3
+  %i.dc = shl nuw i64 %n.vec134, 3
   %i.dd = getelementptr i8, ptr %i.db, i64 %i.dc
   %i.de = and i64 %2, 3
   %broadcast.splatinsert135 = insertelement <2 x ptr> poison, ptr %.pre.i81, i64 0
@@ -613,12 +613,12 @@ bb.l:                                             ; preds = %_ZNKSt6vectorIPiN4t
   %i.cx = phi ptr [ %i.cw, %bb.l ], [ null, %_ZNKSt6vectorIPiN4test18throwing_allocatorIS0_EEE12_M_check_lenEmPKc.exit ] ; 5 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cv ; 3 uses
   %.pre.i81 = load ptr, ptr %3, align 8, !tbaa !352 ; 2 uses
-  %min.iters.check132 = icmp ult i64 %2, 4
+  %min.iters.check132 = icmp samesign ult i64 %2, 4
   br i1 %min.iters.check132, label %.lr.ph.i82.preheader, label %vector.ph133
 
 vector.ph133:                                     ; preds = %.lr.ph.preheader.i80
   %n.vec134 = and i64 %2, -4                      ; 3 uses
-  %i.cz = shl i64 %n.vec134, 3
+  %i.cz = shl nuw i64 %n.vec134, 3
   %i.da = getelementptr i8, ptr %i.cy, i64 %i.cz
   %i.db = and i64 %2, 3
   %broadcast.splatinsert135 = insertelement <2 x ptr> poison, ptr %.pre.i81, i64 0
@@ -1021,12 +1021,12 @@ bb.l:                                             ; preds = %_ZNKSt6vectorIPN4te
   %i.cx = phi ptr [ %i.cw, %bb.l ], [ null, %_ZNKSt6vectorIPN4test8internal20pointer_stable_mixinINS1_10value_typeIiEEEENS0_18throwing_allocatorIS6_EEE12_M_check_lenEmPKc.exit ] ; 5 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cv ; 3 uses
   %.pre.i81 = load ptr, ptr %3, align 8, !tbaa !423 ; 2 uses
-  %min.iters.check132 = icmp ult i64 %2, 4
+  %min.iters.check132 = icmp samesign ult i64 %2, 4
   br i1 %min.iters.check132, label %.lr.ph.i82.preheader, label %vector.ph133
 
 vector.ph133:                                     ; preds = %.lr.ph.preheader.i80
   %n.vec134 = and i64 %2, -4                      ; 3 uses
-  %i.cz = shl i64 %n.vec134, 3
+  %i.cz = shl nuw i64 %n.vec134, 3
   %i.da = getelementptr i8, ptr %i.cy, i64 %i.cz
   %i.db = and i64 %2, 3
   %broadcast.splatinsert135 = insertelement <2 x ptr> poison, ptr %.pre.i81, i64 0
@@ -1429,23 +1429,26 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !563  ; 3 uses
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !562  ; 5 uses
-  %1 = ptrtoint ptr %i.f to i64
-  %2 = ptrtoint ptr %i.g to i64
-  %3 = sub i64 %1, %2
-  %4 = ashr exact i64 %3, 2                       ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !172  ; 2 uses
   store i64 1048575, ptr %i.h, align 8, !tbaa !172
   %.not37 = icmp eq ptr %i.f, %i.g
-  br i1 %.not37, label %.critedge, label %.lr.ph40
+  br i1 %.not37, label %.critedge, label %.lr.ph40.preheader
+
+.lr.ph40.preheader:                               ; preds = %bb.b
+  %1 = ptrtoint ptr %i.f to i64
+  %2 = ptrtoint ptr %i.g to i64
+  %3 = sub i64 %1, %2
+  %4 = ashr exact i64 %3, 2
+  br label %.lr.ph40
 
 bb.c:                                             ; preds = %.lr.ph40
   %.not = icmp eq i64 %i.j, 0
   br i1 %.not, label %.critedge, label %.lr.ph40, !llvm.loop !2162
 
-.lr.ph40:                                         ; preds = %bb.b, %bb.c
-  %.038 = phi i64 [ %i.j, %bb.c ], [ %4, %bb.b ]  ; 2 uses
-  %i.j = add i64 %.038, -1                        ; 4 uses
+.lr.ph40:                                         ; preds = %.lr.ph40.preheader, %bb.c
+  %.038 = phi i64 [ %i.j, %bb.c ], [ %4, %.lr.ph40.preheader ] ; 2 uses
+  %i.j = add i64 %.038, -1                        ; 3 uses
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.j
   %i.l = load i32, ptr %i.k, align 4, !tbaa !171
   %i.m = icmp ugt i32 %i.l, -1048577
@@ -1455,7 +1458,7 @@ bb.c:                                             ; preds = %.lr.ph40
   br label %.critedge, !llvm.loop !2162
 
 .critedge:                                        ; preds = %bb.c, %..critedge_crit_edge41, %bb.b
-  %.0.lcssa = phi i64 [ %4, %bb.b ], [ %.038, %..critedge_crit_edge41 ], [ %i.j, %bb.c ] ; 2 uses
+  %.0.lcssa = phi i64 [ 0, %bb.b ], [ %.038, %..critedge_crit_edge41 ], [ 0, %bb.c ] ; 2 uses
   %.not2131 = icmp eq i64 %i.i, 1048575
   br i1 %.not2131, label %._crit_edge, label %.lr.ph
 

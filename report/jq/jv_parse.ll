@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e
   %.1.idx = zext i1 %i.p to i64
   %.1 = getelementptr inbounds nuw i8, ptr %.023, i64 %.1.idx ; 2 uses
   store i32 %.sink, ptr %i.h, align 8, !tbaa !33
-  %4 = icmp sgt i32 %.120, 0
-  br i1 %4, label %bb.e, label %.critedge, !llvm.loop !0
+  %.not = icmp eq i32 %.120, 0
+  br i1 %.not, label %.critedge, label %bb.e, !llvm.loop !0
 
 .critedge:                                        ; preds = %bb.e, %bb.f, %bb.d
   %.019.lcssa = phi i32 [ %2, %bb.d ], [ 0, %bb.f ], [ %.01922, %bb.e ]
@@ -326,7 +326,7 @@ bb.n:                                             ; preds = %bb.m
   store i32 %i.as, ptr %i.aa, align 4, !tbaa !32
   %i.at = sext i32 %i.ao to i64
   %i.au = getelementptr inbounds i8, ptr %i.ar, i64 %i.at
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !21  ; 12 uses
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !21  ; 17 uses
   %i.aw = load i32, ptr %i.ac, align 8, !tbaa !26 ; 3 uses
   %i.ax = icmp eq i32 %i.aw, 3
   br i1 %i.ax, label %bb.o, label %bb.r
@@ -356,7 +356,7 @@ bb.q:                                             ; preds = %bb.p
 .backedge:                                        ; preds = %bb.dv, %bb.du, %bb.dk, %bb.dj, %bb.di, %bb.bk, %bb.bj, %bb.bi, %bb.p, %bb.q, %.thread
   %.0123.be = phi ptr [ null, %bb.p ], [ null, %.thread ], [ null, %bb.q ], [ null, %bb.dv ], [ %.0172.i, %bb.bj ], [ null, %bb.dj ], [ null, %bb.di ], [ null, %bb.dk ], [ null, %bb.du ], [ %.0172.i, %bb.bi ], [ %.0172.i, %bb.bk ] ; 2 uses
   %.not131 = icmp eq ptr %.0123.be, null
-  br i1 %.not131, label %bb.m, label %.critedge, !llvm.loop !41
+  br i1 %.not131, label %bb.m, label %.critedge.loopexit290, !llvm.loop !41
 
 bb.r:                                             ; preds = %bb.n
   %i.be = load i32, ptr %i.ad, align 4, !tbaa !28
@@ -528,19 +528,19 @@ bb.aj:                                            ; preds = %bb.ai
 classify.exit.thread.i.jt3:                       ; preds = %bb.aj
   %i.dh = tail call fastcc ptr @check_literal(ptr noundef nonnull %0) ; 2 uses
   %.not111.i.jt3 = icmp eq ptr %i.dh, null
-  br i1 %.not111.i.jt3, label %bb.ak, label %.critedge
+  br i1 %.not111.i.jt3, label %bb.ak, label %.critedge.loopexit290
 
 classify.exit.thread.i.jt2:                       ; preds = %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj, %bb.aj
   %i.di = tail call fastcc ptr @check_literal(ptr noundef nonnull %0) ; 2 uses
   %.not111.i.jt2 = icmp eq ptr %i.di, null
-  br i1 %.not111.i.jt2, label %bb.al, label %.critedge
+  br i1 %.not111.i.jt2, label %bb.al, label %.critedge.loopexit290
 
 classify.exit.thread.i.jt1:                       ; preds = %bb.aj, %bb.aj, %bb.aj, %bb.aj
   %i.dj = or i8 %i.de, 1
   store i8 %i.dj, ptr %i.ah, align 4
   %i.dk = tail call fastcc ptr @check_literal(ptr noundef nonnull %0) ; 2 uses
   %.not111.i.jt1 = icmp eq ptr %i.dk, null
-  br i1 %.not111.i.jt1, label %bb.am, label %.critedge
+  br i1 %.not111.i.jt1, label %bb.am, label %.critedge.loopexit290
 
 bb.ak:                                            ; preds = %classify.exit.thread.i.jt3
   %i.dl = load i32, ptr %i.u, align 4, !tbaa !20
@@ -664,7 +664,7 @@ bb.ba:                                            ; preds = %classify.exit.threa
 
 bb.bb:                                            ; preds = %bb.ba
   %i.ev = icmp sgt i32 %i.et, 1073741823
-  br i1 %i.ev, label %.critedge, label %bb.bc
+  br i1 %i.ev, label %.critedge.loopexit290, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.ew = shl nsw i32 %i.et, 1                    ; 2 uses
@@ -719,7 +719,7 @@ bb.bg:                                            ; preds = %classify.exit.i.jt2
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %i.fl = phi ptr [ %i.fj, %bb.bf ], [ %i.fk, %bb.bg ] ; 2 uses
   %.not116.i = icmp eq ptr %i.fl, null
-  br i1 %.not116.i, label %classify.exit.i.jt1, label %.critedge
+  br i1 %.not116.i, label %classify.exit.i.jt1, label %.critedge.loopexit290
 
 classify.exit.i.jt1:                              ; preds = %bb.av, %bb.ay, %bb.as, %bb.ap, %bb.bh, %classify.exit.i.jt3, %tokenadd.exit.thread.i
   %.0172.i = phi ptr [ null, %bb.ap ], [ null, %tokenadd.exit.thread.i ], [ %.0.i.jt3, %classify.exit.i.jt3 ], [ %.0.i.jt2, %bb.bh ], [ null, %bb.as ], [ null, %bb.av ], [ @.str.4, %bb.ay ] ; 3 uses
@@ -1122,7 +1122,7 @@ bb.dn:                                            ; preds = %bb.dl
 
 bb.do:                                            ; preds = %bb.dn
   %i.lh = icmp sgt i32 %i.lf, 1073741823
-  br i1 %i.lh, label %.critedge, label %bb.dp
+  br i1 %i.lh, label %.critedge.loopexit290, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
   %i.li = shl nsw i32 %i.lf, 1                    ; 2 uses
@@ -1168,8 +1168,15 @@ bb.dv:                                            ; preds = %bb.dt, %bb.ds
   store i32 1, ptr %i.ac, align 8, !tbaa !26
   br label %.backedge
 
-.critedge:                                        ; preds = %classify.exit.thread.i.jt2, %classify.exit.thread.i.jt1, %classify.exit.thread.i.jt3, %bb.do, %bb.bh, %bb.bb, %.backedge, %bb.ce, %unhex4.exit.i, %bb.ck, %bb.cl, %bb.bo, %unhex4.exit.i.i, %bb.bv, %bb.bn, %bb.cz, %bb.cj, %bb.by, %bb.cb, %bb.ch, %bb.co, %bb.cr, %bb.cx, %bb.cu, %bb.dg, %bb.de, %parse_is_top_num.exit.i, %seq_check_truncation.exit.thread153.i, %stream_is_top_num.exit.i, %stream_is_top_num.exit.thread.i
-  %.0123.be196 = phi ptr [ @.str.47, %bb.dg ], [ @.str.17, %stream_is_top_num.exit.thread.i ], [ @.str.16, %stream_is_top_num.exit.i ], [ @.str.16, %parse_is_top_num.exit.i ], [ %i.cr, %seq_check_truncation.exit.thread153.i ], [ @.str.54, %bb.ce ], [ @.str.47, %bb.de ], [ @.str.55, %bb.cu ], [ @.str.55, %bb.cx ], [ @.str.55, %bb.cr ], [ @.str.55, %bb.co ], [ @.str.54, %bb.ch ], [ @.str.54, %bb.cb ], [ @.str.54, %bb.by ], [ @.str.55, %bb.cj ], [ @.str.57, %bb.cz ], [ @.str.52, %bb.bn ], [ @.str.53, %bb.bv ], [ @.str.54, %unhex4.exit.i.i ], [ @.str.56, %bb.bo ], [ @.str.55, %bb.cl ], [ @.str.55, %bb.ck ], [ @.str.55, %unhex4.exit.i ], [ @.str.21, %bb.bb ], [ %i.fl, %bb.bh ], [ @.str.21, %bb.do ], [ %i.dh, %classify.exit.thread.i.jt3 ], [ %i.dk, %classify.exit.thread.i.jt1 ], [ %i.di, %classify.exit.thread.i.jt2 ], [ %.0123.be, %.backedge ] ; 3 uses
+.critedge.loopexit290:                            ; preds = %.backedge, %bb.bb, %bb.bh, %bb.do, %classify.exit.thread.i.jt3, %classify.exit.thread.i.jt1, %classify.exit.thread.i.jt2
+  %.lcssa326 = phi i8 [ %i.av, %.backedge ], [ %i.av, %bb.bb ], [ %i.av, %bb.bh ], [ %i.av, %bb.do ], [ 34, %classify.exit.thread.i.jt3 ], [ %i.av, %classify.exit.thread.i.jt1 ], [ %i.av, %classify.exit.thread.i.jt2 ]
+  %.0123.be196.ph291 = phi ptr [ %.0123.be, %.backedge ], [ @.str.21, %bb.bb ], [ %i.fl, %bb.bh ], [ @.str.21, %bb.do ], [ %i.dh, %classify.exit.thread.i.jt3 ], [ %i.dk, %classify.exit.thread.i.jt1 ], [ %i.di, %classify.exit.thread.i.jt2 ]
+  %2 = icmp eq i8 %.lcssa326, 30
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.ce, %unhex4.exit.i, %bb.ck, %bb.cl, %bb.bo, %unhex4.exit.i.i, %bb.bv, %bb.bn, %bb.cz, %bb.cj, %bb.by, %bb.cb, %bb.ch, %bb.co, %bb.cr, %bb.cx, %bb.cu, %.critedge.loopexit290, %bb.dg, %bb.de, %parse_is_top_num.exit.i, %seq_check_truncation.exit.thread153.i, %stream_is_top_num.exit.i, %stream_is_top_num.exit.thread.i
+  %.not143 = phi i1 [ false, %bb.dg ], [ true, %stream_is_top_num.exit.thread.i ], [ true, %stream_is_top_num.exit.i ], [ true, %parse_is_top_num.exit.i ], [ true, %seq_check_truncation.exit.thread153.i ], [ %2, %.critedge.loopexit290 ], [ false, %bb.de ], [ false, %bb.cu ], [ false, %bb.cx ], [ false, %bb.cr ], [ false, %bb.co ], [ false, %bb.ch ], [ false, %bb.cb ], [ false, %bb.by ], [ false, %bb.cj ], [ false, %bb.cz ], [ false, %bb.bn ], [ false, %bb.bv ], [ false, %unhex4.exit.i.i ], [ false, %bb.bo ], [ false, %bb.cl ], [ false, %bb.ck ], [ false, %unhex4.exit.i ], [ false, %bb.ce ]
+  %.0123.be196 = phi ptr [ @.str.47, %bb.dg ], [ @.str.17, %stream_is_top_num.exit.thread.i ], [ @.str.16, %stream_is_top_num.exit.i ], [ @.str.16, %parse_is_top_num.exit.i ], [ %i.cr, %seq_check_truncation.exit.thread153.i ], [ %.0123.be196.ph291, %.critedge.loopexit290 ], [ @.str.47, %bb.de ], [ @.str.55, %bb.cu ], [ @.str.55, %bb.cx ], [ @.str.55, %bb.cr ], [ @.str.55, %bb.co ], [ @.str.54, %bb.ch ], [ @.str.54, %bb.cb ], [ @.str.54, %bb.by ], [ @.str.55, %bb.cj ], [ @.str.57, %bb.cz ], [ @.str.52, %bb.bn ], [ @.str.53, %bb.bv ], [ @.str.54, %unhex4.exit.i.i ], [ @.str.56, %bb.bo ], [ @.str.55, %bb.cl ], [ @.str.55, %bb.ck ], [ @.str.55, %unhex4.exit.i ], [ @.str.54, %bb.ce ] ; 3 uses
   %i.lw = icmp eq ptr %.0123.be196, @.str.4
   br i1 %i.lw, label %.critedge.thread, label %bb.dw
 
@@ -1184,7 +1191,6 @@ bb.dw:                                            ; preds = %.critedge
   %i.lz = load i64, ptr %1, align 8
   %i.ma = load ptr, ptr %i.s, align 8
   tail call void @jv_free(i64 %i.lz, ptr %i.ma) #8
-  %.not143 = icmp eq i8 %i.av, 30
   br i1 %.not143, label %bb.dz, label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw

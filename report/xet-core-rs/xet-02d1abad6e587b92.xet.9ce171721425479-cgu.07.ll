@@ -205,7 +205,7 @@ _RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3l
 
 _RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3lSD_3xet.exit.thread.invoke: ; preds = %_RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3lSD_3xet.exit, %bb.c, %bb.dt
   %i.ck = phi ptr [ @54, %bb.dt ], [ @50, %bb.c ], [ @50, %_RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3lSD_3xet.exit ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @49, i64 noundef 23, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ck) #39
+  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @49, i64 noundef 23, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @88, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ck) #39
           to label %_RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3lSD_3xet.exit.thread.cont unwind label %.body36.thread126.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3lSD_3xet.exit.thread.cont: ; preds = %_RNvMs0_NtNtCsdCDTHl3mYPb_4http6header3mapNtB5_9HeaderMap11try_reserveCsQbU2fm3lSD_3xet.exit.thread.invoke
@@ -608,7 +608,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.h, align 8, !noalias !1865, !nonnull !11, !noundef !11 ; 12 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val1.i = load i64, ptr %i.i, align 8, !noalias !1865, !noundef !11 ; 12 uses
+  %.val1.i = load i64, ptr %i.i, align 8, !noalias !1865, !noundef !11 ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1866)
   switch i64 %.val1.i, label %.lr.ph.preheader.split.i.split.i.i [
     i64 0, label %._crit_edge.i.i.i
@@ -751,8 +751,8 @@ bb.p:                                             ; preds = %.thread48.i.i.i, %b
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %bb.p, %._crit_edge.loopexit.peel.begin.thread.i.i.i, %._crit_edge.loopexit.peel.begin.i.peel.next.i.i, %bb.a
-  %.sroa.012.0.lcssa.i.i.i = phi i64 [ %.val1.i, %bb.a ], [ %.sroa.012.3.peel44.i.i.i, %bb.p ], [ %.sroa.012.2.i.peel.i.i, %._crit_edge.loopexit.peel.begin.i.peel.next.i.i ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i.i.i ] ; 2 uses
-  %.sroa.0.0.lcssa.i.i.i = phi i64 [ %.val1.i, %bb.a ], [ %i.bg, %bb.p ], [ %.sroa.0.1.i.peel.i.i, %._crit_edge.loopexit.peel.begin.i.peel.next.i.i ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i.i.i ] ; 3 uses
+  %.sroa.012.0.lcssa.i.i.i = phi i64 [ 0, %bb.a ], [ %.sroa.012.3.peel44.i.i.i, %bb.p ], [ %.sroa.012.2.i.peel.i.i, %._crit_edge.loopexit.peel.begin.i.peel.next.i.i ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i.i.i ] ; 2 uses
+  %.sroa.0.0.lcssa.i.i.i = phi i64 [ 0, %bb.a ], [ %i.bg, %bb.p ], [ %.sroa.0.1.i.peel.i.i, %._crit_edge.loopexit.peel.begin.i.peel.next.i.i ], [ 0, %._crit_edge.loopexit.peel.begin.thread.i.i.i ] ; 3 uses
   %i.bh = icmp ult i64 %.sroa.0.0.lcssa.i.i.i, %.val1.i
   br i1 %i.bh, label %bb.q, label %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtCsG258MDvU3F_3std4path7PathBufNtB8_4Hash4hashNtNtNtBJ_4hash6random13DefaultHasherECsQbU2fm3lSD_3xet.exit
 
@@ -1155,7 +1155,7 @@ bb.f:                                             ; preds = %bb.d
 _RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i: ; preds = %bb.f, %bb.e, %bb.d
   %.sroa.0.0.copyload73 = phi i64 [ %i.z, %bb.f ], [ 3, %bb.d ], [ %spec.select.i, %bb.e ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2118
-  %i.ad = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.copyload73, i64 1) ; 2 uses
+  %i.ad = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.copyload73, i64 1)
   switch i64 %i.ad, label %.loopexit.i [
     i64 0, label %bb.g
     i64 1, label %bb.h
@@ -1163,7 +1163,10 @@ _RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8
     i64 3, label %bb.i
   ]
 
-.loopexit.i:                                      ; preds = %bb.u, %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i
+default.unreachable:                              ; preds = %bb.u
+  unreachable
+
+.loopexit.i:                                      ; preds = %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i
   unreachable
 
 bb.g:                                             ; preds = %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i
@@ -1218,7 +1221,7 @@ bb.l:                                             ; preds = %bb.g
 
 bb.m:                                             ; preds = %bb.h, %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i, %bb.l
   %.sroa.12.0 = phi i8 [ %.sroa.12.0.copyload77, %bb.l ], [ %i.ag, %bb.h ], [ 1, %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i ]
-  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload73, %bb.l ], [ 2, %bb.h ], [ %i.ad, %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i ]
+  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload73, %bb.l ], [ 2, %bb.h ], [ 2, %_RNvMs0_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4listINtB5_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemE7try_popCsQbU2fm3lSD_3xet.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
   br label %_RNCNvMsa_NtNtNtCsUrhh0HcRih_5tokio4sync4mpsc4chanINtB7_2RxNtNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer17sequential_writer23SequentialRetrievalItemNtNtB9_9unbounded9SemaphoreE8try_recv0CsQbU2fm3lSD_3xet.exit
 
@@ -1276,8 +1279,8 @@ bb.t:                                             ; preds = %.noexc.i
 bb.u:                                             ; preds = %bb.t, %bb.s, %.noexc.i
   %.sroa.0.0.copyload72 = phi i64 [ %i.av, %bb.t ], [ 3, %.noexc.i ], [ %spec.select14.i, %bb.s ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2125
-  %i.ay = call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.copyload72, i64 1) ; 2 uses
-  switch i64 %i.ay, label %.loopexit.i [
+  %i.ay = call i64 @llvm.usub.sat.i64(i64 %.sroa.0.0.copyload72, i64 1)
+  switch i64 %i.ay, label %default.unreachable [
     i64 0, label %bb.v
     i64 1, label %bb.w
     i64 2, label %.loopexit
@@ -1318,7 +1321,7 @@ bb.z:                                             ; preds = %bb.v
 
 .loopexit:                                        ; preds = %bb.u, %bb.w, %bb.z
   %.sroa.12.1 = phi i8 [ %.sroa.12.0.copyload75, %bb.z ], [ %i.bb, %bb.w ], [ 1, %bb.u ]
-  %.sroa.0.1 = phi i64 [ %.sroa.0.0.copyload72, %bb.z ], [ 2, %bb.w ], [ %i.ay, %bb.u ]
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0.copyload72, %bb.z ], [ 2, %bb.w ], [ 2, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.912.i)
   %i.be = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
   %i.bf = load ptr, ptr %i.be, align 8, !noalias !2120, !nonnull !11, !noundef !11

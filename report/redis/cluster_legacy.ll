@@ -205,12 +205,13 @@ bb.bu:                                            ; preds = %.outer.split
   br label %.outer, !llvm.loop !269
 
 .split.us:                                        ; preds = %.outer.split.us, %.outer.split
+  %.5.ph155 = phi ptr [ %.5.ph, %.outer.split ], [ null, %.outer.split.us ]
   call void @dictResetIterator(ptr noundef nonnull %2) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
   br label %bb.bv
 
 bb.bv:                                            ; preds = %.split.us, %sdslen.exit79.thread
-  %.8 = phi ptr [ %.5.ph, %.split.us ], [ %.4.fr, %sdslen.exit79.thread ] ; 7 uses
+  %.8 = phi ptr [ %.5.ph155, %.split.us ], [ %.4.fr, %sdslen.exit79.thread ] ; 7 uses
   %.346 = phi i32 [ %.245.ph, %.split.us ], [ %.144, %sdslen.exit79.thread ]
   %.3 = phi i16 [ %.2.ph, %.split.us ], [ %.1, %sdslen.exit79.thread ]
   %.not62 = icmp eq ptr %.8, null
@@ -613,7 +614,7 @@ clusterSetGossipEntry.exit:                       ; preds = %bb.n
 bb.o:                                             ; preds = %bb.n, %bb.i, %bb.g, %bb.h, %clusterSetGossipEntry.exit, %bb.m
   %.173 = phi i32 [ %i.cs, %clusterSetGossipEntry.exit ], [ %.072106130, %bb.g ], [ %.072106130, %bb.m ], [ %.072106130, %bb.i ], [ %.072106130, %bb.h ], [ %.072106130, %bb.n ] ; 3 uses
   %.169 = phi i32 [ %i.cr, %clusterSetGossipEntry.exit ], [ %.068107129, %bb.g ], [ %i.bg, %bb.m ], [ %.068107129, %bb.i ], [ %.068107129, %bb.h ], [ %.068107129, %bb.n ] ; 2 uses
-  %3 = icmp slt i32 %.169, 1
+  %3 = icmp eq i32 %.169, 0
   %i.ct = icmp sge i32 %.173, %spec.select
   %or.cond90.not139 = select i1 %3, i1 true, i1 %i.ct
   %.not81 = icmp eq i32 %i.am, 0
@@ -712,7 +713,7 @@ bb.r:                                             ; preds = %bb.q, %clusterSetGo
   %.1 = phi i32 [ %i.eo, %clusterSetGossipEntry.exit102 ], [ %.067112, %bb.q ] ; 2 uses
   %i.ep = call ptr @dictNext(ptr noundef nonnull %2) #30 ; 2 uses
   %i.eq = icmp ne ptr %i.ep, null
-  %4 = icmp sgt i32 %.1, 0
+  %4 = icmp ne i32 %.1, 0
   %i.er = select i1 %i.eq, i1 %4, i1 false
   br i1 %i.er, label %bb.q, label %._crit_edge
 

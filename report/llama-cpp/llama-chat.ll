@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %bb.i
 ._crit_edge.i.i1010:                              ; preds = %._crit_edge.i.i1006
   %i.eq = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   store i64 %i.em, ptr %i.eq, align 8, !tbaa !20
-  store i8 0, ptr %i.el, align 1, !tbaa !26
+  store i8 0, ptr %i.el, align 8, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
   %i.er = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   store ptr %i.er, ptr %8, align 8, !tbaa !24
@@ -605,7 +605,7 @@ bb.gd:                                            ; preds = %bb.gc, %bb.gb, %._c
   %i.ajz = getelementptr inbounds nuw i8, ptr %i.ajy, i64 %i.ajx
   store i8 0, ptr %i.ajz, align 1, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  %i.aka = load i64, ptr %i.ajm, align 8, !tbaa !20 ; 3 uses
+  %i.aka = load i64, ptr %i.ajm, align 8, !tbaa !20
   switch i64 %i.aka, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1419 [
     i64 6, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1411
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1430
@@ -681,8 +681,10 @@ bb.gi:                                            ; preds = %bb.gg
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1430: ; preds = %bb.gd
   %.pre3265 = load ptr, ptr %29, align 8, !tbaa !21
-  %bcmp.i1429 = call i32 @bcmp(ptr %.pre3265, ptr nonnull @.str.136, i64 %i.aka)
-  %i.alf = icmp eq i32 %bcmp.i1429, 0
+  %176 = load i32, ptr %.pre3265, align 1
+  %177 = icmp ne i32 %176, 1919251317
+  %178 = zext i1 %177 to i32
+  %i.alf = icmp eq i32 %178, 0
   br i1 %i.alf, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1430.thread, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1419
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1430.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1430
@@ -713,9 +715,17 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1432: ; preds = %_ZS
           to label %.invoke unwind label %bb.gf   ; 0 uses
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1440: ; preds = %bb.gd
-  %.pre3266 = load ptr, ptr %29, align 8, !tbaa !21
-  %bcmp.i1439 = call i32 @bcmp(ptr %.pre3266, ptr nonnull @.str.155, i64 %i.aka)
-  %i.als = icmp eq i32 %bcmp.i1439, 0
+  %.pre3266 = load ptr, ptr %29, align 8, !tbaa !21 ; 2 uses
+  %179 = load i64, ptr %.pre3266, align 1
+  %180 = xor i64 %179, 7953766455952241505
+  %181 = getelementptr i8, ptr %.pre3266, i64 8
+  %182 = load i8, ptr %181, align 1
+  %183 = zext i8 %182 to i64
+  %184 = xor i64 %183, 116
+  %185 = or i64 %180, %184
+  %186 = icmp ne i64 %185, 0
+  %187 = zext i1 %186 to i32
+  %i.als = icmp eq i32 %187, 0
   br i1 %i.als, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1440.thread, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit1419
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1440.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit1440

@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.b
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  store i64 %i.f, ptr %0, align 8
+  %.lcssa = phi i64 [ -9223372036854775806, %bb.d ], [ %i.f, %bb.b ]
+  store i64 %.lcssa, ptr %0, align 8
   %.sroa.6.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.4.0.copyload, ptr %.sroa.6.0..sroa_idx5, align 8
   %.sroa.613.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -311,7 +312,8 @@ bb.d:                                             ; preds = %bb.b
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  store i64 %i.f, ptr %0, align 8
+  %.lcssa = phi i64 [ -9223372036854775806, %bb.d ], [ %i.f, %bb.b ]
+  store i64 %.lcssa, ptr %0, align 8
   %.sroa.6.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.4.0.copyload, ptr %.sroa.6.0..sroa_idx5, align 8
   %.sroa.613.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -418,7 +420,8 @@ bb.d:                                             ; preds = %bb.b
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  store i64 %i.f, ptr %0, align 8
+  %.lcssa = phi i64 [ -9223372036854775806, %bb.d ], [ %i.f, %bb.b ]
+  store i64 %.lcssa, ptr %0, align 8
   %.sroa.6.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.4.0.copyload, ptr %.sroa.6.0..sroa_idx5, align 8
   %.sroa.613.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %0, i64 16

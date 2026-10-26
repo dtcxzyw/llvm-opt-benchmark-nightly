@@ -204,7 +204,7 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultuNtB
   br label %.loopexit2464
 
 switch.lookup5370:                                ; preds = %bb.mb
-  %i.biw = trunc nuw i64 %.sroa.060.0.i.lcssa94.i to i56
+  %i.biw = trunc nuw nsw i64 %.sroa.060.0.i.lcssa94.i to i56
   %switch.shiftamt5372 = shl nuw nsw i56 %i.biw, 3
   %switch.downshift5373 = lshr i56 1694364648734983, %switch.shiftamt5372
   %switch.masked5374 = trunc i56 %switch.downshift5373 to i8
@@ -607,7 +607,7 @@ define internal fastcc void @_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse12pa
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.036, i64 16 ; 2 uses
   %i.e = add nuw nsw i64 %.sroa.8.035, 1
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.036, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !noundef !4 ; 9 uses
+  %i.g = load i64, ptr %i.f, align 8, !noundef !4 ; 11 uses
   %i.h = icmp ult i64 %2, %i.g
   br i1 %i.h, label %.backedge, label %bb.b
 
@@ -727,6 +727,7 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsa9sSWSfjDbm_4jiff.exit24.i: ; preds
   br i1 %i.bk, label %._crit_edge, label %.lr.ph
 
 .loopexit:                                        ; preds = %._crit_edge.i, %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsa9sSWSfjDbm_4jiff.exit24.i, %bb.c, %bb.d
+  %5 = phi i64 [ %i.g, %bb.d ], [ 0, %bb.c ], [ %i.g, %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCsa9sSWSfjDbm_4jiff.exit24.i ], [ %i.g, %._crit_edge.i ]
   %i.bl = icmp samesign ugt i64 %.sroa.8.035, 127
   br i1 %i.bl, label %bb.g, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultaNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsa9sSWSfjDbm_4jiff.exit, !prof !7
 
@@ -737,7 +738,7 @@ bb.g:                                             ; preds = %.loopexit
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultaNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCsa9sSWSfjDbm_4jiff.exit: ; preds = %.loopexit
-  %i.bm = sub nuw nsw i64 %2, %i.g
+  %i.bm = sub nuw nsw i64 %2, %5
   %i.bn = trunc nuw nsw i64 %.sroa.8.035 to i8
   store i8 %i.bn, ptr %0, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

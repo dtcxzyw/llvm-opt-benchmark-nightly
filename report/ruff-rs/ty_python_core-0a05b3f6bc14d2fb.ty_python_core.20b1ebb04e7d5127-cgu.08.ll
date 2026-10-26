@@ -205,6 +205,7 @@ tailrecurse:                                      ; preds = %bb.g, %bb.a
   ]
 
 bb.b:                                             ; preds = %bb.c, %tailrecurse
+  %.tr34.lcssa = phi i64 [ 1, %bb.c ], [ %.tr34, %tailrecurse ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 192 ; 2 uses
   store i64 0, ptr %i.f, align 8
@@ -213,7 +214,7 @@ bb.b:                                             ; preds = %bb.c, %tailrecurse
   store i64 0, ptr %i.g, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 0, ptr %i.c, align 4
-  %i.h = invoke fastcc noundef zeroext i1 @_RNvMs2_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB5_17MemberExprBuilder12collect_expr(i64 noundef %.tr34, ptr noundef %.tr35, ptr noalias noundef align 8 dereferenceable(200) %i.e, ptr noalias noundef align 8 dereferenceable(40) %i.d, ptr noalias noundef align 4 dereferenceable(4) %i.c)
+  %i.h = invoke fastcc noundef zeroext i1 @_RNvMs2_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB5_17MemberExprBuilder12collect_expr(i64 noundef %.tr34.lcssa, ptr noundef %.tr35, ptr noalias noundef align 8 dereferenceable(200) %i.e, ptr noalias noundef align 8 dereferenceable(40) %i.d, ptr noalias noundef align 4 dereferenceable(4) %i.c)
           to label %bb.j unwind label %bb.i
 
 bb.c:                                             ; preds = %tailrecurse

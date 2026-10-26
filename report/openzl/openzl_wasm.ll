@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %_ZNSt10unique_ptrIhN12_GLOBAL__N_111FreeDeleterEED2Ev.exit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.r:                                             ; preds = %.lr.ph
-  %i.ae = extractvalue { i32, i64 } %i.ad, 0      ; 3 uses
+  %i.ae = extractvalue { i32, i64 } %i.ad, 0      ; 2 uses
   %.not194 = icmp eq i32 %i.ae, 0
   br i1 %.not194, label %bb.s, label %._crit_edge
 
@@ -213,12 +213,13 @@ bb.s:                                             ; preds = %bb.r
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !48
 
 ._crit_edge:                                      ; preds = %bb.r, %bb.s
+  %.lcssa = phi i32 [ %i.ae, %bb.r ], [ 0, %bb.s ] ; 2 uses
   %.0120.lcssa.ph = phi i64 [ %.0120196, %bb.r ], [ %i.af, %bb.s ]
   %i.ah = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #14
   %i.ai = sitofp i64 %i.ah to double
   %i.aj = fdiv double %i.ai, 1.000000e+06
   %i.ak = fsub double %i.aj, %i.ac
-  %.not142 = icmp eq i32 %i.ae, 0
+  %.not142 = icmp eq i32 %.lcssa, 0
   br i1 %.not142, label %bb.t, label %.thread170
 
 _ZNSt10unique_ptrIhN12_GLOBAL__N_111FreeDeleterEED2Ev.exit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.p
@@ -238,7 +239,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZNSt10unique_ptrIhN12_GLOBAL__N_111FreeDeleterEED2Ev.exit154.thread
 
 .thread170:                                       ; preds = %._crit_edge, %bb.t, %bb.q
-  %.2175 = phi i32 [ %i.y, %bb.q ], [ %i.ae, %._crit_edge ], [ 1, %bb.t ]
+  %.2175 = phi i32 [ %i.y, %bb.q ], [ %.lcssa, %._crit_edge ], [ 1, %bb.t ]
   tail call void @free(ptr noundef nonnull %i.w) #14
   br label %_ZNSt10unique_ptrIhN12_GLOBAL__N_111FreeDeleterEED2Ev.exit154.thread
 
@@ -398,7 +399,7 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.j:                                             ; preds = %.lr.ph
-  %i.o = extractvalue { i32, i64 } %i.n, 0        ; 3 uses
+  %i.o = extractvalue { i32, i64 } %i.n, 0        ; 2 uses
   %.not119 = icmp eq i32 %i.o, 0
   br i1 %.not119, label %bb.k, label %._crit_edge
 
@@ -409,12 +410,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !52
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.k
+  %.lcssa = phi i32 [ %i.o, %bb.j ], [ 0, %bb.k ] ; 2 uses
   %.060.lcssa.ph = phi i64 [ %.060122, %bb.j ], [ %i.p, %bb.k ]
   %i.r = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #14
   %i.s = sitofp i64 %i.r to double
   %i.t = fdiv double %i.s, 1.000000e+06
   %i.u = fsub double %i.t, %i.m
-  %.not76 = icmp eq i32 %i.o, 0
+  %.not76 = icmp eq i32 %.lcssa, 0
   br i1 %.not76, label %bb.l, label %.thread104
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.h
@@ -432,7 +434,7 @@ bb.m:                                             ; preds = %bb.l
   br label %.thread104
 
 .thread104:                                       ; preds = %bb.m, %._crit_edge, %bb.l, %bb.i
-  %.2107 = phi i32 [ %i.j, %bb.i ], [ %i.o, %._crit_edge ], [ 1, %bb.l ], [ 0, %bb.m ]
+  %.2107 = phi i32 [ %i.j, %bb.i ], [ %.lcssa, %._crit_edge ], [ 1, %bb.l ], [ 0, %bb.m ]
   invoke void @ZL_DCtx_free(ptr noundef nonnull %i.g)
           to label %.thread112 unwind label %bb.n
 

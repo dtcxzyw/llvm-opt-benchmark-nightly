@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %7, i1 false)
   %switch.tableidx = add nsw i64 %i.c, -48        ; 3 uses
   %i.d = icmp ult i64 %switch.tableidx, 7
-  %switch.maskindex = trunc i64 %switch.tableidx to i8
+  %switch.maskindex = trunc nsw i64 %switch.tableidx to i8
   %switch.shifted = lshr i8 85, %switch.maskindex
   %switch.lobit = trunc i8 %switch.shifted to i1
   %or.cond = select i1 %i.d, i1 %switch.lobit, i1 false
@@ -323,7 +323,7 @@ bb.d:                                             ; preds = %.outer, %bb.r
 .thread251.loopexit:                              ; preds = %bb.bp, %bb.df, %.backedge, %bb.cp, %bb.aj, %bb.d
   %.sroa.0103.1.jt0 = phi i64 [ %.sroa.0103.01401, %bb.d ], [ %.sroa.0103.3796, %.backedge ], [ %.sroa.0103.01401, %bb.aj ], [ %i.ic, %bb.cp ], [ %.sroa.036.1787, %bb.df ], [ %i.eu, %bb.bp ] ; 12 uses
   %i.z = add i64 %.sroa.013.01406, %.sroa.0126.01397 ; 9 uses
-  %i.aa = sub i64 %.sroa.0.01409, %.sroa.0126.01397 ; 8 uses
+  %i.aa = sub i64 %.sroa.0.01409, %.sroa.0126.01397 ; 6 uses
   %..i221 = call noundef i64 @llvm.umin.i64(i64 %i.aa, i64 65536) ; 4 uses
   %.not216 = icmp eq i64 %i.aa, 0
   br i1 %.not216, label %bb.f, label %bb.e
@@ -334,6 +334,7 @@ bb.e:                                             ; preds = %.thread251.loopexit
   br i1 %i.ac, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17compress_fragment16ShouldMergeBlock.exit, %bb.e, %.thread251.loopexit
+  %.lcssa2784 = phi i64 [ %i.aa, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc17compress_fragment16ShouldMergeBlock.exit ], [ %i.aa, %bb.e ], [ 0, %.thread251.loopexit ] ; 4 uses
   %i.ad = icmp ult i64 %.sroa.0103.1.jt0, %i.x
   br i1 %i.ad, label %bb.s, label %bb.ab
 
@@ -494,7 +495,7 @@ bb.aa:                                            ; preds = %bb.u
 bb.ab:                                            ; preds = %bb.w, %bb.x, %bb.z, %bb.bj, %bb.f
   %.sroa.0103.1.jt2 = phi i64 [ %i.x, %bb.w ], [ %i.x, %bb.f ], [ %i.x, %bb.z ], [ %.sroa.083.0780, %bb.bj ], [ %i.x, %bb.x ]
   %.sroa.013.1.jt2 = phi i64 [ %i.z, %bb.w ], [ %i.z, %bb.f ], [ %i.z, %bb.z ], [ %.sroa.083.0780, %bb.bj ], [ %i.z, %bb.x ] ; 5 uses
-  %.sroa.0.1.jt2 = phi i64 [ %i.aa, %bb.w ], [ %i.aa, %bb.f ], [ %i.aa, %bb.z ], [ %i.fc, %bb.bj ], [ %i.aa, %bb.x ] ; 3 uses
+  %.sroa.0.1.jt2 = phi i64 [ %.lcssa2784, %bb.w ], [ %.lcssa2784, %bb.f ], [ %.lcssa2784, %bb.z ], [ %i.fc, %bb.bj ], [ %.lcssa2784, %bb.x ] ; 3 uses
   %.not = icmp eq i64 %.sroa.0.1.jt2, 0
   br i1 %.not, label %bb.ac, label %bb.ad
 

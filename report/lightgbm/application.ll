@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i70
 
 _ZNSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEEaSEOS4_.exit.i.i.i.i.i: ; preds = %bb.f, %.lr.ph.i.i.i.i.i70
   %i.bd = add nsw i64 %.010.i.i.i.i.i, -1
-  %5 = icmp sgt i64 %.010.i.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.010.i.i.i.i.i, 1
   br i1 %5, label %.lr.ph.i.i.i.i.i70, label %_ZSt13move_backwardIPSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEES6_ET0_T_S8_S7_.exit, !llvm.loop !542
 
 _ZSt13move_backwardIPSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEES6_ET0_T_S8_S7_.exit: ; preds = %_ZNSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEEaSEOS4_.exit.i.i.i.i.i, %_ZSt22__uninitialized_move_aIPSt6vectorIdN8LightGBM6Common18AlignmentAllocatorIdLm32EEEES6_SaIS5_EET0_T_S9_S8_RT1_.exit
@@ -608,12 +608,13 @@ _ZNSt6vectorIPKN8LightGBM6MetricESaIS3_EE9push_backEOS3_.exit: ; preds = %_ZNSt6
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.n, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN8LightGBM6MetricESaIS3_EED2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #30
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %2) #30
   br label %_ZNSt6vectorIPKN8LightGBM6MetricESaIS3_EED2Ev.exit
 
 _ZNSt6vectorIPKN8LightGBM6MetricESaIS3_EED2Ev.exit: ; preds = %bb.h, %bb.i
@@ -1016,7 +1017,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %.preheader, %bb.u
   %.0 = phi i64 [ %i.bn, %bb.u ], [ %i.au, %.preheader ]
   %i.aw = icmp eq i64 %.0, 1
-  %i.ax = load i8, ptr %i.c, align 1, !tbaa !114  ; 6 uses
+  %i.ax = load i8, ptr %i.c, align 1, !tbaa !114  ; 5 uses
   br i1 %i.aw, label %bb.p, label %.loopexit
 
 bb.p:                                             ; preds = %bb.o
@@ -1087,7 +1088,7 @@ bb.v:                                             ; preds = %.loopexit79
   br label %.loopexit80
 
 .loopexit80:                                      ; preds = %bb.p, %bb.v, %.loopexit
-  %i.bw = phi i8 [ %.pre, %bb.v ], [ %i.ax, %.loopexit ], [ %i.ax, %bb.p ]
+  %i.bw = phi i8 [ %.pre, %bb.v ], [ %i.ax, %.loopexit ], [ 10, %bb.p ]
   %i.bx = icmp eq i8 %i.bw, 10
   br i1 %i.bx, label %bb.w, label %bb.y
 
@@ -1490,7 +1491,7 @@ _ZNKSt6vectorISt4pairIidESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
 .lr.ph.i.i.i30.prol.loopexit:                     ; preds = %.lr.ph.i.i.i30.prol, %_ZNKSt6vectorISt4pairIidESaIS1_EE12_M_check_lenEmPKc.exit
   %.013.i.i.i31.unr = phi ptr [ %i.ap, %_ZNKSt6vectorISt4pairIidESaIS1_EE12_M_check_lenEmPKc.exit ], [ %i.as, %.lr.ph.i.i.i30.prol ]
   %.01012.i.i.i32.unr = phi i64 [ %1, %_ZNKSt6vectorISt4pairIidESaIS1_EE12_M_check_lenEmPKc.exit ], [ %i.ar, %.lr.ph.i.i.i30.prol ]
-  %2 = icmp ult i64 %1, 8
+  %2 = icmp slt i64 %1, 8
   br i1 %2, label %_ZSt27__uninitialized_default_n_aIPSt4pairIidEmS1_ET_S3_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30
 
 .lr.ph.i.i.i30:                                   ; preds = %.lr.ph.i.i.i30.prol.loopexit, %.lr.ph.i.i.i30

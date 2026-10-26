@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 16
   %i.bf = add nsw i64 %.052.i.i.i, -1
-  %4 = icmp sgt i64 %.052.i.i.i, 1
+  %4 = icmp samesign ugt i64 %.052.i.i.i, 1
   br i1 %4, label %bb.h, label %._crit_edge.loopexit.i.i.i, !llvm.loop !5
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.l
@@ -308,7 +308,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i26, i64 16
   %i.cm = add nsw i64 %.052.i.i.i25, -1
-  %5 = icmp sgt i64 %.052.i.i.i25, 1
+  %5 = icmp samesign ugt i64 %.052.i.i.i25, 1
   br i1 %5, label %bb.p, label %._crit_edge.loopexit.i.i.i27, !llvm.loop !5
 
 ._crit_edge.loopexit.i.i.i27:                     ; preds = %bb.t
@@ -525,7 +525,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 16
   %i.ae = add nsw i64 %.052.i.i.i, -1
-  %2 = icmp sgt i64 %.052.i.i.i, 1
+  %2 = icmp samesign ugt i64 %.052.i.i.i, 1
   br i1 %2, label %bb.c, label %._crit_edge.loopexit.i.i.i, !llvm.loop !5
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.g
@@ -928,7 +928,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 32
   %i.dr = add nsw i64 %.052.i.i.i, -1
-  %3 = icmp sgt i64 %.052.i.i.i, 1
+  %3 = icmp samesign ugt i64 %.052.i.i.i, 1
   br i1 %3, label %bb.q, label %._crit_edge.loopexit.i.i.i, !llvm.loop !257
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.u
@@ -1331,7 +1331,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !268
 
 middle.block:                                     ; preds = %vector.body
-  %rdx.minmax = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.r, <4 x i32> %i.s)
+  %rdx.minmax = tail call <4 x i32> @llvm.umax.v4i32(<4 x i32> %i.r, <4 x i32> %i.s)
   %i.u = tail call i32 @llvm.vector.reduce.smax.v4i32(<4 x i32> %rdx.minmax) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
@@ -1733,6 +1733,9 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umax.v4i32(<4 x i32>, <4 x i32>) #22
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

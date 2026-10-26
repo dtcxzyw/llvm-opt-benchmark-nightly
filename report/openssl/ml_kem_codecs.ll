@@ -202,7 +202,8 @@ bb.m:                                             ; preds = %bb.l, %bb.j
   br i1 %.not97, label %.thread, label %bb.j, !llvm.loop !43
 
 bb.n:                                             ; preds = %bb.l, %bb.k
-  %i.as = sext i32 %i.aj to i64                   ; 2 uses
+  %.lcssa = phi i32 [ %i.aj, %bb.l ], [ 4, %bb.k ]
+  %i.as = sext i32 %.lcssa to i64                 ; 2 uses
   %i.at = sub nsw i64 4, %i.as                    ; 2 uses
   %i.au = getelementptr inbounds i8, ptr %i.ab, i64 %i.at ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.af, i64 40 ; 2 uses

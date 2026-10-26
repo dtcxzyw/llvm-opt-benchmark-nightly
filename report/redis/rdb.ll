@@ -202,7 +202,7 @@ bb.hs:                                            ; preds = %bb.hq
   %.2821 = call i32 @llvm.umax.i32(i32 %i.uk, i32 %spec.select1085) ; 2 uses
   %i.ul = load ptr, ptr %i.ap, align 8, !tbaa !70
   %i.um = zext i32 %i.uj to i64
-  %i.un = call ptr @sdstrynewlen(ptr noundef %i.ul, i64 noundef %i.um) #20 ; 3 uses
+  %i.un = call ptr @sdstrynewlen(ptr noundef %i.ul, i64 noundef %i.um) #20 ; 4 uses
   %.not1021 = icmp eq ptr %i.un, null
   br i1 %.not1021, label %bb.hx, label %bb.ht
 
@@ -267,10 +267,11 @@ bb.hw:                                            ; preds = %._crit_edge1449
   br label %.thread1266
 
 bb.hx:                                            ; preds = %.lr.ph1448, %bb.ht, %bb.hu
+  %.lcssa = phi ptr [ null, %.lr.ph1448 ], [ %i.un, %bb.ht ], [ %i.un, %bb.hu ]
   %i.vm = load i32, ptr %i.ar, align 4, !tbaa !18
   call void (i32, i32, ptr, ...) @rdbReportError(i32 noundef 1, i32 noundef 2839, ptr noundef nonnull @.str.74, i32 noundef %i.vm)
   call void @dictRelease(ptr noundef %i.ug) #20
-  call void @sdsfree(ptr noundef %i.un) #20
+  call void @sdsfree(ptr noundef %.lcssa) #20
   call void @zfree(ptr noundef nonnull %i.tw) #20
   store ptr null, ptr %i.ud, align 8, !tbaa !87
   call void @decrRefCount(ptr noundef %i.ty) #20
@@ -471,7 +472,7 @@ bb.it:                                            ; preds = %bb.ir
 
 bb.iu:                                            ; preds = %bb.iq, %bb.ip
   %.25872 = phi i32 [ 1, %bb.ip ], [ 2, %bb.iq ]
-  call void @decrRefCount(ptr noundef %i.ty) #20
+  call void @decrRefCount(ptr noundef nonnull %i.ty) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at) #20
   br label %.thread1254
 
@@ -577,7 +578,7 @@ bb.jg:                                            ; preds = %bb.je
 
 bb.jh:                                            ; preds = %bb.jd, %bb.jc
   %.26873 = phi i32 [ 1, %bb.jc ], [ 2, %bb.jd ]
-  call void @decrRefCount(ptr noundef %i.ty) #20
+  call void @decrRefCount(ptr noundef nonnull %i.ty) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au) #20
   br label %.thread1254
 

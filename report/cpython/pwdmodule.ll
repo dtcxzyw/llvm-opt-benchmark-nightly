@@ -202,7 +202,7 @@ _PyMutex_Lock.exit.i:                             ; preds = %bb.c, %bb.b
 
 .lr.ph.i:                                         ; preds = %_PyMutex_Lock.exit.i, %Py_DECREF.exit23.i
   %i.f = phi ptr [ %i.m, %Py_DECREF.exit23.i ], [ %i.e, %_PyMutex_Lock.exit.i ]
-  %i.g = tail call fastcc ptr @mkpwent(ptr noundef %0, ptr noundef %i.f) ; 8 uses
+  %i.g = tail call fastcc ptr @mkpwent(ptr noundef %0, ptr noundef %i.f) ; 6 uses
   %i.h = icmp eq ptr %i.g, null                   ; 2 uses
   br i1 %i.h, label %bb.h, label %bb.d
 
@@ -232,6 +232,7 @@ Py_DECREF.exit23.i:                               ; preds = %bb.g, %bb.f, %bb.e
   br i1 %.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !33
 
 bb.h:                                             ; preds = %bb.d, %.lr.ph.i
+  %.lcssa20 = phi ptr [ %i.g, %bb.d ], [ null, %.lr.ph.i ] ; 3 uses
   tail call void @endpwent() #4
   %i.n = cmpxchg ptr @pwd_db_mutex, i8 1, i8 0 seq_cst seq_cst, align 1
   %i.o = extractvalue { i8, i1 } %i.n, 1
@@ -245,18 +246,18 @@ _PyMutex_Unlock.exit.i:                           ; preds = %bb.i, %bb.h
   br i1 %i.h, label %Py_XDECREF.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %_PyMutex_Unlock.exit.i
-  %i.p = load i32, ptr %i.g, align 8, !tbaa !16   ; 2 uses
+  %i.p = load i32, ptr %.lcssa20, align 8, !tbaa !16 ; 2 uses
   %.not.i.i.i = icmp sgt i32 %i.p, -1
   br i1 %.not.i.i.i, label %bb.k, label %Py_XDECREF.exit.i
 
 bb.k:                                             ; preds = %bb.j
   %i.q = add nsw i32 %i.p, -1                     ; 2 uses
-  store i32 %i.q, ptr %i.g, align 8, !tbaa !16
+  store i32 %i.q, ptr %.lcssa20, align 8, !tbaa !16
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %bb.l, label %Py_XDECREF.exit.i
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.g) #4
+  tail call void @_Py_Dealloc(ptr noundef nonnull %.lcssa20) #4
   br label %Py_XDECREF.exit.i
 
 Py_XDECREF.exit.i:                                ; preds = %bb.l, %bb.k, %bb.j, %_PyMutex_Unlock.exit.i

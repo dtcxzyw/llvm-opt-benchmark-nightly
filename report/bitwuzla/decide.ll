@@ -202,6 +202,7 @@ bb.s:                                             ; preds = %bb.r
   br label %.thread93
 
 .thread85:                                        ; preds = %bb.q, %bb.r
+  %1 = phi i32 [ 0, %bb.r ], [ %i.av, %bb.q ]
   %.042106 = phi i32 [ %.042109, %bb.r ], [ %.2.ph, %bb.q ] ; 2 uses
   %.not67113 = icmp eq i64 %i.an, 4
   br i1 %.not67113, label %._crit_edge, label %.lr.ph115.preheader
@@ -215,7 +216,7 @@ bb.s:                                             ; preds = %bb.r
 ._crit_edge:                                      ; preds = %.lr.ph115.preheader, %.thread85
   %i.bu = getelementptr i8, ptr %i.ak, i64 %i.an
   %i.bv = getelementptr i8, ptr %i.bu, i64 -4
-  store i32 %i.av, ptr %i.bv, align 4, !tbaa !158
+  store i32 %1, ptr %i.bv, align 4, !tbaa !158
   %.not68 = icmp eq i32 %.042106, 0
   br i1 %.not68, label %bb.u, label %bb.t
 
@@ -618,7 +619,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 
 vector.ph127:                                     ; preds = %bb.k
   %n.vec128 = and i64 %i.ag, 9223372036854775800  ; 3 uses
-  %i.ah = shl i64 %n.vec128, 2
+  %i.ah = shl nuw i64 %n.vec128, 2
   %i.ai = getelementptr i8, ptr %1, i64 %i.ah
   %broadcast.splatinsert129 = insertelement <4 x i32> poison, i32 %i.i, i64 0
   %broadcast.splat130 = shufflevector <4 x i32> %broadcast.splatinsert129, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -804,15 +805,15 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 2       ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.idx.i.i.i.i.i75
   %i.ch = load i32, ptr %3, align 4, !tbaa !158   ; 2 uses
-  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4       ; 2 uses
+  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4
   %i.cj = lshr exact i64 %i.ci, 2
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 2 uses
-  %min.iters.check139 = icmp ult i64 %i.ci, 28
+  %min.iters.check139 = icmp ult i64 %2, 8
   br i1 %min.iters.check139, label %.lr.ph.i.i.i.i.i.i.i76.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %bb.t
   %n.vec141 = and i64 %i.ck, 9223372036854775800  ; 3 uses
-  %i.cl = shl i64 %n.vec141, 2
+  %i.cl = shl nuw nsw i64 %n.vec141, 2
   %i.cm = getelementptr i8, ptr %i.cf, i64 %i.cl
   %broadcast.splatinsert142 = insertelement <4 x i32> poison, i32 %i.ch, i64 0
   %broadcast.splat143 = shufflevector <4 x i32> %broadcast.splatinsert142, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses

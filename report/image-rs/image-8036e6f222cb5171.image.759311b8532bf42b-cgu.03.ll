@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.v
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.ce, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.1298.8..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx14.i.i.i, i64 7, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !236
-  %i.cr = add i64 %i.cg, 1                        ; 12 uses
+  %i.cr = add i64 %i.cg, 1                        ; 6 uses
   store i8 %.sroa.5.0.copyload13.i.i.i, ptr %.sroa.9.8..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store ptr %i.co, ptr %i.m, align 8
@@ -286,11 +286,12 @@ bb.af:                                            ; preds = %bb.ac
           to label %bb.ag unwind label %bb.bk
 
 .body56.thread142.loopexit:                       ; preds = %bb.ay, %bb.aq, %bb.ai, %bb.ae, %bb.ao, %bb.ba
+  %.lcssa382 = phi i64 [ 1, %bb.ay ], [ 1, %bb.aq ], [ 1, %bb.ai ], [ %i.cr, %bb.ae ], [ 1, %bb.ao ], [ 1, %bb.ba ]
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 %.lcssa382, ptr %.sroa.2.0..sroa_idx, align 8
   br label %.critedge
 
 .body56.thread142.loopexit.split-lp:              ; preds = %bb.bc, %bb.x, %bb.ah
@@ -305,7 +306,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   store i64 1, ptr %0, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsPkZ9TkQnmq_10rayon_core8registry13ThreadBuilderECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(104) %i.l)
           to label %bb.aj unwind label %.body56.thread142.loopexit.split-lp
@@ -334,7 +335,7 @@ bb.ak:                                            ; preds = %bb.ai
 bb.al:                                            ; preds = %bb.ak
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   invoke void @_RNvNtCs4wP2HXfJTCR_5alloc5alloc18handle_alloc_error(i64 noundef 128, i64 noundef 384) #36
           to label %.noexc69 unwind label %bb.am
 
@@ -383,7 +384,7 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %.noexc71
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !244
   %i.ds = load ptr, ptr %i.cc, align 8, !alias.scope !244, !nonnull !7, !align !20, !noundef !7
   %i.dt = load i8, ptr %i.cd, align 8, !range !14, !alias.scope !244, !noundef !7
@@ -423,7 +424,7 @@ bb.av:                                            ; preds = %_RNvMNtCsj6eKBz9Db1
           cleanup
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtCsaKJjC64KgbL_3std4sync6poison5mutex10MutexGuardbEECsa5QsYiPB8Gl_5image(ptr nonnull %i.dx, i8 %i.dy) #37
           to label %.critedge unwind label %bb.bb
 
@@ -467,7 +468,7 @@ bb.bb:                                            ; preds = %bb.av
 bb.bc:                                            ; preds = %bb.ap
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #36
           to label %bb.bd unwind label %.body56.thread142.loopexit.split-lp
 
@@ -540,7 +541,7 @@ bb.bk:                                            ; preds = %bb.af
           cleanup
   store ptr %i.ci, ptr %.sroa.08.sroa.0.sroa.2.0..sroa_idx, align 8
   store ptr %i.cn, ptr %.sroa.08.sroa.3.0..sroa_idx, align 8
-  store i64 %i.cr, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsPkZ9TkQnmq_10rayon_core8registry13ThreadBuilderECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(104) %i.l) #37
           to label %.critedge unwind label %bb.bl
 
@@ -943,7 +944,7 @@ bb.d:                                             ; preds = %bb.c
 .invoke:                                          ; preds = %bb.d, %bb.c, %bb.b
   %i.w = phi i64 [ %i.s, %bb.c ], [ %i.m, %bb.b ], [ %i.u, %bb.d ]
   %i.x = phi ptr [ @61, %bb.c ], [ @60, %bb.b ], [ @62, %bb.d ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.w, i64 noundef %i.o, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.x) #40
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.w, i64 noundef %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.x) #40
           to label %.cont unwind label %bb.e, !noalias !1453
 
 .cont:                                            ; preds = %.invoke
@@ -1346,7 +1347,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %bb.b
   %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %i.s, %vector.body ] ; 2 uses
   %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %vector.body ] ; 4 uses
-  %i.aa = sub i64 %i.h, %.sroa.01.0.i.ph
+  %i.aa = sub nsw i64 %i.h, %.sroa.01.0.i.ph
   %xtraiter = and i64 %i.aa, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

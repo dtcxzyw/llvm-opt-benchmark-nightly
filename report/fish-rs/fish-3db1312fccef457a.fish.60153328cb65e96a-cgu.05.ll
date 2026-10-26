@@ -204,7 +204,7 @@ _RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestrin
 
 _RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread: ; preds = %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.i
   %i.eq = call fastcc noundef i8 @_RNvMs0_NtCs1HV6ixfL8cZ_11fish_printf11printf_implNtB5_14ConversionSpec9from_char(i32 noundef %i.eo) ; 5 uses
-  switch i8 %i.eq, label %default.unreachable [
+  switch i8 %i.eq, label %default.unreachable1142 [
     i8 -1, label %bb.at
     i8 0, label %bb.ao
     i8 1, label %bb.ao
@@ -225,11 +225,14 @@ _RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestrin
     i8 16, label %bb.aq
   ]
 
-default.unreachable:                              ; preds = %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %bb.ba
+default.unreachable1142:                          ; preds = %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread
+  unreachable
+
+default.unreachable:                              ; preds = %bb.ba
   unreachable
 
 bb.ao:                                            ; preds = %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread
-  %switch.i = icmp slt i8 %.sroa.0.3.i.ph.i, 8
+  %switch.i = icmp samesign ult i8 %.sroa.0.3.i.ph.i, 8
   br i1 %switch.i, label %bb.ar, label %bb.at
 
 bb.ap:                                            ; preds = %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread, %_RNvXs2_NtCs1HV6ixfL8cZ_11fish_printf11printf_implRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtB5_12FormatString2at.exit21.thread.thread37.i.thread
@@ -275,11 +278,11 @@ bb.aw:                                            ; preds = %bb.au
   br label %bb.gi
 
 bb.ax:                                            ; preds = %bb.av
-  %i.ez = icmp ult i8 %i.es, 15
+  %i.ez = icmp samesign ult i8 %i.es, 15
   br i1 %i.ez, label %switch.lookup, label %bb.ba
 
 bb.ay:                                            ; preds = %bb.av
-  %i.fa = icmp ult i8 %i.es, 12
+  %i.fa = icmp samesign ult i8 %i.es, 12
   br i1 %i.fa, label %switch.hole_check, label %bb.az
 
 bb.az:                                            ; preds = %switch.hole_check, %bb.ay
@@ -682,7 +685,7 @@ bb.gc:                                            ; preds = %.loopexit.split-lp.
 
 .invoke:                                          ; preds = %bb.fa, %bb.et, %._crit_edge970
   %i.qv = phi ptr [ @8, %._crit_edge970 ], [ @11, %bb.et ], [ @10, %bb.fa ]
-  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qv) #33
+  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qv) #33
           to label %.cont unwind label %.loopexit.split-lp631.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1085,7 +1088,7 @@ bb.ay:                                            ; preds = %.noexc485, %.noexc4
 
 bb.az:                                            ; preds = %.noexc488.jt8
   %i.er = call fastcc noundef i8 @_RNvMs0_NtCs1HV6ixfL8cZ_11fish_printf11printf_implNtB5_14ConversionSpec9from_char(i32 noundef %i.em) ; 16 uses
-  switch i8 %i.er, label %default.unreachable [
+  switch i8 %i.er, label %default.unreachable984 [
     i8 -1, label %.thread822
     i8 0, label %bb.bd
     i8 1, label %bb.bd
@@ -1115,10 +1118,13 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %.not22.i.jt1, label %.thread830, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %switch855 = icmp ult i8 %i.es, 6
+  %switch855 = icmp samesign ult i8 %i.es, 6
   br i1 %switch855, label %bb.bd, label %.thread822
 
-default.unreachable:                              ; preds = %bb.az, %bb.bm
+default.unreachable984:                           ; preds = %bb.az
+  unreachable
+
+default.unreachable:                              ; preds = %bb.bm
   unreachable
 
 bb.bd:                                            ; preds = %bb.bc, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az
@@ -1164,11 +1170,11 @@ bb.bi:                                            ; preds = %bb.bg
   br label %bb.gu
 
 bb.bj:                                            ; preds = %bb.bh
-  %i.fb = icmp ult i8 %i.eu, 15
+  %i.fb = icmp samesign ult i8 %i.eu, 15
   br i1 %i.fb, label %switch.lookup, label %bb.bm
 
 bb.bk:                                            ; preds = %bb.bh
-  %i.fc = icmp ult i8 %i.eu, 12
+  %i.fc = icmp samesign ult i8 %i.eu, 12
   br i1 %i.fc, label %switch.hole_check, label %bb.bl
 
 bb.bl:                                            ; preds = %switch.hole_check, %bb.bk
@@ -1571,7 +1577,7 @@ bb.go:                                            ; preds = %.loopexit.split-lp.
 
 .invoke:                                          ; preds = %bb.fm, %bb.ff, %._crit_edge859
   %i.qy = phi ptr [ @8, %._crit_edge859 ], [ @11, %bb.ff ], [ @10, %bb.fm ]
-  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qy) #33
+  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.qy) #33
           to label %.cont unwind label %.loopexit.split-lp592.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -1974,7 +1980,7 @@ bb.d:                                             ; preds = %_RNvXs2K_NtNtCs3oUP
 
 bb.e:                                             ; preds = %bb.c, %bb.b
   %.sroa.2.3.ph = phi ptr [ %.sroa.2.1, %bb.c ], [ %i.a, %bb.b ] ; 3 uses
-  %spec.select.i.ph = phi i32 [ %i.t, %bb.c ], [ %i.j, %bb.b ] ; 80 uses
+  %spec.select.i.ph = phi i32 [ %i.t, %bb.c ], [ %i.j, %bb.b ] ; 76 uses
   %.not.i.i = icmp sgt i16 %.sroa.6.021, -1
   br i1 %.not.i.i, label %bb.m, label %bb.f
 
@@ -2058,7 +2064,7 @@ bb.r:                                             ; preds = %bb.m
   ]
 
 .thread121.i.i:                                   ; preds = %bb.ci, %bb.cm, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %.thread137.i.i, %bb.cb, %bb.bn, %bb.ax, %bb.ax, %bb.ax, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.q, %bb.p
-  %spec.select.i17 = phi i32 [ %spec.select.i.ph, %bb.cm ], [ %spec.select.i.ph, %bb.ci ], [ %spec.select.i.ph, %bb.ch ], [ 127988, %bb.cg ], [ %spec.select.i.ph, %bb.cf ], [ %spec.select.i.ph, %bb.ce ], [ %spec.select.i.ph, %bb.cd ], [ %spec.select.i.ph, %.thread137.i.i ], [ %spec.select.i.ph, %bb.cb ], [ %spec.select.i.ph, %bb.bn ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ %spec.select.i.ph, %bb.au ], [ %spec.select.i.ph, %bb.at ], [ %spec.select.i.ph, %bb.as ], [ %spec.select.i.ph, %bb.ar ], [ %spec.select.i.ph, %bb.q ], [ %spec.select.i.ph, %bb.p ]
+  %spec.select.i17 = phi i32 [ %spec.select.i.ph, %bb.cm ], [ %spec.select.i.ph, %bb.ci ], [ %spec.select.i.ph, %bb.ch ], [ 127988, %bb.cg ], [ %spec.select.i.ph, %bb.cf ], [ %spec.select.i.ph, %bb.ce ], [ %spec.select.i.ph, %bb.cd ], [ %spec.select.i.ph, %.thread137.i.i ], [ %spec.select.i.ph, %bb.cb ], [ %spec.select.i.ph, %bb.bn ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ 11647, %bb.ax ], [ 11647, %bb.au ], [ 11647, %bb.at ], [ 11647, %bb.as ], [ 11647, %bb.ar ], [ %spec.select.i.ph, %bb.q ], [ %spec.select.i.ph, %bb.p ]
   %i.ay = tail call fastcc { i8, i16 } @_RNvNtCsfc8f8SDE2Co_13unicode_width6tables12lookup_width(i32 noundef range(i32 0, 1114112) %spec.select.i17) #35 ; 2 uses
   %i.az = extractvalue { i8, i16 } %i.ay, 0
   %i.ba = extractvalue { i8, i16 } %i.ay, 1
@@ -2180,7 +2186,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   br i1 %i.bx, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
 bb.ai:                                            ; preds = %bb.x
-  %switch.tableidx = add i32 %spec.select.i.ph, -8216 ; 2 uses
+  %switch.tableidx = add nsw i32 %spec.select.i.ph, -8216 ; 2 uses
   %i.by = icmp ult i32 %switch.tableidx, 6
   %switch.maskindex = trunc i32 %switch.tableidx to i8
   %switch.shifted = lshr i8 51, %switch.maskindex
@@ -2549,7 +2555,7 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf, %.th
   br i1 %i.ea, label %_RNCNvNtCsfc8f8SDE2Co_13unicode_width6tables9str_width0Cs8frGy5WneL6_4fish.exit, label %.thread121.i.i
 
 bb.ci:                                            ; preds = %bb.cf, %.thread137.i.i, %bb.bn
-  %switch.tableidx2 = add i32 %spec.select.i.ph, -93539 ; 4 uses
+  %switch.tableidx2 = add nsw i32 %spec.select.i.ph, -93539 ; 4 uses
   %i.eb = icmp ult i32 %switch.tableidx2, 7
   %switch.maskindex6 = trunc i32 %switch.tableidx2 to i8
   %switch.shifted7 = lshr i8 113, %switch.maskindex6
@@ -2952,7 +2958,8 @@ _RNvNtCs8frGy5WneL6_4fish20env_universal_common5match.exit44.i.i: ; preds = %.no
   br label %.loopexit90.i.i
 
 .thread78.i.i:                                    ; preds = %bb.fq, %bb.fs
-  %i.uf = add i64 %.sroa.7.0.i.i.i, -8
+  %.sroa.7.0.i.i.i.lcssa619628 = phi i64 [ %.sroa.7.0.i.i.i, %bb.fs ], [ 8, %bb.fq ]
+  %i.uf = add i64 %.sroa.7.0.i.i.i.lcssa619628, -8
   %i.ug = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i38.i.i, i64 32
   %i.uh = or i8 %.sroa.01.0.i.i.ph, 1
   br label %.loopexit90.i.i.outer.backedge
@@ -2970,7 +2977,8 @@ _RNvNtCs8frGy5WneL6_4fish20env_universal_common5match.exit44.i.i: ; preds = %.no
   br label %.loopexit90.i.i
 
 .thread84.i.i:                                    ; preds = %bb.fv, %bb.fx
-  %i.ui = add i64 %.sroa.7.0.i.i.i, -6
+  %.sroa.7.0.i.i.i.lcssa619627 = phi i64 [ %.sroa.7.0.i.i.i, %bb.fx ], [ 6, %bb.fv ]
+  %i.ui = add i64 %.sroa.7.0.i.i.i.lcssa619627, -6
   %i.uj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i38.i.i, i64 24
   %i.uk = or i8 %.sroa.01.0.i.i.ph, 4
   br label %.loopexit90.i.i.outer.backedge
@@ -3373,7 +3381,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.k, label %.critedge
 
 .critedge:                                        ; preds = %bb.k, %.preheader
-  %.sroa.12.0.lcssa = phi i64 [ 0, %bb.k ], [ %.sroa.12.037, %.preheader ] ; 6 uses
+  %.sroa.12.0.lcssa = phi i64 [ 0, %bb.k ], [ %.sroa.12.037, %.preheader ] ; 5 uses
   %.sroa.0.0.lcssa = phi ptr [ %i.ah, %bb.k ], [ %.sroa.0.038, %.preheader ] ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.lcssa) ]
   %.not.not.not.not.i.not59 = icmp eq i64 %.sroa.12.0.lcssa, 0
@@ -3426,7 +3434,7 @@ bb.j:                                             ; preds = %bb.h
   unreachable
 
 .loopexit:                                        ; preds = %bb.e, %.critedge, %bb.i
-  %.sroa.12.1 = phi i64 [ %i.ae, %bb.i ], [ %.sroa.12.0.lcssa, %.critedge ], [ %.sroa.12.0.lcssa, %bb.e ]
+  %.sroa.12.1 = phi i64 [ %i.ae, %bb.i ], [ 0, %.critedge ], [ %.sroa.12.0.lcssa, %bb.e ]
   %.sroa.0.1 = phi ptr [ %i.ad, %bb.i ], [ %.sroa.0.0.lcssa, %.critedge ], [ %.sroa.0.0.lcssa, %bb.e ] ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.1) ]
   br label %.loopexit31

@@ -204,7 +204,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.cf, label %bb.q, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.r, %bb.q
-  %.0165.le.i = zext i16 %.0165.in.i to i32       ; 2 uses
+  %.0165.in.i.lcssa = phi i16 [ %.0165.in.i, %bb.r ], [ 0, %bb.q ]
+  %.0165.le.i = zext i16 %.0165.in.i.lcssa to i32 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !58
   %.0159259.i = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 2 uses

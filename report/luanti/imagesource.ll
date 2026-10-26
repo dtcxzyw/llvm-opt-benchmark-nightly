@@ -205,12 +205,13 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.v, label %bb.c, label %.critedge.loopexit, !llvm.loop !181
 
 .critedge.loopexit:                               ; preds = %bb.g, %bb.f
+  %.lcssa = phi i64 [ %i.m, %bb.g ], [ 0, %bb.f ]
   %.pre12 = load i64, ptr %i.d, align 8, !tbaa !44, !noalias !184
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.e
   %i.w = phi i64 [ %i.o, %bb.e ], [ %.pre12, %.critedge.loopexit ] ; 3 uses
-  %.0 = phi i64 [ %i.o, %bb.e ], [ %i.m, %.critedge.loopexit ]
+  %.0 = phi i64 [ %i.o, %bb.e ], [ %.lcssa, %.critedge.loopexit ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !184)
   %i.x = icmp ugt i64 %i.c, %i.w
   br i1 %i.x, label %bb.h, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
@@ -613,7 +614,7 @@ bb.ae:                                            ; preds = %.critedge.thread201
   %i.do = zext nneg i32 %.030.lcssa200 to i64
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.do)
   %i.dp = tail call noundef ptr @_ZN11ImageSource13generateImageESt17basic_string_viewIcSt11char_traitsIcEERSt3setINSt7__cxx1112basic_stringIcS2_SaIcEEESt4lessIS8_ESaIS8_EE(ptr noundef nonnull align 8 dereferenceable(64) %0, i64 %.sroa.speculated.i, ptr nonnull %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
-  %i.dq = add nsw i32 %.030.lcssa200, 1
+  %i.dq = add nuw nsw i32 %.030.lcssa200, 1
   %i.dr = zext nneg i32 %i.dq to i64
   br label %.sink.split
 

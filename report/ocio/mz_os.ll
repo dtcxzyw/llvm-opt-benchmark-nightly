@@ -201,13 +201,14 @@ bb.c:                                             ; preds = %.preheader
   br i1 %.not18, label %bb.d, label %.preheader, !llvm.loop !26
 
 bb.d:                                             ; preds = %.preheader, %bb.c
-  %.112 = phi i32 [ %i.h, %bb.c ], [ %.011, %.preheader ]
+  %.lcssa = phi i32 [ %i.f, %.preheader ], [ 0, %bb.c ]
+  %.112 = phi i32 [ %.011, %.preheader ], [ %i.h, %bb.c ]
   %i.i = call i32 @mz_stream_os_close(ptr noundef nonnull %i.c) #10 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b
   %.2 = phi i32 [ %.112, %bb.d ], [ 0, %bb.b ]
-  %.1 = phi i32 [ %i.f, %bb.d ], [ %i.d, %bb.b ]
+  %.1 = phi i32 [ %.lcssa, %bb.d ], [ %i.d, %bb.b ]
   store i32 %.2, ptr %1, align 4, !tbaa !12
   call void @mz_stream_os_delete(ptr noundef nonnull %i.a) #10
   br label %bb.f

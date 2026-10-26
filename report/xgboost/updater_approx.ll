@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.025.050.i.i.i.i.i.i, i64 16
   %i.ad = add nsw i64 %.051.i.i.i.i.i.i, -1
-  %9 = icmp sgt i64 %.051.i.i.i.i.i.i, 1
+  %9 = icmp samesign ugt i64 %.051.i.i.i.i.i.i, 1
   br i1 %9, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i, !llvm.loop !1043
 
 ._crit_edge.loopexit.i.i.i.i.i.i:                 ; preds = %bb.g
@@ -608,7 +608,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 
 vector.ph127:                                     ; preds = %bb.k
   %n.vec128 = and i64 %i.ag, 9223372036854775800  ; 3 uses
-  %i.ah = shl i64 %n.vec128, 2
+  %i.ah = shl nuw i64 %n.vec128, 2
   %i.ai = getelementptr i8, ptr %1, i64 %i.ah
   %broadcast.splatinsert129 = insertelement <4 x i32> poison, i32 %i.i, i64 0
   %broadcast.splat130 = shufflevector <4 x i32> %broadcast.splatinsert129, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -794,15 +794,15 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 2       ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.idx.i.i.i.i.i75
   %i.ch = load i32, ptr %3, align 4, !tbaa !122   ; 2 uses
-  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4       ; 2 uses
+  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4
   %i.cj = lshr exact i64 %i.ci, 2
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 2 uses
-  %min.iters.check139 = icmp ult i64 %i.ci, 28
+  %min.iters.check139 = icmp ult i64 %2, 8
   br i1 %min.iters.check139, label %.lr.ph.i.i.i.i.i.i.i76.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %bb.t
   %n.vec141 = and i64 %i.ck, 9223372036854775800  ; 3 uses
-  %i.cl = shl i64 %n.vec141, 2
+  %i.cl = shl nuw nsw i64 %n.vec141, 2
   %i.cm = getelementptr i8, ptr %i.cf, i64 %i.cl
   %broadcast.splatinsert142 = insertelement <4 x i32> poison, i32 %i.ch, i64 0
   %broadcast.splat143 = shufflevector <4 x i32> %broadcast.splatinsert142, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1205,7 +1205,7 @@ _ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i:      ; preds = %bb.e, %bb.d
   %storemerge.i.i.i.i.i = phi i64 [ %i.ar, %bb.d ], [ %i.au, %bb.e ]
   store i64 %storemerge.i.i.i.i.i, ptr %.sroa.07.1.i.i.i.i.i, align 8, !tbaa !76
   %i.av = add nsw i64 %.024.i.i.i.i.i, -1
-  %5 = icmp sgt i64 %.024.i.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.024.i.i.i.i.i, 1
   br i1 %5, label %_ZNSt13_Bit_iteratormmEv.exit.i.i.i.i.i, label %_ZSt13copy_backwardISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit, !llvm.loop !1355
 
 _ZSt13copy_backwardISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit: ; preds = %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i, %bb.c
@@ -1411,7 +1411,7 @@ _ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i:       ; preds = %bb.x, %bb.w
   %.sroa.03.1.idx.i.i.i.i.i.i = select i1 %i.dv, i64 8, i64 0
   %.sroa.03.1.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.03.019.i.i.i.i.i.i, i64 %.sroa.03.1.idx.i.i.i.i.i.i ; 2 uses
   %i.dw = add nsw i64 %.020.i.i.i.i.i.i, -1
-  %6 = icmp sgt i64 %.020.i.i.i.i.i.i, 1
+  %6 = icmp samesign ugt i64 %.020.i.i.i.i.i.i, 1
   br i1 %6, label %.lr.ph.i.i.i.i.i.i, label %_ZNSt6vectorIbSaIbEE15_M_copy_alignedESt19_Bit_const_iteratorS2_St13_Bit_iterator.exit, !llvm.loop !1356
 
 _ZNSt6vectorIbSaIbEE15_M_copy_alignedESt19_Bit_const_iteratorS2_St13_Bit_iterator.exit: ; preds = %_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i, %_ZSt4copyIPmS0_ET0_T_S2_S1_.exit.i
@@ -1568,7 +1568,7 @@ _ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i122:   ; preds = %bb.al, %bb.ak
   %.sroa.07.1.idx.i.i.i.i.i127 = select i1 %i.gd, i64 8, i64 0
   %.sroa.07.1.i.i.i.i.i128 = getelementptr inbounds nuw i8, ptr %.sroa.07.023.i.i.i.i.i119, i64 %.sroa.07.1.idx.i.i.i.i.i127 ; 2 uses
   %i.ge = add nsw i64 %.024.i.i.i.i.i118, -1
-  %7 = icmp sgt i64 %.024.i.i.i.i.i118, 1
+  %7 = icmp samesign ugt i64 %.024.i.i.i.i.i118, 1
   br i1 %7, label %.lr.ph.i.i.i.i.i, label %_ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit, !llvm.loop !1357
 
 _ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit:  ; preds = %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i122, %_ZSt4fillISt13_Bit_iteratorbEvT_S1_RKT0_.exit101
@@ -1971,7 +1971,7 @@ _ZNSt12_Vector_baseIN7xgboost6detail20GradientPairInternalIdEESaIS3_EE11_M_alloc
 .lr.ph.i.i.i.i82.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i82.prol, %_ZNSt12_Vector_baseIN7xgboost6detail20GradientPairInternalIdEESaIS3_EE11_M_allocateEm.exit
   %.09.i.i.i.i83.unr = phi ptr [ %i.ca, %_ZNSt12_Vector_baseIN7xgboost6detail20GradientPairInternalIdEESaIS3_EE11_M_allocateEm.exit ], [ %i.cc, %.lr.ph.i.i.i.i82.prol ]
   %.068.i.i.i.i84.unr = phi i64 [ %2, %_ZNSt12_Vector_baseIN7xgboost6detail20GradientPairInternalIdEESaIS3_EE11_M_allocateEm.exit ], [ %i.cb, %.lr.ph.i.i.i.i82.prol ]
-  %4 = icmp ult i64 %2, 4
+  %4 = icmp slt i64 %2, 4
   br i1 %4, label %_ZSt24__uninitialized_fill_n_aIPN7xgboost6detail20GradientPairInternalIdEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit87, label %.lr.ph.i.i.i.i82
 
 .lr.ph.i.i.i.i82:                                 ; preds = %.lr.ph.i.i.i.i82.prol.loopexit, %.lr.ph.i.i.i.i82
@@ -2374,7 +2374,7 @@ _ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPK
 .lr.ph.i.i.i30.prol.loopexit:                     ; preds = %.lr.ph.i.i.i30.prol, %_ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPKc.exit
   %.08.i.i.i31.unr = phi ptr [ %i.ap, %_ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPKc.exit ], [ %i.as, %.lr.ph.i.i.i30.prol ]
   %.057.i.i.i32.unr = phi i64 [ %1, %_ZNKSt6vectorIN7xgboost6common16RowSetCollection4ElemESaIS3_EE12_M_check_lenEmPKc.exit ], [ %i.ar, %.lr.ph.i.i.i30.prol ]
-  %2 = icmp ult i64 %1, 8
+  %2 = icmp slt i64 %1, 8
   br i1 %2, label %_ZSt27__uninitialized_default_n_aIPN7xgboost6common16RowSetCollection4ElemEmS3_ET_S5_T0_RSaIT1_E.exit35, label %.lr.ph.i.i.i30
 
 .lr.ph.i.i.i30:                                   ; preds = %.lr.ph.i.i.i30.prol.loopexit, %.lr.ph.i.i.i30
@@ -2777,7 +2777,7 @@ bb.w:                                             ; preds = %bb.v
 .lr.ph.i.i.i.i:                                   ; preds = %bb.w, %select.unfold.i.i.i.i
   %.010.i.i.i.i = phi i64 [ %i.en, %select.unfold.i.i.i.i ], [ %i.eh, %bb.w ] ; 4 uses
   %i.ej = shl nuw nsw i64 %.010.i.i.i.i, 3
-  %i.ek = call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.ej, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #41 ; 2 uses
+  %i.ek = call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.ej, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #41 ; 3 uses
   %.not.i.i.i.i59 = icmp eq ptr %i.ek, null
   br i1 %.not.i.i.i.i59, label %select.unfold.i.i.i.i, label %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i
 
@@ -2789,7 +2789,7 @@ select.unfold.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i
 
 _ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i: ; preds = %select.unfold.i.i.i.i, %.lr.ph.i.i.i.i, %bb.w
   %.sroa.5.0.i.i = phi i64 [ 0, %bb.w ], [ %.010.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %select.unfold.i.i.i.i ] ; 5 uses
-  %.sroa.12.0.i.i = phi ptr [ null, %bb.w ], [ %i.ek, %.lr.ph.i.i.i.i ], [ null, %select.unfold.i.i.i.i ] ; 5 uses
+  %.sroa.12.0.i.i = phi ptr [ null, %bb.w ], [ %i.ek, %.lr.ph.i.i.i.i ], [ %i.ek, %select.unfold.i.i.i.i ] ; 6 uses
   %i.eo = icmp eq i64 %i.eh, %.sroa.5.0.i.i
   br i1 %i.eo, label %bb.x, label %bb.z, !prof !140
 
@@ -2799,11 +2799,12 @@ bb.x:                                             ; preds = %_ZNSt17_Temporary_b
           to label %bb.ac unwind label %bb.y
 
 bb.y:                                             ; preds = %bb.ab, %bb.aa, %bb.x
+  %.sroa.12.0.i.i.lcssa = phi ptr [ %.sroa.12.0.i.i, %bb.ab ], [ null, %bb.aa ], [ %.sroa.12.0.i.i, %bb.x ]
   %.sroa.5.0.i.i.lcssa = phi i64 [ %.sroa.5.0.i.i, %bb.ab ], [ %.sroa.5.0.i.i, %bb.aa ], [ %i.eh, %bb.x ]
   %i.eq = landingpad { ptr, i32 }
           cleanup
   %i.er = shl i64 %.sroa.5.0.i.i.lcssa, 3
-  call void @_ZdlPvm(ptr noundef %.sroa.12.0.i.i, i64 noundef %i.er) #21
+  call void @_ZdlPvm(ptr noundef %.sroa.12.0.i.i.lcssa, i64 noundef %i.er) #21
   br label %.body
 
 bb.z:                                             ; preds = %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEmEC2ES6_l.exit.i.i
@@ -3206,7 +3207,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 
 vector.ph127:                                     ; preds = %bb.k
   %n.vec128 = and i64 %i.ag, 9223372036854775800  ; 3 uses
-  %i.ah = shl i64 %n.vec128, 2
+  %i.ah = shl nuw i64 %n.vec128, 2
   %i.ai = getelementptr i8, ptr %1, i64 %i.ah
   %broadcast.splatinsert129 = insertelement <4 x i32> poison, i32 %i.i, i64 0
   %broadcast.splat130 = shufflevector <4 x i32> %broadcast.splatinsert129, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -3392,15 +3393,15 @@ bb.t:                                             ; preds = %bb.s, %_ZNKSt6vecto
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 2       ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 %.idx.i.i.i.i.i75
   %i.ch = load i32, ptr %3, align 4, !tbaa !122   ; 2 uses
-  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4       ; 2 uses
+  %i.ci = add nsw i64 %.idx.i.i.i.i.i75, -4
   %i.cj = lshr exact i64 %i.ci, 2
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 2 uses
-  %min.iters.check139 = icmp ult i64 %i.ci, 28
+  %min.iters.check139 = icmp ult i64 %2, 8
   br i1 %min.iters.check139, label %.lr.ph.i.i.i.i.i.i.i76.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %bb.t
   %n.vec141 = and i64 %i.ck, 9223372036854775800  ; 3 uses
-  %i.cl = shl i64 %n.vec141, 2
+  %i.cl = shl nuw nsw i64 %n.vec141, 2
   %i.cm = getelementptr i8, ptr %i.cf, i64 %i.cl
   %broadcast.splatinsert142 = insertelement <4 x i32> poison, i32 %i.ch, i64 0
   %broadcast.splat143 = shufflevector <4 x i32> %broadcast.splatinsert142, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -3803,7 +3804,7 @@ bb.a:
   br i1 %.not62, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 10 uses
   %.idx48 = shl i64 %3, 4                         ; 2 uses
   %.not49 = icmp eq i64 %.idx, %.idx48
   br i1 %.not49, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader.preheader
@@ -3834,7 +3835,7 @@ bb.b:                                             ; preds = %.critedge.i.us
 bb.c:                                             ; preds = %bb.b
   %i.k = load i64, ptr %.sroa.039.063.us, align 8, !tbaa !76
   store i64 %i.k, ptr %.064.us, align 8, !tbaa !76
-  %i.l = getelementptr inbounds nuw i8, ptr %.064.us, i64 %.idx
+  %i.l = getelementptr inbounds nuw i8, ptr %.064.us, i64 8
   %i.m = load i64, ptr %i.j, align 8, !tbaa !76
   store i64 %i.m, ptr %i.l, align 8, !tbaa !76
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES2_NS0_5__ops15_Iter_comp_iterIZZN7xgboost4tree13HistEvaluator14EvaluateSplitsERKNSA_21BoundedHistCollectionERKNS9_6common13HistogramCutsENSF_4SpanIKNS9_11FeatureTypeELm18446744073709551615EEEPS3_INSA_14CPUExpandEntryESaISN_EEENKUlmNSF_7Range1dEE_clEmSR_EUlmmE_EEET0_T_SW_SW_SW_SV_T1_.exit.us
@@ -4237,7 +4238,7 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph100.preheader:                              ; preds = %bb.g
   %i.ao = getelementptr [8 x i8], ptr %.sroa.042.0, i64 %.085 ; 5 uses
-  %min.iters.check = icmp ult i64 %i.ag, 6
+  %min.iters.check = icmp samesign ult i64 %i.ag, 6
   br i1 %min.iters.check, label %.lr.ph100.preheader186, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph100.preheader
@@ -4398,7 +4399,7 @@ bb.n:                                             ; preds = %bb.i
   br i1 %i.co, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.n
-  %min.iters.check141 = icmp ult i64 %.085, 6
+  %min.iters.check141 = icmp samesign ult i64 %.085, 6
   br i1 %min.iters.check141, label %.lr.ph.preheader187, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.preheader

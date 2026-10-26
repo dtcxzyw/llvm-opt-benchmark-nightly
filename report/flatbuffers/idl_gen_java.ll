@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %.lr.ph.i.i.i.i.i
 _ZNSt20back_insert_iteratorISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEEaSERKS6_.exit.i.i.i.i.i: ; preds = %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i.i.i.i.i
   %i.ds = getelementptr inbounds nuw i8, ptr %.056.i.i.i.i.i, i64 32
   %i.dt = add nsw i64 %.07.i.i.i.i.i, -1
-  %16 = icmp sgt i64 %.07.i.i.i.i.i, 1
+  %16 = icmp samesign ugt i64 %.07.i.i.i.i.i, 1
   br i1 %16, label %.lr.ph.i.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEESt20back_insert_iteratorISC_EET0_T_SH_SG_.exit, !llvm.loop !497
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEESt20back_insert_iteratorISC_EET0_T_SH_SG_.exit: ; preds = %_ZNSt20back_insert_iteratorISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEEaSERKS6_.exit.i.i.i.i.i, %bb.v
@@ -607,7 +607,7 @@ bb.a:
   %4 = alloca %"class.std::allocator", align 1    ; 3 uses
   %5 = alloca %"class.std::allocator", align 1    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !31   ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !31
   switch i64 %i.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37.thread47 [
     i64 7, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13
@@ -640,8 +640,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13: ; preds = %bb.a
   %.pre = load ptr, ptr %2, align 8, !tbaa !28    ; 3 uses
-  %bcmp.i12 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str.17, i64 %i.b)
-  %i.p = icmp eq i32 %bcmp.i12, 0
+  %6 = load i32, ptr %.pre, align 1
+  %7 = icmp ne i32 %6, 1702132066
+  %8 = zext i1 %7 to i32
+  %i.p = icmp eq i32 %8, 0
   br i1 %i.p, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13
@@ -672,9 +674,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.f
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25: ; preds = %bb.a
-  %.pre48 = load ptr, ptr %2, align 8, !tbaa !28
-  %bcmp.i24 = tail call i32 @bcmp(ptr %.pre48, ptr nonnull @.str.50, i64 %i.b)
-  %i.aa = icmp eq i32 %bcmp.i24, 0
+  %.pre48 = load ptr, ptr %2, align 8, !tbaa !28  ; 2 uses
+  %9 = load i32, ptr %.pre48, align 1
+  %10 = xor i32 %9, 1919903859
+  %11 = getelementptr i8, ptr %.pre48, i64 4
+  %12 = load i8, ptr %11, align 1
+  %13 = zext i8 %12 to i32
+  %14 = xor i32 %13, 116
+  %15 = or i32 %10, %14
+  %16 = icmp ne i32 %15, 0
+  %17 = zext i1 %16 to i32
+  %i.aa = icmp eq i32 %17, 0
   br i1 %i.aa, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37.thread47
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25
@@ -688,9 +698,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.f
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit31: ; preds = %bb.a
-  %.pre49 = load ptr, ptr %2, align 8, !tbaa !28
-  %bcmp.i30 = tail call i32 @bcmp(ptr %.pre49, ptr nonnull @.str.39, i64 %i.b)
-  %i.ae = icmp eq i32 %bcmp.i30, 0
+  %.pre49 = load ptr, ptr %2, align 8, !tbaa !28  ; 2 uses
+  %18 = load i16, ptr %.pre49, align 1
+  %19 = xor i16 %18, 28265
+  %20 = getelementptr i8, ptr %.pre49, i64 2
+  %21 = load i8, ptr %20, align 1
+  %22 = zext i8 %21 to i16
+  %23 = xor i16 %22, 116
+  %24 = or i16 %19, %23
+  %25 = icmp ne i16 %24, 0
+  %26 = zext i1 %25 to i32
+  %i.ae = icmp eq i32 %26, 0
   br i1 %i.ae, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit31.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37.thread47
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit31.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit31
@@ -704,8 +722,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %bb.f
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19
-  %bcmp.i36 = tail call i32 @bcmp(ptr nonnull %.pre, ptr nonnull @.str.41, i64 %i.b)
-  %i.ai = icmp eq i32 %bcmp.i36, 0
+  %27 = load i32, ptr %.pre, align 1
+  %28 = icmp ne i32 %27, 1735290732
+  %29 = zext i1 %28 to i32
+  %i.ai = icmp eq i32 %29, 0
   br i1 %i.ai, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37.thread47
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit37

@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %.lr.ph73.i.i.epil.p
 
 .lr.ph76.preheader.i.i:                           ; preds = %.preheader.i.i
   %wide.trip.count91.i.i = zext nneg i32 %i.a to i64 ; 3 uses
-  %min.iters.check = icmp ult i32 %i.a, 4
+  %min.iters.check = icmp samesign ult i32 %i.a, 4
   br i1 %min.iters.check, label %.lr.ph76.i.i.preheader, label %vector.ph172
 
 vector.ph172:                                     ; preds = %.lr.ph76.preheader.i.i
@@ -608,7 +608,7 @@ bb.p:                                             ; preds = %.lr.ph.i47
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.i.preheader, %bb.r
-  %.2.i = phi ptr [ %i.cm, %bb.r ], [ %.2.i.ph, %.critedge.i.preheader ] ; 5 uses
+  %.2.i = phi ptr [ %i.cm, %bb.r ], [ %.2.i.ph, %.critedge.i.preheader ] ; 6 uses
   %.not27.i = icmp eq ptr %.2.i, null
   br i1 %.not27.i, label %.critedge29.i, label %bb.q
 
@@ -651,10 +651,11 @@ bb.t:                                             ; preds = %.critedge29.i
   br label %PositionOrphanInterval.exit
 
 PositionOrphanInterval.exit:                      ; preds = %.split.thread.i, %bb.s, %.critedge29.i, %bb.t
+  %.2.i90 = phi ptr [ %.2.i, %bb.s ], [ %.2.i, %.split.thread.i ], [ null, %.critedge29.i ], [ null, %bb.t ]
   %.sink66.i = phi ptr [ %i.cs, %bb.s ], [ %i.cn, %.split.thread.i ], [ %0, %.critedge29.i ], [ %0, %bb.t ]
   store ptr %.0, ptr %.sink66.i, align 8, !tbaa !37
   %i.cy = getelementptr inbounds nuw i8, ptr %.0, i64 24
-  store ptr %.2.i, ptr %i.cy, align 8, !tbaa !36
+  store ptr %.2.i90, ptr %i.cy, align 8, !tbaa !36
   %i.cz = load i32, ptr %i.a, align 8, !tbaa !20
   %i.da = add nsw i32 %i.cz, 1
   store i32 %i.da, ptr %i.a, align 8, !tbaa !20

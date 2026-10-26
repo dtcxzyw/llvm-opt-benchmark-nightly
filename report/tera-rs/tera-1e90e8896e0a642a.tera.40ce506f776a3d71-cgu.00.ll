@@ -202,6 +202,7 @@ bb.gw:                                            ; preds = %thread-pre-split
   br i1 %i.asi, label %.preheader4550, label %bb.gz, !dbg !31769
 
 .preheader4550:                                   ; preds = %bb.gx, %.split6.i2746
+  %storemerge3857386245164622 = phi i64 [ %storemerge385738624516, %bb.gx ], [ 1, %.split6.i2746 ]
   br label %bb.ha, !dbg !31770
 
 .sink.split:                                      ; preds = %bb.gd, %bb.gc, %bb.gb, %bb.ga, %bb.fz, %bb.fy, %bb.fo, %bb.fn
@@ -359,7 +360,7 @@ bb.hb:                                            ; preds = %_RNvXs2J_NtNtCsf3Ta
 
 bb.hc:                                            ; preds = %bb.hg
   %i.atu = getelementptr inbounds nuw i8, ptr %i.de, i64 1, !dbg !31803
-  %i.atv = add i64 %storemerge385738624516, -1, !dbg !31804
+  %i.atv = add i64 %storemerge3857386245164622, -1, !dbg !31804
     #dbg_value(!DIArgList(ptr poison, i64 poison), !26703, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !29808)
     #dbg_value(i32 0, !27257, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !29810)
     #dbg_value(i32 undef, !27257, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !29810)
@@ -762,7 +763,7 @@ bb.j:                                             ; preds = %bb.e
   br label %bb.n, !dbg !37552
 
 bb.k:                                             ; preds = %bb.g, %bb.e
-  %.sroa.0.0.ph = phi i8 [ -1, %bb.e ], [ %i.l, %bb.g ] ; 3 uses
+  %.sroa.0.0.ph = phi i8 [ -1, %bb.e ], [ %i.l, %bb.g ] ; 2 uses
     #dbg_value(i8 %.sroa.0.0.ph, !37496, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !37519)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !37535, !noalias !37517
     #dbg_value(i8 %.sroa.0.0.ph, !37495, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !37520)
@@ -783,7 +784,7 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n, !dbg !37560
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %bb.j
-  %storemerge = phi i8 [ -1, %bb.j ], [ %.sroa.0.0.ph, %bb.m ], [ %.sroa.0.0.ph, %bb.l ], !dbg !37503
+  %storemerge = phi i8 [ -1, %bb.j ], [ -1, %bb.m ], [ %.sroa.0.0.ph, %bb.l ], !dbg !37503
   store i8 %storemerge, ptr %0, align 8, !dbg !37503
   ret void, !dbg !37552
 }

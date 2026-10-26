@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %EmitCopyLen.exit
 
 .thread103:                                       ; preds = %EmitCopyLenLastDistance.exit, %.split, %.split.us, %EmitCopyLen.exit, %.critedge.backedge.us, %.critedge.backedge.us205, %UpdateBits.exit
   %.7.i = phi ptr [ %.1361.i, %.split ], [ %.0360.i, %UpdateBits.exit ], [ %.1361.i, %.split.us ], [ %.1361.i, %.critedge.backedge.us ], [ %.1361.i, %.critedge.backedge.us205 ], [ %i.abg, %EmitCopyLen.exit ], [ %i.gt, %EmitCopyLenLastDistance.exit ] ; 11 uses
-  %i.aij = sub i64 %.0318.i, %.0358.i             ; 11 uses
+  %i.aij = sub i64 %.0318.i, %.0358.i             ; 6 uses
   %i.aik = tail call i64 @llvm.umin.i64(i64 %i.aij, i64 65536) ; 4 uses
   %.not390.i = icmp eq i64 %i.aij, 0
   br i1 %.not390.i, label %bb.ay, label %bb.aq
@@ -332,6 +332,7 @@ bb.ax:                                            ; preds = %bb.ax, %bb.aw
   br i1 %.not.i56, label %UpdateBits.exit.loopexit, label %bb.ax, !llvm.loop !1
 
 bb.ay:                                            ; preds = %ShouldMergeBlock.exit, %bb.aq, %.thread103
+  %.lcssa625 = phi i64 [ %i.aij, %ShouldMergeBlock.exit ], [ %i.aij, %bb.aq ], [ 0, %.thread103 ] ; 7 uses
   %.0.i.lcssa632633 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
   %.7.i.lcssa634635 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.aks = icmp ult ptr %.7.i, %i.ct
@@ -734,7 +735,7 @@ EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
 
 EmitLiterals.exit33:                              ; preds = %.epil.preheader629, %EmitLiterals.exit33.loopexit560.unr-lcssa, %.epil.preheader643, %EmitLiterals.exit33.loopexit.unr-lcssa, %EmitInsertLen.exit27, %.thread76.thread118, %bb.bj, %bb.ay
   %.8.i = phi ptr [ %.us-phi221, %.thread76.thread118 ], [ %i.ct, %bb.ay ], [ %i.ct, %EmitInsertLen.exit27 ], [ %i.ct, %bb.bj ], [ %i.ct, %.epil.preheader643 ], [ %i.ct, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.ct, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.ct, %.epil.preheader629 ] ; 2 uses
-  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %i.aij, %bb.ay ], [ %i.aij, %EmitInsertLen.exit27 ], [ %i.aij, %bb.bj ], [ %i.aij, %.epil.preheader643 ], [ %i.aij, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.aij, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.aij, %.epil.preheader629 ] ; 4 uses
+  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %.lcssa625, %bb.ay ], [ %.lcssa625, %EmitInsertLen.exit27 ], [ %.lcssa625, %bb.bj ], [ %.lcssa625, %.epil.preheader643 ], [ %.lcssa625, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %.lcssa625, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %.lcssa625, %.epil.preheader629 ] ; 4 uses
   %.not393.i = icmp eq i64 %.5323.i, 0
   br i1 %.not393.i, label %bb.bp, label %bb.bo
 
@@ -1137,7 +1138,7 @@ bb.ap:                                            ; preds = %EmitCopyLen.exit
 
 .thread103:                                       ; preds = %EmitCopyLenLastDistance.exit, %.split, %.split.us, %EmitCopyLen.exit, %.critedge.backedge.us, %.critedge.backedge.us205, %UpdateBits.exit
   %.7.i = phi ptr [ %.1361.i, %.split ], [ %.0360.i, %UpdateBits.exit ], [ %.1361.i, %.split.us ], [ %.1361.i, %.critedge.backedge.us ], [ %.1361.i, %.critedge.backedge.us205 ], [ %i.abg, %EmitCopyLen.exit ], [ %i.gt, %EmitCopyLenLastDistance.exit ] ; 11 uses
-  %i.aij = sub i64 %.0318.i, %.0358.i             ; 11 uses
+  %i.aij = sub i64 %.0318.i, %.0358.i             ; 6 uses
   %i.aik = tail call i64 @llvm.umin.i64(i64 %i.aij, i64 65536) ; 4 uses
   %.not390.i = icmp eq i64 %i.aij, 0
   br i1 %.not390.i, label %bb.ay, label %bb.aq
@@ -1264,6 +1265,7 @@ bb.ax:                                            ; preds = %bb.ax, %bb.aw
   br i1 %.not.i56, label %UpdateBits.exit.loopexit, label %bb.ax, !llvm.loop !1
 
 bb.ay:                                            ; preds = %ShouldMergeBlock.exit, %bb.aq, %.thread103
+  %.lcssa625 = phi i64 [ %i.aij, %ShouldMergeBlock.exit ], [ %i.aij, %bb.aq ], [ 0, %.thread103 ] ; 7 uses
   %.0.i.lcssa632633 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
   %.7.i.lcssa634635 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.aks = icmp ult ptr %.7.i, %i.ct
@@ -1666,7 +1668,7 @@ EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
 
 EmitLiterals.exit33:                              ; preds = %.epil.preheader629, %EmitLiterals.exit33.loopexit560.unr-lcssa, %.epil.preheader643, %EmitLiterals.exit33.loopexit.unr-lcssa, %EmitInsertLen.exit27, %.thread76.thread118, %bb.bj, %bb.ay
   %.8.i = phi ptr [ %.us-phi221, %.thread76.thread118 ], [ %i.ct, %bb.ay ], [ %i.ct, %EmitInsertLen.exit27 ], [ %i.ct, %bb.bj ], [ %i.ct, %.epil.preheader643 ], [ %i.ct, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.ct, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.ct, %.epil.preheader629 ] ; 2 uses
-  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %i.aij, %bb.ay ], [ %i.aij, %EmitInsertLen.exit27 ], [ %i.aij, %bb.bj ], [ %i.aij, %.epil.preheader643 ], [ %i.aij, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.aij, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.aij, %.epil.preheader629 ] ; 4 uses
+  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %.lcssa625, %bb.ay ], [ %.lcssa625, %EmitInsertLen.exit27 ], [ %.lcssa625, %bb.bj ], [ %.lcssa625, %.epil.preheader643 ], [ %.lcssa625, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %.lcssa625, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %.lcssa625, %.epil.preheader629 ] ; 4 uses
   %.not393.i = icmp eq i64 %.5323.i, 0
   br i1 %.not393.i, label %bb.bp, label %bb.bo
 
@@ -2069,7 +2071,7 @@ bb.ap:                                            ; preds = %EmitCopyLen.exit
 
 .thread103:                                       ; preds = %EmitCopyLenLastDistance.exit, %.split, %.split.us, %EmitCopyLen.exit, %.critedge.backedge.us, %.critedge.backedge.us205, %UpdateBits.exit
   %.7.i = phi ptr [ %.1361.i, %.split ], [ %.0360.i, %UpdateBits.exit ], [ %.1361.i, %.split.us ], [ %.1361.i, %.critedge.backedge.us ], [ %.1361.i, %.critedge.backedge.us205 ], [ %i.abg, %EmitCopyLen.exit ], [ %i.gt, %EmitCopyLenLastDistance.exit ] ; 11 uses
-  %i.aij = sub i64 %.0318.i, %.0358.i             ; 11 uses
+  %i.aij = sub i64 %.0318.i, %.0358.i             ; 6 uses
   %i.aik = tail call i64 @llvm.umin.i64(i64 %i.aij, i64 65536) ; 4 uses
   %.not390.i = icmp eq i64 %i.aij, 0
   br i1 %.not390.i, label %bb.ay, label %bb.aq
@@ -2196,6 +2198,7 @@ bb.ax:                                            ; preds = %bb.ax, %bb.aw
   br i1 %.not.i56, label %UpdateBits.exit.loopexit, label %bb.ax, !llvm.loop !1
 
 bb.ay:                                            ; preds = %ShouldMergeBlock.exit, %bb.aq, %.thread103
+  %.lcssa625 = phi i64 [ %i.aij, %ShouldMergeBlock.exit ], [ %i.aij, %bb.aq ], [ 0, %.thread103 ] ; 7 uses
   %.0.i.lcssa632633 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
   %.7.i.lcssa634635 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.aks = icmp ult ptr %.7.i, %i.ct
@@ -2598,7 +2601,7 @@ EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
 
 EmitLiterals.exit33:                              ; preds = %.epil.preheader629, %EmitLiterals.exit33.loopexit560.unr-lcssa, %.epil.preheader643, %EmitLiterals.exit33.loopexit.unr-lcssa, %EmitInsertLen.exit27, %.thread76.thread118, %bb.bj, %bb.ay
   %.8.i = phi ptr [ %.us-phi221, %.thread76.thread118 ], [ %i.ct, %bb.ay ], [ %i.ct, %EmitInsertLen.exit27 ], [ %i.ct, %bb.bj ], [ %i.ct, %.epil.preheader643 ], [ %i.ct, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.ct, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.ct, %.epil.preheader629 ] ; 2 uses
-  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %i.aij, %bb.ay ], [ %i.aij, %EmitInsertLen.exit27 ], [ %i.aij, %bb.bj ], [ %i.aij, %.epil.preheader643 ], [ %i.aij, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.aij, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.aij, %.epil.preheader629 ] ; 4 uses
+  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %.lcssa625, %bb.ay ], [ %.lcssa625, %EmitInsertLen.exit27 ], [ %.lcssa625, %bb.bj ], [ %.lcssa625, %.epil.preheader643 ], [ %.lcssa625, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %.lcssa625, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %.lcssa625, %.epil.preheader629 ] ; 4 uses
   %.not393.i = icmp eq i64 %.5323.i, 0
   br i1 %.not393.i, label %bb.bp, label %bb.bo
 
@@ -3001,7 +3004,7 @@ bb.ap:                                            ; preds = %EmitCopyLen.exit
 
 .thread103:                                       ; preds = %EmitCopyLenLastDistance.exit, %.split, %.split.us, %EmitCopyLen.exit, %.critedge.backedge.us, %.critedge.backedge.us205, %UpdateBits.exit
   %.7.i = phi ptr [ %.1361.i, %.split ], [ %.0360.i, %UpdateBits.exit ], [ %.1361.i, %.split.us ], [ %.1361.i, %.critedge.backedge.us ], [ %.1361.i, %.critedge.backedge.us205 ], [ %i.abg, %EmitCopyLen.exit ], [ %i.gt, %EmitCopyLenLastDistance.exit ] ; 11 uses
-  %i.aij = sub i64 %.0318.i, %.0358.i             ; 11 uses
+  %i.aij = sub i64 %.0318.i, %.0358.i             ; 6 uses
   %i.aik = tail call i64 @llvm.umin.i64(i64 %i.aij, i64 65536) ; 4 uses
   %.not390.i = icmp eq i64 %i.aij, 0
   br i1 %.not390.i, label %bb.ay, label %bb.aq
@@ -3128,6 +3131,7 @@ bb.ax:                                            ; preds = %bb.ax, %bb.aw
   br i1 %.not.i56, label %UpdateBits.exit.loopexit, label %bb.ax, !llvm.loop !1
 
 bb.ay:                                            ; preds = %ShouldMergeBlock.exit, %bb.aq, %.thread103
+  %.lcssa625 = phi i64 [ %i.aij, %ShouldMergeBlock.exit ], [ %i.aij, %bb.aq ], [ 0, %.thread103 ] ; 7 uses
   %.0.i.lcssa632633 = ptrtoaddr ptr %.0.i to i64  ; 2 uses
   %.7.i.lcssa634635 = ptrtoaddr ptr %.7.i to i64  ; 2 uses
   %i.aks = icmp ult ptr %.7.i, %i.ct
@@ -3530,7 +3534,7 @@ EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
 
 EmitLiterals.exit33:                              ; preds = %.epil.preheader629, %EmitLiterals.exit33.loopexit560.unr-lcssa, %.epil.preheader643, %EmitLiterals.exit33.loopexit.unr-lcssa, %EmitInsertLen.exit27, %.thread76.thread118, %bb.bj, %bb.ay
   %.8.i = phi ptr [ %.us-phi221, %.thread76.thread118 ], [ %i.ct, %bb.ay ], [ %i.ct, %EmitInsertLen.exit27 ], [ %i.ct, %bb.bj ], [ %i.ct, %.epil.preheader643 ], [ %i.ct, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.ct, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.ct, %.epil.preheader629 ] ; 2 uses
-  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %i.aij, %bb.ay ], [ %i.aij, %EmitInsertLen.exit27 ], [ %i.aij, %bb.bj ], [ %i.aij, %.epil.preheader643 ], [ %i.aij, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %i.aij, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %i.aij, %.epil.preheader629 ] ; 4 uses
+  %.5323.i = phi i64 [ %i.ln, %.thread76.thread118 ], [ %.lcssa625, %bb.ay ], [ %.lcssa625, %EmitInsertLen.exit27 ], [ %.lcssa625, %bb.bj ], [ %.lcssa625, %.epil.preheader643 ], [ %.lcssa625, %EmitLiterals.exit33.loopexit.unr-lcssa ], [ %.lcssa625, %EmitLiterals.exit33.loopexit560.unr-lcssa ], [ %.lcssa625, %.epil.preheader629 ] ; 4 uses
   %.not393.i = icmp eq i64 %.5323.i, 0
   br i1 %.not393.i, label %bb.bp, label %bb.bo
 
@@ -3709,7 +3713,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.preheader60
   %xtraiter = and i64 %2, 3                       ; 3 uses
-  %7 = icmp ult i64 %2, 4
+  %7 = icmp slt i64 %2, 4
   br i1 %7, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

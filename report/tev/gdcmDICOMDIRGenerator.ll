@@ -202,11 +202,12 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not62, label %bb.bp, label %bb.cs
 
 bb.bp:                                            ; preds = %bb.bn, %bb.bo
+  %.lcssa415 = phi ptr [ null, %bb.bn ], [ %i.en, %bb.bo ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
   store i16 16, ptr %16, align 4, !tbaa !42, !alias.scope !195
   %i.ep = getelementptr inbounds nuw i8, ptr %16, i64 2
   store i16 32, ptr %i.ep, align 2, !tbaa !42, !alias.scope !195
-  %i.eq = invoke noundef ptr @_ZNK4gdcm7Scanner25GetFilenameFromTagToValueERKNS_3TagEPKc(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %16, ptr noundef %i.en)
+  %i.eq = invoke noundef ptr @_ZNK4gdcm7Scanner25GetFilenameFromTagToValueERKNS_3TagEPKc(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %16, ptr noundef %.lcssa415)
           to label %bb.bq unwind label %bb.cr     ; 0 uses
 
 bb.bq:                                            ; preds = %bb.bp
@@ -609,11 +610,12 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not98, label %bb.bp, label %bb.cs
 
 bb.bp:                                            ; preds = %bb.bn, %bb.bo
+  %.lcssa915 = phi ptr [ null, %bb.bn ], [ %i.fh, %bb.bo ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
   store i16 32, ptr %16, align 4, !tbaa !42, !alias.scope !323
   %i.fj = getelementptr inbounds nuw i8, ptr %16, i64 2
   store i16 13, ptr %i.fj, align 2, !tbaa !42, !alias.scope !323
-  %i.fk = invoke noundef ptr @_ZNK4gdcm7Scanner25GetFilenameFromTagToValueERKNS_3TagEPKc(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %16, ptr noundef %i.fh)
+  %i.fk = invoke noundef ptr @_ZNK4gdcm7Scanner25GetFilenameFromTagToValueERKNS_3TagEPKc(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %16, ptr noundef %.lcssa915)
           to label %bb.bq unwind label %bb.cr     ; 0 uses
 
 bb.bq:                                            ; preds = %bb.bp
@@ -1016,11 +1018,12 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not69, label %bb.bp, label %bb.cs
 
 bb.bp:                                            ; preds = %bb.bn, %bb.bo
+  %.lcssa522 = phi ptr [ null, %bb.bn ], [ %i.eo, %bb.bo ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
   store i16 32, ptr %16, align 4, !tbaa !42, !alias.scope !503
   %i.eq = getelementptr inbounds nuw i8, ptr %16, i64 2
   store i16 14, ptr %i.eq, align 2, !tbaa !42, !alias.scope !503
-  %i.er = invoke noundef ptr @_ZNK4gdcm7Scanner25GetFilenameFromTagToValueERKNS_3TagEPKc(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %16, ptr noundef %i.eo)
+  %i.er = invoke noundef ptr @_ZNK4gdcm7Scanner25GetFilenameFromTagToValueERKNS_3TagEPKc(ptr noundef nonnull align 8 dereferenceable(176) %i.f, ptr noundef nonnull align 4 dereferenceable(4) %16, ptr noundef %.lcssa522)
           to label %bb.bq unwind label %bb.cr     ; 0 uses
 
 bb.bq:                                            ; preds = %bb.bp

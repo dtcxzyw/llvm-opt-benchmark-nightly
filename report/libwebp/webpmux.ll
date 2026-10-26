@@ -205,16 +205,19 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ai
   %i.gd = add nsw i32 %.022481.i.i, 4             ; 2 uses
   %i.ge = icmp slt i32 %i.y, %i.gd
-  br i1 %i.ge, label %.loopexit231, label %.preheader.peel.newph.a
+  br i1 %i.ge, label %.loopexit231, label %.preheader.peel.newph
 
-.preheader.peel.newph.a:                          ; preds = %bb.aj, %bb.ad
-  %i.gf = phi i32 [ %i.fg, %bb.ad ], [ %i.gd, %bb.aj ] ; 6 uses
-  %i.gg = phi i64 [ %i.ef, %bb.ad ], [ %i.fw, %bb.aj ]
-  %i.gh = phi i64 [ %i.ee, %bb.ad ], [ %i.fu, %bb.aj ]
-  %.021983.i.i214 = phi i32 [ %i.gn, %bb.ad ], [ %i.fs, %bb.aj ]
+.preheader.peel.newph:                            ; preds = %bb.aj
+  store i32 5, ptr %i.dq, align 8, !tbaa !40
+  br label %.preheader.peel.newph.a
+
+.preheader.peel.newph.a:                          ; preds = %bb.ad, %.preheader.peel.newph
+  %i.gf = phi i32 [ %i.gd, %.preheader.peel.newph ], [ %i.fg, %bb.ad ] ; 6 uses
+  %i.gg = phi i64 [ %i.fw, %.preheader.peel.newph ], [ %i.ef, %bb.ad ]
+  %i.gh = phi i64 [ %i.fu, %.preheader.peel.newph ], [ %i.ee, %bb.ad ]
+  %.021983.i.i214 = phi i32 [ %i.fs, %.preheader.peel.newph ], [ %i.gn, %bb.ad ]
   %i.gi = getelementptr inbounds [24 x i8], ptr %i.di, i64 %i.gh
   %i.gj = getelementptr inbounds [8 x i8], ptr %i.do, i64 %i.gg
-  store i32 5, ptr %i.dq, align 8, !tbaa !40
   %i.gk = getelementptr i8, ptr %i.gj, i64 8
   %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !16
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gi, i64 16
@@ -478,6 +481,7 @@ sub_126.i.i:                                      ; preds = %.tail.thread.i.i
   br i1 %i.jj, label %bb.bs, label %.tail24.thread.i.i
 
 .tail24.thread.i.i:                               ; preds = %.tail.thread.i.thread.i, %.tail24.i.i, %sub_126.i.i
+  %29 = phi i8 [ %i.il, %sub_126.i.i ], [ 104, %.tail24.i.i ], [ 111, %.tail.thread.i.thread.i ]
   %i.jk = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.gt, ptr noundef nonnull dereferenceable(6) @.str.25) #14
   %.not276.i.i = icmp eq i32 %i.jk, 0
   br i1 %.not276.i.i, label %bb.bs, label %bb.bt
@@ -506,7 +510,7 @@ bb.bu:                                            ; preds = %bb.bt
   unreachable
 
 sub_131.i.i:                                      ; preds = %bb.bt
-  %.not90.i.i = icmp eq i8 %i.il, 45
+  %.not90.i.i = icmp eq i8 %29, 45
   br i1 %.not90.i.i, label %.tail29.i.i, label %.tail29.thread.i.i
 
 .tail29.i.i:                                      ; preds = %sub_131.i.i

@@ -204,12 +204,13 @@ _ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %bb.z
 
 bb.z:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %13 = phi i64 [ %i.dl, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i64 = icmp eq ptr %i.de, null
   br i1 %.not.i.i.i64, label %_ZNSt6vectorIxSaIxEED2Ev.exit67, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.de, i64 noundef %i.dl) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.de, i64 noundef %13) #22
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit67
 
 _ZNSt6vectorIxSaIxEED2Ev.exit67:                  ; preds = %bb.z, %bb.aa
@@ -612,9 +613,8 @@ _ZNSt6vectorIxSaIxEED2Ev.exit125.thread:          ; preds = %_ZNSt6vectorIxSaIxE
 
 .lr.ph212.preheader:                              ; preds = %.preheader
   %i.ir = tail call i64 @llvm.usub.sat.i64(i64 %i.hn, i64 %.062219) ; 2 uses
-  %i.is = tail call i64 @llvm.umin.i64(i64 %i.ir, i64 %i.hp)
-  %3 = add i64 %i.is, 1                           ; 3 uses
-  %min.iters.check351 = icmp ult i64 %3, 5
+  %i.is = tail call i64 @llvm.umin.i64(i64 %i.ir, i64 %i.hp) ; 2 uses
+  %min.iters.check351 = icmp ult i64 %i.is, 4
   br i1 %min.iters.check351, label %.lr.ph212.preheader380, label %vector.ph352
 
 .lr.ph212.preheader380:                           ; preds = %vector.body356, %.lr.ph212.preheader
@@ -624,10 +624,11 @@ _ZNSt6vectorIxSaIxEED2Ev.exit125.thread:          ; preds = %_ZNSt6vectorIxSaIxE
   br label %.lr.ph212
 
 vector.ph352:                                     ; preds = %.lr.ph212.preheader
+  %3 = add nuw nsw i64 %i.is, 1                   ; 2 uses
   %i.it = and i64 %3, 3                           ; 2 uses
   %i.iu = icmp eq i64 %i.it, 0
   %i.iv = select i1 %i.iu, i64 4, i64 %i.it
-  %n.vec353 = sub i64 %3, %i.iv                   ; 4 uses
+  %n.vec353 = sub nuw nsw i64 %3, %i.iv           ; 4 uses
   %i.iw = mul i64 %n.vec353, %i.dp
   %i.ix = add i64 %.060.lcssa, %i.iw
   %i.iy = add i64 %.062219, %n.vec353
@@ -1030,12 +1031,13 @@ _ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %bb.i
 
 bb.i:                                             ; preds = %.loopexit.split-lp, %.loopexit
+  %2 = phi i64 [ %i.ac, %.loopexit ], [ 9223372036854775800, %.loopexit.split-lp ]
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i5 = icmp eq ptr %i.s, null
   br i1 %.not.i.i.i5, label %_ZNSt6vectorIxSaIxEED2Ev.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef %i.ac) #22
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef %2) #22
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit
 
 _ZNSt6vectorIxSaIxEED2Ev.exit:                    ; preds = %bb.i, %bb.j
@@ -1358,7 +1360,7 @@ bb.a:
   br i1 %i.b, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %min.iters.check = icmp ult i64 %1, 4
+  %min.iters.check = icmp samesign ult i64 %1, 4
   br i1 %min.iters.check, label %.lr.ph.preheader16, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader

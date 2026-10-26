@@ -202,7 +202,7 @@ bb.ah:                                            ; preds = %bb.af, %bb.ab
   %i.jn = phi ptr [ %i.ct, %.noexc45.i.i.i ], [ %i.a, %.noexc100 ]
   %i.jo = phi ptr [ @47, %.noexc45.i.i.i ], [ @48, %.noexc100 ]
   %i.jp = phi ptr [ @4, %.noexc45.i.i.i ], [ @75, %.noexc100 ]
-  invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jl, i64 noundef %i.jm, ptr noundef nonnull %i.jn, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.jo, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.jp) #35
+  invoke void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jl, i64 noundef %i.jm, ptr noundef nonnull %i.jn, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.jo, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.jp) #35
           to label %.noexc45.i.i.i.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !13665
 
 .noexc45.i.i.i.cont:                              ; preds = %.noexc45.i.i.i.invoke
@@ -384,7 +384,7 @@ bb.bh:                                            ; preds = %bb.bf
           to label %bb.bi unwind label %bb.ay, !dbg !13715, !noalias !13196
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.kq = load i8, ptr %i.cq, align 8, !dbg !13716, !range !13215, !noalias !13197, !noundef !496 ; 3 uses
+  %i.kq = load i8, ptr %i.cq, align 8, !dbg !13716, !range !13215, !noalias !13197, !noundef !496 ; 2 uses
   switch i8 %i.kq, label %bb.bj [
     i8 -2, label %bb.bx
     i8 -1, label %bb.bk
@@ -487,7 +487,7 @@ bb.bw:                                            ; preds = %bb.bn
   br label %bb.bx, !dbg !13750
 
 bb.bx:                                            ; preds = %bb.ca, %bb.bz, %bb.bw, %bb.bl, %bb.bj, %bb.bi, %bb.be, %bb.ba
-  %.sroa.0101.0.i = phi i8 [ %.sroa.0101.0.copyload.i, %bb.ca ], [ -2, %bb.ba ], [ -2, %bb.bl ], [ -2, %bb.be ], [ %.sroa.0101.0.copyload103.i, %bb.bw ], [ %.sroa.0101.0.copyload102.i, %bb.bz ], [ %i.kq, %bb.bj ], [ %i.kq, %bb.bi ], !dbg !13751 ; 2 uses
+  %.sroa.0101.0.i = phi i8 [ %.sroa.0101.0.copyload.i, %bb.ca ], [ -2, %bb.ba ], [ -2, %bb.bl ], [ -2, %bb.be ], [ %.sroa.0101.0.copyload103.i, %bb.bw ], [ %.sroa.0101.0.copyload102.i, %bb.bz ], [ %i.kq, %bb.bj ], [ -2, %bb.bi ], !dbg !13751 ; 2 uses
   %i.lf = load i64, ptr %i.cs, align 8, !dbg !13752, !range !587, !noalias !13197, !noundef !496
   %.not.i.i72.i.i = icmp eq i64 %i.lf, 2, !dbg !13752
   br i1 %.not.i.i72.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span4SpanECsbaWXNhtWAp9_11foundations.exit.i.i, label %bb.by, !dbg !13753
@@ -564,7 +564,7 @@ bb.ch:                                            ; preds = %bb.az, %_RINvNtCs3o
   unreachable, !dbg !13778
 
 _RNvMs_NtNtCsb6T6P0NKlCh_2h25proto10connectionINtB4_10ConnectionINtNtNtNtCsaCYLheajBls_5hyper6common2io6compat6CompatNtNtNtNtNtCsfUalJnHtWpm_5tonic9transport7channel7service2io7BoxedIoENtNtB8_6client4PeerINtNtNtB18_5proto2h27SendBufNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesEE10poll_readyCsbaWXNhtWAp9_11foundations.exit.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span7EnteredECsbaWXNhtWAp9_11foundations.exit71.sink.split.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span4SpanECsbaWXNhtWAp9_11foundations.exit.i.i
-  %.sroa.0101.2.i = phi i8 [ %.sroa.0101.0.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span4SpanECsbaWXNhtWAp9_11foundations.exit.i.i ], [ %.sroa.0101.1.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span7EnteredECsbaWXNhtWAp9_11foundations.exit71.sink.split.i.i ], !dbg !13746 ; 3 uses
+  %.sroa.0101.2.i = phi i8 [ %.sroa.0101.0.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span4SpanECsbaWXNhtWAp9_11foundations.exit.i.i ], [ %.sroa.0101.1.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs2xfK085Iyqb_7tracing4span7EnteredECsbaWXNhtWAp9_11foundations.exit71.sink.split.i.i ], !dbg !13746 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq), !dbg !13744, !noalias !13193
   switch i8 %.sroa.0101.2.i, label %bb.ck [
     i8 -2, label %.loopexit225
@@ -967,7 +967,8 @@ bb.gh:                                            ; preds = %bb.gf, %bb.ge, %_RN
   br label %thread-pre-split, !dbg !13806
 
 .loopexit225:                                     ; preds = %_RNvMs_NtNtCsb6T6P0NKlCh_2h25proto10connectionINtB4_10ConnectionINtNtNtNtCsaCYLheajBls_5hyper6common2io6compat6CompatNtNtNtNtNtCsfUalJnHtWpm_5tonic9transport7channel7service2io7BoxedIoENtNtB8_6client4PeerINtNtNtB18_5proto2h27SendBufNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesEE10poll_readyCsbaWXNhtWAp9_11foundations.exit.i, %bb.ck
-  store i8 %.sroa.0101.2.i, ptr %i.dh, align 8, !dbg !14095, !alias.scope !13177
+  %.sroa.0101.2.i1058 = phi i8 [ %.sroa.0101.2.i, %bb.ck ], [ -2, %_RNvMs_NtNtCsb6T6P0NKlCh_2h25proto10connectionINtB4_10ConnectionINtNtNtNtCsaCYLheajBls_5hyper6common2io6compat6CompatNtNtNtNtNtCsfUalJnHtWpm_5tonic9transport7channel7service2io7BoxedIoENtNtB8_6client4PeerINtNtNtB18_5proto2h27SendBufNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesEE10poll_readyCsbaWXNhtWAp9_11foundations.exit.i ] ; 2 uses
+  store i8 %.sroa.0101.2.i1058, ptr %i.dh, align 8, !dbg !14095, !alias.scope !13177
   br label %bb.gp, !dbg !13806
 
 bb.gi:                                            ; preds = %.loopexit.i
@@ -1103,7 +1104,7 @@ thread-pre-split:                                 ; preds = %.noexc95, %bb.gh, %
   br label %bb.gp, !dbg !13672
 
 bb.gp:                                            ; preds = %thread-pre-split, %.loopexit225
-  %i.sw = phi i8 [ %.pr209, %thread-pre-split ], [ %.sroa.0101.2.i, %.loopexit225 ], !dbg !13626 ; 2 uses
+  %i.sw = phi i8 [ %.pr209, %thread-pre-split ], [ %.sroa.0101.2.i1058, %.loopexit225 ], !dbg !13626 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.524.sroa.5.i), !dbg !13672
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.sroa.8.i), !dbg !13672
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.341.sroa.0.i), !dbg !13672

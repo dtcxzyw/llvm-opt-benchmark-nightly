@@ -193,7 +193,7 @@ bb.b:                                             ; preds = %bb.e, %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 538
   %i.c = load i16, ptr %i.b, align 2, !noundef !5 ; 2 uses
-  %i.d = zext i16 %i.c to i64                     ; 3 uses
+  %i.d = zext i16 %i.c to i64                     ; 2 uses
   %.idx = shl nuw nsw i64 %i.d, 3
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx
   %i.f = icmp eq i16 %i.c, 0
@@ -220,7 +220,7 @@ bb.d:                                             ; preds = %.lr.ph
   unreachable
 
 ._crit_edge:                                      ; preds = %bb.c, %.lr.ph, %bb.b
-  %.sroa.4.0.i.ph = phi i64 [ %i.d, %bb.b ], [ %i.d, %bb.c ], [ %.sroa.8.0.i82, %.lr.ph ] ; 3 uses
+  %.sroa.4.0.i.ph = phi i64 [ 0, %bb.b ], [ %i.d, %bb.c ], [ %.sroa.8.0.i82, %.lr.ph ] ; 3 uses
   %i.k = icmp eq i64 %.sroa.3.0, 0
   br i1 %i.k, label %.loopexit, label %bb.e
 
@@ -263,7 +263,7 @@ bb.a:
   %.sroa.0.0.us = phi ptr [ %i.aa, %bb.e ], [ %1, %bb.a ] ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us, i64 230
   %i.e = load i16, ptr %i.d, align 2, !noalias !19, !noundef !5 ; 2 uses
-  %i.f = zext i16 %i.e to i64                     ; 3 uses
+  %i.f = zext i16 %i.e to i64                     ; 2 uses
   %.idx163 = shl nuw nsw i64 %i.f, 4
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us, i64 %.idx163
   %i.h = icmp eq i16 %i.e, 0
@@ -326,7 +326,7 @@ bb.d:                                             ; preds = %_RNvXs3_NtNtNtCskKL
 _RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.us.i.us: ; preds = %bb.d, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsg06799QCvd1_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCs5py4yDLWIja_7execute.exit.us.i.us
   %.sroa.0.0.i7.us.i.us = phi i8 [ %i.w, %bb.d ], [ %i.m, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsg06799QCvd1_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCs5py4yDLWIja_7execute.exit.us.i.us ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !19
-  switch i8 %.sroa.0.0.i7.us.i.us, label %.split16.us.i [
+  switch i8 %.sroa.0.0.i7.us.i.us, label %default.unreachable [
     i8 -1, label %.loopexit.us
     i8 0, label %.split83.us
     i8 1, label %.split.us.i.us
@@ -342,7 +342,7 @@ bb.e:                                             ; preds = %.loopexit.us
   br label %.split.us.i.preheader.us
 
 .loopexit.us:                                     ; preds = %.split.us.i.us, %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.us.i.us, %.split.us.i.preheader.us
-  %.sroa.4.0.i.ph.ph.us = phi i64 [ %i.f, %.split.us.i.preheader.us ], [ %i.f, %.split.us.i.us ], [ %.sroa.8.0.us.i.us159, %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.us.i.us ] ; 3 uses
+  %.sroa.4.0.i.ph.ph.us = phi i64 [ 0, %.split.us.i.preheader.us ], [ %i.f, %.split.us.i.us ], [ %.sroa.8.0.us.i.us159, %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.us.i.us ] ; 3 uses
   %i.ac = icmp eq i64 %.sroa.3.0.us, 0
   br i1 %i.ac, label %.split83.us, label %bb.e
 
@@ -351,7 +351,7 @@ bb.e:                                             ; preds = %.loopexit.us
   %.sroa.0.0 = phi ptr [ %i.aw, %bb.g ], [ %1, %bb.a ] ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 230
   %i.ae = load i16, ptr %i.ad, align 2, !noalias !19, !noundef !5 ; 2 uses
-  %i.af = zext i16 %i.ae to i64                   ; 3 uses
+  %i.af = zext i16 %i.ae to i64                   ; 2 uses
   %.idx = shl nuw nsw i64 %i.af, 4
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %.idx
   %i.ah = icmp eq i16 %i.ae, 0
@@ -395,11 +395,14 @@ _RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenO
     i8 1, label %.split.i
   ]
 
-.split16.us.i:                                    ; preds = %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i, %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.us.i.us
+default.unreachable:                              ; preds = %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.us.i.us
+  unreachable
+
+.split16.us.i:                                    ; preds = %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i
   unreachable
 
 .loopexit55:                                      ; preds = %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i, %.split.i, %.split.i.preheader
-  %.sroa.4.0.i.ph.ph56 = phi i64 [ %i.af, %.split.i.preheader ], [ %.sroa.8.0.i147, %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i ], [ %i.af, %.split.i ] ; 3 uses
+  %.sroa.4.0.i.ph.ph56 = phi i64 [ 0, %.split.i.preheader ], [ %.sroa.8.0.i147, %_RNvXs6_NtNtCsg06799QCvd1_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i ], [ %i.af, %.split.i ] ; 3 uses
   %i.ar = icmp eq i64 %.sroa.3.0, 0
   br i1 %i.ar, label %.split83.us, label %bb.g
 

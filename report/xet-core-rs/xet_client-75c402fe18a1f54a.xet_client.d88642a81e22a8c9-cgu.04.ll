@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %i.fq, label %bb.bn, label %bb.bh
 
 bb.bh:                                            ; preds = %.noexc191.i
-  %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !3028 ; 2 uses
+  %.sroa.4.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !3028 ; 4 uses
   switch i64 %.sroa.4.0.copyload.i.i.i.i.i.i.i, label %bb.bv [
     i64 11, label %bb.bi
     i64 8, label %bb.bj
@@ -608,8 +608,9 @@ bb.di:                                            ; preds = %bb.df
           to label %_RINvYINtNtCsiWcPrHiWZDL_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs6SYjS1KFWza_10serde_core2de9MapAccess10next_valueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiAynQAjgDuT_10xet_client9cas_types3key13HexMerkleHashEEB2E_.exit.i unwind label %.loopexit.i42.loopexit.loopexit.split-lp, !noalias !3019
 
 .invoke:                                          ; preds = %bb.br, %bb.bu, %bb.bt, %bb.bs, %bb.bq
-  %i.kp = phi ptr [ @23, %bb.bq ], [ @27, %bb.bu ], [ @26, %bb.bt ], [ @25, %bb.bs ], [ @24, %bb.br ]
-  %i.kq = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsiWcPrHiWZDL_10serde_json5error5ErrorNtNtCs6SYjS1KFWza_10serde_core2de5Error15duplicate_fieldCsiAynQAjgDuT_10xet_client(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.kp, i64 noundef %.sroa.4.0.copyload.i.i.i.i.i.i.i)
+  %.sroa.4.0.copyload.i.i.i.i.i.i.i1052 = phi i64 [ 11, %bb.bq ], [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.bs ], [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.bu ], [ %.sroa.4.0.copyload.i.i.i.i.i.i.i, %bb.bt ], [ 8, %bb.br ]
+  %i.kp = phi ptr [ @23, %bb.bq ], [ @25, %bb.bs ], [ @27, %bb.bu ], [ @26, %bb.bt ], [ @24, %bb.br ]
+  %i.kq = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsiWcPrHiWZDL_10serde_json5error5ErrorNtNtCs6SYjS1KFWza_10serde_core2de5Error15duplicate_fieldCsiAynQAjgDuT_10xet_client(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.kp, i64 noundef %.sroa.4.0.copyload.i.i.i.i.i.i.i1052)
           to label %.loopexit unwind label %.loopexit.split-lp.i, !noalias !3019
 
 _RINvYINtNtCsiWcPrHiWZDL_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs6SYjS1KFWza_10serde_core2de9MapAccess10next_valueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsiAynQAjgDuT_10xet_client9cas_types3key13HexMerkleHashEEB2E_.exit.i: ; preds = %bb.di
@@ -1012,7 +1013,7 @@ bb.fm:                                            ; preds = %_RINvXs0_NvXNvNtCsi
   %i.na = getelementptr inbounds nuw i8, ptr %i.al, i64 88
   store ptr %i.my, ptr %i.na, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
-  %i.nb = load i64, ptr %i.al, align 8, !range !8, !noundef !5 ; 4 uses
+  %i.nb = load i64, ptr %i.al, align 8, !range !8, !noundef !5 ; 2 uses
   %i.nc = icmp eq i64 %i.nb, -1
   br i1 %i.nc, label %bb.fo, label %bb.fn
 
@@ -1041,7 +1042,7 @@ bb.fp:                                            ; preds = %bb.fn
   br label %.thread77
 
 .thread77:                                        ; preds = %.thread502, %bb.fp, %bb.fq, %bb.fo
-  %.sroa.09.283 = phi i64 [ %i.nb, %bb.fo ], [ %i.nb, %bb.fq ], [ -1, %bb.fp ], [ %i.nb, %.thread502 ]
+  %.sroa.09.283 = phi i64 [ -1, %bb.fo ], [ -1, %bb.fq ], [ -1, %bb.fp ], [ %i.nb, %.thread502 ]
   %.sroa.10.282 = phi ptr [ %i.ne, %bb.fo ], [ %i.ne, %bb.fq ], [ %i.my, %bb.fp ], [ %.sroa.421.0.copyload, %.thread502 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   br label %bb.ba
@@ -1444,7 +1445,7 @@ bb.es:                                            ; preds = %_RINvXs0_NvXNvNvXs_
   %i.ms = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   store ptr %i.mq, ptr %i.ms, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  %i.mt = load i64, ptr %i.ak, align 8, !range !8, !noundef !5 ; 4 uses
+  %i.mt = load i64, ptr %i.ak, align 8, !range !8, !noundef !5 ; 2 uses
   %i.mu = icmp eq i64 %i.mt, -1
   br i1 %i.mu, label %bb.eu, label %bb.et
 
@@ -1473,7 +1474,7 @@ bb.ev:                                            ; preds = %bb.et
   br label %.thread74
 
 .thread74:                                        ; preds = %.thread381, %bb.ev, %bb.ew, %bb.eu
-  %.sroa.09.280 = phi i64 [ %i.mt, %bb.eu ], [ %i.mt, %bb.ew ], [ -1, %bb.ev ], [ %i.mt, %.thread381 ]
+  %.sroa.09.280 = phi i64 [ -1, %bb.eu ], [ -1, %bb.ew ], [ -1, %bb.ev ], [ %i.mt, %.thread381 ]
   %.sroa.10.279 = phi ptr [ %i.mw, %bb.eu ], [ %i.mw, %bb.ew ], [ %i.mq, %bb.ev ], [ %.sroa.421.0.copyload, %.thread381 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   br label %bb.av
@@ -1876,7 +1877,7 @@ bb.es:                                            ; preds = %_RINvXs0_NvXNvNvXs_
   %i.ms = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   store ptr %i.mq, ptr %i.ms, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  %i.mt = load i64, ptr %i.ak, align 8, !range !8, !noundef !5 ; 4 uses
+  %i.mt = load i64, ptr %i.ak, align 8, !range !8, !noundef !5 ; 2 uses
   %i.mu = icmp eq i64 %i.mt, -1
   br i1 %i.mu, label %bb.eu, label %bb.et
 
@@ -1905,7 +1906,7 @@ bb.ev:                                            ; preds = %bb.et
   br label %.thread74
 
 .thread74:                                        ; preds = %.thread381, %bb.ev, %bb.ew, %bb.eu
-  %.sroa.09.280 = phi i64 [ %i.mt, %bb.eu ], [ %i.mt, %bb.ew ], [ -1, %bb.ev ], [ %i.mt, %.thread381 ]
+  %.sroa.09.280 = phi i64 [ -1, %bb.eu ], [ -1, %bb.ew ], [ -1, %bb.ev ], [ %i.mt, %.thread381 ]
   %.sroa.10.279 = phi ptr [ %i.mw, %bb.eu ], [ %i.mw, %bb.ew ], [ %i.mq, %bb.ev ], [ %.sroa.421.0.copyload, %.thread381 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
   br label %bb.av
@@ -2308,7 +2309,7 @@ bb.ak:                                            ; preds = %bb.ab
 switch.lookup:                                    ; preds = %bb.ab
   %.sroa.2.0.copyload.i = load i64, ptr %i.bv, align 8, !noalias !4335
   %.sroa.41.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %switch.cast = trunc i64 %i.bt to i24
+  %switch.cast = trunc nuw nsw i64 %i.bt to i24
   %switch.shiftamt = shl nuw nsw i24 %switch.cast, 3
   %switch.downshift = lshr i24 525322, %switch.shiftamt
   %switch.masked = trunc i24 %switch.downshift to i8
@@ -2525,7 +2526,7 @@ bb.bk:                                            ; preds = %bb.bi
 switch.lookup31:                                  ; preds = %bb.bi
   %.sroa.268.0.copyload.i = load i64, ptr %i.dy, align 8, !noalias !4335
   %.sroa.41.0..sroa_idx.i.i61.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %switch.cast32 = trunc i64 %i.dw to i24
+  %switch.cast32 = trunc nuw nsw i64 %i.dw to i24
   %switch.shiftamt33 = shl nuw nsw i24 %switch.cast32, 3
   %switch.downshift34 = lshr i24 525322, %switch.shiftamt33
   %switch.masked35 = trunc i24 %switch.downshift34 to i8

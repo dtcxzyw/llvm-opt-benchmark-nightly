@@ -203,6 +203,7 @@ bb.aa:                                            ; preds = %bb.s
   %i.da = load i64, ptr %i.c, align 8, !noundef !12 ; 3 uses
   %i.db = icmp sgt i64 %i.da, -1
   call void @llvm.assume(i1 %i.db)
+  %3 = add i64 %i.da, %.sroa.034.0121             ; 2 uses
   %i.dc = add i64 %i.da, %i.bz                    ; 4 uses
   store i64 %i.dc, ptr %i.c, align 8
   %i.dd = icmp eq i64 %i.bz, 0
@@ -213,7 +214,6 @@ bb.ab:                                            ; preds = %bb.aa
   br label %.loopexit
 
 bb.ac:                                            ; preds = %bb.aa
-  %3 = add i64 %i.da, %.sroa.034.0121             ; 2 uses
   %i.df = icmp ne i64 %i.bz, %.sroa.053.3.ph.ph
   %or.cond.not = select i1 %i.g, i1 true, i1 %i.df
   br i1 %or.cond.not, label %.outer, label %bb.ad
@@ -616,7 +616,7 @@ bb.az:                                            ; preds = %bb.ax
           to label %bb.ba unwind label %bb.aq, !noalias !777
 
 bb.ba:                                            ; preds = %bb.az
-  %i.jj = load i8, ptr %i.cq, align 8, !range !780, !noalias !778, !noundef !12 ; 3 uses
+  %i.jj = load i8, ptr %i.cq, align 8, !range !780, !noalias !778, !noundef !12 ; 2 uses
   switch i8 %i.jj, label %bb.bb [
     i8 -2, label %bb.bp
     i8 -1, label %bb.bc
@@ -719,7 +719,7 @@ bb.bo:                                            ; preds = %bb.bf
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bs, %bb.br, %bb.bo, %bb.bd, %bb.bb, %bb.ba, %bb.aw, %bb.as
-  %.sroa.099.0.i = phi i8 [ %.sroa.099.0.copyload.i, %bb.bs ], [ -2, %bb.as ], [ -2, %bb.bd ], [ -2, %bb.aw ], [ %.sroa.099.0.copyload101.i, %bb.bo ], [ %.sroa.099.0.copyload100.i, %bb.br ], [ %i.jj, %bb.bb ], [ %i.jj, %bb.ba ] ; 2 uses
+  %.sroa.099.0.i = phi i8 [ %.sroa.099.0.copyload.i, %bb.bs ], [ -2, %bb.as ], [ -2, %bb.bd ], [ -2, %bb.aw ], [ %.sroa.099.0.copyload101.i, %bb.bo ], [ %.sroa.099.0.copyload100.i, %bb.br ], [ %i.jj, %bb.bb ], [ -2, %bb.ba ] ; 2 uses
   %i.jy = load i64, ptr %i.cs, align 8, !range !17, !noalias !778, !noundef !12
   %.not.i.i72.i.i = icmp eq i64 %i.jy, 2
   br i1 %.not.i.i72.i.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span4SpanECsi17nFaBu4HY_10ech_client.exit.i.i, label %bb.bq
@@ -796,7 +796,7 @@ bb.bz:                                            ; preds = %bb.ar, %_RINvNtCsj6
   unreachable
 
 _RNvMNtNtCs4okMlIQ9Z13_2h25proto10connectionINtB2_10ConnectionINtNtCs6HdZZ4a9Zp9_12tokio_rustls6client9TlsStreamINtNtNtCs5MfxasYgTEl_11hickory_net7runtime8iocompat17AsyncIoStdAsTokioINtB1O_17AsyncIoTokioAsStdNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamEEENtNtB6_6client4PeerE10poll_readyCsi17nFaBu4HY_10ech_client.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span7EnteredECsi17nFaBu4HY_10ech_client.exit71.sink.split.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span4SpanECsi17nFaBu4HY_10ech_client.exit.i.i
-  %.sroa.099.2.i = phi i8 [ %.sroa.099.0.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span4SpanECsi17nFaBu4HY_10ech_client.exit.i.i ], [ %.sroa.099.1.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span7EnteredECsi17nFaBu4HY_10ech_client.exit71.sink.split.i.i ] ; 3 uses
+  %.sroa.099.2.i = phi i8 [ %.sroa.099.0.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span4SpanECsi17nFaBu4HY_10ech_client.exit.i.i ], [ %.sroa.099.1.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsiIyHGM5EznH_7tracing4span7EnteredECsi17nFaBu4HY_10ech_client.exit71.sink.split.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq), !noalias !772
   switch i8 %.sroa.099.2.i, label %bb.cd [
     i8 -2, label %.loopexit222
@@ -1199,7 +1199,8 @@ bb.gb:                                            ; preds = %bb.fz, %bb.fy, %_RN
   br label %thread-pre-split
 
 .loopexit222:                                     ; preds = %_RNvMNtNtCs4okMlIQ9Z13_2h25proto10connectionINtB2_10ConnectionINtNtCs6HdZZ4a9Zp9_12tokio_rustls6client9TlsStreamINtNtNtCs5MfxasYgTEl_11hickory_net7runtime8iocompat17AsyncIoStdAsTokioINtB1O_17AsyncIoTokioAsStdNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamEEENtNtB6_6client4PeerE10poll_readyCsi17nFaBu4HY_10ech_client.exit.i, %bb.cd
-  store i8 %.sroa.099.2.i, ptr %i.dg, align 8, !alias.scope !770
+  %.sroa.099.2.i413 = phi i8 [ %.sroa.099.2.i, %bb.cd ], [ -2, %_RNvMNtNtCs4okMlIQ9Z13_2h25proto10connectionINtB2_10ConnectionINtNtCs6HdZZ4a9Zp9_12tokio_rustls6client9TlsStreamINtNtNtCs5MfxasYgTEl_11hickory_net7runtime8iocompat17AsyncIoStdAsTokioINtB1O_17AsyncIoTokioAsStdNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamEEENtNtB6_6client4PeerE10poll_readyCsi17nFaBu4HY_10ech_client.exit.i ] ; 2 uses
+  store i8 %.sroa.099.2.i413, ptr %i.dg, align 8, !alias.scope !770
   br label %bb.gj
 
 bb.gc:                                            ; preds = %bb.cc
@@ -1335,7 +1336,7 @@ thread-pre-split:                                 ; preds = %bb.ca, %bb.gb, %bb.
   br label %bb.gj
 
 bb.gj:                                            ; preds = %thread-pre-split, %.loopexit222
-  %i.rn = phi i8 [ %.pr206, %thread-pre-split ], [ %.sroa.099.2.i, %.loopexit222 ] ; 2 uses
+  %i.rn = phi i8 [ %.pr206, %thread-pre-split ], [ %.sroa.099.2.i413, %.loopexit222 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.524.sroa.5.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.sroa.8.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.341.sroa.0.i)
@@ -1738,7 +1739,7 @@ vector.ph:                                        ; preds = %.preheader.preheade
   %i.d = and i64 %2, 3                            ; 2 uses
   %i.e = icmp eq i64 %i.d, 0
   %i.f = select i1 %i.e, i64 4, i64 %i.d
-  %n.vec = sub nsw i64 %2, %i.f                   ; 2 uses
+  %n.vec = sub nuw nsw i64 %2, %i.f               ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

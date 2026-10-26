@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.x
   %i.bx = shl nuw nsw i64 %i.bw, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.br, i8 0, i64 %i.bx, i1 false), !tbaa !26
   %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
-  %min.iters.check = icmp ult i32 %1, 8
+  %min.iters.check = icmp samesign ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph141.preheader153, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph141.preheader
@@ -607,13 +607,18 @@ bb.eo:                                            ; preds = %bb.en, %bb.em
   %i.aga = load ptr, ptr %i.afz, align 8, !tbaa !46
   store ptr %i.aga, ptr %i.hc, align 8, !tbaa !46
   %.not160.i.i = icmp slt i32 %i.afw, 1
-  br i1 %.not160.i.i, label %.loopexit298, label %.lr.ph.preheader.i.i
+  br i1 %.not160.i.i, label %.._crit_edge_crit_edge.i91.i, label %.lr.ph.preheader.i.i
+
+.._crit_edge_crit_edge.i91.i:                     ; preds = %bb.eo
+  %.pre168.i.i = add nsw i32 %i.afw, 1
+  br label %.loopexit298
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.eo
   %i.agb = zext nneg i32 %i.afw to i64            ; 3 uses
+  %6 = add nuw i32 %i.afw, 1                      ; 3 uses
   %i.agc = zext nneg i32 %i.afw to i64            ; 2 uses
   %xtraiter633 = and i64 %i.agc, 1
-  %i.agd = icmp eq i32 %i.afw, 1
+  %i.agd = icmp eq i32 %6, 2
   br i1 %i.agd, label %.lr.ph.i86.i.epil.preheader, label %.lr.ph.preheader.i.i.new
 
 .lr.ph.preheader.i.i.new:                         ; preds = %.lr.ph.preheader.i.i
@@ -676,8 +681,8 @@ bb.eo:                                            ; preds = %bb.en, %bb.em
   store ptr %i.ahb, ptr %i.ahc, align 8, !tbaa !46
   br label %.loopexit298
 
-.loopexit298:                                     ; preds = %.lr.ph.i86.i.epil.preheader, %.loopexit298.loopexit.unr-lcssa, %bb.eo
-  %.pre-phi169.i.i = add i32 %i.afw, 1
+.loopexit298:                                     ; preds = %.lr.ph.i86.i.epil.preheader, %.loopexit298.loopexit.unr-lcssa, %.._crit_edge_crit_edge.i91.i
+  %.pre-phi169.i.i = phi i32 [ %.pre168.i.i, %.._crit_edge_crit_edge.i91.i ], [ %6, %.loopexit298.loopexit.unr-lcssa ], [ %6, %.lr.ph.i86.i.epil.preheader ]
   %i.ahd = call i32 @N_VLinearSumVectorArray(i32 noundef %.pre-phi169.i.i, double noundef 1.000000e+00, ptr noundef nonnull %i.hc, double noundef 1.000000e+00, ptr noundef nonnull %i.hb, ptr noundef nonnull %i.hc) #13 ; 0 uses
   %i.ahe = load ptr, ptr %i.fy, align 8, !tbaa !37 ; 2 uses
   call void @N_VScale(double noundef %.102.i159.i, ptr noundef %i.ahe, ptr noundef %i.ahe) #13
@@ -1080,7 +1085,7 @@ bb.as:                                            ; preds = %bb.ap, %bb.aq, %bb.
   %i.od = getelementptr inbounds nuw i8, ptr %0, i64 1120
   %i.oe = load ptr, ptr %i.od, align 8, !tbaa !70 ; 7 uses
   %wide.trip.count = zext nneg i32 %i.nr to i64   ; 5 uses
-  %min.iters.check230 = icmp ult i32 %i.nr, 8
+  %min.iters.check230 = icmp samesign ult i32 %i.nr, 8
   %i.of = ptrtoaddr ptr %i.oe to i64
   %i.og = ptrtoaddr ptr %i.oc to i64
   %i.oh = sub i64 %i.og, %i.of
@@ -1215,23 +1220,28 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 612
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !50   ; 2 uses
-  %spec.store.select = tail call i32 @llvm.umax.i32(i32 %i.w, i32 1) ; 5 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !50
+  %spec.store.select = tail call i32 @llvm.umax.i32(i32 %i.w, i32 1) ; 6 uses
   %i.x = fsub double %1, %i.f                     ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
   %i.z = load double, ptr %i.y, align 8, !tbaa !21 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1216 ; 5 uses
   store double 1.000000e+00, ptr %i.aa, align 8, !tbaa !21
   %.not65 = icmp slt i32 %spec.store.select, 1
-  br i1 %.not65, label %._crit_edge, label %.lr.ph
+  br i1 %.not65, label %.._crit_edge_crit_edge, label %.lr.ph
+
+.._crit_edge_crit_edge:                           ; preds = %bb.e
+  %.pre = add nsw i32 %spec.store.select, 1
+  br label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.e
   %i.ab = fdiv double %i.x, %i.z                  ; 2 uses
+  %4 = add nuw i32 %spec.store.select, 1          ; 3 uses
   %i.ac = getelementptr i8, ptr %0, i64 1256      ; 3 uses
   %i.ad = zext nneg i32 %spec.store.select to i64 ; 2 uses
   %xtraiter = and i64 %i.ad, 1
-  %4 = icmp ult i32 %i.w, 2
-  br i1 %4, label %.epil.preheader, label %.lr.ph.new
+  %5 = icmp eq i32 %4, 2
+  br i1 %5, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
   %unroll_iter = and i64 %i.ad, 2147483646
@@ -1293,8 +1303,8 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.new
   store double %i.ay, ptr %i.bb, align 8, !tbaa !21
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.e
-  %.pre-phi = add i32 %spec.store.select, 1
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.._crit_edge_crit_edge
+  %.pre-phi = phi i32 [ %.pre, %.._crit_edge_crit_edge ], [ %4, %._crit_edge.loopexit.unr-lcssa ], [ %4, %.epil.preheader ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.bd = tail call i32 @N_VLinearCombination(i32 noundef %.pre-phi, ptr noundef nonnull %i.aa, ptr noundef nonnull %i.bc, ptr noundef %2) #13
   %.not63 = icmp eq i32 %i.bd, 0

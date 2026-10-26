@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %.critedge275, %_RIN
     #dbg_value(ptr %.sroa.0127.0, !5934, !DIExpression(), !6018)
     #dbg_value(ptr %.sroa.0127.0, !5900, !DIExpression(), !6153)
     #dbg_value(ptr %.sroa.093.1, !5899, !DIExpression(), !6150)
-  %.sroa.093.1.val314 = load ptr, ptr %.sroa.093.1, align 8, !dbg !6523, !noundef !823 ; 5 uses
+  %.sroa.093.1.val314 = load ptr, ptr %.sroa.093.1, align 8, !dbg !6523, !noundef !823 ; 4 uses
     #dbg_value(ptr %.sroa.093.1.val314, !6161, !DIExpression(), !6176)
     #dbg_value(ptr poison, !6172, !DIExpression(), !6177)
     #dbg_value(ptr poison, !6178, !DIExpression(), !6184)
@@ -315,6 +315,7 @@ bb.ag:                                            ; preds = %.thread431
   br i1 %.not.i360448, label %.thread453, label %bb.ah, !dbg !6006
 
 bb.ah:                                            ; preds = %bb.af, %bb.ag
+  %.sroa.093.1.val314.lcssa = phi ptr [ %.sroa.093.1.val314, %bb.af ], [ null, %bb.ag ], !dbg !6523 ; 2 uses
   %.val299 = phi i64 [ %.val300, %bb.af ], [ %.val300447, %bb.ag ], !dbg !6541
     #dbg_value(ptr poison, !6234, !DIExpression(), !6238)
     #dbg_value(ptr poison, !6235, !DIExpression(), !6239)
@@ -333,24 +334,25 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   br label %bb.an, !dbg !6001
 
 ..loopexit_crit_edge:                             ; preds = %bb.ah
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.093.1.val314, i64 16
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.093.1.val314.lcssa, i64 16
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !dbg !6544
   br label %.loopexit, !dbg !6001
 
 .loopexit:                                        ; preds = %bb.ae, %..loopexit_crit_edge
+  %.sroa.093.1.val314588 = phi ptr [ %.sroa.093.1.val314.lcssa, %..loopexit_crit_edge ], [ %.sroa.093.1.val314, %bb.ae ] ; 2 uses
   %i.cf = phi i64 [ %.pre, %..loopexit_crit_edge ], [ %.val301, %bb.ae ], !dbg !6544
-    #dbg_value(ptr %.sroa.093.1.val314, !6069, !DIExpression(), !6244)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.093.1.val314) ]
+    #dbg_value(ptr %.sroa.093.1.val314588, !6069, !DIExpression(), !6244)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.093.1.val314588) ]
     #dbg_value(ptr poison, !1151, !DIExpression(), !5002)
     #dbg_value(ptr poison, !1157, !DIExpression(), !5003)
-    #dbg_value(ptr %.sroa.093.1.val314, !1154, !DIExpression(), !5002)
-    #dbg_value(ptr %.sroa.093.1.val314, !1159, !DIExpression(), !5003)
-    #dbg_value(ptr %.sroa.093.1.val314, !1162, !DIExpression(), !5005)
+    #dbg_value(ptr %.sroa.093.1.val314588, !1154, !DIExpression(), !5002)
+    #dbg_value(ptr %.sroa.093.1.val314588, !1159, !DIExpression(), !5003)
+    #dbg_value(ptr %.sroa.093.1.val314588, !1162, !DIExpression(), !5005)
     #dbg_value(i1 true, !1155, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !5002)
     #dbg_declare(ptr poison, !1166, !DIExpression(), !5006)
-    #dbg_value(ptr %.sroa.093.1.val314, !1173, !DIExpression(), !5008)
-    #dbg_value(ptr %.sroa.093.1.val314, !1173, !DIExpression(), !5010)
-  %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.093.1.val314, i64 16, !dbg !6545
+    #dbg_value(ptr %.sroa.093.1.val314588, !1173, !DIExpression(), !5008)
+    #dbg_value(ptr %.sroa.093.1.val314588, !1173, !DIExpression(), !5010)
+  %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.093.1.val314588, i64 16, !dbg !6545
     #dbg_value(ptr %i.cg, !1185, !DIExpression(), !5011)
     #dbg_value(i1 true, !1168, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !5005)
     #dbg_value(i64 1, !1169, !DIExpression(), !5012)
@@ -753,7 +755,7 @@ bb.bd:                                            ; preds = %bb.bc
     #dbg_value(ptr poison, !1143, !DIExpression(), !5570)
     #dbg_value(i64 %.val297, !5904, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_constu, 1, DW_OP_and, DW_OP_stack_value), !6292)
   %i.fo = getelementptr i8, ptr %.sroa.093.5, i64 8, !dbg !6713
-  %.sroa.093.5.val337 = load ptr, ptr %i.fo, align 8, !dbg !6713, !noundef !823 ; 4 uses
+  %.sroa.093.5.val337 = load ptr, ptr %i.fo, align 8, !dbg !6713, !noundef !823 ; 3 uses
     #dbg_value(ptr %.sroa.093.5.val337, !6293, !DIExpression(), !6305)
     #dbg_value(ptr poison, !6301, !DIExpression(), !6306)
     #dbg_value(ptr poison, !6307, !DIExpression(), !6314)
@@ -848,6 +850,7 @@ bb.bg:                                            ; preds = %.thread465
   br i1 %.not.i391478, label %.thread482, label %.loopexit499, !dbg !5991
 
 bb.bh:                                            ; preds = %bb.be, %bb.bf
+  %.sroa.093.5.val337.lcssa = phi ptr [ null, %bb.be ], [ %.sroa.093.5.val337, %bb.bf ], !dbg !6713 ; 2 uses
     #dbg_value(ptr %.sroa.093.5.val309, !6323, !DIExpression(), !6335)
     #dbg_value(ptr poison, !6331, !DIExpression(), !6336)
     #dbg_value(ptr poison, !6337, !DIExpression(), !6344)
@@ -865,13 +868,13 @@ bb.bh:                                            ; preds = %bb.be, %bb.bf
   br label %bb.bi, !dbg !5979
 
 ..loopexit499_crit_edge:                          ; preds = %bb.bh
-  %.phi.trans.insert539 = getelementptr inbounds nuw i8, ptr %.sroa.093.5.val337, i64 16
+  %.phi.trans.insert539 = getelementptr inbounds nuw i8, ptr %.sroa.093.5.val337.lcssa, i64 16
   %.pre540 = load i64, ptr %.phi.trans.insert539, align 8, !dbg !6729
   br label %.loopexit499, !dbg !5979
 
 .loopexit499:                                     ; preds = %bb.bg, %..loopexit499_crit_edge
   %i.ga = phi i64 [ %.pre540, %..loopexit499_crit_edge ], [ %.val296477, %bb.bg ], !dbg !6729
-  %.sroa.093.5.val337472492 = phi ptr [ %.sroa.093.5.val337, %..loopexit499_crit_edge ], [ %.sroa.093.5.val337467, %bb.bg ] ; 2 uses
+  %.sroa.093.5.val337472492 = phi ptr [ %.sroa.093.5.val337.lcssa, %..loopexit499_crit_edge ], [ %.sroa.093.5.val337467, %bb.bg ] ; 2 uses
     #dbg_value(ptr %.sroa.093.5.val337472492, !6069, !DIExpression(), !6348)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.093.5.val337472492) ]
     #dbg_value(ptr poison, !1151, !DIExpression(), !5615)
@@ -1274,7 +1277,7 @@ bb.e:                                             ; preds = %.lr.ph, %_RNvMs7_Nt
     #dbg_value(i64 %.sroa.8.085, !2784, !DIExpression(), !9602)
     #dbg_value(ptr %.sroa.0.04086, !2748, !DIExpression(), !9603)
     #dbg_value(ptr %.sroa.0.04086, !2788, !DIExpression(), !9600)
-  %.idx.i9 = shl i64 %.sroa.8.085, 4, !dbg !9905  ; 3 uses
+  %.idx.i9 = shl nuw nsw i64 %.sroa.8.085, 4, !dbg !9905 ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.04086, i64 %.idx.i9, !dbg !9905 ; 3 uses
     #dbg_value(ptr %.sroa.0.04086, !2691, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9604)
     #dbg_value(ptr %i.y, !2691, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9604)
@@ -1349,7 +1352,7 @@ bb.f:                                             ; preds = %bb.g
     #dbg_value(ptr poison, !2837, !DIExpression(), !9634)
   %i.am = load ptr, ptr %i.w, align 8, !alias.scope !9878, !nonnull !823, !noundef !823 ; 3 uses
   %.promoted.i.i = load i64, ptr %i.s, align 8, !alias.scope !9878 ; 3 uses
-  %i.an = add i64 %.idx.i9, -16, !dbg !9920       ; 2 uses
+  %i.an = add nsw i64 %.idx.i9, -16, !dbg !9920   ; 2 uses
   %i.ao = and i64 %i.an, 16, !dbg !9920
   %lcmp.mod.not.not = icmp eq i64 %i.ao, 0, !dbg !9920
   br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit, !dbg !9920

@@ -164,7 +164,6 @@ $_ZN3pro2v46detail22meta_ptr_indirect_implINS1_14composite_metaIJNS1_9conv_metaI
 @_ZZN30proxy_integration_tests_detail23MakeDrawableFromCommandERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE21rectangle_memory_pool = internal global %"class.std::pmr::unsynchronized_pool_resource" zeroinitializer, align 8
 @_ZGVZN30proxy_integration_tests_detail23MakeDrawableFromCommandERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE21rectangle_memory_pool = internal global i64 0, align 8
 @__dso_handle = external hidden global i8
-@.str.3 = private unnamed_addr constant [7 x i8] c"Circle\00", align 1
 @.str.4 = private unnamed_addr constant [6 x i8] c"Point\00", align 1
 @_ZZN30proxy_integration_tests_detail23MakeDrawableFromCommandERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8instance = internal global %"class.proxy_integration_tests_detail::Point" zeroinitializer, align 1
 @.str.5 = private unnamed_addr constant [16 x i8] c"Invalid command\00", align 1
@@ -567,7 +566,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !33   ; 3 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !33
   switch i64 %i.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20.thread26 [
     i64 9, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 6, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13
@@ -750,9 +749,17 @@ bb.z:                                             ; preds = %bb.ak, %bb.w
   br label %.body
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit13: ; preds = %bb.b
-  %.pre = load ptr, ptr %i.d, align 8, !tbaa !34
-  %bcmp.i12 = call i32 @bcmp(ptr %.pre, ptr nonnull @.str.3, i64 %i.i)
-  %i.bi = icmp eq i32 %bcmp.i12, 0
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !34  ; 2 uses
+  %3 = load i32, ptr %.pre, align 1
+  %4 = xor i32 %3, 1668442435
+  %5 = getelementptr i8, ptr %.pre, i64 4
+  %6 = load i16, ptr %5, align 1
+  %7 = zext i16 %6 to i32
+  %8 = xor i32 %7, 25964
+  %9 = or i32 %4, %8
+  %10 = icmp ne i32 %9, 0
+  %11 = zext i1 %10 to i32
+  %i.bi = icmp eq i32 %11, 0
   %i.bj = ptrtoint ptr %i.f to i64
   %i.bk = ptrtoint ptr %i.d to i64
   %i.bl = sub i64 %i.bj, %i.bk
@@ -819,9 +826,17 @@ bb.ai:                                            ; preds = %bb.af, %bb.ah
   br label %bb.am
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit20: ; preds = %bb.b
-  %.pre30 = load ptr, ptr %i.d, align 8, !tbaa !34
-  %bcmp.i19 = call i32 @bcmp(ptr %.pre30, ptr nonnull @.str.4, i64 %i.i)
-  %i.bz = icmp eq i32 %bcmp.i19, 0
+  %.pre30 = load ptr, ptr %i.d, align 8, !tbaa !34 ; 2 uses
+  %12 = load i32, ptr %.pre30, align 1
+  %13 = xor i32 %12, 1852403536
+  %14 = getelementptr i8, ptr %.pre30, i64 4
+  %15 = load i8, ptr %14, align 1
+  %16 = zext i8 %15 to i32
+  %17 = xor i32 %16, 116
+  %18 = or i32 %13, %17
+  %19 = icmp ne i32 %18, 0
+  %20 = zext i1 %19 to i32
+  %i.bz = icmp eq i32 %20, 0
   %i.ca = ptrtoint ptr %i.f to i64
   %i.cb = ptrtoint ptr %i.d to i64
   %i.cc = sub i64 %i.ca, %i.cb

@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.n
 _RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit: ; preds = %bb.o, %bb.p
   %.pre131136 = phi i64 [ %i.bs, %bb.p ], [ %i.bj, %bb.o ]
   %.sink = phi i64 [ %i.bu, %bb.p ], [ %i.bk, %bb.o ], !dbg !4184 ; 3 uses
-  %.sroa.0.0.i65 = phi ptr [ %i.bp, %bb.p ], [ %i.bi, %bb.o ], !dbg !4184 ; 8 uses
+  %.sroa.0.0.i65 = phi ptr [ %i.bp, %bb.p ], [ %i.bi, %bb.o ], !dbg !4184 ; 11 uses
   store i64 %.sink, ptr %i.u, align 8, !dbg !4184, !alias.scope !4077
   %.not60 = icmp eq ptr %.sroa.0.0.i65, null, !dbg !4185 ; 2 uses
   br i1 %.not60, label %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexitsplit, label %bb.q, !dbg !4186
@@ -221,7 +221,8 @@ default.unreachable:                              ; preds = %bb.q
   unreachable
 
 _RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexitsplit: ; preds = %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit, %bb.r, %.split, %.split99, %.split100
-  %i.bx = ptrtoint ptr %.sroa.0.0.i65 to i64, !dbg !4190
+  %.sroa.0.0.i65.lcssa = phi ptr [ null, %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit ], [ %.sroa.0.0.i65, %bb.r ], [ %.sroa.0.0.i65, %.split ], [ %.sroa.0.0.i65, %.split99 ], [ %.sroa.0.0.i65, %.split100 ], !dbg !4184
+  %i.bx = ptrtoint ptr %.sroa.0.0.i65.lcssa to i64, !dbg !4190
   br label %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread, !dbg !4191
 
 _RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECskAlUH1kY1DR_10polars_ooc.exit._RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexit_crit_edge, %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQINtNtB5_6cursor6CursorRShEENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexitsplit
@@ -570,7 +571,7 @@ bb.p:                                             ; preds = %bb.n
 _RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit: ; preds = %bb.o, %bb.p
   %.pre131136 = phi i64 [ %i.bs, %bb.p ], [ %i.bj, %bb.o ]
   %.sink = phi i64 [ %i.bu, %bb.p ], [ %i.bk, %bb.o ], !dbg !4573 ; 3 uses
-  %.sroa.0.0.i65 = phi ptr [ %i.bp, %bb.p ], [ %i.bi, %bb.o ], !dbg !4573 ; 8 uses
+  %.sroa.0.0.i65 = phi ptr [ %i.bp, %bb.p ], [ %i.bi, %bb.o ], !dbg !4573 ; 11 uses
   store i64 %.sink, ptr %i.u, align 8, !dbg !4573, !alias.scope !4466
   %.not60 = icmp eq ptr %.sroa.0.0.i65, null, !dbg !4574 ; 2 uses
   br i1 %.not60, label %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexitsplit, label %bb.q, !dbg !4575
@@ -589,7 +590,8 @@ default.unreachable:                              ; preds = %bb.q
   unreachable
 
 _RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexitsplit: ; preds = %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit, %bb.r, %.split, %.split99, %.split100
-  %i.bx = ptrtoint ptr %.sroa.0.0.i65 to i64, !dbg !4579
+  %.sroa.0.0.i65.lcssa = phi ptr [ null, %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit ], [ %.sroa.0.0.i65, %bb.r ], [ %.sroa.0.0.i65, %.split ], [ %.sroa.0.0.i65, %.split99 ], [ %.sroa.0.0.i65, %.split100 ], !dbg !4573
+  %i.bx = ptrtoint ptr %.sroa.0.0.i65.lcssa to i64, !dbg !4579
   br label %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread, !dbg !4580
 
 _RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECskAlUH1kY1DR_10polars_ooc.exit._RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexit_crit_edge, %_RNvXsf_NtCsh8eZTKRCwoO_3std2ioINtB5_4TakeQNtNtB7_2fs4FileENtB5_4Read8read_bufCskAlUH1kY1DR_10polars_ooc.exit.thread.loopexitsplit

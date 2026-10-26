@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.preheader
   br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %narrow.neg51 = mul i32 %.03469, 100000
+  %narrow.neg51 = mul nsw i32 %.03469, 100000
   %i.g = add nsw i32 %narrow.neg51, -1610616809
   br label %.thread
 
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %narrow.neg48 = mul i32 %.03469, 100000
+  %narrow.neg48 = mul nsw i32 %.03469, 100000
   %i.j = add nsw i32 %narrow.neg48, -1610616813
   br label %.thread
 
@@ -224,7 +224,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not40, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %narrow.neg45 = mul i32 %.03469, 100000
+  %narrow.neg45 = mul nsw i32 %.03469, 100000
   %i.l = add nsw i32 %narrow.neg45, -1610616817
   br label %.thread
 
@@ -234,7 +234,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.n, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %bb.h
-  %narrow.neg = mul i32 %.03469, 100000
+  %narrow.neg = mul nsw i32 %.03469, 100000
   %i.o = add nsw i32 %narrow.neg, -1610616821
   br label %.thread
 
@@ -242,7 +242,7 @@ bb.j:                                             ; preds = %.preheader
   br i1 %i.f, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %narrow.neg59 = mul i32 %.03469, 100000
+  %narrow.neg59 = mul nsw i32 %.03469, 100000
   %i.p = add nsw i32 %narrow.neg59, -1610616827
   br label %.thread
 
@@ -252,7 +252,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not53, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %narrow.neg56 = mul i32 %.03469, 100000
+  %narrow.neg56 = mul nsw i32 %.03469, 100000
   %i.r = add nsw i32 %narrow.neg56, -1610616829
   br label %.thread
 
@@ -655,7 +655,7 @@ bb.m:                                             ; preds = %.preheader76.15
 
 bb.n:                                             ; preds = %bb.m, %.thread.15
   %indvars.iv = phi i64 [ 15, %bb.m ], [ %indvars.iv.next, %.thread.15 ] ; 18 uses
-  %i.ca = trunc nuw nsw i64 %indvars.iv to i32    ; 4 uses
+  %i.ca = trunc nuw nsw i64 %indvars.iv to i32    ; 11 uses
   %i.cb = call i32 @wc_PkcsPad(ptr noundef nonnull %i.f, i32 noundef %i.ca, i32 noundef 16) #19
   %.not45 = icmp eq i32 %i.cb, 16
   br i1 %.not45, label %.preheader, label %bb.o
@@ -692,7 +692,8 @@ bb.q:                                             ; preds = %.preheader
   br i1 %or.cond, label %.thread.1.thread, label %bb.r
 
 bb.r:                                             ; preds = %.thread.14, %.thread.13.thread, %.thread.12.thread, %.thread.11.thread, %.thread.10.thread, %.thread.9.thread, %.thread.8.thread, %.thread.7.thread, %.thread.6.thread, %.thread.5.thread, %.thread.4.thread, %.thread.3.thread, %.thread.2.thread, %.thread.1.thread, %.thread.thread, %bb.q
-  %.neg = mul nsw i32 %i.ca, -100000
+  %.lcssa131 = phi i32 [ %i.ca, %.thread.14 ], [ %i.ca, %.thread.13.thread ], [ 13, %.thread.12.thread ], [ %i.ca, %.thread.11.thread ], [ 11, %.thread.10.thread ], [ %i.ca, %.thread.9.thread ], [ 9, %.thread.8.thread ], [ %i.ca, %.thread.7.thread ], [ 7, %.thread.6.thread ], [ %i.ca, %.thread.5.thread ], [ 5, %.thread.4.thread ], [ %i.ca, %.thread.3.thread ], [ 3, %.thread.2.thread ], [ %i.ca, %.thread.1.thread ], [ 1, %.thread.thread ], [ 0, %bb.q ]
+  %.neg = mul nsw i32 %.lcssa131, -100000
   %i.cl = add nsw i32 %.neg, -1610617232
   br label %.thread73
 
@@ -1095,7 +1096,7 @@ bb.f:                                             ; preds = %bb.e
   br label %ecc_test_curve_size.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.ah = call i32 @wc_ecc_make_key_ex(ptr noundef nonnull %0, i32 noundef range(i32 28, 67) %1, ptr noundef nonnull %5, i32 noundef 0) #19 ; 3 uses
+  %i.ah = call i32 @wc_ecc_make_key_ex(ptr noundef nonnull %0, i32 noundef range(i32 28, 67) %1, ptr noundef nonnull %5, i32 noundef 0) #19 ; 2 uses
   switch i32 %i.ah, label %bb.h [
     i32 -172, label %ecc_test_curve_size.exit
     i32 0, label %bb.i
@@ -1387,7 +1388,7 @@ bb.aq:                                            ; preds = %bb.an
   br label %ecc_test_curve_size.exit
 
 ecc_test_curve_size.exit:                         ; preds = %bb.b, %bb.d, %bb.f, %bb.g, %bb.h, %bb.j, %bb.l, %bb.n, %bb.o, %bb.q, %bb.s, %bb.u, %bb.w, %bb.x, %bb.y, %bb.aa, %bb.ac, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.ak, %bb.am, %bb.an, %.loopexit56.i, %bb.ap, %bb.aq
-  %.15.i = phi i32 [ %i.y, %bb.b ], [ %i.ac, %bb.d ], [ %i.ag, %bb.f ], [ %i.ah, %bb.g ], [ %i.ak, %bb.h ], [ 0, %bb.an ], [ %i.aw, %bb.l ], [ %i.ba, %bb.n ], [ -39503, %bb.j ], [ %i.bf, %bb.q ], [ %i.bj, %bb.s ], [ %i.bn, %bb.u ], [ %i.br, %bb.w ], [ -172, %bb.o ], [ -39569, %bb.x ], [ %i.by, %bb.aa ], [ %i.cd, %bb.ac ], [ %i.ch, %bb.ae ], [ -39572, %bb.y ], [ -39650, %bb.af ], [ -39795, %bb.ap ], [ -536910659, %bb.ah ], [ %i.cv, %bb.ak ], [ %i.de, %.loopexit56.i ], [ -39753, %bb.ai ], [ %i.di, %bb.aq ], [ -39795, %bb.am ], [ -536910636, %bb.ag ] ; 3 uses
+  %.15.i = phi i32 [ %i.y, %bb.b ], [ %i.ac, %bb.d ], [ %i.ag, %bb.f ], [ -172, %bb.g ], [ %i.ak, %bb.h ], [ 0, %bb.an ], [ %i.aw, %bb.l ], [ %i.ba, %bb.n ], [ -39503, %bb.j ], [ %i.bf, %bb.q ], [ %i.bj, %bb.s ], [ %i.bn, %bb.u ], [ %i.br, %bb.w ], [ -172, %bb.o ], [ -39569, %bb.x ], [ %i.by, %bb.aa ], [ %i.cd, %bb.ac ], [ %i.ch, %bb.ae ], [ -39572, %bb.y ], [ -39650, %bb.af ], [ -39795, %bb.ap ], [ -536910659, %bb.ah ], [ %i.cv, %bb.ak ], [ %i.de, %.loopexit56.i ], [ -39753, %bb.ai ], [ %i.di, %bb.aq ], [ -39795, %bb.am ], [ -536910636, %bb.ag ] ; 3 uses
   %i.dj = call i32 @wc_ecc_free(ptr noundef nonnull %7) #19 ; 0 uses
   %i.dk = call i32 @wc_ecc_free(ptr noundef nonnull %6) #19 ; 0 uses
   %i.dl = call i32 @wc_ecc_free(ptr noundef nonnull %5) #19 ; 0 uses
@@ -1436,7 +1437,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   %.sroa.28.0.i = phi ptr [ @.str.295, %bb.au ], [ @.str.286, %bb.at ], [ @.str.277, %bb.as ], [ @.str.268, %bb.ar ]
   %.sroa.33.0.i = phi ptr [ @.str.296, %bb.au ], [ @.str.287, %bb.at ], [ @.str.280, %bb.as ], [ @.str.269, %bb.ar ]
   %.sroa.44.0.i = phi ptr [ @.str.297, %bb.au ], [ @.str.288, %bb.at ], [ @.str.278, %bb.as ], [ @.str.270, %bb.ar ] ; 2 uses
-  %.sroa.50.0.i = phi i32 [ 65, %bb.au ], [ %1, %bb.at ], [ %1, %bb.as ], [ %1, %bb.ar ] ; 5 uses
+  %.sroa.50.0.i = phi i32 [ 65, %bb.au ], [ 48, %bb.at ], [ 32, %bb.as ], [ 28, %bb.ar ] ; 5 uses
   %.sroa.568.0.i = phi ptr [ @.str.298, %bb.au ], [ @.str.289, %bb.at ], [ @.str.279, %bb.as ], [ @.str.271, %bb.ar ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #19
   store i32 0, ptr %i.e, align 4, !tbaa !19

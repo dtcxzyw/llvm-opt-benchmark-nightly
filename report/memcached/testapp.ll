@@ -204,7 +204,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.ac, label %bb.p, label %.critedge, !llvm.loop !52
 
 .critedge:                                        ; preds = %bb.p, %bb.q
-  %i.ad = icmp eq i32 %i.z, %i.w
+  %.lcssa = phi i32 [ %i.z, %bb.p ], [ -1, %bb.q ]
+  %i.ad = icmp eq i32 %.lcssa, %i.w
   br i1 %i.ad, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %.critedge

@@ -204,10 +204,11 @@ _ZN11StringUtils10StartsWithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIc
   br i1 %i.ib, label %.backedge.backedge, label %_ZN11StringUtils10StartsWithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc.exit.thread
 
 _ZN11StringUtils10StartsWithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc.exit.thread: ; preds = %bb.ad, %_ZN11StringUtils10StartsWithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc.exit
+  %.lcssa819 = phi i64 [ 0, %bb.ad ], [ %i.hx, %_ZN11StringUtils10StartsWithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc.exit ]
   br i1 %.055.ph, label %bb.cb, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZN11StringUtils10StartsWithERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEc.exit.thread
-  switch i64 %i.hx, label %.outer.backedge [
+  switch i64 %.lcssa819, label %.outer.backedge [
     i64 9, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 16, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit297
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit320
@@ -610,7 +611,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.ao = add nsw i64 %.024.i.i.i.i, -1
-  %4 = icmp sgt i64 %.024.i.i.i.i, 1
+  %4 = icmp samesign ugt i64 %.024.i.i.i.i, 1
   %i.ap = ptrtoint ptr %i.ak to i64               ; 2 uses
   br i1 %4, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !200
 
@@ -735,7 +736,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.025.044.i.i.i.i, i64 4
   %i.cq = add nsw i64 %.045.i.i.i.i, -1
-  %5 = icmp sgt i64 %.045.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.045.i.i.i.i, 1
   br i1 %5, label %.lr.ph.i.i.i.i7, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !203
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.u
@@ -1138,7 +1139,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i: ; p
   %i.ah = getelementptr inbounds nuw i8, ptr %.0910.i.i.i.i.i, i64 32
   %i.ai = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i, i64 32
   %i.aj = add nsw i64 %.013.i.i.i.i.i, -1
-  %2 = icmp sgt i64 %.013.i.i.i.i.i, 1
+  %2 = icmp samesign ugt i64 %.013.i.i.i.i.i, 1
   br i1 %2, label %.lr.ph.i.i.i.i.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.loopexit, !llvm.loop !222
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.loopexit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i

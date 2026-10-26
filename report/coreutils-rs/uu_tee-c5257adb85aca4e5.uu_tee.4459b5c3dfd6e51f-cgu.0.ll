@@ -205,7 +205,7 @@ _RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i: ; preds 
   %.sroa.15250.0.i = phi i64 [ %i.ms, %bb.cd ], [ %i.lv, %bb.by ], [ %i.mj, %bb.cc ], [ 0, %.preheader.i.i ], [ 0, %.preheader114.i.i ], [ %i.lm, %bb.bx ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !414)
   %i.mv = load ptr, ptr %.sroa.410.0..sroa_idx.i, align 8, !alias.scope !414, !noalias !376, !nonnull !5, !noundef !5 ; 3 uses
-  %i.mw = load i64, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !414, !noalias !376, !noundef !5 ; 12 uses
+  %i.mw = load i64, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !414, !noalias !376, !noundef !5 ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !415)
   call void @llvm.experimental.noalias.scope.decl(metadata !416)
   switch i64 %i.mw, label %.lr.ph.i.i.i.i11 [
@@ -267,7 +267,7 @@ bb.cf:                                            ; preds = %._crit_edge.i.i.i.i
   br label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %bb.cf, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i
-  %.sroa.4.0.i.i.ph47.i.i = phi i64 [ %i.np, %bb.cf ], [ %i.mw, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i ] ; 3 uses
+  %.sroa.4.0.i.i.ph47.i.i = phi i64 [ %i.np, %bb.cf ], [ 0, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i ] ; 3 uses
   %i.ns = sitofp i64 %.sroa.15250.0.i to double
   %i.nt = load i64, ptr %i.m, align 8, !range !6, !alias.scope !427, !noalias !376, !noundef !5
   %i.nu = icmp eq i64 %i.mw, %i.nt
@@ -364,7 +364,7 @@ bb.cn:                                            ; preds = %.loopexit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !376
   call void @llvm.experimental.noalias.scope.decl(metadata !430)
   %i.of = load ptr, ptr %.sroa.410.0..sroa_idx.i, align 8, !alias.scope !430, !noalias !376, !nonnull !5, !noundef !5 ; 3 uses
-  %i.og = load i64, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !430, !noalias !376, !noundef !5 ; 12 uses
+  %i.og = load i64, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !430, !noalias !376, !noundef !5 ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !431)
   call void @llvm.experimental.noalias.scope.decl(metadata !432)
   switch i64 %i.og, label %.lr.ph.i.i.i130.i [
@@ -424,7 +424,7 @@ bb.co:                                            ; preds = %._crit_edge.i.i.i11
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %bb.cn
-  %.sroa.4.0.i.i.ph.i.i = phi i64 [ %i.oz, %bb.co ], [ %i.og, %bb.cn ] ; 3 uses
+  %.sroa.4.0.i.i.ph.i.i = phi i64 [ %i.oz, %bb.co ], [ 0, %bb.cn ] ; 3 uses
   %i.pb = icmp ult i64 %i.og, 64051194700380388
   call void @llvm.assume(i1 %i.pb)
   %i.pc = load i64, ptr %i.m, align 8, !range !6, !alias.scope !444, !noalias !376, !noundef !5
@@ -502,7 +502,7 @@ bb.cw:                                            ; preds = %.loopexit.i
   %i.po = load double, ptr %i.pn, align 8, !noalias !376, !noundef !5 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !447)
   %i.pp = load ptr, ptr %.sroa.410.0..sroa_idx.i, align 8, !alias.scope !447, !noalias !376, !nonnull !5, !noundef !5 ; 3 uses
-  %i.pq = load i64, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !447, !noalias !376, !noundef !5 ; 12 uses
+  %i.pq = load i64, ptr %.sroa.511.0..sroa_idx.i, align 8, !alias.scope !447, !noalias !376, !noundef !5 ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !448)
   call void @llvm.experimental.noalias.scope.decl(metadata !449)
   switch i64 %i.pq, label %.lr.ph.i.i.i175.i [
@@ -564,7 +564,7 @@ bb.cx:                                            ; preds = %._crit_edge.i.i.i13
   br label %.thread.i148.i
 
 .thread.i148.i:                                   ; preds = %bb.cx, %bb.cw
-  %.sroa.4.0.i.i.ph47.i149.i = phi i64 [ %i.qj, %bb.cx ], [ %i.pq, %bb.cw ] ; 3 uses
+  %.sroa.4.0.i.i.ph47.i149.i = phi i64 [ %i.qj, %bb.cx ], [ 0, %bb.cw ] ; 3 uses
   %i.qm = load i64, ptr %i.m, align 8, !range !6, !alias.scope !460, !noalias !376, !noundef !5
   %i.qn = icmp eq i64 %i.pq, %i.qm
   br i1 %i.qn, label %bb.cy, label %bb.cz
@@ -967,6 +967,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6Re
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtCs5RPjO8Kzn89_6uu_tee11NamedWriterEEB1i_.exit
 
 .loopexit:                                        ; preds = %_RNCNvCs5RPjO8Kzn89_6uu_tee3tees0_0B3_.exit.i.i.i.i, %.thread.i.i.i.i
+  %.val6.i.i.i76 = phi i64 [ 0, %.thread.i.i.i.i ], [ %.val6.i.i.i, %_RNCNvCs5RPjO8Kzn89_6uu_tee3tees0_0B3_.exit.i.i.i.i ]
   %.sroa.13.0 = phi i32 [ %i.aw, %.thread.i.i.i.i ], [ %.sroa.11.012.i.i.i.i, %_RNCNvCs5RPjO8Kzn89_6uu_tee3tees0_0B3_.exit.i.i.i.i ]
   %.sroa.8.0 = phi ptr [ inttoptr (i64 1 to ptr), %.thread.i.i.i.i ], [ %.sroa.7.013.i.i.i.i, %_RNCNvCs5RPjO8Kzn89_6uu_tee3tees0_0B3_.exit.i.i.i.i ]
   %.sroa.0.0 = phi i64 [ 0, %.thread.i.i.i.i ], [ %.sroa.0.014.i.i.i.i, %_RNCNvCs5RPjO8Kzn89_6uu_tee3tees0_0B3_.exit.i.i.i.i ]
@@ -974,7 +975,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6Re
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.8.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.val6.i.i.i, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %.val6.i.i.i76, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28

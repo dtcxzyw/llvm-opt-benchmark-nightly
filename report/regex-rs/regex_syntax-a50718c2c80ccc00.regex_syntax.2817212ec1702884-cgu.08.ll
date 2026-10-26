@@ -202,7 +202,10 @@ bb.c:                                             ; preds = %bb.a
     i32 7, label %bb.f
   ], !dbg !6251
 
-.loopexit:                                        ; preds = %bb.u, %bb.c
+default.unreachable:                              ; preds = %bb.u
+  unreachable
+
+.loopexit:                                        ; preds = %bb.c
   unreachable, !dbg !6252
 
 bb.d:                                             ; preds = %bb.l, %bb.f, %bb.g, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs3roNzt6HBWW_12regex_syntax3ast8ClassSetEEB1c_.exit, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
@@ -429,7 +432,7 @@ bb.u:                                             ; preds = %bb.p
   %i.bj = add nsw i32 %i.ba, -1114112, !dbg !6301
   %i.bk = icmp samesign ugt i32 %i.ba, 1114111, !dbg !6301
   %narrow104 = select i1 %i.bk, i32 %i.bj, i32 2, !dbg !6301
-  switch i32 %narrow104, label %.loopexit [
+  switch i32 %narrow104, label %default.unreachable [
     i32 0, label %bb.v
     i32 1, label %bb.v
     i32 2, label %bb.v

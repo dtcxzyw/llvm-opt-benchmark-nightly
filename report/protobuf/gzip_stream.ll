@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %.thread, %bb.c
-  %i.v = tail call i32 @deflate(ptr noundef nonnull %i.f, i32 noundef %1) ; 3 uses
+  %i.v = tail call i32 @deflate(ptr noundef nonnull %i.f, i32 noundef %1) ; 2 uses
   %i.w = icmp eq i32 %i.v, 0
   br i1 %i.w, label %bb.i, label %.critedge
 
@@ -212,6 +212,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.y, label %bb.b, label %.critedge, !llvm.loop !54
 
 .critedge:                                        ; preds = %bb.h, %bb.i
+  %.lcssa24 = phi i32 [ %i.v, %bb.h ], [ 0, %bb.i ] ; 2 uses
   %i.z = add i32 %1, -3
   %or.cond = icmp ult i32 %i.z, 2
   br i1 %or.cond, label %bb.j, label %bb.k
@@ -226,13 +227,13 @@ bb.j:                                             ; preds = %.critedge
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.d, %bb.j
-  %.3.ph = phi i32 [ %i.v, %bb.j ], [ -5, %bb.d ]
+  %.3.ph = phi i32 [ %.lcssa24, %bb.j ], [ -5, %bb.d ]
   store ptr null, ptr %i.a, align 8, !tbaa !37
   store i32 0, ptr %i.d, align 8, !tbaa !38
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split, %.critedge
-  %.3 = phi i32 [ %i.v, %.critedge ], [ %.3.ph, %.sink.split ]
+  %.3 = phi i32 [ %.lcssa24, %.critedge ], [ %.3.ph, %.sink.split ]
   ret i32 %.3
 }
 

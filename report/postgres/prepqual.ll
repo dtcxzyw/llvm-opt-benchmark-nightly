@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.r, %.lr.ph.i
   %.0102184.i = phi i32 [ 0, %.lr.ph.i ], [ %.1103.i, %bb.r ] ; 2 uses
   %.0105183.i = phi ptr [ null, %.lr.ph.i ], [ %.1106.i, %bb.r ] ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.i
-  %i.an = load ptr, ptr %i.am, align 8            ; 5 uses
+  %i.an = load ptr, ptr %i.am, align 8            ; 6 uses
   %.not.i127.i = icmp eq ptr %i.an, null
   br i1 %.not.i127.i, label %is_andclause.exit.thread.i, label %bb.o
 
@@ -229,7 +229,8 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 is_andclause.exit.thread.i:                       ; preds = %is_andclause.exit.i, %bb.o, %bb.n
-  %i.ax = tail call ptr @list_make1_impl(i32 noundef 1, ptr %i.an) #4
+  %.lcssa221 = phi ptr [ %i.an, %is_andclause.exit.i ], [ %i.an, %bb.o ], [ null, %bb.n ]
+  %i.ax = tail call ptr @list_make1_impl(i32 noundef 1, ptr %.lcssa221) #4
   br label %.critedge.i
 
 bb.r:                                             ; preds = %bb.q, %bb.p

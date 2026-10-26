@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %bb.af, %bb.ab
   %i.jn = phi ptr [ %i.ct, %.noexc45.i.i.i ], [ %i.a, %.noexc100 ]
   %i.jo = phi ptr [ @63, %.noexc45.i.i.i ], [ @64, %.noexc100 ]
   %i.jp = phi ptr [ @7, %.noexc45.i.i.i ], [ @74, %.noexc100 ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jl, i64 noundef %i.jm, ptr noundef nonnull %i.jn, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.jo, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.jp) #22
+  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jl, i64 noundef %i.jm, ptr noundef nonnull %i.jn, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.jo, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.jp) #22
           to label %.noexc45.i.i.i.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc45.i.i.i.cont:                              ; preds = %.noexc45.i.i.i.invoke
@@ -386,7 +386,7 @@ bb.bh:                                            ; preds = %bb.bf
           to label %bb.bi unwind label %bb.ay, !noalias !3693
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.kq = load i8, ptr %i.cq, align 8, !range !3696, !noalias !3694, !noundef !15 ; 3 uses
+  %i.kq = load i8, ptr %i.cq, align 8, !range !3696, !noalias !3694, !noundef !15 ; 2 uses
   switch i8 %i.kq, label %bb.bj [
     i8 -2, label %bb.bx
     i8 -1, label %bb.bk
@@ -489,7 +489,7 @@ bb.bw:                                            ; preds = %bb.bn
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.ca, %bb.bz, %bb.bw, %bb.bl, %bb.bj, %bb.bi, %bb.be, %bb.ba
-  %.sroa.0101.0.i = phi i8 [ %.sroa.0101.0.copyload.i, %bb.ca ], [ -2, %bb.ba ], [ -2, %bb.bl ], [ -2, %bb.be ], [ %.sroa.0101.0.copyload103.i, %bb.bw ], [ %.sroa.0101.0.copyload102.i, %bb.bz ], [ %i.kq, %bb.bj ], [ %i.kq, %bb.bi ] ; 2 uses
+  %.sroa.0101.0.i = phi i8 [ %.sroa.0101.0.copyload.i, %bb.ca ], [ -2, %bb.ba ], [ -2, %bb.bl ], [ -2, %bb.be ], [ %.sroa.0101.0.copyload103.i, %bb.bw ], [ %.sroa.0101.0.copyload102.i, %bb.bz ], [ %i.kq, %bb.bj ], [ -2, %bb.bi ] ; 2 uses
   %i.lf = load i64, ptr %i.cs, align 8, !range !21, !noalias !3694, !noundef !15
   %.not.i.i72.i.i = icmp eq i64 %i.lf, 2
   br i1 %.not.i.i72.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span4SpanECskeugdADtBsi_12pingora_core.exit.i.i, label %bb.by
@@ -566,7 +566,7 @@ bb.ch:                                            ; preds = %bb.az, %_RINvNtCskK
   unreachable
 
 _RNvMs_NtNtCskxN0Kp1MEon_2h25proto10connectionINtB4_10ConnectionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_ENtNtB8_6client4PeerE10poll_readyB1D_.exit.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span7EnteredECskeugdADtBsi_12pingora_core.exit71.sink.split.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span4SpanECskeugdADtBsi_12pingora_core.exit.i.i
-  %.sroa.0101.2.i = phi i8 [ %.sroa.0101.0.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span4SpanECskeugdADtBsi_12pingora_core.exit.i.i ], [ %.sroa.0101.1.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span7EnteredECskeugdADtBsi_12pingora_core.exit71.sink.split.i.i ] ; 3 uses
+  %.sroa.0101.2.i = phi i8 [ %.sroa.0101.0.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span4SpanECskeugdADtBsi_12pingora_core.exit.i.i ], [ %.sroa.0101.1.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6kPMvhw0TuU_7tracing4span7EnteredECskeugdADtBsi_12pingora_core.exit71.sink.split.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq), !noalias !3690
   switch i8 %.sroa.0101.2.i, label %bb.ck [
     i8 -2, label %.loopexit225
@@ -969,7 +969,8 @@ bb.gh:                                            ; preds = %bb.gf, %bb.ge, %_RN
   br label %thread-pre-split
 
 .loopexit225:                                     ; preds = %_RNvMs_NtNtCskxN0Kp1MEon_2h25proto10connectionINtB4_10ConnectionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_ENtNtB8_6client4PeerE10poll_readyB1D_.exit.i, %bb.ck
-  store i8 %.sroa.0101.2.i, ptr %i.dh, align 8, !alias.scope !3678
+  %.sroa.0101.2.i1058 = phi i8 [ %.sroa.0101.2.i, %bb.ck ], [ -2, %_RNvMs_NtNtCskxN0Kp1MEon_2h25proto10connectionINtB4_10ConnectionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_ENtNtB8_6client4PeerE10poll_readyB1D_.exit.i ] ; 2 uses
+  store i8 %.sroa.0101.2.i1058, ptr %i.dh, align 8, !alias.scope !3678
   br label %bb.gp
 
 bb.gi:                                            ; preds = %.loopexit.i
@@ -1105,7 +1106,7 @@ thread-pre-split:                                 ; preds = %.noexc95, %bb.gh, %
   br label %bb.gp
 
 bb.gp:                                            ; preds = %thread-pre-split, %.loopexit225
-  %i.sw = phi i8 [ %.pr209, %thread-pre-split ], [ %.sroa.0101.2.i, %.loopexit225 ] ; 2 uses
+  %i.sw = phi i8 [ %.pr209, %thread-pre-split ], [ %.sroa.0101.2.i1058, %.loopexit225 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.524.sroa.5.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.sroa.8.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.341.sroa.0.i)
@@ -1508,7 +1509,7 @@ _RNvYNCNKNvNtNtCs2awuzAz5vY4_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarT
 
 .critedge.i.outer:                                ; preds = %.critedge.i.outer.backedge, %.critedge.preheader.i
   %.sroa.0.035.i.ph = phi i1 [ false, %.critedge.preheader.i ], [ true, %.critedge.i.outer.backedge ]
-  %.sroa.017.034.i.ph = phi i32 [ 0, %.critedge.preheader.i ], [ %i.al, %.critedge.i.outer.backedge ]
+  %.sroa.017.034.i.ph = phi i32 [ 0, %.critedge.preheader.i ], [ %3, %.critedge.i.outer.backedge ]
   %i.ae = load i8, ptr %.val, align 1, !noalias !3838, !noundef !15 ; 3 uses
   %i.af = and i8 %i.ae, 2
   %.not19.i = icmp eq i8 %i.af, 0
@@ -1536,7 +1537,7 @@ bb.c:                                             ; preds = %bb.g
 
 .critedge.i:                                      ; preds = %.critedge.i.backedge, %.critedge.i.outer
   %.sroa.017.034.i = phi i32 [ %.sroa.017.034.i.ph, %.critedge.i.outer ], [ %i.al, %.critedge.i.backedge ] ; 2 uses
-  %i.al = add nuw nsw i32 %.sroa.017.034.i, 1     ; 2 uses
+  %i.al = add nuw nsw i32 %.sroa.017.034.i, 1
   switch i32 %.sroa.017.034.i, label %default.unreachable48.i [
     i32 0, label %bb.e
     i32 1, label %bb.f
@@ -1592,6 +1593,7 @@ bb.j:                                             ; preds = %bb.f
   br i1 %i.ar, label %.critedge.i.outer.backedge, label %bb.k
 
 .critedge.i.outer.backedge:                       ; preds = %bb.j, %bb.h
+  %3 = phi i32 [ 2, %bb.j ], [ 1, %bb.h ]
   br label %.critedge.i.outer
 
 bb.k:                                             ; preds = %bb.j

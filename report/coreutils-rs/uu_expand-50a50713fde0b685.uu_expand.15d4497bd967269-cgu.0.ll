@@ -127,7 +127,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 12 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !41)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42)
   switch i64 %i.d, label %.lr.ph.i.i [
@@ -187,7 +187,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph = phi i64 [ %i.w, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %i.y = icmp ult i64 %i.d, 64051194700380388
   tail call void @llvm.assume(i1 %i.y)
   %i.z = load i64, ptr %0, align 8, !range !5, !alias.scope !53, !noundef !4
@@ -255,7 +255,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 12 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
   switch i64 %i.d, label %.lr.ph.i.i [
@@ -317,7 +317,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph60 = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph60 = phi i64 [ %i.w, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %i.z = load i64, ptr %0, align 8, !range !5, !alias.scope !91, !noundef !4
   %i.aa = icmp eq i64 %i.d, %i.z
   br i1 %i.aa, label %bb.c, label %bb.d
@@ -407,7 +407,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 12 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !117)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !118)
   switch i64 %i.d, label %.lr.ph.i.i [
@@ -469,7 +469,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph60 = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph60 = phi i64 [ %i.w, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %i.z = sitofp i64 %3 to double
   %i.aa = load i64, ptr %0, align 8, !range !5, !alias.scope !129, !noundef !4
   %i.ab = icmp eq i64 %i.d, %i.aa
@@ -872,7 +872,7 @@ bb.ag:                                            ; preds = %bb.ad
 
 _RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6unwrapCs7ggdWxGWrR_9uu_expand.exit.i: ; preds = %bb.ad
   %i.jg = load ptr, ptr %i.gx, align 8, !alias.scope !859, !noalias !857, !nonnull !4, !noundef !4 ; 8 uses
-  %i.jh = load i64, ptr %i.gy, align 8, !alias.scope !859, !noalias !857, !noundef !4 ; 15 uses
+  %i.jh = load i64, ptr %i.gy, align 8, !alias.scope !859, !noalias !857, !noundef !4 ; 13 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !857
   switch i64 %i.jh, label %thread-pre-split.i.i [
     i64 0, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7ggdWxGWrR_9uu_expand.exit.thread248
@@ -1050,6 +1050,7 @@ bb.ay:                                            ; preds = %_RNvMsv_NtCs6JMX4GR
   br i1 %i.lc, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7ggdWxGWrR_9uu_expand.exit.thread248, label %.lr.ph.i.i.i111.preheader.i
 
 .lr.ph.i.i.i111.preheader.i:                      ; preds = %.loopexit.i56, %.loopexit.thread.i
+  %2 = phi i64 [ 1, %.loopexit.thread.i ], [ %i.jh, %.loopexit.i56 ] ; 2 uses
   %i.ld = phi ptr [ %i.la, %.loopexit.thread.i ], [ %i.lb, %.loopexit.i56 ] ; 4 uses
   br label %.lr.ph.i.i.i111.i
 
@@ -1133,9 +1134,9 @@ _RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_
   br i1 %i.mx, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7ggdWxGWrR_9uu_expand.exit.thread248, label %.lr.ph.i.i.i111.i
 
 _RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc10is_numericECs7ggdWxGWrR_9uu_expand.exit.i: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core3str7patternNvMNtNtB9_4char7methodsc10is_numericNtB5_11MultiCharEq7matchesCs7ggdWxGWrR_9uu_expand.exit.i.i.i.i.i, %bb.bb
-  %i.my = sub nuw i64 %i.jh, %i.le                ; 13 uses
+  %i.my = sub nuw i64 %2, %i.le                   ; 13 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.jg, i64 %i.le ; 6 uses
-  %.not.i.i54 = icmp eq i64 %i.jh, %i.le
+  %.not.i.i54 = icmp eq i64 %2, %i.le
   br i1 %.not.i.i54, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7ggdWxGWrR_9uu_expand.exit.thread248, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7ggdWxGWrR_9uu_expand.exit.i
 
 _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCs7ggdWxGWrR_9uu_expand.exit.i: ; preds = %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc10is_numericECs7ggdWxGWrR_9uu_expand.exit.i
@@ -1186,7 +1187,7 @@ bb.be:                                            ; preds = %_RNvMNtCs6JMX4GRUq9
 
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7ggdWxGWrR_9uu_expand.exit.thread248: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6unwrapCs7ggdWxGWrR_9uu_expand.exit.i, %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc10is_numericENtB5_8Searcher4nextCs7ggdWxGWrR_9uu_expand.exit.i.i.i.i, %.loopexit.i56, %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc10is_numericECs7ggdWxGWrR_9uu_expand.exit.i, %bb.bf
   %.sroa.9192.0254 = phi i64 [ %i.ni, %bb.bf ], [ 1, %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc10is_numericECs7ggdWxGWrR_9uu_expand.exit.i ], [ 1, %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc10is_numericENtB5_8Searcher4nextCs7ggdWxGWrR_9uu_expand.exit.i.i.i.i ], [ 1, %.loopexit.i56 ], [ 1, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6unwrapCs7ggdWxGWrR_9uu_expand.exit.i ]
-  %.sroa.4191.0253 = phi i64 [ %i.my, %bb.bf ], [ 0, %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc10is_numericECs7ggdWxGWrR_9uu_expand.exit.i ], [ 0, %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc10is_numericENtB5_8Searcher4nextCs7ggdWxGWrR_9uu_expand.exit.i.i.i.i ], [ 0, %.loopexit.i56 ], [ %i.jh, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6unwrapCs7ggdWxGWrR_9uu_expand.exit.i ] ; 3 uses
+  %.sroa.4191.0253 = phi i64 [ %i.my, %bb.bf ], [ 0, %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc10is_numericECs7ggdWxGWrR_9uu_expand.exit.i ], [ 0, %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc10is_numericENtB5_8Searcher4nextCs7ggdWxGWrR_9uu_expand.exit.i.i.i.i ], [ 0, %.loopexit.i56 ], [ 0, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE6unwrapCs7ggdWxGWrR_9uu_expand.exit.i ] ; 3 uses
   %.sroa.13.sroa.0.0.extract.trunc125 = trunc i64 %.sroa.4191.0253 to i8
   %.sroa.13.sroa.11.0.extract.shift127 = lshr i64 %.sroa.4191.0253, 8
   %.sroa.13.sroa.11.0.extract.trunc128 = trunc nuw nsw i64 %.sroa.13.sroa.11.0.extract.shift127 to i56

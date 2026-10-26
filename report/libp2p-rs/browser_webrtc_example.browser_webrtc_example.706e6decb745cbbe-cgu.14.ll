@@ -202,7 +202,7 @@ bb.ma:                                            ; preds = %.thread253.i
   %i.awo = phi ptr [ @0, %bb.lz ], [ @5, %bb.mq ]
   %i.awp = phi i64 [ 39, %bb.lz ], [ 94, %bb.mq ]
   %i.awq = phi ptr [ @2, %bb.lz ], [ @7, %bb.mq ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.awo, i64 noundef %i.awp, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.awq) #30
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.awo, i64 noundef %i.awp, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.awq) #30
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .cont:                                            ; preds = %.invoke
@@ -605,7 +605,8 @@ bb.no:                                            ; preds = %_RINvMNtNtCs66a4hBE
   br label %bb.nx
 
 .loopexit322:                                     ; preds = %_RNvMNtNtCs66a4hBEq2Hz_2h25proto10connectionINtB2_10ConnectionINtNtNtNtCse0yMYRRwETY_5hyper6common2io6compat6CompatINtNtNtCs5IbPN03UQpS_10hyper_util6common6rewind6RewindINtNtNtB1V_2rt5tokio7TokioIoNtNtNtNtCsc13h7DQFCSE_5tokio3net3tcp6stream9TcpStreamEEENtNtB6_6server4PeerINtNtNtB16_5proto2h27SendBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEE10poll_readyCs9Et6OYOsIUY_22browser_webrtc_example.exit.i, %bb.es
-  store i8 %.sroa.0130.0.i, ptr %i.jd, align 8, !alias.scope !2163
+  %.sroa.0130.0.i519 = phi i8 [ %.sroa.0130.0.i, %bb.es ], [ -2, %_RNvMNtNtCs66a4hBEq2Hz_2h25proto10connectionINtB2_10ConnectionINtNtNtNtCse0yMYRRwETY_5hyper6common2io6compat6CompatINtNtNtCs5IbPN03UQpS_10hyper_util6common6rewind6RewindINtNtNtB1V_2rt5tokio7TokioIoNtNtNtNtCsc13h7DQFCSE_5tokio3net3tcp6stream9TcpStreamEEENtNtB6_6server4PeerINtNtNtB16_5proto2h27SendBufNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEE10poll_readyCs9Et6OYOsIUY_22browser_webrtc_example.exit.i ]
+  store i8 %.sroa.0130.0.i519, ptr %i.jd, align 8, !alias.scope !2163
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i)
   br label %bb.nx
 

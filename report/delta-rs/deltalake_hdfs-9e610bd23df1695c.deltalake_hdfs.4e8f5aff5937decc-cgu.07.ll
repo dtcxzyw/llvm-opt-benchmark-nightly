@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %.lr.ph
 _RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit: ; preds = %bb.n, %bb.o
   %.pre132137 = phi i64 [ %i.bv, %bb.o ], [ %i.bl, %bb.n ]
   %.sink = phi i64 [ %i.by, %bb.o ], [ %i.bn, %bb.n ] ; 4 uses
-  %.sroa.0.0.i65 = phi ptr [ %i.bs, %bb.o ], [ %i.bk, %bb.n ] ; 8 uses
+  %.sroa.0.0.i65 = phi ptr [ %i.bs, %bb.o ], [ %i.bk, %bb.n ] ; 11 uses
   store i64 %.sink, ptr %i.u, align 8, !alias.scope !22
   %.not60 = icmp eq ptr %.sroa.0.0.i65, null      ; 2 uses
   br i1 %.not60, label %_RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit.thread.loopexitsplit, label %bb.p
@@ -221,7 +221,8 @@ default.unreachable:                              ; preds = %bb.p
   unreachable
 
 _RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit.thread.loopexitsplit: ; preds = %_RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit, %bb.q, %.split, %.split99, %.split100
-  %i.cb = ptrtoint ptr %.sroa.0.0.i65 to i64
+  %.sroa.0.0.i65.lcssa = phi ptr [ null, %_RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit ], [ %.sroa.0.0.i65, %bb.q ], [ %.sroa.0.0.i65, %.split ], [ %.sroa.0.0.i65, %.split99 ], [ %.sroa.0.0.i65, %.split100 ]
+  %i.cb = ptrtoint ptr %.sroa.0.0.i65.lcssa to i64
   br label %_RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit.thread
 
 _RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit.thread: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECs6KaIMXx2hZw_14deltalake_hdfs.exit._RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit.thread.loopexit_crit_edge, %_RNvXsf_NtCs2pqxYH9ZEk8_3std2ioINtB5_4TakeNtNtB7_2fs4FileENtB5_4Read8read_bufCs6KaIMXx2hZw_14deltalake_hdfs.exit.thread.loopexitsplit
@@ -624,7 +625,7 @@ bb.d:                                             ; preds = %.noexc.i
 .invoke:                                          ; preds = %bb.d, %.noexc.i
   %i.aa = phi i64 [ %i.w, %.noexc.i ], [ %i.y, %bb.d ]
   %i.ab = phi ptr [ @6, %.noexc.i ], [ @7, %bb.d ]
-  invoke void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %i.v, i64 noundef %i.aa, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ab) #16
+  invoke void @_RNvNtCsbvkFyIu7lgC_4core9panicking18panic_bounds_check(i64 noundef %i.v, i64 noundef %i.aa, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ab) #16
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp, !noalias !49
 
 .cont:                                            ; preds = %.invoke

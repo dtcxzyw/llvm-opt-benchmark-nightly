@@ -204,7 +204,7 @@ _RNvMNtNtCsa9sSWSfjDbm_4jiff5civil4dateNtB2_4Date7weekday.exit.i.i.i109: ; preds
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtNtCsa9sSWSfjDbm_4jiff5civil7weekday7WeekdayE7or_elseNCNvMs1_NtNtNtBO_3fmt7strtime7printerINtB1K_9FormatterNtB1M_13DefaultCustomE18fmt_weekday_abbrev0EBO_.exit.i: ; preds = %_RNvMNtNtCsa9sSWSfjDbm_4jiff5civil4dateNtB2_4Date7weekday.exit.i.i.i109, %bb.k
   %.sroa.0.0.i.i100 = phi i8 [ %i.gm, %bb.k ], [ %i.hu, %_RNvMNtNtCsa9sSWSfjDbm_4jiff5civil4dateNtB2_4Date7weekday.exit.i.i.i109 ]
-  %2 = sext i8 %.sroa.0.0.i.i100 to i64
+  %2 = zext nneg i8 %.sroa.0.0.i.i100 to i64
   %i.hv = getelementptr [8 x i8], ptr @switch.table._RNCNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB7_9FormatterNtB9_13DefaultCustomE6format0Bd_.74, i64 %2
   %switch.gep2690 = getelementptr i8, ptr %i.hv, i64 -8
   %switch.load2691 = load ptr, ptr %switch.gep2690, align 8
@@ -607,9 +607,8 @@ bb.mx:                                            ; preds = %bb.x
   br label %_RINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtB8_3fmt7strtime7printer4ItemNtB6_5ErrorEINtB6_12ErrorContextB19_B1J_E7contextNtNtNtB6_3fmt7strtime5ErrorEB8_.exit147.i
 
 _RINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtB8_3fmt7strtime7printer4ItemNtB6_5ErrorEINtB6_12ErrorContextB19_B1J_E7contextNtNtNtB6_3fmt7strtime5ErrorEB8_.exit147.i: ; preds = %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtBa_3fmt7strtime7printer4ItemNtB8_5ErrorEINtB8_12ErrorContextB1b_B1L_E7contextNtNtNtB8_3fmt7strtime5ErrorE0Ba_.exit.i346, %bb.mx
-  %.sink2665 = phi i8 [ -1, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtBa_3fmt7strtime7printer4ItemNtB8_5ErrorEINtB8_12ErrorContextB1b_B1L_E7contextNtNtNtB8_3fmt7strtime5ErrorE0Ba_.exit.i346 ], [ %i.im, %bb.mx ]
   %i.bcj = getelementptr inbounds nuw i8, ptr %i.ek, i64 16
-  store i8 %.sink2665, ptr %i.bcj, align 8, !alias.scope !1778, !noalias !1424
+  store i8 %i.im, ptr %i.bcj, align 8, !alias.scope !1778, !noalias !1424
   br label %_RINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtB8_3fmt7strtime7printer4ItemNtB6_5ErrorEINtB6_12ErrorContextB19_B1J_E7contextNtNtNtB6_3fmt7strtime5ErrorEB8_.exit150.i
 
 bb.my:                                            ; preds = %bb.ac, %bb.ab, %bb.aa
@@ -1012,9 +1011,8 @@ bb.pl:                                            ; preds = %bb.ev
   br label %_RINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtB8_3fmt7strtime7printer4ItemNtB6_5ErrorEINtB6_12ErrorContextB19_B1J_E7contextNtNtNtB6_3fmt7strtime5ErrorEB8_.exit136.i
 
 _RINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtB8_3fmt7strtime7printer4ItemNtB6_5ErrorEINtB6_12ErrorContextB19_B1J_E7contextNtNtNtB6_3fmt7strtime5ErrorEB8_.exit136.i: ; preds = %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtBa_3fmt7strtime7printer4ItemNtB8_5ErrorEINtB8_12ErrorContextB1b_B1L_E7contextNtNtNtB8_3fmt7strtime5ErrorE0Ba_.exit.i434, %bb.pl
-  %.sink2668 = phi i8 [ -1, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtBa_3fmt7strtime7printer4ItemNtB8_5ErrorEINtB8_12ErrorContextB1b_B1L_E7contextNtNtNtB8_3fmt7strtime5ErrorE0Ba_.exit.i434 ], [ %i.aat, %bb.pl ]
   %i.bhi = getelementptr inbounds nuw i8, ptr %i.ek, i64 16
-  store i8 %.sink2668, ptr %i.bhi, align 8, !alias.scope !1844, !noalias !1424
+  store i8 %i.aat, ptr %i.bhi, align 8, !alias.scope !1844, !noalias !1424
   br label %_RINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtNtB8_3fmt7strtime7printer4ItemNtB6_5ErrorEINtB6_12ErrorContextB19_B1J_E7contextNtNtNtB6_3fmt7strtime5ErrorEB8_.exit150.i
 
 bb.pm:                                            ; preds = %bb.ew
@@ -1417,7 +1415,7 @@ bb.yv:                                            ; preds = %_RINvMs4_NtNtCsa9sS
   store <4 x i8> %i.cja, ptr %i.cix, align 1, !noalias !2106
   %i.cjb = udiv i32 %.sroa.0707.0.extract.trunc710, 100000
   %i.cjc = getelementptr inbounds nuw i8, ptr %i.do, i64 3
-  %.lhs.trunc2655 = trunc nuw i32 %i.cjb to i16
+  %.lhs.trunc2655 = trunc nuw nsw i32 %i.cjb to i16
   %i.cjd = urem i16 %.lhs.trunc2655, 10           ; 2 uses
   %i.cje = trunc nuw nsw i16 %i.cjd to i8
   %i.cjf = or disjoint i8 %i.cje, 48
@@ -1431,7 +1429,7 @@ bb.yv:                                            ; preds = %_RINvMs4_NtNtCsa9sS
   store i8 %i.cjk, ptr %i.cjh, align 1, !noalias !2106
   %i.cjl = udiv i32 %.sroa.0707.0.extract.trunc710, 10000000
   %i.cjm = getelementptr inbounds nuw i8, ptr %i.do, i64 1
-  %.lhs.trunc2658 = trunc nuw i32 %i.cjl to i8
+  %.lhs.trunc2658 = trunc nuw nsw i32 %i.cjl to i8
   %i.cjn = urem i8 %.lhs.trunc2658, 10            ; 2 uses
   %i.cjo = or disjoint i8 %i.cjn, 48
   store i8 %i.cjo, ptr %i.cjm, align 1, !noalias !2106
@@ -1482,7 +1480,7 @@ bb.zd:                                            ; preds = %bb.zc
   br i1 %i.ckd, label %bb.ze, label %bb.zf
 
 bb.ze:                                            ; preds = %bb.zd
-  %i.cke = icmp ugt i32 %.sroa.0707.0.extract.trunc710, 99999999
+  %i.cke = icmp samesign ugt i32 %.sroa.0707.0.extract.trunc710, 99999999
   %spec.select = zext i1 %i.cke to i8
   br label %bb.zf
 
@@ -1885,23 +1883,27 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtN
   br i1 %.not, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultNtNtNtBM_5civil4date4DateNtBK_5ErrorEINtBK_12ErrorContextB1x_B1W_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit
-  %i.ak = icmp ult i8 %i.h, 3                     ; 2 uses
+  %i.ak = icmp samesign ult i8 %i.h, 3            ; 2 uses
   %i.al = or disjoint i32 %.sroa.417.0.insert.ext.i, 12
   %.sroa.02.0.i.i = select i1 %i.ak, i32 %i.al, i32 %.sroa.417.0.insert.ext.i
   %i.am = sext i16 %i.f to i32
   %i.an = add nsw i32 %i.am, 32800
   %.neg.i.i = sext i1 %i.ak to i32
   %i.ao = add nsw i32 %i.an, %.neg.i.i            ; 3 uses
-  %2 = udiv i32 %i.ao, 100
+  %.lhs.trunc = trunc i32 %i.ao to i16
+  %2 = udiv i16 %.lhs.trunc, 100
+  %.zext = zext nneg i16 %2 to i32
   %i.ap = mul nuw nsw i32 %i.ao, 1461
   %i.aq = lshr i32 %i.ap, 2
-  %3 = udiv i32 %i.ao, 400
+  %.lhs.trunc64 = trunc i32 %i.ao to i16
+  %3 = udiv i16 %.lhs.trunc64, 400
+  %.zext65 = zext nneg i16 %3 to i32
   %i.ar = mul nuw nsw i32 %.sroa.02.0.i.i, 979
   %i.as = add nsw i32 %i.ar, -2919
   %i.at = lshr i32 %i.as, 5
   %i.au = add nuw nsw i32 %.sroa.518.0.insert.ext.i, -12699423
-  %i.av = sub nuw nsw i32 %i.au, %2
-  %i.aw = add nuw nsw i32 %i.av, %3
+  %i.av = sub nuw nsw i32 %i.au, %.zext
+  %i.aw = add nuw nsw i32 %i.av, %.zext65
   %i.ax = add nsw i32 %i.aw, %i.aq
   %i.ay = add nsw i32 %i.ax, %i.at
   %i.az = mul i32 %i.ay, 613566757
@@ -2080,7 +2082,7 @@ vector.ph:                                        ; preds = %.lr.ph.i
   %i.k = and i64 %i.j, 15                         ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
   %i.m = select i1 %i.l, i64 16, i64 %i.k
-  %n.vec = sub i64 %i.j, %i.m                     ; 2 uses
+  %n.vec = sub nuw i64 %i.j, %i.m                 ; 2 uses
   %i.n = add i64 %n.vec, %i.b
   %invariant.gep = getelementptr i8, ptr %i.g, i64 %i.b
   br label %vector.body

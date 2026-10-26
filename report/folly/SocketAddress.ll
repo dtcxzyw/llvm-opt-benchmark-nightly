@@ -204,7 +204,9 @@ bb.c:                                             ; preds = %._crit_edge.i
 define void @_ZN5folly13SocketAddress16setFromLocalAddrEPK8addrinfo(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %.not12 = icmp eq ptr %1, null
-  br i1 %.not12, label %._crit_edge, label %.lr.ph
+  %2 = xor i1 %.not12, true
+  call void @llvm.assume(i1 %2)
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.0913 = phi ptr [ %i.e, %bb.b ], [ %1, %bb.a ] ; 3 uses
@@ -219,8 +221,8 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !0
 
-._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %bb.a
-  %.0913.lcssa.sink20 = phi ptr [ %1, %bb.a ], [ %.0913, %.lr.ph ], [ %1, %bb.b ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.b, %.lr.ph
+  %.0913.lcssa.sink20 = phi ptr [ %1, %bb.b ], [ %.0913, %.lr.ph ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.0913.lcssa.sink20, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !48
   %i.h = getelementptr inbounds nuw i8, ptr %.0913.lcssa.sink20, i64 16

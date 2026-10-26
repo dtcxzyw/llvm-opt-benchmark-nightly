@@ -205,7 +205,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 .lr.ph985.preheader:                              ; preds = %.preheader784
   %i.mg = sext i32 %.sroa.6.2 to i64              ; 2 uses
-  %i.mh = sub i32 %.1470, %.2471.lcssa
+  %i.mh = sub nsw i32 %.1470, %.2471.lcssa
   %xtraiter1636 = and i32 %i.mh, 3                ; 2 uses
   %lcmp.mod1637.not = icmp eq i32 %xtraiter1636, 0
   br i1 %lcmp.mod1637.not, label %.lr.ph985.prol.loopexit, label %.lr.ph985.prol
@@ -608,7 +608,7 @@ bb.dt:                                            ; preds = %bb.ds, %bb.dr
   %.4394 = phi ptr [ %i.th, %bb.ds ], [ %.3393, %bb.dr ] ; 21 uses
   %i.ti = tail call fastcc ptr @diff(ptr noundef nonnull %0, ptr noundef %.4407, ptr noundef %.4402) ; 27 uses
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ti, i64 16 ; 2 uses
-  %i.tk = load i32, ptr %i.tj, align 8, !tbaa !26 ; 16 uses
+  %i.tk = load i32, ptr %i.tj, align 8, !tbaa !26 ; 15 uses
   store i32 0, ptr %i.tj, align 8, !tbaa !26
   %i.tl = getelementptr inbounds nuw i8, ptr %i.ti, i64 20
   %i.tm = load i32, ptr %i.tl, align 4, !tbaa !28 ; 3 uses
@@ -796,6 +796,7 @@ cmp.exit637.thread765._crit_edge:                 ; preds = %cmp.exit637.thread7
   br i1 %i.qr, label %bb.ga, label %cmp.exit637.thread
 
 .loopexit783:                                     ; preds = %bb.ep, %bb.ei, %bb.em
+  %4 = phi i32 [ %i.tk, %bb.em ], [ %i.tk, %bb.ei ], [ 0, %bb.ep ] ; 3 uses
   %.not562 = icmp eq i32 %.0387, 0
   br i1 %.not562, label %bb.es, label %bb.er
 
@@ -870,7 +871,7 @@ sulp.exit646:                                     ; preds = %bb.ex, %bb.ey, %bb.
   br i1 %i.wr, label %bb.fa, label %bb.cm
 
 bb.fa:                                            ; preds = %sulp.exit646, %sulp.exit
-  %i.ws = sub nsw i32 1, %i.tk
+  %i.ws = sub nsw i32 1, %4
   br label %cmp.exit637.thread
 
 bb.fb:                                            ; preds = %bb.dz
@@ -1189,7 +1190,7 @@ bb.gl:                                            ; preds = %Bfree.exit660
   br label %Bfree.exit662.backedge
 
 cmp.exit637.thread:                               ; preds = %bb.eb, %bb.ef, %bb.dy, %bb.fz, %bb.fy, %cmp.exit637.thread765._crit_edge, %cmp.exit637, %.thread762, %bb.ea, %bb.eg, %bb.fu, %bb.eq, %bb.fi, %bb.es, %bb.er, %bb.fa, %bb.eo
-  %.sroa.18.0 = phi i32 [ %i.ws, %bb.fa ], [ %i.tk, %bb.er ], [ 0, %bb.eo ], [ %spec.select771, %bb.fu ], [ %i.tk, %bb.eq ], [ 0, %bb.fi ], [ 0, %bb.eg ], [ %i.tk, %bb.es ], [ 0, %bb.ea ], [ 0, %bb.eb ], [ %i.tk, %cmp.exit637.thread765._crit_edge ], [ 0, %cmp.exit637 ], [ 0, %bb.ef ], [ 0, %bb.fz ], [ %i.tk, %bb.fy ], [ %i.tk, %bb.dy ], [ %i.tk, %.thread762 ]
+  %.sroa.18.0 = phi i32 [ %i.ws, %bb.fa ], [ %4, %bb.er ], [ 0, %bb.eo ], [ %spec.select771, %bb.fu ], [ %i.tk, %bb.eq ], [ 0, %bb.fi ], [ 0, %bb.eg ], [ %4, %bb.es ], [ 0, %bb.ea ], [ 0, %bb.eb ], [ %i.tk, %cmp.exit637.thread765._crit_edge ], [ 0, %cmp.exit637 ], [ 0, %bb.ef ], [ 0, %bb.fz ], [ %i.tk, %bb.fy ], [ %i.tk, %bb.dy ], [ %i.tk, %.thread762 ]
   %.5 = phi ptr [ %i.ti, %bb.fa ], [ %i.ti, %bb.er ], [ %i.ti, %bb.eo ], [ %i.ti, %bb.fu ], [ %.3, %bb.eq ], [ %i.ti, %bb.fi ], [ %i.uk, %bb.eg ], [ %i.ti, %bb.es ], [ %i.ti, %bb.ea ], [ %i.ti, %bb.eb ], [ %.3, %cmp.exit637.thread765._crit_edge ], [ %i.uk, %cmp.exit637 ], [ %i.uk, %bb.ef ], [ %i.ti, %bb.fz ], [ %i.ti, %bb.fy ], [ %i.ti, %bb.dy ], [ %i.ti, %.thread762 ] ; 7 uses
   %.not569 = phi i1 [ true, %bb.fa ], [ true, %bb.er ], [ true, %bb.eo ], [ true, %bb.fu ], [ true, %bb.eq ], [ true, %bb.fi ], [ true, %bb.eg ], [ true, %bb.es ], [ true, %bb.ea ], [ true, %bb.eb ], [ true, %cmp.exit637.thread765._crit_edge ], [ true, %cmp.exit637 ], [ true, %bb.ef ], [ true, %bb.fz ], [ true, %bb.fy ], [ false, %bb.dy ], [ true, %.thread762 ]
   %.not.i663 = icmp eq ptr %.4407, null
@@ -1592,7 +1593,7 @@ bb.g:                                             ; preds = %.lr.ph73, %bb.f
 
 bb.h:                                             ; preds = %.lr.ph76
   %i.br = add nsw i32 %.05974, -1
-  %3 = icmp sgt i32 %.05974, 1
+  %3 = icmp samesign ugt i32 %.05974, 1
   br i1 %3, label %.lr.ph76, label %.critedge, !llvm.loop !53
 
 .critedge:                                        ; preds = %.lr.ph76, %bb.h, %.preheader
@@ -1995,10 +1996,11 @@ bb.bk:                                            ; preds = %bb.bj
   br label %bb.bl
 
 bb.bl:                                            ; preds = %.loopexit, %bb.bk
+  %.6.idx1285 = phi i64 [ 5, %bb.bk ], [ %.6.idx, %.loopexit ]
   %i.jr = phi i8 [ 49, %bb.bk ], [ %i.jq, %.loopexit ]
   %.ptr752770 = phi ptr [ %.ptr750.ptr, %bb.bk ], [ %.ptr752.le, %.loopexit ]
   %.6478 = phi i32 [ %i.jp, %bb.bk ], [ %.5477, %.loopexit ]
-  %.6.ptr772 = getelementptr inbounds i8, ptr %.0.i.i, i64 %.6.idx
+  %.6.ptr772 = getelementptr inbounds i8, ptr %.0.i.i, i64 %.6.idx1285
   store i8 %i.jr, ptr %.ptr752770, align 1, !tbaa !21
   br label %Bfree.exit695
 
@@ -2401,8 +2403,8 @@ bb.k:                                             ; preds = %bb.k, %bb.j
 
 .preheader59:                                     ; preds = %bb.k
   %.4 = getelementptr inbounds nuw i8, ptr %.347, i64 2
-  %3 = sdiv i32 %i.af, %.043                      ; 3 uses
-  %.recomposed = srem i32 %i.af, %.043
+  %3 = udiv i32 %i.af, %.043                      ; 3 uses
+  %.recomposed = urem i32 %i.af, %.043
   %i.ai = trunc i32 %3 to i8
   %i.aj = add i8 %i.ai, 48
   %i.ak = getelementptr inbounds nuw i8, ptr %.347, i64 3 ; 3 uses
@@ -2417,7 +2419,7 @@ bb.k:                                             ; preds = %bb.k, %bb.j
 
 .lr.ph82.prol:                                    ; preds = %.lr.ph82.preheader
   %i.an = add nsw i32 %.0, -1
-  %i.ao = mul nsw i32 %3, %.043                   ; 0 uses
+  %i.ao = mul nuw nsw i32 %3, %.043               ; 0 uses
   %i.ap = mul nsw i32 %.recomposed, 10            ; 2 uses
   %i.aq = sdiv i32 %i.ap, %.043                   ; 2 uses
   %i.ar = trunc i32 %i.aq to i8

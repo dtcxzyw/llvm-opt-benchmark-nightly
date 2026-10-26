@@ -204,7 +204,10 @@ _ZN6LibRaw6mallocEm.exit:                         ; preds = %bb.j, %bb.i, %bb.h,
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
   br label %bb.z
 
-.preheader.i.i.i94:                               ; preds = %.critedge, %bb.ar, %bb.aq
+default.unreachable:                              ; preds = %.critedge
+  unreachable
+
+.preheader.i.i.i94:                               ; preds = %bb.ar, %bb.aq
   %i.ax = load ptr, ptr %i.c, align 8, !tbaa !21  ; 9 uses
   br label %bb.x
 
@@ -312,7 +315,7 @@ bb.ac:                                            ; preds = %bb.ac, %bb.ab
 
 .critedge:                                        ; preds = %bb.ac
   %i.cf = tail call i64 @__isoc23_strtol(ptr noundef nonnull %.1, ptr noundef null, i32 noundef 10) #30 ; 12 uses
-  switch i32 %.077107, label %.preheader.i.i.i94 [
+  switch i32 %.077107, label %default.unreachable [
     i32 0, label %bb.ad
     i32 1, label %bb.ae
     i32 2, label %bb.af
@@ -715,11 +718,11 @@ bb.u:                                             ; preds = %bb.t
 iter.check:                                       ; preds = %bb.u
   %wide.trip.count = zext nneg i32 %i.dp to i64   ; 2 uses
   %i.dr = add nsw i64 %wide.trip.count, -1        ; 5 uses
-  %min.iters.check = icmp ult i32 %i.dp, 9
+  %min.iters.check = icmp samesign ult i32 %i.dp, 9
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check142 = icmp ult i32 %i.dp, 33
+  %min.iters.check142 = icmp samesign ult i32 %i.dp, 33
   br i1 %min.iters.check142, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -807,11 +810,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check182:                                    ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader
   %.256.lcssa138 = phi i32 [ %i.do, %.preheader ], [ %i.ek, %vec.epilog.middle.block ], [ %i.ee, %middle.block ], [ %spec.select80, %.lr.ph ] ; 5 uses
   %wide.trip.count112 = zext nneg i32 %i.dp to i64 ; 6 uses
-  %min.iters.check160 = icmp ult i32 %i.dp, 8
+  %min.iters.check160 = icmp samesign ult i32 %i.dp, 8
   br i1 %min.iters.check160, label %.lr.ph99.preheader, label %vector.main.loop.iter.check161
 
 vector.main.loop.iter.check161:                   ; preds = %iter.check182
-  %min.iters.check162 = icmp ult i32 %i.dp, 32
+  %min.iters.check162 = icmp samesign ult i32 %i.dp, 32
   br i1 %min.iters.check162, label %vec.epilog.ph186, label %vector.ph163
 
 vector.ph163:                                     ; preds = %vector.main.loop.iter.check161

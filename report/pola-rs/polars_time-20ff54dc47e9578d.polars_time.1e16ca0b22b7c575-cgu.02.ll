@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   %i.dd = phi i64 [ %i.co, %bb.i ], [ %i.cq, %bb.j ], [ %i.as, %bb.c ], [ %i.be, %bb.d ]
   %i.de = phi i64 [ %i.ba, %bb.i ], [ %i.ct, %bb.j ], [ %i.am, %bb.c ], [ %i.bh, %bb.d ]
   %i.df = phi ptr [ @10, %bb.j ], [ @10, %bb.i ], [ @9, %bb.c ], [ @9, %bb.d ]
-  invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.dd, i64 noundef %i.de, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.df) #18
+  invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.dd, i64 noundef %i.de, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.df) #18
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !3820
 
 .cont:                                            ; preds = %.invoke
@@ -605,13 +605,16 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %.lr.ph.i
   %i.as = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %i.ar, i64 %i.m), !dbg !72756
-  switch i8 %i.as, label %.loopexit26.i.i [
+  switch i8 %i.as, label %default.unreachable [
     i8 1, label %_RNvXNtNtCsgZ49sUHp3tW_5alloc3vec11spec_extendINtB4_3VecxEINtB2_10SpecExtendxINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7step_by6StepByINtNtNtB1l_3ops5range14RangeInclusivexEEE11spec_extendCs2Aa799EbAFJ_11polars_time.exit
     i8 -1, label %.thread39.i.i
     i8 0, label %bb.l
   ], !dbg !72757
 
-.loopexit26.i.i:                                  ; preds = %bb.k, %bb.j
+default.unreachable:                              ; preds = %bb.k
+  unreachable
+
+.loopexit26.i.i:                                  ; preds = %bb.j
   unreachable, !dbg !72762
 
 bb.l:                                             ; preds = %bb.k
@@ -1014,7 +1017,7 @@ bb.q:                                             ; preds = %bb.a
   %i.w = load i8, ptr %i.v, align 1, !dbg !74392, !range !1806, !noundef !1761
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !74393 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 31, !dbg !74393
-  %i.z = load i8, ptr %i.y, align 1, !dbg !74393, !range !1870, !noundef !1761 ; 2 uses
+  %i.z = load i8, ptr %i.y, align 1, !dbg !74393, !range !1870, !noundef !1761
   switch i8 %i.z, label %bb.dd [
     i8 -38, label %bb.db
     i8 -40, label %bb.dc
@@ -1417,7 +1420,7 @@ bb.da:                                            ; preds = %bb.db, %_RNvXsd_NtC
   ret void, !dbg !74623
 
 bb.db:                                            ; preds = %bb.q, %bb.de
-  %.sroa.4.0 = phi i8 [ %.sroa.46.0.copyload, %bb.de ], [ %i.z, %bb.q ], !dbg !74624
+  %.sroa.4.0 = phi i8 [ %.sroa.46.0.copyload, %bb.de ], [ -38, %bb.q ], !dbg !74624
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !74625
   store i8 %i.w, ptr %i.ez, align 1, !dbg !74625
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !74625
@@ -1820,7 +1823,7 @@ bb.u:                                             ; preds = %bb.a
   %i.g = load i8, ptr %i.f, align 1, !dbg !79368, !range !2185, !noundef !1761
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !79369 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 31, !dbg !79369
-  %i.j = load i8, ptr %i.i, align 1, !dbg !79369, !range !1870, !noundef !1761 ; 2 uses
+  %i.j = load i8, ptr %i.i, align 1, !dbg !79369, !range !1870, !noundef !1761
   switch i8 %i.j, label %bb.am [
     i8 -38, label %bb.ak
     i8 -40, label %bb.al
@@ -1954,7 +1957,7 @@ bb.aj:                                            ; preds = %bb.ax, %bb.au, %bb.
   ret void, !dbg !79417
 
 bb.ak:                                            ; preds = %bb.u, %bb.an
-  %.sroa.4.0 = phi i8 [ %.sroa.48.0.copyload, %bb.an ], [ %i.j, %bb.u ], !dbg !79418
+  %.sroa.4.0 = phi i8 [ %.sroa.48.0.copyload, %bb.an ], [ -38, %bb.u ], !dbg !79418
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !79419
   store i8 %i.g, ptr %i.as, align 1, !dbg !79419
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !79419

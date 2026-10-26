@@ -205,6 +205,7 @@ _ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit128:  ; preds = %bb.bo, %.noexc127
   br label %bb.ca
 
 bb.bz:                                            ; preds = %bb.bx, %bb.bp
+  %.sroa.0238.1375.lcssa625 = phi ptr [ %.sroa.0238.1375, %bb.bx ], [ null, %bb.bp ]
   %i.lh = landingpad { ptr, i32 }
           cleanup
   br label %.body109
@@ -239,13 +240,14 @@ _ZN6vectorIP4exprLb0EjED2Ev.exit:                 ; preds = %.loopexit, %bb.cb
   br i1 %.not, label %._crit_edge, label %.lr.ph382, !llvm.loop !320
 
 .body109:                                         ; preds = %bb.bz, %bb.bl
+  %.sroa.0238.1375627 = phi ptr [ %.sroa.0238.1375.lcssa625, %bb.bz ], [ %.sroa.0238.1375, %bb.bl ] ; 2 uses
   %.pn86.pn.pn = phi { ptr, i32 } [ %i.lh, %bb.bz ], [ %i.jq, %bb.bl ] ; 2 uses
-  %.not.i.i129 = icmp eq ptr %.sroa.0238.1375, null
+  %.not.i.i129 = icmp eq ptr %.sroa.0238.1375627, null
   br i1 %.not.i.i129, label %.body166, label %.body109.thread
 
 .body109.thread:                                  ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i218, %bb.bw, %bb.ba, %bb.bg, %bb.bd, %bb.ay, %.body109
   %.pn86.pn.pn283 = phi { ptr, i32 } [ %.pn86.pn.pn, %.body109 ], [ %i.kz, %bb.bw ], [ %i.ku, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i218 ], [ %i.hs, %bb.ba ], [ %i.in, %bb.bd ], [ %i.hq, %bb.ay ], [ %i.ir, %bb.bg ]
-  %.sroa.0238.5282 = phi ptr [ %.sroa.0238.1375, %.body109 ], [ %.sroa.0238.1375, %bb.bw ], [ %.sroa.0238.1375, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i218 ], [ %.sroa.0238.0378, %bb.ba ], [ %.sroa.0238.0378, %bb.bd ], [ %.sroa.0238.0378, %bb.ay ], [ %.sroa.0238.0378, %bb.bg ]
+  %.sroa.0238.5282 = phi ptr [ %.sroa.0238.1375627, %.body109 ], [ %.sroa.0238.1375, %bb.bw ], [ %.sroa.0238.1375, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i218 ], [ %.sroa.0238.0378, %bb.ba ], [ %.sroa.0238.0378, %bb.bd ], [ %.sroa.0238.0378, %bb.ay ], [ %.sroa.0238.0378, %bb.bg ]
   %i.ln = getelementptr inbounds i8, ptr %.sroa.0238.5282, i64 -8
   invoke void @_ZN6memory10deallocateEPv(ptr noundef nonnull %i.ln)
           to label %.body166 unwind label %bb.cd

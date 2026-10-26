@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %_ZN12V3NumberData13
   %i.z = lshr exact i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 2 uses
   %n.vec = and i64 %i.aa, 4611686018427387900     ; 3 uses
-  %i.ab = shl i64 %n.vec, 3
+  %i.ab = shl nuw nsw i64 %n.vec, 3
   %i.ac = getelementptr i8, ptr %i.w, i64 %i.ab
   br label %vector.body
 
@@ -607,7 +607,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.idx.i.i.i.i.i = shl nuw nsw i64 %i.q, 3
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i.i.i.i.i ; 3 uses
-  %i.t = add i64 %1, 2305843009213693950
+  %i.t = add nuw nsw i64 %1, 2305843009213693950
   %i.u = and i64 %i.t, 2305843009213693951        ; 2 uses
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.u, 3
@@ -678,7 +678,7 @@ bb.g:                                             ; preds = %_ZNKSt6vectorIN12V3
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 4 uses
   %.idx.i.i.i.i.i30 = shl nuw nsw i64 %i.ak, 3
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %.idx.i.i.i.i.i30
-  %i.ao = add i64 %1, 2305843009213693950
+  %i.ao = add nuw nsw i64 %1, 2305843009213693950
   %i.ap = and i64 %i.ao, 2305843009213693951      ; 2 uses
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
   %min.iters.check45 = icmp samesign ult i64 %i.ap, 3
@@ -686,7 +686,7 @@ bb.g:                                             ; preds = %_ZNKSt6vectorIN12V3
 
 vector.ph46:                                      ; preds = %bb.g
   %n.vec47 = and i64 %i.aq, 4611686018427387900   ; 3 uses
-  %i.ar = shl i64 %n.vec47, 3
+  %i.ar = shl nuw i64 %n.vec47, 3
   %i.as = getelementptr i8, ptr %i.am, i64 %i.ar
   br label %vector.body48
 
@@ -1089,13 +1089,14 @@ _ZN7AstNode4castI9AstVarRef11AstNodeExprEEPT_PT0_.exit: ; preds = %bb.ae
   br label %.critedge107
 
 _ZN7AstNode2isI9AstVarRef11AstNodeExprEEbPKT0_.exit.thread: ; preds = %bb.b, %bb.c
+  %.tr199229.lcssa = phi ptr [ null, %bb.b ], [ %.tr199229, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull @.str.616, ptr noundef nonnull align 1 dereferenceable(1) %10)
           to label %bb.af unwind label %bb.ah
 
 bb.af:                                            ; preds = %_ZN7AstNode2isI9AstVarRef11AstNodeExprEEbPKT0_.exit.thread
-  invoke void @_ZN15SimulateVisitor16clearOptimizableEP7AstNodeRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %.tr199229, ptr noundef nonnull align 8 dereferenceable(32) %9)
+  invoke void @_ZN15SimulateVisitor16clearOptimizableEP7AstNodeRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %.tr199229.lcssa, ptr noundef nonnull align 8 dereferenceable(32) %9)
           to label %bb.ag unwind label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af

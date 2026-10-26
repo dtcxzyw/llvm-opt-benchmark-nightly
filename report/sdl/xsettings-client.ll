@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bl, label %fetch_card32.exit.thread256.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.bm = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #15 ; 21 uses
+  %i.bm = call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #15 ; 23 uses
   %.not76.i = icmp eq ptr %i.bm, null
   br i1 %.not76.i, label %fetch_card32.exit.thread273.i, label %bb.m
 
@@ -383,13 +383,14 @@ bb.ac:                                            ; preds = %.lr.ph
   br i1 %.not29.i, label %.thread34.thread54.i, label %bb.ab
 
 .thread34.thread54.i:                             ; preds = %bb.ac, %bb.ab
+  %.021.i.lcssa = phi ptr [ null, %bb.ac ], [ %.021.i, %bb.ab ]
   %i.eq = getelementptr inbounds nuw i8, ptr %.02143.i52, i64 8
   store ptr %i.ee, ptr %i.eq, align 8
   br label %fetch_card8.exit98.i
 
 fetch_card8.exit98.i:                             ; preds = %.lr.ph.i28, %.thread34.thread54.i, %bb.aa
   %.6 = phi ptr [ %.0, %.thread34.thread54.i ], [ %i.ee, %bb.aa ], [ %i.ee, %.lr.ph.i28 ] ; 2 uses
-  %.021.lcssa52.i = phi ptr [ %.021.i, %.thread34.thread54.i ], [ null, %bb.aa ], [ %.0, %.lr.ph.i28 ]
+  %.021.lcssa52.i = phi ptr [ %.021.i.lcssa, %.thread34.thread54.i ], [ null, %bb.aa ], [ %.0, %.lr.ph.i28 ]
   %i.er = getelementptr inbounds nuw i8, ptr %i.ee, i64 8
   store ptr %.021.lcssa52.i, ptr %i.er, align 8
   %i.es = add nuw i32 %.047285.i, 1               ; 2 uses
@@ -397,6 +398,7 @@ fetch_card8.exit98.i:                             ; preds = %.lr.ph.i28, %.threa
   br i1 %exitcond.not.i, label %parse_settings.exit, label %bb.i, !llvm.loop !7
 
 fetch_card32.exit.thread273.i:                    ; preds = %bb.z, %bb.t, %bb.m, %bb.l
+  %.lcssa = phi ptr [ %i.bm, %bb.z ], [ %i.bm, %bb.t ], [ %i.bm, %bb.m ], [ null, %bb.l ]
   %i.et = load ptr, ptr @stderr, align 8
   %fwrite89.i = call i64 @fwrite(ptr nonnull @.str.6, i64 41, i64 1, ptr %i.et) #17 ; 0 uses
   br label %.loopexit.i
@@ -416,7 +418,7 @@ bb.ad:                                            ; preds = %.lr.ph
 
 .loopexit.i:                                      ; preds = %fetch_card32.exit.thread256.i, %fetch_card32.exit.thread273.i
   %.2 = phi ptr [ %.1, %fetch_card32.exit.thread256.i ], [ %.0, %fetch_card32.exit.thread273.i ] ; 2 uses
-  %.2260.i = phi ptr [ %.2259.i, %fetch_card32.exit.thread256.i ], [ %i.bm, %fetch_card32.exit.thread273.i ] ; 2 uses
+  %.2260.i = phi ptr [ %.2259.i, %fetch_card32.exit.thread256.i ], [ %.lcssa, %fetch_card32.exit.thread273.i ] ; 2 uses
   %.not90.i = icmp eq ptr %.2260.i, null
   br i1 %.not90.i, label %bb.af, label %.loopexit.thread.i
 

@@ -202,9 +202,6 @@ begin_hunk_0
 @.str.441 = private unnamed_addr constant [3 x i8] c"\22\22\00", align 1
 @.str.442 = private unnamed_addr constant [36 x i8] c"alloc::string::ToString::to_string(\00", align 1
 @.str.443 = private unnamed_addr constant [2 x i8] c")\00", align 1
-@.str.448 = private unnamed_addr constant [5 x i8] c"+inf\00", align 1
-@.str.449 = private unnamed_addr constant [9 x i8] c"infinity\00", align 1
-@.str.450 = private unnamed_addr constant [10 x i8] c"+infinity\00", align 1
 @.str.453 = private unnamed_addr constant [6 x i8] c"_type\00", align 1
 @.str.454 = private unnamed_addr constant [71 x i8] c"pub const {{OFFSET_NAME}}: ::flatbuffers::VOffsetT = {{OFFSET_VALUE}};\00", align 1
 @_ZTIZN11flatbuffers4rust13RustGenerator8GenTableERKNS_9StructDefEEUlRKNS_8FieldDefEE_ = linkonce_odr dso_local constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN11flatbuffers4rust13RustGenerator8GenTableERKNS_9StructDefEEUlRKNS_8FieldDefEE_ }, comdat, align 8
@@ -607,7 +604,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %bb.e
 define linkonce_odr dso_local noundef zeroext i1 @_ZN11flatbuffers34StringIsFlatbufferPositiveInfinityERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(32) %0) local_unnamed_addr #17 comdat {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !152  ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !152
   switch i64 %i.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9 [
     i64 3, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5
@@ -631,20 +628,32 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5: ; preds = %bb.a
   %.pre = load ptr, ptr %0, align 8, !tbaa !32
-  %bcmp.i4 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str.448, i64 %i.b)
-  %i.n = icmp eq i32 %bcmp.i4, 0
+  %1 = load i32, ptr %.pre, align 1
+  %2 = icmp ne i32 %1, 1718511915
+  %3 = zext i1 %2 to i32
+  %i.n = icmp eq i32 %3, 0
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit7: ; preds = %bb.a
   %.pre13 = load ptr, ptr %0, align 8, !tbaa !32
-  %bcmp.i6 = tail call i32 @bcmp(ptr %.pre13, ptr nonnull @.str.449, i64 %i.b)
-  %i.o = icmp eq i32 %bcmp.i6, 0
+  %4 = load i64, ptr %.pre13, align 1
+  %5 = icmp ne i64 %4, 8751735898823356009
+  %6 = zext i1 %5 to i32
+  %i.o = icmp eq i32 %6, 0
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9
 
 bb.b:                                             ; preds = %bb.a
-  %.pre14 = load ptr, ptr %0, align 8, !tbaa !32
-  %bcmp.i8 = tail call i32 @bcmp(ptr %.pre14, ptr nonnull @.str.450, i64 %i.b)
-  %i.p = icmp eq i32 %bcmp.i8, 0
+  %.pre14 = load ptr, ptr %0, align 8, !tbaa !32  ; 2 uses
+  %7 = load i64, ptr %.pre14, align 1
+  %8 = xor i64 %7, 8388357179923392811
+  %9 = getelementptr i8, ptr %.pre14, i64 8
+  %10 = load i8, ptr %9, align 1
+  %11 = zext i8 %10 to i64
+  %12 = xor i64 %11, 121
+  %13 = or i64 %8, %12
+  %14 = icmp ne i64 %13, 0
+  %15 = zext i1 %14 to i32
+  %i.p = icmp eq i32 %15, 0
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit9: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit7, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.a, %bb.b

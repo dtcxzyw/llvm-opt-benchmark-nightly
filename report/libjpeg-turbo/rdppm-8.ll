@@ -204,7 +204,7 @@ bb.a:
   ]
 
 pbm_getc.exit:                                    ; preds = %.preheader.i, %.preheader.i, %.critedge
-  %.0.i = phi i32 [ %i.a, %.critedge ], [ %i.c, %.preheader.i ], [ %i.c, %.preheader.i ] ; 3 uses
+  %.0.i = phi i32 [ %i.a, %.critedge ], [ %i.c, %.preheader.i ], [ %i.c, %.preheader.i ] ; 4 uses
   switch i32 %.0.i, label %bb.b [
     i32 -1, label %.thread
     i32 32, label %.critedge.backedge
@@ -230,6 +230,7 @@ bb.b:                                             ; preds = %pbm_getc.exit
   br i1 %or.cond5, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.thread, %bb.b
+  %.0.i60 = phi i32 [ -1, %.thread ], [ %.0.i, %bb.b ]
   %i.h = load ptr, ptr %0, align 8, !tbaa !27     ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   store i32 1036, ptr %i.i, align 8, !tbaa !32
@@ -238,7 +239,8 @@ bb.c:                                             ; preds = %.thread, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %i.k = add nsw i32 %.0.i, -48
+  %.0.i59 = phi i32 [ %.0.i, %bb.b ], [ %.0.i60, %bb.c ]
+  %i.k = add nsw i32 %.0.i59, -48
   br label %bb.e
 
 bb.e:                                             ; preds = %.backedge, %bb.d

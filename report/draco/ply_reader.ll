@@ -176,7 +176,6 @@ $_ZTSZN5draco17PlyPropertyWriterIdEC1EPNS_11PlyPropertyEEUldE6_ = comdat any
 @.str.15 = private unnamed_addr constant [25 x i8] c"Wrong property data type\00", align 1
 @.str.16 = private unnamed_addr constant [25 x i8] c"Wrong property list type\00", align 1
 @.str.17 = private unnamed_addr constant [7 x i8] c" \09\0A\0B\0C\0D\00", align 1
-@.str.20 = private unnamed_addr constant [6 x i8] c"uchar\00", align 1
 @.str.24 = private unnamed_addr constant [7 x i8] c"ushort\00", align 1
 @.str.25 = private unnamed_addr constant [7 x i8] c"uint16\00", align 1
 @.str.26 = private unnamed_addr constant [4 x i8] c"int\00", align 1
@@ -579,7 +578,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.038.057.i.i.i.i, i64 4
   %i.ay = add nsw i64 %.058.i.i.i.i, -1
-  %5 = icmp sgt i64 %.058.i.i.i.i, 1
+  %5 = icmp samesign ugt i64 %.058.i.i.i.i, 1
   br i1 %5, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !133
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.j, %bb.f
@@ -851,7 +850,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.eb = getelementptr inbounds nuw i8, ptr %.sroa.038.057.i.i.i.i49, i64 4
   %i.ec = add nsw i64 %.058.i.i.i.i48, -1
-  %6 = icmp sgt i64 %.058.i.i.i.i48, 1
+  %6 = icmp samesign ugt i64 %.058.i.i.i.i48, 1
   br i1 %6, label %.lr.ph.i.i.i.i47, label %._crit_edge.i.i.i.i37, !llvm.loop !133
 
 ._crit_edge.i.i.i.i37:                            ; preds = %bb.ac, %bb.y
@@ -1254,7 +1253,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 define dso_local noundef range(i32 0, 11) i32 @_ZNK5draco9PlyReader21GetDataTypeFromStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !18
   switch i64 %i.b, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31 [
     i64 4, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
     i64 5, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19
@@ -1276,9 +1275,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.k, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit25.thread31
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19: ; preds = %bb.a
-  %.pre = load ptr, ptr %1, align 8, !tbaa !17    ; 7 uses
-  %bcmp.i18 = tail call i32 @bcmp(ptr %.pre, ptr nonnull @.str.20, i64 %i.b)
-  %i.l = icmp eq i32 %bcmp.i18, 0
+  %.pre = load ptr, ptr %1, align 8, !tbaa !17    ; 8 uses
+  %2 = load i32, ptr %.pre, align 1
+  %3 = xor i32 %2, 1634231157
+  %4 = getelementptr i8, ptr %.pre, i64 4
+  %5 = load i8, ptr %4, align 1
+  %6 = zext i8 %5 to i32
+  %7 = xor i32 %6, 114
+  %8 = or i32 %3, %7
+  %9 = icmp ne i32 %8, 0
+  %10 = zext i1 %9 to i32
+  %i.l = icmp eq i32 %10, 0
   br i1 %i.l, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit21
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit21: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit19
@@ -1681,14 +1688,14 @@ _ZSt13move_backwardIPhS0_ET0_T_S2_S1_.exit:       ; preds = %bb.h, %bb.i, %bb.j
   br i1 %i.ac, label %iter.check162, label %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEET0_T_SA_S9_.exit
 
 iter.check162:                                    ; preds = %_ZSt13move_backwardIPhS0_ET0_T_S2_S1_.exit
-  %min.iters.check146 = icmp ult i64 %i.c, 4
+  %min.iters.check146 = icmp samesign ult i64 %i.c, 4
   %i.ad = sub i64 %i.b, %i.k
   %diff.check148 = icmp ugt i64 %i.ad, -32
   %or.cond = or i1 %min.iters.check146, %diff.check148
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check149
 
 vector.main.loop.iter.check149:                   ; preds = %iter.check162
-  %min.iters.check150 = icmp ult i64 %i.c, 32
+  %min.iters.check150 = icmp samesign ult i64 %i.c, 32
   br i1 %min.iters.check150, label %vec.epilog.ph166, label %vector.ph151
 
 vector.ph151:                                     ; preds = %vector.main.loop.iter.check149
@@ -1770,14 +1777,14 @@ _ZSt9__advanceIPKclEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.c
   br i1 %i.ay, label %iter.check, label %_ZSt22__uninitialized_copy_aIPKcPhhET0_T_S4_S3_RSaIT1_E.exit
 
 iter.check:                                       ; preds = %_ZSt9__advanceIPKclEvRT_T0_St26random_access_iterator_tag.exit
-  %min.iters.check = icmp ult i64 %i.ax, 4
+  %min.iters.check = icmp samesign ult i64 %i.ax, 4
   %i.az = sub i64 %i.b, %i.k
   %diff.check = icmp ugt i64 %i.az, -32
   %or.cond180 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond180, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check96 = icmp ult i64 %i.ax, 32
+  %min.iters.check96 = icmp samesign ult i64 %i.ax, 32
   br i1 %min.iters.check96, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1882,14 +1889,14 @@ _ZSt22__uninitialized_move_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit55: ; preds = %bb.k,
   br i1 %i.bx, label %iter.check126, label %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEET0_T_SA_S9_.exit
 
 iter.check126:                                    ; preds = %_ZSt22__uninitialized_move_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit55
-  %min.iters.check110 = icmp ult i64 %i.l, 4
+  %min.iters.check110 = icmp samesign ult i64 %i.l, 4
   %i.by = sub i64 %i.b, %i.k
   %diff.check112 = icmp ugt i64 %i.by, -32
   %or.cond181 = or i1 %min.iters.check110, %diff.check112
   br i1 %or.cond181, label %.lr.ph.i.i.i.i.i57.preheader, label %vector.main.loop.iter.check113
 
 vector.main.loop.iter.check113:                   ; preds = %iter.check126
-  %min.iters.check114 = icmp ult i64 %i.l, 32
+  %min.iters.check114 = icmp samesign ult i64 %i.l, 32
   br i1 %min.iters.check114, label %vec.epilog.ph130, label %vector.ph115
 
 vector.ph115:                                     ; preds = %vector.main.loop.iter.check113
