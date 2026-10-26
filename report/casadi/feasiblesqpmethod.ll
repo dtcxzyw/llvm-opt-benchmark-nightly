@@ -205,10 +205,9 @@ bb.k:                                             ; preds = %.lr.ph145, %bb.k
   %.idx = mul i64 %i.ds, 24
   %i.du = getelementptr i8, ptr %7, i64 %.idx
   %i.dv = getelementptr i8, ptr %i.du, i64 -16
-  %i.dw = shl i64 %0, 3
+  %i.dw = shl i64 %0, 3                           ; 2 uses
   %i.dx = mul i64 %0, -8
-  %8 = shl nsw i64 %0, 3
-  %i.dy = sub nuw nsw i64 -8, %8
+  %i.dy = sub nuw nsw i64 -8, %i.dw
   %i.dz = shl i64 %0, 3
   br label %.lr.ph160
 
@@ -450,7 +449,7 @@ _ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit: ; preds = %.lr.ph84.i,
 .lr.ph164:                                        ; preds = %._crit_edge161
   %i.iz = add nsw i64 %0, -3
   %.not.i.i.not = icmp eq ptr %6, null
-  %i.ja = shl nsw i64 %0, 3                       ; 3 uses
+  %i.ja = shl i64 %0, 3                           ; 4 uses
   %i.jb = add i64 %i.ja, -16                      ; 2 uses
   %i.jc = mul i64 %0, %i.jb
   %i.jd = mul i64 %0, -8
@@ -466,7 +465,7 @@ _ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit: ; preds = %.lr.ph84.i,
   %i.jn = getelementptr i8, ptr %1, i64 %i.je
   %i.jo = getelementptr i8, ptr %i.jn, i64 16
   %i.jp = getelementptr i8, ptr %6, i64 %i.jb
-  %stride.check = icmp slt i64 %0, 0
+  %stride.check = icmp slt i64 %i.ja, 0
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph164, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !576
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !613
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -1414,7 +1414,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !623
@@ -1817,7 +1817,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !576
@@ -2220,7 +2220,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !613
@@ -2623,7 +2623,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -3026,7 +3026,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !623
@@ -3429,7 +3429,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -3832,7 +3832,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -4235,7 +4235,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -4638,7 +4638,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -5041,7 +5041,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618
@@ -5444,7 +5444,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !618
   %i.q = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.090117
-  %i.r = shl nuw i64 %.092115, 1                  ; 2 uses
+  %i.r = shl i64 %.092115, 1                      ; 2 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %i.r
   tail call void @_ZNSt6vectorItSaItEE13_M_assign_auxIPtEEvT_S4_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef %i.k, ptr noundef %i.s)
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !618

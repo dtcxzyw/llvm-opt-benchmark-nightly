@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %.lr.ph604, %bb.bf
   store i64 %i.na, ptr %i.ng, align 8, !tbaa !21
   %i.nh = add nuw nsw i64 %.4615, 4
   %i.ni = getelementptr inbounds nuw i8, ptr %.8614, i64 32
-  %i.nj = add nuw i64 %.7478612, 32               ; 2 uses
+  %i.nj = add i64 %.7478612, 32                   ; 2 uses
   %i.nk = add i64 %.9613, -32                     ; 2 uses
   %i.nl = icmp ugt i64 %i.nk, 31
   br i1 %i.nl, label %.preheader589, label %.loopexit572, !llvm.loop !151

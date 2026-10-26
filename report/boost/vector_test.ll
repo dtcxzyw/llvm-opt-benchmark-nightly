@@ -205,7 +205,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_4test25expand_bwd_test_alloc
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test12copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_4test25expand_bwd_test_allocatorINS2_12copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bs = shl nuw nsw i64 %i.f, 2
+  %i.bs = shl i64 %i.f, 2
   %i.bt = shl i64 %3, 2
   %i.bu = add i64 %i.bs, %i.j
   %i.bv = add i64 %i.bu, -4
@@ -608,7 +608,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test11movable_intEEPS3_S
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test11movable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test11movable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.az = shl nuw nsw i64 %i.e, 2
+  %i.az = shl i64 %i.e, 2
   %i.ba = shl i64 %3, 2
   %i.bb = add i64 %i.az, %i.h
   %i.bc = add i64 %i.bb, -4
@@ -620,14 +620,14 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test11movable_intEEPS3_S
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader80, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bh = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bh = shl i64 %i.e, 2                         ; 2 uses
   %i.bi = shl i64 %3, 2                           ; 2 uses
   %i.bj = add i64 %i.bh, %i.h
   %i.bk = add i64 %i.bj, -4
   %i.bl = add i64 %i.bi, %i.ac
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = and i64 %i.bm, -4                       ; 2 uses
-  %i.bo = add nsw i64 %i.bh, -4                   ; 2 uses
+  %i.bo = add i64 %i.bh, -4                       ; 2 uses
   %i.bp = sub i64 %i.bo, %i.bn
   %i.bq = getelementptr i8, ptr %i.g, i64 %i.bp
   %i.br = add i64 %i.bi, %i.bn
@@ -1030,7 +1030,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test11movable_intEEPS3_S
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test11movable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.bc = shl nuw nsw i64 %i.e, 2
+  %i.bc = shl i64 %i.e, 2
   %i.bd = shl i64 %3, 2
   %i.be = add i64 %i.bc, %i.h
   %i.bf = add i64 %i.be, -4
@@ -1042,14 +1042,14 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test11movable_intEEPS3_S
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader28, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bk = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bk = shl i64 %i.e, 2                         ; 2 uses
   %i.bl = shl i64 %3, 2                           ; 2 uses
   %i.bm = add i64 %i.bk, %i.h
   %i.bn = add i64 %i.bm, -4
   %i.bo = add i64 %i.bl, %i.af
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = and i64 %i.bp, -4                       ; 2 uses
-  %i.br = add nsw i64 %i.bk, -4                   ; 2 uses
+  %i.br = add i64 %i.bk, -4                       ; 2 uses
   %i.bs = sub i64 %i.br, %i.bq
   %i.bt = getelementptr i8, ptr %i.g, i64 %i.bs
   %i.bu = add i64 %i.bl, %i.bq
@@ -1452,7 +1452,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyab
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.az = shl nuw nsw i64 %i.e, 2
+  %i.az = shl i64 %i.e, 2
   %i.ba = shl i64 %3, 2
   %i.bb = add i64 %i.az, %i.h
   %i.bc = add i64 %i.bb, -4
@@ -1464,14 +1464,14 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyab
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader80, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bh = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bh = shl i64 %i.e, 2                         ; 2 uses
   %i.bi = shl i64 %3, 2                           ; 2 uses
   %i.bj = add i64 %i.bh, %i.h
   %i.bk = add i64 %i.bj, -4
   %i.bl = add i64 %i.bi, %i.ac
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = and i64 %i.bm, -4                       ; 2 uses
-  %i.bo = add nsw i64 %i.bh, -4                   ; 2 uses
+  %i.bo = add i64 %i.bh, -4                       ; 2 uses
   %i.bp = sub i64 %i.bo, %i.bn
   %i.bq = getelementptr i8, ptr %i.g, i64 %i.bp
   %i.br = add i64 %i.bi, %i.bn
@@ -1874,7 +1874,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyab
   br i1 %.not8.i.i.i.i, label %.lr.ph.i42.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.bd = shl nuw nsw i64 %i.e, 2
+  %i.bd = shl i64 %i.e, 2
   %i.be = shl i64 %3, 2
   %i.bf = add i64 %i.bd, %i.h
   %i.bg = add i64 %i.bf, -4
@@ -1886,14 +1886,14 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyab
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader54, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bl = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bl = shl i64 %i.e, 2                         ; 2 uses
   %i.bm = shl i64 %3, 2                           ; 2 uses
   %i.bn = add i64 %i.bl, %i.h
   %i.bo = add i64 %i.bn, -4
   %i.bp = add i64 %i.bm, %i.ag
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = and i64 %i.bq, -4                       ; 2 uses
-  %i.bs = add nsw i64 %i.bl, -4                   ; 2 uses
+  %i.bs = add i64 %i.bl, -4                       ; 2 uses
   %i.bt = sub i64 %i.bs, %i.br
   %i.bu = getelementptr i8, ptr %i.g, i64 %i.bt
   %i.bv = add i64 %i.bm, %i.br
@@ -2296,7 +2296,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyab
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.bc = shl nuw nsw i64 %i.e, 2
+  %i.bc = shl i64 %i.e, 2
   %i.bd = shl i64 %3, 2
   %i.be = add i64 %i.bc, %i.h
   %i.bf = add i64 %i.be, -4
@@ -2308,14 +2308,14 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test24movable_and_copyab
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader28, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bk = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bk = shl i64 %i.e, 2                         ; 2 uses
   %i.bl = shl i64 %3, 2                           ; 2 uses
   %i.bm = add i64 %i.bk, %i.h
   %i.bn = add i64 %i.bm, -4
   %i.bo = add i64 %i.bl, %i.af
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = and i64 %i.bp, -4                       ; 2 uses
-  %i.br = add nsw i64 %i.bk, -4                   ; 2 uses
+  %i.br = add i64 %i.bk, -4                       ; 2 uses
   %i.bs = sub i64 %i.br, %i.bq
   %i.bt = getelementptr i8, ptr %i.g, i64 %i.bs
   %i.bu = add i64 %i.bl, %i.bq
@@ -2718,7 +2718,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_
   br i1 %.not8.i.i.i.i, label %.lr.ph.preheader.i.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.be = shl nuw nsw i64 %i.e, 2
+  %i.be = shl i64 %i.e, 2
   %i.bf = shl i64 %3, 2
   %i.bg = add i64 %i.be, %i.h
   %i.bh = add i64 %i.bg, -4
@@ -3121,7 +3121,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test12copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.br = shl nuw nsw i64 %i.f, 2
+  %i.br = shl i64 %i.f, 2
   %i.bs = shl i64 %3, 2
   %i.bt = add i64 %i.br, %i.i
   %i.bu = add i64 %i.bt, -4
@@ -3524,7 +3524,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_
   br i1 %.not8.i.i.i.i, label %.lr.ph.i39.i.i.i, label %.lr.ph.i37.i.i.i.preheader
 
 .lr.ph.i37.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.bl = shl nuw nsw i64 %i.e, 2
+  %i.bl = shl i64 %i.e, 2
   %i.bm = shl i64 %3, 2
   %i.bn = add i64 %i.bl, %i.h
   %i.bo = add i64 %i.bn, -4
@@ -3927,7 +3927,7 @@ _ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nISaINS0_4test12copyable_intEEPS3_S5_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S8_mS9_.exit.i.i.i
-  %i.bj = shl nuw nsw i64 %i.e, 2
+  %i.bj = shl i64 %i.e, 2
   %i.bk = shl i64 %3, 2
   %i.bl = add i64 %i.bj, %i.h
   %i.bm = add i64 %i.bl, -4
@@ -4330,7 +4330,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test11movabl
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test11movable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test11movable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.az = shl nuw nsw i64 %i.e, 2
+  %i.az = shl i64 %i.e, 2
   %i.ba = shl i64 %3, 2
   %i.bb = add i64 %i.az, %i.h
   %i.bc = add i64 %i.bb, -4
@@ -4342,14 +4342,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test11movabl
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader80, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bh = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bh = shl i64 %i.e, 2                         ; 2 uses
   %i.bi = shl i64 %3, 2                           ; 2 uses
   %i.bj = add i64 %i.bh, %i.h
   %i.bk = add i64 %i.bj, -4
   %i.bl = add i64 %i.bi, %i.ac
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = and i64 %i.bm, -4                       ; 2 uses
-  %i.bo = add nsw i64 %i.bh, -4                   ; 2 uses
+  %i.bo = add i64 %i.bh, -4                       ; 2 uses
   %i.bp = sub i64 %i.bo, %i.bn
   %i.bq = getelementptr i8, ptr %i.g, i64 %i.bp
   %i.br = add i64 %i.bi, %i.bn
@@ -4752,7 +4752,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test11movabl
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test11movable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bc = shl nuw nsw i64 %i.e, 2
+  %i.bc = shl i64 %i.e, 2
   %i.bd = shl i64 %3, 2
   %i.be = add i64 %i.bc, %i.h
   %i.bf = add i64 %i.be, -4
@@ -4764,14 +4764,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test11movabl
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader28, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bk = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bk = shl i64 %i.e, 2                         ; 2 uses
   %i.bl = shl i64 %3, 2                           ; 2 uses
   %i.bm = add i64 %i.bk, %i.h
   %i.bn = add i64 %i.bm, -4
   %i.bo = add i64 %i.bl, %i.af
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = and i64 %i.bp, -4                       ; 2 uses
-  %i.br = add nsw i64 %i.bk, -4                   ; 2 uses
+  %i.br = add i64 %i.bk, -4                       ; 2 uses
   %i.bs = sub i64 %i.br, %i.bq
   %i.bt = getelementptr i8, ptr %i.g, i64 %i.bs
   %i.bu = add i64 %i.bl, %i.bq
@@ -5174,7 +5174,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movabl
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movable_and_copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.az = shl nuw nsw i64 %i.e, 2
+  %i.az = shl i64 %i.e, 2
   %i.ba = shl i64 %3, 2
   %i.bb = add i64 %i.az, %i.h
   %i.bc = add i64 %i.bb, -4
@@ -5186,14 +5186,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movabl
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader80, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bh = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bh = shl i64 %i.e, 2                         ; 2 uses
   %i.bi = shl i64 %3, 2                           ; 2 uses
   %i.bj = add i64 %i.bh, %i.h
   %i.bk = add i64 %i.bj, -4
   %i.bl = add i64 %i.bi, %i.ac
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = and i64 %i.bm, -4                       ; 2 uses
-  %i.bo = add nsw i64 %i.bh, -4                   ; 2 uses
+  %i.bo = add i64 %i.bh, -4                       ; 2 uses
   %i.bp = sub i64 %i.bo, %i.bn
   %i.bq = getelementptr i8, ptr %i.g, i64 %i.bp
   %i.br = add i64 %i.bi, %i.bn
@@ -5596,7 +5596,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movabl
   br i1 %.not8.i.i.i.i, label %.lr.ph.i42.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movable_and_copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bd = shl nuw nsw i64 %i.e, 2
+  %i.bd = shl i64 %i.e, 2
   %i.be = shl i64 %3, 2
   %i.bf = add i64 %i.bd, %i.h
   %i.bg = add i64 %i.bf, -4
@@ -5608,14 +5608,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movabl
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader54, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bl = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bl = shl i64 %i.e, 2                         ; 2 uses
   %i.bm = shl i64 %3, 2                           ; 2 uses
   %i.bn = add i64 %i.bl, %i.h
   %i.bo = add i64 %i.bn, -4
   %i.bp = add i64 %i.bm, %i.ag
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = and i64 %i.bq, -4                       ; 2 uses
-  %i.bs = add nsw i64 %i.bl, -4                   ; 2 uses
+  %i.bs = add i64 %i.bl, -4                       ; 2 uses
   %i.bt = sub i64 %i.bs, %i.br
   %i.bu = getelementptr i8, ptr %i.g, i64 %i.bt
   %i.bv = add i64 %i.bm, %i.br
@@ -6018,7 +6018,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movabl
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movable_and_copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bc = shl nuw nsw i64 %i.e, 2
+  %i.bc = shl i64 %i.e, 2
   %i.bd = shl i64 %3, 2
   %i.be = add i64 %i.bc, %i.h
   %i.bf = add i64 %i.be, -4
@@ -6030,14 +6030,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test24movabl
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader28, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bk = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bk = shl i64 %i.e, 2                         ; 2 uses
   %i.bl = shl i64 %3, 2                           ; 2 uses
   %i.bm = add i64 %i.bk, %i.h
   %i.bn = add i64 %i.bm, -4
   %i.bo = add i64 %i.bl, %i.af
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = and i64 %i.bp, -4                       ; 2 uses
-  %i.br = add nsw i64 %i.bk, -4                   ; 2 uses
+  %i.br = add i64 %i.bk, -4                       ; 2 uses
   %i.bs = sub i64 %i.br, %i.bq
   %i.bt = getelementptr i8, ptr %i.g, i64 %i.bs
   %i.bu = add i64 %i.bl, %i.bq
@@ -6440,7 +6440,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
   br i1 %.not8.i.i.i.i, label %.lr.ph.preheader.i.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.be = shl nuw nsw i64 %i.e, 2
+  %i.be = shl i64 %i.e, 2
   %i.bf = shl i64 %3, 2
   %i.bg = add i64 %i.be, %i.h
   %i.bh = add i64 %i.bg, -4
@@ -6843,7 +6843,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test12copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.br = shl nuw nsw i64 %i.f, 2
+  %i.br = shl i64 %i.f, 2
   %i.bs = shl i64 %3, 2
   %i.bt = add i64 %i.br, %i.i
   %i.bu = add i64 %i.bt, -4
@@ -7246,7 +7246,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
   br i1 %.not8.i.i.i.i, label %.lr.ph.i39.i.i.i, label %.lr.ph.i37.i.i.i.preheader
 
 .lr.ph.i37.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bl = shl nuw nsw i64 %i.e, 2
+  %i.bl = shl i64 %i.e, 2
   %i.bm = shl i64 %3, 2
   %i.bn = add i64 %i.bl, %i.h
   %i.bo = add i64 %i.bn, -4
@@ -7649,7 +7649,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyable_intELj2ELj0EEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bj = shl nuw nsw i64 %i.e, 2
+  %i.bj = shl i64 %i.e, 2
   %i.bk = shl i64 %3, 2
   %i.bl = add i64 %i.bj, %i.h
   %i.bm = add i64 %i.bl, -4
@@ -8052,7 +8052,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test11m
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test11movable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test11movable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.az = shl nuw nsw i64 %i.e, 2
+  %i.az = shl i64 %i.e, 2
   %i.ba = shl i64 %3, 2
   %i.bb = add i64 %i.az, %i.h
   %i.bc = add i64 %i.bb, -4
@@ -8064,14 +8064,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test11m
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader80, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bh = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bh = shl i64 %i.e, 2                         ; 2 uses
   %i.bi = shl i64 %3, 2                           ; 2 uses
   %i.bj = add i64 %i.bh, %i.h
   %i.bk = add i64 %i.bj, -4
   %i.bl = add i64 %i.bi, %i.ac
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = and i64 %i.bm, -4                       ; 2 uses
-  %i.bo = add nsw i64 %i.bh, -4                   ; 2 uses
+  %i.bo = add i64 %i.bh, -4                       ; 2 uses
   %i.bp = sub i64 %i.bo, %i.bn
   %i.bq = getelementptr i8, ptr %i.g, i64 %i.bp
   %i.br = add i64 %i.bi, %i.bn
@@ -8474,7 +8474,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test11m
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test11movable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bc = shl nuw nsw i64 %i.e, 2
+  %i.bc = shl i64 %i.e, 2
   %i.bd = shl i64 %3, 2
   %i.be = add i64 %i.bc, %i.h
   %i.bf = add i64 %i.be, -4
@@ -8486,14 +8486,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test11m
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader28, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bk = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bk = shl i64 %i.e, 2                         ; 2 uses
   %i.bl = shl i64 %3, 2                           ; 2 uses
   %i.bm = add i64 %i.bk, %i.h
   %i.bn = add i64 %i.bm, -4
   %i.bo = add i64 %i.bl, %i.af
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = and i64 %i.bp, -4                       ; 2 uses
-  %i.br = add nsw i64 %i.bk, -4                   ; 2 uses
+  %i.br = add i64 %i.bk, -4                       ; 2 uses
   %i.bs = sub i64 %i.br, %i.bq
   %i.bt = getelementptr i8, ptr %i.g, i64 %i.bs
   %i.bu = add i64 %i.bl, %i.bq
@@ -8896,7 +8896,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.az = shl nuw nsw i64 %i.e, 2
+  %i.az = shl i64 %i.e, 2
   %i.ba = shl i64 %3, 2
   %i.bb = add i64 %i.az, %i.h
   %i.bc = add i64 %i.bb, -4
@@ -8908,14 +8908,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader80, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bh = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bh = shl i64 %i.e, 2                         ; 2 uses
   %i.bi = shl i64 %3, 2                           ; 2 uses
   %i.bj = add i64 %i.bh, %i.h
   %i.bk = add i64 %i.bj, -4
   %i.bl = add i64 %i.bi, %i.ac
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = and i64 %i.bm, -4                       ; 2 uses
-  %i.bo = add nsw i64 %i.bh, -4                   ; 2 uses
+  %i.bo = add i64 %i.bh, -4                       ; 2 uses
   %i.bp = sub i64 %i.bo, %i.bn
   %i.bq = getelementptr i8, ptr %i.g, i64 %i.bp
   %i.br = add i64 %i.bi, %i.bn
@@ -9318,7 +9318,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %.not8.i.i.i.i, label %.lr.ph.i42.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bd = shl nuw nsw i64 %i.e, 2
+  %i.bd = shl i64 %i.e, 2
   %i.be = shl i64 %3, 2
   %i.bf = add i64 %i.bd, %i.h
   %i.bg = add i64 %i.bf, -4
@@ -9330,14 +9330,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader54, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bl = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bl = shl i64 %i.e, 2                         ; 2 uses
   %i.bm = shl i64 %3, 2                           ; 2 uses
   %i.bn = add i64 %i.bl, %i.h
   %i.bo = add i64 %i.bn, -4
   %i.bp = add i64 %i.bm, %i.ag
   %i.bq = sub i64 %i.bo, %i.bp
   %i.br = and i64 %i.bq, -4                       ; 2 uses
-  %i.bs = add nsw i64 %i.bl, -4                   ; 2 uses
+  %i.bs = add i64 %i.bl, -4                       ; 2 uses
   %i.bt = sub i64 %i.bs, %i.br
   %i.bu = getelementptr i8, ptr %i.g, i64 %i.bt
   %i.bv = add i64 %i.bm, %i.br
@@ -9740,7 +9740,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bc = shl nuw nsw i64 %i.e, 2
+  %i.bc = shl i64 %i.e, 2
   %i.bd = shl i64 %3, 2
   %i.be = add i64 %i.bc, %i.h
   %i.bf = add i64 %i.be, -4
@@ -9752,14 +9752,14 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %min.iters.check, label %.lr.ph.i40.i.i.i.preheader28, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.i.i.preheader
-  %i.bk = shl nuw nsw i64 %i.e, 2                 ; 2 uses
+  %i.bk = shl i64 %i.e, 2                         ; 2 uses
   %i.bl = shl i64 %3, 2                           ; 2 uses
   %i.bm = add i64 %i.bk, %i.h
   %i.bn = add i64 %i.bm, -4
   %i.bo = add i64 %i.bl, %i.af
   %i.bp = sub i64 %i.bn, %i.bo
   %i.bq = and i64 %i.bp, -4                       ; 2 uses
-  %i.br = add nsw i64 %i.bk, -4                   ; 2 uses
+  %i.br = add i64 %i.bk, -4                       ; 2 uses
   %i.bs = sub i64 %i.br, %i.bq
   %i.bt = getelementptr i8, ptr %i.g, i64 %i.bs
   %i.bu = add i64 %i.bl, %i.bq
@@ -10162,7 +10162,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12c
   br i1 %.not8.i.i.i.i, label %.lr.ph.preheader.i.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.be = shl nuw nsw i64 %i.e, 2
+  %i.be = shl i64 %i.e, 2
   %i.bf = shl i64 %3, 2
   %i.bg = add i64 %i.be, %i.h
   %i.bh = add i64 %i.bg, -4
@@ -10565,7 +10565,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12c
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test12copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.br = shl nuw nsw i64 %i.f, 2
+  %i.br = shl i64 %i.f, 2
   %i.bs = shl i64 %3, 2
   %i.bt = add i64 %i.br, %i.i
   %i.bu = add i64 %i.bt, -4
@@ -10968,7 +10968,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12c
   br i1 %.not8.i.i.i.i, label %.lr.ph.i39.i.i.i, label %.lr.ph.i37.i.i.i.preheader
 
 .lr.ph.i37.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bl = shl nuw nsw i64 %i.e, 2
+  %i.bl = shl i64 %i.e, 2
   %i.bm = shl i64 %3, 2
   %i.bn = add i64 %i.bl, %i.h
   %i.bo = add i64 %i.bn, -4
@@ -11371,7 +11371,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12c
   br i1 %.not8.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test12copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i.i.i
-  %i.bj = shl nuw nsw i64 %i.e, 2
+  %i.bj = shl i64 %i.e, 2
   %i.bk = shl i64 %3, 2
   %i.bl = add i64 %i.bj, %i.h
   %i.bm = add i64 %i.bl, -4

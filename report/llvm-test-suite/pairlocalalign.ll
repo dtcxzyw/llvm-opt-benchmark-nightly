@@ -204,8 +204,8 @@ bb.bt:                                            ; preds = %bb.bu, %bb.bs
 bb.bu:                                            ; preds = %bb.bt
   %i.hv = call ptr @fgets(ptr noundef nonnull %i.c, i32 noundef 999, ptr noundef nonnull %i.hl) ; 0 uses
   %i.hw = load ptr, ptr %i.ho, align 8, !tbaa !53
-  %i.hx = shl nuw nsw i64 %indvars.iv.i.i.i, 3
-  %i.hy = add nuw i64 %i.hx, 16
+  %i.hx = shl i64 %indvars.iv.i.i.i, 3
+  %i.hy = add i64 %i.hx, 16
   %i.hz = call ptr @realloc(ptr noundef %i.hw, i64 noundef %i.hy) #25 ; 2 uses
   store ptr %i.hz, ptr %i.ho, align 8, !tbaa !53
   %i.ia = call noalias dereferenceable_or_null(100) ptr @calloc(i64 noundef 100, i64 noundef 1) #23 ; 2 uses

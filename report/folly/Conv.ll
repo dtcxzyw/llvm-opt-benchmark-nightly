@@ -205,9 +205,9 @@ _ZNK3fmt2v920basic_format_contextINS0_8appenderEcE3argEi.exit.thread8.i: ; preds
   %.sroa_idx211 = getelementptr inbounds nuw i8, ptr %i.q, i64 10
   %.sroa.092.0.copyload120212 = load i48, ptr %.sroa_idx211, align 2
   %.sroa.092.0.copyload120 = load i128, ptr %i.q, align 16, !tbaa !71 ; 2 uses
-  store i80 %.sroa.092.0.copyload120210, ptr %.sroa.092, align 16
+  store i80 %.sroa.092.0.copyload120210, ptr %.sroa.092, align 16, !tbaa !71
   %.sroa.092.10.sroa_idx213.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.092, i64 10
-  store i48 %.sroa.092.0.copyload120212, ptr %.sroa.092.10.sroa_idx213.sroa_idx, align 2
+  store i48 %.sroa.092.0.copyload120212, ptr %.sroa.092.10.sroa_idx213.sroa_idx, align 2, !tbaa !71
   %i.r = trunc i128 %.sroa.092.0.copyload120 to i64
   %i.s = lshr i128 %.sroa.092.0.copyload120, 64
   %i.t = trunc nuw i128 %i.s to i64
@@ -222,9 +222,9 @@ _ZNK3fmt2v920basic_format_contextINS0_8appenderEcE3argEi.exit.i: ; preds = %bb.b
   %.sroa_idx207 = getelementptr inbounds nuw i8, ptr %i.x, i64 10
   %.sroa.092.0.copyload208 = load i48, ptr %.sroa_idx207, align 2
   %.sroa.092.0.copyload = load i128, ptr %i.x, align 16, !tbaa !71 ; 2 uses
-  store i80 %.sroa.092.0.copyload206, ptr %.sroa.092, align 16
+  store i80 %.sroa.092.0.copyload206, ptr %.sroa.092, align 16, !tbaa !71
   %.sroa.092.10.sroa_idx209.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.092, i64 10
-  store i48 %.sroa.092.0.copyload208, ptr %.sroa.092.10.sroa_idx209.sroa_idx, align 2
+  store i48 %.sroa.092.0.copyload208, ptr %.sroa.092.10.sroa_idx209.sroa_idx, align 2, !tbaa !71
   %.sroa.38.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %.sroa.38.0.copyload = load i32, ptr %.sroa.38.0..sroa_idx, align 16, !tbaa !122 ; 2 uses
   %i.y = icmp eq i32 %.sroa.38.0.copyload, 0

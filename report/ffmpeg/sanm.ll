@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .lr.ph78.preheader:                               ; preds = %.lr.ph83
   %i.dy = load ptr, ptr %i.w, align 8, !tbaa !72
-  %i.dz = shl nsw i64 %i.dq, 1
+  %i.dz = shl i64 %i.dq, 1
   %.mask = and i32 %i.dv, 65535                   ; 3 uses
   %i.ea = zext nneg i32 %.mask to i64             ; 5 uses
   %min.iters.check111 = icmp samesign ult i32 %.mask, 4
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
 
 .lr.ph80.preheader:                               ; preds = %.lr.ph85
   %i.df = load ptr, ptr %i.w, align 8, !tbaa !72
-  %i.dg = shl nsw i64 %i.cx, 1
+  %i.dg = shl i64 %i.cx, 1
   %.mask = and i32 %i.dc, 65535                   ; 3 uses
   %i.dh = zext nneg i32 %.mask to i64             ; 5 uses
   %min.iters.check = icmp samesign ult i32 %.mask, 4

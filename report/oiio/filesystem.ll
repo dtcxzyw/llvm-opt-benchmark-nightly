@@ -205,6 +205,7 @@ bb.ap:                                            ; preds = %_ZZN3fmt3v126detail
 bb.aq:                                            ; preds = %.sink.split, %bb.j, %bb.i
   %i.dk = phi ptr [ %i.ap, %bb.i ], [ %i.ap, %bb.j ], [ %.ph, %.sink.split ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.experimental.noalias.scope.decl(metadata !1751)
   %i.dl = icmp slt i32 %i.an, 0
   %i.dm = load i32, ptr %i.d, align 8, !tbaa !494, !noalias !1751 ; 4 uses
   br i1 %i.dl, label %bb.ar, label %bb.at
@@ -285,8 +286,8 @@ _ZZN3fmt3v126detail7vprintfIcNS0_20basic_printf_contextIcEEEEvRNS1_6bufferIT_EEN
   %.sroa.0.014.in.i111.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.014.in.i111, i64 10
   %.sroa.0.014.i113738 = load i48, ptr %.sroa.0.014.in.i111.sroa_idx, align 2
   %.sroa.0.014.i113 = load i128, ptr %.sroa.0.014.in.i111, align 16, !tbaa !88, !noalias !1751 ; 14 uses
-  store i80 %.sroa.0.014.i113737, ptr %.sroa.0, align 16
-  store i48 %.sroa.0.014.i113738, ptr %.sroa.0.10.sroa_idx739.sroa_idx, align 2
+  store i80 %.sroa.0.014.i113737, ptr %.sroa.0, align 16, !tbaa !88, !alias.scope !1751
+  store i48 %.sroa.0.014.i113738, ptr %.sroa.0.10.sroa_idx739.sroa_idx, align 2, !tbaa !88, !alias.scope !1751
   %i.eh = load i32, ptr %i.h, align 4, !tbaa !502 ; 2 uses
   %i.ei = icmp sgt i32 %i.eh, -1
   %i.ej = trunc i128 %.sroa.0.014.i113 to i64     ; 5 uses

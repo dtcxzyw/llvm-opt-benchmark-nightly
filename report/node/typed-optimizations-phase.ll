@@ -205,7 +205,7 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft4TypeEE14EnsureCapacityEm.e
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft4TypeEE14EnsureCapacityEm.exit
   %i.n = ptrtoaddr ptr %i.l to i64                ; 3 uses
   %i.o = ptrtoaddr ptr %i.i to i64
-  %i.p = mul nuw nsw i64 %1, 24
+  %i.p = mul i64 %1, 24
   %i.q = add nuw i64 %i.p, %i.o
   %i.r = add i64 %i.n, 24
   %umax = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.r)
@@ -608,7 +608,7 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE14EnsureCapacityE
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE14EnsureCapacityEm.exit
   %i.n = ptrtoaddr ptr %i.l to i64
   %i.o = ptrtoaddr ptr %i.i to i64
-  %i.p = shl nuw nsw i64 %1, 2
+  %i.p = shl i64 %1, 2
   %i.q = add i64 %i.p, %i.o
   %i.r = xor i64 %i.n, -1
   %i.s = add i64 %i.q, %i.r
@@ -718,7 +718,7 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft10BlockIndexEE14EnsureCapac
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft10BlockIndexEE14EnsureCapacityEm.exit
   %i.n = ptrtoaddr ptr %i.l to i64
   %i.o = ptrtoaddr ptr %i.i to i64
-  %i.p = shl nuw nsw i64 %1, 2
+  %i.p = shl i64 %1, 2
   %i.q = add i64 %i.p, %i.o
   %i.r = xor i64 %i.n, -1
   %i.s = add i64 %i.q, %i.r
@@ -1121,7 +1121,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.i.i.i.preheader.i.i.i.i.i.i.i:           ; preds = %bb.d
   %i.ab = ptrtoaddr ptr %i.x to i64
   %i.ac = ptrtoaddr ptr %i.y to i64
-  %i.ad = shl nuw nsw i64 %i.q, 2
+  %i.ad = shl nsw i64 %i.q, 2
   %i.ae = add nsw i64 %i.ad, -4
   %i.af = sub i64 %i.ae, %i.ab
   %i.ag = add i64 %i.af, %i.ac
@@ -1524,7 +1524,7 @@ _ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit: ; pre
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit
   %i.n = ptrtoaddr ptr %i.l to i64
   %i.o = ptrtoaddr ptr %i.i to i64
-  %i.p = shl nuw nsw i64 %1, 3
+  %i.p = shl i64 %1, 3
   %i.q = add i64 %i.p, %i.o
   %i.r = xor i64 %i.n, -1
   %i.s = add i64 %i.q, %i.r

@@ -21,7 +21,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.i = load i32, ptr %i.h, align 4
   %i.j = sext i32 %i.i to i64
-  %i.k = select i1 %i.e, i64 %i.g, i64 %i.j       ; 34 uses
+  %i.k = select i1 %i.e, i64 %i.g, i64 %i.j       ; 35 uses
   %i.l = icmp sgt i32 %3, 15
   br i1 %i.l, label %.lr.ph92.i, label %.preheader19.i
 
@@ -424,6 +424,8 @@ vec.epilog.middle.block523:                       ; preds = %vec.epilog.vector.b
   %narrow684 = add nuw i32 %i.amv, 1
   %i.amw = zext i32 %narrow684 to i64             ; 5 uses
   %min.iters.check640 = icmp ult i32 %i.amu, 14
+  %.mask686 = and i64 %i.k, 4611686018427387904
+  %stride.check639 = icmp ne i64 %.mask686, 0
   %min.iters.check642 = icmp ult i32 %i.amu, 126
   %i.amx = and i64 %i.amw, 56
   %n.vec644 = and i64 %i.amw, 4294967232          ; 5 uses
@@ -456,7 +458,8 @@ vector.memcheck632:                               ; preds = %iter.check662
   %bound0636 = icmp ult ptr %.33230.i, %scevgep635
   %bound1637 = icmp ult ptr %scevgep634, %scevgep633
   %found.conflict638 = and i1 %bound0636, %bound1637
-  br i1 %found.conflict638, label %.lr.ph220.i.preheader, label %vector.main.loop.iter.check641
+  %6 = or i1 %found.conflict638, %stride.check639
+  br i1 %6, label %.lr.ph220.i.preheader, label %vector.main.loop.iter.check641
 
 vector.main.loop.iter.check641:                   ; preds = %vector.memcheck632
   br i1 %min.iters.check642, label %vec.epilog.ph666, label %vector.ph643
@@ -859,7 +862,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.i = load i32, ptr %i.h, align 4
   %i.j = sext i32 %i.i to i64
-  %i.k = select i1 %i.e, i64 %i.g, i64 %i.j       ; 34 uses
+  %i.k = select i1 %i.e, i64 %i.g, i64 %i.j       ; 35 uses
   %i.l = icmp sgt i32 %3, 15
   br i1 %i.l, label %.lr.ph92.i, label %.preheader19.i
 
@@ -1262,6 +1265,8 @@ vec.epilog.middle.block523:                       ; preds = %vec.epilog.vector.b
   %narrow684 = add nuw i32 %i.amv, 1
   %i.amw = zext i32 %narrow684 to i64             ; 5 uses
   %min.iters.check640 = icmp ult i32 %i.amu, 14
+  %.mask686 = and i64 %i.k, 4611686018427387904
+  %stride.check639 = icmp ne i64 %.mask686, 0
   %min.iters.check642 = icmp ult i32 %i.amu, 126
   %i.amx = and i64 %i.amw, 56
   %n.vec644 = and i64 %i.amw, 4294967232          ; 5 uses
@@ -1294,7 +1299,8 @@ vector.memcheck632:                               ; preds = %iter.check662
   %bound0636 = icmp ult ptr %.33230.i, %scevgep635
   %bound1637 = icmp ult ptr %scevgep634, %scevgep633
   %found.conflict638 = and i1 %bound0636, %bound1637
-  br i1 %found.conflict638, label %.lr.ph220.i.preheader, label %vector.main.loop.iter.check641
+  %6 = or i1 %found.conflict638, %stride.check639
+  br i1 %6, label %.lr.ph220.i.preheader, label %vector.main.loop.iter.check641
 
 vector.main.loop.iter.check641:                   ; preds = %vector.memcheck632
   br i1 %min.iters.check642, label %vec.epilog.ph666, label %vector.ph643
