@@ -202,12 +202,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.p = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef 4)
-  %.not3 = icmp eq i16 %i.p, 0
-  %1 = select i1 %.not3, i32 1, i32 -1
+  %1 = icmp ne i16 %i.p, 0
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.not = phi i32 [ -1, %bb.g ], [ %1, %bb.i ], [ -1, %bb.h ]
+  %.not = phi i1 [ true, %bb.g ], [ %1, %bb.i ], [ true, %bb.h ] ; 2 uses
   %i.q = tail call zeroext i16 @tvb_get_letohs(ptr noundef %0, i32 noundef 0)
   %i.r = icmp ult i16 %i.q, 256
   br i1 %i.r, label %bb.k, label %bb.n
@@ -239,10 +238,14 @@ bb.o:                                             ; preds = %bb.n
   %.not31 = icmp eq i32 %i.aa, 0
   %i.ab = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 16)
   %.not32 = icmp eq i32 %i.ab, 0
-  %i.ac = select i1 %.not32, i1 %.not31, i1 false
-  %i.ad = select i1 %i.ac, i1 %.not30, i1 false
-  %i.ae = select i1 %i.ad, i1 %.0, i1 false
-  %spec.select2 = select i1 %i.ae, i32 3, i32 %.not
+  %2 = select i1 %.not32, i1 %.not31, i1 false
+  %3 = select i1 %2, i1 %.not30, i1 false
+  %i.ac = select i1 %3, i1 %.0, i1 false          ; 2 uses
+  %i.ad = select i1 %.not, i1 true, i1 %i.ac
+  %4 = xor i1 %.not, true
+  %i.ae = select i1 %4, i1 true, i1 %i.ac
+  %.mux = select i1 %i.ad, i32 3, i32 1
+  %spec.select2 = select i1 %i.ae, i32 %.mux, i32 -1
   br label %.thread
 
 bb.p:                                             ; preds = %bb.n

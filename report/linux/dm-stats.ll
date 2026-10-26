@@ -203,10 +203,10 @@ bb.h:                                             ; preds = %.lr.ph, %__dm_stat_
   %i.ab = getelementptr i8, ptr %.053, i64 20     ; 5 uses
   %i.ac = load i32, ptr %i.ab, align 4
   %i.ad = and i32 %i.ac, 1
-  %i.ae = icmp eq i32 %i.ad, 0
-  %or.cond = select i1 %i.ae, i1 true, i1 %.04552 ; 2 uses
+  %i.ae = icmp eq i32 %i.ad, 0                    ; 2 uses
+  %or.cond = select i1 %i.ae, i1 true, i1 %.04552
   %brmerge = or i1 %or.cond, %.not48
-  %not.or.cond = xor i1 %or.cond, true
+  %not.or.cond = xor i1 %i.ae, true
   %.045.mux = select i1 %not.or.cond, i1 true, i1 %.04552
   br i1 %brmerge, label %bb.j, label %bb.i
 

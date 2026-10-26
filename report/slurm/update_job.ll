@@ -202,15 +202,15 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f, %bb.a
   tail call void @slurm_xfree(ptr noundef nonnull @_next_job_id.task_id_spec) #13
   %i.i = load ptr, ptr @local_job_str, align 8    ; 2 uses
-  %i.j = icmp eq ptr %i.i, null
+  %i.j = icmp eq ptr %i.i, null                   ; 2 uses
   %i.k = load ptr, ptr @_next_job_id.save_ptr, align 8
   %i.l = icmp ne ptr %i.k, null                   ; 2 uses
-  %or.cond = select i1 %i.j, i1 true, i1 %i.l     ; 2 uses
-  %or.cond.not = xor i1 %or.cond, true
+  %or.cond.not = xor i1 %i.j, true
   %brmerge = select i1 %or.cond.not, i1 true, i1 %i.l
   br i1 %brmerge, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
+  %or.cond = select i1 %i.j, i1 true, i1 %i.l
   %.mux = select i1 %or.cond, ptr null, ptr %i.i
   %i.m = tail call ptr @strtok_r(ptr noundef %.mux, ptr noundef nonnull @.str.147, ptr noundef nonnull @_next_job_id.save_ptr) #13 ; 8 uses
   %.not36 = icmp eq ptr %i.m, null

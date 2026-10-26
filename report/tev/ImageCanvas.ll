@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.g = phi i1 [ true, %bb.a ], [ %i.f, %bb.b ]  ; 2 uses
+  %i.g = phi i1 [ true, %bb.a ], [ %i.f, %bb.b ]  ; 3 uses
   %i.h = tail call i32 @glfwGetKey(ptr noundef %i.c, i32 noundef 341)
   %.not23 = icmp eq i32 %i.h, 0
   br i1 %.not23, label %bb.d, label %bb.e
@@ -217,7 +217,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.k = phi i1 [ true, %bb.c ], [ %i.j, %bb.d ]  ; 2 uses
-  %or.cond = select i1 %i.g, i1 %i.k, i1 false    ; 2 uses
+  %or.cond = select i1 %i.g, i1 %i.k, i1 false
   %spec.select26 = xor i1 %i.g, %or.cond
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !207  ; 4 uses
@@ -512,7 +512,7 @@ bb.l:                                             ; preds = %_ZN7nanogui7inverse
 
 bb.m:                                             ; preds = %_ZN7nanogui7inverseERKNS_6MatrixIfLm3EEE.exit43, %bb.l
   %i.hj = phi float [ %i.hi, %bb.l ], [ 1.000000e+00, %_ZN7nanogui7inverseERKNS_6MatrixIfLm3EEE.exit43 ]
-  %not.or.cond = xor i1 %or.cond, true
+  %not.or.cond = xor i1 %i.g, true
   %spec.select = select i1 %not.or.cond, i1 %i.k, i1 false
   %i.hk = icmp eq ptr %i.an, %i.m
   %i.hl = or i1 %spec.select, %i.hk

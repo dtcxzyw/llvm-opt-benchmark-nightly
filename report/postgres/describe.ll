@@ -204,18 +204,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.j = icmp ne ptr %i.d, null                   ; 2 uses
-  %i.k = icmp ne ptr %i.c, null                   ; 2 uses
-  %or.cond = select i1 %i.k, i1 true, i1 %i.j
-  %not.or.cond = xor i1 %or.cond, true            ; 2 uses
-  %spec.select = or i1 %i.k, %not.or.cond         ; 3 uses
-  %spec.select51.a = select i1 %not.or.cond, i1 true, i1 %i.j ; 5 uses
+  %i.k = icmp ne ptr %i.c, null                   ; 3 uses
+  %spec.select51.a = select i1 %i.k, i1 true, i1 %i.j
   %.not = xor i1 %spec.select51.a, true
-  %or.cond3 = or i1 %spec.select, %.not           ; 2 uses
-  %.not4 = xor i1 %spec.select, true
-  %or.cond6 = or i1 %spec.select51.a, %.not4      ; 2 uses
-  %.str.322..str.321 = select i1 %or.cond6, ptr @.str.322, ptr @.str.321
+  %or.cond3 = or i1 %i.k, %.not                   ; 3 uses
+  %.not4 = xor i1 %i.k, true
+  %spec.select51 = select i1 %.not4, i1 true, i1 %i.j ; 5 uses
+  %.str.322..str.321 = select i1 %spec.select51, ptr @.str.322, ptr @.str.321
   %.042 = select i1 %or.cond3, ptr %.str.322..str.321, ptr @.str.320
-  %.0 = and i1 %or.cond3, %or.cond6               ; 2 uses
+  %.0 = select i1 %or.cond3, i1 %spec.select51, i1 false ; 2 uses
   call void @initPQExpBuffer(ptr noundef nonnull %3) #7
   call void (ptr, ptr, ...) @printfPQExpBuffer(ptr noundef nonnull %3, ptr noundef nonnull @.str, ptr noundef nonnull @.str.323) #7
   call void (ptr, ptr, ...) @appendPQExpBuffer(ptr noundef nonnull %3, ptr noundef nonnull @.str.324, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.30) #7
@@ -237,7 +234,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  br i1 %spec.select51.a, label %bb.h, label %bb.i
+  br i1 %spec.select51, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   call void (ptr, ptr, ...) @appendPQExpBuffer(ptr noundef nonnull %3, ptr noundef nonnull @.str.328, ptr noundef nonnull @.str.20) #7
@@ -261,7 +258,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.i
   call void @appendPQExpBufferStr(ptr noundef nonnull %3, ptr noundef nonnull @.str.276) #7
-  br i1 %spec.select51.a, label %bb.n, label %bb.o
+  br i1 %spec.select51, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   call void @appendPQExpBufferStr(ptr noundef nonnull %3, ptr noundef nonnull @.str.278) #7
@@ -287,14 +284,14 @@ bb.q:                                             ; preds = %bb.o, %bb.p
 
 bb.r:                                             ; preds = %.sink.split, %bb.q
   call void @appendPQExpBufferStr(ptr noundef nonnull %3, ptr noundef nonnull @.str.279) #7
-  br i1 %spec.select, label %bb.s, label %bb.t
+  br i1 %or.cond3, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   call void @appendPQExpBufferStr(ptr noundef nonnull %3, ptr noundef nonnull @.str.338) #7
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  br i1 %spec.select51.a, label %bb.u, label %bb.v
+  br i1 %spec.select51, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   call void @appendPQExpBufferStr(ptr noundef nonnull %3, ptr noundef nonnull @.str.339) #7
