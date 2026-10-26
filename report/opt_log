@@ -1,0 +1,49 @@
+faiss/IndexFlatCodes.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/IndexFlatCodes.bc?download=true
+imgui/imgui.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/imgui/original/imgui.bc?download=true
+recastnavigation/imgui.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/imgui.bc?download=true
+imgui/imgui_demo.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/imgui/original/imgui_demo.bc?download=true
+rust-analyzer-rs/nix-df5fc48ef92aad79.nix.e14b652dba6383ab-cgu.3.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/nix-df5fc48ef92aad79.nix.e14b652dba6383ab-cgu.3.bc?download=true
+slurm/anchor.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/slurm/original/anchor.bc?download=true
+ruby/console.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruby/original/console.bc?download=true
+
+Reproduce first opt error with backtrace: faiss/IndexFlatCodes.bc: failed to run opt
+Command: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/faiss/original/IndexFlatCodes.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/faiss-s-IndexFlatCodes.bc
+Exit code: -6
+Stderr:
+opt: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-project/llvm/lib/Transforms/Utils/Evaluator.cpp:920: bool llvm::Evaluator::EvaluateFunction(Function *, Constant *&, const SmallVectorImpl<Constant *> &): Assertion `ActualArgs.size() == F->arg_size() && "wrong number of arguments"' failed.
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and instructions to reproduce the bug.
+Stack dump:
+0.	Program arguments: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/faiss/original/IndexFlatCodes.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/faiss-s-IndexFlatCodes.bc
+1.	Running pass "function<eager-inv>(drop-unnecessary-assumes,float2int,lower-constant-intrinsics,chr,loop(loop-rotate<header-duplication;no-prepare-for-lto;check-exit-count>,loop-deletion,loop-interchange),loop-distribute,inject-tli-mappings,loop-vectorize<no-interleave-forced-only;no-vectorize-forced-only;>,drop-unnecessary-assumes<drop-deref>,infer-alignment,loop-load-elim,instcombine<max-iterations=1;no-verify-fixpoint>,simplifycfg<bonus-inst-threshold=1;forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;switch-to-lookup;no-keep-loops;hoist-common-insts;no-hoist-loads-stores-with-cond-faulting;sink-common-insts;speculate-blocks;simplify-cond-branch;no-speculate-unpredictables>,slp-vectorizer,vector-combine,instcombine<max-iterations=1;no-verify-fixpoint>,loop-unroll<O3>,transform-warning,sroa<preserve-cfg;aggregate-to-vector>,correlated-propagation<finite-values>,sccp,infer-alignment,instcombine<max-iterations=1;no-verify-fixpoint>,loop-mssa(licm<allowspeculation>),alignment-from-assumptions,loop-sink,instsimplify,div-rem-pairs,mergeicmps,expand-memcmp,tailcallelim,simplifycfg<bonus-inst-threshold=1;no-forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;no-switch-to-lookup;keep-loops;no-hoist-common-insts;hoist-loads-stores-with-cond-faulting;no-sink-common-insts;speculate-blocks;simplify-cond-branch;speculate-unpredictables>)" on module "/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/faiss/original/IndexFlatCodes.bc"
+2.	Running pass "correlated-propagation<finite-values>" on function "_ZNK5faiss14IndexFlatCodes7search1EPKfRNS_22ResultHandlerUnorderedIflEEPNS_16SearchParametersE"
+ #0 0x00005555559584eb llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4044eb)
+ #1 0x00005555559552c1 llvm::sys::RunSignalHandlers() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4012c1)
+ #2 0x000055555595924b SignalHandler(int, siginfo_t*, void*) Signals.cpp:0:0
+ #3 0x00007ffff7a3a330 (/lib/x86_64-linux-gnu/libc.so.6+0x45330)
+ #4 0x00007ffff7a93c0c pthread_kill (/lib/x86_64-linux-gnu/libc.so.6+0x9ec0c)
+ #5 0x00007ffff7a3a27e raise (/lib/x86_64-linux-gnu/libc.so.6+0x4527e)
+ #6 0x00007ffff7a1d8ff abort (/lib/x86_64-linux-gnu/libc.so.6+0x288ff)
+ #7 0x00007ffff7a1d81b (/lib/x86_64-linux-gnu/libc.so.6+0x2881b)
+ #8 0x00007ffff7a30517 (/lib/x86_64-linux-gnu/libc.so.6+0x3b517)
+ #9 0x0000555557837efd llvm::Evaluator::EvaluateFunction(llvm::Function*, llvm::Constant*&, llvm::SmallVectorImpl<llvm::Constant*> const&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x22e3efd)
+#10 0x00005555578376f3 llvm::Evaluator::EvaluateRuntimeCall(llvm::CallBase&, llvm::ArrayRef<llvm::Constant*>) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x22e36f3)
+#11 0x0000555557838330 llvm::Evaluator::EvaluateExpressionImpl(llvm::Value*, llvm::function_ref<llvm::Constant* (llvm::Value*)>, unsigned int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x22e4330)
+#12 0x0000555557384a14 (anonymous namespace)::foldFiniteInput(llvm::Instruction&, llvm::LazyValueInfo&, llvm::DominatorTree&, llvm::AssumptionCache&, llvm::TargetLibraryInfo const&, llvm::TargetTransformInfo&) CorrelatedValuePropagation.cpp:0:0
+#13 0x000055555737ca19 llvm::CorrelatedValuePropagationPass::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x1e28a19)
+#14 0x00005555582933e3 llvm::PassManager<llvm::Function, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d3f3e3)
+#15 0x00005555582969ad llvm::ModuleToFunctionPassAdaptor::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d429ad)
+#16 0x000055555829273d llvm::PassManager<llvm::Module, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d3e73d)
+#17 0x0000555555a07d48 llvm::runPassPipeline(llvm::StringRef, llvm::Module&, llvm::TargetMachine*, llvm::TargetLibraryInfoImpl*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::StringRef, llvm::ArrayRef<llvm::PassPluginLibraryInfo>, llvm::ArrayRef<std::function<void (llvm::PassBuilder&)>>, llvm::opt_tool::OutputKind, llvm::opt_tool::VerifierKind, bool, bool, bool, bool, bool, bool, bool, bool) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4b3d48)
+#18 0x00005555559fea34 optMain (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4aaa34)
+#19 0x000055555593e653 main (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3ea653)
+#20 0x00007ffff7a1f1ca (/lib/x86_64-linux-gnu/libc.so.6+0x2a1ca)
+#21 0x00007ffff7a1f28b __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28b)
+#22 0x000055555593e545 _start (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3ea545)
+
