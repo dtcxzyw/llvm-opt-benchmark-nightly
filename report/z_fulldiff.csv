@@ -1,0 +1,4 @@
+Delta,Added Lines,Removed Lines,Download URL
+62,2593,2531,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/decoders_dcraw.bc?download=true
+23,2438,2415,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/decoders_dcraw.bc?download=true
+-3,9,12,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/gemm_x86.bc?download=true

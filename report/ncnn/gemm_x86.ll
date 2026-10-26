@@ -205,17 +205,16 @@ bb.f:                                             ; preds = %bb.e
   br label %._crit_edge.us42.i
 
 ._crit_edge.us42.i:                               ; preds = %bb.f, %bb.e, %.preheader.us33.i
-  %.sroa.speculated4.us41.i.lcssa = phi float [ %.sroa.speculated4.us41.i, %.preheader.us33.i ], [ %.sroa.speculated4.us41.i.1, %bb.e ], [ %.sroa.speculated4.us41.i.2, %bb.f ]
+  %.sroa.speculated4.us41.i.lcssa = phi float [ %.sroa.speculated4.us41.i, %.preheader.us33.i ], [ %.sroa.speculated4.us41.i.1, %bb.e ], [ %.sroa.speculated4.us41.i.2, %bb.f ] ; 2 uses
   switch i32 %i.b, label %bb.h [
     i32 4, label %.thread.us46.i
     i32 1, label %bb.g
   ]
 
 bb.g:                                             ; preds = %._crit_edge.us42.i
-  %.sroa.speculated.us45.i = tail call nnan ninf nsz float @llvm.maxnum.f32(float %.sroa.speculated4.us41.i.lcssa, float 0.000000e+00) ; 2 uses
-  %i.db = fdiv fast float 1.270000e+02, %.sroa.speculated.us45.i
+  %i.db = fdiv fast float 1.270000e+02, %.sroa.speculated4.us41.i.lcssa
   store float %i.db, ptr %.05127.us36.i, align 4, !tbaa !67
-  %i.dc = fmul fast float %.sroa.speculated.us45.i, %i.q
+  %i.dc = fmul fast float %.sroa.speculated4.us41.i.lcssa, %i.q
   store float %i.dc, ptr %.04928.us35.i, align 4, !tbaa !67
   %i.dd = getelementptr inbounds nuw i8, ptr %.05127.us36.i, i64 4
   %i.de = getelementptr inbounds nuw i8, ptr %.04928.us35.i, i64 4
@@ -618,17 +617,16 @@ bb.n:                                             ; preds = %bb.m
   br label %._crit_edge.us42.i.i.us
 
 ._crit_edge.us42.i.i.us:                          ; preds = %bb.n, %bb.m, %.preheader.us33.i.i.us
-  %.sroa.speculated4.us41.i.i.us.lcssa = phi float [ %.sroa.speculated4.us41.i.i.us, %.preheader.us33.i.i.us ], [ %.sroa.speculated4.us41.i.i.us.1, %bb.m ], [ %.sroa.speculated4.us41.i.i.us.2, %bb.n ]
+  %.sroa.speculated4.us41.i.i.us.lcssa = phi float [ %.sroa.speculated4.us41.i.i.us, %.preheader.us33.i.i.us ], [ %.sroa.speculated4.us41.i.i.us.1, %bb.m ], [ %.sroa.speculated4.us41.i.i.us.2, %bb.n ] ; 2 uses
   switch i32 %i.fg, label %bb.p [
     i32 4, label %.thread.us46.i.i.us
     i32 1, label %bb.o
   ]
 
 bb.o:                                             ; preds = %._crit_edge.us42.i.i.us
-  %.sroa.speculated.us45.i.i.us = call nnan ninf nsz float @llvm.maxnum.f32(float %.sroa.speculated4.us41.i.i.us.lcssa, float 0.000000e+00) ; 2 uses
-  %i.ij = fdiv fast float 1.270000e+02, %.sroa.speculated.us45.i.i.us
+  %i.ij = fdiv fast float 1.270000e+02, %.sroa.speculated4.us41.i.i.us.lcssa
   store float %i.ij, ptr %.05127.us36.i.i.us, align 4, !tbaa !67
-  %i.ik = fmul fast float %.sroa.speculated.us45.i.i.us, %i.fr
+  %i.ik = fmul fast float %.sroa.speculated4.us41.i.i.us.lcssa, %i.fr
   store float %i.ik, ptr %.04928.us35.i.i.us, align 4, !tbaa !67
   %i.il = getelementptr inbounds nuw i8, ptr %.05127.us36.i.i.us, i64 4
   %i.im = getelementptr inbounds nuw i8, ptr %.04928.us35.i.i.us, i64 4
@@ -1031,17 +1029,16 @@ bb.n:                                             ; preds = %bb.m
   br label %._crit_edge.us42.i.i.us
 
 ._crit_edge.us42.i.i.us:                          ; preds = %bb.n, %bb.m, %.preheader.us33.i.i.us
-  %.sroa.speculated4.us41.i.i.us.lcssa = phi float [ %.sroa.speculated4.us41.i.i.us, %.preheader.us33.i.i.us ], [ %.sroa.speculated4.us41.i.i.us.1, %bb.m ], [ %.sroa.speculated4.us41.i.i.us.2, %bb.n ]
+  %.sroa.speculated4.us41.i.i.us.lcssa = phi float [ %.sroa.speculated4.us41.i.i.us, %.preheader.us33.i.i.us ], [ %.sroa.speculated4.us41.i.i.us.1, %bb.m ], [ %.sroa.speculated4.us41.i.i.us.2, %bb.n ] ; 2 uses
   switch i32 %i.fg, label %bb.p [
     i32 4, label %.thread.us46.i.i.us
     i32 1, label %bb.o
   ]
 
 bb.o:                                             ; preds = %._crit_edge.us42.i.i.us
-  %.sroa.speculated.us45.i.i.us = call nnan ninf nsz float @llvm.maxnum.f32(float %.sroa.speculated4.us41.i.i.us.lcssa, float 0.000000e+00) ; 2 uses
-  %i.ij = fdiv fast float 1.270000e+02, %.sroa.speculated.us45.i.i.us
+  %i.ij = fdiv fast float 1.270000e+02, %.sroa.speculated4.us41.i.i.us.lcssa
   store float %i.ij, ptr %.05127.us36.i.i.us, align 4, !tbaa !67
-  %i.ik = fmul fast float %.sroa.speculated.us45.i.i.us, %i.fr
+  %i.ik = fmul fast float %.sroa.speculated4.us41.i.i.us.lcssa, %i.fr
   store float %i.ik, ptr %.04928.us35.i.i.us, align 4, !tbaa !67
   %i.il = getelementptr inbounds nuw i8, ptr %.05127.us36.i.i.us, i64 4
   %i.im = getelementptr inbounds nuw i8, ptr %.04928.us35.i.i.us, i64 4
