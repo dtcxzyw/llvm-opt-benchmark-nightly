@@ -204,9 +204,9 @@ _RNvXs2o_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringINtNtNtCs3oUPov
   %i.j = sub nuw i64 %1, %i.c
   %.idx.i = shl nuw nsw i64 %i.j, 2
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx.i
-  %i.l = shl nuw nsw i64 %1, 2
-  %i.m = shl nuw nsw i64 %i.c, 2
-  %i.n = add nsw i64 %i.l, -4
+  %i.l = shl i64 %1, 2
+  %i.m = shl i64 %i.c, 2
+  %i.n = add i64 %i.l, -4
   %i.o = sub i64 %i.n, %i.m                       ; 2 uses
   %i.p = lshr exact i64 %i.o, 2
   %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
@@ -285,9 +285,9 @@ _RNvXs2o_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32StringINtNtNtCs3oUPov
   %i.ap = sub nuw i64 %i.c, %1
   %.idx.i12 = shl nuw nsw i64 %i.ap, 2
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.idx.i12
-  %i.ar = shl nuw nsw i64 %i.c, 2
-  %i.as = shl nuw nsw i64 %1, 2
-  %i.at = add nsw i64 %i.ar, -4
+  %i.ar = shl i64 %i.c, 2
+  %i.as = shl i64 %1, 2
+  %i.at = add i64 %i.ar, -4
   %i.au = sub i64 %i.at, %i.as                    ; 2 uses
   %i.av = lshr exact i64 %i.au, 2
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses

@@ -205,7 +205,7 @@ _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS_9Repl
 vector.memcheck562:                               ; preds = %.preheader.lr.ph.i.i.i.i.i.i.i.i.i.i193
   %i.cu = ptrtoaddr ptr %i.ct to i64
   %i.cv = ptrtoaddr ptr %i.cr to i64
-  %i.cw = shl nsw i64 %i.aw, 3
+  %i.cw = shl i64 %i.aw, 3
   %i.cx = add i64 %i.cw, %i.cv
   %i.cy = sub i64 %i.cu, %i.cx
   %diff.check563 = icmp ugt i64 %i.cy, -32

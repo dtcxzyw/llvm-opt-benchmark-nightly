@@ -206,7 +206,7 @@ bb.x:                                             ; preds = %bb.w
   %.sroa.27.sroa.0.4..sroa_idx663 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.5148.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx663, align 4, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx675 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.6149.0.copyload.i54, ptr %.sroa.27.sroa.0.12..sroa_idx675, align 4
+  store i32 %.sroa.6149.0.copyload.i54, ptr %.sroa.27.sroa.0.12..sroa_idx675, align 4, !alias.scope !20791
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !20792
   invoke void @"_ZN4core3ptr226drop_in_place$LT$nickel_lang_parser..typ..TypeF$LT$alloc..boxed..Box$LT$nickel_lang_core..typ..Type$GT$$C$nickel_lang_core..typ..RecordRows$C$nickel_lang_core..typ..EnumRows$C$nickel_lang_core..eval..value..NickelValue$GT$$GT$17ha0c517b75e5c97a4E"(ptr noalias noundef nonnull align 8 dereferenceable(104) %.sroa.628.sroa.6.0) #84
           to label %"_ZN4core3ptr73drop_in_place$LT$alloc..boxed..Box$LT$nickel_lang_core..typ..Type$GT$$GT$17hffeb5fc86f39bc32E.exit" unwind label %bb.y, !noalias !20800, !inline_history !20779
@@ -255,7 +255,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.sroa.27.sroa.0.4..sroa_idx662 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.5157.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx662, align 4, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx674 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.6158.0.copyload.i52, ptr %.sroa.27.sroa.0.12..sroa_idx674, align 4
+  store i32 %.sroa.6158.0.copyload.i52, ptr %.sroa.27.sroa.0.12..sroa_idx674, align 4, !alias.scope !20791
   call void @"_ZN4core3ptr73drop_in_place$LT$alloc..boxed..Box$LT$nickel_lang_core..typ..Type$GT$$GT$17hffeb5fc86f39bc32E"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.m), !noalias !20793, !inline_history !20758
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !20792
   br label %bb.ae
@@ -313,7 +313,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.sroa.27.sroa.0.4..sroa_idx661 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.5166.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx661, align 4, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx673 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.6167.0.copyload.i50, ptr %.sroa.27.sroa.0.12..sroa_idx673, align 4
+  store i32 %.sroa.6167.0.copyload.i50, ptr %.sroa.27.sroa.0.12..sroa_idx673, align 4, !alias.scope !20791
   call void @llvm.experimental.noalias.scope.decl(metadata !20801)
   switch i64 %.sroa.026.0, label %bb.ak [
     i64 0, label %"_ZN4core3ptr53drop_in_place$LT$nickel_lang_parser..typ..VarKind$GT$17hec625ca286c1f616E.exit"
@@ -403,7 +403,7 @@ bb.an:                                            ; preds = %bb.q
   %.sroa.27.sroa.0.8..sroa_idx668 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 8
   store i32 %i.au, ptr %.sroa.27.sroa.0.8..sroa_idx668, align 8, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx670 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.614.i.i35.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx670, align 4
+  store i32 %.sroa.614.i.i35.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx670, align 4, !noalias !20803
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17h1c728c8125142579E.exit.thread"
 
 bb.ao:                                            ; preds = %bb.r
@@ -436,7 +436,7 @@ bb.ap:                                            ; preds = %bb.r
   %.sroa.27.sroa.0.8..sroa_idx667 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 8
   store i32 %i.ay, ptr %.sroa.27.sroa.0.8..sroa_idx667, align 8, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.614.i.i.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx, align 4
+  store i32 %.sroa.614.i.i.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx, align 4, !noalias !20803
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17h1c728c8125142579E.exit.thread"
 
 bb.aq:                                            ; preds = %bb.s
@@ -444,7 +444,7 @@ bb.aq:                                            ; preds = %bb.s
   %.sroa.27.sroa.0.4..sroa_idx660 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.4183.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx660, align 4, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx672 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.5184.0.copyload.i305, ptr %.sroa.27.sroa.0.12..sroa_idx672, align 4
+  store i32 %.sroa.5184.0.copyload.i305, ptr %.sroa.27.sroa.0.12..sroa_idx672, align 4, !alias.scope !20791
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17h1c728c8125142579E.exit.thread298"
 
 bb.ar:                                            ; preds = %bb.s
@@ -461,7 +461,7 @@ bb.as:                                            ; preds = %bb.t
   %.sroa.27.sroa.0.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.4192.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx, align 4, !alias.scope !20791
   %.sroa.27.sroa.0.12..sroa_idx671 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.5193.0.copyload.i303, ptr %.sroa.27.sroa.0.12..sroa_idx671, align 4
+  store i32 %.sroa.5193.0.copyload.i303, ptr %.sroa.27.sroa.0.12..sroa_idx671, align 4, !alias.scope !20791
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17h1c728c8125142579E.exit.thread298"
 
 bb.at:                                            ; preds = %bb.t
@@ -864,7 +864,7 @@ bb.x:                                             ; preds = %bb.w
   %.sroa.27.sroa.0.4..sroa_idx663 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.5148.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx663, align 4, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx675 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.6149.0.copyload.i54, ptr %.sroa.27.sroa.0.12..sroa_idx675, align 4
+  store i32 %.sroa.6149.0.copyload.i54, ptr %.sroa.27.sroa.0.12..sroa_idx675, align 4, !alias.scope !21098
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !21099
   invoke void @"_ZN4core3ptr226drop_in_place$LT$nickel_lang_parser..typ..TypeF$LT$alloc..boxed..Box$LT$nickel_lang_core..typ..Type$GT$$C$nickel_lang_core..typ..RecordRows$C$nickel_lang_core..typ..EnumRows$C$nickel_lang_core..eval..value..NickelValue$GT$$GT$17ha0c517b75e5c97a4E"(ptr noalias noundef nonnull align 8 dereferenceable(104) %.sroa.628.sroa.6.0) #84
           to label %"_ZN4core3ptr73drop_in_place$LT$alloc..boxed..Box$LT$nickel_lang_core..typ..Type$GT$$GT$17hffeb5fc86f39bc32E.exit" unwind label %bb.y, !noalias !21107, !inline_history !21086
@@ -913,7 +913,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.sroa.27.sroa.0.4..sroa_idx662 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.5157.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx662, align 4, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx674 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.6158.0.copyload.i52, ptr %.sroa.27.sroa.0.12..sroa_idx674, align 4
+  store i32 %.sroa.6158.0.copyload.i52, ptr %.sroa.27.sroa.0.12..sroa_idx674, align 4, !alias.scope !21098
   call void @"_ZN4core3ptr73drop_in_place$LT$alloc..boxed..Box$LT$nickel_lang_core..typ..Type$GT$$GT$17hffeb5fc86f39bc32E"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.m), !noalias !21100, !inline_history !21065
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !21099
   br label %bb.ae
@@ -971,7 +971,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.sroa.27.sroa.0.4..sroa_idx661 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.5166.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx661, align 4, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx673 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.6167.0.copyload.i50, ptr %.sroa.27.sroa.0.12..sroa_idx673, align 4
+  store i32 %.sroa.6167.0.copyload.i50, ptr %.sroa.27.sroa.0.12..sroa_idx673, align 4, !alias.scope !21098
   call void @llvm.experimental.noalias.scope.decl(metadata !21108)
   switch i64 %.sroa.026.0, label %bb.ak [
     i64 0, label %"_ZN4core3ptr53drop_in_place$LT$nickel_lang_parser..typ..VarKind$GT$17hec625ca286c1f616E.exit"
@@ -1061,7 +1061,7 @@ bb.an:                                            ; preds = %bb.q
   %.sroa.27.sroa.0.8..sroa_idx668 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 8
   store i32 %i.au, ptr %.sroa.27.sroa.0.8..sroa_idx668, align 8, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx670 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.614.i.i35.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx670, align 4
+  store i32 %.sroa.614.i.i35.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx670, align 4, !noalias !21110
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17hb869963a766f1493E.exit.thread"
 
 bb.ao:                                            ; preds = %bb.r
@@ -1094,7 +1094,7 @@ bb.ap:                                            ; preds = %bb.r
   %.sroa.27.sroa.0.8..sroa_idx667 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 8
   store i32 %i.ay, ptr %.sroa.27.sroa.0.8..sroa_idx667, align 8, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.614.i.i.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx, align 4
+  store i32 %.sroa.614.i.i.sroa.0.0.copyload, ptr %.sroa.27.sroa.0.12..sroa_idx, align 4, !noalias !21110
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17hb869963a766f1493E.exit.thread"
 
 bb.aq:                                            ; preds = %bb.s
@@ -1102,7 +1102,7 @@ bb.aq:                                            ; preds = %bb.s
   %.sroa.27.sroa.0.4..sroa_idx660 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.4183.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx660, align 4, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx672 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.5184.0.copyload.i305, ptr %.sroa.27.sroa.0.12..sroa_idx672, align 4
+  store i32 %.sroa.5184.0.copyload.i305, ptr %.sroa.27.sroa.0.12..sroa_idx672, align 4, !alias.scope !21098
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17hb869963a766f1493E.exit.thread298"
 
 bb.ar:                                            ; preds = %bb.s
@@ -1119,7 +1119,7 @@ bb.as:                                            ; preds = %bb.t
   %.sroa.27.sroa.0.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 4
   store ptr %.sroa.4192.0.copyload.i, ptr %.sroa.27.sroa.0.4..sroa_idx, align 4, !alias.scope !21098
   %.sroa.27.sroa.0.12..sroa_idx671 = getelementptr inbounds nuw i8, ptr %.sroa.27.sroa.0, i64 12
-  store i32 %.sroa.5193.0.copyload.i303, ptr %.sroa.27.sroa.0.12..sroa_idx671, align 4
+  store i32 %.sroa.5193.0.copyload.i303, ptr %.sroa.27.sroa.0.12..sroa_idx671, align 4, !alias.scope !21098
   br label %"_ZN18nickel_lang_parser3typ36TypeF$LT$Ty$C$RRows$C$ERows$C$Te$GT$13try_map_state17hb869963a766f1493E.exit.thread298"
 
 bb.at:                                            ; preds = %bb.t

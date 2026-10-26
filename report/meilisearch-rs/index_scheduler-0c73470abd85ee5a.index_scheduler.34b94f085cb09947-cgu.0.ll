@@ -206,7 +206,7 @@ bb.ch:                                            ; preds = %.noexc266
   %.sroa.18.29..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.18, i64 13
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.18.29..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.735.0..sroa_idx.i, i64 3, i1 false), !noalias !65584
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc), !noalias !65566
-  store i40 %i.oh, ptr %.sroa.18, align 8
+  store i40 %i.oh, ptr %.sroa.18, align 8, !alias.scope !65565
   %.sroa.18.5..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.18, i64 5
   store ptr %.sroa.527.sroa.5.0.copyload.i, ptr %.sroa.18.5..sroa_idx, align 1, !alias.scope !65565
   br label %.thread406

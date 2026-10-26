@@ -205,7 +205,7 @@ _ZN5Eigen8internal13first_alignedILi16EilEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   br i1 %min.iters.check2666, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i534.preheader3540, label %vector.memcheck2667
 
 vector.memcheck2667:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i534.preheader
-  %i.eg = shl nsw i64 %i.k, 2
+  %i.eg = shl i64 %i.k, 2
   %i.eh = add i64 %i.eg, %i.dt
   %i.ei = add i64 %.idx1929, %i.dp
   %i.ej = sub i64 %i.ei, %i.eh
@@ -298,7 +298,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check2682, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i529.preheader3539, label %vector.memcheck2683
 
 vector.memcheck2683:                              ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i529.preheader
-  %i.fp = shl nsw i64 %i.k, 2
+  %i.fp = shl i64 %i.k, 2
   %i.fq = add i64 %i.fp, %i.dt
   %i.fr = add i64 %.idx1929, %i.dp
   %i.fs = sub i64 %i.fr, %i.fq
@@ -642,7 +642,7 @@ _ZN5Eigen8internal13first_alignedILi16EilEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   br i1 %min.iters.check2730, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i572.preheader3536, label %vector.memcheck2731
 
 vector.memcheck2731:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i572.preheader
-  %i.lj = shl nsw i64 %i.ku, 2
+  %i.lj = shl i64 %i.ku, 2
   %i.lk = add i64 %i.lj, %i.kw
   %i.ll = sub i64 %i.ks, %i.lk
   %diff.check2732 = icmp ugt i64 %i.ll, -32
@@ -734,7 +734,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check2746, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i567.preheader3535, label %vector.memcheck2747
 
 vector.memcheck2747:                              ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i567.preheader
-  %i.mr = shl nsw i64 %i.ku, 2
+  %i.mr = shl i64 %i.ku, 2
   %i.ms = add i64 %i.mr, %i.kw
   %i.mt = sub i64 %i.ks, %i.ms
   %diff.check2748 = icmp ugt i64 %i.mt, -32
@@ -1137,7 +1137,7 @@ _ZN5Eigen8internal13first_alignedILi16EilEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   br i1 %min.iters.check2826, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i633.preheader3530, label %vector.memcheck2827
 
 vector.memcheck2827:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i633.preheader
-  %i.xg = shl nsw i64 %i.sk, 2
+  %i.xg = shl i64 %i.sk, 2
   %i.xh = add i64 %i.xg, %i.wt
   %i.xi = add i64 %.idx1931, %i.wp
   %i.xj = sub i64 %i.xi, %i.xh
@@ -1230,7 +1230,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check2842, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i628.preheader3529, label %vector.memcheck2843
 
 vector.memcheck2843:                              ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i628.preheader
-  %i.yp = shl nsw i64 %i.sk, 2
+  %i.yp = shl i64 %i.sk, 2
   %i.yq = add i64 %i.yp, %i.wt
   %i.yr = add i64 %.idx1931, %i.wp
   %i.ys = sub i64 %i.yr, %i.yq
@@ -1574,7 +1574,7 @@ _ZN5Eigen8internal13first_alignedILi16EilEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   br i1 %min.iters.check2890, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i671.preheader3526, label %vector.memcheck2891
 
 vector.memcheck2891:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i671.preheader
-  %i.aej = shl nsw i64 %i.adu, 2
+  %i.aej = shl i64 %i.adu, 2
   %i.aek = add i64 %i.aej, %i.adw
   %i.ael = sub i64 %i.ads, %i.aek
   %diff.check2892 = icmp ugt i64 %i.ael, -32
@@ -1666,7 +1666,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check2906, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i666.preheader3525, label %vector.memcheck2907
 
 vector.memcheck2907:                              ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i666.preheader
-  %i.afr = shl nsw i64 %i.adu, 2
+  %i.afr = shl i64 %i.adu, 2
   %i.afs = add i64 %i.afr, %i.adw
   %i.aft = sub i64 %i.ads, %i.afs
   %diff.check2908 = icmp ugt i64 %i.aft, -32

@@ -205,7 +205,7 @@ iter.check7106:                                   ; preds = %bb.jt
 
 vector.memcheck7089:                              ; preds = %iter.check7106
   %i.bhk = sub i64 %i.bbv, %i.ak
-  %i.bhl = mul nuw nsw i64 %i.bbt, 48
+  %i.bhl = mul nsw i64 %i.bbt, 48
   %i.bhm = add i64 %i.bhk, %i.bhl
   %i.bhn = add i64 %i.bhm, -1
   %diff.check7090 = icmp ult i64 %i.bhn, 127

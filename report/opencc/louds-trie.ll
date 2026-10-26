@@ -205,7 +205,7 @@ _ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit.loopexit: ; preds = %_ZN6m
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.w
   %i.ab = shl i64 %i.f, 3
   %i.ac = add i64 %i.ab, 8
-  %i.ad = shl nuw nsw i64 %i.w, 3
+  %i.ad = shl i64 %i.w, 3
   %i.ae = sub i64 %i.ac, %i.ad
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.aa, i8 0, i64 %i.ae, i1 false), !tbaa !54
   br label %_ZN6marisa8grimoire6vector6VectorImE6resizeEmRKm.exit
@@ -608,7 +608,7 @@ bb.q:                                             ; preds = %bb.p
           to label %.noexc125 unwind label %.loopexit326 ; 5 uses
 
 .noexc125:                                        ; preds = %bb.q
-  %i.hh = shl nuw i64 %.sroa.23.0488, 4
+  %i.hh = shl i64 %.sroa.23.0488, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.hg, ptr align 4 %.sroa.12.0487, i64 %i.hh, i1 false)
   %.not.i.i.i.i.i.i.i121 = icmp eq ptr %.sroa.0265.1486, null
   br i1 %.not.i.i.i.i.i.i.i121, label %bb.r, label %_ZNKSt14default_deleteIA_cEclIcEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i.i.i.i.i.i122
@@ -1011,7 +1011,7 @@ bb.as:                                            ; preds = %bb.ar
           to label %.noexc203 unwind label %bb.au ; 7 uses
 
 .noexc203:                                        ; preds = %bb.as
-  %i.ok = mul nuw i64 %.sroa.18.1512, 24
+  %i.ok = mul i64 %.sroa.18.1512, 24
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.oj, ptr align 8 %.sroa.10294.1510, i64 %i.ok, i1 false)
   %.not.i.i.i.i.i.i.i199 = icmp eq ptr %.sroa.0290.1508, null
   br i1 %.not.i.i.i.i.i.i.i199, label %bb.at, label %_ZNKSt14default_deleteIA_cEclIcEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i.i.i.i.i.i200
@@ -1414,7 +1414,7 @@ bb.p:                                             ; preds = %bb.o
           to label %.noexc125 unwind label %.loopexit326 ; 5 uses
 
 .noexc125:                                        ; preds = %bb.p
-  %i.hj = shl nuw i64 %.sroa.23.0486, 4
+  %i.hj = shl i64 %.sroa.23.0486, 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.hi, ptr align 4 %.sroa.12.0485, i64 %i.hj, i1 false)
   %.not.i.i.i.i.i.i.i121 = icmp eq ptr %.sroa.0265.1484, null
   br i1 %.not.i.i.i.i.i.i.i121, label %bb.q, label %_ZNKSt14default_deleteIA_cEclIcEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i.i.i.i.i.i122
@@ -1817,7 +1817,7 @@ bb.ar:                                            ; preds = %bb.aq
           to label %.noexc203 unwind label %bb.at ; 7 uses
 
 .noexc203:                                        ; preds = %bb.ar
-  %i.on = mul nuw i64 %.sroa.18.1509, 24
+  %i.on = mul i64 %.sroa.18.1509, 24
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.om, ptr align 8 %.sroa.10294.1507, i64 %i.on, i1 false)
   %.not.i.i.i.i.i.i.i199 = icmp eq ptr %.sroa.0290.1505, null
   br i1 %.not.i.i.i.i.i.i.i199, label %bb.as, label %_ZNKSt14default_deleteIA_cEclIcEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i.i.i.i.i.i200

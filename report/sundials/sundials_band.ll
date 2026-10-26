@@ -109,7 +109,7 @@ bb.a:
 
 .lr.ph180.preheader:                              ; preds = %.loopexit145
   %.not141166.not = icmp slt i64 %3, 1
-  %i.ai = shl nsw i64 %4, 3                       ; 2 uses
+  %i.ai = shl i64 %4, 3                           ; 2 uses
   %i.aj = add i64 %i.ai, 8
   br label %.lr.ph180
 
@@ -431,7 +431,7 @@ bb.a:
   %i.n = add i64 %i.d, %i.m
   %i.o = shl i64 %i.d, 3
   %i.p = add i64 %i.o, -8
-  %i.q = shl nsw i64 %i.f, 3
+  %i.q = shl i64 %i.f, 3
   %invariant.op = sub i64 1, %i.d
   br label %.lr.ph73.i
 
@@ -687,7 +687,7 @@ bb.a:
   %i.f = add i64 %1, %i.e
   %i.g = shl i64 %1, 3
   %i.h = add i64 %i.g, -8
-  %i.i = shl nsw i64 %2, 3
+  %i.i = shl i64 %2, 3
   %invariant.op = sub i64 1, %1
   br label %.lr.ph73
 

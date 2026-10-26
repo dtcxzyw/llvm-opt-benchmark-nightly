@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %"_ZN59_$LT$$RF$mut$
 
 bb.u:                                             ; preds = %bb.t
   store ptr %.sroa.10.8.copyload.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.22.i.i.i.i.i.i, align 8, !alias.scope !5166, !noalias !5132
-  store i32 %.sroa.14.8.copyload.i.i.i.i.i6.i.i.i.i.i.i, ptr %.sroa.22.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !noalias !5132
+  store i32 %.sroa.14.8.copyload.i.i.i.i.i6.i.i.i.i.i.i, ptr %.sroa.22.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !alias.scope !5166, !noalias !5132
   br label %"_ZN4core3ptr40drop_in_place$LT$lsp_types..TextEdit$GT$17h4b1d1e831c9f902bE.exit13.i.i.i.i.i.i.i.i.i.i"
 
 bb.v:                                             ; preds = %bb.t
@@ -608,9 +608,9 @@ bb.do:                                            ; preds = %bb.dn
 bb.dp:                                            ; preds = %bb.dj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.18.i.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(72) %.sroa.9.sroa.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 72, i1 false), !noalias !21824
   store ptr %.sroa.1089.8.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.21.i.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !21825, !noalias !21816
-  store i32 %.sroa.14.8.copyload.i.i.i.i.i4.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.21.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !noalias !21816
+  store i32 %.sroa.14.8.copyload.i.i.i.i.i4.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.21.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !alias.scope !21825, !noalias !21816
   store ptr %.sroa.1092.8.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.27.i.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !21825, !noalias !21816
-  store i32 %.sroa.1493.8.copyload.i.i.i.i.i6.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.27.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !noalias !21816
+  store i32 %.sroa.1493.8.copyload.i.i.i.i.i6.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.27.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !alias.scope !21825, !noalias !21816
   br label %_ZN5serde7private2de7content21visit_content_seq_ref17h7b6f59b152028004E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 _ZN5serde7private2de7content21visit_content_seq_ref17h7b6f59b152028004E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.dp, %bb.do, %bb.dn, %.noexc9.i.i.i.i.i.i.i

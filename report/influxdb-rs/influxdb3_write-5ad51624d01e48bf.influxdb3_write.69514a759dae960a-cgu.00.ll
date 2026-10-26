@@ -204,12 +204,12 @@ bb.v:                                             ; preds = %bb.s
   %.sroa.36.sroa.0.sroa.12.0.extract.trunc159.i.i = trunc i32 %.sroa.36.sroa.0.sroa.12.0.extract.shift158.i.i to i8
   %.sroa.36.sroa.0.sroa.13.0.extract.shift170.i.i = lshr i32 %i.el, 24
   %.sroa.36.sroa.0.sroa.13.0.extract.trunc171.i.i = trunc nuw i32 %.sroa.36.sroa.0.sroa.13.0.extract.shift170.i.i to i8
-  store i8 %i.en, ptr %.sroa.36.sroa.14.sroa.11.i.i, align 4, !noalias !17373
-  store i16 %i.eo, ptr %.sroa.36.sroa.14.sroa.11.i.i.1.i.i.1.i.i.1.i.1.i.1.sroa_idx354, align 1, !noalias !17373
+  store i8 %i.en, ptr %.sroa.36.sroa.14.sroa.11.i.i, align 4, !alias.scope !17376, !noalias !17373
+  store i16 %i.eo, ptr %.sroa.36.sroa.14.sroa.11.i.i.1.i.i.1.i.i.1.i.1.i.1.sroa_idx354, align 1, !alias.scope !17376, !noalias !17373
   %.sroa.52.sroa.0.0.extract.trunc101.i.i = trunc i64 %.sroa.54.0.i5.i.i.i to i32
   %.sroa.52.sroa.10.0.extract.shift106.i.i = lshr i64 %.sroa.54.0.i5.i.i.i, 32
   %.sroa.52.sroa.10.0.extract.trunc107.i.i = trunc nuw i64 %.sroa.52.sroa.10.0.extract.shift106.i.i to i32
-  store i8 %i.ev, ptr %.sroa.60.sroa.0.sroa.14.i.i, align 1, !noalias !17373
+  store i8 %i.ev, ptr %.sroa.60.sroa.0.sroa.14.i.i, align 1, !alias.scope !17376, !noalias !17373
   br label %bb.bg
 
 bb.w:                                             ; preds = %bb.s
@@ -369,12 +369,12 @@ bb.ab:                                            ; preds = %bb.s
   %.sroa.36.sroa.0.sroa.12.0.extract.trunc.i.i = trunc i32 %.sroa.36.sroa.0.sroa.12.0.extract.shift.i.i to i8
   %.sroa.36.sroa.0.sroa.13.0.extract.shift.i.i = lshr i32 %i.hs, 24
   %.sroa.36.sroa.0.sroa.13.0.extract.trunc.i.i = trunc nuw i32 %.sroa.36.sroa.0.sroa.13.0.extract.shift.i.i to i8
-  store i8 %i.hu, ptr %.sroa.36.sroa.14.sroa.11.i.i, align 4, !noalias !17373
-  store i16 %i.hv, ptr %.sroa.36.sroa.14.sroa.11.i.i.1.i.i.1.i.i.1.i.1.i.1.sroa_idx, align 1, !noalias !17373
+  store i8 %i.hu, ptr %.sroa.36.sroa.14.sroa.11.i.i, align 4, !alias.scope !17376, !noalias !17373
+  store i16 %i.hv, ptr %.sroa.36.sroa.14.sroa.11.i.i.1.i.i.1.i.i.1.i.1.i.1.sroa_idx, align 1, !alias.scope !17376, !noalias !17373
   %.sroa.52.sroa.0.0.extract.trunc100.i.i = trunc i64 %.sroa.54.0.i15.i.i.i to i32
   %.sroa.52.sroa.10.0.extract.shift104.i.i = lshr i64 %.sroa.54.0.i15.i.i.i, 32
   %.sroa.52.sroa.10.0.extract.trunc105.i.i = trunc nuw i64 %.sroa.52.sroa.10.0.extract.shift104.i.i to i32
-  store i8 %i.ic, ptr %.sroa.60.sroa.0.sroa.14.i.i, align 1, !noalias !17373
+  store i8 %i.ic, ptr %.sroa.60.sroa.0.sroa.14.i.i, align 1, !alias.scope !17376, !noalias !17373
   br label %bb.bg
 
 bb.ac:                                            ; preds = %bb.s
