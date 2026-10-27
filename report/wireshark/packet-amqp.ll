@@ -204,13 +204,11 @@ bb.w:                                             ; preds = %bb.v, %bb.v, %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.cf = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %3)
-  store i32 %i.cf, ptr %8, align 4
-  br label %bb.bn
+  br label %.sink.split
 
 bb.y:                                             ; preds = %bb.w
   %i.cg = add i32 %i.cd, -1
-  store i32 %i.cg, ptr %8, align 4
-  br label %bb.bn
+  br label %.sink.split
 
 bb.z:                                             ; preds = %bb.v, %bb.v
   %i.ch = add i32 %3, -1                          ; 8 uses
@@ -551,7 +549,12 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bl
   store i32 %i.gq, ptr %8, align 4
   br label %bb.bn
 
-bb.bn:                                            ; preds = %bb.j, %bb.l, %bb.o, %bb.u, %dissect_amqp_1_0_map.exit, %dissect_amqp_1_0_array.exit, %bb.bm, %bb.y, %bb.x
+.sink.split:                                      ; preds = %bb.y, %bb.x
+  %.sink185 = phi i32 [ %i.cf, %bb.x ], [ %i.cg, %bb.y ]
+  store i32 %.sink185, ptr %8, align 4
+  br label %bb.bn
+
+bb.bn:                                            ; preds = %.sink.split, %bb.j, %bb.l, %bb.o, %bb.u, %dissect_amqp_1_0_map.exit, %dissect_amqp_1_0_array.exit, %bb.bm
   call void @decrement_dissection_depth(ptr noundef %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #16
   ret void

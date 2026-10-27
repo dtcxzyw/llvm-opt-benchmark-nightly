@@ -205,7 +205,7 @@ bb.a:
   %i.h = alloca [8 x i8], align 8                 ; 3 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
   %.sroa.2 = alloca [24 x i8], align 8            ; 2 uses
-  %i.j = alloca [32 x i8], align 8                ; 11 uses
+  %i.j = alloca [32 x i8], align 8                ; 10 uses
   %i.k = alloca [56 x i8], align 8                ; 9 uses
   %.sroa.635.sroa.0 = alloca [7 x i8], align 1    ; 7 uses
   %.sroa.737.sroa.5 = alloca [16 x i8], align 8   ; 7 uses
@@ -582,10 +582,13 @@ bb.t:                                             ; preds = %bb.r
   store ptr null, ptr %i.cr, align 8
   %.sroa.5175.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   store i64 0, ptr %.sroa.5175.0..sroa_idx, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.t, %bb.w
   store i64 1, ptr %i.j, align 8
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.v, %bb.w, %bb.t, %bb.s
+bb.u:                                             ; preds = %.sink.split, %bb.v, %bb.s
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cu, ptr noundef nonnull align 8 dereferenceable(32) %i.j, i64 32, i1 false)
   store i8 -1, ptr %0, align 8
@@ -607,8 +610,7 @@ bb.v:                                             ; preds = %.thread243
 
 bb.w:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cr, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.482.0..sroa_idx211, i64 24, i1 false)
-  store i64 1, ptr %i.j, align 8
-  br label %bb.u
+  br label %.sink.split
 
 bb.x:                                             ; preds = %bb.y
   resume { ptr, i32 } %lpad.thr_comm

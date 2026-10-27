@@ -204,14 +204,12 @@ bb.bl:                                            ; preds = %_ZNK4llvh9StringRef
   %i.lo = getelementptr inbounds nuw i8, ptr %16, i64 16
   store i8 1, ptr %i.lo, align 8, !tbaa !401
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(16) %i.ln, i64 16, i1 false), !tbaa.struct !398
-  call fastcc void @_ZL9printHelpN4llvh8OptionalINS_9StringRefEEE(ptr noundef nonnull byval(%"class.llvh::Optional.342") align 8 %16)
-  br label %_ZN4llvh11raw_ostreamlsEPKc.exit240
+  br label %_ZN4llvh11raw_ostreamlsEPKc.exit240.sink.split
 
 bb.bm:                                            ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit145.thread238
   %i.lp = getelementptr inbounds nuw i8, ptr %17, i64 16
   store i8 0, ptr %i.lp, align 8, !tbaa !401
-  call fastcc void @_ZL9printHelpN4llvh8OptionalINS_9StringRefEEE(ptr noundef nonnull byval(%"class.llvh::Optional.342") align 8 %17)
-  br label %_ZN4llvh11raw_ostreamlsEPKc.exit240
+  br label %_ZN4llvh11raw_ostreamlsEPKc.exit240.sink.split
 
 _ZNK4llvh9StringRef6equalsES0_.exit147:           ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit145
   %i.lq = load i32, ptr %.sroa.064.0.copyload, align 1
@@ -252,8 +250,13 @@ bb.bp:                                            ; preds = %bb.bn
   store i32 %i.dg, ptr %i.df, align 8, !tbaa !130
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit240
 
-_ZN4llvh11raw_ostreamlsEPKc.exit240:              ; preds = %bb.m, %bb.l, %bb.n, %bb.p, %bb.ad, %bb.ah, %_ZNK4llvh9StringRef6equalsES0_.exit147.thread, %_ZN6hermes11JSONEmitterD2Ev.exit236, %_ZN6hermes11JSONEmitterD2Ev.exit228, %.critedge119, %_ZN6hermes11JSONEmitterD2Ev.exit221, %_ZN6hermes11JSONEmitterD2Ev.exit229, %_ZN6hermes11JSONEmitterD2Ev.exit237, %bb.bm, %bb.bl, %_ZNK4llvh9StringRef6equalsES0_.exit147, %.thread, %.thread200, %bb.bo, %bb.bp, %bb.a
-  %.14 = phi i1 [ false, %bb.a ], [ false, %bb.m ], [ false, %bb.bp ], [ false, %bb.n ], [ false, %bb.p ], [ false, %.critedge119 ], [ false, %bb.ad ], [ false, %.thread ], [ false, %bb.ah ], [ false, %.thread200 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit221 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit228 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit236 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit237 ], [ false, %bb.bl ], [ false, %_ZNK4llvh9StringRef6equalsES0_.exit147.thread ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit229 ], [ false, %bb.bm ], [ true, %_ZNK4llvh9StringRef6equalsES0_.exit147 ], [ false, %bb.bo ], [ false, %bb.l ]
+_ZN4llvh11raw_ostreamlsEPKc.exit240.sink.split:   ; preds = %bb.bm, %bb.bl
+  %.sink = phi ptr [ %16, %bb.bl ], [ %17, %bb.bm ]
+  call fastcc void @_ZL9printHelpN4llvh8OptionalINS_9StringRefEEE(ptr noundef nonnull byval(%"class.llvh::Optional.342") align 8 %.sink)
+  br label %_ZN4llvh11raw_ostreamlsEPKc.exit240
+
+_ZN4llvh11raw_ostreamlsEPKc.exit240:              ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit240.sink.split, %bb.m, %bb.l, %bb.n, %bb.p, %bb.ad, %bb.ah, %_ZNK4llvh9StringRef6equalsES0_.exit147.thread, %_ZN6hermes11JSONEmitterD2Ev.exit236, %_ZN6hermes11JSONEmitterD2Ev.exit228, %.critedge119, %_ZN6hermes11JSONEmitterD2Ev.exit221, %_ZN6hermes11JSONEmitterD2Ev.exit229, %_ZN6hermes11JSONEmitterD2Ev.exit237, %_ZNK4llvh9StringRef6equalsES0_.exit147, %.thread, %.thread200, %bb.bo, %bb.bp, %bb.a
+  %.14 = phi i1 [ false, %bb.a ], [ false, %bb.m ], [ false, %bb.bp ], [ false, %bb.n ], [ false, %bb.p ], [ false, %.critedge119 ], [ false, %bb.ad ], [ false, %.thread ], [ false, %bb.ah ], [ false, %.thread200 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit221 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit228 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit236 ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit237 ], [ false, %bb.bo ], [ false, %_ZNK4llvh9StringRef6equalsES0_.exit147.thread ], [ false, %_ZN6hermes11JSONEmitterD2Ev.exit229 ], [ false, %bb.l ], [ true, %_ZNK4llvh9StringRef6equalsES0_.exit147 ], [ false, %_ZN4llvh11raw_ostreamlsEPKc.exit240.sink.split ]
   %i.md = load ptr, ptr %3, align 8, !tbaa !50    ; 2 uses
   %i.me = icmp eq ptr %i.md, %i.h
   br i1 %i.me, label %_ZN4llvh11SmallVectorINS_9StringRefELj8EED2Ev.exit, label %bb.bq

@@ -204,7 +204,7 @@ bb.a:
   %i.e = zext i32 %1 to i64
   %i.f = getelementptr inbounds nuw [32 x i8], ptr %i.d, i64 %i.e ; 4 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !31
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.h) #18 ; 0 uses
   %i.j = add i32 %i.g, 40
   %i.k = tail call ptr @bipbuf_request(ptr noundef %i.b, i32 noundef %i.j) #18 ; 8 uses
@@ -251,19 +251,22 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.aj = load ptr, ptr @stderr, align 8, !tbaa !17
   %fwrite = call i64 @fwrite(ptr nonnull @.str, i64 43, i64 1, ptr %i.aj) #22 ; 0 uses
-  %4 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.h) #18 ; 0 uses
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !68
   %i.am = add i64 %i.al, 1
   store i64 %i.am, ptr %i.ak, align 8, !tbaa !68
-  %5 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.h) #18 ; 0 uses
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.d
+  %.0.ph = phi i32 [ 0, %bb.e ], [ 2, %bb.d ]
+  %4 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.h) #18 ; 0 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
-  %.0 = phi i32 [ 1, %bb.b ], [ 2, %bb.d ], [ 0, %bb.e ]
+bb.f:                                             ; preds = %.sink.split, %bb.b
+  %.0 = phi i32 [ 1, %bb.b ], [ %.0.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   ret i32 %.0
 }

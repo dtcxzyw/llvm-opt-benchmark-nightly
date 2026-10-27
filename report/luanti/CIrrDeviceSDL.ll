@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load i32, ptr %i.d, align 4, !tbaa !142  ; 2 uses
   %i.f = load i32, ptr %i.c, align 4, !tbaa !141  ; 2 uses
-  %i.g = tail call ptr @SDL_CreateRGBSurface(i32 noundef 0, i32 noundef %i.f, i32 noundef %i.e, i32 noundef 32, i32 noundef 16711680, i32 noundef 65280, i32 noundef 255, i32 noundef -16777216) ; 8 uses
+  %i.g = tail call ptr @SDL_CreateRGBSurface(i32 noundef 0, i32 noundef %i.f, i32 noundef %i.e, i32 noundef 32, i32 noundef 16711680, i32 noundef 65280, i32 noundef 255, i32 noundef -16777216) ; 7 uses
   %.not18 = icmp eq ptr %i.g, null
   br i1 %.not18, label %bb.c, label %bb.d
 
@@ -222,23 +222,25 @@ bb.d:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %1, align 8, !tbaa !24
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call noundef zeroext i1 %i.o(ptr noundef nonnull align 8 dereferenceable(41) %1, ptr noundef %i.j, i32 noundef %i.f, i32 noundef %i.e, i32 noundef 3, i32 noundef %i.l)
+  %i.p = tail call noundef zeroext i1 %i.o(ptr noundef nonnull align 8 dereferenceable(41) %1, ptr noundef %i.j, i32 noundef %i.f, i32 noundef %i.e, i32 noundef 3, i32 noundef %i.l) ; 2 uses
   tail call void @SDL_UnlockSurface(ptr noundef nonnull %i.g)
   br i1 %i.p, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_ZN2os7Printer3logEPKc10ELOG_LEVEL(ptr noundef nonnull @.str.49, i32 noundef 3)
-  tail call void @SDL_FreeSurface(ptr noundef nonnull %i.g)
-  br label %bb.g
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.d
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !78
   tail call void @SDL_SetWindowIcon(ptr noundef %i.q, ptr noundef nonnull %i.g)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.f
   tail call void @SDL_FreeSurface(ptr noundef nonnull %i.g)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e, %bb.a
-  %.2 = phi i1 [ false, %bb.a ], [ false, %bb.c ], [ true, %bb.f ], [ false, %bb.e ]
+bb.g:                                             ; preds = %.sink.split, %bb.c, %bb.a
+  %.2 = phi i1 [ false, %bb.a ], [ false, %bb.c ], [ %i.p, %.sink.split ]
   ret i1 %.2
 }
 

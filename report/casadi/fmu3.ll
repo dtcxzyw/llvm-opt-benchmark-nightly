@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.t
   %i.lc = load ptr, ptr %i.lb, align 8, !tbaa !82
   %i.ld = load double, ptr %i.lc, align 8, !tbaa !83
   %i.le = fcmp une double %i.ld, 0.000000e+00     ; 2 uses
-  %i.lf = load ptr, ptr %i.ah, align 8, !tbaa !29 ; 7 uses
+  %i.lf = load ptr, ptr %i.ah, align 8, !tbaa !29 ; 6 uses
   %i.lg = load ptr, ptr %i.ay, align 8, !tbaa !65
   %.not.i181 = icmp eq ptr %i.lf, %i.lg
   %.sroa.2.0.copyload.i11.i = load i32, ptr %.sroa.2.0..sroa_idx.i.i, align 8 ; 4 uses
@@ -230,21 +230,24 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.as, %bb.ar
 bb.at:                                            ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.lm = load i64, ptr %i.lf, align 8, !tbaa !85
   %i.ln = or i64 %i.lm, %i.ll
-  store i64 %i.ln, ptr %i.lf, align 8, !tbaa !85
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.au:                                            ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.lo = xor i64 %i.ll, -1
   %i.lp = load i64, ptr %i.lf, align 8, !tbaa !85
   %i.lq = and i64 %i.lp, %i.lo
-  store i64 %i.lq, ptr %i.lf, align 8, !tbaa !85
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.av:                                            ; preds = %bb.aq
   call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.af, ptr %i.lf, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %i.le)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.at, %bb.au, %bb.av
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.au, %bb.at
+  %.sink.i = phi i64 [ %i.ln, %bb.at ], [ %i.lq, %bb.au ]
+  store i64 %.sink.i, ptr %i.lf, align 8, !tbaa !85
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.av, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
   %i.lr = load ptr, ptr %i.r, align 8, !tbaa !70  ; 4 uses
   %i.ls = load ptr, ptr %i.az, align 8, !tbaa !61
   %.not.i183 = icmp eq ptr %i.lr, %i.ls

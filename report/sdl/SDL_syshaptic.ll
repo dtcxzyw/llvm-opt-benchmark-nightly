@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   %.inv = icmp slt i32 %i.q, 0
   %i.u = select i1 %.inv, i16 0, i16 -32768
-  store i16 %i.u, ptr %0, align 2
-  br label %bb.k
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.f
   %i.v = sitofp i32 %i.q to float
@@ -221,8 +220,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ae = shl nsw i32 %i.ad, 15
   %i.af = udiv i32 %i.ae, 18000
   %i.ag = trunc i32 %i.af to i16
-  store i16 %i.ag, ptr %0, align 2
-  br label %bb.k
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.a
   store i16 16384, ptr %0, align 2
@@ -232,8 +230,13 @@ bb.j:                                             ; preds = %bb.a
   %i.ah = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.15) #13
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.b, %bb.c, %bb.i, %bb.g, %bb.h, %bb.e, %bb.j
-  %.0 = phi i1 [ %i.ah, %bb.j ], [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.g ], [ true, %bb.i ], [ true, %bb.c ], [ true, %bb.b ]
+.sink.split:                                      ; preds = %bb.h, %bb.g
+  %.sink = phi i16 [ %i.u, %bb.g ], [ %i.ag, %bb.h ]
+  store i16 %.sink, ptr %0, align 2
+  br label %bb.k
+
+bb.k:                                             ; preds = %.sink.split, %bb.b, %bb.c, %bb.i, %bb.e, %bb.j
+  %.0 = phi i1 [ %i.ah, %bb.j ], [ true, %bb.e ], [ true, %bb.c ], [ true, %bb.b ], [ true, %bb.i ], [ true, %.sink.split ]
   ret i1 %.0
 }
 

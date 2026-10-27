@@ -205,7 +205,7 @@ define hidden void @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvNtC
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
   %i.b = alloca [40 x i8], align 8                ; 6 uses
-  %i.c = alloca [104 x i8], align 8               ; 7 uses
+  %i.c = alloca [104 x i8], align 8               ; 6 uses
   %i.d = alloca [20 x i8], align 4                ; 4 uses
   %i.e = alloca [24 x i8], align 4                ; 6 uses
   %i.f = alloca [40 x i8], align 8                ; 2 uses
@@ -253,17 +253,19 @@ bb.d:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.p, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(104) %i.c, i64 104, i1 false), !noalias !4256
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit
+  br label %_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit.sink.split
 
 bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !4255
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 -1, ptr %i.q, align 8, !alias.scope !4254
+  br label %_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit.sink.split
+
+_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit.sink.split: ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit
 
-_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit: ; preds = %bb.c, %bb.d, %bb.e
+_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit: ; preds = %_RNCNvNtCs33K2ylI4knu_10hir_expand5attrs27parse_path_comma_token_trees_0CsileJQcQObtj_7hir_def.exit.sink.split, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
 }

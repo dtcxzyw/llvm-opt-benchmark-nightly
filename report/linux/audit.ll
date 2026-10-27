@@ -205,8 +205,7 @@ bb.cw:                                            ; preds = %bb.cu
 bb.cx:                                            ; preds = %bb.cw
   %i.jy = ptrtoint ptr %i.jw to i64
   %i.jz = trunc i64 %i.jy to i32
-  call void @kfree(ptr noundef %i.jr) #17
-  br label %.thread287.i
+  br label %.thread287.sink.split.i
 
 bb.cy:                                            ; preds = %bb.cw
   %i.ka = call i32 @audit_tag_tree(ptr noundef %i.jr, ptr noundef %i.jw) #17 ; 2 uses
@@ -306,11 +305,16 @@ audit_log_untrustedstring.exit:                   ; preds = %audit_string_contai
   call void (ptr, ptr, ...) @audit_log_format(ptr noundef %i.ki, ptr noundef @.str.58, i32 noundef %i.kz) #22
   call void @audit_log_end(ptr noundef %i.ki) #22
   call void @kfree(ptr noundef %i.jr) #17
-  call void @kfree(ptr noundef %i.jw) #17
+  br label %.thread287.sink.split.i
+
+.thread287.sink.split.i:                          ; preds = %audit_log_untrustedstring.exit, %bb.cx
+  %.sink.i = phi ptr [ %i.jr, %bb.cx ], [ %i.jw, %audit_log_untrustedstring.exit ]
+  %.11.ph.ph.i = phi i32 [ %i.jz, %bb.cx ], [ %i.ka, %audit_log_untrustedstring.exit ]
+  call void @kfree(ptr noundef %.sink.i) #17
   br label %.thread287.i
 
-.thread287.i:                                     ; preds = %audit_log_untrustedstring.exit, %bb.cx, %bb.cv, %bb.ct
-  %.11.ph.i = phi i32 [ -22, %bb.ct ], [ %i.jz, %bb.cx ], [ %i.ju, %bb.cv ], [ %i.ka, %audit_log_untrustedstring.exit ]
+.thread287.i:                                     ; preds = %.thread287.sink.split.i, %bb.cv, %bb.ct
+  %.11.ph.i = phi i32 [ -22, %bb.ct ], [ %i.ju, %bb.cv ], [ %.11.ph.ph.i, %.thread287.sink.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   br label %audit_set_feature.exit

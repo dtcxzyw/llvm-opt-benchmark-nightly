@@ -137,8 +137,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.f, ptr %.sroa.5.0..sroa_idx21, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i128 166310101364263904992416576642764729534, ptr %.sroa.6.0..sroa_idx, align 8
-  store i64 1, ptr %0, align 8
-  br label %bb.f
+  br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !27
@@ -160,14 +159,18 @@ bb.d:                                             ; preds = %bb.b
   store ptr null, ptr %.sroa.48.sroa.7.0..sroa.48.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.j, ptr %.sroa.5.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
+.sink.split:                                      ; preds = %bb.c, %bb.d
+  %.sink = phi i64 [ 0, %bb.d ], [ 1, %bb.c ]
+  store i64 %.sink, ptr %0, align 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.e
   ret void
 }
 

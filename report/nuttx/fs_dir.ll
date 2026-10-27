@@ -28,7 +28,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 7 uses
-  %i.d = tail call ptr @lib_get_tempbuffer(i64 noundef 256) #11 ; 7 uses
+  %i.d = tail call ptr @lib_get_tempbuffer(i64 noundef 256) #11 ; 6 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.m, label %bb.b
 
@@ -95,7 +95,7 @@ bb.j:                                             ; preds = %open_pseudodir.exit
   %i.aa = call i32 @inode_getpath(ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, i64 noundef 256) #11 ; 0 uses
   %i.ab = load ptr, ptr %i.a, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = call i32 (ptr, ptr, ...) @nx_asprintf(ptr noundef nonnull %i.ac, ptr noundef nonnull @.str, ptr noundef nonnull %i.d, ptr noundef %1) #11 ; 3 uses
+  %i.ad = call i32 (ptr, ptr, ...) @nx_asprintf(ptr noundef nonnull %i.ac, ptr noundef nonnull @.str, ptr noundef nonnull %i.d, ptr noundef %1) #11 ; 2 uses
   %i.ae = icmp slt i32 %i.ad, 0
   br i1 %i.ae, label %bb.k, label %bb.l
 
@@ -103,8 +103,7 @@ bb.k:                                             ; preds = %bb.j
   %i.af = load ptr, ptr %i.a, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store ptr null, ptr %i.ag, align 8
-  call void @lib_put_tempbuffer(ptr noundef nonnull %i.d) #11
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.j
   store ptr @g_dir_inode, ptr %i.b, align 8
@@ -112,11 +111,14 @@ bb.l:                                             ; preds = %bb.j
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.ah, ptr %i.ai, align 8
   call void @inode_addref(ptr noundef nonnull @g_dir_inode) #11
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.l, %bb.k
   call void @lib_put_tempbuffer(ptr noundef nonnull %i.d) #11
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.a, %bb.l, %bb.k, %bb.i, %bb.g
-  %.0 = phi i32 [ -12, %bb.i ], [ %.0.i.ph, %bb.g ], [ %i.ad, %bb.k ], [ %i.ad, %bb.l ], [ -12, %bb.a ]
+bb.m:                                             ; preds = %.sink.split, %bb.a, %bb.i, %bb.g
+  %.0 = phi i32 [ -12, %bb.i ], [ %.0.i.ph, %bb.g ], [ -12, %bb.a ], [ %i.ad, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.0
 }

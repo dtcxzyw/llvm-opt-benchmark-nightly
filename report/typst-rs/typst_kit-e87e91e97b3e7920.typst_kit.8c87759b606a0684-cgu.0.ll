@@ -206,7 +206,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
-  %i.e = alloca [32 x i8], align 8                ; 7 uses
+  %i.e = alloca [32 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3432)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3433)
   %i.f = load ptr, ptr %1, align 8, !alias.scope !3433, !noalias !3432, !nonnull !17, !align !25, !noundef !17 ; 8 uses
@@ -325,7 +325,7 @@ _RINvNvXs7_NtCs261H7cERR92_10serde_json2deINtB8_9SeqAccesspENtNtCs7PiwjADO7TO_10
   call fastcc void @_RINvXs5_NtCs261H7cERR92_10serde_json2deQINtB6_12DeserializerNtNtB8_4read9SliceReadENtNtCs7PiwjADO7TO_10serde_core2de12Deserializer15deserialize_anyNtNvXNtNtB8_5value2deNtB2s_5ValueNtB1l_11Deserialize11deserialize12ValueVisitorECsc4241EHy6Do_9typst_kit(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.f) #48, !noalias !3445, !inline_history !3431
   %i.af = load i8, ptr %i.e, align 8, !range !42, !noalias !3445, !noundef !17
   %i.ag = icmp eq i8 %i.af, -1
-  br i1 %i.ag, label %bb.l, label %bb.m
+  br i1 %i.ag, label %bb.l, label %2
 
 bb.l:                                             ; preds = %.loopexit
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -333,15 +333,17 @@ bb.l:                                             ; preds = %.loopexit
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ai, ptr %i.aj, align 8, !alias.scope !3432
   store i8 -2, ptr %0, align 8, !alias.scope !3432
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !3445
-  br label %_RINvXs7_NtCs261H7cERR92_10serde_json2deINtB6_9SeqAccessNtNtB8_4read9SliceReadENtNtCs7PiwjADO7TO_10serde_core2de9SeqAccess17next_element_seedINtNtCs3oUPovFnLWP_4core6marker11PhantomDataNtNtB8_5value5ValueEECsc4241EHy6Do_9typst_kit.exit
+  br label %bb.m
 
-bb.m:                                             ; preds = %.loopexit
+2:                                                ; preds = %.loopexit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.e, i64 32, i1 false), !noalias !3446
+  br label %bb.m
+
+bb.m:                                             ; preds = %2, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !3445
   br label %_RINvXs7_NtCs261H7cERR92_10serde_json2deINtB6_9SeqAccessNtNtB8_4read9SliceReadENtNtCs7PiwjADO7TO_10serde_core2de9SeqAccess17next_element_seedINtNtCs3oUPovFnLWP_4core6marker11PhantomDataNtNtB8_5value5ValueEECsc4241EHy6Do_9typst_kit.exit
 
-_RINvXs7_NtCs261H7cERR92_10serde_json2deINtB6_9SeqAccessNtNtB8_4read9SliceReadENtNtCs7PiwjADO7TO_10serde_core2de9SeqAccess17next_element_seedINtNtCs3oUPovFnLWP_4core6marker11PhantomDataNtNtB8_5value5ValueEECsc4241EHy6Do_9typst_kit.exit: ; preds = %bb.k, %_RINvNvXs7_NtCs261H7cERR92_10serde_json2deINtB8_9SeqAccesspENtNtCs7PiwjADO7TO_10serde_core2de9SeqAccess17next_element_seed16has_next_elementNtNtBa_4read9SliceReadECsc4241EHy6Do_9typst_kit.exit, %bb.l, %bb.m
+_RINvXs7_NtCs261H7cERR92_10serde_json2deINtB6_9SeqAccessNtNtB8_4read9SliceReadENtNtCs7PiwjADO7TO_10serde_core2de9SeqAccess17next_element_seedINtNtCs3oUPovFnLWP_4core6marker11PhantomDataNtNtB8_5value5ValueEECsc4241EHy6Do_9typst_kit.exit: ; preds = %bb.m, %bb.k, %_RINvNvXs7_NtCs261H7cERR92_10serde_json2deINtB8_9SeqAccesspENtNtCs7PiwjADO7TO_10serde_core2de9SeqAccess17next_element_seed16has_next_elementNtNtBa_4read9SliceReadECsc4241EHy6Do_9typst_kit.exit
   ret void
 }
 
@@ -744,10 +746,10 @@ bb.f:                                             ; preds = %.noexc24.us.us.i.i
   br label %.thread.us.us.i.i
 
 .thread.us.us.i.i:                                ; preds = %bb.f, %bb.d, %bb.c, %bb.b
-  %.sroa.829.1.extract.trunc46.us.us.i.i = phi i56 [ %.sroa.829.1.extract.trunc.us.us.i.i, %bb.f ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ]
-  %.sroa.829.0.extract.trunc45.us.us.i.i = phi i8 [ %.sroa.829.0.extract.trunc.us.us.i.i, %bb.f ], [ undef, %bb.b ], [ undef, %bb.d ], [ undef, %bb.c ]
-  %.sroa.0.0.ph44.us.us.i.i = phi i64 [ 3, %bb.f ], [ 2, %bb.b ], [ %spec.select.i.us.us.i.i, %bb.d ], [ 1, %bb.c ]
-  %.sroa.11.0.ph43.us.us.i.i = phi i64 [ %i.av, %bb.f ], [ undef, %bb.b ], [ undef, %bb.d ], [ undef, %bb.c ]
+  %.sroa.829.1.extract.trunc46.us.us.i.i = phi i56 [ %.sroa.829.1.extract.trunc.us.us.i.i, %bb.f ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.b ]
+  %.sroa.829.0.extract.trunc45.us.us.i.i = phi i8 [ %.sroa.829.0.extract.trunc.us.us.i.i, %bb.f ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.b ]
+  %.sroa.0.0.ph44.us.us.i.i = phi i64 [ 3, %bb.f ], [ 1, %bb.c ], [ %spec.select.i.us.us.i.i, %bb.d ], [ 2, %bb.b ]
+  %.sroa.11.0.ph43.us.us.i.i = phi i64 [ %i.av, %bb.f ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.b ]
   store i64 %.sroa.0.0.ph44.us.us.i.i, ptr %i.e, align 8, !noalias !4282
   store i8 %.sroa.829.0.extract.trunc45.us.us.i.i, ptr %.sroa.610.0..sroa_idx11.i.i, align 8, !noalias !4282
   store i56 %.sroa.829.1.extract.trunc46.us.us.i.i, ptr %.sroa.8.0..sroa_idx13.i.i, align 1, !noalias !4282
@@ -927,10 +929,10 @@ bb.t:                                             ; preds = %bb.q
   br label %.split100.i.i
 
 .thread.i.i:                                      ; preds = %bb.s, %bb.o, %bb.n, %bb.m
-  %.sroa.829.1.extract.trunc46.i.i = phi i56 [ %.sroa.829.1.extract.trunc.i.i, %bb.s ], [ 0, %bb.o ], [ 0, %bb.m ], [ 0, %bb.n ]
-  %.sroa.829.0.extract.trunc45.i.i = phi i8 [ %.sroa.829.0.extract.trunc.i.i, %bb.s ], [ undef, %bb.o ], [ undef, %bb.m ], [ undef, %bb.n ]
-  %.sroa.0.0.ph44.i.i = phi i64 [ 3, %bb.s ], [ 2, %bb.o ], [ %spec.select.i.i.i, %bb.m ], [ 1, %bb.n ]
-  %.sroa.11.0.ph43.i.i = phi i64 [ %i.cl, %bb.s ], [ undef, %bb.o ], [ undef, %bb.m ], [ undef, %bb.n ]
+  %.sroa.829.1.extract.trunc46.i.i = phi i56 [ %.sroa.829.1.extract.trunc.i.i, %bb.s ], [ 0, %bb.n ], [ 0, %bb.m ], [ 0, %bb.o ]
+  %.sroa.829.0.extract.trunc45.i.i = phi i8 [ %.sroa.829.0.extract.trunc.i.i, %bb.s ], [ undef, %bb.n ], [ undef, %bb.m ], [ undef, %bb.o ]
+  %.sroa.0.0.ph44.i.i = phi i64 [ 3, %bb.s ], [ 1, %bb.n ], [ %spec.select.i.i.i, %bb.m ], [ 2, %bb.o ]
+  %.sroa.11.0.ph43.i.i = phi i64 [ %i.cl, %bb.s ], [ undef, %bb.n ], [ undef, %bb.m ], [ undef, %bb.o ]
   store i64 %.sroa.0.0.ph44.i.i, ptr %i.e, align 8, !noalias !4282
   store i8 %.sroa.829.0.extract.trunc45.i.i, ptr %.sroa.610.0..sroa_idx11.i.i, align 8, !noalias !4282
   store i56 %.sroa.829.1.extract.trunc46.i.i, ptr %.sroa.8.0..sroa_idx13.i.i, align 1, !noalias !4282

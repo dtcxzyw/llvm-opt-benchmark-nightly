@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %.lr.ph432.5
 
 .critedge18.thread.thread:                        ; preds = %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %.critedge18, %.critedge18.thread
   %.5298382 = phi i64 [ %.5298430.lcssa, %.critedge18 ], [ %.4297, %.critedge18.thread ], [ %i.dm, %bb.ax ], [ %i.ds, %bb.ay ], [ %i.dy, %bb.az ], [ %i.ee, %bb.ba ], [ %i.ek, %bb.bb ], [ %i.eq, %bb.bc ] ; 2 uses
-  %.13379 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.12.lcssa, %.critedge18.thread ], [ %i.dl, %bb.ax ], [ %i.dr, %bb.ay ], [ %i.dx, %bb.az ], [ %i.ed, %bb.ba ], [ %i.ej, %bb.bb ], [ %i.ep, %bb.bc ] ; 5 uses
+  %.13379 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.12.lcssa, %.critedge18.thread ], [ %i.dl, %bb.ax ], [ %i.dr, %bb.ay ], [ %i.dx, %bb.az ], [ %i.ed, %bb.ba ], [ %i.ej, %bb.bb ], [ %i.ep, %bb.bc ] ; 4 uses
   %i.er = icmp eq i64 %.5298382, 1
   %i.es = load i8, ptr %i.c, align 1
   %i.et = icmp eq i8 %i.es, 45
@@ -247,23 +247,26 @@ bb.bi:                                            ; preds = %bb.bh
   %.neg345 = sub nsw i64 %.0292497508, %i.fc
   %i.fd = load i64, ptr %4, align 8, !tbaa !24
   %i.fe = add i64 %.neg345, %i.fd
-  store i64 %i.fe, ptr %4, align 8, !tbaa !24
-  br label %bb.bl
+  br label %.sink.split533
 
 bb.bj:                                            ; preds = %bb.bh
   %.neg = sub nsw i64 %.0292497508, %.3296
   %i.ff = add i64 %.neg, %i.ez
-  store i64 %i.ff, ptr %4, align 8, !tbaa !24
-  br label %bb.bl
+  br label %.sink.split533
 
 bb.bk:                                            ; preds = %bb.bg
   %i.fg = add nsw i64 %i.ez, %.2291512
   store i64 %i.fg, ptr %4, align 8, !tbaa !24
   br label %bb.bl
 
-bb.bl:                                            ; preds = %.critedge18, %bb.bf, %bb.be, %bb.bi, %bb.bj, %bb.bk, %bb.bd
-  %.sroa.0279.6 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.13380, %bb.bd ], [ %0, %bb.be ], [ %.13379, %bb.bf ], [ %.13379, %bb.bi ], [ %.13379, %bb.bj ], [ %.13379, %bb.bk ]
-  %.sroa.29.6 = phi i32 [ 34, %.critedge18 ], [ 0, %bb.bd ], [ %i.ex, %bb.be ], [ %i.ex, %bb.bf ], [ 0, %bb.bi ], [ 0, %bb.bj ], [ 0, %bb.bk ]
+.sink.split533:                                   ; preds = %bb.bi, %bb.bj
+  %.sink534 = phi i64 [ %i.ff, %bb.bj ], [ %i.fe, %bb.bi ]
+  store i64 %.sink534, ptr %4, align 8, !tbaa !24
+  br label %bb.bl
+
+bb.bl:                                            ; preds = %.sink.split533, %.critedge18, %bb.bf, %bb.be, %bb.bk, %bb.bd
+  %.sroa.0279.6 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.13380, %bb.bd ], [ %0, %bb.be ], [ %.13379, %bb.bf ], [ %.13379, %bb.bk ], [ %.13379, %.sink.split533 ]
+  %.sroa.29.6 = phi i32 [ 34, %.critedge18 ], [ 0, %bb.bd ], [ %i.ex, %bb.be ], [ %i.ex, %bb.bf ], [ 0, %bb.bk ], [ 0, %.sink.split533 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   br label %bb.bm
 
@@ -666,7 +669,7 @@ bb.bc:                                            ; preds = %.lr.ph432.5
 
 .critedge18.thread.thread:                        ; preds = %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %.critedge18, %.critedge18.thread
   %.5298382 = phi i64 [ %.5298430.lcssa, %.critedge18 ], [ %.4297, %.critedge18.thread ], [ %i.dm, %bb.ax ], [ %i.ds, %bb.ay ], [ %i.dy, %bb.az ], [ %i.ee, %bb.ba ], [ %i.ek, %bb.bb ], [ %i.eq, %bb.bc ] ; 2 uses
-  %.13379 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.12.lcssa, %.critedge18.thread ], [ %i.dl, %bb.ax ], [ %i.dr, %bb.ay ], [ %i.dx, %bb.az ], [ %i.ed, %bb.ba ], [ %i.ej, %bb.bb ], [ %i.ep, %bb.bc ] ; 5 uses
+  %.13379 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.12.lcssa, %.critedge18.thread ], [ %i.dl, %bb.ax ], [ %i.dr, %bb.ay ], [ %i.dx, %bb.az ], [ %i.ed, %bb.ba ], [ %i.ej, %bb.bb ], [ %i.ep, %bb.bc ] ; 4 uses
   %i.er = icmp eq i64 %.5298382, 1
   %i.es = load i8, ptr %i.c, align 1
   %i.et = icmp eq i8 %i.es, 45
@@ -708,23 +711,26 @@ bb.bi:                                            ; preds = %bb.bh
   %.neg345 = sub nsw i64 %.0292497508, %i.fc
   %i.fd = load i64, ptr %4, align 8, !tbaa !24
   %i.fe = add i64 %.neg345, %i.fd
-  store i64 %i.fe, ptr %4, align 8, !tbaa !24
-  br label %bb.bl
+  br label %.sink.split533
 
 bb.bj:                                            ; preds = %bb.bh
   %.neg = sub nsw i64 %.0292497508, %.3296
   %i.ff = add i64 %.neg, %i.ez
-  store i64 %i.ff, ptr %4, align 8, !tbaa !24
-  br label %bb.bl
+  br label %.sink.split533
 
 bb.bk:                                            ; preds = %bb.bg
   %i.fg = add nsw i64 %i.ez, %.2291512
   store i64 %i.fg, ptr %4, align 8, !tbaa !24
   br label %bb.bl
 
-bb.bl:                                            ; preds = %.critedge18, %bb.bf, %bb.be, %bb.bi, %bb.bj, %bb.bk, %bb.bd
-  %.sroa.0279.6 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.13380, %bb.bd ], [ %0, %bb.be ], [ %.13379, %bb.bf ], [ %.13379, %bb.bi ], [ %.13379, %bb.bj ], [ %.13379, %bb.bk ]
-  %.sroa.29.6 = phi i32 [ 34, %.critedge18 ], [ 0, %bb.bd ], [ %i.ex, %bb.be ], [ %i.ex, %bb.bf ], [ 0, %bb.bi ], [ 0, %bb.bj ], [ 0, %bb.bk ]
+.sink.split533:                                   ; preds = %bb.bi, %bb.bj
+  %.sink534 = phi i64 [ %i.ff, %bb.bj ], [ %i.fe, %bb.bi ]
+  store i64 %.sink534, ptr %4, align 8, !tbaa !24
+  br label %bb.bl
+
+bb.bl:                                            ; preds = %.sink.split533, %.critedge18, %bb.bf, %bb.be, %bb.bk, %bb.bd
+  %.sroa.0279.6 = phi ptr [ %.13431.lcssa, %.critedge18 ], [ %.13380, %bb.bd ], [ %0, %bb.be ], [ %.13379, %bb.bf ], [ %.13379, %bb.bk ], [ %.13379, %.sink.split533 ]
+  %.sroa.29.6 = phi i32 [ 34, %.critedge18 ], [ 0, %bb.bd ], [ %i.ex, %bb.be ], [ %i.ex, %bb.bf ], [ 0, %bb.bk ], [ 0, %.sink.split533 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   br label %bb.bm
 

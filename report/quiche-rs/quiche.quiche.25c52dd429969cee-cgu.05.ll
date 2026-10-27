@@ -202,7 +202,7 @@ bb.be:                                            ; preds = %.body
 define internal fastcc void @_RNvNtCs3f36owOmepS_6quiche5frame18parse_stream_frame(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(128) %0, i64 noundef range(i64 8, 16) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %2) unnamed_addr #0 !dbg !8079 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [24 x i8], align 8                ; 5 uses
+  %i.b = alloca [24 x i8], align 8                ; 4 uses
     #dbg_value(i64 %1, !8097, !DIExpression(), !8115)
     #dbg_value(ptr %2, !8098, !DIExpression(), !8115)
     #dbg_value(ptr %2, !8116, !DIExpression(), !8119)
@@ -331,33 +331,35 @@ bb.o:                                             ; preds = %bb.m
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8213
   store i64 1, ptr %i.ag, align 8, !dbg !8213
   store i64 -1, ptr %0, align 8, !dbg !8213
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !8214
-  br label %bb.q, !dbg !8211
+  br label %.sink.split, !dbg !8211
 
 bb.p:                                             ; preds = %bb.m
-  %i.ah = trunc i64 %1 to i1, !dbg !8215
+  %i.ah = trunc i64 %1 to i1, !dbg !8214
     #dbg_value(i1 %i.ah, !8173, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8176)
     #dbg_value(i1 %i.ah, !8109, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8184)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !dbg !8216
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !dbg !8215
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !8212
-  %i.ai = call { ptr, i64 } @_RNvXs1_Cs3cD8Bj6DSIP_6octetsNtB5_6OctetsINtNtCskKLDkoKarTP_4core7convert5AsRefShE6as_ref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.b), !dbg !8217 ; 2 uses
-  %i.aj = extractvalue { ptr, i64 } %i.ai, 0, !dbg !8217
-  %i.ak = extractvalue { ptr, i64 } %i.ai, 1, !dbg !8217
+  %i.ai = call { ptr, i64 } @_RNvXs1_Cs3cD8Bj6DSIP_6octetsNtB5_6OctetsINtNtCskKLDkoKarTP_4core7convert5AsRefShE6as_ref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.b), !dbg !8216 ; 2 uses
+  %i.aj = extractvalue { ptr, i64 } %i.ai, 0, !dbg !8216
+  %i.ak = extractvalue { ptr, i64 } %i.ai, 1, !dbg !8216
     #dbg_value(ptr %i.aj, !8172, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8176)
     #dbg_value(i64 %i.ak, !8172, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8176)
-  %i.al = call { ptr, i64 } @_RNvXNtCs3f36owOmepS_6quiche7buffersNtB2_17DefaultBufFactoryNtB2_10BufFactory14buf_from_slice(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aj, i64 noundef %i.ak), !dbg !8218 ; 2 uses
-  %i.am = extractvalue { ptr, i64 } %i.al, 0, !dbg !8218
-  %i.an = extractvalue { ptr, i64 } %i.al, 1, !dbg !8218
-  %.sroa.519.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8219
-  call void @_RNvMNtCs3f36owOmepS_6quiche9range_bufNtB2_8RangeBuf8from_rawB4_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %.sroa.519.0..sroa_idx, ptr noundef nonnull %i.am, i64 noundef %i.an, i64 noundef %.sroa.08.0, i1 noundef zeroext %i.ah), !dbg !8220
-  store i64 10, ptr %0, align 8, !dbg !8219
-  %.sroa.418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8219
-  store i64 %i.f, ptr %.sroa.418.0..sroa_idx, align 8, !dbg !8219
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !8214
-  br label %bb.q, !dbg !8221
+  %i.al = call { ptr, i64 } @_RNvXNtCs3f36owOmepS_6quiche7buffersNtB2_17DefaultBufFactoryNtB2_10BufFactory14buf_from_slice(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aj, i64 noundef %i.ak), !dbg !8217 ; 2 uses
+  %i.am = extractvalue { ptr, i64 } %i.al, 0, !dbg !8217
+  %i.an = extractvalue { ptr, i64 } %i.al, 1, !dbg !8217
+  %.sroa.519.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8218
+  call void @_RNvMNtCs3f36owOmepS_6quiche9range_bufNtB2_8RangeBuf8from_rawB4_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %.sroa.519.0..sroa_idx, ptr noundef nonnull %i.am, i64 noundef %i.an, i64 noundef %.sroa.08.0, i1 noundef zeroext %i.ah), !dbg !8219
+  store i64 10, ptr %0, align 8, !dbg !8218
+  %.sroa.418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8218
+  store i64 %i.f, ptr %.sroa.418.0..sroa_idx, align 8, !dbg !8218
+  br label %.sink.split, !dbg !8220
 
-bb.q:                                             ; preds = %bb.b, %bb.k, %bb.n, %bb.o, %bb.f, %bb.p
-  ret void, !dbg !8221
+.sink.split:                                      ; preds = %bb.p, %bb.o
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !8221
+  br label %bb.q, !dbg !8220
+
+bb.q:                                             ; preds = %.sink.split, %bb.b, %bb.k, %bb.n, %bb.f
+  ret void, !dbg !8220
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -760,14 +762,14 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !8211 = !DILocation(line: 0, scope: !8185)
 !8212 = !DILocation(line: 1392, column: 32, scope: !8068)
 !8213 = !DILocation(line: 2192, column: 23, scope: !8084, inlinedAt: !8153)
-!8214 = !DILocation(line: 1396, column: 1, scope: !8068)
-!8215 = !DILocation(line: 1390, column: 15, scope: !8071)
-!8216 = !DILocation(line: 2177, column: 16, scope: !8083, inlinedAt: !8125)
-!8217 = !DILocation(line: 1393, column: 38, scope: !8067)
-!8218 = !DILocation(line: 84, column: 24, scope: !8096, inlinedAt: !8175)
-!8219 = !DILocation(line: 1395, column: 5, scope: !8064)
-!8220 = !DILocation(line: 84, column: 9, scope: !8096, inlinedAt: !8175)
-!8221 = !DILocation(line: 1396, column: 2, scope: !8079)
+!8214 = !DILocation(line: 1390, column: 15, scope: !8071)
+!8215 = !DILocation(line: 2177, column: 16, scope: !8083, inlinedAt: !8125)
+!8216 = !DILocation(line: 1393, column: 38, scope: !8067)
+!8217 = !DILocation(line: 84, column: 24, scope: !8096, inlinedAt: !8175)
+!8218 = !DILocation(line: 1395, column: 5, scope: !8064)
+!8219 = !DILocation(line: 84, column: 9, scope: !8096, inlinedAt: !8175)
+!8220 = !DILocation(line: 1396, column: 2, scope: !8079)
+!8221 = !DILocation(line: 1396, column: 1, scope: !8068)
 !8222 = !DILocation(line: 0, scope: !315)
 !8223 = !DILocation(line: 0, scope: !314)
 !8224 = !DILocation(line: 1361, column: 5, scope: !314)

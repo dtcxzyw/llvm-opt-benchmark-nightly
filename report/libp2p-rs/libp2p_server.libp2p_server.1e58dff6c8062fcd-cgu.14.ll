@@ -205,7 +205,7 @@ bb.a:
   %i.e = alloca [184 x i8], align 8               ; 4 uses
   %i.f = alloca [88 x i8], align 8                ; 7 uses
   %.sroa.610 = alloca [56 x i8], align 8          ; 6 uses
-  %i.g = alloca [120 x i8], align 8               ; 15 uses
+  %i.g = alloca [120 x i8], align 8               ; 14 uses
   %i.h = alloca [32 x i8], align 4                ; 5 uses
   %i.i = trunc nuw i16 %.0.val to i1
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 504 ; 2 uses
@@ -398,8 +398,7 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.br, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.610, i64 56, i1 false)
   store ptr null, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.610)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  br label %bb.v
+  br label %.sink.split
 
 bb.u:                                             ; preds = %bb.s
   %.sroa.528.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 64
@@ -410,10 +409,13 @@ bb.u:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.610, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.610)
   store ptr %i.bo, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.g, %bb.t, %bb.u
+bb.v:                                             ; preds = %.sink.split, %bb.g
   ret void
 
 bb.w:                                             ; preds = %bb.r, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcDINtNtNtB4_3ops8function2FnuEp6OutputINtNtBG_5boxed3BoxDNtNtCsdAHj8hiIvQh_11quinn_proto13cid_generator21ConnectionIdGeneratorEL_ENtNtB4_6marker4SendNtB3g_4SyncEL_EECs2Bxje7pdMIr_13libp2p_server.exit.i

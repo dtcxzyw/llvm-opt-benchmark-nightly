@@ -202,7 +202,7 @@ define dso_local noundef ptr @sts_parallel_scan_next(ptr nofree noundef captures
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
   %2 = alloca %struct.SharedTuplestoreChunk, align 4 ; 5 uses
-  %3 = alloca %struct.SharedTuplestoreChunk, align 4 ; 6 uses
+  %3 = alloca %struct.SharedTuplestoreChunk, align 4 ; 5 uses
   %i.b = alloca [1024 x i8], align 16             ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
@@ -434,15 +434,13 @@ bb.q:                                             ; preds = %bb.o
   %i.de = load i32, ptr %3, align 4
   store i32 %i.de, ptr %i.d, align 8
   store i64 8, ptr %i.o, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
-  br label %.backedge
+  br label %.backedge.sink.split
 
 bb.r:                                             ; preds = %bb.q
   %i.df = shl i32 %i.dc, 2
   %i.dg = add i32 %i.df, %i.ci
   store i32 %i.dg, ptr %i.j, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
-  br label %.backedge
+  br label %.backedge.sink.split
 
 bb.s:                                             ; preds = %bb.l
   call void @LWLockRelease(ptr noundef nonnull %i.cc) #12
@@ -470,7 +468,11 @@ bb.v:                                             ; preds = %bb.u
   store i32 0, ptr %i.j, align 8
   br label %.backedge
 
-.backedge:                                        ; preds = %bb.v, %.thread57, %bb.r
+.backedge.sink.split:                             ; preds = %.thread57, %bb.r
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  br label %.backedge
+
+.backedge:                                        ; preds = %.backedge.sink.split, %bb.v
   %i.dp = load i32, ptr %i.c, align 4
   %i.dq = load i32, ptr %i.d, align 8
   %i.dr = icmp slt i32 %i.dp, %i.dq

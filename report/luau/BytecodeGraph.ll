@@ -204,10 +204,10 @@ bb.bj:                                            ; preds = %bb.a
   %i.zv = getelementptr inbounds nuw [8 x i8], ptr %i.zu, i64 %i.zt
   %i.zw = getelementptr inbounds nuw i8, ptr %i.zv, i64 4
   %i.zx = load i32, ptr %i.zw, align 4, !tbaa !33 ; 2 uses
-  %i.zy = trunc i32 %i.zx to i8                   ; 2 uses
+  %i.zy = trunc i32 %i.zx to i8
   %i.zz = and i32 %i.zx, 254
   %or.cond = icmp eq i32 %i.zz, 0
-  %i.aaa = load ptr, ptr %i.h, align 8, !tbaa !304, !nonnull !170, !align !198 ; 2 uses
+  %i.aaa = load ptr, ptr %i.h, align 8, !tbaa !304, !nonnull !170, !align !198
   %i.aab = getelementptr inbounds nuw i8, ptr %i.zp, i64 4
   %.sroa.0.0.copyload.i297 = load i32, ptr %i.aab, align 4, !tbaa !33 ; 2 uses
   br i1 %or.cond, label %bb.bk, label %bb.bl
@@ -223,11 +223,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.aai = zext nneg i32 %i.aah to i64
   %i.aaj = load ptr, ptr %i.aag, align 8, !tbaa !266
   %i.aak = getelementptr inbounds nuw [8 x i8], ptr %i.aaj, i64 %i.aai
-  %2 = getelementptr inbounds nuw i8, ptr %i.aak, i64 4
-  %3 = load i32, ptr %2, align 4, !tbaa !33
-  %4 = trunc i32 %3 to i8
-  tail call void @_ZN4Luau15BytecodeBuilder7emitABCE10LuauOpcodehhh(ptr noundef nonnull align 8 dereferenceable(1048) %i.aaa, i32 noundef 70, i8 noundef zeroext %i.zy, i8 noundef zeroext %i.aac, i8 noundef zeroext %4)
-  br label %bb.bx
+  br label %.sink.split
 
 bb.bl:                                            ; preds = %bb.bj
   %i.aal = lshr i32 %.sroa.0.0.copyload.i297, 4
@@ -237,11 +233,7 @@ bb.bl:                                            ; preds = %bb.bj
   %i.aao = lshr i32 %.sroa.01.0.copyload.i.i300, 4
   %i.aap = zext nneg i32 %i.aao to i64
   %i.aaq = getelementptr inbounds nuw [8 x i8], ptr %i.zu, i64 %i.aap
-  %5 = getelementptr inbounds nuw i8, ptr %i.aaq, i64 4
-  %6 = load i32, ptr %5, align 4, !tbaa !33
-  %7 = trunc i32 %6 to i8
-  tail call void @_ZN4Luau15BytecodeBuilder7emitABCE10LuauOpcodehhh(ptr noundef nonnull align 8 dereferenceable(1048) %i.aaa, i32 noundef 70, i8 noundef zeroext %i.zy, i8 noundef zeroext %i.aam, i8 noundef zeroext %7)
-  br label %bb.bx
+  br label %.sink.split
 
 bb.bm:                                            ; preds = %bb.a, %bb.a
   %i.aar = load ptr, ptr %i.h, align 8, !tbaa !304, !nonnull !170, !align !198
@@ -449,7 +441,16 @@ bb.bw:                                            ; preds = %bb.a
   tail call void @_ZN4Luau15BytecodeBuilder7emitAuxEj(ptr noundef nonnull align 8 dereferenceable(1048) %i.afn, i32 noundef %i.afq)
   br label %bb.bx
 
-bb.bx:                                            ; preds = %bb.bk, %bb.bl, %bb.bw, %bb.bv, %bb.bu, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE18getVmConstInputABCERNS0_6BcInstEh.exit313, %bb.br, %bb.bq, %bb.bp, %bb.bo, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE18getVmConstInputABCERNS0_6BcInstEh.exit301, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE16getVmConstInputDERNS0_6BcInstEh.exit293, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE16getVmConstInputDERNS0_6BcInstEh.exit264, %bb.ap, %bb.ao, %bb.an, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE18getVmConstInputABCERNS0_6BcInstEh.exit, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE13getProtoInputERNS0_6BcInstEh.exit, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %._crit_edge, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE16getVmConstInputDERNS0_6BcInstEh.exit, %bb.g, %bb.f, %bb.c, %bb.b, %bb.a
+.sink.split:                                      ; preds = %bb.bl, %bb.bk
+  %.sink325 = phi ptr [ %i.aak, %bb.bk ], [ %i.aaq, %bb.bl ]
+  %.sink = phi i8 [ %i.aac, %bb.bk ], [ %i.aam, %bb.bl ]
+  %2 = getelementptr inbounds nuw i8, ptr %.sink325, i64 4
+  %3 = load i32, ptr %2, align 4, !tbaa !33
+  %4 = trunc i32 %3 to i8
+  tail call void @_ZN4Luau15BytecodeBuilder7emitABCE10LuauOpcodehhh(ptr noundef nonnull align 8 dereferenceable(1048) %i.aaa, i32 noundef 70, i8 noundef zeroext %i.zy, i8 noundef zeroext %.sink, i8 noundef zeroext %4)
+  br label %bb.bx
+
+bb.bx:                                            ; preds = %.sink.split, %bb.bw, %bb.bv, %bb.bu, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE18getVmConstInputABCERNS0_6BcInstEh.exit313, %bb.br, %bb.bq, %bb.bp, %bb.bo, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE18getVmConstInputABCERNS0_6BcInstEh.exit301, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE16getVmConstInputDERNS0_6BcInstEh.exit293, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE16getVmConstInputDERNS0_6BcInstEh.exit264, %bb.ap, %bb.ao, %bb.an, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE18getVmConstInputABCERNS0_6BcInstEh.exit, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE13getProtoInputERNS0_6BcInstEh.exit, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %._crit_edge, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %_ZN4Luau8Bytecode23BytecodeGraphSerializerINS0_9BcVmConstEE16getVmConstInputDERNS0_6BcInstEh.exit, %bb.g, %bb.f, %bb.c, %bb.b, %bb.a
   ret void
 }
 

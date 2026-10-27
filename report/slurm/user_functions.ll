@@ -202,8 +202,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.im = load i32, ptr %i.ii, align 4
   %i.in = call ptr @slurm_strerror(i32 noundef %i.im) #9
   %i.io = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.il, ptr noundef nonnull @.str.35, ptr noundef %i.in) #11 ; 0 uses
-  call void @notice_thread_fini() #9
-  br label %bb.cm
+  br label %.sink.split
 
 bb.cf:                                            ; preds = %bb.cd
   %puts168 = call i32 @puts(ptr nonnull dereferenceable(1) @str.9) ; 0 uses
@@ -217,8 +216,7 @@ bb.cf:                                            ; preds = %bb.cd
 
 bb.cg:                                            ; preds = %.critedge180
   %puts168271 = call i32 @puts(ptr nonnull dereferenceable(1) @str.9) ; 0 uses
-  call void @notice_thread_fini() #9
-  br label %bb.cm
+  br label %.sink.split
 
 bb.ch:                                            ; preds = %.split214
   %i.ip = call i32 @commit_check(ptr noundef nonnull @.str.6) #9
@@ -250,8 +248,12 @@ bb.cl:                                            ; preds = %bb.ck
   %i.iz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ix, ptr noundef nonnull @.str.9, ptr noundef %i.iy) #11 ; 0 uses
   br label %bb.cm
 
-bb.cm:                                            ; preds = %bb.cc, %bb.ck, %bb.cl, %bb.ci, %bb.cj, %bb.bz, %.thread199, %.thread211, %.split214, %bb.cg, %bb.at, %bb.as, %bb.ar, %._crit_edge, %._crit_edge.thread, %bb.an, %.thread
-  %.0114 = phi i32 [ -1, %.thread ], [ -1, %._crit_edge ], [ -1, %bb.at ], [ 0, %bb.an ], [ -1, %._crit_edge.thread ], [ %i.et, %bb.ar ], [ -1, %bb.as ], [ %i.ir, %bb.cj ], [ 0, %bb.ci ], [ %i.iw, %bb.cl ], [ 0, %bb.ck ], [ -1, %bb.cg ], [ -1, %bb.cc ], [ %.3112, %bb.bz ], [ -1, %.thread199 ], [ -1, %.thread211 ], [ %.4113268, %.split214 ]
+.sink.split:                                      ; preds = %.thread211, %bb.cg
+  call void @notice_thread_fini() #9
+  br label %bb.cm
+
+bb.cm:                                            ; preds = %bb.cc, %bb.ck, %bb.cl, %bb.ci, %bb.cj, %bb.bz, %.thread199, %.split214, %.sink.split, %bb.at, %bb.as, %bb.ar, %._crit_edge, %._crit_edge.thread, %bb.an, %.thread
+  %.0114 = phi i32 [ -1, %.thread ], [ -1, %._crit_edge ], [ -1, %bb.at ], [ 0, %bb.an ], [ -1, %._crit_edge.thread ], [ %i.et, %bb.ar ], [ -1, %bb.as ], [ %i.ir, %bb.cj ], [ 0, %bb.ci ], [ %i.iw, %bb.cl ], [ 0, %bb.ck ], [ %.4113268, %.split214 ], [ -1, %bb.cc ], [ %.3112, %bb.bz ], [ -1, %.thread199 ], [ -1, %.sink.split ]
   call void @slurmdb_destroy_user_cond(ptr noundef %i.f) #9
   call void @slurmdb_destroy_user_rec(ptr noundef %i.g) #9
   call void @slurmdb_destroy_assoc_rec(ptr noundef %i.h) #9

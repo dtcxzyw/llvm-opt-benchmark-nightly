@@ -79,8 +79,7 @@ bb.f:                                             ; preds = %bb.e
   store ptr @0, ptr %i.x, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 41, ptr %i.y, align 8
-  store i64 1, ptr %0, align 8
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %.sroa.032.0.copyload = load i32, ptr %i.p, align 1
@@ -95,10 +94,14 @@ bb.g:                                             ; preds = %bb.e
   store i32 %i.i, ptr %.sroa.626.0..sroa_idx, align 4
   %.sroa.727.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.z, ptr %.sroa.727.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.f
+  %.sink = phi i64 [ 1, %bb.f ], [ 0, %bb.g ]
+  store i64 %.sink, ptr %0, align 8
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.d, %bb.f, %bb.g, %bb.c
+bb.h:                                             ; preds = %.sink.split, %bb.d, %bb.c
   ret void
 }
 

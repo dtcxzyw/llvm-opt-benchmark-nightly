@@ -204,12 +204,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.amn = getelementptr inbounds nuw [96 x i8], ptr %i.aml, i64 %i.amm
   %i.amo = getelementptr inbounds nuw i8, ptr %i.amn, i64 64
   %i.amp = load i64, ptr %i.amo, align 8, !tbaa !36
-  %5 = tail call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %2, i64 noundef %i.amp) #10
-  %6 = getelementptr inbounds nuw [96 x i8], ptr %i.aml, i64 %5
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 48
-  store i64 -1, ptr %7, align 8, !tbaa !37
-  %8 = load ptr, ptr %2, align 8, !tbaa !8
-  br label %bb.cl
+  br label %.sink.split935
 
 bb.ck:                                            ; preds = %bb.ci
   store i64 -1, ptr %i.amc, align 8, !tbaa !37
@@ -236,20 +231,29 @@ bb.ck:                                            ; preds = %bb.ci
   %i.ani = getelementptr inbounds nuw [96 x i8], ptr %i.ang, i64 %i.anh
   %i.anj = getelementptr inbounds nuw i8, ptr %i.ani, i64 64
   %i.ank = load i64, ptr %i.anj, align 8, !tbaa !36
-  %9 = load ptr, ptr %2, align 8, !tbaa !8
-  %10 = tail call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %2, i64 noundef %i.qi) #10
-  %11 = getelementptr inbounds nuw [96 x i8], ptr %9, i64 %10
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 56
-  store i64 %i.ank, ptr %12, align 8, !tbaa !35
   %i.anl = load ptr, ptr %2, align 8, !tbaa !8
+  br label %.sink.split935
+
+.sink.split935:                                   ; preds = %bb.ck, %bb.cj
+  %.sink941 = phi i64 [ %i.amp, %bb.cj ], [ %i.qi, %bb.ck ]
+  %.sink939 = phi ptr [ %i.aml, %bb.cj ], [ %i.anl, %bb.ck ]
+  %.sink938 = phi i64 [ 48, %bb.cj ], [ 56, %bb.ck ]
+  %.sink = phi i64 [ -1, %bb.cj ], [ %i.ank, %bb.ck ]
+  %.sink924.sink.ph = phi i64 [ %.0775854, %bb.cj ], [ %i.qi, %bb.ck ]
+  %.sink926.ph = phi i64 [ 56, %bb.cj ], [ 64, %bb.ck ]
+  %5 = tail call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %2, i64 noundef %.sink941) #10
+  %6 = getelementptr inbounds nuw [96 x i8], ptr %.sink939, i64 %5
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %.sink938
+  store i64 %.sink, ptr %7, align 8, !tbaa !13
+  %8 = load ptr, ptr %2, align 8, !tbaa !8
   br label %bb.cl
 
-bb.cl:                                            ; preds = %bb.cb, %is_left_of.exit827.thread841, %is_left_of.exit827.thread, %bb.bi, %is_left_of.exit.thread833, %is_left_of.exit.thread, %bb.cj, %bb.ck, %bb.ch
-  %.sink924.sink = phi i64 [ %i.zv, %bb.bi ], [ %i.qi, %bb.ch ], [ %.0775854, %bb.cj ], [ %i.qi, %bb.ck ], [ %i.qi, %is_left_of.exit.thread ], [ %.0775854, %is_left_of.exit.thread833 ], [ %i.qi, %is_left_of.exit827.thread ], [ %.0775854, %is_left_of.exit827.thread841 ], [ %i.agy, %bb.cb ]
-  %.sink922.sink = phi ptr [ %i.zr, %bb.bi ], [ %i.alm, %bb.ch ], [ %8, %bb.cj ], [ %i.anl, %bb.ck ], [ %i.wq, %is_left_of.exit.thread ], [ %i.xd, %is_left_of.exit.thread833 ], [ %i.adt, %is_left_of.exit827.thread ], [ %i.aeg, %is_left_of.exit827.thread841 ], [ %i.agu, %bb.cb ]
-  %.sink921.sink = phi i64 [ 48, %bb.bi ], [ 64, %bb.ch ], [ 64, %bb.cj ], [ 64, %bb.ck ], [ 64, %is_left_of.exit.thread ], [ 64, %is_left_of.exit.thread833 ], [ 64, %is_left_of.exit827.thread ], [ 64, %is_left_of.exit827.thread841 ], [ 48, %bb.cb ]
-  %.sink918.sink = phi i64 [ %i.qi, %bb.bi ], [ -1, %bb.ch ], [ -1, %bb.cj ], [ -1, %bb.ck ], [ -1, %is_left_of.exit.thread ], [ -1, %is_left_of.exit.thread833 ], [ -1, %is_left_of.exit827.thread ], [ -1, %is_left_of.exit827.thread841 ], [ %i.qi, %bb.cb ]
-  %.sink926 = phi i64 [ 56, %bb.bi ], [ 64, %bb.ch ], [ 56, %bb.cj ], [ 64, %bb.ck ], [ 56, %is_left_of.exit.thread ], [ 56, %is_left_of.exit.thread833 ], [ 64, %is_left_of.exit827.thread ], [ 64, %is_left_of.exit827.thread841 ], [ 64, %bb.cb ]
+bb.cl:                                            ; preds = %.sink.split935, %bb.cb, %is_left_of.exit827.thread841, %is_left_of.exit827.thread, %bb.bi, %is_left_of.exit.thread833, %is_left_of.exit.thread, %bb.ch
+  %.sink924.sink = phi i64 [ %i.zv, %bb.bi ], [ %i.qi, %bb.ch ], [ %.0775854, %is_left_of.exit827.thread841 ], [ %i.agy, %bb.cb ], [ %i.qi, %is_left_of.exit.thread ], [ %.0775854, %is_left_of.exit.thread833 ], [ %i.qi, %is_left_of.exit827.thread ], [ %.sink924.sink.ph, %.sink.split935 ]
+  %.sink922.sink = phi ptr [ %i.zr, %bb.bi ], [ %i.alm, %bb.ch ], [ %i.aeg, %is_left_of.exit827.thread841 ], [ %i.agu, %bb.cb ], [ %i.wq, %is_left_of.exit.thread ], [ %i.xd, %is_left_of.exit.thread833 ], [ %i.adt, %is_left_of.exit827.thread ], [ %8, %.sink.split935 ]
+  %.sink921.sink = phi i64 [ 48, %bb.bi ], [ 64, %bb.ch ], [ 64, %is_left_of.exit827.thread841 ], [ 48, %bb.cb ], [ 64, %is_left_of.exit.thread ], [ 64, %is_left_of.exit.thread833 ], [ 64, %is_left_of.exit827.thread ], [ 64, %.sink.split935 ]
+  %.sink918.sink = phi i64 [ %i.qi, %bb.bi ], [ -1, %bb.ch ], [ -1, %is_left_of.exit827.thread841 ], [ %i.qi, %bb.cb ], [ -1, %is_left_of.exit.thread ], [ -1, %is_left_of.exit.thread833 ], [ -1, %is_left_of.exit827.thread ], [ -1, %.sink.split935 ]
+  %.sink926 = phi i64 [ 56, %bb.bi ], [ 64, %bb.ch ], [ 64, %is_left_of.exit827.thread841 ], [ 64, %bb.cb ], [ 56, %is_left_of.exit.thread ], [ 56, %is_left_of.exit.thread833 ], [ 64, %is_left_of.exit827.thread ], [ %.sink926.ph, %.sink.split935 ]
   %i.anm = tail call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %2, i64 noundef %.sink924.sink) #10
   %i.ann = getelementptr inbounds nuw [96 x i8], ptr %.sink922.sink, i64 %i.anm
   %i.ano = getelementptr inbounds nuw i8, ptr %i.ann, i64 %.sink921.sink

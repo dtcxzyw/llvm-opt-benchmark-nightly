@@ -202,7 +202,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 2 uses
   %i.f = alloca [48 x i8], align 8                ; 7 uses
-  %.sroa.6 = alloca [24 x i8], align 8            ; 6 uses
+  %.sroa.6 = alloca [24 x i8], align 8            ; 5 uses
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 2 uses
   %.sroa.6.sroa.7 = alloca [16 x i8], align 8     ; 3 uses
@@ -351,16 +351,18 @@ bb.m:                                             ; preds = %bb.h
   store ptr %i.ao, ptr %i.ap, align 8
   store i64 -1, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
-  br label %bb.o
+  br label %.sink.split
 
 bb.n:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6, i64 24, i1 false)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.b, %.split, %bb.m, %bb.l, %bb.j, %bb.n
+bb.o:                                             ; preds = %bb.b, %.split, %.sink.split, %bb.l, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   ret void

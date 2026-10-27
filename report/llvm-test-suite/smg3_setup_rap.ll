@@ -126,8 +126,7 @@ bb.c:                                             ; preds = %bb.a
   %i.az = getelementptr inbounds nuw i8, ptr %i.at, i64 72
   store i32 -1, ptr %i.az, align 4, !tbaa !7
   %i.ba = getelementptr inbounds nuw i8, ptr %i.at, i64 76
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ba, i8 0, i64 20, i1 false)
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .split133.us.1:                                   ; preds = %bb.c
   %i.bb = tail call ptr @hypre_CAlloc(i32 noundef 14, i32 noundef 12) #6 ; 12 uses
@@ -151,12 +150,18 @@ bb.c:                                             ; preds = %bb.a
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bb, i64 144
   store i32 -1, ptr %i.bk, align 4, !tbaa !7
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bb, i64 148
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.bl, i8 0, i64 20, i1 false)
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.split133.us.1, %.loopexit.loopexit158
+  %.sink = phi ptr [ %i.ba, %.loopexit.loopexit158 ], [ %i.bl, %.split133.us.1 ]
+  %.0110.ph = phi ptr [ %i.at, %.loopexit.loopexit158 ], [ %i.bb, %.split133.us.1 ]
+  %.0109.ph = phi i32 [ 8, %.loopexit.loopexit158 ], [ 14, %.split133.us.1 ]
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sink, i8 0, i64 20, i1 false)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.split133.us.1, %.loopexit.loopexit158, %.preheader114, %.loopexit.loopexit
-  %.0110 = phi ptr [ %i.at, %.loopexit.loopexit158 ], [ %i.i, %.loopexit.loopexit ], [ %i.w, %.preheader114 ], [ %i.bb, %.split133.us.1 ]
-  %.0109 = phi i32 [ 8, %.loopexit.loopexit158 ], [ 15, %.loopexit.loopexit ], [ 27, %.preheader114 ], [ 14, %.split133.us.1 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.preheader114, %.loopexit.loopexit
+  %.0110 = phi ptr [ %i.w, %.preheader114 ], [ %i.i, %.loopexit.loopexit ], [ %.0110.ph, %.loopexit.sink.split ]
+  %.0109 = phi i32 [ 27, %.preheader114 ], [ 15, %.loopexit.loopexit ], [ %.0109.ph, %.loopexit.sink.split ]
   %i.bm = tail call ptr @hypre_StructStencilCreate(i32 noundef 3, i32 noundef %.0109, ptr noundef nonnull %.0110) #6 ; 2 uses
   %i.bn = load i32, ptr %1, align 8, !tbaa !37
   %i.bo = tail call ptr @hypre_StructMatrixCreate(i32 noundef %i.bn, ptr noundef %3, ptr noundef %i.bm) #6 ; 3 uses

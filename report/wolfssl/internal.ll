@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1068 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, i8 0, i64 32, i1 false)
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1059 ; 6 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1059 ; 5 uses
   store i8 2, ptr %i.e, align 1, !tbaa !242
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1060 ; 9 uses
   store i8 0, ptr %i.f, align 4, !tbaa !241
@@ -419,15 +419,13 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   store i8 10, ptr %i.f, align 4, !tbaa !52
   %i.bs = load i8, ptr %i.bp, align 1, !tbaa !52
-  %i.bt = add i8 %i.bs, -5                        ; 2 uses
-  store i8 %i.bt, ptr %i.e, align 1, !tbaa !52
-  br label %DecodeSigAlg.exit
+  %i.bt = add i8 %i.bs, -5
+  br label %DecodeSigAlg.exit.sink.split
 
 bb.o:                                             ; preds = %bb.m
   store i8 8, ptr %i.f, align 4, !tbaa !52
-  %i.bu = load i8, ptr %i.bp, align 1, !tbaa !52  ; 2 uses
-  store i8 %i.bu, ptr %i.e, align 1, !tbaa !52
-  br label %DecodeSigAlg.exit
+  %i.bu = load i8, ptr %i.bp, align 1, !tbaa !52
+  br label %DecodeSigAlg.exit.sink.split
 
 bb.p:                                             ; preds = %bb.l
   store i8 %i.bo, ptr %i.e, align 1, !tbaa !52
@@ -436,9 +434,15 @@ bb.p:                                             ; preds = %bb.l
   store i8 %i.bw, ptr %i.f, align 4, !tbaa !52
   br label %DecodeSigAlg.exit
 
-DecodeSigAlg.exit:                                ; preds = %bb.n, %bb.o, %bb.p
-  %5 = phi i8 [ %i.bt, %bb.n ], [ %i.bu, %bb.o ], [ %i.bo, %bb.p ] ; 3 uses
-  %6 = phi i8 [ 10, %bb.n ], [ 8, %bb.o ], [ %i.bw, %bb.p ] ; 4 uses
+DecodeSigAlg.exit.sink.split:                     ; preds = %bb.o, %bb.n
+  %.sink = phi i8 [ %i.bt, %bb.n ], [ %i.bu, %bb.o ] ; 2 uses
+  %.ph170 = phi i8 [ 10, %bb.n ], [ 8, %bb.o ]
+  store i8 %.sink, ptr %i.e, align 1, !tbaa !52
+  br label %DecodeSigAlg.exit
+
+DecodeSigAlg.exit:                                ; preds = %DecodeSigAlg.exit.sink.split, %bb.p
+  %5 = phi i8 [ %i.bo, %bb.p ], [ %.sink, %DecodeSigAlg.exit.sink.split ] ; 3 uses
+  %6 = phi i8 [ %i.bw, %bb.p ], [ %.ph170, %DecodeSigAlg.exit.sink.split ] ; 4 uses
   %i.bx = add i32 %i.g, 2                         ; 3 uses
   store i32 %i.bx, ptr %i.h, align 4, !tbaa !403
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 1096

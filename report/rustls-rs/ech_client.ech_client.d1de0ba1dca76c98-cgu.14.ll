@@ -204,7 +204,7 @@ bb.a:
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [16 x i8], align 8                ; 5 uses
-  %i.i = alloca [8 x i8], align 8                 ; 6 uses
+  %i.i = alloca [8 x i8], align 8                 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.k = load i8, ptr %i.j, align 4, !noundef !14
   %i.l = and i8 %i.k, 1
@@ -359,17 +359,19 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 bb.t:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.e, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  br label %bb.v
+  br label %.sink.split
 
 bb.u:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   store i32 2, ptr %1, align 4
   store i8 -1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.t, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.e, %bb.u, %bb.aa, %bb.t
+bb.v:                                             ; preds = %.sink.split, %bb.e, %bb.aa
   ret void
 
 bb.w:                                             ; preds = %bb.c

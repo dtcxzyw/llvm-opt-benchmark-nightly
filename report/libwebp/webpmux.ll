@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %struct.WebPData, align 8           ; 4 uses
   %6 = alloca %struct.WebPData, align 8           ; 4 uses
   %7 = alloca %struct.WebPData, align 8           ; 4 uses
-  %8 = alloca %struct.WebPMuxFrameInfo, align 8   ; 8 uses
+  %8 = alloca %struct.WebPMuxFrameInfo, align 8   ; 7 uses
   %9 = alloca %struct.WebPData, align 8           ; 7 uses
   %10 = alloca %struct.WebPData, align 8          ; 5 uses
   %11 = alloca %struct.WebPData, align 8          ; 7 uses
@@ -282,7 +282,7 @@ CountOccurrences.exit.i.i:                        ; preds = %bb.c
 bb.d:                                             ; preds = %CountOccurrences.exit.i.i
   %i.ah = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite38.i.i = call i64 @fwrite(ptr nonnull @.str.3, i64 44, i64 1, ptr %i.ah) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 .lr.ph.i42.i.i:                                   ; preds = %CountOccurrences.exit.i.i, %.lr.ph.i42.i.i
   %indvars.iv.i44.i.i = phi i64 [ %indvars.iv.next.i48.i.i, %.lr.ph.i42.i.i ], [ 0, %CountOccurrences.exit.i.i ] ; 2 uses
@@ -304,7 +304,7 @@ CountOccurrences.exit50.i.i:                      ; preds = %.lr.ph.i42.i.i
 bb.e:                                             ; preds = %CountOccurrences.exit50.i.i
   %i.an = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite37.i.i = call i64 @fwrite(ptr nonnull @.str.5, i64 44, i64 1, ptr %i.an) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 .lr.ph.i52.i.i:                                   ; preds = %CountOccurrences.exit50.i.i, %.lr.ph.i52.i.i
   %indvars.iv.i54.i.i = phi i64 [ %indvars.iv.next.i58.i.i, %.lr.ph.i52.i.i ], [ 0, %CountOccurrences.exit50.i.i ] ; 2 uses
@@ -326,7 +326,7 @@ CountOccurrences.exit60.i.i:                      ; preds = %.lr.ph.i52.i.i
 bb.f:                                             ; preds = %CountOccurrences.exit60.i.i
   %i.at = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite36.i.i = call i64 @fwrite(ptr nonnull @.str.7, i64 46, i64 1, ptr %i.at) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 .lr.ph.i62.i.i:                                   ; preds = %CountOccurrences.exit60.i.i, %.lr.ph.i62.i.i
   %indvars.iv.i64.i.i = phi i64 [ %indvars.iv.next.i68.i.i, %.lr.ph.i62.i.i ], [ 0, %CountOccurrences.exit60.i.i ] ; 2 uses
@@ -357,7 +357,7 @@ sub_0.i.i.preheader.new:                          ; preds = %sub_0.i.i.preheader
 bb.g:                                             ; preds = %CountOccurrences.exit70.i.i
   %i.ba = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite35.i.i = call i64 @fwrite(ptr nonnull @.str.9, i64 45, i64 1, ptr %i.ba) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 sub_0.i.i:                                        ; preds = %.tail.i.i.1, %sub_0.i.i.preheader.new
   %indvars.iv.i74.i.i = phi i64 [ 0, %sub_0.i.i.preheader.new ], [ %indvars.iv.next.i78.i.i.1, %.tail.i.i.1 ] ; 3 uses
@@ -454,7 +454,7 @@ CountOccurrences.exit80.i.i:                      ; preds = %CountOccurrences.ex
 bb.h:                                             ; preds = %CountOccurrences.exit80.i.i
   %i.ce = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite34.i.i = call i64 @fwrite(ptr nonnull @.str.11, i64 40, i64 1, ptr %i.ce) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 .lr.ph.i82.i.i:                                   ; preds = %CountOccurrences.exit80.i.i, %.lr.ph.i82.i.i
   %indvars.iv.i84.i.i = phi i64 [ %indvars.iv.next.i88.i.i, %.lr.ph.i82.i.i ], [ 0, %CountOccurrences.exit80.i.i ] ; 2 uses
@@ -515,7 +515,7 @@ CountOccurrences.exit120.i.i:                     ; preds = %.lr.ph.i112.i.i
 bb.i:                                             ; preds = %CountOccurrences.exit120.i.i
   %i.cw = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite33.i.i = call i64 @fwrite(ptr nonnull @.str.16, i64 39, i64 1, ptr %i.cw) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 bb.j:                                             ; preds = %CountOccurrences.exit120.i.i
   %i.cx = icmp samesign ugt i32 %spec.select.i107.i.i, 1
@@ -524,7 +524,7 @@ bb.j:                                             ; preds = %CountOccurrences.ex
 bb.k:                                             ; preds = %bb.j
   %i.cy = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite32.i.i = call i64 @fwrite(ptr nonnull @.str.17, i64 45, i64 1, ptr %i.cy) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 .thread156.i.i:                                   ; preds = %bb.j, %bb.b
   %.0.lcssa.i101146152164.i.i = phi i32 [ %spec.select.i107.i.i, %bb.j ], [ 0, %bb.b ]
@@ -540,17 +540,22 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.thread156.i.i
   %i.dc = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite31.i.i = call i64 @fwrite(ptr nonnull @.str.18, i64 79, i64 1, ptr %i.dc) #15 ; 0 uses
-  br label %29
+  br label %bb.n
 
 bb.m:                                             ; preds = %.thread156.i.i
   %i.dd = icmp slt i32 %.0.lcssa.i111155161.i.i, 1 ; 2 uses
   %or.cond.not.i.i = or i1 %i.cz, %i.dd
-  br i1 %or.cond.not.i.i, label %ValidateCommandLine.exit.i, label %bb.n
+  br i1 %or.cond.not.i.i, label %ValidateCommandLine.exit.i, label %29
 
-bb.n:                                             ; preds = %bb.m
+29:                                               ; preds = %bb.m
+  %30 = load ptr, ptr @stderr, align 8, !tbaa !18
+  %fwrite.i.i = call i64 @fwrite(ptr nonnull @.str.19, i64 54, i64 1, ptr %30) #15 ; 0 uses
+  br label %bb.n
+
+bb.n:                                             ; preds = %29, %bb.l, %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
   %i.de = load ptr, ptr @stderr, align 8, !tbaa !18
-  %fwrite.i.i.a = call i64 @fwrite(ptr nonnull @.str.19, i64 54, i64 1, ptr %i.de) #15 ; 0 uses
-  br label %29
+  %fwrite.i.i.a = call i64 @fwrite(ptr nonnull @.str, i64 43, i64 1, ptr %i.de) #15 ; 0 uses
+  br label %InitializeConfig.exit.thread
 
 ValidateCommandLine.exit.i:                       ; preds = %bb.m
   %i.df = add i32 %i.da, %.0.lcssa.i81131135144153163.i.i
@@ -564,11 +569,6 @@ ValidateCommandLine.exit.i:                       ; preds = %bb.m
   store ptr %i.di, ptr %i.dj, align 8, !tbaa !20
   %i.dk = icmp eq ptr %i.di, null
   br i1 %i.dk, label %bb.o, label %bb.p
-
-29:                                               ; preds = %bb.n, %bb.l, %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
-  %30 = load ptr, ptr @stderr, align 8, !tbaa !18
-  %fwrite.i = call i64 @fwrite(ptr nonnull @.str, i64 43, i64 1, ptr %30) #15 ; 0 uses
-  br label %InitializeConfig.exit.thread
 
 bb.o:                                             ; preds = %ValidateCommandLine.exit.i
   %i.dl = load ptr, ptr @stderr, align 8, !tbaa !18
@@ -972,7 +972,7 @@ bb.jb:                                            ; preds = %bb.ja, %bb.iz
 bb.jc:                                            ; preds = %bb.jb
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %i.agz = call i32 @WebPMuxGetFrame(ptr noundef nonnull %i.acu, i32 noundef 1, ptr noundef nonnull %8) #13
-  %i.aha = icmp eq i32 %i.agz, 1
+  %i.aha = icmp eq i32 %i.agz, 1                  ; 2 uses
   br i1 %i.aha, label %.thread63.i.i, label %.critedge66.i.i
 
 .thread63.i.i:                                    ; preds = %bb.jc
@@ -982,8 +982,7 @@ bb.jc:                                            ; preds = %bb.jb
   %i.ahe = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.121, i32 noundef %i.ahd) ; 0 uses
   %i.ahf = load ptr, ptr %8, align 8, !tbaa !21
   call void @WebPFree(ptr noundef %i.ahf) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
-  br label %DisplayInfo.exit.i
+  br label %.sink.split.i.i
 
 .critedge66.i.i:                                  ; preds = %bb.jc
   %i.ahg = load ptr, ptr %8, align 8, !tbaa !21
@@ -991,11 +990,15 @@ bb.jc:                                            ; preds = %bb.jb
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
   %i.ahh = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite.i290.i = call i64 @fwrite(ptr nonnull @.str.122, i64 29, i64 1, ptr %i.ahh) #15 ; 0 uses
+  br label %.sink.split.i.i
+
+.sink.split.i.i:                                  ; preds = %.critedge66.i.i, %.thread63.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
+  %31 = zext i1 %i.aha to i32
   br label %DisplayInfo.exit.i
 
-DisplayInfo.exit.i:                               ; preds = %.critedge66.i.i, %.thread63.i.i, %bb.jb, %.critedge.i291.i, %bb.if, %bb.id
-  %.7.i.i = phi i32 [ 0, %bb.id ], [ 1, %bb.if ], [ 0, %.critedge.i291.i ], [ 0, %.critedge66.i.i ], [ 1, %.thread63.i.i ], [ 1, %bb.jb ]
+DisplayInfo.exit.i:                               ; preds = %.sink.split.i.i, %bb.jb, %.critedge.i291.i, %bb.if, %bb.id
+  %.7.i.i = phi i32 [ 0, %bb.id ], [ 1, %bb.if ], [ 0, %.critedge.i291.i ], [ 1, %bb.jb ], [ %31, %.sink.split.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
@@ -1010,7 +1013,7 @@ Process.exit:                                     ; preds = %InitializeConfig.ex
   %i.ahj = zext i1 %i.ahi to i32
   br label %bb.jd
 
-InitializeConfig.exit.thread:                     ; preds = %ParseCommandLine.exit.thread.i, %29, %bb.o, %bb.a
+InitializeConfig.exit.thread:                     ; preds = %ParseCommandLine.exit.thread.i, %bb.n, %bb.o, %bb.a
   call fastcc void @PrintHelp()
   br label %bb.jd
 

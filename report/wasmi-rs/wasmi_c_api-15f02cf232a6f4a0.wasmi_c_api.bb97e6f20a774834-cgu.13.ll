@@ -202,29 +202,34 @@ bb.g:                                             ; preds = %bb.a
 
 bb.h:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.o = load ptr, ptr %i.n, align 8, !noundef !4 ; 3 uses
+  %i.o = load ptr, ptr %i.n, align 8, !noundef !4 ; 4 uses
   %i.p = icmp eq ptr %i.o, null
-  br i1 %i.p, label %3, label %bb.j
+  br i1 %i.p, label %.sink.split, label %bb.j
 
-bb.i:                                             ; preds = %3, %bb.j, %bb.f, %bb.e, %bb.d, %bb.c
-  %.sink = phi i8 [ 5, %3 ], [ %spec.select, %bb.j ], [ 3, %bb.f ], [ 2, %bb.e ], [ 1, %bb.d ], [ 0, %bb.c ]
+.sink.split:                                      ; preds = %bb.h, %bb.j
+  %.sink5 = phi i64 [ 8, %bb.j ], [ 4, %bb.h ]
+  %.sink3 = phi i32 [ %.sroa.6.0.copyload, %bb.j ], [ 0, %bb.h ]
+  %.sink.ph = phi i8 [ %spec.select, %bb.j ], [ 5, %bb.h ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink5
+  store i32 %.sink3, ptr %2, align 4
+  br label %bb.i
+
+bb.i:                                             ; preds = %.sink.split, %bb.f, %bb.e, %bb.d, %bb.c
+  %.sink = phi i8 [ 1, %bb.d ], [ 0, %bb.c ], [ 3, %bb.f ], [ 2, %bb.e ], [ %.sink.ph, %.sink.split ]
   store i8 %.sink, ptr %0, align 8
   ret void
 
 bb.j:                                             ; preds = %bb.h
   %.sroa.0.0.copyload = load i32, ptr %i.o, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 4
+  %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 4
   %i.q = trunc i32 %.sroa.0.0.copyload to i1
   %spec.select = select i1 %i.q, i8 6, i8 5
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %.sroa.4.0..sroa_idx, align 4
-  store <2 x i32> %2, ptr %i.r, align 4
-  br label %bb.i
-
-3:                                                ; preds = %bb.h
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 0, ptr %4, align 4
-  br label %bb.i
+  store i32 %.sroa.4.0.copyload, ptr %i.r, align 4
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

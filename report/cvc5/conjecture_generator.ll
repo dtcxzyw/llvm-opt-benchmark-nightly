@@ -205,8 +205,8 @@ bb.a:
   %24 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
   %25 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
   %26 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
-  %27 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
-  %28 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 2 uses
+  %27 = alloca %"class.cvc5::internal::NodeTemplate", align 8
+  %28 = alloca %"class.cvc5::internal::NodeTemplate", align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 8 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !646  ; 5 uses
   %i.e = icmp slt i32 %i.d, 0
@@ -609,10 +609,7 @@ _ZNSt3mapIjN4cvc58internal6theory11quantifiers13TermGeneratorESt4lessIjESaISt4pa
 bb.as:                                            ; preds = %_ZNSt3mapIjN4cvc58internal6theory11quantifiers13TermGeneratorESt4lessIjESaISt4pairIKjS4_EEEixERS8_.exit
   %i.jl = add nsw i32 %i.jk, 1
   store i32 %i.jl, ptr %i.en, align 4, !tbaa !647
-  %29 = load ptr, ptr %2, align 8, !tbaa !62
-  store ptr %29, ptr %27, align 8, !tbaa !62
-  %30 = call noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers13TermGenerator12getNextMatchEPNS2_10TermGenEnvENS0_12NodeTemplateILb0EEERSt3mapINS0_8TypeNodeES8_IjS7_St4lessIjESaISt4pairIKjS7_EEESA_IS9_ESaISC_IKS9_SG_EEERS8_IS7_bSA_IS7_ESaISC_IKS7_bEEE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull %1, ptr noundef nonnull align 8 %27, ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %4)
-  br label %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread
+  br label %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread.sink.split
 
 bb.at:                                            ; preds = %_ZNSt3mapIjN4cvc58internal6theory11quantifiers13TermGeneratorESt4lessIjESaISt4pairIKjS4_EEEixERS8_.exit
   %i.jm = sext i32 %i.jk to i64
@@ -621,13 +618,17 @@ bb.at:                                            ; preds = %_ZNSt3mapIjN4cvc58i
   %.sroa.0.0.copyload.i = load ptr, ptr %i.jo, align 8, !tbaa !79
   %i.jp = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0.0.copyload.i) #33
   store ptr %i.jp, ptr %i.jo, align 8, !tbaa !1207
-  %31 = load ptr, ptr %2, align 8, !tbaa !62
-  store ptr %31, ptr %28, align 8, !tbaa !62
-  %32 = call noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers13TermGenerator12getNextMatchEPNS2_10TermGenEnvENS0_12NodeTemplateILb0EEERSt3mapINS0_8TypeNodeES8_IjS7_St4lessIjESaISt4pairIKjS7_EEESA_IS9_ESaISC_IKS9_SG_EEERS8_IS7_bSA_IS7_ESaISC_IKS7_bEEE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull %1, ptr noundef nonnull align 8 %28, ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %4)
+  br label %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread.sink.split
+
+_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread.sink.split: ; preds = %bb.at, %bb.as
+  %.sink361 = phi ptr [ %27, %bb.as ], [ %28, %bb.at ] ; 2 uses
+  %29 = load ptr, ptr %2, align 8, !tbaa !62
+  store ptr %29, ptr %.sink361, align 8, !tbaa !62
+  %30 = call noundef zeroext i1 @_ZN4cvc58internal6theory11quantifiers13TermGenerator12getNextMatchEPNS2_10TermGenEnvENS0_12NodeTemplateILb0EEERSt3mapINS0_8TypeNodeES8_IjS7_St4lessIjESaISt4pairIKjS7_EEESA_IS9_ESaISC_IKS9_SG_EEERS8_IS7_bSA_IS7_ESaISC_IKS7_bEEE(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull %1, ptr noundef nonnull align 8 %.sink361, ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %4)
   br label %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread
 
-_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread: ; preds = %_ZNSt3mapIN4cvc58internal12NodeTemplateILb0EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit, %bb.at, %bb.al, %_ZN4cvc58internal6theory11quantifiers13TermGenerator13resetMatchingEj.exit, %bb.as, %_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_NS2_ILb1EEEESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i, %bb.d, %bb.ah, %.critedge94, %bb.w, %bb.r, %_ZNSt3mapIN4cvc58internal8TypeNodeES_IjNS1_12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS4_EEES5_IS2_ESaIS7_IKS2_SB_EEEixERSD_.exit262, %bb.q, %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit, %bb.a, %bb.an, %_ZNSt3mapIjN4cvc58internal12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS3_EEE4findERS7_.exit, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit
-  %.2 = phi i1 [ false, %bb.w ], [ false, %bb.a ], [ true, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit ], [ false, %_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_NS2_ILb1EEEESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i ], [ false, %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit ], [ %i.em, %_ZNSt3mapIjN4cvc58internal12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS3_EEE4findERS7_.exit ], [ false, %_ZNSt3mapIN4cvc58internal8TypeNodeES_IjNS1_12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS4_EEES5_IS2_ESaIS7_IKS2_SB_EEEixERSD_.exit262 ], [ false, %bb.r ], [ %32, %bb.at ], [ true, %bb.an ], [ %i.gz, %bb.al ], [ %i.fr, %bb.ah ], [ %i.ih, %_ZN4cvc58internal6theory11quantifiers13TermGenerator13resetMatchingEj.exit ], [ %30, %bb.as ], [ false, %bb.q ], [ false, %.critedge94 ], [ false, %bb.d ], [ false, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb0EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit ]
+_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread: ; preds = %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread.sink.split, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb0EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit, %bb.al, %_ZN4cvc58internal6theory11quantifiers13TermGenerator13resetMatchingEj.exit, %_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_NS2_ILb1EEEESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i, %bb.d, %bb.ah, %.critedge94, %bb.w, %bb.r, %_ZNSt3mapIN4cvc58internal8TypeNodeES_IjNS1_12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS4_EEES5_IS2_ESaIS7_IKS2_SB_EEEixERSD_.exit262, %bb.q, %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit, %bb.a, %bb.an, %_ZNSt3mapIjN4cvc58internal12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS3_EEE4findERS7_.exit, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit
+  %.2 = phi i1 [ false, %bb.w ], [ false, %bb.a ], [ true, %_ZN4cvc58internal12NodeTemplateILb0EEaSERKS2_.exit ], [ false, %_ZNSt8_Rb_treeIN4cvc58internal12NodeTemplateILb0EEESt4pairIKS3_NS2_ILb1EEEESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS5_.exit.i.i.i.i ], [ false, %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit ], [ %i.em, %_ZNSt3mapIjN4cvc58internal12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS3_EEE4findERS7_.exit ], [ false, %_ZNSt3mapIN4cvc58internal8TypeNodeES_IjNS1_12NodeTemplateILb0EEESt4lessIjESaISt4pairIKjS4_EEES5_IS2_ESaIS7_IKS2_SB_EEEixERSD_.exit262 ], [ false, %bb.r ], [ false, %bb.d ], [ true, %bb.an ], [ %i.gz, %bb.al ], [ %i.fr, %bb.ah ], [ %i.ih, %_ZN4cvc58internal6theory11quantifiers13TermGenerator13resetMatchingEj.exit ], [ false, %_ZNSt3mapIN4cvc58internal12NodeTemplateILb0EEEbSt4lessIS3_ESaISt4pairIKS3_bEEE4findERS7_.exit ], [ false, %bb.q ], [ false, %.critedge94 ], [ %30, %_ZN4cvc58internal6theory11quantifiers10TermGenEnv11isGroundEqcENS0_12NodeTemplateILb0EEE.exit.thread.sink.split ]
   ret i1 %.2
 }
 

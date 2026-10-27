@@ -204,18 +204,21 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.z = load i32, ptr %i.t, align 8, !tbaa !67
-  store i32 %i.z, ptr %2, align 4, !tbaa !29
-  br label %bb.o
+  br label %.sink.split
 
 bb.n:                                             ; preds = %bb.l
   %i.aa = load ptr, ptr %0, align 8, !tbaa !39
   %i.ab = load ptr, ptr %1, align 8, !tbaa !39
   %i.ac = call i32 @H5P__cmp_class(ptr noundef %i.aa, ptr noundef %i.ab)
-  store i32 %i.ac, ptr %2, align 4, !tbaa !29
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.m, %bb.n
+  %.sink = phi i32 [ %i.ac, %bb.n ], [ %i.z, %bb.m ]
+  store i32 %.sink, ptr %2, align 4, !tbaa !29
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m, %bb.a
-  %.0 = phi i32 [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ -1, %bb.k ], [ 0, %bb.m ], [ 0, %bb.a ], [ 0, %bb.n ]
+bb.o:                                             ; preds = %.sink.split, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.a
+  %.0 = phi i32 [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ -1, %bb.k ], [ 0, %bb.a ], [ 0, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   ret i32 %.0

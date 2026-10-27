@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc:                                           ; preds = %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813TZEnumerationE, i64 16), ptr %i.a, align 8, !tbaa !16
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 120 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 120 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 128 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 136 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 140 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 140
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, i8 0, i64 24, i1 false)
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !31
@@ -234,9 +234,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.m, ptr align 4 %i.o, i64 %i.q, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 140
   %i.s = load i32, ptr %i.r, align 4, !tbaa !33
-  store i32 %i.s, ptr %i.f, align 4, !tbaa !33
-  store ptr %i.m, ptr %i.c, align 8, !tbaa !34
-  br label %_ZN6icu_7813TZEnumerationC2ERKS0_.exit
+  br label %.sink.split.i
 
 bb.f:                                             ; preds = %bb.c
   %i.t = landingpad { ptr, i32 }
@@ -246,9 +244,7 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.d
   store i32 0, ptr %i.e, align 8, !tbaa !35
-  store i32 0, ptr %i.f, align 4, !tbaa !33
-  store ptr null, ptr %i.c, align 8, !tbaa !34
-  br label %_ZN6icu_7813TZEnumerationC2ERKS0_.exit
+  br label %.sink.split.i
 
 bb.h:                                             ; preds = %.noexc
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -260,7 +256,13 @@ bb.h:                                             ; preds = %.noexc
   store <2 x i32> %i.x, ptr %i.e, align 8, !tbaa !21
   br label %_ZN6icu_7813TZEnumerationC2ERKS0_.exit
 
-_ZN6icu_7813TZEnumerationC2ERKS0_.exit:           ; preds = %bb.h, %bb.g, %bb.e, %bb.a
+.sink.split.i:                                    ; preds = %bb.g, %bb.e
+  %.sink11.i = phi i32 [ 0, %bb.g ], [ %i.s, %bb.e ]
+  store i32 %.sink11.i, ptr %i.f, align 4, !tbaa !33
+  store ptr %i.m, ptr %i.c, align 8, !tbaa !34
+  br label %_ZN6icu_7813TZEnumerationC2ERKS0_.exit
+
+_ZN6icu_7813TZEnumerationC2ERKS0_.exit:           ; preds = %.sink.split.i, %bb.h, %bb.a
   ret ptr %i.a
 
 bb.i:                                             ; preds = %bb.b

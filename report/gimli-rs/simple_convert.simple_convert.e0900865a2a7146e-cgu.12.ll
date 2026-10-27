@@ -202,7 +202,7 @@ bb.a:
   %i.t = alloca [16 x i8], align 8                ; 7 uses
   %i.u = alloca [16 x i8], align 8                ; 7 uses
   %i.v = alloca [16 x i8], align 8                ; 7 uses
-  %i.w = alloca [32 x i8], align 8                ; 69 uses
+  %i.w = alloca [32 x i8], align 8                ; 67 uses
   %i.x = alloca [32 x i8], align 8                ; 8 uses
   %i.y = alloca [24 x i8], align 8                ; 13 uses
   %i.z = alloca [32 x i8], align 8                ; 10 uses
@@ -605,21 +605,16 @@ bb.bq:                                            ; preds = %bb.k
 bb.br:                                            ; preds = %bb.p
   %.not1089 = icmp eq i8 %.sroa.30.sroa.0.0.extract.trunc, %.sroa.07.0.extract.trunc
   store i8 %.sroa.30.sroa.13.0.extract.trunc, ptr %i.ax, align 8
-  br i1 %.not1089, label %9, label %bb.bt
+  br i1 %.not1089, label %.sink.split, label %bb.bt
 
 bb.bs:                                            ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   invoke void %i.az(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.v, ptr noundef nonnull %7, i64 noundef %.sroa.0899.0.copyload)
           to label %bb.bu unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-9:                                                ; preds = %bb.br
-  store i64 12, ptr %i.w, align 8
-  br label %bb.bx
-
 bb.bt:                                            ; preds = %bb.br
   store i8 %.sroa.30.sroa.0.0.extract.trunc, ptr %i.bz, align 1
-  store i64 13, ptr %i.w, align 8
-  br label %bb.bx
+  br label %.sink.split
 
 bb.bu:                                            ; preds = %bb.bs
   %i.da = load i8, ptr %i.v, align 8, !range !95, !noundef !5 ; 2 uses
@@ -648,7 +643,17 @@ bb.bw:                                            ; preds = %bb.bu
   store i64 14, ptr %i.w, align 8
   br label %bb.bx
 
-bb.bx:                                            ; preds = %bb.co, %bb.cr, %bb.et, %bb.ex, %bb.eo, %bb.es, %bb.cf, %bb.cj, %bb.bw, %bb.bt, %9, %bb.em, %bb.ed, %bb.dw, %bb.do, %bb.dm, %bb.dj, %bb.dg, %bb.dd, %bb.cw, %bb.cv, %bb.cu, %bb.ce, %bb.cc, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bd, %bb.bb, %bb.ba, %bb.ax, %bb.aw, %bb.av, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
+.sink.split:                                      ; preds = %bb.br, %bb.bt
+  %.sink = phi i64 [ 13, %bb.bt ], [ 12, %bb.br ]
+  store i64 %.sink, ptr %i.w, align 8
+  br label %bb.bx
+
+.sink.split1271:                                  ; preds = %bb.cw, %bb.cv
+  %.sink1272 = phi i64 [ 28, %bb.cv ], [ 27, %bb.cw ]
+  store i64 %.sink1272, ptr %i.w, align 8
+  br label %bb.bx
+
+bb.bx:                                            ; preds = %.sink.split1271, %.sink.split, %bb.co, %bb.cr, %bb.et, %bb.ex, %bb.eo, %bb.es, %bb.cf, %bb.cj, %bb.bw, %bb.em, %bb.ed, %bb.dw, %bb.do, %bb.dm, %bb.dj, %bb.dg, %bb.dd, %bb.cu, %bb.ce, %bb.cc, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bd, %bb.bb, %bb.ba, %bb.ax, %bb.aw, %bb.av, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
   %i.de = load i64, ptr %i.av, align 8, !alias.scope !96, !noundef !5 ; 3 uses
   %i.df = load i64, ptr %i.y, align 8, !range !9, !alias.scope !96, !noundef !5
   %i.dg = icmp eq i64 %i.de, %i.df
@@ -884,14 +889,12 @@ bb.cu:                                            ; preds = %bb.cs
 bb.cv:                                            ; preds = %bb.bc
   store i64 %.sroa.5895.0.copyload, ptr %i.ax, align 8
   store i64 %.sroa.4900.0.copyload, ptr %i.bb, align 8
-  store i64 28, ptr %i.w, align 8
-  br label %bb.bx
+  br label %.sink.split1271
 
 bb.cw:                                            ; preds = %bb.bc
   %i.fd = lshr i64 %.sroa.5895.0.copyload, 3
   store i64 %i.fd, ptr %i.ax, align 8
-  store i64 27, ptr %i.w, align 8
-  br label %bb.bx
+  br label %.sink.split1271
 
 bb.cx:                                            ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)

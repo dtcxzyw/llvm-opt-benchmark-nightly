@@ -52,12 +52,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %.021 = phi double [ 0.000000e+00, %bb.a ], [ %.021.be, %.backedge ] ; 29 uses
-  %.019 = phi double [ 1.000000e-10, %bb.a ], [ %.019.be, %.backedge ] ; 26 uses
-  %.017 = phi i32 [ 0, %bb.a ], [ %.017.be, %.backedge ] ; 29 uses
-  %.015 = phi i32 [ 10, %bb.a ], [ %.015.be, %.backedge ] ; 26 uses
-  %.013 = phi i32 [ 0, %bb.a ], [ %.013.be, %.backedge ] ; 26 uses
-  %.0 = phi i32 [ 1, %bb.a ], [ %.0.be, %.backedge ] ; 26 uses
+  %.021 = phi double [ 0.000000e+00, %bb.a ], [ %.021.be, %.backedge ] ; 28 uses
+  %.019 = phi double [ 1.000000e-10, %bb.a ], [ %.019.be, %.backedge ] ; 25 uses
+  %.017 = phi i32 [ 0, %bb.a ], [ %.017.be, %.backedge ] ; 28 uses
+  %.015 = phi i32 [ 10, %bb.a ], [ %.015.be, %.backedge ] ; 25 uses
+  %.013 = phi i32 [ 0, %bb.a ], [ %.013.be, %.backedge ] ; 25 uses
+  %.0 = phi i32 [ 1, %bb.a ], [ %.0.be, %.backedge ] ; 25 uses
   %i.c = load i32, ptr %i.a, align 4, !tbaa !12
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !16
   %i.e = call i32 @my_getopt(i32 noundef %i.c, ptr noundef %i.d, ptr noundef nonnull @options) #4
@@ -141,13 +141,11 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.u = call i64 @strtol(ptr noundef nonnull captures(none) %i.t, ptr noundef null, i32 noundef 10) #4, !inline_history !9
   %i.v = trunc i64 %i.u to i32
-  store i32 %i.v, ptr @verbose, align 4, !tbaa !12
-  br label %.backedge
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.j
   %i.w = add nuw nsw i32 %i.r, 1
-  store i32 %i.w, ptr @verbose, align 4, !tbaa !12
-  br label %.backedge
+  br label %.sink.split
 
 bb.m:                                             ; preds = %bb.b
   %i.x = load ptr, ptr @my_optarg, align 8, !tbaa !19
@@ -173,15 +171,6 @@ bb.q:                                             ; preds = %bb.b
   %i.ab = icmp sgt i32 %i.aa, -1
   br i1 %i.ab, label %bb.r, label %.backedge
 
-.backedge:                                        ; preds = %bb.q, %bb.r, %bb.i, %bb.l, %bb.k, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.p, %bb.o, %bb.n, %bb.m, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %.021.be = phi double [ %i.j, %bb.c ], [ %.021, %bb.d ], [ %.021, %bb.e ], [ %.021, %bb.f ], [ %.021, %bb.g ], [ %.021, %bb.h ], [ %.021, %bb.k ], [ %.021, %bb.l ], [ %.021, %bb.i ], [ %.021, %bb.m ], [ %.021, %bb.n ], [ %.021, %bb.o ], [ %.021, %bb.p ], [ %.021, %bb.r ], [ %.021, %bb.q ], [ %.021, %bb.s ], [ %.021, %bb.t ], [ %.021, %bb.u ], [ %.021, %bb.v ], [ %.021, %bb.w ], [ %.021, %bb.x ], [ %.021, %bb.y ], [ %.021, %bb.z ], [ %.021, %bb.aa ], [ %.021, %bb.ab ], [ %.021, %bb.ac ]
-  %.019.be = phi double [ %.019, %bb.c ], [ %.019, %bb.d ], [ %.019, %bb.e ], [ %.019, %bb.f ], [ %.019, %bb.g ], [ %.019, %bb.h ], [ %.019, %bb.k ], [ %.019, %bb.l ], [ %.019, %bb.i ], [ %.019, %bb.m ], [ %.019, %bb.n ], [ %.019, %bb.o ], [ %.019, %bb.p ], [ %.019, %bb.r ], [ %.019, %bb.q ], [ %.019, %bb.s ], [ %.019, %bb.t ], [ %.019, %bb.u ], [ %.019, %bb.v ], [ %.019, %bb.w ], [ %.019, %bb.x ], [ %.019, %bb.y ], [ %i.aj, %bb.z ], [ %.019, %bb.aa ], [ %.019, %bb.ab ], [ %.019, %bb.ac ]
-  %.017.be = phi i32 [ %.017, %bb.c ], [ %i.m, %bb.d ], [ %.017, %bb.e ], [ %.017, %bb.f ], [ %.017, %bb.g ], [ %.017, %bb.h ], [ %.017, %bb.k ], [ %.017, %bb.l ], [ %.017, %bb.i ], [ %.017, %bb.m ], [ %.017, %bb.n ], [ %.017, %bb.o ], [ %.017, %bb.p ], [ %.017, %bb.r ], [ %.017, %bb.q ], [ %.017, %bb.s ], [ %.017, %bb.t ], [ %.017, %bb.u ], [ %.017, %bb.v ], [ %.017, %bb.w ], [ %.017, %bb.x ], [ %.017, %bb.y ], [ %.017, %bb.z ], [ %.017, %bb.aa ], [ %.017, %bb.ab ], [ %.017, %bb.ac ]
-  %.015.be = phi i32 [ %.015, %bb.c ], [ %.015, %bb.d ], [ %.015, %bb.e ], [ %.015, %bb.f ], [ %.015, %bb.g ], [ %.015, %bb.h ], [ %.015, %bb.k ], [ %.015, %bb.l ], [ %.015, %bb.i ], [ %.015, %bb.m ], [ %.015, %bb.n ], [ %.015, %bb.o ], [ %.015, %bb.p ], [ %.015, %bb.r ], [ %.015, %bb.q ], [ %.015, %bb.s ], [ %.015, %bb.t ], [ %.015, %bb.u ], [ %.015, %bb.v ], [ %.015, %bb.w ], [ %i.ah, %bb.x ], [ %.015, %bb.y ], [ %.015, %bb.z ], [ %.015, %bb.aa ], [ %.015, %bb.ab ], [ %.015, %bb.ac ]
-  %.013.be = phi i32 [ %.013, %bb.c ], [ %.013, %bb.d ], [ %.013, %bb.e ], [ %.013, %bb.f ], [ %.013, %bb.g ], [ %.013, %bb.h ], [ %.013, %bb.k ], [ %.013, %bb.l ], [ %.013, %bb.i ], [ %.013, %bb.m ], [ %.013, %bb.n ], [ %.013, %bb.o ], [ %.013, %bb.p ], [ %.013, %bb.r ], [ %.013, %bb.q ], [ %.013, %bb.s ], [ %.013, %bb.t ], [ %.013, %bb.u ], [ %.013, %bb.v ], [ %.013, %bb.w ], [ %.013, %bb.x ], [ %.013, %bb.y ], [ %.013, %bb.z ], [ %.013, %bb.aa ], [ %.013, %bb.ab ], [ %i.as, %bb.ac ]
-  %.0.be = phi i32 [ %.0, %bb.c ], [ %.0, %bb.d ], [ %.0, %bb.e ], [ %.0, %bb.f ], [ %.0, %bb.g ], [ %.0, %bb.h ], [ %.0, %bb.k ], [ %.0, %bb.l ], [ %.0, %bb.i ], [ %.0, %bb.m ], [ %.0, %bb.n ], [ %.0, %bb.o ], [ %.0, %bb.p ], [ %.0, %bb.r ], [ %.0, %bb.q ], [ %.0, %bb.s ], [ %.0, %bb.t ], [ %.0, %bb.u ], [ %.0, %bb.v ], [ %.0, %bb.w ], [ %.0, %bb.x ], [ %.0, %bb.y ], [ %.0, %bb.z ], [ %.0, %bb.aa ], [ %i.ap, %bb.ab ], [ %.0, %bb.ac ]
-  br label %bb.b, !llvm.loop !10
-
 bb.r:                                             ; preds = %bb.q
   %i.ac = load ptr, ptr %i.b, align 8, !tbaa !16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !19
@@ -206,7 +195,7 @@ bb.v:                                             ; preds = %bb.b
 
 bb.w:                                             ; preds = %bb.b
   call void @timer_init(double noundef %.021, i32 noundef %.017) #4
-  %i.ae = load double, ptr @time_min, align 8, !tbaa !22
+  %i.ae = load double, ptr @time_min, align 8, !tbaa !21
   call void (ptr, ...) @ovtpvt(ptr noundef nonnull @.str, double noundef %i.ae) #4
   br label %.backedge
 
@@ -247,6 +236,20 @@ bb.ac:                                            ; preds = %bb.b
 bb.ad:                                            ; preds = %bb.b
   call void @abort() #5
   unreachable
+
+.sink.split:                                      ; preds = %bb.k, %bb.l
+  %.sink = phi i32 [ %i.w, %bb.l ], [ %i.v, %bb.k ]
+  store i32 %.sink, ptr @verbose, align 4, !tbaa !12
+  br label %.backedge
+
+.backedge:                                        ; preds = %.sink.split, %bb.q, %bb.r, %bb.i, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.p, %bb.o, %bb.n, %bb.m, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %.021.be = phi double [ %i.j, %bb.c ], [ %.021, %bb.d ], [ %.021, %bb.e ], [ %.021, %bb.f ], [ %.021, %bb.g ], [ %.021, %bb.h ], [ %.021, %bb.ab ], [ %.021, %bb.ac ], [ %.021, %bb.i ], [ %.021, %bb.m ], [ %.021, %bb.n ], [ %.021, %bb.o ], [ %.021, %bb.p ], [ %.021, %bb.r ], [ %.021, %bb.q ], [ %.021, %bb.s ], [ %.021, %bb.t ], [ %.021, %bb.u ], [ %.021, %bb.v ], [ %.021, %bb.w ], [ %.021, %bb.x ], [ %.021, %bb.y ], [ %.021, %bb.z ], [ %.021, %bb.aa ], [ %.021, %.sink.split ]
+  %.019.be = phi double [ %.019, %bb.c ], [ %.019, %bb.d ], [ %.019, %bb.e ], [ %.019, %bb.f ], [ %.019, %bb.g ], [ %.019, %bb.h ], [ %.019, %bb.ab ], [ %.019, %bb.ac ], [ %.019, %bb.i ], [ %.019, %bb.m ], [ %.019, %bb.n ], [ %.019, %bb.o ], [ %.019, %bb.p ], [ %.019, %bb.r ], [ %.019, %bb.q ], [ %.019, %bb.s ], [ %.019, %bb.t ], [ %.019, %bb.u ], [ %.019, %bb.v ], [ %.019, %bb.w ], [ %.019, %bb.x ], [ %.019, %bb.y ], [ %i.aj, %bb.z ], [ %.019, %bb.aa ], [ %.019, %.sink.split ]
+  %.017.be = phi i32 [ %.017, %bb.c ], [ %i.m, %bb.d ], [ %.017, %bb.e ], [ %.017, %bb.f ], [ %.017, %bb.g ], [ %.017, %bb.h ], [ %.017, %bb.ab ], [ %.017, %bb.ac ], [ %.017, %bb.i ], [ %.017, %bb.m ], [ %.017, %bb.n ], [ %.017, %bb.o ], [ %.017, %bb.p ], [ %.017, %bb.r ], [ %.017, %bb.q ], [ %.017, %bb.s ], [ %.017, %bb.t ], [ %.017, %bb.u ], [ %.017, %bb.v ], [ %.017, %bb.w ], [ %.017, %bb.x ], [ %.017, %bb.y ], [ %.017, %bb.z ], [ %.017, %bb.aa ], [ %.017, %.sink.split ]
+  %.015.be = phi i32 [ %.015, %bb.c ], [ %.015, %bb.d ], [ %.015, %bb.e ], [ %.015, %bb.f ], [ %.015, %bb.g ], [ %.015, %bb.h ], [ %.015, %bb.ab ], [ %.015, %bb.ac ], [ %.015, %bb.i ], [ %.015, %bb.m ], [ %.015, %bb.n ], [ %.015, %bb.o ], [ %.015, %bb.p ], [ %.015, %bb.r ], [ %.015, %bb.q ], [ %.015, %bb.s ], [ %.015, %bb.t ], [ %.015, %bb.u ], [ %.015, %bb.v ], [ %.015, %bb.w ], [ %i.ah, %bb.x ], [ %.015, %bb.y ], [ %.015, %bb.z ], [ %.015, %bb.aa ], [ %.015, %.sink.split ]
+  %.013.be = phi i32 [ %.013, %bb.c ], [ %.013, %bb.d ], [ %.013, %bb.e ], [ %.013, %bb.f ], [ %.013, %bb.g ], [ %.013, %bb.h ], [ %.013, %bb.ab ], [ %i.as, %bb.ac ], [ %.013, %bb.i ], [ %.013, %bb.m ], [ %.013, %bb.n ], [ %.013, %bb.o ], [ %.013, %bb.p ], [ %.013, %bb.r ], [ %.013, %bb.q ], [ %.013, %bb.s ], [ %.013, %bb.t ], [ %.013, %bb.u ], [ %.013, %bb.v ], [ %.013, %bb.w ], [ %.013, %bb.x ], [ %.013, %bb.y ], [ %.013, %bb.z ], [ %.013, %bb.aa ], [ %.013, %.sink.split ]
+  %.0.be = phi i32 [ %.0, %bb.c ], [ %.0, %bb.d ], [ %.0, %bb.e ], [ %.0, %bb.f ], [ %.0, %bb.g ], [ %.0, %bb.h ], [ %i.ap, %bb.ab ], [ %.0, %bb.ac ], [ %.0, %bb.i ], [ %.0, %bb.m ], [ %.0, %bb.n ], [ %.0, %bb.o ], [ %.0, %bb.p ], [ %.0, %bb.r ], [ %.0, %bb.q ], [ %.0, %bb.s ], [ %.0, %bb.t ], [ %.0, %bb.u ], [ %.0, %bb.v ], [ %.0, %bb.w ], [ %.0, %bb.x ], [ %.0, %bb.y ], [ %.0, %bb.z ], [ %.0, %bb.aa ], [ %.0, %.sink.split ]
+  br label %bb.b, !llvm.loop !10
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   call void @timer_init(double noundef %.021, i32 noundef %.017) #4
@@ -335,8 +338,8 @@ attributes #5 = { noreturn nounwind }
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
 !9 = distinct !{null}
-!10 = distinct !{!10, !20}
-!11 = distinct !{!11, !20}
+!10 = distinct !{!10, !22}
+!11 = distinct !{!11, !22}
 !12 = !{!6, !6, i64 0}
 !13 = !{!"any pointer", !5, i64 0}
 !14 = !{!"any p2 pointer", !13, i64 0}
@@ -345,7 +348,7 @@ attributes #5 = { noreturn nounwind }
 !17 = !{!13, !13, i64 0}
 !18 = !{!"p1 omnipotent char", !13, i64 0}
 !19 = !{!18, !18, i64 0}
-!20 = !{!"llvm.loop.mustprogress"}
-!21 = !{!"double", !5, i64 0}
-!22 = !{!21, !21, i64 0}
+!20 = !{!"double", !5, i64 0}
+!21 = !{!20, !20, i64 0}
+!22 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

@@ -202,7 +202,7 @@ bb.fw:                                            ; preds = %"_ZN4core3ptr39drop
 define internal fastcc void @"_ZN3zip4read61_$LT$impl$u20$zip..read..zip_archive..ZipArchive$LT$R$GT$$GT$31by_index_with_optional_password17h5deef39210dda19bE"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(240) initializes((0, 16)) %0, ptr noalias noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
-  %.sroa.630 = alloca [24 x i8], align 8          ; 6 uses
+  %.sroa.630 = alloca [24 x i8], align 8          ; 5 uses
   %i.b = alloca [40 x i8], align 8                ; 2 uses
   %i.c = alloca [48 x i8], align 8                ; 6 uses
   %.sroa.525 = alloca [40 x i8], align 8          ; 7 uses
@@ -230,7 +230,11 @@ bb.b:                                             ; preds = %bb.a
   %i.p = trunc nuw i8 %i.o to i1
   br i1 %i.p, label %bb.e, label %bb.d
 
-bb.c:                                             ; preds = %bb.f, %bb.h, %bb.e, %bb.j, %"_ZN4core3ptr70drop_in_place$LT$alloc..borrow..Cow$LT$zip..types..ZipFileData$GT$$GT$17hc88d1db6decab2b7E.exit54", %bb.b
+.sink.split:                                      ; preds = %bb.j, %"_ZN4core3ptr70drop_in_place$LT$alloc..borrow..Cow$LT$zip..types..ZipFileData$GT$$GT$17hc88d1db6decab2b7E.exit54"
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.630)
+  br label %bb.c
+
+bb.c:                                             ; preds = %.sink.split, %bb.f, %bb.h, %bb.e, %bb.b
   ret void
 
 bb.d:                                             ; preds = %"_ZN4core3ptr42drop_in_place$LT$zip..result..ZipError$GT$17h5568fed9e7206a73E.exit"
@@ -309,8 +313,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.630, i64 24, i1 false)
   store i64 3, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.630)
-  br label %bb.c
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.i
   %.sroa.636.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
@@ -320,8 +323,7 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.m, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.535.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 208
   store i64 %i.ah, ptr %.sroa.535.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.630)
-  br label %bb.c
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

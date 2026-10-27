@@ -205,8 +205,7 @@ bb.cc:                                            ; preds = %.critedge
   %i.nf = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %i.nc, i64 noundef %i.ne) #22 ; 0 uses
   call void @_ZN4llvm13MCInstPrinter10WithMarkupD1Ev(ptr noundef nonnull align 8 dead_on_return(18) dereferenceable(18) %15) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
-  call void @_ZN4llvm13MCInstPrinter15printAnnotationERNS_11raw_ostreamENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr %3, i64 %4) #22
-  br label %bb.de
+  br label %.sink.split
 
 bb.cd:                                            ; preds = %.critedge
   %reass.sub = sub i64 %i.kz, %i.kw
@@ -245,8 +244,7 @@ bb.cd:                                            ; preds = %.critedge
   %i.od = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %i.ob, i64 noundef %i.oc) #22 ; 0 uses
   call void @_ZN4llvm13MCInstPrinter10WithMarkupD1Ev(ptr noundef nonnull align 8 dead_on_return(18) dereferenceable(18) %17) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #22
-  call void @_ZN4llvm13MCInstPrinter15printAnnotationERNS_11raw_ostreamENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr %3, i64 %4) #22
-  br label %bb.de
+  br label %.sink.split
 
 bb.ce:                                            ; preds = %bb.bx
   %.not468 = icmp eq i32 %i.b, 5551               ; 2 uses
@@ -554,7 +552,11 @@ bb.dd:                                            ; preds = %bb.dc
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #22
   br label %bb.de
 
-bb.de:                                            ; preds = %_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit, %_ZN4llvm11raw_ostreamlsEc.exit375, %bb.cb, %bb.cc, %bb.cd, %_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit409, %_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit431, %bb.i, %.critedge49, %bb.cj, %bb.cg, %bb.h, %bb.e, %bb.c
+.sink.split:                                      ; preds = %bb.cd, %bb.cc
+  call void @_ZN4llvm13MCInstPrinter15printAnnotationERNS_11raw_ostreamENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr %3, i64 %4) #22
+  br label %bb.de
+
+bb.de:                                            ; preds = %.sink.split, %_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit, %_ZN4llvm11raw_ostreamlsEc.exit375, %bb.cb, %_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit409, %_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit431, %bb.i, %.critedge49, %bb.cj, %bb.cg, %bb.h, %bb.e, %bb.c
   ret void
 }
 

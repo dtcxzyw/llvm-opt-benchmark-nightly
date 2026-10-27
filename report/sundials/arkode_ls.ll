@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !37
   %i.s = call i32 %i.r(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.d, ptr noundef nonnull %i.c) #11 ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 304 ; 8 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.g, i64 304 ; 7 uses
   store i32 %i.s, ptr %i.t, align 8, !tbaa !60
   %.not52 = icmp eq i32 %i.s, 0
   br i1 %.not52, label %bb.f, label %bb.e
@@ -319,16 +319,11 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bm = icmp slt i32 %i.bb, 0
-  br i1 %i.bm, label %bb.s, label %9
+  br i1 %i.bm, label %bb.s, label %.sink.split
 
 bb.s:                                             ; preds = %bb.r
   call void (ptr, i32, i32, ptr, ptr, ptr, ...) @arkProcessError(ptr noundef nonnull %0, i32 noundef -7, i32 noundef 3273, ptr noundef nonnull @__func__.arkLsSetup, ptr noundef nonnull @.str, ptr noundef nonnull @.str.51) #11
-  store i32 -7, ptr %i.t, align 8, !tbaa !60
-  br label %bb.z
-
-9:                                                ; preds = %bb.r
-  store i32 -8, ptr %i.t, align 8, !tbaa !60
-  br label %bb.z
+  br label %.sink.split
 
 bb.t:                                             ; preds = %.thread
   %i.bn = load i32, ptr %i.ak, align 8, !tbaa !58
@@ -372,8 +367,14 @@ bb.y:                                             ; preds = %bb.x
   %.pre89 = load i32, ptr %i.t, align 8, !tbaa !60
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.u, %bb.y, %bb.x, %arkLs_AccessLMem.exit, %bb.q, %9, %bb.s, %bb.m, %bb.e, %bb.c
-  %.046 = phi i32 [ %i.bb, %bb.q ], [ 0, %bb.c ], [ %i.u, %bb.e ], [ %i.ar, %bb.m ], [ -1, %bb.s ], [ 1, %9 ], [ -2, %arkLs_AccessLMem.exit ], [ %i.bq, %bb.x ], [ %.pre89, %bb.y ], [ %i.bq, %bb.u ]
+.sink.split:                                      ; preds = %bb.r, %bb.s
+  %.sink = phi i32 [ -7, %bb.s ], [ -8, %bb.r ]
+  %.046.ph = phi i32 [ -1, %bb.s ], [ 1, %bb.r ]
+  store i32 %.sink, ptr %i.t, align 8, !tbaa !60
+  br label %bb.z
+
+bb.z:                                             ; preds = %.sink.split, %bb.u, %bb.y, %bb.x, %arkLs_AccessLMem.exit, %bb.q, %bb.m, %bb.e, %bb.c
+  %.046 = phi i32 [ %i.bb, %bb.q ], [ 0, %bb.c ], [ %i.u, %bb.e ], [ %i.ar, %bb.m ], [ %.pre89, %bb.y ], [ %i.bq, %bb.u ], [ -2, %arkLs_AccessLMem.exit ], [ %i.bq, %bb.x ], [ %.046.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11

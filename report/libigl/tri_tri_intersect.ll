@@ -202,10 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.av = load double, ptr %3, align 8, !tbaa !15
   store double %i.av, ptr %11, align 16, !tbaa !15
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %13 = load double, ptr %i.aw, align 8, !tbaa !15
-  %14 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  store double %13, ptr %14, align 8, !tbaa !15
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.ax = load <2 x double>, ptr %0, align 8, !tbaa !15
@@ -216,13 +213,22 @@ bb.e:                                             ; preds = %bb.c
   store <2 x double> %i.az, ptr %9, align 16, !tbaa !15
   %i.ba = load <2 x double>, ptr %3, align 8, !tbaa !15
   store <2 x double> %i.ba, ptr %10, align 16, !tbaa !15
-  %15 = load <2 x double>, ptr %4, align 8, !tbaa !15
-  store <2 x double> %15, ptr %11, align 16, !tbaa !15
+  %13 = load double, ptr %4, align 8, !tbaa !15
+  store double %13, ptr %11, align 16, !tbaa !15
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.d, %bb.e
+  %.sink58.in = phi ptr [ %14, %bb.e ], [ %i.aw, %bb.d ]
+  %.sink.ph = phi i64 [ 8, %bb.e ], [ 16, %bb.d ]
+  %.sink58 = load double, ptr %.sink58.in, align 8, !tbaa !15
+  %15 = getelementptr inbounds nuw i8, ptr %11, i64 8
+  store double %.sink58, ptr %15, align 8, !tbaa !15
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
-  %.sink57.in = phi ptr [ %5, %bb.d ], [ %5, %bb.e ], [ %i.ac, %bb.b ]
-  %.sink = phi i64 [ 16, %bb.d ], [ 8, %bb.e ], [ 8, %bb.b ]
+bb.f:                                             ; preds = %.sink.split, %bb.b
+  %.sink57.in = phi ptr [ %i.ac, %bb.b ], [ %5, %.sink.split ]
+  %.sink = phi i64 [ 8, %bb.b ], [ %.sink.ph, %.sink.split ]
   %.sink57 = load double, ptr %.sink57.in, align 8, !tbaa !15
   store double %.sink57, ptr %12, align 16, !tbaa !15
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 %.sink

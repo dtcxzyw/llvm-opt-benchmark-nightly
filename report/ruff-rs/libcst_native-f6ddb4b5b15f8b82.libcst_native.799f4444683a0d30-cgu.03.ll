@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [320 x i8], align 8               ; 7 uses
   %.sroa.6 = alloca [24 x i8], align 8            ; 6 uses
-  %i.c = alloca [320 x i8], align 8               ; 10 uses
+  %i.c = alloca [320 x i8], align 8               ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -269,8 +269,7 @@ bb.g:                                             ; preds = %bb.f
   store ptr %i.r, ptr %.sroa.531.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
   call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes2op6CompOpEBH_(ptr noalias noundef align 8 dereferenceable(320) %i.c)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.i
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(320) %0, ptr noundef nonnull align 8 dereferenceable(320) %i.c, i64 320, i1 false)
@@ -278,10 +277,13 @@ bb.h:                                             ; preds = %bb.f
   store i64 %i.p, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 328
   store ptr %i.r, ptr %.sroa.518.0..sroa_idx, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %bb.c
+bb.i:                                             ; preds = %.sink.split, %bb.c
   ret void
 
 bb.j:                                             ; preds = %bb.k, %bb.e

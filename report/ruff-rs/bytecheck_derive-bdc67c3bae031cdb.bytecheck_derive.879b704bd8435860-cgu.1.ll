@@ -204,8 +204,7 @@ bb.o:                                             ; preds = %bb.m
   store i64 4, ptr %i.bp, align 8
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %i.bn, ptr %.sroa.26.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
-  br label %bb.q
+  br label %.sink.split
 
 bb.p:                                             ; preds = %bb.m
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -213,10 +212,13 @@ bb.p:                                             ; preds = %bb.m
   %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.br = load <2 x i64>, ptr %i.r, align 16
   store <2 x i64> %i.br, ptr %.sroa.29.0..sroa_idx, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.o, %bb.p
   store i64 0, ptr %0, align 8
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.r, %bb.p, %bb.o, %bb.n, %bb.l
+bb.q:                                             ; preds = %.sink.split, %bb.r, %bb.n, %bb.l
   ret void
 
 bb.r:                                             ; preds = %_RINvMNtCslNEiUQgeYIG_3syn4attrNtB3_9Attribute17parse_nested_metaNCNvMs0_NtCsbDPHjAM0yJM_16bytecheck_derive4reprNtB18_4Repr10from_attrss_0EB1a_.exit

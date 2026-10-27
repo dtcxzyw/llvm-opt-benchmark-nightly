@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !24   ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 72 ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 80 ; 6 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 88 ; 12 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 88 ; 11 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   br label %bb.g
@@ -244,14 +244,12 @@ readback_bytes.exit52:                            ; preds = %bb.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.053.i68, ptr nonnull align 1 %i.aa, i64 %spec.select.i51, i1 false)
   %i.ab = load i64, ptr %i.q, align 8, !tbaa !57
   %i.ac = add i64 %i.ab, %spec.select.i51
-  store i64 %i.ac, ptr %i.q, align 8, !tbaa !57
-  br label %bb.aa
+  br label %.sink.split
 
 readback_bytes.exit52.thread:                     ; preds = %bb.i
   store i32 6, ptr %i.o, align 8, !tbaa !45
   store ptr %i.t, ptr %i.p, align 8, !tbaa !56
-  store i64 0, ptr %i.q, align 8, !tbaa !57
-  br label %bb.aa
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.g
   %.not63.i = icmp eq ptr %i.t, null
@@ -352,8 +350,14 @@ bb.z:                                             ; preds = %bb.x
   store i64 0, ptr %i.q, align 8, !tbaa !57
   br label %bb.aa
 
-bb.aa:                                            ; preds = %readback_bytes.exit52, %bb.g, %bb.h, %readback_bytes.exit52.thread, %bb.u, %bb.w, %bb.x, %bb.z, %bb.t, %bb.o
-  %.1.i = phi i64 [ 0, %bb.g ], [ 0, %bb.h ], [ %spec.select.i51, %readback_bytes.exit52 ], [ 0, %readback_bytes.exit52.thread ], [ 0, %bb.w ], [ 0, %bb.u ], [ %i.aq, %bb.x ], [ 0, %bb.z ], [ %spec.select.i, %bb.t ], [ %spec.select.i45, %bb.o ] ; 3 uses
+.sink.split:                                      ; preds = %readback_bytes.exit52.thread, %readback_bytes.exit52
+  %.sink = phi i64 [ %i.ac, %readback_bytes.exit52 ], [ 0, %readback_bytes.exit52.thread ]
+  %.1.i.ph = phi i64 [ %spec.select.i51, %readback_bytes.exit52 ], [ 0, %readback_bytes.exit52.thread ]
+  store i64 %.sink, ptr %i.q, align 8, !tbaa !57
+  br label %bb.aa
+
+bb.aa:                                            ; preds = %.sink.split, %bb.g, %bb.h, %bb.u, %bb.w, %bb.x, %bb.z, %bb.t, %bb.o
+  %.1.i = phi i64 [ 0, %bb.g ], [ 0, %bb.h ], [ %spec.select.i, %bb.t ], [ %spec.select.i45, %bb.o ], [ 0, %bb.w ], [ 0, %bb.u ], [ %i.aq, %bb.x ], [ 0, %bb.z ], [ %.1.i.ph, %.sink.split ] ; 3 uses
   %i.at = add i64 %.1.i, %.049.i70                ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.053.i68, i64 %.1.i
   %i.av = sub i64 %.055.i66, %.1.i                ; 2 uses

@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %.loopexit.thread.i.
   %indvars.iv115.i.i = phi i64 [ 0, %.lr.ph103.i.i ], [ %indvars.iv.next116.i.i, %.loopexit.thread.i.i ] ; 2 uses
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %indvars.iv115.i.i
   %i.in = load ptr, ptr %i.im, align 8, !tbaa !44
-  %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 16 ; 4 uses
+  %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 16 ; 3 uses
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !15 ; 7 uses
   br i1 %.not37.i, label %.preheader92.i.i, label %.preheader91.i.i
 
@@ -355,8 +355,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ls = add nsw i32 %i.lo, %i.ll
   %i.lt = sdiv i32 %i.ls, 2
   %i.lu = sitofp i32 %i.lt to double
-  %2 = load ptr, ptr %i.io, align 8, !tbaa !15
-  br label %.loopexit.thread.i.i
+  br label %.loopexit.thread.sink.split.i.i
 
 bb.aj:                                            ; preds = %bb.ah
   %i.lv = sitofp i32 %i.lo to double
@@ -368,12 +367,16 @@ bb.aj:                                            ; preds = %bb.ah
   %i.mb = add nsw i32 %i.lq, %i.lm
   %i.mc = sitofp i32 %i.mb to double
   %i.md = fdiv double %i.ma, %i.mc
-  %3 = load ptr, ptr %i.io, align 8, !tbaa !15
+  br label %.loopexit.thread.sink.split.i.i
+
+.loopexit.thread.sink.split.i.i:                  ; preds = %bb.aj, %bb.ai
+  %.sink.ph.i.i = phi double [ %i.md, %bb.aj ], [ %i.lu, %bb.ai ]
+  %2 = load ptr, ptr %i.io, align 8, !tbaa !15
   br label %.loopexit.thread.i.i
 
-.loopexit.thread.i.i:                             ; preds = %bb.aj, %bb.ai, %bb.ag, %bb.ae, %bb.ad, %.loopexit.i.i, %.preheader91.i.i, %.preheader92.i.i
-  %.sink134.i.i = phi ptr [ %2, %bb.ai ], [ %3, %bb.aj ], [ %i.lg, %bb.ag ], [ %i.ip, %bb.ae ], [ %i.ip, %bb.ad ], [ %i.ip, %.loopexit.i.i ], [ %i.ip, %.preheader92.i.i ], [ %i.ip, %.preheader91.i.i ]
-  %.sink.i.i = phi double [ %i.lu, %bb.ai ], [ %i.md, %bb.aj ], [ %i.lf, %bb.ag ], [ %i.la, %bb.ae ], [ %i.kv, %bb.ad ], [ -1.000000e+00, %.loopexit.i.i ], [ -1.000000e+00, %.preheader92.i.i ], [ -1.000000e+00, %.preheader91.i.i ]
+.loopexit.thread.i.i:                             ; preds = %.loopexit.thread.sink.split.i.i, %bb.ag, %bb.ae, %bb.ad, %.loopexit.i.i, %.preheader91.i.i, %.preheader92.i.i
+  %.sink134.i.i = phi ptr [ %i.ip, %.preheader92.i.i ], [ %i.ip, %.preheader91.i.i ], [ %i.lg, %bb.ag ], [ %i.ip, %bb.ae ], [ %i.ip, %bb.ad ], [ %i.ip, %.loopexit.i.i ], [ %2, %.loopexit.thread.sink.split.i.i ]
+  %.sink.i.i = phi double [ -1.000000e+00, %.preheader92.i.i ], [ -1.000000e+00, %.preheader91.i.i ], [ %i.lf, %bb.ag ], [ %i.la, %bb.ae ], [ %i.kv, %bb.ad ], [ -1.000000e+00, %.loopexit.i.i ], [ %.sink.ph.i.i, %.loopexit.thread.sink.split.i.i ]
   %i.me = getelementptr inbounds nuw i8, ptr %.sink134.i.i, i64 368
   store double %.sink.i.i, ptr %i.me, align 8, !tbaa !179
   %indvars.iv.next116.i.i = add nuw nsw i64 %indvars.iv115.i.i, 1 ; 2 uses

@@ -200,11 +200,7 @@ bb.j:                                             ; preds = %bb.d
 bb.k:                                             ; preds = %bb.d
   %i.x = tail call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #11 ; 5 uses
   %i.y = icmp eq ptr %i.x, null
-  br i1 %i.y, label %5, label %bb.l
-
-5:                                                ; preds = %bb.k
-  store ptr null, ptr %3, align 8
-  br label %bb.m
+  br i1 %i.y, label %.sink.split, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 2 uses
@@ -214,11 +210,16 @@ bb.l:                                             ; preds = %bb.k
   %i.ab = load ptr, ptr %i.j, align 8
   store ptr %i.ab, ptr %i.x, align 8
   store ptr %i.x, ptr %i.j, align 8
-  store ptr %i.z, ptr %3, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.k, %bb.l
+  %.sink = phi ptr [ %i.z, %bb.l ], [ null, %bb.k ]
+  %.042.ph = phi i32 [ 1, %bb.l ], [ 0, %bb.k ]
+  store ptr %.sink, ptr %3, align 8
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.d, %bb.l, %5, %bb.j, %bb.i, %bb.h
-  %.042 = phi i32 [ 1, %bb.h ], [ 1, %bb.l ], [ 1, %bb.i ], [ 0, %bb.j ], [ 0, %5 ], [ 0, %bb.d ]
+bb.m:                                             ; preds = %.sink.split, %bb.d, %bb.j, %bb.i, %bb.h
+  %.042 = phi i32 [ 1, %bb.h ], [ 0, %bb.d ], [ 1, %bb.i ], [ 0, %bb.j ], [ %.042.ph, %.sink.split ]
   ret i32 %.042
 }
 

@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
@@ -249,7 +249,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ac = icmp eq i32 %i.ab, 0
   br i1 %i.ac, label %.backedge.i.i, label %bb.j
 
-.backedge.i.i:                                    ; preds = %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.l, %bb.k, %.lr.ph.i.i
+.backedge.i.i:                                    ; preds = %.sink.split.i.i, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.l, %bb.k, %.lr.ph.i.i
   %i.ad = call ptr @strtok_r(ptr noundef null, ptr noundef nonnull @.str.27, ptr noundef nonnull %i.b) #10 ; 2 uses
   %.0.be.i.i = add nuw nsw i32 %.037.i.i, 1
   %.not31.i.i = icmp eq ptr %i.ad, null
@@ -285,13 +285,11 @@ bb.m:                                             ; preds = %bb.j
 bb.n:                                             ; preds = %bb.m
   %i.aj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ops, i64 24), align 8
   %i.ak = call ptr %i.aj(ptr noundef nonnull %.02936.i.i) #10, !inline_history !16
-  store ptr %i.ak, ptr %i.p, align 8
-  br label %.backedge.i.i
+  br label %.sink.split.i.i
 
 bb.o:                                             ; preds = %bb.m
   %i.al = call ptr @xstrdup(ptr noundef nonnull %.02936.i.i) #10
-  store ptr %i.al, ptr %i.p, align 8
-  br label %.backedge.i.i
+  br label %.sink.split.i.i
 
 bb.p:                                             ; preds = %bb.j
   %i.am = call ptr @xstrdup(ptr noundef nonnull %.02936.i.i) #10
@@ -315,6 +313,11 @@ bb.s:                                             ; preds = %bb.j
 
 bb.t:                                             ; preds = %bb.j
   %i.aq = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.29) #10 ; 0 uses
+  br label %.backedge.i.i
+
+.sink.split.i.i:                                  ; preds = %bb.o, %bb.n
+  %.sink.i.i = phi ptr [ %i.ak, %bb.n ], [ %i.al, %bb.o ]
+  store ptr %.sink.i.i, ptr %i.p, align 8
   br label %.backedge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.backedge.i.i

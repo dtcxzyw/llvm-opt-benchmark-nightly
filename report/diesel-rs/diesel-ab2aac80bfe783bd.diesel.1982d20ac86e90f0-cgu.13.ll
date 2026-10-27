@@ -205,7 +205,7 @@ define hidden void @_RINvXs8A_NtNtCsjRvGck33osM_6diesel10type_impls6tuplesTmmEIN
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 6 uses
-  %i.c = alloca [24 x i8], align 8                ; 5 uses
+  %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
   %i.e = tail call noundef i64 @_RNvXs0_NtNtNtCsjRvGck33osM_6diesel2pg10connection3rowNtB5_5PgRowINtNtBb_3row3RowNtNtB9_7backend2PgE11field_count(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -243,8 +243,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.k, ptr %0, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.m, ptr %i.n, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.o = load i32, ptr %i.l, align 8, !noalias !1590, !noundef !5
@@ -254,10 +253,13 @@ bb.e:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.o, ptr %i.q, align 4
   store ptr null, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
+bb.f:                                             ; preds = %.sink.split, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
 }

@@ -202,7 +202,7 @@ define void @_RNvXs4_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB5_10PayloadU24NtNtB7_
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.510 = alloca [24 x i8], align 8          ; 6 uses
-  %i.b = alloca [24 x i8], align 8                ; 5 uses
+  %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @_RNvXs2_NtNtCs7ZUl82OSlxp_6rustls4msgs5codecNtB5_3u24NtB5_5Codec4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
@@ -248,8 +248,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.510, i64 24, i1 false)
   store i64 1, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.510)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.510, i64 24, i1 false)
@@ -264,10 +263,13 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.526.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.o, ptr %.sroa.526.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
+bb.f:                                             ; preds = %.sink.split, %bb.b
   ret void
 }
 

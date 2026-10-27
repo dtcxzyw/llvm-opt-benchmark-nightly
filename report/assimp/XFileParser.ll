@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.c, %bb.b
   %i.ab = icmp eq i32 %i.aa, 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ad = load ptr, ptr %i.ac, align 8            ; 3 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.af = load ptr, ptr %i.ae, align 8            ; 5 uses
   %i.ag = ptrtoint ptr %i.ad to i64
   %i.ah = ptrtoint ptr %i.af to i64
@@ -229,17 +229,12 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.g
   %i.am = icmp sgt i64 %i.ai, 3
-  br i1 %i.am, label %bb.l, label %4
+  br i1 %i.am, label %bb.l, label %.sink.split
 
 bb.l:                                             ; preds = %bb.k
   %.0.copyload = load float, ptr %i.af, align 1
   %i.an = getelementptr inbounds nuw i8, ptr %i.af, i64 4
-  store ptr %i.an, ptr %i.ae, align 8
-  br label %bb.af
-
-4:                                                ; preds = %bb.k
-  store ptr %i.ad, ptr %i.ae, align 8
-  br label %bb.af
+  br label %.sink.split
 
 .preheader.i:                                     ; preds = %bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
@@ -529,8 +524,14 @@ _ZN6Assimp11XFileParser17CheckForSeparatorEv.exit36: ; preds = %bb.ab, %_ZNSt7__
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   br label %bb.af
 
-bb.af:                                            ; preds = %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit36, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit21, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit, %4, %bb.l, %bb.j, %bb.i
-  %.0 = phi float [ %i.al, %bb.i ], [ 0.000000e+00, %bb.j ], [ %.0.copyload, %bb.l ], [ 0.000000e+00, %4 ], [ 0.000000e+00, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit ], [ 0.000000e+00, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit21 ], [ %i.dl, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit36 ]
+.sink.split:                                      ; preds = %bb.k, %bb.l
+  %.sink = phi ptr [ %i.an, %bb.l ], [ %i.ad, %bb.k ]
+  %.0.ph = phi float [ %.0.copyload, %bb.l ], [ 0.000000e+00, %bb.k ]
+  store ptr %.sink, ptr %i.ae, align 8
+  br label %bb.af
+
+bb.af:                                            ; preds = %.sink.split, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit36, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit21, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit, %bb.j, %bb.i
+  %.0 = phi float [ %i.al, %bb.i ], [ 0.000000e+00, %bb.j ], [ 0.000000e+00, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit21 ], [ %i.dl, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit36 ], [ 0.000000e+00, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit ], [ %.0.ph, %.sink.split ]
   ret float %.0
 }
 
@@ -686,21 +687,16 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.y = phi i32 [ 0, %bb.c ], [ %storemerge, %bb.f ], [ %i.e, %bb.b ]
   %i.z = add i32 %i.y, -1
   store i32 %i.z, ptr %i.d, align 8
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ab = ptrtoint ptr %i.x to i64
   %i.ac = sub i64 %i.k, %i.ab
   %i.ad = icmp ugt i64 %i.ac, 3
-  br i1 %i.ad, label %bb.g, label %2
+  br i1 %i.ad, label %bb.g, label %.sink.split
 
 bb.g:                                             ; preds = %._crit_edge36
   %i.ae = load i32, ptr %i.x, align 1
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 4
-  store ptr %i.af, ptr %i.aa, align 8
-  br label %bb.u
-
-2:                                                ; preds = %._crit_edge36
-  store ptr %i.h, ptr %i.aa, align 8
-  br label %bb.u
+  br label %.sink.split
 
 .preheader.i:                                     ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
@@ -893,8 +889,14 @@ _ZN6Assimp11XFileParser17CheckForSeparatorEv.exit: ; preds = %_ZStneIcSt11char_t
   %i.ch = select i1 %i.bg, i32 %i.cg, i32 %.0.lcssa
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.g, %2, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit
-  %.1 = phi i32 [ %i.ch, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit ], [ %i.ae, %bb.g ], [ 0, %2 ]
+.sink.split:                                      ; preds = %._crit_edge36, %bb.g
+  %.sink = phi ptr [ %i.af, %bb.g ], [ %i.h, %._crit_edge36 ]
+  %.1.ph = phi i32 [ %i.ae, %bb.g ], [ 0, %._crit_edge36 ]
+  store ptr %.sink, ptr %i.aa, align 8
+  br label %bb.u
+
+bb.u:                                             ; preds = %.sink.split, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit
+  %.1 = phi i32 [ %i.ch, %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit ], [ %.1.ph, %.sink.split ]
   ret i32 %.1
 }
 

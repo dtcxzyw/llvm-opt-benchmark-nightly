@@ -204,7 +204,7 @@ define dso_local range(i32 0, 2) i32 @ossl_cipher_generic_set_ctx_params(ptr nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = icmp eq ptr %1, null
   br i1 %i.d, label %ossl_param_is_empty.exit.thread, label %ossl_param_is_empty.exit
 
@@ -322,18 +322,21 @@ bb.o:                                             ; preds = %bb.n
   call void @ERR_new() #5
   call void @ERR_set_debug(ptr noundef nonnull @.str.1, i32 noundef 691, ptr noundef nonnull @__func__.ossl_cipher_generic_set_ctx_params) #5
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 103, ptr noundef null) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  br label %ossl_param_is_empty.exit.thread
+  br label %ossl_param_is_empty.exit.thread.sink.split
 
 bb.p:                                             ; preds = %bb.o
   %i.ad = load i32, ptr %i.c, align 4, !tbaa !38
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i32 %i.ad, ptr %i.ae, align 8, !tbaa !20
+  br label %ossl_param_is_empty.exit.thread.sink.split
+
+ossl_param_is_empty.exit.thread.sink.split:       ; preds = %bb.p, %.thread49
+  %.5.ph = phi i32 [ 1, %bb.p ], [ 0, %.thread49 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
   br label %ossl_param_is_empty.exit.thread
 
-ossl_param_is_empty.exit.thread:                  ; preds = %bb.a, %bb.n, %bb.p, %.thread49, %.thread48, %.thread, %ossl_param_is_empty.exit, %bb.m, %bb.j
-  %.5 = phi i32 [ 0, %.thread ], [ 1, %bb.n ], [ 0, %.thread49 ], [ 0, %bb.m ], [ 0, %bb.j ], [ 0, %.thread48 ], [ 1, %ossl_param_is_empty.exit ], [ 1, %bb.p ], [ 1, %bb.a ]
+ossl_param_is_empty.exit.thread:                  ; preds = %ossl_param_is_empty.exit.thread.sink.split, %bb.a, %bb.n, %.thread48, %.thread, %ossl_param_is_empty.exit, %bb.m, %bb.j
+  %.5 = phi i32 [ 0, %.thread ], [ 1, %bb.n ], [ 1, %bb.a ], [ 0, %bb.m ], [ 0, %bb.j ], [ 0, %.thread48 ], [ 1, %ossl_param_is_empty.exit ], [ %.5.ph, %ossl_param_is_empty.exit.thread.sink.split ]
   ret i32 %.5
 }
 

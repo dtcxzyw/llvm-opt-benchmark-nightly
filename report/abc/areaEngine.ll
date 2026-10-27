@@ -204,7 +204,7 @@ _ZNSt6vectorIbSaIbEE9push_backEb.exit:
   %i.i = icmp ne i32 %i.h, %.010
   %i.j = icmp sgt i32 %i.g, 0
   %i.k = or i1 %i.j, %i.i                         ; 2 uses
-  %i.l = load ptr, ptr %i.b, align 8, !tbaa !72   ; 7 uses
+  %i.l = load ptr, ptr %i.b, align 8, !tbaa !72   ; 6 uses
   %i.m = load ptr, ptr %i.d, align 8, !tbaa !76
   %.not.i4 = icmp eq ptr %i.l, %i.m
   %.sroa.2.0.copyload.i11.i6 = load i32, ptr %i.c, align 8 ; 4 uses
@@ -230,21 +230,24 @@ _ZNSt13_Bit_iteratorppEi.exit.i7:                 ; preds = %bb.b, %bb.a
 bb.c:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i7
   %i.s = load i64, ptr %i.l, align 8, !tbaa !14
   %i.t = or i64 %i.s, %i.r
-  store i64 %i.t, ptr %i.l, align 8, !tbaa !14
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit8
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.d:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i7
   %i.u = xor i64 %i.r, -1
   %i.v = load i64, ptr %i.l, align 8, !tbaa !14
   %i.w = and i64 %i.v, %i.u
-  store i64 %i.w, ptr %i.l, align 8, !tbaa !14
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit8
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.e:                                             ; preds = %.lr.ph
   tail call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr %i.l, i32 %.sroa.2.0.copyload.i11.i6, i1 noundef zeroext %i.k)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit8
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit8:           ; preds = %bb.c, %bb.d, %bb.e
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.d, %bb.c
+  %.sink.i = phi i64 [ %i.t, %bb.c ], [ %i.w, %bb.d ]
+  store i64 %.sink.i, ptr %i.l, align 8, !tbaa !14
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit8
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit8:           ; preds = %bb.e, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
   %i.x = add nuw nsw i32 %.010, 1
   %i.y = tail call noundef i32 @_ZN7CaDiCaL6Solver4varsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.e) #13
   %.not.not = icmp slt i32 %.010, %i.y

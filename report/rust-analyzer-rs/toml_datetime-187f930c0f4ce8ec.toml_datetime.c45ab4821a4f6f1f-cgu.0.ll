@@ -202,18 +202,21 @@ bb.dp:                                            ; preds = %bb.aq
   store i16 %.sroa.9.02280, ptr %.sroa.9.0..sroa_idx, align 4
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   store i32 %.sroa.15.sroa.0.02277, ptr %.sroa.15.0..sroa_idx, align 2
-  store i32 0, ptr %0, align 8
-  br label %bb.dr
+  br label %.sink.split
 
 bb.dq:                                            ; preds = %bb.aq
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.hr, align 8
   %.sroa.41589.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr null, ptr %.sroa.41589.0..sroa_idx, align 8
-  store i32 1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.dq, %bb.dp
+  %.sink = phi i32 [ 0, %bb.dp ], [ 1, %bb.dq ]
+  store i32 %.sink, ptr %0, align 8
   br label %bb.dr
 
-bb.dr:                                            ; preds = %bb.c, %bb.d, %bb.g, %bb.f, %bb.dq, %bb.do, %bb.ar, %bb.k, %bb.j, %bb.n, %bb.m, %bb.ad, %bb.am, %bb.y, %bb.u, %bb.s, %bb.q, %bb.p, %bb.z, %bb.ab, %_RNvMsz_NtCshzWfHUSfYae_4core3numt27from_ascii_bytes_radix_impl.exit.thread, %bb.av, %bb.au, %bb.ay, %bb.ax, %bb.ch, %bb.cj, %bb.ck, %bb.co, %bb.bw, %bb.bt, %bb.br, %bb.bb, %bb.ba, %bb.bf, %bb.be, %bb.bi, %bb.bh, %bb.bm, %bb.bl, %bb.bp, %bb.bo, %bb.bz, %bb.cd, %bb.bx, %bb.dp
+bb.dr:                                            ; preds = %.sink.split, %bb.c, %bb.d, %bb.g, %bb.f, %bb.do, %bb.ar, %bb.k, %bb.j, %bb.n, %bb.m, %bb.ad, %bb.am, %bb.y, %bb.u, %bb.s, %bb.q, %bb.p, %bb.z, %bb.ab, %_RNvMsz_NtCshzWfHUSfYae_4core3numt27from_ascii_bytes_radix_impl.exit.thread, %bb.av, %bb.au, %bb.ay, %bb.ax, %bb.ch, %bb.cj, %bb.ck, %bb.co, %bb.bw, %bb.bt, %bb.br, %bb.bb, %bb.ba, %bb.bf, %bb.be, %bb.bi, %bb.bh, %bb.bm, %bb.bl, %bb.bp, %bb.bo, %bb.bz, %bb.cd, %bb.bx
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
   ret void
 }

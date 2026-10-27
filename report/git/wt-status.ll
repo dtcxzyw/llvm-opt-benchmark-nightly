@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %wt_status_collect_c
 
 .lr.ph.i:                                         ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 1096
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1060 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1060
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 240 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 12
@@ -312,8 +312,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !117
   %i.co = or i32 %i.cl, %i.cn
   store i32 %i.co, ptr %i.cm, align 8, !tbaa !117
-  store i32 1, ptr %i.ar, align 4, !tbaa !76
-  br label %bb.s
+  br label %.sink.split.i25
 
 bb.r:                                             ; preds = %bb.p
   store i32 65, ptr %i.cg, align 4, !tbaa !71
@@ -327,10 +326,13 @@ bb.r:                                             ; preds = %bb.p
   %i.cu = load i32, ptr %i.ct, align 8, !tbaa !75
   %i.cv = getelementptr inbounds nuw i8, ptr %.0.i, i64 92
   store i32 %i.cu, ptr %i.cv, align 4, !tbaa !75
+  br label %.sink.split.i25
+
+.sink.split.i25:                                  ; preds = %bb.r, %bb.q
   store i32 1, ptr %i.ar, align 4, !tbaa !76
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %bb.q, %strbuf_setlen.exit.i, %bb.h, %bb.g
+bb.s:                                             ; preds = %.sink.split.i25, %strbuf_setlen.exit.i, %bb.h, %bb.g
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.cw = load i32, ptr %i.ao, align 4, !tbaa !113
   %i.cx = zext i32 %i.cw to i64

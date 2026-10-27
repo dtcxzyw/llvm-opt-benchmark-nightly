@@ -205,8 +205,7 @@ _ZNK8seq_util3rex13is_complementEPK4exprRPS1_.exit65: ; preds = %bb.ah
 
 bb.ai:                                            ; preds = %_ZNK8seq_util3rex13is_complementEPK4exprRPS1_.exit65
   %i.gc = tail call noundef ptr @_ZN11ast_manager6mk_appEiiP4exprS1_(ptr noundef nonnull align 8 dereferenceable(952) %i.gb, i32 noundef %i.p, i32 noundef 32, ptr noundef %.070, ptr noundef %i.fz)
-  %4 = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN7obj_refI4expr11ast_managerEaSEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %i.gc) ; 0 uses
-  br label %bb.an
+  br label %.sink.split
 
 .thread:                                          ; preds = %bb.ag, %_ZNK8seq_util3rex13is_complementEPK4exprRPS1_.exit, %_ZNK8seq_util3rex13is_complementEPK4expr.exit.i64, %bb.ah
   br i1 %.0.i, label %bb.aj, label %bb.al
@@ -226,8 +225,7 @@ bb.ak:                                            ; preds = %_ZNK8seq_util3rex13
   %i.gl = load ptr, ptr %i.ga, align 8, !tbaa !165, !nonnull !31, !align !32
   %i.gm = load i32, ptr %i.o, align 8, !tbaa !74
   %i.gn = tail call noundef ptr @_ZN11ast_manager6mk_appEiiP4expr(ptr noundef nonnull align 8 dereferenceable(952) %i.gl, i32 noundef %i.gm, i32 noundef 35, ptr noundef %i.gk)
-  %5 = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN7obj_refI4expr11ast_managerEaSEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %i.gn) ; 0 uses
-  br label %bb.an
+  br label %.sink.split
 
 bb.al:                                            ; preds = %.thread
   %i.go = load i32, ptr %1, align 4, !tbaa !200
@@ -242,8 +240,14 @@ bb.am:                                            ; preds = %bb.al
   %i.gu = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN7obj_refI4expr11ast_managerEaSEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %i.gt) ; 0 uses
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.ai, %bb.aj, %bb.ak, %bb.am, %bb.al, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit60, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit51, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit46, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit40, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit
-  %.1 = phi i32 [ 4, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit ], [ 4, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit40 ], [ 4, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit46 ], [ 0, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit51 ], [ 0, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit60 ], [ 0, %bb.ai ], [ 1, %bb.aj ], [ 1, %bb.ak ], [ 4, %bb.am ], [ 5, %bb.al ]
+.sink.split:                                      ; preds = %bb.ak, %bb.ai
+  %.sink = phi ptr [ %i.gc, %bb.ai ], [ %i.gn, %bb.ak ]
+  %.1.ph = phi i32 [ 0, %bb.ai ], [ 1, %bb.ak ]
+  %4 = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN7obj_refI4expr11ast_managerEaSEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %.sink) ; 0 uses
+  br label %bb.an
+
+bb.an:                                            ; preds = %.sink.split, %bb.aj, %bb.am, %bb.al, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit60, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit51, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit46, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit40, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit
+  %.1 = phi i32 [ 4, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit ], [ 4, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit40 ], [ 4, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit46 ], [ 0, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit51 ], [ 0, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit60 ], [ 4, %bb.am ], [ 1, %bb.aj ], [ 5, %bb.al ], [ %.1.ph, %.sink.split ]
   ret i32 %.1
 }
 

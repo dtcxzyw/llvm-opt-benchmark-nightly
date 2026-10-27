@@ -202,7 +202,7 @@ bb.a:
   %i.v = alloca [16 x i8], align 8                ; 5 uses
   %i.w = alloca [24 x i8], align 8                ; 2 uses
   %i.x = alloca [56 x i8], align 8                ; 4 uses
-  %i.y = alloca [56 x i8], align 8                ; 11 uses
+  %i.y = alloca [56 x i8], align 8                ; 10 uses
   %.sroa.5164 = alloca [40 x i8], align 8         ; 4 uses
   %i.z = alloca [64 x i8], align 8                ; 5 uses
   %i.aa = alloca [24 x i8], align 8               ; 6 uses
@@ -605,7 +605,11 @@ bb.br:                                            ; preds = %bb.b
   store i64 -1, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.bs
 
-bb.bs:                                            ; preds = %_RINvMs4_NtCs63DIHKhvmTb_10lance_core5errorNtB6_5Error9namespaceNtNtCs40k4W9msRzi_5alloc6string6StringECsjqC71KfQTl6_15lance_namespace.exit676, %.split531, %bb.gv, %bb.gg, %bb.ge, %bb.gc, %bb.ga, %bb.fy, %bb.fw, %bb.ft, %bb.fs, %_RINvMs4_NtCs63DIHKhvmTb_10lance_core5errorNtB6_5Error9namespaceNtNtCs40k4W9msRzi_5alloc6string6StringECsjqC71KfQTl6_15lance_namespace.exit653, %bb.fo, %bb.ez, %bb.ex, %bb.ei, %bb.ee, %bb.dp, %_RINvMs4_NtCs63DIHKhvmTb_10lance_core5errorNtB6_5Error9namespaceNtNtCs40k4W9msRzi_5alloc6string6StringECsjqC71KfQTl6_15lance_namespace.exit, %bb.do, %bb.dm, %bb.dk, %bb.di, %bb.dg, %bb.de, %bb.dc, %bb.da, %bb.cy, %bb.cw, %bb.cu, %bb.cs, %bb.cq, %bb.co, %bb.cm, %bb.ck, %bb.ci, %bb.cg, %bb.ce, %bb.cc, %bb.ca, %bb.by, %bb.bw, %bb.bu, %bb.br
+.sink.split:                                      ; preds = %bb.ft, %bb.fs
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
+  br label %bb.bs
+
+bb.bs:                                            ; preds = %.sink.split, %_RINvMs4_NtCs63DIHKhvmTb_10lance_core5errorNtB6_5Error9namespaceNtNtCs40k4W9msRzi_5alloc6string6StringECsjqC71KfQTl6_15lance_namespace.exit676, %.split531, %bb.gv, %bb.gg, %bb.ge, %bb.gc, %bb.ga, %bb.fy, %bb.fw, %_RINvMs4_NtCs63DIHKhvmTb_10lance_core5errorNtB6_5Error9namespaceNtNtCs40k4W9msRzi_5alloc6string6StringECsjqC71KfQTl6_15lance_namespace.exit653, %bb.fo, %bb.ez, %bb.ex, %bb.ei, %bb.ee, %bb.dp, %_RINvMs4_NtCs63DIHKhvmTb_10lance_core5errorNtB6_5Error9namespaceNtNtCs40k4W9msRzi_5alloc6string6StringECsjqC71KfQTl6_15lance_namespace.exit, %bb.do, %bb.dm, %bb.dk, %bb.di, %bb.dg, %bb.de, %bb.dc, %bb.da, %bb.cy, %bb.cw, %bb.cu, %bb.cs, %bb.cq, %bb.co, %bb.cm, %bb.ck, %bb.ci, %bb.cg, %bb.ce, %bb.cc, %bb.ca, %bb.by, %bb.bw, %bb.bu, %bb.br
   ret void
 
 bb.bt:                                            ; preds = %bb.c
@@ -1008,8 +1012,7 @@ bb.fs:                                            ; preds = %bb.fr
   store ptr %i.ff, ptr %.sroa.6180.sroa.5.0..sroa.6180.0..sroa_idx.sroa_idx, align 8
   %.sroa.6180.sroa.6.0..sroa.6180.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 6, ptr %.sroa.6180.sroa.6.0..sroa.6180.0..sroa_idx.sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
-  br label %bb.bs
+  br label %.sink.split
 
 bb.ft:                                            ; preds = %bb.fr
   %.sroa.6189.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 1
@@ -1021,8 +1024,7 @@ bb.ft:                                            ; preds = %bb.fr
   store i8 %.sroa.0187.0.copyload, ptr %i.je, align 8
   store i64 -1, ptr %0, align 8
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ff, i64 noundef 6, i64 noundef range(i64 1, -9223372036854775807) 1) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
-  br label %bb.bs
+  br label %.sink.split
 
 bb.fu:                                            ; preds = %bb.fq
   %i.jf = landingpad { ptr, i32 }

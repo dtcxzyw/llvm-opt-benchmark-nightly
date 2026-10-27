@@ -154,7 +154,12 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.f, %bb.e, %bb.c
+.sink.split:                                      ; preds = %bb.e, %bb.f
+  %.sink = phi i64 [ 1, %bb.f ], [ 0, %bb.e ]
+  store i64 %.sink, ptr %0, align 8
+  br label %bb.d
+
+bb.d:                                             ; preds = %.sink.split, %bb.c
   ret void
 
 bb.e:                                             ; preds = %bb.b
@@ -173,8 +178,7 @@ bb.e:                                             ; preds = %bb.b
   store i32 %.sroa.9.16.extract.trunc, ptr %.sroa.518.0..sroa_idx, align 8
   %.sroa.619.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 %.sroa.026.0.copyload, ptr %.sroa.619.0..sroa_idx, align 4
-  store i64 0, ptr %0, align 8
-  br label %bb.d
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -182,8 +186,7 @@ bb.f:                                             ; preds = %bb.b
   store ptr @0, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 39, ptr %i.g, align 8
-  store i64 1, ptr %0, align 8
-  br label %bb.d
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

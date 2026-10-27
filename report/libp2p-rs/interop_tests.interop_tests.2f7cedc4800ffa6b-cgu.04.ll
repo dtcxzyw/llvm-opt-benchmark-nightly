@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.a, %bb.b, %bb.d
 define hidden void @_RNvXs0_NtNtCsl9hx9jpF0W9_12futures_util4sink4feedINtB5_4FeedINtNtNtCs3r7LNfiWgbg_10tokio_util5codec6framed6FramedINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCs5hzaM3VbZx4_5redis3aio11AsyncStreamNtNtB1S_6marker4SendNtB3A_4SyncEL_EENtNtNtB2X_6parser11aio_support10ValueCodecEINtNtB2o_3vec3VechEENtNtNtB1S_6future6future6Future4pollCs44McOc0n4RX_13interop_tests(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
-  %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %i.b = alloca [24 x i8], align 8                ; 5 uses
   %i.c = alloca [32 x i8], align 8                ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !19, !align !24, !noundef !19 ; 2 uses
@@ -244,16 +244,18 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store i8 -1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.i, %bb.g
+bb.h:                                             ; preds = %.sink.split, %bb.i
   ret void
 
 bb.i:                                             ; preds = %bb.a, %bb.b

@@ -206,7 +206,7 @@ bb.ap:                                            ; preds = %bb.ap, %bb.ao
   br i1 %or.cond12, label %bb.az, label %.critedge10.thread
 
 .critedge10.thread:                               ; preds = %.preheader, %.critedge10
-  %.11.lcssa324 = phi ptr [ %.11.lcssa, %.critedge10 ], [ %.10, %.preheader ] ; 5 uses
+  %.11.lcssa324 = phi ptr [ %.11.lcssa, %.critedge10 ], [ %.10, %.preheader ] ; 4 uses
   %.5229.lcssa323 = phi i64 [ %.5229.lcssa, %.critedge10 ], [ %.4228, %.preheader ] ; 3 uses
   %i.fl = icmp eq i64 %.5229.lcssa323, 0
   br i1 %i.fl, label %bb.ar, label %bb.aq
@@ -252,23 +252,26 @@ bb.aw:                                            ; preds = %bb.av
   %.neg246 = sub nsw i64 %.0223, %i.fx
   %i.fy = load i64, ptr %4, align 8, !tbaa !90
   %i.fz = add i64 %.neg246, %i.fy
-  store i64 %i.fz, ptr %4, align 8, !tbaa !90
-  br label %bb.az
+  br label %.sink.split
 
 bb.ax:                                            ; preds = %bb.av
   %.neg = sub nsw i64 %.0223, %.3227
   %i.ga = add i64 %.neg, %i.fu
-  store i64 %i.ga, ptr %4, align 8, !tbaa !90
-  br label %bb.az
+  br label %.sink.split
 
 bb.ay:                                            ; preds = %bb.au
   %i.gb = add nsw i64 %i.fu, %.2222
   store i64 %i.gb, ptr %4, align 8, !tbaa !90
   br label %bb.az
 
-bb.az:                                            ; preds = %bb.at, %bb.as, %bb.aw, %bb.ax, %bb.ay, %.critedge10, %bb.ar
-  %.sroa.0210.6 = phi ptr [ %.11.lcssa, %.critedge10 ], [ %.11.lcssa324, %bb.ar ], [ %0, %bb.as ], [ %.11.lcssa324, %bb.at ], [ %.11.lcssa324, %bb.aw ], [ %.11.lcssa324, %bb.ax ], [ %.11.lcssa324, %bb.ay ]
-  %.sroa.23.6 = phi i32 [ 34, %.critedge10 ], [ 0, %bb.ar ], [ %i.fs, %bb.as ], [ %i.fs, %bb.at ], [ 0, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.ay ]
+.sink.split:                                      ; preds = %bb.aw, %bb.ax
+  %.sink = phi i64 [ %i.ga, %bb.ax ], [ %i.fz, %bb.aw ]
+  store i64 %.sink, ptr %4, align 8, !tbaa !90
+  br label %bb.az
+
+bb.az:                                            ; preds = %.sink.split, %bb.at, %bb.as, %bb.ay, %.critedge10, %bb.ar
+  %.sroa.0210.6 = phi ptr [ %.11.lcssa, %.critedge10 ], [ %.11.lcssa324, %bb.ar ], [ %0, %bb.as ], [ %.11.lcssa324, %bb.at ], [ %.11.lcssa324, %bb.ay ], [ %.11.lcssa324, %.sink.split ]
+  %.sroa.23.6 = phi i32 [ 34, %.critedge10 ], [ 0, %bb.ar ], [ %i.fs, %bb.as ], [ %i.fs, %bb.at ], [ 0, %bb.ay ], [ 0, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #46
   br label %_ZN5boost4json6detail8charconv6detail10from_charsImEENS2_19from_chars_result_tIcEEPKcS8_RT_i.exit.thread
 

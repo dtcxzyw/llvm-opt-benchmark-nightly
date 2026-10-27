@@ -202,7 +202,7 @@ define void @_RNvMs1_NtNtCs807GXlIGG3x_7zkgroup3api13server_paramsNtB5_18ServerP
 bb.a:
   %.sroa.0 = alloca [368 x i8], align 8           ; 5 uses
   %i.a = alloca [320 x i8], align 8               ; 5 uses
-  %i.b = alloca [32 x i8], align 8                ; 7 uses
+  %i.b = alloca [32 x i8], align 8                ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 3 uses
   %i.e = urem i64 %i.d, 86400
@@ -238,8 +238,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.b
   store i64 1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
@@ -254,10 +253,13 @@ bb.e:                                             ; preds = %bb.b
   store i64 %i.i, ptr %.sroa.6.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
+bb.f:                                             ; preds = %.sink.split, %bb.c
   ret void
 }
 

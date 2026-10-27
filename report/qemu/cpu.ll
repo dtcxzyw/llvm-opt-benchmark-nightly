@@ -204,15 +204,13 @@ bb.ff:                                            ; preds = %bb.fe
   %i.sb = getelementptr inbounds nuw i8, ptr %0, i64 13856
   %i.sc = load i64, ptr %i.sb, align 16
   %i.sd = trunc i64 %i.sc to i32
-  store i32 %i.sd, ptr %6, align 4
-  br label %bb.gb
+  br label %.sink.split
 
 bb.fg:                                            ; preds = %bb.fe
   store i32 0, ptr %3, align 4
   store i32 0, ptr %4, align 4
   store i32 0, ptr %5, align 4
-  store i32 0, ptr %6, align 4
-  br label %bb.gb
+  br label %.sink.split
 
 bb.fh:                                            ; preds = %bb.i
   store i32 0, ptr %3, align 4
@@ -361,7 +359,12 @@ bb.ga:                                            ; preds = %bb.i
   store i32 0, ptr %6, align 4
   br label %bb.gb
 
-bb.gb:                                            ; preds = %bb.bm, %bb.dz, %bb.ei, %bb.ek, %bb.dr, %bb.dw, %bb.dx, %bb.cq, %bb.ck, %bb.cg, %bb.ak, %bb.ax, %bb.az, %bb.ba, %bb.au, %bb.at, %bb.aw, %bb.av, %bb.ar, %bb.am, %bb.al, %bb.ac, %bb.ah, %bb.ai, %bb.fs, %bb.ft, %bb.fp, %bb.fq, %bb.ff, %bb.fg, %bb.dj, %bb.dk, %bb.dl, %bb.dm, %bb.dn, %bb.do, %bb.di, %.thread618, %bb.cx, %bb.cy, %bb.ct, %bb.cu, %bb.cr, %bb.cs, %bb.cp, %bb.cl, %bb.cm, %bb.cj, %bb.ch, %bb.ci, %bb.cf, %bb.cd, %bb.by, %bb.ca, %bb.cb, %bb.bz, %bb.bw, %bb.bh, %bb.bj, %bb.bk, %bb.bi, %bb.w, %bb.y, %bb.x, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %bb.fw, %bb.fv, %bb.fu, %bb.fi, %bb.fd, %bb.fb, %bb.eq, %bb.dp, %bb.cz, %x86_has_cpuid_0x1f.exit.thread, %bb.co, %bb.ce, %bb.cc, %bb.bv, %bb.bo, %bb.bl, %bb.bc, %bb.bb, %bb.j, %bb.i
+.sink.split:                                      ; preds = %bb.ff, %bb.fg
+  %.sink = phi i32 [ 0, %bb.fg ], [ %i.sd, %bb.ff ]
+  store i32 %.sink, ptr %6, align 4
+  br label %bb.gb
+
+bb.gb:                                            ; preds = %.sink.split, %bb.bm, %bb.dz, %bb.ei, %bb.ek, %bb.dr, %bb.dw, %bb.dx, %bb.cq, %bb.ck, %bb.cg, %bb.ak, %bb.ax, %bb.az, %bb.ba, %bb.au, %bb.at, %bb.aw, %bb.av, %bb.ar, %bb.am, %bb.al, %bb.ac, %bb.ah, %bb.ai, %bb.fs, %bb.ft, %bb.fp, %bb.fq, %bb.dj, %bb.dk, %bb.dl, %bb.dm, %bb.dn, %bb.do, %bb.di, %.thread618, %bb.cx, %bb.cy, %bb.ct, %bb.cu, %bb.cr, %bb.cs, %bb.cp, %bb.cl, %bb.cm, %bb.cj, %bb.ch, %bb.ci, %bb.cf, %bb.cd, %bb.by, %bb.ca, %bb.cb, %bb.bz, %bb.bw, %bb.bh, %bb.bj, %bb.bk, %bb.bi, %bb.w, %bb.y, %bb.x, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %bb.fw, %bb.fv, %bb.fu, %bb.fi, %bb.fd, %bb.fb, %bb.eq, %bb.dp, %bb.cz, %x86_has_cpuid_0x1f.exit.thread, %bb.co, %bb.ce, %bb.cc, %bb.bv, %bb.bo, %bb.bl, %bb.bc, %bb.bb, %bb.j, %bb.i
   ret void
 }
 

@@ -24,7 +24,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 11 uses
   %i.b = alloca [64 x i8], align 1                ; 3 uses
   %i.c = alloca [64 x i8], align 1                ; 3 uses
-  %i.d = alloca ptr, align 8                      ; 7 uses
+  %i.d = alloca ptr, align 8                      ; 6 uses
   %i.e = alloca [64 x i8], align 1                ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !28
@@ -427,8 +427,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ez = call i32 @av_strerror(i32 noundef range(i32 -2147483648, 0) %i.ex, ptr noundef nonnull %i.e, i64 noundef 64) #6 ; 0 uses
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.3, ptr noundef nonnull %i.e) #6
   call void @av_freep(ptr noundef nonnull %i.d) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
-  br label %bb.as
+  br label %.sink.split
 
 bb.ar:                                            ; preds = %bb.ap
   %i.fa = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -441,11 +440,15 @@ bb.ar:                                            ; preds = %bb.ap
   %i.fe = load i32, ptr %i.fd, align 8, !tbaa !97
   %i.ff = or i32 %i.fe, 1
   store i32 %i.ff, ptr %i.fd, align 8, !tbaa !97
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ar, %bb.aq
+  %.024.ph = phi i32 [ %i.ex, %bb.aq ], [ 0, %bb.ar ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   br label %bb.as
 
-bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.ao, %bb.e
-  %.024 = phi i32 [ %.0.i.ph, %bb.e ], [ %.0102.i59, %bb.ao ], [ 0, %bb.ar ], [ %i.ex, %bb.aq ]
+bb.as:                                            ; preds = %.sink.split, %bb.ao, %bb.e
+  %.024 = phi i32 [ %.0.i.ph, %bb.e ], [ %.0102.i59, %bb.ao ], [ %.024.ph, %.sink.split ]
   %i.fg = load ptr, ptr %i.a, align 8, !tbaa !30  ; 2 uses
   %.not33 = icmp eq ptr %i.fg, null
   br i1 %.not33, label %bb.au, label %bb.at

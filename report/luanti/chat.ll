@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond32, label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !70   ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
@@ -362,8 +362,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph46
 
 bb.h:                                             ; preds = %.loopexit
   %i.ce = sub nsw i32 %i.cd, %2
-  store i32 %i.ce, ptr %i.n, align 8, !tbaa !70
-  br label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit
+  br label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit.sink.split
 
 bb.i:                                             ; preds = %.loopexit
   %.not.i.i39 = icmp slt i32 %2, %i.cd
@@ -371,10 +370,14 @@ bb.i:                                             ; preds = %.loopexit
   %.0.i.i40 = select i1 %.not.i.i39, i32 0, i32 %i.cf
   %spec.select.i = tail call i32 @llvm.smax.i32(i32 %.2, i32 %.0.i.i40)
   %storemerge6.i = tail call i32 @llvm.smin.i32(i32 %spec.select.i, i32 %i.cf)
-  store i32 %storemerge6.i, ptr %i.n, align 8, !tbaa !70
+  br label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit.sink.split
+
+_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit.sink.split: ; preds = %bb.h, %bb.i
+  %storemerge6.i.sink = phi i32 [ %storemerge6.i, %bb.i ], [ %i.ce, %bb.h ]
+  store i32 %storemerge6.i.sink, ptr %i.n, align 8, !tbaa !70
   br label %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit
 
-_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit: ; preds = %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i, %bb.b, %bb.h, %bb.i, %bb.c
+_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit: ; preds = %_ZNSt6vectorI17ChatFormattedLineSaIS0_EE5clearEv.exit.sink.split, %_ZSt8_DestroyIP17ChatFormattedLineS0_EvT_S2_RSaIT0_E.exit.i.i, %bb.b, %bb.c
   ret void
 }
 

@@ -202,33 +202,34 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.az = call ptr @A1C_MapBuilder_add(ptr noundef nonnull byval(%struct.A1C_MapBuilder) align 8 %5) ; 3 uses
   %i.ba = icmp eq ptr %i.az, null
-  br i1 %i.ba, label %bb.l, label %11
+  br i1 %i.ba, label %bb.l, label %10
 
 bb.l:                                             ; preds = %bb.k
   %i.bb = icmp eq ptr %.sroa.0.0.copyload, null
-  br i1 %i.bb, label %bb.m, label %bb.n
+  br i1 %i.bb, label %8, label %bb.m
+
+8:                                                ; preds = %bb.l
+  %9 = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @_ZZL21A1C_MapBuilder_tryAdd14A1C_MapBuilderE22__zl_static_error_info, ptr noundef nonnull %3, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 99, i32 noundef 70, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i64 noundef 0, i64 noundef 0)
+  br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bc = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @_ZZL21A1C_MapBuilder_tryAdd14A1C_MapBuilderE22__zl_static_error_info, ptr noundef nonnull %3, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 99, i32 noundef 70, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i64 noundef 0, i64 noundef 0) ; 3 uses
-  %8 = extractvalue { i32, ptr } %i.bc, 0
-  %9 = extractvalue { i32, ptr } %i.bc, 1         ; 2 uses
-  call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %8, ptr %9, ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.12)
-  br label %_ZL21A1C_MapBuilder_tryAdd14A1C_MapBuilder.exit
+  %i.bc = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @_ZZL21A1C_MapBuilder_tryAdd14A1C_MapBuilderE22__zl_static_error_info_0, ptr noundef nonnull %3, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 101, i32 noundef 1, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i64 noundef 0, i64 noundef 0)
+  br label %bb.n
 
-bb.n:                                             ; preds = %bb.l
-  %10 = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @_ZZL21A1C_MapBuilder_tryAdd14A1C_MapBuilderE22__zl_static_error_info_0, ptr noundef nonnull %3, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 101, i32 noundef 1, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i64 noundef 0, i64 noundef 0) ; 3 uses
-  %i.bd = extractvalue { i32, ptr } %10, 0
-  %i.be = extractvalue { i32, ptr } %10, 1        ; 2 uses
-  call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.bd, ptr %i.be, ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.12)
-  br label %_ZL21A1C_MapBuilder_tryAdd14A1C_MapBuilder.exit
-
-11:                                               ; preds = %bb.k
+10:                                               ; preds = %bb.k
   %.fca.1.insert.i.i = insertvalue { i32, ptr } { i32 0, ptr poison }, ptr %i.az, 1
   br label %_ZL21A1C_MapBuilder_tryAdd14A1C_MapBuilder.exit
 
-_ZL21A1C_MapBuilder_tryAdd14A1C_MapBuilder.exit:  ; preds = %bb.m, %bb.n, %11
-  %.pre-phi = phi ptr [ %9, %bb.m ], [ %i.be, %bb.n ], [ %i.az, %11 ] ; 3 uses
-  %.pn.i = phi { i32, ptr } [ %i.bc, %bb.m ], [ %10, %bb.n ], [ %.fca.1.insert.i.i, %11 ]
+bb.n:                                             ; preds = %bb.m, %8
+  %.sink33.i = phi { i32, ptr } [ %9, %8 ], [ %i.bc, %bb.m ] ; 3 uses
+  %i.bd = extractvalue { i32, ptr } %.sink33.i, 0
+  %i.be = extractvalue { i32, ptr } %.sink33.i, 1 ; 2 uses
+  call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.bd, ptr %i.be, ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.12)
+  br label %_ZL21A1C_MapBuilder_tryAdd14A1C_MapBuilder.exit
+
+_ZL21A1C_MapBuilder_tryAdd14A1C_MapBuilder.exit:  ; preds = %10, %bb.n
+  %.pre-phi = phi ptr [ %i.az, %10 ], [ %i.be, %bb.n ] ; 3 uses
+  %.pn.i = phi { i32, ptr } [ %.fca.1.insert.i.i, %10 ], [ %.sink33.i, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   %i.bf = extractvalue { i32, ptr } %.pn.i, 0     ; 2 uses
   %.not.i = icmp eq i32 %i.bf, 0

@@ -205,11 +205,11 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader63, %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
   %.068 = phi i64 [ 0, %.preheader63 ], [ %i.dd, %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit ] ; 3 uses
-  %i.e = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.068 ; 26 uses
+  %i.e = getelementptr inbounds nuw [56 x i8], ptr %i.c, i64 %.068 ; 24 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.068 ; 2 uses
   %i.g = load float, ptr %i.f, align 4, !tbaa !58 ; 23 uses
   %i.h = load i32, ptr %i.e, align 8, !tbaa !60
-  switch i32 %i.h, label %bb.x [
+  switch i32 %i.h, label %6 [
     i32 0, label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
     i32 1, label %bb.c
     i32 2, label %bb.h
@@ -307,19 +307,13 @@ bb.l:                                             ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.ax = load float, ptr %i.aw, align 8, !tbaa !64
   %i.ay = fsub float %i.av, %i.ax
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
-  %7 = load float, ptr %6, align 4, !tbaa !63
-  %8 = fdiv float %i.ay, %7
-  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
+  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit.sink.split
 
 bb.m:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.ba = load float, ptr %i.az, align 8, !tbaa !64
   %i.bb = fneg float %i.ba
-  %9 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
-  %10 = load float, ptr %9, align 4, !tbaa !63
-  %11 = fdiv float %i.bb, %10
-  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
+  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit.sink.split
 
 bb.n:                                             ; preds = %bb.b
   %i.bc = fcmp olt float %i.g, 0.000000e+00
@@ -340,19 +334,13 @@ bb.p:                                             ; preds = %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.bm = load float, ptr %i.bl, align 8, !tbaa !64
   %i.bn = fsub float %i.bk, %i.bm
-  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
-  %13 = load float, ptr %12, align 4, !tbaa !63
-  %14 = fdiv float %i.bn, %13
-  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
+  br label %bb.x
 
 bb.q:                                             ; preds = %bb.o
   %i.bo = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.bp = load float, ptr %i.bo, align 8, !tbaa !64
   %i.bq = fneg float %i.bp
-  %15 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
-  %16 = load float, ptr %15, align 4, !tbaa !63
-  %17 = fdiv float %i.bq, %16
-  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
+  br label %bb.x
 
 bb.r:                                             ; preds = %bb.b
   %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 36
@@ -410,11 +398,25 @@ bb.w:                                             ; preds = %bb.u
   %i.dc = fdiv float %i.db, %i.cj
   br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
 
-bb.x:                                             ; preds = %bb.b
+6:                                                ; preds = %bb.b
   br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
 
-_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit: ; preds = %bb.b, %bb.c, %._crit_edge.i, %bb.e, %bb.f, %bb.h, %bb.i, %bb.j, %bb.l, %bb.m, %bb.n, %bb.p, %bb.q, %bb.s, %bb.t, %bb.v, %bb.w, %bb.x
-  %.2.i = phi float [ 0.000000e+00, %bb.x ], [ %i.g, %bb.b ], [ %i.u, %bb.e ], [ %i.g, %bb.h ], [ %i.g, %bb.j ], [ %11, %bb.m ], [ %i.g, %bb.n ], [ %17, %bb.q ], [ %i.ch, %bb.t ], [ %i.dc, %bb.w ], [ %i.g, %bb.c ], [ %i.p, %._crit_edge.i ], [ %i.ad, %bb.f ], [ %i.ap, %bb.i ], [ %8, %bb.l ], [ %14, %bb.p ], [ %i.cg, %bb.s ], [ %i.da, %bb.v ]
+_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit.sink.split: ; preds = %bb.m, %bb.l
+  %.sink = phi float [ %i.ay, %bb.l ], [ %i.bb, %bb.m ]
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
+  %8 = load float, ptr %7, align 4, !tbaa !63
+  %9 = fdiv float %.sink, %8
+  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
+
+bb.x:                                             ; preds = %bb.q, %bb.p
+  %.sink110 = phi float [ %i.bn, %bb.p ], [ %i.bq, %bb.q ]
+  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 28
+  %11 = load float, ptr %10, align 4, !tbaa !63
+  %12 = fdiv float %.sink110, %11
+  br label %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit
+
+_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit: ; preds = %bb.x, %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit.sink.split, %bb.b, %bb.c, %._crit_edge.i, %bb.e, %bb.f, %bb.h, %bb.i, %bb.j, %bb.n, %bb.s, %bb.t, %bb.v, %bb.w, %6
+  %.2.i = phi float [ 0.000000e+00, %6 ], [ %i.g, %bb.b ], [ %i.u, %bb.e ], [ %i.g, %bb.h ], [ %i.g, %bb.j ], [ %i.cg, %bb.s ], [ %i.g, %bb.n ], [ %9, %_ZN7lodepngL14iccBackwardTRCEPKNS_15LodePNGICCCurveEf.exit.sink.split ], [ %i.ch, %bb.t ], [ %i.dc, %bb.w ], [ %i.g, %bb.c ], [ %i.p, %._crit_edge.i ], [ %i.ad, %bb.f ], [ %i.ap, %bb.i ], [ %i.da, %bb.v ], [ %12, %bb.x ]
   store float %.2.i, ptr %i.f, align 4, !tbaa !58
   %i.dd = add nuw nsw i64 %.068, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.dd, 3
@@ -817,7 +819,7 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZN7lodepngL7getChrmEPfS0_jP
 bb.a:
   %i.a = alloca [9 x float], align 16             ; 9 uses
   %i.b = alloca [9 x float], align 16             ; 11 uses
-  %i.c = alloca [9 x float], align 16             ; 10 uses
+  %i.c = alloca [9 x float], align 16             ; 9 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.g, label %bb.b
 
@@ -1056,8 +1058,7 @@ bb.e:                                             ; preds = %.loopexit.i
   store <2 x float> %i.ea, ptr %1, align 4, !tbaa !58
   %i.gw = getelementptr inbounds nuw i8, ptr %1, i64 8
   store float %.sroa.8.0.i, ptr %i.gw, align 4, !tbaa !58
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.f:                                             ; preds = %bb.b
   %i.gx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1072,8 +1073,7 @@ bb.f:                                             ; preds = %bb.b
 
 _ZN7lodepngL10getICCChrmEPfS0_PKNS_10LodePNGICCE.exit: ; preds = %.loopexit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.g:                                             ; preds = %bb.a
   %i.ha = getelementptr inbounds nuw i8, ptr %4, i64 208
@@ -1207,8 +1207,13 @@ bb.l:                                             ; preds = %bb.h, %bb.g
   store float f0x3F8B663F, ptr %i.kn, align 4, !tbaa !58
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.i, %bb.f, %bb.e, %bb.l, %bb.k, %_ZN7lodepngL15getChrmMatrixXYEPfffffffff.exit, %_ZN7lodepngL10getICCChrmEPfS0_PKNS_10LodePNGICCE.exit
-  %.1 = phi i32 [ 1, %_ZN7lodepngL15getChrmMatrixXYEPfffffffff.exit ], [ 0, %bb.f ], [ 1, %_ZN7lodepngL10getICCChrmEPfS0_PKNS_10LodePNGICCE.exit ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.e ], [ 1, %bb.i ]
+.critedge.sink.split:                             ; preds = %_ZN7lodepngL10getICCChrmEPfS0_PKNS_10LodePNGICCE.exit, %bb.e
+  %.1.ph = phi i32 [ 0, %bb.e ], [ 1, %_ZN7lodepngL10getICCChrmEPfS0_PKNS_10LodePNGICCE.exit ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.sink.split, %bb.i, %bb.l, %bb.k, %bb.f, %_ZN7lodepngL15getChrmMatrixXYEPfffffffff.exit
+  %.1 = phi i32 [ 1, %_ZN7lodepngL15getChrmMatrixXYEPfffffffff.exit ], [ 0, %bb.l ], [ 0, %bb.k ], [ 1, %bb.i ], [ 0, %bb.f ], [ %.1.ph, %.critedge.sink.split ]
   ret i32 %.1
 }
 

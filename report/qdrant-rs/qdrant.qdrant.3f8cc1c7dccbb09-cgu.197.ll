@@ -204,18 +204,21 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.713.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.713.0..sroa_idx14, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1111
-  store i64 %i.u, ptr %0, align 8
-  br label %bb.t
+  br label %.sink.split
 
 bb.s:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1111
   store ptr %1, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 0, ptr %i.w, align 8
-  store i64 -1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.r, %bb.s
+  %.sink = phi i64 [ -1, %bb.s ], [ %i.u, %bb.r ]
+  store i64 %.sink, ptr %0, align 8
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.d, %bb.g, %bb.s, %bb.r, %bb.p
+bb.t:                                             ; preds = %.sink.split, %bb.d, %bb.g, %bb.p
   ret void
 }
 

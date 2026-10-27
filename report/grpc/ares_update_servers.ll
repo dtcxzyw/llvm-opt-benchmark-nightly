@@ -202,19 +202,23 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !14
-  call void @ares_llist_destroy(ptr noundef %i.g) #9
-  br label %bb.g
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.d
   call void @ares_channel_lock(ptr noundef nonnull %0) #9
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !14   ; 2 uses
   %i.i = call i32 @ares_servers_update(ptr noundef nonnull %0, ptr noundef %i.h, i32 noundef 1)
   call void @ares_channel_unlock(ptr noundef nonnull %0) #9
-  call void @ares_llist_destroy(ptr noundef %i.h) #9
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.f
+  %.sink = phi ptr [ %i.h, %bb.f ], [ %i.g, %bb.e ]
+  %.0.ph = phi i32 [ %i.i, %bb.f ], [ %i.f, %bb.e ]
+  call void @ares_llist_destroy(ptr noundef %.sink) #9
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e, %bb.c
-  %.0 = phi i32 [ %i.i, %bb.f ], [ %i.e, %bb.c ], [ %i.f, %bb.e ], [ 1, %bb.a ]
+bb.g:                                             ; preds = %.sink.split, %bb.a, %bb.c
+  %.0 = phi i32 [ 1, %bb.a ], [ %i.e, %bb.c ], [ %.0.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.0
 }

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i, label %inflateStateCheck.exit, label %inflateStateCheck.exit.thread
 
 inflateStateCheck.exit:                           ; preds = %bb.e
-  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 59 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 58 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !21   ; 3 uses
   %i.o = add i32 %i.n, -16180
   %or.cond.i = icmp ult i32 %i.o, 32
@@ -290,13 +290,13 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.thread, %.split2339
   %i.bs = phi i32 [ %i.x, %.split2339 ], [ %.pre, %.thread ]
   %.01056 = phi ptr [ %i.s, %.split2339 ], [ %.631119, %.thread ] ; 68 uses
-  %.01053 = phi ptr [ %i.q, %.split2339 ], [ %.21055, %.thread ] ; 46 uses
+  %.01053 = phi ptr [ %i.q, %.split2339 ], [ %.21055, %.thread ] ; 45 uses
   %.0992 = phi i32 [ %i.ab, %.split2339 ], [ %.63, %.thread ] ; 62 uses
-  %.0990 = phi i32 [ %i.z, %.split2339 ], [ %.1991, %.thread ] ; 80 uses
+  %.0990 = phi i32 [ %i.z, %.split2339 ], [ %.1991, %.thread ] ; 79 uses
   %.0929 = phi i64 [ %i.ad, %.split2339 ], [ %.59988, %.thread ] ; 48 uses
   %.0918 = phi i32 [ %i.af, %.split2339 ], [ %.59, %.thread ] ; 59 uses
-  %.0912 = phi i32 [ %i.z, %.split2339 ], [ %.4916, %.thread ] ; 74 uses
-  %.0 = phi i32 [ 0, %.split2339 ], [ %.8, %.thread ] ; 49 uses
+  %.0912 = phi i32 [ %i.z, %.split2339 ], [ %.4916, %.thread ] ; 73 uses
+  %.0 = phi i32 [ 0, %.split2339 ], [ %.8, %.thread ] ; 48 uses
   %.010533956 = ptrtoaddr ptr %.01053 to i64
   switch i32 %i.bs, label %inflateStateCheck.exit.thread [
     i32 16180, label %bb.l
@@ -427,8 +427,8 @@ bb.o:                                             ; preds = %.lr.ph2333.1
   br label %._crit_edge2334
 
 ._crit_edge2334:                                  ; preds = %._crit_edge2334.loopexit, %.preheader1286
-  %.11057.lcssa = phi ptr [ %.01056, %.preheader1286 ], [ %.lcssa4204.a, %._crit_edge2334.loopexit ] ; 5 uses
-  %.1993.lcssa = phi i32 [ %.0992, %.preheader1286 ], [ %.lcssa4205.a, %._crit_edge2334.loopexit ] ; 5 uses
+  %.11057.lcssa = phi ptr [ %.01056, %.preheader1286 ], [ %.lcssa4204.a, %._crit_edge2334.loopexit ] ; 4 uses
+  %.1993.lcssa = phi i32 [ %.0992, %.preheader1286 ], [ %.lcssa4205.a, %._crit_edge2334.loopexit ] ; 4 uses
   %.1930.lcssa = phi i64 [ %.0929, %.preheader1286 ], [ %.lcssa4203, %._crit_edge2334.loopexit ] ; 8 uses
   %.1919.lcssa = phi i32 [ %.0918, %.preheader1286 ], [ %i.cv, %._crit_edge2334.loopexit ] ; 3 uses
   %i.cw = and i32 %i.cc, 2
@@ -518,8 +518,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   store ptr @.str.3, ptr %i.am, align 8, !tbaa !46
-  store i32 16209, ptr %i.m, align 8, !tbaa !21
-  br label %.thread
+  br label %.thread.sink.split
 
 bb.ad:                                            ; preds = %bb.ab
   %i.dw = shl nuw nsw i32 256, %i.dp
@@ -531,8 +530,7 @@ bb.ad:                                            ; preds = %bb.ab
   %i.dy = and i64 %.1930.lcssa, 8192
   %.not1254 = icmp eq i64 %i.dy, 0
   %i.dz = select i1 %.not1254, i32 16191, i32 16189
-  store i32 %i.dz, ptr %i.m, align 8, !tbaa !21
-  br label %.thread
+  br label %.thread.sink.split
 
 bb.ae:                                            ; preds = %.lr.ph2284.preheader
   %i.ea = add i32 %.0992, -1                      ; 2 uses
@@ -935,15 +933,22 @@ bb.hp:                                            ; preds = %bb.hn, %._crit_edge
   store i32 16208, ptr %i.m, align 8, !tbaa !21
   br label %.loopexit1277
 
-.thread:                                          ; preds = %bb.ew, %bb.fb, %.loopexit3996, %bb.gr, %bb.fl, %bb.fm, %bb.ho, %bb.hf, %bb.gt, %bb.gl, %bb.gd, %bb.fv, %bb.ft, %bb.fr, %bb.fh, %bb.ff, %bb.fd, %bb.ep, %bb.em, %bb.ej, %bb.ei, %bb.ed, %bb.dx, %bb.dr, %bb.dh, %bb.de, %bb.ai, %bb.ag, %bb.ad, %bb.ac, %bb.y, %bb.w, %bb.r, %bb.m
-  %.631119 = phi ptr [ %.01056, %bb.m ], [ %.11057.lcssa, %bb.r ], [ %.11057.lcssa, %bb.w ], [ %.11057.lcssa, %bb.y ], [ %.11057.lcssa, %bb.ac ], [ %.11057.lcssa, %bb.ad ], [ %.21058.lcssa, %bb.ag ], [ %.21058.lcssa, %bb.ai ], [ %.181074.lcssa, %bb.de ], [ %.191075, %bb.dh ], [ %.231079, %bb.dr ], [ %.241080.lcssa, %bb.dx ], [ %.251081.lcssa, %bb.ed ], [ %i.rx, %bb.ei ], [ %.271083, %bb.ej ], [ %.281084.lcssa, %bb.em ], [ %.301086.lcssa, %bb.ep ], [ %.351091.lcssa, %bb.ew ], [ %.331089.lcssa, %bb.fd ], [ %.331089.lcssa, %bb.ff ], [ %.331089.lcssa, %bb.fh ], [ %i.aai, %bb.fm ], [ %i.aai, %bb.fl ], [ %.451101, %bb.fr ], [ %.451101, %bb.ft ], [ %.451101, %bb.fv ], [ %.521108, %bb.gd ], [ %.561112, %bb.gl ], [ %.561112, %bb.gr ], [ %.561112, %.loopexit3996 ], [ %.01056, %bb.gt ], [ %.571113.lcssa, %bb.hf ], [ %.601116.lcssa, %bb.ho ], [ %.381094, %bb.fb ]
-  %.21055 = phi ptr [ %.01053, %bb.m ], [ %.01053, %bb.r ], [ %.01053, %bb.w ], [ %.01053, %bb.y ], [ %.01053, %bb.ac ], [ %.01053, %bb.ad ], [ %.01053, %bb.ag ], [ %.01053, %bb.ai ], [ %.01053, %bb.de ], [ %.01053, %bb.dh ], [ %.01053, %bb.dr ], [ %.01053, %bb.dx ], [ %.01053, %bb.ed ], [ %i.rz, %bb.ei ], [ %.01053, %bb.ej ], [ %.01053, %bb.em ], [ %.01053, %bb.ep ], [ %.01053, %bb.ew ], [ %.01053, %bb.fd ], [ %.01053, %bb.ff ], [ %.01053, %bb.fh ], [ %i.aag, %bb.fm ], [ %i.aag, %bb.fl ], [ %.01053, %bb.fr ], [ %.01053, %bb.ft ], [ %.01053, %bb.fv ], [ %.01053, %bb.gd ], [ %.01053, %bb.gl ], [ %.lcssa3510, %bb.gr ], [ %.lcssa3510, %.loopexit3996 ], [ %i.aku, %bb.gt ], [ %.01053, %bb.hf ], [ %.01053, %bb.ho ], [ %.01053, %bb.fb ]
-  %.63 = phi i32 [ %.0992, %bb.m ], [ %.1993.lcssa, %bb.r ], [ %.1993.lcssa, %bb.w ], [ %.1993.lcssa, %bb.y ], [ %.1993.lcssa, %bb.ac ], [ %.1993.lcssa, %bb.ad ], [ %.2994.lcssa, %bb.ag ], [ %.2994.lcssa, %bb.ai ], [ %.181010.lcssa, %bb.de ], [ %.191011, %bb.dh ], [ %.231015, %bb.dr ], [ %.241016.lcssa, %bb.dx ], [ %.251017.lcssa, %bb.ed ], [ %i.rw, %bb.ei ], [ %.271019, %bb.ej ], [ %.281020.lcssa, %bb.em ], [ %.301022.lcssa, %bb.ep ], [ %.351027.lcssa, %bb.ew ], [ %.331025.lcssa, %bb.fd ], [ %.331025.lcssa, %bb.ff ], [ %.331025.lcssa, %bb.fh ], [ %i.aaj, %bb.fm ], [ %i.aaj, %bb.fl ], [ %.451037, %bb.fr ], [ %.451037, %bb.ft ], [ %.451037, %bb.fv ], [ %.521044, %bb.gd ], [ %.561048, %bb.gl ], [ %.561048, %bb.gr ], [ %.561048, %.loopexit3996 ], [ %.0992, %bb.gt ], [ %.571049.lcssa, %bb.hf ], [ %.601052.lcssa, %bb.ho ], [ %.381030, %bb.fb ]
-  %.1991 = phi i32 [ %.0990, %bb.m ], [ %.0990, %bb.r ], [ %.0990, %bb.w ], [ %.0990, %bb.y ], [ %.0990, %bb.ac ], [ %.0990, %bb.ad ], [ %.0990, %bb.ag ], [ %.0990, %bb.ai ], [ %.0990, %bb.de ], [ %.0990, %bb.dh ], [ %.0990, %bb.dr ], [ %.0990, %bb.dx ], [ %.0990, %bb.ed ], [ %i.ry, %bb.ei ], [ %.0990, %bb.ej ], [ %.0990, %bb.em ], [ %.0990, %bb.ep ], [ %.0990, %bb.ew ], [ %.0990, %bb.fd ], [ %.0990, %bb.ff ], [ %.0990, %bb.fh ], [ %i.aah, %bb.fm ], [ %i.aah, %bb.fl ], [ %.0990, %bb.fr ], [ %.0990, %bb.ft ], [ %.0990, %bb.fv ], [ %.0990, %bb.gd ], [ %.0990, %bb.gl ], [ %i.ako, %bb.gr ], [ %i.ako, %.loopexit3996 ], [ %i.akv, %bb.gt ], [ %.0990, %bb.hf ], [ %.0990, %bb.ho ], [ %.0990, %bb.fb ]
-  %.59988 = phi i64 [ %.0929, %bb.m ], [ 0, %bb.r ], [ %.1930.lcssa, %bb.w ], [ %.1930.lcssa, %bb.y ], [ %i.dm, %bb.ac ], [ 0, %bb.ad ], [ %.2931.lcssa, %bb.ag ], [ %.2931.lcssa, %bb.ai ], [ %.14943.lcssa, %bb.de ], [ %.15944, %bb.dh ], [ %i.pk, %bb.dr ], [ %i.qa, %bb.dx ], [ %.21950.lcssa, %bb.ed ], [ %.23952, %bb.ei ], [ %.23952, %bb.ej ], [ %i.ta, %bb.em ], [ %.26955.lcssa, %bb.ep ], [ %i.wp, %bb.ew ], [ %.29958.lcssa, %bb.fd ], [ %.29958.lcssa, %bb.ff ], [ %.29958.lcssa, %bb.fh ], [ %i.aak, %bb.fm ], [ %i.aak, %bb.fl ], [ %i.acy, %bb.fr ], [ %i.acy, %bb.ft ], [ %i.acy, %bb.fv ], [ %i.agr, %bb.gd ], [ %.52981, %bb.gl ], [ %.52981, %bb.gr ], [ %.52981, %.loopexit3996 ], [ %.0929, %bb.gt ], [ %.53982.lcssa, %bb.hf ], [ %.56985.lcssa, %bb.ho ], [ %.34963, %bb.fb ]
-  %.59 = phi i32 [ %.0918, %bb.m ], [ 0, %bb.r ], [ %.1919.lcssa, %bb.w ], [ %.1919.lcssa, %bb.y ], [ %i.dn, %bb.ac ], [ 0, %bb.ad ], [ %.2920.lcssa, %bb.ag ], [ %.2920.lcssa, %bb.ai ], [ %.14.lcssa, %bb.de ], [ %.15, %bb.dh ], [ %i.pl, %bb.dr ], [ %i.qb, %bb.dx ], [ %.21.lcssa, %bb.ed ], [ %.23, %bb.ei ], [ %.23, %bb.ej ], [ %i.tb, %bb.em ], [ %.26.lcssa, %bb.ep ], [ %i.wq, %bb.ew ], [ %.29.lcssa, %bb.fd ], [ %.29.lcssa, %bb.ff ], [ %.29.lcssa, %bb.fh ], [ %i.aal, %bb.fm ], [ %i.aal, %bb.fl ], [ %i.acz, %bb.fr ], [ %i.acz, %bb.ft ], [ %i.acz, %bb.fv ], [ %i.ags, %bb.gd ], [ %.52, %bb.gl ], [ %.52, %bb.gr ], [ %.52, %.loopexit3996 ], [ %.0918, %bb.gt ], [ %.53.lcssa, %bb.hf ], [ %.56.lcssa, %bb.ho ], [ %.34, %bb.fb ]
-  %.4916 = phi i32 [ %.0912, %bb.m ], [ %.0912, %bb.r ], [ %.0912, %bb.w ], [ %.0912, %bb.y ], [ %.0912, %bb.ac ], [ %.0912, %bb.ad ], [ %.0912, %bb.ag ], [ %.0912, %bb.ai ], [ %.0912, %bb.de ], [ %.0912, %bb.dh ], [ %.0912, %bb.dr ], [ %.0912, %bb.dx ], [ %.0912, %bb.ed ], [ %.0912, %bb.ei ], [ %.0912, %bb.ej ], [ %.0912, %bb.em ], [ %.0912, %bb.ep ], [ %.0912, %bb.ew ], [ %.0912, %bb.fd ], [ %.0912, %bb.ff ], [ %.0912, %bb.fh ], [ %.0912, %bb.fm ], [ %.0912, %bb.fl ], [ %.0912, %bb.fr ], [ %.0912, %bb.ft ], [ %.0912, %bb.fv ], [ %.0912, %bb.gd ], [ %.0912, %bb.gl ], [ %.0912, %bb.gr ], [ %.0912, %.loopexit3996 ], [ %.0912, %bb.gt ], [ %.0990, %bb.hf ], [ %.2914, %bb.ho ], [ %.0912, %bb.fb ]
-  %.8 = phi i32 [ %.0, %bb.m ], [ %.0, %bb.r ], [ %.0, %bb.w ], [ %.0, %bb.y ], [ %.0, %bb.ac ], [ %.0, %bb.ad ], [ %.0, %bb.ag ], [ %.0, %bb.ai ], [ %.0, %bb.de ], [ %.0, %bb.dh ], [ %.0, %bb.dr ], [ %.0, %bb.dx ], [ %.0, %bb.ed ], [ %.0, %bb.ei ], [ %.0, %bb.ej ], [ %.0, %bb.em ], [ %i.uh, %bb.ep ], [ %.1, %bb.ew ], [ %.1, %bb.fd ], [ %i.zx, %bb.ff ], [ %i.aad, %bb.fh ], [ %.3, %bb.fm ], [ %.3, %bb.fl ], [ %.3, %bb.fr ], [ %.3, %bb.ft ], [ %.3, %bb.fv ], [ %.5, %bb.gd ], [ %.7, %bb.gl ], [ %.7, %bb.gr ], [ %.7, %.loopexit3996 ], [ %.0, %bb.gt ], [ %.0, %bb.hf ], [ %.0, %bb.ho ], [ %.1, %bb.fb ]
+.thread.sink.split:                               ; preds = %bb.ad, %bb.ac
+  %.sink3405 = phi i32 [ 16209, %bb.ac ], [ %i.dz, %bb.ad ]
+  %.59988.ph = phi i64 [ %i.dm, %bb.ac ], [ 0, %bb.ad ]
+  %.59.ph = phi i32 [ %i.dn, %bb.ac ], [ 0, %bb.ad ]
+  store i32 %.sink3405, ptr %i.m, align 8, !tbaa !21
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.sink.split, %bb.ew, %bb.fb, %.loopexit3996, %bb.gr, %bb.fl, %bb.fm, %bb.ho, %bb.hf, %bb.gt, %bb.gl, %bb.gd, %bb.fv, %bb.ft, %bb.fr, %bb.fh, %bb.ff, %bb.fd, %bb.ep, %bb.em, %bb.ej, %bb.ei, %bb.ed, %bb.dx, %bb.dr, %bb.dh, %bb.de, %bb.ai, %bb.ag, %bb.y, %bb.w, %bb.r, %bb.m
+  %.631119 = phi ptr [ %.01056, %bb.m ], [ %.11057.lcssa, %bb.r ], [ %.11057.lcssa, %bb.w ], [ %.11057.lcssa, %bb.y ], [ %.601116.lcssa, %bb.ho ], [ %.381094, %bb.fb ], [ %.21058.lcssa, %bb.ag ], [ %.21058.lcssa, %bb.ai ], [ %.181074.lcssa, %bb.de ], [ %.191075, %bb.dh ], [ %.231079, %bb.dr ], [ %.241080.lcssa, %bb.dx ], [ %.251081.lcssa, %bb.ed ], [ %i.rx, %bb.ei ], [ %.271083, %bb.ej ], [ %.281084.lcssa, %bb.em ], [ %.301086.lcssa, %bb.ep ], [ %.351091.lcssa, %bb.ew ], [ %.331089.lcssa, %bb.fd ], [ %.331089.lcssa, %bb.ff ], [ %.331089.lcssa, %bb.fh ], [ %i.aai, %bb.fm ], [ %i.aai, %bb.fl ], [ %.451101, %bb.fr ], [ %.451101, %bb.ft ], [ %.451101, %bb.fv ], [ %.521108, %bb.gd ], [ %.561112, %bb.gl ], [ %.561112, %bb.gr ], [ %.561112, %.loopexit3996 ], [ %.01056, %bb.gt ], [ %.571113.lcssa, %bb.hf ], [ %.11057.lcssa, %.thread.sink.split ]
+  %.21055 = phi ptr [ %.01053, %bb.m ], [ %.01053, %bb.r ], [ %.01053, %bb.w ], [ %.01053, %bb.y ], [ %.01053, %bb.ho ], [ %.01053, %bb.fb ], [ %.01053, %bb.ag ], [ %.01053, %bb.ai ], [ %.01053, %bb.de ], [ %.01053, %bb.dh ], [ %.01053, %bb.dr ], [ %.01053, %bb.dx ], [ %.01053, %bb.ed ], [ %i.rz, %bb.ei ], [ %.01053, %bb.ej ], [ %.01053, %bb.em ], [ %.01053, %bb.ep ], [ %.01053, %bb.ew ], [ %.01053, %bb.fd ], [ %.01053, %bb.ff ], [ %.01053, %bb.fh ], [ %i.aag, %bb.fm ], [ %i.aag, %bb.fl ], [ %.01053, %bb.fr ], [ %.01053, %bb.ft ], [ %.01053, %bb.fv ], [ %.01053, %bb.gd ], [ %.01053, %bb.gl ], [ %.lcssa3510, %bb.gr ], [ %.lcssa3510, %.loopexit3996 ], [ %i.aku, %bb.gt ], [ %.01053, %bb.hf ], [ %.01053, %.thread.sink.split ]
+  %.63 = phi i32 [ %.0992, %bb.m ], [ %.1993.lcssa, %bb.r ], [ %.1993.lcssa, %bb.w ], [ %.1993.lcssa, %bb.y ], [ %.601052.lcssa, %bb.ho ], [ %.381030, %bb.fb ], [ %.2994.lcssa, %bb.ag ], [ %.2994.lcssa, %bb.ai ], [ %.181010.lcssa, %bb.de ], [ %.191011, %bb.dh ], [ %.231015, %bb.dr ], [ %.241016.lcssa, %bb.dx ], [ %.251017.lcssa, %bb.ed ], [ %i.rw, %bb.ei ], [ %.271019, %bb.ej ], [ %.281020.lcssa, %bb.em ], [ %.301022.lcssa, %bb.ep ], [ %.351027.lcssa, %bb.ew ], [ %.331025.lcssa, %bb.fd ], [ %.331025.lcssa, %bb.ff ], [ %.331025.lcssa, %bb.fh ], [ %i.aaj, %bb.fm ], [ %i.aaj, %bb.fl ], [ %.451037, %bb.fr ], [ %.451037, %bb.ft ], [ %.451037, %bb.fv ], [ %.521044, %bb.gd ], [ %.561048, %bb.gl ], [ %.561048, %bb.gr ], [ %.561048, %.loopexit3996 ], [ %.0992, %bb.gt ], [ %.571049.lcssa, %bb.hf ], [ %.1993.lcssa, %.thread.sink.split ]
+  %.1991 = phi i32 [ %.0990, %bb.m ], [ %.0990, %bb.r ], [ %.0990, %bb.w ], [ %.0990, %bb.y ], [ %.0990, %bb.ho ], [ %.0990, %bb.fb ], [ %.0990, %bb.ag ], [ %.0990, %bb.ai ], [ %.0990, %bb.de ], [ %.0990, %bb.dh ], [ %.0990, %bb.dr ], [ %.0990, %bb.dx ], [ %.0990, %bb.ed ], [ %i.ry, %bb.ei ], [ %.0990, %bb.ej ], [ %.0990, %bb.em ], [ %.0990, %bb.ep ], [ %.0990, %bb.ew ], [ %.0990, %bb.fd ], [ %.0990, %bb.ff ], [ %.0990, %bb.fh ], [ %i.aah, %bb.fm ], [ %i.aah, %bb.fl ], [ %.0990, %bb.fr ], [ %.0990, %bb.ft ], [ %.0990, %bb.fv ], [ %.0990, %bb.gd ], [ %.0990, %bb.gl ], [ %i.ako, %bb.gr ], [ %i.ako, %.loopexit3996 ], [ %i.akv, %bb.gt ], [ %.0990, %bb.hf ], [ %.0990, %.thread.sink.split ]
+  %.59988 = phi i64 [ %.0929, %bb.m ], [ 0, %bb.r ], [ %.1930.lcssa, %bb.w ], [ %.1930.lcssa, %bb.y ], [ %.56985.lcssa, %bb.ho ], [ %.34963, %bb.fb ], [ %.2931.lcssa, %bb.ag ], [ %.2931.lcssa, %bb.ai ], [ %.14943.lcssa, %bb.de ], [ %.15944, %bb.dh ], [ %i.pk, %bb.dr ], [ %i.qa, %bb.dx ], [ %.21950.lcssa, %bb.ed ], [ %.23952, %bb.ei ], [ %.23952, %bb.ej ], [ %i.ta, %bb.em ], [ %.26955.lcssa, %bb.ep ], [ %i.wp, %bb.ew ], [ %.29958.lcssa, %bb.fd ], [ %.29958.lcssa, %bb.ff ], [ %.29958.lcssa, %bb.fh ], [ %i.aak, %bb.fm ], [ %i.aak, %bb.fl ], [ %i.acy, %bb.fr ], [ %i.acy, %bb.ft ], [ %i.acy, %bb.fv ], [ %i.agr, %bb.gd ], [ %.52981, %bb.gl ], [ %.52981, %bb.gr ], [ %.52981, %.loopexit3996 ], [ %.0929, %bb.gt ], [ %.53982.lcssa, %bb.hf ], [ %.59988.ph, %.thread.sink.split ]
+  %.59 = phi i32 [ %.0918, %bb.m ], [ 0, %bb.r ], [ %.1919.lcssa, %bb.w ], [ %.1919.lcssa, %bb.y ], [ %.56.lcssa, %bb.ho ], [ %.34, %bb.fb ], [ %.2920.lcssa, %bb.ag ], [ %.2920.lcssa, %bb.ai ], [ %.14.lcssa, %bb.de ], [ %.15, %bb.dh ], [ %i.pl, %bb.dr ], [ %i.qb, %bb.dx ], [ %.21.lcssa, %bb.ed ], [ %.23, %bb.ei ], [ %.23, %bb.ej ], [ %i.tb, %bb.em ], [ %.26.lcssa, %bb.ep ], [ %i.wq, %bb.ew ], [ %.29.lcssa, %bb.fd ], [ %.29.lcssa, %bb.ff ], [ %.29.lcssa, %bb.fh ], [ %i.aal, %bb.fm ], [ %i.aal, %bb.fl ], [ %i.acz, %bb.fr ], [ %i.acz, %bb.ft ], [ %i.acz, %bb.fv ], [ %i.ags, %bb.gd ], [ %.52, %bb.gl ], [ %.52, %bb.gr ], [ %.52, %.loopexit3996 ], [ %.0918, %bb.gt ], [ %.53.lcssa, %bb.hf ], [ %.59.ph, %.thread.sink.split ]
+  %.4916 = phi i32 [ %.0912, %bb.m ], [ %.0912, %bb.r ], [ %.0912, %bb.w ], [ %.0912, %bb.y ], [ %.2914, %bb.ho ], [ %.0912, %bb.fb ], [ %.0912, %bb.ag ], [ %.0912, %bb.ai ], [ %.0912, %bb.de ], [ %.0912, %bb.dh ], [ %.0912, %bb.dr ], [ %.0912, %bb.dx ], [ %.0912, %bb.ed ], [ %.0912, %bb.ei ], [ %.0912, %bb.ej ], [ %.0912, %bb.em ], [ %.0912, %bb.ep ], [ %.0912, %bb.ew ], [ %.0912, %bb.fd ], [ %.0912, %bb.ff ], [ %.0912, %bb.fh ], [ %.0912, %bb.fm ], [ %.0912, %bb.fl ], [ %.0912, %bb.fr ], [ %.0912, %bb.ft ], [ %.0912, %bb.fv ], [ %.0912, %bb.gd ], [ %.0912, %bb.gl ], [ %.0912, %bb.gr ], [ %.0912, %.loopexit3996 ], [ %.0912, %bb.gt ], [ %.0990, %bb.hf ], [ %.0912, %.thread.sink.split ]
+  %.8 = phi i32 [ %.0, %bb.m ], [ %.0, %bb.r ], [ %.0, %bb.w ], [ %.0, %bb.y ], [ %.0, %bb.ho ], [ %.1, %bb.fb ], [ %.0, %bb.ag ], [ %.0, %bb.ai ], [ %.0, %bb.de ], [ %.0, %bb.dh ], [ %.0, %bb.dr ], [ %.0, %bb.dx ], [ %.0, %bb.ed ], [ %.0, %bb.ei ], [ %.0, %bb.ej ], [ %.0, %bb.em ], [ %i.uh, %bb.ep ], [ %.1, %bb.ew ], [ %.1, %bb.fd ], [ %i.zx, %bb.ff ], [ %i.aad, %bb.fh ], [ %.3, %bb.fm ], [ %.3, %bb.fl ], [ %.3, %bb.fr ], [ %.3, %bb.ft ], [ %.3, %bb.fv ], [ %.5, %bb.gd ], [ %.7, %bb.gl ], [ %.7, %bb.gr ], [ %.7, %.loopexit3996 ], [ %.0, %bb.gt ], [ %.0, %bb.hf ], [ %.0, %.thread.sink.split ]
   %.pre = load i32, ptr %i.m, align 8, !tbaa !21
   br label %bb.k
 

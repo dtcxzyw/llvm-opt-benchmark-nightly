@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
-  %i.e = alloca [32 x i8], align 8                ; 8 uses
+  %i.e = alloca [32 x i8], align 8                ; 7 uses
   %i.f = icmp eq i64 %3, 0                        ; 2 uses
   br i1 %i.f, label %.thread, label %bb.b
 
@@ -390,7 +390,11 @@ bb.w:                                             ; preds = %.thread, %bb.m
   %i.bo = icmp eq i64 %i.bm, 0
   br i1 %i.bo, label %bb.aa, label %bb.y
 
-bb.x:                                             ; preds = %bb.ad, %bb.ac, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsjHtSR7YjKD4_8xet_data.exit30
+.sink.split:                                      ; preds = %bb.ac, %bb.ad
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
+  br label %bb.x
+
+bb.x:                                             ; preds = %.sink.split, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE15append_elementsCsjHtSR7YjKD4_8xet_data.exit30
   ret void
 
 bb.y:                                             ; preds = %bb.w
@@ -438,8 +442,7 @@ bb.ac:                                            ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %.sroa.011.0, ptr %i.bx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  br label %bb.x
+  br label %.sink.split
 
 bb.ad:                                            ; preds = %bb.u
   store ptr null, ptr %0, align 8
@@ -454,8 +457,7 @@ bb.ad:                                            ; preds = %bb.u
   %i.cd = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !alias.scope !2676, !noundef !12
   call void %i.cb(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cc, ptr noundef %i.ce, i64 noundef 0), !inline_history !5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  br label %bb.x
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -205,9 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 bb.i:                                             ; preds = %bb.h
   %i.s = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 124) seq_cst, align 4, !tbaa !70
   %i.t = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.50, i32 noundef %i.s) ; 0 uses
-  %4 = load ptr, ptr @stdout, align 8, !tbaa !40
-  %5 = tail call i32 @fflush(ptr noundef %4)      ; 0 uses
-  br label %bb.k
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.u = load i64, ptr getelementptr inbounds nuw (i8, ptr @config, i64 184), align 8, !tbaa !71
@@ -245,12 +243,15 @@ bb.j:                                             ; preds = %bb.h
   store i32 %i.ax, ptr getelementptr inbounds nuw (i8, ptr @config, i64 144), align 8, !tbaa !72
   %i.ay = load ptr, ptr getelementptr inbounds nuw (i8, ptr @config, i64 304), align 8, !tbaa !74
   tail call void @hdr_reset(ptr noundef %i.ay) #20
-  %6 = load ptr, ptr @stdout, align 8, !tbaa !40
-  %7 = tail call i32 @fflush(ptr noundef %6)      ; 0 uses
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.j, %bb.i
+  %4 = load ptr, ptr @stdout, align 8, !tbaa !40
+  %5 = tail call i32 @fflush(ptr noundef %4)      ; 0 uses
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.g, %bb.e, %bb.j, %bb.i, %bb.d
-  %.0 = phi i32 [ -1, %bb.d ], [ 250, %bb.j ], [ 250, %bb.e ], [ 250, %bb.i ], [ 250, %bb.g ]
+bb.k:                                             ; preds = %.sink.split, %bb.g, %bb.e, %bb.d
+  %.0 = phi i32 [ -1, %bb.d ], [ 250, %bb.g ], [ 250, %bb.e ], [ 250, %.sink.split ]
   ret i32 %.0
 }
 

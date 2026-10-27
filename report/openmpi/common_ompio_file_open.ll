@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %mca_common_ompio_create_incomplete_file_handle.exit.thread
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = tail call noalias dereferenceable_or_null(456) ptr @calloc(i64 noundef 1, i64 noundef 456) #15 ; 7 uses
+  %i.b = tail call noalias dereferenceable_or_null(456) ptr @calloc(i64 noundef 1, i64 noundef 456) #15 ; 6 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.d, label %bb.e
 
@@ -223,8 +223,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   tail call void (i32, ptr, ...) @opal_output(i32 noundef 1, ptr noundef nonnull @.str.17) #14
-  tail call void @free(ptr noundef nonnull %i.b) #14
-  br label %mca_common_ompio_create_incomplete_file_handle.exit.thread
+  br label %mca_common_ompio_create_incomplete_file_handle.exit.thread.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 336
@@ -232,11 +231,15 @@ bb.g:                                             ; preds = %bb.e
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !146
   %i.k = tail call i32 %i.j(ptr noundef nonnull %0, ptr noundef null) #14
+  br label %mca_common_ompio_create_incomplete_file_handle.exit.thread.sink.split
+
+mca_common_ompio_create_incomplete_file_handle.exit.thread.sink.split: ; preds = %bb.f, %bb.g
+  %.0.ph = phi i32 [ %i.f, %bb.f ], [ %i.k, %bb.g ]
   tail call void @free(ptr noundef nonnull %i.b) #14
   br label %mca_common_ompio_create_incomplete_file_handle.exit.thread
 
-mca_common_ompio_create_incomplete_file_handle.exit.thread: ; preds = %bb.d, %bb.b, %bb.g, %bb.f
-  %.0 = phi i32 [ %i.k, %bb.g ], [ %i.f, %bb.f ], [ -2, %bb.d ], [ -1, %bb.b ]
+mca_common_ompio_create_incomplete_file_handle.exit.thread: ; preds = %mca_common_ompio_create_incomplete_file_handle.exit.thread.sink.split, %bb.d, %bb.b
+  %.0 = phi i32 [ -2, %bb.d ], [ -1, %bb.b ], [ %.0.ph, %mca_common_ompio_create_incomplete_file_handle.exit.thread.sink.split ]
   ret i32 %.0
 }
 

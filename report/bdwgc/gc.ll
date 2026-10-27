@@ -205,19 +205,22 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %maybe_install_looping_handler.exit
   %i.t = load i32, ptr @manual_vdb_allowed, align 4
   %.not9 = icmp eq i32 %i.t, 0
-  br i1 %.not9, label %bb.t, label %bb.s
+  br i1 %.not9, label %0, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   store i1 true, ptr @GC_manual_vdb, align 4
-  store i32 1, ptr @GC_incremental, align 4
+  br label %bb.t
+
+0:                                                ; preds = %bb.r
+  %1 = tail call fastcc i32 @GC_dirty_init()
+  br label %bb.t
+
+bb.t:                                             ; preds = %bb.s, %0
+  %.sink = phi i32 [ %1, %0 ], [ 1, %bb.s ]
+  store i32 %.sink, ptr @GC_incremental, align 4
   br label %bb.u
 
-bb.t:                                             ; preds = %bb.r
-  %0 = tail call fastcc i32 @GC_dirty_init()
-  store i32 %0, ptr @GC_incremental, align 4
-  br label %bb.u
-
-bb.u:                                             ; preds = %bb.s, %bb.t, %bb.p, %bb.q, %bb.o
+bb.u:                                             ; preds = %bb.t, %bb.p, %bb.q, %bb.o
   %i.u = load i32, ptr @GC_incremental, align 4
   %i.v = icmp eq i32 %i.u, 0
   %i.w = load i32, ptr @GC_dont_gc, align 4

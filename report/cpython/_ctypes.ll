@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -1, 1) i32 @_ctypes_PyCArrayType_Type_raw_set(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree readnone captures(none) %2) #0 {
 bb.a:
-  %3 = alloca %struct.Py_buffer, align 8          ; 7 uses
+  %3 = alloca %struct.Py_buffer, align 8          ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.b, label %bb.c
@@ -231,19 +231,22 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.j = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !36
   call void @PyErr_SetString(ptr noundef %i.j, ptr noundef nonnull @.str.124) #17
-  call void @PyBuffer_Release(ptr noundef nonnull %3) #17
-  br label %_ctypes_PyCArrayType_Type_raw_set_impl.exit
+  br label %.sink.split.i
 
 bb.f:                                             ; preds = %bb.d
   %i.k = load ptr, ptr %3, align 8, !tbaa !112
   %i.l = getelementptr i8, ptr %0, i64 16
   %i.m = load ptr, ptr %i.l, align 16, !tbaa !55
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.m, ptr align 1 %i.k, i64 %i.f, i1 false)
+  br label %.sink.split.i
+
+.sink.split.i:                                    ; preds = %bb.f, %bb.e
+  %.0.ph.i = phi i32 [ -1, %bb.e ], [ 0, %bb.f ]
   call void @PyBuffer_Release(ptr noundef nonnull %3) #17
   br label %_ctypes_PyCArrayType_Type_raw_set_impl.exit
 
-_ctypes_PyCArrayType_Type_raw_set_impl.exit:      ; preds = %bb.b, %bb.c, %bb.e, %bb.f
-  %.0.i = phi i32 [ -1, %bb.b ], [ 0, %bb.f ], [ -1, %bb.e ], [ -1, %bb.c ]
+_ctypes_PyCArrayType_Type_raw_set_impl.exit:      ; preds = %bb.b, %bb.c, %.sink.split.i
+  %.0.i = phi i32 [ -1, %bb.b ], [ -1, %bb.c ], [ %.0.ph.i, %.sink.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   ret i32 %.0.i
 }

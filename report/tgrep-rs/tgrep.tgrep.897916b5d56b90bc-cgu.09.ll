@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %.thread13
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapjINtNtBb_3vec3VecTjjEEE5entryCsbNLsQi0JuJ4_5tgrep(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) initializes((0, 24)) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 6 uses
+  %i.a = alloca [32 x i8], align 8                ; 5 uses
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
   store i64 %2, ptr %i.b, align 8
   %i.c = load ptr, ptr %1, align 8, !noundef !7   ; 2 uses
@@ -233,8 +233,7 @@ bb.d:                                             ; preds = %bb.b
   store ptr %1, ptr %0, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %.sroa.46.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -242,10 +241,13 @@ bb.e:                                             ; preds = %bb.b
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %1, ptr %.sroa.44.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
+bb.f:                                             ; preds = %.sink.split, %bb.c
   ret void
 }
 
@@ -301,21 +303,21 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.f
 
-bb.e:                                             ; preds = %bb.c, %bb.a
-  %.sroa.137.0.ph = phi ptr [ undef, %bb.a ], [ %.sroa.137.16.copyload, %bb.c ]
-  %.sroa.13.0.ph = phi i64 [ undef, %bb.a ], [ %.sroa.13.16.copyload, %bb.c ]
-  %.sroa.11.0.ph = phi ptr [ null, %bb.a ], [ %.sroa.11.16.copyload, %bb.c ]
+bb.e:                                             ; preds = %bb.a, %bb.c
+  %.sroa.137.0.ph = phi ptr [ %.sroa.11.16.copyload, %bb.c ], [ null, %bb.a ]
+  %.sroa.13.0.ph = phi i64 [ %.sroa.13.16.copyload, %bb.c ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi ptr [ %.sroa.137.16.copyload, %bb.c ], [ undef, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %0, ptr %i.d, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %1, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %.sroa.11.0.ph, ptr %.sroa.11.0..sroa_idx, align 8
+  store ptr %.sroa.137.0.ph, ptr %.sroa.11.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %.sroa.13.0.ph, ptr %.sroa.13.0..sroa_idx, align 8
   %.sroa.137.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store ptr %.sroa.137.0.ph, ptr %.sroa.137.0..sroa_idx, align 8
+  store ptr %.sroa.11.0.ph, ptr %.sroa.137.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @_RNvMs4_NtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map5entryINtB5_11VacantEntryjNtNtB9_7set_val9SetValZSTE12insert_entryCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.c, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.d)
   %i.l = call noundef nonnull ptr @_RNvMs5_NtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map5entryINtB5_13OccupiedEntryjNtNtB9_7set_val9SetValZSTE8into_mutCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.c) ; 0 uses

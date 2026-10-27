@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 define linkonce_odr void @_ZNSt6vectorIbSaIbEE9push_backEb(ptr noundef nonnull align 8 dereferenceable(40) %0, i1 noundef zeroext %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !263  ; 7 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !263  ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !267
   %.not = icmp eq ptr %i.b, %i.d
@@ -232,21 +232,24 @@ _ZNSt13_Bit_iteratorppEi.exit:                    ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit
   %i.j = load i64, ptr %i.b, align 8, !tbaa !50
   %i.k = or i64 %i.j, %i.i
-  store i64 %i.k, ptr %i.b, align 8, !tbaa !50
-  br label %_ZNSt14_Bit_referenceaSEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split
 
 bb.e:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit
   %i.l = xor i64 %i.i, -1
   %i.m = load i64, ptr %i.b, align 8, !tbaa !50
   %i.n = and i64 %i.m, %i.l
-  store i64 %i.n, ptr %i.b, align 8, !tbaa !50
-  br label %_ZNSt14_Bit_referenceaSEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split
 
 bb.f:                                             ; preds = %bb.a
   tail call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr %i.b, i32 %.sroa.2.0.copyload.i11, i1 noundef zeroext %1) #30
   br label %_ZNSt14_Bit_referenceaSEb.exit
 
-_ZNSt14_Bit_referenceaSEb.exit:                   ; preds = %bb.e, %bb.d, %bb.f
+_ZNSt14_Bit_referenceaSEb.exit.sink.split:        ; preds = %bb.e, %bb.d
+  %.sink = phi i64 [ %i.k, %bb.d ], [ %i.n, %bb.e ]
+  store i64 %.sink, ptr %i.b, align 8, !tbaa !50
+  br label %_ZNSt14_Bit_referenceaSEb.exit
+
+_ZNSt14_Bit_referenceaSEb.exit:                   ; preds = %_ZNSt14_Bit_referenceaSEb.exit.sink.split, %bb.f
   ret void
 }
 

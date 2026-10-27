@@ -184,7 +184,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m, %bb.j
   br i1 %.not.not, label %.lr.ph, label %.loopexit, !llvm.loop !9
 
 .loopexit:                                        ; preds = %bb.n, %bb.h, %bb.i, %bb.c
-  %.4275 = phi double [ %i.ba, %bb.h ], [ %i.n, %bb.c ], [ %i.n, %bb.i ], [ %i.cj, %bb.n ] ; 2 uses
+  %.4275 = phi double [ %i.ba, %bb.h ], [ %i.n, %bb.c ], [ %i.n, %bb.i ], [ %i.cj, %bb.n ]
   %.4 = phi double [ %.1270, %bb.h ], [ %i.p, %bb.c ], [ %i.p, %bb.i ], [ %.3, %bb.n ]
   store double %.4, ptr %9, align 8, !tbaa !12
   %i.ck = load double, ptr %4, align 8, !tbaa !12
@@ -231,9 +231,8 @@ bb.q:                                             ; preds = %bb.p
   %i.di = fmul double %i.dg, %i.dh
   store double %i.di, ptr %i.cv, align 8, !tbaa !12
   %i.dj = load double, ptr %9, align 8, !tbaa !12
-  %i.dk = fmul double %i.dg, %i.dj                ; 2 uses
-  store double %i.dk, ptr %8, align 8, !tbaa !12
-  br label %bb.s
+  %i.dk = fmul double %i.dg, %i.dj
+  br label %.sink.split
 
 bb.r:                                             ; preds = %bb.p
   %i.dl = load double, ptr %i.cr, align 8, !tbaa !12
@@ -243,13 +242,17 @@ bb.r:                                             ; preds = %bb.p
   %i.do = load double, ptr %i.da, align 8, !tbaa !12
   %i.dp = load double, ptr %9, align 8, !tbaa !12
   %i.dq = fdiv double %i.dp, %i.ct
-  %i.dr = fmul double %i.do, %i.dq                ; 2 uses
-  store double %i.dr, ptr %8, align 8, !tbaa !12
+  %i.dr = fmul double %i.do, %i.dq
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.r, %bb.q
+  %.sink = phi double [ %i.dk, %bb.q ], [ %i.dr, %bb.r ] ; 2 uses
+  store double %.sink, ptr %8, align 8, !tbaa !12
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.q, %bb.r, %bb.o
-  %10 = phi double [ %.pre, %bb.o ], [ %i.dk, %bb.q ], [ %i.dr, %bb.r ] ; 2 uses
-  %.5 = phi double [ 0.000000e+00, %bb.o ], [ %.4275, %bb.q ], [ %.4275, %bb.r ] ; 2 uses
+bb.s:                                             ; preds = %.sink.split, %bb.o
+  %10 = phi double [ %.pre, %bb.o ], [ %.sink, %.sink.split ] ; 2 uses
+  %.5 = phi double [ 0.000000e+00, %bb.o ], [ %.4275, %.sink.split ]
   %i.ds = load double, ptr %4, align 8, !tbaa !12 ; 2 uses
   %.inv300 = fcmp ole double %i.ds, %10
   %. = select i1 %.inv300, double %i.ds, double %10 ; 2 uses
@@ -297,9 +300,8 @@ bb.v:                                             ; preds = %bb.u
   %i.er = fmul double %i.ep, %i.eq
   store double %i.er, ptr %i.eo, align 8, !tbaa !12
   %i.es = load double, ptr %8, align 8, !tbaa !12
-  %i.et = fmul double %i.ep, %i.es                ; 2 uses
-  store double %i.et, ptr %7, align 8, !tbaa !12
-  br label %bb.x
+  %i.et = fmul double %i.ep, %i.es
+  br label %.sink.split334
 
 bb.w:                                             ; preds = %bb.u
   %i.eu = load double, ptr %i.dy, align 8, !tbaa !12
@@ -309,13 +311,17 @@ bb.w:                                             ; preds = %bb.u
   %i.ex = load double, ptr %i.eh, align 8, !tbaa !12
   %i.ey = load double, ptr %8, align 8, !tbaa !12
   %i.ez = fdiv double %i.ey, %i.ea
-  %i.fa = fmul double %i.ex, %i.ez                ; 2 uses
-  store double %i.fa, ptr %7, align 8, !tbaa !12
+  %i.fa = fmul double %i.ex, %i.ez
+  br label %.sink.split334
+
+.sink.split334:                                   ; preds = %bb.w, %bb.v
+  %.sink336 = phi double [ %i.et, %bb.v ], [ %i.fa, %bb.w ] ; 2 uses
+  store double %.sink336, ptr %7, align 8, !tbaa !12
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.v, %bb.w, %bb.t
-  %11 = phi double [ %.pre321, %bb.t ], [ %i.et, %bb.v ], [ %i.fa, %bb.w ] ; 2 uses
-  %.6 = phi double [ 0.000000e+00, %bb.t ], [ %.5, %bb.v ], [ %.5, %bb.w ]
+bb.x:                                             ; preds = %.sink.split334, %bb.t
+  %11 = phi double [ %.pre321, %bb.t ], [ %.sink336, %.sink.split334 ] ; 2 uses
+  %.6 = phi double [ 0.000000e+00, %bb.t ], [ %.5, %.sink.split334 ]
   %i.fb = load double, ptr %4, align 8, !tbaa !12 ; 2 uses
   %.inv301 = fcmp ole double %i.fb, %11
   %.298 = select i1 %.inv301, double %i.fb, double %11

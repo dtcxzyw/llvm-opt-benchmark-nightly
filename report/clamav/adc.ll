@@ -83,7 +83,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not162, label %.thread, label %.lr.ph164
 
 .lr.ph164:                                        ; preds = %bb.e
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 70 ; 10 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 70 ; 9 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 9 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 9 uses
@@ -149,8 +149,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ah = and i8 %i.aa, 63
   %narrow = add nuw nsw i8 %i.ah, 4
   %i.ai = zext nneg i8 %narrow to i16
-  store i16 %i.ai, ptr %i.p, align 2, !tbaa !16
-  br label %bb.ai
+  br label %.sink.split
 
 bb.m:                                             ; preds = %bb.k
   store i16 3, ptr %i.g, align 4, !tbaa !13
@@ -160,8 +159,7 @@ bb.m:                                             ; preds = %bb.k
   %i.al = lshr i32 %i.ae, 2
   %i.am = trunc nuw nsw i32 %i.al to i16
   %i.an = add nuw nsw i16 %i.am, 3
-  store i16 %i.an, ptr %i.p, align 2, !tbaa !16
-  br label %bb.ai
+  br label %.sink.split
 
 bb.n:                                             ; preds = %bb.h
   %i.ao = load ptr, ptr %0, align 8, !tbaa !19    ; 2 uses
@@ -383,7 +381,12 @@ bb.ah:                                            ; preds = %bb.h
   tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.3, i32 noundef %i.dr) #8
   br label %.thread
 
-bb.ai:                                            ; preds = %bb.n, %bb.o, %bb.p, %bb.l, %bb.m, %bb.j, %.critedge.thread, %.critedge, %.critedge2.thread
+.sink.split:                                      ; preds = %bb.l, %bb.m
+  %.sink = phi i16 [ %i.an, %bb.m ], [ %i.ai, %bb.l ]
+  store i16 %.sink, ptr %i.p, align 2, !tbaa !16
+  br label %bb.ai
+
+bb.ai:                                            ; preds = %.sink.split, %bb.n, %bb.o, %bb.p, %bb.j, %.critedge.thread, %.critedge, %.critedge2.thread
   %.pr194 = load i64, ptr %i.m, align 8, !tbaa !22
   %.not = icmp eq i64 %.pr194, 0
   br i1 %.not, label %.thread, label %bb.f

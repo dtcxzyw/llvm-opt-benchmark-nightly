@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMsi_NtNtNtCsgZ49sUHp3tW_5alloc11collections5btree3mapINtB5_8BTreeMapTyyEmE5entryCs2mZqlW55729_12polars_utils(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) initializes((0, 32)) %0, ptr noalias noundef align 8 dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !777 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 6 uses
+  %i.a = alloca [32 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 3 uses
   store i64 %2, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -241,8 +241,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %2, ptr %.sroa.46.0..sroa_idx, align 8, !dbg !793
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !793
   store i64 %3, ptr %.sroa.57.0..sroa_idx, align 8, !dbg !793
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !795
-  br label %bb.f, !dbg !795
+  br label %.sink.split, !dbg !795
 
 bb.e:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !796
@@ -250,10 +249,13 @@ bb.e:                                             ; preds = %bb.b
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !796
   store ptr %1, ptr %.sroa.44.0..sroa_idx, align 8, !dbg !796
   store ptr null, ptr %0, align 8, !dbg !796
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !795
-  br label %bb.f, !dbg !798
+  br label %.sink.split, !dbg !798
 
-bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
+.sink.split:                                      ; preds = %bb.e, %bb.d
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !795
+  br label %bb.f, !dbg !799
+
+bb.f:                                             ; preds = %.sink.split, %bb.c
   ret void, !dbg !799
 }
 

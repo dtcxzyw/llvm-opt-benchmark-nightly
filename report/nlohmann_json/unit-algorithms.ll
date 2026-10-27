@@ -205,8 +205,7 @@ bb.l:                                             ; preds = %.critedge
   %i.aw = getelementptr inbounds nuw i8, ptr %11, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !tbaa.struct !45
   call void @_ZSt9__reverseIN8nlohmann16json_abi_v3_12_06detail9iter_implINS1_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES6_IhSaIhEEvEEEEEvT_SI_St26bidirectional_iterator_tag(ptr nofreeobj noundef nonnull align 8 dead_on_return dereferenceable(32) %10, ptr nofreeobj noundef nonnull align 8 dead_on_return dereferenceable(32) %11)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !50
-  br label %bb.n
+  br label %.sink.split
 
 bb.m:                                             ; preds = %.critedge
   %i.ax = load ptr, ptr %1, align 8, !tbaa !40
@@ -218,10 +217,14 @@ bb.m:                                             ; preds = %.critedge
   %i.ba = getelementptr inbounds nuw i8, ptr %13, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ba, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !tbaa.struct !45
   call void @_ZSt9__reverseIN8nlohmann16json_abi_v3_12_06detail9iter_implINS1_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES6_IhSaIhEEvEEEEEvT_SI_St26bidirectional_iterator_tag(ptr nofreeobj noundef nonnull align 8 dead_on_return dereferenceable(32) %12, ptr nofreeobj noundef nonnull align 8 dead_on_return dereferenceable(32) %13)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !50
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.m, %bb.l
+  %.sink = phi ptr [ %3, %bb.l ], [ %1, %bb.m ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink, i64 32, i1 false)
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l, %bb.d, %bb.b
+bb.n:                                             ; preds = %.sink.split, %bb.d, %bb.b
   ret void
 }
 

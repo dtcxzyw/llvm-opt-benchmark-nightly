@@ -202,12 +202,12 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = alloca [256 x i32], align 16             ; 5 uses
   %i.f = alloca i64, align 8                      ; 7 uses
-  %i.g = alloca [256 x i8], align 16              ; 13 uses
+  %i.g = alloca [256 x i8], align 16              ; 12 uses
   %i.h = alloca [64 x i8], align 16               ; 4 uses
   %i.i = alloca i64, align 8                      ; 4 uses
   %i.j = alloca i64, align 8                      ; 5 uses
   %i.k = alloca i64, align 8                      ; 5 uses
-  %5 = alloca %struct.h5tools_str_t, align 8      ; 48 uses
+  %5 = alloca %struct.h5tools_str_t, align 8      ; 47 uses
   %6 = alloca %struct.h5tools_context_t, align 8  ; 5 uses
   %i.l = alloca [64 x i64], align 16              ; 6 uses
   %i.m = alloca [256 x i8], align 16              ; 4 uses
@@ -372,19 +372,21 @@ bb.j:                                             ; preds = %.lr.ph122
   %i.bn = load i64, ptr %i.j, align 8, !tbaa !37  ; 2 uses
   %i.bo = icmp eq i64 %i.bn, -1
   %i.bp = load i64, ptr %i.i, align 8, !tbaa !37  ; 2 uses
-  br i1 %i.bo, label %bb.k, label %bb.l
+  br i1 %i.bo, label %7, label %bb.k
+
+7:                                                ; preds = %bb.j
+  %8 = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef nonnull %5, ptr noundef nonnull @.str.79, i32 noundef %.3120, i64 noundef %.194119, i64 noundef %i.bp, ptr noundef nonnull @.str.80) #18 ; 0 uses
+  br label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.bq = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef nonnull %5, ptr noundef nonnull @.str.79, i32 noundef %.3120, i64 noundef %.194119, i64 noundef %i.bp, ptr noundef nonnull @.str.80) #18 ; 0 uses
-  %7 = call fastcc i32 @print_string(ptr noundef nonnull %5, ptr noundef nonnull %i.g, i1 noundef zeroext true) ; 0 uses
-  br label %bb.m
+  %i.bq = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef nonnull %5, ptr noundef nonnull @.str.81, i32 noundef %.3120, i64 noundef %.194119, i64 noundef %i.bp, i64 noundef %i.bn) #18 ; 0 uses
+  br label %bb.l
 
-bb.l:                                             ; preds = %bb.j
-  %8 = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef nonnull %5, ptr noundef nonnull @.str.81, i32 noundef %.3120, i64 noundef %.194119, i64 noundef %i.bp, i64 noundef %i.bn) #18 ; 0 uses
+bb.l:                                             ; preds = %bb.k, %7
   %i.br = call fastcc i32 @print_string(ptr noundef nonnull %5, ptr noundef nonnull %i.g, i1 noundef zeroext true) ; 0 uses
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.k, %bb.l, %bb.i
+bb.m:                                             ; preds = %bb.l, %bb.i
   %i.bs = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef nonnull %5, ptr noundef nonnull @.str.76) #18 ; 0 uses
   %i.bt = load i64, ptr %i.j, align 8, !tbaa !37
   %i.bu = add i64 %i.bt, %.194119

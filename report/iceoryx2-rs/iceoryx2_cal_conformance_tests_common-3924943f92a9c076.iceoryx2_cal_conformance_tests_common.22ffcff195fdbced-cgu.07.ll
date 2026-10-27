@@ -202,7 +202,7 @@ bb.a:
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [32 x i8], align 8                ; 7 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
-  %i.g = alloca [8 x i8], align 8                 ; 5 uses
+  %i.g = alloca [8 x i8], align 8                 ; 4 uses
   %i.h = alloca [16 x i8], align 8                ; 6 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
   %i.j = alloca [16 x i8], align 8                ; 6 uses
@@ -246,8 +246,7 @@ bb.f:                                             ; preds = %bb.e
   store i64 1, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.t, ptr %i.u, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -268,10 +267,13 @@ bb.g:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 1, ptr %i.w, align 8
   store i64 2, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.d, %bb.f, %bb.g, %bb.k
+bb.h:                                             ; preds = %.sink.split, %bb.d, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)

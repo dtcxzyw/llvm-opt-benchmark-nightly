@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %struct.DBusMessageIter, align 8    ; 5 uses
-  %4 = alloca %struct.DBusMessageIter, align 8    ; 6 uses
+  %4 = alloca %struct.DBusMessageIter, align 8    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   call void @dbus_error_init(ptr noundef nonnull %1) #15
   %i.c = call ptr @dbus_message_new_method_call(ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.43, ptr noundef nonnull @.str.44) #15 ; 3 uses
@@ -248,7 +248,7 @@ bb.e:                                             ; preds = %bb.d
   call void @dbus_message_iter_recurse(ptr noundef nonnull %3, ptr noundef nonnull %4) #15
   %i.k = call i32 @dbus_message_iter_get_arg_type(ptr noundef nonnull %4) #15
   %.not13 = icmp eq i32 %i.k, 117
-  br i1 %.not13, label %bb.g, label %bb.f
+  br i1 %.not13, label %5, label %bb.f
 
 .thread:                                          ; preds = %bb.d, %bb.c
   %storemerge = phi ptr [ @.str.46, %bb.c ], [ @.str.47, %bb.d ]
@@ -257,22 +257,25 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   store ptr @.str.48, ptr @_ZN12_GLOBAL__N_17err_ptrE, align 8, !tbaa !20
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
-  br label %bb.h
+  br label %bb.g
 
-bb.g:                                             ; preds = %bb.e
+5:                                                ; preds = %bb.e
   call void @dbus_message_iter_get_basic(ptr noundef nonnull %4, ptr noundef nonnull %0) #15
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.f, %5
+  %.ph = phi i32 [ 0, %bb.f ], [ 1, %5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %.thread, %bb.g
-  %5 = phi i32 [ 1, %bb.g ], [ 0, %bb.f ], [ 0, %.thread ]
+bb.h:                                             ; preds = %bb.g, %.thread
+  %6 = phi i32 [ 0, %.thread ], [ %.ph, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   call void @dbus_message_unref(ptr noundef nonnull %i.g) #15
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.b
-  %.3 = phi i32 [ %5, %bb.h ], [ 0, %bb.b ]
+  %.3 = phi i32 [ %6, %bb.h ], [ 0, %bb.b ]
   call void @dbus_message_unref(ptr noundef %i.c) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   ret i32 %.3

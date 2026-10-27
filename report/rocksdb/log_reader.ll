@@ -202,22 +202,25 @@ bb.i:                                             ; preds = %bb.b, %bb.a
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !71 ; 2 uses
   %.not = icmp eq i64 %i.ao, 0
-  br i1 %.not, label %bb.k, label %bb.j
+  br i1 %.not, label %5, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   store i64 %i.ao, ptr %1, align 8, !tbaa !77
   store ptr @.str.30, ptr %i.am, align 8, !tbaa !70
   store i64 0, ptr %i.an, align 8, !tbaa !71
-  store i8 -122, ptr %2, align 1, !tbaa !22
-  br label %bb.l
+  br label %bb.k
 
-bb.k:                                             ; preds = %bb.i
+5:                                                ; preds = %bb.i
   store ptr @.str.30, ptr %i.am, align 8, !tbaa !70
-  store i8 -124, ptr %2, align 1, !tbaa !22
+  br label %bb.k
+
+bb.k:                                             ; preds = %bb.j, %5
+  %.sink = phi i8 [ -124, %5 ], [ -122, %bb.j ]
+  store i8 %.sink, ptr %2, align 1, !tbaa !22
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j, %_ZN7rocksdb6StatusD2Ev.exit12
-  %.1 = phi i1 [ false, %bb.j ], [ false, %bb.k ], [ %i.ab, %_ZN7rocksdb6StatusD2Ev.exit12 ]
+bb.l:                                             ; preds = %bb.k, %_ZN7rocksdb6StatusD2Ev.exit12
+  %.1 = phi i1 [ %i.ab, %_ZN7rocksdb6StatusD2Ev.exit12 ], [ false, %bb.k ]
   ret i1 %.1
 }
 

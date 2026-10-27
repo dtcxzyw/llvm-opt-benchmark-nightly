@@ -204,22 +204,25 @@ bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 2248
   store ptr %i.p, ptr %i.q, align 8, !tbaa !38
   %i.r = getelementptr inbounds nuw i8, ptr %.1, i64 %.119
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2240
-  store ptr %i.r, ptr %3, align 16, !tbaa !39
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 2248
   store ptr %.1, ptr %i.s, align 8, !tbaa !38
   %i.t = getelementptr inbounds nuw i8, ptr %.1, i64 %.119
   %i.u = sub nsw i64 0, %1
-  %4 = getelementptr inbounds i8, ptr %i.t, i64 %i.u ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 2240
-  store ptr %4, ptr %i.v, align 16, !tbaa !39
+  %i.v = getelementptr inbounds i8, ptr %i.t, i64 %i.u ; 2 uses
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.f
+  %.sink = phi ptr [ %i.r, %bb.f ], [ %i.v, %bb.g ]
+  %.121.ph = phi ptr [ %.1, %bb.f ], [ %i.v, %bb.g ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2240
+  store ptr %.sink, ptr %3, align 16, !tbaa !39
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g, %bb.b
-  %.121 = phi ptr [ %i.h, %bb.b ], [ %.1, %bb.f ], [ %4, %bb.g ]
+bb.h:                                             ; preds = %.sink.split, %bb.b
+  %.121 = phi ptr [ %i.h, %bb.b ], [ %.121.ph, %.sink.split ]
   ret ptr %.121
 }
 

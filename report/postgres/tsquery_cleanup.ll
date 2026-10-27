@@ -202,9 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = add i32 %i.ac, 1
   store i32 %i.ad, ptr %i.a, align 4
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load ptr, ptr %i.ae, align 8
-  tail call fastcc void @plainnode(ptr noundef %0, ptr noundef %2)
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %i.af = load i32, ptr %i.a, align 4             ; 3 uses
@@ -220,11 +218,15 @@ bb.g:                                             ; preds = %bb.e
   %i.an = getelementptr inbounds [12 x i8], ptr %i.al, i64 %i.am
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   store i32 %i.ak, ptr %i.ao, align 4
-  %3 = load ptr, ptr %1, align 8
-  tail call fastcc void @plainnode(ptr noundef %0, ptr noundef %3)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.f
+  %.sink.in = phi ptr [ %i.ae, %bb.f ], [ %1, %bb.g ]
+  %.sink = load ptr, ptr %.sink.in, align 8
+  tail call fastcc void @plainnode(ptr noundef %0, ptr noundef %.sink)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
+bb.h:                                             ; preds = %.sink.split, %bb.d
   tail call void @pfree(ptr noundef nonnull %1) #6
   ret void
 }

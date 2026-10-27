@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.f, %bb.d
   %.lcssa14 = phi i64 [ %i.e, %bb.f ], [ %i.h, %bb.d ]
   %i.l = load i8, ptr %i.a, align 1               ; 2 uses
   %i.m = icmp eq i8 %i.l, 3
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %i.m, label %bb.g, label %bb.h
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
+  br i1 %i.m, label %bb.g, label %5
 
 bb.f:                                             ; preds = %bb.d
   %i.o = icmp ne i8 %i.i, 2
@@ -213,17 +213,21 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.q = call ptr @_ZN3std2io5error5Error3new17h2fc9d5dda48b3f00E(i8 20, ptr nonnull align 1 @176, i64 22)
-  store ptr %i.q, ptr %0, align 8
-  store i8 3, ptr %i.n, align 8
+  %4 = ptrtoint ptr %i.q to i64
+  br label %bb.h
+
+5:                                                ; preds = %bb.e
+  %6 = sub i64 %.lcssa14, %i.e
+  br label %bb.h
+
+bb.h:                                             ; preds = %5, %bb.g
+  %storemerge = phi i64 [ %6, %5 ], [ %4, %bb.g ]
+  %.sink = phi i8 [ %i.l, %5 ], [ 3, %bb.g ]
+  store i64 %storemerge, ptr %0, align 8
+  store i8 %.sink, ptr %i.n, align 8
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.e
-  %4 = sub i64 %.lcssa14, %i.e
-  store i64 %4, ptr %0, align 8
-  store i8 %i.l, ptr %i.n, align 8
-  br label %bb.i
-
-bb.i:                                             ; preds = %bb.h, %bb.g, %bb.c
+bb.i:                                             ; preds = %bb.h, %bb.c
   ret void
 }
 

@@ -204,7 +204,7 @@ bb.dg:                                            ; preds = %.body231
 define hidden void @_RINvXs0_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram13serializationNtB6_14UnigramVisitorNtNtCsboAIIHEtPkY_10serde_core2de7Visitor9visit_mapQINtNtNtNtCsctIyQp3ax5j_5serde7private2de7content18MapRefDeserializerNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEEBc_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([328 x i8]) align 8 captures(none) dereferenceable(328) %0, ptr noalias noundef align 8 dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [328 x i8], align 8               ; 7 uses
-  %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %i.b = alloca [24 x i8], align 8                ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [16 x i8], align 8                ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
@@ -604,8 +604,7 @@ bb.aq:                                            ; preds = %bb.ao
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.cz, ptr %i.da, align 8
   store i64 2, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95
+  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95.sink.split
 
 bb.ar:                                            ; preds = %bb.ao
   %.sroa.353.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -614,10 +613,13 @@ bb.ar:                                            ; preds = %bb.ao
   store i64 %i.cr, ptr %0, align 8
   %.sroa.252.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.cu, ptr %.sroa.252.0..sroa_idx, align 8
+  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95.sink.split
+
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95.sink.split: ; preds = %bb.ar, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95: ; preds = %bb.ap, %bb.ar, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringdEEECs2JiOgHzbbc7_10tokenizers.exit.i94, %bb.aj, %bb.aq
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtB12_6string6StringdEEEECs2JiOgHzbbc7_10tokenizers.exit95.sink.split, %bb.ap, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringdEEECs2JiOgHzbbc7_10tokenizers.exit.i94, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   ret void
 }
@@ -1020,7 +1022,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
           cleanup
   br label %.body
 
-.thread:                                          ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringdEEECs2JiOgHzbbc7_10tokenizers.exit.i94.i, %bb.aj, %.noexc40, %.noexc41
+.thread:                                          ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtBG_6string6StringdEEECs2JiOgHzbbc7_10tokenizers.exit.i94.i, %bb.aj, %.noexc41, %.noexc40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !289
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   invoke void @_RNvXsy_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB5_8IntoIterNtNtBb_6string6StringNtNtCs5PtHgSLqj5O_10serde_json5value5ValueENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(104) %i.l)

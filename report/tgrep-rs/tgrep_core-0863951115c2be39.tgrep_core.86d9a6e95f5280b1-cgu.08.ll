@@ -204,7 +204,7 @@ define hidden void @_RNvNtCsbzNSmZPCnTx_10tgrep_core6ondisk15file_table_body(ptr
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [4 x i8], align 4                 ; 5 uses
+  %i.c = alloca [4 x i8], align 4                 ; 4 uses
   %i.d = tail call noundef zeroext i1 @_RNvMNtCsf3Ta7LF998c_4core5sliceSh11starts_withCsbzNSmZPCnTx_10tgrep_core(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 12)
   br i1 %i.d, label %bb.c, label %bb.b
 
@@ -220,7 +220,13 @@ bb.c:                                             ; preds = %bb.a
   %i.g = icmp samesign ugt i64 %2, 15
   br i1 %i.g, label %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsbzNSmZPCnTx_10tgrep_core.exit, label %bb.e
 
-bb.d:                                             ; preds = %.split, %bb.g, %_RNCNvNtCsbzNSmZPCnTx_10tgrep_core6ondisk15file_table_body0B5_.exit, %bb.b
+.sink.split:                                      ; preds = %.split, %bb.g
+  %storemerge = phi i64 [ 3, %.split ], [ -1, %bb.g ]
+  store i64 %storemerge, ptr %0, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  br label %bb.d
+
+bb.d:                                             ; preds = %.sink.split, %_RNCNvNtCsbzNSmZPCnTx_10tgrep_core6ondisk15file_table_body0B5_.exit, %bb.b
   ret void
 
 bb.e:                                             ; preds = %bb.c
@@ -271,9 +277,7 @@ _RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceEr
   %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @_RNvNvNtCsgCecv3eZDcN_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %.sroa.428.0..sroa_idx, ptr noundef nonnull @6, ptr noundef nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  store i64 3, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.d
+  br label %.sink.split
 
 bb.g:                                             ; preds = %_RNvMNtCsf3Ta7LF998c_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsbzNSmZPCnTx_10tgrep_core.exit
   %i.t = add nsw i64 %2, -16
@@ -282,9 +286,7 @@ bb.g:                                             ; preds = %_RNvMNtCsf3Ta7LF998
   store ptr %i.u, ptr %i.v, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.t, ptr %i.w, align 8
-  store i64 -1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.d
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

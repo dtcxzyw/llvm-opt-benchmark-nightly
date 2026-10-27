@@ -205,7 +205,7 @@ declare i32 @Gia_ManLevelNum(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nofree nounwind uwtable
 define range(i32 0, 2) i32 @Gia_ManSimParamRead(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #7 {
 bb.a:
-  %i.a = tail call noalias ptr @fopen(ptr noundef %0, ptr noundef nonnull @.str.33) ; 6 uses
+  %i.a = tail call noalias ptr @fopen(ptr noundef %0, ptr noundef nonnull @.str.33) ; 5 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %.critedge.outer
 
@@ -270,19 +270,22 @@ bb.f:                                             ; preds = %bb.c, %bb.d
 
 bb.g:                                             ; preds = %.loopexit
   %i.o = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.36, i32 noundef %.031.ph) ; 0 uses
-  %3 = tail call i32 @fclose(ptr noundef nonnull %i.a) ; 0 uses
-  br label %bb.i
+  br label %.sink.split
 
 bb.h:                                             ; preds = %.loopexit
   %i.p = add nsw i32 %.034.ph, -1
   store i32 %i.p, ptr %1, align 4, !tbaa !33
   %i.q = sdiv i32 %.031.ph, 64
   store i32 %i.q, ptr %2, align 4, !tbaa !33
-  %4 = tail call i32 @fclose(ptr noundef nonnull %i.a) ; 0 uses
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.h, %bb.g
+  %.037.ph = phi i32 [ 1, %bb.h ], [ 0, %bb.g ]
+  %3 = tail call i32 @fclose(ptr noundef nonnull %i.a) ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e, %bb.b
-  %.037 = phi i32 [ 0, %bb.b ], [ 0, %bb.e ], [ 0, %bb.g ], [ 1, %bb.h ]
+bb.i:                                             ; preds = %.sink.split, %bb.e, %bb.b
+  %.037 = phi i32 [ 0, %bb.b ], [ 0, %bb.e ], [ %.037.ph, %.sink.split ]
   ret i32 %.037
 }
 

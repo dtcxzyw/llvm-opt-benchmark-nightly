@@ -204,8 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ak = extractvalue { i16, i16 } %i.ah, 1
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %i.ak, ptr %i.al, align 2
-  store i16 0, ptr %0, align 8
-  br label %bb.l
+  br label %.sink.split
 
 bb.k:                                             ; preds = %bb.i
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 72
@@ -219,10 +218,14 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !547
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ao, ptr %i.ap, align 8, !alias.scope !546
-  store i16 1, ptr %0, align 8, !alias.scope !546
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.k, %bb.j
+  %.sink = phi i16 [ 0, %bb.j ], [ 1, %bb.k ]
+  store i16 %.sink, ptr %0, align 8
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.j, %bb.k, %bb.b, %bb.f, %bb.h, %bb.d
+bb.l:                                             ; preds = %.sink.split, %bb.b, %bb.f, %bb.h, %bb.d
   ret void
 }
 

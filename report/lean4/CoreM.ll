@@ -204,7 +204,7 @@ bb.bi:                                            ; preds = %bb.bh
   br label %lean_dec.exit92
 
 lean_dec.exit92:                                  ; preds = %bb.bg, %bb.bh, %bb.bi, %lean_dec.exit94
-  %.074 = phi ptr [ %i.bx, %lean_dec.exit94 ], [ inttoptr (i64 1 to ptr), %bb.bi ], [ inttoptr (i64 1 to ptr), %bb.bh ], [ inttoptr (i64 1 to ptr), %bb.bg ] ; 3 uses
+  %.074 = phi ptr [ %i.bx, %lean_dec.exit94 ], [ inttoptr (i64 1 to ptr), %bb.bi ], [ inttoptr (i64 1 to ptr), %bb.bh ], [ inttoptr (i64 1 to ptr), %bb.bg ] ; 2 uses
   br i1 %i.bi, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %lean_dec.exit92
@@ -214,7 +214,7 @@ bb.bj:                                            ; preds = %lean_dec.exit92
   br label %bb.bk
 
 bb.bk:                                            ; preds = %lean_dec.exit92, %bb.bj
-  %.sink157 = phi ptr [ %i.ci, %bb.bj ], [ %.076, %lean_dec.exit92 ] ; 3 uses
+  %.sink157 = phi ptr [ %i.ci, %bb.bj ], [ %.076, %lean_dec.exit92 ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.sink157, i64 16
   store ptr %i.bz, ptr %i.ck, align 8, !tbaa !15
   br i1 %i.ca, label %bb.bl, label %bb.bm
@@ -225,15 +225,11 @@ bb.bl:                                            ; preds = %bb.bk
   %i.cn = and i32 %i.cm, 16777215
   %i.co = or disjoint i32 %i.cn, 16777216
   store i32 %i.co, ptr %i.cl, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %.074, i64 8
-  store ptr %.sink157, ptr %4, align 8, !tbaa !15
-  br label %lean_dec_ref.exit107
+  br label %lean_dec_ref.exit107.sink.split
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.cp = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 1, i32 noundef 1, i32 noundef 0) ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
-  store ptr %.sink157, ptr %5, align 8, !tbaa !15
-  br label %lean_dec_ref.exit107
+  %i.cp = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 1, i32 noundef 1, i32 noundef 0)
+  br label %lean_dec_ref.exit107.sink.split
 
 bb.bn:                                            ; preds = %lean_obj_tag.exit124
   %i.cq = load i32, ptr %i.u, align 4, !tbaa !11  ; 3 uses
@@ -310,8 +306,14 @@ bb.bz:                                            ; preds = %bb.by
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %1) #10
   br label %lean_dec_ref.exit107
 
-lean_dec_ref.exit107:                             ; preds = %bb.bz, %bb.by, %bb.bx, %bb.bt, %bb.bs, %bb.br, %bb.n, %bb.m, %bb.l, %bb.bm, %bb.bl
-  %.3 = phi ptr [ %i.cp, %bb.bm ], [ %i.i, %bb.bt ], [ %i.i, %bb.n ], [ %.074, %bb.bl ], [ %i.i, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.br ], [ %i.i, %bb.bs ], [ %i.i, %bb.bx ], [ %i.i, %bb.by ], [ %i.i, %bb.bz ]
+lean_dec_ref.exit107.sink.split:                  ; preds = %bb.bm, %bb.bl
+  %.074.sink = phi ptr [ %.074, %bb.bl ], [ %i.cp, %bb.bm ] ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.074.sink, i64 8
+  store ptr %.sink157, ptr %4, align 8, !tbaa !15
+  br label %lean_dec_ref.exit107
+
+lean_dec_ref.exit107:                             ; preds = %lean_dec_ref.exit107.sink.split, %bb.bz, %bb.by, %bb.bx, %bb.bt, %bb.bs, %bb.br, %bb.n, %bb.m, %bb.l
+  %.3 = phi ptr [ %i.i, %bb.by ], [ %i.i, %bb.bt ], [ %i.i, %bb.n ], [ %i.i, %bb.bz ], [ %i.i, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.br ], [ %i.i, %bb.bs ], [ %i.i, %bb.bx ], [ %.074.sink, %lean_dec_ref.exit107.sink.split ]
   ret ptr %.3
 }
 

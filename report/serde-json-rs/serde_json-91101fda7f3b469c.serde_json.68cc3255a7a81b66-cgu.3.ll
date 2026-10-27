@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %_RINvXs9_NtCs8ZPNfZ
   ]
 
 .loopexit30.i.i.i:                                ; preds = %bb.s, %.noexc7.i.i.i, %bb.j, %bb.g
-  %.sroa.9.014.i.i.i = phi ptr [ %i.am, %bb.g ], [ %i.as, %bb.j ], [ %i.bh, %.noexc7.i.i.i ], [ %.sroa.4.0.copyload.i.i.i, %bb.s ] ; 2 uses
+  %.sroa.9.014.i.i.i = phi ptr [ %i.as, %bb.j ], [ %i.am, %bb.g ], [ %i.bh, %.noexc7.i.i.i ], [ %.sroa.4.0.copyload.i.i.i, %bb.s ] ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.014.i.i.i) ]
   invoke void @_RNvXNtNtNtCsbqH9stoieM8_5alloc11collections5btree3mapINtB2_8BTreeMapNtNtB8_6string6StringNtNtCs8ZPNfZ0ciAA_10serde_json5value5ValueENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropB1t_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l)
           to label %_RINvXNvXs8_NtCs8ZPNfZ0ciAA_10serde_json3mapINtB9_3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBb_5value5ValueENtNtCsdnjrqM8ey3e_10serde_core2de11Deserialize11deserializeNtB3_7VisitorNtB1N_7Visitor9visit_mapINtNtBb_2de9MapAccessNtNtBb_4read7StrReadEEBb_.exit.i.i unwind label %bb.ab
@@ -308,8 +308,8 @@ bb.aa:                                            ; preds = %bb.x
   invoke fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCs8ZPNfZ0ciAA_10serde_json5error5ErrorEBF_(ptr nonnull %i.br)
           to label %.noexc5.sink.split unwind label %bb.ab
 
-.noexc5.sink.split:                               ; preds = %.split.i.i, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.thread.thread.i.i, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.i.i
-  %.sroa.7.1.i.i.ph = phi ptr [ %i.by, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.i.i ], [ %i.br, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.thread.thread.i.i ], [ %i.by, %.split.i.i ]
+.noexc5.sink.split:                               ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.i.i, %.split.i.i, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.thread.thread.i.i
+  %.sroa.7.1.i.i.ph = phi ptr [ %i.br, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.thread.thread.i.i ], [ %i.by, %.split.i.i ], [ %i.by, %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCs8ZPNfZ0ciAA_10serde_json3map3MapNtNtCsbqH9stoieM8_5alloc6string6StringNtNtBG_5value5ValueEEBG_.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !110
   br label %.noexc5
 
@@ -712,7 +712,7 @@ bb.a:
   %i.z = alloca [24 x i8], align 8                ; 4 uses
   %i.aa = alloca [32 x i8], align 8               ; 9 uses
   %i.ab = alloca [40 x i8], align 8               ; 14 uses
-  %.sroa.8 = alloca [16 x i8], align 8            ; 7 uses
+  %.sroa.8 = alloca [16 x i8], align 8            ; 6 uses
   %i.ac = alloca [24 x i8], align 8               ; 4 uses
   %i.ad = alloca [24 x i8], align 8               ; 7 uses
   %i.ae = alloca [16 x i8], align 8               ; 6 uses
@@ -1019,10 +1019,10 @@ bb.af:                                            ; preds = %bb.k, %_RNvXs8_NtCs
   br label %bb.ah
 
 bb.ag:                                            ; preds = %.thread176, %.thread173
-  %.sroa.25279.0 = phi i64 [ %.sroa.25279.4.a, %.thread176 ], [ %.sroa.25279.3, %.thread173 ] ; 2 uses
-  %.sroa.23.0 = phi i8 [ %.sroa.23.2.a, %.thread176 ], [ %.sroa.23.1, %.thread173 ]
-  %.sroa.0.0 = phi i8 [ %.sroa.0.4.a, %.thread176 ], [ %.sroa.0.3, %.thread173 ] ; 2 uses
-  %i.da = phi <2 x i64> [ %i.ht, %.thread176 ], [ %2, %.thread173 ]
+  %.sroa.25279.0 = phi i64 [ %.sroa.25279.4.a, %.thread176 ], [ %.sroa.25279.4, %.thread173 ] ; 2 uses
+  %.sroa.23.0 = phi i8 [ %.sroa.23.2.a, %.thread176 ], [ %.sroa.23.2, %.thread173 ]
+  %.sroa.0.0 = phi i8 [ %.sroa.0.4.a, %.thread176 ], [ %.sroa.0.4, %.thread173 ] ; 2 uses
+  %i.da = phi <2 x i64> [ %i.ht, %.thread176 ], [ %3, %.thread173 ]
   %i.db = icmp eq i8 %.sroa.0.0, -1
   br i1 %i.db, label %._crit_edge, label %.thread, !prof !440
 
@@ -1425,8 +1425,7 @@ _RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE
   %i.gv = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %i.gw = load ptr, ptr %i.gv, align 8, !nonnull !5, !align !11, !noundef !5
   %i.gx = ptrtoint ptr %i.gw to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
-  br label %.thread173
+  br label %.thread173.sink.split
 
 .thread240:                                       ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE7end_seqB7_.exit.thread
   %.sroa.23.0..sroa_idx273 = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
@@ -1437,8 +1436,7 @@ _RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE
   %.sroa.25279.0.copyload281 = load i64, ptr %.sroa.25279.0..sroa_idx280, align 8
   %.sroa.39.0..sroa_idx284 = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %i.gy = load <2 x i64>, ptr %.sroa.39.0..sroa_idx284, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
-  br label %.thread173
+  br label %.thread173.sink.split
 
 bb.ca:                                            ; preds = %_RNvMs3_NtCs8ZPNfZ0ciAA_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE7end_seqB7_.exit
   %i.gz = ptrtoint ptr %.sroa.0.0.i to i64
@@ -1452,11 +1450,18 @@ bb.cb:                                            ; preds = %bb.cf, %bb.bz
   call void @_RNvNtCs8Chj7Szqq0n_4core9panicking16panic_in_cleanup() #14
   unreachable
 
-.thread173:                                       ; preds = %.thread242, %.thread240, %bb.ca, %bb.cc
-  %.sroa.25279.3 = phi i64 [ %i.hd, %bb.cc ], [ %i.gz, %bb.ca ], [ %i.gx, %.thread242 ], [ %.sroa.25279.0.copyload281, %.thread240 ]
-  %.sroa.23.1 = phi i8 [ undef, %bb.cc ], [ undef, %bb.ca ], [ undef, %.thread242 ], [ %.sroa.23.0.copyload274, %.thread240 ]
-  %.sroa.0.3 = phi i8 [ -1, %bb.cc ], [ -1, %bb.ca ], [ -1, %.thread242 ], [ %i.gt, %.thread240 ]
-  %2 = phi <2 x i64> [ undef, %bb.cc ], [ undef, %bb.ca ], [ undef, %.thread242 ], [ %i.gy, %.thread240 ]
+.thread173.sink.split:                            ; preds = %.thread240, %.thread242
+  %.sroa.25279.3 = phi i64 [ %i.gx, %.thread242 ], [ %.sroa.25279.0.copyload281, %.thread240 ]
+  %.sroa.23.1 = phi i8 [ undef, %.thread242 ], [ %.sroa.23.0.copyload274, %.thread240 ]
+  %2 = phi <2 x i64> [ undef, %.thread242 ], [ %i.gy, %.thread240 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
+  br label %.thread173
+
+.thread173:                                       ; preds = %.thread173.sink.split, %bb.ca, %bb.cc
+  %.sroa.25279.4 = phi i64 [ %i.hd, %bb.cc ], [ %i.gz, %bb.ca ], [ %.sroa.25279.3, %.thread173.sink.split ]
+  %.sroa.23.2 = phi i8 [ undef, %bb.cc ], [ undef, %bb.ca ], [ %.sroa.23.1, %.thread173.sink.split ]
+  %.sroa.0.4 = phi i8 [ -1, %bb.cc ], [ -1, %bb.ca ], [ %i.gt, %.thread173.sink.split ]
+  %3 = phi <2 x i64> [ undef, %bb.cc ], [ undef, %bb.ca ], [ %2, %.thread173.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab)
   br label %bb.ag
 
@@ -1655,7 +1660,7 @@ bb.cv:                                            ; preds = %bb.cu, %.loopexit18
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXs9_NtCs8ZPNfZ0ciAA_10serde_json2deINtB6_9MapAccessNtNtB8_4read7StrReadENtNtCsdnjrqM8ey3e_10serde_core2de9MapAccess13next_key_seedINtNtCs8Chj7Szqq0n_4core6marker11PhantomDataNtNtCsbqH9stoieM8_5alloc6string6StringEEB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 7 uses
+  %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call fastcc void @_RINvNvXs9_NtCs8ZPNfZ0ciAA_10serde_json2deINtB8_9MapAccesspENtNtCsdnjrqM8ey3e_10serde_core2de9MapAccess13next_key_seed12has_next_keyNtNtBa_4read7StrReadEBa_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.b, ptr noalias nofree noundef align 8 dereferenceable(16) %1)
@@ -1691,7 +1696,11 @@ bb.e:                                             ; preds = %bb.c
   %i.m = icmp eq i64 %i.l, -1
   br i1 %i.m, label %bb.g, label %bb.h
 
-bb.f:                                             ; preds = %bb.h, %bb.g, %bb.d, %bb.b
+.sink.split:                                      ; preds = %bb.h, %bb.g
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.d, %bb.b
   ret void
 
 bb.g:                                             ; preds = %bb.e
@@ -1700,19 +1709,17 @@ bb.g:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.o, ptr %i.p, align 8
   store i64 -2, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.f
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.f
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXs9_NtCs8ZPNfZ0ciAA_10serde_json2deINtB6_9MapAccessNtNtB8_4read7StrReadENtNtCsdnjrqM8ey3e_10serde_core2de9MapAccess13next_key_seedNtNtNtB8_5value2de13KeyClassifierEB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 7 uses
+  %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call fastcc void @_RINvNvXs9_NtCs8ZPNfZ0ciAA_10serde_json2deINtB8_9MapAccesspENtNtCsdnjrqM8ey3e_10serde_core2de9MapAccess13next_key_seed12has_next_keyNtNtBa_4read7StrReadEBa_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.b, ptr noalias nofree noundef align 8 dereferenceable(16) %1)
@@ -1748,7 +1755,11 @@ bb.e:                                             ; preds = %bb.c
   %i.m = icmp eq i64 %i.l, -1
   br i1 %i.m, label %bb.g, label %bb.h
 
-bb.f:                                             ; preds = %bb.h, %bb.g, %bb.d, %bb.b
+.sink.split:                                      ; preds = %bb.h, %bb.g
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.d, %bb.b
   ret void
 
 bb.g:                                             ; preds = %bb.e
@@ -1757,13 +1768,11 @@ bb.g:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.o, ptr %i.p, align 8
   store i64 -2, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.f
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.f
+  br label %.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

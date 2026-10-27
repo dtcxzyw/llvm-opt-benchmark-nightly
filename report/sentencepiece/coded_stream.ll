@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load i32, ptr %i.i, align 8, !tbaa !32
   %i.k = load i32, ptr %i.h, align 8, !tbaa !32
   %i.l = tail call i32 @llvm.smin.i32(i32 %i.j, i32 %i.k) ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !28
   %i.o = sub nsw i32 %i.l, %i.n                   ; 3 uses
   %i.p = icmp slt i32 %i.o, %i.g
@@ -230,7 +230,7 @@ bb.f:                                             ; preds = %bb.c
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !27
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   %i.ab = load ptr, ptr %i.aa, align 8
-  %i.ac = tail call noundef zeroext i1 %i.ab(ptr noundef nonnull align 8 dereferenceable(8) %i.y, i32 noundef %i.g)
+  %i.ac = tail call noundef zeroext i1 %i.ab(ptr noundef nonnull align 8 dereferenceable(8) %i.y, i32 noundef %i.g) ; 2 uses
   br i1 %i.ac, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -240,17 +240,20 @@ bb.g:                                             ; preds = %bb.f
   %i.ag = load ptr, ptr %i.af, align 8
   %i.ah = tail call noundef i64 %i.ag(ptr noundef nonnull align 8 dereferenceable(8) %i.ad)
   %i.ai = trunc i64 %i.ah to i32
-  store i32 %i.ai, ptr %i.m, align 8, !tbaa !28
-  br label %bb.i
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.f
   %i.aj = load i32, ptr %i.m, align 8, !tbaa !28
   %i.ak = add nsw i32 %i.aj, %i.g
-  store i32 %i.ak, ptr %i.m, align 8, !tbaa !28
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.h
+  %.sink = phi i32 [ %i.ak, %bb.h ], [ %i.ai, %bb.g ]
+  store i32 %.sink, ptr %i.m, align 8, !tbaa !28
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e, %bb.d, %bb.b
-  %.1 = phi i1 [ false, %bb.b ], [ false, %bb.g ], [ true, %bb.h ], [ false, %bb.e ], [ false, %bb.d ]
+bb.i:                                             ; preds = %.sink.split, %bb.e, %bb.d, %bb.b
+  %.1 = phi i1 [ false, %bb.b ], [ false, %bb.e ], [ false, %bb.d ], [ %i.ac, %.sink.split ]
   ret i1 %.1
 }
 
@@ -653,7 +656,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %2, align 8, !tbaa !55
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 9 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 14 uses
   %i.k = ptrtoint ptr %i.j to i64                 ; 2 uses
@@ -784,9 +787,7 @@ bb.o:                                             ; preds = %bb.n
   %.sink9.i = select i1 %i.bd, ptr %i.bg, ptr %i.bh
   %.sink.i = select i1 %i.bd, ptr null, ptr %i.bb
   %.0.i16 = select i1 %i.bd, ptr %i.bb, ptr %i.j
-  store ptr %.sink9.i, ptr %0, align 8, !tbaa !51
-  store ptr %.sink.i, ptr %i.h, align 8, !tbaa !52
-  br label %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread
+  br label %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread.sink.split
 
 bb.p:                                             ; preds = %bb.n
   %i.bi = icmp sgt i32 %.0.i46, 16                ; 3 uses
@@ -799,13 +800,20 @@ bb.p:                                             ; preds = %bb.n
   %.sink9.i17 = select i1 %i.bi, ptr %i.bl, ptr %i.bn
   %.sink.i18 = select i1 %i.bi, ptr null, ptr %i.az
   %.0.i19 = select i1 %i.bi, ptr %i.az, ptr %i.j
-  store ptr %.sink9.i17, ptr %0, align 8, !tbaa !51
-  store ptr %.sink.i18, ptr %i.h, align 8, !tbaa !52
+  br label %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread.sink.split
+
+_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread.sink.split: ; preds = %bb.o, %bb.p
+  %.sink9.i17.sink = phi ptr [ %.sink9.i17, %bb.p ], [ %.sink9.i, %bb.o ]
+  %.sink.i18.sink = phi ptr [ %.sink.i18, %bb.p ], [ %.sink.i, %bb.o ]
+  %.sink.ph = phi ptr [ %.0.i19, %bb.p ], [ %.0.i16, %bb.o ]
+  %.1.ph = phi ptr [ null, %bb.p ], [ %i.az, %bb.o ]
+  store ptr %.sink9.i17.sink, ptr %0, align 8, !tbaa !51
+  store ptr %.sink.i18.sink, ptr %i.h, align 8, !tbaa !52
   br label %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread
 
-_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread: ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.i, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.thread.i, %bb.o, %bb.p, %bb.b
-  %.sink = phi ptr [ %i.f, %bb.b ], [ %.0.i16, %bb.o ], [ %.0.i19, %bb.p ], [ %i.j, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit ], [ %i.j, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.thread.i ], [ %i.j, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.i ]
-  %.1 = phi ptr [ null, %bb.b ], [ %i.az, %bb.o ], [ null, %bb.p ], [ null, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit ], [ null, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.thread.i ], [ null, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.i ]
+_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread: ; preds = %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.i, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread.sink.split, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.thread.i, %bb.b
+  %.sink = phi ptr [ %i.f, %bb.b ], [ %i.j, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.thread.i ], [ %i.j, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit ], [ %.sink.ph, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread.sink.split ], [ %i.j, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.i ]
+  %.1 = phi ptr [ null, %bb.b ], [ null, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.thread.i ], [ null, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit ], [ %.1.ph, %_ZN6google8protobuf2io19EpsCopyOutputStream5FlushEPh.exit.thread.sink.split ], [ null, %_ZN6google8protobuf2io19EpsCopyOutputStream4NextEv.exit.i ]
   store ptr %.sink, ptr %2, align 8, !tbaa !55
   ret ptr %.1
 }

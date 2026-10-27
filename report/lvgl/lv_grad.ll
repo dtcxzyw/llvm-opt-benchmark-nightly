@@ -57,9 +57,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.g, ptr noundef nonnull align 1 dereferenceable(3) %i.h, i64 3, i1 false), !tbaa.struct !16
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.j = load i8, ptr %i.i, align 1, !tbaa !8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %i.j, ptr %5, align 2, !tbaa !14
-  br label %.split37.us
+  br label %.split37.us.sink.split54
 
 .split.us.split.us.preheader:                     ; preds = %.split.us
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 3
@@ -69,9 +67,7 @@ bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.m, ptr noundef nonnull align 1 dereferenceable(3) %i.n, i64 3, i1 false), !tbaa.struct !16
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 -1, ptr %6, align 2, !tbaa !14
-  br label %.split37.us
+  br label %.split37.us.sink.split54
 
 .split:                                           ; preds = %bb.e
   br i1 %.not30, label %.split.split.us.preheader, label %.split.split.preheader
@@ -87,12 +83,8 @@ bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.s, ptr noundef nonnull align 1 dereferenceable(3) %i.t, i64 3, i1 false), !tbaa.struct !16
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %7 = load i8, ptr %i.u, align 1, !tbaa !8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %7, ptr %8, align 2, !tbaa !14
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %i.v = load i8, ptr %9, align 1, !tbaa !8
-  br label %.split37.us
+  %i.v = load i8, ptr %i.u, align 1, !tbaa !8
+  br label %.split37.us.sink.split
 
 .split.split.us.preheader:                        ; preds = %.split
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 3
@@ -103,14 +95,24 @@ bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.z, ptr noundef nonnull align 1 dereferenceable(3) %i.aa, i64 3, i1 false), !tbaa.struct !16
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 -1, ptr %10, align 2, !tbaa !14
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %12 = load i8, ptr %11, align 1, !tbaa !8
+  br label %.split37.us.sink.split
+
+.split37.us.sink.split:                           ; preds = %.split.split.preheader, %.split.split.us.preheader
+  %.sink52 = phi i8 [ -1, %.split.split.us.preheader ], [ %i.v, %.split.split.preheader ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %.sink52, ptr %5, align 2, !tbaa !14
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %7 = load i8, ptr %6, align 1, !tbaa !8
   br label %.split37.us
 
-.split37.us:                                      ; preds = %.split.split.preheader, %.split.split.us.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader
-  %.sink = phi i8 [ %i.v, %.split.split.preheader ], [ %12, %.split.split.us.preheader ], [ -1, %.split.us.split.preheader ], [ -1, %.split.us.split.us.preheader ]
+.split37.us.sink.split54:                         ; preds = %.split.us.split.preheader, %.split.us.split.us.preheader
+  %.sink55 = phi i8 [ -1, %.split.us.split.us.preheader ], [ %i.j, %.split.us.split.preheader ]
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %.sink55, ptr %8, align 2, !tbaa !14
+  br label %.split37.us
+
+.split37.us:                                      ; preds = %.split37.us.sink.split54, %.split37.us.sink.split
+  %.sink = phi i8 [ %7, %.split37.us.sink.split ], [ -1, %.split37.us.sink.split54 ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %.sink, ptr %i.ab, align 1, !tbaa !15
   ret void
