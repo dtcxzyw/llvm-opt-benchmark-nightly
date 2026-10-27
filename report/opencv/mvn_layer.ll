@@ -204,8 +204,6 @@ declare noundef i32 @_ZNK2cv3dnn14dnn5_v202606055Layer10getLayoutsERKSt6vectorIN
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i64 @_ZNK2cv3dnn12MVNLayerImpl8getFLOPSERKSt6vectorINS_8MatShapeESaIS3_EES7_(ptr noundef nonnull align 8 dereferenceable(616) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 .split:
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %4 = alloca %"class.std::allocator.5", align 1  ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !122  ; 2 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !123    ; 3 uses
@@ -218,7 +216,7 @@ define linkonce_odr hidden noundef i64 @_ZNK2cv3dnn12MVNLayerImpl8getFLOPSERKSt6
   %i.f = sub i64 %i.d, %i.e
   %i.g = sdiv exact i64 %i.f, 52
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.i = load i8, ptr %i.h, align 8, !range !65
+  %i.i = load i8, ptr %i.h, align 8, !tbaa !41, !range !65, !noundef !66
   %i.j = trunc nuw i8 %i.i to i1
   %i.k = select i1 %i.j, i32 2, i32 1             ; 3 uses
   %i.l = zext nneg i32 %i.k to i64
@@ -232,24 +230,19 @@ bb.a:                                             ; preds = %.lr.ph, %_ZN2cv3dnn
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa ] ; 2 uses
   %.0934 = phi i64 [ 0, %.lr.ph ], [ %i.bp, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit25.epilog-lcssa ]
   %i.m = getelementptr inbounds nuw [52 x i8], ptr %i.c, i64 %indvars.iv ; 3 uses
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !68   ; 5 uses
-  %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.n, i32 0) ; 3 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !68   ; 4 uses
+  %narrow.i.i = tail call i32 @llvm.smax.i32(i32 %i.n, i32 0) ; 2 uses
   %.not33.i = icmp slt i32 %i.n, 1
   br i1 %.not33.i, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 12 ; 9 uses
   %i.p = zext nneg i32 %narrow.i.i to i64         ; 2 uses
-  %5 = add nsw i32 %narrow.i.i, -1
-  %.not32.not.i = icmp samesign ugt i32 %i.n, %5
-  br i1 %.not32.not.i, label %_ZNK2cv8MatShapeixEm.exit.i.preheader, label %7
-
-_ZNK2cv8MatShapeixEm.exit.i.preheader:            ; preds = %.lr.ph.i
   %xtraiter = and i64 %i.p, 7                     ; 3 uses
-  %6 = icmp slt i32 %i.n, 8
-  br i1 %6, label %_ZNK2cv8MatShapeixEm.exit.i.epil.preheader, label %_ZNK2cv8MatShapeixEm.exit.i.preheader.new
+  %3 = icmp slt i32 %i.n, 8
+  br i1 %3, label %_ZNK2cv8MatShapeixEm.exit.i.epil.preheader, label %_ZNK2cv8MatShapeixEm.exit.i.preheader.new
 
-_ZNK2cv8MatShapeixEm.exit.i.preheader.new:        ; preds = %_ZNK2cv8MatShapeixEm.exit.i.preheader
+_ZNK2cv8MatShapeixEm.exit.i.preheader.new:        ; preds = %.lr.ph.i
   %unroll_iter = and i64 %i.p, 2147483640
   br label %_ZNK2cv8MatShapeixEm.exit.i
 
@@ -301,42 +294,13 @@ _ZNK2cv8MatShapeixEm.exit.i:                      ; preds = %_ZNK2cv8MatShapeixE
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa, label %_ZNK2cv8MatShapeixEm.exit.i, !llvm.loop !116
 
-7:                                                ; preds = %.lr.ph.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.10, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  invoke void @_ZN2cv5errorENS_5Error4CodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSB_i(i32 noundef -215, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @__func__._ZN2cv8MatShapeixEm, ptr noundef nonnull @.str.11, i32 noundef 103) #23
-          to label %8 unwind label %9
-
-8:                                                ; preds = %7
-  unreachable
-
-9:                                                ; preds = %7
-  %10 = landingpad { ptr, i32 }
-          cleanup
-  %11 = load ptr, ptr %3, align 8, !tbaa !22      ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %13 = icmp eq ptr %11, %12
-  br i1 %13, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %9
-  %14 = load i64, ptr %12, align 8, !tbaa !23
-  %15 = add i64 %14, 1
-  call void @_ZdlPvm(ptr noundef %11, i64 noundef %15) #21
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i: ; preds = %9, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
-  resume { ptr, i32 } %10
-
 _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa: ; preds = %_ZNK2cv8MatShapeixEm.exit.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit, label %_ZNK2cv8MatShapeixEm.exit.i.epil.preheader
 
-_ZNK2cv8MatShapeixEm.exit.i.epil.preheader:       ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa, %_ZNK2cv8MatShapeixEm.exit.i.preheader
-  %indvars.iv.i.epil.init = phi i64 [ 0, %_ZNK2cv8MatShapeixEm.exit.i.preheader ], [ %indvars.iv.next.i.7, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa ]
-  %.02128.i.epil.init = phi i64 [ 1, %_ZNK2cv8MatShapeixEm.exit.i.preheader ], [ %i.bc, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa ]
+_ZNK2cv8MatShapeixEm.exit.i.epil.preheader:       ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.7, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa ]
+  %.02128.i.epil.init = phi i64 [ 1, %.lr.ph.i ], [ %i.bc, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.loopexit.unr-lcssa ]
   %lcmp.mod58 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod58)
   br label %_ZNK2cv8MatShapeixEm.exit.i.epil

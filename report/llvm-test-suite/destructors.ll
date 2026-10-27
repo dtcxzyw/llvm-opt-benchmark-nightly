@@ -200,10 +200,10 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %i.o = icmp ne ptr %local_laplacian.host, null
   %local_laplacian.host_and_dev_are_null.not276 = or i1 %i.o, %i.n ; 2 uses
   %buf_extent16 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 16 ; 2 uses
-  %local_laplacian.extent.0 = load i32, ptr %buf_extent16, align 8 ; 6 uses
+  %local_laplacian.extent.0 = load i32, ptr %buf_extent16, align 8 ; 5 uses
   %x7 = sext i32 %local_laplacian.extent.0 to i64 ; 2 uses
   %buf_extent17 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 20 ; 2 uses
-  %local_laplacian.extent.1 = load i32, ptr %buf_extent17, align 4 ; 6 uses
+  %local_laplacian.extent.1 = load i32, ptr %buf_extent17, align 4 ; 5 uses
   %i.p = sext i32 %local_laplacian.extent.1 to i64 ; 2 uses
   %buf_extent18 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 24
   %local_laplacian.extent.2 = load i32, ptr %buf_extent18, align 8 ; 3 uses
@@ -217,9 +217,9 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %local_laplacian.stride.2 = load i32, ptr %buf_stride22, align 8 ; 2 uses
   %i.s = sext i32 %local_laplacian.stride.2 to i64
   %buf_min24 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 48 ; 2 uses
-  %a286 = load i32, ptr %buf_min24, align 8       ; 18 uses
+  %a286 = load i32, ptr %buf_min24, align 8       ; 16 uses
   %buf_min25 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 52 ; 2 uses
-  %a114 = load i32, ptr %buf_min25, align 4       ; 20 uses
+  %a114 = load i32, ptr %buf_min25, align 4       ; 18 uses
   %buf_min26 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 56
   %a108 = load i32, ptr %buf_min26, align 8       ; 3 uses
   %buf_elem_size28 = getelementptr inbounds nuw i8, ptr %local_laplacian.buffer, i64 64 ; 2 uses
@@ -260,7 +260,7 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %i.ao = select i1 %i.an, float 0.000000e+00, float %i.am ; 2 uses
   %a4 = fptosi float %i.ao to i32
   %b6 = add nsw i32 %levels, -2                   ; 5 uses
-  %a742 = tail call i32 @llvm.smin.i32(i32 %b6, i32 %a4) ; 2 uses
+  %a742 = tail call i32 @llvm.smin.i32(i32 %b6, i32 %a4)
   %i.ap = select i1 %i.an, float %i.am, float 0.000000e+00 ; 2 uses
   %a5 = fptosi float %i.ap to i32
   %a772 = tail call i32 @llvm.smin.i32(i32 %b6, i32 %a5) ; 9 uses
@@ -407,8 +407,7 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %a56 = tail call i32 @llvm.smin.i32(i32 %b59, i32 %a114)
   %i.cn = shl nsw i32 %f72.s0.v4.min.s, 1
   %b58 = add nsw i32 %i.cn, -3
-  %a55 = tail call i32 @llvm.smin.i32(i32 %b58, i32 %a56)
-  %a145 = tail call i32 @llvm.smin.i32(i32 %a114, i32 %a55) ; 7 uses
+  %a145 = tail call i32 @llvm.smin.i32(i32 %b58, i32 %a56) ; 7 uses
   %a60 = add nsw i32 %i.ac, -1                    ; 4 uses
   %i.co = shl nsw i32 %b465, 1
   %b62 = add nsw i32 %i.co, 2                     ; 2 uses
@@ -420,8 +419,7 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %a62 = tail call i32 @llvm.smin.i32(i32 %b65, i32 %a286)
   %i.cr = shl nsw i32 %f72.s0.v3.min.s, 1
   %b64 = add nsw i32 %i.cr, -3
-  %a61 = tail call i32 @llvm.smin.i32(i32 %b64, i32 %a62)
-  %a181 = tail call i32 @llvm.smin.i32(i32 %a286, i32 %a61) ; 4 uses
+  %a181 = tail call i32 @llvm.smin.i32(i32 %b64, i32 %a62) ; 4 uses
   %i.cs = tail call i32 @llvm.smax.i32(i32 %a772, i32 0) ; 9 uses
   %i.ct = fmul nnan float %i.ao, 2.560000e+02
   %a66 = fptosi float %i.ct to i32
@@ -453,7 +451,7 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %i.df = and i32 %i.de, -8
   %i.dg = add nsw i32 %a286, %i.df                ; 3 uses
   %a79 = add nsw i32 %i.dg, 7
-  %b79 = tail call i32 @llvm.smin.i32(i32 %a60, i32 %a79) ; 12 uses
+  %b79 = tail call i32 @llvm.smin.i32(i32 %a60, i32 %a79) ; 11 uses
   %a76 = tail call i32 @llvm.smax.i32(i32 %a77, i32 %b79)
   %a75 = tail call i32 @llvm.smin.i32(i32 %b73, i32 %a76)
   %i.dh = tail call i32 @llvm.smax.i32(i32 %a75, i32 %b82) ; 3 uses
@@ -475,7 +473,7 @@ call_destructor.exit290:                          ; preds = %call_destructor.exi
   %i.do = ashr i32 %i.dn, 6
   %i.dp = or i32 %i.dn, 63
   %a94 = add i32 %i.dp, %a114
-  %b94 = tail call i32 @llvm.smin.i32(i32 %a54, i32 %a94) ; 11 uses
+  %b94 = tail call i32 @llvm.smin.i32(i32 %a54, i32 %a94) ; 10 uses
   %a91 = tail call i32 @llvm.smax.i32(i32 %a92, i32 %b94)
   %a90 = tail call i32 @llvm.smin.i32(i32 %b88, i32 %a91)
   %i.dq = tail call i32 @llvm.smax.i32(i32 %a90, i32 %b97) ; 3 uses
@@ -587,22 +585,16 @@ true_bb58:                                        ; preds = %after_bb
   br label %call_destructor.exit210.thread823
 
 "assert succeeded70":                             ; preds = %"assert succeeded68"
-  %13 = sub nsw i32 %b79, %local_laplacian.extent.0
-  %.not280 = icmp slt i32 %13, %a286
-  %14 = icmp sge i32 %b76, %a286
-  %15 = and i1 %14, %.not280
-  br i1 %15, label %"assert succeeded72", label %"assert failed71", !prof !5
+  %.not280 = icmp slt i32 %b76, %a286
+  br i1 %.not280, label %"assert failed71", label %"assert succeeded72", !prof !4
 
 "assert failed71":                                ; preds = %"assert succeeded70"
   %i.em = tail call i32 @halide_error_access_out_of_bounds(ptr null, ptr nonnull @str.5, i32 0, i32 %b74, i32 %b79, i32 %a286, i32 %a60) #3
   br label %call_destructor.exit210.thread823
 
 "assert succeeded72":                             ; preds = %"assert succeeded70"
-  %16 = sub nsw i32 %b94, %local_laplacian.extent.1
-  %.not281 = icmp slt i32 %16, %a114
-  %17 = icmp sge i32 %b91, %a114
-  %18 = and i1 %17, %.not281
-  br i1 %18, label %"assert succeeded74", label %"assert failed73", !prof !5
+  %.not281 = icmp slt i32 %b91, %a114
+  br i1 %.not281, label %"assert failed73", label %"assert succeeded74", !prof !4
 
 "assert failed73":                                ; preds = %"assert succeeded72"
   %i.en = tail call i32 @halide_error_access_out_of_bounds(ptr null, ptr nonnull @str.5, i32 1, i32 %b89, i32 %b94, i32 %a114, i32 %a54) #3
@@ -1005,10 +997,9 @@ begin_hunk_1_@__local_laplacian:entry
 
 "consume f2":                                     ; preds = %"produce f2"
   %b252 = add nuw nsw i32 %i.cw, 1
-  %a249 = call i32 @llvm.smax.i32(i32 %a742, i32 %b252)
-  %f4.v6.extent_realized.s = sub nsw i32 %a249, %i.cs
+  %f4.v6.extent_realized.s = sub nsw i32 %b252, %i.cs
   %i.ml = ashr i32 %b89, 1
-  %a256 = add nsw i32 %i.ml, -1                   ; 2 uses
+  %a256 = add nsw i32 %i.ml, -1
   %i.mm = add nsw i32 %b89, 3
   %b258 = ashr i32 %i.mm, 1
   %a255 = call i32 @llvm.smin.i32(i32 %b258, i32 %a256) ; 3 uses
@@ -1016,8 +1007,7 @@ begin_hunk_1_@__local_laplacian:entry
   %i.mn = call i32 @llvm.smin.i32(i32 %b259, i32 %a392) ; 2 uses
   %i.mo = shl nsw i32 %i.mn, 1
   %b257 = add nsw i32 %i.mo, -1
-  %a254 = call i32 @llvm.smin.i32(i32 %b257, i32 %a255)
-  %a253 = call i32 @llvm.smin.i32(i32 %a256, i32 %a254)
+  %a253 = call i32 @llvm.smin.i32(i32 %b257, i32 %a255)
   %f4.v4.min_realized = call i32 @llvm.smin.i32(i32 %a133, i32 %a253) ; 4 uses
   %i.mp = sub nsw i32 %b539, %a392                ; 2 uses
   %i.mq = ashr i32 %i.mp, 3
