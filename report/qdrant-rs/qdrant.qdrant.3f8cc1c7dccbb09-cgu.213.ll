@@ -100,8 +100,7 @@ bb.c:                                             ; preds = %bb.a
 _RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtCs6EFb6a2W5dE_10actix_http5error5ErrorINtB5_4IntoINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EE4intoCsl8OoimOLbh_6qdrant.exit: ; preds = %bb.a
   %i.c = extractvalue { ptr, ptr } %i.a, 0        ; 3 uses
   %i.d = extractvalue { ptr, ptr } %i.a, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c), "nonnull"(ptr %i.d) ]
   %.val = load ptr, ptr %0, align 8, !noundef !5  ; 4 uses
   %i.e = getelementptr i8, ptr %0, i64 8          ; 3 uses
   %.val2 = load ptr, ptr %i.e, align 8            ; 6 uses
@@ -249,8 +248,7 @@ bb.c:                                             ; preds = %bb.a
 _RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7encoder12EncoderErrorINtB5_4IntoINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EE4intoCsl8OoimOLbh_6qdrant.exit: ; preds = %bb.a
   %i.c = extractvalue { ptr, ptr } %i.a, 0        ; 3 uses
   %i.d = extractvalue { ptr, ptr } %i.a, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c), "nonnull"(ptr %i.d) ]
   %.val = load ptr, ptr %0, align 8, !noundef !5  ; 4 uses
   %i.e = getelementptr i8, ptr %0, i64 8          ; 3 uses
   %.val2 = load ptr, ptr %i.e, align 8            ; 6 uses
@@ -653,11 +651,15 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.f
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %.sroa.3.0.copyload.i.i = load ptr, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !noalias !809 ; 2 uses
+  %.sroa.3.0.copyload.i.i = load ptr, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !noalias !809 ; 3 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %.sroa.4.0.copyload.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !809 ; 2 uses
+  %.sroa.4.0.copyload.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !809 ; 3 uses
   %i.at = icmp eq i64 %i.ar, -2
-  br i1 %i.at, label %.thread.i, label %bb.h
+  br i1 %i.at, label %3, label %bb.h
+
+3:                                                ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.i), "nonnull"(ptr %.sroa.4.0.copyload.i.i) ]
+  br label %.thread.i
 
 bb.h:                                             ; preds = %bb.g
   %.sroa.515.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 24
@@ -709,11 +711,15 @@ _RINvMs6_NtCsgoPClq0H8JF_9actix_web7serviceINtB6_15ServiceResponseINtNtNtCs6EFb6
 bb.k:                                             ; preds = %_RNvXs0_NtNtCs2tOeTMwhwEo_11actix_utils6future6eitherINtB5_6EitherINtNtNtCsgoPClq0H8JF_9actix_web10middleware8compress16CompressResponseNtNtB18_11app_service10AppRoutingNtNtNtCs6EFb6a2W5dE_10actix_http4body5boxed7BoxBodyEINtNtB7_5ready5ReadyINtNtCskKLDkoKarTP_4core6result6ResultINtNtB18_7service15ServiceResponseINtNtB2K_6either10EitherBodyINtNtNtB2M_8encoding7encoder7EncoderB2G_EEENtNtNtB18_5error5error5ErrorEEENtNtNtB3V_6future6future6Future4pollCsl8OoimOLbh_6qdrant.exit.i.i, %_RNvXs0_NtNtCs2tOeTMwhwEo_11actix_utils6future6eitherINtB5_6EitherINtNtNtCsgoPClq0H8JF_9actix_web10middleware8compress16CompressResponseNtNtB18_11app_service10AppRoutingNtNtNtCs6EFb6a2W5dE_10actix_http4body5boxed7BoxBodyEINtNtB7_5ready5ReadyINtNtCskKLDkoKarTP_4core6result6ResultINtNtB18_7service15ServiceResponseINtNtB2K_6either10EitherBodyINtNtNtB2M_8encoding7encoder7EncoderB2G_EEENtNtNtB18_5error5error5ErrorEEENtNtNtB3V_6future6future6Future4pollCsl8OoimOLbh_6qdrant.exit.thread.i.i
   %i.az = phi i64 [ %i.an, %_RNvXs0_NtNtCs2tOeTMwhwEo_11actix_utils6future6eitherINtB5_6EitherINtNtNtCsgoPClq0H8JF_9actix_web10middleware8compress16CompressResponseNtNtB18_11app_service10AppRoutingNtNtNtCs6EFb6a2W5dE_10actix_http4body5boxed7BoxBodyEINtNtB7_5ready5ReadyINtNtCskKLDkoKarTP_4core6result6ResultINtNtB18_7service15ServiceResponseINtNtB2K_6either10EitherBodyINtNtNtB2M_8encoding7encoder7EncoderB2G_EEENtNtNtB18_5error5error5ErrorEEENtNtNtB3V_6future6future6Future4pollCsl8OoimOLbh_6qdrant.exit.thread.i.i ], [ %.pr.i.i, %_RNvXs0_NtNtCs2tOeTMwhwEo_11actix_utils6future6eitherINtB5_6EitherINtNtNtCsgoPClq0H8JF_9actix_web10middleware8compress16CompressResponseNtNtB18_11app_service10AppRoutingNtNtNtCs6EFb6a2W5dE_10actix_http4body5boxed7BoxBodyEINtNtB7_5ready5ReadyINtNtCskKLDkoKarTP_4core6result6ResultINtNtB18_7service15ServiceResponseINtNtB2K_6either10EitherBodyINtNtNtB2M_8encoding7encoder7EncoderB2G_EEENtNtNtB18_5error5error5ErrorEEENtNtNtB3V_6future6future6Future4pollCsl8OoimOLbh_6qdrant.exit.i.i ] ; 2 uses
   %.sroa.329.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %.sroa.329.0.copyload.i.i = load ptr, ptr %.sroa.329.0..sroa_idx.i.i, align 8, !noalias !809 ; 2 uses
+  %.sroa.329.0.copyload.i.i = load ptr, ptr %.sroa.329.0..sroa_idx.i.i, align 8, !noalias !809 ; 3 uses
   %.sroa.432.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %.sroa.432.0.copyload.i.i = load ptr, ptr %.sroa.432.0..sroa_idx.i.i, align 8, !noalias !809 ; 2 uses
+  %.sroa.432.0.copyload.i.i = load ptr, ptr %.sroa.432.0..sroa_idx.i.i, align 8, !noalias !809 ; 3 uses
   %i.ba = icmp eq i64 %i.az, -2
-  br i1 %i.ba, label %.thread.i, label %bb.l
+  br i1 %i.ba, label %4, label %bb.l
+
+4:                                                ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.329.0.copyload.i.i), "nonnull"(ptr %.sroa.432.0.copyload.i.i) ]
+  br label %.thread.i
 
 bb.l:                                             ; preds = %bb.k
   %.sroa.535.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24
@@ -765,16 +771,14 @@ _RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25Condit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !802
   br label %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit.thread
 
-.thread.i:                                        ; preds = %bb.k, %bb.g
-  %.sroa.3.0.copyload.i.sink.i = phi ptr [ %.sroa.3.0.copyload.i.i, %bb.g ], [ %.sroa.329.0.copyload.i.i, %bb.k ] ; 2 uses
-  %.sroa.4.0.copyload.i.sink.i = phi ptr [ %.sroa.4.0.copyload.i.i, %bb.g ], [ %.sroa.432.0.copyload.i.i, %bb.k ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.sink.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.sink.i) ]
+.thread.i:                                        ; preds = %4, %3
+  %.sroa.4.0.copyload.i.sink.i = phi ptr [ %.sroa.4.0.copyload.i.i, %3 ], [ %.sroa.432.0.copyload.i.i, %4 ]
+  %.sroa.9.2.ph.i = phi ptr [ %.sroa.3.0.copyload.i.i, %3 ], [ %.sroa.329.0.copyload.i.i, %4 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !802
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !802
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !802
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !802
-  br label %.thread
+  br label %6
 
 _RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i: ; preds = %_RINvMs6_NtCsgoPClq0H8JF_9actix_web7serviceINtB6_15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB18_8encoding7encoder7EncoderNtNtB16_5boxed7BoxBodyEEE8map_bodyNCINvB2_19map_into_right_bodyB11_E0IB12_B11_B11_EECsl8OoimOLbh_6qdrant.exit.i.i, %_RINvMs6_NtCsgoPClq0H8JF_9actix_web7serviceINtB6_15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB18_8encoding7encoder7EncoderNtNtB16_5boxed7BoxBodyEEE8map_bodyNCINvB2_18map_into_left_bodyB11_E0IB12_B11_B11_EECsl8OoimOLbh_6qdrant.exit.i.i
   %.sroa.0.i.sroa.0.0.i = phi i64 [ %.sroa.0.i.sroa.0.0.copyload59.i, %_RINvMs6_NtCsgoPClq0H8JF_9actix_web7serviceINtB6_15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB18_8encoding7encoder7EncoderNtNtB16_5boxed7BoxBodyEEE8map_bodyNCINvB2_18map_into_left_bodyB11_E0IB12_B11_B11_EECsl8OoimOLbh_6qdrant.exit.i.i ], [ %.sroa.0.i.sroa.0.0.copyload.i, %_RINvMs6_NtCsgoPClq0H8JF_9actix_web7serviceINtB6_15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB18_8encoding7encoder7EncoderNtNtB16_5boxed7BoxBodyEEE8map_bodyNCINvB2_19map_into_right_bodyB11_E0IB12_B11_B11_EECsl8OoimOLbh_6qdrant.exit.i.i ] ; 2 uses
@@ -787,7 +791,7 @@ _RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25Condit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !802
   switch i64 %.sroa.0.i.sroa.0.0.i, label %bb.t [
     i64 -1, label %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit.thread
-    i64 2, label %.thread
+    i64 2, label %6
   ]
 
 bb.o:                                             ; preds = %bb.a
@@ -799,11 +803,15 @@ bb.o:                                             ; preds = %bb.a
 
 bb.p:                                             ; preds = %bb.o
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %.sroa.3.0.copyload.i = load ptr, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !802 ; 2 uses
+  %.sroa.3.0.copyload.i = load ptr, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !802 ; 3 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !802 ; 2 uses
+  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !802 ; 3 uses
   %i.bk = icmp eq i64 %i.bi, -1
-  br i1 %i.bk, label %.thread, label %bb.q
+  br i1 %i.bk, label %5, label %bb.q
+
+5:                                                ; preds = %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  br label %.thread
 
 bb.q:                                             ; preds = %bb.p
   %.sroa.515.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
@@ -847,6 +855,12 @@ _RINvMs6_NtCsgoPClq0H8JF_9actix_web7serviceINtB6_15ServiceResponseINtNtNtCs6EFb6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(248) %.sroa.0.i.sroa.7, ptr noundef nonnull align 8 dereferenceable(248) %.sroa.0.i.sroa.7.0..sroa_idx49, i64 248, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !824
   br label %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit
+
+6:                                                ; preds = %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i, %.thread.i
+  %.sroa.12.27684.i = phi ptr [ %.sroa.4.0.copyload.i.sink.i, %.thread.i ], [ %.sroa.0.i.sroa.6.0.i, %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i ] ; 2 uses
+  %.sroa.9.27783.i = phi ptr [ %.sroa.9.2.ph.i, %.thread.i ], [ %.sroa.0.i.sroa.5.0.i, %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.27783.i), "nonnull"(ptr %.sroa.12.27684.i) ]
+  br label %.thread
 
 bb.t:                                             ; preds = %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i
   %.sroa.1025.0..sroa_idx26.i = getelementptr inbounds nuw i8, ptr %i.o, i64 24
@@ -895,11 +909,9 @@ _RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br label %bb.w
 
-.thread:                                          ; preds = %.thread.i, %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i, %bb.p
-  %.sroa.3.0.copyload.i.sink = phi ptr [ %.sroa.3.0.copyload.i, %bb.p ], [ %.sroa.3.0.copyload.i.sink.i, %.thread.i ], [ %.sroa.0.i.sroa.5.0.i, %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i ] ; 2 uses
-  %.sroa.4.0.copyload.i.sink = phi ptr [ %.sroa.4.0.copyload.i, %bb.p ], [ %.sroa.4.0.copyload.i.sink.i, %.thread.i ], [ %.sroa.0.i.sroa.6.0.i, %_RNvXs1_NtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1D_6future6future6Futurep6OutputINtNtB1D_6result6ResultINtNtCsgoPClq0H8JF_9actix_web7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyINtNtNtB4D_8encoding7encoder7EncoderNtNtB4B_5boxed7BoxBodyEEENtNtNtB3J_5error5error5ErrorEEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtNtB3J_10middleware8compress16CompressResponseNtNtB3J_11app_service10AppRoutingB61_EINtNtB73_5ready5ReadyB3h_EEEB2E_4pollCsl8OoimOLbh_6qdrant.exit.i ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.sink) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.sink) ]
+.thread:                                          ; preds = %5, %6
+  %.sroa.12.2.ph = phi ptr [ %.sroa.4.0.copyload.i, %5 ], [ %.sroa.12.27684.i, %6 ]
+  %.sroa.9.2.ph = phi ptr [ %.sroa.3.0.copyload.i, %5 ], [ %.sroa.9.27783.i, %6 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.7.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
@@ -925,10 +937,9 @@ bb.w:                                             ; preds = %_RNvXs1_NtNtCsgoPCl
   br label %bb.at
 
 bb.x:                                             ; preds = %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit, %.thread
-  %.sroa.12.26169 = phi ptr [ %.sroa.4.0.copyload.i.sink, %.thread ], [ %.sroa.0.i.sroa.6.0, %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit ] ; 2 uses
-  %.sroa.9.26268 = phi ptr [ %.sroa.3.0.copyload.i.sink, %.thread ], [ %.sroa.0.i.sroa.5.0, %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.26268) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.26169) ]
+  %.sroa.12.26169 = phi ptr [ %.sroa.12.2.ph, %.thread ], [ %.sroa.0.i.sroa.6.0, %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit ] ; 2 uses
+  %.sroa.9.26268 = phi ptr [ %.sroa.9.2.ph, %.thread ], [ %.sroa.0.i.sroa.5.0, %_RNvXs1_NtNtCsgoPClq0H8JF_9actix_web10middleware9conditionINtB5_25ConditionMiddlewareFutureINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB1v_6future6future6Futurep6OutputINtNtB1v_6result6ResultINtNtB9_7service15ServiceResponseINtNtNtCs6EFb6a2W5dE_10actix_http4body6either10EitherBodyIB44_IB44_INtNtNtB4a_8encoding7encoder7EncoderNtNtB48_5boxed7BoxBodyEEB53_EEENtNtNtB9_5error5error5ErrorEEL_EEINtNtNtCs9kmuiX5O2xo_16actix_web_extras10middleware9condition25ConditionMiddlewareFutureIB1r_IB1X_DB2w_p6OutputIB3a_IB3x_B53_EB6d_EEL_EEINtNtNtCs2tOeTMwhwEo_11actix_utils6future6either6EitherINtNtB7_8compress16CompressResponseNtNtB9_11app_service10AppRoutingB5I_EINtNtB91_5ready5ReadyB8x_EEEEB2w_4pollCsl8OoimOLbh_6qdrant.exit ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.26268), "nonnull"(ptr %.sroa.12.26169) ]
   store i64 2, ptr %0, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.9.26268, ptr %.sroa.411.0..sroa_idx, align 8

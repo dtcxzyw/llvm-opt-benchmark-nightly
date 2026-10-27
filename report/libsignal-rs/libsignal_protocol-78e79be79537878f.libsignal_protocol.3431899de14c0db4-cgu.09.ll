@@ -205,10 +205,10 @@ bb.a:
   %i.j = alloca [48 x i8], align 8                ; 9 uses
   %i.k = alloca [24 x i8], align 8                ; 13 uses
   %i.l = tail call { ptr, i64 } @_RNvMs3_NtCsbwPL7qM37dJ_14libsignal_core5curveNtB5_9PublicKey9serialize(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %1) ; 2 uses
-  %i.m = extractvalue { ptr, i64 } %i.l, 0        ; 6 uses
+  %i.m = extractvalue { ptr, i64 } %i.l, 0        ; 8 uses
   %i.n = extractvalue { ptr, i64 } %i.l, 1        ; 7 uses
   %i.o = invoke { ptr, i64 } @_RNvMs3_NtCsbwPL7qM37dJ_14libsignal_core5curveNtB5_9PublicKey9serialize(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %2)
-          to label %bb.d unwind label %bb.c       ; 2 uses
+          to label %4 unwind label %bb.c          ; 2 uses
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit38: ; preds = %bb.e, %.body43, %bb.c
   %.pn17 = phi { ptr, i32 } [ %i.q, %bb.c ], [ %.pn15, %.body43 ], [ %.pn15, %bb.e ]
@@ -225,39 +225,48 @@ bb.c:                                             ; preds = %bb.a
           cleanup
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit38
 
-bb.d:                                             ; preds = %bb.a
-  %4 = extractvalue { ptr, i64 } %i.o, 0          ; 8 uses
-  %5 = extractvalue { ptr, i64 } %i.o, 1          ; 8 uses
+4:                                                ; preds = %bb.a
+  %5 = extractvalue { ptr, i64 } %i.o, 0          ; 10 uses
+  %6 = extractvalue { ptr, i64 } %i.o, 1          ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  %. = select i1 %3, ptr %i.m, ptr %4             ; 2 uses
-  %.79 = select i1 %3, ptr %4, ptr %i.m           ; 2 uses
-  %.80 = select i1 %3, i64 %i.n, i64 %5
-  %.81 = select i1 %3, i64 %5, i64 %i.n
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.79) ]
+  br i1 %3, label %7, label %8
+
+7:                                                ; preds = %4
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %5) ]
+  br label %bb.d
+
+8:                                                ; preds = %4
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5), "nonnull"(ptr %i.m) ]
+  br label %bb.d
+
+bb.d:                                             ; preds = %8, %7
+  %.sink71 = phi ptr [ %i.m, %7 ], [ %5, %8 ]
+  %.sink70 = phi i64 [ %i.n, %7 ], [ %6, %8 ]
+  %.sink69 = phi ptr [ %5, %7 ], [ %i.m, %8 ]
+  %.sink = phi i64 [ %6, %7 ], [ %i.n, %8 ]
   store ptr @22, ptr %i.j, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 20, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  store ptr %., ptr %i.s, align 8
+  store ptr %.sink71, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.j, i64 24
-  store i64 %.80, ptr %i.t, align 8
+  store i64 %.sink70, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  store ptr %.79, ptr %i.u, align 8
+  store ptr %.sink69, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.j, i64 40
-  store i64 %.81, ptr %i.v, align 8
+  store i64 %.sink, ptr %i.v, align 8
   invoke void @_RNvXs0_NtCs6i54tJFfzR_5alloc5sliceSRShINtB5_6ConcathE6concatCs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.k, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.j, i64 noundef 3)
           to label %bb.g unwind label %bb.f
 
 .body43:                                          ; preds = %bb.ad, %bb.t, %bb.f, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit40
   %.pn15 = phi { ptr, i32 } [ %.pn, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit40 ], [ %i.av, %bb.t ], [ %i.x, %bb.f ], [ %i.bb, %bb.ad ] ; 2 uses
-  %i.w = icmp eq i64 %5, 0
+  %i.w = icmp eq i64 %6, 0
   br i1 %i.w, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit38, label %bb.e
 
 bb.e:                                             ; preds = %.body43
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %4, i64 noundef range(i64 1, 0) %5, i64 noundef 1) #19
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
+  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %5, i64 noundef range(i64 1, 0) %6, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit38
 
 bb.f:                                             ; preds = %bb.ae, %bb.u, %bb.d
@@ -425,12 +434,12 @@ bb.v:                                             ; preds = %bb.t
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  %i.ax = icmp eq i64 %5, 0
+  %i.ax = icmp eq i64 %6, 0
   br i1 %i.ax, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit45, label %bb.w
 
 bb.w:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %4, i64 noundef range(i64 1, 0) %5, i64 noundef 1) #19
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
+  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %5, i64 noundef range(i64 1, 0) %6, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit45
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit45: ; preds = %bb.w, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit
@@ -497,12 +506,12 @@ bb.af:                                            ; preds = %bb.ad
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit51: ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  %i.bd = icmp eq i64 %5, 0
+  %i.bd = icmp eq i64 %6, 0
   br i1 %i.bd, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit52, label %bb.ag
 
 bb.ag:                                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit51
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %4, i64 noundef range(i64 1, 0) %5, i64 noundef 1) #19
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
+  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %5, i64 noundef range(i64 1, 0) %6, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit52
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit52: ; preds = %bb.ag, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc3vec3VechEECs4tP8yUXWbFU_18libsignal_protocol.exit51
