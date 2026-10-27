@@ -205,7 +205,7 @@ _RNvMs6_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6Config21byte_classes_
 
 bb.k:                                             ; preds = %bb.m, %_RNvMs6_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6Config21byte_classes_from_nfa.exit
   %.sroa.0.0.i = phi i64 [ %i.bs, %bb.m ], [ 24, %_RNvMs6_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6Config21byte_classes_from_nfa.exit ], !dbg !15814
-    #dbg_value(!DIArgList(i64 poison, i64 poison, i64 poison), !4771, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_shl, DW_OP_stack_value), !15664)
+    #dbg_value(!DIArgList(i64 poison, i64 poison, i64 poison), !4771, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_constu, 63, DW_OP_and, DW_OP_shl, DW_OP_stack_value), !15664)
     #dbg_value(!DIArgList(i64 poison, i64 poison, i64 poison), !4774, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_shl, DW_OP_stack_value), !15671)
     #dbg_value(i64 %i.bh, !4773, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !15670)
     #dbg_value(i64 %.sroa.0.0.i, !4775, !DIExpression(), !15672)
@@ -608,7 +608,7 @@ _RNvMs6_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6Config21byte_classes_
 
 bb.l:                                             ; preds = %bb.n, %_RNvMs6_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6Config21byte_classes_from_nfa.exit
   %.sroa.0.0.i = phi i64 [ %i.bz, %bb.n ], [ 24, %_RNvMs6_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_6Config21byte_classes_from_nfa.exit ], !dbg !16749
-    #dbg_value(!DIArgList(i64 poison, i64 poison, i64 poison), !4771, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_shl, DW_OP_stack_value), !16325)
+    #dbg_value(!DIArgList(i64 poison, i64 poison, i64 poison), !4771, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_constu, 63, DW_OP_and, DW_OP_shl, DW_OP_stack_value), !16325)
     #dbg_value(!DIArgList(i64 poison, i64 poison, i64 poison), !4774, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_shl, DW_OP_stack_value), !16332)
     #dbg_value(i64 %i.bo, !4773, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !16331)
     #dbg_value(i64 %.sroa.0.0.i, !4775, !DIExpression(), !16333)

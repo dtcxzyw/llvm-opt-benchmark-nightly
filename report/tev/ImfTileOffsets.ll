@@ -204,11 +204,8 @@ vector.ph207:                                     ; preds = %vector.memcheck
   %i.fc = icmp eq i64 %i.fb, 0
   %i.fd = select i1 %i.fc, i64 4, i64 %i.fb
   %n.vec208 = sub nsw i64 %.071.lcssa181, %i.fd   ; 2 uses
-  %5 = load i32, ptr %i.ek, align 4, !tbaa !21, !alias.scope !121 ; 2 uses
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %5, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert211 = insertelement <4 x i32> poison, i32 %5, i64 0
-  %broadcast.splat212 = shufflevector <4 x i32> %broadcast.splatinsert211, <4 x i32> poison, <4 x i32> zeroinitializer
+  %5 = load <1 x i32>, ptr %i.ek, align 4
+  %broadcast.splat212 = shufflevector <1 x i32> %5, <1 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body209
 
 vector.body209:                                   ; preds = %vector.body209, %vector.ph207
@@ -228,13 +225,16 @@ vector.body209:                                   ; preds = %vector.body209, %ve
   %i.fq = insertelement <4 x i32> poison, i32 %i.fm, i64 0
   %i.fr = insertelement <4 x i32> %i.fq, i32 %i.fn, i64 1
   %i.fs = insertelement <4 x i32> %i.fr, i32 %i.fo, i64 2
-  %i.ft = insertelement <4 x i32> %i.fs, i32 %i.fp, i64 3 ; 2 uses
-  %6 = srem <4 x i32> %i.ft, %broadcast.splat
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index210
-  store <4 x i32> %6, ptr %7, align 4, !tbaa !24, !alias.scope !122, !noalias !123
-  %8 = sdiv <4 x i32> %i.ft, %broadcast.splat212
+  %i.ft = insertelement <4 x i32> %i.fs, i32 %i.fp, i64 3
+  %.frozen = freeze <4 x i32> %i.ft               ; 2 uses
+  %broadcast.splat.frozen = freeze <4 x i32> %broadcast.splat212 ; 2 uses
+  %6 = sdiv <4 x i32> %.frozen, %broadcast.splat.frozen ; 2 uses
+  %7 = mul <4 x i32> %6, %broadcast.splat.frozen
+  %.decomposed = sub <4 x i32> %.frozen, %7
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index210
+  store <4 x i32> %.decomposed, ptr %8, align 4, !tbaa !24, !alias.scope !121, !noalias !122
   %i.fu = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index210
-  store <4 x i32> %8, ptr %i.fu, align 4, !tbaa !24, !alias.scope !124, !noalias !121
+  store <4 x i32> %6, ptr %i.fu, align 4, !tbaa !24, !alias.scope !123, !noalias !124
   %index.next213 = add nuw i64 %index210, 4       ; 2 uses
   %i.fv = icmp eq i64 %index.next213, %n.vec208
   br i1 %i.fv, label %scalar.ph198.preheader, label %vector.body209, !llvm.loop !113
@@ -637,9 +637,9 @@ attributes #22 = { nounwind }
 !119 = !{!49, !10, i64 12}
 !120 = !{!49, !10, i64 16}
 !121 = !{!110}
-!122 = !{!111}
-!123 = !{!112, !110}
-!124 = !{!112}
+!122 = !{!112, !111}
+!123 = !{!112}
+!124 = !{!111}
 !125 = distinct !{!125, !38}
 !126 = distinct !{!126, !38}
 !127 = distinct !{!127, !38}

@@ -204,8 +204,8 @@ _RNvXs5_NtCsenfyI6F4F2A_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit45.t
   %.sroa.0.0.lcssa.i.i = phi i32 [ %.sroa.07.076.i, %_RNvXs5_NtCsenfyI6F4F2A_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit45.thread.i ], [ %i.aq, %bb.g ]
   %.sroa.012.0.lcssa.i.i = phi i32 [ %.sroa.012.028.i.i, %_RNvXs5_NtCsenfyI6F4F2A_10serde_json4readNtB5_9SliceReadNtB5_4Read4peek.exit45.thread.i ], [ %.sroa.012.0.i.i, %bb.g ], !dbg !14791
   %i.ak = zext nneg i32 %.sroa.012.0.lcssa.i.i to i64, !dbg !14795
-    #dbg_value(i64 %i.ak, !4290, !DIExpression(), !14663)
-    #dbg_value(i64 %i.ak, !4300, !DIExpression(), !14665)
+    #dbg_value(i32 %.sroa.012.0.lcssa.i.i, !4290, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !14663)
+    #dbg_value(i32 %.sroa.012.0.lcssa.i.i, !4300, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !14665)
   %i.al = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.ak, !dbg !14796
   %i.am = load double, ptr %i.al, align 8, !dbg !14797, !noalias !14744, !noundef !1364 ; 2 uses
     #dbg_value(double %i.am, !4271, !DIExpression(), !14669)
@@ -608,8 +608,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.sroa.0.0.lcssa.i = phi i32 [ %.sroa.015.0, %bb.j ], [ %i.au, %bb.l ]
   %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.028.i, %bb.j ], [ %.sroa.012.0.i, %bb.l ], !dbg !15690
   %i.ao = zext nneg i32 %.sroa.012.0.lcssa.i to i64, !dbg !15694
-    #dbg_value(i64 %i.ao, !4290, !DIExpression(), !15554)
-    #dbg_value(i64 %i.ao, !4300, !DIExpression(), !15556)
+    #dbg_value(i32 %.sroa.012.0.lcssa.i, !4290, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !15554)
+    #dbg_value(i32 %.sroa.012.0.lcssa.i, !4300, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_signed, DW_OP_LLVM_convert, 64, DW_ATE_signed, DW_OP_stack_value), !15556)
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr @_RNvNtCsenfyI6F4F2A_10serde_json2de5POW10, i64 %i.ao, !dbg !15695
   %i.aq = load double, ptr %i.ap, align 8, !dbg !15696, !noalias !15649, !noundef !1364 ; 2 uses
     #dbg_value(double %i.aq, !4271, !DIExpression(), !15560)

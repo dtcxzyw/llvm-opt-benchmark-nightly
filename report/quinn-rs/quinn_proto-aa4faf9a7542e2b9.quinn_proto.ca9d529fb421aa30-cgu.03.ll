@@ -204,9 +204,9 @@ bb.ab:                                            ; preds = %bb.aa
     #dbg_value(ptr %i.eb, !6494, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
     #dbg_value(ptr %i.mj, !6466, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19385)
     #dbg_value(ptr %i.mj, !6498, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
-    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
+    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
   %i.nb = trunc nuw i8 %i.mz to i1, !dbg !25253
-    #dbg_value(i8 %i.mz, !6500, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
+    #dbg_value(i8 %i.mz, !6500, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
   %i.nc = icmp eq i8 %.fr.i.i.i, %i.mz, !dbg !25254
   br i1 %i.nc, label %.split.us.us.i.us.us.i.i, label %_RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCshovLROGBtMy_11quinn_proto8endpoint9FourTupleNtBU_16ConnectionHandleEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B1G_E0E0BW_.exit.thread.us.us.i.us.us.i.i, !dbg !25254, !prof !23090
 
@@ -536,8 +536,8 @@ bb.ak:                                            ; preds = %.split.i.i.i.i.us.u
     #dbg_value(ptr %i.eb, !6494, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
     #dbg_value(ptr %i.pe, !6466, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19385)
     #dbg_value(ptr %i.pe, !6498, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
-    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
-    #dbg_value(i8 %i.pu, !6500, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
+    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
+    #dbg_value(i8 %i.pu, !6500, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
   %i.pv = icmp eq i8 %.fr.i.i.i, %i.pu
   br i1 %i.pv, label %.split30.us.us.i.i.i, label %_RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCshovLROGBtMy_11quinn_proto8endpoint9FourTupleNtBU_16ConnectionHandleEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B1G_E0E0BW_.exit.thread.us.us.i.i.i, !dbg !25252, !prof !23095
 
@@ -705,9 +705,9 @@ bb.ao:                                            ; preds = %bb.an
     #dbg_value(ptr %i.eb, !6494, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
     #dbg_value(ptr %i.qp, !6466, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19385)
     #dbg_value(ptr %i.qp, !6498, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
-    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
+    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
   %i.rb = trunc nuw i8 %i.qz to i1, !dbg !25253
-    #dbg_value(i8 %i.qz, !6500, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
+    #dbg_value(i8 %i.qz, !6500, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
   %i.rc = icmp eq i8 %.fr.i.i.i, %i.qz, !dbg !25254
   br i1 %i.rc, label %.split.i.i.us.i, label %_RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCshovLROGBtMy_11quinn_proto8endpoint9FourTupleNtBU_16ConnectionHandleEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B1G_E0E0BW_.exit.thread.i.i.us.i, !dbg !25254, !prof !23090
 
@@ -813,8 +813,8 @@ bb.aq:                                            ; preds = %_RNvXse_NtNtCskKLDk
     #dbg_value(ptr %i.eb, !6494, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
     #dbg_value(ptr %i.ro, !6466, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19385)
     #dbg_value(ptr %i.ro, !6498, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !19384)
-    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
-    #dbg_value(i8 %i.ry, !6500, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
+    #dbg_value(i8 %i.kt, !6499, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19386)
+    #dbg_value(i8 %i.ry, !6500, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !19387)
   %i.rz = icmp eq i8 %.fr.i.i.i, %i.ry
   br i1 %i.rz, label %.split30.i.i.i, label %_RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCshovLROGBtMy_11quinn_proto8endpoint9FourTupleNtBU_16ConnectionHandleEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B1G_E0E0BW_.exit.thread.i.i.i, !dbg !25252, !prof !23095
 
@@ -1217,9 +1217,9 @@ bb.h:                                             ; preds = %bb.g
     #dbg_value(ptr %0, !6494, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !29263)
     #dbg_value(ptr %1, !6466, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !29264)
     #dbg_value(ptr %1, !6498, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !29263)
-    #dbg_value(i8 %i.aj, !6499, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !29265)
+    #dbg_value(i8 %i.aj, !6499, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !29265)
   %i.an = trunc nuw i8 %i.al to i1, !dbg !29304
-    #dbg_value(i8 %i.al, !6500, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !29266)
+    #dbg_value(i8 %i.al, !6500, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !29266)
   %i.ao = icmp eq i8 %i.aj, %i.al, !dbg !29305
   br i1 %i.ao, label %bb.i, label %_RNvXsI_NtCshovLROGBtMy_11quinn_proto8endpointNtB5_9FourTupleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit, !dbg !29305
 
