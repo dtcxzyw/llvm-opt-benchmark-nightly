@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 6309
 inline.NumDeleted: 2630
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 72
-loop-unroll.NumUnrolled: 73
+loop-unroll.NumRuntimeUnrolled: 76
+loop-unroll.NumUnrolled: 77
 begin_hunk_0_@_ZNK8LightGBM17LinearTreeLearnerINS_17SerialTreeLearnerEE15CalculateLinearILb1EEEvPNS_4TreeEbPKfS7_b.omp_outlined.14:bb.a
   %.036.prol = phi i64 [ %i.cb, %scalar.ph.prol ], [ %.036.ph, %scalar.ph.preheader ] ; 3 uses
   %prol.iter78 = phi i64 [ %prol.iter78.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph245, %_ZN8Lig
   %i.ba = ptrtoint ptr %i.ay to i64               ; 2 uses
   %i.bb = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
-  %i.bd = ashr exact i64 %i.bc, 2                 ; 11 uses
+  %i.bd = ashr exact i64 %i.bc, 2                 ; 15 uses
   %i.be = trunc i64 %i.bd to i32
   %.not90 = icmp sgt i32 %i.au, %i.be
   br i1 %.not90, label %bb.k, label %bb.d
@@ -509,36 +509,70 @@ bb.q:                                             ; preds = %.invoke309
   store i64 1, ptr %i.o, align 8, !tbaa !306
   %i.gb = load ptr, ptr %i.p, align 8, !tbaa !185
   %i.gc = getelementptr inbounds nuw [24 x i8], ptr %i.gb, i64 %indvars.iv
-  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 2 uses
+  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 4 uses
   %i.ge = load ptr, ptr %i.r, align 8, !tbaa !185
   %i.gf = getelementptr inbounds nuw [24 x i8], ptr %i.ge, i64 %indvars.iv
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !187
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split.us
-  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 10 uses
-  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 2 uses
-  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 2 uses
+  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 15 uses
+  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 4 uses
+  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 4 uses
   %i.gi = mul nsw i64 %i.fi, %.086230
-  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 2 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 4 uses
   %i.gj = icmp ult i64 %.086230, %i.bd
   %.fr = freeze i1 %i.gj
-  br i1 %.fr, label %.preheader.split, label %.preheader.split.us
+  br i1 %.fr, label %.preheader.split, label %.preheader.split.us.preheader
 
-.preheader.split.us:                              ; preds = %.preheader, %.preheader.split.us
-  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.086230, %.preheader ] ; 3 uses
-  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.087229, %.preheader ] ; 2 uses
-  %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
-  %i.gl = load double, ptr %i.gk, align 8, !tbaa !189 ; 2 uses
-  %i.gm = mul nsw i64 %i.fi, %.085228.us
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %20 = add i64 %i.bd, %.086230
+  %21 = and i64 %20, 1
+  %lcmp.mod354.not.not = icmp eq i64 %21, 0
+  br i1 %lcmp.mod354.not.not, label %.preheader.split.us.prol, label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol:                         ; preds = %.preheader.split.us.preheader
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.087229
+  %23 = load double, ptr %22, align 8, !tbaa !189 ; 2 uses
+  %24 = mul nsw i64 %i.fi, %.086230
+  %25 = getelementptr [8 x i8], ptr %i.gh, i64 %24
+  store double %23, ptr %25, align 8, !tbaa !189
+  %gep.us.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %.086230
+  store double %23, ptr %gep.us.prol, align 8, !tbaa !189
+  %26 = add i64 %.087229, 1                       ; 2 uses
+  %27 = add nuw i64 %.086230, 1
+  br label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol.loopexit:                ; preds = %.preheader.split.us.prol, %.preheader.split.us.preheader
+  %.lcssa.unr = phi i64 [ poison, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %.085228.us.unr = phi i64 [ %.086230, %.preheader.split.us.preheader ], [ %27, %.preheader.split.us.prol ]
+  %.1227.us.unr = phi i64 [ %.087229, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %28 = icmp eq i64 %i.bd, %.086230
+  br i1 %28, label %.split.us, label %.preheader.split.us
+
+.preheader.split.us:                              ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us
+  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.085228.us.unr, %.preheader.split.us.prol.loopexit ] ; 4 uses
+  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.1227.us.unr, %.preheader.split.us.prol.loopexit ] ; 3 uses
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
+  %30 = load double, ptr %29, align 8, !tbaa !189 ; 2 uses
+  %31 = mul nsw i64 %i.fi, %.085228.us
+  %32 = getelementptr [8 x i8], ptr %i.gh, i64 %31
+  store double %30, ptr %32, align 8, !tbaa !189
+  %gep.us = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  store double %30, ptr %gep.us, align 8, !tbaa !189
+  %33 = add nuw i64 %.085228.us, 1                ; 3 uses
+  %i.gk = getelementptr [8 x i8], ptr %i.gd, i64 %.1227.us
+  %34 = getelementptr i8, ptr %i.gk, i64 8
+  %i.gl = load double, ptr %34, align 8, !tbaa !189 ; 2 uses
+  %i.gm = mul nsw i64 %i.fi, %33
   %i.gn = getelementptr [8 x i8], ptr %i.gh, i64 %i.gm
   store double %i.gl, ptr %i.gn, align 8, !tbaa !189
-  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %33
   store double %i.gl, ptr %gep.us.a, align 8, !tbaa !189
-  %i.go = add i64 %.1227.us, 1                    ; 2 uses
-  %i.gp = add nuw i64 %.085228.us, 1              ; 2 uses
-  %20 = icmp ult i64 %i.gp, %i.fi
-  br i1 %20, label %.preheader.split.us, label %.split.us, !llvm.loop !521
+  %i.go = add i64 %.1227.us, 2                    ; 2 uses
+  %i.gp = add nuw i64 %.085228.us, 2
+  %exitcond.not.1 = icmp eq i64 %33, %i.bd
+  br i1 %exitcond.not.1, label %.split.us, label %.preheader.split.us, !llvm.loop !521
 
 ._crit_edge:                                      ; preds = %.split.us, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #6
@@ -550,7 +584,7 @@ bb.q:                                             ; preds = %.invoke309
           to label %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9fullPivLuEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader.split:                                 ; preds = %.preheader, %bb.s
-  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 4 uses
+  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 5 uses
   %.1227 = phi i64 [ %i.ha, %bb.s ], [ %.087229, %.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227
   %i.gr = load double, ptr %i.gq, align 8, !tbaa !189 ; 2 uses
@@ -573,12 +607,12 @@ bb.r:                                             ; preds = %.preheader.split
 
 bb.s:                                             ; preds = %bb.r, %.preheader.split
   %i.ha = add i64 %.1227, 1                       ; 2 uses
-  %i.hb = add nuw i64 %.085228, 1                 ; 2 uses
-  %21 = icmp ult i64 %i.hb, %i.fi
-  br i1 %21, label %.preheader.split, label %.split.us, !llvm.loop !521
+  %i.hb = add nuw i64 %.085228, 1
+  %exitcond259.not = icmp eq i64 %.085228, %i.bd
+  br i1 %exitcond259.not, label %.split.us, label %.preheader.split, !llvm.loop !521
 
-.split.us:                                        ; preds = %.preheader.split.us, %bb.s
-  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %i.go, %.preheader.split.us ]
+.split.us:                                        ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us, %bb.s
+  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %.lcssa.unr, %.preheader.split.us.prol.loopexit ], [ %i.go, %.preheader.split.us ]
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.086230
   %i.hd = load double, ptr %i.hc, align 8, !tbaa !189
   %i.he = getelementptr inbounds [8 x i8], ptr %.sink.i165, i64 %.086230
@@ -981,7 +1015,7 @@ bb.c:                                             ; preds = %.lr.ph245, %_ZN8Lig
   %i.ba = ptrtoint ptr %i.ay to i64               ; 2 uses
   %i.bb = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
-  %i.bd = ashr exact i64 %i.bc, 2                 ; 11 uses
+  %i.bd = ashr exact i64 %i.bc, 2                 ; 15 uses
   %i.be = trunc i64 %i.bd to i32
   %.not90 = icmp sgt i32 %i.au, %i.be
   br i1 %.not90, label %bb.k, label %bb.d
@@ -1285,36 +1319,70 @@ bb.q:                                             ; preds = %.invoke309
   store i64 1, ptr %i.o, align 8, !tbaa !306
   %i.gb = load ptr, ptr %i.p, align 8, !tbaa !185
   %i.gc = getelementptr inbounds nuw [24 x i8], ptr %i.gb, i64 %indvars.iv
-  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 2 uses
+  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 4 uses
   %i.ge = load ptr, ptr %i.r, align 8, !tbaa !185
   %i.gf = getelementptr inbounds nuw [24 x i8], ptr %i.ge, i64 %indvars.iv
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !187
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split.us
-  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 10 uses
-  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 2 uses
-  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 2 uses
+  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 15 uses
+  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 4 uses
+  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 4 uses
   %i.gi = mul nsw i64 %i.fi, %.086230
-  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 2 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 4 uses
   %i.gj = icmp ult i64 %.086230, %i.bd
   %.fr = freeze i1 %i.gj
-  br i1 %.fr, label %.preheader.split, label %.preheader.split.us
+  br i1 %.fr, label %.preheader.split, label %.preheader.split.us.preheader
 
-.preheader.split.us:                              ; preds = %.preheader, %.preheader.split.us
-  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.086230, %.preheader ] ; 3 uses
-  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.087229, %.preheader ] ; 2 uses
-  %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
-  %i.gl = load double, ptr %i.gk, align 8, !tbaa !189 ; 2 uses
-  %i.gm = mul nsw i64 %i.fi, %.085228.us
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %20 = add i64 %i.bd, %.086230
+  %21 = and i64 %20, 1
+  %lcmp.mod354.not.not = icmp eq i64 %21, 0
+  br i1 %lcmp.mod354.not.not, label %.preheader.split.us.prol, label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol:                         ; preds = %.preheader.split.us.preheader
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.087229
+  %23 = load double, ptr %22, align 8, !tbaa !189 ; 2 uses
+  %24 = mul nsw i64 %i.fi, %.086230
+  %25 = getelementptr [8 x i8], ptr %i.gh, i64 %24
+  store double %23, ptr %25, align 8, !tbaa !189
+  %gep.us.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %.086230
+  store double %23, ptr %gep.us.prol, align 8, !tbaa !189
+  %26 = add i64 %.087229, 1                       ; 2 uses
+  %27 = add nuw i64 %.086230, 1
+  br label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol.loopexit:                ; preds = %.preheader.split.us.prol, %.preheader.split.us.preheader
+  %.lcssa.unr = phi i64 [ poison, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %.085228.us.unr = phi i64 [ %.086230, %.preheader.split.us.preheader ], [ %27, %.preheader.split.us.prol ]
+  %.1227.us.unr = phi i64 [ %.087229, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %28 = icmp eq i64 %i.bd, %.086230
+  br i1 %28, label %.split.us, label %.preheader.split.us
+
+.preheader.split.us:                              ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us
+  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.085228.us.unr, %.preheader.split.us.prol.loopexit ] ; 4 uses
+  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.1227.us.unr, %.preheader.split.us.prol.loopexit ] ; 3 uses
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
+  %30 = load double, ptr %29, align 8, !tbaa !189 ; 2 uses
+  %31 = mul nsw i64 %i.fi, %.085228.us
+  %32 = getelementptr [8 x i8], ptr %i.gh, i64 %31
+  store double %30, ptr %32, align 8, !tbaa !189
+  %gep.us = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  store double %30, ptr %gep.us, align 8, !tbaa !189
+  %33 = add nuw i64 %.085228.us, 1                ; 3 uses
+  %i.gk = getelementptr [8 x i8], ptr %i.gd, i64 %.1227.us
+  %34 = getelementptr i8, ptr %i.gk, i64 8
+  %i.gl = load double, ptr %34, align 8, !tbaa !189 ; 2 uses
+  %i.gm = mul nsw i64 %i.fi, %33
   %i.gn = getelementptr [8 x i8], ptr %i.gh, i64 %i.gm
   store double %i.gl, ptr %i.gn, align 8, !tbaa !189
-  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %33
   store double %i.gl, ptr %gep.us.a, align 8, !tbaa !189
-  %i.go = add i64 %.1227.us, 1                    ; 2 uses
-  %i.gp = add nuw i64 %.085228.us, 1              ; 2 uses
-  %20 = icmp ult i64 %i.gp, %i.fi
-  br i1 %20, label %.preheader.split.us, label %.split.us, !llvm.loop !1124
+  %i.go = add i64 %.1227.us, 2                    ; 2 uses
+  %i.gp = add nuw i64 %.085228.us, 2
+  %exitcond.not.1 = icmp eq i64 %33, %i.bd
+  br i1 %exitcond.not.1, label %.split.us, label %.preheader.split.us, !llvm.loop !1124
 
 ._crit_edge:                                      ; preds = %.split.us, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #6
@@ -1326,7 +1394,7 @@ bb.q:                                             ; preds = %.invoke309
           to label %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9fullPivLuEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader.split:                                 ; preds = %.preheader, %bb.s
-  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 4 uses
+  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 5 uses
   %.1227 = phi i64 [ %i.ha, %bb.s ], [ %.087229, %.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227
   %i.gr = load double, ptr %i.gq, align 8, !tbaa !189 ; 2 uses
@@ -1349,12 +1417,12 @@ bb.r:                                             ; preds = %.preheader.split
 
 bb.s:                                             ; preds = %bb.r, %.preheader.split
   %i.ha = add i64 %.1227, 1                       ; 2 uses
-  %i.hb = add nuw i64 %.085228, 1                 ; 2 uses
-  %21 = icmp ult i64 %i.hb, %i.fi
-  br i1 %21, label %.preheader.split, label %.split.us, !llvm.loop !1124
+  %i.hb = add nuw i64 %.085228, 1
+  %exitcond259.not = icmp eq i64 %.085228, %i.bd
+  br i1 %exitcond259.not, label %.split.us, label %.preheader.split, !llvm.loop !1124
 
-.split.us:                                        ; preds = %.preheader.split.us, %bb.s
-  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %i.go, %.preheader.split.us ]
+.split.us:                                        ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us, %bb.s
+  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %.lcssa.unr, %.preheader.split.us.prol.loopexit ], [ %i.go, %.preheader.split.us ]
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.086230
   %i.hd = load double, ptr %i.hc, align 8, !tbaa !189
   %i.he = getelementptr inbounds [8 x i8], ptr %.sink.i165, i64 %.086230
@@ -1757,7 +1825,7 @@ bb.c:                                             ; preds = %.lr.ph245, %_ZN8Lig
   %i.ba = ptrtoint ptr %i.ay to i64               ; 2 uses
   %i.bb = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
-  %i.bd = ashr exact i64 %i.bc, 2                 ; 11 uses
+  %i.bd = ashr exact i64 %i.bc, 2                 ; 15 uses
   %i.be = trunc i64 %i.bd to i32
   %.not90 = icmp sgt i32 %i.au, %i.be
   br i1 %.not90, label %bb.k, label %bb.d
@@ -2061,36 +2129,70 @@ bb.q:                                             ; preds = %.invoke309
   store i64 1, ptr %i.o, align 8, !tbaa !306
   %i.gb = load ptr, ptr %i.p, align 8, !tbaa !185
   %i.gc = getelementptr inbounds nuw [24 x i8], ptr %i.gb, i64 %indvars.iv
-  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 2 uses
+  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 4 uses
   %i.ge = load ptr, ptr %i.r, align 8, !tbaa !185
   %i.gf = getelementptr inbounds nuw [24 x i8], ptr %i.ge, i64 %indvars.iv
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !187
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split.us
-  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 10 uses
-  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 2 uses
-  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 2 uses
+  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 15 uses
+  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 4 uses
+  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 4 uses
   %i.gi = mul nsw i64 %i.fi, %.086230
-  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 2 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 4 uses
   %i.gj = icmp ult i64 %.086230, %i.bd
   %.fr = freeze i1 %i.gj
-  br i1 %.fr, label %.preheader.split, label %.preheader.split.us
+  br i1 %.fr, label %.preheader.split, label %.preheader.split.us.preheader
 
-.preheader.split.us:                              ; preds = %.preheader, %.preheader.split.us
-  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.086230, %.preheader ] ; 3 uses
-  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.087229, %.preheader ] ; 2 uses
-  %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
-  %i.gl = load double, ptr %i.gk, align 8, !tbaa !189 ; 2 uses
-  %i.gm = mul nsw i64 %i.fi, %.085228.us
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %20 = add i64 %i.bd, %.086230
+  %21 = and i64 %20, 1
+  %lcmp.mod354.not.not = icmp eq i64 %21, 0
+  br i1 %lcmp.mod354.not.not, label %.preheader.split.us.prol, label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol:                         ; preds = %.preheader.split.us.preheader
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.087229
+  %23 = load double, ptr %22, align 8, !tbaa !189 ; 2 uses
+  %24 = mul nsw i64 %i.fi, %.086230
+  %25 = getelementptr [8 x i8], ptr %i.gh, i64 %24
+  store double %23, ptr %25, align 8, !tbaa !189
+  %gep.us.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %.086230
+  store double %23, ptr %gep.us.prol, align 8, !tbaa !189
+  %26 = add i64 %.087229, 1                       ; 2 uses
+  %27 = add nuw i64 %.086230, 1
+  br label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol.loopexit:                ; preds = %.preheader.split.us.prol, %.preheader.split.us.preheader
+  %.lcssa.unr = phi i64 [ poison, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %.085228.us.unr = phi i64 [ %.086230, %.preheader.split.us.preheader ], [ %27, %.preheader.split.us.prol ]
+  %.1227.us.unr = phi i64 [ %.087229, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %28 = icmp eq i64 %i.bd, %.086230
+  br i1 %28, label %.split.us, label %.preheader.split.us
+
+.preheader.split.us:                              ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us
+  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.085228.us.unr, %.preheader.split.us.prol.loopexit ] ; 4 uses
+  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.1227.us.unr, %.preheader.split.us.prol.loopexit ] ; 3 uses
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
+  %30 = load double, ptr %29, align 8, !tbaa !189 ; 2 uses
+  %31 = mul nsw i64 %i.fi, %.085228.us
+  %32 = getelementptr [8 x i8], ptr %i.gh, i64 %31
+  store double %30, ptr %32, align 8, !tbaa !189
+  %gep.us = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  store double %30, ptr %gep.us, align 8, !tbaa !189
+  %33 = add nuw i64 %.085228.us, 1                ; 3 uses
+  %i.gk = getelementptr [8 x i8], ptr %i.gd, i64 %.1227.us
+  %34 = getelementptr i8, ptr %i.gk, i64 8
+  %i.gl = load double, ptr %34, align 8, !tbaa !189 ; 2 uses
+  %i.gm = mul nsw i64 %i.fi, %33
   %i.gn = getelementptr [8 x i8], ptr %i.gh, i64 %i.gm
   store double %i.gl, ptr %i.gn, align 8, !tbaa !189
-  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %33
   store double %i.gl, ptr %gep.us.a, align 8, !tbaa !189
-  %i.go = add i64 %.1227.us, 1                    ; 2 uses
-  %i.gp = add nuw i64 %.085228.us, 1              ; 2 uses
-  %20 = icmp ult i64 %i.gp, %i.fi
-  br i1 %20, label %.preheader.split.us, label %.split.us, !llvm.loop !1203
+  %i.go = add i64 %.1227.us, 2                    ; 2 uses
+  %i.gp = add nuw i64 %.085228.us, 2
+  %exitcond.not.1 = icmp eq i64 %33, %i.bd
+  br i1 %exitcond.not.1, label %.split.us, label %.preheader.split.us, !llvm.loop !1203
 
 ._crit_edge:                                      ; preds = %.split.us, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #6
@@ -2102,7 +2204,7 @@ bb.q:                                             ; preds = %.invoke309
           to label %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9fullPivLuEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader.split:                                 ; preds = %.preheader, %bb.s
-  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 4 uses
+  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 5 uses
   %.1227 = phi i64 [ %i.ha, %bb.s ], [ %.087229, %.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227
   %i.gr = load double, ptr %i.gq, align 8, !tbaa !189 ; 2 uses
@@ -2125,12 +2227,12 @@ bb.r:                                             ; preds = %.preheader.split
 
 bb.s:                                             ; preds = %bb.r, %.preheader.split
   %i.ha = add i64 %.1227, 1                       ; 2 uses
-  %i.hb = add nuw i64 %.085228, 1                 ; 2 uses
-  %21 = icmp ult i64 %i.hb, %i.fi
-  br i1 %21, label %.preheader.split, label %.split.us, !llvm.loop !1203
+  %i.hb = add nuw i64 %.085228, 1
+  %exitcond259.not = icmp eq i64 %.085228, %i.bd
+  br i1 %exitcond259.not, label %.split.us, label %.preheader.split, !llvm.loop !1203
 
-.split.us:                                        ; preds = %.preheader.split.us, %bb.s
-  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %i.go, %.preheader.split.us ]
+.split.us:                                        ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us, %bb.s
+  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %.lcssa.unr, %.preheader.split.us.prol.loopexit ], [ %i.go, %.preheader.split.us ]
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.086230
   %i.hd = load double, ptr %i.hc, align 8, !tbaa !189
   %i.he = getelementptr inbounds [8 x i8], ptr %.sink.i165, i64 %.086230
@@ -2533,7 +2635,7 @@ bb.c:                                             ; preds = %.lr.ph245, %_ZN8Lig
   %i.ba = ptrtoint ptr %i.ay to i64               ; 2 uses
   %i.bb = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bc = sub i64 %i.ba, %i.bb                    ; 2 uses
-  %i.bd = ashr exact i64 %i.bc, 2                 ; 11 uses
+  %i.bd = ashr exact i64 %i.bc, 2                 ; 15 uses
   %i.be = trunc i64 %i.bd to i32
   %.not90 = icmp sgt i32 %i.au, %i.be
   br i1 %.not90, label %bb.k, label %bb.d
@@ -2837,36 +2939,70 @@ bb.q:                                             ; preds = %.invoke309
   store i64 1, ptr %i.o, align 8, !tbaa !306
   %i.gb = load ptr, ptr %i.p, align 8, !tbaa !185
   %i.gc = getelementptr inbounds nuw [24 x i8], ptr %i.gb, i64 %indvars.iv
-  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 2 uses
+  %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !187 ; 4 uses
   %i.ge = load ptr, ptr %i.r, align 8, !tbaa !185
   %i.gf = getelementptr inbounds nuw [24 x i8], ptr %i.ge, i64 %indvars.iv
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !187
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split.us
-  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 10 uses
-  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 2 uses
-  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 2 uses
+  %.086230 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hf, %.split.us ] ; 15 uses
+  %.087229 = phi i64 [ 0, %.preheader.lr.ph ], [ %.us-phi, %.split.us ] ; 4 uses
+  %i.gh = getelementptr [8 x i8], ptr %i.fo, i64 %.086230 ; 4 uses
   %i.gi = mul nsw i64 %i.fi, %.086230
-  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 2 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %i.fo, i64 %i.gi ; 4 uses
   %i.gj = icmp ult i64 %.086230, %i.bd
   %.fr = freeze i1 %i.gj
-  br i1 %.fr, label %.preheader.split, label %.preheader.split.us
+  br i1 %.fr, label %.preheader.split, label %.preheader.split.us.preheader
 
-.preheader.split.us:                              ; preds = %.preheader, %.preheader.split.us
-  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.086230, %.preheader ] ; 3 uses
-  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.087229, %.preheader ] ; 2 uses
-  %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
-  %i.gl = load double, ptr %i.gk, align 8, !tbaa !189 ; 2 uses
-  %i.gm = mul nsw i64 %i.fi, %.085228.us
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %20 = add i64 %i.bd, %.086230
+  %21 = and i64 %20, 1
+  %lcmp.mod354.not.not = icmp eq i64 %21, 0
+  br i1 %lcmp.mod354.not.not, label %.preheader.split.us.prol, label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol:                         ; preds = %.preheader.split.us.preheader
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.087229
+  %23 = load double, ptr %22, align 8, !tbaa !189 ; 2 uses
+  %24 = mul nsw i64 %i.fi, %.086230
+  %25 = getelementptr [8 x i8], ptr %i.gh, i64 %24
+  store double %23, ptr %25, align 8, !tbaa !189
+  %gep.us.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %.086230
+  store double %23, ptr %gep.us.prol, align 8, !tbaa !189
+  %26 = add i64 %.087229, 1                       ; 2 uses
+  %27 = add nuw i64 %.086230, 1
+  br label %.preheader.split.us.prol.loopexit
+
+.preheader.split.us.prol.loopexit:                ; preds = %.preheader.split.us.prol, %.preheader.split.us.preheader
+  %.lcssa.unr = phi i64 [ poison, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %.085228.us.unr = phi i64 [ %.086230, %.preheader.split.us.preheader ], [ %27, %.preheader.split.us.prol ]
+  %.1227.us.unr = phi i64 [ %.087229, %.preheader.split.us.preheader ], [ %26, %.preheader.split.us.prol ]
+  %28 = icmp eq i64 %i.bd, %.086230
+  br i1 %28, label %.split.us, label %.preheader.split.us
+
+.preheader.split.us:                              ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us
+  %.085228.us = phi i64 [ %i.gp, %.preheader.split.us ], [ %.085228.us.unr, %.preheader.split.us.prol.loopexit ] ; 4 uses
+  %.1227.us = phi i64 [ %i.go, %.preheader.split.us ], [ %.1227.us.unr, %.preheader.split.us.prol.loopexit ] ; 3 uses
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227.us
+  %30 = load double, ptr %29, align 8, !tbaa !189 ; 2 uses
+  %31 = mul nsw i64 %i.fi, %.085228.us
+  %32 = getelementptr [8 x i8], ptr %i.gh, i64 %31
+  store double %30, ptr %32, align 8, !tbaa !189
+  %gep.us = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  store double %30, ptr %gep.us, align 8, !tbaa !189
+  %33 = add nuw i64 %.085228.us, 1                ; 3 uses
+  %i.gk = getelementptr [8 x i8], ptr %i.gd, i64 %.1227.us
+  %34 = getelementptr i8, ptr %i.gk, i64 8
+  %i.gl = load double, ptr %34, align 8, !tbaa !189 ; 2 uses
+  %i.gm = mul nsw i64 %i.fi, %33
   %i.gn = getelementptr [8 x i8], ptr %i.gh, i64 %i.gm
   store double %i.gl, ptr %i.gn, align 8, !tbaa !189
-  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %.085228.us
+  %gep.us.a = getelementptr [8 x i8], ptr %invariant.gep, i64 %33
   store double %i.gl, ptr %gep.us.a, align 8, !tbaa !189
-  %i.go = add i64 %.1227.us, 1                    ; 2 uses
-  %i.gp = add nuw i64 %.085228.us, 1              ; 2 uses
-  %20 = icmp ult i64 %i.gp, %i.fi
-  br i1 %20, label %.preheader.split.us, label %.split.us, !llvm.loop !1240
+  %i.go = add i64 %.1227.us, 2                    ; 2 uses
+  %i.gp = add nuw i64 %.085228.us, 2
+  %exitcond.not.1 = icmp eq i64 %33, %i.bd
+  br i1 %exitcond.not.1, label %.split.us, label %.preheader.split.us, !llvm.loop !1240
 
 ._crit_edge:                                      ; preds = %.split.us, %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #6
@@ -2878,7 +3014,7 @@ bb.q:                                             ; preds = %.invoke309
           to label %_ZNK5Eigen10MatrixBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE9fullPivLuEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .preheader.split:                                 ; preds = %.preheader, %bb.s
-  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 4 uses
+  %.085228 = phi i64 [ %i.hb, %bb.s ], [ %.086230, %.preheader ] ; 5 uses
   %.1227 = phi i64 [ %i.ha, %bb.s ], [ %.087229, %.preheader ] ; 2 uses
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.gd, i64 %.1227
   %i.gr = load double, ptr %i.gq, align 8, !tbaa !189 ; 2 uses
@@ -2901,12 +3037,12 @@ bb.r:                                             ; preds = %.preheader.split
 
 bb.s:                                             ; preds = %bb.r, %.preheader.split
   %i.ha = add i64 %.1227, 1                       ; 2 uses
-  %i.hb = add nuw i64 %.085228, 1                 ; 2 uses
-  %21 = icmp ult i64 %i.hb, %i.fi
-  br i1 %21, label %.preheader.split, label %.split.us, !llvm.loop !1240
+  %i.hb = add nuw i64 %.085228, 1
+  %exitcond259.not = icmp eq i64 %.085228, %i.bd
+  br i1 %exitcond259.not, label %.split.us, label %.preheader.split, !llvm.loop !1240
 
-.split.us:                                        ; preds = %.preheader.split.us, %bb.s
-  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %i.go, %.preheader.split.us ]
+.split.us:                                        ; preds = %.preheader.split.us.prol.loopexit, %.preheader.split.us, %bb.s
+  %.us-phi = phi i64 [ %i.ha, %bb.s ], [ %.lcssa.unr, %.preheader.split.us.prol.loopexit ], [ %i.go, %.preheader.split.us ]
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.gg, i64 %.086230
   %i.hd = load double, ptr %i.hc, align 8, !tbaa !189
   %i.he = getelementptr inbounds [8 x i8], ptr %.sink.i165, i64 %.086230
