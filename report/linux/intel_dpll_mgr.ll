@@ -204,14 +204,8 @@ bb.a:
   %.val4 = load i32, ptr %2, align 4
   %i.b = getelementptr i8, ptr %.val, i64 16
   %.val.val = load i32, ptr %i.b, align 8
-  %i.c = mul i32 %.val.val, 6                     ; 4 uses
-  %3 = add i32 %i.c, 5
-  %4 = shl nuw i32 1, %3
-  %5 = add i32 %i.c, 4
-  %6 = shl nuw i32 1, %5
-  %7 = or disjoint i32 %4, %6
-  %i.d = shl i32 14, %i.c
-  %8 = or i32 %7, %i.d
+  %i.c = mul i32 %.val.val, 6                     ; 2 uses
+  %i.d = shl i32 62, %i.c
   %i.e = shl i32 %.val4, %i.c
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 442456) #14
   %.val.i.i = load ptr, ptr %0, align 8
@@ -219,7 +213,7 @@ bb.a:
   %i.g = getelementptr i8, ptr %i.f, i64 144
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call i32 %i.h(ptr noundef %i.f, i32 442456, i1 noundef zeroext true) #14, !inline_history !7
-  %i.j = xor i32 %8, -1
+  %i.j = xor i32 %i.d, -1
   %i.k = and i32 %i.i, %i.j
   %i.l = or i32 %i.k, %i.e
   %i.m = getelementptr i8, ptr %i.f, i64 176
@@ -599,14 +593,8 @@ bb.a:
   %i.c = getelementptr i8, ptr %i.b, i64 16
   %i.d = load i32, ptr %i.c, align 8              ; 4 uses
   %.val25 = load i32, ptr %2, align 4
-  %i.e = mul i32 %i.d, 6                          ; 4 uses
-  %3 = add i32 %i.e, 5
-  %4 = shl nuw i32 1, %3
-  %5 = add i32 %i.e, 4
-  %6 = shl nuw i32 1, %5
-  %7 = or disjoint i32 %4, %6
-  %i.f = shl i32 14, %i.e
-  %8 = or i32 %7, %i.f
+  %i.e = mul i32 %i.d, 6                          ; 2 uses
+  %i.f = shl i32 62, %i.e
   %i.g = shl i32 %.val25, %i.e
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 442456) #14
   %.val.i.i = load ptr, ptr %0, align 8
@@ -614,7 +602,7 @@ bb.a:
   %i.i = getelementptr i8, ptr %i.h, i64 144
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = tail call i32 %i.j(ptr noundef %i.h, i32 442456, i1 noundef zeroext true) #14, !inline_history !7
-  %i.l = xor i32 %8, -1
+  %i.l = xor i32 %i.f, -1
   %i.m = and i32 %i.k, %i.l
   %i.n = or i32 %i.m, %i.g
   %i.o = getelementptr i8, ptr %i.h, i64 176

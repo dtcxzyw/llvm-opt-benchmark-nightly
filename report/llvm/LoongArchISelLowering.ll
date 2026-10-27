@@ -205,8 +205,7 @@ bb.ae:                                            ; preds = %bb.ac
 
 _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit39.1: ; preds = %bb.ae, %bb.ad
   %i.dc = sub i32 %.055.1, %i.a
-  %8 = shl i32 %i.dc, 4
-  %i.dd = and i32 %8, 48
+  %i.dd = and i32 %i.dc, 3
   %i.de = select i1 %i.cg, i32 0, i32 %i.dd
   %i.df = sub i32 %.0.1, %i.a
   br label %bb.ai
@@ -234,8 +233,7 @@ bb.ah:                                            ; preds = %bb.af
   br label %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.1
 
 _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.1: ; preds = %bb.ah, %bb.ag
-  %9 = shl nsw i32 %.055.1, 4
-  %i.dn = and i32 %9, 48
+  %i.dn = and i32 %.055.1, 3
   %i.do = select i1 %i.cg, i32 0, i32 %i.dn
   br label %bb.ai
 
@@ -244,11 +242,12 @@ bb.ai:                                            ; preds = %_ZN4llvm23SmallVect
   %.sink101.a = phi i1 [ %i.cj, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.1 ], [ %i.cq, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit39.1 ]
   %.sink100 = phi i32 [ %i.do, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.1 ], [ %i.de, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit39.1 ]
   %.sink97 = load i32, ptr %7, align 4, !tbaa !160
-  %i.dp = shl i32 %.0.1.sink, 6
-  %i.dq = and i32 %i.dp, 192
+  %i.dp = shl i32 %.0.1.sink, 2
+  %i.dq = and i32 %i.dp, 12
   %i.dr = select i1 %.sink101.a, i32 0, i32 %i.dq
   %i.ds = or disjoint i32 %i.dr, %.sink100
-  %i.dt = or i32 %.sink97, %i.ds
+  %8 = shl nuw nsw i32 %i.ds, 4
+  %i.dt = or i32 %.sink97, %8
   store i32 %i.dt, ptr %7, align 4, !tbaa !160
   br label %.critedge31
 
