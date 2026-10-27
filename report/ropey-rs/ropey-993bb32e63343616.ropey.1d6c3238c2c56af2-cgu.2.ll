@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.i, %_RNvNtCsk17M
   %.lcssa1668 = phi ptr [ %i.o, %bb.g ], [ %i.ajq, %bb.es ]
   %i.jv = getelementptr inbounds nuw i8, ptr %.lcssa1668, i64 24 ; 5 uses
   %i.jw = call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.jv) ; 2 uses
-  %i.jx = extractvalue { ptr, i64 } %i.jw, 0      ; 6 uses
+  %i.jx = extractvalue { ptr, i64 } %i.jw, 0      ; 7 uses
   %i.jy = extractvalue { ptr, i64 } %i.jw, 1      ; 13 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !83)
   %i.jz = icmp samesign ult i64 %i.jy, 17
@@ -227,7 +227,7 @@ bb.ba:                                            ; preds = %._crit_edge
 
 bb.bb:                                            ; preds = %._crit_edge
   %i.kj = getelementptr inbounds nuw i8, ptr %i.jx, i64 %i.jy
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jx) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jx), "nonnull"(ptr %i.jx) ]
   %i.kk = icmp samesign eq i64 %i.jy, 0
   br i1 %i.kk, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit113, label %.lr.ph2271
 

@@ -205,8 +205,7 @@ define internal fastcc noalias noundef align 8 ptr @"_ZN10serde_core3ser5impls81
 bb.a:
   %.idx.i = mul nuw nsw i64 %.16.val, 24
   %i.a = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.0.val) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7076)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7077)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7078)
@@ -609,8 +608,7 @@ bb.di:                                            ; preds = %bb.df
   %.sroa.11.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.hu, i64 16
   %.sroa.11.0.copyload.i.i.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i, align 8, !noalias !12765
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hu), !noalias !12765
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i), "nonnull"(ptr %.val33.i.i.i) ]
   %i.uz = getelementptr inbounds nuw i8, ptr %.val33.i.i.i, i64 56
   %i.va = load ptr, ptr %i.uz, align 8, !invariant.load !28, !noalias !12927, !nonnull !28 ; 2 uses
   %i.vb = invoke noundef ptr %i.va(ptr noundef nonnull align 1 %.val32.i.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i, i64 noundef %.sroa.11.0.copyload.i.i.i.i)
@@ -1013,8 +1011,7 @@ bb.iz:                                            ; preds = %bb.iw
   %.sroa.11.0..sroa_idx.i.i.i.i122 = getelementptr inbounds nuw i8, ptr %i.gq, i64 16
   %.sroa.11.0.copyload.i.i.i.i123 = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i122, align 8, !noalias !13042
   call void @llvm.lifetime.end.p0(ptr nonnull %i.gq), !noalias !13042
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i23) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i24) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i23), "nonnull"(ptr %.val33.i.i.i24) ]
   %i.akm = getelementptr inbounds nuw i8, ptr %.val33.i.i.i24, i64 56
   %i.akn = load ptr, ptr %i.akm, align 8, !invariant.load !28, !noalias !13235, !nonnull !28 ; 2 uses
   %i.ako = invoke noundef ptr %i.akn(ptr noundef nonnull align 1 %.val32.i.i.i23, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i121, i64 noundef %.sroa.11.0.copyload.i.i.i.i123)
@@ -1417,8 +1414,7 @@ bb.sf:                                            ; preds = %bb.sc
   %.sroa.11.0..sroa_idx.i.i.i.i303 = getelementptr inbounds nuw i8, ptr %i.fe, i64 16
   %.sroa.11.0.copyload.i.i.i.i304 = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i303, align 8, !noalias !13347
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fe), !noalias !13347
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i206) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i207) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i206), "nonnull"(ptr %.val33.i.i.i207) ]
   %i.bmi = getelementptr inbounds nuw i8, ptr %.val33.i.i.i207, i64 56
   %i.bmj = load ptr, ptr %i.bmi, align 8, !invariant.load !28, !noalias !13576, !nonnull !28 ; 2 uses
   %i.bmk = invoke noundef ptr %i.bmj(ptr noundef nonnull align 1 %.val32.i.i.i206, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i302, i64 noundef %.sroa.11.0.copyload.i.i.i.i304)
@@ -1821,8 +1817,7 @@ bb.we:                                            ; preds = %bb.wb
   %.sroa.11.0..sroa_idx.i.i.i.i541 = getelementptr inbounds nuw i8, ptr %i.ee, i64 16
   %.sroa.11.0.copyload.i.i.i.i542 = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i541, align 8, !noalias !13644
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ee), !noalias !13644
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i389) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i390) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i389), "nonnull"(ptr %.val33.i.i.i390) ]
   %i.bvq = getelementptr inbounds nuw i8, ptr %.val33.i.i.i390, i64 56
   %i.bvr = load ptr, ptr %i.bvq, align 8, !invariant.load !28, !noalias !13762, !nonnull !28 ; 2 uses
   %i.bvs = invoke noundef ptr %i.bvr(ptr noundef nonnull align 1 %.val32.i.i.i389, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i540, i64 noundef %.sroa.11.0.copyload.i.i.i.i542)
@@ -2225,8 +2220,7 @@ bb.agx:                                           ; preds = %bb.agu
   %.sroa.11.0..sroa_idx.i.i.i.i815 = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %.sroa.11.0.copyload.i.i.i.i816 = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i815, align 8, !noalias !14072
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd), !noalias !14072
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i622) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i623) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i622), "nonnull"(ptr %.val33.i.i.i623) ]
   %i.cqd = getelementptr inbounds nuw i8, ptr %.val33.i.i.i623, i64 56
   %i.cqe = load ptr, ptr %i.cqd, align 8, !invariant.load !28, !noalias !14191, !nonnull !28 ; 2 uses
   %i.cqf = invoke noundef ptr %i.cqe(ptr noundef nonnull align 1 %.val32.i.i.i622, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i814, i64 noundef %.sroa.11.0.copyload.i.i.i.i816)
@@ -2629,8 +2623,7 @@ bb.dq:                                            ; preds = %bb.dn
   %.sroa.11.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %.sroa.11.0.copyload.i.i.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i, align 8, !noalias !15289
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !15289
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i46) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i47) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i46), "nonnull"(ptr %.val33.i.i.i47) ]
   %i.lk = getelementptr inbounds nuw i8, ptr %.val33.i.i.i47, i64 56
   %i.ll = load ptr, ptr %i.lk, align 8, !invariant.load !28, !noalias !15406, !nonnull !28 ; 2 uses
   %i.lm = invoke noundef ptr %i.ll(ptr noundef nonnull align 1 %.val32.i.i.i46, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i, i64 noundef %.sroa.11.0.copyload.i.i.i.i)
@@ -3033,8 +3026,7 @@ bb.ad:                                            ; preds = %bb.aa
   %.sroa.11.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.by, i64 16
   %.sroa.11.0.copyload.i.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8, !noalias !16670
   call void @llvm.lifetime.end.p0(ptr nonnull %i.by), !noalias !16670
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i), "nonnull"(ptr %.val33.i.i) ]
   %i.hk = getelementptr inbounds nuw i8, ptr %.val33.i.i, i64 56
   %i.hl = load ptr, ptr %i.hk, align 8, !invariant.load !28, !noalias !16789, !nonnull !28 ; 2 uses
   %i.hm = invoke noundef ptr %i.hl(ptr noundef nonnull align 1 %.val32.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i, i64 noundef %.sroa.11.0.copyload.i.i.i)
@@ -3437,8 +3429,7 @@ bb.bc:                                            ; preds = %bb.az
   %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %.sroa.11.0.copyload.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i, align 8, !noalias !20773
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !20773
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13), "nonnull"(ptr %.val14) ]
   %i.jr = getelementptr inbounds nuw i8, ptr %.val14, i64 56
   %i.js = load ptr, ptr %i.jr, align 8, !invariant.load !28, !noalias !20773, !nonnull !28 ; 2 uses
   %i.jt = invoke noundef ptr %i.js(ptr noundef nonnull align 1 %.val13, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i, i64 noundef %.sroa.11.0.copyload.i.i)
@@ -3841,8 +3832,7 @@ bb.ae:                                            ; preds = %bb.ab
   %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %.sroa.11.0.copyload.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i, align 8, !noalias !21618
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !21618
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i), "nonnull"(ptr %.val32.i) ]
   %i.fo = getelementptr inbounds nuw i8, ptr %.val32.i, i64 56
   %i.fp = load ptr, ptr %i.fo, align 8, !invariant.load !28, !noalias !21618, !nonnull !28 ; 2 uses
   %i.fq = invoke noundef ptr %i.fp(ptr noundef nonnull align 1 %.val.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i, i64 noundef %.sroa.11.0.copyload.i.i)
@@ -4245,8 +4235,7 @@ bb.hd:                                            ; preds = %bb.ha
   %.sroa.11.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %.sroa.11.0.copyload.i.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8, !noalias !22863
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !22863
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i48) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val37.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i48), "nonnull"(ptr %.val37.i) ]
   %i.tb = getelementptr inbounds nuw i8, ptr %.val37.i, i64 56
   %i.tc = load ptr, ptr %i.tb, align 8, !invariant.load !28, !noalias !22863, !nonnull !28 ; 2 uses
   %i.td = invoke noundef ptr %i.tc(ptr noundef nonnull align 1 %.val.i48, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i, i64 noundef %.sroa.11.0.copyload.i.i.i)
@@ -4540,8 +4529,7 @@ bb.a:
   %.sroa.444.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8 ; 7 uses
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.444.0..sroa_idx, align 8
   %.sroa.545.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bw, i64 16 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.64.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.72.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.64.val), "nonnull"(ptr %.72.val) ]
   %i.bx = getelementptr inbounds nuw i8, ptr %.72.val, i64 128
   %i.by = load ptr, ptr %i.bx, align 8, !invariant.load !28, !nonnull !28
   %i.bz = getelementptr inbounds nuw i8, ptr %i.br, i64 8 ; 3 uses
@@ -4944,8 +4932,7 @@ bb.ae:                                            ; preds = %bb.ab
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %.sroa.11.0.copyload = load i64, ptr %.sroa.11.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.48.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.56.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.48.val), "nonnull"(ptr %.56.val) ]
   %i.ex = getelementptr inbounds nuw i8, ptr %.56.val, i64 56
   %i.ey = load ptr, ptr %i.ex, align 8, !invariant.load !28, !nonnull !28 ; 2 uses
   %i.ez = invoke noundef ptr %i.ey(ptr noundef nonnull align 1 %.48.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload, i64 noundef %.sroa.11.0.copyload)
@@ -5348,8 +5335,7 @@ bb.ak:                                            ; preds = %bb.ah
   %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %.sroa.11.0.copyload.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i, align 8, !noalias !24536
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !24536
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val4) ]
   %i.ex = getelementptr inbounds nuw i8, ptr %.val4, i64 56
   %i.ey = load ptr, ptr %i.ex, align 8, !invariant.load !28, !noalias !24536, !nonnull !28 ; 2 uses
   %i.ez = invoke noundef ptr %i.ey(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i, i64 noundef %.sroa.11.0.copyload.i.i)
@@ -5752,8 +5738,7 @@ bb.r:                                             ; preds = %bb.o
   %.sroa.11.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %.sroa.11.0.copyload.i.i.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i.i, align 8, !noalias !36143
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !36143
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val33.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.i.i), "nonnull"(ptr %.val33.i.i.i) ]
   %i.cw = getelementptr inbounds nuw i8, ptr %.val33.i.i.i, i64 56
   %i.cx = load ptr, ptr %i.cw, align 8, !invariant.load !28, !noalias !36143, !nonnull !28 ; 2 uses
   %i.cy = invoke noundef ptr %i.cx(ptr noundef nonnull align 1 %.val32.i.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i.i, i64 noundef %.sroa.11.0.copyload.i.i.i.i)
@@ -6156,8 +6141,7 @@ bb.cc:                                            ; preds = %bb.bz
   %.sroa.11.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %.sroa.11.0.copyload.i.i.i = load i64, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8, !noalias !36233
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !36233
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i), "nonnull"(ptr %.val9.i) ]
   %i.ii = getelementptr inbounds nuw i8, ptr %.val9.i, i64 56
   %i.ij = load ptr, ptr %i.ii, align 8, !invariant.load !28, !noalias !36233, !nonnull !28 ; 2 uses
   %i.ik = invoke noundef ptr %i.ij(ptr noundef nonnull align 1 %.val.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.7.0.copyload.i.i.i, i64 noundef %.sroa.11.0.copyload.i.i.i)

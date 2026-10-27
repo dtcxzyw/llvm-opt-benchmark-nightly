@@ -205,8 +205,7 @@ bb.af:                                            ; preds = %bb.o, %_RNvMNtNtCsi
   br label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterRSINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_RShEEINtB5_7ZipImplBW_B3t_E4nextCskeugdADtBsi_12pingora_core.exit.thread.thread.i
 
 _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterRSINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_RShEEINtB5_7ZipImplBW_B3t_E4nextCskeugdADtBsi_12pingora_core.exit.lr.ph.i: ; preds = %bb.af
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.438.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.sroa.438.0.copyload.i) ]
   %.val25.i = load ptr, ptr %i.gp, align 8, !alias.scope !1203, !nonnull !4 ; 4 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gp, i64 8
   %.val26.i = load i64, ptr %i.gt, align 8, !alias.scope !1203 ; 4 uses
@@ -241,8 +240,7 @@ _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %exitcond.not.i7781.not, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_hEEINtB5_7ZipImplBW_B3r_E4nextCskeugdADtBsi_12pingora_core.exit.i.lr.ph.preheader, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_hEEINtB5_7ZipImplBW_B3r_E4nextCskeugdADtBsi_12pingora_core.exit.thread.loopexit.i
 
 _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_hEEINtB5_7ZipImplBW_B3r_E4nextCskeugdADtBsi_12pingora_core.exit.i.lr.ph.preheader: ; preds = %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterRSINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_RShEEINtB5_7ZipImplBW_B3t_E4nextCskeugdADtBsi_12pingora_core.exit.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.040.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.442.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.040.0.copyload.i), "nonnull"(ptr %.sroa.442.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_hEEINtB5_7ZipImplBW_B3r_E4nextCskeugdADtBsi_12pingora_core.exit.i.lr.ph
 
 _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterRSINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_RShEEINtB5_7ZipImplBW_B3t_E4nextCskeugdADtBsi_12pingora_core.exit.thread.i: ; preds = %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterINtNtNtCsiRgJJXJ4lb7_6brotli3enc11find_stride23EntropyBucketPopulationNtNtCsc389t4z7aPt_12alloc_stdlib9std_alloc13StandardAllocEEIBX_hEEINtB5_7ZipImplBW_B3r_E4nextCskeugdADtBsi_12pingora_core.exit.thread.loopexit.i
@@ -298,8 +296,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.hq, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItermEEINtB5_7ZipImplBW_B1r_E4nextCskeugdADtBsi_12pingora_core.exit.lr.ph.i, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItermEEINtB5_7ZipImplBW_B1r_E4nextCskeugdADtBsi_12pingora_core.exit.thread.i
 
 _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItermEEINtB5_7ZipImplBW_B1r_E4nextCskeugdADtBsi_12pingora_core.exit.lr.ph.i: ; preds = %bb.aj
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.046.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.448.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.046.0.copyload.i), "nonnull"(ptr %.sroa.448.0.copyload.i) ]
   %i.hr = sub nuw i64 %.sroa.751.0.copyload.i, %.sroa.550.0.copyload.i ; 3 uses
   %min.iters.check = icmp ult i64 %i.hr, 8
   br i1 %min.iters.check, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItermEEINtB5_7ZipImplBW_B1r_E4nextCskeugdADtBsi_12pingora_core.exit.i.preheader, label %vector.memcheck
@@ -702,11 +699,7 @@ bb.al:                                            ; preds = %bb.ah, %bb.ak
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(48) %2, i64 48, i1 false)
   %.sroa.0.48..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.48..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0260.0292306344376424466) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0262.0320335385415475) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0265.0354370430460) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0277.1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v), "nonnull"(ptr %.sroa.0260.0292306344376424466), "nonnull"(ptr %.sroa.0262.0320335385415475), "nonnull"(ptr %.sroa.0265.0354370430460), "nonnull"(ptr %.sroa.0277.1) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.idx.i = shl i64 %.sroa.6.0280283309341379421469, 5 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0260.0292306344376424466, i64 %.idx.i

@@ -34,8 +34,7 @@ bb.a:
   %i.g = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13, i64 %.val14) #14 ; 2 uses
   %i.h = extractvalue { ptr, i64 } %i.g, 0        ; 2 uses
   %i.i = extractvalue { ptr, i64 } %i.g, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.h) ]
   %spec.store.select.i.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %i.i)
   %i.j = tail call i32 @memcmp(ptr nonnull readonly %i.e, ptr nonnull readonly %i.h, i64 %spec.store.select.i.i.i.i.i), !alias.scope !38 ; 2 uses
   %i.k = sext i32 %i.j to i64
@@ -81,8 +80,7 @@ bb.f:                                             ; preds = %.noexc
   %i.u = extractvalue { ptr, i64 } %i.r, 0        ; 2 uses
   %i.v = extractvalue { ptr, i64 } %i.s, 0        ; 2 uses
   %i.w = extractvalue { ptr, i64 } %i.s, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u), "nonnull"(ptr %i.v) ]
   %spec.store.select.i.i.i.i.i15 = tail call i64 @llvm.umin.i64(i64 %i.t, i64 %i.w)
   %i.x = tail call i32 @memcmp(ptr nonnull readonly %i.u, ptr nonnull readonly %i.v, i64 %spec.store.select.i.i.i.i.i15), !alias.scope !39 ; 2 uses
   %i.y = sext i32 %i.x to i64
@@ -129,8 +127,7 @@ bb.a:
   %i.g = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val18, i64 %.val19) #14 ; 2 uses
   %i.h = extractvalue { ptr, i64 } %i.g, 0        ; 2 uses
   %i.i = extractvalue { ptr, i64 } %i.g, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.h) ]
   %spec.store.select.i.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %i.i)
   %i.j = tail call i32 @memcmp(ptr nonnull readonly %i.e, ptr nonnull readonly %i.h, i64 %spec.store.select.i.i.i.i.i), !alias.scope !87 ; 2 uses
   %i.k = sext i32 %i.j to i64
@@ -153,8 +150,7 @@ bb.a:
   %i.v = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val14, i64 %.val15) #14 ; 2 uses
   %i.w = extractvalue { ptr, i64 } %i.v, 0        ; 2 uses
   %i.x = extractvalue { ptr, i64 } %i.v, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t), "nonnull"(ptr %i.w) ]
   %spec.store.select.i.i.i.i.i20 = tail call i64 @llvm.umin.i64(i64 %i.u, i64 %i.x)
   %i.y = tail call i32 @memcmp(ptr nonnull readonly %i.t, ptr nonnull readonly %i.w, i64 %spec.store.select.i.i.i.i.i20), !alias.scope !88 ; 2 uses
   %i.z = sext i32 %i.y to i64
@@ -183,8 +179,7 @@ bb.a:
   %i.ap = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val10, i64 %.val11) #14 ; 2 uses
   %i.aq = extractvalue { ptr, i64 } %i.ap, 0      ; 2 uses
   %i.ar = extractvalue { ptr, i64 } %i.ap, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aq) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an), "nonnull"(ptr %i.aq) ]
   %spec.store.select.i.i.i.i.i22 = tail call i64 @llvm.umin.i64(i64 %i.ao, i64 %i.ar)
   %i.as = tail call i32 @memcmp(ptr nonnull readonly %i.an, ptr nonnull readonly %i.aq, i64 %spec.store.select.i.i.i.i.i22), !alias.scope !89 ; 2 uses
   %i.at = sext i32 %i.as to i64
@@ -205,8 +200,7 @@ bb.a:
   %i.bc = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val6, i64 %.val7) #14 ; 2 uses
   %i.bd = extractvalue { ptr, i64 } %i.bc, 0      ; 2 uses
   %i.be = extractvalue { ptr, i64 } %i.bc, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ba) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bd) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ba), "nonnull"(ptr %i.bd) ]
   %spec.store.select.i.i.i.i.i24 = tail call i64 @llvm.umin.i64(i64 %i.bb, i64 %i.be)
   %i.bf = tail call i32 @memcmp(ptr nonnull readonly %i.ba, ptr nonnull readonly %i.bd, i64 %spec.store.select.i.i.i.i.i24), !alias.scope !90 ; 2 uses
   %i.bg = sext i32 %i.bf to i64
@@ -233,8 +227,7 @@ bb.a:
   %i.bv = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val2, i64 %.val3) #14 ; 2 uses
   %i.bw = extractvalue { ptr, i64 } %i.bv, 0      ; 2 uses
   %i.bx = extractvalue { ptr, i64 } %i.bv, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bt) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bw) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bt), "nonnull"(ptr %i.bw) ]
   %spec.store.select.i.i.i.i.i26 = tail call i64 @llvm.umin.i64(i64 %i.bu, i64 %i.bx)
   %i.by = tail call i32 @memcmp(ptr nonnull readonly %i.bt, ptr nonnull readonly %i.bw, i64 %spec.store.select.i.i.i.i.i26), !alias.scope !91 ; 2 uses
   %i.bz = sext i32 %i.by to i64
@@ -562,8 +555,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.u = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13.i.1, i64 %.val14.i.1) #14 ; 2 uses
   %i.v = extractvalue { ptr, i64 } %i.u, 0        ; 2 uses
   %i.w = extractvalue { ptr, i64 } %i.u, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.v) ]
   %spec.store.select.i.i.i.i.i.i34.1 = tail call i64 @llvm.umin.i64(i64 %i.t, i64 %i.w)
   %i.x = tail call i32 @memcmp(ptr nonnull readonly %i.s, ptr nonnull readonly %i.v, i64 %spec.store.select.i.i.i.i.i.i34.1), !alias.scope !153 ; 2 uses
   %i.y = sext i32 %i.x to i64
@@ -605,8 +597,7 @@ bb.j:                                             ; preds = %.noexc.i.1
   %i.ak = extractvalue { ptr, i64 } %i.ah, 0      ; 2 uses
   %i.al = extractvalue { ptr, i64 } %i.ai, 0      ; 2 uses
   %i.am = extractvalue { ptr, i64 } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak), "nonnull"(ptr %i.al) ]
   %spec.store.select.i.i.i.i.i15.i.1 = tail call i64 @llvm.umin.i64(i64 %i.aj, i64 %i.am)
   %i.an = tail call i32 @memcmp(ptr nonnull readonly %i.ak, ptr nonnull readonly %i.al, i64 %spec.store.select.i.i.i.i.i15.i.1), !alias.scope !154 ; 2 uses
   %i.ao = sext i32 %i.an to i64
@@ -674,8 +665,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3
   %i.bh = extractvalue { ptr, i64 } %i.be, 0      ; 2 uses
   %i.bi = extractvalue { ptr, i64 } %i.bf, 0      ; 2 uses
   %i.bj = extractvalue { ptr, i64 } %i.bf, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh), "nonnull"(ptr %i.bi) ]
   %spec.store.select.i.i.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.bg, i64 %i.bj)
   %i.bk = tail call i32 @memcmp(ptr nonnull readonly %i.bh, ptr nonnull readonly %i.bi, i64 %spec.store.select.i.i.i.i.i.i), !alias.scope !157, !noalias !156 ; 2 uses
   %i.bl = sext i32 %i.bk to i64
@@ -709,8 +699,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3
   %i.by = extractvalue { ptr, i64 } %i.bv, 0      ; 2 uses
   %i.bz = extractvalue { ptr, i64 } %i.bw, 0      ; 2 uses
   %i.ca = extractvalue { ptr, i64 } %i.bw, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.by) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bz) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.by), "nonnull"(ptr %i.bz) ]
   %spec.store.select.i.i.i.i.i26.i = tail call i64 @llvm.umin.i64(i64 %i.bx, i64 %i.ca)
   %i.cb = tail call i32 @memcmp(ptr nonnull readonly %i.by, ptr nonnull readonly %i.bz, i64 %spec.store.select.i.i.i.i.i26.i), !alias.scope !159, !noalias !156 ; 2 uses
   %i.cc = sext i32 %i.cb to i64
@@ -788,8 +777,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort19bidirectional_merg
   %i.da = tail call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13.i, i64 %.val14.i) #14 ; 2 uses
   %i.db = extractvalue { ptr, i64 } %i.da, 0      ; 2 uses
   %i.dc = extractvalue { ptr, i64 } %i.da, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cy) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.db) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cy), "nonnull"(ptr %i.db) ]
   %spec.store.select.i.i.i.i.i.i34 = tail call i64 @llvm.umin.i64(i64 %i.cz, i64 %i.dc)
   %i.dd = tail call i32 @memcmp(ptr nonnull readonly %i.cy, ptr nonnull readonly %i.db, i64 %spec.store.select.i.i.i.i.i.i34), !alias.scope !153 ; 2 uses
   %i.de = sext i32 %i.dd to i64
@@ -831,8 +819,7 @@ bb.p:                                             ; preds = %.noexc.i
   %i.dq = extractvalue { ptr, i64 } %i.dn, 0      ; 2 uses
   %i.dr = extractvalue { ptr, i64 } %i.do, 0      ; 2 uses
   %i.ds = extractvalue { ptr, i64 } %i.do, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dq) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dr) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dq), "nonnull"(ptr %i.dr) ]
   %spec.store.select.i.i.i.i.i15.i = tail call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.ds)
   %i.dt = tail call i32 @memcmp(ptr nonnull readonly %i.dq, ptr nonnull readonly %i.dr, i64 %spec.store.select.i.i.i.i.i15.i), !alias.scope !154 ; 2 uses
   %i.du = sext i32 %i.dt to i64

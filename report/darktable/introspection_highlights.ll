@@ -205,9 +205,7 @@ bb.i:                                             ; preds = %decompose_2D_Bsplin
   call void @llvm.experimental.noalias.scope.decl(metadata !623)
   call void @llvm.experimental.noalias.scope.decl(metadata !624)
   call void @llvm.experimental.noalias.scope.decl(metadata !625)
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.0, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %6, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64), "align"(ptr %.0, i64 64), "align"(ptr %6, i64 64) ]
   br i1 %.not.i, label %guide_laplacians.exit, label %.lr.ph321.i
 
 .lr.ph321.i:                                      ; preds = %bb.i
@@ -610,9 +608,7 @@ bb.s:                                             ; preds = %decompose_2D_Bsplin
   call void @llvm.experimental.noalias.scope.decl(metadata !630)
   call void @llvm.experimental.noalias.scope.decl(metadata !631)
   call void @llvm.experimental.noalias.scope.decl(metadata !632)
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.0, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %6, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64), "align"(ptr %.0, i64 64), "align"(ptr %6, i64 64) ]
   br i1 %.not.i, label %guide_laplacians.exit, label %.lr.ph214.i
 
 .lr.ph214.i:                                      ; preds = %bb.s

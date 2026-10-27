@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %"_ZN63_$LT$alloc..a
   br i1 %i.g, label %"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit.split.us", label %"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit.split"
 
 "_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit.split.us": ; preds = %"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12123.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12123.0.copyload), "nonnull"(ptr %.sroa.14.0.copyload) ]
   %i.i = sub i64 %.sroa.15.0.copyload, %.sroa.6117.0.copyload
   %umax50.i.us = call i64 @llvm.umax.i64(i64 %.sroa.4115.0.copyload, i64 %.sroa.15.0.copyload)
   %i.j = add i64 %.sroa.4115.0.copyload, -1
@@ -609,8 +608,7 @@ bb.ft:                                            ; preds = %bb.fo, %bb.fn
   br i1 %.not.i.i.i, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17h9a1e7f1187879c36E.exit.thread", label %bb.fu
 
 bb.fu:                                            ; preds = %bb.ft
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.76.0.copyload.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.76.0.copyload.i.i.i), "nonnull"(ptr %.sroa.9.0.copyload.i.i.i) ]
   %i.om = load ptr, ptr %.sroa.76.0.copyload.i.i.i, align 8, !noalias !6184, !noundef !17 ; 2 uses
   %.not.i174.i.i.i = icmp eq ptr %i.om, null
   br i1 %.not.i174.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
@@ -1013,8 +1011,7 @@ bb.hh:                                            ; preds = %"_ZN5alloc11collect
   br i1 %.not16.i.i.i, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17h9a1e7f1187879c36E.exit.thread", label %bb.hi
 
 bb.hi:                                            ; preds = %bb.hh
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.845.0.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1051.0.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.845.0.i.i.i), "nonnull"(ptr %.sroa.1051.0.i.i.i) ]
   %i.wg = load ptr, ptr %.sroa.845.0.i.i.i, align 8, !noalias !6184, !noundef !17 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.wg, null
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i, label %bb.gj
@@ -1417,8 +1414,7 @@ bb.da:                                            ; preds = %bb.cv, %bb.cu
   br i1 %.not.i.i.i, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17h8bd30e2254572d81E.exit.thread", label %bb.db
 
 bb.db:                                            ; preds = %bb.da
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.76.0.copyload.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.76.0.copyload.i.i.i), "nonnull"(ptr %.sroa.9.0.copyload.i.i.i) ]
   %i.ig = load ptr, ptr %.sroa.76.0.copyload.i.i.i, align 8, !noalias !6537, !noundef !17 ; 2 uses
   %.not.i174.i.i.i = icmp eq ptr %i.ig, null
   br i1 %.not.i174.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
@@ -1821,8 +1817,7 @@ bb.eo:                                            ; preds = %"_ZN5alloc11collect
   br i1 %.not16.i.i.i, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17h8bd30e2254572d81E.exit.thread", label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.845.0.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1051.0.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.845.0.i.i.i), "nonnull"(ptr %.sroa.1051.0.i.i.i) ]
   %i.qa = load ptr, ptr %.sroa.845.0.i.i.i, align 8, !noalias !6537, !noundef !17 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.qa, null
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i, label %bb.dq
@@ -2225,8 +2220,7 @@ bb.t:                                             ; preds = %"_ZN3std3sys12threa
   br label %.body.i.i
 
 bb.u:                                             ; preds = %bb.r
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i), "nonnull"(ptr %.sroa.5.0.copyload.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cd), !noalias !8122
   store i64 0, ptr %i.cd, align 8, !noalias !8122
   %.sroa.05.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.cd, i64 32
@@ -2497,8 +2491,7 @@ _ZN7similar6common21capture_diff_deadline17h52761d049c9fd318E.exit.i.i: ; preds 
 
 ._crit_edge.i.i490:                               ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cf), !noalias !8119
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i), "nonnull"(ptr %.sroa.5.0.copyload.i) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !8131)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bx), !noalias !8132
   %i.pr = call align 8 ptr @llvm.threadlocal.address.p0(ptr @"_ZN3std4hash6random11RandomState3new4KEYS29_$u7b$$u7b$constant$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$3VAL17h3d0bd8071983845cE") ; 5 uses
@@ -2901,8 +2894,7 @@ bb.dr:                                            ; preds = %bb.dn
   %.sink5.i.i.i = phi i64 [ %i.afp, %bb.dp ], [ %i.afo, %bb.dr ], [ %i.afr, %bb.dq ]
   %.sink3.i.i.i = phi i64 [ %.sroa.5.0.copyload.i480.i, %bb.dp ], [ %.sroa.5.0.copyload.i480.i, %bb.dr ], [ %.sroa.9.0.copyload.i482.i, %bb.dq ] ; 3 uses
   %.sink.i.i.i = phi i64 [ %i.afq, %bb.dp ], [ %i.afs, %bb.dr ], [ %.sroa.9.0.copyload.i482.i, %bb.dq ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i), "nonnull"(ptr %.sroa.5.0.copyload.i) ]
   call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #51, !noalias !8221
   %i.aft = call noundef align 8 dereferenceable_or_null(104) ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef 104, i64 noundef range(i64 1, -9223372036854775807) 8) #51, !noalias !8221 ; 15 uses
   %i.afu = icmp eq ptr %i.aft, null
@@ -3305,8 +3297,7 @@ bb.dr:                                            ; preds = %bb.do, %bb.dn
   br i1 %.not.i.i.i.i.i, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17he87da3a0e7023c02E.exit.i.i.i", label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dr
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.719.0.copyload.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.921.0.copyload.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.719.0.copyload.i.i.i.i.i), "nonnull"(ptr %.sroa.921.0.copyload.i.i.i.i.i) ]
   %i.pi = load ptr, ptr %.sroa.719.0.copyload.i.i.i.i.i, align 8, !noalias !15516, !noundef !17 ; 2 uses
   %.not.i168.i.i.i.i.i = icmp eq ptr %i.pi, null
   br i1 %.not.i168.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
@@ -3709,8 +3700,7 @@ bb.eo:                                            ; preds = %"_ZN5alloc11collect
   br i1 %.not16.i.i.i.i.i, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17he87da3a0e7023c02E.exit.i.i.i", label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.850.0.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1056.0.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.850.0.i.i.i.i.i), "nonnull"(ptr %.sroa.1056.0.i.i.i.i.i) ]
   %i.wd = load ptr, ptr %.sroa.850.0.i.i.i.i.i, align 8, !noalias !15516, !noundef !17 ; 2 uses
   %.not.i.i.i.i.i186.i = icmp eq ptr %i.wd, null
   br i1 %.not.i.i.i.i.i186.i, label %._crit_edge.i.i.i.i.i, label %bb.dy
@@ -4113,8 +4103,7 @@ bb.hq:                                            ; preds = %bb.hp
 
 "_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17h1730168c5792b04aE.exit54.i.i.i.i.i.i": ; preds = %bb.hn, %bb.hm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb), !noalias !15591
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.623.sroa.0.0.copyload.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.614.sroa.0.0.copyload.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.623.sroa.0.0.copyload.i.i.i.i.i.i), "nonnull"(ptr %.sroa.614.sroa.0.0.copyload.i.i.i.i.i.i) ]
   %i.ace = invoke { ptr, i64 } @_ZN3std4path4Path13_strip_prefix17h70fd9b124dcff30fE(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.623.sroa.0.0.copyload.i.i.i.i.i.i, i64 noundef %.sroa.623.sroa.6.0.copyload.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.614.sroa.0.0.copyload.i.i.i.i.i.i, i64 noundef %.sroa.614.sroa.6.0.copyload.i.i.i.i.i.i)
           to label %_ZN3std4path4Path12strip_prefix17hf4560cfb0756f15fE.exit.i.i.i.i.i.i unwind label %bb.hp, !noalias !15592 ; 2 uses
 
@@ -4517,8 +4506,7 @@ bb.au:                                            ; preds = %bb.ar, %_ZN5alloc11
   br i1 %.not.i.i.i, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17h6d83e6a699e18dacE.exit.i", label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.722.0.copyload.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.924.0.copyload.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.722.0.copyload.i.i.i), "nonnull"(ptr %.sroa.924.0.copyload.i.i.i) ]
   %i.fr = load ptr, ptr %.sroa.722.0.copyload.i.i.i, align 8, !noalias !16118, !noundef !17 ; 2 uses
   %.not.i197.i.i.i = icmp eq ptr %i.fr, null
   br i1 %.not.i197.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
@@ -4921,8 +4909,7 @@ bb.bw:                                            ; preds = %"_ZN5alloc11collect
   br i1 %.not16.i.i.i, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17h6d83e6a699e18dacE.exit.i", label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.862.0.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1068.0.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.862.0.i.i.i), "nonnull"(ptr %.sroa.1068.0.i.i.i) ]
   %i.nf = load ptr, ptr %.sroa.862.0.i.i.i, align 8, !noalias !16118, !noundef !17 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.nf, null
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i, label %bb.bg
@@ -5325,8 +5312,7 @@ bb.dq:                                            ; preds = %bb.dn, %_ZN5alloc11
   br i1 %.not.i.i.i171, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17hb4d331b2fdd979e1E.exit.i", label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.721.0.copyload.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.923.0.copyload.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.721.0.copyload.i.i.i), "nonnull"(ptr %.sroa.923.0.copyload.i.i.i) ]
   %i.th = load ptr, ptr %.sroa.721.0.copyload.i.i.i, align 8, !noalias !16196, !noundef !17 ; 2 uses
   %.not.i194.i.i.i = icmp eq ptr %i.th, null
   br i1 %.not.i194.i.i.i, label %._crit_edge.i.i.i184, label %.lr.ph.i.i.i172
@@ -5729,8 +5715,7 @@ bb.es:                                            ; preds = %"_ZN5alloc11collect
   br i1 %.not16.i.i.i182, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17hb4d331b2fdd979e1E.exit.i", label %bb.et
 
 bb.et:                                            ; preds = %bb.es
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.861.0.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1067.0.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.861.0.i.i.i), "nonnull"(ptr %.sroa.1067.0.i.i.i) ]
   %i.aay = load ptr, ptr %.sroa.861.0.i.i.i, align 8, !noalias !16196, !noundef !17 ; 2 uses
   %.not.i.i.i.i183 = icmp eq ptr %i.aay, null
   %i.aaz = extractelement <2 x i64> %i.aax, i64 0 ; 2 uses
@@ -6133,8 +6118,7 @@ bb.r:                                             ; preds = %bb.o
           to label %bb.p unwind label %bb.m
 
 "_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit": ; preds = %.cont
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %.sroa.7.0.copyload) ]
   %bcmp.i = call i32 @bcmp(ptr nonnull readonly %.sroa.7.0.copyload, ptr nonnull readonly %i.ab, i64 %.sroa.11.0.copyload)
   %i.ae = icmp eq i32 %bcmp.i, 0
   br i1 %i.ae, label %bb.t, label %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread"
@@ -6537,8 +6521,7 @@ _ZN5alloc11collections5btree4node12slice_insert17h956a79a5ccb70867E.exit.i48.i.i
   br i1 %.not35.i.i.i, label %"_ZN5alloc11collections5btree3map5entry28VacantEntry$LT$K$C$V$C$A$GT$12insert_entry17h57c30918101da64bE.exit.i", label %bb.ag
 
 bb.ag:                                            ; preds = %"_ZN5alloc11collections5btree4node214Handle$LT$alloc..collections..btree..node..NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$$C$alloc..collections..btree..node..marker..Edge$GT$6insert17hdcdd3a42ca7dcb3fE.exit.i.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.010.0.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.714.0.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.010.0.i.i.i), "nonnull"(ptr %.sroa.714.0.i.i.i) ]
   %i.ja = load ptr, ptr %.sroa.010.0.i.i.i, align 8, !noalias !20236, !noundef !17 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ja, null
   br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i, label %bb.v

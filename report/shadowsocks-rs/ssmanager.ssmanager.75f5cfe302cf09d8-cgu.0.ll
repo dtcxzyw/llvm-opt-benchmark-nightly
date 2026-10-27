@@ -205,8 +205,7 @@ _RNvMs8_NtNtCsf3Ta7LF998c_4core2io12borrowed_bufINtB5_14BorrowedCursorhE11ensure
   store i64 %.sroa.032.0208, ptr %i.t, align 8, !noalias !13567
   store i64 0, ptr %i.u, align 8, !noalias !13567
   store i64 %.sroa.032.0208, ptr %i.v, align 8, !noalias !13567
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.0.val) ]
   %.val.i.i.i.i.peel = load ptr, ptr %.0.val, align 8, !noalias !13568, !nonnull !80, !noundef !80
   %i.bi = call { i64, ptr } @_RNvXs0_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6streamNtB5_19OutboundProxyStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(1160) %.val.i.i.i.i.peel, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.8.val, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b) #45, !noalias !13569 ; 2 uses
   %i.bj = extractvalue { i64, ptr } %i.bi, 0
@@ -609,8 +608,7 @@ bb.l:                                             ; preds = %.peel.begin
   br label %_RNvMs8_NtNtCsf3Ta7LF998c_4core2io12borrowed_bufINtB5_14BorrowedCursorhE11ensure_initCsa7TLgTh0CeG_9ssmanager.exit.i.i.peel
 
 _RNvMs8_NtNtCsf3Ta7LF998c_4core2io12borrowed_bufINtB5_14BorrowedCursorhE11ensure_initCsa7TLgTh0CeG_9ssmanager.exit.i.i.peel: ; preds = %bb.l, %.peel.begin
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.0.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13609
   store ptr %i.bg, ptr %i.b, align 8, !noalias !13609
   store i64 %.sroa.032.0194, ptr %i.t, align 8, !noalias !13609
@@ -1013,8 +1011,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.0.val) ]
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br label %bb.b
 
@@ -1184,8 +1181,7 @@ bb.a:
   %i.c = alloca [32 x i8], align 1                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.c, i8 0, i64 32, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.0.val) ]
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -1588,8 +1584,7 @@ bb.ab:                                            ; preds = %bb.z
   %i.ep = call { ptr, ptr } @_RNvMs_NtNtCsaI3lGUjttVO_5hyper6common4timeNtB4_4Time11sleep_until(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.bb, i64 noundef %i.em, i32 noundef %i.en) #45, !noalias !18413 ; 2 uses
   %i.eq = extractvalue { ptr, ptr } %i.ep, 0      ; 2 uses
   %i.er = extractvalue { ptr, ptr } %i.ep, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eq) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.er) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.eq), "nonnull"(ptr %i.er) ]
   %.val118.i.i.i.i.i.i.i.i = load ptr, ptr %i.bc, align 8, !alias.scope !18396, !noundef !80 ; 3 uses
   %.val119.i.i.i.i.i.i.i.i = load ptr, ptr %i.bd, align 8, !alias.scope !18396 ; 4 uses
   %i.es = icmp eq ptr %.val118.i.i.i.i.i.i.i.i, null
@@ -1992,8 +1987,7 @@ bb.ax:                                            ; preds = %bb.au
   br i1 %i.hg, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
 bb.ay:                                            ; preds = %bb.au
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.8.0.copyload.i.i.i.i.i.i.i) ]
   br label %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i.i
 
 bb.az:                                            ; preds = %bb.au
@@ -2396,8 +2390,7 @@ _RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB
 .thread.i.i.i.i:                                  ; preds = %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i, %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i.i
   %.sroa.13.319.i.i.i.i.i.i = phi ptr [ %.sroa.13.3.ph.i.i.i.i.i.i, %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i.i ], [ %.sroa.13.3.i.i.i.i.i.i, %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i ] ; 2 uses
   %.sroa.19.318.i.i.i.i.i.i = phi ptr [ %.sroa.19.3.ph.i.i.i.i.i.i, %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.thread.i.i.i.i.i.i ], [ %.sroa.19.3.i.i.i.i.i.i, %_RNvXNtNtCs3Ol6WPi9G6e_12tokio_rustls6common9handshakeINtB2_12MidHandshakeINtNtB6_6client9TlsStreamINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEEENtNtNtCsf3Ta7LF998c_4core6future6future6Future4pollCsa7TLgTh0CeG_9ssmanager.exit.i.i.i.i.i.i ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.13.319.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.19.318.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.13.319.i.i.i.i.i.i), "nonnull"(ptr %.sroa.19.318.i.i.i.i.i.i) ]
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6stream19OutboundProxyStreamEECsa7TLgTh0CeG_9ssmanager(ptr nonnull %.sroa.19.318.i.i.i.i.i.i) #45, !noalias !20537
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.25.i.sroa.0.i.i.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.25.i.sroa.8.i.i.i.i.i)
@@ -2800,8 +2793,7 @@ bb.cw:                                            ; preds = %bb.cv
   br i1 %i.qs, label %bb.de, label %bb.dd
 
 bb.cx:                                            ; preds = %bb.cv
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7177.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9179.sroa.0.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7177.sroa.0.0.copyload), "nonnull"(ptr %.sroa.9179.sroa.0.0.copyload) ]
   %i.qt = getelementptr inbounds nuw i8, ptr %1, i64 43656
   %i.qu = load ptr, ptr %i.qt, align 8, !nonnull !80, !align !86, !noundef !80
   %i.qv = getelementptr inbounds nuw i8, ptr %i.qu, i64 288
@@ -3204,8 +3196,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCsgCecv3eZDcN
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDINtNtCsb28OZjLZAOu_6rustls12common_state5StateNtNtNtB1g_6client11client_conn20ClientConnectionDataEEL_EECsa7TLgTh0CeG_9ssmanager.exit
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.63.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.63.0.copyload), "nonnull"(ptr %.sroa.7.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 840 ; 9 uses
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 864
@@ -3608,8 +3599,7 @@ bb.a:
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.lr.ph.i.i: ; preds = %bb.a
   %.sroa.46.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2), "nonnull"(ptr %.val3) ]
   br label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.i.i
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.i.i: ; preds = %bb.c, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.lr.ph.i.i
@@ -3825,8 +3815,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.b, ptr %i.l, align 8, !noalias !40644
   %.sroa.422.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRtNtB6_7Display3fmtCsa7TLgTh0CeG_9ssmanager, ptr %.sroa.422.0..sroa_idx.i, align 8, !noalias !40644
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   %i.m = call noundef zeroext i1 @_RNvNtCsf3Ta7LF998c_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @412, ptr noundef nonnull %i.a) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !40644
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !40644
@@ -3841,8 +3830,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.e, ptr %i.d, align 8, !noalias !40644
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtRNtNtNtB8_3net11socket_addr10SocketAddrNtB6_7Display3fmtCsa7TLgTh0CeG_9ssmanager, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !40644
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   %i.o = call noundef zeroext i1 @_RNvNtCsf3Ta7LF998c_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @341, ptr noundef nonnull %i.d) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !40644
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !40644
@@ -4245,8 +4233,7 @@ bb.a:
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.lr.ph.i: ; preds = %bb.a
   %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   br label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.i
 
 _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.i: ; preds = %bb.c, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa7TLgTh0CeG_9ssmanager.exit.lr.ph.i
@@ -4649,8 +4636,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val) ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br label %bb.b
 
@@ -4846,8 +4832,7 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionQNtNtNtB5_2io8io_slice10IoSliceMu
   store i64 0, ptr %i.k, align 8, !noalias !44868
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 %.sroa.3.0.i.i, ptr %i.l, align 8, !noalias !44868
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val) ]
   %.val.i.i.i = load ptr, ptr %.val, align 8, !noalias !44869, !nonnull !80, !noundef !80
   %i.m = call { i64, ptr } @_RNvXs0_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6streamNtB5_19OutboundProxyStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(1160) %.val.i.i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.val1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.a) #45, !noalias !44870 ; 2 uses
   %i.n = extractvalue { i64, ptr } %i.m, 0
@@ -5080,8 +5065,7 @@ _RNvMs8_NtNtCsf3Ta7LF998c_4core2io12borrowed_bufINtB5_14BorrowedCursorhE11ensure
   store i64 0, ptr %i.t, align 8, !noalias !44900
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 %i.q, ptr %i.u, align 8, !noalias !44900
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val) ]
   %.val.i.i.i = load ptr, ptr %.val, align 8, !noalias !44901, !nonnull !80, !noundef !80
   %i.v = call { i64, ptr } @_RNvXs0_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service3net8outbound6streamNtB5_19OutboundProxyStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(1160) %.val.i.i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.val1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.a) #45, !noalias !44902 ; 2 uses
   %i.w = extractvalue { i64, ptr } %i.v, 0
@@ -5157,8 +5141,7 @@ bb.a:
   br i1 %i.d, label %_RINvNtNtCsgCecv3eZDcN_5alloc2io4read18default_read_exactINtNtCs3Ol6WPi9G6e_12tokio_rustls6common15SyncReadAdapterINtNtNtCsi1FNhPBS7PW_11hickory_net7runtime8iocompat17AsyncIoStdAsTokioINtB1Q_17AsyncIoTokioAsStdNtNtNtCslxdWNweD0x2_11shadowsocks3net3tcp9TcpStreamEEEECsa7TLgTh0CeG_9ssmanager.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -5347,9 +5330,7 @@ bb.c:                                             ; preds = %.lr.ph
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionQNtNtNtB5_2io8io_slice10IoSliceMutE6map_orQShNCINvNtNtCsgCecv3eZDcN_5alloc2io4read21default_read_vectoredNCNvYINtNtCs3Ol6WPi9G6e_12tokio_rustls6common15SyncReadAdapterINtNtNtCsi1FNhPBS7PW_11hickory_net7runtime8iocompat17AsyncIoStdAsTokioINtB3s_17AsyncIoTokioAsStdNtNtNtCslxdWNweD0x2_11shadowsocks3net3tcp9TcpStreamEEENtB1w_4Read13read_vectored0Es_0ECsa7TLgTh0CeG_9ssmanager.exit.i: ; preds = %bb.b, %bb.a, %bb.c
   %.sroa.3.0.i.i = phi i64 [ %i.i, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ] ; 3 uses
   %.sroa.02.0.i.i = phi ptr [ %.val.i.i, %bb.c ], [ inttoptr (i64 1 to ptr), %bb.a ], [ inttoptr (i64 1 to ptr), %bb.b ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i.i), "nonnull"(ptr %.val1), "nonnull"(ptr %.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !44954
   store ptr %.sroa.02.0.i.i, ptr %i.a, align 8, !noalias !44954
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
@@ -5594,8 +5575,7 @@ _RNvMs8_NtNtCsf3Ta7LF998c_4core2io12borrowed_bufINtB5_14BorrowedCursorhE11ensure
   %i.p = load i64, ptr %i.o, align 8, !noundef !80
   %i.q = sub nuw i64 %i.p, %i.n                   ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %i.n
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1), "nonnull"(ptr %.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !44996
   store ptr %i.r, ptr %i.a, align 8, !noalias !44996
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses

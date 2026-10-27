@@ -204,8 +204,7 @@ bb.as:                                            ; preds = %bb.au, %bb.aq
 
 bb.at:                                            ; preds = %bb.aq
   %i.ee = trunc nuw i64 %i.db to i1, !dbg !10926
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i), "nonnull"(ptr %.sroa.3.0.copyload.i.i) ]
   br i1 %i.ee, label %bb.au, label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtNtNtNtCsfUalJnHtWpm_5tonic9transport7channel7service10connection10ConnectionINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB5_5error5ErrorNtNtB5_6marker4SendNtB2V_4SyncEL_EE7map_errNtNtBQ_5error5ErrorINvMB3C_B3A_11from_sourceB20_EECsbaWXNhtWAp9_11foundations.exit.thread.i.i, !dbg !10926
 
 bb.au:                                            ; preds = %bb.at
@@ -608,8 +607,7 @@ bb.cq:                                            ; preds = %bb.cs, %bb.co
 
 bb.cr:                                            ; preds = %bb.co
   %i.jc = trunc nuw i64 %i.hz to i1, !dbg !11025
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i38.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload.i40.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i38.i), "nonnull"(ptr %.sroa.3.0.copyload.i40.i) ]
   br i1 %i.jc, label %bb.cs, label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtNtNtNtCsfUalJnHtWpm_5tonic9transport7channel7service10connection10ConnectionINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB5_5error5ErrorNtNtB5_6marker4SendNtB2V_4SyncEL_EE7map_errNtNtBQ_5error5ErrorINvMB3C_B3A_11from_sourceB20_EECsbaWXNhtWAp9_11foundations.exit.thread.i41.i, !dbg !11025
 
 bb.cs:                                            ; preds = %bb.cr
@@ -1012,9 +1010,8 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.l = extractelement <2 x ptr> %i.i, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %i.m = extractelement <2 x ptr> %i.i, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   br label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultINtNtCs74LoFwSioHw_4http8response8ResponseNtNtCsfUalJnHtWpm_5tonic4body4BodyEINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB5_5error5ErrorNtNtB5_6marker4SendNtB2S_4SyncEL_EE7map_errB1X_NvYB1X_INtNtB5_7convert4IntoB1X_E4intoECsbaWXNhtWAp9_11foundations.exit, !dbg !11141
 
 bb.n:                                             ; preds = %bb.l
@@ -1169,9 +1166,8 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.l = extractelement <2 x ptr> %i.i, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %i.m = extractelement <2 x ptr> %i.i, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   br label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultINtNtCs74LoFwSioHw_4http8response8ResponseNtNtCsfUalJnHtWpm_5tonic4body4BodyEINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB5_5error5ErrorNtNtB5_6marker4SendNtB2S_4SyncEL_EE7map_errB1X_NvYB1X_INtNtB5_7convert4IntoB1X_E4intoECsbaWXNhtWAp9_11foundations.exit, !dbg !11168
 
 bb.n:                                             ; preds = %bb.l
@@ -1574,12 +1570,10 @@ bb.g:                                             ; preds = %bb.e
   %i.az = getelementptr inbounds nuw i8, ptr %i.i, i64 168, !dbg !16914
   %i.ba = getelementptr inbounds nuw i8, ptr %i.i, i64 522, !dbg !16914
   %i.bb = getelementptr inbounds nuw i8, ptr %i.i, i64 504, !dbg !16914
-  %i.bc = load <2 x ptr>, ptr %.sroa.4157.0..sroa_idx, align 8, !dbg !16913 ; 3 uses
+  %i.bc = load <2 x ptr>, ptr %.sroa.4157.0..sroa_idx, align 8, !dbg !16913 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !16911
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.35.176..sroa_idx, i64 24, i1 false), !dbg !16859
-  %4 = extractelement <2 x ptr> %i.bc, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %i.bd = extractelement <2 x ptr> %i.bc, i64 1
+  %i.bd = extractelement <2 x ptr> %i.bc, i64 0
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bd) ]
   %i.be = load i64, ptr %i.ac, align 8, !dbg !16915, !noundef !786
   store i64 %i.be, ptr %i.ad, align 8, !dbg !16914

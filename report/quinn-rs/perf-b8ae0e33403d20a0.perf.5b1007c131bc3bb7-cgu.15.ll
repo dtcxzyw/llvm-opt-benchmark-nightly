@@ -202,9 +202,9 @@ bb.a:
     #dbg_value(ptr poison, !9035, !DIExpression(), !8928)
     #dbg_value(ptr poison, !9041, !DIExpression(), !8934)
     #dbg_value(i64 24, !9048, !DIExpression(), !8942)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %2, !9046, !DIExpression(), !8943)
     #dbg_value(ptr %2, !9062, !DIExpression(), !8944)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !9063, !DIExpression(), !8944)
     #dbg_value(ptr %2, !9056, !DIExpression(), !8945)
     #dbg_value(ptr %1, !9057, !DIExpression(), !8945)
@@ -607,9 +607,9 @@ bb.a:
     #dbg_value(ptr poison, !11701, !DIExpression(), !11582)
     #dbg_value(ptr poison, !11708, !DIExpression(), !11588)
     #dbg_value(i64 48, !11715, !DIExpression(), !11596)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %2, !11713, !DIExpression(), !11597)
     #dbg_value(ptr %2, !11730, !DIExpression(), !11598)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !11731, !DIExpression(), !11598)
     #dbg_value(ptr %2, !11724, !DIExpression(), !11599)
     #dbg_value(ptr %1, !11725, !DIExpression(), !11599)

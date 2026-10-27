@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.8, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.810.0..sroa_idx, i64 16, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.0.copyload), "nonnull"(ptr %.sroa.10.0.copyload) ]
   %i.d = tail call fastcc noundef nonnull align 8 dereferenceable(104) ptr @_ZN18nickel_lang_parser3ast5alloc8AstAlloc14clone_ref_from17ha49c576ccedf057bE(ptr noundef nonnull align 8 %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.08.0.copyload), !noalias !125, !inline_history !123
   %i.e = tail call fastcc noundef nonnull align 8 dereferenceable(40) ptr @_ZN18nickel_lang_parser3ast5alloc8AstAlloc14clone_ref_from17h89cc45a4d901fae5E(ptr noundef nonnull align 8 %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.10.0.copyload), !noalias !125, !inline_history !124
   br label %"_ZN114_$LT$nickel_lang_parser..typ..RecordRowsF$LT$Ty$C$RRows$GT$$u20$as$u20$nickel_lang_parser..ast..alloc..CloneTo$GT$8clone_to17hc0ea053a54014fb4E.exit"
@@ -609,9 +608,7 @@ bb.e:                                             ; preds = %bb.f, %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 104 ; 2 uses
   store ptr %i.s, ptr %i.j, align 8, !alias.scope !846
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p), "nonnull"(ptr %.sroa.5.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !847
   store <2 x ptr> %i.l, ptr %i.a, align 16, !noalias !847
   %i.t = call fastcc noundef align 8 dereferenceable_or_null(48) ptr @"_ZN140_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..traverse..TraverseAlloc$LT$nickel_lang_parser..ast..typ..Type$GT$$GT$12traverse_ref17h2fc2f6f8a09139a4E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.q, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @72, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.5.0.copyload), !noalias !848, !inline_history !840 ; 2 uses
@@ -1014,8 +1011,7 @@ default.unreachable:                              ; preds = %bb.e
   %.sroa.4.0.i3846 = phi i32 [ %.sroa.4.0.i38, %bb.e ], [ %i.b, %"_ZN79_$LT$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$core..clone..Clone$GT$5clone17h68f003267ce0c4f1E.exit" ]
   %.sroa.0.0.i14045 = phi ptr [ %.sroa.0.0.i140, %bb.e ], [ %i.h, %"_ZN79_$LT$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$core..clone..Clone$GT$5clone17h68f003267ce0c4f1E.exit" ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.8, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9, i64 16, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i14045) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.i3647) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i14045), "nonnull"(ptr %.sroa.9.0.i3647) ]
   %i.j = tail call fastcc noundef nonnull align 8 dereferenceable(104) ptr @_ZN18nickel_lang_parser3ast5alloc8AstAlloc14clone_ref_from17ha49c576ccedf057bE(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.0.0.i14045), !noalias !3827, !inline_history !3815
   %i.k = tail call fastcc noundef nonnull align 8 dereferenceable(40) ptr @_ZN18nickel_lang_parser3ast5alloc8AstAlloc14clone_ref_from17h89cc45a4d901fae5E(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.9.0.i3647), !noalias !3827, !inline_history !3816
   br label %"_ZN114_$LT$nickel_lang_parser..typ..RecordRowsF$LT$Ty$C$RRows$GT$$u20$as$u20$nickel_lang_parser..ast..alloc..CloneTo$GT$8clone_to17hc0ea053a54014fb4E.exit"
@@ -1418,8 +1414,7 @@ define internal noundef zeroext i1 @_ZN4core3fmt5Write9write_fmt17he139eaf0fecbc
 define internal fastcc noundef zeroext i1 @_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E(ptr %.0.val, ptr nofree readonly captures(address, read_provenance) %.8.val, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val), "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %0, i64 48, i1 false)
   %i.b = call noundef zeroext i1 @_ZN4core3fmt5write17h80461e1e45e4fdd2E(ptr noundef nonnull align 1 %.0.val, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.8.val, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a)
@@ -1822,8 +1817,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.g, label %"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit.split.us", label %"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit.split"
 
 "_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit.split.us": ; preds = %"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12123.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12123.0.copyload), "nonnull"(ptr %.sroa.14.0.copyload) ]
   %i.i = sub i64 %.sroa.15.0.copyload, %.sroa.6117.0.copyload
   %umax50.i.us = call i64 @llvm.umax.i64(i64 %.sroa.4115.0.copyload, i64 %.sroa.15.0.copyload)
   %i.j = add i64 %.sroa.4115.0.copyload, -1
@@ -2226,8 +2220,7 @@ bb.aq:                                            ; preds = %bb.q
   br i1 %.not90.i, label %.thread.i, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.650.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.650.0.copyload.i), "nonnull"(ptr %.0.val) ]
   %i.fr = invoke noundef zeroext i1 @"_ZN57_$LT$core..fmt..Formatter$u20$as$u20$core..fmt..Write$GT$9write_str17h8b742be6ac34d954E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %.0.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @69, i64 noundef 1)
           to label %.noexc29 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -2630,8 +2623,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.965, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.375.0..sroa_idx, i64 12, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.073.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.476.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.073.0.copyload), "nonnull"(ptr %.sroa.476.0.copyload) ]
   %i.ae = tail call fastcc noundef nonnull align 8 dereferenceable(104) ptr @_ZN18nickel_lang_parser3ast5alloc8AstAlloc14clone_ref_from17ha49c576ccedf057bE(ptr noundef nonnull align 8 %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %.sroa.073.0.copyload), !noalias !506349, !inline_history !506344
   %i.af = tail call fastcc noundef nonnull align 8 dereferenceable(40) ptr @_ZN18nickel_lang_parser3ast5alloc8AstAlloc14clone_ref_from17h89cc45a4d901fae5E(ptr noundef nonnull align 8 %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.476.0.copyload), !noalias !506349, !inline_history !506345
   br label %_ZN18nickel_lang_parser3ast5alloc8AstAlloc10clone_from17h57e2e1ca13b80fccE.exit

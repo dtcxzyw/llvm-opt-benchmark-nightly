@@ -202,21 +202,16 @@ bb.ah:                                            ; preds = %_RINvNtCskKLDkoKarT
   %.sroa.1076.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 624
   %i.fq = load <2 x ptr>, ptr %.sroa.583.0..sroa_idx.i.i, align 8, !noalias !13234 ; 3 uses
   %i.fr = extractelement <2 x ptr> %i.fq, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fr) ]
   %i.fs = extractelement <2 x ptr> %i.fq, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fs) ]
-  %.sroa.1278.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 640
-  %i.ft = load <2 x ptr>, ptr %.sroa.785.0..sroa_idx.i.i, align 8, !noalias !13234 ; 3 uses
-  %3 = extractelement <2 x ptr> %i.ft, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
-  %4 = extractelement <2 x ptr> %i.ft, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
-  %5 = load <2 x ptr>, ptr %.sroa.1290.0..sroa_idx.i.i, align 8, !noalias !13234
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fr), "nonnull"(ptr %i.fs) ]
+  %i.ft = load <2 x ptr>, ptr %.sroa.1290.0..sroa_idx.i.i, align 8, !noalias !13234
   %.sroa.1290.0.copyload.i.i = load ptr, ptr %.sroa.1290.0..sroa_idx.i.i, align 8, !noalias !13234
-  store <2 x ptr> %5, ptr %i.fp, align 8, !noalias !13234
+  store <2 x ptr> %i.ft, ptr %i.fp, align 8, !noalias !13234
   store ptr %.sroa.082.0.copyload.i.i, ptr %.sroa.975.0..sroa_idx.i.i, align 8, !noalias !13234
   store <2 x ptr> %i.fq, ptr %.sroa.1076.0..sroa_idx.i.i, align 8, !noalias !13234
-  store <2 x ptr> %i.ft, ptr %.sroa.1278.0..sroa_idx.i.i, align 8, !noalias !13234
+  %.sroa.1278.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 640
+  %3 = load <2 x ptr>, ptr %.sroa.785.0..sroa_idx.i.i, align 8, !noalias !13234
+  store <2 x ptr> %3, ptr %.sroa.1278.0..sroa_idx.i.i, align 8, !noalias !13234
   %.sroa.1480.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 656
   %i.fu = load <2 x ptr>, ptr %.sroa.987.0..sroa_idx.i.i, align 8, !noalias !13234
   store <2 x ptr> %i.fu, ptr %.sroa.1480.0..sroa_idx.i.i, align 8, !noalias !13234

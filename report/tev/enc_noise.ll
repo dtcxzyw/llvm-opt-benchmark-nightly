@@ -189,8 +189,7 @@ bb.b:                                             ; preds = %_ZN3jxl12_GLOBAL__N
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.cb ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.cc, i64 64) ]
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.cb ; 3 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.cd, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bs, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.cd, i64 64), "align"(ptr %i.bs, i64 64) ]
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.br ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ce, i64 64) ]
   br label %.preheader61.i.i
@@ -593,8 +592,7 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.yl = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.yj ; 2 uses
   %i.ym = getelementptr inbounds nuw [4 x i8], ptr %i.yk, i64 %..i.peel
   %i.yn = getelementptr inbounds nuw [4 x i8], ptr %i.yl, i64 %..i.peel
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.yk, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.yl, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.yk, i64 64), "align"(ptr %i.yl, i64 64) ]
   %i.yo = getelementptr inbounds nuw [4 x i8], ptr %i.od, i64 %i.kr
   %i.yp = load float, ptr %i.yo, align 4, !tbaa !11, !noalias !67
   %i.yq = getelementptr inbounds nuw [4 x i8], ptr %i.oe, i64 %i.kr
@@ -645,8 +643,7 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.aag = fadd float %i.aad, %i.aaf
   %i.aah = fmul float %i.aag, 5.000000e-01
   %i.aai = call float @llvm.fmuladd.f32(float %i.aah, float -2.500000e-01, float %i.zx)
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.aaa, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.aab, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.aaa, i64 64), "align"(ptr %i.aab, i64 64) ]
   %i.aaj = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.zz ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.aaj, i64 64) ]
   %i.aak = getelementptr inbounds nuw [4 x i8], ptr %i.aaj, i64 %..i.peel

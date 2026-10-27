@@ -204,8 +204,7 @@ bb.az:                                            ; preds = %bb.aj
 bb.ba:                                            ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.an, ptr noundef nonnull align 16 dereferenceable(48) %i.a, i64 48, i1 false), !dbg !145389, !noalias !145281
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !145390, !noalias !145281
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al), "nonnull"(ptr %i.am) ]
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !145391
   store ptr %i.al, ptr %i.bh, align 8, !dbg !145391
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !145391

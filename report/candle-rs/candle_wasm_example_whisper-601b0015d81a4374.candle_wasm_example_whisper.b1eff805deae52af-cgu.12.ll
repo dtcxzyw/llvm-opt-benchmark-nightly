@@ -204,10 +204,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph.i, label %_RINvYINtNtNtCsf3Ta7LF998c_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNtNtBR_8adapters3map8map_foldjfuNCINvNtCsfh9HxMbthk9_27candle_wasm_example_whisper5audio20log_mel_spectrogram_fE0NCINvNvBL_8for_each4callfNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB3Y_3VecfE14extend_trustedINtB1B_3MapB3_B27_EE0E0E0EB2e_.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.24.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.24.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.24.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.24.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.24.copyload), "nonnull"(ptr %.sroa.9.24.copyload), "nonnull"(ptr %.sroa.10.24.copyload), "nonnull"(ptr %.sroa.11.24.copyload) ]
   %i.f = sub nuw i64 %i.d, %i.b                   ; 3 uses
   %min.iters.check = icmp ult i64 %i.f, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck

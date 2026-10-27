@@ -204,8 +204,7 @@ bb.a:
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.lr.ph.i.i: ; preds = %bb.a
   %.sroa.46.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3), "nonnull"(ptr %.val4) ]
   br label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i.i, !dbg !21519
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i.i: ; preds = %bb.c, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.lr.ph.i.i
@@ -608,8 +607,7 @@ bb.a:
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.lr.ph.i: ; preds = %bb.a
   %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val2) ]
   br label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i, !dbg !22118
 
 _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.i: ; preds = %bb.c, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshovLROGBtMy_11quinn_proto.exit.lr.ph.i
@@ -711,9 +709,9 @@ bb.a:
     #dbg_value(ptr poison, !22263, !DIExpression(), !22179)
     #dbg_value(ptr poison, !22270, !DIExpression(), !22185)
     #dbg_value(i64 16, !22277, !DIExpression(), !22193)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %2, !22275, !DIExpression(), !22194)
     #dbg_value(ptr %2, !22291, !DIExpression(), !22195)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !22292, !DIExpression(), !22195)
     #dbg_value(ptr %2, !22285, !DIExpression(), !22196)
     #dbg_value(ptr %1, !22286, !DIExpression(), !22196)
@@ -955,9 +953,9 @@ bb.a:
     #dbg_value(ptr poison, !22650, !DIExpression(), !22540)
     #dbg_value(ptr poison, !22657, !DIExpression(), !22546)
     #dbg_value(i64 32, !22664, !DIExpression(), !22554)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %2, !22662, !DIExpression(), !22555)
     #dbg_value(ptr %2, !22678, !DIExpression(), !22556)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !22679, !DIExpression(), !22556)
     #dbg_value(ptr %2, !22672, !DIExpression(), !22557)
     #dbg_value(ptr %1, !22673, !DIExpression(), !22557)
@@ -1048,9 +1046,9 @@ bb.a:
     #dbg_value(ptr poison, !22903, !DIExpression(), !22786)
     #dbg_value(ptr poison, !22910, !DIExpression(), !22792)
     #dbg_value(i64 24, !22917, !DIExpression(), !22800)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %2, !22915, !DIExpression(), !22801)
     #dbg_value(ptr %2, !22931, !DIExpression(), !22802)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !22932, !DIExpression(), !22802)
     #dbg_value(ptr %2, !22925, !DIExpression(), !22803)
     #dbg_value(ptr %1, !22926, !DIExpression(), !22803)

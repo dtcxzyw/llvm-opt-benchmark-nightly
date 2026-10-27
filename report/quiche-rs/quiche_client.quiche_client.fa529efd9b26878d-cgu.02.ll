@@ -205,15 +205,13 @@ bb.yr:                                            ; preds = %bb.yq
   %i.bfv = extractvalue { ptr, ptr } %i.bfs, 1, !dbg !29093 ; 3 uses
     #dbg_value(ptr %i.bfu, !24025, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !27330)
     #dbg_value(ptr %i.bfv, !24025, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !27330)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bfv) ]
-    #dbg_value(ptr %i.bfu, !24025, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !27330)
     #dbg_value(ptr undef, !24368, !DIExpression(), !24384)
     #dbg_value(ptr %i.bfu, !24379, !DIExpression(), !27331)
     #dbg_value(ptr %i.bfu, !25264, !DIExpression(), !25267)
     #dbg_value(ptr %i.bfv, !24380, !DIExpression(), !27332)
     #dbg_value(ptr poison, !27334, !DIExpression(), !27340)
     #dbg_value(ptr poison, !27337, !DIExpression(), !27341)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bfu) ], !dbg !29096
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bfu), "nonnull"(ptr %i.bfv) ], !dbg !29096
   %i.bfw = icmp eq ptr %i.bfu, %i.bfv, !dbg !29097
   br i1 %i.bfw, label %._crit_edge2826, label %.lr.ph2825, !dbg !27339
 
@@ -616,7 +614,7 @@ begin_hunk_1_@llvm.umax.v2i64
 !27342 = !{!8791, !829}
 !27343 = !DISubroutineType(types: !27342)
 !27344 = !DISubprogram(name: "as_ptr<quiche::frame::Frame>", linkageName: "_RNvMs1_NtNtCskKLDkoKarTP_4core3ptr8non_nullINtB5_7NonNullNtNtCs3f36owOmepS_6quiche5frame5FrameE6as_ptrCslusEaBCZKLp_13quiche_client", scope: !829, file: !4310, line: 411, type: !27343, scopeLine: 411, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !5538)
-!27345 = !DILocation(line: 1663, column: 14, scope: !23499, inlinedAt: !27339)
+!27345 = !DILocation(line: 1663, column: 32, scope: !23499, inlinedAt: !27339)
 !27346 = !DILocation(line: 0, scope: !21113)
 !27347 = !DILocation(line: 0, scope: !24027)
 !27348 = !DILocation(line: 1488, column: 11, scope: !21639, inlinedAt: !25268)

@@ -205,14 +205,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep23 = getelementptr i8, ptr %i.ao, i64 384 ; 2 uses
   %i.ap = getelementptr i8, ptr %.015.lcssa.i.i.i, i64 %i.ai
   %next.gep24 = getelementptr i8, ptr %i.ap, i64 448 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep18) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep19) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep20) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep21) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep22) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep23) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep24) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep18), "nonnull"(ptr %next.gep19), "nonnull"(ptr %next.gep20), "nonnull"(ptr %next.gep21), "nonnull"(ptr %next.gep22), "nonnull"(ptr %next.gep23), "nonnull"(ptr %next.gep24) ]
   %i.aq = add <4 x i32> %vec.phi, splat (i32 1)   ; 2 uses
   %i.ar = add <4 x i32> %vec.phi17, splat (i32 1) ; 2 uses
   store i32 0, ptr %next.gep, align 64, !tbaa !246, !alias.scope !4512
@@ -615,14 +608,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep24 = getelementptr i8, ptr %i.ao, i64 384 ; 2 uses
   %i.ap = getelementptr i8, ptr %.015.lcssa.i.i.i, i64 %i.ai
   %next.gep25 = getelementptr i8, ptr %i.ap, i64 448 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep19) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep20) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep21) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep22) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep23) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep24) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep25) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep19), "nonnull"(ptr %next.gep20), "nonnull"(ptr %next.gep21), "nonnull"(ptr %next.gep22), "nonnull"(ptr %next.gep23), "nonnull"(ptr %next.gep24), "nonnull"(ptr %next.gep25) ]
   %i.aq = add <4 x i32> %vec.phi, splat (i32 1)   ; 2 uses
   %i.ar = add <4 x i32> %vec.phi18, splat (i32 1) ; 2 uses
   store i32 %.pre.i.i.i.i, ptr %next.gep, align 64, !tbaa !246, !alias.scope !4559
@@ -1025,14 +1011,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep22 = getelementptr i8, ptr %i.an, i64 384 ; 2 uses
   %i.ao = getelementptr i8, ptr %.015.lcssa.i.i.i, i64 %i.ah
   %next.gep23 = getelementptr i8, ptr %i.ao, i64 448 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep17) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep18) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep19) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep20) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep21) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep22) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep23) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep17), "nonnull"(ptr %next.gep18), "nonnull"(ptr %next.gep19), "nonnull"(ptr %next.gep20), "nonnull"(ptr %next.gep21), "nonnull"(ptr %next.gep22), "nonnull"(ptr %next.gep23) ]
   %i.ap = add <4 x i32> %vec.phi, splat (i32 1)   ; 2 uses
   %i.aq = add <4 x i32> %vec.phi16, splat (i32 1) ; 2 uses
   store i32 0, ptr %next.gep, align 64, !tbaa !246, !alias.scope !12760
@@ -1435,14 +1414,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep23 = getelementptr i8, ptr %i.an, i64 384 ; 2 uses
   %i.ao = getelementptr i8, ptr %.015.lcssa.i.i.i, i64 %i.ah
   %next.gep24 = getelementptr i8, ptr %i.ao, i64 448 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep18) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep19) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep20) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep21) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep22) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep23) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep24) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep18), "nonnull"(ptr %next.gep19), "nonnull"(ptr %next.gep20), "nonnull"(ptr %next.gep21), "nonnull"(ptr %next.gep22), "nonnull"(ptr %next.gep23), "nonnull"(ptr %next.gep24) ]
   %i.ap = add <4 x i32> %vec.phi, splat (i32 1)   ; 2 uses
   %i.aq = add <4 x i32> %vec.phi17, splat (i32 1) ; 2 uses
   store i32 %.pre.i.i.i.i, ptr %next.gep, align 64, !tbaa !246, !alias.scope !12807

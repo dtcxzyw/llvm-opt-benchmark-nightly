@@ -205,8 +205,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4toml2v35arrayE, i64 16), ptr %0, align 8, !tbaa !75
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.c = icmp ule ptr %1, %2
   tail call void @llvm.assume(i1 %i.c)
   %i.d = icmp eq ptr %1, %2
@@ -609,8 +608,7 @@ bb.a:
   store i64 0, ptr %i.g, align 8, !tbaa !158
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 0, ptr %i.h, align 8, !tbaa !145
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.i = icmp ule ptr %1, %2
   tail call void @llvm.assume(i1 %i.i)
   %i.j = icmp eq ptr %1, %2

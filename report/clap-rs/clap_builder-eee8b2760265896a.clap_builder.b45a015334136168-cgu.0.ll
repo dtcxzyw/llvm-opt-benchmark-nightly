@@ -205,8 +205,7 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfu0r
   br i1 %i.c, label %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfu0rQaTkGUu_12clap_builder.exit.split.us, label %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfu0rQaTkGUu_12clap_builder.exit.split
 
 _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfu0rQaTkGUu_12clap_builder.exit.split.us: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsfu0rQaTkGUu_12clap_builder.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1257.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1257.0.copyload), "nonnull"(ptr %.sroa.14.0.copyload) ]
   %i.e = sub i64 %.sroa.15.0.copyload, %.sroa.651.0.copyload
   %i.f = add i64 %.fr63.i115, -1                  ; 2 uses
   %umax.i.i.us = tail call i64 @llvm.umax.i64(i64 %.fr63.i115, i64 range(i64 0, -9223372036854775808) %.sroa.15.0.copyload) ; 2 uses
@@ -609,8 +608,7 @@ bb.o:                                             ; preds = %_RINvNtCsj6eKBz9Db1
   br i1 %.not.i.i.i.i.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtCsfu0rQaTkGUu_12clap_builder4util2id2IdEEEB1R_.exit.i.i.i.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.13.1.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.1.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.13.1.i.i), "nonnull"(ptr %.sroa.7.1.i.i) ]
   %i.fm = icmp eq ptr %.sroa.7.1.i.i, %.sroa.13.1.i.i
   br i1 %i.fm, label %bb.q, label %bb.u
 
@@ -1013,8 +1011,7 @@ _RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser11arg_matcherNtB2_10ArgMatcher28star
   %i.brr = call { ptr, ptr } @_RNvMCs3RZUOUhPFQ6_8clap_lexNtB2_7RawArgs9remaining(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ga) #43, !noalias !10006, !inline_history !8350 ; 2 uses
   %i.brs = extractvalue { ptr, ptr } %i.brr, 0    ; 3 uses
   %i.brt = extractvalue { ptr, ptr } %i.brr, 1    ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.brt) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.brs) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.brs), "nonnull"(ptr %i.brt) ]
   %i.bru = icmp eq ptr %i.brs, %i.brt
   br i1 %i.bru, label %._crit_edge, label %.lr.ph1823
 
@@ -1053,8 +1050,7 @@ bb.lu:                                            ; preds = %bb.lr
   br label %_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB4_11ValueParser9parse_ref.exit
 
 bb.lv:                                            ; preds = %bb.lr
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.i), "nonnull"(ptr %.sroa.9.0.i) ]
   br label %_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB4_11ValueParser9parse_ref.exit
 
 _RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder7builder12value_parserNtB4_11ValueParser9parse_ref.exit: ; preds = %bb.lr, %bb.ls, %bb.lt, %bb.lu, %bb.lv
@@ -1457,8 +1453,7 @@ bb.a:
   br i1 %i.h, label %bb.b, label %_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec10partial_eqINtB4_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringENtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2neCsfu0rQaTkGUu_12clap_builder.exit.thread
 
 bb.b:                                             ; preds = %.lr.ph
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6), "nonnull"(ptr %.val) ]
   %i.i = icmp eq i64 %.val5, 0
   br i1 %i.i, label %_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec10partial_eqINtB4_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringENtNtCsj6eKBz9Db1c_4core3cmp9PartialEq2neCsfu0rQaTkGUu_12clap_builder.exit, label %.lr.ph.i.i
 

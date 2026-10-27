@@ -205,9 +205,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !938 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload.i), "nonnull"(ptr %.sroa.5.0.copyload.i), "nonnull"(ptr %.sroa.02.0.copyload.i) ]
   %.not.i.i.i = icmp eq i64 %.sroa.4.0.copyload.i, %i.a
   br i1 %.not.i.i.i, label %bb.g, label %bb.i, !prof !19
 
@@ -268,9 +266,7 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n
   %.sroa.4.0..sroa_idx.i14 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload.i15 = load i64, ptr %.sroa.4.0..sroa_idx.i14, align 8, !alias.scope !941 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload.i7) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i3) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.copyload.i1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload.i7), "nonnull"(ptr %.sroa.5.0.copyload.i3), "nonnull"(ptr %.sroa.02.0.copyload.i1) ]
   %.not.i.i.i16 = icmp eq i64 %.sroa.4.0.copyload.i15, %i.a
   br i1 %.not.i.i.i16, label %bb.p, label %bb.r, !prof !19
 
@@ -343,8 +339,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !974 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i), "nonnull"(ptr %.sroa.02.0.copyload.i) ]
   %.not.i.i.i = icmp eq i64 %.sroa.4.0.copyload.i, %i.a
   br i1 %.not.i.i.i, label %bb.i, label %bb.h, !prof !19
 
@@ -397,8 +392,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.m
   %.sroa.4.0..sroa_idx.i10 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0.copyload.i11 = load i64, ptr %.sroa.4.0..sroa_idx.i10, align 8, !alias.scope !977 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i3) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.copyload.i1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i3), "nonnull"(ptr %.sroa.02.0.copyload.i1) ]
   %.not.i.i.i12 = icmp eq i64 %.sroa.4.0.copyload.i11, %i.a
   br i1 %.not.i.i.i12, label %bb.q, label %bb.p, !prof !19
 
@@ -801,8 +795,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.0.val) ]
   %.not9.i.i.i.i = icmp eq i64 %.sroa.5.0.copyload.i, %i.d
   br i1 %.not9.i.i.i.i, label %_RNvNtCs5yxAJGbRKSL_4ring4limb37verify_limbs_less_than_limbs_leak_bit.exit.i.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxSINtNtNtB4_3mem12maybe_uninit11MaybeUninityEEECs5yxAJGbRKSL_4ring.exit18, !prof !36
 
@@ -1205,8 +1198,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i), "nonnull"(ptr %.0.val) ]
   %.not9.i.i.i.i = icmp eq i64 %.sroa.5.0.copyload.i, %i.d
   br i1 %.not9.i.i.i.i, label %_RNvNtCs5yxAJGbRKSL_4ring4limb37verify_limbs_less_than_limbs_leak_bit.exit.i.i, label %_RNvNtCs5yxAJGbRKSL_4ring4limb37verify_limbs_less_than_limbs_leak_bit.exit.thread.i.i, !prof !36
 
@@ -1609,8 +1601,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %bb.b
   %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i

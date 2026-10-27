@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %.sroa.69.0.copyload = load i32, ptr %.sroa.69.0..sroa_idx, align 4 ; 12 uses
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.sroa.14.0.copyload = load ptr, ptr %.sroa.14.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.14.0.copyload = load ptr, ptr %.sroa.14.0..sroa_idx, align 8 ; 12 uses
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %.sroa.18.0.copyload = load ptr, ptr %.sroa.18.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.18.0.copyload = load ptr, ptr %.sroa.18.0..sroa_idx, align 8 ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %.sroa.064.0.copyload = load i8, ptr %i.j, align 8 ; 6 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 25
@@ -264,8 +264,6 @@ bb.g:                                             ; preds = %bb.b
   ]
 
 bb.h:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.18.0.copyload) ]
   switch i64 %i.o, label %bb.d [
     i64 0, label %bb.an
     i64 1, label %bb.ar
@@ -378,8 +376,7 @@ bb.o:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.6, i64 3, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   store i8 %i.i, ptr %i.g, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   store i32 %.sroa.69.0.copyload, ptr %.sroa.5.0..sroa_idx, align 4
@@ -512,8 +509,7 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit139: ; preds = %bb.x
   br label %bb.s
 
 bb.z:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.aw = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   store i32 %.sroa.69.0.copyload, ptr %i.aw, align 8
@@ -634,8 +630,7 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit144: ; preds = %bb.ah
   br label %bb.s
 
 bb.aj:                                            ; preds = %bb.g
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store i32 %.sroa.69.0.copyload, ptr %i.br, align 8
@@ -679,6 +674,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.an:                                            ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload) ]
   %.sroa.4115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4115.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.9, i64 3, i1 false)
@@ -730,6 +726,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.ar:                                            ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %.sroa.14.0.copyload, ptr %i.c, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -773,6 +770,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.av:                                            ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %.sroa.14.0.copyload, ptr %i.b, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -816,8 +814,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.az:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload), "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.sroa.14.0.copyload, ptr %i.a, align 8
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -888,9 +885,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %.sroa.69.0.copyload = load i32, ptr %.sroa.69.0..sroa_idx, align 4 ; 12 uses
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %.sroa.14.0.copyload = load ptr, ptr %.sroa.14.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.14.0.copyload = load ptr, ptr %.sroa.14.0..sroa_idx, align 8 ; 12 uses
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %.sroa.18.0.copyload = load ptr, ptr %.sroa.18.0..sroa_idx, align 8 ; 9 uses
+  %.sroa.18.0.copyload = load ptr, ptr %.sroa.18.0..sroa_idx, align 8 ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %.sroa.064.0.copyload = load i8, ptr %i.j, align 8 ; 6 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 25
@@ -950,8 +947,6 @@ bb.g:                                             ; preds = %bb.b
   ]
 
 bb.h:                                             ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.18.0.copyload) ]
   switch i64 %i.o, label %bb.d [
     i64 0, label %bb.an
     i64 1, label %bb.ar
@@ -1064,8 +1059,7 @@ bb.o:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.6, i64 3, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   store i8 %i.i, ptr %i.g, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   store i32 %.sroa.69.0.copyload, ptr %.sroa.5.0..sroa_idx, align 4
@@ -1198,8 +1192,7 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit139: ; preds = %bb.x
   br label %bb.s
 
 bb.z:                                             ; preds = %bb.f
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.aw = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   store i32 %.sroa.69.0.copyload, ptr %i.aw, align 8
@@ -1320,8 +1313,7 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit144: ; preds = %bb.ah
   br label %bb.s
 
 bb.aj:                                            ; preds = %bb.g
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store i32 %.sroa.69.0.copyload, ptr %i.br, align 8
@@ -1365,6 +1357,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.an:                                            ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload) ]
   %.sroa.4115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4115.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.9, i64 3, i1 false)
@@ -1416,6 +1409,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.ar:                                            ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %.sroa.14.0.copyload, ptr %i.c, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -1459,6 +1453,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.av:                                            ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %.sroa.14.0.copyload, ptr %i.b, align 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -1502,8 +1497,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvNvMsr_NtNtCsefoF4u9kbII_5wasmi6m
   br label %bb.s
 
 bb.az:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.17.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.21.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.14.0.copyload), "nonnull"(ptr %.sroa.18.0.copyload), "nonnull"(ptr %.sroa.17.0.copyload), "nonnull"(ptr %.sroa.21.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.sroa.14.0.copyload, ptr %i.a, align 8
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 8

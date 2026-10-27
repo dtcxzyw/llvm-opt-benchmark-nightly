@@ -205,8 +205,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.ap, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterfEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterfEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterfEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_7IterMutfEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload), "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
   %.not.i116 = icmp eq i64 %i.u, 0
   %i.aq = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 4 uses
   br i1 %.not.i116, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterfEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterfEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -469,10 +468,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.dq, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterfEB14_EINtB17_7IterMutfEEB1B_EINtB5_7ZipImplBW_B1B_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterfEB14_EINtB17_7IterMutfEEB1B_EINtB5_7ZipImplBW_B1B_E4nextCsa5QsYiPB8Gl_5image.exit.thread.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterfEB14_EINtB17_7IterMutfEEB1B_EINtB5_7ZipImplBW_B1B_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.r
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.072.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.474.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.678.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.882.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.072.0.copyload), "nonnull"(ptr %.sroa.474.0.copyload), "nonnull"(ptr %.sroa.678.0.copyload), "nonnull"(ptr %.sroa.882.0.copyload) ]
   %i.dr = sub nuw i64 %.sroa.11.0.copyload, %.sroa.983.0.copyload ; 3 uses
   %min.iters.check190 = icmp ult i64 %i.dr, 8
   br i1 %min.iters.check190, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterfEB14_EINtB17_7IterMutfEEB1B_EINtB5_7ZipImplBW_B1B_E4nextCsa5QsYiPB8Gl_5image.exit.preheader, label %vector.memcheck166
@@ -743,8 +739,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.ap, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterhEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterhEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterhEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_7IterMutfEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload), "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
   %.not.i121 = icmp eq i64 %i.u, 0
   %i.aq = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 4 uses
   br i1 %.not.i121, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterhEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterhEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -1022,10 +1017,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ed, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterhEB14_EINtB17_7IterMutfEEIB1C_hEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterhEB14_EINtB17_7IterMutfEEIB1C_hEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.thread.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterhEB14_EINtB17_7IterMutfEEIB1C_hEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.r
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.073.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.475.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.679.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.883.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.073.0.copyload), "nonnull"(ptr %.sroa.475.0.copyload), "nonnull"(ptr %.sroa.679.0.copyload), "nonnull"(ptr %.sroa.883.0.copyload) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterhEB14_EINtB17_7IterMutfEEIB1C_hEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterhEB14_EINtB17_7IterMutfEEIB1C_hEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4IterhEB14_EINtB17_7IterMutfEEIB1C_hEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, %bb.u
@@ -1233,8 +1225,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4ItertENtNtNtNtBa_4iter6traits8iterat
   br i1 %i.ap, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4ItertEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4ItertEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.thread
 
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4ItertEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4ItertENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_7IterMutfEECsa5QsYiPB8Gl_5image.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload), "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
   %.not.i121 = icmp eq i64 %i.u, 0
   %i.aq = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 4 uses
   br i1 %.not.i121, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4ItertEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4ItertEINtB1q_7IterMutfEEENtNtNtB8_6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit
@@ -1514,10 +1505,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ef, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4ItertEB14_EINtB17_7IterMutfEEIB1C_tEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4ItertEB14_EINtB17_7IterMutfEEIB1C_tEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.thread.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4ItertEB14_EINtB17_7IterMutfEEIB1C_tEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.r
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.073.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.475.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.679.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.883.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.073.0.copyload), "nonnull"(ptr %.sroa.475.0.copyload), "nonnull"(ptr %.sroa.679.0.copyload), "nonnull"(ptr %.sroa.883.0.copyload) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4ItertEB14_EINtB17_7IterMutfEEIB1C_tEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4ItertEB14_EINtB17_7IterMutfEEIB1C_tEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter4ItertEB14_EINtB17_7IterMutfEEIB1C_tEEINtB5_7ZipImplBW_B1T_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, %bb.u
@@ -1838,9 +1826,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.co, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0206.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4208.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6212.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0206.0.copyload.i), "nonnull"(ptr %.sroa.4208.0.copyload.i), "nonnull"(ptr %.sroa.6212.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -2243,9 +2229,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cj, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0214.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4216.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6220.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0214.0.copyload.i), "nonnull"(ptr %.sroa.4216.0.copyload.i), "nonnull"(ptr %.sroa.6220.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -2648,9 +2632,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cj, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0214.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4216.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6220.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0214.0.copyload.i), "nonnull"(ptr %.sroa.4216.0.copyload.i), "nonnull"(ptr %.sroa.6220.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj3_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -3053,9 +3035,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bk, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0124.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4126.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6130.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0124.0.copyload.i), "nonnull"(ptr %.sroa.4126.0.copyload.i), "nonnull"(ptr %.sroa.6130.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -3458,9 +3438,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bh, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0124.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4126.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6130.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0124.0.copyload.i), "nonnull"(ptr %.sroa.4126.0.copyload.i), "nonnull"(ptr %.sroa.6130.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj1_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -3863,9 +3841,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cn, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0247.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4249.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6253.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0247.0.copyload.i), "nonnull"(ptr %.sroa.4249.0.copyload.i), "nonnull"(ptr %.sroa.6253.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAfj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -4268,9 +4244,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cn, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0258.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4260.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6264.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0258.0.copyload.i), "nonnull"(ptr %.sroa.4260.0.copyload.i), "nonnull"(ptr %.sroa.6264.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -4673,9 +4647,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cn, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0258.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4260.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6264.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0258.0.copyload.i), "nonnull"(ptr %.sroa.4260.0.copyload.i), "nonnull"(ptr %.sroa.6264.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj4_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -5078,9 +5050,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cd, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0170.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4172.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6176.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0170.0.copyload.i), "nonnull"(ptr %.sroa.4172.0.copyload.i), "nonnull"(ptr %.sroa.6176.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAhj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j
@@ -5483,9 +5453,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.cd, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.i: ; preds = %bb.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0170.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4172.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6176.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0170.0.copyload.i), "nonnull"(ptr %.sroa.4172.0.copyload.i), "nonnull"(ptr %.sroa.6176.0.copyload.i) ]
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutAtj2_EINtB13_4IterB1t_EEB1z_EINtB5_7ZipImplBW_B1z_E4nextCsa5QsYiPB8Gl_5image.exit.i
 
 bb.l:                                             ; preds = %bb.j

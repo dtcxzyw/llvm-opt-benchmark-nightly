@@ -205,12 +205,12 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %bb.b
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
-  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8, !nonnull !34, !noundef !34 ; 36 uses
+  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8 ; 44 uses
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
   %.sroa.22.0.copyload = load ptr, ptr %.sroa.22.0..sroa_idx, align 8 ; 22 uses
   switch i64 %i.bn, label %default.unreachable [
     i64 0, label %bb.cu
-    i64 1, label %.thread398.thread
+    i64 1, label %5
     i64 2, label %bb.cv
     i64 3, label %bb.cw
     i64 4, label %bb.cx
@@ -221,10 +221,10 @@ bb.h:                                             ; preds = %bb.b
     i64 9, label %bb.dc
     i64 10, label %bb.dd
     i64 11, label %bb.de
-    i64 12, label %.thread398.thread
-    i64 13, label %.thread398.thread
-    i64 14, label %.thread398.thread
-    i64 15, label %.thread398.thread
+    i64 12, label %5
+    i64 13, label %5
+    i64 14, label %5
+    i64 15, label %5
   ]
 
 bb.i:                                             ; preds = %bb.b
@@ -627,7 +627,6 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h6f991377d5eca976E.exit.i.
   br label %"_ZN8indexmap3map25IndexMap$LT$K$C$V$C$S$GT$12into_entries17hd92c04f82909230fE.exit.i"
 
 "_ZN8indexmap3map25IndexMap$LT$K$C$V$C$S$GT$12into_entries17hd92c04f82909230fE.exit.i": ; preds = %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h6f991377d5eca976E.exit.i.i.i.i.i.i, %bb.bn
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0238.sroa.4.0.copyload) ]
   %i.ig = icmp ult i64 %.sroa.0238.sroa.5.0.copyload, 128102389400760776
   call void @llvm.assume(i1 %i.ig)
   %i.ih = getelementptr inbounds nuw [72 x i8], ptr %.sroa.0238.sroa.4.0.copyload, i64 %.sroa.0238.sroa.5.0.copyload
@@ -641,6 +640,7 @@ _ZN9hashbrown3raw11TableLayout20calculate_layout_for17h6f991377d5eca976E.exit.i.
   store ptr %i.ih, ptr %.sroa.6256.0..sroa_idx, align 8, !alias.scope !17852, !noalias !17853
   %.sroa.7257.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   store ptr %i.s, ptr %.sroa.7257.0..sroa_idx, align 8, !alias.scope !17852, !noalias !17853
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0238.sroa.4.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !17851
   %i.ii = call align 8 ptr @llvm.threadlocal.address.p0(ptr @"_ZN3std4hash6random11RandomState3new4KEYS29_$u7b$$u7b$constant$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$3VAL17h3d0bd8071983845cE") ; 5 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 16 ; 2 uses
@@ -941,8 +941,8 @@ bb.ci:                                            ; preds = %"_ZN103_$LT$alloc..
   %i.lq = invoke noundef nonnull ptr @_ZN16nickel_lang_core4eval5value11NickelValue6record17h6a415f67381847fbE(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.bf, i32 noundef %i.bm)
           to label %.thread398 unwind label %bb.fq
 
-.thread398.thread:                                ; preds = %bb.ch, %bb.l, %.thread398, %.thread398, %.thread398, %.thread398, %.thread398, %bb.gc, %bb.d, %bb.es, %bb.ew, %bb.fm, %bb.fs, %bb.fj, %bb.fb, %bb.ei, %bb.dy, %bb.dh, %bb.ee, %bb.ed, %_ZN16nickel_lang_core4eval5value11NickelValue12enum_variant17h63677e19df7e1cfcE.exit, %bb.bj, %"_ZN4core3ptr155drop_in_place$LT$nickel_lang_parser..environment..Environment$LT$nickel_lang_parser..identifier..Ident$C$nickel_lang_core..eval..cache..lazy..Thunk$GT$$GT$17hbf0bf6f57231cc98E.exit", %bb.h, %bb.h, %bb.h, %bb.h, %bb.h
-  %.sroa.0.2 = phi ptr [ %.sroa.9.0.copyload, %bb.h ], [ %.sroa.0.0, %bb.gc ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %i.bs, %bb.d ], [ %i.hq, %bb.bj ], [ %i.op, %bb.ed ], [ %i.oq, %bb.ee ], [ %i.pt, %bb.fb ], [ %i.oy, %bb.ei ], [ %i.py, %bb.fj ], [ %i.oi, %bb.dy ], [ %i.mv, %bb.dh ], [ %i.qc, %bb.fm ], [ %i.pj, %bb.ew ], [ %i.pe, %bb.es ], [ %i.qq, %bb.fs ], [ %i.qy, %_ZN16nickel_lang_core4eval5value11NickelValue12enum_variant17h63677e19df7e1cfcE.exit ], [ %i.lt, %"_ZN4core3ptr155drop_in_place$LT$nickel_lang_parser..environment..Environment$LT$nickel_lang_parser..identifier..Ident$C$nickel_lang_core..eval..cache..lazy..Thunk$GT$$GT$17hbf0bf6f57231cc98E.exit" ], [ %.sroa.9.0.copyload, %bb.h ], [ %.sroa.9.0.copyload, %bb.h ], [ %.sroa.9.0.copyload, %bb.h ], [ %.sroa.9.0.copyload, %bb.h ], [ %i.cq, %bb.l ], [ %i.lg, %bb.ch ] ; 2 uses
+.thread398.thread:                                ; preds = %bb.ch, %bb.l, %.thread398, %.thread398, %.thread398, %.thread398, %.thread398, %bb.gc, %bb.d, %bb.es, %bb.ew, %bb.fm, %bb.fs, %bb.fj, %bb.fb, %bb.ei, %bb.dy, %bb.dh, %bb.ee, %bb.ed, %5, %_ZN16nickel_lang_core4eval5value11NickelValue12enum_variant17h63677e19df7e1cfcE.exit, %bb.bj, %"_ZN4core3ptr155drop_in_place$LT$nickel_lang_parser..environment..Environment$LT$nickel_lang_parser..identifier..Ident$C$nickel_lang_core..eval..cache..lazy..Thunk$GT$$GT$17hbf0bf6f57231cc98E.exit"
+  %.sroa.0.2 = phi ptr [ %i.hq, %bb.bj ], [ %.sroa.0.0, %bb.gc ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %.sroa.0.0, %.thread398 ], [ %i.bs, %bb.d ], [ %.sroa.9.0.copyload, %5 ], [ %i.op, %bb.ed ], [ %i.oq, %bb.ee ], [ %i.pt, %bb.fb ], [ %i.oy, %bb.ei ], [ %i.py, %bb.fj ], [ %i.oi, %bb.dy ], [ %i.mv, %bb.dh ], [ %i.qc, %bb.fm ], [ %i.pj, %bb.ew ], [ %i.pe, %bb.es ], [ %i.qq, %bb.fs ], [ %i.qy, %_ZN16nickel_lang_core4eval5value11NickelValue12enum_variant17h63677e19df7e1cfcE.exit ], [ %i.lt, %"_ZN4core3ptr155drop_in_place$LT$nickel_lang_parser..environment..Environment$LT$nickel_lang_parser..identifier..Ident$C$nickel_lang_core..eval..cache..lazy..Thunk$GT$$GT$17hbf0bf6f57231cc98E.exit" ], [ %i.cq, %bb.l ], [ %i.lg, %bb.ch ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bk)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.2) ]
   ret ptr %.sroa.0.2
@@ -1027,64 +1027,68 @@ bb.ct:                                            ; preds = %bb.cq
   br label %.thread398.thread
 
 bb.cu:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad)
   invoke void %.sroa.22.0.copyload(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.ad, ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.df unwind label %bb.di
 
+5:                                                ; preds = %bb.h, %bb.h, %bb.h, %bb.h, %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload) ]
+  br label %.thread398.thread
+
 bb.cv:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   %i.mn = invoke noundef nonnull align 8 ptr %.sroa.22.0.copyload(ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.dj unwind label %bb.di     ; 8 uses
 
 bb.cw:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.au)
   %i.mo = invoke { ptr, ptr } %.sroa.22.0.copyload(ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.dv unwind label %bb.di     ; 2 uses
 
 bb.cx:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   invoke void %.sroa.22.0.copyload(ptr noalias noundef nonnull sret([20 x i8]) align 4 captures(address) dereferenceable(20) %i.ax, ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.eb unwind label %bb.di
 
 bb.cy:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   %i.mp = invoke noundef nonnull align 8 ptr %.sroa.22.0.copyload(ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.ef unwind label %bb.di     ; 11 uses
 
 bb.cz:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z)
   %i.mq = invoke noundef nonnull ptr %.sroa.22.0.copyload(ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.eq unwind label %bb.di
 
 bb.da:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as)
   invoke void %.sroa.22.0.copyload(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.as, ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.eu unwind label %bb.di
 
 bb.db:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
   invoke void %.sroa.22.0.copyload(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.aq, ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.ey unwind label %bb.di
 
 bb.dc:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao)
   invoke void %.sroa.22.0.copyload(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.ao, ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.fh unwind label %bb.di
 
 bb.dd:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
   invoke void %.sroa.22.0.copyload(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.al, ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.fk unwind label %bb.di
 
 bb.de:                                            ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.22.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload), "nonnull"(ptr %.sroa.22.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab)
   %i.mr = invoke { ptr, ptr } %.sroa.22.0.copyload(ptr noundef nonnull %.sroa.9.0.copyload)
           to label %bb.fp unwind label %bb.di     ; 2 uses
@@ -1487,7 +1491,7 @@ bb.fu:                                            ; preds = %bb.ft
   ]
 
 bb.fv:                                            ; preds = %.thread367
-  invoke fastcc void @"_ZN4core3ptr69drop_in_place$LT$nickel_lang_core..eval..value..lens..TermContent$GT$17h7545013d74a4e8a3E"(i64 %i.bn, ptr nonnull %.sroa.9.0.copyload) #61
+  invoke fastcc void @"_ZN4core3ptr69drop_in_place$LT$nickel_lang_core..eval..value..lens..TermContent$GT$17h7545013d74a4e8a3E"(i64 %i.bn, ptr %.sroa.9.0.copyload) #61
           to label %.thread309 unwind label %bb.bl
 
 bb.fw:                                            ; preds = %bb.i
@@ -1890,9 +1894,7 @@ bb.l:                                             ; preds = %"_ZN102_$LT$core..i
           to label %bb.m unwind label %bb.aj      ; 2 uses
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.622.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.823.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.622.0.copyload), "nonnull"(ptr %.sroa.823.0.copyload), "nonnull"(ptr %.sroa.9.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !19912
   store i64 %.sroa.017.0.copyload, ptr %i.i, align 8, !noalias !19913
   %.sroa.5.0..sroa_idx19 = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 3 uses
@@ -2295,7 +2297,6 @@ bb.c:                                             ; preds = %bb.b
           to label %"_ZN4core3ptr112drop_in_place$LT$core..option..Option$LT$alloc..rc..Rc$LT$nickel_lang_core..term..record..SealedTail$GT$$GT$$GT$17h6bdb7cbb8a8ecf39E.exit" unwind label %bb.v
 
 bb.d:                                             ; preds = %bb.a, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h6f991377d5eca976E.exit.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.021.sroa.4.0.copyload) ]
   %i.z = icmp ult i64 %.sroa.021.sroa.5.0.copyload, 128102389400760776
   tail call void @llvm.assume(i1 %i.z)
   %i.aa = getelementptr inbounds nuw [72 x i8], ptr %.sroa.021.sroa.4.0.copyload, i64 %.sroa.021.sroa.5.0.copyload
@@ -2309,6 +2310,7 @@ bb.d:                                             ; preds = %bb.a, %_ZN9hashbrow
   store ptr %i.aa, ptr %.sroa.636.0..sroa_idx, align 8, !alias.scope !25404, !noalias !25405
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   store ptr %i.i, ptr %.sroa.7.0..sroa_idx, align 8, !alias.scope !25404, !noalias !25405
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.021.sroa.4.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !25403
   %i.ab = call align 8 ptr @llvm.threadlocal.address.p0(ptr @"_ZN3std4hash6random11RandomState3new4KEYS29_$u7b$$u7b$constant$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$3VAL17h3d0bd8071983845cE") ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 2 uses
@@ -2711,9 +2713,7 @@ bb.c:                                             ; preds = %.lr.ph
 _ZN3std2io22default_write_vectored17h46d8ce1e674ef6a7E.exit: ; preds = %bb.b, %bb.a, %bb.c
   %.sroa.3.0.i.i = phi i64 [ %i.h, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ]
   %.sroa.02.0.i.i = phi ptr [ %.val.i.i, %bb.c ], [ inttoptr (i64 1 to ptr), %bb.a ], [ inttoptr (i64 1 to ptr), %bb.b ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i.i), "nonnull"(ptr %.val), "nonnull"(ptr %.val1) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !invariant.load !34, !noalias !31609, !nonnull !34
   %i.k = tail call { i64, ptr } %i.j(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.02.0.i.i, i64 noundef %.sroa.3.0.i.i), !noalias !31610, !inline_history !31605
@@ -3116,9 +3116,9 @@ bb.c:                                             ; preds = %.lr.ph.i
 .lr.ph:                                           ; preds = %"_ZN110_$LT$core..ops..range..RangeFrom$LT$usize$GT$$u20$as$u20$core..slice..index..SliceIndex$LT$$u5b$T$u5d$$GT$$GT$9index_mut17h48743ff39ea652baE.exit.i"
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.sroa.0.0.lcssa.i
   %i.q = sub nuw i64 %2, %.sroa.0.0.lcssa.i
-  %.val.i = load ptr, ptr %0, align 8, !alias.scope !31867, !nonnull !34, !noundef !34
+  %.val.i = load ptr, ptr %0, align 8, !alias.scope !31867 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val1.i = load ptr, ptr %i.r, align 8, !alias.scope !31867, !nonnull !34, !noundef !34
+  %.val1.i = load ptr, ptr %i.r, align 8, !alias.scope !31867 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.val1.i, i64 24
   %i.t = load ptr, ptr %i.s, align 8, !invariant.load !34, !noalias !31868, !nonnull !34
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
@@ -3155,7 +3155,7 @@ bb.f:                                             ; preds = %.lr.ph120
 _ZN3std2io5Write14write_vectored17h290ff3683c41aeb3E.exit: ; preds = %bb.e, %bb.d, %bb.f
   %.sroa.3.0.i.i.i = phi i64 [ %i.ab, %bb.f ], [ 0, %bb.d ], [ 0, %bb.e ]
   %.sroa.02.0.i.i.i = phi ptr [ %.val.i.i.i, %bb.f ], [ inttoptr (i64 1 to ptr), %bb.d ], [ inttoptr (i64 1 to ptr), %bb.e ] ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0.i.i.i), "nonnull"(ptr %.val.i), "nonnull"(ptr %.val1.i) ]
   %i.ac = tail call { i64, ptr } %i.t(ptr noundef nonnull align 1 %.val.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.sroa.02.0.i.i.i, i64 noundef %.sroa.3.0.i.i.i), !noalias !31874, !inline_history !31862 ; 2 uses
   %i.ad = extractvalue { i64, ptr } %i.ac, 0      ; 2 uses
   %i.ae = extractvalue { i64, ptr } %i.ac, 1      ; 11 uses
@@ -3558,8 +3558,7 @@ bb.c:                                             ; preds = %"_ZN9hashbrown3raw2
           to label %"_ZN8indexmap3map4core25IndexMapCore$LT$K$C$V$GT$7reserve17h6f2310496427d5b5E.exit.i.i" unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !43533
 
 "_ZN8indexmap3map4core25IndexMapCore$LT$K$C$V$GT$7reserve17h6f2310496427d5b5E.exit.i.i": ; preds = %bb.c, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$7reserve17he916de7c025c01efE.exit.i.i.i"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload), "nonnull"(ptr %.sroa.6.0.copyload) ]
   %i.ap = icmp eq ptr %.sroa.0.0.copyload, %.sroa.4.0.copyload
   br i1 %i.ap, label %"_ZN123_$LT$indexmap..map..IndexMap$LT$K$C$V$C$S$GT$$u20$as$u20$core..iter..traits..collect..FromIterator$LT$$LP$K$C$V$RP$$GT$$GT$9from_iter17h082c6dac8a8f1d23E.exit", label %.lr.ph.i.i.i.i.i
 
@@ -3962,8 +3961,7 @@ bb.ar:                                            ; preds = %bb.q
   br i1 %.not125.i, label %.thread.i, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.671.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.671.0.copyload.i), "nonnull"(ptr %.0.val) ]
   %i.fs = invoke noundef ptr @"_ZN57_$LT$std..io..stdio..Stdout$u20$as$u20$std..io..Write$GT$9write_all17h767631693dd4e92aE"(ptr noalias noundef nonnull align 8 dereferenceable(8) %.0.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @13, i64 noundef 1)
           to label %.noexc30 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 

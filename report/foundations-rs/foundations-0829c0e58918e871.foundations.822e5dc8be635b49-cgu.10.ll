@@ -202,8 +202,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !10950
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integeraECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i8 noundef %1), !dbg !10952 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !10953
   %. = select i1 %.not, i64 9, i64 8, !dbg !10954
@@ -248,8 +247,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !10971
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integerhECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i8 noundef %1), !dbg !10973 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !10974
   %. = select i1 %.not, i64 9, i64 8, !dbg !10975
@@ -312,8 +310,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !10998
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer18serialize_floatingfECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, float noundef %1), !dbg !11000 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11001
   %. = select i1 %.not, i64 9, i64 8, !dbg !11002
@@ -358,8 +355,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11019
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer18serialize_floatingdECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, double noundef %1), !dbg !11021 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11022
   %. = select i1 %.not, i64 9, i64 8, !dbg !11023
@@ -404,8 +400,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11040
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integersECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i16 noundef %1), !dbg !11042 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11043
   %. = select i1 %.not, i64 9, i64 8, !dbg !11044
@@ -450,8 +445,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11061
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integerlECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i32 noundef %1), !dbg !11063 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11064
   %. = select i1 %.not, i64 9, i64 8, !dbg !11065
@@ -496,8 +490,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11082
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integerxECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i64 noundef %1), !dbg !11084 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11085
   %. = select i1 %.not, i64 9, i64 8, !dbg !11086
@@ -542,8 +535,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11102
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer13serialize_map(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i64 noundef %2, i64 %3), !dbg !11104
   store i64 8, ptr %1, align 8, !dbg !11105
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11105
@@ -587,8 +579,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11121
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer13serialize_seq(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i64 noundef %2, i64 %3), !dbg !11123
   store i64 8, ptr %1, align 8, !dbg !11124
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11124
@@ -632,8 +623,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11139
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer13serialize_str(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !dbg !11141 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11142
   %. = select i1 %.not, i64 9, i64 8, !dbg !11143
@@ -678,8 +668,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11160
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integertECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i16 noundef %1), !dbg !11162 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11163
   %. = select i1 %.not, i64 9, i64 8, !dbg !11164
@@ -724,8 +713,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11181
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integermECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i32 noundef %1), !dbg !11183 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11184
   %. = select i1 %.not, i64 9, i64 8, !dbg !11185
@@ -770,8 +758,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11202
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integeryECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i64 noundef %1), !dbg !11204 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11205
   %. = select i1 %.not, i64 9, i64 8, !dbg !11206
@@ -816,8 +803,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11221
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer14serialize_bool(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i1 noundef zeroext %1), !dbg !11223 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11224
   %. = select i1 %.not, i64 9, i64 8, !dbg !11225
@@ -862,8 +848,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11240
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer14serialize_char(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i32 noundef %1), !dbg !11242 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11243
   %. = select i1 %.not, i64 9, i64 8, !dbg !11244
@@ -908,8 +893,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11261
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integernECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i128 noundef %1), !dbg !11263 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11264
   %. = select i1 %.not, i64 9, i64 8, !dbg !11265
@@ -994,8 +978,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11296
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB3_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer14serialize_someDNtNtCs5brsvYHD4Ou_12erased_serde3ser9SerializeEL_ECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noundef nonnull %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2), !dbg !11298 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11299
   %. = select i1 %.not, i64 9, i64 8, !dbg !11300
@@ -1040,8 +1023,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11317
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvMs_NtNtCskfQLOxWbF12_10prometools5serde5valueNtB5_15ValueSerializer17serialize_integeroECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i128 noundef %1), !dbg !11319 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11320
   %. = select i1 %.not, i64 9, i64 8, !dbg !11321
@@ -1126,8 +1108,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11352
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer15serialize_bytes(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !dbg !11354 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11355
   %. = select i1 %.not, i64 9, i64 8, !dbg !11356
@@ -1172,8 +1153,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11372
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer15serialize_tuple(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, i64 noundef %2), !dbg !11374
   store i64 8, ptr %1, align 8, !dbg !11375
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11375
@@ -1217,8 +1197,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11391
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer16serialize_struct(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i64 noundef %4), !dbg !11393
   store i64 8, ptr %1, align 8, !dbg !11394
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11394
@@ -1277,8 +1256,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11416
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer13serialize_str(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2), !dbg !11418 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11419
   %. = select i1 %.not, i64 9, i64 8, !dbg !11420
@@ -1323,8 +1301,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11436
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer22serialize_tuple_struct(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i64 noundef %4), !dbg !11438
   store i64 8, ptr %1, align 8, !dbg !11439
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11439
@@ -1368,8 +1345,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11454
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer22serialize_unit_variant(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i32 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef %5), !dbg !11456 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11457
   %. = select i1 %.not, i64 9, i64 8, !dbg !11458
@@ -1414,8 +1390,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11474
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer23serialize_tuple_variant(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i32 noundef %4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %7), !dbg !11476
   store i64 8, ptr %1, align 8, !dbg !11477
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11477
@@ -1459,8 +1434,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11492
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB3_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer24serialize_newtype_structDNtNtCs5brsvYHD4Ou_12erased_serde3ser9SerializeEL_ECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noundef nonnull %3, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %4), !dbg !11494 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11495
   %. = select i1 %.not, i64 9, i64 8, !dbg !11496
@@ -1505,8 +1479,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11512
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef nonnull ptr @_RNvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB2_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer24serialize_struct_variant(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i32 noundef %4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %7), !dbg !11514
   store i64 8, ptr %1, align 8, !dbg !11515
   store ptr %i.d, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !11515
@@ -1550,8 +1523,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !11530
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i), "nonnull"(ptr %.sroa.6.0.copyload.i) ]
   %i.d = tail call noundef ptr @_RINvXNtNtCskfQLOxWbF12_10prometools5serde5valueNtB3_15ValueSerializerNtNtCs5FjQZcNRzHx_10serde_core3ser10Serializer25serialize_newtype_variantDNtNtCs5brsvYHD4Ou_12erased_serde3ser9SerializeEL_ECsbaWXNhtWAp9_11foundations(ptr noundef nonnull %.sroa.6.0.copyload.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.8.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i32 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef %5, ptr noundef nonnull %6, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %7), !dbg !11532 ; 2 uses
   %.not = icmp eq ptr %i.d, null, !dbg !11533
   %. = select i1 %.not, i64 9, i64 8, !dbg !11534

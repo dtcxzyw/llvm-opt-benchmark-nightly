@@ -205,9 +205,8 @@ bb.it:                                            ; preds = %bb.iu
   %i.adp = landingpad { ptr, i32 }
           cleanup
   %i.adq = extractelement <2 x ptr> %i.ads, i64 0 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.adq) ]
   %i.adr = extractelement <2 x ptr> %i.ads, i64 1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.adr) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.adq), "nonnull"(ptr %i.adr) ]
   invoke fastcc void @"_ZN4core3ptr92drop_in_place$LT$$LP$actix_server..signals..SignalKind$C$tokio..signal..unix..Signal$RP$$GT$17h45a7961dea229edcE"(ptr nonnull %i.adq, ptr nonnull %i.adr) #36
           to label %.body.i unwind label %bb.ja, !noalias !1380
 
@@ -288,9 +287,8 @@ bb.ix:                                            ; preds = %bb.iy
   %i.aeh = landingpad { ptr, i32 }
           cleanup
   %i.aei = extractelement <2 x ptr> %i.adz, i64 0 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aei) ]
   %i.aej = extractelement <2 x ptr> %i.adz, i64 1 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aej) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aei), "nonnull"(ptr %i.aej) ]
   invoke fastcc void @"_ZN4core3ptr92drop_in_place$LT$$LP$actix_server..signals..SignalKind$C$tokio..signal..unix..Signal$RP$$GT$17h45a7961dea229edcE"(ptr nonnull %i.aei, ptr nonnull %i.aej) #36
           to label %.body.i.i.i.i.i.i.i unwind label %bb.iz, !noalias !1385
 
@@ -693,8 +691,7 @@ bb.ai:                                            ; preds = %bb.ag
   %i.eu = load i64, ptr %i.et, align 8, !noundef !12 ; 4 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ew = load i32, ptr %i.ev, align 8, !range !43, !noundef !12 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dt) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.er) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dt), "nonnull"(ptr %i.er) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
@@ -1097,8 +1094,7 @@ bb.j:                                             ; preds = %bb.h
   %i.ar = load i64, ptr %i.aq, align 8, !noundef !12
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.at = load i32, ptr %i.as, align 8, !range !43, !noundef !12
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t), "nonnull"(ptr %i.ao) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -1501,8 +1497,7 @@ bb.d:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @"_ZN4core3ptr92drop_in_place$LT$$LP$actix_server..signals..SignalKind$C$tokio..signal..unix..Signal$RP$$GT$17h45a7961dea229edcE"(ptr %.8.val, ptr nofree readonly captures(none) %.16.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.16.val) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val), "nonnull"(ptr %.16.val) ]
   %i.a = load ptr, ptr %.16.val, align 8, !invariant.load !12 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i.i.i.i, label %bb.c, label %bb.b
@@ -1905,8 +1900,7 @@ bb.j:                                             ; preds = %.body.i.i.i
 bb.k:                                             ; preds = %.body.i.i.i
   %i.ah = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !range !35, !noalias !7973, !noundef !12
   br label %bb.l
@@ -2288,8 +2282,7 @@ bb.j:                                             ; preds = %.body.i.i.i
 bb.k:                                             ; preds = %.body.i.i.i
   %i.ah = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !range !35, !noalias !7995, !noundef !12
   br label %bb.l
@@ -2671,8 +2664,7 @@ bb.j:                                             ; preds = %.body.i.i.i
 bb.k:                                             ; preds = %.body.i.i.i
   %i.ah = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !range !35, !noalias !8017, !noundef !12
   br label %bb.l
@@ -3054,8 +3046,7 @@ bb.j:                                             ; preds = %.body.i.i.i
 bb.k:                                             ; preds = %.body.i.i.i
   %i.ah = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !range !35, !noalias !8039, !noundef !12
   br label %bb.l
@@ -3437,8 +3428,7 @@ bb.j:                                             ; preds = %.body.i.i.i
 bb.k:                                             ; preds = %.body.i.i.i
   %i.ah = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !range !35, !noalias !8061, !noundef !12
   br label %bb.l
@@ -3820,8 +3810,7 @@ bb.j:                                             ; preds = %.body.i.i.i
 bb.k:                                             ; preds = %.body.i.i.i
   %i.ah = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ak = load i64, ptr %i.aj, align 8, !range !35, !noalias !8083, !noundef !12
   br label %bb.l

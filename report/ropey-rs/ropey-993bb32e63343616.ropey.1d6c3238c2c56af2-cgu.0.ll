@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.s, %bb.o, %bb.b, %bb.a
   %i.j = tail call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %4) ; 2 uses
-  %i.k = extractvalue { ptr, i64 } %i.j, 0        ; 6 uses
+  %i.k = extractvalue { ptr, i64 } %i.j, 0        ; 7 uses
   %i.l = extractvalue { ptr, i64 } %i.j, 1        ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42)
   %i.m = icmp samesign ult i64 %i.l, 17
@@ -227,7 +227,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.l
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k), "nonnull"(ptr %i.k) ]
   %i.x = icmp samesign eq i64 %i.l, 0
   br i1 %i.x, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %.lr.ph299
 
@@ -630,8 +630,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoEIBX_INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtB1q_4node4NodeEEEINtB5_7ZipImplBW_B2b_E4nextB1s_.exit.lr.ph, label %_RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoEIBX_INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtB1q_4node4NodeEEEINtB5_7ZipImplBW_B2b_E4nextB1s_.exit.thread
 
 _RNvXs3_NtNtNtCskKLDkoKarTP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoEIBX_INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtB1q_4node4NodeEEEINtB5_7ZipImplBW_B2b_E4nextB1s_.exit.lr.ph: ; preds = %bb.b
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.45.0.copyload) ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -1034,7 +1033,7 @@ _RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren21search_cha
 
 bb.k:                                             ; preds = %bb.b
   %i.bb = tail call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.n) ; 2 uses
-  %i.bc = extractvalue { ptr, i64 } %i.bb, 0      ; 6 uses
+  %i.bc = extractvalue { ptr, i64 } %i.bb, 0      ; 7 uses
   %i.bd = extractvalue { ptr, i64 } %i.bb, 1      ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !241)
   %i.be = icmp samesign ult i64 %i.bd, 17
@@ -1057,7 +1056,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bd
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bc) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bc), "nonnull"(ptr %i.bc) ]
   %i.bp = icmp samesign eq i64 %i.bd, 0
   br i1 %i.bp, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit105, label %.lr.ph715
 
@@ -1460,7 +1459,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.q = tail call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.j) ; 2 uses
-  %i.r = extractvalue { ptr, i64 } %i.q, 0        ; 6 uses
+  %i.r = extractvalue { ptr, i64 } %i.q, 0        ; 7 uses
   %i.s = extractvalue { ptr, i64 } %i.q, 1        ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !265)
   %i.t = icmp samesign ult i64 %i.s, 17
@@ -1483,7 +1482,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.r) ]
   %i.ae = icmp samesign eq i64 %i.s, 0
   br i1 %i.ae, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %.lr.ph265
 
