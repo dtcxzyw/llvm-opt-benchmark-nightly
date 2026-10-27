@@ -186,12 +186,12 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(write, argmem: readwrite, target_mem: none) uwtable
 define hidden void @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h32c6cc3dfe587ad9E"(ptr noundef nonnull %0, ptr noundef %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h769e50169b740431E.exit", label %bb.b
 
@@ -268,12 +268,11 @@ bb.c:                                             ; preds = %bb.c, %.new
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write, inaccessiblemem: write) uwtable
 define hidden void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h165b4e89183afedfE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2), "nonnull"(ptr %4) ]
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub nuw i64 %i.a, %i.b
   %i.d = udiv exact i64 %i.c, 24
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   %i.e = ptrtoint ptr %4 to i64
   %i.f = ptrtoint ptr %3 to i64
   %i.g = sub nuw i64 %i.e, %i.f
@@ -676,8 +675,9 @@ bb.d:                                             ; preds = %bb.c
 
 .thread52:                                        ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.o, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   %i.r = extractvalue { ptr, ptr } %i.o, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   br label %bb.f
@@ -800,8 +800,9 @@ bb.d:                                             ; preds = %bb.c
 
 .thread36:                                        ; preds = %bb.c
   %i.m = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %i.n) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   br label %bb.f
@@ -1204,8 +1205,9 @@ bb.l:                                             ; preds = %bb.k
 
 .thread40.i:                                      ; preds = %bb.k
   %i.ag = extractvalue { ptr, ptr } %i.ae, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag) ]
   %i.ah = extractvalue { ptr, ptr } %i.ae, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag), "nonnull"(ptr %i.ah) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !216
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !216
   br label %bb.n

@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvXs6_NtCsaPlfBUY5LAj_10serde_json3serINtB6_8CompoundQINtNtCsgCecv3eZDcN_5alloc3vec3VechENtB6_16CompactFormatterENtNtCseZbltJ5Yqe_10serde_core3ser12SerializeMap13serialize_keyReECscsgjCEAuSgO_6candle.exit
 
 _RINvXs6_NtCsaPlfBUY5LAj_10serde_json3serINtB6_8CompoundQINtNtCsgCecv3eZDcN_5alloc3vec3VechENtB6_16CompactFormatterENtNtCseZbltJ5Yqe_10serde_core3ser12SerializeMap13serialize_keyReECscsgjCEAuSgO_6candle.exit: ; preds = %bb.a, %bb.b
-  store i8 2, ptr %i.c, align 8, !alias.scope !162
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  store i8 2, ptr %i.c, align 8, !alias.scope !162
   %i.f = tail call noundef ptr @_RINvNtCsaPlfBUY5LAj_10serde_json3ser18format_escaped_strQINtNtCsgCecv3eZDcN_5alloc3vec3VechENtB2_16CompactFormatterECscsgjCEAuSgO_6candle(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %i.b, ptr noalias nofree nonnull readonly poison, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val, i64 noundef %.val3), !noalias !162 ; 0 uses
   %.val.i5 = load ptr, ptr %i.b, align 8, !noalias !163, !nonnull !4, !align !6, !noundef !4
   tail call void @_RNvMs1_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE17extend_from_sliceCscsgjCEAuSgO_6candle(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i5, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !163
@@ -238,10 +238,10 @@ _RINvXs6_NtCsaPlfBUY5LAj_10serde_json3serINtB6_8CompoundQINtNtCsgCecv3eZDcN_5all
   %.val4 = load i64, ptr %i.h, align 8            ; 3 uses
   %.val.i5 = load ptr, ptr %i.b, align 8, !nonnull !4, !align !6, !noundef !4
   tail call void @_RNvMs1_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE17extend_from_sliceCscsgjCEAuSgO_6candle(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val.i5, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef range(i64 0, -9223372036854775808) 1)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   %.val10.i = load ptr, ptr %i.b, align 8, !alias.scope !189, !nonnull !4, !align !6, !noundef !4 ; 6 uses
   %.idx.i.i.i = shl nuw nsw i64 %.val4, 3
   %i.i = getelementptr inbounds nuw i8, ptr %.val3, i64 %.idx.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
   tail call void @_RNvMs1_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE17extend_from_sliceCscsgjCEAuSgO_6candle(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.val10.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef range(i64 0, -9223372036854775808) 1), !noalias !190
   %i.j = icmp eq i64 %.val4, 0
   br i1 %i.j, label %_RNvXs1_NtCsaPlfBUY5LAj_10serde_json3serQINtB5_10SerializerQINtNtCsgCecv3eZDcN_5alloc3vec3VechEENtNtCseZbltJ5Yqe_10serde_core3ser10Serializer13serialize_seqCscsgjCEAuSgO_6candle.exit.thread.i.i.i, label %.lr.ph.i.i.i.i.i
@@ -503,8 +503,8 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload, ptr %i.g, align 8, !noalias !276
   call void @_RNvXs4_NtNtCs4dfyxXSEGwW_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e), !noalias !276
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !276
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !276
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !277
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !277
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !277
@@ -514,11 +514,11 @@ bb.a:
   call void @_RINvMNtNtCs4dfyxXSEGwW_4pyo35types6moduleNtB3_8PyModule6importReECscsgjCEAuSgO_6candle(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j), !noalias !277
   %i.k = load i64, ptr %i.b, align 8, !range !5, !noalias !277, !noundef !4
   %i.l = trunc nuw i64 %i.k to i1
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.015.0.copyload.i.i = load ptr, ptr %i.m, align 8, !noalias !277 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br i1 %i.l, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.015.0.copyload.i.i = load ptr, ptr %i.m, align 8, !noalias !277
   %.sroa.416.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.13, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.416.0..sroa_idx.i.i, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !277
@@ -526,9 +526,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.k
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !277
-  store ptr %.sroa.015.0.copyload.i.i, ptr %i.c, align 8, !noalias !277
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload) ]
+  %1 = load ptr, ptr %i.m, align 8, !noalias !277, !nonnull !4, !noundef !4 ; 4 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !277
+  store ptr %1, ptr %i.c, align 8, !noalias !277
   %i.n = load ptr, ptr %.sroa.5.sroa.4.0.copyload, align 8, !noalias !277, !nonnull !4, !noundef !4
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.5.sroa.4.0.copyload, i64 8
   %i.p = load i64, ptr %i.o, align 8, !noalias !277, !noundef !4
@@ -542,7 +543,7 @@ common.resume:                                    ; preds = %bb.q, %bb.s, %bb.d
 bb.d:                                             ; preds = %bb.h, %bb.c
   %i.q = landingpad { ptr, i32 }
           cleanup
-  call void @_Py_DecRef(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #21, !noalias !277
+  call void @_Py_DecRef(ptr noundef nonnull %1) #21, !noalias !277
   br label %common.resume
 
 bb.e:                                             ; preds = %bb.c
@@ -582,7 +583,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.f
   %.sroa.714.0 = phi ptr [ %.sroa.021.0.copyload.i.i, %bb.f ], [ %.sroa.714.8.copyload15, %bb.i ]
-  call void @_Py_DecRef(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #21, !noalias !277
+  call void @_Py_DecRef(ptr noundef nonnull %1) #21, !noalias !277
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.b, %bb.j
@@ -600,9 +601,9 @@ bb.l:                                             ; preds = %bb.k
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs4dfyxXSEGwW_4pyo33err5PyErrEECscsgjCEAuSgO_6candle.exit unwind label %bb.s
 
 bb.m:                                             ; preds = %bb.g
-  call void @_Py_DecRef(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #21, !noalias !277
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !277
+  call void @_Py_DecRef(ptr noundef nonnull %1) #21, !noalias !277
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.021.0.copyload.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !277
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !nonnull !4, !align !6, !noundef !4 ; 3 uses
   %i.af = load ptr, ptr %i.ae, align 8, !noundef !4

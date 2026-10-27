@@ -202,8 +202,8 @@ bb.a:
   %i.al = alloca [32 x i8], align 8               ; 4 uses
   %i.am = alloca [224 x i8], align 8              ; 4 uses
   %i.an = alloca [312 x i8], align 8              ; 5 uses
-  %i.ao = alloca [64 x i8], align 8               ; 7 uses
-  %.sroa.674 = alloca [24 x i8], align 8          ; 6 uses
+  %i.ao = alloca [64 x i8], align 8               ; 8 uses
+  %.sroa.674 = alloca [24 x i8], align 8          ; 7 uses
   %i.ap = alloca [24 x i8], align 8               ; 11 uses
   %i.aq = alloca [128 x i8], align 8              ; 13 uses
   %.sroa.657 = alloca [24 x i8], align 8          ; 4 uses
@@ -606,11 +606,11 @@ bb.fd:                                            ; preds = %bb.fc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an)
   %i.hu = load i64, ptr %i.ao, align 8, !range !1242, !noundef !13 ; 2 uses
   %i.hv = icmp eq i64 %i.hu, -1
-  %4 = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.674, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
   br i1 %i.hv, label %bb.fe, label %bb.fh
 
 bb.fe:                                            ; preds = %bb.fd
+  %4 = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.674, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao)
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hw, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.674, i64 24, i1 false)
@@ -634,6 +634,9 @@ bb.fg:                                            ; preds = %bb.ff
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsiD8eKn5yFCp_11proc_macro25IdentECs8SLDEF1Cvau_13dsl_auto_type.exit226
 
 bb.fh:                                            ; preds = %bb.fd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.hd), "nonnull"(ptr %i.he) ]
+  %.sroa.4143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.674, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4143.0..sroa_idx, i64 24, i1 false)
   %.sroa.5144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
   %.sroa.6237.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.aq, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6237.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5144.0..sroa_idx, i64 32, i1 false)
@@ -643,7 +646,6 @@ bb.fh:                                            ; preds = %bb.fd
   %.sroa.7238.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.aq, i64 88
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7238.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.ap, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.hd), "nonnull"(ptr %i.he) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !1249)
   %i.ic = getelementptr inbounds nuw i8, ptr %i.aq, i64 112
   store ptr %i.hd, ptr %i.ic, align 8, !alias.scope !1250
@@ -668,8 +670,8 @@ bb.fh:                                            ; preds = %bb.fd
   br label %bb.bd
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsiD8eKn5yFCp_11proc_macro25IdentECs8SLDEF1Cvau_13dsl_auto_type.exit226: ; preds = %bb.fg, %bb.ff, %bb.fe
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.he) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
   call fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters6cloned6ClonedINtNtCs91tTATF2stA_3syn10punctuated4IterNtNtB1k_4path11PathSegmentEEECs8SLDEF1Cvau_13dsl_auto_type(ptr %i.hd, ptr nonnull %i.he)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.674)
@@ -850,9 +852,9 @@ bb.ga:                                            ; preds = %bb.fy
   br label %bb.gg
 
 bb.gb:                                            ; preds = %bb.fz
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kd), "nonnull"(ptr %i.ke) ]
   %i.ki = extractvalue { ptr, ptr } %i.kf, 0
   %i.kj = extractvalue { ptr, ptr } %i.kf, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kd), "nonnull"(ptr %i.ke) ]
   %.sroa.7228.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7228.0..sroa_idx, i8 0, i64 16, i1 false)
   store ptr %i.kd, ptr %i.bg, align 8

@@ -205,20 +205,20 @@ bb.a:
 
 .loopexit:                                        ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j
   %.sroa.0.03.lcssa = phi i64 [ %0, %bb.a ], [ %i.g, %bb.b ], [ %i.k, %bb.c ], [ %i.o, %bb.d ], [ %i.s, %bb.e ], [ %i.w, %bb.f ], [ %i.aa, %bb.g ], [ %i.ae, %bb.h ], [ %i.ai, %bb.i ], [ 1, %bb.j ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.d = trunc nuw nsw i64 %.sroa.0.03.lcssa to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 %i.d, ptr %i.a, align 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   call void @_RNvXs2_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB5_8BytesMutNtNtNtB7_3buf7buf_mut6BufMut9put_slice(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = trunc i64 %0 to i8
   %i.f = or i8 %i.e, -128
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 %i.f, ptr %i.b, align 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   call void @_RNvXs2_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB5_8BytesMutNtNtNtB7_3buf7buf_mut6BufMut9put_slice(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.g = lshr i64 %0, 7                           ; 2 uses
@@ -621,9 +621,10 @@ bb.p:                                             ; preds = %bb.n
   %i.bm = extractvalue { ptr, i64 } %i.bl, 0      ; 2 uses
   %i.bn = extractvalue { ptr, i64 } %i.bl, 1
   %i.bo = tail call { ptr, i64 } @_RINvMNtCskKLDkoKarTP_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bk, i64 noundef %i.bj) ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm) ]
   %i.bp = extractvalue { ptr, i64 } %i.bo, 0      ; 8 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   %3 = extractvalue { ptr, i64 } %i.bo, 1         ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm), "nonnull"(ptr %i.bp) ]
   %i.bq = icmp ult i64 %3, 2
   br i1 %i.bq, label %bb.t, label %bb.s
 

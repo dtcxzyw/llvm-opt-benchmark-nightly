@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxDNtNtNtNtCs1dZk1kIfPhr_19candle_transformers6models5mmdit6blocks10JointBlockEL_ENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropBQ_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !407, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #28
   br label %_RNvXs8_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxDNtNtNtNtCs1dZk1kIfPhr_19candle_transformers6models5mmdit6blocks10JointBlockEL_ENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropBQ_.exit
 
@@ -610,13 +610,13 @@ _RNvNtNtCs1dZk1kIfPhr_19candle_transformers6models4eva26linear.exit119.i: ; pred
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !24612
   %i.bl = load i64, ptr %i.n, align 8, !range !16, !noalias !24612, !noundef !5 ; 4 uses
   %.not109.i = icmp eq i64 %i.bl, -1
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %5 = load ptr, ptr %i.bm, align 8, !noalias !24612 ; 5 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %6 = load ptr, ptr %i.bn, align 8, !noalias !24612 ; 5 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
   br i1 %.not109.i, label %bb.af, label %bb.x
 
 bb.x:                                             ; preds = %_RNvNtNtCs1dZk1kIfPhr_19candle_transformers6models4eva26linear.exit119.i
+  %.sroa.498.0.copyload.i = load ptr, ptr %i.bm, align 8, !noalias !24612 ; 3 uses
+  %.sroa.599.0.copyload.i = load ptr, ptr %i.bn, align 8, !noalias !24612 ; 3 uses
   %.sroa.6100.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.bo = load <2 x ptr>, ptr %.sroa.6100.0..sroa_idx.i, align 8, !noalias !24614 ; 3 uses
   %.sroa.33.32..sroa.6100.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 40
@@ -686,12 +686,14 @@ bb.ae:                                            ; preds = %bb.ab
   unreachable
 
 bb.af:                                            ; preds = %_RNvNtNtCs1dZk1kIfPhr_19candle_transformers6models4eva26linear.exit119.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %5 = load ptr, ptr %i.bm, align 8, !noalias !24612, !nonnull !5, !noundef !5 ; 2 uses
+  %6 = load ptr, ptr %i.bn, align 8, !noalias !24612, !noundef !5 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !24612
   store ptr %5, ptr %i.o, align 8, !noalias !24612
   %i.cc = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %6, ptr %i.cc, align 8, !noalias !24612
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !24612
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.cd = atomicrmw add ptr %.val, i64 1 monotonic, align 8, !noalias !24612
   %i.ce = icmp slt i64 %i.cd, 0
   br i1 %i.ce, label %bb.ah, label %bb.ag
@@ -772,8 +774,8 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn6linear6Line
   %.sroa.35.2 = phi ptr [ %.sroa.35.32.copyload90, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %.sroa.35.32.copyload90, %bb.ad ], [ %.sroa.35.32.copyload90, %bb.ac ], [ %.sroa.35.32.copyload89, %bb.s ] ; 3 uses
   %.sroa.34.2 = phi ptr [ %.sroa.34.32.copyload86, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %.sroa.34.32.copyload86, %bb.ad ], [ %.sroa.34.32.copyload86, %bb.ac ], [ %.sroa.34.32.copyload85, %bb.s ] ; 3 uses
   %.sroa.33.2 = phi ptr [ %.sroa.33.32.copyload82, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %.sroa.33.32.copyload82, %bb.ad ], [ %.sroa.33.32.copyload82, %bb.ac ], [ %.sroa.33.32.copyload81, %bb.s ] ; 3 uses
-  %.sroa.22.2 = phi ptr [ %6, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %6, %bb.ad ], [ %6, %bb.ac ], [ %i.bh, %bb.s ] ; 3 uses
-  %.sroa.17.2 = phi ptr [ %5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %5, %bb.ad ], [ %5, %bb.ac ], [ %i.bf, %bb.s ] ; 3 uses
+  %.sroa.22.2 = phi ptr [ %.sroa.599.0.copyload.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %.sroa.599.0.copyload.i, %bb.ad ], [ %.sroa.599.0.copyload.i, %bb.ac ], [ %i.bh, %bb.s ] ; 3 uses
+  %.sroa.17.2 = phi ptr [ %.sroa.498.0.copyload.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %.sroa.498.0.copyload.i, %bb.ad ], [ %.sroa.498.0.copyload.i, %bb.ac ], [ %i.bf, %bb.s ] ; 3 uses
   %.sroa.10.2 = phi i64 [ %i.bl, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %i.bl, %bb.ad ], [ %i.bl, %bb.ac ], [ %i.bd, %bb.s ] ; 3 uses
   %i.cv = phi <2 x ptr> [ %i.bo, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i.i ], [ %i.bo, %bb.ad ], [ %i.bo, %bb.ac ], [ %i.bi, %bb.s ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !24612
@@ -1176,8 +1178,8 @@ bb.gp:                                            ; preds = %bb.go
           to label %.noexc169 unwind label %bb.ox
 
 .noexc169:                                        ; preds = %bb.gp, %bb.go
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !30642
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val134) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !30642
   %i.re = atomicrmw add ptr %.val134, i64 1 monotonic, align 8, !noalias !30642
   %i.rf = icmp slt i64 %i.re, 0
   br i1 %i.rf, label %bb.gr, label %bb.gq

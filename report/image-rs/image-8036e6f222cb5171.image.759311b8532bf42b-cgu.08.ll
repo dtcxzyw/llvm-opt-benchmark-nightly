@@ -204,8 +204,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val45 to i64
   %i.u = mul nuw nsw i64 %i.t, 3
   %i.v = zext i32 %.val46 to i64
@@ -355,8 +356,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val to i64                    ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = zext i32 %.val44 to i64                  ; 2 uses
@@ -759,8 +761,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val45 to i64
   %i.u = mul nuw nsw i64 %i.t, 3
   %i.v = zext i32 %.val46 to i64
@@ -910,8 +913,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val to i64                    ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = zext i32 %.val44 to i64                  ; 2 uses
@@ -1314,8 +1318,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val45 to i64
   %i.u = mul nuw nsw i64 %i.t, 3
   %i.v = zext i32 %.val46 to i64
@@ -1465,8 +1470,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val to i64                    ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = zext i32 %.val44 to i64                  ; 2 uses
@@ -1869,8 +1875,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val45 to i64
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = zext i32 %.val46 to i64
@@ -2020,8 +2027,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val47 to i64                  ; 2 uses
   %i.u = mul nuw nsw i64 %i.t, 3
   %i.v = zext i32 %.val48 to i64                  ; 2 uses
@@ -2424,8 +2432,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val45 to i64
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = zext i32 %.val46 to i64
@@ -2575,8 +2584,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val47 to i64                  ; 2 uses
   %i.u = mul nuw nsw i64 %i.t, 3
   %i.v = zext i32 %.val48 to i64                  ; 2 uses
@@ -2979,8 +2989,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val45 to i64
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = zext i32 %.val46 to i64
@@ -3130,8 +3141,9 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %bb.d
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = zext i32 %.val47 to i64                  ; 2 uses
   %i.u = mul nuw nsw i64 %i.t, 3
   %i.v = zext i32 %.val48 to i64                  ; 2 uses
@@ -3534,8 +3546,8 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.sroa.8.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.q = icmp ult i64 %.sroa.8.sroa.8.sroa.8.0.copyload, 1152921504606846976
   call void @llvm.assume(i1 %i.q)
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %.sroa.8.sroa.8.sroa.0.0.copyload, i64 %.sroa.8.sroa.8.sroa.8.0.copyload
@@ -3663,8 +3675,8 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.sroa.8.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.q = icmp ult i64 %.sroa.8.sroa.8.sroa.8.0.copyload, 1152921504606846976
   call void @llvm.assume(i1 %i.q)
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %.sroa.8.sroa.8.sroa.0.0.copyload, i64 %.sroa.8.sroa.8.sroa.8.0.copyload
@@ -4067,8 +4079,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXsO_NtCs4wP2HXfJTCR_5alloc4syncINtB5_4WeakDG0_INtNtNtCsj6eKBz9Db1c_4core3ops8function2FnTRL1_SfQL0_B1w_EEp6OutputuNtNtBS_6marker4SendNtB1T_4SyncEL_RNtNtB7_5alloc6GlobalENtNtBQ_4drop4Drop4dropCsa5QsYiPB8Gl_5image.exit
 
 bb.c:                                             ; preds = %bb.b
-  fence acquire
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 8
   %i.f = load i64, ptr %i.e, align 8, !range !16, !invariant.load !5
   %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
@@ -4103,8 +4115,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXsO_NtCs4wP2HXfJTCR_5alloc4syncINtB5_4WeakDG0_INtNtNtCsj6eKBz9Db1c_4core3ops8function2FnTRL1_ShQL0_B1w_EEp6OutputuNtNtBS_6marker4SendNtB1T_4SyncEL_RNtNtB7_5alloc6GlobalENtNtBQ_4drop4Drop4dropCsa5QsYiPB8Gl_5image.exit
 
 bb.c:                                             ; preds = %bb.b
-  fence acquire
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 8
   %i.f = load i64, ptr %i.e, align 8, !range !16, !invariant.load !5
   %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
@@ -4139,8 +4151,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXsO_NtCs4wP2HXfJTCR_5alloc4syncINtB5_4WeakDG0_INtNtNtCsj6eKBz9Db1c_4core3ops8function2FnTRL1_StQL0_B1w_EEp6OutputuNtNtBS_6marker4SendNtB1T_4SyncEL_RNtNtB7_5alloc6GlobalENtNtBQ_4drop4Drop4dropCsa5QsYiPB8Gl_5image.exit
 
 bb.c:                                             ; preds = %bb.b
-  fence acquire
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 8
   %i.f = load i64, ptr %i.e, align 8, !range !16, !invariant.load !5
   %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
@@ -4175,8 +4187,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXsO_NtCs4wP2HXfJTCR_5alloc4syncINtB5_4WeakDINtNtCshGoo8nsRtFZ_6moxcms9transform17TransformExecutorhENtNtCsj6eKBz9Db1c_4core6marker4SendNtB1F_4SyncEL_RNtNtB7_5alloc6GlobalENtNtNtB1H_3ops4drop4Drop4dropCsa5QsYiPB8Gl_5image.exit
 
 bb.c:                                             ; preds = %bb.b
-  fence acquire
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  fence acquire
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 8
   %i.f = load i64, ptr %i.e, align 8, !range !16, !invariant.load !5
   %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
@@ -4217,9 +4229,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs4wP2HXfJTCR_5alloc5boxedINtB5_3BoxDNtNtNtCsa5QsYiPB8Gl_5image2io7decoder12ImageDecoderEL_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBO_.exit, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !17, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 0, -9223372036317904881) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #25
   br label %_RNvXs8_NtCs4wP2HXfJTCR_5alloc5boxedINtB5_3BoxDNtNtNtCsa5QsYiPB8Gl_5image2io7decoder12ImageDecoderEL_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBO_.exit
 
@@ -4622,9 +4634,9 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i: ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.k = udiv i8 8, %i.i                          ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.8.0..8.val.sroa_idx.i.i, i8 0, i64 16, i1 false), !noalias !2848
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %.val.i.i, ptr %.val, align 8, !alias.scope !2852, !noalias !2848
   store i8 0, ptr %.sroa.3.sroa.4.0..8.val.sroa_idx.i.i, align 8, !alias.scope !2852, !noalias !2848
   store i8 %i.k, ptr %.sroa.3.sroa.5.0..8.val.sroa_idx.i.i, align 1, !alias.scope !2852, !noalias !2848
@@ -4860,12 +4872,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color3RgbfEINtNtCs4wP2HXfJTCR_5alloc3vec3VecfEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ac = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ad = mul nuw nsw i64 %i.ac, 3                ; 9 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.af = load i32, ptr %i.ae, align 8, !alias.scope !2884, !noundef !5
   %i.ag = zext i32 %i.af to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !2888)
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ai = load i32, ptr %i.ah, align 4, !alias.scope !2889, !noundef !5
@@ -5264,12 +5276,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color3RgbhEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ac = mul nuw nsw i64 %i.ab, 3                ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load i32, ptr %i.ad, align 8, !alias.scope !2922, !noundef !5
   %i.af = zext i32 %i.ae to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !2926)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !2927, !noundef !5
@@ -5665,12 +5677,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color3RgbtEINtNtCs4wP2HXfJTCR_5alloc3vec3VectEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ac = mul nuw nsw i64 %i.ab, 3                ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load i32, ptr %i.ad, align 8, !alias.scope !2960, !noundef !5
   %i.af = zext i32 %i.ae to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !2964)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !2965, !noundef !5
@@ -6066,11 +6078,11 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64 ; 9 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ad = load i32, ptr %i.ac, align 8, !alias.scope !2998, !noundef !5
   %i.ae = zext i32 %i.ad to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3002)
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ag = load i32, ptr %i.af, align 4, !alias.scope !3003, !noundef !5
@@ -6442,11 +6454,11 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color4LumatEINtNtCs4wP2HXfJTCR_5alloc3vec3VectEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64 ; 9 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ad = load i32, ptr %i.ac, align 8, !alias.scope !3036, !noundef !5
   %i.ae = zext i32 %i.ad to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3040)
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ag = load i32, ptr %i.af, align 4, !alias.scope !3041, !noundef !5
@@ -6819,12 +6831,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color4RgbafEINtNtCs4wP2HXfJTCR_5alloc3vec3VecfEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ac = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ad = shl nuw nsw i64 %i.ac, 2                ; 9 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.af = load i32, ptr %i.ae, align 8, !alias.scope !3076, !noundef !5
   %i.ag = zext i32 %i.af to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3080)
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ai = load i32, ptr %i.ah, align 4, !alias.scope !3081, !noundef !5
@@ -7218,12 +7230,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color4RgbahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ac = shl nuw nsw i64 %i.ab, 2                ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load i32, ptr %i.ad, align 8, !alias.scope !3114, !noundef !5
   %i.af = zext i32 %i.ae to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3118)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !3119, !noundef !5
@@ -7614,12 +7626,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color4RgbatEINtNtCs4wP2HXfJTCR_5alloc3vec3VectEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ac = shl nuw nsw i64 %i.ab, 2                ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load i32, ptr %i.ad, align 8, !alias.scope !3152, !noundef !5
   %i.af = zext i32 %i.ae to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3156)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !3157, !noundef !5
@@ -8010,12 +8022,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color5LumaAhEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ac = shl nuw nsw i64 %i.ab, 1                ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load i32, ptr %i.ad, align 8, !alias.scope !3190, !noundef !5
   %i.af = zext i32 %i.ae to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3194)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !3195, !noundef !5
@@ -8406,12 +8418,12 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXsK_NtNtCsa5QsYiPB8Gl_5image6images6bufferINtB5_11ImageBufferINtNtB9_5color5LumaAtEINtNtCs4wP2HXfJTCR_5alloc3vec3VectEENtNtB7_13generic_image12GenericImage17copy_from_samplesB9_.exit
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   %i.ab = zext i32 %.sroa.0.sroa.7.0.copyload to i64
   %i.ac = shl nuw nsw i64 %i.ab, 1                ; 9 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load i32, ptr %i.ad, align 8, !alias.scope !3228, !noundef !5
   %i.af = zext i32 %i.ae to i64                   ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3232)
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.ah = load i32, ptr %i.ag, align 4, !alias.scope !3233, !noundef !5

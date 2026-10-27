@@ -204,12 +204,12 @@ bb.a:
 define hidden void @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17he45f61e21adc2160E"(ptr noundef nonnull %0, ptr noundef %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.b = icmp eq ptr %0, %1
   br i1 %i.b, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h59d5ed5bf88b4688E.exit", label %bb.b
 
@@ -612,7 +612,8 @@ bb.q:                                             ; preds = %.loopexit.split-lp.
   ]
 
 .loopexit30.i.i:                                  ; preds = %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i", %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.thread.i.i.i.i"
-  %.sroa.52.014.i.i.i.i = phi ptr [ %i.l, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.thread.i.i.i.i" ], [ %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ] ; 2 uses
+  %.sroa.52.014.i.i.i.i = phi ptr [ %i.l, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.thread.i.i.i.i" ], [ %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.52.014.i.i.i.i) ]
   %i.z = load ptr, ptr %3, align 8, !alias.scope !252, !noalias !253, !noundef !5
   %i.aa = icmp eq ptr %i.z, null
   br i1 %i.aa, label %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread15.i.i", label %bb.r

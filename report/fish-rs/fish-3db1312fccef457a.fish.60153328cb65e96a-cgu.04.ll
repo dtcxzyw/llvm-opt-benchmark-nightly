@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDG_INtNtNtCs3oUPovFnLWP_4core3ops8function2FnTQL0_INtNtBR_6option6OptionNtNtNtNtCsaL1QbXo9JQH_3std2os2fd5owned7OwnedFdEEEp6OutputuNtNtBR_6marker4SendNtB2P_4SyncEL_ENtNtBP_4drop4Drop4dropCs8frGy5WneL6_4fish.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !22, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #36
   br label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDG_INtNtNtCs3oUPovFnLWP_4core3ops8function2FnTQL0_INtNtBR_6option6OptionNtNtNtNtCsaL1QbXo9JQH_3std2os2fd5owned7OwnedFdEEEp6OutputuNtNtBR_6marker4SendNtB2P_4SyncEL_ENtNtBP_4drop4Drop4dropCs8frGy5WneL6_4fish.exit
 
@@ -252,9 +252,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBQ_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !22, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #36
   br label %_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBQ_.exit
 
@@ -344,8 +344,8 @@ bb.a:
   br i1 %.not.i, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaL1QbXo9JQH_3std2fs8MetadataNtNtNtB4_2io5error5ErrorEECs8frGy5WneL6_4fish.exit
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.c = ptrtoint ptr %.8.val to i64              ; 2 uses
   %i.d = and i64 %i.c, 3
   switch i64 %i.d, label %default.unreachable [
@@ -748,9 +748,9 @@ bb.d:                                             ; preds = %bb.c, %_RINvNtCs3oU
   br i1 %i.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDG_INtNtNtB4_3ops8function2FnTQL0_INtNtB4_6option6OptionNtNtNtNtCsaL1QbXo9JQH_3std2os2fd5owned7OwnedFdEEEp6OutputuNtNtB4_6marker4SendNtB32_4SyncEL_EECs8frGy5WneL6_4fish.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !22, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDG_INtNtNtB4_3ops8function2FnTQL0_INtNtB4_6option6OptionNtNtNtNtCsaL1QbXo9JQH_3std2os2fd5owned7OwnedFdEEEp6OutputuNtNtB4_6marker4SendNtB32_4SyncEL_EECs8frGy5WneL6_4fish.exit
 
@@ -1153,9 +1153,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_EEB1j_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !22, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.d, i64 noundef range(i64 1, 536870913) %i.g) #36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_EEB1j_.exit
 
@@ -1267,9 +1267,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_EEB1j_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !22, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.d, i64 noundef range(i64 1, 536870913) %i.g) #36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions10ExpressionEL_EEB1j_.exit
 
@@ -1672,8 +1672,8 @@ bb.a:
   br i1 %i.h, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RNvNtCs8frGy5WneL6_4fish15parse_execution13varname_error(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.g, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %.0.val, i64 noundef %.8.val, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2)
   call void @_RNvMNtNtNtCs8frGy5WneL6_4fish8builtins6shared5errorNtB2_5Error6finish(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -1800,6 +1800,7 @@ bb.m:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br label %.body
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish12localization7gettext17LocalizableStringEBH_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueANtNtCs1HV6ixfL8cZ_11fish_printf3arg3Argj1_ECs8frGy5WneL6_4fish.exit12, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
@@ -1812,7 +1813,6 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish12localization7
   store ptr null, ptr %i.ae, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.f, i64 64
   store i8 0, ptr %i.af, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   store ptr %.0.val, ptr %i.ab, align 8
   store i64 %.8.val, ptr %i.ac, align 8
   call void @_RNvMNtNtNtCs8frGy5WneL6_4fish8builtins6shared5errorNtB2_5Error6finish(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0)
@@ -2215,9 +2215,9 @@ bb.az:                                            ; preds = %bb.ay, %_RINvNtCs3o
   br i1 %i.dj, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDG_INtNtNtB4_3ops8function2FnTQL0_INtNtB4_6option6OptionNtNtNtNtCsaL1QbXo9JQH_3std2os2fd5owned7OwnedFdEEEp6OutputuNtNtB4_6marker4SendNtB32_4SyncEL_EECs8frGy5WneL6_4fish.exit, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7) ]
   %i.dk = getelementptr inbounds nuw i8, ptr %.val8, i64 16
   %i.dl = load i64, ptr %i.dk, align 8, !range !22, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7) ]
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val7, i64 noundef range(i64 1, 0) %i.di, i64 noundef range(i64 1, 536870913) %i.dl) #36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDG_INtNtNtB4_3ops8function2FnTQL0_INtNtB4_6option6OptionNtNtNtNtCsaL1QbXo9JQH_3std2os2fd5owned7OwnedFdEEEp6OutputuNtNtB4_6marker4SendNtB32_4SyncEL_EECs8frGy5WneL6_4fish.exit
 
@@ -2620,6 +2620,7 @@ bb.ag:                                            ; preds = %bb.ae, %.thread.i
   %.lcssa129.i = phi ptr [ %i.bb, %bb.af ], [ %i.gj, %bb.ce ] ; 4 uses
   %.lcssa121.i = phi i64 [ %.sroa.416.0.copyload, %bb.af ], [ %i.dv, %bb.ce ]
   %.lcssa.i = phi ptr [ %i.r, %bb.af ], [ %i.dq, %bb.ce ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !1322
   %.sroa.02.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.02.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7244.i, i64 56, i1 false), !noalias !1322
@@ -2632,7 +2633,6 @@ bb.ag:                                            ; preds = %bb.ae, %.thread.i
   store ptr %.lcssa129.i, ptr %.sroa.65.0..sroa_idx.i, align 8, !noalias !1322
   %.sroa.76.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 88
   store i64 %.lcssa137.i, ptr %.sroa.76.0..sroa_idx.i, align 8, !noalias !1322
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
   %i.cs = load ptr, ptr %.val11, align 8, !noalias !1344, !noundef !8 ; 4 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %.val11, i64 8 ; 2 uses
   %.not.i23.i = icmp eq ptr %i.cs, null
@@ -3035,8 +3035,8 @@ bb.cr:                                            ; preds = %bb.cl
 bb.cs:                                            ; preds = %.noexc69
   %i.gk = landingpad { ptr, i32 }
           cleanup
-  %5 = zext i1 %i.gi to i8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gh) ]
+  %5 = zext i1 %i.gi to i8
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardNtNtCs8frGy5WneL6_4fish20env_universal_common12EnvUniversalEEB1A_(ptr nonnull %i.gh, i8 %5) #34
           to label %thread-pre-split unwind label %bb.cy, !noalias !1740
 
@@ -3439,8 +3439,8 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   %i.ea = landingpad { ptr, i32 }
           cleanup
-  %3 = zext i1 %i.dw to i8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dv) ]
+  %3 = zext i1 %i.dw to i8
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardNtNtCs8frGy5WneL6_4fish20env_universal_common12EnvUniversalEEB1A_(ptr nonnull %i.dv, i8 %3) #34
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment11EnvNodeIterEBJ_.exit.thread unwind label %bb.ap
 
@@ -3843,8 +3843,8 @@ bb.j:                                             ; preds = %_RNvMst_NtCs3oUPovF
 _RNCNvMs9_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB7_13EnvScopedImpl31export_array_needs_regeneration0Bd_.exit29.i.i: ; preds = %bb.j, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit26.i.i, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit.i.i
   %.sroa.06.2.i = phi i1 [ %.sroa.06.1.i, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit.i.i ], [ %spec.select8.i, %bb.j ], [ true, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit26.i.i ]
   %.sroa.0.3.i = phi ptr [ %.sroa.0.1.i, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit.i.i ], [ %i.bs, %bb.j ], [ %i.at, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit26.i.i ] ; 2 uses
-  store i64 %i.bm, ptr %i.bl, align 8, !noalias !2251
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
+  store i64 %i.bm, ptr %i.bl, align 8, !noalias !2251
   %i.bu = atomicrmw add ptr %.val.i, i64 1 monotonic, align 8, !noalias !2251
   %i.bv = icmp slt i64 %i.bu, 0
   br i1 %i.bv, label %bb.l, label %bb.k
@@ -4247,8 +4247,8 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %.not23.i, label %.backedge, label %bb.da
 
 bb.bf:                                            ; preds = %bb.bd
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !2272
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fk) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !2272
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fk, i64 4
   br i1 %i.fl, label %_RNvMNtNtCsaL1QbXo9JQH_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i, label %bb.bg
 
@@ -4651,13 +4651,13 @@ bb.do:                                            ; preds = %bb.dn
           to label %.thread unwind label %bb.ew
 
 bb.dp:                                            ; preds = %bb.dn, %.noexc15
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jz) ]
   %i.kj = getelementptr inbounds nuw i8, ptr %i.al, i64 8 ; 3 uses
   %i.kk = load ptr, ptr %i.kj, align 8, !alias.scope !2298, !nonnull !8, !noundef !8
   %i.kl = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %i.kf
   store i64 %i.kd, ptr %i.kl, align 8
   %i.km = add i64 %i.kf, 1
   store i64 %i.km, ptr %i.ke, align 8, !alias.scope !2298
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jz) ]
   %i.kn = getelementptr inbounds nuw i8, ptr %i.jz, i64 4
   br i1 %i.ka, label %_RNvMNtNtCsaL1QbXo9JQH_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i8, label %bb.dq
 
@@ -4721,8 +4721,8 @@ bb.dv:                                            ; preds = %_RNvMst_NtCs3oUPovF
 
 bb.dw:                                            ; preds = %bb.dy, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit.i
   %storemerge.i = phi i64 [ %i.lm, %bb.dy ], [ %i.kv, %_RNvMst_NtCs3oUPovFnLWP_4core4cellINtB5_7RefCellNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment7EnvNodeE6borrowBR_.exit.i ]
-  store i64 %storemerge.i, ptr %i.ku, align 8, !noalias !2297
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  store i64 %storemerge.i, ptr %i.ku, align 8, !noalias !2297
   %i.ld = atomicrmw add ptr %.val, i64 1 monotonic, align 8, !noalias !2297
   %i.le = icmp slt i64 %i.ld, 0
   br i1 %i.le, label %bb.ea, label %bb.dz
@@ -5125,11 +5125,11 @@ bb.a:
   %i.j = alloca [24 x i8], align 8                ; 9 uses
   %i.k = alloca [24 x i8], align 8                ; 5 uses
   %i.l = alloca [24 x i8], align 8                ; 7 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %.sroa.04.1.extract.shift = lshr i24 %3, 8      ; 2 uses
   %.sroa.04.1.extract.trunc = trunc i24 %.sroa.04.1.extract.shift to i8
   %.sroa.04.2.extract.shift = lshr i24 %3, 16     ; 2 uses
   %.sroa.04.2.extract.trunc = trunc nuw nsw i24 %.sroa.04.2.extract.shift to i8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.0.val, i64 16 ; 10 uses
   %i.n = load i64, ptr %i.m, align 8, !noundef !8
   %.not53 = icmp eq i64 %i.n, 0
@@ -5532,8 +5532,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsl
   br label %bb.o
 
 bb.y:                                             ; preds = %bb.o
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   invoke void @_RNvMNtCs8frGy5WneL6_4fish20env_universal_commonNtB2_12EnvUniversal3set(ptr noalias nofree noundef nonnull align 8 dereferenceable(208) %i.k, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %0, i64 noundef %1, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.d)
           to label %bb.z unwind label %bb.n
 
@@ -5936,9 +5936,9 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment11EnvNodeIterEBJ_.exit9: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment10EnvNodeRefEBJ_.exit12
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.88.val) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2768
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.88.val) ]
   %i.aa = atomicrmw add ptr %.88.val, i64 1 monotonic, align 8
   %i.ab = icmp slt i64 %i.aa, 0
   br i1 %i.ab, label %bb.p, label %bb.q
@@ -6341,8 +6341,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.y = landingpad { ptr, i32 }
           cleanup
-  %4 = zext i1 %i.v to i8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
+  %4 = zext i1 %i.v to i8
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardNtNtCs8frGy5WneL6_4fish20env_universal_common12EnvUniversalEEB1A_(ptr nonnull %i.u, i8 %4) #34
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment10EnvNodeRefEBJ_.exit unwind label %bb.n
 
@@ -6577,8 +6577,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish3env4impl11en
 bb.ak:                                            ; preds = %bb.p
   %i.ce = landingpad { ptr, i32 }
           cleanup
-  %5 = zext i1 %i.aj to i8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  %5 = zext i1 %i.aj to i8
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardNtNtCs8frGy5WneL6_4fish20env_universal_common12EnvUniversalEEB1A_(ptr nonnull %i.ai, i8 %5) #34
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCs8frGy5WneL6_4fish3env4impl11environment10EnvNodeRefEBJ_.exit unwind label %bb.n
 
@@ -6981,6 +6981,7 @@ bb.gz:                                            ; preds = %bb.gy
 
 bb.ha:                                            ; preds = %bb.gy
   %i.qo = extractvalue { ptr, i64 } %i.qm, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qo) ]
   %i.qp = extractvalue { ptr, i64 } %i.qm, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt)
   %i.qq = load i8, ptr %i.fx, align 1, !range !18, !noundef !8
@@ -6991,7 +6992,6 @@ bb.ha:                                            ; preds = %bb.gy
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bx, ptr noundef nonnull align 8 dereferenceable(24) %i.bv, i64 24, i1 false)
   %i.qt = getelementptr inbounds nuw i8, ptr %i.bx, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.qt, ptr noundef nonnull align 8 dereferenceable(24) %i.bu, i64 24, i1 false)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qo) ]
   %i.qu = getelementptr inbounds nuw i8, ptr %i.bx, i64 64
   store ptr %i.qo, ptr %i.qu, align 8
   %i.qv = getelementptr inbounds nuw i8, ptr %i.bx, i64 72
@@ -7394,8 +7394,8 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5021
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx, i64 24, i1 false)
@@ -7447,8 +7447,8 @@ bb.a:
   br i1 %.not, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %.sroa.5.0.copyload, ptr %i.b, align 8
   %.sroa.7.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -7510,8 +7510,8 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5033
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx, i64 24, i1 false)
@@ -7914,7 +7914,7 @@ _RNCNvNtNtNtNtCs8frGy5WneL6_4fish3env4impl3var15electric_values11GET_HISTORY0Bb_
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal void @_RNvYNCNvNtNtNtNtCs8frGy5WneL6_4fish3env4impl3var15electric_values14GET_PIPESTATUS0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTRNtNtBa_11environment13EnvScopedImplEE9call_onceBe_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(104) %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
@@ -7929,27 +7929,30 @@ bb.a:
   call void @_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %.val1, i1 noundef zeroext false, i64 noundef 8, i64 noundef 24), !noalias !5483
   %i.h = load i64, ptr %i.a, align 8, !range !16, !noalias !5483, !noundef !8
   %i.i = trunc nuw i64 %i.h to i1
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = load i64, ptr %2, align 8, !range !25, !noalias !5483, !noundef !8 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   br i1 %i.i, label %bb.b, label %bb.c, !prof !13
 
 bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %3 = load i64, ptr %2, align 8, !range !25, !noalias !5483, !noundef !8
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.j = load i64, ptr %4, align 8, !noalias !5483
   tail call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %3, i64 %i.j) #37, !noalias !5483
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.k = load ptr, ptr %4, align 8, !noalias !5483, !nonnull !8, !noundef !8
-  %i.l = icmp samesign ule i64 %.val1, %3
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %6 = load i64, ptr %5, align 8, !range !21, !noalias !5483, !noundef !8 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.k = load ptr, ptr %7, align 8, !noalias !5483, !nonnull !8, !noundef !8
+  %i.l = icmp samesign ule i64 %.val1, %6
   tail call void @llvm.assume(i1 %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5483
-  store i64 %3, ptr %i.d, align 8, !noalias !5483
+  store i64 %6, ptr %i.d, align 8, !noalias !5483
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   store ptr %i.k, ptr %i.m, align 8, !noalias !5483
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 3 uses
   store i64 0, ptr %i.n, align 8, !noalias !5483
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %.idx.i = shl nuw nsw i64 %.val1, 2
   %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i
   %.not5.i = icmp eq i64 %.val1, 0

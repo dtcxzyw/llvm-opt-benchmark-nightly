@@ -204,9 +204,9 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br i1 %i.ca, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeEECsefoF4u9kbII_5wasmi.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i4
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i.i4: ; preds = %bb.at
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.cb = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.cc = load i64, ptr %i.cb, align 8, !range !583, !invariant.load !7
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef %i.bz, i64 noundef range(i64 1, -9223372036854775807) %i.cc) #34
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeEECsefoF4u9kbII_5wasmi.exit
 
@@ -609,7 +609,8 @@ _RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_elemen
   br i1 %i.h, label %.loopexit.i, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtBa_6result6ResultNtNtNtNtCs9FmeSmcCnTG_10wasmparser7readers4core8elements7ElementNtNtB1t_13binary_reader17BinaryReaderErrorEIB10_NtNtNtCsefoF4u9kbII_5wasmi6module7element14ElementSegmentNtNtB3f_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4r_B39_EENCNvMNtB3d_6parserNtB5l_12ModuleParser15process_element0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtB1r_22SectionLimitedIntoIterB1l_EB5g_EIB10_zB44_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB7E_12try_for_each4callB39_B55_NcNtB55_5Break0E0B55_E0E0B3f_.exit.i
 
 .loopexit.i:                                      ; preds = %_RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_element0B8_.exit.i.i, %_RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_element0B8_.exit.thread.i.i
-  %.sroa.0.0.copyload.sink.i6.i.i = phi ptr [ %i.g, %_RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_element0B8_.exit.thread.i.i ], [ %.sroa.0.0.copyload.i.i.i, %_RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_element0B8_.exit.i.i ] ; 2 uses
+  %.sroa.0.0.copyload.sink.i6.i.i = phi ptr [ %i.g, %_RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_element0B8_.exit.thread.i.i ], [ %.sroa.0.0.copyload.i.i.i, %_RNCNvMNtNtCsefoF4u9kbII_5wasmi6module6parserNtB4_12ModuleParser15process_element0B8_.exit.i.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.sink.i6.i.i) ]
   %.val.i.i.i = load ptr, ptr %3, align 8, !noalias !1296, !align !12, !noundef !7 ; 4 uses
   %i.i = icmp eq ptr %.val.i.i.i, null
   br i1 %i.i, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map12map_try_foldINtNtBa_6result6ResultNtNtNtNtCs9FmeSmcCnTG_10wasmparser7readers4core8elements7ElementNtNtB1t_13binary_reader17BinaryReaderErrorEIB10_NtNtNtCsefoF4u9kbII_5wasmi6module7element14ElementSegmentNtNtB3f_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4r_B39_EENCNvMNtB3d_6parserNtB5l_12ModuleParser15process_element0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtB1r_22SectionLimitedIntoIterB1l_EB5g_EIB10_zB44_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB7E_12try_for_each4callB39_B55_NcNtB55_5Break0E0B55_E0E0B3f_.exit.thread.i, label %bb.c
@@ -682,12 +683,12 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.d = icmp eq ptr %0, %1
   br i1 %i.d, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtNtCs9FmeSmcCnTG_10wasmparser7readers4core5types7ValTypeENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1W_8adapters3map8map_foldRBQ_NtNtCsexYYUdYSQU6_5alloc6string6StringuNCNvMs8_NtNtBY_9validator9operatorsINtB3Z_21OperatorValidatorTempNtNtB41_4core18ValidatorResourcesE28check_func_type_same_resultss0_0NCINvNvB1Q_8for_each4callB3e_NCINvMsk_NtB3i_3vecINtB6C_3VecB3e_E14extend_trustedINtB2G_3MapBF_B3R_EE0E0E0ECsefoF4u9kbII_5wasmi.exit, label %bb.b
 
@@ -740,12 +741,12 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtNtCs9FmeSmcCnTG_10w
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterNtNtNtNtCs9FmeSmcCnTG_10wasmparser7readers4core5types7ValTypeENvNvXs2_NtNtCsefoF4u9kbII_5wasmi6module5utilsNtNtNtB2z_4func2ty8FuncTypeINtB2v_14FromWasmparserRNtB1p_8FuncTypeE15from_wasmparser18extract_value_typeENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB4N_8for_each4callNtNtCs5zeGauAcNNa_10wasmi_core5value7ValTypeNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6H_3VecB5Q_E14extend_trustedBN_E0E0EB2z_(ptr noundef nonnull %0, ptr noundef %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtNtCs9FmeSmcCnTG_10wasmparser7readers4core5types7ValTypeENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1W_8adapters3map8map_foldRBQ_NtNtCs5zeGauAcNNa_10wasmi_core5value7ValTypeuNvNvXs2_NtNtCsefoF4u9kbII_5wasmi6module5utilsNtNtNtB49_4func2ty8FuncTypeINtB45_14FromWasmparserRNtBS_8FuncTypeE15from_wasmparser18extract_value_typeNCINvNvB1Q_8for_each4callB3e_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6X_3VecB3e_E14extend_trustedINtB2G_3MapBF_B3X_EE0E0E0EB49_.exit, label %bb.b
 
@@ -1148,8 +1149,8 @@ bb.d:                                             ; preds = %._crit_edge.i
 .noexc7:                                          ; preds = %.lr.ph.i
   %i.z = add nuw i64 %.sroa.06.112.i, 1           ; 2 uses
   %i.aa = extractvalue { ptr, i64 } %i.y, 0       ; 2 uses
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.06.112.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.06.112.i
   store ptr %i.aa, ptr %2, align 8, !noalias !1408
   %exitcond.not.i = icmp eq i64 %i.z, %i.q
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
@@ -1552,8 +1553,8 @@ bb.h:                                             ; preds = %_RNvMs1_NtNtNtNtNtC
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.pn = phi { ptr, i64 } [ %i.z, %bb.g ], [ %i.aa, %bb.h ] ; 2 uses
   %.sroa.02.0 = extractvalue { ptr, i64 } %.pn, 0 ; 3 uses
-  %.sroa.3.0 = extractvalue { ptr, i64 } %.pn, 1  ; 5 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.02.0) ]
+  %.sroa.3.0 = extractvalue { ptr, i64 } %.pn, 1  ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1511)
   %i.ab = icmp samesign eq i64 %.sroa.3.0, 0
   br i1 %i.ab, label %bb.k, label %.preheader.i.preheader
@@ -1853,8 +1854,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   %.sroa.01.0 = phi i16 [ %i.h, %bb.d ], [ %i.k, %bb.e ], [ %i.f, %bb.c ]
   %.pn = phi { ptr, i64 } [ %i.b, %bb.d ], [ %i.b, %bb.e ], [ %i.e, %bb.c ] ; 2 uses
   %.sroa.0.0 = extractvalue { ptr, i64 } %.pn, 0  ; 4 uses
-  %.sroa.3.0 = extractvalue { ptr, i64 } %.pn, 1  ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0) ]
+  %.sroa.3.0 = extractvalue { ptr, i64 } %.pn, 1  ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1522)
   switch i64 %.sroa.3.0, label %bb.h [
     i64 0, label %_RNvMs0_NtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stackNtB5_5Stack18branch_params_regs.exit
@@ -2257,8 +2258,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
+  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   %i.d = icmp eq i64 %1, 0
   br i1 %i.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator6shrink.exit
 
@@ -2661,8 +2662,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #34

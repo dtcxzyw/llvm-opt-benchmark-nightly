@@ -72,8 +72,8 @@ bb.b:                                             ; preds = %_RINvNtCs3oUPovFnLW
   ret void
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.c = ptrtoint ptr %.8.val to i64              ; 2 uses
   %i.d = and i64 %i.c, 3
   switch i64 %i.d, label %default.unreachable [
@@ -476,8 +476,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECskuiImRAV2ip_9elfshaker(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -761,9 +761,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.p, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1w_4SyncEL_EECskuiImRAV2ip_9elfshaker.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.q = getelementptr inbounds nuw i8, ptr %.val2, i64 16
   %i.r = load i64, ptr %i.q, align 8, !range !17, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1, i64 noundef range(i64 1, 0) %i.o, i64 noundef range(i64 1, 536870913) %i.r) #19
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1w_4SyncEL_EECskuiImRAV2ip_9elfshaker.exit
 
@@ -1166,8 +1166,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
 _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtCs3oUPovFnLWP_4core6result6ResultAhj14_NtNtNtB1E_2io5error5ErrorENCINvNtBa_5batch17compute_checksumsB10_E0INtNtNtB1E_5slice4iter4IterB10_EE0s_0Ba_.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !391
   %.sroa.4.16.copyload.i = load i64, ptr %i.c, align 8, !noalias !391 ; 2 uses
-  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !391 ; 3 uses
-  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !391 ; 3 uses
+  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !391 ; 4 uses
+  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !391 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !391
   store ptr %2, ptr %i.a, align 8, !noalias !392
   store ptr %.sroa.4.018, ptr %i.i, align 8, !noalias !392
@@ -1175,6 +1175,7 @@ _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtCsaL1QbXo9J
   br i1 %i.l, label %bb.c, label %bb.o
 
 bb.c:                                             ; preds = %_RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtCs3oUPovFnLWP_4core6result6ResultAhj14_NtNtNtB1E_2io5error5ErrorENCINvNtBa_5batch17compute_checksumsB10_E0INtNtNtB1E_5slice4iter4IterB10_EE0s_0Ba_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.16.copyload.i), "nonnull"(ptr %.sroa.7.16.copyload.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.m, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %.val.i.i = load ptr, ptr %.val.le, align 8, !noalias !392, !noundef !5 ; 4 uses
@@ -1317,8 +1318,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
 _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtBa_7packidx9FileEntryINtNtCs3oUPovFnLWP_4core6result6ResultNtNtCsaL1QbXo9JQH_3std4path7PathBufNtNtB8_5error5ErrorENCNvMs0_NtB8_10repositoryNtB32_10Repository18copy_loose_entries0INtNtNtB1u_5slice4iter4IterB10_EE0s_0Ba_.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !399
   %.sroa.4.16.copyload.i = load i64, ptr %i.c, align 8, !noalias !399 ; 2 uses
-  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !399 ; 3 uses
-  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !399 ; 3 uses
+  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !399 ; 4 uses
+  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !399 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !399
   store ptr %2, ptr %i.a, align 8, !noalias !400
   store ptr %.sroa.4.018, ptr %i.i, align 8, !noalias !400
@@ -1326,6 +1327,7 @@ _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtBa_7packidx
   br i1 %i.l, label %bb.c, label %bb.o
 
 bb.c:                                             ; preds = %_RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtBa_7packidx9FileEntryINtNtCs3oUPovFnLWP_4core6result6ResultNtNtCsaL1QbXo9JQH_3std4path7PathBufNtNtB8_5error5ErrorENCNvMs0_NtB8_10repositoryNtB32_10Repository18copy_loose_entries0INtNtNtB1u_5slice4iter4IterB10_EE0s_0Ba_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.16.copyload.i), "nonnull"(ptr %.sroa.7.16.copyload.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.m, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %.val.i.i = load ptr, ptr %.val.le, align 8, !noalias !400, !noundef !5 ; 4 uses
@@ -1468,8 +1470,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
 _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelTNtNtB8_4pack10PackReaderINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBa_7packidx9FileEntryEEINtNtCs3oUPovFnLWP_4core6result6ResultNtB12_12ExtractStatsNtNtB8_5error5ErrorENCINvMsa_B12_NtB12_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathEs0_0INtNtB1r_9into_iter8IntoIterBZ_EE0s_0Ba_.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !407
   %.sroa.4.16.copyload.i = load i64, ptr %i.c, align 8, !noalias !407 ; 2 uses
-  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !407 ; 3 uses
-  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !407 ; 3 uses
+  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !407 ; 4 uses
+  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !407 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !407
   store ptr %2, ptr %i.a, align 8, !noalias !408
   store ptr %.sroa.4.018, ptr %i.i, align 8, !noalias !408
@@ -1477,6 +1479,7 @@ _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelTNtNtB8_4pack10P
   br i1 %i.l, label %bb.c, label %bb.o
 
 bb.c:                                             ; preds = %_RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelTNtNtB8_4pack10PackReaderINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBa_7packidx9FileEntryEEINtNtCs3oUPovFnLWP_4core6result6ResultNtB12_12ExtractStatsNtNtB8_5error5ErrorENCINvMsa_B12_NtB12_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathEs0_0INtNtB1r_9into_iter8IntoIterBZ_EE0s_0Ba_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.16.copyload.i), "nonnull"(ptr %.sroa.7.16.copyload.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.m, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %.val.i.i = load ptr, ptr %.val.le, align 8, !noalias !408, !noundef !5 ; 4 uses
@@ -1619,8 +1622,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
 _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRSmINtNtCs3oUPovFnLWP_4core6result6ResultTyINtNtCs1xwejQucwHj_5alloc3vec3VechEENtNtNtB17_2io5error5ErrorENCNvMs0_NtB8_10repositoryNtB2O_10Repository11create_pack0INtNtB1J_9into_iter8IntoIterBZ_EE0s_0Ba_.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !415
   %.sroa.4.16.copyload.i = load i64, ptr %i.c, align 8, !noalias !415 ; 2 uses
-  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !415 ; 3 uses
-  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !415 ; 3 uses
+  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !415 ; 4 uses
+  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !415 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !415
   store ptr %2, ptr %i.a, align 8, !noalias !416
   store ptr %.sroa.4.018, ptr %i.i, align 8, !noalias !416
@@ -1628,6 +1631,7 @@ _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRSmINtNtCs3oUPov
   br i1 %i.l, label %bb.c, label %bb.o
 
 bb.c:                                             ; preds = %_RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRSmINtNtCs3oUPovFnLWP_4core6result6ResultTyINtNtCs1xwejQucwHj_5alloc3vec3VechEENtNtNtB17_2io5error5ErrorENCNvMs0_NtB8_10repositoryNtB2O_10Repository11create_pack0INtNtB1J_9into_iter8IntoIterBZ_EE0s_0Ba_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.16.copyload.i), "nonnull"(ptr %.sroa.7.16.copyload.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.m, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %.val.i.i = load ptr, ptr %.val.le, align 8, !noalias !416, !noundef !5 ; 4 uses
@@ -1770,8 +1774,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.o
 _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtB8_4pack6PackIdINtNtCs3oUPovFnLWP_4core6result6ResultuNtNtB8_5error5ErrorENCNvMs0_NtB8_10repositoryNtB2o_10Repository24find_duplicate_snapshots0QINtNtNtB1o_5slice4iter4IterB10_EE0s_0Ba_.exit.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !423
   %.sroa.4.16.copyload.i = load i64, ptr %i.c, align 8, !noalias !423 ; 2 uses
-  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !423 ; 3 uses
-  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !423 ; 3 uses
+  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !423 ; 4 uses
+  %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !423 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !423
   store ptr %2, ptr %i.a, align 8, !noalias !424
   store ptr %.sroa.4.018, ptr %i.i, align 8, !noalias !424
@@ -1779,6 +1783,7 @@ _RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtB8_4pack6Pa
   br i1 %i.l, label %bb.c, label %bb.o
 
 bb.c:                                             ; preds = %_RNCNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRNtNtB8_4pack6PackIdINtNtCs3oUPovFnLWP_4core6result6ResultuNtNtB8_5error5ErrorENCNvMs0_NtB8_10repositoryNtB2o_10Repository24find_duplicate_snapshots0QINtNtNtB1o_5slice4iter4IterB10_EE0s_0Ba_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.16.copyload.i), "nonnull"(ptr %.sroa.7.16.copyload.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.m, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %.val.i.i = load ptr, ptr %.val.le, align 8, !noalias !424, !noundef !5 ; 4 uses
@@ -2181,8 +2186,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.y
           to label %bb.c unwind label %bb.p, !noalias !599
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !598
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !598
   store ptr %.val2.i, ptr %i.o, align 8, !noalias !598
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !599
   %i.y = load i64, ptr %i.e, align 8, !range !8, !noalias !598, !noundef !5 ; 3 uses
@@ -2346,6 +2351,7 @@ bb.q:                                             ; preds = %bb.p
   br label %.loopexit.split-lp
 
 bb.r:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEBH_.exit.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.le) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !598
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !598
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.9.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8.i.i, i64 40, i1 false), !noalias !597
@@ -2354,7 +2360,6 @@ bb.r:                                             ; preds = %_RINvNtCs3oUPovFnLW
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !597
   store ptr %2, ptr %i.a, align 8, !noalias !607
   store ptr %.sroa.4.047, ptr %i.t, align 8, !noalias !607
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.le) ]
   %i.av = load i64, ptr %.val2.le, align 8, !range !8, !alias.scope !608, !noalias !607, !noundef !5
   %i.aw = icmp eq i64 %i.av, -2
   br i1 %i.aw, label %bb.x, label %bb.s
@@ -2757,8 +2762,8 @@ bb.i:                                             ; preds = %bb.f
   br i1 %.not42.i.i, label %bb.j, label %bb.am
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !722
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.pre) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !722
   %i.ai = load ptr, ptr %.val1.i.pre, align 8, !noalias !724, !nonnull !5, !align !9, !noundef !5
   %i.aj = getelementptr inbounds nuw i8, ptr %i.y, i64 40
   invoke void @_RNvMs0_NtNtCskuiImRAV2ip_9elfshaker4repo10repositoryNtB5_10Repository17loose_object_path(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.g, ptr noundef nonnull align 8 %i.ai, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(20) %i.aj)
@@ -2900,12 +2905,11 @@ bb.ab:                                            ; preds = %_RINvMNtCs3oUPovFnL
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i.i.i: ; preds = %bb.aa, %bb.z, %bb.y, %.noexc.i.i.i
   %.sroa.0.0.i.i.i.i = phi i8 [ %i.bn, %bb.aa ], [ %switch.idx.cast.i.i.i.i.i.i, %bb.y ], [ %i.bl, %bb.z ], [ %i.bg, %.noexc.i.i.i ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i), "nonnull"(ptr %.val47.i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !722
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   store ptr %.val.i.i, ptr %i.e, align 8, !noalias !722
   store i64 %.val46.i.i, ptr %i.q, align 8, !noalias !722
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !722
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val47.i.i) ]
   store ptr %.val47.i.i, ptr %i.d, align 8, !noalias !722
   store i64 %.val48.i.i, ptr %i.r, align 8, !noalias !722
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !722
@@ -3228,9 +3232,9 @@ bb.d:                                             ; preds = %.noexc
           to label %bb.e unwind label %.thread21.i.i, !noalias !762
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.pre) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !760
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !760
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.pre) ]
   %i.at = load ptr, ptr %.val1.i.pre, align 8, !noalias !763, !nonnull !5, !noundef !5
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   invoke void @_RNvMs5_NtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutexINtB5_5MutexINtNtNtNtBb_11collections4hash3map7HashMapAhj14_INtNtCs1xwejQucwHj_5alloc3vec3VecNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack10SnapshotIdEEE4lockB2m_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.o, ptr noundef nonnull align 8 %i.au)
@@ -3633,8 +3637,8 @@ bb.b:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %i.s, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultAhj14_NtNtNtB4_2io5error5ErrorEECskuiImRAV2ip_9elfshaker.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !843
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !843
   %i.t = ptrtoint ptr %.val9.i to i64             ; 2 uses
   %i.u = and i64 %i.t, 3
   switch i64 %i.u, label %default.unreachable [

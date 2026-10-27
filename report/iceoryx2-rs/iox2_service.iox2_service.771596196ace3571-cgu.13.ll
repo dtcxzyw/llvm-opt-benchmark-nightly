@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.h, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory9publisher1__11TinyClosureKj18_EECsadSKrpJ73hd_12iox2_service.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !7, !invariant.load !5, !noalias !437
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #25, !noalias !437
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNvNtNtNtCsg6ZEkMtNi4J_8iceoryx27service12port_factory9publisher1__11TinyClosureKj18_EECsadSKrpJ73hd_12iox2_service.exit
 
@@ -609,7 +609,7 @@ bb.q:                                             ; preds = %bb.p, %_RNvXs3_NtCs
   %.sroa.29.3696..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.29.i, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1360) %.sroa.29.3696..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(1360) %i.ac, i64 1360, i1 false), !noalias !530
   call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !541
-  %i.ew = call noundef align 16 dereferenceable_or_null(5168) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 8, 6417) 5168, i64 noundef range(i64 8, 17) 16) #25, !noalias !541 ; 37 uses
+  %i.ew = call noundef align 16 dereferenceable_or_null(5168) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 8, 6417) 5168, i64 noundef range(i64 8, 17) 16) #25, !noalias !541 ; 38 uses
   %i.ex = icmp eq ptr %i.ew, null
   br i1 %i.ex, label %bb.r, label %_RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service3ipc7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCsadSKrpJ73hd_12iox2_service.exit.i, !prof !12
 
@@ -618,6 +618,7 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service3ipc7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCsadSKrpJ73hd_12iox2_service.exit.i: ; preds = %bb.q
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ew) ]
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !542
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ew, i64 16 ; 3 uses
@@ -797,9 +798,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %i.fs, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceNtNtNtCslR0xdO7Fetl_27iceoryx2_services_discovery17service_discovery7service9DiscoveryuE3newCsadSKrpJ73hd_12iox2_service.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.ft = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i, i64 16
   %i.fu = load i64, ptr %i.ft, align 8, !range !7, !invariant.load !5, !noalias !550
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.fr, i64 noundef range(i64 1, 536870913) %i.fu) #25, !noalias !550
   br label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceNtNtNtCslR0xdO7Fetl_27iceoryx2_services_discovery17service_discovery7service9DiscoveryuE3newCsadSKrpJ73hd_12iox2_service.exit
 
@@ -875,9 +876,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.gh, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceNtNtNtCslR0xdO7Fetl_27iceoryx2_services_discovery17service_discovery7service9DiscoveryuE3newCsadSKrpJ73hd_12iox2_service.exit.thread, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i113.i) ]
   %i.gi = getelementptr inbounds nuw i8, ptr %.val1.i.i.i114.i, i64 16
   %i.gj = load i64, ptr %i.gi, align 8, !range !7, !invariant.load !5, !noalias !555
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i113.i) ]
   call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i113.i, i64 noundef range(i64 1, -9223372036854775808) %i.gg, i64 noundef range(i64 1, 536870913) %i.gj) #25, !noalias !555
   br label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceNtNtNtCslR0xdO7Fetl_27iceoryx2_services_discovery17service_discovery7service9DiscoveryuE3newCsadSKrpJ73hd_12iox2_service.exit.thread
 
@@ -1280,7 +1281,7 @@ bb.q:                                             ; preds = %bb.p, %_RNvXs3_NtCs
   %.sroa.29.3696..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.29.i, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1360) %.sroa.29.3696..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(1360) %i.ac, i64 1360, i1 false), !noalias !606
   call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !617
-  %i.ew = call noundef align 16 dereferenceable_or_null(5168) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 8, 6417) 5168, i64 noundef range(i64 8, 17) 16) #25, !noalias !617 ; 37 uses
+  %i.ew = call noundef align 16 dereferenceable_or_null(5168) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 8, 6417) 5168, i64 noundef range(i64 8, 17) 16) #25, !noalias !617 ; 38 uses
   %i.ex = icmp eq ptr %i.ew, null
   br i1 %i.ex, label %bb.r, label %_RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service3ipc7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCsadSKrpJ73hd_12iox2_service.exit.i, !prof !12
 
@@ -1289,6 +1290,7 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port9publisher20PublisherSharedStateNtNtNtB1C_7service3ipc7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCsadSKrpJ73hd_12iox2_service.exit.i: ; preds = %bb.q
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ew) ]
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !618
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ew, i64 16 ; 3 uses
@@ -1468,9 +1470,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %i.fs, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceSNtNtB15_7builder19CustomPayloadMarkerNtB1x_18CustomHeaderMarkerE3newCsadSKrpJ73hd_12iox2_service.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.ft = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i, i64 16
   %i.fu = load i64, ptr %i.ft, align 8, !range !7, !invariant.load !5, !noalias !626
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.fr, i64 noundef range(i64 1, 536870913) %i.fu) #25, !noalias !626
   br label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceSNtNtB15_7builder19CustomPayloadMarkerNtB1x_18CustomHeaderMarkerE3newCsadSKrpJ73hd_12iox2_service.exit
 
@@ -1546,9 +1548,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   br i1 %i.gh, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceSNtNtB15_7builder19CustomPayloadMarkerNtB1x_18CustomHeaderMarkerE3newCsadSKrpJ73hd_12iox2_service.exit.thread, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i113.i) ]
   %i.gi = getelementptr inbounds nuw i8, ptr %.val1.i.i.i114.i, i64 16
   %i.gj = load i64, ptr %i.gi, align 8, !range !7, !invariant.load !5, !noalias !631
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i113.i) ]
   call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i113.i, i64 noundef range(i64 1, -9223372036854775808) %i.gg, i64 noundef range(i64 1, 536870913) %i.gj) #25, !noalias !631
   br label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port9publisherINtB5_9PublisherNtNtNtB9_7service3ipc7ServiceSNtNtB15_7builder19CustomPayloadMarkerNtB1x_18CustomHeaderMarkerE3newCsadSKrpJ73hd_12iox2_service.exit.thread
 
@@ -1951,9 +1953,9 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br i1 %i.jd, label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service3ipc7ServiceuuSNtNtBZ_13static_config12StaticConfiguE3newCsadSKrpJ73hd_12iox2_service.exit, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.je = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i, i64 16
   %i.jf = load i64, ptr %i.je, align 8, !range !7, !invariant.load !5, !noalias !737
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.jc, i64 noundef range(i64 1, 536870913) %i.jf) #25, !noalias !737
   br label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service3ipc7ServiceuuSNtNtBZ_13static_config12StaticConfiguE3newCsadSKrpJ73hd_12iox2_service.exit
 
@@ -2049,9 +2051,9 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.jw, label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service3ipc7ServiceuuSNtNtBZ_13static_config12StaticConfiguE3newCsadSKrpJ73hd_12iox2_service.exit.thread, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i116.i) ]
   %i.jx = getelementptr inbounds nuw i8, ptr %.val1.i.i.i117.i, i64 16
   %i.jy = load i64, ptr %i.jx, align 8, !range !7, !invariant.load !5, !noalias !748
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i116.i) ]
   call void @_RNvCsicpYtSlSgpD_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i116.i, i64 noundef range(i64 1, -9223372036854775808) %i.jv, i64 noundef range(i64 1, 536870913) %i.jy) #25, !noalias !748
   br label %_RNvMs5_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service3ipc7ServiceuuSNtNtBZ_13static_config12StaticConfiguE3newCsadSKrpJ73hd_12iox2_service.exit.thread
 

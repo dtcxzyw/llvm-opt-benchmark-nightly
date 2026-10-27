@@ -202,8 +202,9 @@ bb.bw:                                            ; preds = %bb.bt, %_RNvMs3_NtN
 
 bb.bx:                                            ; preds = %.body.i.i
   %i.gk = extractvalue { ptr, ptr } %i.gi, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gk) ]
   %i.gl = extractvalue { ptr, ptr } %i.gi, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gk), "nonnull"(ptr %i.gl) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gl) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !3458
   invoke void @_RNvXse_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcNtB5_12PanicMessageINtNtCscI6d9CVNmLh_4core7convert4FromINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB18_3any3AnyNtNtB18_6marker4SendEL_EE4from(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.an, ptr noundef nonnull %i.gk, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.gl)
           to label %bb.by unwind label %.critedge.body, !noalias !3458
@@ -606,8 +607,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %2 = mul nuw i64 %.0.val, 40
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %2 = mul nuw i64 %.0.val, 40
   %i.c = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.c)
   %i.d = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %2, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %i.a) #24

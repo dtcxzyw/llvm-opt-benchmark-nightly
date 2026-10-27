@@ -189,8 +189,8 @@ bb.h:                                             ; preds = %bb.e
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMs_NtCs2XfPe3Xe4Zx_9untrusted5inputNtB5_5Input8read_allNCNCINvNtCshVVPy9isBpn_6webpki3der13nested_of_mutNCNCNCNvMNtB14_4certNtB1R_4Cert10from_inputs_000E00uNtNtB14_5error5ErrorEB14_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([56 x i8]) align 8 captures(none) dereferenceable(56) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %1, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(56) %2, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [56 x i8], align 8                ; 7 uses
-  %.sroa.6.i.i = alloca [40 x i8], align 8        ; 6 uses
+  %i.a = alloca [56 x i8], align 8                ; 8 uses
+  %.sroa.6.i.i = alloca [40 x i8], align 8        ; 7 uses
   %i.b = alloca [40 x i8], align 8                ; 5 uses
   %i.c = alloca [56 x i8], align 8                ; 8 uses
   %i.d = alloca [24 x i8], align 8                ; 8 uses
@@ -218,11 +218,11 @@ bb.a:
 .noexc:                                           ; preds = %bb.a
   %i.k = load i64, ptr %i.a, align 8, !range !8, !noalias !37, !noundef !4 ; 2 uses
   %.not.i.i = icmp eq i64 %i.k, -1
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.i.i, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !noalias !37
   br i1 %.not.i.i, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %.noexc
+  %.sroa.410.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.410.0..sroa_idx.i.i, i64 40, i1 false), !noalias !37
   %.sroa.511.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %.sroa.511.0.copyload.i.i = load i64, ptr %.sroa.511.0..sroa_idx.i.i, align 8, !noalias !37
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !37
@@ -235,9 +235,11 @@ bb.a:
   br label %bb.e
 
 bb.b:                                             ; preds = %.noexc
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14) ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.i.i, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 40, i1 false), !noalias !37
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !37
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.i.i, i64 40, i1 false), !noalias !37
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14) ]
   %i.l = load i8, ptr %.val14, align 1, !range !5, !noalias !37, !noundef !4
   %i.m = trunc nuw i8 %i.l to i1
   invoke void @_RNvNtCshVVPy9isBpn_6webpki4cert23remember_cert_extension(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(248) %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.b, i1 noundef zeroext %i.m)

@@ -204,14 +204,14 @@ bb.y:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.cj, label %bb.z, label %bb.ae
 
 bb.z:                                             ; preds = %bb.y
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   %i.ck = sub nuw i64 %i.cf, %i.ci
   %i.cl = uitofp nsz i64 %i.ck to float
   %i.cm = fdiv nsz float %i.cl, 1.000000e+03
   br label %.invoke
 
-.invoke:                                          ; preds = %bb.ae, %bb.z
-  %i.cn = phi float [ %i.cm, %bb.z ], [ %i.cx, %bb.ae ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+.invoke:                                          ; preds = %18, %bb.z
+  %i.cn = phi float [ %i.cm, %bb.z ], [ %i.cx, %18 ]
   invoke void @_ZN3con7UDPPeer9reportRTTEf(ptr noundef nonnull align 8 dereferenceable(1696) %4, float noundef %i.cn)
           to label %bb.ag unwind label %bb.af
 
@@ -253,7 +253,11 @@ bb.ae:                                            ; preds = %bb.y
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cg, i64 12
   %i.cx = load float, ptr %i.cw, align 4, !tbaa !366 ; 2 uses
   %i.cy = fcmp nsz ogt float %i.cx, 0.000000e+00
-  br i1 %i.cy, label %.invoke, label %bb.ag
+  br i1 %i.cy, label %18, label %bb.ag
+
+18:                                               ; preds = %bb.ae
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  br label %.invoke
 
 bb.af:                                            ; preds = %.invoke, %bb.ag, %bb.ah, %bb.aj
   %i.cz = landingpad { ptr, i32 }

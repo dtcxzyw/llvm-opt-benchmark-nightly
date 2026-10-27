@@ -143,7 +143,8 @@ _RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode10attributesNtB3_
   br label %bb.h
 
 bb.h:                                             ; preds = %_RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode5valueNtB3_5Value19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB9_4dataNtB2g_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtB1C_9FormatterE0ECs1GZEXNOm2AR_12icu_provider.exit.i, %.lr.ph.i
-  %.sroa.0.016.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i ], [ %i.ao, %_RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode5valueNtB3_5Value19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB9_4dataNtB2g_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtB1C_9FormatterE0ECs1GZEXNOm2AR_12icu_provider.exit.i ] ; 5 uses
+  %.sroa.0.016.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i ], [ %i.ao, %_RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode5valueNtB3_5Value19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB9_4dataNtB2g_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtB1C_9FormatterE0ECs1GZEXNOm2AR_12icu_provider.exit.i ] ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.016.i) ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i, i64 18 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i, i64 2 ; 2 uses
   %.val8.i = load i16, ptr %.sroa.0.016.i, align 1, !alias.scope !52
@@ -334,7 +335,8 @@ _RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode10attributesNtB3_
   br label %bb.h
 
 bb.h:                                             ; preds = %_RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode5valueNtB3_5Value19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB9_4dataNtB2g_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCsl2c274gG30Y_8zerotrie6cursor25ZeroTrieSimpleAsciiCursorE0ECs1GZEXNOm2AR_12icu_provider.exit.i, %.lr.ph.i
-  %.sroa.0.016.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i ], [ %i.ao, %_RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode5valueNtB3_5Value19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB9_4dataNtB2g_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCsl2c274gG30Y_8zerotrie6cursor25ZeroTrieSimpleAsciiCursorE0ECs1GZEXNOm2AR_12icu_provider.exit.i ] ; 5 uses
+  %.sroa.0.016.i = phi ptr [ %.sroa.0.0.i.i, %.lr.ph.i ], [ %i.ao, %_RINvMNtNtNtCs96xUavsWfLi_15icu_locale_core10extensions7unicode5valueNtB3_5Value19for_each_subtag_strNtNtCshzWfHUSfYae_4core3fmt5ErrorNCINvXsd_NtB9_4dataNtB2g_10DataLocaleNtCs8xIf8eOPprX_9writeable9Writeable8write_toNtNtCsl2c274gG30Y_8zerotrie6cursor25ZeroTrieSimpleAsciiCursorE0ECs1GZEXNOm2AR_12icu_provider.exit.i ] ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.016.i) ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i, i64 18 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.016.i, i64 2 ; 2 uses
   %.val.i = load i16, ptr %.sroa.0.016.i, align 1, !alias.scope !103

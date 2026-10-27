@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_ENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2c5WrizoNH7_11polars_json.exit, label %bb.d, !dbg !740
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !739
   %i.f = load i64, ptr %i.e, align 8, !dbg !741, !range !328, !invariant.load !267
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #17, !dbg !742
   br label %_RNvXs8_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_ENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2c5WrizoNH7_11polars_json.exit, !dbg !743
 
@@ -249,9 +249,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxDNtNtNtNtCs2c5WrizoNH7_11polars_json4json5write9serialize14JsonSerializerp4ItemShNtNtCscgRAwXFJnXP_4core6marker4SendNtB22_4SyncEL_ENtNtNtB24_3ops4drop4Drop4dropBQ_.exit, label %bb.d, !dbg !769
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !768
   %i.f = load i64, ptr %i.e, align 8, !dbg !770, !range !328, !invariant.load !267
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #17, !dbg !771
   br label %_RNvXs8_NtCsgZ49sUHp3tW_5alloc5boxedINtB5_3BoxDNtNtNtNtCs2c5WrizoNH7_11polars_json4json5write9serialize14JsonSerializerp4ItemShNtNtCscgRAwXFJnXP_4core6marker4SendNtB22_4SyncEL_ENtNtNtB24_3ops4drop4Drop4dropBQ_.exit, !dbg !772
 
@@ -654,8 +654,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !2278, !noalias !2276
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !2278, !noalias !2276
   %i.d = ptrtoint ptr %2 to i64, !dbg !2279
   %i.e = ptrtoint ptr %1 to i64, !dbg !2279
   %i.f = sub nuw i64 %i.d, %i.e, !dbg !2279
@@ -721,8 +721,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !2345, !noalias !2343
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !2345, !noalias !2343
   %i.d = ptrtoint ptr %2 to i64, !dbg !2346
   %i.e = ptrtoint ptr %1 to i64, !dbg !2346
   %i.f = sub nuw i64 %i.d, %i.e, !dbg !2346
@@ -1125,8 +1125,9 @@ bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 16, !dbg !6303
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.m, i64 %.sroa.7.022.i, !dbg !6304 ; 2 uses
   %i.y = extractvalue { ptr, ptr } %i.u, 0, !dbg !6305 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ], !dbg !6306
   %i.z = extractvalue { ptr, ptr } %i.u, 1, !dbg !6305 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y), "nonnull"(ptr %i.z) ], !dbg !6306
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ], !dbg !6306
   store ptr %i.y, ptr %i.x, align 8, !dbg !6307, !noalias !6280
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 8, !dbg !6307
   store ptr %i.z, ptr %i.aa, align 8, !dbg !6307, !noalias !6280
@@ -1500,9 +1501,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.l, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EECs2c5WrizoNH7_11polars_json.exit.i, label %bb.d, !dbg !6650
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16, !dbg !6649
   %i.n = load i64, ptr %i.m, align 8, !dbg !6651, !range !328, !invariant.load !267, !noalias !6643
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef range(i64 1, -9223372036854775808) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #17, !dbg !6652, !noalias !6643
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EECs2c5WrizoNH7_11polars_json.exit.i, !dbg !6653
 
@@ -1589,9 +1590,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.l, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtNtNtCs2c5WrizoNH7_11polars_json4json5write9serialize14JsonSerializerp4ItemShNtNtB4_6marker4SendNtB2A_4SyncEL_EEB1o_.exit.i, label %bb.d, !dbg !6699
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16, !dbg !6698
   %i.n = load i64, ptr %i.m, align 8, !dbg !6700, !range !328, !invariant.load !267, !noalias !6692
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef range(i64 1, -9223372036854775808) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #17, !dbg !6701, !noalias !6692
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtNtNtCs2c5WrizoNH7_11polars_json4json5write9serialize14JsonSerializerp4ItemShNtNtB4_6marker4SendNtB2A_4SyncEL_EEB1o_.exit.i, !dbg !6702
 

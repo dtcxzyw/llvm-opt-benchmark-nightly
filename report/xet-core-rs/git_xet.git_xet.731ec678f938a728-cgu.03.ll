@@ -202,8 +202,8 @@ bb.aj:                                            ; preds = %bb.a
   br i1 %i.bb, label %bb.ak, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsUrhh0HcRih_5tokio7runtime4task5error9JoinErrorECs9SMuO7kbZ2K_7git_xet.exit
 
 bb.ak:                                            ; preds = %bb.aj
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bc = ptrtoint ptr %.val4 to i64              ; 2 uses
   %i.bd = and i64 %i.bc, 3
   switch i64 %i.bd, label %default.unreachable [
@@ -606,8 +606,9 @@ bb.e:                                             ; preds = %.body.i.i
 
 .thread.i.i:                                      ; preds = %.body.i.i
   %i.s = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -687,8 +688,9 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.ab = extractvalue { ptr, ptr } %i.z, 0       ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %i.ac = extractvalue { ptr, ptr } %i.z, 1       ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %i.ac) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = load ptr, ptr %i.ac, align 8, !invariant.load !8, !noalias !2540 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -1091,8 +1093,9 @@ bb.e:                                             ; preds = %.body.i.i
 
 .thread.i.i:                                      ; preds = %.body.i.i
   %i.s = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -1172,8 +1175,9 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j
   %i.ab = extractvalue { ptr, ptr } %i.z, 0       ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %i.ac = extractvalue { ptr, ptr } %i.z, 1       ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab), "nonnull"(ptr %i.ac) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = load ptr, ptr %i.ac, align 8, !invariant.load !8, !noalias !2685 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m

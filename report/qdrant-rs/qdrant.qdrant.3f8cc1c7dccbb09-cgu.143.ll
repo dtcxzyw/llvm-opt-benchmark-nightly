@@ -202,8 +202,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgOCJwUSa4vG_5tonic6status6StatusEC
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultzNtNtNtB4_2io5error5ErrorEECsl8OoimOLbh_6qdrant(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -606,7 +606,8 @@ _RNCNvCs3zYKyHJHYqN_14rustls_pemfile5certss_0Csl8OoimOLbh_6qdrant.exit.i.i.i.i: 
   br label %bb.b
 
 .loopexit36.i.i.i:                                ; preds = %_RNCNvCs3zYKyHJHYqN_14rustls_pemfile5certss_0Csl8OoimOLbh_6qdrant.exit.i.i.i.i, %.thread.i.i.i
-  %.sroa.7.02025.i.i.i.i = phi ptr [ %i.h, %.thread.i.i.i ], [ %.sroa.7.0.copyload3.i.i.i.i, %_RNCNvCs3zYKyHJHYqN_14rustls_pemfile5certss_0Csl8OoimOLbh_6qdrant.exit.i.i.i.i ] ; 2 uses
+  %.sroa.7.02025.i.i.i.i = phi ptr [ %i.h, %.thread.i.i.i ], [ %.sroa.7.0.copyload3.i.i.i.i, %_RNCNvCs3zYKyHJHYqN_14rustls_pemfile5certss_0Csl8OoimOLbh_6qdrant.exit.i.i.i.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.02025.i.i.i.i) ]
   %.val.i.i.i.i.i = load ptr, ptr %i.e, align 8, !alias.scope !644, !noalias !653, !noundef !6 ; 4 uses
   %i.j = icmp eq ptr %.val.i.i.i.i.i, null
   br i1 %i.j, label %_RINvXNtNtCskKLDkoKarTP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB5_7sources7from_fn6FromFnNCNvCs3zYKyHJHYqN_14rustls_pemfile5certs0ENCB21_s_0EINtNtB7_6result6ResultzNtNtNtB7_2io5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB3C_12try_for_each4callNtCsg2eWlRba8yQ_16rustls_pki_types14CertificateDerINtNtNtB7_3ops12control_flow11ControlFlowB4O_ENcNtB5C_5Break0E0B5C_ECsl8OoimOLbh_6qdrant.exit.thread5, label %bb.d
@@ -1009,11 +1010,12 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.05.0.copyload.i.i = load ptr, ptr %i.g, align 8, !noalias !826 ; 2 uses
   %.sroa.56.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.56.0.copyload.i.i = load ptr, ptr %.sroa.56.0..sroa_idx.i.i, align 8, !noalias !826 ; 3 uses
+  %.sroa.56.0.copyload.i.i = load ptr, ptr %.sroa.56.0..sroa_idx.i.i, align 8, !noalias !826 ; 4 uses
   %i.h = icmp eq ptr %.sroa.05.0.copyload.i.i, null
   br i1 %i.h, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.56.0.copyload.i.i) ]
   %.val.i.i.i = load ptr, ptr %i.d, align 8, !alias.scope !822, !noalias !827, !noundef !6 ; 4 uses
   %i.i = icmp eq ptr %.val.i.i.i, null
   br i1 %i.i, label %bb.h, label %bb.d

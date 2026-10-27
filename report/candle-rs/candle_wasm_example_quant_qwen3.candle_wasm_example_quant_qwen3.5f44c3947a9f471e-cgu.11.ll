@@ -204,8 +204,8 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECs8b
 define internal fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr %.0.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.0.val to i64              ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -608,8 +608,9 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
-  %.sroa.10.0.ph.i.i.i.i = phi ptr [ %i.an, %bb.e ], [ %i.z, %bb.c ] ; 2 uses
-  %.sroa.66.0.ph.i.i.i.i = phi ptr [ %i.al, %bb.e ], [ %i.x, %bb.c ] ; 2 uses
+  %.sroa.10.0.ph.i.i.i.i = phi ptr [ %i.an, %bb.e ], [ %i.z, %bb.c ] ; 3 uses
+  %.sroa.66.0.ph.i.i.i.i = phi ptr [ %i.al, %bb.e ], [ %i.x, %bb.c ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.66.0.ph.i.i.i.i), "nonnull"(ptr %.sroa.10.0.ph.i.i.i.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !232
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !231
   %.val.i.i.i.i.i = load ptr, ptr %3, align 8, !noalias !234, !noundef !4 ; 4 uses
@@ -785,8 +786,9 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
-  %.sroa.10.0.ph.i.i.i.i = phi ptr [ %i.an, %bb.e ], [ %i.z, %bb.c ] ; 2 uses
-  %.sroa.66.0.ph.i.i.i.i = phi ptr [ %i.al, %bb.e ], [ %i.x, %bb.c ] ; 2 uses
+  %.sroa.10.0.ph.i.i.i.i = phi ptr [ %i.an, %bb.e ], [ %i.z, %bb.c ] ; 3 uses
+  %.sroa.66.0.ph.i.i.i.i = phi ptr [ %i.al, %bb.e ], [ %i.x, %bb.c ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.66.0.ph.i.i.i.i), "nonnull"(ptr %.sroa.10.0.ph.i.i.i.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !280
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !279
   %.val.i.i.i.i.i = load ptr, ptr %3, align 8, !noalias !282, !noundef !4 ; 4 uses
@@ -961,8 +963,9 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
-  %.sroa.10.0.ph.i.i.i.i = phi ptr [ %i.am, %bb.e ], [ %i.y, %bb.c ] ; 2 uses
-  %.sroa.64.0.ph.i.i.i.i = phi ptr [ %i.ak, %bb.e ], [ %i.w, %bb.c ] ; 2 uses
+  %.sroa.10.0.ph.i.i.i.i = phi ptr [ %i.am, %bb.e ], [ %i.y, %bb.c ] ; 3 uses
+  %.sroa.64.0.ph.i.i.i.i = phi ptr [ %i.ak, %bb.e ], [ %i.w, %bb.c ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.64.0.ph.i.i.i.i), "nonnull"(ptr %.sroa.10.0.ph.i.i.i.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !328
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !327
   %.val.i.i.i.i.i = load ptr, ptr %3, align 8, !noalias !330, !noundef !4 ; 4 uses
@@ -1120,8 +1123,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.x = extractvalue { ptr, ptr } %i.u, 1        ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !346
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !346
   store ptr %i.w, ptr %i.a, align 8, !noalias !346
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.x, ptr %i.y, align 8, !noalias !346

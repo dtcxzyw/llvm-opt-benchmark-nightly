@@ -101,9 +101,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxDNtNtNtCsC8CapfvpQ1_5salsa5table4memo4MemoEL_ENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBN_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !5, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #27
   br label %_RNvXs8_NtCscdodAO9FK5_5alloc5boxedINtB5_3BoxDNtNtNtCsC8CapfvpQ1_5salsa5table4memo4MemoEL_ENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBN_.exit
 
@@ -506,6 +506,7 @@ _RNvMss_NtCs4EKqXNOBxpl_8hashlink15linked_hash_mapINtB5_17RawVacantEntryMutNtNtC
   %i.cc = phi i8 [ %.pre10.i.i.i.i, %.noexc2 ], [ %i.br, %_RNvMsa_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i.i.i.i ]
   %i.cd = phi ptr [ %.val7.i.i.i.i, %.noexc2 ], [ %i.l, %_RNvMsa_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i.i.i.i ] ; 4 uses
   %.sroa.0.0.i.i.i.i = phi i64 [ %i.bx, %.noexc2 ], [ %.sroa.0.0.i5.i.i.i.i.i, %_RNvMsa_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit.i.i.i.i ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !162)
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 %.sroa.0.0.i.i.i.i
   %i.cf = and i8 %i.cc, 1
@@ -526,7 +527,6 @@ _RNvMss_NtCs4EKqXNOBxpl_8hashlink15linked_hash_mapINtB5_17RawVacantEntryMutNtNtC
   %i.cq = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.cp
   %i.cr = getelementptr inbounds i8, ptr %i.cq, i64 -8
   store ptr %.sink6.i.i.i.i, ptr %i.cr, align 8, !noalias !159
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd) ]
   br label %_RNvMs0_NtCs4EKqXNOBxpl_8hashlink15linked_hash_mapINtB5_13LinkedHashMapNtNtCsC8CapfvpQ1_5salsa2id2IduINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCs3CTDFEpwZhE_10rustc_hash8FxHasherEE6insertB1a_.exit
 
 bb.m:                                             ; preds = %.lr.ph.i.i.i
@@ -700,8 +700,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = extractvalue { ptr, ptr } %i.ab, 0      ; 2 uses
-  %2 = extractvalue { ptr, ptr } %i.ab, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
+  %2 = extractvalue { ptr, ptr } %i.ab, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ae = load ptr, ptr %i.ad, align 8, !invariant.load !3, !nonnull !3
@@ -1104,8 +1104,9 @@ bb.c:                                             ; preds = %bb.b
 
 .noexc4:                                          ; preds = %bb.c
   %i.af = extractvalue { ptr, ptr } %i.ae, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   %i.ag = extractvalue { ptr, ptr } %i.ae, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af), "nonnull"(ptr %i.ag) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag) ]
   %i.ah = invoke noundef i32 @_RNvMs_NtCsC8CapfvpQ1_5salsa5zalsaNtB4_19MemoIngredientIndex10from_usize(i64 noundef %.sroa.0.019.i.i)
           to label %bb.e unwind label %bb.d, !noalias !231
 
@@ -1392,8 +1393,8 @@ _RNvNtCsC8CapfvpQ1_5salsa8interned20insert_unique_erased.exit: ; preds = %_RNvMs
   ret void
 
 bb.c:                                             ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.aw = load ptr, ptr %3, align 8, !noundef !3
   %cond.i.i.i = icmp eq ptr %i.aw, inttoptr (i64 1 to ptr)
   br i1 %cond.i.i.i, label %bb.d, label %_RNvXs4_NtCsj8k30Q1C9TB_21intrusive_collections11linked_listNtB5_7LinkOpsNtNtB7_8link_ops7LinkOps12acquire_link.exit.i.i
@@ -1589,8 +1590,9 @@ bb.b:                                             ; preds = %.lr.ph.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.u = call { ptr, ptr } %.val4.i(ptr noundef nonnull %i.s), !noalias !269, !inline_history !266 ; 2 uses
   %i.v = extractvalue { ptr, ptr } %i.u, 0        ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
   %i.w = extractvalue { ptr, ptr } %i.u, 1        ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v), "nonnull"(ptr %i.w) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = load ptr, ptr %i.w, align 8, !invariant.load !3 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.x, null
   br i1 %.not.i.i.i, label %bb.d, label %bb.c

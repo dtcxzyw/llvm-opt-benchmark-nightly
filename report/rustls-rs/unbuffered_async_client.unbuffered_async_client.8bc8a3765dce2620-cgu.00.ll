@@ -202,8 +202,9 @@ bb.az:                                            ; preds = %bb.aw
 
 bb.ba:                                            ; preds = %bb.aw
   %i.gb = extractvalue { ptr, ptr } %i.fy, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gb) ]
   %i.gc = extractvalue { ptr, ptr } %i.fy, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gb), "nonnull"(ptr %i.gc) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gc) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !235
   br label %bb.bb
 
@@ -220,8 +221,9 @@ bb.bc:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 
 bb.bd:                                            ; preds = %bb.at
   %i.gd = extractvalue { ptr, ptr } %i.fu, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gd) ]
   %i.ge = extractvalue { ptr, ptr } %i.fu, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gd), "nonnull"(ptr %i.ge) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ge) ]
   call void @llvm.experimental.noalias.scope.decl(metadata !236)
   call void @llvm.experimental.noalias.scope.decl(metadata !237)
   %i.gf = load ptr, ptr %i.at, align 8, !alias.scope !238, !noalias !225, !nonnull !8, !noundef !8
@@ -624,8 +626,9 @@ bb.eu:                                            ; preds = %bb.fl, %bb.et
 
 bb.ev:                                            ; preds = %bb.es
   %i.jr = extractvalue { ptr, ptr } %i.jo, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jr) ]
   %i.js = extractvalue { ptr, ptr } %i.jo, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jr), "nonnull"(ptr %i.js) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.js) ]
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit228.i.i.i
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit228.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i224._RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit228_crit_edge.i.i.i, %bb.ev
@@ -1028,9 +1031,9 @@ bb.ig:                                            ; preds = %bb.if
   br label %bb.fb
 
 bb.ih:                                            ; preds = %bb.if
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.og) ]
   %i.oj = insertvalue { ptr, ptr } poison, ptr %i.of, 0
   %i.ok = insertvalue { ptr, ptr } %i.oj, ptr %i.og, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.og) ]
   br label %bb.hj
 
 bb.ii:                                            ; preds = %bb.fz
@@ -1072,9 +1075,9 @@ bb.in:                                            ; preds = %bb.il
   br i1 %.not.i207.i.i.i, label %bb.fb, label %bb.io
 
 bb.io:                                            ; preds = %bb.in
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.or) ]
   %i.os = insertvalue { ptr, ptr } poison, ptr %i.oq, 0
   %i.ot = insertvalue { ptr, ptr } %i.os, ptr %i.or, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.or) ]
   br label %bb.hj
 
 bb.ip:                                            ; preds = %bb.fz
@@ -1140,9 +1143,9 @@ bb.iy:                                            ; preds = %bb.iw
   br i1 %.not.i209.i.i.i, label %bb.fb, label %bb.iz
 
 bb.iz:                                            ; preds = %bb.iy
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pj) ]
   %i.pk = insertvalue { ptr, ptr } poison, ptr %i.pi, 0
   %i.pl = insertvalue { ptr, ptr } %i.pk, ptr %i.pj, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pj) ]
   br label %bb.hj
 
 bb.ja:                                            ; preds = %bb.is
@@ -1210,9 +1213,9 @@ bb.jj:                                            ; preds = %bb.ji
   br label %bb.fb
 
 bb.jk:                                            ; preds = %bb.ji
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.px) ]
   %i.py = insertvalue { ptr, ptr } poison, ptr %i.pw, 0
   %i.pz = insertvalue { ptr, ptr } %i.py, ptr %i.px, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.px) ]
   br label %bb.hj
 
 bb.jl:                                            ; preds = %bb.jc
@@ -1313,15 +1316,15 @@ bb.jy:                                            ; preds = %bb.jw
   br i1 %.not.i216.i.i.i, label %bb.fb, label %bb.jz
 
 bb.jz:                                            ; preds = %bb.jy
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qt) ]
   %i.qu = insertvalue { ptr, ptr } poison, ptr %i.qs, 0
   %i.qv = insertvalue { ptr, ptr } %i.qu, ptr %i.qt, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qt) ]
   br label %bb.hj
 
 bb.ka:                                            ; preds = %bb.js
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qm) ]
   %i.qw = insertvalue { ptr, ptr } poison, ptr %i.ql, 0
   %i.qx = insertvalue { ptr, ptr } %i.qw, ptr %i.qm, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qm) ]
   br label %bb.hj
 
 bb.kb:                                            ; preds = %bb.fy
@@ -1461,9 +1464,9 @@ bb.kt:                                            ; preds = %_RINvNtCsj6eKBz9Db1
   br label %bb.bj
 
 bb.ku:                                            ; preds = %bb.fa
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jx) ]
   %i.sa = insertvalue { ptr, ptr } poison, ptr %i.jw, 0
   %i.sb = insertvalue { ptr, ptr } %i.sa, ptr %i.jx, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jx) ]
   br label %bb.hj
 
 bb.kv:                                            ; preds = %bb.hj
@@ -1866,9 +1869,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs4wP2HXfJTCR_5alloc5boxedINtB5_3BoxDNtNtNtCs7ZUl82OSlxp_6rustls6crypto6cipher16MessageDecrypterEL_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !26, !invariant.load !8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #17
   br label %_RNvXs8_NtCs4wP2HXfJTCR_5alloc5boxedINtB5_3BoxDNtNtNtCs7ZUl82OSlxp_6rustls6crypto6cipher16MessageDecrypterEL_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client.exit
 
@@ -2271,9 +2274,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtNtCs7ZUl82OSlxp_6rustls6crypto6cipher16MessageEncrypterEL_EECsc044841uM34_23unbuffered_async_client.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val1.i, i64 16
   %i.h = load i64, ptr %i.g, align 8, !range !26, !invariant.load !8, !noalias !507
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i, i64 noundef range(i64 1, -9223372036854775808) %i.e, i64 noundef range(i64 1, 536870913) %i.h) #17, !noalias !507
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtNtCs7ZUl82OSlxp_6rustls6crypto6cipher16MessageEncrypterEL_EECsc044841uM34_23unbuffered_async_client.exit.i
 
@@ -2320,9 +2323,9 @@ bb.h:                                             ; preds = %bb.g, %_RINvNtCsj6e
   br i1 %i.v, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls12record_layer11RecordLayerECsc044841uM34_23unbuffered_async_client.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.w = getelementptr inbounds nuw i8, ptr %.val3.i, i64 16
   %i.x = load i64, ptr %i.w, align 8, !range !26, !invariant.load !8, !noalias !507
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i, i64 noundef range(i64 1, -9223372036854775808) %i.u, i64 noundef range(i64 1, 536870913) %i.x) #17, !noalias !507
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls12record_layer11RecordLayerECsc044841uM34_23unbuffered_async_client.exit
 
@@ -2725,9 +2728,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtCs7ZUl82OSlxp_6rustls12common_state5StateNtNtNtB1C_6client11client_conn20ClientConnectionDataEEL_ENtNtB1C_5error5ErrorEECsc044841uM34_23unbuffered_async_client.exit.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   %i.j = getelementptr inbounds nuw i8, ptr %.val1.i.i.i, i64 16
   %i.k = load i64, ptr %i.j, align 8, !range !26, !invariant.load !8, !noalias !592
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
   tail call void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.h, i64 noundef range(i64 1, 536870913) %i.k) #17, !noalias !592
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtCs7ZUl82OSlxp_6rustls12common_state5StateNtNtNtB1C_6client11client_conn20ClientConnectionDataEEL_ENtNtB1C_5error5ErrorEECsc044841uM34_23unbuffered_async_client.exit.i.i
 
@@ -3130,8 +3133,9 @@ bb.r:                                             ; preds = %bb.c, %bb.l, %bb.h
 
 bb.s:                                             ; preds = %bb.l
   %i.ah = extractvalue { ptr, ptr } %i.y, 0       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
   %i.ai = extractvalue { ptr, ptr } %i.y, 1       ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah), "nonnull"(ptr %i.ai) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   br label %bb.p
 }
 
@@ -3253,8 +3257,9 @@ bb.p:                                             ; preds = %bb.c, %bb.j, %bb.g
 
 bb.q:                                             ; preds = %bb.j
   %i.x = extractvalue { ptr, ptr } %i.q, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
   %i.y = extractvalue { ptr, ptr } %i.q, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x), "nonnull"(ptr %i.y) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.n
 }
 

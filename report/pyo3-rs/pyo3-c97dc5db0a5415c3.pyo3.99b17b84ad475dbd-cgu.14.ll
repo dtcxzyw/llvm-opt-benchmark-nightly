@@ -202,8 +202,8 @@ bb.a:
   %i.i = extractvalue { ptr, i64 } %i.g, 1
   %i.j = call { ptr, i64 } @_RNvCs971naDxHMnY_8pyo3_ffi32__cstr_from_utf8_with_nul_checked(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 236), !noalias !89 ; 2 uses
   %i.k = extractvalue { ptr, i64 } %i.j, 0        ; 2 uses
-  %1 = extractvalue { ptr, i64 } %i.j, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
+  %1 = extractvalue { ptr, i64 } %i.j, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !89
   %i.l = load ptr, ptr @PyExc_BaseException, align 8, !noalias !89, !nonnull !4, !noundef !4 ; 9 uses
   %i.m = load i32, ptr %i.l, align 8, !noalias !89, !noundef !4
@@ -365,8 +365,8 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload, ptr %i.g, align 8, !noalias !101
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e), !noalias !101
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !101
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !101
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !102
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !102
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !102
@@ -376,11 +376,11 @@ bb.a:
   call fastcc void @_RINvMNtNtCsdc6yCHiM2ZJ_4pyo35types6moduleNtB3_8PyModule6importReEB7_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(56) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j), !noalias !102
   %i.k = load i64, ptr %i.b, align 8, !range !5, !noalias !102, !noundef !4
   %i.l = trunc nuw i64 %i.k to i1
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.015.0.copyload.i.i = load ptr, ptr %i.m, align 8, !noalias !102 ; 11 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br i1 %i.l, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.015.0.copyload.i.i = load ptr, ptr %i.m, align 8, !noalias !102
   %.sroa.416.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.13, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.416.0..sroa_idx.i.i, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !102
@@ -388,9 +388,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.s
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !102
-  store ptr %.sroa.015.0.copyload.i.i, ptr %i.c, align 8, !noalias !102
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload) ]
+  %1 = load ptr, ptr %i.m, align 8, !noalias !102, !nonnull !4, !noundef !4 ; 10 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !102
+  store ptr %1, ptr %i.c, align 8, !noalias !102
   %i.n = load ptr, ptr %.sroa.5.sroa.4.0.copyload, align 8, !noalias !102, !nonnull !4, !noundef !4
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.5.sroa.4.0.copyload, i64 8
   %i.p = load i64, ptr %i.o, align 8, !noalias !102, !noundef !4
@@ -400,19 +401,19 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.l, %bb.c
   %i.q = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
-  %i.r = load i64, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !102, !noundef !4 ; 2 uses
+  %i.r = load i64, ptr %1, align 8, !noalias !102, !noundef !4 ; 2 uses
   %i.s = and i64 %i.r, 2147483648
   %.not.i.i.i.i = icmp eq i64 %i.s, 0
   br i1 %.not.i.i.i.i, label %bb.e, label %common.resume
 
 bb.e:                                             ; preds = %bb.d
   %i.t = add i64 %i.r, -1                         ; 2 uses
-  store i64 %i.t, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !102
+  store i64 %i.t, ptr %1, align 8, !noalias !102
   %i.u = icmp eq i64 %i.t, 0
   br i1 %i.u, label %bb.f, label %common.resume
 
 bb.f:                                             ; preds = %bb.e
-  call void @_Py_Dealloc(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #13, !noalias !102
+  call void @_Py_Dealloc(ptr noundef nonnull %1) #13, !noalias !102
   br label %common.resume
 
 bb.g:                                             ; preds = %bb.c
@@ -454,19 +455,19 @@ bb.l:                                             ; preds = %bb.k, %bb.j
           to label %bb.o unwind label %bb.d, !noalias !102
 
 _RINvNvMs_NtCsdc6yCHiM2ZJ_4pyo38instanceINtB7_5BoundpE9cast_into5innerNtNtNtB9_5types10typeobject6PyTypeEB9_.exit.i.i: ; preds = %bb.i
-  %i.ag = load i64, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !102, !noundef !4 ; 2 uses
+  %i.ag = load i64, ptr %1, align 8, !noalias !102, !noundef !4 ; 2 uses
   %i.ah = and i64 %i.ag, 2147483648
   %.not.i.i32.i.i = icmp eq i64 %i.ah, 0
   br i1 %.not.i.i32.i.i, label %bb.m, label %bb.u
 
 bb.m:                                             ; preds = %_RINvNvMs_NtCsdc6yCHiM2ZJ_4pyo38instanceINtB7_5BoundpE9cast_into5innerNtNtNtB9_5types10typeobject6PyTypeEB9_.exit.i.i
   %i.ai = add i64 %i.ag, -1                       ; 2 uses
-  store i64 %i.ai, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !102
+  store i64 %i.ai, ptr %1, align 8, !noalias !102
   %i.aj = icmp eq i64 %i.ai, 0
   br i1 %i.aj, label %bb.n, label %bb.u
 
 bb.n:                                             ; preds = %bb.m
-  call void @_Py_Dealloc(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #13, !noalias !102
+  call void @_Py_Dealloc(ptr noundef nonnull %1) #13, !noalias !102
   br label %bb.u
 
 common.resume:                                    ; preds = %bb.aa, %bb.ac, %bb.d, %bb.e, %bb.f
@@ -482,19 +483,19 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o, %bb.h
   %.sroa.715.0 = phi ptr [ %.sroa.021.0.copyload.i.i, %bb.h ], [ %.sroa.715.8.copyload16, %bb.o ] ; 3 uses
-  %i.ak = load i64, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !102, !noundef !4 ; 2 uses
+  %i.ak = load i64, ptr %1, align 8, !noalias !102, !noundef !4 ; 2 uses
   %i.al = and i64 %i.ak, 2147483648
   %.not.i.i35.i.i = icmp eq i64 %i.al, 0
   br i1 %.not.i.i35.i.i, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
   %i.am = add i64 %i.ak, -1                       ; 2 uses
-  store i64 %i.am, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !102
+  store i64 %i.am, ptr %1, align 8, !noalias !102
   %i.an = icmp eq i64 %i.am, 0
   br i1 %i.an, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @_Py_Dealloc(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #13, !noalias !102
+  call void @_Py_Dealloc(ptr noundef nonnull %1) #13, !noalias !102
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.b, %bb.p, %bb.q, %bb.r
@@ -512,8 +513,8 @@ bb.t:                                             ; preds = %bb.s
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsdc6yCHiM2ZJ_4pyo33err5PyErrEEB12_.exit unwind label %bb.ac
 
 bb.u:                                             ; preds = %bb.n, %bb.m, %_RINvNvMs_NtCsdc6yCHiM2ZJ_4pyo38instanceINtB7_5BoundpE9cast_into5innerNtNtNtB9_5types10typeobject6PyTypeEB9_.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !102
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.021.0.copyload.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !102
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !nonnull !4, !align !8, !noundef !4 ; 3 uses
   %i.av = load ptr, ptr %i.au, align 8, !noundef !4
@@ -604,8 +605,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload, ptr %i.f, align 8, !noalias !113
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d), !noalias !113
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !113
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !113
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !114
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !114
@@ -615,11 +616,11 @@ bb.a:
   call fastcc void @_RINvMNtNtCsdc6yCHiM2ZJ_4pyo35types6moduleNtB3_8PyModule6importReEB7_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(56) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef %i.i), !noalias !114
   %i.j = load i64, ptr %i.a, align 8, !range !5, !noalias !114, !noundef !4
   %i.k = trunc nuw i64 %i.j to i1
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.015.0.copyload.i.i = load ptr, ptr %i.l, align 8, !noalias !114 ; 11 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br i1 %i.k, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.015.0.copyload.i.i = load ptr, ptr %i.l, align 8, !noalias !114
   %.sroa.416.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.416.0..sroa_idx.i.i, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !114
@@ -627,9 +628,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.n
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !114
-  store ptr %.sroa.015.0.copyload.i.i, ptr %i.b, align 8, !noalias !114
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload) ]
+  %1 = load ptr, ptr %i.l, align 8, !noalias !114, !nonnull !4, !noundef !4 ; 10 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !114
+  store ptr %1, ptr %i.b, align 8, !noalias !114
   %i.m = load ptr, ptr %.sroa.5.sroa.4.0.copyload, align 8, !noalias !114, !nonnull !4, !noundef !4
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.5.sroa.4.0.copyload, i64 8
   %i.o = load i64, ptr %i.n, align 8, !noalias !114, !noundef !4
@@ -639,19 +641,19 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.p = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
-  %i.q = load i64, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !114, !noundef !4 ; 2 uses
+  %i.q = load i64, ptr %1, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.r = and i64 %i.q, 2147483648
   %.not.i.i.i.i = icmp eq i64 %i.r, 0
   br i1 %.not.i.i.i.i, label %bb.e, label %common.resume
 
 bb.e:                                             ; preds = %bb.d
   %i.s = add i64 %i.q, -1                         ; 2 uses
-  store i64 %i.s, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !114
+  store i64 %i.s, ptr %1, align 8, !noalias !114
   %i.t = icmp eq i64 %i.s, 0
   br i1 %i.t, label %bb.f, label %common.resume
 
 bb.f:                                             ; preds = %bb.e
-  call void @_Py_Dealloc(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #13, !noalias !114
+  call void @_Py_Dealloc(ptr noundef nonnull %1) #13, !noalias !114
   br label %common.resume
 
 bb.g:                                             ; preds = %bb.c
@@ -663,19 +665,19 @@ bb.g:                                             ; preds = %bb.c
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !114
-  %i.x = load i64, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !114, !noundef !4 ; 2 uses
+  %i.x = load i64, ptr %1, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.y = and i64 %i.x, 2147483648
   %.not.i.i32.i.i = icmp eq i64 %i.y, 0
   br i1 %.not.i.i32.i.i, label %bb.i, label %bb.p
 
 bb.i:                                             ; preds = %bb.h
   %i.z = add i64 %i.x, -1                         ; 2 uses
-  store i64 %i.z, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !114
+  store i64 %i.z, ptr %1, align 8, !noalias !114
   %i.aa = icmp eq i64 %i.z, 0
   br i1 %i.aa, label %bb.j, label %bb.p
 
 bb.j:                                             ; preds = %bb.i
-  call void @_Py_Dealloc(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #13, !noalias !114
+  call void @_Py_Dealloc(ptr noundef nonnull %1) #13, !noalias !114
   br label %bb.p
 
 common.resume:                                    ; preds = %bb.v, %bb.x, %bb.d, %bb.e, %bb.f
@@ -686,19 +688,19 @@ bb.k:                                             ; preds = %bb.g
   %.sroa.422.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.422.0..sroa_idx.i.i, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !114
-  %i.ab = load i64, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !114, !noundef !4 ; 2 uses
+  %i.ab = load i64, ptr %1, align 8, !noalias !114, !noundef !4 ; 2 uses
   %i.ac = and i64 %i.ab, 2147483648
   %.not.i.i35.i.i = icmp eq i64 %i.ac, 0
   br i1 %.not.i.i35.i.i, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
   %i.ad = add i64 %i.ab, -1                       ; 2 uses
-  store i64 %i.ad, ptr %.sroa.015.0.copyload.i.i, align 8, !noalias !114
+  store i64 %i.ad, ptr %1, align 8, !noalias !114
   %i.ae = icmp eq i64 %i.ad, 0
   br i1 %i.ae, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @_Py_Dealloc(ptr noundef nonnull %.sroa.015.0.copyload.i.i) #13, !noalias !114
+  call void @_Py_Dealloc(ptr noundef nonnull %1) #13, !noalias !114
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.b, %bb.k, %bb.l, %bb.m
@@ -716,8 +718,8 @@ bb.o:                                             ; preds = %bb.n
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsdc6yCHiM2ZJ_4pyo33err5PyErrEEB12_.exit unwind label %bb.x
 
 bb.p:                                             ; preds = %bb.j, %bb.i, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !114
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.021.0.copyload.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !114
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.al = load ptr, ptr %i.ak, align 8, !nonnull !4, !align !8, !noundef !4 ; 3 uses
   %i.am = load ptr, ptr %i.al, align 8, !noundef !4
@@ -845,8 +847,8 @@ bb.e:                                             ; preds = %bb.d
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsdc6yCHiM2ZJ_4pyo33err5PyErrEEB12_.exit unwind label %bb.o
 
 bb.f:                                             ; preds = %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !123
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.0.copyload.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !123
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !nonnull !4, !align !8, !noundef !4 ; 3 uses
   %i.u = load ptr, ptr %i.t, align 8, !noundef !4
@@ -942,8 +944,8 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload, ptr %i.h, align 8, !noalias !134
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e), !noalias !134
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !134
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !134
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !134
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.01.0.copyload, i64 16 ; 2 uses
@@ -1170,8 +1172,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload, ptr %i.c, align 8, !noalias !142
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a), !noalias !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !142
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !142
   %i.d = call noundef nonnull ptr @_RNvMs_NtNtCsdc6yCHiM2ZJ_4pyo35types6stringNtB4_8PyString6intern(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5.sroa.0.0.copyload, i64 noundef %.sroa.5.sroa.4.0.copyload), !noalias !142 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !nonnull !4, !align !8, !noundef !4 ; 3 uses
@@ -1238,8 +1240,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload, ptr %i.c, align 8, !noalias !147
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a), !noalias !147
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !147
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !147
   %i.d = call noundef nonnull ptr @_RNvMs_NtNtCsdc6yCHiM2ZJ_4pyo35types6stringNtB4_8PyString6intern(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5.sroa.0.0.copyload, i64 noundef %.sroa.5.sroa.4.0.copyload), !noalias !147 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !nonnull !4, !align !8, !noundef !4 ; 3 uses
@@ -1383,9 +1385,9 @@ bb.l:                                             ; preds = %bb.k
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCsdc6yCHiM2ZJ_4pyo33err5PyErrEEB12_.exit unwind label %bb.v
 
 bb.m:                                             ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.019.0.copyload.i.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !159
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !159
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.019.0.copyload.i.i) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !nonnull !4, !align !8, !noundef !4 ; 3 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !noundef !4
@@ -1513,8 +1515,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload.i.i, ptr %i.c, align 8, !noalias !173
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a), !noalias !173
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !173
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !173
   %i.d = call noundef nonnull ptr @_RNvMs_NtNtCsdc6yCHiM2ZJ_4pyo35types6stringNtB4_8PyString6intern(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5.sroa.0.0.copyload.i.i, i64 noundef %.sroa.5.sroa.4.0.copyload.i.i), !noalias !173 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.e = load ptr, ptr %.val1, align 8, !noalias !172, !noundef !4
@@ -1582,8 +1584,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %.sroa.5.sroa.6.0.copyload.i.i, ptr %i.c, align 8, !noalias !184
   call void @_RNvXs4_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13SuspendAttachNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a), !noalias !184
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !184
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload.i.i) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !184
   %i.d = call noundef nonnull ptr @_RNvMs_NtNtCsdc6yCHiM2ZJ_4pyo35types6stringNtB4_8PyString6intern(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5.sroa.0.0.copyload.i.i, i64 noundef %.sroa.5.sroa.4.0.copyload.i.i), !noalias !184 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.e = load ptr, ptr %.val1, align 8, !noalias !183, !noundef !4

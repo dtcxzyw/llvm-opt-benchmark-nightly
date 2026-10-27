@@ -204,12 +204,12 @@ bb.a:
 ; Function Attrs: nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterINtNtCsjulH565TUV7_15crossbeam_deque5deque6WorkerNtNtCsizY4S0OBG5z_6ignore4walk7MessageEENvMs4_B1q_B1n_7stealerENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB3b_8for_each4callINtB1q_7StealerB2a_ENCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4H_3VecB4e_E14extend_trustedBN_E0E0EB2e_(ptr noundef nonnull %0, ptr noundef %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCsjulH565TUV7_15crossbeam_deque5deque6WorkerNtNtCsizY4S0OBG5z_6ignore4walk7MessageEENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB2n_8adapters3map8map_foldRBQ_INtBT_7StealerB1D_EuNvMs4_BT_BQ_7stealerNCINvNvB2h_8for_each4callB3F_NCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB4V_3VecB3F_E14extend_trustedINtB37_3MapBF_B3Z_EE0E0E0EB1H_.exit, label %bb.b
 
@@ -260,12 +260,12 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %.sroa.0.0.copyload = load ptr, ptr %2, align 8 ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.e = icmp eq ptr %0, %1
   br i1 %i.e, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtCsizY4S0OBG5z_6ignore5ErrorENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_NtNtCscdodAO9FK5_5alloc6string6StringuNCNvXs1_BS_BQ_NtNtBb_3fmt7Display3fmt0NCINvNvB1k_8for_each4callB2I_NCINvMsj_NtB2M_3vecINtB4y_3VecB2I_E14extend_trustedINtB2a_3MapBF_B3k_EE0E0E0EBS_.exit, label %bb.b
 
@@ -668,11 +668,12 @@ bb.a:
   %i.k = extractvalue { ptr, i64 } %i.j, 0        ; 2 uses
   %i.l = extractvalue { ptr, i64 } %i.j, 1
   %i.m = tail call { ptr, i64 } @_RNvMNtCsesAwPL3NJIw_7walkdir4dentNtB2_8DirEntry9file_name(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2) ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.n = extractvalue { ptr, i64 } %i.m, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractvalue { ptr, i64 } %i.m, 1
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.q = load ptr, ptr %i.p, align 8, !invariant.load !3, !nonnull !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k), "nonnull"(ptr %i.n) ]
   %i.r = tail call noundef i8 %i.q(ptr noundef nonnull %i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef %i.l, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.n, i64 noundef %i.o)
   ret i8 %i.r
 }
@@ -731,11 +732,12 @@ bb.a:
 .noexc2.i:                                        ; preds = %.noexc.i
   %i.n = extractvalue { ptr, i64 } %i.l, 1
   %i.o = extractvalue { ptr, i64 } %i.l, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.p = extractvalue { ptr, i64 } %i.m, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
   %i.q = extractvalue { ptr, i64 } %i.m, 1
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.s = load ptr, ptr %i.r, align 8, !invariant.load !3, !alias.scope !493, !noalias !497, !nonnull !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   %i.t = invoke noundef range(i8 -1, 2) i8 %i.s(ptr noundef nonnull %i.k, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef %i.q)
           to label %_RNCNCNvMs3_NtCsizY4S0OBG5z_6ignore4walkNtB9_11WalkBuilder5build00Bb_.exit.i unwind label %bb.b, !inline_history !498
 

@@ -204,8 +204,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsiAynQAjgDuT_10xet_client5error11Cl
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync8ArcInnerNtNtNtB4_2io5error5ErrorEECsjHtSR7YjKD4_8xet_data(ptr %.16.val) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.16.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = ptrtoint ptr %.16.val to i64             ; 2 uses
   %i.c = and i64 %i.b, 3
   switch i64 %i.c, label %default.unreachable [
@@ -608,8 +608,8 @@ bb.aj:                                            ; preds = %bb.a
   br i1 %i.bb, label %bb.ak, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsUrhh0HcRih_5tokio7runtime4task5error9JoinErrorECsjHtSR7YjKD4_8xet_data.exit
 
 bb.ak:                                            ; preds = %bb.aj
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bc = ptrtoint ptr %.val4 to i64              ; 2 uses
   %i.bd = and i64 %i.bc, 3
   switch i64 %i.bd, label %default.unreachable [
@@ -1012,8 +1012,8 @@ bb.a:
   %i.l = alloca [12 x i8], align 4                ; 5 uses
   %i.m = alloca [24 x i8], align 8                ; 13 uses
   %i.n = alloca [24 x i8], align 8                ; 13 uses
-  %i.o = alloca [32 x i8], align 8                ; 5 uses
-  %.sroa.67.i = alloca [24 x i8], align 8         ; 6 uses
+  %i.o = alloca [32 x i8], align 8                ; 7 uses
+  %.sroa.67.i = alloca [24 x i8], align 8         ; 7 uses
   %i.p = alloca [32 x i8], align 8                ; 7 uses
   %i.q = alloca [256 x i8], align 16              ; 8 uses
   %.sroa.6.i = alloca [24 x i8], align 8          ; 6 uses
@@ -1137,12 +1137,12 @@ bb.i:                                             ; preds = %bb.h
 .noexc:                                           ; preds = %bb.i
   %i.bm = load ptr, ptr %i.o, align 8, !noalias !1392, !noundef !5 ; 3 uses
   %i.bn = icmp eq ptr %i.bm, null
-  %3 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.67.i, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !noalias !1392
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !1392
   br i1 %i.bn, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %.noexc
+  %3 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.67.i, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !noalias !1392
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !1392
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.67.i, i64 24, i1 false), !noalias !1394
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !1392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1392
@@ -1161,10 +1161,13 @@ bb.l:                                             ; preds = %bb.k
           to label %.body unwind label %bb.av, !noalias !1393
 
 bb.m:                                             ; preds = %.noexc
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
+  %.sroa.459.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.67.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.459.0..sroa_idx.i, i64 24, i1 false), !noalias !1392
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !1392
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.67.i, i64 24, i1 false), !noalias !1392
   store ptr %i.bm, ptr %i.p, align 8, !noalias !1392
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !1392
   invoke void @_RNvXs2_NtNtCs7SkU8gPisFf_4redb10tree_store15table_tree_baseNtB5_23InternalTableDefinitionNtNtB9_5types5Value8as_bytes(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(192) %2)
           to label %bb.n unwind label %bb.k, !noalias !1393

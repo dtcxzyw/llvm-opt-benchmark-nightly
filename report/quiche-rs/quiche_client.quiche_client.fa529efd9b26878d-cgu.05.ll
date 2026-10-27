@@ -204,11 +204,11 @@ bb.hv:                                            ; preds = %bb.hu
 
 bb.hw:                                            ; preds = %bb.hv
   %i.wu = extractvalue { i64, ptr } %i.wr, 1, !dbg !13004 ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.wu) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fk), !dbg !8432
   store ptr %i.wu, ptr %i.fk, align 8, !dbg !8432
     #dbg_value(ptr poison, !10977, !DIExpression(), !6418)
     #dbg_value(ptr poison, !10989, !DIExpression(), !6427)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.wu) ]
     #dbg_value(ptr %i.wu, !11011, !DIExpression(), !6436)
     #dbg_declare(ptr poison, !11016, !DIExpression(), !6437)
     #dbg_value(i64 1, !11025, !DIExpression(), !6440)
@@ -611,8 +611,9 @@ bb.kh:                                            ; preds = %bb.ke
 
 bb.ki:                                            ; preds = %bb.kh
   %i.agq = extractvalue { ptr, ptr } %i.agp, 0, !dbg !13178 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.agq) ], !dbg !13179
   %i.agr = extractvalue { ptr, ptr } %i.agp, 1, !dbg !13178 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.agq), "nonnull"(ptr %i.agr) ], !dbg !13179
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.agr) ], !dbg !13179
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCsiGRwBGCeC5s_11quiche_apps6common8HttpConnEL_EEECslusEaBCZKLp_13quiche_client(ptr %.sroa.01425.7, ptr %.sroa.20.7)
           to label %bb.kk unwind label %bb.kj, !dbg !13180
 
@@ -645,8 +646,9 @@ bb.km:                                            ; preds = %bb.jz
 
 bb.kn:                                            ; preds = %bb.km
   %i.agw = extractvalue { ptr, ptr } %i.agv, 0, !dbg !13185 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.agw) ], !dbg !13186
   %i.agx = extractvalue { ptr, ptr } %i.agv, 1, !dbg !13185 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.agw), "nonnull"(ptr %i.agx) ], !dbg !13186
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.agx) ], !dbg !13186
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCsiGRwBGCeC5s_11quiche_apps6common8HttpConnEL_EEECslusEaBCZKLp_13quiche_client(ptr %.sroa.01425.7, ptr %.sroa.20.7)
           to label %bb.kk unwind label %bb.ko, !dbg !13187
 
@@ -1049,11 +1051,11 @@ bb.ot:                                            ; preds = %bb.or
 
 bb.ou:                                            ; preds = %bb.ot
   %i.amo = extractvalue { i64, ptr } %i.aml, 1, !dbg !13425 ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amo) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bt), !dbg !8551
   store ptr %i.amo, ptr %i.bt, align 8, !dbg !8551
     #dbg_value(ptr poison, !10977, !DIExpression(), !6905)
     #dbg_value(ptr poison, !10989, !DIExpression(), !6907)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.amo) ]
     #dbg_value(ptr %i.amo, !11011, !DIExpression(), !6909)
     #dbg_declare(ptr poison, !11016, !DIExpression(), !6910)
     #dbg_value(i64 1, !11025, !DIExpression(), !6912)
@@ -1456,10 +1458,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCsiGRwBGCeC5s_11quiche_apps6common8HttpConnEL_ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCslusEaBCZKLp_13quiche_client.exit, label %bb.d, !dbg !14393
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !14392
   %i.f = load i64, ptr %i.e, align 8, !dbg !14394, !range !4270, !invariant.load !1183
     #dbg_value(i64 %i.f, !4552, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14361)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
     #dbg_value(ptr %.0.val, !4565, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14354)
     #dbg_value(ptr %.0.val, !4572, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14356)
     #dbg_value(ptr %.0.val, !4576, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14358)
@@ -1570,10 +1572,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtNtCskKLDkoKarTP_4core2io5write5WriteNtNtBO_6marker4SendNtB1o_4SyncEL_ENtNtNtBO_3ops4drop4Drop4dropCslusEaBCZKLp_13quiche_client.exit, label %bb.d, !dbg !14445
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !14444
   %i.f = load i64, ptr %i.e, align 8, !dbg !14446, !range !4270, !invariant.load !1183
     #dbg_value(i64 %i.f, !4235, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14413)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
     #dbg_value(ptr %.0.val, !4249, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14406)
     #dbg_value(ptr %.0.val, !4256, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14408)
     #dbg_value(ptr %.0.val, !4261, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14410)
@@ -1976,10 +1978,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog8streamer12QlogStreamerECslusEaBCZKLp_13quiche_client.exit.i, label %bb.g, !dbg !15205
 
 bb.g:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val3.i.i, i64 16, !dbg !15204
   %i.m = load i64, ptr %i.l, align 8, !dbg !15206, !range !4270, !invariant.load !1183
     #dbg_value(i64 %i.m, !4235, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15150)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
     #dbg_value(ptr %.val.i.i, !4249, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15143)
     #dbg_value(ptr %.val.i.i, !4256, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15145)
     #dbg_value(ptr %.val.i.i, !4261, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15147)

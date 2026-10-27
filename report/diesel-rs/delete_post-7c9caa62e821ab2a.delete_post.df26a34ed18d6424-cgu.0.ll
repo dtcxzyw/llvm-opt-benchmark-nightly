@@ -144,9 +144,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
   br i1 %i.j, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_3fmt5DebugEL_EECsj9PhBAIfT7c_11delete_post.exit.i.i, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i.i) ]
   %i.k = getelementptr inbounds nuw i8, ptr %.val9.i.i, i64 16
   %i.l = load i64, ptr %i.k, align 8, !range !7, !invariant.load !4, !noalias !21
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i.i) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i.i, i64 noundef %i.i, i64 noundef range(i64 1, -9223372036854775807) %i.l) #16, !noalias !21
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_3fmt5DebugEL_EECsj9PhBAIfT7c_11delete_post.exit.i.i
 
@@ -299,9 +299,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCs40k4W9msRzi_5alloc5boxedINtB5_3BoxDNtNtCscI6d9CVNmLh_4core3fmt5DebugEL_ENtNtNtBM_3ops4drop4Drop4dropCsj9PhBAIfT7c_11delete_post.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !7, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) %i.f) #16
   br label %_RNvXs8_NtCs40k4W9msRzi_5alloc5boxedINtB5_3BoxDNtNtCscI6d9CVNmLh_4core3fmt5DebugEL_ENtNtNtBM_3ops4drop4Drop4dropCsj9PhBAIfT7c_11delete_post.exit
 
@@ -545,9 +545,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.l, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i: ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val3, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !7, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) %i.n) #16
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit
 
@@ -590,9 +590,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.z, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i12
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i12: ; preds = %bb.j
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8) ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.val9, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !range !7, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8, i64 noundef %i.y, i64 noundef range(i64 1, -9223372036854775807) %i.ab) #16
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit
 
@@ -631,9 +631,9 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.an, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i16
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i16: ; preds = %bb.n
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.val7, i64 16
   %i.ap = load i64, ptr %i.ao, align 8, !range !7, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val6, i64 noundef %i.am, i64 noundef range(i64 1, -9223372036854775807) %i.ap) #16
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit
 
@@ -672,9 +672,9 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.bb, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i21
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i21: ; preds = %bb.r
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
   %i.bc = getelementptr inbounds nuw i8, ptr %.val5, i64 16
   %i.bd = load i64, ptr %i.bc, align 8, !range !7, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4, i64 noundef %i.ba, i64 noundef range(i64 1, -9223372036854775807) %i.bd) #16
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40k4W9msRzi_5alloc3ffi5c_str8NulErrorECsj9PhBAIfT7c_11delete_post.exit
 
@@ -804,9 +804,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsjRvGck33osM_6diesel10connection15statement_cache14StatementCacheNtNtNtBI_6sqlite7backend6SqliteNtNtNtB1Q_10connection4stmt9StatementEECsj9PhBAIfT7c_11delete_post.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val4, i64 16
   %i.h = load i64, ptr %i.g, align 8, !range !7, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) %i.h) #16
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsjRvGck33osM_6diesel10connection15statement_cache14StatementCacheNtNtNtBI_6sqlite7backend6SqliteNtNtNtB1Q_10connection4stmt9StatementEECsj9PhBAIfT7c_11delete_post.exit
 
@@ -1209,16 +1209,16 @@ _RNCINvMNtNtCsjRvGck33osM_6diesel10connection15statement_cacheINtB5_14StatementC
   %.sroa.10.0.copyload.i.i.i.i = load i64, ptr %.sroa.10.0..sroa_idx.i.i.i.i, align 8, !alias.scope !247, !noalias !248 ; 2 uses
   %i.dd = load i64, ptr %i.q, align 8, !range !13, !alias.scope !246, !noalias !248, !noundef !4 ; 3 uses
   %.not.i.i.i.i = icmp eq i64 %i.dd, -1
-  %i.de = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %0 = load ptr, ptr %i.de, align 8, !alias.scope !246, !noalias !248 ; 2 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
   br i1 %.not.i.i.i.i, label %bb.am, label %bb.aj
 
 bb.aj:                                            ; preds = %_RNCINvMNtNtCsjRvGck33osM_6diesel10connection15statement_cacheINtB5_14StatementCacheNtNtNtB9_6sqlite7backend6SqliteNtNtNtB1n_10connection4stmt9StatementE28cached_statement_non_genericINtNtCscI6d9CVNmLh_4core6result6ResultB1O_NtNtB9_6result5ErrorERNtNtB1S_3raw13RawConnectionE0Csj9PhBAIfT7c_11delete_post.exit.i.i.i
+  %.sroa.410.0.copyload.i.i.i.i = load ptr, ptr %i.de, align 8, !alias.scope !246, !noalias !248
   %.sroa.511.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %.sroa.24.16.copyload.i.i.i = load ptr, ptr %.sroa.511.0..sroa_idx.i.i.i.i, align 8, !alias.scope !249, !noalias !248 ; 3 uses
   %.sroa.30.16..sroa.511.0..sroa_idx.i.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %.sroa.30.16.copyload.i.i.i = load i64, ptr %.sroa.30.16..sroa.511.0..sroa_idx.i.sroa_idx.i.i.i, align 8, !alias.scope !249, !noalias !248 ; 3 uses
-  %i.df = ptrtoint ptr %0 to i64                  ; 2 uses
+  %i.df = ptrtoint ptr %.sroa.410.0.copyload.i.i.i.i to i64 ; 2 uses
   %.sroa.16.sroa.0.0.extract.trunc55.i.i.i = trunc i64 %i.df to i8 ; 3 uses
   %.sroa.16.sroa.16.0.extract.shift67.i.i.i = lshr i64 %i.df, 8
   %.sroa.16.sroa.16.0.extract.trunc68.i.i.i = trunc nuw i64 %.sroa.16.sroa.16.0.extract.shift67.i.i.i to i56 ; 3 uses
@@ -1243,6 +1243,7 @@ bb.al:                                            ; preds = %_RINvNtCscI6d9CVNmL
 
 bb.am:                                            ; preds = %_RNCINvMNtNtCsjRvGck33osM_6diesel10connection15statement_cacheINtB5_14StatementCacheNtNtNtB9_6sqlite7backend6SqliteNtNtNtB1n_10connection4stmt9StatementE28cached_statement_non_genericINtNtCscI6d9CVNmLh_4core6result6ResultB1O_NtNtB9_6result5ErrorERNtNtB1S_3raw13RawConnectionE0Csj9PhBAIfT7c_11delete_post.exit.i.i.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.928.0.copyload.i.i.i.i) ], !noalias !250
+  %0 = load ptr, ptr %i.de, align 8, !alias.scope !246, !noalias !248, !nonnull !4, !noundef !4
   call void @llvm.experimental.noalias.scope.decl(metadata !252), !noalias !250
   %.val.i.i.i13.i.i.i = load ptr, ptr %.sroa.928.0.copyload.i.i.i.i, align 8, !alias.scope !252, !noalias !253, !nonnull !4, !noundef !4 ; 8 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.928.0.copyload.i.i.i.i, i64 8

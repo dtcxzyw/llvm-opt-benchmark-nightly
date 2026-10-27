@@ -202,8 +202,9 @@ bb.dm:                                            ; preds = %bb.dj, %_RNvMs3_NtN
 
 bb.dn:                                            ; preds = %.body49.i.i
   %i.fx = extractvalue { ptr, ptr } %i.fv, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fx) ]
   %i.fy = extractvalue { ptr, ptr } %i.fv, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fx), "nonnull"(ptr %i.fy) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fy) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba), !noalias !2742
   invoke void @_RNvXse_NtNtCs50gxqRnCXtk_10proc_macro6bridge3rpcNtB5_12PanicMessageINtNtCscI6d9CVNmLh_4core7convert4FromINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB18_3any3AnyNtNtB18_6marker4SendEL_EE4from(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ba, ptr noundef nonnull %i.fx, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.fy)
           to label %bb.dq unwind label %bb.dp, !noalias !2742

@@ -202,7 +202,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
 define internal fastcc void @_RNvNtNtCsfF8zpZz1lvn_13yara_x_parser3ast10ascii_tree19build_tree_for_expr(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(48) %0, i32 %.0.val, ptr %.8.val, ptr noalias nofree noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %i.b = alloca [24 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
@@ -519,6 +519,7 @@ bb.o:                                             ; preds = %bb.a
           to label %bb.hm unwind label %.thread203
 
 bb.p:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.el)
   %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.gq = load ptr, ptr %i.gp, align 8, !nonnull !5, !noundef !5 ; 3 uses
@@ -541,7 +542,6 @@ bb.p:                                             ; preds = %bb.a
   store ptr inttoptr (i64 8 to ptr), ptr %i.gz, align 8
   %i.ha = getelementptr inbounds nuw i8, ptr %i.ek, i64 16 ; 3 uses
   store i64 0, ptr %i.ha, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.hb = getelementptr inbounds nuw i8, ptr %.8.val, i64 24
   %i.hc = load i32, ptr %i.hb, align 8, !range !117, !noundef !5
   %.not721 = icmp eq i32 %i.hc, -1
@@ -698,6 +698,7 @@ bb.at:                                            ; preds = %bb.a
           to label %bb.lz unwind label %.thread203
 
 bb.au:                                            ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ea)
   %i.hd = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.he = load ptr, ptr %i.hd, align 8, !nonnull !5, !noundef !5 ; 3 uses
@@ -715,7 +716,6 @@ bb.au:                                            ; preds = %bb.a
   %i.hm = getelementptr inbounds nuw i8, ptr %i.ea, i64 24 ; 4 uses
   store ptr %i.hj, ptr %i.hm, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dz)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.hn = getelementptr inbounds nuw i8, ptr %.8.val, i64 48
   %.val819 = load i32, ptr %i.hn, align 8, !range !118, !noundef !5
   invoke fastcc void @_RINvNtNtCsfF8zpZz1lvn_13yara_x_parser3ast10ascii_tree21quantifier_ascii_treeQINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEEB6_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %i.dz, i32 %.val819, ptr noalias nofree noundef align 8 dereferenceable(32) %i.ea)
@@ -1118,8 +1118,8 @@ bb.pj:                                            ; preds = %bb.ph
   br label %bb.pi
 
 bb.pk:                                            ; preds = %bb.ph
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.dh)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.dh)
   %i.ama = getelementptr inbounds nuw i8, ptr %.8.val, i64 24
   %.val818 = load i32, ptr %i.ama, align 8, !range !118, !noundef !5
   invoke fastcc void @_RINvNtNtCsfF8zpZz1lvn_13yara_x_parser3ast10ascii_tree21quantifier_ascii_treeQINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEEB6_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %i.dh, i32 %.val818, ptr noalias nofree noundef align 8 dereferenceable(32) %i.dl)
@@ -1389,8 +1389,8 @@ bb.qo:                                            ; preds = %bb.qm
   br label %bb.qn
 
 bb.qp:                                            ; preds = %bb.qm
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.cy)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.cy)
   %i.anv = getelementptr inbounds nuw i8, ptr %.8.val, i64 24
   %.val817 = load i32, ptr %i.anv, align 8, !range !118, !noundef !5
   invoke fastcc void @_RINvNtNtCsfF8zpZz1lvn_13yara_x_parser3ast10ascii_tree21quantifier_ascii_treeQINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtCsdJkkaF0JZ31_10ascii_tree4TreeEEB6_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(48) %i.cy, i32 %.val817, ptr noalias nofree noundef align 8 dereferenceable(32) %i.dc)
@@ -1793,30 +1793,33 @@ bb.tw:                                            ; preds = %bb.ty, %bb.tu
 bb.tx:                                            ; preds = %bb.tu
   %i.aua = load i64, ptr %i.b, align 8, !range !7, !noundef !5
   %i.aub = trunc nuw i64 %i.aua to i1
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %3 = load i64, ptr %2, align 8, !range !8, !noundef !5 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   br i1 %i.aub, label %bb.ty, label %bb.tz, !prof !6
 
 bb.ty:                                            ; preds = %bb.tx
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %3 = load i64, ptr %2, align 8, !range !8, !noundef !5
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.auc = load i64, ptr %4, align 8
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %3, i64 %i.auc) #16
           to label %bb.bh unwind label %bb.tw
 
 bb.tz:                                            ; preds = %bb.tx
-  %i.aud = load ptr, ptr %4, align 8, !nonnull !5, !noundef !5 ; 2 uses
-  %i.aue = icmp samesign ugt i64 %3, 12
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %6 = load i64, ptr %5, align 8, !range !10, !noundef !5 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %i.aud = load ptr, ptr %7, align 8, !nonnull !5, !noundef !5 ; 2 uses
+  %i.aue = icmp samesign ugt i64 %6, 12
   tail call void @llvm.assume(i1 %i.aue)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.aud, ptr noundef nonnull align 1 dereferenceable(13) @90, i64 13, i1 false)
-  store i64 %3, ptr %i.cc, align 8
+  store i64 %6, ptr %i.cc, align 8
   %.sroa.4616.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   store ptr %i.aud, ptr %.sroa.4616.0..sroa_idx, align 8
   %.sroa.6617.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
   store i64 13, ptr %.sroa.6617.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cb)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ca)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   %i.auf = getelementptr inbounds nuw i8, ptr %.8.val, i64 8
   %i.aug = load ptr, ptr %i.auf, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.auh = getelementptr inbounds nuw i8, ptr %.8.val, i64 16

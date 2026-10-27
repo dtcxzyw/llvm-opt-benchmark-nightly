@@ -128,8 +128,9 @@ _RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtCsexYYUdYSQU6_5alloc6string6StringINtB5
 
 _RNvXs1_NtCskKLDkoKarTP_4core7convertINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtCsfsXztIhCltD_13pingora_error5ErrorEINtB5_4IntoIBz_DNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB2k_4SyncEL_EE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i: ; preds = %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtNtCsexYYUdYSQU6_5alloc6string6StringINtB5_4IntoNtNtCsfsXztIhCltD_13pingora_error9immut_str8ImmutStrE4intoCs2TJrahNLnPN_22pingora_load_balancing.exit.i
   %i.w = extractvalue { ptr, ptr } %i.v, 0        ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = extractvalue { ptr, ptr } %i.v, 1        ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w), "nonnull"(ptr %i.x) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !45
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %i.z = load ptr, ptr %i.y, align 8, !invariant.load !4, !noalias !46, !nonnull !4
@@ -532,8 +533,8 @@ bb.a:
   br i1 %or.cond.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
+  %4 = mul nuw i64 %.val, %3                      ; 3 uses
   %i.d = icmp eq i64 %1, 0
   br i1 %i.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator6shrink.exit
 
@@ -780,8 +781,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %4 = mul nuw i64 %3, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %4
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %i.b) #22

@@ -202,7 +202,7 @@ _ZN3upb5ArenaC2Ev.exit:                           ; preds = %bb.av
   call void @llvm.assume(i1 %i.dw)
   %i.dx = getelementptr inbounds nuw i8, ptr %i.ds, i64 8
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !39
-  %i.dz = load ptr, ptr %i.ds, align 8, !tbaa !40 ; 3 uses
+  %i.dz = load ptr, ptr %i.ds, align 8, !tbaa !40 ; 4 uses
   %i.ea = ptrtoint ptr %i.dy to i64
   %i.eb = ptrtoint ptr %i.dz to i64
   %i.ec = sub i64 %i.ea, %i.eb
@@ -210,17 +210,21 @@ _ZN3upb5ArenaC2Ev.exit:                           ; preds = %bb.av
   br i1 %i.ed, label %upb_Arena_Malloc.exit.i.i, label %upb_Arena_Malloc.exit.thread.i.i, !prof !41
 
 upb_Arena_Malloc.exit.thread.i.i:                 ; preds = %_ZN3upb5ArenaC2Ev.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dz) ]
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dz, i64 %i.du
   store ptr %i.ee, ptr %i.ds, align 8, !tbaa !40
   br label %.noexc199.a
 
 upb_Arena_Malloc.exit.i.i:                        ; preds = %_ZN3upb5ArenaC2Ev.exit
   %i.ef = invoke ptr @_upb_Arena_SlowMalloc_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %i.ds, i64 noundef %i.du)
-          to label %.noexc199.a unwind label %bb.be
+          to label %.noexc199 unwind label %bb.be ; 2 uses
 
-.noexc199.a:                                      ; preds = %upb_Arena_Malloc.exit.i.i, %upb_Arena_Malloc.exit.thread.i.i
-  %.sink = phi ptr [ %i.dz, %upb_Arena_Malloc.exit.thread.i.i ], [ %i.ef, %upb_Arena_Malloc.exit.i.i ] ; 15 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink) ]
+.noexc199:                                        ; preds = %upb_Arena_Malloc.exit.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ef) ]
+  br label %.noexc199.a
+
+.noexc199.a:                                      ; preds = %.noexc199, %upb_Arena_Malloc.exit.thread.i.i
+  %.sink = phi ptr [ %i.dz, %upb_Arena_Malloc.exit.thread.i.i ], [ %i.ef, %.noexc199 ] ; 14 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.sink, i8 0, i64 %i.du, i1 false)
   %i.eg = getelementptr inbounds nuw i8, ptr %.sink, i64 16
   store ptr %.sroa.010.0.copyload11.i157, ptr %i.eg, align 1
@@ -623,9 +627,9 @@ upb_Arena_Malloc.exit.i.i:                        ; preds = %_upb_Message_GetOrC
   br label %bb.c
 
 bb.b:                                             ; preds = %_upb_Message_GetOrCreateMutableMap.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store ptr %i.o, ptr %5, align 8, !tbaa !40
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %3, ptr %i.h, align 8, !tbaa !44
   %.sroa.310.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store i64 %4, ptr %.sroa.310.0..sroa_idx, align 8, !tbaa !35

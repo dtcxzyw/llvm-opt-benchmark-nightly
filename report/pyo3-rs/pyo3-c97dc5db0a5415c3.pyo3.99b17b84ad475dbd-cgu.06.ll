@@ -204,11 +204,11 @@ bb.a:
   br label %.thread.i
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   store i32 %i.g, ptr %i.d, align 4, !noalias !97
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !97
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !97
   %.val.i.i = load ptr, ptr %1, align 8, !alias.scope !96, !nonnull !4, !noundef !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   invoke void %.val.i.i(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.a, ptr noundef nonnull %0)
           to label %bb.e unwind label %bb.c, !noalias !97, !inline_history !93
 
@@ -228,8 +228,9 @@ bb.d:                                             ; preds = %bb.c
 
 .thread35.i:                                      ; preds = %bb.c
   %i.m = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %i.n) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !97
   br label %bb.f
 
@@ -326,9 +327,9 @@ bb.a:
   br label %.thread.i
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   store i32 %i.g, ptr %i.d, align 4, !noalias !112
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !112
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !112
   %i.i = icmp eq ptr %1, null
   br i1 %i.i, label %bb.d, label %bb.c
@@ -416,8 +417,9 @@ bb.k:                                             ; preds = %bb.j
 
 .thread52.i:                                      ; preds = %bb.j
   %i.x = extractvalue { ptr, ptr } %i.v, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
   %i.y = extractvalue { ptr, ptr } %i.v, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x), "nonnull"(ptr %i.y) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !112
   br label %bb.m
 
@@ -520,10 +522,10 @@ bb.a:
   br label %.thread.i
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %0) ]
   store i32 %i.g, ptr %i.d, align 4, !noalias !122
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !122
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !122
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %0) ]
   invoke void %1(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.a, ptr noundef nonnull %0)
           to label %bb.e unwind label %bb.c, !noalias !122, !inline_history !119
 
@@ -543,8 +545,9 @@ bb.d:                                             ; preds = %bb.c
 
 .thread35.i:                                      ; preds = %bb.c
   %i.m = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   %i.n = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %i.n) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !122
   br label %bb.f
 
@@ -705,8 +708,9 @@ bb.g:                                             ; preds = %bb.f
 
 .thread50.i:                                      ; preds = %bb.f
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.r, ptr %i.t, align 8, !noalias !135
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -1109,8 +1113,8 @@ bb.bb:                                            ; preds = %bb.ax, %bb.aw
 
 .noexc100.i:                                      ; preds = %bb.bb
   %i.jr = extractvalue { ptr, i64 } %i.jq, 0      ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !299
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jr) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !299
   %i.js = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 2 uses
   %i.jt = getelementptr inbounds nuw i8, ptr %i.an, i64 32 ; 2 uses
   %i.ju = load i64, ptr %i.jt, align 8, !alias.scope !301, !noundef !4 ; 3 uses
@@ -1206,8 +1210,8 @@ bb.bk:                                            ; preds = %bb.bg, %bb.bf
 
 .noexc103.i:                                      ; preds = %bb.bk
   %i.kr = extractvalue { ptr, i64 } %i.kq, 0      ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !308
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kr) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !308
   %i.ks = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.an, i64 32 ; 2 uses
   %i.ku = load i64, ptr %i.kt, align 8, !alias.scope !310, !noundef !4 ; 3 uses
@@ -1371,8 +1375,8 @@ bb.ca:                                            ; preds = %bb.bw, %bb.bv
 
 .noexc23.i.i:                                     ; preds = %bb.ca
   %i.mm = extractvalue { ptr, i64 } %i.ml, 0      ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !317
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mm) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !317
   %i.mn = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %i.an, i64 32 ; 2 uses
   %i.mp = load i64, ptr %i.mo, align 8, !alias.scope !319, !noundef !4 ; 3 uses

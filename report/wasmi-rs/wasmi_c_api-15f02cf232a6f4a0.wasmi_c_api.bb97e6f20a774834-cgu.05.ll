@@ -202,9 +202,9 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.bp, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECsg6ypMx2A1Am_11wasmi_c_api.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ], !noalias !136
   %i.bq = getelementptr inbounds nuw i8, ptr %.val4.i, i64 16
   %i.br = load i64, ptr %i.bq, align 8, !range !150, !invariant.load !5, !noalias !141
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ], !noalias !136
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i, i64 noundef range(i64 1, 0) %i.bo, i64 noundef range(i64 1, 536870913) %i.br) #21, !noalias !141, !inline_history !23
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECsg6ypMx2A1Am_11wasmi_c_api.exit
 
@@ -607,8 +607,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !5, !noalias !363, !nonnull !5
   %i.i = tail call { ptr, ptr } %i.h(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull %i.e) #23, !noalias !363, !inline_history !10 ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j), "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 680
   %i.m = load i64, ptr %i.l, align 8, !noundef !5
   %i.n = tail call i64 @llvm.uadd.sat.i64(i64 %i.m, i64 %1)
@@ -641,8 +642,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !5, !noalias !368, !nonnull !5
   %i.i = tail call { ptr, ptr } %i.h(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull %i.e) #23, !noalias !368, !inline_history !10 ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j), "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.m = load i64, ptr %i.l, align 8, !noundef !5
   %i.n = tail call i64 @llvm.uadd.sat.i64(i64 %i.m, i64 %1)
@@ -675,8 +677,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !5, !noalias !373, !nonnull !5
   %i.i = tail call { ptr, ptr } %i.h(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull %i.e) #23, !noalias !373, !inline_history !10 ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j), "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.m = load i64, ptr %i.l, align 8, !noundef !5 ; 2 uses
   %i.n = icmp ult i64 %i.m, 576460752303423488
@@ -710,8 +713,9 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !invariant.load !5, !nonnull !5
   %i.i = tail call { ptr, ptr } %i.h(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull %i.e) #23 ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j), "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1114,8 +1118,9 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !473, !nonnull !5
   %i.m = tail call { ptr, ptr } %i.l(ptr noundef nonnull %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.i) #23, !noalias !473, !inline_history !467 ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.m, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   br label %_RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreNtNtCsg6ypMx2A1Am_11wasmi_c_api5store14WasmiStoreDataE36store_inner_and_resource_limiter_refBN_.exit.i
 
 _RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreNtNtCsg6ypMx2A1Am_11wasmi_c_api5store14WasmiStoreDataE36store_inner_and_resource_limiter_refBN_.exit.i: ; preds = %bb.c, %bb.b
@@ -1210,8 +1215,9 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !490, !nonnull !5
   %i.m = tail call { ptr, ptr } %i.l(ptr noundef nonnull %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.i) #23, !noalias !490, !inline_history !484 ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.m, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   br label %_RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreNtNtCsg6ypMx2A1Am_11wasmi_c_api5store14WasmiStoreDataE36store_inner_and_resource_limiter_refBN_.exit.i
 
 _RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreNtNtCsg6ypMx2A1Am_11wasmi_c_api5store14WasmiStoreDataE36store_inner_and_resource_limiter_refBN_.exit.i: ; preds = %bb.c, %bb.b
@@ -1487,8 +1493,9 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !549, !nonnull !5
   %i.m = tail call { ptr, ptr } %i.l(ptr noundef nonnull %i.f, ptr noalias nofree noundef nonnull %i.i) #23, !noalias !549, !inline_history !543 ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.m, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   br label %_RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreuE36store_inner_and_resource_limiter_refCsg6ypMx2A1Am_11wasmi_c_api.exit.i
 
 _RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreuE36store_inner_and_resource_limiter_refCsg6ypMx2A1Am_11wasmi_c_api.exit.i: ; preds = %bb.c, %bb.b
@@ -1583,8 +1590,9 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !invariant.load !5, !noalias !566, !nonnull !5
   %i.m = tail call { ptr, ptr } %i.l(ptr noundef nonnull %i.f, ptr noalias nofree noundef nonnull %i.i) #23, !noalias !566, !inline_history !560 ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.m, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractvalue { ptr, ptr } %i.m, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   br label %_RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreuE36store_inner_and_resource_limiter_refCsg6ypMx2A1Am_11wasmi_c_api.exit.i
 
 _RNvMs0_NtCsefoF4u9kbII_5wasmi5storeINtB5_5StoreuE36store_inner_and_resource_limiter_refCsg6ypMx2A1Am_11wasmi_c_api.exit.i: ; preds = %bb.c, %bb.b

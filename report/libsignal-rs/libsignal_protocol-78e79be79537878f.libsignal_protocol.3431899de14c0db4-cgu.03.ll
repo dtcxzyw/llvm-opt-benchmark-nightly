@@ -204,9 +204,9 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br i1 %i.ai, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs4tP8yUXWbFU_18libsignal_protocol5error15SessionNotFoundEBF_.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.ak = load i64, ptr %i.aj, align 8, !range !23, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ah, i64 noundef range(i64 1, 536870913) %i.ak) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs4tP8yUXWbFU_18libsignal_protocol5error15SessionNotFoundEBF_.exit
 
@@ -609,9 +609,9 @@ bb.j:                                             ; preds = %bb.h
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit26.i
 
 bb.k:                                             ; preds = %bb.j
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.al, ptr nonnull align 1 %i.ab, i64 %i.ac, i1 false), !noalias !73
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.12.i, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false), !noalias !72
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ab, i64 noundef range(i64 1, 0) %i.ac, i64 noundef 1) #19, !noalias !73
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit26.i
 
@@ -1014,10 +1014,10 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a
   %i.j = extractvalue { ptr, i64 } %i.h, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = extractvalue { ptr, i64 } %i.h, 1        ; 3 uses
   %i.l = icmp sgt i64 %i.k, -1
   tail call void @llvm.assume(i1 %i.l)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   store i64 %i.k, ptr %i.g, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %i.j, ptr %i.m, align 8
@@ -1039,10 +1039,10 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.d
   %i.q = extractvalue { ptr, i64 } %i.o, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   %i.r = extractvalue { ptr, i64 } %i.o, 1        ; 3 uses
   %i.s = icmp sgt i64 %i.r, -1
   tail call void @llvm.assume(i1 %i.s)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   store i64 %i.r, ptr %i.f, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.q, ptr %i.t, align 8
@@ -1109,10 +1109,10 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.ak = zext i8 %1 to i32
   %i.al = extractvalue { ptr, i64 } %i.ai, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
   %i.am = extractvalue { ptr, i64 } %i.ai, 1      ; 3 uses
   %i.an = icmp sgt i64 %i.am, -1
   tail call void @llvm.assume(i1 %i.an)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
   %.sroa.0.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
@@ -1515,8 +1515,8 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not.i, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.v, ptr nonnull align 1 %i.l, i64 %i.m, i1 false), !noalias !141
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.v, ptr nonnull align 1 %i.l, i64 %i.m, i1 false), !noalias !141
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.l, i64 noundef range(i64 1, 0) %i.m, i64 noundef 1) #19, !noalias !141
   br label %bb.m
 
@@ -1919,8 +1919,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.n
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !178
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !178
   call void @_RNvMNtCs4tP8yUXWbFU_18libsignal_protocol12identity_keyNtB2_11IdentityKey6decode(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val, i64 noundef %.val54), !noalias !178
   %i.j = load i64, ptr %i.c, align 8, !range !11, !noalias !178, !noundef !5
   %.not.i.i = icmp eq i64 %i.j, -2
@@ -1995,8 +1995,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not.i19.i, label %_RNCNvMs1_NtNtCs4tP8yUXWbFU_18libsignal_protocol5state7sessionNtB7_12SessionState25remote_identity_key_bytes0Bb_.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr nonnull align 1 %i.q, i64 %i.r, i1 false), !noalias !181
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr nonnull align 1 %i.q, i64 %i.r, i1 false), !noalias !181
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.q, i64 noundef range(i64 1, 0) %i.r, i64 noundef 1) #19, !noalias !181
   br label %_RNCNvMs1_NtNtCs4tP8yUXWbFU_18libsignal_protocol5state7sessionNtB7_12SessionState25remote_identity_key_bytes0Bb_.exit.i
 
@@ -2399,9 +2399,9 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit4, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr nonnull align 1 %i.c, i64 %i.d, i1 false)
   store i64 %i.d, ptr %i.p, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.c, i64 noundef range(i64 1, 0) %i.d, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit4
 
@@ -2424,7 +2424,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvXs4_NtNtCs4tP8yUXWbFU_18libsignal_protocol5state13signed_prekeyINtNtB9_3kem3KeyNtB15_6SecretENtB5_8KeySerde9serialize(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
@@ -2441,9 +2441,6 @@ bb.b:                                             ; preds = %bb.a
   call void @_RNvMs5_NtCs6i54tJFfzR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.f, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
   %i.h = load i64, ptr %i.a, align 8, !range !8, !noundef !5
   %i.i = trunc nuw i64 %i.h to i1
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = load i64, ptr %2, align 8, !range !9, !noundef !5 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   br i1 %i.i, label %bb.d, label %bb.e, !prof !10
 
 bb.c:                                             ; preds = %bb.a
@@ -2451,22 +2448,28 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 bb.d:                                             ; preds = %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %3 = load i64, ptr %2, align 8, !range !9, !noundef !5
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.j = load i64, ptr %4, align 8
   tail call void @_RNvNtCs6i54tJFfzR_5alloc7raw_vec12handle_error(i64 noundef %3, i64 %i.j) #20
   unreachable
 
 bb.e:                                             ; preds = %bb.b
-  %i.k = load ptr, ptr %4, align 8, !nonnull !5, !noundef !5 ; 2 uses
-  %i.l = icmp ule i64 %i.f, %3
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %6 = load i64, ptr %5, align 8, !range !7, !noundef !5 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.k = load ptr, ptr %7, align 8, !nonnull !5, !noundef !5 ; 2 uses
+  %i.l = icmp ule i64 %i.f, %6
   tail call void @llvm.assume(i1 %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i64 %3, ptr %i.c, align 8
+  store i64 %6, ptr %i.c, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store ptr %i.k, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
   store i8 8, ptr %i.k, align 1
   store i64 1, ptr %i.n, align 8, !alias.scope !293
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4) ]
   invoke void @_RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VechE7reserveCs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %.val5)
           to label %.noexc2.i unwind label %bb.g
 
@@ -2553,9 +2556,9 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit6, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ag, ptr nonnull align 1 %i.w, i64 %i.x, i1 false)
   store i64 %i.x, ptr %i.aj, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.w, i64 noundef range(i64 1, 0) %i.x, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit6
 

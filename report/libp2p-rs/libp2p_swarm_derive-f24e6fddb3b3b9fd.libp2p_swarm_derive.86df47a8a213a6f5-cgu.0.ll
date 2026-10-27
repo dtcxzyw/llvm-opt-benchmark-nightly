@@ -202,13 +202,13 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dc, ptr noundef nonnull align 8 dereferenceable(32) %i.db, i64 32, i1 false), !noalias !1441
   call void @llvm.lifetime.end.p0(ptr nonnull %i.db), !noalias !1441
   call void @_RINvNtCs1OBHko07mPX_3syn11parse_quote5parseNtNtB4_4path4PathECsbzV8chLHuFl_19libp2p_swarm_derive(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.dd, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.dc, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @99), !noalias !1441
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dc), !noalias !1441
   %i.ml = getelementptr inbounds nuw i8, ptr %i.de, i64 248 ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ml, ptr noundef nonnull align 8 dereferenceable(48) %i.dd, i64 48, i1 false), !noalias !1441
   store i64 -1, ptr %i.de, align 16, !noalias !1441
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.de, i64 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dd), !noalias !1441
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.mm = getelementptr inbounds nuw [248 x i8], ptr %.val, i64 %.val296
   %.sroa.455.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.da, i64 8
   %.sroa.6.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
@@ -611,8 +611,8 @@ bb.ge:                                            ; preds = %bb.gd
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1OBHko07mPX_3syn8generics9LifetimesECsbzV8chLHuFl_19libp2p_swarm_derive.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1OBHko07mPX_3syn8generics9LifetimesECsbzV8chLHuFl_19libp2p_swarm_derive.exit: ; preds = %bb.ge, %bb.gd
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.kq)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qq), "nonnull"(ptr %i.qr) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.kq)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.kp)
   store ptr %i.qq, ptr %i.kp, align 8
   %i.rr = getelementptr inbounds nuw i8, ptr %i.kp, i64 8 ; 3 uses
@@ -663,8 +663,8 @@ bb.gi:                                            ; preds = %bb.gh
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1OBHko07mPX_3syn8generics10TypeParamsECsbzV8chLHuFl_19libp2p_swarm_derive.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1OBHko07mPX_3syn8generics10TypeParamsECsbzV8chLHuFl_19libp2p_swarm_derive.exit: ; preds = %bb.gi, %bb.gh
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.kp)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.qy), "nonnull"(ptr %i.qz) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.kp)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ko)
   store ptr %i.qy, ptr %i.ko, align 8
   %i.sg = getelementptr inbounds nuw i8, ptr %i.ko, i64 8 ; 3 uses
@@ -903,8 +903,9 @@ bb.hh:                                            ; preds = %bb.hf
 
 bb.hi:                                            ; preds = %bb.hh
   %i.ud = extractvalue { ptr, ptr } %i.ua, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ud) ]
   %i.ue = extractvalue { ptr, ptr } %i.ua, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ud), "nonnull"(ptr %i.ue) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ue) ]
   %i.uf = getelementptr inbounds nuw i8, ptr %1, i64 184
   call void @llvm.lifetime.start.p0(ptr nonnull %i.kb)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ka)
@@ -926,8 +927,9 @@ bb.hj:                                            ; preds = %bb.nz, %bb.hi, %bb.
 
 bb.hk:                                            ; preds = %bb.hi
   %i.uj = extractvalue { ptr, ptr } %i.ug, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.uj) ]
   %i.uk = extractvalue { ptr, ptr } %i.ug, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.uj), "nonnull"(ptr %i.uk) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.uk) ]
   store ptr %i.uj, ptr %i.ka, align 8
   %i.ul = getelementptr inbounds nuw i8, ptr %i.ka, i64 8
   store ptr %i.uk, ptr %i.ul, align 8
@@ -958,8 +960,9 @@ bb.hm:                                            ; preds = %bb.nw, %bb.hl, %bb.
 
 bb.hn:                                            ; preds = %bb.hl
   %i.up = extractvalue { ptr, ptr } %i.un, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.up) ]
   %i.uq = extractvalue { ptr, ptr } %i.un, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.up), "nonnull"(ptr %i.uq) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.uq) ]
   store ptr %i.up, ptr %i.jy, align 8
   %i.ur = getelementptr inbounds nuw i8, ptr %i.jy, i64 8
   store ptr %i.uq, ptr %i.ur, align 8
@@ -1362,8 +1365,8 @@ bb.aow:                                           ; preds = %bb.aov
 
 .noexc489:                                        ; preds = %bb.aow
   %i.aki = extractvalue { ptr, i64 } %i.akh, 0    ; 2 uses
-  %3 = extractvalue { ptr, i64 } %i.akh, 1        ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aki) ]
+  %3 = extractvalue { ptr, i64 } %i.akh, 1        ; 2 uses
   %.sroa.5.sroa.0.0.extract.trunc.i.i = trunc i64 %3 to i8
   %.sroa.5.sroa.4.0.extract.shift.i.i = and i64 %3, -256
   br label %_RNvXs15_Cs7djI6dnwcVV_11proc_macro2NtB6_5IdentNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
@@ -1766,8 +1769,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.n = tail call { ptr, i64 } @_RNvXsf_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbzV8chLHuFl_19libp2p_swarm_derive(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.m), !noalias !1583 ; 2 uses
   %i.o = extractvalue { ptr, i64 } %i.n, 0        ; 2 uses
-  %2 = extractvalue { ptr, i64 } %i.n, 1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  %2 = extractvalue { ptr, i64 } %i.n, 1          ; 2 uses
   %.sroa.5.sroa.0.0.extract.trunc.i.i = trunc i64 %2 to i8
   %.sroa.5.sroa.4.0.extract.shift.i.i = and i64 %2, -256
   br label %_RNvXs15_Cs7djI6dnwcVV_11proc_macro2NtB6_5IdentNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
