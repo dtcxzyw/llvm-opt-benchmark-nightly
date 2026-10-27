@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.lr.ph521, %.loopex
   %i.is = shl nsw i64 %i.ir, 2
   %scevgep.i = getelementptr i8, ptr %i.ht, i64 %i.is
   %i.it = sub i32 %i.cj, %indvars585
-  %i.iu = getelementptr inbounds nuw i8, ptr %i.io, i64 4 ; 5 uses
+  %i.iu = getelementptr inbounds nuw i8, ptr %i.io, i64 4 ; 4 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %i.io, i64 8 ; 5 uses
   %i.iw = xor i32 %indvars585, -1
   %i.ix = add i32 %i.hv, %i.iw
@@ -426,8 +426,7 @@ iter.check819:                                    ; preds = %._crit_edge.i447, %
   %indvars.iv156.i = phi i64 [ %i.nm, %.preheader.lr.ph.split.i ], [ %indvars.iv.next157.i, %._crit_edge.i447 ] ; 3 uses
   %invariant.gep.idx.i = shl nsw i64 %indvars.iv156.i, 4
   %invariant.gep.i = getelementptr i8, ptr %0, i64 %invariant.gep.idx.i ; 4 uses
-  %5 = load float, ptr %i.io, align 4, !tbaa !56  ; 3 uses
-  %6 = load float, ptr %i.iu, align 4, !tbaa !56  ; 3 uses
+  %5 = load <2 x float>, ptr %i.io, align 4, !tbaa !56 ; 5 uses
   %i.nu = load float, ptr %i.iv, align 4, !tbaa !56 ; 3 uses
   br i1 %min.iters.check774, label %vec.epilog.scalar.ph821.preheader, label %vector.main.loop.iter.check775
 
@@ -435,10 +434,8 @@ vector.main.loop.iter.check775:                   ; preds = %iter.check819
   br i1 %min.iters.check776, label %vec.epilog.ph823, label %vector.ph777
 
 vector.ph777:                                     ; preds = %vector.main.loop.iter.check775
-  %broadcast.splatinsert779 = insertelement <8 x float> poison, float %5, i64 0
-  %broadcast.splat780 = shufflevector <8 x float> %broadcast.splatinsert779, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert781 = insertelement <8 x float> poison, float %6, i64 0
-  %broadcast.splat782 = shufflevector <8 x float> %broadcast.splatinsert781, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat780 = shufflevector <2 x float> %5, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat782 = shufflevector <2 x float> %5, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
   %broadcast.splatinsert783 = insertelement <8 x float> poison, float %i.nu, i64 0
   %broadcast.splat784 = shufflevector <8 x float> %broadcast.splatinsert783, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
   br label %vector.body789
@@ -510,17 +507,16 @@ middle.block816:                                  ; preds = %vector.body789
   br i1 %cmp.n818, label %._crit_edge.i447, label %vec.epilog.iter.check820
 
 vec.epilog.iter.check820:                         ; preds = %middle.block816
+  %slprdx.init861 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.ow, i64 0
   br i1 %min.epilog.iters.check822, label %vec.epilog.scalar.ph821.preheader, label %vec.epilog.ph823, !prof !59
 
 vec.epilog.ph823:                                 ; preds = %vector.main.loop.iter.check775, %vec.epilog.iter.check820
   %vec.epilog.resume.val824 = phi i64 [ %n.vec778, %vec.epilog.iter.check820 ], [ 0, %vector.main.loop.iter.check775 ]
   %bc.resume.val825 = phi i64 [ %i.ns, %vec.epilog.iter.check820 ], [ %i.nk, %vector.main.loop.iter.check775 ]
   %bc.merge.rdx826 = phi float [ %i.ow, %vec.epilog.iter.check820 ], [ 0.000000e+00, %vector.main.loop.iter.check775 ]
-  %7 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %bc.merge.rdx826, i64 0
-  %broadcast.splatinsert828 = insertelement <4 x float> poison, float %5, i64 0
-  %broadcast.splat829 = shufflevector <4 x float> %broadcast.splatinsert828, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert830 = insertelement <4 x float> poison, float %6, i64 0
-  %broadcast.splat831 = shufflevector <4 x float> %broadcast.splatinsert830, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert828 = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %bc.merge.rdx826, i64 0
+  %broadcast.splat829 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splat831 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %broadcast.splatinsert832 = insertelement <4 x float> poison, float %i.nu, i64 0
   %broadcast.splat833 = shufflevector <4 x float> %broadcast.splatinsert832, <4 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert836 = insertelement <4 x i64> poison, i64 %bc.resume.val825, i64 0
@@ -531,7 +527,7 @@ vec.epilog.ph823:                                 ; preds = %vector.main.loop.it
 vec.epilog.vector.body839:                        ; preds = %vec.epilog.vector.body839, %vec.epilog.ph823
   %index840 = phi i64 [ %vec.epilog.resume.val824, %vec.epilog.ph823 ], [ %index.next855, %vec.epilog.vector.body839 ]
   %vec.ind841 = phi <4 x i64> [ %induction838, %vec.epilog.ph823 ], [ %vec.ind.next856, %vec.epilog.vector.body839 ] ; 2 uses
-  %vec.phi842 = phi <4 x float> [ %7, %vec.epilog.ph823 ], [ %i.pj, %vec.epilog.vector.body839 ]
+  %vec.phi842 = phi <4 x float> [ %broadcast.splatinsert828, %vec.epilog.ph823 ], [ %i.pj, %vec.epilog.vector.body839 ]
   %i.ox = mul nsw <4 x i64> %vec.ind841, %broadcast.splat835
   %wide.gep843 = getelementptr [4 x i8], ptr %invariant.gep.i, <4 x i64> %i.ox ; 4 uses
   %wide.gep844 = getelementptr inbounds [4 x i8], <4 x ptr> %wide.gep843, i64 %i.nj ; 3 uses
@@ -564,11 +560,15 @@ vec.epilog.vector.body839:                        ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block857:                       ; preds = %vec.epilog.vector.body839
   %i.pl = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %i.pj) ; 2 uses
+  %slprdx.init = insertelement <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, float %i.pl, i64 0
   br i1 %cmp.n858, label %._crit_edge.i447, label %vec.epilog.scalar.ph821.preheader
 
 vec.epilog.scalar.ph821.preheader:                ; preds = %iter.check819, %vec.epilog.iter.check820, %vec.epilog.middle.block857
   %indvars.iv.i.ph = phi i64 [ %i.nk, %iter.check819 ], [ %i.ns, %vec.epilog.iter.check820 ], [ %i.nt, %vec.epilog.middle.block857 ]
-  %.0121143.i.ph = phi float [ 0.000000e+00, %iter.check819 ], [ %i.ow, %vec.epilog.iter.check820 ], [ %i.pl, %vec.epilog.middle.block857 ]
+  %slprdx.acc.ph = phi <4 x float> [ zeroinitializer, %iter.check819 ], [ %slprdx.init861, %vec.epilog.iter.check820 ], [ %slprdx.init, %vec.epilog.middle.block857 ]
+  %6 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.nu, i64 2
+  %7 = shufflevector <2 x float> %5, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x float> %7, <4 x float> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   br label %vec.epilog.scalar.ph821
 
 ._crit_edge148.i:                                 ; preds = %._crit_edge.i447, %.preheader.us.preheader.i, %.preheader140.i
@@ -589,37 +589,40 @@ vec.epilog.scalar.ph821.preheader:                ; preds = %iter.check819, %vec
   br label %init_column_sums.exit
 
 ._crit_edge.i447:                                 ; preds = %vec.epilog.scalar.ph821, %vec.epilog.middle.block857, %middle.block816
-  %.lcssa = phi float [ %i.pl, %vec.epilog.middle.block857 ], [ %i.ow, %middle.block816 ], [ %24, %vec.epilog.scalar.ph821 ]
+  %slprdx.exit = phi <4 x float> [ poison, %vec.epilog.middle.block857 ], [ poison, %middle.block816 ], [ %slprdx.acc862, %vec.epilog.scalar.ph821 ]
+  %slprdx.fromloop = phi i1 [ false, %vec.epilog.middle.block857 ], [ false, %middle.block816 ], [ true, %vec.epilog.scalar.ph821 ]
+  %.lcssa = phi float [ %i.pl, %vec.epilog.middle.block857 ], [ %i.ow, %middle.block816 ], [ poison, %vec.epilog.scalar.ph821 ]
+  %9 = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %slprdx.exit)
+  %slprdx.sel = select i1 %slprdx.fromloop, float %9, float %.lcssa
   %i.pu = getelementptr inbounds [4 x i8], ptr %i.ht, i64 %indvars.iv156.i
-  store float %.lcssa, ptr %i.pu, align 4, !tbaa !56
+  store float %slprdx.sel, ptr %i.pu, align 4, !tbaa !56
   %indvars.iv.next157.i = add nuw nsw i64 %indvars.iv156.i, 1 ; 2 uses
   %i.pv = icmp slt i64 %indvars.iv.next157.i, %i.nn
   br i1 %i.pv, label %iter.check819, label %._crit_edge148.i
 
 vec.epilog.scalar.ph821:                          ; preds = %vec.epilog.scalar.ph821.preheader, %vec.epilog.scalar.ph821
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %vec.epilog.scalar.ph821 ], [ %indvars.iv.i.ph, %vec.epilog.scalar.ph821.preheader ] ; 2 uses
-  %.0121143.i = phi float [ %24, %vec.epilog.scalar.ph821 ], [ %.0121143.i.ph, %vec.epilog.scalar.ph821.preheader ]
+  %slprdx.acc = phi <4 x float> [ %slprdx.acc862, %vec.epilog.scalar.ph821 ], [ %slprdx.acc.ph, %vec.epilog.scalar.ph821.preheader ]
   %i.pw = mul nsw i64 %indvars.iv.i, %i.s
   %gep.i = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %i.pw ; 3 uses
   %i.px = getelementptr inbounds [4 x i8], ptr %gep.i, i64 %i.nj ; 2 uses
-  %8 = load float, ptr %gep.i, align 4, !tbaa !56
-  %i.py = load float, ptr %i.px, align 4, !tbaa !56
-  %9 = fsub reassoc nsz arcp contract afn float %8, %i.py ; 2 uses
-  %10 = fmul reassoc nsz arcp contract afn float %9, %9
-  %11 = fmul reassoc nsz arcp contract afn float %10, %5
-  %12 = getelementptr inbounds nuw i8, ptr %gep.i, i64 4
-  %13 = getelementptr inbounds nuw i8, ptr %i.px, i64 4
-  %14 = load <2 x float>, ptr %12, align 4, !tbaa !56
-  %15 = load <2 x float>, ptr %13, align 4, !tbaa !56
-  %16 = fsub reassoc nsz arcp contract afn <2 x float> %14, %15 ; 2 uses
-  %17 = fmul reassoc nsz arcp contract afn <2 x float> %16, %16 ; 2 uses
-  %18 = extractelement <2 x float> %17, i64 0
-  %19 = fmul reassoc nsz arcp contract afn float %18, %6
-  %20 = extractelement <2 x float> %17, i64 1
-  %21 = fmul reassoc nsz arcp contract afn float %20, %i.nu
-  %22 = fadd reassoc nsz arcp contract afn float %.0121143.i, %11
-  %23 = fadd reassoc nsz arcp contract afn float %19, %22
-  %24 = fadd reassoc nsz arcp contract afn float %23, %21 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %gep.i, i64 8
+  %i.py = load float, ptr %10, align 4, !tbaa !56
+  %11 = getelementptr inbounds nuw i8, ptr %i.px, i64 8
+  %12 = load float, ptr %11, align 4, !tbaa !56
+  %13 = load <2 x float>, ptr %gep.i, align 4, !tbaa !56
+  %14 = load <2 x float>, ptr %i.px, align 4, !tbaa !56
+  %15 = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.py, i64 2
+  %16 = shufflevector <2 x float> %13, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %17 = shufflevector <4 x float> %16, <4 x float> %15, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %18 = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %12, i64 2
+  %19 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %20 = shufflevector <4 x float> %19, <4 x float> %18, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %21 = fsub reassoc nsz arcp contract afn <4 x float> %17, %20 ; 2 uses
+  %22 = insertelement <4 x float> %21, float 1.000000e+00, i64 3
+  %23 = fmul reassoc nsz arcp contract afn <4 x float> %21, %22
+  %24 = fmul reassoc nsz arcp contract afn <4 x float> %23, %8
+  %slprdx.acc862 = fadd reassoc nsz arcp afn <4 x float> %slprdx.acc, %24 ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
   %exitcond.not.i446 = icmp eq i32 %i.nl, %lftr.wideiv.i
