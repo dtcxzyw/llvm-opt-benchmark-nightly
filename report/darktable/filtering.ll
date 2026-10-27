@@ -204,10 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %.in, align 8, !tbaa !21
   %i.h = load ptr, ptr %i.c, align 8, !tbaa !24   ; 3 uses
   %i.i = add nsw i32 %1, -1
-  %5 = shl nuw nsw i32 1, %i.i
-  %6 = add nsw i32 %1, 11
-  %i.j = shl nuw nsw i32 1, %6
-  %7 = or i32 %5, %i.j
+  %i.j = shl nuw nsw i32 4097, %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 72 ; 4 uses
   %i.l = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.k) #20
   %i.m = icmp ugt i64 %i.l, 1
@@ -228,7 +225,7 @@ bb.d:                                             ; preds = %bb.c
 
 _get_mask.exit:                                   ; preds = %bb.b, %bb.c, %bb.d
   %.0.i = phi i32 [ %i.s, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
-  %i.t = select i1 %.not, i32 -2147483648, i32 %7 ; 2 uses
+  %i.t = select i1 %.not, i32 -2147483648, i32 %i.j ; 2 uses
   %i.u = and i32 %.0.i, %i.t                      ; 2 uses
   %i.v = fcmp reassoc nsz arcp contract afn une float %3, f0xFF7FFFFF
   br i1 %i.v, label %bb.e, label %bb.m
