@@ -57,8 +57,6 @@ $_ZNSt6vectorIhSaIhEE17_M_default_appendEm = comdat any
 @.str.17 = private unnamed_addr constant [20 x i8] c"!envelopes_.empty()\00", align 1
 @__PRETTY_FUNCTION__._ZN5crdtp4cbor12_GLOBAL__N_111CBOREncoder12HandleMapEndEv = private unnamed_addr constant [77 x i8] c"virtual void crdtp::cbor::(anonymous namespace)::CBOREncoder::HandleMapEnd()\00", align 1
 @__PRETTY_FUNCTION__._ZN5crdtp4cbor12_GLOBAL__N_111CBOREncoder14HandleArrayEndEv = private unnamed_addr constant [79 x i8] c"virtual void crdtp::cbor::(anonymous namespace)::CBOREncoder::HandleArrayEnd()\00", align 1
-@_ZN5crdtp4cbor12_GLOBAL__N_112kEncodedTrueE = internal unnamed_addr constant i8 -11, align 1
-@_ZN5crdtp4cbor12_GLOBAL__N_113kEncodedFalseE = internal unnamed_addr constant i8 -12, align 1
 @.str.20 = private unnamed_addr constant [49 x i8] c"tokenizer->TokenTag() == CBORTokenTag::MAP_START\00", align 1
 @__PRETTY_FUNCTION__._ZN5crdtp4cbor12_GLOBAL__N_18ParseMapEiPNS0_13CBORTokenizerEPNS_13ParserHandlerE = private unnamed_addr constant [93 x i8] c"bool crdtp::cbor::(anonymous namespace)::ParseMap(int32_t, CBORTokenizer *, ParserHandler *)\00", align 1
 @.str.21 = private unnamed_addr constant [51 x i8] c"tokenizer->TokenTag() == CBORTokenTag::ARRAY_START\00", align 1
@@ -461,7 +459,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8              ; 4 uses
-  %_ZN5crdtp4cbor12_GLOBAL__N_112kEncodedTrueE._ZN5crdtp4cbor12_GLOBAL__N_113kEncodedFalseE = select i1 %1, ptr @_ZN5crdtp4cbor12_GLOBAL__N_112kEncodedTrueE, ptr @_ZN5crdtp4cbor12_GLOBAL__N_113kEncodedFalseE ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 3 uses
@@ -470,7 +467,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = load i8, ptr %_ZN5crdtp4cbor12_GLOBAL__N_112kEncodedTrueE._ZN5crdtp4cbor12_GLOBAL__N_113kEncodedFalseE, align 1
+  %2 = select i1 %1, i8 -11, i8 -12
   store i8 %2, ptr %i.h, align 1
   %i.k = load ptr, ptr %i.g, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 1
@@ -499,7 +496,7 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.d
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #17 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.p ; 2 uses
-  %3 = load i8, ptr %_ZN5crdtp4cbor12_GLOBAL__N_112kEncodedTrueE._ZN5crdtp4cbor12_GLOBAL__N_113kEncodedFalseE, align 1
+  %3 = select i1 %1, i8 -11, i8 -12
   store i8 %3, ptr %i.w, align 1
   %i.x = icmp sgt i64 %i.p, 0
   br i1 %i.x, label %bb.f, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i

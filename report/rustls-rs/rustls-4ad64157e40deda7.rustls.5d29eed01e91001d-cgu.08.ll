@@ -202,24 +202,22 @@ bb.bm:                                            ; preds = %_RNCINvNtNtNtCsj6eK
 
 bb.bn:                                            ; preds = %.noexc82.i
   %i.nn = load i64, ptr %i.ni, align 8, !range !10, !alias.scope !672, !noalias !674, !noundef !5
-  %i.no = trunc nuw i64 %i.nn to i1               ; 5 uses
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24, !noalias !673
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24, !noalias !673
-  %6 = select i1 %i.no, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i.i.i.i, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i.i ; 2 uses
+  %i.no = trunc nuw i64 %i.nn to i1               ; 4 uses
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13._RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.i.i.i.i = select i1 %i.no, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12 ; 2 uses
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i.i = load i16, ptr %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13._RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.i.i.i.i, align 2, !range !24, !noalias !673, !noundef !5 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13._RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.i.i.i.i, i64 2
   %i.np = load i16, ptr %i.bp, align 2, !range !24, !noalias !675, !noundef !5
-  %i.nq = icmp eq i16 %6, %i.np
+  %i.nq = icmp eq i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i.i, %i.np
   br i1 %i.nq, label %bb.bo, label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.nr = icmp eq i16 %6, 9
+  %i.nr = icmp eq i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i.i.i.i, 9
   br i1 %i.nr, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bo
-  %.val.i.i.i.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, i64 2), align 2, !noalias !673
-  %.val7.i.i.i.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, i64 2), align 2, !noalias !673
-  %7 = select i1 %i.no, i16 %.val.i.i.i.i, i16 %.val7.i.i.i.i
+  %.val7.i.i.i.i = load i16, ptr %6, align 2, !noalias !673, !noundef !5
   %i.ns = load i16, ptr %i.nh, align 2, !noalias !675, !noundef !5
-  %i.nt = icmp eq i16 %7, %i.ns
+  %i.nt = icmp eq i16 %.val7.i.i.i.i, %i.ns
   br i1 %i.nt, label %bb.bq, label %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
@@ -622,27 +620,25 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %.val, align 8, !range !10, !noalias !861, !noundef !5
-  %i.h = trunc nuw i64 %i.g to i1                 ; 5 uses
+  %i.h = trunc nuw i64 %i.g to i1                 ; 4 uses
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13._RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.i = select i1 %i.h, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !alias.scope !861, !nonnull !5, !align !862, !noundef !5 ; 2 uses
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, align 2, !range !24, !noalias !861
-  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i = load i16, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, align 2, !range !24, !noalias !861
-  %2 = select i1 %i.h, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13.val.i, i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i ; 2 uses
+  %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i = load i16, ptr %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13._RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.i, align 2, !range !24, !noalias !861, !noundef !5 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13._RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.i, i64 2
   %i.k = load i16, ptr %i.j, align 2, !range !24, !noalias !861, !noundef !5
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 2
-  %i.m = icmp eq i16 %2, %i.k
+  %i.m = icmp eq i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i, %i.k
   br i1 %i.m, label %bb.c, label %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server2hsNtB6_17ExpectClientHello25choose_suite_and_kx_groups0_0Ba_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = icmp eq i16 %2, 9
+  %i.n = icmp eq i16 %_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12.val.i, 9
   br i1 %i.n, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %.val.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS13, i64 2), align 2, !noalias !861
-  %.val7.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs7ZUl82OSlxp_6rustls8versions5TLS12, i64 2), align 2, !noalias !861
-  %3 = select i1 %i.h, i16 %.val.i, i16 %.val7.i
+  %.val7.i = load i16, ptr %2, align 2, !noalias !861, !noundef !5
   %i.o = load i16, ptr %i.l, align 2, !noalias !861, !noundef !5
-  %i.p = icmp eq i16 %3, %i.o
+  %i.p = icmp eq i16 %.val7.i, %i.o
   br i1 %i.p, label %bb.e, label %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server2hsNtB6_17ExpectClientHello25choose_suite_and_kx_groups0_0Ba_.exit
 
 bb.e:                                             ; preds = %bb.d, %bb.c

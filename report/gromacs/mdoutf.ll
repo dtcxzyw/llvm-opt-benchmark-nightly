@@ -143,7 +143,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 5 uses
   %27 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 9 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
-  %i.e = icmp eq i32 %11, 0                       ; 5 uses
+  %i.e = icmp eq i32 %11, 0                       ; 9 uses
   %i.f = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 145, i64 noundef 1, i64 noundef 160) ; 25 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   store ptr null, ptr %i.g, align 8, !tbaa !26
@@ -217,7 +217,7 @@ bb.f:                                             ; preds = %bb.e
   %i.at = load i8, ptr %i.as, align 8, !tbaa !228, !range !36, !noundef !37
   %i.au = getelementptr inbounds nuw i8, ptr %i.f, i64 64
   store i8 %i.at, ptr %i.au, align 8, !tbaa !64
-  %i.av = select i1 %i.e, ptr @.str, ptr @.str.1  ; 6 uses
+  %i.av = select i1 %i.e, ptr @.str, ptr @.str.1  ; 3 uses
   switch i32 %i.n, label %bb.ab [
     i32 0, label %bb.g
     i32 10, label %bb.g
@@ -286,7 +286,7 @@ bb.l:                                             ; preds = %bb.i
 bb.m:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #24
   call void @_ZNSt10filesystem7__cxx114pathC2IPKcS1_EERKT_NS1_6formatE(ptr noundef nonnull align 8 dereferenceable(40) %15, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i8 noundef zeroext 2)
-  %28 = load i8, ptr %i.av, align 1, !tbaa !72    ; 2 uses
+  %28 = select i1 %i.e, i8 97, i8 119
   invoke void @_Z12gmx_tng_openRKNSt10filesystem7__cxx114pathEcPP18gmx_tng_trajectory(ptr noundef nonnull align 8 dereferenceable(40) %15, i8 noundef signext %28, ptr noundef nonnull %i.j)
           to label %bb.n unwind label %bb.q
 
@@ -314,8 +314,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt10filesystem7__cxx114pathD2Ev.exit153:       ; preds = %_ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i150, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i151
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
-  %29 = icmp eq i8 %28, 119
-  br i1 %29, label %bb.p, label %bb.z
+  br i1 %i.e, label %bb.z, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit153
   %i.br = load ptr, ptr %i.j, align 8, !tbaa !73
@@ -499,8 +498,8 @@ bb.am:                                            ; preds = %bb.aj
 bb.an:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #24
   call void @_ZNSt10filesystem7__cxx114pathC2IPKcS1_EERKT_NS1_6formatE(ptr noundef nonnull align 8 dereferenceable(40) %20, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i8 noundef zeroext 2)
-  %30 = load i8, ptr %i.av, align 1, !tbaa !72    ; 2 uses
-  invoke void @_Z12gmx_tng_openRKNSt10filesystem7__cxx114pathEcPP18gmx_tng_trajectory(ptr noundef nonnull align 8 dereferenceable(40) %20, i8 noundef signext %30, ptr noundef nonnull %i.i)
+  %29 = select i1 %i.e, i8 97, i8 119
+  invoke void @_Z12gmx_tng_openRKNSt10filesystem7__cxx114pathEcPP18gmx_tng_trajectory(ptr noundef nonnull align 8 dereferenceable(40) %20, i8 noundef signext %29, ptr noundef nonnull %i.i)
           to label %bb.ao unwind label %bb.ar
 
 bb.ao:                                            ; preds = %bb.an
@@ -527,8 +526,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt10filesystem7__cxx114pathD2Ev.exit163:       ; preds = %_ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i160, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i161
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #24
-  %31 = icmp eq i8 %30, 119
-  br i1 %31, label %bb.aq, label %bb.bl
+  br i1 %i.e, label %bb.bl, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit163
   %i.dj = load ptr, ptr %i.i, align 8, !tbaa !75
@@ -585,10 +583,10 @@ bb.aw:                                            ; preds = %bb.at
   br label %bb.bm
 
 bb.ax:                                            ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit168, %bb.as
+  %30 = phi i8 [ 119, %_ZNSt10filesystem7__cxx114pathD2Ev.exit168 ], [ 97, %bb.as ]
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #24
   call void @_ZNSt10filesystem7__cxx114pathC2IPKcS1_EERKT_NS1_6formatE(ptr noundef nonnull align 8 dereferenceable(40) %22, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i8 noundef zeroext 2)
-  %32 = load i8, ptr %i.av, align 1, !tbaa !72
-  %i.dt = invoke noundef ptr @_ZN3gmx8makeH5mdERKNSt10filesystem7__cxx114pathENS_12H5mdFileModeE(ptr noundef nonnull align 8 dereferenceable(40) %22, i8 noundef signext %32)
+  %i.dt = invoke noundef ptr @_ZN3gmx8makeH5mdERKNSt10filesystem7__cxx114pathENS_12H5mdFileModeE(ptr noundef nonnull align 8 dereferenceable(40) %22, i8 noundef signext %30)
           to label %bb.ay unwind label %bb.bb
 
 bb.ay:                                            ; preds = %bb.ax

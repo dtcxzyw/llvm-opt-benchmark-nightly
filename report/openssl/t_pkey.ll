@@ -27,7 +27,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not16.peel, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = load i8, ptr %1, align 1, !tbaa !8
+  %i.c = load i8, ptr %1, align 1, !tbaa !9
   %i.d = zext i8 %i.c to i32
   %i.e = icmp eq i64 %i.a, 0
   %i.f = select i1 %i.e, ptr @.str.2, ptr @.str.3
@@ -42,7 +42,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.h
   %i.i = add nuw i64 %.017, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !9
+  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !8
 
 .peel.next:                                       ; preds = %bb.d, %bb.e
   %.017 = phi i64 [ %i.i, %bb.e ], [ 1, %bb.d ]   ; 4 uses
@@ -62,7 +62,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %.peel.next
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %.017
-  %i.p = load i8, ptr %i.o, align 1, !tbaa !8
+  %i.p = load i8, ptr %i.o, align 1, !tbaa !9
   %i.q = zext i8 %i.p to i32
   %i.r = icmp eq i64 %.017, %i.a
   %i.s = select i1 %i.r, ptr @.str.2, ptr @.str.3
@@ -97,8 +97,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call i32 @BN_is_negative(ptr noundef nonnull %2) #2
-  %.not = icmp eq i32 %i.b, 0
-  %i.c = select i1 %.not, ptr @.str.2, ptr @.str.4 ; 3 uses
+  %.not = icmp eq i32 %i.b, 0                     ; 2 uses
+  %i.c = select i1 %.not, ptr @.str.2, ptr @.str.4 ; 2 uses
   %i.d = tail call i32 @BIO_indent(ptr noundef %0, i32 noundef %4, i32 noundef 128) #2
   %.not32 = icmp eq i32 %i.d, 0
   br i1 %.not32, label %bb.k, label %bb.c
@@ -139,9 +139,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.u, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %5 = load i8, ptr %i.c, align 1, !tbaa !8
-  %6 = icmp eq i8 %5, 45
-  %i.v = select i1 %6, ptr @.str.9, ptr @.str.2
+  %i.v = select i1 %.not, ptr @.str.2, ptr @.str.9
   %i.w = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.8, ptr noundef %1, ptr noundef nonnull %i.v) #2
   %i.x = icmp slt i32 %i.w, 1
   br i1 %i.x, label %bb.j, label %bb.i
@@ -193,8 +191,8 @@ attributes #2 = { nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = !{!4, !4, i64 0}
-!9 = distinct !{!9, !10, !11}
+!8 = distinct !{!8, !10, !11}
+!9 = !{!4, !4, i64 0}
 !10 = !{!"llvm.loop.mustprogress"}
 !11 = !{!"llvm.loop.peeled.count", i32 1}
 !12 = !{!"long", !4, i64 0}

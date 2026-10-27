@@ -204,8 +204,8 @@ bb.q:                                             ; preds = %bb.p
   %i.by = load ptr, ptr %i.bx, align 8            ; 3 uses
   %i.bz = getelementptr i8, ptr %i.by, i64 1656   ; 2 uses
   %i.ca = load i8, ptr %i.bz, align 8             ; 3 uses
-  %3 = icmp ult i8 %i.ca, 8                       ; 2 uses
-  %spec.select.i.i = select i1 %3, i32 306184193, i32 306184194
+  %3 = icmp ugt i8 %i.ca, 7                       ; 2 uses
+  %spec.select.i.i = select i1 %3, i32 306184194, i32 306184193
   %i.cb = load ptr, ptr %i.al, align 8            ; 2 uses
   %i.cc = load i32, ptr %i.d, align 8             ; 4 uses
   %.not.i.i = icmp eq i32 %i.cc, 0
@@ -219,8 +219,8 @@ bb.q:                                             ; preds = %bb.p
   %i.cg = zext i8 %.val44.i.i to i32
   %i.ch = or disjoint i32 %i.cf, %i.cg
   %i.ci = icmp samesign ugt i32 %i.ch, 3126
-  %i.cj = icmp ugt i8 %i.ca, 11
-  %mcr_ranges_gen12.mux.i.i = select i1 %i.cj, ptr @mcr_ranges_gen12, ptr @mcr_ranges_gen8 ; 3 uses
+  %i.cj = icmp ugt i8 %i.ca, 11                   ; 2 uses
+  %mcr_ranges_gen12.mux.i.i = select i1 %i.cj, ptr @mcr_ranges_gen12, ptr @mcr_ranges_gen8 ; 2 uses
   br i1 %i.ci, label %.lr.ph.i.preheader.us.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.i.preheader.us.i.i:                        ; preds = %.lr.ph.i.i, %.loopexit59.us.i.i
@@ -338,10 +338,8 @@ mcr_range.exit.thread.loopexit.us.i.i:            ; preds = %bb.ac, %.lr.ph.i.us
   br i1 %exitcond91.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.preheader.us.i.i, !llvm.loop !112
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i
-  %4 = load i32, ptr %mcr_ranges_gen12.mux.i.i, align 16 ; 2 uses
-  %.not1.i.i.i = icmp eq i32 %4, 0
-  %or.cond122.i.i = select i1 %3, i1 true, i1 %.not1.i.i.i
-  br i1 %or.cond122.i.i, label %._crit_edge.i.i, label %.lr.ph.i.preheader.us66.i.i
+  %4 = select i1 %i.cj, i32 33104, i32 21760
+  br i1 %3, label %.lr.ph.i.preheader.us66.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.preheader.us66.i.i:                      ; preds = %.lr.ph.split.i.i, %.loopexit59.us72.i.i
   %.03462.us63.i.i = phi ptr [ %i.dc, %.loopexit59.us72.i.i ], [ %i.cb, %.lr.ph.split.i.i ] ; 2 uses

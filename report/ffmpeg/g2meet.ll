@@ -205,8 +205,8 @@ declare i32 @av_reallocp(ptr noundef, i64 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1094995529, 1) i32 @jpg_decode_block(ptr nofree noundef captures(none) %0, ptr nofree noundef nonnull captures(none) %1, i32 noundef range(i32 0, 3) %2, ptr noundef %3) unnamed_addr #1 {
 bb.a:
-  %i.a = icmp ne i32 %2, 0                        ; 2 uses
-  %i.b = select i1 %i.a, ptr @chroma_quant, ptr @luma_quant ; 2 uses
+  %i.a = icmp ne i32 %2, 0                        ; 3 uses
+  %i.b = select i1 %i.a, ptr @chroma_quant, ptr @luma_quant
   %i.c = getelementptr i8, ptr %1, i64 8          ; 7 uses
   %.val = load i32, ptr %i.c, align 8, !tbaa !69
   %i.d = getelementptr i8, ptr %1, i64 12
@@ -301,9 +301,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.043 = phi i32 [ %i.bn, %bb.e ], [ 0, %bb.d ]
-  %4 = load i8, ptr %i.b, align 16, !tbaa !31
-  %5 = zext i8 %4 to i32
-  %i.bo = mul nsw i32 %.043, %5
+  %4 = select i1 %i.a, i32 9, i32 8
+  %i.bo = mul nsw i32 %.043, %4
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.bq = zext nneg i32 %2 to i64
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %i.bq ; 2 uses

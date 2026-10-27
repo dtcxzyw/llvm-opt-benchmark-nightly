@@ -204,24 +204,9 @@ bb.t:                                             ; preds = %bb.s
 lean_dec.exit63:                                  ; preds = %bb.r, %bb.s, %bb.t, %lean_dec_ref_known.exit
   %i.ab = and i64 %i.k, 510
   %i.ac = icmp eq i64 %i.ab, 0
-  br i1 %i.ac, label %6, label %bb.v
+  br i1 %i.ac, label %lean_inc_ref.exit71, label %bb.v
 
-6:                                                ; preds = %lean_dec.exit63
-  %7 = icmp eq i8 %0, 0
-  %l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__0_value.l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__1_value = select i1 %7, ptr @l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__0_value, ptr @l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__1_value ; 3 uses
-  %.val.i.i69 = load i32, ptr %l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__0_value.l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__1_value, align 8, !tbaa !10 ; 2 uses
-  %8 = icmp sgt i32 %.val.i.i69, 0
-  br i1 %8, label %lean_inc_ref.exit71, label %9, !prof !15
-
-9:                                                ; preds = %6
-  %.not.i.i70 = icmp eq i32 %.val.i.i69, 0
-  br i1 %.not.i.i70, label %lean_inc_ref.exit71, label %10
-
-10:                                               ; preds = %9
-  %11 = atomicrmw add ptr %l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__0_value.l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__1_value, i32 -1 monotonic, align 4 ; 0 uses
-  br label %lean_inc_ref.exit71
-
-lean_inc_ref.exit71:                              ; preds = %6, %9, %10
+lean_inc_ref.exit71:                              ; preds = %lean_dec.exit63
   tail call void @lean_inc_heartbeat() #6
   %i.ad = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #6 ; 5 uses
   %i.ae = icmp eq ptr %i.ad, null
@@ -232,6 +217,8 @@ bb.u:                                             ; preds = %lean_inc_ref.exit71
   unreachable
 
 lean_alloc_ctor.exit:                             ; preds = %lean_inc_ref.exit71
+  %6 = icmp eq i8 %0, 0
+  %l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__0_value.l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__1_value = select i1 %6, ptr @l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__0_value, ptr @l___private_Lean_Widget_InteractiveGoal_0__Lean_Widget_addInteractiveHypothesisBundle_ppLetValueExprTagged___closed__1_value
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
   store i32 1, ptr %i.ad, align 4, !tbaa !10
   store i32 50397200, ptr %i.af, align 4

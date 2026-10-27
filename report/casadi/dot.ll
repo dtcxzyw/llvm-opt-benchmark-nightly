@@ -204,11 +204,9 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.p = shl i64 %n.vec, 3                        ; 2 uses
   %i.q = getelementptr i8, ptr %i.g, i64 %i.p
   %i.r = getelementptr i8, ptr %i.h, i64 %i.p
-  %i.s = load i64, ptr %i.a, align 8, !tbaa !37, !alias.scope !97 ; 2 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.s, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.s = load i64, ptr %i.a, align 8, !tbaa !37, !alias.scope !97
   %broadcast.splatinsert37 = insertelement <2 x i64> poison, i64 %i.s, i64 0
-  %broadcast.splat38 = shufflevector <2 x i64> %broadcast.splatinsert37, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat38 = shufflevector <2 x i64> %broadcast.splatinsert37, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -219,8 +217,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.u = getelementptr i8, ptr %next.gep33, i64 16 ; 2 uses
   %wide.load = load <2 x i64>, ptr %next.gep33, align 8, !tbaa !37, !alias.scope !98, !noalias !99
   %wide.load34 = load <2 x i64>, ptr %i.u, align 8, !tbaa !37, !alias.scope !98, !noalias !99
-  %i.v = or <2 x i64> %wide.load, %broadcast.splat
-  %i.w = or <2 x i64> %wide.load34, %broadcast.splat
+  %i.v = or <2 x i64> %wide.load, %broadcast.splat38
+  %i.w = or <2 x i64> %wide.load34, %broadcast.splat38
   store <2 x i64> %i.v, ptr %next.gep33, align 8, !tbaa !37, !alias.scope !98, !noalias !99
   store <2 x i64> %i.w, ptr %i.u, align 8, !tbaa !37, !alias.scope !98, !noalias !99
   %i.x = getelementptr i8, ptr %next.gep, i64 16  ; 2 uses

@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.av
 
 lean_dec.exit210:                                 ; preds = %bb.aw, %bb.av, %bb.au, %lean_dec_ref_known.exit
   %i.bz = icmp eq i8 %i.bt, 0
-  %l_Lean_Compiler_LCNF_LetValue_toMono___closed__27_value.l_Lean_Compiler_LCNF_LetValue_toMono___closed__30_value = select i1 %i.bz, ptr @l_Lean_Compiler_LCNF_LetValue_toMono___closed__27_value, ptr @l_Lean_Compiler_LCNF_LetValue_toMono___closed__30_value ; 4 uses
+  %l_Lean_Compiler_LCNF_LetValue_toMono___closed__27_value.l_Lean_Compiler_LCNF_LetValue_toMono___closed__30_value = select i1 %i.bz, ptr @l_Lean_Compiler_LCNF_LetValue_toMono___closed__27_value, ptr @l_Lean_Compiler_LCNF_LetValue_toMono___closed__30_value ; 2 uses
   %i.ca = tail call ptr @l_Lean_Compiler_LCNF_Code_toMono(ptr noundef %i.ae, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7) ; 13 uses
   %i.cb = ptrtoint ptr %i.ca to i64               ; 2 uses
   %i.cc = and i64 %i.cb, 1
@@ -285,7 +285,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 lean_dec.exit.i265:                               ; preds = %bb.bh, %bb.bg, %bb.bf, %.preheader.i262
   tail call void @lean_free_object(ptr noundef nonnull %i.ca) #5
-  br label %lean_dec_ref_known.exit269
+  br label %lean_inc.exit193
 
 bb.bi:                                            ; preds = %lean_inc.exit195
   %i.cw = icmp sgt i32 %.val.i260, 1
@@ -294,30 +294,17 @@ bb.bi:                                            ; preds = %lean_inc.exit195
 bb.bj:                                            ; preds = %bb.bi
   %i.cx = add nsw i32 %.val.i260, -1
   store i32 %i.cx, ptr %i.ca, align 8, !tbaa !14
-  br label %lean_dec_ref_known.exit269
+  br label %lean_inc.exit193
 
 bb.bk:                                            ; preds = %bb.bi
   %.not.i8.i261 = icmp eq i32 %.val.i260, 0
-  br i1 %.not.i8.i261, label %lean_dec_ref_known.exit269, label %bb.bl
+  br i1 %.not.i8.i261, label %lean_inc.exit193, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.ca) #5
-  br label %lean_dec_ref_known.exit269
-
-lean_dec_ref_known.exit269:                       ; preds = %bb.bl, %bb.bk, %bb.bj, %lean_dec.exit.i265
-  %.val.i.i270 = load i32, ptr %l_Lean_Compiler_LCNF_LetValue_toMono___closed__27_value.l_Lean_Compiler_LCNF_LetValue_toMono___closed__30_value, align 8, !tbaa !14 ; 2 uses
-  %8 = icmp sgt i32 %.val.i.i270, 0
-  br i1 %8, label %lean_inc.exit193, label %9, !prof !15
-
-9:                                                ; preds = %lean_dec_ref_known.exit269
-  %.not.i.i271 = icmp eq i32 %.val.i.i270, 0
-  br i1 %.not.i.i271, label %lean_inc.exit193, label %10
-
-10:                                               ; preds = %9
-  %11 = atomicrmw add ptr %l_Lean_Compiler_LCNF_LetValue_toMono___closed__27_value.l_Lean_Compiler_LCNF_LetValue_toMono___closed__30_value, i32 -1 monotonic, align 4 ; 0 uses
   br label %lean_inc.exit193
 
-lean_inc.exit193:                                 ; preds = %lean_dec_ref_known.exit269, %10, %9
+lean_inc.exit193:                                 ; preds = %bb.bl, %bb.bk, %bb.bj, %lean_dec.exit.i265
   br i1 %i.af, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %lean_inc.exit193

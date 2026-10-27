@@ -205,39 +205,37 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8, !noalias !51
-  %i.h = icmp eq i64 %i.g, 2                      ; 3 uses
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val.i = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !7, !noalias !51
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val.i = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !7, !noalias !51
-  %3 = select i1 %i.h, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val.i, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val.i
+  %i.h = icmp eq i64 %i.g, 2
+  %.sroa.0.0.i = select i1 %i.h, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
+  %3 = load i64, ptr %.sroa.0.0.i, align 8, !range !7, !alias.scope !52, !noalias !51, !noundef !6
   %i.i = trunc nuw i64 %3 to i1
-  %.val.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !noalias !51, !nonnull !6
-  %.val7.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !noalias !51, !nonnull !6
-  %4 = select i1 %i.h, ptr %.val.i, ptr %.val7.i  ; 2 uses
-  %.val8.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !noalias !51, !nonnull !6, !align !8
-  %.val9.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !noalias !51, !nonnull !6, !align !8
-  %5 = select i1 %i.h, ptr %.val8.i, ptr %.val9.i ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 8
+  %.val7.i = load ptr, ptr %4, align 8, !alias.scope !52, !noalias !51, !nonnull !6, !noundef !6 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 16
+  %.val9.i = load ptr, ptr %5, align 8, !alias.scope !52, !noalias !51, !nonnull !6, !align !8, !noundef !6 ; 3 uses
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.k = load i64, ptr %i.j, align 8, !range !9, !invariant.load !6, !noalias !52
+  %i.j = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16
+  %i.k = load i64, ptr %i.j, align 8, !range !9, !invariant.load !6, !noalias !53
   %i.l = add nsw i64 %i.k, -1
   %i.m = and i64 %i.l, -16
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 %i.m
+  %i.n = getelementptr inbounds nuw i8, ptr %.val7.i, i64 %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.0.0.i.i = phi ptr [ %i.o, %bb.c ], [ %4, %bb.b ] ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 80
-  %i.q = load ptr, ptr %i.p, align 8, !invariant.load !6, !noalias !52, !nonnull !6
-  %i.r = call noundef zeroext i1 %i.q(ptr noundef nonnull %.sroa.0.0.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a), !noalias !53, !inline_history !40
+  %.sroa.0.0.i.i = phi ptr [ %i.o, %bb.c ], [ %.val7.i, %bb.b ] ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %.val9.i, i64 80
+  %i.q = load ptr, ptr %i.p, align 8, !invariant.load !6, !noalias !53, !nonnull !6
+  %i.r = call noundef zeroext i1 %i.q(ptr noundef nonnull %.sroa.0.0.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a), !noalias !52, !inline_history !40
   br i1 %i.r, label %bb.e, label %_RINvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11get_defaultuNCINvMNtB4_5eventNtB12_5Event8child_ofINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtB4_4span2IdEE0ECshFZivb7RUAJ_8ruff_dev.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 88
-  %i.t = load ptr, ptr %i.s, align 8, !invariant.load !6, !noalias !53, !nonnull !6
-  call void %i.t(ptr noundef nonnull %.sroa.0.0.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a), !noalias !53, !inline_history !40
+  %i.s = getelementptr inbounds nuw i8, ptr %.val9.i, i64 88
+  %i.t = load ptr, ptr %i.s, align 8, !invariant.load !6, !noalias !52, !nonnull !6
+  call void %i.t(ptr noundef nonnull %.sroa.0.0.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a), !noalias !52, !inline_history !40
   br label %_RINvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11get_defaultuNCINvMNtB4_5eventNtB12_5Event8child_ofINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtB4_4span2IdEE0ECshFZivb7RUAJ_8ruff_dev.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -640,8 +638,8 @@ attributes #28 = { cold noreturn nounwind }
 !49 = distinct !{!49, i1 true, !"_RNCINvMNtCs3pBv9WGWlWf_12tracing_core5eventNtB5_5Event8child_ofINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtB7_4span2IdEE0CshFZivb7RUAJ_8ruff_dev"}
 !50 = distinct !{!50, !49, !"_RNCINvMNtCs3pBv9WGWlWf_12tracing_core5eventNtB5_5Event8child_ofINtNtCs4NRVxsYgnAr_4core6option6OptionNtNtB7_4span2IdEE0CshFZivb7RUAJ_8ruff_dev: argument 0"}
 !51 = !{!37}
-!52 = !{!39, !37}
-!53 = !{!39}
+!52 = !{!39}
+!53 = !{!39, !37}
 !54 = !{!42}
 !55 = !{!42, !37}
 !56 = !{!45}

@@ -206,8 +206,8 @@ bb.a:
   %i.b = alloca [8 x i8], align 1                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #50
   store i8 0, ptr %i.a, align 16, !tbaa !69
-  %i.c = icmp slt i64 %1, 1
-  %.str.215..str.218 = select i1 %i.c, ptr @.str.215, ptr @.str.218 ; 4 uses
+  %i.c = icmp slt i64 %1, 1                       ; 2 uses
+  %.str.215..str.218 = select i1 %i.c, ptr @.str.215, ptr @.str.218 ; 2 uses
   %.not52 = icmp eq i64 %1, 0                     ; 3 uses
   %i.d = select i1 %.not52, i64 1000, i64 1024    ; 3 uses
   %i.e = tail call i64 @llvm.abs.i64(i64 %0, i1 true) ; 3 uses
@@ -225,12 +225,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %4 = load i8, ptr %.str.215..str.218, align 1, !tbaa !69
-  %.not54 = icmp eq i8 %4, 66
-  br i1 %.not54, label %bb.e, label %.split45
+  br i1 %i.c, label %.split45, label %bb.e
 
 .split45:                                         ; preds = %bb.c
-  %i.j = call noundef i32 (ptr, i64, ptr, ...) @_Z12_mi_snprintfPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 32, ptr noundef nonnull @.str.219, i64 noundef 1, ptr noundef nonnull %.str.215..str.218) ; 0 uses
+  %i.j = call noundef i32 (ptr, i64, ptr, ...) @_Z12_mi_snprintfPcmPKcz(ptr noundef nonnull %i.a, i64 noundef 32, ptr noundef nonnull @.str.219, i64 noundef 1, ptr noundef nonnull @.str.215) ; 0 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a

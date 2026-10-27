@@ -205,34 +205,19 @@ vector.memcheck799:                               ; preds = %.preheader341.lr.ph
   br i1 %conflict.rdx808, label %.preheader341.preheader, label %vector.ph811
 
 vector.ph811:                                     ; preds = %vector.memcheck799
-  %i.wi = load float, ptr %i.wf, align 4, !tbaa !104, !alias.scope !129 ; 3 uses
-  %broadcast.splatinsert823 = insertelement <8 x float> poison, float %i.wi, i64 0
-  %broadcast.splat824 = shufflevector <8 x float> %broadcast.splatinsert823, <8 x float> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert825 = insertelement <8 x float> poison, float %i.wi, i64 0
-  %broadcast.splat826 = shufflevector <8 x float> %broadcast.splatinsert825, <8 x float> poison, <8 x i32> zeroinitializer
+  %i.wi = load float, ptr %i.wf, align 4, !tbaa !104, !alias.scope !129
   %broadcast.splatinsert827 = insertelement <8 x float> poison, float %i.wi, i64 0
-  %broadcast.splat828 = shufflevector <8 x float> %broadcast.splatinsert827, <8 x float> poison, <8 x i32> zeroinitializer
+  %9 = shufflevector <8 x float> %broadcast.splatinsert827, <8 x float> poison, <24 x i32> zeroinitializer
   br label %vector.body813
 
 vector.body813:                                   ; preds = %vector.body813, %vector.ph811
   %index814 = phi i64 [ 0, %vector.ph811 ], [ %index.next830, %vector.body813 ] ; 3 uses
   %i.wj = getelementptr inbounds nuw [12 x i8], ptr %i.wh, i64 %index814
   %i.wk = getelementptr inbounds nuw [12 x i8], ptr %i.ks, i64 %index814 ; 2 uses
-  %wide.vec815 = load <24 x float>, ptr %i.wj, align 4, !tbaa !104, !alias.scope !130 ; 3 uses
-  %strided.vec816 = shufflevector <24 x float> %wide.vec815, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec817 = shufflevector <24 x float> %wide.vec815, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
-  %strided.vec818 = shufflevector <24 x float> %wide.vec815, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %wide.vec819 = load <24 x float>, ptr %i.wk, align 4, !tbaa !104, !alias.scope !131, !noalias !132 ; 3 uses
-  %strided.vec820 = shufflevector <24 x float> %wide.vec819, <24 x float> poison, <8 x i32> <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21>
-  %strided.vec821 = shufflevector <24 x float> %wide.vec819, <24 x float> poison, <8 x i32> <i32 1, i32 4, i32 7, i32 10, i32 13, i32 16, i32 19, i32 22>
-  %strided.vec822 = shufflevector <24 x float> %wide.vec819, <24 x float> poison, <8 x i32> <i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23>
-  %9 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat824, <8 x float> %strided.vec816, <8 x float> %strided.vec820)
-  %10 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat826, <8 x float> %strided.vec817, <8 x float> %strided.vec821)
-  %11 = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %broadcast.splat828, <8 x float> %strided.vec818, <8 x float> %strided.vec822)
-  %12 = shufflevector <8 x float> %9, <8 x float> %10, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %13 = shufflevector <8 x float> %11, <8 x float> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %interleaved.vec829 = shufflevector <16 x float> %12, <16 x float> %13, <24 x i32> <i32 0, i32 8, i32 16, i32 1, i32 9, i32 17, i32 2, i32 10, i32 18, i32 3, i32 11, i32 19, i32 4, i32 12, i32 20, i32 5, i32 13, i32 21, i32 6, i32 14, i32 22, i32 7, i32 15, i32 23>
-  store <24 x float> %interleaved.vec829, ptr %i.wk, align 4, !tbaa !104, !alias.scope !131, !noalias !132
+  %wide.vec815 = load <24 x float>, ptr %i.wj, align 4, !tbaa !104, !alias.scope !130
+  %wide.vec819 = load <24 x float>, ptr %i.wk, align 4, !tbaa !104, !alias.scope !131, !noalias !132
+  %interleaved.vec825 = call <24 x float> @llvm.fmuladd.v24f32(<24 x float> %9, <24 x float> %wide.vec815, <24 x float> %wide.vec819)
+  store <24 x float> %interleaved.vec825, ptr %i.wk, align 4, !tbaa !104, !alias.scope !131, !noalias !132
   %index.next830 = add nuw i64 %index814, 8       ; 2 uses
   %i.wl = icmp eq i64 %index.next830, %n.vec812
   br i1 %i.wl, label %middle.block831, label %vector.body813, !llvm.loop !53
@@ -635,7 +620,7 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #7
+declare <24 x float> @llvm.fmuladd.v24f32(<24 x float>, <24 x float>, <24 x float>) #7
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -204,34 +204,21 @@ bb.atl:                                           ; preds = %lean_inc.exit2364, 
   br label %lean_dec.exit1961
 
 bb.atm:                                           ; preds = %bb.aqt, %bb.aqs, %bb.aqr, %lean_dec.exit2025
-  %l_Lean_Meta_substCore___lam__3___closed__30_value.l_Lean_Meta_substCore___lam__3___closed__31_value = select i1 %i.gg, ptr @l_Lean_Meta_substCore___lam__3___closed__30_value, ptr @l_Lean_Meta_substCore___lam__3___closed__31_value ; 3 uses
+  %l_Lean_Meta_substCore___lam__3___closed__30_value.l_Lean_Meta_substCore___lam__3___closed__31_value = select i1 %i.gg, ptr @l_Lean_Meta_substCore___lam__3___closed__30_value, ptr @l_Lean_Meta_substCore___lam__3___closed__31_value
   %i.bek = load atomic i32, ptr @l_Lean_Meta_substCore___lam__3___closed__3_once seq_cst, align 4, !tbaa !20
   %i.bel = icmp eq i32 %i.bek, 1
   br i1 %i.bel, label %bb.atn, label %bb.ato, !prof !16
 
 bb.atn:                                           ; preds = %bb.atm
   %i.bem = load ptr, ptr @l_Lean_Meta_substCore___lam__3___closed__3, align 8, !tbaa !15
-  br label %lean_obj_once.exit3426
+  br label %lean_inc_ref.exit3429
 
 bb.ato:                                           ; preds = %bb.atm
   %i.ben = tail call ptr @lean_obj_once_cold(ptr noundef nonnull @l_Lean_Meta_substCore___lam__3___closed__3, ptr noundef nonnull @l_Lean_Meta_substCore___lam__3___closed__3_once, ptr noundef nonnull @_init_l_Lean_Meta_substCore___lam__3___closed__3) #7
-  br label %lean_obj_once.exit3426
-
-lean_obj_once.exit3426:                           ; preds = %bb.atn, %bb.ato
-  %.0.i3425 = phi ptr [ %i.bem, %bb.atn ], [ %i.ben, %bb.ato ]
-  %.val.i.i3427 = load i32, ptr %l_Lean_Meta_substCore___lam__3___closed__30_value.l_Lean_Meta_substCore___lam__3___closed__31_value, align 8, !tbaa !11 ; 2 uses
-  %11 = icmp sgt i32 %.val.i.i3427, 0
-  br i1 %11, label %lean_inc_ref.exit3429, label %12, !prof !16
-
-12:                                               ; preds = %lean_obj_once.exit3426
-  %.not.i.i3428 = icmp eq i32 %.val.i.i3427, 0
-  br i1 %.not.i.i3428, label %lean_inc_ref.exit3429, label %13
-
-13:                                               ; preds = %12
-  %14 = atomicrmw add ptr %l_Lean_Meta_substCore___lam__3___closed__30_value.l_Lean_Meta_substCore___lam__3___closed__31_value, i32 -1 monotonic, align 4 ; 0 uses
   br label %lean_inc_ref.exit3429
 
-lean_inc_ref.exit3429:                            ; preds = %lean_obj_once.exit3426, %12, %13
+lean_inc_ref.exit3429:                            ; preds = %bb.atn, %bb.ato
+  %.0.i3425 = phi ptr [ %i.bem, %bb.atn ], [ %i.ben, %bb.ato ]
   %i.beo = tail call ptr @l_Lean_stringToMessageData(ptr noundef nonnull %l_Lean_Meta_substCore___lam__3___closed__30_value.l_Lean_Meta_substCore___lam__3___closed__31_value) #7
   %i.bep = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 7, i32 noundef 2, i32 noundef 0) ; 3 uses
   %i.beq = getelementptr inbounds nuw i8, ptr %i.bep, i64 8

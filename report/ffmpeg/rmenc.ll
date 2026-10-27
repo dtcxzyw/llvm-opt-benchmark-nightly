@@ -205,9 +205,9 @@ put_str.exit.3:                                   ; preds = %.lr.ph.i.3, %bb.s
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 40 ; 13 uses
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !43
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !44
-  %i.dp = icmp eq i32 %i.do, 1                    ; 3 uses
-  %.str.10..str.12 = select i1 %i.dp, ptr @.str.10, ptr @.str.12 ; 2 uses
-  %.str.9..str.11 = select i1 %i.dp, ptr @.str.9, ptr @.str.11 ; 2 uses
+  %i.dp = icmp eq i32 %i.do, 1                    ; 4 uses
+  %.str.10..str.12 = select i1 %i.dp, ptr @.str.10, ptr @.str.12
+  %.str.9..str.11 = select i1 %i.dp, ptr @.str.9, ptr @.str.11
   %. = select i1 %i.dp, i32 73, i32 34            ; 2 uses
   tail call void @avio_wl32(ptr noundef nonnull %i.d, i32 noundef 1380992077) #7
   %narrow = add nuw nsw i32 %., 82
@@ -261,12 +261,10 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   %.sink = phi i32 [ %i.ej, %bb.w ], [ 3600000, %bb.v ], [ 3600000, %bb.u ]
   tail call void @avio_wb32(ptr noundef nonnull %i.d, i32 noundef %.sink) #7
   tail call void @avio_w8(ptr noundef nonnull %i.d, i32 noundef 16) #7
-  %2 = load i8, ptr %.str.9..str.11, align 1, !tbaa !56 ; 2 uses
-  %.not6.i247 = icmp eq i8 %2, 0
-  br i1 %.not6.i247, label %put_str8.exit, label %.lr.ph.i248
+  br label %.lr.ph.i248
 
 .lr.ph.i248:                                      ; preds = %bb.x, %.lr.ph.i248
-  %i.ek = phi i8 [ %i.en, %.lr.ph.i248 ], [ %2, %bb.x ]
+  %i.ek = phi i8 [ %i.en, %.lr.ph.i248 ], [ 84, %bb.x ]
   %.07.i249 = phi ptr [ %i.el, %.lr.ph.i248 ], [ %.str.9..str.11, %bb.x ]
   %i.el = getelementptr inbounds nuw i8, ptr %.07.i249, i64 1 ; 2 uses
   %i.em = sext i8 %i.ek to i32
@@ -275,14 +273,13 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   %.not.i250 = icmp eq i8 %i.en, 0
   br i1 %.not.i250, label %put_str8.exit, label %.lr.ph.i248, !llvm.loop !75
 
-put_str8.exit:                                    ; preds = %.lr.ph.i248, %bb.x
+put_str8.exit:                                    ; preds = %.lr.ph.i248
   tail call void @avio_w8(ptr noundef nonnull %i.d, i32 noundef 20) #7
-  %3 = load i8, ptr %.str.10..str.12, align 1, !tbaa !56 ; 2 uses
-  %.not6.i251 = icmp eq i8 %3, 0
-  br i1 %.not6.i251, label %put_str8.exit255, label %.lr.ph.i252
+  %2 = select i1 %i.dp, i8 97, i8 118
+  br label %.lr.ph.i252
 
 .lr.ph.i252:                                      ; preds = %put_str8.exit, %.lr.ph.i252
-  %i.eo = phi i8 [ %i.er, %.lr.ph.i252 ], [ %3, %put_str8.exit ]
+  %i.eo = phi i8 [ %i.er, %.lr.ph.i252 ], [ %2, %put_str8.exit ]
   %.07.i253 = phi ptr [ %i.ep, %.lr.ph.i252 ], [ %.str.10..str.12, %put_str8.exit ]
   %i.ep = getelementptr inbounds nuw i8, ptr %.07.i253, i64 1 ; 2 uses
   %i.eq = sext i8 %i.eo to i32
@@ -291,7 +288,7 @@ put_str8.exit:                                    ; preds = %.lr.ph.i248, %bb.x
   %.not.i254 = icmp eq i8 %i.er, 0
   br i1 %.not.i254, label %put_str8.exit255, label %.lr.ph.i252, !llvm.loop !75
 
-put_str8.exit255:                                 ; preds = %.lr.ph.i252, %put_str8.exit
+put_str8.exit255:                                 ; preds = %.lr.ph.i252
   tail call void @avio_wb32(ptr noundef nonnull %i.d, i32 noundef %.) #7
   %i.es = load ptr, ptr %i.dm, align 8, !tbaa !43 ; 2 uses
   %i.et = load i32, ptr %i.es, align 8, !tbaa !44

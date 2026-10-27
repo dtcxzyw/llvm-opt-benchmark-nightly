@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 show_type.exit:                                   ; preds = %bb.e, %bb.f
   %i.y = call zeroext i1 @__mnt_is_readonly(ptr noundef %1) #5
   %i.z = select i1 %i.y, ptr @.str.1, ptr @.str.2
-  call void @__seq_puts(ptr noundef %0, ptr noundef nonnull %i.z) #5
+  %3 = call i32 @seq_write(ptr noundef %0, ptr noundef nonnull %i.z, i64 noundef 3) #5 ; 0 uses
   %i.aa = call fastcc i32 @show_sb_opts(ptr noundef %0, ptr noundef %i.f) #7, !srcloc !17 ; 2 uses
   %.not36 = icmp eq i32 %i.aa, 0
   br i1 %.not36, label %bb.g, label %bb.j
@@ -429,9 +429,6 @@ declare dso_local void @seq_escape_mem(ptr noundef, ptr noundef, i64 noundef, i3
 declare dso_local i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #4
 
 ; Function Attrs: noredzone null_pointer_is_valid
-declare dso_local void @__seq_puts(ptr noundef, ptr noundef) local_unnamed_addr #0
-
-; Function Attrs: noredzone null_pointer_is_valid
 declare dso_local i32 @seq_write(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #0
 
 ; Function Attrs: noredzone null_pointer_is_valid
@@ -483,7 +480,7 @@ seq_puts.exit80:                                  ; preds = %bb.b
   %i.x = and i32 %i.w, 64
   %.not68 = icmp eq i32 %i.x, 0
   %i.y = select i1 %.not68, ptr @.str.2, ptr @.str.1
-  call void @__seq_puts(ptr noundef %0, ptr noundef nonnull %i.y) #5
+  %3 = call i32 @seq_write(ptr noundef %0, ptr noundef nonnull %i.y, i64 noundef 3) #5 ; 0 uses
   call fastcc void @show_vfsmnt_opts(ptr noundef %0, ptr noundef %1) #7, !srcloc !19
   %i.z = getelementptr i8, ptr %1, i64 272        ; 2 uses
   %i.aa = load i32, ptr %i.z, align 8
@@ -568,12 +565,12 @@ bb.l:                                             ; preds = %show_type.exit
   call void @seq_escape_mem(ptr noundef %0, ptr noundef %i.bc, i64 noundef %i.bd, i32 noundef 8, ptr noundef @.str.4) #5
   br label %seq_puts.exit
 
-seq_puts.exit:                                    ; preds = %bb.l, %bb.k
+seq_puts.exit:                                    ; preds = %bb.k, %bb.l
   %i.be = getelementptr i8, ptr %i.e, i64 80
   %.val = load i64, ptr %i.be, align 16
   %i.bf = trunc i64 %.val to i1
   %i.bg = select i1 %i.bf, ptr @.str.1, ptr @.str.2
-  call void @__seq_puts(ptr noundef %0, ptr noundef nonnull %i.bg) #5
+  %4 = call i32 @seq_write(ptr noundef %0, ptr noundef nonnull %i.bg, i64 noundef 3) #5 ; 0 uses
   %i.bh = call fastcc i32 @show_sb_opts(ptr noundef %0, ptr noundef %i.e) #7, !srcloc !20 ; 2 uses
   %.not76 = icmp eq i32 %i.bh, 0
   br i1 %.not76, label %bb.m, label %bb.p

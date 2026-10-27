@@ -205,12 +205,10 @@ vector.memcheck178:                               ; preds = %.preheader.us
   br i1 %conflict.rdx193, label %scalar.ph194.preheader, label %vector.ph196
 
 vector.ph196:                                     ; preds = %vector.memcheck178
-  %i.da = load i64, ptr %i.cm, align 8, !tbaa !45, !alias.scope !335 ; 2 uses
+  %i.da = load i64, ptr %i.cm, align 8, !tbaa !45, !alias.scope !335
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.da, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 3 uses
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.db = xor <2 x i64> %broadcast.splat, splat (i64 -1)
-  %broadcast.splatinsert204 = insertelement <2 x i64> poison, i64 %i.da, i64 0
-  %broadcast.splat205 = shufflevector <2 x i64> %broadcast.splatinsert204, <2 x i64> poison, <2 x i32> zeroinitializer
   br label %vector.body200
 
 vector.body200:                                   ; preds = %vector.body200, %vector.ph196
@@ -226,7 +224,7 @@ vector.body200:                                   ; preds = %vector.body200, %ve
   %i.di = and <2 x i64> %wide.load202, %i.db
   %i.dj = or <2 x i64> %i.dh, %i.di
   store <2 x i64> %i.dj, ptr %i.dc, align 8, !tbaa !45, !alias.scope !336, !noalias !337
-  %i.dk = and <2 x i64> %broadcast.splat205, %wide.load203
+  %i.dk = and <2 x i64> %broadcast.splat, %wide.load203
   %i.dl = or <2 x i64> %i.dk, %i.de
   store <2 x i64> %i.dl, ptr %i.df, align 8, !tbaa !45, !alias.scope !338, !noalias !335
   %index.next206 = add nuw i64 %index201, 2       ; 2 uses

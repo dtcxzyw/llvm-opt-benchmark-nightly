@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %.loopexit534
   store i32 %.1456, ptr %i.la, align 4, !tbaa !37
   %i.lb = getelementptr inbounds nuw i8, ptr %i.ji, i64 44
   store i32 %.1454, ptr %i.lb, align 4, !tbaa !38
-  %i.lc = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 5 uses
+  %i.lc = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.ld = load float, ptr %i.lc, align 8, !tbaa !39
   %i.le = fdiv float 1.000000e+00, %i.ld
   %i.lf = getelementptr inbounds nuw i8, ptr %i.ji, i64 96
@@ -255,18 +255,17 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splatinsert798 = insertelement <4 x float> poison, float %i.ma, i64 0
   %i.mb = load float, ptr %i.lc, align 8, !tbaa !39, !alias.scope !63
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.mb, i64 0
-  %3 = load float, ptr %i.kj, align 8, !tbaa !24, !alias.scope !63
-  %broadcast.splatinsert802 = insertelement <4 x float> poison, float %3, i64 0
-  %i.mc = load float, ptr %i.lv, align 4, !tbaa !53, !alias.scope !63
+  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.mc = load float, ptr %i.kj, align 8, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert800.a = insertelement <4 x float> poison, float %i.mc, i64 0
-  %i.md = load float, ptr %i.km, align 4, !tbaa !24, !alias.scope !63
+  %i.md = load float, ptr %i.lv, align 4, !tbaa !53, !alias.scope !63
   %broadcast.splatinsert806 = insertelement <4 x float> poison, float %i.md, i64 0
   %broadcast.splat807 = shufflevector <4 x float> %broadcast.splatinsert806, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.me = load float, ptr %i.lc, align 8, !tbaa !39, !alias.scope !63
+  %i.me = load float, ptr %i.km, align 4, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert804 = insertelement <4 x float> poison, float %i.me, i64 0
   %broadcast.splat805 = shufflevector <4 x float> %broadcast.splatinsert804, <4 x float> poison, <4 x i32> zeroinitializer
-  %4 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> %broadcast.splatinsert800.a, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
-  %i.mf = shufflevector <4 x float> %broadcast.splatinsert798, <4 x float> %broadcast.splatinsert802, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
+  %3 = shufflevector <4 x float> %broadcast.splat, <4 x float> %broadcast.splat807, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %i.mf = shufflevector <4 x float> %broadcast.splatinsert798, <4 x float> %broadcast.splatinsert800.a, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -318,9 +317,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.nv = insertelement <4 x i16> %i.nu, i16 %i.nr, i64 2
   %i.nw = insertelement <4 x i16> %i.nv, i16 %i.ns, i64 3
   %i.nx = uitofp <4 x i16> %i.nw to <4 x float>
-  %i.ny = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.nx, <4 x float> %broadcast.splat805, <4 x float> %broadcast.splat807)
+  %i.ny = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.nx, <4 x float> %broadcast.splat, <4 x float> %broadcast.splat805)
   %i.nz = shufflevector <4 x float> %i.mx, <4 x float> %i.nk, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.oa = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.nz, <8 x float> %4, <8 x float> %i.mf)
+  %i.oa = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.nz, <8 x float> %3, <8 x float> %i.mf)
   %i.ob = shufflevector <4 x float> %i.ny, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <8 x float> %i.oa, <8 x float> %i.ob, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
   store <12 x float> %interleaved.vec, ptr %i.mo, align 4, !tbaa !24, !alias.scope !64, !noalias !63

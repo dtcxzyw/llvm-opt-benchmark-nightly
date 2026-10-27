@@ -204,11 +204,9 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.ar = getelementptr i8, ptr %i.j, i64 %i.al
   %i.as = getelementptr i8, ptr %i.m, i64 %i.al
   %i.at = getelementptr i8, ptr %i.p, i64 %i.al
-  %i.au = load float, ptr %i.w, align 8, !tbaa !38, !alias.scope !87 ; 2 uses
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %i.au, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.au = load float, ptr %i.w, align 8, !tbaa !38, !alias.scope !87
   %broadcast.splatinsert191 = insertelement <4 x float> poison, float %i.au, i64 0
-  %broadcast.splat192 = shufflevector <4 x float> %broadcast.splatinsert191, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splat192 = shufflevector <4 x float> %broadcast.splatinsert191, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -225,7 +223,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aw = fadd <4 x float> %wide.load, %wide.load186
   %wide.load187 = load <4 x float>, ptr %next.gep185, align 4, !tbaa !24, !alias.scope !91, !noalias !92
   %i.ax = fsub <4 x float> %i.aw, %wide.load187
-  %i.ay = fmul <4 x float> %broadcast.splat, %i.ax ; 2 uses
+  %i.ay = fmul <4 x float> %broadcast.splat192, %i.ax ; 2 uses
   %i.az = fcmp ogt <4 x float> %i.ay, zeroinitializer
   %i.ba = uitofp <4 x i1> %i.az to <4 x float>
   %i.bb = fmul <4 x float> %i.ay, %i.ba

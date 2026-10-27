@@ -204,15 +204,12 @@ bb.g:                                             ; preds = %bb.f
   store i8 3, ptr %i.at, align 8, !tbaa !489
   call void @_ZN4llvmplERKNS_5TwineES2_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Twine") align 8 %9, ptr noundef nonnull align 8 dereferenceable(34) %10, ptr noundef nonnull align 8 dereferenceable(34) %11)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #27
-  %14 = select i1 %2, ptr @.str.43, ptr @.str.44  ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %12, i64 33
   store i8 1, ptr %i.av, align 1, !tbaa !490
-  %15 = load i8, ptr %14, align 1, !tbaa !191
-  %.not.i = icmp eq i8 %15, 0
-  br i1 %.not.i, label %_ZN4llvm5TwineC2EPKc.exit, label %bb.h
+  br i1 %2, label %_ZN4llvm5TwineC2EPKc.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  store ptr %14, ptr %12, align 8, !tbaa !191
+  store ptr @.str.44, ptr %12, align 8, !tbaa !191
   br label %_ZN4llvm5TwineC2EPKc.exit
 
 _ZN4llvm5TwineC2EPKc.exit:                        ; preds = %bb.g, %bb.h
