@@ -205,10 +205,7 @@ _ZN3jxl22ComputeBlockL2DistanceERKNS_6Image3IfEES3_RKNS_5PlaneIfEEmm.exit.us.us.
   %i.ha = load ptr, ptr %i.cv, align 8, !tbaa !91 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ha, i64 64) ]
   %i.hb = load ptr, ptr %i.cw, align 8, !tbaa !91 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.hb, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.gv, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.gw, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.gx, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.hb, i64 64), "align"(ptr %i.gv, i64 64), "align"(ptr %i.gw, i64 64), "align"(ptr %i.gx, i64 64) ]
   %i.hc = load ptr, ptr %i.db, align 8, !tbaa !91
   %i.hd = load i64, ptr %i.dc, align 8, !tbaa !92
   br label %.lr.ph54.i.us
@@ -611,8 +608,7 @@ bb.a:
   %.082.3 = select i1 %.not97.3, i64 %i.ah, i64 %i.l
   %i.ai = mul i64 %i.p, %.082.3
   %i.aj = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.ai ; 6 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.aj, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.aa, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.aj, i64 64), "align"(ptr %i.aa, i64 64) ]
   br label %.preheader111
 
 ._crit_edge126.split:                             ; preds = %._crit_edge, %.preheader113.lr.ph, %bb.a
@@ -1015,15 +1011,13 @@ bb.a:
   call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 64) ]
   %i.n = mul i64 %.06226.us, %.16.val
   %i.o = getelementptr inbounds nuw i8, ptr %.40.val, i64 %i.n ; 11 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 64), "align"(ptr %i.o, i64 64) ]
   %i.p = add nsw i64 %.06226.us, -1               ; 2 uses
   %i.q = icmp ult i64 %i.p, %i.e
   %i.r = mul i64 %i.p, %.16.val
   %i.s = getelementptr inbounds nuw i8, ptr %.40.val, i64 %i.r ; 9 uses
   %.fr.us = freeze i1 %i.q
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.o, i64 64), "align"(ptr %i.o, i64 64) ]
   %i.t = add nuw nsw i64 %.06226.us, 1            ; 4 uses
   %i.u = icmp samesign ult i64 %i.t, %i.e
   %i.v = mul i64 %i.t, %.16.val

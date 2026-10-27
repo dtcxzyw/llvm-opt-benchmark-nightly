@@ -205,8 +205,7 @@ default.unreachable1.i.i.i.i.i:                   ; preds = %bb.c
   unreachable
 
 .noexc6.i.i.i:                                    ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i), "nonnull"(ptr %.sroa.5.0.copyload.i.i.i) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.4.0.copyload.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.5.0.copyload.i.i.i) #32, !noalias !205
   unreachable
 
@@ -296,8 +295,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i), "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i.i.i.i) #32
           to label %.noexc1.i.i.i.i unwind label %bb.f, !noalias !234
 
@@ -453,8 +451,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i), "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i.i.i.i) #32
           to label %.noexc1.i.i.i.i unwind label %bb.f, !noalias !265
 
@@ -610,8 +607,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i), "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i.i.i.i) #32
           to label %.noexc1.i.i.i.i unwind label %bb.f, !noalias !296
 
@@ -767,8 +763,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i.i.i.i), "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i.i.i.i) #32
           to label %.noexc1.i.i.i.i unwind label %bb.f, !noalias !327
 
@@ -918,9 +913,8 @@ bb.d:                                             ; preds = %bb.c
 
 .noexc6.i.i.i:                                    ; preds = %bb.c
   %i.k = extractelement <2 x ptr> %i.f, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = extractelement <2 x ptr> %i.f, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k), "nonnull"(ptr %i.l) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.l) #32, !noalias !344
   unreachable
 
@@ -1129,9 +1123,8 @@ bb.d:                                             ; preds = %bb.c
 
 .noexc6.i.i.i:                                    ; preds = %bb.c
   %i.k = extractelement <2 x ptr> %i.f, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = extractelement <2 x ptr> %i.f, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k), "nonnull"(ptr %i.l) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.l) #32, !noalias !371
   unreachable
 
@@ -1217,9 +1210,8 @@ bb.d:                                             ; preds = %bb.c
 
 .noexc6.i.i.i:                                    ; preds = %bb.c
   %i.k = extractelement <2 x ptr> %i.f, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.l = extractelement <2 x ptr> %i.f, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k), "nonnull"(ptr %i.l) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.l) #32, !noalias !386
   unreachable
 
@@ -1309,9 +1301,8 @@ default.unreachable1.i.i:                         ; preds = %bb.d
 
 .noexc11:                                         ; preds = %bb.d
   %i.j = extractelement <2 x ptr> %i.i, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   %i.k = extractelement <2 x ptr> %i.i, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j), "nonnull"(ptr %i.k) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.j, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.k) #32
   unreachable
 
@@ -1399,8 +1390,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.g, !noalias !413
 
@@ -1562,8 +1552,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.g, !noalias !433
 
@@ -1725,8 +1714,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.g, !noalias !453
 
@@ -1888,8 +1876,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.g, !noalias !473
 
@@ -2046,9 +2033,8 @@ bb.e:                                             ; preds = %bb.d
 
 .noexc11:                                         ; preds = %bb.d
   %i.n = extractelement <2 x ptr> %i.i, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractelement <2 x ptr> %i.i, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.o) #32
   unreachable
 
@@ -2282,9 +2268,8 @@ bb.e:                                             ; preds = %bb.d
 
 .noexc12:                                         ; preds = %bb.d
   %i.n = extractelement <2 x ptr> %i.i, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractelement <2 x ptr> %i.i, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.o) #32
   unreachable
 
@@ -2369,9 +2354,8 @@ bb.e:                                             ; preds = %bb.d
 
 .noexc11:                                         ; preds = %bb.d
   %i.n = extractelement <2 x ptr> %i.i, i64 0     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = extractelement <2 x ptr> %i.i, i64 1     ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   call void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.o) #32
   unreachable
 
@@ -2774,8 +2758,7 @@ bb.h:                                             ; preds = %_RNvMNtCs5NXVUOdy9d
 bb.i:                                             ; preds = %bb.f
   %i.am = extractvalue { ptr, ptr } %i.ah, 0      ; 2 uses
   %i.an = extractvalue { ptr, ptr } %i.ah, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am), "nonnull"(ptr %i.an) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core4join23join_recover_from_panic(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.l, ptr noundef nonnull %i.am, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.an) #32
           to label %bb.an unwind label %.thread
 
@@ -2853,8 +2836,7 @@ bb.n:                                             ; preds = %.loopexit
   unreachable
 
 bb.o:                                             ; preds = %.loopexit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.p, !noalias !979
 
@@ -3196,8 +3178,7 @@ bb.h:                                             ; preds = %_RNvMNtCs5NXVUOdy9d
 bb.i:                                             ; preds = %bb.f
   %i.an = extractvalue { ptr, ptr } %i.ah, 0      ; 2 uses
   %i.ao = extractvalue { ptr, ptr } %i.ah, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an), "nonnull"(ptr %i.ao) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core4join23join_recover_from_panic(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.m, ptr noundef nonnull %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ao) #32
           to label %bb.ao unwind label %.thread
@@ -3287,8 +3268,7 @@ bb.n:                                             ; preds = %.loopexit101
   unreachable
 
 bb.o:                                             ; preds = %.loopexit101
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.p, !noalias !1026
 
@@ -3642,8 +3622,7 @@ bb.h:                                             ; preds = %_RNvMNtCs5NXVUOdy9d
 bb.i:                                             ; preds = %bb.f
   %i.ak = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.al = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak), "nonnull"(ptr %i.al) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core4join23join_recover_from_panic(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.k, ptr noundef nonnull %i.ak, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.al) #32
           to label %bb.am unwind label %.thread
 
@@ -3720,8 +3699,7 @@ bb.n:                                             ; preds = %.loopexit
   unreachable
 
 bb.o:                                             ; preds = %.loopexit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.p, !noalias !1073
 
@@ -4062,8 +4040,7 @@ bb.h:                                             ; preds = %_RNvMNtCs5NXVUOdy9d
 bb.i:                                             ; preds = %bb.f
   %i.an = extractvalue { ptr, ptr } %i.ah, 0      ; 2 uses
   %i.ao = extractvalue { ptr, ptr } %i.ah, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an), "nonnull"(ptr %i.ao) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core4join23join_recover_from_panic(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.m, ptr noundef nonnull %i.an, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ao) #32
           to label %bb.ao unwind label %.thread
@@ -4153,8 +4130,7 @@ bb.n:                                             ; preds = %.loopexit101
   unreachable
 
 bb.o:                                             ; preds = %.loopexit101
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.2.0.copyload.i), "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.2.0.copyload.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.4.0.copyload.i) #32
           to label %.noexc1.i unwind label %bb.p, !noalias !1120
 
@@ -4557,8 +4533,7 @@ bb.i:                                             ; preds = %_RNvMNtCs5NXVUOdy9d
 bb.j:                                             ; preds = %bb.g
   %i.as = extractvalue { ptr, ptr } %i.am, 0      ; 2 uses
   %i.at = extractvalue { ptr, ptr } %i.am, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.as), "nonnull"(ptr %i.at) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core4join23join_recover_from_panic(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.o, ptr noundef nonnull %i.as, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.at) #32
@@ -4646,8 +4621,7 @@ bb.o:                                             ; preds = %.loopexit108
   unreachable
 
 bb.p:                                             ; preds = %.loopexit108
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.466.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.567.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.466.0.copyload), "nonnull"(ptr %.sroa.567.0.copyload) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.466.0.copyload, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.567.0.copyload) #32
           to label %.noexc57 unwind label %bb.ac
 
@@ -4938,8 +4912,7 @@ bb.i:                                             ; preds = %_RNvMNtCs5NXVUOdy9d
 bb.j:                                             ; preds = %bb.g
   %i.ap = extractvalue { ptr, ptr } %i.aj, 0      ; 2 uses
   %i.aq = extractvalue { ptr, ptr } %i.aj, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aq) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap), "nonnull"(ptr %i.aq) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core4join23join_recover_from_panic(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.o, ptr noundef nonnull %i.ap, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.aq) #32
@@ -5032,8 +5005,7 @@ bb.p:                                             ; preds = %.loopexit107
   unreachable
 
 bb.q:                                             ; preds = %.loopexit107
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.469.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.copyload), "nonnull"(ptr %.sroa.469.0.copyload) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.3.0.copyload, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.469.0.copyload) #32
           to label %.noexc57 unwind label %bb.ad
 
@@ -5417,8 +5389,7 @@ bb.p:                                             ; preds = %.loopexit105
   unreachable
 
 bb.q:                                             ; preds = %.loopexit105
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.468.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.569.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.468.0.copyload), "nonnull"(ptr %.sroa.569.0.copyload) ]
   invoke void @_RNvNtCs5NXVUOdy9du_10rayon_core6unwind16resume_unwinding(ptr noundef nonnull %.sroa.468.0.copyload, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.569.0.copyload) #32
           to label %.noexc57 unwind label %bb.ak
 
@@ -5821,8 +5792,7 @@ bb.j:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.k:                                             ; preds = %bb.d
   %i.n = extractvalue { ptr, ptr } %i.j, 0        ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.j, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   %i.p = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.o, i64 0
   br label %bb.l
 
@@ -5995,8 +5965,7 @@ bb.m:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.n:                                             ; preds = %.body44
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -6203,8 +6172,7 @@ bb.m:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.n:                                             ; preds = %.body
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -6372,8 +6340,7 @@ bb.m:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.n:                                             ; preds = %.body44
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -6580,8 +6547,7 @@ bb.m:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.n:                                             ; preds = %.body
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -6884,8 +6850,7 @@ bb.j:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.k:                                             ; preds = %bb.d
   %i.l = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
   %i.m = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -7039,8 +7004,7 @@ bb.j:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.k:                                             ; preds = %bb.d
   %i.l = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
   %i.m = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -7217,8 +7181,7 @@ bb.j:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.k:                                             ; preds = %bb.d
   %i.m = extractvalue { ptr, ptr } %i.j, 0        ; 2 uses
   %i.n = extractvalue { ptr, ptr } %i.j, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m), "nonnull"(ptr %i.n) ]
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -7500,8 +7463,7 @@ bb.i:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.j:                                             ; preds = %bb.d
   %i.n = extractvalue { ptr, ptr } %i.j, 0        ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.j, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   %i.p = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.o, i64 0
   br label %bb.k
 
@@ -7752,8 +7714,7 @@ bb.l:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.m:                                             ; preds = %.body46
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -8038,8 +7999,7 @@ bb.l:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.m:                                             ; preds = %.body44
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -8285,8 +8245,7 @@ bb.l:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.m:                                             ; preds = %.body46
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -8571,8 +8530,7 @@ bb.l:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.m:                                             ; preds = %.body44
   %i.o = extractvalue { ptr, ptr } %i.l, 0        ; 2 uses
   %i.p = extractvalue { ptr, ptr } %i.l, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o), "nonnull"(ptr %i.p) ]
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -8975,8 +8933,7 @@ bb.i:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.j:                                             ; preds = %bb.d
   %i.l = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
   %i.m = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -9208,8 +9165,7 @@ bb.i:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.j:                                             ; preds = %bb.d
   %i.l = extractvalue { ptr, ptr } %i.i, 0        ; 2 uses
   %i.m = extractvalue { ptr, ptr } %i.i, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -9465,8 +9421,7 @@ bb.i:                                             ; preds = %_RNvXsl_NtNtCs4NRVx
 bb.j:                                             ; preds = %bb.d
   %i.n = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -9839,8 +9794,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2620
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.5.sroa.7.0..sroa.5.0..sroa_idx.sroa_idx, i64 40, i1 false)
   %i.d = inttoptr i64 %.sroa.5.sroa.0.0.copyload to ptr
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.5.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload), "nonnull"(ptr %.sroa.5.sroa.5.0.copyload) ]
   %i.e = load i64, ptr %.sroa.0.0.copyload, align 8, !noalias !2620, !noundef !4
   %i.f = load i64, ptr %i.d, align 8, !noalias !2620, !noundef !4
   %i.g = sub i64 %i.e, %i.f
@@ -10127,8 +10081,7 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.n, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.n, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -10333,8 +10286,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
   %i.e = inttoptr i64 %.sroa.5.sroa.4.0.copyload to ptr ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.7.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.5.0.copyload), "nonnull"(ptr %.sroa.5.sroa.7.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.f = load i64, ptr %.sroa.0.0.copyload, align 8, !noalias !2680, !noundef !4
   %i.g = load i64, ptr %.sroa.5.sroa.0.0.copyload, align 8, !noalias !2680, !noundef !4
@@ -10387,8 +10339,7 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.n, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.n, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -10648,8 +10599,7 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.n, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.n, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -10894,8 +10844,7 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.c
   %i.q = extractvalue { ptr, ptr } %i.n, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.n, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -11150,8 +11099,7 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.c
   %i.s = extractvalue { ptr, ptr } %i.o, 0        ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.o, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
   %i.u = insertelement <2 x ptr> <ptr poison, ptr undef>, ptr %i.t, i64 0
   br label %bb.j
 
@@ -11554,8 +11502,7 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.c
   %i.s = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
   %i.t = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s), "nonnull"(ptr %i.t) ]
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -11704,10 +11651,7 @@ bb.a:
   br i1 %.not, label %bb.e, label %bb.b, !prof !10
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.7.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload), "nonnull"(ptr %.sroa.5.sroa.4.0.copyload), "nonnull"(ptr %.sroa.5.sroa.5.0.copyload), "nonnull"(ptr %.sroa.5.sroa.7.0.copyload) ]
   %i.c = load i64, ptr %.sroa.0.0.copyload, align 8, !noalias !2850, !noundef !4
   %i.d = load i64, ptr %.sroa.5.sroa.0.0.copyload, align 8, !noalias !2850, !noundef !4
   %i.e = sub i64 %i.c, %i.d
@@ -11931,10 +11875,7 @@ bb.a:
   br i1 %.not, label %bb.e, label %bb.b, !prof !10
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.4.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.7.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.sroa.0.0.copyload), "nonnull"(ptr %.sroa.5.sroa.4.0.copyload), "nonnull"(ptr %.sroa.5.sroa.5.0.copyload), "nonnull"(ptr %.sroa.5.sroa.7.0.copyload) ]
   %i.c = load i64, ptr %.sroa.0.0.copyload, align 8, !noalias !2876, !noundef !4
   %i.d = load i64, ptr %.sroa.5.sroa.0.0.copyload, align 8, !noalias !2876, !noundef !4
   %i.e = sub i64 %i.c, %i.d

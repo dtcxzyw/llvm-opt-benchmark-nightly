@@ -204,12 +204,7 @@ bb.dq:                                            ; preds = %bb.dp
   %.pre423.pre = load ptr, ptr %.phi.trans.insert422.phi.trans.insert, align 8, !tbaa !107 ; 3 uses
   %.pre = load ptr, ptr %i.uf, align 8, !tbaa !33 ; 4 uses
   %.pre409 = load ptr, ptr %i.ug, align 8, !tbaa !33 ; 4 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre409, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre412.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre414.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre419.pre, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.pre421.pre, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %.pre, i64 64), "align"(ptr %.pre409, i64 64), "align"(ptr %.pre412.pre, i64 64), "align"(ptr %.pre414.pre, i64 64), "align"(ptr %.pre419.pre, i64 64), "align"(ptr %.pre421.pre, i64 64) ]
   %i.blo = shl i64 %i.blh, 2
   %i.blp = mul i64 %i.blo, %i.blg                 ; 3 uses
   %scevgep = getelementptr i8, ptr %.pre410.pre, i64 %i.blp ; 3 uses

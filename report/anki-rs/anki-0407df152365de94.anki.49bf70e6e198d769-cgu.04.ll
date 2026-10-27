@@ -206,8 +206,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.al = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.am = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al), "nonnull"(ptr %i.am) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.al, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.am) #38
           to label %bb.x unwind label %.thread
@@ -482,8 +481,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.al = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.am = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al), "nonnull"(ptr %i.am) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.al, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.am) #38
           to label %bb.x unwind label %.thread
@@ -762,8 +760,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.ao = extractvalue { ptr, ptr } %i.ai, 0      ; 2 uses
   %i.ap = extractvalue { ptr, ptr } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao), "nonnull"(ptr %i.ap) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.ao, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ap) #38
           to label %bb.x unwind label %.thread
@@ -1038,8 +1035,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.al = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.am = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al), "nonnull"(ptr %i.am) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.al, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.am) #38
           to label %bb.x unwind label %.thread
@@ -1318,8 +1314,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.ao = extractvalue { ptr, ptr } %i.ai, 0      ; 2 uses
   %i.ap = extractvalue { ptr, ptr } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao), "nonnull"(ptr %i.ap) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.ao, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ap) #38
           to label %bb.x unwind label %.thread
@@ -1598,8 +1593,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.ao = extractvalue { ptr, ptr } %i.ai, 0      ; 2 uses
   %i.ap = extractvalue { ptr, ptr } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao), "nonnull"(ptr %i.ap) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.ao, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ap) #38
           to label %bb.x unwind label %.thread
@@ -1878,8 +1872,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.ao = extractvalue { ptr, ptr } %i.ai, 0      ; 2 uses
   %i.ap = extractvalue { ptr, ptr } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao), "nonnull"(ptr %i.ap) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.ao, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ap) #38
           to label %bb.x unwind label %.thread
@@ -2158,8 +2151,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.ao = extractvalue { ptr, ptr } %i.ai, 0      ; 2 uses
   %i.ap = extractvalue { ptr, ptr } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao), "nonnull"(ptr %i.ap) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.ao, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ap) #38
           to label %bb.x unwind label %.thread
@@ -2431,8 +2423,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.al = extractvalue { ptr, ptr } %i.af, 0      ; 2 uses
   %i.am = extractvalue { ptr, ptr } %i.af, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.am) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al), "nonnull"(ptr %i.am) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.al, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.am) #38
           to label %bb.x unwind label %.thread
@@ -2711,8 +2702,7 @@ bb.h:                                             ; preds = %_ZN10rayon_core5sle
 bb.i:                                             ; preds = %bb.f
   %i.ao = extractvalue { ptr, ptr } %i.ai, 0      ; 2 uses
   %i.ap = extractvalue { ptr, ptr } %i.ai, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao), "nonnull"(ptr %i.ap) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   invoke void @_ZN10rayon_core4join23join_recover_from_panic17h80b67168c3d68f84E(ptr noundef nonnull align 128 %2, ptr noundef nonnull align 8 %i.n, ptr noundef nonnull align 1 %i.ao, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ap) #38
           to label %bb.x unwind label %.thread
@@ -2979,8 +2969,7 @@ bb.i:                                             ; preds = %"_ZN115_$LT$core..p
 bb.j:                                             ; preds = %.body
   %i.aa = extractvalue { ptr, ptr } %i.y, 0       ; 6 uses
   %i.ab = extractvalue { ptr, ptr } %i.y, 1       ; 8 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa), "nonnull"(ptr %i.ab) ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.ad = load ptr, ptr %i.ac, align 32, !align !15, !noundef !5 ; 2 uses
   %.not = icmp eq ptr %i.ad, null
@@ -3172,8 +3161,7 @@ bb.i:                                             ; preds = %"_ZN115_$LT$core..p
 bb.j:                                             ; preds = %.body
   %i.aa = extractvalue { ptr, ptr } %i.y, 0       ; 6 uses
   %i.ab = extractvalue { ptr, ptr } %i.y, 1       ; 8 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa), "nonnull"(ptr %i.ab) ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.ad = load ptr, ptr %i.ac, align 32, !align !15, !noundef !5 ; 2 uses
   %.not = icmp eq ptr %i.ad, null
@@ -3576,7 +3564,7 @@ bb.l:                                             ; preds = %"_ZN3std11collectio
   %i.av = ptrtoint ptr %i.at to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %.val374 = load ptr, ptr %i.aw, align 8         ; 4 uses
+  %.val374 = load ptr, ptr %i.aw, align 8         ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 224
   %.val475 = load i64, ptr %i.ax, align 8         ; 3 uses
   %i.ay = getelementptr inbounds i8, ptr %i.as, i64 -48
@@ -3590,13 +3578,16 @@ bb.l:                                             ; preds = %"_ZN3std11collectio
   br i1 %.not8.i.i.i, label %"_ZN4anki13import_export7package4apkg6import5notes11NoteContext20record_remapped_ords28_$u7b$$u7b$closure$u7d$$u7d$17h83bf16bd025a35feE.exit.i", label %.lr.ph9.i.i.i
 
 .lr.ph9.i.i.i:                                    ; preds = %bb.l
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val374) ]
   %.idx.i.i.i = mul nuw nsw i64 %.val475, 224
   %i.bb = getelementptr inbounds nuw i8, ptr %.val374, i64 %.idx.i.i.i
   %.not12.i.i.i = icmp eq i64 %.val475, 0
-  br i1 %.not12.i.i.i, label %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i, label %.lr.ph.i.i.i
+  br i1 %.not12.i.i.i, label %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i.preheader, label %.lr.ph.i.i.i
 
-_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i: ; preds = %.lr.ph9.i.i.i, %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i
+_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i.preheader: ; preds = %.lr.ph9.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val374) ]
+  br label %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i
+
+_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i: ; preds = %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i.preheader, %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.i
   %i.bc = call { ptr, ptr } @"_ZN95_$LT$hashbrown..map..IterMut$LT$K$C$V$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h8dcb47df5730a386E"(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.b), !noalias !5944
   %i.bd = extractvalue { ptr, ptr } %i.bc, 0
   %.not.us.i.i.i = icmp eq ptr %i.bd, null
@@ -3605,7 +3596,7 @@ _ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.us.i.i.
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph9.i.i.i, %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.i.i.i
   %.pn = phi { ptr, ptr } [ %i.bn, %_ZN4core4iter6traits8iterator8Iterator8try_fold17h5a3c442f7c90f50fE.exit.i.i.i ], [ %i.az, %.lr.ph9.i.i.i ]
   %i.be = extractvalue { ptr, ptr } %.pn, 1       ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.be) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.be), "nonnull"(ptr %.val374) ]
   br label %bb.m
 
 bb.m:                                             ; preds = %.backedge.i.i.i.i, %.lr.ph.i.i.i
@@ -4008,8 +3999,7 @@ _ZN4core4iter6traits8iterator8Iterator3zip17he2a9be3506ef392aE.exit.i.i: ; preds
   br label %.thread.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZN4core4iter6traits8iterator8Iterator3zip17he2a9be3506ef392aE.exit.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.429.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i), "nonnull"(ptr %.sroa.429.0.copyload.i.i) ]
   %i.ga = trunc i64 %i.fx to i32
   %i.gb = sub i32 %i.ga, %i.eu
   br label %bb.aj
@@ -4412,7 +4402,7 @@ bb.b:                                             ; preds = %"_ZN5alloc3vec16Vec
   br i1 %i.g, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE.exit"
-  %i.h = phi ptr [ %i.am, %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE.exit" ], [ %i.f, %bb.b ] ; 12 uses
+  %i.h = phi ptr [ %i.am, %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE.exit" ], [ %i.f, %bb.b ] ; 14 uses
   %i.i = ptrtoint ptr %i.h to i64                 ; 3 uses
   %i.j = and i64 %i.i, 3
   switch i64 %i.j, label %default.unreachable [
@@ -4458,11 +4448,11 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   br i1 %i.u, label %bb.d, label %bb.m
 
 "_ZN4core3ptr78drop_in_place$LT$core..result..Result$LT$usize$C$std..io..error..Error$GT$$GT$17hf6f15a96625a91b2E.exit11.i.i.thread": ; preds = %.split25.i.i, %.split.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ], !noalias !9811
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h), "nonnull"(ptr %i.h) ]
   br label %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE.exit"
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ], !noalias !9811
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h), "nonnull"(ptr %i.h) ]
   br label %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE.exit"
 
 bb.e:                                             ; preds = %.split24.i.i

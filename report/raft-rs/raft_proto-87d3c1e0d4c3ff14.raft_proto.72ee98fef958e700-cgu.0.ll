@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.c = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 2 uses
   %i.d = extractvalue { ptr, ptr } %i.c, 0        ; 3 uses
   %i.e = extractvalue { ptr, ptr } %i.c, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %i.e) ]
   %i.f = icmp eq ptr %i.d, %i.e
   br i1 %i.f, label %._crit_edge, label %.lr.ph
 
@@ -276,7 +275,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXsM_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvXsM_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 0 uses
   ret i1 true
@@ -381,8 +380,7 @@ bb.b:                                             ; preds = %bb.e, %bb.a
   %i.k = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 2 uses
   %i.l = extractvalue { ptr, ptr } %i.k, 0        ; 3 uses
   %i.m = extractvalue { ptr, ptr } %i.k, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l), "nonnull"(ptr %i.m) ]
   %i.n = icmp eq ptr %i.l, %i.m
   br i1 %i.n, label %._crit_edge, label %.lr.ph
 
@@ -785,8 +783,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   %i.ac = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 2 uses
   %i.ad = extractvalue { ptr, ptr } %i.ac, 0      ; 3 uses
   %i.ae = extractvalue { ptr, ptr } %i.ac, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad), "nonnull"(ptr %i.ae) ]
   %i.af = icmp eq ptr %i.ad, %i.ae
   br i1 %i.af, label %._crit_edge, label %.lr.ph
 
@@ -929,7 +926,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXsi_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr noundef nonnull align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvXsi_NtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpbNtB5_7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message14is_initialized(ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) ; 0 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -1212,8 +1209,7 @@ bb.w:                                             ; preds = %bb.s, %bb.y
   %i.at = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 2 uses
   %i.au = extractvalue { ptr, ptr } %i.at, 0      ; 3 uses
   %i.av = extractvalue { ptr, ptr } %i.at, 1      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.av) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.au), "nonnull"(ptr %i.av) ]
   %i.aw = icmp eq ptr %i.au, %i.av
   br i1 %i.aw, label %._crit_edge, label %.lr.ph
 
@@ -1616,7 +1612,7 @@ bb.l:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 4)) %0, ptr noundef nonnull align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
+define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb12ConfChangeV2NtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 4)) %0, ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 0 uses
   store i32 -1, ptr %0, align 8
@@ -2019,7 +2015,7 @@ bb.l:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
+define hidden void @_RNvYNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb7MessageNtNtCslpwiOMB70Kp_8protobuf7message7Message17check_initializedB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(address, read_provenance) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvXs9_NtCslpwiOMB70Kp_8protobuf8repeatedRINtB5_13RepeatedFieldNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb5EntryENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterB15_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 0 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40

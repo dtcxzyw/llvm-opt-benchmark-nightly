@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %bb.i
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.k
   %.sroa.4186.0.copyload5 = ptrtoaddr ptr %.sroa.4186.0.copyload to i64
   %.sroa.0.0.copyload4 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4186.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4186.0.copyload) ]
   %i.z = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5187.0.copyload ; 3 uses
   %min.iters.check = icmp ult i64 %i.z, 8
   %i.aa = sub i64 %.sroa.4186.0.copyload5, %.sroa.0.0.copyload4
@@ -377,8 +376,7 @@ bb.p:                                             ; preds = %bb.m
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit180.lr.ph: ; preds = %bb.p
   %.sroa.4215.0.copyload25 = ptrtoaddr ptr %.sroa.4215.0.copyload to i64
   %.sroa.0213.0.copyload24 = ptrtoaddr ptr %.sroa.0213.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0213.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4215.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0213.0.copyload), "nonnull"(ptr %.sroa.4215.0.copyload) ]
   %i.bu = sub nuw i64 %.sroa.7218.0.copyload, %.sroa.5217.0.copyload ; 3 uses
   %min.iters.check28 = icmp ult i64 %i.bu, 8
   %i.bv = sub i64 %.sroa.4215.0.copyload25, %.sroa.0213.0.copyload24
@@ -481,8 +479,7 @@ bb.r:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit185.lr.ph: ; preds = %bb.r
   %.sroa.4199.0.copyload9 = ptrtoaddr ptr %.sroa.4199.0.copyload to i64
   %.sroa.0197.0.copyload8 = ptrtoaddr ptr %.sroa.0197.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0197.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4199.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0197.0.copyload), "nonnull"(ptr %.sroa.4199.0.copyload) ]
   %i.dg = sub nuw i64 %.sroa.7202.0.copyload, %.sroa.5201.0.copyload ; 3 uses
   %min.iters.check12 = icmp ult i64 %i.dg, 8
   %i.dh = sub i64 %.sroa.4199.0.copyload9, %.sroa.0197.0.copyload8
@@ -656,8 +653,7 @@ bb.k:                                             ; preds = %bb.i
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.k
   %.sroa.4185.0.copyload6 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload5 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ad = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 3 uses
   %min.iters.check = icmp ult i64 %i.ad, 8
   %i.ae = sub i64 %.sroa.4185.0.copyload6, %.sroa.0.0.copyload5
@@ -834,8 +830,7 @@ bb.q:                                             ; preds = %bb.m
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit179.lr.ph: ; preds = %bb.q
   %.sroa.4214.0.copyload26 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload25 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cd = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 3 uses
   %min.iters.check29 = icmp ult i64 %i.cd, 8
   %i.ce = sub i64 %.sroa.4214.0.copyload26, %.sroa.0212.0.copyload25
@@ -938,8 +933,7 @@ bb.s:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit184.lr.ph: ; preds = %bb.s
   %.sroa.4198.0.copyload10 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload9 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.dp = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 3 uses
   %min.iters.check13 = icmp ult i64 %i.dp, 8
   %i.dq = sub i64 %.sroa.4198.0.copyload10, %.sroa.0196.0.copyload9
@@ -1118,8 +1112,7 @@ bb.k:                                             ; preds = %bb.i
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.k
   %.sroa.4185.0.copyload9 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload8 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ac = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 3 uses
   %min.iters.check = icmp ult i64 %i.ac, 8
   %i.ad = sub i64 %.sroa.4185.0.copyload9, %.sroa.0.0.copyload8
@@ -1295,8 +1288,7 @@ bb.p:                                             ; preds = %bb.m
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit179.lr.ph: ; preds = %bb.p
   %.sroa.4214.0.copyload29 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload28 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cd = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 3 uses
   %min.iters.check32 = icmp ult i64 %i.cd, 8
   %i.ce = sub i64 %.sroa.4214.0.copyload29, %.sroa.0212.0.copyload28
@@ -1398,8 +1390,7 @@ bb.r:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit184.lr.ph: ; preds = %bb.r
   %.sroa.4198.0.copyload13 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload12 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.do = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 3 uses
   %min.iters.check16 = icmp ult i64 %i.do, 8
   %i.dp = sub i64 %.sroa.4198.0.copyload13, %.sroa.0196.0.copyload12
@@ -1579,8 +1570,7 @@ bb.k:                                             ; preds = %bb.i
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %bb.k
   %.sroa.4185.0.copyload6 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload5 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ad = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 3 uses
   %min.iters.check = icmp ult i64 %i.ad, 8
   %i.ae = sub i64 %.sroa.4185.0.copyload6, %.sroa.0.0.copyload5
@@ -1757,8 +1747,7 @@ bb.q:                                             ; preds = %bb.m
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit179.lr.ph: ; preds = %bb.q
   %.sroa.4214.0.copyload26 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload25 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cd = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 3 uses
   %min.iters.check29 = icmp ult i64 %i.cd, 8
   %i.ce = sub i64 %.sroa.4214.0.copyload26, %.sroa.0212.0.copyload25
@@ -1861,8 +1850,7 @@ bb.s:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit184.lr.ph: ; preds = %bb.s
   %.sroa.4198.0.copyload10 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload9 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.dp = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 3 uses
   %min.iters.check13 = icmp ult i64 %i.dp, 8
   %i.dq = sub i64 %.sroa.4198.0.copyload10, %.sroa.0196.0.copyload9
@@ -2041,8 +2029,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4186.0.copyload4 = ptrtoaddr ptr %.sroa.4186.0.copyload to i64
   %.sroa.0.0.copyload5 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4186.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4186.0.copyload) ]
   %i.z = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5187.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.z, 8
   %i.aa = sub i64 %.sroa.4186.0.copyload4, %.sroa.0.0.copyload5
@@ -2243,8 +2230,7 @@ bb.p:                                             ; preds = %bb.m
 iter.check59:                                     ; preds = %bb.p
   %.sroa.4215.0.copyload45 = ptrtoaddr ptr %.sroa.4215.0.copyload to i64
   %.sroa.0213.0.copyload44 = ptrtoaddr ptr %.sroa.0213.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0213.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4215.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0213.0.copyload), "nonnull"(ptr %.sroa.4215.0.copyload) ]
   %i.ca = sub nuw i64 %.sroa.7218.0.copyload, %.sroa.5217.0.copyload ; 7 uses
   %min.iters.check47 = icmp ult i64 %i.ca, 8
   %i.cb = sub i64 %.sroa.4215.0.copyload45, %.sroa.0213.0.copyload44
@@ -2377,8 +2363,7 @@ bb.r:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check29:                                     ; preds = %bb.r
   %.sroa.4199.0.copyload15 = ptrtoaddr ptr %.sroa.4199.0.copyload to i64
   %.sroa.0197.0.copyload14 = ptrtoaddr ptr %.sroa.0197.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0197.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4199.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0197.0.copyload), "nonnull"(ptr %.sroa.4199.0.copyload) ]
   %i.ds = sub nuw i64 %.sroa.7202.0.copyload, %.sroa.5201.0.copyload ; 7 uses
   %min.iters.check17 = icmp ult i64 %i.ds, 8
   %i.dt = sub i64 %.sroa.4199.0.copyload15, %.sroa.0197.0.copyload14
@@ -2582,8 +2567,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4185.0.copyload5 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload6 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ad = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.ad, 8
   %i.ae = sub i64 %.sroa.4185.0.copyload5, %.sroa.0.0.copyload6
@@ -2790,8 +2774,7 @@ bb.q:                                             ; preds = %bb.m
 iter.check60:                                     ; preds = %bb.q
   %.sroa.4214.0.copyload46 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload45 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cj = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 7 uses
   %min.iters.check48 = icmp ult i64 %i.cj, 8
   %i.ck = sub i64 %.sroa.4214.0.copyload46, %.sroa.0212.0.copyload45
@@ -2924,8 +2907,7 @@ bb.s:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check30:                                     ; preds = %bb.s
   %.sroa.4198.0.copyload16 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload15 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.eb = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 7 uses
   %min.iters.check18 = icmp ult i64 %i.eb, 8
   %i.ec = sub i64 %.sroa.4198.0.copyload16, %.sroa.0196.0.copyload15
@@ -3134,8 +3116,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4185.0.copyload8 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload9 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ac = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.ac, 8
   %i.ad = sub i64 %.sroa.4185.0.copyload8, %.sroa.0.0.copyload9
@@ -3341,8 +3322,7 @@ bb.p:                                             ; preds = %bb.m
 iter.check63:                                     ; preds = %bb.p
   %.sroa.4214.0.copyload49 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload48 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cj = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 7 uses
   %min.iters.check51 = icmp ult i64 %i.cj, 8
   %i.ck = sub i64 %.sroa.4214.0.copyload49, %.sroa.0212.0.copyload48
@@ -3474,8 +3454,7 @@ bb.r:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check33:                                     ; preds = %bb.r
   %.sroa.4198.0.copyload19 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload18 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.ea = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 7 uses
   %min.iters.check21 = icmp ult i64 %i.ea, 8
   %i.eb = sub i64 %.sroa.4198.0.copyload19, %.sroa.0196.0.copyload18
@@ -3685,8 +3664,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4185.0.copyload5 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload6 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ad = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.ad, 8
   %i.ae = sub i64 %.sroa.4185.0.copyload5, %.sroa.0.0.copyload6
@@ -3893,8 +3871,7 @@ bb.q:                                             ; preds = %bb.m
 iter.check60:                                     ; preds = %bb.q
   %.sroa.4214.0.copyload46 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload45 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cj = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 7 uses
   %min.iters.check48 = icmp ult i64 %i.cj, 8
   %i.ck = sub i64 %.sroa.4214.0.copyload46, %.sroa.0212.0.copyload45
@@ -4027,8 +4004,7 @@ bb.s:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check30:                                     ; preds = %bb.s
   %.sroa.4198.0.copyload16 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload15 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.eb = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 7 uses
   %min.iters.check18 = icmp ult i64 %i.eb, 8
   %i.ec = sub i64 %.sroa.4198.0.copyload16, %.sroa.0196.0.copyload15
@@ -4237,8 +4213,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4186.0.copyload4 = ptrtoaddr ptr %.sroa.4186.0.copyload to i64
   %.sroa.0.0.copyload5 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4186.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4186.0.copyload) ]
   %i.z = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5187.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.z, 4
   %i.aa = sub i64 %.sroa.4186.0.copyload4, %.sroa.0.0.copyload5
@@ -4439,8 +4414,7 @@ bb.p:                                             ; preds = %bb.m
 iter.check59:                                     ; preds = %bb.p
   %.sroa.4215.0.copyload45 = ptrtoaddr ptr %.sroa.4215.0.copyload to i64
   %.sroa.0213.0.copyload44 = ptrtoaddr ptr %.sroa.0213.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0213.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4215.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0213.0.copyload), "nonnull"(ptr %.sroa.4215.0.copyload) ]
   %i.ca = sub nuw i64 %.sroa.7218.0.copyload, %.sroa.5217.0.copyload ; 7 uses
   %min.iters.check47 = icmp ult i64 %i.ca, 4
   %i.cb = sub i64 %.sroa.4215.0.copyload45, %.sroa.0213.0.copyload44
@@ -4573,8 +4547,7 @@ bb.r:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check29:                                     ; preds = %bb.r
   %.sroa.4199.0.copyload15 = ptrtoaddr ptr %.sroa.4199.0.copyload to i64
   %.sroa.0197.0.copyload14 = ptrtoaddr ptr %.sroa.0197.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0197.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4199.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0197.0.copyload), "nonnull"(ptr %.sroa.4199.0.copyload) ]
   %i.ds = sub nuw i64 %.sroa.7202.0.copyload, %.sroa.5201.0.copyload ; 7 uses
   %min.iters.check17 = icmp ult i64 %i.ds, 4
   %i.dt = sub i64 %.sroa.4199.0.copyload15, %.sroa.0197.0.copyload14
@@ -4778,8 +4751,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4185.0.copyload5 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload6 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ad = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.ad, 4
   %i.ae = sub i64 %.sroa.4185.0.copyload5, %.sroa.0.0.copyload6
@@ -4986,8 +4958,7 @@ bb.q:                                             ; preds = %bb.m
 iter.check60:                                     ; preds = %bb.q
   %.sroa.4214.0.copyload46 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload45 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cj = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 7 uses
   %min.iters.check48 = icmp ult i64 %i.cj, 4
   %i.ck = sub i64 %.sroa.4214.0.copyload46, %.sroa.0212.0.copyload45
@@ -5120,8 +5091,7 @@ bb.s:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check30:                                     ; preds = %bb.s
   %.sroa.4198.0.copyload16 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload15 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.eb = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 7 uses
   %min.iters.check18 = icmp ult i64 %i.eb, 4
   %i.ec = sub i64 %.sroa.4198.0.copyload16, %.sroa.0196.0.copyload15
@@ -5330,8 +5300,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4185.0.copyload8 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload9 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ac = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.ac, 4
   %i.ad = sub i64 %.sroa.4185.0.copyload8, %.sroa.0.0.copyload9
@@ -5537,8 +5506,7 @@ bb.p:                                             ; preds = %bb.m
 iter.check63:                                     ; preds = %bb.p
   %.sroa.4214.0.copyload49 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload48 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cj = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 7 uses
   %min.iters.check51 = icmp ult i64 %i.cj, 4
   %i.ck = sub i64 %.sroa.4214.0.copyload49, %.sroa.0212.0.copyload48
@@ -5670,8 +5638,7 @@ bb.r:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check33:                                     ; preds = %bb.r
   %.sroa.4198.0.copyload19 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload18 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.ea = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 7 uses
   %min.iters.check21 = icmp ult i64 %i.ea, 4
   %i.eb = sub i64 %.sroa.4198.0.copyload19, %.sroa.0196.0.copyload18
@@ -5881,8 +5848,7 @@ bb.k:                                             ; preds = %bb.i
 iter.check:                                       ; preds = %bb.k
   %.sroa.4185.0.copyload5 = ptrtoaddr ptr %.sroa.4185.0.copyload to i64
   %.sroa.0.0.copyload6 = ptrtoaddr ptr %.sroa.0.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4185.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.4185.0.copyload) ]
   %i.ad = sub nuw i64 %.sroa.7.0.copyload, %.sroa.5186.0.copyload ; 7 uses
   %min.iters.check = icmp ult i64 %i.ad, 4
   %i.ae = sub i64 %.sroa.4185.0.copyload5, %.sroa.0.0.copyload6
@@ -6089,8 +6055,7 @@ bb.q:                                             ; preds = %bb.m
 iter.check60:                                     ; preds = %bb.q
   %.sroa.4214.0.copyload46 = ptrtoaddr ptr %.sroa.4214.0.copyload to i64
   %.sroa.0212.0.copyload45 = ptrtoaddr ptr %.sroa.0212.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4214.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0212.0.copyload), "nonnull"(ptr %.sroa.4214.0.copyload) ]
   %i.cj = sub nuw i64 %.sroa.7217.0.copyload, %.sroa.5216.0.copyload ; 7 uses
   %min.iters.check48 = icmp ult i64 %i.cj, 4
   %i.ck = sub i64 %.sroa.4214.0.copyload46, %.sroa.0212.0.copyload45
@@ -6223,8 +6188,7 @@ bb.s:                                             ; preds = %_RNvXs3_NtNtNtCsj6e
 iter.check30:                                     ; preds = %bb.s
   %.sroa.4198.0.copyload16 = ptrtoaddr ptr %.sroa.4198.0.copyload to i64
   %.sroa.0196.0.copyload15 = ptrtoaddr ptr %.sroa.0196.0.copyload to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4198.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0196.0.copyload), "nonnull"(ptr %.sroa.4198.0.copyload) ]
   %i.eb = sub nuw i64 %.sroa.7201.0.copyload, %.sroa.5200.0.copyload ; 7 uses
   %min.iters.check18 = icmp ult i64 %i.eb, 4
   %i.ec = sub i64 %.sroa.4198.0.copyload16, %.sroa.0196.0.copyload15
@@ -6627,8 +6591,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %bb.d
   %.sroa.4144.0.copyload.us97 = ptrtoaddr ptr %.sroa.4144.0.copyload.us to i64
   %.sroa.0142.0.copyload.us96 = ptrtoaddr ptr %.sroa.0142.0.copyload.us to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0142.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4144.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0142.0.copyload.us), "nonnull"(ptr %.sroa.4144.0.copyload.us) ]
   %i.dg = sub nuw i64 %.sroa.7146.0.copyload.us, %.sroa.5145.0.copyload.us ; 3 uses
   %min.iters.check100 = icmp ult i64 %i.dg, 8
   %i.dh = sub i64 %.sroa.4144.0.copyload.us97, %.sroa.0142.0.copyload.us96
@@ -6689,9 +6652,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.dy, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutfEINtB13_4IterfEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %bb.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0150.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4152.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6156.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0150.0.copyload.us), "nonnull"(ptr %.sroa.4152.0.copyload.us), "nonnull"(ptr %.sroa.6156.0.copyload.us) ]
   %i.dz = sub nuw i64 %.sroa.9.0.copyload.us, %.sroa.7158.0.copyload.us ; 3 uses
   %min.iters.check80 = icmp ult i64 %i.dz, 8
   br i1 %min.iters.check80, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutfEINtB13_4IterfEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck70
@@ -6788,8 +6749,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutfEINtB13_4IterfEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread._crit_edge.us
   %.sroa.4164.0.copyload.us67 = ptrtoaddr ptr %.sroa.4164.0.copyload.us to i64
   %.sroa.0162.0.copyload.us68 = ptrtoaddr ptr %.sroa.0162.0.copyload.us to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0162.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4164.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0162.0.copyload.us), "nonnull"(ptr %.sroa.4164.0.copyload.us) ]
   %i.fj = sub nuw i64 %.sroa.7167.0.copyload.us, %.sroa.5166.0.copyload.us ; 3 uses
   %min.iters.check = icmp ult i64 %i.fj, 8
   %i.fk = sub i64 %.sroa.0162.0.copyload.us68, %.sroa.4164.0.copyload.us67
@@ -7192,8 +7152,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %i.gs, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.thread._crit_edge.us, label %.lr.ph.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %bb.e
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0268.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4270.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0268.0.copyload.us), "nonnull"(ptr %.sroa.4270.0.copyload.us) ]
   %i.gt = sub nuw i64 %.sroa.7272.0.copyload.us, %.sroa.5271.0.copyload.us ; 3 uses
   %min.iters.check205 = icmp ult i64 %i.gt, 8
   br i1 %min.iters.check205, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck196
@@ -7266,8 +7225,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.hp, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit212.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0273.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4275.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0273.0.copyload.us), "nonnull"(ptr %.sroa.4275.0.copyload.us) ]
   %i.hq = sub nuw i64 %.sroa.7278.0.copyload.us, %.sroa.5277.0.copyload.us ; 3 uses
   %min.iters.check183 = icmp ult i64 %i.hq, 8
   br i1 %min.iters.check183, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit212.us.preheader, label %vector.memcheck174
@@ -7340,9 +7298,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.im, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit212.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit212.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %bb.l
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0282.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4284.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6288.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0282.0.copyload.us), "nonnull"(ptr %.sroa.4284.0.copyload.us), "nonnull"(ptr %.sroa.6288.0.copyload.us) ]
   %i.in = sub nuw i64 %.sroa.9.0.copyload.us, %.sroa.7290.0.copyload.us ; 3 uses
   %min.iters.check160 = icmp ult i64 %i.in, 8
   br i1 %min.iters.check160, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck145
@@ -7429,9 +7385,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %i.js, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0294.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4296.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6300.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0294.0.copyload.us), "nonnull"(ptr %.sroa.4296.0.copyload.us), "nonnull"(ptr %.sroa.6300.0.copyload.us) ]
   %i.jt = sub nuw i64 %.sroa.9303.0.copyload.us, %.sroa.7302.0.copyload.us ; 3 uses
   %min.iters.check133 = icmp ult i64 %i.jt, 8
   br i1 %min.iters.check133, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.us.preheader, label %vector.memcheck119
@@ -7518,8 +7472,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %i.ky, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.thread.loopexit.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit231.thread._crit_edge.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0310.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4312.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0310.0.copyload.us), "nonnull"(ptr %.sroa.4312.0.copyload.us) ]
   %i.kz = sub nuw i64 %.sroa.7315.0.copyload.us, %.sroa.5314.0.copyload.us ; 3 uses
   %min.iters.check108 = icmp ult i64 %i.kz, 8
   br i1 %min.iters.check108, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck99
@@ -7594,8 +7547,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.lz, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit222.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0316.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4318.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0316.0.copyload.us), "nonnull"(ptr %.sroa.4318.0.copyload.us) ]
   %i.ma = sub nuw i64 %.sroa.7321.0.copyload.us, %.sroa.5320.0.copyload.us ; 3 uses
   %min.iters.check = icmp ult i64 %i.ma, 8
   br i1 %min.iters.check, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit222.us.preheader, label %vector.memcheck
@@ -7935,8 +7887,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.rb, label %._crit_edge662, label %bb.n
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit236.lr.ph.us: ; preds = %bb.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0329.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4331.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0329.0.copyload.us), "nonnull"(ptr %.sroa.4331.0.copyload.us) ]
   %i.rc = sub nuw i64 %.sroa.7334.0.copyload.us, %.sroa.5333.0.copyload.us ; 3 uses
   %min.iters.check276 = icmp ult i64 %i.rc, 8
   br i1 %min.iters.check276, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit236.us.preheader, label %vector.memcheck267
@@ -8009,9 +7960,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.ry, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit236.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit236.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.lr.ph.us: ; preds = %bb.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0339.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4341.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6345.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0339.0.copyload.us), "nonnull"(ptr %.sroa.4341.0.copyload.us), "nonnull"(ptr %.sroa.6345.0.copyload.us) ]
   %i.rz = sub nuw i64 %.sroa.9348.0.copyload.us, %.sroa.7347.0.copyload.us ; 3 uses
   %min.iters.check253 = icmp ult i64 %i.rz, 8
   br i1 %min.iters.check253, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.us.preheader, label %vector.memcheck238
@@ -8098,8 +8047,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %i.te, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.thread.loopexit.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit244.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4IterhEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit252.thread._crit_edge.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0352.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4354.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0352.0.copyload.us), "nonnull"(ptr %.sroa.4354.0.copyload.us) ]
   %i.tf = sub nuw i64 %.sroa.7357.0.copyload.us, %.sroa.5356.0.copyload.us ; 3 uses
   %min.iters.check227 = icmp ult i64 %i.tf, 8
   br i1 %min.iters.check227, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit244.us.preheader, label %vector.memcheck218
@@ -8502,8 +8450,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %i.dl, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread._crit_edge.us, label %.lr.ph.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItertEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0147.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4149.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0147.0.copyload.us), "nonnull"(ptr %.sroa.4149.0.copyload.us) ]
   %i.dm = sub nuw i64 %.sroa.7151.0.copyload.us, %.sroa.5150.0.copyload.us ; 3 uses
   %min.iters.check104 = icmp ult i64 %i.dm, 8
   br i1 %min.iters.check104, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItertEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck95
@@ -8578,9 +8525,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   br i1 %i.ek, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItertEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutmEINtBZ_4ItertEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %bb.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0155.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4157.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6161.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0155.0.copyload.us), "nonnull"(ptr %.sroa.4157.0.copyload.us), "nonnull"(ptr %.sroa.6161.0.copyload.us) ]
   %i.el = sub nuw i64 %.sroa.9.0.copyload.us, %.sroa.7163.0.copyload.us ; 3 uses
   %min.iters.check80 = icmp ult i64 %i.el, 8
   br i1 %min.iters.check80, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck66
@@ -8683,8 +8628,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slic
   br i1 %i.gc, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread.loopexit.us, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.us
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuttEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_INtNtNtBb_5slice4iter7IterMutmEINtB13_4ItertEEB1v_EINtB5_7ZipImplBW_B1v_E4nextCsa5QsYiPB8Gl_5image.exit.thread._crit_edge.us
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0167.0.copyload.us) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4169.0.copyload.us) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0167.0.copyload.us), "nonnull"(ptr %.sroa.4169.0.copyload.us) ]
   %i.gd = sub nuw i64 %.sroa.7172.0.copyload.us, %.sroa.5171.0.copyload.us ; 3 uses
   %min.iters.check = icmp ult i64 %i.gd, 8
   br i1 %min.iters.check, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItermEINtBZ_7IterMuttEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %vector.memcheck
@@ -9087,8 +9031,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check386:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i39
   %.sroa.4206.0.copyload.i372 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i371 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gn = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 7 uses
   %min.iters.check374 = icmp ult i64 %i.gn, 8
   %i.go = sub i64 %.sroa.4206.0.copyload.i372, %.sroa.0204.0.copyload.i371
@@ -9491,8 +9434,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check356:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i342 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i341 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !391
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !391
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !391
   %i.ml = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check344 = icmp ult i64 %i.ml, 8
   %i.mm = sub i64 %.sroa.4115.0.copyload.i342, %.sroa.0113.0.copyload.i341
@@ -9669,8 +9611,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i332 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i331 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !391
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !391
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !391
   %i.op = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.op, 8
   %i.oq = sub i64 %.sroa.491.0.copyload.i332, %.sroa.089.0.copyload.i331
@@ -10073,8 +10014,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check413:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i40
   %.sroa.4206.0.copyload.i399 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i398 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gp = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 7 uses
   %min.iters.check401 = icmp ult i64 %i.gp, 8
   %i.gq = sub i64 %.sroa.4206.0.copyload.i399, %.sroa.0204.0.copyload.i398
@@ -10477,8 +10417,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check383:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i369 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i368 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !483
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !483
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !483
   %i.mo = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check371 = icmp ult i64 %i.mo, 8
   %i.mp = sub i64 %.sroa.4115.0.copyload.i369, %.sroa.0113.0.copyload.i368
@@ -10657,8 +10596,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i359 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i358 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !483
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !483
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !483
   %i.ou = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.ou, 8
   %i.ov = sub i64 %.sroa.491.0.copyload.i359, %.sroa.089.0.copyload.i358
@@ -11061,8 +10999,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check386:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i39
   %.sroa.4206.0.copyload.i372 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i371 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gn = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 7 uses
   %min.iters.check374 = icmp ult i64 %i.gn, 8
   %i.go = sub i64 %.sroa.4206.0.copyload.i372, %.sroa.0204.0.copyload.i371
@@ -11465,8 +11402,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check356:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i342 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i341 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !575
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !575
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !575
   %i.ml = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check344 = icmp ult i64 %i.ml, 8
   %i.mm = sub i64 %.sroa.4115.0.copyload.i342, %.sroa.0113.0.copyload.i341
@@ -11643,8 +11579,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i332 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i331 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !575
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !575
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !575
   %i.op = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.op, 8
   %i.oq = sub i64 %.sroa.491.0.copyload.i332, %.sroa.089.0.copyload.i331
@@ -12047,8 +11982,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check385:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i39
   %.sroa.4202.0.copyload.i371 = ptrtoaddr ptr %.sroa.4202.0.copyload.i to i64
   %.sroa.0200.0.copyload.i370 = ptrtoaddr ptr %.sroa.0200.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0200.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4202.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0200.0.copyload.i), "nonnull"(ptr %.sroa.4202.0.copyload.i) ]
   %i.gj = sub nuw i64 %.sroa.7204.0.copyload.i, %.sroa.5203.0.copyload.i ; 7 uses
   %min.iters.check373 = icmp ult i64 %i.gj, 8
   %i.gk = sub i64 %.sroa.4202.0.copyload.i371, %.sroa.0200.0.copyload.i370
@@ -12451,8 +12385,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check355:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i341 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i340 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !667
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !667
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !667
   %i.mc = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check343 = icmp ult i64 %i.mc, 8
   %i.md = sub i64 %.sroa.4115.0.copyload.i341, %.sroa.0113.0.copyload.i340
@@ -12626,8 +12559,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuthENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterhEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i331 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i330 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !667
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !667
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !667
   %i.od = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.od, 8
   %i.oe = sub i64 %.sroa.491.0.copyload.i331, %.sroa.089.0.copyload.i330
@@ -13030,8 +12962,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i46:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i42
   %.sroa.4206.0.copyload.i355 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i354 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gn = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 3 uses
   %min.iters.check358 = icmp ult i64 %i.gn, 8
   %i.go = sub i64 %.sroa.4206.0.copyload.i355, %.sroa.0204.0.copyload.i354
@@ -13434,8 +13365,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph162.i:                                      ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i339 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i338 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !756
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !756
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !756
   %i.mf = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 3 uses
   %min.iters.check342 = icmp ult i64 %i.mf, 8
   %i.mg = sub i64 %.sroa.4115.0.copyload.i339, %.sroa.0113.0.copyload.i338
@@ -13582,8 +13512,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i26:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i335 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i334 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !756
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !756
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !756
   %i.od = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 3 uses
   %min.iters.check = icmp ult i64 %i.od, 8
   %i.oe = sub i64 %.sroa.491.0.copyload.i335, %.sroa.089.0.copyload.i334
@@ -13986,8 +13915,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check386:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i39
   %.sroa.4206.0.copyload.i372 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i371 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gn = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 7 uses
   %min.iters.check374 = icmp ult i64 %i.gn, 4
   %i.go = sub i64 %.sroa.4206.0.copyload.i372, %.sroa.0204.0.copyload.i371
@@ -14390,8 +14318,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check356:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i342 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i341 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !848
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !848
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !848
   %i.ml = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check344 = icmp ult i64 %i.ml, 4
   %i.mm = sub i64 %.sroa.4115.0.copyload.i342, %.sroa.0113.0.copyload.i341
@@ -14568,8 +14495,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i332 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i331 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !848
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !848
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !848
   %i.op = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.op, 4
   %i.oq = sub i64 %.sroa.491.0.copyload.i332, %.sroa.089.0.copyload.i331
@@ -14972,8 +14898,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i47:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i43
   %.sroa.4206.0.copyload.i382 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i381 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gp = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 3 uses
   %min.iters.check385 = icmp ult i64 %i.gp, 8
   %i.gq = sub i64 %.sroa.4206.0.copyload.i382, %.sroa.0204.0.copyload.i381
@@ -15376,8 +15301,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph166.i:                                      ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i366 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i365 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !937
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !937
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !937
   %i.mi = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 3 uses
   %min.iters.check369 = icmp ult i64 %i.mi, 8
   %i.mj = sub i64 %.sroa.4115.0.copyload.i366, %.sroa.0113.0.copyload.i365
@@ -15526,8 +15450,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i27:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i362 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i361 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !937
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !937
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !937
   %i.oi = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 3 uses
   %min.iters.check = icmp ult i64 %i.oi, 8
   %i.oj = sub i64 %.sroa.491.0.copyload.i362, %.sroa.089.0.copyload.i361
@@ -15930,8 +15853,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check413:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i40
   %.sroa.4206.0.copyload.i399 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i398 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gp = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 7 uses
   %min.iters.check401 = icmp ult i64 %i.gp, 4
   %i.gq = sub i64 %.sroa.4206.0.copyload.i399, %.sroa.0204.0.copyload.i398
@@ -16334,8 +16256,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check383:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i369 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i368 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !1029
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1029
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1029
   %i.mo = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check371 = icmp ult i64 %i.mo, 4
   %i.mp = sub i64 %.sroa.4115.0.copyload.i369, %.sroa.0113.0.copyload.i368
@@ -16514,8 +16435,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i359 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i358 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !1029
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1029
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1029
   %i.ou = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.ou, 4
   %i.ov = sub i64 %.sroa.491.0.copyload.i359, %.sroa.089.0.copyload.i358
@@ -16918,8 +16838,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i46:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i42
   %.sroa.4206.0.copyload.i355 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i354 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gn = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 3 uses
   %min.iters.check358 = icmp ult i64 %i.gn, 8
   %i.go = sub i64 %.sroa.4206.0.copyload.i355, %.sroa.0204.0.copyload.i354
@@ -17322,8 +17241,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph162.i:                                      ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i339 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i338 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !1118
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1118
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1118
   %i.mf = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 3 uses
   %min.iters.check342 = icmp ult i64 %i.mf, 8
   %i.mg = sub i64 %.sroa.4115.0.copyload.i339, %.sroa.0113.0.copyload.i338
@@ -17470,8 +17388,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i26:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i335 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i334 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !1118
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1118
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1118
   %i.od = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 3 uses
   %min.iters.check = icmp ult i64 %i.od, 8
   %i.oe = sub i64 %.sroa.491.0.copyload.i335, %.sroa.089.0.copyload.i334
@@ -17874,8 +17791,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check386:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i39
   %.sroa.4206.0.copyload.i372 = ptrtoaddr ptr %.sroa.4206.0.copyload.i to i64
   %.sroa.0204.0.copyload.i371 = ptrtoaddr ptr %.sroa.0204.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0204.0.copyload.i), "nonnull"(ptr %.sroa.4206.0.copyload.i) ]
   %i.gn = sub nuw i64 %.sroa.7208.0.copyload.i, %.sroa.5207.0.copyload.i ; 7 uses
   %min.iters.check374 = icmp ult i64 %i.gn, 4
   %i.go = sub i64 %.sroa.4206.0.copyload.i372, %.sroa.0204.0.copyload.i371
@@ -18278,8 +18194,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check356:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i342 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i341 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !1210
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1210
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1210
   %i.ml = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check344 = icmp ult i64 %i.ml, 4
   %i.mm = sub i64 %.sroa.4115.0.copyload.i342, %.sroa.0113.0.copyload.i341
@@ -18456,8 +18371,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i332 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i331 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !1210
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1210
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1210
   %i.op = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.op, 4
   %i.oq = sub i64 %.sroa.491.0.copyload.i332, %.sroa.089.0.copyload.i331
@@ -18860,8 +18774,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i46:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i42
   %.sroa.4202.0.copyload.i354 = ptrtoaddr ptr %.sroa.4202.0.copyload.i to i64
   %.sroa.0200.0.copyload.i353 = ptrtoaddr ptr %.sroa.0200.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0200.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4202.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0200.0.copyload.i), "nonnull"(ptr %.sroa.4202.0.copyload.i) ]
   %i.gj = sub nuw i64 %.sroa.7204.0.copyload.i, %.sroa.5203.0.copyload.i ; 3 uses
   %min.iters.check357 = icmp ult i64 %i.gj, 8
   %i.gk = sub i64 %.sroa.4202.0.copyload.i354, %.sroa.0200.0.copyload.i353
@@ -19264,8 +19177,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph162.i:                                      ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i338 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i337 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !1299
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1299
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1299
   %i.lw = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 3 uses
   %min.iters.check341 = icmp ult i64 %i.lw, 8
   %i.lx = sub i64 %.sroa.4115.0.copyload.i338, %.sroa.0113.0.copyload.i337
@@ -19409,8 +19321,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8ite
 .lr.ph.i26:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMutfENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterfEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i334 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i333 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !1299
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1299
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1299
   %i.nr = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 3 uses
   %min.iters.check = icmp ult i64 %i.nr, 8
   %i.ns = sub i64 %.sroa.491.0.copyload.i334, %.sroa.089.0.copyload.i333
@@ -19813,8 +19724,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check385:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i39
   %.sroa.4202.0.copyload.i371 = ptrtoaddr ptr %.sroa.4202.0.copyload.i to i64
   %.sroa.0200.0.copyload.i370 = ptrtoaddr ptr %.sroa.0200.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0200.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4202.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0200.0.copyload.i), "nonnull"(ptr %.sroa.4202.0.copyload.i) ]
   %i.gj = sub nuw i64 %.sroa.7204.0.copyload.i, %.sroa.5203.0.copyload.i ; 7 uses
   %min.iters.check373 = icmp ult i64 %i.gj, 4
   %i.gk = sub i64 %.sroa.4202.0.copyload.i371, %.sroa.0200.0.copyload.i370
@@ -20217,8 +20127,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check355:                                    ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit.i
   %.sroa.4115.0.copyload.i341 = ptrtoaddr ptr %.sroa.4115.0.copyload.i to i64
   %.sroa.0113.0.copyload.i340 = ptrtoaddr ptr %.sroa.0113.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i) ], !noalias !1391
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1391
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0113.0.copyload.i), "nonnull"(ptr %.sroa.4115.0.copyload.i) ], !noalias !1391
   %i.mc = sub nuw i64 %.sroa.7118.0.copyload.i, %.sroa.5117.0.copyload.i ; 7 uses
   %min.iters.check343 = icmp ult i64 %i.mc, 4
   %i.md = sub i64 %.sroa.4115.0.copyload.i341, %.sroa.0113.0.copyload.i340
@@ -20392,8 +20301,7 @@ _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8ite
 iter.check:                                       ; preds = %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter7IterMuttENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4ItertEECsa5QsYiPB8Gl_5image.exit70.i
   %.sroa.491.0.copyload.i331 = ptrtoaddr ptr %.sroa.491.0.copyload.i to i64
   %.sroa.089.0.copyload.i330 = ptrtoaddr ptr %.sroa.089.0.copyload.i to i64
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i) ], !noalias !1391
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1391
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.089.0.copyload.i), "nonnull"(ptr %.sroa.491.0.copyload.i) ], !noalias !1391
   %i.od = sub nuw i64 %.sroa.794.0.copyload.i, %.sroa.593.0.copyload.i ; 7 uses
   %min.iters.check = icmp ult i64 %i.od, 4
   %i.oe = sub i64 %.sroa.491.0.copyload.i331, %.sroa.089.0.copyload.i330

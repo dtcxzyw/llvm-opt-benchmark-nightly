@@ -205,9 +205,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !746
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload), "nonnull"(ptr %.sroa.7.0.copyload), "nonnull"(ptr %.sroa.8.0.copyload) ]
   store ptr %.sroa.6.0.copyload, ptr %i.c, align 8, !noalias !746
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %i.g, ptr %i.j, align 8, !noalias !746
@@ -429,8 +427,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %.val1.i7 = load i32, ptr %.sroa.0.0.copyload, align 4, !range !24, !noalias !779, !noundef !7
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.69.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload), "nonnull"(ptr %.sroa.69.0.copyload) ]
   %.val.i8 = load i32, ptr %.sroa.69.0.copyload, align 4, !range !24, !noalias !779, !noundef !7
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.copyload) ]
   %i.g = load i32, ptr %.sroa.7.0.copyload, align 4, !noalias !779, !noundef !7
@@ -498,8 +495,7 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   %.val1.i7 = load ptr, ptr %.sroa.0.0.copyload, align 8, !noalias !787, !nonnull !7, !align !30, !noundef !7
   %.val.i.i = load i32, ptr %.val1.i7, align 4, !range !24, !noalias !787, !noundef !7
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.69.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.copyload), "nonnull"(ptr %.sroa.69.0.copyload) ]
   %.val.i8 = load ptr, ptr %.sroa.69.0.copyload, align 8, !noalias !787, !nonnull !7, !align !30, !noundef !7
   %.val.i2.i = load i32, ptr %.val.i8, align 4, !range !24, !noalias !787, !noundef !7
   %i.g = zext i32 %.val.i.i to i64
@@ -559,8 +555,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.f = load i64, ptr %i.e, align 8, !noundef !7 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.510.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.510.0.copyload) ]
   %.val.i9 = load ptr, ptr %.sroa.510.0.copyload, align 8, !noalias !794, !nonnull !7, !align !30, !noundef !7
   %.val.i.i = load i32, ptr %.val.i9, align 4, !range !24, !noalias !794, !noundef !7
   %i.g = zext i32 %.val.i.i to i64
@@ -963,8 +958,7 @@ bb.bv:                                            ; preds = %_RNvXsE_NtCs7GWc7oq
   %.sroa.854.sroa.7.sroa.7.0.copyload.i.i = load i64, ptr %.sroa.854.sroa.7.sroa.7.0..sroa.854.sroa.7.0..sroa.854.0..sroa_idx.sroa_idx.sroa_idx.i.i, align 8, !noalias !1488
   %.sroa.854.sroa.6.0..sroa.854.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds i8, ptr %i.mk, i64 -32
   %.sroa.854.sroa.6.0.copyload.i.i = load i64, ptr %.sroa.854.sroa.6.0..sroa.854.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1488
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.854.sroa.7.sroa.6.0.copyload.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.854.sroa.0.0.copyload.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.854.sroa.7.sroa.6.0.copyload.i.i), "nonnull"(ptr %.sroa.854.sroa.0.0.copyload.i.i) ]
   %i.mn = call noundef ptr @_RNvNtNtCsiNTfMYMREvh_5xattr3sys11linux_macos8set_path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ah, i64 noundef %i.aj, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.854.sroa.0.0.copyload.i.i, i64 noundef %.sroa.854.sroa.6.0.copyload.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.854.sroa.7.sroa.6.0.copyload.i.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.854.sroa.7.sroa.7.0.copyload.i.i, i1 noundef zeroext false) #33, !noalias !1489 ; 3 uses
   %.not4.i.i = icmp eq ptr %i.mn, null
   %i.mo = icmp eq i64 %.sroa.854.sroa.7.sroa.0.0.copyload.i.i, 0 ; 2 uses
@@ -1367,8 +1361,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bc, label %.split27.i.i.i.i.i.i.i.i.i, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 .split27.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.710.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.811.0.copyload.i.i.i.i.i.i.i), !alias.scope !4952, !noalias !4953
   %bcmp.i.i.i.i.i.i.fr.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.bd = icmp eq i32 %bcmp.i.i.i.i.i.i.fr.i.i.i.i.i.i.i.i.i, 0
@@ -1379,8 +1372,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.be, label %_RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrNtB7_9PartialEq2eqCseE7g6nXQLt3_5uu_mv.exit27.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 _RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrNtB7_9PartialEq2eqCseE7g6nXQLt3_5uu_mv.exit27.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.p
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i26.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.710.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.811.0.copyload.i.i.i.i.i.i.i), !alias.scope !4954, !noalias !4953
   %i.bf = icmp eq i32 %bcmp.i.i26.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
   %i.bg = icmp eq i64 %.sroa.10.0.copyload.i.i.i.i.i.i.i, %.sroa.910.0.copyload.i.i.i.i.i.i.i.i.i
@@ -1397,8 +1389,7 @@ bb.q:                                             ; preds = %bb.n
   br i1 %i.bi, label %.split33.i.i.i.i.i.i.i.i.i, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 .split33.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.q
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.710.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.811.0.copyload.i.i.i.i.i.i.i), !alias.scope !4955, !noalias !4953
   %bcmp.i.i29.i.i.i.i.fr.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i29.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.bj = icmp eq i32 %bcmp.i.i29.i.i.i.i.fr.i.i.i.i.i.i.i.i.i, 0
@@ -1409,8 +1400,7 @@ bb.r:                                             ; preds = %bb.n
   br i1 %i.bk, label %_RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrNtB7_9PartialEq2eqCseE7g6nXQLt3_5uu_mv.exit33.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 _RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrNtB7_9PartialEq2eqCseE7g6nXQLt3_5uu_mv.exit33.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.r
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i32.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.710.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.811.0.copyload.i.i.i.i.i.i.i), !alias.scope !4956, !noalias !4953
   %i.bl = icmp eq i32 %bcmp.i.i32.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
   %i.bm = icmp eq i64 %.sroa.10.0.copyload.i.i.i.i.i.i.i, %.sroa.910.0.copyload.i.i.i.i.i.i.i.i.i
@@ -1423,8 +1413,7 @@ _RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5Os
   br i1 %cond.fr30.i.i.i.i.i.i.i.i.i, label %bb.t, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 .split.i.i.i.i.i.i.i.i.i:                         ; preds = %_RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrNtB7_9PartialEq2eqCseE7g6nXQLt3_5uu_mv.exit33.i.i.i.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.89.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.912.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.89.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.912.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i38.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.912.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.89.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.10.0.copyload.i.i.i.i.i.i.i), !alias.scope !4957, !noalias !4953
   %bcmp.i.i38.i.i.i.i.fr.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i38.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.bo = icmp eq i32 %bcmp.i.i38.i.i.i.i.fr.i.i.i.i.i.i.i.i.i, 0
@@ -1435,16 +1424,14 @@ bb.s:                                             ; preds = %bb.k
   br i1 %i.bp, label %.split35.i.i.i.i.i.i.i.i.i, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 .split35.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.710.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.710.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.67.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.811.0.copyload.i.i.i.i.i.i.i), !alias.scope !4958, !noalias !4959
   %bcmp.i.i.i.i.i.fr.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.bq = icmp eq i32 %bcmp.i.i.i.i.i.fr.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.bq, label %bb.t, label %_RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3rev3RevNtNtCs2vKOLqTMYjT_3std4path10ComponentsENtNtNtBa_6traits8iterator8Iterator12try_for_eachNCINvNvB1x_12iter_compare7compareB3_NtBT_9ComponentuNCINvNvB1v_5eq_by7compareB2R_B2R_NCINvYB3_B1v_2eqB3_E0E0E0INtNtNtBc_3ops12control_flow11ControlFlowIB44_uNtNtBc_3cmp8OrderingEEECseE7g6nXQLt3_5uu_mv.exit.i.i.i.i
 
 _RNCINvNvNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator5eq_by7compareNtNtCs2vKOLqTMYjT_3std4path9ComponentB1f_NCINvYINtNtNtBc_8adapters3rev3RevNtB1h_10ComponentsEB6_2eqB20_E0E0CseE7g6nXQLt3_5uu_mv.exit.i.i.i.i.i.i.i.i.i: ; preds = %_RNvXs7_NtNtCs6JMX4GRUq9U_4core3cmp5implsRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrNtB7_9PartialEq2eqCseE7g6nXQLt3_5uu_mv.exit27.i.i.i.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.89.0.copyload.i.i.i.i.i.i.i.i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.912.0.copyload.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.89.0.copyload.i.i.i.i.i.i.i.i.i), "nonnull"(ptr %.sroa.912.0.copyload.i.i.i.i.i.i.i) ]
   %bcmp.i.i35.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.912.0.copyload.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.89.0.copyload.i.i.i.i.i.i.i.i.i, i64 %.sroa.10.0.copyload.i.i.i.i.i.i.i), !alias.scope !4960, !noalias !4953
   %bcmp.i.i35.i.i.i.i.fr.i.i.i.i.i.i.i.i.i = freeze i32 %bcmp.i.i35.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.br = icmp eq i32 %bcmp.i.i35.i.i.i.i.fr.i.i.i.i.i.i.i.i.i, 0

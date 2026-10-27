@@ -202,9 +202,7 @@ define internal fastcc ptr @php_fileinfo_from_path(ptr noundef %0, ptr noundef %
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   %3 = alloca %struct._php_stream_statbuf, align 8 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0), "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses

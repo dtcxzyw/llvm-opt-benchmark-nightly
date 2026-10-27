@@ -205,8 +205,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep49 = getelementptr i8, ptr %i.d, i64 %i.t ; 2 uses
   %next.gep51 = getelementptr i8, ptr %1, i64 %i.s
   %next.gep52 = getelementptr i8, ptr %1, i64 %i.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep49) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep49) ]
   %wide.vec = load <4 x i32>, ptr %next.gep51, align 4, !tbaa !338, !alias.scope !2361, !noalias !2360
   %wide.vec54 = load <4 x i32>, ptr %next.gep52, align 4, !tbaa !338, !alias.scope !2361, !noalias !2360
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !2362, !noalias !2360
@@ -484,8 +483,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep33 = getelementptr i8, ptr %i.d, i64 %i.t ; 2 uses
   %next.gep35 = getelementptr i8, ptr %1, i64 %i.s
   %next.gep36 = getelementptr i8, ptr %1, i64 %i.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep33) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep33) ]
   %wide.vec = load <4 x i32>, ptr %next.gep35, align 4, !tbaa !338, !alias.scope !2384, !noalias !2383
   %wide.vec38 = load <4 x i32>, ptr %next.gep36, align 4, !tbaa !338, !alias.scope !2384, !noalias !2383
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !2385, !noalias !2383
@@ -888,8 +886,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep14 = getelementptr i8, ptr %.0.i.i.i.i, i64 %i.ag ; 2 uses
   %next.gep16 = getelementptr i8, ptr %4, i64 %i.af
   %next.gep17 = getelementptr i8, ptr %4, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep14) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep14) ]
   %wide.vec = load <4 x i32>, ptr %next.gep16, align 4, !tbaa !338
   %wide.vec19 = load <4 x i32>, ptr %next.gep17, align 4, !tbaa !338
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338
@@ -1292,8 +1289,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep49 = getelementptr i8, ptr %i.d, i64 %i.t ; 2 uses
   %next.gep51 = getelementptr i8, ptr %1, i64 %i.s
   %next.gep52 = getelementptr i8, ptr %1, i64 %i.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep49) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep49) ]
   %wide.vec = load <4 x i32>, ptr %next.gep51, align 4, !tbaa !338, !alias.scope !7215, !noalias !7214
   %wide.vec54 = load <4 x i32>, ptr %next.gep52, align 4, !tbaa !338, !alias.scope !7215, !noalias !7214
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !7216, !noalias !7214
@@ -1571,8 +1567,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep33 = getelementptr i8, ptr %i.d, i64 %i.t ; 2 uses
   %next.gep35 = getelementptr i8, ptr %1, i64 %i.s
   %next.gep36 = getelementptr i8, ptr %1, i64 %i.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep33) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep33) ]
   %wide.vec = load <4 x i32>, ptr %next.gep35, align 4, !tbaa !338, !alias.scope !7238, !noalias !7237
   %wide.vec38 = load <4 x i32>, ptr %next.gep36, align 4, !tbaa !338, !alias.scope !7238, !noalias !7237
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !7239, !noalias !7237
@@ -1837,8 +1832,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep16 = getelementptr i8, ptr %.0.i.i.i.i, i64 %i.ag ; 2 uses
   %next.gep18 = getelementptr i8, ptr %4, i64 %i.af
   %next.gep19 = getelementptr i8, ptr %4, i64 %i.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep16) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep16) ]
   %wide.vec = load <4 x i32>, ptr %next.gep18, align 4, !tbaa !338
   %wide.vec21 = load <4 x i32>, ptr %next.gep19, align 4, !tbaa !338
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338
@@ -2241,8 +2235,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep48 = getelementptr i8, ptr %i.c, i64 %i.p ; 2 uses
   %next.gep50 = getelementptr i8, ptr %1, i64 %i.o
   %next.gep51 = getelementptr i8, ptr %1, i64 %i.p
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep48) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep48) ]
   %wide.vec = load <4 x i32>, ptr %next.gep50, align 4, !tbaa !338, !alias.scope !9153, !noalias !9154
   %wide.vec53 = load <4 x i32>, ptr %next.gep51, align 4, !tbaa !338, !alias.scope !9153, !noalias !9154
   store <4 x i32> %wide.vec, ptr %next.gep, align 8, !tbaa !338, !alias.scope !9155, !noalias !9154
@@ -2495,8 +2488,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep32 = getelementptr i8, ptr %i.c, i64 %i.p ; 2 uses
   %next.gep34 = getelementptr i8, ptr %1, i64 %i.o
   %next.gep35 = getelementptr i8, ptr %1, i64 %i.p
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep32) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep32) ]
   %wide.vec = load <4 x i32>, ptr %next.gep34, align 4, !tbaa !338, !alias.scope !9173, !noalias !9174
   %wide.vec37 = load <4 x i32>, ptr %next.gep35, align 4, !tbaa !338, !alias.scope !9173, !noalias !9174
   store <4 x i32> %wide.vec, ptr %next.gep, align 8, !tbaa !338, !alias.scope !9175, !noalias !9174
@@ -2899,8 +2891,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep15 = getelementptr i8, ptr %i.r, i64 %i.ai ; 2 uses
   %next.gep17 = getelementptr i8, ptr %3, i64 %i.ah
   %next.gep18 = getelementptr i8, ptr %3, i64 %i.ai
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep15) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep15) ]
   %wide.vec = load <4 x i32>, ptr %next.gep17, align 4, !tbaa !338, !alias.scope !21084
   %wide.vec20 = load <4 x i32>, ptr %next.gep18, align 4, !tbaa !338, !alias.scope !21084
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !21085, !noalias !21084
@@ -3031,8 +3022,7 @@ vector.body35:                                    ; preds = %vector.body35, %vec
   %next.gep39 = getelementptr i8, ptr %i.bv, i64 %i.cc ; 2 uses
   %next.gep41 = getelementptr i8, ptr %.lcssa45.i.i, i64 %i.cb
   %next.gep42 = getelementptr i8, ptr %.lcssa45.i.i, i64 %i.cc
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep37) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep39) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep37), "nonnull"(ptr %next.gep39) ]
   %wide.vec43 = load <4 x i32>, ptr %next.gep41, align 4, !tbaa !338, !alias.scope !21086
   %wide.vec46 = load <4 x i32>, ptr %next.gep42, align 4, !tbaa !338, !alias.scope !21086
   store <4 x i32> %wide.vec43, ptr %next.gep37, align 4, !tbaa !338, !alias.scope !21087, !noalias !21086
@@ -3259,8 +3249,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep22 = getelementptr i8, ptr %.sroa.0.0.i.ph, i64 %i.ax ; 2 uses
   %next.gep24 = getelementptr i8, ptr %3, i64 %i.aw
   %next.gep25 = getelementptr i8, ptr %3, i64 %i.ax
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep22) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep22) ]
   %wide.vec = load <4 x i32>, ptr %next.gep24, align 4, !tbaa !338, !alias.scope !21109
   %wide.vec27 = load <4 x i32>, ptr %next.gep25, align 4, !tbaa !338, !alias.scope !21109
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !21110, !noalias !21109
@@ -3391,8 +3380,7 @@ vector.body42:                                    ; preds = %vector.body42, %vec
   %next.gep46 = getelementptr i8, ptr %i.ck, i64 %i.cr ; 2 uses
   %next.gep48 = getelementptr i8, ptr %.lcssa45.i.i, i64 %i.cq
   %next.gep49 = getelementptr i8, ptr %.lcssa45.i.i, i64 %i.cr
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep44) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep46) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep44), "nonnull"(ptr %next.gep46) ]
   %wide.vec50 = load <4 x i32>, ptr %next.gep48, align 4, !tbaa !338, !alias.scope !21111
   %wide.vec53 = load <4 x i32>, ptr %next.gep49, align 4, !tbaa !338, !alias.scope !21111
   store <4 x i32> %wide.vec50, ptr %next.gep44, align 4, !tbaa !338, !alias.scope !21112, !noalias !21111
@@ -3795,8 +3783,7 @@ vector.body880:                                   ; preds = %vector.body880, %ve
   %next.gep884 = getelementptr i8, ptr %.sroa.0.0.i.ph, i64 %i.my ; 2 uses
   %next.gep886 = getelementptr i8, ptr %4, i64 %i.mx
   %next.gep887 = getelementptr i8, ptr %4, i64 %i.my
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep882) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep884) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep882), "nonnull"(ptr %next.gep884) ]
   %wide.vec888 = load <4 x i32>, ptr %next.gep886, align 4, !tbaa !338, !alias.scope !21240
   %wide.vec891 = load <4 x i32>, ptr %next.gep887, align 4, !tbaa !338, !alias.scope !21240
   store <4 x i32> %wide.vec888, ptr %next.gep882, align 4, !tbaa !338, !alias.scope !21241, !noalias !21240
@@ -3927,8 +3914,7 @@ vector.body912:                                   ; preds = %vector.body912, %ve
   %next.gep916 = getelementptr i8, ptr %i.ol, i64 %i.os ; 2 uses
   %next.gep918 = getelementptr i8, ptr %.lcssa45.i, i64 %i.or
   %next.gep919 = getelementptr i8, ptr %.lcssa45.i, i64 %i.os
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep914) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep916) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep914), "nonnull"(ptr %next.gep916) ]
   %wide.vec920 = load <4 x i32>, ptr %next.gep918, align 4, !tbaa !338, !alias.scope !21242
   %wide.vec923 = load <4 x i32>, ptr %next.gep919, align 4, !tbaa !338, !alias.scope !21242
   store <4 x i32> %wide.vec920, ptr %next.gep914, align 4, !tbaa !338, !alias.scope !21243, !noalias !21242
@@ -4331,8 +4317,7 @@ vector.body812:                                   ; preds = %vector.body812, %ve
   %next.gep816 = getelementptr i8, ptr %i.yf, i64 %i.atd ; 2 uses
   %next.gep818 = getelementptr i8, ptr %.sroa.0412.1, i64 %i.atc
   %next.gep819 = getelementptr i8, ptr %.sroa.0412.1, i64 %i.atd
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep814) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep816) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep814), "nonnull"(ptr %next.gep816) ]
   %wide.vec820 = load <4 x i32>, ptr %next.gep818, align 4, !tbaa !338, !alias.scope !21269
   %wide.vec823 = load <4 x i32>, ptr %next.gep819, align 4, !tbaa !338, !alias.scope !21269
   store <4 x i32> %wide.vec820, ptr %next.gep814, align 4, !tbaa !338, !alias.scope !21270, !noalias !21269
@@ -4463,8 +4448,7 @@ vector.body844:                                   ; preds = %vector.body844, %ve
   %next.gep848 = getelementptr i8, ptr %i.auq, i64 %i.aux ; 2 uses
   %next.gep850 = getelementptr i8, ptr %.lcssa45.i301, i64 %i.auw
   %next.gep851 = getelementptr i8, ptr %.lcssa45.i301, i64 %i.aux
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep846) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep848) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep846), "nonnull"(ptr %next.gep848) ]
   %wide.vec852 = load <4 x i32>, ptr %next.gep850, align 4, !tbaa !338, !alias.scope !21271
   %wide.vec855 = load <4 x i32>, ptr %next.gep851, align 4, !tbaa !338, !alias.scope !21271
   store <4 x i32> %wide.vec852, ptr %next.gep846, align 4, !tbaa !338, !alias.scope !21272, !noalias !21271
@@ -4867,8 +4851,7 @@ vector.body162:                                   ; preds = %vector.body162, %ve
   %next.gep166 = getelementptr i8, ptr %i.o, i64 %i.fa ; 2 uses
   %next.gep168 = getelementptr i8, ptr %.lcssa104, i64 %i.ez
   %next.gep169 = getelementptr i8, ptr %.lcssa104, i64 %i.fa
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep164) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep166) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep164), "nonnull"(ptr %next.gep166) ]
   %wide.vec170 = load <4 x i32>, ptr %next.gep168, align 4, !tbaa !338, !alias.scope !30296
   %wide.vec173 = load <4 x i32>, ptr %next.gep169, align 4, !tbaa !338, !alias.scope !30296
   store <4 x i32> %wide.vec170, ptr %next.gep164, align 4, !tbaa !338, !alias.scope !30297, !noalias !30296
@@ -5143,8 +5126,7 @@ vector.body230:                                   ; preds = %vector.body230, %ve
   %next.gep234 = getelementptr i8, ptr %.0.i.i40.i, i64 %i.is ; 2 uses
   %next.gep236 = getelementptr i8, ptr %2, i64 %i.ir
   %next.gep237 = getelementptr i8, ptr %2, i64 %i.is
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep232) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep234) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep232), "nonnull"(ptr %next.gep234) ]
   %wide.vec238 = load <4 x i32>, ptr %next.gep236, align 4, !tbaa !338, !alias.scope !30300
   %wide.vec241 = load <4 x i32>, ptr %next.gep237, align 4, !tbaa !338, !alias.scope !30300
   store <4 x i32> %wide.vec238, ptr %next.gep232, align 4, !tbaa !338, !alias.scope !30301, !noalias !30300
@@ -5514,8 +5496,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep72 = getelementptr i8, ptr %.0.i.i.i, i64 %i.bc ; 2 uses
   %next.gep74 = getelementptr i8, ptr %3, i64 %i.bb
   %next.gep75 = getelementptr i8, ptr %3, i64 %i.bc
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep72) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep72) ]
   %wide.vec = load <4 x i32>, ptr %next.gep74, align 4, !tbaa !338
   %wide.vec77 = load <4 x i32>, ptr %next.gep75, align 4, !tbaa !338
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338
@@ -5653,8 +5634,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep287 = getelementptr i8, ptr %.0.i.i, i64 %i.w ; 2 uses
   %next.gep289 = getelementptr i8, ptr %5, i64 %i.v
   %next.gep290 = getelementptr i8, ptr %5, i64 %i.w
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep287) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep287) ]
   %wide.vec = load <4 x i32>, ptr %next.gep289, align 4, !tbaa !338, !alias.scope !30354
   %wide.vec292 = load <4 x i32>, ptr %next.gep290, align 4, !tbaa !338, !alias.scope !30354
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !30355, !noalias !30354
@@ -5990,8 +5970,7 @@ vector.body344:                                   ; preds = %vector.body344, %ve
   %next.gep348 = getelementptr i8, ptr %.0.i.i167, i64 %i.eh ; 2 uses
   %next.gep350 = getelementptr i8, ptr %5, i64 %i.eg
   %next.gep351 = getelementptr i8, ptr %5, i64 %i.eh
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep346) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep348) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep346), "nonnull"(ptr %next.gep348) ]
   %wide.vec352 = load <4 x i32>, ptr %next.gep350, align 4, !tbaa !338, !alias.scope !30358
   %wide.vec355 = load <4 x i32>, ptr %next.gep351, align 4, !tbaa !338, !alias.scope !30358
   store <4 x i32> %wide.vec352, ptr %next.gep346, align 4, !tbaa !338, !alias.scope !30359, !noalias !30358
@@ -6394,8 +6373,7 @@ vector.body511:                                   ; preds = %vector.body511, %ve
   %next.gep515 = getelementptr i8, ptr %i.a, i64 %i.nu ; 2 uses
   %next.gep517 = getelementptr i8, ptr %.sroa.0.0.lcssa.i.i226, i64 %i.nt
   %next.gep518 = getelementptr i8, ptr %.sroa.0.0.lcssa.i.i226, i64 %i.nu
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep513) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep515) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep513), "nonnull"(ptr %next.gep515) ]
   %wide.vec519 = load <4 x i32>, ptr %next.gep517, align 4, !tbaa !338, !alias.scope !30368
   %wide.vec522 = load <4 x i32>, ptr %next.gep518, align 4, !tbaa !338, !alias.scope !30368
   store <4 x i32> %wide.vec519, ptr %next.gep513, align 4, !tbaa !338, !alias.scope !30369, !noalias !30368
@@ -6550,8 +6528,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep173 = getelementptr i8, ptr %i.m, i64 %i.y ; 2 uses
   %next.gep175 = getelementptr i8, ptr %5, i64 %i.x
   %next.gep176 = getelementptr i8, ptr %5, i64 %i.y
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep173) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep), "nonnull"(ptr %next.gep173) ]
   %wide.vec = load <4 x i32>, ptr %next.gep175, align 4, !tbaa !338, !alias.scope !30394
   %wide.vec178 = load <4 x i32>, ptr %next.gep176, align 4, !tbaa !338, !alias.scope !30394
   store <4 x i32> %wide.vec, ptr %next.gep, align 4, !tbaa !338, !alias.scope !30395, !noalias !30394
@@ -6875,8 +6852,7 @@ vector.body261:                                   ; preds = %vector.body261, %ve
   %next.gep265 = getelementptr i8, ptr %i.a, i64 %i.eq ; 2 uses
   %next.gep267 = getelementptr i8, ptr %.sroa.0.0.lcssa.i.i114, i64 %i.ep
   %next.gep268 = getelementptr i8, ptr %.sroa.0.0.lcssa.i.i114, i64 %i.eq
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep263) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep265) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %next.gep263), "nonnull"(ptr %next.gep265) ]
   %wide.vec269 = load <4 x i32>, ptr %next.gep267, align 4, !tbaa !338, !alias.scope !30398
   %wide.vec272 = load <4 x i32>, ptr %next.gep268, align 4, !tbaa !338, !alias.scope !30398
   store <4 x i32> %wide.vec269, ptr %next.gep263, align 4, !tbaa !338, !alias.scope !30399, !noalias !30398

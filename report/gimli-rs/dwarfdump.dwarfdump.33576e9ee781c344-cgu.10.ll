@@ -205,8 +205,7 @@ _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IterINtNtCsexYYUdYSQU6_5alloc3vec3Ve
   br i1 %i.ok, label %.lr.ph, label %.thread578
 
 .lr.ph:                                           ; preds = %_RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IterINtNtCsexYYUdYSQU6_5alloc3vec3VecTjNtCsfcxKEGBgCs2_7getopts6OptvalEEENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_NtB1k_3OptEECs4phXRVW1pDQ_9dwarfdump.exit
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0479.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5481.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0479.0.copyload), "nonnull"(ptr %.sroa.5481.0.copyload) ]
   br label %bb.fz
 
 bb.fz:                                            ; preds = %.lr.ph, %bb.gl
@@ -557,9 +556,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i, label %.loopexit95, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.013.sroa.4.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.013.sroa.5.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.013.sroa.6.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.013.sroa.4.0.copyload), "nonnull"(ptr %.sroa.013.sroa.5.0.copyload), "nonnull"(ptr %.sroa.013.sroa.6.0.copyload) ]
   %i.ag = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %.sroa.5.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 40

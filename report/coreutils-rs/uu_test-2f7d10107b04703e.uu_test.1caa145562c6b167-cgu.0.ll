@@ -204,8 +204,7 @@ bb.ag:                                            ; preds = %bb.ad, %bb.ao, %bb.
   br i1 %i.ce, label %bb.ah, label %_RNvXs8_NtNtCs2vKOLqTMYjT_3std3ffi6os_strNtB5_8OsStringNtNtCs6JMX4GRUq9U_4core3cmp9PartialEq2eq.exit
 
 bb.ah:                                            ; preds = %bb.ag
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5635.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5640.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5635.0.copyload), "nonnull"(ptr %.sroa.5640.0.copyload) ]
   %bcmp.i344 = tail call i32 @bcmp(ptr nonnull readonly %.sroa.5640.0.copyload, ptr nonnull readonly %.sroa.5635.0.copyload, i64 %.sroa.6636.0.copyload)
   %i.cf = icmp eq i32 %bcmp.i344, 0
   %i.cg = zext i1 %i.cf to i8
@@ -222,8 +221,7 @@ bb.ai:                                            ; preds = %bb.af
   br i1 %i.ci, label %bb.aj, label %_RNvXs8_NtNtCs2vKOLqTMYjT_3std3ffi6os_strNtB5_8OsStringNtNtCs6JMX4GRUq9U_4core3cmp9PartialEq2eq.exit347
 
 bb.aj:                                            ; preds = %bb.ai
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5635.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5640.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5635.0.copyload), "nonnull"(ptr %.sroa.5640.0.copyload) ]
   %bcmp.i346 = tail call i32 @bcmp(ptr nonnull readonly %.sroa.5640.0.copyload, ptr nonnull readonly %.sroa.5635.0.copyload, i64 %.sroa.6636.0.copyload)
   %i.cj = icmp ne i32 %bcmp.i346, 0
   %i.ck = zext i1 %i.cj to i8
@@ -270,8 +268,7 @@ bb.ao:                                            ; preds = %bb.ad
   ]
 
 bb.ap:                                            ; preds = %bb.ao
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5640.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5635.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5640.0.copyload), "nonnull"(ptr %.sroa.5635.0.copyload) ]
   %spec.store.select.i = tail call i64 @llvm.umin.i64(i64 %.sroa.6641.0.copyload, i64 %.sroa.6636.0.copyload)
   %i.cq = tail call i32 @memcmp(ptr nonnull readonly %.sroa.5640.0.copyload, ptr nonnull readonly %.sroa.5635.0.copyload, i64 %spec.store.select.i), !alias.scope !231 ; 2 uses
   %i.cr = sext i32 %i.cq to i64
@@ -285,8 +282,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.ak
 
 bb.aq:                                            ; preds = %bb.ao
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5640.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5635.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5640.0.copyload), "nonnull"(ptr %.sroa.5635.0.copyload) ]
   %spec.store.select.i351 = tail call i64 @llvm.umin.i64(i64 %.sroa.6641.0.copyload, i64 %.sroa.6636.0.copyload)
   %i.cw = tail call i32 @memcmp(ptr nonnull readonly %.sroa.5640.0.copyload, ptr nonnull readonly %.sroa.5635.0.copyload, i64 %spec.store.select.i351), !alias.scope !232 ; 2 uses
   %i.cx = sext i32 %i.cw to i64
@@ -344,9 +340,7 @@ bb.at:                                            ; preds = %bb.as
   unreachable
 
 bb.au:                                            ; preds = %bb.at
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5645.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5630.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5132.sroa.4.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5645.0.copyload), "nonnull"(ptr %.sroa.5630.0.copyload), "nonnull"(ptr %.sroa.5132.sroa.4.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !233
   call fastcc void @_RNvMCs2szWGFz6wmN_7uu_testNtB2_7Integer5parse(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5645.0.copyload, i64 noundef %.sroa.6646.0.copyload) #21, !noalias !234
   %i.dm = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -427,8 +421,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   br i1 %i.dx, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0128.0.copyload.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0110.0.copyload.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0128.0.copyload.i), "nonnull"(ptr %.sroa.0110.0.copyload.i) ]
   %i.dy = tail call i32 @memcmp(ptr nonnull %.sroa.0110.0.copyload.i, ptr nonnull %.sroa.0128.0.copyload.i, i64 %.sroa.4111.0.copyload.i), !noalias !240
   %i.dz = tail call i8 @llvm.scmp.i8.i32(i32 %i.dy, i32 0)
   br label %bb.bd
@@ -759,8 +752,7 @@ bb.cc:                                            ; preds = %bb.cb
   %.sroa.6651.0.copyload = load i64, ptr %.sroa.6651.0..sroa_idx, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5650.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5625.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5132.sroa.4.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5625.0.copyload), "nonnull"(ptr %.sroa.5132.sroa.4.0.copyload) ]
   call fastcc void @_RNvCs2szWGFz6wmN_7uu_test5files(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.w, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5650.0.copyload, i64 noundef %.sroa.6651.0.copyload, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5625.0.copyload, i64 noundef %.sroa.6626.0.copyload, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.5132.sroa.4.0.copyload, i64 noundef %.sroa.5132.sroa.5.0.copyload) #21
   %i.hy = load i64, ptr %i.w, align 8, !range !12, !noundef !4 ; 2 uses
   %.not235 = icmp eq i64 %i.hy, -1
@@ -1163,8 +1155,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.h
   %.sroa.0.0.i.i.i.i = phi i64 [ 1, %bb.h ], [ 0, %bb.g ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i.sroa.7.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i.sroa.9.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i.sroa.7.0.copyload), "nonnull"(ptr %.sroa.0.i.sroa.9.0.copyload) ]
   %i.bs = ptrtoint ptr %.sroa.0.i.sroa.9.0.copyload to i64 ; 3 uses
   %i.bt = ptrtoint ptr %.sroa.0.i.sroa.7.0.copyload to i64
   %i.bu = sub nuw i64 %i.bs, %i.bt
@@ -1264,8 +1255,7 @@ _RINvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters4takeINtB5_4TakeINtNtB7_8peekable
   %.sroa.9.1.i.i.i.i.i = phi ptr [ %.sroa.0.i.sroa.7.0.copyload, %._crit_edge15.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.i.sroa.7.0.copyload, %.thread ], [ %i.cn, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
   %.val11.i.sink.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.512.0.copyload.i.i.i.i.i.i.i.i.i, %._crit_edge15.i.i.i.i.i.i.i.i.i ], [ 0, %.thread ], [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 6 uses
   store i64 %.val11.i.sink.i.i.i.i.i.i.i.i, ptr %i.cu, align 8, !alias.scope !926, !noalias !936
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.1.i.i.i.i.i) ], !noalias !918
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i.sroa.9.0.copyload) ], !noalias !918
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.1.i.i.i.i.i), "nonnull"(ptr %.sroa.0.i.sroa.9.0.copyload) ], !noalias !918
   %i.cw = ptrtoint ptr %.sroa.9.1.i.i.i.i.i to i64
   %i.cx = sub nuw i64 %.pre-phi, %i.cw
   %i.cy = udiv exact i64 %i.cx, 24
@@ -1668,8 +1658,7 @@ bb.cd:                                            ; preds = %bb.cc
 
 bb.ce:                                            ; preds = %bb.cc, %bb.cd
   %.sroa.0.0.i.i.i.i209 = phi i64 [ 1, %bb.cd ], [ 0, %bb.cc ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i8.sroa.7.0.copyload) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i8.sroa.9.0.copyload) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i8.sroa.7.0.copyload), "nonnull"(ptr %.sroa.0.i8.sroa.9.0.copyload) ]
   %i.hf = ptrtoint ptr %.sroa.0.i8.sroa.9.0.copyload to i64 ; 3 uses
   %i.hg = ptrtoint ptr %.sroa.0.i8.sroa.7.0.copyload to i64
   %i.hh = sub nuw i64 %i.hf, %i.hg
@@ -1768,8 +1757,7 @@ _RINvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters4takeINtB5_4TakeINtNtB7_8peekable
   %.sroa.9.1.i.i.i.i.i186 = phi ptr [ %.sroa.0.i8.sroa.7.0.copyload, %._crit_edge15.i.i.i.i.i.i.i.i.i200 ], [ %.sroa.0.i8.sroa.7.0.copyload, %.thread506 ], [ %i.ia, %.lr.ph.i.i.i.i.i.i.i.i.i.i204 ] ; 4 uses
   %.val11.i.sink.i.i.i.i.i.i.i.i188 = phi i64 [ %.sroa.512.0.copyload.i.i.i.i.i.i.i.i.i202, %._crit_edge15.i.i.i.i.i.i.i.i.i200 ], [ 0, %.thread506 ], [ %i.id, %.lr.ph.i.i.i.i.i.i.i.i.i.i204 ]
   store i64 %.val11.i.sink.i.i.i.i.i.i.i.i188, ptr %i.ih, align 8, !alias.scope !979, !noalias !989
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.1.i.i.i.i.i186) ], !noalias !958
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.i8.sroa.9.0.copyload) ], !noalias !958
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.1.i.i.i.i.i186), "nonnull"(ptr %.sroa.0.i8.sroa.9.0.copyload) ], !noalias !958
   %i.ii = ptrtoint ptr %.sroa.9.1.i.i.i.i.i186 to i64
   %i.ij = sub nuw i64 %.pre-phi535, %i.ii
   %i.ik = udiv exact i64 %i.ij, 24

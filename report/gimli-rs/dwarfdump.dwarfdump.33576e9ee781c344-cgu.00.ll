@@ -204,11 +204,9 @@ bb.hj:                                            ; preds = %.noexc234
 
 bb.hk:                                            ; preds = %.noexc234
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !2923
-  %i.ur = extractelement <2 x ptr> %i.uo, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ur) ], !noalias !2912
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.029.sroa.10.0.copyload.i) ], !noalias !2912
-  %i.us = extractelement <2 x ptr> %i.uo, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.us) ], !noalias !2912
+  %i.ur = extractelement <2 x ptr> %i.uo, i64 0
+  %i.us = extractelement <2 x ptr> %i.uo, i64 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.us), "nonnull"(ptr %.sroa.029.sroa.10.0.copyload.i), "nonnull"(ptr %i.ur) ], !noalias !2912
   store <2 x ptr> %i.uo, ptr %i.f, align 16, !noalias !2923
   store i64 %.sroa.029.sroa.7.0.copyload.i, ptr %.sroa.5.0..sroa_idx102.i, align 16, !noalias !2923
   store i8 %.sroa.029.sroa.8.0.copyload.i, ptr %.sroa.6103.0..sroa_idx.i, align 8, !noalias !2923
@@ -474,11 +472,9 @@ bb.ie:                                            ; preds = %.noexc204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !2929
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !2929
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !2929
-  %i.wg = extractelement <2 x ptr> %i.we, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.wg) ], !noalias !2912
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.054.sroa.11.0.copyload.i) ], !noalias !2912
-  %i.wh = extractelement <2 x ptr> %i.we, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.wh) ], !noalias !2912
+  %i.wg = extractelement <2 x ptr> %i.we, i64 0
+  %i.wh = extractelement <2 x ptr> %i.we, i64 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.wh), "nonnull"(ptr %.sroa.054.sroa.11.0.copyload.i), "nonnull"(ptr %i.wg) ], !noalias !2912
   store <2 x ptr> %i.we, ptr %i.x, align 16, !noalias !2929
   store i64 %.sroa.054.sroa.8.0.copyload.i, ptr %.sroa.5147.0..sroa_idx.i, align 16, !noalias !2929
   store i8 %.sroa.054.sroa.9.0.copyload.i, ptr %.sroa.6148.0..sroa_idx.i, align 8, !noalias !2929
@@ -771,11 +767,9 @@ _RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4From
 
 bb.jd:                                            ; preds = %.noexc185
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an), !noalias !2941
-  %i.xy = extractelement <2 x ptr> %i.xq, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.xy) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8293.0.copyload) ]
-  %i.xz = extractelement <2 x ptr> %i.xq, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.xz) ]
+  %i.xy = extractelement <2 x ptr> %i.xq, i64 0
+  %i.xz = extractelement <2 x ptr> %i.xq, i64 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.xz), "nonnull"(ptr %.sroa.8293.0.copyload), "nonnull"(ptr %i.xy) ]
   store <2 x ptr> %i.xq, ptr %i.an, align 16, !noalias !2941
   store i64 %.sroa.6292.0.copyload, ptr %.sroa.017.sroa.5.0..sroa_idx.i161, align 16, !noalias !2941
   store i8 %.sroa.7.0.copyload, ptr %.sroa.017.sroa.6.0..sroa_idx.i162, align 8, !noalias !2941
@@ -1011,11 +1005,9 @@ _RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4From
 
 bb.jy:                                            ; preds = %.noexc144
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !2950
-  %i.zl = extractelement <2 x ptr> %i.zd, i64 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.zl) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8353.0.copyload) ]
-  %i.zm = extractelement <2 x ptr> %i.zd, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.zm) ]
+  %i.zl = extractelement <2 x ptr> %i.zd, i64 0
+  %i.zm = extractelement <2 x ptr> %i.zd, i64 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.zm), "nonnull"(ptr %.sroa.8353.0.copyload), "nonnull"(ptr %i.zl) ]
   store <2 x ptr> %i.zd, ptr %i.aw, align 16, !noalias !2950
   store i64 %.sroa.6350.0.copyload, ptr %.sroa.017.sroa.5.0..sroa_idx.i, align 16, !noalias !2950
   store i8 %.sroa.7351.0.copyload, ptr %.sroa.017.sroa.6.0..sroa_idx.i, align 8, !noalias !2950

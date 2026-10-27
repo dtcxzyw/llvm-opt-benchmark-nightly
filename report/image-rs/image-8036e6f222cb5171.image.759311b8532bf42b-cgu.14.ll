@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
 _RNvXs1_NtCsj6eKBz9Db1c_4core7convertNtNtCsltZrX1n1NSl_3qoi5error5ErrorINtB5_4IntoINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB2c_4SyncEL_EE4intoCsa5QsYiPB8Gl_5image.exit: ; preds = %bb.a
   %i.d = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.e = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %i.e) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.d, ptr %i.f, align 8
@@ -609,8 +608,7 @@ bb.b:                                             ; preds = %bb.a
 _RNvXs1_NtCsj6eKBz9Db1c_4core7convertNtNtCs4wP2HXfJTCR_5alloc6string13FromUtf8ErrorINtB5_4IntoINtNtBC_5boxed3BoxDNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB27_4SyncEL_EE4intoCsa5QsYiPB8Gl_5image.exit: ; preds = %bb.a
   %i.d = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.e = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %i.e) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.d, ptr %i.f, align 8
@@ -705,8 +703,7 @@ bb.b:                                             ; preds = %bb.a
 _RNvXs1_NtCsj6eKBz9Db1c_4core7convertNtNtCsltZrX1n1NSl_3qoi5error5ErrorINtB5_4IntoINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB2c_4SyncEL_EE4intoCsa5QsYiPB8Gl_5image.exit: ; preds = %bb.a
   %i.d = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.e = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %i.e) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.d, ptr %i.f, align 8
@@ -743,8 +740,7 @@ bb.b:                                             ; preds = %bb.a
 _RNvXs1_NtCsj6eKBz9Db1c_4core7convertNtNtNtB7_2io5error5ErrorINtB5_4IntoINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorNtNtB7_6marker4SendNtB22_4SyncEL_EE4intoCsa5QsYiPB8Gl_5image.exit: ; preds = %bb.a
   %i.d = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.e = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.d), "nonnull"(ptr %i.e) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.d, ptr %i.f, align 8
@@ -1147,8 +1143,7 @@ bb.e:                                             ; preds = %bb.c
 _RINvMs0_NtCsa5QsYiPB8Gl_5image5errorNtB6_13EncodingError3newNtNtCsksn9slvsHfS_10image_webp7encoder13EncodingErrorEB8_.exit: ; preds = %bb.b
   %i.f = extractvalue { ptr, ptr } %i.c, 0        ; 2 uses
   %i.g = extractvalue { ptr, ptr } %i.c, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.g) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f), "nonnull"(ptr %i.g) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !909
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.h, align 8
@@ -1551,8 +1546,7 @@ bb.j:                                             ; preds = %bb.k, %bb.h
 bb.k:                                             ; preds = %bb.b
   %i.q = extractvalue { ptr, ptr } %i.h, 0        ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.h, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q), "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1003
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.s, align 8
@@ -1617,8 +1611,7 @@ bb.f:                                             ; preds = %bb.d
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtCsksn9slvsHfS_10image_webp7decoder13DecodingErrorEB7_.exit: ; preds = %bb.c
   %i.j = extractvalue { ptr, ptr } %i.g, 0        ; 2 uses
   %i.k = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j), "nonnull"(ptr %i.k) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1010
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -2021,8 +2014,7 @@ common.resume:                                    ; preds = %.body, %bb.d
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtCs5XDXJCpOCOR_3png7decoder6stream13DecodingErrorEB7_.exit: ; preds = %bb.c
   %i.n = extractvalue { ptr, ptr } %i.k, 0        ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n), "nonnull"(ptr %i.o) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1120
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.p, align 8
@@ -2425,8 +2417,7 @@ bb.f:                                             ; preds = %bb.d
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtCsvKatKEpids_3gif6reader7decoder13DecodingErrorEB7_.exit: ; preds = %bb.c
   %i.k = extractvalue { ptr, ptr } %i.h, 0        ; 2 uses
   %i.l = extractvalue { ptr, ptr } %i.h, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k), "nonnull"(ptr %i.l) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1194
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.m, align 8
@@ -2483,8 +2474,7 @@ bb.f:                                             ; preds = %bb.d
 _RINvMs0_NtCsa5QsYiPB8Gl_5image5errorNtB6_13EncodingError3newNtNtCsvKatKEpids_3gif7encoder13EncodingErrorEB8_.exit: ; preds = %bb.c
   %i.i = extractvalue { ptr, ptr } %i.f, 0        ; 2 uses
   %i.j = extractvalue { ptr, ptr } %i.f, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.i), "nonnull"(ptr %i.j) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1201
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.k, align 8
@@ -2867,8 +2857,7 @@ bb.s:                                             ; preds = %bb.o, %bb.t, %bb.r
 bb.t:                                             ; preds = %bb.c
   %i.ag = extractvalue { ptr, ptr } %i.n, 0       ; 2 uses
   %i.ah = extractvalue { ptr, ptr } %i.n, 1       ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag), "nonnull"(ptr %i.ah) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1216
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.ai, align 8
@@ -3073,8 +3062,7 @@ bb.s:                                             ; preds = %bb.o, %bb.t, %bb.r
 bb.t:                                             ; preds = %bb.c
   %i.ag = extractvalue { ptr, ptr } %i.n, 0       ; 2 uses
   %i.ah = extractvalue { ptr, ptr } %i.n, 1       ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ah) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ag), "nonnull"(ptr %i.ah) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1229
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.ai, align 8
@@ -3477,8 +3465,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtNtB7_6codecs3bmp7decoder12DecoderErrorEB7_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1307
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
@@ -3862,8 +3849,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs0_NtCsa5QsYiPB8Gl_5image5errorNtB6_13EncodingError3newNtNtNtNtB8_6codecs4jpeg7encoder12EncoderErrorEB8_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1367
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
@@ -4266,8 +4252,7 @@ bb.g:                                             ; preds = %bb.e
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNvXs9_NtNtB7_6images4flatNtB5_10ImageErrorINtNtCsj6eKBz9Db1c_4core7convert4FromNtB13_5ErrorE4from23NormalFormRequiredErrorEB7_.exit: ; preds = %bb.d
   %i.f = extractvalue { ptr, ptr } %i.c, 0        ; 2 uses
   %i.g = extractvalue { ptr, ptr } %i.c, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.g) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f), "nonnull"(ptr %i.g) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1400
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 3, ptr %i.h, align 8
@@ -4670,8 +4655,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtB7_6codecs3dds12DecoderErrorEB7_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1417
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
@@ -4728,8 +4712,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtNtB7_6codecs3hdr7decoder12DecoderErrorEB7_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1423
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
@@ -4772,8 +4755,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtNtB7_6codecs3ico7decoder12DecoderErrorEB7_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1430
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
@@ -4816,8 +4798,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs_NtCsa5QsYiPB8Gl_5image5errorNtB5_13DecodingError3newNtNtNtNtB7_6codecs3pnm7decoder12DecoderErrorEB7_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1437
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
@@ -4860,8 +4841,7 @@ bb.d:                                             ; preds = %bb.b
 _RINvMs0_NtCsa5QsYiPB8Gl_5image5errorNtB6_13EncodingError3newNtNtNtNtB8_6codecs3tga7encoder12EncoderErrorEB8_.exit: ; preds = %bb.a
   %i.e = extractvalue { ptr, ptr } %i.b, 0        ; 2 uses
   %i.f = extractvalue { ptr, ptr } %i.b, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e), "nonnull"(ptr %i.f) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1444
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.g, align 8
