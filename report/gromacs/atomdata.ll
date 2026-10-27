@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.al = insertelement <2 x i32> poison, i32 %i.af, i64 0
   %i.am = shufflevector <2 x i32> %i.al, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.an = sdiv <2 x i32> %i.ak, %i.am
-  %i.ao = sdiv <2 x i32> %i.an, %i.ab
-  %i.ap = mul <2 x i32> %i.ao, %i.am              ; 9 uses
+  %i.ao = sdiv <2 x i32> %i.an, %i.ab             ; 9 uses
+  %i.ap = mul <2 x i32> %i.ao, %i.am
   %i.aq = add <2 x i32> %i.ap, %i.x               ; 15 uses
   switch i32 %i.u, label %bb.j [
     i32 0, label %bb.f
@@ -222,8 +222,8 @@ bb.f:                                             ; preds = %bb.e
   %i.au = getelementptr i8, ptr %i.ar, i64 8
   %.val = load ptr, ptr %i.au, align 8, !tbaa !76 ; 9 uses
   %i.av = icmp eq ptr %i.as, null
-  %shift = shufflevector <2 x i32> %i.ap, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %i.aw = icmp slt <2 x i32> %i.ap, %shift
+  %shift = shufflevector <2 x i32> %i.ao, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %i.aw = icmp slt <2 x i32> %i.ao, %shift
   %i.ax = extractelement <2 x i1> %i.aw, i64 0    ; 2 uses
   br i1 %i.av, label %.preheader.i, label %.preheader1.i
 
@@ -458,8 +458,8 @@ bb.g:                                             ; preds = %bb.e
   %i.fu = getelementptr i8, ptr %i.fr, i64 8
   %.val39 = load ptr, ptr %i.fu, align 8, !tbaa !76 ; 9 uses
   %i.fv = icmp eq ptr %i.fs, null
-  %shift171 = shufflevector <2 x i32> %i.ap, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %i.fw = icmp slt <2 x i32> %i.ap, %shift171
+  %shift171 = shufflevector <2 x i32> %i.ao, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %i.fw = icmp slt <2 x i32> %i.ao, %shift171
   %i.fx = extractelement <2 x i1> %i.fw, i64 0    ; 2 uses
   br i1 %i.fv, label %.preheader.i49, label %.preheader1.i42
 
@@ -706,8 +706,8 @@ bb.h:                                             ; preds = %bb.e
   %i.lf = getelementptr i8, ptr %i.lc, i64 8
   %.val40 = load ptr, ptr %i.lf, align 8, !tbaa !76 ; 15 uses
   %i.lg = icmp eq ptr %i.ld, null
-  %shift172 = shufflevector <2 x i32> %i.ap, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %i.lh = icmp slt <2 x i32> %i.ap, %shift172
+  %shift172 = shufflevector <2 x i32> %i.ao, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %i.lh = icmp slt <2 x i32> %i.ao, %shift172
   %i.li = extractelement <2 x i1> %i.lh, i64 0    ; 2 uses
   br i1 %i.lg, label %.preheader1.i63, label %.preheader2.i
 
@@ -935,8 +935,8 @@ bb.i:                                             ; preds = %bb.e
   %i.rf = getelementptr i8, ptr %i.rc, i64 8
   %.val41 = load ptr, ptr %i.rf, align 8, !tbaa !76 ; 27 uses
   %i.rg = icmp eq ptr %i.rd, null
-  %shift173 = shufflevector <2 x i32> %i.ap, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %i.rh = icmp slt <2 x i32> %i.ap, %shift173
+  %shift173 = shufflevector <2 x i32> %i.ao, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %i.rh = icmp slt <2 x i32> %i.ao, %shift173
   %i.ri = extractelement <2 x i1> %i.rh, i64 0    ; 2 uses
   br i1 %i.rg, label %.preheader1.i72, label %.preheader2.i65
 

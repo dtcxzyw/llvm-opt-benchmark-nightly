@@ -162,7 +162,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bm = load ptr, ptr %1, align 8, !tbaa !46
-  %wide.trip.count = zext nneg i32 %.0.i to i64   ; 4 uses
+  %wide.trip.count = zext nneg i32 %.0.i to i64   ; 3 uses
   br label %.preheader113
 
 .preheader112:                                    ; preds = %.preheader113
@@ -171,7 +171,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bo, label %.preheader.preheader, label %._crit_edge133
 
 .preheader.preheader:                             ; preds = %.preheader112
-  %4 = mul nuw nsw i64 %wide.trip.count, 20
+  %4 = mul nuw nsw i32 %.0.i, 20
   br label %.preheader
 
 .preheader113:                                    ; preds = %bb.k, %.preheader113
@@ -230,10 +230,9 @@ bb.k:                                             ; preds = %bb.j
   br i1 %exitcond.not, label %.preheader112, label %.preheader113, !llvm.loop !29
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.l
-  %indvars.iv143 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next144, %bb.l ] ; 2 uses
+  %indvars.iv143 = phi i32 [ 0, %.preheader.preheader ], [ %indvars.iv.next144, %bb.l ] ; 2 uses
   %.080132 = phi i32 [ 0, %.preheader.preheader ], [ %i.dd, %bb.l ] ; 2 uses
   %.sroa.0.3131 = phi ptr [ %i.cy, %.preheader.preheader ], [ %i.di, %bb.l ]
-  %5 = mul nuw nsw i32 %.080132, %.0.i
   %i.dd = add nuw nsw i32 %.080132, 20            ; 3 uses
   br label %bb.m
 
@@ -245,24 +244,25 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.n
   %i.df = load i32, ptr %i.av, align 8, !tbaa !45
   %i.dg = icmp slt i32 %i.dd, %i.df
-  %indvars.iv.next144 = add nuw nsw i64 %indvars.iv143, %4
+  %indvars.iv.next144 = add i32 %indvars.iv143, %4
   br i1 %i.dg, label %.preheader, label %._crit_edge133, !llvm.loop !30
 
 bb.m:                                             ; preds = %.preheader, %bb.n
   %indvars.iv150 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next151, %bb.n ] ; 3 uses
-  %indvars.iv145 = phi i64 [ %indvars.iv143, %.preheader ], [ %indvars.iv.next146, %bb.n ] ; 2 uses
+  %indvars.iv145 = phi i32 [ %indvars.iv143, %.preheader ], [ %indvars.iv.next146, %bb.n ] ; 2 uses
   %.sroa.0.4129 = phi ptr [ %.sroa.0.3131, %.preheader ], [ %i.di, %bb.n ] ; 2 uses
   %i.dh = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %indvars.iv150 ; 9 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.0.4129, i64 8 ; 2 uses
-  %i.dj = load i32, ptr %i.av, align 8, !tbaa !45
+  %i.dj = load i32, ptr %i.av, align 8, !tbaa !45 ; 2 uses
   %..i = tail call i32 @llvm.smin.i32(i32 %i.dd, i32 %i.dj)
-  %i.dk = mul nsw i32 %..i, %.0.i                 ; 2 uses
+  %i.dk = mul nsw i32 %..i, %.0.i
   %i.dl = trunc nuw nsw i64 %indvars.iv150 to i32
   %i.dm = add nsw i32 %i.dk, %i.dl
-  %6 = icmp slt i32 %5, %i.dk
-  br i1 %6, label %.lr.ph, label %bb.n
+  %5 = icmp sgt i32 %i.dj, %.080132
+  br i1 %5, label %.lr.ph, label %bb.n
 
 .lr.ph:                                           ; preds = %bb.m
+  %6 = zext i32 %indvars.iv145 to i64
   %i.dn = load i64, ptr %.sroa.0.4129, align 1, !tbaa !37
   %i.do = tail call noundef i64 @llvm.bswap.i64(i64 %i.dn) ; 2 uses
   %i.dp = lshr i64 %i.do, 60
@@ -290,12 +290,12 @@ bb.m:                                             ; preds = %.preheader, %bb.n
 
 bb.n:                                             ; preds = %._crit_edge, %bb.m
   %indvars.iv.next151 = add nuw nsw i64 %indvars.iv150, 1 ; 2 uses
-  %indvars.iv.next146 = add nuw nsw i64 %indvars.iv145, 1
+  %indvars.iv.next146 = add i32 %indvars.iv145, 1
   %exitcond154.not = icmp eq i64 %indvars.iv.next151, %wide.trip.count
   br i1 %exitcond154.not, label %bb.l, label %bb.m, !llvm.loop !31
 
 bb.o:                                             ; preds = %.lr.ph, %bb.o
-  %indvars.iv147 = phi i64 [ %indvars.iv145, %.lr.ph ], [ %indvars.iv.next148, %bb.o ] ; 2 uses
+  %indvars.iv147 = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next148, %bb.o ] ; 2 uses
   %i.dy = phi i32 [ %.promoted128, %.lr.ph ], [ %i.ev, %bb.o ] ; 2 uses
   %i.dz = phi i32 [ %.promoted126, %.lr.ph ], [ %i.fl, %bb.o ] ; 2 uses
   %i.ea = phi i32 [ %.promoted124, %.lr.ph ], [ %i.fi, %bb.o ] ; 2 uses

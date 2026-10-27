@@ -202,9 +202,9 @@ bb.a:
     #dbg_value(ptr poison, !10889, !DIExpression(), !10691)
     #dbg_value(ptr poison, !10897, !DIExpression(), !10697)
     #dbg_value(i64 48, !10905, !DIExpression(), !10705)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %2, !10903, !DIExpression(), !10706)
     #dbg_value(ptr %2, !10919, !DIExpression(), !10707)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !10920, !DIExpression(), !10707)
     #dbg_value(ptr %2, !10913, !DIExpression(), !10708)
     #dbg_value(ptr %1, !10914, !DIExpression(), !10708)
