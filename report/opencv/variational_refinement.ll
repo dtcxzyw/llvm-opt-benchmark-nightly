@@ -205,11 +205,9 @@ vector.memcheck:                                  ; preds = %.lr.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %i.hv = load float, ptr %i.aw, align 8, !tbaa !121, !alias.scope !254 ; 2 uses
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %i.hv, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.hv = load float, ptr %i.aw, align 8, !tbaa !121, !alias.scope !254
   %broadcast.splatinsert297 = insertelement <4 x float> poison, float %i.hv, i64 0
-  %broadcast.splat298 = shufflevector <4 x float> %broadcast.splatinsert297, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splat298 = shufflevector <4 x float> %broadcast.splatinsert297, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -260,7 +258,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.iy = getelementptr inbounds nuw [4 x i8], ptr %.0118, i64 %index ; 2 uses
   %wide.load292 = load <4 x float>, ptr %i.iy, align 4, !tbaa !28, !alias.scope !269, !noalias !270 ; 2 uses
   %i.iz = fsub <4 x float> %i.ix, %wide.load292
-  %i.ja = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat, <4 x float> %i.iz, <4 x float> %wide.load292) ; 2 uses
+  %i.ja = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat298, <4 x float> %i.iz, <4 x float> %wide.load292) ; 2 uses
   store <4 x float> %i.ja, ptr %i.iy, align 4, !tbaa !28, !alias.scope !269, !noalias !270
   %i.jb = getelementptr inbounds nuw [4 x i8], ptr %.0120, i64 %index
   %wide.load293 = load <4 x float>, ptr %i.jb, align 4, !tbaa !28, !alias.scope !271

@@ -204,11 +204,9 @@ bb.c:                                             ; preds = %switch.early.test38
   br i1 %brmerge, label %scalar.ph621.preheader, label %vector.ph623
 
 vector.ph623:                                     ; preds = %.preheader211
-  %i.du = load double, ptr %gep363, align 8, !tbaa !14, !alias.scope !79 ; 3 uses
-  %broadcast.splatinsert633 = insertelement <4 x double> poison, double %i.du, i64 0
-  %broadcast.splat634 = shufflevector <4 x double> %broadcast.splatinsert633, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.du = load double, ptr %gep363, align 8, !tbaa !14, !alias.scope !79 ; 2 uses
   %broadcast.splatinsert625 = insertelement <4 x double> poison, double %i.du, i64 0
-  %broadcast.splat626 = shufflevector <4 x double> %broadcast.splatinsert625, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat626 = shufflevector <4 x double> %broadcast.splatinsert625, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.dv = fneg <4 x double> %broadcast.splat626
   %i.dw = fcmp oge double %i.du, 0.000000e+00
   %i.dx = select i1 %i.dw, <4 x double> %broadcast.splat626, <4 x double> %i.dv ; 2 uses
@@ -225,8 +223,8 @@ vector.body627:                                   ; preds = %vector.body627, %ve
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 32 ; 2 uses
   %wide.load631 = load <4 x double>, ptr %i.eb, align 8, !tbaa !14, !alias.scope !81, !noalias !82
   %wide.load632 = load <4 x double>, ptr %i.ec, align 8, !tbaa !14, !alias.scope !81, !noalias !82
-  %i.ed = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load629, <4 x double> %broadcast.splat634, <4 x double> %wide.load631)
-  %i.ee = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load630, <4 x double> %broadcast.splat634, <4 x double> %wide.load632)
+  %i.ed = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load629, <4 x double> %broadcast.splat626, <4 x double> %wide.load631)
+  %i.ee = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load630, <4 x double> %broadcast.splat626, <4 x double> %wide.load632)
   store <4 x double> %i.ed, ptr %i.eb, align 8, !tbaa !14, !alias.scope !81, !noalias !82
   store <4 x double> %i.ee, ptr %i.ec, align 8, !tbaa !14, !alias.scope !81, !noalias !82
   %wide.load635 = load <4 x double>, ptr %i.dz, align 8, !tbaa !14, !alias.scope !80 ; 3 uses
@@ -400,11 +398,9 @@ bb.d:                                             ; preds = %switch.early.test
   br i1 %brmerge664, label %scalar.ph462.preheader, label %vector.ph464
 
 vector.ph464:                                     ; preds = %.preheader210
-  %i.hn = load double, ptr %gep375, align 8, !tbaa !14, !alias.scope !85 ; 3 uses
-  %broadcast.splatinsert474 = insertelement <4 x double> poison, double %i.hn, i64 0
-  %broadcast.splat475 = shufflevector <4 x double> %broadcast.splatinsert474, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.hn = load double, ptr %gep375, align 8, !tbaa !14, !alias.scope !85 ; 2 uses
   %broadcast.splatinsert466 = insertelement <4 x double> poison, double %i.hn, i64 0
-  %broadcast.splat467 = shufflevector <4 x double> %broadcast.splatinsert466, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat467 = shufflevector <4 x double> %broadcast.splatinsert466, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.ho = fneg <4 x double> %broadcast.splat467
   %i.hp = fcmp oge double %i.hn, 0.000000e+00
   %i.hq = select i1 %i.hp, <4 x double> %broadcast.splat467, <4 x double> %i.ho ; 2 uses
@@ -421,8 +417,8 @@ vector.body468:                                   ; preds = %vector.body468, %ve
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 32 ; 2 uses
   %wide.load472.a = load <4 x double>, ptr %i.hu, align 8, !tbaa !14, !alias.scope !87, !noalias !88
   %wide.load473.a = load <4 x double>, ptr %i.hv, align 8, !tbaa !14, !alias.scope !87, !noalias !88
-  %i.hw = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load470.a, <4 x double> %broadcast.splat475, <4 x double> %wide.load472.a)
-  %i.hx = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load471.a, <4 x double> %broadcast.splat475, <4 x double> %wide.load473.a)
+  %i.hw = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load470.a, <4 x double> %broadcast.splat467, <4 x double> %wide.load472.a)
+  %i.hx = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load471.a, <4 x double> %broadcast.splat467, <4 x double> %wide.load473.a)
   store <4 x double> %i.hw, ptr %i.hu, align 8, !tbaa !14, !alias.scope !87, !noalias !88
   store <4 x double> %i.hx, ptr %i.hv, align 8, !tbaa !14, !alias.scope !87, !noalias !88
   %wide.load476 = load <4 x double>, ptr %i.hs, align 8, !tbaa !14, !alias.scope !86 ; 3 uses
@@ -600,11 +596,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %brmerge665, label %scalar.ph515.preheader, label %vector.ph517
 
 vector.ph517:                                     ; preds = %.preheader
-  %i.ln = load double, ptr %gep371, align 8, !tbaa !14, !alias.scope !91 ; 3 uses
-  %broadcast.splatinsert527 = insertelement <4 x double> poison, double %i.ln, i64 0
-  %broadcast.splat528 = shufflevector <4 x double> %broadcast.splatinsert527, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.ln = load double, ptr %gep371, align 8, !tbaa !14, !alias.scope !91 ; 2 uses
   %broadcast.splatinsert519 = insertelement <4 x double> poison, double %i.ln, i64 0
-  %broadcast.splat520 = shufflevector <4 x double> %broadcast.splatinsert519, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat520 = shufflevector <4 x double> %broadcast.splatinsert519, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.lo = fneg <4 x double> %broadcast.splat520
   %i.lp = fcmp oge double %i.ln, 0.000000e+00
   %i.lq = select i1 %i.lp, <4 x double> %broadcast.splat520, <4 x double> %i.lo ; 2 uses
@@ -621,8 +615,8 @@ vector.body521:                                   ; preds = %vector.body521, %ve
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 32 ; 2 uses
   %wide.load525 = load <4 x double>, ptr %i.lu, align 8, !tbaa !14, !alias.scope !93, !noalias !94
   %wide.load526 = load <4 x double>, ptr %i.lv, align 8, !tbaa !14, !alias.scope !93, !noalias !94
-  %i.lw = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load523.a, <4 x double> %broadcast.splat528, <4 x double> %wide.load525)
-  %i.lx = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load524.a, <4 x double> %broadcast.splat528, <4 x double> %wide.load526)
+  %i.lw = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load523.a, <4 x double> %broadcast.splat520, <4 x double> %wide.load525)
+  %i.lx = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load524.a, <4 x double> %broadcast.splat520, <4 x double> %wide.load526)
   store <4 x double> %i.lw, ptr %i.lu, align 8, !tbaa !14, !alias.scope !93, !noalias !94
   store <4 x double> %i.lx, ptr %i.lv, align 8, !tbaa !14, !alias.scope !93, !noalias !94
   %wide.load529 = load <4 x double>, ptr %i.ls, align 8, !tbaa !14, !alias.scope !92 ; 3 uses
@@ -796,11 +790,9 @@ bb.h:                                             ; preds = %bb.g
   br i1 %brmerge666, label %scalar.ph569.preheader, label %vector.ph571
 
 vector.ph571:                                     ; preds = %.preheader209
-  %i.pi = load double, ptr %gep367, align 8, !tbaa !14, !alias.scope !97 ; 3 uses
-  %broadcast.splatinsert581 = insertelement <4 x double> poison, double %i.pi, i64 0
-  %broadcast.splat582 = shufflevector <4 x double> %broadcast.splatinsert581, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %i.pi = load double, ptr %gep367, align 8, !tbaa !14, !alias.scope !97 ; 2 uses
   %broadcast.splatinsert573 = insertelement <4 x double> poison, double %i.pi, i64 0
-  %broadcast.splat574 = shufflevector <4 x double> %broadcast.splatinsert573, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat574 = shufflevector <4 x double> %broadcast.splatinsert573, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.pj = fneg <4 x double> %broadcast.splat574
   %i.pk = fcmp oge double %i.pi, 0.000000e+00
   %i.pl = select i1 %i.pk, <4 x double> %broadcast.splat574, <4 x double> %i.pj ; 2 uses
@@ -817,8 +809,8 @@ vector.body575:                                   ; preds = %vector.body575, %ve
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pp, i64 32 ; 2 uses
   %wide.load579 = load <4 x double>, ptr %i.pp, align 8, !tbaa !14, !alias.scope !99, !noalias !100
   %wide.load580 = load <4 x double>, ptr %i.pq, align 8, !tbaa !14, !alias.scope !99, !noalias !100
-  %i.pr = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load577, <4 x double> %broadcast.splat582, <4 x double> %wide.load579)
-  %i.ps = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load578, <4 x double> %broadcast.splat582, <4 x double> %wide.load580)
+  %i.pr = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load577, <4 x double> %broadcast.splat574, <4 x double> %wide.load579)
+  %i.ps = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load578, <4 x double> %broadcast.splat574, <4 x double> %wide.load580)
   store <4 x double> %i.pr, ptr %i.pp, align 8, !tbaa !14, !alias.scope !99, !noalias !100
   store <4 x double> %i.ps, ptr %i.pq, align 8, !tbaa !14, !alias.scope !99, !noalias !100
   %wide.load583 = load <4 x double>, ptr %i.pn, align 8, !tbaa !14, !alias.scope !98 ; 3 uses
@@ -978,23 +970,18 @@ vector.memcheck:                                  ; preds = %.lr.ph260
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.sg, 2147483640              ; 3 uses
   %i.si = or disjoint i64 %n.vec, 1
-  %i.sj = load double, ptr %5, align 8, !tbaa !14, !alias.scope !103 ; 3 uses
+  %i.sj = load double, ptr %5, align 8, !tbaa !14, !alias.scope !103 ; 2 uses
   %broadcast.splatinsert428 = insertelement <4 x double> poison, double %i.sj, i64 0
-  %broadcast.splat429 = shufflevector <4 x double> %broadcast.splatinsert428, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.sk = load double, ptr %10, align 8, !tbaa !14, !alias.scope !104
-  %broadcast.splatinsert426 = insertelement <4 x double> poison, double %i.sk, i64 0
-  %broadcast.splat427 = shufflevector <4 x double> %broadcast.splatinsert426, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert = insertelement <4 x double> poison, double %i.sj, i64 0
-  %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.sl = fneg <4 x double> %broadcast.splat
+  %broadcast.splat429 = shufflevector <4 x double> %broadcast.splatinsert428, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %i.sk = load double, ptr %10, align 8, !tbaa !14, !alias.scope !104 ; 2 uses
+  %broadcast.splatinsert = insertelement <4 x double> poison, double %i.sk, i64 0
+  %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
+  %i.sl = fneg <4 x double> %broadcast.splat429
   %i.sm = fcmp ult double %i.sj, 0.000000e+00
-  %i.sn = select i1 %i.sm, <4 x double> %i.sl, <4 x double> %broadcast.splat ; 2 uses
-  %24 = load double, ptr %10, align 8, !tbaa !14, !alias.scope !104 ; 2 uses
-  %broadcast.splatinsert421 = insertelement <4 x double> poison, double %24, i64 0
-  %broadcast.splat422 = shufflevector <4 x double> %broadcast.splatinsert421, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.so = fneg <4 x double> %broadcast.splat422
-  %i.sp = fcmp ult double %24, 0.000000e+00
-  %i.sq = select i1 %i.sp, <4 x double> %i.so, <4 x double> %broadcast.splat422 ; 2 uses
+  %i.sn = select i1 %i.sm, <4 x double> %i.sl, <4 x double> %broadcast.splat429 ; 2 uses
+  %i.so = fneg <4 x double> %broadcast.splat
+  %i.sp = fcmp ult double %i.sk, 0.000000e+00
+  %i.sq = select i1 %i.sp, <4 x double> %i.so, <4 x double> %broadcast.splat ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1008,8 +995,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sv = getelementptr i8, ptr %i.st, i64 40     ; 2 uses
   %wide.load424 = load <4 x double>, ptr %i.su, align 8, !tbaa !14, !alias.scope !107
   %wide.load425 = load <4 x double>, ptr %i.sv, align 8, !tbaa !14, !alias.scope !107
-  %i.sw = fmul <4 x double> %broadcast.splat427, %wide.load424
-  %i.sx = fmul <4 x double> %broadcast.splat427, %wide.load425
+  %i.sw = fmul <4 x double> %broadcast.splat, %wide.load424
+  %i.sx = fmul <4 x double> %broadcast.splat, %wide.load425
   %i.sy = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat429, <4 x double> %wide.load, <4 x double> %i.sw)
   %i.sz = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %broadcast.splat429, <4 x double> %wide.load423, <4 x double> %i.sx)
   store <4 x double> %i.sy, ptr %i.sr, align 8, !tbaa !14, !alias.scope !105, !noalias !106

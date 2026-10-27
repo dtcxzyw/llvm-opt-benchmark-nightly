@@ -204,12 +204,12 @@ bb.ax:                                            ; preds = %bb.j, %bb.i, %._cri
 ._crit_edge.i.i99.i.i.i.i:                        ; preds = %bb.ax
   %i.fo = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.fp = load i8, ptr %i.fo, align 8, !range !41, !noundef !42
-  %i.fq = trunc nuw i8 %i.fp to i1
-  %.str.163..str.618.i.i.i.i = select i1 %i.fq, ptr @.str.163, ptr @.str.618 ; 2 uses
+  %i.fq = trunc nuw i8 %i.fp to i1                ; 2 uses
+  %.str.163..str.618.i.i.i.i = select i1 %i.fq, ptr @.str.163, ptr @.str.618
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   %i.fr = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 6 uses
   store ptr %i.fr, ptr %11, align 8
-  %15 = load i8, ptr %.str.163..str.618.i.i.i.i, align 1
+  %15 = select i1 %i.fq, i8 48, i8 105
   store i8 %15, ptr %i.fr, align 8
   %i.fs = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 1, ptr %i.fs, align 8
@@ -612,12 +612,12 @@ bb.ax:                                            ; preds = %bb.j, %bb.i, %._cri
 ._crit_edge.i.i101.i.i.i.i:                       ; preds = %bb.ax
   %i.fo = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.fp = load i8, ptr %i.fo, align 8, !range !41, !noundef !42
-  %i.fq = trunc nuw i8 %i.fp to i1
-  %.str.163..str.618.i.i.i.i = select i1 %i.fq, ptr @.str.163, ptr @.str.618 ; 2 uses
+  %i.fq = trunc nuw i8 %i.fp to i1                ; 2 uses
+  %.str.163..str.618.i.i.i.i = select i1 %i.fq, ptr @.str.163, ptr @.str.618
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #27
   %i.fr = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 6 uses
   store ptr %i.fr, ptr %13, align 8
-  %18 = load i8, ptr %.str.163..str.618.i.i.i.i, align 1
+  %18 = select i1 %i.fq, i8 48, i8 105
   store i8 %18, ptr %i.fr, align 8
   %i.fs = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i64 1, ptr %i.fs, align 8

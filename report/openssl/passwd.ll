@@ -205,7 +205,7 @@ declare i32 @EVP_read_pw_string(ptr noundef, i32 noundef, ptr noundef, i32 nound
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @do_passwd(i32 noundef range(i32 0, 2) %0, ptr nofree noundef nonnull captures(none) %1, ptr nofree noundef nonnull captures(none) %2, ptr noundef %3, ptr noundef %4, i32 noundef range(i32 0, 2) %5, i32 noundef range(i32 0, 2) %6, i32 noundef range(i32 0, 2) %7, i32 noundef range(i32 0, 6) %8) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 106 uses
+  %i.a = alloca [64 x i8], align 16               ; 105 uses
   %i.b = alloca [64 x i8], align 16               ; 8 uses
   %i.c = alloca [2 x i8], align 1                 ; 4 uses
   %i.d = alloca [17 x i8], align 16               ; 8 uses
@@ -360,19 +360,15 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.be, label %bb.n, label %.thread76
 
 bb.n:                                             ; preds = %bb.m
-  %i.bf = icmp eq i32 %8, 3
-  %i.bg = select i1 %i.bf, ptr @.str.23, ptr @.str.21 ; 2 uses
+  %i.bf = icmp eq i32 %8, 3                       ; 3 uses
+  %i.bg = select i1 %i.bf, ptr @.str.23, ptr @.str.21
   %i.bh = load ptr, ptr %1, align 8, !tbaa !11    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   %i.bi = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %3) #8 ; 17 uses
-  %9 = load i8, ptr %i.bg, align 1, !tbaa !15     ; 2 uses
-  switch i8 %9, label %shacrypt.exit [
-    i8 53, label %bb.o
-    i8 54, label %bb.p
-  ]
+  br i1 %i.bf, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.bj = tail call ptr @EVP_sha256() #7
@@ -683,23 +679,22 @@ bb.az:                                            ; preds = %bb.aq
   call void @CRYPTO_free(ptr noundef nonnull %i.dg, ptr noundef nonnull @.str.52, i32 noundef 706) #7
   call void @CRYPTO_free(ptr noundef nonnull %i.ds, ptr noundef nonnull @.str.52, i32 noundef 707) #7
   %i.en = call i64 @strlen(ptr noundef nonnull dereferenceable(1) @shacrypt.out_buf) #8
-  %i.eo = getelementptr inbounds nuw i8, ptr @shacrypt.out_buf, i64 %i.en ; 131 uses
+  %i.eo = getelementptr inbounds nuw i8, ptr @shacrypt.out_buf, i64 %i.en ; 129 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 1 ; 2 uses
   store i8 36, ptr %i.eo, align 1, !tbaa !15
-  switch i8 %9, label %.loopexit402.i [
-    i8 53, label %.loopexit.loopexit.i
-    i8 54, label %.loopexit.loopexit534.i
-  ]
+  %9 = load i8, ptr %i.a, align 16, !tbaa !15
+  %10 = zext i8 %9 to i32                         ; 3 uses
+  %11 = shl nuw nsw i32 %10, 16                   ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.eo, i64 2 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.eo, i64 3 ; 2 uses
+  br i1 %i.bf, label %.loopexit.loopexit.i, label %.loopexit.loopexit534.i
 
 .loopexit.loopexit.i:                             ; preds = %bb.az
-  %10 = load i8, ptr %i.a, align 16, !tbaa !15
-  %11 = zext i8 %10 to i32                        ; 2 uses
-  %12 = shl nuw nsw i32 %11, 16
   %i.eq = getelementptr inbounds nuw i8, ptr %i.a, i64 10
   %i.er = load i8, ptr %i.eq, align 2, !tbaa !15
   %i.es = zext i8 %i.er to i32
   %i.et = shl nuw nsw i32 %i.es, 8                ; 2 uses
-  %i.eu = or disjoint i32 %i.et, %12
+  %i.eu = or disjoint i32 %i.et, %11
   %i.ev = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.ew = load i8, ptr %i.ev, align 4, !tbaa !15
   %i.ex = zext i8 %i.ew to i32                    ; 2 uses
@@ -708,23 +703,21 @@ bb.az:                                            ; preds = %bb.aq
   %i.fa = zext nneg i32 %i.ez to i64
   %i.fb = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.fa
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !15
-  %13 = getelementptr inbounds nuw i8, ptr %i.eo, i64 2
   store i8 %i.fc, ptr %i.ep, align 1, !tbaa !15
   %i.fd = lshr i32 %i.ey, 6
   %i.fe = and i32 %i.fd, 63
   %i.ff = zext nneg i32 %i.fe to i64
   %i.fg = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.ff
   %i.fh = load i8, ptr %i.fg, align 1, !tbaa !15
-  %14 = getelementptr inbounds nuw i8, ptr %i.eo, i64 3
-  store i8 %i.fh, ptr %13, align 1, !tbaa !15
+  store i8 %i.fh, ptr %12, align 1, !tbaa !15
   %i.fi = lshr i32 %i.eu, 12
   %i.fj = and i32 %i.fi, 63
   %i.fk = zext nneg i32 %i.fj to i64
   %i.fl = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.fk
   %i.fm = load i8, ptr %i.fl, align 1, !tbaa !15
   %i.fn = getelementptr inbounds nuw i8, ptr %i.eo, i64 4
-  store i8 %i.fm, ptr %14, align 1, !tbaa !15
-  %i.fo = lshr i32 %11, 2
+  store i8 %i.fm, ptr %13, align 1, !tbaa !15
+  %i.fo = lshr i32 %10, 2
   %i.fp = zext nneg i32 %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.fp
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !15
@@ -1106,14 +1099,11 @@ bb.az:                                            ; preds = %bb.aq
   br label %.loopexit.i
 
 .loopexit.loopexit534.i:                          ; preds = %bb.az
-  %15 = load i8, ptr %i.a, align 16, !tbaa !15
-  %16 = zext i8 %15 to i32                        ; 2 uses
-  %17 = shl nuw nsw i32 %16, 16
   %i.sp = getelementptr inbounds nuw i8, ptr %i.a, i64 21
   %i.sq = load i8, ptr %i.sp, align 1, !tbaa !15
   %i.sr = zext i8 %i.sq to i32
   %i.ss = shl nuw nsw i32 %i.sr, 8                ; 2 uses
-  %i.st = or disjoint i32 %i.ss, %17
+  %i.st = or disjoint i32 %i.ss, %11
   %i.su = getelementptr inbounds nuw i8, ptr %i.a, i64 42
   %i.sv = load i8, ptr %i.su, align 2, !tbaa !15
   %i.sw = zext i8 %i.sv to i32                    ; 2 uses
@@ -1122,23 +1112,21 @@ bb.az:                                            ; preds = %bb.aq
   %i.sz = zext nneg i32 %i.sy to i64
   %i.ta = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.sz
   %i.tb = load i8, ptr %i.ta, align 1, !tbaa !15
-  %18 = getelementptr inbounds nuw i8, ptr %i.eo, i64 2
   store i8 %i.tb, ptr %i.ep, align 1, !tbaa !15
   %i.tc = lshr i32 %i.sx, 6
   %i.td = and i32 %i.tc, 63
   %i.te = zext nneg i32 %i.td to i64
   %i.tf = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.te
   %i.tg = load i8, ptr %i.tf, align 1, !tbaa !15
-  %19 = getelementptr inbounds nuw i8, ptr %i.eo, i64 3
-  store i8 %i.tg, ptr %18, align 1, !tbaa !15
+  store i8 %i.tg, ptr %12, align 1, !tbaa !15
   %i.th = lshr i32 %i.st, 12
   %i.ti = and i32 %i.th, 63
   %i.tj = zext nneg i32 %i.ti to i64
   %i.tk = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.tj
   %i.tl = load i8, ptr %i.tk, align 1, !tbaa !15
   %i.tm = getelementptr inbounds nuw i8, ptr %i.eo, i64 4
-  store i8 %i.tl, ptr %19, align 1, !tbaa !15
-  %i.tn = lshr i32 %16, 2
+  store i8 %i.tl, ptr %13, align 1, !tbaa !15
+  %i.tn = lshr i32 %10, 2
   %i.to = zext nneg i32 %i.tn to i64
   %i.tp = getelementptr inbounds nuw i8, ptr @cov_2char, i64 %i.to
   %i.tq = load i8, ptr %i.tp, align 1, !tbaa !15
@@ -1541,11 +1529,11 @@ begin_hunk_1_@do_passwd:bb.a
   store i8 0, ptr %.35.i, align 1, !tbaa !15
   br label %shacrypt.exit
 
-.loopexit402.i:                                   ; preds = %.lr.ph.i, %.lr.ph415.i, %.lr.ph419.i, %bb.an, %bb.ay, %bb.ax, %bb.aw, %bb.au, %bb.as, %bb.ar, %bb.az, %bb.ap, %bb.ao, %._crit_edge424.i, %bb.ak, %._crit_edge420.i, %bb.ai, %._crit_edge416.i, %._crit_edge.i, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
-  %.0344.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ %i.cf, %bb.aa ], [ %i.cf, %bb.ay ], [ %i.cf, %.lr.ph415.i ], [ %i.cf, %.lr.ph419.i ], [ %i.cf, %bb.ak ], [ %i.cf, %bb.an ], [ %i.cf, %bb.ap ], [ %i.cf, %bb.ad ], [ %i.cf, %bb.ac ], [ %i.cf, %bb.ab ], [ %i.cf, %bb.z ], [ %i.cf, %bb.y ], [ %i.cf, %bb.x ], [ null, %bb.az ], [ %i.cf, %bb.ao ], [ %i.cf, %._crit_edge424.i ], [ %i.cf, %._crit_edge420.i ], [ %i.cf, %bb.ai ], [ %i.cf, %._crit_edge416.i ], [ %i.cf, %._crit_edge.i ], [ %i.cf, %bb.af ], [ %i.cf, %bb.ae ], [ %i.cf, %bb.ar ], [ %i.cf, %bb.as ], [ %i.cf, %bb.au ], [ %i.cf, %bb.aw ], [ %i.cf, %bb.ax ], [ %i.cf, %.lr.ph.i ]
-  %.0343.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ null, %bb.aa ], [ %i.ck, %bb.ay ], [ %i.ck, %.lr.ph415.i ], [ %i.ck, %.lr.ph419.i ], [ %i.ck, %bb.ak ], [ %i.ck, %bb.an ], [ %i.ck, %bb.ap ], [ %i.ck, %bb.ad ], [ %i.ck, %bb.ac ], [ %i.ck, %bb.ab ], [ null, %bb.z ], [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.az ], [ %i.ck, %bb.ao ], [ %i.ck, %._crit_edge424.i ], [ %i.ck, %._crit_edge420.i ], [ %i.ck, %bb.ai ], [ %i.ck, %._crit_edge416.i ], [ %i.ck, %._crit_edge.i ], [ %i.ck, %bb.af ], [ %i.ck, %bb.ae ], [ %i.ck, %bb.ar ], [ %i.ck, %bb.as ], [ %i.ck, %bb.au ], [ %i.ck, %bb.aw ], [ %i.ck, %bb.ax ], [ %i.ck, %.lr.ph.i ]
-  %.0336.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ null, %bb.aa ], [ %i.dg, %bb.ay ], [ null, %.lr.ph415.i ], [ null, %.lr.ph419.i ], [ null, %bb.ak ], [ %i.dg, %bb.an ], [ %i.dg, %bb.ap ], [ null, %bb.ad ], [ null, %bb.ac ], [ null, %bb.ab ], [ null, %bb.z ], [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.az ], [ %i.dg, %bb.ao ], [ %i.dg, %._crit_edge424.i ], [ null, %._crit_edge420.i ], [ null, %bb.ai ], [ null, %._crit_edge416.i ], [ null, %._crit_edge.i ], [ null, %bb.af ], [ null, %bb.ae ], [ %i.dg, %bb.ar ], [ %i.dg, %bb.as ], [ %i.dg, %bb.au ], [ %i.dg, %bb.aw ], [ %i.dg, %bb.ax ], [ null, %.lr.ph.i ]
-  %.0335.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ null, %bb.aa ], [ %i.ds, %bb.ay ], [ null, %.lr.ph415.i ], [ null, %.lr.ph419.i ], [ null, %bb.ak ], [ null, %bb.an ], [ null, %bb.ap ], [ null, %bb.ad ], [ null, %bb.ac ], [ null, %bb.ab ], [ null, %bb.z ], [ null, %bb.y ], [ null, %bb.x ], [ null, %bb.az ], [ null, %bb.ao ], [ null, %._crit_edge424.i ], [ null, %._crit_edge420.i ], [ null, %bb.ai ], [ null, %._crit_edge416.i ], [ null, %._crit_edge.i ], [ null, %bb.af ], [ null, %bb.ae ], [ %i.ds, %bb.ar ], [ %i.ds, %bb.as ], [ %i.ds, %bb.au ], [ %i.ds, %bb.aw ], [ %i.ds, %bb.ax ], [ null, %.lr.ph.i ]
+.loopexit402.i:                                   ; preds = %.lr.ph.i, %.lr.ph415.i, %.lr.ph419.i, %bb.an, %bb.ay, %bb.ax, %bb.aw, %bb.au, %bb.as, %bb.ar, %bb.ap, %bb.ao, %._crit_edge424.i, %bb.ak, %._crit_edge420.i, %bb.ai, %._crit_edge416.i, %._crit_edge.i, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
+  %.0344.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ %i.cf, %bb.aa ], [ %i.cf, %bb.ay ], [ %i.cf, %.lr.ph415.i ], [ %i.cf, %bb.ae ], [ %i.cf, %bb.ak ], [ %i.cf, %bb.an ], [ %i.cf, %bb.ap ], [ %i.cf, %bb.ad ], [ %i.cf, %bb.ac ], [ %i.cf, %bb.ab ], [ %i.cf, %bb.z ], [ %i.cf, %bb.y ], [ %i.cf, %bb.x ], [ %i.cf, %.lr.ph419.i ], [ %i.cf, %bb.ao ], [ %i.cf, %._crit_edge424.i ], [ %i.cf, %._crit_edge420.i ], [ %i.cf, %bb.ai ], [ %i.cf, %._crit_edge416.i ], [ %i.cf, %._crit_edge.i ], [ %i.cf, %bb.af ], [ %i.cf, %bb.ar ], [ %i.cf, %bb.as ], [ %i.cf, %bb.au ], [ %i.cf, %bb.aw ], [ %i.cf, %bb.ax ], [ %i.cf, %.lr.ph.i ]
+  %.0343.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ null, %bb.aa ], [ %i.ck, %bb.ay ], [ %i.ck, %.lr.ph415.i ], [ %i.ck, %bb.ae ], [ %i.ck, %bb.ak ], [ %i.ck, %bb.an ], [ %i.ck, %bb.ap ], [ %i.ck, %bb.ad ], [ %i.ck, %bb.ac ], [ %i.ck, %bb.ab ], [ null, %bb.z ], [ null, %bb.y ], [ null, %bb.x ], [ %i.ck, %.lr.ph419.i ], [ %i.ck, %bb.ao ], [ %i.ck, %._crit_edge424.i ], [ %i.ck, %._crit_edge420.i ], [ %i.ck, %bb.ai ], [ %i.ck, %._crit_edge416.i ], [ %i.ck, %._crit_edge.i ], [ %i.ck, %bb.af ], [ %i.ck, %bb.ar ], [ %i.ck, %bb.as ], [ %i.ck, %bb.au ], [ %i.ck, %bb.aw ], [ %i.ck, %bb.ax ], [ %i.ck, %.lr.ph.i ]
+  %.0336.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ null, %bb.aa ], [ %i.dg, %bb.ay ], [ null, %.lr.ph415.i ], [ null, %bb.ae ], [ null, %bb.ak ], [ %i.dg, %bb.an ], [ %i.dg, %bb.ap ], [ null, %bb.ad ], [ null, %bb.ac ], [ null, %bb.ab ], [ null, %bb.z ], [ null, %bb.y ], [ null, %bb.x ], [ null, %.lr.ph419.i ], [ %i.dg, %bb.ao ], [ %i.dg, %._crit_edge424.i ], [ null, %._crit_edge420.i ], [ null, %bb.ai ], [ null, %._crit_edge416.i ], [ null, %._crit_edge.i ], [ null, %bb.af ], [ %i.dg, %bb.ar ], [ %i.dg, %bb.as ], [ %i.dg, %bb.au ], [ %i.dg, %bb.aw ], [ %i.dg, %bb.ax ], [ null, %.lr.ph.i ]
+  %.0335.i = phi ptr [ null, %bb.v ], [ null, %bb.w ], [ null, %bb.aa ], [ %i.ds, %bb.ay ], [ null, %.lr.ph415.i ], [ null, %bb.ae ], [ null, %bb.ak ], [ null, %bb.an ], [ null, %bb.ap ], [ null, %bb.ad ], [ null, %bb.ac ], [ null, %bb.ab ], [ null, %bb.z ], [ null, %bb.y ], [ null, %bb.x ], [ null, %.lr.ph419.i ], [ null, %bb.ao ], [ null, %._crit_edge424.i ], [ null, %._crit_edge420.i ], [ null, %bb.ai ], [ null, %._crit_edge416.i ], [ null, %._crit_edge.i ], [ null, %bb.af ], [ %i.ds, %bb.ar ], [ %i.ds, %bb.as ], [ %i.ds, %bb.au ], [ %i.ds, %bb.aw ], [ %i.ds, %bb.ax ], [ null, %.lr.ph.i ]
   call void @EVP_MD_CTX_free(ptr noundef %.0343.i) #7
   call void @EVP_MD_CTX_free(ptr noundef %.0344.i) #7
   call void @CRYPTO_free(ptr noundef %.0336.i, ptr noundef nonnull @.str.52, i32 noundef 775) #7
@@ -1557,8 +1545,8 @@ begin_hunk_1_@do_passwd:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
   br label %shacrypt.exit
 
-shacrypt.exit:                                    ; preds = %bb.n, %.loopexit.i, %.loopexit402.i, %.critedge.i
-  %.1356.i = phi ptr [ null, %.critedge.i ], [ null, %bb.n ], [ null, %.loopexit402.i ], [ @shacrypt.out_buf, %.loopexit.i ]
+shacrypt.exit:                                    ; preds = %.loopexit.i, %.loopexit402.i, %.critedge.i
+  %.1356.i = phi ptr [ null, %.critedge.i ], [ @shacrypt.out_buf, %.loopexit.i ], [ null, %.loopexit402.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7

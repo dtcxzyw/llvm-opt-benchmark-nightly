@@ -58,8 +58,8 @@ bb.a:
 define i32 @evthread_set_lock_callbacks(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i32, ptr @evthread_lock_debugging_enabled_, align 4
-  %.not.i = icmp eq i32 %i.a, 0                   ; 6 uses
-  %i.b = select i1 %.not.i, ptr @evthread_lock_fns_, ptr @original_lock_fns_ ; 3 uses
+  %.not.i = icmp eq i32 %i.a, 0
+  %i.b = select i1 %.not.i, ptr @evthread_lock_fns_, ptr @original_lock_fns_ ; 8 uses
   %i.c = load i32, ptr @event_debug_mode_on_, align 4
   %i.d = icmp ne i32 %i.c, 0
   %i.e = load i32, ptr @event_debug_created_threadable_ctx_, align 4
@@ -73,10 +73,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.not = icmp eq ptr %0, null
-  %.val40 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 8), align 8
-  %.val41 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 8), align 8
-  %1 = select i1 %.not.i, ptr %.val40, ptr %.val41 ; 2 uses
-  %.not25 = icmp eq ptr %1, null                  ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %.val41 = load ptr, ptr %1, align 8             ; 2 uses
+  %.not25 = icmp eq ptr %.val41, null             ; 2 uses
   br i1 %.not, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -100,45 +99,41 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.i, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %bb.h
-  %.val32 = load i32, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 4), align 4
-  %.val33 = load i32, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 4), align 4
-  %2 = select i1 %.not.i, i32 %.val32, i32 %.val33
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %.val33 = load i32, ptr %2, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.k = load i32, ptr %i.j, align 4
-  %i.l = icmp eq i32 %2, %i.k
+  %i.l = icmp eq i32 %.val33, %i.k
   br i1 %i.l, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = load ptr, ptr %i.m, align 8
-  %i.o = icmp eq ptr %1, %i.n
+  %i.o = icmp eq ptr %.val41, %i.n
   br i1 %i.o, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  %.val34 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 16), align 8
-  %.val35 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 16), align 8
-  %3 = select i1 %.not.i, ptr %.val34, ptr %.val35
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.val35 = load ptr, ptr %3, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load ptr, ptr %i.p, align 8
-  %i.r = icmp eq ptr %3, %i.q
+  %i.r = icmp eq ptr %.val35, %i.q
   br i1 %i.r, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %.val36 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8
-  %.val37 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 24), align 8
-  %4 = select i1 %.not.i, ptr %.val36, ptr %.val37
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %.val37 = load ptr, ptr %4, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.t = load ptr, ptr %i.s, align 8
-  %i.u = icmp eq ptr %4, %i.t
+  %i.u = icmp eq ptr %.val37, %i.t
   br i1 %i.u, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %.val38 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 32), align 8
-  %.val39 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_lock_fns_, i64 32), align 8
-  %5 = select i1 %.not.i, ptr %.val38, ptr %.val39
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %.val39 = load ptr, ptr %5, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.w = load ptr, ptr %i.v, align 8
-  %i.x = icmp eq ptr %5, %i.w
+  %i.x = icmp eq ptr %.val39, %i.w
   br i1 %i.x, label %bb.t, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -196,8 +191,8 @@ declare i32 @event_global_setup_locks_(i32 noundef) local_unnamed_addr #4
 define range(i32 -1, 1) i32 @evthread_set_condition_callbacks(ptr nofree noundef readonly captures(address_is_null) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i32, ptr @evthread_lock_debugging_enabled_, align 4
-  %.not.i = icmp eq i32 %i.a, 0                   ; 6 uses
-  %i.b = select i1 %.not.i, ptr @evthread_cond_fns_, ptr @original_cond_fns_ ; 3 uses
+  %.not.i = icmp eq i32 %i.a, 0                   ; 2 uses
+  %i.b = select i1 %.not.i, ptr @evthread_cond_fns_, ptr @original_cond_fns_ ; 7 uses
   %i.c = load i32, ptr @event_debug_mode_on_, align 4
   %i.d = icmp ne i32 %i.c, 0
   %i.e = load i32, ptr @event_debug_created_threadable_ctx_, align 4
@@ -211,10 +206,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.not = icmp eq ptr %0, null
-  %.val40 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_cond_fns_, i64 8), align 8
-  %.val41 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_cond_fns_, i64 8), align 8
-  %1 = select i1 %.not.i, ptr %.val40, ptr %.val41 ; 2 uses
-  %.not26 = icmp eq ptr %1, null                  ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %.val41 = load ptr, ptr %1, align 8             ; 2 uses
+  %.not26 = icmp eq ptr %.val41, null             ; 2 uses
   br i1 %.not, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -240,34 +234,31 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = icmp eq ptr %1, %i.k
+  %i.l = icmp eq ptr %.val41, %i.k
   br i1 %i.l, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %.val34 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_cond_fns_, i64 16), align 8
-  %.val35 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_cond_fns_, i64 16), align 8
-  %2 = select i1 %.not.i, ptr %.val34, ptr %.val35
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.val35 = load ptr, ptr %2, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.n = load ptr, ptr %i.m, align 8
-  %i.o = icmp eq ptr %2, %i.n
+  %i.o = icmp eq ptr %.val35, %i.n
   br i1 %i.o, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
-  %.val36 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_cond_fns_, i64 24), align 8
-  %.val37 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_cond_fns_, i64 24), align 8
-  %3 = select i1 %.not.i, ptr %.val36, ptr %.val37
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %.val37 = load ptr, ptr %3, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = load ptr, ptr %i.p, align 8
-  %i.r = icmp eq ptr %3, %i.q
+  %i.r = icmp eq ptr %.val37, %i.q
   br i1 %i.r, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %.val38 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_cond_fns_, i64 32), align 8
-  %.val39 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @original_cond_fns_, i64 32), align 8
-  %4 = select i1 %.not.i, ptr %.val38, ptr %.val39
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %.val39 = load ptr, ptr %4, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.t = load ptr, ptr %i.s, align 8
-  %i.u = icmp eq ptr %4, %i.t
+  %i.u = icmp eq ptr %.val39, %i.t
   br i1 %i.u, label %bb.u, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h

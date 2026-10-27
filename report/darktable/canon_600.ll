@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6LibRaw18canon_600_load_rawEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #7 align 2 {
 bb.a:
-  %i.a = alloca [1120 x i8], align 16             ; 4 uses
+  %i.a = alloca [1120 x i8], align 16             ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.c = load i16, ptr %i.b, align 4, !tbaa !77
@@ -215,17 +215,18 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 381592
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 193784
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 18
+  %scevgep39 = getelementptr inbounds nuw i8, ptr %i.a, i64 1120
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
   %.037 = phi i32 [ 0, %.lr.ph ], [ %spec.store.select, %bb.f ] ; 2 uses
   %.03136 = phi i32 [ 0, %.lr.ph ], [ %i.cw, %bb.f ]
   call void @_ZN6LibRaw11checkCancelEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
-  %i.g = load ptr, ptr %i.d, align 8, !tbaa !92   ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !94
+  %i.g = load ptr, ptr %i.d, align 8, !tbaa !96   ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !98
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = call noundef i32 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 1120), !call_target !104
+  %i.k = call noundef i32 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 1120), !call_target !108
   %i.l = icmp slt i32 %i.k, 1120
   br i1 %i.l, label %bb.c, label %bb.d
 
@@ -234,32 +235,129 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.m = load ptr, ptr %i.e, align 8, !tbaa !105
-  %i.n = load i16, ptr %i.f, align 2, !tbaa !106
+  %i.m = load ptr, ptr %i.e, align 8, !tbaa !109  ; 2 uses
+  %i.n = load i16, ptr %i.f, align 2, !tbaa !110
   %i.o = zext i16 %i.n to i32
-  %i.p = mul nsw i32 %.037, %i.o
-  %i.q = sext i32 %i.p to i64
-  %i.r = getelementptr inbounds [2 x i8], ptr %i.m, i64 %i.q
-  br label %bb.e
+  %i.p = mul i32 %.037, %i.o
+  %i.q = sext i32 %i.p to i64                     ; 2 uses
+  %i.r = getelementptr [2 x i8], ptr %i.m, i64 %i.q ; 3 uses
+  %scevgep = getelementptr i8, ptr %i.m, i64 1792
+  %1 = shl nsw i64 %i.q, 1
+  %scevgep38 = getelementptr i8, ptr %scevgep, i64 %1
+  %bound0 = icmp ult ptr %i.r, %scevgep39
+  %bound1 = icmp ult ptr %i.a, %scevgep38
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %bb.e, label %vector.body
+
+vector.body:                                      ; preds = %bb.d, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %bb.d ] ; 3 uses
+  %2 = shl i64 %index, 4
+  %next.gep = getelementptr i8, ptr %i.r, i64 %2
+  %3 = mul nuw i64 %index, 10
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 %3 ; 10 uses
+  %5 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 16 %4, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %6 = shufflevector <151 x i8> %5, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %7 = zext <16 x i8> %6 to <16 x i16>
+  %8 = shl nuw nsw <16 x i16> %7, splat (i16 2)
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %10 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 1 %9, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %11 = shufflevector <151 x i8> %10, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150> ; 4 uses
+  %12 = lshr <16 x i8> %11, splat (i8 6)
+  %13 = zext nneg <16 x i8> %12 to <16 x i16>
+  %14 = or disjoint <16 x i16> %8, %13
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %16 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 2 %15, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %17 = shufflevector <151 x i8> %16, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %18 = zext <16 x i8> %17 to <16 x i16>
+  %19 = shl nuw nsw <16 x i16> %18, splat (i16 2)
+  %20 = lshr <16 x i8> %11, splat (i8 4)
+  %21 = and <16 x i8> %20, splat (i8 3)
+  %22 = zext nneg <16 x i8> %21 to <16 x i16>
+  %23 = or disjoint <16 x i16> %19, %22
+  %24 = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %25 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 1 %24, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %26 = shufflevector <151 x i8> %25, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %27 = zext <16 x i8> %26 to <16 x i16>
+  %28 = shl nuw nsw <16 x i16> %27, splat (i16 2)
+  %29 = lshr <16 x i8> %11, splat (i8 2)
+  %30 = and <16 x i8> %29, splat (i8 3)
+  %31 = zext nneg <16 x i8> %30 to <16 x i16>
+  %32 = or disjoint <16 x i16> %28, %31
+  %33 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %34 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 4 %33, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %35 = shufflevector <151 x i8> %34, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %36 = zext <16 x i8> %35 to <16 x i16>
+  %37 = shl nuw nsw <16 x i16> %36, splat (i16 2)
+  %38 = and <16 x i8> %11, splat (i8 3)
+  %39 = zext nneg <16 x i8> %38 to <16 x i16>
+  %40 = or disjoint <16 x i16> %37, %39
+  %41 = getelementptr inbounds nuw i8, ptr %4, i64 5
+  %42 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 1 %41, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %43 = shufflevector <151 x i8> %42, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %44 = zext <16 x i8> %43 to <16 x i16>
+  %45 = shl nuw nsw <16 x i16> %44, splat (i16 2)
+  %46 = getelementptr inbounds nuw i8, ptr %4, i64 9
+  %47 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 1 %46, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %48 = shufflevector <151 x i8> %47, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150> ; 4 uses
+  %49 = and <16 x i8> %48, splat (i8 3)
+  %50 = zext nneg <16 x i8> %49 to <16 x i16>
+  %51 = or disjoint <16 x i16> %45, %50
+  %52 = getelementptr inbounds nuw i8, ptr %4, i64 6
+  %53 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 2 %52, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %54 = shufflevector <151 x i8> %53, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %55 = zext <16 x i8> %54 to <16 x i16>
+  %56 = shl nuw nsw <16 x i16> %55, splat (i16 2)
+  %57 = lshr <16 x i8> %48, splat (i8 2)
+  %58 = and <16 x i8> %57, splat (i8 3)
+  %59 = zext nneg <16 x i8> %58 to <16 x i16>
+  %60 = or disjoint <16 x i16> %56, %59
+  %61 = getelementptr inbounds nuw i8, ptr %4, i64 7
+  %62 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 1 %61, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %63 = shufflevector <151 x i8> %62, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %64 = zext <16 x i8> %63 to <16 x i16>
+  %65 = shl nuw nsw <16 x i16> %64, splat (i16 2)
+  %66 = lshr <16 x i8> %48, splat (i8 4)
+  %67 = and <16 x i8> %66, splat (i8 3)
+  %68 = zext nneg <16 x i8> %67 to <16 x i16>
+  %69 = or disjoint <16 x i16> %65, %68
+  %70 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %71 = call <151 x i8> @llvm.masked.load.v151i8.p0(ptr nonnull align 8 %70, <151 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 true>, <151 x i8> poison), !tbaa !111, !alias.scope !112
+  %72 = shufflevector <151 x i8> %71, <151 x i8> poison, <16 x i32> <i32 0, i32 10, i32 20, i32 30, i32 40, i32 50, i32 60, i32 70, i32 80, i32 90, i32 100, i32 110, i32 120, i32 130, i32 140, i32 150>
+  %73 = zext <16 x i8> %72 to <16 x i16>
+  %74 = shl nuw nsw <16 x i16> %73, splat (i16 2)
+  %75 = lshr <16 x i8> %48, splat (i8 6)
+  %76 = zext nneg <16 x i8> %75 to <16 x i16>
+  %77 = or disjoint <16 x i16> %74, %76
+  %78 = shufflevector <16 x i16> %14, <16 x i16> %23, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %79 = shufflevector <16 x i16> %32, <16 x i16> %40, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %80 = shufflevector <16 x i16> %51, <16 x i16> %60, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %81 = shufflevector <16 x i16> %69, <16 x i16> %77, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %82 = shufflevector <32 x i16> %78, <32 x i16> %79, <64 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %83 = shufflevector <32 x i16> %80, <32 x i16> %81, <64 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %interleaved.vec = shufflevector <64 x i16> %82, <64 x i16> %83, <128 x i32> <i32 0, i32 16, i32 32, i32 48, i32 64, i32 80, i32 96, i32 112, i32 1, i32 17, i32 33, i32 49, i32 65, i32 81, i32 97, i32 113, i32 2, i32 18, i32 34, i32 50, i32 66, i32 82, i32 98, i32 114, i32 3, i32 19, i32 35, i32 51, i32 67, i32 83, i32 99, i32 115, i32 4, i32 20, i32 36, i32 52, i32 68, i32 84, i32 100, i32 116, i32 5, i32 21, i32 37, i32 53, i32 69, i32 85, i32 101, i32 117, i32 6, i32 22, i32 38, i32 54, i32 70, i32 86, i32 102, i32 118, i32 7, i32 23, i32 39, i32 55, i32 71, i32 87, i32 103, i32 119, i32 8, i32 24, i32 40, i32 56, i32 72, i32 88, i32 104, i32 120, i32 9, i32 25, i32 41, i32 57, i32 73, i32 89, i32 105, i32 121, i32 10, i32 26, i32 42, i32 58, i32 74, i32 90, i32 106, i32 122, i32 11, i32 27, i32 43, i32 59, i32 75, i32 91, i32 107, i32 123, i32 12, i32 28, i32 44, i32 60, i32 76, i32 92, i32 108, i32 124, i32 13, i32 29, i32 45, i32 61, i32 77, i32 93, i32 109, i32 125, i32 14, i32 30, i32 46, i32 62, i32 78, i32 94, i32 110, i32 126, i32 15, i32 31, i32 47, i32 63, i32 79, i32 95, i32 111, i32 127>
+  store <128 x i16> %interleaved.vec, ptr %next.gep, align 2, !tbaa !12, !alias.scope !113, !noalias !112
+  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %84 = icmp eq i64 %index.next, 112
+  br i1 %84, label %bb.f, label %vector.body, !llvm.loop !93
 
 bb.e:                                             ; preds = %bb.d, %bb.e
-  %.03235 = phi ptr [ %i.r, %bb.d ], [ %i.cq, %bb.e ] ; 9 uses
-  %.033.idx34 = phi i64 [ 0, %bb.d ], [ %.033.add, %bb.e ] ; 3 uses
+  %.03235 = phi ptr [ %i.cq, %bb.e ], [ %i.r, %bb.d ] ; 9 uses
+  %.033.idx34 = phi i64 [ %.033.add, %bb.e ], [ 0, %bb.d ] ; 3 uses
   %.033.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.033.idx34 ; 10 uses
-  %i.s = load i8, ptr %.033.ptr, align 2, !tbaa !107
+  %i.s = load i8, ptr %.033.ptr, align 2, !tbaa !111
   %i.t = zext i8 %i.s to i16
   %i.u = shl nuw nsw i16 %i.t, 2
   %i.v = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 1 ; 4 uses
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !107
+  %i.w = load i8, ptr %i.v, align 1, !tbaa !111
   %i.x = lshr i8 %i.w, 6
   %i.y = zext nneg i8 %i.x to i16
   %i.z = or disjoint i16 %i.u, %i.y
   store i16 %i.z, ptr %.03235, align 2, !tbaa !12
   %i.aa = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 2
-  %i.ab = load i8, ptr %i.aa, align 2, !tbaa !107
+  %i.ab = load i8, ptr %i.aa, align 2, !tbaa !111
   %i.ac = zext i8 %i.ab to i16
   %i.ad = shl nuw nsw i16 %i.ac, 2
-  %i.ae = load i8, ptr %i.v, align 1, !tbaa !107
+  %i.ae = load i8, ptr %i.v, align 1, !tbaa !111
   %i.af = lshr i8 %i.ae, 4
   %i.ag = and i8 %i.af, 3
   %i.ah = zext nneg i8 %i.ag to i16
@@ -267,10 +365,10 @@ bb.e:                                             ; preds = %bb.d, %bb.e
   %i.aj = getelementptr inbounds nuw i8, ptr %.03235, i64 2
   store i16 %i.ai, ptr %i.aj, align 2, !tbaa !12
   %i.ak = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 3
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !107
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !111
   %i.am = zext i8 %i.al to i16
   %i.an = shl nuw nsw i16 %i.am, 2
-  %i.ao = load i8, ptr %i.v, align 1, !tbaa !107
+  %i.ao = load i8, ptr %i.v, align 1, !tbaa !111
   %i.ap = lshr i8 %i.ao, 2
   %i.aq = and i8 %i.ap, 3
   %i.ar = zext nneg i8 %i.aq to i16
@@ -278,31 +376,31 @@ bb.e:                                             ; preds = %bb.d, %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %.03235, i64 4
   store i16 %i.as, ptr %i.at, align 2, !tbaa !12
   %i.au = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 4
-  %i.av = load i8, ptr %i.au, align 2, !tbaa !107
+  %i.av = load i8, ptr %i.au, align 2, !tbaa !111
   %i.aw = zext i8 %i.av to i16
   %i.ax = shl nuw nsw i16 %i.aw, 2
-  %i.ay = load i8, ptr %i.v, align 1, !tbaa !107
+  %i.ay = load i8, ptr %i.v, align 1, !tbaa !111
   %i.az = and i8 %i.ay, 3
   %i.ba = zext nneg i8 %i.az to i16
   %i.bb = or disjoint i16 %i.ax, %i.ba
   %i.bc = getelementptr inbounds nuw i8, ptr %.03235, i64 6
   store i16 %i.bb, ptr %i.bc, align 2, !tbaa !12
   %i.bd = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 5
-  %i.be = load i8, ptr %i.bd, align 1, !tbaa !107
+  %i.be = load i8, ptr %i.bd, align 1, !tbaa !111
   %i.bf = zext i8 %i.be to i16
   %i.bg = shl nuw nsw i16 %i.bf, 2
   %i.bh = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 9 ; 4 uses
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !107
+  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !111
   %i.bj = and i8 %i.bi, 3
   %i.bk = zext nneg i8 %i.bj to i16
   %i.bl = or disjoint i16 %i.bg, %i.bk
   %i.bm = getelementptr inbounds nuw i8, ptr %.03235, i64 8
   store i16 %i.bl, ptr %i.bm, align 2, !tbaa !12
   %i.bn = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 6
-  %i.bo = load i8, ptr %i.bn, align 2, !tbaa !107
+  %i.bo = load i8, ptr %i.bn, align 2, !tbaa !111
   %i.bp = zext i8 %i.bo to i16
   %i.bq = shl nuw nsw i16 %i.bp, 2
-  %i.br = load i8, ptr %i.bh, align 1, !tbaa !107
+  %i.br = load i8, ptr %i.bh, align 1, !tbaa !111
   %i.bs = lshr i8 %i.br, 2
   %i.bt = and i8 %i.bs, 3
   %i.bu = zext nneg i8 %i.bt to i16
@@ -310,10 +408,10 @@ bb.e:                                             ; preds = %bb.d, %bb.e
   %i.bw = getelementptr inbounds nuw i8, ptr %.03235, i64 10
   store i16 %i.bv, ptr %i.bw, align 2, !tbaa !12
   %i.bx = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 7
-  %i.by = load i8, ptr %i.bx, align 1, !tbaa !107
+  %i.by = load i8, ptr %i.bx, align 1, !tbaa !111
   %i.bz = zext i8 %i.by to i16
   %i.ca = shl nuw nsw i16 %i.bz, 2
-  %i.cb = load i8, ptr %i.bh, align 1, !tbaa !107
+  %i.cb = load i8, ptr %i.bh, align 1, !tbaa !111
   %i.cc = lshr i8 %i.cb, 4
   %i.cd = and i8 %i.cc, 3
   %i.ce = zext nneg i8 %i.cd to i16
@@ -321,10 +419,10 @@ bb.e:                                             ; preds = %bb.d, %bb.e
   %i.cg = getelementptr inbounds nuw i8, ptr %.03235, i64 12
   store i16 %i.cf, ptr %i.cg, align 2, !tbaa !12
   %i.ch = getelementptr inbounds nuw i8, ptr %.033.ptr, i64 8
-  %i.ci = load i8, ptr %i.ch, align 2, !tbaa !107
+  %i.ci = load i8, ptr %i.ch, align 2, !tbaa !111
   %i.cj = zext i8 %i.ci to i16
   %i.ck = shl nuw nsw i16 %i.cj, 2
-  %i.cl = load i8, ptr %i.bh, align 1, !tbaa !107
+  %i.cl = load i8, ptr %i.bh, align 1, !tbaa !111
   %i.cm = lshr i8 %i.cl, 6
   %i.cn = zext nneg i8 %i.cm to i16
   %i.co = or disjoint i16 %i.ck, %i.cn
@@ -333,9 +431,9 @@ bb.e:                                             ; preds = %bb.d, %bb.e
   %.033.add = add nuw nsw i64 %.033.idx34, 10
   %i.cq = getelementptr inbounds nuw i8, ptr %.03235, i64 16
   %i.cr = icmp samesign ult i64 %.033.idx34, 1110
-  br i1 %i.cr, label %bb.e, label %bb.f, !llvm.loop !90
+  br i1 %i.cr, label %bb.e, label %bb.f, !llvm.loop !94
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %vector.body, %bb.e
   %i.cs = add nsw i32 %.037, 2                    ; 2 uses
   %i.ct = load i16, ptr %i.b, align 4, !tbaa !77
   %i.cu = zext i16 %i.ct to i32                   ; 2 uses
@@ -343,7 +441,7 @@ bb.f:                                             ; preds = %bb.e
   %spec.store.select = select i1 %i.cv, i32 1, i32 %i.cs
   %i.cw = add nuw nsw i32 %.03136, 1              ; 2 uses
   %i.cx = icmp samesign ult i32 %i.cw, %i.cu
-  br i1 %i.cx, label %bb.b, label %._crit_edge, !llvm.loop !91
+  br i1 %i.cx, label %bb.b, label %._crit_edge, !llvm.loop !95
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
@@ -383,7 +481,7 @@ bb.b:                                             ; preds = %.lr.ph20, %._crit_e
   %i.k = load i32, ptr %i.g, align 8, !tbaa !82
   %i.l = shl nuw nsw i32 %.01618, 1
   %i.m = and i32 %i.l, 14
-  %i.n = load i32, ptr %i.h, align 8, !tbaa !110
+  %i.n = load i32, ptr %i.h, align 8, !tbaa !118
   %i.o = and i32 %.01618, 3
   %i.p = zext nneg i32 %i.o to i64
   %i.q = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6LibRaw17canon_600_correctEvE3mul, i64 %i.p
@@ -424,14 +522,14 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.at = load i16, ptr %i.d, align 2, !tbaa !78
   %i.au = zext i16 %i.at to i32
   %i.av = icmp samesign ult i32 %i.as, %i.au
-  br i1 %i.av, label %bb.c, label %._crit_edge, !llvm.loop !108
+  br i1 %i.av, label %bb.c, label %._crit_edge, !llvm.loop !116
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b
   %i.aw = add nuw nsw i32 %.01618, 1              ; 2 uses
   %i.ax = load i16, ptr %i.b, align 4, !tbaa !77
   %i.ay = zext i16 %i.ax to i32
   %i.az = icmp samesign ult i32 %i.aw, %i.ay
-  br i1 %i.az, label %bb.b, label %._crit_edge21, !llvm.loop !109
+  br i1 %i.az, label %bb.b, label %._crit_edge21, !llvm.loop !117
 
 ._crit_edge21:                                    ; preds = %._crit_edge, %bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 153268
@@ -508,13 +606,13 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
 
 _ZN6LibRaw15canon_600_coeffEv.exit:               ; preds = %.preheader.preheader.i, %._crit_edge21
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 153088 ; 2 uses
-  %i.cp = load i32, ptr %i.co, align 8, !tbaa !110
+  %i.cp = load i32, ptr %i.co, align 8, !tbaa !118
   %i.cq = sub i32 1023, %i.cp
   %i.cr = mul i32 %i.cq, 1109
   %i.cs = lshr i32 %i.cr, 9
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 153096
-  store i32 %i.cs, ptr %i.ct, align 8, !tbaa !111
-  store i32 0, ptr %i.co, align 8, !tbaa !110
+  store i32 %i.cs, ptr %i.ct, align 8, !tbaa !119
+  store i32 0, ptr %i.co, align 8, !tbaa !118
   ret void
 }
 
@@ -538,6 +636,9 @@ declare <4 x i16> @llvm.masked.load.v4i16.p0(ptr captures(none), <4 x i1>, <4 x 
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v4f32.p0(<4 x float>, ptr captures(none), <4 x i1>) #5
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare <151 x i8> @llvm.masked.load.v151i8.p0(ptr captures(none), <151 x i1>, <151 x i8>) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -645,27 +746,35 @@ attributes #11 = { nounwind }
 !86 = distinct !{!86, !83}
 !87 = distinct !{!87, !83}
 !88 = !{!74, !13, i64 153516}
-!89 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "LibRaw_abstract_datastream", file: !95, line: 95, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTS26LibRaw_abstract_datastream")
-!90 = distinct !{!90, !83}
-!91 = distinct !{!91, !83}
-!92 = !{!74, !61, i64 381592}
-!93 = !{!"vtable pointer", !6, i64 0}
-!94 = !{!93, !93, i64 0}
-!95 = !DIFile(filename: "src/external/LibRaw/libraw/libraw_datastream.h", directory: "/opt-bench/work/darktable/darktable", checksumkind: CSK_MD5, checksum: "505b914805f57d87ebbd6647c463dab8")
-!96 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
-!97 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !89, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!98 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: null, size: 64)
-!99 = !DIFile(filename: "/usr/lib/llvm-24/lib/clang/24/include/__stddef_size_t.h", directory: "", checksumkind: CSK_MD5, checksum: "2c44e821a2b1951cde2eb0fb2e656867")
-!100 = !DIBasicType(name: "unsigned long", size: 64, encoding: DW_ATE_unsigned)
-!101 = !DIDerivedType(tag: DW_TAG_typedef, name: "size_t", file: !99, line: 18, baseType: !100)
-!102 = !{!96, !97, !98, !101, !101}
-!103 = !DISubroutineType(types: !102)
-!104 = !DISubprogram(name: "read", linkageName: "_ZN26LibRaw_abstract_datastream4readEPvmm", scope: !89, file: !95, line: 101, type: !103, scopeLine: 101, containingType: !89, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!105 = !{!74, !16, i64 193784}
-!106 = !{!74, !11, i64 18}
-!107 = !{!7, !7, i64 0}
-!108 = distinct !{!108, !83}
-!109 = distinct !{!109, !83}
-!110 = !{!74, !8, i64 153088}
-!111 = !{!74, !8, i64 153096}
+!89 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "LibRaw_abstract_datastream", file: !99, line: 95, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTS26LibRaw_abstract_datastream")
+!90 = distinct !{!90, i1 false, !"LVerDomain"}
+!91 = distinct !{!91, !90}
+!92 = distinct !{!92, !90}
+!93 = distinct !{!93, !83, !114, !115}
+!94 = distinct !{!94, !83, !114}
+!95 = distinct !{!95, !83}
+!96 = !{!74, !61, i64 381592}
+!97 = !{!"vtable pointer", !6, i64 0}
+!98 = !{!97, !97, i64 0}
+!99 = !DIFile(filename: "src/external/LibRaw/libraw/libraw_datastream.h", directory: "/opt-bench/work/darktable/darktable", checksumkind: CSK_MD5, checksum: "505b914805f57d87ebbd6647c463dab8")
+!100 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
+!101 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !89, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!102 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: null, size: 64)
+!103 = !DIFile(filename: "/usr/lib/llvm-24/lib/clang/24/include/__stddef_size_t.h", directory: "", checksumkind: CSK_MD5, checksum: "2c44e821a2b1951cde2eb0fb2e656867")
+!104 = !DIBasicType(name: "unsigned long", size: 64, encoding: DW_ATE_unsigned)
+!105 = !DIDerivedType(tag: DW_TAG_typedef, name: "size_t", file: !103, line: 18, baseType: !104)
+!106 = !{!100, !101, !102, !105, !105}
+!107 = !DISubroutineType(types: !106)
+!108 = !DISubprogram(name: "read", linkageName: "_ZN26LibRaw_abstract_datastream4readEPvmm", scope: !89, file: !99, line: 101, type: !107, scopeLine: 101, containingType: !89, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!109 = !{!74, !16, i64 193784}
+!110 = !{!74, !11, i64 18}
+!111 = !{!7, !7, i64 0}
+!112 = !{!91}
+!113 = !{!92}
+!114 = !{!"llvm.loop.isvectorized", i32 1}
+!115 = !{!"llvm.loop.unroll.runtime.disable"}
+!116 = distinct !{!116, !83}
+!117 = distinct !{!117, !83}
+!118 = !{!74, !8, i64 153088}
+!119 = !{!74, !8, i64 153096}
 end_hunk_0

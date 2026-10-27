@@ -206,19 +206,19 @@ qrfRestrictScreenWidth.exit.i:                    ; preds = %qrfRestrictScreenWi
   ]
 
 bb.dn:                                            ; preds = %qrfRestrictScreenWidth.exit.i
-  %.not296.i = icmp eq i8 %i.qm, 0                ; 4 uses
-  %.str.168..str.166.i.a = select i1 %.not296.i, ptr @.str.168, ptr @.str.166 ; 2 uses
+  %.not296.i = icmp eq i8 %i.qm, 0                ; 3 uses
+  %.str.168..str.166.i = select i1 %.not296.i, ptr @.str.168, ptr @.str.166 ; 2 uses
+  %.str.168..str.166.i.a = select i1 %.not296.i, ptr @.str.168, ptr @.str.165 ; 2 uses
   %i.qo = getelementptr inbounds nuw i8, ptr %4, i64 108
   %i.qp = load i8, ptr %i.qo, align 4, !tbaa !102
   %i.qq = icmp eq i8 %i.qp, 1
   br i1 %i.qq, label %bb.do, label %bb.dp
 
 bb.do:                                            ; preds = %bb.dn
-  %5 = select i1 %.not296.i, ptr getelementptr inbounds nuw (i8, ptr @.str.168, i64 3), ptr getelementptr inbounds nuw (i8, ptr @.str.165, i64 3)
+  %5 = getelementptr inbounds nuw i8, ptr %.str.168..str.166.i.a, i64 3
   br label %bb.dx
 
 bb.dp:                                            ; preds = %bb.dn
-  %.str.168..str.165.i = select i1 %.not296.i, ptr @.str.168, ptr @.str.165
   %.str.169..str.167.i = select i1 %.not296.i, ptr @.str.169, ptr @.str.167
   %i.qr = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.qs = load ptr, ptr %i.qr, align 8, !tbaa !69
@@ -226,19 +226,19 @@ bb.dp:                                            ; preds = %bb.dn
   br label %bb.dx
 
 bb.dq:                                            ; preds = %qrfRestrictScreenWidth.exit.i
-  %.not295.i = icmp eq i8 %i.qm, 0                ; 4 uses
-  %.str.158..str.174.i.a = select i1 %.not295.i, ptr @.str.158, ptr @.str.174 ; 2 uses
+  %.not295.i = icmp eq i8 %i.qm, 0                ; 3 uses
+  %.str.158..str.174.i = select i1 %.not295.i, ptr @.str.158, ptr @.str.174 ; 2 uses
+  %.str.158..str.174.i.a = select i1 %.not295.i, ptr @.str.158, ptr @.str.173 ; 2 uses
   %i.qt = getelementptr inbounds nuw i8, ptr %4, i64 108
   %i.qu = load i8, ptr %i.qt, align 4, !tbaa !102
   %i.qv = icmp eq i8 %i.qu, 1
   br i1 %i.qv, label %bb.dr, label %bb.ds
 
 bb.dr:                                            ; preds = %bb.dq
-  %6 = select i1 %.not295.i, ptr getelementptr inbounds nuw (i8, ptr @.str.158, i64 1), ptr getelementptr inbounds nuw (i8, ptr @.str.173, i64 1)
+  %6 = getelementptr inbounds nuw i8, ptr %.str.158..str.174.i.a, i64 1
   br label %bb.dx
 
 bb.ds:                                            ; preds = %bb.dq
-  %.str.158..str.173.i = select i1 %.not295.i, ptr @.str.158, ptr @.str.173
   %.str.176..str.175.i = select i1 %.not295.i, ptr @.str.176, ptr @.str.175
   %i.qw = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.qx = load ptr, ptr %i.qw, align 8, !tbaa !69
@@ -267,9 +267,9 @@ bb.dw:                                            ; preds = %qrfRestrictScreenWi
   br label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dp, %bb.do
-  %.3.i = phi ptr [ %.str.158..str.174311.i, %bb.dw ], [ @qrfColumnar.zSpace, %bb.du ], [ %.str.168..str.166.i.a, %bb.do ], [ %.str.168..str.166.i.a, %bb.dp ], [ %.str.158..str.174.i.a, %bb.dr ], [ %.str.158..str.174.i.a, %bb.ds ], [ @.str.177, %bb.dt ], [ %i.rb, %bb.dv ] ; 4 uses
+  %.3.i = phi ptr [ %.str.158..str.174311.i, %bb.dw ], [ @qrfColumnar.zSpace, %bb.du ], [ %.str.168..str.166.i, %bb.do ], [ %.str.168..str.166.i, %bb.dp ], [ %.str.158..str.174.i, %bb.dr ], [ %.str.158..str.174.i, %bb.ds ], [ @.str.177, %bb.dt ], [ %i.rb, %bb.dv ] ; 4 uses
   %.2269.i = phi ptr [ %.str.176..str.175312.i, %bb.dw ], [ @.str.125, %bb.du ], [ @.str.125, %bb.do ], [ %.str.169..str.167.i, %bb.dp ], [ @.str.125, %bb.dr ], [ %.str.176..str.175.i, %bb.ds ], [ @.str.125, %bb.dt ], [ @.str.125, %bb.dv ] ; 4 uses
-  %.2266.i = phi ptr [ %.str.158..str.173313.i, %bb.dw ], [ @.str.48, %bb.du ], [ %5, %bb.do ], [ %.str.168..str.165.i, %bb.dp ], [ %6, %bb.dr ], [ %.str.158..str.173.i, %bb.ds ], [ @.str.48, %bb.dt ], [ @.str.48, %bb.dv ] ; 4 uses
+  %.2266.i = phi ptr [ %.str.158..str.173313.i, %bb.dw ], [ @.str.48, %bb.du ], [ %5, %bb.do ], [ %.str.168..str.166.i.a, %bb.dp ], [ %6, %bb.dr ], [ %.str.158..str.174.i.a, %bb.ds ], [ @.str.48, %bb.dt ], [ @.str.48, %bb.dv ] ; 4 uses
   %i.rc = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.2266.i) #46
   %i.rd = trunc i64 %i.rc to i32                  ; 3 uses
   %i.re = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.2269.i) #46

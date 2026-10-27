@@ -204,16 +204,11 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
   %i.f = load double, ptr %1, align 8, !tbaa !18, !alias.scope !101
   %broadcast.splatinsert22 = insertelement <2 x double> poison, double %i.f, i64 0
-  %broadcast.splat23 = shufflevector <2 x double> %broadcast.splatinsert22, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.g = load double, ptr %i.b, align 8, !tbaa !18, !alias.scope !101 ; 2 uses
-  %.scalar = fneg double %i.g
-  %3 = insertelement <2 x double> poison, double %.scalar, i64 0
-  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat23 = shufflevector <2 x double> %broadcast.splatinsert22, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.g = load double, ptr %i.b, align 8, !tbaa !18, !alias.scope !101
   %broadcast.splatinsert26 = insertelement <2 x double> poison, double %i.g, i64 0
-  %broadcast.splat27 = shufflevector <2 x double> %broadcast.splatinsert26, <2 x double> poison, <2 x i32> zeroinitializer
-  %5 = load double, ptr %1, align 8, !tbaa !18, !alias.scope !101
-  %broadcast.splatinsert24 = insertelement <2 x double> poison, double %5, i64 0
-  %broadcast.splat25 = shufflevector <2 x double> %broadcast.splatinsert24, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat27 = shufflevector <2 x double> %broadcast.splatinsert26, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %3 = fneg <2 x double> %broadcast.splat27
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -222,9 +217,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.vec = load <4 x double>, ptr %i.h, align 8, !tbaa !18, !alias.scope !102, !noalias !101 ; 2 uses
   %strided.vec = shufflevector <4 x double> %wide.vec, <4 x double> poison, <2 x i32> <i32 0, i32 2> ; 2 uses
   %strided.vec21 = shufflevector <4 x double> %wide.vec, <4 x double> poison, <2 x i32> <i32 1, i32 3> ; 2 uses
-  %i.i = fmul <2 x double> %strided.vec21, %4
+  %i.i = fmul <2 x double> %strided.vec21, %3
   %i.j = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %strided.vec, <2 x double> %broadcast.splat23, <2 x double> %i.i)
-  %i.k = fmul <2 x double> %strided.vec21, %broadcast.splat25
+  %i.k = fmul <2 x double> %strided.vec21, %broadcast.splat23
   %i.l = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %strided.vec, <2 x double> %broadcast.splat27, <2 x double> %i.k)
   %interleaved.vec = shufflevector <2 x double> %i.j, <2 x double> %i.l, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec, ptr %i.h, align 8, !tbaa !18, !alias.scope !102, !noalias !101

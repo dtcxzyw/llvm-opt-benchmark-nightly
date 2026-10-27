@@ -205,8 +205,8 @@ bb.cb:                                            ; preds = %_ZNKSt7__cxx1112bas
   store i64 0, ptr %i.nt, align 8, !tbaa !65, !noalias !208
   store i8 0, ptr %i.mx, align 8, !tbaa !58, !noalias !208
   %i.oi = load i32, ptr %2, align 8
-  %i.oj = icmp slt i32 %i.oi, 0
-  %i.ok = select i1 %i.oj, ptr @.str.9, ptr @.str.14 ; 2 uses
+  %i.oj = icmp slt i32 %i.oi, 0                   ; 2 uses
+  %i.ok = select i1 %i.oj, ptr @.str.9, ptr @.str.14
   call void @llvm.experimental.noalias.scope.decl(metadata !209)
   %i.ol = icmp eq i64 %i.og, 9223372036854775807
   br i1 %i.ol, label %bb.cc, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i420
@@ -239,7 +239,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i422:
 
 bb.cd:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i422
   %i.or = getelementptr inbounds nuw i8, ptr %i.of, i64 %i.og
-  %59 = load i8, ptr %i.ok, align 1, !tbaa !58, !noalias !209
+  %59 = select i1 %i.oj, i8 45, i8 43
   store i8 %59, ptr %i.or, align 1, !tbaa !58, !noalias !209
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i426
 
@@ -642,8 +642,8 @@ bb.eg:                                            ; preds = %_ZNKSt7__cxx1112bas
   store i64 0, ptr %i.aas, align 8, !tbaa !65, !noalias !218
   store i8 0, ptr %i.zw, align 8, !tbaa !58, !noalias !218
   %i.abh = load i32, ptr %2, align 8
-  %i.abi = icmp slt i32 %i.abh, 0
-  %i.abj = select i1 %i.abi, ptr @.str.9, ptr @.str.14 ; 2 uses
+  %i.abi = icmp slt i32 %i.abh, 0                 ; 2 uses
+  %i.abj = select i1 %i.abi, ptr @.str.9, ptr @.str.14
   call void @llvm.experimental.noalias.scope.decl(metadata !219)
   %i.abk = icmp eq i64 %i.abf, 9223372036854775807
   br i1 %i.abk, label %bb.eh, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i668
@@ -676,7 +676,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i670:
 
 bb.ei:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i670
   %i.abq = getelementptr inbounds nuw i8, ptr %i.abe, i64 %i.abf
-  %60 = load i8, ptr %i.abj, align 1, !tbaa !58, !noalias !219
+  %60 = select i1 %i.abi, i8 45, i8 43
   store i8 %60, ptr %i.abq, align 1, !tbaa !58, !noalias !219
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i674
 
@@ -1079,8 +1079,8 @@ bb.fl:                                            ; preds = %.lr.ph, %_ZN15_scop
   %i.amo = getelementptr inbounds nuw i8, ptr %i.amn, i64 8
   %.0.in.in.in.i.i = select i1 %i.amm, ptr %i.akc, ptr %i.amo
   %.0.in.in.i.i = load i32, ptr %.0.in.in.in.i.i, align 4, !tbaa !19
-  %.0.i.i = trunc i32 %.0.in.in.i.i to i1
-  %.str.22..str = select i1 %.0.i.i, ptr @.str.22, ptr @.str ; 2 uses
+  %.0.i.i = trunc i32 %.0.in.in.i.i to i1         ; 2 uses
+  %.str.22..str = select i1 %.0.i.i, ptr @.str.22, ptr @.str
   %i.amp = load i64, ptr %i.amb, align 8, !tbaa !65 ; 5 uses
   %i.amq = icmp eq i64 %i.amp, 9223372036854775807
   br i1 %i.amq, label %.invoke1367, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i891
@@ -1107,7 +1107,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i893:
 
 bb.fm:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i893
   %i.amx = getelementptr inbounds nuw i8, ptr %i.ams, i64 %i.amp
-  %61 = load i8, ptr %.str.22..str, align 1, !tbaa !58
+  %61 = select i1 %.0.i.i, i8 49, i8 48
   store i8 %61, ptr %i.amx, align 1, !tbaa !58
   br label %bb.fo
 
@@ -1448,8 +1448,8 @@ bb.gi:                                            ; preds = %.lr.ph1034, %bb.gy
   %i.aqw = getelementptr inbounds nuw i8, ptr %i.aqv, i64 8
   %.0.in.in.in.i.i941 = select i1 %i.aqu, ptr %i.akc, ptr %i.aqw
   %.0.in.in.i.i942 = load i32, ptr %.0.in.in.in.i.i941, align 4, !tbaa !19
-  %.0.i.i943 = trunc i32 %.0.in.in.i.i942 to i1
-  %.str.22..str1 = select i1 %.0.i.i943, ptr @.str.22, ptr @.str ; 2 uses
+  %.0.i.i943 = trunc i32 %.0.in.in.i.i942 to i1   ; 2 uses
+  %.str.22..str1 = select i1 %.0.i.i943, ptr @.str.22, ptr @.str
   %i.aqx = load i64, ptr %i.amb, align 8, !tbaa !65 ; 5 uses
   %i.aqy = icmp eq i64 %i.aqx, 9223372036854775807
   br i1 %i.aqy, label %.invoke1367, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i944
@@ -1476,7 +1476,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i946:
 
 bb.gj:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit.i.i.i946
   %i.arf = getelementptr inbounds nuw i8, ptr %i.ara, i64 %i.aqx
-  %62 = load i8, ptr %.str.22..str1, align 1, !tbaa !58
+  %62 = select i1 %.0.i.i943, i8 49, i8 48
   store i8 %62, ptr %i.arf, align 1, !tbaa !58
   br label %bb.gl
 

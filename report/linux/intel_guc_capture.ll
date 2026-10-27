@@ -204,12 +204,10 @@ bb.a:                                             ; preds = %_kzalloc_noprof.exi
   %i.g = getelementptr i8, ptr %.val.i, i64 1656  ; 2 uses
   %i.h = load i8, ptr %i.g, align 8
   %i.i = icmp ugt i8 %i.h, 11
-  %xe_lp_lists.gen8_lists.i = select i1 %i.i, ptr @xe_lp_lists, ptr @gen8_lists ; 4 uses
+  %xe_lp_lists.gen8_lists.i = select i1 %i.i, ptr @xe_lp_lists, ptr @gen8_lists ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  %1 = load ptr, ptr %xe_lp_lists.gen8_lists.i, align 16
-  %.not2021.i.i = icmp eq ptr %1, null
-  br i1 %.not2021.i.i, label %guc_capture_alloc_steered_lists.exit, label %.lr.ph.i.i
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.d
   %i.j = phi ptr [ %i.v, %bb.d ], [ %xe_lp_lists.gen8_lists.i, %bb.a ] ; 4 uses
@@ -563,7 +561,7 @@ __drm_to_dev.exit.i17:                            ; preds = %bb.y, %bb.x
   store ptr %i.cd, ptr %i.fp, align 8
   br label %guc_capture_alloc_steered_lists.exit
 
-guc_capture_alloc_steered_lists.exit:             ; preds = %bb.d, %bb.a, %guc_capture_get_one_list.exit.i, %bb.e, %bb.o, %_kzalloc_noprof.exit.i, %__alloc_ext_regs.exit.i, %__drm_to_dev.exit.i17
+guc_capture_alloc_steered_lists.exit:             ; preds = %bb.d, %guc_capture_get_one_list.exit.i, %bb.e, %bb.o, %_kzalloc_noprof.exit.i, %__alloc_ext_regs.exit.i, %__drm_to_dev.exit.i17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   %i.fq = load ptr, ptr %i.e, align 8

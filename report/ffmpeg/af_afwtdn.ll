@@ -204,10 +204,7 @@ vector.memcheck:                                  ; preds = %.lr.ph295
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count323, 4294967294 ; 3 uses
-  %i.se = load double, ptr %i.ry, align 8, !tbaa !145, !alias.scope !146 ; 2 uses
-  %4 = fmul nsz double %i.se, 5.000000e-01
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %4, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.se = load double, ptr %i.ry, align 8, !tbaa !145, !alias.scope !146
   %i.sf = fmul nsz double %i.se, 5.000000e-01
   %broadcast.splatinsert437 = insertelement <2 x double> poison, double %i.sf, i64 0
   %broadcast.splat438 = shufflevector <2 x double> %broadcast.splatinsert437, <2 x double> poison, <2 x i32> zeroinitializer
@@ -220,13 +217,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.sh = sitofp nsz <2 x i32> %wide.load to <2 x double>
   %i.si = tail call nsz <2 x double> @llvm.log.v2f64(<2 x double> %i.sh)
   %i.sj = fmul nsz <2 x double> %i.si, splat (double 2.000000e+00)
-  %i.sk = tail call nsz <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.sj) ; 2 uses
-  %i.sl = fmul nsz <2 x double> %broadcast.splat, %i.sk
+  %i.sk = tail call nsz <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.sj)
+  %i.sl = fmul nsz <2 x double> %broadcast.splat438, %i.sk ; 2 uses
   %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %index
   store <2 x double> %i.sl, ptr %i.sm, align 8, !tbaa !86, !alias.scope !147, !noalias !148
-  %5 = fmul nsz <2 x double> %broadcast.splat438, %i.sk
   %i.sn = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %index
-  store <2 x double> %5, ptr %i.sn, align 8, !tbaa !86, !alias.scope !149, !noalias !146
+  store <2 x double> %i.sl, ptr %i.sn, align 8, !tbaa !86, !alias.scope !149, !noalias !146
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.so = icmp eq i64 %index.next, %n.vec
   br i1 %i.so, label %middle.block, label %vector.body, !llvm.loop !110

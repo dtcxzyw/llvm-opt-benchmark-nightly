@@ -205,12 +205,10 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.ky = fadd reassoc nsz arcp contract afn float %i.ik, %i.kx
   %i.kz = fmul reassoc nsz arcp contract afn float %i.jg, %i.kw
   %i.la = fadd reassoc nsz arcp contract afn float %i.ir, %i.kz
-  %i.lb = load float, ptr %5, align 4, !tbaa !102, !alias.scope !251 ; 2 uses
-  %broadcast.splatinsert242 = insertelement <8 x float> poison, float %i.lb, i64 0
-  %i.lc = load float, ptr %i.go, align 4, !tbaa !102, !alias.scope !251 ; 2 uses
-  %broadcast.splatinsert244 = insertelement <8 x float> poison, float %i.lc, i64 0
-  %broadcast.splatinsert246 = insertelement <8 x float> poison, float %i.lb, i64 0
-  %broadcast.splatinsert248 = insertelement <8 x float> poison, float %i.lc, i64 0
+  %i.lb = load float, ptr %5, align 4, !tbaa !102, !alias.scope !251
+  %broadcast.splatinsert242 = insertelement <8 x float> poison, float %i.lb, i64 0 ; 2 uses
+  %i.lc = load float, ptr %i.go, align 4, !tbaa !102, !alias.scope !251
+  %broadcast.splatinsert248 = insertelement <8 x float> poison, float %i.lc, i64 0 ; 2 uses
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.je, i64 0
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert229 = insertelement <8 x float> poison, float %i.jg, i64 0
@@ -229,8 +227,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.lg = fmul reassoc nsz arcp contract afn float %i.jg, 8.000000e+00
   %broadcast.splatinsert238 = insertelement <8 x float> poison, float %i.lg, i64 0
   %broadcast.splat239 = shufflevector <8 x float> %broadcast.splatinsert238, <8 x float> poison, <8 x i32> zeroinitializer
-  %interleaved.vec = shufflevector <8 x float> %broadcast.splatinsert242, <8 x float> %broadcast.splatinsert244, <16 x i32> <i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8>
-  %i.lh = shufflevector <8 x float> %broadcast.splatinsert246, <8 x float> %broadcast.splatinsert248, <16 x i32> <i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8>
+  %interleaved.vec = shufflevector <8 x float> %broadcast.splatinsert242, <8 x float> %broadcast.splatinsert248, <16 x i32> <i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8>
+  %i.lh = shufflevector <8 x float> %broadcast.splatinsert242, <8 x float> %broadcast.splatinsert248, <16 x i32> <i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8, i32 0, i32 8>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
