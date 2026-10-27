@@ -107,7 +107,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.as = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str.8) #6
   %i.at = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str.9) #6
   %i.au = icmp ne i32 %i.at, 0
-  %i.av = icmp ne i32 %i.as, 0                    ; 17 uses
+  %i.av = icmp ne i32 %i.as, 0                    ; 16 uses
   %i.aw = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str.10) #6
   %i.ax = tail call i32 @lsame_(ptr noundef %2, ptr noundef nonnull @.str.11) #6
   %.not1729 = icmp eq i32 %i.aw, 0                ; 5 uses
@@ -260,7 +260,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.cm, label %bb.ad, label %.thread1906
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.cn = mul nsw i32 %i.ca, 3                    ; 11 uses
+  %i.cn = mul nsw i32 %i.ca, 3                    ; 10 uses
   %i.co = add nuw nsw i32 %i.cn, 1                ; 6 uses
   br i1 %or.cond, label %bb.ae, label %bb.af
 
@@ -439,11 +439,9 @@ bb.bf:                                            ; preds = %bb.bd
 bb.bg:                                            ; preds = %bb.aw
   %i.er = call i32 @llvm.umax.i32(i32 %i.co, i32 %i.cs) ; 2 uses
   store i32 %i.er, ptr %i.a, align 4, !tbaa !116
-  %22 = call i32 @llvm.smax.i32(i32 %i.er, i32 %.01639) ; 2 uses
-  %i.es = call i32 @llvm.umax.i32(i32 %22, i32 %i.cn)
-  %.4 = select i1 %i.av, i32 %i.es, i32 %22
+  %i.es = call i32 @llvm.smax.i32(i32 %i.er, i32 %.01639)
   %i.et = load i32, ptr %6, align 4, !tbaa !116   ; 6 uses
-  %i.eu = add nsw i32 %i.et, %.4                  ; 2 uses
+  %i.eu = add nsw i32 %i.et, %i.es                ; 2 uses
   br i1 %i.am, label %.sink.split2612, label %bb.bh
 
 .sink.split2612:                                  ; preds = %bb.bg

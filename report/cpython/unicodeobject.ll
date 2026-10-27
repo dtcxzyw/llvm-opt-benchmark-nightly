@@ -205,17 +205,13 @@ bb.fu:                                            ; preds = %bb.fs
   %i.pl = load i8, ptr %.080, align 1, !tbaa !237
   %i.pm = tail call i64 @llvm.smin.i64(i64 %.1, i64 11)
   %i.pn = add nsw i64 %i.pm, 1
-  %i.po = tail call ptr @PyList_New(i64 noundef %i.pn) #33, !inline_history !750 ; 12 uses
+  %i.po = tail call ptr @PyList_New(i64 noundef %i.pn) #33, !inline_history !750 ; 10 uses
   %i.pp = icmp eq ptr %i.po, null
-  br i1 %i.pp, label %asciilib_rsplit.exit, label %3
+  br i1 %i.pp, label %asciilib_rsplit.exit, label %.lr.ph107.i.i
 
-3:                                                ; preds = %bb.fu
-  %4 = add i64 %.val100, -1                       ; 4 uses
-  %5 = icmp sgt i64 %4, -1
-  br i1 %5, label %.lr.ph107.i.i, label %.critedge.thread.i.i
-
-.lr.ph107.i.i:                                    ; preds = %3
-  %i.pq = getelementptr i8, ptr %i.po, i64 24
+.lr.ph107.i.i:                                    ; preds = %bb.fu
+  %3 = add nsw i64 %.val100, -1                   ; 2 uses
+  %i.pq = getelementptr i8, ptr %i.po, i64 24     ; 3 uses
   %smin.i = tail call i64 @llvm.smin.i64(i64 %.1, i64 0)
   %i.pr = sub i64 %.1, %smin.i                    ; 4 uses
   %exitcond.not.i2831493 = icmp eq i64 %i.pr, 0
@@ -226,7 +222,7 @@ bb.fv:                                            ; preds = %.loopexit.i.i
   br i1 %exitcond.not.i283, label %.critedge.i.i, label %.lr.ph.i.i.preheader, !llvm.loop !751
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph107.i.i, %bb.fv
-  %.050105.i.i1495 = phi i64 [ %i.qx, %bb.fv ], [ %4, %.lr.ph107.i.i ] ; 3 uses
+  %.050105.i.i1495 = phi i64 [ %i.qx, %bb.fv ], [ %3, %.lr.ph107.i.i ] ; 3 uses
   %.0106.i.i1494 = phi i64 [ %i.qw, %bb.fv ], [ 0, %.lr.ph107.i.i ] ; 4 uses
   br label %.lr.ph.i.i
 
@@ -336,13 +332,12 @@ bb.gj:                                            ; preds = %.lr.ph.i.i
   br i1 %i.qy, label %bb.fv, label %.critedge.i.thread.i, !llvm.loop !751
 
 .critedge.i.i:                                    ; preds = %bb.fv, %bb.gj, %.lr.ph107.i.i
-  %.050105.i.i1422 = phi i64 [ %.050105.i.i1495, %bb.gj ], [ %4, %.lr.ph107.i.i ], [ %i.qx, %bb.fv ] ; 2 uses
+  %.050105.i.i1422 = phi i64 [ %.050105.i.i1495, %bb.gj ], [ %3, %.lr.ph107.i.i ], [ %i.qx, %bb.fv ] ; 2 uses
   %.0.lcssa.i.i = phi i64 [ %.0106.i.i1494, %bb.gj ], [ %i.pr, %.lr.ph107.i.i ], [ %i.pr, %bb.fv ] ; 2 uses
   %i.qz = icmp eq i64 %.0.lcssa.i.i, 0
   br i1 %i.qz, label %.critedge.thread.i.i, label %.critedge.i.thread.i
 
-.critedge.thread.i.i:                             ; preds = %.critedge.i.i, %3
-  %.050.lcssa132.i.i = phi i64 [ %.050105.i.i1422, %.critedge.i.i ], [ %4, %3 ]
+.critedge.thread.i.i:                             ; preds = %.critedge.i.i
   %i.ra = getelementptr i8, ptr %0, i64 8
   %.val.i.i = load ptr, ptr %i.ra, align 8, !tbaa !229
   %.not.i82.i = icmp eq ptr %.val.i.i, @PyUnicode_Type
@@ -359,19 +354,18 @@ bb.gl:                                            ; preds = %bb.gk
   br label %Py_INCREF.exit.i.i
 
 Py_INCREF.exit.i.i:                               ; preds = %bb.gl, %bb.gk
-  %6 = getelementptr i8, ptr %i.po, i64 24
-  %.val75.i.i = load ptr, ptr %6, align 8, !tbaa !280
+  %.val75.i.i = load ptr, ptr %i.pq, align 8, !tbaa !280
   store ptr %0, ptr %.val75.i.i, align 8, !tbaa !227
   br label %bb.gz
 
 .critedge.i.thread.i:                             ; preds = %.loopexit.i.i, %.critedge.thread.i.i, %.critedge.i.i
   %.0.lcssa133.i.i = phi i64 [ 0, %.critedge.thread.i.i ], [ %.0.lcssa.i.i, %.critedge.i.i ], [ %i.qw, %.loopexit.i.i ] ; 4 uses
-  %.050.lcssa131.i.i = phi i64 [ %.050.lcssa132.i.i, %.critedge.thread.i.i ], [ %.050105.i.i1422, %.critedge.i.i ], [ %i.qx, %.loopexit.i.i ] ; 3 uses
+  %.050.lcssa131.i.i = phi i64 [ %.050105.i.i1422, %.critedge.thread.i.i ], [ %.050105.i.i1422, %.critedge.i.i ], [ %i.qx, %.loopexit.i.i ] ; 3 uses
   %i.re = icmp sgt i64 %.050.lcssa131.i.i, -2
   br i1 %i.re, label %bb.gm, label %bb.gz
 
 bb.gm:                                            ; preds = %.critedge.i.thread.i
-  %i.rf = add i64 %.050.lcssa131.i.i, 1           ; 2 uses
+  %i.rf = add nsw i64 %.050.lcssa131.i.i, 1       ; 2 uses
   %i.rg = icmp eq i64 %.050.lcssa131.i.i, 0
   br i1 %i.rg, label %_PyUnicode_FromASCII.exit88.i.i, label %bb.gn
 
@@ -421,8 +415,7 @@ bb.gr:                                            ; preds = %_PyUnicode_FromASCI
   br i1 %i.ru, label %bb.gs, label %bb.gt
 
 bb.gs:                                            ; preds = %bb.gr
-  %7 = getelementptr i8, ptr %i.po, i64 24
-  %.val74.i.i = load ptr, ptr %7, align 8, !tbaa !280
+  %.val74.i.i = load ptr, ptr %i.pq, align 8, !tbaa !280
   %i.rv = getelementptr [8 x i8], ptr %.val74.i.i, i64 %.0.lcssa133.i.i
   store ptr %.0.i8696.i.i, ptr %i.rv, align 8, !tbaa !227
   br label %Py_DECREF.exit63.i.i
@@ -825,17 +818,13 @@ bb.ip:                                            ; preds = %bb.in
   %i.xk = load i8, ptr %.080, align 1, !tbaa !237
   %i.xl = tail call i64 @llvm.smin.i64(i64 %.1, i64 11)
   %i.xm = add nsw i64 %i.xl, 1
-  %i.xn = tail call ptr @PyList_New(i64 noundef %i.xm) #33, !inline_history !757 ; 12 uses
+  %i.xn = tail call ptr @PyList_New(i64 noundef %i.xm) #33, !inline_history !757 ; 10 uses
   %i.xo = icmp eq ptr %i.xn, null
-  br i1 %i.xo, label %asciilib_rsplit.exit, label %8
+  br i1 %i.xo, label %asciilib_rsplit.exit, label %.lr.ph122.i.i
 
-8:                                                ; preds = %bb.ip
-  %9 = add i64 %.val100, -1                       ; 4 uses
-  %10 = icmp sgt i64 %9, -1
-  br i1 %10, label %.lr.ph122.i.i, label %.critedge.thread.i.i296
-
-.lr.ph122.i.i:                                    ; preds = %8
-  %i.xp = getelementptr i8, ptr %i.xn, i64 24
+.lr.ph122.i.i:                                    ; preds = %bb.ip
+  %4 = add nsw i64 %.val100, -1                   ; 2 uses
+  %i.xp = getelementptr i8, ptr %i.xn, i64 24     ; 3 uses
   %smin.i311 = tail call i64 @llvm.smin.i64(i64 %.1, i64 0)
   %i.xq = sub i64 %.1, %smin.i311                 ; 4 uses
   %exitcond.not.i3121497 = icmp eq i64 %i.xq, 0
@@ -846,7 +835,7 @@ bb.iq:                                            ; preds = %.loopexit.i.i319
   br i1 %exitcond.not.i312, label %.critedge.i.i314, label %.lr.ph.i.i313.preheader, !llvm.loop !758
 
 .lr.ph.i.i313.preheader:                          ; preds = %.lr.ph122.i.i, %bb.iq
-  %.050120.i.i1499 = phi i64 [ %i.zf, %bb.iq ], [ %9, %.lr.ph122.i.i ] ; 3 uses
+  %.050120.i.i1499 = phi i64 [ %i.zf, %bb.iq ], [ %4, %.lr.ph122.i.i ] ; 3 uses
   %.0121.i.i1498 = phi i64 [ %i.ze, %bb.iq ], [ 0, %.lr.ph122.i.i ] ; 4 uses
   br label %.lr.ph.i.i313
 
@@ -997,13 +986,12 @@ bb.jh:                                            ; preds = %.lr.ph.i.i313
   br i1 %i.zg, label %bb.iq, label %.critedge.i.thread.i299, !llvm.loop !758
 
 .critedge.i.i314:                                 ; preds = %bb.iq, %bb.jh, %.lr.ph122.i.i
-  %.050120.i.i1392 = phi i64 [ %.050120.i.i1499, %bb.jh ], [ %9, %.lr.ph122.i.i ], [ %i.zf, %bb.iq ] ; 2 uses
+  %.050120.i.i1392 = phi i64 [ %.050120.i.i1499, %bb.jh ], [ %4, %.lr.ph122.i.i ], [ %i.zf, %bb.iq ] ; 2 uses
   %.0.lcssa.i.i315 = phi i64 [ %.0121.i.i1498, %bb.jh ], [ %i.xq, %.lr.ph122.i.i ], [ %i.xq, %bb.iq ] ; 2 uses
   %i.zh = icmp eq i64 %.0.lcssa.i.i315, 0
   br i1 %i.zh, label %.critedge.thread.i.i296, label %.critedge.i.thread.i299
 
-.critedge.thread.i.i296:                          ; preds = %.critedge.i.i314, %8
-  %.050.lcssa154.i.i = phi i64 [ %.050120.i.i1392, %.critedge.i.i314 ], [ %9, %8 ]
+.critedge.thread.i.i296:                          ; preds = %.critedge.i.i314
   %i.zi = getelementptr i8, ptr %0, i64 8
   %.val.i.i297 = load ptr, ptr %i.zi, align 8, !tbaa !229
   %.not.i82.i298 = icmp eq ptr %.val.i.i297, @PyUnicode_Type
@@ -1020,19 +1008,18 @@ bb.jj:                                            ; preds = %bb.ji
   br label %Py_INCREF.exit.i.i309
 
 Py_INCREF.exit.i.i309:                            ; preds = %bb.jj, %bb.ji
-  %11 = getelementptr i8, ptr %i.xn, i64 24
-  %.val75.i.i310 = load ptr, ptr %11, align 8, !tbaa !280
+  %.val75.i.i310 = load ptr, ptr %i.xp, align 8, !tbaa !280
   store ptr %0, ptr %.val75.i.i310, align 8, !tbaa !227
   br label %bb.ka
 
 .critedge.i.thread.i299:                          ; preds = %.loopexit.i.i319, %.critedge.thread.i.i296, %.critedge.i.i314
   %.0.lcssa155.i.i = phi i64 [ 0, %.critedge.thread.i.i296 ], [ %.0.lcssa.i.i315, %.critedge.i.i314 ], [ %i.ze, %.loopexit.i.i319 ] ; 4 uses
-  %.050.lcssa153.i.i = phi i64 [ %.050.lcssa154.i.i, %.critedge.thread.i.i296 ], [ %.050120.i.i1392, %.critedge.i.i314 ], [ %i.zf, %.loopexit.i.i319 ] ; 2 uses
+  %.050.lcssa153.i.i = phi i64 [ %.050120.i.i1392, %.critedge.thread.i.i296 ], [ %.050120.i.i1392, %.critedge.i.i314 ], [ %i.zf, %.loopexit.i.i319 ] ; 2 uses
   %i.zm = icmp sgt i64 %.050.lcssa153.i.i, -2
   br i1 %i.zm, label %bb.jk, label %bb.ka
 
 bb.jk:                                            ; preds = %.critedge.i.thread.i299
-  %i.zn = add i64 %.050.lcssa153.i.i, 1           ; 4 uses
+  %i.zn = add nsw i64 %.050.lcssa153.i.i, 1       ; 4 uses
   switch i64 %i.zn, label %bb.jl [
     i64 0, label %_PyUnicode_FromUCS1.exit99.thread.i.i
     i64 1, label %_PyUnicode_FromUCS1.exit99.i.i
@@ -1123,8 +1110,7 @@ _PyUnicode_FromUCS1.exit99.thread.i.i:            ; preds = %_PyUnicode_FromUCS1
   br i1 %i.aal, label %bb.jt, label %bb.ju
 
 bb.jt:                                            ; preds = %_PyUnicode_FromUCS1.exit99.thread.i.i
-  %12 = getelementptr i8, ptr %i.xn, i64 24
-  %.val74.i.i308 = load ptr, ptr %12, align 8, !tbaa !280
+  %.val74.i.i308 = load ptr, ptr %i.xp, align 8, !tbaa !280
   %i.aam = getelementptr [8 x i8], ptr %.val74.i.i308, i64 %.0.lcssa155.i.i
   store ptr %.0.i78105.i.i, ptr %i.aam, align 8, !tbaa !227
   br label %Py_DECREF.exit63.i.i307
@@ -1527,17 +1513,13 @@ bb.lw:                                            ; preds = %bb.lu
   %i.agt = load i16, ptr %.080, align 2, !tbaa !240
   %i.agu = tail call i64 @llvm.smin.i64(i64 %.1, i64 11)
   %i.agv = add nsw i64 %i.agu, 1
-  %i.agw = tail call ptr @PyList_New(i64 noundef %i.agv) #33, !inline_history !764 ; 12 uses
+  %i.agw = tail call ptr @PyList_New(i64 noundef %i.agv) #33, !inline_history !764 ; 10 uses
   %i.agx = icmp eq ptr %i.agw, null
-  br i1 %i.agx, label %asciilib_rsplit.exit, label %13
+  br i1 %i.agx, label %asciilib_rsplit.exit, label %.lr.ph89.i.i
 
-13:                                               ; preds = %bb.lw
-  %14 = add i64 %.val100, -1                      ; 4 uses
-  %15 = icmp sgt i64 %14, -1
-  br i1 %15, label %.lr.ph89.i.i, label %.critedge.thread.i.i382
-
-.lr.ph89.i.i:                                     ; preds = %13
-  %i.agy = getelementptr i8, ptr %i.agw, i64 24
+.lr.ph89.i.i:                                     ; preds = %bb.lw
+  %5 = add nsw i64 %.val100, -1                   ; 2 uses
+  %i.agy = getelementptr i8, ptr %i.agw, i64 24   ; 3 uses
   %smin.i397 = tail call i64 @llvm.smin.i64(i64 %.1, i64 0)
   %i.agz = sub i64 %.1, %smin.i397                ; 4 uses
   %exitcond.not.i3981489 = icmp eq i64 %i.agz, 0
@@ -1548,7 +1530,7 @@ bb.lx:                                            ; preds = %.loopexit.i.i405
   br i1 %exitcond.not.i398, label %.critedge.i.i400, label %.lr.ph.i.i399.preheader, !llvm.loop !765
 
 .lr.ph.i.i399.preheader:                          ; preds = %.lr.ph89.i.i, %bb.lx
-  %.05087.i.i1491 = phi i64 [ %i.aht, %bb.lx ], [ %14, %.lr.ph89.i.i ] ; 3 uses
+  %.05087.i.i1491 = phi i64 [ %i.aht, %bb.lx ], [ %5, %.lr.ph89.i.i ] ; 3 uses
   %.088.i.i1490 = phi i64 [ %i.ahs, %bb.lx ], [ 0, %.lr.ph89.i.i ] ; 4 uses
   br label %.lr.ph.i.i399
 
@@ -1618,13 +1600,12 @@ bb.mh:                                            ; preds = %.lr.ph.i.i399
   br i1 %i.ahu, label %bb.lx, label %.critedge.i.thread.i385, !llvm.loop !765
 
 .critedge.i.i400:                                 ; preds = %bb.lx, %bb.mh, %.lr.ph89.i.i
-  %.05087.i.i1448 = phi i64 [ %.05087.i.i1491, %bb.mh ], [ %14, %.lr.ph89.i.i ], [ %i.aht, %bb.lx ] ; 2 uses
+  %.05087.i.i1448 = phi i64 [ %.05087.i.i1491, %bb.mh ], [ %5, %.lr.ph89.i.i ], [ %i.aht, %bb.lx ] ; 2 uses
   %.0.lcssa.i.i401 = phi i64 [ %.088.i.i1490, %bb.mh ], [ %i.agz, %.lr.ph89.i.i ], [ %i.agz, %bb.lx ] ; 2 uses
   %i.ahv = icmp eq i64 %.0.lcssa.i.i401, 0
   br i1 %i.ahv, label %.critedge.thread.i.i382, label %.critedge.i.thread.i385
 
-.critedge.thread.i.i382:                          ; preds = %.critedge.i.i400, %13
-  %.050.lcssa112.i.i = phi i64 [ %.05087.i.i1448, %.critedge.i.i400 ], [ %14, %13 ]
+.critedge.thread.i.i382:                          ; preds = %.critedge.i.i400
   %i.ahw = getelementptr i8, ptr %0, i64 8
   %.val.i.i383 = load ptr, ptr %i.ahw, align 8, !tbaa !229
   %.not.i82.i384 = icmp eq ptr %.val.i.i383, @PyUnicode_Type
@@ -1641,19 +1622,18 @@ bb.mj:                                            ; preds = %bb.mi
   br label %Py_INCREF.exit.i.i395
 
 Py_INCREF.exit.i.i395:                            ; preds = %bb.mj, %bb.mi
-  %16 = getelementptr i8, ptr %i.agw, i64 24
-  %.val75.i.i396 = load ptr, ptr %16, align 8, !tbaa !280
+  %.val75.i.i396 = load ptr, ptr %i.agy, align 8, !tbaa !280
   store ptr %0, ptr %.val75.i.i396, align 8, !tbaa !227
   br label %bb.mt
 
 .critedge.i.thread.i385:                          ; preds = %.loopexit.i.i405, %.critedge.thread.i.i382, %.critedge.i.i400
   %.0.lcssa113.i.i = phi i64 [ 0, %.critedge.thread.i.i382 ], [ %.0.lcssa.i.i401, %.critedge.i.i400 ], [ %i.ahs, %.loopexit.i.i405 ] ; 4 uses
-  %.050.lcssa111.i.i = phi i64 [ %.050.lcssa112.i.i, %.critedge.thread.i.i382 ], [ %.05087.i.i1448, %.critedge.i.i400 ], [ %i.aht, %.loopexit.i.i405 ] ; 2 uses
+  %.050.lcssa111.i.i = phi i64 [ %.05087.i.i1448, %.critedge.thread.i.i382 ], [ %.05087.i.i1448, %.critedge.i.i400 ], [ %i.aht, %.loopexit.i.i405 ] ; 2 uses
   %i.aia = icmp sgt i64 %.050.lcssa111.i.i, -2
   br i1 %i.aia, label %bb.mk, label %bb.mt
 
 bb.mk:                                            ; preds = %.critedge.i.thread.i385
-  %i.aib = add i64 %.050.lcssa111.i.i, 1
+  %i.aib = add nsw i64 %.050.lcssa111.i.i, 1
   %i.aic = tail call fastcc ptr @_PyUnicode_FromUCS2(ptr noundef readonly %.0.i271, i64 noundef %i.aib), !inline_history !764 ; 8 uses
   %i.aid = icmp eq ptr %i.aic, null
   br i1 %i.aid, label %Py_DECREF.exit69.i.i388, label %bb.ml
@@ -1663,8 +1643,7 @@ bb.ml:                                            ; preds = %bb.mk
   br i1 %i.aie, label %bb.mm, label %bb.mn
 
 bb.mm:                                            ; preds = %bb.ml
-  %17 = getelementptr i8, ptr %i.agw, i64 24
-  %.val74.i.i394 = load ptr, ptr %17, align 8, !tbaa !280
+  %.val74.i.i394 = load ptr, ptr %i.agy, align 8, !tbaa !280
   %i.aif = getelementptr [8 x i8], ptr %.val74.i.i394, i64 %.0.lcssa113.i.i
   store ptr %i.aic, ptr %i.aif, align 8, !tbaa !227
   br label %Py_DECREF.exit63.i.i393
@@ -1933,17 +1912,13 @@ bb.nv:                                            ; preds = %bb.nt
   %i.akr = load i32, ptr %.080, align 4, !tbaa !43
   %i.aks = tail call i64 @llvm.smin.i64(i64 %.1, i64 11)
   %i.akt = add nsw i64 %i.aks, 1
-  %i.aku = tail call ptr @PyList_New(i64 noundef %i.akt) #33, !inline_history !769 ; 12 uses
+  %i.aku = tail call ptr @PyList_New(i64 noundef %i.akt) #33, !inline_history !769 ; 10 uses
   %i.akv = icmp eq ptr %i.aku, null
-  br i1 %i.akv, label %asciilib_rsplit.exit, label %18
+  br i1 %i.akv, label %asciilib_rsplit.exit, label %.lr.ph89.i.i446
 
-18:                                               ; preds = %bb.nv
-  %19 = add i64 %.val100, -1                      ; 4 uses
-  %20 = icmp sgt i64 %19, -1
-  br i1 %20, label %.lr.ph89.i.i446, label %.critedge.thread.i.i427
-
-.lr.ph89.i.i446:                                  ; preds = %18
-  %i.akw = getelementptr i8, ptr %i.aku, i64 24
+.lr.ph89.i.i446:                                  ; preds = %bb.nv
+  %6 = add nsw i64 %.val100, -1                   ; 2 uses
+  %i.akw = getelementptr i8, ptr %i.aku, i64 24   ; 3 uses
   %smin.i447 = tail call i64 @llvm.smin.i64(i64 %.1, i64 0)
   %i.akx = sub i64 %.1, %smin.i447                ; 4 uses
   %exitcond.not.i4501486 = icmp eq i64 %i.akx, 0
@@ -1954,7 +1929,7 @@ bb.nw:                                            ; preds = %.loopexit.i.i458
   br i1 %exitcond.not.i450, label %.critedge.i.i453, label %.lr.ph.i.i451.preheader, !llvm.loop !770
 
 .lr.ph.i.i451.preheader:                          ; preds = %.lr.ph89.i.i446, %bb.nw
-  %.05087.i.i4491488 = phi i64 [ %i.alr, %bb.nw ], [ %19, %.lr.ph89.i.i446 ] ; 3 uses
+  %.05087.i.i4491488 = phi i64 [ %i.alr, %bb.nw ], [ %6, %.lr.ph89.i.i446 ] ; 3 uses
   %.088.i.i4481487 = phi i64 [ %i.alq, %bb.nw ], [ 0, %.lr.ph89.i.i446 ] ; 4 uses
   br label %.lr.ph.i.i451
 
@@ -2024,13 +1999,12 @@ bb.og:                                            ; preds = %.lr.ph.i.i451
   br i1 %i.als, label %bb.nw, label %.critedge.i.thread.i431, !llvm.loop !770
 
 .critedge.i.i453:                                 ; preds = %bb.nw, %bb.og, %.lr.ph89.i.i446
-  %.05087.i.i4491476 = phi i64 [ %.05087.i.i4491488, %bb.og ], [ %19, %.lr.ph89.i.i446 ], [ %i.alr, %bb.nw ] ; 2 uses
+  %.05087.i.i4491476 = phi i64 [ %.05087.i.i4491488, %bb.og ], [ %6, %.lr.ph89.i.i446 ], [ %i.alr, %bb.nw ] ; 2 uses
   %.0.lcssa.i.i454 = phi i64 [ %.088.i.i4481487, %bb.og ], [ %i.akx, %.lr.ph89.i.i446 ], [ %i.akx, %bb.nw ] ; 2 uses
   %i.alt = icmp eq i64 %.0.lcssa.i.i454, 0
   br i1 %i.alt, label %.critedge.thread.i.i427, label %.critedge.i.thread.i431
 
-.critedge.thread.i.i427:                          ; preds = %.critedge.i.i453, %18
-  %.050.lcssa112.i.i428 = phi i64 [ %.05087.i.i4491476, %.critedge.i.i453 ], [ %19, %18 ]
+.critedge.thread.i.i427:                          ; preds = %.critedge.i.i453
   %i.alu = getelementptr i8, ptr %0, i64 8
   %.val.i.i429 = load ptr, ptr %i.alu, align 8, !tbaa !229
   %.not.i82.i430 = icmp eq ptr %.val.i.i429, @PyUnicode_Type
@@ -2047,19 +2021,18 @@ bb.oi:                                            ; preds = %bb.oh
   br label %Py_INCREF.exit.i.i444
 
 Py_INCREF.exit.i.i444:                            ; preds = %bb.oi, %bb.oh
-  %21 = getelementptr i8, ptr %i.aku, i64 24
-  %.val75.i.i445 = load ptr, ptr %21, align 8, !tbaa !280
+  %.val75.i.i445 = load ptr, ptr %i.akw, align 8, !tbaa !280
   store ptr %0, ptr %.val75.i.i445, align 8, !tbaa !227
   br label %bb.os
 
 .critedge.i.thread.i431:                          ; preds = %.loopexit.i.i458, %.critedge.thread.i.i427, %.critedge.i.i453
   %.0.lcssa113.i.i432 = phi i64 [ 0, %.critedge.thread.i.i427 ], [ %.0.lcssa.i.i454, %.critedge.i.i453 ], [ %i.alq, %.loopexit.i.i458 ] ; 4 uses
-  %.050.lcssa111.i.i433 = phi i64 [ %.050.lcssa112.i.i428, %.critedge.thread.i.i427 ], [ %.05087.i.i4491476, %.critedge.i.i453 ], [ %i.alr, %.loopexit.i.i458 ] ; 2 uses
+  %.050.lcssa111.i.i433 = phi i64 [ %.05087.i.i4491476, %.critedge.thread.i.i427 ], [ %.05087.i.i4491476, %.critedge.i.i453 ], [ %i.alr, %.loopexit.i.i458 ] ; 2 uses
   %i.aly = icmp sgt i64 %.050.lcssa111.i.i433, -2
   br i1 %i.aly, label %bb.oj, label %bb.os
 
 bb.oj:                                            ; preds = %.critedge.i.thread.i431
-  %i.alz = add i64 %.050.lcssa111.i.i433, 1
+  %i.alz = add nsw i64 %.050.lcssa111.i.i433, 1
   %i.ama = tail call fastcc ptr @_PyUnicode_FromUCS4(ptr noundef readonly %.0.i271, i64 noundef %i.alz), !inline_history !769 ; 8 uses
   %i.amb = icmp eq ptr %i.ama, null
   br i1 %i.amb, label %Py_DECREF.exit69.i.i436, label %bb.ok
@@ -2069,8 +2042,7 @@ bb.ok:                                            ; preds = %bb.oj
   br i1 %i.amc, label %bb.ol, label %bb.om
 
 bb.ol:                                            ; preds = %bb.ok
-  %22 = getelementptr i8, ptr %i.aku, i64 24
-  %.val74.i.i443 = load ptr, ptr %22, align 8, !tbaa !280
+  %.val74.i.i443 = load ptr, ptr %i.akw, align 8, !tbaa !280
   %i.amd = getelementptr [8 x i8], ptr %.val74.i.i443, i64 %.0.lcssa113.i.i432
   store ptr %i.ama, ptr %i.amd, align 8, !tbaa !227
   br label %Py_DECREF.exit63.i.i442
