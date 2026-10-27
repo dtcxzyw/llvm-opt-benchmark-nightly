@@ -204,6 +204,7 @@ _RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCskt5MLIAl8
   br i1 %i.bf, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0EECsfypgzpEsCtg_18foundations_sentry.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, !dbg !834
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core10intrinsics25typed_swap_nonoverlappingNtNtCskt5MLIAl8nl_9hashbrown3raw13RawTableInnerECsfypgzpEsCtg_18foundations_sentry.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %.val.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !832, !alias.scope !726
   %i.bg = add i64 %.val3.i.i, 1, !dbg !835
   %i.bh = mul nuw i64 %.val.i.i, %i.bg, !dbg !836 ; 2 uses
@@ -222,7 +223,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   call void @llvm.assume(i1 %i.br), !dbg !844
   %i.bs = icmp ne i64 %.val1.i.i, 0, !dbg !845
   call void @llvm.assume(i1 %i.bs), !dbg !846
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
   %i.bt = icmp eq i64 %i.bo, 0, !dbg !847
   br i1 %i.bt, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0EECsfypgzpEsCtg_18foundations_sentry.exit, label %bb.m, !dbg !847
 
@@ -325,12 +325,11 @@ common.resume:                                    ; preds = %bb.r, %bb.k
 
 bb.o:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !735), !dbg !902
-  %.val13.i = load ptr, ptr %0, align 8, !dbg !903, !alias.scope !735 ; 7 uses
+  %.val13.i = load ptr, ptr %0, align 8, !dbg !903, !alias.scope !735, !nonnull !114, !noundef !114 ; 5 uses
   %.not6.i.i = icmp eq i64 %i.k, 0, !dbg !904
   br i1 %.not6.i.i, label %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread, label %.lr.ph.i.i, !dbg !904
 
 _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit.thread: ; preds = %bb.o
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !905, !noalias !735
   br label %bb.z, !dbg !906
 
@@ -340,7 +339,6 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %.not10.i.i.i.i = icmp ne i64 %i.dr, 0, !dbg !909
   %i.ds = zext i1 %.not10.i.i.i.i to i64, !dbg !909
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dq, %i.ds, !dbg !909 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1, !dbg !904
   %i.dt = icmp eq i64 %.sroa.05.0.i.i.i.i, 1, !dbg !904
   br i1 %i.dt, label %.epil.preheader, label %.lr.ph.i.i.new, !dbg !904
@@ -677,6 +675,7 @@ bb.a:
   br i1 %i.d, label %_RNvXs1_NtCskt5MLIAl8nl_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsfypgzpEsCtg_18foundations_sentry.exit, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !dbg !1086
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !1084
   %.val.i = load i64, ptr %i.e, align 8, !dbg !1084, !alias.scope !1081
   %i.f = add i64 %.val3.i, 1, !dbg !1087
@@ -696,7 +695,6 @@ _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   tail call void @llvm.assume(i1 %i.q), !dbg !1096
   %i.r = icmp ne i64 %.val1.i, 0, !dbg !1097
   tail call void @llvm.assume(i1 %i.r), !dbg !1098
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.s = icmp eq i64 %i.n, 0, !dbg !1099
   br i1 %i.s, label %_RNvXs1_NtCskt5MLIAl8nl_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsfypgzpEsCtg_18foundations_sentry.exit, label %bb.b, !dbg !1099
 

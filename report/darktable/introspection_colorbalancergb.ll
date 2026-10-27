@@ -205,6 +205,7 @@ bb.a:
   br i1 %i.i, label %bb.ae, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 64), "align"(ptr %3, i64 64) ]
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 576
   %gep.1.i = getelementptr inbounds nuw i8, ptr %i.h, i64 592
   %gep.2.i = getelementptr inbounds nuw i8, ptr %i.h, i64 608
@@ -309,19 +310,15 @@ bb.b:                                             ; preds = %bb.a
   %i.db = fadd reassoc nsz arcp contract afn <4 x float> %i.da, %i.cz
   %i.dc = fmul reassoc arcp contract afn <4 x float> %i.cw, <float f0x3F44995A, float f0x3F44995A, float f0x3F44995A, float -0.000000e+00>
   %i.dd = fadd reassoc nsz arcp contract afn <4 x float> %i.db, %i.dc
-  call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 64), "align"(ptr %3, i64 64) ]
   %i.de = getelementptr inbounds nuw i8, ptr %i.c, i64 168
-  %i.df = load ptr, ptr %i.de, align 16, !tbaa !56 ; 5 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.df, i64 64), "align"(ptr %i.c, i64 16) ]
+  %i.df = load ptr, ptr %i.de, align 8, !tbaa !56 ; 5 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.df, i64 64), "align"(ptr %i.c, i64 16), "align"(ptr %i.c, i64 16, i64 -72), "align"(ptr %i.c, i64 16, i64 -100), "align"(ptr %i.c, i64 16, i64 -120) ]
   %i.dg = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.dh = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.di = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.dj = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.c, i64 16, i64 -72) ]
   %i.dk = getelementptr inbounds nuw i8, ptr %i.c, i64 100 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.c, i64 16, i64 -100) ]
   %i.dl = getelementptr inbounds nuw i8, ptr %i.c, i64 120 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.c, i64 16, i64 -120) ]
   %i.dm = load ptr, ptr %i.f, align 8, !tbaa !53
   %i.dn = getelementptr i8, ptr %i.dm, i64 644
   %.val = load i32, ptr %i.dn, align 4, !tbaa !235

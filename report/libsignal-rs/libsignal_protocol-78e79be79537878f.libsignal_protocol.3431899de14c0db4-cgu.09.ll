@@ -205,9 +205,9 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br i1 %i.ai, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs4tP8yUXWbFU_18libsignal_protocol5error15SessionNotFoundEBF_.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.ak = load i64, ptr %i.aj, align 8, !range !18, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.ah, i64 noundef range(i64 1, 536870913) %i.ak) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs4tP8yUXWbFU_18libsignal_protocol5error15SessionNotFoundEBF_.exit
 
@@ -610,17 +610,17 @@ bb.j:                                             ; preds = %bb.i
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit29
 
 bb.k:                                             ; preds = %bb.h, %bb.o
+  %.sink61 = phi ptr [ %i.ai, %bb.o ], [ %i.t, %bb.h ] ; 3 uses
   %.sink = phi { ptr, i64 } [ %i.ak, %bb.o ], [ %i.v, %bb.h ] ; 2 uses
-  %.sink59 = phi ptr [ %i.ai, %bb.o ], [ %i.t, %bb.h ] ; 3 uses
   %.sink55 = phi i64 [ %i.aj, %bb.o ], [ %i.u, %bb.h ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink61) ]
   %i.y = extractvalue { ptr, i64 } %.sink, 0      ; 2 uses
   %i.z = extractvalue { ptr, i64 } %.sink, 1      ; 3 uses
   store ptr %.sroa.08.0.copyload, ptr %i.i, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i64 %.sroa.49.0.copyload, ptr %i.aa, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink59) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store ptr %.sink59, ptr %i.ab, align 8
+  store ptr %.sink61, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   store i64 %.sink55, ptr %i.ac, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -686,7 +686,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs
   br i1 %i.ap, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit.1.i.i, label %bb.u
 
 bb.u:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit.i.i
-  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink59, i64 noundef range(i64 1, 0) %.sink55, i64 noundef 1) #19, !noalias !248
+  call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink61, i64 noundef range(i64 1, 0) %.sink55, i64 noundef 1) #19, !noalias !248
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit.1.i.i
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit.1.i.i: ; preds = %bb.u, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit.i.i
@@ -1046,13 +1046,13 @@ bb.g:                                             ; preds = %bb.f
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 bb.h:                                             ; preds = %.noexc
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.z = load ptr, ptr %i.p, align 8, !alias.scope !292, !nonnull !4, !noundef !4
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.v
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aa, ptr nonnull readonly align 1 %i.t, i64 %i.u, i1 false)
   %.pre.i = load i64, ptr %i.q, align 8, !alias.scope !292
   %i.ab = add i64 %.pre.i, %i.u
   store i64 %i.ab, ptr %i.q, align 8, !alias.scope !292
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.t, i64 noundef range(i64 1, 0) %i.u, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit34
 
@@ -1104,13 +1104,13 @@ bb.n:                                             ; preds = %bb.m
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 bb.o:                                             ; preds = %.noexc40
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aj) ]
   %i.ap = load ptr, ptr %i.p, align 8, !alias.scope !294, !nonnull !4, !noundef !4
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.al
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aq, ptr nonnull readonly align 1 %i.aj, i64 %i.ak, i1 false)
   %.pre.i39 = load i64, ptr %i.q, align 8, !alias.scope !294
   %i.ar = add i64 %.pre.i39, %i.ak
   store i64 %i.ar, ptr %i.q, align 8, !alias.scope !294
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aj) ]
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef range(i64 1, 0) %i.ak, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit43
 
@@ -1143,13 +1143,13 @@ bb.r:                                             ; preds = %bb.q
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 bb.s:                                             ; preds = %.noexc46
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   %i.az = load ptr, ptr %i.p, align 8, !alias.scope !295, !nonnull !4, !noundef !4
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.av
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ba, ptr nonnull readonly align 1 %i.at, i64 %i.au, i1 false)
   %.pre.i45 = load i64, ptr %i.q, align 8, !alias.scope !295
   %i.bb = add i64 %.pre.i45, %i.au
   store i64 %i.bb, ptr %i.q, align 8, !alias.scope !295
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.at, i64 noundef range(i64 1, 0) %i.au, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit49
 
@@ -1194,13 +1194,13 @@ bb.w:                                             ; preds = %bb.v
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 bb.x:                                             ; preds = %.noexc52
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
   %i.bl = load ptr, ptr %i.p, align 8, !alias.scope !296, !nonnull !4, !noundef !4
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.bh
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bm, ptr nonnull readonly align 1 %i.bf, i64 %i.bg, i1 false)
   %.pre.i51 = load i64, ptr %i.q, align 8, !alias.scope !296
   %i.bn = add i64 %.pre.i51, %i.bg
   store i64 %i.bn, ptr %i.q, align 8, !alias.scope !296
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.bf, i64 noundef range(i64 1, 0) %i.bg, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit55
 
@@ -1233,13 +1233,13 @@ bb.aa:                                            ; preds = %bb.z
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit
 
 bb.ab:                                            ; preds = %.noexc58
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   %i.bv = load ptr, ptr %i.p, align 8, !alias.scope !297, !nonnull !4, !noundef !4
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.br
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bw, ptr nonnull readonly align 1 %i.bp, i64 %i.bq, i1 false)
   %.pre.i57 = load i64, ptr %i.q, align 8, !alias.scope !297
   %i.bx = add i64 %.pre.i57, %i.bq
   store i64 %i.bx, ptr %i.q, align 8, !alias.scope !297
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bp) ]
   call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %i.bp, i64 noundef range(i64 1, 0) %i.bq, i64 noundef 1) #19
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc5boxed3BoxShEECs4tP8yUXWbFU_18libsignal_protocol.exit49
 
@@ -1642,9 +1642,9 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs4tP8yUXWbFU_18libsignal_protocol3
   resume { ptr, i32 } %i.o
 
 _RINvXNtNtCs4tP8yUXWbFU_18libsignal_protocol3kem9kyber1024NtB3_10ParametersNtB5_10Parameters8generateDNtCsfNFcxEHTA3o_9rand_core9CryptoRngEL_EB7_.exit: ; preds = %_RINvYDNtCsfNFcxEHTA3o_9rand_core9CryptoRngEL_NtNtCs4N9X91BVcYz_4rand3rng3Rng6randomAhj40_ECs4tP8yUXWbFU_18libsignal_protocol.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   %i.q = extractvalue { ptr, i64 } %i.n, 0
   %i.r = extractvalue { ptr, i64 } %i.n, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ]
   store ptr %i.l, ptr %0, align 8, !alias.scope !349
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.m, ptr %i.s, align 8, !alias.scope !349
@@ -1820,7 +1820,7 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
 
 _RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.thread.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.ao = getelementptr inbounds i8, ptr %i.ae, i64 -368
-  br label %bb.j
+  br label %1
 
 _RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i, %bb.b
   call void @_RNvXs4_NtCs6i54tJFfzR_5alloc6stringNtB5_6StringNtNtCsgxBkk5gSRhY_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.val8.i.i.i), !noalias !384
@@ -1836,7 +1836,7 @@ _RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessio
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.4.0.copyload.i.i.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !noalias !384 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %.sroa.0.0.copyload.pr.i.i.i.i, -2
-  br i1 %.not.i.i.i.i.i.i, label %bb.j, label %bb.g
+  br i1 %.not.i.i.i.i.i.i, label %1, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.i.i.i.i
   %i.ar = load i64, ptr %i.c, align 8, !range !8, !alias.scope !394, !noalias !395, !noundef !4
@@ -1846,6 +1846,11 @@ bb.g:                                             ; preds = %_RNCNvMs5_NtNtCs4tP
 bb.h:                                             ; preds = %bb.g
   invoke void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs4tP8yUXWbFU_18libsignal_protocol5error19SignalProtocolErrorEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.c)
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCs4tP8yUXWbFU_18libsignal_protocol5error19SignalProtocolErrorEEEB1O_.exit.i.i.i.i.i unwind label %bb.i, !noalias !396
+
+1:                                                ; preds = %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.i.i.i.i, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.thread.i.i.i.i
+  %.sroa.4.0.copyload6.i.i.i.i = phi ptr [ %i.ao, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.thread.i.i.i.i ], [ %.sroa.4.0.copyload.i.i.i.i, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.i.i.i.i ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload6.i.i.i.i) ]
+  br label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.at = landingpad { ptr, i32 }
@@ -1865,8 +1870,8 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6Re
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.611.0..8.val.sroa_idx12.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.j, i64 32, i1 false), !noalias !397
   br label %bb.j
 
-bb.j:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCs4tP8yUXWbFU_18libsignal_protocol5error19SignalProtocolErrorEEEB1O_.exit.i.i.i.i.i, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.i.i.i.i, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.thread.i.i.i.i
-  %.sroa.4.1.i.i.i.i.i = phi ptr [ null, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCs4tP8yUXWbFU_18libsignal_protocol5error19SignalProtocolErrorEEEB1O_.exit.i.i.i.i.i ], [ %.sroa.4.0.copyload.i.i.i.i, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.i.i.i.i ], [ %i.ao, %_RNCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB7_17InMemSessionStore22load_existing_sessions0Bb_.exit.thread.i.i.i.i ]
+bb.j:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCs4tP8yUXWbFU_18libsignal_protocol5error19SignalProtocolErrorEEEB1O_.exit.i.i.i.i.i, %1
+  %.sroa.4.1.i.i.i.i.i = phi ptr [ null, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCs4tP8yUXWbFU_18libsignal_protocol5error19SignalProtocolErrorEEEB1O_.exit.i.i.i.i.i ], [ %.sroa.4.0.copyload6.i.i.i.i, %1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !384
   br label %_RINvXNtNtCsgxBkk5gSRhY_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterRNtNtCsbwPL7qM37dJ_14libsignal_core7address15ProtocolAddressENCNvMs5_NtNtCs4tP8yUXWbFU_18libsignal_protocol7storage5inmemNtB2L_17InMemSessionStore22load_existing_sessions0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB2P_5error19SignalProtocolErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB5O_12try_for_each4callRNtNtNtB2P_5state7session13SessionRecordINtNtNtB7_3ops12control_flow11ControlFlowB70_ENcNtB7E_5Break0E0B7E_EB2P_.exit
 
@@ -2012,7 +2017,7 @@ _RNCINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters6cloned14clone_try_foldNtNtCs4tP8y
 ; Function Attrs: nonlazybind uwtable
 define hidden { i64, ptr } @_RNvXs1_NtNtNtCsgxBkk5gSRhY_4core3ops8function5implsQNCINvNvXs_NtNtNtBb_4iter8adapters9enumerateINtBY_9EnumeratepENtNtNtB12_6traits8iterator8Iterator8try_fold9enumerateRNtNtCs4tP8yUXWbFU_18libsignal_protocol11sender_keys14SenderKeyStateuINtNtB9_12control_flow11ControlFlowTjB2F_EENCINvNvB1N_4find5checkB4l_NCINvYINtNtNtNtCs6i54tJFfzR_5alloc11collections9vec_deque4iter4IterB2G_ENtCsgNxaXBj14db_9itertools9Itertools13find_positionNCNvMs2_B2I_NtB2I_15SenderKeyRecord12remove_state0E0E0E0INtB7_5FnMutTuB2F_EE8call_mutB2K_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(112) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [33 x i8], align 1                ; 6 uses
+  %i.a = alloca [33 x i8], align 1                ; 4 uses
   %i.b = alloca [40 x i8], align 8                ; 6 uses
   %i.c = alloca [33 x i8], align 1                ; 5 uses
   %i.d = load ptr, ptr %0, align 8, !nonnull !4, !align !7, !noundef !4 ; 2 uses
@@ -2024,7 +2029,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !467)
   %.val.i.i.i = load ptr, ptr %.val, align 8, !noalias !468, !nonnull !4, !align !469, !noundef !4
   %i.g = getelementptr i8, ptr %.val, i64 8
-  %.val1.i.i.i = load ptr, ptr %i.g, align 8, !noalias !468 ; 3 uses
+  %.val1.i.i.i = load ptr, ptr %i.g, align 8, !noalias !468 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 108
   %i.i = load i32, ptr %i.h, align 4, !alias.scope !468, !noundef !4
   %i.j = load i32, ptr %.val.i.i.i, align 4, !noalias !468, !noundef !4
@@ -2035,15 +2040,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !468
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !468
   call void @_RNvMs1_NtCs4tP8yUXWbFU_18libsignal_protocol11sender_keysNtB5_14SenderKeyState18signing_key_public(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(112) %1)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i) ]
   %i.l = load i8, ptr %i.b, align 8, !range !9, !noalias !468, !noundef !4
   %i.m = trunc nuw i8 %i.l to i1
   br i1 %i.m, label %_RNCINvYINtNtNtNtCs6i54tJFfzR_5alloc11collections9vec_deque4iter4IterNtNtCs4tP8yUXWbFU_18libsignal_protocol11sender_keys14SenderKeyStateENtCsgNxaXBj14db_9itertools9Itertools13find_positionNCNvMs2_B16_NtB16_15SenderKeyRecord12remove_state0E0B18_.exit.thread2.i.i, label %_RNCINvYINtNtNtNtCs6i54tJFfzR_5alloc11collections9vec_deque4iter4IterNtNtCs4tP8yUXWbFU_18libsignal_protocol11sender_keys14SenderKeyStateENtCsgNxaXBj14db_9itertools9Itertools13find_positionNCNvMs2_B16_NtB16_15SenderKeyRecord12remove_state0E0B18_.exit.i.i
 
 _RNCINvYINtNtNtNtCs6i54tJFfzR_5alloc11collections9vec_deque4iter4IterNtNtCs4tP8yUXWbFU_18libsignal_protocol11sender_keys14SenderKeyStateENtCsgNxaXBj14db_9itertools9Itertools13find_positionNCNvMs2_B16_NtB16_15SenderKeyRecord12remove_state0E0B18_.exit.thread2.i.i: ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !468
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !468
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i) ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !468
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !468
   br label %_RNCINvNvNtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4find5checkTjRNtNtCs4tP8yUXWbFU_18libsignal_protocol11sender_keys14SenderKeyStateENCINvYINtNtNtNtCs6i54tJFfzR_5alloc11collections9vec_deque4iter4IterB1f_ENtCsgNxaXBj14db_9itertools9Itertools13find_positionNCNvMs2_B1h_NtB1h_15SenderKeyRecord12remove_state0E0E0B1j_.exit.i
 
@@ -2054,7 +2057,6 @@ _RNCINvYINtNtNtNtCs6i54tJFfzR_5alloc11collections9vec_deque4iter4IterNtNtCs4tP8y
   store i8 1, ptr %i.c, align 1, !noalias !468
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !468
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !468
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i) ]
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.p, ptr noundef nonnull readonly align 1 dereferenceable(32) %.val1.i.i.i, i64 32, i1 false)
   store i8 1, ptr %i.a, align 1, !noalias !468

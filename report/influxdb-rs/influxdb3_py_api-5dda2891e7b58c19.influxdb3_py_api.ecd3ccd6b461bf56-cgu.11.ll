@@ -202,8 +202,9 @@ bb.d:                                             ; preds = %bb.c
 
 .thread70:                                        ; preds = %bb.c
   %i.r = extractvalue { ptr, ptr } %i.p, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.p, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   br label %bb.f
 
@@ -606,8 +607,9 @@ bb.j:                                             ; preds = %bb.i
 
 .thread39.i:                                      ; preds = %bb.i
   %i.ac = extractvalue { ptr, ptr } %i.aa, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = extractvalue { ptr, ptr } %i.aa, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac), "nonnull"(ptr %i.ad) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !59
   br label %bb.l
 

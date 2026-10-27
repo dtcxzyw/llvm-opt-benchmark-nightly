@@ -202,6 +202,7 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i: ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val18) ]
   store i64 1, ptr %i.au, align 8, !noalias !1382
   %.sroa.4.0..sroa_idx1.i = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx1.i, align 8, !noalias !1382
@@ -209,7 +210,6 @@ _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i: ; preds = %bb.i
   store i64 0, ptr %.sroa.5.0..sroa_idx2.i, align 8, !noalias !1382
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.615.sroa.4.0.copyload, i64 32
   %i.ax = load <2 x i64>, ptr %i.aw, align 8, !noalias !1382
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val18) ]
   %i.ay = atomicrmw add ptr %.val18, i64 1 monotonic, align 8, !noalias !1382
   %i.az = icmp slt i64 %i.ay, 0
   br i1 %i.az, label %bb.k, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service14ipc_threadsafe7ServiceyuyuE21create_active_requestCshJgtdScfPDc_26benchmark_request_response.exit
@@ -320,6 +320,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i22: ; preds = %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
   store i64 1, ptr %i.bp, align 8, !noalias !1397
   %.sroa.4.0..sroa_idx1.i23 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx1.i23, align 8, !noalias !1397
@@ -327,7 +328,6 @@ _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i22: ; preds = %bb.p
   store i64 0, ptr %.sroa.5.0..sroa_idx2.i24, align 8, !noalias !1397
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.615.sroa.4.0.copyload, i64 32
   %i.bs = load <2 x i64>, ptr %i.br, align 8, !noalias !1397
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
   %i.bt = atomicrmw add ptr %.val16, i64 1 monotonic, align 8, !noalias !1397
   %i.bu = icmp slt i64 %i.bt, 0
   br i1 %i.bu, label %bb.r, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service14ipc_threadsafe7ServiceyuyuE21create_active_requestCshJgtdScfPDc_26benchmark_request_response.exit29
@@ -523,6 +523,7 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i: ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val18) ]
   store i64 1, ptr %i.au, align 8, !noalias !1438
   %.sroa.4.0..sroa_idx1.i = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx1.i, align 8, !noalias !1438
@@ -530,7 +531,6 @@ _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i: ; preds = %bb.i
   store i64 0, ptr %.sroa.5.0..sroa_idx2.i, align 8, !noalias !1438
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.615.sroa.4.0.copyload, i64 32
   %i.ax = load <2 x i64>, ptr %i.aw, align 8, !noalias !1438
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val18) ]
   %i.ay = atomicrmw add ptr %.val18, i64 1 monotonic, align 8, !noalias !1438
   %i.az = icmp slt i64 %i.ay, 0
   br i1 %i.az, label %bb.k, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceyuyuE21create_active_requestCshJgtdScfPDc_26benchmark_request_response.exit
@@ -641,6 +641,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i22: ; preds = %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
   store i64 1, ptr %i.bp, align 8, !noalias !1453
   %.sroa.4.0..sroa_idx1.i23 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx1.i23, align 8, !noalias !1453
@@ -648,7 +649,6 @@ _RNvNtCsbqH9stoieM8_5alloc5boxed14box_new_uninit.exit.i22: ; preds = %bb.p
   store i64 0, ptr %.sroa.5.0..sroa_idx2.i24, align 8, !noalias !1453
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.615.sroa.4.0.copyload, i64 32
   %i.bs = load <2 x i64>, ptr %i.br, align 8, !noalias !1453
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16) ]
   %i.bt = atomicrmw add ptr %.val16, i64 1 monotonic, align 8, !noalias !1453
   %i.bu = icmp slt i64 %i.bt, 0
   br i1 %i.bu, label %bb.r, label %_RNvMs6_NtNtCsg6ZEkMtNi4J_8iceoryx24port6serverINtB5_6ServerNtNtNtB9_7service16local_threadsafe7ServiceyuyuE21create_active_requestCshJgtdScfPDc_26benchmark_request_response.exit29
@@ -1051,7 +1051,7 @@ _RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1360) %.sroa.23.3632..sroa_idx, ptr noundef nonnull align 8 dereferenceable(1360) %i.ai, i64 1360, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !1814
-  %i.fn = call noundef align 16 dereferenceable_or_null(6464) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 24, 7289) 6464, i64 noundef range(i64 8, 17) 16) #15, !noalias !1814 ; 48 uses
+  %i.fn = call noundef align 16 dereferenceable_or_null(6464) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 24, 7289) 6464, i64 noundef range(i64 8, 17) 16) #15, !noalias !1814 ; 49 uses
   %i.fo = icmp eq ptr %i.fn, null
   br i1 %i.fo, label %bb.r, label %_RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client17ClientSharedStateNtNtNtB1C_7service3ipc7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCshJgtdScfPDc_26benchmark_request_response.exit, !prof !20
 
@@ -1067,6 +1067,7 @@ bb.r:                                             ; preds = %._crit_edge152
   br i1 %exitcond155.not, label %._crit_edge152, label %.lr.ph151
 
 _RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client17ClientSharedStateNtNtNtB1C_7service3ipc7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCshJgtdScfPDc_26benchmark_request_response.exit: ; preds = %._crit_edge152
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fn) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fn, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1815
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fn, i64 16 ; 3 uses
@@ -1469,7 +1470,7 @@ _RNvMsG_NtCsbqH9stoieM8_5alloc3vecINtB5_3VecNtNtNtNtCsg6ZEkMtNi4J_8iceoryx24port
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.23.3856..sroa_idx, ptr noundef nonnull align 16 dereferenceable(32) %.sroa.05, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !1888
-  %i.fq = call noundef align 16 dereferenceable_or_null(6400) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 24, 7289) 6400, i64 noundef range(i64 8, 17) 16) #15, !noalias !1888 ; 49 uses
+  %i.fq = call noundef align 16 dereferenceable_or_null(6400) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef range(i64 24, 7289) 6400, i64 noundef range(i64 8, 17) 16) #15, !noalias !1888 ; 50 uses
   %i.fr = icmp eq ptr %i.fq, null
   br i1 %i.fr, label %bb.s, label %_RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client17ClientSharedStateNtNtNtB1C_7service5local7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCshJgtdScfPDc_26benchmark_request_response.exit, !prof !20
 
@@ -1485,6 +1486,7 @@ bb.s:                                             ; preds = %._crit_edge154
   br i1 %exitcond157.not, label %._crit_edge154, label %.lr.ph153
 
 _RNvXs2_NtNtCs7gufeB8TUC6_12iceoryx2_cal15arc_sync_policy15single_threadedINtB5_14SingleThreadedINtNtNtCsg6ZEkMtNi4J_8iceoryx24port6client17ClientSharedStateNtNtNtB1C_7service5local7ServiceEEINtB7_13ArcSyncPolicyB1v_E4lockCshJgtdScfPDc_26benchmark_request_response.exit: ; preds = %._crit_edge154
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fq) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fq, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1889
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fq, i64 16 ; 3 uses

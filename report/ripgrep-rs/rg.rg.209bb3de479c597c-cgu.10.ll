@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.3.0.i.i27.us = phi i64 [ %spec.select.i28.us, %bb.n ], [ %i.br, %bb.m ], !dbg !3456 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !3457, !noalias !3386
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.us) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !3457, !noalias !3386
   %.val.i.i.us = load ptr, ptr %.val26.us, align 8, !dbg !3458, !noalias !3389, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   %i.cd = getelementptr i8, ptr %.val.i.i.us, i64 48, !dbg !3459
   %.val.i.i.i.us = load ptr, ptr %i.cd, align 8, !dbg !3459, !noalias !3390, !nonnull !514, !noundef !514
@@ -608,8 +608,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.3.0.i.i27.us = phi i64 [ %spec.select.i28.us, %bb.n ], [ %i.br, %bb.m ], !dbg !6293 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !6294, !noalias !6223
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.us) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !6294, !noalias !6223
   %.val.i.i.us = load ptr, ptr %.val26.us, align 8, !dbg !6295, !noalias !6226, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   %i.cd = getelementptr i8, ptr %.val.i.i.us, i64 48, !dbg !6296
   %.val.i.i.i.us = load ptr, ptr %i.cd, align 8, !dbg !6296, !noalias !6227, !nonnull !514, !noundef !514
@@ -1012,8 +1012,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.3.0.i.i27.us = phi i64 [ %spec.select.i28.us, %bb.n ], [ %i.br, %bb.m ], !dbg !9068 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !9069, !noalias !8998
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.us) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !9069, !noalias !8998
   %.val.i.i.us = load ptr, ptr %.val26.us, align 8, !dbg !9070, !noalias !9001, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   %i.cd = getelementptr i8, ptr %.val.i.i.us, i64 48, !dbg !9071
   %.val.i.i.i.us = load ptr, ptr %i.cd, align 8, !dbg !9071, !noalias !9002, !nonnull !514, !noundef !514
@@ -1416,8 +1416,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.3.0.i.i27.us = phi i64 [ %spec.select.i28.us, %bb.n ], [ %i.br, %bb.m ], !dbg !11822 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !11823, !noalias !11752
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.us) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !11823, !noalias !11752
   %.val.i.i.us = load ptr, ptr %.val26.us, align 8, !dbg !11824, !noalias !11755, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   %i.cd = getelementptr i8, ptr %.val.i.i.us, i64 48, !dbg !11825
   %.val.i.i.i.us = load ptr, ptr %i.cd, align 8, !dbg !11825, !noalias !11756, !nonnull !514, !noundef !514
@@ -1820,8 +1820,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.3.0.i.i27.us = phi i64 [ %spec.select.i28.us, %bb.n ], [ %i.bs, %bb.m ], !dbg !14748 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !14749, !noalias !14674
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.us) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !14749, !noalias !14674
   %.val.i.i.us = load ptr, ptr %.val26.us, align 8, !dbg !14750, !noalias !14677, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   %i.ce = getelementptr i8, ptr %.val.i.i.us, i64 48, !dbg !14751
   %.val.i.i.i.us = load ptr, ptr %i.ce, align 8, !dbg !14751, !noalias !14678, !nonnull !514, !noundef !514
@@ -2224,8 +2224,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.sroa.3.0.i.i27.us = phi i64 [ %spec.select.i28.us, %bb.n ], [ %i.bs, %bb.m ], !dbg !17763 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !17764, !noalias !17689
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.us) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !17764, !noalias !17689
   %.val.i.i.us = load ptr, ptr %.val26.us, align 8, !dbg !17765, !noalias !17692, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   %i.ce = getelementptr i8, ptr %.val.i.i.us, i64 48, !dbg !17766
   %.val.i.i.i.us = load ptr, ptr %i.ce, align 8, !dbg !17766, !noalias !17693, !nonnull !514, !noundef !514
@@ -2628,7 +2628,7 @@ bb.a:
   %.val = load ptr, ptr %.0.val, align 8, !dbg !18949, !nonnull !514, !align !551, !noundef !514 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !18924), !dbg !18949
   %i.e = getelementptr i8, ptr %.val, i64 48, !dbg !18950
-  %.val.i = load ptr, ptr %i.e, align 8, !dbg !18950, !noalias !18925 ; 6 uses
+  %.val.i = load ptr, ptr %i.e, align 8, !dbg !18950, !noalias !18925, !nonnull !514, !noundef !514 ; 5 uses
   %i.f = getelementptr i8, ptr %.val, i64 56, !dbg !18950
   %.val1.i = load ptr, ptr %i.f, align 8, !dbg !18950, !noalias !18925 ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !18926), !dbg !18950
@@ -2648,7 +2648,6 @@ bb.a:
   store i8 0, ptr %.sroa.98.0..sroa_idx.i.i.i, align 8, !dbg !18954, !noalias !18928
   tail call void @llvm.experimental.noalias.scope.decl(metadata !18932), !dbg !18955
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !18928
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val.i, i64 32, !dbg !18956
   %i.h = load ptr, ptr %i.g, align 8, !dbg !18956, !noalias !18936, !nonnull !514, !noundef !514 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 138, !dbg !18957

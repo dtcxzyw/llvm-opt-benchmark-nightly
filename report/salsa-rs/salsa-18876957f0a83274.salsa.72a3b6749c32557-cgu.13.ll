@@ -202,10 +202,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @14) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -237,10 +237,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -272,10 +272,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @16) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -307,10 +307,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @10, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @17) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -342,10 +342,10 @@ bb.a:
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
   %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8
   %i.i = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @10, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @18) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -748,8 +748,9 @@ bb.b:                                             ; preds = %_RNvXs3_NtNtNtCs4NR
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.q = call { ptr, ptr } %.val4.i(ptr noundef nonnull %i.o), !noalias !257, !inline_history !256 ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.q, 0        ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.q, 1        ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = load ptr, ptr %i.s, align 8, !invariant.load !3 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i, label %bb.d, label %bb.c

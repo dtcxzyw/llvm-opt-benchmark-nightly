@@ -150,7 +150,6 @@ bb.b:                                             ; preds = %_ZN3jxl12_GLOBAL__N
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.bb ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.bc, i64 64) ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.bb ; 3 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bd, i64 64) ]
   %i.be = getelementptr inbounds [4 x i8], ptr %i.bc, i64 %i.ak
   %i.bf = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.ak
   %i.bg = getelementptr inbounds [4 x i8], ptr %i.bc, i64 %i.ar
@@ -189,7 +188,7 @@ bb.b:                                             ; preds = %_ZN3jxl12_GLOBAL__N
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.cb ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.cc, i64 64) ]
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.cb ; 3 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.cd, i64 64), "align"(ptr %i.bs, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.cd, i64 64), "align"(ptr %i.bd, i64 64), "align"(ptr %i.bs, i64 64) ]
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.br ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ce, i64 64) ]
   br label %.preheader61.i.i
@@ -592,22 +591,22 @@ begin_hunk_1_@_ZN3jxl17GetNoiseParameterERKNS_6Image3IfEEPNS_11NoiseParamsEf:bb.
   %i.oj = mul i64 %i.oi, %i.ke                    ; 3 uses
   %..v = select i1 %i.nv, i64 %i.nz, i64 %i.nx
   %. = getelementptr inbounds nuw i8, ptr %i.kf, i64 %..v ; 3 uses
-  %.220.v = select i1 %i.nv, i64 %i.nz, i64 %i.nx
-  %.220 = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.220.v ; 3 uses
-  %.221 = select i1 %i.nv, i64 %i.nz, i64 %i.nx   ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %., i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.220, i64 64) ]
-  %i.ok = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.221 ; 2 uses
+  %.207.v = select i1 %i.nv, i64 %i.nz, i64 %i.nx
+  %.207 = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.207.v ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %.207, i64 64) ]
+  %.208 = select i1 %i.nv, i64 %i.nz, i64 %i.nx   ; 2 uses
+  %i.ok = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.208 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ok, i64 64) ]
-  %i.ol = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.221 ; 2 uses
+  %i.ol = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.208 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ol, i64 64) ]
   %.sink219.v = select i1 %i.of, i64 %i.oj, i64 %i.oh
   %.sink219 = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.sink219.v ; 3 uses
-  %.sink217.v = select i1 %i.of, i64 %i.oj, i64 %i.oh
-  %.sink217 = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.sink217.v ; 3 uses
-  %.pre-phi84 = select i1 %i.of, i64 %i.oj, i64 %i.oh ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %.sink219, i64 64) ]
-  call void @llvm.assume(i1 true) [ "align"(ptr %.sink217, i64 64) ]
+  %.sink205.v = select i1 %i.of, i64 %i.oj, i64 %i.oh
+  %.sink205 = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.sink205.v ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %.sink205, i64 64) ]
+  %.pre-phi84 = select i1 %i.of, i64 %i.oj, i64 %i.oh ; 2 uses
   %i.om = getelementptr inbounds nuw i8, ptr %i.kf, i64 %.pre-phi84 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.om, i64 64) ]
   %i.on = getelementptr inbounds nuw i8, ptr %i.kg, i64 %.pre-phi84 ; 2 uses
@@ -853,11 +852,11 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %..i = add nsw i64 %..v.i, %i.ve                ; 6 uses
   %i.vh = getelementptr inbounds nuw [4 x i8], ptr %., i64 %..i
   %i.vi = load float, ptr %i.vh, align 4, !tbaa !11, !noalias !67
-  %i.vj = getelementptr inbounds nuw [4 x i8], ptr %.220, i64 %..i
+  %i.vj = getelementptr inbounds nuw [4 x i8], ptr %.207, i64 %..i
   %i.vk = load float, ptr %i.vj, align 4, !tbaa !11, !noalias !67
   %i.vl = getelementptr inbounds nuw [4 x i8], ptr %., i64 %i.ve
   %i.vm = load float, ptr %i.vl, align 4, !tbaa !11, !noalias !67
-  %i.vn = getelementptr inbounds nuw [4 x i8], ptr %.220, i64 %i.ve
+  %i.vn = getelementptr inbounds nuw [4 x i8], ptr %.207, i64 %i.ve
   %i.vo = load float, ptr %i.vn, align 4, !tbaa !11, !noalias !67
   %.sink258.i = add nuw nsw i64 %i.ve, 1          ; 6 uses
   %i.vp = getelementptr inbounds nuw [4 x i8], ptr %i.ob, i64 %i.ve
@@ -895,11 +894,11 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.wv = load float, ptr %i.wu, align 4, !tbaa !11, !noalias !67
   %i.ww = getelementptr inbounds nuw [4 x i8], ptr %.sink219, i64 %..i
   %i.wx = load float, ptr %i.ww, align 4, !tbaa !11, !noalias !67
-  %i.wy = getelementptr inbounds nuw [4 x i8], ptr %.sink217, i64 %..i
+  %i.wy = getelementptr inbounds nuw [4 x i8], ptr %.sink205, i64 %..i
   %i.wz = load float, ptr %i.wy, align 4, !tbaa !11, !noalias !67
   %i.xa = getelementptr inbounds nuw [4 x i8], ptr %.sink219, i64 %i.ve
   %i.xb = load float, ptr %i.xa, align 4, !tbaa !11, !noalias !67
-  %i.xc = getelementptr inbounds nuw [4 x i8], ptr %.sink217, i64 %i.ve
+  %i.xc = getelementptr inbounds nuw [4 x i8], ptr %.sink205, i64 %i.ve
   %i.xd = load float, ptr %i.xc, align 4, !tbaa !11, !noalias !67
   %i.xe = insertelement <4 x float> poison, float %i.wo, i64 0
   %i.xf = insertelement <4 x float> %i.xe, float %i.wt, i64 1
@@ -939,10 +938,11 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.yi = add nsw i64 %i.nt, %.222
   %i.yj = mul i64 %i.yi, %i.ke                    ; 4 uses
   %i.yk = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.yj ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.yk, i64 64) ]
   %i.yl = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.yj ; 2 uses
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.yk, i64 %..i.peel
-  %i.ym = getelementptr inbounds nuw [4 x i8], ptr %i.yl, i64 %..i.peel
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.yk, i64 64), "align"(ptr %i.yl, i64 64) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.yl, i64 64) ]
+  %i.ym = getelementptr inbounds nuw [4 x i8], ptr %i.yk, i64 %..i.peel
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.yl, i64 %..i.peel
   %i.yn = getelementptr inbounds nuw [4 x i8], ptr %i.od, i64 %i.kr
   %i.yo = load float, ptr %i.yn, align 4, !tbaa !11, !noalias !67
   %i.yp = getelementptr inbounds nuw [4 x i8], ptr %i.oe, i64 %i.kr
@@ -955,8 +955,8 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   call void @llvm.assume(i1 true) [ "align"(ptr %i.yu, i64 64) ]
   %i.yv = getelementptr inbounds nuw [4 x i8], ptr %i.yu, i64 %..i.peel
   %i.yw = load float, ptr %i.yv, align 8, !tbaa !11, !noalias !67
-  %i.yx = load <2 x float>, ptr %13, align 8, !tbaa !11, !noalias !67
-  %i.yy = load <2 x float>, ptr %i.ym, align 8, !tbaa !11, !noalias !67
+  %i.yx = load <2 x float>, ptr %i.ym, align 8, !tbaa !11, !noalias !67
+  %i.yy = load <2 x float>, ptr %13, align 8, !tbaa !11, !noalias !67
   %i.yz = shufflevector <2 x float> %i.yx, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.za = insertelement <4 x float> %i.yz, float %i.yo, i64 2
   %i.zb = insertelement <4 x float> %i.za, float %i.yt, i64 3
@@ -985,7 +985,9 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.zx = add nsw i64 %i.nt, %.sink181
   %i.zy = mul i64 %i.zx, %i.ke                    ; 4 uses
   %i.zz = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.zy ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.zz, i64 64) ]
   %i.aaa = getelementptr inbounds nuw i8, ptr %i.kg, i64 %i.zy ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.aaa, i64 64) ]
   %i.aab = getelementptr inbounds nuw [4 x i8], ptr %i.zz, i64 %..i.peel
   %i.aac = load float, ptr %i.aab, align 8, !tbaa !11, !noalias !67
   %i.aad = getelementptr inbounds nuw [4 x i8], ptr %i.aaa, i64 %..i.peel
@@ -993,7 +995,6 @@ _ZNSt3__16vectorIN3jxl10NoiseLevelENS_9allocatorIS2_EEE9push_backB8nn180100ERKS2
   %i.aaf = fadd float %i.aac, %i.aae
   %i.aag = fmul float %i.aaf, 5.000000e-01
   %i.aah = call float @llvm.fmuladd.f32(float %i.aag, float -2.500000e-01, float %i.zw)
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.zz, i64 64), "align"(ptr %i.aaa, i64 64) ]
   %i.aai = getelementptr inbounds nuw i8, ptr %i.kf, i64 %i.zy ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.aai, i64 64) ]
   %i.aaj = getelementptr inbounds nuw [4 x i8], ptr %i.aai, i64 %..i.peel

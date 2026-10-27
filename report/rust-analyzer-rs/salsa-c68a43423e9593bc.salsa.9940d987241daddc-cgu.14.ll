@@ -186,9 +186,9 @@ _RNCNvMs_NtCs3gqD4ldeioo_8indexmap5innerINtB6_4CoreNtNtCsd9Lm8bEdjjY_5salsa11zal
   ret void
 
 bb.c:                                             ; preds = %_RNCNvMs_NtCs3gqD4ldeioo_8indexmap5innerINtB6_4CoreNtNtCsd9Lm8bEdjjY_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.1) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43)
   %i.ae = load ptr, ptr %0, align 8, !alias.scope !43, !nonnull !5, !noundef !5 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.06.1) ]
   %i.af = ptrtoint ptr %i.ae to i64
   %i.ag = ptrtoint ptr %i.y to i64
   %i.ah = sub i64 %i.af, %i.ag
@@ -591,8 +591,9 @@ bb.b:                                             ; preds = %_RNvXs3_NtNtNtCshzW
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.q = call { ptr, ptr } %.val4.i(ptr noundef nonnull %i.o), !noalias !303, !inline_history !0 ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.q, 0        ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.q, 1        ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = load ptr, ptr %i.s, align 8, !invariant.load !5 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i, label %bb.d, label %bb.c
@@ -690,8 +691,9 @@ bb.b:                                             ; preds = %_RNvXs3_NtNtNtCshzW
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.q = call { ptr, ptr } %.val4.i(ptr noundef nonnull %i.o), !noalias !306, !inline_history !0 ; 2 uses
   %i.r = extractvalue { ptr, ptr } %i.q, 0        ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = extractvalue { ptr, ptr } %i.q, 1        ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r), "nonnull"(ptr %i.s) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.t = load ptr, ptr %i.s, align 8, !invariant.load !5 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i, label %bb.d, label %bb.c

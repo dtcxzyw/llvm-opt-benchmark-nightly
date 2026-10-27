@@ -145,9 +145,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.w, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCscScJTt9VrQp_6fea_rs5parse4tree9ParseTreeNtNtBI_10diagnostic13DiagnosticSetEECs4jhN2sci4pa_10parse_test.exit, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i: ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.x = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !34, !invariant.load !6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %i.v, i64 noundef range(i64 1, -9223372036854775807) %i.y) #22
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueTNtNtNtCscScJTt9VrQp_6fea_rs5parse4tree9ParseTreeNtNtBI_10diagnostic13DiagnosticSetEECs4jhN2sci4pa_10parse_test.exit
 
@@ -550,6 +550,7 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_
   br i1 %.not.i9, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.thread.i, label %bb.ce
 
 bb.ce:                                            ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCs5Xr050g3D4S_3std4path7PathBufbEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs4jhN2sci4pa_10parse_test.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7171.sroa.0.0.copyload.i) ]
   %.sroa.7171.sroa.5.0..sroa.7171.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ie, i64 16
   %.sroa.7171.sroa.5.0.copyload.i = load i64, ptr %.sroa.7171.sroa.5.0..sroa.7171.0..sroa_idx.sroa_idx.i, align 8, !noalias !356
   %.sroa.7173.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ie, i64 24
@@ -560,7 +561,6 @@ bb.ce:                                            ; preds = %_RNvXs4_NtNtCsgCecv
   store ptr %spec.select.i, ptr %i.k, align 8, !noalias !340
   store i64 5, ptr %i.ib, align 8, !noalias !340
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !340
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7171.sroa.0.0.copyload.i) ]
   store ptr %.sroa.7171.sroa.0.0.copyload.i, ptr %i.j, align 8, !noalias !340
   store i64 %.sroa.7171.sroa.5.0.copyload.i, ptr %i.ic, align 8, !noalias !340
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !340
@@ -893,8 +893,9 @@ bb.dh:                                            ; preds = %bb.dd
 
 .thread.i:                                        ; preds = %bb.df
   %i.kx = extractvalue { ptr, ptr } %i.kv, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kx) ]
   %i.ky = extractvalue { ptr, ptr } %i.kv, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kx), "nonnull"(ptr %i.ky) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ky) ]
   store ptr %i.kx, ptr %i.q, align 16, !noalias !340
   store ptr %i.ky, ptr %i.fy, align 8, !noalias !340
   store i64 -1, ptr %i.fz, align 8, !noalias !340
@@ -1297,8 +1298,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %3 = mul nuw i64 %2, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %3 = mul nuw i64 %2, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %3
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef align 8 ptr @_RNvCsh0WfaQiVYm0_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %3, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %i.b) #22

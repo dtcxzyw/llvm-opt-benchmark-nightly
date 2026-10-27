@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxDNtCsltEA4u8Pgfu_11candle_core6ModuleEL_ENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1dZk1kIfPhr_19candle_transformers.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !428, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #21
   br label %_RNvXs8_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxDNtCsltEA4u8Pgfu_11candle_core6ModuleEL_ENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1dZk1kIfPhr_19candle_transformers.exit
 
@@ -609,13 +609,13 @@ bb.a:
   %i.n = alloca [24 x i8], align 8                ; 15 uses
   %i.o = alloca [24 x i8], align 8                ; 15 uses
   %i.p = alloca [24 x i8], align 8                ; 13 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   store i64 0, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 4 uses
   store ptr inttoptr (i64 8 to ptr), ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 7 uses
   store i64 0, ptr %i.r, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   invoke void @_RNvMs_NtCsgCecv3eZDcN_5alloc3vecINtB4_3VecjE7reserveCs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p, i64 noundef range(i64 0, 2305843009213693952) %.16.val)
           to label %.noexc unwind label %bb.c
 
@@ -1018,8 +1018,8 @@ bb.a:
   %i.ac = alloca [40 x i8], align 8               ; 9 uses
   %i.ad = alloca [40 x i8], align 8               ; 4 uses
   %i.ae = alloca [32 x i8], align 8               ; 6 uses
-  %i.af = alloca [80 x i8], align 8               ; 7 uses
-  %.sroa.611 = alloca [48 x i8], align 8          ; 7 uses
+  %i.af = alloca [80 x i8], align 8               ; 8 uses
+  %.sroa.611 = alloca [48 x i8], align 8          ; 8 uses
   %i.ag = alloca [24 x i8], align 8               ; 9 uses
   %i.ah = alloca [56 x i8], align 8               ; 5 uses
   %i.ai = alloca [24 x i8], align 8               ; 18 uses
@@ -1151,11 +1151,11 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae)
   %i.bn = load i64, ptr %i.af, align 8, !range !7, !noundef !5 ; 2 uses
   %.not131 = icmp eq i64 %i.bn, -1
-  %3 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.611, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false)
   br i1 %.not131, label %bb.l, label %bb.ec
 
 bb.l:                                             ; preds = %bb.k
+  %3 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.611, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ab, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.611, i64 48, i1 false)
   call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #21, !noalias !17672
@@ -1558,6 +1558,9 @@ bb.eb:                                            ; preds = %bb.s
   br label %bb.dq
 
 bb.ec:                                            ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jb) ]
+  %.sroa.483.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.611, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.483.0..sroa_idx, i64 48, i1 false)
   %.sroa.584.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 56
   %.sroa.587.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.587.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.584.0..sroa_idx, i64 24, i1 false)
@@ -1567,7 +1570,6 @@ bb.ec:                                            ; preds = %bb.k
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bn, ptr %i.gi, align 8
   store i64 -1, ptr %0, align 8
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jb) ]
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.jb, i64 noundef 64, i64 noundef 8) #21
   br label %bb.ea
 
@@ -1970,9 +1972,9 @@ bb.hj:                                            ; preds = %.split.us.i
 
 bb.hk:                                            ; preds = %bb.hj
   %i.ws = extractvalue { ptr, ptr } %i.wq, 1      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ws) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !18998
   store ptr %i.wr, ptr %i.t, align 8, !noalias !18998
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ws) ]
   %i.wt = getelementptr inbounds nuw i8, ptr %i.ws, i64 16
   %i.wu = load i64, ptr %i.wt, align 8, !noalias !18996, !noundef !5 ; 3 uses
   %.not320.us.i = icmp eq i64 %i.wu, 0
@@ -2032,9 +2034,9 @@ bb.hp:                                            ; preds = %.split.i
 
 bb.hq:                                            ; preds = %bb.hp
   %i.xe = extractvalue { ptr, ptr } %i.xc, 1      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.xe) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !18998
   store ptr %i.xd, ptr %i.t, align 8, !noalias !18998
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.xe) ]
   %i.xf = getelementptr inbounds nuw i8, ptr %i.xe, i64 8
   %i.xg = load ptr, ptr %i.xf, align 8, !noalias !18996, !nonnull !5, !noundef !5 ; 3 uses
   %i.xh = getelementptr inbounds nuw i8, ptr %i.xe, i64 16

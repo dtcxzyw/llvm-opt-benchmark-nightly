@@ -202,9 +202,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.k, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECs2JiOgHzbbc7_10tokenizers.exit.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i, i64 16
   %i.m = load i64, ptr %i.l, align 8, !range !10, !invariant.load !6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, 0) %i.j, i64 noundef range(i64 1, 536870913) %i.m) #25
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECs2JiOgHzbbc7_10tokenizers.exit.i.i.i
 
@@ -607,10 +607,10 @@ bb.e:                                             ; preds = %bb.v, %bb.b
   br label %.body.i.i
 
 bb.f:                                             ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.u = load ptr, ptr %i.k, align 8, !noalias !259, !nonnull !6, !noundef !6 ; 5 uses
   %i.v = load i64, ptr %i.l, align 8, !noalias !259, !noundef !6 ; 10 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.v
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.x = load ptr, ptr %.val.i, align 8, !noalias !259, !nonnull !6, !align !8, !noundef !6 ; 4 uses
   %i.y = load i64, ptr %i.x, align 8, !noalias !259, !noundef !6 ; 3 uses
   %i.z = icmp eq i64 %i.y, 0
@@ -827,7 +827,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.val2 = load ptr, ptr %i.m, align 8, !nonnull !6, !align !8, !noundef !6
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 4 uses
   %.sroa.55.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 7 uses
@@ -869,23 +869,24 @@ bb.b:                                             ; preds = %.lr.ph, %bb.at
 bb.c:                                             ; preds = %bb.b
   %i.y = load i64, ptr %i.d, align 8, !range !14, !noalias !285, !noundef !6
   %i.z = trunc nuw i64 %i.y to i1
-  %5 = load i64, ptr %i.o, align 8, !range !15, !noalias !285, !noundef !6 ; 2 uses
-  br i1 %i.z, label %bb.d, label %bb.e, !prof !16
+  br i1 %i.z, label %bb.d, label %bb.e, !prof !15
 
 bb.d:                                             ; preds = %bb.c
+  %5 = load i64, ptr %i.o, align 8, !range !16, !noalias !285, !noundef !6
   %i.aa = load i64, ptr %i.p, align 8, !noalias !285
   invoke void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %5, i64 %i.aa) #26
           to label %bb.ab unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !285
 
 bb.e:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
+  %6 = load i64, ptr %i.o, align 8, !range !9, !noalias !285, !noundef !6
   %i.ab = load ptr, ptr %i.p, align 8, !noalias !285, !nonnull !6, !noundef !6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !285
-  store i64 %5, ptr %i.g, align 8, !noalias !285
+  store i64 %6, ptr %i.g, align 8, !noalias !285
   store ptr %i.ab, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !285
   store i64 0, ptr %.sroa.55.0..sroa_idx.i.i, align 8, !noalias !285
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !285
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !285
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.ac = load ptr, ptr %.val.i, align 8, !noalias !285, !nonnull !6, !align !8, !noundef !6
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 56
   store ptr %i.ad, ptr %i.e, align 8, !noalias !285
@@ -1288,8 +1289,8 @@ bb.d:                                             ; preds = %bb.b
 .noexc3.i.i.i:                                    ; preds = %bb.d
   %i.al = load i64, ptr %i.a, align 8, !range !14, !noalias !338, !noundef !6
   %i.am = trunc nuw i64 %i.al to i1
-  %i.an = load i64, ptr %i.u, align 8, !range !15, !noalias !338, !noundef !6 ; 3 uses
-  br i1 %i.am, label %bb.e, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i.i, !prof !16
+  %i.an = load i64, ptr %i.u, align 8, !range !16, !noalias !338, !noundef !6 ; 3 uses
+  br i1 %i.am, label %bb.e, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i.i, !prof !15
 
 bb.e:                                             ; preds = %.noexc3.i.i.i
   %i.ao = load i64, ptr %i.v, align 8, !noalias !338
@@ -1692,8 +1693,8 @@ bb.x:                                             ; preds = %bb.s
 .noexc.i.i:                                       ; preds = %bb.x
   %i.dg = load i64, ptr %i.c, align 8, !range !14, !noalias !474, !noundef !6
   %i.dh = trunc nuw i64 %i.dg to i1
-  %i.di = load i64, ptr %i.bk, align 8, !range !15, !noalias !474, !noundef !6 ; 2 uses
-  br i1 %i.dh, label %bb.y, label %bb.ac, !prof !16
+  %i.di = load i64, ptr %i.bk, align 8, !range !16, !noalias !474, !noundef !6 ; 2 uses
+  br i1 %i.dh, label %bb.y, label %bb.ac, !prof !15
 
 bb.y:                                             ; preds = %.noexc.i.i
   %i.dj = load i64, ptr %i.bl, align 8, !noalias !474
@@ -1811,8 +1812,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2Ji
 .noexc14.i.i:                                     ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2JiOgHzbbc7_10tokenizers.exit.i.i
   %i.du = load i64, ptr %i.a, align 8, !range !14, !noalias !475, !noundef !6
   %i.dv = trunc nuw i64 %i.du to i1
-  %i.dw = load i64, ptr %i.bu, align 8, !range !15, !noalias !475, !noundef !6 ; 3 uses
-  br i1 %i.dv, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !16
+  %i.dw = load i64, ptr %i.bu, align 8, !range !16, !noalias !475, !noundef !6 ; 3 uses
+  br i1 %i.dv, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !15
 
 bb.al:                                            ; preds = %.noexc14.i.i
   %i.dx = load i64, ptr %i.bv, align 8, !noalias !475
@@ -1853,7 +1854,7 @@ bb.ao:                                            ; preds = %_RNvMs4_NtCscdodAO9
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !471
   %i.ec = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 24, i64 noundef 8) #25, !noalias !471 ; 5 uses
   %i.ed = icmp eq ptr %i.ec, null
-  br i1 %i.ed, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !16
+  br i1 %i.ed, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !15
 
 bb.ap:                                            ; preds = %bb.ao
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #26
@@ -2256,8 +2257,8 @@ bb.x:                                             ; preds = %bb.s
 .noexc.i.i:                                       ; preds = %bb.x
   %i.cq = load i64, ptr %i.c, align 8, !range !14, !noalias !491, !noundef !6
   %i.cr = trunc nuw i64 %i.cq to i1
-  %i.cs = load i64, ptr %i.az, align 8, !range !15, !noalias !491, !noundef !6 ; 2 uses
-  br i1 %i.cr, label %bb.y, label %bb.ac, !prof !16
+  %i.cs = load i64, ptr %i.az, align 8, !range !16, !noalias !491, !noundef !6 ; 2 uses
+  br i1 %i.cr, label %bb.y, label %bb.ac, !prof !15
 
 bb.y:                                             ; preds = %.noexc.i.i
   %i.ct = load i64, ptr %i.ba, align 8, !noalias !491
@@ -2373,8 +2374,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2Ji
 .noexc14.i.i:                                     ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2JiOgHzbbc7_10tokenizers.exit.i.i
   %i.de = load i64, ptr %i.a, align 8, !range !14, !noalias !492, !noundef !6
   %i.df = trunc nuw i64 %i.de to i1
-  %i.dg = load i64, ptr %i.bh, align 8, !range !15, !noalias !492, !noundef !6 ; 3 uses
-  br i1 %i.df, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !16
+  %i.dg = load i64, ptr %i.bh, align 8, !range !16, !noalias !492, !noundef !6 ; 3 uses
+  br i1 %i.df, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !15
 
 bb.al:                                            ; preds = %.noexc14.i.i
   %i.dh = load i64, ptr %i.bi, align 8, !noalias !492
@@ -2415,7 +2416,7 @@ bb.ao:                                            ; preds = %_RNvMs4_NtCscdodAO9
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !488
   %i.dm = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 24, i64 noundef 8) #25, !noalias !488 ; 5 uses
   %i.dn = icmp eq ptr %i.dm, null
-  br i1 %i.dn, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !16
+  br i1 %i.dn, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !15
 
 bb.ap:                                            ; preds = %bb.ao
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #26
@@ -2711,8 +2712,8 @@ bb.d:                                             ; preds = %bb.b
 .noexc.i.i:                                       ; preds = %bb.d
   %i.ci = load i64, ptr %i.d, align 8, !range !14, !noalias !510, !noundef !6
   %i.cj = trunc nuw i64 %i.ci to i1
-  %i.ck = load i64, ptr %i.ai, align 8, !range !15, !noalias !510, !noundef !6 ; 2 uses
-  br i1 %i.cj, label %bb.e, label %bb.i, !prof !16
+  %i.ck = load i64, ptr %i.ai, align 8, !range !16, !noalias !510, !noundef !6 ; 2 uses
+  br i1 %i.cj, label %bb.e, label %bb.i, !prof !15
 
 bb.e:                                             ; preds = %.noexc.i.i
   %i.cl = load i64, ptr %i.aj, align 8, !noalias !510
@@ -2890,8 +2891,8 @@ bb.x:                                             ; preds = %bb.s
 .noexc13.i.i:                                     ; preds = %bb.x
   %i.dg = load i64, ptr %i.c, align 8, !range !14, !noalias !512, !noundef !6
   %i.dh = trunc nuw i64 %i.dg to i1
-  %i.di = load i64, ptr %i.bh, align 8, !range !15, !noalias !512, !noundef !6 ; 2 uses
-  br i1 %i.dh, label %bb.y, label %bb.ac, !prof !16
+  %i.di = load i64, ptr %i.bh, align 8, !range !16, !noalias !512, !noundef !6 ; 2 uses
+  br i1 %i.dh, label %bb.y, label %bb.ac, !prof !15
 
 bb.y:                                             ; preds = %.noexc13.i.i
   %i.dj = load i64, ptr %i.bi, align 8, !noalias !512
@@ -3009,8 +3010,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2Ji
 .noexc17.i.i:                                     ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2JiOgHzbbc7_10tokenizers.exit.i.i
   %i.du = load i64, ptr %i.a, align 8, !range !14, !noalias !513, !noundef !6
   %i.dv = trunc nuw i64 %i.du to i1
-  %i.dw = load i64, ptr %i.br, align 8, !range !15, !noalias !513, !noundef !6 ; 3 uses
-  br i1 %i.dv, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !16
+  %i.dw = load i64, ptr %i.br, align 8, !range !16, !noalias !513, !noundef !6 ; 3 uses
+  br i1 %i.dv, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !15
 
 bb.al:                                            ; preds = %.noexc17.i.i
   %i.dx = load i64, ptr %i.bs, align 8, !noalias !513
@@ -3051,7 +3052,7 @@ bb.ao:                                            ; preds = %_RNvMs4_NtCscdodAO9
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !507
   %i.ec = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 24, i64 noundef 8) #25, !noalias !507 ; 5 uses
   %i.ed = icmp eq ptr %i.ec, null
-  br i1 %i.ed, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !16
+  br i1 %i.ed, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !15
 
 bb.ap:                                            ; preds = %bb.ao
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #26
@@ -3346,8 +3347,8 @@ bb.d:                                             ; preds = %bb.b
 .noexc.i.i:                                       ; preds = %bb.d
   %i.ch = load i64, ptr %i.d, align 8, !range !14, !noalias !531, !noundef !6
   %i.ci = trunc nuw i64 %i.ch to i1
-  %i.cj = load i64, ptr %i.ai, align 8, !range !15, !noalias !531, !noundef !6 ; 2 uses
-  br i1 %i.ci, label %bb.e, label %bb.i, !prof !16
+  %i.cj = load i64, ptr %i.ai, align 8, !range !16, !noalias !531, !noundef !6 ; 2 uses
+  br i1 %i.ci, label %bb.e, label %bb.i, !prof !15
 
 bb.e:                                             ; preds = %.noexc.i.i
   %i.ck = load i64, ptr %i.aj, align 8, !noalias !531
@@ -3525,8 +3526,8 @@ bb.x:                                             ; preds = %bb.s
 .noexc13.i.i:                                     ; preds = %bb.x
   %i.df = load i64, ptr %i.c, align 8, !range !14, !noalias !533, !noundef !6
   %i.dg = trunc nuw i64 %i.df to i1
-  %i.dh = load i64, ptr %i.bi, align 8, !range !15, !noalias !533, !noundef !6 ; 2 uses
-  br i1 %i.dg, label %bb.y, label %bb.ac, !prof !16
+  %i.dh = load i64, ptr %i.bi, align 8, !range !16, !noalias !533, !noundef !6 ; 2 uses
+  br i1 %i.dg, label %bb.y, label %bb.ac, !prof !15
 
 bb.y:                                             ; preds = %.noexc13.i.i
   %i.di = load i64, ptr %i.bj, align 8, !noalias !533
@@ -3644,8 +3645,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2Ji
 .noexc17.i.i:                                     ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecmEECs2JiOgHzbbc7_10tokenizers.exit.i.i
   %i.dt = load i64, ptr %i.a, align 8, !range !14, !noalias !534, !noundef !6
   %i.du = trunc nuw i64 %i.dt to i1
-  %i.dv = load i64, ptr %i.bs, align 8, !range !15, !noalias !534, !noundef !6 ; 3 uses
-  br i1 %i.du, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !16
+  %i.dv = load i64, ptr %i.bs, align 8, !range !16, !noalias !534, !noundef !6 ; 3 uses
+  br i1 %i.du, label %bb.al, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOgHzbbc7_10tokenizers.exit.i.i.i, !prof !15
 
 bb.al:                                            ; preds = %.noexc17.i.i
   %i.dw = load i64, ptr %i.bt, align 8, !noalias !534
@@ -3686,7 +3687,7 @@ bb.ao:                                            ; preds = %_RNvMs4_NtCscdodAO9
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !528
   %i.eb = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 24, i64 noundef 8) #25, !noalias !528 ; 5 uses
   %i.ec = icmp eq ptr %i.eb, null
-  br i1 %i.ec, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !16
+  br i1 %i.ec, label %bb.ap, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !15
 
 bb.ap:                                            ; preds = %bb.ao
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #26
@@ -4042,7 +4043,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !571
   %i.x = load i64, ptr %i.f, align 8, !range !5, !noalias !571, !noundef !6
   %.not.i.i = icmp eq i64 %i.x, -1
-  br i1 %.not.i.i, label %bb.d, label %bb.c, !prof !16
+  br i1 %.not.i.i, label %bb.d, label %bb.c, !prof !15
 
 bb.c:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.g, ptr noundef nonnull align 8 dereferenceable(80) %i.f, i64 80, i1 false), !noalias !571
@@ -4072,8 +4073,8 @@ bb.f:                                             ; preds = %bb.c
 bb.g:                                             ; preds = %bb.e
   %i.ab = load i64, ptr %i.b, align 8, !range !14, !noalias !571, !noundef !6
   %i.ac = trunc nuw i64 %i.ab to i1
-  %i.ad = load i64, ptr %i.p, align 8, !range !15, !noalias !571, !noundef !6 ; 3 uses
-  br i1 %i.ac, label %bb.h, label %bb.i, !prof !16
+  %i.ad = load i64, ptr %i.p, align 8, !range !16, !noalias !571, !noundef !6 ; 3 uses
+  br i1 %i.ac, label %bb.h, label %bb.i, !prof !15
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = load i64, ptr %i.q, align 8, !noalias !571
@@ -4097,7 +4098,7 @@ bb.j:                                             ; preds = %bb.l, %bb.i
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !571
   %i.ah = call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 48, i64 noundef 8) #25, !noalias !571 ; 6 uses
   %i.ai = icmp eq ptr %i.ah, null
-  br i1 %i.ai, label %bb.k, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !16
+  br i1 %i.ai, label %bb.k, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit.i.i, !prof !15
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 48) #26
@@ -4330,7 +4331,7 @@ bb.d:                                             ; preds = %bb.f, %.noexc.i.i.i
   %i.ay = icmp eq <16 x i8> %.sroa.0.0.copyload.i26.i.i.i.i.i, splat (i8 -1)
   %i.az = bitcast <16 x i1> %i.ay to i16
   %i.ba = icmp eq i16 %i.az, 0
-  br i1 %i.ba, label %bb.f, label %select.unfold.i.i.i, !prof !16
+  br i1 %i.ba, label %bb.f, label %select.unfold.i.i.i, !prof !15
 
 bb.e:                                             ; preds = %.noexc104.i.i.i
   %i.bb = add i16 %.sroa.06.0.i33.i.i.i.i.i, -1
@@ -4404,7 +4405,7 @@ bb.h:                                             ; preds = %bb.j, %.noexc118.i.
   %i.ca = icmp eq <16 x i8> %.sroa.0.0.copyload.i26.i.i108.i.i.i, splat (i8 -1)
   %i.cb = bitcast <16 x i1> %i.ca to i16
   %i.cc = icmp eq i16 %i.cb, 0
-  br i1 %i.cc, label %bb.j, label %select.unfold163.i.i.i, !prof !16
+  br i1 %i.cc, label %bb.j, label %select.unfold163.i.i.i, !prof !15
 
 bb.i:                                             ; preds = %.noexc119.i.i.i
   %i.cd = add i16 %.sroa.06.0.i33.i.i111.i.i.i, -1
@@ -4435,7 +4436,7 @@ bb.k:                                             ; preds = %select.unfold.i.i.i
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !650
   %i.ch = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 32, i64 noundef 8) #25, !noalias !650 ; 3 uses
   %i.ci = icmp eq ptr %i.ch, null
-  br i1 %i.ci, label %bb.l, label %bb.o, !prof !16
+  br i1 %i.ci, label %bb.l, label %bb.o, !prof !15
 
 bb.l:                                             ; preds = %bb.k
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 32) #26
@@ -4511,7 +4512,7 @@ bb.s:                                             ; preds = %select.unfold163.i.
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !651
   %i.ct = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 32, i64 noundef 8) #25, !noalias !651 ; 3 uses
   %i.cu = icmp eq ptr %i.ct, null
-  br i1 %i.cu, label %bb.t, label %bb.w, !prof !16
+  br i1 %i.cu, label %bb.t, label %bb.w, !prof !15
 
 bb.t:                                             ; preds = %bb.s
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 32) #26
@@ -4564,7 +4565,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.dl = icmp ugt i64 %i.dd, %i.da
-  br i1 %i.dl, label %.invoke.i.i.i, label %bb.aa, !prof !16
+  br i1 %i.dl, label %.invoke.i.i.i, label %bb.aa, !prof !15
 
 bb.aa:                                            ; preds = %bb.z
   %i.dm = load ptr, ptr %i.v, align 8, !noalias !636, !nonnull !6, !noundef !6
@@ -4640,7 +4641,7 @@ bb.ae:                                            ; preds = %bb.ag, %.noexc139.i
   %i.ep = icmp eq <16 x i8> %.sroa.0.0.copyload.i26.i.i130.i.i.i, splat (i8 -1)
   %i.eq = bitcast <16 x i1> %i.ep to i16
   %i.er = icmp eq i16 %i.eq, 0
-  br i1 %i.er, label %bb.ag, label %select.unfold166.i.i.i, !prof !16
+  br i1 %i.er, label %bb.ag, label %select.unfold166.i.i.i, !prof !15
 
 bb.af:                                            ; preds = %.noexc140.i.i.i
   %i.es = add i16 %.sroa.06.0.i33.i.i133.i.i.i, -1
@@ -4686,9 +4687,9 @@ select.unfold166.i.i.i:                           ; preds = %bb.ac, %._crit_edge
   %i.fc = load i64, ptr %i.b, align 8, !range !14, !noalias !657, !noundef !6
   %i.fd = trunc nuw i64 %i.fc to i1
   %i.fe = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.ff = load i64, ptr %i.fe, align 8, !range !15, !noalias !657, !noundef !6 ; 3 uses
+  %i.ff = load i64, ptr %i.fe, align 8, !range !16, !noalias !657, !noundef !6 ; 3 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  br i1 %i.fd, label %bb.aj, label %bb.ak, !prof !16
+  br i1 %i.fd, label %bb.aj, label %bb.ak, !prof !15
 
 bb.aj:                                            ; preds = %.noexc148.i.i.i
   %i.fh = load i64, ptr %i.fg, align 8, !noalias !657
@@ -4723,7 +4724,7 @@ _RNCNCNvMs1_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5modelNtB9_10BpeBuilder5b
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !658
   %i.fl = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef range(i64 24, 49) 32, i64 noundef 8) #25, !noalias !658 ; 3 uses
   %i.fm = icmp eq ptr %i.fl, null
-  br i1 %i.fm, label %bb.am, label %bb.ap, !prof !16
+  br i1 %i.fm, label %bb.am, label %bb.ap, !prof !15
 
 bb.am:                                            ; preds = %_RNCNCNvMs1_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5modelNtB9_10BpeBuilder5builds_0s0_0Bf_.exit.i.i.i
   invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 32) #26
@@ -5126,8 +5127,8 @@ _RNvNtNtCs4NRVxsYgnAr_4core4char7methods15encode_utf8_raw.exit.i.i: ; preds = %b
 .noexc:                                           ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core4char7methods15encode_utf8_raw.exit.i.i
   %i.ar = load i64, ptr %i.e, align 8, !range !14, !noundef !6
   %i.as = trunc nuw i64 %i.ar to i1
-  %i.at = load i64, ptr %i.n, align 8, !range !15, !noundef !6 ; 3 uses
-  br i1 %i.as, label %bb.i, label %_RNvMs0_NtCshgwszQZps6S_11compact_str4reprNtB5_4Repr3new.exit.i.i.i, !prof !16
+  %i.at = load i64, ptr %i.n, align 8, !range !16, !noundef !6 ; 3 uses
+  br i1 %i.as, label %bb.i, label %_RNvMs0_NtCshgwszQZps6S_11compact_str4reprNtB5_4Repr3new.exit.i.i.i, !prof !15
 
 bb.i:                                             ; preds = %.noexc
   %i.au = load i64, ptr %i.o, align 8
@@ -5182,7 +5183,7 @@ bb.j:                                             ; preds = %_RINvMCshgwszQZps6S
           cleanup                                 ; 2 uses
   %i.bc = load i8, ptr %i.p, align 1, !range !744, !alias.scope !745, !noundef !6
   %i.bd = icmp eq i8 %i.bc, -40
-  br i1 %i.bd, label %bb.k, label %.body.i.i, !prof !16
+  br i1 %i.bd, label %bb.k, label %.body.i.i, !prof !15
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_RNvNvXs2_NtCshgwszQZps6S_11compact_str4reprNtB7_4ReprNtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h)
@@ -5194,14 +5195,14 @@ bb.l:                                             ; preds = %_RINvMCshgwszQZps6S
   br i1 %i.ba, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  br i1 %i.bf, label %bb.n, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCshgwszQZps6S_11compact_str13CompactStringECs2JiOgHzbbc7_10tokenizers.exit6.i.i, !prof !16
+  br i1 %i.bf, label %bb.n, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCshgwszQZps6S_11compact_str13CompactStringECs2JiOgHzbbc7_10tokenizers.exit6.i.i, !prof !15
 
 bb.n:                                             ; preds = %bb.m
   invoke void @_RNvNvXs2_NtCshgwszQZps6S_11compact_str4reprNtB7_4ReprNtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCshgwszQZps6S_11compact_str13CompactStringECs2JiOgHzbbc7_10tokenizers.exit6.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.o:                                             ; preds = %bb.l
-  br i1 %i.bf, label %bb.p, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCshgwszQZps6S_11compact_str13CompactStringECs2JiOgHzbbc7_10tokenizers.exit8.i.i, !prof !16
+  br i1 %i.bf, label %bb.p, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCshgwszQZps6S_11compact_str13CompactStringECs2JiOgHzbbc7_10tokenizers.exit8.i.i, !prof !15
 
 bb.p:                                             ; preds = %bb.o
   invoke void @_RNvNvXs2_NtCshgwszQZps6S_11compact_str4reprNtB7_4ReprNtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h)
@@ -5283,7 +5284,7 @@ bb.v:                                             ; preds = %bb.u
           cleanup                                 ; 2 uses
   %.mask.i.i = and i64 %.sroa.56.032.i.i, -72057594037927936
   %i.bs = icmp eq i64 %.mask.i.i, -2882303761517117440
-  br i1 %i.bs, label %bb.w, label %.body.i.i, !prof !16
+  br i1 %i.bs, label %bb.w, label %.body.i.i, !prof !15
 
 bb.w:                                             ; preds = %bb.v
   invoke void @_RNvNvXs2_NtCshgwszQZps6S_11compact_str4reprNtB7_4ReprNtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4drop13outlined_drop(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g)
@@ -5686,8 +5687,8 @@ bb.g:                                             ; preds = %bb.f
 .noexc:                                           ; preds = %bb.g
   %i.cj = load i64, ptr %i.c, align 8, !range !14, !noalias !1236, !noundef !6
   %i.ck = trunc nuw i64 %i.cj to i1
-  %i.cl = load i64, ptr %i.ah, align 8, !range !15, !noalias !1236, !noundef !6 ; 3 uses
-  br i1 %i.ck, label %bb.i, label %bb.j, !prof !16
+  %i.cl = load i64, ptr %i.ah, align 8, !range !16, !noalias !1236, !noundef !6 ; 3 uses
+  br i1 %i.ck, label %bb.i, label %bb.j, !prof !15
 
 bb.h:                                             ; preds = %bb.f
   %i.cm = icmp sgt i64 %i.by, 0
@@ -5735,8 +5736,8 @@ bb.l:                                             ; preds = %bb.h
 .noexc6:                                          ; preds = %bb.l
   %i.cq = load i64, ptr %i.b, align 8, !range !14, !noalias !1236, !noundef !6
   %i.cr = trunc nuw i64 %i.cq to i1
-  %i.cs = load i64, ptr %i.af, align 8, !range !15, !noalias !1236, !noundef !6 ; 3 uses
-  br i1 %i.cr, label %bb.m, label %bb.n, !prof !16
+  %i.cs = load i64, ptr %i.af, align 8, !range !16, !noalias !1236, !noundef !6 ; 3 uses
+  br i1 %i.cr, label %bb.m, label %bb.n, !prof !15
 
 .split.i.i:                                       ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !1236
@@ -6139,8 +6140,8 @@ attributes #26 = { noreturn }
 !12 = !{i32 0, i32 1114112}
 !13 = !{!"branch_weights", i32 4001, i32 4000000}
 !14 = !{i64 0, i64 2}
-!15 = !{i64 0, i64 -9223372036854775807}
-!16 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!15 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!16 = !{i64 0, i64 -9223372036854775807}
 !17 = !{i8 0, i8 2}
 !18 = !{!1}
 !19 = distinct !{!19, i1 true, !"_RNvXs_NtNtCscdodAO9FK5_5alloc3vec13in_place_dropINtB4_11InPlaceDropNtNtB8_6string6StringENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers"}

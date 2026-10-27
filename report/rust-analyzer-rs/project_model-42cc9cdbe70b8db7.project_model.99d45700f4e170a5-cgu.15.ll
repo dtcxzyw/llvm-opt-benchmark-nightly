@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.j, %bb.f
   %.sroa.8.0.i = phi i64 [ %.sroa.8.8.copyload.i, %bb.f ], [ undef, %bb.j ]
-  %.sroa.5.0.i = phi ptr [ %.sroa.5.8.copyload.i, %bb.f ], [ %i.t, %bb.j ] ; 3 uses
+  %.sroa.5.0.i = phi ptr [ %.sroa.5.8.copyload.i, %bb.f ], [ %i.t, %bb.j ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !458
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCsdcPuHeDsw6v_13project_model(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsdcPuHeDsw6v_13project_model.exit.i.i unwind label %bb.h, !noalias !459
@@ -248,6 +248,7 @@ _RNCINvNtNtCsdcPuHeDsw6v_13project_model12project_json4cfg_11deserializeQINtNtCs
   br i1 %.not.i.not.i, label %bb.t, label %bb.m
 
 bb.m:                                             ; preds = %_RNCINvNtNtCsdcPuHeDsw6v_13project_model12project_json4cfg_11deserializeQINtNtCs8yjYO7b73r2_10serde_json2de12DeserializerNtNtB1d_4read7StrReadEE0B8_.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.5.0.i) ]
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.y, align 8, !nonnull !4, !noundef !4 ; 4 uses
   %i.z = load ptr, ptr %.val.le, align 8, !alias.scope !462, !noalias !461, !align !12, !noundef !4

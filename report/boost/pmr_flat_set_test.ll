@@ -164,7 +164,7 @@ bb.a:
   %3 = alloca %"class.boost::container::vec_iterator", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !22, !noalias !51 ; 8 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !22, !noalias !51 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !24, !noalias !52 ; 7 uses
   %.idx.i = shl nsw i64 %i.e, 2
@@ -222,7 +222,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.y = load i32, ptr %2, align 4, !tbaa !14, !noalias !58
   store i32 %i.y, ptr %i.p, align 4, !tbaa !14, !noalias !58
   %i.z = add i64 %i.e, 1
@@ -235,7 +234,6 @@ bb.f:                                             ; preds = %bb.d
   %i.ac = sub i64 %i.ab, %i.aa
   %i.ad = ashr exact i64 %i.ac, 2                 ; 2 uses
   %i.ae = getelementptr inbounds i8, ptr %i.x, i64 -4 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !14, !noalias !58
   store i32 %i.af, ptr %i.x, align 4, !tbaa !14, !noalias !58
   %i.ag = add i64 %i.e, 1

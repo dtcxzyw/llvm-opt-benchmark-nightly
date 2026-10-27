@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %bb.a
     #dbg_declare(ptr poison, !11994, !DIExpression(), !11808)
     #dbg_declare(ptr poison, !11997, !DIExpression(), !11810)
     #dbg_value(ptr poison, !11995, !DIExpression(), !11811)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !12068, !noalias !12012
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload7.i) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !12068, !noalias !12012
     #dbg_value(ptr %.sroa.0.0.copyload7.i, !11998, !DIExpression(), !11814)
     #dbg_value(i64 %.sroa.6.0.copyload11.i, !11999, !DIExpression(), !11814)
     #dbg_value(ptr %.sroa.0.0.copyload7.i, !12000, !DIExpression(), !11815)
@@ -260,6 +260,7 @@ bb.a:
     #dbg_value(ptr %1, !12128, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12133)
     #dbg_value(ptr %2, !12128, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12133)
     #dbg_declare(ptr %i.a, !12129, !DIExpression(), !12134)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !12174
   store i64 0, ptr %i.a, align 8, !dbg !12175
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !12175
@@ -279,7 +280,6 @@ bb.a:
     #dbg_value(i64 1, !3993, !DIExpression(), !12109)
     #dbg_value(ptr %2, !3991, !DIExpression(), !12110)
     #dbg_value(ptr %2, !4007, !DIExpression(), !12111)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !4008, !DIExpression(), !12111)
     #dbg_value(ptr %2, !4001, !DIExpression(), !12112)
     #dbg_value(ptr %1, !4002, !DIExpression(), !12112)
@@ -682,10 +682,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.l = extractvalue { ptr, i64 } %i.k, 0, !dbg !18873 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !18874
   %3 = extractvalue { ptr, i64 } %i.k, 1, !dbg !18873 ; 2 uses
     #dbg_value(ptr %i.l, !18854, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18858)
     #dbg_value(i64 %3, !18854, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18858)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !18874
   store ptr %i.l, ptr %i.j, align 8, !dbg !18875
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !18875
   store i64 %3, ptr %i.m, align 8, !dbg !18875
@@ -789,10 +789,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = extractvalue { ptr, i64 } %i.j, 0, !dbg !18999 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ], !dbg !19000
   %2 = extractvalue { ptr, i64 } %i.j, 1, !dbg !18999 ; 2 uses
     #dbg_value(ptr %i.k, !18980, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18984)
     #dbg_value(i64 %2, !18980, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18984)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ], !dbg !19000
   store ptr %i.k, ptr %i.i, align 8, !dbg !19001
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8, !dbg !19001
   store i64 %2, ptr %i.l, align 8, !dbg !19001
@@ -889,10 +889,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.l = extractvalue { ptr, i64 } %i.k, 0, !dbg !19125 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !19126
   %3 = extractvalue { ptr, i64 } %i.k, 1, !dbg !19125 ; 2 uses
     #dbg_value(ptr %i.l, !19106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19110)
     #dbg_value(i64 %3, !19106, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19110)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !19126
   store ptr %i.l, ptr %i.j, align 8, !dbg !19127
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !19127
   store i64 %3, ptr %i.m, align 8, !dbg !19127
@@ -997,10 +997,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.l = extractvalue { ptr, i64 } %i.k, 0, !dbg !19251 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !19252
   %3 = extractvalue { ptr, i64 } %i.k, 1, !dbg !19251 ; 2 uses
     #dbg_value(ptr %i.l, !19232, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19236)
     #dbg_value(i64 %3, !19232, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19236)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !19252
   store ptr %i.l, ptr %i.j, align 8, !dbg !19253
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !19253
   store i64 %3, ptr %i.m, align 8, !dbg !19253
@@ -1104,10 +1104,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.l = extractvalue { ptr, i64 } %i.k, 0, !dbg !19387 ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !19388
   %3 = extractvalue { ptr, i64 } %i.k, 1, !dbg !19387 ; 2 uses
     #dbg_value(ptr %i.l, !19367, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19371)
     #dbg_value(i64 %3, !19367, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19371)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.l) ], !dbg !19388
   store ptr %i.l, ptr %i.j, align 8, !dbg !19389
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !19389
   store i64 %3, ptr %i.m, align 8, !dbg !19389
@@ -1510,12 +1510,12 @@ bb.a:
     #dbg_value(i64 1, !23567, !DIExpression(), !23517)
     #dbg_value(ptr %2, !23565, !DIExpression(), !23518)
     #dbg_value(ptr %2, !23574, !DIExpression(), !23519)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
     #dbg_value(ptr %1, !23575, !DIExpression(), !23519)
     #dbg_value(ptr %2, !23571, !DIExpression(), !23520)
     #dbg_value(ptr %1, !23572, !DIExpression(), !23520)
     #dbg_value(ptr %1, !23569, !DIExpression(), !23521)
     #dbg_value(ptr %2, !23568, !DIExpression(), !23521)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2), "nonnull"(ptr %4) ]
   %i.a = ptrtoint ptr %2 to i64, !dbg !23589
   %i.b = ptrtoint ptr %1 to i64, !dbg !23589
   %i.c = sub nuw i64 %i.a, %i.b, !dbg !23589
@@ -1526,7 +1526,6 @@ bb.a:
     #dbg_value(i64 1, !23567, !DIExpression(), !23531)
     #dbg_value(ptr %4, !23565, !DIExpression(), !23532)
     #dbg_value(ptr %4, !23574, !DIExpression(), !23533)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
     #dbg_value(ptr %3, !23575, !DIExpression(), !23533)
     #dbg_value(ptr %4, !23571, !DIExpression(), !23534)
     #dbg_value(ptr %3, !23572, !DIExpression(), !23534)

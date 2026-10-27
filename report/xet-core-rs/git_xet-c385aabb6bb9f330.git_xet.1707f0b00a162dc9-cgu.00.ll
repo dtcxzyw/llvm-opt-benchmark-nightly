@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvXsh_NtCsiWcPrHiWZDL_10serde_json2deINtB6_6MapKeyNtNtB8_4read7StrReadENtNtCs6SYjS1KFWza_10serde_core2de12Deserializer15deserialize_anyNtNtNtNtCseHpJhTld930_5serde7private2de7content19TagOrContentVisitorECs1YANDSn9Kib_7git_xet.exit
 
 bb.c:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !150 ; 7 uses
   %i.m = trunc nuw i64 %i.h to i1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.k) ]
   %i.n = icmp eq i64 %.sroa.4.0.copyload.i, %2    ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.l
 
@@ -608,7 +608,7 @@ bb.a:
   %i.q = alloca [24 x i8], align 8                ; 8 uses
   %i.r = alloca [32 x i8], align 8                ; 5 uses
   %i.s = alloca [32 x i8], align 8                ; 13 uses
-  %i.t = alloca [24 x i8], align 8                ; 6 uses
+  %i.t = alloca [24 x i8], align 8                ; 8 uses
   %.sroa.413.i.i = alloca [31 x i8], align 1      ; 5 uses
   %i.u = alloca [64 x i8], align 8                ; 9 uses
   %i.v = alloca [32 x i8], align 8                ; 11 uses
@@ -1011,12 +1011,12 @@ bb.ai:                                            ; preds = %bb.a
 .noexc.i12:                                       ; preds = %bb.ai
   %i.gc = load i64, ptr %i.t, align 8, !range !12, !noalias !459, !noundef !5
   %i.gd = trunc nuw i64 %i.gc to i1
-  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %4 = load i64, ptr %3, align 8, !range !13, !noalias !459, !noundef !5 ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
   br i1 %i.gd, label %bb.aj, label %bb.ak, !prof !11
 
 bb.aj:                                            ; preds = %.noexc.i12
+  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %4 = load i64, ptr %3, align 8, !range !13, !noalias !459, !noundef !5
+  %5 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.ge = load i64, ptr %5, align 8, !noalias !459
   invoke void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %4, i64 %i.ge) #21
           to label %.noexc10.i15 unwind label %.thread12.i, !noalias !456
@@ -1025,16 +1025,19 @@ bb.aj:                                            ; preds = %.noexc.i12
   unreachable
 
 bb.ak:                                            ; preds = %.noexc.i12
-  %i.gf = load ptr, ptr %5, align 8, !noalias !459, !nonnull !5, !noundef !5
-  %i.gg = icmp samesign ule i64 %..i.i.i, %4
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
+  %6 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %7 = load i64, ptr %6, align 8, !range !16, !noalias !459, !noundef !5 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
+  %i.gf = load ptr, ptr %8, align 8, !noalias !459, !nonnull !5, !noundef !5
+  %i.gg = icmp samesign ule i64 %..i.i.i, %7
   tail call void @llvm.assume(i1 %i.gg)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !459
-  store i64 %4, ptr %i.x, align 8, !noalias !459
+  store i64 %7, ptr %i.x, align 8, !noalias !459
   %i.gh = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 2 uses
   store ptr %i.gf, ptr %i.gh, align 8, !noalias !459
   %i.gi = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 3 uses
   store i64 0, ptr %i.gi, align 8, !noalias !459
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.gj = icmp eq i64 %.sroa.520.0.copyload, 0
   br i1 %i.gj, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs6SYjS1KFWza_10serde_core7private7content7ContentBX_EENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs1YANDSn9Kib_7git_xet.exit.i.i._crit_edge.thread.i.i, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCs6SYjS1KFWza_10serde_core7private7content7ContentBX_EENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs1YANDSn9Kib_7git_xet.exit.i.i.lr.ph.i.i
 
@@ -1437,8 +1440,8 @@ bb.cc:                                            ; preds = %_RNvXs4_NtNtCsexYYU
   br i1 %i.jr, label %bb.cd, label %_RINvXs5_NtCs6SYjS1KFWza_10serde_core2deQINtNtNtNtCseHpJhTld930_5serde7private2de7content15MapDeserializerNtNtCsiWcPrHiWZDL_10serde_json5error5ErrorENtB6_9MapAccess15next_entry_seedNtBF_14ContentVisitorB2S_ECs1YANDSn9Kib_7git_xet.exit.i.i.i.i.i.i.i.i.i
 
 bb.cd:                                            ; preds = %bb.cc
-  store ptr %i.jp, ptr %.sroa.4.0..sroa_idx.i36.i.i.i.i.i.i, align 8, !alias.scope !512, !noalias !509
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.sroa.8.sroa.7.0.copyload.i.i.i.i.i.i.i.i.i.i.i) ]
+  store ptr %i.jp, ptr %.sroa.4.0..sroa_idx.i36.i.i.i.i.i.i, align 8, !alias.scope !512, !noalias !509
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6SYjS1KFWza_10serde_core7private7content7ContentECs1YANDSn9Kib_7git_xet(ptr noalias nofree noundef align 8 dereferenceable(32) %i.b)
           to label %_RINvXs5_NtCs6SYjS1KFWza_10serde_core2deQINtNtNtNtCseHpJhTld930_5serde7private2de7content15MapDeserializerNtNtCsiWcPrHiWZDL_10serde_json5error5ErrorENtB6_9MapAccess15next_entry_seedNtBF_14ContentVisitorB2S_ECs1YANDSn9Kib_7git_xet.exit.thread21.i.i.i.i.i.i.i.i.i unwind label %bb.ce, !noalias !513
 

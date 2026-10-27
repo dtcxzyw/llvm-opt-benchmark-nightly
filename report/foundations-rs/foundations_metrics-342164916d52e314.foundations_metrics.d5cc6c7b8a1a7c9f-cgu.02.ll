@@ -202,11 +202,10 @@ _RINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB3_9Histogram3n
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write, inaccessiblemem: write) uwtable
 define hidden void @_RNvXs3_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEBW_EINtB5_7ZipImplBW_BW_E3newCsim2LhUzKY4R_19foundations_metrics(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4) unnamed_addr #6 personality ptr @rust_eh_personality !dbg !2215 {
 bb.a:
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2), "nonnull"(ptr %4) ]
   %i.a = ptrtoint ptr %2 to i64, !dbg !2242
   %i.b = ptrtoint ptr %1 to i64, !dbg !2242
   %i.c = sub nuw i64 %i.a, %i.b, !dbg !2242
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   %i.d = ptrtoint ptr %4 to i64, !dbg !2243
   %i.e = ptrtoint ptr %3 to i64, !dbg !2243
   %i.f = sub nuw i64 %i.d, %i.e, !dbg !2243

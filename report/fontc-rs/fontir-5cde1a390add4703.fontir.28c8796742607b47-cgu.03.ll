@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.44.0.copyload.i = load i64, ptr %.sroa.44.0..sroa_idx.i, align 8, !noalias !37
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !37
   %i.i = tail call { i64, i64 } @_RINvMs2_NtNtCs5Xr050g3D4S_3std6thread5localINtB6_8LocalKeyINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @19), !noalias !38 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %4 = extractvalue { i64, i64 } %i.i, 0
   %5 = extractvalue { i64, i64 } %i.i, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !39
   store i8 %i.g, ptr %i.b, align 8, !noalias !39
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -283,9 +283,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.44.0.copyload.i = load i64, ptr %.sroa.44.0..sroa_idx.i, align 8, !noalias !50
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !50
   %i.i = tail call { i64, i64 } @_RINvMs2_NtNtCs5Xr050g3D4S_3std6thread5localINtB6_8LocalKeyINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @19), !noalias !51 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %4 = extractvalue { i64, i64 } %i.i, 0
   %5 = extractvalue { i64, i64 } %i.i, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !52
   store i8 %i.g, ptr %i.b, align 8, !noalias !52
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -688,9 +688,9 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.44.0.copyload = load i64, ptr %.sroa.44.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.f = tail call { i64, i64 } @_RINvMs2_NtNtCs5Xr050g3D4S_3std6thread5localINtB6_8LocalKeyINtNtCsf3Ta7LF998c_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1I_11RandomState3new0B21_ECs3v5ql5U6hxj_6fontir(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @19), !noalias !185 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   %2 = extractvalue { i64, i64 } %i.f, 0
   %3 = extractvalue { i64, i64 } %i.f, 1
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !186
   store i8 %i.d, ptr %i.a, align 8, !noalias !186
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1093,7 +1093,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.y, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
-  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
@@ -1117,10 +1117,10 @@ bb.d:                                             ; preds = %.lr.ph, %bb.ad
 .noexc:                                           ; preds = %bb.d
   %i.ag = load i64, ptr %i.a, align 8, !range !5, !noalias !846, !noundef !4
   %i.ah = trunc nuw i64 %i.ag to i1
-  %4 = load i64, ptr %i.z, align 8, !range !6, !noalias !846, !noundef !4 ; 3 uses
   br i1 %i.ah, label %bb.e, label %bb.f, !prof !7
 
 bb.e:                                             ; preds = %.noexc
+  %4 = load i64, ptr %i.z, align 8, !range !6, !noalias !846, !noundef !4
   %i.ai = load i64, ptr %i.aa, align 8, !noalias !846
   invoke void @_RNvNtCsgCecv3eZDcN_5alloc7raw_vec12handle_error(i64 noundef %4, i64 %i.ai) #22
           to label %.noexc43 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -1129,14 +1129,15 @@ bb.e:                                             ; preds = %.noexc
   unreachable
 
 bb.f:                                             ; preds = %.noexc
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.029.0.val) ]
+  %5 = load i64, ptr %i.z, align 8, !range !16, !noalias !846, !noundef !4 ; 2 uses
   %i.aj = load ptr, ptr %i.aa, align 8, !noalias !846, !nonnull !4, !noundef !4
-  %i.ak = icmp ule i64 %.sroa.029.0.val42, %4
+  %i.ak = icmp ule i64 %.sroa.029.0.val42, %5
   call void @llvm.assume(i1 %i.ak)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !846
-  store i64 %4, ptr %i.b, align 8, !noalias !846
+  store i64 %5, ptr %i.b, align 8, !noalias !846
   store ptr %i.aj, ptr %i.ab, align 8, !noalias !846
   store i64 0, ptr %i.ac, align 8, !noalias !846
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.029.0.val) ]
   %.idx.i = mul nuw nsw i64 %.sroa.029.0.val42, 56
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.029.0.val, i64 %.idx.i
   %i.am = icmp eq i64 %.sroa.029.0.val42, 0
@@ -1315,10 +1316,10 @@ bb.z:                                             ; preds = %.loopexit.split-lp.
 .loopexit:                                        ; preds = %bb.y, %bb.f
   %.sroa.4.0.lcssa.i = phi i64 [ %.sroa.21.0114, %bb.f ], [ %i.bt, %bb.y ] ; 2 uses
   %.sroa.0.0.lcssa.i = phi ptr [ %.sroa.0.0115, %bb.f ], [ %i.bu, %bb.y ] ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.lcssa.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !846
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.lcssa.i) ]
   %i.cc = load i64, ptr %i.u, align 8, !alias.scope !850, !noundef !4 ; 3 uses
   %i.cd = load i64, ptr %i.h, align 8, !range !16, !alias.scope !850, !noundef !4
   %i.ce = icmp eq i64 %i.cc, %i.cd

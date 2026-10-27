@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.h, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsdjW2DEjcQy2_12clap_builder7builder12value_parser11ValueParserECs5RUJIcrgHnQ_18ty_completion_eval.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.i = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.j = load i64, ptr %i.i, align 8, !range !9, !invariant.load !4, !noalias !112
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, 0) %i.g, i64 noundef range(i64 1, 536870913) %i.j) #30, !noalias !112
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsdjW2DEjcQy2_12clap_builder7builder12value_parser11ValueParserECs5RUJIcrgHnQ_18ty_completion_eval.exit
 
@@ -609,9 +609,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.k, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECs5RUJIcrgHnQ_18ty_completion_eval.exit.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.l = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i, i64 16
   %i.m = load i64, ptr %i.l, align 8, !range !9, !invariant.load !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, 0) %i.j, i64 noundef range(i64 1, 536870913) %i.m) #30
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECs5RUJIcrgHnQ_18ty_completion_eval.exit.i.i.i
 
@@ -1014,9 +1014,9 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs
   br i1 %i.fy, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdjW2DEjcQy2_12clap_builder7builder12value_parser11ValueParserEECs5RUJIcrgHnQ_18ty_completion_eval.exit, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i150) ]
   %i.fz = getelementptr inbounds nuw i8, ptr %.val1.i.i.i151, i64 16
   %i.ga = load i64, ptr %i.fz, align 8, !range !9, !invariant.load !4, !noalias !397
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i150) ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i150, i64 noundef range(i64 1, 0) %i.fx, i64 noundef range(i64 1, 536870913) %i.ga) #30, !noalias !397
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsdjW2DEjcQy2_12clap_builder7builder12value_parser11ValueParserEECs5RUJIcrgHnQ_18ty_completion_eval.exit
 
@@ -1326,11 +1326,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   call void @_RNvMs_Cs5RUJIcrgHnQ_18ty_completion_evalNtB4_4Task3new(ptr noalias noundef nonnull sret([272 x i8]) align 8 captures(none) dereferenceable(272) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.l, i64 noundef %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.o, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.a), !noalias !455
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !455
   %.sroa.0.0.copyload.i = load i64, ptr %i.b, align 8, !noalias !455 ; 3 uses
-  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !455 ; 3 uses
+  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !455 ; 4 uses
   %i.p = icmp eq i64 %.sroa.0.0.copyload.i, -1
   br i1 %i.p, label %bb.c, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldNtCs5RUJIcrgHnQ_18ty_completion_eval6CursorINtNtBa_6result6ResultNtB11_4TaskNtCsiXichZnxgbf_6anyhow5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2J_B22_EENCNvMs2_B11_NtB11_10TaskSource8to_taskss1_0NCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterBZ_EB3y_EIB1H_NtNtBa_7convert10InfallibleB2d_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB6q_12try_for_each4callB22_B3n_NcNtB3n_5Break0E0B3n_E0E0B11_.exit
 
 bb.c:                                             ; preds = %bb.b
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i) ]
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.val.le = load ptr, ptr %i.q, align 8, !nonnull !4, !noundef !4 ; 4 uses
   %i.r = load ptr, ptr %.val.le, align 8, !alias.scope !457, !noalias !458, !noundef !4

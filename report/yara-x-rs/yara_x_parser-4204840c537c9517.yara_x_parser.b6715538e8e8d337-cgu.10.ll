@@ -204,14 +204,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 11 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !4 ; 12 uses
   %i.e = add i64 %i.d, %1                         ; 2 uses
   %i.f = load i64, ptr %0, align 8, !range !7, !noundef !4 ; 16 uses
   %.not21 = icmp ult i64 %i.e, %i.f
   %i.g = select i1 %.not21, i64 0, i64 %i.f
   %.sroa.01.0 = sub nuw i64 %i.e, %i.g            ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !noundef !4 ; 41 uses
+  %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !noundef !4 ; 44 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.01.0 ; 10 uses
   %i.k = load i64, ptr %i.j, align 8, !noundef !4
   %i.l = xor i64 %1, -1
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = add i64 %i.d, 1                          ; 2 uses
   %.not22 = icmp ult i64 %i.o, %i.f
   %i.p = select i1 %.not22, i64 0, i64 %i.f
-  %.sroa.05.0 = sub nuw i64 %i.o, %i.p            ; 10 uses
+  %.sroa.05.0 = sub nuw i64 %i.o, %i.p            ; 11 uses
   store i64 %.sroa.05.0, ptr %i.c, align 8
   %i.q = icmp eq i64 %i.d, %.sroa.05.0
   %i.r = icmp eq i64 %1, 0
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %bb.c
   %.not.i = icmp ult i64 %i.t, %i.f
   %..i = select i1 %.not.i, i64 %i.t, i64 %i.s
   %i.u = icmp ult i64 %..i, %1                    ; 2 uses
-  %i.v = sub i64 %i.f, %i.d                       ; 10 uses
+  %i.v = sub i64 %i.f, %i.d                       ; 12 uses
   %i.w = sub i64 %i.f, %.sroa.05.0                ; 11 uses
   %i.x = icmp ult i64 %i.v, %1
   %i.y = icmp ult i64 %i.w, %1                    ; 3 uses
@@ -281,27 +281,31 @@ bb.j:                                             ; preds = %bb.h
   br label %_RNvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequejE9wrap_copyCsfF8zpZz1lvn_13yara_x_parser.exit
 
 bb.k:                                             ; preds = %bb.f
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.d ; 2 uses
-  %3 = getelementptr [8 x i8], ptr %i.i, i64 %.sroa.05.0 ; 3 uses
-  %4 = shl nuw nsw i64 %i.v, 3                    ; 2 uses
-  %5 = getelementptr [8 x i8], ptr %3, i64 %i.v   ; 2 uses
   br i1 %i.y, label %bb.n, label %bb.m
 
 bb.l:                                             ; preds = %bb.f
   br i1 %i.y, label %bb.p, label %bb.o
 
 bb.m:                                             ; preds = %bb.k
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.d
+  %3 = getelementptr [8 x i8], ptr %i.i, i64 %.sroa.05.0 ; 2 uses
+  %4 = shl nuw nsw i64 %i.v, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %3, ptr nonnull align 8 %2, i64 %4, i1 false)
   %i.ao = sub nuw i64 %1, %i.v
+  %5 = getelementptr [8 x i8], ptr %3, i64 %i.v
   %i.ap = shl nuw nsw i64 %i.ao, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %5, ptr nonnull align 8 %i.i, i64 %i.ap, i1 false)
   br label %_RNvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequejE9wrap_copyCsfF8zpZz1lvn_13yara_x_parser.exit
 
 bb.n:                                             ; preds = %bb.k
   %i.aq = sub i64 %i.w, %i.v                      ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %3, ptr nonnull align 8 %2, i64 %4, i1 false)
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.d
+  %7 = getelementptr [8 x i8], ptr %i.i, i64 %.sroa.05.0 ; 2 uses
+  %8 = shl nuw nsw i64 %i.v, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %7, ptr nonnull align 8 %6, i64 %8, i1 false)
+  %9 = getelementptr [8 x i8], ptr %7, i64 %i.v
   %i.ar = shl nuw nsw i64 %i.aq, 3
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %5, ptr nonnull align 8 %i.i, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %9, ptr nonnull align 8 %i.i, i64 %i.ar, i1 false)
   %i.as = sub nuw i64 %1, %i.w
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.aq
   %i.au = shl nuw nsw i64 %i.as, 3
@@ -339,7 +343,7 @@ bb.q:                                             ; preds = %bb.b
   %i.bl = add i64 %.sroa.01.0, 1                  ; 2 uses
   %.not23 = icmp ult i64 %i.bl, %i.f
   %i.bm = select i1 %.not23, i64 0, i64 %i.f
-  %.sroa.04.0 = sub nuw i64 %i.bl, %i.bm          ; 9 uses
+  %.sroa.04.0 = sub nuw i64 %i.bl, %i.bm          ; 10 uses
   %i.bn = icmp eq i64 %.sroa.04.0, %.sroa.01.0
   %i.bo = icmp eq i64 %i.m, 0
   %or.cond.i27 = or i1 %i.bo, %i.bn
@@ -351,7 +355,7 @@ bb.r:                                             ; preds = %bb.q
   %.not.i28 = icmp ult i64 %i.bq, %i.f
   %..i29 = select i1 %.not.i28, i64 %i.bq, i64 %i.bp
   %i.br = icmp ult i64 %..i29, %i.m               ; 2 uses
-  %i.bs = sub i64 %i.f, %.sroa.04.0               ; 10 uses
+  %i.bs = sub i64 %i.f, %.sroa.04.0               ; 11 uses
   %i.bt = sub i64 %i.f, %.sroa.01.0               ; 11 uses
   %i.bu = icmp ult i64 %i.bs, %i.m
   %i.bv = icmp ult i64 %i.bt, %i.m                ; 3 uses
@@ -393,8 +397,6 @@ bb.x:                                             ; preds = %bb.v
   br label %_RNvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequejE9wrap_copyCsfF8zpZz1lvn_13yara_x_parser.exit
 
 bb.y:                                             ; preds = %bb.t
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.04.0 ; 2 uses
-  %7 = shl nuw nsw i64 %i.bs, 3                   ; 2 uses
   %i.ci = getelementptr [8 x i8], ptr %i.j, i64 %i.bs ; 2 uses
   br i1 %i.bv, label %bb.ab, label %bb.aa
 
@@ -402,7 +404,9 @@ bb.z:                                             ; preds = %bb.t
   br i1 %i.bv, label %bb.ad, label %bb.ac
 
 bb.aa:                                            ; preds = %bb.y
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.j, ptr nonnull align 8 %6, i64 %7, i1 false)
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.04.0
+  %11 = shl nuw nsw i64 %i.bs, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.j, ptr nonnull align 8 %10, i64 %11, i1 false)
   %i.cj = sub nuw i64 %i.m, %i.bs
   %i.ck = shl nuw nsw i64 %i.cj, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.ci, ptr nonnull align 8 %i.i, i64 %i.ck, i1 false)
@@ -410,7 +414,9 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.y
   %i.cl = sub i64 %i.bt, %i.bs                    ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.j, ptr nonnull align 8 %6, i64 %7, i1 false)
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.04.0
+  %13 = shl nuw nsw i64 %i.bs, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.j, ptr nonnull align 8 %12, i64 %13, i1 false)
   %i.cm = shl nuw nsw i64 %i.cl, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.ci, ptr nonnull align 8 %i.i, i64 %i.cm, i1 false)
   %i.cn = sub nuw i64 %i.m, %i.bt

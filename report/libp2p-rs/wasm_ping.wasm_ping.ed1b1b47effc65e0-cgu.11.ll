@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function5FnMutuEp6OutputINtNtBP_6result6ResultuNtNtNtBP_2io5error5ErrorENtNtBP_6marker4SendNtB2p_4SyncEL_ENtNtBN_4drop4Drop4dropCskm6LeB9lWb4_9wasm_ping.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !27, !invariant.load !15
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #26
   br label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function5FnMutuEp6OutputINtNtBP_6result6ResultuNtNtNtBP_2io5error5ErrorENtNtBP_6marker4SendNtB2p_4SyncEL_ENtNtBN_4drop4Drop4dropCskm6LeB9lWb4_9wasm_ping.exit
 
@@ -609,9 +609,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemNtNtNtB4_3net11socket_addr10SocketAddrNtNtB4_6marker4SendEL_EECskm6LeB9lWb4_9wasm_ping.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !27, !invariant.load !15
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #26
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemNtNtNtB4_3net11socket_addr10SocketAddrNtNtB4_6marker4SendEL_EECskm6LeB9lWb4_9wasm_ping.exit
 
@@ -1014,9 +1014,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1w_4SyncEL_EECskm6LeB9lWb4_9wasm_ping.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !27, !invariant.load !15
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.d, i64 noundef range(i64 1, 536870913) %i.g) #26
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SendNtB1w_4SyncEL_EECskm6LeB9lWb4_9wasm_ping.exit
 
@@ -1419,9 +1419,9 @@ bb.a:
   br i1 %.not.i.i.i.i.i, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %.noexc.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.57.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !1194
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.e, ptr noundef nonnull align 4 dereferenceable(32) %i.f, i64 32, i1 false), !noalias !1191
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.57.0.copyload) ]
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   store ptr %.sroa.57.0.copyload, ptr %i.m, align 8, !alias.scope !1195, !noalias !1194
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 248
@@ -1824,7 +1824,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.n
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1220
   %.sroa.4.16.copyload.i = load i64, ptr %i.c, align 8, !noalias !1220 ; 2 uses
-  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !1220 ; 3 uses
+  %.sroa.6.16.copyload.i = load ptr, ptr %.sroa.6.16..sroa_idx.i, align 8, !noalias !1220 ; 4 uses
   %.sroa.7.16.copyload.i = load i64, ptr %.sroa.7.16..sroa_idx.i, align 8, !noalias !1220
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1220
   store ptr %2, ptr %i.a, align 8, !noalias !1221
@@ -1833,6 +1833,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.l, label %bb.d, label %bb.n
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.16.copyload.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.val.le = load ptr, ptr %i.m, align 8, !nonnull !15, !noundef !15 ; 3 uses
   %.val.i.i = load ptr, ptr %.val.le, align 8, !noalias !1221, !noundef !15 ; 4 uses
@@ -2235,9 +2236,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.l, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtNtB4_3ops8function5FnMutuEp6OutputINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorENtNtB4_6marker4SendNtB2C_4SyncEL_EECskm6LeB9lWb4_9wasm_ping.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !27, !invariant.load !15, !noalias !1943
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val8.i) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef range(i64 1, 0) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #26, !noalias !1943
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtNtB4_3ops8function5FnMutuEp6OutputINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorENtNtB4_6marker4SendNtB2C_4SyncEL_EECskm6LeB9lWb4_9wasm_ping.exit.i
 

@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
   br label %.thread
 
 .preheader33:                                     ; preds = %bb.f
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ae ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 16) ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ae ; 4 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.phi.trans.insert61 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.aj = load <2 x i64>, ptr %3, align 1, !tbaa !18, !alias.scope !127, !noalias !129
@@ -499,8 +499,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i2, label %bb.m, label %.preheader32
 
 .preheader32:                                     ; preds = %bb.j
-  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.hq ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 16) ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.hq ; 4 uses
   %.pre85.pre = load <2 x i64>, ptr %0, align 64, !tbaa !18, !alias.scope !134
   %.phi.trans.insert79 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.phi.trans.insert81 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -903,7 +903,7 @@ XXH3_initCustomSecret_sse2.exit:
   %i.c = insertelement <2 x i64> poison, i64 %1, i64 0
   %i.d = insertelement <2 x i64> %i.c, i64 %i.b, i64 1 ; 12 uses
   %i.e = call ptr asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(ptr nonnull %i.a) #32, !srcloc !28 ; 13 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.e, i64 16) ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.e, i64 16), "nonnull"(ptr %0) ]
   %i.f = add <2 x i64> %i.d, <i64 -4734510112055689544, i64 2066345149520216444>
   store <2 x i64> %i.f, ptr %i.e, align 16, !tbaa !18
   %i.g = add <2 x i64> %i.d, <i64 -2623469361688619810, i64 2262974939099578482>
@@ -939,7 +939,6 @@ XXH3_initCustomSecret_sse2.exit:
   %i.aa = add <2 x i64> %i.d, <i64 2883454493032893253, i64 9097354517224871855>
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 176
   store <2 x i64> %i.aa, ptr %i.ab, align 16, !tbaa !18
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(192) %0, ptr noundef nonnull align 16 dereferenceable(192) %i.a, i64 192, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   ret void

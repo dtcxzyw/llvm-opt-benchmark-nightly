@@ -204,9 +204,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.t, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueECs4dRV7rdzHEF_18uu_checksum_common.exit, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i: ; preds = %bb.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   %i.u = getelementptr inbounds nuw i8, ptr %.val5.i, i64 16
   %i.v = load i64, ptr %i.u, align 8, !range !14, !invariant.load !6, !noalias !178
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i) ]
   tail call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4.i, i64 noundef %i.s, i64 noundef range(i64 1, -9223372036854775807) %i.v) #22, !noalias !178
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueECs4dRV7rdzHEF_18uu_checksum_common.exit
 
@@ -217,8 +217,8 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsiMbvvWBbXLn_13fluent_bundle5types1
 ; Function Attrs: nounwind nonlazybind uwtable
 define internal fastcc { ptr, ptr } @_RINvNtNtNtCsh036I4OHgIr_6uucore8features8checksum7compute28perform_checksum_computationNtNtNtCs2vKOLqTMYjT_3std2io5stdio6StdoutINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtB1t_3ffi6os_str8OsStringENvYB42_INtNtB2a_6borrow6BorrowNtB44_5OsStrE6borrowEECs4dRV7rdzHEF_18uu_checksum_common(ptr noundef nonnull align 8 %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dead_on_return dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(64) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [48 x i8], align 8                ; 9 uses
-  %i.b = alloca [4 x i8], align 4                 ; 4 uses
+  %i.a = alloca [48 x i8], align 8                ; 10 uses
+  %i.b = alloca [4 x i8], align 4                 ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [40 x i8], align 8                ; 8 uses
   %i.e = alloca [16 x i8], align 8                ; 6 uses
@@ -621,8 +621,8 @@ bb.ao:                                            ; preds = %_RNvMs1_NtNtCs6JMX4
 
 bb.ap:                                            ; preds = %.split10.i.i.i.i
   %i.jh = getelementptr i8, ptr %i.ij, i64 -1     ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !510
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jh) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !510
   store ptr %i.jh, ptr %i.cv, align 8, !alias.scope !511, !noalias !510
   store i8 3, ptr %i.ah, align 8, !alias.scope !511, !noalias !510
   call void @_RNvXsd_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cv) #22, !noalias !509
@@ -651,8 +651,8 @@ bb.aq:                                            ; preds = %.thread53.i.i.i.i
 
 .loopexit:                                        ; preds = %bb.an, %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i, %.split10.i.i.i.i, %.split11.i.i.i.i, %.split.i.i.i.i, %bb.aq
   %.sroa.6466.0.ph = phi ptr [ %i.ij, %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error14is_interrupted.exit.i.i.i.i ], [ %i.jp, %bb.aq ], [ %i.ij, %.split.i.i.i.i ], [ %i.ij, %.split11.i.i.i.i ], [ %i.ij, %.split10.i.i.i.i ], [ %i.jd, %bb.an ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !505
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6466.0.ph) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !505
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i), !noalias !514
   call void @_RNvNtNtCsh036I4OHgIr_6uucore4mods6locale11get_message(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %.sroa.0.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @44, i64 noundef 35) #22, !noalias !514
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !515
@@ -1055,9 +1055,9 @@ bb.cu:                                            ; preds = %bb.ct, %_RINvNtCs6J
   br i1 %i.rb, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EECs4dRV7rdzHEF_18uu_checksum_common.exit, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i: ; preds = %bb.cu
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val215) ]
   %i.rc = getelementptr inbounds nuw i8, ptr %.val216, i64 16
   %i.rd = load i64, ptr %i.rc, align 8, !range !14, !invariant.load !6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val215) ]
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val215, i64 noundef %i.ra, i64 noundef range(i64 1, -9223372036854775807) %i.rd) #22
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc5boxed3BoxDNtNtNtCsh036I4OHgIr_6uucore4mods5error6UErrorEL_EECs4dRV7rdzHEF_18uu_checksum_common.exit
 
@@ -1460,8 +1460,8 @@ bb.fc:                                            ; preds = %bb.fb
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECs4dRV7rdzHEF_18uu_checksum_common.exit33.i
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECs4dRV7rdzHEF_18uu_checksum_common.exit33.i: ; preds = %bb.fc, %bb.fb
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !588
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i358) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !588
   %i.tw = call noundef ptr @_RNvXse_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_6StdoutNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bv, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.6.0.copyload.i358, i64 noundef range(i64 0, -9223372036854775808) %.sroa.9.0.copyload.i) #22, !noalias !592 ; 2 uses
   %.not26.i = icmp eq ptr %i.tw, null
   br i1 %.not26.i, label %bb.fd, label %bb.fe
@@ -1605,8 +1605,6 @@ bb.fo:                                            ; preds = %_RINvNtCs6JMX4GRUq9
   store ptr @_RNvXsk_NtCs6JMX4GRUq9U_4core3fmtcNtB5_7Display3fmt, ptr %.sroa.420.0..sroa_idx.i, align 8, !noalias !601
   %i.um = call noundef ptr @_RNvXse_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_6StdoutNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bv, ptr noundef nonnull @25, ptr noundef nonnull %i.a) #22 ; 3 uses
   %.not22.i = icmp eq ptr %i.um, null
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !601
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !601
   br i1 %.not22.i, label %bb.fu, label %bb.fs
 
 bb.fp:                                            ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i388, %bb.fm
@@ -1633,6 +1631,8 @@ bb.fr:                                            ; preds = %_RNvXs_NtCs7tKScEop
   br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs4dRV7rdzHEF_18uu_checksum_common.exit.thread9.i
 
 bb.fs:                                            ; preds = %bb.fo
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !601
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !601
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !601
   %i.up = icmp eq i64 %.sroa.01.0.copyload.i382, 0
   br i1 %i.up, label %_RINvNtNtNtCsh036I4OHgIr_6uucore8features8checksum7compute23write_untagged_checksumQNtNtNtCs2vKOLqTMYjT_3std2io5stdio6StdoutECs4dRV7rdzHEF_18uu_checksum_common.exit.thread, label %bb.ft
@@ -1647,6 +1647,8 @@ bb.ft:                                            ; preds = %bb.fs
 
 bb.fu:                                            ; preds = %bb.fo
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.0.copyload.i381) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !601
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !601
   %i.uq = call noundef ptr @_RNvXse_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_6StdoutNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bv, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.6.0.copyload.i381, i64 noundef range(i64 0, -9223372036854775808) %.sroa.9.0.copyload.i380) #22 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !601
   %i.ur = icmp eq i64 %.sroa.01.0.copyload.i382, 0
@@ -1744,9 +1746,9 @@ bb.gd:                                            ; preds = %bb.gc, %_RINvNtCs6J
   br i1 %i.vb, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECs4dRV7rdzHEF_18uu_checksum_common.exit.i, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i402
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i402: ; preds = %bb.gd
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val224) ]
   %i.vc = getelementptr inbounds nuw i8, ptr %.val225, i64 16
   %i.vd = load i64, ptr %i.vc, align 8, !range !14, !invariant.load !6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val224) ]
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val224, i64 noundef %i.va, i64 noundef range(i64 1, -9223372036854775807) %i.vd) #22
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECs4dRV7rdzHEF_18uu_checksum_common.exit.i
 
@@ -1816,9 +1818,9 @@ bb.gk:                                            ; preds = %bb.gj, %bb.gi
   br i1 %i.vn, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECs4dRV7rdzHEF_18uu_checksum_common.exit.i415, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i410
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i410: ; preds = %bb.gk
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val222) ]
   %i.vo = getelementptr inbounds nuw i8, ptr %.val223, i64 16
   %i.vp = load i64, ptr %i.vo, align 8, !range !14, !invariant.load !6
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val222) ]
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.val222, i64 noundef %i.vm, i64 noundef range(i64 1, -9223372036854775807) %i.vp) #22
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECs4dRV7rdzHEF_18uu_checksum_common.exit.i415
 
@@ -2221,8 +2223,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %3 = mul nuw i64 %2, %.0.val                    ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  %3 = mul nuw i64 %2, %.0.val                    ; 2 uses
   %i.f = icmp uge i64 %i.b, %3
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %3, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %i.b) #22
@@ -2625,8 +2627,8 @@ define internal noundef zeroext i1 @_RNvXs3_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_
 bb.a:
   %i.a = tail call { ptr, i1 } @_RNvMs1_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_5Stdin4lock(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %0) #22 ; 2 uses
   %i.b = extractvalue { ptr, i1 } %i.a, 0         ; 4 uses
-  %1 = extractvalue { ptr, i1 } %i.a, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.b) ]
+  %1 = extractvalue { ptr, i1 } %i.a, 1
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   br i1 %1, label %_RNvMNtNtCs2vKOLqTMYjT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i, label %bb.b
 
@@ -3029,8 +3031,8 @@ bb.h:                                             ; preds = %_RNvMs1_NtNtCs6JMX4
 
 bb.i:                                             ; preds = %.split12.i
   %i.af = getelementptr i8, ptr %i.f, i64 -1      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1229
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1229
   store ptr %i.af, ptr %i.c, align 8, !alias.scope !1230, !noalias !1229
   store i8 3, ptr %i.a, align 8, !alias.scope !1230, !noalias !1229
   call void @_RNvXsd_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c) #22
@@ -3136,8 +3138,8 @@ bb.e:                                             ; preds = %_RNvMs1_NtNtCs6JMX4
 
 bb.f:                                             ; preds = %.split6.i
   %i.ae = getelementptr i8, ptr %i.h, i64 -1      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1238
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1238
   store ptr %i.ae, ptr %i.f, align 8, !alias.scope !1239, !noalias !1238
   store i8 3, ptr %i.a, align 8, !alias.scope !1239, !noalias !1238
   call void @_RNvXsd_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.f) #22

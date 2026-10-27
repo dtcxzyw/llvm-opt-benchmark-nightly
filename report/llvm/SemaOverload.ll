@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.eo
   %.0146 = phi i1 [ false, %.lr.ph ], [ %.3.ph, %bb.eo ] ; 12 uses
   %.041145 = phi i32 [ 0, %.lr.ph ], [ %i.db, %bb.eo ] ; 3 uses
   %.044144 = phi ptr [ %4, %.lr.ph ], [ %i.aeq, %bb.eo ] ; 3 uses
-  %i.ct = load ptr, ptr %.044144, align 8, !tbaa !1468 ; 42 uses
+  %i.ct = load ptr, ptr %.044144, align 8, !tbaa !1468 ; 41 uses
   %i.cu = load ptr, ptr %i.u, align 8, !tbaa !1490, !nonnull !87, !align !500 ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 12
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !1522
@@ -281,6 +281,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 32
   %i.ed = load ptr, ptr %i.ec, align 8
   %i.ee = call noundef ptr %i.ed(ptr noundef nonnull align 8 dereferenceable(168) %i.dc) #28, !inline_history !1986
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 80
   %i.eg = load i32, ptr %i.ef, align 8
   %i.eh = and i32 %i.eg, 4194304
@@ -293,7 +294,6 @@ bb.m:                                             ; preds = %bb.l
   store i64 0, ptr %i.af, align 8, !tbaa !1447
   store i8 0, ptr %i.ae, align 8, !tbaa !75
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ct, i64 8 ; 2 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i.i = load i64, ptr %i.ei, align 8
   %i.ej = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.ek = inttoptr i64 %i.ej to ptr
@@ -440,7 +440,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %_ZN
 
 bb.u:                                             ; preds = %bb.l
   %i.gy = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i83.i = load i64, ptr %i.gy, align 8
   %i.gz = and i64 %.0.copyload.i.i.i.i.i83.i, -8
   %i.ha = inttoptr i64 %i.gz to ptr
@@ -488,8 +487,8 @@ bb.x:                                             ; preds = %bb.w
   br i1 %cond.i.i.i, label %_ZL21DiagnoseArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEj.exit.i, label %_ZL18CheckArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEjb.exit.i.i
 
 _ZL18CheckArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEjb.exit.i.i: ; preds = %bb.x, %bb.w
-  %53 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
+  %53 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %53, align 8
   %i.hm = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
   %i.hn = inttoptr i64 %i.hm to ptr
@@ -524,8 +523,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %cond.i.i, label %_ZL21DiagnoseArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEj.exit.i, label %_ZL18CheckArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEjb.exit.i
 
 _ZL18CheckArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEjb.exit.i: ; preds = %bb.aa, %bb.z, %bb.y
-  %54 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
+  %54 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %.0.copyload.i.i.i.i.i.i110 = load i64, ptr %54, align 8
   %i.ic = and i64 %.0.copyload.i.i.i.i.i.i110, -8
   %i.id = inttoptr i64 %i.ic to ptr
@@ -545,9 +544,9 @@ bb.ab:                                            ; preds = %bb.v
   %i.ih = call noundef nonnull align 8 dereferenceable(136) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsIivEERKS1_OT_(ptr noundef nonnull align 8 dereferenceable(136) %45, ptr noundef nonnull align 4 dereferenceable(4) %i.o) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %45) #28
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #28
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i86.i = load i64, ptr %i.ii, align 8
   %i.ij = and i64 %.0.copyload.i.i.i.i.i86.i, -8  ; 2 uses
   %i.ik = inttoptr i64 %i.ij to ptr               ; 3 uses
@@ -584,9 +583,9 @@ bb.ad:                                            ; preds = %bb.v
   call void @_ZN5clang8SemaBase4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::SemaBase::SemaDiagnosticBuilder") align 8 %47, ptr noundef nonnull align 8 dereferenceable(8) %i.ag, i32 %.sroa.0.0.copyload.i87.i, i32 noundef 6412) #28
   %i.iv = call noundef nonnull align 8 dereferenceable(136) ptr @_ZN5clanglsINS_10QualifiersEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_(ptr noundef nonnull align 8 dereferenceable(136) %47, ptr noundef nonnull align 8 dereferenceable(8) %46) ; 0 uses
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %47) #28
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %47) #28
   %i.iw = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i88.i = load i64, ptr %i.iw, align 8
   %i.ix = and i64 %.0.copyload.i.i.i.i.i88.i, -8  ; 2 uses
   %i.iy = inttoptr i64 %i.ix to ptr               ; 3 uses
@@ -617,8 +616,8 @@ _ZN12_GLOBAL__N_133MaybeEmitInheritedConstructorNoteERN5clang4SemaEPKNS0_4DeclE.
   br label %_ZL21DiagnoseArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEj.exit.i
 
 bb.af:                                            ; preds = %bb.v, %bb.v, %bb.v
-  %55 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
+  %55 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %.0.copyload.i.i.i.i.i89.i = load i64, ptr %55, align 8
   %i.jg = and i64 %.0.copyload.i.i.i.i.i89.i, -8
   %i.jh = inttoptr i64 %i.jg to ptr
@@ -662,8 +661,8 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %.not78.i, label %.critedge.i, label %bb.ah, !llvm.loop !1989
 
 .critedge.i:                                      ; preds = %bb.aj, %bb.ag
-  %56 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
+  %56 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %.0.copyload.i.i.i.i.i90.i = load i64, ptr %56, align 8
   %i.jv = and i64 %.0.copyload.i.i.i.i.i90.i, -8
   %i.jw = inttoptr i64 %i.jv to ptr
@@ -682,13 +681,13 @@ bb.ak:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #28
   %i.kd = load ptr, ptr %i.at, align 8, !tbaa !1357
   %i.ke = call noundef i32 @_ZN5clang8SemaCUDA14IdentifyTargetEPKNS_12FunctionDeclEb(ptr noundef nonnull align 8 dereferenceable(76) %i.kd, ptr noundef %i.ka, i1 noundef zeroext false) #28
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   store i32 %i.ke, ptr %i.d, align 4, !tbaa !1525
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
   store ptr %i.au, ptr %11, align 8, !tbaa !1523
   store i64 0, ptr %i.av, align 8, !tbaa !1447
   store i8 0, ptr %i.au, align 8, !tbaa !75
   %i.kf = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i.i79 = load i64, ptr %i.kf, align 8
   %i.kg = and i64 %.0.copyload.i.i.i.i.i.i79, -8
   %i.kh = inttoptr i64 %i.kg to ptr
@@ -1091,9 +1090,9 @@ bb.bl:                                            ; preds = %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %48) #28
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %48) #28
   %i.ra = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i94.i = load i64, ptr %i.ra, align 8
   %i.rb = and i64 %.0.copyload.i.i.i.i.i94.i, -8  ; 2 uses
   %i.rc = inttoptr i64 %i.rb to ptr               ; 3 uses
@@ -1124,12 +1123,12 @@ bb.bn:                                            ; preds = %bb.v
   br label %_ZL21DiagnoseArityMismatchRN5clang4SemaEPNS_17OverloadCandidateEj.exit.i
 
 bb.bo:                                            ; preds = %bb.v
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #28
   store ptr %i.ah, ptr %49, align 8, !tbaa !1523
   store i64 0, ptr %i.ai, align 8, !tbaa !1447
   store i8 0, ptr %i.ah, align 8, !tbaa !75
   %i.rl = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ct, i64 8) ]
   %.0.copyload.i.i.i.i.i95.i = load i64, ptr %i.rl, align 8
   %i.rm = and i64 %.0.copyload.i.i.i.i.i95.i, -8
   %i.rn = inttoptr i64 %i.rm to ptr
@@ -1532,9 +1531,9 @@ bb.as:                                            ; preds = %bb.aq
 bb.at:                                            ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
   %i.hc = load ptr, ptr %i.b, align 8, !tbaa !1468 ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.hc, i64 8) ]
   %12 = load ptr, ptr %i.hc, align 8, !tbaa !1477
   %13 = getelementptr inbounds nuw i8, ptr %i.hc, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.hc, i64 8) ]
   %.0.copyload.i.i.i.i144 = load i64, ptr %13, align 8
   %i.hd = and i64 %.0.copyload.i.i.i.i144, 3
   %i.he = ptrtoint ptr %12 to i64
@@ -1937,8 +1936,8 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit ] ; 2 uses
   %i.m = load ptr, ptr %5, align 8, !tbaa !515    ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv
   call void @llvm.assume(i1 true) [ "align"(ptr %i.m, i64 8) ]
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv
   %.0.copyload.i.i.i.i.i = load i64, ptr %9, align 8
   %i.n = and i64 %.0.copyload.i.i.i.i.i, -8
   %i.o = inttoptr i64 %i.n to ptr                 ; 3 uses
@@ -2330,8 +2329,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
-  %9 = load ptr, ptr %2, align 8, !tbaa !1230
   call void @llvm.assume(i1 true) [ "align"(ptr %6, i64 8) ]
+  %9 = load ptr, ptr %2, align 8, !tbaa !1230
   %.0.copyload.i.i.i.i.i28 = load i64, ptr %6, align 8
   %i.bg = and i64 %.0.copyload.i.i.i.i.i28, -8
   %i.bh = inttoptr i64 %i.bg to ptr
@@ -2734,8 +2733,8 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %or.cond26, label %bb.ar, label %.thread428
 
 bb.ar:                                            ; preds = %bb.aq
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.0.copyload.i.i.i.i.i = load i64, ptr %6, align 8
   %i.et = and i64 %.0.copyload.i.i.i.i.i, -8
   %i.eu = inttoptr i64 %i.et to ptr
@@ -2757,6 +2756,7 @@ bb.at:                                            ; preds = %bb.ar
 
 _ZN5clang4Decl14getDeclContextEv.exit:            ; preds = %bb.as, %bb.at
   %.0.i364 = phi ptr [ %i.ey, %bb.as ], [ %i.fb, %bb.at ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 8) ]
   %i.fc = getelementptr inbounds nuw i8, ptr %.0.i364, i64 8
   %i.fd = load i16, ptr %i.fc, align 8
   %i.fe = and i16 %i.fd, 127
@@ -2764,7 +2764,6 @@ _ZN5clang4Decl14getDeclContextEv.exit:            ; preds = %bb.as, %bb.at
   %i.fg = icmp ult i16 %i.ff, -3
   %i.fh = getelementptr inbounds i8, ptr %.0.i364, i64 -64
   %i.fi = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 8) ]
   %.0.copyload.i.i.i.i.i365 = load i64, ptr %i.fi, align 8
   %i.fj = and i64 %.0.copyload.i.i.i.i.i365, -8
   %i.fk = inttoptr i64 %i.fj to ptr
@@ -2858,8 +2857,8 @@ bb.bb:                                            ; preds = %.thread428
   br i1 %i.hj, label %.thread413, label %bb.bc
 
 bb.bc:                                            ; preds = %.thread428, %bb.bb
+  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8), "align"(ptr %2, i64 8) ]
   %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   %.0.copyload.i.i.i.i = load i64, ptr %7, align 8
   %i.hk = and i64 %.0.copyload.i.i.i.i, -8        ; 2 uses
   %.not.i.i371 = icmp eq i64 %i.hk, 0
@@ -2872,7 +2871,6 @@ _ZN4llvm15isa_and_nonnullIJN5clang26ConstructorUsingShadowDeclEEPNS1_9NamedDeclE
   %i.ho = and i32 %i.hn, 127
   %i.hp = icmp eq i32 %i.ho, 55                   ; 3 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 8) ]
   %.0.copyload.i.i.i.i372 = load i64, ptr %i.hq, align 8
   %i.hr = and i64 %.0.copyload.i.i.i.i372, -8     ; 2 uses
   %.not.i.i373 = icmp eq i64 %i.hr, 0
@@ -2880,7 +2878,6 @@ _ZN4llvm15isa_and_nonnullIJN5clang26ConstructorUsingShadowDeclEEPNS1_9NamedDeclE
 
 _ZN4llvm15isa_and_nonnullIJN5clang26ConstructorUsingShadowDeclEEPNS1_9NamedDeclEEEbRKT0_.exit.thread: ; preds = %bb.bc
   %i.hs = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 8) ]
   %.0.copyload.i.i.i.i372478 = load i64, ptr %i.hs, align 8
   %i.ht = and i64 %.0.copyload.i.i.i.i372478, -8  ; 2 uses
   %.not.i.i373479 = icmp eq i64 %i.ht, 0
@@ -3283,9 +3280,9 @@ _ZN4llvm4sortIRNS_11SmallVectorIPN5clang21TemplateSpecCandidateELj32EEEN12_GLOBA
 
 .lr.ph40.split.preheader:                         ; preds = %.lr.ph40
   %i.bf = load ptr, ptr %i.aw, align 8, !tbaa !1737 ; 4 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bf, i64 8) ]
   %i.bg = load i8, ptr %i.be, align 4, !tbaa !1745, !range !86, !noundef !87
   %i.bh = trunc nuw i8 %i.bg to i1
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bf, i64 8) ]
   %.0.copyload.i.i.i.i.i.i = load i64, ptr %i.bf, align 8
   %i.bi = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.bj = inttoptr i64 %i.bi to ptr
@@ -3299,9 +3296,9 @@ _ZN4llvm4sortIRNS_11SmallVectorIPN5clang21TemplateSpecCandidateELj32EEEN12_GLOBA
 .lr.ph40.split.us:                                ; preds = %.lr.ph40, %.lr.ph40.split.us
   %.02638.us = phi ptr [ %i.bv, %.lr.ph40.split.us ], [ %i.aw, %.lr.ph40 ] ; 2 uses
   %i.bn = load ptr, ptr %.02638.us, align 8, !tbaa !1737 ; 4 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bn, i64 8) ]
   %i.bo = load i8, ptr %i.be, align 4, !tbaa !1745, !range !86, !noundef !87
   %i.bp = trunc nuw i8 %i.bo to i1
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.bn, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.us = load i64, ptr %i.bn, align 8
   %i.bq = and i64 %.0.copyload.i.i.i.i.i.i.us, -8
   %i.br = inttoptr i64 %i.bq to ptr
@@ -3348,9 +3345,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang21TemplateSpecCandidateELb1EE9push_bac
 .lr.ph40.split.1:                                 ; preds = %.lr.ph40.split.preheader
   %i.cg = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !1737 ; 4 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.ch, i64 8) ]
   %i.ci = load i8, ptr %i.be, align 4, !tbaa !1745, !range !86, !noundef !87
   %i.cj = trunc nuw i8 %i.ci to i1
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.ch, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.1 = load i64, ptr %i.ch, align 8
   %i.ck = and i64 %.0.copyload.i.i.i.i.i.i.1, -8
   %i.cl = inttoptr i64 %i.ck to ptr
@@ -3364,9 +3361,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang21TemplateSpecCandidateELb1EE9push_bac
 .lr.ph40.split.2:                                 ; preds = %.lr.ph40.split.1
   %i.cp = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !1737 ; 4 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.cq, i64 8) ]
   %i.cr = load i8, ptr %i.be, align 4, !tbaa !1745, !range !86, !noundef !87
   %i.cs = trunc nuw i8 %i.cr to i1
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.cq, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.2 = load i64, ptr %i.cq, align 8
   %i.ct = and i64 %.0.copyload.i.i.i.i.i.i.2, -8
   %i.cu = inttoptr i64 %i.ct to ptr
@@ -3380,9 +3377,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPN5clang21TemplateSpecCandidateELb1EE9push_bac
 .lr.ph40.split.3:                                 ; preds = %.lr.ph40.split.2
   %i.cy = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !1737 ; 4 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.cz, i64 8) ]
   %i.da = load i8, ptr %i.be, align 4, !tbaa !1745, !range !86, !noundef !87
   %i.db = trunc nuw i8 %i.da to i1
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.cz, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.3 = load i64, ptr %i.cz, align 8
   %i.dc = and i64 %.0.copyload.i.i.i.i.i.i.3, -8
   %i.dd = inttoptr i64 %i.dc to ptr
@@ -3785,10 +3782,10 @@ _ZN5clang19StreamingDiagnosticD2Ev.exit22.i.i:    ; preds = %bb.cw, %bb.cv, %bb.
 .lr.ph.i83.i:                                     ; preds = %_ZN5clang17UnresolvedSetImpl7addDeclEPNS_9NamedDeclENS_15AccessSpecifierE.exit.i.i, %.lr.ph.preheader.i82.i
   %indvars.iv.i84.i = phi i64 [ 0, %.lr.ph.preheader.i82.i ], [ %indvars.iv.next.i86.i, %_ZN5clang17UnresolvedSetImpl7addDeclEPNS_9NamedDeclENS_15AccessSpecifierE.exit.i.i ] ; 2 uses
   %i.adp = load ptr, ptr %i.ax, align 8, !tbaa !515 ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.adp, i64 8) ]
   %i.adq = getelementptr inbounds nuw [16 x i8], ptr %i.adp, i64 %indvars.iv.i84.i ; 2 uses
   %i.adr = getelementptr inbounds nuw i8, ptr %i.adq, i64 8
   %i.ads = load ptr, ptr %i.adr, align 8, !tbaa !2380
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.adp, i64 8) ]
   %.0.copyload.i.i.i.i.i85.i = load i64, ptr %i.adq, align 8
   %i.adt = and i64 %.0.copyload.i.i.i.i.i85.i, 3
   %i.adu = ptrtoint ptr %i.ads to i64
@@ -3818,6 +3815,7 @@ _ZN5clang17UnresolvedSetImpl7addDeclEPNS_9NamedDeclENS_15AccessSpecifierE.exit.i
   br i1 %.not.i87.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i83.i, !llvm.loop !2367
 
 bb.cz:                                            ; preds = %_ZN5clang19StreamingDiagnosticD2Ev.exit22.i.i
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.acd, i64 8) ]
   %i.aed = ptrtoint ptr %i.acd to i64
   %i.aee = ptrtoint ptr %i.adl to i64
   %i.aef = sub i64 %i.aed, %i.aee
@@ -3826,7 +3824,6 @@ bb.cz:                                            ; preds = %_ZN5clang19Streamin
   %i.aei = getelementptr inbounds nuw [16 x i8], ptr %i.aeh, i64 %i.aeg
   %i.aej = load i64, ptr %i.aei, align 8, !tbaa !75
   store i64 %i.aej, ptr %i.aeh, align 8, !tbaa !75
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.acd, i64 8) ]
   %.0.copyload.i.i.i.i.i.i.i95.i = load i64, ptr %i.acd, align 8
   %i.aek = and i64 %.0.copyload.i.i.i.i.i.i.i95.i, -8
   %i.ael = inttoptr i64 %i.aek to ptr
@@ -4229,8 +4226,8 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.z
   %.2 = phi ptr [ %i.ek, %bb.ab ], [ %i.eb, %bb.z ]
   %.1117 = phi ptr [ null, %bb.ab ], [ %i.eb, %bb.z ]
-  %23 = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.dn, i64 8) ]
+  %23 = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
   %.0.copyload.i.i.i.i.i135 = load i64, ptr %23, align 8
   %i.el = and i64 %.0.copyload.i.i.i.i.i135, -8
   %i.em = inttoptr i64 %i.el to ptr
@@ -4633,7 +4630,7 @@ define dso_local i64 @_ZN5clang4Sema21CreateOverloadedBinOpENS_14SourceLocationE
 bb.a:
   %9 = alloca %"struct.clang::DeclarationNameInfo", align 8 ; 4 uses
   %10 = alloca %"class.clang::SourceLocation", align 4 ; 31 uses
-  %i.a = alloca [2 x ptr], align 16               ; 45 uses
+  %i.a = alloca [2 x ptr], align 16               ; 46 uses
   %11 = alloca %"struct.clang::DeclarationNameInfo", align 8 ; 6 uses
   %12 = alloca %"class.clang::OverloadCandidateSet", align 8 ; 37 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -5036,19 +5033,20 @@ bb.bh:                                            ; preds = %bb.bg
   %.sroa.081.0.copyload = load i64, ptr %i.nq, align 8, !tbaa !75
   %i.nr = call noundef i32 @_ZN5clang4Sema25CheckMemberOperatorAccessENS_14SourceLocationEPNS_4ExprES3_NS_14DeclAccessPairE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %.sroa.082.0.copyload, ptr noundef %i.no, ptr noundef %i.np, i64 %.sroa.081.0.copyload) #28 ; 0 uses
   %i.ns = call noundef zeroext i1 @_ZNK5clang13CXXMethodDecl30isExplicitObjectMemberFunctionEv(ptr noundef nonnull align 8 dereferenceable(168) %i.fc) #28
-  %69 = load ptr, ptr %i.a, align 16, !tbaa !1230 ; 2 uses
   br i1 %i.ns, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
+  %69 = load ptr, ptr %i.a, align 16, !tbaa !1230
   %i.nt = call i64 @_ZN5clang4Sema32InitializeExplicitObjectArgumentERS0_PNS_4ExprEPNS_12FunctionDeclE(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %69, ptr noundef nonnull %i.fc)
   br label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bh
   call void @llvm.assume(i1 true) [ "align"(ptr %i.fb, i64 8) ]
+  %70 = load ptr, ptr %i.a, align 16, !tbaa !1230
   %.0.copyload.i.i.i.i.i326 = load i64, ptr %i.nq, align 8
   %i.nu = and i64 %.0.copyload.i.i.i.i.i326, -8
   %i.nv = inttoptr i64 %i.nu to ptr
-  %i.nw = call i64 @_ZN5clang4Sema43PerformImplicitObjectArgumentInitializationEPNS_4ExprENS_19NestedNameSpecifierEPNS_9NamedDeclEPNS_13CXXMethodDeclE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %69, i64 0, ptr noundef %i.nv, ptr noundef nonnull %i.fc)
+  %i.nw = call i64 @_ZN5clang4Sema43PerformImplicitObjectArgumentInitializationEPNS_4ExprENS_19NestedNameSpecifierEPNS_9NamedDeclEPNS_13CXXMethodDeclE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %70, i64 0, ptr noundef %i.nv, ptr noundef nonnull %i.fc)
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi
@@ -5114,12 +5112,12 @@ bb.bo:                                            ; preds = %.thread507, %bb.bl
   %storemerge520 = phi ptr [ %i.oj, %bb.bl ], [ %i.pc, %.thread507 ]
   %storemerge519.in.in = phi i64 [ %i.of, %bb.bl ], [ %i.oz, %.thread507 ]
   %.1228 = phi ptr [ %i.oj, %bb.bl ], [ null, %.thread507 ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.fb, i64 8) ]
   store ptr %storemerge520, ptr %i.a, align 16, !tbaa !1230
   %storemerge519.in = and i64 %storemerge519.in.in, -2
   %storemerge519 = inttoptr i64 %storemerge519.in to ptr
   store ptr %storemerge519, ptr %i.f, align 8, !tbaa !1230
   %i.pd = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.fb, i64 8) ]
   %.0.copyload.i.i.i.i.i327 = load i64, ptr %i.pd, align 8
   %i.pe = and i64 %.0.copyload.i.i.i.i.i327, -8
   %i.pf = inttoptr i64 %i.pe to ptr
@@ -5522,7 +5520,7 @@ declare noundef ptr @_ZN5clang16PseudoObjectExpr6CreateERKNS_10ASTContextEPNS_4E
 define dso_local i64 @_ZN5clang4Sema34CreateOverloadedArraySubscriptExprENS_14SourceLocationES1_PNS_4ExprEN4llvm15MutableArrayRefIS3_EE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %1, i32 %2, ptr noundef %3, ptr %4, i64 %5) local_unnamed_addr #5 align 2 {
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang4ExprELb1EE9push_backES3_.exit:
   %6 = alloca %"struct.clang::DeclarationNameInfo", align 8 ; 4 uses
-  %7 = alloca %"class.llvm::SmallVector.1604", align 8 ; 32 uses
+  %7 = alloca %"class.llvm::SmallVector.1604", align 8 ; 33 uses
   %8 = alloca %"struct.clang::DeclarationNameInfo", align 8 ; 6 uses
   %9 = alloca %"class.clang::UnresolvedSet.1606", align 8 ; 7 uses
   %10 = alloca %"class.(anonymous namespace)::UnbridgedCastsSet", align 8 ; 8 uses
@@ -5821,11 +5819,11 @@ bb.l:                                             ; preds = %bb.k
   %i.di = getelementptr inbounds nuw i8, ptr %12, i64 12
   store i32 2, ptr %i.di, align 4, !tbaa !517
   %i.dj = call noundef zeroext i1 @_ZNK5clang13CXXMethodDecl30isExplicitObjectMemberFunctionEv(ptr noundef nonnull align 8 dereferenceable(168) %i.db) #28
-  %36 = load ptr, ptr %7, align 8, !tbaa !515
-  %37 = load ptr, ptr %36, align 8, !tbaa !1230   ; 2 uses
   br i1 %i.dj, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
+  %36 = load ptr, ptr %7, align 8, !tbaa !515
+  %37 = load ptr, ptr %36, align 8, !tbaa !1230
   %i.dk = call i64 @_ZN5clang4Sema32InitializeExplicitObjectArgumentERS0_PNS_4ExprEPNS_12FunctionDeclE(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %37, ptr noundef nonnull %i.db) ; 2 uses
   %i.dl = icmp eq i64 %i.dk, 1
   br i1 %i.dl, label %.critedge, label %bb.n
@@ -5841,10 +5839,12 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.l
   call void @llvm.assume(i1 true) [ "align"(ptr %i.da, i64 8) ]
+  %38 = load ptr, ptr %7, align 8, !tbaa !515
+  %39 = load ptr, ptr %38, align 8, !tbaa !1230
   %.0.copyload.i.i.i.i.i = load i64, ptr %i.de, align 8
   %i.dr = and i64 %.0.copyload.i.i.i.i.i, -8
   %i.ds = inttoptr i64 %i.dr to ptr
-  %i.dt = call i64 @_ZN5clang4Sema43PerformImplicitObjectArgumentInitializationEPNS_4ExprENS_19NestedNameSpecifierEPNS_9NamedDeclEPNS_13CXXMethodDeclE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %37, i64 0, ptr noundef %i.ds, ptr noundef nonnull %i.db) ; 2 uses
+  %i.dt = call i64 @_ZN5clang4Sema43PerformImplicitObjectArgumentInitializationEPNS_4ExprENS_19NestedNameSpecifierEPNS_9NamedDeclEPNS_13CXXMethodDeclE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %39, i64 0, ptr noundef %i.ds, ptr noundef nonnull %i.db) ; 2 uses
   %i.du = icmp eq i64 %i.dt, 1
   br i1 %i.du, label %.critedge, label %bb.p
 
@@ -5867,13 +5867,13 @@ bb.r:                                             ; preds = %bb.q
   store i32 %1, ptr %i.dy, align 8, !tbaa !554
   %i.dz = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
   call void @_ZN5clang18DeclarationNameLocC1ENS_15DeclarationNameE(ptr noundef nonnull align 8 dereferenceable(8) %i.dz, i64 %i.y) #28
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.da, i64 8) ]
   %.sroa.2292.0.insert.ext = zext i32 %2 to i64
   %.sroa.2292.0.insert.shift = shl nuw i64 %.sroa.2292.0.insert.ext, 32
   %.sroa.0291.0.insert.ext = zext i32 %1 to i64
   %.sroa.0291.0.insert.insert = or disjoint i64 %.sroa.2292.0.insert.shift, %.sroa.0291.0.insert.ext
   %i.ea = inttoptr i64 %.sroa.0291.0.insert.insert to ptr
   store ptr %i.ea, ptr %i.dz, align 8, !tbaa !75
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.da, i64 8) ]
   %.0.copyload.i.i.i.i.i104 = load i64, ptr %i.de, align 8
   %i.eb = and i64 %.0.copyload.i.i.i.i.i104, -8
   %i.ec = inttoptr i64 %i.eb to ptr
@@ -6276,13 +6276,13 @@ _ZNK5clang4Type6castAsINS_17FunctionProtoTypeEEEPKT_v.exit: ; preds = %bb.bk, %b
   store i32 %3, ptr %i.tw, align 8, !tbaa !554
   %i.tx = getelementptr inbounds nuw i8, ptr %37, i64 16 ; 3 uses
   call void @_ZN5clang18DeclarationNameLocC1ENS_15DeclarationNameE(ptr noundef nonnull align 8 dereferenceable(8) %i.tx, i64 %i.tv) #28
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.pz, i64 8) ]
   %.sroa.2226.0.insert.ext = zext i32 %6 to i64
   %.sroa.2226.0.insert.shift = shl nuw i64 %.sroa.2226.0.insert.ext, 32
   %.sroa.0225.0.insert.ext = zext i32 %3 to i64
   %.sroa.0225.0.insert.insert = or disjoint i64 %.sroa.2226.0.insert.shift, %.sroa.0225.0.insert.ext
   %i.ty = inttoptr i64 %.sroa.0225.0.insert.insert to ptr
   store ptr %i.ty, ptr %i.tx, align 8, !tbaa !75
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.pz, i64 8) ]
   %.0.copyload.i.i.i.i.i192 = load i64, ptr %i.tb, align 8
   %i.tz = and i64 %.0.copyload.i.i.i.i.i192, -8
   %i.ua = inttoptr i64 %i.tz to ptr
@@ -6602,7 +6602,7 @@ bb.a:
   %6 = alloca %"class.llvm::ArrayRef", align 8    ; 4 uses
   %7 = alloca %"class.llvm::MutableArrayRef", align 8 ; 4 uses
   %8 = alloca %"class.clang::Sema::BoundTypeDiagnoser.2274", align 8 ; 6 uses
-  %i.a = alloca ptr, align 8                      ; 19 uses
+  %i.a = alloca ptr, align 8                      ; 20 uses
   %9 = alloca %"class.clang::OverloadCandidateSet", align 8 ; 35 uses
   %10 = alloca %"class.clang::LookupResult", align 8 ; 25 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -7005,29 +7005,30 @@ bb.ay:                                            ; preds = %._crit_edge
   %i.mf = call noundef i32 @_ZN5clang4Sema25CheckMemberOperatorAccessENS_14SourceLocationEPNS_4ExprES3_NS_14DeclAccessPairE(ptr noundef nonnull align 8 dereferenceable(18640) %0, i32 %3, ptr noundef %i.mc, ptr noundef null, i64 %.sroa.023.0.copyload) #28 ; 0 uses
   %i.mg = load ptr, ptr %i.md, align 8, !tbaa !1477 ; 8 uses
   %i.mh = call noundef zeroext i1 @_ZNK5clang13CXXMethodDecl30isExplicitObjectMemberFunctionEv(ptr noundef nonnull align 8 dereferenceable(168) %i.mg) #28
-  %34 = load ptr, ptr %i.a, align 8, !tbaa !1230  ; 2 uses
   br i1 %i.mh, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
+  %34 = load ptr, ptr %i.a, align 8, !tbaa !1230
   %i.mi = call i64 @_ZN5clang4Sema32InitializeExplicitObjectArgumentERS0_PNS_4ExprEPNS_12FunctionDeclE(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %34, ptr noundef nonnull %i.mg) ; 2 uses
   %i.mj = icmp eq i64 %i.mi, 1
   br i1 %i.mj, label %.thread159, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.ay
   call void @llvm.assume(i1 true) [ "align"(ptr %i.md, i64 8) ]
+  %35 = load ptr, ptr %i.a, align 8, !tbaa !1230
   %.0.copyload.i.i.i.i.i98 = load i64, ptr %i.me, align 8
   %i.mk = and i64 %.0.copyload.i.i.i.i.i98, -8
   %i.ml = inttoptr i64 %i.mk to ptr
-  %i.mm = call i64 @_ZN5clang4Sema43PerformImplicitObjectArgumentInitializationEPNS_4ExprENS_19NestedNameSpecifierEPNS_9NamedDeclEPNS_13CXXMethodDeclE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %34, i64 0, ptr noundef %i.ml, ptr noundef nonnull %i.mg) ; 2 uses
+  %i.mm = call i64 @_ZN5clang4Sema43PerformImplicitObjectArgumentInitializationEPNS_4ExprENS_19NestedNameSpecifierEPNS_9NamedDeclEPNS_13CXXMethodDeclE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %35, i64 0, ptr noundef %i.ml, ptr noundef nonnull %i.mg) ; 2 uses
   %i.mn = icmp eq i64 %i.mm, 1
   br i1 %i.mn, label %.thread159, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az
   %storemerge.in.in = phi i64 [ %i.mi, %bb.az ], [ %i.mm, %bb.ba ]
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.md, i64 8) ]
   %storemerge.in = and i64 %storemerge.in.in, -2
   %storemerge = inttoptr i64 %storemerge.in to ptr ; 2 uses
   store ptr %storemerge, ptr %i.a, align 8, !tbaa !1230
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.md, i64 8) ]
   %.0.copyload.i.i.i.i.i99 = load i64, ptr %i.me, align 8
   %i.mo = and i64 %.0.copyload.i.i.i.i.i99, -8
   %i.mp = inttoptr i64 %i.mo to ptr
@@ -7430,9 +7431,9 @@ bb.u:                                             ; preds = %_ZNK5clang19Declara
   %i.ej = add nuw nsw i64 %i.eh, %i.ei
   %i.ek = icmp samesign ugt i64 %i.ej, 1
   %i.el = load ptr, ptr %i.a, align 8, !tbaa !1468 ; 3 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.el, i64 8) ]
   %20 = load ptr, ptr %i.el, align 8, !tbaa !1477 ; 6 uses
   %21 = getelementptr inbounds nuw i8, ptr %i.el, i64 8
-  call void @llvm.assume(i1 true) [ "align"(ptr %i.el, i64 8) ]
   %.0.copyload.i.i.i.i.i = load i64, ptr %21, align 8
   %i.em = and i64 %.0.copyload.i.i.i.i.i, -8
   %i.en = inttoptr i64 %i.em to ptr
@@ -7835,8 +7836,8 @@ bb.p:                                             ; preds = %.lr.ph, %_ZN5clang2
   br i1 %.not56, label %_ZN5clang27AmbiguousConversionSequence13addConversionEPNS_9NamedDeclEPNS_12FunctionDeclE.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %8 = getelementptr inbounds nuw i8, ptr %.05389, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %.05389, i64 8) ]
+  %8 = getelementptr inbounds nuw i8, ptr %.05389, i64 8
   %.0.copyload.i.i.i.i.i68 = load i64, ptr %8, align 8
   %i.dt = and i64 %.0.copyload.i.i.i.i.i68, -8
   %i.du = inttoptr i64 %i.dt to ptr               ; 2 uses
@@ -8239,8 +8240,8 @@ bb.af:                                            ; preds = %.lr.ph213, %_ZN5cla
   br i1 %.not72, label %_ZN5clang27AmbiguousConversionSequence13addConversionEPNS_9NamedDeclEPNS_12FunctionDeclE.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %9 = getelementptr inbounds nuw i8, ptr %.0212, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %.0212, i64 8) ]
+  %9 = getelementptr inbounds nuw i8, ptr %.0212, i64 8
   %.0.copyload.i.i.i.i.i157 = load i64, ptr %9, align 8
   %i.ks = and i64 %.0.copyload.i.i.i.i.i157, -8
   %i.kt = inttoptr i64 %i.ks to ptr               ; 2 uses
@@ -8643,6 +8644,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   %.0198 = phi i1 [ false, %bb.a ], [ true, %bb.c ], [ false, %bb.b ], [ false, %bb.d ] ; 10 uses
   %.0 = phi i32 [ %2, %bb.a ], [ 0, %bb.c ], [ %2, %bb.b ], [ %spec.select, %bb.d ] ; 15 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #28
   %i.cg = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 4 uses
   store ptr %i.cg, ptr %19, align 8, !tbaa !1523
@@ -8650,7 +8652,6 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
   store i64 0, ptr %i.ch, align 8, !tbaa !1447
   store i8 0, ptr %i.cg, align 8, !tbaa !75
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 13 uses
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   %.0.copyload.i.i.i.i.i = load i64, ptr %i.ci, align 8
   %i.cj = and i64 %.0.copyload.i.i.i.i.i, -8
   %i.ck = inttoptr i64 %i.cj to ptr
@@ -8900,8 +8901,8 @@ _ZN5clanglsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKNS_8SemaBase
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %24) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %24) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %24) #28
   %.0.copyload.i.i.i.i.i235 = load i64, ptr %i.ci, align 8
   %i.gg = and i64 %.0.copyload.i.i.i.i.i235, -8   ; 2 uses
   %i.gh = inttoptr i64 %i.gg to ptr               ; 3 uses
@@ -9304,8 +9305,8 @@ _ZN5clanglsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKNS_8SemaBase
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %28) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %28) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %28) #28
   %.0.copyload.i.i.i.i.i294 = load i64, ptr %i.ci, align 8
   %i.om = and i64 %.0.copyload.i.i.i.i.i294, -8   ; 2 uses
   %i.on = inttoptr i64 %i.om to ptr               ; 3 uses
@@ -9375,8 +9376,8 @@ bb.bf:                                            ; preds = %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %29) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %29) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %29) #28
   %.0.copyload.i.i.i.i.i300 = load i64, ptr %i.ci, align 8
   %i.pm = and i64 %.0.copyload.i.i.i.i.i300, -8
   %i.pn = inttoptr i64 %i.pm to ptr
@@ -9482,8 +9483,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit305: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %30) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %30) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %30) #28
   %.0.copyload.i.i.i.i.i306 = load i64, ptr %i.ci, align 8
   %i.qz = and i64 %.0.copyload.i.i.i.i.i306, -8
   %i.ra = inttoptr i64 %i.qz to ptr
@@ -9650,8 +9651,8 @@ _ZN5clanglsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKNS_8SemaBase
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %38) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %38) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %38) #28
   %.0.copyload.i.i.i.i.i315 = load i64, ptr %i.ci, align 8
   %i.tn = and i64 %.0.copyload.i.i.i.i.i315, -8   ; 2 uses
   %i.to = inttoptr i64 %i.tn to ptr               ; 3 uses
@@ -9776,8 +9777,8 @@ _ZN5clanglsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKNS_8SemaBase
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %39) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %39) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %39) #28
   %.0.copyload.i.i.i.i.i325 = load i64, ptr %i.ci, align 8
   %i.vr = and i64 %.0.copyload.i.i.i.i.i325, -8   ; 2 uses
   %i.vs = inttoptr i64 %i.vr to ptr               ; 3 uses
@@ -9996,8 +9997,8 @@ _ZN5clanglsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKNS_8SemaBase
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %40) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %40) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %40) #28
   %.0.copyload.i.i.i.i.i351 = load i64, ptr %i.ci, align 8
   %i.zi = and i64 %.0.copyload.i.i.i.i.i351, -8   ; 2 uses
   %i.zj = inttoptr i64 %i.zi to ptr               ; 3 uses
@@ -10310,8 +10311,8 @@ _ZN5clanglsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERKNS_8SemaBase
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bi) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bh) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %44) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %44) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %44) #28
   %.0.copyload.i.i.i.i.i389 = load i64, ptr %i.ci, align 8
   %i.aed = and i64 %.0.copyload.i.i.i.i.i389, -8  ; 2 uses
   %i.aee = inttoptr i64 %i.aed to ptr             ; 3 uses
@@ -10415,8 +10416,8 @@ bb.dl:                                            ; preds = %_ZNK5clang7CanQualI
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bm) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bl) #28
   call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %45) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %45) #28
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %45) #28
   %.0.copyload.i.i.i.i.i407 = load i64, ptr %i.ci, align 8
   %i.afs = and i64 %.0.copyload.i.i.i.i.i407, -8
   %i.aft = inttoptr i64 %i.afs to ptr
@@ -10819,8 +10820,8 @@ _ZN5clang12LookupResult5clearEv.exit:             ; preds = %bb.i, %bb.j
   store i8 0, ptr %i.t, align 2, !tbaa !1340
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
   %i.bk = load ptr, ptr %i.a, align 8, !tbaa !1468 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   call void @llvm.assume(i1 true) [ "align"(ptr %i.bk, i64 8) ]
+  %20 = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %.0.copyload.i.i.i.i = load i64, ptr %20, align 8 ; 2 uses
   %i.bl = and i64 %.0.copyload.i.i.i.i, -8
   %i.bm = inttoptr i64 %i.bl to ptr

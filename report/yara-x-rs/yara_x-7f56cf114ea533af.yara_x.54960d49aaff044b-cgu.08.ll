@@ -205,8 +205,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %lcmp.mod.not, label %.lr.ph.split.i.i.i.prol.loopexit, label %.lr.ph.split.i.i.i.prol
 
 .lr.ph.split.i.i.i.prol:                          ; preds = %.lr.ph.split.i.i.i.preheader
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.copyload.i.i.i, i64 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0.copyload.i.i.i), "nonnull"(ptr %.sroa.11.0.copyload.i.i.i) ]
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0.copyload.i.i.i, i64 1
   %i.bm = icmp eq ptr %.sroa.8.0.copyload.i.i.i, %.sroa.11.0.copyload.i.i.i ; 2 uses
   %spec.select.i.i.i.prol = select i1 %i.bm, ptr %.sroa.7.0.copyload.i.i.i, ptr %.sroa.11.0.copyload.i.i.i
   %spec.select82.i.i.i.prol = select i1 %i.bm, ptr %.sroa.62.0.copyload.i.i.i, ptr %.sroa.8.0.copyload.i.i.i ; 2 uses
@@ -301,10 +301,11 @@ bb.u:                                             ; preds = %.lr.ph.split.us.i.i
   %.sroa.01.080.i.i.i = phi ptr [ %i.cw, %.lr.ph.split.i.i.i ], [ %.sroa.01.080.i.i.i.unr, %.lr.ph.split.i.i.i.prol.loopexit ] ; 4 uses
   %.sroa.8.079.i.i.i = phi ptr [ %i.cy, %.lr.ph.split.i.i.i ], [ %.sroa.8.079.i.i.i.unr, %.lr.ph.split.i.i.i.prol.loopexit ] ; 3 uses
   %.sroa.11.078.i.i.i = phi ptr [ %spec.select.i.i.i.1, %.lr.ph.split.i.i.i ], [ %.sroa.11.078.i.i.i.unr, %.lr.ph.split.i.i.i.prol.loopexit ] ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.080.i.i.i, i64 1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.079.i.i.i), "nonnull"(ptr %.sroa.11.078.i.i.i) ]
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.080.i.i.i, i64 1 ; 2 uses
   %i.cr = icmp eq ptr %.sroa.8.079.i.i.i, %.sroa.11.078.i.i.i ; 2 uses
   %spec.select.i.i.i = select i1 %i.cr, ptr %.sroa.7.0.copyload.i.i.i, ptr %.sroa.11.078.i.i.i ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %spec.select.i.i.i) ]
   %spec.select82.i.i.i = select i1 %i.cr, ptr %.sroa.62.0.copyload.i.i.i, ptr %.sroa.8.079.i.i.i ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %spec.select82.i.i.i, i64 1 ; 2 uses
   %i.ct = load i8, ptr %spec.select82.i.i.i, align 1, !noalias !102, !noundef !5
@@ -312,7 +313,6 @@ bb.u:                                             ; preds = %.lr.ph.split.us.i.i
   %i.cv = xor i8 %i.cu, %i.ct
   store i8 %i.cv, ptr %.sroa.01.080.i.i.i, align 1, !noalias !102
   %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.01.080.i.i.i, i64 2 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %spec.select.i.i.i) ]
   %i.cx = icmp eq ptr %i.cs, %spec.select.i.i.i   ; 2 uses
   %spec.select.i.i.i.1 = select i1 %i.cx, ptr %.sroa.7.0.copyload.i.i.i, ptr %spec.select.i.i.i
   %spec.select82.i.i.i.1 = select i1 %i.cx, ptr %.sroa.62.0.copyload.i.i.i, ptr %i.cs ; 2 uses
@@ -715,9 +715,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.d, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceuEp6OutputuNtNtBP_6marker4SendEL_ENtNtBN_4drop4Drop4dropCs7gfv9tzbXmh_6yara_x.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.e = getelementptr inbounds nuw i8, ptr %.8.val, i64 16
   %i.f = load i64, ptr %i.e, align 8, !range !20, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.0.val, i64 noundef range(i64 1, 0) %i.c, i64 noundef range(i64 1, 536870913) %i.f) #47
   br label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceuEp6OutputuNtNtBP_6marker4SendEL_ENtNtBN_4drop4Drop4dropCs7gfv9tzbXmh_6yara_x.exit
 
@@ -1120,9 +1120,9 @@ bb.e:                                             ; preds = %bb.d, %_RINvNtCskKL
   br i1 %i.l, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputuNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.m = getelementptr inbounds nuw i8, ptr %.val1, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !20, !invariant.load !5
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, 0) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #47
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputuNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit
 
@@ -1339,9 +1339,9 @@ bb.m:                                             ; preds = %bb.k
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtNtCsg2CeFYmfPbl_8protobuf7reflect3acc2v23map22MapFieldAccessorHolderECs7gfv9tzbXmh_6yara_x.exit.sink.split.i.i: ; preds = %bb.l, %bb.h, %bb.d
   %.sink18.i.i = phi i64 [ %i.o, %bb.h ], [ %i.f, %bb.d ], [ %i.v, %bb.l ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 16
   %i.ac = load i64, ptr %i.ab, align 8, !range !20, !invariant.load !5, !noalias !430
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i, i64 noundef range(i64 1, 0) %.sink18.i.i, i64 noundef range(i64 1, 536870913) %i.ac) #47, !noalias !430
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect3acc22GeneratedFieldAccessorECs7gfv9tzbXmh_6yara_x.exit
 
@@ -1744,8 +1744,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.h = extractvalue { ptr, ptr } %i.f, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   %i.i = extractvalue { ptr, ptr } %i.f, 1        ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h), "nonnull"(ptr %i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.i) ]
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !2783, !nonnull !5, !noundef !5 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 3 uses
@@ -2148,8 +2149,8 @@ bb.l:                                             ; preds = %bb.j
   unreachable
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit10.i: ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit12.i
-  %2 = load i64, ptr %i.z, align 8, !alias.scope !2844, !noundef !5 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
+  %2 = load i64, ptr %i.z, align 8, !alias.scope !2844, !noundef !5 ; 2 uses
   %.idx.i = mul nuw nsw i64 %.val7, 48
   %i.ae = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i
   %i.af = icmp eq i64 %.val7, 0
@@ -2552,10 +2553,10 @@ bb.au:                                            ; preds = %bb.at
 
 _RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev3new.exit: ; preds = %bb.a
   %i.he = getelementptr i8, ptr %2, i64 4         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.he) ]
   %i.hf = getelementptr i8, ptr %2, i64 3
   %i.hg = load i8, ptr %i.hf, align 1, !alias.scope !4816, !noundef !5
   %i.hh = zext i8 %i.hg to i32
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.he) ]
   %i.hi = getelementptr i8, ptr %2, i64 2
   %.sroa.5.0.peel.i = load i8, ptr %i.hi, align 1, !alias.scope !4816, !noundef !5
   %i.hj = zext i8 %.sroa.5.0.peel.i to i32
@@ -2958,8 +2959,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsg2CeFYmfPbl_8protobuf13message_fi
 bb.aq:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsg2CeFYmfPbl_8protobuf13message_field12MessageFieldNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos2pe7VersionEEB1E_.exit285
   %i.iy = getelementptr inbounds nuw i8, ptr %i.aj, i64 272
   %i.iz = extractvalue { ptr, i64 } %i.ix, 0      ; 3 uses
-  %2 = extractvalue { ptr, i64 } %i.ix, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.iz) ]
+  %2 = extractvalue { ptr, i64 } %i.ix, 1
   %i.ja = getelementptr inbounds nuw [8 x i8], ptr %i.iz, i64 %2
   invoke void @_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos2pe8DirEntryE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB20_5slice4iter4IterNtNtNtBM_2pe6parser8DirEntryENvYBG_INtNtB20_7convert4FromRB36_E4fromEEBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.iy, ptr noundef nonnull %i.iz, ptr noundef nonnull %i.ja)
           to label %bb.ar unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -2981,8 +2982,8 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.jg = getelementptr inbounds nuw i8, ptr %i.aj, i64 296
   %i.jh = extractvalue { ptr, i64 } %i.jf, 0      ; 3 uses
-  %3 = extractvalue { ptr, i64 } %i.jf, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jh) ]
+  %3 = extractvalue { ptr, i64 } %i.jf, 1
   %i.ji = getelementptr inbounds nuw [88 x i8], ptr %i.jh, i64 %3
   invoke void @_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos2pe8ResourceE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB20_5slice4iter4IterNtNtNtBM_2pe6parser8ResourceENvYBG_INtNtB20_7convert4FromRB36_E4fromEEBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.jg, ptr noundef nonnull %i.jh, ptr noundef nonnull %i.ji)
           to label %bb.au unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
@@ -2994,8 +2995,8 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.au
   %i.jk = getelementptr inbounds nuw i8, ptr %i.aj, i64 392
   %i.jl = extractvalue { ptr, i64 } %i.jj, 0      ; 3 uses
-  %4 = extractvalue { ptr, i64 } %i.jj, 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jl) ]
+  %4 = extractvalue { ptr, i64 } %i.jj, 1
   %i.jm = getelementptr inbounds nuw [600 x i8], ptr %i.jl, i64 %4
   invoke void @_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos2pe9SignatureE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB21_5slice4iter4IterNtNtNtBM_5utils12authenticode21AuthenticodeSignatureENvYBG_INtNtB21_7convert4FromRB37_E4fromEEBO_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.jk, ptr noundef nonnull %i.jl, ptr noundef nonnull %i.jm)
           to label %bb.aw unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
