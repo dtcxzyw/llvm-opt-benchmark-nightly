@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   call void %.0200.i(ptr noundef nonnull %i.ad, ptr noundef nonnull %i.bl, ptr noundef nonnull %i.bn, ptr noundef nonnull %i.x, ptr noundef nonnull %i.a) #46, !callees !1262, !inline_history !1243
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.bf, i64 noundef %i.be) #46
   call void @OPENSSL_free(ptr noundef nonnull %i.bf) #46
-  %i.fw = add nsw i32 %12, 63
+  %i.fw = add nuw nsw i32 %12, 63
   %i.fx = ashr i32 %i.fw, 6                       ; 3 uses
   %i.fy = icmp sgt i32 %i.fx, 0                   ; 2 uses
   br i1 %i.fy, label %.lr.ph.preheader.i113, label %.preheader.i
@@ -608,7 +608,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ea = xor i8 %i.dz, %i.dw
   store i8 %i.ea, ptr %i.dy, align 1, !tbaa !76
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
-  %i.eb = add i64 %.5169, -2                      ; 2 uses
+  %i.eb = add nsw i64 %.5169, -2                  ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.4, i64 %indvars.iv.next
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !76
   %i.ee = getelementptr inbounds nuw i8, ptr %i.bx, i64 %indvars.iv.next
@@ -987,7 +987,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ea = getelementptr inbounds nuw i8, ptr %.4133, i64 %indvars.iv
   store i8 %i.dz, ptr %i.ea, align 1, !tbaa !76
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
-  %i.eb = add i64 %.5174, -2                      ; 2 uses
+  %i.eb = add nsw i64 %.5174, -2                  ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.4, i64 %indvars.iv.next
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !76  ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.cb, i64 %indvars.iv.next ; 2 uses

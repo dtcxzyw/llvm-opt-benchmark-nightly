@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.ar, %.lr.ph.i
   %.sroa.012.025.i = phi ptr [ %i.bi, %.lr.ph.i ], [ %i.ca, %bb.ar ] ; 5 uses
   %.sroa.7.024.i = phi i64 [ 0, %.lr.ph.i ], [ %i.cb, %bb.ar ] ; 3 uses
   %.sroa.10.023.i = phi i64 [ %i.bo, %.lr.ph.i ], [ %i.by, %bb.ar ]
-  %i.by = add i64 %.sroa.10.023.i, -1, !dbg !117263 ; 2 uses
+  %i.by = add nsw i64 %.sroa.10.023.i, -1, !dbg !117263 ; 2 uses
   %i.bz = icmp eq ptr %.sroa.012.025.i, %i.bv, !dbg !117264
   br i1 %i.bz, label %.loopexit, label %bb.al, !dbg !117265
 
