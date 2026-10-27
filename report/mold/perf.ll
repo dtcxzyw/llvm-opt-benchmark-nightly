@@ -205,24 +205,22 @@ bb.o:                                             ; preds = %bb.n
 _ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit: ; preds = %bb.n, %bb.o
   %.0.i = phi ptr [ %i.dn, %bb.o ], [ %.sroa.38.0, %bb.n ]
   %i.do = load ptr, ptr %.0.i, align 8, !tbaa !76
-  %4 = add i64 %.0178, %.sroa.18.0
-  %5 = add i64 %.0178, -1                         ; 2 uses
-  %6 = icmp sgt i64 %5, 0
-  br i1 %6, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit.i.i.i.i.i, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit16
+  br label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit.i.i.i.i.i
 
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit.i.i.i.i.i: ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i
-  %.sroa.2.0.i.i.i.i.in = phi i64 [ %.sroa.2.0.i.i.i.i.a, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i ], [ %.sroa.18.0, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit ]
+_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit.i.i.i.i.i: ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit
+  %.sroa.2.0.i.i.i.i.in = phi i64 [ %.sroa.2.0.i.i.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i ], [ %.sroa.18.0, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit ]
   %.sroa.8.0.i.i.i.i = phi ptr [ %.sroa.8.1.i.i.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i ], [ %.sroa.38.0, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit ] ; 3 uses
   %.sroa.3.0.i.i.i.i = phi i64 [ %i.ef, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i ], [ %.sroa.18.0, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit ] ; 4 uses
-  %.08.i.i.i.i.i.a = phi i64 [ %7, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i ], [ %5, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit ] ; 2 uses
-  %.sroa.2.0.i.i.i.i.a = add i64 %.sroa.2.0.i.i.i.i.in, 1 ; 3 uses
-  %i.dp = or i64 %.sroa.2.0.i.i.i.i.a, 1
+  %.08.i.i.i.i.i.a = phi i64 [ %.sroa.2.0.i.i.i.i.a, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i ], [ %.0178, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit ] ; 2 uses
+  %.sroa.2.0.i.i.i.i = add i64 %.sroa.2.0.i.i.i.i.in, 1 ; 3 uses
+  %.sroa.2.0.i.i.i.i.a = add nsw i64 %.08.i.i.i.i.i.a, -1
+  %i.dp = or i64 %.sroa.2.0.i.i.i.i, 1
   %i.dq = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.dp, i1 true)
   %i.dr = xor i64 %i.dq, 63
   %i.ds = load atomic ptr, ptr %i.dc acquire, align 8, !noalias !335
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.ds, i64 %i.dr
   %i.du = load atomic ptr, ptr %i.dt acquire, align 8, !noalias !335
-  %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %.sroa.2.0.i.i.i.i.a
+  %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %.sroa.2.0.i.i.i.i
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !76, !noalias !335
   %i.dx = icmp eq ptr %.sroa.8.0.i.i.i.i, null    ; 2 uses
   br i1 %i.dx, label %bb.p, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i
@@ -247,11 +245,11 @@ _ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecord
   %i.ej = getelementptr inbounds nuw i8, ptr %.sroa.8.0.i.i.i.i, i64 8
   %i.ek = select i1 %i.dx, i1 true, i1 %i.ei
   %.sroa.8.1.i.i.i.i = select i1 %i.ek, ptr null, ptr %i.ej
-  %7 = add nsw i64 %.08.i.i.i.i.i.a, -1
-  %i.el = icmp sgt i64 %.08.i.i.i.i.i.a, 1
+  %i.el = icmp sgt i64 %.08.i.i.i.i.i.a, 2
   br i1 %i.el, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit.i.i.i.i.i, label %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit16, !llvm.loop !9
 
-_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit16: ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i, %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit
+_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit16: ; preds = %_ZNK3tbb6detail2d115vector_iteratorINS1_17concurrent_vectorIPN4mold11TimerRecordENS1_23cache_aligned_allocatorIS6_EEEES6_EdeEv.exit3.i.i.i.i.i
+  %4 = add i64 %.0178, %.sroa.18.0
   %i.em = add i64 %4, -1                          ; 2 uses
   %i.en = or i64 %i.em, 1
   %i.eo = tail call noundef range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.en, i1 true)
