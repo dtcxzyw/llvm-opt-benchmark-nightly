@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = zext nneg i32 %i.j to i64
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.o
   %i.q = sext i32 %i.n to i64
-  %i.r = shl nsw i64 %i.q, 3
+  %i.r = shl nuw nsw i64 %i.q, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.p, i64 %i.r, i1 false)
   %.pre = load i32, ptr %i.a, align 8, !tbaa !70
   br label %bb.e
