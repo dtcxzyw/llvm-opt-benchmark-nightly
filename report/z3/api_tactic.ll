@@ -205,14 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.h
 
 _Z12to_probe_refP9_Z3_probe.exit:                 ; preds = %bb.b, %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1), "nonnull"(ptr %2) ]
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1600
   store i32 0, ptr %i.d, align 8, !tbaa !172
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !206  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   tail call void @llvm.experimental.noalias.scope.decl(metadata !366)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !223, !noalias !366, !nonnull !224, !noundef !224 ; 6 uses
   store ptr %i.h, ptr %3, align 8, !tbaa !223, !alias.scope !366
@@ -474,9 +473,9 @@ bb.a:
           to label %_Z11to_goal_refP8_Z3_goal.exit unwind label %bb.ah ; 3 uses
 
 _Z11to_goal_refP8_Z3_goal.exit:                   ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   tail call void @llvm.experimental.noalias.scope.decl(metadata !371)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !223, !noalias !371, !nonnull !224, !noundef !224 ; 6 uses
   store ptr %i.c, ptr %5, align 8, !tbaa !223, !alias.scope !371
@@ -563,6 +562,7 @@ bb.k:                                             ; preds = %bb.j
           to label %_Z13to_tactic_refP10_Z3_tactic.exit unwind label %bb.ah
 
 _Z13to_tactic_refP10_Z3_tactic.exit:              ; preds = %bb.k
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   %i.ad = load ptr, ptr %i.v, align 8, !tbaa !190
   %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -572,7 +572,6 @@ _Z13to_tactic_refP10_Z3_tactic.exit:              ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 64 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(42) %i.af, i8 0, i64 42, i1 false)
   store ptr %i.ad, ptr %i.ag, align 8, !tbaa !372
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !197 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !14

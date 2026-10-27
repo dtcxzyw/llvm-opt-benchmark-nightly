@@ -205,8 +205,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not.i.i, label %.thread199.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 64 %i.fb, i8 0, i64 %i.fa, i1 false)
   call void @llvm.assume(i1 true) [ "align"(ptr %i.fb, i64 64) ]
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 64 %i.fb, i8 0, i64 %i.fa, i1 false)
   %i.fc = add nsw i64 %i.cw, -1                   ; 2 uses
   %.not237.i = icmp eq i64 %i.fc, 0
   br i1 %.not237.i, label %._crit_edge220.thread.i, label %.preheader211.lr.ph.i
@@ -609,8 +609,8 @@ bb.a:
   %i.k = tail call ptr @dt_alloc_aligned(i64 noundef %i.j) #33 ; 5 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.k, i64 64) ]
   %i.l = tail call ptr @dt_alloc_aligned(i64 noundef %i.j) #33 ; 19 uses
-  %5 = ptrtoaddr ptr %i.l to i64
   call void @llvm.assume(i1 true) [ "align"(ptr %i.l, i64 64) ]
+  %5 = ptrtoaddr ptr %i.l to i64
   %i.m = icmp ne ptr %i.k, null
   %i.n = icmp ne ptr %i.l, null
   %or.cond = select i1 %i.m, i1 %i.n, i1 false
@@ -1013,8 +1013,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i, label %.thread338, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 64 %i.df, i8 0, i64 %i.de, i1 false)
   call void @llvm.assume(i1 true) [ "align"(ptr %i.df, i64 64) ]
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 64 %i.df, i8 0, i64 %i.de, i1 false)
   %i.dg = add nsw i64 %i.bc, -1                   ; 3 uses
   %.not411 = icmp eq i64 %i.dg, 0
   br i1 %.not411, label %._crit_edge371.thread, label %.preheader357.lr.ph
@@ -1417,7 +1417,7 @@ bb.c:                                             ; preds = %bb.a, %bb.aa
   %.not = icmp eq i32 %i.aj, 0                    ; 2 uses
   %. = select i1 %.not, ptr %8, ptr %7
   %.053 = select i1 %.not147.not, ptr %0, ptr %.  ; 13 uses
-  %.0 = select i1 %.not, ptr %7, ptr %8           ; 17 uses
+  %.0 = select i1 %.not, ptr %7, ptr %8           ; 16 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !615)
   br i1 %.not.i, label %decompose_2D_Bspline.exit, label %.lr.ph66.i
 
@@ -1820,6 +1820,7 @@ decompose_2D_Bspline.exit:                        ; preds = %._crit_edge.i, %bb.
   %.not80 = icmp eq i32 %.054119, %i.k            ; 2 uses
   %i.ir = shl nuw nsw i32 %.054119, 2
   %i.is = call fastcc float @equivalent_sigma_at_step(i32 noundef %i.ir) ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64), "align"(ptr %.0, i64 64), "align"(ptr %6, i64 64) ]
   %i.it = fmul reassoc nsz arcp contract afn float %i.is, %i.is ; 4 uses
   br i1 %i.o, label %bb.i, label %bb.s
 
@@ -1828,7 +1829,6 @@ bb.i:                                             ; preds = %decompose_2D_Bsplin
   call void @llvm.experimental.noalias.scope.decl(metadata !623)
   call void @llvm.experimental.noalias.scope.decl(metadata !624)
   call void @llvm.experimental.noalias.scope.decl(metadata !625)
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64), "align"(ptr %.0, i64 64), "align"(ptr %6, i64 64) ]
   br i1 %.not.i, label %guide_laplacians.exit, label %.lr.ph321.i
 
 .lr.ph321.i:                                      ; preds = %bb.i
@@ -2231,7 +2231,6 @@ bb.s:                                             ; preds = %decompose_2D_Bsplin
   call void @llvm.experimental.noalias.scope.decl(metadata !630)
   call void @llvm.experimental.noalias.scope.decl(metadata !631)
   call void @llvm.experimental.noalias.scope.decl(metadata !632)
-  call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 64), "align"(ptr %.0, i64 64), "align"(ptr %6, i64 64) ]
   br i1 %.not.i, label %guide_laplacians.exit, label %.lr.ph214.i
 
 .lr.ph214.i:                                      ; preds = %bb.s
