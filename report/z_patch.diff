@@ -1,0 +1,34 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 61420334b51b9..dd5890d17993f 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16330,8 +16330,15 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+              Bitwidth > Op->getType()->getScalarSizeInBits()) {
+         Type *NarrowTy = IntegerType::get(SE.getContext(), Bitwidth);
+         auto *NarrowExt = SE.getZeroExtendExpr(Op, NarrowTy);
+-        if (const SCEV *S = Map.lookup(NarrowExt))
++        if (const SCEV *S = Map.lookup(NarrowExt)) {
++          // S is equal to NarrowExt, but may have a wider range. Bound it by
++          // the maximum value of Op.
++          APInt OpMax = APInt::getLowBitsSet(
++              Bitwidth, Op->getType()->getScalarSizeInBits());
++          if (SE.getUnsignedRangeMax(S).ugt(OpMax))
++            S = SE.getUMinExpr(S, SE.getConstant(OpMax));
+           return SE.getZeroExtendExpr(S, Ty);
++        }
+         Bitwidth = Bitwidth / 2;
+       }
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-narrower-zext.ll b/llvm/test/Analysis/ScalarEvolution/guards-narrower-zext.ll
+index 64f41835d336f..de5f25761dd66 100644
+--- a/llvm/test/Analysis/ScalarEvolution/guards-narrower-zext.ll
++++ b/llvm/test/Analysis/ScalarEvolution/guards-narrower-zext.ll
+@@ -7,7 +7,7 @@ define void @narrower_zext_bounded_by_operand(i32 %m, i8 %k) {
+ ; CHECK-LABEL: 'narrower_zext_bounded_by_operand'
+ ; CHECK-NEXT:  Determining loop execution counts for: @narrower_zext_bounded_by_operand
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (2 * (zext i8 %k to i64))<nuw><nsw>)<nsw>
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 8589934589
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 509
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (2 * (zext i8 %k to i64))<nuw><nsw>)<nsw>
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 2
+ ;
