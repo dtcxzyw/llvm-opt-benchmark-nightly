@@ -206,11 +206,7 @@ bb.b:                                             ; preds = %sqlite3_malloc64.ex
   %wide.trip.count.i = zext nneg i32 %i.t to i64
   br label %bb.c
 
-.preheader.i:                                     ; preds = %.critedge.i
-  %6 = icmp sgt i32 %spec.select.i, 0
-  br i1 %6, label %.lr.ph56.i, label %geopolySortEventsByX.exit.thread
-
-.lr.ph56.i:                                       ; preds = %.preheader.i
+.lr.ph56.i:                                       ; preds = %.critedge.i
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %wide.trip.count68.i = zext nneg i32 %spec.select.i to i64
   br label %bb.h
@@ -300,10 +296,10 @@ geopolyEventMerge.exit.i:                         ; preds = %geopolyEventMerge.e
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.as
   store ptr %.0.lcssa.i, ptr %i.at, align 8, !tbaa !8215
   %i.au = add nuw nsw i32 %.023.lcssa.i, 1
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %.02650.i, i32 %i.au) ; 3 uses
+  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %.02650.i, i32 %i.au) ; 2 uses
   %indvars.iv.next62.i = add nuw nsw i64 %indvars.iv61.i, 1 ; 2 uses
   %exitcond64.not.i = icmp eq i64 %indvars.iv.next62.i, %wide.trip.count.i
-  br i1 %exitcond64.not.i, label %.preheader.i, label %bb.c, !llvm.loop !8204
+  br i1 %exitcond64.not.i, label %.lr.ph56.i, label %bb.c, !llvm.loop !8204
 
 bb.h:                                             ; preds = %geopolyEventMerge.exit41.i, %.lr.ph56.i
   %indvars.iv65.i = phi i64 [ 0, %.lr.ph56.i ], [ %indvars.iv.next66.i, %geopolyEventMerge.exit41.i ] ; 2 uses
@@ -362,7 +358,7 @@ geopolyEventMerge.exit41.i:                       ; preds = %bb.k, %bb.h
   %exitcond69.not.i = icmp eq i64 %indvars.iv.next66.i, %wide.trip.count68.i
   br i1 %exitcond69.not.i, label %geopolySortEventsByX.exit, label %bb.h, !llvm.loop !8205
 
-geopolySortEventsByX.exit.thread:                 ; preds = %.preheader.i, %bb.b
+geopolySortEventsByX.exit.thread:                 ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
   br label %.loopexit165
 
@@ -398,11 +394,7 @@ bb.n:                                             ; preds = %bb.m
   %.not50.i = icmp eq ptr %.099192, null
   br i1 %.not50.i, label %geopolySortSegmentsByYAndC.exit, label %.lr.ph53.i
 
-.preheader.i134:                                  ; preds = %.critedge.i130
-  %7 = icmp sgt i32 %spec.select.i132, 0
-  br i1 %7, label %.lr.ph57.i, label %geopolySortSegmentsByYAndC.exit
-
-.lr.ph57.i:                                       ; preds = %.preheader.i134
+.lr.ph57.i:                                       ; preds = %.critedge.i130
   %wide.trip.count.i136 = zext nneg i32 %spec.select.i132 to i64
   br label %bb.u
 
@@ -505,9 +497,9 @@ geopolySegmentMerge.exit.i:                       ; preds = %geopolySegmentMerge
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.cx
   store ptr %.0.lcssa.i131, ptr %i.cy, align 8, !tbaa !8217
   %i.cz = add nuw nsw i32 %.021.lcssa.i, 1
-  %spec.select.i132 = tail call i32 @llvm.smax.i32(i32 %.02352.i, i32 %i.cz) ; 3 uses
+  %spec.select.i132 = tail call i32 @llvm.smax.i32(i32 %.02352.i, i32 %i.cz) ; 2 uses
   %.not.i133 = icmp eq ptr %i.bw, null
-  br i1 %.not.i133, label %.preheader.i134, label %.lr.ph53.i, !llvm.loop !8208
+  br i1 %.not.i133, label %.lr.ph57.i, label %.lr.ph53.i, !llvm.loop !8208
 
 bb.u:                                             ; preds = %geopolySegmentMerge.exit41.i, %.lr.ph57.i
   %indvars.iv62.i = phi i64 [ 0, %.lr.ph57.i ], [ %indvars.iv.next63.i, %geopolySegmentMerge.exit41.i ] ; 2 uses
@@ -580,8 +572,8 @@ geopolySegmentMerge.exit41.i:                     ; preds = %bb.z, %bb.u
   %exitcond65.not.i = icmp eq i64 %indvars.iv.next63.i, %wide.trip.count.i136
   br i1 %exitcond65.not.i, label %geopolySortSegmentsByYAndC.exit, label %bb.u, !llvm.loop !8209
 
-geopolySortSegmentsByYAndC.exit:                  ; preds = %geopolySegmentMerge.exit41.i, %bb.n, %.preheader.i134
-  %.1.lcssa.i135 = phi ptr [ null, %.preheader.i134 ], [ null, %bb.n ], [ %i.dz, %geopolySegmentMerge.exit41.i ]
+geopolySortSegmentsByYAndC.exit:                  ; preds = %geopolySegmentMerge.exit41.i, %bb.n
+  %.1.lcssa.i135 = phi ptr [ null, %bb.n ], [ %i.dz, %geopolySegmentMerge.exit41.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #58
   br label %bb.aa
 

@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bv = shl nsw i32 %i.bs, 1
   %i.bw = add nsw i32 %i.br, 2
   %spec.select.i.i = call i32 @llvm.smax.i32(i32 %i.bv, i32 %i.bw)
-  %spec.store.select.i.i = call i32 @llvm.smax.i32(i32 %spec.select.i.i, i32 200) ; 3 uses
+  %spec.store.select.i.i = call i32 @llvm.smax.i32(i32 %spec.select.i.i, i32 200) ; 2 uses
   %i.bx = zext nneg i32 %spec.store.select.i.i to i64
   %i.by = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.bx) #15
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -217,8 +217,7 @@ bb.j:                                             ; preds = %.noexc
 
 bb.k:                                             ; preds = %bb.j
   %i.ca = load i32, ptr %i.ak, align 8, !tbaa !56
-  %spec.select.i.i.i = call i32 @llvm.smin.i32(i32 %i.br, i32 %i.ca)
-  %.1.i.i.i.a = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i, i32 %spec.store.select.i.i)
+  %.1.i.i.i.a = call i32 @llvm.smin.i32(i32 %i.br, i32 %i.ca)
   %i.cb = load ptr, ptr %11, align 8, !tbaa !55
   %i.cc = sext i32 %.1.i.i.i.a to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.by, ptr align 1 %i.cb, i64 %i.cc, i1 false)
@@ -280,7 +279,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cq = shl nsw i32 %i.cn, 1
   %i.cr = add nsw i32 %i.cm, 2
   %spec.select.i.i476 = call i32 @llvm.smax.i32(i32 %i.cq, i32 %i.cr)
-  %spec.store.select.i.i477 = call i32 @llvm.smax.i32(i32 %spec.select.i.i476, i32 200) ; 3 uses
+  %spec.store.select.i.i477 = call i32 @llvm.smax.i32(i32 %spec.select.i.i476, i32 200) ; 2 uses
   %i.cs = zext nneg i32 %spec.store.select.i.i477 to i64
   %i.ct = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.cs) #15
           to label %.noexc486 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -295,8 +294,7 @@ bb.r:                                             ; preds = %.noexc486
 
 bb.s:                                             ; preds = %bb.r
   %i.cv = load i32, ptr %i.ak, align 8, !tbaa !56
-  %spec.select.i.i.i482 = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cv)
-  %.1.i.i.i483 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i482, i32 %spec.store.select.i.i477)
+  %.1.i.i.i483 = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.cv)
   %i.cw = load ptr, ptr %11, align 8, !tbaa !55
   %i.cx = sext i32 %.1.i.i.i483 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ct, ptr align 1 %i.cw, i64 %i.cx, i1 false)
@@ -392,7 +390,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.dy = shl nsw i32 %i.dv, 1
   %i.dz = add nsw i32 %i.du, 2
   %spec.select.i.i491 = call i32 @llvm.smax.i32(i32 %i.dy, i32 %i.dz)
-  %spec.store.select.i.i492 = call i32 @llvm.smax.i32(i32 %spec.select.i.i491, i32 200) ; 3 uses
+  %spec.store.select.i.i492 = call i32 @llvm.smax.i32(i32 %spec.select.i.i491, i32 200) ; 2 uses
   %i.ea = zext nneg i32 %spec.store.select.i.i492 to i64
   %i.eb = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ea) #15
           to label %.noexc501 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -407,8 +405,7 @@ bb.ae:                                            ; preds = %.noexc501
 
 bb.af:                                            ; preds = %bb.ae
   %i.ed = load i32, ptr %i.ak, align 8, !tbaa !56
-  %spec.select.i.i.i497 = call i32 @llvm.smin.i32(i32 %i.du, i32 %i.ed)
-  %.1.i.i.i498 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i497, i32 %spec.store.select.i.i492)
+  %.1.i.i.i498 = call i32 @llvm.smin.i32(i32 %i.du, i32 %i.ed)
   %i.ee = load ptr, ptr %11, align 8, !tbaa !55
   %i.ef = sext i32 %.1.i.i.i498 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.eb, ptr align 1 %i.ee, i64 %i.ef, i1 false)
@@ -811,7 +808,7 @@ bb.ck:                                            ; preds = %bb.cj
   %i.kh = shl nsw i32 %i.ke, 1
   %i.ki = add nsw i32 %i.kd, 2
   %spec.select.i.i536 = call i32 @llvm.smax.i32(i32 %i.kh, i32 %i.ki)
-  %spec.store.select.i.i537 = call i32 @llvm.smax.i32(i32 %spec.select.i.i536, i32 200) ; 3 uses
+  %spec.store.select.i.i537 = call i32 @llvm.smax.i32(i32 %spec.select.i.i536, i32 200) ; 2 uses
   %i.kj = zext nneg i32 %spec.store.select.i.i537 to i64
   %i.kk = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.kj) #15
           to label %.noexc546 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -826,8 +823,7 @@ bb.cl:                                            ; preds = %.noexc546
 
 bb.cm:                                            ; preds = %bb.cl
   %i.km = load i32, ptr %i.aa, align 8, !tbaa !56
-  %spec.select.i.i.i542 = call i32 @llvm.smin.i32(i32 %i.kd, i32 %i.km)
-  %.1.i.i.i543 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i542, i32 %spec.store.select.i.i537)
+  %.1.i.i.i543 = call i32 @llvm.smin.i32(i32 %i.kd, i32 %i.km)
   %i.kn = load ptr, ptr %9, align 8, !tbaa !55
   %i.ko = sext i32 %.1.i.i.i543 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.kk, ptr align 1 %i.kn, i64 %i.ko, i1 false)
@@ -893,7 +889,7 @@ bb.cs:                                            ; preds = %bb.cr
   %i.lf = shl nsw i32 %i.lc, 1
   %i.lg = add nsw i32 %i.lb, 2
   %spec.select.i.i550 = call i32 @llvm.smax.i32(i32 %i.lf, i32 %i.lg)
-  %spec.store.select.i.i551 = call i32 @llvm.smax.i32(i32 %spec.select.i.i550, i32 200) ; 3 uses
+  %spec.store.select.i.i551 = call i32 @llvm.smax.i32(i32 %spec.select.i.i550, i32 200) ; 2 uses
   %i.lh = zext nneg i32 %spec.store.select.i.i551 to i64
   %i.li = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.lh) #15
           to label %.noexc560 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -908,8 +904,7 @@ bb.ct:                                            ; preds = %.noexc560
 
 bb.cu:                                            ; preds = %bb.ct
   %i.lk = load i32, ptr %i.aa, align 8, !tbaa !56
-  %spec.select.i.i.i556 = call i32 @llvm.smin.i32(i32 %i.lb, i32 %i.lk)
-  %.1.i.i.i557 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i556, i32 %spec.store.select.i.i551)
+  %.1.i.i.i557 = call i32 @llvm.smin.i32(i32 %i.lb, i32 %i.lk)
   %i.ll = load ptr, ptr %9, align 8, !tbaa !55
   %i.lm = sext i32 %.1.i.i.i557 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.li, ptr align 1 %i.ll, i64 %i.lm, i1 false)
@@ -1066,7 +1061,7 @@ bb.dk:                                            ; preds = %bb.dj
   %i.nj = shl nsw i32 %i.ng, 1
   %i.nk = add nsw i32 %i.nf, 2
   %spec.select.i.i577 = call i32 @llvm.smax.i32(i32 %i.nj, i32 %i.nk)
-  %spec.store.select.i.i578 = call i32 @llvm.smax.i32(i32 %spec.select.i.i577, i32 200) ; 3 uses
+  %spec.store.select.i.i578 = call i32 @llvm.smax.i32(i32 %spec.select.i.i577, i32 200) ; 2 uses
   %i.nl = zext nneg i32 %spec.store.select.i.i578 to i64
   %i.nm = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.nl) #15
           to label %.noexc587 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1081,8 +1076,7 @@ bb.dl:                                            ; preds = %.noexc587
 
 bb.dm:                                            ; preds = %bb.dl
   %i.no = load i32, ptr %i.aa, align 8, !tbaa !56
-  %spec.select.i.i.i583 = call i32 @llvm.smin.i32(i32 %i.nf, i32 %i.no)
-  %.1.i.i.i584 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i583, i32 %spec.store.select.i.i578)
+  %.1.i.i.i584 = call i32 @llvm.smin.i32(i32 %i.nf, i32 %i.no)
   %i.np = load ptr, ptr %9, align 8, !tbaa !55
   %i.nq = sext i32 %.1.i.i.i584 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.nm, ptr align 1 %i.np, i64 %i.nq, i1 false)
@@ -1145,7 +1139,7 @@ bb.ds:                                            ; preds = %bb.dr
   %i.of = shl nsw i32 %i.oc, 1
   %i.og = add nsw i32 %i.ob, 2
   %spec.select.i.i591 = call i32 @llvm.smax.i32(i32 %i.of, i32 %i.og)
-  %spec.store.select.i.i592 = call i32 @llvm.smax.i32(i32 %spec.select.i.i591, i32 200) ; 3 uses
+  %spec.store.select.i.i592 = call i32 @llvm.smax.i32(i32 %spec.select.i.i591, i32 200) ; 2 uses
   %i.oh = zext nneg i32 %spec.store.select.i.i592 to i64
   %i.oi = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.oh) #15
           to label %.noexc601 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1160,8 +1154,7 @@ bb.dt:                                            ; preds = %.noexc601
 
 bb.du:                                            ; preds = %bb.dt
   %i.ok = load i32, ptr %i.aa, align 8, !tbaa !56
-  %spec.select.i.i.i597 = call i32 @llvm.smin.i32(i32 %i.ob, i32 %i.ok)
-  %.1.i.i.i598 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i597, i32 %spec.store.select.i.i592)
+  %.1.i.i.i598 = call i32 @llvm.smin.i32(i32 %i.ob, i32 %i.ok)
   %i.ol = load ptr, ptr %9, align 8, !tbaa !55
   %i.om = sext i32 %.1.i.i.i598 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.oi, ptr align 1 %i.ol, i64 %i.om, i1 false)
@@ -1259,7 +1252,7 @@ bb.ee:                                            ; preds = %bb.ed
   %i.pn = shl nsw i32 %i.pk, 1
   %i.po = add nsw i32 %i.pi, 2
   %spec.select.i.i605 = call i32 @llvm.smax.i32(i32 %i.pn, i32 %i.po)
-  %spec.store.select.i.i606 = call i32 @llvm.smax.i32(i32 %spec.select.i.i605, i32 200) ; 3 uses
+  %spec.store.select.i.i606 = call i32 @llvm.smax.i32(i32 %spec.select.i.i605, i32 200) ; 2 uses
   %i.pp = zext nneg i32 %spec.store.select.i.i606 to i64
   %i.pq = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.pp) #15
           to label %.noexc615 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1274,8 +1267,7 @@ bb.ef:                                            ; preds = %.noexc615
 
 bb.eg:                                            ; preds = %bb.ef
   %i.ps = load i32, ptr %i.aa, align 8, !tbaa !56
-  %spec.select.i.i.i611 = call i32 @llvm.smin.i32(i32 %i.pi, i32 %i.ps)
-  %.1.i.i.i612 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i611, i32 %spec.store.select.i.i606)
+  %.1.i.i.i612 = call i32 @llvm.smin.i32(i32 %i.pi, i32 %i.ps)
   %i.pt = load ptr, ptr %9, align 8, !tbaa !55
   %i.pu = sext i32 %.1.i.i.i612 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.pq, ptr align 1 %i.pt, i64 %i.pu, i1 false)
@@ -1480,7 +1472,7 @@ bb.fg:                                            ; preds = %bb.ff
   %i.sb = shl nsw i32 %i.ry, 1
   %i.sc = add nsw i32 %i.rx, 2
   %spec.select.i.i630 = call i32 @llvm.smax.i32(i32 %i.sb, i32 %i.sc)
-  %spec.store.select.i.i631 = call i32 @llvm.smax.i32(i32 %spec.select.i.i630, i32 200) ; 3 uses
+  %spec.store.select.i.i631 = call i32 @llvm.smax.i32(i32 %spec.select.i.i630, i32 200) ; 2 uses
   %i.sd = zext nneg i32 %spec.store.select.i.i631 to i64
   %i.se = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.sd) #15
           to label %.noexc640 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1495,8 +1487,7 @@ bb.fh:                                            ; preds = %.noexc640
 
 bb.fi:                                            ; preds = %bb.fh
   %i.sg = load i32, ptr %i.v, align 8, !tbaa !56
-  %spec.select.i.i.i636 = call i32 @llvm.smin.i32(i32 %i.rx, i32 %i.sg)
-  %.1.i.i.i637 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i636, i32 %spec.store.select.i.i631)
+  %.1.i.i.i637 = call i32 @llvm.smin.i32(i32 %i.rx, i32 %i.sg)
   %i.sh = load ptr, ptr %8, align 8, !tbaa !55
   %i.si = sext i32 %.1.i.i.i637 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.se, ptr align 1 %i.sh, i64 %i.si, i1 false)
@@ -1566,7 +1557,7 @@ bb.fo:                                            ; preds = %bb.fn
   %i.sz = shl nsw i32 %i.sw, 1
   %i.ta = add nsw i32 %i.ss, 2
   %spec.select.i.i644 = call i32 @llvm.smax.i32(i32 %i.sz, i32 %i.ta)
-  %spec.store.select.i.i645 = call i32 @llvm.smax.i32(i32 %spec.select.i.i644, i32 200) ; 3 uses
+  %spec.store.select.i.i645 = call i32 @llvm.smax.i32(i32 %spec.select.i.i644, i32 200) ; 2 uses
   %i.tb = zext nneg i32 %spec.store.select.i.i645 to i64
   %i.tc = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.tb) #15
           to label %.noexc654 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1581,8 +1572,7 @@ bb.fp:                                            ; preds = %.noexc654
 
 bb.fq:                                            ; preds = %bb.fp
   %i.te = load i32, ptr %i.v, align 8, !tbaa !56
-  %spec.select.i.i.i650 = call i32 @llvm.smin.i32(i32 %i.ss, i32 %i.te)
-  %.1.i.i.i651 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i650, i32 %spec.store.select.i.i645)
+  %.1.i.i.i651 = call i32 @llvm.smin.i32(i32 %i.ss, i32 %i.te)
   %i.tf = load ptr, ptr %8, align 8, !tbaa !55
   %i.tg = sext i32 %.1.i.i.i651 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.tc, ptr align 1 %i.tf, i64 %i.tg, i1 false)
@@ -1658,7 +1648,7 @@ bb.fz:                                            ; preds = %bb.fy
   %i.ty = shl nsw i32 %i.tv, 1
   %i.tz = add nsw i32 %i.tu, 2
   %spec.select.i.i658 = call i32 @llvm.smax.i32(i32 %i.ty, i32 %i.tz)
-  %spec.store.select.i.i659 = call i32 @llvm.smax.i32(i32 %spec.select.i.i658, i32 200) ; 3 uses
+  %spec.store.select.i.i659 = call i32 @llvm.smax.i32(i32 %spec.select.i.i658, i32 200) ; 2 uses
   %i.ua = zext nneg i32 %spec.store.select.i.i659 to i64
   %i.ub = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ua) #15
           to label %.noexc668 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1673,8 +1663,7 @@ bb.ga:                                            ; preds = %.noexc668
 
 bb.gb:                                            ; preds = %bb.ga
   %i.ud = load i32, ptr %i.v, align 8, !tbaa !56
-  %spec.select.i.i.i664 = call i32 @llvm.smin.i32(i32 %i.tu, i32 %i.ud)
-  %.1.i.i.i665 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i664, i32 %spec.store.select.i.i659)
+  %.1.i.i.i665 = call i32 @llvm.smin.i32(i32 %i.tu, i32 %i.ud)
   %i.ue = load ptr, ptr %8, align 8, !tbaa !55
   %i.uf = sext i32 %.1.i.i.i665 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ub, ptr align 1 %i.ue, i64 %i.uf, i1 false)
@@ -1736,7 +1725,7 @@ bb.gh:                                            ; preds = %bb.gg
   %i.ut = shl nsw i32 %i.uq, 1
   %i.uu = add nsw i32 %i.up, 2
   %spec.select.i.i672 = call i32 @llvm.smax.i32(i32 %i.ut, i32 %i.uu)
-  %spec.store.select.i.i673 = call i32 @llvm.smax.i32(i32 %spec.select.i.i672, i32 200) ; 3 uses
+  %spec.store.select.i.i673 = call i32 @llvm.smax.i32(i32 %spec.select.i.i672, i32 200) ; 2 uses
   %i.uv = zext nneg i32 %spec.store.select.i.i673 to i64
   %i.uw = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.uv) #15
           to label %.noexc682 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1751,8 +1740,7 @@ bb.gi:                                            ; preds = %.noexc682
 
 bb.gj:                                            ; preds = %bb.gi
   %i.uy = load i32, ptr %i.v, align 8, !tbaa !56
-  %spec.select.i.i.i678 = call i32 @llvm.smin.i32(i32 %i.up, i32 %i.uy)
-  %.1.i.i.i679 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i678, i32 %spec.store.select.i.i673)
+  %.1.i.i.i679 = call i32 @llvm.smin.i32(i32 %i.up, i32 %i.uy)
   %i.uz = load ptr, ptr %8, align 8, !tbaa !55
   %i.va = sext i32 %.1.i.i.i679 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.uw, ptr align 1 %i.uz, i64 %i.va, i1 false)
@@ -1827,7 +1815,7 @@ bb.gq:                                            ; preds = %bb.gp
   %i.vr = shl nsw i32 %i.vo, 1
   %i.vs = add nsw i32 %i.vn, 2
   %spec.select.i.i686 = call i32 @llvm.smax.i32(i32 %i.vr, i32 %i.vs)
-  %spec.store.select.i.i687 = call i32 @llvm.smax.i32(i32 %spec.select.i.i686, i32 200) ; 3 uses
+  %spec.store.select.i.i687 = call i32 @llvm.smax.i32(i32 %spec.select.i.i686, i32 200) ; 2 uses
   %i.vt = zext nneg i32 %spec.store.select.i.i687 to i64
   %i.vu = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.vt) #15
           to label %.noexc696.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1842,8 +1830,7 @@ bb.gr:                                            ; preds = %.noexc696.a
 
 bb.gs:                                            ; preds = %bb.gr
   %i.vw = load i32, ptr %i.v, align 8, !tbaa !56
-  %spec.select.i.i.i692 = call i32 @llvm.smin.i32(i32 %i.vn, i32 %i.vw)
-  %.1.i.i.i693 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i692, i32 %spec.store.select.i.i687)
+  %.1.i.i.i693 = call i32 @llvm.smin.i32(i32 %i.vn, i32 %i.vw)
   %i.vx = load ptr, ptr %8, align 8, !tbaa !55
   %i.vy = sext i32 %.1.i.i.i693 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.vu, ptr align 1 %i.vx, i64 %i.vy, i1 false)
@@ -1926,7 +1913,7 @@ bb.hd:                                            ; preds = %bb.hc
   %i.wq = shl nsw i32 %i.wn, 1
   %i.wr = add nsw i32 %i.wm, 2
   %spec.select.i.i700.a = call i32 @llvm.smax.i32(i32 %i.wq, i32 %i.wr)
-  %spec.store.select.i.i701.a = call i32 @llvm.smax.i32(i32 %spec.select.i.i700.a, i32 200) ; 3 uses
+  %spec.store.select.i.i701.a = call i32 @llvm.smax.i32(i32 %spec.select.i.i700.a, i32 200) ; 2 uses
   %i.ws = zext nneg i32 %spec.store.select.i.i701.a to i64
   %i.wt = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ws) #15
           to label %.noexc710 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -1941,8 +1928,7 @@ bb.he:                                            ; preds = %.noexc710
 
 bb.hf:                                            ; preds = %bb.he
   %i.wv = load i32, ptr %i.af, align 8, !tbaa !56
-  %spec.select.i.i.i706 = call i32 @llvm.smin.i32(i32 %i.wm, i32 %i.wv)
-  %.1.i.i.i707 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i706, i32 %spec.store.select.i.i701.a)
+  %.1.i.i.i707 = call i32 @llvm.smin.i32(i32 %i.wm, i32 %i.wv)
   %i.ww = load ptr, ptr %10, align 8, !tbaa !55
   %i.wx = sext i32 %.1.i.i.i707 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.wt, ptr align 1 %i.ww, i64 %i.wx, i1 false)
@@ -2008,7 +1994,7 @@ bb.hl:                                            ; preds = %bb.hk
   %i.xo = shl nsw i32 %i.xl, 1
   %i.xp = add nsw i32 %i.xk, 2
   %spec.select.i.i714 = call i32 @llvm.smax.i32(i32 %i.xo, i32 %i.xp)
-  %spec.store.select.i.i715 = call i32 @llvm.smax.i32(i32 %spec.select.i.i714, i32 200) ; 3 uses
+  %spec.store.select.i.i715 = call i32 @llvm.smax.i32(i32 %spec.select.i.i714, i32 200) ; 2 uses
   %i.xq = zext nneg i32 %spec.store.select.i.i715 to i64
   %i.xr = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.xq) #15
           to label %.noexc724.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2023,8 +2009,7 @@ bb.hm:                                            ; preds = %.noexc724.a
 
 bb.hn:                                            ; preds = %bb.hm
   %i.xt = load i32, ptr %i.af, align 8, !tbaa !56
-  %spec.select.i.i.i720 = call i32 @llvm.smin.i32(i32 %i.xk, i32 %i.xt)
-  %.1.i.i.i721 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i720, i32 %spec.store.select.i.i715)
+  %.1.i.i.i721 = call i32 @llvm.smin.i32(i32 %i.xk, i32 %i.xt)
   %i.xu = load ptr, ptr %10, align 8, !tbaa !55
   %i.xv = sext i32 %.1.i.i.i721 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.xr, ptr align 1 %i.xu, i64 %i.xv, i1 false)
@@ -2187,7 +2172,7 @@ bb.if:                                            ; preds = %bb.ie
   %i.zr = shl nsw i32 %i.zo, 1
   %i.zs = add nsw i32 %i.zn, 2
   %spec.select.i.i743 = call i32 @llvm.smax.i32(i32 %i.zr, i32 %i.zs)
-  %spec.store.select.i.i744 = call i32 @llvm.smax.i32(i32 %spec.select.i.i743, i32 200) ; 3 uses
+  %spec.store.select.i.i744 = call i32 @llvm.smax.i32(i32 %spec.select.i.i743, i32 200) ; 2 uses
   %i.zt = zext nneg i32 %spec.store.select.i.i744 to i64
   %i.zu = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.zt) #15
           to label %.noexc753 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2202,8 +2187,7 @@ bb.ig:                                            ; preds = %.noexc753
 
 bb.ih:                                            ; preds = %bb.ig
   %i.zw = load i32, ptr %i.af, align 8, !tbaa !56
-  %spec.select.i.i.i749 = call i32 @llvm.smin.i32(i32 %i.zn, i32 %i.zw)
-  %.1.i.i.i750 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i749, i32 %spec.store.select.i.i744)
+  %.1.i.i.i750 = call i32 @llvm.smin.i32(i32 %i.zn, i32 %i.zw)
   %i.zx = load ptr, ptr %10, align 8, !tbaa !55
   %i.zy = sext i32 %.1.i.i.i750 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.zu, ptr align 1 %i.zx, i64 %i.zy, i1 false)
@@ -2269,7 +2253,7 @@ bb.in:                                            ; preds = %bb.im
   %i.aap = shl nsw i32 %i.aam, 1
   %i.aaq = add nsw i32 %i.aal, 2
   %spec.select.i.i757.a = call i32 @llvm.smax.i32(i32 %i.aap, i32 %i.aaq)
-  %spec.store.select.i.i758.a = call i32 @llvm.smax.i32(i32 %spec.select.i.i757.a, i32 200) ; 3 uses
+  %spec.store.select.i.i758.a = call i32 @llvm.smax.i32(i32 %spec.select.i.i757.a, i32 200) ; 2 uses
   %i.aar = zext nneg i32 %spec.store.select.i.i758.a to i64
   %i.aas = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.aar) #15
           to label %.noexc767 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2284,8 +2268,7 @@ bb.io:                                            ; preds = %.noexc767
 
 bb.ip:                                            ; preds = %bb.io
   %i.aau = load i32, ptr %i.af, align 8, !tbaa !56
-  %spec.select.i.i.i763 = call i32 @llvm.smin.i32(i32 %i.aal, i32 %i.aau)
-  %.1.i.i.i764.a = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i763, i32 %spec.store.select.i.i758.a)
+  %.1.i.i.i764.a = call i32 @llvm.smin.i32(i32 %i.aal, i32 %i.aau)
   %i.aav = load ptr, ptr %10, align 8, !tbaa !55
   %i.aaw = sext i32 %.1.i.i.i764.a to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aas, ptr align 1 %i.aav, i64 %i.aaw, i1 false)
@@ -2465,7 +2448,7 @@ bb.jk:                                            ; preds = %bb.jj
   %i.acy = shl nsw i32 %i.acv, 1
   %i.acz = add nsw i32 %i.acu, 2
   %spec.select.i.i786 = call i32 @llvm.smax.i32(i32 %i.acy, i32 %i.acz)
-  %spec.store.select.i.i787 = call i32 @llvm.smax.i32(i32 %spec.select.i.i786, i32 200) ; 3 uses
+  %spec.store.select.i.i787 = call i32 @llvm.smax.i32(i32 %spec.select.i.i786, i32 200) ; 2 uses
   %i.ada = zext nneg i32 %spec.store.select.i.i787 to i64
   %i.adb = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ada) #15
           to label %.noexc796 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2480,8 +2463,7 @@ bb.jl:                                            ; preds = %.noexc796
 
 bb.jm:                                            ; preds = %bb.jl
   %i.add = load i32, ptr %i.af, align 8, !tbaa !56
-  %spec.select.i.i.i792 = call i32 @llvm.smin.i32(i32 %i.acu, i32 %i.add)
-  %.1.i.i.i793 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i792, i32 %spec.store.select.i.i787)
+  %.1.i.i.i793 = call i32 @llvm.smin.i32(i32 %i.acu, i32 %i.add)
   %i.ade = load ptr, ptr %10, align 8, !tbaa !55
   %i.adf = sext i32 %.1.i.i.i793 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.adb, ptr align 1 %i.ade, i64 %i.adf, i1 false)
@@ -2547,7 +2529,7 @@ bb.js:                                            ; preds = %bb.jr
   %i.adw = shl nsw i32 %i.adt, 1
   %i.adx = add nsw i32 %i.ads, 2
   %spec.select.i.i800 = call i32 @llvm.smax.i32(i32 %i.adw, i32 %i.adx)
-  %spec.store.select.i.i801 = call i32 @llvm.smax.i32(i32 %spec.select.i.i800, i32 200) ; 3 uses
+  %spec.store.select.i.i801 = call i32 @llvm.smax.i32(i32 %spec.select.i.i800, i32 200) ; 2 uses
   %i.ady = zext nneg i32 %spec.store.select.i.i801 to i64
   %i.adz = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ady) #15
           to label %.noexc810 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2562,8 +2544,7 @@ bb.jt:                                            ; preds = %.noexc810
 
 bb.ju:                                            ; preds = %bb.jt
   %i.aeb = load i32, ptr %i.af, align 8, !tbaa !56
-  %spec.select.i.i.i806 = call i32 @llvm.smin.i32(i32 %i.ads, i32 %i.aeb)
-  %.1.i.i.i807 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i806, i32 %spec.store.select.i.i801)
+  %.1.i.i.i807 = call i32 @llvm.smin.i32(i32 %i.ads, i32 %i.aeb)
   %i.aec = load ptr, ptr %10, align 8, !tbaa !55
   %i.aed = sext i32 %.1.i.i.i807 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.adz, ptr align 1 %i.aec, i64 %i.aed, i1 false)
@@ -2797,7 +2778,7 @@ bb.kv:                                            ; preds = %bb.ku
   %i.ago = shl nsw i32 %i.agl, 1
   %i.agp = add nsw i32 %i.agk, 2
   %spec.select.i.i843 = call i32 @llvm.smax.i32(i32 %i.ago, i32 %i.agp)
-  %spec.store.select.i.i844 = call i32 @llvm.smax.i32(i32 %spec.select.i.i843, i32 200) ; 3 uses
+  %spec.store.select.i.i844 = call i32 @llvm.smax.i32(i32 %spec.select.i.i843, i32 200) ; 2 uses
   %i.agq = zext nneg i32 %spec.store.select.i.i844 to i64
   %i.agr = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.agq) #15
           to label %.noexc853 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2812,8 +2793,7 @@ bb.kw:                                            ; preds = %.noexc853
 
 bb.kx:                                            ; preds = %bb.kw
   %i.agt = load i32, ptr %i.ak, align 8, !tbaa !56
-  %spec.select.i.i.i849 = call i32 @llvm.smin.i32(i32 %i.agk, i32 %i.agt)
-  %.1.i.i.i850 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i849, i32 %spec.store.select.i.i844)
+  %.1.i.i.i850 = call i32 @llvm.smin.i32(i32 %i.agk, i32 %i.agt)
   %i.agu = load ptr, ptr %11, align 8, !tbaa !55
   %i.agv = sext i32 %.1.i.i.i850 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.agr, ptr align 1 %i.agu, i64 %i.agv, i1 false)
@@ -2878,7 +2858,7 @@ bb.ld:                                            ; preds = %bb.lc
   %i.ahl = shl nsw i32 %i.ahi, 1
   %i.ahm = add nsw i32 %i.ahh, 2
   %spec.select.i.i857 = call i32 @llvm.smax.i32(i32 %i.ahl, i32 %i.ahm)
-  %spec.store.select.i.i858 = call i32 @llvm.smax.i32(i32 %spec.select.i.i857, i32 200) ; 3 uses
+  %spec.store.select.i.i858 = call i32 @llvm.smax.i32(i32 %spec.select.i.i857, i32 200) ; 2 uses
   %i.ahn = zext nneg i32 %spec.store.select.i.i858 to i64
   %i.aho = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ahn) #15
           to label %.noexc867 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2893,8 +2873,7 @@ bb.le:                                            ; preds = %.noexc867
 
 bb.lf:                                            ; preds = %bb.le
   %i.ahq = load i32, ptr %i.ak, align 8, !tbaa !56
-  %spec.select.i.i.i863 = call i32 @llvm.smin.i32(i32 %i.ahh, i32 %i.ahq)
-  %.1.i.i.i864 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i863, i32 %spec.store.select.i.i858)
+  %.1.i.i.i864 = call i32 @llvm.smin.i32(i32 %i.ahh, i32 %i.ahq)
   %i.ahr = load ptr, ptr %11, align 8, !tbaa !55
   %i.ahs = sext i32 %.1.i.i.i864 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aho, ptr align 1 %i.ahr, i64 %i.ahs, i1 false)
@@ -2951,7 +2930,7 @@ bb.ll:                                            ; preds = %bb.lk
   %i.aif = shl nsw i32 %i.aic, 1
   %i.aig = add nsw i32 %i.aib, 2
   %spec.select.i.i871 = call i32 @llvm.smax.i32(i32 %i.aif, i32 %i.aig)
-  %spec.store.select.i.i872 = call i32 @llvm.smax.i32(i32 %spec.select.i.i871, i32 200) ; 3 uses
+  %spec.store.select.i.i872 = call i32 @llvm.smax.i32(i32 %spec.select.i.i871, i32 200) ; 2 uses
   %i.aih = zext nneg i32 %spec.store.select.i.i872 to i64
   %i.aii = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.aih) #15
           to label %.noexc881 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp ; 4 uses
@@ -2966,8 +2945,7 @@ bb.lm:                                            ; preds = %.noexc881
 
 bb.ln:                                            ; preds = %bb.lm
   %i.aik = load i32, ptr %i.ak, align 8, !tbaa !56
-  %spec.select.i.i.i877 = call i32 @llvm.smin.i32(i32 %i.aib, i32 %i.aik)
-  %.1.i.i.i878 = call i32 @llvm.smin.i32(i32 %spec.select.i.i.i877, i32 %spec.store.select.i.i872)
+  %.1.i.i.i878 = call i32 @llvm.smin.i32(i32 %i.aib, i32 %i.aik)
   %i.ail = load ptr, ptr %11, align 8, !tbaa !55
   %i.aim = sext i32 %.1.i.i.i878 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aii, ptr align 1 %i.ail, i64 %i.aim, i1 false)

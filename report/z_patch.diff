@@ -1,0 +1,1762 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 85619390ea132a..ff505ca25a22f1 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -13,6 +13,7 @@
+ 
+ #include "llvm/Transforms/Scalar/ConstraintElimination.h"
+ #include "ScalarOptions.h"
++#include "llvm/ADT/MapVector.h"
+ #include "llvm/ADT/PointerIntPair.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/ScopeExit.h"
+@@ -345,6 +346,30 @@ struct Decomposition {
+         return true;
+     return false;
+   }
++
++  /// Merge entries that refer to the same variable, and remove any whose
++  /// coefficient is zero. \returns true if any operation overflows, i.e. the
++  /// decomposition is invalid.
++  [[nodiscard]] bool canonicalize() {
++    // Sum the coefficients of each variable.
++    SmallMapVector<Value *, int64_t, 4> Coefficients;
++    for (const DecompEntry &E : Vars) {
++      int64_t &Sum = Coefficients[E.Variable];
++      if (AddOverflow(Sum, E.Coefficient, Sum))
++        return true;
++    }
++    Vars.clear();
++    for (const auto &[Variable, Coefficient] : Coefficients)
++      if (Coefficient != 0)
++        Vars.emplace_back(Coefficient, Variable);
++    return false;
++  }
++
++  /// Returns a new decomposition with \p Variable replaced by \p Replacement.
++  /// Returns std::nullopt if a coefficient overflows, i.e. the decomposition is
++  /// invalid.
++  [[nodiscard]] std::optional<Decomposition>
++  substitute(Value *Variable, Value *Replacement, ConstraintInfo &Info) const;
+ };
+ 
+ /// Wrapper encapsulating separate constraint systems and corresponding value
+@@ -393,6 +418,8 @@ class ConstraintInfo {
+     return Signed ? SignedCS : UnsignedCS;
+   }
+ 
++  const DataLayout &getDataLayout() const { return DL; }
++
+   void popLastConstraint(bool Signed) {
+     assert(DecomposeCache.empty() && "Cache must be cleared");
+     getCS(Signed).popLastConstraint();
+@@ -408,10 +435,18 @@ class ConstraintInfo {
+   /// signed system implies it or because ValueTracking can prove it.
+   bool isKnownNonNegative(Value *V);
+ 
++  /// Returns true if \p V is known to be negative, either because the signed
++  /// system implies it, or because ValueTracking can prove it.
++  bool isKnownNegative(Value *);
++
+   /// Returns true if \p V is known to be positive, either because the signed
+   /// system implies it or because ValueTracking can prove it.
+   bool isKnownPositive(Value *V);
+ 
++  /// Returns true if \p V is known to be non-positive, either because the
++  /// signed system implies it or because ValueTracking can prove it.
++  bool isKnownNonPositive(Value *V);
++
+   void addFact(CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+                unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack);
+ 
+@@ -551,6 +586,128 @@ static bool doesHoldInRange(ConstraintInfo &Info, Value *Op,
+   return true;
+ }
+ 
++std::optional<Decomposition>
++Decomposition::substitute(Value *Variable, Value *Replacement,
++                          ConstraintInfo &Info) const {
++  Decomposition Result(Offset);
++  int64_t Coefficient = 0;
++  for (const DecompEntry &E : Vars) {
++    if (E.Variable != Variable)
++      Result.Vars.push_back(E);
++    else if (AddOverflow(Coefficient, E.Coefficient, Coefficient))
++      return std::nullopt;
++  }
++  Decomposition ReplacementDec =
++      decompose(Replacement, Info, /*IsSigned=*/true, Info.getDataLayout());
++  if (ReplacementDec.mul(Coefficient) || Result.add(ReplacementDec))
++    return std::nullopt;
++  return Result;
++}
++
++enum class SignedBound { Upper, Lower };
++
++/// Returns true if \p Info implies that the value of \p D does not exceed the
++/// signed maximum of \p Ty (if \p Bound is Upper) or is not below the signed
++/// minimum of \p Ty (if \p Bound is Lower).
++///
++/// The constraint systems do not record that every variable is within the
++/// range of its type, so only decompositions that are trivially in range, or
++/// that reduce to a single variable plus an offset, are handled. A min/max
++/// intrinsic result in \p D is split across its respective operands, using the
++/// fact that the value of \p D is monotonic in it: for an upper bound on a
++/// maximum, both sides must be in range, while for a lower bound only one side
++/// must be.
++static bool isKnownWithinSignedRange(Decomposition D, SignedBound Bound,
++                                     Type *Ty, ConstraintInfo &Info,
++                                     unsigned Depth) {
++  if (D.canonicalize())
++    return false;
++
++  if (Depth != 0) {
++    for (const DecompEntry &E : D.Vars) {
++      auto *MM = dyn_cast<MinMaxIntrinsic>(E.Variable);
++      if (!MM || !MM->isSigned() || MM->getType() != Ty)
++        continue;
++      auto LHS = D.substitute(E.Variable, MM->getLHS(), Info);
++      auto RHS = D.substitute(E.Variable, MM->getRHS(), Info);
++      if (!LHS || !RHS)
++        return false;
++
++      // D is increasing in the min/max result iff its coefficient is positive.
++      // Then D is a max over the respective sides iff the intrinsic is a max.
++      bool IsMax =
++          (MM->getIntrinsicID() == Intrinsic::smax) == (E.Coefficient > 0);
++      bool L = isKnownWithinSignedRange(*LHS, Bound, Ty, Info, Depth - 1);
++      if ((Bound == SignedBound::Upper) == IsMax)
++        return L && isKnownWithinSignedRange(*RHS, Bound, Ty, Info, Depth - 1);
++      return L || isKnownWithinSignedRange(*RHS, Bound, Ty, Info, Depth - 1);
++    }
++  }
++
++  // Compare in a type wide enough for both the bounds of Ty and the int64_t
++  // offset, so this does not depend on the width of Ty.
++  unsigned BitWidth = Ty->getScalarSizeInBits();
++  unsigned WideBits = std::max(BitWidth, 64u);
++  APInt SMax = APInt::getSignedMaxValue(BitWidth).sext(WideBits);
++  APInt SMin = APInt::getSignedMinValue(BitWidth).sext(WideBits);
++  APInt Offset(WideBits, D.Offset, /*isSigned=*/true);
++  if (D.Vars.empty())
++    return Bound == SignedBound::Upper ? Offset.sle(SMax) : Offset.sge(SMin);
++
++  // V + C is at most the maximum if C <= 0 and at least the minimum if C >= 0,
++  // since V is itself in range.
++  if (D.Vars.size() != 1 || D.Vars[0].Coefficient != 1)
++    return false;
++
++  Value *V = D.Vars[0].Variable;
++  if (V->getType() != Ty)
++    return false;
++
++  if (Bound == SignedBound::Upper) {
++    if (D.Offset <= 0)
++      return true;
++
++    // V + C <= SMax iff V <= SMax - C, which is only satisfiable in range.
++    APInt Limit = SMax - Offset;
++    return Limit.sge(SMin) &&
++           Info.doesHold(CmpInst::ICMP_SLE, V,
++                         ConstantInt::get(Ty, Limit.trunc(BitWidth)));
++  }
++
++  if (D.Offset >= 0)
++    return true;
++
++  // V + C >= SMin iff V >= SMin - C, which is only satisfiable in range.
++  APInt Limit = SMin - Offset;
++  return Limit.sle(SMax) &&
++         Info.doesHold(CmpInst::ICMP_SGE, V,
++                       ConstantInt::get(Ty, Limit.trunc(BitWidth)));
++}
++
++/// Returns true if the signed \p Opcode (Add or Sub) of \p Op0 and \p Op1 is
++/// known to not overflow because the result is in the range of the type.
++/// For example, A + (B - A) is B and therefore cannot overflow.
++static bool isKnownNoSignedWrap(Instruction::BinaryOps Opcode, Value *Op0,
++                                Value *Op1, ConstraintInfo &Info) {
++  if (Opcode != Instruction::Add && Opcode != Instruction::Sub)
++    return false;
++
++  Type *Ty = Op0->getType();
++  if (!Ty->isIntegerTy())
++    return false;
++
++  const DataLayout &DL = Info.getDataLayout();
++  Decomposition LHS = decompose(Op0, Info, /*IsSigned=*/true, DL);
++  Decomposition RHS = decompose(Op1, Info, /*IsSigned=*/true, DL);
++  if (Opcode == Instruction::Add ? LHS.add(RHS) : LHS.sub(RHS))
++    return false;
++
++  constexpr unsigned MaxDepth = 2;
++  return isKnownWithinSignedRange(LHS, SignedBound::Upper, Ty, Info,
++                                  MaxDepth) &&
++         isKnownWithinSignedRange(LHS, SignedBound::Lower, Ty, Info, MaxDepth);
++}
++
+ /// Returns true if \p Opcode applied to \p Op0 and \p Op1 with \p NoWrapFlags
+ /// is known to not wrap in signed or unsigned, depending on \p Signed.
+ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+@@ -572,6 +729,14 @@ static bool isKnownNoWrap(Instruction::BinaryOps Opcode, Value *Op0, Value *Op1,
+       return true;
+   }
+ 
++  // A signed sum of operands with opposite signs cannot wrap.
++  if (Signed && Opcode == Instruction::Add) {
++    if (Info.isKnownNonNegative(Op0) && Info.isKnownNonPositive(Op1))
++      return true;
++    if (Info.isKnownNonPositive(Op0) && Info.isKnownNonNegative(Op1))
++      return true;
++  }
++
+   if (!Signed && (NoWrapFlags & OBO::NoSignedWrap) &&
+       (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1)) &&
+       Info.isKnownNonNegative(Op0))
+@@ -596,9 +761,16 @@ static bool isKnownNoWrap(Value *V, ConstraintInfo &Info, bool Signed) {
+   if (match(V, m_DisjointOr(m_Value(), m_Value())))
+     return true;
+ 
+-  if (auto *WO = dyn_cast<WithOverflowInst>(V))
+-    return isKnownNoWrap(WO->getBinaryOp(), WO->getLHS(), WO->getRHS(),
+-                         /*NoWrapFlags=*/0, Info, Signed);
++  if (auto *WO = dyn_cast<WithOverflowInst>(V)) {
++    if (isKnownNoWrap(WO->getBinaryOp(), WO->getLHS(), WO->getRHS(),
++                      /*NoWrapFlags=*/0, Info, Signed))
++      return true;
++    // Reasoning about the infinite precision sum is costlier than the checks
++    // above, so only do it for the overflow intrinsics themselves, not
++    // for the plain adds and subs that decompose() analyzes.
++    return Signed && isKnownNoSignedWrap(WO->getBinaryOp(), WO->getLHS(),
++                                         WO->getRHS(), Info);
++  }
+ 
+   if (auto *Trunc = dyn_cast<TruncInst>(V)) {
+     if (Signed)
+@@ -1059,6 +1231,20 @@ bool ConstraintInfo::isKnownNonNegative(Value *V) {
+          doesHold(CmpInst::ICMP_SGE, V, ConstantInt::get(V->getType(), 0));
+ }
+ 
++bool ConstraintInfo::isKnownNegative(Value *V) {
++  if (auto *CI = dyn_cast<ConstantInt>(V))
++    return CI->isNegative();
++  return ::isKnownNegative(V, DL) ||
++         doesHold(CmpInst::ICMP_SLT, V, ConstantInt::get(V->getType(), 0));
++}
++
++bool ConstraintInfo::isKnownNonPositive(Value *V) {
++  if (auto *CI = dyn_cast<ConstantInt>(V))
++    return CI->getValue().isNonPositive();
++  return ::isKnownNegative(V, DL) ||
++         doesHold(CmpInst::ICMP_SLE, V, ConstantInt::get(V->getType(), 0));
++}
++
+ bool ConstraintInfo::isKnownPositive(Value *V) {
+   if (auto *CI = dyn_cast<ConstantInt>(V))
+     return CI->getValue().isStrictlyPositive();
+@@ -1950,6 +2136,115 @@ static RowTy getDecompositionLinkRow(Value *V, const ConstraintTy &C,
+   return NewVariables.empty() ? Row : RowTy();
+ }
+ 
++/// Three-valued conjunction, where std::nullopt is "unknown".
++static std::optional<bool> kleeneAnd(std::optional<bool> A,
++                                     std::optional<bool> B) {
++  if (A == false || B == false)
++    return false;
++  if (A == true && B == true)
++    return true;
++  return std::nullopt;
++}
++
++/// Three-valued disjunction, where std::nullopt is "unknown".
++static std::optional<bool> kleeneOr(std::optional<bool> A,
++                                    std::optional<bool> B) {
++  if (A == true || B == true)
++    return true;
++  if (A == false && B == false)
++    return false;
++  return std::nullopt;
++}
++
++/// Checks the signed relation \p D \p Pred 0 against the signed system, where
++/// \p Pred is SLT or SLE. Returns true or false if the relation or its
++/// negation is implied, std::nullopt otherwise.
++///
++/// For the result of a signed min/max intrinsic the systems only contain the
++/// bounds that hold for both sides (smax(a, b) >= a and >= b, and smin(a, b) <=
++/// a and <= b). The other direction is a disjunction, which cannot be a fact.
++/// Handle it here by splitting a min/max result in \p D across its operands: \p
++/// D is monotonic in that result, so it is the max or the min of its values at
++/// each side, and the relation holds for all or for either of the sides
++/// respectively.
++static std::optional<bool>
++checkSignedDecompositionWithMinMax(CmpInst::Predicate Pred, Decomposition D,
++                                   ConstraintInfo &Info, unsigned Depth) {
++  assert((Pred == CmpInst::ICMP_SLT || Pred == CmpInst::ICMP_SLE) &&
++         "only < and <= are handled");
++  if (D.canonicalize())
++    return std::nullopt;
++
++  // Evaluate constants directly.
++  if (D.Vars.empty())
++    return Pred == CmpInst::ICMP_SLT ? D.Offset < 0 : D.Offset <= 0;
++
++  if (Depth != 0) {
++    for (const DecompEntry &E : D.Vars) {
++      auto *MM = dyn_cast<MinMaxIntrinsic>(E.Variable);
++      if (!MM || !MM->isSigned())
++        continue;
++      auto LHS = D.substitute(E.Variable, MM->getLHS(), Info);
++      auto RHS = D.substitute(E.Variable, MM->getRHS(), Info);
++      if (!LHS || !RHS)
++        return std::nullopt;
++      auto L = checkSignedDecompositionWithMinMax(Pred, *LHS, Info, Depth - 1);
++      auto R = checkSignedDecompositionWithMinMax(Pred, *RHS, Info, Depth - 1);
++      // D is an affine function of MM with slope E.Coefficient. If the slope
++      // is positive, then D(max(a, b)) = max(D(a), D(b)) and D(min(a, b)) =
++      // min(D(a), D(b)). If it is negative, max and min swap roles.
++      return (MM->getIntrinsicID() == Intrinsic::smax) == (E.Coefficient > 0)
++                 ? kleeneAnd(L, R)
++                 : kleeneOr(L, R);
++    }
++  }
++
++  // Build "D Pred 0" as a single constraint over known variables.
++  Decomposition Zero(int64_t(0));
++  SmallVector<Value *> NewVariables;
++  RowTy R = getRowForLessEqual(D, Zero, Info.getValue2Index(/*Signed=*/true),
++                               NewVariables);
++  if (R.empty() || !NewVariables.empty())
++    return std::nullopt;
++
++  // "D < 0" is "D <= -1". R[0] is -D.Offset, and getRowForLessEqual gives up if
++  // that overflows, so R[0] > INT64_MIN and subtracting one cannot wrap.
++  if (Pred == CmpInst::ICMP_SLT) {
++    assert(R[0].Coefficient != std::numeric_limits<int64_t>::min() &&
++           "getRowForLessEqual rejects an offset that cannot be negated");
++    --R[0].Coefficient;
++  }
++
++  ConstraintTy C(std::move(R), Info.getValue2Index(/*Signed=*/true).size(),
++                 /*IsSigned=*/true, /*IsEq=*/false, /*IsNe=*/false);
++  return C.isImpliedBy(Info.getCS(/*Signed=*/true));
++}
++
++/// Checks the signed relation \p A \p Pred \p B, splitting signed min/max
++/// results across their respective operands.
++static std::optional<bool> TryWithMinMaxDecomposition(CmpInst::Predicate Pred,
++                                                      Value *A, Value *B,
++                                                      ConstraintInfo &Info) {
++  if (!A->getType()->isIntegerTy())
++    return std::nullopt;
++
++  // Canonicalize to "<" and "<=".
++  if (Pred == CmpInst::ICMP_SGT || Pred == CmpInst::ICMP_SGE) {
++    Pred = CmpInst::getSwappedPredicate(Pred);
++    std::swap(A, B);
++  }
++
++  if (Pred != CmpInst::ICMP_SLT && Pred != CmpInst::ICMP_SLE)
++    return std::nullopt;
++
++  const DataLayout &DL = Info.getDataLayout();
++  Decomposition D = decompose(A, Info, /*IsSigned=*/true, DL);
++  if (D.sub(decompose(B, Info, /*IsSigned=*/true, DL)))
++    return std::nullopt;
++
++  return checkSignedDecompositionWithMinMax(Pred, D, Info, /*Depth=*/2);
++}
++
+ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+                                           Value *B, Instruction *CheckInst,
+                                           ConstraintInfo &Info) {
+@@ -2012,6 +2307,8 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+     return ImpliedCondition;
+   if (auto ImpliedCondition = TryWithLinkedDecomposition(R))
+     return ImpliedCondition;
++  if (auto ImpliedCondition = TryWithMinMaxDecomposition(Pred, A, B, Info))
++    return ImpliedCondition;
+ 
+   // For non-negative operands unsigned queries can also be checked against the
+   // signed system.
+@@ -2566,12 +2863,30 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+         // If samesign is present on the ICmp, simply flip the sign of the
+         // predicate, transferring the information from the signed system to the
+         // unsigned system, and viceversa.
+-        if (Pred.hasSameSign())
++        if (Pred.hasSameSign()) {
+           Info.addFact(ICmpInst::getFlippedSignednessPredicate(Pred), A, B,
+                        CB.NumIn, CB.NumOut, DFSInStack);
+-        else
++          // The operands also have the same sign: if one of them is known to
++          // be non-negative (or negative), so is the other.
++          if (A->getType()->isIntegerTy()) {
++            Constant *Zero = Constant::getNullValue(A->getType());
++            bool ANonNeg = Info.isKnownNonNegative(A);
++            bool BNonNeg = Info.isKnownNonNegative(B);
++            if (ANonNeg != BNonNeg) {
++              Info.addFact(CmpInst::ICMP_SGE, ANonNeg ? B : A, Zero, CB.NumIn,
++                           CB.NumOut, DFSInStack);
++            } else if (!ANonNeg) {
++              bool ANeg = Info.isKnownNegative(A);
++              bool BNeg = Info.isKnownNegative(B);
++              if (ANeg != BNeg)
++                Info.addFact(CmpInst::ICMP_SLT, ANeg ? B : A, Zero, CB.NumIn,
++                             CB.NumOut, DFSInStack);
++            }
++          }
++        } else {
+           Info.transferToOtherSystem(Pred, A, B, CB.NumIn, CB.NumOut,
+                                      DFSInStack);
++        }
+       }
+ 
+       // (X | Y) >s -1 implies X >s -1 and Y >s -1, because the sign bit of an
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 07ad9a51f1912d..757ed12e167308 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -978,8 +978,7 @@ define i1 @add_non_positive_slt(i64 %x, i64 %y, i64 %b) {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %x, 0
+   call void @llvm.assume(i1 %x.non.neg)
+@@ -1001,8 +1000,7 @@ define i1 @add_non_positive_slt_commuted(i64 %x, i64 %y, i64 %b) {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[Y]], [[X]]
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %x.non.neg = icmp sge i64 %x, 0
+   call void @llvm.assume(i1 %x.non.neg)
+@@ -1026,8 +1024,7 @@ define i1 @add_non_positive_slt_hoisted(i64 %x, i64 %y, i64 %b) {
+ ; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
+ ; CHECK-NEXT:    br i1 [[AND_2]], label [[IF_END:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       if.end:
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    ret i1 true
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret i1 false
+ ;
+diff --git a/llvm/test/Transforms/ConstraintElimination/minmax.ll b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+index ffcc7a8bcf7e60..b207f568a25320 100644
+--- a/llvm/test/Transforms/ConstraintElimination/minmax.ll
++++ b/llvm/test/Transforms/ConstraintElimination/minmax.ll
+@@ -306,9 +306,7 @@ define i1 @smin_branchless(i32 %x, i32 %y) {
+ ; CHECK-SAME: (i32 [[X:%.*]], i32 [[Y:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[MIN:%.*]] = call i32 @llvm.smin.i32(i32 [[X]], i32 [[Y]])
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp sle i32 [[MIN]], [[X]]
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp sgt i32 [[MIN]], [[X]]
+-; CHECK-NEXT:    [[RET:%.*]] = xor i1 [[CMP1]], [[CMP2]]
++; CHECK-NEXT:    [[RET:%.*]] = xor i1 true, false
+ ; CHECK-NEXT:    ret i1 [[RET]]
+ ;
+ entry:
+@@ -722,3 +720,368 @@ declare i32 @llvm.smin.i32(i32, i32)
+ declare i32 @llvm.smax.i32(i32, i32)
+ declare i32 @llvm.umin.i32(i32, i32)
+ declare i32 @llvm.umax.i32(i32, i32)
++
++define i1 @smax_le_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_le_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sle i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sle i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ac = icmp sle i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sle i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sle i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smax_gt_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_gt_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sle i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sle i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %ac = icmp sle i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sle i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sgt i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smax_ge_swapped_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_ge_swapped_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sle i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sle i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ac = icmp sle i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sle i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sge i32 %c, %m
++  ret i1 %r
++}
++
++define i1 @smax_le_one_side(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_le_one_side
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sle i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[R:%.*]] = icmp sle i32 [[M]], [[C]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %ac = icmp sle i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sle i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smin_ge_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smin_ge_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sge i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sge i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smin.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ac = icmp sge i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sge i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smin.i32(i32 %a, i32 %b)
++  %r = icmp sge i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smin_le_swapped_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smin_le_swapped_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sge i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sge i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smin.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ac = icmp sge i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sge i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smin.i32(i32 %a, i32 %b)
++  %r = icmp sle i32 %c, %m
++  ret i1 %r
++}
++
++define i1 @smin_lt_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smin_lt_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sge i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sge i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smin.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %ac = icmp sge i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sge i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smin.i32(i32 %a, i32 %b)
++  %r = icmp slt i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smin_ge_one_side(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smin_ge_one_side
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sge i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smin.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[R:%.*]] = icmp sge i32 [[M]], [[C]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %ac = icmp sge i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %m = call i32 @llvm.smin.i32(i32 %a, i32 %b)
++  %r = icmp sge i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smax_ge_one_side(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_ge_one_side
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sge i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ac = icmp sge i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sge i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smin_le_one_side(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smin_le_one_side
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp sle i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smin.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ac = icmp sle i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %m = call i32 @llvm.smin.i32(i32 %a, i32 %b)
++  %r = icmp sle i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smax_ge_no_side(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_ge_no_side
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[R:%.*]] = icmp sge i32 [[M]], [[C]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sge i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smax_le_with_other_terms(i32 %x, i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_le_with_other_terms
++; CHECK-SAME: (i32 [[X:%.*]], i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[XZ:%.*]] = icmp sle i32 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[XZ]])
++; CHECK-NEXT:    [[AC:%.*]] = icmp sle i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp sle i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[S:%.*]] = add nsw i32 [[X]], [[M]]
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %xz = icmp sle i32 %x, 0
++  call void @llvm.assume(i1 %xz)
++  %ac = icmp sle i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp sle i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %s = add nsw i32 %x, %m
++  %r = icmp sle i32 %s, %c
++  ret i1 %r
++}
++
++define i1 @umax_le_both_sides(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @umax_le_both_sides
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AC:%.*]] = icmp ule i32 [[A]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AC]])
++; CHECK-NEXT:    [[BC:%.*]] = icmp ule i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.umax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[R:%.*]] = icmp sle i32 [[M]], [[C]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %ac = icmp ule i32 %a, %c
++  call void @llvm.assume(i1 %ac)
++  %bc = icmp ule i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.umax.i32(i32 %a, i32 %b)
++  %r = icmp sle i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smax_ge_second_side(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i1 @smax_ge_second_side
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[BC:%.*]] = icmp sge i32 [[B]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BC]])
++; CHECK-NEXT:    [[M:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %bc = icmp sge i32 %b, %c
++  call void @llvm.assume(i1 %bc)
++  %m = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %r = icmp sge i32 %m, %c
++  ret i1 %r
++}
++
++define i1 @smin_of_smax_le(i32 %a, i32 %b, i32 %c, i32 %d) {
++; CHECK-LABEL: define i1 @smin_of_smax_le
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]], i32 [[D:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AD:%.*]] = icmp sle i32 [[A]], [[D]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AD]])
++; CHECK-NEXT:    [[BD:%.*]] = icmp sle i32 [[B]], [[D]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BD]])
++; CHECK-NEXT:    [[MX:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[MN:%.*]] = call i32 @llvm.smin.i32(i32 [[MX]], i32 [[C]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %ad = icmp sle i32 %a, %d
++  call void @llvm.assume(i1 %ad)
++  %bd = icmp sle i32 %b, %d
++  call void @llvm.assume(i1 %bd)
++  %mx = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %mn = call i32 @llvm.smin.i32(i32 %mx, i32 %c)
++  %r = icmp sle i32 %mn, %d
++  ret i1 %r
++}
++
++define i1 @smax_three_levels_le(i32 %a, i32 %b, i32 %c, i32 %d, i32 %e) {
++; CHECK-LABEL: define i1 @smax_three_levels_le
++; CHECK-SAME: (i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]], i32 [[D:%.*]], i32 [[E:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[AE:%.*]] = icmp sle i32 [[A]], [[E]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[AE]])
++; CHECK-NEXT:    [[BE:%.*]] = icmp sle i32 [[B]], [[E]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[BE]])
++; CHECK-NEXT:    [[CE:%.*]] = icmp sle i32 [[C]], [[E]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CE]])
++; CHECK-NEXT:    [[DE:%.*]] = icmp sle i32 [[D]], [[E]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[DE]])
++; CHECK-NEXT:    [[M1:%.*]] = call i32 @llvm.smax.i32(i32 [[A]], i32 [[B]])
++; CHECK-NEXT:    [[M2:%.*]] = call i32 @llvm.smax.i32(i32 [[M1]], i32 [[C]])
++; CHECK-NEXT:    [[M3:%.*]] = call i32 @llvm.smax.i32(i32 [[M2]], i32 [[D]])
++; CHECK-NEXT:    [[R:%.*]] = icmp sle i32 [[M3]], [[E]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %ae = icmp sle i32 %a, %e
++  call void @llvm.assume(i1 %ae)
++  %be = icmp sle i32 %b, %e
++  call void @llvm.assume(i1 %be)
++  %ce = icmp sle i32 %c, %e
++  call void @llvm.assume(i1 %ce)
++  %de = icmp sle i32 %d, %e
++  call void @llvm.assume(i1 %de)
++  %m1 = call i32 @llvm.smax.i32(i32 %a, i32 %b)
++  %m2 = call i32 @llvm.smax.i32(i32 %m1, i32 %c)
++  %m3 = call i32 @llvm.smax.i32(i32 %m2, i32 %d)
++  %r = icmp sle i32 %m3, %e
++  ret i1 %r
++}
++
++define i1 @smax_substitute_overflow(i64 %x, i64 %z, i64 %y) {
++; CHECK-LABEL: define i1 @smax_substitute_overflow
++; CHECK-SAME: (i64 [[X:%.*]], i64 [[Z:%.*]], i64 [[Y:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = mul nsw i64 [[X]], 1099511627776
++; CHECK-NEXT:    [[M:%.*]] = call i64 @llvm.smax.i64(i64 [[A]], i64 [[Z]])
++; CHECK-NEXT:    [[D:%.*]] = mul nsw i64 [[M]], 1073741824
++; CHECK-NEXT:    [[R:%.*]] = icmp slt i64 [[D]], [[Y]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %a = mul nsw i64 %x, 1099511627776
++  %m = call i64 @llvm.smax.i64(i64 %a, i64 %z)
++  %d = mul nsw i64 %m, 1073741824
++  %r = icmp slt i64 %d, %y
++  ret i1 %r
++}
++
++define i1 @slt_offset_overflow(i64 %x) {
++; CHECK-LABEL: define i1 @slt_offset_overflow
++; CHECK-SAME: (i64 [[X:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[A:%.*]] = add nsw i64 [[X]], 9223372036854775806
++; CHECK-NEXT:    [[R:%.*]] = icmp slt i64 [[A]], -5
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %a = add nsw i64 %x, 9223372036854775806
++  %r = icmp slt i64 %a, -5
++  ret i1 %r
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+index 4194797fa5ea05..7ffae1b1350a48 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sadd-with-overflow.ll
+@@ -318,3 +318,633 @@ then:
+ else:
+   ret i8 0
+ }
++
++define void @sadd_sum_of_difference_assume(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_assume(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_sum_of_difference_branch(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_branch(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    br i1 [[NONNEG]], label %[[B1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[B1]]:
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    br i1 [[ORDERED]], label %[[BODY:.*]], label %[[EXIT]]
++; CHECK:       [[BODY]]:
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  br i1 %nonneg, label %b1, label %exit
++b1:
++  %ordered = icmp sge i8 %end, %start
++  br i1 %ordered, label %body, label %exit
++body:
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  br label %exit
++exit:
++  ret void
++}
++
++define void @sadd_sum_of_difference_commuted(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_commuted(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %d, i8 %start)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_sum_of_difference_nsw_any_sign(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_nsw_any_sign(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %d = sub nsw i8 %end, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_sum_of_difference_neg_start(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_neg_start(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub i8 [[END]], [[START]]
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[START]], i8 [[D]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_sum_of_difference_unordered(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_unordered(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[D:%.*]] = sub i8 [[END]], [[START]]
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[START]], i8 [[D]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smin_side(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_smin_side(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smin.i8(i8 [[D]], i8 5)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub i8 %end, %start
++  %m = call i8 @llvm.smin.i8(i8 %d, i8 5)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smax_side_neg(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_smax_side_neg(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smax.i8(i8 [[D]], i8 5)
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[START]], i8 [[M]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub i8 %end, %start
++  %m = call i8 @llvm.smax.i8(i8 %d, i8 5)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smax_clamp(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_smax_clamp(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[NOTSTART:%.*]] = xor i8 [[START]], -1
++; CHECK-NEXT:    [[X:%.*]] = add nsw i8 [[END]], [[NOTSTART]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smax.i8(i8 [[X]], i8 0)
++; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i8 [[START]], [[M]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %notstart = xor i8 %start, -1
++  %x = add nsw i8 %end, %notstart
++  %m = call i8 @llvm.smax.i8(i8 %x, i8 0)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  %new = extractvalue { i8, i1 } %r, 0
++  %lt = icmp slt i8 %new, %start
++  call void @use(i1 %lt)
++  %gt = icmp slt i8 %end, %new
++  call void @use(i1 %gt)
++  ret void
++}
++
++define void @sadd_smax_clamp_unordered(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_smax_clamp_unordered(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NOTSTART:%.*]] = xor i8 [[START]], -1
++; CHECK-NEXT:    [[X:%.*]] = add nsw i8 [[END]], [[NOTSTART]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smax.i8(i8 [[X]], i8 0)
++; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i8 [[START]], [[M]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    [[GT:%.*]] = icmp slt i8 [[END]], [[TMP0]]
++; CHECK-NEXT:    call void @use(i1 [[GT]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %notstart = xor i8 %start, -1
++  %x = add nsw i8 %end, %notstart
++  %m = call i8 @llvm.smax.i8(i8 %x, i8 0)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  %new = extractvalue { i8, i1 } %r, 0
++  %lt = icmp slt i8 %new, %start
++  call void @use(i1 %lt)
++  %gt = icmp slt i8 %end, %new
++  call void @use(i1 %gt)
++  ret void
++}
++
++define void @sadd_opposite_signs(i64 %v, i64 %s) {
++; CHECK-LABEL: define void @sadd_opposite_signs(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[S:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[S]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[N:%.*]] = xor i64 [[S]], -1
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = lshr i64 %v, 1
++  %c = icmp sge i64 %s, 0
++  call void @llvm.assume(i1 %c)
++  %n = xor i64 %s, -1
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %n)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_same_signs(i64 %v, i64 %s) {
++; CHECK-LABEL: define void @sadd_same_signs(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[S:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[S]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[R:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 [[S]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = lshr i64 %v, 1
++  %c = icmp sge i64 %s, 0
++  call void @llvm.assume(i1 %c)
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %s)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smax_clamp_samesign(i64 %v, i64 %start) {
++; CHECK-LABEL: define void @sadd_smax_clamp_samesign(
++; CHECK-SAME: i64 [[V:%.*]], i64 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[END:%.*]] = lshr i64 [[V]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign uge i64 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[NOTSTART:%.*]] = xor i64 [[START]], -1
++; CHECK-NEXT:    [[X:%.*]] = add i64 [[END]], [[NOTSTART]]
++; CHECK-NEXT:    [[M:%.*]] = call i64 @llvm.smax.i64(i64 [[X]], i64 0)
++; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i64 [[START]], [[M]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %end = lshr i64 %v, 1
++  %c = icmp samesign uge i64 %end, %start
++  call void @llvm.assume(i1 %c)
++  %notstart = xor i64 %start, -1
++  %x = add i64 %end, %notstart
++  %m = call i64 @llvm.smax.i64(i64 %x, i64 0)
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %start, i64 %m)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  %new = extractvalue { i64, i1 } %r, 0
++  %lt = icmp slt i64 %new, %start
++  call void @use(i1 %lt)
++  %gt = icmp slt i64 %end, %new
++  call void @use(i1 %gt)
++  ret void
++}
++
++define void @sadd_sum_of_difference_i128(i128 %start, i128 %end) {
++; CHECK-LABEL: define void @sadd_sum_of_difference_i128(
++; CHECK-SAME: i128 [[START:%.*]], i128 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i128 [[END]], [[START]]
++; CHECK-NEXT:    [[R:%.*]] = call { i128, i1 } @llvm.sadd.with.overflow.i128(i128 [[START]], i128 [[D]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i128, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %d = sub nsw i128 %end, %start
++  %r = call { i128, i1 } @llvm.sadd.with.overflow.i128(i128 %start, i128 %d)
++  %ov = extractvalue { i128, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smax_clamp_i256(i256 %start, i256 %end) {
++; CHECK-LABEL: define void @sadd_smax_clamp_i256(
++; CHECK-SAME: i256 [[START:%.*]], i256 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i256 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[NOTSTART:%.*]] = xor i256 [[START]], -1
++; CHECK-NEXT:    [[X:%.*]] = add nsw i256 [[END]], [[NOTSTART]]
++; CHECK-NEXT:    [[M:%.*]] = call i256 @llvm.smax.i256(i256 [[X]], i256 0)
++; CHECK-NEXT:    [[R:%.*]] = call { i256, i1 } @llvm.sadd.with.overflow.i256(i256 [[START]], i256 [[M]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i256, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ordered = icmp sge i256 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %notstart = xor i256 %start, -1
++  %x = add nsw i256 %end, %notstart
++  %m = call i256 @llvm.smax.i256(i256 %x, i256 0)
++  %r = call { i256, i1 } @llvm.sadd.with.overflow.i256(i256 %start, i256 %m)
++  %ov = extractvalue { i256, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_repeated_variable_cancels(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_repeated_variable_cancels(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    [[E:%.*]] = add nsw i8 [[D]], [[START]]
++; CHECK-NEXT:    [[F:%.*]] = sub nsw i8 [[E]], [[START]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %d = sub nsw i8 %end, %start
++  %e = add nsw i8 %d, %start
++  %f = sub nsw i8 %e, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %f)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_repeated_variable_nonzero(i8 %start) {
++; CHECK-LABEL: define void @sadd_repeated_variable_nonzero(
++; CHECK-SAME: i8 [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = add nsw i8 [[START]], [[START]]
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[A]], i8 [[START]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = add nsw i8 %start, %start
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %start)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_cancels_to_constant(i8 %x) {
++; CHECK-LABEL: define void @sadd_cancels_to_constant(
++; CHECK-SAME: i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[N:%.*]] = sub nsw i8 0, [[X]]
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %n = sub nsw i8 0, %x
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %x, i8 %n)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smin_second_operand(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_smin_second_operand(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smin.i8(i8 5, i8 [[D]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub nsw i8 %end, %start
++  %m = call i8 @llvm.smin.i8(i8 5, i8 %d)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_opposite_signs_known_negative(i8 %v, i8 %w) {
++; CHECK-LABEL: define void @sadd_opposite_signs_known_negative(
++; CHECK-SAME: i8 [[V:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = lshr i8 [[V]], 1
++; CHECK-NEXT:    [[B:%.*]] = or i8 [[W]], -128
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = lshr i8 %v, 1
++  %b = or i8 %w, -128
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %a, i8 %b)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_vector_not_folded(<2 x i8> %start, <2 x i8> %end) {
++; CHECK-LABEL: define void @sadd_vector_not_folded(
++; CHECK-SAME: <2 x i8> [[START:%.*]], <2 x i8> [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[D:%.*]] = sub nsw <2 x i8> [[END]], [[START]]
++; CHECK-NEXT:    [[R:%.*]] = call { <2 x i8>, <2 x i1> } @llvm.sadd.with.overflow.v2i8(<2 x i8> [[START]], <2 x i8> [[D]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { <2 x i8>, <2 x i1> } [[R]], 1
++; CHECK-NEXT:    call void @use.vec(<2 x i1> [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %d = sub nsw <2 x i8> %end, %start
++  %r = call { <2 x i8>, <2 x i1> } @llvm.sadd.with.overflow.v2i8(<2 x i8> %start, <2 x i8> %d)
++  %ov = extractvalue { <2 x i8>, <2 x i1> } %r, 1
++  call void @use.vec(<2 x i1> %ov)
++  ret void
++}
++
++define void @sadd_coefficient_overflow(i64 %x, i64 %y) {
++; CHECK-LABEL: define void @sadd_coefficient_overflow(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = mul nsw i64 [[X]], 2305843009213693952
++; CHECK-NEXT:    [[B:%.*]] = add nsw i64 [[A]], [[A]]
++; CHECK-NEXT:    [[C:%.*]] = add nsw i64 [[B]], [[A]]
++; CHECK-NEXT:    [[D:%.*]] = add nsw i64 [[C]], [[A]]
++; CHECK-NEXT:    [[R:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[D]], i64 [[Y]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = mul nsw i64 %x, 2305843009213693952
++  %b = add nsw i64 %a, %a
++  %c = add nsw i64 %b, %a
++  %d = add nsw i64 %c, %a
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %d, i64 %y)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_umax_not_split(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_umax_not_split(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[START]], i8 [[END]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %m = call i8 @llvm.umax.i8(i8 %end, i8 0)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @slt_coefficient_overflow(i64 %x, i64 %y) {
++; CHECK-LABEL: define void @slt_coefficient_overflow(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = mul nsw i64 [[X]], 2305843009213693952
++; CHECK-NEXT:    [[B:%.*]] = add nsw i64 [[A]], [[A]]
++; CHECK-NEXT:    [[C:%.*]] = add nsw i64 [[B]], [[A]]
++; CHECK-NEXT:    [[D:%.*]] = add nsw i64 [[C]], [[A]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i64 [[D]], [[Y]]
++; CHECK-NEXT:    call void @use(i1 [[CMP]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = mul nsw i64 %x, 2305843009213693952
++  %b = add nsw i64 %a, %a
++  %c = add nsw i64 %b, %a
++  %d = add nsw i64 %c, %a
++  %cmp = icmp slt i64 %d, %y
++  call void @use(i1 %cmp)
++  ret void
++}
++
++define void @sadd_smax_three_levels(i8 %start, i8 %end) {
++; CHECK-LABEL: define void @sadd_smax_three_levels(
++; CHECK-SAME: i8 [[START:%.*]], i8 [[END:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[M1:%.*]] = call i8 @llvm.smax.i8(i8 [[END]], i8 0)
++; CHECK-NEXT:    [[M2:%.*]] = call i8 @llvm.smax.i8(i8 [[M1]], i8 1)
++; CHECK-NEXT:    [[M3:%.*]] = call i8 @llvm.smax.i8(i8 [[M2]], i8 2)
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 [[START]], i8 [[M3]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %m1 = call i8 @llvm.smax.i8(i8 %end, i8 0)
++  %m2 = call i8 @llvm.smax.i8(i8 %m1, i8 1)
++  %m3 = call i8 @llvm.smax.i8(i8 %m2, i8 2)
++  %r = call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %start, i8 %m3)
++  %ov = extractvalue { i8, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_offset_overflow(i64 %x, i64 %y) {
++; CHECK-LABEL: define void @sadd_offset_overflow(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = add nsw i64 [[X]], 9223372036854775806
++; CHECK-NEXT:    [[B:%.*]] = add nsw i64 [[Y]], 5
++; CHECK-NEXT:    [[R:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[A]], i64 [[B]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = add nsw i64 %x, 9223372036854775806
++  %b = add nsw i64 %y, 5
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %a, i64 %b)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++define void @sadd_smax_substitute_overflow(i64 %x, i64 %z, i64 %y) {
++; CHECK-LABEL: define void @sadd_smax_substitute_overflow(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Z:%.*]], i64 [[Y:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = mul nsw i64 [[X]], 1099511627776
++; CHECK-NEXT:    [[M:%.*]] = call i64 @llvm.smax.i64(i64 [[A]], i64 [[Z]])
++; CHECK-NEXT:    [[D:%.*]] = mul nsw i64 [[M]], 1073741824
++; CHECK-NEXT:    [[R:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[D]], i64 [[Y]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[R]], 1
++; CHECK-NEXT:    call void @use(i1 [[OV]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %a = mul nsw i64 %x, 1099511627776
++  %m = call i64 @llvm.smax.i64(i64 %a, i64 %z)
++  %d = mul nsw i64 %m, 1073741824
++  %r = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %d, i64 %y)
++  %ov = extractvalue { i64, i1 } %r, 1
++  call void @use(i1 %ov)
++  ret void
++}
++
++declare void @use.vec(<2 x i1>)
+diff --git a/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll b/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
+index 9077c3647589de..1e38a73e67a758 100644
+--- a/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/ssub-with-overflow.ll
+@@ -395,3 +395,103 @@ check.2:
+ exit:
+   ret i1 false
+ }
++
++define i1 @ssub_difference_of_difference_nsw(i8 %start, i8 %end) {
++; CHECK-LABEL: @ssub_difference_of_difference_nsw(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i8 [[END:%.*]], [[START:%.*]]
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %d = sub nsw i8 %end, %start
++  %r = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %end, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  ret i1 %ov
++}
++
++define i1 @ssub_difference_of_difference_assume(i8 %start, i8 %end) {
++; CHECK-LABEL: @ssub_difference_of_difference_assume(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[NONNEG:%.*]] = icmp sge i8 [[START:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NONNEG]])
++; CHECK-NEXT:    [[ORDERED:%.*]] = icmp sge i8 [[END:%.*]], [[START]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[ORDERED]])
++; CHECK-NEXT:    [[D:%.*]] = sub nuw nsw i8 [[END]], [[START]]
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %nonneg = icmp sge i8 %start, 0
++  call void @llvm.assume(i1 %nonneg)
++  %ordered = icmp sge i8 %end, %start
++  call void @llvm.assume(i1 %ordered)
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %end, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  ret i1 %ov
++}
++
++define i1 @ssub_double_start(i8 %start, i8 %end) {
++; CHECK-LABEL: @ssub_double_start(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i8 [[END:%.*]], [[START:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 [[START]], i8 [[D]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    ret i1 [[OV]]
++;
++entry:
++  %d = sub nsw i8 %end, %start
++  %r = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %start, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  ret i1 %ov
++}
++
++define i1 @ssub_difference_unordered(i8 %start, i8 %end) {
++; CHECK-LABEL: @ssub_difference_unordered(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[D:%.*]] = sub i8 [[END:%.*]], [[START:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 [[END]], i8 [[D]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    ret i1 [[OV]]
++;
++entry:
++  %d = sub i8 %end, %start
++  %r = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %end, i8 %d)
++  %ov = extractvalue { i8, i1 } %r, 1
++  ret i1 %ov
++}
++
++define i1 @ssub_smax_negated_with_lower_bound(i8 %start, i8 %end) {
++; CHECK-LABEL: @ssub_smax_negated_with_lower_bound(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[LO:%.*]] = icmp sge i8 [[END:%.*]], -100
++; CHECK-NEXT:    call void @llvm.assume(i1 [[LO]])
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i8 [[END]], [[START:%.*]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smax.i8(i8 [[D]], i8 5)
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %lo = icmp sge i8 %end, -100
++  call void @llvm.assume(i1 %lo)
++  %d = sub nsw i8 %end, %start
++  %m = call i8 @llvm.smax.i8(i8 %d, i8 5)
++  %r = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %end, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  ret i1 %ov
++}
++
++define i1 @ssub_smax_negated_no_lower_bound(i8 %start, i8 %end) {
++; CHECK-LABEL: @ssub_smax_negated_no_lower_bound(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i8 [[END:%.*]], [[START:%.*]]
++; CHECK-NEXT:    [[M:%.*]] = call i8 @llvm.smax.i8(i8 [[D]], i8 5)
++; CHECK-NEXT:    [[R:%.*]] = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 [[END]], i8 [[M]])
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[R]], 1
++; CHECK-NEXT:    ret i1 [[OV]]
++;
++entry:
++  %d = sub nsw i8 %end, %start
++  %m = call i8 @llvm.smax.i8(i8 %d, i8 5)
++  %r = call { i8, i1 } @llvm.ssub.with.overflow.i8(i8 %end, i8 %m)
++  %ov = extractvalue { i8, i1 } %r, 1
++  ret i1 %ov
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/transfer-samesign-facts.ll b/llvm/test/Transforms/ConstraintElimination/transfer-samesign-facts.ll
+index 44565f8d1341fe..e12cd317ccb499 100644
+--- a/llvm/test/Transforms/ConstraintElimination/transfer-samesign-facts.ll
++++ b/llvm/test/Transforms/ConstraintElimination/transfer-samesign-facts.ll
+@@ -11,8 +11,7 @@ define i1 @idx_known_positive_via_len_1(i8 %len, i8 %idx) {
+ ; CHECK-NEXT:    [[R_1:%.*]] = xor i1 true, true
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[R_2:%.*]] = xor i1 [[R_1]], [[C_1]]
+-; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[LEN]], 1
+-; CHECK-NEXT:    [[R_3:%.*]] = xor i1 [[R_2]], [[C_2]]
++; CHECK-NEXT:    [[R_3:%.*]] = xor i1 [[R_2]], true
+ ; CHECK-NEXT:    ret i1 [[R_3]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp sge i8 [[IDX]], 0
+@@ -52,8 +51,7 @@ define i1 @idx_known_positive_via_len_2(i8 %len, i8 %idx) {
+ ; CHECK-NEXT:    [[R_1:%.*]] = xor i1 true, true
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[R_2:%.*]] = xor i1 [[R_1]], [[C_1]]
+-; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i8 [[LEN]], 1
+-; CHECK-NEXT:    [[R_3:%.*]] = xor i1 [[R_2]], [[C_2]]
++; CHECK-NEXT:    [[R_3:%.*]] = xor i1 [[R_2]], true
+ ; CHECK-NEXT:    ret i1 [[R_3]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp sge i8 [[IDX]], 0
+@@ -164,8 +162,7 @@ define i1 @ult_signed_pos_constant(i8 %a) {
+ ; CHECK-NEXT:    [[A_ULT_4:%.*]] = icmp samesign ult i8 [[A:%.*]], 4
+ ; CHECK-NEXT:    br i1 [[A_ULT_4]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[RES_1:%.*]] = icmp sge i8 [[A]], 0
+-; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], true
++; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 true, true
+ ; CHECK-NEXT:    [[RES_5:%.*]] = xor i1 [[RES_2]], true
+ ; CHECK-NEXT:    ret i1 [[RES_5]]
+ ; CHECK:       else:
+@@ -243,8 +240,7 @@ define i1 @ule_signed_pos_constant_2(i8 %a) {
+ ; CHECK-NEXT:    [[A_ULT_4:%.*]] = icmp samesign ule i8 [[A:%.*]], 4
+ ; CHECK-NEXT:    br i1 [[A_ULT_4]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[RES_1:%.*]] = icmp sge i8 [[A]], 0
+-; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], true
++; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 true, true
+ ; CHECK-NEXT:    [[RES_5:%.*]] = xor i1 [[RES_2]], true
+ ; CHECK-NEXT:    ret i1 [[RES_5]]
+ ; CHECK:       else:
+@@ -364,3 +360,139 @@ not_equal:
+ exit:
+   ret i1 false
+ }
++
++define i1 @samesign_sign_from_lshr(i8 %v, i8 %start) {
++; CHECK-LABEL: @samesign_sign_from_lshr(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[END:%.*]] = lshr i8 [[V:%.*]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign uge i8 [[END]], [[START:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %end = lshr i8 %v, 1
++  %c = icmp samesign uge i8 %end, %start
++  call void @llvm.assume(i1 %c)
++  %r = icmp sge i8 %start, 0
++  ret i1 %r
++}
++
++define i1 @samesign_sign_from_negative(i8 %v, i8 %start) {
++; CHECK-LABEL: @samesign_sign_from_negative(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[END:%.*]] = or i8 [[V:%.*]], -128
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign uge i8 [[END]], [[START:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %end = or i8 %v, -128
++  %c = icmp samesign uge i8 %end, %start
++  call void @llvm.assume(i1 %c)
++  %r = icmp slt i8 %start, 0
++  ret i1 %r
++}
++
++define i1 @samesign_sign_unknown(i8 %end, i8 %start) {
++; CHECK-LABEL: @samesign_sign_unknown(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign uge i8 [[END:%.*]], [[START:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[R:%.*]] = icmp sge i8 [[START]], 0
++; CHECK-NEXT:    ret i1 [[R]]
++;
++entry:
++  %c = icmp samesign uge i8 %end, %start
++  call void @llvm.assume(i1 %c)
++  %r = icmp sge i8 %start, 0
++  ret i1 %r
++}
++
++define i1 @samesign_ptr(ptr %a, ptr %b) {
++; CHECK-LABEL: @samesign_ptr(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign ult ptr [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    br i1 [[C]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       else:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %c = icmp samesign ult ptr %a, %b
++  br i1 %c, label %then, label %else
++then:
++  %d = icmp ult ptr %a, %b
++  ret i1 %d
++else:
++  ret i1 false
++}
++
++define <2 x i1> @samesign_vector(<2 x i32> %a, <2 x i32> %b) {
++; CHECK-LABEL: @samesign_vector(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign ult <2 x i32> [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[E:%.*]] = extractelement <2 x i1> [[C]], i32 0
++; CHECK-NEXT:    br i1 [[E]], label [[THEN:%.*]], label [[ELSE:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    ret <2 x i1> [[C]]
++; CHECK:       else:
++; CHECK-NEXT:    ret <2 x i1> zeroinitializer
++;
++entry:
++  %c = icmp samesign ult <2 x i32> %a, %b
++  %e = extractelement <2 x i1> %c, i32 0
++  br i1 %e, label %then, label %else
++then:
++  ret <2 x i1> %c
++else:
++  ret <2 x i1> zeroinitializer
++}
++
++define i1 @samesign_sign_from_negative_fact(i8 %end, i8 %start) {
++; CHECK-LABEL: @samesign_sign_from_negative_fact(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[NEG:%.*]] = icmp slt i8 [[END:%.*]], 0
++; CHECK-NEXT:    br i1 [[NEG]], label [[THEN:%.*]], label [[EXIT:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign ule i8 [[END]], [[START:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %neg = icmp slt i8 %end, 0
++  br i1 %neg, label %then, label %exit
++then:
++  %c = icmp samesign ule i8 %end, %start
++  call void @llvm.assume(i1 %c)
++  %r = icmp slt i8 %start, 0
++  ret i1 %r
++exit:
++  ret i1 false
++}
++
++define i1 @samesign_sign_from_nonnegative_fact(i8 %end, i8 %start) {
++; CHECK-LABEL: @samesign_sign_from_nonnegative_fact(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[NN:%.*]] = icmp sge i8 [[END:%.*]], 0
++; CHECK-NEXT:    br i1 [[NN]], label [[THEN:%.*]], label [[EXIT:%.*]]
++; CHECK:       then:
++; CHECK-NEXT:    [[C:%.*]] = icmp samesign uge i8 [[END]], [[START:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %nn = icmp sge i8 %end, 0
++  br i1 %nn, label %then, label %exit
++then:
++  %c = icmp samesign uge i8 %end, %start
++  call void @llvm.assume(i1 %c)
++  %r = icmp sge i8 %start, 0
++  ret i1 %r
++exit:
++  ret i1 false
++}

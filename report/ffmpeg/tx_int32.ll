@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ct = sub nsw i64 %i.cs, %i.cr
   %i.cu = lshr i64 %i.ct, 31
   %i.cv = trunc i64 %i.cu to i32
-  %i.cw = shl nsw i64 %i.bz, 1
-  %i.cx = mul nsw i64 %i.h, %i.cw
+  %i.cw = shl nuw nsw i64 %i.bz, 1
+  %i.cx = mul nuw nsw i64 %i.h, %i.cw
   %i.cy = getelementptr [4 x i8], ptr %1, i64 %i.cx ; 2 uses
   %i.cz = getelementptr [4 x i8], ptr %i.cy, i64 %i.h
   store i32 %i.cv, ptr %i.cz, align 4, !tbaa !12
@@ -608,8 +608,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.k
   %i.ka = sub nsw i64 %i.jz, %i.jy
   %i.kb = lshr i64 %i.ka, 31
   %i.kc = trunc i64 %i.kb to i32
-  %i.kd = shl nsw i64 %i.ja, 1
-  %i.ke = mul nsw i64 %i.p, %i.kd
+  %i.kd = shl nuw nsw i64 %i.ja, 1
+  %i.ke = mul nuw nsw i64 %i.p, %i.kd
   %i.kf = getelementptr [4 x i8], ptr %1, i64 %i.ke ; 2 uses
   %i.kg = getelementptr [4 x i8], ptr %i.kf, i64 %i.p
   store i32 %i.kc, ptr %i.kg, align 4, !tbaa !12
@@ -1012,8 +1012,8 @@ bb.q:                                             ; preds = %.lr.ph, %bb.q
   %i.qn = sub nsw i64 %i.qm, %i.ql
   %i.qo = lshr i64 %i.qn, 31
   %i.qp = trunc i64 %i.qo to i32
-  %i.qq = shl nsw i64 %i.pn, 1
-  %i.qr = mul nsw i64 %i.p, %i.qq
+  %i.qq = shl nuw nsw i64 %i.pn, 1
+  %i.qr = mul nuw nsw i64 %i.p, %i.qq
   %i.qs = getelementptr [4 x i8], ptr %1, i64 %i.qr ; 2 uses
   %i.qt = getelementptr [4 x i8], ptr %i.qs, i64 %i.p
   store i32 %i.qp, ptr %i.qt, align 4, !tbaa !12
@@ -1416,8 +1416,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.lh = sub nsw i64 %i.lg, %i.lf
   %i.li = lshr i64 %i.lh, 31
   %i.lj = trunc i64 %i.li to i32
-  %i.lk = shl nsw i64 %i.kh, 1
-  %i.ll = mul nsw i64 %i.p, %i.lk
+  %i.lk = shl nuw nsw i64 %i.kh, 1
+  %i.ll = mul nuw nsw i64 %i.p, %i.lk
   %i.lm = getelementptr [4 x i8], ptr %1, i64 %i.ll ; 2 uses
   %i.ln = getelementptr [4 x i8], ptr %i.lm, i64 %i.p
   store i32 %i.lj, ptr %i.ln, align 4, !tbaa !12
@@ -1820,8 +1820,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.nl = sub nsw i64 %i.nk, %i.nj
   %i.nm = lshr i64 %i.nl, 31
   %i.nn = trunc i64 %i.nm to i32
-  %i.no = shl nsw i64 %i.ml, 1
-  %i.np = mul nsw i64 %i.p, %i.no
+  %i.no = shl nuw nsw i64 %i.ml, 1
+  %i.np = mul nuw nsw i64 %i.p, %i.no
   %i.nq = getelementptr [4 x i8], ptr %1, i64 %i.np ; 2 uses
   %i.nr = getelementptr [4 x i8], ptr %i.nq, i64 %i.p
   store i32 %i.nn, ptr %i.nr, align 4, !tbaa !12
@@ -2224,8 +2224,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.zd = sub nsw i64 %i.zc, %i.zb
   %i.ze = lshr i64 %i.zd, 31
   %i.zf = trunc i64 %i.ze to i32
-  %i.zg = shl nsw i64 %i.yd, 1
-  %i.zh = mul nsw i64 %i.p, %i.zg
+  %i.zg = shl nuw nsw i64 %i.yd, 1
+  %i.zh = mul nuw nsw i64 %i.p, %i.zg
   %i.zi = getelementptr [4 x i8], ptr %1, i64 %i.zh ; 2 uses
   %i.zj = getelementptr [4 x i8], ptr %i.zi, i64 %i.p
   store i32 %i.zf, ptr %i.zj, align 4, !tbaa !12

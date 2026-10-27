@@ -204,7 +204,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11330)
     #dbg_value(i64 %.sroa.7.045.i, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11330)
     #dbg_value(i64 %.sroa.10.044.i, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11330)
-  %i.lw = add i64 %.sroa.10.044.i, -1, !dbg !19365 ; 2 uses
+  %i.lw = add nsw i64 %.sroa.10.044.i, -1, !dbg !19365 ; 2 uses
     #dbg_value(i64 %i.lw, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11330)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11073)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11072)
@@ -476,7 +476,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1747, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11438)
     #dbg_value(i64 %.sroa.7.045.i1748, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11438)
     #dbg_value(i64 %.sroa.10.044.i1749, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11438)
-  %i.nj = add i64 %.sroa.10.044.i1749, -1, !dbg !19419 ; 2 uses
+  %i.nj = add nsw i64 %.sroa.10.044.i1749, -1, !dbg !19419 ; 2 uses
     #dbg_value(i64 %i.nj, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11438)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11066)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11065)
@@ -738,7 +738,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1761, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11519)
     #dbg_value(i64 %.sroa.7.045.i1762, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11519)
     #dbg_value(i64 %.sroa.10.044.i1763, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11519)
-  %i.ou = add i64 %.sroa.10.044.i1763, -1, !dbg !19470 ; 2 uses
+  %i.ou = add nsw i64 %.sroa.10.044.i1763, -1, !dbg !19470 ; 2 uses
     #dbg_value(i64 %i.ou, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11519)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11059)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11058)
@@ -1000,7 +1000,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1776, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11600)
     #dbg_value(i64 %.sroa.7.045.i1777, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11600)
     #dbg_value(i64 %.sroa.10.044.i1778, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11600)
-  %i.qf = add i64 %.sroa.10.044.i1778, -1, !dbg !19521 ; 2 uses
+  %i.qf = add nsw i64 %.sroa.10.044.i1778, -1, !dbg !19521 ; 2 uses
     #dbg_value(i64 %i.qf, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11600)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11052)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11051)
@@ -1262,7 +1262,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1791, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11681)
     #dbg_value(i64 %.sroa.7.045.i1792, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11681)
     #dbg_value(i64 %.sroa.10.044.i1793, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11681)
-  %i.rq = add i64 %.sroa.10.044.i1793, -1, !dbg !19572 ; 2 uses
+  %i.rq = add nsw i64 %.sroa.10.044.i1793, -1, !dbg !19572 ; 2 uses
     #dbg_value(i64 %i.rq, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11681)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11045)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11044)
@@ -1524,7 +1524,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1806, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11762)
     #dbg_value(i64 %.sroa.7.045.i1807, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11762)
     #dbg_value(i64 %.sroa.10.044.i1808, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11762)
-  %i.tb = add i64 %.sroa.10.044.i1808, -1, !dbg !19623 ; 2 uses
+  %i.tb = add nsw i64 %.sroa.10.044.i1808, -1, !dbg !19623 ; 2 uses
     #dbg_value(i64 %i.tb, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11762)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11038)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11037)
@@ -1786,7 +1786,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1821, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11843)
     #dbg_value(i64 %.sroa.7.045.i1822, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11843)
     #dbg_value(i64 %.sroa.10.044.i1823, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11843)
-  %i.um = add i64 %.sroa.10.044.i1823, -1, !dbg !19674 ; 2 uses
+  %i.um = add nsw i64 %.sroa.10.044.i1823, -1, !dbg !19674 ; 2 uses
     #dbg_value(i64 %i.um, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11843)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11031)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11030)
@@ -2048,7 +2048,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1836, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11924)
     #dbg_value(i64 %.sroa.7.045.i1837, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11924)
     #dbg_value(i64 %.sroa.10.044.i1838, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11924)
-  %i.vx = add i64 %.sroa.10.044.i1838, -1, !dbg !19725 ; 2 uses
+  %i.vx = add nsw i64 %.sroa.10.044.i1838, -1, !dbg !19725 ; 2 uses
     #dbg_value(i64 %i.vx, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !11924)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11024)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11023)
@@ -2310,7 +2310,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1851, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12005)
     #dbg_value(i64 %.sroa.7.045.i1852, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12005)
     #dbg_value(i64 %.sroa.10.044.i1853, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12005)
-  %i.xi = add i64 %.sroa.10.044.i1853, -1, !dbg !19776 ; 2 uses
+  %i.xi = add nsw i64 %.sroa.10.044.i1853, -1, !dbg !19776 ; 2 uses
     #dbg_value(i64 %i.xi, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12005)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11017)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11016)
@@ -2572,7 +2572,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1866, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12086)
     #dbg_value(i64 %.sroa.7.045.i1867, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12086)
     #dbg_value(i64 %.sroa.10.044.i1868, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12086)
-  %i.yt = add i64 %.sroa.10.044.i1868, -1, !dbg !19827 ; 2 uses
+  %i.yt = add nsw i64 %.sroa.10.044.i1868, -1, !dbg !19827 ; 2 uses
     #dbg_value(i64 %i.yt, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12086)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11010)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11009)
@@ -2834,7 +2834,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1881, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12167)
     #dbg_value(i64 %.sroa.7.045.i1882, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12167)
     #dbg_value(i64 %.sroa.10.044.i1883, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12167)
-  %i.aae = add i64 %.sroa.10.044.i1883, -1, !dbg !19878 ; 2 uses
+  %i.aae = add nsw i64 %.sroa.10.044.i1883, -1, !dbg !19878 ; 2 uses
     #dbg_value(i64 %i.aae, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12167)
     #dbg_value(ptr undef, !15147, !DIExpression(), !11003)
     #dbg_value(ptr undef, !15119, !DIExpression(), !11002)
@@ -3096,7 +3096,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1896, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12248)
     #dbg_value(i64 %.sroa.7.045.i1897, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12248)
     #dbg_value(i64 %.sroa.10.044.i1898, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12248)
-  %i.abp = add i64 %.sroa.10.044.i1898, -1, !dbg !19929 ; 2 uses
+  %i.abp = add nsw i64 %.sroa.10.044.i1898, -1, !dbg !19929 ; 2 uses
     #dbg_value(i64 %i.abp, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12248)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10996)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10995)
@@ -3358,7 +3358,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1911, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12329)
     #dbg_value(i64 %.sroa.7.045.i1912, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12329)
     #dbg_value(i64 %.sroa.10.044.i1913, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12329)
-  %i.ada = add i64 %.sroa.10.044.i1913, -1, !dbg !19980 ; 2 uses
+  %i.ada = add nsw i64 %.sroa.10.044.i1913, -1, !dbg !19980 ; 2 uses
     #dbg_value(i64 %i.ada, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12329)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10989)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10988)
@@ -3620,7 +3620,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1926, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12410)
     #dbg_value(i64 %.sroa.7.045.i1927, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12410)
     #dbg_value(i64 %.sroa.10.044.i1928, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12410)
-  %i.ael = add i64 %.sroa.10.044.i1928, -1, !dbg !20031 ; 2 uses
+  %i.ael = add nsw i64 %.sroa.10.044.i1928, -1, !dbg !20031 ; 2 uses
     #dbg_value(i64 %i.ael, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12410)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10982)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10981)
@@ -3882,7 +3882,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1941, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12491)
     #dbg_value(i64 %.sroa.7.045.i1942, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12491)
     #dbg_value(i64 %.sroa.10.044.i1943, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12491)
-  %i.afw = add i64 %.sroa.10.044.i1943, -1, !dbg !20082 ; 2 uses
+  %i.afw = add nsw i64 %.sroa.10.044.i1943, -1, !dbg !20082 ; 2 uses
     #dbg_value(i64 %i.afw, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12491)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10975)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10974)
@@ -4144,7 +4144,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1956, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12572)
     #dbg_value(i64 %.sroa.7.045.i1957, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12572)
     #dbg_value(i64 %.sroa.10.044.i1958, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12572)
-  %i.ahh = add i64 %.sroa.10.044.i1958, -1, !dbg !20133 ; 2 uses
+  %i.ahh = add nsw i64 %.sroa.10.044.i1958, -1, !dbg !20133 ; 2 uses
     #dbg_value(i64 %i.ahh, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12572)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10968)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10967)
@@ -4406,7 +4406,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1971, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12653)
     #dbg_value(i64 %.sroa.7.045.i1972, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12653)
     #dbg_value(i64 %.sroa.10.044.i1973, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12653)
-  %i.ais = add i64 %.sroa.10.044.i1973, -1, !dbg !20184 ; 2 uses
+  %i.ais = add nsw i64 %.sroa.10.044.i1973, -1, !dbg !20184 ; 2 uses
     #dbg_value(i64 %i.ais, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12653)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10961)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10960)
@@ -4668,7 +4668,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i1986, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12734)
     #dbg_value(i64 %.sroa.7.045.i1987, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12734)
     #dbg_value(i64 %.sroa.10.044.i1988, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12734)
-  %i.akd = add i64 %.sroa.10.044.i1988, -1, !dbg !20235 ; 2 uses
+  %i.akd = add nsw i64 %.sroa.10.044.i1988, -1, !dbg !20235 ; 2 uses
     #dbg_value(i64 %i.akd, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12734)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10954)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10953)
@@ -4930,7 +4930,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2001, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12815)
     #dbg_value(i64 %.sroa.7.045.i2002, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12815)
     #dbg_value(i64 %.sroa.10.044.i2003, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12815)
-  %i.alo = add i64 %.sroa.10.044.i2003, -1, !dbg !20286 ; 2 uses
+  %i.alo = add nsw i64 %.sroa.10.044.i2003, -1, !dbg !20286 ; 2 uses
     #dbg_value(i64 %i.alo, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12815)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10947)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10946)
@@ -5192,7 +5192,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2016, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12896)
     #dbg_value(i64 %.sroa.7.045.i2017, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12896)
     #dbg_value(i64 %.sroa.10.044.i2018, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12896)
-  %i.amz = add i64 %.sroa.10.044.i2018, -1, !dbg !20337 ; 2 uses
+  %i.amz = add nsw i64 %.sroa.10.044.i2018, -1, !dbg !20337 ; 2 uses
     #dbg_value(i64 %i.amz, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12896)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10940)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10939)
@@ -5454,7 +5454,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2031, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12977)
     #dbg_value(i64 %.sroa.7.045.i2032, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !12977)
     #dbg_value(i64 %.sroa.10.044.i2033, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12977)
-  %i.aok = add i64 %.sroa.10.044.i2033, -1, !dbg !20388 ; 2 uses
+  %i.aok = add nsw i64 %.sroa.10.044.i2033, -1, !dbg !20388 ; 2 uses
     #dbg_value(i64 %i.aok, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !12977)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10933)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10932)
@@ -5716,7 +5716,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2046, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13058)
     #dbg_value(i64 %.sroa.7.045.i2047, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13058)
     #dbg_value(i64 %.sroa.10.044.i2048, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13058)
-  %i.apv = add i64 %.sroa.10.044.i2048, -1, !dbg !20439 ; 2 uses
+  %i.apv = add nsw i64 %.sroa.10.044.i2048, -1, !dbg !20439 ; 2 uses
     #dbg_value(i64 %i.apv, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13058)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10926)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10925)
@@ -5978,7 +5978,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2061, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13139)
     #dbg_value(i64 %.sroa.7.045.i2062, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13139)
     #dbg_value(i64 %.sroa.10.044.i2063, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13139)
-  %i.arg = add i64 %.sroa.10.044.i2063, -1, !dbg !20490 ; 2 uses
+  %i.arg = add nsw i64 %.sroa.10.044.i2063, -1, !dbg !20490 ; 2 uses
     #dbg_value(i64 %i.arg, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13139)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10919)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10918)
@@ -6240,7 +6240,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2076, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13220)
     #dbg_value(i64 %.sroa.7.045.i2077, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13220)
     #dbg_value(i64 %.sroa.10.044.i2078, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13220)
-  %i.asr = add i64 %.sroa.10.044.i2078, -1, !dbg !20541 ; 2 uses
+  %i.asr = add nsw i64 %.sroa.10.044.i2078, -1, !dbg !20541 ; 2 uses
     #dbg_value(i64 %i.asr, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13220)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10912)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10911)
@@ -6502,7 +6502,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2091, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13301)
     #dbg_value(i64 %.sroa.7.045.i2092, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13301)
     #dbg_value(i64 %.sroa.10.044.i2093, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13301)
-  %i.auc = add i64 %.sroa.10.044.i2093, -1, !dbg !20592 ; 2 uses
+  %i.auc = add nsw i64 %.sroa.10.044.i2093, -1, !dbg !20592 ; 2 uses
     #dbg_value(i64 %i.auc, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13301)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10905)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10904)
@@ -6764,7 +6764,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2106, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13382)
     #dbg_value(i64 %.sroa.7.045.i2107, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13382)
     #dbg_value(i64 %.sroa.10.044.i2108, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13382)
-  %i.avn = add i64 %.sroa.10.044.i2108, -1, !dbg !20643 ; 2 uses
+  %i.avn = add nsw i64 %.sroa.10.044.i2108, -1, !dbg !20643 ; 2 uses
     #dbg_value(i64 %i.avn, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13382)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10898)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10897)
@@ -7026,7 +7026,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2121, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13463)
     #dbg_value(i64 %.sroa.7.045.i2122, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13463)
     #dbg_value(i64 %.sroa.10.044.i2123, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13463)
-  %i.awy = add i64 %.sroa.10.044.i2123, -1, !dbg !20694 ; 2 uses
+  %i.awy = add nsw i64 %.sroa.10.044.i2123, -1, !dbg !20694 ; 2 uses
     #dbg_value(i64 %i.awy, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13463)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10891)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10890)
@@ -7288,7 +7288,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2136, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13544)
     #dbg_value(i64 %.sroa.7.045.i2137, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13544)
     #dbg_value(i64 %.sroa.10.044.i2138, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13544)
-  %i.ayj = add i64 %.sroa.10.044.i2138, -1, !dbg !20745 ; 2 uses
+  %i.ayj = add nsw i64 %.sroa.10.044.i2138, -1, !dbg !20745 ; 2 uses
     #dbg_value(i64 %i.ayj, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13544)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10884)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10883)
@@ -7550,7 +7550,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2151, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13625)
     #dbg_value(i64 %.sroa.7.045.i2152, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13625)
     #dbg_value(i64 %.sroa.10.044.i2153, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13625)
-  %i.azu = add i64 %.sroa.10.044.i2153, -1, !dbg !20796 ; 2 uses
+  %i.azu = add nsw i64 %.sroa.10.044.i2153, -1, !dbg !20796 ; 2 uses
     #dbg_value(i64 %i.azu, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13625)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10877)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10876)
@@ -7812,7 +7812,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2166, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13706)
     #dbg_value(i64 %.sroa.7.045.i2167, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13706)
     #dbg_value(i64 %.sroa.10.044.i2168, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13706)
-  %i.bbf = add i64 %.sroa.10.044.i2168, -1, !dbg !20847 ; 2 uses
+  %i.bbf = add nsw i64 %.sroa.10.044.i2168, -1, !dbg !20847 ; 2 uses
     #dbg_value(i64 %i.bbf, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13706)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10870)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10869)
@@ -8074,7 +8074,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2181, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13787)
     #dbg_value(i64 %.sroa.7.045.i2182, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13787)
     #dbg_value(i64 %.sroa.10.044.i2183, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13787)
-  %i.bcq = add i64 %.sroa.10.044.i2183, -1, !dbg !20898 ; 2 uses
+  %i.bcq = add nsw i64 %.sroa.10.044.i2183, -1, !dbg !20898 ; 2 uses
     #dbg_value(i64 %i.bcq, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13787)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10863)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10862)
@@ -8336,7 +8336,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2196, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13868)
     #dbg_value(i64 %.sroa.7.045.i2197, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13868)
     #dbg_value(i64 %.sroa.10.044.i2198, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13868)
-  %i.beb = add i64 %.sroa.10.044.i2198, -1, !dbg !20949 ; 2 uses
+  %i.beb = add nsw i64 %.sroa.10.044.i2198, -1, !dbg !20949 ; 2 uses
     #dbg_value(i64 %i.beb, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13868)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10856)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10855)
@@ -8598,7 +8598,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2211, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13949)
     #dbg_value(i64 %.sroa.7.045.i2212, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13949)
     #dbg_value(i64 %.sroa.10.044.i2213, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13949)
-  %i.bfm = add i64 %.sroa.10.044.i2213, -1, !dbg !21000 ; 2 uses
+  %i.bfm = add nsw i64 %.sroa.10.044.i2213, -1, !dbg !21000 ; 2 uses
     #dbg_value(i64 %i.bfm, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !13949)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10849)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10848)
@@ -8860,7 +8860,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2226, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14030)
     #dbg_value(i64 %.sroa.7.045.i2227, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14030)
     #dbg_value(i64 %.sroa.10.044.i2228, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14030)
-  %i.bgx = add i64 %.sroa.10.044.i2228, -1, !dbg !21051 ; 2 uses
+  %i.bgx = add nsw i64 %.sroa.10.044.i2228, -1, !dbg !21051 ; 2 uses
     #dbg_value(i64 %i.bgx, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14030)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10842)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10841)
@@ -9122,7 +9122,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2241, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14111)
     #dbg_value(i64 %.sroa.7.045.i2242, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14111)
     #dbg_value(i64 %.sroa.10.044.i2243, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14111)
-  %i.bii = add i64 %.sroa.10.044.i2243, -1, !dbg !21102 ; 2 uses
+  %i.bii = add nsw i64 %.sroa.10.044.i2243, -1, !dbg !21102 ; 2 uses
     #dbg_value(i64 %i.bii, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14111)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10835)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10834)
@@ -9384,7 +9384,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2256, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14192)
     #dbg_value(i64 %.sroa.7.045.i2257, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14192)
     #dbg_value(i64 %.sroa.10.044.i2258, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14192)
-  %i.bjt = add i64 %.sroa.10.044.i2258, -1, !dbg !21153 ; 2 uses
+  %i.bjt = add nsw i64 %.sroa.10.044.i2258, -1, !dbg !21153 ; 2 uses
     #dbg_value(i64 %i.bjt, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14192)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10828)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10827)
@@ -9646,7 +9646,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2271, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14273)
     #dbg_value(i64 %.sroa.7.045.i2272, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14273)
     #dbg_value(i64 %.sroa.10.044.i2273, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14273)
-  %i.ble = add i64 %.sroa.10.044.i2273, -1, !dbg !21204 ; 2 uses
+  %i.ble = add nsw i64 %.sroa.10.044.i2273, -1, !dbg !21204 ; 2 uses
     #dbg_value(i64 %i.ble, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14273)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10821)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10820)
@@ -9908,7 +9908,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2286, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14354)
     #dbg_value(i64 %.sroa.7.045.i2287, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14354)
     #dbg_value(i64 %.sroa.10.044.i2288, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14354)
-  %i.bmp = add i64 %.sroa.10.044.i2288, -1, !dbg !21255 ; 2 uses
+  %i.bmp = add nsw i64 %.sroa.10.044.i2288, -1, !dbg !21255 ; 2 uses
     #dbg_value(i64 %i.bmp, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14354)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10814)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10813)
@@ -10170,7 +10170,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2301, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14435)
     #dbg_value(i64 %.sroa.7.045.i2302, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14435)
     #dbg_value(i64 %.sroa.10.044.i2303, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14435)
-  %i.boa = add i64 %.sroa.10.044.i2303, -1, !dbg !21306 ; 2 uses
+  %i.boa = add nsw i64 %.sroa.10.044.i2303, -1, !dbg !21306 ; 2 uses
     #dbg_value(i64 %i.boa, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14435)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10807)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10806)
@@ -10432,7 +10432,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2316, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14516)
     #dbg_value(i64 %.sroa.7.045.i2317, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14516)
     #dbg_value(i64 %.sroa.10.044.i2318, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14516)
-  %i.bpl = add i64 %.sroa.10.044.i2318, -1, !dbg !21357 ; 2 uses
+  %i.bpl = add nsw i64 %.sroa.10.044.i2318, -1, !dbg !21357 ; 2 uses
     #dbg_value(i64 %i.bpl, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14516)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10800)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10799)
@@ -10694,7 +10694,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2331, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14597)
     #dbg_value(i64 %.sroa.7.045.i2332, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14597)
     #dbg_value(i64 %.sroa.10.044.i2333, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14597)
-  %i.bqw = add i64 %.sroa.10.044.i2333, -1, !dbg !21408 ; 2 uses
+  %i.bqw = add nsw i64 %.sroa.10.044.i2333, -1, !dbg !21408 ; 2 uses
     #dbg_value(i64 %i.bqw, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14597)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10793)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10792)
@@ -10956,7 +10956,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2346, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14678)
     #dbg_value(i64 %.sroa.7.045.i2347, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14678)
     #dbg_value(i64 %.sroa.10.044.i2348, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14678)
-  %i.bsh = add i64 %.sroa.10.044.i2348, -1, !dbg !21459 ; 2 uses
+  %i.bsh = add nsw i64 %.sroa.10.044.i2348, -1, !dbg !21459 ; 2 uses
     #dbg_value(i64 %i.bsh, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14678)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10786)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10785)
@@ -11218,7 +11218,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2361, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14759)
     #dbg_value(i64 %.sroa.7.045.i2362, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14759)
     #dbg_value(i64 %.sroa.10.044.i2363, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14759)
-  %i.bts = add i64 %.sroa.10.044.i2363, -1, !dbg !21510 ; 2 uses
+  %i.bts = add nsw i64 %.sroa.10.044.i2363, -1, !dbg !21510 ; 2 uses
     #dbg_value(i64 %i.bts, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14759)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10779)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10778)
@@ -11480,7 +11480,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2376, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14840)
     #dbg_value(i64 %.sroa.7.045.i2377, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14840)
     #dbg_value(i64 %.sroa.10.044.i2378, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14840)
-  %i.bvd = add i64 %.sroa.10.044.i2378, -1, !dbg !21561 ; 2 uses
+  %i.bvd = add nsw i64 %.sroa.10.044.i2378, -1, !dbg !21561 ; 2 uses
     #dbg_value(i64 %i.bvd, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14840)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10772)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10771)
@@ -11742,7 +11742,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2391, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14921)
     #dbg_value(i64 %.sroa.7.045.i2392, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14921)
     #dbg_value(i64 %.sroa.10.044.i2393, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14921)
-  %i.bwo = add i64 %.sroa.10.044.i2393, -1, !dbg !21612 ; 2 uses
+  %i.bwo = add nsw i64 %.sroa.10.044.i2393, -1, !dbg !21612 ; 2 uses
     #dbg_value(i64 %i.bwo, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !14921)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10765)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10764)
@@ -12004,7 +12004,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsa2e0
     #dbg_value(ptr %.sroa.035.046.i2406, !15182, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15002)
     #dbg_value(i64 %.sroa.7.045.i2407, !15182, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !15002)
     #dbg_value(i64 %.sroa.10.044.i2408, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !15002)
-  %i.bxz = add i64 %.sroa.10.044.i2408, -1, !dbg !21663 ; 2 uses
+  %i.bxz = add nsw i64 %.sroa.10.044.i2408, -1, !dbg !21663 ; 2 uses
     #dbg_value(i64 %i.bxz, !15182, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !15002)
     #dbg_value(ptr undef, !15147, !DIExpression(), !10758)
     #dbg_value(ptr undef, !15119, !DIExpression(), !10757)
