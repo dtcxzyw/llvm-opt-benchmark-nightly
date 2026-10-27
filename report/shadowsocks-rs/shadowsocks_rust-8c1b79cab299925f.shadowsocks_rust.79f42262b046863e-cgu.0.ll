@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.w, ptr %.sroa.5.0..sroa_idx21, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i128 -14408605693253748246545459478122018109, ptr %.sroa.6.0..sroa_idx, align 8
-  store i64 1, ptr %0, align 8
-  br label %bb.g
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !607
@@ -228,14 +227,18 @@ bb.f:                                             ; preds = %bb.d
   store ptr null, ptr %.sroa.48.sroa.7.0..sroa.48.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.aa, ptr %.sroa.5.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
-  br label %bb.g
+  br label %.sink.split
 
 .loopexit:                                        ; preds = %_RNvXs_NtNtCsf3Ta7LF998c_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i, %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.e, %.loopexit, %bb.f
+.sink.split:                                      ; preds = %bb.e, %bb.f
+  %.sink = phi i64 [ 0, %bb.f ], [ 1, %bb.e ]
+  store i64 %.sink, ptr %0, align 8
+  br label %bb.g
+
+bb.g:                                             ; preds = %.sink.split, %.loopexit
   ret void
 }
 
@@ -342,7 +345,7 @@ bb.a:
   %i.ba = alloca [16 x i8], align 8               ; 5 uses
   %i.bb = alloca [184 x i8], align 8              ; 12 uses
   %i.bc = alloca [184 x i8], align 8              ; 12 uses
-  %i.bd = alloca [184 x i8], align 8              ; 12 uses
+  %i.bd = alloca [184 x i8], align 8              ; 11 uses
   %i.be = alloca [184 x i8], align 8              ; 8 uses
   %i.bf = alloca [1 x i8], align 1                ; 9 uses
   %i.bg = alloca [1 x i8], align 1                ; 10 uses
@@ -745,12 +748,11 @@ bb.ad:                                            ; preds = %bb.x, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb)
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs8UFHSMUhzWe_19shadowsocks_service3acl12ParsingRulesECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef align 8 dereferenceable(184) %i.bc) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc)
-  br i1 %i.is, label %.split.thread, label %2
+  br i1 %i.is, label %.split.thread, label %.sink.split
 
 .split.thread:                                    ; preds = %bb.ad
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs8UFHSMUhzWe_19shadowsocks_service3acl12ParsingRulesECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef align 8 dereferenceable(184) %i.bd) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
-  br label %bb.dp
+  br label %.sink.split
 
 bb.ae:                                            ; preds = %_RNvXs8_NtNtCsgCecv3eZDcN_5alloc2io4utilINtB5_5LinesINtNtNtB7_8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9239.1) ]
@@ -1153,10 +1155,6 @@ _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Al
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i217, i64 noundef %.val1.i.i215, i64 noundef 1) #30, !noalias !832
   br label %.split
 
-2:                                                ; preds = %bb.ad
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
-  br label %bb.dp
-
 .split:                                           ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i216, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsat9HgdBb3qc_16shadowsocks_rust.exit214
   call void @llvm.experimental.noalias.scope.decl(metadata !833)
   %.val.i.i.i218 = load i32, ptr %.sroa.5236.0..sroa_idx, align 8, !range !15, !alias.scope !834, !noundef !14
@@ -1171,7 +1169,11 @@ _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Al
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs8UFHSMUhzWe_19shadowsocks_service3acl12ParsingRulesECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef align 8 dereferenceable(184) %i.be) #30
   br label %bb.dp
 
-bb.dp:                                            ; preds = %.split.thread, %2, %.thread265, %.split
+.sink.split:                                      ; preds = %bb.ad, %.split.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
+  br label %bb.dp
+
+bb.dp:                                            ; preds = %.sink.split, %.thread265, %.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bg)

@@ -205,7 +205,7 @@ _RINvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtNtCs
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMsi_NtNtNtCscdodAO9FK5_5alloc11collections5btree3mapINtB5_8BTreeMapReINtNtBb_5boxed3BoxDNtCsamjPIc071P4_6metric10InstrumentEL_EE5entryCsidB8gjke19X_15influxdb3_cache(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) initializes((0, 32)) %0, ptr noalias noundef align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 6 uses
+  %i.a = alloca [32 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 3 uses
   store ptr %2, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -242,8 +242,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %3, ptr %.sroa.46.0..sroa_idx, align 8
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %1, ptr %.sroa.57.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -251,10 +250,13 @@ bb.e:                                             ; preds = %bb.b
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %1, ptr %.sroa.44.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
+bb.f:                                             ; preds = %.sink.split, %bb.c
   ret void
 }
 

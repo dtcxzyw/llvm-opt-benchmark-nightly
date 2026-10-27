@@ -118,17 +118,20 @@ bb.i:                                             ; preds = %bb.h
   %i.bg = fsub float %i.aw, %i.ak
   %i.bh = fpext float %i.bg to double
   %i.bi = tail call double @llvm.fmuladd.f64(double %i.bh, double 6.000000e+01, double 1.200000e+02)
-  store double %i.bi, ptr %1, align 8, !tbaa !12
-  br label %bb.k
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.bj = fsub float %i.ak, %i.at
   %i.bk = fpext float %i.bj to double
   %i.bl = tail call double @llvm.fmuladd.f64(double %i.bk, double 6.000000e+01, double 2.400000e+02)
-  store double %i.bl, ptr %1, align 8, !tbaa !12
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.j, %bb.i
+  %.sink = phi double [ %i.bi, %bb.i ], [ %i.bl, %bb.j ]
+  store double %.sink, ptr %1, align 8, !tbaa !12
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.d, %bb.i, %bb.j, %bb.f, %bb.g, %bb.b
+bb.k:                                             ; preds = %.sink.split, %bb.d, %bb.f, %bb.g, %bb.b
   ret void
 }
 
@@ -228,16 +231,19 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %bb.h
   %i.bf = fsub double %i.aq, %i.ar
   %i.bg = tail call double @llvm.fmuladd.f64(double %i.bf, double 6.000000e+01, double 1.200000e+02)
-  store double %i.bg, ptr %1, align 8, !tbaa !12
-  br label %bb.k
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.bh = fsub double %i.ar, %i.au
   %i.bi = tail call double @llvm.fmuladd.f64(double %i.bh, double 6.000000e+01, double 2.400000e+02)
-  store double %i.bi, ptr %1, align 8, !tbaa !12
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.j, %bb.i
+  %.sink = phi double [ %i.bg, %bb.i ], [ %i.bi, %bb.j ]
+  store double %.sink, ptr %1, align 8, !tbaa !12
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.d, %bb.i, %bb.j, %bb.f, %bb.g, %bb.b
+bb.k:                                             ; preds = %.sink.split, %bb.d, %bb.f, %bb.g, %bb.b
   ret void
 }
 
@@ -369,9 +375,9 @@ bb.k:                                             ; preds = %bb.i
   %i.bx = tail call double @llvm.fmuladd.f64(double %i.bw, double 6.000000e+01, double 2.400000e+02)
   br label %_ZN3igl10rgb_to_hsvIddEEvPKT_PT0_.exit
 
-_ZN3igl10rgb_to_hsvIddEEvPKT_PT0_.exit:           ; preds = %bb.e, %bb.d, %bb.g, %bb.h, %bb.j, %bb.k
-  %.sroa.0.0 = phi double [ %i.bx, %bb.k ], [ 0.000000e+00, %bb.d ], [ %i.bs, %bb.h ], [ %i.bq, %bb.g ], [ %i.bv, %bb.j ], [ 0.000000e+00, %bb.e ]
-  %.sroa.10.0 = phi double [ %i.aw, %bb.k ], [ 0.000000e+00, %bb.d ], [ %i.aw, %bb.h ], [ %i.aw, %bb.g ], [ %i.aw, %bb.j ], [ %i.aw, %bb.e ]
+_ZN3igl10rgb_to_hsvIddEEvPKT_PT0_.exit:           ; preds = %bb.j, %bb.k, %bb.e, %bb.d, %bb.g, %bb.h
+  %.sroa.0.0 = phi double [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.d ], [ %i.bs, %bb.h ], [ %i.bq, %bb.g ], [ %i.bv, %bb.j ], [ %i.bx, %bb.k ]
+  %.sroa.10.0 = phi double [ %i.aw, %bb.e ], [ 0.000000e+00, %bb.d ], [ %i.aw, %bb.h ], [ %i.aw, %bb.g ], [ %i.aw, %bb.j ], [ %i.aw, %bb.k ]
   %i.by = getelementptr [8 x i8], ptr %i.n, i64 %.021 ; 3 uses
   store double %.sroa.0.0, ptr %i.by, align 8, !tbaa !12
   %i.bz = getelementptr [8 x i8], ptr %i.by, i64 %i.p

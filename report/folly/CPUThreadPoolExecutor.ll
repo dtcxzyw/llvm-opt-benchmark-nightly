@@ -205,23 +205,25 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %.034, i64 24
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !15639 ; 4 uses
-  br i1 %i.af, label %bb.j, label %bb.k
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !15639 ; 3 uses
+  br i1 %i.af, label %3, label %bb.j
+
+3:                                                ; preds = %bb.i
+  store ptr %i.ai, ptr %i.ad, align 8, !tbaa !15638
+  br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store ptr %i.ai, ptr %i.ad, align 8, !tbaa !15638
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  store ptr null, ptr %i.aj, align 8, !tbaa !15633
-  br label %_ZN5folly18parking_lot_detail6Bucket5eraseEPNS0_12WaitNodeBaseE.exit
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.v, i64 24
+  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !15639
+  br label %bb.k
 
-bb.k:                                             ; preds = %bb.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.v, i64 24
-  store ptr %i.ai, ptr %3, align 8, !tbaa !15639
+bb.k:                                             ; preds = %bb.j, %3
+  %.sink.i = phi ptr [ null, %3 ], [ %i.v, %bb.j ]
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  store ptr %i.v, ptr %i.ak, align 8, !tbaa !15633
+  store ptr %.sink.i, ptr %i.ak, align 8, !tbaa !15633
   br label %_ZN5folly18parking_lot_detail6Bucket5eraseEPNS0_12WaitNodeBaseE.exit
 
-_ZN5folly18parking_lot_detail6Bucket5eraseEPNS0_12WaitNodeBaseE.exit: ; preds = %bb.g, %bb.h, %bb.j, %bb.k
+_ZN5folly18parking_lot_detail6Bucket5eraseEPNS0_12WaitNodeBaseE.exit: ; preds = %bb.g, %bb.h, %bb.k
   %i.al = atomicrmw add ptr %i.o, i64 -1 monotonic, align 8 ; 0 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.034, i64 40 ; 2 uses
   %i.an = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.am) #29 ; 2 uses

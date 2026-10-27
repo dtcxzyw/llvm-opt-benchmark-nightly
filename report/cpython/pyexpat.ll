@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.f = getelementptr i8, ptr %0, i64 60         ; 5 uses
+  %i.f = getelementptr i8, ptr %0, i64 60         ; 4 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !47   ; 4 uses
   %i.h = add i32 %i.g, %2
   %i.i = getelementptr i8, ptr %0, i64 56         ; 2 uses
@@ -242,8 +242,7 @@ bb.f:                                             ; preds = %flush_character_buf
 
 bb.g:                                             ; preds = %bb.f
   %i.u = tail call fastcc i32 @call_character_handler(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2) ; 0 uses
-  store i32 0, ptr %i.f, align 4, !tbaa !47
-  br label %bb.i
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.f
   %i.v = load ptr, ptr %i.b, align 8, !tbaa !45
@@ -253,10 +252,14 @@ bb.h:                                             ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.x, ptr align 1 %1, i64 %i.y, i1 false)
   %i.z = load i32, ptr %i.f, align 4, !tbaa !47
   %i.aa = add i32 %i.z, %2
-  store i32 %i.aa, ptr %i.f, align 4, !tbaa !47
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.h, %bb.g
+  %.sink = phi i32 [ 0, %bb.g ], [ %i.aa, %bb.h ]
+  store i32 %.sink, ptr %i.f, align 4, !tbaa !47
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.c, %bb.h, %bb.g, %flush_character_buffer.exit.thread, %flush_character_buffer.exit, %bb.a
+bb.i:                                             ; preds = %.sink.split, %bb.c, %flush_character_buffer.exit.thread, %flush_character_buffer.exit, %bb.a
   ret void
 }
 

@@ -202,8 +202,7 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p
   store i8 0, ptr @current_session, align 8
-  store i8 0, ptr getelementptr inbounds nuw (i8, ptr @current_session, i64 1), align 1
-  br label %bb.s
+  br label %.sink.split
 
 bb.r:                                             ; preds = %bb.p
   store i8 1, ptr @current_session, align 8
@@ -219,10 +218,14 @@ bb.r:                                             ; preds = %bb.p
   call void @g_io_channel_set_buffer_size(ptr noundef %i.bb, i64 noundef 256000)
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @current_session, i64 24), align 8
   %i.be = call i32 @g_io_add_watch_full(ptr noundef %i.bb, i32 noundef -100, i32 noundef 25, ptr noundef @snort_fast_output, ptr noundef @current_session, ptr noundef null) ; 0 uses
-  store i8 1, ptr getelementptr inbounds nuw (i8, ptr @current_session, i64 1), align 1
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.r, %bb.q
+  %.sink = phi i8 [ 0, %bb.q ], [ 1, %bb.r ]
+  store i8 %.sink, ptr getelementptr inbounds nuw (i8, ptr @current_session, i64 1), align 1
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %bb.q, %bb.o, %bb.m, %bb.k
+bb.s:                                             ; preds = %.sink.split, %bb.o, %bb.m, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #11
   br label %bb.t

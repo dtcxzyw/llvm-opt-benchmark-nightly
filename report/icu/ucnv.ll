@@ -204,20 +204,21 @@ bb.k:                                             ; preds = %bb.j
   %i.q = call ptr @ucnv_createConverter_78(ptr noundef nonnull %8, ptr noundef %0, ptr noundef nonnull %6) ; 2 uses
   %i.r = load i32, ptr %6, align 4, !tbaa !9
   %i.s = icmp slt i32 %i.r, 1
-  br i1 %i.s, label %bb.m, label %bb.l
+  br i1 %i.s, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  call void @ucnv_close_78(ptr noundef %i.n)
-  br label %bb.n
-
-bb.m:                                             ; preds = %bb.k
   %9 = call fastcc noundef i32 @_ZL20ucnv_internalConvertP10UConverterS0_PciPKciP10UErrorCode(ptr noundef %i.q, ptr noundef %i.n, ptr noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %6)
   call void @ucnv_close_78(ptr noundef %i.n)
-  call void @ucnv_close_78(ptr noundef %i.q)
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.k, %bb.l
+  %.sink = phi ptr [ %i.q, %bb.l ], [ %i.n, %bb.k ]
+  %.0.ph = phi i32 [ %9, %bb.l ], [ 0, %bb.k ]
+  call void @ucnv_close_78(ptr noundef %.sink)
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.j, %bb.a, %bb.b, %bb.m, %bb.l, %bb.i, %bb.e
-  %.0 = phi i32 [ %9, %bb.m ], [ 0, %bb.e ], [ %i.m, %bb.i ], [ 0, %bb.a ], [ 0, %bb.l ], [ 0, %bb.b ], [ 0, %bb.j ]
+bb.n:                                             ; preds = %bb.m, %bb.j, %bb.a, %bb.b, %bb.i, %bb.e
+  %.0 = phi i32 [ 0, %bb.b ], [ 0, %bb.e ], [ %i.m, %bb.i ], [ 0, %bb.a ], [ 0, %bb.j ], [ %.0.ph, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
   ret i32 %.0

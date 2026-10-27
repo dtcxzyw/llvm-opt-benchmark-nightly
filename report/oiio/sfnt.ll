@@ -205,16 +205,12 @@ bb.h:                                             ; preds = %bb.g
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 40
   %i.au = load i64, ptr %i.at, align 8, !tbaa !568
   %i.av = shl nsw i64 %i.au, 10
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 64
-  store i64 %i.av, ptr %5, align 8, !tbaa !26
-  br label %bb.ed
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.g
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i64 0, ptr %i.aw, align 8, !tbaa !26
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 64
-  store i64 0, ptr %6, align 8, !tbaa !26
-  br label %bb.ed
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -617,8 +613,14 @@ read_paint.exit:                                  ; preds = %bb.j, %bb.k, %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.ed
 
-bb.ed:                                            ; preds = %bb.h, %bb.i, %bb.a, %bb.b, %bb.c, %read_paint.exit
-  %.0 = phi i8 [ 0, %bb.a ], [ %.4.i, %read_paint.exit ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %bb.i ], [ 1, %bb.h ]
+.sink.split:                                      ; preds = %bb.h, %bb.i
+  %.sink = phi i64 [ 0, %bb.i ], [ %i.av, %bb.h ]
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 64
+  store i64 %.sink, ptr %5, align 8, !tbaa !26
+  br label %bb.ed
+
+bb.ed:                                            ; preds = %.sink.split, %bb.a, %bb.b, %bb.c, %read_paint.exit
+  %.0 = phi i8 [ 0, %bb.a ], [ %.4.i, %read_paint.exit ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   ret i8 %.0
 }

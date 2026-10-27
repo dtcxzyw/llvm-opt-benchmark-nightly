@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.b, %_RNvMNtCskKL
 ; Function Attrs: cold noinline nonlazybind uwtable
 define void @_RINvNtNtCslcwApyVHiOd_7bincode6varint15decode_unsigned27deserialize_varint_cold_u16NtNtNtB6_2de4read11SliceReaderECseRvVZ55ETAB_11yara_x_capi(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 1)) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %1, i1 noundef zeroext %2) unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [2 x i8], align 2                 ; 6 uses
+  %i.a = alloca [2 x i8], align 2                 ; 5 uses
   %i.b = alloca [1 x i8], align 1                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 0, ptr %i.b, align 1
@@ -274,8 +274,7 @@ bb.k:                                             ; preds = %bb.g
   store i8 0, ptr %0, align 8
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.n, ptr %.sroa.553.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.g
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 3
@@ -289,10 +288,13 @@ bb.l:                                             ; preds = %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %.sroa.0.0, ptr %i.r, align 2
   store i8 -1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.l, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.e, %bb.f, %bb.h, %bb.i, %bb.j, %bb.l, %bb.k, %bb.b
+bb.m:                                             ; preds = %.sink.split, %bb.e, %bb.f, %bb.h, %bb.i, %bb.j, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret void
 }

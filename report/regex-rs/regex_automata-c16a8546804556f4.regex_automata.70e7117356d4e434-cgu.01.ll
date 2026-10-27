@@ -202,8 +202,7 @@ bb.e:                                             ; preds = %bb.c
     #dbg_value(ptr %i.x, !16191, !DIExpression(), !16199)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !16269
   store ptr %i.x, ptr %i.y, align 8, !dbg !16269
-  store i32 1, ptr %0, align 8, !dbg !16269
-  br label %bb.aa, !dbg !16270
+  br label %.sink.split122, !dbg !16270
 
 bb.f:                                             ; preds = %bb.c
   %.sroa.555.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !16271
@@ -225,8 +224,7 @@ bb.f:                                             ; preds = %bb.c
   store i32 %i.aa, ptr %i.ab, align 4, !dbg !16273
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !16273
   store i32 %.sroa.5.0, ptr %i.ac, align 8, !dbg !16273
-  store i32 0, ptr %0, align 8, !dbg !16273
-  br label %bb.aa, !dbg !16274
+  br label %.sink.split122, !dbg !16274
 
 bb.g:                                             ; preds = %bb.d
     #dbg_value(ptr %1, !16203, !DIExpression(DW_OP_plus_uconst, 48, DW_OP_stack_value), !16206)
@@ -445,7 +443,17 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !16307
   br label %bb.aa, !dbg !16326
 
-bb.aa:                                            ; preds = %bb.ad, %bb.ae, %bb.o, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives11NonMaxUsizeEEEB1A_.exit, %bb.f, %bb.e, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives11NonMaxUsizeEEEB1A_.exit115
+.sink.split:                                      ; preds = %bb.ae, %bb.ad
+  %.sink = phi i32 [ 1, %bb.ad ], [ 0, %bb.ae ]
+  store i32 %.sink, ptr %0, align 8, !dbg !16182
+  br label %bb.aa, !dbg !16326
+
+.sink.split122:                                   ; preds = %bb.f, %bb.e
+  %.sink123 = phi i32 [ 1, %bb.e ], [ 0, %bb.f ]
+  store i32 %.sink123, ptr %0, align 8, !dbg !16146
+  br label %bb.aa, !dbg !16326
+
+bb.aa:                                            ; preds = %.sink.split122, %.sink.split, %bb.o, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives11NonMaxUsizeEEEB1A_.exit, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives11NonMaxUsizeEEEB1A_.exit115
   ret void, !dbg !16326
 
 bb.ab:                                            ; preds = %bb.w
@@ -466,8 +474,7 @@ bb.ad:                                            ; preds = %bb.h
     #dbg_value(ptr %i.bn, !16192, !DIExpression(), !16252)
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !16330
   store ptr %i.bn, ptr %i.bo, align 8, !dbg !16330
-  store i32 1, ptr %0, align 8, !dbg !16330
-  br label %bb.aa, !dbg !16306
+  br label %.sink.split, !dbg !16306
 
 bb.ae:                                            ; preds = %bb.h
   %.sroa.558.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16, !dbg !16331
@@ -489,8 +496,7 @@ bb.ae:                                            ; preds = %bb.h
   store i32 %i.bq, ptr %i.br, align 4, !dbg !16333
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !16333
   store i32 %.sroa.524.0, ptr %i.bs, align 8, !dbg !16333
-  store i32 0, ptr %0, align 8, !dbg !16333
-  br label %bb.aa, !dbg !16334
+  br label %.sink.split, !dbg !16334
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -712,7 +718,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_RNvMsc_NtNtCs9GYDdpCSJ4S_14regex_automata4util6searchNtB5_10PatternSet10try_insert.exit.i, !dbg !16672
 
 _RNvMsc_NtNtCs9GYDdpCSJ4S_14regex_automata4util6searchNtB5_10PatternSet10try_insert.exit.i: ; preds = %bb.n, %bb.m, %bb.l
-  %i.as = phi i64 [ %i.ae, %bb.m ], [ %i.ae, %bb.l ], [ %i.ar, %bb.n ] ; 2 uses
+  %i.as = phi i64 [ %i.ae, %bb.m ], [ %i.ar, %bb.n ], [ %i.ae, %bb.l ] ; 2 uses
   %i.at = icmp eq i64 %i.as, %i.l, !dbg !16673
   br i1 %i.at, label %_RNvMs_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB4_3DFA29try_which_overlapping_matches.exit.thread, label %.split.i, !dbg !16674
 

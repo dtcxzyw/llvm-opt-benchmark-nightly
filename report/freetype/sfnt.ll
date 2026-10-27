@@ -205,11 +205,11 @@ bb.ea:                                            ; preds = %._crit_edge424.i.i,
   br label %.thread.i93.i
 
 .thread.i93.i:                                    ; preds = %bb.bt, %bb.br, %bb.bm, %.lr.ph.i95.i, %bb.cj, %bb.ci, %.lr.ph375.i.i, %bb.ea, %bb.dz, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.dr, %bb.dq, %bb.do, %bb.dn, %._crit_edge378.i.i, %bb.di, %bb.dh, %bb.de, %bb.db, %bb.cy, %bb.cu, %bb.cr, %bb.co, %.thread329.i.i, %bb.ch, %bb.cg, %bb.ce, %bb.cd, %bb.cb, %bb.bz, %bb.by, %bb.bw, %bb.bk, %bb.bj
-  %.1208 = phi i32 [ %.0207, %bb.bz ], [ %.0207, %bb.cd ], [ %.0207, %bb.cg ], [ %.0207, %bb.cr ], [ %.0207, %bb.dq ], [ %.0207, %bb.dr ], [ %.0207, %bb.dt ], [ %.0207, %bb.bj ], [ %.0207.lobit, %bb.ea ], [ %.0207, %bb.dz ], [ %.0207, %bb.dx ], [ %.0207, %bb.dw ], [ %.0207, %bb.dv ], [ %.0207, %bb.du ], [ %.0207, %bb.do ], [ %.0207, %bb.dn ], [ %.0207, %bb.dh ], [ %.0207, %._crit_edge378.i.i ], [ %.0207, %bb.di ], [ %.0207, %bb.de ], [ %.0207, %bb.db ], [ %.0207, %bb.cy ], [ %.0207, %bb.cu ], [ %.0207, %bb.co ], [ %.0207, %.thread329.i.i ], [ %.0207, %bb.bw ], [ %.0207, %bb.cj ], [ %.0207, %bb.bk ], [ %.0207, %bb.ch ], [ %.0207, %bb.ce ], [ %.0207, %bb.cb ], [ %.0207, %bb.by ], [ %.0207, %.lr.ph375.i.i ], [ %.0207, %bb.ci ], [ %.0207, %.lr.ph.i95.i ], [ %.0207, %bb.bm ], [ %.0207, %bb.br ], [ %.0207, %bb.bt ] ; 2 uses
-  %.1204 = phi i64 [ %.0203, %bb.bz ], [ %.0203, %bb.cd ], [ %.0203, %bb.cg ], [ %.0203, %bb.cr ], [ %i.sf, %bb.dq ], [ %i.sf, %bb.dr ], [ %i.sf, %bb.dt ], [ %.0203, %bb.bj ], [ %i.sf, %bb.ea ], [ %i.sf, %bb.dz ], [ %i.sf, %bb.dx ], [ %i.sf, %bb.dw ], [ %i.sf, %bb.dv ], [ %i.sf, %bb.du ], [ %i.sf, %bb.do ], [ %i.sf, %bb.dn ], [ %i.sf, %bb.dh ], [ %i.sf, %._crit_edge378.i.i ], [ %i.sf, %bb.di ], [ %i.sf, %bb.de ], [ %.0203, %bb.db ], [ %.0203, %bb.cy ], [ %.0203, %bb.cu ], [ %.0203, %bb.co ], [ %.0203, %.thread329.i.i ], [ %.0203, %bb.bw ], [ %.0203, %bb.cj ], [ %.0203, %bb.bk ], [ %.0203, %bb.ch ], [ %.0203, %bb.ce ], [ %.0203, %bb.cb ], [ %.0203, %bb.by ], [ %.0203, %.lr.ph375.i.i ], [ %.0203, %bb.ci ], [ %.0203, %.lr.ph.i95.i ], [ %.0203, %bb.bm ], [ %.0203, %bb.br ], [ %.0203, %bb.bt ] ; 2 uses
-  %.2246.i.i = phi ptr [ %i.nk, %bb.bz ], [ %i.nk, %bb.cd ], [ %i.nk, %bb.cg ], [ %i.nk, %bb.cr ], [ %.1245.i.i, %bb.dq ], [ %.1245.i.i, %bb.dr ], [ %.1245.i.i, %bb.dt ], [ null, %bb.bj ], [ %.1245.i.i, %bb.ea ], [ %.1245.i.i, %bb.dz ], [ %.1245.i.i, %bb.dx ], [ %.1245.i.i, %bb.dw ], [ %.1245.i.i, %bb.dv ], [ %.1245.i.i, %bb.du ], [ %.1245.i.i, %bb.do ], [ %.1245.i.i, %bb.dn ], [ %i.nk, %bb.dh ], [ %i.ug, %._crit_edge378.i.i ], [ %i.nk, %bb.di ], [ %i.nk, %bb.de ], [ %i.nk, %bb.db ], [ %i.nk, %bb.cy ], [ %i.nk, %bb.cu ], [ %i.nk, %bb.co ], [ %i.nk, %.thread329.i.i ], [ %i.nk, %bb.bw ], [ %i.nk, %bb.cj ], [ %i.nk, %bb.bk ], [ %i.nk, %bb.ch ], [ %i.nk, %bb.ce ], [ %i.nk, %bb.cb ], [ %i.nk, %bb.by ], [ %i.nk, %.lr.ph375.i.i ], [ %i.nk, %bb.ci ], [ %i.nk, %.lr.ph.i95.i ], [ %i.nk, %bb.bm ], [ %i.nk, %bb.br ], [ %i.nk, %bb.bt ]
-  %.0226.i.i = phi ptr [ null, %bb.bz ], [ null, %bb.cd ], [ null, %bb.cg ], [ null, %bb.cr ], [ %i.vw, %bb.dq ], [ %i.vw, %bb.dr ], [ %i.vw, %bb.dt ], [ null, %bb.bj ], [ %i.vw, %bb.ea ], [ %i.vw, %bb.dz ], [ %i.vw, %bb.dx ], [ %i.vw, %bb.dw ], [ %i.vw, %bb.dv ], [ %i.vw, %bb.du ], [ %i.vw, %bb.do ], [ null, %bb.dn ], [ null, %bb.dh ], [ null, %._crit_edge378.i.i ], [ null, %bb.di ], [ null, %bb.de ], [ null, %bb.db ], [ null, %bb.cy ], [ null, %bb.cu ], [ null, %bb.co ], [ null, %.thread329.i.i ], [ null, %bb.bw ], [ null, %bb.cj ], [ null, %bb.bk ], [ null, %bb.ch ], [ null, %bb.ce ], [ null, %bb.cb ], [ null, %bb.by ], [ null, %.lr.ph375.i.i ], [ null, %bb.ci ], [ null, %.lr.ph.i95.i ], [ null, %bb.bm ], [ null, %bb.br ], [ null, %bb.bt ] ; 3 uses
-  %.0225.i.i = phi ptr [ null, %bb.bz ], [ null, %bb.cd ], [ null, %bb.cg ], [ null, %bb.cr ], [ null, %bb.dq ], [ null, %bb.dr ], [ null, %bb.dt ], [ null, %bb.bj ], [ %i.yz, %bb.ea ], [ %i.yz, %bb.dz ], [ %i.yz, %bb.dx ], [ %i.yz, %bb.dw ], [ %i.yz, %bb.dv ], [ %i.yz, %bb.du ], [ null, %bb.do ], [ null, %bb.dn ], [ null, %bb.dh ], [ null, %._crit_edge378.i.i ], [ null, %bb.di ], [ null, %bb.de ], [ null, %bb.db ], [ null, %bb.cy ], [ null, %bb.cu ], [ null, %bb.co ], [ null, %.thread329.i.i ], [ null, %bb.bw ], [ null, %bb.cj ], [ null, %bb.bk ], [ null, %bb.ch ], [ null, %bb.ce ], [ null, %bb.cb ], [ null, %bb.by ], [ null, %.lr.ph375.i.i ], [ null, %bb.ci ], [ null, %.lr.ph.i95.i ], [ null, %bb.bm ], [ null, %bb.br ], [ null, %bb.bt ]
+  %.1208 = phi i32 [ %.0207, %bb.bz ], [ %.0207, %bb.cd ], [ %.0207, %bb.cg ], [ %.0207, %bb.cr ], [ %.0207, %bb.dq ], [ %.0207, %bb.dr ], [ %.0207, %bb.dt ], [ %.0207.lobit, %bb.ea ], [ %.0207, %bb.dz ], [ %.0207, %bb.dx ], [ %.0207, %bb.dw ], [ %.0207, %bb.dv ], [ %.0207, %bb.du ], [ %.0207, %bb.do ], [ %.0207, %bb.dn ], [ %.0207, %bb.dh ], [ %.0207, %._crit_edge378.i.i ], [ %.0207, %bb.di ], [ %.0207, %bb.de ], [ %.0207, %bb.db ], [ %.0207, %bb.cy ], [ %.0207, %bb.cu ], [ %.0207, %bb.co ], [ %.0207, %.thread329.i.i ], [ %.0207, %bb.cj ], [ %.0207, %bb.bk ], [ %.0207, %bb.bj ], [ %.0207, %bb.ch ], [ %.0207, %bb.ce ], [ %.0207, %bb.cb ], [ %.0207, %bb.by ], [ %.0207, %bb.bw ], [ %.0207, %.lr.ph375.i.i ], [ %.0207, %bb.ci ], [ %.0207, %.lr.ph.i95.i ], [ %.0207, %bb.bm ], [ %.0207, %bb.br ], [ %.0207, %bb.bt ] ; 2 uses
+  %.1204 = phi i64 [ %.0203, %bb.bz ], [ %.0203, %bb.cd ], [ %.0203, %bb.cg ], [ %.0203, %bb.cr ], [ %i.sf, %bb.dq ], [ %i.sf, %bb.dr ], [ %i.sf, %bb.dt ], [ %i.sf, %bb.ea ], [ %i.sf, %bb.dz ], [ %i.sf, %bb.dx ], [ %i.sf, %bb.dw ], [ %i.sf, %bb.dv ], [ %i.sf, %bb.du ], [ %i.sf, %bb.do ], [ %i.sf, %bb.dn ], [ %i.sf, %bb.dh ], [ %i.sf, %._crit_edge378.i.i ], [ %i.sf, %bb.di ], [ %i.sf, %bb.de ], [ %.0203, %bb.db ], [ %.0203, %bb.cy ], [ %.0203, %bb.cu ], [ %.0203, %bb.co ], [ %.0203, %.thread329.i.i ], [ %.0203, %bb.cj ], [ %.0203, %bb.bk ], [ %.0203, %bb.bj ], [ %.0203, %bb.ch ], [ %.0203, %bb.ce ], [ %.0203, %bb.cb ], [ %.0203, %bb.by ], [ %.0203, %bb.bw ], [ %.0203, %.lr.ph375.i.i ], [ %.0203, %bb.ci ], [ %.0203, %.lr.ph.i95.i ], [ %.0203, %bb.bm ], [ %.0203, %bb.br ], [ %.0203, %bb.bt ] ; 2 uses
+  %.2246.i.i = phi ptr [ %i.nk, %bb.bz ], [ %i.nk, %bb.cd ], [ %i.nk, %bb.cg ], [ %i.nk, %bb.cr ], [ %.1245.i.i, %bb.dq ], [ %.1245.i.i, %bb.dr ], [ %.1245.i.i, %bb.dt ], [ %.1245.i.i, %bb.ea ], [ %.1245.i.i, %bb.dz ], [ %.1245.i.i, %bb.dx ], [ %.1245.i.i, %bb.dw ], [ %.1245.i.i, %bb.dv ], [ %.1245.i.i, %bb.du ], [ %.1245.i.i, %bb.do ], [ %.1245.i.i, %bb.dn ], [ %i.nk, %bb.dh ], [ %i.ug, %._crit_edge378.i.i ], [ %i.nk, %bb.di ], [ %i.nk, %bb.de ], [ %i.nk, %bb.db ], [ %i.nk, %bb.cy ], [ %i.nk, %bb.cu ], [ %i.nk, %bb.co ], [ %i.nk, %.thread329.i.i ], [ %i.nk, %bb.cj ], [ %i.nk, %bb.bk ], [ null, %bb.bj ], [ %i.nk, %bb.ch ], [ %i.nk, %bb.ce ], [ %i.nk, %bb.cb ], [ %i.nk, %bb.by ], [ %i.nk, %bb.bw ], [ %i.nk, %.lr.ph375.i.i ], [ %i.nk, %bb.ci ], [ %i.nk, %.lr.ph.i95.i ], [ %i.nk, %bb.bm ], [ %i.nk, %bb.br ], [ %i.nk, %bb.bt ]
+  %.0226.i.i = phi ptr [ null, %bb.bz ], [ null, %bb.cd ], [ null, %bb.cg ], [ null, %bb.cr ], [ %i.vw, %bb.dq ], [ %i.vw, %bb.dr ], [ %i.vw, %bb.dt ], [ %i.vw, %bb.ea ], [ %i.vw, %bb.dz ], [ %i.vw, %bb.dx ], [ %i.vw, %bb.dw ], [ %i.vw, %bb.dv ], [ %i.vw, %bb.du ], [ %i.vw, %bb.do ], [ null, %bb.dn ], [ null, %bb.dh ], [ null, %._crit_edge378.i.i ], [ null, %bb.di ], [ null, %bb.de ], [ null, %bb.db ], [ null, %bb.cy ], [ null, %bb.cu ], [ null, %bb.co ], [ null, %.thread329.i.i ], [ null, %bb.cj ], [ null, %bb.bk ], [ null, %bb.bj ], [ null, %bb.ch ], [ null, %bb.ce ], [ null, %bb.cb ], [ null, %bb.by ], [ null, %bb.bw ], [ null, %.lr.ph375.i.i ], [ null, %bb.ci ], [ null, %.lr.ph.i95.i ], [ null, %bb.bm ], [ null, %bb.br ], [ null, %bb.bt ] ; 3 uses
+  %.0225.i.i = phi ptr [ null, %bb.bz ], [ null, %bb.cd ], [ null, %bb.cg ], [ null, %bb.cr ], [ null, %bb.dq ], [ null, %bb.dr ], [ null, %bb.dt ], [ %i.yz, %bb.ea ], [ %i.yz, %bb.dz ], [ %i.yz, %bb.dx ], [ %i.yz, %bb.dw ], [ %i.yz, %bb.dv ], [ %i.yz, %bb.du ], [ null, %bb.do ], [ null, %bb.dn ], [ null, %bb.dh ], [ null, %._crit_edge378.i.i ], [ null, %bb.di ], [ null, %bb.de ], [ null, %bb.db ], [ null, %bb.cy ], [ null, %bb.cu ], [ null, %bb.co ], [ null, %.thread329.i.i ], [ null, %bb.cj ], [ null, %bb.bk ], [ null, %bb.bj ], [ null, %bb.ch ], [ null, %bb.ce ], [ null, %bb.cb ], [ null, %bb.by ], [ null, %bb.bw ], [ null, %.lr.ph375.i.i ], [ null, %bb.ci ], [ null, %.lr.ph.i95.i ], [ null, %bb.bm ], [ null, %bb.br ], [ null, %bb.bt ]
   call void @ft_mem_free(ptr noundef %i.lz, ptr noundef %i.ng) #27
   call void @ft_mem_free(ptr noundef %i.lz, ptr noundef %.2246.i.i) #27
   call void @ft_mem_free(ptr noundef %i.lz, ptr noundef %.0225.i.i) #27
@@ -612,16 +612,12 @@ bb.h:                                             ; preds = %bb.g
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 40
   %i.au = load i64, ptr %i.at, align 8, !tbaa !622
   %i.av = shl nsw i64 %i.au, 10
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 64
-  store i64 %i.av, ptr %5, align 8, !tbaa !29
-  br label %bb.ee
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.g
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i64 0, ptr %i.aw, align 8, !tbaa !29
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 64
-  store i64 0, ptr %6, align 8, !tbaa !29
-  br label %bb.ee
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1024,8 +1020,14 @@ read_paint.exit:                                  ; preds = %bb.j, %bb.k, %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.ee
 
-bb.ee:                                            ; preds = %bb.h, %bb.i, %bb.a, %bb.b, %bb.c, %read_paint.exit
-  %.0 = phi i8 [ 0, %bb.a ], [ %.4.i, %read_paint.exit ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %bb.i ], [ 1, %bb.h ]
+.sink.split:                                      ; preds = %bb.h, %bb.i
+  %.sink = phi i64 [ 0, %bb.i ], [ %i.av, %bb.h ]
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 64
+  store i64 %.sink, ptr %5, align 8, !tbaa !29
+  br label %bb.ee
+
+bb.ee:                                            ; preds = %.sink.split, %bb.a, %bb.b, %bb.c, %read_paint.exit
+  %.0 = phi i8 [ 0, %bb.a ], [ %.4.i, %read_paint.exit ], [ 0, %bb.c ], [ 0, %bb.b ], [ 1, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   ret i8 %.0
 }

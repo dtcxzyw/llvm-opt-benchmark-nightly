@@ -204,7 +204,7 @@ bb.a:
   %i.h = alloca [16 x i8], align 8                ; 5 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
   %i.j = alloca [16 x i8], align 8                ; 5 uses
-  %i.k = alloca [8 x i8], align 8                 ; 6 uses
+  %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.m = load i8, ptr %i.l, align 4, !noundef !15
   %i.n = and i8 %i.m, 1
@@ -450,17 +450,19 @@ _RNvMNtNtNtCskxN0Kp1MEon_2h25proto7streams7streamsINtB2_7StreamsNtNtCs1eA6bChxBZ
 bb.ae:                                            ; preds = %_RNvMNtNtNtCskxN0Kp1MEon_2h25proto7streams7streamsINtB2_7StreamsNtNtCs1eA6bChxBZF_5bytes5bytes5BytesNtNtB8_6client4PeerE20apply_local_settingsCskeugdADtBsi_12pingora_core.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.g, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  br label %bb.ag
+  br label %.sink.split
 
 bb.af:                                            ; preds = %_RNvMNtNtNtCskxN0Kp1MEon_2h25proto7streams7streamsINtB2_7StreamsNtNtCs1eA6bChxBZF_5bytes5bytes5BytesNtNtB8_6client4PeerE20apply_local_settingsCskeugdADtBsi_12pingora_core.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   store i32 2, ptr %1, align 4
   store i8 -1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ae, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.e, %bb.af, %bb.al, %bb.ae
+bb.ag:                                            ; preds = %.sink.split, %bb.e, %bb.al
   ret void
 
 bb.ah:                                            ; preds = %bb.c

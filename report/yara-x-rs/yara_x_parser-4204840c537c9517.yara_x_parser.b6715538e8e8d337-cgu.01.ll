@@ -204,7 +204,7 @@ bb.a:
   %i.s = alloca [12 x i8], align 4                ; 6 uses
   %i.t = alloca [16 x i8], align 8                ; 4 uses
   %i.u = alloca [8 x i8], align 8                 ; 3 uses
-  %i.v = alloca [16 x i8], align 8                ; 13 uses
+  %i.v = alloca [16 x i8], align 8                ; 15 uses
   %i.w = tail call fastcc noundef i8 @_RNvMs_NtNtCsfF8zpZz1lvn_13yara_x_parser3ast7cst2astINtB4_7BuilderNtNtB8_6parser6ParserE5beginB8_(ptr noalias nofree noundef align 8 dereferenceable(456) %1, i16 noundef 101) ; 2 uses
   %.not = icmp eq i8 %i.w, 2
   br i1 %.not, label %bb.c, label %bb.b
@@ -554,7 +554,7 @@ common.resume:                                    ; preds = %bb.ar, %.thread74.i
   %common.resume.op = phi { ptr, i32 } [ %i.ey, %bb.bs ], [ %i.cx, %bb.am ], [ %.pn.ph, %bb.cf ], [ %i.ct, %bb.aj ], [ %eh.lpad-body4977.i, %.thread74.i ], [ %i.cz, %bb.ar ]
   resume { ptr, i32 } %common.resume.op
 
-bb.au:                                            ; preds = %bb.j, %bb.l, %bb.as, %bb.g, %bb.ao
+bb.au:                                            ; preds = %bb.g, %bb.as, %bb.l, %bb.j, %bb.ao
   %.sroa.13.2.ph = phi i8 [ %i.cw, %bb.ao ], [ %.sroa.7.sroa.0.0.ph.i, %bb.j ], [ %i.bb, %bb.l ], [ %.sroa.13.1, %bb.as ], [ %i.aj, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -569,11 +569,12 @@ bb.av:                                            ; preds = %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !721
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !721
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
+  store i32 15, ptr %i.v, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 4
+  store i8 2, ptr %.sroa.4.0..sroa_idx, align 4
   br label %bb.aw
 
 bb.aw:                                            ; preds = %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit, %bb.av
-  %storemerge = phi i32 [ 8, %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit ], [ 15, %bb.av ]
-  store i32 %storemerge, ptr %i.v, align 8
   %i.dc = invoke fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtCsfF8zpZz1lvn_13yara_x_parser3ast7cst2astINtB4_7BuilderNtNtB8_6parser6ParserE4peekB8_(ptr noalias nofree noundef align 8 dereferenceable(456) %1)
           to label %bb.bf unwind label %bb.be     ; 2 uses
 
@@ -643,6 +644,7 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.bc
   store i32 %i.dk, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx, align 4
   %i.du = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store ptr %i.ds, ptr %i.du, align 8
+  store i32 8, ptr %i.v, align 8
   br label %bb.aw
 
 bb.be:                                            ; preds = %bb.bv, %bb.bq, %bb.bl, %bb.bk, %bb.bh, %bb.aw

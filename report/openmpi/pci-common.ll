@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
 
 .lr.ph:                                           ; preds = %bb.b, %.loopexit118
   %.080114 = phi ptr [ %.0..0..0..0..2.i, %.loopexit118 ], [ %1, %bb.b ]
-  %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 888 ; 4 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 888 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 880
   br label %bb.m
 
@@ -286,7 +286,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.0 = phi i32 [ %i.bq, %bb.s ], [ %i.bv, %bb.t ] ; 2 uses
   %.077.in = load i16, ptr %.077.in.in, align 4, !tbaa !36
   %.077 = zext i16 %.077.in to i32                ; 2 uses
-  %i.bx = tail call fastcc ptr @hwloc__pci_find_busid_parent(ptr noundef %0, ptr noundef %i.bw) ; 6 uses
+  %i.bx = tail call fastcc ptr @hwloc__pci_find_busid_parent(ptr noundef %0, ptr noundef %i.bw) ; 5 uses
   %i.by = load ptr, ptr %i.ao, align 8, !tbaa !82 ; 4 uses
   %.not91 = icmp eq ptr %i.by, null
   br i1 %.not91, label %bb.z, label %bb.v
@@ -316,7 +316,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.ag
 
 bb.z:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u
-  %i.cj = tail call noalias dereferenceable_or_null(48) ptr @malloc(i64 noundef 48) #23 ; 13 uses
+  %i.cj = tail call noalias dereferenceable_or_null(48) ptr @malloc(i64 noundef 48) #23 ; 12 uses
   %.not92 = icmp eq ptr %i.cj, null
   br i1 %.not92, label %bb.aa, label %bb.ab
 
@@ -357,17 +357,19 @@ bb.ae:                                            ; preds = %bb.ad
   store ptr null, ptr %i.cv, align 8, !tbaa !51
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ct, i64 40
   store ptr %i.cj, ptr %i.cw, align 8, !tbaa !51
-  store ptr %i.cj, ptr %i.ao, align 8, !tbaa !82
-  br label %bb.ag
+  br label %.sink.split
 
 bb.af:                                            ; preds = %bb.ad
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cu, i8 0, i64 16, i1 false)
   store ptr %i.cj, ptr %i.ap, align 8, !tbaa !48
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ae, %bb.af
   store ptr %i.cj, ptr %i.ao, align 8, !tbaa !82
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.ae, %bb.af, %bb.ac, %bb.aa, %bb.y
-  %.078 = phi ptr [ %i.bx, %bb.y ], [ %i.bx, %bb.ae ], [ %i.bx, %bb.af ], [ %i.cs, %bb.ac ], [ %i.ck, %bb.aa ]
+bb.ag:                                            ; preds = %.sink.split, %bb.ac, %bb.aa, %bb.y
+  %.078 = phi ptr [ %i.bx, %bb.y ], [ %i.cs, %bb.ac ], [ %i.ck, %bb.aa ], [ %i.bx, %.sink.split ]
   %i.cx = getelementptr inbounds nuw i8, ptr %.199, i64 88 ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !61 ; 2 uses
   store ptr null, ptr %i.cx, align 8, !tbaa !61

@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.d
   store i64 %i.w, ptr %.sroa.5.0..sroa_idx21, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i128 -49237559333878691962261109163680243548, ptr %.sroa.6.0..sroa_idx, align 8
-  store i64 1, ptr %0, align 8
-  br label %bb.g
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !171
@@ -228,14 +227,18 @@ bb.f:                                             ; preds = %bb.d
   store ptr null, ptr %.sroa.48.sroa.7.0..sroa.48.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.aa, ptr %.sroa.5.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
-  br label %bb.g
+  br label %.sink.split
 
 .loopexit:                                        ; preds = %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i, %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.e, %.loopexit, %bb.f
+.sink.split:                                      ; preds = %bb.e, %bb.f
+  %.sink = phi i64 [ 0, %bb.f ], [ 1, %bb.e ]
+  store i64 %.sink, ptr %0, align 8
+  br label %bb.g
+
+bb.g:                                             ; preds = %.sink.split, %.loopexit
   ret void
 }
 
@@ -638,7 +641,7 @@ _RNCNvMs0_Css03989lGqH_5uu_dfNtB7_7Options4froms0_0B7_.exit.i: ; preds = %_RINvN
   br i1 %.not51247.i, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtB12_6string6StringEEECss03989lGqH_5uu_df.exit.i, label %bb.ag
 
 bb.ap:                                            ; preds = %bb.ab, %bb.y, %bb.x, %bb.w
-  %i.fq = phi i64 [ %i.de, %bb.w ], [ %i.df, %bb.x ], [ %i.dg, %bb.y ], [ %i.dn, %bb.ab ]
+  %i.fq = phi i64 [ %i.de, %bb.w ], [ %i.dn, %bb.ab ], [ %i.df, %bb.x ], [ %i.dg, %bb.y ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !2736
   %i.fr = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @69, i64 noundef 21) #28, !noalias !2737
   br i1 %i.fr, label %bb.at, label %bb.aq

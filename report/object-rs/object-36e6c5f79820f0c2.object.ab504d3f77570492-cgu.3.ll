@@ -204,7 +204,7 @@ bb.a:
   %.sroa.8110.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.sroa.9111.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 113 ; 4 uses
-  %.sroa.566.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 5 uses
+  %.sroa.566.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 4 uses
   %.sroa.669.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
@@ -303,7 +303,11 @@ bb.i:                                             ; preds = %bb.d
   store i8 1, ptr %i.g, align 1
   br label %.backedge
 
-.backedge:                                        ; preds = %bb.l, %bb.e, %bb.h, %bb.i, %bb.k, %bb.m, %bb.n, %bb.j, %bb.s, %bb.d, %bb.d, %bb.d, %bb.d
+.backedge.sink.split:                             ; preds = %bb.l, %bb.m
+  store ptr null, ptr %.sroa.566.0..sroa_idx, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %.backedge.sink.split, %bb.e, %bb.h, %bb.i, %bb.k, %bb.n, %bb.j, %bb.s, %bb.d, %bb.d, %bb.d, %bb.d
   %i.ac = load i64, ptr %i.b, align 8, !noundef !5 ; 2 uses
   %i.ad = icmp ult i64 %i.ac, 3
   br i1 %i.ad, label %bb.b, label %._crit_edge
@@ -331,13 +335,11 @@ bb.l:                                             ; preds = %bb.f
   %.131 = zext i1 %i.al to i32
   store i32 %.131, ptr %i.i, align 8
   store i32 -3, ptr %i.j, align 4
-  store ptr null, ptr %.sroa.566.0..sroa_idx, align 8
-  br label %.backedge
+  br label %.backedge.sink.split
 
 bb.m:                                             ; preds = %bb.f
   store i32 0, ptr %i.i, align 8
-  store ptr null, ptr %.sroa.566.0..sroa_idx, align 8
-  br label %.backedge
+  br label %.backedge.sink.split
 
 bb.n:                                             ; preds = %bb.g
   %i.am = trunc nuw nsw i64 %i.t to i32

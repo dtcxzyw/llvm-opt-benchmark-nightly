@@ -204,7 +204,7 @@ _ZN4bzla9backtrack6objectIbED2Ev.exit:            ; preds = %bb.a, %bb.b
 define linkonce_odr void @_ZN4bzla9backtrack6objectIbE4pushEv(ptr noundef nonnull align 8 dereferenceable(80) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.a, align 8 ; 8 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.a, align 8 ; 7 uses
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %.sroa.2.0.copyload.i.i = load i32, ptr %.sroa.2.0..sroa_idx.i.i, align 8 ; 4 uses
   %i.b = zext i32 %.sroa.2.0.copyload.i.i to i64  ; 2 uses
@@ -244,22 +244,25 @@ _ZNSt13_Bit_iteratorppEi.exit.i.i:                ; preds = %bb.c, %bb.b
 bb.d:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i.i
   %i.s = load i64, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !345
   %i.t = or i64 %i.s, %i.r
-  store i64 %i.t, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !345
-  br label %_ZNSt6vectorIbSaIbEE12emplace_backIJSt14_Bit_referenceEEES3_DpOT_.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i.i
 
 bb.e:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i.i
   %i.u = xor i64 %i.r, -1
   %i.v = load i64, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !345
   %i.w = and i64 %i.v, %i.u
-  store i64 %i.w, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !345
-  br label %_ZNSt6vectorIbSaIbEE12emplace_backIJSt14_Bit_referenceEEES3_DpOT_.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i.i
 
 bb.f:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.x, ptr nonnull %.sroa.0.0.copyload.i.i, i32 %.sroa.2.0.copyload.i.i, i1 noundef zeroext %i.l)
   br label %_ZNSt6vectorIbSaIbEE12emplace_backIJSt14_Bit_referenceEEES3_DpOT_.exit
 
-_ZNSt6vectorIbSaIbEE12emplace_backIJSt14_Bit_referenceEEES3_DpOT_.exit: ; preds = %bb.d, %bb.e, %bb.f
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i.i:    ; preds = %bb.e, %bb.d
+  %.sink.i.i = phi i64 [ %i.t, %bb.d ], [ %i.w, %bb.e ]
+  store i64 %.sink.i.i, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !345
+  br label %_ZNSt6vectorIbSaIbEE12emplace_backIJSt14_Bit_referenceEEES3_DpOT_.exit
+
+_ZNSt6vectorIbSaIbEE12emplace_backIJSt14_Bit_referenceEEES3_DpOT_.exit: ; preds = %bb.f, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i.i
   ret void
 }
 

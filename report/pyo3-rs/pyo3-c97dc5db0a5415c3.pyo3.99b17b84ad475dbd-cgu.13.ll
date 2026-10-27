@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.c
   %i.d = tail call noundef i32 @Py_IsInitialized() #22
   %i.e = icmp eq i32 %i.d, 0
-  br i1 %i.e, label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread18, label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a, !prof !10
+  br i1 %i.e, label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread18, label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit, !prof !10
 
 bb.c:                                             ; preds = %bb.a
   %i.f = icmp eq i64 %.val.i.i, -1
@@ -219,19 +219,21 @@ bb.d:                                             ; preds = %_RINvMs2_NtNtCsG258
   tail call fastcc void @_RNvMs0_NtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB5_13ReferencePool24drop_deferred_references()
   br label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread13
 
-_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a: ; preds = %bb.b
+_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit: ; preds = %bb.b
   tail call void @_RNvNtCsdc6yCHiM2ZJ_4pyo321interpreter_lifecycle23wait_for_initialization()
+  br label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a
+
+_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a: ; preds = %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit, %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread18
   %i.j = tail call fastcc noundef i32 @_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard19do_attach_unchecked()
   br label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread13
 
-_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread13: ; preds = %_RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyINtNtCskKLDkoKarTP_4core4cell4CelliEE8try_withNCNvNtNtCsdc6yCHiM2ZJ_4pyo38internal5state22increment_attach_count0uEB1L_.exit.i.i, %bb.d, %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a, %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread18
-  %.sroa.0.0 = phi i32 [ %0, %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread18 ], [ %i.j, %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a ], [ 2, %_RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyINtNtCskKLDkoKarTP_4core4cell4CelliEE8try_withNCNvNtNtCsdc6yCHiM2ZJ_4pyo38internal5state22increment_attach_count0uEB1L_.exit.i.i ], [ 2, %bb.d ]
+_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread13: ; preds = %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a, %_RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyINtNtCskKLDkoKarTP_4core4cell4CelliEE8try_withNCNvNtNtCsdc6yCHiM2ZJ_4pyo38internal5state22increment_attach_count0uEB1L_.exit.i.i, %bb.d
+  %.sroa.0.0 = phi i32 [ 2, %_RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyINtNtCskKLDkoKarTP_4core4cell4CelliEE8try_withNCNvNtNtCsdc6yCHiM2ZJ_4pyo38internal5state22increment_attach_count0uEB1L_.exit.i.i ], [ 2, %bb.d ], [ %i.j, %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a ]
   ret i32 %.sroa.0.0
 
 _RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread18: ; preds = %bb.b
   tail call void @_RNvNtCsdc6yCHiM2ZJ_4pyo321interpreter_lifecycle18ensure_initialized()
-  %0 = tail call fastcc noundef i32 @_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard19do_attach_unchecked()
-  br label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread13
+  br label %_RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.a
 
 _RNvMNtNtCsdc6yCHiM2ZJ_4pyo38internal5stateNtB2_11AttachGuard10try_attach.exit.thread.thread: ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

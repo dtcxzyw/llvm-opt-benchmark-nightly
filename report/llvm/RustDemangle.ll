@@ -204,18 +204,21 @@ bb.af:                                            ; preds = %_ZN12_GLOBAL__N_19D
 
 bb.ag:                                            ; preds = %bb.af
   %i.ey = trunc nuw nsw i64 %i.a to i8
-  tail call fastcc void @_ZN12_GLOBAL__N_19Demangler5printEc(ptr noundef nonnull align 8 dereferenceable(104) %0, i8 noundef signext %i.ey)
-  br label %_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15
+  br label %_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15.sink.split
 
 bb.ah:                                            ; preds = %bb.af
   tail call fastcc void @_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(104) %0, i64 3, ptr nonnull @.str.56)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !24
   tail call fastcc void @_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(104) %0, i64 %i.e, ptr %.sroa.2.0.copyload)
-  tail call fastcc void @_ZN12_GLOBAL__N_19Demangler5printEc(ptr noundef nonnull align 8 dereferenceable(104) %0, i8 noundef signext 125)
+  br label %_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15.sink.split
+
+_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15.sink.split: ; preds = %bb.ah, %bb.ag
+  %.sink = phi i8 [ %i.ey, %bb.ag ], [ 125, %bb.ah ]
+  tail call fastcc void @_ZN12_GLOBAL__N_19Demangler5printEc(ptr noundef nonnull align 8 dereferenceable(104) %0, i8 noundef signext %.sink)
   br label %_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15
 
-_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15: ; preds = %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i71, %bb.ab, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i59, %bb.x, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i47, %bb.t, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i35, %bb.p, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i23, %bb.l, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i11, %bb.h, %bb.ag, %bb.ah
+_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15: ; preds = %_ZN12_GLOBAL__N_19Demangler5printESt17basic_string_viewIcSt11char_traitsIcEE.exit15.sink.split, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i71, %bb.ab, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i59, %bb.x, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i47, %bb.t, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i35, %bb.p, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i23, %bb.l, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i.i11, %bb.h
   %i.ez = load i8, ptr %i.b, align 1, !tbaa !21, !range !27, !noundef !28
   %i.fa = trunc nuw i8 %i.ez to i1
   %.not.i = xor i1 %i.fa, true

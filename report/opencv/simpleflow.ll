@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %.split86.u
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !64
   %invariant.gep = getelementptr [8 x i8], ptr %i.ec, i64 %i.ao ; 4 uses
-  br i1 %i.ea, label %.split.us.split.us.preheader.a, label %.split.us.split.preheader
+  br i1 %i.ea, label %.split.us.split.us.preheader, label %.split.us.split.preheader
 
 .split.us.split.preheader:                        ; preds = %.split.us
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dx, i64 128 ; 2 uses
@@ -216,20 +216,22 @@ bb.b:                                             ; preds = %.lr.ph, %.split86.u
   store float %i.eg, ptr %i.do, align 4, !tbaa !67
   %i.eh = load i64, ptr %i.ed, align 8
   %i.ei = mul i64 %i.eh, %i.am
-  %gep.1 = getelementptr i8, ptr %invariant.gep, i64 %i.ei
-  %i.ej = getelementptr inbounds nuw i8, ptr %gep.1, i64 4
-  %2 = load float, ptr %i.ej, align 4, !tbaa !67
-  br label %.split86.us
+  %i.ej = getelementptr i8, ptr %invariant.gep, i64 %i.ei
+  br label %.split.us.split.us.preheader.a
 
-.split.us.split.us.preheader.a:                   ; preds = %.split.us
-  %3 = load float, ptr %invariant.gep, align 4, !tbaa !67
-  store float %3, ptr %i.do, align 4, !tbaa !67
-  %i.ek = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 4
+.split.us.split.us.preheader:                     ; preds = %.split.us
+  %2 = load float, ptr %invariant.gep, align 4, !tbaa !67
+  store float %2, ptr %i.do, align 4, !tbaa !67
+  br label %.split.us.split.us.preheader.a
+
+.split.us.split.us.preheader.a:                   ; preds = %.split.us.split.preheader, %.split.us.split.us.preheader
+  %invariant.gep.sink = phi ptr [ %invariant.gep, %.split.us.split.us.preheader ], [ %i.ej, %.split.us.split.preheader ]
+  %i.ek = getelementptr inbounds nuw i8, ptr %invariant.gep.sink, i64 4
   %i.el = load float, ptr %i.ek, align 4, !tbaa !67
   br label %.split86.us
 
-.split86.us:                                      ; preds = %.split.preheader, %.split.us.split.preheader, %.split.us.split.us.preheader.a
-  %.sink = phi float [ %i.dw, %.split.preheader ], [ %2, %.split.us.split.preheader ], [ %i.el, %.split.us.split.us.preheader.a ]
+.split86.us:                                      ; preds = %.split.us.split.us.preheader.a, %.split.preheader
+  %.sink = phi float [ %i.dw, %.split.preheader ], [ %i.el, %.split.us.split.us.preheader.a ]
   %i.em = getelementptr inbounds nuw i8, ptr %i.do, i64 4
   store float %.sink, ptr %i.em, align 4, !tbaa !67
   %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1 ; 2 uses

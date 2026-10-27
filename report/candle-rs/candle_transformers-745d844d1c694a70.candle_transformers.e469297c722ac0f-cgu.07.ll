@@ -204,7 +204,7 @@ bb.a:
   %i.k = alloca [8 x i8], align 8                 ; 11 uses
   %i.l = alloca [80 x i8], align 8                ; 8 uses
   %i.m = alloca [80 x i8], align 8                ; 7 uses
-  %i.n = alloca [8 x i8], align 8                 ; 37 uses
+  %i.n = alloca [8 x i8], align 8                 ; 36 uses
   %i.o = alloca [8 x i8], align 8                 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   %i.p = load ptr, ptr %2, align 8, !nonnull !5, !noundef !5 ; 4 uses
@@ -607,18 +607,20 @@ bb.bo:                                            ; preds = %bb.bn
   store i64 %i.dr, ptr %0, align 8
   %.sroa.4169.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.dt, ptr %.sroa.4169.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221.sink.split
 
 bb.bp:                                            ; preds = %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.dt, ptr %i.du, align 8
   store i64 -1, ptr %0, align 8
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221.sink.split
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221.sink.split: ; preds = %bb.bo, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221: ; preds = %bb.bp, %bb.bl, %bb.bm, %bb.bo, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit193, %bb.br
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit221.sink.split, %bb.bl, %bb.bm, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit193, %bb.br
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   ret void
 

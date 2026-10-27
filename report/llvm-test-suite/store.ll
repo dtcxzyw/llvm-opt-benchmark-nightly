@@ -204,19 +204,21 @@ bb.n:                                             ; preds = %bb.m
   tail call fastcc void @conv420to422(ptr noundef %i.ac, ptr noundef %i.ad)
   %i.ae = load ptr, ptr @store_ppm_tga.u444, align 8, !tbaa !10
   tail call fastcc void @conv422to444(ptr noundef %i.ab, ptr noundef %i.ae)
-  %6 = load ptr, ptr @store_ppm_tga.v444, align 8, !tbaa !10
-  tail call fastcc void @conv422to444(ptr noundef %i.ad, ptr noundef %6)
-  br label %bb.p
+  br label %.sink.split
 
 bb.o:                                             ; preds = %bb.m
   %i.af = load ptr, ptr @store_ppm_tga.u444, align 8, !tbaa !10
   tail call fastcc void @conv422to444(ptr noundef %i.z, ptr noundef %i.af)
   %i.ag = load ptr, ptr %i.aa, align 8, !tbaa !10
-  %7 = load ptr, ptr @store_ppm_tga.v444, align 8, !tbaa !10
-  tail call fastcc void @conv422to444(ptr noundef %i.ag, ptr noundef %7)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.o, %bb.n
+  %.sink = phi ptr [ %i.ad, %bb.n ], [ %i.ag, %bb.o ]
+  %6 = load ptr, ptr @store_ppm_tga.v444, align 8, !tbaa !10
+  tail call fastcc void @conv422to444(ptr noundef %.sink, ptr noundef %6)
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.n, %bb.o, %bb.b
+bb.p:                                             ; preds = %.sink.split, %bb.b
   %.not66 = icmp eq i32 %5, 0                     ; 3 uses
   %i.ah = select i1 %.not66, ptr @.str.9, ptr @.str.8
   %strlen = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0)

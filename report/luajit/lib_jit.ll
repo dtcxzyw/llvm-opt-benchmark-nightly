@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 2380
-  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 912 ; 6 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 912 ; 5 uses
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -304,15 +304,13 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.aw = load i32, ptr %i.o, align 8, !tbaa !32
   %i.ax = or i32 %i.aw, %.02540.i
-  store i32 %i.ax, ptr %i.o, align 8, !tbaa !32
-  br label %jitopt_param.exit
+  br label %jitopt_param.exit.sink.split
 
 bb.o:                                             ; preds = %bb.m
   %i.ay = xor i32 %.02540.i, -1
   %i.az = load i32, ptr %i.o, align 8, !tbaa !32
   %i.ba = and i32 %i.az, %i.ay
-  store i32 %i.ba, ptr %i.o, align 8, !tbaa !32
-  br label %jitopt_param.exit
+  br label %jitopt_param.exit.sink.split
 
 bb.p:                                             ; preds = %bb.l, %bb.k
   %i.bb = getelementptr inbounds nuw i8, ptr %.02639.i, i64 %i.ap
@@ -539,7 +537,12 @@ bb.av:                                            ; preds = %.critedge.i, %bb.au
   tail call void (ptr, i32, ...) @lj_err_callerv(ptr noundef %0, i32 noundef 2096, ptr noundef nonnull %i.u) #8
   unreachable
 
-jitopt_param.exit:                                ; preds = %bb.o, %bb.n, %bb.s, %bb.r, %jitopt_level.exit
+jitopt_param.exit.sink.split:                     ; preds = %bb.n, %bb.o
+  %.sink = phi i32 [ %i.ba, %bb.o ], [ %i.ax, %bb.n ]
+  store i32 %.sink, ptr %i.o, align 8, !tbaa !32
+  br label %jitopt_param.exit
+
+jitopt_param.exit:                                ; preds = %jitopt_param.exit.sink.split, %bb.s, %bb.r, %jitopt_level.exit
   %i.eu = add nuw i32 %.034, 1
   %exitcond.not = icmp eq i32 %.034, %i.l
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !101

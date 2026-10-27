@@ -202,8 +202,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ERR_put_error(i32 noundef 4, i32 noundef 0, i32 noundef 69, ptr noundef nonnull @.str, i32 noundef 342) #6
-  store i64 0, ptr %1, align 8, !tbaa !15
-  br label %bb.ad
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.e = trunc nuw nsw i64 %5 to i32
@@ -212,8 +211,7 @@ bb.e:                                             ; preds = %bb.c
   %narrow = tail call i32 @llvm.smax.i32(i32 %i.f, i32 0)
   %storemerge = zext nneg i32 %narrow to i64
   %.072 = zext i1 %i.g to i32
-  store i64 %storemerge, ptr %1, align 8, !tbaa !15
-  br label %bb.ad
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.b, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -347,8 +345,14 @@ bb.ac:                                            ; preds = %bb.l, %bb.ab
   tail call void @OPENSSL_free(ptr noundef %.07192) #6
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.k, %bb.ac, %bb.i, %bb.h, %bb.e, %bb.d
-  %.2 = phi i32 [ 0, %bb.d ], [ %.072, %bb.e ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.k ], [ %.094, %bb.ac ]
+.sink.split:                                      ; preds = %bb.e, %bb.d
+  %.sink = phi i64 [ 0, %bb.d ], [ %storemerge, %bb.e ]
+  %.2.ph = phi i32 [ 0, %bb.d ], [ %.072, %bb.e ]
+  store i64 %.sink, ptr %1, align 8, !tbaa !15
+  br label %bb.ad
+
+bb.ad:                                            ; preds = %.sink.split, %bb.k, %bb.ac, %bb.i, %bb.h
+  %.2 = phi i32 [ 0, %bb.k ], [ %.094, %bb.ac ], [ 0, %bb.h ], [ 0, %bb.i ], [ %.2.ph, %.sink.split ]
   ret i32 %.2
 }
 
@@ -509,8 +513,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ERR_put_error(i32 noundef 4, i32 noundef 0, i32 noundef 69, ptr noundef nonnull @.str, i32 noundef 519) #6
-  store i64 0, ptr %1, align 8, !tbaa !15
-  br label %rsa_default_decrypt.exit
+  br label %rsa_default_decrypt.exit.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.e = trunc nuw nsw i64 %5 to i32
@@ -519,8 +522,7 @@ bb.e:                                             ; preds = %bb.c
   %narrow = tail call i32 @llvm.smax.i32(i32 %i.f, i32 0)
   %storemerge = zext nneg i32 %narrow to i64
   %.0 = zext i1 %i.g to i32
-  store i64 %storemerge, ptr %1, align 8, !tbaa !15
-  br label %rsa_default_decrypt.exit
+  br label %rsa_default_decrypt.exit.sink.split
 
 bb.f:                                             ; preds = %bb.b, %bb.a
   %i.h = tail call i32 @RSA_size(ptr noundef nonnull %0) #6 ; 3 uses
@@ -672,8 +674,14 @@ rsa_padding_check_PKCS1_type_2.exit.thread42.i:   ; preds = %rsa_padding_check_P
   tail call void @OPENSSL_free(ptr noundef %.13147.i) #6
   br label %rsa_default_decrypt.exit
 
-rsa_default_decrypt.exit:                         ; preds = %.thread.i, %rsa_padding_check_PKCS1_type_2.exit.thread42.i, %rsa_padding_check_PKCS1_type_2.exit.thread42.thread.i, %bb.g, %bb.e, %bb.d
-  %.1 = phi i32 [ 0, %bb.d ], [ %.0, %bb.e ], [ 0, %bb.g ], [ %.148.i, %.thread.i ], [ 0, %rsa_padding_check_PKCS1_type_2.exit.thread42.i ], [ 1, %rsa_padding_check_PKCS1_type_2.exit.thread42.thread.i ]
+rsa_default_decrypt.exit.sink.split:              ; preds = %bb.e, %bb.d
+  %.sink = phi i64 [ 0, %bb.d ], [ %storemerge, %bb.e ]
+  %.1.ph = phi i32 [ 0, %bb.d ], [ %.0, %bb.e ]
+  store i64 %.sink, ptr %1, align 8, !tbaa !15
+  br label %rsa_default_decrypt.exit
+
+rsa_default_decrypt.exit:                         ; preds = %rsa_default_decrypt.exit.sink.split, %.thread.i, %rsa_padding_check_PKCS1_type_2.exit.thread42.i, %rsa_padding_check_PKCS1_type_2.exit.thread42.thread.i, %bb.g
+  %.1 = phi i32 [ 0, %rsa_padding_check_PKCS1_type_2.exit.thread42.i ], [ 1, %rsa_padding_check_PKCS1_type_2.exit.thread42.thread.i ], [ 0, %bb.g ], [ %.148.i, %.thread.i ], [ %.1.ph, %rsa_default_decrypt.exit.sink.split ]
   ret i32 %.1
 }
 

@@ -205,7 +205,7 @@ define void @_RNvMNtNtNtNtCs5yxAJGbRKSL_4ring2ec10curve255197ed255197signingNtB2
 bb.a:
   %i.a = alloca [32 x i8], align 1                ; 6 uses
   %i.b = alloca [104 x i8], align 8               ; 6 uses
-  %i.c = alloca [96 x i8], align 1                ; 5 uses
+  %i.c = alloca [96 x i8], align 1                ; 4 uses
   %i.d = alloca [32 x i8], align 1                ; 5 uses
   %i.e = load atomic i32, ptr @_RNvNtNtNtCs5yxAJGbRKSL_4ring3cpu6x86_6412featureflags8FEATURES acquire, align 4
   %.not.i.i = icmp eq i32 %i.e, 0
@@ -241,9 +241,7 @@ bb.d:                                             ; preds = %_RNvNtNtNtCs5yxAJGb
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  store i64 1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.g
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -252,11 +250,15 @@ bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   call fastcc void @_RNvNtCs5yxAJGbRKSL_4ring5pkcs88wrap_key(ptr noalias nofree noundef align 8 captures(none) dereferenceable(200) %i.l, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @_RNvNtNtNtNtCs5yxAJGbRKSL_4ring2ec10curve255197ed255197signing14PKCS8_TEMPLATE, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 32, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef 32)
-  store i64 0, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.f, %bb.e
+  %.sink = phi i64 [ 1, %bb.e ], [ 0, %bb.f ]
+  store i64 %.sink, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.c, %bb.e, %bb.f
+bb.g:                                             ; preds = %.sink.split, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
 }
@@ -659,8 +661,8 @@ bb.a:
   %.sroa.4 = alloca [96 x i8], align 8            ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 48 ; 2 uses
   %i.i = alloca [96 x i8], align 8                ; 5 uses
-  %i.j = alloca [48 x i8], align 8                ; 5 uses
-  %i.k = alloca [48 x i8], align 8                ; 5 uses
+  %i.j = alloca [48 x i8], align 8                ; 4 uses
+  %i.k = alloca [48 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !4757
   store ptr %3, ptr %i.g, align 8, !noalias !4757
@@ -749,9 +751,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   store i64 1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -762,11 +762,14 @@ bb.l:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.af, ptr noundef nonnull align 8 dereferenceable(96) %i.i, i64 96, i1 false)
   store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.l, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k, %bb.i
+bb.m:                                             ; preds = %.sink.split, %bb.i
   ret void
 }
 

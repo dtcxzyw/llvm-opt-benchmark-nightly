@@ -205,18 +205,21 @@ bb.f:                                             ; preds = %bb.e
 _RNvMs0_NtNtCsa9sSWSfjDbm_4jiff2tz6offsetNtB5_6Offset12from_seconds.exit: ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.g, ptr %i.i, align 4, !alias.scope !737
-  store i32 0, ptr %0, align 8, !alias.scope !737
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.f
   %i.j = tail call noundef ptr @_RNvMs_NtCsa9sSWSfjDbm_4jiff5errorNtB4_5Error11jcore_range(i32 5119) #24, !noalias !737
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = tail call fastcc noundef ptr @_RNCNvXsi_NtNtCsa9sSWSfjDbm_4jiff2tz6offsetNtB7_6OffsetINtNtCs3oUPovFnLWP_4core7convert7TryFromNtNtBb_15signed_duration14SignedDurationE8try_froms_0Bb_(ptr noundef %i.j) #26
   store ptr %i.l, ptr %i.k, align 8
-  store i32 1, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff2tz6offsetNtB5_6Offset12from_seconds.exit
+  %.sink = phi i32 [ 0, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff2tz6offsetNtB5_6Offset12from_seconds.exit ], [ 1, %bb.g ]
+  store i32 %.sink, ptr %0, align 8
   br label %bb.h
 
-bb.h:                                             ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff2tz6offsetNtB5_6Offset12from_seconds.exit, %bb.g, %bb.i
+bb.h:                                             ; preds = %.sink.split, %bb.i
   ret void
 
 bb.i:                                             ; preds = %bb.e

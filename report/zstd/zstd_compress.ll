@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define range(i64 -107, 1) i64 @ZSTD_convertBlockSequences(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #11 {
 bb.a:
-  %4 = alloca %struct.repcodes_s, align 8         ; 19 uses
+  %4 = alloca %struct.repcodes_s, align 8         ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 976 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1032
@@ -303,22 +303,20 @@ convertSequences_noRepcodes.exit:                 ; preds = %bb.g
 bb.h:                                             ; preds = %convertSequences_noRepcodes.exit
   %.not71 = icmp ugt i64 %.2.i, %i.n
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 1048 ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 1052 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 1052
   br i1 %.not71, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   store i32 2, ptr %i.am, align 8, !tbaa !412
   %i.ao = trunc i64 %.2.i to i32
   %i.ap = add i32 %i.ao, -1
-  store i32 %i.ap, ptr %i.an, align 4, !tbaa !413
-  br label %.loopexit
+  br label %..loopexit_crit_edge.a
 
 bb.j:                                             ; preds = %bb.h
   store i32 1, ptr %i.am, align 8, !tbaa !412
   %i.aq = sub i64 %.2.i, %2
   %i.ar = trunc i64 %i.aq to i32
-  store i32 %i.ar, ptr %i.an, align 4, !tbaa !413
-  br label %.loopexit
+  br label %..loopexit_crit_edge.a
 
 bb.k:                                             ; preds = %.lr.ph, %ZSTD_updateRep.exit
   %i.as = phi ptr [ %.promoted83, %.lr.ph ], [ %i.cg, %ZSTD_updateRep.exit ] ; 6 uses
@@ -367,7 +365,7 @@ ZSTD_finalizeOffBase.exit.thread:                 ; preds = %bb.p
 ZSTD_finalizeOffBase.exit:                        ; preds = %bb.k, %bb.m, %bb.o, %bb.p
   %.0.i = phi i32 [ %i.bh, %bb.m ], [ %i.bj, %bb.o ], [ 1, %bb.k ], [ %i.be, %bb.p ] ; 2 uses
   %i.bm = icmp ugt i32 %i.ay, 65535
-  br i1 %i.bm, label %bb.q, label %bb.r, !prof !414
+  br i1 %i.bm, label %bb.q, label %bb.r, !prof !413
 
 bb.q:                                             ; preds = %ZSTD_finalizeOffBase.exit
   store i32 1, ptr %i.j, align 8, !tbaa !182
@@ -455,13 +453,18 @@ ZSTD_updateRep.exit:                              ; preds = %bb.u, %.sink.split.
   %i.cu = phi i32 [ %i.av, %bb.u ], [ %.sink.i, %.sink.split.i ]
   %i.cv = add nuw i64 %.06580, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.cv, %i.g
-  br i1 %exitcond.not, label %..loopexit_crit_edge.a, label %bb.k, !llvm.loop !411
+  br i1 %exitcond.not, label %..loopexit_crit_edge, label %bb.k, !llvm.loop !411
 
-..loopexit_crit_edge.a:                           ; preds = %ZSTD_updateRep.exit
+..loopexit_crit_edge:                             ; preds = %ZSTD_updateRep.exit
   store ptr %i.cg, ptr %i.k, align 8, !tbaa !175
   br label %.loopexit
 
-.loopexit:                                        ; preds = %..loopexit_crit_edge.a, %convertSequences_noRepcodes.exit, %bb.j, %bb.i
+..loopexit_crit_edge.a:                           ; preds = %bb.i, %bb.j
+  %.sink = phi i32 [ %i.ar, %bb.j ], [ %i.ap, %bb.i ]
+  store i32 %.sink, ptr %i.an, align 4, !tbaa !414
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %..loopexit_crit_edge.a, %..loopexit_crit_edge, %convertSequences_noRepcodes.exit
   %i.cw = icmp ugt i64 %2, 1
   %or.cond = and i1 %i.cw, %.not69
   br i1 %or.cond, label %bb.y, label %.loopexit.thread
@@ -502,19 +505,21 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dq = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %i.dp, ptr %i.dq, align 4, !tbaa !64
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %5 = load i32, ptr %i.dr, align 4, !tbaa !196
-  store i32 %5, ptr %4, align 8, !tbaa !64
-  br label %.loopexit.thread
+  br label %.loopexit.thread.sink.split
 
 bb.ac:                                            ; preds = %bb.aa
   %i.ds = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.dt = load <2 x i32>, ptr %4, align 8, !tbaa !64
   store <2 x i32> %i.dt, ptr %i.ds, align 4, !tbaa !64
-  %6 = load i32, ptr %1, align 4, !tbaa !196
-  store i32 %6, ptr %4, align 8, !tbaa !64
+  br label %.loopexit.thread.sink.split
+
+.loopexit.thread.sink.split:                      ; preds = %bb.ac, %bb.ab
+  %.sink94.in = phi ptr [ %i.dr, %bb.ab ], [ %1, %bb.ac ]
+  %.sink94 = load i32, ptr %.sink94.in, align 4, !tbaa !196
+  store i32 %.sink94, ptr %4, align 8, !tbaa !64
   br label %.loopexit.thread
 
-.loopexit.thread:                                 ; preds = %.preheader, %.thread, %bb.z, %bb.ac, %bb.ab, %.loopexit
+.loopexit.thread:                                 ; preds = %.loopexit.thread.sink.split, %.preheader, %.thread, %bb.z, %.loopexit
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 3232
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !71
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 5616
@@ -917,8 +922,8 @@ begin_hunk_1_@llvm.umin.v2i32
 !410 = !{ptr @ZSTD_transferSequences_noDelim, ptr @ZSTD_transferSequences_wBlockDelim}
 !411 = distinct !{!411, !147}
 !412 = !{!57, !19, i64 1048}
-!413 = !{!57, !19, i64 1052}
-!414 = !{!"branch_weights", !"expected", i32 1125985, i32 2146357663}
+!413 = !{!"branch_weights", !"expected", i32 1125985, i32 2146357663}
+!414 = !{!57, !19, i64 1052}
 !415 = !{!"", !27, i64 0, !27, i64 8, !27, i64 16}
 !416 = !{!415, !27, i64 0}
 !417 = !{!415, !27, i64 16}

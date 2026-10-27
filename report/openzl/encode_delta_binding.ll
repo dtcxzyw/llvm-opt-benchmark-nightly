@@ -30,7 +30,7 @@ target triple = "x86_64-pc-linux-gnu"
 define { i32, i64 } @EI_delta_int(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.ZL_ErrorContext, align 8    ; 8 uses
-  %i.a = alloca [8 x i8], align 1                 ; 5 uses
+  %i.a = alloca [8 x i8], align 1                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
@@ -102,11 +102,7 @@ bb.h:                                             ; preds = %bb.e
   %i.ai = call { i32, i64 } @ZL_Data_commit(ptr noundef nonnull %i.g, i64 noundef %i.ah) #5 ; 2 uses
   %i.aj = extractvalue { i32, i64 } %i.ai, 0      ; 2 uses
   %.not69 = icmp eq i32 %i.aj, 0
-  br i1 %.not69, label %.thread74, label %bb.i, !prof !21
-
-.thread74:                                        ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
-  br label %bb.j
+  br i1 %.not69, label %.sink.split, label %bb.i, !prof !21
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = extractvalue { i32, i64 } %i.ai, 1
@@ -115,12 +111,17 @@ bb.i:                                             ; preds = %bb.h
   %i.an = extractvalue { i32, ptr } %i.am, 0
   %i.ao = extractvalue { i32, ptr } %i.am, 1
   %i.ap = ptrtoint ptr %i.ao to i64
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.h, %bb.i
+  %.sroa.054.3.ph = phi i32 [ %i.an, %bb.i ], [ 0, %bb.h ]
+  %.sroa.22.3.ph = phi i64 [ %i.ap, %bb.i ], [ 1, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.c, %bb.f, %.thread74, %bb.i, %.thread, %bb.d, %bb.g
-  %.sroa.054.3 = phi i32 [ %i.i, %.thread ], [ %i.t, %bb.d ], [ %i.an, %bb.i ], [ %i.ae, %bb.g ], [ 0, %.thread74 ], [ 0, %bb.f ], [ 0, %bb.c ]
-  %.sroa.22.3 = phi i64 [ %i.k, %.thread ], [ %i.v, %bb.d ], [ %i.ap, %bb.i ], [ %i.ag, %bb.g ], [ 1, %.thread74 ], [ 1, %bb.f ], [ 1, %bb.c ]
+bb.j:                                             ; preds = %.sink.split, %bb.c, %bb.f, %.thread, %bb.d, %bb.g
+  %.sroa.054.3 = phi i32 [ %i.i, %.thread ], [ %i.t, %bb.d ], [ 0, %bb.f ], [ %i.ae, %bb.g ], [ 0, %bb.c ], [ %.sroa.054.3.ph, %.sink.split ]
+  %.sroa.22.3 = phi i64 [ %i.k, %.thread ], [ %i.v, %bb.d ], [ 1, %bb.f ], [ %i.ag, %bb.g ], [ 1, %bb.c ], [ %.sroa.22.3.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.054.3, 0
   %.fca.1.insert = insertvalue { i32, i64 } %.fca.0.insert, i64 %.sroa.22.3, 1

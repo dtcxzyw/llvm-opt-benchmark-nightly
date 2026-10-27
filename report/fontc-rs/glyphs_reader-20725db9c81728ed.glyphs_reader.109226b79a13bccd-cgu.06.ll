@@ -205,10 +205,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4200.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4197.0..sroa_idx, i64 28, i1 false)
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.be, ptr %i.bf, align 8
-  %.sroa.5201.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %.sroa.5198.0.copyload, ptr %.sroa.5201.0..sroa_idx, align 8
-  store i64 1, ptr %0, align 8
-  br label %bb.cc
+  br label %.sink.split
 
 bb.o:                                             ; preds = %bb.m
   %i.bg = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -217,10 +214,7 @@ bb.o:                                             ; preds = %bb.m
   %i.bh = add i64 %i.ax, 1
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 3, ptr %i.bi, align 8
-  %.sroa.468.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %i.bh, ptr %.sroa.468.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
-  br label %bb.cc
+  br label %.sink.split
 
 ._crit_edge:                                      ; preds = %bb.bq, %bb.h
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -623,7 +617,15 @@ _RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread373: ; preds = %b
   store i64 0, ptr %0, align 8
   br label %bb.cc
 
-bb.cc:                                            ; preds = %bb.bz, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread373, %.thread.thread, %bb.l, %bb.n, %.loopexit, %bb.af, %bb.e, %bb.f, %bb.o, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit
+.sink.split:                                      ; preds = %bb.n, %bb.o
+  %.sink609 = phi i64 [ %i.bh, %bb.o ], [ %.sroa.5198.0.copyload, %bb.n ]
+  %.sink608 = phi i64 [ 0, %bb.o ], [ 1, %bb.n ]
+  %.sroa.468.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i64 %.sink609, ptr %.sroa.468.0..sroa_idx, align 8
+  store i64 %.sink608, ptr %0, align 8
+  br label %bb.cc
+
+bb.cc:                                            ; preds = %.sink.split, %bb.bz, %_RNvNtNtCsf3Ta7LF998c_4core3str6traits11check_range.exit.thread373, %.thread.thread, %bb.l, %.loopexit, %bb.af, %bb.e, %bb.f, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs1qcNTItuk7F_13glyphs_reader.exit
   ret void
 }
 

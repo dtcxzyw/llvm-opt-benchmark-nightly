@@ -202,7 +202,7 @@ bb.a:
   store i32 %2, ptr %i.b, align 4, !noalias !1205
   %i.f = load ptr, ptr %1, align 8, !alias.scope !1204, !noundef !4 ; 2 uses
   %.not.i = icmp eq ptr %i.f, null
-  br i1 %.not.i, label %bb.d, label %bb.b
+  br i1 %.not.i, label %_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types3tag3TagTINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1N_15NormalizedSpaceEB1K_EE5entryCs3v5ql5U6hxj_6fontir.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -216,10 +216,14 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.11.8..sroa_idx8 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.8..sroa_idx8, i64 16, i1 false), !noalias !1204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1205
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br i1 %i.j, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.b
+_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types3tag3TagTINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1N_15NormalizedSpaceEB1K_EE5entryCs3v5ql5U6hxj_6fontir.exit.thread: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr %.sroa.7.8.copyload6, ptr %i.e, align 8
   %.sroa.11.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -237,11 +241,10 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.e
 
-bb.d:                                             ; preds = %bb.b, %bb.a
-  %.sroa.7.0.ph = phi ptr [ null, %bb.a ], [ %.sroa.7.8.copyload6, %bb.b ]
+bb.d:                                             ; preds = %bb.b, %_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types3tag3TagTINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1N_15NormalizedSpaceEB1K_EE5entryCs3v5ql5U6hxj_6fontir.exit.thread
+  %.sroa.7.0.ph = phi ptr [ null, %_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types3tag3TagTINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1N_15NormalizedSpaceEB1K_EE5entryCs3v5ql5U6hxj_6fontir.exit.thread ], [ %.sroa.7.8.copyload6, %bb.b ]
   %.sroa.119.0.ph.in = zext i32 %2 to i64
   %.sroa.119.0.ph = inttoptr i64 %.sroa.119.0.ph.in to ptr
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %1, ptr %i.d, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -278,7 +281,7 @@ bb.a:
   store i16 %1, ptr %i.b, align 2, !noalias !1210
   %i.f = load ptr, ptr %0, align 8, !alias.scope !1209, !noundef !4 ; 2 uses
   %.not.i = icmp eq ptr %i.f, null
-  br i1 %.not.i, label %bb.d, label %bb.b
+  br i1 %.not.i, label %_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdNtNtB7_7set_val9SetValZSTE5entryCs3v5ql5U6hxj_6fontir.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -292,10 +295,14 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.11.8..sroa_idx5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.8..sroa_idx5, i64 16, i1 false), !noalias !1209
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1210
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br i1 %i.j, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.b
+_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdNtNtB7_7set_val9SetValZSTE5entryCs3v5ql5U6hxj_6fontir.exit.thread: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr %.sroa.7.8.copyload3, ptr %i.e, align 8
   %.sroa.11.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -306,11 +313,10 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.e
 
-bb.d:                                             ; preds = %bb.b, %bb.a
-  %.sroa.7.0.ph = phi ptr [ null, %bb.a ], [ %.sroa.7.8.copyload3, %bb.b ]
+bb.d:                                             ; preds = %bb.b, %_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdNtNtB7_7set_val9SetValZSTE5entryCs3v5ql5U6hxj_6fontir.exit.thread
+  %.sroa.7.0.ph = phi ptr [ null, %_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtCsbZq13ASDQ8l_10font_types7name_id6NameIdNtNtB7_7set_val9SetValZSTE5entryCs3v5ql5U6hxj_6fontir.exit.thread ], [ %.sroa.7.8.copyload3, %bb.b ]
   %.sroa.116.0.ph.in = zext i16 %1 to i64
   %.sroa.116.0.ph = inttoptr i64 %.sroa.116.0.ph.in to ptr
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %0, ptr %i.d, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8

@@ -205,8 +205,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ac = select i1 %i.i, float -0.000000e+00, float 0.000000e+00
-  store float %i.ac, ptr %1, align 4, !tbaa !27
-  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit
+  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit.sink.split
 
 bb.n:                                             ; preds = %bb.l
   %i.ad = uitofp i64 %.pre.pre to float
@@ -215,8 +214,7 @@ bb.n:                                             ; preds = %bb.l
   %i.ag = fmul float %i.af, %i.ad                 ; 2 uses
   %i.ah = fneg float %i.ag
   %spec.select.i = select i1 %i.i, float %i.ah, float %i.ag
-  store float %spec.select.i, ptr %1, align 4, !tbaa !27
-  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit
+  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit.sink.split
 
 _ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit.thread: ; preds = %bb.a, %bb.j, %bb.k, %bb.d, %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -577,8 +575,13 @@ _ZN14arrow_vendored10fast_float10digit_compIfcEENS0_17adjusted_mantissaERNS0_22p
   %spec.select144 = select i1 %or.cond139, i32 34, i32 0
   br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit
 
-_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit: ; preds = %.thread, %bb.n, %bb.m, %bb.i, %bb.h
-  %.sroa.247.1 = phi i32 [ 0, %bb.n ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.m ], [ %spec.select144, %.thread ]
+_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit.sink.split: ; preds = %bb.n, %bb.m
+  %.sink = phi float [ %i.ac, %bb.m ], [ %spec.select.i, %bb.n ]
+  store float %.sink, ptr %1, align 4, !tbaa !27
+  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit
+
+_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit: ; preds = %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit.sink.split, %.thread, %bb.i, %bb.h
+  %.sroa.247.1 = phi i32 [ %spec.select144, %.thread ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIfEEbmlbRT_.exit.sink.split ]
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %i.c, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.247.1, 1
   ret { ptr, i32 } %.fca.1.insert
@@ -981,8 +984,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ac = select i1 %i.i, double -0.000000e+00, double 0.000000e+00
-  store double %i.ac, ptr %1, align 8, !tbaa !73
-  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit
+  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit.sink.split
 
 bb.n:                                             ; preds = %bb.l
   %i.ad = uitofp i64 %.pre.pre to double
@@ -991,8 +993,7 @@ bb.n:                                             ; preds = %bb.l
   %i.ag = fmul double %i.af, %i.ad                ; 2 uses
   %i.ah = fneg double %i.ag
   %spec.select.i = select i1 %i.i, double %i.ah, double %i.ag
-  store double %spec.select.i, ptr %1, align 8, !tbaa !73
-  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit
+  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit.sink.split
 
 _ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit.thread: ; preds = %bb.a, %bb.j, %bb.k, %bb.d, %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1353,8 +1354,13 @@ _ZN14arrow_vendored10fast_float10digit_compIdcEENS0_17adjusted_mantissaERNS0_22p
   %spec.select135 = select i1 %or.cond130, i32 34, i32 0
   br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit
 
-_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit: ; preds = %.thread, %bb.n, %bb.m, %bb.i, %bb.h
-  %.sroa.247.1 = phi i32 [ 0, %bb.n ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.m ], [ %spec.select135, %.thread ]
+_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit.sink.split: ; preds = %bb.n, %bb.m
+  %.sink = phi double [ %i.ac, %bb.m ], [ %spec.select.i, %bb.n ]
+  store double %.sink, ptr %1, align 8, !tbaa !73
+  br label %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit
+
+_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit: ; preds = %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit.sink.split, %.thread, %bb.i, %bb.h
+  %.sroa.247.1 = phi i32 [ %spec.select135, %.thread ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %_ZN14arrow_vendored10fast_float22clinger_fast_path_implIdEEbmlbRT_.exit.sink.split ]
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %i.c, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.247.1, 1
   ret { ptr, i32 } %.fca.1.insert

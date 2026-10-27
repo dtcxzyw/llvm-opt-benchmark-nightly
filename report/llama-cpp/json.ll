@@ -205,7 +205,7 @@ _ZNKSt8functionIFbiN8nlohmann16json_abi_v3_12_06detail13parse_event_tERNS1_10bas
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !250  ; 7 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !250  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !251
   %.not.i = icmp eq ptr %i.u, %i.w
@@ -233,22 +233,25 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.d, %bb.c
 bb.e:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.ac = load i64, ptr %i.u, align 8, !tbaa !62
   %i.ad = or i64 %i.ac, %i.ab
-  store i64 %i.ad, ptr %i.u, align 8, !tbaa !62
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.f:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.ae = xor i64 %i.ab, -1
   %i.af = load i64, ptr %i.u, align 8, !tbaa !62
   %i.ag = and i64 %i.af, %i.ae
-  store i64 %i.ag, ptr %i.u, align 8, !tbaa !62
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.g:                                             ; preds = %_ZNKSt8functionIFbiN8nlohmann16json_abi_v3_12_06detail13parse_event_tERNS1_10basic_jsonINS1_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES6_IhSaIhEEvEEEEclEiS3_SH_.exit
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.ah, ptr %i.u, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %i.s)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.e, %bb.f, %bb.g
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.f, %bb.e
+  %.sink.i = phi i64 [ %i.ad, %bb.e ], [ %i.ag, %bb.f ]
+  store i64 %.sink.i, ptr %i.u, align 8, !tbaa !62
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.g, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
   store i8 1, ptr %i.c, align 1, !tbaa !101
   %i.ai = call { i8, ptr } @_ZN8nlohmann16json_abi_v3_12_06detail28json_sax_dom_callback_parserINS0_10basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEENS1_22iterator_input_adapterIN9__gnu_cxx17__normal_iteratorIPKcSB_EEEEE12handle_valueINS1_7value_tEEESt4pairIbPSF_EOT_b(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 1 dereferenceable(1) %i.c, i1 noundef zeroext true)
@@ -651,7 +654,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !250 ; 7 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !250 ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !251
   %.not.i = icmp eq ptr %i.aa, %i.ac
@@ -679,25 +682,28 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.k, %bb.j
 _ZNSt6vectorIbSaIbEE9push_backEb.exit.thread:     ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.ai = load i64, ptr %i.aa, align 8, !tbaa !62
   %i.aj = or i64 %i.ai, %i.ah
-  store i64 %i.aj, ptr %i.aa, align 8, !tbaa !62
-  br label %bb.m
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 _ZNSt6vectorIbSaIbEE9push_backEb.exit.thread35:   ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.ak = xor i64 %i.ah, -1
   %i.al = load i64, ptr %i.aa, align 8, !tbaa !62
   %i.am = and i64 %i.al, %i.ak
-  store i64 %i.am, ptr %i.aa, align 8, !tbaa !62
-  br label %_ZN8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.l:                                             ; preds = %bb.i
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 72
   invoke void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.an, ptr %i.aa, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %i.y)
           to label %_ZNSt6vectorIbSaIbEE9push_backEb.exit unwind label %bb.v
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.l
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %_ZNSt6vectorIbSaIbEE9push_backEb.exit.thread35, %_ZNSt6vectorIbSaIbEE9push_backEb.exit.thread
+  %.sink.i = phi i64 [ %i.aj, %_ZNSt6vectorIbSaIbEE9push_backEb.exit.thread ], [ %i.am, %_ZNSt6vectorIbSaIbEE9push_backEb.exit.thread35 ]
+  store i64 %.sink.i, ptr %i.aa, align 8, !tbaa !62
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i, %bb.l
   br i1 %i.y, label %bb.m, label %_ZN8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit
 
-bb.m:                                             ; preds = %_ZNSt6vectorIbSaIbEE9push_backEb.exit.thread, %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+bb.m:                                             ; preds = %_ZNSt6vectorIbSaIbEE9push_backEb.exit
   %i.ao = load ptr, ptr %i.l, align 8, !tbaa !258
   %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 -8
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !117
@@ -783,7 +789,7 @@ bb.w:                                             ; preds = %bb.o
   call void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #30
   br label %bb.ac
 
-_ZN8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit: ; preds = %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE16assert_invariantEb.exit.i, %_ZNSt6vectorIbSaIbEE9push_backEb.exit.thread35, %bb.m, %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+_ZN8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED2Ev.exit: ; preds = %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE16assert_invariantEb.exit.i, %bb.m, %_ZNSt6vectorIbSaIbEE9push_backEb.exit
   %i.bl = load i8, ptr %2, align 8, !tbaa !91     ; 5 uses
   %.not.i.i22 = icmp eq i8 %i.bl, 1
   %i.bm = load ptr, ptr %i.c, align 8
@@ -883,7 +889,7 @@ _ZNKSt8functionIFbiN8nlohmann16json_abi_v3_12_06detail13parse_event_tERNS1_10bas
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !250  ; 7 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !250  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !251
   %.not.i = icmp eq ptr %i.u, %i.w
@@ -911,22 +917,25 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.d, %bb.c
 bb.e:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.ac = load i64, ptr %i.u, align 8, !tbaa !62
   %i.ad = or i64 %i.ac, %i.ab
-  store i64 %i.ad, ptr %i.u, align 8, !tbaa !62
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.f:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.ae = xor i64 %i.ab, -1
   %i.af = load i64, ptr %i.u, align 8, !tbaa !62
   %i.ag = and i64 %i.af, %i.ae
-  store i64 %i.ag, ptr %i.u, align 8, !tbaa !62
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.g:                                             ; preds = %_ZNKSt8functionIFbiN8nlohmann16json_abi_v3_12_06detail13parse_event_tERNS1_10basic_jsonINS1_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES6_IhSaIhEEvEEEEclEiS3_SH_.exit
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.ah, ptr %i.u, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %i.s)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.e, %bb.f, %bb.g
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.f, %bb.e
+  %.sink.i = phi i64 [ %i.ad, %bb.e ], [ %i.ag, %bb.f ]
+  store i64 %.sink.i, ptr %i.u, align 8, !tbaa !62
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.g, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
   store i8 2, ptr %i.c, align 1, !tbaa !101
   %i.ai = call { i8, ptr } @_ZN8nlohmann16json_abi_v3_12_06detail28json_sax_dom_callback_parserINS0_10basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEENS1_22iterator_input_adapterIN9__gnu_cxx17__normal_iteratorIPKcSB_EEEEE12handle_valueINS1_7value_tEEESt4pairIbPSF_EOT_b(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 1 dereferenceable(1) %i.c, i1 noundef zeroext true)

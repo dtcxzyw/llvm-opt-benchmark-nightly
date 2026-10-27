@@ -201,22 +201,26 @@ bb.e:                                             ; preds = %bb.c
   %i.k = call i64 @strnlen(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 17) #12 ; 5 uses
   %i.l = load i64, ptr %2, align 8
   %.not = icmp ugt i64 %i.l, %i.k
-  br i1 %.not, label %bb.g, label %bb.f
+  br i1 %.not, label %bb.f, label %3
+
+3:                                                ; preds = %bb.e
+  %4 = add i64 %i.k, 1
+  br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %3 = add i64 %i.k, 1
-  store i64 %3, ptr %2, align 8
-  br label %bb.h
-
-bb.g:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull align 16 %i.a, i64 %i.k, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %i.k
-  store i8 0, ptr %4, align 1
-  store i64 %i.k, ptr %2, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %i.k
+  store i8 0, ptr %5, align 1
+  br label %bb.g
+
+bb.g:                                             ; preds = %3, %bb.f
+  %.sink = phi i64 [ %i.k, %bb.f ], [ %4, %3 ]
+  %.0.ph = phi i32 [ 0, %bb.f ], [ -105, %3 ]
+  store i64 %.sink, ptr %2, align 8
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.a, %bb.b, %bb.g, %bb.f, %bb.d
-  %.0 = phi i32 [ 0, %bb.g ], [ %i.j, %bb.d ], [ -105, %bb.f ], [ -22, %bb.b ], [ -22, %bb.a ]
+bb.h:                                             ; preds = %bb.g, %bb.a, %bb.b, %bb.d
+  %.0 = phi i32 [ -22, %bb.b ], [ %i.j, %bb.d ], [ -22, %bb.a ], [ %.0.ph, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.0
 }
@@ -257,22 +261,26 @@ bb.e:                                             ; preds = %bb.c
   %i.k = call i64 @strnlen(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 17) #12 ; 5 uses
   %i.l = load i64, ptr %2, align 8
   %.not.i = icmp ugt i64 %i.l, %i.k
-  br i1 %.not.i, label %bb.g, label %bb.f
+  br i1 %.not.i, label %bb.f, label %3
+
+3:                                                ; preds = %bb.e
+  %4 = add i64 %i.k, 1
+  br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %3 = add i64 %i.k, 1
-  store i64 %3, ptr %2, align 8
-  br label %uv_if_indextoname.exit
-
-bb.g:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull align 16 %i.a, i64 %i.k, i1 false)
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %i.k
-  store i8 0, ptr %4, align 1
-  store i64 %i.k, ptr %2, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %i.k
+  store i8 0, ptr %5, align 1
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.f, %3
+  %.sink.i = phi i64 [ %i.k, %bb.f ], [ %4, %3 ]
+  %.0.ph.i = phi i32 [ 0, %bb.f ], [ -105, %3 ]
+  store i64 %.sink.i, ptr %2, align 8
   br label %uv_if_indextoname.exit
 
-uv_if_indextoname.exit:                           ; preds = %bb.a, %bb.b, %bb.d, %bb.f, %bb.g
-  %.0.i = phi i32 [ 0, %bb.g ], [ %i.j, %bb.d ], [ -105, %bb.f ], [ -22, %bb.b ], [ -22, %bb.a ]
+uv_if_indextoname.exit:                           ; preds = %bb.a, %bb.b, %bb.d, %bb.g
+  %.0.i = phi i32 [ -22, %bb.b ], [ %i.j, %bb.d ], [ -22, %bb.a ], [ %.0.ph.i, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.0.i
 }

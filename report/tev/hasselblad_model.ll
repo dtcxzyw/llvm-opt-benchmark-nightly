@@ -203,7 +203,7 @@ sub_1398:                                         ; preds = %sub_0397
   br i1 %i.qr, label %bb.jc, label %.thread331.tail.thread
 
 bb.jc:                                            ; preds = %.thread331.tail, %bb.jb
-  %i.qs = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 3 uses
+  %i.qs = getelementptr inbounds nuw i8, ptr %0, i64 1200 ; 2 uses
   %i.qt = getelementptr inbounds nuw i8, ptr %0, i64 1352
   store i16 9, ptr %i.qt, align 8, !tbaa !84
   %i.qu = getelementptr inbounds nuw i8, ptr %0, i64 1354
@@ -247,17 +247,20 @@ bb.jh:                                            ; preds = %bb.jg
 
 bb.ji:                                            ; preds = %bb.jh
   store i16 2, ptr %i.rg, align 4, !tbaa !74
-  store i64 1600350750, ptr %i.qs, align 8, !tbaa !73
-  br label %.thread331.tail.thread
+  br label %.thread331.tail.thread.sink.split
 
 bb.jj:                                            ; preds = %bb.jh
   store i16 1, ptr %i.rg, align 4, !tbaa !74
   %reass.mul = mul i64 %i.re, 10010
   %i.rh = add i64 %reass.mul, 1600000000
-  store i64 %i.rh, ptr %i.qs, align 8, !tbaa !73
+  br label %.thread331.tail.thread.sink.split
+
+.thread331.tail.thread.sink.split:                ; preds = %bb.jj, %bb.ji
+  %.sink468 = phi i64 [ 1600350750, %bb.ji ], [ %i.rh, %bb.jj ]
+  store i64 %.sink468, ptr %i.qs, align 8, !tbaa !73
   br label %.thread331.tail.thread
 
-.thread331.tail.thread:                           ; preds = %sub_1398, %sub_0397, %bb.jc, %.thread331.tail, %bb.je, %bb.ji, %bb.jj, %bb.jg, %bb.jf, %bb.jd, %bb.iz, %bb.ja
+.thread331.tail.thread:                           ; preds = %.thread331.tail.thread.sink.split, %sub_1398, %sub_0397, %bb.jc, %.thread331.tail, %bb.je, %bb.jg, %bb.jf, %bb.jd, %bb.iz, %bb.ja
   %i.ri = getelementptr inbounds nuw i8, ptr %0, i64 460 ; 2 uses
   %i.rj = load i8, ptr %i.ri, align 4, !tbaa !12
   %.not203 = icmp eq i8 %i.rj, 0

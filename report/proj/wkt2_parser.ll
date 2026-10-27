@@ -202,7 +202,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden i32 @pj_wkt2_lex(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 11 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
   br label %bb.b
 
@@ -362,13 +362,11 @@ bb.q:                                             ; preds = %.tail
 bb.r:                                             ; preds = %bb.q
   %i.ap = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0) #10
   %i.aq = getelementptr inbounds nuw i8, ptr %.0, i64 %i.ap
-  store ptr %i.aq, ptr %i.a, align 8, !tbaa !16
-  br label %bb.t
+  br label %.sink.split
 
 bb.s:                                             ; preds = %bb.q
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 3
-  store ptr %i.ar, ptr %i.a, align 8, !tbaa !16
-  br label %bb.t
+  br label %.sink.split
 
 .tail.thread:                                     ; preds = %bb.m, %sub_1, %.tail
   %i.as = getelementptr inbounds nuw i8, ptr %.0, i64 1
@@ -377,8 +375,14 @@ bb.s:                                             ; preds = %bb.q
   %i.au = sext i8 %i.at to i32
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.r, %bb.s, %.tail.thread, %bb.p, %bb.o, %.critedge2, %bb.k, %bb.g, %bb.d
-  %.167 = phi i32 [ -1, %bb.d ], [ %i.t, %bb.g ], [ 410, %.critedge2 ], [ %i.ab, %bb.k ], [ -1, %bb.o ], [ 409, %bb.p ], [ -1, %bb.r ], [ 409, %bb.s ], [ %i.au, %.tail.thread ]
+.sink.split:                                      ; preds = %bb.s, %bb.r
+  %.sink = phi ptr [ %i.aq, %bb.r ], [ %i.ar, %bb.s ]
+  %.167.ph = phi i32 [ -1, %bb.r ], [ 409, %bb.s ]
+  store ptr %.sink, ptr %i.a, align 8, !tbaa !16
+  br label %bb.t
+
+bb.t:                                             ; preds = %.sink.split, %.tail.thread, %bb.p, %bb.o, %.critedge2, %bb.k, %bb.g, %bb.d
+  %.167 = phi i32 [ -1, %bb.d ], [ %i.t, %bb.g ], [ 410, %.critedge2 ], [ %i.ab, %bb.k ], [ -1, %bb.o ], [ 409, %bb.p ], [ %i.au, %.tail.thread ], [ %.167.ph, %.sink.split ]
   ret i32 %.167
 }
 

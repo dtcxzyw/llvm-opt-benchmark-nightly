@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZL21segmentsCloses
 bb.n:                                             ; preds = %bb.m
   %i.bv = tail call noundef float @llvm.fabs.f32(float %i.i)
   %i.bw = fcmp ogt float %i.bv, f0x3F3504F3
-  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 8
   br i1 %i.bw, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -217,9 +217,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cd = fmul float %i.cb, %i.cc                 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 4
   store float %i.cd, ptr %i.ce, align 4, !tbaa !54
-  %i.cf = fmul float %i.h, %i.cb                  ; 2 uses
-  store float %i.cf, ptr %i.bx, align 4, !tbaa !54
-  br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit
+  %i.cf = fmul float %i.h, %i.cb
+  br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split
 
 bb.p:                                             ; preds = %bb.n
   %i.cg = fmul float %i.h, %i.h
@@ -232,8 +231,7 @@ bb.p:                                             ; preds = %bb.n
   %i.cm = fmul float %i.g, %i.cj                  ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 4
   store float %i.cm, ptr %i.cn, align 4, !tbaa !54
-  store float 0.000000e+00, ptr %i.bx, align 4, !tbaa !54
-  br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit
+  br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split
 
 bb.q:                                             ; preds = %bb.m
   %i.co = fdiv float -1.000000e+00, %i.bq         ; 3 uses
@@ -248,10 +246,17 @@ bb.q:                                             ; preds = %bb.m
   store <2 x float> %.sroa.3.12.vec.insert.i34, ptr %.sroa.42.0..sroa_idx, align 4, !tbaa !68
   br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit
 
-_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.p, %bb.o, %bb.q
-  %11 = phi float [ 0.000000e+00, %bb.p ], [ %i.cf, %bb.o ], [ %i.cr, %bb.q ]
-  %12 = phi float [ %i.cm, %bb.p ], [ %i.cd, %bb.o ], [ %i.cq, %bb.q ]
-  %13 = phi float [ %i.cl, %bb.p ], [ 0.000000e+00, %bb.o ], [ %i.cp, %bb.q ]
+_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split: ; preds = %bb.p, %bb.o
+  %.sink = phi float [ %i.cf, %bb.o ], [ 0.000000e+00, %bb.p ] ; 2 uses
+  %.ph141 = phi float [ %i.cd, %bb.o ], [ %i.cm, %bb.p ]
+  %.ph142 = phi float [ 0.000000e+00, %bb.o ], [ %i.cl, %bb.p ]
+  store float %.sink, ptr %i.bx, align 4, !tbaa !54
+  br label %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit
+
+_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split, %bb.q
+  %11 = phi float [ %i.cr, %bb.q ], [ %.sink, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split ]
+  %12 = phi float [ %i.cq, %bb.q ], [ %.ph141, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split ]
+  %13 = phi float [ %i.cp, %bb.q ], [ %.ph142, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit.sink.split ]
   %i.cs = load float, ptr %i.t, align 4, !tbaa !54
   %i.ct = fadd float %i.be, %i.cs
   %i.cu = load float, ptr %.sroa.482.0..sroa_idx, align 4, !tbaa !54

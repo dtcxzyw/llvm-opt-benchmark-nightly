@@ -204,7 +204,7 @@ bb.bh:                                            ; preds = %bb.bg, %.thread202.
   br i1 %i.gw, label %send_frame.exit, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.gx = getelementptr inbounds nuw i8, ptr %i.dc, i64 224 ; 3 uses
+  %i.gx = getelementptr inbounds nuw i8, ptr %i.dc, i64 224 ; 2 uses
   %i.gy = load i32, ptr %i.dq, align 4, !tbaa !112
   %i.gz = icmp eq i32 %i.gy, 1
   br i1 %i.gz, label %bb.bj, label %bb.bk
@@ -227,16 +227,19 @@ bb.bl:                                            ; preds = %bb.bk
   %i.he = getelementptr inbounds nuw i8, ptr %i.dc, i64 72
   %i.hf = load i64, ptr %i.he, align 8            ; 2 uses
   %.sroa.01.0.insert.insert.i.i.i = call i64 @llvm.fshl.i64(i64 %i.hf, i64 %i.hf, i64 32)
-  store i64 %.sroa.01.0.insert.insert.i.i.i, ptr %i.gx, align 8, !tbaa !38
-  br label %bb.bn
+  br label %.sink.split.i.i
 
 bb.bm:                                            ; preds = %bb.bk
   %i.hg = getelementptr inbounds nuw i8, ptr %i.bp, i64 152
   %i.hh = load i64, ptr %i.hg, align 8, !tbaa !38
-  store i64 %i.hh, ptr %i.gx, align 8, !tbaa !38
+  br label %.sink.split.i.i
+
+.sink.split.i.i:                                  ; preds = %bb.bm, %bb.bl
+  %.sink.i.i = phi i64 [ %i.hh, %bb.bm ], [ %.sroa.01.0.insert.insert.i.i.i, %bb.bl ]
+  store i64 %.sink.i.i, ptr %i.gx, align 8, !tbaa !38
   br label %bb.bn
 
-bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.bj
+bb.bn:                                            ; preds = %.sink.split.i.i, %bb.bj
   %i.hi = getelementptr inbounds nuw i8, ptr %i.bp, i64 116
   %i.hj = load i32, ptr %i.hi, align 4, !tbaa !155
   %i.hk = getelementptr inbounds nuw i8, ptr %i.dc, i64 160

@@ -204,7 +204,7 @@ _ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit: ; preds = %
   br label %bb.h
 
 bb.e:                                             ; preds = %_ZN11hb_vector_tIP9hb_blob_tLb0EE12push_or_failIJRS1_EEEbDpOT_.exit
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 3 uses
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !91 ; 3 uses
   %i.ad = icmp ugt i32 %i.ac, 2
   br i1 %i.ad, label %bb.f, label %bb.g, !prof !12
@@ -212,9 +212,7 @@ bb.e:                                             ; preds = %_ZN11hb_vector_tIP9
 bb.f:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 357
   store i8 1, ptr %i.ae, align 1, !tbaa !69
-  %4 = add i32 %i.ac, 1
-  store i32 %4, ptr %i.ab, align 8, !tbaa !91
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %i.af = load i32, ptr %3, align 4, !tbaa !84    ; 3 uses
@@ -251,11 +249,15 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 56
   store i32 %.sroa.speculated, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !37
   %i.as = load i32, ptr %i.ab, align 8, !tbaa !91
-  %5 = add i32 %i.as, 1
-  store i32 %5, ptr %i.ab, align 8, !tbaa !91
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %bb.f
+  %.sink50 = phi i32 [ %i.ac, %bb.f ], [ %i.as, %bb.g ]
+  %4 = add i32 %.sink50, 1
+  store i32 %4, ptr %i.ab, align 8, !tbaa !91
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g, %.critedge
+bb.h:                                             ; preds = %.sink.split, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   br label %bb.i
 

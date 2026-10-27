@@ -202,9 +202,7 @@ bb.c:                                             ; preds = %zend_parse_arg_str_
 bb.d:                                             ; preds = %.critedge
   %i.m = load ptr, ptr @zend_empty_string, align 8, !tbaa !28
   store ptr %i.m, ptr %1, align 8, !tbaa !12
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 6, ptr %2, align 8, !tbaa !12
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %.critedge
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 24
@@ -215,11 +213,15 @@ bb.e:                                             ; preds = %.critedge
   %i.r = and i32 %i.q, 64
   %.not49 = icmp eq i32 %i.r, 0
   %i.s = select i1 %.not49, i32 262, i32 6
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 %i.s, ptr %3, align 8, !tbaa !12
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.d
+  %.sink = phi i32 [ 6, %bb.d ], [ %i.s, %bb.e ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store i32 %.sink, ptr %2, align 8, !tbaa !12
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
+bb.f:                                             ; preds = %.sink.split, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret void
 }

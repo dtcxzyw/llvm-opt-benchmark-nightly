@@ -202,7 +202,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca [64 x i8], align 16               ; 5 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  %i.g = alloca ptr, align 8                      ; 5 uses
+  %i.g = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #4
   %i.h = icmp eq ptr %0, null
   br i1 %i.h, label %bb.b, label %bb.c
@@ -605,18 +605,21 @@ bb.ba:                                            ; preds = %bb.az
   %i.fs = load ptr, ptr %i.g, align 8, !tbaa !65
   %i.ft = trunc i64 %i.fq to i32
   call void @ASN1_STRING_set0(ptr noundef nonnull %.076110, ptr noundef %i.fs, i32 noundef %i.ft) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #4
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.bb:                                            ; preds = %bb.ba
   call void @ERR_new() #4
   call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 929, ptr noundef nonnull @__func__.PKCS7_dataFinal) #4
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 33, i32 noundef 107, ptr noundef null) #4
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.thread126, %bb.bb
+  %.079.ph = phi i32 [ 0, %bb.bb ], [ 1, %.thread126 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #4
   br label %.loopexit
 
-.loopexit:                                        ; preds = %do_pkcs7_signed_attrib.exit, %bb.ai, %bb.ah, %bb.ax, %bb.az, %.thread126, %bb.bb, %.thread124, %.thread115, %do_pkcs7_signed_attrib.exit.thread, %bb.ay, %bb.af, %bb.n, %bb.k
-  %.079 = phi i32 [ 0, %bb.af ], [ 1, %.thread126 ], [ 1, %bb.az ], [ 0, %.thread115 ], [ 1, %bb.ax ], [ 0, %do_pkcs7_signed_attrib.exit.thread ], [ 0, %bb.ay ], [ 0, %bb.bb ], [ 0, %.thread124 ], [ 0, %bb.k ], [ 0, %bb.n ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ 0, %do_pkcs7_signed_attrib.exit ]
+.loopexit:                                        ; preds = %do_pkcs7_signed_attrib.exit, %bb.ai, %bb.ah, %.loopexit.sink.split, %bb.ax, %bb.az, %.thread124, %.thread115, %do_pkcs7_signed_attrib.exit.thread, %bb.ay, %bb.af, %bb.n, %bb.k
+  %.079 = phi i32 [ 0, %bb.af ], [ 0, %bb.n ], [ 1, %bb.az ], [ 0, %.thread115 ], [ 1, %bb.ax ], [ 0, %do_pkcs7_signed_attrib.exit.thread ], [ 0, %bb.ay ], [ %.079.ph, %.loopexit.sink.split ], [ 0, %.thread124 ], [ 0, %bb.k ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ 0, %do_pkcs7_signed_attrib.exit ]
   call void @EVP_MD_CTX_free(ptr noundef nonnull %i.m) #4
   br label %bb.bc
 

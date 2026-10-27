@@ -202,9 +202,8 @@ bb.d:                                             ; preds = %bb.c
   %i.s = load ptr, ptr %i.g, align 8, !tbaa !50
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.c
   store ptr %i.t, ptr %i.g, align 8, !tbaa !50
-  %4 = tail call noundef ptr @_ZNSt20__copy_move_backwardILb1ELb0ESt26random_access_iterator_tagE13__copy_move_bIPN2cv3ccm9OperationES6_EET0_T_S8_S7_(ptr noundef %1, ptr noundef %i.q, ptr noundef %i.h) ; 0 uses
-  %i.u = tail call noundef ptr @_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKN2cv3ccm9OperationEPS5_EET0_T_SA_S9_(ptr noundef %2, ptr noundef %3, ptr noundef %1) ; 0 uses
-  br label %bb.m
+  %i.u = tail call noundef ptr @_ZNSt20__copy_move_backwardILb1ELb0ESt26random_access_iterator_tagE13__copy_move_bIPN2cv3ccm9OperationES6_EET0_T_S8_S7_(ptr noundef %1, ptr noundef %i.q, ptr noundef %i.h) ; 0 uses
+  br label %.sink.split
 
 _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN2cv3ccm9OperationESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.c
   %i.v = getelementptr inbounds i8, ptr %2, i64 %i.m ; 2 uses
@@ -217,8 +216,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN2cv3ccm9OperationESt6vectorIS4_
   %i.ab = load ptr, ptr %i.g, align 8, !tbaa !50
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.m
   store ptr %i.ac, ptr %i.g, align 8, !tbaa !50
-  %5 = tail call noundef ptr @_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKN2cv3ccm9OperationEPS5_EET0_T_SA_S9_(ptr noundef %2, ptr noundef %i.v, ptr noundef %1) ; 0 uses
-  br label %bb.m
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr %0, align 8, !tbaa !51    ; 6 uses
@@ -331,7 +329,12 @@ bb.k:                                             ; preds = %_ZNSt12_Vector_base
 bb.l:                                             ; preds = %bb.k
   resume { ptr, i32 } %i.bh
 
-bb.m:                                             ; preds = %_ZNSt12_Vector_baseIN2cv3ccm9OperationESaIS2_EE13_M_deallocateEPS2_m.exit, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN2cv3ccm9OperationESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit, %bb.d, %bb.a
+.sink.split:                                      ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN2cv3ccm9OperationESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit, %bb.d
+  %.sink = phi ptr [ %3, %bb.d ], [ %i.v, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPKN2cv3ccm9OperationESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit ]
+  %4 = tail call noundef ptr @_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKN2cv3ccm9OperationEPS5_EET0_T_SA_S9_(ptr noundef %2, ptr noundef %.sink, ptr noundef %1) ; 0 uses
+  br label %bb.m
+
+bb.m:                                             ; preds = %.sink.split, %_ZNSt12_Vector_baseIN2cv3ccm9OperationESaIS2_EE13_M_deallocateEPS2_m.exit, %bb.a
   ret void
 
 bb.n:                                             ; preds = %bb.k

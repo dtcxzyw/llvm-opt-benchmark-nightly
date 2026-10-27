@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.al = load ptr, ptr %i.v, align 8
   %i.am = load i64, ptr %i.a, align 8
   %.idx131 = shl i64 %i.am, 4
-  %i.an = getelementptr i8, ptr %i.al, i64 %.idx131 ; 4 uses
+  %i.an = getelementptr i8, ptr %i.al, i64 %.idx131 ; 3 uses
   %i.ao = getelementptr i8, ptr %i.an, i64 8
   %i.ap = load i16, ptr %i.ak, align 2
   %i.aq = zext i16 %i.ap to i64                   ; 2 uses
@@ -228,15 +228,16 @@ bb.g:                                             ; preds = %bb.f
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
   %i.ay = load i16, ptr %i.ax, align 2
   %i.az = zext i16 %i.ay to i64
-  store i64 %i.az, ptr %i.an, align 8
+  br label %bb.h
+
+bb.h:                                             ; preds = %bb.f, %bb.g
+  %.sink = phi i64 [ %i.az, %bb.g ], [ %i.aq, %bb.f ]
+  %.sink17.in.i.ph = phi ptr [ %i.ak, %bb.g ], [ %i.as, %bb.f ]
+  store i64 %.sink, ptr %i.an, align 8
   br label %_ZN5o3dgc18CompueOppositeEdgeItEEvlPKT_RlS4_.exit
 
-bb.h:                                             ; preds = %bb.f
-  store i64 %i.aq, ptr %i.an, align 8
-  br label %_ZN5o3dgc18CompueOppositeEdgeItEEvlPKT_RlS4_.exit
-
-_ZN5o3dgc18CompueOppositeEdgeItEEvlPKT_RlS4_.exit: ; preds = %bb.e, %bb.g, %bb.h
-  %.sink17.in.i = phi ptr [ %i.ak, %bb.g ], [ %i.as, %bb.h ], [ %i.av, %bb.e ]
+_ZN5o3dgc18CompueOppositeEdgeItEEvlPKT_RlS4_.exit: ; preds = %bb.h, %bb.e
+  %.sink17.in.i = phi ptr [ %i.av, %bb.e ], [ %.sink17.in.i.ph, %bb.h ]
   %.sink17.i = load i16, ptr %.sink17.in.i, align 2
   %i.ba = zext i16 %.sink17.i to i64
   store i64 %i.ba, ptr %i.ao, align 8

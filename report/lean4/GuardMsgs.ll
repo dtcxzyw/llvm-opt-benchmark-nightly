@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   br label %lean_dec.exit95
 
 lean_dec.exit95:                                  ; preds = %bb.b, %lean_inc.exit84, %bb.i, %bb.j, %bb.k
-  %.074 = phi ptr [ inttoptr (i64 1 to ptr), %bb.k ], [ inttoptr (i64 1 to ptr), %lean_inc.exit84 ], [ inttoptr (i64 1 to ptr), %bb.i ], [ inttoptr (i64 1 to ptr), %bb.j ], [ %0, %bb.b ] ; 13 uses
+  %.074 = phi ptr [ inttoptr (i64 1 to ptr), %bb.k ], [ inttoptr (i64 1 to ptr), %lean_inc.exit84 ], [ inttoptr (i64 1 to ptr), %bb.i ], [ inttoptr (i64 1 to ptr), %bb.j ], [ %0, %bb.b ] ; 12 uses
   %.not.i81 = icmp eq i64 %.pre123, 0             ; 3 uses
   br i1 %.not.i81, label %bb.l, label %lean_inc.exit82
 
@@ -405,15 +405,11 @@ bb.ap:                                            ; preds = %bb.ao
   %i.bh = load i32, ptr %i.bg, align 4
   %i.bi = and i32 %i.bh, 16777215
   store i32 %i.bi, ptr %i.bg, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %.074, i64 8
-  store ptr inttoptr (i64 5 to ptr), ptr %3, align 8, !tbaa !10
-  br label %bb.bk
+  br label %.sink.split
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.bj = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 0, i32 noundef 1, i32 noundef 0) ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  store ptr inttoptr (i64 5 to ptr), ptr %4, align 8, !tbaa !10
-  br label %bb.bk
+  %i.bj = tail call fastcc ptr @lean_alloc_ctor(i32 noundef 0, i32 noundef 1, i32 noundef 0)
+  br label %.sink.split
 
 bb.ar:                                            ; preds = %lean_inc.exit
   %i.bk = load i32, ptr %i.ah, align 4, !tbaa !14 ; 3 uses
@@ -546,8 +542,14 @@ lean_alloc_ctor.exit121:                          ; preds = %lean_dec.exit
   store ptr inttoptr (i64 1 to ptr), ptr %i.cl, align 8, !tbaa !10
   br label %bb.bk
 
-bb.bk:                                            ; preds = %l_Lean_Elab_throwUnsupportedSyntax___at___00Lean_Elab_Tactic_GuardMsgs_parseGuardMsgsFilterAction_spec__0___redArg.exit, %lean_alloc_ctor.exit120, %bb.bc, %bb.aq, %bb.ap, %lean_del_object.exit119, %bb.av, %lean_alloc_ctor.exit, %lean_alloc_ctor.exit121
-  %.7 = phi ptr [ %i.ci, %lean_alloc_ctor.exit121 ], [ %i.ad, %l_Lean_Elab_throwUnsupportedSyntax___at___00Lean_Elab_Tactic_GuardMsgs_parseGuardMsgsFilterAction_spec__0___redArg.exit ], [ %i.br, %lean_alloc_ctor.exit ], [ %i.bj, %bb.aq ], [ %i.bf, %lean_del_object.exit119 ], [ %.074, %bb.ap ], [ %.074, %bb.av ], [ %.074, %bb.bc ], [ %i.cb, %lean_alloc_ctor.exit120 ]
+.sink.split:                                      ; preds = %bb.aq, %bb.ap
+  %.074.sink = phi ptr [ %.074, %bb.ap ], [ %i.bj, %bb.aq ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.074.sink, i64 8
+  store ptr inttoptr (i64 5 to ptr), ptr %3, align 8, !tbaa !10
+  br label %bb.bk
+
+bb.bk:                                            ; preds = %.sink.split, %l_Lean_Elab_throwUnsupportedSyntax___at___00Lean_Elab_Tactic_GuardMsgs_parseGuardMsgsFilterAction_spec__0___redArg.exit, %lean_alloc_ctor.exit120, %bb.bc, %lean_del_object.exit119, %bb.av, %lean_alloc_ctor.exit, %lean_alloc_ctor.exit121
+  %.7 = phi ptr [ %i.ci, %lean_alloc_ctor.exit121 ], [ %i.ad, %l_Lean_Elab_throwUnsupportedSyntax___at___00Lean_Elab_Tactic_GuardMsgs_parseGuardMsgsFilterAction_spec__0___redArg.exit ], [ %i.br, %lean_alloc_ctor.exit ], [ %.074, %bb.bc ], [ %i.bf, %lean_del_object.exit119 ], [ %i.cb, %lean_alloc_ctor.exit120 ], [ %.074, %bb.av ], [ %.074.sink, %.sink.split ]
   ret ptr %.7
 }
 

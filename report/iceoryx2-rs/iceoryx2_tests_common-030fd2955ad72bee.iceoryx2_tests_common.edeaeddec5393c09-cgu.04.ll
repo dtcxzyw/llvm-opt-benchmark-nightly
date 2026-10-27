@@ -204,7 +204,7 @@ define hidden void @_RNvXsc_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connec
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [8 x i8], align 8                 ; 5 uses
+  %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [16 x i8], align 8                ; 6 uses
@@ -435,17 +435,19 @@ bb.w:                                             ; preds = %bb.u
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.cu, align 8
   store i64 2, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.y
+  br label %.sink.split
 
 bb.x:                                             ; preds = %bb.u
   store i64 1, ptr %0, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.cf, ptr %i.cv, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.x, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.t, %bb.x, %bb.i, %bb.w
+bb.y:                                             ; preds = %.sink.split, %bb.t, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   ret void
 }

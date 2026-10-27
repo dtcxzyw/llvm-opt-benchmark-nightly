@@ -104,7 +104,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.i = load i64, ptr %i.b, align 8, !tbaa !19
-  %i.j = call ptr @OPENSSL_malloc(i64 noundef %i.i) #4 ; 5 uses
+  %i.j = call ptr @OPENSSL_malloc(i64 noundef %i.i) #4 ; 4 uses
   %.not18 = icmp eq ptr %i.j, null
   br i1 %.not18, label %bb.m, label %bb.j
 
@@ -116,18 +116,21 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   call void @ERR_put_error(i32 noundef 11, i32 noundef 0, i32 noundef 103, ptr noundef nonnull @.str, i32 noundef 55) #4
-  call void @OPENSSL_free(ptr noundef nonnull %i.j) #4
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.j
   store ptr %i.j, ptr %i.a, align 8, !tbaa !21
   %i.m = load i64, ptr %i.b, align 8, !tbaa !19
   %i.n = call ptr @d2i_NETSCAPE_SPKI(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %i.m) #4
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.l, %bb.k
+  %.013.ph = phi ptr [ null, %bb.k ], [ %i.n, %bb.l ]
   call void @OPENSSL_free(ptr noundef nonnull %i.j) #4
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.i, %bb.a, %bb.b, %bb.l, %bb.k, %bb.h, %bb.f
-  %.013 = phi ptr [ null, %bb.h ], [ null, %bb.f ], [ %i.n, %bb.l ], [ null, %bb.k ], [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.i ]
+bb.m:                                             ; preds = %.sink.split, %bb.i, %bb.a, %bb.b, %bb.h, %bb.f
+  %.013 = phi ptr [ null, %bb.h ], [ null, %bb.f ], [ null, %bb.b ], [ null, %bb.i ], [ null, %bb.a ], [ %.013.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret ptr %.013
@@ -172,7 +175,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = call ptr @OPENSSL_malloc(i64 noundef %i.d) #4 ; 5 uses
+  %i.f = call ptr @OPENSSL_malloc(i64 noundef %i.d) #4 ; 4 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.g, label %bb.d
 
@@ -180,21 +183,21 @@ bb.d:                                             ; preds = %bb.c
   %i.h = load i64, ptr %i.b, align 8, !tbaa !19
   %i.i = call ptr @OPENSSL_malloc(i64 noundef %i.h) #4 ; 3 uses
   %i.j = icmp eq ptr %i.i, null
-  br i1 %i.j, label %bb.e, label %bb.f
+  br i1 %i.j, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  call void @OPENSSL_free(ptr noundef nonnull %i.f) #4
-  br label %bb.g
-
-bb.f:                                             ; preds = %bb.d
   store ptr %i.f, ptr %i.a, align 8, !tbaa !21
   %1 = call i32 @i2d_NETSCAPE_SPKI(ptr noundef %0, ptr noundef nonnull %i.a) #4 ; 0 uses
   %2 = call i64 @EVP_EncodeBlock(ptr noundef nonnull %i.i, ptr noundef nonnull %i.f, i64 noundef %i.d) #4 ; 0 uses
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %.0.ph = phi ptr [ %i.i, %bb.e ], [ null, %bb.d ]
   call void @OPENSSL_free(ptr noundef nonnull %i.f) #4
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e, %bb.b
-  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.e ], [ %i.i, %bb.f ], [ null, %bb.c ]
+bb.g:                                             ; preds = %bb.f, %bb.c, %bb.b
+  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.c ], [ %.0.ph, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret ptr %.0

@@ -204,7 +204,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16
 bb.l:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16tracing_appender3MsgNtNtCsjfHCj4Qo55Q_17crossbeam_channel3err12TryRecvErrorEECsarFSTFZzLuM_11xet_runtime.exit26, %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMsa_NtCsjfHCj4Qo55Q_17crossbeam_channel7channelINtB5_8ReceiverNtCs5ZfSctYBbRf_16tracing_appender3MsgE8try_recvCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c)
-  %i.t = load i64, ptr %i.a, align 8
+  %i.t = load i64, ptr %i.a, align 8, !range !13, !noundef !5
   switch i64 %i.t, label %bb.n [
     i64 -2, label %bb.m
     i64 -1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16tracing_appender3MsgNtNtCsjfHCj4Qo55Q_17crossbeam_channel3err12TryRecvErrorEECsarFSTFZzLuM_11xet_runtime.exit26.thread
@@ -227,16 +227,19 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %._crit_edge
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.s, ptr %i.y, align 8
-  store i8 1, ptr %0, align 8
-  br label %bb.q
+  br label %.sink.split
 
 bb.p:                                             ; preds = %._crit_edge
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.sroa.06.0.lcssa, ptr %i.z, align 1
-  store i8 0, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.o, %bb.p
+  %.sink = phi i8 [ 0, %bb.p ], [ 1, %bb.o ]
+  store i8 %.sink, ptr %0, align 8
   br label %bb.q
 
-bb.q:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16tracing_appender3MsgNtNtCsjfHCj4Qo55Q_17crossbeam_channel3err9RecvErrorEECsarFSTFZzLuM_11xet_runtime.exit, %bb.o, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16tracing_appender3MsgNtNtCsjfHCj4Qo55Q_17crossbeam_channel3err12TryRecvErrorEECsarFSTFZzLuM_11xet_runtime.exit, %bb.p
+bb.q:                                             ; preds = %.sink.split, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16tracing_appender3MsgNtNtCsjfHCj4Qo55Q_17crossbeam_channel3err9RecvErrorEECsarFSTFZzLuM_11xet_runtime.exit, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtCs5ZfSctYBbRf_16tracing_appender3MsgNtNtCsjfHCj4Qo55Q_17crossbeam_channel3err12TryRecvErrorEECsarFSTFZzLuM_11xet_runtime.exit
   ret void
 
 bb.r:                                             ; preds = %bb.n
@@ -639,7 +642,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.sink = phi i64 [ %., %bb.b ], [ 0, %bb.c ]
+  %.sink = phi i64 [ 0, %bb.c ], [ %., %bb.b ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }

@@ -64,7 +64,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef zeroext i1 @QEMU_Elf_init(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = alloca %struct.stat, align 8               ; 6 uses
+  %2 = alloca %struct.stat, align 8               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %i.a = tail call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 1, ptr noundef nonnull @.str.2) #10 ; 0 uses
   %i.b = tail call i32 (ptr, i32, ...) @open64(ptr noundef %1, i32 noundef 0, i32 noundef 0) #10 ; 6 uses
@@ -98,13 +98,14 @@ bb.e:                                             ; preds = %bb.c
   %i.n = icmp eq ptr %i.l, inttoptr (i64 -1 to ptr)
   br i1 %i.n, label %bb.f, label %bb.g
 
+QEMU_Elf_map.exit.thread:                         ; preds = %bb.b, %bb.d
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
+  br label %bb.aa
+
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr @stderr, align 8
   %i.p = tail call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.o, i32 noundef 1, ptr noundef nonnull @.str.5) #10 ; 0 uses
   %i.q = tail call i32 @close(i32 noundef %i.b) #10 ; 0 uses
-  br label %QEMU_Elf_map.exit.thread
-
-QEMU_Elf_map.exit.thread:                         ; preds = %bb.b, %bb.d, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   br label %bb.aa
 
@@ -313,8 +314,8 @@ init_states.exit:                                 ; preds = %bb.s, %bb.t, %advan
   store ptr %i.dj, ptr %i.dk, align 8
   br label %bb.aa
 
-bb.aa:                                            ; preds = %init_states.exit, %QEMU_Elf_map.exit.thread, %init_states.exit.thread, %bb.p
-  %.0 = phi i1 [ false, %QEMU_Elf_map.exit.thread ], [ false, %init_states.exit.thread ], [ false, %bb.p ], [ true, %init_states.exit ]
+bb.aa:                                            ; preds = %init_states.exit, %bb.f, %QEMU_Elf_map.exit.thread, %init_states.exit.thread, %bb.p
+  %.0 = phi i1 [ false, %bb.f ], [ false, %init_states.exit.thread ], [ false, %bb.p ], [ true, %init_states.exit ], [ false, %QEMU_Elf_map.exit.thread ]
   ret i1 %.0
 }
 

@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 8) i32 @__kernel_rem_pio2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly captures(none) %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [20 x i32], align 16              ; 22 uses
+  %i.a = alloca [20 x i32], align 16              ; 21 uses
   %i.b = alloca [20 x double], align 16           ; 15 uses
   %i.c = alloca [20 x double], align 16           ; 43 uses
   %i.d = alloca [20 x double], align 16           ; 12 uses
@@ -414,23 +414,28 @@ bb.x:                                             ; preds = %.critedge287
   %i.id = add nsw i32 %.0258, 1                   ; 2 uses
   %i.ie = add i32 %.neg, %2
   %i.if = sext i32 %i.id to i64
-  %6 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.if
-  store i32 %i.hy, ptr %6, align 4
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.y:                                             ; preds = %.critedge287
   %i.ig = fptosi double %i.hv to i32
-  %7 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.cd
-  store i32 %i.ig, ptr %7, align 4
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .loopexit.loopexit:                               ; preds = %.preheader300
   %i.ih = trunc nsw i64 %indvars.iv.next452 to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.x, %bb.y
-  %.2260 = phi i32 [ %.0258, %bb.y ], [ %i.id, %bb.x ], [ %i.ih, %.loopexit.loopexit ] ; 18 uses
-  %.1238 = phi i32 [ %i.l, %bb.y ], [ %i.ie, %bb.x ], [ %.0237, %.loopexit.loopexit ]
+.loopexit.sink.split:                             ; preds = %bb.x, %bb.y
+  %.lcssa498.sink = phi i64 [ %i.cd, %bb.y ], [ %i.if, %bb.x ]
+  %.sink = phi i32 [ %i.ig, %bb.y ], [ %i.hy, %bb.x ]
+  %.2260.ph = phi i32 [ %.0258, %bb.y ], [ %i.id, %bb.x ]
+  %.1238.ph = phi i32 [ %i.l, %bb.y ], [ %i.ie, %bb.x ]
+  %6 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %.lcssa498.sink
+  store i32 %.sink, ptr %6, align 4
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.loopexit.loopexit
+  %.2260 = phi i32 [ %i.ih, %.loopexit.loopexit ], [ %.2260.ph, %.loopexit.sink.split ] ; 18 uses
+  %.1238 = phi i32 [ %.0237, %.loopexit.loopexit ], [ %.1238.ph, %.loopexit.sink.split ]
   %i.ii = tail call double @SDL_uclibc_scalbn(double noundef 1.000000e+00, i32 noundef %.1238) #6 ; 3 uses
   %i.ij = icmp sgt i32 %.2260, -1                 ; 3 uses
   br i1 %i.ij, label %.lr.ph356.preheader, label %._crit_edge357

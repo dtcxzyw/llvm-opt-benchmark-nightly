@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca [8 x i8], align 8                 ; 8 uses
   %.sroa.3.i.i.i.i.i.i.i = alloca [40 x i8], align 8 ; 7 uses
   %i.d = alloca [56 x i8], align 8                ; 8 uses
-  %.sroa.828.i.i.i.i.i.i = alloca [32 x i8], align 8 ; 8 uses
+  %.sroa.828.i.i.i.i.i.i = alloca [32 x i8], align 8 ; 7 uses
   %.sroa.516.i.i.i.i.i.i = alloca [32 x i8], align 8 ; 8 uses
   %i.e = alloca [48 x i8], align 8                ; 8 uses
   %i.f = alloca [24 x i8], align 8                ; 8 uses
@@ -608,10 +608,10 @@ bb.cb:                                            ; preds = %bb.cc
   br label %.body.i.i.i.i.i.i, !dbg !206094
 
 bb.cc:                                            ; preds = %bb.by, %bb.bx
-  %i.gr = phi ptr [ %i.gj, %bb.by ], [ %.phi.trans.insert.i.i.i.i, %bb.bx ] ; 4 uses
-  %i.gs = phi ptr [ %i.gk, %bb.by ], [ %i.dl, %bb.bx ] ; 4 uses
-  %i.gt = phi ptr [ %i.gl, %bb.by ], [ %.phi.trans.insert.i.i.i.i.i, %bb.bx ] ; 4 uses
-  %i.gu = phi ptr [ %i.gm, %bb.by ], [ %i.fh, %bb.bx ] ; 2 uses
+  %i.gr = phi ptr [ %i.gj, %bb.by ], [ %.phi.trans.insert.i.i.i.i, %bb.bx ] ; 3 uses
+  %i.gs = phi ptr [ %i.gk, %bb.by ], [ %i.dl, %bb.bx ] ; 3 uses
+  %i.gt = phi ptr [ %i.gl, %bb.by ], [ %.phi.trans.insert.i.i.i.i.i, %bb.bx ] ; 3 uses
+  %i.gu = phi ptr [ %i.gm, %bb.by ], [ %i.fh, %bb.bx ]
   %i.gv = phi ptr [ %i.go, %bb.by ], [ %.phi.trans.insert.i.i.i.i.i.i, %bb.bx ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !206102, !noalias !205900
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 520, !dbg !206102
@@ -644,14 +644,12 @@ bb.cg:                                            ; preds = %bb.ce
   store i8 1, ptr %i.gv, align 8, !dbg !206107, !noalias !205900
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.i.i.i.i.i.i), !dbg !206107
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.516.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.828.i.i.i.i.i.i, i64 32, i1 false), !dbg !206109, !noalias !205892
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.828.i.i.i.i.i.i), !dbg !206098
-  br label %bb.cj, !dbg !206110
+  br label %.sink.split.i.i.i.i.i, !dbg !206110
 
 bb.ch:                                            ; preds = %bb.ce
   store i8 1, ptr %i.gv, align 8, !dbg !206107, !noalias !205900
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.i.i.i.i.i.i), !dbg !206107
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.828.i.i.i.i.i.i), !dbg !206098
-  br label %bb.cj, !dbg !206111
+  br label %.sink.split.i.i.i.i.i, !dbg !206111
 
 bb.ci:                                            ; preds = %bb.cf, %bb.bu
   %i.ha = phi ptr [ %i.fx, %bb.bu ], [ %i.gr, %bb.cf ]
@@ -664,13 +662,17 @@ bb.ci:                                            ; preds = %bb.cf, %bb.bu
   store i8 3, ptr %i.ha, align 8, !dbg !206074, !noalias !205882
   br label %bb.fe, !dbg !206074
 
-bb.cj:                                            ; preds = %bb.ch, %bb.cg, %bb.bv, %bb.bm
-  %1 = phi ptr [ %i.fi, %bb.bm ], [ %i.fx, %bb.bv ], [ %i.gr, %bb.ch ], [ %i.gr, %bb.cg ] ; 5 uses
-  %2 = phi ptr [ %i.fj, %bb.bm ], [ %i.fy, %bb.bv ], [ %i.gs, %bb.ch ], [ %i.gs, %bb.cg ] ; 5 uses
-  %3 = phi ptr [ %i.fl, %bb.bm ], [ %i.fz, %bb.bv ], [ %i.gt, %bb.ch ], [ %i.gt, %bb.cg ] ; 2 uses
-  %4 = phi ptr [ %i.fm, %bb.bm ], [ %i.ga, %bb.bv ], [ %i.gu, %bb.ch ], [ %i.gu, %bb.cg ]
-  %.sroa.013.0.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.copyload7.i.i.i.i.i.i, %bb.bm ], [ %.sroa.013.0.copyload14.i.i.i.i.i.i, %bb.bv ], [ null, %bb.ch ], [ %.sroa.07.0.copyload.i.i.i.i.i.i.i, %bb.cg ], !dbg !206113 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.8.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.516.i.i.i.i.i.i, i64 32, i1 false), !dbg !206114, !noalias !205902
+.sink.split.i.i.i.i.i:                            ; preds = %bb.ch, %bb.cg
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.828.i.i.i.i.i.i), !dbg !206098
+  br label %bb.cj, !dbg !206113
+
+bb.cj:                                            ; preds = %.sink.split.i.i.i.i.i, %bb.bv, %bb.bm
+  %1 = phi ptr [ %i.fi, %bb.bm ], [ %i.fx, %bb.bv ], [ %i.gr, %.sink.split.i.i.i.i.i ] ; 5 uses
+  %2 = phi ptr [ %i.fj, %bb.bm ], [ %i.fy, %bb.bv ], [ %i.gs, %.sink.split.i.i.i.i.i ] ; 5 uses
+  %3 = phi ptr [ %i.fl, %bb.bm ], [ %i.fz, %bb.bv ], [ %i.gt, %.sink.split.i.i.i.i.i ] ; 2 uses
+  %4 = phi ptr [ %i.fm, %bb.bm ], [ %i.ga, %bb.bv ], [ %i.gu, %.sink.split.i.i.i.i.i ]
+  %.sroa.013.0.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.copyload7.i.i.i.i.i.i, %bb.bm ], [ %.sroa.013.0.copyload14.i.i.i.i.i.i, %bb.bv ], [ %.sroa.07.0.copyload.i.i.i.i.i.i.i, %.sink.split.i.i.i.i.i ], !dbg !206114 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.8.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.516.i.i.i.i.i.i, i64 32, i1 false), !dbg !206113, !noalias !205902
   store i8 1, ptr %3, align 8, !dbg !206112, !noalias !205892
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.516.i.i.i.i.i.i), !dbg !206112
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 416, !dbg !206115
@@ -1073,8 +1075,8 @@ begin_hunk_2_@llvm.abs.i128
 !206110 = !DILocation(line: 1342, column: 5, scope: !2606, inlinedAt: !205614)
 !206111 = !DILocation(line: 1340, column: 28, scope: !2606, inlinedAt: !205614)
 !206112 = !DILocation(line: 0, scope: !205588, inlinedAt: !205589)
-!206113 = !DILocation(line: 0, scope: !205595, inlinedAt: !205589)
-!206114 = !DILocation(line: 45, column: 6, scope: !205588, inlinedAt: !205589)
+!206113 = !DILocation(line: 45, column: 6, scope: !205588, inlinedAt: !205589)
+!206114 = !DILocation(line: 0, scope: !205595, inlinedAt: !205589)
 !206115 = !DILocation(line: 82, column: 36, scope: !205615, inlinedAt: !205562)
 !206116 = !DILocation(line: 82, column: 36, scope: !205587, inlinedAt: !205562)
 !206117 = !DILocation(line: 82, column: 30, scope: !205569, inlinedAt: !205562)

@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define i32 @cli_bytecode_runlsig(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %7 = alloca %struct.cli_bc_ctx, align 8         ; 24 uses
+  %7 = alloca %struct.cli_bc_ctx, align 8         ; 23 uses
   %8 = alloca %struct.cli_pe_hook_data, align 8   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %i.a = load ptr, ptr %2, align 8, !tbaa !168
@@ -352,8 +352,7 @@ bb.o:                                             ; preds = %bb.n
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.66, ptr noundef nonnull %i.bm) #24
   %i.bn = load ptr, ptr %i.bl, align 8, !tbaa !165
   %i.bo = call i32 @cli_append_virus(ptr noundef nonnull %0, ptr noundef %i.bn) #24
-  call fastcc void @bytecode_context_reset(ptr noundef nonnull %7)
-  br label %bb.q
+  br label %.sink.split
 
 bb.p:                                             ; preds = %bb.n
   %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 40
@@ -361,11 +360,15 @@ bb.p:                                             ; preds = %bb.n
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !95
   %i.bs = load i32, ptr %i.au, align 8, !tbaa !164
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.67, ptr noundef %.043, i32 noundef %i.bs, i32 noundef %i.br) #24
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.o, %bb.p
+  %.0.ph = phi i32 [ %i.bo, %bb.o ], [ 0, %bb.p ]
   call fastcc void @bytecode_context_reset(ptr noundef nonnull %7)
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.l, %bb.a, %bb.p, %bb.o, %bb.m, %bb.j
-  %.0 = phi i32 [ 0, %bb.p ], [ 0, %bb.j ], [ 21, %bb.m ], [ 2, %bb.a ], [ %i.bo, %bb.o ], [ 0, %bb.l ]
+bb.q:                                             ; preds = %.sink.split, %bb.l, %bb.a, %bb.m, %bb.j
+  %.0 = phi i32 [ 0, %bb.l ], [ 0, %bb.j ], [ 21, %bb.m ], [ 2, %bb.a ], [ %.0.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   ret i32 %.0

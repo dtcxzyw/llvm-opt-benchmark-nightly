@@ -204,7 +204,7 @@ bb.a:
     #dbg_declare(ptr poison, !6941, !DIExpression(DW_OP_LLVM_fragment, 192, 832), !6980)
     #dbg_declare(ptr poison, !6855, !DIExpression(DW_OP_LLVM_fragment, 192, 832), !6981)
   %i.b = alloca [128 x i8], align 8               ; 8 uses
-  %i.c = alloca [16 x i8], align 8                ; 8 uses
+  %i.c = alloca [16 x i8], align 8                ; 7 uses
     #dbg_value(ptr %1, !6852, !DIExpression(), !6982)
     #dbg_value(ptr %2, !6853, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6982)
     #dbg_value(i64 %3, !6853, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6982)
@@ -283,10 +283,13 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.n, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.611, i64 48, i1 false), !dbg !6931
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.611), !dbg !7018
   store i64 -2, ptr %0, align 8, !dbg !7017
-  call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs3roNzt6HBWW_12regex_syntax3ast3AstEBF_(ptr noalias nofree noundef align 8 dereferenceable(16) %i.c), !dbg !7012
-  br label %bb.g, !dbg !7019
+  br label %.sink.split, !dbg !7019
 
-bb.g:                                             ; preds = %bb.b, %bb.h, %bb.f
+.sink.split:                                      ; preds = %bb.h, %bb.f
+  call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs3roNzt6HBWW_12regex_syntax3ast3AstEBF_(ptr noalias nofree noundef align 8 dereferenceable(16) %i.c), !dbg !7012
+  br label %bb.g, !dbg !7012
+
+bb.g:                                             ; preds = %.sink.split, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !7012
   ret void, !dbg !7019
 
@@ -306,8 +309,7 @@ bb.h:                                             ; preds = %bb.e
   %.sroa.452.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !7021
   store i64 %i.l, ptr %.sroa.452.0..sroa_idx, align 8, !dbg !7021
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.611), !dbg !7018
-  call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs3roNzt6HBWW_12regex_syntax3ast3AstEBF_(ptr noalias nofree noundef align 8 dereferenceable(16) %i.c), !dbg !7012
-  br label %bb.g, !dbg !7012
+  br label %.sink.split, !dbg !7012
 
 bb.i:                                             ; preds = %bb.d
   %i.o = landingpad { ptr, i32 }

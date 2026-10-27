@@ -205,17 +205,20 @@ bb.cm:                                            ; preds = %bb.cl
   %i.sq = load float, ptr @_ZZ12gmx_make_ediiPPcE5alpha, align 4, !tbaa !27 ; 2 uses
   %i.sr = fneg float %i.sq
   %i.ss = fmul float %i.sq, %i.sr
-  store float %i.ss, ptr getelementptr inbounds nuw (i8, ptr @_ZZ12gmx_make_ediiPPcE10edi_params, i64 152), align 8, !tbaa !106
-  br label %bb.co
+  br label %.sink.split
 
 bb.cn:                                            ; preds = %bb.cl
   store float %i.so, ptr getelementptr inbounds nuw (i8, ptr @_ZZ12gmx_make_ediiPPcE10edi_params, i64 148), align 4, !tbaa !105
   %i.st = load float, ptr @_ZZ12gmx_make_ediiPPcE5alpha, align 4, !tbaa !27 ; 2 uses
   %i.su = fmul float %i.st, %i.st
-  store float %i.su, ptr getelementptr inbounds nuw (i8, ptr @_ZZ12gmx_make_ediiPPcE10edi_params, i64 152), align 8, !tbaa !106
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.cn, %bb.cm
+  %.sink = phi float [ %i.ss, %bb.cm ], [ %i.su, %bb.cn ]
+  store float %.sink, ptr getelementptr inbounds nuw (i8, ptr @_ZZ12gmx_make_ediiPPcE10edi_params, i64 152), align 8, !tbaa !106
   br label %bb.co
 
-bb.co:                                            ; preds = %bb.cm, %bb.cn, %bb.bn
+bb.co:                                            ; preds = %.sink.split, %bb.bn
   %i.sv = load i32, ptr %i.k, align 4, !tbaa !10  ; 2 uses
   store i32 %i.sv, ptr getelementptr inbounds nuw (i8, ptr @_ZZ12gmx_make_ediiPPcE10edi_params, i64 124), align 4, !tbaa !107
   %i.sw = load i32, ptr %i.la, align 8, !tbaa !108

@@ -205,7 +205,7 @@ pred_dc.exit:                                     ; preds = %.lr.ph102.i.prol.lo
 define internal fastcc void @mc(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef range(i32 0, -3) %4, i32 noundef range(i32 0, -3) %5, i32 noundef range(i32 0, -3) %6, i32 noundef range(i32 0, -3) %7, i32 %8, i32 noundef range(i32 0, 2) %9) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [4900 x i8], align 16             ; 4 uses
-  %i.b = alloca [1600 x i8], align 16             ; 24 uses
+  %i.b = alloca [1600 x i8], align 16             ; 23 uses
   %.not = icmp eq i32 %9, 0                       ; 5 uses
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -524,8 +524,7 @@ check_pos.exit134.thread.preheader:               ; preds = %.split.split
   %i.hq = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !41
   call fastcc void @chroma_mc(ptr noundef %i.hp, i32 noundef %i.hr, ptr noundef nonnull %i.b, i32 noundef 40, i32 noundef %i.cb, i32 noundef %i.cc, i32 noundef %i.by, i32 noundef %i.ca)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  br label %.split143.us
+  br label %.split143.us.sink.split
 
 check_pos.exit134.thread.us146.preheader:         ; preds = %.split.split
   %i.hs = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
@@ -575,10 +574,13 @@ check_pos.exit134.thread.us146.preheader:         ; preds = %.split.split
   %i.je = getelementptr inbounds i8, ptr %i.jd, i64 %i.iq
   %i.jf = load i32, ptr %i.im, align 4, !tbaa !41
   call fastcc void @chroma_mc(ptr noundef %i.je, i32 noundef %i.jf, ptr noundef nonnull %i.b, i32 noundef 40, i32 noundef %i.cb, i32 noundef %i.cc, i32 noundef %i.by, i32 noundef %i.ca)
+  br label %.split143.us.sink.split
+
+.split143.us.sink.split:                          ; preds = %check_pos.exit134.thread.preheader, %check_pos.exit134.thread.us146.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   br label %.split143.us
 
-.split143.us:                                     ; preds = %check_pos.exit134.thread.preheader, %check_pos.exit134.thread.us146.preheader, %.split.split.us.split.preheader, %.split.split.us.split.us.preheader, %check_pos.exit134.thread.us.1
+.split143.us:                                     ; preds = %.split143.us.sink.split, %.split.split.us.split.preheader, %.split.split.us.split.us.preheader, %check_pos.exit134.thread.us.1
   ret void
 }
 

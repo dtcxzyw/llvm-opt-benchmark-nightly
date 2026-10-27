@@ -204,7 +204,7 @@ _.exit41:                                         ; preds = %bb.ai, %bb.aj
   br label %.thread45
 
 .thread44:                                        ; preds = %bb.af, %bb.ag
-  %i.di = call ptr @xmalloc(i64 noundef 36) #15   ; 4 uses
+  %i.di = call ptr @xmalloc(i64 noundef 36) #15   ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.di, ptr noundef nonnull readonly align 4 dereferenceable(32) %4, i64 32, i1 false)
   %i.dj = load i32, ptr %i.q, align 4, !tbaa !81
   %i.dk = getelementptr inbounds nuw i8, ptr %i.di, i64 32
@@ -213,24 +213,26 @@ _.exit41:                                         ; preds = %bb.ai, %bb.aj
 
 bb.ak:                                            ; preds = %.thread44
   %i.dl = call ptr @string_list_append(ptr noundef nonnull %i.s, ptr noundef nonnull @.str.3) #15
-  %5 = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
-  store ptr %i.di, ptr %5, align 8, !tbaa !31
-  br label %select.unfold
+  br label %select.unfold.sink.split
 
 bb.al:                                            ; preds = %.thread44
   %i.dm = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 1
   %i.do = call ptr @string_list_append(ptr noundef nonnull %i.r, ptr noundef nonnull %i.dn) #15
-  %6 = getelementptr inbounds nuw i8, ptr %i.do, i64 8
-  store ptr %i.di, ptr %6, align 8, !tbaa !31
-  br label %select.unfold
+  br label %select.unfold.sink.split
 
 .thread45:                                        ; preds = %_.exit14.i, %_.exit.i, %bb.ah, %_.exit41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br label %.critedge.thread
 
-select.unfold:                                    ; preds = %bb.z, %skip_prefix_impl.exit.7.i, %bb.ak, %bb.al
+select.unfold.sink.split:                         ; preds = %bb.al, %bb.ak
+  %.sink73 = phi ptr [ %i.dl, %bb.ak ], [ %i.do, %bb.al ]
+  %5 = getelementptr inbounds nuw i8, ptr %.sink73, i64 8
+  store ptr %i.di, ptr %5, align 8, !tbaa !31
+  br label %select.unfold
+
+select.unfold:                                    ; preds = %select.unfold.sink.split, %bb.z, %skip_prefix_impl.exit.7.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   %i.dp = call i32 @strbuf_getwholeline_fd(ptr noundef nonnull %3, i32 noundef %0, i32 noundef 10) #15

@@ -203,21 +203,22 @@ bb.l:                                             ; preds = %._crit_edge137
   %i.nm = load double, ptr %i.nl, align 8, !tbaa !99
   %i.nn = tail call i32 %i.nk(ptr noundef nonnull %0, ptr noundef %i.g, double noundef %i.nm) #13
   %i.no = icmp slt i32 %i.nn, 0
-  br i1 %i.no, label %bb.m, label %bb.n
+  br i1 %i.no, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  store double 2.000000e+00, ptr %1, align 8, !tbaa !58
-  br label %bb.o
-
-bb.n:                                             ; preds = %bb.l
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 592
   %3 = load ptr, ptr %2, align 8, !tbaa !75
   %4 = tail call double @N_VWrmsNorm(ptr noundef %i.g, ptr noundef %3) #13
-  store double %4, ptr %1, align 8, !tbaa !58
+  br label %bb.n
+
+bb.n:                                             ; preds = %bb.l, %bb.m
+  %.sink = phi double [ %4, %bb.m ], [ 2.000000e+00, %bb.l ]
+  %.0107.ph = phi i32 [ 0, %bb.m ], [ 4, %bb.l ]
+  store double %.sink, ptr %1, align 8, !tbaa !58
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.k, %bb.n, %._crit_edge137, %bb.j, %._crit_edge, %bb.m, %bb.h, %bb.b
-  %.0107 = phi i32 [ -21, %bb.b ], [ -28, %._crit_edge137 ], [ -37, %bb.j ], [ 4, %bb.m ], [ -28, %._crit_edge ], [ 4, %bb.h ], [ 0, %bb.n ], [ 0, %bb.k ]
+bb.o:                                             ; preds = %bb.n, %bb.k, %._crit_edge137, %bb.j, %._crit_edge, %bb.h, %bb.b
+  %.0107 = phi i32 [ -21, %bb.b ], [ -28, %._crit_edge137 ], [ -37, %bb.j ], [ 0, %bb.k ], [ -28, %._crit_edge ], [ 4, %bb.h ], [ %.0107.ph, %bb.n ]
   ret i32 %.0107
 }
 

@@ -85,9 +85,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.critedge
   %i.f = call ptr @ps_title_errno(i32 noundef %i.e) #4
   call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 2, ptr noundef nonnull @.str.2, ptr noundef %i.f) #4
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 1, ptr %2, align 8, !tbaa !15
-  br label %bb.d
+  br label %.sink.split
 
 zend_string_alloc.exit:                           ; preds = %.critedge
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !14
@@ -107,11 +105,15 @@ zend_string_alloc.exit:                           ; preds = %.critedge
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.h
   store i8 0, ptr %i.p, align 1, !tbaa !15
   store ptr %i.k, ptr %1, align 8, !tbaa !15
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 262, ptr %3, align 8, !tbaa !15
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.c, %zend_string_alloc.exit
+  %.sink = phi i32 [ 262, %zend_string_alloc.exit ], [ 1, %bb.c ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store i32 %.sink, ptr %2, align 8, !tbaa !15
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %zend_string_alloc.exit
+bb.d:                                             ; preds = %.sink.split, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret void

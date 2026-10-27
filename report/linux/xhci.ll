@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 hcd_to_xhci.exit:                                 ; preds = %bb.a, %bb.b
   %.0.i = phi ptr [ %i.c, %bb.b ], [ %0, %bb.a ]  ; 4 uses
-  %i.d = getelementptr i8, ptr %.0.i, i64 584     ; 25 uses
+  %i.d = getelementptr i8, ptr %.0.i, i64 584     ; 24 uses
   %i.e = getelementptr i8, ptr %1, i64 3          ; 2 uses
   %.val.i = load i8, ptr %i.e, align 1
   %i.f = and i8 %.val.i, 3
@@ -395,7 +395,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not115, label %xhci_check_ep0_maxpacket.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.cf = tail call ptr @xhci_alloc_command_with_ctx(ptr noundef %i.d, i1 noundef zeroext true, i32 noundef 10240) #20 ; 12 uses
+  %i.cf = tail call ptr @xhci_alloc_command_with_ctx(ptr noundef %i.d, i1 noundef zeroext true, i32 noundef 10240) #20 ; 11 uses
   %.not116 = icmp eq ptr %i.cf, null
   br i1 %.not116, label %bb.ae, label %bb.v
 
@@ -473,8 +473,7 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %i.bu, i64 noundef %i.ct) #20
-  tail call void @xhci_free_command(ptr noundef %i.d, ptr noundef nonnull %i.cf) #20
-  br label %bb.ae
+  br label %.sink.split
 
 bb.ad:                                            ; preds = %bb.ab
   tail call void @xhci_ring_cmd_db(ptr noundef %i.d) #20
@@ -482,10 +481,13 @@ bb.ad:                                            ; preds = %bb.ab
   %i.dl = getelementptr i8, ptr %i.cf, i64 24
   %i.dm = load ptr, ptr %i.dl, align 8
   tail call void @wait_for_completion(ptr noundef %i.dm) #20
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ad, %bb.ac
   tail call void @xhci_free_command(ptr noundef %i.d, ptr noundef nonnull %i.cf) #20
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.u, %bb.ad, %bb.ac, %bb.aa, %bb.y, %bb.w
+bb.ae:                                            ; preds = %.sink.split, %bb.u, %bb.aa, %bb.y, %bb.w
   tail call void @xhci_free_command(ptr noundef %i.d, ptr noundef nonnull %i.ce) #20
   %i.dn = tail call i64 @_raw_spin_lock_irqsave(ptr noundef %i.bu) #20
   %i.do = load i32, ptr %i.bw, align 4            ; 2 uses

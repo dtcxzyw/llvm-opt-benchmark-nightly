@@ -204,17 +204,19 @@ bb.o:                                             ; preds = %bb.n
   %i.at = tail call ptr (ptr, ptr, ...) @sdscatfmt(ptr noundef %i.ar, ptr noundef nonnull @.str.124, ptr noundef %i.as) #17
   %i.au = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 16), align 8, !tbaa !35
   %i.av = tail call ptr @listAddNodeTail(ptr noundef %i.au, ptr noundef %i.at) #17 ; 0 uses
-  tail call void @lua_settop(ptr noundef %0, i32 noundef -2) #17
-  br label %bb.q
+  br label %.sink.split
 
 bb.p:                                             ; preds = %bb.n
   %i.aw = tail call ptr @sdsnew(ptr noundef nonnull @.str.125) #17
   %i.ax = tail call ptr @ldbCatStackValueRec(ptr noundef %i.aw, ptr noundef %0, i32 noundef -1, i32 noundef 0)
   tail call void @ldbLogWithMaxLen(ptr noundef %i.ax)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.o, %bb.p
   tail call void @lua_settop(ptr noundef %0, i32 noundef -2) #17
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %bb.o, %bb.m
+bb.q:                                             ; preds = %.sink.split, %bb.m
   ret void
 }
 

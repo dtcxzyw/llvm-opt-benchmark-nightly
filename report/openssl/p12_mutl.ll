@@ -106,7 +106,7 @@ bb.a:
   %i.b = tail call ptr @PBMAC1PARAM_it() #4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !25
-  %i.e = tail call ptr @ASN1_TYPE_unpack_sequence(ptr noundef %i.b, ptr noundef %i.d) #4 ; 5 uses
+  %i.e = tail call ptr @ASN1_TYPE_unpack_sequence(ptr noundef %i.b, ptr noundef %i.d) #4 ; 4 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -128,8 +128,7 @@ bb.d:                                             ; preds = %bb.c
   call void @ERR_new() #4
   call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 99, ptr noundef nonnull @__func__.PBMAC1_get1_pbkdf2_param) #4
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 35, i32 noundef 524550, ptr noundef null) #4
-  call void @PBMAC1PARAM_free(ptr noundef nonnull %i.e) #4
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.j = call ptr @PBKDF2PARAM_it() #4
@@ -137,11 +136,15 @@ bb.e:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !25
   %i.n = call ptr @ASN1_TYPE_unpack_sequence(ptr noundef %i.j, ptr noundef %i.m) #4
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.d, %bb.e
+  %.0.ph = phi ptr [ %i.n, %bb.e ], [ null, %bb.d ]
   call void @PBMAC1PARAM_free(ptr noundef nonnull %i.e) #4
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
-  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.d ], [ %i.n, %bb.e ]
+bb.f:                                             ; preds = %.sink.split, %bb.b
+  %.0 = phi ptr [ null, %bb.b ], [ %.0.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret ptr %.0
 }

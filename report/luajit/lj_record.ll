@@ -205,7 +205,7 @@ define internal fastcc range(i32 0, 3) i32 @rec_itern(ptr noundef %0, i32 nounde
 bb.a:
   %3 = alloca %struct.RecordIndex, align 8        ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !56
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3008
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !70
@@ -391,19 +391,23 @@ bb.m:                                             ; preds = %bb.l
   %i.dm = zext nneg i32 %i.dl to i64
   %i.dn = getelementptr [4 x i8], ptr %i.di, i64 %i.dm
   %i.do = getelementptr i8, ptr %i.dn, i64 -131064
-  store ptr %i.do, ptr %i.a, align 8, !tbaa !56
-  br label %bb.o
+  br label %.sink.split
 
 bb.n:                                             ; preds = %bb.l
   %i.dp = add i32 %1, -3
   store i32 %i.dp, ptr %i.ad, align 4, !tbaa !36
   %i.dq = load ptr, ptr %i.a, align 8, !tbaa !56
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
-  store ptr %i.dr, ptr %i.a, align 8, !tbaa !56
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.m, %bb.n
+  %.sink = phi ptr [ %i.dr, %bb.n ], [ %i.do, %bb.m ]
+  %.1.ph = phi i32 [ 0, %bb.n ], [ 2, %bb.m ]
+  store ptr %.sink, ptr %i.a, align 8, !tbaa !56
   br label %bb.o
 
-bb.o:                                             ; preds = %.critedge, %bb.n, %bb.m
-  %.1 = phi i32 [ 0, %bb.n ], [ 2, %bb.m ], [ 2, %.critedge ]
+bb.o:                                             ; preds = %.sink.split, %.critedge
+  %.1 = phi i32 [ 2, %.critedge ], [ %.1.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   ret i32 %.1
 }

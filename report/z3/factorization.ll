@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %class.svector, align 8             ; 10 uses
   %5 = alloca %class.svector, align 8             ; 10 uses
   %i.a = alloca i32, align 4                      ; 6 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.b = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   store ptr null, ptr %4, align 8, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
@@ -369,7 +369,7 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit32.thread:         ; preds = %bb.l, %_ZNK6vectorI
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !39
   %i.bh = load ptr, ptr %i.bg, align 8
   %i.bi = invoke noundef zeroext i1 %i.bh(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
-          to label %bb.n unwind label %bb.o
+          to label %bb.n unwind label %bb.o       ; 2 uses
 
 bb.n:                                             ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit32.thread
   br i1 %i.bi, label %.thread38, label %bb.p
@@ -385,18 +385,20 @@ bb.o:                                             ; preds = %_ZNK6vectorIjLb0EjE
   store i32 %i.bk, ptr %2, align 4, !tbaa !36
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 1, ptr %i.bl, align 4, !tbaa !37
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  br label %bb.q
+  br label %.sink.split
 
 bb.p:                                             ; preds = %bb.n
   %i.bm = load i32, ptr %i.w, align 4, !tbaa !32
   %i.bn = add i32 %i.bm, 1
   store i32 %i.bn, ptr %i.w, align 4, !tbaa !32
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.p, %.thread38
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.m, %.thread38, %bb.p, %bb.k, %._crit_edge
-  %.3 = phi i1 [ false, %._crit_edge ], [ false, %bb.k ], [ false, %bb.p ], [ true, %.thread38 ], [ true, %bb.m ]
+bb.q:                                             ; preds = %.sink.split, %bb.m, %bb.k, %._crit_edge
+  %.3 = phi i1 [ false, %._crit_edge ], [ false, %bb.k ], [ true, %bb.m ], [ %i.bi, %.sink.split ]
   %i.bo = load ptr, ptr %5, align 8, !tbaa !26    ; 2 uses
   %.not.i.i33 = icmp eq ptr %i.bo, null
   br i1 %.not.i.i33, label %_ZN6vectorIjLb0EjED2Ev.exit, label %bb.r

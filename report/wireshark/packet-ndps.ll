@@ -202,14 +202,12 @@ bb.d:                                             ; preds = %bb.c
 .split101:                                        ; preds = %bb.d
   %i.x = load i32, ptr @hf_ndps_auth_null, align 4
   %i.y = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.x, ptr noundef %0, i32 noundef 16, i32 noundef 8, i32 noundef 0) ; 0 uses
-  tail call fastcc void @dissect_ndps_reply(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 24)
-  br label %.thread
+  br label %.thread.sink.split
 
 .split:                                           ; preds = %bb.d
   %i.z = load i32, ptr @hf_ndps_rpc_rej_stat, align 4
   %i.aa = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.z, ptr noundef %0, i32 noundef 20, i32 noundef 4, i32 noundef 0) ; 0 uses
-  tail call fastcc void @dissect_ndps_reply(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 20)
-  br label %.thread
+  br label %.thread.sink.split
 
 bb.e:                                             ; preds = %bb.c
   tail call void @col_set_str(ptr noundef %i.s, i32 noundef 25, ptr noundef @.str.1786)
@@ -288,7 +286,12 @@ bb.o:                                             ; preds = %bb.n
   tail call fastcc void @dissect_ndps_request(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %i.ad, i32 noundef %i.al)
   br label %.thread
 
-.thread:                                          ; preds = %bb.f, %bb.m, %bb.o, %bb.n, %bb.e, %.split, %.split101, %bb.b
+.thread.sink.split:                               ; preds = %.split, %.split101
+  %.sink = phi i32 [ 24, %.split101 ], [ 20, %.split ]
+  tail call fastcc void @dissect_ndps_reply(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %.sink)
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.sink.split, %bb.f, %bb.m, %bb.o, %bb.n, %bb.e, %bb.b
   ret void
 }
 

@@ -202,7 +202,7 @@ bb.a:
   %i.c = alloca [64 x i8], align 8                ; 4 uses
   %i.d = alloca [48 x i8], align 8                ; 7 uses
   %i.e = alloca [64 x i8], align 8                ; 7 uses
-  %i.f = alloca [64 x i8], align 8                ; 10 uses
+  %i.f = alloca [64 x i8], align 8                ; 9 uses
   %i.g = alloca [416 x i8], align 8               ; 4 uses
   %i.h = alloca [48 x i8], align 8                ; 6 uses
   %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 2 uses
@@ -298,8 +298,7 @@ bb.l:                                             ; preds = %bb.k
   store ptr %i.u, ptr %i.v, align 8
   store i64 -1, ptr %0, align 8
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalEBH_(ptr noalias nofree noundef align 8 dereferenceable(64) %i.f)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  br label %bb.n
+  br label %.sink.split
 
 bb.m:                                             ; preds = %bb.k
   %.sroa.547.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -311,10 +310,13 @@ bb.m:                                             ; preds = %bb.k
   store ptr %i.r, ptr %.sroa.433.0..sroa_idx, align 8
   %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.u, ptr %.sroa.534.0..sroa_idx, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.m, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.e, %bb.l, %bb.m
+bb.n:                                             ; preds = %.sink.split, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   ret void
 

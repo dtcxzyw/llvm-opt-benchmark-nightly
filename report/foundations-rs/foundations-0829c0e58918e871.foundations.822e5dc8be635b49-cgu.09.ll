@@ -205,7 +205,7 @@ bb.a:
   %i.h = alloca [16 x i8], align 8                ; 5 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
   %i.j = alloca [16 x i8], align 8                ; 5 uses
-  %i.k = alloca [8 x i8], align 8                 ; 6 uses
+  %i.k = alloca [8 x i8], align 8                 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 56, !dbg !1058
   %i.m = load i8, ptr %i.l, align 4, !dbg !1058, !noundef !396
   %i.n = and i8 %i.m, 1, !dbg !1058
@@ -451,18 +451,20 @@ _RNvMNtNtNtCsb6T6P0NKlCh_2h25proto7streams7streamsINtB2_7StreamsINtNtNtCsaCYLhea
 bb.ae:                                            ; preds = %_RNvMNtNtNtCsb6T6P0NKlCh_2h25proto7streams7streamsINtB2_7StreamsINtNtNtCsaCYLheajBls_5hyper5proto2h27SendBufNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesENtNtB8_6client4PeerE20apply_local_settingsCsbaWXNhtWAp9_11foundations.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %i.g, i64 40, i1 false), !dbg !1141
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !1142
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !dbg !1143
-  br label %bb.ag, !dbg !1144
+  br label %.sink.split, !dbg !1143
 
 bb.af:                                            ; preds = %_RNvMNtNtNtCsb6T6P0NKlCh_2h25proto7streams7streamsINtB2_7StreamsINtNtNtCsaCYLheajBls_5hyper5proto2h27SendBufNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesENtNtB8_6client4PeerE20apply_local_settingsCsbaWXNhtWAp9_11foundations.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !1142
-  store i32 2, ptr %1, align 4, !dbg !1145
-  store i8 -1, ptr %0, align 8, !dbg !1146
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !dbg !1143
+  store i32 2, ptr %1, align 4, !dbg !1144
+  store i8 -1, ptr %0, align 8, !dbg !1145
+  br label %.sink.split, !dbg !1146
+
+.sink.split:                                      ; preds = %bb.ae, %bb.af
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !dbg !1146
   br label %bb.ag, !dbg !1143
 
-bb.ag:                                            ; preds = %bb.e, %bb.af, %bb.al, %bb.ae
-  ret void, !dbg !1144
+bb.ag:                                            ; preds = %.sink.split, %bb.e, %bb.al
+  ret void, !dbg !1143
 
 bb.ah:                                            ; preds = %bb.c
   %i.cj = load atomic i64, ptr @_RNvNtCshtG1HG2JiYb_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !dbg !1147
@@ -865,10 +867,10 @@ begin_hunk_1_@llvm.umin.i64
 !1140 = !DILocation(line: 2175, column: 9, scope: !962, inlinedAt: !1031)
 !1141 = !DILocation(line: 2177, column: 17, scope: !962, inlinedAt: !1031)
 !1142 = !DILocation(line: 70, column: 56, scope: !903)
-!1143 = !DILocation(line: 73, column: 17, scope: !896)
-!1144 = !DILocation(line: 88, column: 6, scope: !896)
-!1145 = !DILocation(line: 71, column: 21, scope: !903)
-!1146 = !DILocation(line: 72, column: 21, scope: !903)
+!1143 = !DILocation(line: 88, column: 6, scope: !896)
+!1144 = !DILocation(line: 71, column: 21, scope: !903)
+!1145 = !DILocation(line: 72, column: 21, scope: !903)
+!1146 = !DILocation(line: 73, column: 17, scope: !896)
 !1147 = !DILocation(line: 3998, column: 24, scope: !2, inlinedAt: !963)
 !1148 = !DILocation(line: 705, column: 9, scope: !904, inlinedAt: !1035)
 !1149 = !DILocation(line: 94, column: 9, scope: !1033)

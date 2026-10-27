@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.sink.split, %_ZNKS
 
 bb.x:                                             ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmED2Ev.exit
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
-  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !70 ; 7 uses
+  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !70 ; 6 uses
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !74
   %.not.i = icmp eq ptr %i.cn, %i.cp
@@ -233,22 +233,25 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.z, %bb.y
 bb.aa:                                            ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.cv = load i64, ptr %i.cn, align 8, !tbaa !178
   %i.cw = or i64 %i.cv, %i.cu
-  store i64 %i.cw, ptr %i.cn, align 8, !tbaa !178
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.ab:                                            ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.cx = xor i64 %i.cu, -1
   %i.cy = load i64, ptr %i.cn, align 8, !tbaa !178
   %i.cz = and i64 %i.cy, %i.cx
-  store i64 %i.cz, ptr %i.cn, align 8, !tbaa !178
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.ac:                                            ; preds = %bb.x
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 192
   call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.da, ptr %i.cn, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %3)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.aa, %bb.ab, %bb.ac
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.ab, %bb.aa
+  %.sink.i = phi i64 [ %i.cw, %bb.aa ], [ %i.cz, %bb.ab ]
+  store i64 %.sink.i, ptr %i.cn, align 8, !tbaa !178
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.ac, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
   %i.db = load ptr, ptr %i.c, align 8, !tbaa !159 ; 3 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !309
@@ -651,7 +654,7 @@ bb.w:                                             ; preds = %.sink.split, %_ZNKS
 
 bb.x:                                             ; preds = %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmED2Ev.exit
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
-  %i.co = load ptr, ptr %i.cn, align 8, !tbaa !70 ; 7 uses
+  %i.co = load ptr, ptr %i.cn, align 8, !tbaa !70 ; 6 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !74
   %.not.i = icmp eq ptr %i.co, %i.cq
@@ -679,22 +682,25 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.z, %bb.y
 bb.aa:                                            ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.cw = load i64, ptr %i.co, align 8, !tbaa !178
   %i.cx = or i64 %i.cw, %i.cv
-  store i64 %i.cx, ptr %i.co, align 8, !tbaa !178
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.ab:                                            ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.cy = xor i64 %i.cv, -1
   %i.cz = load i64, ptr %i.co, align 8, !tbaa !178
   %i.da = and i64 %i.cz, %i.cy
-  store i64 %i.da, ptr %i.co, align 8, !tbaa !178
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.ac:                                            ; preds = %bb.x
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 232
   call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %i.db, ptr %i.co, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %3)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.aa, %bb.ab, %bb.ac
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.ab, %bb.aa
+  %.sink.i = phi i64 [ %i.cx, %bb.aa ], [ %i.da, %bb.ab ]
+  store i64 %.sink.i, ptr %i.co, align 8, !tbaa !178
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.ac, %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
   %i.dc = load ptr, ptr %i.d, align 8, !tbaa !159 ; 3 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !309

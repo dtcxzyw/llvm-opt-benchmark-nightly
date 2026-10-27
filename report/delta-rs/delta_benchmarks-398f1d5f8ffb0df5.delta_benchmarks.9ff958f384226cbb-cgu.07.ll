@@ -204,7 +204,7 @@ bb.a:
   %.sroa.4.i.i.i.i.i = alloca [104 x i8], align 8 ; 5 uses
   %i.a = alloca [64 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
-  %i.c = alloca [112 x i8], align 16              ; 9 uses
+  %i.c = alloca [112 x i8], align 16              ; 8 uses
   %i.d = alloca [112 x i8], align 16              ; 9 uses
   %i.e = alloca [112 x i8], align 16              ; 7 uses
   %i.f = alloca [328 x i8], align 8               ; 5 uses
@@ -310,13 +310,11 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1910
   call void @_RINvMs_NtCsjhHCjzi9uUI_17datafusion_common6columnNtB5_6Column3newNtNtCs6Po7BT7Nknu_5alloc6string6StringRB11_ECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %.sroa.67.0..sroa_idx8.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.an), !noalias !1910
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1910
-  store i64 5, ptr %i.c, align 16, !noalias !1910
-  br label %_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.i.i.i.i
+  br label %_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.sink.split.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
   call void @_RNvXs4_NtCsjhHCjzi9uUI_17datafusion_common6columnNtB5_6ColumnINtNtCsbvkFyIu7lgC_4core7convert4FromTINtNtB12_6option6OptionRNtNtB7_15table_reference14TableReferenceERINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEE4from(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %.sroa.67.0..sroa_idx8.i.i.i.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(56) %..i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ak), !noalias !1912
-  store i64 5, ptr %i.c, align 16, !noalias !1910
-  br label %_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.i.i.i.i
+  br label %_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.sink.split.i.i.i.i
 
 bb.g:                                             ; preds = %bb.c
   %i.as = load ptr, ptr %i.ap, align 8, !noalias !1910, !nonnull !21, !noundef !21
@@ -411,7 +409,11 @@ bb.q:                                             ; preds = %bb.c
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4lawaffTVVK_9sqlparser3ast4ExprECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(328) %i.f) #26
           to label %common.resume.i.i.i.i unwind label %bb.p, !noalias !1910
 
-_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.i.i.i.i: ; preds = %bb.n, %bb.f, %bb.e
+_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.sink.split.i.i.i.i: ; preds = %bb.f, %bb.e
+  store i64 5, ptr %i.c, align 16, !noalias !1910
+  br label %_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.i.i.i.i
+
+_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.i.i.i.i: ; preds = %_RNCNvMNtCsjHlmExTLNuX_14datafusion_sql9statementINtNtB6_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE14update_to_plans_0CsdJxlLsGgtXr_16delta_benchmarks.exit.sink.split.i.i.i.i, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1910
   call void @_RINvMsC_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB6_4Expr5aliasRNtNtCs6Po7BT7Nknu_5alloc6string6StringECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull sret([112 x i8]) align 16 captures(none) dereferenceable(112) %i.i, ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(112) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.an), !noalias !1913
   %.sroa.0.0.copyload.pre.i.i.i.i = load i64, ptr %i.i, align 16, !noalias !1902 ; 3 uses

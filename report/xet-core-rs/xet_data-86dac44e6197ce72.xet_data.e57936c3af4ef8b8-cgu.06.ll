@@ -202,17 +202,20 @@ bb.s:                                             ; preds = %bb.r
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ax, ptr noundef nonnull align 8 dereferenceable(32) %i.e, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  store i64 1, ptr %0, align 8
-  br label %_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit
+  br label %_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit.sink.split
 
 bb.t:                                             ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.sroa.32.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr null, ptr %.sroa.32.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
+  br label %_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit.sink.split
+
+_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit.sink.split: ; preds = %bb.s, %bb.t
+  %.sink = phi i64 [ 0, %bb.t ], [ 1, %bb.s ]
+  store i64 %.sink, ptr %0, align 8
   br label %_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit
 
-_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit: ; preds = %bb.t, %bb.k, %bb.p, %bb.s, %bb.i
+_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit: ; preds = %_RNvMNtNtNtCsjHtSR7YjKD4_8xet_data19file_reconstruction11data_writer25unordered_download_streamNtB2_23UnorderedDownloadStream12process_term.exit.sink.split, %bb.k, %bb.p, %bb.i
   ret void
 }
 

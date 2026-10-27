@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ld = and i32 %.0282.val306, 4
   %.not13 = icmp eq i32 %i.ld, 0
   %.str.78..str.77 = select i1 %.not13, ptr @.str.78, ptr @.str.77
-  %i.le = call ptr (ptr, ...) @aml_device(ptr noundef nonnull %.str.78..str.77, i32 noundef %i.ky) #11 ; 13 uses
+  %i.le = call ptr (ptr, ...) @aml_device(ptr noundef nonnull %.str.78..str.77, i32 noundef %i.ky) #11 ; 12 uses
   %i.lf = and i64 %i.lb, 4294967295
   %i.lg = call ptr @aml_int(i64 noundef %i.lf) #11
   %i.lh = call ptr @aml_name_decl(ptr noundef nonnull @.str.58, ptr noundef %i.lg) #11
@@ -244,16 +244,19 @@ bb.af:                                            ; preds = %bb.ae
   %i.lw = call ptr @aml_name_decl(ptr noundef nonnull @.str.60, ptr noundef %i.lv) #11
   call void @aml_append(ptr noundef %i.le, ptr noundef %i.lw) #11
   %i.lx = call ptr @build_pci_host_bridge_osc_method(i1 noundef zeroext true) #11
-  call void @aml_append(ptr noundef %i.le, ptr noundef %i.lx) #11
-  br label %bb.ah
+  br label %.sink.split
 
 bb.ag:                                            ; preds = %bb.ae
   %i.ly = call ptr @aml_eisaid(ptr noundef nonnull @.str.57) #11
   %i.lz = call ptr @aml_name_decl(ptr noundef nonnull @.str.56, ptr noundef %i.ly) #11
-  call void @aml_append(ptr noundef %i.le, ptr noundef %i.lz) #11
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ag, %bb.af
+  %.sink = phi ptr [ %i.lx, %bb.af ], [ %i.lz, %bb.ag ]
+  call void @aml_append(ptr noundef %i.le, ptr noundef %.sink) #11
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.af, %bb.ag, %bb.ad
+bb.ah:                                            ; preds = %.sink.split, %bb.ad
   %i.ma = and i32 %i.kv, 255                      ; 2 uses
   %.not302 = icmp eq i32 %i.ma, 128
   br i1 %.not302, label %bb.aj, label %bb.ai

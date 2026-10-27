@@ -204,7 +204,7 @@ bb.a:
   store float %i.d, ptr %i.b, align 4, !tbaa !90
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 7 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 6 uses
   %i.h = load float, ptr %i.g, align 4, !tbaa !141 ; 4 uses
   %i.i = fcmp nsz olt float %i.h, 0.000000e+00    ; 2 uses
   %i.j = fneg nsz float %i.h
@@ -380,8 +380,7 @@ bb.n:                                             ; preds = %bb.m
   %i.da = load float, ptr %i.g, align 4, !tbaa !470
   %i.db = fneg nsz float %i.cb
   %i.dc = fmul nsz float %i.da, %i.db
-  store float %i.dc, ptr %i.g, align 4, !tbaa !470
-  br label %bb.q
+  br label %.sink.split
 
 bb.o:                                             ; preds = %bb.m
   %i.dd = load float, ptr %i.g, align 4, !tbaa !141
@@ -393,8 +392,7 @@ bb.o:                                             ; preds = %bb.m
   %i.dj = fneg nsz float %i.dd
   %i.dk = fmul nsz float %i.cb, %i.dj
   store <2 x float> %i.di, ptr %i.e, align 4, !tbaa !53
-  store float %i.dk, ptr %i.g, align 4, !tbaa !53
-  br label %bb.q
+  br label %.sink.split
 
 bb.p:                                             ; preds = %bb.c, %bb.d
   %i.dl = load float, ptr %6, align 8, !tbaa !192
@@ -409,7 +407,12 @@ bb.p:                                             ; preds = %bb.c, %bb.d
   store float %i.dr, ptr %i.g, align 4, !tbaa !53
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %bb.h, %bb.l, %bb.o, %bb.n, %bb.j, %bb.f
+.sink.split:                                      ; preds = %bb.o, %bb.n
+  %.sink = phi float [ %i.dc, %bb.n ], [ %i.dk, %bb.o ]
+  store float %.sink, ptr %i.g, align 4, !tbaa !53
+  br label %bb.q
+
+bb.q:                                             ; preds = %.sink.split, %bb.p, %bb.h, %bb.l, %bb.j, %bb.f
   %i.ds = load float, ptr %5, align 8, !tbaa !192
   %i.dt = fdiv nsz float %i.ds, 1.000000e+01
   %i.du = getelementptr inbounds nuw i8, ptr %5, i64 4

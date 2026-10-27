@@ -202,8 +202,7 @@ bb.j:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.425.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx7.i, i64 24, i1 false), !noalias !499
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !505
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !505
-  store i64 %i.p, ptr %0, align 8, !alias.scope !498
-  br label %_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit
+  br label %_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit.sink.split
 
 bb.k:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !505
@@ -212,10 +211,14 @@ bb.k:                                             ; preds = %bb.g
   %i.r = load i32, ptr %i.q, align 8, !alias.scope !499, !noundef !6
   %i.s = add i32 %i.r, 1
   store i32 %i.s, ptr %i.q, align 8, !alias.scope !499
-  store i64 -1, ptr %0, align 8, !alias.scope !498
+  br label %_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit.sink.split
+
+_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit.sink.split: ; preds = %bb.j, %bb.k
+  %.sink = phi i64 [ -1, %bb.k ], [ %i.p, %bb.j ]
+  store i64 %.sink, ptr %0, align 8, !alias.scope !498
   br label %_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit
 
-_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.e, %bb.h, %bb.j, %bb.k
+_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit: ; preds = %_RINvMs3_NtCs8jn5zD2RXga_10serde_cbor3serINtB6_16StructSerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE21serialize_field_innerbECsl8OoimOLbh_6qdrant.exit.sink.split, %bb.e, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   ret void
 }

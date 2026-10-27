@@ -204,7 +204,7 @@ leap_year_p.exit115:                              ; preds = %bb.z
   %.1.i113163 = phi ptr [ %i.cl, %leap_year_p.exit115 ], [ @leap_year_days_in_month, %bb.z ], [ @common_year_days_in_month, %bb.y ]
   %i.cm = phi i32 [ %spec.select175, %leap_year_p.exit115 ], [ 365, %bb.z ], [ 364, %bb.y ]
   %i.cn = getelementptr i8, ptr %1, i64 28        ; 2 uses
-  %i.co = load i32, ptr %i.cn, align 4, !tbaa !70 ; 3 uses
+  %i.co = load i32, ptr %i.cn, align 4, !tbaa !70 ; 2 uses
   %i.cp = icmp eq i32 %i.co, %i.cm
   br i1 %i.cp, label %bb.aa, label %bb.ab
 
@@ -218,7 +218,7 @@ bb.aa:                                            ; preds = %.sink.split176
   br label %bb.ae
 
 bb.ab:                                            ; preds = %.sink.split176
-  %i.ct = getelementptr i8, ptr %1, i64 12        ; 3 uses
+  %i.ct = getelementptr i8, ptr %1, i64 12        ; 2 uses
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !65 ; 2 uses
   %i.cv = getelementptr i8, ptr %1, i64 16        ; 2 uses
   %i.cw = load i32, ptr %i.cv, align 8, !tbaa !64 ; 2 uses
@@ -227,23 +227,25 @@ bb.ab:                                            ; preds = %.sink.split176
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !51
   %i.da = sext i8 %i.cz to i32
   %i.db = icmp eq i32 %i.cu, %i.da
-  br i1 %i.db, label %bb.ac, label %bb.ad
+  br i1 %i.db, label %bb.ac, label %2
 
 bb.ac:                                            ; preds = %bb.ab
   %i.dc = add i32 %i.cw, 1
   store i32 %i.dc, ptr %i.cv, align 8, !tbaa !64
-  store i32 1, ptr %i.ct, align 4, !tbaa !65
-  %2 = add i32 %i.co, 1
-  br label %bb.ae
+  br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ab
+2:                                                ; preds = %bb.ab
   %3 = add i32 %i.cu, 1
-  store i32 %3, ptr %i.ct, align 4, !tbaa !65
+  br label %bb.ad
+
+bb.ad:                                            ; preds = %2, %bb.ac
+  %.sink188 = phi i32 [ 1, %bb.ac ], [ %3, %2 ]
+  store i32 %.sink188, ptr %i.ct, align 4, !tbaa !65
   %i.dd = add i32 %i.co, 1
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ac, %bb.ad, %bb.aa
-  %.sink180 = phi i32 [ %2, %bb.ac ], [ %i.dd, %bb.ad ], [ 0, %bb.aa ]
+bb.ae:                                            ; preds = %bb.ad, %bb.aa
+  %.sink180 = phi i32 [ 0, %bb.aa ], [ %i.dd, %bb.ad ]
   store i32 %.sink180, ptr %i.cn, align 4, !tbaa !70
   br label %.thread119.sink.split
 

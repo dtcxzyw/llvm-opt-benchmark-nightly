@@ -204,8 +204,7 @@ bb.wz:                                            ; preds = %bb.wn
 
 bb.xa:                                            ; preds = %bb.wz
   %i.exx = tail call i32 @w2c_hermes_hermes0x3A0x3Airgen0x3A0x3AESTreeIRGen0x3A0x3AgenExpression0x28hermes0x3A0x3AESTree0x3A0x3ANode0x2A0x2C0x20hermes0x3A0x3AIdentifier0x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %.0.copyload.i15751, i32 noundef 0)
-  %4 = tail call i32 @w2c_hermes_hermes0x3A0x3Airgen0x3A0x3AESTreeIRGen0x3A0x3AgenYieldOrAwaitExpr0x28hermes0x3A0x3AValue0x2A0x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %i.exx)
-  br label %.loopexit15791
+  br label %.loopexit15791.sink.split
 
 bb.xb:                                            ; preds = %bb.wz
   %.val13335 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -214,8 +213,7 @@ bb.xb:                                            ; preds = %bb.wz
   %.0.copyload.i15752 = load i32, ptr %i.exz, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i15752) #7, !srcloc !19
   %i.eya = add i32 %.0.copyload.i15752, 268
-  %5 = tail call i32 @w2c_hermes_hermes0x3A0x3Airgen0x3A0x3AESTreeIRGen0x3A0x3AgenYieldOrAwaitExpr0x28hermes0x3A0x3AValue0x2A0x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %i.eya)
-  br label %.loopexit15791
+  br label %.loopexit15791.sink.split
 
 bb.xc:                                            ; preds = %bb.wm
   %.not13248 = icmp eq i32 %.0.copyload.i14845, 45
@@ -280,8 +278,13 @@ bb.xe:                                            ; preds = %bb.xc
   %i.eyz = add i32 %.0.copyload.i15758, 268
   br label %.loopexit15791
 
-.loopexit15791:                                   ; preds = %.preheader15790, %bb.nn, %bb.no, %bb.nm, %bb.gv, %bb.hg, %bb.gf, %bb.gl, %bb.fe, %bb.ff, %bb.fi, %bb.fh, %bb.be, %bb.bf, %bb.ru, %bb.ox, %bb.xa, %bb.xb, %bb.oy, %bb.xe, %bb.xd, %bb.wy, %bb.wl, %bb.sh, %bb.rs, %bb.rf, %bb.qu, %bb.qj, %bb.os, %bb.or, %bb.oo, %bb.mt, %.loopexit15770, %bb.hm, %bb.hk, %bb.hi, %bb.gn, %bb.az, %bb.ax, %bb.av, %bb.f, %bb.d, %bb.b
-  %.21 = phi i32 [ %i.s, %bb.d ], [ %i.cbo, %bb.or ], [ %.0.copyload.i15376, %bb.os ], [ %i.eyz, %bb.xe ], [ %i.eye, %bb.xd ], [ %i.exu, %bb.wy ], [ %4, %bb.xa ], [ %5, %bb.xb ], [ %i.egf, %bb.wl ], [ %.2212612, %bb.sh ], [ %.11, %bb.ox ], [ %i.dcd, %bb.rs ], [ %i.cyf, %bb.rf ], [ %.12, %bb.qu ], [ %i.cnq, %bb.qj ], [ %i.ccn, %bb.oy ], [ %i.n, %bb.b ], [ %.10, %bb.oo ], [ %i.amh, %bb.gv ], [ %i.bqp, %bb.mt ], [ %i.bon, %.loopexit15770 ], [ %i.aqk, %bb.hm ], [ %.0.copyload.i15147, %bb.hk ], [ %.0.copyload.i15146, %bb.hi ], [ %.2, %bb.gf ], [ %i.ake, %bb.gn ], [ %.612564, %bb.fi ], [ %.412622, %bb.be ], [ %.1912609, %bb.nn ], [ %i.nb, %bb.az ], [ %i.mw, %bb.ax ], [ %i.mq, %bb.av ], [ %i.at, %bb.f ], [ %i.dcg, %bb.ru ], [ %.412622, %bb.bf ], [ %i.abg, %bb.fe ], [ %i.abn, %bb.ff ], [ %.612564, %bb.fh ], [ %i.akd, %bb.gl ], [ %i.apr, %bb.hg ], [ %i.buz, %bb.no ], [ %.1912609, %bb.nm ], [ %i.dck, %.preheader15790 ]
+.loopexit15791.sink.split:                        ; preds = %bb.xa, %bb.xb
+  %.sink16060 = phi i32 [ %i.eya, %bb.xb ], [ %i.exx, %bb.xa ]
+  %4 = tail call i32 @w2c_hermes_hermes0x3A0x3Airgen0x3A0x3AESTreeIRGen0x3A0x3AgenYieldOrAwaitExpr0x28hermes0x3A0x3AValue0x2A0x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %.sink16060)
+  br label %.loopexit15791
+
+.loopexit15791:                                   ; preds = %.preheader15790, %.loopexit15791.sink.split, %bb.nn, %bb.no, %bb.nm, %bb.gv, %bb.hg, %bb.gf, %bb.gl, %bb.fe, %bb.ff, %bb.fi, %bb.fh, %bb.be, %bb.bf, %bb.ru, %bb.ox, %bb.oy, %bb.xe, %bb.xd, %bb.wy, %bb.wl, %bb.sh, %bb.rs, %bb.rf, %bb.qu, %bb.qj, %bb.os, %bb.or, %bb.oo, %bb.mt, %.loopexit15770, %bb.hm, %bb.hk, %bb.hi, %bb.gn, %bb.az, %bb.ax, %bb.av, %bb.f, %bb.d, %bb.b
+  %.21 = phi i32 [ %i.s, %bb.d ], [ %i.cbo, %bb.or ], [ %.0.copyload.i15376, %bb.os ], [ %i.eyz, %bb.xe ], [ %i.eye, %bb.xd ], [ %i.exu, %bb.wy ], [ %.1912609, %bb.nm ], [ %4, %.loopexit15791.sink.split ], [ %i.egf, %bb.wl ], [ %.2212612, %bb.sh ], [ %.11, %bb.ox ], [ %i.dcd, %bb.rs ], [ %i.cyf, %bb.rf ], [ %.12, %bb.qu ], [ %i.cnq, %bb.qj ], [ %i.ccn, %bb.oy ], [ %i.n, %bb.b ], [ %.10, %bb.oo ], [ %i.amh, %bb.gv ], [ %i.bqp, %bb.mt ], [ %i.bon, %.loopexit15770 ], [ %i.aqk, %bb.hm ], [ %.0.copyload.i15147, %bb.hk ], [ %.0.copyload.i15146, %bb.hi ], [ %.2, %bb.gf ], [ %i.ake, %bb.gn ], [ %.612564, %bb.fi ], [ %.412622, %bb.be ], [ %.1912609, %bb.nn ], [ %i.nb, %bb.az ], [ %i.mw, %bb.ax ], [ %i.mq, %bb.av ], [ %i.at, %bb.f ], [ %i.dcg, %bb.ru ], [ %.412622, %bb.bf ], [ %i.abg, %bb.fe ], [ %i.abn, %bb.ff ], [ %.612564, %bb.fh ], [ %i.akd, %bb.gl ], [ %i.apr, %bb.hg ], [ %i.buz, %bb.no ], [ %i.dck, %.preheader15790 ]
   %.val14015 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.eza = getelementptr inbounds nuw i8, ptr %.val14015, i64 %i.f
   store i32 %.0.copyload.i, ptr %i.eza, align 1

@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %bb.br
   br i1 %.not85.i, label %memieq.exit154.i, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.ks = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
+  %i.ks = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 4 uses
   %i.kt = load i32, ptr %i.ks, align 8, !tbaa !15
   %i.ku = and i32 %i.kt, 131072
   %.not86.i = icmp eq i32 %i.ku, 0
@@ -228,15 +228,13 @@ bb.bv:                                            ; preds = %bb.bu
   store i8 %i.le, ptr %i.kv, align 1, !tbaa !60
   %i.lf = load i32, ptr %i.ks, align 8, !tbaa !15
   %i.lg = or i32 %i.lf, 65536
-  store i32 %i.lg, ptr %i.ks, align 8, !tbaa !15
-  br label %memieq.exit154.i
+  br label %memieq.exit154.sink.split.i
 
 bb.bw:                                            ; preds = %bb.bu
   %i.lh = load i32, ptr %i.ks, align 8, !tbaa !15
   %i.li = and i32 %i.lh, -196609
   %i.lj = or disjoint i32 %i.li, 131072
-  store i32 %i.lj, ptr %i.ks, align 8, !tbaa !15
-  br label %memieq.exit154.i
+  br label %memieq.exit154.sink.split.i
 
 bb.bx:                                            ; preds = %.thread
   %i.lk = getelementptr inbounds nuw i8, ptr %i.x, i64 16
@@ -271,7 +269,12 @@ check_header_value.exit159.i:                     ; preds = %bb.ca, %bb.bz
   %.not109.i = icmp eq i32 %.0.i158.i, 0
   br i1 %.not109.i, label %http_request_on_header.exit, label %memieq.exit154.i
 
-memieq.exit154.i:                                 ; preds = %check_header_value.exit159.i, %bb.bw, %bb.bv, %bb.bt, %bb.bs, %bb.br, %bb.bm, %parse_uint.exit.i, %check_pseudo_header.exit147.i, %bb.aw, %lws.exit.i, %memieq.exit.i, %bb.aq, %bb.ap, %bb.ao, %bb.an, %.preheader.3.i, %.preheader.2.i, %.preheader.1.i, %.preheader.preheader.i, %.preheader206.i, %bb.am, %.thread181.i, %bb.ag, %bb.af, %bb.ae, %bb.z, %bb.y, %bb.x, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %check_pseudo_header.exit.i
+memieq.exit154.sink.split.i:                      ; preds = %bb.bw, %bb.bv
+  %.sink.i = phi i32 [ %i.lg, %bb.bv ], [ %i.lj, %bb.bw ]
+  store i32 %.sink.i, ptr %i.ks, align 8, !tbaa !15
+  br label %memieq.exit154.i
+
+memieq.exit154.i:                                 ; preds = %memieq.exit154.sink.split.i, %check_header_value.exit159.i, %bb.bt, %bb.bs, %bb.br, %bb.bm, %parse_uint.exit.i, %check_pseudo_header.exit147.i, %bb.aw, %lws.exit.i, %memieq.exit.i, %bb.aq, %bb.ap, %bb.ao, %bb.an, %.preheader.3.i, %.preheader.2.i, %.preheader.1.i, %.preheader.preheader.i, %.preheader206.i, %bb.am, %.thread181.i, %bb.ag, %bb.af, %bb.ae, %bb.z, %bb.y, %bb.x, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %check_pseudo_header.exit.i
   br label %http_request_on_header.exit
 
 http_request_on_header.exit:                      ; preds = %.preheader.i.i, %bb.bc, %.lr.ph.i139.i, %bb.av, %bb.ak, %.lr.ph.i.i, %.thread, %.thread, %.thread, %.thread, %.thread, %bb.l, %bb.n, %bb.o, %bb.p, %bb.q, %bb.w, %bb.aa, %bb.ab, %bb.ac, %bb.ah, %bb.ai, %check_scheme.exit.i, %check_scheme.exit.thread172.i, %bb.ar, %bb.as, %bb.at, %lws.exit.i, %bb.aw, %bb.ax, %bb.az, %bb.ba, %bb.bb, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bq, %bb.bx, %check_header_value.exit159.i, %memieq.exit154.i

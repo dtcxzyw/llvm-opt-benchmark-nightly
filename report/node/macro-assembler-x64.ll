@@ -202,16 +202,18 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_ZN2v88internal18MacroAssemblerBase20IndirectLoadConstantENS0_8RegisterENS0_6HandleINS0_10HeapObjectEEE(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 10, ptr nonnull %2) #15
-  tail call void @_ZN2v88internal9Assembler13arithmetic_opEhNS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 noundef zeroext 59, i8 %1, i8 10, i32 noundef 8) #15
-  br label %_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit
+  br label %_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit.sink.split
 
 bb.f:                                             ; preds = %bb.d
   %i.k = ptrtoint ptr %2 to i64
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_11Immediate64Ei(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %i.k, i8 4, i32 noundef 8) #15
+  br label %_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit.sink.split
+
+_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit.sink.split: ; preds = %bb.f, %bb.e
   tail call void @_ZN2v88internal9Assembler13arithmetic_opEhNS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 noundef zeroext 59, i8 %1, i8 10, i32 noundef 8) #15
   br label %_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit
 
-_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit: ; preds = %_ZN2v88internal14MacroAssembler14GetSmiConstantENS0_6TaggedINS0_3SmiEEE.exit.i, %bb.c, %bb.e, %bb.f
+_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit: ; preds = %_ZN2v88internal14MacroAssembler3CmpENS0_8RegisterENS0_6TaggedINS0_3SmiEEE.exit.sink.split, %_ZN2v88internal14MacroAssembler14GetSmiConstantENS0_6TaggedINS0_3SmiEEE.exit.i, %bb.c
   ret void
 }
 
@@ -256,7 +258,7 @@ _ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_6HandleINS0_10HeapObjectE
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_11Immediate64Ei(ptr noundef nonnull align 8 dereferenceable(436) %0, i8 10, i64 %i.k, i8 4, i32 noundef 8) #15
   br label %_ZN2v88internal14MacroAssembler3CmpENS0_7OperandENS0_6TaggedINS0_3SmiEEE.exit
 
-_ZN2v88internal14MacroAssembler3CmpENS0_7OperandENS0_6TaggedINS0_3SmiEEE.exit: ; preds = %bb.d, %bb.c, %bb.f, %_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_6HandleINS0_10HeapObjectEEENS0_9RelocInfo4ModeE.exit
+_ZN2v88internal14MacroAssembler3CmpENS0_7OperandENS0_6TaggedINS0_3SmiEEE.exit: ; preds = %bb.f, %_ZN2v88internal14MacroAssembler4MoveENS0_8RegisterENS0_6HandleINS0_10HeapObjectEEENS0_9RelocInfo4ModeE.exit, %bb.d, %bb.c
   tail call void @_ZN2v88internal9Assembler13arithmetic_opEhNS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 noundef zeroext 57, i8 10, i64 %1, ptr %2, i32 noundef 8) #15
   ret void
 }

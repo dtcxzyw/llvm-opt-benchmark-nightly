@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [72 x i8], align 8                ; 6 uses
   %i.d = alloca [16 x i8], align 8                ; 6 uses
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
-  %i.f = alloca [72 x i8], align 8                ; 15 uses
+  %i.f = alloca [72 x i8], align 8                ; 14 uses
   %i.g = alloca [64 x i8], align 8                ; 8 uses
   %i.h = alloca [64 x i8], align 8                ; 5 uses
   %.sroa.11.i = alloca [48 x i8], align 8         ; 4 uses
@@ -301,14 +301,17 @@ bb.i:                                             ; preds = %.noexc15.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.aa, ptr noundef nonnull align 8 dereferenceable(64) %i.z, i64 64, i1 false), !noalias !216
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !218
-  store i32 1, ptr %i.f, align 8, !noalias !216
-  br label %bb.m
+  br label %"_ZN4pyo35impl_10trampoline11module_exec28_$u7b$$u7b$closure$u7d$$u7d$17h52953ca956ff2289E.exit.sink.split.i.i.i"
 
 bb.j:                                             ; preds = %.noexc15.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !218
   %i.ab = getelementptr inbounds nuw i8, ptr %i.f, i64 4
   store i32 0, ptr %i.ab, align 4, !noalias !216
-  store i32 0, ptr %i.f, align 8, !noalias !216
+  br label %"_ZN4pyo35impl_10trampoline11module_exec28_$u7b$$u7b$closure$u7d$$u7d$17h52953ca956ff2289E.exit.sink.split.i.i.i"
+
+"_ZN4pyo35impl_10trampoline11module_exec28_$u7b$$u7b$closure$u7d$$u7d$17h52953ca956ff2289E.exit.sink.split.i.i.i": ; preds = %bb.j, %bb.i
+  %.sink.i.i.i = phi i32 [ 1, %bb.i ], [ 0, %bb.j ]
+  store i32 %.sink.i.i.i, ptr %i.f, align 8, !noalias !216
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.c
@@ -334,7 +337,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !216
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.j, %bb.i, %.noexc14.i, %.noexc12.i
+bb.m:                                             ; preds = %"_ZN4pyo35impl_10trampoline11module_exec28_$u7b$$u7b$closure$u7d$$u7d$17h52953ca956ff2289E.exit.sink.split.i.i.i", %.noexc14.i, %.noexc12.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !218
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !217
   %.sroa.016.0.copyload18.i = load ptr, ptr %i.f, align 8, !noalias !216

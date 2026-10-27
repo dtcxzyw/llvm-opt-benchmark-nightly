@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, argmem: write, target_mem: none) uwtable
 define hidden noalias noundef ptr @_Z12pj_gauss_iniddPdS_(double noundef %0, double noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #8 ; 10 uses
+  %i.a = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #8 ; 8 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.i, label %bb.b
 
@@ -66,9 +66,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.ag = fdiv double 1.000000e+00, %i.ac
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store double %i.ag, ptr %4, align 8, !tbaa !14
-  br label %bb.i
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.f
   %i.ah = tail call double @llvm.fmuladd.f64(double %i.u, double 5.000000e-01, double f0x3FE921FB54442D18)
@@ -77,12 +75,16 @@ bb.h:                                             ; preds = %bb.f
   %i.ak = tail call double @pow(double noundef %i.aj, double noundef %i.r) #9
   %i.al = fmul double %i.ac, %i.ak
   %i.am = fdiv double %i.ai, %i.al
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store double %i.am, ptr %5, align 8, !tbaa !14
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.h, %bb.g
+  %.sink = phi double [ %i.ag, %bb.g ], [ %i.am, %bb.h ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store double %.sink, ptr %4, align 8, !tbaa !14
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g, %bb.a, %bb.c
-  %.1 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ null, %bb.e ], [ %i.a, %bb.h ], [ %i.a, %bb.g ]
+bb.i:                                             ; preds = %.sink.split, %bb.e, %bb.a, %bb.c
+  %.1 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ null, %bb.e ], [ %i.a, %.sink.split ]
   ret ptr %.1
 }
 

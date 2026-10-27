@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit
 
 bb.m:                                             ; preds = %bb.c
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.bo = load i8, ptr %i.bn, align 4, !tbaa !32, !range !36, !noundef !37
   %i.bp = trunc nuw i8 %i.bo to i1
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -219,8 +219,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !34
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float %i.bw, ptr %i.bx, align 8, !tbaa !34
-  store i8 1, ptr %i.bn, align 4, !tbaa !32
-  br label %_ZNSt6vectorIfSaIfEED2Ev.exit
+  br label %_ZNSt6vectorIfSaIfEED2Ev.exit.sink.split
 
 bb.o:                                             ; preds = %bb.m
   %i.by = getelementptr inbounds nuw i8, ptr %i.b, i64 64
@@ -228,10 +227,14 @@ bb.o:                                             ; preds = %bb.m
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 29
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !50, !range !36, !noundef !37
   tail call void @_ZN9InputGeom20addOffMeshConnectionEPKfS1_fhht(ptr noundef nonnull align 8 dereferenceable(448) %i.d, ptr noundef nonnull %i.bq, ptr noundef %2, float noundef %i.bz, i8 noundef zeroext %i.cb, i8 noundef zeroext 5, i16 noundef zeroext 8) #11
-  store i8 0, ptr %i.bn, align 4, !tbaa !32
+  br label %_ZNSt6vectorIfSaIfEED2Ev.exit.sink.split
+
+_ZNSt6vectorIfSaIfEED2Ev.exit.sink.split:         ; preds = %bb.n, %bb.o
+  %.sink = phi i8 [ 0, %bb.o ], [ 1, %bb.n ]
+  store i8 %.sink, ptr %i.bn, align 4, !tbaa !32
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit
 
-_ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %_ZNSt6vectorIfSaIfEEC2ERKS1_.exit.thread, %.thread40, %bb.b, %bb.n, %bb.o, %bb.a
+_ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit.sink.split, %_ZNSt6vectorIfSaIfEEC2ERKS1_.exit.thread, %.thread40, %bb.b, %bb.a
   ret void
 }
 

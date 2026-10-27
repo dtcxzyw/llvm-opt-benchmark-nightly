@@ -202,7 +202,7 @@ bb.a:
   %i.e = alloca [264 x i8], align 8               ; 4 uses
   %i.f = alloca [360 x i8], align 8               ; 6 uses
   %i.g = alloca [17 x i8], align 1                ; 5 uses
-  %i.h = alloca [336 x i8], align 8               ; 6 uses
+  %i.h = alloca [336 x i8], align 8               ; 5 uses
   %i.i = alloca [8 x i8], align 8                 ; 3 uses
   store i64 %4, ptr %i.i, align 8
   %i.j = urem i64 %4, 86400
@@ -281,8 +281,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   store i64 1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.j
   %i.q = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -300,10 +299,13 @@ bb.l:                                             ; preds = %bb.j
   store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.l, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs17t5S1clqUH_12zkcredential8issuance13IssuanceProofECs807GXlIGG3x_7zkgroup.exit
+bb.m:                                             ; preds = %.sink.split, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs17t5S1clqUH_12zkcredential8issuance13IssuanceProofECs807GXlIGG3x_7zkgroup.exit
   ret void
 
 bb.n:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.b

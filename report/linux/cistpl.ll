@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 _kmalloc_noprof.exit:                             ; preds = %bb.a
-  %i.c = getelementptr i8, ptr %0, i64 472        ; 3 uses
+  %i.c = getelementptr i8, ptr %0, i64 472        ; 2 uses
   tail call void @mutex_lock(ptr noundef %i.c) #11
   %i.d = getelementptr i8, ptr %0, i64 256        ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -218,8 +218,7 @@ _kmalloc_noprof.exit:                             ; preds = %bb.a
 bb.c:                                             ; preds = %_kmalloc_noprof.exit
   %i.h = getelementptr i8, ptr %0, i64 544
   tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.h, ptr noundef @.str.2) #14
-  tail call void @mutex_unlock(ptr noundef %i.c) #11
-  br label %bb.e
+  br label %.sink.split
 
 bb.d:                                             ; preds = %_kmalloc_noprof.exit
   %i.i = getelementptr i8, ptr %0, i64 248
@@ -227,11 +226,15 @@ bb.d:                                             ; preds = %_kmalloc_noprof.exi
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr align 1 %1, i64 %2, i1 false)
   %i.j = getelementptr i8, ptr %0, i64 544
   tail call void (ptr, ptr, ...) @_dev_info(ptr noundef %i.j, ptr noundef @.str.3) #14
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.d, %bb.c
+  %.0.ph = phi i32 [ 0, %bb.d ], [ -12, %bb.c ]
   tail call void @mutex_unlock(ptr noundef %i.c) #11
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.0 = phi i32 [ -22, %bb.b ], [ -12, %bb.c ], [ 0, %bb.d ]
+bb.e:                                             ; preds = %.sink.split, %bb.b
+  %.0 = phi i32 [ -22, %bb.b ], [ %.0.ph, %.sink.split ]
   ret i32 %.0
 }
 

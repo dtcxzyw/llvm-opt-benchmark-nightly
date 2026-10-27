@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %i.b = alloca [5 x i8], align 1                 ; 15 uses
+  %i.b = alloca [5 x i8], align 1                 ; 14 uses
   %i.c = icmp ugt i32 %1, 2097151
   br i1 %i.c, label %bb.b, label %bb.i
 
@@ -406,11 +406,7 @@ bb.n:                                             ; preds = %bb.m
   store i8 0, ptr %i.bu, align 1, !tbaa !81
   %i.bv = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   store i8 %i.bp, ptr %i.bv, align 1, !tbaa !81
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %i.bt, ptr %4, align 1, !tbaa !81
-  %5 = trunc nuw nsw i32 %i.bq to i8
-  %6 = or disjoint i8 %5, -32
-  br label %bb.p
+  br label %.sink.split
 
 bb.o:                                             ; preds = %bb.m
   %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -422,15 +418,21 @@ bb.o:                                             ; preds = %bb.m
   %i.bz = lshr i32 %1, 18
   %i.ca = trunc i32 %i.bq to i8
   %i.cb = and i8 %i.ca, 63
-  %7 = or disjoint i8 %i.cb, -128
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !81
-  %9 = trunc nuw nsw i32 %i.bz to i8
-  %i.cc = or disjoint i8 %9, -16
+  %i.cc = or disjoint i8 %i.cb, -128
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.o, %bb.n
+  %.sink50 = phi i8 [ %i.bt, %bb.n ], [ %i.cc, %bb.o ]
+  %.sink49 = phi i32 [ %i.bq, %bb.n ], [ %i.bz, %bb.o ]
+  %.sink48 = phi i8 [ -32, %bb.n ], [ -16, %bb.o ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i8 %.sink50, ptr %4, align 1, !tbaa !81
+  %5 = trunc nuw nsw i32 %.sink49 to i8
+  %6 = or disjoint i8 %.sink48, %5
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.l, %bb.o, %bb.n, %bb.j
-  %.sink = phi i8 [ %i.bk, %bb.l ], [ %i.cc, %bb.o ], [ %6, %bb.n ], [ %i.bb, %bb.j ] ; 2 uses
+bb.p:                                             ; preds = %.sink.split, %bb.l, %bb.j
+  %.sink = phi i8 [ %i.bk, %bb.l ], [ %i.bb, %bb.j ], [ %6, %.sink.split ] ; 2 uses
   store i8 %.sink, ptr %i.b, align 1, !tbaa !81
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.cd, ptr %0, align 8, !tbaa !75

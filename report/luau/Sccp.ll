@@ -204,15 +204,11 @@ _ZNRSt8optionalIN4Luau8Bytecode4BcOpEE5valueEv.exit68: ; preds = %_ZNRSt8optiona
   store i32 2, ptr %0, align 4, !tbaa !61
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.0.0.extract.trunc, ptr %i.cj, align 4, !tbaa !18
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 1, ptr %9, align 4, !tbaa !62
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.aa:                                            ; preds = %_ZNRSt8optionalIN4Luau8Bytecode4BcOpEE5valueEv.exit67
   store i32 1, ptr %0, align 4, !tbaa !61
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %10, align 4, !tbaa !62
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.ab:                                            ; preds = %bb.w
   %i.ck = icmp eq i32 %i.t, 0
@@ -232,8 +228,14 @@ bb.ac:                                            ; preds = %bb.ab
   store i8 0, ptr %i.cn, align 4, !tbaa !62
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNRSt8optionalIN4Luau8Bytecode4BcOpEE5valueEv.exit68, %bb.aa, %bb.i, %bb.t, %bb.v, %.thread, %bb.k, %.thread84, %bb.ac
-  %.sink = phi i8 [ 0, %_ZNRSt8optionalIN4Luau8Bytecode4BcOpEE5valueEv.exit68 ], [ 0, %bb.aa ], [ 0, %bb.i ], [ 0, %bb.t ], [ 0, %bb.v ], [ 1, %.thread ], [ 0, %bb.k ], [ 0, %.thread84 ], [ 0, %bb.ac ]
+.critedge.sink.split:                             ; preds = %_ZNRSt8optionalIN4Luau8Bytecode4BcOpEE5valueEv.exit68, %bb.aa
+  %.sink87 = phi i8 [ 0, %bb.aa ], [ 1, %_ZNRSt8optionalIN4Luau8Bytecode4BcOpEE5valueEv.exit68 ]
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %.sink87, ptr %9, align 4, !tbaa !62
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.sink.split, %bb.i, %bb.t, %bb.v, %.thread, %bb.k, %.thread84, %bb.ac
+  %.sink = phi i8 [ 0, %.thread84 ], [ 0, %bb.ac ], [ 0, %bb.i ], [ 0, %bb.t ], [ 0, %bb.v ], [ 1, %.thread ], [ 0, %bb.k ], [ 0, %.critedge.sink.split ]
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i8 %.sink, ptr %i.co, align 4, !tbaa !63
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21

@@ -204,20 +204,14 @@ bb.j:                                             ; preds = %bb.i
   %i.lm = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ln = load ptr, ptr %i.lm, align 8, !tbaa !12
   %i.lo = load i32, ptr %i.ln, align 4, !tbaa !13
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !12
-  store i32 %i.lo, ptr %7, align 4, !tbaa !13
-  br label %_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit
+  br label %bb.u
 
 bb.k:                                             ; preds = %bb.i
   %i.lp = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.lq = load ptr, ptr %i.lp, align 8, !tbaa !12
   %i.lr = load i32, ptr %i.lq, align 4, !tbaa !13
   %i.ls = ashr i32 %i.lr, 1
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %9 = load ptr, ptr %8, align 8, !tbaa !12
-  store i32 %i.ls, ptr %9, align 4, !tbaa !13
-  br label %_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit
+  br label %bb.u
 
 bb.l:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.m, label %bb.s
@@ -620,28 +614,36 @@ bb.r:                                             ; preds = %bb.q, %._crit_edge.
   br label %_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit
 
 bb.s:                                             ; preds = %bb.l
-  br i1 %5, label %bb.t, label %bb.u
+  br i1 %5, label %6, label %10
 
-bb.t:                                             ; preds = %bb.s
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %11 = load ptr, ptr %10, align 8, !tbaa !12
-  %12 = load i64, ptr %11, align 8, !tbaa !24
+6:                                                ; preds = %bb.s
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %8 = load ptr, ptr %7, align 8, !tbaa !12
+  %9 = load i64, ptr %8, align 8, !tbaa !24
+  br label %bb.t
+
+10:                                               ; preds = %bb.s
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %12 = load ptr, ptr %11, align 8, !tbaa !12
+  %13 = load i64, ptr %12, align 8, !tbaa !24
+  %14 = ashr i64 %13, 1
+  br label %bb.t
+
+bb.t:                                             ; preds = %10, %6
+  %.sink = phi i64 [ %9, %6 ], [ %14, %10 ]
   %i.xx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.xy = load ptr, ptr %i.xx, align 8, !tbaa !12
-  store i64 %12, ptr %i.xy, align 8, !tbaa !24
+  store i64 %.sink, ptr %i.xy, align 8, !tbaa !24
   br label %_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit
 
-bb.u:                                             ; preds = %bb.s
-  %13 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %14 = load ptr, ptr %13, align 8, !tbaa !12
-  %15 = load i64, ptr %14, align 8, !tbaa !24
-  %16 = ashr i64 %15, 1
+bb.u:                                             ; preds = %bb.k, %bb.j
+  %.sink114 = phi i32 [ %i.lo, %bb.j ], [ %i.ls, %bb.k ]
   %i.xz = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ya = load ptr, ptr %i.xz, align 8, !tbaa !12
-  store i64 %16, ptr %i.ya, align 8, !tbaa !24
+  store i32 %.sink114, ptr %i.ya, align 4, !tbaa !13
   br label %_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit
 
-_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit: ; preds = %bb.u, %bb.t, %._crit_edge172.thread.i39, %._crit_edge172.i47, %bb.k, %bb.j, %._crit_edge172.thread.i, %._crit_edge172.i
+_ZN4ojph5localL18gen_rev_horz_syn32EPKNS0_9param_atkEPKNS_8line_bufES6_S6_jb.exit: ; preds = %bb.u, %bb.t, %._crit_edge172.thread.i39, %._crit_edge172.i47, %._crit_edge172.thread.i, %._crit_edge172.i
   ret void
 }
 

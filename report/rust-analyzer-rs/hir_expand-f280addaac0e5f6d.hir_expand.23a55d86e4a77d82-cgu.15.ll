@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvYQNtNtCs4dcH4YgJDq_2tt4iter6TtIterNtCscFGNKo4Sl5v_9itertools9Itertools11exactly_oneCs33K2ylI4knu_10hir_expand(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([184 x i8]) align 8 captures(none) dereferenceable(184) %0, ptr noalias nofree noundef align 8 dereferenceable(40) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [88 x i8], align 8                ; 6 uses
+  %i.a = alloca [88 x i8], align 8                ; 5 uses
   %i.b = alloca [88 x i8], align 8                ; 6 uses
   call void @_RNvXs3_NtCs4dcH4YgJDq_2tt4iterNtB5_6TtIterNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([88 x i8]) align 8 captures(none) dereferenceable(88) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %1)
   %i.c = load i64, ptr %i.b, align 8, !range !26, !noundef !7 ; 4 uses
@@ -259,8 +259,7 @@ bb.f:                                             ; preds = %_RNvXs0_NtNtNtCshzW
   store ptr %.sroa.822.0.copyload, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 176
   store ptr %1, ptr %.sroa.4.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.h
+  br label %.sink.split
 
 bb.g:                                             ; preds = %_RNvXs0_NtNtNtCshzWfHUSfYae_4core4iter6traits8iteratorQNtNtCs4dcH4YgJDq_2tt4iter6TtIterNtB5_8Iterator4nextCs33K2ylI4knu_10hir_expand.exit
   %.sroa.753.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -274,10 +273,13 @@ bb.g:                                             ; preds = %_RNvXs0_NtNtNtCshzW
   %.sroa.652.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.822.0.copyload, ptr %.sroa.652.0..sroa_idx, align 8
   store i64 3, ptr %0, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.f, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.c, %bb.f, %bb.g
+bb.h:                                             ; preds = %.sink.split, %bb.c
   ret void
 
 bb.i:                                             ; preds = %bb.e

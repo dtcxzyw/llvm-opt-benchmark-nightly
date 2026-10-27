@@ -205,7 +205,7 @@ bb.a:
   %i.q = alloca [64 x i8], align 8                ; 22 uses
   %.sroa.6.sroa.9 = alloca [12 x i8], align 8     ; 7 uses
   %.sroa.6.sroa.15 = alloca [28 x i8], align 4    ; 7 uses
-  %i.r = alloca [60 x i8], align 8                ; 15 uses
+  %i.r = alloca [60 x i8], align 8                ; 14 uses
   %i.s = alloca [4 x i8], align 4                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   store i32 0, ptr %i.s, align 4
@@ -371,7 +371,13 @@ bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.b, %bb.ao, %bb.e, %bb.al, %bb.ak, %bb.m
+.sink.split:                                      ; preds = %bb.ak, %bb.al
+  %storemerge = phi i8 [ %i.bb, %bb.ak ], [ -1, %bb.al ]
+  store i8 %storemerge, ptr %0, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
+  br label %bb.n
+
+bb.n:                                             ; preds = %.sink.split, %bb.b, %bb.ao, %bb.e, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   ret void
 
@@ -562,17 +568,13 @@ bb.ak:                                            ; preds = %bb.ai
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5203.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5200.0..sroa_idx, i64 16, i1 false)
   %.sroa.4202.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.4202.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.4199.0..sroa_idx, i64 47, i1 false)
-  store i8 %i.bb, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  br label %bb.n
+  br label %.sink.split
 
 bb.al:                                            ; preds = %bb.ai
   %i.be = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bf, ptr noundef nonnull align 8 dereferenceable(40) %i.be, i64 40, i1 false)
-  store i8 -1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  br label %bb.n
+  br label %.sink.split
 
 bb.am:                                            ; preds = %bb.aj
   %i.bg = landingpad { ptr, i32 }

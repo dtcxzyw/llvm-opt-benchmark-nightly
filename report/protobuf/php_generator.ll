@@ -205,14 +205,14 @@ declare void @_ZN6google8protobuf17FileDescriptorSetC2EPNS0_5ArenaE(ptr noundef 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN6google8protobuf8internal20RepeatedPtrFieldBase3AddINS1_18GenericTypeHandlerINS0_19FileDescriptorProtoEEEEEPNT_4TypeEPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !119    ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !119    ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 1, ptr %i.c, align 8, !tbaa !13
-  %i.d = tail call noundef ptr @_ZN6google8protobuf5Arena16DefaultConstructINS0_19FileDescriptorProtoEEEPvPS1_(ptr noundef %1) ; 2 uses
+  %i.d = tail call noundef ptr @_ZN6google8protobuf5Arena16DefaultConstructINS0_19FileDescriptorProtoEEEPvPS1_(ptr noundef %1)
   store ptr %i.d, ptr %0, align 8, !tbaa !121
   br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
 
@@ -224,18 +224,14 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.d, label %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14SizeAtCapacityEv.exit.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !120
   %i.j = icmp eq i32 %i.i, 0
-  br i1 %i.j, label %2, label %bb.e
-
-2:                                                ; preds = %bb.d
-  store i32 1, ptr %i.h, align 8, !tbaa !13
-  br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
+  br i1 %i.j, label %.sink.split.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = tail call noundef ptr @_ZN6google8protobuf8internal20RepeatedPtrFieldBase14InternalExtendEiPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef 1, ptr noundef %1)
-  %i.l = tail call noundef ptr @_ZN6google8protobuf5Arena16DefaultConstructINS0_19FileDescriptorProtoEEEPvPS1_(ptr noundef %1) ; 2 uses
+  %i.k = tail call noundef ptr @_ZN6google8protobuf8internal20RepeatedPtrFieldBase14InternalExtendEiPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef 1, ptr noundef %1) ; 2 uses
+  %i.l = tail call noundef ptr @_ZN6google8protobuf5Arena16DefaultConstructINS0_19FileDescriptorProtoEEEPvPS1_(ptr noundef %1)
   store ptr %i.l, ptr %i.k, align 8, !tbaa !121
   %i.m = load ptr, ptr %0, align 8, !tbaa !119
   %i.n = ptrtoint ptr %i.m to i64
@@ -243,8 +239,7 @@ bb.e:                                             ; preds = %bb.d
   %i.p = inttoptr i64 %i.o to ptr
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4
   store i32 2, ptr %i.q, align 4, !tbaa !864
-  store i32 2, ptr %i.h, align 8, !tbaa !13
-  br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
+  br label %.sink.split.i
 
 _ZNK6google8protobuf8internal20RepeatedPtrFieldBase14SizeAtCapacityEv.exit.i: ; preds = %bb.c
   %i.r = add nsw i64 %i.e, -1
@@ -278,7 +273,6 @@ bb.g:                                             ; preds = %_ZNK6google8protobu
   store i32 %i.ag, ptr %i.t, align 8, !tbaa !13
   %i.ah = sext i32 %i.u to i64
   %i.ai = getelementptr inbounds [8 x i8], ptr %i.af, i64 %i.ah
-  %.1.i.pre = load ptr, ptr %i.ai, align 8, !tbaa !121
   br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
 
 bb.h:                                             ; preds = %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase12ClearedCountEv.exit.i, %bb.f
@@ -292,13 +286,20 @@ bb.h:                                             ; preds = %_ZNK6google8protobu
   %i.ao = add nsw i32 %i.aj, 1
   store i32 %i.ao, ptr %i.t, align 8, !tbaa !13
   %i.ap = sext i32 %i.aj to i64
-  %i.aq = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.ap
-  %i.ar = tail call noundef ptr @_ZN6google8protobuf5Arena16DefaultConstructINS0_19FileDescriptorProtoEEEPvPS1_(ptr noundef %1) ; 2 uses
+  %i.aq = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.ap ; 2 uses
+  %i.ar = tail call noundef ptr @_ZN6google8protobuf5Arena16DefaultConstructINS0_19FileDescriptorProtoEEEPvPS1_(ptr noundef %1)
   store ptr %i.ar, ptr %i.aq, align 8, !tbaa !121
   br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
 
-_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit: ; preds = %bb.b, %2, %bb.e, %bb.g, %bb.h
-  %.1.i = phi ptr [ %i.d, %bb.b ], [ %i.a, %2 ], [ %i.l, %bb.e ], [ %i.ar, %bb.h ], [ %.1.i.pre, %bb.g ]
+.sink.split.i:                                    ; preds = %bb.e, %bb.d
+  %.sink.i = phi i32 [ 2, %bb.e ], [ 1, %bb.d ]
+  %.1.in.ph.i = phi ptr [ %i.k, %bb.e ], [ %0, %bb.d ]
+  store i32 %.sink.i, ptr %i.h, align 8, !tbaa !13
+  br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
+
+_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit: ; preds = %bb.b, %bb.g, %bb.h, %.sink.split.i
+  %.1.in.i = phi ptr [ %0, %bb.b ], [ %i.aq, %bb.h ], [ %i.ai, %bb.g ], [ %.1.in.ph.i, %.sink.split.i ]
+  %.1.i = load ptr, ptr %.1.in.i, align 8, !tbaa !121
   ret ptr %.1.i
 }
 

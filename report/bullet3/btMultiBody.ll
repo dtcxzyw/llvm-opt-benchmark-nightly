@@ -205,16 +205,12 @@ bb.h:                                             ; preds = %bb.g
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !20
   %i.al = load float, ptr %i.y, align 8, !tbaa !45
   %i.am = fdiv float %i.ak, %i.al
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store float %i.am, ptr %4, align 4, !tbaa !20
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.i:                                             ; preds = %bb.g
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 12
   store <2 x float> zeroinitializer, ptr %i.an, align 4, !tbaa !20
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store float 0.000000e+00, ptr %5, align 4, !tbaa !20
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.j:                                             ; preds = %bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 560
@@ -617,7 +613,13 @@ begin_hunk_1_@_ZNK11btMultiBody12solveImatrixERK9btVector3S2_Pf:bb.a
   store <2 x float> %i.so, ptr %i.ce, align 4, !tbaa !20
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader.preheader, %bb.k, %bb.i, %bb.h
+.loopexit.sink.split:                             ; preds = %bb.h, %bb.i
+  %.sink249 = phi float [ 0.000000e+00, %bb.i ], [ %i.am, %bb.h ]
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 20
+  store float %.sink249, ptr %4, align 4, !tbaa !20
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.preheader.preheader, %bb.k
   ret void
 }
 

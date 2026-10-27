@@ -204,11 +204,7 @@ _ZL17encoded_jwt_claimPK18grpc_auth_json_keyPKc12gpr_timespecS3_.exit: ; preds =
   call void @gpr_free(ptr noundef nonnull %i.il)
   %i.ju = call noundef ptr @_Z28compute_and_encode_signaturePK18grpc_auth_json_keyPKcS3_(ptr noundef nonnull %0, ptr noundef nonnull @.str.14, ptr noundef %i.jq) ; 4 uses
   %i.jv = icmp eq ptr %i.ju, null
-  br i1 %i.jv, label %46, label %bb.cx
-
-46:                                               ; preds = %_ZL17encoded_jwt_claimPK18grpc_auth_json_keyPKc12gpr_timespecS3_.exit
-  call void @gpr_free(ptr noundef nonnull %i.jq)
-  br label %bb.cy
+  br i1 %i.jv, label %.sink.split, label %bb.cx
 
 bb.cx:                                            ; preds = %_ZL17encoded_jwt_claimPK18grpc_auth_json_keyPKc12gpr_timespecS3_.exit
   %i.jw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jq) #25 ; 3 uses
@@ -224,11 +220,16 @@ bb.cx:                                            ; preds = %_ZL17encoded_jwt_cl
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 %i.jx
   store i8 0, ptr %i.kd, align 1, !tbaa !42
   call void @gpr_free(ptr noundef nonnull %i.jq)
-  call void @gpr_free(ptr noundef nonnull %i.ju)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %_ZL17encoded_jwt_claimPK18grpc_auth_json_keyPKc12gpr_timespecS3_.exit, %bb.cx
+  %.sink = phi ptr [ %i.ju, %bb.cx ], [ %i.jq, %_ZL17encoded_jwt_claimPK18grpc_auth_json_keyPKc12gpr_timespecS3_.exit ]
+  %.1.ph = phi ptr [ %i.ka, %bb.cx ], [ null, %_ZL17encoded_jwt_claimPK18grpc_auth_json_keyPKc12gpr_timespecS3_.exit ]
+  call void @gpr_free(ptr noundef nonnull %.sink)
   br label %bb.cy
 
-bb.cy:                                            ; preds = %46, %bb.cx, %bb.b
-  %.1 = phi ptr [ %i.b, %bb.b ], [ null, %46 ], [ %i.ka, %bb.cx ]
+bb.cy:                                            ; preds = %.sink.split, %bb.b
+  %.1 = phi ptr [ %i.b, %bb.b ], [ %.1.ph, %.sink.split ]
   ret ptr %.1
 }
 

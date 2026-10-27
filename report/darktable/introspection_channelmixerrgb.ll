@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
   %i.jc = load <2 x float>, ptr %i.jb, align 4, !tbaa !12 ; 3 uses
   %i.jd = load <2 x float>, ptr %5, align 4, !tbaa !12 ; 4 uses
   %i.je = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 9 uses
-  %i.jf = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 12 uses
+  %i.jf = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 11 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.jh = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 4 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
@@ -608,8 +608,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.abx = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.abq, float 0.000000e+00)
   store float %i.abx, ptr %i.je, align 4, !tbaa !12
   %i.aby = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.abv, float 0.000000e+00)
-  store float %i.aby, ptr %i.jf, align 8, !tbaa !12
-  br label %bb.ar
+  br label %.sink.split
 
 .critedge61:                                      ; preds = %bb.ap
   %i.abz = fmul reassoc nsz arcp contract afn float %i.abc, %i.jq
@@ -630,10 +629,14 @@ bb.aq:                                            ; preds = %bb.ap
   %i.acm = fadd reassoc nsz arcp contract afn float %i.acl, %i.ack
   %i.acn = fmul reassoc nsz arcp contract afn float %i.acc, %i.im
   %i.aco = fadd reassoc nsz arcp contract afn float %i.acm, %i.acn
-  store float %i.aco, ptr %i.jf, align 8, !tbaa !12
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.aq, %.critedge61
+  %.sink273 = phi float [ %i.aco, %.critedge61 ], [ %i.aby, %bb.aq ]
+  store float %.sink273, ptr %i.jf, align 8, !tbaa !12
   br label %bb.ar
 
-bb.ar:                                            ; preds = %.critedge61, %bb.aq, %bb.ai
+bb.ar:                                            ; preds = %.sink.split, %bb.ai
   store float %i.lb, ptr %i.jg, align 4, !tbaa !12
   %i.acp = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.054235
   %.val = load <4 x float>, ptr %i.b, align 16, !tbaa !103
