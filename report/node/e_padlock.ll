@@ -204,8 +204,8 @@ declare void @padlock_aes_block(ptr noundef, ptr noundef, ptr noundef) local_unn
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @padlock_ofb_cipher(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #6 ; 2 uses
   %i.d = ptrtoaddr ptr %i.c to i64
   %i.e = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #6
@@ -237,10 +237,10 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.r = sub i64 %i.a, %i.b
+  %i.r = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.r, -16
   %i.s = add i64 %i.l, %i.n
-  %i.t = sub i64 %i.s, %i.b
+  %i.t = sub i64 %i.s, %i.a
   %diff.check92 = icmp ugt i64 %i.t, -16
   %conflict.rdx = or i1 %diff.check, %diff.check92
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vec.epilog.ph
@@ -318,8 +318,8 @@ bb.c:                                             ; preds = %._crit_edge, %bb.a
   %.254 = phi ptr [ %.052.lcssa, %._crit_edge ], [ %1, %bb.a ] ; 3 uses
   %.250 = phi ptr [ %.048.lcssa, %._crit_edge ], [ %2, %bb.a ] ; 3 uses
   %.2 = phi i64 [ %.047.lcssa, %._crit_edge ], [ %3, %bb.a ] ; 4 uses
-  %.254112 = ptrtoaddr ptr %.254 to i64           ; 2 uses
-  %.250113 = ptrtoaddr ptr %.250 to i64
+  %.254112 = ptrtoaddr ptr %.250 to i64
+  %.250113 = ptrtoaddr ptr %.254 to i64           ; 2 uses
   %i.ao = icmp eq i64 %.2, 0
   br i1 %i.ao, label %.critedge, label %bb.d
 
@@ -353,10 +353,10 @@ iter.check135:                                    ; preds = %bb.d, %bb.f
   br i1 %min.iters.check114, label %vec.epilog.scalar.ph137.preheader, label %vector.memcheck115
 
 vector.memcheck115:                               ; preds = %iter.check135
-  %i.ax = sub i64 %.250113, %.254112
+  %i.ax = sub i64 %.254112, %.250113
   %diff.check116 = icmp ugt i64 %i.ax, -32
   %i.ay = add i64 %i.h, %i.d
-  %i.az = add i64 %i.aq, %.254112
+  %i.az = add i64 %i.aq, %.250113
   %i.ba = sub i64 %i.ay, %i.az
   %diff.check117 = icmp ugt i64 %i.ba, -32
   %conflict.rdx118 = or i1 %diff.check116, %diff.check117

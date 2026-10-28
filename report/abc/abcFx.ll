@@ -204,21 +204,21 @@ Fx_ManCompressCubes.exit437:                      ; preds = %bb.q, %Fx_ManCompre
   %.043.lcssa.i = phi ptr [ %.val14.i427, %Fx_ManCompressCubes.exit437 ], [ %.144.i, %bb.ae ] ; 5 uses
   %.040.lcssa.i = phi ptr [ %i.de, %Fx_ManCompressCubes.exit437 ], [ %.141.i, %bb.ae ] ; 5 uses
   %.0.lcssa.i438 = phi ptr [ %.val14.i427, %Fx_ManCompressCubes.exit437 ], [ %.1.i441, %bb.ae ] ; 5 uses
-  %.043.lcssa.i1283 = ptrtoaddr ptr %.043.lcssa.i to i64 ; 2 uses
-  %.0.lcssa.i4381285 = ptrtoaddr ptr %.0.lcssa.i438 to i64
+  %.043.lcssa.i1283 = ptrtoaddr ptr %.0.lcssa.i438 to i64
+  %.0.lcssa.i4381285 = ptrtoaddr ptr %.043.lcssa.i to i64 ; 2 uses
   %i.dq = icmp ult ptr %.046.lcssa.i, %i.dj
   br i1 %i.dq, label %.lr.ph62.i.preheader, label %.preheader.i
 
 .lr.ph62.i.preheader:                             ; preds = %.preheader52.i
-  %.040.lcssa.i1275 = ptrtoaddr ptr %.040.lcssa.i to i64
-  %.046.lcssa.i1274 = ptrtoaddr ptr %.046.lcssa.i to i64 ; 2 uses
+  %.040.lcssa.i1275 = ptrtoaddr ptr %.046.lcssa.i to i64 ; 2 uses
+  %.046.lcssa.i1274 = ptrtoaddr ptr %.040.lcssa.i to i64
   %i.dr = add i64 %.idx.i, %i.df
-  %i.ds = xor i64 %.046.lcssa.i1274, -1
+  %i.ds = xor i64 %.040.lcssa.i1275, -1
   %i.dt = add i64 %i.dr, %i.ds                    ; 2 uses
   %i.du = lshr i64 %i.dt, 2
   %i.dv = add nuw nsw i64 %i.du, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dt, 44
-  %i.dw = sub i64 %.046.lcssa.i1274, %.040.lcssa.i1275
+  %i.dw = sub i64 %.040.lcssa.i1275, %.046.lcssa.i1274
   %diff.check = icmp ugt i64 %i.dw, -32
   %or.cond1341 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1341, label %.lr.ph62.i.preheader1383, label %vector.ph
@@ -366,12 +366,12 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %Vec
 
 .lr.ph66.i.preheader:                             ; preds = %.preheader.i
   %i.fl = add i64 %.idx68.i, %.val14.i4271284
-  %i.fm = xor i64 %.043.lcssa.i1283, -1
+  %i.fm = xor i64 %.0.lcssa.i4381285, -1
   %i.fn = add i64 %i.fl, %i.fm                    ; 2 uses
   %i.fo = lshr i64 %i.fn, 2
   %i.fp = add nuw nsw i64 %i.fo, 1                ; 2 uses
   %min.iters.check1287 = icmp ult i64 %i.fn, 44
-  %i.fq = sub i64 %.043.lcssa.i1283, %.0.lcssa.i4381285
+  %i.fq = sub i64 %.0.lcssa.i4381285, %.043.lcssa.i1283
   %diff.check1289 = icmp ugt i64 %i.fq, -32
   %or.cond1342 = select i1 %min.iters.check1287, i1 true, i1 %diff.check1289
   br i1 %or.cond1342, label %.lr.ph66.i.preheader1381, label %vector.ph1290

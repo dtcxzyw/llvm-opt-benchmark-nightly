@@ -202,16 +202,16 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !430
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !15   ; 2 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !15   ; 3 uses
+  %.not = icmp eq i64 %i.h, 0
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 52
   %5 = load i32, ptr %4, align 4, !tbaa !431
   %6 = icmp eq i32 %5, 331
   %7 = sub nsw i64 0, %i.h
-  %spec.select = select i1 %6, i64 %7, i64 %i.h   ; 2 uses
-  %.not = icmp eq i64 %spec.select, 0
-  br i1 %.not, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %bb.b
+  %spec.select = select i1 %6, i64 %7, i64 %i.h
   tail call void @_ZNK4llvm15VEFrameLowering16emitSPAdjustmentERNS_15MachineFunctionERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEElNS_10MaybeAlignE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(360) %2, ptr nonnull %3, i64 noundef %spec.select, i16 0)
   br label %bb.d
 

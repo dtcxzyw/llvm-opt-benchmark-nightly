@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZL22stbi__resample_row_v_2PhS_S_ii(ptr nofree noundef returned writeonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 %4) #25 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = ptrtoaddr ptr %2 to i64
   %i.d = icmp sgt i32 %3, 0
   br i1 %i.d, label %iter.check, label %._crit_edge
@@ -217,9 +217,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.e = sub i64 %i.a, %i.b
+  %i.e = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.e, -16
-  %i.f = sub i64 %i.c, %i.b
+  %i.f = sub i64 %i.c, %i.a
   %diff.check12 = icmp ugt i64 %i.f, -16
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -622,16 +622,16 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %.noexc170
   %i.dl = phi ptr [ %i.di, %.noexc170 ], [ %i.dk, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.dm = phi ptr [ %i.dh, %.noexc170 ], [ %i.dj, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 6 uses
-  %i.dn = ptrtoaddr ptr %i.dm to i64              ; 2 uses
-  %i.do = ptrtoaddr ptr %i.dl to i64
+  %i.dn = ptrtoaddr ptr %i.dl to i64
+  %i.do = ptrtoaddr ptr %i.dm to i64              ; 2 uses
   %i.dp = load ptr, ptr %7, align 8, !tbaa !419   ; 4 uses
-  %i.dq = add i64 %i.do, -4
-  %i.dr = sub i64 %i.dq, %i.dn                    ; 2 uses
+  %i.dq = add i64 %i.dn, -4
+  %i.dr = sub i64 %i.dq, %i.do                    ; 2 uses
   %i.ds = lshr i64 %i.dr, 2
   %i.dt = add nuw nsw i64 %i.ds, 1                ; 2 uses
   %min.iters.check1552 = icmp ult i64 %i.dr, 44
   %i.du = ptrtoaddr ptr %i.dp to i64
-  %i.dv = sub i64 %i.dn, %i.du
+  %i.dv = sub i64 %i.do, %i.du
   %diff.check = icmp ugt i64 %i.dv, -32
   %or.cond1657 = select i1 %min.iters.check1552, i1 true, i1 %diff.check
   br i1 %or.cond1657, label %.lr.ph.i.i.preheader, label %vector.ph1553
@@ -719,16 +719,16 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %.pr = phi i64 [ %i.em, %.noexc182 ], [ %i.ei, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 7 uses
   %i.er = phi ptr [ %i.eo, %.noexc182 ], [ %i.ep, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 2 uses
   %i.es = phi ptr [ %i.en, %.noexc182 ], [ %i.eg, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 4 uses
-  %i.et = ptrtoaddr ptr %i.es to i64              ; 2 uses
-  %i.eu = ptrtoaddr ptr %i.er to i64
+  %i.et = ptrtoaddr ptr %i.er to i64
+  %i.eu = ptrtoaddr ptr %i.es to i64              ; 2 uses
   %i.ev = load ptr, ptr %8, align 8, !tbaa !419   ; 7 uses
-  %i.ew = add i64 %i.eu, -4
-  %i.ex = sub i64 %i.ew, %i.et                    ; 2 uses
+  %i.ew = add i64 %i.et, -4
+  %i.ex = sub i64 %i.ew, %i.eu                    ; 2 uses
   %i.ey = lshr i64 %i.ex, 2
   %i.ez = add nuw nsw i64 %i.ey, 1                ; 2 uses
   %min.iters.check1568 = icmp ult i64 %i.ex, 44
   %i.fa = ptrtoaddr ptr %i.ev to i64
-  %i.fb = sub i64 %i.et, %i.fa
+  %i.fb = sub i64 %i.eu, %i.fa
   %diff.check1570 = icmp ugt i64 %i.fb, -32
   %or.cond1659 = select i1 %min.iters.check1568, i1 true, i1 %diff.check1570
   br i1 %or.cond1659, label %.lr.ph.i.i175.preheader, label %vector.ph1571

@@ -8,8 +8,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @ff_png_add_paeth_prediction(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %1 to i64
   %i.d = icmp sgt i32 %3, 0
   br i1 %i.d, label %iter.check, label %._crit_edge
@@ -23,14 +23,14 @@ iter.check:                                       ; preds = %bb.a
 vector.memcheck:                                  ; preds = %iter.check
   %i.f = add nsw i64 %i.e, -1
   %diff.check = icmp ult i64 %i.f, 15
-  %i.g = add i64 %i.b, %i.e
-  %i.h = sub i64 %i.a, %i.g
+  %i.g = add i64 %i.a, %i.e
+  %i.h = sub i64 %i.b, %i.g
   %diff.check44 = icmp ugt i64 %i.h, -16
   %conflict.rdx = or i1 %diff.check, %diff.check44
-  %i.i = sub i64 %i.a, %i.b
+  %i.i = sub i64 %i.b, %i.a
   %diff.check45 = icmp ugt i64 %i.i, -16
   %conflict.rdx46 = or i1 %conflict.rdx, %diff.check45
-  %i.j = sub i64 %i.c, %i.b
+  %i.j = sub i64 %i.c, %i.a
   %diff.check47 = icmp ugt i64 %i.j, -16
   %conflict.rdx48 = or i1 %conflict.rdx46, %diff.check47
   br i1 %conflict.rdx48, label %.lr.ph.preheader, label %vector.main.loop.iter.check

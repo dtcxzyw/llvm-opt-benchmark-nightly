@@ -205,12 +205,12 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %min.iters.check, label %.lr.ph.i36.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i34
-  %5 = add i64 %i.b, 512
-  %6 = shl nsw i64 %i.d, 9
-  %i.ch = add i64 %6, %i.a
-  %i.ci = sub i64 %5, %i.ch
+  %5 = shl nsw i64 %i.d, 9
+  %6 = add i64 %i.b, 512
+  %i.ch = add i64 %5, %i.a
+  %i.ci = sub i64 %6, %i.ch
   %i.cj = shl i64 %indvar, 9
-  %i.ck = add i64 %i.cj, %i.ci
+  %i.ck = add i64 %i.ci, %i.cj
   %i.cl = add i64 %i.ck, -1
   %diff.check = icmp ult i64 %i.cl, 31
   br i1 %diff.check, label %.lr.ph.i36.preheader, label %vector.ph
@@ -463,7 +463,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i5
   %i.ap = add i64 %i.ao, %i.a
   %i.aq = sub i64 %i.b, %i.ap
   %i.ar = shl nuw nsw i64 %indvar, 9
-  %i.as = add i64 %i.ar, %i.aq
+  %i.as = add i64 %i.aq, %i.ar
   %i.at = add i64 %i.as, -1
   %diff.check = icmp ult i64 %i.at, 31
   br i1 %diff.check, label %.lr.ph.i56.preheader, label %vector.ph

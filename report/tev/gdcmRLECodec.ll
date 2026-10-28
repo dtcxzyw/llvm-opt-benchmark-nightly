@@ -204,15 +204,15 @@ vector.memcheck109:                               ; preds = %.lr.ph71.preheader
   %i.bq = add i64 %i.bp, %i.a
   %i.br = add i64 %i.bq, -2
   %i.bs = sub i64 %i.br, %.0.lcssa106             ; 2 uses
-  %3 = and i64 %i.bs, -2
-  %4 = getelementptr i8, ptr %.0.lcssa, i64 %3
-  %i.bt = getelementptr i8, ptr %4, i64 2
-  %5 = lshr i64 %i.bs, 1
-  %i.bu = mul i64 %5, 6
+  %3 = lshr i64 %i.bs, 1
+  %4 = and i64 %i.bs, -2
+  %i.bt = getelementptr i8, ptr %.0.lcssa, i64 %4
+  %5 = getelementptr i8, ptr %i.bt, i64 2
+  %i.bu = mul i64 %3, 6
   %i.bv = getelementptr i8, ptr %1, i64 %i.bu
   %i.bw = getelementptr i8, ptr %i.bv, i64 4
   %bound0110 = icmp ult ptr %.0.lcssa, %i.bw
-  %bound1111 = icmp ult ptr %i.b, %i.bt
+  %bound1111 = icmp ult ptr %i.b, %5
   %found.conflict112 = and i1 %bound0110, %bound1111
   br i1 %found.conflict112, label %.lr.ph71.preheader161, label %vector.ph113
 
@@ -323,10 +323,10 @@ bb.g:                                             ; preds = %bb.e
   br label %.lr.ph78
 
 vector.memcheck139:                               ; preds = %.lr.ph78.preheader
+  %6 = lshr i64 %i.dr, 1
   %i.du = and i64 %i.dr, -2
   %i.dv = getelementptr i8, ptr %.1.lcssa, i64 %i.du
   %i.dw = getelementptr i8, ptr %i.dv, i64 2
-  %6 = lshr i64 %i.dr, 1
   %i.dx = mul i64 %6, 6
   %i.dy = getelementptr i8, ptr %1, i64 %i.dx
   %i.dz = getelementptr i8, ptr %i.dy, i64 6

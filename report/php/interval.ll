@@ -202,14 +202,14 @@ bb.d:                                             ; preds = %bb.b
   %spec.select = select i1 %.not52, i64 1, i64 -1 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.k, i8 0, i64 104, i1 false)
-  %i.l = load i64, ptr %1, align 8, !tbaa !48     ; 2 uses
+  %i.l = load i64, ptr %1, align 8, !tbaa !48     ; 3 uses
   %i.m = sub i64 0, %i.l
-  %.neg = select i1 %.not52, i64 %i.m, i64 %i.l   ; 2 uses
+  %.neg = select i1 %.not52, i64 %i.m, i64 %i.l
   store i64 %.neg, ptr %i.k, align 8, !tbaa !49
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !50   ; 2 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !50   ; 3 uses
   %i.p = sub i64 0, %i.o
-  %.neg56 = select i1 %.not52, i64 %i.p, i64 %i.o ; 2 uses
+  %.neg56 = select i1 %.not52, i64 %i.p, i64 %i.o
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   store i64 %.neg56, ptr %i.q, align 8, !tbaa !51
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -218,11 +218,11 @@ bb.d:                                             ; preds = %bb.b
   %.neg57 = select i1 %.not52, i64 %i.t, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store i64 %.neg57, ptr %i.u, align 8, !tbaa !52
-  %.not53 = icmp eq i64 %.neg, 0
+  %.not53 = icmp eq i64 %i.l, 0
   br i1 %.not53, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %.not54 = icmp eq i64 %.neg56, 0
+  %.not54 = icmp eq i64 %i.o, 0
   %.not55 = icmp eq i64 %i.s, 0
   %or.cond = select i1 %.not54, i1 %.not55, i1 false
   br i1 %or.cond, label %bb.g, label %bb.f

@@ -204,14 +204,14 @@ bb.n:                                             ; preds = %bb.m
   %i.cg = zext nneg i32 %i.cf to i64
   %i.ch = load ptr, ptr %i.ba, align 8, !tbaa !196
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cg
-  %i.cj = load i8, ptr %i.ci, align 1, !tbaa !194 ; 2 uses
-  %3 = icmp slt i32 %i.bz, 0
-  %4 = sub i8 0, %i.cj
-  %spec.select.i = select i1 %3, i8 %4, i8 %i.cj  ; 2 uses
-  %.not215 = icmp eq i8 %spec.select.i, 0
+  %i.cj = load i8, ptr %i.ci, align 1, !tbaa !194 ; 3 uses
+  %.not215 = icmp eq i8 %i.cj, 0
   br i1 %.not215, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
+  %3 = icmp slt i32 %i.bz, 0
+  %4 = sub i8 0, %i.cj
+  %spec.select.i = select i1 %3, i8 %4, i8 %i.cj
   %i.ck = icmp slt i8 %spec.select.i, 0
   br i1 %i.ck, label %bb.p, label %bb.q
 

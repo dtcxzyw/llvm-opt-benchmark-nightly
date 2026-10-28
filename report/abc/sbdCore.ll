@@ -205,15 +205,15 @@ bb.a:
   br i1 %i.n, label %.lr.ph51.preheader, label %.preheader
 
 .lr.ph51.preheader:                               ; preds = %.preheader42
-  %.036.lcssa71 = ptrtoaddr ptr %.036.lcssa to i64
-  %.033.lcssa70 = ptrtoaddr ptr %.033.lcssa to i64 ; 2 uses
+  %.036.lcssa71 = ptrtoaddr ptr %.033.lcssa to i64 ; 2 uses
+  %.033.lcssa70 = ptrtoaddr ptr %.036.lcssa to i64
   %i.o = add i64 %.idx, %i.b
   %i.p = add i64 %i.o, 3
-  %i.q = sub i64 %i.p, %.033.lcssa70              ; 2 uses
+  %i.q = sub i64 %i.p, %.036.lcssa71              ; 2 uses
   %i.r = lshr i64 %i.q, 2
   %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.q, 44
-  %i.t = sub i64 %.033.lcssa70, %.036.lcssa71
+  %i.t = sub i64 %.036.lcssa71, %.033.lcssa70
   %diff.check = icmp ugt i64 %i.t, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph51.preheader100, label %vector.ph
@@ -456,17 +456,17 @@ bb.a:
   br i1 %i.ba, label %.lr.ph51.i.preheader, label %.preheader.i
 
 .lr.ph51.i.preheader:                             ; preds = %.preheader42.i
-  %.036.lcssa.i231 = ptrtoaddr ptr %.036.lcssa.i to i64
-  %.033.lcssa.i229 = ptrtoaddr ptr %.033.lcssa.i to i64 ; 2 uses
+  %.036.lcssa.i231 = ptrtoaddr ptr %.033.lcssa.i to i64 ; 2 uses
+  %.033.lcssa.i229 = ptrtoaddr ptr %.036.lcssa.i to i64
   %i.bb = shl nsw i64 %i.ai, 2
   %i.bc = add i64 %.idx.i, %.val95.val230
   %i.bd = add i64 %i.bc, %i.bb
   %i.be = add i64 %i.bd, 3
-  %i.bf = sub i64 %i.be, %.033.lcssa.i229         ; 2 uses
+  %i.bf = sub i64 %i.be, %.036.lcssa.i231         ; 2 uses
   %i.bg = lshr i64 %i.bf, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bf, 44
-  %i.bi = sub i64 %.033.lcssa.i229, %.036.lcssa.i231
+  %i.bi = sub i64 %.036.lcssa.i231, %.033.lcssa.i229
   %diff.check = icmp ugt i64 %i.bi, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph51.i.preheader416, label %vector.ph
@@ -650,15 +650,15 @@ Sbd_CutMergeSimple.exit:                          ; preds = %Sbd_CutMergeSimple.
   br i1 %i.dn, label %.lr.ph51.i109.preheader, label %.preheader.i103
 
 .lr.ph51.i109.preheader:                          ; preds = %.preheader42.i99
-  %.036.lcssa.i102263 = ptrtoaddr ptr %.036.lcssa.i102 to i64
-  %.033.lcssa.i100262 = ptrtoaddr ptr %.033.lcssa.i100 to i64 ; 2 uses
+  %.036.lcssa.i102263 = ptrtoaddr ptr %.033.lcssa.i100 to i64 ; 2 uses
+  %.033.lcssa.i100262 = ptrtoaddr ptr %.036.lcssa.i102 to i64
   %i.do = add i64 %.idx.i96, %i.f
   %i.dp = or disjoint i64 %i.do, 3
-  %i.dq = sub i64 %i.dp, %.033.lcssa.i100262      ; 2 uses
+  %i.dq = sub i64 %i.dp, %.036.lcssa.i102263      ; 2 uses
   %i.dr = lshr i64 %i.dq, 2
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
   %min.iters.check265 = icmp ult i64 %i.dq, 44
-  %i.dt = sub i64 %.033.lcssa.i100262, %.036.lcssa.i102263
+  %i.dt = sub i64 %.036.lcssa.i102263, %.033.lcssa.i100262
   %diff.check267 = icmp ugt i64 %i.dt, -32
   %or.cond397 = select i1 %min.iters.check265, i1 true, i1 %diff.check267
   br i1 %or.cond397, label %.lr.ph51.i109.preheader412, label %vector.ph268
@@ -835,17 +835,17 @@ Sbd_CutMergeSimple.exit119:                       ; preds = %.lr.ph55.i106, %mid
   br i1 %i.fz, label %.lr.ph51.i133.preheader, label %.preheader.i127
 
 .lr.ph51.i133.preheader:                          ; preds = %.preheader42.i123
-  %.036.lcssa.i126309 = ptrtoaddr ptr %.036.lcssa.i126 to i64
-  %.033.lcssa.i124308 = ptrtoaddr ptr %.033.lcssa.i124 to i64 ; 2 uses
+  %.036.lcssa.i126309 = ptrtoaddr ptr %.033.lcssa.i124 to i64 ; 2 uses
+  %.033.lcssa.i124308 = ptrtoaddr ptr %.036.lcssa.i126 to i64
   %i.ga = shl nsw i64 %i.ai, 2
   %i.gb = add i64 %.idx.i120, %.val95.val230
   %i.gc = add i64 %i.gb, %i.ga
   %i.gd = add i64 %i.gc, 3
-  %i.ge = sub i64 %i.gd, %.033.lcssa.i124308      ; 2 uses
+  %i.ge = sub i64 %i.gd, %.036.lcssa.i126309      ; 2 uses
   %i.gf = lshr i64 %i.ge, 2
   %i.gg = add nuw nsw i64 %i.gf, 1                ; 2 uses
   %min.iters.check311 = icmp ult i64 %i.ge, 44
-  %i.gh = sub i64 %.033.lcssa.i124308, %.036.lcssa.i126309
+  %i.gh = sub i64 %.036.lcssa.i126309, %.033.lcssa.i124308
   %diff.check313 = icmp ugt i64 %i.gh, -32
   %or.cond399 = select i1 %min.iters.check311, i1 true, i1 %diff.check313
   br i1 %or.cond399, label %.lr.ph51.i133.preheader408, label %vector.ph314
@@ -1026,15 +1026,15 @@ Sbd_CutMergeSimple.exit143:                       ; preds = %Sbd_CutMergeSimple.
   br i1 %i.ik, label %.lr.ph51.i157.preheader, label %.preheader.i151
 
 .lr.ph51.i157.preheader:                          ; preds = %.preheader42.i147
-  %.036.lcssa.i150355 = ptrtoaddr ptr %.036.lcssa.i150 to i64
-  %.033.lcssa.i148354 = ptrtoaddr ptr %.033.lcssa.i148 to i64 ; 2 uses
+  %.036.lcssa.i150355 = ptrtoaddr ptr %.033.lcssa.i148 to i64 ; 2 uses
+  %.033.lcssa.i148354 = ptrtoaddr ptr %.036.lcssa.i150 to i64
   %i.il = add i64 %.idx.i144, %i.f
   %i.im = or disjoint i64 %i.il, 3
-  %i.in = sub i64 %i.im, %.033.lcssa.i148354      ; 2 uses
+  %i.in = sub i64 %i.im, %.036.lcssa.i150355      ; 2 uses
   %i.io = lshr i64 %i.in, 2
   %i.ip = add nuw nsw i64 %i.io, 1                ; 2 uses
   %min.iters.check357 = icmp ult i64 %i.in, 44
-  %i.iq = sub i64 %.033.lcssa.i148354, %.036.lcssa.i150355
+  %i.iq = sub i64 %.036.lcssa.i150355, %.033.lcssa.i148354
   %diff.check359 = icmp ugt i64 %i.iq, -32
   %or.cond401 = select i1 %min.iters.check357, i1 true, i1 %diff.check359
   br i1 %or.cond401, label %.lr.ph51.i157.preheader404, label %vector.ph360

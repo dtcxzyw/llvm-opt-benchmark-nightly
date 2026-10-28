@@ -204,17 +204,17 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %i.f = ptrtoaddr ptr %1 to i64
-  %i.g = add i64 %.idx, %i.e
-  %i.h = add i64 %i.e, 2
+  %i.e = ptrtoaddr ptr %1 to i64
+  %i.f = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.g = add i64 %.idx, %i.f
+  %i.h = add i64 %i.f, 2
   %i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 %i.h)
-  %i.j = xor i64 %i.e, -1
+  %i.j = xor i64 %i.f, -1
   %i.k = add i64 %i.i, %i.j                       ; 2 uses
   %i.l = lshr i64 %i.k, 1
   %i.m = add nuw i64 %i.l, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 14
-  %i.n = sub i64 %i.e, %i.f
+  %i.n = sub i64 %i.f, %i.e
   %diff.check = icmp ugt i64 %i.n, -16
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader24, label %vector.ph
@@ -617,18 +617,18 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %i.f = ptrtoaddr ptr %1 to i64
-  %i.g = add i64 %i.e, %i.a
+  %i.e = ptrtoaddr ptr %1 to i64
+  %i.f = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.g = add i64 %i.f, %i.a
   %i.h = add i64 %i.g, -3
-  %i.i = add i64 %i.e, 4
+  %i.i = add i64 %i.f, 4
   %i.j = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.i)
-  %i.k = xor i64 %i.e, -1
+  %i.k = xor i64 %i.f, -1
   %i.l = add i64 %i.j, %i.k                       ; 2 uses
   %i.m = lshr i64 %i.l, 2
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.l, 28
-  %i.o = sub i64 %i.e, %i.f
+  %i.o = sub i64 %i.f, %i.e
   %diff.check = icmp ugt i64 %i.o, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader28, label %vector.ph
@@ -1027,18 +1027,18 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %i.f = ptrtoaddr ptr %1 to i64
-  %i.g = add i64 %i.e, %i.a
+  %i.e = ptrtoaddr ptr %1 to i64
+  %i.f = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.g = add i64 %i.f, %i.a
   %i.h = add i64 %i.g, -3
-  %i.i = add i64 %i.e, 4
+  %i.i = add i64 %i.f, 4
   %i.j = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.i)
-  %i.k = xor i64 %i.e, -1
+  %i.k = xor i64 %i.f, -1
   %i.l = add i64 %i.j, %i.k                       ; 2 uses
   %i.m = lshr i64 %i.l, 2
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.l, 28
-  %i.o = sub i64 %i.e, %i.f
+  %i.o = sub i64 %i.f, %i.e
   %diff.check = icmp ugt i64 %i.o, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader28, label %vector.ph

@@ -205,14 +205,14 @@ iter.check:                                       ; preds = %._crit_edge
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = tail call i64 @llvm.umax.i64(i64 %i.ak, i64 8)
   %i.ap = add nsw i64 %i.ao, -1                   ; 2 uses
-  %4 = and i64 %i.ap, -8
-  %5 = getelementptr i8, ptr %.026.lcssa, i64 %4
-  %i.aq = getelementptr i8, ptr %5, i64 8
-  %6 = lshr i64 %i.ap, 3
-  %i.ar = getelementptr i8, ptr %.025.lcssa, i64 %6
+  %4 = lshr i64 %i.ap, 3
+  %5 = and i64 %i.ap, -8
+  %i.aq = getelementptr i8, ptr %.026.lcssa, i64 %5
+  %6 = getelementptr i8, ptr %i.aq, i64 8
+  %i.ar = getelementptr i8, ptr %.025.lcssa, i64 %4
   %i.as = getelementptr i8, ptr %i.ar, i64 1
   %bound0 = icmp ult ptr %.026.lcssa, %i.as
-  %bound1 = icmp ult ptr %.025.lcssa, %i.aq
+  %bound1 = icmp ult ptr %.025.lcssa, %6
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i28.preheader, label %vector.main.loop.iter.check
 

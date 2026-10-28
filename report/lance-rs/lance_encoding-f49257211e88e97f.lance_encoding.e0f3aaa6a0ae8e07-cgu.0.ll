@@ -205,8 +205,8 @@ vector.memcheck101:                               ; preds = %_RINvYINtNtNtCscI6d
   %i.cs = shl i64 %i.cr, 2
   %i.ct = add i64 %i.cs, %i.bi
   %i.cu = sub i64 %i.ct, %i.ae
-  %i.cv = shl i64 %indvar, 2
-  %i.cw = add i64 %i.cv, %i.cu
+  %i.cv = shl nuw i64 %indvar, 2
+  %i.cw = add i64 %i.cu, %i.cv
   %i.cx = add i64 %i.cw, -1
   %diff.check102 = icmp ult i64 %i.cx, 31
   br i1 %diff.check102, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter4ItermENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQNCINvNtNtBR_8adapters6cloned14clone_try_foldmuINtNtNtBa_3ops12control_flow11ControlFlowINtNtB2q_9try_trait17NeverShortCircuituEENCINvNvXs_NtB1I_4takeINtB3P_4TakepEBL_8try_fold5checkmuB30_NCINvMB33_B30_10wrap_mut_2umNCINvNvXs_NtB1I_9enumerateINtB5e_9EnumeratepEBL_4fold9enumeratemuNCINvNvBL_8for_each4callTjmENCINvMs1_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB6I_8VecDequemE10write_iterIB41_INtNtB1I_12by_ref_sized10ByRefSizedINtB1G_6ClonedINtNtB6I_4iter4ItermEEEEE0E0E0E0E0E0B2l_ECsjjpCCFGI3ul_14lance_encoding.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader152, label %vector.ph105

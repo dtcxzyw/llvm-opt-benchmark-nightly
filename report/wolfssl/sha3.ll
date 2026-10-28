@@ -205,11 +205,11 @@ bb.e:                                             ; preds = %bb.c
 
 ._crit_edge.i.thread:                             ; preds = %bb.e
   %i.bz = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx.i30.i149 ; 2 uses
-  %.0.lcssa.i15423.a = ptrtoaddr ptr %i.g to i64  ; 2 uses
-  %i.ca = ptrtoaddr ptr %i.bz to i64
-  %i.cb = add nuw i64 %.0.lcssa.i15423.a, 8
-  %i.cc = tail call i64 @llvm.umax.i64(i64 %i.ca, i64 %i.cb)
-  %i.cd = xor i64 %.0.lcssa.i15423.a, -1
+  %.0.lcssa.i15423.a = ptrtoaddr ptr %i.bz to i64
+  %i.ca = ptrtoaddr ptr %i.g to i64               ; 2 uses
+  %i.cb = add nuw i64 %i.ca, 8
+  %i.cc = tail call i64 @llvm.umax.i64(i64 %.0.lcssa.i15423.a, i64 %i.cb)
+  %i.cd = xor i64 %i.ca, -1
   %i.ce = add i64 %i.cc, %i.cd                    ; 3 uses
   %i.cf = lshr i64 %i.ce, 3
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 2 uses

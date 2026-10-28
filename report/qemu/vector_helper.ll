@@ -204,8 +204,8 @@ bb.a:
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vsll_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = ptrtoaddr ptr %3 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 4 uses
@@ -244,9 +244,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.preheader.split.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -16
-  %i.ab = sub i64 %i.c, %i.b
+  %i.ab = sub i64 %i.c, %i.a
   %diff.check52 = icmp ugt i64 %i.ab, -16
   %conflict.rdx = or i1 %diff.check, %diff.check52
   br i1 %conflict.rdx, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -649,8 +649,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vsrl_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = ptrtoaddr ptr %3 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 4 uses
@@ -689,9 +689,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.preheader.split.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -16
-  %i.ab = sub i64 %i.c, %i.b
+  %i.ab = sub i64 %i.c, %i.a
   %diff.check52 = icmp ugt i64 %i.ab, -16
   %conflict.rdx = or i1 %diff.check, %diff.check52
   br i1 %conflict.rdx, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -1094,8 +1094,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vsra_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = ptrtoaddr ptr %3 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 4 uses
@@ -1134,9 +1134,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.preheader.split.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -16
-  %i.ab = sub i64 %i.c, %i.b
+  %i.ab = sub i64 %i.c, %i.a
   %diff.check52 = icmp ugt i64 %i.ab, -16
   %conflict.rdx = or i1 %diff.check, %diff.check52
   br i1 %conflict.rdx, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -1539,8 +1539,8 @@ vext_vx_rm_2.exit:                                ; preds = %bb.b, %vext_vx_rm_1
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vaadd_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 22 uses
@@ -1593,9 +1593,9 @@ iter.check69:                                     ; preds = %.lr.ph.i.i
   br i1 %or.cond, label %.lr.ph.split.i.i.preheader, label %vector.memcheck54
 
 vector.memcheck54:                                ; preds = %iter.check69
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check55 = icmp ugt i64 %i.ad, -16
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check56 = icmp ugt i64 %i.ae, -16
   %conflict.rdx57 = or i1 %diff.check55, %diff.check56
   br i1 %conflict.rdx57, label %.lr.ph.split.i.i.preheader, label %vector.main.loop.iter.check58
@@ -1902,9 +1902,9 @@ iter.check:                                       ; preds = %.lr.ph.i66.i
   br i1 %or.cond86, label %.lr.ph.split.i68.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.gv = sub i64 %i.a, %i.b
+  %i.gv = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.gv, -16
-  %i.gw = sub i64 %i.c, %i.b
+  %i.gw = sub i64 %i.c, %i.a
   %diff.check39 = icmp ugt i64 %i.gw, -16
   %conflict.rdx = or i1 %diff.check, %diff.check39
   br i1 %conflict.rdx, label %.lr.ph.split.i68.i.preheader, label %vector.main.loop.iter.check
@@ -2307,8 +2307,8 @@ vext_vx_rm_2.exit:                                ; preds = %bb.b, %vext_vx_rm_1
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vaaddu_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 6 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 6 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 3 uses
   %i.c = ptrtoaddr ptr %3 to i64                  ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 24 uses
@@ -2361,9 +2361,9 @@ iter.check107:                                    ; preds = %.lr.ph.i.i
   br i1 %or.cond, label %.lr.ph.split.i.i.preheader, label %vector.memcheck92
 
 vector.memcheck92:                                ; preds = %iter.check107
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check93 = icmp ugt i64 %i.ad, -16
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check94 = icmp ugt i64 %i.ae, -16
   %conflict.rdx95 = or i1 %diff.check93, %diff.check94
   br i1 %conflict.rdx95, label %.lr.ph.split.i.i.preheader, label %vector.main.loop.iter.check96
@@ -2555,9 +2555,9 @@ iter.check71:                                     ; preds = %.lr.ph.i56.i
   br i1 %or.cond124, label %.lr.ph.split.i58.i.preheader, label %vector.memcheck56
 
 vector.memcheck56:                                ; preds = %iter.check71
-  %i.dz = sub i64 %i.a, %i.b
+  %i.dz = sub i64 %i.b, %i.a
   %diff.check57 = icmp ugt i64 %i.dz, -16
-  %i.ea = sub i64 %i.c, %i.b
+  %i.ea = sub i64 %i.c, %i.a
   %diff.check58 = icmp ugt i64 %i.ea, -16
   %conflict.rdx59 = or i1 %diff.check57, %diff.check58
   br i1 %conflict.rdx59, label %.lr.ph.split.i58.i.preheader, label %vector.main.loop.iter.check60
@@ -2761,9 +2761,9 @@ iter.check:                                       ; preds = %.lr.ph.i66.i
   br i1 %or.cond126, label %.lr.ph.split.i68.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ih = sub i64 %i.a, %i.b
+  %i.ih = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ih, -32
-  %i.ii = sub i64 %i.c, %i.b
+  %i.ii = sub i64 %i.c, %i.a
   %diff.check39 = icmp ugt i64 %i.ii, -32
   %conflict.rdx = or i1 %diff.check, %diff.check39
   br i1 %conflict.rdx, label %.lr.ph.split.i68.i.preheader, label %vector.main.loop.iter.check
@@ -3166,8 +3166,8 @@ vext_vx_rm_2.exit:                                ; preds = %bb.b, %vext_vx_rm_1
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vasub_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 22 uses
@@ -3220,9 +3220,9 @@ iter.check69:                                     ; preds = %.lr.ph.i.i
   br i1 %or.cond, label %.lr.ph.split.i.i.preheader, label %vector.memcheck54
 
 vector.memcheck54:                                ; preds = %iter.check69
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check55 = icmp ugt i64 %i.ad, -16
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check56 = icmp ugt i64 %i.ae, -16
   %conflict.rdx57 = or i1 %diff.check55, %diff.check56
   br i1 %conflict.rdx57, label %.lr.ph.split.i.i.preheader, label %vector.main.loop.iter.check58
@@ -3529,9 +3529,9 @@ iter.check:                                       ; preds = %.lr.ph.i66.i
   br i1 %or.cond86, label %.lr.ph.split.i68.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.gv = sub i64 %i.a, %i.b
+  %i.gv = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.gv, -16
-  %i.gw = sub i64 %i.c, %i.b
+  %i.gw = sub i64 %i.c, %i.a
   %diff.check39 = icmp ugt i64 %i.gw, -16
   %conflict.rdx = or i1 %diff.check, %diff.check39
   br i1 %conflict.rdx, label %.lr.ph.split.i68.i.preheader, label %vector.main.loop.iter.check
@@ -3934,8 +3934,8 @@ vext_vx_rm_2.exit:                                ; preds = %bb.b, %vext_vx_rm_1
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vasubu_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 22 uses
@@ -3988,9 +3988,9 @@ iter.check71:                                     ; preds = %.lr.ph.i.i
   br i1 %or.cond, label %.lr.ph.split.i.i.preheader, label %vector.memcheck56
 
 vector.memcheck56:                                ; preds = %iter.check71
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check57 = icmp ugt i64 %i.ad, -16
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check58 = icmp ugt i64 %i.ae, -16
   %conflict.rdx59 = or i1 %diff.check57, %diff.check58
   br i1 %conflict.rdx59, label %.lr.ph.split.i.i.preheader, label %vector.main.loop.iter.check60
@@ -4297,9 +4297,9 @@ iter.check:                                       ; preds = %.lr.ph.i66.i
   br i1 %or.cond88, label %.lr.ph.split.i68.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.gv = sub i64 %i.a, %i.b
+  %i.gv = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.gv, -32
-  %i.gw = sub i64 %i.c, %i.b
+  %i.gw = sub i64 %i.c, %i.a
   %diff.check39 = icmp ugt i64 %i.gw, -32
   %conflict.rdx = or i1 %diff.check, %diff.check39
   br i1 %conflict.rdx, label %.lr.ph.split.i68.i.preheader, label %vector.main.loop.iter.check
@@ -4702,8 +4702,8 @@ vext_vx_rm_2.exit:                                ; preds = %bb.b, %vext_vx_rm_1
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vssrl_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 16 uses
@@ -4756,9 +4756,9 @@ iter.check100:                                    ; preds = %.lr.ph.i.i
   br i1 %or.cond, label %.lr.ph.split.i.i.preheader, label %vector.memcheck85
 
 vector.memcheck85:                                ; preds = %iter.check100
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check86 = icmp ugt i64 %i.ad, -16
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check87 = icmp ugt i64 %i.ae, -16
   %conflict.rdx88 = or i1 %diff.check86, %diff.check87
   br i1 %conflict.rdx88, label %.lr.ph.split.i.i.preheader, label %vector.main.loop.iter.check89
@@ -5048,9 +5048,9 @@ iter.check:                                       ; preds = %.lr.ph.i66.i
   br i1 %or.cond117, label %.lr.ph.split.i68.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.gb = sub i64 %i.a, %i.b
+  %i.gb = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.gb, -16
-  %i.gc = sub i64 %i.c, %i.b
+  %i.gc = sub i64 %i.c, %i.a
   %diff.check70 = icmp ugt i64 %i.gc, -16
   %conflict.rdx = or i1 %diff.check, %diff.check70
   br i1 %conflict.rdx, label %.lr.ph.split.i68.i.preheader, label %vector.main.loop.iter.check
@@ -5453,8 +5453,8 @@ vext_vx_rm_2.exit:                                ; preds = %bb.b, %vext_vx_rm_1
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vssra_vv_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 16 uses
@@ -5507,9 +5507,9 @@ iter.check100:                                    ; preds = %.lr.ph.i.i
   br i1 %or.cond, label %.lr.ph.split.i.i.preheader, label %vector.memcheck85
 
 vector.memcheck85:                                ; preds = %iter.check100
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check86 = icmp ugt i64 %i.ad, -16
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check87 = icmp ugt i64 %i.ae, -16
   %conflict.rdx88 = or i1 %diff.check86, %diff.check87
   br i1 %conflict.rdx88, label %.lr.ph.split.i.i.preheader, label %vector.main.loop.iter.check89
@@ -5799,9 +5799,9 @@ iter.check:                                       ; preds = %.lr.ph.i66.i
   br i1 %or.cond117, label %.lr.ph.split.i68.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.gb = sub i64 %i.a, %i.b
+  %i.gb = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.gb, -16
-  %i.gc = sub i64 %i.c, %i.b
+  %i.gc = sub i64 %i.c, %i.a
   %diff.check70 = icmp ugt i64 %i.gc, -16
   %conflict.rdx = or i1 %diff.check, %diff.check70
   br i1 %conflict.rdx, label %.lr.ph.split.i68.i.preheader, label %vector.main.loop.iter.check
@@ -6204,8 +6204,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vfsgnj_vv_h(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = ptrtoaddr ptr %3 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 8 uses
@@ -6250,9 +6250,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %or.cond, label %.preheader.split.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ad, -32
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check45 = icmp ugt i64 %i.ae, -32
   %conflict.rdx = or i1 %diff.check, %diff.check45
   br i1 %conflict.rdx, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -6655,8 +6655,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vfsgnjn_vv_h(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = ptrtoaddr ptr %3 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 8 uses
@@ -6701,9 +6701,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %or.cond, label %.preheader.split.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ad, -32
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check45 = icmp ugt i64 %i.ae, -32
   %conflict.rdx = or i1 %diff.check, %diff.check45
   br i1 %conflict.rdx, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -7106,8 +7106,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vfsgnjx_vv_h(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, i32 noundef %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = ptrtoaddr ptr %3 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 4616
   %i.e = load i32, ptr %i.d, align 8              ; 8 uses
@@ -7152,9 +7152,9 @@ iter.check:                                       ; preds = %.preheader
   br i1 %or.cond, label %.preheader.split.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ad, -32
-  %i.ae = sub i64 %i.c, %i.b
+  %i.ae = sub i64 %i.c, %i.a
   %diff.check45 = icmp ugt i64 %i.ae, -32
   %conflict.rdx = or i1 %diff.check, %diff.check45
   br i1 %conflict.rdx, label %.preheader.split.preheader, label %vector.main.loop.iter.check

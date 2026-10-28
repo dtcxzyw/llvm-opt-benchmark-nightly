@@ -205,8 +205,8 @@ _ZSt4copyIPN2cv3dnn14dnn5_v202606053ArgES4_ET0_T_S6_S5_.exit: ; preds = %bb.l, %
   %i.ak = phi ptr [ %.pre26, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.n ] ; 3 uses
   %i.al = phi ptr [ %.pre25, %bb.l ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ] ; 5 uses
   %i.am = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 2 uses
-  %i.an = ptrtoaddr ptr %i.am to i64              ; 2 uses
-  %i.ao = ptrtoaddr ptr %i.al to i64
+  %i.an = ptrtoaddr ptr %i.al to i64
+  %i.ao = ptrtoaddr ptr %i.am to i64              ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %.pre-phi33 ; 5 uses
   %.not9.i.i.i.i = icmp eq ptr %i.ap, %i.aj
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN2cv3dnn14dnn5_v202606053ArgESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit, label %.lr.ph.i.i.i.i.preheader
@@ -214,7 +214,7 @@ _ZSt4copyIPN2cv3dnn14dnn5_v202606053ArgES4_ET0_T_S6_S5_.exit: ; preds = %bb.l, %
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN2cv3dnn14dnn5_v202606053ArgES4_ET0_T_S6_S5_.exit
   %i.aq = ptrtoaddr ptr %i.aj to i64
   %i.ar = add i64 %i.aq, -4
-  %i.as = add i64 %.pre-phi33, %i.an
+  %i.as = add i64 %.pre-phi33, %i.ao
   %i.at = sub i64 %i.ar, %i.as                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -222,8 +222,8 @@ _ZSt4copyIPN2cv3dnn14dnn5_v202606053ArgES4_ET0_T_S6_S5_.exit: ; preds = %bb.l, %
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %i.aw = add nuw i64 %.pre-phi33, %i.an
-  %i.ax = sub i64 %i.aw, %i.ao
+  %i.aw = add nuw i64 %.pre-phi33, %i.ao
+  %i.ax = sub i64 %i.aw, %i.an
   %diff.check = icmp ugt i64 %i.ax, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.ph
 
@@ -626,15 +626,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc121
-  %i.al = ptrtoaddr ptr %i.ak to i64
-  %i.am = ptrtoaddr ptr %i.aj to i64              ; 2 uses
+  %i.al = ptrtoaddr ptr %i.aj to i64              ; 2 uses
+  %i.am = ptrtoaddr ptr %i.ak to i64
   %i.an = ptrtoaddr ptr %i.ai to i64
   %i.ao = add i64 %i.an, -4
-  %i.ap = sub i64 %i.ao, %i.am                    ; 2 uses
+  %i.ap = sub i64 %i.ao, %i.al                    ; 2 uses
   %i.aq = lshr i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ap, 44
-  %i.as = sub i64 %i.am, %i.al
+  %i.as = sub i64 %i.al, %i.am
   %diff.check = icmp ugt i64 %i.as, -32
   %or.cond515 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond515, label %.lr.ph.i.i.i.i.i.preheader535, label %vector.ph
@@ -726,15 +726,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i124, label %.loopexit374, label %.lr.ph.i.i.i.i.i125.preheader
 
 .lr.ph.i.i.i.i.i125.preheader:                    ; preds = %.noexc132
-  %i.bs = ptrtoaddr ptr %i.bo to i64
-  %i.bt = ptrtoaddr ptr %i.bn to i64              ; 2 uses
+  %i.bs = ptrtoaddr ptr %i.bn to i64              ; 2 uses
+  %i.bt = ptrtoaddr ptr %i.bo to i64
   %i.bu = ptrtoaddr ptr %i.bm to i64
   %i.bv = add i64 %i.bu, -4
-  %i.bw = sub i64 %i.bv, %i.bt                    ; 2 uses
+  %i.bw = sub i64 %i.bv, %i.bs                    ; 2 uses
   %i.bx = lshr i64 %i.bw, 2
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check499 = icmp ult i64 %i.bw, 44
-  %i.bz = sub i64 %i.bt, %i.bs
+  %i.bz = sub i64 %i.bs, %i.bt
   %diff.check501 = icmp ugt i64 %i.bz, -32
   %or.cond516 = or i1 %min.iters.check499, %diff.check501
   br i1 %or.cond516, label %.lr.ph.i.i.i.i.i125.preheader534, label %vector.ph502
@@ -1137,15 +1137,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc47
-  %i.al = ptrtoaddr ptr %i.ak to i64
-  %i.am = ptrtoaddr ptr %i.aj to i64              ; 2 uses
+  %i.al = ptrtoaddr ptr %i.aj to i64              ; 2 uses
+  %i.am = ptrtoaddr ptr %i.ak to i64
   %i.an = ptrtoaddr ptr %i.ai to i64
   %i.ao = add i64 %i.an, -4
-  %i.ap = sub i64 %i.ao, %i.am                    ; 2 uses
+  %i.ap = sub i64 %i.ao, %i.al                    ; 2 uses
   %i.aq = lshr i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ap, 44
-  %i.as = sub i64 %i.am, %i.al
+  %i.as = sub i64 %i.al, %i.am
   %diff.check = icmp ugt i64 %i.as, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader333, label %vector.ph
@@ -1237,15 +1237,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i50, label %.loopexit, label %.lr.ph.i.i.i.i.i51.preheader
 
 .lr.ph.i.i.i.i.i51.preheader:                     ; preds = %.noexc58
-  %i.bs = ptrtoaddr ptr %i.bo to i64
-  %i.bt = ptrtoaddr ptr %i.bn to i64              ; 2 uses
+  %i.bs = ptrtoaddr ptr %i.bn to i64              ; 2 uses
+  %i.bt = ptrtoaddr ptr %i.bo to i64
   %i.bu = ptrtoaddr ptr %i.bm to i64
   %i.bv = add i64 %i.bu, -4
-  %i.bw = sub i64 %i.bv, %i.bt                    ; 2 uses
+  %i.bw = sub i64 %i.bv, %i.bs                    ; 2 uses
   %i.bx = lshr i64 %i.bw, 2
   %i.by = add nuw nsw i64 %i.bx, 1                ; 2 uses
   %min.iters.check307 = icmp ult i64 %i.bw, 44
-  %i.bz = sub i64 %i.bt, %i.bs
+  %i.bz = sub i64 %i.bs, %i.bt
   %diff.check309 = icmp ugt i64 %i.bz, -32
   %or.cond323 = or i1 %min.iters.check307, %diff.check309
   br i1 %or.cond323, label %.lr.ph.i.i.i.i.i51.preheader332, label %vector.ph310
@@ -1648,15 +1648,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc83
-  %i.am = ptrtoaddr ptr %i.al to i64
-  %i.an = ptrtoaddr ptr %i.ak to i64              ; 2 uses
+  %i.am = ptrtoaddr ptr %i.ak to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.al to i64
   %i.ao = ptrtoaddr ptr %i.aj to i64
   %i.ap = add i64 %i.ao, -4
-  %i.aq = sub i64 %i.ap, %i.an                    ; 2 uses
+  %i.aq = sub i64 %i.ap, %i.am                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aq, 44
-  %i.at = sub i64 %i.an, %i.am
+  %i.at = sub i64 %i.am, %i.an
   %diff.check = icmp ugt i64 %i.at, -32
   %or.cond381 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond381, label %.lr.ph.i.i.i.i.i.preheader393, label %vector.ph
@@ -1748,15 +1748,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i86, label %.loopexit270, label %.lr.ph.i.i.i.i.i87.preheader
 
 .lr.ph.i.i.i.i.i87.preheader:                     ; preds = %.noexc94
-  %i.bt = ptrtoaddr ptr %i.bp to i64
-  %i.bu = ptrtoaddr ptr %i.bo to i64              ; 2 uses
+  %i.bt = ptrtoaddr ptr %i.bo to i64              ; 2 uses
+  %i.bu = ptrtoaddr ptr %i.bp to i64
   %i.bv = ptrtoaddr ptr %i.bn to i64
   %i.bw = add i64 %i.bv, -4
-  %i.bx = sub i64 %i.bw, %i.bu                    ; 2 uses
+  %i.bx = sub i64 %i.bw, %i.bt                    ; 2 uses
   %i.by = lshr i64 %i.bx, 2
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check365 = icmp ult i64 %i.bx, 44
-  %i.ca = sub i64 %i.bu, %i.bt
+  %i.ca = sub i64 %i.bt, %i.bu
   %diff.check367 = icmp ugt i64 %i.ca, -32
   %or.cond382 = or i1 %min.iters.check365, %diff.check367
   br i1 %or.cond382, label %.lr.ph.i.i.i.i.i87.preheader392, label %vector.ph368
@@ -2159,15 +2159,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc57
-  %i.am = ptrtoaddr ptr %i.al to i64
-  %i.an = ptrtoaddr ptr %i.ak to i64              ; 2 uses
+  %i.am = ptrtoaddr ptr %i.ak to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.al to i64
   %i.ao = ptrtoaddr ptr %i.aj to i64
   %i.ap = add i64 %i.ao, -4
-  %i.aq = sub i64 %i.ap, %i.an                    ; 2 uses
+  %i.aq = sub i64 %i.ap, %i.am                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aq, 44
-  %i.at = sub i64 %i.an, %i.am
+  %i.at = sub i64 %i.am, %i.an
   %diff.check = icmp ugt i64 %i.at, -32
   %or.cond356 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond356, label %.lr.ph.i.i.i.i.i.preheader367, label %vector.ph
@@ -2259,15 +2259,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i60, label %.loopexit, label %.lr.ph.i.i.i.i.i61.preheader
 
 .lr.ph.i.i.i.i.i61.preheader:                     ; preds = %.noexc68
-  %i.bt = ptrtoaddr ptr %i.bp to i64
-  %i.bu = ptrtoaddr ptr %i.bo to i64              ; 2 uses
+  %i.bt = ptrtoaddr ptr %i.bo to i64              ; 2 uses
+  %i.bu = ptrtoaddr ptr %i.bp to i64
   %i.bv = ptrtoaddr ptr %i.bn to i64
   %i.bw = add i64 %i.bv, -4
-  %i.bx = sub i64 %i.bw, %i.bu                    ; 2 uses
+  %i.bx = sub i64 %i.bw, %i.bt                    ; 2 uses
   %i.by = lshr i64 %i.bx, 2
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check340 = icmp ult i64 %i.bx, 44
-  %i.ca = sub i64 %i.bu, %i.bt
+  %i.ca = sub i64 %i.bt, %i.bu
   %diff.check342 = icmp ugt i64 %i.ca, -32
   %or.cond357 = or i1 %min.iters.check340, %diff.check342
   br i1 %or.cond357, label %.lr.ph.i.i.i.i.i61.preheader366, label %vector.ph343
@@ -2670,15 +2670,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc50
-  %i.an = ptrtoaddr ptr %i.am to i64
-  %i.ao = ptrtoaddr ptr %i.al to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.al to i64              ; 2 uses
+  %i.ao = ptrtoaddr ptr %i.am to i64
   %i.ap = ptrtoaddr ptr %i.ak to i64
   %i.aq = add i64 %i.ap, -4
-  %i.ar = sub i64 %i.aq, %i.ao                    ; 2 uses
+  %i.ar = sub i64 %i.aq, %i.an                    ; 2 uses
   %i.as = lshr i64 %i.ar, 2
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ar, 44
-  %i.au = sub i64 %i.ao, %i.an
+  %i.au = sub i64 %i.an, %i.ao
   %diff.check = icmp ugt i64 %i.au, -32
   %or.cond313 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond313, label %.lr.ph.i.i.i.i.i.preheader321, label %vector.ph
@@ -2770,15 +2770,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i53, label %.loopexit, label %.lr.ph.i.i.i.i.i54.preheader
 
 .lr.ph.i.i.i.i.i54.preheader:                     ; preds = %.noexc61
-  %i.bu = ptrtoaddr ptr %i.bq to i64
-  %i.bv = ptrtoaddr ptr %i.bp to i64              ; 2 uses
+  %i.bu = ptrtoaddr ptr %i.bp to i64              ; 2 uses
+  %i.bv = ptrtoaddr ptr %i.bq to i64
   %i.bw = ptrtoaddr ptr %i.bo to i64
   %i.bx = add i64 %i.bw, -4
-  %i.by = sub i64 %i.bx, %i.bv                    ; 2 uses
+  %i.by = sub i64 %i.bx, %i.bu                    ; 2 uses
   %i.bz = lshr i64 %i.by, 2
   %i.ca = add nuw nsw i64 %i.bz, 1                ; 2 uses
   %min.iters.check297 = icmp ult i64 %i.by, 44
-  %i.cb = sub i64 %i.bv, %i.bu
+  %i.cb = sub i64 %i.bu, %i.bv
   %diff.check299 = icmp ugt i64 %i.cb, -32
   %or.cond314 = or i1 %min.iters.check297, %diff.check299
   br i1 %or.cond314, label %.lr.ph.i.i.i.i.i54.preheader320, label %vector.ph300
@@ -3181,15 +3181,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc44
-  %i.am = ptrtoaddr ptr %i.al to i64
-  %i.an = ptrtoaddr ptr %i.ak to i64              ; 2 uses
+  %i.am = ptrtoaddr ptr %i.ak to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.al to i64
   %i.ao = ptrtoaddr ptr %i.aj to i64
   %i.ap = add i64 %i.ao, -4
-  %i.aq = sub i64 %i.ap, %i.an                    ; 2 uses
+  %i.aq = sub i64 %i.ap, %i.am                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aq, 44
-  %i.at = sub i64 %i.an, %i.am
+  %i.at = sub i64 %i.am, %i.an
   %diff.check = icmp ugt i64 %i.at, -32
   %or.cond272 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond272, label %.lr.ph.i.i.i.i.i.preheader280, label %vector.ph
@@ -3281,15 +3281,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i47, label %.loopexit, label %.lr.ph.i.i.i.i.i48.preheader
 
 .lr.ph.i.i.i.i.i48.preheader:                     ; preds = %.noexc55
-  %i.bt = ptrtoaddr ptr %i.bp to i64
-  %i.bu = ptrtoaddr ptr %i.bo to i64              ; 2 uses
+  %i.bt = ptrtoaddr ptr %i.bo to i64              ; 2 uses
+  %i.bu = ptrtoaddr ptr %i.bp to i64
   %i.bv = ptrtoaddr ptr %i.bn to i64
   %i.bw = add i64 %i.bv, -4
-  %i.bx = sub i64 %i.bw, %i.bu                    ; 2 uses
+  %i.bx = sub i64 %i.bw, %i.bt                    ; 2 uses
   %i.by = lshr i64 %i.bx, 2
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check256 = icmp ult i64 %i.bx, 44
-  %i.ca = sub i64 %i.bu, %i.bt
+  %i.ca = sub i64 %i.bt, %i.bu
   %diff.check258 = icmp ugt i64 %i.ca, -32
   %or.cond273 = or i1 %min.iters.check256, %diff.check258
   br i1 %or.cond273, label %.lr.ph.i.i.i.i.i48.preheader279, label %vector.ph259
@@ -3692,15 +3692,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc52
-  %i.an = ptrtoaddr ptr %i.am to i64
-  %i.ao = ptrtoaddr ptr %i.al to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.al to i64              ; 2 uses
+  %i.ao = ptrtoaddr ptr %i.am to i64
   %i.ap = ptrtoaddr ptr %i.ak to i64
   %i.aq = add i64 %i.ap, -4
-  %i.ar = sub i64 %i.aq, %i.ao                    ; 2 uses
+  %i.ar = sub i64 %i.aq, %i.an                    ; 2 uses
   %i.as = lshr i64 %i.ar, 2
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ar, 44
-  %i.au = sub i64 %i.ao, %i.an
+  %i.au = sub i64 %i.an, %i.ao
   %diff.check = icmp ugt i64 %i.au, -32
   %or.cond316 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond316, label %.lr.ph.i.i.i.i.i.preheader325, label %vector.ph
@@ -3792,15 +3792,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i55, label %.loopexit208, label %.lr.ph.i.i.i.i.i56.preheader
 
 .lr.ph.i.i.i.i.i56.preheader:                     ; preds = %.noexc63
-  %i.bu = ptrtoaddr ptr %i.bq to i64
-  %i.bv = ptrtoaddr ptr %i.bp to i64              ; 2 uses
+  %i.bu = ptrtoaddr ptr %i.bp to i64              ; 2 uses
+  %i.bv = ptrtoaddr ptr %i.bq to i64
   %i.bw = ptrtoaddr ptr %i.bo to i64
   %i.bx = add i64 %i.bw, -4
-  %i.by = sub i64 %i.bx, %i.bv                    ; 2 uses
+  %i.by = sub i64 %i.bx, %i.bu                    ; 2 uses
   %i.bz = lshr i64 %i.by, 2
   %i.ca = add nuw nsw i64 %i.bz, 1                ; 2 uses
   %min.iters.check300 = icmp ult i64 %i.by, 44
-  %i.cb = sub i64 %i.bv, %i.bu
+  %i.cb = sub i64 %i.bu, %i.bv
   %diff.check302 = icmp ugt i64 %i.cb, -32
   %or.cond317 = or i1 %min.iters.check300, %diff.check302
   br i1 %or.cond317, label %.lr.ph.i.i.i.i.i56.preheader324, label %vector.ph303
@@ -4203,15 +4203,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc59
-  %i.aq = ptrtoaddr ptr %i.ap to i64
-  %i.ar = ptrtoaddr ptr %i.ao to i64              ; 2 uses
+  %i.aq = ptrtoaddr ptr %i.ao to i64              ; 2 uses
+  %i.ar = ptrtoaddr ptr %i.ap to i64
   %i.as = ptrtoaddr ptr %i.an to i64
   %i.at = add i64 %i.as, -4
-  %i.au = sub i64 %i.at, %i.ar                    ; 2 uses
+  %i.au = sub i64 %i.at, %i.aq                    ; 2 uses
   %i.av = lshr i64 %i.au, 2
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.au, 44
-  %i.ax = sub i64 %i.ar, %i.aq
+  %i.ax = sub i64 %i.aq, %i.ar
   %diff.check = icmp ugt i64 %i.ax, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader467, label %vector.ph
@@ -4303,15 +4303,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i62, label %.lr.ph, label %.lr.ph.i.i.i.i.i63.preheader
 
 .lr.ph.i.i.i.i.i63.preheader:                     ; preds = %.noexc70
-  %i.bx = ptrtoaddr ptr %i.bt to i64
-  %i.by = ptrtoaddr ptr %i.bs to i64              ; 2 uses
+  %i.bx = ptrtoaddr ptr %i.bs to i64              ; 2 uses
+  %i.by = ptrtoaddr ptr %i.bt to i64
   %i.bz = ptrtoaddr ptr %i.br to i64
   %i.ca = add i64 %i.bz, -4
-  %i.cb = sub i64 %i.ca, %i.by                    ; 2 uses
+  %i.cb = sub i64 %i.ca, %i.bx                    ; 2 uses
   %i.cc = lshr i64 %i.cb, 2
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check413 = icmp ult i64 %i.cb, 44
-  %i.ce = sub i64 %i.by, %i.bx
+  %i.ce = sub i64 %i.bx, %i.by
   %diff.check415 = icmp ugt i64 %i.ce, -32
   %or.cond446 = or i1 %min.iters.check413, %diff.check415
   br i1 %or.cond446, label %.lr.ph.i.i.i.i.i63.preheader465, label %vector.ph416
@@ -4714,15 +4714,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EEC2ERKS5_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc60
-  %i.ah = ptrtoaddr ptr %i.ag to i64
-  %i.ai = ptrtoaddr ptr %i.af to i64              ; 2 uses
+  %i.ah = ptrtoaddr ptr %i.af to i64              ; 2 uses
+  %i.ai = ptrtoaddr ptr %i.ag to i64
   %i.aj = ptrtoaddr ptr %i.ae to i64
   %i.ak = add i64 %i.aj, -4
-  %i.al = sub i64 %i.ak, %i.ai                    ; 2 uses
+  %i.al = sub i64 %i.ak, %i.ah                    ; 2 uses
   %i.am = lshr i64 %i.al, 2
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.al, 44
-  %i.ao = sub i64 %i.ai, %i.ah
+  %i.ao = sub i64 %i.ah, %i.ai
   %diff.check = icmp ugt i64 %i.ao, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader427, label %vector.ph
@@ -4814,15 +4814,15 @@ _ZNSt15__new_allocatorIN2cv3dnn14dnn5_v202606053ArgEE8allocateEmPKv.exit.i.i.i.i
   br i1 %.not7.i.i.i.i.i63, label %.loopexit, label %.lr.ph.i.i.i.i.i64.preheader
 
 .lr.ph.i.i.i.i.i64.preheader:                     ; preds = %.noexc71
-  %i.bo = ptrtoaddr ptr %i.bk to i64
-  %i.bp = ptrtoaddr ptr %i.bj to i64              ; 2 uses
+  %i.bo = ptrtoaddr ptr %i.bj to i64              ; 2 uses
+  %i.bp = ptrtoaddr ptr %i.bk to i64
   %i.bq = ptrtoaddr ptr %i.bi to i64
   %i.br = add i64 %i.bq, -4
-  %i.bs = sub i64 %i.br, %i.bp                    ; 2 uses
+  %i.bs = sub i64 %i.br, %i.bo                    ; 2 uses
   %i.bt = lshr i64 %i.bs, 2
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 2 uses
   %min.iters.check404 = icmp ult i64 %i.bs, 44
-  %i.bv = sub i64 %i.bp, %i.bo
+  %i.bv = sub i64 %i.bo, %i.bp
   %diff.check406 = icmp ugt i64 %i.bv, -32
   %or.cond420 = or i1 %min.iters.check404, %diff.check406
   br i1 %or.cond420, label %.lr.ph.i.i.i.i.i64.preheader426, label %vector.ph407

@@ -205,8 +205,8 @@ bb.a:
   br i1 %i.a, label %.preheader.preheader, label %._crit_edge
 
 .preheader.preheader:                             ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
+  %i.c = ptrtoaddr ptr %0 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 6
@@ -238,8 +238,8 @@ bb.a:
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 58
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 60
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 62
-  %i.ai = xor i64 %i.b, -1
-  %i.aj = add i64 %i.ai, %i.c                     ; 3 uses
+  %i.ai = xor i64 %i.c, -1
+  %i.aj = add i64 %i.ai, %i.b                     ; 3 uses
   %i.ak = lshr i64 %i.aj, 1
   %i.al = add nuw i64 %i.ak, 1                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.aj, 14

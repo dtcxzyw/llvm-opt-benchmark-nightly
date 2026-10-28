@@ -172,9 +172,9 @@ declare i32 @av_image_fill_linesizes(ptr noundef, i32 noundef, i32 noundef) loca
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @maskedmin8(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %3 to i64
-  %i.c = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64
+  %i.c = ptrtoaddr ptr %3 to i64
   %i.d = ptrtoaddr ptr %2 to i64
   %i.e = icmp sgt i32 %4, 0
   br i1 %i.e, label %iter.check, label %._crit_edge
@@ -185,12 +185,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.f, -16
-  %i.g = sub i64 %i.b, %i.c
+  %i.g = sub i64 %i.c, %i.a
   %diff.check45 = icmp ugt i64 %i.g, -16
   %conflict.rdx = or i1 %diff.check, %diff.check45
-  %i.h = sub i64 %i.d, %i.c
+  %i.h = sub i64 %i.d, %i.a
   %diff.check46 = icmp ugt i64 %i.h, -16
   %conflict.rdx47 = or i1 %conflict.rdx, %diff.check46
   br i1 %conflict.rdx47, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -301,9 +301,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @maskedmax8(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %3 to i64
-  %i.c = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64
+  %i.c = ptrtoaddr ptr %3 to i64
   %i.d = ptrtoaddr ptr %2 to i64
   %i.e = icmp sgt i32 %4, 0
   br i1 %i.e, label %iter.check, label %._crit_edge
@@ -314,12 +314,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.f, -16
-  %i.g = sub i64 %i.b, %i.c
+  %i.g = sub i64 %i.c, %i.a
   %diff.check45 = icmp ugt i64 %i.g, -16
   %conflict.rdx = or i1 %diff.check, %diff.check45
-  %i.h = sub i64 %i.d, %i.c
+  %i.h = sub i64 %i.d, %i.a
   %diff.check46 = icmp ugt i64 %i.h, -16
   %conflict.rdx47 = or i1 %conflict.rdx, %diff.check46
   br i1 %conflict.rdx47, label %.lr.ph.preheader, label %vector.main.loop.iter.check

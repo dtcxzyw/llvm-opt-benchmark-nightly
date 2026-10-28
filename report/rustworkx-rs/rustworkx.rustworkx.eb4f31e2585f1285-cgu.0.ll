@@ -205,10 +205,10 @@ bb.fc:                                            ; preds = %bb.fb, %.thread1055
   br i1 %i.arh, label %bb.fd, label %.lr.ph.i.i.i.i.i.i22.i.preheader
 
 .lr.ph.i.i.i.i.i.i22.i.preheader:                 ; preds = %bb.fc
-  %i.ari = ptrtoaddr ptr %i.are to i64
-  %.sroa.7.17610521061.i1874 = ptrtoaddr ptr %.sroa.7.17610521061.i to i64
-  %i.arj = add i64 %i.ari, -4
-  %i.ark = sub i64 %i.arj, %.sroa.7.17610521061.i1874 ; 4 uses
+  %i.ari = ptrtoaddr ptr %.sroa.7.17610521061.i to i64
+  %.sroa.7.17610521061.i1874 = ptrtoaddr ptr %i.are to i64
+  %i.arj = add i64 %.sroa.7.17610521061.i1874, -4
+  %i.ark = sub i64 %i.arj, %i.ari                 ; 4 uses
   %i.arl = lshr i64 %i.ark, 2
   %i.arm = add nuw nsw i64 %i.arl, 1              ; 2 uses
   %min.iters.check = icmp ult i64 %i.ark, 100
@@ -611,8 +611,8 @@ vector.memcheck90:                                ; preds = %_RINvYINtNtNtCslwFu
   %i.cl = shl i64 %i.ck, 2
   %i.cm = add i64 %i.cl, %i.bc
   %i.cn = sub i64 %i.cm, %i.y
-  %i.co = shl i64 %indvar, 2
-  %i.cp = add i64 %i.co, %i.cn
+  %i.co = shl nuw i64 %indvar, 2
+  %i.cp = add i64 %i.cn, %i.co
   %i.cq = add i64 %i.cp, -1
   %diff.check91 = icmp ult i64 %i.cq, 31
   br i1 %diff.check91, label %_RINvYINtNtNtCslwFuT2d6ECx_4core5slice4iter4IterNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQNCINvNtNtB1D_8adapters6cloned14clone_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowINtNtB3f_9try_trait17NeverShortCircuituEENCINvNvXs_NtB2u_4takeINtB4E_4TakepEB1x_8try_fold5checkBJ_uB3P_NCINvMB3S_B3P_10wrap_mut_2uBJ_NCINvNvXs_NtB2u_9enumerateINtB68_9EnumeratepEB1x_4fold9enumerateBJ_uNCINvNvB1x_8for_each4callTjBJ_ENCINvMs2_NtNtCs87CvPiUlf0m_5alloc11collections9vec_dequeINtB7I_8VecDequeBJ_E10write_iterIB4Q_INtNtB2u_12by_ref_sized10ByRefSizedINtB2s_6ClonedINtNtB7I_4iter4IterBJ_EEEEE0E0E0E0E0E0B3a_ECskcxRuJ53GpR_9rustworkx.exit.i.i.i.i.i.i.i.preheader141, label %vector.ph94

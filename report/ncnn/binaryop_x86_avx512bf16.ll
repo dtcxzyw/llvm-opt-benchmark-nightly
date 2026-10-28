@@ -161,8 +161,8 @@ bb.d:                                             ; preds = %bb.c
   %.236.lcssa.i.i = phi ptr [ %.135.lcssa.i.i, %.preheader62.i.i ], [ %i.eb, %.lr.ph84.i.i ] ; 7 uses
   %.2.lcssa.i.i = phi ptr [ %.1.lcssa.i.i, %.preheader62.i.i ], [ %i.ea, %.lr.ph84.i.i ] ; 7 uses
   %.236.lcssa.i.i9123 = ptrtoaddr ptr %.236.lcssa.i.i to i64
-  %.244.lcssa.i.i9124 = ptrtoaddr ptr %.244.lcssa.i.i to i64 ; 2 uses
-  %.2.lcssa.i.i9125 = ptrtoaddr ptr %.2.lcssa.i.i to i64
+  %.244.lcssa.i.i9124 = ptrtoaddr ptr %.2.lcssa.i.i to i64
+  %.2.lcssa.i.i9125 = ptrtoaddr ptr %.244.lcssa.i.i to i64 ; 2 uses
   %i.bb = icmp slt i32 %.240.lcssa.i.i, %i.a
   br i1 %i.bb, label %iter.check9145, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -175,9 +175,9 @@ iter.check9145:                                   ; preds = %.preheader.i.i
   br i1 %min.iters.check9126, label %.lr.ph93.i.i.preheader, label %vector.memcheck9127
 
 vector.memcheck9127:                              ; preds = %iter.check9145
-  %i.bg = sub i64 %.2.lcssa.i.i9125, %.244.lcssa.i.i9124
+  %i.bg = sub i64 %.244.lcssa.i.i9124, %.2.lcssa.i.i9125
   %diff.check9128 = icmp ugt i64 %i.bg, -64
-  %i.bh = sub i64 %.236.lcssa.i.i9123, %.244.lcssa.i.i9124
+  %i.bh = sub i64 %.236.lcssa.i.i9123, %.2.lcssa.i.i9125
   %diff.check9129 = icmp ugt i64 %i.bh, -64
   %conflict.rdx9130 = or i1 %diff.check9128, %diff.check9129
   br i1 %conflict.rdx9130, label %.lr.ph93.i.i.preheader, label %vector.main.loop.iter.check9131
@@ -580,8 +580,8 @@ bb.ae:                                            ; preds = %bb.ad
   %.236.lcssa.i.i297 = phi ptr [ %.135.lcssa.i.i292, %.preheader62.i.i289 ], [ %i.akv, %.lr.ph84.i.i305 ] ; 7 uses
   %.2.lcssa.i.i298 = phi ptr [ %.1.lcssa.i.i293, %.preheader62.i.i289 ], [ %i.aku, %.lr.ph84.i.i305 ] ; 7 uses
   %.236.lcssa.i.i2978935 = ptrtoaddr ptr %.236.lcssa.i.i297 to i64
-  %.244.lcssa.i.i2958936 = ptrtoaddr ptr %.244.lcssa.i.i295 to i64 ; 2 uses
-  %.2.lcssa.i.i2988937 = ptrtoaddr ptr %.2.lcssa.i.i298 to i64
+  %.244.lcssa.i.i2958936 = ptrtoaddr ptr %.2.lcssa.i.i298 to i64
+  %.2.lcssa.i.i2988937 = ptrtoaddr ptr %.244.lcssa.i.i295 to i64 ; 2 uses
   %i.ahv = icmp slt i32 %.240.lcssa.i.i296, %i.afu
   br i1 %i.ahv, label %iter.check8957, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -594,9 +594,9 @@ iter.check8957:                                   ; preds = %.preheader.i.i294
   br i1 %min.iters.check8938, label %.lr.ph93.i.i299.preheader, label %vector.memcheck8939
 
 vector.memcheck8939:                              ; preds = %iter.check8957
-  %i.aia = sub i64 %.2.lcssa.i.i2988937, %.244.lcssa.i.i2958936
+  %i.aia = sub i64 %.244.lcssa.i.i2958936, %.2.lcssa.i.i2988937
   %diff.check8940 = icmp ugt i64 %i.aia, -64
-  %i.aib = sub i64 %.236.lcssa.i.i2978935, %.244.lcssa.i.i2958936
+  %i.aib = sub i64 %.236.lcssa.i.i2978935, %.2.lcssa.i.i2988937
   %diff.check8941 = icmp ugt i64 %i.aib, -64
   %conflict.rdx8942 = or i1 %diff.check8940, %diff.check8941
   br i1 %conflict.rdx8942, label %.lr.ph93.i.i299.preheader, label %vector.main.loop.iter.check8943
@@ -999,8 +999,8 @@ bb.bf:                                            ; preds = %bb.be
   %.236.lcssa.i.i467 = phi ptr [ %.135.lcssa.i.i462, %.preheader62.i.i459 ], [ %i.brp, %.lr.ph84.i.i475 ] ; 7 uses
   %.2.lcssa.i.i468 = phi ptr [ %.1.lcssa.i.i463, %.preheader62.i.i459 ], [ %i.bro, %.lr.ph84.i.i475 ] ; 7 uses
   %.236.lcssa.i.i4678747 = ptrtoaddr ptr %.236.lcssa.i.i467 to i64
-  %.244.lcssa.i.i4658748 = ptrtoaddr ptr %.244.lcssa.i.i465 to i64 ; 2 uses
-  %.2.lcssa.i.i4688749 = ptrtoaddr ptr %.2.lcssa.i.i468 to i64
+  %.244.lcssa.i.i4658748 = ptrtoaddr ptr %.2.lcssa.i.i468 to i64
+  %.2.lcssa.i.i4688749 = ptrtoaddr ptr %.244.lcssa.i.i465 to i64 ; 2 uses
   %i.bop = icmp slt i32 %.240.lcssa.i.i466, %i.bmo
   br i1 %i.bop, label %iter.check8769, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -1013,9 +1013,9 @@ iter.check8769:                                   ; preds = %.preheader.i.i464
   br i1 %min.iters.check8750, label %.lr.ph93.i.i469.preheader, label %vector.memcheck8751
 
 vector.memcheck8751:                              ; preds = %iter.check8769
-  %i.bou = sub i64 %.2.lcssa.i.i4688749, %.244.lcssa.i.i4658748
+  %i.bou = sub i64 %.244.lcssa.i.i4658748, %.2.lcssa.i.i4688749
   %diff.check8752 = icmp ugt i64 %i.bou, -64
-  %i.bov = sub i64 %.236.lcssa.i.i4678747, %.244.lcssa.i.i4658748
+  %i.bov = sub i64 %.236.lcssa.i.i4678747, %.2.lcssa.i.i4688749
   %diff.check8753 = icmp ugt i64 %i.bov, -64
   %conflict.rdx8754 = or i1 %diff.check8752, %diff.check8753
   br i1 %conflict.rdx8754, label %.lr.ph93.i.i469.preheader, label %vector.main.loop.iter.check8755
@@ -1418,8 +1418,8 @@ bb.cg:                                            ; preds = %bb.cf
   %.236.lcssa.i.i637 = phi ptr [ %.135.lcssa.i.i632, %.preheader62.i.i629 ], [ %i.cyj, %.lr.ph84.i.i645 ] ; 7 uses
   %.2.lcssa.i.i638 = phi ptr [ %.1.lcssa.i.i633, %.preheader62.i.i629 ], [ %i.cyi, %.lr.ph84.i.i645 ] ; 7 uses
   %.236.lcssa.i.i6378559 = ptrtoaddr ptr %.236.lcssa.i.i637 to i64
-  %.244.lcssa.i.i6358560 = ptrtoaddr ptr %.244.lcssa.i.i635 to i64 ; 2 uses
-  %.2.lcssa.i.i6388561 = ptrtoaddr ptr %.2.lcssa.i.i638 to i64
+  %.244.lcssa.i.i6358560 = ptrtoaddr ptr %.2.lcssa.i.i638 to i64
+  %.2.lcssa.i.i6388561 = ptrtoaddr ptr %.244.lcssa.i.i635 to i64 ; 2 uses
   %i.cvj = icmp slt i32 %.240.lcssa.i.i636, %i.cti
   br i1 %i.cvj, label %iter.check8581, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -1432,9 +1432,9 @@ iter.check8581:                                   ; preds = %.preheader.i.i634
   br i1 %min.iters.check8562, label %.lr.ph93.i.i639.preheader, label %vector.memcheck8563
 
 vector.memcheck8563:                              ; preds = %iter.check8581
-  %i.cvo = sub i64 %.2.lcssa.i.i6388561, %.244.lcssa.i.i6358560
+  %i.cvo = sub i64 %.244.lcssa.i.i6358560, %.2.lcssa.i.i6388561
   %diff.check8564 = icmp ugt i64 %i.cvo, -64
-  %i.cvp = sub i64 %.236.lcssa.i.i6378559, %.244.lcssa.i.i6358560
+  %i.cvp = sub i64 %.236.lcssa.i.i6378559, %.2.lcssa.i.i6388561
   %diff.check8565 = icmp ugt i64 %i.cvp, -64
   %conflict.rdx8566 = or i1 %diff.check8564, %diff.check8565
   br i1 %conflict.rdx8566, label %.lr.ph93.i.i639.preheader, label %vector.main.loop.iter.check8567
@@ -1837,8 +1837,8 @@ bb.dh:                                            ; preds = %bb.dg
   %.236.lcssa.i.i724 = phi ptr [ %.135.lcssa.i.i719, %.preheader61.i.i ], [ %i.eck, %.lr.ph83.i.i ] ; 7 uses
   %.2.lcssa.i.i725 = phi ptr [ %.1.lcssa.i.i720, %.preheader61.i.i ], [ %i.ecj, %.lr.ph83.i.i ] ; 7 uses
   %.236.lcssa.i.i7248380 = ptrtoaddr ptr %.236.lcssa.i.i724 to i64
-  %.244.lcssa.i.i7228381 = ptrtoaddr ptr %.244.lcssa.i.i722 to i64 ; 2 uses
-  %.2.lcssa.i.i7258382 = ptrtoaddr ptr %.2.lcssa.i.i725 to i64
+  %.244.lcssa.i.i7228381 = ptrtoaddr ptr %.2.lcssa.i.i725 to i64
+  %.2.lcssa.i.i7258382 = ptrtoaddr ptr %.244.lcssa.i.i722 to i64 ; 2 uses
   %i.dzo = icmp slt i32 %.240.lcssa.i.i723, %i.dxn
   br i1 %i.dzo, label %iter.check8402, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -1851,9 +1851,9 @@ iter.check8402:                                   ; preds = %.preheader.i.i721
   br i1 %min.iters.check8383, label %.lr.ph92.i.i.preheader, label %vector.memcheck8384
 
 vector.memcheck8384:                              ; preds = %iter.check8402
-  %i.dzt = sub i64 %.2.lcssa.i.i7258382, %.244.lcssa.i.i7228381
+  %i.dzt = sub i64 %.244.lcssa.i.i7228381, %.2.lcssa.i.i7258382
   %diff.check8385 = icmp ugt i64 %i.dzt, -64
-  %i.dzu = sub i64 %.236.lcssa.i.i7248380, %.244.lcssa.i.i7228381
+  %i.dzu = sub i64 %.236.lcssa.i.i7248380, %.2.lcssa.i.i7258382
   %diff.check8386 = icmp ugt i64 %i.dzu, -64
   %conflict.rdx8387 = or i1 %diff.check8385, %diff.check8386
   br i1 %conflict.rdx8387, label %.lr.ph92.i.i.preheader, label %vector.main.loop.iter.check8388
@@ -2256,8 +2256,8 @@ bb.ei:                                            ; preds = %bb.eh
   %.236.lcssa.i.i877 = phi ptr [ %.135.lcssa.i.i872, %.preheader61.i.i869 ], [ %i.fgg, %.lr.ph83.i.i886 ] ; 7 uses
   %.2.lcssa.i.i878 = phi ptr [ %.1.lcssa.i.i873, %.preheader61.i.i869 ], [ %i.fgf, %.lr.ph83.i.i886 ] ; 7 uses
   %.236.lcssa.i.i8778201 = ptrtoaddr ptr %.236.lcssa.i.i877 to i64
-  %.244.lcssa.i.i8758202 = ptrtoaddr ptr %.244.lcssa.i.i875 to i64 ; 2 uses
-  %.2.lcssa.i.i8788203 = ptrtoaddr ptr %.2.lcssa.i.i878 to i64
+  %.244.lcssa.i.i8758202 = ptrtoaddr ptr %.2.lcssa.i.i878 to i64
+  %.2.lcssa.i.i8788203 = ptrtoaddr ptr %.244.lcssa.i.i875 to i64 ; 2 uses
   %i.fdk = icmp slt i32 %.240.lcssa.i.i876, %i.fbj
   br i1 %i.fdk, label %iter.check8223, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -2270,9 +2270,9 @@ iter.check8223:                                   ; preds = %.preheader.i.i874
   br i1 %min.iters.check8204, label %.lr.ph92.i.i879.preheader, label %vector.memcheck8205
 
 vector.memcheck8205:                              ; preds = %iter.check8223
-  %i.fdp = sub i64 %.2.lcssa.i.i8788203, %.244.lcssa.i.i8758202
+  %i.fdp = sub i64 %.244.lcssa.i.i8758202, %.2.lcssa.i.i8788203
   %diff.check8206 = icmp ugt i64 %i.fdp, -64
-  %i.fdq = sub i64 %.236.lcssa.i.i8778201, %.244.lcssa.i.i8758202
+  %i.fdq = sub i64 %.236.lcssa.i.i8778201, %.2.lcssa.i.i8788203
   %diff.check8207 = icmp ugt i64 %i.fdq, -64
   %conflict.rdx8208 = or i1 %diff.check8206, %diff.check8207
   br i1 %conflict.rdx8208, label %.lr.ph92.i.i879.preheader, label %vector.main.loop.iter.check8209
@@ -2675,8 +2675,8 @@ bb.fj:                                            ; preds = %bb.fi
   %.236.lcssa.i.i959 = phi ptr [ %.135.lcssa.i.i954, %.preheader176.i.i ], [ %i.gpr, %.lr.ph198.i.i ] ; 7 uses
   %.2.lcssa.i.i960 = phi ptr [ %.1.lcssa.i.i955, %.preheader176.i.i ], [ %i.gpq, %.lr.ph198.i.i ] ; 7 uses
   %.236.lcssa.i.i9598022 = ptrtoaddr ptr %.236.lcssa.i.i959 to i64
-  %.244.lcssa.i.i9578023 = ptrtoaddr ptr %.244.lcssa.i.i957 to i64 ; 2 uses
-  %.2.lcssa.i.i9608024 = ptrtoaddr ptr %.2.lcssa.i.i960 to i64
+  %.244.lcssa.i.i9578023 = ptrtoaddr ptr %.2.lcssa.i.i960 to i64
+  %.2.lcssa.i.i9608024 = ptrtoaddr ptr %.244.lcssa.i.i957 to i64 ; 2 uses
   %i.gko = icmp slt i32 %.240.lcssa.i.i958, %i.gff
   br i1 %i.gko, label %iter.check8044, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -2689,9 +2689,9 @@ iter.check8044:                                   ; preds = %.preheader.i.i956
   br i1 %min.iters.check8025, label %.lr.ph207.i.i.preheader, label %vector.memcheck8026
 
 vector.memcheck8026:                              ; preds = %iter.check8044
-  %i.gkt = sub i64 %.2.lcssa.i.i9608024, %.244.lcssa.i.i9578023
+  %i.gkt = sub i64 %.244.lcssa.i.i9578023, %.2.lcssa.i.i9608024
   %diff.check8027 = icmp ugt i64 %i.gkt, -64
-  %i.gku = sub i64 %.236.lcssa.i.i9598022, %.244.lcssa.i.i9578023
+  %i.gku = sub i64 %.236.lcssa.i.i9598022, %.2.lcssa.i.i9608024
   %diff.check8028 = icmp ugt i64 %i.gku, -64
   %conflict.rdx8029 = or i1 %diff.check8027, %diff.check8028
   br i1 %conflict.rdx8029, label %.lr.ph207.i.i.preheader, label %vector.main.loop.iter.check8030
@@ -3094,8 +3094,8 @@ bb.gn:                                            ; preds = %bb.gm
   %.236.lcssa.i.i1109 = phi ptr [ %.135.lcssa.i.i1104, %.preheader62.i.i1101 ], [ %i.izc, %.lr.ph84.i.i1117 ] ; 7 uses
   %.2.lcssa.i.i1110 = phi ptr [ %.1.lcssa.i.i1105, %.preheader62.i.i1101 ], [ %i.izb, %.lr.ph84.i.i1117 ] ; 7 uses
   %.236.lcssa.i.i11097855 = ptrtoaddr ptr %.236.lcssa.i.i1109 to i64
-  %.244.lcssa.i.i11077856 = ptrtoaddr ptr %.244.lcssa.i.i1107 to i64 ; 2 uses
-  %.2.lcssa.i.i11107857 = ptrtoaddr ptr %.2.lcssa.i.i1110 to i64
+  %.244.lcssa.i.i11077856 = ptrtoaddr ptr %.2.lcssa.i.i1110 to i64
+  %.2.lcssa.i.i11107857 = ptrtoaddr ptr %.244.lcssa.i.i1107 to i64 ; 2 uses
   %i.iwc = icmp slt i32 %.240.lcssa.i.i1108, %i.iub
   br i1 %i.iwc, label %iter.check7877, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -3108,9 +3108,9 @@ iter.check7877:                                   ; preds = %.preheader.i.i1106
   br i1 %min.iters.check7858, label %.lr.ph93.i.i1111.preheader, label %vector.memcheck7859
 
 vector.memcheck7859:                              ; preds = %iter.check7877
-  %i.iwh = sub i64 %.2.lcssa.i.i11107857, %.244.lcssa.i.i11077856
+  %i.iwh = sub i64 %.244.lcssa.i.i11077856, %.2.lcssa.i.i11107857
   %diff.check7860 = icmp ugt i64 %i.iwh, -64
-  %i.iwi = sub i64 %.236.lcssa.i.i11097855, %.244.lcssa.i.i11077856
+  %i.iwi = sub i64 %.236.lcssa.i.i11097855, %.2.lcssa.i.i11107857
   %diff.check7861 = icmp ugt i64 %i.iwi, -64
   %conflict.rdx7862 = or i1 %diff.check7860, %diff.check7861
   br i1 %conflict.rdx7862, label %.lr.ph93.i.i1111.preheader, label %vector.main.loop.iter.check7863
@@ -3513,8 +3513,8 @@ bb.ho:                                            ; preds = %bb.hn
   %.236.lcssa.i.i1276 = phi ptr [ %.135.lcssa.i.i1271, %.preheader62.i.i1268 ], [ %i.kfw, %.lr.ph84.i.i1284 ] ; 7 uses
   %.2.lcssa.i.i1277 = phi ptr [ %.1.lcssa.i.i1272, %.preheader62.i.i1268 ], [ %i.kfv, %.lr.ph84.i.i1284 ] ; 7 uses
   %.236.lcssa.i.i12767667 = ptrtoaddr ptr %.236.lcssa.i.i1276 to i64
-  %.244.lcssa.i.i12747668 = ptrtoaddr ptr %.244.lcssa.i.i1274 to i64 ; 2 uses
-  %.2.lcssa.i.i12777669 = ptrtoaddr ptr %.2.lcssa.i.i1277 to i64
+  %.244.lcssa.i.i12747668 = ptrtoaddr ptr %.2.lcssa.i.i1277 to i64
+  %.2.lcssa.i.i12777669 = ptrtoaddr ptr %.244.lcssa.i.i1274 to i64 ; 2 uses
   %i.kcw = icmp slt i32 %.240.lcssa.i.i1275, %i.kav
   br i1 %i.kcw, label %iter.check7689, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -3527,9 +3527,9 @@ iter.check7689:                                   ; preds = %.preheader.i.i1273
   br i1 %min.iters.check7670, label %.lr.ph93.i.i1278.preheader, label %vector.memcheck7671
 
 vector.memcheck7671:                              ; preds = %iter.check7689
-  %i.kdb = sub i64 %.2.lcssa.i.i12777669, %.244.lcssa.i.i12747668
+  %i.kdb = sub i64 %.244.lcssa.i.i12747668, %.2.lcssa.i.i12777669
   %diff.check7672 = icmp ugt i64 %i.kdb, -64
-  %i.kdc = sub i64 %.236.lcssa.i.i12767667, %.244.lcssa.i.i12747668
+  %i.kdc = sub i64 %.236.lcssa.i.i12767667, %.2.lcssa.i.i12777669
   %diff.check7673 = icmp ugt i64 %i.kdc, -64
   %conflict.rdx7674 = or i1 %diff.check7672, %diff.check7673
   br i1 %conflict.rdx7674, label %.lr.ph93.i.i1278.preheader, label %vector.main.loop.iter.check7675
@@ -3932,8 +3932,8 @@ bb.im:                                            ; preds = %bb.il
   %.236.lcssa.i.i1446 = phi ptr [ %.135.lcssa.i.i1441, %.preheader176.i.i1438 ], [ %i.lpp, %.lr.ph198.i.i1454 ] ; 7 uses
   %.2.lcssa.i.i1447 = phi ptr [ %.1.lcssa.i.i1442, %.preheader176.i.i1438 ], [ %i.lpo, %.lr.ph198.i.i1454 ] ; 7 uses
   %.236.lcssa.i.i14467488 = ptrtoaddr ptr %.236.lcssa.i.i1446 to i64
-  %.244.lcssa.i.i14447489 = ptrtoaddr ptr %.244.lcssa.i.i1444 to i64 ; 2 uses
-  %.2.lcssa.i.i14477490 = ptrtoaddr ptr %.2.lcssa.i.i1447 to i64
+  %.244.lcssa.i.i14447489 = ptrtoaddr ptr %.2.lcssa.i.i1447 to i64
+  %.2.lcssa.i.i14477490 = ptrtoaddr ptr %.244.lcssa.i.i1444 to i64 ; 2 uses
   %i.lkm = icmp slt i32 %.240.lcssa.i.i1445, %i.lfd
   br i1 %i.lkm, label %iter.check7510, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -3946,9 +3946,9 @@ iter.check7510:                                   ; preds = %.preheader.i.i1443
   br i1 %min.iters.check7491, label %.lr.ph207.i.i1448.preheader, label %vector.memcheck7492
 
 vector.memcheck7492:                              ; preds = %iter.check7510
-  %i.lkr = sub i64 %.2.lcssa.i.i14477490, %.244.lcssa.i.i14447489
+  %i.lkr = sub i64 %.244.lcssa.i.i14447489, %.2.lcssa.i.i14477490
   %diff.check7493 = icmp ugt i64 %i.lkr, -64
-  %i.lks = sub i64 %.236.lcssa.i.i14467488, %.244.lcssa.i.i14447489
+  %i.lks = sub i64 %.236.lcssa.i.i14467488, %.2.lcssa.i.i14477490
   %diff.check7494 = icmp ugt i64 %i.lks, -64
   %conflict.rdx7495 = or i1 %diff.check7493, %diff.check7494
   br i1 %conflict.rdx7495, label %.lr.ph207.i.i1448.preheader, label %vector.main.loop.iter.check7496
@@ -4351,8 +4351,8 @@ bb.jt:                                            ; preds = %bb.js
   %.236.lcssa.i.i1511 = phi ptr [ %.135.lcssa.i.i1506, %.preheader132.i.i ], [ %i.ocy, %.lr.ph154.i.i ] ; 7 uses
   %.2.lcssa.i.i1512 = phi ptr [ %.1.lcssa.i.i1507, %.preheader132.i.i ], [ %i.ocx, %.lr.ph154.i.i ] ; 7 uses
   %.236.lcssa.i.i15117321 = ptrtoaddr ptr %.236.lcssa.i.i1511 to i64
-  %.244.lcssa.i.i15097322 = ptrtoaddr ptr %.244.lcssa.i.i1509 to i64 ; 2 uses
-  %.2.lcssa.i.i15127323 = ptrtoaddr ptr %.2.lcssa.i.i1512 to i64
+  %.244.lcssa.i.i15097322 = ptrtoaddr ptr %.2.lcssa.i.i1512 to i64
+  %.2.lcssa.i.i15127323 = ptrtoaddr ptr %.244.lcssa.i.i1509 to i64 ; 2 uses
   %i.nyf = icmp slt i32 %.240.lcssa.i.i1510, %i.ntz
   br i1 %i.nyf, label %iter.check7343, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -4365,9 +4365,9 @@ iter.check7343:                                   ; preds = %.preheader.i.i1508
   br i1 %min.iters.check7324, label %.lr.ph163.i.i.preheader, label %vector.memcheck7325
 
 vector.memcheck7325:                              ; preds = %iter.check7343
-  %i.nyk = sub i64 %.2.lcssa.i.i15127323, %.244.lcssa.i.i15097322
+  %i.nyk = sub i64 %.244.lcssa.i.i15097322, %.2.lcssa.i.i15127323
   %diff.check7326 = icmp ugt i64 %i.nyk, -64
-  %i.nyl = sub i64 %.236.lcssa.i.i15117321, %.244.lcssa.i.i15097322
+  %i.nyl = sub i64 %.236.lcssa.i.i15117321, %.2.lcssa.i.i15127323
   %diff.check7327 = icmp ugt i64 %i.nyl, -64
   %conflict.rdx7328 = or i1 %diff.check7326, %diff.check7327
   br i1 %conflict.rdx7328, label %.lr.ph163.i.i.preheader, label %vector.main.loop.iter.check7329
@@ -4770,8 +4770,8 @@ bb.ld:                                            ; preds = %bb.lc
   %.236.lcssa.i.i1660 = phi ptr [ %.135.lcssa.i.i1655, %.preheader132.i.i1652 ], [ %i.qik, %.lr.ph154.i.i1668 ] ; 7 uses
   %.2.lcssa.i.i1661 = phi ptr [ %.1.lcssa.i.i1656, %.preheader132.i.i1652 ], [ %i.qij, %.lr.ph154.i.i1668 ] ; 7 uses
   %.236.lcssa.i.i16607154 = ptrtoaddr ptr %.236.lcssa.i.i1660 to i64
-  %.244.lcssa.i.i16587155 = ptrtoaddr ptr %.244.lcssa.i.i1658 to i64 ; 2 uses
-  %.2.lcssa.i.i16617156 = ptrtoaddr ptr %.2.lcssa.i.i1661 to i64
+  %.244.lcssa.i.i16587155 = ptrtoaddr ptr %.2.lcssa.i.i1661 to i64
+  %.2.lcssa.i.i16617156 = ptrtoaddr ptr %.244.lcssa.i.i1658 to i64 ; 2 uses
   %i.qdr = icmp slt i32 %.240.lcssa.i.i1659, %i.pzl
   br i1 %i.qdr, label %iter.check7176, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -4784,9 +4784,9 @@ iter.check7176:                                   ; preds = %.preheader.i.i1657
   br i1 %min.iters.check7157, label %.lr.ph163.i.i1662.preheader, label %vector.memcheck7158
 
 vector.memcheck7158:                              ; preds = %iter.check7176
-  %i.qdw = sub i64 %.2.lcssa.i.i16617156, %.244.lcssa.i.i16587155
+  %i.qdw = sub i64 %.244.lcssa.i.i16587155, %.2.lcssa.i.i16617156
   %diff.check7159 = icmp ugt i64 %i.qdw, -64
-  %i.qdx = sub i64 %.236.lcssa.i.i16607154, %.244.lcssa.i.i16587155
+  %i.qdx = sub i64 %.236.lcssa.i.i16607154, %.2.lcssa.i.i16617156
   %diff.check7160 = icmp ugt i64 %i.qdx, -64
   %conflict.rdx7161 = or i1 %diff.check7159, %diff.check7160
   br i1 %conflict.rdx7161, label %.lr.ph163.i.i1662.preheader, label %vector.main.loop.iter.check7162
@@ -5189,8 +5189,8 @@ bb.mn:                                            ; preds = %bb.mm
   %.236.lcssa.i.i1752 = phi ptr [ %.135.lcssa.i.i1747, %.preheader71.i.i ], [ %i.ski, %.lr.ph93.i.i1755 ] ; 7 uses
   %.2.lcssa.i.i1753 = phi ptr [ %.1.lcssa.i.i1748, %.preheader71.i.i ], [ %i.skh, %.lr.ph93.i.i1755 ] ; 7 uses
   %.236.lcssa.i.i17526987 = ptrtoaddr ptr %.236.lcssa.i.i1752 to i64
-  %.244.lcssa.i.i17506988 = ptrtoaddr ptr %.244.lcssa.i.i1750 to i64 ; 2 uses
-  %.2.lcssa.i.i17536989 = ptrtoaddr ptr %.2.lcssa.i.i1753 to i64
+  %.244.lcssa.i.i17506988 = ptrtoaddr ptr %.2.lcssa.i.i1753 to i64
+  %.2.lcssa.i.i17536989 = ptrtoaddr ptr %.244.lcssa.i.i1750 to i64 ; 2 uses
   %i.shw = icmp slt i32 %.240.lcssa.i.i1751, %i.sfj
   br i1 %i.shw, label %iter.check7009, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -5203,9 +5203,9 @@ iter.check7009:                                   ; preds = %.preheader.i.i1749
   br i1 %min.iters.check6990, label %.lr.ph102.i.i.preheader, label %vector.memcheck6991
 
 vector.memcheck6991:                              ; preds = %iter.check7009
-  %i.sib = sub i64 %.2.lcssa.i.i17536989, %.244.lcssa.i.i17506988
+  %i.sib = sub i64 %.244.lcssa.i.i17506988, %.2.lcssa.i.i17536989
   %diff.check6992 = icmp ugt i64 %i.sib, -64
-  %i.sic = sub i64 %.236.lcssa.i.i17526987, %.244.lcssa.i.i17506988
+  %i.sic = sub i64 %.236.lcssa.i.i17526987, %.2.lcssa.i.i17536989
   %diff.check6993 = icmp ugt i64 %i.sic, -64
   %conflict.rdx6994 = or i1 %diff.check6992, %diff.check6993
   br i1 %conflict.rdx6994, label %.lr.ph102.i.i.preheader, label %vector.main.loop.iter.check6995
@@ -5608,8 +5608,8 @@ bb.no:                                            ; preds = %bb.nn
   %.236.lcssa.i.i1905 = phi ptr [ %.135.lcssa.i.i1900, %.preheader71.i.i1897 ], [ %i.tpp, %.lr.ph93.i.i1913 ] ; 7 uses
   %.2.lcssa.i.i1906 = phi ptr [ %.1.lcssa.i.i1901, %.preheader71.i.i1897 ], [ %i.tpo, %.lr.ph93.i.i1913 ] ; 7 uses
   %.236.lcssa.i.i19056808 = ptrtoaddr ptr %.236.lcssa.i.i1905 to i64
-  %.244.lcssa.i.i19036809 = ptrtoaddr ptr %.244.lcssa.i.i1903 to i64 ; 2 uses
-  %.2.lcssa.i.i19066810 = ptrtoaddr ptr %.2.lcssa.i.i1906 to i64
+  %.244.lcssa.i.i19036809 = ptrtoaddr ptr %.2.lcssa.i.i1906 to i64
+  %.2.lcssa.i.i19066810 = ptrtoaddr ptr %.244.lcssa.i.i1903 to i64 ; 2 uses
   %i.tnd = icmp slt i32 %.240.lcssa.i.i1904, %i.tkq
   br i1 %i.tnd, label %iter.check6830, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -5622,9 +5622,9 @@ iter.check6830:                                   ; preds = %.preheader.i.i1902
   br i1 %min.iters.check6811, label %.lr.ph102.i.i1907.preheader, label %vector.memcheck6812
 
 vector.memcheck6812:                              ; preds = %iter.check6830
-  %i.tni = sub i64 %.2.lcssa.i.i19066810, %.244.lcssa.i.i19036809
+  %i.tni = sub i64 %.244.lcssa.i.i19036809, %.2.lcssa.i.i19066810
   %diff.check6813 = icmp ugt i64 %i.tni, -64
-  %i.tnj = sub i64 %.236.lcssa.i.i19056808, %.244.lcssa.i.i19036809
+  %i.tnj = sub i64 %.236.lcssa.i.i19056808, %.2.lcssa.i.i19066810
   %diff.check6814 = icmp ugt i64 %i.tnj, -64
   %conflict.rdx6815 = or i1 %diff.check6813, %diff.check6814
   br i1 %conflict.rdx6815, label %.lr.ph102.i.i1907.preheader, label %vector.main.loop.iter.check6816
@@ -6027,8 +6027,8 @@ bb.pq:                                            ; preds = %bb.pp
   %.236.lcssa.i.i2061 = phi ptr [ %.135.lcssa.i.i2056, %.preheader63.i.i2053 ], [ %i.wzy, %.lr.ph85.i.i ] ; 7 uses
   %.2.lcssa.i.i2062 = phi ptr [ %.1.lcssa.i.i2057, %.preheader63.i.i2053 ], [ %i.wzx, %.lr.ph85.i.i ] ; 7 uses
   %.236.lcssa.i.i20616629 = ptrtoaddr ptr %.236.lcssa.i.i2061 to i64
-  %.244.lcssa.i.i20596630 = ptrtoaddr ptr %.244.lcssa.i.i2059 to i64 ; 2 uses
-  %.2.lcssa.i.i20626631 = ptrtoaddr ptr %.2.lcssa.i.i2062 to i64
+  %.244.lcssa.i.i20596630 = ptrtoaddr ptr %.2.lcssa.i.i2062 to i64
+  %.2.lcssa.i.i20626631 = ptrtoaddr ptr %.244.lcssa.i.i2059 to i64 ; 2 uses
   %i.wwu = icmp slt i32 %.240.lcssa.i.i2060, %i.wup
   br i1 %i.wwu, label %iter.check6651, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -6041,9 +6041,9 @@ iter.check6651:                                   ; preds = %.preheader.i.i2058
   br i1 %min.iters.check6632, label %.lr.ph94.i.i2063.preheader, label %vector.memcheck6633
 
 vector.memcheck6633:                              ; preds = %iter.check6651
-  %i.wwz = sub i64 %.2.lcssa.i.i20626631, %.244.lcssa.i.i20596630
+  %i.wwz = sub i64 %.244.lcssa.i.i20596630, %.2.lcssa.i.i20626631
   %diff.check6634 = icmp ugt i64 %i.wwz, -64
-  %i.wxa = sub i64 %.236.lcssa.i.i20616629, %.244.lcssa.i.i20596630
+  %i.wxa = sub i64 %.236.lcssa.i.i20616629, %.2.lcssa.i.i20626631
   %diff.check6635 = icmp ugt i64 %i.wxa, -64
   %conflict.rdx6636 = or i1 %diff.check6634, %diff.check6635
   br i1 %conflict.rdx6636, label %.lr.ph94.i.i2063.preheader, label %vector.main.loop.iter.check6637
@@ -6446,8 +6446,8 @@ bb.qr:                                            ; preds = %bb.qq
   %.236.lcssa.i.i2215 = phi ptr [ %.135.lcssa.i.i2210, %.preheader63.i.i2207 ], [ %i.yfk, %.lr.ph85.i.i2223 ] ; 7 uses
   %.2.lcssa.i.i2216 = phi ptr [ %.1.lcssa.i.i2211, %.preheader63.i.i2207 ], [ %i.yfj, %.lr.ph85.i.i2223 ] ; 7 uses
   %.236.lcssa.i.i22156451 = ptrtoaddr ptr %.236.lcssa.i.i2215 to i64
-  %.244.lcssa.i.i22136452 = ptrtoaddr ptr %.244.lcssa.i.i2213 to i64 ; 2 uses
-  %.2.lcssa.i.i22166453 = ptrtoaddr ptr %.2.lcssa.i.i2216 to i64
+  %.244.lcssa.i.i22136452 = ptrtoaddr ptr %.2.lcssa.i.i2216 to i64
+  %.2.lcssa.i.i22166453 = ptrtoaddr ptr %.244.lcssa.i.i2213 to i64 ; 2 uses
   %i.ycg = icmp slt i32 %.240.lcssa.i.i2214, %i.yab
   br i1 %i.ycg, label %iter.check6472, label %_ZN4ncnnL22binary_op_vector_bf16sINS_20BinaryOp_x86_functor13binary_op_addEEEvPKtS4_Ptiiii.exit
 
@@ -6460,9 +6460,9 @@ iter.check6472:                                   ; preds = %.preheader.i.i2212
   br i1 %min.iters.check6454, label %.lr.ph94.i.i2217.preheader, label %vector.memcheck6455
 
 vector.memcheck6455:                              ; preds = %iter.check6472
-  %i.ycl = sub i64 %.2.lcssa.i.i22166453, %.244.lcssa.i.i22136452
+  %i.ycl = sub i64 %.244.lcssa.i.i22136452, %.2.lcssa.i.i22166453
   %diff.check6456 = icmp ugt i64 %i.ycl, -64
-  %i.ycm = sub i64 %.236.lcssa.i.i22156451, %.244.lcssa.i.i22136452
+  %i.ycm = sub i64 %.236.lcssa.i.i22156451, %.2.lcssa.i.i22166453
   %diff.check6457 = icmp ugt i64 %i.ycm, -64
   %conflict.rdx = or i1 %diff.check6456, %diff.check6457
   br i1 %conflict.rdx, label %.lr.ph94.i.i2217.preheader, label %vector.main.loop.iter.check6458

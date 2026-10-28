@@ -205,8 +205,8 @@ _ZNSt10unique_ptrIN4llvm16CodeGenInstAliasESt14default_deleteIS1_EED2Ev.exit: ; 
   br i1 %.not709, label %._crit_edge689, label %.lr.ph688
 
 ._crit_edge701:                                   ; preds = %_ZNSt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS1_EED2Ev.exit345
-  %.sroa.0444.11760.le = ptrtoaddr ptr %.sroa.0444.1 to i64 ; 2 uses
-  %.sroa.9.11761.le = ptrtoaddr ptr %.sroa.9.1 to i64 ; 2 uses
+  %.sroa.0444.11760.le = ptrtoaddr ptr %.sroa.9.1 to i64 ; 2 uses
+  %.sroa.9.11761.le = ptrtoaddr ptr %.sroa.0444.1 to i64 ; 2 uses
   %i.cfq = ptrtoint ptr %.sroa.15.1 to i64        ; 3 uses
   %i.cfr = icmp eq ptr %.sroa.0444.1, %.sroa.9.1
   br i1 %i.cfr, label %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE6insertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS5_S7_EEEvEESD_NSB_IPKS5_S7_EET_SI_.exit, label %bb.ts
@@ -609,8 +609,8 @@ bb.ts:                                            ; preds = %._crit_edge701
   br i1 %.not.i.i390, label %bb.tt, label %.lr.ph.i.i.i.i.i.i391.preheader
 
 .lr.ph.i.i.i.i.i.i391.preheader:                  ; preds = %bb.ts
-  %i.dnj = add i64 %.sroa.9.11761.le, -8
-  %i.dnk = sub i64 %i.dnj, %.sroa.0444.11760.le   ; 3 uses
+  %i.dnj = add i64 %.sroa.0444.11760.le, -8
+  %i.dnk = sub i64 %i.dnj, %.sroa.9.11761.le      ; 3 uses
   %i.dnl = lshr i64 %i.dnk, 3
   %i.dnm = add nuw nsw i64 %i.dnl, 1              ; 2 uses
   %min.iters.check1763 = icmp ult i64 %i.dnk, 120
@@ -761,8 +761,8 @@ middle.block1792:                                 ; preds = %vector.body1785
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EES6_SaIS5_EET0_T_S9_S8_RT1_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i72.i.i, %middle.block1792, %_ZNSt12_Vector_baseISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i.i
   %.0.lcssa.i.i.i.i.i77.i.i = phi ptr [ %i.dom, %_ZNSt12_Vector_baseISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i.i ], [ %i.dos, %middle.block1792 ], [ %i.dpa, %.lr.ph.i.i.i.i.i72.i.i ] ; 6 uses
-  %i.dpb = add i64 %.sroa.9.11761.le, -8
-  %i.dpc = sub i64 %i.dpb, %.sroa.0444.11760.le   ; 3 uses
+  %i.dpb = add i64 %.sroa.0444.11760.le, -8
+  %i.dpc = sub i64 %i.dpb, %.sroa.9.11761.le      ; 3 uses
   %i.dpd = lshr i64 %i.dpc, 3
   %i.dpe = add nuw nsw i64 %i.dpd, 1              ; 2 uses
   %min.iters.check1805 = icmp ult i64 %i.dpc, 120
