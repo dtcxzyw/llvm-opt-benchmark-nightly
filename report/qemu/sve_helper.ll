@@ -205,7 +205,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.em, label %vec.epilog.scalar.ph, label %vec.epilog.vector.body, !llvm.loop !809
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.vector.body, %iter.check, %vector.memcheck, %vec.epilog.iter.check
-  %bc.resume.val = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.memcheck ], [ %n.vec47, %vec.epilog.vector.body ]
+  %bc.resume.val = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.memcheck ], [ %n.vec47, %vec.epilog.vector.body ] ; 3 uses
   %bc.resume.val50 = phi i64 [ %i.i, %iter.check ], [ %i.aj, %vec.epilog.iter.check ], [ %i.i, %vector.memcheck ], [ %i.dd, %vec.epilog.vector.body ] ; 3 uses
   br label %bb.c
 
@@ -241,24 +241,26 @@ iter.check68:                                     ; preds = %bb.c
 vector.memcheck51:                                ; preds = %iter.check68
   %scevgep = getelementptr i8, ptr %0, i64 %i.eq
   %i.ff = and i64 %i.q, -2                        ; 2 uses
-  %5 = add i64 %i.ff, %i.i
-  %i.fg = add i64 %5, -4
-  %6 = zext nneg i32 %.v.v.i to i64               ; 3 uses
-  %i.fh = sub i64 %i.fg, %6
+  %5 = zext nneg i32 %.v.v.i to i64               ; 3 uses
+  %i.fg = add i64 %i.ff, %i.i
+  %6 = add i64 %i.fg, -4
+  %i.fh = sub i64 %6, %5
   %umax = call i64 @llvm.umax.i64(i64 %i.fh, i64 %i.g)
-  %i.fi = add i64 %umax, %6
+  %i.fi = add i64 %umax, %5
   %i.fj = add i64 %i.fi, 5
   %i.fk = add i64 %i.ff, %i.i
   %i.fl = sub i64 %i.fj, %i.fk                    ; 2 uses
   %i.fm = lshr i64 %i.fl, 1
-  %i.fn = getelementptr i8, ptr %0, i64 %.027
-  %i.fo = getelementptr i8, ptr %i.fn, i64 %i.fm
-  %scevgep52 = getelementptr i8, ptr %i.fo, i64 2
+  %7 = sub i64 %.027, %bc.resume.val
+  %8 = getelementptr i8, ptr %0, i64 %bc.resume.val
+  %i.fn = getelementptr i8, ptr %8, i64 %i.fm
+  %i.fo = getelementptr i8, ptr %i.fn, i64 2
+  %scevgep52 = getelementptr i8, ptr %i.fo, i64 %7
   %scevgep53 = getelementptr i8, ptr %.029, i64 %i.et
   %i.fp = and i64 %i.fl, -2
   %i.fq = add i64 %bc.resume.val50, %i.fp
   %i.fr = add i64 %i.fq, -5
-  %i.fs = sub i64 %i.fr, %6
+  %i.fs = sub i64 %i.fr, %5
   %i.ft = sub i64 %.0, %bc.resume.val50
   %i.fu = getelementptr i8, ptr %.029, i64 %i.fs
   %scevgep54 = getelementptr i8, ptr %i.fu, i64 %i.ft
@@ -446,7 +448,7 @@ bb.a:
   %i.d = shl i32 %3, 3
   %i.e = and i32 %i.d, 2040
   %i.f = icmp eq i32 %i.b, 2
-  %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
+  %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 9 uses
   %i.h = ashr i32 %3, 10
@@ -520,7 +522,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ar, label %scalar.ph, label %vector.body, !llvm.loop !829
 
 scalar.ph:                                        ; preds = %vector.body, %vector.memcheck, %bb.c
-  %bc.resume.val = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.c ], [ %i.ag, %vector.body ]
+  %bc.resume.val = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.c ], [ %i.ag, %vector.body ] ; 3 uses
   %bc.resume.val48 = phi i64 [ %i.i, %vector.memcheck ], [ %i.i, %bb.c ], [ %i.ai, %vector.body ] ; 3 uses
   br label %bb.d
 
@@ -539,7 +541,7 @@ bb.d:                                             ; preds = %scalar.ph, %bb.d
 bb.e:                                             ; preds = %bb.d
   %i.ay = sub i64 %i.aw, %i.g                     ; 5 uses
   %i.az = and i64 %i.r, -4                        ; 2 uses
-  %i.ba = zext nneg i32 %.v.v.i to i64            ; 2 uses
+  %i.ba = zext nneg i32 %.v.v.i to i64            ; 5 uses
   %i.bb = add i64 %i.az, %i.i
   %i.bc = sub i64 %i.bb, %i.ba
   %i.bd = call i64 @llvm.umax.i64(i64 %i.bc, i64 %i.g)
@@ -556,23 +558,24 @@ vector.memcheck49:                                ; preds = %bb.e
   %scevgep = getelementptr i8, ptr %0, i64 %i.av
   %i.bk = and i64 %i.r, -4                        ; 2 uses
   %i.bl = add i64 %i.bk, %i.i
-  %5 = zext nneg i32 %.v.v.i to i64               ; 3 uses
-  %i.bm = sub i64 %i.bl, %5
+  %i.bm = sub i64 %i.bl, %i.ba
   %umax = call i64 @llvm.umax.i64(i64 %i.bm, i64 %i.g)
-  %i.bn = add i64 %umax, %5
+  %i.bn = add i64 %umax, %i.ba
   %i.bo = add i64 %i.bn, 3
   %i.bp = add i64 %i.bk, %i.i
   %i.bq = sub i64 %i.bo, %i.bp                    ; 2 uses
   %i.br = lshr i64 %i.bq, 1
   %i.bs = and i64 %i.br, 9223372036854775806
-  %i.bt = getelementptr i8, ptr %0, i64 %.027
-  %i.bu = getelementptr i8, ptr %i.bt, i64 %i.bs
-  %scevgep50 = getelementptr i8, ptr %i.bu, i64 4
+  %5 = sub i64 %.027, %bc.resume.val
+  %6 = getelementptr i8, ptr %0, i64 %bc.resume.val
+  %i.bt = getelementptr i8, ptr %6, i64 %i.bs
+  %i.bu = getelementptr i8, ptr %i.bt, i64 4
+  %scevgep50 = getelementptr i8, ptr %i.bu, i64 %5
   %scevgep51 = getelementptr i8, ptr %.029, i64 %i.ay
   %i.bv = and i64 %i.bq, -4
   %i.bw = add i64 %bc.resume.val48, %i.bv
   %i.bx = add i64 %i.bw, -2
-  %i.by = sub i64 %i.bx, %5
+  %i.by = sub i64 %i.bx, %i.ba
   %i.bz = sub i64 %.0, %bc.resume.val48
   %i.ca = getelementptr i8, ptr %.029, i64 %i.by
   %scevgep52 = getelementptr i8, ptr %i.ca, i64 %i.bz
@@ -647,7 +650,7 @@ bb.a:
   %i.d = shl i32 %3, 3
   %i.e = and i32 %i.d, 2040
   %i.f = icmp eq i32 %i.b, 2
-  %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
+  %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 9 uses
   %i.h = ashr i32 %3, 10
@@ -721,7 +724,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ar, label %scalar.ph, label %vector.body, !llvm.loop !847
 
 scalar.ph:                                        ; preds = %vector.body, %vector.memcheck, %bb.c
-  %bc.resume.val = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.c ], [ %i.ag, %vector.body ]
+  %bc.resume.val = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.c ], [ %i.ag, %vector.body ] ; 3 uses
   %bc.resume.val48 = phi i64 [ %i.i, %vector.memcheck ], [ %i.i, %bb.c ], [ %i.ai, %vector.body ] ; 3 uses
   br label %bb.d
 
@@ -740,7 +743,7 @@ bb.d:                                             ; preds = %scalar.ph, %bb.d
 bb.e:                                             ; preds = %bb.d
   %i.ay = sub i64 %i.aw, %i.g                     ; 5 uses
   %i.az = and i64 %i.r, -8                        ; 2 uses
-  %i.ba = zext nneg i32 %.v.v.i to i64            ; 2 uses
+  %i.ba = zext nneg i32 %.v.v.i to i64            ; 5 uses
   %i.bb = add i64 %i.az, %i.i
   %i.bc = add i64 %i.bb, 8
   %i.bd = sub i64 %i.bc, %i.ba
@@ -759,23 +762,24 @@ vector.memcheck49:                                ; preds = %bb.e
   %i.bl = and i64 %i.r, -8                        ; 2 uses
   %i.bm = add i64 %i.bl, %i.i
   %i.bn = add i64 %i.bm, 8
-  %5 = zext nneg i32 %.v.v.i to i64               ; 3 uses
-  %i.bo = sub i64 %i.bn, %5
+  %i.bo = sub i64 %i.bn, %i.ba
   %umax = call i64 @llvm.umax.i64(i64 %i.bo, i64 %i.g)
-  %i.bp = add i64 %umax, %5
+  %i.bp = add i64 %umax, %i.ba
   %i.bq = xor i64 %i.i, -1
   %i.br = add i64 %i.bp, %i.bq
   %i.bs = sub i64 %i.br, %i.bl                    ; 2 uses
   %i.bt = lshr i64 %i.bs, 1
   %i.bu = and i64 %i.bt, 9223372036854775804
-  %i.bv = getelementptr i8, ptr %0, i64 %.027
-  %i.bw = getelementptr i8, ptr %i.bv, i64 %i.bu
-  %scevgep50 = getelementptr i8, ptr %i.bw, i64 8
+  %5 = sub i64 %.027, %bc.resume.val
+  %6 = getelementptr i8, ptr %0, i64 %bc.resume.val
+  %i.bv = getelementptr i8, ptr %6, i64 %i.bu
+  %i.bw = getelementptr i8, ptr %i.bv, i64 8
+  %scevgep50 = getelementptr i8, ptr %i.bw, i64 %5
   %scevgep51 = getelementptr i8, ptr %.029, i64 %i.ay
   %i.bx = and i64 %i.bs, -8
   %i.by = add i64 %bc.resume.val48, %i.bx
   %i.bz = add i64 %i.by, 4
-  %i.ca = sub i64 %i.bz, %5
+  %i.ca = sub i64 %i.bz, %i.ba
   %i.cb = sub i64 %.0, %bc.resume.val48
   %i.cc = getelementptr i8, ptr %.029, i64 %i.ca
   %scevgep52 = getelementptr i8, ptr %i.cc, i64 %i.cb
@@ -1178,11 +1182,11 @@ iter.check:
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
   %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = sub i64 %i.l, %i.k
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.m = sub i64 %i.k, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.j, %i.k
+  %i.n = sub i64 %i.j, %i.l
   %diff.check13 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check13
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1585,11 +1589,11 @@ iter.check:
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
   %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = sub i64 %i.l, %i.k
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.m = sub i64 %i.k, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.j, %i.k
+  %i.n = sub i64 %i.j, %i.l
   %diff.check13 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check13
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1992,11 +1996,11 @@ iter.check:
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
   %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = sub i64 %i.l, %i.k
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.m = sub i64 %i.k, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.j, %i.k
+  %i.n = sub i64 %i.j, %i.l
   %diff.check13 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check13
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -2399,11 +2403,11 @@ iter.check:
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
   %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = sub i64 %i.l, %i.k
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.m = sub i64 %i.k, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.j, %i.k
+  %i.n = sub i64 %i.j, %i.l
   %diff.check13 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check13
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

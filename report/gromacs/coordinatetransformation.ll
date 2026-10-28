@@ -48,12 +48,12 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.e = add i64 %i.b, -12
-  %i.f = sub i64 %i.e, %i.a                       ; 2 uses
+  %i.e = add i64 %i.a, -12
+  %i.f = sub i64 %i.e, %i.b                       ; 2 uses
   %i.g = udiv i64 %i.f, 12                        ; 2 uses
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 180
@@ -242,12 +242,12 @@ bb.a:
   br i1 %.not11.i, label %_ZNK3gmx16ScaleCoordinates4Impl5scaleENS_8ArrayRefINS_11BasicVectorIfEEEE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %1 to i64
-  %i.c = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
+  %i.c = ptrtoaddr ptr %1 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %i.f = add i64 %i.c, -12
-  %i.g = sub i64 %i.f, %i.b                       ; 2 uses
+  %i.f = add i64 %i.b, -12
+  %i.g = sub i64 %i.f, %i.c                       ; 2 uses
   %i.h = udiv i64 %i.g, 12                        ; 2 uses
   %i.i = add nuw nsw i64 %i.h, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.g, 180

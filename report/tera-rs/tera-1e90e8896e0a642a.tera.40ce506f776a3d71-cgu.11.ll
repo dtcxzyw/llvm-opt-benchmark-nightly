@@ -204,8 +204,8 @@ bb.a:
     #dbg_value(ptr %1, !6467, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6473)
     #dbg_declare(ptr poison, !6468, !DIExpression(), !6474)
     #dbg_declare(ptr %2, !6469, !DIExpression(), !6475)
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !6567      ; 4 uses
-  %i.b = ptrtoaddr ptr %1 to i64, !dbg !6567      ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64, !dbg !6567      ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !6567      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6476), !dbg !6567
     #dbg_value(ptr poison, !2456, !DIExpression(), !6362)
     #dbg_value(ptr %0, !6479, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6363)
@@ -233,14 +233,14 @@ iter.check:                                       ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !6486, !noundef !975 ; 9 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.promoted.i = load i64, ptr %i.f, align 8, !alias.scope !6486 ; 8 uses
-  %i.g = sub i64 %i.b, %i.a, !dbg !6569           ; 7 uses
+  %i.g = sub i64 %i.a, %i.b, !dbg !6569           ; 7 uses
   %min.iters.check = icmp ult i64 %i.g, 8, !dbg !6569
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck, !dbg !6569
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.h = getelementptr nuw i8, ptr %i.e, i64 %.promoted.i, !dbg !6569
-  %i.i = add i64 %.promoted.i, %i.b, !dbg !6569
-  %i.j = sub i64 %i.i, %i.a, !dbg !6569
+  %i.i = add i64 %.promoted.i, %i.a, !dbg !6569
+  %i.j = sub i64 %i.i, %i.b, !dbg !6569
   %i.k = getelementptr i8, ptr %i.e, i64 %i.j, !dbg !6569
   %bound0 = icmp ult ptr %i.h, %1, !dbg !6569
   %bound1 = icmp ult ptr %0, %i.k, !dbg !6569
@@ -322,7 +322,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector
   %.ph = phi i64 [ %.promoted.i, %iter.check ], [ %.promoted.i, %vector.memcheck ], [ %i.m, %vec.epilog.iter.check ], [ %i.w, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.2.012.i.ph = phi ptr [ %1, %iter.check ], [ %1, %vector.memcheck ], [ %i.o, %vec.epilog.iter.check ], [ %i.y, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.2.012.i.ph15 = ptrtoaddr ptr %.sroa.2.012.i.ph to i64, !dbg !6569 ; 2 uses
-  %i.ae = sub i64 %.sroa.2.012.i.ph15, %i.a, !dbg !6569
+  %i.ae = sub i64 %.sroa.2.012.i.ph15, %i.b, !dbg !6569
   %xtraiter = and i64 %i.ae, 3, !dbg !6569        ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !6569
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol, !dbg !6569
@@ -374,7 +374,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %.lcssa.unr = phi i64 [ poison, %vec.epilog.scalar.ph.preheader ], [ %i.ai, %vec.epilog.scalar.ph.prol ]
   %.unr = phi i64 [ %.ph, %vec.epilog.scalar.ph.preheader ], [ %i.ai, %vec.epilog.scalar.ph.prol ]
   %.sroa.2.012.i.unr = phi ptr [ %.sroa.2.012.i.ph, %vec.epilog.scalar.ph.preheader ], [ %i.ag, %vec.epilog.scalar.ph.prol ]
-  %i.aj = sub i64 %i.a, %.sroa.2.012.i.ph15, !dbg !6569
+  %i.aj = sub i64 %i.b, %.sroa.2.012.i.ph15, !dbg !6569
   %i.ak = icmp ugt i64 %i.aj, -4, !dbg !6569
   br i1 %i.ak, label %_RINvYINtNtNtCsf3Ta7LF998c_4core5slice4iter4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfolduNCINvNtNtBR_8adapters6copied9copy_foldhuNCINvNvNtNtBP_8iterator8Iterator8for_each4callhNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB3m_3VechE14extend_trustedINtB1T_6CopiedINtNtB1V_3rev3RevB3_EEE0E0E0ECs5yXxDE1DkoT_4tera.exit, label %vec.epilog.scalar.ph, !dbg !6569
 

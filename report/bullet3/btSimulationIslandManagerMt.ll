@@ -204,11 +204,13 @@ bb.f:                                             ; preds = %bb.e, %bb.a
 bb.g:                                             ; preds = %bb.h
   %indvars.iv.next84 = add i32 %indvars.iv83110, -1
   %i.u = icmp sgt i64 %indvars.iv111, 1
+  %indvar.next = add i32 %indvar, 1
   %indvar.next.a = add i64 %indvar.a, 1
   br i1 %i.u, label %bb.h, label %.thread70, !llvm.loop !130
 
 bb.h:                                             ; preds = %.preheader, %bb.g
-  %indvar.a = phi i64 [ 0, %.preheader ], [ %indvar.next.a, %bb.g ] ; 3 uses
+  %indvar.a = phi i64 [ 0, %.preheader ], [ %indvar.next.a, %bb.g ] ; 2 uses
+  %indvar = phi i32 [ 0, %.preheader ], [ %indvar.next, %bb.g ] ; 2 uses
   %indvars.iv111 = phi i64 [ %i.s, %.preheader ], [ %indvars.iv.next, %bb.g ] ; 7 uses
   %indvars.iv83110 = phi i32 [ %i.t, %.preheader ], [ %indvars.iv.next84, %bb.g ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv111, -1 ; 2 uses
@@ -228,10 +230,10 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph:                                           ; preds = %bb.i
   %i.ac = sext i32 %indvars.iv83110 to i64        ; 5 uses
-  %3 = add i64 %indvar.a, 4294967295
-  %4 = and i64 %3, 4294967295                     ; 2 uses
+  %3 = add i32 %indvar, -1                        ; 2 uses
+  %4 = zext i32 %3 to i64
   %i.ad = add nuw nsw i64 %4, 1                   ; 2 uses
-  %min.iters.check134 = icmp samesign ult i64 %4, 15
+  %min.iters.check134 = icmp ult i32 %3, 15
   br i1 %min.iters.check134, label %scalar.ph133.preheader, label %vector.memcheck131
 
 vector.memcheck131:                               ; preds = %.lr.ph

@@ -205,15 +205,15 @@ bb.v:                                             ; preds = %bb.u
   %i.do = ashr i64 %i.dn, 63
   %i.dp = add i64 %i.dn, 32768
   %i.dq = add i64 %i.dp, %i.do
-  %i.dr = ashr i64 %i.dq, 16
+  %i.dr = ashr i64 %i.dq, 16                      ; 3 uses
   %i.ds = mul i64 %.sroa.11.0160, %.sroa.056.0169 ; 2 uses
   %i.dt = ashr i64 %i.ds, 63
   %i.du = add i64 %i.ds, 32768
   %i.dv = add i64 %i.du, %i.dt
-  %i.dw = ashr i64 %i.dv, 16
+  %i.dw = ashr i64 %i.dv, 16                      ; 3 uses
   %i.dx = sub nsw i64 %i.dr, %i.dw                ; 4 uses
   %i.dy = sub nsw i64 0, %i.dx
-  %.0102 = select i1 %i.n, i64 %i.dy, i64 %i.dx   ; 6 uses
+  %.0102 = select i1 %i.n, i64 %i.dy, i64 %i.dx   ; 4 uses
   %i.dz = tail call i64 @llvm.smin.i64(i64 %.0108174, i64 %.0107) ; 3 uses
   %i.ea = mul i64 %.0102, %i.o                    ; 2 uses
   %i.eb = ashr i64 %i.ea, 63
@@ -241,7 +241,7 @@ FT_MulDiv.exit:                                   ; preds = %bb.v
   br label %bb.y
 
 bb.w:                                             ; preds = %bb.v
-  %.not.i126 = icmp eq i64 %.0102, 0
+  %.not.i126 = icmp eq i64 %i.dr, %i.dw
   br i1 %.not.i126, label %FT_MulDiv.exit133, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -285,7 +285,7 @@ FT_MulDiv.exit141:                                ; preds = %bb.y
   br label %bb.ab
 
 bb.z:                                             ; preds = %bb.y
-  %.not.i142 = icmp eq i64 %.0102, 0
+  %.not.i142 = icmp eq i64 %i.dr, %i.dw
   br i1 %.not.i142, label %FT_MulDiv.exit149, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z

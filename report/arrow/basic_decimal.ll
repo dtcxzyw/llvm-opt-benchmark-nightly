@@ -205,12 +205,12 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val101.i = load i64, ptr %i.g, align 8        ; 5 uses
   %i.h = icmp slt i64 %.val101.i, 0               ; 4 uses
-  %i.i = icmp ne i64 %.val100.i, 0
+  %i.i = icmp ne i64 %.val100.i, 0                ; 2 uses
   %i.j = sub i64 0, %.val100.i
   %i.k = sext i1 %i.i to i64
   %.sroa.6.0.i.i.i.i.i = sub i64 %i.k, %.val101.i
   %.sroa.6.0.i.i.i = select i1 %i.h, i64 %.sroa.6.0.i.i.i.i.i, i64 %.val101.i ; 5 uses
-  %.sroa.0.0.i.i.i = select i1 %i.h, i64 %i.j, i64 %.val100.i ; 9 uses
+  %.sroa.0.0.i.i.i = select i1 %i.h, i64 %i.j, i64 %.val100.i ; 8 uses
   %.not.i.i.not = icmp eq i64 %.sroa.6.0.i.i.i, 0 ; 2 uses
   %.0.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %.0.i.sroa.gep4.i = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 3 uses
@@ -269,8 +269,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
 
 bb.g:                                             ; preds = %bb.e
-  %4 = icmp eq i64 %.sroa.0.0.i.i.i, 0
-  br i1 %4, label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i, label %bb.h
+  br i1 %i.i, label %bb.h, label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = trunc nuw i64 %.sroa.0.0.i.i.i to i32   ; 2 uses
@@ -294,12 +293,12 @@ _ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i: ; preds = %bb.h, %bb
   %.0.i.i = phi i64 [ 4, %bb.c ], [ 3, %bb.d ], [ 2, %bb.f ], [ 1, %bb.h ], [ 0, %bb.g ] ; 10 uses
   %i.ag = add nuw nsw i64 %.0.i.i, 1              ; 3 uses
   %i.ah = icmp slt i64 %.val4, 0                  ; 2 uses
-  %i.ai = icmp ne i64 %.val, 0
+  %i.ai = icmp ne i64 %.val, 0                    ; 2 uses
   %i.aj = sub i64 0, %.val
   %i.ak = sext i1 %i.ai to i64
   %.sroa.6.0.i.i.i.i102.i = sub i64 %i.ak, %.val4
   %.sroa.6.0.i.i103.i = select i1 %i.ah, i64 %.sroa.6.0.i.i.i.i102.i, i64 %.val4 ; 5 uses
-  %.sroa.0.0.i.i104.i = select i1 %i.ah, i64 %i.aj, i64 %.val ; 9 uses
+  %.sroa.0.0.i.i104.i = select i1 %i.ah, i64 %i.aj, i64 %.val ; 8 uses
   %.not.i106.i.not.not = icmp eq i64 %.sroa.6.0.i.i103.i, 0 ; 3 uses
   br i1 %.not.i106.i.not.not, label %bb.l, label %bb.i
 
@@ -348,8 +347,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
 
 bb.n:                                             ; preds = %bb.l
-  %5 = icmp eq i64 %.sroa.0.0.i.i104.i, 0
-  br i1 %5, label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i, label %bb.o
+  br i1 %i.ai, label %bb.o, label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
 
 bb.o:                                             ; preds = %bb.n
   %i.bf = trunc nuw i64 %.sroa.0.0.i.i104.i to i32 ; 2 uses

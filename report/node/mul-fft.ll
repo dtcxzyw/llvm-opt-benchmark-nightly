@@ -204,13 +204,12 @@ vector.scevcheck337:                              ; preds = %.lr.ph235.preheader
   br i1 %i.gl, label %.lr.ph235.preheader365, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck337
-  %5 = add i64 %i.b, -8
-  %6 = sub i64 %5, %i.a
   %i.gm = add i32 %.0112, 1
   %i.gn = zext i32 %i.gm to i64
   %i.go = shl nuw nsw i64 %i.gn, 3
-  %i.gp = add i64 %6, %i.go
-  %i.gq = add i64 %i.gp, -1
+  %i.gp = add i64 %i.go, %i.b
+  %5 = sub i64 %i.gp, %i.a
+  %i.gq = add i64 %5, -9
   %diff.check = icmp ult i64 %i.gq, 31
   br i1 %diff.check, label %.lr.ph235.preheader365, label %vector.ph340
 

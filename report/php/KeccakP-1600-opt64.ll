@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %KeccakP1600_Extract
   %i.cq = phi ptr [ %i.cm, %bb.i ], [ %i.cg, %KeccakP1600_ExtractAndAddLanes.exit ], [ %2, %KeccakP1600_ExtractAndAddLanes.exit.thread59 ] ; 8 uses
   %i.cr = phi ptr [ %i.cn, %bb.i ], [ %i.cf, %KeccakP1600_ExtractAndAddLanes.exit ], [ %1, %KeccakP1600_ExtractAndAddLanes.exit.thread59 ] ; 8 uses
   %.027.i = phi i64 [ %i.co, %bb.i ], [ %i.cj, %KeccakP1600_ExtractAndAddLanes.exit ], [ %i.i, %KeccakP1600_ExtractAndAddLanes.exit.thread59 ]
-  %i.cs = ptrtoaddr ptr %i.cq to i64              ; 2 uses
-  %i.ct = ptrtoaddr ptr %i.cr to i64
+  %i.cs = ptrtoaddr ptr %i.cr to i64
+  %i.ct = ptrtoaddr ptr %i.cq to i64              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
   store i64 %.027.i, ptr %i.e, align 8, !tbaa !14
   %.not.i41 = icmp eq i32 %i.cp, 0
@@ -217,9 +217,9 @@ iter.check:                                       ; preds = %bb.j
   br i1 %min.iters.check82, label %.lr.ph.i44.preheader, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %iter.check
-  %i.cu = sub i64 %i.ct, %i.cs
+  %i.cu = sub i64 %i.cs, %i.ct
   %diff.check84 = icmp ugt i64 %i.cu, -32
-  %i.cv = sub i64 %i.f, %i.cs
+  %i.cv = sub i64 %i.f, %i.ct
   %diff.check85 = icmp ugt i64 %i.cv, -32
   %conflict.rdx86 = or i1 %diff.check84, %diff.check85
   br i1 %conflict.rdx86, label %.lr.ph.i44.preheader, label %vector.main.loop.iter.check

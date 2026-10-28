@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.c
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.ae = ptrtoaddr ptr %i.ab to i64
   %i.af = shl nsw i64 %i.ad, 3
-  %1 = add i64 %i.af, %i.ae
-  %2 = shl i64 %indvars.iv88, 3
-  %i.ag = add i64 %2, %i.x
-  %i.ah = sub i64 %i.ag, %1
+  %1 = shl i64 %indvars.iv88, 3
+  %2 = add i64 %i.af, %i.ae
+  %i.ag = add i64 %1, %i.x
+  %i.ah = sub i64 %i.ag, %2
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -611,13 +611,13 @@ bb.g:                                             ; preds = %.critedge
 vector.memcheck:                                  ; preds = %bb.g
   %i.ca = ptrtoaddr ptr %i.bx to i64
   %i.cb = ptrtoaddr ptr %i.bp to i64
-  %i.cc = shl nsw i64 %i.bz, 3
-  %1 = add i64 %i.cc, %i.ca
-  %2 = shl i64 %indvars.iv, 3
-  %i.cd = add i64 %2, %i.cb
-  %reass.sub = sub i64 %1, %i.cd
-  %3 = add i64 %reass.sub, -9
-  %diff.check = icmp ult i64 %3, 31
+  %i.cc = shl i64 %indvars.iv, 3
+  %1 = shl nsw i64 %i.bz, 3
+  %reass.sub = sub i64 %i.ca, %i.cc
+  %i.cd = add i64 %reass.sub, -8
+  %2 = add i64 %i.cd, %1
+  %3 = sub i64 %i.cb, %2
+  %diff.check = icmp ugt i64 %3, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

@@ -205,30 +205,29 @@ bb.a:
   store i8 %.sroa.010.0, ptr %i.f, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.m = sdiv i32 %i.h, 60
-  %i.n = srem i32 %i.m, 60                        ; 3 uses
+  %i.n = srem i32 %i.m, 60                        ; 4 uses
   %i.o = trunc nsw i32 %i.n to i8                 ; 2 uses
   %i.p = icmp slt i32 %i.n, 0
   %i.q = sub nsw i8 0, %i.o
-  %.sroa.011.0 = select i1 %i.p, i8 %i.q, i8 %i.o ; 2 uses
+  %.sroa.011.0 = select i1 %i.p, i8 %i.q, i8 %i.o
   store i8 %.sroa.011.0, ptr %i.e, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.r = srem i32 %i.h, 60                        ; 2 uses
+  %i.r = srem i32 %i.h, 60                        ; 4 uses
   %i.s = trunc nsw i32 %i.r to i8                 ; 2 uses
   %i.t = icmp slt i32 %i.r, 0
   %i.u = sub nsw i8 0, %i.s
-  %.sroa.012.0 = select i1 %i.t, i8 %i.u, i8 %i.s ; 2 uses
+  %.sroa.012.0 = select i1 %i.t, i8 %i.u, i8 %i.s
   store i8 %.sroa.012.0, ptr %i.d, align 1
   %i.v = icmp eq i8 %i.l, 0                       ; 2 uses
-  %i.w = icmp eq i8 %.sroa.011.0, 0               ; 2 uses
-  %or.cond = select i1 %i.v, i1 %i.w, i1 false
-  %i.x = icmp eq i8 %.sroa.012.0, 0               ; 3 uses
-  %or.cond3 = select i1 %or.cond, i1 %i.x, i1 false
+  %i.w = icmp eq i32 %i.r, 0
+  %2 = or i32 %i.n, %i.r
+  %i.x = icmp eq i32 %2, 0                        ; 2 uses
+  %or.cond3 = and i1 %i.v, %i.x
   br i1 %or.cond3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.not = xor i1 %i.v, true
-  %or.cond5 = select i1 %.not, i1 %i.w, i1 false
-  %or.cond7 = select i1 %or.cond5, i1 %i.x, i1 false
+  %or.cond7 = and i1 %i.x, %.not
   br i1 %or.cond7, label %bb.f, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -245,7 +244,7 @@ bb.d:                                             ; preds = %bb.h, %bb.g, %bb.f,
 
 bb.e:                                             ; preds = %bb.b
   %i.z = icmp ne i32 %i.n, 0
-  %or.cond9 = select i1 %i.z, i1 %i.x, i1 false
+  %or.cond9 = and i1 %i.w, %i.z
   br i1 %or.cond9, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %bb.b

@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %_ZL11addOptionalRN3
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ag = shl nuw nsw i64 %indvar, 2
-  %i.ah = getelementptr i8, ptr %.0.i.i.i.i, i64 %i.ag
-  %i.ai = getelementptr i8, ptr %i.ah, i64 %.idx
-  %scevgep = getelementptr i8, ptr %i.ai, i64 4   ; 2 uses
+  %i.ah = getelementptr i8, ptr %.0.i.i.i.i, i64 %.idx
+  %i.ai = getelementptr i8, ptr %i.ah, i64 4
+  %scevgep = getelementptr i8, ptr %i.ai, i64 %i.ag ; 2 uses
   %scevgep1 = getelementptr inbounds nuw i8, ptr %0, i64 2160
   %bound0 = icmp ult ptr %i.cf, %i.ac
   %bound1 = icmp ult ptr %3, %scevgep

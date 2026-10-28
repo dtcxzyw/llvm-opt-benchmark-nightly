@@ -205,21 +205,21 @@ bb.a:
   %.045.lcssa.i = phi ptr [ %i.ag, %.split25.us ], [ %.146.i, %bb.g ] ; 5 uses
   %.042.lcssa.i = phi ptr [ %i.ad, %.split25.us ], [ %.143.i, %bb.g ] ; 5 uses
   %.040.lcssa.i = phi ptr [ %i.ag, %.split25.us ], [ %.141.i, %bb.g ] ; 5 uses
-  %.045.lcssa.i52 = ptrtoaddr ptr %.045.lcssa.i to i64 ; 2 uses
-  %.040.lcssa.i53 = ptrtoaddr ptr %.040.lcssa.i to i64
+  %.045.lcssa.i52 = ptrtoaddr ptr %.040.lcssa.i to i64
+  %.040.lcssa.i53 = ptrtoaddr ptr %.045.lcssa.i to i64 ; 2 uses
   %i.at = icmp ult ptr %.048.lcssa.i, %i.al
   br i1 %i.at, label %.lr.ph70.i.preheader, label %.preheader.i
 
 .lr.ph70.i.preheader:                             ; preds = %.preheader55.i
-  %.042.lcssa.i44 = ptrtoaddr ptr %.042.lcssa.i to i64
-  %.048.lcssa.i43 = ptrtoaddr ptr %.048.lcssa.i to i64 ; 2 uses
+  %.042.lcssa.i44 = ptrtoaddr ptr %.048.lcssa.i to i64 ; 2 uses
+  %.048.lcssa.i43 = ptrtoaddr ptr %.042.lcssa.i to i64
   %i.au = add i64 %.idx.i, %i.ae
-  %i.av = xor i64 %.048.lcssa.i43, -1
+  %i.av = xor i64 %.042.lcssa.i44, -1
   %i.aw = add i64 %i.au, %i.av                    ; 2 uses
   %i.ax = lshr i64 %i.aw, 2
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aw, 44
-  %i.az = sub i64 %.048.lcssa.i43, %.042.lcssa.i44
+  %i.az = sub i64 %.042.lcssa.i44, %.048.lcssa.i43
   %diff.check = icmp ugt i64 %i.az, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph70.i.preheader73, label %vector.ph
@@ -308,12 +308,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
 
 .lr.ph74.i.preheader:                             ; preds = %.preheader.i
   %i.bv = add i64 %.idx76.i, %i.ah
-  %i.bw = xor i64 %.045.lcssa.i52, -1
+  %i.bw = xor i64 %.040.lcssa.i53, -1
   %i.bx = add i64 %i.bv, %i.bw                    ; 2 uses
   %i.by = lshr i64 %i.bx, 2
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check55 = icmp ult i64 %i.bx, 44
-  %i.ca = sub i64 %.045.lcssa.i52, %.040.lcssa.i53
+  %i.ca = sub i64 %.040.lcssa.i53, %.045.lcssa.i52
   %diff.check57 = icmp ugt i64 %i.ca, -32
   %or.cond71 = select i1 %min.iters.check55, i1 true, i1 %diff.check57
   br i1 %or.cond71, label %.lr.ph74.i.preheader72, label %vector.ph58
@@ -716,21 +716,21 @@ bb.a:
   %.045.lcssa.i = phi ptr [ %i.ae, %.split26.us ], [ %.146.i, %bb.g ] ; 5 uses
   %.042.lcssa.i = phi ptr [ %i.ab, %.split26.us ], [ %.143.i, %bb.g ] ; 5 uses
   %.040.lcssa.i = phi ptr [ %i.ae, %.split26.us ], [ %.141.i, %bb.g ] ; 5 uses
-  %.045.lcssa.i53 = ptrtoaddr ptr %.045.lcssa.i to i64 ; 2 uses
-  %.040.lcssa.i54 = ptrtoaddr ptr %.040.lcssa.i to i64
+  %.045.lcssa.i53 = ptrtoaddr ptr %.040.lcssa.i to i64
+  %.040.lcssa.i54 = ptrtoaddr ptr %.045.lcssa.i to i64 ; 2 uses
   %i.ar = icmp ult ptr %.048.lcssa.i, %i.aj
   br i1 %i.ar, label %.lr.ph70.i.preheader, label %.preheader.i
 
 .lr.ph70.i.preheader:                             ; preds = %.preheader55.i
-  %.042.lcssa.i45 = ptrtoaddr ptr %.042.lcssa.i to i64
-  %.048.lcssa.i44 = ptrtoaddr ptr %.048.lcssa.i to i64 ; 2 uses
+  %.042.lcssa.i45 = ptrtoaddr ptr %.048.lcssa.i to i64 ; 2 uses
+  %.048.lcssa.i44 = ptrtoaddr ptr %.042.lcssa.i to i64
   %i.as = add i64 %.idx.i, %i.ac
-  %i.at = xor i64 %.048.lcssa.i44, -1
+  %i.at = xor i64 %.042.lcssa.i45, -1
   %i.au = add i64 %i.as, %i.at                    ; 2 uses
   %i.av = lshr i64 %i.au, 2
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.au, 44
-  %i.ax = sub i64 %.048.lcssa.i44, %.042.lcssa.i45
+  %i.ax = sub i64 %.042.lcssa.i45, %.048.lcssa.i44
   %diff.check = icmp ugt i64 %i.ax, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph70.i.preheader74, label %vector.ph
@@ -819,12 +819,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
 
 .lr.ph74.i.preheader:                             ; preds = %.preheader.i
   %i.bt = add i64 %.idx76.i, %i.af
-  %i.bu = xor i64 %.045.lcssa.i53, -1
+  %i.bu = xor i64 %.040.lcssa.i54, -1
   %i.bv = add i64 %i.bt, %i.bu                    ; 2 uses
   %i.bw = lshr i64 %i.bv, 2
   %i.bx = add nuw nsw i64 %i.bw, 1                ; 2 uses
   %min.iters.check56 = icmp ult i64 %i.bv, 44
-  %i.by = sub i64 %.045.lcssa.i53, %.040.lcssa.i54
+  %i.by = sub i64 %.040.lcssa.i54, %.045.lcssa.i53
   %diff.check58 = icmp ugt i64 %i.by, -32
   %or.cond72 = select i1 %min.iters.check56, i1 true, i1 %diff.check58
   br i1 %or.cond72, label %.lr.ph74.i.preheader73, label %vector.ph59
@@ -1227,21 +1227,21 @@ bb.a:
   %.045.lcssa.i = phi ptr [ %i.ai, %.split26.us ], [ %.146.i, %bb.g ] ; 5 uses
   %.042.lcssa.i = phi ptr [ %i.af, %.split26.us ], [ %.143.i, %bb.g ] ; 5 uses
   %.040.lcssa.i = phi ptr [ %i.ai, %.split26.us ], [ %.141.i, %bb.g ] ; 5 uses
-  %.045.lcssa.i47 = ptrtoaddr ptr %.045.lcssa.i to i64 ; 2 uses
-  %.040.lcssa.i48 = ptrtoaddr ptr %.040.lcssa.i to i64
+  %.045.lcssa.i47 = ptrtoaddr ptr %.040.lcssa.i to i64
+  %.040.lcssa.i48 = ptrtoaddr ptr %.045.lcssa.i to i64 ; 2 uses
   %i.av = icmp ult ptr %.048.lcssa.i, %i.an
   br i1 %i.av, label %.lr.ph70.i.preheader, label %.preheader.i
 
 .lr.ph70.i.preheader:                             ; preds = %.preheader55.i
-  %.042.lcssa.i39 = ptrtoaddr ptr %.042.lcssa.i to i64
-  %.048.lcssa.i38 = ptrtoaddr ptr %.048.lcssa.i to i64 ; 2 uses
+  %.042.lcssa.i39 = ptrtoaddr ptr %.048.lcssa.i to i64 ; 2 uses
+  %.048.lcssa.i38 = ptrtoaddr ptr %.042.lcssa.i to i64
   %i.aw = add i64 %.idx.i, %i.ag
-  %i.ax = xor i64 %.048.lcssa.i38, -1
+  %i.ax = xor i64 %.042.lcssa.i39, -1
   %i.ay = add i64 %i.aw, %i.ax                    ; 2 uses
   %i.az = lshr i64 %i.ay, 2
   %i.ba = add nuw nsw i64 %i.az, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ay, 44
-  %i.bb = sub i64 %.048.lcssa.i38, %.042.lcssa.i39
+  %i.bb = sub i64 %.042.lcssa.i39, %.048.lcssa.i38
   %diff.check = icmp ugt i64 %i.bb, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph70.i.preheader68, label %vector.ph
@@ -1330,12 +1330,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
 
 .lr.ph74.i.preheader:                             ; preds = %.preheader.i
   %i.bx = add i64 %.idx76.i, %i.aj
-  %i.by = xor i64 %.045.lcssa.i47, -1
+  %i.by = xor i64 %.040.lcssa.i48, -1
   %i.bz = add i64 %i.bx, %i.by                    ; 2 uses
   %i.ca = lshr i64 %i.bz, 2
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check50 = icmp ult i64 %i.bz, 44
-  %i.cc = sub i64 %.045.lcssa.i47, %.040.lcssa.i48
+  %i.cc = sub i64 %.040.lcssa.i48, %.045.lcssa.i47
   %diff.check52 = icmp ugt i64 %i.cc, -32
   %or.cond66 = select i1 %min.iters.check50, i1 true, i1 %diff.check52
   br i1 %or.cond66, label %.lr.ph74.i.preheader67, label %vector.ph53

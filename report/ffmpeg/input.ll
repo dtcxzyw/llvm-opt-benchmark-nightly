@@ -205,9 +205,9 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @shf16_10LEToUV_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree readnone captures(none) %6, ptr nofree readnone captures(none) %7) #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 2 uses
-  %i.c = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = ptrtoaddr ptr %4 to i64                  ; 2 uses
   %i.e = icmp sgt i32 %5, 0
   br i1 %i.e, label %iter.check, label %._crit_edge
@@ -218,18 +218,18 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.f, -32
-  %i.g = sub i64 %i.b, %i.a
+  %i.g = sub i64 %i.c, %i.b
   %diff.check19 = icmp ugt i64 %i.g, -32
   %conflict.rdx = or i1 %diff.check, %diff.check19
-  %i.h = sub i64 %i.a, %i.d
+  %i.h = sub i64 %i.b, %i.d
   %diff.check20 = icmp ugt i64 %i.h, -32
   %conflict.rdx21 = or i1 %conflict.rdx, %diff.check20
-  %i.i = sub i64 %i.b, %i.c
+  %i.i = sub i64 %i.c, %i.a
   %diff.check22 = icmp ugt i64 %i.i, -32
   %conflict.rdx23 = or i1 %conflict.rdx21, %diff.check22
-  %i.j = sub i64 %i.d, %i.c
+  %i.j = sub i64 %i.d, %i.a
   %diff.check24 = icmp ugt i64 %i.j, -32
   %conflict.rdx25 = or i1 %conflict.rdx23, %diff.check24
   br i1 %conflict.rdx25, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -367,9 +367,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @shf16_12LEToUV_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree readnone captures(none) %6, ptr nofree readnone captures(none) %7) #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 2 uses
-  %i.c = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.c = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.d = ptrtoaddr ptr %4 to i64                  ; 2 uses
   %i.e = icmp sgt i32 %5, 0
   br i1 %i.e, label %iter.check, label %._crit_edge
@@ -380,18 +380,18 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.f, -32
-  %i.g = sub i64 %i.b, %i.a
+  %i.g = sub i64 %i.c, %i.b
   %diff.check19 = icmp ugt i64 %i.g, -32
   %conflict.rdx = or i1 %diff.check, %diff.check19
-  %i.h = sub i64 %i.a, %i.d
+  %i.h = sub i64 %i.b, %i.d
   %diff.check20 = icmp ugt i64 %i.h, -32
   %conflict.rdx21 = or i1 %conflict.rdx, %diff.check20
-  %i.i = sub i64 %i.b, %i.c
+  %i.i = sub i64 %i.c, %i.a
   %diff.check22 = icmp ugt i64 %i.i, -32
   %conflict.rdx23 = or i1 %conflict.rdx21, %diff.check22
-  %i.j = sub i64 %i.d, %i.c
+  %i.j = sub i64 %i.d, %i.a
   %diff.check24 = icmp ugt i64 %i.j, -32
   %conflict.rdx25 = or i1 %conflict.rdx23, %diff.check24
   br i1 %conflict.rdx25, label %.lr.ph.preheader, label %vector.main.loop.iter.check

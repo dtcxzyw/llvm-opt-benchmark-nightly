@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @sprite_v_single_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = ptrtoaddr ptr %2 to i64
   %.not.i4 = icmp eq i32 %4, 0
   br i1 %.not.i4, label %sprite_v_template.exit, label %iter.check
@@ -217,9 +217,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.e = sub i64 %i.a, %i.b
+  %i.e = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.e, -16
-  %i.f = sub i64 %i.c, %i.b
+  %i.f = sub i64 %i.c, %i.a
   %diff.check10 = icmp ugt i64 %i.f, -16
   %conflict.rdx = or i1 %diff.check, %diff.check10
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -378,8 +378,8 @@ sprite_v_template.exit:                           ; preds = %.lr.ph.prol.loopexi
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @sprite_v_double_noscale_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = ptrtoaddr ptr %2 to i64
   %.not.i4 = icmp eq i32 %4, 0
   br i1 %.not.i4, label %sprite_v_template.exit, label %iter.check
@@ -390,9 +390,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.e = sub i64 %i.a, %i.b
+  %i.e = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.e, -16
-  %i.f = sub i64 %i.c, %i.b
+  %i.f = sub i64 %i.c, %i.a
   %diff.check10 = icmp ugt i64 %i.f, -16
   %conflict.rdx = or i1 %diff.check, %diff.check10
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -551,9 +551,9 @@ sprite_v_template.exit:                           ; preds = %.lr.ph.prol.loopexi
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @sprite_v_double_onescale_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, i32 noundef %6) #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
-  %i.c = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %1 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = ptrtoaddr ptr %4 to i64
   %.not.i6 = icmp eq i32 %6, 0
   br i1 %.not.i6, label %sprite_v_template.exit, label %iter.check
@@ -564,12 +564,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.f, -16
-  %i.g = sub i64 %i.b, %i.c
+  %i.g = sub i64 %i.c, %i.a
   %diff.check15 = icmp ugt i64 %i.g, -16
   %conflict.rdx = or i1 %diff.check, %diff.check15
-  %i.h = sub i64 %i.d, %i.c
+  %i.h = sub i64 %i.d, %i.a
   %diff.check16 = icmp ugt i64 %i.h, -16
   %conflict.rdx17 = or i1 %conflict.rdx, %diff.check16
   br i1 %conflict.rdx17, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -772,10 +772,10 @@ sprite_v_template.exit:                           ; preds = %.lr.ph.prol.loopexi
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @sprite_v_double_twoscale_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8) #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
-  %i.c = ptrtoaddr ptr %4 to i64
-  %i.d = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %1 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
+  %i.d = ptrtoaddr ptr %4 to i64
   %i.e = ptrtoaddr ptr %5 to i64
   %.not.i8 = icmp eq i32 %8, 0
   br i1 %.not.i8, label %sprite_v_template.exit, label %iter.check
@@ -786,15 +786,15 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.g = sub i64 %i.a, %i.d
+  %i.g = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.g, -16
-  %i.h = sub i64 %i.b, %i.d
+  %i.h = sub i64 %i.c, %i.a
   %diff.check20 = icmp ugt i64 %i.h, -16
   %conflict.rdx = or i1 %diff.check, %diff.check20
-  %i.i = sub i64 %i.c, %i.d
+  %i.i = sub i64 %i.d, %i.a
   %diff.check21 = icmp ugt i64 %i.i, -16
   %conflict.rdx22 = or i1 %conflict.rdx, %diff.check21
-  %i.j = sub i64 %i.e, %i.d
+  %i.j = sub i64 %i.e, %i.a
   %diff.check23 = icmp ugt i64 %i.j, -16
   %conflict.rdx24 = or i1 %conflict.rdx22, %diff.check23
   br i1 %conflict.rdx24, label %.lr.ph.preheader, label %vector.main.loop.iter.check

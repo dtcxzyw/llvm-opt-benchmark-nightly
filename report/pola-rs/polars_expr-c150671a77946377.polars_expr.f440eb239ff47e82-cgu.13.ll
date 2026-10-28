@@ -205,10 +205,10 @@ bb.a:
   br i1 %i.a, label %_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter4ItermENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfolduNCINvNtNtBR_8adapters6copied9copy_foldmuNCINvNvNtNtBP_8iterator8Iterator8for_each4callmNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB3m_3VecmE14extend_trustedINtNtB1V_3rev3RevINtB1T_6CopiedB3_EEE0E0E0ECskY9G75ZWc4U_11polars_expr.exit, label %.lr.ph.i.preheader, !dbg !55077
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !55075
-  %i.c = ptrtoaddr ptr %1 to i64, !dbg !55075
-  %i.d = add i64 %i.c, -4, !dbg !55077
-  %i.e = sub i64 %i.d, %i.b, !dbg !55077          ; 3 uses
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !55075
+  %i.c = ptrtoaddr ptr %0 to i64, !dbg !55075
+  %i.d = add i64 %i.b, -4, !dbg !55077
+  %i.e = sub i64 %i.d, %i.c, !dbg !55077          ; 3 uses
   %i.f = lshr i64 %i.e, 2, !dbg !55077
   %i.g = add nuw nsw i64 %i.f, 1, !dbg !55077     ; 2 uses
   %min.iters.check = icmp ult i64 %i.e, 108, !dbg !55077

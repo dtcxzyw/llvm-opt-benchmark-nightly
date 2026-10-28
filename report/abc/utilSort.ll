@@ -41,14 +41,14 @@ bb.a:
   br i1 %i.f, label %.lr.ph46.preheader, label %.preheader
 
 .lr.ph46.preheader:                               ; preds = %.preheader38
-  %.0.lcssa62 = ptrtoaddr ptr %.0.lcssa to i64
-  %.029.lcssa61 = ptrtoaddr ptr %.029.lcssa to i64 ; 2 uses
-  %i.g = xor i64 %.029.lcssa61, -1
+  %.0.lcssa62 = ptrtoaddr ptr %.029.lcssa to i64  ; 2 uses
+  %.029.lcssa61 = ptrtoaddr ptr %.0.lcssa to i64
+  %i.g = xor i64 %.0.lcssa62, -1
   %i.h = add i64 %i.g, %i.b                       ; 2 uses
   %i.i = lshr i64 %i.h, 2
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 44
-  %i.k = sub i64 %.029.lcssa61, %.0.lcssa62
+  %i.k = sub i64 %.0.lcssa62, %.029.lcssa61
   %diff.check = icmp ugt i64 %i.k, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph46.preheader91, label %vector.ph
@@ -351,15 +351,15 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.be, label %.lr.ph46.i.preheader, label %.preheader.i
 
 .lr.ph46.i.preheader:                             ; preds = %.preheader38.i
-  %.0.lcssa.i83 = ptrtoaddr ptr %.0.lcssa.i to i64
-  %.029.lcssa.i82 = ptrtoaddr ptr %.029.lcssa.i to i64 ; 2 uses
+  %.0.lcssa.i83 = ptrtoaddr ptr %.029.lcssa.i to i64 ; 2 uses
+  %.029.lcssa.i82 = ptrtoaddr ptr %.0.lcssa.i to i64
   %i.bf = add i64 %.idx, %i.b
-  %i.bg = xor i64 %.029.lcssa.i82, -1
+  %i.bg = xor i64 %.0.lcssa.i83, -1
   %i.bh = add i64 %i.bf, %i.bg                    ; 2 uses
   %i.bi = lshr i64 %i.bh, 2
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bh, 44
-  %i.bk = sub i64 %.029.lcssa.i82, %.0.lcssa.i83
+  %i.bk = sub i64 %.0.lcssa.i83, %.029.lcssa.i82
   %diff.check = icmp ugt i64 %i.bk, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph46.i.preheader112, label %vector.ph
@@ -561,14 +561,14 @@ bb.a:
   br i1 %i.f, label %.lr.ph49.preheader, label %.preheader
 
 .lr.ph49.preheader:                               ; preds = %.preheader41
-  %.033.lcssa64 = ptrtoaddr ptr %.033.lcssa to i64
-  %.0.lcssa63 = ptrtoaddr ptr %.0.lcssa to i64    ; 2 uses
-  %i.g = xor i64 %.0.lcssa63, -1
+  %.033.lcssa64 = ptrtoaddr ptr %.0.lcssa to i64  ; 2 uses
+  %.0.lcssa63 = ptrtoaddr ptr %.033.lcssa to i64
+  %i.g = xor i64 %.033.lcssa64, -1
   %i.h = add i64 %i.g, %i.b                       ; 2 uses
   %i.i = lshr i64 %i.h, 2
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 44
-  %i.k = sub i64 %.0.lcssa63, %.033.lcssa64
+  %i.k = sub i64 %.033.lcssa64, %.0.lcssa63
   %diff.check = icmp ugt i64 %i.k, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph49.preheader93, label %vector.ph
@@ -971,15 +971,15 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.gw, label %.lr.ph49.i.preheader, label %.preheader.i
 
 .lr.ph49.i.preheader:                             ; preds = %.preheader41.i
-  %.033.lcssa.i88 = ptrtoaddr ptr %.033.lcssa.i to i64
-  %.0.lcssa.i87 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
+  %.033.lcssa.i88 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
+  %.0.lcssa.i87 = ptrtoaddr ptr %.033.lcssa.i to i64
   %i.gx = add i64 %.idx, %i.b
-  %i.gy = xor i64 %.0.lcssa.i87, -1
+  %i.gy = xor i64 %.033.lcssa.i88, -1
   %i.gz = add i64 %i.gx, %i.gy                    ; 2 uses
   %i.ha = lshr i64 %i.gz, 2
   %i.hb = add nuw nsw i64 %i.ha, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.gz, 44
-  %i.hc = sub i64 %.0.lcssa.i87, %.033.lcssa.i88
+  %i.hc = sub i64 %.033.lcssa.i88, %.0.lcssa.i87
   %diff.check = icmp ugt i64 %i.hc, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph49.i.preheader117, label %vector.ph
@@ -1178,14 +1178,14 @@ bb.a:
   br i1 %i.f, label %.lr.ph49.preheader, label %.preheader
 
 .lr.ph49.preheader:                               ; preds = %.preheader41
-  %.033.lcssa64 = ptrtoaddr ptr %.033.lcssa to i64
-  %.0.lcssa63 = ptrtoaddr ptr %.0.lcssa to i64    ; 2 uses
-  %i.g = xor i64 %.0.lcssa63, -1
+  %.033.lcssa64 = ptrtoaddr ptr %.0.lcssa to i64  ; 2 uses
+  %.0.lcssa63 = ptrtoaddr ptr %.033.lcssa to i64
+  %i.g = xor i64 %.033.lcssa64, -1
   %i.h = add i64 %i.g, %i.b                       ; 2 uses
   %i.i = lshr i64 %i.h, 2
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 44
-  %i.k = sub i64 %.0.lcssa63, %.033.lcssa64
+  %i.k = sub i64 %.033.lcssa64, %.0.lcssa63
   %diff.check = icmp ugt i64 %i.k, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph49.preheader93, label %vector.ph
@@ -1588,15 +1588,15 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.gw, label %.lr.ph49.i.preheader, label %.preheader.i
 
 .lr.ph49.i.preheader:                             ; preds = %.preheader41.i
-  %.033.lcssa.i88 = ptrtoaddr ptr %.033.lcssa.i to i64
-  %.0.lcssa.i87 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
+  %.033.lcssa.i88 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
+  %.0.lcssa.i87 = ptrtoaddr ptr %.033.lcssa.i to i64
   %i.gx = add i64 %.idx, %i.b
-  %i.gy = xor i64 %.0.lcssa.i87, -1
+  %i.gy = xor i64 %.033.lcssa.i88, -1
   %i.gz = add i64 %i.gx, %i.gy                    ; 2 uses
   %i.ha = lshr i64 %i.gz, 2
   %i.hb = add nuw nsw i64 %i.ha, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.gz, 44
-  %i.hc = sub i64 %.0.lcssa.i87, %.033.lcssa.i88
+  %i.hc = sub i64 %.033.lcssa.i88, %.0.lcssa.i87
   %diff.check = icmp ugt i64 %i.hc, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph49.i.preheader117, label %vector.ph

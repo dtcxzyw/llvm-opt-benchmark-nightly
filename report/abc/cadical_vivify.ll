@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !191 ; 2 uses
   %.not.i = icmp eq i8 %i.ae, 0
-  br i1 %.not.i, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %bb.d
+  br i1 %.not.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.af = sext i8 %i.ae to i32
@@ -213,22 +213,18 @@ bb.d:                                             ; preds = %bb.c
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %i.ac
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !187
   %.not9.i = icmp eq i32 %i.ai, 0
-  %spec.select.i.a = select i1 %.not9.i, i32 %i.af, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit
-
-_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.c, %bb.d
-  %.0.i = phi i32 [ 0, %bb.c ], [ %spec.select.i.a, %bb.d ] ; 2 uses
+  %spec.select.i = select i1 %.not9.i, i32 %i.af, i32 0 ; 3 uses
   %3 = icmp slt i32 %i.z, 0
-  %4 = sub nsw i32 0, %.0.i
-  %spec.select10.i = select i1 %3, i32 %4, i32 %.0.i ; 2 uses
-  %5 = icmp slt i32 %spec.select10.i, 1
+  %4 = sub nsw i32 0, %spec.select.i
+  %spec.select.i.a = select i1 %3, i32 %4, i32 %spec.select.i
+  %5 = icmp slt i32 %spec.select.i.a, 1
   br i1 %5, label %bb.e, label %bb.m
 
-bb.e:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %.not152 = icmp eq i32 %spec.select10.i, 0
+bb.e:                                             ; preds = %bb.d
+  %.not152 = icmp eq i32 %spec.select.i, 0
   br i1 %.not152, label %bb.f, label %bb.l
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %bb.c, %bb.e
   %i.aj = load ptr, ptr %i.w, align 8, !tbaa !192
   %.not.i174 = icmp eq ptr %i.y, %i.aj
   br i1 %.not.i174, label %bb.h, label %bb.g
@@ -297,7 +293,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %.not = icmp eq ptr %i.bg, %i.t
   br i1 %.not, label %.critedge, label %bb.c
 
-bb.m:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
+bb.m:                                             ; preds = %bb.d
   tail call void @_ZN7CaDiCaL8Internal12mark_garbageEPNS_6ClauseE(ptr noundef nonnull align 8 dereferenceable(7296) %0, ptr noundef nonnull %2) #21
   br label %bb.bm
 

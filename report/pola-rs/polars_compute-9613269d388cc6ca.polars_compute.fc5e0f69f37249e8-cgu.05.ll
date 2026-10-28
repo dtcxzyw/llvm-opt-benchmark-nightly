@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !68836 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !68877
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !68877     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !68877     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !68877
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !68877
   %.not = icmp eq i64 %3, 0, !dbg !68877
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !68863
@@ -216,9 +216,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !68863
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !68863
+  %i.d = sub i64 %i.b, %i.a, !dbg !68863
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !68863
-  %i.e = sub i64 %i.c, %i.b, !dbg !68863
+  %i.e = sub i64 %i.c, %i.a, !dbg !68863
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !68863
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !68863
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !68878
@@ -353,8 +353,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_mod0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !68887 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !68928
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !68928     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !68928     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !68928
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !68928
   %.not = icmp eq i64 %3, 0, !dbg !68928
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !68914
@@ -364,9 +364,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !68929
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !68929
+  %i.d = sub i64 %i.b, %i.a, !dbg !68929
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !68929
-  %i.e = sub i64 %i.c, %i.b, !dbg !68929
+  %i.e = sub i64 %i.c, %i.a, !dbg !68929
   %diff.check9 = icmp ugt i64 %i.e, -16, !dbg !68929
   %conflict.rdx = or i1 %diff.check, %diff.check9, !dbg !68929
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !68930
@@ -482,8 +482,8 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveAri
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !68942 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !68983
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !68983     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !68983     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !68983
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !68983
   %.not = icmp eq i64 %3, 0, !dbg !68983
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !68969
@@ -493,9 +493,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !68969
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !68969
+  %i.d = sub i64 %i.b, %i.a, !dbg !68969
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !68969
-  %i.e = sub i64 %i.c, %i.b, !dbg !68969
+  %i.e = sub i64 %i.c, %i.a, !dbg !68969
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !68969
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !68969
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !68984
@@ -630,8 +630,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !68993 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69034
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69034     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !69034     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69034
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !69034
   %.not = icmp eq i64 %3, 0, !dbg !69034
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69020
@@ -641,9 +641,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69020
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !69020
+  %i.d = sub i64 %i.b, %i.a, !dbg !69020
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !69020
-  %i.e = sub i64 %i.c, %i.b, !dbg !69020
+  %i.e = sub i64 %i.c, %i.a, !dbg !69020
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !69020
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !69020
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69035
@@ -778,8 +778,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl23prim_wrapping_floor_div0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69044 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69089
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69089     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !69089     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69089
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !69089
   %.not = icmp eq i64 %3, 0, !dbg !69089
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69075
@@ -789,9 +789,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69090
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !69090
+  %i.d = sub i64 %i.b, %i.a, !dbg !69090
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !69090
-  %i.e = sub i64 %i.c, %i.b, !dbg !69090
+  %i.e = sub i64 %i.c, %i.a, !dbg !69090
   %diff.check9 = icmp ugt i64 %i.e, -16, !dbg !69090
   %conflict.rdx = or i1 %diff.check, %diff.check9, !dbg !69090
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69091
@@ -934,8 +934,8 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveAri
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl23prim_wrapping_trunc_div0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69107 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69149
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69149     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !69149     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69149
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !69149
   %.not = icmp eq i64 %3, 0, !dbg !69149
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69135
@@ -945,9 +945,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69150
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !69150
+  %i.d = sub i64 %i.b, %i.a, !dbg !69150
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !69150
-  %i.e = sub i64 %i.c, %i.b, !dbg !69150
+  %i.e = sub i64 %i.c, %i.a, !dbg !69150
   %diff.check9 = icmp ugt i64 %i.e, -16, !dbg !69150
   %conflict.rdx = or i1 %diff.check, %diff.check9, !dbg !69150
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69151
@@ -1350,8 +1350,8 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelhhhNCNvXNtNtB4_10arithmetic8unsignedhNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69977 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !70018
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !70018     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !70018     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !70018
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !70018
   %.not = icmp eq i64 %3, 0, !dbg !70018
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !70004
@@ -1361,9 +1361,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !70004
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !70004
+  %i.d = sub i64 %i.b, %i.a, !dbg !70004
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !70004
-  %i.e = sub i64 %i.c, %i.b, !dbg !70004
+  %i.e = sub i64 %i.c, %i.a, !dbg !70004
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !70004
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !70004
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !70019
@@ -1581,8 +1581,8 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic8unsignedhNtB6_29PrimitiveA
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelhhhNCNvXNtNtB4_10arithmetic8unsignedhNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !70076 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !70117
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !70117     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !70117     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !70117
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !70117
   %.not = icmp eq i64 %3, 0, !dbg !70117
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !70103
@@ -1592,9 +1592,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !70103
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !70103
+  %i.d = sub i64 %i.b, %i.a, !dbg !70103
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !70103
-  %i.e = sub i64 %i.c, %i.b, !dbg !70103
+  %i.e = sub i64 %i.c, %i.a, !dbg !70103
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !70103
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !70103
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !70118
@@ -1729,8 +1729,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelhhhNCNvXNtNtB4_10arithmetic8unsignedhNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !70127 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !70168
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !70168     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !70168     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !70168
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !70168
   %.not = icmp eq i64 %3, 0, !dbg !70168
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !70154
@@ -1740,9 +1740,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !70154
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !70154
+  %i.d = sub i64 %i.b, %i.a, !dbg !70154
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !70154
-  %i.e = sub i64 %i.c, %i.b, !dbg !70154
+  %i.e = sub i64 %i.c, %i.a, !dbg !70154
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !70154
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !70154
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !70169
@@ -2145,8 +2145,8 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelsssNCNvXs_NtNtB4_10arithmetic6signedsNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71600 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !71641
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !71641     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !71641     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !71641
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !71641
   %.not = icmp eq i64 %3, 0, !dbg !71641
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !71627
@@ -2156,9 +2156,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !71627
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !71627
+  %i.d = sub i64 %i.b, %i.a, !dbg !71627
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !71627
-  %i.e = sub i64 %i.c, %i.b, !dbg !71627
+  %i.e = sub i64 %i.c, %i.a, !dbg !71627
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !71627
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !71627
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !71642
@@ -2382,8 +2382,8 @@ _RNCNvXs_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedsNtB8_29PrimitiveA
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelsssNCNvXs_NtNtB4_10arithmetic6signedsNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71705 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !71746
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !71746     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !71746     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !71746
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !71746
   %.not = icmp eq i64 %3, 0, !dbg !71746
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !71732
@@ -2393,9 +2393,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !71732
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !71732
+  %i.d = sub i64 %i.b, %i.a, !dbg !71732
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !71732
-  %i.e = sub i64 %i.c, %i.b, !dbg !71732
+  %i.e = sub i64 %i.c, %i.a, !dbg !71732
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !71732
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !71732
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !71747
@@ -2530,8 +2530,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelsssNCNvXs_NtNtB4_10arithmetic6signedsNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71756 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !71797
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !71797     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !71797     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !71797
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !71797
   %.not = icmp eq i64 %3, 0, !dbg !71797
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !71783
@@ -2541,9 +2541,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !71783
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !71783
+  %i.d = sub i64 %i.b, %i.a, !dbg !71783
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !71783
-  %i.e = sub i64 %i.c, %i.b, !dbg !71783
+  %i.e = sub i64 %i.c, %i.a, !dbg !71783
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !71783
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !71783
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !71798
@@ -2946,8 +2946,8 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kerneltttNCNvXs_NtNtB4_10arithmetic8unsignedtNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71982 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !72023
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !72023     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !72023     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !72023
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !72023
   %.not = icmp eq i64 %3, 0, !dbg !72023
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !72009
@@ -2957,9 +2957,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !72009
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !72009
+  %i.d = sub i64 %i.b, %i.a, !dbg !72009
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !72009
-  %i.e = sub i64 %i.c, %i.b, !dbg !72009
+  %i.e = sub i64 %i.c, %i.a, !dbg !72009
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !72009
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !72009
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !72024
@@ -3177,8 +3177,8 @@ _RNCNvXs_NtNtCslFlrwjHoTci_14polars_compute10arithmetic8unsignedtNtB8_29Primitiv
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kerneltttNCNvXs_NtNtB4_10arithmetic8unsignedtNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !72081 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !72122
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !72122     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !72122     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !72122
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !72122
   %.not = icmp eq i64 %3, 0, !dbg !72122
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !72108
@@ -3188,9 +3188,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !72108
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !72108
+  %i.d = sub i64 %i.b, %i.a, !dbg !72108
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !72108
-  %i.e = sub i64 %i.c, %i.b, !dbg !72108
+  %i.e = sub i64 %i.c, %i.a, !dbg !72108
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !72108
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !72108
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !72123
@@ -3325,8 +3325,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kerneltttNCNvXs_NtNtB4_10arithmetic8unsignedtNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !72132 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !72173
-  %i.b = ptrtoaddr ptr %2 to i64, !dbg !72173     ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64, !dbg !72173     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !72173
   %i.c = ptrtoaddr ptr %1 to i64, !dbg !72173
   %.not = icmp eq i64 %3, 0, !dbg !72173
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !72159
@@ -3336,9 +3336,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !72159
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.a, %i.b, !dbg !72159
+  %i.d = sub i64 %i.b, %i.a, !dbg !72159
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !72159
-  %i.e = sub i64 %i.c, %i.b, !dbg !72159
+  %i.e = sub i64 %i.c, %i.a, !dbg !72159
   %diff.check7 = icmp ugt i64 %i.e, -32, !dbg !72159
   %conflict.rdx = or i1 %diff.check, %diff.check7, !dbg !72159
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !72174

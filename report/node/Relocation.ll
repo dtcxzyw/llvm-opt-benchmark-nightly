@@ -205,8 +205,8 @@ _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit20: ; preds = %bb.e, %bb.f
   br i1 %i.av, label %bb.l, label %bb.g
 
 bb.g:                                             ; preds = %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit20
-  %i.aw = ptrtoaddr ptr %i.t to i64
-  %i.ax = ptrtoaddr ptr %i.r to i64
+  %i.aw = ptrtoaddr ptr %i.r to i64
+  %i.ax = ptrtoaddr ptr %i.t to i64
   store ptr %i.t, ptr %0, align 8
   %.not.i.i21 = icmp eq ptr %i.s, %i.r
   br i1 %.not.i.i21, label %bb.i, label %bb.h
@@ -247,8 +247,8 @@ _ZNKSt6vectorISt10unique_ptrIN4LIEF2PE10RelocationESt14default_deleteIS3_EESaIS6
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4LIEF2PE10RelocationESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN4LIEF2PE10RelocationESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i
-  %i.bn = add i64 %i.ax, -8
-  %i.bo = sub i64 %i.bn, %i.aw                    ; 3 uses
+  %i.bn = add i64 %i.aw, -8
+  %i.bo = sub i64 %i.bn, %i.ax                    ; 3 uses
   %i.bp = lshr i64 %i.bo, 3
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check228 = icmp ult i64 %i.bo, 120
@@ -651,16 +651,16 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i
   %i.fc = phi ptr [ %i.ez, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i ], [ %i.fb, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.fd = phi ptr [ %i.ey, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i ], [ %i.fa, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 4 uses
-  %i.fe = ptrtoaddr ptr %i.fd to i64              ; 2 uses
-  %i.ff = ptrtoaddr ptr %i.fc to i64
+  %i.fe = ptrtoaddr ptr %i.fc to i64
+  %i.ff = ptrtoaddr ptr %i.fd to i64              ; 2 uses
   %i.fg = load ptr, ptr %8, align 8               ; 4 uses
-  %i.fh = add i64 %i.ff, -4
-  %i.fi = sub i64 %i.fh, %i.fe                    ; 2 uses
+  %i.fh = add i64 %i.fe, -4
+  %i.fi = sub i64 %i.fh, %i.ff                    ; 2 uses
   %i.fj = lshr i64 %i.fi, 2
   %i.fk = add nuw nsw i64 %i.fj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.fi, 44
   %i.fl = ptrtoaddr ptr %i.fg to i64
-  %i.fm = sub i64 %i.fe, %i.fl
+  %i.fm = sub i64 %i.ff, %i.fl
   %diff.check = icmp ugt i64 %i.fm, -32
   %or.cond880 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond880, label %.lr.ph.i.i.preheader, label %vector.ph
@@ -743,16 +743,16 @@ _ZN3fmt3v116detail6bigint6assignERKS2_.exit151.thread: ; preds = %_ZN3fmt3v1119b
 .lr.ph.i.preheader.i143:                          ; preds = %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148
   %i.gh = phi ptr [ %i.ge, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148 ], [ %i.gg, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140 ] ; 2 uses
   %i.gi = phi ptr [ %i.gd, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.thread.i148 ], [ %i.gf, %_ZN3fmt3v1119basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i140 ] ; 4 uses
-  %i.gj = ptrtoaddr ptr %i.gi to i64              ; 2 uses
-  %i.gk = ptrtoaddr ptr %i.gh to i64
+  %i.gj = ptrtoaddr ptr %i.gh to i64
+  %i.gk = ptrtoaddr ptr %i.gi to i64              ; 2 uses
   %i.gl = load ptr, ptr %9, align 8               ; 4 uses
-  %i.gm = add i64 %i.gk, -4
-  %i.gn = sub i64 %i.gm, %i.gj                    ; 2 uses
+  %i.gm = add i64 %i.gj, -4
+  %i.gn = sub i64 %i.gm, %i.gk                    ; 2 uses
   %i.go = lshr i64 %i.gn, 2
   %i.gp = add nuw nsw i64 %i.go, 1                ; 2 uses
   %min.iters.check863 = icmp ult i64 %i.gn, 44
   %i.gq = ptrtoaddr ptr %i.gl to i64
-  %i.gr = sub i64 %i.gj, %i.gq
+  %i.gr = sub i64 %i.gk, %i.gq
   %diff.check865 = icmp ugt i64 %i.gr, -32
   %or.cond882 = select i1 %min.iters.check863, i1 true, i1 %diff.check865
   br i1 %or.cond882, label %.lr.ph.i.i144.preheader, label %vector.ph866

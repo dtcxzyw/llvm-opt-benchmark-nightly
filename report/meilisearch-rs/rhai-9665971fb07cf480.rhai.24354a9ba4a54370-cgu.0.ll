@@ -205,9 +205,9 @@ bb.t:                                             ; preds = %bb.s
   br i1 %min.iters.check140, label %scalar.ph139.preheader, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph57
-  %4 = add i64 %.promoted59, %i.fj
   %i.gl = xor i64 %bc.resume.val134136, -1
   %i.gm = sub i64 %i.gl, %indvar
+  %4 = add i64 %.promoted59, %i.fj
   %i.gn = add i64 %4, %i.gm
   %i.go = add i64 %i.gn, -1
   %diff.check137 = icmp ult i64 %i.go, 3

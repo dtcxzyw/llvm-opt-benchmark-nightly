@@ -206,20 +206,17 @@ fts3GetDeltaVarint3.exit42.i:                     ; preds = %fts3GetDeltaVarint3
   %i.bu = phi ptr [ %i.ec, %fts3GetDeltaVarint3.exit51.i ], [ %i.bo, %fts3GetDeltaVarint3.exit42.i ] ; 3 uses
   %.084103.i = phi i32 [ %.2.i, %fts3GetDeltaVarint3.exit51.i ], [ 0, %fts3GetDeltaVarint3.exit42.i ] ; 4 uses
   %.085102.i = phi i64 [ %.287.i, %fts3GetDeltaVarint3.exit51.i ], [ 0, %fts3GetDeltaVarint3.exit42.i ] ; 5 uses
-  %.088101.i = phi i64 [ %.189.i, %fts3GetDeltaVarint3.exit51.i ], [ %i.bs, %fts3GetDeltaVarint3.exit42.i ] ; 4 uses
-  %.091100.i = phi i64 [ %.192.i, %fts3GetDeltaVarint3.exit51.i ], [ %.293.i, %fts3GetDeltaVarint3.exit42.i ] ; 8 uses
-  %5 = tail call i32 @llvm.scmp.i32.i64(i64 %.091100.i, i64 %.088101.i) ; 2 uses
-  %6 = sub nsw i32 0, %5
-  %7 = select i1 %.not.i46, i32 %5, i32 %6        ; 2 uses
-  %i.bv = icmp eq i32 %7, 0
+  %.088101.i = phi i64 [ %.189.i, %fts3GetDeltaVarint3.exit51.i ], [ %i.bs, %fts3GetDeltaVarint3.exit42.i ] ; 10 uses
+  %.091100.i = phi i64 [ %.192.i, %fts3GetDeltaVarint3.exit51.i ], [ %.293.i, %fts3GetDeltaVarint3.exit42.i ] ; 4 uses
+  %i.bv = icmp eq i64 %.091100.i, %.088101.i
   br i1 %i.bv, label %bb.w, label %bb.ac
 
 bb.w:                                             ; preds = %.lr.ph.i
   %i.bw = load ptr, ptr %i.i, align 8, !tbaa !741 ; 4 uses
   %i.bx = icmp eq i32 %.084103.i, 0
   %or.cond.i = select i1 %.not.i46, i1 true, i1 %i.bx
-  %i.by = sub i64 %.091100.i, %.085102.i
-  %i.bz = sub i64 %.085102.i, %.091100.i
+  %i.by = sub i64 %.088101.i, %.085102.i
+  %i.bz = sub i64 %.085102.i, %.088101.i
   %.0.i43.i = select i1 %or.cond.i, i64 %i.by, i64 %i.bz
   br label %bb.x
 
@@ -252,7 +249,7 @@ bb.y:                                             ; preds = %fts3PutDeltaVarint3
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %fts3PutDeltaVarint3.exit.i
-  %.186.i = phi i64 [ %.085102.i, %bb.y ], [ %.091100.i, %fts3PutDeltaVarint3.exit.i ]
+  %.186.i = phi i64 [ %.085102.i, %bb.y ], [ %.088101.i, %fts3PutDeltaVarint3.exit.i ]
   %.1.i = phi i32 [ %.084103.i, %bb.y ], [ 1, %fts3PutDeltaVarint3.exit.i ]
   %i.cm = load ptr, ptr %i.g, align 8, !tbaa !741 ; 3 uses
   %.not.i44.i = icmp ult ptr %i.cm, %i.bd
@@ -266,13 +263,13 @@ bb.aa:                                            ; preds = %bb.z
   %i.cq = load i64, ptr %i.d, align 8, !tbaa !565 ; 2 uses
   %i.cr = sub i64 0, %i.cq
   %storemerge.p.i.i = select i1 %.not.i46, i64 %i.cq, i64 %i.cr
-  %storemerge.i45.i = add i64 %storemerge.p.i.i, %.091100.i
+  %storemerge.i45.i = add i64 %storemerge.p.i.i, %.088101.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #57
   br label %fts3GetDeltaVarint3.exit46.i
 
 fts3GetDeltaVarint3.exit46.i:                     ; preds = %bb.aa, %bb.z
   %.sink108.i = phi ptr [ %i.cp, %bb.aa ], [ null, %bb.z ] ; 2 uses
-  %.394.i = phi i64 [ %storemerge.i45.i, %bb.aa ], [ %.091100.i, %bb.z ]
+  %.394.i = phi i64 [ %storemerge.i45.i, %bb.aa ], [ %.088101.i, %bb.z ]
   store ptr %.sink108.i, ptr %i.g, align 8, !tbaa !741
   %i.cs = load ptr, ptr %i.h, align 8, !tbaa !741 ; 3 uses
   %.not.i47.i = icmp ult ptr %i.cs, %i.bf
@@ -292,6 +289,9 @@ bb.ab:                                            ; preds = %fts3GetDeltaVarint3
   br label %fts3GetDeltaVarint3.exit51.i
 
 bb.ac:                                            ; preds = %.lr.ph.i
+  %5 = tail call i32 @llvm.scmp.i32.i64(i64 %.091100.i, i64 %.088101.i) ; 2 uses
+  %6 = sub nsw i32 0, %5
+  %7 = select i1 %.not.i46, i32 %5, i32 %6
   %i.cy = icmp slt i32 %7, 0
   br i1 %i.cy, label %bb.ad, label %bb.af
 
@@ -694,19 +694,16 @@ bb.e:                                             ; preds = %.lr.ph, %fts3GetDel
   %i.ag = phi i1 [ %i.aa, %.lr.ph ], [ %i.dy, %fts3GetDeltaVarint3.exit67 ] ; 2 uses
   %or.cond139 = phi i1 [ true, %.lr.ph ], [ %.not50, %fts3GetDeltaVarint3.exit67 ] ; 3 uses
   %.0116151 = phi i64 [ 0, %.lr.ph ], [ %.1117, %fts3GetDeltaVarint3.exit67 ] ; 6 uses
-  %.0118150 = phi i64 [ %.2120, %.lr.ph ], [ %.1119, %fts3GetDeltaVarint3.exit67 ] ; 11 uses
-  %.0122149 = phi i64 [ %.2124, %.lr.ph ], [ %.1123, %fts3GetDeltaVarint3.exit67 ] ; 15 uses
-  %7 = tail call i32 @llvm.scmp.i32.i64(i64 %.0122149, i64 %.0118150) ; 2 uses
-  %8 = sub nsw i32 0, %7
-  %9 = select i1 %.not50, i32 %7, i32 %8          ; 2 uses
+  %.0118150 = phi i64 [ %.2120, %.lr.ph ], [ %.1119, %fts3GetDeltaVarint3.exit67 ] ; 18 uses
+  %.0122149 = phi i64 [ %.2124, %.lr.ph ], [ %.1123, %fts3GetDeltaVarint3.exit67 ] ; 10 uses
   %or.cond = and i1 %i.ag, %i.af
-  %i.ah = icmp eq i32 %9, 0
+  %i.ah = icmp eq i64 %.0122149, %.0118150
   %or.cond3 = select i1 %or.cond, i1 %i.ah, i1 false
   br i1 %or.cond3, label %bb.f, label %bb.l
 
 bb.f:                                             ; preds = %bb.e
-  %i.ai = sub i64 %.0122149, %.0116151
-  %i.aj = sub i64 %.0116151, %.0122149
+  %i.ai = sub i64 %.0118150, %.0116151
+  %i.aj = sub i64 %.0116151, %.0118150
   %.0.i59 = select i1 %or.cond139, i64 %i.ai, i64 %i.aj
   %i.ak = load ptr, ptr %i.i, align 8, !tbaa !741 ; 3 uses
   br label %bb.g
@@ -748,13 +745,13 @@ bb.i:                                             ; preds = %bb.h
   %i.ba = load i64, ptr %i.d, align 8, !tbaa !565 ; 2 uses
   %i.bb = sub i64 0, %i.ba
   %storemerge.p.i = select i1 %.not50, i64 %i.ba, i64 %i.bb
-  %storemerge.i61 = add i64 %storemerge.p.i, %.0122149
+  %storemerge.i61 = add i64 %storemerge.p.i, %.0118150
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #57
   br label %fts3GetDeltaVarint3.exit62
 
 fts3GetDeltaVarint3.exit62:                       ; preds = %bb.h, %bb.i
   %.sink161 = phi ptr [ %i.az, %bb.i ], [ null, %bb.h ] ; 3 uses
-  %.3125 = phi i64 [ %storemerge.i61, %bb.i ], [ %.0122149, %bb.h ] ; 2 uses
+  %.3125 = phi i64 [ %storemerge.i61, %bb.i ], [ %.0118150, %bb.h ] ; 2 uses
   store ptr %.sink161, ptr %i.g, align 8, !tbaa !741
   %i.bc = load ptr, ptr %i.h, align 8, !tbaa !741 ; 3 uses
   %.not.i63 = icmp ult ptr %i.bc, %i.m
@@ -778,6 +775,9 @@ bb.k:                                             ; preds = %fts3GetDeltaVarint3
   br label %fts3GetDeltaVarint3.exit67
 
 bb.l:                                             ; preds = %bb.e
+  %7 = tail call i32 @llvm.scmp.i32.i64(i64 %.0122149, i64 %.0118150) ; 2 uses
+  %8 = sub nsw i32 0, %7
+  %9 = select i1 %.not50, i32 %7, i32 %8
   %.not53 = xor i1 %i.af, true
   %i.bi = icmp slt i32 %9, 0
   %or.cond5 = select i1 %i.ag, i1 %i.bi, i1 false
@@ -946,7 +946,7 @@ fts3GetDeltaVarint3.exit67:                       ; preds = %bb.t, %bb.s, %bb.p,
   %i.dx = phi ptr [ null, %bb.o ], [ %.pre, %bb.t ], [ %.sink161, %bb.k ], [ %.sink161, %bb.j ], [ %i.cn, %bb.p ], [ %i.ae, %bb.s ] ; 2 uses
   %.1123 = phi i64 [ %.0122149, %bb.o ], [ %.0122149, %bb.t ], [ %.3125, %bb.k ], [ %.3125, %bb.j ], [ %storemerge.i77, %bb.p ], [ %.0122149, %bb.s ]
   %.1119 = phi i64 [ %.0118150, %bb.o ], [ %storemerge.i94, %bb.t ], [ %storemerge.i66, %bb.k ], [ %.0118150, %bb.j ], [ %.0118150, %bb.p ], [ %.0118150, %bb.s ]
-  %.1117 = phi i64 [ %.0122149, %bb.o ], [ %.0118150, %bb.t ], [ %.0122149, %bb.k ], [ %.0122149, %bb.j ], [ %.0122149, %bb.p ], [ %.0118150, %bb.s ]
+  %.1117 = phi i64 [ %.0122149, %bb.o ], [ %.0118150, %bb.t ], [ %.0118150, %bb.k ], [ %.0118150, %bb.j ], [ %.0122149, %bb.p ], [ %.0118150, %bb.s ]
   %i.dy = icmp ne ptr %i.dx, null                 ; 2 uses
   %i.dz = icmp ne ptr %i.dw, null                 ; 2 uses
   %i.ea = select i1 %i.dy, i1 true, i1 %i.dz

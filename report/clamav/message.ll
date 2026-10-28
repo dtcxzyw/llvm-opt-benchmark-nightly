@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @messageAddArgument(ptr nofree noundef captures(address_is_null) %0, ptr noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.preheader63
-  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.preheader63 ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.preheader63 ] ; 2 uses
   %.043 = phi ptr [ %i.k, %bb.d ], [ %1, %.preheader63 ] ; 22 uses
   %i.f = load i8, ptr %.043, align 1, !tbaa !28   ; 2 uses
   %i.g = sext i8 %i.f to i64
@@ -395,34 +395,32 @@ bb.t:                                             ; preds = %bb.s
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.132, ptr noundef nonnull %.043) #20
   %i.bb = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.043) #22
   %i.bc = add i64 %i.bb, 1
-  %i.bd = tail call ptr @cli_max_malloc(i64 noundef %i.bc) #20 ; 12 uses
+  %i.bd = tail call ptr @cli_max_malloc(i64 noundef %i.bc) #20 ; 11 uses
   %i.be = ptrtoaddr ptr %i.bd to i64
   %i.bf = icmp eq ptr %i.bd, null
   br i1 %i.bf, label %rfc2231.exit.thread59, label %.preheader109.i
 
 .preheader109.i:                                  ; preds = %.thread.i
   %.not88116.i = icmp eq ptr %.043, %.068105.i
-  br i1 %.not88116.i, label %._crit_edge.i, label %iter.check
+  br i1 %.not88116.i, label %._crit_edge.i, label %vector.memcheck
 
-iter.check:                                       ; preds = %.preheader109.i
-  %2 = add i64 %indvar, %i.a
-  %3 = sub i64 %.068105.i124, %2                  ; 7 uses
-  %min.iters.check = icmp ult i64 %3, 8
-  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %iter.check
+vector.memcheck:                                  ; preds = %.preheader109.i
   %i.bg = add i64 %indvar, %i.a
-  %i.bh = sub i64 %i.bg, %i.be
+  %2 = sub i64 %.068105.i124, %i.bg               ; 7 uses
+  %min.iters.check = icmp ult i64 %2, 8
+  %3 = ptrtoaddr ptr %.043 to i64
+  %i.bh = sub i64 %3, %i.be
   %diff.check = icmp ugt i64 %i.bh, -32
-  br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
+  %or.cond = or i1 %min.iters.check, %diff.check
+  br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check125 = icmp ult i64 %3, 32
+  %min.iters.check125 = icmp ult i64 %2, 32
   br i1 %min.iters.check125, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.bi = and i64 %3, 24
-  %n.vec = and i64 %3, -32                        ; 5 uses
+  %i.bi = and i64 %2, 24
+  %n.vec = and i64 %2, -32                        ; 5 uses
   %i.bj = getelementptr i8, ptr %i.bd, i64 %n.vec ; 2 uses
   %i.bk = getelementptr i8, ptr %.043, i64 %n.vec ; 2 uses
   br label %vector.body
@@ -442,7 +440,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.bn, label %middle.block, label %vector.body, !llvm.loop !60
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %2, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -451,7 +449,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec128 = and i64 %3, -8                      ; 4 uses
+  %n.vec128 = and i64 %2, -8                      ; 4 uses
   %i.bo = getelementptr i8, ptr %i.bd, i64 %n.vec128 ; 2 uses
   %i.bp = getelementptr i8, ptr %.043, i64 %n.vec128 ; 2 uses
   br label %vec.epilog.vector.body
@@ -467,12 +465,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.bq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !61
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n134 = icmp eq i64 %3, %n.vec128
+  %cmp.n134 = icmp eq i64 %2, %n.vec128
   br i1 %cmp.n134, label %._crit_edge.i, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.165118.i.ph = phi ptr [ %i.bd, %iter.check ], [ %i.bd, %vector.memcheck ], [ %i.bj, %vec.epilog.iter.check ], [ %i.bo, %vec.epilog.middle.block ] ; 2 uses
-  %.376117.i.ph = phi ptr [ %.043, %iter.check ], [ %.043, %vector.memcheck ], [ %i.bk, %vec.epilog.iter.check ], [ %i.bp, %vec.epilog.middle.block ] ; 3 uses
+.lr.ph.i.preheader:                               ; preds = %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.165118.i.ph = phi ptr [ %i.bd, %vector.memcheck ], [ %i.bj, %vec.epilog.iter.check ], [ %i.bo, %vec.epilog.middle.block ] ; 2 uses
+  %.376117.i.ph = phi ptr [ %.043, %vector.memcheck ], [ %i.bk, %vec.epilog.iter.check ], [ %i.bp, %vec.epilog.middle.block ] ; 3 uses
   %.376117.i.ph145 = ptrtoaddr ptr %.376117.i.ph to i64 ; 2 uses
   %i.br = sub i64 %.068105.i124, %.376117.i.ph145
   %xtraiter = and i64 %i.br, 7                    ; 2 uses

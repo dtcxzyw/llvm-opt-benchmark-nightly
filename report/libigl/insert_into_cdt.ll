@@ -205,10 +205,10 @@ bb.x:                                             ; preds = %_ZN5boost7movelib15
   br i1 %.not8.i150, label %_ZN5boost20adl_move_swap_rangesIPN4CGAL8internal11CC_iteratorINS1_17Compact_containerINS1_37Constrained_triangulation_face_base_2INS1_5EpickENS1_25Triangulation_face_base_2IS6_NS1_28Triangulation_ds_face_base_2INS1_30Triangulation_data_structure_2INS1_27Triangulation_vertex_base_2IS6_NS1_30Triangulation_ds_vertex_base_2IvEEEENS5_IS6_NS7_IS6_NS8_IvEEEEEEEEEEEEEENS1_7DefaultESL_SL_EELb0EEESO_EET0_T_SQ_SP_.exit158, label %.lr.ph.i151.preheader
 
 .lr.ph.i151.preheader:                            ; preds = %.thread
-  %i.gp = ptrtoaddr ptr %i.gl to i64
-  %i.gq = ptrtoaddr ptr %i.gm to i64
-  %i.gr = add i64 %i.gp, -8
-  %i.gs = sub i64 %i.gr, %i.gq                    ; 3 uses
+  %i.gp = ptrtoaddr ptr %i.gm to i64
+  %i.gq = ptrtoaddr ptr %i.gl to i64
+  %i.gr = add i64 %i.gq, -8
+  %i.gs = sub i64 %i.gr, %i.gp                    ; 3 uses
   %i.gt = lshr i64 %i.gs, 3
   %i.gu = add nuw nsw i64 %i.gt, 1                ; 2 uses
   %min.iters.check396 = icmp ult i64 %i.gs, 104
@@ -611,7 +611,7 @@ _ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIP
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_NS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEENS0_7swap_opEEET_S11_S11_RS11_S11_S11_RT0_S14_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #3 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = load ptr, ptr %5, align 8, !tbaa !285    ; 3 uses
   %i.c = load ptr, ptr %6, align 8, !tbaa !285    ; 2 uses
   %i.d = load ptr, ptr %2, align 8, !tbaa !285    ; 11 uses
@@ -640,7 +640,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEET_S10_S10_RKNS0_15iterator_traitsIS10_E10value_typeET0_.exit: ; preds = %bb.c, %bb.d, %bb.b
   %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.07.i, %bb.c ], [ %i.i, %bb.d ] ; 10 uses
-  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 3 uses
   %i.k = ptrtoint ptr %0 to i64
   %i.l = sub i64 %i.j, %i.k
   %i.m = getelementptr inbounds i8, ptr %i.b, i64 %i.l ; 14 uses
@@ -669,7 +669,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not4864.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEENS0_7swap_opEEET1_T_S12_RT0_S13_S14_RS11_T2_T3_.exit.thread91, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.f, %bb.j
-  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
   %.04169.i = phi ptr [ %.041.i, %bb.j ], [ %.04163.i, %bb.f ] ; 10 uses
   %.03768.i = phi ptr [ %.037.i, %bb.j ], [ %.03762.i, %bb.f ] ; 5 uses
   %.067.i = phi ptr [ %.1.i, %bb.j ], [ %i.o, %bb.f ] ; 7 uses
@@ -682,7 +682,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = add i64 %i.a, -16
   %i.v = shl i64 %indvar, 3
   %i.w = add i64 %i.v, %i.j
-  %i.x = sub i64 %i.u, %i.w                       ; 2 uses
+  %i.x = sub i64 %i.u, %i.w                       ; 3 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 168
@@ -690,16 +690,12 @@ bb.f:                                             ; preds = %bb.e
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.aa = shl i64 %indvar, 3
-  %7 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.aa
-  %scevgep = getelementptr i8, ptr %7, i64 16
-  %8 = add i64 %i.a, -16
-  %9 = shl i64 %indvar, 3
-  %10 = add i64 %9, %i.j
-  %11 = sub i64 %8, %10
-  %12 = and i64 %11, -8                           ; 2 uses
-  %scevgep235 = getelementptr i8, ptr %scevgep, i64 %12
-  %scevgep236 = getelementptr i8, ptr %.03965.i, i64 8
-  %scevgep237 = getelementptr i8, ptr %scevgep236, i64 %12
+  %7 = and i64 %i.x, -8                           ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.aa
+  %8 = getelementptr i8, ptr %scevgep, i64 16
+  %scevgep235 = getelementptr i8, ptr %8, i64 %7
+  %scevgep236 = getelementptr i8, ptr %.03965.i, i64 %7
+  %scevgep237 = getelementptr i8, ptr %scevgep236, i64 8
   %bound0 = icmp ult ptr %.04169.i, %scevgep237
   %bound1 = icmp ult ptr %.03965.i, %scevgep235
   %found.conflict = and i1 %bound0, %bound1
@@ -812,7 +808,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.be, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEENS0_7swap_opEEET1_T_S12_RT0_S13_S14_RS11_T2_T3_.exit.thread, label %.lr.ph.i34
 
 .lr.ph.i34:                                       ; preds = %bb.l, %bb.m
-  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 3 uses
   %.03457.i = phi ptr [ %.034.i, %bb.m ], [ %.03453.i, %bb.l ] ; 8 uses
   %.03056.i = phi ptr [ %.030.i, %bb.m ], [ %.03052.i, %bb.l ] ; 3 uses
   %.055.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ba, %bb.l ] ; 6 uses
@@ -824,7 +820,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bg = add i64 %i.a, -16
   %i.bh = shl i64 %indvar244, 3
   %i.bi = add i64 %i.bh, %i.j
-  %i.bj = sub i64 %i.bg, %i.bi                    ; 2 uses
+  %i.bj = sub i64 %i.bg, %i.bi                    ; 3 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
   %min.iters.check254 = icmp ult i64 %i.bj, 168
@@ -832,16 +828,12 @@ bb.l:                                             ; preds = %bb.k
 
 vector.memcheck243:                               ; preds = %.lr.ph.i.i40.preheader
   %i.bm = shl i64 %indvar244, 3
-  %13 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bm
-  %scevgep246 = getelementptr i8, ptr %13, i64 16
-  %14 = add i64 %i.a, -16
-  %15 = shl i64 %indvar244, 3
-  %16 = add i64 %15, %i.j
-  %17 = sub i64 %14, %16
-  %18 = and i64 %17, -8                           ; 2 uses
-  %scevgep247 = getelementptr i8, ptr %scevgep246, i64 %18
-  %scevgep248 = getelementptr i8, ptr %.03254.i, i64 8
-  %scevgep249 = getelementptr i8, ptr %scevgep248, i64 %18
+  %9 = and i64 %i.bj, -8                          ; 2 uses
+  %scevgep246 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bm
+  %10 = getelementptr i8, ptr %scevgep246, i64 16
+  %scevgep247 = getelementptr i8, ptr %10, i64 %9
+  %scevgep248 = getelementptr i8, ptr %.03254.i, i64 %9
+  %scevgep249 = getelementptr i8, ptr %scevgep248, i64 8
   %bound0250 = icmp ult ptr %.03457.i, %scevgep249
   %bound1251 = icmp ult ptr %.03254.i, %scevgep247
   %found.conflict252 = and i1 %bound0250, %bound1251
@@ -1031,7 +1023,7 @@ _ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8inter
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEENS0_7swap_opEEET_S13_S13_RS13_S13_S13_RT0_S16_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef align 8 dead_on_return %7) local_unnamed_addr #3 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = load ptr, ptr %5, align 8, !tbaa !285    ; 3 uses
   %i.c = load ptr, ptr %6, align 8, !tbaa !285    ; 2 uses
   %i.d = load ptr, ptr %2, align 8, !tbaa !285    ; 11 uses
@@ -1060,7 +1052,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEEEET_S12_S12_RKNS0_15iterator_traitsIS12_E10value_typeET0_.exit: ; preds = %bb.c, %bb.d, %bb.b
   %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.08.i, %bb.c ], [ %i.h, %bb.d ] ; 10 uses
-  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 3 uses
   %i.j = ptrtoint ptr %0 to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 14 uses
@@ -1089,7 +1081,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not4865.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEENS0_7swap_opEEET1_T_S14_RT0_S15_S16_RS13_T2_T3_.exit.thread95, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.f, %bb.j
-  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
   %.04170.i = phi ptr [ %.041.i, %bb.j ], [ %.04164.i, %bb.f ] ; 10 uses
   %.03769.i = phi ptr [ %.037.i, %bb.j ], [ %.03763.i, %bb.f ] ; 5 uses
   %.068.i = phi ptr [ %.1.i, %bb.j ], [ %i.n, %bb.f ] ; 7 uses
@@ -1102,7 +1094,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = add i64 %i.a, -16
   %i.u = shl i64 %indvar, 3
   %i.v = add i64 %i.u, %i.i
-  %i.w = sub i64 %i.t, %i.v                       ; 2 uses
+  %i.w = sub i64 %i.t, %i.v                       ; 3 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.w, 168
@@ -1110,16 +1102,12 @@ bb.f:                                             ; preds = %bb.e
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.z = shl i64 %indvar, 3
-  %8 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.z
-  %scevgep = getelementptr i8, ptr %8, i64 16
-  %9 = add i64 %i.a, -16
-  %10 = shl i64 %indvar, 3
-  %11 = add i64 %10, %i.i
-  %12 = sub i64 %9, %11
-  %13 = and i64 %12, -8                           ; 2 uses
-  %scevgep238 = getelementptr i8, ptr %scevgep, i64 %13
-  %scevgep239 = getelementptr i8, ptr %.03966.i, i64 8
-  %scevgep240 = getelementptr i8, ptr %scevgep239, i64 %13
+  %8 = and i64 %i.w, -8                           ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.z
+  %9 = getelementptr i8, ptr %scevgep, i64 16
+  %scevgep238 = getelementptr i8, ptr %9, i64 %8
+  %scevgep239 = getelementptr i8, ptr %.03966.i, i64 %8
+  %scevgep240 = getelementptr i8, ptr %scevgep239, i64 8
   %bound0 = icmp ult ptr %.04170.i, %scevgep240
   %bound1 = icmp ult ptr %.03966.i, %scevgep238
   %found.conflict = and i1 %bound0, %bound1
@@ -1232,7 +1220,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bc, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEENS0_7swap_opEEET1_T_S14_RT0_S15_S16_RS13_T2_T3_.exit.thread, label %.lr.ph.i34
 
 .lr.ph.i34:                                       ; preds = %bb.l, %bb.m
-  %indvar247 = phi i64 [ %indvar.next248, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %indvar247 = phi i64 [ %indvar.next248, %bb.m ], [ 0, %bb.l ] ; 3 uses
   %.03458.i = phi ptr [ %.034.i, %bb.m ], [ %.03454.i, %bb.l ] ; 8 uses
   %.03057.i = phi ptr [ %.030.i, %bb.m ], [ %.03053.i, %bb.l ] ; 3 uses
   %.056.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ay, %bb.l ] ; 6 uses
@@ -1244,7 +1232,7 @@ bb.l:                                             ; preds = %bb.k
   %i.be = add i64 %i.a, -16
   %i.bf = shl i64 %indvar247, 3
   %i.bg = add i64 %i.bf, %i.i
-  %i.bh = sub i64 %i.be, %i.bg                    ; 2 uses
+  %i.bh = sub i64 %i.be, %i.bg                    ; 3 uses
   %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check257 = icmp ult i64 %i.bh, 168
@@ -1252,16 +1240,12 @@ bb.l:                                             ; preds = %bb.k
 
 vector.memcheck246:                               ; preds = %.lr.ph.i.i40.preheader
   %i.bk = shl i64 %indvar247, 3
-  %14 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bk
-  %scevgep249 = getelementptr i8, ptr %14, i64 16
-  %15 = add i64 %i.a, -16
-  %16 = shl i64 %indvar247, 3
-  %17 = add i64 %16, %i.i
-  %18 = sub i64 %15, %17
-  %19 = and i64 %18, -8                           ; 2 uses
-  %scevgep250 = getelementptr i8, ptr %scevgep249, i64 %19
-  %scevgep251 = getelementptr i8, ptr %.03255.i, i64 8
-  %scevgep252 = getelementptr i8, ptr %scevgep251, i64 %19
+  %10 = and i64 %i.bh, -8                         ; 2 uses
+  %scevgep249 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bk
+  %11 = getelementptr i8, ptr %scevgep249, i64 16
+  %scevgep250 = getelementptr i8, ptr %11, i64 %10
+  %scevgep251 = getelementptr i8, ptr %.03255.i, i64 %10
+  %scevgep252 = getelementptr i8, ptr %scevgep251, i64 8
   %bound0253 = icmp ult ptr %.03458.i, %scevgep252
   %bound1254 = icmp ult ptr %.03255.i, %scevgep250
   %found.conflict255 = and i1 %bound0253, %bound1254
@@ -1664,10 +1648,10 @@ bb.x:                                             ; preds = %_ZN5boost7movelib15
   br i1 %.not8.i150, label %_ZN5boost20adl_move_swap_rangesIPN4CGAL8internal11CC_iteratorINS1_17Compact_containerINS1_37Constrained_triangulation_face_base_2INS1_5EpeckENS1_25Triangulation_face_base_2IS6_NS1_28Triangulation_ds_face_base_2INS1_30Triangulation_data_structure_2INS1_27Triangulation_vertex_base_2IS6_NS1_30Triangulation_ds_vertex_base_2IvEEEENS5_IS6_NS7_IS6_NS8_IvEEEEEEEEEEEEEENS1_7DefaultESL_SL_EELb0EEESO_EET0_T_SQ_SP_.exit158, label %.lr.ph.i151.preheader
 
 .lr.ph.i151.preheader:                            ; preds = %.thread
-  %i.gp = ptrtoaddr ptr %i.gl to i64
-  %i.gq = ptrtoaddr ptr %i.gm to i64
-  %i.gr = add i64 %i.gp, -8
-  %i.gs = sub i64 %i.gr, %i.gq                    ; 3 uses
+  %i.gp = ptrtoaddr ptr %i.gm to i64
+  %i.gq = ptrtoaddr ptr %i.gl to i64
+  %i.gr = add i64 %i.gq, -8
+  %i.gs = sub i64 %i.gr, %i.gp                    ; 3 uses
   %i.gt = lshr i64 %i.gs, 3
   %i.gu = add nuw nsw i64 %i.gt, 1                ; 2 uses
   %min.iters.check396 = icmp ult i64 %i.gs, 104
@@ -2070,7 +2054,7 @@ _ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIP
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_NS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEENS0_7swap_opEEET_S11_S11_RS11_S11_S11_RT0_S14_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #3 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = load ptr, ptr %5, align 8, !tbaa !467    ; 3 uses
   %i.c = load ptr, ptr %6, align 8, !tbaa !467    ; 2 uses
   %i.d = load ptr, ptr %2, align 8, !tbaa !467    ; 11 uses
@@ -2099,7 +2083,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEET_S10_S10_RKNS0_15iterator_traitsIS10_E10value_typeET0_.exit: ; preds = %bb.c, %bb.d, %bb.b
   %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.07.i, %bb.c ], [ %i.i, %bb.d ] ; 10 uses
-  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 3 uses
   %i.k = ptrtoint ptr %0 to i64
   %i.l = sub i64 %i.j, %i.k
   %i.m = getelementptr inbounds i8, ptr %i.b, i64 %i.l ; 14 uses
@@ -2128,7 +2112,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not4864.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEENS0_7swap_opEEET1_T_S12_RT0_S13_S14_RS11_T2_T3_.exit.thread91, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.f, %bb.j
-  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
   %.04169.i = phi ptr [ %.041.i, %bb.j ], [ %.04163.i, %bb.f ] ; 10 uses
   %.03768.i = phi ptr [ %.037.i, %bb.j ], [ %.03762.i, %bb.f ] ; 5 uses
   %.067.i = phi ptr [ %.1.i, %bb.j ], [ %i.o, %bb.f ] ; 7 uses
@@ -2141,7 +2125,7 @@ bb.f:                                             ; preds = %bb.e
   %i.u = add i64 %i.a, -16
   %i.v = shl i64 %indvar, 3
   %i.w = add i64 %i.v, %i.j
-  %i.x = sub i64 %i.u, %i.w                       ; 2 uses
+  %i.x = sub i64 %i.u, %i.w                       ; 3 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 168
@@ -2149,16 +2133,12 @@ bb.f:                                             ; preds = %bb.e
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.aa = shl i64 %indvar, 3
-  %7 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.aa
-  %scevgep = getelementptr i8, ptr %7, i64 16
-  %8 = add i64 %i.a, -16
-  %9 = shl i64 %indvar, 3
-  %10 = add i64 %9, %i.j
-  %11 = sub i64 %8, %10
-  %12 = and i64 %11, -8                           ; 2 uses
-  %scevgep235 = getelementptr i8, ptr %scevgep, i64 %12
-  %scevgep236 = getelementptr i8, ptr %.03965.i, i64 8
-  %scevgep237 = getelementptr i8, ptr %scevgep236, i64 %12
+  %7 = and i64 %i.x, -8                           ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.aa
+  %8 = getelementptr i8, ptr %scevgep, i64 16
+  %scevgep235 = getelementptr i8, ptr %8, i64 %7
+  %scevgep236 = getelementptr i8, ptr %.03965.i, i64 %7
+  %scevgep237 = getelementptr i8, ptr %scevgep236, i64 8
   %bound0 = icmp ult ptr %.04169.i, %scevgep237
   %bound1 = icmp ult ptr %.03965.i, %scevgep235
   %found.conflict = and i1 %bound0, %bound1
@@ -2271,7 +2251,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.be, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEENS0_7swap_opEEET1_T_S12_RT0_S13_S14_RS11_T2_T3_.exit.thread, label %.lr.ph.i34
 
 .lr.ph.i34:                                       ; preds = %bb.l, %bb.m
-  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 3 uses
   %.03457.i = phi ptr [ %.034.i, %bb.m ], [ %.03453.i, %bb.l ] ; 8 uses
   %.03056.i = phi ptr [ %.030.i, %bb.m ], [ %.03052.i, %bb.l ] ; 3 uses
   %.055.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ba, %bb.l ] ; 6 uses
@@ -2283,7 +2263,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bg = add i64 %i.a, -16
   %i.bh = shl i64 %indvar244, 3
   %i.bi = add i64 %i.bh, %i.j
-  %i.bj = sub i64 %i.bg, %i.bi                    ; 2 uses
+  %i.bj = sub i64 %i.bg, %i.bi                    ; 3 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
   %min.iters.check254 = icmp ult i64 %i.bj, 168
@@ -2291,16 +2271,12 @@ bb.l:                                             ; preds = %bb.k
 
 vector.memcheck243:                               ; preds = %.lr.ph.i.i40.preheader
   %i.bm = shl i64 %indvar244, 3
-  %13 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bm
-  %scevgep246 = getelementptr i8, ptr %13, i64 16
-  %14 = add i64 %i.a, -16
-  %15 = shl i64 %indvar244, 3
-  %16 = add i64 %15, %i.j
-  %17 = sub i64 %14, %16
-  %18 = and i64 %17, -8                           ; 2 uses
-  %scevgep247 = getelementptr i8, ptr %scevgep246, i64 %18
-  %scevgep248 = getelementptr i8, ptr %.03254.i, i64 8
-  %scevgep249 = getelementptr i8, ptr %scevgep248, i64 %18
+  %9 = and i64 %i.bj, -8                          ; 2 uses
+  %scevgep246 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bm
+  %10 = getelementptr i8, ptr %scevgep246, i64 16
+  %scevgep247 = getelementptr i8, ptr %10, i64 %9
+  %scevgep248 = getelementptr i8, ptr %.03254.i, i64 %9
+  %scevgep249 = getelementptr i8, ptr %scevgep248, i64 8
   %bound0250 = icmp ult ptr %.03457.i, %scevgep249
   %bound1251 = icmp ult ptr %.03254.i, %scevgep247
   %found.conflict252 = and i1 %bound0250, %bound1251
@@ -2490,7 +2466,7 @@ _ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8inter
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEENS0_7swap_opEEET_S13_S13_RS13_S13_S13_RT0_S16_T1_T2_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef align 8 dead_on_return %7) local_unnamed_addr #3 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = load ptr, ptr %5, align 8, !tbaa !467    ; 3 uses
   %i.c = load ptr, ptr %6, align 8, !tbaa !467    ; 2 uses
   %i.d = load ptr, ptr %2, align 8, !tbaa !467    ; 11 uses
@@ -2519,7 +2495,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEEEET_S12_S12_RKNS0_15iterator_traitsIS12_E10value_typeET0_.exit: ; preds = %bb.c, %bb.d, %bb.b
   %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.08.i, %bb.c ], [ %i.h, %bb.d ] ; 10 uses
-  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 3 uses
   %i.j = ptrtoint ptr %0 to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 14 uses
@@ -2548,7 +2524,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not4865.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEENS0_7swap_opEEET1_T_S14_RT0_S15_S16_RS13_T2_T3_.exit.thread95, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.f, %bb.j
-  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
   %.04170.i = phi ptr [ %.041.i, %bb.j ], [ %.04164.i, %bb.f ] ; 10 uses
   %.03769.i = phi ptr [ %.037.i, %bb.j ], [ %.03763.i, %bb.f ] ; 5 uses
   %.068.i = phi ptr [ %.1.i, %bb.j ], [ %i.n, %bb.f ] ; 7 uses
@@ -2561,7 +2537,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = add i64 %i.a, -16
   %i.u = shl i64 %indvar, 3
   %i.v = add i64 %i.u, %i.i
-  %i.w = sub i64 %i.t, %i.v                       ; 2 uses
+  %i.w = sub i64 %i.t, %i.v                       ; 3 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.w, 168
@@ -2569,16 +2545,12 @@ bb.f:                                             ; preds = %bb.e
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.z = shl i64 %indvar, 3
-  %8 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.z
-  %scevgep = getelementptr i8, ptr %8, i64 16
-  %9 = add i64 %i.a, -16
-  %10 = shl i64 %indvar, 3
-  %11 = add i64 %10, %i.i
-  %12 = sub i64 %9, %11
-  %13 = and i64 %12, -8                           ; 2 uses
-  %scevgep238 = getelementptr i8, ptr %scevgep, i64 %13
-  %scevgep239 = getelementptr i8, ptr %.03966.i, i64 8
-  %scevgep240 = getelementptr i8, ptr %scevgep239, i64 %13
+  %8 = and i64 %i.w, -8                           ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0.lcssa.i, i64 %i.z
+  %9 = getelementptr i8, ptr %scevgep, i64 16
+  %scevgep238 = getelementptr i8, ptr %9, i64 %8
+  %scevgep239 = getelementptr i8, ptr %.03966.i, i64 %8
+  %scevgep240 = getelementptr i8, ptr %scevgep239, i64 8
   %bound0 = icmp ult ptr %.04170.i, %scevgep240
   %bound1 = icmp ult ptr %.03966.i, %scevgep238
   %found.conflict = and i1 %bound0, %bound1
@@ -2691,7 +2663,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bc, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS8_NSA_IvEEEEEEEEEEEEEENS3_7DefaultESN_SN_EELb0EEESQ_SQ_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessISP_ESP_NS_11move_detail8identityISP_EEEEEENS0_7swap_opEEET1_T_S14_RT0_S15_S16_RS13_T2_T3_.exit.thread, label %.lr.ph.i34
 
 .lr.ph.i34:                                       ; preds = %bb.l, %bb.m
-  %indvar247 = phi i64 [ %indvar.next248, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %indvar247 = phi i64 [ %indvar.next248, %bb.m ], [ 0, %bb.l ] ; 3 uses
   %.03458.i = phi ptr [ %.034.i, %bb.m ], [ %.03454.i, %bb.l ] ; 8 uses
   %.03057.i = phi ptr [ %.030.i, %bb.m ], [ %.03053.i, %bb.l ] ; 3 uses
   %.056.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ay, %bb.l ] ; 6 uses
@@ -2703,7 +2675,7 @@ bb.l:                                             ; preds = %bb.k
   %i.be = add i64 %i.a, -16
   %i.bf = shl i64 %indvar247, 3
   %i.bg = add i64 %i.bf, %i.i
-  %i.bh = sub i64 %i.be, %i.bg                    ; 2 uses
+  %i.bh = sub i64 %i.be, %i.bg                    ; 3 uses
   %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nuw nsw i64 %i.bi, 1                ; 2 uses
   %min.iters.check257 = icmp ult i64 %i.bh, 168
@@ -2711,16 +2683,12 @@ bb.l:                                             ; preds = %bb.k
 
 vector.memcheck246:                               ; preds = %.lr.ph.i.i40.preheader
   %i.bk = shl i64 %indvar247, 3
-  %14 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bk
-  %scevgep249 = getelementptr i8, ptr %14, i64 16
-  %15 = add i64 %i.a, -16
-  %16 = shl i64 %indvar247, 3
-  %17 = add i64 %16, %i.i
-  %18 = sub i64 %15, %17
-  %19 = and i64 %18, -8                           ; 2 uses
-  %scevgep250 = getelementptr i8, ptr %scevgep249, i64 %19
-  %scevgep251 = getelementptr i8, ptr %.03255.i, i64 8
-  %scevgep252 = getelementptr i8, ptr %scevgep251, i64 %19
+  %10 = and i64 %i.bh, -8                         ; 2 uses
+  %scevgep249 = getelementptr i8, ptr %.0.lcssa.i, i64 %i.bk
+  %11 = getelementptr i8, ptr %scevgep249, i64 16
+  %scevgep250 = getelementptr i8, ptr %11, i64 %10
+  %scevgep251 = getelementptr i8, ptr %.03255.i, i64 %10
+  %scevgep252 = getelementptr i8, ptr %scevgep251, i64 8
   %bound0253 = icmp ult ptr %.03458.i, %scevgep252
   %bound1254 = icmp ult ptr %.03255.i, %scevgep250
   %found.conflict255 = and i1 %bound0253, %bound1254

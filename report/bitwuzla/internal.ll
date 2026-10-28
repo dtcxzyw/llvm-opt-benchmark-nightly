@@ -205,14 +205,14 @@ bb.f:                                             ; preds = %.lr.ph79, %bb.j
   %i.aj = zext nneg i32 %i.ai to i64
   %i.ak = load ptr, ptr %i.q, align 8, !tbaa !184
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %i.aj
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !174 ; 3 uses
-  %3 = icmp slt i32 %.sroa.056.077, 0
-  %4 = sub nsw i32 0, %i.am
-  %spec.select.i = select i1 %3, i32 %4, i32 %i.am ; 2 uses
-  %.not45 = icmp eq i32 %spec.select.i, 0
+  %i.am = load i32, ptr %i.al, align 4, !tbaa !174 ; 4 uses
+  %.not45 = icmp eq i32 %i.am, 0
   br i1 %.not45, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %3 = icmp slt i32 %.sroa.056.077, 0
+  %4 = sub nsw i32 0, %i.am
+  %spec.select.i = select i1 %3, i32 %4, i32 %i.am
   %i.an = tail call i32 @llvm.abs.i32(i32 %i.am, i1 true)
   %i.ao = tail call i32 @llvm.fshl.i32(i32 %i.an, i32 %spec.select.i, i32 1)
   %i.ap = load ptr, ptr %i.f, align 8, !tbaa !171
@@ -615,33 +615,27 @@ _ZN7CaDiCaL8Internal5fixedEi.exit.1:              ; preds = %bb.e, %_ZN7CaDiCaL8
   br i1 %.not5774, label %._crit_edge78, label %.lr.ph77
 
 bb.f:                                             ; preds = %.lr.ph72, %bb.i
-  %i.bg = phi ptr [ %.pre84, %.lr.ph72 ], [ %4, %bb.i ] ; 2 uses
+  %i.bg = phi ptr [ %.pre84, %.lr.ph72 ], [ %4, %bb.i ] ; 3 uses
   %.sroa.043.070 = phi i32 [ 1, %.lr.ph72 ], [ %i.bs, %bb.i ] ; 6 uses
   %i.bh = tail call noundef i32 @llvm.abs.i32(i32 %.sroa.043.070, i1 true)
   %i.bi = zext nneg i32 %i.bh to i64              ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bi
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !165 ; 2 uses
   %.not.i28 = icmp eq i8 %i.bk, 0
-  br i1 %.not.i28, label %_ZN7CaDiCaL8Internal5fixedEi.exit33, label %bb.g
+  br i1 %.not.i28, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %1 = sext i8 %i.bk to i32
   %i.bl = load ptr, ptr %i.ax, align 8, !tbaa !187
   %i.bm = getelementptr inbounds nuw [16 x i8], ptr %i.bl, i64 %i.bi
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !303
   %.not9.i29 = icmp eq i32 %i.bn, 0
-  %spec.select.i30 = select i1 %.not9.i29, i32 %1, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit33
+  br i1 %.not9.i29, label %bb.h, label %bb.i
 
-_ZN7CaDiCaL8Internal5fixedEi.exit33:              ; preds = %bb.f, %bb.g
-  %.0.i31 = phi i32 [ 0, %bb.f ], [ %spec.select.i30, %bb.g ] ; 2 uses
+bb.h:                                             ; preds = %bb.g
+  %1 = sext i8 %i.bk to i32                       ; 2 uses
   %2 = icmp slt i32 %.sroa.043.070, 0
-  %3 = sub nsw i32 0, %.0.i31
-  %spec.select10.i32 = select i1 %2, i32 %3, i32 %.0.i31 ; 2 uses
-  %.not24 = icmp eq i32 %spec.select10.i32, 0
-  br i1 %.not24, label %bb.i, label %bb.h
-
-bb.h:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit33
+  %3 = sub nsw i32 0, %1
+  %spec.select10.i32 = select i1 %2, i32 %3, i32 %1
   %i.bo = icmp slt i32 %spec.select10.i32, 0
   %i.bp = sub nsw i32 0, %.sroa.043.070
   %i.bq = select i1 %i.bo, i32 %i.bp, i32 %.sroa.043.070
@@ -649,8 +643,8 @@ bb.h:                                             ; preds = %_ZN7CaDiCaL8Interna
   %.pre = load ptr, ptr %i.aw, align 8, !tbaa !228
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %_ZN7CaDiCaL8Internal5fixedEi.exit33
-  %4 = phi ptr [ %.pre, %bb.h ], [ %i.bg, %_ZN7CaDiCaL8Internal5fixedEi.exit33 ]
+bb.i:                                             ; preds = %bb.g, %bb.f, %bb.h
+  %4 = phi ptr [ %.pre, %bb.h ], [ %i.bg, %bb.g ], [ %i.bg, %bb.f ]
   %i.bs = add i32 %.sroa.043.070, 1
   %.not56 = icmp eq i32 %.sroa.043.070, %i.av
   br i1 %.not56, label %._crit_edge73, label %bb.f

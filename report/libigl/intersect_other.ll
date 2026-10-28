@@ -205,7 +205,7 @@ _ZN4CGAL18Box_intersection_d18Predicate_traits_dINS0_12Box_traits_dINS0_17Box_wi
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN4CGAL10Triangle_3INS0_5EpeckEEESaIS3_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS3_S5_EEEEvSA_T_SB_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %.not112 = icmp eq ptr %2, %3
   br i1 %.not112, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, label %bb.b
 
@@ -219,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !203  ; 26 uses
   %i.j = ptrtoint ptr %i.g to i64
-  %i.k = ptrtoint ptr %i.i to i64                 ; 6 uses
+  %i.k = ptrtoint ptr %i.i to i64                 ; 5 uses
   %i.l = sub i64 %i.j, %i.k
   %.not = icmp ult i64 %i.l, %i.d
   br i1 %.not, label %bb.s, label %bb.c
@@ -622,20 +622,18 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3I
 
 .lr.ph.i.i.i.i.i90.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEES6_S5_ET0_T_SC_SB_RSaIT1_E.exit88
   %i.go = add i64 %i.k, -8
-  %i.gp = sub i64 %i.go, %i.a                     ; 2 uses
+  %i.gp = sub i64 %i.go, %i.a                     ; 3 uses
   %i.gq = lshr i64 %i.gp, 3
   %i.gr = add nuw nsw i64 %i.gq, 1                ; 2 uses
   %min.iters.check232 = icmp ult i64 %i.gp, 216
   br i1 %min.iters.check232, label %.lr.ph.i.i.i.i.i90.preheader246, label %vector.memcheck225
 
 vector.memcheck225:                               ; preds = %.lr.ph.i.i.i.i.i90.preheader
-  %4 = add i64 %i.k, -8
-  %5 = sub i64 %4, %i.a
-  %i.gs = and i64 %5, -8                          ; 2 uses
+  %i.gs = and i64 %i.gp, -8                       ; 2 uses
   %i.gt = ptrtoaddr ptr %i.gn to i64
   %reass.sub = sub i64 %i.gt, %.0.lcssa.i.i.i.i.i79226
-  %i.gu = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i79, i64 %reass.sub
-  %i.gv = getelementptr i8, ptr %i.gu, i64 %i.gs
+  %i.gu = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i79, i64 %i.gs
+  %i.gv = getelementptr i8, ptr %i.gu, i64 %reass.sub
   %scevgep = getelementptr i8, ptr %i.gv, i64 8
   %i.gw = getelementptr i8, ptr %1, i64 %i.gs
   %scevgep227 = getelementptr i8, ptr %i.gw, i64 8

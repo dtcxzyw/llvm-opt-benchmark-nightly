@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8
   %.not22.i = icmp eq i64 %i.j, 0
-  br i1 %.not22.i, label %ReadInt.exit, label %.lr.ph.i
+  br i1 %.not22.i, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -220,7 +220,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %.not.i = icmp eq i32 %i.n, 0
   %i.o = shl i32 %i.n, %.021.i
   %i.p = select i1 %.not.i, i32 0, i32 %i.o
-  %.1.i = add i32 %i.p, %.01719.i                 ; 2 uses
+  %.1.i = add i32 %i.p, %.01719.i                 ; 4 uses
   %i.q = add i32 %.021.i, 8
   %i.r = add i32 %.01620.i, 1                     ; 2 uses
   %i.s = sext i32 %i.r to i64
@@ -228,15 +228,14 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %i.u = icmp ugt i64 %i.t, %i.s
   br i1 %i.u, label %bb.e, label %ReadInt.exit, !llvm.loop !1
 
-ReadInt.exit:                                     ; preds = %bb.e, %bb.d
-  %.017.lcssa.i = phi i32 [ 0, %bb.d ], [ %.1.i, %bb.e ] ; 2 uses
-  %i.v = sub i32 0, %.017.lcssa.i
-  %spec.select.i = select i1 %.015.i, i32 %.017.lcssa.i, i32 %i.v ; 3 uses
+ReadInt.exit:                                     ; preds = %bb.e
+  %i.v = sub i32 0, %.1.i
+  %spec.select.i = select i1 %.015.i, i32 %.1.i, i32 %i.v ; 2 uses
   %i.w = icmp slt i32 %spec.select.i, 0
   br i1 %i.w, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %ReadInt.exit
-  %i.x = icmp eq i32 %spec.select.i, 0
+  %i.x = icmp eq i32 %.1.i, 0
   br i1 %i.x, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -298,8 +297,8 @@ bb.m:                                             ; preds = %bb.j, %bb.k
   %i.ar = icmp ugt i64 %i.aq, %i.ap
   br i1 %i.ar, label %.lr.ph, label %.loopexit, !llvm.loop !53
 
-.loopexit:                                        ; preds = %bb.m, %.preheader, %bb.f, %ReadInt.exit, %bb.g
-  %.022 = phi i32 [ 3, %bb.f ], [ 1, %ReadInt.exit ], [ 2, %bb.g ], [ %i.ac, %.preheader ], [ %i.ac, %bb.m ]
+.loopexit:                                        ; preds = %bb.m, %bb.d, %.preheader, %bb.f, %ReadInt.exit, %bb.g
+  %.022 = phi i32 [ 3, %bb.f ], [ 1, %ReadInt.exit ], [ 2, %bb.g ], [ %i.ac, %.preheader ], [ 3, %bb.d ], [ %i.ac, %bb.m ]
   ret i32 %.022
 }
 

@@ -204,16 +204,16 @@ bb.c:                                             ; preds = %bb.b
   %i.z = load i32, ptr %i.y, align 4, !tbaa !9
   %i.aa = mul i32 %i.o, %i.x
   %i.ab = add i32 %i.aa, %i.z
-  %i.ac = lshr i32 %i.ab, 17
+  %i.ac = lshr i32 %i.ab, 17                      ; 2 uses
   %spec.store.select = tail call i32 @llvm.umin.i32(i32 %i.ac, i32 2047) ; 2 uses
   %i.ad = sub nsw i32 0, %spec.store.select
-  %spec.select = select i1 %i.s, i32 %i.ad, i32 %spec.store.select ; 2 uses
+  %spec.select = select i1 %i.s, i32 %i.ad, i32 %spec.store.select
   %i.ae = trunc nsw i32 %spec.select to i16       ; 2 uses
   %i.af = mul i16 %i.u, %i.ae
   store i16 %i.af, ptr %i.h, align 2, !tbaa !15
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv
   store i16 %i.ae, ptr %i.ag, align 2, !tbaa !15
-  %.not = icmp eq i32 %spec.select, 0
+  %.not = icmp eq i32 %i.ac, 0
   %i.ah = trunc nuw nsw i64 %indvars.iv to i32
   %.1 = select i1 %.not, i32 %.04145, i32 %i.ah
   br label %bb.e

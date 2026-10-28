@@ -204,11 +204,11 @@ bb.av:                                            ; preds = %bb.an, %bb.aq, %bb.
 bb.aw:                                            ; preds = %.thread317, %bb.u
   %.6233 = phi i8 [ %.0227, %bb.u ], [ %.4231309, %.thread317 ]
   %i.iw = trunc nuw i8 %.6233 to i1
-  %i.ix = load i32, ptr %3, align 4, !tbaa !274   ; 2 uses
+  %i.ix = load i32, ptr %3, align 4, !tbaa !274   ; 3 uses
   %i.iy = sub nsw i32 0, %i.ix
-  %i.iz = select i1 %i.iw, i32 %i.iy, i32 %i.ix   ; 2 uses
+  %i.iz = select i1 %i.iw, i32 %i.iy, i32 %i.ix
   store i32 %i.iz, ptr %3, align 4, !tbaa !274
-  %i.ja = icmp eq i32 %i.iz, 0
+  %i.ja = icmp eq i32 %i.ix, 0
   br i1 %i.ja, label %bb.ax, label %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit267
 
 bb.ax:                                            ; preds = %bb.aw

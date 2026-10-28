@@ -204,15 +204,15 @@ bb.q:                                             ; preds = %bb.a, %bb.p
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN3jxl6N_AVX29InvRCTRowILi0EEEvPKiS3_S3_PiS4_S4_m(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i64 noundef %6) #5 comdat {
 bb.a:
-  %7 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.c = insertelement <3 x ptr> poison, ptr %3, i64 0
   %i.d = insertelement <3 x ptr> %i.c, ptr %5, i64 1
   %i.e = insertelement <3 x ptr> %i.d, ptr %4, i64 2
   %i.f = shufflevector <3 x ptr> %i.e, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 1>
   %i.g = ptrtoaddr <8 x ptr> %i.f to <8 x i64>
   %i.h = ptrtoaddr ptr %5 to i64                  ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64
   %i.i = insertelement <4 x ptr> poison, ptr %0, i64 0
   %i.j = insertelement <4 x ptr> %i.i, ptr %1, i64 1
   %i.k = insertelement <4 x ptr> %i.j, ptr %2, i64 2
@@ -269,13 +269,13 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph73.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ah = sub i64 %7, %i.a
+  %i.ah = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ah, -64
-  %i.ai = sub i64 %7, %i.h
+  %i.ai = sub i64 %i.b, %i.h
   %diff.check95 = icmp ugt i64 %i.ai, -64
   %i.aj = sub <8 x i64> %i.n, %i.g
   %i.ak = icmp ugt <8 x i64> %i.aj, splat (i64 -64)
-  %i.al = sub i64 %i.b, %i.h
+  %i.al = sub i64 %7, %i.h
   %diff.check112 = icmp ugt i64 %i.al, -64
   %i.am = sub i64 %i.o, %i.h
   %diff.check114 = icmp ugt i64 %i.am, -64
@@ -465,15 +465,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN3jxl6N_AVX29InvRCTRowILi1EEEvPKiS3_S3_PiS4_S4_m(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i64 noundef %6) #5 comdat {
 bb.a:
-  %7 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.c = insertelement <3 x ptr> poison, ptr %3, i64 0
   %i.d = insertelement <3 x ptr> %i.c, ptr %5, i64 1
   %i.e = insertelement <3 x ptr> %i.d, ptr %4, i64 2
   %i.f = shufflevector <3 x ptr> %i.e, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 1>
   %i.g = ptrtoaddr <8 x ptr> %i.f to <8 x i64>
   %i.h = ptrtoaddr ptr %5 to i64                  ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64
   %i.i = insertelement <4 x ptr> poison, ptr %0, i64 0
   %i.j = insertelement <4 x ptr> %i.i, ptr %1, i64 1
   %i.k = insertelement <4 x ptr> %i.j, ptr %2, i64 2
@@ -532,13 +532,13 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph73.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.aj = sub i64 %7, %i.a
+  %i.aj = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aj, -64
-  %i.ak = sub i64 %7, %i.h
+  %i.ak = sub i64 %i.b, %i.h
   %diff.check95 = icmp ugt i64 %i.ak, -64
   %i.al = sub <8 x i64> %i.n, %i.g
   %i.am = icmp ugt <8 x i64> %i.al, splat (i64 -64)
-  %i.an = sub i64 %i.b, %i.h
+  %i.an = sub i64 %7, %i.h
   %diff.check112 = icmp ugt i64 %i.an, -64
   %i.ao = sub i64 %i.o, %i.h
   %diff.check114 = icmp ugt i64 %i.ao, -64
@@ -738,15 +738,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN3jxl6N_AVX29InvRCTRowILi2EEEvPKiS3_S3_PiS4_S4_m(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i64 noundef %6) #5 comdat {
 bb.a:
-  %7 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.c = insertelement <3 x ptr> poison, ptr %3, i64 0
   %i.d = insertelement <3 x ptr> %i.c, ptr %5, i64 1
   %i.e = insertelement <3 x ptr> %i.d, ptr %4, i64 2
   %i.f = shufflevector <3 x ptr> %i.e, <3 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 1>
   %i.g = ptrtoaddr <8 x ptr> %i.f to <8 x i64>
   %i.h = ptrtoaddr ptr %5 to i64                  ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64
   %i.i = insertelement <4 x ptr> poison, ptr %0, i64 0
   %i.j = insertelement <4 x ptr> %i.i, ptr %1, i64 1
   %i.k = insertelement <4 x ptr> %i.j, ptr %2, i64 2
@@ -805,13 +805,13 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph73.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.aj = sub i64 %7, %i.a
+  %i.aj = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aj, -64
-  %i.ak = sub i64 %7, %i.h
+  %i.ak = sub i64 %i.b, %i.h
   %diff.check95 = icmp ugt i64 %i.ak, -64
   %i.al = sub <8 x i64> %i.n, %i.g
   %i.am = icmp ugt <8 x i64> %i.al, splat (i64 -64)
-  %i.an = sub i64 %i.b, %i.h
+  %i.an = sub i64 %7, %i.h
   %diff.check112 = icmp ugt i64 %i.an, -64
   %i.ao = sub i64 %i.o, %i.h
   %diff.check114 = icmp ugt i64 %i.ao, -64

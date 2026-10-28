@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = mul i32 %.041.i, 10
   %i.ac = zext nneg i8 %i.aa to i32
   %i.ad = add nsw i32 %i.ac, -48
-  %i.ae = add i32 %i.ad, %i.ab                    ; 3 uses
+  %i.ae = add i32 %i.ad, %i.ab                    ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.02140.i, i64 1 ; 3 uses
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !21  ; 2 uses
   %i.ah = add i8 %i.ag, -48
@@ -219,7 +219,7 @@ bb.f:                                             ; preds = %.lr.ph.i
   %i.an = add nsw i32 %.val35.i, %i.am            ; 2 uses
   store i32 %i.an, ptr %i.h, align 4, !tbaa !30
   %i.ao = sub i32 0, %i.ae
-  %spec.select.i = select i1 %.0.i36.i, i32 %i.ao, i32 %i.ae ; 4 uses
+  %spec.select.i = select i1 %.0.i36.i, i32 %i.ao, i32 %i.ae ; 3 uses
   %i.ap = sext i32 %spec.select.i to i64          ; 2 uses
   store i32 %i.i, ptr %i.a, align 4, !tbaa !31
   %i.aq = add nsw i32 %i.d, 4
@@ -230,7 +230,7 @@ bb.f:                                             ; preds = %.lr.ph.i
 bb.g:                                             ; preds = %bb.f
   %i.as = sext i32 %i.an to i64
   %i.at = getelementptr inbounds i8, ptr %.val34.pre.i, i64 %i.as ; 4 uses
-  %i.au = icmp eq i32 %spec.select.i, 0
+  %i.au = icmp eq i32 %i.ae, 0
   br i1 %i.au, label %_ZN4absl12lts_2026052618debugging_internalL30IdentifierIsAnonymousNamespaceEPNS1_5StateEm.exit.thread.i, label %.lr.ph.i.i
 
 bb.h:                                             ; preds = %.lr.ph.i.i

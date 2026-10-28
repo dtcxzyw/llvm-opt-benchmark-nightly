@@ -204,7 +204,7 @@ _ZNK12lldb_private11ConstStringcvbEv.exit94.thread: ; preds = %thread-pre-split1
 
 bb.m:                                             ; preds = %_ZNK12lldb_private11ConstStringcvbEv.exit94.thread, %bb.i
   %.176 = phi i1 [ %.075, %_ZNK12lldb_private11ConstStringcvbEv.exit94.thread ], [ true, %bb.i ] ; 2 uses
-  %i.af = call noundef i64 @_ZNK12lldb_private7Address14GetFileAddressEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #23 ; 3 uses
+  %i.af = call noundef i64 @_ZNK12lldb_private7Address14GetFileAddressEv(ptr noundef nonnull align 8 dereferenceable(24) %3) #23 ; 4 uses
   %.not88 = icmp eq i64 %i.af, -1
   br i1 %.not88, label %bb.s, label %bb.n
 
@@ -219,10 +219,10 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   %i.ak = load ptr, ptr %i.l, align 8, !tbaa !52
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 176
-  %i.am = call noundef i64 @_ZNK12lldb_private7Address14GetFileAddressEv(ptr noundef nonnull align 8 dereferenceable(24) %i.al) #23
+  %i.am = call noundef i64 @_ZNK12lldb_private7Address14GetFileAddressEv(ptr noundef nonnull align 8 dereferenceable(24) %i.al) #23 ; 2 uses
   %i.an = sub i64 %i.af, %i.am                    ; 2 uses
   %i.ao = sub i64 0, %i.an
-  %spec.select = select i1 %.not89, i64 %i.ao, i64 %i.an ; 2 uses
+  %spec.select = select i1 %.not89, i64 %i.ao, i64 %i.an
   store i64 %spec.select, ptr %i.b, align 8, !tbaa !75
   br i1 %8, label %bb.p, label %bb.o
 
@@ -258,7 +258,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
-  %.not90 = icmp eq i64 %spec.select, 0
+  %.not90 = icmp eq i64 %i.af, %i.am
   br i1 %.not90, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
