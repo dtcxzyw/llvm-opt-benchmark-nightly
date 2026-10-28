@@ -204,34 +204,24 @@ _ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit403.thread: ; preds 
   br i1 %or.cond8, label %bb.ax, label %bb.be
 
 bb.at:                                            ; preds = %.lr.ph1064, %bb.aw
-  %i.ke = phi ptr [ %.pre1355.a, %.lr.ph1064 ], [ %5, %bb.aw ] ; 3 uses
+  %i.ke = phi ptr [ %.pre1355.a, %.lr.ph1064 ], [ %2, %bb.aw ] ; 4 uses
   %.sroa.0524.01062 = phi ptr [ %i.ex, %.lr.ph1064 ], [ %i.kt, %bb.aw ] ; 2 uses
-  %i.kf = load i32, ptr %.sroa.0524.01062, align 4, !tbaa !195 ; 4 uses
+  %i.kf = load i32, ptr %.sroa.0524.01062, align 4, !tbaa !195 ; 3 uses
   %i.kg = tail call noundef i32 @llvm.abs.i32(i32 %i.kf, i1 true)
   %i.kh = zext nneg i32 %i.kg to i64              ; 2 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.ke, i64 %i.kh
-  %i.kj = load i8, ptr %i.ki, align 1, !tbaa !166 ; 2 uses
+  %i.kj = load i8, ptr %i.ki, align 1, !tbaa !166
   %.not.i406 = icmp eq i8 %i.kj, 0
-  br i1 %.not.i406, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %bb.au
+  br i1 %.not.i406, label %bb.aw, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %2 = sext i8 %i.kj to i32
   %i.kk = load ptr, ptr %i.fa, align 8, !tbaa !196
   %i.kl = getelementptr inbounds nuw [16 x i8], ptr %i.kk, i64 %i.kh
   %i.km = load i32, ptr %i.kl, align 8, !tbaa !198
   %.not9.i = icmp eq i32 %i.km, 0
-  %spec.select.i = select i1 %.not9.i, i32 %2, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit
+  br i1 %.not9.i, label %bb.av, label %bb.aw
 
-_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.at, %bb.au
-  %.0.i = phi i32 [ 0, %bb.at ], [ %spec.select.i, %bb.au ] ; 2 uses
-  %3 = icmp slt i32 %i.kf, 0
-  %4 = sub nsw i32 0, %.0.i
-  %spec.select10.i = select i1 %3, i32 %4, i32 %.0.i
-  %.not355 = icmp eq i32 %spec.select10.i, 0
-  br i1 %.not355, label %bb.aw, label %bb.av
-
-bb.av:                                            ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
+bb.av:                                            ; preds = %bb.au
   %i.kn = sext i32 %i.kf to i64
   %i.ko = getelementptr inbounds i8, ptr %i.ke, i64 %i.kn
   store i8 0, ptr %i.ko, align 1, !tbaa !166
@@ -243,8 +233,8 @@ bb.av:                                            ; preds = %_ZN7CaDiCaL8Interna
   %.pre1354 = load ptr, ptr %i.ez, align 8, !tbaa !165
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av, %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %5 = phi ptr [ %.pre1354, %bb.av ], [ %i.ke, %_ZN7CaDiCaL8Internal5fixedEi.exit ]
+bb.aw:                                            ; preds = %bb.at, %bb.av, %bb.au
+  %2 = phi ptr [ %i.ke, %bb.at ], [ %.pre1354, %bb.av ], [ %i.ke, %bb.au ]
   %i.kt = getelementptr inbounds nuw i8, ptr %.sroa.0524.01062, i64 4 ; 2 uses
   %.not649 = icmp eq ptr %i.kt, %i.ey
   br i1 %.not649, label %._crit_edge1065, label %bb.at

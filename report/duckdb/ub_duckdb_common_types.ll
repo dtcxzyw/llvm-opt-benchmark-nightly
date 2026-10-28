@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %bb.d
   %i.cb = xor i64 %1, -1
   %i.cc = zext i1 %i.g to i64
   %i.cd = add nuw nsw i64 %i.cc, %i.cb
-  %.sroa.861.0 = select i1 %i.by, i64 %i.cd, i64 %1 ; 3 uses
-  %.sroa.059.0 = select i1 %i.by, i64 %i.ca, i64 %0 ; 3 uses
+  %.sroa.861.0 = select i1 %i.by, i64 %i.cd, i64 %1 ; 4 uses
+  %.sroa.059.0 = select i1 %i.by, i64 %i.ca, i64 %0 ; 2 uses
   %i.ce = sub i64 0, %2
   %i.cf = xor i64 %3, -1
   %i.cg = zext i1 %i.j to i64
@@ -214,27 +214,24 @@ bb.j:                                             ; preds = %bb.d
   %.sroa.8.0 = select i1 %i.bz, i64 %i.ch, i64 %3 ; 3 uses
   %.sroa.047.0 = select i1 %i.bz, i64 %i.ce, i64 %2 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
-  %.not.i = icmp eq i64 %.sroa.861.0, 0
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  br i1 %.not.i, label %.preheader.i, label %.lr.ph
+  %18 = or i64 %.sroa.861.0, %0
+  %brmerge.not = icmp eq i64 %18, 0
+  br i1 %brmerge.not, label %._crit_edge, label %.lr.ph
 
-.preheader.i:                                     ; preds = %bb.j
-  %.not1117.i = icmp eq i64 %.sroa.059.0, 0
-  br i1 %.not1117.i, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader.i, %bb.j
-  %.sroa.059.0.sink = phi i64 [ %.sroa.861.0, %bb.j ], [ %.sroa.059.0, %.preheader.i ]
-  %.sink = phi i64 [ 128, %bb.j ], [ 64, %.preheader.i ]
-  %i.cj = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sroa.059.0.sink, i1 true)
-  %i.ck = sub nsw i64 %.sink, %i.cj
+.lr.ph:                                           ; preds = %bb.j
+  %.not.i = icmp eq i64 %.sroa.861.0, 0           ; 2 uses
+  %.mux = select i1 %.not.i, i64 64, i64 128
+  %.sroa.861.0.mux = select i1 %.not.i, i64 %.sroa.059.0, i64 %.sroa.861.0
+  %i.cj = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sroa.861.0.mux, i1 true)
+  %i.ck = sub nuw nsw i64 %.mux, %i.cj
   %i.cl = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.cm = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %18 = and i64 %i.ck, 255
   br label %bb.k
 
-._crit_edge:                                      ; preds = %bb.o, %.preheader.i
-  %i.cn = phi i64 [ 0, %.preheader.i ], [ %.sroa.25.0.copyload93, %bb.o ] ; 2 uses
-  %i.co = phi i64 [ 0, %.preheader.i ], [ %.sroa.04.0.copyload91, %bb.o ] ; 3 uses
+._crit_edge:                                      ; preds = %bb.o, %bb.j
+  %i.cn = phi i64 [ 0, %bb.j ], [ %.sroa.25.0.copyload93, %bb.o ] ; 2 uses
+  %i.co = phi i64 [ 0, %bb.j ], [ %.sroa.04.0.copyload91, %bb.o ] ; 3 uses
   %.lobit33 = xor i64 %3, %1
   %.not34 = icmp sgt i64 %.lobit33, -1
   br i1 %.not34, label %bb.q, label %bb.p
@@ -242,7 +239,7 @@ bb.j:                                             ; preds = %bb.d
 bb.k:                                             ; preds = %.lr.ph, %bb.o
   %.sroa.25.0.copyload = phi i64 [ 0, %.lr.ph ], [ %.sroa.25.0.copyload93, %bb.o ]
   %.sroa.04.0.copyload = phi i64 [ 0, %.lr.ph ], [ %.sroa.04.0.copyload91, %bb.o ] ; 2 uses
-  %indvars.iv = phi i64 [ %18, %.lr.ph ], [ %i.ct, %bb.o ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.ck, %.lr.ph ], [ %i.ct, %bb.o ] ; 3 uses
   %i.cp = shl i64 %.sroa.04.0.copyload, 1         ; 3 uses
   %i.cq = call i64 @llvm.fshl.i64(i64 %.sroa.25.0.copyload, i64 %.sroa.04.0.copyload, i64 1) ; 2 uses
   %.sroa.01.0.copyload = load i64, ptr %4, align 8, !tbaa !245 ; 2 uses
@@ -645,7 +642,7 @@ bb.u:                                             ; preds = %.lr.ph183, %.lr.ph1
 
 .lr.ph189:                                        ; preds = %.lr.ph189.preheader, %bb.w
   %.0188 = phi i64 [ %i.cr, %bb.w ], [ 0, %.lr.ph189.preheader ] ; 2 uses
-  %.0117187 = phi i32 [ %i.cq, %bb.w ], [ 0, %.lr.ph189.preheader ] ; 5 uses
+  %.0117187 = phi i32 [ %i.cq, %bb.w ], [ 0, %.lr.ph189.preheader ] ; 6 uses
   %i.ch = phi i64 [ %i.cs, %bb.w ], [ %.promoted186, %.lr.ph189.preheader ] ; 4 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !273 ; 2 uses
@@ -676,7 +673,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %.critedge4
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 %i.ch
   %i.cv = sub nsw i32 0, %.0117187
-  %spec.select = select i1 %i.h, i32 %i.cv, i32 %.0117187 ; 7 uses
+  %spec.select = select i1 %i.h, i32 %i.cv, i32 %.0117187 ; 6 uses
   %i.cw = add nuw i64 %i.ch, 1
   store i64 %i.cw, ptr %2, align 8, !tbaa !245
   %i.cx = load i8, ptr %i.cu, align 1, !tbaa !273 ; 2 uses
@@ -761,7 +758,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.dy, label %bb.ai, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit156
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.dz = icmp eq i32 %spec.select, 0
+  %i.dz = icmp eq i32 %.0117187, 0
   %or.cond13 = select i1 %i.h, i1 true, i1 %i.dz
   br i1 %or.cond13, label %.critedge, label %bb.aj
 

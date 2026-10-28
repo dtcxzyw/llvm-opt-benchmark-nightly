@@ -141,8 +141,7 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span8try_dayslEB7_.exit.thread: ; preds 
   br label %bb.g
 
 bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i, 32
-  %.sroa.622.0.extract.trunc.i = trunc nuw i64 %.sroa.622.0.extract.shift.i to i32 ; 2 uses
+  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i, 32 ; 2 uses
   %.sroa.58.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 52
   %.sroa.58.0.copyload.i = load i32, ptr %.sroa.58.0..sroa_idx.i, align 4, !alias.scope !41 ; 2 uses
   %.sroa.511.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -152,10 +151,7 @@ bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.714.sroa.4.0..sroa.714.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 60
   %.sroa.714.sroa.4.0.copyload.i = load i8, ptr %.sroa.714.sroa.4.0..sroa.714.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !41 ; 3 uses
   %.sroa.714.sroa.5.0..sroa.714.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 61 ; 2 uses
-  %3 = icmp slt i64 %.sroa.3.0.insert.insert.i.i, 0
-  %4 = sub i32 0, %.sroa.622.0.extract.trunc.i
-  %.sroa.016.0.i = select i1 %3, i32 %4, i32 %.sroa.622.0.extract.trunc.i ; 2 uses
-  %i.l = icmp eq i32 %.sroa.016.0.i, 0            ; 2 uses
+  %i.l = icmp eq i64 %.sroa.622.0.extract.shift.i, 0 ; 2 uses
   %.sroa.0.0.copyload23.i = load i64, ptr %1, align 8, !alias.scope !41 ; 3 uses
   %.sroa.5.0..sroa_idx24.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0.copyload25.i = load i64, ptr %.sroa.5.0..sroa_idx24.i, align 8, !alias.scope !41 ; 2 uses
@@ -183,7 +179,7 @@ bb.f:                                             ; preds = %bb.e
   %or.cond.i.i = select i1 %i.p, i1 %i.q, i1 false
   %i.r = icmp eq i32 %.sroa.10.0.copyload35.i, 0
   %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.r, i1 false
-  %or.cond8.i.i = select i1 %or.cond5.i.i, i1 %i.l, i1 false
+  %or.cond8.i.i = and i1 %i.l, %or.cond5.i.i
   %i.s = icmp eq i32 %.sroa.58.0.copyload.i, 0
   %or.cond11.i.i = select i1 %or.cond8.i.i, i1 %i.s, i1 false
   %i.t = icmp eq i64 %.sroa.0.0.copyload23.i, 0
@@ -259,6 +255,10 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %i.ag = and i16 %.sroa.511.0.copyload.i, -65
   %masksel.i = select i1 %i.l, i16 0, i16 64
   %.sroa.018.0.i = or disjoint i16 %i.ag, %masksel.i
+  %3 = icmp slt i64 %.sroa.3.0.insert.insert.i.i, 0
+  %.sroa.622.0.extract.trunc.i = trunc nuw i64 %.sroa.622.0.extract.shift.i to i32 ; 2 uses
+  %4 = sub i32 0, %.sroa.622.0.extract.trunc.i
+  %.sroa.016.0.i = select i1 %3, i32 %4, i32 %.sroa.622.0.extract.trunc.i
   store i64 %.sroa.0.0.copyload23.i, ptr %0, align 8, !alias.scope !46
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.5.0.copyload25.i, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !46
@@ -325,8 +325,7 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_weekslEB7_.exit.thread: ; preds
   br label %bb.g
 
 bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanWeeksNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i, 32
-  %.sroa.622.0.extract.trunc.i = trunc nuw i64 %.sroa.622.0.extract.shift.i to i32 ; 2 uses
+  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i, 32 ; 2 uses
   %.sroa.58.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.58.0.copyload.i = load i64, ptr %.sroa.58.0..sroa_idx.i, align 8, !alias.scope !68 ; 2 uses
   %.sroa.511.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -336,10 +335,7 @@ bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.714.sroa.4.0..sroa.714.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 60
   %.sroa.714.sroa.4.0.copyload.i = load i8, ptr %.sroa.714.sroa.4.0..sroa.714.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !68 ; 3 uses
   %.sroa.714.sroa.5.0..sroa.714.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 61 ; 2 uses
-  %3 = icmp slt i64 %.sroa.3.0.insert.insert.i.i, 0
-  %4 = sub i32 0, %.sroa.622.0.extract.trunc.i
-  %.sroa.016.0.i = select i1 %3, i32 %4, i32 %.sroa.622.0.extract.trunc.i ; 2 uses
-  %i.l = icmp eq i32 %.sroa.016.0.i, 0            ; 2 uses
+  %i.l = icmp eq i64 %.sroa.622.0.extract.shift.i, 0 ; 2 uses
   %.sroa.0.0.copyload23.i = load i64, ptr %1, align 8, !alias.scope !68 ; 3 uses
   %.sroa.5.0..sroa_idx24.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0.copyload25.i = load i64, ptr %.sroa.5.0..sroa_idx24.i, align 8, !alias.scope !68 ; 2 uses
@@ -363,7 +359,7 @@ bb.f:                                             ; preds = %bb.e
   %i.p = icmp eq i16 %.sroa.714.sroa.0.0.copyload.i, 0
   %i.q = icmp eq i32 %.sroa.9.0.copyload33.i, 0
   %or.cond.i.i = select i1 %i.p, i1 %i.q, i1 false
-  %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.l, i1 false
+  %or.cond5.i.i = and i1 %i.l, %or.cond.i.i
   %i.r = icmp eq i64 %.sroa.58.0.copyload.i, 0
   %or.cond11.i.i = select i1 %or.cond5.i.i, i1 %i.r, i1 false
   %i.s = icmp eq i64 %.sroa.0.0.copyload23.i, 0
@@ -439,6 +435,10 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %i.af = and i16 %.sroa.511.0.copyload.i, -129
   %masksel.i = select i1 %i.l, i16 0, i16 128
   %.sroa.018.0.i = or disjoint i16 %i.af, %masksel.i
+  %3 = icmp slt i64 %.sroa.3.0.insert.insert.i.i, 0
+  %.sroa.622.0.extract.trunc.i = trunc nuw i64 %.sroa.622.0.extract.shift.i to i32 ; 2 uses
+  %4 = sub i32 0, %.sroa.622.0.extract.trunc.i
+  %.sroa.016.0.i = select i1 %3, i32 %4, i32 %.sroa.622.0.extract.trunc.i
   store i64 %.sroa.0.0.copyload23.i, ptr %0, align 8, !alias.scope !73
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.5.0.copyload25.i, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !73
@@ -501,15 +501,12 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearssEB7_.exit.thread: ; preds
 
 bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
   %.sroa.517.0.extract.shift.i = lshr i32 %.sroa.3.0.insert.insert.i.i, 16 ; 2 uses
-  %.sroa.517.0.extract.trunc.i = trunc nuw i32 %.sroa.517.0.extract.shift.i to i16 ; 2 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.4.0.copyload.i = load i16, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !94
   %.sroa.79.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 60
   %.sroa.79.0.copyload.i = load i32, ptr %.sroa.79.0..sroa_idx.i, align 4, !alias.scope !94 ; 3 uses
   %i.l = icmp slt i32 %.sroa.3.0.insert.insert.i.i, 0 ; 2 uses
-  %3 = sub i16 0, %.sroa.517.0.extract.trunc.i
-  %.sroa.012.0.i = select i1 %i.l, i16 %3, i16 %.sroa.517.0.extract.trunc.i ; 2 uses
-  %4 = icmp eq i16 %.sroa.012.0.i, 0              ; 2 uses
+  %3 = icmp ne i32 %.sroa.517.0.extract.shift.i, 0 ; 3 uses
   %.sroa.0.0.copyload18.i = load i64, ptr %1, align 8, !alias.scope !94 ; 3 uses
   %.sroa.5.0..sroa_idx19.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0.copyload20.i = load i64, ptr %.sroa.5.0..sroa_idx19.i, align 8, !alias.scope !94 ; 2 uses
@@ -530,14 +527,12 @@ bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   br i1 %i.l, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %5 = icmp ne i32 %.sroa.517.0.extract.shift.i, 0 ; 2 uses
-  br i1 %5, label %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearssEB7_.exit, label %bb.f
+  br i1 %3, label %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearssEB7_.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.m = icmp eq i32 %.sroa.9.0.copyload28.i, 0
-  %or.cond.i.i = select i1 %4, i1 %i.m, i1 false
   %i.n = icmp eq i32 %.sroa.10.0.copyload30.i, 0
-  %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.n, i1 false
+  %or.cond5.i.i = select i1 %i.m, i1 %i.n, i1 false
   %i.o = icmp eq i32 %.sroa.11.0.copyload32.i, 0
   %or.cond8.i.i = select i1 %or.cond5.i.i, i1 %i.o, i1 false
   %i.p = icmp eq i32 %.sroa.12.0.copyload34.i, 0
@@ -557,7 +552,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearssEB7_.exit: ; preds = %bb.e, %bb.f
   %i.v = and i32 %.sroa.79.0.copyload.i, 255
   %.sroa.027.0.in.i.i = icmp eq i32 %i.v, 0
-  %spec.select.i.i = zext i1 %5 to i32
+  %spec.select.i.i = zext i1 %3 to i32
   %spec.select.i = select i1 %.sroa.027.0.in.i.i, i32 %spec.select.i.i, i32 %.sroa.79.0.copyload.i
   %i.w = and i32 %spec.select.i, 255              ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !96)
@@ -609,8 +604,11 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %.sroa.16.60.insert.mask.i = and i32 %.sroa.79.0.copyload.i, -256
   %.sroa.16.60.insert.insert.i = or disjoint i32 %.sroa.0.0.i.i17, %.sroa.16.60.insert.mask.i
   %i.af = and i16 %.sroa.4.0.copyload.i, -513
-  %masksel.i = select i1 %4, i16 0, i16 512
+  %masksel.i = select i1 %3, i16 512, i16 0
   %.sroa.014.0.i = or disjoint i16 %i.af, %masksel.i
+  %.sroa.517.0.extract.trunc.i = trunc nuw i32 %.sroa.517.0.extract.shift.i to i16 ; 2 uses
+  %4 = sub i16 0, %.sroa.517.0.extract.trunc.i
+  %.sroa.012.0.i = select i1 %i.l, i16 %4, i16 %.sroa.517.0.extract.trunc.i
   store i64 %.sroa.0.0.copyload18.i, ptr %0, align 8, !alias.scope !99
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.5.0.copyload20.i, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !99
@@ -674,8 +672,7 @@ _RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span10try_monthslEB7_.exit.thread: ; pre
   br label %bb.g
 
 bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.621.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i, 32
-  %.sroa.621.0.extract.trunc.i = trunc nuw i64 %.sroa.621.0.extract.shift.i to i32 ; 2 uses
+  %.sroa.621.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i, 32 ; 2 uses
   %.sroa.58.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 44
   %.sroa.58.sroa.0.0.copyload.i = load i32, ptr %.sroa.58.0..sroa_idx.i, align 4, !alias.scope !121 ; 2 uses
   %.sroa.58.sroa.4.0..sroa.58.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -689,10 +686,7 @@ bb.d:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.713.sroa.4.0..sroa.713.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 60
   %.sroa.713.sroa.4.0.copyload.i = load i8, ptr %.sroa.713.sroa.4.0..sroa.713.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !121 ; 3 uses
   %.sroa.713.sroa.5.0..sroa.713.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 61 ; 2 uses
-  %3 = icmp slt i64 %.sroa.3.0.insert.insert.i.i, 0
-  %4 = sub i32 0, %.sroa.621.0.extract.trunc.i
-  %.sroa.015.0.i = select i1 %3, i32 %4, i32 %.sroa.621.0.extract.trunc.i ; 2 uses
-  %i.l = icmp eq i32 %.sroa.015.0.i, 0            ; 2 uses
+  %i.l = icmp eq i64 %.sroa.621.0.extract.shift.i, 0 ; 2 uses
   %.sroa.0.0.copyload22.i = load i64, ptr %1, align 8, !alias.scope !121 ; 3 uses
   %.sroa.5.0..sroa_idx23.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0.copyload24.i = load i64, ptr %.sroa.5.0..sroa_idx23.i, align 8, !alias.scope !121 ; 2 uses
@@ -712,7 +706,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.p = icmp eq i16 %.sroa.713.sroa.0.0.copyload.i, 0
-  %or.cond.i.i = select i1 %i.p, i1 %i.l, i1 false
+  %or.cond.i.i = and i1 %i.l, %i.p
   %i.q = icmp eq i32 %.sroa.58.sroa.0.0.copyload.i, 0
   %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.q, i1 false
   %i.r = icmp eq i32 %.sroa.58.sroa.4.0.copyload.i, 0
@@ -792,6 +786,10 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %i.ag = and i16 %.sroa.510.0.copyload.i, -257
   %masksel.i = select i1 %i.l, i16 0, i16 256
   %.sroa.017.0.i = or disjoint i16 %i.ag, %masksel.i
+  %3 = icmp slt i64 %.sroa.3.0.insert.insert.i.i, 0
+  %.sroa.621.0.extract.trunc.i = trunc nuw i64 %.sroa.621.0.extract.shift.i to i32 ; 2 uses
+  %4 = sub i32 0, %.sroa.621.0.extract.trunc.i
+  %.sroa.015.0.i = select i1 %3, i32 %4, i32 %.sroa.621.0.extract.trunc.i
   store i64 %.sroa.0.0.copyload22.i, ptr %0, align 8, !alias.scope !126
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.5.0.copyload24.i, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !126
@@ -1194,8 +1192,8 @@ bb.af:                                            ; preds = %bb.ae
   br label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i: ; preds = %.thread434.i, %bb.af
-  %.sroa.079.2442.i = phi i32 [ %.sroa.079.2443.i, %.thread434.i ], [ %.sroa.079.0.i, %bb.af ] ; 3 uses
-  %.sroa.042.0432439.i = phi i32 [ %.sroa.042.0432440.i, %.thread434.i ], [ %i.cq, %bb.af ] ; 3 uses
+  %.sroa.079.2442.i = phi i32 [ %.sroa.079.2443.i, %.thread434.i ], [ %.sroa.079.0.i, %bb.af ] ; 5 uses
+  %.sroa.042.0432439.i = phi i32 [ %.sroa.042.0432440.i, %.thread434.i ], [ %i.cq, %bb.af ] ; 4 uses
   %.sroa.3.0.insert.insert.i.i128.i = phi i32 [ %i.ed, %.thread434.i ], [ %i.eb, %bb.af ] ; 4 uses
   %i.ee = trunc i32 %.sroa.3.0.insert.insert.i.i128.i to i1
   br i1 %i.ee, label %bb.ag, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
@@ -1238,37 +1236,36 @@ bb.al:                                            ; preds = %bb.aj
   unreachable
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i: ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanYearsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
-  %.sroa.517.0.extract.shift.i.i = lshr i32 %.sroa.3.0.insert.insert.i.i128.i, 16 ; 2 uses
+  %.sroa.517.0.extract.shift.i.i = lshr i32 %.sroa.3.0.insert.insert.i.i128.i, 16 ; 4 uses
   %.sroa.517.0.extract.trunc.i.i = trunc nuw i32 %.sroa.517.0.extract.shift.i.i to i16 ; 2 uses
   %i.em = icmp slt i32 %.sroa.3.0.insert.insert.i.i128.i, 0 ; 2 uses
   %i.en = sub i16 0, %.sroa.517.0.extract.trunc.i.i
+  %.sroa.012.0.i.i = select i1 %i.em, i16 %i.en, i16 %.sroa.517.0.extract.trunc.i.i ; 3 uses
   %.not529.i = icmp ne i32 %.sroa.517.0.extract.shift.i.i, 0 ; 2 uses
   %masksel.i.i = select i1 %.not529.i, i16 512, i16 0
   %spec.select538.i = zext i1 %.not529.i to i8
   %.sroa.26.60.extract.trunc455.i = select i1 %i.em, i8 -1, i8 %spec.select538.i ; 2 uses
-  %.sroa.24382.0450.i = select i1 %i.em, i16 %i.en, i16 %.sroa.517.0.extract.trunc.i.i ; 5 uses
   %.sroa.015.0.i.i = tail call i32 @llvm.abs.i32(i32 %.sroa.079.2442.i, i1 true) ; 3 uses
-  %3 = icmp eq i32 %.sroa.079.2442.i, 0           ; 4 uses
-  %masksel.i133.i = select i1 %3, i16 0, i16 256
+  %3 = icmp ne i32 %.sroa.079.2442.i, 0           ; 2 uses
+  %masksel.i133.i = select i1 %3, i16 256, i16 0
   %i.eo = icmp slt i32 %.sroa.079.2442.i, 0
   br i1 %i.eo, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i, label %bb.am
 
 bb.am:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
-  %4 = icmp eq i16 %.sroa.24382.0450.i, 0
-  %5 = select i1 %3, i1 %4, i1 false
-  br i1 %5, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i, label %.thread.i.i143.i
+  %4 = or i32 %.sroa.517.0.extract.shift.i.i, %.sroa.079.2442.i
+  %or.cond524.i = icmp eq i32 %4, 0
+  br i1 %or.cond524.i, label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i, label %.thread.i.i143.i
 
 .thread.i.i143.i:                                 ; preds = %bb.am
-  %.not = xor i1 %3, true
   %.sroa.027.0.in.i.i144.i = icmp eq i8 %.sroa.26.60.extract.trunc455.i, 0
-  %spec.select.i.i145.i = zext i1 %.not to i8
+  %spec.select.i.i145.i = zext i1 %3 to i8
   %spec.select540.i = select i1 %.sroa.027.0.in.i.i144.i, i8 %spec.select.i.i145.i, i8 %.sroa.26.60.extract.trunc455.i
   br label %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i: ; preds = %.thread.i.i143.i, %bb.am, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
   %.sroa.26396.0468.i = phi i8 [ %spec.select540.i, %.thread.i.i143.i ], [ -1, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ 0, %bb.am ] ; 2 uses
   %.sroa.016.0.i.i = tail call i32 @llvm.abs.i32(i32 %.sroa.042.0432439.i, i1 true) ; 3 uses
-  %i.ep = icmp ne i32 %.sroa.042.0432439.i, 0     ; 3 uses
+  %i.ep = icmp ne i32 %.sroa.042.0432439.i, 0     ; 2 uses
   %masksel.i155.i = select i1 %i.ep, i16 64, i16 0
   %.sroa.017.0.i.i = or disjoint i16 %masksel.i155.i, %masksel.i133.i
   %.sroa.018.0.i.i = or disjoint i16 %.sroa.017.0.i.i, %masksel.i.i ; 3 uses
@@ -1276,11 +1273,10 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6boun
   br i1 %i.eq, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit174.i, label %bb.an
 
 bb.an:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
-  %.not577.i = xor i1 %i.ep, true
-  %6 = icmp eq i16 %.sroa.24382.0450.i, 0
-  %7 = select i1 %.not577.i, i1 %6, i1 false
-  %or.cond578.i = select i1 %7, i1 %3, i1 false
-  br i1 %or.cond578.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit174.i, label %.thread.i.i165.i
+  %5 = or i32 %.sroa.042.0432439.i, %.sroa.079.2442.i
+  %6 = or i32 %5, %.sroa.517.0.extract.shift.i.i
+  %or.cond567.i = icmp eq i32 %6, 0
+  br i1 %or.cond567.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit174.i, label %.thread.i.i165.i
 
 .thread.i.i165.i:                                 ; preds = %bb.an
   %.sroa.027.0.in.i.i166.i = icmp eq i8 %.sroa.26396.0468.i, 0
@@ -1329,11 +1325,11 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanWeeksNtNtCsb09rMIQFAXO_9jiff_core6bou
   br i1 %i.fg, label %bb.as, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit221.i
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit221.i: ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanWeeksNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i
-  %.sroa.622.0.extract.shift.i177.i = lshr i64 %.sroa.3.0.insert.insert.i.i176.i, 32 ; 2 uses
+  %.sroa.622.0.extract.shift.i177.i = lshr i64 %.sroa.3.0.insert.insert.i.i176.i, 32 ; 3 uses
   %.sroa.622.0.extract.trunc.i178.i = trunc nuw i64 %.sroa.622.0.extract.shift.i177.i to i32 ; 2 uses
   %i.fh = icmp slt i64 %.sroa.3.0.insert.insert.i.i176.i, 0
   %i.fi = sub i32 0, %.sroa.622.0.extract.trunc.i178.i
-  %.sroa.016.0.i188.i = select i1 %i.fh, i32 %i.fi, i32 %.sroa.622.0.extract.trunc.i178.i ; 3 uses
+  %.sroa.016.0.i188.i = select i1 %i.fh, i32 %i.fi, i32 %.sroa.622.0.extract.trunc.i178.i ; 2 uses
   %.not532.i = icmp eq i64 %.sroa.622.0.extract.shift.i177.i, 0
   %masksel.i189.i = select i1 %.not532.i, i16 0, i16 128
   %i.fj = ashr i64 %.sroa.3.0.insert.insert.i.i176.i, 32 ; 2 uses
@@ -1397,27 +1393,25 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6boun
   br i1 %i.fy, label %bb.bc, label %bb.ba
 
 bb.ba:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i223.i
-  %.sroa.622.0.extract.shift.i225.i = lshr i64 %.sroa.3.0.insert.insert.i.i224.i, 32
+  %.sroa.622.0.extract.shift.i225.i = lshr i64 %.sroa.3.0.insert.insert.i.i224.i, 32 ; 2 uses
   %.sroa.622.0.extract.trunc.i226.i = trunc nuw i64 %.sroa.622.0.extract.shift.i225.i to i32 ; 2 uses
   %i.fz = icmp slt i64 %.sroa.3.0.insert.insert.i.i224.i, 0
   %i.ga = sub i32 0, %.sroa.622.0.extract.trunc.i226.i
-  %.sroa.016.0.i236.i = select i1 %i.fz, i32 %i.ga, i32 %.sroa.622.0.extract.trunc.i226.i ; 4 uses
-  %i.gb = icmp eq i32 %.sroa.016.0.i236.i, 0      ; 2 uses
+  %.sroa.016.0.i236.i = select i1 %i.fz, i32 %i.ga, i32 %.sroa.622.0.extract.trunc.i226.i ; 3 uses
+  %i.gb = icmp eq i64 %.sroa.622.0.extract.shift.i225.i, 0
   %masksel.i237.i = select i1 %i.gb, i16 0, i16 64
   %.sroa.018.0.i238.i = or disjoint i16 %masksel.i237.i, %masksel.i189.i ; 3 uses
-  %i.gc = ashr i64 %.sroa.3.0.insert.insert.i.i224.i, 32 ; 2 uses
+  %i.gc = ashr i64 %.sroa.3.0.insert.insert.i.i224.i, 32 ; 3 uses
   %i.gd = icmp slt i64 %i.gc, 0
   br i1 %i.gd, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit174.i, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %8 = icmp ne i64 %i.gc, 0                       ; 2 uses
-  %.not536.i = xor i1 %8, true
-  %i.ge = icmp eq i32 %.sroa.016.0.i188.i, 0
-  %9 = select i1 %.not536.i, i1 %i.ge, i1 false
-  %or.cond537.i = select i1 %9, i1 %i.gb, i1 false
-  br i1 %or.cond537.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit174.i, label %.thread.i.i261.i
+  %7 = or i64 %i.gc, %.sroa.622.0.extract.shift.i177.i
+  %i.ge = icmp eq i64 %7, 0
+  br i1 %i.ge, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit174.i, label %.thread.i.i261.i
 
 .thread.i.i261.i:                                 ; preds = %bb.bb
+  %8 = icmp ne i64 %i.gc, 0
   %.sroa.027.0.in.i.i262.i = icmp eq i64 %i.fj, 0
   %spec.select.i.i263.i = zext i1 %8 to i8
   %spec.select.i264.i = select i1 %.sroa.027.0.in.i.i262.i, i8 %spec.select.i.i263.i, i8 %.sroa.0.0.i.i215.i
@@ -1472,7 +1466,7 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanN
   %.sroa.1327.0.ph = phi i32 [ 0, %bb.b ], [ 0, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ 0, %.thread.i.i165.i ], [ 0, %bb.an ], [ %.sroa.016.0.i188.i, %.thread.i.i261.i ], [ 0, %bb.bb ], [ %.sroa.016.0.i188.i, %bb.ba ]
   %.sroa.15.0.ph = phi i32 [ 0, %bb.b ], [ %.sroa.016.0.i.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ %.sroa.016.0.i.i, %.thread.i.i165.i ], [ %.sroa.016.0.i.i, %bb.an ], [ %.sroa.016.0.i236.i, %.thread.i.i261.i ], [ %.sroa.016.0.i236.i, %bb.bb ], [ %.sroa.016.0.i236.i, %bb.ba ]
   %.sroa.19.0.ph = phi i16 [ 0, %bb.b ], [ %.sroa.018.0.i.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ %.sroa.018.0.i.i, %.thread.i.i165.i ], [ %.sroa.018.0.i.i, %bb.an ], [ %.sroa.018.0.i238.i, %.thread.i.i261.i ], [ %.sroa.018.0.i238.i, %bb.bb ], [ %.sroa.018.0.i238.i, %bb.ba ]
-  %.sroa.21.0.ph = phi i16 [ 0, %bb.b ], [ %.sroa.24382.0450.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ %.sroa.24382.0450.i, %.thread.i.i165.i ], [ %.sroa.24382.0450.i, %bb.an ], [ 0, %.thread.i.i261.i ], [ 0, %bb.bb ], [ 0, %bb.ba ]
+  %.sroa.21.0.ph = phi i16 [ 0, %bb.b ], [ %.sroa.012.0.i.i, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ %.sroa.012.0.i.i, %.thread.i.i165.i ], [ %.sroa.012.0.i.i, %bb.an ], [ 0, %.thread.i.i261.i ], [ 0, %bb.bb ], [ 0, %bb.ba ]
   %.sroa.23.0.ph = phi i8 [ 0, %bb.b ], [ -1, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i.i ], [ %spec.select541.i, %.thread.i.i165.i ], [ 0, %bb.an ], [ %spec.select.i264.i, %.thread.i.i261.i ], [ 0, %bb.bb ], [ -1, %bb.ba ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.1126, i8 0, i64 32, i1 false)
   store ptr null, ptr %0, align 8
@@ -1875,22 +1869,20 @@ bb.n:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.517.0.extract.trunc.i = trunc nuw i32 %.sroa.517.0.extract.shift.i to i16 ; 2 uses
   %i.av = icmp slt i32 %.sroa.3.0.insert.insert.i.i, 0 ; 2 uses
   %i.aw = sub i16 0, %.sroa.517.0.extract.trunc.i
-  %.sroa.012.0.i = select i1 %i.av, i16 %i.aw, i16 %.sroa.517.0.extract.trunc.i ; 2 uses
-  %7 = icmp eq i16 %.sroa.012.0.i, 0              ; 4 uses
+  %.sroa.012.0.i = select i1 %i.av, i16 %i.aw, i16 %.sroa.517.0.extract.trunc.i
+  %7 = icmp ne i32 %.sroa.517.0.extract.shift.i, 0 ; 5 uses
   %i.ax = and i16 %.sroa.414.sroa.11.0.copyload, -897
-  %masksel.i = select i1 %7, i16 0, i16 512
+  %masksel.i = select i1 %7, i16 512, i16 0
   %.sroa.014.0.i = or disjoint i16 %masksel.i, %i.ax
   br i1 %i.av, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %8 = icmp ne i32 %.sroa.517.0.extract.shift.i, 0 ; 2 uses
-  br i1 %8, label %.thread.i.i, label %bb.p
+  br i1 %7, label %.thread.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ay = icmp eq i32 %.sroa.414.sroa.7.0.copyload, 0
-  %or.cond.i.i = select i1 %7, i1 %i.ay, i1 false
   %i.az = icmp eq i32 %.sroa.414.sroa.8.0.copyload, 0
-  %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.az, i1 false
+  %or.cond5.i.i = select i1 %i.ay, i1 %i.az, i1 false
   %i.ba = icmp eq i32 %i.ag, 0
   %i.bb = icmp eq i64 %i.ah, 0
   %i.bc = and i1 %i.ba, %i.bb
@@ -1909,7 +1901,7 @@ bb.p:                                             ; preds = %bb.o
 
 .thread.i.i:                                      ; preds = %bb.p, %bb.o
   %.sroa.027.0.in.i.i = icmp eq i8 %i.w, 0
-  %i.bi = zext i1 %8 to i8
+  %i.bi = zext i1 %7 to i8
   %i.bj = select i1 %.sroa.027.0.in.i.i, i8 %i.bi, i8 %i.w
   br label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtCsa9sSWSfjDbm_4jiff4span4SpanNtNtBL_5error5ErrorE6expectBL_.exit
 
@@ -1978,12 +1970,12 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6b
   br i1 %i.cc, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.621.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i20, 32
+  %.sroa.621.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i20, 32 ; 2 uses
   %.sroa.621.0.extract.trunc.i = trunc nuw i64 %.sroa.621.0.extract.shift.i to i32 ; 2 uses
   %i.cd = icmp slt i64 %.sroa.3.0.insert.insert.i.i20, 0
   %i.ce = sub i32 0, %.sroa.621.0.extract.trunc.i
-  %.sroa.015.0.i = select i1 %i.cd, i32 %i.ce, i32 %.sroa.621.0.extract.trunc.i ; 2 uses
-  %i.cf = icmp eq i32 %.sroa.015.0.i, 0           ; 3 uses
+  %.sroa.015.0.i = select i1 %i.cd, i32 %i.ce, i32 %.sroa.621.0.extract.trunc.i
+  %i.cf = icmp eq i64 %.sroa.621.0.extract.shift.i, 0 ; 3 uses
   %masksel.i21 = select i1 %i.cf, i16 0, i16 256
   %.sroa.017.0.i = or disjoint i16 %.sroa.014.0.i, %masksel.i21
   %i.cg = ashr i64 %.sroa.3.0.insert.insert.i.i20, 32 ; 2 uses
@@ -1995,9 +1987,10 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ci, label %.thread.i.i31, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %or.cond.i.i22 = select i1 %7, i1 %i.cf, i1 false
+  %.not = xor i1 %7, true
+  %or.cond.i.i = and i1 %i.cf, %.not
   %i.cj = icmp eq i32 %.sroa.414.sroa.8.0.copyload, 0
-  %or.cond5.i.i23 = select i1 %or.cond.i.i22, i1 %i.cj, i1 false
+  %or.cond5.i.i23 = select i1 %or.cond.i.i, i1 %i.cj, i1 false
   %i.ck = icmp eq i32 %i.ag, 0
   %i.cl = icmp eq i64 %i.ah, 0
   %i.cm = and i1 %i.ck, %i.cl
@@ -2089,12 +2082,12 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanWeeksNtNtCsb09rMIQFAXO_9jiff_core6bou
   br i1 %i.dj, label %bb.am, label %bb.aj
 
 bb.aj:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanWeeksNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i41, 32
+  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i41, 32 ; 2 uses
   %.sroa.622.0.extract.trunc.i = trunc nuw i64 %.sroa.622.0.extract.shift.i to i32 ; 2 uses
   %i.dk = icmp slt i64 %.sroa.3.0.insert.insert.i.i41, 0
   %i.dl = sub i32 0, %.sroa.622.0.extract.trunc.i
-  %.sroa.016.0.i = select i1 %i.dk, i32 %i.dl, i32 %.sroa.622.0.extract.trunc.i ; 2 uses
-  %i.dm = icmp eq i32 %.sroa.016.0.i, 0           ; 2 uses
+  %.sroa.016.0.i = select i1 %i.dk, i32 %i.dl, i32 %.sroa.622.0.extract.trunc.i
+  %i.dm = icmp eq i64 %.sroa.622.0.extract.shift.i, 0
   %masksel.i43 = select i1 %i.dm, i16 0, i16 128
   %.sroa.018.0.i = or disjoint i16 %.sroa.017.0.i, %masksel.i43
   %i.dn = ashr i64 %.sroa.3.0.insert.insert.i.i41, 32 ; 2 uses
@@ -2106,10 +2099,10 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.dp, label %.thread.i.i52, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %or.cond.i.i44 = select i1 %7, i1 %i.cf, i1 false
-  %or.cond5.i.i45 = select i1 %or.cond.i.i44, i1 %i.dm, i1 false
+  %.not211 = xor i1 %7, true
+  %or.cond5.i.i44 = and i1 %i.cf, %.not211
   %i.dq = icmp eq i64 %.sroa.414.sroa.9.0.copyload, 0
-  %or.cond11.i.i46 = select i1 %or.cond5.i.i45, i1 %i.dq, i1 false
+  %or.cond11.i.i46 = select i1 %or.cond5.i.i44, i1 %i.dq, i1 false
   %i.dr = icmp eq i64 %.sroa.097.0160, 0
   %or.cond13.i.i47 = select i1 %or.cond11.i.i46, i1 %i.dr, i1 false
   %i.ds = icmp eq i64 %.sroa.698.0158, 0
@@ -2512,10 +2505,10 @@ bb.f:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.79.0.copyload.i = load i32, ptr %.sroa.79.0..sroa_idx.i, align 4, !alias.scope !1109 ; 3 uses
   %i.k = icmp slt i32 %.sroa.3.0.insert.insert.i.i, 0 ; 2 uses
   %i.l = sub i16 0, %.sroa.517.0.extract.trunc.i
-  %.sroa.012.0.i = select i1 %i.k, i16 %i.l, i16 %.sroa.517.0.extract.trunc.i ; 2 uses
-  %4 = icmp eq i16 %.sroa.012.0.i, 0              ; 2 uses
+  %.sroa.012.0.i = select i1 %i.k, i16 %i.l, i16 %.sroa.517.0.extract.trunc.i
+  %4 = icmp ne i32 %.sroa.517.0.extract.shift.i, 0 ; 3 uses
   %i.m = and i16 %.sroa.4.0.copyload.i, -513
-  %masksel.i = select i1 %4, i16 0, i16 512
+  %masksel.i = select i1 %4, i16 512, i16 0
   %.sroa.014.0.i = or disjoint i16 %i.m, %masksel.i
   %.sroa.0.0.copyload18.i = load i64, ptr %1, align 8, !alias.scope !1109 ; 2 uses
   %.sroa.5.0..sroa_idx19.i = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -2537,14 +2530,12 @@ bb.f:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   br i1 %i.k, label %_RNvNvMs4_NtCsa9sSWSfjDbm_4jiff4spanNtB7_4Span6resign3imp.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %5 = icmp ne i32 %.sroa.517.0.extract.shift.i, 0 ; 2 uses
-  br i1 %5, label %.thread.i.i, label %bb.h
+  br i1 %4, label %.thread.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.n = icmp eq i32 %.sroa.9.0.copyload28.i, 0
-  %or.cond.i.i = select i1 %4, i1 %i.n, i1 false
   %i.o = icmp eq i32 %.sroa.10.0.copyload30.i, 0
-  %or.cond5.i.i = select i1 %or.cond.i.i, i1 %i.o, i1 false
+  %or.cond5.i.i = select i1 %i.n, i1 %i.o, i1 false
   %i.p = icmp eq i32 %.sroa.11.0.copyload32.i, 0
   %or.cond8.i.i = select i1 %or.cond5.i.i, i1 %i.p, i1 false
   %i.q = icmp eq i32 %.sroa.12.0.copyload34.i, 0
@@ -2564,7 +2555,7 @@ bb.h:                                             ; preds = %bb.g
 .thread.i.i:                                      ; preds = %bb.h, %bb.g
   %i.w = and i32 %.sroa.79.0.copyload.i, 255
   %.sroa.027.0.in.i.i = icmp eq i32 %i.w, 0
-  %spec.select.i.i = zext i1 %5 to i32
+  %spec.select.i.i = zext i1 %4 to i32
   %spec.select.i = select i1 %.sroa.027.0.in.i.i, i32 %spec.select.i.i, i32 %.sroa.79.0.copyload.i
   %i.x = and i32 %spec.select.i, 255
   br label %_RNvNvMs4_NtCsa9sSWSfjDbm_4jiff4spanNtB7_4Span6resign3imp.exit.i
@@ -2631,7 +2622,7 @@ bb.l:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   br label %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearsxEB7_.exit
 
 bb.m:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b10SpanMonthsNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.621.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i2, 32
+  %.sroa.621.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i2, 32 ; 2 uses
   %.sroa.621.0.extract.trunc.i = trunc nuw i64 %.sroa.621.0.extract.shift.i to i32 ; 2 uses
   %.sroa.58.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 44
   %.sroa.58.sroa.0.0.copyload.i = load i32, ptr %.sroa.58.0..sroa_idx.i, align 4, !alias.scope !1112 ; 2 uses
@@ -2648,8 +2639,8 @@ bb.m:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.713.sroa.5.0..sroa.713.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 61
   %i.ah = icmp slt i64 %.sroa.3.0.insert.insert.i.i2, 0
   %i.ai = sub i32 0, %.sroa.621.0.extract.trunc.i
-  %.sroa.015.0.i = select i1 %i.ah, i32 %i.ai, i32 %.sroa.621.0.extract.trunc.i ; 2 uses
-  %i.aj = icmp eq i32 %.sroa.015.0.i, 0           ; 2 uses
+  %.sroa.015.0.i = select i1 %i.ah, i32 %i.ai, i32 %.sroa.621.0.extract.trunc.i
+  %i.aj = icmp eq i64 %.sroa.621.0.extract.shift.i, 0 ; 2 uses
   %i.ak = and i16 %.sroa.510.0.copyload.i, -257
   %masksel.i3 = select i1 %i.aj, i16 0, i16 256
   %.sroa.017.0.i = or disjoint i16 %i.ak, %masksel.i3
@@ -2672,9 +2663,9 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ao = icmp eq i16 %.sroa.713.sroa.0.0.copyload.i, 0
-  %or.cond.i.i4 = select i1 %i.ao, i1 %i.aj, i1 false
+  %or.cond.i.i = and i1 %i.aj, %i.ao
   %i.ap = icmp eq i32 %.sroa.58.sroa.0.0.copyload.i, 0
-  %or.cond5.i.i5 = select i1 %or.cond.i.i4, i1 %i.ap, i1 false
+  %or.cond5.i.i5 = select i1 %or.cond.i.i, i1 %i.ap, i1 false
   %i.aq = icmp eq i32 %.sroa.58.sroa.4.0.copyload.i, 0
   %or.cond8.i.i6 = select i1 %or.cond5.i.i5, i1 %i.aq, i1 false
   %i.ar = icmp eq i32 %.sroa.58.sroa.5.0.copyload.i, 0
@@ -2759,7 +2750,7 @@ bb.s:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   br label %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearsxEB7_.exit
 
 bb.t:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanWeeksNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i21, 32
+  %.sroa.622.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i21, 32 ; 2 uses
   %.sroa.622.0.extract.trunc.i = trunc nuw i64 %.sroa.622.0.extract.shift.i to i32 ; 2 uses
   %.sroa.58.0..sroa_idx.i22 = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.58.0.copyload.i = load i64, ptr %.sroa.58.0..sroa_idx.i22, align 8, !alias.scope !1115 ; 2 uses
@@ -2772,8 +2763,8 @@ bb.t:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.714.sroa.5.0..sroa.714.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 61
   %i.bg = icmp slt i64 %.sroa.3.0.insert.insert.i.i21, 0
   %i.bh = sub i32 0, %.sroa.622.0.extract.trunc.i
-  %.sroa.016.0.i = select i1 %i.bg, i32 %i.bh, i32 %.sroa.622.0.extract.trunc.i ; 2 uses
-  %i.bi = icmp eq i32 %.sroa.016.0.i, 0           ; 2 uses
+  %.sroa.016.0.i = select i1 %i.bg, i32 %i.bh, i32 %.sroa.622.0.extract.trunc.i
+  %i.bi = icmp eq i64 %.sroa.622.0.extract.shift.i, 0 ; 2 uses
   %i.bj = and i16 %.sroa.511.0.copyload.i, -129
   %masksel.i23 = select i1 %i.bi, i16 0, i16 128
   %.sroa.018.0.i = or disjoint i16 %i.bj, %masksel.i23
@@ -2800,9 +2791,9 @@ bb.v:                                             ; preds = %bb.u
   %i.bn = icmp eq i16 %.sroa.714.sroa.0.0.copyload.i, 0
   %i.bo = icmp eq i32 %.sroa.9.0.copyload33.i, 0
   %or.cond.i.i24 = select i1 %i.bn, i1 %i.bo, i1 false
-  %or.cond5.i.i25 = select i1 %or.cond.i.i24, i1 %i.bi, i1 false
+  %or.cond5.i.i24 = and i1 %i.bi, %or.cond.i.i24
   %i.bp = icmp eq i64 %.sroa.58.0.copyload.i, 0
-  %or.cond11.i.i26 = select i1 %or.cond5.i.i25, i1 %i.bp, i1 false
+  %or.cond11.i.i26 = select i1 %or.cond5.i.i24, i1 %i.bp, i1 false
   %i.bq = icmp eq i64 %.sroa.0.0.copyload23.i, 0
   %or.cond13.i.i27 = select i1 %or.cond11.i.i26, i1 %i.bq, i1 false
   %i.br = icmp eq i64 %.sroa.5.0.copyload25.i, 0
@@ -2881,7 +2872,7 @@ bb.z:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   br label %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearsxEB7_.exit
 
 bb.aa:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.622.0.extract.shift.i41 = lshr i64 %.sroa.3.0.insert.insert.i.i40, 32
+  %.sroa.622.0.extract.shift.i41 = lshr i64 %.sroa.3.0.insert.insert.i.i40, 32 ; 2 uses
   %.sroa.622.0.extract.trunc.i42 = trunc nuw i64 %.sroa.622.0.extract.shift.i41 to i32 ; 2 uses
   %.sroa.58.0..sroa_idx.i43 = getelementptr inbounds nuw i8, ptr %1, i64 52
   %.sroa.58.0.copyload.i44 = load i32, ptr %.sroa.58.0..sroa_idx.i43, align 4, !alias.scope !1118 ; 2 uses
@@ -2894,8 +2885,8 @@ bb.aa:                                            ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.714.sroa.5.0..sroa.714.0..sroa_idx.sroa_idx.i51 = getelementptr inbounds nuw i8, ptr %1, i64 61
   %i.ce = icmp slt i64 %.sroa.3.0.insert.insert.i.i40, 0
   %i.cf = sub i32 0, %.sroa.622.0.extract.trunc.i42
-  %.sroa.016.0.i52 = select i1 %i.ce, i32 %i.cf, i32 %.sroa.622.0.extract.trunc.i42 ; 2 uses
-  %i.cg = icmp eq i32 %.sroa.016.0.i52, 0         ; 2 uses
+  %.sroa.016.0.i52 = select i1 %i.ce, i32 %i.cf, i32 %.sroa.622.0.extract.trunc.i42
+  %i.cg = icmp eq i64 %.sroa.622.0.extract.shift.i41, 0 ; 2 uses
   %i.ch = and i16 %.sroa.511.0.copyload.i46, -65
   %masksel.i53 = select i1 %i.cg, i16 0, i16 64
   %.sroa.018.0.i54 = or disjoint i16 %i.ch, %masksel.i53
@@ -2926,9 +2917,9 @@ bb.ac:                                            ; preds = %bb.ab
   %or.cond.i.i66 = select i1 %i.cl, i1 %i.cm, i1 false
   %i.cn = icmp eq i32 %.sroa.10.0.copyload35.i, 0
   %or.cond5.i.i67 = select i1 %or.cond.i.i66, i1 %i.cn, i1 false
-  %or.cond8.i.i68 = select i1 %or.cond5.i.i67, i1 %i.cg, i1 false
+  %or.cond8.i.i67 = and i1 %i.cg, %or.cond5.i.i67
   %i.co = icmp eq i32 %.sroa.58.0.copyload.i44, 0
-  %or.cond11.i.i69 = select i1 %or.cond8.i.i68, i1 %i.co, i1 false
+  %or.cond11.i.i69 = select i1 %or.cond8.i.i67, i1 %i.co, i1 false
   %i.cp = icmp eq i64 %.sroa.0.0.copyload23.i55, 0
   %or.cond13.i.i70 = select i1 %or.cond11.i.i69, i1 %i.cp, i1 false
   %i.cq = icmp eq i64 %.sroa.5.0.copyload25.i57, 0
@@ -3009,7 +3000,7 @@ bb.ag:                                            ; preds = %_RINvYNtNtNtCsa9sSW
   br label %_RINvMs_NtCsa9sSWSfjDbm_4jiff4spanNtB5_4Span9try_yearsxEB7_.exit
 
 bb.ah:                                            ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanHoursNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.619.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i87, 32
+  %.sroa.619.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i87, 32 ; 2 uses
   %.sroa.619.0.extract.trunc.i = trunc nuw i64 %.sroa.619.0.extract.shift.i to i32 ; 2 uses
   %.sroa.58.0..sroa_idx.i88 = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.58.0.copyload.i89 = load i16, ptr %.sroa.58.0..sroa_idx.i88, align 8, !alias.scope !1121
@@ -3020,8 +3011,8 @@ bb.ah:                                            ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.711.sroa.5.0..sroa.711.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 61
   %i.dd = icmp slt i64 %.sroa.3.0.insert.insert.i.i87, 0
   %i.de = sub i32 0, %.sroa.619.0.extract.trunc.i
-  %.sroa.013.0.i = select i1 %i.dd, i32 %i.de, i32 %.sroa.619.0.extract.trunc.i ; 2 uses
-  %i.df = icmp eq i32 %.sroa.013.0.i, 0           ; 2 uses
+  %.sroa.013.0.i = select i1 %i.dd, i32 %i.de, i32 %.sroa.619.0.extract.trunc.i
+  %i.df = icmp eq i64 %.sroa.619.0.extract.shift.i, 0 ; 2 uses
   %i.dg = and i16 %.sroa.58.0.copyload.i89, -33
   %masksel.i90 = select i1 %i.df, i16 0, i16 32
   %.sroa.015.0.i91 = or disjoint i16 %i.dg, %masksel.i90
@@ -3056,9 +3047,9 @@ bb.aj:                                            ; preds = %bb.ai
   %or.cond5.i.i93 = select i1 %or.cond.i.i92, i1 %i.dm, i1 false
   %i.dn = icmp eq i32 %.sroa.11.0.copyload34.i, 0
   %or.cond8.i.i94 = select i1 %or.cond5.i.i93, i1 %i.dn, i1 false
-  %or.cond11.i.i95 = select i1 %or.cond8.i.i94, i1 %i.df, i1 false
+  %or.cond11.i.i94 = and i1 %i.df, %or.cond8.i.i94
   %i.do = icmp eq i64 %.sroa.0.0.copyload20.i, 0
-  %or.cond13.i.i96 = select i1 %or.cond11.i.i95, i1 %i.do, i1 false
+  %or.cond13.i.i96 = select i1 %or.cond11.i.i94, i1 %i.do, i1 false
   %i.dp = icmp eq i64 %.sroa.5.0.copyload22.i, 0
   %or.cond16.i.i97 = select i1 %or.cond13.i.i96, i1 %i.dp, i1 false
   %i.dq = icmp eq i64 %.sroa.6.0.copyload24.i, 0
@@ -3461,7 +3452,7 @@ bb.h:                                             ; preds = %.thread, %bb.b
   %.sroa.89.0571 = phi i16 [ %masksel.i, %.thread ], [ 0, %bb.b ]
   %.sroa.107.0570 = phi i8 [ %.sroa.0.0.i.i, %.thread ], [ 0, %bb.b ] ; 2 uses
   %i.q = sdiv i64 %.sroa.0.0576, 86400            ; 2 uses
-  %i.r = srem i64 %.sroa.0.0576, 86400            ; 3 uses
+  %i.r = srem i64 %.sroa.0.0576, 86400
   %i.s = add nsw i64 %i.q, -7304485
   %or.cond.i151 = icmp ult i64 %i.s, -14608969
   br i1 %or.cond.i151, label %bb.i, label %bb.j
@@ -3483,31 +3474,29 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6boun
   br i1 %i.y, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.622.0.extract.shift.i153 = lshr i64 %.sroa.3.0.insert.insert.i.i152, 32
-  %.sroa.622.0.extract.trunc.i154 = trunc nuw i64 %.sroa.622.0.extract.shift.i153 to i32 ; 2 uses
+  %.sroa.622.0.extract.shift.i153 = lshr i64 %.sroa.3.0.insert.insert.i.i152, 32 ; 3 uses
   %i.z = icmp slt i64 %.sroa.3.0.insert.insert.i.i152, 0
-  %4 = sub i32 0, %.sroa.622.0.extract.trunc.i154
-  %.sroa.016.0.i164 = select i1 %i.z, i32 %4, i32 %.sroa.622.0.extract.trunc.i154 ; 4 uses
-  %i.aa = icmp eq i32 %.sroa.016.0.i164, 0        ; 2 uses
+  %4 = sub nsw i64 0, %.sroa.622.0.extract.shift.i153
+  %i.aa = icmp eq i64 %.sroa.622.0.extract.shift.i153, 0 ; 2 uses
   %masksel.i165 = select i1 %i.aa, i16 0, i16 64
-  %.sroa.018.0.i166 = or disjoint i16 %masksel.i165, %.sroa.89.0571 ; 3 uses
+  %.sroa.018.0.i166 = or disjoint i16 %masksel.i165, %.sroa.89.0571
   %i.ab = ashr i64 %.sroa.3.0.insert.insert.i.i152, 32 ; 2 uses
   %i.ac = icmp slt i64 %i.ab, 0
-  br i1 %i.ac, label %.thread583.a, label %bb.l
+  br i1 %i.ac, label %.thread583, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ad = icmp ne i64 %i.ab, 0                    ; 2 uses
   %.not747 = xor i1 %i.ad, true
   %i.ae = icmp eq i32 %.sroa.66.0572, 0
-  %5 = select i1 %.not747, i1 %i.ae, i1 false
-  %or.cond748 = select i1 %5, i1 %i.aa, i1 false
-  br i1 %or.cond748, label %.thread583.a, label %.thread.i.i186
+  %or.cond8.i.i = and i1 %i.ae, %i.aa
+  %or.cond748 = select i1 %.not747, i1 %or.cond8.i.i, i1 false
+  br i1 %or.cond748, label %.thread583, label %.thread.i.i186
 
 .thread.i.i186:                                   ; preds = %bb.l
   %.sroa.027.0.in.i.i187 = icmp eq i8 %.sroa.107.0570, 0
   %spec.select.i.i188 = zext i1 %i.ad to i8
   %spec.select.i189 = select i1 %.sroa.027.0.in.i.i187, i8 %spec.select.i.i188, i8 %.sroa.107.0570
-  br label %.thread583.a
+  br label %.thread583
 
 bb.m:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b8SpanDaysNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
   %.sroa.420.0.extract.shift.i194 = lshr i64 %.sroa.3.0.insert.insert.i.i152, 8
@@ -3516,16 +3505,23 @@ bb.m:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   store ptr %i.af, ptr %0, align 8
   br label %bb.aw
 
+.thread583:                                       ; preds = %bb.l, %bb.k, %.thread.i.i186
+  %.sroa.66.0573 = phi i32 [ %.sroa.66.0572, %.thread.i.i186 ], [ %.sroa.66.0572, %bb.k ], [ 0, %bb.l ]
+  %.sroa.0.0.i.i191 = phi i8 [ %spec.select.i189, %.thread.i.i186 ], [ -1, %bb.k ], [ 0, %bb.l ]
+  %.sroa.4122.sroa.14.40.insert.ext = select i1 %i.z, i64 %4, i64 %.sroa.622.0.extract.shift.i153
+  %.sroa.74.sroa.0.0.extract.trunc531 = trunc i64 %.sroa.4122.sroa.14.40.insert.ext to i32
+  br label %.thread583.a
+
 bb.n:                                             ; preds = %bb.g
   %i.ag = icmp samesign ugt i8 %1, 3
   br i1 %i.ag, label %bb.v, label %bb.u
 
-.thread583.a:                                     ; preds = %.thread.i.i186, %bb.k, %bb.l, %bb.g
-  %.sroa.0.1599 = phi i64 [ %2, %bb.g ], [ %i.r, %bb.l ], [ %i.r, %bb.k ], [ %i.r, %.thread.i.i186 ] ; 2 uses
-  %.sroa.66.1595 = phi i32 [ 0, %bb.g ], [ %.sroa.66.0572, %.thread.i.i186 ], [ %.sroa.66.0572, %bb.k ], [ 0, %bb.l ] ; 3 uses
-  %.sroa.89.1594 = phi i16 [ 0, %bb.g ], [ %.sroa.018.0.i166, %bb.l ], [ %.sroa.018.0.i166, %bb.k ], [ %.sroa.018.0.i166, %.thread.i.i186 ]
-  %.sroa.107.1593 = phi i8 [ 0, %bb.g ], [ %spec.select.i189, %.thread.i.i186 ], [ -1, %bb.k ], [ 0, %bb.l ] ; 2 uses
-  %.sroa.74.sroa.0.1591 = phi i32 [ 0, %bb.g ], [ %.sroa.016.0.i164, %bb.l ], [ %.sroa.016.0.i164, %bb.k ], [ %.sroa.016.0.i164, %.thread.i.i186 ] ; 3 uses
+.thread583.a:                                     ; preds = %.thread583, %bb.g
+  %.sroa.0.1599 = phi i64 [ %i.r, %.thread583 ], [ %2, %bb.g ] ; 2 uses
+  %.sroa.66.1595 = phi i32 [ %.sroa.66.0573, %.thread583 ], [ 0, %bb.g ] ; 3 uses
+  %.sroa.89.1594 = phi i16 [ %.sroa.018.0.i166, %.thread583 ], [ 0, %bb.g ]
+  %.sroa.107.1593 = phi i8 [ %.sroa.0.0.i.i191, %.thread583 ], [ 0, %bb.g ] ; 2 uses
+  %.sroa.74.sroa.0.1591 = phi i32 [ %.sroa.74.sroa.0.0.extract.trunc531, %.thread583 ], [ 0, %bb.g ] ; 3 uses
   %i.ah = sdiv i64 %.sroa.0.1599, 3600            ; 2 uses
   %i.ai = srem i64 %.sroa.0.1599, 3600
   %i.aj = add nsw i64 %i.ah, -175307617
@@ -3549,12 +3545,10 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanHoursNtNtCsb09rMIQFAXO_9jiff_core6bou
   br i1 %i.ap, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b9SpanHoursNtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit.i
-  %.sroa.619.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i197, 32
-  %.sroa.619.0.extract.trunc.i = trunc nuw i64 %.sroa.619.0.extract.shift.i to i32 ; 2 uses
+  %.sroa.619.0.extract.shift.i = lshr i64 %.sroa.3.0.insert.insert.i.i197, 32 ; 3 uses
   %i.aq = icmp slt i64 %.sroa.3.0.insert.insert.i.i197, 0
-  %6 = sub i32 0, %.sroa.619.0.extract.trunc.i
-  %.sroa.013.0.i = select i1 %i.aq, i32 %6, i32 %.sroa.619.0.extract.trunc.i ; 2 uses
-  %i.ar = icmp eq i32 %.sroa.013.0.i, 0           ; 2 uses
+  %5 = sub nsw i64 0, %.sroa.619.0.extract.shift.i
+  %i.ar = icmp eq i64 %.sroa.619.0.extract.shift.i, 0 ; 2 uses
   %masksel.i200 = select i1 %i.ar, i16 0, i16 32
   %i.as = ashr i64 %.sroa.3.0.insert.insert.i.i197, 32 ; 2 uses
   %i.at = icmp slt i64 %i.as, 0
@@ -3568,7 +3562,7 @@ bb.s:                                             ; preds = %bb.r
   %i.av = icmp eq i32 %.sroa.66.1595, 0
   %i.aw = icmp eq i32 %.sroa.74.sroa.0.1591, 0
   %or.cond8.i.i203 = select i1 %i.av, i1 %i.aw, i1 false
-  %or.cond11.i.i204 = select i1 %or.cond8.i.i203, i1 %i.ar, i1 false
+  %or.cond11.i.i204 = and i1 %or.cond8.i.i203, %i.ar
   br i1 %or.cond11.i.i204, label %.thread607, label %.thread.i.i210
 
 .thread.i.i210:                                   ; preds = %bb.s, %bb.r
@@ -3588,6 +3582,8 @@ bb.t:                                             ; preds = %_RINvYNtNtNtCsa9sSW
   %.sroa.66.1596 = phi i32 [ %.sroa.66.1595, %.thread.i.i210 ], [ %.sroa.66.1595, %bb.q ], [ 0, %bb.s ]
   %.sroa.74.sroa.0.1592 = phi i32 [ %.sroa.74.sroa.0.1591, %.thread.i.i210 ], [ %.sroa.74.sroa.0.1591, %bb.q ], [ 0, %bb.s ]
   %.sroa.0.0.i.i215 = phi i8 [ %spec.select.i213, %.thread.i.i210 ], [ -1, %bb.q ], [ 0, %bb.s ]
+  %.sroa.4126.sroa.14.44.insert.ext = select i1 %i.aq, i64 %5, i64 %.sroa.619.0.extract.shift.i
+  %.sroa.74.sroa.17.0.extract.trunc544 = trunc i64 %.sroa.4126.sroa.14.44.insert.ext to i32
   %i.ay = or i16 %masksel.i200, %.sroa.89.1594
   br label %bb.v
 
@@ -3601,7 +3597,7 @@ bb.v:                                             ; preds = %.thread607, %bb.n
   %.sroa.89.2620 = phi i16 [ %i.ay, %.thread607 ], [ 0, %bb.n ]
   %.sroa.107.2619 = phi i8 [ %.sroa.0.0.i.i215, %.thread607 ], [ 0, %bb.n ] ; 2 uses
   %.sroa.74.sroa.0.2617 = phi i32 [ %.sroa.74.sroa.0.1592, %.thread607 ], [ 0, %bb.n ] ; 3 uses
-  %.sroa.74.sroa.17.2615 = phi i32 [ %.sroa.013.0.i, %.thread607 ], [ 0, %bb.n ] ; 3 uses
+  %.sroa.74.sroa.17.2615 = phi i32 [ %.sroa.74.sroa.17.0.extract.trunc544, %.thread607 ], [ 0, %bb.n ] ; 3 uses
   %i.ba = sdiv i64 %.sroa.0.2623, 60              ; 2 uses
   %i.bb = srem i64 %.sroa.0.2623, 60
   %i.bc = add nsw i64 %i.ba, -10518456961

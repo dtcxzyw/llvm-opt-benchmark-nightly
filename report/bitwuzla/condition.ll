@@ -204,34 +204,24 @@ bb.bd:                                            ; preds = %.thread664
   br i1 %or.cond8, label %bb.bi, label %bb.bq
 
 bb.be:                                            ; preds = %.lr.ph1229, %bb.bh
-  %i.ld = phi ptr [ %.pre1555.a, %.lr.ph1229 ], [ %5, %bb.bh ] ; 3 uses
+  %i.ld = phi ptr [ %.pre1555.a, %.lr.ph1229 ], [ %2, %bb.bh ] ; 4 uses
   %.sroa.0579.01228 = phi ptr [ %i.kx, %.lr.ph1229 ], [ %i.ls, %bb.bh ] ; 2 uses
-  %i.le = load i32, ptr %.sroa.0579.01228, align 4, !tbaa !199 ; 4 uses
+  %i.le = load i32, ptr %.sroa.0579.01228, align 4, !tbaa !199 ; 3 uses
   %i.lf = tail call noundef i32 @llvm.abs.i32(i32 %i.le, i1 true)
   %i.lg = zext nneg i32 %i.lf to i64              ; 2 uses
   %i.lh = getelementptr inbounds nuw i8, ptr %i.ld, i64 %i.lg
-  %i.li = load i8, ptr %i.lh, align 1, !tbaa !168 ; 2 uses
+  %i.li = load i8, ptr %i.lh, align 1, !tbaa !168
   %.not.i461 = icmp eq i8 %i.li, 0
-  br i1 %.not.i461, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %bb.bf
+  br i1 %.not.i461, label %bb.bh, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  %2 = sext i8 %i.li to i32
   %i.lj = load ptr, ptr %i.la, align 8, !tbaa !200
   %i.lk = getelementptr inbounds nuw [16 x i8], ptr %i.lj, i64 %i.lg
   %i.ll = load i32, ptr %i.lk, align 8, !tbaa !202
   %.not9.i = icmp eq i32 %i.ll, 0
-  %spec.select.i = select i1 %.not9.i, i32 %2, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit
+  br i1 %.not9.i, label %bb.bg, label %bb.bh
 
-_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.be, %bb.bf
-  %.0.i = phi i32 [ 0, %bb.be ], [ %spec.select.i, %bb.bf ] ; 2 uses
-  %3 = icmp slt i32 %i.le, 0
-  %4 = sub nsw i32 0, %.0.i
-  %spec.select10.i = select i1 %3, i32 %4, i32 %.0.i
-  %.not410 = icmp eq i32 %spec.select10.i, 0
-  br i1 %.not410, label %bb.bh, label %bb.bg
-
-bb.bg:                                            ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
+bb.bg:                                            ; preds = %bb.bf
   %i.lm = sext i32 %i.le to i64
   %i.ln = getelementptr inbounds i8, ptr %i.ld, i64 %i.lm
   store i8 0, ptr %i.ln, align 1, !tbaa !168
@@ -243,8 +233,8 @@ bb.bg:                                            ; preds = %_ZN7CaDiCaL8Interna
   %.pre1554 = load ptr, ptr %i.kz, align 8, !tbaa !167
   br label %bb.bh
 
-bb.bh:                                            ; preds = %bb.bg, %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %5 = phi ptr [ %.pre1554, %bb.bg ], [ %i.ld, %_ZN7CaDiCaL8Internal5fixedEi.exit ]
+bb.bh:                                            ; preds = %bb.be, %bb.bg, %bb.bf
+  %2 = phi ptr [ %i.ld, %bb.be ], [ %.pre1554, %bb.bg ], [ %i.ld, %bb.bf ]
   %i.ls = getelementptr inbounds nuw i8, ptr %.sroa.0579.01228, i64 4 ; 2 uses
   %.not738 = icmp eq ptr %i.ls, %i.ky
   br i1 %.not738, label %._crit_edge1230, label %bb.be

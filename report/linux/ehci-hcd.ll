@@ -205,8 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %1, i64 112
-  %i.g = load i16, ptr %i.f, align 8
-  %3 = zext i16 %i.g to i32                       ; 2 uses
+  %i.g = load i16, ptr %i.f, align 8              ; 3 uses
   %i.h = load i8, ptr %i.b, align 1               ; 3 uses
   %i.i = getelementptr i8, ptr %1, i64 122
   %i.j = load i8, ptr %i.i, align 2               ; 2 uses
@@ -217,10 +216,9 @@ bb.b:                                             ; preds = %bb.a
   %i.o = icmp slt i32 %2, 0                       ; 3 uses
   %i.p = sub i8 0, %i.j
   %i.q = sub i8 0, %i.h
-  %4 = sub nsw i32 0, %3
+  %3 = sub i16 0, %i.g
   %.048 = select i1 %i.o, i8 %i.p, i8 %i.j
   %.047 = select i1 %i.o, i8 %i.q, i8 %i.h        ; 6 uses
-  %.0 = select i1 %i.o, i32 %4, i32 %3            ; 2 uses
   %i.r = getelementptr i8, ptr %1, i64 121
   %i.s = load i8, ptr %i.r, align 1
   %i.t = zext i8 %i.s to i32
@@ -368,7 +366,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.bv, label %.preheader, label %.loopexit55, !llvm.loop !104
 
 .loopexit55:                                      ; preds = %bb.o, %._crit_edge
-  %.not52 = icmp eq i32 %.0, 0
+  %.not52 = icmp eq i16 %i.g, 0
   br i1 %.not52, label %.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %.loopexit55
@@ -404,7 +402,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %i.ah, label %.lr.ph62, label %.loopexit
 
 .lr.ph62:                                         ; preds = %bb.s
-  %5 = trunc i32 %.0 to i16
+  %4 = select i1 %i.o, i16 %3, i16 %i.g
   %i.ci = getelementptr i8, ptr %1, i64 125
   br label %bb.t
 
@@ -413,7 +411,7 @@ bb.t:                                             ; preds = %.lr.ph62, %bb.t
   %i.cj = zext nneg i32 %.260 to i64
   %i.ck = getelementptr [2 x i8], ptr %i.bx, i64 %i.cj ; 2 uses
   %i.cl = load i16, ptr %i.ck, align 2
-  %i.cm = add i16 %i.cl, %5
+  %i.cm = add i16 %i.cl, %4
   store i16 %i.cm, ptr %i.ck, align 2
   %i.cn = load i8, ptr %i.ci, align 1
   %i.co = zext i8 %i.cn to i32

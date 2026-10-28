@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ak = phi i1 [ false, %bb.a ], [ %i.aj, %bb.b ] ; 2 uses
   %.not = icmp eq i32 %i.d, 0
   %i.al = sub nsw i32 0, %i.u
-  %spec.select = select i1 %.not, i32 %i.u, i32 %i.al ; 4 uses
+  %spec.select = select i1 %.not, i32 %i.u, i32 %i.al ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.an = load i32, ptr %i.am, align 8, !tbaa !60
   %i.ao = add nsw i32 %i.an, %spec.select
@@ -214,6 +214,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !77
   %i.at = add nsw i32 %i.as, %spec.select
   %i.au = tail call i32 @llvm.scmp.i32.i32(i32 %i.at, i32 0) ; 4 uses
+  %.not132 = icmp ne i32 %i.u, 0                  ; 3 uses
   br i1 %i.ak, label %.loopexit.loopexit, label %.loopexit.loopexit176
 
 .loopexit.loopexit:                               ; preds = %bb.c
@@ -224,10 +225,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.loopexit
 
 .loopexit.loopexit176:                            ; preds = %bb.c
-  %.not132 = icmp eq i32 %spec.select, 0
   %.inv.i145 = icmp sgt i32 %spec.select, -1
   %i.aw = select i1 %.inv.i145, i32 128, i32 -128
-  %i.ax = select i1 %.not132, i32 0, i32 %i.aw    ; 4 uses
+  %i.ax = select i1 %.not132, i32 %i.aw, i32 0    ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !47 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -363,8 +363,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ev = getelementptr inbounds nuw i8, ptr @ff_log2_tab, i64 %i.eu
   %i.ew = load i8, ptr %i.ev, align 1, !tbaa !61
   %i.ex = zext i8 %i.ew to i32
-  %2 = icmp ne i32 %i.u, 0                        ; 2 uses
-  %i.ey = zext i1 %2 to i32
+  %i.ey = zext i1 %.not132 to i32
   %i.ez = or disjoint i32 %spec.select7.i.i151, %i.ey
   %i.fa = add nuw nsw i32 %i.ez, %i.ex            ; 3 uses
   %i.fb = trunc i32 %i.fa to i8
@@ -374,7 +373,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.fe = and i32 %i.fa, 255
   %i.ff = lshr i32 %i.fd, %i.fe
   %i.fg = trunc i32 %i.ff to i8
-  %i.fh = select i1 %2, i8 %i.fg, i8 32           ; 2 uses
+  %i.fh = select i1 %.not132, i8 %i.fg, i8 32     ; 2 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i8 %i.fh, ptr %i.fi, align 8, !tbaa !46
   %i.fj = trunc i32 %i.d to i8                    ; 2 uses

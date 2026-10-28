@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !180 ; 2 uses
   %.not.i = icmp eq i8 %i.ae, 0
-  br i1 %.not.i, label %_ZN7CaDiCaL8Internal5fixedEi.exit, label %bb.d
+  br i1 %.not.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.af = sext i8 %i.ae to i32
@@ -213,22 +213,18 @@ bb.d:                                             ; preds = %bb.c
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %i.ac
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !176
   %.not9.i = icmp eq i32 %i.ai, 0
-  %spec.select.i.a = select i1 %.not9.i, i32 %i.af, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit
-
-_ZN7CaDiCaL8Internal5fixedEi.exit:                ; preds = %bb.c, %bb.d
-  %.0.i = phi i32 [ 0, %bb.c ], [ %spec.select.i.a, %bb.d ] ; 2 uses
+  %spec.select.i = select i1 %.not9.i, i32 %i.af, i32 0 ; 3 uses
   %3 = icmp slt i32 %i.z, 0
-  %4 = sub nsw i32 0, %.0.i
-  %spec.select10.i = select i1 %3, i32 %4, i32 %.0.i ; 2 uses
-  %5 = icmp slt i32 %spec.select10.i, 1
+  %4 = sub nsw i32 0, %spec.select.i
+  %spec.select.i.a = select i1 %3, i32 %4, i32 %spec.select.i
+  %5 = icmp slt i32 %spec.select.i.a, 1
   br i1 %5, label %bb.e, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
-bb.e:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
-  %.not169 = icmp eq i32 %spec.select10.i, 0
+bb.e:                                             ; preds = %bb.d
+  %.not169 = icmp eq i32 %spec.select.i, 0
   br i1 %.not169, label %bb.f, label %bb.l
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %bb.c, %bb.e
   %i.aj = load ptr, ptr %i.w, align 8, !tbaa !181
   %.not.i191 = icmp eq ptr %i.y, %i.aj
   br i1 %.not.i191, label %bb.h, label %bb.g
@@ -294,7 +290,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %.not168 = icmp eq ptr %i.bd, %i.t
   br i1 %.not168, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.thread220, label %bb.c
 
-_ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit
+_ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.d
   %.not170 = icmp eq i32 %i.z, 0
   br i1 %.not170, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.thread220, label %bb.m
 
@@ -407,32 +403,22 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %.lr.ph277, %select.unfold
   %.0141276 = phi i32 [ 1, %.lr.ph277 ], [ %.2143, %select.unfold ] ; 5 uses
   %.sroa.0214.0275 = phi ptr [ %i.cu, %.lr.ph277 ], [ %i.dt, %select.unfold ] ; 2 uses
-  %i.db = load i32, ptr %.sroa.0214.0275, align 4, !tbaa !171 ; 3 uses
+  %i.db = load i32, ptr %.sroa.0214.0275, align 4, !tbaa !171 ; 2 uses
   %i.dc = tail call noundef i32 @llvm.abs.i32(i32 %i.db, i1 true)
   %i.dd = zext nneg i32 %i.dc to i64              ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.dd
-  %i.df = load i8, ptr %i.de, align 1, !tbaa !180 ; 2 uses
+  %i.df = load i8, ptr %i.de, align 1, !tbaa !180
   %.not.i193 = icmp eq i8 %i.df, 0
-  br i1 %.not.i193, label %_ZN7CaDiCaL8Internal5fixedEi.exit198, label %bb.u
+  br i1 %.not.i193, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %6 = sext i8 %i.df to i32
   %i.dg = load ptr, ptr %i.cy, align 8, !tbaa !174
   %i.dh = getelementptr inbounds nuw [16 x i8], ptr %i.dg, i64 %i.dd
   %i.di = load i32, ptr %i.dh, align 8, !tbaa !176
   %.not9.i194 = icmp eq i32 %i.di, 0
-  %spec.select.i195 = select i1 %.not9.i194, i32 %6, i32 0
-  br label %_ZN7CaDiCaL8Internal5fixedEi.exit198
+  br i1 %.not9.i194, label %select.unfold, label %bb.v
 
-_ZN7CaDiCaL8Internal5fixedEi.exit198:             ; preds = %bb.t, %bb.u
-  %.0.i196 = phi i32 [ 0, %bb.t ], [ %spec.select.i195, %bb.u ] ; 2 uses
-  %7 = icmp slt i32 %i.db, 0
-  %8 = sub nsw i32 0, %.0.i196
-  %spec.select10.i197 = select i1 %7, i32 %8, i32 %.0.i196
-  %.not176 = icmp eq i32 %spec.select10.i197, 0
-  br i1 %.not176, label %bb.v, label %select.unfold
-
-bb.v:                                             ; preds = %_ZN7CaDiCaL8Internal5fixedEi.exit198
+bb.v:                                             ; preds = %bb.t, %bb.u
   %i.dj = sext i32 %.0141276 to i64
   %i.dk = load ptr, ptr %i.cz, align 8, !tbaa !172
   %i.dl = getelementptr inbounds nuw [16 x i8], ptr %i.dk, i64 %i.dj
@@ -454,8 +440,8 @@ bb.x:                                             ; preds = %bb.v
   tail call void @_ZN7CaDiCaL8Internal9backtrackEi(ptr noundef nonnull align 8 dereferenceable(7288) %0, i32 noundef %i.ds)
   br label %.thread225
 
-select.unfold:                                    ; preds = %bb.w, %_ZN7CaDiCaL8Internal5fixedEi.exit198
-  %.2143 = phi i32 [ %.0141276, %_ZN7CaDiCaL8Internal5fixedEi.exit198 ], [ %i.dr, %bb.w ]
+select.unfold:                                    ; preds = %bb.w, %bb.u
+  %.2143 = phi i32 [ %.0141276, %bb.u ], [ %i.dr, %bb.w ]
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.0214.0275, i64 4 ; 2 uses
   %.not247 = icmp eq ptr %i.dt, %i.cv
   br i1 %.not247, label %.thread225, label %bb.t

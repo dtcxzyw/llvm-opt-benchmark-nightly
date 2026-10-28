@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvar = phi i64 [ %indvar.next, %bb.b ], [ 0, %bb.a ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.sroa.035.0 = phi ptr [ %i.g, %bb.b ], [ %i.b, %bb.a ] ; 7 uses
   %i.f = load i32, ptr %.sroa.035.0, align 4, !tbaa !207
   %.not = icmp eq i32 %i.f, %2
@@ -257,22 +257,21 @@ bb.c:                                             ; preds = %.lr.ph71
 
 .lr.ph54.preheader:                               ; preds = %.preheader
   %i.o = add i64 %i.e, -8
-  %3 = shl i64 %indvar, 2
-  %i.p = add i64 %3, %.cast
-  %i.q = add i64 %i.p, %i.j
-  %i.r = sub i64 %i.o, %i.q                       ; 2 uses
+  %3 = mul i64 %indvar, -4                        ; 2 uses
+  %i.p = add i64 %i.o, %3
+  %i.q = add i64 %i.j, %.cast
+  %i.r = sub i64 %i.p, %i.q                       ; 2 uses
   %i.s = lshr i64 %i.r, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.r, 108
   br i1 %min.iters.check, label %.lr.ph54.preheader77, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph54.preheader
-  %i.u = sub i64 %.sroa.028.0.lcssa72, %i.j
-  %4 = mul i64 %indvar, -4
-  %reass.sub = sub i64 %4, %.cast
-  %op.rdx = add i64 %reass.sub, -5
-  %op.rdx76 = add i64 %op.rdx, %i.u
-  %diff.check = icmp ult i64 %op.rdx76, 31
+  %i.u = sub i64 %3, %.cast
+  %4 = add i64 %i.u, -4
+  %op.rdx = add i64 %4, %.sroa.028.0.lcssa72
+  %5 = sub i64 %i.j, %op.rdx
+  %diff.check = icmp ugt i64 %5, -32
   br i1 %diff.check, label %.lr.ph54.preheader77, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -675,7 +674,7 @@ bb.cb:                                            ; preds = %bb.ca
   br label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cc, %bb.cb
-  %indvar292 = phi i64 [ %indvar.next293, %bb.cc ], [ 0, %bb.cb ] ; 3 uses
+  %indvar292 = phi i64 [ %indvar.next293, %bb.cc ], [ 0, %bb.cb ] ; 2 uses
   %.sroa.035.0.i = phi ptr [ %i.lc, %bb.cc ], [ %i.ky, %bb.cb ] ; 7 uses
   %i.lb = load i32, ptr %.sroa.035.0.i, align 4, !tbaa !207
   %.not.i = icmp eq i32 %i.lb, %3
@@ -727,23 +726,22 @@ bb.cd:                                            ; preds = %.lr.ph285
 
 .lr.ph54.i.preheader:                             ; preds = %.preheader.i
   %i.lk = add i64 %i.la, -8
-  %10 = shl i64 %indvar292, 2
-  %i.ll = add i64 %10, %.cast.i
-  %i.lm = add i64 %i.ll, %i.lf
-  %i.ln = sub i64 %i.lk, %i.lm                    ; 2 uses
+  %10 = mul i64 %indvar292, -4                    ; 2 uses
+  %i.ll = add i64 %i.lk, %10
+  %i.lm = add i64 %i.lf, %.cast.i
+  %i.ln = sub i64 %i.ll, %i.lm                    ; 2 uses
   %i.lo = lshr i64 %i.ln, 2
   %i.lp = add nuw nsw i64 %i.lo, 1                ; 2 uses
   %min.iters.check296 = icmp ult i64 %i.ln, 108
   br i1 %min.iters.check296, label %.lr.ph54.i.preheader314, label %vector.memcheck290
 
 vector.memcheck290:                               ; preds = %.lr.ph54.i.preheader
-  %i.lq = sub i64 %.sroa.028.0.lcssa.i291, %i.lf
-  %11 = mul i64 %indvar292, -4
-  %reass.sub310 = sub i64 %11, %.cast.i
-  %op.rdx = add i64 %reass.sub310, -5
-  %op.rdx311 = add i64 %op.rdx, %i.lq
-  %diff.check294 = icmp ult i64 %op.rdx311, 31
-  br i1 %diff.check294, label %.lr.ph54.i.preheader314, label %vector.ph297
+  %i.lq = sub i64 %10, %.cast.i
+  %11 = add i64 %i.lq, -4
+  %op.rdx = add i64 %11, %.sroa.028.0.lcssa.i291
+  %12 = sub i64 %i.lf, %op.rdx
+  %diff.check302 = icmp ugt i64 %12, -32
+  br i1 %diff.check302, label %.lr.ph54.i.preheader314, label %vector.ph297
 
 vector.ph297:                                     ; preds = %vector.memcheck290
   %n.vec298 = and i64 %i.lp, 9223372036854775800  ; 3 uses
@@ -843,7 +841,7 @@ bb.cj:                                            ; preds = %bb.ca
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.ck, %bb.cj
-  %indvar = phi i64 [ %indvar.next, %bb.ck ], [ 0, %bb.cj ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.ck ], [ 0, %bb.cj ] ; 2 uses
   %.sroa.035.0.i147 = phi ptr [ %i.mu, %bb.ck ], [ %i.mq, %bb.cj ] ; 7 uses
   %i.mt = load i32, ptr %.sroa.035.0.i147, align 4, !tbaa !207
   %.not.i148 = icmp eq i32 %i.mt, %2
@@ -895,22 +893,21 @@ bb.cl:                                            ; preds = %.lr.ph
 
 .lr.ph54.i176.preheader:                          ; preds = %.preheader.i173
   %i.nc = add i64 %i.ms, -8
-  %12 = shl i64 %indvar, 2
-  %i.nd = add i64 %12, %.cast.i150
-  %i.ne = add i64 %i.nd, %i.mx
-  %i.nf = sub i64 %i.nc, %i.ne                    ; 2 uses
+  %13 = mul i64 %indvar, -4                       ; 2 uses
+  %i.nd = add i64 %i.nc, %13
+  %i.ne = add i64 %i.mx, %.cast.i150
+  %i.nf = sub i64 %i.nd, %i.ne                    ; 2 uses
   %i.ng = lshr i64 %i.nf, 2
   %i.nh = add nuw nsw i64 %i.ng, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.nf, 108
   br i1 %min.iters.check, label %.lr.ph54.i176.preheader317, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph54.i176.preheader
-  %i.ni = sub i64 %.sroa.028.0.lcssa.i158286, %i.mx
-  %13 = mul i64 %indvar, -4
-  %reass.sub = sub i64 %13, %.cast.i150
-  %op.rdx312 = add i64 %reass.sub, -5
-  %op.rdx313 = add i64 %op.rdx312, %i.ni
-  %diff.check = icmp ult i64 %op.rdx313, 31
+  %i.ni = sub i64 %13, %.cast.i150
+  %14 = add i64 %i.ni, -4
+  %op.rdx312 = add i64 %14, %.sroa.028.0.lcssa.i158286
+  %15 = sub i64 %i.mx, %op.rdx312
+  %diff.check = icmp ugt i64 %15, -32
   br i1 %diff.check, label %.lr.ph54.i176.preheader317, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
