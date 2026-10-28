@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %indvar = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvar.next, %bb.c ] ; 2 uses
   %.027.i = phi ptr [ %5, %.lr.ph.i.preheader ], [ %.1.i, %bb.c ] ; 12 uses
   %.sroa.017.026.i = phi ptr [ %1, %.lr.ph.i.preheader ], [ %.sroa.017.1.i, %bb.c ] ; 4 uses
-  %.sroa.013.025.i = phi ptr [ %0, %.lr.ph.i.preheader ], [ %i.ad, %bb.c ] ; 10 uses
+  %.sroa.013.025.i = phi ptr [ %0, %.lr.ph.i.preheader ], [ %i.ad, %bb.c ] ; 9 uses
   %.not20.i = icmp eq ptr %.sroa.017.026.i, %2
   br i1 %.not20.i, label %.critedge.i, label %bb.c
 
@@ -240,20 +240,21 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %min.iters.check111, label %.lr.ph.i.i.i.i.i.i.preheader194, label %vector.memcheck96
 
 vector.memcheck96:                                ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.aj = shl i64 %indvar, 3                      ; 2 uses
+  %i.aj = shl i64 %indvar, 3                      ; 3 uses
   %i.ak = getelementptr i8, ptr %0, i64 %i.aj
   %scevgep = getelementptr i8, ptr %i.ak, i64 -4
   %scevgep97 = getelementptr i8, ptr %scevgep, i64 %i.ag
   %i.al = getelementptr i8, ptr %.027.i, i64 %i.ag
-  %scevgep98 = getelementptr i8, ptr %i.al, i64 -4
-  %i.am = getelementptr i8, ptr %0, i64 %i.aj
-  %scevgep99 = getelementptr i8, ptr %i.am, i64 4
-  %scevgep100 = getelementptr i8, ptr %.sroa.013.025.i, i64 %i.ag
+  %7 = getelementptr i8, ptr %i.al, i64 -4
+  %scevgep98 = getelementptr i8, ptr %0, i64 %i.aj
+  %i.am = getelementptr i8, ptr %scevgep98, i64 4
+  %scevgep99 = getelementptr i8, ptr %0, i64 %i.aj
+  %scevgep100 = getelementptr i8, ptr %scevgep99, i64 %i.ag
   %scevgep101 = getelementptr i8, ptr %.027.i, i64 4
-  %bound0103 = icmp ult ptr %.sroa.013.025.i, %scevgep98
+  %bound0103 = icmp ult ptr %.sroa.013.025.i, %7
   %bound1104 = icmp ult ptr %.027.i, %scevgep97
   %found.conflict105 = and i1 %bound0103, %bound1104
-  %bound0106 = icmp ult ptr %scevgep99, %.lcssa74
+  %bound0106 = icmp ult ptr %i.am, %.lcssa74
   %bound1107 = icmp ult ptr %scevgep101, %scevgep100
   %found.conflict108 = and i1 %bound0106, %bound1107
   %conflict.rdx109 = or i1 %found.conflict105, %found.conflict108

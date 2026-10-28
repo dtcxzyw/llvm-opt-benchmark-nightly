@@ -205,6 +205,8 @@ scalar.ph.preheader:                              ; preds = %_ZNSt6vectorImSaImE
   %i.dm = load ptr, ptr %2, align 8, !tbaa !19
   %i.dn = load ptr, ptr %.sroa.0130.0173, align 8, !tbaa !19 ; 4 uses
   %umax126.i = call i64 @llvm.umax.i64(i64 %i.cr, i64 2) ; 2 uses
+  %6 = add i64 %i.at, 1
+  %umax129.i = call i64 @llvm.umax.i64(i64 %6, i64 2)
   %exitcond127.peel.i = icmp samesign ult i64 %i.cr, 3
   br label %.lr.ph.i
 
@@ -217,7 +219,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.i, label %.preheader.i, label %scalar.ph, !llvm.loop !42
 
 ..loopexit_crit_edge.i:                           ; preds = %bb.aa, %bb.x, %bb.r
-  %exitcond129.i = icmp eq i64 %.086123.i, %i.at
+  %exitcond129.i = icmp eq i64 %i.ei, %umax129.i
   br i1 %exitcond129.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !41
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.loopexit.us.i
@@ -271,11 +273,11 @@ bb.o:                                             ; preds = %_ZNSt6vectorImSaImE
   br label %bb.ab
 
 .lr.ph.i:                                         ; preds = %..loopexit_crit_edge.i, %.lr.ph124.split.i
-  %.086123.i = phi i64 [ 1, %.lr.ph124.split.i ], [ %i.ei, %..loopexit_crit_edge.i ] ; 7 uses
+  %.086123.i = phi i64 [ 1, %.lr.ph124.split.i ], [ %i.ei, %..loopexit_crit_edge.i ] ; 6 uses
   %i.ef = urem i64 %.086123.i, 3
   %i.eg = add i64 %.086123.i, 2
   %i.eh = urem i64 %i.eg, 3
-  %i.ei = add nuw i64 %.086123.i, 1               ; 2 uses
+  %i.ei = add nuw i64 %.086123.i, 1               ; 3 uses
   %i.ej = urem i64 %i.ei, 3
   %i.ek = shl i64 %.086123.i, 1                   ; 2 uses
   %i.el = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.ef
@@ -425,7 +427,7 @@ bb.z:                                             ; preds = %.peel.next.i
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.sink155.i = phi i64 [ %i.ha, %bb.y ], [ %spec.select156.i, %bb.z ]
-  %i.hj = add nsw i64 %i.gs, 1
+  %i.hj = add nuw nsw i64 %i.gs, 1
   %.sroa.speculated113.i = call i64 @llvm.umin.i64(i64 %.sink155.i, i64 %i.hj)
   %.sroa.speculated101.i = call i64 @llvm.umin.i64(i64 %.sroa.speculated113.i, i64 100000000) ; 2 uses
   store i64 %.sroa.speculated101.i, ptr %i.gt, align 8, !tbaa !24
