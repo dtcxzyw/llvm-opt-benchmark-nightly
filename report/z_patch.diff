@@ -1,0 +1,212 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index b3ebf8f210d90..0fcc84d86aff2 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -1621,8 +1621,11 @@ class ScalarEvolution {
+       return Guards;
+     }
+ 
+-    /// Try to apply the collected loop guards to \p Expr.
+-    LLVM_ABI const SCEV *rewrite(const SCEV *Expr) const;
++    /// Try to apply the collected loop guards to \p Expr. If \p UsedKeys is
++    /// not null, add the expressions whose rewrites are used to it.
++    LLVM_ABI const SCEV *
++    rewrite(const SCEV *Expr,
++            SmallVectorImpl<const SCEV *> *UsedKeys = nullptr) const;
+   };
+ 
+   /// Try to apply information from loop guards for \p L to \p Expr.
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index b9fc9e5f6b5dd..608755d7b501f 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16246,8 +16246,35 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+ 
+   // Now that all rewrite information is collect, rewrite the collected
+   // expressions with the information in the map. This applies information to
+-  // sub-expressions.
++  // sub-expressions. Rewrite each expression after the collected expressions
++  // whose rewrites its rewrite uses, so it picks up their final form. If there
++  // is a cycle or a long dependency chain, keep the collection order for all
++  // of them.
+   if (ExprsToRewrite.size() > 1) {
++    constexpr unsigned MaxDepth = 16;
++    SmallPtrSet<const SCEV *, 16> ToVisit(llvm::from_range, ExprsToRewrite);
++    SmallPtrSet<const SCEV *, MaxDepth> InProgress;
++    SmallVector<SCEVUse> Order;
++    // Returns false on a cycle or if the chain is longer than MaxDepth.
++    std::function<bool(const SCEV *)> Visit = [&](const SCEV *Expr) {
++      if (!ToVisit.erase(Expr))
++        return !InProgress.contains(Expr);
++      if (InProgress.size() >= MaxDepth)
++        return false;
++      InProgress.insert(Expr);
++      const SCEV *RewriteTo = Guards.RewriteMap[Expr];
++      Guards.RewriteMap.erase(Expr);
++      SmallVector<const SCEV *> UsedKeys;
++      Guards.rewrite(RewriteTo, &UsedKeys);
++      Guards.RewriteMap[Expr] = RewriteTo;
++      if (!all_of(UsedKeys, Visit))
++        return false;
++      InProgress.erase(Expr);
++      Order.push_back(Expr);
++      return true;
++    };
++    if (all_of(ExprsToRewrite, Visit))
++      ExprsToRewrite = std::move(Order);
+     for (const SCEV *Expr : ExprsToRewrite) {
+       const SCEV *RewriteTo = Guards.RewriteMap[Expr];
+       Guards.RewriteMap.erase(Expr);
+@@ -16256,7 +16283,8 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+   }
+ }
+ 
+-const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
++const SCEV *ScalarEvolution::LoopGuards::rewrite(
++    const SCEV *Expr, SmallVectorImpl<const SCEV *> *UsedKeys) const {
+   /// A rewriter to replace SCEV expressions in Map with the corresponding entry
+   /// in the map. It skips AddRecExpr because we cannot guarantee that the
+   /// replacement is loop invariant in the loop of the AddRec.
+@@ -16264,14 +16292,23 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+       : public SCEVRewriteVisitor<SCEVLoopGuardRewriter> {
+     const DenseMap<const SCEV *, const SCEV *> &Map;
+     const SmallDenseSet<std::pair<const SCEV *, const SCEV *>> &NotEqual;
++    SmallVectorImpl<const SCEV *> *UsedKeys;
+ 
+     SCEVFlags FlagMask = SCEV::FlagNone;
+ 
++    const SCEV *lookup(const SCEV *Key) {
++      const SCEV *S = Map.lookup(Key);
++      if (S && UsedKeys)
++        UsedKeys->push_back(Key);
++      return S;
++    }
++
+   public:
+     SCEVLoopGuardRewriter(ScalarEvolution &SE,
+-                          const ScalarEvolution::LoopGuards &Guards)
++                          const ScalarEvolution::LoopGuards &Guards,
++                          SmallVectorImpl<const SCEV *> *UsedKeys)
+         : SCEVRewriteVisitor(SE), Map(Guards.RewriteMap),
+-          NotEqual(Guards.NotEqual) {
++          NotEqual(Guards.NotEqual), UsedKeys(UsedKeys) {
+       if (Guards.PreserveNUW)
+         FlagMask = ScalarEvolution::setFlags(FlagMask, SCEV::FlagNUW);
+       if (Guards.PreserveNSW)
+@@ -16281,18 +16318,19 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+     const SCEV *visitAddRecExpr(const SCEVAddRecExpr *Expr) { return Expr; }
+ 
+     const SCEV *visitUnknown(const SCEVUnknown *Expr) {
+-      return Map.lookup_or(Expr, Expr);
++      const SCEV *S = lookup(Expr);
++      return S ? S : Expr;
+     }
+ 
+     const SCEV *visitPtrToAddrExpr(const SCEVPtrToAddrExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitPtrToAddrExpr(
+           Expr);
+     }
+ 
+     const SCEV *visitZeroExtendExpr(const SCEVZeroExtendExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+ 
+       // If we didn't find the extact ZExt expr in the map, check if there's
+@@ -16314,26 +16352,26 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+     }
+ 
+     const SCEV *visitSignExtendExpr(const SCEVSignExtendExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitSignExtendExpr(
+           Expr);
+     }
+ 
+     const SCEV *visitUMinExpr(const SCEVUMinExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitUMinExpr(Expr);
+     }
+ 
+     const SCEV *visitSMinExpr(const SCEVSMinExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitSMinExpr(Expr);
+     }
+ 
+     const SCEV *visitAddExpr(const SCEVAddExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+ 
+       // Helper to check if S is a subtraction (A - B) where A != B, and if so,
+@@ -16368,7 +16406,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+             return SE.getAddExpr(
+                 Expr->getOperand(0), Rewritten,
+                 ScalarEvolution::maskFlags(Expr->getNoWrapFlags(), FlagMask));
+-          if (const SCEV *S = Map.lookup(Add))
++          if (const SCEV *S = lookup(Add))
+             return SE.getAddExpr(Expr->getOperand(0), S);
+         }
+ 
+@@ -16380,11 +16418,11 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+           const SCEV *S = nullptr;
+           // Handle (-1 + 1 + A) without constructing SCEVs.
+           if (match(Expr->getOperand(0), m_scev_AllOnes())) {
+-            S = Map.lookup(Expr->getOperand(1));
++            S = lookup(Expr->getOperand(1));
+           } else {
+             const SCEV *NewC =
+                 SE.getAddExpr(Expr->getOperand(0), SE.getOne(Expr->getType()));
+-            S = Map.lookup(SE.getAddExpr(NewC, Expr->getOperand(1)));
++            S = lookup(SE.getAddExpr(NewC, Expr->getOperand(1)));
+           }
+           if (S)
+             return SE.getAddExpr(S, SE.getMinusOne(Expr->getType()));
+@@ -16425,7 +16463,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+   if (RewriteMap.empty() && NotEqual.empty())
+     return Expr;
+ 
+-  SCEVLoopGuardRewriter Rewriter(SE, *this);
++  SCEVLoopGuardRewriter Rewriter(SE, *this, UsedKeys);
+   return Rewriter.visit(Expr);
+ }
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll b/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll
+index 70542abdc2ba5..9dc948af54229 100644
+--- a/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll
++++ b/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll
+@@ -10,7 +10,7 @@ define void @umin_uge_16(i64 %n, i8 %k) {
+ ; CHECK-LABEL: 'umin_uge_16'
+ ; CHECK-NEXT:  Determining loop execution counts for: @umin_uge_16
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 1152921504606846975
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -77,7 +77,7 @@ define void @smin_sge_16(i64 %n, i8 %k) {
+ ; CHECK-LABEL: 'smin_sge_16'
+ ; CHECK-NEXT:  Determining loop execution counts for: @smin_sge_16
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((sext i8 (64 + (-1 * %k)) to i64) smin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 6
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((sext i8 (64 + (-1 * %k)) to i64) smin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -268,7 +268,7 @@ define void @narrow_zext_dep(i64 %n, i32 %m, i8 %k) {
+ ; CHECK-LABEL: 'narrow_zext_dep'
+ ; CHECK-NEXT:  Determining loop execution counts for: @narrow_zext_dep
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %n)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 254
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 10
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %n)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
