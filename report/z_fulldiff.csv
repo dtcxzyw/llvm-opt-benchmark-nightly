@@ -1,0 +1,10 @@
+Delta,Added Lines,Removed Lines,Download URL
+166,289,123,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/tif_luv.bc?download=true
+166,289,123,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/tif_luv.bc?download=true
+53,158,105,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-knxip_decrypt.bc?download=true
+15,45,30,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/e_padlock.bc?download=true
+0,55,55,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/7zAes.bc?download=true
+-13,40,53,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/e_chacha20poly1305.bc?download=true
+-13,42,55,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/cipher_chacha20_hw.bc?download=true
+-13,42,55,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/cipher_chacha20_hw.bc?download=true
+-13,67,80,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/e_chacha20_poly1305.bc?download=true
