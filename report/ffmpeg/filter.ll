@@ -205,8 +205,8 @@ get_qp.exit.us:                                   ; preds = %.critedge.i.i.us, %
   br i1 %i.bo, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %get_qp.exit.us
-  %i.he = select i1 %.not185, i32 %i.cv, i32 %4
-  %i.hf = select i1 %.not185, i32 %i.kx, i32 %i.cv
+  %i.he = select i1 %.not185, i32 %i.cv, i32 %i.kx
+  %i.hf = select i1 %.not185, i32 %4, i32 %i.cv
   %i.hg = load ptr, ptr %.in.i.i, align 8, !tbaa !88 ; 2 uses
   %i.hh = ashr i32 %i.hf, 2
   %i.hi = load ptr, ptr %i.t, align 8, !tbaa !84
@@ -361,9 +361,9 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.kw, label %bb.d, label %._crit_edge8.us, !llvm.loop !196
 
 .lr.ph.us:                                        ; preds = %bb.f
+  %4 = add i32 %.01745.us, -1
   %.not26.i.i.us = icmp eq i32 %i.cs, 0
   %spec.store.select.i.i.us = select i1 %.not26.i.i.us, i8 3, i8 1
-  %4 = add i32 %.01745.us, -1
   %i.kx = add i32 %.01745.us, -1
   br label %bb.g
 

@@ -205,6 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = load i32, ptr %i.k, align 8
   %i.s = lshr i32 %i.r, 19
   %i.t = and i32 %i.s, 31                         ; 2 uses
+  %39 = icmp ne i32 %i.t, 7                       ; 2 uses
   %i.u = add nsw i32 %i.t, -8
   %or.cond = icmp ult i32 %i.u, -2
   br i1 %or.cond, label %.critedge165, label %bb.f
@@ -218,14 +219,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not99, label %bb.g, label %.critedge165
 
 bb.g:                                             ; preds = %bb.f
-  %39 = icmp eq i32 %i.t, 7                       ; 2 uses
   %i.z = xor i1 %39, true
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.d, %bb.g
   %.2146 = phi ptr [ %i.k, %bb.d ], [ %i.w, %bb.g ] ; 4 uses
-  %.2143 = phi i1 [ false, %bb.d ], [ %i.z, %bb.g ]
-  %.2 = phi i1 [ false, %bb.d ], [ %39, %bb.g ]
+  %.2143 = phi i1 [ false, %bb.d ], [ %39, %bb.g ]
+  %.2 = phi i1 [ false, %bb.d ], [ %i.z, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.aa = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4186)

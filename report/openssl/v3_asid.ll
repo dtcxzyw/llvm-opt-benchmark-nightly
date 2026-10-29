@@ -202,7 +202,7 @@ bb.az:                                            ; preds = %._crit_edge304, %bb
 bb.ba:                                            ; preds = %bb.az
   %i.dm = load i32, ptr %i.dl, align 8, !tbaa !12
   %i.dn = icmp eq i32 %i.dm, 0                    ; 2 uses
-  %brmerge.not = and i1 %i.c, %i.dn
+  %brmerge.not = and i1 %i.dn, %i.c
   %.15.mux = select i1 %i.dn, i32 0, i32 %.15
   br i1 %brmerge.not, label %bb.bb, label %.critedge.thread
 

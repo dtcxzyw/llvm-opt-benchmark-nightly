@@ -205,7 +205,7 @@ bb.pc:                                            ; preds = %bb.pb
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %i.ajv) #37
           to label %bb.pd unwind label %bb.oq
 
-bb.pd:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsileJQcQObtj_7hir_def.exit629, %bb.pa, %bb.pb, %bb.pc
+bb.pd:                                            ; preds = %bb.pc, %bb.pb, %bb.pa, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsileJQcQObtj_7hir_def.exit629
   %.sroa.090.0 = phi i8 [ 0, %bb.pa ], [ %i.akb, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEECsileJQcQObtj_7hir_def.exit629 ], [ 1, %bb.pb ], [ 1, %bb.pc ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar)
   %i.akg = getelementptr inbounds nuw i8, ptr %i.ar, i64 4

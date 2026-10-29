@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %bb.k, %_ZN4llvmeqEN
   %.0158 = phi i1 [ %i.ad, %bb.k ], [ false, %_ZN4llvmeqENS_9StringRefES0_.exit ]
   %.0 = phi i1 [ %i.ai, %bb.k ], [ false, %_ZN4llvmeqENS_9StringRefES0_.exit ]
   %i.aj = call noundef ptr @_ZNK4llvm3opt7ArgList10getLastArgIJN5clang7options2IDES5_EEEPNS0_3ArgEDpT_(ptr noundef nonnull align 8 dereferenceable(176) %2, i32 noundef 2403, i32 noundef 2690) ; 2 uses
-  %.not172 = icmp ne ptr %i.aj, null              ; 3 uses
-  br i1 %.not172, label %bb.m, label %bb.n
+  %.not172 = icmp eq ptr %i.aj, null              ; 4 uses
+  br i1 %.not172, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ak = call noundef zeroext i1 @_ZNK4llvm3opt6Option7matchesENS0_12OptSpecifierE(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i32 2403) #17
@@ -213,8 +213,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.al = phi i1 [ true, %bb.l ], [ %i.ak, %bb.m ] ; 3 uses
-  %.not172.not = xor i1 %.not172, true            ; 2 uses
-  %or.cond3 = or i1 %i.al, %.not172.not           ; 2 uses
+  %or.cond3 = or i1 %.not172, %i.al               ; 2 uses
   %or.cond = and i1 %.0158, %or.cond3
   br i1 %or.cond, label %bb.o, label %bb.p
 
@@ -228,6 +227,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ao = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !55
   call void @_ZNK5clang19StreamingDiagnostic9AddStringEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(66) %7, ptr %i.an, i64 %i.ap)
+  %not. = xor i1 %.not172, true
   %i.aq = load ptr, ptr %7, align 8, !tbaa !110   ; 2 uses
   %.not.i.i.i187 = icmp eq ptr %i.aq, null
   br i1 %.not.i.i.i187, label %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i, label %_ZNK5clang17DiagnosticBuilderlsIivEERKS0_OT_.exit
@@ -241,7 +241,7 @@ _ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i: ; preds = %bb.o
 
 _ZNK5clang17DiagnosticBuilderlsIivEERKS0_OT_.exit: ; preds = %bb.o, %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i
   %i.au = phi ptr [ %i.at, %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i ], [ %i.aq, %bb.o ] ; 2 uses
-  %i.av = zext i1 %.not172 to i64
+  %i.av = zext i1 %not. to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 1
   %i.ax = load i8, ptr %i.au, align 8, !tbaa !126
   %i.ay = zext i8 %i.ax to i64
@@ -644,7 +644,7 @@ _ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i253: ; preds = %bb.as
 
 _ZNK5clang17DiagnosticBuilderlsIivEERKS0_OT_.exit254: ; preds = %bb.as, %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i253
   %i.he = phi ptr [ %i.hd, %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i253 ], [ %i.ha, %bb.as ] ; 2 uses
-  %i.hf = zext i1 %.not172.not to i64
+  %i.hf = zext i1 %.not172 to i64
   %i.hg = getelementptr inbounds nuw i8, ptr %i.he, i64 1
   %i.hh = load i8, ptr %i.he, align 8, !tbaa !126
   %i.hi = zext i8 %i.hh to i64

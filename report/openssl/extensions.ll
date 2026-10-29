@@ -204,7 +204,7 @@ extension_is_relevant.exit.i:                     ; preds = %bb.q
   br i1 %or.cond33.i.not.i, label %should_add_extension.exit.thread, label %should_add_extension.exit
 
 should_add_extension.exit:                        ; preds = %extension_is_relevant.exit.i
-  %or.cond12.i = or i1 %.not23.i.i, %.not67
+  %or.cond12.i = or i1 %.not67, %.not23.i.i
   %i.ax = icmp sgt i32 %i.ad, 771
   %or.cond.not.i = and i1 %i.ax, %.not19.i.i
   %or.cond.i = select i1 %or.cond12.i, i1 true, i1 %or.cond.not.i
@@ -314,7 +314,7 @@ extension_is_relevant.exit.i.1:                   ; preds = %bb.z
   br i1 %or.cond33.i.not.i.1, label %should_add_extension.exit.thread.1, label %should_add_extension.exit.1
 
 should_add_extension.exit.1:                      ; preds = %extension_is_relevant.exit.i.1
-  %or.cond12.i.1 = or i1 %.not23.i.i.1, %.not67
+  %or.cond12.i.1 = or i1 %.not67, %.not23.i.i.1
   %i.cf = icmp sgt i32 %i.bl, 771
   %or.cond.not.i.1 = and i1 %i.cf, %.not19.i.i.1
   %or.cond.i.1 = select i1 %or.cond12.i.1, i1 true, i1 %or.cond.not.i.1

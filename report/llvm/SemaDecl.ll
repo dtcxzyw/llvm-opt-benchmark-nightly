@@ -205,8 +205,8 @@ _ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit.i.i: ; p
   %.not.i38 = icmp eq ptr %.sroa.013.2.i, null
   br i1 %.not.i38, label %.critedge17, label %.lr.ph.i, !llvm.loop !3342
 
-.critedge17:                                      ; preds = %.lr.ph.i, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit.i.i, %bb.e, %_ZNK5clang4Type15getAsRecordDeclEv.exit, %bb.d, %_ZNK5clang8QualType19isVolatileQualifiedEv.exit.thread, %bb.b
-  %.1 = phi i1 [ true, %bb.b ], [ true, %_ZNK5clang8QualType19isVolatileQualifiedEv.exit.thread ], [ false, %bb.e ], [ false, %bb.d ], [ false, %_ZNK5clang4Type15getAsRecordDeclEv.exit ], [ %i.as, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit.i.i ], [ %i.as, %.lr.ph.i ]
+.critedge17:                                      ; preds = %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit.i.i, %.lr.ph.i, %bb.e, %_ZNK5clang4Type15getAsRecordDeclEv.exit, %bb.d, %_ZNK5clang8QualType19isVolatileQualifiedEv.exit.thread, %bb.b
+  %.1 = phi i1 [ true, %bb.b ], [ true, %_ZNK5clang8QualType19isVolatileQualifiedEv.exit.thread ], [ false, %bb.d ], [ false, %bb.e ], [ false, %_ZNK5clang4Type15getAsRecordDeclEv.exit ], [ %i.as, %.lr.ph.i ], [ %i.as, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit.i.i ]
   ret i1 %.1
 }
 
@@ -609,10 +609,11 @@ bb.aa:                                            ; preds = %_ZN5clang9FixItHint
   %i.fc = load i8, ptr %i.fb, align 8, !tbaa !1052, !range !816, !noundef !805
   %i.fd = trunc nuw i8 %i.fc to i1                ; 2 uses
   %i.fe = load ptr, ptr %16, align 8              ; 2 uses
-  %.not.i = icmp ne ptr %i.fe, null               ; 3 uses
-  %.not891 = select i1 %i.fd, i1 true, i1 %.not.i
+  %.not.i = icmp eq ptr %i.fe, null               ; 3 uses
+  %not..i = xor i1 %i.fd, true
+  %.not891 = select i1 %not..i, i1 %.not.i, i1 false
   %i.ff = load i8, ptr %i.f, align 1, !range !816 ; 2 uses
-  %i.fg = select i1 %.not891, i8 1, i8 %i.ff
+  %i.fg = select i1 %.not891, i8 %i.ff, i8 1
   store i8 %i.fg, ptr %i.j, align 1, !tbaa !882
   %i.fh = icmp eq i32 %i.fa, 4
   br i1 %i.fh, label %bb.ab, label %bb.ao
@@ -621,9 +622,8 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.fd, label %.critedge, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %.not.i.not = xor i1 %.not.i, true
   %i.fi = trunc nuw i8 %i.ff to i1
-  %or.cond17 = select i1 %.not.i.not, i1 %i.fi, i1 false
+  %or.cond17 = select i1 %.not.i, i1 %i.fi, i1 false
   %i.fj = load i8, ptr %i.h, align 1, !range !816
   %i.fk = trunc nuw i8 %i.fj to i1
   %or.cond885 = select i1 %or.cond17, i1 true, i1 %i.fk
@@ -642,7 +642,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ao
 
 bb.ad:                                            ; preds = %bb.ac
-  br i1 %.not.i, label %bb.ae, label %bb.al
+  br i1 %.not.i, label %bb.al, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #28

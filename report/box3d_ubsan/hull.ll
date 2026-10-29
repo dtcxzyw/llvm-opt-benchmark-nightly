@@ -204,6 +204,7 @@ b3FindFarthestPointFromLine.exit.i:               ; preds = %bb.cd
 
 bb.ce:                                            ; preds = %b3FindFarthestPointFromLine.exit.i
   %.not331.i = icmp eq i64 %i.gp, 0
+  %.not333.i = icmp eq i64 %i.gs, 0
   %i.ii = zext nneg i32 %.262.i.i to i64          ; 3 uses
   %i.ij = mul nuw nsw i64 %i.ii, 12
   %i.ik = add i64 %i.ij, %i.d, !nosanitize !12    ; 2 uses
@@ -339,8 +340,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cp
   %.sroa.2147.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.kg, i64 8 ; 3 uses
-  %.not335.i = icmp eq i64 %i.gs, 0
-  br i1 %.not335.i, label %bb.cs, label %bb.ct, !prof !22, !nosanitize !12
+  br i1 %.not333.i, label %bb.cs, label %bb.ct, !prof !22, !nosanitize !12
 
 bb.cs:                                            ; preds = %bb.cr
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @355, i64 %i.d, i64 0) #14, !nosanitize !12
