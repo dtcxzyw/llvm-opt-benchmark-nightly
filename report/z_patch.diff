@@ -1,0 +1,224 @@
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index f6ff566469b23..60412a21eb593 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -5895,10 +5895,11 @@ bool VPRecipeBuilder::replaceWithFinalIfReductionStore(
+       VPValue *Addr = VPI->getOperand(1);
+       // We need to store the exiting value of the reduction, so use the blend
+       // if tail folded.
+-      if (auto *Blend = VPlanPatternMatch::findUserOf<VPBlendRecipe>(Val))
++      if (auto *Blend =
++              VPlanPatternMatch::find_singleton_user<VPBlendRecipe>(Val))
+         Val = Blend;
+       [[maybe_unused]] auto *Rdx =
+-          VPlanPatternMatch::findUserOf<VPReductionPHIRecipe>(Val);
++          VPlanPatternMatch::find_singleton_user<VPReductionPHIRecipe>(Val);
+       assert((isa<VPIRValue>(Val) || !Rdx || Rdx->getBackedgeValue() == Val) &&
+              "Store of reduction thats not the backedge value?");
+       auto *Recipe = new VPReplicateRecipe(
+@@ -6555,7 +6556,10 @@ void LoopVectorizationPlanner::addReductionResultComputation(
+     // reduction result.
+     if (RecurrenceDescriptor::isAnyOfRecurrenceKind(RecurrenceKind)) {
+       auto *AnyOfSelect = cast<VPSingleDefRecipe>(
+-          findUserOf(PhiR, m_Select(m_VPValue(), m_VPValue(), m_VPValue())));
++          *find_if(PhiR->users(),
++                   match_fn(m_CombineOr(
++                       m_Select(m_Cmp(), m_VPValue(), m_Specific(PhiR)),
++                       m_Select(m_Cmp(), m_Specific(PhiR), m_VPValue())))));
+       VPValue *Start = PhiR->getStartValue();
+       bool TrueValIsPhi = AnyOfSelect->getOperand(1) == PhiR;
+       // NewVal is the non-phi operand of the select.
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp b/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
+index 872ee86115a72..d72968b6ca025 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
+@@ -2073,7 +2073,8 @@ bool VPlanTransforms::handleFindLastReductions(VPlan &Plan) {
+     // Find final reduction computation and replace it with an
+     // extract.last.active intrinsic.
+     auto *RdxResult =
+-        findUserOf<VPInstruction::ComputeReductionResult>(BackedgeSelect);
++        find_singleton_user<VPInstruction::ComputeReductionResult>(
++            BackedgeSelect);
+     assert(RdxResult && "Could not find reduction result");
+ 
+     // Add mask phi.
+@@ -2355,8 +2356,8 @@ bool VPlanTransforms::handleMultiUseReductions(VPlan &Plan,
+     VPValue *CmpOpA;
+     VPValue *CmpOpB;
+     CmpPredicate Pred;
+-    auto *Cmp = dyn_cast_or_null<VPRecipeWithIRFlags>(findUserOf(
+-        MinOrMaxPhiR, m_Cmp(Pred, m_VPValue(CmpOpA), m_VPValue(CmpOpB))));
++    auto *Cmp = find_singleton_user<VPRecipeWithIRFlags>(
++        MinOrMaxPhiR, m_Cmp(Pred, m_VPValue(CmpOpA), m_VPValue(CmpOpB)));
+     if (!Cmp || Cmp->getNumUsers() != 1 ||
+         (CmpOpA != MinOrMaxOpValue && CmpOpB != MinOrMaxOpValue))
+       return false;
+@@ -2373,7 +2374,8 @@ bool VPlanTransforms::handleMultiUseReductions(VPlan &Plan,
+       return false;
+ 
+     VPInstruction *MinOrMaxResult =
+-        findUserOf<VPInstruction::ComputeReductionResult>(MinOrMaxBackedgeR);
++        find_singleton_user<VPInstruction::ComputeReductionResult>(
++            MinOrMaxBackedgeR);
+     assert(MinOrMaxResult &&
+            "MinOrMaxResult must be a user of MinOrMaxBackedgeR");
+ 
+@@ -2401,7 +2403,7 @@ bool VPlanTransforms::handleMultiUseReductions(VPlan &Plan,
+     // Check if FindIVPhiR is a FindLast pattern by checking the MinMaxKind
+     // on its ComputeReductionResult. SMax/UMax indicates FindLast.
+     VPInstruction *FindIVResult =
+-        findUserOf<VPInstruction::ComputeReductionResult>(
++        find_singleton_user<VPInstruction::ComputeReductionResult>(
+             FindIVPhiR->getBackedgeValue());
+     assert(FindIVResult &&
+            "must be able to retrieve the FindIVResult VPInstruction");
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanEVLTailFolding.cpp b/llvm/lib/Transforms/Vectorize/VPlanEVLTailFolding.cpp
+index edd50c33f0f16..ceaa481372b82 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanEVLTailFolding.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanEVLTailFolding.cpp
+@@ -589,9 +589,9 @@ void VPlanTransforms::convertToVariableLengthStep(VPlan &Plan) {
+ 
+   // Replace CanonicalIVInc with CurrentIteration increment if it exists.
+   auto *CanonicalIV = cast<VPPhi>(&*HeaderVPBB->begin());
+-  if (auto *CanIVInc = findUserOf(
++  if (auto *CanIVInc = find_singleton_user<VPInstruction>(
+           CanonicalIV, m_c_Add(m_VPValue(), m_Specific(&Plan.getVFxUF())))) {
+-    cast<VPInstruction>(CanIVInc)->replaceAllUsesWith(CurrentIterationIncr);
++    CanIVInc->replaceAllUsesWith(CurrentIterationIncr);
+     CanIVInc->eraseFromParent();
+   }
+ }
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp b/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
+index d88ac7f7868a5..3d15f56ec4632 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
+@@ -45,8 +45,8 @@ void VPlanTransforms::replaceWideCanonicalIVWithWideIV(
+   if (!LoopRegion)
+     return;
+ 
+-  auto *WideCanIV =
+-      findUserOf<VPWidenCanonicalIVRecipe>(LoopRegion->getCanonicalIV());
++  auto *WideCanIV = find_singleton_user<VPWidenCanonicalIVRecipe>(
++      LoopRegion->getCanonicalIV());
+   if (!WideCanIV)
+     return;
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanPatternMatch.h b/llvm/lib/Transforms/Vectorize/VPlanPatternMatch.h
+index 41bbb3a58dddd..416c10b7363ec 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanPatternMatch.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanPatternMatch.h
+@@ -823,6 +823,11 @@ m_Cmp(CmpPredicate &Pred, const Op0_t &Op0, const Op1_t &Op1) {
+       Pred, Op0, Op1);
+ }
+ 
++inline auto m_Cmp() {
++  return m_CombineOr(m_Binary<Instruction::ICmp>(m_VPValue(), m_VPValue()),
++                     m_Binary<Instruction::FCmp>(m_VPValue(), m_VPValue()));
++}
++
+ template <typename Op0_t, typename Op1_t>
+ inline SpecificCmp_match<Op0_t, Op1_t, Instruction::ICmp, Instruction::FCmp>
+ m_SpecificCmp(CmpPredicate MatchPred, const Op0_t &Op0, const Op1_t &Op1) {
+@@ -1240,22 +1245,26 @@ inline auto m_VPPhi(const Op0_t &Op0, const Op1_t &Op1) {
+                       /*Commutative*/ false, VPInstruction>({Op0, Op1});
+ }
+ 
+-/// If \p V is used by a recipe matching pattern \p P, return it. Otherwise
+-/// return nullptr;
+-template <typename MatchT>
+-VPRecipeBase *findUserOf(VPValue *V, const MatchT &P) {
+-  auto It = find_if(V->users(), match_fn(P));
+-  return It == V->user_end() ? nullptr : cast<VPRecipeBase>(*It);
++/// Return the sole user of \p V matching pattern \p P, casting it to \p
++/// RecipeTy, or nullptr.
++template <typename RecipeTy, typename MatchT>
++RecipeTy *find_singleton_user(VPValue *V, const MatchT &P) { // NOLINT
++  return find_singleton<RecipeTy>(V->users(), [&P](VPUser *U, bool) {
++    return match(U, P) ? cast<RecipeTy>(U) : nullptr;
++  });
+ }
+ 
+-/// If \p V is used by a VPInstruction with \p Opcode, return it. Otherwise
+-/// return nullptr.
+-template <unsigned Opcode> VPInstruction *findUserOf(VPValue *V) {
+-  return cast_or_null<VPInstruction>(findUserOf(V, m_VPInstruction<Opcode>()));
++/// Return the sole user of \p V that is a VPInstruction with \p Opcode, or
++/// nullptr.
++template <unsigned Opcode>
++VPInstruction *find_singleton_user(VPValue *V) { // NOLINT
++  return find_singleton_user<VPInstruction>(V, m_VPInstruction<Opcode>());
+ }
+ 
+-template <typename RecipeTy> RecipeTy *findUserOf(VPValue *V) {
+-  return cast_or_null<RecipeTy>(findUserOf(V, m_Isa<RecipeTy>()));
++/// Return the sole user of \p V that is a \p RecipeTy, or nullptr.
++template <typename RecipeTy>
++RecipeTy *find_singleton_user(VPValue *V) { // NOLINT
++  return find_singleton_user<RecipeTy>(V, m_Isa<RecipeTy>());
+ }
+ } // namespace llvm::VPlanPatternMatch
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 090524de2968e..82e87291902c8 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -1737,8 +1737,8 @@ static VPSingleDefRecipe *combineRecipe(VPlan &Plan, VPSingleDefRecipe *Def,
+     auto *Phi = cast<VPPhi>(X);
+     // If Phi has a second user (besides IVInc's defining recipe), it must be
+     // Inc = Phi + Y for the fold to apply.
+-    auto *Inc = dyn_cast_if_present<VPSingleDefRecipe>(
+-        findUserOf(Phi, m_Add(m_Specific(Phi), m_Specific(Y))));
++    auto *Inc = find_singleton_user<VPSingleDefRecipe>(
++        Phi, m_Add(m_Specific(Phi), m_Specific(Y)));
+     if ((Phi->getNumUsers() == 1 || (Phi->getNumUsers() == 2 && Inc)) &&
+         isAvailableAtEndOf(Y, Phi->getIncomingBlock(0))) {
+       Def->replaceAllUsesWith(IVInc);
+@@ -4766,7 +4766,7 @@ void VPlanTransforms::adjustFirstOrderRecurrenceMiddleUsers(VPlan &Plan,
+     // createHeaderPhiRecipes. All uses of FOR have already been replaced with
+     // RecurSplice there; only RecurSplice itself still references FOR.
+     auto *RecurSplice =
+-        findUserOf<VPInstruction::FirstOrderRecurrenceSplice>(&FOR);
++        find_singleton_user<VPInstruction::FirstOrderRecurrenceSplice>(&FOR);
+     assert(RecurSplice && "expected FirstOrderRecurrenceSplice");
+ 
+     // For VF vscale x 1, if vscale = 1, we are unable to extract the
+@@ -5381,9 +5381,9 @@ static void transformToPartialReduction(const PartialReductionDescriptor &Link,
+       Link.Blend ? cast<VPValue>(Link.Blend) : cast<VPValue>(WidenRecipe);
+ 
+   VPValue *Cond = nullptr;
+-  VPValue *ExitValue = cast_or_null<VPInstruction>(
+-      findUserOf(ExitSearch, m_Select(m_VPValue(Cond), m_Specific(ExitSearch),
+-                                      m_Specific(RdxPhi))));
++  VPValue *ExitValue = find_singleton_user<VPInstruction>(
++      ExitSearch,
++      m_Select(m_VPValue(Cond), m_Specific(ExitSearch), m_Specific(RdxPhi)));
+ 
+   if (Link.Blend) {
+     std::optional<unsigned> BlendReductionIdx =
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+index 9df66a1340013..ece663a9f6b4d 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+@@ -847,17 +847,16 @@ VPInstruction *vputils::findCanonicalIVIncrement(VPlan &Plan) {
+ /// inserted for predicated reductions or tail folding.
+ VPInstruction *vputils::findComputeReductionResult(VPReductionPHIRecipe *PhiR) {
+   VPValue *BackedgeVal = PhiR->getBackedgeValue();
+-  if (auto *Res =
+-          findUserOf<VPInstruction::ComputeReductionResult>(BackedgeVal))
++  if (auto *Res = find_singleton_user<VPInstruction::ComputeReductionResult>(
++          BackedgeVal))
+     return Res;
+ 
+   // Look through selects inserted for tail folding or predicated reductions.
+-  VPRecipeBase *SelR =
+-      findUserOf(BackedgeVal, m_Select(m_VPValue(), m_VPValue(), m_VPValue()));
++  auto *SelR = find_singleton_user<VPSingleDefRecipe>(
++      BackedgeVal, m_Select(m_VPValue(), m_VPValue(), m_VPValue()));
+   if (!SelR)
+     return nullptr;
+-  return findUserOf<VPInstruction::ComputeReductionResult>(
+-      cast<VPSingleDefRecipe>(SelR));
++  return find_singleton_user<VPInstruction::ComputeReductionResult>(SelR);
+ }
+ 
+ bool vputils::isUsedByLoadStoreAddress(const VPValue *V) {
