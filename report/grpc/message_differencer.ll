@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n, %bb.l
 
 bb.p:                                             ; preds = %.lr.ph839, %.thread741
   %indvars.iv879 = phi i64 [ 0, %.lr.ph839 ], [ %indvars.iv.next880, %.thread741 ] ; 14 uses
-  %.0147835 = phi i32 [ 0, %.lr.ph839 ], [ %.2, %.thread741 ] ; 7 uses
+  %.0147835 = phi i32 [ 0, %.lr.ph839 ], [ %.2, %.thread741 ] ; 8 uses
   %.0148834 = phi i1 [ false, %.lr.ph839 ], [ %.5, %.thread741 ] ; 3 uses
   %.sroa.33.0833 = phi i32 [ -1, %.lr.ph839 ], [ %.sroa.33.2, %.thread741 ] ; 4 uses
   %.sroa.44.0832 = phi ptr [ null, %.lr.ph839 ], [ %.sroa.44.4, %.thread741 ] ; 7 uses
@@ -392,28 +392,27 @@ bb.z:                                             ; preds = %bb.q, %bb.p
   %i.cj = getelementptr inbounds nuw [4 x i8], ptr %i.ci, i64 %indvars.iv879
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !27
   %.not181823 = icmp slt i32 %.0147835, %i.ck
-  br i1 %.not181823, label %.lr.ph.preheader.a, label %.critedge
+  br i1 %.not181823, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph.preheader.a:                               ; preds = %.preheader750
-  %i.cl = zext i32 %.0147835 to i64
+.lr.ph.preheader:                                 ; preds = %.preheader750
   %.not.i.i = icmp slt i32 %.0147835, 0
+  br i1 %.not.i.i, label %bb.aa, label %.lr.ph.preheader.a, !prof !110
+
+.lr.ph.preheader.a:                               ; preds = %.lr.ph.preheader
+  %i.cl = zext nneg i32 %.0147835 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader.a, %bb.aj
-  %indvars.iv = phi i64 [ %i.cl, %.lr.ph.preheader.a ], [ %indvars.iv.next, %bb.aj ] ; 6 uses
+  %indvars.iv = phi i64 [ %i.cl, %.lr.ph.preheader.a ], [ %indvars.iv.next, %bb.aj ] ; 5 uses
   %.sroa.44.1824 = phi ptr [ %.sroa.44.0832, %.lr.ph.preheader.a ], [ %.sroa.44.7, %bb.aj ]
-  br i1 %.not.i.i, label %bb.aa, label %11, !prof !110
+  %9 = load ptr, ptr %0, align 8, !tbaa !130
+  %10 = icmp eq ptr %9, null
+  br i1 %10, label %.critedge198, label %bb.ae
 
-bb.aa:                                            ; preds = %.lr.ph
-  %9 = shl i64 %indvars.iv, 32
-  %10 = ashr exact i64 %9, 32
-  %i.cm = invoke noundef nonnull ptr @_ZN4absl12lts_2025051212log_internal17MakeCheckOpStringIllEEPKcT_T0_S4_(i64 noundef 0, i64 noundef %10, ptr noundef nonnull @.str.22)
+bb.aa:                                            ; preds = %.lr.ph.preheader
+  %11 = sext i32 %.0147835 to i64
+  %i.cm = invoke noundef nonnull ptr @_ZN4absl12lts_2025051212log_internal17MakeCheckOpStringIllEEPKcT_T0_S4_(i64 noundef 0, i64 noundef %11, ptr noundef nonnull @.str.22)
           to label %_ZN4absl12lts_2025051212log_internal12Check_LEImplEiiPKc.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-
-11:                                               ; preds = %.lr.ph
-  %12 = load ptr, ptr %0, align 8, !tbaa !130
-  %13 = icmp eq ptr %12, null
-  br i1 %13, label %.critedge198, label %bb.ae
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i221, %.noexc218, %bb.af, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit235, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit315, %bb.bp, %.noexc297, %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i301, %bb.g, %.thread, %bb.k, %bb.i, %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i321, %.noexc317, %bb.by, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit335, %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i281, %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i265, %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i249, %.noexc245, %bb.ao, %.noexc241, %bb.am, %.noexc237, %bb.ak, %_ZNKSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE12_M_check_lenEmPKc.exit.i.i, %.noexc, %bb.u, %_ZN6google8protobuf4util19AddSpecificNewIndexEPNS1_18MessageDifferencer13SpecificFieldERKNS0_7MessageEPKNS0_15FieldDescriptorEi.exit243, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit263, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit279, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit295, %_ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EE9push_backERKS4_.exit, %.invoke, %bb.aa
   %lpad.loopexit.split-lp975 = landingpad { ptr, i32 }
@@ -445,7 +444,7 @@ bb.ad:                                            ; preds = %bb.ab
   call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %8) #43
   unreachable
 
-bb.ae:                                            ; preds = %11
+bb.ae:                                            ; preds = %.lr.ph
   %i.cp = load i8, ptr %i.ac, align 1
   %i.cq = and i8 %i.cp, 16
   %.not.i217 = icmp eq i8 %i.cq, 0
@@ -848,8 +847,8 @@ bb.cd:                                            ; preds = %.critedge204, %bb.b
   %exitcond886.not = icmp eq i64 %indvars.iv.next884, %wide.trip.count885
   br i1 %exitcond886.not, label %._crit_edge, label %bb.bv, !llvm.loop !638
 
-.critedge198:                                     ; preds = %._crit_edge, %11, %bb.s, %bb.aq, %bb.n
-  %.7175 = phi i1 [ false, %bb.n ], [ %i.kw, %._crit_edge ], [ false, %11 ], [ false, %bb.s ], [ false, %bb.aq ]
+.critedge198:                                     ; preds = %._crit_edge, %.lr.ph, %bb.s, %bb.aq, %bb.n
+  %.7175 = phi i1 [ false, %bb.n ], [ %i.kw, %._crit_edge ], [ false, %.lr.ph ], [ false, %bb.s ], [ false, %bb.aq ]
   %i.mm = load ptr, ptr %7, align 8, !tbaa !26    ; 3 uses
   %.not.i.i.i336 = icmp eq ptr %i.mm, null
   br i1 %.not.i.i.i336, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.ce
