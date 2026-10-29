@@ -202,8 +202,6 @@ _ZN4llvm3AVR21isProgramMemoryAccessEPKNS_9MemSDNodeE.exit.i.i: ; preds = %bb.o, 
   call void @llvm.lifetime.start.p0(ptr nonnull %15)
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.ff = load i16, ptr %i.fe, align 8
-  %51 = lshr i16 %i.ff, 7
-  %52 = and i16 %51, 7                            ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %1, i64 88
   %.sroa.0.0.copyload.i.i.i16.i = load i16, ptr %i.fg, align 8, !tbaa !331 ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 816
@@ -219,14 +217,18 @@ _ZN4llvm3AVR21isProgramMemoryAccessEPKNS_9MemSDNodeE.exit.i.i: ; preds = %bb.o, 
   %i.fr = tail call i16 %i.fq(ptr noundef nonnull align 8 dereferenceable(518435) %i.fi, ptr noundef nonnull align 8 dereferenceable(912) %i.fn, i32 noundef 0) #18, !inline_history !451
   %i.fs = load i16, ptr %i.fe, align 8
   %i.ft = and i16 %i.fs, 3072
-  %.not41.i.i.i = icmp ne i16 %i.ft, 0
-  %53 = add nsw i16 %52, -4
-  %or.cond.i.i.i = icmp ult i16 %53, -2
-  %or.cond44.i.i.i = or i1 %or.cond.i.i.i, %.not41.i.i.i
-  br i1 %or.cond44.i.i.i, label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12, label %bb.p
+  %.not.i86.i.i = icmp eq i16 %i.ft, 0
+  br i1 %.not.i86.i.i, label %51, label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12
 
-bb.p:                                             ; preds = %_ZN4llvm3AVR21isProgramMemoryAccessEPKNS_9MemSDNodeE.exit.i.i
-  %54 = icmp eq i16 %52, 2                        ; 4 uses
+51:                                               ; preds = %_ZN4llvm3AVR21isProgramMemoryAccessEPKNS_9MemSDNodeE.exit.i.i
+  %52 = lshr i16 %i.ff, 7
+  %53 = and i16 %52, 7                            ; 2 uses
+  %.not47.i.i.i = icmp eq i16 %53, 2              ; 4 uses
+  %54 = add nsw i16 %53, -4
+  %or.cond.i.i.i = icmp ult i16 %54, -2
+  br i1 %or.cond.i.i.i, label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12, label %bb.p
+
+bb.p:                                             ; preds = %51
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !326 ; 3 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 80
@@ -263,21 +265,21 @@ _ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i.i.i: ; preds = %bb.r, %bb.q
   ]
 
 bb.s:                                             ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i.i.i
-  %or.cond45.v.i.i.i = select i1 %54, i32 -1, i32 1
+  %or.cond45.v.i.i.i = select i1 %.not47.i.i.i, i32 -1, i32 1
   %or.cond45.not.i.i.i = icmp eq i32 %or.cond45.v.i.i.i, %i.gm
   br i1 %or.cond45.not.i.i.i, label %bb.t, label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12
 
 bb.t:                                             ; preds = %bb.s
-  %i.gn = select i1 %54, i32 476, i32 477
+  %i.gn = select i1 %.not47.i.i.i, i32 476, i32 477
   br label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i
 
 bb.u:                                             ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i.i.i
-  %or.cond46.v.i.i.i = select i1 %54, i32 -2, i32 2
+  %or.cond46.v.i.i.i = select i1 %.not47.i.i.i, i32 -2, i32 2
   %or.cond46.not.i.i.i = icmp eq i32 %or.cond46.v.i.i.i, %i.gm
   br i1 %or.cond46.not.i.i.i, label %bb.v, label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12
 
 bb.v:                                             ; preds = %bb.u
-  %i.go = select i1 %54, i32 375, i32 376
+  %i.go = select i1 %.not47.i.i.i, i32 375, i32 376
   br label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i
 
 bb.w:                                             ; preds = %bb.o
@@ -574,7 +576,7 @@ _ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %30)
   br label %_ZN12_GLOBAL__N_115AVRDAGToDAGISel9trySelectEPN4llvm6SDNodeE.exit.thread
 
-_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12: ; preds = %_ZN4llvm3AVR21isProgramMemoryAccessEPKNS_9MemSDNodeE.exit.i.i, %bb.u, %bb.s, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i.i.i
+_ZN12_GLOBAL__N_115AVRDAGToDAGISel6selectILj316EEEbPN4llvm6SDNodeE.exit.i.thread12: ; preds = %_ZN4llvm3AVR21isProgramMemoryAccessEPKNS_9MemSDNodeE.exit.i.i, %51, %bb.u, %bb.s, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %14)
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
   call void @llvm.lifetime.end.p0(ptr nonnull %18)
