@@ -1,0 +1,1916 @@
+diff --git a/llvm/include/llvm/Analysis/InlineCost.h b/llvm/include/llvm/Analysis/InlineCost.h
+index 9b7c2b6ca96a14..3552f1dfcea5d8 100644
+--- a/llvm/include/llvm/Analysis/InlineCost.h
++++ b/llvm/include/llvm/Analysis/InlineCost.h
+@@ -14,7 +14,9 @@
+ #define LLVM_ANALYSIS_INLINECOST_H
+ 
+ #include "llvm/ADT/APInt.h"
++#include "llvm/ADT/DenseMap.h"
+ #include "llvm/ADT/STLFunctionalExtras.h"
++#include "llvm/ADT/SmallVector.h"
+ #include "llvm/Analysis/InlineModelFeatureMaps.h"
+ #include "llvm/IR/PassManager.h"
+ #include "llvm/Support/Compiler.h"
+@@ -33,6 +35,7 @@ class ProfileSummaryInfo;
+ class TargetTransformInfo;
+ class TargetLibraryInfo;
+ class EphemeralValuesCache;
++class Value;
+ 
+ namespace InlineConstants {
+ // Various thresholds used by inline cost analysis.
+@@ -347,6 +350,23 @@ LLVM_ABI std::optional<InlineCostFeatures> getInliningCostFeatures(
+ /// perform a valid inline in a particular use context.
+ LLVM_ABI InlineResult isInlineViable(Function &Callee);
+ 
++/// A store of a value at a byte offset and size from its base pointer.
++struct CallBaseReachingStore {
++  int64_t Offset;
++  uint64_t Size;
++  Value *Val;
++};
++
++/// The stores that are still in effect at a program point, grouped by base
++/// pointer.
++struct CallBaseReachingStoreSummary {
++  DenseMap<Value *, SmallVector<CallBaseReachingStore, 2>> StoresByBase;
++  /// The recorded base that is not an identified object, if any. There is at
++  /// most one: it is only recorded when no other base is, and a store to a
++  /// different base after it ends the walk, since the two may alias.
++  std::optional<Value *> UnidentifiedBase;
++};
++
+ // This pass is used to annotate instructions during the inline process for
+ // debugging and analysis. The main purpose of the pass is to see and test
+ // inliner's decisions when creating new optimizations to InlineCost.
+diff --git a/llvm/include/llvm/Transforms/Utils/Cloning.h b/llvm/include/llvm/Transforms/Utils/Cloning.h
+index 119084eea72380..04a68fcebfc823 100644
+--- a/llvm/include/llvm/Transforms/Utils/Cloning.h
++++ b/llvm/include/llvm/Transforms/Utils/Cloning.h
+@@ -281,6 +281,14 @@ class InlineFunctionInfo {
+   /// 'InlineFunction' fills this in by scanning the inlined instructions.
+   SmallVector<CallBase *, 8> InlinedCallSites;
+ 
++  /// The instruction range for the inlined code:
++  /// [InlinedRegionBegin, InlinedRegionEnd).
++  /// The range is defined in InlineFunction and is currently used by
++  /// simplifyInlinedRegion. InlinedRegionEnd can be set to null to skip the
++  /// simplification.
++  Instruction *InlinedRegionBegin = nullptr;
++  Instruction *InlinedRegionEnd = nullptr;
++
+   Value *ConvergenceControlToken = nullptr;
+   Instruction *CallSiteEHPad = nullptr;
+ 
+@@ -291,6 +299,8 @@ class InlineFunctionInfo {
+   void reset() {
+     StaticAllocas.clear();
+     InlinedCallSites.clear();
++    InlinedRegionBegin = nullptr;
++    InlinedRegionEnd = nullptr;
+     ConvergenceControlToken = nullptr;
+     CallSiteEHPad = nullptr;
+   }
+diff --git a/llvm/lib/Analysis/InlineCost.cpp b/llvm/lib/Analysis/InlineCost.cpp
+index 2a327ac162ce0c..0d942d33d95c56 100644
+--- a/llvm/lib/Analysis/InlineCost.cpp
++++ b/llvm/lib/Analysis/InlineCost.cpp
+@@ -17,6 +17,7 @@
+ #include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/ADT/Statistic.h"
++#include "llvm/Analysis/AliasAnalysis.h"
+ #include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/BlockFrequencyInfo.h"
+ #include "llvm/Analysis/CodeMetrics.h"
+@@ -48,6 +49,7 @@
+ #include "llvm/Support/raw_ostream.h"
+ #include <climits>
+ #include <limits>
++#include <memory>
+ #include <optional>
+ 
+ using namespace llvm;
+@@ -92,6 +94,12 @@ static cl::opt<int>
+     InstrCost("inline-instr-cost", cl::Hidden, cl::init(5),
+               cl::desc("Cost of a single instruction when inlining"));
+ 
++static cl::opt<unsigned> CallBaseReachingStoreScanLimit(
++    "inline-reaching-store-scan-limit", cl::Hidden, cl::init(64),
++    cl::desc(
++        "Maximum number of instructions scanned backwards from a call site "
++        "to collect the stores that reach it"));
++
+ namespace llvm {
+ std::optional<int> getStringFnAttrAsInt(const Attribute &Attr) {
+   if (Attr.isValid()) {
+@@ -193,6 +201,9 @@ class CallAnalyzer : public InstVisitor<CallAnalyzer, bool> {
+   /// Getter for the cache of ephemeral values.
+   function_ref<EphemeralValuesCache &(Function &)> GetEphValuesCache = nullptr;
+ 
++  /// The stores that are still in effect at the candidate call site.
++  std::unique_ptr<CallBaseReachingStoreSummary> CallBaseReachingStores;
++
+   /// Extension points for handling callsite features.
+   // Called before a basic block was analyzed.
+   virtual void onBlockStart(const BasicBlock *BB) {}
+@@ -339,6 +350,10 @@ class CallAnalyzer : public InstVisitor<CallAnalyzer, bool> {
+   /// loads.
+   bool EnableLoadElimination = true;
+ 
++  /// Simplify callee loads using the stores the caller made before the call,
++  /// until a callee instruction may clobber them.
++  bool UseCallBaseReachingStores = true;
++
+   /// Whether we allow inlining for recursive call.
+   bool AllowRecursiveCall = false;
+ 
+@@ -365,6 +380,8 @@ class CallAnalyzer : public InstVisitor<CallAnalyzer, bool> {
+   void disableSROA(Value *V);
+   void findDeadBlocks(BasicBlock *CurrBB, BasicBlock *NextBB);
+   void disableLoadElimination();
++  void invalidateCallBaseReachingStores();
++  void buildCallBaseReachingStores();
+   bool isGEPFree(GetElementPtrInst &GEP);
+   bool canFoldInboundsGEP(GetElementPtrInst &I);
+   bool accumulateGEPOffset(GEPOperator &GEP, APInt &Offset);
+@@ -1436,6 +1453,123 @@ void CallAnalyzer::disableLoadElimination() {
+   }
+ }
+ 
++void CallAnalyzer::invalidateCallBaseReachingStores() {
++  UseCallBaseReachingStores = false;
++  CallBaseReachingStores.reset();
++}
++
++void CallAnalyzer::buildCallBaseReachingStores() {
++  if (!UseCallBaseReachingStores || CallBaseReachingStores != nullptr)
++    return;
++
++  enum class Check { Shadowed, Disjoint, Conflict };
++
++  CallBaseReachingStores = std::make_unique<CallBaseReachingStoreSummary>();
++  BasicBlock *BB = CandidateCall.getParent();
++  SmallPtrSet<BasicBlock *, 8> Visited;
++  Visited.insert(BB);
++
++  auto It = CandidateCall.getIterator();
++  unsigned NumInstrsChecked = 0;
++
++  while (NumInstrsChecked < CallBaseReachingStoreScanLimit) {
++    if (It == BB->begin()) {
++      // Reached the start of BB: continue into the unique predecessor, unless
++      // this is a join, the entry block, or a cycle.
++      BasicBlock *Pred = BB->getUniquePredecessor();
++      if (!Pred || !Visited.insert(Pred).second)
++        break;
++      BB = Pred;
++      It = BB->end();
++    }
++
++    Instruction &I = *--It;
++    ++NumInstrsChecked;
++
++    if (auto *SI = dyn_cast<StoreInst>(&I)) {
++      if (!SI->isSimple())
++        break;
++
++      Value *Val = SI->getValueOperand();
++      TypeSize TS = DL.getTypeStoreSize(Val->getType());
++      if (TS.isScalable())
++        break;
++      uint64_t Size = TS.getFixedValue();
++
++      int64_t Off = 0;
++      Value *Base =
++          GetPointerBaseWithConstantOffset(SI->getPointerOperand(), Off, DL);
++      if (!Base)
++        break;
++
++      Check C = Check::Disjoint;
++
++      // Stores on the same base decide Shadowed / overlap.
++      auto BaseIt = CallBaseReachingStores->StoresByBase.find(Base);
++      if (BaseIt != CallBaseReachingStores->StoresByBase.end()) {
++        for (const CallBaseReachingStore &S : BaseIt->second) {
++          if (S.Offset == Off && S.Size == Size) {
++            C = Check::Shadowed;
++            break;
++          }
++          if (Off < S.Offset + (int64_t)S.Size &&
++              S.Offset < Off + (int64_t)Size) {
++            C = Check::Conflict;
++            break;
++          }
++        }
++      }
++
++      // A store to a new base is only recorded if it cannot alias the bases
++      // recorded so far. Two identified objects never alias; an unidentified
++      // base may alias any other base.
++      if (C == Check::Disjoint) {
++        auto &UnidentifiedBase = CallBaseReachingStores->UnidentifiedBase;
++
++        if (UnidentifiedBase) {
++          // An unidentified base is recorded, so any other base might alias it.
++          if (Base != *UnidentifiedBase)
++            C = Check::Conflict;
++        } else if (!isIdentifiedObject(Base) &&
++                   !CallBaseReachingStores->StoresByBase.empty()) {
++          // This base is unidentified, so it might alias the bases already
++          // recorded.
++          C = Check::Conflict;
++        }
++      }
++
++      if (C == Check::Shadowed)
++        continue; // a newer store already recorded this location
++      if (C == Check::Conflict)
++        break;
++
++      if (!isIdentifiedObject(Base))
++        CallBaseReachingStores->UnidentifiedBase = Base;
++      CallBaseReachingStores->StoresByBase[Base].push_back({Off, Size, Val});
++      continue;
++    }
++
++    if (auto *LI = dyn_cast<LoadInst>(&I)) {
++      if (!LI->isSimple())
++        break;
++      continue;
++    }
++
++    if (isAssumeLikeIntrinsic(&I))
++      continue;
++
++    if (I.mayWriteToMemory() || I.mayHaveSideEffects())
++      break;
++  }
++
++  LLVM_DEBUG({
++    for (const auto &[Base, Stores] : CallBaseReachingStores->StoresByBase)
++      for (const CallBaseReachingStore &Store : Stores)
++        dbgs() << "Reaching store: " << *Store.Val << " at " << *Base << " + "
++               << Store.Offset << ", size " << Store.Size << "\n";
++  });
++}
++
+ /// Accumulate a constant GEP offset into an APInt if possible.
+ ///
+ /// Returns false if unable to compute the offset for any reason. Respects any
+@@ -2253,6 +2387,37 @@ bool CallAnalyzer::visitFNeg(UnaryOperator &I) {
+ }
+ 
+ bool CallAnalyzer::visitLoad(LoadInst &I) {
++  if (UseCallBaseReachingStores && I.getParent() == &F.getEntryBlock()) {
++    if (!I.isSimple()) {
++      invalidateCallBaseReachingStores();
++    } else {
++      auto [Base, Off] = ConstantOffsetPtrs.lookup(I.getPointerOperand());
++      TypeSize TS = DL.getTypeStoreSize(I.getType());
++
++      if (Base && Off.isSignedIntN(64) && !TS.isScalable()) {
++        buildCallBaseReachingStores();
++        auto It = CallBaseReachingStores->StoresByBase.find(Base);
++        if (It != CallBaseReachingStores->StoresByBase.end()) {
++          for (const CallBaseReachingStore &Store : It->second) {
++            if (Store.Offset != Off.getSExtValue() ||
++                Store.Size != TS.getFixedValue())
++              continue;
++            if (Store.Val->getType() != I.getType())
++              break;
++
++            // The caller stored this value right before the call, so the load
++            // goes away after inlining. Later loads of the address can reuse
++            // it through load elimination.
++            LoadAddrSet.insert(I.getPointerOperand());
++            if (auto *C = dyn_cast<Constant>(Store.Val))
++              SimplifiedValues[&I] = C;
++            return true;
++          }
++        }
++      }
++    }
++  }
++
+   if (handleSROA(I.getPointerOperand(), I.isSimple()))
+     return true;
+ 
+@@ -2270,6 +2435,43 @@ bool CallAnalyzer::visitLoad(LoadInst &I) {
+ }
+ 
+ bool CallAnalyzer::visitStore(StoreInst &I) {
++  // This store may overwrite memory the caller stored to before the call, which
++  // would make the reaching stores stale. CallBaseReachingStores only simplify
++  // loads in the entry block as of now, so only stores there matter.
++  if (UseCallBaseReachingStores && I.getParent() == &F.getEntryBlock()) {
++    Value *Ptr = I.getPointerOperand();
++    Value *Base = ConstantOffsetPtrs.lookup(Ptr).first;
++
++    if (!I.isSimple()) {
++      invalidateCallBaseReachingStores();
++    } else if (!Base) {
++      // We don't know which caller object is written, unless it is the callee's
++      // own stack memory, which cannot collide with the caller's stores.
++      if (!isa<AllocaInst>(getUnderlyingObject(Ptr)))
++        invalidateCallBaseReachingStores();
++    } else {
++      buildCallBaseReachingStores();
++      auto &StoresByBase = CallBaseReachingStores->StoresByBase;
++      auto It = StoresByBase.find(Base);
++      if (It != StoresByBase.end()) {
++        // The callee overwrites a base we recorded.
++        StoresByBase.erase(It);
++        if (CallBaseReachingStores->UnidentifiedBase == Base)
++          CallBaseReachingStores->UnidentifiedBase.reset();
++      } else if (!isIdentifiedObject(Base)) {
++        // An unknown pointer may alias any recorded base.
++        invalidateCallBaseReachingStores();
++      } else {
++        // Base is a known object, so it can only alias a recorded base we know
++        // nothing about.
++        if (CallBaseReachingStores->UnidentifiedBase) {
++          StoresByBase.erase(*CallBaseReachingStores->UnidentifiedBase);
++          CallBaseReachingStores->UnidentifiedBase.reset();
++        }
++      }
++    }
++  }
++
+   if (handleSROA(I.getPointerOperand(), I.isSimple()))
+     return true;
+ 
+@@ -2408,8 +2610,10 @@ bool CallAnalyzer::visitCallBase(CallBase &Call) {
+     if (!F || F->getFunctionType() != Call.getFunctionType()) {
+       onCallArgumentSetup(Call);
+ 
+-      if (!Call.onlyReadsMemory())
++      if (!Call.onlyReadsMemory()) {
+         disableLoadElimination();
++        invalidateCallBaseReachingStores();
++      }
+       return Base::visitCallBase(Call);
+     }
+   }
+@@ -2425,8 +2629,10 @@ bool CallAnalyzer::visitCallBase(CallBase &Call) {
+   if (IntrinsicInst *II = dyn_cast<IntrinsicInst>(&Call)) {
+     switch (II->getIntrinsicID()) {
+     default:
+-      if (!Call.onlyReadsMemory() && !isAssumeLikeIntrinsic(II))
++      if (!Call.onlyReadsMemory() && !isAssumeLikeIntrinsic(II)) {
+         disableLoadElimination();
++        invalidateCallBaseReachingStores();
++      }
+       return Base::visitCallBase(Call);
+ 
+     case Intrinsic::load_relative:
+@@ -2437,6 +2643,7 @@ bool CallAnalyzer::visitCallBase(CallBase &Call) {
+     case Intrinsic::memcpy:
+     case Intrinsic::memmove:
+       disableLoadElimination();
++      invalidateCallBaseReachingStores();
+       // SROA can usually chew through these intrinsics, but they aren't free.
+       return false;
+     case Intrinsic::icall_branch_funnel:
+@@ -2469,8 +2676,10 @@ bool CallAnalyzer::visitCallBase(CallBase &Call) {
+     onLoweredCall(F, Call, IsIndirectCall);
+   }
+ 
+-  if (!(Call.onlyReadsMemory() || (IsIndirectCall && F->onlyReadsMemory())))
++  if (!(Call.onlyReadsMemory() || (IsIndirectCall && F->onlyReadsMemory()))) {
+     disableLoadElimination();
++    invalidateCallBaseReachingStores();
++  }
+   return Base::visitCallBase(Call);
+ }
+ 
+@@ -2632,6 +2841,12 @@ bool CallAnalyzer::visitUnreachableInst(UnreachableInst &I) {
+ }
+ 
+ bool CallAnalyzer::visitInstruction(Instruction &I) {
++  // Anything that may write memory (atomics, fences, calls that reach here)
++  // can overwrite the caller's reaching stores. Stores are handled by
++  // visitStore.
++  if (I.mayWriteToMemory() && !isAssumeLikeIntrinsic(&I))
++    invalidateCallBaseReachingStores();
++
+   // Some instructions are free. All of the free intrinsics can also be
+   // handled by SROA, etc.
+   if (TTI.getInstructionCost(&I, TargetTransformInfo::TCK_SizeAndLatency) ==
+diff --git a/llvm/lib/Transforms/IPO/Inliner.cpp b/llvm/lib/Transforms/IPO/Inliner.cpp
+index 65ef0842185002..710fe94d44db11 100644
+--- a/llvm/lib/Transforms/IPO/Inliner.cpp
++++ b/llvm/lib/Transforms/IPO/Inliner.cpp
+@@ -29,6 +29,7 @@
+ #include "llvm/Analysis/EphemeralValuesCache.h"
+ #include "llvm/Analysis/InlineAdvisor.h"
+ #include "llvm/Analysis/InlineCost.h"
++#include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/LazyCallGraph.h"
+ #include "llvm/Analysis/Loads.h"
+ #include "llvm/Analysis/OptimizationRemarkEmitter.h"
+@@ -37,6 +38,7 @@
+ #include "llvm/Analysis/Utils/ImportedFunctionsInliningStatistics.h"
+ #include "llvm/IR/Attributes.h"
+ #include "llvm/IR/BasicBlock.h"
++#include "llvm/IR/DataLayout.h"
+ #include "llvm/IR/DebugLoc.h"
+ #include "llvm/IR/DerivedTypes.h"
+ #include "llvm/IR/DiagnosticInfo.h"
+@@ -197,6 +199,128 @@ void makeFunctionBodyUnreachable(Function &F) {
+   new UnreachableInst(F.getContext(), BB);
+ }
+ 
++/// Simplifies the code that was just inlined into a caller, which is in the
++/// instruction range [Begin, End).
++static void simplifyInlinedRegion(Instruction *Begin, Instruction *End,
++                                  const DataLayout &DL) {
++  if (Begin == End)
++    return;
++
++  BasicBlock *FirstBB = Begin->getParent();
++  BasicBlock *LastBB = End->getParent();
++
++  SimplifyQuery SQ(DL);
++
++  // The blocks of the inlined region, in layout order.
++  SmallVector<BasicBlock *, 8> Blocks;
++  for (auto It = FirstBB->getIterator();; ++It) {
++    Blocks.push_back(&*It);
++    if (&*It == LastBB)
++      break;
++  }
++
++  // The instructions of a block that are part of the inlined region. Only the
++  // first and the last block can also hold caller code, so those are clipped.
++  auto InstsInRegion =
++      [&](BasicBlock *BB) -> iterator_range<BasicBlock::iterator> {
++    BasicBlock::iterator From =
++        BB == FirstBB ? Begin->getIterator() : BB->begin();
++    BasicBlock::iterator To = BB == LastBB ? End->getIterator() : BB->end();
++    return make_range(From, To);
++  };
++
++  // Forward constants stored in the same block to loads, fold what that
++  // makes constant, and resolve branches on constant conditions. Calls are
++  // not erased, since the inliner's worklists may have them.
++  auto SimplifyInsts = [&]() {
++    bool Changed = false;
++    for (BasicBlock *BB : Blocks) {
++      for (Instruction &I : make_early_inc_range(InstsInRegion(BB))) {
++        if (auto *LI = dyn_cast<LoadInst>(&I)) {
++          if (!LI->isSimple() || LI->use_empty())
++            continue;
++          BasicBlock::iterator ScanFrom = LI->getIterator();
++          Value *Stored = FindAvailableLoadedValue(LI, BB, ScanFrom,
++                                                   InlinerForwardingScanLimit);
++          auto *C = dyn_cast_or_null<Constant>(Stored);
++          if (!C)
++            continue;
++          // Handle type mismatches from memset forwarding (e.g. memset writes
++          // i64 0 but the load type is ptr).
++          if (C->getType() != LI->getType()) {
++            if (!C->isNullValue())
++              continue;
++            C = Constant::getNullValue(LI->getType());
++          }
++          LI->replaceAllUsesWith(C);
++          // The region is re-walked from Begin, so move it off the load.
++          if (LI == Begin)
++            Begin = LI->getNextNode();
++          LI->eraseFromParent();
++          Changed = true;
++        } else if (!I.use_empty()) {
++          if (Value *V = simplifyInstruction(&I, SQ)) {
++            I.replaceAllUsesWith(V);
++            Changed = true;
++          }
++        }
++      }
++
++      // The terminator of the last block is at or after End, so it is not part
++      // of the inlined region.
++      if (BB != LastBB) {
++        // Folding replaces the terminator, so Begin has to follow it.
++        bool IsBeginInstTerminator = Begin == BB->getTerminator();
++        Changed |= ConstantFoldTerminator(BB);
++        if (IsBeginInstTerminator)
++          Begin = BB->getTerminator();
++      }
++    }
++    return Changed;
++  };
++
++  // Find the blocks of the inlined region that are unreachable after
++  // SimplifyInsts and change their terminators to unreachable, so they are
++  // removed from the predecessors of other blocks. Fewer predecessors help the
++  // reaching store analysis in the inliner cost model scan further back.
++  auto CutDeadBlocks = [&]() {
++    // Start with every block of the region and remove the ones the walk from
++    // FirstBB reaches. What is left over is unreachable.
++    SmallPtrSet<BasicBlock *, 8> UnreachableBlocks(Blocks.begin(),
++                                                   Blocks.end());
++    UnreachableBlocks.erase(FirstBB);
++    SmallVector<BasicBlock *, 8> Worklist;
++    Worklist.push_back(FirstBB);
++    while (!Worklist.empty()) {
++      BasicBlock *BB = Worklist.pop_back_val();
++      for (BasicBlock *Succ : successors(BB))
++        if (UnreachableBlocks.erase(Succ))
++          Worklist.push_back(Succ);
++    }
++
++    bool Changed = false;
++    for (BasicBlock *BB : Blocks) {
++      if (BB == LastBB || !UnreachableBlocks.count(BB))
++        continue;
++
++      Instruction *Term = BB->getTerminator();
++      if (!isa<UnreachableInst>(Term) && !isa<CallBase>(Term)) {
++        changeToUnreachable(Term);
++        Changed = true;
++      }
++    }
++    return Changed;
++  };
++
++  constexpr unsigned MaxIterations = 4;
++  for (unsigned Iter = 0; Iter < MaxIterations; ++Iter) {
++    bool Changed = SimplifyInsts();
++    Changed |= CutDeadBlocks();
++    if (!Changed)
++      break;
++  }
++}
++
+ PreservedAnalyses InlinerPass::run(LazyCallGraph::SCC &InitialC,
+                                    CGSCCAnalysisManager &AM, LazyCallGraph &CG,
+                                    CGSCCUpdateResult &UR) {
+@@ -315,6 +439,11 @@ PreservedAnalyses InlinerPass::run(LazyCallGraph::SCC &InitialC,
+     // We bail out as soon as the caller has to change so we can update the
+     // call graph and prepare the context of that new caller.
+     bool DidInline = false;
++
++    // The instruction range [Begin, End) of the code that was inlined last.
++    Instruction *InlinedRegionBegin = nullptr;
++    Instruction *InlinedRegionEnd = nullptr;
++
+     for (; I < (int)Calls.size() && Calls[I]->getCaller() == &F; ++I) {
+       CallBase *CB = Calls[I];
+       Function &Callee = *CB->getCalledFunction();
+@@ -334,9 +463,24 @@ PreservedAnalyses InlinerPass::run(LazyCallGraph::SCC &InitialC,
+         continue;
+       }
+ 
+-      // Store-to-load forwarding, loads can be sometimes simplified to
+-      // constants from stores introduced by previous inlining
+       if (DidInline) {
++        // Simplify the code inlined last, so the reaching store analysis at
++        // the next call site can scan through it. Skipped if InlineFunction
++        // set the region end to null.
++        if (InlinedRegionEnd) {
++          // TODO: This could be restricted, e.g. based on the size of an
++          // inlined callee or based on a flag from the cost model, for example
++          // we can simplify only when there is a store-to-load forwarding, to
++          // save compile time.
++
++          simplifyInlinedRegion(InlinedRegionBegin, InlinedRegionEnd,
++                                F.getDataLayout());
++          InlinedRegionBegin = nullptr;
++          InlinedRegionEnd = nullptr;
++        }
++
++        // Store-to-load forwarding, loads can be sometimes simplified to
++        // constants from stores introduced by previous inlining
+         for (Value *Arg : CB->args()) {
+           auto *LI = dyn_cast<LoadInst>(Arg);
+           if (!LI || !LI->isSimple())
+@@ -406,6 +550,11 @@ PreservedAnalyses InlinerPass::run(LazyCallGraph::SCC &InitialC,
+         Advice->recordUnsuccessfulInlining(IR);
+         continue;
+       }
++
++      // Record the range of the inlined code, InlineFunction defines it.
++      InlinedRegionBegin = IFI.InlinedRegionBegin;
++      InlinedRegionEnd = IFI.InlinedRegionEnd;
++
+       // TODO: Shouldn't we be invalidating all analyses on F here?
+       // The caller was modified, so invalidate Ephemeral Values.
+       FAM.getResult<EphemeralValuesAnalysis>(F).clear();
+diff --git a/llvm/lib/Transforms/Utils/InlineFunction.cpp b/llvm/lib/Transforms/Utils/InlineFunction.cpp
+index e8d630491dd750..c4cbd311df9bc0 100644
+--- a/llvm/lib/Transforms/Utils/InlineFunction.cpp
++++ b/llvm/lib/Transforms/Utils/InlineFunction.cpp
+@@ -3357,6 +3357,13 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+     }
+   }
+ 
++  // Start with the default bounds of the inlined region: the instructions
++  // right before and after the call. An invoke is a terminator and has nothing
++  // after it, so we update that bound below to the branch to its normal
++  // destination.
++  Instruction *InstBeforeInlined = CB.getPrevNode();
++  Instruction *InstAfterInlined = CB.getNextNode();
++
+   // If we cloned in _exactly one_ basic block, and if that block ends in a
+   // return instruction, we splice the body of the inlined callee directly into
+   // the calling basic block.
+@@ -3373,6 +3380,7 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+       UncondBrInst *NewBr =
+           UncondBrInst::Create(II->getNormalDest(), CB.getIterator());
+       NewBr->setDebugLoc(Returns[0]->getDebugLoc());
++      InstAfterInlined = NewBr;
+     }
+ 
+     // If the return instruction returned a value, replace uses of the call with
+@@ -3393,6 +3401,12 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+     if (MergeAttributes)
+       AttributeFuncs::mergeAttributesForInlining(*Caller, *CalledFunc);
+ 
++    // The inlined code starts right after the instruction that was before the
++    // call, or at the start of the block if the call was its first instruction.
++    IFI.InlinedRegionBegin =
++        InstBeforeInlined ? InstBeforeInlined->getNextNode() : &OrigBB->front();
++    IFI.InlinedRegionEnd = InstAfterInlined;
++
+     // We are now done with the inlining.
+     return;
+   }
+@@ -3412,6 +3426,7 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+         UncondBrInst::Create(II->getNormalDest(), CB.getIterator());
+     // We intend to replace this DebugLoc with another later.
+     CreatedBranchToNormalDest->setDebugLoc(DebugLoc::getTemporary());
++    InstAfterInlined = CreatedBranchToNormalDest;
+ 
+     // Split the basic block.  This guarantees that no PHI nodes will have to be
+     // updated due to new incoming edges, and make the invoke case more
+@@ -3527,9 +3542,15 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+ 
+   // If we inlined any musttail calls and the original return is now
+   // unreachable, delete it.  It can only contain a ret.
+-  if (InlinedMustTailCalls && pred_empty(AfterCallBB))
++  if (InlinedMustTailCalls && pred_empty(AfterCallBB)) {
+     AfterCallBB->eraseFromParent();
+ 
++    // The instruction after the inlined code goes with it too, so the region
++    // has no end. Not sure how to handle this case yet, so for now we skip it
++    // in simplifyInlinedRegion.
++    InstAfterInlined = nullptr;
++  }
++
+   // We should always be able to fold the entry block of the function into the
+   // single predecessor of the block...
+   BasicBlock *CalleeEntry = Br->getSuccessor();
+@@ -3545,6 +3566,12 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+   // Now we can remove the CalleeEntry block, which is now empty.
+   CalleeEntry->eraseFromParent();
+ 
++  // The inlined code starts right after the instruction that was before the
++  // call, or at the start of the block if the call was its first instruction.
++  IFI.InlinedRegionBegin =
++      InstBeforeInlined ? InstBeforeInlined->getNextNode() : &OrigBB->front();
++  IFI.InlinedRegionEnd = InstAfterInlined;
++
+   // If we inserted a phi node, check to see if it has a single value (e.g. all
+   // the entries are the same or undef).  If so, remove the PHI so it doesn't
+   // block other optimizations.
+diff --git a/llvm/test/Transforms/Inline/inline_cost_reaching_stores.ll b/llvm/test/Transforms/Inline/inline_cost_reaching_stores.ll
+new file mode 100644
+index 00000000000000..6f97d288b86e57
+--- /dev/null
++++ b/llvm/test/Transforms/Inline/inline_cost_reaching_stores.ll
+@@ -0,0 +1,910 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; Tests for forwarding the caller's stores into the callee's loads in the
++; inline cost model (CallBaseReachingStores).
++
++; RUN: opt < %s -passes=inline -inline-threshold=50 -S | FileCheck %s --check-prefixes=CHECK,FWD
++; RUN: opt < %s -passes=inline -inline-threshold=50 -inline-reaching-store-scan-limit=0 -S | FileCheck %s --check-prefixes=CHECK,NOFWD
++
++declare void @opaque(i64)
++declare void @reader(i64) nounwind willreturn memory(read)
++declare void @llvm.assume(i1 noundef)
++declare i32 @__gxx_personality_v0(...)
++
++define i64 @callee(ptr %p, i64 %n) {
++; CHECK-LABEL: define i64 @callee(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SIZE:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[SIZE]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[EMPTY:.*]], label %[[SLOW:.*]]
++; CHECK:       [[EMPTY]]:
++; CHECK-NEXT:    ret i64 0
++; CHECK:       [[SLOW]]:
++; CHECK-NEXT:    [[A1:%.*]] = add i64 [[N]], 1
++; CHECK-NEXT:    [[A2:%.*]] = mul i64 [[A1]], [[N]]
++; CHECK-NEXT:    [[A3:%.*]] = xor i64 [[A2]], [[A1]]
++; CHECK-NEXT:    call void @opaque(i64 [[A3]])
++; CHECK-NEXT:    [[A4:%.*]] = add i64 [[A3]], 7
++; CHECK-NEXT:    call void @opaque(i64 [[A4]])
++; CHECK-NEXT:    [[A5:%.*]] = mul i64 [[A4]], [[A3]]
++; CHECK-NEXT:    call void @opaque(i64 [[A5]])
++; CHECK-NEXT:    [[A6:%.*]] = xor i64 [[A5]], [[A4]]
++; CHECK-NEXT:    ret i64 [[A6]]
++;
++entry:
++  %size = load i64, ptr %p
++  %c = icmp eq i64 %size, 0
++  br i1 %c, label %empty, label %slow
++
++empty:
++  ret i64 0
++
++slow:
++  %a1 = add i64 %n, 1
++  %a2 = mul i64 %a1, %n
++  %a3 = xor i64 %a2, %a1
++  call void @opaque(i64 %a3)
++  %a4 = add i64 %a3, 7
++  call void @opaque(i64 %a4)
++  %a5 = mul i64 %a4, %a3
++  call void @opaque(i64 %a5)
++  %a6 = xor i64 %a5, %a4
++  ret i64 %a6
++}
++
++; Callees that clobber memory before their load. The caller's stores are stale
++; by then, so they must not be forwarded.
++
++; The callee overwrites the location before loading it. Forwarding the
++; caller's 0 would be wrong, so the call must be kept.
++define i64 @callee_overwrites_location(ptr %p, i64 %n) {
++; CHECK-LABEL: define i64 @callee_overwrites_location(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    store i64 [[N]], ptr [[P]], align 4
++; CHECK-NEXT:    [[SIZE:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[SIZE]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[EMPTY:.*]], label %[[SLOW:.*]]
++; CHECK:       [[EMPTY]]:
++; CHECK-NEXT:    ret i64 0
++; CHECK:       [[SLOW]]:
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    ret i64 [[N]]
++;
++entry:
++  store i64 %n, ptr %p
++  %size = load i64, ptr %p
++  %c = icmp eq i64 %size, 0
++  br i1 %c, label %empty, label %slow
++
++empty:
++  ret i64 0
++
++slow:
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  ret i64 %n
++}
++
++; The callee stores through a different pointer that may alias %p.
++define i64 @callee_stores_through_unknown_ptr(ptr %p, ptr %q, i64 %n) {
++; CHECK-LABEL: define i64 @callee_stores_through_unknown_ptr(
++; CHECK-SAME: ptr [[P:%.*]], ptr [[Q:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    store i64 [[N]], ptr [[Q]], align 4
++; CHECK-NEXT:    [[SIZE:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[SIZE]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[EMPTY:.*]], label %[[SLOW:.*]]
++; CHECK:       [[EMPTY]]:
++; CHECK-NEXT:    ret i64 0
++; CHECK:       [[SLOW]]:
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    ret i64 [[N]]
++;
++entry:
++  store i64 %n, ptr %q
++  %size = load i64, ptr %p
++  %c = icmp eq i64 %size, 0
++  br i1 %c, label %empty, label %slow
++
++empty:
++  ret i64 0
++
++slow:
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  ret i64 %n
++}
++
++; A call that may write memory between the callee's entry and its load makes the
++; caller's stores stale.
++define i64 @callee_call_before_load(ptr %p, i64 %n) {
++; CHECK-LABEL: define i64 @callee_call_before_load(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    [[SIZE:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[SIZE]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[EMPTY:.*]], label %[[SLOW:.*]]
++; CHECK:       [[EMPTY]]:
++; CHECK-NEXT:    ret i64 0
++; CHECK:       [[SLOW]]:
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    ret i64 [[N]]
++;
++entry:
++  call void @opaque(i64 %n)
++  %size = load i64, ptr %p
++  %c = icmp eq i64 %size, 0
++  br i1 %c, label %empty, label %slow
++
++empty:
++  ret i64 0
++
++slow:
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  ret i64 %n
++}
++
++define i64 @const_store_folds_callee_branch(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @const_store_folds_callee_branch(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @const_store_folds_callee_branch(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; An intervening call that may write memory ends the walk.
++define i64 @intervening_call_blocks_forwarding(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @intervening_call_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  call void @opaque(i64 %n)
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; A call that only reads memory does not end the walk.
++define i64 @readonly_call_does_not_block_forwarding(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @readonly_call_does_not_block_forwarding(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    call void @reader(i64 [[N]])
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @readonly_call_does_not_block_forwarding(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    call void @reader(i64 [[N]])
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  call void @reader(i64 %n)
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; The newer store (1) is forwarded, so the expensive block stays live and the
++; call is kept.
++define i64 @newer_nonzero_store_keeps_callee_branch(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @newer_nonzero_store_keeps_callee_branch(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    store i64 1, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  store i64 1, ptr %this
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; TODO: %other is noalias, so the store to it should not alias %this and the
++; stored 0 could be forwarded. As of now an unidentified pointer is assumed to
++; alias a recorded base, so the call is kept.
++define i64 @noalias_store_after_plain_store_blocks_forwarding(ptr %this, ptr noalias %other, i64 %n) {
++; CHECK-LABEL: define i64 @noalias_store_after_plain_store_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], ptr noalias [[OTHER:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    store i64 7, ptr [[OTHER]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  store i64 7, ptr %other
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; Two stores to the same location: the newer one (0) is forwarded.
++define i64 @newer_store_shadows_older(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @newer_store_shadows_older(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    store i64 1, ptr [[THIS]], align 4
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @newer_store_shadows_older(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 1, ptr [[THIS]], align 4
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 1, ptr %this
++  store i64 0, ptr %this
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; A store to a different field of the same object does not hide the one the
++; callee loads.
++define i64 @disjoint_fields_both_recorded(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @disjoint_fields_both_recorded(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    [[F1:%.*]] = getelementptr inbounds i8, ptr [[THIS]], i64 8
++; FWD-NEXT:    store i64 5, ptr [[F1]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @disjoint_fields_both_recorded(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    [[F1:%.*]] = getelementptr inbounds i8, ptr [[THIS]], i64 8
++; NOFWD-NEXT:    store i64 5, ptr [[F1]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %f1 = getelementptr inbounds i8, ptr %this, i64 8
++  store i64 5, ptr %f1
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; A later store that partially overlaps the location is a conflict.
++define i64 @partial_overlap_blocks_forwarding(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @partial_overlap_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[F:%.*]] = getelementptr inbounds i8, ptr [[THIS]], i64 4
++; CHECK-NEXT:    store i32 1, ptr [[F]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %f = getelementptr inbounds i8, ptr %this, i64 4
++  store i32 1, ptr %f
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; Two different plain pointers may alias, so the walk gives up.
++define i64 @two_unidentified_bases_conflict(ptr %this, ptr %other, i64 %n) {
++; CHECK-LABEL: define i64 @two_unidentified_bases_conflict(
++; CHECK-SAME: ptr [[THIS:%.*]], ptr [[OTHER:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    store i64 7, ptr [[OTHER]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  store i64 7, ptr %other
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; noalias arguments are identified objects, so both stores are recorded.
++define i64 @two_noalias_bases_both_recorded(ptr noalias %this, ptr noalias %other, i64 %n) {
++; FWD-LABEL: define i64 @two_noalias_bases_both_recorded(
++; FWD-SAME: ptr noalias [[THIS:%.*]], ptr noalias [[OTHER:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    store i64 7, ptr [[OTHER]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @two_noalias_bases_both_recorded(
++; NOFWD-SAME: ptr noalias [[THIS:%.*]], ptr noalias [[OTHER:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    store i64 7, ptr [[OTHER]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  store i64 7, ptr %other
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; A store at a variable offset has an unknown base, which may alias %this.
++define i64 @variable_gep_store_blocks_forwarding(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @variable_gep_store_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[V:%.*]] = getelementptr i64, ptr [[THIS]], i64 [[N]]
++; CHECK-NEXT:    store i64 1, ptr [[V]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %v = getelementptr i64, ptr %this, i64 %n
++  store i64 1, ptr %v
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; Assume-like intrinsics are skipped by the walk.
++define i64 @assume_does_not_block_forwarding(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @assume_does_not_block_forwarding(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    call void @llvm.assume(i1 true)
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @assume_does_not_block_forwarding(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    call void @llvm.assume(i1 true)
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  call void @llvm.assume(i1 true)
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; The caller passes a pointer at a constant offset. The offset has to be
++; accounted for when matching the store to the callee's load.
++define i64 @gep_argument_forwarded(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @gep_argument_forwarded(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    [[F:%.*]] = getelementptr inbounds i8, ptr [[THIS]], i64 8
++; FWD-NEXT:    store i64 0, ptr [[F]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[F]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @gep_argument_forwarded(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    [[F:%.*]] = getelementptr inbounds i8, ptr [[THIS]], i64 8
++; NOFWD-NEXT:    store i64 0, ptr [[F]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[F]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  %f = getelementptr inbounds i8, ptr %this, i64 8
++  store i64 0, ptr %f
++  %r = call i64 @callee(ptr %f, i64 %n)
++  ret i64 %r
++}
++
++; The walk continues into a block's unique predecessor.
++define i64 @store_in_single_predecessor_chain(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @store_in_single_predecessor_chain(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:  [[ENTRY:.*:]]
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    br label %[[NEXT:.*]]
++; FWD:       [[NEXT]]:
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @store_in_single_predecessor_chain(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:  [[ENTRY:.*:]]
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    br label %[[NEXT:.*]]
++; NOFWD:       [[NEXT]]:
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++entry:
++  store i64 0, ptr %this
++  br label %next
++
++next:
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; The walk stops at a join block, even though the store dominates the call.
++define i64 @store_before_join_blocks_forwarding(ptr %this, i1 %cond, i64 %n) {
++; CHECK-LABEL: define i64 @store_before_join_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i1 [[COND:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    br i1 [[COND]], label %[[A:.*]], label %[[B:.*]]
++; CHECK:       [[A]]:
++; CHECK-NEXT:    br label %[[JOIN:.*]]
++; CHECK:       [[B]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++entry:
++  store i64 0, ptr %this
++  br i1 %cond, label %a, label %b
++
++a:
++  br label %join
++
++b:
++  br label %join
++
++join:
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; Same size and offset, but the stored value is a double and the callee loads
++; an i64, so the value is not forwarded.
++define i64 @type_mismatch_blocks_forwarding(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @type_mismatch_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store double 0.000000e+00, ptr [[THIS]], align 8
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store double 0.0, ptr %this
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; A volatile store is not a simple store, so the walk stops at it.
++define i64 @volatile_store_blocks_forwarding(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @volatile_store_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store volatile i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store volatile i64 0, ptr %this
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; A fence may order or write memory, so the walk stops at it.
++define i64 @fence_blocks_forwarding(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @fence_blocks_forwarding(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    fence seq_cst
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  fence seq_cst
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; The call site is an invoke.
++define i64 @invoke_call_site(ptr %this, i64 %n) personality ptr @__gxx_personality_v0 {
++; FWD-LABEL: define i64 @invoke_call_site(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) personality ptr @__gxx_personality_v0 {
++; FWD-NEXT:  [[ENTRY:.*:]]
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    invoke void @opaque(i64 [[A3_I]])
++; FWD-NEXT:            to label %[[DOTNOEXC:.*]] unwind label %[[LPAD:.*]]
++; FWD:       [[DOTNOEXC]]:
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    invoke void @opaque(i64 [[A4_I]])
++; FWD-NEXT:            to label %[[DOTNOEXC1:.*]] unwind label %[[LPAD]]
++; FWD:       [[DOTNOEXC1]]:
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    invoke void @opaque(i64 [[A5_I]])
++; FWD-NEXT:            to label %[[DOTNOEXC2:.*]] unwind label %[[LPAD]]
++; FWD:       [[DOTNOEXC2]]:
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R3:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[DOTNOEXC2]] ]
++; FWD-NEXT:    br label %[[CONT:.*]]
++; FWD:       [[CONT]]:
++; FWD-NEXT:    ret i64 [[R3]]
++; FWD:       [[LPAD]]:
++; FWD-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
++; FWD-NEXT:            cleanup
++; FWD-NEXT:    resume { ptr, i32 } [[LP]]
++;
++; NOFWD-LABEL: define i64 @invoke_call_site(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) personality ptr @__gxx_personality_v0 {
++; NOFWD-NEXT:  [[ENTRY:.*:]]
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = invoke i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:            to label %[[CONT:.*]] unwind label %[[LPAD:.*]]
++; NOFWD:       [[CONT]]:
++; NOFWD-NEXT:    ret i64 [[R]]
++; NOFWD:       [[LPAD]]:
++; NOFWD-NEXT:    [[LP:%.*]] = landingpad { ptr, i32 }
++; NOFWD-NEXT:            cleanup
++; NOFWD-NEXT:    resume { ptr, i32 } [[LP]]
++;
++entry:
++  store i64 0, ptr %this
++  %r = invoke i64 @callee(ptr %this, i64 %n)
++  to label %cont unwind label %lpad
++
++cont:
++  ret i64 %r
++
++lpad:
++  %lp = landingpad { ptr, i32 } cleanup
++  resume { ptr, i32 } %lp
++}
++
++define i64 @callee_overwrite_caller(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @callee_overwrite_caller(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee_overwrites_location(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %r = call i64 @callee_overwrites_location(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++define i64 @callee_unknown_store_caller(ptr %this, ptr %other, i64 %n) {
++; CHECK-LABEL: define i64 @callee_unknown_store_caller(
++; CHECK-SAME: ptr [[THIS:%.*]], ptr [[OTHER:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee_stores_through_unknown_ptr(ptr [[THIS]], ptr [[OTHER]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %r = call i64 @callee_stores_through_unknown_ptr(ptr %this, ptr %other, i64 %n)
++  ret i64 %r
++}
++
++; The callee's own stack memory cannot alias the caller's stores, so the
++; forwarding survives and the call is inlined.
++define i64 @callee_stores_to_own_alloca(ptr %p, i64 %n) {
++; CHECK-LABEL: define i64 @callee_stores_to_own_alloca(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 [[N]], ptr [[TMP]], align 4
++; CHECK-NEXT:    [[SIZE:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[SIZE]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[EMPTY:.*]], label %[[SLOW:.*]]
++; CHECK:       [[EMPTY]]:
++; CHECK-NEXT:    ret i64 0
++; CHECK:       [[SLOW]]:
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    call void @opaque(i64 [[N]])
++; CHECK-NEXT:    ret i64 [[N]]
++;
++entry:
++  %tmp = alloca i64
++  store i64 %n, ptr %tmp
++  %size = load i64, ptr %p
++  %c = icmp eq i64 %size, 0
++  br i1 %c, label %empty, label %slow
++
++empty:
++  ret i64 0
++
++slow:
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  call void @opaque(i64 %n)
++  ret i64 %n
++}
++
++define i64 @callee_own_alloca_caller(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @callee_own_alloca_caller(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; FWD-NEXT:    store i64 [[N]], ptr [[TMP_I]], align 4
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; FWD-NEXT:    br label %[[CALLEE_STORES_TO_OWN_ALLOCA_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    call void @opaque(i64 [[N]])
++; FWD-NEXT:    call void @opaque(i64 [[N]])
++; FWD-NEXT:    call void @opaque(i64 [[N]])
++; FWD-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; FWD-NEXT:    br label %[[CALLEE_STORES_TO_OWN_ALLOCA_EXIT]]
++; FWD:       [[CALLEE_STORES_TO_OWN_ALLOCA_EXIT]]:
++; FWD-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[N]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R1]]
++;
++; NOFWD-LABEL: define i64 @callee_own_alloca_caller(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee_stores_to_own_alloca(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %r = call i64 @callee_stores_to_own_alloca(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++define i64 @callee_call_before_load_caller(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @callee_call_before_load_caller(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[R:%.*]] = call i64 @callee_call_before_load(ptr [[THIS]], i64 [[N]])
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  store i64 0, ptr %this
++  %r = call i64 @callee_call_before_load(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++; The branch folds once the load from %tmp is forwarded. That cuts
++; the else arm, so the second call site, which is in a join block, now has a
++; single predecessor and the walk reaches the store.
++define void @init_diamond(ptr %p) {
++; CHECK-LABEL: define void @init_diamond(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 0, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[V]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[ELSE:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    store i64 0, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++; CHECK:       [[ELSE]]:
++; CHECK-NEXT:    store i64 1, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tmp = alloca i64
++  store i64 0, ptr %tmp
++  %v = load i64, ptr %tmp
++  %c = icmp eq i64 %v, 0
++  br i1 %c, label %then, label %else
++
++then:
++  store i64 0, ptr %p
++  ret void
++
++else:
++  store i64 1, ptr %p
++  ret void
++}
++
++define i64 @folded_branch_lets_walk_reach_store(ptr %this, i64 %n) {
++; FWD-LABEL: define i64 @folded_branch_lets_walk_reach_store(
++; FWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; FWD-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; FWD-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; FWD-NEXT:    store i64 0, ptr [[TMP_I]], align 4
++; FWD-NEXT:    [[C_I:%.*]] = icmp eq i64 0, 0
++; FWD-NEXT:    br label %[[THEN_I:.*]]
++; FWD:       [[THEN_I]]:
++; FWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; FWD-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; FWD-NEXT:    br label %[[INIT_DIAMOND_EXIT:.*]]
++; FWD:       [[ELSE_I:.*:]]
++; FWD-NEXT:    store i64 1, ptr [[THIS]], align 4
++; FWD-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; FWD-NEXT:    unreachable
++; FWD:       [[INIT_DIAMOND_EXIT]]:
++; FWD-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; FWD-NEXT:    [[C_I1:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; FWD-NEXT:    br i1 [[C_I1]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; FWD:       [[EMPTY_I]]:
++; FWD-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; FWD:       [[SLOW_I]]:
++; FWD-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; FWD-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; FWD-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A3_I]])
++; FWD-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; FWD-NEXT:    call void @opaque(i64 [[A4_I]])
++; FWD-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; FWD-NEXT:    call void @opaque(i64 [[A5_I]])
++; FWD-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; FWD-NEXT:    br label %[[CALLEE_EXIT]]
++; FWD:       [[CALLEE_EXIT]]:
++; FWD-NEXT:    [[R2:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; FWD-NEXT:    ret i64 [[R2]]
++;
++; NOFWD-LABEL: define i64 @folded_branch_lets_walk_reach_store(
++; NOFWD-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; NOFWD-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; NOFWD-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; NOFWD-NEXT:    store i64 0, ptr [[TMP_I]], align 4
++; NOFWD-NEXT:    [[C_I:%.*]] = icmp eq i64 0, 0
++; NOFWD-NEXT:    br label %[[THEN_I:.*]]
++; NOFWD:       [[THEN_I]]:
++; NOFWD-NEXT:    store i64 0, ptr [[THIS]], align 4
++; NOFWD-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; NOFWD-NEXT:    br label %[[INIT_DIAMOND_EXIT:.*]]
++; NOFWD:       [[ELSE_I:.*:]]
++; NOFWD-NEXT:    store i64 1, ptr [[THIS]], align 4
++; NOFWD-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; NOFWD-NEXT:    unreachable
++; NOFWD:       [[INIT_DIAMOND_EXIT]]:
++; NOFWD-NEXT:    [[R:%.*]] = call i64 @callee(ptr [[THIS]], i64 [[N]])
++; NOFWD-NEXT:    ret i64 [[R]]
++;
++  call void @init_diamond(ptr %this)
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
+diff --git a/llvm/test/Transforms/Inline/post_inline_simplify.ll b/llvm/test/Transforms/Inline/post_inline_simplify.ll
+new file mode 100644
+index 00000000000000..6cde2fd8bd565c
+--- /dev/null
++++ b/llvm/test/Transforms/Inline/post_inline_simplify.ll
+@@ -0,0 +1,317 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; Tests for the simplifications done on the inlined region before the next call
++; site of the same caller is analyzed (simplifyInlinedRegion). The simplifier
++; only runs when another call site follows, which is why we need a call after
++; the inlined one in each caller.
++
++; RUN: opt < %s -passes=inline -inline-threshold=50 -S | FileCheck %s
++
++declare void @opaque(i64)
++
++define void @trailing() {
++; CHECK-LABEL: define void @trailing() {
++; CHECK-NEXT:    ret void
++;
++  ret void
++}
++
++define void @init_const(ptr %p) {
++; CHECK-LABEL: define void @init_const(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 5, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[X:%.*]] = add i64 [[V]], 1
++; CHECK-NEXT:    store i64 [[X]], ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tmp = alloca i64
++  store i64 5, ptr %tmp
++  %v = load i64, ptr %tmp
++  %x = add i64 %v, 1
++  store i64 %x, ptr %p
++  ret void
++}
++
++; The load is forwarded from the store in the same block and the add folds, so
++; the caller ends up storing the constant 6.
++define void @forward_and_fold(ptr %this) {
++; CHECK-LABEL: define void @forward_and_fold(
++; CHECK-SAME: ptr [[THIS:%.*]]) {
++; CHECK-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    store i64 5, ptr [[TMP_I]], align 4
++; CHECK-NEXT:    [[X_I:%.*]] = add i64 5, 1
++; CHECK-NEXT:    store i64 6, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    ret void
++;
++  call void @init_const(ptr %this)
++  call void @trailing()
++  ret void
++}
++
++define void @init_branch(ptr %p) {
++; CHECK-LABEL: define void @init_branch(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 0, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[V]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[ELSE:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    store i64 1, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++; CHECK:       [[ELSE]]:
++; CHECK-NEXT:    store i64 2, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tmp = alloca i64
++  store i64 0, ptr %tmp
++  %v = load i64, ptr %tmp
++  %c = icmp eq i64 %v, 0
++  br i1 %c, label %then, label %else
++
++then:
++  store i64 1, ptr %p
++  ret void
++
++else:
++  store i64 2, ptr %p
++  ret void
++}
++
++; The branch condition folds to true, so the else arm becomes unreachable.
++define void @fold_branch_cut_dead_arm(ptr %this) {
++; CHECK-LABEL: define void @fold_branch_cut_dead_arm(
++; CHECK-SAME: ptr [[THIS:%.*]]) {
++; CHECK-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    store i64 0, ptr [[TMP_I]], align 4
++; CHECK-NEXT:    [[C_I:%.*]] = icmp eq i64 0, 0
++; CHECK-NEXT:    br label %[[THEN_I:.*]]
++; CHECK:       [[THEN_I]]:
++; CHECK-NEXT:    store i64 1, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    br label %[[INIT_BRANCH_EXIT:.*]]
++; CHECK:       [[ELSE_I:.*:]]
++; CHECK-NEXT:    store i64 2, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    unreachable
++; CHECK:       [[INIT_BRANCH_EXIT]]:
++; CHECK-NEXT:    ret void
++;
++  call void @init_branch(ptr %this)
++  call void @trailing()
++  ret void
++}
++
++define i64 @callee(ptr %p, i64 %n) {
++; CHECK-LABEL: define i64 @callee(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SIZE:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[SIZE]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[EMPTY:.*]], label %[[SLOW:.*]]
++; CHECK:       [[EMPTY]]:
++; CHECK-NEXT:    ret i64 0
++; CHECK:       [[SLOW]]:
++; CHECK-NEXT:    [[A1:%.*]] = add i64 [[N]], 1
++; CHECK-NEXT:    [[A2:%.*]] = mul i64 [[A1]], [[N]]
++; CHECK-NEXT:    [[A3:%.*]] = xor i64 [[A2]], [[A1]]
++; CHECK-NEXT:    call void @opaque(i64 [[A3]])
++; CHECK-NEXT:    [[A4:%.*]] = add i64 [[A3]], 7
++; CHECK-NEXT:    call void @opaque(i64 [[A4]])
++; CHECK-NEXT:    [[A5:%.*]] = mul i64 [[A4]], [[A3]]
++; CHECK-NEXT:    call void @opaque(i64 [[A5]])
++; CHECK-NEXT:    [[A6:%.*]] = xor i64 [[A5]], [[A4]]
++; CHECK-NEXT:    ret i64 [[A6]]
++;
++entry:
++  %size = load i64, ptr %p
++  %c = icmp eq i64 %size, 0
++  br i1 %c, label %empty, label %slow
++
++empty:
++  ret i64 0
++
++slow:
++  %a1 = add i64 %n, 1
++  %a2 = mul i64 %a1, %n
++  %a3 = xor i64 %a2, %a1
++  call void @opaque(i64 %a3)
++  %a4 = add i64 %a3, 7
++  call void @opaque(i64 %a4)
++  %a5 = mul i64 %a4, %a3
++  call void @opaque(i64 %a5)
++  %a6 = xor i64 %a5, %a4
++  ret i64 %a6
++}
++
++define void @init_via_tmp(ptr %p) {
++; CHECK-LABEL: define void @init_via_tmp(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 0, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[TMP]], align 4
++; CHECK-NEXT:    store i64 [[V]], ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  %tmp = alloca i64
++  store i64 0, ptr %tmp
++  %v = load i64, ptr %tmp
++  store i64 %v, ptr %p
++  ret void
++}
++
++; After @init_via_tmp is inlined, the stored value is the result of a load. The
++; simplifier forwards it to the constant 0, so the cost model sees a constant
++; reaching store and @callee is inlined.
++define i64 @init_then_callee_inlined(ptr %this, i64 %n) {
++; CHECK-LABEL: define i64 @init_then_callee_inlined(
++; CHECK-SAME: ptr [[THIS:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    store i64 0, ptr [[TMP_I]], align 4
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    [[SIZE_I:%.*]] = load i64, ptr [[THIS]], align 4
++; CHECK-NEXT:    [[C_I:%.*]] = icmp eq i64 [[SIZE_I]], 0
++; CHECK-NEXT:    br i1 [[C_I]], label %[[EMPTY_I:.*]], label %[[SLOW_I:.*]]
++; CHECK:       [[EMPTY_I]]:
++; CHECK-NEXT:    br label %[[CALLEE_EXIT:.*]]
++; CHECK:       [[SLOW_I]]:
++; CHECK-NEXT:    [[A1_I:%.*]] = add i64 [[N]], 1
++; CHECK-NEXT:    [[A2_I:%.*]] = mul i64 [[A1_I]], [[N]]
++; CHECK-NEXT:    [[A3_I:%.*]] = xor i64 [[A2_I]], [[A1_I]]
++; CHECK-NEXT:    call void @opaque(i64 [[A3_I]])
++; CHECK-NEXT:    [[A4_I:%.*]] = add i64 [[A3_I]], 7
++; CHECK-NEXT:    call void @opaque(i64 [[A4_I]])
++; CHECK-NEXT:    [[A5_I:%.*]] = mul i64 [[A4_I]], [[A3_I]]
++; CHECK-NEXT:    call void @opaque(i64 [[A5_I]])
++; CHECK-NEXT:    [[A6_I:%.*]] = xor i64 [[A5_I]], [[A4_I]]
++; CHECK-NEXT:    br label %[[CALLEE_EXIT]]
++; CHECK:       [[CALLEE_EXIT]]:
++; CHECK-NEXT:    [[R1:%.*]] = phi i64 [ 0, %[[EMPTY_I]] ], [ [[A6_I]], %[[SLOW_I]] ]
++; CHECK-NEXT:    ret i64 [[R1]]
++;
++  call void @init_via_tmp(ptr %this)
++  %r = call i64 @callee(ptr %this, i64 %n)
++  ret i64 %r
++}
++
++define void @dead_target(ptr %p) {
++; CHECK-LABEL: define void @dead_target(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    call void @opaque(i64 1)
++; CHECK-NEXT:    call void @opaque(i64 2)
++; CHECK-NEXT:    call void @opaque(i64 3)
++; CHECK-NEXT:    store i64 9, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++;
++  call void @opaque(i64 1)
++  call void @opaque(i64 2)
++  call void @opaque(i64 3)
++  store i64 9, ptr %p
++  ret void
++}
++
++define void @init_dead_call(ptr %p) {
++; CHECK-LABEL: define void @init_dead_call(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 0, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[V]], 0
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[ELSE:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    store i64 0, ptr [[P]], align 4
++; CHECK-NEXT:    ret void
++; CHECK:       [[ELSE]]:
++; CHECK-NEXT:    call void @dead_target(ptr [[P]])
++; CHECK-NEXT:    ret void
++;
++  %tmp = alloca i64
++  store i64 0, ptr %tmp
++  %v = load i64, ptr %tmp
++  %c = icmp eq i64 %v, 0
++  br i1 %c, label %then, label %else
++
++then:
++  store i64 0, ptr %p
++  ret void
++
++else:
++  call void @dead_target(ptr %p)
++  ret void
++}
++
++; The else arm is cut after the branch folds, but the call to @dead_target in it
++; is still in the inliner's worklist. This must not crash or break the IR.
++define void @dead_call_site_in_cut_arm(ptr %this) {
++; CHECK-LABEL: define void @dead_call_site_in_cut_arm(
++; CHECK-SAME: ptr [[THIS:%.*]]) {
++; CHECK-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    store i64 0, ptr [[TMP_I]], align 4
++; CHECK-NEXT:    [[C_I:%.*]] = icmp eq i64 0, 0
++; CHECK-NEXT:    br label %[[THEN_I:.*]]
++; CHECK:       [[THEN_I]]:
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    br label %[[INIT_DEAD_CALL_EXIT:.*]]
++; CHECK:       [[ELSE_I:.*:]]
++; CHECK-NEXT:    call void @dead_target(ptr [[THIS]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    unreachable
++; CHECK:       [[INIT_DEAD_CALL_EXIT]]:
++; CHECK-NEXT:    ret void
++;
++  call void @init_dead_call(ptr %this)
++  call void @trailing()
++  ret void
++}
++
++define void @simplifies_inlined_region_only(ptr %this, ptr %out) {
++; CHECK-LABEL: define void @simplifies_inlined_region_only(
++; CHECK-SAME: ptr [[THIS:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TMP_I:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    [[TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    [[EXIT_TMP:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 5, ptr [[TMP]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[TMP]], align 4
++; CHECK-NEXT:    store i64 [[V]], ptr [[OUT]], align 4
++; CHECK-NEXT:    br label %[[MID:.*]]
++; CHECK:       [[MID]]:
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    store i64 5, ptr [[TMP_I]], align 4
++; CHECK-NEXT:    [[X_I:%.*]] = add i64 5, 1
++; CHECK-NEXT:    store i64 6, ptr [[THIS]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr [[TMP_I]])
++; CHECK-NEXT:    br label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    store i64 5, ptr [[EXIT_TMP]], align 4
++; CHECK-NEXT:    [[EXIT_V:%.*]] = load i64, ptr [[EXIT_TMP]], align 4
++; CHECK-NEXT:    store i64 [[EXIT_V]], ptr [[OUT]], align 4
++; CHECK-NEXT:    ret void
++;
++entry:
++  %tmp = alloca i64
++  %exit_tmp = alloca i64
++  store i64 5, ptr %tmp
++  %v = load i64, ptr %tmp
++  store i64 %v, ptr %out
++  br label %mid
++
++mid:
++  call void @init_const(ptr %this)
++  call void @trailing()
++  br label %exit
++
++exit:
++  store i64 5, ptr %exit_tmp
++  %exit_v = load i64, ptr %exit_tmp
++  store i64 %exit_v, ptr %out
++  ret void
++}
