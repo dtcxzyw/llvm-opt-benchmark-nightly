@@ -156,7 +156,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ah = trunc <4 x i8> %.fr to <4 x i1>
   %i.ai = bitcast <4 x i1> %i.ah to i4, !dbg !840
   %i.aj = icmp ne i4 %i.ai, 0, !dbg !840
-  %i.ak = or i1 %i.ac, %i.aj, !dbg !840
+  %i.ak = or i1 %i.aj, %i.ac, !dbg !840
   %op.rdx49 = select i1 %i.ak, i1 true, i1 %i.ae, !dbg !840
   br i1 %op.rdx49, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i.i, label %.split.i.i, !dbg !840
 
@@ -354,7 +354,7 @@ bb.u:                                             ; preds = %bb.t
   %i.da = trunc <4 x i8> %.fr50 to <4 x i1>
   %i.db = bitcast <4 x i1> %i.da to i4, !dbg !888
   %i.dc = icmp ne i4 %i.db, 0, !dbg !888
-  %i.dd = or i1 %i.cv, %i.dc, !dbg !888
+  %i.dd = or i1 %i.dc, %i.cv, !dbg !888
   %op.rdx47 = select i1 %i.dd, i1 true, i1 %i.cx, !dbg !888
   br i1 %op.rdx47, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i, label %.split.i, !dbg !888
 
@@ -544,7 +544,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = trunc <4 x i8> %.fr to <4 x i1>
   %i.aj = bitcast <4 x i1> %i.ai to i4, !dbg !1043
   %i.ak = icmp ne i4 %i.aj, 0, !dbg !1043
-  %i.al = or i1 %i.ad, %i.ak, !dbg !1043
+  %i.al = or i1 %i.ak, %i.ad, !dbg !1043
   %op.rdx48 = select i1 %i.al, i1 true, i1 %i.af, !dbg !1043
   br i1 %op.rdx48, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i.i, label %.split.i.i, !dbg !1043
 
@@ -742,7 +742,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dd = trunc <4 x i8> %.fr49 to <4 x i1>
   %i.de = bitcast <4 x i1> %i.dd to i4, !dbg !1090
   %i.df = icmp ne i4 %i.de, 0, !dbg !1090
-  %i.dg = or i1 %i.cy, %i.df, !dbg !1090
+  %i.dg = or i1 %i.df, %i.cy, !dbg !1090
   %op.rdx46 = select i1 %i.dg, i1 true, i1 %i.da, !dbg !1090
   br i1 %op.rdx46, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i, label %.split.i, !dbg !1090
 
@@ -1145,7 +1145,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = trunc <4 x i8> %.fr to <4 x i1>
   %i.s = bitcast <4 x i1> %i.r to i4, !dbg !2449
   %i.t = icmp ne i4 %i.s, 0, !dbg !2449
-  %i.u = or i1 %i.m, %i.t, !dbg !2449
+  %i.u = or i1 %i.t, %i.m, !dbg !2449
   %op.rdx16 = select i1 %i.u, i1 true, i1 %i.o, !dbg !2449
   br i1 %op.rdx16, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit, !dbg !2449
 
@@ -1309,7 +1309,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = trunc <4 x i8> %.fr to <4 x i1>
   %i.z = bitcast <4 x i1> %i.y to i4, !dbg !2721
   %i.aa = icmp ne i4 %i.z, 0, !dbg !2721
-  %i.ab = or i1 %i.t, %i.aa, !dbg !2721
+  %i.ab = or i1 %i.aa, %i.t, !dbg !2721
   %op.rdx56 = select i1 %i.ab, i1 true, i1 %i.v, !dbg !2721
   br i1 %op.rdx56, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit, !dbg !2721
 
@@ -1712,7 +1712,7 @@ bb.d:                                             ; preds = %bb.c
   %i.af = trunc <4 x i8> %.fr to <4 x i1>
   %i.ag = bitcast <4 x i1> %i.af to i4, !dbg !3943
   %i.ah = icmp ne i4 %i.ag, 0, !dbg !3943
-  %i.ai = or i1 %i.aa, %i.ah, !dbg !3943
+  %i.ai = or i1 %i.ah, %i.aa, !dbg !3943
   %op.rdx316 = select i1 %i.ai, i1 true, i1 %i.ac, !dbg !3943
   br i1 %op.rdx316, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread.i, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i, !dbg !3943
 
@@ -2115,7 +2115,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.fj = trunc <4 x i8> %.fr317 to <4 x i1>
   %i.fk = bitcast <4 x i1> %i.fj to i4, !dbg !4117
   %i.fl = icmp ne i4 %i.fk, 0, !dbg !4117
-  %i.fm = or i1 %i.fe, %i.fl, !dbg !4117
+  %i.fm = or i1 %i.fl, %i.fe, !dbg !4117
   %op.rdx314 = select i1 %i.fm, i1 true, i1 %i.fg, !dbg !4117
   br i1 %op.rdx314, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread.i105, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i112, !dbg !4117
 
@@ -2518,7 +2518,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = trunc <4 x i8> %.fr to <4 x i1>
   %i.s = bitcast <4 x i1> %i.r to i4, !dbg !11196
   %i.t = icmp ne i4 %i.s, 0, !dbg !11196
-  %i.u = or i1 %i.m, %i.t, !dbg !11196
+  %i.u = or i1 %i.t, %i.m, !dbg !11196
   %op.rdx29 = select i1 %i.u, i1 true, i1 %i.o, !dbg !11196
   br i1 %op.rdx29, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit, !dbg !11196
 
@@ -2692,7 +2692,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = trunc <4 x i8> %.fr to <4 x i1>
   %i.aa = bitcast <4 x i1> %i.z to i4, !dbg !11460
   %i.ab = icmp ne i4 %i.aa, 0, !dbg !11460
-  %i.ac = or i1 %i.u, %i.ab, !dbg !11460
+  %i.ac = or i1 %i.ab, %i.u, !dbg !11460
   %op.rdx55 = select i1 %i.ac, i1 true, i1 %i.w, !dbg !11460
   br i1 %op.rdx55, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit, !dbg !11460
 
@@ -3095,7 +3095,7 @@ bb.d:                                             ; preds = %bb.c
   %i.af = trunc <4 x i8> %.fr to <4 x i1>
   %i.ag = bitcast <4 x i1> %i.af to i4, !dbg !12669
   %i.ah = icmp ne i4 %i.ag, 0, !dbg !12669
-  %i.ai = or i1 %i.aa, %i.ah, !dbg !12669
+  %i.ai = or i1 %i.ah, %i.aa, !dbg !12669
   %op.rdx345 = select i1 %i.ai, i1 true, i1 %i.ac, !dbg !12669
   br i1 %op.rdx345, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread.i, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i, !dbg !12669
 
@@ -3498,7 +3498,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.fp = trunc <4 x i8> %.fr346 to <4 x i1>
   %i.fq = bitcast <4 x i1> %i.fp to i4, !dbg !12844
   %i.fr = icmp ne i4 %i.fq, 0, !dbg !12844
-  %i.fs = or i1 %i.fk, %i.fr, !dbg !12844
+  %i.fs = or i1 %i.fr, %i.fk, !dbg !12844
   %op.rdx343 = select i1 %i.fs, i1 true, i1 %i.fm, !dbg !12844
   br i1 %op.rdx343, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.thread.i110, label %_RNvMsz_Cs6Ur84ob3I15_9termcolorNtB5_9ColorSpec7is_none.exit.i121, !dbg !12844
 

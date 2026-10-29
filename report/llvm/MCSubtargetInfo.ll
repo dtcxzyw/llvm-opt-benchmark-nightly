@@ -204,18 +204,18 @@ bb.a:
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.b = load <2 x i64>, ptr %.sroa.11.0..sroa_idx, align 8 ; 4 uses
   %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.c = load <2 x i64>, ptr %.sroa.19.0..sroa_idx, align 8
-  %.fr119 = freeze <2 x i64> %i.c                 ; 3 uses
+  %i.c = load <2 x i64>, ptr %.sroa.19.0..sroa_idx, align 8 ; 3 uses
   %i.d = shufflevector <2 x i64> %i.a, <2 x i64> %i.b, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %.fr = freeze <4 x i64> %i.d
   %i.e = icmp ne <4 x i64> %.fr, zeroinitializer
-  %i.f = extractelement <2 x i64> %.fr119, i64 0  ; 2 uses
-  %4 = extractelement <2 x i64> %.fr119, i64 1    ; 2 uses
+  %i.f = extractelement <2 x i64> %i.c, i64 0     ; 2 uses
+  %.not30.i.i.i.i.i.i.i78 = icmp ne i64 %i.f, 0
+  %4 = extractelement <2 x i64> %i.c, i64 1       ; 2 uses
+  %i.g = icmp ne i64 %4, 0
   %5 = bitcast <4 x i1> %i.e to i4
-  %i.g = icmp ne i4 %5, 0
-  %6 = or i64 %4, %i.f
-  %i.h = icmp ne i64 %6, 0
-  %op.rdx117 = or i1 %i.g, %i.h
+  %i.h = icmp ne i4 %5, 0
+  %op.rdx116 = select i1 %i.h, i1 true, i1 %.not30.i.i.i.i.i.i.i78
+  %op.rdx117 = select i1 %op.rdx116, i1 true, i1 %i.g
   br i1 %op.rdx117, label %_ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph, label %._crit_edge88
 
 _ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph: ; preds = %bb.a
@@ -231,7 +231,7 @@ _ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph: ; preds = %bb.a
 _ZNK4llvm13FeatureBitset3anyEv.exit.thread:       ; preds = %_ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph, %._crit_edge
   %i.n = phi <2 x i64> [ %i.w, %._crit_edge ], [ %i.a, %_ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph ] ; 2 uses
   %i.o = phi <2 x i64> [ %i.x, %._crit_edge ], [ %i.b, %_ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph ] ; 2 uses
-  %i.p = phi <2 x i64> [ %i.y, %._crit_edge ], [ %.fr119, %_ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph ] ; 2 uses
+  %i.p = phi <2 x i64> [ %i.y, %._crit_edge ], [ %i.c, %_ZNK4llvm13FeatureBitset3anyEv.exit.thread.lr.ph ] ; 2 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d
@@ -242,22 +242,22 @@ _ZNK4llvm13FeatureBitset3anyEv.exit.thread:       ; preds = %_ZNK4llvm13FeatureB
   store <2 x i64> %i.t, ptr %1, align 8
   %i.u = and <2 x i64> %i.bb, %i.r                ; 2 uses
   store <2 x i64> %i.u, ptr %.sroa.11.0..sroa_idx, align 8
-  %i.v = and <2 x i64> %i.bc, %i.s
-  %.fr122 = freeze <2 x i64> %i.v                 ; 3 uses
-  store <2 x i64> %.fr122, ptr %.sroa.19.0..sroa_idx, align 8
+  %i.v = and <2 x i64> %i.bc, %i.s                ; 3 uses
+  store <2 x i64> %i.v, ptr %.sroa.19.0..sroa_idx, align 8
   %i.w = or <2 x i64> %i.ba, %i.n                 ; 3 uses
   %i.x = or <2 x i64> %i.bb, %i.o                 ; 3 uses
   %i.y = or <2 x i64> %i.bc, %i.p                 ; 3 uses
   %i.z = shufflevector <2 x i64> %i.t, <2 x i64> %i.u, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %.fr120 = freeze <4 x i64> %i.z
   %i.aa = icmp ne <4 x i64> %.fr120, zeroinitializer
-  %i.ab = extractelement <2 x i64> %.fr122, i64 0
-  %7 = extractelement <2 x i64> %.fr122, i64 1
-  %8 = bitcast <4 x i1> %i.aa to i4
-  %i.ac = icmp ne i4 %8, 0
-  %9 = or i64 %7, %i.ab
-  %i.ad = icmp ne i64 %9, 0
-  %op.rdx115 = or i1 %i.ac, %i.ad
+  %i.ab = extractelement <2 x i64> %i.v, i64 0
+  %.not30.i.i.i.i.i.i.i = icmp ne i64 %i.ab, 0
+  %6 = extractelement <2 x i64> %i.v, i64 1
+  %i.ac = icmp ne i64 %6, 0
+  %7 = bitcast <4 x i1> %i.aa to i4
+  %i.ad = icmp ne i4 %7, 0
+  %op.rdx = select i1 %i.ad, i1 true, i1 %.not30.i.i.i.i.i.i.i
+  %op.rdx115 = select i1 %op.rdx, i1 true, i1 %i.ac
   br i1 %op.rdx115, label %_ZNK4llvm13FeatureBitset3anyEv.exit.thread, label %._crit_edge88.loopexit, !llvm.loop !110
 
 bb.b:                                             ; preds = %_ZNK4llvm13FeatureBitset3anyEv.exit.thread, %bb.d

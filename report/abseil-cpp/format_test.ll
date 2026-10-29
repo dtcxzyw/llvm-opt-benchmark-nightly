@@ -202,8 +202,8 @@ bb.do:                                            ; preds = %bb.dn
   %i.kc = icmp eq i8 %i.kb, 9
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.kd = icmp eq i32 %.fr.scalar, 135470086
-  %48 = and i1 %i.jx, %i.kd
-  %op.rdx405 = select i1 %48, i1 %i.kc, i1 false
+  %op.rdx = select i1 %i.kd, i1 %i.jx, i1 false
+  %op.rdx405 = select i1 %op.rdx, i1 %i.kc, i1 false
   br i1 %op.rdx405, label %bb.dp, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.dp:                                            ; preds = %bb.do
@@ -606,8 +606,8 @@ bb.t:                                             ; preds = %_ZN7testing8interna
   %i.br = icmp eq i8 %i.bq, 9
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.bs = icmp eq i32 %.fr.scalar, 135470086
-  %35 = and i1 %i.bm, %i.bs
-  %op.rdx282 = select i1 %35, i1 %i.br, i1 false
+  %op.rdx281 = select i1 %i.bs, i1 %i.bm, i1 false
+  %op.rdx282 = select i1 %op.rdx281, i1 %i.br, i1 false
   br i1 %op.rdx282, label %bb.u, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.u:                                             ; preds = %bb.t
@@ -1010,8 +1010,8 @@ bb.bq:                                            ; preds = %bb.bp
   %i.fs = icmp eq i8 %i.fr, 9
   %.fr283.scalar = bitcast <4 x i8> %.fr283 to i32
   %i.ft = icmp eq i32 %.fr283.scalar, 135470086
-  %36 = and i1 %i.fn, %i.ft
-  %op.rdx280 = select i1 %36, i1 %i.fs, i1 false
+  %op.rdx = select i1 %i.ft, i1 %i.fn, i1 false
+  %op.rdx280 = select i1 %op.rdx, i1 %i.fs, i1 false
   br i1 %op.rdx280, label %bb.br, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i137
 
 bb.br:                                            ; preds = %bb.bq

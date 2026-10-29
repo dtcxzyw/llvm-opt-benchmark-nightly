@@ -205,9 +205,9 @@ bb.a:
   %i.q = icmp ult i8 %5, -96
   %i.r = bitcast <8 x i1> %i.m to i8
   %i.s = icmp eq i8 %i.r, 0
-  %op.rdx.not36 = and i1 %i.s, %i.n
-  %op.rdx27.not34 = and i1 %i.p, %i.q
-  %op.rdx28.not = select i1 %op.rdx27.not34, i1 %op.rdx.not36, i1 false
+  %op.rdx.not36 = and i1 %i.s, %i.q
+  %op.rdx27.not34 = and i1 %op.rdx.not36, %i.n
+  %op.rdx28.not = select i1 %op.rdx27.not34, i1 %i.p, i1 false
   %i.t = and i8 %5, 14
   %i.u = icmp samesign ult i8 %i.t, 10
   %narrow = select i1 %op.rdx28.not, i1 %i.u, i1 false

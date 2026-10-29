@@ -205,7 +205,7 @@ _ZN11duckdb_zstdL21ZSTD_dictNCountRepeatEPsjj.exit: ; preds = %bb.i
   %i.az = shufflevector <48 x i1> %i.ay, <48 x i1> %i.aq, <48 x i32> <i32 0, i32 1, i32 2, i32 3, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71, i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95>
   %i.ba = bitcast <48 x i1> %i.az to i48
   %i.bb = icmp ne i48 %i.ba, 0
-  %i.bc = select i1 %i.ao, i1 true, i1 %i.bb
+  %i.bc = select i1 %i.bb, i1 true, i1 %i.ao
   %op.rdx408 = select i1 %i.bc, i1 true, i1 %i.aw
   %.07.i = select i1 %op.rdx408, i32 1, i32 2
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 5608
@@ -252,7 +252,7 @@ _ZN11duckdb_zstdL21ZSTD_dictNCountRepeatEPsjj.exit117: ; preds = %bb.k
   %i.by = shufflevector <32 x i1> %i.bx, <32 x i1> %i.bs, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.bz = bitcast <32 x i1> %i.by to i32
   %i.ca = icmp ne i32 %i.bz, 0
-  %op.rdx = select i1 %i.bq, i1 true, i1 %i.ca
+  %op.rdx = select i1 %i.ca, i1 true, i1 %i.bq
   %.07.i116 = select i1 %op.rdx, i32 1, i32 2
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 5612
   store i32 %.07.i116, ptr %i.cb, align 4, !tbaa !167

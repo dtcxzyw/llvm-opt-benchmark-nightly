@@ -205,7 +205,7 @@ _ZN3ozz2io8IArchive7TestTagINS_9animation7offline11RawSkeletonEEEbv.exit.i: ; pr
   %i.et = icmp ne <16 x i8> %.fr, <i8 111, i8 122, i8 122, i8 45, i8 114, i8 97, i8 119, i8 95, i8 115, i8 107, i8 101, i8 108, i8 101, i8 116, i8 111, i8 110>
   %i.eu = bitcast <16 x i1> %i.et to i16
   %i.ev = icmp eq i16 %i.eu, 0
-  %i.ew = and i1 %.not.i.i.i, %i.ev
+  %i.ew = and i1 %i.ev, %.not.i.i.i
   %op.rdx1823 = select i1 %i.ew, i1 %i.es, i1 false
   br i1 %op.rdx1823, label %bb.aw, label %bb.ca
 
@@ -567,8 +567,8 @@ _ZN3ozz2io8IArchive7TestTagINS_9animation8SkeletonEEEbv.exit.i: ; preds = %.noex
   %i.ix = shufflevector <8 x i1> %i.iw, <8 x i1> %i.is, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
   %i.iy = bitcast <8 x i1> %i.ix to i8
   %i.iz = icmp eq i8 %i.iy, -1
-  %63 = select i1 %.not.i.i78.i, i1 %i.iz, i1 false
-  %op.rdx1821 = select i1 %63, i1 %i.iu, i1 false
+  %op.rdx = and i1 %i.iz, %.not.i.i78.i
+  %op.rdx1821 = select i1 %op.rdx, i1 %i.iu, i1 false
   br i1 %op.rdx1821, label %bb.cb, label %bb.cd
 
 bb.cb:                                            ; preds = %_ZN3ozz2io8IArchive7TestTagINS_9animation8SkeletonEEEbv.exit.i

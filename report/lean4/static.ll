@@ -206,20 +206,20 @@ bb.b:                                             ; preds = %bb.a
   %i.i = shufflevector <2 x i64> %i.f, <2 x i64> %i.h, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %.fr = freeze <4 x i64> %i.i
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.k = load <2 x i64>, ptr %i.j, align 16
-  %.fr4 = freeze <2 x i64> %i.k                   ; 5 uses
-  %i.l = extractelement <2 x i64> %.fr4, i64 0    ; 2 uses
-  %5 = extractelement <2 x i64> %.fr4, i64 1      ; 2 uses
+  %i.k = load <2 x i64>, ptr %i.j, align 16       ; 5 uses
+  %5 = extractelement <2 x i64> %i.k, i64 0       ; 2 uses
+  %.not.4.i = icmp eq i64 %5, 0
+  %i.l = extractelement <2 x i64> %i.k, i64 1     ; 2 uses
+  %.not.5.i = icmp eq i64 %i.l, 0
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.n = load i64, ptr %i.m, align 16             ; 5 uses
   %.not.6.i = icmp eq i64 %i.n, 0
   %i.o = icmp ne <4 x i64> %.fr, zeroinitializer
   %i.p = bitcast <4 x i1> %i.o to i4
   %i.q = icmp eq i4 %i.p, 0
-  %6 = or i64 %5, %i.l
-  %7 = icmp eq i64 %6, 0
-  %8 = and i1 %i.q, %7
-  %op.rdx2 = select i1 %8, i1 %.not.6.i, i1 false
+  %op.rdx = select i1 %i.q, i1 %.not.4.i, i1 false
+  %6 = select i1 %op.rdx, i1 %.not.5.i, i1 false
+  %op.rdx2 = select i1 %6, i1 %.not.6.i, i1 false
   br i1 %op.rdx2, label %bb.c, label %_ZL23mi_commit_mask_is_emptyPK16mi_commit_mask_s.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -270,14 +270,14 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.am = load i64, ptr %i.al, align 8, !tbaa !98
-  %i.an = and i64 %i.l, %i.am
+  %i.an = and i64 %5, %i.am
   %.not.4.not.i = icmp eq i64 %i.an, 0
   br i1 %.not.4.not.i, label %bb.i, label %_ZL22mi_commit_mask_any_setPK16mi_commit_mask_sS1_.exit.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !98
-  %i.aq = and i64 %5, %i.ap
+  %i.aq = and i64 %i.l, %i.ap
   %.not.5.not.i = icmp eq i64 %i.aq, 0
   br i1 %.not.5.not.i, label %bb.j, label %_ZL22mi_commit_mask_any_setPK16mi_commit_mask_sS1_.exit.thread
 
@@ -320,7 +320,7 @@ bb.k:                                             ; preds = %_ZL22mi_commit_mask
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.bj = load <2 x i64>, ptr %i.bh, align 8, !tbaa !98
-  %i.bk = and <2 x i64> %.fr4, %i.bj
+  %i.bk = and <2 x i64> %i.k, %i.bj
   store <2 x i64> %i.bk, ptr %i.bi, align 16, !tbaa !98
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !98
@@ -372,7 +372,7 @@ _Z17_mi_stat_increaseP15mi_stat_count_sm.exit:    ; preds = %bb.k, %_ZL24mi_atom
   %i.cl = load <2 x i64>, ptr %i.bd, align 8, !tbaa !98
   %i.cm = and <2 x i64> %i.cl, %i.ck
   store <2 x i64> %i.cm, ptr %i.bd, align 8, !tbaa !98
-  %i.cn = xor <2 x i64> %.fr4, splat (i64 -1)
+  %i.cn = xor <2 x i64> %i.k, splat (i64 -1)
   %i.co = load <2 x i64>, ptr %i.bh, align 8, !tbaa !98
   %i.cp = and <2 x i64> %i.co, %i.cn
   store <2 x i64> %i.cp, ptr %i.bh, align 8, !tbaa !98
@@ -397,7 +397,7 @@ bb.n:                                             ; preds = %_ZL22mi_commit_mask
   %i.dc = load <2 x i64>, ptr %i.db, align 8, !tbaa !98
   %i.dd = and <2 x i64> %i.dc, %i.da
   store <2 x i64> %i.dd, ptr %i.db, align 8, !tbaa !98
-  %i.de = xor <2 x i64> %.fr4, splat (i64 -1)
+  %i.de = xor <2 x i64> %i.k, splat (i64 -1)
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.dg = load <2 x i64>, ptr %i.df, align 8, !tbaa !98
   %i.dh = and <2 x i64> %i.dg, %i.de
@@ -800,20 +800,20 @@ bb.l:                                             ; preds = %mi_option_get.exit.
   %i.bg = shufflevector <2 x i64> %i.bd, <2 x i64> %i.bf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %.fr = freeze <4 x i64> %i.bg
   %i.bh = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.bi = load <2 x i64>, ptr %i.bh, align 16
-  %.fr39 = freeze <2 x i64> %i.bi                 ; 3 uses
-  %i.bj = extractelement <2 x i64> %.fr39, i64 0
-  %7 = extractelement <2 x i64> %.fr39, i64 1
+  %i.bi = load <2 x i64>, ptr %i.bh, align 16     ; 3 uses
+  %7 = extractelement <2 x i64> %i.bi, i64 0
+  %.not.4.i.i = icmp eq i64 %7, 0
+  %i.bj = extractelement <2 x i64> %i.bi, i64 1
+  %.not.5.i.i = icmp eq i64 %i.bj, 0
   %i.bk = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.bl = load i64, ptr %i.bk, align 16           ; 2 uses
   %.not.6.i.i = icmp eq i64 %i.bl, 0
   %i.bm = icmp ne <4 x i64> %.fr, zeroinitializer
   %i.bn = bitcast <4 x i1> %i.bm to i4
   %i.bo = icmp eq i4 %i.bn, 0
-  %8 = or i64 %7, %i.bj
-  %9 = icmp eq i64 %8, 0
-  %10 = and i1 %i.bo, %9
-  %op.rdx37 = select i1 %10, i1 %.not.6.i.i, i1 false
+  %op.rdx = select i1 %i.bo, i1 %.not.4.i.i, i1 false
+  %8 = select i1 %op.rdx, i1 %.not.5.i.i, i1 false
+  %op.rdx37 = select i1 %8, i1 %.not.6.i.i, i1 false
   br i1 %op.rdx37, label %bb.m, label %_ZL23mi_commit_mask_is_emptyPK16mi_commit_mask_s.exit.i
 
 bb.m:                                             ; preds = %bb.l
@@ -850,7 +850,7 @@ bb.n:                                             ; preds = %_ZL23mi_commit_mask
   store <2 x i64> %i.ci, ptr %i.ce, align 8, !tbaa !98
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.ck = load <2 x i64>, ptr %i.bv, align 8, !tbaa !98
-  %i.cl = and <2 x i64> %i.ck, %.fr39
+  %i.cl = and <2 x i64> %i.ck, %i.bi
   %i.cm = load <2 x i64>, ptr %i.cj, align 8, !tbaa !98
   %i.cn = or <2 x i64> %i.cm, %i.cl
   store <2 x i64> %i.cn, ptr %i.cj, align 8, !tbaa !98
@@ -1253,20 +1253,20 @@ _ZL22mi_commit_mask_is_fullPK16mi_commit_mask_s.exit.thread.i: ; preds = %_ZL23m
   %i.as = shufflevector <2 x i64> %i.ap, <2 x i64> %i.ar, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %.fr = freeze <4 x i64> %i.as
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.au = load <2 x i64>, ptr %i.at, align 16
-  %.fr71 = freeze <2 x i64> %i.au                 ; 4 uses
-  %i.av = extractelement <2 x i64> %.fr71, i64 0  ; 5 uses
-  %6 = extractelement <2 x i64> %.fr71, i64 1     ; 5 uses
+  %i.au = load <2 x i64>, ptr %i.at, align 16     ; 4 uses
+  %6 = extractelement <2 x i64> %i.au, i64 0      ; 5 uses
+  %.not.4.i.i.i = icmp eq i64 %6, 0
+  %i.av = extractelement <2 x i64> %i.au, i64 1   ; 5 uses
+  %.not.5.i.i.i = icmp eq i64 %i.av, 0
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.ax = load i64, ptr %i.aw, align 16           ; 7 uses
   %.not.6.i.i.i = icmp eq i64 %i.ax, 0
   %i.ay = icmp ne <4 x i64> %.fr, zeroinitializer
   %i.az = bitcast <4 x i1> %i.ay to i4
   %i.ba = icmp eq i4 %i.az, 0
-  %7 = or i64 %6, %i.av
-  %8 = icmp eq i64 %7, 0
-  %9 = and i1 %i.ba, %8
-  %op.rdx69 = select i1 %9, i1 %.not.6.i.i.i, i1 false
+  %op.rdx = select i1 %i.ba, i1 %.not.4.i.i.i, i1 false
+  %7 = select i1 %op.rdx, i1 %.not.5.i.i.i, i1 false
+  %op.rdx69 = select i1 %7, i1 %.not.6.i.i.i, i1 false
   br i1 %op.rdx69, label %bb.o, label %_ZL23mi_commit_mask_is_emptyPK16mi_commit_mask_s.exit.i.i
 
 bb.o:                                             ; preds = %_ZL22mi_commit_mask_is_fullPK16mi_commit_mask_s.exit.thread.i
@@ -1310,15 +1310,15 @@ bb.p:                                             ; preds = %_ZL23mi_commit_mask
 bb.q:                                             ; preds = %bb.p
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !98
-  %i.bw = and i64 %i.bv, %i.av
-  %.not.4.i17.i.i = icmp eq i64 %i.bw, %i.av
+  %i.bw = and i64 %i.bv, %6
+  %.not.4.i17.i.i = icmp eq i64 %i.bw, %6
   br i1 %.not.4.i17.i.i, label %bb.r, label %_ZL22mi_commit_mask_all_setPK16mi_commit_mask_sS1_.exit.thread.i.i
 
 bb.r:                                             ; preds = %bb.q
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !98
-  %i.bz = and i64 %i.by, %6
-  %.not.5.i18.i.i = icmp eq i64 %i.bz, %6
+  %i.bz = and i64 %i.by, %i.av
+  %.not.5.i18.i.i = icmp eq i64 %i.bz, %i.av
   br i1 %.not.5.i18.i.i, label %bb.s, label %_ZL22mi_commit_mask_all_setPK16mi_commit_mask_sS1_.exit.thread.i.i
 
 bb.s:                                             ; preds = %bb.r
@@ -1350,7 +1350,7 @@ _ZL22mi_commit_mask_all_setPK16mi_commit_mask_sS1_.exit.thread.i.i: ; preds = %b
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.cn = load <2 x i64>, ptr %i.cl, align 8, !tbaa !98
-  %i.co = and <2 x i64> %i.cn, %.fr71
+  %i.co = and <2 x i64> %i.cn, %i.au
   store <2 x i64> %i.co, ptr %i.cm, align 8, !tbaa !98
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !98
@@ -1405,7 +1405,7 @@ bb.v:                                             ; preds = %_Z17_mi_stat_decrea
   %i.dp = or <2 x i64> %i.do, %i.ar
   store <2 x i64> %i.dp, ptr %i.bm, align 8, !tbaa !98
   %i.dq = load <2 x i64>, ptr %i.cl, align 8, !tbaa !98
-  %i.dr = or <2 x i64> %i.dq, %.fr71
+  %i.dr = or <2 x i64> %i.dq, %i.au
   store <2 x i64> %i.dr, ptr %i.cl, align 8, !tbaa !98
   %i.ds = load i64, ptr %i.cp, align 8, !tbaa !98
   %i.dt = or i64 %i.ds, %i.ax
@@ -1449,14 +1449,14 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !98 ; 2 uses
-  %i.el = and i64 %i.ek, %i.av
+  %i.el = and i64 %i.ek, %6
   %.not.4.not.i.i.i = icmp eq i64 %i.el, 0
   br i1 %.not.4.not.i.i.i, label %bb.ab, label %_ZL22mi_commit_mask_any_setPK16mi_commit_mask_sS1_.exit.thread.i.i
 
 bb.ab:                                            ; preds = %bb.aa
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.en = load i64, ptr %i.em, align 8, !tbaa !98 ; 2 uses
-  %i.eo = and i64 %i.en, %6
+  %i.eo = and i64 %i.en, %i.av
   %.not.5.not.i.i.i = icmp eq i64 %i.eo, 0
   br i1 %.not.5.not.i.i.i, label %bb.ac, label %_ZL22mi_commit_mask_any_setPK16mi_commit_mask_sS1_.exit.thread.i.i
 
@@ -1538,11 +1538,11 @@ bb.ae:                                            ; preds = %mi_option_get.exit.
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.fz = and i64 %i.fl, %i.fx
   store i64 %i.fz, ptr %i.fy, align 8, !tbaa !98
-  %i.ga = xor i64 %i.av, -1
+  %i.ga = xor i64 %6, -1
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.gc = and i64 %i.fk, %i.ga
   store i64 %i.gc, ptr %i.gb, align 8, !tbaa !98
-  %i.gd = xor i64 %6, -1
+  %i.gd = xor i64 %i.av, -1
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.gf = and i64 %i.fj, %i.gd
   store i64 %i.gf, ptr %i.ge, align 8, !tbaa !98

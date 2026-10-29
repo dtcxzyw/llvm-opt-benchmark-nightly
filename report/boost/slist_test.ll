@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %.critedge22
   %i.bh = icmp ne <4 x i32> %.fr, <i32 1, i32 2, i32 0, i32 0>
   %i.bi = bitcast <4 x i1> %i.bh to i4
   %i.bj = icmp eq i4 %i.bi, 0
-  %1 = and i1 %i.be, %i.bj
-  %op.rdx229 = select i1 %1, i1 %.not27.i55, i1 false
+  %op.rdx228 = select i1 %i.bj, i1 %i.be, i1 false
+  %op.rdx229 = select i1 %op.rdx228, i1 %.not27.i55, i1 false
   br i1 %op.rdx229, label %bb.k, label %.lr.ph.i.i.i.i.i.preheader
 
 bb.k:                                             ; preds = %bb.j
@@ -311,8 +311,8 @@ bb.s:                                             ; preds = %_ZN5boost9container
   %i.dg = icmp ne <4 x i32> %.fr230, <i32 1, i32 2, i32 3, i32 0>
   %i.dh = bitcast <4 x i1> %i.dg to i4
   %i.di = icmp eq i4 %i.dh, 0
-  %2 = and i1 %i.dd, %i.di
-  %op.rdx227 = select i1 %2, i1 %.not27.i73, i1 false
+  %op.rdx226 = select i1 %i.di, i1 %i.dd, i1 false
+  %op.rdx227 = select i1 %op.rdx226, i1 %.not27.i73, i1 false
   br i1 %op.rdx227, label %bb.t, label %.lr.ph.i.i.i.i.i.preheader
 
 bb.t:                                             ; preds = %bb.s
@@ -457,8 +457,8 @@ bb.af:                                            ; preds = %_ZN5boost9container
   %i.fz = icmp ne <4 x i32> %.fr231, <i32 1, i32 2, i32 3, i32 4>
   %i.ga = bitcast <4 x i1> %i.fz to i4
   %i.gb = icmp eq i4 %i.ga, 0
-  %3 = and i1 %i.fw, %i.gb
-  %op.rdx225 = select i1 %3, i1 %.not27.i91, i1 false
+  %op.rdx224 = select i1 %i.gb, i1 %i.fw, i1 false
+  %op.rdx225 = select i1 %op.rdx224, i1 %.not27.i91, i1 false
   br i1 %op.rdx225, label %bb.ag, label %.lr.ph.i.i.i.i.i.preheader
 
 bb.ag:                                            ; preds = %bb.af
@@ -643,8 +643,8 @@ bb.aw:                                            ; preds = %_ZN5boost9container
   %i.jm = icmp ne <4 x i32> %.fr232, <i32 1, i32 2, i32 3, i32 4>
   %i.jn = bitcast <4 x i1> %i.jm to i4
   %i.jo = icmp eq i4 %i.jn, 0
-  %4 = and i1 %i.jj, %i.jo
-  %op.rdx223 = select i1 %4, i1 %.not27.i109, i1 false
+  %op.rdx = select i1 %i.jo, i1 %i.jj, i1 false
+  %op.rdx223 = select i1 %op.rdx, i1 %.not27.i109, i1 false
   br i1 %op.rdx223, label %bb.ax, label %.lr.ph.i.i.i.i.i.preheader
 
 bb.ax:                                            ; preds = %bb.aw
@@ -1047,8 +1047,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bb = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.bc = bitcast <4 x i1> %i.bb to i4
   %i.bd = icmp eq i4 %i.bc, 0
-  %2 = and i1 %i.ay, %i.bd
-  %op.rdx371 = select i1 %2, i1 %.not27.i, i1 false
+  %op.rdx370 = select i1 %i.bd, i1 %i.ay, i1 false
+  %op.rdx371 = select i1 %op.rdx370, i1 %.not27.i, i1 false
   br i1 %op.rdx371, label %bb.l, label %.lr.ph.i.i.i.i.i.preheader
 
 bb.l:                                             ; preds = %bb.k
@@ -1361,8 +1361,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.ge = icmp ne <4 x i32> %.fr372, zeroinitializer
   %i.gf = bitcast <4 x i1> %i.ge to i4
   %i.gg = icmp eq i4 %i.gf, 0
-  %3 = and i1 %i.gb, %i.gg
-  %op.rdx369 = select i1 %3, i1 %.not27.i56, i1 false
+  %op.rdx368 = select i1 %i.gg, i1 %i.gb, i1 false
+  %op.rdx369 = select i1 %op.rdx368, i1 %.not27.i56, i1 false
   br i1 %op.rdx369, label %bb.aj, label %_ZNSolsEPFRSoS_E.exit
 
 bb.aj:                                            ; preds = %bb.ai
@@ -1608,8 +1608,8 @@ bb.be:                                            ; preds = %bb.bd
   %i.km = icmp ne <4 x i32> %.fr373, zeroinitializer
   %i.kn = bitcast <4 x i1> %i.km to i4
   %i.ko = icmp eq i4 %i.kn, 0
-  %4 = and i1 %i.kj, %i.ko
-  %op.rdx367 = select i1 %4, i1 %.not27.i80, i1 false
+  %op.rdx = select i1 %i.ko, i1 %i.kj, i1 false
+  %op.rdx367 = select i1 %op.rdx, i1 %.not27.i80, i1 false
   br i1 %op.rdx367, label %_ZN5boost9container4test23test_expected_containerINS0_5slistINS1_10EmplaceIntEvEEEENS_11move_detail11enable_if_cIXntsr5boost9container3dtl7is_pairINT_10value_typeEEE5valueEbE4typeERKS8_PKS4_jj.exit83, label %_ZNSolsEPFRSoS_E.exit
 
 _ZN5boost9container4test23test_expected_containerINS0_5slistINS1_10EmplaceIntEvEEEENS_11move_detail11enable_if_cIXntsr5boost9container3dtl7is_pairINT_10value_typeEEE5valueEbE4typeERKS8_PKS4_jj.exit83: ; preds = %bb.be
