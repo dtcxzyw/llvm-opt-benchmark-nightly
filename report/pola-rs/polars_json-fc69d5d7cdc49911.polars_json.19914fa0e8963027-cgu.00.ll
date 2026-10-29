@@ -202,10 +202,10 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %i.afj = icmp eq i64 %i.afi, %2, !dbg !7444
   br i1 %i.afj, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtB1M_8adapters9enumerateINtB2B_9EnumeratepEB1G_4fold9enumerateRBQ_uNCINvNvB1G_8for_each4callTjB3E_ENCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize16deserialize_listBQ_E0E0E0EB4o_.exit.i, label %bb.mn, !dbg !7444
 
-.body.thread.thread.i:                            ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.oh, %.body.thread.i393, %bb.nv, %.body.thread112.i
-  %.sroa.017.1.i = phi i8 [ 1, %bb.oh ], [ 0, %.body.thread.i393 ], [ 0, %bb.nv ], [ 0, %.body.thread112.i ], [ 1, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !7445
-  %.sroa.016.0.i = phi i8 [ 0, %bb.oh ], [ 0, %.body.thread.i393 ], [ 0, %bb.nv ], [ 0, %.body.thread112.i ], [ 1, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !7446
-  %.pn.pn.i = phi { ptr, i32 } [ %.pn.ph.i, %bb.oh ], [ %.pn.ph.i, %.body.thread.i393 ], [ %i.aga, %bb.nv ], [ %5, %.body.thread112.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body.thread.thread.i:                            ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.oh, %.body.thread.i393, %bb.nv, %.body.i
+  %.sroa.017.1.i = phi i8 [ %.sroa.015.0.ph.i, %bb.oh ], [ %.sroa.015.0.ph.i, %.body.thread.i393 ], [ 0, %bb.nv ], [ 0, %.body.i ], [ 1, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !7445
+  %.sroa.016.0.i = phi i8 [ 0, %bb.oh ], [ 0, %.body.thread.i393 ], [ 0, %bb.nv ], [ 0, %.body.i ], [ 1, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !7446
+  %.pn.pn.i = phi { ptr, i32 } [ %.pn.ph.i, %bb.oh ], [ %.pn.ph.i, %.body.thread.i393 ], [ %i.aga, %bb.nv ], [ %5, %.body.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEECs2c5WrizoNH7_11polars_json(ptr noalias noundef align 8 dereferenceable(24) %i.bo) #31
           to label %.body65.i unwind label %bb.oe, !dbg !7447, !noalias !6233
 
@@ -332,16 +332,16 @@ bb.nr:                                            ; preds = %bb.nq
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder17into_opt_validity(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.bi, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(56) %i.bh)
           to label %bb.ns unwind label %bb.od, !dbg !7477, !noalias !6233
 
-bb.ns:                                            ; preds = %bb.nr
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bh), !dbg !7478, !noalias !6228
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.be), !dbg !7479, !noalias !6228
-  invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array4listINtB2_9ListArrayxE7try_newCs2c5WrizoNH7_11polars_json(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.be, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.bk, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.bj, ptr noundef nonnull %i.afs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.afu, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.bi)
-          to label %bb.nt unwind label %.body.thread112.i, !dbg !7479, !noalias !6233
-
-.body.thread112.i:                                ; preds = %bb.ns
+.body.i:                                          ; preds = %bb.ns
   %5 = landingpad { ptr, i32 }
           cleanup
-  br label %.body.thread.thread.i, !dbg !7480
+  br label %.body.thread.thread.i, !dbg !7478
+
+bb.ns:                                            ; preds = %bb.nr
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bh), !dbg !7479, !noalias !6228
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.be), !dbg !7480, !noalias !6228
+  invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array4listINtB2_9ListArrayxE7try_newCs2c5WrizoNH7_11polars_json(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.be, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.bk, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.bj, ptr noundef nonnull %i.afs, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.afu, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.bi)
+          to label %bb.nt unwind label %.body.i, !dbg !7480, !noalias !6233
 
 bb.nt:                                            ; preds = %bb.ns
   call void @llvm.experimental.noalias.scope.decl(metadata !6267), !dbg !7481
@@ -383,9 +383,9 @@ bb.ny:                                            ; preds = %bb.nt
   %.sroa.13468.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 80, !dbg !7488
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.13468, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.13468.0..sroa_idx, i64 24, i1 false), !dbg !7488, !noalias !6264
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be), !dbg !7489, !noalias !6228
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bi), !dbg !7480, !noalias !6228
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bj), !dbg !7480, !noalias !6228
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bk), !dbg !7480, !noalias !6228
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bi), !dbg !7478, !noalias !6228
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bj), !dbg !7478, !noalias !6228
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bk), !dbg !7478, !noalias !6228
   invoke void @_RNvXso_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2c5WrizoNH7_11polars_json(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bo)
           to label %bb.oa unwind label %bb.nz, !dbg !7490, !noalias !6233
 
@@ -422,7 +422,7 @@ bb.od:                                            ; preds = %bb.nr
   %i.agh = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EECs2c5WrizoNH7_11polars_json(ptr nonnull %i.afs, ptr nonnull %i.afu) #31
-          to label %bb.of unwind label %bb.oe, !dbg !7480, !noalias !6233
+          to label %bb.of unwind label %bb.oe, !dbg !7478, !noalias !6233
 
 bb.oe:                                            ; preds = %.thread.i385, %.thread89.i, %.body65.thread.i, %bb.oh, %bb.og, %bb.of, %bb.od, %.body.thread.thread.i
   %i.agi = landingpad { ptr, i32 }
@@ -439,9 +439,10 @@ bb.of:                                            ; preds = %bb.od
 
 bb.og:                                            ; preds = %bb.of, %bb.np
   %.sroa.015.0.ph.i.a = phi i1 [ true, %bb.np ], [ false, %bb.of ]
+  %.sroa.015.0.ph.i = phi i8 [ 1, %bb.np ], [ 0, %bb.of ] ; 2 uses
   %.pn.ph.i = phi { ptr, i32 } [ %i.afw, %bb.np ], [ %i.agh, %bb.of ] ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs8774dFTUdNv_12polars_arrow9datatypes13ArrowDataTypeECs2c5WrizoNH7_11polars_json(ptr noalias noundef align 8 dereferenceable(32) %i.bk) #31
-          to label %.body.thread.i393 unwind label %bb.oe, !dbg !7480, !noalias !6233
+          to label %.body.thread.i393 unwind label %bb.oe, !dbg !7478, !noalias !6233
 
 bb.oh:                                            ; preds = %.body.thread.i393
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EECs2c5WrizoNH7_11polars_json(ptr nonnull %i.afs, ptr nonnull %i.afu) #31
@@ -844,10 +845,10 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %i.bky = icmp eq i64 %i.bkx, %2, !dbg !14738
   br i1 %i.bky, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtB1N_8adapters9enumerateINtB2C_9EnumeratepEB1H_4fold9enumerateRBQ_uNCINvNvB1H_8for_each4callTjB3F_ENCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize16deserialize_listBQ_E0E0E0EB4p_.exit, label %bb.ut, !dbg !14738
 
-.body.i.thread.thread:                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.wb, %.body.i.thread581, %bb.wj, %.body.i.thread
-  %.sroa.017.1.i = phi i8 [ 1, %bb.wj ], [ 0, %.body.i.thread ], [ 0, %bb.wb ], [ 0, %.body.i.thread581 ], [ 1, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !14739
-  %.sroa.016.0.i = phi i8 [ 0, %bb.wj ], [ 0, %.body.i.thread ], [ 0, %bb.wb ], [ 0, %.body.i.thread581 ], [ 1, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !14740
-  %.pn.pn.i = phi { ptr, i32 } [ %.pn.i.ph, %bb.wj ], [ %.pn.i.ph, %.body.i.thread ], [ %i.blp, %bb.wb ], [ %5, %.body.i.thread581 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body.i.thread.thread:                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.wb, %.body.i, %bb.wj, %.body.i.thread
+  %.sroa.017.1.i = phi i8 [ %.sroa.015.0.i.ph, %bb.wj ], [ %.sroa.015.0.i.ph, %.body.i.thread ], [ 0, %bb.wb ], [ 0, %.body.i ], [ 1, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !14739
+  %.sroa.016.0.i = phi i8 [ 0, %bb.wj ], [ 0, %.body.i.thread ], [ 0, %bb.wb ], [ 0, %.body.i ], [ 1, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], !dbg !14740
+  %.pn.pn.i = phi { ptr, i32 } [ %.pn.i.ph, %bb.wj ], [ %.pn.i.ph, %.body.i.thread ], [ %i.blp, %bb.wb ], [ %5, %.body.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEECs2c5WrizoNH7_11polars_json(ptr noalias noundef align 8 dereferenceable(24) %i.ha) #31
           to label %.body450 unwind label %bb.wg, !dbg !14741, !noalias !12419, !inline_history !10464
 
@@ -976,16 +977,16 @@ bb.vx:                                            ; preds = %bb.vw
   invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow6bitmap7builderNtB2_13BitmapBuilder17into_opt_validity(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.gu, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(56) %i.gt)
           to label %bb.vy unwind label %bb.wf, !dbg !14771, !noalias !12419, !inline_history !10464
 
-bb.vy:                                            ; preds = %bb.vx
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.gt), !dbg !14772, !noalias !12414
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.gq), !dbg !14773, !noalias !12414
-  invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array4listINtB2_9ListArrayxE7try_newCs2c5WrizoNH7_11polars_json(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.gq, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.gw, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.gv, ptr noundef nonnull %i.blh, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.blj, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.gu)
-          to label %bb.vz unwind label %.body.i.thread581, !dbg !14773, !noalias !12419, !inline_history !10464
-
-.body.i.thread581:                                ; preds = %bb.vy
+.body.i:                                          ; preds = %bb.vy
   %5 = landingpad { ptr, i32 }
           cleanup
-  br label %.body.i.thread.thread, !dbg !14774
+  br label %.body.i.thread.thread, !dbg !14772
+
+bb.vy:                                            ; preds = %bb.vx
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.gt), !dbg !14773, !noalias !12414
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.gq), !dbg !14774, !noalias !12414
+  invoke void @_RNvMNtNtCs8774dFTUdNv_12polars_arrow5array4listINtB2_9ListArrayxE7try_newCs2c5WrizoNH7_11polars_json(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.gq, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.gw, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.gv, ptr noundef nonnull %i.blh, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.blj, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.gu)
+          to label %bb.vz unwind label %.body.i, !dbg !14774, !noalias !12419, !inline_history !10464
 
 bb.vz:                                            ; preds = %bb.vy
   call void @llvm.experimental.noalias.scope.decl(metadata !12448), !dbg !14775
@@ -1028,9 +1029,9 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultINtNtNtCs8774dFTUdNv_12polars_arro
   %.sroa.9523.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gq, i64 80, !dbg !14782
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.14, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9523.0..sroa_idx, i64 24, i1 false), !dbg !14782, !noalias !12445
   call void @llvm.lifetime.end.p0(ptr nonnull %i.gq), !dbg !14783, !noalias !12414
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.gu), !dbg !14774, !noalias !12414
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.gv), !dbg !14774, !noalias !12414
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.gw), !dbg !14774, !noalias !12414
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.gu), !dbg !14772, !noalias !12414
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.gv), !dbg !14772, !noalias !12414
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.gw), !dbg !14772, !noalias !12414
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEECs2c5WrizoNH7_11polars_json(ptr noalias noundef align 8 dereferenceable(24) %i.ha)
           to label %bb.aeb unwind label %bb.we, !dbg !14741, !noalias !12419, !inline_history !10464
 
@@ -1051,7 +1052,7 @@ bb.wf:                                            ; preds = %bb.vx
   %i.blu = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EECs2c5WrizoNH7_11polars_json(ptr nonnull %i.blh, ptr nonnull %i.blj) #31
-          to label %bb.wh unwind label %bb.wg, !dbg !14774, !noalias !12419, !inline_history !10464
+          to label %bb.wh unwind label %bb.wg, !dbg !14772, !noalias !12419, !inline_history !10464
 
 bb.wg:                                            ; preds = %bb.wh, %.thread, %.thread558, %.body450.thread, %bb.wj, %bb.wi, %bb.wf, %.body.i.thread.thread
   %i.blv = landingpad { ptr, i32 }
@@ -1068,9 +1069,10 @@ bb.wh:                                            ; preds = %bb.wf
 
 bb.wi:                                            ; preds = %bb.vv, %bb.wh
   %.sroa.015.0.i.ph.a = phi i1 [ true, %bb.vv ], [ false, %bb.wh ]
+  %.sroa.015.0.i.ph = phi i8 [ 1, %bb.vv ], [ 0, %bb.wh ] ; 2 uses
   %.pn.i.ph = phi { ptr, i32 } [ %i.bll, %bb.vv ], [ %i.blu, %bb.wh ] ; 2 uses
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs8774dFTUdNv_12polars_arrow9datatypes13ArrowDataTypeECs2c5WrizoNH7_11polars_json(ptr noalias noundef align 8 dereferenceable(32) %i.gw) #31
-          to label %.body.i.thread unwind label %bb.wg, !dbg !14774, !noalias !12419, !inline_history !10464
+          to label %.body.i.thread unwind label %bb.wg, !dbg !14772, !noalias !12419, !inline_history !10464
 
 bb.wj:                                            ; preds = %.body.i.thread
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EECs2c5WrizoNH7_11polars_json(ptr nonnull %i.blh, ptr nonnull %i.blj) #31
@@ -1473,9 +1475,9 @@ begin_hunk_2_@llvm.umin.i8
 !7475 = !DILocation(line: 67, column: 30, scope: !5204, inlinedAt: !5207)
 !7476 = !DILocation(line: 213, column: 9, scope: !5203, inlinedAt: !4969)
 !7477 = !DILocation(line: 213, column: 18, scope: !5203, inlinedAt: !4969)
-!7478 = !DILocation(line: 213, column: 36, scope: !5203, inlinedAt: !4969)
-!7479 = !DILocation(line: 88, column: 9, scope: !5214, inlinedAt: !5215)
-!7480 = !DILocation(line: 214, column: 5, scope: !5203, inlinedAt: !4969)
+!7478 = !DILocation(line: 214, column: 5, scope: !5203, inlinedAt: !4969)
+!7479 = !DILocation(line: 213, column: 36, scope: !5203, inlinedAt: !4969)
+!7480 = !DILocation(line: 88, column: 9, scope: !5214, inlinedAt: !5215)
 !7481 = !DILocation(line: 88, column: 57, scope: !5214, inlinedAt: !5215)
 !7482 = !DILocation(line: 1231, column: 15, scope: !276, inlinedAt: !5218)
 !7483 = !DILocation(line: 1231, column: 9, scope: !276, inlinedAt: !5218)
@@ -1878,9 +1880,9 @@ begin_hunk_3_@llvm.umin.i8
 !14769 = !DILocation(line: 67, column: 30, scope: !10692, inlinedAt: !10695)
 !14770 = !DILocation(line: 213, column: 9, scope: !10691, inlinedAt: !10454)
 !14771 = !DILocation(line: 213, column: 18, scope: !10691, inlinedAt: !10454)
-!14772 = !DILocation(line: 213, column: 36, scope: !10691, inlinedAt: !10454)
-!14773 = !DILocation(line: 88, column: 9, scope: !10702, inlinedAt: !10703)
-!14774 = !DILocation(line: 214, column: 5, scope: !10691, inlinedAt: !10454)
+!14772 = !DILocation(line: 214, column: 5, scope: !10691, inlinedAt: !10454)
+!14773 = !DILocation(line: 213, column: 36, scope: !10691, inlinedAt: !10454)
+!14774 = !DILocation(line: 88, column: 9, scope: !10702, inlinedAt: !10703)
 !14775 = !DILocation(line: 88, column: 57, scope: !10702, inlinedAt: !10703)
 !14776 = !DILocation(line: 1231, column: 15, scope: !276, inlinedAt: !10707)
 !14777 = !DILocation(line: 1231, column: 9, scope: !276, inlinedAt: !10707)

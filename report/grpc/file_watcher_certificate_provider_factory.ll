@@ -204,36 +204,38 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 1, ptr nonnull @.str.2)
-          to label %bb.e unwind label %bb.d
+          to label %bb.f unwind label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.x, %.thread, %bb.v, %bb.u, %bb.t, %bb.s, %bb.p, %bb.o, %bb.n, %bb.m, %bb.j, %bb.i, %bb.h, %bb.g, %bb.c, %bb.b, %bb.a
   %i.k = landingpad { ptr, i32 }
           cleanup
   br label %bb.ag
 
-bb.e:                                             ; preds = %bb.c, %._crit_edge.i.i
-  %.018 = phi i8 [ 1, %._crit_edge.i.i ], [ 0, %bb.c ] ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48
+bb.e:                                             ; preds = %._crit_edge.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !15
   %i.n = icmp eq i64 %i.m, 0
-  br i1 %i.n, label %bb.k, label %bb.f
+  br i1 %i.n, label %bb.l, label %bb.h
 
-bb.f:                                             ; preds = %bb.e
-  %5 = trunc nuw i8 %.018 to i1
-  br i1 %5, label %bb.h, label %bb.g
+bb.f:                                             ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %5 = load i64, ptr %4, align 8, !tbaa !15
+  %6 = icmp eq i64 %5, 0
+  br i1 %6, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 2, ptr nonnull @.str.3)
           to label %bb.h unwind label %bb.d
 
-bb.h:                                             ; preds = %bb.g, %bb.f
+bb.h:                                             ; preds = %bb.e, %bb.g
+  %7 = phi ptr [ %4, %bb.g ], [ %i.l, %bb.e ]
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 18, ptr nonnull @.str.4)
           to label %bb.i unwind label %bb.d
 
 bb.i:                                             ; preds = %bb.h
-  %i.o = load ptr, ptr %4, align 8, !tbaa !16
-  %i.p = load i64, ptr %i.l, align 8, !tbaa !15
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.o = load ptr, ptr %8, align 8, !tbaa !16
+  %i.p = load i64, ptr %7, align 8, !tbaa !15
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 %i.p, ptr %i.o)
           to label %bb.j unwind label %bb.d
 
@@ -241,29 +243,31 @@ bb.j:                                             ; preds = %bb.i
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 1, ptr nonnull @.str.2)
           to label %bb.k unwind label %bb.d
 
-bb.k:                                             ; preds = %bb.j, %bb.e
-  %.119 = phi i8 [ %.018, %bb.e ], [ 0, %bb.j ]   ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 80
+bb.k:                                             ; preds = %bb.f, %bb.j
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !15
   %i.s = icmp eq i64 %i.r, 0
-  br i1 %i.s, label %bb.q, label %bb.l
+  br i1 %i.s, label %bb.q, label %bb.m
 
-bb.l:                                             ; preds = %bb.k
-  %7 = trunc nuw i8 %.119 to i1
-  br i1 %7, label %bb.n, label %bb.m
+bb.l:                                             ; preds = %bb.e
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
+  %10 = load i64, ptr %9, align 8, !tbaa !15
+  %11 = icmp eq i64 %10, 0
+  br i1 %11, label %bb.q, label %bb.n
 
-bb.m:                                             ; preds = %bb.l
+bb.m:                                             ; preds = %bb.k
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 2, ptr nonnull @.str.3)
           to label %bb.n unwind label %bb.d
 
-bb.n:                                             ; preds = %bb.m, %bb.l
+bb.n:                                             ; preds = %bb.l, %bb.m
+  %12 = phi ptr [ %i.q, %bb.m ], [ %9, %bb.l ]
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 21, ptr nonnull @.str.5)
           to label %bb.o unwind label %bb.d
 
 bb.o:                                             ; preds = %bb.n
-  %i.t = load ptr, ptr %6, align 8, !tbaa !16
-  %i.u = load i64, ptr %i.q, align 8, !tbaa !15
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %i.t = load ptr, ptr %13, align 8, !tbaa !16
+  %i.u = load i64, ptr %12, align 8, !tbaa !15
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 %i.u, ptr %i.t)
           to label %bb.p unwind label %bb.d
 
@@ -271,17 +275,16 @@ bb.p:                                             ; preds = %bb.o
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 1, ptr nonnull @.str.2)
           to label %bb.q unwind label %bb.d
 
-bb.q:                                             ; preds = %bb.p, %bb.k
-  %.220 = phi i8 [ %.119, %bb.k ], [ 0, %bb.p ]
+bb.q:                                             ; preds = %bb.l, %bb.p, %bb.k
+  %.220 = phi i1 [ false, %bb.k ], [ false, %bb.p ], [ true, %bb.l ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !15
   %i.y = icmp eq i64 %i.x, 0
-  %8 = trunc nuw i8 %.220 to i1                   ; 2 uses
   br i1 %i.y, label %bb.w, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  br i1 %8, label %bb.t, label %bb.s
+  br i1 %.220, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 2, ptr nonnull @.str.3)
@@ -302,7 +305,7 @@ bb.v:                                             ; preds = %bb.u
           to label %.thread unwind label %bb.d
 
 bb.w:                                             ; preds = %bb.q
-  br i1 %8, label %bb.x, label %.thread
+  br i1 %.220, label %bb.x, label %.thread
 
 .thread:                                          ; preds = %bb.v, %bb.w
   invoke void @_ZN9grpc_core9StrAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 2, ptr nonnull @.str.3)

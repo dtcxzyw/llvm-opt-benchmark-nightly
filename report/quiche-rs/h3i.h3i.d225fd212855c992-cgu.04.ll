@@ -204,8 +204,9 @@ bb.g:                                             ; preds = %bb.d
 
 .outer:                                           ; preds = %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i, %bb.g
   %.sroa.11.0.i.ph = phi ptr [ %i.ed, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ undef, %bb.g ] ; 11 uses
+  %2 = phi i1 [ true, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ false, %bb.g ] ; 2 uses
   %.not173.i = phi i1 [ false, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ true, %bb.g ]
-  %.sroa.0.0.i.ph = phi i64 [ 1, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ 0, %bb.g ] ; 16 uses
+  %.sroa.0.0.i.ph = phi i64 [ 1, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ 0, %bb.g ] ; 15 uses
   %.sroa.028.0.i.ph = phi i8 [ %.sroa.028.0.i.ph899, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ -1, %bb.g ]
   %.sroa.415.0.i.ph = phi double [ %.sroa.415.0.i.ph906, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ undef, %bb.g ]
   %.sroa.013.0.i.ph = phi i64 [ %.sroa.013.0.i.ph907, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtB2I_6string6StringEEECsi2C7WdEh0SA_3h3i.exit.i ], [ 0, %bb.g ]
@@ -608,7 +609,6 @@ bb.bg:                                            ; preds = %bb.be
 bb.bh:                                            ; preds = %bb.bg, %bb.s
   %.sroa.059.0.i = phi double [ %i.fl, %bb.bg ], [ %.sroa.415.0.i.ph906, %bb.s ], !dbg !10516
     #dbg_value(double %.sroa.059.0.i, !9953, !DIExpression(), !9806)
-  %2 = trunc nuw i64 %.sroa.0.0.i.ph to i1, !dbg !10697 ; 2 uses
   %storemerge.i = select i1 %2, ptr %.sroa.11.0.i.ph, ptr null, !dbg !10697 ; 5 uses
   %not..i = xor i1 %2, true, !dbg !10697
   %.sroa.093.4.i = zext i1 %not..i to i8, !dbg !10697 ; 6 uses
@@ -853,7 +853,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !dbg !10584, !noalias !10105
   %i.gh = trunc nuw i64 %.sroa.0.0494.i to i1, !dbg !10712
   %i.gi = trunc nuw i8 %.sroa.093.7.i to i1, !dbg !10712
-  %or.cond.i = select i1 %i.gh, i1 %i.gi, i1 false, !dbg !10712
+  %or.cond.i = and i1 %i.gh, %i.gi, !dbg !10712
     #dbg_value(ptr poison, !3255, !DIExpression(), !9877)
   %i.gj = icmp ne ptr %.sroa.11.0.i.ph, null
   %or.cond254.not.i = select i1 %or.cond.i, i1 %i.gj, i1 false, !dbg !10712
@@ -1256,6 +1256,8 @@ bb.ak:                                            ; preds = %bb.aj
     #dbg_value(i64 %i.du, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
     #dbg_value(ptr %.sroa.4.0.copyload, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13), !dbg !12715
+    #dbg_value(i64 %i.du, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
+    #dbg_value(ptr %.sroa.4.0.copyload, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit.thread, !dbg !12715
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit: ; preds = %bb.ai
@@ -1264,6 +1266,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEvent
     #dbg_value(ptr %i.dx, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
     #dbg_value(i64 -1, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13), !dbg !12715
+    #dbg_value(i64 %i.du, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
     #dbg_value(ptr %i.dx, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
   %.not960 = icmp eq ptr %i.dq, null, !dbg !12715
   br i1 %.not960, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit.thread, label %bb.ar, !dbg !12715
@@ -1399,8 +1402,8 @@ bb.au:                                            ; preds = %bb.f
 
 _RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueNtNtB1a_11ignored_any10IgnoredAnyECsi2C7WdEh0SA_3h3i.exit.i.outer: ; preds = %bb.dw, %bb.au
   %.sroa.4.0.i.ph = phi double [ %i.le, %bb.dw ], [ undef, %bb.au ]
-  %.not1224 = phi i1 [ false, %bb.dw ], [ true, %bb.au ]
-  %.sroa.011.0.i.ph = phi i1 [ true, %bb.dw ], [ false, %bb.au ]
+  %.not1224 = phi i1 [ true, %bb.dw ], [ false, %bb.au ]
+  %.sroa.011.0.i.ph = phi i1 [ false, %bb.dw ], [ true, %bb.au ]
   br label %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueNtNtB1a_11ignored_any10IgnoredAnyECsi2C7WdEh0SA_3h3i.exit.i, !dbg !12727
 
 _RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueNtNtB1a_11ignored_any10IgnoredAnyECsi2C7WdEh0SA_3h3i.exit.i: ; preds = %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueNtNtB1a_11ignored_any10IgnoredAnyECsi2C7WdEh0SA_3h3i.exit.i.backedge, %_RINvYINtNtCsenfyI6F4F2A_10serde_json2de9MapAccessNtNtB8_4read9SliceReadENtNtCs9xKKqPmwf7Y_10serde_core2de9MapAccess10next_valueNtNtB1a_11ignored_any10IgnoredAnyECsi2C7WdEh0SA_3h3i.exit.i.outer
@@ -1630,12 +1633,12 @@ bb.bf:                                            ; preds = %.noexc158.i
   br label %.loopexit.split-lp.i
 
 bb.bg:                                            ; preds = %bb.aw
-  br i1 %.sroa.011.0.i.ph, label %bb.es, label %bb.eo, !dbg !12726
+  br i1 %.not1224, label %bb.es, label %bb.eo, !dbg !12726
 
 bb.bh:                                            ; preds = %bb.bd, %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !dbg !12760, !noalias !12232
     #dbg_value(ptr undef, !11926, !DIExpression(), !10943)
-  br i1 %.not1224, label %bb.dr, label %.invoke, !dbg !12728, !prof !3841
+  br i1 %.sroa.011.0.i.ph, label %bb.dr, label %.invoke, !dbg !12728, !prof !3841
 
 bb.bi:                                            ; preds = %bb.be, %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !dbg !12760, !noalias !12232
@@ -2038,7 +2041,7 @@ bb.fs:                                            ; preds = %_RINvXs0_NvXNvNtCs3
   %i.nu = getelementptr inbounds nuw i8, ptr %i.as, i64 112, !dbg !13042
   store ptr %i.ns, ptr %i.nu, align 8, !dbg !13042
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !dbg !13045
-  %i.nv = load i64, ptr %i.as, align 8, !dbg !13042, !range !3165, !noundef !1364 ; 2 uses
+  %i.nv = load i64, ptr %i.as, align 8, !dbg !13042, !range !3165, !noundef !1364 ; 4 uses
   %i.nw = icmp eq i64 %i.nv, -1, !dbg !13042
   br i1 %i.nw, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63, label %bb.ft, !dbg !13046
 
@@ -2055,6 +2058,8 @@ bb.fu:                                            ; preds = %bb.ft
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.14, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.522.0..sroa_idx, i64 96, i1 false), !dbg !13047
     #dbg_value(i64 %i.nv, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
     #dbg_value(ptr %.sroa.421.0.copyload, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
+    #dbg_value(i64 %i.nv, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
+    #dbg_value(ptr %.sroa.421.0.copyload, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63.thread, !dbg !13048
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63: ; preds = %bb.fs
@@ -2062,6 +2067,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEvent
   %i.ny = load ptr, ptr %i.nx, align 8, !dbg !13049, !nonnull !1364, !align !3542, !noundef !1364 ; 2 uses
     #dbg_value(ptr %i.ny, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
     #dbg_value(i64 -1, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
+    #dbg_value(i64 %i.nv, !11872, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11974)
     #dbg_value(ptr %i.ny, !11872, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11974)
   %.not959 = icmp eq ptr %i.ns, null, !dbg !13048
   br i1 %.not959, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63.thread, label %bb.ga, !dbg !13048
@@ -2116,7 +2122,7 @@ bb.fz:                                            ; preds = %.body.i57
   unreachable, !dbg !13053
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63.thread: ; preds = %bb.fu, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsi2C7WdEh0SA_3h3i.exit.i60, %bb.ga, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63
-  %.sroa.09.2689 = phi i64 [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63 ], [ -1, %bb.ga ], [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsi2C7WdEh0SA_3h3i.exit.i60 ], [ %i.nv, %bb.fu ]
+  %.sroa.09.2689 = phi i64 [ %i.nv, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63 ], [ %i.nv, %bb.ga ], [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsi2C7WdEh0SA_3h3i.exit.i60 ], [ %i.nv, %bb.fu ]
   %.sroa.10.2688 = phi ptr [ %i.ny, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3JBf551F2Kj_4qlog6events9JsonEventECsi2C7WdEh0SA_3h3i.exit63 ], [ %i.ny, %bb.ga ], [ %i.ns, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsi2C7WdEh0SA_3h3i.exit.i60 ], [ %.sroa.421.0.copyload, %bb.fu ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !dbg !13048
   br label %bb.as, !dbg !13048

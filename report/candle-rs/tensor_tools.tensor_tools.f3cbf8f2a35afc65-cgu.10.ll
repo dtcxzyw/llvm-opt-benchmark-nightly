@@ -202,7 +202,7 @@ bb.gi:                                            ; preds = %bb.gc
   %i.rx = load i64, ptr %i.m, align 8, !range !466, !noalias !563, !noundef !8 ; 2 uses
   %.not.i29.i.i.i.i.i = icmp eq i64 %i.rx, -2
   %i.ry = load ptr, ptr %i.cw, align 8, !noalias !563 ; 7 uses
-  %i.rz = load i64, ptr %i.cx, align 8, !noalias !563 ; 10 uses
+  %i.rz = load i64, ptr %i.cx, align 8, !noalias !563 ; 11 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !563
   br i1 %.not.i29.i.i.i.i.i, label %bb.gk, label %bb.gj
 
@@ -227,11 +227,7 @@ bb.gm:                                            ; preds = %bb.gk
   %i.se = load ptr, ptr %i.cy, align 8, !noalias !563 ; 5 uses
   %i.sf = load i64, ptr %i.cz, align 8, !noalias !563 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !563
-  br i1 %.not159.i.i.i.i.i.i, label %bb.gn, label %2
-
-2:                                                ; preds = %bb.gm
-  %3 = ptrtoint ptr %i.se to i64
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
+  br i1 %.not159.i.i.i.i.i.i, label %bb.gn, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
 
 bb.gn:                                            ; preds = %bb.gm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !563
@@ -250,13 +246,12 @@ bb.go:                                            ; preds = %_RNvXs1_NtCsgCecv3e
 bb.gp:                                            ; preds = %bb.gn
   %i.si = load i64, ptr %i.k, align 8, !range !466, !noalias !563, !noundef !8 ; 3 uses
   %.not160.i.i.i.i.i.i = icmp eq i64 %i.si, -2
-  %i.sj = load ptr, ptr %i.da, align 8, !noalias !563 ; 7 uses
+  %i.sj = load ptr, ptr %i.da, align 8, !noalias !563 ; 8 uses
   %i.sk = load i64, ptr %i.db, align 8, !noalias !563 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !563
   br i1 %.not160.i.i.i.i.i.i, label %bb.gr, label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp
-  %4 = ptrtoint ptr %i.sj to i64                  ; 2 uses
   %i.sl = icmp eq i64 %i.sf, 0
   br i1 %i.sl, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i
 
@@ -431,11 +426,11 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxeEECs
   %.sroa.31.0.i.i.i.i.i = phi i64 [ undef, %bb.hj ], [ undef, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i205.i.i.i.i.i.i ], [ %.sroa.31.2.i.i.i.i.i, %bb.ik ] ; 2 uses
   %.sroa.085.6.i.i.i.i.i.i = phi i1 [ true, %bb.hj ], [ true, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i205.i.i.i.i.i.i ], [ false, %bb.ik ]
   %i.ti = icmp eq i64 %i.sk, 0
-  br i1 %i.ti, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i206.i.i.i.i.i.i
+  br i1 %i.ti, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i206.i.i.i.i.i.i
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i206.i.i.i.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxeEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.sj, i64 noundef %i.sk, i64 noundef 1) #23, !noalias !564
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i
 
 bb.hk:                                            ; preds = %bb.gu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !563
@@ -447,16 +442,16 @@ _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Al
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.sj, i64 noundef %i.sk, i64 noundef 1) #23, !noalias !564
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i, %bb.hk
-  %.sroa.24.1.i.i.i.i.i = phi i64 [ %i.tj, %bb.hk ], [ %i.tj, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i ], [ %.sroa.24.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ] ; 2 uses
-  %.sroa.1451.1.i.i.i.i.i = phi i64 [ -9223372036854775808, %bb.hk ], [ -9223372036854775808, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i ], [ %.sroa.1451.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ] ; 2 uses
-  %.sroa.31.1.i.i.i.i.i = phi i64 [ undef, %bb.hk ], [ undef, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i ], [ %.sroa.31.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ] ; 2 uses
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i, %bb.hk
+  %.sroa.24.1.i.i.i.i.i = phi i64 [ %i.tj, %bb.hk ], [ %i.tj, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i ], [ %.sroa.24.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.1451.1.i.i.i.i.i = phi i64 [ -9223372036854775808, %bb.hk ], [ -9223372036854775808, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i ], [ %.sroa.1451.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.31.1.i.i.i.i.i = phi i64 [ undef, %bb.hk ], [ undef, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i208.i.i.i.i.i.i ], [ %.sroa.31.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i ] ; 2 uses
   %i.tl = icmp eq i64 %i.sf, 0
-  br i1 %i.tl, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i
+  br i1 %i.tl, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i
 
 _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.se, i64 noundef %i.sf, i64 noundef 1) #23, !noalias !564
-  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a
 
 bb.hl:                                            ; preds = %bb.gt
   %i.tm = load i64, ptr %i.e, align 8, !range !568, !noalias !563, !noundef !8
@@ -704,17 +699,25 @@ bb.ik:                                            ; preds = %.loopexit181.i.i.i.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !563
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxeEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i206.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxeEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i206.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxeEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
   br i1 %.sroa.085.6.i.i.i.i.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i, label %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i, %bb.gq, %2
-  %.sroa.24.3.i.i.i.i.i = phi i64 [ %.sroa.24.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i ], [ %.sroa.24.1.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i ], [ %4, %bb.gq ], [ %4, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i ], [ %3, %2 ] ; 2 uses
-  %.sroa.1451.3.i.i.i.i.i = phi i64 [ %.sroa.1451.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i ], [ %.sroa.1451.1.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i ], [ %i.si, %bb.gq ], [ %i.si, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i ], [ %i.sd, %2 ] ; 2 uses
-  %.sroa.31.3.i.i.i.i.i = phi i64 [ %.sroa.31.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i ], [ %.sroa.31.1.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i ], [ %i.sk, %bb.gq ], [ %i.sk, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i ], [ %i.sf, %2 ] ; 2 uses
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i210.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit209.i.i.i.i.i.i
+  %.not337.i.i.i.i.i.i = icmp eq i64 %i.rz, 0
+  br i1 %.not337.i.i.i.i.i.i, label %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i: ; preds = %bb.gm, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i, %bb.gq
+  %.sroa.24.3.in.i.i.i.i.i = phi ptr [ %i.sj, %bb.gq ], [ %i.sj, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i ], [ %i.se, %bb.gm ]
+  %.sroa.1451.3.i.i.i.i.i = phi i64 [ %i.si, %bb.gq ], [ %i.si, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i ], [ %i.sd, %bb.gm ] ; 2 uses
+  %.sroa.31.3.i.i.i.i.i = phi i64 [ %i.sk, %bb.gq ], [ %i.sk, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i42.i.i ], [ %i.sf, %bb.gm ] ; 2 uses
+  %.sroa.24.3.i.i.i.i.i = ptrtoint ptr %.sroa.24.3.in.i.i.i.i.i to i64 ; 2 uses
   %i.vd = icmp eq i64 %i.rz, 0
   br i1 %i.vd, label %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i, label %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i
 
-_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i
+_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a
+  %.sroa.24.4.i.i.i.i.i = phi i64 [ %.sroa.24.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ], [ %.sroa.24.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ]
+  %.sroa.1451.4.i.i.i.i.i = phi i64 [ %.sroa.1451.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ], [ %.sroa.1451.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ]
+  %.sroa.31.4.i.i.i.i.i = phi i64 [ %.sroa.31.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ], [ %.sroa.31.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ]
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ry, i64 noundef %i.rz, i64 noundef 1) #23, !noalias !564
   br label %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i
 
@@ -774,10 +777,10 @@ _RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Al
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ry, i64 noundef %i.rz, i64 noundef 1) #23, !noalias !564
   br label %.body.i.i.i.i
 
-_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a, %bb.gj
-  %.sroa.24.4.ph.i.i.i.i.i = phi i64 [ %i.sa, %bb.gj ], [ %.sroa.24.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ], [ %.sroa.24.3.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i ], [ %.sroa.24.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ]
-  %.sroa.1451.4.ph.i.i.i.i.i = phi i64 [ %i.rx, %bb.gj ], [ %.sroa.1451.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ], [ %.sroa.1451.3.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i ], [ %.sroa.1451.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ]
-  %.sroa.31.4.ph.i.i.i.i.i = phi i64 [ %i.rz, %bb.gj ], [ %.sroa.31.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ], [ %.sroa.31.3.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i ], [ %.sroa.31.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ]
+_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i: ; preds = %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i, %bb.gj
+  %.sroa.24.5.ph.i.i.i.i.i = phi i64 [ %i.sa, %bb.gj ], [ %.sroa.24.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ], [ %.sroa.24.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i ], [ %.sroa.24.4.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i ], [ %.sroa.24.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ]
+  %.sroa.1451.5.ph.i.i.i.i.i = phi i64 [ %i.rx, %bb.gj ], [ %.sroa.1451.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ], [ %.sroa.1451.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i ], [ %.sroa.1451.4.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i ], [ %.sroa.1451.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ]
+  %.sroa.31.5.ph.i.i.i.i.i = phi i64 [ %i.rz, %bb.gj ], [ %.sroa.31.3.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i.i ], [ %.sroa.31.0.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i ], [ %.sroa.31.4.i.i.i.i.i, %_RNvXs1_NtCsgCecv3eZDcN_5alloc5allocNtB5_6GlobalNtNtCsf3Ta7LF998c_4core5alloc9Allocator10deallocate.exit.i.i225.i.i.i.i.i.i ], [ %.sroa.31.1.i.i.i.i.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc5boxed3BoxShEECskVIURZGHVHJ_12tensor_tools.exit207.i.i.i.i.i.i.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !558
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !558
   br label %.loopexit182.i.i.i.i
@@ -789,9 +792,9 @@ _RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv
   br i1 %i.vk, label %.loopexit182.i.i.i.i, label %bb.io
 
 .loopexit182.i.i.i.i:                             ; preds = %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i
-  %.sroa.31.4189.i.i.i.i.i = phi i64 [ %.sroa.31.4.ph.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i ], [ %.sroa.31.0.copyload.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i ] ; 5 uses
-  %.sroa.1451.4188.i.i.i.i.i = phi i64 [ %.sroa.1451.4.ph.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i ], [ %.sroa.1451.0.copyload.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i ] ; 2 uses
-  %.sroa.24.4187.i.i.i.i.i = phi i64 [ %.sroa.24.4.ph.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i ], [ %.sroa.24.0.copyload.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i ]
+  %.sroa.31.4189.i.i.i.i.i = phi i64 [ %.sroa.31.5.ph.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i ], [ %.sroa.31.0.copyload.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i ] ; 5 uses
+  %.sroa.1451.4188.i.i.i.i.i = phi i64 [ %.sroa.1451.5.ph.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i ], [ %.sroa.1451.0.copyload.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.24.4187.i.i.i.i.i = phi i64 [ %.sroa.24.5.ph.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.thread.i.i.i.i.i ], [ %.sroa.24.0.copyload.i.i.i.i.i, %_RINvNtCscWUIX17zZnI_3zip4read32central_header_to_zip_file_innerINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEECskVIURZGHVHJ_12tensor_tools.exit.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.36.i.i.i.i.i)
   %.sroa.10.sroa.12.0.extract.shift109.i.i.i.i = and i64 %.sroa.1451.4188.i.i.i.i.i, -1099511627776
   %.sroa.25.sroa.0.0.extract.trunc42.i.i.i.i = trunc i64 %.sroa.31.4189.i.i.i.i.i to i8

@@ -205,10 +205,10 @@ bb.a:
   invoke void @_RNvMs4_NtNtCs4oFq2PzodUt_7reqwest10async_impl6clientNtB5_6Client7builder(ptr noalias noundef nonnull sret([1016 x i8]) align 8 captures(address) dereferenceable(1016) %i.m)
           to label %bb.c unwind label %bb.b
 
-.thread:                                          ; preds = %bb.ay, %bb.ax, %.body.thread, %.body.a, %bb.b
-  %.sroa.0110.0 = phi i1 [ true, %bb.b ], [ %.sroa.0110.1257, %.body.thread ], [ %.sroa.0110.1, %.body.a ], [ false, %bb.ax ], [ false, %bb.ay ]
-  %.sroa.0112.0 = phi i1 [ %.sroa.0112.1, %bb.b ], [ %.not, %.body.thread ], [ %.not, %.body.a ], [ %.not, %bb.ax ], [ %.not, %bb.ay ]
-  %.pn222 = phi { ptr, i32 } [ %i.q, %bb.b ], [ %.pn220259, %.body.thread ], [ %.pn220, %.body.a ], [ %i.cg, %bb.ax ], [ %i.cg, %bb.ay ] ; 2 uses
+.thread:                                          ; preds = %bb.ay, %bb.ax, %.body.a, %bb.b
+  %.sroa.0110.0 = phi i1 [ true, %bb.b ], [ false, %bb.ay ], [ false, %bb.ax ], [ %.sroa.0110.1, %.body.a ]
+  %.sroa.0112.0 = phi i1 [ %.sroa.0112.1, %bb.b ], [ %.not, %bb.ay ], [ %.not, %bb.ax ], [ %.not, %.body.a ]
+  %.pn222 = phi { ptr, i32 } [ %i.q, %bb.b ], [ %i.cg, %bb.ay ], [ %i.cg, %bb.ax ], [ %lpad.thr_comm, %.body.a ] ; 2 uses
   %i.o = load i64, ptr %2, align 8, !range !33, !noundef !27
   %i.p = icmp ne i64 %i.o, -1
   %or.cond = and i1 %.sroa.0112.0, %i.p
@@ -232,7 +232,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.f, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.s = load i64, ptr %2, align 8, !range !33, !noundef !27
-  %.not = icmp eq i64 %i.s, -1                    ; 5 uses
+  %.not = icmp eq i64 %i.s, -1                    ; 4 uses
   br i1 %.not, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -252,16 +252,16 @@ bb.h:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1016) %i.d, ptr noundef nonnull align 8 dereferenceable(1016) %i.n, i64 1016, i1 false)
   %i.t = invoke { i64, ptr } @_RNvMs2_NtNtCs4oFq2PzodUt_7reqwest10async_impl6clientNtB5_13ClientBuilder5build(ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(1016) %i.d)
-          to label %bb.au unwind label %bb.ah     ; 2 uses
+          to label %bb.au unwind label %.body.a   ; 2 uses
 
 .body224:                                         ; preds = %bb.ak, %bb.ac, %bb.i, %bb.o
-  %.sroa.0108.1 = phi i8 [ %.sroa.0108.3, %bb.o ], [ 0, %bb.ac ], [ %.sroa.0108.2, %bb.i ], [ %.sroa.0108.7, %bb.ak ]
-  %.pn = phi { ptr, i32 } [ %i.ah, %bb.o ], [ %i.bo, %bb.ac ], [ %i.u, %bb.i ], [ %i.bv, %bb.ak ]
+  %.sroa.0108.1 = phi i1 [ %.sroa.0108.3, %bb.o ], [ false, %bb.ac ], [ %.sroa.0108.2, %bb.i ], [ %i.bg, %bb.ak ]
+  %.pn = phi { ptr, i32 } [ %i.ah, %bb.o ], [ %i.bo, %bb.ac ], [ %i.u, %bb.i ], [ %i.bv, %bb.ak ] ; 2 uses
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k) #41
-          to label %.body.a unwind label %bb.at
+          to label %4 unwind label %bb.at
 
 bb.i:                                             ; preds = %bb.al, %bb.ad, %bb.g
-  %.sroa.0108.2 = phi i8 [ %.sroa.0108.7, %bb.al ], [ 0, %bb.ad ], [ 1, %bb.g ]
+  %.sroa.0108.2 = phi i1 [ %i.bg, %bb.al ], [ false, %bb.ad ], [ true, %bb.g ]
   %i.u = landingpad { ptr, i32 }
           cleanup
   br label %.body224
@@ -298,7 +298,12 @@ bb.m:                                             ; preds = %bb.l
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %bb.k
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit unwind label %bb.ah
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit unwind label %.body.thread270
+
+.body.thread270:                                  ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i
+  %lpad.thr_comm.split-lp272 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body.thread
 
 bb.n:                                             ; preds = %bb.j
   %.sroa.5115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -318,7 +323,7 @@ bb.n:                                             ; preds = %bb.j
           to label %bb.p unwind label %bb.o       ; 2 uses
 
 bb.o:                                             ; preds = %bb.z, %bb.y, %.critedge, %bb.v, %bb.q, %bb.n
-  %.sroa.0108.3 = phi i8 [ 0, %bb.z ], [ 0, %bb.y ], [ 1, %.critedge ], [ 1, %bb.v ], [ 1, %bb.q ], [ 1, %bb.n ]
+  %.sroa.0108.3 = phi i1 [ false, %bb.z ], [ false, %bb.y ], [ true, %.critedge ], [ true, %bb.v ], [ true, %bb.q ], [ true, %bb.n ]
   %i.ah = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.j) #41
@@ -380,7 +385,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %.critedge, %bb.v
   %i.bf = load i64, ptr %i.h, align 8, !range !42, !noundef !27 ; 2 uses
-  %i.bg = icmp eq i64 %i.bf, 2
+  %i.bg = icmp eq i64 %i.bf, 2                    ; 6 uses
   br i1 %i.bg, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
@@ -455,21 +460,21 @@ bb.ag:                                            ; preds = %bb.af
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsgsNUVCRJO2f_13influxdb3_lib.exit
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit233 unwind label %bb.ah
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit233 unwind label %.body.a
 
-.body.a:                                          ; preds = %bb.an, %bb.ah, %.body224
-  %.sroa.0110.1 = phi i1 [ true, %.body224 ], [ true, %bb.an ], [ %.sroa.0110.2, %bb.ah ] ; 2 uses
-  %.sroa.0108.4 = phi i8 [ %.sroa.0108.1, %.body224 ], [ %.sroa.0108.7, %bb.an ], [ %.sroa.0108.5, %bb.ah ]
-  %.pn220 = phi { ptr, i32 } [ %.pn, %.body224 ], [ %i.bx, %bb.an ], [ %i.bs, %bb.ah ] ; 2 uses
-  %4 = trunc nuw i8 %.sroa.0108.4 to i1
-  br i1 %4, label %.body.thread, label %.thread
+4:                                                ; preds = %.body224
+  br i1 %.sroa.0108.1, label %.body.thread, label %.thread.thread.thread
 
-bb.ah:                                            ; preds = %bb.bb, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i240, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i, %bb.h
-  %.sroa.0110.2 = phi i1 [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i240 ], [ false, %bb.bb ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227 ], [ true, %bb.h ]
-  %.sroa.0108.5 = phi i8 [ 1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i ], [ %.sroa.0108.7, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i240 ], [ 0, %bb.bb ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227 ], [ 0, %bb.h ]
-  %i.bs = landingpad { ptr, i32 }
+.body.a:                                          ; preds = %bb.bb, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227, %bb.h
+  %.sroa.0110.1 = phi i1 [ true, %bb.h ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227 ], [ false, %bb.bb ]
+  %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
-  br label %.body.a
+  br label %.thread
+
+bb.ah:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i240
+  %i.bs = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.bg, label %.body.thread, label %.thread.thread.thread
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit233: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i227
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
@@ -485,7 +490,6 @@ bb.ai:                                            ; preds = %bb.aw, %_RINvNtCs4N
 
 bb.aj:                                            ; preds = %bb.aa, %bb.x
   %.sink = phi ptr [ %i.bi, %bb.x ], [ %i.bm, %bb.aa ]
-  %.sroa.0108.7 = phi i8 [ 1, %bb.x ], [ 0, %bb.aa ] ; 5 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 10, ptr %i.bu, align 8
   %.sroa.5158.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -517,15 +521,18 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsgsN
 
 bb.an:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsgsNUVCRJO2f_13influxdb3_lib.exit238
   %i.bx = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k)
-          to label %.body.a unwind label %bb.ao
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc7raw_vec6RawVechEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i239 unwind label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.by = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #40
   unreachable
+
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc7raw_vec6RawVechEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i239: ; preds = %bb.an
+  br i1 %i.bg, label %.body.thread, label %.thread.thread.thread
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i240: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VechEECsgsNUVCRJO2f_13influxdb3_lib.exit238
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k)
@@ -534,8 +541,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsSt
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit246: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringECsgsNUVCRJO2f_13influxdb3_lib.exit.i240
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %5 = trunc nuw i8 %.sroa.0108.7 to i1
-  br i1 %5, label %bb.as, label %bb.ap
+  br i1 %i.bg, label %bb.as, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.av, %bb.as, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib.exit246
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
@@ -555,7 +561,7 @@ bb.ar:                                            ; preds = %bb.aq
   unreachable
 
 common.resume:                                    ; preds = %.thread.thread, %.thread.thread.thread, %bb.aq
-  %common.resume.op = phi { ptr, i32 } [ %i.bz, %bb.aq ], [ %.pn222270274, %.thread.thread.thread ], [ %.pn222, %.thread.thread ]
+  %common.resume.op = phi { ptr, i32 } [ %i.bz, %bb.aq ], [ %.pn222278283, %.thread.thread.thread ], [ %.pn222, %.thread.thread ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCsj7DbYNsdxOJ_3url3UrlECsgsNUVCRJO2f_13influxdb3_lib.exit: ; preds = %bb.ap
@@ -632,7 +638,7 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.ba
   fence acquire
   invoke void @_RNvMsn_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcNtNtNtCs4oFq2PzodUt_7reqwest10async_impl6client9ClientRefE9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.l)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs4oFq2PzodUt_7reqwest10async_impl6client6ClientECsgsNUVCRJO2f_13influxdb3_lib.exit248 unwind label %bb.ah
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs4oFq2PzodUt_7reqwest10async_impl6client6ClientECsgsNUVCRJO2f_13influxdb3_lib.exit248 unwind label %.body.a
 
 bb.bc:                                            ; preds = %bb.az
   %.sroa.4177.sroa.0.0.copyload = load i8, ptr %i.cl, align 8
@@ -669,11 +675,10 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs4oFq2PzodUt_7reqwest10async_impl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br label %bb.bd
 
-.body.thread:                                     ; preds = %bb.l, %.body.a
-  %.pn220259 = phi { ptr, i32 } [ %.pn220, %.body.a ], [ %i.aa, %bb.l ]
-  %.sroa.0110.1257 = phi i1 [ %.sroa.0110.1, %.body.a ], [ true, %bb.l ]
+.body.thread:                                     ; preds = %bb.l, %.body.thread270, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc7raw_vec6RawVechEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i239, %bb.ah, %4
+  %.pn220255 = phi { ptr, i32 } [ %i.bs, %bb.ah ], [ %.pn, %4 ], [ %lpad.thr_comm.split-lp272, %.body.thread270 ], [ %i.bx, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc7raw_vec6RawVechEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i239 ], [ %i.aa, %bb.l ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs4oFq2PzodUt_7reqwest10async_impl6client13ClientBuilderECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef align 8 dereferenceable(1016) %i.n) #41
-          to label %.thread unwind label %bb.at
+          to label %.thread.thread.thread unwind label %bb.at
 
 .thread.thread:                                   ; preds = %bb.be, %.thread
   br i1 %.sroa.0110.0, label %.thread.thread.thread, label %common.resume
@@ -682,8 +687,8 @@ bb.be:                                            ; preds = %.thread
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %2) #41
           to label %.thread.thread unwind label %bb.at
 
-.thread.thread.thread:                            ; preds = %bb.af, %.thread.thread
-  %.pn222270274 = phi { ptr, i32 } [ %.pn222, %.thread.thread ], [ %i.bq, %bb.af ]
+.thread.thread.thread:                            ; preds = %.body.thread, %4, %bb.ah, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc7raw_vec6RawVechEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i239, %bb.af, %.thread.thread
+  %.pn222278283 = phi { ptr, i32 } [ %.pn222, %.thread.thread ], [ %i.bx, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc7raw_vec6RawVechEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i.i.i239 ], [ %.pn220255, %.body.thread ], [ %i.bs, %bb.ah ], [ %.pn, %4 ], [ %i.bq, %bb.af ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCsj7DbYNsdxOJ_3url3UrlECsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef align 8 dereferenceable(88) %1) #41
           to label %common.resume unwind label %bb.at
 }

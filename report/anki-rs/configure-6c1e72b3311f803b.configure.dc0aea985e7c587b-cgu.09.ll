@@ -202,17 +202,19 @@ bb.a:
   invoke void @"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17h8cbb71417adaf731E"(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.m, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.n)
           to label %bb.c unwind label %bb.b
 
-.body10:                                          ; preds = %bb.v, %bb.b, %.body
-  %.pn8 = phi { ptr, i32 } [ %.pn, %.body ], [ %i.o, %bb.b ], [ %i.bd, %bb.v ] ; 2 uses
-  %.sroa.01.0 = phi i8 [ %.sroa.01.2, %.body ], [ %.sroa.01.1, %bb.b ], [ %.sroa.01.2, %bb.v ]
-  %2 = trunc nuw i8 %.sroa.01.0 to i1
-  br i1 %2, label %bb.ad, label %common.resume
+.body10:                                          ; preds = %bb.v, %.body
+  %.pn8 = phi { ptr, i32 } [ %.pn, %.body ], [ %i.bd, %bb.v ] ; 2 uses
+  br i1 %i.w, label %common.resume, label %bb.ad
 
-bb.b:                                             ; preds = %bb.w, %bb.f, %bb.c, %bb.a
-  %.sroa.01.1 = phi i8 [ %.sroa.01.2, %bb.w ], [ 1, %bb.f ], [ 1, %bb.c ], [ 1, %bb.a ]
+bb.b:                                             ; preds = %bb.f, %bb.c, %bb.a
   %i.o = landingpad { ptr, i32 }
           cleanup
-  br label %.body10
+  br label %bb.ad
+
+.split:                                           ; preds = %bb.w
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %i.w, label %common.resume, label %bb.ad
 
 bb.c:                                             ; preds = %bb.a
   invoke void @"_ZN82_$LT$ninja_gen..build..BuildStatement$u20$as$u20$ninja_gen..build..FilesHandle$GT$14add_inputs_vec17h2f27cb78ffd2c4f2E"(ptr noalias noundef nonnull align 8 dereferenceable(296) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) inttoptr (i64 1 to ptr), i64 noundef 0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.m)
@@ -227,7 +229,7 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.v = load i64, ptr %i.u, align 8, !noundef !4
-  %i.w = icmp eq i64 %i.v, 0
+  %i.w = icmp eq i64 %i.v, 0                      ; 4 uses
   br i1 %i.w, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -249,7 +251,6 @@ bb.f:                                             ; preds = %bb.d
           to label %bb.h unwind label %bb.b
 
 bb.g:                                             ; preds = %bb.h, %bb.e
-  %.sroa.01.2 = phi i8 [ 0, %bb.e ], [ 1, %bb.h ] ; 4 uses
   %.sroa.3.0 = phi i64 [ 1, %bb.e ], [ %i.af, %bb.h ]
   %.sroa.0.0 = phi ptr [ @19, %bb.e ], [ %i.ae, %bb.h ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
@@ -396,7 +397,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.u
   invoke void @"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17ha86766fe95ee8582E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l)
-          to label %"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE.exit" unwind label %bb.b
+          to label %"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE.exit" unwind label %.split
 
 bb.x:                                             ; preds = %bb.v
   %i.be = landingpad { ptr, i32 }
@@ -406,8 +407,7 @@ bb.x:                                             ; preds = %bb.v
 
 "_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE.exit": ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %3 = trunc nuw i8 %.sroa.01.2 to i1
-  br i1 %3, label %bb.z, label %bb.y
+  br i1 %i.w, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE.exit13", %"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE.exit"
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
@@ -429,8 +429,8 @@ bb.ab:                                            ; preds = %bb.aa
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #15
   unreachable
 
-common.resume:                                    ; preds = %.body10, %bb.ad, %bb.aa
-  %common.resume.op = phi { ptr, i32 } [ %i.bf, %bb.aa ], [ %.pn8, %bb.ad ], [ %.pn8, %.body10 ]
+common.resume:                                    ; preds = %.split, %.body10, %bb.ad, %bb.aa
+  %common.resume.op = phi { ptr, i32 } [ %i.bf, %bb.aa ], [ %.pn814, %bb.ad ], [ %.pn8, %.body10 ], [ %lpad.thr_comm.split-lp, %.split ]
   resume { ptr, i32 } %common.resume.op
 
 "_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE.exit13": ; preds = %bb.z
@@ -443,7 +443,8 @@ bb.ac:                                            ; preds = %bb.ad, %bb.q, %.bod
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #15
   unreachable
 
-bb.ad:                                            ; preds = %.body10
+bb.ad:                                            ; preds = %bb.b, %.split, %.body10
+  %.pn814 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.split ], [ %.pn8, %.body10 ], [ %i.o, %bb.b ]
   invoke fastcc void @"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h191415ba13e9866fE"(ptr noalias noundef align 8 dereferenceable(24) %i.n) #16
           to label %common.resume unwind label %bb.ac
 }

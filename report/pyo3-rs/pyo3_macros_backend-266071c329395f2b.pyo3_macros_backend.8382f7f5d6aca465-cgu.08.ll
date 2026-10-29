@@ -202,8 +202,8 @@ bb.am:                                            ; preds = %bb.al
   invoke void @_RNvXsB_NtCsexYYUdYSQU6_5alloc6stringNtCs3FigHW6Y7TR_11proc_macro25IdentNtB5_8ToString9to_stringBA_(ptr nonnull sret([24 x i8]) align 8 %i.da, ptr nonnull align 8 %i.cz)
           to label %bb.an unwind label %.body43.thread113.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.body43.thread:                                   ; preds = %.body43.thread113.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.bo, %bb.bi, %bb.cj
-  %.pn20 = phi { ptr, i32 } [ %.pn.i, %bb.bo ], [ %.pn.ph, %bb.cj ], [ %.pn.i, %bb.bi ], [ %lpad.loopexit.split-lp210, %.body43.thread113.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body43.thread:                                   ; preds = %.body43.thread113.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.bo, %bb.bj, %bb.bi, %bb.cj
+  %.pn20 = phi { ptr, i32 } [ %lpad.thr_comm.i, %bb.bi ], [ %.pn.ph, %bb.cj ], [ %.pn12.i, %bb.bo ], [ %i.gj, %bb.bj ], [ %lpad.loopexit.split-lp210, %.body43.thread113.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs3FigHW6Y7TR_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.cz) #18
           to label %.body unwind label %bb.ci
 
@@ -293,7 +293,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.bf, %bb.az
   %.sink.i = phi ptr [ %i.bi, %bb.bf ], [ %i.bk, %bb.az ]
-  %.sroa.06.1.i = phi i8 [ 1, %bb.bf ], [ 0, %bb.az ] ; 2 uses
+  %3 = phi i1 [ true, %bb.bf ], [ false, %bb.az ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.db, ptr noundef nonnull align 8 dereferenceable(24) %.sink.i, i64 24, i1 false)
   %i.ga = load i64, ptr %i.cy, align 8, !noalias !20
   %.not9.i = icmp eq i64 %i.ga, -1
@@ -334,30 +334,26 @@ bb.bf:                                            ; preds = %bb.be
           to label %bb.ba unwind label %bb.bl, !noalias !20
 
 bb.bg:                                            ; preds = %bb.bh, %bb.ba
-  %3 = trunc nuw i8 %.sroa.06.1.i to i1
   br i1 %3, label %bb.bk, label %bb.bp
 
 bb.bh:                                            ; preds = %bb.ba
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1QQTzni0HOp_3syn4expr4ExprEBF_(ptr nonnull align 8 %i.cy)
           to label %bb.bg unwind label %bb.bj, !noalias !20
 
-bb.bi:                                            ; preds = %bb.bm, %bb.bl, %bb.bj
-  %.pn.i = phi { ptr, i32 } [ %lpad.thr_comm.i, %bb.bm ], [ %lpad.thr_comm.i, %bb.bl ], [ %i.gj, %bb.bj ] ; 2 uses
-  %.sroa.06.2.i = phi i8 [ %.sroa.06.0.ph.i, %bb.bm ], [ %.sroa.06.0.ph.i, %bb.bl ], [ %.sroa.06.1.i, %bb.bj ]
-  %4 = trunc nuw i8 %.sroa.06.2.i to i1
-  br i1 %4, label %bb.bo, label %.body43.thread
+bb.bi:                                            ; preds = %bb.bm, %bb.bl
+  br i1 %.sroa.06.0.ph.i, label %bb.bo, label %.body43.thread
 
 bb.bj:                                            ; preds = %bb.bh
   %i.gj = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.bi
+          cleanup                                 ; 2 uses
+  br i1 %3, label %bb.bo, label %.body43.thread
 
 bb.bk:                                            ; preds = %bb.bg
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs3FigHW6Y7TR_11proc_macro2(ptr nonnull align 8 %i.da)
           to label %bb.bp unwind label %.body43.thread113.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bl:                                            ; preds = %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.az, %bb.ax, %bb.au, %bb.as
-  %.sroa.06.0.ph.i = phi i8 [ 1, %bb.bb ], [ 1, %bb.bc ], [ 1, %bb.bd ], [ 1, %bb.be ], [ 1, %bb.au ], [ 1, %bb.bf ], [ 0, %bb.as ], [ 0, %bb.ax ], [ 0, %bb.az ] ; 2 uses
+  %.sroa.06.0.ph.i = phi i1 [ true, %bb.bb ], [ true, %bb.bc ], [ true, %bb.bd ], [ true, %bb.be ], [ true, %bb.au ], [ true, %bb.bf ], [ false, %bb.as ], [ false, %bb.ax ], [ false, %bb.az ]
   %lpad.thr_comm.i = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.gk = load i64, ptr %i.cy, align 8, !noalias !20
@@ -374,7 +370,8 @@ bb.bn:                                            ; preds = %bb.bo, %bb.bm
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !noalias !20
   unreachable
 
-bb.bo:                                            ; preds = %bb.bi
+bb.bo:                                            ; preds = %bb.bj, %bb.bi
+  %.pn12.i = phi { ptr, i32 } [ %i.gj, %bb.bj ], [ %lpad.thr_comm.i, %bb.bi ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs3FigHW6Y7TR_11proc_macro2(ptr nonnull align 8 %i.da) #18
           to label %.body43.thread unwind label %bb.bn, !noalias !20
 

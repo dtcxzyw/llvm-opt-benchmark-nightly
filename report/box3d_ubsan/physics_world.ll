@@ -204,7 +204,7 @@ bb.ij:                                            ; preds = %bb.ih
   %.sroa.5154.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 4 uses
   %.sroa.6155.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 20 ; 4 uses
   %i.aie = call i32 @b3DynamicTree_GetProxyCount(ptr noundef nonnull %i.ar) #16
-  %i.aif = icmp eq i32 %i.aie, 0
+  %i.aif = icmp eq i32 %i.aie, 0                  ; 2 uses
   br i1 %i.aif, label %bb.il, label %bb.ik
 
 bb.ik:                                            ; preds = %bb.ij
@@ -215,7 +215,7 @@ bb.ik:                                            ; preds = %bb.ij
   br label %bb.il
 
 bb.il:                                            ; preds = %bb.ik, %bb.ij
-  %.1 = phi i8 [ 1, %bb.ik ], [ 0, %bb.ij ]       ; 2 uses
+  %.1 = phi i8 [ 1, %bb.ik ], [ 0, %bb.ij ]
   %i.aig = getelementptr inbounds nuw i8, ptr %..i, i64 880 ; 2 uses
   %i.aih = add i64 %i.as, 80, !nosanitize !10
   %.not141.1 = icmp ugt ptr %i.ar, inttoptr (i64 -81 to ptr)
@@ -229,8 +229,7 @@ bb.im:                                            ; preds = %bb.il
 bb.in:                                            ; preds = %bb.im
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   call void @b3DynamicTree_GetRootBounds(ptr dead_on_unwind nonnull writable sret(%struct.b3AABB) align 4 %7, ptr noundef nonnull %i.aig) #16
-  %8 = trunc nuw i8 %.1 to i1
-  br i1 %8, label %bb.ip, label %bb.io
+  br i1 %i.aif, label %bb.io, label %bb.ip
 
 bb.io:                                            ; preds = %bb.in
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 24, i1 false), !tbaa.struct !268

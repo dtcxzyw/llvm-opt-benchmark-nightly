@@ -202,20 +202,22 @@ _RNvXs1_NtCskKLDkoKarTP_4core7convertNtCseSCJ3UB48O9_10proc_macro11TokenStreamIN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !85
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !85
   %i.bn = invoke zeroext i1 @_RNvMCs7djI6dnwcVV_11proc_macro2NtB2_11TokenStream8is_empty(ptr nonnull align 8 %i.ag)
-          to label %bb.i unwind label %bb.h, !noalias !87
+          to label %bb.i unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.a, !noalias !87
 
-.body.i.i.i.i.i.i.i.i.i.i.i.a:                    ; preds = %.body31.i.i.i.i.i.i.i.i.i.i.i, %bb.h
-  %.pn22.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %.pn20.i.i.i.i.i.i.i.i.i.i.i, %.body31.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bo, %bb.h ] ; 2 uses
-  %.sroa.06.0.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.06.3.i.i.i.i.i.i.i.i.i.i.i, %.body31.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.06.1.i.i.i.i.i.i.i.i.i.i.i, %bb.h ]
-  %2 = trunc nuw i8 %.sroa.06.0.i.i.i.i.i.i.i.i.i.i.i to i1
-  br i1 %2, label %.body.thread.i.i.i.i.i.i.i.i.i.i.i, label %bb.bo
+.body.i.i.i.i.i.i.i.i.i.i.i:                      ; preds = %.body31.i.i.i.i.i.i.i.i.i.i.i
+  br i1 %.sroa.06.3.i.i.i.i.i.i.i.i.i.i.i, label %.body.thread.i.i.i.i.i.i.i.i.i.i.i, label %bb.bo
 
-bb.h:                                             ; preds = %bb.bw, %bb.bn, %bb.r, %bb.n, %bb.l, %bb.j, %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtCseSCJ3UB48O9_10proc_macro11TokenStreamINtB5_4IntoNtCs7djI6dnwcVV_11proc_macro211TokenStreamE4intoCs6zco5hFcJZh_18wasmi_c_api_macros.exit5.i.i.i.i.i.i.i.i.i.i
-  %.sroa.06.1.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.06.9.i.i.i.i.i.i.i.i.i.i.i, %bb.bw ], [ 1, %bb.bn ], [ 1, %bb.r ], [ 1, %bb.n ], [ 1, %bb.j ], [ 1, %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtCseSCJ3UB48O9_10proc_macro11TokenStreamINtB5_4IntoNtCs7djI6dnwcVV_11proc_macro211TokenStreamE4intoCs6zco5hFcJZh_18wasmi_c_api_macros.exit5.i.i.i.i.i.i.i.i.i.i ], [ 1, %bb.l ]
-  %i.bo = landingpad { ptr, i32 }
+.body.i.i.i.i.i.i.i.i.i.i.i.a:                    ; preds = %bb.bn, %bb.r, %bb.n, %bb.l, %bb.j, %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtCseSCJ3UB48O9_10proc_macro11TokenStreamINtB5_4IntoNtCs7djI6dnwcVV_11proc_macro211TokenStreamE4intoCs6zco5hFcJZh_18wasmi_c_api_macros.exit5.i.i.i.i.i.i.i.i.i.i
+  %lpad.thr_comm.i.i.i.i.i.i.i.i.i.i.i = landingpad { ptr, i32 }
           cleanup
           catch ptr null
-  br label %.body.i.i.i.i.i.i.i.i.i.i.i.a
+  br label %.body.thread.i.i.i.i.i.i.i.i.i.i.i
+
+bb.h:                                             ; preds = %bb.bw
+  %i.bo = landingpad { ptr, i32 }
+          cleanup
+          catch ptr null                          ; 2 uses
+  br i1 %2, label %.body.thread.i.i.i.i.i.i.i.i.i.i.i, label %bb.bo
 
 bb.i:                                             ; preds = %_RNvXs1_NtCskKLDkoKarTP_4core7convertNtCseSCJ3UB48O9_10proc_macro11TokenStreamINtB5_4IntoNtCs7djI6dnwcVV_11proc_macro211TokenStreamE4intoCs6zco5hFcJZh_18wasmi_c_api_macros.exit5.i.i.i.i.i.i.i.i.i.i
   br i1 %i.bn, label %bb.k, label %bb.j
@@ -223,7 +225,7 @@ bb.i:                                             ; preds = %_RNvXs1_NtCskKLDkoK
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !88
   invoke void @_RINvXs_NvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs7djI6dnwcVV_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.n, ptr nonnull @71, i64 range(i64 28, 45) 44) #11
-          to label %.thread.i.i.i.i.i.i.i.i.i.i.i unwind label %bb.h, !noalias !87
+          to label %.thread.i.i.i.i.i.i.i.i.i.i.i unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.a, !noalias !87
 
 bb.k:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !89)
@@ -234,7 +236,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k
   %i.br = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.bs = invoke ptr @_RNvXs1_NtCs7djI6dnwcVV_11proc_macro25rcvecINtB5_5RcVecNtB7_9TokenTreeENtNtCskKLDkoKarTP_4core5clone5Clone5cloneB7_(ptr nonnull align 8 %i.br)
-          to label %bb.r unwind label %bb.h, !noalias !87
+          to label %bb.r unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.a, !noalias !87
 
 bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !90
@@ -246,7 +248,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.bv = invoke i32 @_RNvXsa_NtNtCseSCJ3UB48O9_10proc_macro6bridge6clientNtB5_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5clone(ptr nonnull align 4 %i.bt)
-          to label %_RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs6zco5hFcJZh_18wasmi_c_api_macros.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i unwind label %bb.h, !noalias !87
+          to label %_RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs6zco5hFcJZh_18wasmi_c_api_macros.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.a, !noalias !87
 
 _RNvXs11_CseSCJ3UB48O9_10proc_macroNtB6_11TokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs6zco5hFcJZh_18wasmi_c_api_macros.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.n, %bb.m
   %i.bw = phi i32 [ 0, %bb.m ], [ %i.bv, %bb.n ]  ; 2 uses
@@ -283,8 +285,7 @@ _RNvXsA_NtCs7djI6dnwcVV_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoK
   br label %.invoke.i.i.i.i.i.i.i.i.i.i.i
 
 bb.q:                                             ; preds = %bb.bw
-  %3 = trunc nuw i8 %.sroa.06.9.i.i.i.i.i.i.i.i.i.i.i to i1
-  br i1 %3, label %.invoke.i.i.i.i.i.i.i.i.i.i.i, label %bb.bq
+  br i1 %2, label %.invoke.i.i.i.i.i.i.i.i.i.i.i, label %bb.bq
 
 bb.r:                                             ; preds = %_RNvXsA_NtCs7djI6dnwcVV_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs6zco5hFcJZh_18wasmi_c_api_macros.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.l
   %.sroa.46.0.i.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %i.bw, %_RNvXsA_NtCs7djI6dnwcVV_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs6zco5hFcJZh_18wasmi_c_api_macros.exit.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ undef, %bb.l ]
@@ -299,7 +300,7 @@ bb.r:                                             ; preds = %_RNvXsA_NtCs7djI6dn
   %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   store i32 %.sroa.46.0.i.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.46.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !89, !noalias !87
   invoke void @_RNvXs0_NtCs7djI6dnwcVV_11proc_macro212token_streamNtB7_11TokenStreamNtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iter(ptr nonnull sret([40 x i8]) align 8 %i.ac, ptr nonnull align 8 %i.ab)
-          to label %bb.s unwind label %bb.h, !noalias !87
+          to label %bb.s unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.a, !noalias !87
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.experimental.noalias.scope.decl(metadata !93)
@@ -437,10 +438,10 @@ _RNvXNtNtCskKLDkoKarTP_4core3ops12control_flowINtB2_11ControlFlowNtCs7djI6dnwcVV
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.loopexit48.i.i.i.i.i.i.i.i.i.i.i, label %bb.t
 
 .body31.i.i.i.i.i.i.i.i.i.i.i:                    ; preds = %bb.ac, %.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i.i.i.i.i.i, %bb.aa
-  %.pn20.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %.pn18.i.i.i.i.i.i.i.i.i.i.i, %bb.ac ], [ %i.dc, %bb.aa ], [ %lpad.loopexit.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i ]
-  %.sroa.06.3.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.06.5.i.i.i.i.i.i.i.i.i.i.i, %bb.ac ], [ 1, %bb.aa ], [ 1, %.loopexit.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.06.4.ph.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i ]
+  %.pn20.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %.pn18.i.i.i.i.i.i.i.i.i.i.i, %bb.ac ], [ %i.dc, %bb.aa ], [ %lpad.loopexit.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.06.3.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ %.sroa.06.5.i.i.i.i.i.i.i.i.i.i.i, %bb.ac ], [ true, %bb.aa ], [ true, %.loopexit.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.06.4.ph.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs7djI6dnwcVV_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.ac) #13
-          to label %.body.i.i.i.i.i.i.i.i.i.i.i.a unwind label %bb.br, !noalias !87
+          to label %.body.i.i.i.i.i.i.i.i.i.i.i unwind label %bb.br, !noalias !87
 
 .loopexit.i.i.i.i.i.i.i.i.i.i.i:                  ; preds = %_RNvXNtNtCskKLDkoKarTP_4core3ops12control_flowINtB2_11ControlFlowNtCs7djI6dnwcVV_11proc_macro29TokenTreeENtNtB4_9try_trait3Try6branchCs6zco5hFcJZh_18wasmi_c_api_macros.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4find5checkNtCs7djI6dnwcVV_11proc_macro29TokenTreeNCNvCs6zco5hFcJZh_18wasmi_c_api_macros18prefix_symbol_impl0E0B1T_.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i.i
   %lpad.loopexit.i.i.i.i.i.i.i.i.i.i.i = landingpad { ptr, i32 }
@@ -449,7 +450,7 @@ _RNvXNtNtCskKLDkoKarTP_4core3ops12control_flowINtB2_11ControlFlowNtCs7djI6dnwcVV
   br label %.body31.i.i.i.i.i.i.i.i.i.i.i
 
 .loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i:         ; preds = %bb.bm, %.sink.split.i.i.i.i.i.i.i.i.i.i.i, %bb.s
-  %.sroa.06.4.ph.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ 1, %bb.s ], [ 1, %bb.bm ], [ %.sroa.06.9.i.i.i.i.i.i.i.i.i.i.i, %.sink.split.i.i.i.i.i.i.i.i.i.i.i ]
+  %.sroa.06.4.ph.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ true, %bb.s ], [ true, %bb.bm ], [ %2, %.sink.split.i.i.i.i.i.i.i.i.i.i.i ]
   %lpad.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i = landingpad { ptr, i32 }
           cleanup
           catch ptr null
@@ -457,12 +458,12 @@ _RNvXNtNtCskKLDkoKarTP_4core3ops12control_flowINtB2_11ControlFlowNtCs7djI6dnwcVV
 
 bb.ac:                                            ; preds = %bb.ah, %bb.ad
   %.pn18.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.df, %bb.ad ], [ %.pn16.i.i.i.i.i.i.i.i.i.i.i, %bb.ah ]
-  %.sroa.06.5.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.06.6.i.i.i.i.i.i.i.i.i.i.i, %bb.ad ], [ %.sroa.06.7.i.i.i.i.i.i.i.i.i.i.i, %bb.ah ]
+  %.sroa.06.5.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ %.sroa.06.6.i.i.i.i.i.i.i.i.i.i.i, %bb.ad ], [ %.sroa.06.7.i.i.i.i.i.i.i.i.i.i.i, %bb.ah ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs7djI6dnwcVV_11proc_macro29TokenTreeEECs5uUHdUE6bLW_5quote(ptr nonnull align 8 %i.aa) #13
           to label %.body31.i.i.i.i.i.i.i.i.i.i.i unwind label %bb.br, !noalias !87
 
 bb.ad:                                            ; preds = %bb.bt, %bb.bs, %bb.bl, %bb.ap, %.loopexit48.i.i.i.i.i.i.i.i.i.i.i, %bb.ae
-  %.sroa.06.6.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ 1, %.loopexit48.i.i.i.i.i.i.i.i.i.i.i ], [ 1, %bb.bl ], [ 0, %bb.ap ], [ 1, %bb.bs ], [ 1, %bb.bt ], [ 1, %bb.ae ]
+  %.sroa.06.6.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ true, %.loopexit48.i.i.i.i.i.i.i.i.i.i.i ], [ true, %bb.bl ], [ false, %bb.ap ], [ true, %bb.bs ], [ true, %bb.bt ], [ true, %bb.ae ]
   %i.df = landingpad { ptr, i32 }
           cleanup
           catch ptr null
@@ -500,12 +501,12 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.aj, %bb.ai
   %.pn16.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.di, %bb.ai ], [ %.pn14.i.i.i.i.i.i.i.i.i.i.i, %bb.aj ]
-  %.sroa.06.7.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ %.sroa.06.8.i.i.i.i.i.i.i.i.i.i.i, %bb.ai ], [ 1, %bb.aj ]
+  %.sroa.06.7.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ %.sroa.06.8.i.i.i.i.i.i.i.i.i.i.i, %bb.ai ], [ true, %bb.aj ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs7djI6dnwcVV_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.z) #13
           to label %bb.ac unwind label %bb.br, !noalias !87
 
 bb.ai:                                            ; preds = %bb.bk, %bb.an, %bb.ag
-  %.sroa.06.8.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ 1, %bb.bk ], [ 0, %bb.an ], [ 1, %bb.ag ]
+  %.sroa.06.8.i.i.i.i.i.i.i.i.i.i.i = phi i1 [ true, %bb.bk ], [ false, %bb.an ], [ true, %bb.ag ]
   %i.di = landingpad { ptr, i32 }
           cleanup
           catch ptr null
@@ -550,7 +551,7 @@ bb.ap:                                            ; preds = %bb.an
 
 .sink.split.i.i.i.i.i.i.i.i.i.i.i:                ; preds = %bb.bv, %bb.bu, %bb.ap
   %.sroa.0.2.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.0.copyload14.i.i.i.i.i.i.i.i.i.i, %bb.ap ], [ -2, %bb.bv ], [ -2, %bb.bu ] ; 2 uses
-  %.sroa.06.9.i.i.i.i.i.i.i.i.i.i.i = phi i8 [ 0, %bb.ap ], [ 1, %bb.bv ], [ 1, %bb.bu ] ; 3 uses
+  %2 = phi i1 [ false, %bb.ap ], [ true, %bb.bv ], [ true, %bb.bu ] ; 3 uses
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs7djI6dnwcVV_11proc_macro29TokenTreeEECs5uUHdUE6bLW_5quote(ptr nonnull align 8 %i.aa)
           to label %bb.bw unwind label %.loopexit.split-lp.i.i.i.i.i.i.i.i.i.i.i, !noalias !87
 
@@ -674,10 +675,10 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bm
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs7djI6dnwcVV_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.ac)
-          to label %.invoke.i.i.i.i.i.i.i.i.i.i.i unwind label %bb.h, !noalias !87
+          to label %.invoke.i.i.i.i.i.i.i.i.i.i.i unwind label %.body.i.i.i.i.i.i.i.i.i.i.i.a, !noalias !87
 
-bb.bo:                                            ; preds = %.body.thread.i.i.i.i.i.i.i.i.i.i.i, %bb.bp, %.body.i.i.i.i.i.i.i.i.i.i.i.a
-  %.pn24.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.du, %bb.bp ], [ %.pn2247.i.i.i.i.i.i.i.i.i.i.i, %.body.thread.i.i.i.i.i.i.i.i.i.i.i ], [ %.pn22.i.i.i.i.i.i.i.i.i.i.i, %.body.i.i.i.i.i.i.i.i.i.i.i.a ]
+bb.bo:                                            ; preds = %.body.thread.i.i.i.i.i.i.i.i.i.i.i, %bb.bp, %bb.h, %.body.i.i.i.i.i.i.i.i.i.i.i
+  %.pn24.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.du, %bb.bp ], [ %.pn2247.i.i.i.i.i.i.i.i.i.i.i, %.body.thread.i.i.i.i.i.i.i.i.i.i.i ], [ %.pn20.i.i.i.i.i.i.i.i.i.i.i, %.body.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bo, %bb.h ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs7djI6dnwcVV_11proc_macro211TokenStreamECs5uUHdUE6bLW_5quote(ptr nonnull align 8 %i.ag) #13
           to label %.body.i.i.i.i.i.i unwind label %bb.br, !noalias !87
 
@@ -745,8 +746,8 @@ bb.bw:                                            ; preds = %.sink.split.i.i.i.i
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs7djI6dnwcVV_11proc_macro211TokenStreamECs5uUHdUE6bLW_5quote(ptr nonnull align 8 %i.af)
           to label %bb.bq unwind label %bb.bp, !noalias !87
 
-.body.thread.i.i.i.i.i.i.i.i.i.i.i:               ; preds = %bb.o, %.body.i.i.i.i.i.i.i.i.i.i.i.a
-  %.pn2247.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %.pn22.i.i.i.i.i.i.i.i.i.i.i, %.body.i.i.i.i.i.i.i.i.i.i.i.a ], [ %i.bx, %bb.o ]
+.body.thread.i.i.i.i.i.i.i.i.i.i.i:               ; preds = %bb.o, %bb.h, %.body.i.i.i.i.i.i.i.i.i.i.i.a, %.body.i.i.i.i.i.i.i.i.i.i.i
+  %.pn2247.i.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %.pn20.i.i.i.i.i.i.i.i.i.i.i, %.body.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bx, %bb.o ], [ %i.bo, %bb.h ], [ %lpad.thr_comm.i.i.i.i.i.i.i.i.i.i.i, %.body.i.i.i.i.i.i.i.i.i.i.i.a ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs7djI6dnwcVV_11proc_macro211TokenStreamECs5uUHdUE6bLW_5quote(ptr nonnull align 8 %i.af) #13
           to label %bb.bo unwind label %bb.br, !noalias !87
 

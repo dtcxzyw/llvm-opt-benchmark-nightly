@@ -205,17 +205,20 @@ bb.b:                                             ; preds = %bb.a
   invoke void @_RNvMs3_NtCsexYYUdYSQU6_5alloc3stre12to_lowercase(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.x, i64 noundef %i.z)
           to label %bb.o unwind label %bb.n
 
-.body110:                                         ; preds = %bb.am, %bb.c, %.body105
-  %.pn102 = phi { ptr, i32 } [ %.pn, %.body105 ], [ %i.aa, %bb.c ], [ %i.ck, %bb.am ] ; 2 uses
-  %.sroa.039.0 = phi i8 [ %.sroa.039.2, %.body105 ], [ %.sroa.039.1, %bb.c ], [ %.sroa.039.4, %bb.am ]
-  %5 = trunc nuw i8 %.sroa.039.0 to i1
-  br i1 %5, label %bb.bb, label %common.resume
+.body110:                                         ; preds = %bb.am, %.body105
+  %.pn102 = phi { ptr, i32 } [ %.pn, %.body105 ], [ %i.ck, %bb.am ] ; 2 uses
+  %.sroa.039.0 = phi i1 [ %.sroa.039.2, %.body105 ], [ %.not.not.not.i.not.not.not.not139, %bb.am ]
+  br i1 %.sroa.039.0, label %bb.bb, label %common.resume
 
-bb.c:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i109, %bb.k, %bb.g, %bb.f
-  %.sroa.039.1 = phi i8 [ %.sroa.039.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i109 ], [ 1, %bb.k ], [ 1, %bb.g ], [ 1, %bb.f ]
+bb.c:                                             ; preds = %bb.k, %bb.g, %bb.f
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  br label %.body110
+  br label %bb.bb
+
+.split:                                           ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i109
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %.not.not.not.i.not.not.not.not139, label %bb.bb, label %common.resume
 
 bb.d:                                             ; preds = %bb.a
   %i.ab = load atomic i64, ptr @_RNvNtCs94TQx44N27d_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
@@ -293,12 +296,12 @@ bb.m:                                             ; preds = %_RINvNtCskKLDkoKarT
 
 .body105:                                         ; preds = %bb.ai, %bb.n, %.body
   %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.an, %bb.n ], [ %i.cd, %bb.ai ]
-  %.sroa.039.2 = phi i8 [ 1, %.body ], [ %.sroa.039.3, %bb.n ], [ 0, %bb.ai ]
+  %.sroa.039.2 = phi i1 [ true, %.body ], [ %.sroa.039.3, %bb.n ], [ false, %bb.ai ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #22
           to label %.body110 unwind label %bb.ba
 
 bb.n:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i, %bb.b
-  %.sroa.039.3 = phi i8 [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i ], [ 1, %bb.b ]
+  %.sroa.039.3 = phi i1 [ false, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i ], [ true, %bb.b ]
   %i.an = landingpad { ptr, i32 }
           cleanup
   br label %.body105
@@ -544,7 +547,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.ah
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i, %bb.au
-  %.sroa.039.4 = phi i8 [ 1, %bb.au ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i ] ; 3 uses
+  %.not.not.not.i.not.not.not.not139 = phi i1 [ false, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i ], [ true, %bb.au ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i109 unwind label %bb.am
@@ -563,7 +566,7 @@ bb.an:                                            ; preds = %bb.am
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i109: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit113 unwind label %bb.c
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit113 unwind label %.split
 
 bb.ao:                                            ; preds = %.noexc104
   %i.cm = load atomic i64, ptr @_RNvNtCs94TQx44N27d_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
@@ -644,8 +647,7 @@ bb.aw:                                            ; preds = %bb.av
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit113: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsarFSTFZzLuM_11xet_runtime.exit.i109
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
-  %6 = trunc nuw i8 %.sroa.039.4 to i1
-  br i1 %6, label %bb.ax, label %bb.m
+  br i1 %.not.not.not.i.not.not.not.not139, label %bb.ax, label %bb.m
 
 bb.ax:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit113
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %4)
@@ -663,8 +665,8 @@ bb.az:                                            ; preds = %bb.ay
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #21
   unreachable
 
-common.resume:                                    ; preds = %.body110, %bb.bb, %bb.ay
-  %common.resume.op = phi { ptr, i32 } [ %i.dc, %bb.ay ], [ %.pn102, %bb.bb ], [ %.pn102, %.body110 ]
+common.resume:                                    ; preds = %.split, %.body110, %bb.bb, %bb.ay
+  %common.resume.op = phi { ptr, i32 } [ %i.dc, %bb.ay ], [ %.pn102128, %bb.bb ], [ %.pn102, %.body110 ], [ %lpad.thr_comm.split-lp, %.split ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsarFSTFZzLuM_11xet_runtime5utils11config_enum10ConfigEnumEBH_.exit: ; preds = %bb.ax
@@ -677,7 +679,8 @@ bb.ba:                                            ; preds = %bb.bb, %.body, %.bo
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #21
   unreachable
 
-bb.bb:                                            ; preds = %.body110
+bb.bb:                                            ; preds = %bb.c, %.split, %.body110
+  %.pn102128 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.split ], [ %.pn102, %.body110 ], [ %i.aa, %bb.c ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsarFSTFZzLuM_11xet_runtime5utils11config_enum10ConfigEnumEBH_(ptr noalias nofree noundef align 8 dereferenceable(40) %4) #22
           to label %common.resume unwind label %bb.ba
 }

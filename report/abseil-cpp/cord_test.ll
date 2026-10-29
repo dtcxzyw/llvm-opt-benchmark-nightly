@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not262, label %bb.aon, label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.not262 = phi i1 [ false, %bb.b ], [ true, %bb.c ]
-  %.080.idx3396.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.b ], [ 1, %bb.c ] ; 2 uses
+  %.not262 = phi i1 [ false, %bb.b ], [ true, %bb.c ] ; 3 uses
+  %.080.idx3396.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.b ], [ 1, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %73) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %69)
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #38
@@ -214,11 +214,10 @@ bb.d:                                             ; preds = %bb.b, %bb.c
           to label %.noexc unwind label %bb.af
 
 .noexc:                                           ; preds = %bb.d
-  %230 = trunc nuw i8 %.080.idx3396.sroa.phi.sroa.speculated to i1 ; 2 uses
-  %i.ij = select i1 %230, ptr @.str.38, ptr @.str.37
+  %i.ij = select i1 %.not262, ptr @.str.38, ptr @.str.37
   %i.ik = load ptr, ptr %70, align 8, !tbaa !115
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 16
-  %i.im = select i1 %230, i64 4, i64 5
+  %i.im = select i1 %.not262, i64 4, i64 5
   %i.in = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.il, ptr noundef nonnull %i.ij, i64 noundef %i.im)
           to label %_ZN7testing7MessagelsEb.exit.i unwind label %bb.g ; 0 uses
 
@@ -621,7 +620,7 @@ bb.vn:                                            ; preds = %_ZN7testing8interna
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #38, !noalias !2134
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false), !noalias !2134
   %i.awk = invoke noundef zeroext i1 @_ZN4absl12lts_202605264Cord10GetFlatAuxEPNS0_13cord_internal7CordRepEPSt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull %i.awc, ptr noundef nonnull %3)
-          to label %.noexc1015 unwind label %bb.vs
+          to label %.noexc1015 unwind label %bb.vs ; 2 uses
 
 .noexc1015:                                       ; preds = %bb.vn
   br i1 %i.awk, label %bb.vo, label %bb.vp
@@ -631,17 +630,16 @@ bb.vo:                                            ; preds = %.noexc1015
   br label %bb.vp
 
 bb.vp:                                            ; preds = %bb.vo, %.noexc1015
-  %.sink.i = phi i8 [ 1, %bb.vo ], [ 0, %.noexc1015 ] ; 2 uses
+  %.sink.i = phi i8 [ 1, %bb.vo ], [ 0, %.noexc1015 ]
   %i.awl = getelementptr inbounds nuw i8, ptr %135, i64 16
   store i8 %.sink.i, ptr %i.awl, align 8, !tbaa !201, !alias.scope !2134
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #38, !noalias !2134
   %.sroa.0.0.copyload.i.i.i.pre = load i64, ptr %135, align 8
-  %145 = trunc nuw i8 %.sink.i to i1
   br label %_ZNK4absl12lts_202605264Cord7TryFlatEv.exit
 
 _ZNK4absl12lts_202605264Cord7TryFlatEv.exit:      ; preds = %bb.vp, %_ZNK4absl12lts_202605264Cord9InlineRep4sizeEv.exit.i
   %.sroa.0.0.copyload.i.i.i = phi i64 [ %.sroa.0.0.copyload.i.i.i.pre, %bb.vp ], [ %i.awi, %_ZNK4absl12lts_202605264Cord9InlineRep4sizeEv.exit.i ]
-  %i.awm = phi i1 [ %145, %bb.vp ], [ true, %_ZNK4absl12lts_202605264Cord9InlineRep4sizeEv.exit.i ]
+  %i.awm = phi i1 [ %i.awk, %bb.vp ], [ true, %_ZNK4absl12lts_202605264Cord9InlineRep4sizeEv.exit.i ]
   %i.awn = icmp eq i64 %.sroa.0.0.copyload.i.i.i, 0
   %or.cond = select i1 %i.awm, i1 %i.awn, i1 false
   br i1 %or.cond, label %_ZSteqISt17basic_string_viewIcSt11char_traitsIcEEA1_cENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS6_ESB_.exit.i.i, label %bb.vq

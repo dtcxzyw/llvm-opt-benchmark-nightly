@@ -205,13 +205,12 @@ _ZNK8facebook5velox7Variant3mapEv.exit:           ; preds = %bb.f
   br i1 %i.w, label %.thread76, label %.lr.ph90
 
 .lr.ph90:                                         ; preds = %_ZNK8facebook5velox7Variant3mapEv.exit, %.thread69
-  %.03989 = phi i1 [ %.174, %.thread69 ], [ false, %_ZNK8facebook5velox7Variant3mapEv.exit ]
-  %.04088 = phi i8 [ %.141, %.thread69 ], [ 0, %_ZNK8facebook5velox7Variant3mapEv.exit ]
+  %.03989 = phi i1 [ %.174, %.thread69 ], [ false, %_ZNK8facebook5velox7Variant3mapEv.exit ] ; 3 uses
+  %.04095 = phi i1 [ %.141115, %.thread69 ], [ false, %_ZNK8facebook5velox7Variant3mapEv.exit ]
   %.sroa.060.087 = phi ptr [ %i.ap, %.thread69 ], [ %i.u, %_ZNK8facebook5velox7Variant3mapEv.exit ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 48 ; 2 uses
-  %2 = trunc nuw i8 %.04088 to i1
-  br i1 %2, label %bb.i, label %bb.g
+  br i1 %.04095, label %2, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph90
   %i.z = load ptr, ptr %i.x, align 8, !tbaa !77
@@ -224,14 +223,20 @@ bb.h:                                             ; preds = %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.ae(ptr noundef nonnull align 8 dereferenceable(8) %i.ab, i32 noundef 0)
-  %i.ag = tail call noundef zeroext i1 @_ZNK8facebook5velox7Variant16isTypeCompatibleERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(10) %i.x, ptr noundef nonnull align 8 dereferenceable(16) %i.af)
-  br i1 %i.ag, label %bb.i, label %.thread76
+  %i.ag = tail call noundef zeroext i1 @_ZNK8facebook5velox7Variant16isTypeCompatibleERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(10) %i.x, ptr noundef nonnull align 8 dereferenceable(16) %i.af) ; 2 uses
+  %.not123 = xor i1 %i.ag, true
+  %brmerge = or i1 %.03989, %.not123
+  br i1 %brmerge, label %.thread76, label %bb.j
 
-bb.i:                                             ; preds = %bb.h, %bb.g, %.lr.ph90
-  %.141 = phi i8 [ 1, %.lr.ph90 ], [ 0, %bb.g ], [ 1, %bb.h ] ; 2 uses
-  br i1 %.03989, label %3, label %bb.j
+2:                                                ; preds = %.lr.ph90
+  br i1 %.03989, label %.thread76, label %bb.j
 
-bb.j:                                             ; preds = %bb.i
+bb.i:                                             ; preds = %bb.g
+  br i1 %.03989, label %.thread69, label %bb.j
+
+bb.j:                                             ; preds = %bb.h, %bb.i, %2
+  %.141116 = phi i1 [ false, %bb.i ], [ true, %2 ], [ true, %bb.h ] ; 2 uses
+  %not.114 = phi i1 [ true, %bb.i ], [ false, %2 ], [ false, %bb.h ]
   %i.ah = load ptr, ptr %i.y, align 8, !tbaa !77
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %.thread69, label %bb.k
@@ -242,16 +247,14 @@ bb.k:                                             ; preds = %bb.j
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = tail call noundef nonnull align 8 dereferenceable(16) ptr %i.am(ptr noundef nonnull align 8 dereferenceable(8) %i.aj, i32 noundef 1)
-  %i.ao = tail call noundef zeroext i1 @_ZNK8facebook5velox7Variant16isTypeCompatibleERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(10) %i.y, ptr noundef nonnull align 8 dereferenceable(16) %i.an)
-  br i1 %i.ao, label %3, label %.thread76
+  %i.ao = tail call noundef zeroext i1 @_ZNK8facebook5velox7Variant16isTypeCompatibleERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(10) %i.y, ptr noundef nonnull align 8 dereferenceable(16) %i.an) ; 2 uses
+  %brmerge.not = and i1 %not.114, %i.ao
+  br i1 %brmerge.not, label %.thread69, label %.thread76
 
-3:                                                ; preds = %bb.i, %bb.k
-  %4 = trunc nuw i8 %.141 to i1
-  br i1 %4, label %.thread76, label %.thread69
-
-.thread69:                                        ; preds = %bb.j, %3
-  %.174 = phi i1 [ true, %3 ], [ false, %bb.j ]
-  %i.ap = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.060.087) #40 ; 2 uses
+.thread69:                                        ; preds = %bb.i, %bb.k, %bb.j
+  %.141115 = phi i1 [ %.141116, %bb.k ], [ %.141116, %bb.j ], [ false, %bb.i ]
+  %.174 = phi i1 [ true, %bb.k ], [ false, %bb.j ], [ true, %bb.i ]
+  %i.ap = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.060.087) #40 ; 2 uses
   %i.aq = icmp eq ptr %i.ap, %i.v
   br i1 %i.aq, label %.thread76, label %.lr.ph90
 
@@ -306,8 +309,8 @@ bb.m:                                             ; preds = %.lr.ph
   %i.bv = tail call noundef zeroext i1 @_ZNK8facebook5velox7Variant16isTypeCompatibleERKSt10shared_ptrIKNS0_4TypeEE(ptr noundef nonnull align 8 dereferenceable(10) %i.bo, ptr noundef nonnull align 8 dereferenceable(16) %i.bu) ; 3 uses
   br i1 %i.bv, label %bb.m, label %.thread76
 
-.thread76:                                        ; preds = %bb.m, %.lr.ph, %bb.k, %bb.h, %3, %.thread69, %.preheader, %_ZNK8facebook5velox7Variant3mapEv.exit, %_ZNK8facebook5velox7Variant3rowEv.exit, %bb.l, %bb.f, %bb.d, %.thread, %bb.e, %bb.c, %bb.b, %bb.a
-  %.6 = phi i1 [ true, %bb.l ], [ true, %bb.a ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.c ], [ true, %.preheader ], [ true, %bb.d ], [ true, %bb.f ], [ true, %.thread ], [ false, %_ZNK8facebook5velox7Variant3rowEv.exit ], [ true, %.thread69 ], [ true, %_ZNK8facebook5velox7Variant3mapEv.exit ], [ false, %bb.h ], [ false, %bb.k ], [ true, %3 ], [ %i.bv, %.lr.ph ], [ %i.bv, %bb.m ]
+.thread76:                                        ; preds = %bb.m, %.lr.ph, %.thread69, %2, %bb.k, %bb.h, %.preheader, %_ZNK8facebook5velox7Variant3mapEv.exit, %_ZNK8facebook5velox7Variant3rowEv.exit, %bb.l, %bb.f, %bb.d, %.thread, %bb.e, %bb.c, %bb.b, %bb.a
+  %.6 = phi i1 [ true, %bb.l ], [ true, %bb.a ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.c ], [ true, %_ZNK8facebook5velox7Variant3mapEv.exit ], [ true, %bb.d ], [ true, %bb.f ], [ true, %.thread ], [ false, %_ZNK8facebook5velox7Variant3rowEv.exit ], [ true, %2 ], [ true, %.preheader ], [ true, %.thread69 ], [ %i.ag, %bb.h ], [ %i.ao, %bb.k ], [ %i.bv, %.lr.ph ], [ %i.bv, %bb.m ]
   ret i1 %.6
 }
 

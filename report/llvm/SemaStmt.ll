@@ -205,6 +205,7 @@ bb.i:                                             ; preds = %_ZL30GetTypeBeforeI
 bb.j:                                             ; preds = %.thread562, %bb.i
   %i.ca = phi i1 [ %i.bx, %bb.i ], [ %i.bq, %.thread562 ] ; 5 uses
   %i.cb = phi i32 [ %i.bt, %bb.i ], [ 0, %.thread562 ] ; 10 uses
+  %68 = phi i8 [ 0, %bb.i ], [ 1, %.thread562 ]
   %i.cc = phi i32 [ %i.bz, %bb.i ], [ 0, %.thread562 ] ; 2 uses
   %.0.copyload.i.i.i.i.i284 = load i64, ptr %29, align 8
   %i.cd = and i64 %.0.copyload.i.i.i.i.i284, -16
@@ -248,6 +249,7 @@ bb.j:                                             ; preds = %.thread562, %bb.i
 
 bb.k:                                             ; preds = %.lr.ph, %.thread565
   %.0225619 = phi ptr [ %.0225614, %.lr.ph ], [ %.0225, %.thread565 ] ; 10 uses
+  %.0205618 = phi i8 [ %68, %.lr.ph ], [ 0, %.thread565 ] ; 2 uses
   %.0215617 = phi ptr [ null, %.lr.ph ], [ %.2217571, %.thread565 ] ; 4 uses
   %.0219616 = phi i8 [ 0, %.lr.ph ], [ %.3222570, %.thread565 ] ; 4 uses
   %i.db = load i16, ptr %.0225619, align 8
@@ -641,7 +643,7 @@ _ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit306: ; preds = %_ZN4llvm23S
   br label %bb.al
 
 bb.al:                                            ; preds = %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit306, %_ZN5clang8CaseStmt6getRHSEv.exit302
-  %.1206 = phi i8 [ 1, %_ZN5clang8CaseStmt6getRHSEv.exit302 ], [ 0, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit306 ], [ 0, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit ] ; 2 uses
+  %.1206 = phi i8 [ 1, %_ZN5clang8CaseStmt6getRHSEv.exit302 ], [ %.0205618, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit306 ], [ %.0205618, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit ] ; 2 uses
   %i.ir = phi i1 [ false, %_ZN5clang8CaseStmt6getRHSEv.exit302 ], [ true, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit306 ], [ true, %_ZNSt4pairIN4llvm6APSIntEPN5clang8CaseStmtEED2Ev.exit ]
   %i.is = load i32, ptr %i.cp, align 8, !tbaa !846
   %i.it = icmp ugt i32 %i.is, 64

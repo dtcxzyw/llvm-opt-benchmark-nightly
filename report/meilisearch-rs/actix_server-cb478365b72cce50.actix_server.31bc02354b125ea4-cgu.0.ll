@@ -205,6 +205,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.ld = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   %i.le = load ptr, ptr %i.ld, align 8, !noalias !1178, !nonnull !12, !noundef !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.br), !noalias !1178
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !1178
   br label %bb.hr
 
 bb.bh:                                            ; preds = %bb.bf
@@ -607,38 +608,44 @@ bb.hn:                                            ; preds = %bb.hk
 
 bb.ho:                                            ; preds = %bb.hn, %bb.ck
   %.sroa.9.0221 = phi ptr [ %.sroa.9.3.a, %bb.hn ], [ %.sroa.5.0168.i, %bb.ck ] ; 2 uses
-  %.sroa.044.4.i = phi i8 [ 0, %bb.hn ], [ 1, %bb.ck ] ; 2 uses
+  %2 = phi i1 [ false, %bb.hn ], [ true, %bb.ck ]
+  %.sroa.044.4.i = phi i8 [ 0, %bb.hn ], [ 1, %bb.ck ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1362)
   call void @llvm.experimental.noalias.scope.decl(metadata !1363)
   call void @llvm.experimental.noalias.scope.decl(metadata !1364)
   %i.zp = load ptr, ptr %i.bq, align 8, !alias.scope !1365, !noalias !1178, !nonnull !12, !noundef !12
   %i.zq = atomicrmw add ptr %i.zp, i64 -1 release, align 8, !noalias !1366
   %i.zr = icmp eq i64 %i.zq, 1
-  br i1 %i.zr, label %bb.hp, label %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a"
+  br i1 %i.zr, label %bb.hp, label %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i"
 
 bb.hp:                                            ; preds = %bb.ho
   fence acquire
   invoke void @"_ZN5alloc4sync16Arc$LT$T$C$A$GT$9drop_slow17hcf0bc3cad65d82b1E"(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.bq)
-          to label %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a" unwind label %bb.bp, !noalias !1179
+          to label %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i" unwind label %bb.bp, !noalias !1179
 
-"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a": ; preds = %bb.hp, %bb.ho
+"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i": ; preds = %bb.hp, %bb.ho
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bq), !noalias !1178
-  %i.zs = trunc nuw i8 %.sroa.044.4.i to i1
-  br i1 %i.zs, label %.thread211.i, label %bb.hq
+  br i1 %2, label %.thread211.i, label %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a"
 
-.thread211.i:                                     ; preds = %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a", %bb.bq
-  %.sroa.9.1.a = phi ptr [ %i.lz, %bb.bq ], [ %.sroa.9.0221, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a" ]
+"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a": ; preds = %.thread211.i, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i"
+  %.sroa.9.1 = phi ptr [ %.sroa.9.1.a, %.thread211.i ], [ %.sroa.9.0221, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i" ] ; 2 uses
+  %.sroa.046.7.i = phi i8 [ %.sroa.046.8.i, %.thread211.i ], [ %.sroa.044.4.i, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i" ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !1178
+  %i.zs = trunc nuw i8 %.sroa.046.7.i to i1
+  br i1 %i.zs, label %bb.hr, label %bb.hq
+
+.thread211.i:                                     ; preds = %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i", %bb.bq
+  %.sroa.9.1.a = phi ptr [ %i.lz, %bb.bq ], [ %.sroa.9.0221, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i" ]
+  %.sroa.046.8.i = phi i8 [ 1, %bb.bq ], [ %.sroa.044.4.i, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i" ]
   %i.zt = call noundef i32 @close(i32 noundef %i.lg) #24, !noalias !1179 ; 0 uses
-  br label %bb.hr
+  br label %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a"
 
 bb.hq:                                            ; preds = %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a"
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !1178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt), !noalias !1178
   br label %.thread247
 
-bb.hr:                                            ; preds = %.thread211.i, %bb.bg
-  %.sroa.9.2 = phi ptr [ %i.le, %bb.bg ], [ %.sroa.9.1.a, %.thread211.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !1178
+bb.hr:                                            ; preds = %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a", %bb.bg
+  %.sroa.9.2 = phi ptr [ %i.le, %bb.bg ], [ %.sroa.9.1, %"_ZN4core3ptr58drop_in_place$LT$actix_server..waker_queue..WakerQueue$GT$17h2a1a8b88987dda31E.exit116.i.a" ] ; 2 uses
   %i.zu = atomicrmw add ptr %i.kw, i64 -1 acq_rel, align 8, !noalias !1367
   %i.zv = icmp eq i64 %i.zu, 1
   br i1 %i.zv, label %bb.hs, label %"_ZN82_$LT$tokio..sync..mpsc..chan..Tx$LT$T$C$S$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hbea30c90fd353728E.exit.i.i.i.i"
@@ -731,7 +738,7 @@ bb.ib:                                            ; preds = %bb.ia, %bb.hx, %bb.
   br label %.body
 
 .thread247:                                       ; preds = %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hb5b890ae051715cdE.exit.i.i", %bb.hz, %bb.hq
-  %.sroa.9.4.ph = phi ptr [ %.sroa.9.0221, %bb.hq ], [ %.sroa.9.2, %bb.hz ], [ %.sroa.9.2, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hb5b890ae051715cdE.exit.i.i" ]
+  %.sroa.9.4.ph = phi ptr [ %.sroa.9.1, %bb.hq ], [ %.sroa.9.2, %bb.hz ], [ %.sroa.9.2, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hb5b890ae051715cdE.exit.i.i" ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bp)
   br label %bb.id
 
@@ -1134,8 +1141,8 @@ bb.e:                                             ; preds = %"_ZN5alloc5boxed12B
   unreachable
 
 .body37.i:                                        ; preds = %"_ZN79_$LT$tokio..sync..oneshot..Sender$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17haeb932975200a7dcE.exit.thread.i", %bb.mo, %bb.mt, %bb.ml, %bb.mk, %bb.ll, %bb.lk, %.split342.i, %.body66.i, %bb.j, %bb.c
-  %cond.i.a = phi i1 [ false, %bb.c ], [ true, %.split342.i ], [ false, %bb.j ], [ true, %.body66.i ], [ false, %bb.ml ], [ false, %bb.mk ], [ true, %bb.lk ], [ true, %bb.ll ], [ false, %bb.mt ], [ false, %bb.mo ], [ false, %"_ZN79_$LT$tokio..sync..oneshot..Sender$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17haeb932975200a7dcE.exit.thread.i" ]
-  %.sroa.05.0.i = phi i1 [ true, %bb.c ], [ false, %.split342.i ], [ true, %bb.j ], [ false, %.body66.i ], [ true, %bb.ml ], [ true, %bb.mk ], [ false, %bb.lk ], [ false, %bb.ll ], [ true, %bb.mt ], [ true, %bb.mo ], [ true, %"_ZN79_$LT$tokio..sync..oneshot..Sender$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17haeb932975200a7dcE.exit.thread.i" ]
+  %cond.i.a = phi i1 [ true, %bb.c ], [ false, %.split342.i ], [ true, %bb.j ], [ false, %.body66.i ], [ true, %bb.ml ], [ true, %bb.mk ], [ false, %bb.lk ], [ false, %bb.ll ], [ true, %bb.mt ], [ true, %bb.mo ], [ true, %"_ZN79_$LT$tokio..sync..oneshot..Sender$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17haeb932975200a7dcE.exit.thread.i" ]
+  %.sroa.05.0.i = phi i1 [ false, %bb.c ], [ true, %.split342.i ], [ false, %bb.j ], [ true, %.body66.i ], [ false, %bb.ml ], [ false, %bb.mk ], [ true, %bb.lk ], [ true, %bb.ll ], [ false, %bb.mt ], [ false, %bb.mo ], [ false, %"_ZN79_$LT$tokio..sync..oneshot..Sender$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17haeb932975200a7dcE.exit.thread.i" ]
   %.pn18.i = phi { ptr, i32 } [ %i.bv, %bb.c ], [ %lpad.thr_comm.split-lp.i, %.split342.i ], [ %i.ci, %bb.j ], [ %.pn12.i, %.body66.i ], [ %i.aab, %bb.ml ], [ %i.aab, %bb.mk ], [ %i.yg, %bb.lk ], [ %i.yg, %bb.ll ], [ %.pn16.ph.i, %bb.mt ], [ %.pn16.ph.i, %bb.mo ], [ %.pn16.ph.i, %"_ZN79_$LT$tokio..sync..oneshot..Sender$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17haeb932975200a7dcE.exit.thread.i" ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3284)
   call void @llvm.experimental.noalias.scope.decl(metadata !3285)
@@ -1538,7 +1545,7 @@ bb.mu:                                            ; preds = %bb.ms
   unreachable
 
 "_ZN4core3ptr51drop_in_place$LT$tokio..runtime..handle..Handle$GT$17hef63ab6fd0266facE.exit": ; preds = %bb.h, %bb.f, %bb.g, %bb.i
-  br i1 %.sroa.05.0.i, label %bb.mv, label %"_ZN4core3ptr122drop_in_place$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_server..service..InternalServiceFactory$GT$$GT$$GT$17h65f52cb425d2a86bE.exit"
+  br i1 %cond.i.a, label %bb.mv, label %"_ZN4core3ptr122drop_in_place$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_server..service..InternalServiceFactory$GT$$GT$$GT$17h65f52cb425d2a86bE.exit"
 
 "_ZN4core3ptr122drop_in_place$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_server..service..InternalServiceFactory$GT$$GT$$GT$17h65f52cb425d2a86bE.exit": ; preds = %bb.my, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hb6c33fef59afafe5E.exit.i", %"_ZN4core3ptr51drop_in_place$LT$tokio..runtime..handle..Handle$GT$17hef63ab6fd0266facE.exit"
   %i.aaw = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1581,7 +1588,7 @@ bb.my:                                            ; preds = %"_ZN70_$LT$alloc..v
   br label %"_ZN4core3ptr122drop_in_place$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_server..service..InternalServiceFactory$GT$$GT$$GT$17h65f52cb425d2a86bE.exit"
 
 bb.mz:                                            ; preds = %"_ZN4core3ptr122drop_in_place$LT$alloc..vec..Vec$LT$alloc..boxed..Box$LT$dyn$u20$actix_server..service..InternalServiceFactory$GT$$GT$$GT$17h65f52cb425d2a86bE.exit"
-  br i1 %cond.i.a, label %"_ZN4core3ptr50drop_in_place$LT$actix_server..worker..Counter$GT$17h661becc8fd2d99fcE.exit.i", label %bb.na
+  br i1 %.sroa.05.0.i, label %"_ZN4core3ptr50drop_in_place$LT$actix_server..worker..Counter$GT$17h661becc8fd2d99fcE.exit.i", label %bb.na
 
 bb.na:                                            ; preds = %bb.mz
   %i.abg = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -1984,7 +1991,7 @@ bb.ag:                                            ; preds = %"_ZN3std6thread5loc
   br i1 %i.dn, label %.lr.ph.i.i, label %"_ZN3std4sync4mpmc5array16Channel$LT$T$GT$4send17h5c065117b96035e9E.exit"
 
 common.resume:                                    ; preds = %bb.ds, %bb.dt, %.body.i, %.body.i.i, %bb.db, %.body.thread90.i, %bb.dn, %.body.thread.i11, %bb.bc, %.body.thread.i, %bb.ah
-  %common.resume.op = phi { ptr, i32 } [ %i.jy, %bb.db ], [ %eh.lpad-body26.i, %.body.thread.i ], [ %eh.lpad-body16.i, %.body.thread.i11 ], [ %eh.lpad-body26.i, %bb.ah ], [ %eh.lpad-body16.i, %bb.bc ], [ %i.hz, %.body.i ], [ %.pn.pn93.i, %.body.thread90.i ], [ %.pn.pn93.i, %bb.dn ], [ %eh.lpad-body.i.i, %.body.i.i ], [ %i.ks, %bb.dt ], [ %i.ks, %bb.ds ]
+  %common.resume.op = phi { ptr, i32 } [ %eh.lpad-body.i.i, %.body.i.i ], [ %eh.lpad-body26.i, %.body.thread.i ], [ %eh.lpad-body16.i, %.body.thread.i11 ], [ %eh.lpad-body26.i, %bb.ah ], [ %eh.lpad-body16.i, %bb.bc ], [ %i.jy, %bb.db ], [ %i.hz, %.body.i ], [ %.pn.pn93.i, %bb.dn ], [ %.pn.pn93.i, %.body.thread90.i ], [ %i.ks, %bb.dt ], [ %i.ks, %bb.ds ]
   resume { ptr, i32 } %common.resume.op
 
 .body.thread.i:                                   ; preds = %.body.thread27.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ad, %bb.ac, %bb.u, %bb.t
@@ -2387,7 +2394,7 @@ bb.dm:                                            ; preds = %bb.bs
           to label %.body.thread90.i unwind label %bb.cf
 
 .body.thread90.i:                                 ; preds = %bb.dm, %bb.bj, %.split.thread.i, %.body.i
-  %.pn.pn93.i = phi { ptr, i32 } [ %i.hz, %.body.i ], [ %i.gb, %bb.bj ], [ %lpad.thr_comm.split-lp.i, %bb.dm ], [ %lpad.thr_comm.i17, %.split.thread.i ] ; 2 uses
+  %.pn.pn93.i = phi { ptr, i32 } [ %lpad.thr_comm.i17, %.split.thread.i ], [ %i.hz, %.body.i ], [ %i.gb, %bb.bj ], [ %lpad.thr_comm.split-lp.i, %bb.dm ] ; 2 uses
   %i.kp = icmp eq ptr %0, null
   br i1 %i.kp, label %common.resume, label %bb.dn
 

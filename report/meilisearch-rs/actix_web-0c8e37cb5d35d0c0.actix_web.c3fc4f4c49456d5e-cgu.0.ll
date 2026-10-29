@@ -205,7 +205,7 @@ bb.a:
 .body28:                                          ; preds = %bb.f, %bb.b, %bb.ao, %bb.an
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.ao ], [ %.pn.pn, %bb.an ], [ %i.o, %bb.b ], [ %i.x, %bb.f ] ; 2 uses
   %.sroa.09.0 = phi i1 [ %.sroa.09.1, %bb.ao ], [ %.sroa.09.1, %bb.an ], [ true, %bb.b ], [ true, %bb.f ]
-  %cond19 = phi i1 [ false, %bb.ao ], [ true, %bb.an ], [ false, %bb.b ], [ false, %bb.f ]
+  %.sroa.07.0 = phi i8 [ %.sroa.06.0, %bb.ao ], [ %.sroa.06.0, %bb.an ], [ 1, %bb.b ], [ 1, %bb.f ]
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 232
   invoke fastcc void @"_ZN4core3ptr50drop_in_place$LT$actix_http..test..TestRequest$GT$17h70e3ed880e2a3189E"(ptr noalias noundef align 8 dereferenceable(184) %i.n) #53
           to label %bb.ap unwind label %bb.ah
@@ -285,6 +285,7 @@ bb.i:                                             ; preds = %bb.h, %"_ZN10actix_
   %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.ak ], [ %i.ah, %bb.j ], [ %i.aq, %bb.n ], [ %i.av, %bb.q ], [ %i.cg, %bb.al ], [ %i.cg, %bb.am ], [ %i.bn, %bb.aa ] ; 2 uses
   %.sroa.09.1 = phi i1 [ false, %bb.ak ], [ true, %bb.j ], [ false, %bb.n ], [ false, %bb.q ], [ false, %bb.al ], [ false, %bb.am ], [ false, %bb.aa ] ; 2 uses
   %.sroa.06.0.a = phi i1 [ false, %bb.ak ], [ true, %bb.j ], [ true, %bb.n ], [ true, %bb.q ], [ true, %bb.al ], [ true, %bb.am ], [ false, %bb.aa ]
+  %.sroa.06.0 = phi i8 [ 0, %bb.ak ], [ 1, %bb.j ], [ 1, %bb.n ], [ 1, %bb.q ], [ 1, %bb.al ], [ 1, %bb.am ], [ 0, %bb.aa ] ; 2 uses
   invoke fastcc void @"_ZN4core3ptr245drop_in_place$LT$actix_http..payload..Payload$LT$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$futures_core..stream..Stream$u2b$Item$u20$$u3d$$u20$core..result..Result$LT$bytes..bytes..Bytes$C$actix_http..error..PayloadError$GT$$GT$$GT$$GT$$GT$17h2a24f08e635f7441E"(ptr noalias noundef align 8 dereferenceable(24) %i.l) #53
           to label %bb.an unwind label %bb.ah
 
@@ -599,7 +600,8 @@ bb.as:                                            ; preds = %bb.ap
           to label %bb.aq unwind label %bb.ah
 
 "_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit43": ; preds = %bb.ar, %bb.aq
-  br i1 %cond19, label %"_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit", label %bb.at
+  %cond18 = icmp eq i8 %.sroa.07.0, 0
+  br i1 %cond18, label %"_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit", label %bb.at
 
 bb.at:                                            ; preds = %"_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit43"
   %i.cn = getelementptr inbounds nuw i8, ptr %1, i64 480
@@ -637,7 +639,7 @@ bb.a:
 .body28:                                          ; preds = %bb.f, %bb.b, %bb.ao, %bb.an
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.ao ], [ %.pn.pn, %bb.an ], [ %i.o, %bb.b ], [ %i.x, %bb.f ] ; 2 uses
   %.sroa.09.0 = phi i1 [ %.sroa.09.1, %bb.ao ], [ %.sroa.09.1, %bb.an ], [ true, %bb.b ], [ true, %bb.f ]
-  %cond19 = phi i1 [ false, %bb.ao ], [ true, %bb.an ], [ false, %bb.b ], [ false, %bb.f ]
+  %.sroa.07.0 = phi i8 [ %.sroa.06.0, %bb.ao ], [ %.sroa.06.0, %bb.an ], [ 1, %bb.b ], [ 1, %bb.f ]
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 232
   invoke fastcc void @"_ZN4core3ptr50drop_in_place$LT$actix_http..test..TestRequest$GT$17h70e3ed880e2a3189E"(ptr noalias noundef align 8 dereferenceable(184) %i.n) #53
           to label %bb.ap unwind label %bb.ah
@@ -717,6 +719,7 @@ bb.i:                                             ; preds = %bb.h, %"_ZN10actix_
   %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.ak ], [ %i.ah, %bb.j ], [ %i.aq, %bb.n ], [ %i.av, %bb.q ], [ %i.cg, %bb.al ], [ %i.cg, %bb.am ], [ %i.bn, %bb.aa ] ; 2 uses
   %.sroa.09.1 = phi i1 [ false, %bb.ak ], [ true, %bb.j ], [ false, %bb.n ], [ false, %bb.q ], [ false, %bb.al ], [ false, %bb.am ], [ false, %bb.aa ] ; 2 uses
   %.sroa.06.0.a = phi i1 [ false, %bb.ak ], [ true, %bb.j ], [ true, %bb.n ], [ true, %bb.q ], [ true, %bb.al ], [ true, %bb.am ], [ false, %bb.aa ]
+  %.sroa.06.0 = phi i8 [ 0, %bb.ak ], [ 1, %bb.j ], [ 1, %bb.n ], [ 1, %bb.q ], [ 1, %bb.al ], [ 1, %bb.am ], [ 0, %bb.aa ] ; 2 uses
   invoke fastcc void @"_ZN4core3ptr245drop_in_place$LT$actix_http..payload..Payload$LT$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$futures_core..stream..Stream$u2b$Item$u20$$u3d$$u20$core..result..Result$LT$bytes..bytes..Bytes$C$actix_http..error..PayloadError$GT$$GT$$GT$$GT$$GT$17h2a24f08e635f7441E"(ptr noalias noundef align 8 dereferenceable(24) %i.l) #53
           to label %bb.an unwind label %bb.ah
 
@@ -1031,7 +1034,8 @@ bb.as:                                            ; preds = %bb.ap
           to label %bb.aq unwind label %bb.ah
 
 "_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit43": ; preds = %bb.ar, %bb.aq
-  br i1 %cond19, label %"_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit", label %bb.at
+  %cond18 = icmp eq i8 %.sroa.07.0, 0
+  br i1 %cond18, label %"_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit", label %bb.at
 
 bb.at:                                            ; preds = %"_ZN4core3ptr49drop_in_place$LT$actix_web..config..AppConfig$GT$17h47fc701721b820faE.exit43"
   %i.cn = getelementptr inbounds nuw i8, ptr %1, i64 480

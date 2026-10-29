@@ -204,11 +204,11 @@ bb.ei:                                            ; preds = %.body746
 bb.ej:                                            ; preds = %bb.eh
   %i.oi = load i64, ptr %2, align 8, !range !2857
   %.not700 = icmp ne i64 %i.oi, -1
-  %or.cond738.not = select i1 %i.oh, i1 %.not700, i1 false, !dbg !17576
+  %or.cond738.not = select i1 %i.oh, i1 %.not700, i1 false, !dbg !17576 ; 2 uses
   br i1 %or.cond738.not, label %bb.el, label %bb.ek, !dbg !17576
 
 bb.ek:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionEEB1e_.exit, %bb.ej
-  %.sroa.096.19 = phi i8 [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionEEB1e_.exit ], [ 1, %bb.ej ], !dbg !17263 ; 20 uses
+  %.sroa.096.19 = phi i8 [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionEEB1e_.exit ], [ 1, %bb.ej ], !dbg !17263 ; 19 uses
   %i.oj = icmp ult i64 %.sroa.0983.0.copyload, 1351
     #dbg_value(ptr %i.ey, !14924, !DIExpression(), !15896)
     #dbg_value(ptr %i.ey, !14932, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !15897)
@@ -611,10 +611,9 @@ bb.lf:                                            ; preds = %bb.ni, %bb.le
 
 bb.lg:                                            ; preds = %bb.le
   %i.acl = load i64, ptr %2, align 8, !dbg !17245, !range !2857, !noundef !1750
-  %5 = icmp ne i64 %i.acl, -1, !dbg !17245
-  %6 = trunc nuw i8 %.sroa.096.19 to i1, !dbg !17245
-  %or.cond4 = and i1 %5, %6, !dbg !17245
-  br i1 %or.cond4, label %bb.lh, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionEEB1e_.exit976, !dbg !17245
+  %5 = icmp eq i64 %i.acl, -1, !dbg !17245
+  %or.cond4.not = or i1 %or.cond738.not, %5, !dbg !17245
+  br i1 %or.cond4.not, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionEEB1e_.exit976, label %bb.lh, !dbg !17245
 
 bb.lh:                                            ; preds = %bb.lg
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsjfnSKV9Rz3v_3h3i7actions2h36ActionEEB1e_(ptr noalias nofree noundef align 8 dereferenceable(24) %2)

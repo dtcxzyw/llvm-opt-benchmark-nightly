@@ -202,7 +202,7 @@ bb.a:
   %i.q = alloca [320 x i8], align 8               ; 3 uses
   %i.r = alloca [24 x i8], align 8                ; 5 uses
   %.sroa.0 = alloca [280 x i8], align 8           ; 4 uses
-  %i.s = alloca [56 x i8], align 8                ; 7 uses
+  %i.s = alloca [56 x i8], align 8                ; 8 uses
   %i.t = alloca [32 x i8], align 8                ; 2 uses
   %i.u = alloca [32 x i8], align 8                ; 3 uses
   %i.v = alloca [24 x i8], align 8                ; 6 uses
@@ -230,8 +230,8 @@ bb.e:                                             ; preds = %bb.c
   %i.z = invoke zeroext i1 @_RINvMNtCsJWcWohxsl6_3syn9lookaheadNtB3_10Lookahead14peekNvNtB5_5ident5IdentEB5_(ptr nonnull align 8 %i.s)
           to label %bb.f unwind label %.thread24
 
-.thread24:                                        ; preds = %.invoke46.invoke, %bb.j, %bb.g, %bb.e
-  %.sroa.010.3.ph = phi i1 [ true, %bb.e ], [ true, %bb.g ], [ true, %bb.j ], [ false, %.invoke46.invoke ]
+.thread24:                                        ; preds = %.invoke46.invoke, %.invoke, %bb.j, %bb.g, %bb.e
+  %.sroa.010.3.ph = phi i1 [ true, %bb.e ], [ true, %bb.g ], [ true, %bb.j ], [ false, %.invoke ], [ false, %.invoke46.invoke ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -297,7 +297,7 @@ bb.r:                                             ; preds = %bb.q
   %i.af = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.af, i64 24, i1 false)
   invoke void @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtCsJWcWohxsl6_3syn8generics12GenericParamNtNtBO_5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zB1s_EE13from_residualBO_(ptr sret([456 x i8]) align 8 %0, ptr nonnull align 8 %i.d, ptr nonnull align 8 @60)
-          to label %.invoke46.invoke unwind label %bb.t
+          to label %.invoke unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.q
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(456) %i.i, ptr noundef nonnull align 8 dereferenceable(456) %i.h, i64 456, i1 false)
@@ -328,7 +328,7 @@ bb.t:                                             ; preds = %bb.r
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsJWcWohxsl6_3syn4attr9AttributeEEB1c_(ptr nonnull align 8 %i.j) #17
           to label %.thread unwind label %bb.u
 
-.invoke.a:                                        ; preds = %.invoke46.invoke
+.invoke.a:                                        ; preds = %.invoke
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsJWcWohxsl6_3syn9lookahead10Lookahead1EBF_(ptr nonnull align 8 %i.s)
   br label %bb.ah
 
@@ -357,7 +357,7 @@ bb.y:                                             ; preds = %bb.x
   %i.as = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.as, i64 24, i1 false)
   invoke void @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtCsJWcWohxsl6_3syn8generics12GenericParamNtNtBO_5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zB1s_EE13from_residualBO_(ptr sret([456 x i8]) align 8 %0, ptr nonnull align 8 %i.c, ptr nonnull align 8 @61)
-          to label %.invoke46.invoke unwind label %bb.aa
+          to label %.invoke unwind label %bb.aa
 
 bb.z:                                             ; preds = %bb.x
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.m, ptr noundef nonnull align 8 dereferenceable(96) %i.l, i64 96, i1 false)
@@ -402,7 +402,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.bb = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.bb, i64 24, i1 false)
   invoke void @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtCsJWcWohxsl6_3syn8generics12GenericParamNtNtBO_5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zB1s_EE13from_residualBO_(ptr sret([456 x i8]) align 8 %0, ptr nonnull align 8 %i.b, ptr nonnull align 8 @62)
-          to label %.invoke46.invoke unwind label %bb.ai
+          to label %.invoke unwind label %bb.ai
 
 bb.af:                                            ; preds = %bb.ad
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(320) %i.q, ptr noundef nonnull align 8 dereferenceable(320) %i.p, i64 320, i1 false)
@@ -425,10 +425,14 @@ bb.af:                                            ; preds = %bb.ad
   %i.bg = getelementptr inbounds nuw i8, ptr %i.q, i64 224
   br label %.invoke46.invoke
 
-.invoke46.invoke:                                 ; preds = %bb.r, %bb.y, %bb.ae, %bb.af, %bb.z, %bb.s
-  %2 = phi ptr [ %i.am, %bb.s ], [ %i.bg, %bb.af ], [ %i.m, %bb.z ], [ %i.n, %bb.y ], [ %i.j, %bb.r ], [ %i.r, %bb.ae ]
+.invoke46.invoke:                                 ; preds = %bb.s, %bb.z, %bb.af
+  %2 = phi ptr [ %i.bg, %bb.af ], [ %i.m, %bb.z ], [ %i.am, %bb.s ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsJWcWohxsl6_3syn4attr9AttributeEEB1c_(ptr nonnull align 8 %2)
-          to label %.invoke.a unwind label %.thread24
+          to label %3 unwind label %.thread24
+
+3:                                                ; preds = %.invoke46.invoke
+  call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsJWcWohxsl6_3syn9lookahead10Lookahead1EBF_(ptr nonnull align 8 %i.s)
+  br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.m
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -437,7 +441,7 @@ bb.ag:                                            ; preds = %bb.m
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsJWcWohxsl6_3syn4attr9AttributeEEB1c_(ptr nonnull align 8 %i.v)
   br label %bb.ah
 
-bb.ah:                                            ; preds = %.invoke.a, %bb.b, %bb.ag
+bb.ah:                                            ; preds = %.invoke.a, %3, %bb.b, %bb.ag
   ret void
 
 bb.ai:                                            ; preds = %bb.ae
@@ -446,6 +450,11 @@ bb.ai:                                            ; preds = %bb.ae
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsJWcWohxsl6_3syn4attr9AttributeEEB1c_(ptr nonnull align 8 %i.r) #17
           to label %.thread unwind label %bb.u
 
+.invoke:                                          ; preds = %bb.ae, %bb.y, %bb.r
+  %4 = phi ptr [ %i.n, %bb.y ], [ %i.j, %bb.r ], [ %i.r, %bb.ae ]
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsJWcWohxsl6_3syn4attr9AttributeEEB1c_(ptr nonnull align 8 %4)
+          to label %.invoke.a unwind label %.thread24
+
 .thread:                                          ; preds = %bb.o, %bb.t, %bb.v, %bb.aa, %bb.ab, %bb.ai, %.thread24
   %.pn22 = phi { ptr, i32 } [ %lpad.thr_comm, %.thread24 ], [ %i.ac, %bb.o ], [ %i.an, %bb.t ], [ %i.ap, %bb.v ], [ %i.ax, %bb.aa ], [ %i.ay, %bb.ab ], [ %i.bi, %bb.ai ] ; 2 uses
   %.sroa.010.221 = phi i1 [ %.sroa.010.3.ph, %.thread24 ], [ false, %bb.o ], [ false, %bb.t ], [ false, %bb.v ], [ false, %bb.aa ], [ false, %bb.ab ], [ false, %bb.ai ]
@@ -453,7 +462,7 @@ bb.ai:                                            ; preds = %bb.ae
           to label %bb.d unwind label %bb.u
 
 bb.aj:                                            ; preds = %bb.ak, %bb.d
-  %.pn1439 = phi { ptr, i32 } [ %.pn1440, %bb.ak ], [ %.pn22, %bb.d ]
+  %.pn1439 = phi { ptr, i32 } [ %.pn22, %bb.d ], [ %.pn1440, %bb.ak ]
   resume { ptr, i32 } %.pn1439
 
 bb.ak:                                            ; preds = %.thread36, %bb.d

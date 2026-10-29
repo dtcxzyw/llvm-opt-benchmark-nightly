@@ -204,9 +204,9 @@ bb.f:                                             ; preds = %bb.d
   %i.an = icmp eq i8 %lhsc.i, 46
   br i1 %i.an, label %bb.g, label %bb.e
 
-.body83.thread.a:                                 ; preds = %bb.aw, %bb.ax, %.body83, %bb.bi
-  %.pn54 = phi { ptr, i32 } [ %.pn51.pn141, %bb.bi ], [ %.pn51, %.body83 ], [ %i.cr, %bb.ax ], [ %i.cr, %bb.aw ] ; 2 uses
-  br i1 %.sroa.08.1, label %.thread, label %common.resume
+.body83.thread.a:                                 ; preds = %.body83, %bb.bi
+  %.pn54 = phi { ptr, i32 } [ %.pn51.pn141, %bb.bi ], [ %.pn51, %.body83 ] ; 2 uses
+  br i1 %.not.not115, label %.thread, label %common.resume
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.b, %bb.l
   %lpad.loopexit.split-lp168 = landingpad { ptr, i32 }
@@ -235,9 +235,9 @@ bb.j:                                             ; preds = %bb.e, %_RNvNtNtCshz
   br label %bb.k
 
 bb.k:                                             ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131, %bb.j
+  %.not.not115 = phi i1 [ true, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131 ], [ false, %bb.j ] ; 3 uses
   %.sroa.3.sroa.2.0 = phi i64 [ %i.ao, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131 ], [ undef, %bb.j ]
   %.sroa.3.sroa.0.0 = phi ptr [ %i.ay, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131 ], [ undef, %bb.j ]
-  %.sroa.08.1 = phi i1 [ true, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131 ], [ false, %bb.j ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %i.ao, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131 ], [ -1, %bb.j ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
@@ -302,6 +302,9 @@ _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCj
 bb.r:                                             ; preds = %bb.n
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.av, ptr nonnull align 1 %i.ap, i64 %i.ao, i1 false)
   br label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask.exit61.thread131
+
+.body83.thread:                                   ; preds = %bb.ax, %bb.aw
+  br i1 %.not.not115, label %.thread, label %common.resume
 
 .body83:                                          ; preds = %.body67
   br i1 %cond, label %.body83.thread.a, label %.thread137
@@ -570,12 +573,12 @@ bb.aw:                                            ; preds = %_RINvNtCshzWfHUSfYa
           cleanup                                 ; 2 uses
   %.val2.i.i.i.i78 = load i64, ptr %i.l, align 8, !alias.scope !950 ; 2 uses
   %i.cs = icmp eq i64 %.val2.i.i.i.i78, 0
-  br i1 %i.cs, label %.body83.thread.a, label %bb.ax
+  br i1 %i.cs, label %.body83.thread, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   %.val3.i.i.i.i79 = load ptr, ptr %i.by, align 8, !alias.scope !951, !nonnull !6, !noundef !6
   call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i.i.i.i79, i64 noundef %.val2.i.i.i.i78, i64 noundef range(i64 1, -9223372036854775807) 1) #29, !noalias !952
-  br label %.body83.thread.a
+  br label %.body83.thread
 
 bb.ay:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit
   %.val.i.i.i.i81 = load i64, ptr %i.l, align 8, !alias.scope !950 ; 2 uses
@@ -591,7 +594,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std4path7PathBufECslk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  br i1 %.sroa.08.1, label %bb.ba, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit91
+  br i1 %.not.not115, label %bb.ba, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit91
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit91: ; preds = %bb.be, %bb.bd, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std4path7PathBufECslkzCjlEuW1f_5xtask.exit85
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
@@ -623,8 +626,8 @@ bb.be:                                            ; preds = %bb.bd
   call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i90, i64 noundef %.val.i.i89, i64 noundef range(i64 1, -9223372036854775807) 1) #29, !noalias !957
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit91
 
-common.resume:                                    ; preds = %.body83.thread.a, %.thread, %bb.bb, %bb.bc
-  %common.resume.op = phi { ptr, i32 } [ %i.cu, %bb.bb ], [ %i.cu, %bb.bc ], [ %.pn54109, %.thread ], [ %.pn54, %.body83.thread.a ]
+common.resume:                                    ; preds = %.body83.thread.a, %.thread, %.body83.thread, %bb.bb, %bb.bc
+  %common.resume.op = phi { ptr, i32 } [ %i.cu, %bb.bb ], [ %i.cu, %bb.bc ], [ %.pn54109, %.thread ], [ %.pn54, %.body83.thread.a ], [ %i.cr, %.body83.thread ]
   resume { ptr, i32 } %common.resume.op
 
 bb.bf:                                            ; preds = %.thread, %bb.bi, %.thread137, %bb.bg, %bb.ar, %bb.ao, %bb.am, %.body67, %.body, %bb.w, %bb.t, %bb.p
@@ -649,8 +652,8 @@ bb.bi:                                            ; preds = %.thread137
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p) #31
           to label %.body83.thread.a unwind label %bb.bf
 
-.thread:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.p, %.body83.thread.a
-  %.pn54109 = phi { ptr, i32 } [ %.pn54, %.body83.thread.a ], [ %i.ax, %bb.p ], [ %lpad.loopexit.split-lp168, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.thread:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body83.thread, %bb.p, %.body83.thread.a
+  %.pn54109 = phi { ptr, i32 } [ %.pn54, %.body83.thread.a ], [ %i.ax, %bb.p ], [ %i.cr, %.body83.thread ], [ %lpad.loopexit.split-lp168, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q) #31
           to label %common.resume unwind label %bb.bf
 }

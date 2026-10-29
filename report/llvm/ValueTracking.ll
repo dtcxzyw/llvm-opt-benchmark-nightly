@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %5, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %i.a, ptr %i.d, align 8
-  %i.e = call noundef zeroext i1 @_ZNK4llvm12PatternMatch14BinaryOp_matchINS0_14cstval_pred_tyINS0_11is_all_onesENS_11ConstantIntELb1EEENS_19PatternMatchHelpers10match_bindIKNS_5ValueEEELj31ELb1EE5matchIS9_EEbjPT_(ptr noundef nonnull align 8 dereferenceable(16) %5, i32 noundef 31, ptr noundef %1)
+  %i.e = call noundef zeroext i1 @_ZNK4llvm12PatternMatch14BinaryOp_matchINS0_14cstval_pred_tyINS0_11is_all_onesENS_11ConstantIntELb1EEENS_19PatternMatchHelpers10match_bindIKNS_5ValueEEELj31ELb1EE5matchIS9_EEbjPT_(ptr noundef nonnull align 8 dereferenceable(16) %5, i32 noundef 31, ptr noundef %1) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !75  ; 10 uses
   br i1 %i.e, label %bb.c, label %bb.e
@@ -219,7 +219,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 bb.e:                                             ; preds = %bb.c, %bb.b
-  %.0 = phi i8 [ 0, %bb.b ], [ 1, %bb.c ]         ; 6 uses
+  %.0 = phi i8 [ 0, %bb.b ], [ 1, %bb.c ]         ; 4 uses
   %i.h = load i8, ptr %.pre, align 8, !tbaa !40   ; 3 uses
   %.not.i.i.i.i = icmp eq i8 %i.h, 85
   br i1 %.not.i.i.i.i, label %bb.f, label %bb.h
@@ -301,7 +301,8 @@ _ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14ICmpLike_matchINS_19PatternMatchHe
 
 bb.m:                                             ; preds = %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14ICmpLike_matchINS_19PatternMatchHelpers10match_bindIS2_EES7_EEEEbPT_RKT0_.exit
   %.sroa.095.0.extract.trunc = trunc i16 %i.ag to i8
-  %spec.select = xor i8 %.0, %.sroa.095.0.extract.trunc
+  %6 = zext i1 %i.e to i8
+  %spec.select = xor i8 %.sroa.095.0.extract.trunc, %6
   br label %.critedge
 
 bb.n:                                             ; preds = %._crit_edge, %_ZNK4llvm4Type18isIntOrIntVectorTyEj.exit.i.i
@@ -326,7 +327,8 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %.sroa.092.0.extract.trunc = trunc i16 %i.ar to i8
-  %spec.select133 = xor i8 %.0, %.sroa.092.0.extract.trunc
+  %7 = zext i1 %i.e to i8
+  %spec.select133 = xor i8 %.sroa.092.0.extract.trunc, %7
   br label %.critedge
 
 .critedge43:                                      ; preds = %bb.n

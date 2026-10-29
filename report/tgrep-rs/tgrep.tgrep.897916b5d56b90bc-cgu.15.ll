@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.f
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.df = load i64, ptr %i.de, align 8, !noundef !5 ; 2 uses
   %i.dg = invoke fastcc noundef ptr @_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter17ensure_json_begin(ptr noalias nofree noundef align 8 dereferenceable(464) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dd, i64 noundef %i.df)
-          to label %bb.be unwind label %2         ; 2 uses
+          to label %bb.be unwind label %bb.z      ; 2 uses
 
 bb.j:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bt)
@@ -216,13 +216,13 @@ bb.j:                                             ; preds = %bb.f
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 456
   %.val209 = load i8, ptr %i.dl, align 8, !range !9, !noundef !5
   invoke fastcc void @_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter9highlight(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.bt, i8 %.val209, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.cv, i64 noundef %i.cm, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.di, i64 noundef %i.dk)
-          to label %bb.fv unwind label %2
+          to label %bb.fv unwind label %bb.z
 
 bb.k:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit313, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs6MoqnCnVQOT_10serde_json5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit, %bb.f, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.032)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   invoke void @_RNvXs4_NtCsgCecv3eZDcN_5alloc6stringNtB5_6StringNtNtCsf3Ta7LF998c_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.t, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
-          to label %bb.gn unwind label %2
+          to label %bb.gn unwind label %bb.z
 
 bb.l:                                             ; preds = %bb.h
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -230,7 +230,7 @@ bb.l:                                             ; preds = %bb.h
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dp = load i64, ptr %i.do, align 8, !noundef !5
   %i.dq = invoke fastcc noundef ptr @_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter14ensure_heading(ptr noalias nofree noundef align 8 dereferenceable(464) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dn, i64 noundef %i.dp)
-          to label %bb.s unwind label %2          ; 2 uses
+          to label %bb.s unwind label %bb.z       ; 2 uses
 
 bb.m:                                             ; preds = %._crit_edge, %bb.h
   %i.dr = phi i64 [ %.pre387, %._crit_edge ], [ %i.cm, %bb.h ] ; 8 uses
@@ -290,17 +290,12 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXs1i_NtCsf3Ta7LF998c_4core3fmtReNtB6_7Display3fmtCsbNLsQi0JuJ4_5tgrep, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !670
   invoke void @_RNvNvNtCsgCecv3eZDcN_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bx, ptr noundef nonnull @94, ptr noundef nonnull %i.a)
-          to label %_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter17apply_max_columns.exit unwind label %2
+          to label %_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter17apply_max_columns.exit unwind label %bb.z
 
-.body232:                                         ; preds = %bb.gj, %bb.gh, %bb.fp, %bb.ba, %bb.av, %2, %.body320, %.body298, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit, %bb.bd, %.body228
-  %.pn185 = phi { ptr, i32 } [ %.pn, %.body298 ], [ %.pn183, %bb.bd ], [ %.pn183, %.body228 ], [ %eh.lpad-body321, %.body320 ], [ %.pn172.pn, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit ], [ %i.pr, %bb.gh ], [ %i.gl, %bb.av ], [ %i.gr, %bb.ba ], [ %i.om, %bb.fp ], [ %3, %2 ], [ %i.pt, %bb.gj ]
+.body232:                                         ; preds = %bb.z, %.split, %bb.gj, %bb.gh, %bb.fp, %bb.ba, %bb.av, %.body320, %.body298, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit, %bb.bd, %.body228
+  %.pn185 = phi { ptr, i32 } [ %.pn, %.body298 ], [ %.pn183412, %bb.bd ], [ %.pn183, %.body228 ], [ %eh.lpad-body321, %.body320 ], [ %.pn172.pn, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit ], [ %i.pr, %bb.gh ], [ %i.gl, %bb.av ], [ %i.gr, %bb.ba ], [ %i.om, %bb.fp ], [ %i.fc, %bb.z ], [ %i.pt, %bb.gj ], [ %lpad.thr_comm.split-lp, %.split ]
   invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.by) #31
           to label %.body211 unwind label %bb.bc
-
-2:                                                ; preds = %bb.gs, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i315, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i309, %bb.fq, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i243, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i, %.split.i, %bb.j, %bb.fm, %bb.bf, %bb.l, %bb.k, %bb.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body232
 
 bb.s:                                             ; preds = %bb.l
   %.not175 = icmp eq ptr %i.dq, null
@@ -389,7 +384,12 @@ bb.x:                                             ; preds = %_RNvMs3_NtCsbNLsQi0
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 456
   %.val208 = load i8, ptr %i.fa, align 8, !range !9, !noundef !5
   invoke fastcc void @_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter9highlight(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.bw, i8 %.val208, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ev, i64 noundef %i.eu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.ex, i64 noundef %i.ez)
-          to label %bb.af unwind label %bb.z
+          to label %bb.af unwind label %.split.thread416
+
+.split.thread416:                                 ; preds = %bb.x
+  %lpad.thr_comm.split-lp418 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.bd
 
 bb.y:                                             ; preds = %.thread, %bb.w
   %.sroa.5.0.copyload411 = phi ptr [ %.sroa.5.0.copyload410, %.thread ], [ %.sroa.5.0.copyload, %bb.w ] ; 2 uses
@@ -399,17 +399,19 @@ bb.y:                                             ; preds = %.thread, %bb.w
   invoke void @_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.r, i64 noundef %i.fb, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.aa unwind label %bb.z
 
-.body228:                                         ; preds = %bb.ax, %bb.as, %bb.z, %.body216
-  %.pn183 = phi { ptr, i32 } [ %.pn181, %.body216 ], [ %i.gh, %bb.as ], [ %i.fc, %bb.z ], [ %i.gn, %bb.ax ] ; 2 uses
-  %.sroa.036.0 = phi i8 [ %.sroa.036.2, %.body216 ], [ %.sroa.036.2, %bb.as ], [ %.sroa.036.1, %bb.z ], [ %.sroa.036.2, %bb.ax ]
-  %4 = trunc nuw i8 %.sroa.036.0 to i1
-  br i1 %4, label %bb.bd, label %.body232
+.body228:                                         ; preds = %bb.ax, %bb.as, %.body216
+  %.pn183 = phi { ptr, i32 } [ %.pn181, %.body216 ], [ %i.gh, %bb.as ], [ %i.gn, %bb.ax ] ; 2 uses
+  br i1 %2, label %bb.bd, label %.body232
 
-bb.z:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i236, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i227, %bb.x, %bb.ab, %bb.y
-  %.sroa.036.1 = phi i8 [ %.sroa.036.2, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i236 ], [ %.sroa.036.2, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i227 ], [ 1, %bb.x ], [ 0, %bb.ab ], [ 0, %bb.y ]
+bb.z:                                             ; preds = %bb.i, %bb.k, %bb.l, %bb.bf, %bb.fm, %bb.j, %.split.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i243, %bb.fq, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i309, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i315, %bb.gs, %bb.ab, %bb.y
   %i.fc = landingpad { ptr, i32 }
           cleanup
-  br label %.body228
+  br label %.body232
+
+.split:                                           ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i236, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i227
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %2, label %bb.bd, label %.body232
 
 bb.aa:                                            ; preds = %bb.y
   %i.fd = load i64, ptr %i.r, align 8, !range !8, !noundef !5
@@ -451,7 +453,7 @@ bb.ae:                                            ; preds = %bb.db, %bb.ce, %bb.
   br label %bb.af
 
 bb.af:                                            ; preds = %.sink.split, %bb.x
-  %.sroa.036.2 = phi i8 [ 1, %bb.x ], [ 0, %.sink.split ] ; 7 uses
+  %2 = phi i1 [ true, %bb.x ], [ false, %.sink.split ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv)
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.fm = load ptr, ptr %i.fl, align 8, !nonnull !5, !noundef !5
@@ -571,14 +573,13 @@ bb.at:                                            ; preds = %bb.as
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i227: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit225
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bw)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit231 unwind label %bb.z
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit231 unwind label %.split
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit231: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i227
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bw)
-  %5 = trunc nuw i8 %.sroa.036.2 to i1
   %i.gj = load i64, ptr %i.bx, align 8, !range !10
   %i.gk = icmp ne i64 %i.gj, -1
-  %or.cond.not = select i1 %5, i1 %i.gk, i1 false
+  %or.cond.not = select i1 %2, i1 %i.gk, i1 false
   br i1 %or.cond.not, label %bb.au, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit231
@@ -603,7 +604,7 @@ bb.aw:                                            ; preds = %bb.av
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i: ; preds = %bb.au
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bx)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit unwind label %2
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit unwind label %bb.z
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit219: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i215
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv)
@@ -624,14 +625,13 @@ bb.ay:                                            ; preds = %bb.ax
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i236: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit219
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bw)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit241 unwind label %bb.z
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit241 unwind label %.split
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit241: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i236
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bw)
-  %6 = trunc nuw i8 %.sroa.036.2 to i1
   %i.gp = load i64, ptr %i.bx, align 8, !range !10
   %i.gq = icmp ne i64 %i.gp, -1
-  %or.cond377.not = select i1 %6, i1 %i.gq, i1 false
+  %or.cond377.not = select i1 %2, i1 %i.gq, i1 false
   br i1 %or.cond377.not, label %bb.az, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit247
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit247: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i243, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit241
@@ -656,7 +656,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit.i243: ; preds = %bb.az
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bx)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit247 unwind label %2
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep.exit247 unwind label %bb.z
 
 bb.bc:                                            ; preds = %.body271, %.body258, %bb.by, %bb.bj, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body298, %.body201.thread, %bb.fu, %bb.ft, %.body198.thread, %bb.fs, %.body195.thread, %.body192.thread, %.body189.thread, %.body.thread, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit, %bb.fe, %.body289, %bb.dm, %bb.dd, %bb.cq, %bb.cg, %bb.bd, %bb.ak, %.body216, %.body232, %.body211
   %i.gt = landingpad { ptr, i32 }
@@ -664,7 +664,8 @@ bb.bc:                                            ; preds = %.body271, %.body258
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #30
   unreachable
 
-bb.bd:                                            ; preds = %.body228
+bb.bd:                                            ; preds = %.split.thread416, %.split, %.body228
+  %.pn183412 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.split ], [ %.pn183, %.body228 ], [ %lpad.thr_comm.split-lp418, %.split.thread416 ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc6borrow3CoweEECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bx) #31
           to label %.body232 unwind label %bb.bc
 
@@ -686,7 +687,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.ha = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   store ptr %i.by, ptr %i.ha, align 8
   invoke void @_RNvXs_NtNtCsgCecv3eZDcN_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs6MoqnCnVQOT_10serde_json5value5ValueEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsf3Ta7LF998c_4core4iter8adapters3map3MapINtNtNtB2n_5slice4iter4IterTjjEENCNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB3G_12OutputWriter11write_match0EE9from_iterB3I_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bo, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.bn)
-          to label %bb.bg unwind label %2
+          to label %bb.bg unwind label %bb.z
 
 bb.bg:                                            ; preds = %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bn)
@@ -1089,7 +1090,7 @@ bb.fl:                                            ; preds = %_RINvNtCsf3Ta7LF998
 bb.fm:                                            ; preds = %bb.fk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bm)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs6MoqnCnVQOT_10serde_json5value5ValueEECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bo)
-          to label %bb.fn unwind label %2
+          to label %bb.fn unwind label %bb.z
 
 bb.fn:                                            ; preds = %bb.fm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bo)
@@ -1113,7 +1114,7 @@ bb.fp:                                            ; preds = %bb.fo
 
 bb.fq:                                            ; preds = %bb.fo
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecNtNtCs6MoqnCnVQOT_10serde_json5value5ValueENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bo)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs6MoqnCnVQOT_10serde_json5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit unwind label %2
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCs6MoqnCnVQOT_10serde_json5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit unwind label %bb.z
 
 bb.fr:                                            ; preds = %bb.fp
   %i.on = landingpad { ptr, i32 }
@@ -1326,7 +1327,7 @@ bb.gi:                                            ; preds = %bb.gh
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i309: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit307
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bt)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit313 unwind label %2
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit313 unwind label %bb.z
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit313: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i309
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt)
@@ -1351,7 +1352,7 @@ bb.gk:                                            ; preds = %bb.gj
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i315: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit301
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bt)
-          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit319 unwind label %2
+          to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit319 unwind label %bb.z
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsbNLsQi0JuJ4_5tgrep.exit319: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep.exit.i315
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt)
@@ -1439,7 +1440,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCsgCecv3eZDcN
 bb.gs:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCsgCecv3eZDcN_5alloc6string6StringjEEECsbNLsQi0JuJ4_5tgrep.exit
   %i.qi = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.qj = invoke noundef ptr @_RNvXs4_NtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufwriterINtB5_9BufWriterNtNtNtCs5Xr050g3D4S_3std2io5stdio6StdoutENtNtNtCsf3Ta7LF998c_4core2io5write5Write5flushCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.qi)
-          to label %_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter11maybe_flush.exit unwind label %2
+          to label %_RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter11maybe_flush.exit unwind label %bb.z
 
 _RNvMs3_NtCsbNLsQi0JuJ4_5tgrep6outputNtB5_12OutputWriter11maybe_flush.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCsgCecv3eZDcN_5alloc6string6StringjEEECsbNLsQi0JuJ4_5tgrep.exit, %bb.gs
   %.sroa.0.0.i = phi ptr [ null, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCsgCecv3eZDcN_5alloc6string6StringjEEECsbNLsQi0JuJ4_5tgrep.exit ], [ %i.qj, %bb.gs ]

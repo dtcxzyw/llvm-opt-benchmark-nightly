@@ -1,0 +1,29 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 647c5b6d589e10..cedf43eb3f1782 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -1390,6 +1390,24 @@ Instruction *InstCombinerImpl::visitTrunc(TruncInst &Trunc) {
+           return Res;
+       }
+ 
++  if (auto *Phi = dyn_cast<PHINode>(Src))
++    if (DestWidth == 1 && all_of(Phi->operands(), IsaPred<Constant>)) {
++      SmallVector<Constant *> Ops;
++      for (Value *V : Phi->incoming_values()) {
++        Constant *Res = ConstantFoldCastOperand(Instruction::Trunc,
++                                                cast<Constant>(V), DestTy, DL);
++        if (!Res)
++          return Changed ? &Trunc : nullptr;
++        Ops.push_back(Res);
++      }
++      Worklist.pushUsersToWorkList(*Phi);
++      Builder.SetInsertPoint(Phi);
++      PHINode *NewPhi = Builder.CreatePHI(DestTy, Phi->getNumOperands());
++      for (auto [V, Pred] : zip(Ops, Phi->blocks()))
++        NewPhi->addIncoming(V, Pred);
++      return replaceInstUsesWith(Trunc, NewPhi);
++    }
++
+   return Changed ? &Trunc : nullptr;
+ }
+ 

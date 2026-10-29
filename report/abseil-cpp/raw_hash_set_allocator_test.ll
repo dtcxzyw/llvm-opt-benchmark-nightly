@@ -202,7 +202,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16Poli
 bb.d:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !407)
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !67, !noalias !408 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !67, !noalias !408 ; 4 uses
   %i.n = and i64 %.val.i.i.i.i.i, 255
   %notmask.i.i.i.i.i.i.i.i.i.i.i = shl nsw i64 -1, %i.n
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !408
@@ -214,14 +214,14 @@ bb.d:                                             ; preds = %bb.a
   %i.t = lshr i64 %i.q, 57
   %i.u = trunc nuw nsw i64 %i.t to i8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %.val7.i.i.i.i.i.i = load ptr, ptr %i.v, align 8, !tbaa !67, !noalias !408 ; 3 uses
+  %.val7.i.i.i.i.i.i = load ptr, ptr %i.v, align 8, !tbaa !67, !noalias !408 ; 2 uses
   %i.w = insertelement <16 x i8> poison, i8 %i.u, i64 0
   %i.x = shufflevector <16 x i8> %i.w, <16 x i8> poison, <16 x i32> zeroinitializer
   br label %bb.e
 
-bb.e:                                             ; preds = %5, %bb.d
-  %.pn.i.i.i.i.i.i = phi i64 [ %i.r, %bb.d ], [ %7, %5 ]
-  %.sroa.14.0.i.i.i.i.i.i = phi i64 [ 0, %bb.d ], [ %6, %5 ] ; 2 uses
+bb.e:                                             ; preds = %4, %bb.d
+  %.pn.i.i.i.i.i.i = phi i64 [ %i.r, %bb.d ], [ %6, %4 ]
+  %.sroa.14.0.i.i.i.i.i.i = phi i64 [ 0, %bb.d ], [ %5, %4 ] ; 2 uses
   %.sroa.642.0.i.i.i.i.i.i = and i64 %.pn.i.i.i.i.i.i, %i.s ; 5 uses
   %i.y = getelementptr inbounds nuw [40 x i8], ptr %.val7.i.i.i.i.i.i, i64 %.sroa.642.0.i.i.i.i.i.i
   tail call void @llvm.prefetch.p0(ptr %i.y, i32 0, i32 3, i32 1), !noalias !408
@@ -240,10 +240,10 @@ bb.e:                                             ; preds = %5, %bb.d
   %i.ag = zext nneg i32 %i.af to i64
   %i.ah = add nuw i64 %.sroa.642.0.i.i.i.i.i.i, %i.ag
   %i.ai = and i64 %i.ah, %i.s                     ; 2 uses
-  %i.aj = getelementptr inbounds nuw [40 x i8], ptr %.val7.i.i.i.i.i.i, i64 %i.ai
+  %i.aj = getelementptr inbounds nuw [40 x i8], ptr %.val7.i.i.i.i.i.i, i64 %i.ai ; 2 uses
   %.val3.i5.i.i.i.i.i = load i32, ptr %i.aj, align 4, !tbaa !68, !noalias !408
   %i.ak = icmp eq i32 %.val3.i5.i.i.i.i.i, %.0.val
-  br i1 %i.ak, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i, label %.critedge.i.i.i.i.i.i.i, !prof !113
+  br i1 %i.ak, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE10emplace_atIJRiEEEvNSC_8iteratorEDpOT_.exit.critedge.i.i.i.i, label %.critedge.i.i.i.i.i.i.i, !prof !113
 
 .critedge.i.i.i.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i.i.i
   %i.al = add i32 %.sroa.027.071.i.i.i.i.i.i, -1
@@ -257,34 +257,25 @@ bb.e:                                             ; preds = %5, %bb.d
   %i.ap = zext i16 %i.ao to i32
   %i.aq = tail call noundef i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ap) #38, !srcloc !112 ; 2 uses
   %.not64.i.i.i.i.i.i = icmp eq i32 %i.aq, 0
-  br i1 %.not64.i.i.i.i.i.i, label %5, label %3, !prof !70
+  br i1 %.not64.i.i.i.i.i.i, label %4, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i, !prof !70
 
-3:                                                ; preds = %._crit_edge.i.i.i.i.i.i
-  %4 = tail call noundef i64 @_ZN4absl12lts_2026052618container_internal18PrepareInsertLargeERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmNS1_18NonIterableBitMaskIjLi16ELi0EEENS1_8FindInfoE(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE18GetPolicyFunctionsEvE5value, i64 noundef %i.r, i32 %i.aq, i64 %.sroa.642.0.i.i.i.i.i.i, i64 %.sroa.14.0.i.i.i.i.i.i), !noalias !408
-  %.sroa.0.0.copyload.i.i.i.i10.pre.i.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !67, !noalias !408
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i
+  %3 = tail call noundef i64 @_ZN4absl12lts_2026052618container_internal18PrepareInsertLargeERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmNS1_18NonIterableBitMaskIjLi16ELi0EEENS1_8FindInfoE(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE18GetPolicyFunctionsEvE5value, i64 noundef %i.r, i32 %i.aq, i64 %.sroa.642.0.i.i.i.i.i.i, i64 %.sroa.14.0.i.i.i.i.i.i), !noalias !408 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i10.pre.i.i.i.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !67, !noalias !408, !nonnull !82, !noundef !82
   %.val.i.pre.i.i.i.i.i.i = load ptr, ptr %i.v, align 8, !tbaa !67, !noalias !408
-  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i
-
-5:                                                ; preds = %._crit_edge.i.i.i.i.i.i
-  %6 = add i64 %.sroa.14.0.i.i.i.i.i.i, 16        ; 2 uses
-  %7 = add i64 %6, %.sroa.642.0.i.i.i.i.i.i
-  br label %bb.e
-
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %3
-  %.val.i.i.i.i.i.i.i = phi ptr [ %.val.i.pre.i.i.i.i.i.i, %3 ], [ %.val7.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
-  %.sroa.0.0.copyload.i.i.i.i10.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.copyload.i.i.i.i10.pre.i.i.i.i.i.i, %3 ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %.352.ph.i.i.i.i.i.i = phi i64 [ %4, %3 ], [ %i.ai, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %.3.ph.i.i.i.i.i.i = phi i8 [ 1, %3 ], [ 0, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i10.i.i.i.i.i.i, i64 %.352.ph.i.i.i.i.i.i
-  %i.as = getelementptr inbounds nuw [40 x i8], ptr %.val.i.i.i.i.i.i.i, i64 %.352.ph.i.i.i.i.i.i ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i10.i.i.i.i.i.i) ]
+  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i10.pre.i.i.i.i.i.i, i64 %3
+  %i.as = getelementptr inbounds nuw [40 x i8], ptr %.val.i.pre.i.i.i.i.i.i, i64 %3 ; 2 uses
   store ptr %i.ar, ptr %0, align 8, !alias.scope !408
   %.sroa.4.0..sroa_idx.i6.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.as, ptr %.sroa.4.0..sroa_idx.i6.i.i.i.i.i, align 8, !alias.scope !408
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.3.ph.i.i.i.i.i.i, ptr %i.at, align 8, !tbaa !406, !alias.scope !408
-  %8 = trunc nuw i8 %.3.ph.i.i.i.i.i.i to i1
-  br i1 %8, label %bb.f, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE7emplaceIJiETnNSt9enable_ifIXsr14IsDecomposableIDpT_EE5valueEiE4typeELi0EEESt4pairINSC_8iteratorEbEDpOSF_.exit
+  store i8 1, ptr %i.at, align 8, !tbaa !406, !alias.scope !408
+  br label %bb.f
+
+4:                                                ; preds = %._crit_edge.i.i.i.i.i.i
+  %5 = add i64 %.sroa.14.0.i.i.i.i.i.i, 16        ; 2 uses
+  %6 = add i64 %5, %.sroa.642.0.i.i.i.i.i.i
+  br label %bb.e
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.thread.i.i.i.i
   %.sroa.2.0.copyload15.i.i.i.i = phi ptr [ %i.k, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.thread.i.i.i.i ], [ %i.as, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i ] ; 5 uses
@@ -406,7 +397,17 @@ bb.r:                                             ; preds = %_ZN4absl12lts_20260
   call fastcc void @_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_112CheckedAllocINS1_7TrackedIiEELi6EED2Ev(ptr %.val.i.i.i.i) #32, !noalias !409
   resume { ptr, i32 } %eh.lpad-body.i.i.i.i.i.i.i.i
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE7emplaceIJiETnNSt9enable_ifIXsr14IsDecomposableIDpT_EE5valueEiE4typeELi0EEESt4pairINSC_8iteratorEbEDpOSF_.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.thread16.i.i.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.i.i.i.i, %bb.k, %bb.m, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i.i.i.i.i, %bb.q
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE10emplace_atIJRiEEEvNSC_8iteratorEDpOT_.exit.critedge.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 %i.ai
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i) ]
+  store ptr %7, ptr %0, align 8, !alias.scope !408
+  %.sroa.4.0..sroa_idx.i6.i.c.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.aj, ptr %.sroa.4.0..sroa_idx.i6.i.c.i.i.i.i, align 8, !alias.scope !408
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i8 0, ptr %8, align 8, !tbaa !406, !alias.scope !408
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE7emplaceIJiETnNSt9enable_ifIXsr14IsDecomposableIDpT_EE5valueEiE4typeELi0EEESt4pairINSC_8iteratorEbEDpOSF_.exit
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE7emplaceIJiETnNSt9enable_ifIXsr14IsDecomposableIDpT_EE5valueEiE4typeELi0EEESt4pairINSC_8iteratorEbEDpOSF_.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE22find_or_prepare_insertIiEESt4pairINSC_8iteratorEbERKT_.exit.thread16.i.i.i.i, %bb.k, %bb.m, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i.i.i.i.i, %bb.q, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_16PolicyEJNS3_8IdentityESt8equal_toIiENS3_12CheckedAllocINS1_7TrackedIiEELi6EEEEE10emplace_atIJRiEEEvNSC_8iteratorEDpOT_.exit.critedge.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !397
   ret void
 }

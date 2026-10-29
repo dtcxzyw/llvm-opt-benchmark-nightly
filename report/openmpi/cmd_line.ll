@@ -204,7 +204,7 @@ get_help_otype.exit:                              ; preds = %bb.p, %bb.e, %bb.f,
 bb.q:                                             ; preds = %.lr.ph158, %bb.aq
   %.0100157 = phi i64 [ 0, %.lr.ph158 ], [ %i.gb, %bb.aq ] ; 2 uses
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.0100157
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !82 ; 11 uses
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !82 ; 12 uses
   switch i32 %.016.i, label %bb.u [
     i32 12, label %bb.r
     i32 13, label %bb.v
@@ -262,18 +262,24 @@ bb.w:                                             ; preds = %bb.v
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(153) %i.c, i8 0, i64 153, i1 false)
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ba, i64 40
   %i.ci = load i8, ptr %i.ch, align 8, !tbaa !22  ; 2 uses
-  %.not118 = icmp ne i8 %i.ci, 0                  ; 4 uses
-  %storemerge188 = select i1 %.not118, i8 45, i8 32
-  %storemerge = select i1 %.not118, i8 %i.ci, i8 32
+  %.not118.not.not = icmp eq i8 %i.ci, 0          ; 4 uses
+  %storemerge188 = select i1 %.not118.not.not, i8 32, i8 45
+  %storemerge = select i1 %.not118.not.not, i8 32, i8 %i.ci
   store i8 %storemerge188, ptr %i.c, align 16, !tbaa !64
   store i8 %storemerge, ptr %i.aw, align 1, !tbaa !64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ba, i64 48 ; 2 uses
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !26
   %.not119 = icmp eq ptr %i.ck, null
-  br i1 %.not119, label %bb.y, label %bb.x
+  br i1 %.not119, label %1, label %bb.x
+
+1:                                                ; preds = %bb.w
+  %2 = getelementptr inbounds nuw i8, ptr %i.ba, i64 56 ; 2 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !27
+  %.not120 = icmp eq ptr %3, null
+  br i1 %.not120, label %bb.aa, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.cl = select i1 %.not118, i8 124, i8 32
+  %i.cl = select i1 %.not118.not.not, i8 32, i8 124
   store i8 %i.cl, ptr %i.ax, align 2, !tbaa !64
   %i.cm = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #21
   %i.cn = sub i64 152, %i.cm
@@ -282,30 +288,31 @@ bb.x:                                             ; preds = %bb.w
   %i.cq = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #21
   %i.cr = sub i64 152, %i.cq
   %i.cs = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef %i.cp, i64 noundef %i.cr) #20 ; 0 uses
-  br label %bb.y
+  %4 = getelementptr inbounds nuw i8, ptr %i.ba, i64 56 ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !27
+  %.not120127 = icmp eq ptr %5, null
+  br i1 %.not120127, label %bb.aa, label %bb.z
 
-bb.y:                                             ; preds = %bb.x, %bb.w
-  %.1 = phi i1 [ true, %bb.x ], [ %.not118, %bb.w ]
-  %1 = getelementptr inbounds nuw i8, ptr %i.ba, i64 56 ; 2 uses
-  %2 = load ptr, ptr %1, align 8, !tbaa !27
-  %.not120 = icmp eq ptr %2, null
-  br i1 %.not120, label %bb.aa, label %bb.z
+bb.y:                                             ; preds = %1
+  %spec.select210 = select i1 %.not118.not.not, ptr @.str.12, ptr @.str.11
+  br label %bb.z
 
-bb.z:                                             ; preds = %bb.y
+bb.z:                                             ; preds = %bb.y, %bb.x
+  %.str.12.sink = phi ptr [ %spec.select210, %bb.y ], [ @.str.11, %bb.x ]
+  %6 = phi ptr [ %2, %bb.y ], [ %4, %bb.x ]
   %i.ct = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #21
   %i.cu = sub i64 152, %i.ct
-  %.str.11..str.12 = select i1 %.1, ptr @.str.11, ptr @.str.12
-  %i.cv = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull %.str.11..str.12, i64 noundef %i.cu) #20 ; 0 uses
+  %i.cv = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull %.str.12.sink, i64 noundef %i.cu) #20 ; 0 uses
   %i.cw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #21
   %i.cx = sub i64 152, %i.cw
   %i.cy = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull @.str.4, i64 noundef %i.cx) #20 ; 0 uses
-  %i.cz = load ptr, ptr %1, align 8, !tbaa !27
+  %i.cz = load ptr, ptr %6, align 8, !tbaa !27
   %i.da = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #21
   %i.db = sub i64 152, %i.da
   %i.dc = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef %i.cz, i64 noundef %i.db) #20 ; 0 uses
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %bb.y
+bb.aa:                                            ; preds = %bb.x, %bb.z, %1
   %i.dd = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #21
   %i.de = sub i64 152, %i.dd
   %i.df = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull @.str.12, i64 noundef %i.de) #20 ; 0 uses

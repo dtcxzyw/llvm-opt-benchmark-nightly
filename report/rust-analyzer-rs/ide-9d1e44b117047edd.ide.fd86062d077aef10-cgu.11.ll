@@ -204,14 +204,15 @@ bb.l:                                             ; preds = %_RINvNtCshzWfHUSfYa
   br i1 %i.ah, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide.exit
-  %storemerge = phi i64 [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide.exit ], [ 0, %bb.l ] ; 2 uses
+  %storemerge = phi i64 [ 1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide.exit ], [ 0, %bb.l ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload) ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr %.sroa.4.0.copyload, ptr %i.ai, align 8
-  %.sroa.011.4 = xor i1 %i.ag, true               ; 6 uses
+  %.sroa.011.4 = xor i1 %i.ag, true               ; 7 uses
   store i64 %storemerge, ptr %i.m, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
-  %i.ak = invoke noundef ptr @_RINvMs_Cs83ee1IJTiSq_6eitherINtB5_6EitherRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeParamRNtBG_5TraitE6eitherNCNvXsr_NtCslLuZgPVt6hg_3ide17navigation_targetNtCs8Xq8PKFYOms_3hir9TypeParamNtB23_8TryToNav10try_to_nav0NCB1X_s_0INtNtCshzWfHUSfYae_4core6option6OptionNtBG_4NameEEB25_(i64 noundef %storemerge, ptr noundef nonnull %i.aj)
+  %.sroa.010.0 = zext i1 %.sroa.011.4 to i64
+  %i.ak = invoke noundef ptr @_RINvMs_Cs83ee1IJTiSq_6eitherINtB5_6EitherRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeParamRNtBG_5TraitE6eitherNCNvXsr_NtCslLuZgPVt6hg_3ide17navigation_targetNtCs8Xq8PKFYOms_3hir9TypeParamNtB23_8TryToNav10try_to_nav0NCB1X_s_0INtNtCshzWfHUSfYae_4core6option6OptionNtBG_4NameEEB25_(i64 noundef %.sroa.010.0, ptr noundef nonnull %i.aj)
           to label %bb.aa unwind label %bb.z
 
 bb.n:                                             ; preds = %bb.l

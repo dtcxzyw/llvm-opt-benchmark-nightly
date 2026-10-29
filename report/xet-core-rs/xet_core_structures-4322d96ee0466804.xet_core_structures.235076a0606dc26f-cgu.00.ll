@@ -204,7 +204,7 @@ bb.a:
   %i.ao = alloca [24 x i8], align 8               ; 11 uses
   %.sroa.14 = alloca [24 x i8], align 8           ; 6 uses
   %.sroa.623.sroa.8 = alloca [24 x i8], align 8   ; 7 uses
-  %i.ap = alloca [24 x i8], align 8               ; 14 uses
+  %i.ap = alloca [24 x i8], align 8               ; 15 uses
   %i.aq = alloca [24 x i8], align 8               ; 11 uses
   %i.ar = alloca [40 x i8], align 8               ; 7 uses
   %i.as = alloca [248 x i8], align 8              ; 22 uses
@@ -485,7 +485,7 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 common.resume:                                    ; preds = %bb.fi, %.thread352, %bb.fl, %.body.i, %bb.z
-  %common.resume.op = phi { ptr, i32 } [ %i.pz, %bb.fl ], [ %.pn.i, %.body.i ], [ %i.df, %bb.z ], [ %.pn158356, %.thread352 ], [ %.pn158, %bb.fi ]
+  %common.resume.op = phi { ptr, i32 } [ %i.pz, %bb.fl ], [ %.pn.i, %.body.i ], [ %i.df, %bb.z ], [ %.pn158361, %.thread352 ], [ %.pn158, %bb.fi ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvMs2_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12shard_formatNtB6_12MDBShardInfo26convert_and_save_file_infoINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriter9BufWriterQINtNtNtBa_10merklehash9data_hash11HashedWriteNtNtCsG258MDvU3F_3std2fs4FileEEEBa_.exit.thread: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit.i
@@ -888,13 +888,17 @@ bb.cv:                                            ; preds = %.thread, %bb.cu
   store i64 1, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.627.sroa.8)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ap)
-          to label %.invoke unwind label %bb.cw
+          to label %5 unwind label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
   %i.jm = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecmENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ap)
           to label %.thread352 unwind label %bb.cx
+
+5:                                                ; preds = %bb.cv
+  invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecmENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ap)
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit unwind label %bb.fj
 
 bb.cx:                                            ; preds = %bb.cw
   %i.jn = landingpad { ptr, i32 }
@@ -966,9 +970,9 @@ _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IteryENtNtNtNtBa_4iter6traits8iterat
   %.sroa.5262.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %.sroa.5262.0.copyload = load ptr, ptr %.sroa.5262.0..sroa_idx, align 8 ; 2 uses
   %.sroa.6263.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
-  %.sroa.6263.0.copyload = load i64, ptr %.sroa.6263.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.6263.0.copyload = load i64, ptr %.sroa.6263.0..sroa_idx, align 8 ; 4 uses
   %.sroa.8264.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
-  %.sroa.8264.0.copyload = load i64, ptr %.sroa.8264.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.8264.0.copyload = load i64, ptr %.sroa.8264.0..sroa_idx, align 8 ; 3 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 14 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
   %umax = call i64 @llvm.umax.i64(i64 %.sroa.8264.0.copyload, i64 %.sroa.6263.0.copyload)
@@ -984,8 +988,8 @@ bb.cz:                                            ; preds = %_RNvXs4_NtNtNtCsexY
   br i1 %exitcond.not, label %.thread328, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.cz
-  %.sroa.6263.0472 = phi i64 [ %i.kb, %bb.cz ], [ %.sroa.6263.0.copyload, %.lr.ph.preheader ] ; 3 uses
-  %i.kb = add i64 %.sroa.6263.0472, 1             ; 2 uses
+  %.sroa.6263.0472 = phi i64 [ %i.kb, %bb.cz ], [ %.sroa.6263.0.copyload, %.lr.ph.preheader ] ; 4 uses
+  %i.kb = add i64 %.sroa.6263.0472, 1             ; 3 uses
   %i.kc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0260.0.copyload, i64 %.sroa.6263.0472
   %i.kd = getelementptr inbounds nuw [4 x i8], ptr %.sroa.5262.0.copyload, i64 %.sroa.6263.0472
   %i.ke = load i64, ptr %i.kc, align 8, !noundef !4 ; 2 uses
@@ -1016,6 +1020,7 @@ _RNvXs4_NtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriterINtB5_9BufWriterQINtNtNt
   br label %bb.es
 
 .thread328:                                       ; preds = %bb.cz, %_RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IteryENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_mEECs31YAwBA1AlL_19xet_core_structures.exit
+  %.sroa.6263.0.lcssa = phi i64 [ %.sroa.6263.0.copyload, %_RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IteryENtNtNtNtBa_4iter6traits8iterator8Iterator3zipIB4_mEECs31YAwBA1AlL_19xet_core_structures.exit ], [ %i.kb, %bb.cz ] ; 5 uses
   %i.kp = load i64, ptr %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx, align 8, !noundef !4 ; 2 uses
   %i.kq = icmp ult i64 %i.kp, 1152921504606846976
   call void @llvm.assume(i1 %i.kq)
@@ -1354,8 +1359,10 @@ bb.eb:                                            ; preds = %bb.b, %bb.ad, %bb.f
   ret void
 
 bb.ec:                                            ; preds = %bb.eg, %bb.ej, %bb.en, %bb.ev, %bb.er, %bb.ds
-  %.sroa.074.9 = phi i8 [ 1, %bb.ev ], [ 0, %bb.er ], [ 0, %bb.ds ], [ 0, %bb.en ], [ 0, %bb.ej ], [ 0, %bb.eg ] ; 13 uses
+  %.sroa.6263.0475 = phi i64 [ %.sroa.6263.0472, %bb.ev ], [ %.sroa.6263.0.lcssa, %bb.er ], [ %.sroa.6263.0.lcssa, %bb.ds ], [ %.sroa.6263.0.lcssa, %bb.en ], [ %.sroa.6263.0.lcssa, %bb.ej ], [ %.sroa.6263.0.lcssa, %bb.eg ]
+  %.sroa.074.9 = phi i8 [ 1, %bb.ev ], [ 0, %bb.er ], [ 0, %bb.ds ], [ 0, %bb.en ], [ 0, %bb.ej ], [ 0, %bb.eg ] ; 14 uses
   store i64 1, ptr %0, align 8
+  %.not391445 = icmp ult i64 %.sroa.6263.0475, %.sroa.8264.0.copyload
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTmmEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.al)
           to label %bb.ee unwind label %bb.ed
 
@@ -1632,12 +1639,7 @@ bb.fe:                                            ; preds = %bb.fc
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit239: ; preds = %bb.fd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao)
-  %5 = trunc nuw i8 %.sroa.074.9 to i1
-  br i1 %5, label %bb.ff, label %6
-
-6:                                                ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit239
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
-  br label %bb.fk
+  br i1 %.not391445, label %bb.ff, label %.critedge
 
 bb.ff:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit239
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ap)
@@ -1647,9 +1649,9 @@ bb.fg:                                            ; preds = %bb.ff
   %i.pv = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecmENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ap)
-          to label %.thread352 unwind label %bb.fh
+          to label %bb.fi unwind label %bb.fh
 
-.invoke:                                          ; preds = %bb.ff, %bb.cv
+.invoke:                                          ; preds = %bb.ff
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecmENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ap)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit unwind label %bb.fj
 
@@ -1659,22 +1661,27 @@ bb.fh:                                            ; preds = %bb.fg
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18
   unreachable
 
-bb.fi:                                            ; preds = %.body.thread, %.body
-  %.sroa.074.10 = phi i8 [ %.sroa.074.0, %.body ], [ %.sroa.074.0360, %.body.thread ]
-  %.pn158 = phi { ptr, i32 } [ %.pn156, %.body ], [ %.pn156361, %.body.thread ] ; 2 uses
+bb.fi:                                            ; preds = %bb.fg, %bb.fj, %.body.thread, %.body
+  %.sroa.074.10 = phi i8 [ %.sroa.074.0, %.body ], [ %.sroa.074.0360, %.body.thread ], [ %.sroa.074.9, %bb.fg ], [ %.sroa.074.11, %bb.fj ]
+  %.pn158 = phi { ptr, i32 } [ %.pn156, %.body ], [ %.pn156361, %.body.thread ], [ %i.pv, %bb.fg ], [ %i.py, %bb.fj ] ; 2 uses
   %i.px = trunc nuw i8 %.sroa.074.10 to i1
   br i1 %i.px, label %.thread352, label %common.resume
 
-bb.fj:                                            ; preds = %.invoke
+bb.fj:                                            ; preds = %.invoke, %5
+  %.sroa.074.11 = phi i8 [ 1, %5 ], [ %.sroa.074.9, %.invoke ]
   %i.py = landingpad { ptr, i32 }
           cleanup
-  br label %.thread352
+  br label %bb.fi
 
-bb.fk:                                            ; preds = %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit247
+.critedge:                                        ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit239
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
+  br label %bb.fk
+
+bb.fk:                                            ; preds = %.critedge, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit247
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   br label %bb.eb
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit: ; preds = %.invoke
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit: ; preds = %.invoke, %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecyENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aq)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures.exit247 unwind label %bb.fl
@@ -1707,8 +1714,8 @@ bb.fn:                                            ; preds = %.thread352, %.body.
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ap) #17
           to label %bb.fi unwind label %bb.fn
 
-.thread352:                                       ; preds = %bb.fj, %bb.fg, %bb.cw, %bb.fi
-  %.pn158356 = phi { ptr, i32 } [ %.pn158, %bb.fi ], [ %i.jm, %bb.cw ], [ %i.py, %bb.fj ], [ %i.pv, %bb.fg ]
+.thread352:                                       ; preds = %bb.cw, %bb.fi
+  %.pn158361 = phi { ptr, i32 } [ %.pn158, %bb.fi ], [ %i.jm, %bb.cw ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aq) #17
           to label %common.resume unwind label %bb.fn
 }

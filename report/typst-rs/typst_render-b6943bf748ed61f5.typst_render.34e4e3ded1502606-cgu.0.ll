@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = fdiv <2 x double> %i.ai, splat (double 1.270000e+02)
   %i.ak = fptrunc <2 x double> %i.aj to <2 x float>
   %i.al = load i64, ptr %5, align 8, !range !11, !noundef !5
-  %7 = icmp eq i64 %i.al, -9223372036854775807
-  br i1 %7, label %bb.c, label %bb.h
+  %7 = icmp ne i64 %i.al, -9223372036854775807    ; 2 uses
+  br i1 %7, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -276,7 +276,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 bb.h:                                             ; preds = %bb.b, %bb.g
   %.sroa.10.0194 = phi i64 [ %i.ca, %bb.g ], [ undef, %bb.b ]
   %.sroa.8.0 = phi i64 [ %i.by, %bb.g ], [ undef, %bb.b ]
-  %storemerge = phi i64 [ 1, %bb.g ], [ 0, %bb.b ] ; 2 uses
+  %storemerge = phi i64 [ 1, %bb.g ], [ 0, %bb.b ]
   %i.cb = phi <2 x i64> [ %i.bw, %bb.g ], [ undef, %bb.b ]
   %i.cc = phi <2 x double> [ %i.bt, %bb.g ], [ undef, %bb.b ]
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
@@ -288,15 +288,13 @@ bb.h:                                             ; preds = %bb.b, %bb.g
   %i.cj = fcmp ord <2 x double> %i.ci, zeroinitializer
   %i.ck = select <2 x i1> %i.cj, <2 x double> %i.ci, <2 x double> zeroinitializer
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
-  %8 = trunc nuw i64 %storemerge to i1
-  %9 = xor i1 %8, true
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.a, %bb.h
   %.sroa.10.1 = phi i64 [ %.sroa.10.0194, %bb.h ], [ undef, %bb.a ] ; 4 uses
   %.sroa.8.1 = phi i64 [ %.sroa.8.0, %bb.h ], [ undef, %bb.a ] ; 4 uses
   %.sroa.0.0 = phi i64 [ %storemerge, %bb.h ], [ 0, %bb.a ] ; 2 uses
-  %.not = phi i1 [ %9, %bb.h ], [ true, %bb.a ]
+  %.not = phi i1 [ %7, %bb.h ], [ true, %bb.a ]
   %i.cl = phi <2 x double> [ %i.ck, %bb.h ], [ zeroinitializer, %bb.a ]
   %i.cm = phi <2 x i64> [ %i.cb, %bb.h ], [ undef, %bb.a ] ; 5 uses
   %i.cn = phi <2 x float> [ %i.ak, %bb.h ], [ undef, %bb.a ] ; 2 uses
@@ -699,7 +697,7 @@ bb.hc:                                            ; preds = %bb.hb
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapEEECs4xylOWI7Ys4_12typst_render.exit178: ; preds = %bb.hc, %bb.hb, %bb.ha
   store ptr %i.bqe, ptr %4, align 8
-  %brmerge = select i1 %.sroa.059.0, i1 true, i1 %.not
+  %brmerge = or i1 %.not, %.sroa.059.0
   br i1 %brmerge, label %bb.he, label %bb.hd
 
 bb.hd:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapEEECs4xylOWI7Ys4_12typst_render.exit178

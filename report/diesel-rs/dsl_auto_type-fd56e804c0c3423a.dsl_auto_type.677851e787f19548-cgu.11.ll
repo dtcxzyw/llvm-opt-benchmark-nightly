@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.b
   call void @_RNvNtCscI6d9CVNmLh_4core9panicking16panic_in_cleanup() #13, !noalias !1309
   unreachable
 
-common.resume:                                    ; preds = %.body, %bb.u, %bb.r, %bb.b
-  %common.resume.op = phi { ptr, i32 } [ %i.am, %bb.r ], [ %i.i, %bb.b ], [ %.pn, %bb.u ], [ %.pn, %.body ]
+common.resume:                                    ; preds = %.split, %.body, %bb.u, %bb.r, %bb.b
+  %common.resume.op = phi { ptr, i32 } [ %i.am, %bb.r ], [ %i.i, %bb.b ], [ %.pn9, %bb.u ], [ %.pn, %.body ], [ %lpad.thr_comm.split-lp, %.split ]
   resume { ptr, i32 } %common.resume.op
 
 _RNvXsC_NtCs40k4W9msRzi_5alloc6stringNtCsiD8eKn5yFCp_11proc_macro25IdentNtB5_12SpecToString14spec_to_stringCs8SLDEF1Cvau_13dsl_auto_type.exit: ; preds = %bb.c
@@ -260,7 +260,7 @@ bb.i:                                             ; preds = %_RNvXsC_NtCs40k4W9m
           to label %bb.j unwind label %bb.k
 
 bb.j:                                             ; preds = %.invoke, %bb.i, %bb.h, %bb.g, %bb.f
-  %.sroa.0.0 = phi i8 [ 0, %bb.f ], [ 1, %bb.i ], [ 1, %.invoke ], [ 1, %bb.g ], [ 1, %bb.h ] ; 4 uses
+  %3 = phi i1 [ false, %bb.f ], [ true, %.invoke ], [ true, %bb.i ], [ true, %bb.g ], [ true, %bb.h ] ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !13, !noundef !13
   %i.ac = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -274,17 +274,19 @@ bb.j:                                             ; preds = %.invoke, %bb.i, %bb
   invoke void @_RNvMsx_CsiD8eKn5yFCp_11proc_macro2NtB5_5Ident3new(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ab, i64 noundef %i.ad, i32 noundef %.sroa.02.0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2)
           to label %bb.m unwind label %bb.l
 
-.body:                                            ; preds = %bb.n, %bb.k, %bb.l
-  %.pn = phi { ptr, i32 } [ %i.aj, %bb.l ], [ %i.ai, %bb.k ], [ %i.ak, %bb.n ] ; 2 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.0, %bb.l ], [ %.sroa.0.2, %bb.k ], [ %.sroa.0.0, %bb.n ]
-  %3 = trunc nuw i8 %.sroa.0.1 to i1
+.body:                                            ; preds = %bb.n, %bb.l
+  %.pn = phi { ptr, i32 } [ %i.aj, %bb.l ], [ %i.ak, %bb.n ] ; 2 uses
   br i1 %3, label %bb.u, label %common.resume
 
-bb.k:                                             ; preds = %.invoke, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs8SLDEF1Cvau_13dsl_auto_type.exit.i, %bb.i, %bb.h, %bb.g
-  %.sroa.0.2 = phi i8 [ %.sroa.0.0, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs8SLDEF1Cvau_13dsl_auto_type.exit.i ], [ 1, %bb.i ], [ 1, %.invoke ], [ 1, %bb.g ], [ 1, %bb.h ]
+bb.k:                                             ; preds = %.invoke, %bb.g, %bb.h, %bb.i
   %i.ai = landingpad { ptr, i32 }
           cleanup
-  br label %.body
+  br label %bb.u
+
+.split:                                           ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs8SLDEF1Cvau_13dsl_auto_type.exit.i
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %3, label %bb.u, label %common.resume
 
 bb.l:                                             ; preds = %bb.j
   %i.aj = landingpad { ptr, i32 }
@@ -310,12 +312,11 @@ bb.o:                                             ; preds = %bb.n
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs8SLDEF1Cvau_13dsl_auto_type.exit.i: ; preds = %bb.m
   invoke void @_RNvXs1_NtCs40k4W9msRzi_5alloc7raw_vecINtB5_6RawVechENtNtNtCscI6d9CVNmLh_4core3ops4drop4Drop4dropCs8SLDEF1Cvau_13dsl_auto_type(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d)
-          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs8SLDEF1Cvau_13dsl_auto_type.exit unwind label %bb.k
+          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs8SLDEF1Cvau_13dsl_auto_type.exit unwind label %.split
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs8SLDEF1Cvau_13dsl_auto_type.exit: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs8SLDEF1Cvau_13dsl_auto_type.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %4 = trunc nuw i8 %.sroa.0.0 to i1
-  br i1 %4, label %bb.q, label %bb.p
+  br i1 %3, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs8SLDEF1Cvau_13dsl_auto_type.exit7, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs8SLDEF1Cvau_13dsl_auto_type.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -347,7 +348,8 @@ bb.t:                                             ; preds = %bb.u, %bb.l
   call void @_RNvNtCscI6d9CVNmLh_4core9panicking16panic_in_cleanup() #13
   unreachable
 
-bb.u:                                             ; preds = %.body
+bb.u:                                             ; preds = %bb.k, %.split, %.body
+  %.pn9 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.split ], [ %.pn, %.body ], [ %i.ai, %bb.k ]
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECs8SLDEF1Cvau_13dsl_auto_type(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e) #14
           to label %common.resume unwind label %bb.t
 }
