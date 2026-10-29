@@ -204,7 +204,7 @@ bb.dm:                                            ; preds = %.thread, %bb.dl, %b
   %.04439922909 = phi i8 [ %.04439922910, %.thread ], [ %.04431733, %bb.dl ], [ %.04431733, %bb.dk ]
   %.044510132906 = phi ptr [ %.044510132907, %.thread ], [ %.04451731, %bb.dl ], [ %.04451731, %bb.dk ] ; 3 uses
   %.044710342903 = phi i32 [ %.044710342904, %.thread ], [ %.04471729, %bb.dl ], [ %.04471729, %bb.dk ]
-  %.044910552900 = phi i32 [ %.044910552901, %.thread ], [ %.04491727, %bb.dl ], [ %.04491727, %bb.dk ]
+  %.044910552900 = phi i32 [ %.044910552901, %.thread ], [ %.04491727, %bb.dl ], [ %.04491727, %bb.dk ] ; 2 uses
   %.045110762897 = phi ptr [ %.045110762898, %.thread ], [ %.04511725, %bb.dl ], [ %.04511725, %bb.dk ] ; 2 uses
   %.045310972894 = phi i32 [ %.045310972895, %.thread ], [ %.04531723, %bb.dl ], [ %.04531723, %bb.dk ]
   %.045511182891 = phi ptr [ %.045511182892, %.thread ], [ %.04551721, %bb.dl ], [ %.04551721, %bb.dk ] ; 2 uses
@@ -220,7 +220,7 @@ bb.dm:                                            ; preds = %.thread, %bb.dl, %b
   %.048313282863 = phi i32 [ %.048313282861, %.thread ], [ %.04831701, %bb.dl ], [ %.04831701, %bb.dk ]
   %.048513502858 = phi i32 [ %.048513502859, %.thread ], [ %.04851699, %bb.dl ], [ %.04851699, %bb.dk ]
   %.048713712855 = phi i32 [ %.048713712856, %.thread ], [ %.04871697, %bb.dl ], [ %.04871697, %bb.dk ]
-  %.048913922852 = phi i32 [ %.048913922853, %.thread ], [ %.04891695, %bb.dl ], [ %.04891695, %bb.dk ] ; 2 uses
+  %.048913922852 = phi i32 [ %.048913922853, %.thread ], [ %.04891695, %bb.dl ], [ %.04891695, %bb.dk ]
   %.049114132849 = phi i32 [ %.049114132850, %.thread ], [ %.04911693, %bb.dl ], [ %.04911693, %bb.dk ]
   %.049314342846 = phi i32 [ %.049314342847, %.thread ], [ %.04931691, %bb.dl ], [ %.04931691, %bb.dk ] ; 5 uses
   %.049514552844 = phi i32 [ %.049514552845, %.thread ], [ %.04951689, %bb.dl ], [ %.04951689, %bb.dk ]
@@ -364,10 +364,9 @@ bb.en:                                            ; preds = %bb.em
   unreachable
 
 bb.eo:                                            ; preds = %bb.em
-  %.not569 = icmp eq i32 %.050615612828, 0        ; 3 uses
+  %9 = icmp ne i32 %.050615612828, 0              ; 3 uses
   %i.fh = icmp eq i32 %.047112862867, 0
-  %not..not5692767 = xor i1 %.not569, true
-  %i.fi = or i1 %i.fh, %not..not5692767           ; 2 uses
+  %i.fi = or i1 %9, %i.fh                         ; 2 uses
   %i.fj = icmp ne i32 %.04237822939, 0            ; 3 uses
   %or.cond25 = or i1 %i.fi, %i.fj
   br i1 %or.cond25, label %.critedge, label %bb.ep
@@ -393,13 +392,14 @@ bb.es:                                            ; preds = %bb.er
   unreachable
 
 .critedge:                                        ; preds = %bb.eo, %bb.er
-  %i.fm = icmp ne i32 %.044910552900, 0           ; 2 uses
-  %9 = load i32, ptr %i.o, align 4
-  %10 = icmp eq i32 %9, 1
-  %not..not569 = xor i1 %.not569, true
-  %not.or.cond33.not = or i1 %i.fm, %not..not569
-  %or.cond36 = select i1 %not.or.cond33.not, i1 true, i1 %10
-  %.not573.a = icmp eq i32 %.048913922852, 0      ; 2 uses
+  %.not2736 = xor i1 %9, true
+  %i.fm = icmp ne i32 %.044910552900, 0
+  %10 = or i32 %.050615612828, %.044910552900
+  %or.cond33 = icmp ne i32 %10, 0
+  %11 = load i32, ptr %i.o, align 4
+  %12 = icmp eq i32 %11, 1
+  %or.cond36 = select i1 %or.cond33, i1 true, i1 %12
+  %.not573.a = icmp eq i32 %.048913922852, 0      ; 3 uses
   %or.cond680 = or i1 %or.cond36, %.not573.a
   br i1 %or.cond680, label %.thread660, label %bb.et
 
@@ -439,8 +439,7 @@ bb.ey:                                            ; preds = %.thread660
   br label %bb.fd
 
 bb.ez:                                            ; preds = %.thread660
-  %11 = or i32 %.050615612828, %.048913922852
-  %or.cond50 = icmp eq i32 %11, 0
+  %or.cond50 = and i1 %.not573.a, %.not2736
   br i1 %or.cond50, label %bb.fa, label %bb.fb
 
 bb.fa:                                            ; preds = %bb.ez
@@ -448,9 +447,9 @@ bb.fa:                                            ; preds = %bb.ez
   br label %bb.fd
 
 bb.fb:                                            ; preds = %bb.ez
-  %12 = icmp eq i32 %i.fp, 3
-  %or.cond57 = select i1 %.not569, i1 %12, i1 false
-  br i1 %or.cond57, label %bb.fc, label %bb.fd
+  %13 = icmp ne i32 %i.fp, 3
+  %or.cond57 = select i1 %9, i1 true, i1 %13
+  br i1 %or.cond57, label %bb.fd, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
   tail call void @wolfSSL_CTX_set_verify(ptr noundef nonnull %i.ew, i32 noundef 1, ptr noundef nonnull @myVerify) #21

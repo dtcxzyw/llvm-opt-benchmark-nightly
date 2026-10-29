@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.f
 
 .body.i:                                          ; preds = %bb.gc, %bb.df, %.body220.i, %.body227.i, %bb.au, %bb.at, %bb.aq, %bb.ai, %.body44.i.i, %bb.z, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3set7HashSetNtNtCsbSS6DM8SDEO_5alloc6string6StringNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEECs6u1mgJOKDyY_13rust_analyzer.exit.i.i
-  %.pn185.pn.i = phi { ptr, i32 } [ %.pn185.i, %bb.gc ], [ %.pn175.i, %.body220.i ], [ %.pn185.i, %.body227.i ], [ %i.cs, %bb.z ], [ %i.cv, %bb.at ], [ %eh.lpad-body54.i.i, %bb.aq ], [ %.pn175.i, %bb.df ], [ %.pn28.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3set7HashSetNtNtCsbSS6DM8SDEO_5alloc6string6StringNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEECs6u1mgJOKDyY_13rust_analyzer.exit.i.i ], [ %i.dm, %bb.au ], [ %eh.lpad-body45.i.i, %.body44.i.i ], [ %i.db, %bb.ai ]
+  %.pn185.pn.i = phi { ptr, i32 } [ %.pn185.i, %bb.gc ], [ %.pn175.i, %.body220.i ], [ %.pn185.i, %.body227.i ], [ %eh.lpad-body54.i.i, %bb.aq ], [ %i.db, %bb.ai ], [ %i.cs, %bb.z ], [ %.pn175.i, %bb.df ], [ %.pn28.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3set7HashSetNtNtCsbSS6DM8SDEO_5alloc6string6StringNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEECs6u1mgJOKDyY_13rust_analyzer.exit.i.i ], [ %i.dm, %bb.au ], [ %eh.lpad-body45.i.i, %.body44.i.i ], [ %i.cv, %bb.at ]
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs9R0CJ7nmiec_5paths10AbsPathBufEECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bh) #41
           to label %.body254.i unwind label %bb.da
 

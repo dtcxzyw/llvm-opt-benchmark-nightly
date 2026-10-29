@@ -200,27 +200,28 @@ bb.d:                                             ; preds = %._crit_edge54, %bb.
   %.pre-phi = phi i1 [ %.pre56, %._crit_edge54 ], [ %i.c, %bb.a ]
   %i.l = xor i1 %.pre-phi58, true
   %i.m = select i1 %.pre-phi, i1 true, i1 %i.l
-  br i1 %i.m, label %.preheader, label %.loopexit, !prof !12
+  br i1 %i.m, label %.outer, label %.loopexit, !prof !12
 
-.preheader:                                       ; preds = %bb.d
+.outer:                                           ; preds = %bb.d
   %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  br label %.outer
-
-.outer:                                           ; preds = %.split, %.preheader
-  %.039.ph = phi ptr [ %i.at, %.split ], [ %i.a, %.preheader ]
-  %i.n = getelementptr inbounds nuw i8, ptr %.039.ph, i64 16 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !20
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.q = load i32, ptr %i.p, align 8, !tbaa !42   ; 2 uses
   %.not50 = icmp eq i32 %i.q, 0
-  br i1 %.not50, label %.loopexit, label %.lr.ph
+  br i1 %.not50, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %.outer, %.thread
-  %.03547 = phi i32 [ %.136, %.thread ], [ %i.q, %.outer ] ; 2 uses
-  %.03746 = phi i32 [ %.138, %.thread ], [ 0, %.outer ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %.outer, %.split
+  %2 = phi i32 [ %7, %.split ], [ %i.q, %.outer ]
+  %3 = phi ptr [ %4, %.split ], [ %i.n, %.outer ] ; 2 uses
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.thread
+  %.03547 = phi i32 [ %.136, %.thread ], [ %2, %.lr.ph.preheader ] ; 2 uses
+  %.03746 = phi i32 [ %.138, %.thread ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.r = add i32 %.03547, %.03746
   %i.s = lshr i32 %i.r, 1                         ; 4 uses
-  %i.t = load ptr, ptr %i.n, align 8, !tbaa !20
+  %i.t = load ptr, ptr %3, align 8, !tbaa !20
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !43
   %i.w = zext nneg i32 %i.s to i64
@@ -259,10 +260,10 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge:                                      ; preds = %.thread
   %i.am = icmp eq i32 %i.ag, 0
-  br i1 %i.am, label %bb.h, label %.loopexit, !llvm.loop !79
+  br i1 %i.am, label %bb.h, label %.loopexit
 
 bb.h:                                             ; preds = %._crit_edge
-  %i.an = load ptr, ptr %i.n, align 8, !tbaa !20
+  %i.an = load ptr, ptr %3, align 8, !tbaa !20
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 48
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !43
   %i.aq = zext nneg i32 %i.s to i64
@@ -297,10 +298,15 @@ bb.k:                                             ; preds = %bb.j
 
 .split:                                           ; preds = %bb.j
   store ptr %i.at, ptr %0, align 8, !tbaa !59
-  br label %.outer, !llvm.loop !79
+  %4 = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !20
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %7 = load i32, ptr %6, align 8, !tbaa !42       ; 2 uses
+  %.not49 = icmp eq i32 %7, 0
+  br i1 %.not49, label %.loopexit, label %.lr.ph.preheader, !llvm.loop !79
 
-.loopexit:                                        ; preds = %.outer, %._crit_edge, %bb.c, %bb.i, %bb.k, %bb.d
-  %.0 = phi i32 [ -1, %bb.c ], [ -1, %bb.i ], [ -1, %bb.k ], [ 0, %bb.d ], [ 0, %._crit_edge ], [ 0, %.outer ]
+.loopexit:                                        ; preds = %._crit_edge, %.split, %.outer, %bb.c, %bb.i, %bb.k, %bb.d
+  %.0 = phi i32 [ -1, %bb.c ], [ -1, %bb.i ], [ -1, %bb.k ], [ 0, %bb.d ], [ 0, %.outer ], [ 0, %.split ], [ 0, %._crit_edge ]
   ret i32 %.0
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZL22getGlobalDebuggerStatev.exit:                ; preds = %bb.a, %bb.b
   %i.b = tail call noundef nonnull align 8 dereferenceable(128) ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZL22getGlobalDebuggerStatevE13debuggerState)
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 120 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 120 ; 4 uses
   %.0.copyload.i.i.i = load i64, ptr %i.c, align 8 ; 3 uses
   %i.d = icmp ugt i64 %.0.copyload.i.i.i, 7
   br i1 %i.d, label %bb.f, label %bb.c
@@ -343,9 +343,7 @@ bb.p:                                             ; preds = %bb.h
   %i.bu = getelementptr inbounds nuw [32 x i8], ptr %i.bq, i64 %i.bt
   %i.bv = zext nneg i32 %0 to i64
   %i.bw = getelementptr inbounds nuw [32 x i8], ptr %i.bu, i64 %i.bv
-  %2 = ptrtoint ptr %i.bw to i64
-  %3 = or i64 %2, 2
-  br label %.critedge53
+  br label %.critedge53.sink.split
 
 .preheader:                                       ; preds = %bb.f, %.preheader
   %.pn = phi ptr [ %.sroa.0103.0, %.preheader ], [ %i.s, %bb.f ]
@@ -433,15 +431,13 @@ bb.x:                                             ; preds = %_ZN4llvm11raw_ostre
 
 _ZN4llvm11raw_ostreamlsEPKc.exit76:               ; preds = %bb.q
   %i.dk = getelementptr inbounds i8, ptr %.sroa.0103.0, i64 -8
-  %4 = ptrtoint ptr %i.dk to i64
-  %5 = or i64 %4, 4
-  br label %.critedge53
+  br label %.critedge53.sink.split
 
 bb.y:                                             ; preds = %bb.f
   %i.dl = getelementptr inbounds nuw i8, ptr %i.s, i64 48
   %i.dm = getelementptr inbounds nuw i8, ptr %i.s, i64 40 ; 3 uses
   %.sroa.096.0111 = load ptr, ptr %i.dl, align 8, !tbaa !87 ; 3 uses
-  %i.dn = icmp ne ptr %.sroa.096.0111, %i.dm
+  %i.dn = icmp ne ptr %.sroa.096.0111, %i.dm      ; 2 uses
   %i.do = icmp ne i32 %0, 0
   %i.dp = and i1 %i.dn, %i.do
   br i1 %i.dp, label %.lr.ph, label %._crit_edge
@@ -452,7 +448,7 @@ bb.y:                                             ; preds = %bb.f
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.096.0113, i64 8
   %i.dr = add nuw nsw i32 %.0112, 1               ; 3 uses
   %.sroa.096.0 = load ptr, ptr %i.dq, align 8, !tbaa !87 ; 3 uses
-  %i.ds = icmp ne ptr %.sroa.096.0, %i.dm
+  %i.ds = icmp ne ptr %.sroa.096.0, %i.dm         ; 2 uses
   %i.dt = icmp ne i32 %i.dr, %0
   %i.du = select i1 %i.ds, i1 %i.dt, i1 false
   br i1 %i.du, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !154
@@ -464,6 +460,7 @@ bb.y:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.y
   %.0.lcssa = phi i64 [ 0, %bb.y ], [ %i.dv, %._crit_edge.loopexit ]
   %.sroa.096.0.lcssa = phi ptr [ %.sroa.096.0111, %bb.y ], [ %.sroa.096.0, %._crit_edge.loopexit ] ; 2 uses
+  %.lcssa = phi i1 [ %i.dn, %bb.y ], [ %i.ds, %._crit_edge.loopexit ]
   %i.dw = icmp eq ptr %.sroa.096.0.lcssa, %i.dm
   br i1 %i.dw, label %bb.z, label %_ZN4llvm11raw_ostreamlsEPKc.exit87.a
 
@@ -527,19 +524,23 @@ _ZN4llvm11raw_ostreamlsEPKc.exit84:               ; preds = %bb.ac, %bb.ad
 
 bb.ae:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit84
   %i.fc = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.ew, ptr noundef nonnull @.str.3, i64 noundef 1) #10 ; 0 uses
-  br label %.critedge55
+  br label %_ZN4llvm11raw_ostreamlsEPKc.exit87
 
 bb.af:                                            ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit84
   store i8 10, ptr %i.fa, align 1
   %i.fd = load ptr, ptr %i.ez, align 8, !tbaa !52
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 1
   store ptr %i.fe, ptr %i.ez, align 8, !tbaa !52
-  br label %.critedge55
+  br label %_ZN4llvm11raw_ostreamlsEPKc.exit87
 
 _ZN4llvm11raw_ostreamlsEPKc.exit87.a:             ; preds = %._crit_edge
   %i.ff = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %.sroa.096.0.lcssa) #10
   %i.fg = ptrtoint ptr %i.ff to i64
-  br label %.critedge53
+  store i64 %i.fg, ptr %i.c, align 8
+  br label %_ZN4llvm11raw_ostreamlsEPKc.exit87
+
+_ZN4llvm11raw_ostreamlsEPKc.exit87:               ; preds = %bb.af, %bb.ae, %_ZN4llvm11raw_ostreamlsEPKc.exit87.a
+  br i1 %.lcssa, label %.critedge53, label %.critedge55
 
 .unreachabledefault:                              ; preds = %bb.f
   unreachable
@@ -567,9 +568,15 @@ bb.ah:                                            ; preds = %.critedge
   store ptr %i.fs, ptr %i.fk, align 8, !tbaa !52
   br label %.critedge55
 
-.critedge53:                                      ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit87.a, %_ZN4llvm11raw_ostreamlsEPKc.exit76, %bb.p
-  %.sink = phi i64 [ %i.fg, %_ZN4llvm11raw_ostreamlsEPKc.exit87.a ], [ %5, %_ZN4llvm11raw_ostreamlsEPKc.exit76 ], [ %3, %bb.p ]
-  store i64 %.sink, ptr %i.c, align 8
+.critedge53.sink.split:                           ; preds = %bb.p, %_ZN4llvm11raw_ostreamlsEPKc.exit76
+  %.sink = phi ptr [ %i.dk, %_ZN4llvm11raw_ostreamlsEPKc.exit76 ], [ %i.bw, %bb.p ]
+  %.sink135 = phi i64 [ 4, %_ZN4llvm11raw_ostreamlsEPKc.exit76 ], [ 2, %bb.p ]
+  %2 = ptrtoint ptr %.sink to i64
+  %3 = or i64 %.sink135, %2
+  store i64 %3, ptr %i.c, align 8
+  br label %.critedge53
+
+.critedge53:                                      ; preds = %.critedge53.sink.split, %_ZN4llvm11raw_ostreamlsEPKc.exit87
   %i.ft = tail call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4outsEv() #10
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
   call void @_ZN4mlir15OpPrintingFlagsC1Ev(ptr noundef nonnull align 8 dereferenceable(42) %1) #10
@@ -596,7 +603,7 @@ bb.aj:                                            ; preds = %.critedge53
   store ptr %i.ge, ptr %i.fz, align 8, !tbaa !52
   br label %.critedge55
 
-.critedge55:                                      ; preds = %bb.ae, %bb.af, %bb.w, %bb.x, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.o, %bb.n, %bb.e, %bb.d
+.critedge55:                                      ; preds = %bb.w, %bb.x, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.o, %bb.n, %bb.e, %bb.d, %_ZN4llvm11raw_ostreamlsEPKc.exit87
   ret void
 }
 

@@ -55,7 +55,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond, label %.thread88, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.not96 = xor i1 %i.r, true                     ; 2 uses
+  %.not96 = xor i1 %i.r, true                     ; 4 uses
   %or.cond3 = select i1 %.not96, i1 true, i1 %i.s
   br i1 %or.cond3, label %bb.e, label %.thread88
 
@@ -70,10 +70,12 @@ bb.f:                                             ; preds = %bb.e
 
 .thread88:                                        ; preds = %bb.d, %bb.c, %bb.f
   %i.u = phi i32 [ %i.t, %bb.f ], [ %6, %bb.d ], [ %5, %bb.c ]
+  %16 = phi i1 [ %.not96, %bb.f ], [ false, %bb.d ], [ false, %bb.c ]
   %i.v = select i1 %i.r, i32 %7, i32 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %.thread88
+  %17 = phi i1 [ %16, %.thread88 ], [ true, %bb.e ], [ %.not96, %bb.f ]
   %i.w = phi i32 [ %i.u, %.thread88 ], [ %i.t, %bb.e ], [ %i.t, %bb.f ] ; 3 uses
   %i.x = phi i32 [ %i.v, %.thread88 ], [ %5, %bb.e ], [ %6, %bb.f ] ; 4 uses
   %i.y = icmp ne i32 %i.q, 0
@@ -112,9 +114,12 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.u
 
 bb.m:                                             ; preds = %bb.k
-  %or.cond95.v = select i1 %i.r, i32 %i.w, i32 %i.x
-  %or.cond95.not = icmp sgt i32 %7, %or.cond95.v
-  br i1 %or.cond95.not, label %bb.n, label %bb.o
+  %18 = icmp sgt i32 %7, %i.w
+  %or.cond83 = and i1 %i.r, %18
+  %or.cond95.not = icmp sgt i32 %7, %i.x
+  %or.cond86 = and i1 %17, %or.cond95.not
+  %or.cond94 = or i1 %or.cond83, %or.cond86
+  br i1 %or.cond94, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   tail call void @LAPACKE_xerbla(ptr noundef nonnull @.str, i32 noundef -8) #7

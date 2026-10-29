@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.d, %bb.b
   %.pn.i = phi ptr [ %i.d, %bb.b ], [ %.0.i, %bb.d ]
   %.0.in.i = getelementptr inbounds nuw i8, ptr %.pn.i, i64 208
   %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !266 ; 18 uses
-  %.not.i.not.not.not.not.not = icmp ne ptr %.0.i, null ; 9 uses
-  br i1 %.not.i.not.not.not.not.not, label %bb.d, label %_ZNK5clang6format11FormatToken21getPreviousNonCommentEv.exit.thread
+  %.not.i = icmp eq ptr %.0.i, null               ; 9 uses
+  br i1 %.not.i, label %_ZNK5clang6format11FormatToken21getPreviousNonCommentEv.exit.thread, label %bb.d
 
 _ZNK5clang6format11FormatToken21getPreviousNonCommentEv.exit.thread: ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 489 ; 2 uses
@@ -476,7 +476,7 @@ bb.y:                                             ; preds = %bb.x
   %i.dj = icmp ne i16 %i.di, 24
   %i.dk = icmp ne i16 %i.di, 21
   %spec.select.i.not.i.not.not298 = and i1 %i.dj, %i.dk ; 3 uses
-  br i1 %.not.i.not.not.not.not.not, label %switch.early.test, label %.critedge
+  br i1 %.not.i, label %.critedge, label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.y
   switch i16 %i.di, label %bb.z [
@@ -615,9 +615,9 @@ bb.ar:                                            ; preds = %bb.am
   %i.fc = load ptr, ptr %i.ao, align 8, !tbaa !270, !nonnull !122, !align !123
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 527
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !242 ; 2 uses
-  %2 = icmp eq i8 %i.fe, 5
-  %or.cond11 = and i1 %.not.i.not.not.not.not.not, %2
-  br i1 %or.cond11, label %bb.as, label %bb.aw
+  %2 = icmp ne i8 %i.fe, 5
+  %or.cond11.not = or i1 %.not.i, %2
+  br i1 %or.cond11.not, label %bb.aw, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
   %.val184 = load ptr, ptr %0, align 8, !tbaa !20
@@ -663,9 +663,9 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fv = getelementptr inbounds nuw [56 x i8], ptr %.val182, i64 %i.fu
   %i.fw = getelementptr inbounds i8, ptr %i.fv, i64 -56
   %i.fx = load i16, ptr %i.fw, align 8, !tbaa !250
-  %3 = icmp eq i16 %i.fx, 24
-  %or.cond13 = and i1 %.not.i.not.not.not.not.not, %3
-  br i1 %or.cond13, label %bb.ay, label %bb.bb
+  %3 = icmp ne i16 %i.fx, 24
+  %or.cond13.not = or i1 %.not.i, %3
+  br i1 %or.cond13.not, label %bb.bb, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.fy = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
@@ -710,9 +710,9 @@ bb.be:                                            ; preds = %bb.bb
   %i.gm = load ptr, ptr %i.a, align 8, !tbaa !240
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gm, i64 16
   %i.go = load i16, ptr %i.gn, align 8, !tbaa !62
-  %4 = icmp eq i16 %i.go, 21
-  %or.cond15 = and i1 %.not.i.not.not.not.not.not, %4
-  br i1 %or.cond15, label %bb.bf, label %bb.bi
+  %4 = icmp ne i16 %i.go, 21
+  %or.cond15.not = or i1 %.not.i, %4
+  br i1 %or.cond15.not, label %bb.bi, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.gp = getelementptr inbounds nuw i8, ptr %.0.i, i64 67
@@ -778,9 +778,8 @@ bb.bo:                                            ; preds = %bb.bn
   br label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit
 
 bb.bp:                                            ; preds = %bb.bi
-  %.not16 = xor i1 %i.ah, true
-  %or.cond18 = and i1 %.not.i.not.not.not.not.not, %.not16
-  br i1 %or.cond18, label %bb.bq, label %bb.bu
+  %or.cond18.not = or i1 %.not.i, %i.ah
+  br i1 %or.cond18.not, label %bb.bu, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
   %i.hm = getelementptr inbounds nuw i8, ptr %.0.i, i64 67
@@ -894,9 +893,9 @@ _ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_
   %i.iz = load ptr, ptr %i.ao, align 8, !tbaa !270, !nonnull !122, !align !123
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 527
   %i.jb = load i8, ptr %i.ja, align 1, !tbaa !242
-  %5 = icmp eq i8 %i.jb, 5
-  %or.cond20 = and i1 %.not.i.not.not.not.not.not, %5
-  br i1 %or.cond20, label %bb.by, label %bb.ca
+  %5 = icmp ne i8 %i.jb, 5
+  %or.cond20.not = or i1 %.not.i, %5
+  br i1 %or.cond20.not, label %bb.ca, label %bb.by
 
 bb.by:                                            ; preds = %_ZN5clang6format12_GLOBAL__N_116AnnotatingParser20ScopedContextCreatorC2ERS2_NS_3tok9TokenKindEj.exit
   %i.jc = getelementptr inbounds nuw i8, ptr %.0.i, i64 67
@@ -1095,7 +1094,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit252
 
 _ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit252: ; preds = %bb.cv, %bb.cu, %bb.ct, %bb.cs, %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit250
-  br i1 %.not.i.not.not.not.not.not, label %bb.cw, label %_ZN5clang6format11FormatToken18overwriteFixedTypeENS0_9TokenTypeE.exit
+  br i1 %.not.i, label %_ZN5clang6format11FormatToken18overwriteFixedTypeENS0_9TokenTypeE.exit, label %bb.cw
 
 bb.cw:                                            ; preds = %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit252
   %i.me = load i8, ptr %i.jp, align 1, !tbaa !261
@@ -1320,7 +1319,7 @@ _ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit274: ; preds = %bb.dm,
   %i.pj = getelementptr inbounds nuw [56 x i8], ptr %.val, i64 %i.pi
   %i.pk = getelementptr inbounds i8, ptr %i.pj, i64 -38
   store i8 1, ptr %i.pk, align 2, !tbaa !396
-  br i1 %.not.i.not.not.not.not.not, label %bb.do, label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit271
+  br i1 %.not.i, label %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit271, label %bb.do
 
 bb.do:                                            ; preds = %_ZN5clang6format11FormatToken7setTypeENS0_9TokenTypeE.exit274
   %i.pl = load i16, ptr %i.jm, align 8, !tbaa !62

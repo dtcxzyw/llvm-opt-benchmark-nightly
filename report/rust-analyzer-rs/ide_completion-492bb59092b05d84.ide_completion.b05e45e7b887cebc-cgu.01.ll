@@ -204,7 +204,8 @@ bb.lv:                                            ; preds = %bb.lu
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7LetStmtEECsf8NQSppxkmK_14ide_completion.exit unwind label %bb.in
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7LetStmtEECsf8NQSppxkmK_14ide_completion.exit: ; preds = %bb.jk, %bb.jh, %_RNCNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_00B9_.exit.i, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs3_0B7_.exit.i, %bb.lu, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_0B7_.exit.thread431, %bb.lv
-  %i.aaz = phi i1 [ true, %bb.lv ], [ false, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_0B7_.exit.thread431 ], [ true, %bb.lu ], [ false, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs3_0B7_.exit.i ], [ false, %_RNCNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_00B9_.exit.i ], [ false, %bb.jh ], [ false, %bb.jk ] ; 2 uses
+  %i.aaz = phi i1 [ false, %bb.lv ], [ true, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_0B7_.exit.thread431 ], [ false, %bb.lu ], [ true, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs3_0B7_.exit.i ], [ true, %_RNCNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_00B9_.exit.i ], [ true, %bb.jh ], [ true, %bb.jk ]
+  %4 = phi i8 [ 1, %bb.lv ], [ 0, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_0B7_.exit.thread431 ], [ 1, %bb.lu ], [ 0, %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs3_0B7_.exit.i ], [ 0, %_RNCNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs4_00B9_.exit.i ], [ 0, %bb.jh ], [ 0, %bb.jk ]
   %.val136 = load ptr, ptr %i.rm, align 8, !noundef !5 ; 8 uses
   %.not.i273 = icmp eq ptr %.val136, null
   br i1 %.not.i273, label %_RNCNvNtNtCsf8NQSppxkmK_14ide_completion7context8analysis17classify_name_refs5_0B7_.exit.thread, label %bb.lw
@@ -607,8 +608,7 @@ bb.ox:                                            ; preds = %_RNCNCNvNtNtCsf8NQS
 
 bb.oy:                                            ; preds = %bb.ow
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw)
-  %.not128 = xor i1 %i.aaz, true
-  %brmerge = or i1 %.sroa.049.0440446, %.not128
+  %brmerge = or i1 %i.aaz, %.sroa.049.0440446
   br i1 %brmerge, label %bb.pa, label %bb.oz
 
 bb.oz:                                            ; preds = %bb.oy
@@ -751,7 +751,6 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   %i.aif = zext i1 %i.dk to i8
   %i.aig = zext i1 %.sroa.0.0.i287447 to i8
   %i.aih = zext i1 %i.uf to i8
-  %4 = zext i1 %i.aaz to i8
   %i.aii = zext i1 %i.ahb to i8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 60
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.11.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.429, i64 44, i1 false)

@@ -205,7 +205,7 @@ bb.jb:                                            ; preds = %_ZN12_GLOBAL__N_115
   %i.aux = trunc nuw i8 %i.auw to i1              ; 6 uses
   %i.auy = getelementptr inbounds nuw i8, ptr %i.auu, i64 52
   %i.auz = load i32, ptr %i.auy, align 4, !tbaa !553
-  %.not1927 = icmp eq i32 %i.auz, 19              ; 4 uses
+  %144 = icmp ne i32 %i.auz, 19                   ; 4 uses
   %i.ava = getelementptr inbounds nuw i8, ptr %0, i64 952
   %i.avb = load ptr, ptr %i.ava, align 8, !tbaa !448, !nonnull !24, !align !43 ; 2 uses
   %i.avc = getelementptr i8, ptr %1, i64 40       ; 3 uses
@@ -234,17 +234,16 @@ bb.jc:                                            ; preds = %_ZN4llvm8dyn_castIN
 
 _ZL12getCodeModelRKN4llvm12PPCSubtargetERKNS_13TargetMachineEPKNS_6SDNodeE.exit: ; preds = %bb.jb, %_ZN4llvm8dyn_castINS_19GlobalAddressSDNodeENS_7SDValueEEEDcRKT0_.exit.i, %bb.jc
   %.1.i1409 = phi i32 [ %i.ave, %_ZN4llvm8dyn_castINS_19GlobalAddressSDNodeENS_7SDValueEEEDcRKT0_.exit.i ], [ %i.avj, %bb.jc ], [ %i.ave, %bb.jb ] ; 2 uses
-  %144 = icmp eq i32 %.1.i1409, 3
-  %or.cond58 = and i1 %.not1927, %144
-  br i1 %or.cond58, label %bb.jd, label %bb.je
+  %145 = icmp ne i32 %.1.i1409, 3
+  %or.cond58.not = or i1 %145, %144
+  br i1 %or.cond58.not, label %bb.je, label %bb.jd
 
 bb.jd:                                            ; preds = %_ZL12getCodeModelRKN4llvm12PPCSubtargetERKNS_13TargetMachineEPKNS_6SDNodeE.exit
   call void @_ZN4llvm18report_fatal_errorEPKcb(ptr noundef nonnull @.str.47, i1 noundef zeroext true) #33
   unreachable
 
 bb.je:                                            ; preds = %_ZL12getCodeModelRKN4llvm12PPCSubtargetERKNS_13TargetMachineEPKNS_6SDNodeE.exit
-  %.not1028 = xor i1 %.not1927, true
-  %or.cond61.not = and i1 %i.aux, %.not1028
+  %or.cond61.not = and i1 %144, %i.aux
   %i.avk = icmp eq i32 %.1.i1409, 1               ; 3 uses
   %or.cond63 = and i1 %or.cond61.not, %i.avk
   br i1 %or.cond63, label %.critedge1047, label %bb.jf
@@ -255,7 +254,7 @@ bb.jf:                                            ; preds = %bb.je
   br i1 %or.cond66, label %bb.jg, label %bb.jl
 
 bb.jg:                                            ; preds = %bb.jf
-  br i1 %.not1927, label %bb.ji, label %bb.jh
+  br i1 %144, label %bb.jh, label %bb.ji
 
 bb.jh:                                            ; preds = %bb.jg
   call fastcc void @"_ZZN12_GLOBAL__N_115PPCDAGToDAGISel6SelectEPN4llvm6SDNodeEENK3$_0clEjS3_NS1_3EVTE"(ptr nonnull %0, ptr nonnull %4, i32 noundef 1462, ptr noundef nonnull %1, i16 7, ptr null)
@@ -309,7 +308,7 @@ bb.jo:                                            ; preds = %bb.jl
   %.sroa.11.0..sroa_idx226 = getelementptr inbounds nuw i8, ptr %112, i64 12
   store i32 %.sroa.11.0.copyload, ptr %.sroa.11.0..sroa_idx226, align 4
   %i.avy = call noundef ptr @_ZN4llvm12SelectionDAG14getMachineNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %i.avw, i32 noundef %i.avx, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 %i.avu, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %i.avp, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %112) #32 ; 3 uses
-  br i1 %.not1927, label %bb.jp, label %bb.jr
+  br i1 %144, label %bb.jr, label %bb.jp
 
 bb.jp:                                            ; preds = %bb.jo
   %i.avz = call fastcc noundef zeroext i1 @_ZL14hasTocDataAttrN4llvm7SDValueE(ptr %.sroa.0235.0.copyload)

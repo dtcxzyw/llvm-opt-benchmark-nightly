@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.cj = phi i32 [ %i.ci, %bb.s ], [ 3, %bb.r ]
   tail call void @proj_operation_factory_context_set_grid_availability_use(ptr noundef %.0307, ptr noundef nonnull %i.bo, i32 noundef %i.cj)
-  %i.ck = tail call ptr @proj_create_operations(ptr noundef %.0307, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.bo) ; 8 uses
+  %i.ck = tail call ptr @proj_create_operations(ptr noundef %.0307, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.bo) ; 9 uses
   tail call void @proj_operation_factory_context_destroy(ptr noundef nonnull %i.bo)
   %.not339 = icmp eq ptr %i.ck, null
   br i1 %.not339, label %.critedge.thread, label %bb.u
@@ -220,7 +220,7 @@ bb.v:                                             ; preds = %bb.u
   br label %.critedge.thread
 
 bb.w:                                             ; preds = %bb.u
-  %i.cn = getelementptr inbounds nuw i8, ptr %.0307, i64 76 ; 6 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %.0307, i64 76 ; 7 uses
   store i8 %.0284.lcssa, ptr %i.cn, align 4, !tbaa !102
   %i.co = getelementptr inbounds nuw i8, ptr %.0307, i64 36 ; 7 uses
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !103 ; 3 uses
@@ -233,7 +233,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w, %bb.x
   %i.cq = tail call ptr @proj_list_get(ptr noundef nonnull %.0307, ptr noundef nonnull %i.ck, i32 noundef 0) ; 19 uses
   store i32 %i.cp, ptr %i.co, align 4, !tbaa !103
-  %i.cr = icmp ne ptr %i.cq, null                 ; 4 uses
+  %i.cr = icmp ne ptr %i.cq, null                 ; 3 uses
   br i1 %i.cr, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
@@ -270,34 +270,34 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.cy, label %.thread555, label %.thread441
 
 bb.ae:                                            ; preds = %bb.ab
-  %i.db = tail call i32 @proj_coordoperation_is_instantiable(ptr noundef nonnull %.0307, ptr noundef nonnull %i.cq) ; 3 uses
+  %i.db = tail call i32 @proj_coordoperation_is_instantiable(ptr noundef nonnull %.0307, ptr noundef nonnull %i.cq) ; 4 uses
   %i.dc = tail call i32 @proj_context_errno(ptr noundef nonnull %.0307) ; 0 uses
   %i.dd = icmp eq i32 %i.db, 1
   %or.cond15 = select i1 %i.cf, i1 true, i1 %i.dd
-  br i1 %or.cond15, label %bb.af, label %bb.am
+  br i1 %or.cond15, label %bb.ag, label %bb.am
 
 .thread555:                                       ; preds = %bb.ad
   %.not557 = xor i1 %i.cz, true
   %or.cond13558 = or i1 %i.cf, %.not557
   br i1 %or.cond13558, label %bb.af, label %.thread441
 
-bb.af:                                            ; preds = %.thread555, %bb.ae
-  %.0260431 = phi i32 [ %i.db, %bb.ae ], [ -1, %.thread555 ] ; 2 uses
+bb.af:                                            ; preds = %.thread555
   tail call void @proj_list_destroy(ptr noundef nonnull %i.ck)
   store i8 0, ptr %i.cn, align 4, !tbaa !102
-  %brmerge.demorgan = and i1 %or.cond, %i.cr
-  br i1 %brmerge.demorgan, label %bb.ag, label %.thread437
+  br i1 %or.cond, label %bb.ah, label %.thread437
 
-bb.ag:                                            ; preds = %bb.af
-  %i.de = icmp slt i32 %.0260431, 0
+bb.ag:                                            ; preds = %bb.ae
+  tail call void @proj_list_destroy(ptr noundef nonnull %i.ck)
+  store i8 0, ptr %i.cn, align 4, !tbaa !102
+  %i.de = icmp slt i32 %i.db, 0
   br i1 %i.de, label %bb.ah, label %bb.ai
 
-bb.ah:                                            ; preds = %bb.ag
+bb.ah:                                            ; preds = %bb.af, %bb.ag
   %i.df = tail call i32 @proj_coordoperation_is_instantiable(ptr noundef nonnull %.0307, ptr noundef nonnull %i.cq)
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %.1261 = phi i32 [ %i.df, %bb.ah ], [ %.0260431, %bb.ag ]
+  %.1261 = phi i32 [ %i.df, %bb.ah ], [ %i.db, %bb.ag ]
   %.not359 = icmp eq i32 %.1261, 0
   br i1 %.not359, label %bb.aj, label %.thread437
 
@@ -314,7 +314,7 @@ bb.al:                                            ; preds = %bb.ac
   store i8 0, ptr %i.cn, align 4, !tbaa !102
   br label %.critedge.thread
 
-.thread437:                                       ; preds = %bb.af, %bb.aj, %bb.ai
+.thread437:                                       ; preds = %bb.af, %bb.ai, %bb.aj
   %i.dh = zext nneg i8 %.0284.lcssa to i32
   %i.di = getelementptr inbounds nuw i8, ptr %i.cq, i64 344
   store i32 %i.dh, ptr %i.di, align 8, !tbaa !107

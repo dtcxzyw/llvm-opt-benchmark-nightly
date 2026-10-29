@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr i8, ptr %0, i64 16
   %.val11 = load ptr, ptr %i.c, align 8, !tbaa !17 ; 7 uses
-  %.not.i.i.i = icmp ne ptr %.val11, null         ; 9 uses
-  br i1 %.not.i.i.i, label %bb.d, label %PyCell_GetRef.exit
+  %.not.i.i.i = icmp eq ptr %.val11, null         ; 6 uses
+  br i1 %.not.i.i.i, label %PyCell_GetRef.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.d = load i32, ptr %.val11, align 8, !tbaa !11 ; 2 uses
@@ -218,8 +218,12 @@ bb.e:                                             ; preds = %bb.d
 PyCell_GetRef.exit:                               ; preds = %bb.c, %bb.d, %bb.e
   %i.g = getelementptr i8, ptr %1, i64 16
   %.val = load ptr, ptr %i.g, align 8, !tbaa !17  ; 7 uses
-  %.not.i.i.i14 = icmp ne ptr %.val, null         ; 8 uses
-  br i1 %.not.i.i.i14, label %bb.f, label %PyCell_GetRef.exit15.thread.a
+  %.not.i.i.i14 = icmp eq ptr %.val, null         ; 5 uses
+  br i1 %.not.i.i.i14, label %PyCell_GetRef.exit15.thread, label %bb.f
+
+PyCell_GetRef.exit15.thread:                      ; preds = %PyCell_GetRef.exit
+  %.not.i.i.i.not = xor i1 %.not.i.i.i, true
+  br label %PyCell_GetRef.exit15.thread.a
 
 bb.f:                                             ; preds = %PyCell_GetRef.exit
   %i.h = load i32, ptr %.val, align 8, !tbaa !11  ; 2 uses
@@ -232,13 +236,15 @@ bb.g:                                             ; preds = %bb.f
   br label %PyCell_GetRef.exit15
 
 PyCell_GetRef.exit15:                             ; preds = %bb.f, %bb.g
-  br i1 %.not.i.i.i, label %cell_compare_impl.exit.thread, label %PyCell_GetRef.exit15.thread.a
+  br i1 %.not.i.i.i, label %PyCell_GetRef.exit15.thread.a, label %cell_compare_impl.exit.thread
 
 cell_compare_impl.exit.thread:                    ; preds = %PyCell_GetRef.exit15
   %i.k = tail call ptr @PyObject_RichCompare(ptr noundef nonnull %.val11, ptr noundef nonnull %.val, i32 noundef %2) #4
   br label %bb.o
 
-PyCell_GetRef.exit15.thread.a:                    ; preds = %PyCell_GetRef.exit, %PyCell_GetRef.exit15
+PyCell_GetRef.exit15.thread.a:                    ; preds = %PyCell_GetRef.exit15.thread, %PyCell_GetRef.exit15
+  %3 = phi i1 [ %.not.i.i.i.not, %PyCell_GetRef.exit15.thread ], [ false, %PyCell_GetRef.exit15 ] ; 4 uses
+  %4 = xor i1 %.not.i.i.i14, true                 ; 4 uses
   switch i32 %2, label %bb.n [
     i32 2, label %bb.h
     i32 3, label %bb.i
@@ -249,36 +255,32 @@ PyCell_GetRef.exit15.thread.a:                    ; preds = %PyCell_GetRef.exit,
   ]
 
 bb.h:                                             ; preds = %PyCell_GetRef.exit15.thread.a
-  %i.l = xor i1 %.not.i.i.i14, %.not.i.i.i
+  %i.l = xor i1 %3, %4
   %_Py_TrueStruct._Py_FalseStruct.i = select i1 %i.l, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %cell_compare_impl.exit
 
 bb.i:                                             ; preds = %PyCell_GetRef.exit15.thread.a
-  %i.m = xor i1 %.not.i.i.i14, %.not.i.i.i
+  %i.m = xor i1 %3, %4
   %_Py_FalseStruct._Py_TrueStruct.i = select i1 %i.m, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
   br label %cell_compare_impl.exit
 
 bb.j:                                             ; preds = %PyCell_GetRef.exit15.thread.a
-  %.not30.i = xor i1 %.not.i.i.i, true
-  %i.n = and i1 %.not.i.i.i14, %.not30.i
+  %i.n = and i1 %.not.i.i.i, %4
   %_Py_TrueStruct._Py_FalseStruct23.i = select i1 %i.n, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
   br label %cell_compare_impl.exit
 
 bb.k:                                             ; preds = %PyCell_GetRef.exit15.thread.a
-  %.not29.i = xor i1 %.not.i.i.i14, true
-  %i.o = and i1 %.not.i.i.i, %.not29.i
+  %i.o = and i1 %.not.i.i.i14, %3
   %_Py_TrueStruct._Py_FalseStruct24.i = select i1 %i.o, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
   br label %cell_compare_impl.exit
 
 bb.l:                                             ; preds = %PyCell_GetRef.exit15.thread.a
-  %.not28.i = xor i1 %.not.i.i.i14, true
-  %.not21.i = and i1 %.not.i.i.i, %.not28.i
+  %.not21.i = and i1 %.not.i.i.i14, %3
   %_Py_FalseStruct._Py_TrueStruct25.i = select i1 %.not21.i, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %cell_compare_impl.exit
 
 bb.m:                                             ; preds = %PyCell_GetRef.exit15.thread.a
-  %.not27.i = xor i1 %.not.i.i.i, true
-  %.not.i = and i1 %.not.i.i.i14, %.not27.i
+  %.not.i = and i1 %.not.i.i.i, %4
   %_Py_FalseStruct._Py_TrueStruct26.i = select i1 %.not.i, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %cell_compare_impl.exit
 
@@ -287,7 +289,7 @@ bb.n:                                             ; preds = %PyCell_GetRef.exit1
 
 cell_compare_impl.exit:                           ; preds = %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m
   %.0.i = phi ptr [ %_Py_FalseStruct._Py_TrueStruct25.i, %bb.l ], [ %_Py_TrueStruct._Py_FalseStruct.i, %bb.h ], [ %_Py_TrueStruct._Py_FalseStruct24.i, %bb.k ], [ %_Py_FalseStruct._Py_TrueStruct.i, %bb.i ], [ %_Py_FalseStruct._Py_TrueStruct26.i, %bb.m ], [ %_Py_TrueStruct._Py_FalseStruct23.i, %bb.j ] ; 2 uses
-  br i1 %.not.i.i.i, label %bb.o, label %Py_XDECREF.exit
+  br i1 %.not.i.i.i, label %Py_XDECREF.exit, label %bb.o
 
 bb.o:                                             ; preds = %cell_compare_impl.exit.thread, %cell_compare_impl.exit
   %.0.i22 = phi ptr [ %i.k, %cell_compare_impl.exit.thread ], [ %.0.i, %cell_compare_impl.exit ] ; 3 uses
@@ -307,7 +309,7 @@ bb.q:                                             ; preds = %bb.p
 
 Py_XDECREF.exit:                                  ; preds = %cell_compare_impl.exit, %bb.o, %bb.p, %bb.q
   %.0.i23 = phi ptr [ %.0.i, %cell_compare_impl.exit ], [ %.0.i22, %bb.o ], [ %.0.i22, %bb.p ], [ %.0.i22, %bb.q ] ; 4 uses
-  br i1 %.not.i.i.i14, label %bb.r, label %Py_XDECREF.exit19
+  br i1 %.not.i.i.i14, label %Py_XDECREF.exit19, label %bb.r
 
 bb.r:                                             ; preds = %Py_XDECREF.exit
   %i.s = load i32, ptr %.val, align 8, !tbaa !11  ; 2 uses

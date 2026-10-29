@@ -205,8 +205,8 @@ bb.a:
   %i.d = getelementptr [8 x i8], ptr %0, i64 %i.c ; 2 uses
   %i.e = getelementptr i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !74   ; 17 uses
-  %2 = icmp slt i32 %i.b, 2                       ; 4 uses
-  br i1 %2, label %._crit_edge, label %.lr.ph
+  %2 = icmp sgt i32 %i.b, 1                       ; 4 uses
+  br i1 %2, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 3 uses
@@ -293,12 +293,12 @@ bb.g:                                             ; preds = %.epil.preheader
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   %.0179.lcssa = phi i1 [ true, %bb.a ], [ %i.w, %._crit_edge.loopexit ]
   %.0177.lcssa = phi i1 [ true, %bb.a ], [ %i.x, %._crit_edge.loopexit ]
-  %i.y = load ptr, ptr %0, align 8, !tbaa !74     ; 25 uses
+  %i.y = load ptr, ptr %0, align 8, !tbaa !74     ; 24 uses
   %i.z = load ptr, ptr %i.d, align 8, !tbaa !74   ; 22 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !55 ; 3 uses
-  %3 = icmp ne ptr %i.z, %i.ab                    ; 2 uses
-  %spec.select = select i1 %3, ptr %i.z, ptr null ; 2 uses
+  %3 = icmp eq ptr %i.z, %i.ab                    ; 2 uses
+  %spec.select = select i1 %3, ptr null, ptr %i.z ; 2 uses
   %i.ac = icmp ne ptr %i.f, %i.ab                 ; 2 uses
   %.0192 = select i1 %i.ac, ptr %i.f, ptr null    ; 2 uses
   %i.ad = icmp ne ptr %.0192, null                ; 14 uses
@@ -308,7 +308,7 @@ bb.g:                                             ; preds = %.epil.preheader
 
 bb.h:                                             ; preds = %._crit_edge
   %or.cond.i = or i1 %i.ad, %i.ae
-  br i1 %or.cond.i, label %bb.i, label %.thread297
+  br i1 %or.cond.i, label %bb.i, label %same.exit.thread.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 56
@@ -340,14 +340,13 @@ same.exit:                                        ; preds = %bb.j
   %i.az = load i128, ptr %i.ax, align 1
   %i.ba = xor i128 %i.ay, %i.az
   %i.bb = or i128 %i.av, %i.ba
-  %i.bc = icmp ne i128 %i.bb, 0
-  %i.bd = zext i1 %i.bc to i32
-  %.not.i.i.not = icmp eq i32 %i.bd, 0
-  %brmerge384 = or i1 %.not.i.i.not, %2
-  br i1 %brmerge384, label %.thread297, label %.lr.ph336.a
+  %i.bc = icmp ne i128 %i.bb, 0                   ; 2 uses
+  %i.bd = zext i1 %i.bc to i32                    ; 0 uses
+  %or.cond337 = and i1 %i.bc, %2
+  br i1 %or.cond337, label %.lr.ph336.a, label %same.exit.thread.thread
 
 .preheader328:                                    ; preds = %._crit_edge, %bb.i, %bb.j
-  br i1 %2, label %.thread297, label %.lr.ph336.a
+  br i1 %2, label %.lr.ph336.a, label %same.exit.thread.thread
 
 .lr.ph336.a:                                      ; preds = %same.exit, %.preheader328
   %i.be = getelementptr inbounds nuw i8, ptr %i.z, i64 56
@@ -474,13 +473,18 @@ same.exit244.thread293:                           ; preds = %same.exit244, %same
   %exitcond355.not = icmp eq i64 %indvars.iv.next352, %wide.trip.count354
   br i1 %exitcond355.not, label %._crit_edge337, label %bb.k, !llvm.loop !218
 
+same.exit.thread.thread:                          ; preds = %bb.h, %same.exit, %.preheader328
+  %.not368 = xor i1 %i.ad, true
+  br label %.thread297
+
 ._crit_edge337:                                   ; preds = %same.exit244.thread293
   %i.dk = icmp ne i32 %i.di, 0                    ; 2 uses
   %i.dl = icmp ne i32 %i.dj, 0                    ; 2 uses
-  %or.cond.not210 = and i1 %3, %i.ad
-  %or.cond3 = select i1 %or.cond.not210, i1 %i.dk, i1 false
-  %or.cond3.not.a = xor i1 %or.cond3, true
-  %or.cond5 = select i1 %or.cond3.not.a, i1 true, i1 %i.dl
+  %.not = xor i1 %i.ad, true                      ; 2 uses
+  %or.cond = or i1 %3, %.not
+  %or.cond3.not.a = xor i1 %i.dk, true
+  %or.cond3.not = select i1 %or.cond, i1 true, i1 %or.cond3.not.a
+  %or.cond5 = select i1 %or.cond3.not, i1 true, i1 %i.dl
   br i1 %or.cond5, label %.thread297, label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge337
@@ -489,7 +493,7 @@ bb.q:                                             ; preds = %._crit_edge337
 
 bb.r:                                             ; preds = %bb.q
   %i.dm = getelementptr inbounds nuw i8, ptr %i.y, i64 56
-  %i.dn = load i32, ptr %i.dm, align 8, !tbaa !18
+  %i.dn = load i32, ptr %i.dm, align 8, !tbaa !18 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.f, i64 56
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !18
   %i.dq = or i32 %i.dp, %i.dn
@@ -522,15 +526,13 @@ same.exit250:                                     ; preds = %bb.s
   %.not.i.i249.not = icmp eq i32 %i.ej, 0
   br i1 %.not.i.i249.not, label %bb.aa, label %same.exit250.thread
 
-same.exit250.thread:                              ; preds = %bb.s, %bb.r, %same.exit250
+same.exit250.thread:                              ; preds = %bb.r, %bb.s, %same.exit250
   br i1 %i.ae, label %bb.t, label %same.exit256.thread
 
 bb.t:                                             ; preds = %same.exit250.thread
-  %4 = getelementptr inbounds nuw i8, ptr %i.y, i64 56
-  %5 = load i32, ptr %4, align 8, !tbaa !18
   %i.ek = getelementptr inbounds nuw i8, ptr %i.z, i64 56
   %i.el = load i32, ptr %i.ek, align 8, !tbaa !18
-  %i.em = or i32 %i.el, %5
+  %i.em = or i32 %i.el, %i.dn
   %i.en = and i32 %i.em, 8388608
   %.not.i253 = icmp eq i32 %i.en, 0
   br i1 %.not.i253, label %bb.u, label %same.exit256.thread
@@ -603,9 +605,10 @@ bb.aa:                                            ; preds = %same.exit256, %same
   %i.fx = tail call fastcc i32 @merged_entry(ptr noundef nonnull %i.f, ptr noundef %i.y, ptr noundef %1)
   br label %reject_merge.exit
 
-.thread297:                                       ; preds = %same.exit, %.preheader328, %bb.h, %._crit_edge337
-  %6 = phi i1 [ %i.dl, %._crit_edge337 ], [ false, %same.exit ], [ false, %bb.h ], [ false, %.preheader328 ] ; 3 uses
-  %7 = phi i1 [ %i.dk, %._crit_edge337 ], [ false, %same.exit ], [ false, %bb.h ], [ false, %.preheader328 ] ; 3 uses
+.thread297:                                       ; preds = %same.exit.thread.thread, %._crit_edge337
+  %.not375 = phi i1 [ %.not368, %same.exit.thread.thread ], [ %.not, %._crit_edge337 ] ; 2 uses
+  %.2185374 = phi i1 [ false, %same.exit.thread.thread ], [ %i.dl, %._crit_edge337 ] ; 3 uses
+  %.2188373 = phi i1 [ false, %same.exit.thread.thread ], [ %i.dk, %._crit_edge337 ] ; 3 uses
   %.not214 = icmp ne ptr %i.y, null               ; 5 uses
   br i1 %.not214, label %bb.ab, label %bb.aj
 
@@ -732,9 +735,9 @@ bb.am:                                            ; preds = %same.exit274
   br label %reject_merge.exit
 
 same.exit274.thread:                              ; preds = %bb.al, %bb.ak, %.thread310, %same.exit274
-  %or.cond7 = select i1 %i.ac, i1 %6, i1 false
+  %or.cond7 = select i1 %i.ac, i1 %.2185374, i1 false
   %or.cond7.not = xor i1 %or.cond7, true
-  %or.cond9 = select i1 %or.cond7.not, i1 true, i1 %7
+  %or.cond9 = select i1 %or.cond7.not, i1 true, i1 %.2188373
   br i1 %or.cond9, label %.thread313, label %bb.an
 
 bb.an:                                            ; preds = %same.exit274.thread
@@ -753,12 +756,12 @@ bb.ao:                                            ; preds = %bb.aj
 
 bb.ap:                                            ; preds = %.thread313
   %i.ip = xor i1 %i.ae, true                      ; 2 uses
-  %8 = xor i1 %i.ad, true                         ; 2 uses
   %brmerge = or i1 %.not214, %i.ae
   %brmerge232 = or i1 %i.ad, %brmerge             ; 2 uses
   %.mux = select i1 %i.ae, ptr %spec.select, ptr %.0192
   %.mux.mux = select i1 %.not214, ptr %i.y, ptr %.mux
-  %brmerge386 = or i1 %brmerge232, %2
+  %.not379 = xor i1 %2, true
+  %brmerge386 = or i1 %brmerge232, %.not379
   %.mux.mux.mux = select i1 %brmerge232, ptr %.mux.mux, ptr null
   br i1 %brmerge386, label %.loopexit327, label %.lr.ph341.preheader
 
@@ -782,12 +785,12 @@ bb.aq:                                            ; preds = %.lr.ph341
 
 .loopexit327:                                     ; preds = %bb.aq, %.lr.ph341, %bb.ap
   %.0 = phi ptr [ %.mux.mux.mux, %bb.ap ], [ null, %bb.aq ], [ %i.ir, %.lr.ph341 ] ; 3 uses
-  %or.cond15 = and i1 %i.ip, %8
+  %or.cond15 = and i1 %.not375, %i.ip
   %or.cond17 = and i1 %i.ad, %i.ip
-  %or.cond19 = select i1 %or.cond17, i1 %6, i1 false
+  %or.cond19 = select i1 %or.cond17, i1 %.2185374, i1 false
   %or.cond.a = select i1 %or.cond15, i1 true, i1 %or.cond19
-  %or.cond21 = and i1 %i.ae, %8
-  %or.cond23 = select i1 %or.cond21, i1 %7, i1 false
+  %or.cond21 = and i1 %i.ae, %.not375
+  %or.cond23 = select i1 %or.cond21, i1 %.2188373, i1 false
   %or.cond229 = select i1 %or.cond.a, i1 true, i1 %or.cond23
   br i1 %or.cond229, label %bb.ar, label %bb.aw
 
@@ -872,7 +875,7 @@ verify_uptodate.exit:                             ; preds = %bb.bc, %bb.bd
 verify_uptodate.exit.thread:                      ; preds = %bb.bd, %verify_uptodate.exit, %bb.az
   %i.jm = getelementptr inbounds nuw i8, ptr %1, i64 224
   store i32 1, ptr %i.jm, align 8, !tbaa !93
-  %or.cond31 = select i1 %7, i1 %6, i1 false
+  %or.cond31 = select i1 %.2188373, i1 %.2185374, i1 false
   br i1 %or.cond31, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %verify_uptodate.exit.thread

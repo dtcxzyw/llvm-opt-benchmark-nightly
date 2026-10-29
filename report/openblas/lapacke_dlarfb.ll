@@ -22,15 +22,16 @@ bb.c:                                             ; preds = %bb.b
   %i.c = tail call i32 @LAPACKE_lsame(i8 noundef signext %4, i8 noundef signext 99) #7 ; 2 uses
   %i.d = icmp ne i32 %i.c, 0                      ; 4 uses
   %i.e = icmp eq i32 %.pre, 0                     ; 2 uses
+  %.not103 = xor i1 %i.d, true
   %spec.select = select i1 %i.e, i32 %6, i32 %5
   %i.f = select i1 %i.d, i32 %spec.select, i32 %7 ; 2 uses
   %spec.select99 = select i1 %i.e, i32 %6, i32 %5
   %i.g = select i1 %i.d, i32 %7, i32 %spec.select99 ; 2 uses
-  %14 = icmp sle i32 %7, %i.f
-  %15 = icmp sle i32 %7, %i.g
-  %or.cond98.not = or i1 %i.d, %15
-  %or.cond103 = select i1 %14, i1 %or.cond98.not, i1 false
-  br i1 %or.cond103, label %bb.d, label %.sink.split
+  %14 = icmp sgt i32 %7, %i.f
+  %15 = icmp sgt i32 %7, %i.g
+  %or.cond98 = and i1 %15, %.not103
+  %or.cond103 = select i1 %14, i1 true, i1 %or.cond98
+  br i1 %or.cond103, label %.sink.split, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call i32 @LAPACKE_lsame(i8 noundef signext %3, i8 noundef signext 102) #7 ; 2 uses

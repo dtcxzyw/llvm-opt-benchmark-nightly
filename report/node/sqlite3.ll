@@ -206,7 +206,6 @@ sqlite3PagerWrite.exit.thread:                    ; preds = %bb.j, %sqlite3Pager
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bb = icmp eq i8 %4, 2                        ; 3 uses
   %.not271 = icmp eq i32 %3, 0
-  %.not476 = xor i1 %i.bb, true
   %i.bc = getelementptr i8, ptr %0, i64 96
   br label %bb.p
 
@@ -376,6 +375,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %.thread397.thread518
 
 bb.ag:                                            ; preds = %bb.ae
+  %.not472 = xor i1 %i.da, true
   br i1 %i.da, label %bb.ah, label %bb.bp
 
 bb.ah:                                            ; preds = %bb.ag
@@ -778,12 +778,12 @@ bb.bu:                                            ; preds = %.loopexit
   br label %.thread397
 
 bb.bv:                                            ; preds = %.loopexit
-  %5 = icmp ne i32 %i.ks, %3
-  %6 = icmp uge i32 %i.ks, %3
-  %or.cond14.not450 = or i1 %6, %.not476
-  %7 = and i1 %5, %or.cond14.not450
-  %or.cond446.not = and i1 %7, %i.da
-  br i1 %or.cond446.not, label %.thread391, label %bb.bw
+  %5 = icmp eq i32 %i.ks, %3
+  %6 = icmp ult i32 %i.ks, %3
+  %or.cond14 = and i1 %i.bb, %6
+  %7 = or i1 %5, %or.cond14
+  %or.cond445 = or i1 %7, %.not472
+  br i1 %or.cond445, label %bb.bw, label %.thread391
 
 bb.bw:                                            ; preds = %bb.bv
   store i32 %i.ks, ptr %2, align 4, !tbaa !576
@@ -1186,11 +1186,11 @@ bb.n:                                             ; preds = %fts5AllocateSegid.e
   br i1 %i.bq, label %.lr.ph270.i, label %.critedge.i
 
 .lr.ph270.i:                                      ; preds = %bb.n
-  %2 = icmp ne i32 %i.bl, 0                       ; 4 uses
+  %2 = icmp eq i32 %i.bl, 0                       ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 16 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.bu = xor i1 %2, true
-  %i.bv = zext i1 %i.bu to i32
+  %i.bv = zext i1 %2 to i32
   %i.bw = icmp eq i32 %i.bj, 1                    ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 73 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
@@ -1210,7 +1210,7 @@ sqlite3Fts5HashScanEntry.exit.i:                  ; preds = %.lr.ph270.i, %bb.ce
   %i.cf = load i32, ptr %i.ce, align 8, !tbaa !3362
   %reass.sub.i.i = sub i32 %i.cf, %i.cb
   %i.cg = add i32 %reass.sub.i.i, -48             ; 4 uses
-  br i1 %2, label %sqlite3Fts5HashScanEntry.exit..thread_crit_edge.i, label %bb.o
+  br i1 %2, label %bb.o, label %sqlite3Fts5HashScanEntry.exit..thread_crit_edge.i
 
 sqlite3Fts5HashScanEntry.exit..thread_crit_edge.i: ; preds = %sqlite3Fts5HashScanEntry.exit.i
   %.pre.i = load i32, ptr %i.v, align 4, !tbaa !3096
@@ -1261,7 +1261,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cy = add nsw i32 %.0156269.i, %i.cx          ; 13 uses
   %i.cz = load i64, ptr %i.h, align 8, !tbaa !571
   %i.da = add i64 %i.cz, %.0159267.i              ; 14 uses
-  br i1 %2, label %bb.r, label %bb.ad
+  br i1 %2, label %bb.ad, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph.i
   br i1 %i.bw, label %bb.s, label %bb.y
@@ -1548,7 +1548,7 @@ fts5GetPoslistSize.exit.i:                        ; preds = %bb.be, %bb.bd, %bb.
   %.0.i196.i = phi i32 [ 1, %bb.az ], [ %i.hd, %bb.be ], [ 2, %bb.bb ], [ 3, %bb.bd ] ; 2 uses
   %i.he = lshr i32 %.08.i.i, 1                    ; 2 uses
   %i.hf = trunc i32 %.08.i.i to i1
-  %or.cond3.i = and i1 %2, %i.hf
+  %or.cond3.i = and i1 %i.bu, %i.hf
   br i1 %or.cond3.i, label %bb.bf, label %bb.bo
 
 bb.bf:                                            ; preds = %fts5GetPoslistSize.exit.i

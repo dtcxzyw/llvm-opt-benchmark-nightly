@@ -205,9 +205,9 @@ bb.a:
   %i.a = tail call noundef ptr @_ZNK4llvm5Value17stripPointerCastsEv(ptr noundef nonnull align 8 dereferenceable(24) %2) #24 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !104
   %i.c = add i8 %i.b, -14
-  %switch.selectcmp.i.i.i.i.i.i.i = icmp ult i8 %i.c, 4 ; 2 uses
+  %switch.selectcmp.i.i.i.i.i.i.i = icmp ult i8 %i.c, 4
   %spec.select.i.i = select i1 %switch.selectcmp.i.i.i.i.i.i.i, ptr %i.a, ptr null ; 2 uses
-  %i.d = icmp eq ptr %spec.select.i.i, null
+  %i.d = icmp eq ptr %spec.select.i.i, null       ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !376, !nonnull !30, !align !336
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -241,7 +241,7 @@ _ZN4llvm5APIntC2Ejmbb.exit:                       ; preds = %bb.b, %bb.c
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN4llvm5APIntC2Ejmbb.exit
-  %i.r = select i1 %switch.selectcmp.i.i.i.i.i.i.i, i64 4, i64 0
+  %i.r = select i1 %i.d, i64 0, i64 4
   br label %.thread113
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN4llvm25generic_gep_type_iteratorIPKPKNS_5ValueEEppEv.exit
@@ -644,9 +644,9 @@ bb.a:
   %i.a = tail call noundef ptr @_ZNK4llvm5Value17stripPointerCastsEv(ptr noundef nonnull align 8 dereferenceable(24) %2) #24 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !104
   %i.c = add i8 %i.b, -14
-  %switch.selectcmp.i.i.i.i.i.i.i = icmp ult i8 %i.c, 4 ; 2 uses
+  %switch.selectcmp.i.i.i.i.i.i.i = icmp ult i8 %i.c, 4
   %spec.select.i.i = select i1 %switch.selectcmp.i.i.i.i.i.i.i, ptr %i.a, ptr null ; 2 uses
-  %i.d = icmp eq ptr %spec.select.i.i, null
+  %i.d = icmp eq ptr %spec.select.i.i, null       ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !376, !nonnull !30, !align !336
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -680,7 +680,7 @@ _ZN4llvm5APIntC2Ejmbb.exit:                       ; preds = %bb.b, %bb.c
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN4llvm5APIntC2Ejmbb.exit
-  %i.r = select i1 %switch.selectcmp.i.i.i.i.i.i.i, i64 4, i64 0
+  %i.r = select i1 %i.d, i64 0, i64 4
   br label %.thread113
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN4llvm25generic_gep_type_iteratorIPKPKNS_5ValueEEppEv.exit

@@ -205,7 +205,7 @@ bb.a:
 define internal noundef zeroext i1 @_ZL24Items_SingleStringGetterPviPPKc(ptr noundef %0, i32 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2) #12 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !148     ; 2 uses
-  %.not18 = icmp eq i8 %i.a, 0
+  %.not18 = icmp eq i8 %i.a, 0                    ; 2 uses
   %i.b = icmp eq i32 %1, 0
   %or.cond19 = or i1 %.not18, %i.b
   br i1 %or.cond19, label %._crit_edge, label %.lr.ph
@@ -218,7 +218,7 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.d, i64 1        ; 3 uses
   %i.f = add nuw nsw i32 %.01220, 1               ; 2 uses
   %i.g = load i8, ptr %i.e, align 1, !tbaa !148   ; 2 uses
-  %.not = icmp eq i8 %i.g, 0
+  %.not = icmp eq i8 %i.g, 0                      ; 2 uses
   %i.h = icmp eq i32 %1, %i.f
   %or.cond = select i1 %.not, i1 true, i1 %i.h
   br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !435
@@ -226,16 +226,17 @@ bb.a:
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.e, %.lr.ph ]
   %.lcssa = phi i8 [ %i.a, %bb.a ], [ %i.g, %.lr.ph ]
-  %.not15 = icmp ne i8 %.lcssa, 0                 ; 2 uses
-  %.not16 = icmp ne ptr %2, null
-  %or.cond17.not = and i1 %.not16, %.not15
-  br i1 %or.cond17.not, label %bb.b, label %bb.c
+  %.not.lcssa = phi i1 [ %.not18, %bb.a ], [ %.not, %.lr.ph ]
+  %.not16 = icmp eq ptr %2, null
+  %or.cond17 = or i1 %.not16, %.not.lcssa
+  br i1 %or.cond17, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
   store ptr %.0.lcssa, ptr %2, align 8, !tbaa !149
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
+  %.not15 = icmp ne i8 %.lcssa, 0
   ret i1 %.not15
 }
 
@@ -638,8 +639,8 @@ _ZN8ImVectorItE6resizeEi.exit1124:                ; preds = %._ZN8ImVectorItE6re
 bb.bs:                                            ; preds = %.thread1308
   %i.km = load i32, ptr %i.cm, align 4, !tbaa !165
   %i.kn = icmp ne i32 %i.km, %i.x
-  %i.ko = or i1 %i.kn, %i.iq
-  %brmerge1026 = or i1 %i.q, %i.ko
+  %i.ko = or i1 %i.q, %i.kn
+  %brmerge1026 = or i1 %i.iq, %i.ko
   br i1 %brmerge1026, label %bb.bv, label %bb.bu
 
 bb.bt:                                            ; preds = %.thread1308

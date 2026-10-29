@@ -88,8 +88,7 @@ bb.c:                                             ; preds = %.lr.ph77
 
 ._crit_edge.thread:                               ; preds = %bb.c
   %i.h = zext nneg i8 %i.d to i32
-  %.14967105 = getelementptr inbounds nuw i8, ptr %.04875, i64 1 ; 2 uses
-  %8 = icmp eq ptr %.14967105, %3
+  %.14967105 = getelementptr inbounds nuw i8, ptr %.04875, i64 1
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.c
@@ -144,23 +143,23 @@ bb.i:                                             ; preds = %.lr.ph
   %i.y = add nuw nsw i32 %.069, 1                 ; 2 uses
   %.149 = getelementptr inbounds nuw i8, ptr %.14970, i64 1 ; 3 uses
   %i.z = icmp ne i32 %i.y, %.0.i.i                ; 2 uses
-  %i.aa = icmp ne ptr %.149, %3
+  %i.aa = icmp ne ptr %.149, %3                   ; 2 uses
   %i.ab = select i1 %i.z, i1 %i.aa, i1 false
   br i1 %i.ab, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !19
 
 ._crit_edge.loopexit:                             ; preds = %bb.i
   %i.ac = add nuw nsw i32 %.069, 2
   %i.ad = zext nneg i32 %i.ac to i64
+  %8 = xor i1 %i.z, true
+  %9 = or i1 %i.aa, %8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit
   %.045.lcssa = phi i32 [ %i.r, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit ], [ %i.x, %._crit_edge.loopexit ]
   %.0.lcssa = phi i64 [ 1, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit ], [ %i.ad, %._crit_edge.loopexit ]
-  %.149.lcssa = phi ptr [ %.14967, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit ], [ %.149, %._crit_edge.loopexit ] ; 3 uses
-  %.lcssa = phi i1 [ true, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit ], [ %i.z, %._crit_edge.loopexit ]
-  %9 = icmp eq ptr %.149.lcssa, %3                ; 2 uses
-  %brmerge.not = and i1 %9, %.lcssa
-  br i1 %brmerge.not, label %bb.j, label %bb.k
+  %.149.lcssa = phi ptr [ %.14967, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit ], [ %.149, %._crit_edge.loopexit ] ; 2 uses
+  %.lcssa = phi i1 [ false, %_ZN5boost15program_options6detail18utf8_codecvt_facet20get_cont_octet_countEh.exit ], [ %9, %._crit_edge.loopexit ]
+  br i1 %.lcssa, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge
   %i.ae = sub nsw i64 0, %.0.lcssa
@@ -170,14 +169,14 @@ bb.j:                                             ; preds = %._crit_edge
   br label %.thread
 
 bb.k:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %10 = phi i1 [ %8, %._crit_edge.thread ], [ %9, %._crit_edge ]
-  %.149.lcssa112 = phi ptr [ %.14967105, %._crit_edge.thread ], [ %.149.lcssa, %._crit_edge ] ; 2 uses
+  %.149.lcssa112 = phi ptr [ %.14967105, %._crit_edge.thread ], [ %.149.lcssa, %._crit_edge ] ; 3 uses
   %.045.lcssa111 = phi i32 [ %i.h, %._crit_edge.thread ], [ %.045.lcssa, %._crit_edge ]
   %i.ag = getelementptr inbounds nuw i8, ptr %.05074, i64 4 ; 3 uses
   store i32 %.045.lcssa111, ptr %.05074, align 4, !tbaa !17
-  %11 = icmp eq ptr %i.ag, %6
-  %.not103 = select i1 %10, i1 true, i1 %11
-  br i1 %.not103, label %._crit_edge78, label %.lr.ph77, !llvm.loop !20
+  %10 = icmp ne ptr %.149.lcssa112, %3
+  %11 = icmp ne ptr %i.ag, %6
+  %.not103 = select i1 %10, i1 %11, i1 false
+  br i1 %.not103, label %.lr.ph77, label %._crit_edge78, !llvm.loop !20
 
 ._crit_edge78:                                    ; preds = %bb.k, %bb.a
   %.050.lcssa = phi ptr [ %5, %bb.a ], [ %i.ag, %bb.k ]
@@ -238,7 +237,7 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   store i8 %i.q, ptr %.04861, align 1, !tbaa !10
   %.14955 = getelementptr inbounds nuw i8, ptr %.04861, i64 1 ; 3 uses
   %i.r = icmp ne i32 %.0.i.i, 0                   ; 2 uses
-  %i.s = icmp ne ptr %.14955, %6
+  %i.s = icmp ne ptr %.14955, %6                  ; 2 uses
   %i.t = select i1 %i.r, i1 %i.s, i1 false
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
@@ -253,7 +252,7 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   store i8 %i.aa, ptr %.14955, align 1, !tbaa !10
   %.149 = getelementptr inbounds nuw i8, ptr %.04861, i64 2 ; 3 uses
   %i.ab = icmp ne i32 %.0.i.i, 1                  ; 2 uses
-  %i.ac = icmp ne ptr %.149, %6
+  %i.ac = icmp ne ptr %.149, %6                   ; 2 uses
   %i.ad = select i1 %i.ab, i1 %i.ac, i1 false
   br i1 %i.ad, label %.lr.ph.1, label %._crit_edge
 
@@ -268,7 +267,7 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   store i8 %i.ak, ptr %.149, align 1, !tbaa !10
   %.149.1 = getelementptr inbounds nuw i8, ptr %.04861, i64 3 ; 3 uses
   %i.al = icmp ne i32 %.0.i.i, 2                  ; 2 uses
-  %i.am = icmp ne ptr %.149.1, %6
+  %i.am = icmp ne ptr %.149.1, %6                 ; 2 uses
   %i.an = select i1 %i.al, i1 %i.am, i1 false
   br i1 %i.an, label %.lr.ph.2, label %._crit_edge
 
@@ -283,7 +282,7 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   store i8 %i.au, ptr %.149.1, align 1, !tbaa !10
   %.149.2 = getelementptr inbounds nuw i8, ptr %.04861, i64 4 ; 3 uses
   %i.av = icmp ne i32 %.0.i.i, 3                  ; 2 uses
-  %i.aw = icmp ne ptr %.149.2, %6
+  %i.aw = icmp ne ptr %.149.2, %6                 ; 2 uses
   %i.ax = select i1 %i.av, i1 %i.aw, i1 false
   br i1 %i.ax, label %.lr.ph.3, label %._crit_edge
 
@@ -298,7 +297,7 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   store i8 %i.be, ptr %.149.2, align 1, !tbaa !10
   %.149.3 = getelementptr inbounds nuw i8, ptr %.04861, i64 5 ; 3 uses
   %i.bf = icmp ne i32 %.0.i.i, 4                  ; 2 uses
-  %i.bg = icmp ne ptr %.149.3, %6
+  %i.bg = icmp ne ptr %.149.3, %6                 ; 2 uses
   %i.bh = select i1 %i.bf, i1 %i.bg, i1 false
   br i1 %i.bh, label %.lr.ph.4, label %._crit_edge
 
@@ -313,7 +312,7 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   store i8 %i.bo, ptr %.149.3, align 1, !tbaa !10
   %.149.4 = getelementptr inbounds nuw i8, ptr %.04861, i64 6 ; 3 uses
   %i.bp = icmp ne i32 %.0.i.i, 5                  ; 2 uses
-  %i.bq = icmp ne ptr %.149.4, %6
+  %i.bq = icmp ne ptr %.149.4, %6                 ; 2 uses
   %i.br = select i1 %i.bp, i1 %i.bq, i1 false
   br i1 %i.br, label %.lr.ph.5, label %._crit_edge
 
@@ -339,16 +338,18 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   %i.ce = trunc nsw i32 %i.cd to i8
   %i.cf = xor i8 %i.ce, -128
   store i8 %i.cf, ptr %.149.5, align 1, !tbaa !10
-  %.149.6 = getelementptr inbounds nuw i8, ptr %.04861, i64 8
+  %.149.6 = getelementptr inbounds nuw i8, ptr %.04861, i64 8 ; 2 uses
+  %8 = icmp ne ptr %.149.6, %6
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %_ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
   %.0.lcssa.neg = phi i64 [ -1, %_ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ -2, %.lr.ph ], [ -3, %.lr.ph.1 ], [ -4, %.lr.ph.2 ], [ -5, %.lr.ph.3 ], [ -6, %.lr.ph.4 ], [ -7, %.lr.ph.5 ], [ -8, %.lr.ph.6 ]
   %.149.lcssa = phi ptr [ %.14955, %_ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %.149, %.lr.ph ], [ %.149.1, %.lr.ph.1 ], [ %.149.2, %.lr.ph.2 ], [ %.149.3, %.lr.ph.3 ], [ %.149.4, %.lr.ph.4 ], [ %.149.5, %.lr.ph.5 ], [ %.149.6, %.lr.ph.6 ] ; 4 uses
   %.lcssa.a = phi i1 [ %i.r, %_ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %i.ab, %.lr.ph ], [ %i.al, %.lr.ph.1 ], [ %i.av, %.lr.ph.2 ], [ %i.bf, %.lr.ph.3 ], [ %i.bp, %.lr.ph.4 ], [ true, %.lr.ph.5 ], [ true, %.lr.ph.6 ]
-  %8 = icmp eq ptr %.149.lcssa, %6                ; 2 uses
-  %brmerge.not = and i1 %8, %.lcssa.a
-  br i1 %brmerge.not, label %.critedge, label %bb.f
+  %.lcssa = phi i1 [ %i.s, %_ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %i.ac, %.lr.ph ], [ %i.am, %.lr.ph.1 ], [ %i.aw, %.lr.ph.2 ], [ %i.bg, %.lr.ph.3 ], [ %i.bq, %.lr.ph.4 ], [ false, %.lr.ph.5 ], [ %8, %.lr.ph.6 ]
+  %.not52 = xor i1 %.lcssa.a, true
+  %brmerge = or i1 %.lcssa, %.not52
+  br i1 %brmerge, label %bb.f, label %.critedge
 
 .critedge:                                        ; preds = %._crit_edge
   store ptr %.04662, ptr %4, align 8, !tbaa !15
@@ -358,9 +359,10 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
 
 bb.f:                                             ; preds = %._crit_edge
   %i.ch = getelementptr inbounds nuw i8, ptr %.04662, i64 4 ; 3 uses
-  %9 = icmp eq ptr %i.ch, %3
-  %.not81 = or i1 %9, %8
-  br i1 %.not81, label %._crit_edge65, label %.lr.ph64, !llvm.loop !21
+  %9 = icmp ne ptr %i.ch, %3
+  %10 = icmp ne ptr %.149.lcssa, %6
+  %11 = select i1 %9, i1 %10, i1 false
+  br i1 %11, label %.lr.ph64, label %._crit_edge65, !llvm.loop !21
 
 ._crit_edge65:                                    ; preds = %bb.f, %bb.a
   %.048.lcssa = phi ptr [ %5, %bb.a ], [ %.149.lcssa, %bb.f ]

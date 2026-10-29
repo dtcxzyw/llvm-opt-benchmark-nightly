@@ -206,7 +206,6 @@ sqlite3PagerWrite.exit.thread:                    ; preds = %bb.j, %sqlite3Pager
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bb = icmp eq i8 %4, 2                        ; 3 uses
   %.not271 = icmp eq i32 %3, 0
-  %.not476 = xor i1 %i.bb, true
   %i.bc = getelementptr i8, ptr %0, i64 96
   br label %bb.p
 
@@ -376,6 +375,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %.thread397.thread518
 
 bb.ag:                                            ; preds = %bb.ae
+  %.not472 = xor i1 %i.da, true
   br i1 %i.da, label %bb.ah, label %bb.bp
 
 bb.ah:                                            ; preds = %bb.ag
@@ -778,12 +778,12 @@ bb.bu:                                            ; preds = %.loopexit
   br label %.thread397
 
 bb.bv:                                            ; preds = %.loopexit
-  %5 = icmp ne i32 %i.ks, %3
-  %6 = icmp uge i32 %i.ks, %3
-  %or.cond14.not450 = or i1 %6, %.not476
-  %7 = and i1 %5, %or.cond14.not450
-  %or.cond446.not = and i1 %7, %i.da
-  br i1 %or.cond446.not, label %.thread391, label %bb.bw
+  %5 = icmp eq i32 %i.ks, %3
+  %6 = icmp ult i32 %i.ks, %3
+  %or.cond14 = and i1 %i.bb, %6
+  %7 = or i1 %5, %or.cond14
+  %or.cond445 = or i1 %7, %.not472
+  br i1 %or.cond445, label %bb.bw, label %.thread391
 
 bb.bw:                                            ; preds = %bb.bv
   store i32 %i.ks, ptr %2, align 4, !tbaa !570
