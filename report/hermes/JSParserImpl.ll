@@ -204,9 +204,8 @@ _ZNK6hermes6parser6detail12JSParserImpl5checkEPNS_12UniqueStringE.exit: ; preds 
   %i.y = bitcast <4 x i1> %i.x to i4
   %i.z = icmp ne i4 %i.y, 0
   %op.rdx = select i1 %i.z, i1 true, i1 %i.l
-  %3 = freeze i1 %i.o
-  %4 = or i1 %op.rdx, %3
-  %op.rdx75 = select i1 %4, i1 true, i1 %i.r
+  %3 = select i1 %op.rdx, i1 true, i1 %i.o
+  %op.rdx75 = select i1 %3, i1 true, i1 %i.r
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1384
   %i.ab = load ptr, ptr %i.aa, align 8
   %i.ac = icmp eq ptr %i.k, %i.ab

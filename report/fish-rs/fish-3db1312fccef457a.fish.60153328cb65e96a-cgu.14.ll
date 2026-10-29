@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %._crit_edge749, %bb
   %i.hz = trunc nuw i8 %i.hy to i1
   %i.ia = bitcast <4 x i1> %i.hx to i4
   %i.ib = icmp ne i4 %i.ia, 0
-  %4 = or i1 %i.hv, %i.ib
-  %op.rdx971 = select i1 %4, i1 true, i1 %i.hz
+  %op.rdx = select i1 %i.ib, i1 true, i1 %i.hv
+  %op.rdx971 = select i1 %op.rdx, i1 true, i1 %i.hz
   br i1 %op.rdx971, label %.backedge, label %bb.an
 
 bb.ae:                                            ; preds = %bb.ac

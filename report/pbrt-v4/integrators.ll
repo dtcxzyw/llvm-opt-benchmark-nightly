@@ -205,9 +205,8 @@ _ZNK4pbrt11SampledGridINS_20RGBUnboundedSpectrumEE6LookupIZNKS_13RGBGridMedium11
   %i.dk = freeze <4 x i1> %i.di
   %i.dl = bitcast <4 x i1> %i.dk to i4
   %i.dm = icmp eq i4 %i.dl, -1
-  %.fr = freeze i1 %i.dj
-  %op.rdx = and i1 %i.dm, %.fr
-  %op.rdx538 = select i1 %op.rdx, i1 %.not11.i.i212, i1 false
+  %op.rdx = and i1 %.not11.i.i212, %i.dj
+  %op.rdx538 = select i1 %i.dm, i1 %op.rdx, i1 false
   br i1 %op.rdx538, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %_ZNK4pbrt11SampledGridINS_20RGBUnboundedSpectrumEE6LookupIZNKS_13RGBGridMedium11SamplePointENS_6Point3IfEERKNS_18SampledWavelengthsEEUlS1_E_EEDaRKNS5_IiEET_.exit166

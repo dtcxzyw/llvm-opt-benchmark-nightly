@@ -202,16 +202,12 @@ bb.a:
   %i.v = freeze <4 x i1> %i.j
   %i.w = bitcast <4 x i1> %i.v to i4
   %i.x = icmp eq i4 %i.w, -1
-  %.fr = freeze i1 %i.l
-  %op.rdx = and i1 %i.x, %.fr
-  %2 = freeze i1 %i.o
-  %3 = freeze i1 %i.u
-  %4 = and i1 %op.rdx, %2
-  %.fr33 = freeze i1 %i.r
-  %op.rdx30 = and i1 %4, %.fr33
-  %5 = and i1 %i.c, %3
-  %i.y = select i1 %op.rdx30, i1 %5, i1 false
-  %op.rdx32 = select i1 %i.y, i1 %i.f, i1 false
+  %op.rdx = select i1 %i.x, i1 %i.c, i1 false
+  %2 = select i1 %op.rdx, i1 %i.f, i1 false
+  %op.rdx30 = select i1 %2, i1 %i.l, i1 false
+  %3 = select i1 %op.rdx30, i1 %i.o, i1 false
+  %i.y = select i1 %3, i1 %i.r, i1 false
+  %op.rdx32 = select i1 %i.y, i1 %i.u, i1 false
   br i1 %op.rdx32, label %bb.b, label %_RNvXsi_NtCsa9sSWSfjDbm_4jiff4spanRNtB5_13SpanFieldwiseINtNtCs3oUPovFnLWP_4core3cmp9PartialEqBw_E2eq.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -266,16 +262,12 @@ bb.a:
   %i.v = freeze <4 x i1> %i.j
   %i.w = bitcast <4 x i1> %i.v to i4
   %i.x = icmp eq i4 %i.w, -1
-  %.fr = freeze i1 %i.l
-  %op.rdx = and i1 %i.x, %.fr
-  %2 = freeze i1 %i.o
-  %3 = freeze i1 %i.u
-  %4 = and i1 %op.rdx, %2
-  %.fr32 = freeze i1 %i.r
-  %op.rdx29 = and i1 %4, %.fr32
-  %5 = and i1 %i.c, %3
-  %i.y = select i1 %op.rdx29, i1 %5, i1 false
-  %op.rdx31 = select i1 %i.y, i1 %i.f, i1 false
+  %op.rdx = select i1 %i.x, i1 %i.c, i1 false
+  %2 = select i1 %op.rdx, i1 %i.f, i1 false
+  %op.rdx29 = select i1 %2, i1 %i.l, i1 false
+  %3 = select i1 %op.rdx29, i1 %i.o, i1 false
+  %i.y = select i1 %3, i1 %i.r, i1 false
+  %op.rdx31 = select i1 %i.y, i1 %i.u, i1 false
   br i1 %op.rdx31, label %bb.b, label %_RNvXsh_NtCsa9sSWSfjDbm_4jiff4spanNtB5_13SpanFieldwiseNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -331,16 +323,12 @@ bb.a:
   %i.w = freeze <4 x i1> %i.k
   %i.x = bitcast <4 x i1> %i.w to i4
   %i.y = icmp eq i4 %i.x, -1
-  %.fr = freeze i1 %i.m
-  %op.rdx = and i1 %i.y, %.fr
-  %2 = freeze i1 %i.p
-  %3 = freeze i1 %i.v
-  %4 = and i1 %op.rdx, %2
-  %.fr44 = freeze i1 %i.s
-  %op.rdx41 = and i1 %4, %.fr44
-  %5 = and i1 %i.d, %3
-  %i.z = select i1 %op.rdx41, i1 %5, i1 false
-  %op.rdx43 = select i1 %i.z, i1 %i.g, i1 false
+  %op.rdx = select i1 %i.y, i1 %i.d, i1 false
+  %2 = select i1 %op.rdx, i1 %i.g, i1 false
+  %op.rdx41 = select i1 %2, i1 %i.m, i1 false
+  %3 = select i1 %op.rdx41, i1 %i.p, i1 false
+  %i.z = select i1 %3, i1 %i.s, i1 false
+  %op.rdx43 = select i1 %i.z, i1 %i.v, i1 false
   br i1 %op.rdx43, label %bb.b, label %_RNvXsh_NtCsa9sSWSfjDbm_4jiff4spanNtB5_13SpanFieldwiseNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit
 
 bb.b:                                             ; preds = %bb.a

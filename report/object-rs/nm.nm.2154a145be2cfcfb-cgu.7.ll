@@ -202,22 +202,18 @@ _RINvNtNtNtCseHTIzroA4w0_6object4read4coff4file20anon_object_class_idRShECs2RpUv
   %.sroa.22.1.copyload.i = load i8, ptr %.sroa.22.1..sroa_idx.i, align 1, !noalias !18
   %i.bp = load <4 x i8>, ptr %i.bo, align 1, !noalias !18
   %.fr = freeze <4 x i8> %i.bp
-  %.sroa.10.1.copyload.i.fr = freeze i8 %.sroa.10.1.copyload.i
-  %i.bq = icmp eq i8 %.sroa.10.1.copyload.i.fr, -18
-  %.sroa.11.1.copyload.i.fr = freeze i8 %.sroa.11.1.copyload.i
-  %i.br = icmp eq i8 %.sroa.11.1.copyload.i.fr, -70
-  %.sroa.12.1.copyload.i.fr = freeze i8 %.sroa.12.1.copyload.i
-  %i.bs = icmp eq i8 %.sroa.12.1.copyload.i.fr, -87
-  %.sroa.22.1.copyload.i.fr = freeze i8 %.sroa.22.1.copyload.i
-  %i.bt = icmp eq i8 %.sroa.22.1.copyload.i.fr, -72
+  %i.bq = icmp eq i8 %.sroa.10.1.copyload.i, -18
+  %i.br = icmp eq i8 %.sroa.11.1.copyload.i, -70
+  %i.bs = icmp eq i8 %.sroa.12.1.copyload.i, -87
+  %i.bt = icmp eq i8 %.sroa.22.1.copyload.i, -72
   %i.bu = icmp eq ptr %.sroa.13.1.copyload.i, inttoptr (i64 -2547793880193913013 to ptr)
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.bv = icmp eq i32 %.fr.scalar, -776298041
-  %op.rdx = and i1 %i.bv, %i.bq
-  %3 = and i1 %op.rdx, %i.br
-  %op.rdx4 = and i1 %3, %i.bs
-  %4 = and i1 %op.rdx4, %i.bt
-  %op.rdx5 = select i1 %4, i1 %i.bu, i1 false
+  %op.rdx = select i1 %i.bv, i1 %i.bq, i1 false
+  %3 = select i1 %op.rdx, i1 %i.br, i1 false
+  %op.rdx4 = select i1 %3, i1 %i.bs, i1 false
+  %4 = select i1 %op.rdx4, i1 %i.bu, i1 false
+  %op.rdx5 = select i1 %4, i1 %i.bt, i1 false
   br i1 %op.rdx5, label %bb.x, label %_RINvNtNtNtCseHTIzroA4w0_6object4read4coff4file20anon_object_class_idRShECs2RpUvwn4Ihr_2nm.exit.thread.i
 
 _RINvNtNtNtCseHTIzroA4w0_6object4read4coff4file20anon_object_class_idRShECs2RpUvwn4Ihr_2nm.exit.thread.i: ; preds = %_RINvNtNtNtCseHTIzroA4w0_6object4read4coff4file20anon_object_class_idRShECs2RpUvwn4Ihr_2nm.exit.i, %bb.an

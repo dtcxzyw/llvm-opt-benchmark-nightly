@@ -205,21 +205,20 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   store float 0.000000e+00, ptr %i.i, align 4, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   call fastcc void @dt_UCS_JCH_to_sRGB(ptr noundef %i.a, float noundef f0x3F7CF0E2, ptr noundef %i.b)
-  %i.l = load <3 x float>, ptr %i.b, align 16
-  %.fr = freeze <3 x float> %i.l                  ; 3 uses
-  %i.m = shufflevector <3 x float> %.fr, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
-  %i.n = extractelement <3 x float> %.fr, i64 1
+  %i.l = load <3 x float>, ptr %i.b, align 16     ; 3 uses
+  %i.m = shufflevector <3 x float> %i.l, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
+  %i.n = extractelement <3 x float> %i.l, i64 1
   %i.o = fcmp reassoc nsz arcp contract afn oge float %i.n, 0.000000e+00
   %i.p = fcmp reassoc nsz arcp contract afn ole <4 x float> %i.m, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>
   %i.q = fcmp reassoc nsz arcp contract afn oge <4 x float> %i.m, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>
   %i.r = shufflevector <4 x i1> %i.p, <4 x i1> %i.q, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %i.s = extractelement <3 x float> %.fr, i64 2
+  %i.s = extractelement <3 x float> %i.l, i64 2
   %i.t = fcmp reassoc nsz arcp contract afn oge float %i.s, 0.000000e+00
   %i.u = freeze <4 x i1> %i.r
   %i.v = bitcast <4 x i1> %i.u to i4
   %i.w = icmp eq i4 %i.v, -1
-  %op.rdx = and i1 %i.w, %i.o
-  %op.rdx7 = and i1 %op.rdx, %i.t                 ; 2 uses
+  %op.rdx = select i1 %i.w, i1 %i.o, i1 false
+  %op.rdx7 = select i1 %op.rdx, i1 %i.t, i1 false ; 2 uses
   %..025.i = select nsz i1 %op.rdx7, float %i.k, float %.02527.i ; 2 uses
   %.024..i = select nsz i1 %op.rdx7, float %.02428.i, float %i.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25

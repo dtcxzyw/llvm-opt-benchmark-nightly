@@ -205,12 +205,9 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = freeze <4 x i1> %i.aa
   %i.ac = bitcast <4 x i1> %i.ab to i4
   %i.ad = icmp eq i4 %i.ac, -1
-  %.not27.fr = freeze i1 %.not27
-  %op.rdx = and i1 %i.ad, %.not27.fr
-  %1 = freeze i1 %.not26
-  %2 = and i1 %op.rdx, %1
-  %.not25.fr = freeze i1 %.not25
-  %op.rdx45 = and i1 %2, %.not25.fr
+  %op.rdx = select i1 %i.ad, i1 %.not27, i1 false
+  %1 = select i1 %op.rdx, i1 %.not26, i1 false
+  %op.rdx45 = select i1 %1, i1 %.not25, i1 false
   %op.rdx46 = select i1 %op.rdx45, i1 %.not, i1 false
   br label %bb.d
 
@@ -613,12 +610,9 @@ _ZN4gdcmL16check_comp_validEP9opj_image.exit:     ; preds = %bb.g
   %i.bl = freeze <4 x i1> %i.bk
   %i.bm = bitcast <4 x i1> %i.bl to i4
   %i.bn = icmp eq i4 %i.bm, -1
-  %.not27.i.fr = freeze i1 %.not27.i
-  %op.rdx = and i1 %i.bn, %.not27.i.fr
-  %9 = freeze i1 %.not26.i
-  %10 = and i1 %op.rdx, %9
-  %.not25.i.fr = freeze i1 %.not25.i
-  %op.rdx103 = and i1 %10, %.not25.i.fr
+  %op.rdx = select i1 %i.bn, i1 %.not27.i, i1 false
+  %9 = select i1 %op.rdx, i1 %.not26.i, i1 false
+  %op.rdx103 = select i1 %9, i1 %.not25.i, i1 false
   %op.rdx104 = select i1 %op.rdx103, i1 %.not.i, i1 false
   br i1 %op.rdx104, label %_ZN4gdcmL16check_comp_validEP9opj_image.exit.thread, label %_ZN4gdcmL16check_comp_validEP9opj_image.exit.thread87
 

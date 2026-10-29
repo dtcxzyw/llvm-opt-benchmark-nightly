@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %bb.j
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit66.i.i: ; preds = %bb.k, %bb.j, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i
   %.sroa.12.0.i.i = phi i64 [ %i.p, %bb.k ], [ 0, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i ], [ 0, %bb.j ]
-  %.sroa.774.0.shrunk.i.i = phi i1 [ %.not7.i.i.i65.i.i, %bb.k ], [ true, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i ], [ %.not7.i.i.i65.i.i, %bb.j ]
-  %.sroa.774.0.shrunk.i.i.fr = freeze i1 %.sroa.774.0.shrunk.i.i ; 2 uses
+  %.sroa.774.0.shrunk.i.i = phi i1 [ %.not7.i.i.i65.i.i, %bb.k ], [ true, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i ], [ %.not7.i.i.i65.i.i, %bb.j ] ; 2 uses
   %i.q = add nuw nsw i64 %.sroa.12.0.i.i, %.sroa.11.0.i.i ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.s = load ptr, ptr %i.r, align 8, !alias.scope !15268, !noundef !7
@@ -219,12 +218,12 @@ bb.l:                                             ; preds = %_RINvMNtCshzWfHUSfY
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 128
   %.val61.i.i = load ptr, ptr %i.u, align 8, !alias.scope !15268, !nonnull !7, !noundef !7
   %i.v = icmp eq ptr %.val61.i.i, %.val.i.i
-  %op.rdx45 = and i1 %i.v, %.sroa.774.0.shrunk.i.i.fr
-  %op.rdx46 = select i1 %op.rdx45, i1 %.sroa.7.0.shrunk.i.i, i1 false
+  %op.rdx45 = select i1 %i.v, i1 %.sroa.7.0.shrunk.i.i, i1 false
+  %op.rdx46 = select i1 %op.rdx45, i1 %.sroa.774.0.shrunk.i.i, i1 false
   br i1 %op.rdx46, label %bb.n, label %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_9enumerate9EnumerateINtNtB7_3map3MapINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprENCNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers25convert_to_guarded_return25if_expr_to_guarded_returns1_00EEINtNtB7_5chain5ChainINtNtBb_6option8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB5Z_3api10SyntaxNodeNtNtB2I_11syntax_node12RustLanguageEINtB6O_11SyntaxTokenB7a_EEEINtB6O_21SyntaxElementChildrenB7a_EENCB3v_s_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3D_.exit
 
 bb.m:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit66.i.i
-  %or.cond55.i.i = and i1 %.sroa.7.0.shrunk.i.i, %.sroa.774.0.shrunk.i.i.fr
+  %or.cond55.i.i = select i1 %.sroa.7.0.shrunk.i.i, i1 %.sroa.774.0.shrunk.i.i, i1 false
   br i1 %or.cond55.i.i, label %bb.n, label %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_9enumerate9EnumerateINtNtB7_3map3MapINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprENCNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers25convert_to_guarded_return25if_expr_to_guarded_returns1_00EEINtNtB7_5chain5ChainINtNtBb_6option8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB5Z_3api10SyntaxNodeNtNtB2I_11syntax_node12RustLanguageEINtB6O_11SyntaxTokenB7a_EEEINtB6O_21SyntaxElementChildrenB7a_EENCB3v_s_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3D_.exit
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -293,8 +292,7 @@ bb.s:                                             ; preds = %bb.r
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit66.i.i26: ; preds = %bb.s, %bb.r, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i19
   %.sroa.12.0.i.i27 = phi i64 [ %i.ah, %bb.s ], [ 0, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i19 ], [ 0, %bb.r ]
-  %.sroa.774.0.shrunk.i.i28 = phi i1 [ %.not7.i.i.i65.i.i25, %bb.s ], [ true, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i19 ], [ %.not7.i.i.i65.i.i25, %bb.r ]
-  %.sroa.774.0.shrunk.i.i28.fr = freeze i1 %.sroa.774.0.shrunk.i.i28 ; 2 uses
+  %.sroa.774.0.shrunk.i.i28 = phi i1 [ %.not7.i.i.i65.i.i25, %bb.s ], [ true, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit.i.i19 ], [ %.not7.i.i.i65.i.i25, %bb.r ] ; 2 uses
   %i.ai = add nuw nsw i64 %.sroa.12.0.i.i27, %.sroa.11.0.i.i21 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.ak = load ptr, ptr %i.aj, align 8, !alias.scope !15276, !noundef !7
@@ -307,12 +305,12 @@ bb.t:                                             ; preds = %_RINvMNtCshzWfHUSfY
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 128
   %.val61.i.i31 = load ptr, ptr %i.am, align 8, !alias.scope !15276, !nonnull !7, !noundef !7
   %i.an = icmp eq ptr %.val61.i.i31, %.val.i.i30
-  %op.rdx = and i1 %i.an, %.sroa.774.0.shrunk.i.i28.fr
-  %op.rdx44 = select i1 %op.rdx, i1 %.sroa.7.0.shrunk.i.i20, i1 false
+  %op.rdx = select i1 %i.an, i1 %.sroa.7.0.shrunk.i.i20, i1 false
+  %op.rdx44 = select i1 %op.rdx, i1 %.sroa.774.0.shrunk.i.i28, i1 false
   br i1 %op.rdx44, label %bb.w, label %bb.v
 
 bb.u:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterINtNtCs9GitHPCrz2Q_5rowan13utility_types11NodeOrTokenINtNtB1F_3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEINtB2u_11SyntaxTokenB2Q_EEEINtB2u_21SyntaxElementChildrenB2Q_EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsiU5vK8fN4ZC_11ide_assists.exit66.i.i26
-  %or.cond55.i.i37 = and i1 %.sroa.7.0.shrunk.i.i20, %.sroa.774.0.shrunk.i.i28.fr
+  %or.cond55.i.i37 = select i1 %.sroa.7.0.shrunk.i.i20, i1 %.sroa.774.0.shrunk.i.i28, i1 false
   br i1 %or.cond55.i.i37, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t

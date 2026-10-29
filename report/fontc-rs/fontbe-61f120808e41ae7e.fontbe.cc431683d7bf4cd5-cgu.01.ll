@@ -204,12 +204,11 @@ bb.g:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.phi.trans.insert78.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.pre79.i.i.i = load i64, ptr %.phi.trans.insert78.i.i.i, align 8, !noalias !4011
   %i.as = call i64 @llvm.uadd.sat.i64(i64 %i.ap, i64 %.pre75.i.i.i)
-  %2 = freeze i64 %.pre77.i.i.i
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i: ; preds = %bb.g, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i
   %i.at = phi i64 [ %.pre79.i.i.i, %bb.g ], [ 0, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ]
-  %.fr35 = phi i64 [ %2, %bb.g ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ] ; 2 uses
+  %.fr35 = phi i64 [ %.pre77.i.i.i, %bb.g ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ] ; 2 uses
   %i.au = phi i64 [ %i.as, %bb.g ], [ %i.ap, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !4011
   %i.av = load ptr, ptr %1, align 8, !alias.scope !4012, !noundef !4 ; 2 uses
@@ -220,9 +219,9 @@ bb.h:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.val61.i.i.i = load ptr, ptr %i.i, align 8, !alias.scope !4012, !nonnull !4, !noundef !4
   %i.aw = icmp eq ptr %.val61.i.i.i, %i.av
   %i.ax = trunc nuw i64 %i.ao to i1
-  %i.ay = trunc i64 %.fr35 to i1
-  %op.rdx33 = and i1 %i.aw, %i.ay
-  %op.rdx34 = select i1 %op.rdx33, i1 %i.ax, i1 false
+  %i.ay = trunc nuw i64 %.fr35 to i1
+  %op.rdx33 = select i1 %i.aw, i1 %i.ax, i1 false
+  %op.rdx34 = select i1 %op.rdx33, i1 %i.ay, i1 false
   br i1 %op.rdx34, label %bb.j, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterTNtNtNtCscScJTt9VrQp_6fea_rs6common11glyph_class10GlyphClassINtNtBb_6option6OptionNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gpos8builders13AnchorBuilderEEEINtNtB7_6copied6CopiedIB15_NtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENCNCNCNvMNtNtB1B_7compile11compile_ctxINtB5p_14CompilationCtxNtNtB5r_14feature_writer18NopFeatureProviderNtNtCshxhuDJfZv4T_6fontbe8features16FeaVariationInfoE25resolve_named_glyph_class000ENtNtNtB9_6traits8iterator8Iterator9size_hintB71_.exit.i
 
 bb.i:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i
@@ -430,12 +429,11 @@ bb.s:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.pre77.i.i.i.i.i = load i64, ptr %.phi.trans.insert76.i.i.i.i.i, align 8, !range !11, !noalias !4032
   %.pre79.i.i.i.i.i = load i64, ptr %.phi.trans.insert78.i.i.i.i.i, align 8, !noalias !4032
   %i.cz = call i64 @llvm.uadd.sat.i64(i64 %i.cx, i64 %.pre75.i.i.i.i.i)
-  %3 = freeze i64 %.pre77.i.i.i.i.i
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i.i.i
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i.i.i: ; preds = %.noexc12.i, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i
   %i.da = phi i64 [ %.pre79.i.i.i.i.i, %.noexc12.i ], [ 0, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ]
-  %.fr36 = phi i64 [ %3, %.noexc12.i ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ] ; 2 uses
+  %.fr36 = phi i64 [ %.pre77.i.i.i.i.i, %.noexc12.i ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ] ; 2 uses
   %i.db = phi i64 [ %i.cz, %.noexc12.i ], [ %i.cx, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !4032
   %i.dc = load ptr, ptr %i.f, align 8, !alias.scope !4033, !noalias !4000, !noundef !4 ; 2 uses
@@ -446,9 +444,9 @@ bb.t:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.val61.i.i.i.i.i = load ptr, ptr %i.bm, align 8, !alias.scope !4033, !noalias !4000, !nonnull !4, !noundef !4
   %i.dd = icmp eq ptr %.val61.i.i.i.i.i, %i.dc
   %i.de = trunc nuw i64 %i.cw to i1
-  %i.df = trunc i64 %.fr36 to i1
-  %op.rdx = and i1 %i.dd, %i.df
-  %op.rdx32 = select i1 %op.rdx, i1 %i.de, i1 false
+  %i.df = trunc nuw i64 %.fr36 to i1
+  %op.rdx = select i1 %i.dd, i1 %i.de, i1 false
+  %op.rdx32 = select i1 %op.rdx, i1 %i.df, i1 false
   br i1 %op.rdx32, label %bb.v, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterTNtNtNtCscScJTt9VrQp_6fea_rs6common11glyph_class10GlyphClassINtNtBb_6option6OptionNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gpos8builders13AnchorBuilderEEEINtNtB7_6copied6CopiedIB15_NtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENCNCNCNvMNtNtB1B_7compile11compile_ctxINtB5p_14CompilationCtxNtNtB5r_14feature_writer18NopFeatureProviderNtNtCshxhuDJfZv4T_6fontbe8features16FeaVariationInfoE25resolve_named_glyph_class000ENtNtNtB9_6traits8iterator8Iterator9size_hintB71_.exit.i.i.i
 
 bb.u:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i.i.i
@@ -667,12 +665,11 @@ bb.g:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.phi.trans.insert78.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.pre79.i.i.i = load i64, ptr %.phi.trans.insert78.i.i.i, align 8, !noalias !4106
   %i.as = call i64 @llvm.uadd.sat.i64(i64 %i.ap, i64 %.pre75.i.i.i)
-  %2 = freeze i64 %.pre77.i.i.i
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i: ; preds = %bb.g, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i
   %i.at = phi i64 [ %.pre79.i.i.i, %bb.g ], [ 0, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ]
-  %.fr35 = phi i64 [ %2, %bb.g ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ] ; 2 uses
+  %.fr35 = phi i64 [ %.pre77.i.i.i, %bb.g ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ] ; 2 uses
   %i.au = phi i64 [ %i.as, %bb.g ], [ %i.ap, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !4106
   %i.av = load ptr, ptr %1, align 8, !alias.scope !4107, !noundef !4 ; 2 uses
@@ -683,9 +680,9 @@ bb.h:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.val61.i.i.i = load ptr, ptr %i.i, align 8, !alias.scope !4107, !nonnull !4, !noundef !4
   %i.aw = icmp eq ptr %.val61.i.i.i, %i.av
   %i.ax = trunc nuw i64 %i.ao to i1
-  %i.ay = trunc i64 %.fr35 to i1
-  %op.rdx33 = and i1 %i.aw, %i.ay
-  %op.rdx34 = select i1 %op.rdx33, i1 %i.ax, i1 false
+  %i.ay = trunc nuw i64 %.fr35 to i1
+  %op.rdx33 = select i1 %i.aw, i1 %i.ax, i1 false
+  %op.rdx34 = select i1 %op.rdx33, i1 %i.ay, i1 false
   br i1 %op.rdx34, label %bb.j, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterTNtNtNtCscScJTt9VrQp_6fea_rs6common11glyph_class10GlyphClassINtNtBb_6option6OptionNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gpos8builders13AnchorBuilderEEEINtNtB7_6copied6CopiedIB15_NtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENCNCNCNvMNtNtB1B_7compile11compile_ctxINtB5p_14CompilationCtxNtNtCshxhuDJfZv4T_6fontbe8features13FeatureWriterNtB6h_16FeaVariationInfoE25resolve_named_glyph_class000ENtNtNtB9_6traits8iterator8Iterator9size_hintB6j_.exit.i
 
 bb.i:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i
@@ -893,12 +890,11 @@ bb.s:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.pre77.i.i.i.i.i = load i64, ptr %.phi.trans.insert76.i.i.i.i.i, align 8, !range !11, !noalias !4127
   %.pre79.i.i.i.i.i = load i64, ptr %.phi.trans.insert78.i.i.i.i.i, align 8, !noalias !4127
   %i.cz = call i64 @llvm.uadd.sat.i64(i64 %i.cx, i64 %.pre75.i.i.i.i.i)
-  %3 = freeze i64 %.pre77.i.i.i.i.i
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i.i.i
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i.i.i: ; preds = %.noexc12.i, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i
   %i.da = phi i64 [ %.pre79.i.i.i.i.i, %.noexc12.i ], [ 0, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ]
-  %.fr36 = phi i64 [ %3, %.noexc12.i ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ] ; 2 uses
+  %.fr36 = phi i64 [ %.pre77.i.i.i.i.i, %.noexc12.i ], [ 1, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ] ; 2 uses
   %i.db = phi i64 [ %i.cz, %.noexc12.i ], [ %i.cx, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !4127
   %i.dc = load ptr, ptr %i.f, align 8, !alias.scope !4128, !noalias !4095, !noundef !4 ; 2 uses
@@ -909,9 +905,9 @@ bb.t:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %.val61.i.i.i.i.i = load ptr, ptr %i.bm, align 8, !alias.scope !4128, !noalias !4095, !nonnull !4, !noundef !4
   %i.dd = icmp eq ptr %.val61.i.i.i.i.i, %i.dc
   %i.de = trunc nuw i64 %i.cw to i1
-  %i.df = trunc i64 %.fr36 to i1
-  %op.rdx = and i1 %i.dd, %i.df
-  %op.rdx32 = select i1 %op.rdx, i1 %i.de, i1 false
+  %i.df = trunc nuw i64 %.fr36 to i1
+  %op.rdx = select i1 %i.dd, i1 %i.de, i1 false
+  %op.rdx32 = select i1 %op.rdx, i1 %i.df, i1 false
   br i1 %op.rdx32, label %bb.v, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterTNtNtNtCscScJTt9VrQp_6fea_rs6common11glyph_class10GlyphClassINtNtBb_6option6OptionNtNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4gpos8builders13AnchorBuilderEEEINtNtB7_6copied6CopiedIB15_NtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EENCNCNCNvMNtNtB1B_7compile11compile_ctxINtB5p_14CompilationCtxNtNtCshxhuDJfZv4T_6fontbe8features13FeatureWriterNtB6h_16FeaVariationInfoE25resolve_named_glyph_class000ENtNtNtB9_6traits8iterator8Iterator9size_hintB6j_.exit.i.i.i
 
 bb.u:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtCsbZq13ASDQ8l_10font_types8glyph_id9GlyphId16EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECshxhuDJfZv4T_6fontbe.exit62.i.i.i.i.i

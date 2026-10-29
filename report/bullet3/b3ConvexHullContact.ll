@@ -205,8 +205,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.aem = shufflevector <4 x float> %i.adv, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.aen = shufflevector <4 x float> %i.aek, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.aeo = fadd <2 x float> %i.aem, %i.aen
-  %i.aep = fcmp ule <2 x float> %i.ze, %i.aeo
-  %.fr949 = freeze <2 x i1> %i.aep                ; 2 uses
+  %i.aep = fcmp ule <2 x float> %i.ze, %i.aeo     ; 2 uses
   %i.aeq = insertelement <4 x float> poison, float %i.zf, i64 0
   %i.aer = shufflevector <2 x float> %i.zg, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.aes = shufflevector <4 x float> %i.aeq, <4 x float> %i.aer, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
@@ -215,10 +214,10 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.aev = freeze <4 x i1> %i.aeu
   %i.aew = bitcast <4 x i1> %i.aev to i4
   %i.aex = icmp eq i4 %i.aew, -1
-  %i.aey = extractelement <2 x i1> %.fr949, i64 0
-  %op.rdx = and i1 %i.aex, %i.aey
-  %i.aez = extractelement <2 x i1> %.fr949, i64 1
-  %op.rdx890 = and i1 %op.rdx, %i.aez
+  %i.aey = extractelement <2 x i1> %i.aep, i64 0
+  %op.rdx = select i1 %i.aex, i1 %i.aey, i1 false
+  %i.aez = extractelement <2 x i1> %i.aep, i64 1
+  %op.rdx890 = select i1 %op.rdx, i1 %i.aez, i1 false
   br i1 %op.rdx890, label %bb.s, label %bb.ad
 
 bb.s:                                             ; preds = %bb.r

@@ -59,13 +59,12 @@ $_ZSt27__throw_bad_optional_accessv = comdat any
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal8temporal15IsValidDurationEPNS0_7IsolateERKNS1_14DurationRecordE(ptr nofree readnone captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load double, ptr %1, align 8
-  %.fr128 = freeze double %i.a                    ; 4 uses
-  %i.b = fcmp uge double %.fr128, 0.000000e+00    ; 2 uses
+  %i.a = load double, ptr %1, align 8             ; 4 uses
+  %i.b = fcmp uge double %i.a, 0.000000e+00       ; 2 uses
   br i1 %i.b, label %bb.b, label %_ZN2v88internal8temporal14DurationRecord4SignERKS2_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = fcmp ogt double %.fr128, 0.000000e+00
+  %i.c = fcmp ogt double %i.a, 0.000000e+00
   br i1 %i.c, label %_ZN2v88internal8temporal14DurationRecord4SignERKS2_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -162,15 +161,14 @@ bb.t:                                             ; preds = %bb.s
 _ZN2v88internal8temporal14DurationRecord4SignERKS2_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t
   %.1.i = phi i32 [ 1, %bb.f ], [ -1, %bb.a ], [ 1, %bb.b ], [ -1, %bb.c ], [ 1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.s ], [ -1, %bb.g ], [ 1, %bb.h ], [ -1, %bb.i ], [ 1, %bb.j ], [ -1, %bb.k ], [ 1, %bb.l ], [ -1, %bb.m ], [ 1, %bb.n ], [ -1, %bb.o ], [ 1, %bb.p ], [ -1, %bb.q ], [ 1, %bb.r ], [ %..i, %bb.t ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ao = tail call double @llvm.fabs.f64(double %.fr128) ; 4 uses
+  %i.ao = tail call double @llvm.fabs.f64(double %i.a) ; 4 uses
   %i.ap = fcmp ueq double %i.ao, +inf
   br i1 %i.ap, label %bb.al, label %bb.u
 
 bb.u:                                             ; preds = %_ZN2v88internal8temporal14DurationRecord4SignERKS2_.exit
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ar = load double, ptr %i.aq, align 8
-  %.fr133 = freeze double %i.ar                   ; 3 uses
-  %i.as = tail call double @llvm.fabs.f64(double %.fr133) ; 4 uses
+  %i.ar = load double, ptr %i.aq, align 8         ; 3 uses
+  %i.as = tail call double @llvm.fabs.f64(double %i.ar) ; 4 uses
   %i.at = fcmp ueq double %i.as, +inf
   br i1 %i.at, label %bb.al, label %bb.v
 
@@ -224,9 +222,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.bw = load double, ptr %i.bv, align 8
-  %.fr130 = freeze double %i.bw                   ; 5 uses
-  %i.bx = tail call double @llvm.fabs.f64(double %.fr130)
+  %i.bw = load double, ptr %i.bv, align 8         ; 5 uses
+  %i.bx = tail call double @llvm.fabs.f64(double %i.bw)
   %i.by = fcmp ueq double %i.bx, +inf
   br i1 %i.by, label %bb.al, label %bb.ad
 
@@ -235,7 +232,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.bz, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ca = insertelement <8 x double> poison, double %.fr133, i64 0
+  %i.ca = insertelement <8 x double> poison, double %i.ar, i64 0
   %i.cb = insertelement <8 x double> %i.ca, double %i.av, i64 1
   %i.cc = insertelement <8 x double> %i.cb, double %i.ay, i64 2
   %i.cd = insertelement <8 x double> %i.cc, double %i.bc, i64 3
@@ -244,18 +241,18 @@ bb.ae:                                            ; preds = %bb.ad
   %i.cg = insertelement <8 x double> %i.cf, double %i.bo, i64 6
   %i.ch = insertelement <8 x double> %i.cg, double %i.bs, i64 7
   %.fr126 = freeze <8 x double> %i.ch
-  %i.ci = fcmp uge double %.fr130, 0.000000e+00
+  %i.ci = fcmp uge double %i.bw, 0.000000e+00
   %.old = fcmp ult double %i.ao, f0x41F0000000000000
   %i.cj = fcmp ult double %i.as, f0x41F0000000000000
   %.old86.old = fcmp ult double %i.aw, f0x41F0000000000000
   %i.ck = fcmp olt <8 x double> %.fr126, zeroinitializer
   %i.cl = bitcast <8 x i1> %i.ck to i8
   %i.cm = icmp eq i8 %i.cl, 0
-  %op.rdx = and i1 %i.cm, %i.ci
-  %op.rdx120 = and i1 %.old, %i.cj
-  %op.rdx121 = and i1 %i.b, %.old86.old
-  %op.rdx122 = and i1 %op.rdx, %op.rdx120
-  %op.rdx123 = and i1 %op.rdx122, %op.rdx121
+  %op.rdx = and i1 %i.cm, %.old86.old
+  %op.rdx120 = and i1 %i.cj, %.old
+  %op.rdx121 = and i1 %op.rdx, %op.rdx120
+  %op.rdx122 = and i1 %op.rdx121, %i.b
+  %op.rdx123 = select i1 %op.rdx122, i1 %i.ci, i1 false
   br i1 %op.rdx123, label %bb.ah, label %bb.al
 
 bb.af:                                            ; preds = %bb.ad
@@ -263,8 +260,8 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %i.cn, label %bb.ag, label %.thread
 
 bb.ag:                                            ; preds = %bb.af
-  %i.co = insertelement <8 x double> poison, double %.fr128, i64 0
-  %i.cp = insertelement <8 x double> %i.co, double %.fr133, i64 1
+  %i.co = insertelement <8 x double> poison, double %i.a, i64 0
+  %i.cp = insertelement <8 x double> %i.co, double %i.ar, i64 1
   %i.cq = insertelement <8 x double> %i.cp, double %i.av, i64 2
   %i.cr = insertelement <8 x double> %i.cq, double %i.ay, i64 3
   %i.cs = insertelement <8 x double> %i.cr, double %i.bc, i64 4
@@ -274,7 +271,7 @@ bb.ag:                                            ; preds = %bb.af
   %.fr = freeze <8 x double> %i.cv
   %i.cw = fcmp ule <8 x double> %.fr, zeroinitializer ; 2 uses
   %i.cx = insertelement <4 x double> poison, double %i.bs, i64 0
-  %i.cy = insertelement <4 x double> %i.cx, double %.fr130, i64 1
+  %i.cy = insertelement <4 x double> %i.cx, double %i.bw, i64 1
   %i.cz = insertelement <4 x double> %i.cy, double %i.ao, i64 2
   %i.da = insertelement <4 x double> %i.cz, double %i.as, i64 3 ; 2 uses
   %i.db = fcmp ule <4 x double> %i.da, <double 0.000000e+00, double 0.000000e+00, double f0x41F0000000000000, double f0x41F0000000000000>
@@ -319,7 +316,7 @@ bb.ai:                                            ; preds = %bb.ah
   %shift = shufflevector <2 x double> %i.dx, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.dx, %shift
   %i.dy = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.dz = fdiv double %.fr130, 1.000000e+09
+  %i.dz = fdiv double %i.bw, 1.000000e+09
   %i.ea = tail call noundef double @llvm.fabs.f64(double %i.dz)
   %i.eb = tail call double @llvm.floor.f64(double %i.ea)
   %i.ec = fadd double %i.dy, %i.eb                ; 2 uses
@@ -341,7 +338,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.em = tail call noundef double @llvm.fabs.f64(double %i.el)
   %i.en = fmul nnan double %i.em, 1.000000e+03
   %i.eo = tail call double @llvm.fmuladd.f64(double %i.ek, double 1.000000e+06, double %i.en)
-  %i.ep = frem double %.fr130, 1.000000e+09
+  %i.ep = frem double %i.bw, 1.000000e+09
   %i.eq = tail call noundef double @llvm.fabs.f64(double %i.ep)
   %i.er = fadd double %i.eo, %i.eq
   %i.es = fptosi double %i.er to i64

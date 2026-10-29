@@ -205,12 +205,11 @@ bb.j:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.pre81.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i.i.i, align 8, !range !70, !noalias !55545
   %.phi.trans.insert82.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.pre83.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert82.i.i.i.i.i.i, align 8, !noalias !55545
-  %4 = freeze i64 %.pre81.i.i.i.i.i.i
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i: ; preds = %.noexc10.i, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i
   %i.bb = phi i64 [ %.pre83.i.i.i.i.i.i, %.noexc10.i ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ]
-  %.fr216 = phi i64 [ %4, %.noexc10.i ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ] ; 2 uses
+  %.fr216 = phi i64 [ %.pre81.i.i.i.i.i.i, %.noexc10.i ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !55545
   %i.bc = load ptr, ptr %.sroa.8.0..sroa_idx, align 8, !alias.scope !55546, !noundef !62 ; 2 uses
   %.not56.i.i.i.i.i.i = icmp eq ptr %i.bc, null
@@ -221,9 +220,9 @@ bb.k:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.val63.i.i.i.i.i.i = load ptr, ptr %i.bd, align 8, !alias.scope !55546, !nonnull !62, !noundef !62
   %i.be = icmp eq ptr %.val63.i.i.i.i.i.i, %i.bc
   %i.bf = trunc nuw i64 %i.av to i1
-  %i.bg = trunc i64 %.fr216 to i1
-  %op.rdx214 = and i1 %i.be, %i.bg
-  %op.rdx215 = select i1 %op.rdx214, i1 %i.bf, i1 false
+  %i.bg = trunc nuw i64 %.fr216 to i1
+  %op.rdx214 = select i1 %i.be, i1 %i.bf, i1 false
+  %op.rdx215 = select i1 %op.rdx214, i1 %i.bg, i1 false
   br i1 %op.rdx215, label %bb.m, label %bb.o
 
 bb.l:                                             ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i
@@ -598,9 +597,8 @@ bb.aj:                                            ; preds = %_RINvMNtCscI6d9CVNm
   %i.fc = icmp eq ptr %i.bx, %i.ed
   %i.fd = trunc nuw i64 %i.ey to i1
   %i.fe = trunc nuw i64 %i.fb to i1
-  %op.rdx = select i1 %i.fc, i1 %i.fe, i1 false
-  %5 = freeze i1 %op.rdx
-  %op.rdx213 = select i1 %5, i1 %i.fd, i1 false
+  %op.rdx = select i1 %i.fc, i1 %i.fd, i1 false
+  %op.rdx213 = select i1 %op.rdx, i1 %i.fe, i1 false
   br i1 %op.rdx213, label %bb.al, label %bb.am
 
 bb.ak:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i.i.i
@@ -1003,12 +1001,11 @@ bb.br:                                            ; preds = %_RINvMNtCscI6d9CVNm
   %.pre81.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i, align 8, !range !70, !noalias !58771
   %.pre83.i.i.i.i = load i64, ptr %.phi.trans.insert82.i.i.i.i, align 8, !noalias !58771
   %i.tc = call i64 @llvm.uadd.sat.i64(i64 %i.sy, i64 %.pre79.i.i.i.i)
-  %6 = freeze i64 %.pre81.i.i.i.i
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i: ; preds = %.noexc8.i240, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i
   %i.td = phi i64 [ %.pre83.i.i.i.i, %.noexc8.i240 ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ]
-  %.fr1097 = phi i64 [ %6, %.noexc8.i240 ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ] ; 2 uses
+  %.fr1097 = phi i64 [ %.pre81.i.i.i.i, %.noexc8.i240 ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ] ; 2 uses
   %i.te = phi i64 [ %i.tc, %.noexc8.i240 ], [ %i.sy, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !58771
   %i.tf = load ptr, ptr %i.ri, align 8, !alias.scope !58772, !noundef !62 ; 2 uses
@@ -1019,9 +1016,9 @@ bb.bs:                                            ; preds = %_RINvMNtCscI6d9CVNm
   %.val63.i.i.i.i = load ptr, ptr %.sroa.4447.0..sroa_idx, align 8, !alias.scope !58772, !nonnull !62, !noundef !62
   %i.tg = icmp eq ptr %.val63.i.i.i.i, %i.tf
   %i.th = trunc nuw i64 %i.sx to i1
-  %i.ti = trunc i64 %.fr1097 to i1
-  %op.rdx1095 = and i1 %i.tg, %i.ti
-  %op.rdx1096 = select i1 %op.rdx1095, i1 %i.th, i1 false
+  %i.ti = trunc nuw i64 %.fr1097 to i1
+  %op.rdx1095 = select i1 %i.tg, i1 %i.th, i1 false
+  %op.rdx1096 = select i1 %op.rdx1095, i1 %i.ti, i1 false
   br i1 %op.rdx1096, label %bb.bu, label %bb.bw
 
 bb.bt:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i
@@ -1153,12 +1150,11 @@ bb.cf:                                            ; preds = %_RINvMNtCscI6d9CVNm
   %.pre81.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i.i.i, align 8, !range !70, !noalias !58793
   %.pre83.i.i.i.i.i.i = load i64, ptr %.phi.trans.insert82.i.i.i.i.i.i, align 8, !noalias !58793
   %i.uh = call i64 @llvm.uadd.sat.i64(i64 %i.ud, i64 %.pre79.i.i.i.i.i.i)
-  %7 = freeze i64 %.pre81.i.i.i.i.i.i
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i: ; preds = %.noexc6.i.i.i, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i
   %i.ui = phi i64 [ %.pre83.i.i.i.i.i.i, %.noexc6.i.i.i ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ]
-  %.fr1098 = phi i64 [ %7, %.noexc6.i.i.i ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ] ; 2 uses
+  %.fr1098 = phi i64 [ %.pre81.i.i.i.i.i.i, %.noexc6.i.i.i ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ] ; 2 uses
   %i.uj = phi i64 [ %i.uh, %.noexc6.i.i.i ], [ %i.ud, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !58793
   %i.uk = load ptr, ptr %i.rl, align 8, !alias.scope !58794, !noalias !58763, !noundef !62 ; 2 uses
@@ -1169,9 +1165,9 @@ bb.cg:                                            ; preds = %_RINvMNtCscI6d9CVNm
   %.val63.i.i.i.i.i.i = load ptr, ptr %i.rq, align 8, !alias.scope !58794, !noalias !58763, !nonnull !62, !noundef !62
   %i.ul = icmp eq ptr %.val63.i.i.i.i.i.i, %i.uk
   %i.um = trunc nuw i64 %i.uc to i1
-  %i.un = trunc i64 %.fr1098 to i1
-  %op.rdx = and i1 %i.ul, %i.un
-  %op.rdx1094 = select i1 %op.rdx, i1 %i.um, i1 false
+  %i.un = trunc nuw i64 %.fr1098 to i1
+  %op.rdx = select i1 %i.ul, i1 %i.um, i1 false
+  %op.rdx1094 = select i1 %op.rdx, i1 %i.un, i1 false
   br i1 %op.rdx1094, label %bb.ci, label %bb.ck
 
 bb.ch:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i.i.i
@@ -1574,12 +1570,11 @@ bb.d:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.phi.trans.insert82.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.pre83.i.i = load i64, ptr %.phi.trans.insert82.i.i, align 8, !noalias !64255
   %i.x = call i64 @llvm.uadd.sat.i64(i64 %i.r, i64 %.pre79.i.i)
-  %2 = freeze i64 %.pre81.i.i
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i: ; preds = %.noexc8, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i
   %i.y = phi i64 [ %.pre83.i.i, %.noexc8 ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i ]
-  %.fr29 = phi i64 [ %2, %.noexc8 ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i ] ; 2 uses
+  %.fr29 = phi i64 [ %.pre81.i.i, %.noexc8 ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i ] ; 2 uses
   %i.z = phi i64 [ %i.x, %.noexc8 ], [ %i.r, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !64255
   %i.aa = load ptr, ptr %1, align 8, !alias.scope !64256, !noundef !62 ; 2 uses
@@ -1591,9 +1586,9 @@ bb.e:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.val63.i.i = load ptr, ptr %i.ab, align 8, !alias.scope !64256, !nonnull !62, !noundef !62
   %i.ac = icmp eq ptr %.val63.i.i, %i.aa
   %i.ad = trunc nuw i64 %i.q to i1
-  %i.ae = trunc i64 %.fr29 to i1
-  %op.rdx27 = and i1 %i.ac, %i.ae
-  %op.rdx28 = select i1 %op.rdx27, i1 %i.ad, i1 false
+  %i.ae = trunc nuw i64 %.fr29 to i1
+  %op.rdx27 = select i1 %i.ac, i1 %i.ad, i1 false
+  %op.rdx28 = select i1 %op.rdx27, i1 %i.ae, i1 false
   br i1 %op.rdx28, label %bb.g, label %bb.j
 
 bb.f:                                             ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i
@@ -1738,12 +1733,11 @@ bb.r:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.pre81.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i, align 8, !range !70, !noalias !64274
   %.pre83.i.i.i.i = load i64, ptr %.phi.trans.insert82.i.i.i.i, align 8, !noalias !64274
   %i.bl = call i64 @llvm.uadd.sat.i64(i64 %i.bh, i64 %.pre79.i.i.i.i)
-  %3 = freeze i64 %.pre81.i.i.i.i
   br label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i: ; preds = %.noexc6.i.i, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i
   %i.bm = phi i64 [ %.pre83.i.i.i.i, %.noexc6.i.i ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ]
-  %.fr30 = phi i64 [ %3, %.noexc6.i.i ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ] ; 2 uses
+  %.fr30 = phi i64 [ %.pre81.i.i.i.i, %.noexc6.i.i ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ] ; 2 uses
   %i.bn = phi i64 [ %i.bl, %.noexc6.i.i ], [ %i.bh, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !64274
   %i.bo = load ptr, ptr %i.e, align 8, !alias.scope !64275, !noundef !62 ; 2 uses
@@ -1754,9 +1748,9 @@ bb.s:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.val63.i.i.i.i = load ptr, ptr %i.as, align 8, !alias.scope !64275, !nonnull !62, !noundef !62
   %i.bp = icmp eq ptr %.val63.i.i.i.i, %i.bo
   %i.bq = trunc nuw i64 %i.bg to i1
-  %i.br = trunc i64 %.fr30 to i1
-  %op.rdx = and i1 %i.bp, %i.br
-  %op.rdx26 = select i1 %op.rdx, i1 %i.bq, i1 false
+  %i.br = trunc nuw i64 %.fr30 to i1
+  %op.rdx = select i1 %i.bp, i1 %i.bq, i1 false
+  %op.rdx26 = select i1 %op.rdx, i1 %i.br, i1 false
   br i1 %op.rdx26, label %bb.u, label %bb.w
 
 bb.t:                                             ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits12double_ended19DoubleEndedIteratorp4ItemyEL_EE6map_orTjIBw_jEENvYBJ_NtNtB1n_8iterator8Iterator9size_hintECs9KQ7US1M400_11lance_table.exit66.i.i.i.i

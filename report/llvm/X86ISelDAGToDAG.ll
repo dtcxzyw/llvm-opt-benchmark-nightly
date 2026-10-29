@@ -204,12 +204,11 @@ bb.a:
   %.not4.i = icmp ne i32 %i.j, -1
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8
-  %.fr3 = freeze ptr %i.l
-  %i.m = icmp ne ptr %.fr3, null
+  %i.m = icmp ne ptr %i.l, null
   %i.n = bitcast <4 x i1> %i.h to i4
   %i.o = icmp ne i4 %i.n, 0
-  %op.rdx = or i1 %i.o, %i.m
-  %op.rdx1 = select i1 %op.rdx, i1 true, i1 %.not4.i
+  %op.rdx = select i1 %i.o, i1 true, i1 %.not4.i
+  %op.rdx1 = select i1 %op.rdx, i1 true, i1 %i.m
   br i1 %op.rdx1, label %_ZNK12_GLOBAL__N_118X86ISelAddressMode23hasSymbolicDisplacementEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -612,12 +611,11 @@ bb.b:                                             ; preds = %bb.a
   %.not4.i = icmp ne i32 %i.ap, -1
   %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 88
   %i.ar = load ptr, ptr %i.aq, align 8
-  %.fr54 = freeze ptr %i.ar
-  %i.as = icmp ne ptr %.fr54, null
+  %i.as = icmp ne ptr %i.ar, null
   %i.at = bitcast <4 x i1> %i.ao to i4
   %i.au = icmp ne i4 %i.at, 0
-  %op.rdx = or i1 %i.au, %i.as
-  %op.rdx52 = select i1 %op.rdx, i1 true, i1 %.not4.i
+  %op.rdx = select i1 %i.au, i1 true, i1 %.not4.i
+  %op.rdx52 = select i1 %op.rdx, i1 true, i1 %i.as
   br i1 %op.rdx52, label %_ZNK12_GLOBAL__N_118X86ISelAddressMode23hasSymbolicDisplacementEv.exit.thread, label %bb.c
 
 _ZNK12_GLOBAL__N_118X86ISelAddressMode23hasSymbolicDisplacementEv.exit.thread: ; preds = %bb.b

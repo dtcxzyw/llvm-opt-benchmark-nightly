@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = icmp eq i8 %i.m, 0
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 21
   %i.p = load i8, ptr %i.o, align 1
-  %.fr21 = freeze i8 %i.p
-  %i.q = icmp eq i8 %.fr21, 0
+  %i.q = icmp eq i8 %i.p, 0
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 22
   %i.s = load i8, ptr %i.r, align 2
   %i.t = icmp eq i8 %i.s, 0
@@ -216,9 +215,8 @@ bb.c:                                             ; preds = %bb.a
   %i.x = bitcast <8 x i1> %i.w to i8
   %i.y = icmp eq i8 %i.x, -1
   %op.rdx = select i1 %i.y, i1 %i.n, i1 false
-  %1 = freeze i1 %op.rdx
-  %2 = and i1 %1, %i.q
-  %op.rdx19 = select i1 %2, i1 %i.t, i1 false
+  %1 = select i1 %op.rdx, i1 %i.q, i1 false
+  %op.rdx19 = select i1 %1, i1 %i.t, i1 false
   br i1 %op.rdx19, label %bb.d, label %_ZNK5boost4asio2ip10address_v611is_loopbackEv.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -256,8 +254,7 @@ bb.a:
   %i.h = icmp eq i8 %i.g, 0
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 13
   %i.j = load i8, ptr %i.i, align 1
-  %.fr45 = freeze i8 %i.j
-  %i.k = icmp eq i8 %.fr45, 0
+  %i.k = icmp eq i8 %i.j, 0
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.m = load i8, ptr %i.l, align 2
   %i.n = icmp eq i8 %i.m, 0
@@ -268,9 +265,8 @@ bb.a:
   %i.r = bitcast <8 x i1> %i.q to i8
   %i.s = icmp eq i8 %i.r, -1
   %op.rdx = select i1 %i.s, i1 %i.h, i1 false
-  %1 = freeze i1 %op.rdx
-  %2 = and i1 %1, %i.k
-  %op.rdx43 = select i1 %2, i1 %i.n, i1 false
+  %1 = select i1 %op.rdx, i1 %i.k, i1 false
+  %op.rdx43 = select i1 %1, i1 %i.n, i1 false
   br i1 %op.rdx43, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -311,8 +307,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = icmp eq i8 %i.m, 0
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 21
   %i.p = load i8, ptr %i.o, align 1
-  %.fr21 = freeze i8 %i.p
-  %i.q = icmp eq i8 %.fr21, 0
+  %i.q = icmp eq i8 %i.p, 0
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 22
   %i.s = load i8, ptr %i.r, align 2
   %i.t = icmp eq i8 %i.s, 0
@@ -323,9 +318,8 @@ bb.c:                                             ; preds = %bb.a
   %i.x = bitcast <8 x i1> %i.w to i8
   %i.y = icmp eq i8 %i.x, -1
   %op.rdx = select i1 %i.y, i1 %i.n, i1 false
-  %1 = freeze i1 %op.rdx
-  %2 = and i1 %1, %i.q
-  %op.rdx19 = select i1 %2, i1 %i.t, i1 false
+  %1 = select i1 %op.rdx, i1 %i.q, i1 false
+  %op.rdx19 = select i1 %1, i1 %i.t, i1 false
   br i1 %op.rdx19, label %bb.d, label %_ZNK5boost4asio2ip10address_v614is_unspecifiedEv.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -362,8 +356,7 @@ bb.a:
   %i.h = icmp eq i8 %i.g, 0
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 13
   %i.j = load i8, ptr %i.i, align 1
-  %.fr45 = freeze i8 %i.j
-  %i.k = icmp eq i8 %.fr45, 0
+  %i.k = icmp eq i8 %i.j, 0
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.m = load i8, ptr %i.l, align 2
   %i.n = icmp eq i8 %i.m, 0
@@ -374,9 +367,8 @@ bb.a:
   %i.r = bitcast <8 x i1> %i.q to i8
   %i.s = icmp eq i8 %i.r, -1
   %op.rdx = select i1 %i.s, i1 %i.h, i1 false
-  %1 = freeze i1 %op.rdx
-  %2 = and i1 %1, %i.k
-  %op.rdx43 = select i1 %2, i1 %i.n, i1 false
+  %1 = select i1 %op.rdx, i1 %i.k, i1 false
+  %op.rdx43 = select i1 %1, i1 %i.n, i1 false
   br i1 %op.rdx43, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -779,18 +771,17 @@ bb.a:
   %.fr = freeze <8 x i8> %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i8, ptr %i.b, align 4
-  %.fr34 = freeze i8 %i.c
+  %1 = icmp eq i8 %i.c, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.e = load i8, ptr %i.d, align 1
-  %.fr32 = freeze i8 %i.e
+  %2 = icmp eq i8 %i.e, 0
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.g = load i8, ptr %i.f, align 2
   %i.h = icmp eq i8 %i.g, -1
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.i = icmp eq i64 %.fr.scalar, 0
-  %1 = or i8 %.fr32, %.fr34
-  %2 = icmp eq i8 %1, 0
-  %3 = and i1 %i.i, %2
+  %op.rdx = select i1 %i.i, i1 %1, i1 false
+  %3 = select i1 %op.rdx, i1 %2, i1 false
   %op.rdx31 = select i1 %3, i1 %i.h, i1 false
   br i1 %op.rdx31, label %bb.b, label %bb.c
 

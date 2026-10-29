@@ -205,8 +205,7 @@ bb.m:                                             ; preds = %bb.b, %bb.b, %bb.b,
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.cl = load <2 x float>, ptr %1, align 4, !tbaa !23
   %i.cm = load <2 x float>, ptr %i.ck, align 4, !tbaa !23
-  %i.cn = fcmp une <2 x float> %i.cl, %i.cm
-  %.fr137 = freeze <2 x i1> %i.cn                 ; 2 uses
+  %i.cn = fcmp une <2 x float> %i.cl, %i.cm       ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.cq = load <4 x float>, ptr %i.co, align 4, !tbaa !23
@@ -215,10 +214,10 @@ bb.m:                                             ; preds = %bb.b, %bb.b, %bb.b,
   %i.ct = freeze <4 x i1> %i.cs
   %i.cu = bitcast <4 x i1> %i.ct to i4
   %i.cv = icmp ne i4 %i.cu, 0
-  %i.cw = extractelement <2 x i1> %.fr137, i64 1
-  %op.rdx = or i1 %i.cv, %i.cw
-  %i.cx = extractelement <2 x i1> %.fr137, i64 0
-  %op.rdx136 = or i1 %op.rdx, %i.cx
+  %i.cw = extractelement <2 x i1> %i.cn, i64 1
+  %op.rdx = select i1 %i.cv, i1 true, i1 %i.cw
+  %i.cx = extractelement <2 x i1> %i.cn, i64 0
+  %op.rdx136 = select i1 %op.rdx, i1 true, i1 %i.cx
   br i1 %op.rdx136, label %.thread, label %.thread100
 
 .split127:                                        ; preds = %bb.b, %bb.b, %bb.b, %bb.b

@@ -205,24 +205,22 @@ _RNvMs_NtCsileJQcQObtj_7hir_def9lang_itemNtB4_9LangItems16resolve_manually.exit:
   %i.ur = load i32, ptr %i.ja, align 4, !alias.scope !2299
   %.not161.i = icmp eq i32 %i.ur, 0
   %i.us = load i32, ptr %i.jb, align 4, !alias.scope !2299
-  %.fr416 = freeze i32 %i.us
+  %.not162.i = icmp eq i32 %i.us, 0
   %i.ut = load i32, ptr %i.jc, align 4, !alias.scope !2299
-  %.fr418 = freeze i32 %i.ut
+  %.not163.i = icmp eq i32 %i.ut, 0
   %i.uu = load i32, ptr %i.jd, align 4
-  %.fr417 = freeze i32 %i.uu
+  %.not164.i = icmp eq i32 %i.uu, 0
   %i.uv = shufflevector <128 x i1> %i.un, <128 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
   %rdx.op = and <32 x i1> %i.uv, %i.uq
   %i.uw = shufflevector <32 x i1> %rdx.op, <32 x i1> poison, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ux = shufflevector <128 x i1> %i.uw, <128 x i1> %i.un, <128 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 160, i32 161, i32 162, i32 163, i32 164, i32 165, i32 166, i32 167, i32 168, i32 169, i32 170, i32 171, i32 172, i32 173, i32 174, i32 175, i32 176, i32 177, i32 178, i32 179, i32 180, i32 181, i32 182, i32 183, i32 184, i32 185, i32 186, i32 187, i32 188, i32 189, i32 190, i32 191, i32 192, i32 193, i32 194, i32 195, i32 196, i32 197, i32 198, i32 199, i32 200, i32 201, i32 202, i32 203, i32 204, i32 205, i32 206, i32 207, i32 208, i32 209, i32 210, i32 211, i32 212, i32 213, i32 214, i32 215, i32 216, i32 217, i32 218, i32 219, i32 220, i32 221, i32 222, i32 223, i32 224, i32 225, i32 226, i32 227, i32 228, i32 229, i32 230, i32 231, i32 232, i32 233, i32 234, i32 235, i32 236, i32 237, i32 238, i32 239, i32 240, i32 241, i32 242, i32 243, i32 244, i32 245, i32 246, i32 247, i32 248, i32 249, i32 250, i32 251, i32 252, i32 253, i32 254, i32 255>
   %i.uy = bitcast <128 x i1> %i.ux to i128
   %i.uz = icmp eq i128 %i.uy, -1
-  %op.rdx = select i1 %i.uz, i1 %.not161.i, i1 false
-  %4 = freeze i1 %op.rdx
-  %5 = or i32 %.fr418, %.fr416
-  %6 = or i32 %.fr417, %5
-  %7 = icmp eq i32 %6, 0
-  %8 = and i1 %4, %7
-  %op.rdx414 = select i1 %8, i1 %.not19.i, i1 false
+  %op.rdx = select i1 %i.uz, i1 %.not19.i, i1 false
+  %4 = select i1 %op.rdx, i1 %.not161.i, i1 false
+  %op.rdx413 = select i1 %4, i1 %.not162.i, i1 false
+  %5 = select i1 %op.rdx413, i1 %.not163.i, i1 false
+  %op.rdx414 = select i1 %5, i1 %.not164.i, i1 false
   br i1 %op.rdx414, label %bb.k, label %_RNvMsj_NtCsileJQcQObtj_7hir_def9lang_itemNtB5_9LangItems8is_empty.exit.thread
 
 _RNvMsj_NtCsileJQcQObtj_7hir_def9lang_itemNtB5_9LangItems8is_empty.exit.thread: ; preds = %_RNvMs_NtCsileJQcQObtj_7hir_def9lang_itemNtB4_9LangItems16resolve_manually.exit

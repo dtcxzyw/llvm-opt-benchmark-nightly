@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.k = add i8 %i.j, -91
   %or.cond = icmp ult i8 %i.k, -26
   %i.l = load i8, ptr %i.d, align 1, !tbaa !128
-  %.fr49 = freeze i8 %i.l
-  %i.m = add i8 %.fr49, -91
+  %i.m = add i8 %i.l, -91
   %or.cond.1 = icmp ult i8 %i.m, -26
   %i.n = load <4 x i8>, ptr %i.e, align 1, !tbaa !128
   %.fr48 = freeze <4 x i8> %i.n
@@ -214,7 +213,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.p = icmp ult <4 x i8> %i.o, splat (i8 -26)
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp ne i4 %i.q, 0
-  %op.rdx = or i1 %i.r, %or.cond.1
+  %op.rdx = select i1 %i.r, i1 true, i1 %or.cond.1
   %op.rdx47 = select i1 %op.rdx, i1 true, i1 %or.cond
   br i1 %op.rdx47, label %._crit_edge45, label %.preheader
 

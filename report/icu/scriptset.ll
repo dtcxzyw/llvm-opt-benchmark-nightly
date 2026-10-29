@@ -204,11 +204,9 @@ _ZNK6icu_789ScriptSeteqERKS0_.exit:
   %i.aa = freeze <4 x i1> %i.z
   %i.ab = bitcast <4 x i1> %i.aa to i4
   %i.ac = icmp eq i4 %i.ab, -1
-  %.not.4.i.fr = freeze i1 %.not.4.i
-  %op.rdx = and i1 %i.ac, %.not.4.i.fr
-  %3 = freeze i1 %.not.5.i
-  %4 = and i1 %op.rdx, %3
-  %op.rdx8 = select i1 %4, i1 %.not.6.i, i1 false
+  %op.rdx = select i1 %i.ac, i1 %.not.4.i, i1 false
+  %3 = select i1 %op.rdx, i1 %.not.5.i, i1 false
+  %op.rdx8 = select i1 %3, i1 %.not.6.i, i1 false
   %i.ad = zext i1 %op.rdx8 to i8
   call void @_ZN6icu_789ScriptSetD1Ev(ptr noundef nonnull align 4 dead_on_return(28) dereferenceable(28) %2) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
@@ -398,20 +396,19 @@ bb.a:
   %.fr = freeze <4 x i32> %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load i32, ptr %i.b, align 4
-  %.fr24 = freeze i32 %i.c
+  %.not.4 = icmp eq i32 %i.c, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.e = load i32, ptr %i.d, align 4
-  %.fr23 = freeze i32 %i.e
+  %.not.5 = icmp eq i32 %i.e, 0
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load i32, ptr %i.f, align 4
   %.not.6 = icmp eq i32 %i.g, 0
   %i.h = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.i = bitcast <4 x i1> %i.h to i4
   %i.j = icmp eq i4 %i.i, 0
-  %1 = or i32 %.fr23, %.fr24
-  %2 = icmp eq i32 %1, 0
-  %3 = and i1 %i.j, %2
-  %op.rdx22 = select i1 %3, i1 %.not.6, i1 false
+  %op.rdx = select i1 %i.j, i1 %.not.4, i1 false
+  %1 = select i1 %op.rdx, i1 %.not.5, i1 false
+  %op.rdx22 = select i1 %1, i1 %.not.6, i1 false
   %i.k = zext i1 %op.rdx22 to i8
   ret i8 %i.k
 }

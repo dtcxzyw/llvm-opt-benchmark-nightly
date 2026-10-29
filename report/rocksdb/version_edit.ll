@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %.not = icmp ne i64 %i.ar, %.neg
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 121
   %i.aw = load i8, ptr %i.av, align 1, !range !155
-  %.fr36 = freeze i8 %i.aw
-  %i.ax = trunc i8 %.fr36 to i1
+  %i.ax = trunc nuw i8 %i.aw to i1
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 123
   %i.az = load <4 x i8>, ptr %i.ay, align 1
   %.fr = freeze <4 x i8> %i.az
@@ -216,8 +215,8 @@ bb.b:                                             ; preds = %bb.a
   %i.bd = trunc nuw i8 %i.bc to i1
   %i.be = bitcast <4 x i1> %i.ba to i4
   %i.bf = icmp ne i4 %i.be, 0
-  %op.rdx = or i1 %i.bf, %i.ax
-  %i.bg = select i1 %op.rdx, i1 true, i1 %.not
+  %op.rdx = select i1 %i.bf, i1 true, i1 %.not
+  %i.bg = select i1 %op.rdx, i1 true, i1 %i.ax
   %op.rdx34 = select i1 %i.bg, i1 true, i1 %i.bd
   br i1 %op.rdx34, label %bb.f, label %bb.c
 

@@ -129,8 +129,7 @@ bb.a:
   %i.p = alloca [1 x i8], align 1                 ; 18 uses
   %.sroa.13 = alloca [3 x i8], align 1            ; 2 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 1
-  %.sroa.10.0.copyload.fr = freeze i8 %.sroa.10.0.copyload ; 2 uses
+  %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 1 ; 2 uses
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   %.sroa.11.0.copyload = load i8, ptr %.sroa.11.0..sroa_idx, align 1 ; 2 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -140,11 +139,11 @@ bb.a:
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.q = load <8 x i8>, ptr %0, align 1
   %.fr = freeze <8 x i8> %i.q                     ; 9 uses
-  %i.r = icmp eq i8 %.sroa.10.0.copyload.fr, 0
+  %i.r = icmp eq i8 %.sroa.10.0.copyload, 0
   %.not.i.i = icmp eq i8 %.sroa.11.0.copyload, -1 ; 2 uses
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.s = icmp eq i64 %.fr.scalar, 0
-  %op.rdx = and i1 %i.s, %i.r
+  %op.rdx = select i1 %i.s, i1 %i.r, i1 false
   %op.rdx33 = select i1 %op.rdx, i1 %.not.i.i, i1 false
   br i1 %op.rdx33, label %_RNvMNtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB2_5Style8is_plain.exit, label %bb.b
 
@@ -153,7 +152,7 @@ _RNvMNtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB2_5Style8is_plain.exit: ; preds = %b
   br i1 %.not3.i.i, label %bb.ak, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.t = trunc nuw i8 %.sroa.10.0.copyload.fr to i1
+  %i.t = trunc nuw i8 %.sroa.10.0.copyload to i1
   br i1 %i.t, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %_RNvMNtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB2_5Style8is_plain.exit, %bb.c, %bb.b
@@ -556,14 +555,13 @@ bb.a:
   %.fr = freeze <8 x i8> %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i8, ptr %i.b, align 1, !range !7
-  %.fr30 = freeze i8 %i.c
-  %i.d = icmp eq i8 %.fr30, 0
+  %i.d = icmp eq i8 %i.c, 0
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.f = load i8, ptr %i.e, align 1, !range !14
   %.not.i = icmp eq i8 %i.f, -1
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.g = icmp eq i64 %.fr.scalar, 0
-  %op.rdx = and i1 %i.g, %i.d
+  %op.rdx = select i1 %i.g, i1 %i.d, i1 false
   %op.rdx28 = select i1 %op.rdx, i1 %.not.i, i1 false
   br i1 %op.rdx28, label %bb.b, label %_RNvXs4_NtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB5_5StyleNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
@@ -966,22 +964,20 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 1
   %.sroa.1019.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %.sroa.1019.0.copyload = load i8, ptr %.sroa.1019.0..sroa_idx, align 1
-  %.sroa.1019.0.copyload.fr = freeze i8 %.sroa.1019.0.copyload ; 2 uses
+  %.sroa.1019.0.copyload = load i8, ptr %.sroa.1019.0..sroa_idx, align 1 ; 2 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
   %.sroa.1223.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 13
   %.sroa.1223.0.copyload = load i8, ptr %.sroa.1223.0..sroa_idx, align 1 ; 2 uses
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
   %i.j = load <8 x i8>, ptr %0, align 1
   %.fr = freeze <8 x i8> %i.j                     ; 9 uses
-  %.sroa.10.0.copyload.fr = freeze i8 %.sroa.10.0.copyload
-  %i.k = icmp eq i8 %.sroa.10.0.copyload.fr, 0
-  %.not.i.i = icmp eq i8 %.sroa.1019.0.copyload.fr, -1 ; 2 uses
+  %i.k = icmp eq i8 %.sroa.10.0.copyload, 0
+  %.not.i.i = icmp eq i8 %.sroa.1019.0.copyload, -1 ; 2 uses
   %.not3.i.i = icmp eq i8 %.sroa.1223.0.copyload, -1 ; 2 uses
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.l = icmp eq i64 %.fr.scalar, 0
-  %op.rdx = and i1 %i.l, %i.k
-  %2 = and i1 %op.rdx, %.not.i.i
+  %op.rdx = select i1 %i.l, i1 %i.k, i1 false
+  %2 = select i1 %op.rdx, i1 %.not.i.i, i1 false
   %op.rdx97 = select i1 %2, i1 %.not3.i.i, i1 false
   br i1 %op.rdx97, label %bb.d, label %_RNvMNtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB2_5Style8is_plain.exit.thread
 
@@ -1030,7 +1026,7 @@ bb.f:                                             ; preds = %bb.g, %bb.e
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store i8 %.sroa.1019.0.copyload.fr, ptr %i.d, align 1
+  store i8 %.sroa.1019.0.copyload, ptr %i.d, align 1
   %.sroa.12.9..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.12.9..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.12.0..sroa_idx, i64 3, i1 false)
   store i8 1, ptr %i.e, align 1
@@ -1398,15 +1394,13 @@ bb.a:
   %.sroa.141.0.copyload.i = load i8, ptr %.sroa.141.0..sroa_idx.i, align 1, !alias.scope !651
   %i.c = load <8 x i8>, ptr %0, align 1, !alias.scope !651
   %.fr = freeze <8 x i8> %i.c
-  %.sroa.12.0.copyload.i.fr = freeze i8 %.sroa.12.0.copyload.i
-  %i.d = icmp eq i8 %.sroa.12.0.copyload.i.fr, 0
-  %.sroa.13.0.copyload.i.fr = freeze i8 %.sroa.13.0.copyload.i
-  %.not.i.i.i = icmp eq i8 %.sroa.13.0.copyload.i.fr, -1
+  %i.d = icmp eq i8 %.sroa.12.0.copyload.i, 0
+  %.not.i.i.i = icmp eq i8 %.sroa.13.0.copyload.i, -1
   %.not3.i.i.i = icmp eq i8 %.sroa.141.0.copyload.i, -1
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.e = icmp eq i64 %.fr.scalar, 0
-  %op.rdx = and i1 %i.e, %i.d
-  %2 = and i1 %op.rdx, %.not.i.i.i
+  %op.rdx = select i1 %i.e, i1 %i.d, i1 false
+  %2 = select i1 %op.rdx, i1 %.not.i.i.i, i1 false
   %op.rdx3 = select i1 %2, i1 %.not3.i.i.i, i1 false
   br i1 %op.rdx3, label %_RINvMNtCsjUslRMS7Tf2_12nu_ansi_term4ansiNtNtB5_5style5Style12write_suffixDNtNtCshzWfHUSfYae_4core3fmt5WriteEL_EB5_.exit, label %_RNvMNtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB2_5Style8is_plain.exit.thread.i
 
@@ -1532,15 +1526,13 @@ bb.c:                                             ; preds = %bb.e
   %.sroa.144.0.copyload.i = load i8, ptr %.sroa.144.0..sroa_idx.i, align 1
   %i.u = load <8 x i8>, ptr %i.t, align 8
   %.fr = freeze <8 x i8> %i.u
-  %.sroa.12.0.copyload.i.fr = freeze i8 %.sroa.12.0.copyload.i
-  %i.v = icmp eq i8 %.sroa.12.0.copyload.i.fr, 0
-  %.sroa.13.0.copyload.i.fr = freeze i8 %.sroa.13.0.copyload.i
-  %.not.i.i.i = icmp eq i8 %.sroa.13.0.copyload.i.fr, -1
+  %i.v = icmp eq i8 %.sroa.12.0.copyload.i, 0
+  %.not.i.i.i = icmp eq i8 %.sroa.13.0.copyload.i, -1
   %.not3.i.i.i = icmp eq i8 %.sroa.144.0.copyload.i, -1
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.w = icmp eq i64 %.fr.scalar, 0
-  %op.rdx = and i1 %i.w, %i.v
-  %2 = and i1 %op.rdx, %.not.i.i.i
+  %op.rdx = select i1 %i.w, i1 %i.v, i1 false
+  %2 = select i1 %op.rdx, i1 %.not.i.i.i, i1 false
   %op.rdx5 = select i1 %2, i1 %.not3.i.i.i, i1 false
   br i1 %op.rdx5, label %_RINvMs9_NtCsjUslRMS7Tf2_12nu_ansi_term7displayINtB6_18AnsiGenericStringseE12write_to_anyDNtNtCshzWfHUSfYae_4core3fmt5WriteEL_EB8_.exit, label %_RNvMNtCsjUslRMS7Tf2_12nu_ansi_term5styleNtB2_5Style8is_plain.exit.thread.i
 

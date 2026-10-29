@@ -204,8 +204,7 @@ _ZN4mlir6TypeID3getINS_23MemoryEffectOpInterface5TraitEEES0_v.exit: ; preds = %_
   %i.bb = freeze <8 x i1> %i.ay
   %i.bc = bitcast <8 x i1> %i.bb to i8
   %i.bd = icmp ne i8 %i.bc, 0
-  %.fr = freeze i1 %i.az
-  %op.rdx = or i1 %i.bd, %.fr
+  %op.rdx = select i1 %i.bd, i1 true, i1 %i.az
   %op.rdx36 = select i1 %op.rdx, i1 true, i1 %i.ba
   ret i1 %op.rdx36
 }

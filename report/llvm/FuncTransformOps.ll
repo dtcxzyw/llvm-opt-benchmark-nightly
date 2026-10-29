@@ -205,19 +205,13 @@ _ZN4mlir6TypeID3getINS_7OpTrait18HasOnlyGraphRegionEEES0_v.exit: ; preds = %_ZN4
   %i.ca = freeze <8 x i1> %i.bs
   %i.cb = bitcast <8 x i1> %i.ca to i8
   %i.cc = icmp ne i8 %i.cb, 0
-  %.fr = freeze i1 %i.bt
-  %op.rdx = or i1 %i.cc, %.fr
-  %1 = freeze i1 %i.bu
-  %2 = freeze i1 %i.bw
-  %.fr57 = freeze i1 %i.bx
-  %op.rdx52 = or i1 %2, %.fr57
-  %3 = freeze i1 %i.by
-  %4 = or i1 %op.rdx, %1
-  %.fr58 = freeze i1 %i.bv
-  %op.rdx54 = or i1 %4, %.fr58
-  %5 = or i1 %op.rdx52, %3
-  %6 = or i1 %op.rdx54, %5
-  %op.rdx56 = select i1 %6, i1 true, i1 %i.bz
+  %op.rdx = select i1 %i.cc, i1 true, i1 %i.bt
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bu
+  %op.rdx54 = select i1 %1, i1 true, i1 %i.bv
+  %2 = select i1 %op.rdx54, i1 true, i1 %i.bw
+  %3 = select i1 %2, i1 true, i1 %i.bx
+  %4 = select i1 %3, i1 true, i1 %i.by
+  %op.rdx56 = select i1 %4, i1 true, i1 %i.bz
   ret i1 %op.rdx56
 }
 

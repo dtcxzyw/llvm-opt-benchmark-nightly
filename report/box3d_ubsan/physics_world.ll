@@ -204,8 +204,7 @@ bb.ar:                                            ; preds = %bb.ap
   %i.gu = freeze <4 x i1> %i.gt
   %i.gv = bitcast <4 x i1> %i.gu to i4
   %i.gw = icmp eq i4 %i.gv, -1
-  %.fr10088 = freeze i1 %i.gl
-  %op.rdx = and i1 %i.gw, %.fr10088
+  %op.rdx = select i1 %i.gw, i1 %i.gl, i1 false
   %op.rdx10002 = select i1 %op.rdx, i1 %i.gm, i1 false
   br i1 %op.rdx10002, label %bb.ax, label %b3AABB_Overlaps.exit.thread
 

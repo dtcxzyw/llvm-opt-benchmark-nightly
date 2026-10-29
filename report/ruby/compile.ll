@@ -205,8 +205,7 @@ bb.y:                                             ; preds = %bb.f
   %i.cp = icmp uge i64 %i.co, %i.u
   %i.cq = bitcast <4 x i1> %i.cn to i4
   %i.cr = icmp ne i4 %i.cq, 0
-  %.fr461 = freeze i1 %i.cp
-  %op.rdx = or i1 %i.cr, %.fr461
+  %op.rdx = or i1 %i.cr, %i.cp
   %op.rdx460 = select i1 %op.rdx, i1 true, i1 %.0213273.ph
   br i1 %op.rdx460, label %bb.aj, label %.preheader.preheader
 

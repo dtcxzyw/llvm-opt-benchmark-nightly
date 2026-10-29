@@ -204,8 +204,7 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.cp = freeze <16 x i1> %i.cm
   %i.cq = bitcast <16 x i1> %i.cp to i16
   %i.cr = icmp ne i16 %i.cq, 0
-  %.fr = freeze i1 %i.cn
-  %op.rdx = or i1 %i.cr, %.fr
+  %op.rdx = select i1 %i.cr, i1 true, i1 %i.cn
   %op.rdx60 = select i1 %op.rdx, i1 true, i1 %i.co
   ret i1 %op.rdx60
 }
@@ -608,8 +607,7 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.cp = freeze <16 x i1> %i.cm
   %i.cq = bitcast <16 x i1> %i.cp to i16
   %i.cr = icmp ne i16 %i.cq, 0
-  %.fr = freeze i1 %i.cn
-  %op.rdx = or i1 %i.cr, %.fr
+  %op.rdx = select i1 %i.cr, i1 true, i1 %i.cn
   %op.rdx60 = select i1 %op.rdx, i1 true, i1 %i.co
   ret i1 %op.rdx60
 }
@@ -1012,8 +1010,7 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.cp = freeze <16 x i1> %i.cm
   %i.cq = bitcast <16 x i1> %i.cp to i16
   %i.cr = icmp ne i16 %i.cq, 0
-  %.fr = freeze i1 %i.cn
-  %op.rdx = or i1 %i.cr, %.fr
+  %op.rdx = select i1 %i.cr, i1 true, i1 %i.cn
   %op.rdx60 = select i1 %op.rdx, i1 true, i1 %i.co
   ret i1 %op.rdx60
 }
@@ -1416,8 +1413,7 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.cp = freeze <16 x i1> %i.cm
   %i.cq = bitcast <16 x i1> %i.cp to i16
   %i.cr = icmp ne i16 %i.cq, 0
-  %.fr = freeze i1 %i.cn
-  %op.rdx = or i1 %i.cr, %.fr
+  %op.rdx = select i1 %i.cr, i1 true, i1 %i.cn
   %op.rdx60 = select i1 %op.rdx, i1 true, i1 %i.co
   ret i1 %op.rdx60
 }
@@ -1820,11 +1816,9 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.cu = freeze <16 x i1> %i.cq
   %i.cv = bitcast <16 x i1> %i.cu to i16
   %i.cw = icmp ne i16 %i.cv, 0
-  %.fr = freeze i1 %i.cr
-  %op.rdx = or i1 %i.cw, %.fr
-  %1 = freeze i1 %i.cs
-  %2 = or i1 %op.rdx, %1
-  %op.rdx64 = select i1 %2, i1 true, i1 %i.ct
+  %op.rdx = select i1 %i.cw, i1 true, i1 %i.cr
+  %1 = select i1 %op.rdx, i1 true, i1 %i.cs
+  %op.rdx64 = select i1 %1, i1 true, i1 %i.ct
   ret i1 %op.rdx64
 }
 
@@ -2227,8 +2221,7 @@ _ZN4mlir6TypeID3getINS_16OpAsmOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4mlir
   %i.cp = freeze <16 x i1> %i.cm
   %i.cq = bitcast <16 x i1> %i.cp to i16
   %i.cr = icmp ne i16 %i.cq, 0
-  %.fr = freeze i1 %i.cn
-  %op.rdx = or i1 %i.cr, %.fr
+  %op.rdx = select i1 %i.cr, i1 true, i1 %i.cn
   %op.rdx60 = select i1 %op.rdx, i1 true, i1 %i.co
   ret i1 %op.rdx60
 }

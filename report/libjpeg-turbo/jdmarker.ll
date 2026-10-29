@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %._crit_edge
   %i.ar = icmp eq i8 %i.aq, 101
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.as = icmp eq i32 %.fr.scalar, 1651467329
-  %i.at = and i1 %i.an, %i.as
+  %i.at = and i1 %i.as, %i.an
   %op.rdx100 = select i1 %i.at, i1 %i.ar, i1 false
   br i1 %op.rdx100, label %bb.n, label %bb.o
 

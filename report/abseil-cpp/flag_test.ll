@@ -204,8 +204,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_1
   %i.t = freeze <4 x i1> %i.p
   %i.u = bitcast <4 x i1> %i.t to i4
   %i.v = icmp eq i4 %i.u, -1
-  %79 = and i1 %i.j, %i.v
-  %op.rdx688 = select i1 %79, i1 %i.s, i1 false
+  %op.rdx687 = select i1 %i.v, i1 %i.j, i1 false
+  %op.rdx688 = select i1 %op.rdx687, i1 %i.s, i1 false
   br i1 %op.rdx688, label %bb.b, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.b:                                             ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_10second_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit
@@ -376,8 +376,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_1
   %i.bn = freeze <4 x i1> %i.bj
   %i.bo = bitcast <4 x i1> %i.bn to i4
   %i.bp = icmp eq i4 %i.bo, -1
-  %80 = and i1 %i.bd, %i.bp
-  %op.rdx686 = select i1 %80, i1 %i.bm, i1 false
+  %op.rdx685 = select i1 %i.bp, i1 %i.bd, i1 false
+  %op.rdx686 = select i1 %op.rdx685, i1 %i.bm, i1 false
   br i1 %op.rdx686, label %bb.n, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10minute_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.n:                                             ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_10minute_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit
@@ -548,8 +548,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8
   %i.dh = freeze <4 x i1> %i.dd
   %i.di = bitcast <4 x i1> %i.dh to i4
   %i.dj = icmp eq i4 %i.di, -1
-  %81 = and i1 %i.cx, %i.dj
-  %op.rdx684 = select i1 %81, i1 %i.dg, i1 false
+  %op.rdx683 = select i1 %i.dj, i1 %i.cx, i1 false
+  %op.rdx684 = select i1 %op.rdx683, i1 %i.dg, i1 false
   br i1 %op.rdx684, label %bb.z, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_8hour_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.z:                                             ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8hour_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit
@@ -720,8 +720,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_7
   %i.fb = freeze <4 x i1> %i.ex
   %i.fc = bitcast <4 x i1> %i.fb to i4
   %i.fd = icmp eq i4 %i.fc, -1
-  %82 = and i1 %i.er, %i.fd
-  %op.rdx682 = select i1 %82, i1 %i.fa, i1 false
+  %op.rdx681 = select i1 %i.fd, i1 %i.er, i1 false
+  %op.rdx682 = select i1 %op.rdx681, i1 %i.fa, i1 false
   br i1 %op.rdx682, label %bb.al, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_7day_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.al:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_7day_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit
@@ -892,8 +892,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_9
   %i.gv = freeze <4 x i1> %i.gr
   %i.gw = bitcast <4 x i1> %i.gv to i4
   %i.gx = icmp eq i4 %i.gw, -1
-  %83 = and i1 %i.gl, %i.gx
-  %op.rdx680 = select i1 %83, i1 %i.gu, i1 false
+  %op.rdx679 = select i1 %i.gx, i1 %i.gl, i1 false
+  %op.rdx680 = select i1 %op.rdx679, i1 %i.gu, i1 false
   br i1 %op.rdx680, label %bb.ax, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_9month_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.ax:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_9month_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit
@@ -1064,8 +1064,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8
   %i.ip = freeze <4 x i1> %i.il
   %i.iq = bitcast <4 x i1> %i.ip to i4
   %i.ir = icmp eq i4 %i.iq, -1
-  %84 = and i1 %i.if, %i.ir
-  %op.rdx678 = select i1 %84, i1 %i.io, i1 false
+  %op.rdx677 = select i1 %i.ir, i1 %i.if, i1 false
+  %op.rdx678 = select i1 %op.rdx677, i1 %i.io, i1 false
   br i1 %op.rdx678, label %bb.bj, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_8year_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i
 
 bb.bj:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8year_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit
@@ -1278,8 +1278,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_1
   %i.kj = freeze <4 x i1> %i.kf
   %i.kk = bitcast <4 x i1> %i.kj to i4
   %i.kl = icmp eq i4 %i.kk, -1
-  %85 = and i1 %i.jz, %i.kl
-  %op.rdx676 = select i1 %85, i1 %i.ki, i1 false
+  %op.rdx675 = select i1 %i.kl, i1 %i.jz, i1 false
+  %op.rdx676 = select i1 %op.rdx675, i1 %i.ki, i1 false
   br i1 %op.rdx676, label %bb.bv, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10second_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i234
 
 bb.bv:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_10second_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit233
@@ -1450,8 +1450,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_1
   %i.md = freeze <4 x i1> %i.lz
   %i.me = bitcast <4 x i1> %i.md to i4
   %i.mf = icmp eq i4 %i.me, -1
-  %86 = and i1 %i.lt, %i.mf
-  %op.rdx674 = select i1 %86, i1 %i.mc, i1 false
+  %op.rdx673 = select i1 %i.mf, i1 %i.lt, i1 false
+  %op.rdx674 = select i1 %op.rdx673, i1 %i.mc, i1 false
   br i1 %op.rdx674, label %bb.ch, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_10minute_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i265
 
 bb.ch:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_10minute_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit264
@@ -1622,8 +1622,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8
   %i.nx = freeze <4 x i1> %i.nt
   %i.ny = bitcast <4 x i1> %i.nx to i4
   %i.nz = icmp eq i4 %i.ny, -1
-  %87 = and i1 %i.nn, %i.nz
-  %op.rdx672 = select i1 %87, i1 %i.nw, i1 false
+  %op.rdx671 = select i1 %i.nz, i1 %i.nn, i1 false
+  %op.rdx672 = select i1 %op.rdx671, i1 %i.nw, i1 false
   br i1 %op.rdx672, label %bb.ct, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_8hour_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i296
 
 bb.ct:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8hour_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit295
@@ -1794,8 +1794,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_7
   %i.pr = freeze <4 x i1> %i.pn
   %i.ps = bitcast <4 x i1> %i.pr to i4
   %i.pt = icmp eq i4 %i.ps, -1
-  %88 = and i1 %i.ph, %i.pt
-  %op.rdx670 = select i1 %88, i1 %i.pq, i1 false
+  %op.rdx669 = select i1 %i.pt, i1 %i.ph, i1 false
+  %op.rdx670 = select i1 %op.rdx669, i1 %i.pq, i1 false
   br i1 %op.rdx670, label %bb.df, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_7day_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i327
 
 bb.df:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_7day_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit326
@@ -1966,8 +1966,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_9
   %i.rl = freeze <4 x i1> %i.rh
   %i.rm = bitcast <4 x i1> %i.rl to i4
   %i.rn = icmp eq i4 %i.rm, -1
-  %89 = and i1 %i.rb, %i.rn
-  %op.rdx668 = select i1 %89, i1 %i.rk, i1 false
+  %op.rdx667 = select i1 %i.rn, i1 %i.rb, i1 false
+  %op.rdx668 = select i1 %op.rdx667, i1 %i.rk, i1 false
   br i1 %op.rdx668, label %bb.dr, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_9month_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i359
 
 bb.dr:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_9month_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit358
@@ -2138,8 +2138,8 @@ _ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8
   %i.tf = freeze <4 x i1> %i.tb
   %i.tg = bitcast <4 x i1> %i.tf to i4
   %i.th = icmp eq i4 %i.tg, -1
-  %90 = and i1 %i.sv, %i.th
-  %op.rdx666 = select i1 %90, i1 %i.te, i1 false
+  %op.rdx = select i1 %i.th, i1 %i.sv, i1 false
+  %op.rdx666 = select i1 %op.rdx, i1 %i.te, i1 false
   br i1 %op.rdx666, label %bb.ed, label %_ZN4absl12lts_2026052613time_internal4cctz6detaileqINS1_8year_tagES5_EEbRKNS3_10civil_timeIT_EERKNS6_IT0_EE.exit.thread.i.i386
 
 bb.ed:                                            ; preds = %_ZN4absl12lts_202605267GetFlagINS0_13time_internal4cctz6detail10civil_timeINS2_8year_tagEEEEET_RKNS0_14flags_internal4FlagIS8_EE.exit385

@@ -205,8 +205,7 @@ bb.h:                                             ; preds = %_ZSt4endlIcSt11char
   %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 96), align 16
   %i.ay = icmp eq i32 %i.ax, 0
   %i.az = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 100), align 4
-  %.fr305 = freeze i32 %i.az
-  %i.ba = icmp eq i32 %.fr305, 0
+  %i.ba = icmp eq i32 %i.az, 0
   %i.bb = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 104), align 8
   %.not27.i47.2 = icmp eq i32 %i.bb, 0
   %i.bc = shufflevector <8 x i1> %i.at, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -216,9 +215,8 @@ bb.h:                                             ; preds = %_ZSt4endlIcSt11char
   %i.bf = bitcast <8 x i1> %i.be to i8
   %i.bg = icmp eq i8 %i.bf, -1
   %op.rdx301 = select i1 %i.bg, i1 %i.ay, i1 false
-  %0 = freeze i1 %op.rdx301
-  %1 = and i1 %0, %i.ba
-  %op.rdx303 = select i1 %1, i1 %.not27.i47.2, i1 false
+  %0 = select i1 %op.rdx301, i1 %i.ba, i1 false
+  %op.rdx303 = select i1 %0, i1 %.not27.i47.2, i1 false
   br i1 %op.rdx303, label %.lr.ph36.i54.2, label %_ZN5boost9container6vectorINS0_4test10EmplaceIntEvvED2Ev.exit.thread
 
 .lr.ph36.i54.2:                                   ; preds = %.preheader28.i37
@@ -230,14 +228,13 @@ bb.h:                                             ; preds = %_ZSt4endlIcSt11char
   %i.bk = shufflevector <14 x i32> %i.bj, <14 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 11, i32 12, i32 13>
   %.fr306.a = freeze <8 x i32> %i.bk
   %i.bl = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 144), align 16
-  %.fr308 = freeze i32 %i.bl
-  %i.bm = icmp eq i32 %.fr308, 0
+  %i.bm = icmp eq i32 %i.bl, 0
   %i.bn = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 148), align 4
   %.not27.i61.3 = icmp eq i32 %i.bn, 0
   %i.bo = icmp ne <8 x i32> %.fr306.a, <i32 1, i32 2, i32 0, i32 0, i32 0, i32 1, i32 2, i32 3>
   %i.bp = bitcast <8 x i1> %i.bo to i8
   %i.bq = icmp eq i8 %i.bp, 0
-  %op.rdx299 = and i1 %i.bq, %i.bm
+  %op.rdx299 = select i1 %i.bq, i1 %i.bm, i1 false
   %op.rdx300 = select i1 %op.rdx299, i1 %.not27.i61.3, i1 false
   br i1 %op.rdx300, label %.lr.ph36.i68.3, label %_ZN5boost9container6vectorINS0_4test10EmplaceIntEvvED2Ev.exit.thread
 
@@ -250,14 +247,13 @@ bb.h:                                             ; preds = %_ZSt4endlIcSt11char
   %i.bu = shufflevector <14 x i32> %i.bt, <14 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 11, i32 12, i32 13>
   %.fr309 = freeze <8 x i32> %i.bu
   %i.bv = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 188), align 4
-  %.fr311 = freeze i32 %i.bv
-  %i.bw = icmp eq i32 %.fr311, 4
+  %i.bw = icmp eq i32 %i.bv, 4
   %i.bx = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 192), align 16
   %.not27.i75.4 = icmp eq i32 %i.bx, 0
   %i.by = icmp ne <8 x i32> %.fr309, <i32 1, i32 2, i32 3, i32 0, i32 0, i32 1, i32 2, i32 3>
   %i.bz = bitcast <8 x i1> %i.by to i8
   %i.ca = icmp eq i8 %i.bz, 0
-  %op.rdx297 = and i1 %i.ca, %i.bw
+  %op.rdx297 = select i1 %i.ca, i1 %i.bw, i1 false
   %op.rdx298 = select i1 %op.rdx297, i1 %.not27.i75.4, i1 false
   br i1 %op.rdx298, label %.lr.ph36.i82.4, label %_ZN5boost9container6vectorINS0_4test10EmplaceIntEvvED2Ev.exit.thread
 
@@ -270,14 +266,13 @@ bb.h:                                             ; preds = %_ZSt4endlIcSt11char
   %i.ce = shufflevector <14 x i32> %i.cd, <14 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 11, i32 12, i32 13>
   %.fr312 = freeze <8 x i32> %i.ce
   %i.cf = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 232), align 8
-  %.fr314 = freeze i32 %i.cf
-  %i.cg = icmp eq i32 %.fr314, 4
+  %i.cg = icmp eq i32 %i.cf, 4
   %i.ch = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9container4test27test_unchecked_emplace_backINS0_6vectorINS1_10EmplaceIntEvvEEEEbNS_11move_detail5bool_ILb1EEEE8expected, i64 236), align 4
   %.not27.i89.5 = icmp eq i32 %i.ch, 5
   %i.ci = icmp ne <8 x i32> %.fr312, <i32 1, i32 2, i32 3, i32 4, i32 0, i32 1, i32 2, i32 3>
   %i.cj = bitcast <8 x i1> %i.ci to i8
   %i.ck = icmp eq i8 %i.cj, 0
-  %op.rdx = and i1 %i.ck, %i.cg
+  %op.rdx = select i1 %i.ck, i1 %i.cg, i1 false
   %op.rdx296 = select i1 %op.rdx, i1 %.not27.i89.5, i1 false
   br i1 %op.rdx296, label %bb.i, label %_ZN5boost9container6vectorINS0_4test10EmplaceIntEvvED2Ev.exit.thread
 

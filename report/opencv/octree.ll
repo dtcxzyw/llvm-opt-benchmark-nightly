@@ -205,15 +205,14 @@ bb.a:
   %i.al = shufflevector <2 x float> %i.r, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.am = shufflevector <4 x float> %i.q, <4 x float> %i.al, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
   %i.an = fcmp ole <4 x float> %i.am, %i.ak
-  %i.ao = fcmp oge <2 x float> %i.ac, %i.u
-  %.fr58 = freeze <2 x i1> %i.ao                  ; 2 uses
+  %i.ao = fcmp oge <2 x float> %i.ac, %i.u        ; 2 uses
   %i.ap = freeze <4 x i1> %i.an
   %i.aq = bitcast <4 x i1> %i.ap to i4
   %i.ar = icmp eq i4 %i.aq, -1
-  %i.as = extractelement <2 x i1> %.fr58, i64 0
-  %op.rdx = and i1 %i.ar, %i.as
-  %i.at = extractelement <2 x i1> %.fr58, i64 1
-  %op.rdx57 = and i1 %op.rdx, %i.at
+  %i.as = extractelement <2 x i1> %i.ao, i64 0
+  %op.rdx = select i1 %i.ar, i1 %i.as, i1 false
+  %i.at = extractelement <2 x i1> %i.ao, i64 1
+  %op.rdx57 = select i1 %op.rdx, i1 %i.at, i1 false
   ret i1 %op.rdx57
 }
 
@@ -616,8 +615,7 @@ _ZNSt12__shared_ptrIN2cv10OctreeNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; 
   %i.db = freeze <4 x i1> %i.cz
   %i.dc = bitcast <4 x i1> %i.db to i4
   %i.dd = icmp eq i4 %i.dc, -1
-  %.fr = freeze i1 %i.cu
-  %op.rdx = and i1 %i.dd, %.fr
+  %op.rdx = select i1 %i.dd, i1 %i.cu, i1 false
   %op.rdx153 = select i1 %op.rdx, i1 %i.da, i1 false
   %i.de = getelementptr inbounds nuw i8, ptr %i.bj, i64 136
   %i.df = load i32, ptr %i.de, align 8, !tbaa !31
@@ -1020,15 +1018,14 @@ bb.a:
   %i.an = shufflevector <2 x float> %i.t, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.ao = shufflevector <4 x float> %i.s, <4 x float> %i.an, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
   %i.ap = fcmp ole <4 x float> %i.ao, %i.am
-  %i.aq = fcmp oge <2 x float> %i.ae, %i.w
-  %.fr3 = freeze <2 x i1> %i.aq                   ; 2 uses
+  %i.aq = fcmp oge <2 x float> %i.ae, %i.w        ; 2 uses
   %i.ar = freeze <4 x i1> %i.ap
   %i.as = bitcast <4 x i1> %i.ar to i4
   %i.at = icmp eq i4 %i.as, -1
-  %i.au = extractelement <2 x i1> %.fr3, i64 0
-  %op.rdx = and i1 %i.at, %i.au
-  %i.av = extractelement <2 x i1> %.fr3, i64 1
-  %op.rdx2 = and i1 %op.rdx, %i.av
+  %i.au = extractelement <2 x i1> %i.aq, i64 0
+  %op.rdx = select i1 %i.at, i1 %i.au, i1 false
+  %i.av = extractelement <2 x i1> %i.aq, i64 1
+  %op.rdx2 = select i1 %op.rdx, i1 %i.av, i1 false
   ret i1 %op.rdx2
 }
 

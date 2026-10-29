@@ -203,8 +203,7 @@ bb.p:                                             ; preds = %.split, %bb.o
   %i.dj = freeze <4 x i1> %i.di
   %i.dk = bitcast <4 x i1> %i.dj to i4
   %i.dl = icmp eq i4 %i.dk, -1
-  %.fr = freeze i1 %i.da
-  %op.rdx = and i1 %i.dl, %.fr
+  %op.rdx = select i1 %i.dl, i1 %i.da, i1 false
   %op.rdx1205 = select i1 %op.rdx, i1 %i.dc, i1 false
   br i1 %op.rdx1205, label %b3LoadV.exit172, label %.backedge.sink.split, !llvm.loop !78
 
@@ -607,8 +606,7 @@ bb.v:                                             ; preds = %bb.u, %.split
   %i.dp = freeze <4 x i1> %i.do
   %i.dq = bitcast <4 x i1> %i.dp to i4
   %i.dr = icmp eq i4 %i.dq, -1
-  %.fr = freeze i1 %i.dh
-  %op.rdx = and i1 %i.dr, %.fr
+  %op.rdx = select i1 %i.dr, i1 %i.dh, i1 false
   %op.rdx1525 = select i1 %op.rdx, i1 %i.di, i1 false
   br i1 %op.rdx1525, label %_mm_load_sd.exit.i258, label %b3AABB_Overlaps.exit.thread, !llvm.loop !83
 

@@ -206,9 +206,8 @@ bb.c:                                             ; preds = %"_ZN4core6option15O
   %.val58.i = load ptr, ptr %i.w, align 8, !alias.scope !26675, !nonnull !21
   %i.x = icmp eq ptr %.val58.i, %i.v
   %.sroa.8.0.i = select i1 %.not52.i, i1 true, i1 %i.x
-  %op.rdx = select i1 %.sroa.8.0.i, i1 %i.s, i1 false
-  %2 = freeze i1 %op.rdx
-  %op.rdx2 = select i1 %2, i1 %i.i, i1 false
+  %op.rdx = select i1 %.sroa.8.0.i, i1 %i.i, i1 false
+  %op.rdx2 = select i1 %op.rdx, i1 %i.s, i1 false
   br i1 %op.rdx2, label %bb.d, label %"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$9size_hint17h7cf0abbf138a1001E.exit"
 
 bb.d:                                             ; preds = %"_ZN4core6option15Option$LT$T$GT$6map_or17h063e5909798cd652E.exit61.i"

@@ -204,9 +204,8 @@ _RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7Fl
   %i.do = icmp eq i64 %i.dn, 0
   %i.dp = trunc nuw i64 %.sroa.8.0..sroa.8.0..sroa.8.8..i.i.i to i1
   %i.dq = trunc nuw i64 %.sroa.8110.0..sroa.8110.0..sroa.8110.8..i.i.i to i1
-  %op.rdx = select i1 %i.do, i1 %i.dq, i1 false
-  %3 = freeze i1 %op.rdx
-  %op.rdx15 = select i1 %3, i1 %i.dp, i1 false
+  %op.rdx = select i1 %i.do, i1 %i.dp, i1 false
+  %op.rdx15 = select i1 %op.rdx, i1 %i.dq, i1 false
   br i1 %op.rdx15, label %bb.ac, label %_RNvXs0_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtB7_6filter6FilterINtNtNtBb_5slice4iter4IterNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerENCNCNvXs9_NtCsjceHdiZFn9b_13glyphs2fontir6sourceNtB2Z_16ColorPaletteWorkINtNtCsgdm2QMcbaeA_10fontdrasil13orchestration4WorkNtNtCs3v5ql5U6hxj_6fontir13orchestration7ContextNtB4Q_6WorkIdNtNtB4S_5error5ErrorE4execs_00EIB1H_NtB28_5ShapeENCB2R_s_0ENCB2R_s0_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB31_.exit.thread.i.i.i
 
 bb.ab:                                            ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtBO_7flatten7FlatMapINtB3_4IterNtNtCs1qcNTItuk7F_13glyphs_reader4font8GradientEINtNtBO_3map3MapINtNtNtB5_5slice4iter4IterNtB1W_9ColorStopENCNvMsc_B1W_B1U_6colors0ENCNvMsb_B1W_NtB1W_15ShapeAttributes6colors0EIB1K_NtB1W_5ColorEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsjceHdiZFn9b_13glyphs2fontir.exit95.i.i.i
@@ -609,9 +608,8 @@ bb.k:                                             ; preds = %bb.h
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit69.i: ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit.i
   %.sroa.8.0.i = phi i64 [ 0, %bb.i ], [ %.sroa.46.0.i.i.i62.i, %bb.k ], [ %i.af, %bb.j ], [ %i.ab, %bb.h ], [ 0, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit.i ]
-  %.sroa.577.0.i = phi i1 [ true, %bb.i ], [ %narrow.i.i.i63.i, %bb.k ], [ %i.ag, %bb.j ], [ true, %bb.h ], [ true, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit.i ]
+  %.sroa.577.0.i = phi i1 [ true, %bb.i ], [ %narrow.i.i.i63.i, %bb.k ], [ %i.ag, %bb.j ], [ true, %bb.h ], [ true, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit.i ] ; 2 uses
   %.sroa.076.0.i = phi i64 [ 0, %bb.i ], [ %i.ab, %bb.k ], [ 0, %bb.j ], [ %i.ab, %bb.h ], [ 0, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit.i ]
-  %.sroa.577.0.i.fr = freeze i1 %.sroa.577.0.i    ; 2 uses
   %i.ao = add nuw nsw i64 %.sroa.076.0.i, %.sroa.0.0.i ; 2 uses
   %i.ap = load i64, ptr %1, align 8, !range !4, !alias.scope !3842, !noundef !5
   %.not54.i = icmp eq i64 %i.ap, 2
@@ -621,12 +619,12 @@ bb.l:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.val.i = load i64, ptr %i.aq, align 8, !alias.scope !3842, !noundef !5
   %i.ar = icmp eq i64 %.val.i, 0
-  %op.rdx = and i1 %i.ar, %.sroa.577.0.i.fr
-  %op.rdx2 = select i1 %op.rdx, i1 %.sroa.5.0.i, i1 false
+  %op.rdx = select i1 %i.ar, i1 %.sroa.5.0.i, i1 false
+  %op.rdx2 = select i1 %op.rdx, i1 %.sroa.577.0.i, i1 false
   br i1 %op.rdx2, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtB3_8IntoIterTNtNtCsgdm2QMcbaeA_10fontdrasil5types9GlyphNameNtNtNtCs8n5UXKvQVD9_10read_fonts6tables4gdef13GlyphClassDefEEINtNtBO_10filter_map9FilterMapINtNtBO_3map3MapINtNtNtCsbeZck1VjBmm_8indexmap3map4iter8IntoIterNtNtNtCs3v5ql5U6hxj_6fontir2ir15static_metadata12ConditionSetTB1B_INtNtCsgCecv3eZDcN_5alloc3vec3VecRNtNtCs1qcNTItuk7F_13glyphs_reader4font5LayerEEENCNvNtCsjceHdiZFn9b_13glyphs2fontir6source19bracket_glyph_names0ENCNCNvB7h_33make_preliminary_glyph_categoriess0_0s_0EEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB7j_.exit69.i
-  %or.cond55.i = and i1 %.sroa.5.0.i, %.sroa.577.0.i.fr
+  %or.cond55.i = select i1 %.sroa.5.0.i, i1 %.sroa.577.0.i, i1 false
   br i1 %or.cond55.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l

@@ -205,15 +205,14 @@ bb.a:
   %.fr = freeze <4 x i32> %i.c
   %.ptr.4 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i.4 = load i32, ptr %.ptr.4, align 8
-  %.val.i.4.fr = freeze i32 %.val.i.4
-  %.not.i.4 = icmp eq i32 %.val.i.4.fr, 0
+  %.not.i.4 = icmp eq i32 %.val.i.4, 0
   %.ptr.5 = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.val.i.5 = load i32, ptr %.ptr.5, align 4
   %.not.i.5 = icmp eq i32 %.val.i.5, 0
   %i.d = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.e = bitcast <4 x i1> %i.d to i4
   %i.f = icmp eq i4 %i.e, 0
-  %op.rdx27 = and i1 %i.f, %.not.i.4
+  %op.rdx27 = select i1 %i.f, i1 %.not.i.4, i1 false
   %op.rdx28 = select i1 %op.rdx27, i1 %.not.i.5, i1 false
   br i1 %op.rdx28, label %.preheader.6, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterbENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB1G_22ResponseCompressionCtx10is_enableds_0EB1M_.exit
 
@@ -233,20 +232,19 @@ bb.b:                                             ; preds = %bb.a
   %i.k = trunc <4 x i8> %.fr29 to <4 x i1>
   %.ptr8.4 = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i2.4 = load i8, ptr %.ptr8.4, align 8, !range !20
-  %.val.i2.4.fr = freeze i8 %.val.i2.4
+  %1 = trunc nuw i8 %.val.i2.4 to i1
   %.ptr8.5 = getelementptr inbounds nuw i8, ptr %0, i64 57
   %.val.i2.5 = load i8, ptr %.ptr8.5, align 1, !range !20
-  %.val.i2.5.fr = freeze i8 %.val.i2.5
+  %2 = trunc nuw i8 %.val.i2.5 to i1
   %.ptr8.6 = getelementptr inbounds nuw i8, ptr %0, i64 58
   %.val.i2.6 = load i8, ptr %.ptr8.6, align 2, !range !20
   %i.l = trunc nuw i8 %.val.i2.6 to i1
   %i.m = bitcast <4 x i1> %i.k to i4
   %i.n = icmp ne i4 %i.m, 0
-  %1 = or i8 %.val.i2.5.fr, %.val.i2.4.fr
-  %2 = trunc i8 %1 to i1
-  %3 = or i1 %i.n, %2
-  %4 = or i1 %.not.i.6, %3
-  %op.rdx26 = select i1 %4, i1 true, i1 %i.l
+  %op.rdx = or i1 %i.n, %.not.i.6
+  %3 = select i1 %op.rdx, i1 true, i1 %1
+  %op.rdx25 = select i1 %3, i1 true, i1 %2
+  %op.rdx26 = select i1 %op.rdx25, i1 true, i1 %i.l
   br label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterbENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB1G_22ResponseCompressionCtx10is_enableds_0EB1M_.exit
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterbENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB1G_22ResponseCompressionCtx10is_enableds_0EB1M_.exit: ; preds = %.preheader.6, %.preheader.preheader, %bb.b
@@ -302,15 +300,14 @@ bb.a:
   %.fr = freeze <4 x i32> %i.l
   %.ptr.4.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i.4.i = load i32, ptr %.ptr.4.i, align 8, !alias.scope !1933
-  %.val.i.4.i.fr = freeze i32 %.val.i.4.i
-  %.not.i.4.i = icmp eq i32 %.val.i.4.i.fr, 0
+  %.not.i.4.i = icmp eq i32 %.val.i.4.i, 0
   %.ptr.5.i = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.val.i.5.i = load i32, ptr %.ptr.5.i, align 4, !alias.scope !1933
   %.not.i.5.i = icmp eq i32 %.val.i.5.i, 0
   %i.m = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.n = bitcast <4 x i1> %i.m to i4
   %i.o = icmp eq i4 %i.n, 0
-  %op.rdx8 = and i1 %i.o, %.not.i.4.i
+  %op.rdx8 = select i1 %i.o, i1 %.not.i.4.i, i1 false
   %op.rdx9 = select i1 %op.rdx8, i1 %.not.i.5.i, i1 false
   br i1 %op.rdx9, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread
 
@@ -330,20 +327,19 @@ _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22Respon
   %i.s = trunc <4 x i8> %.fr10 to <4 x i1>
   %.ptr8.4.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i2.4.i = load i8, ptr %.ptr8.4.i, align 8, !range !20, !alias.scope !1933
-  %.val.i2.4.i.fr = freeze i8 %.val.i2.4.i
+  %2 = trunc nuw i8 %.val.i2.4.i to i1
   %.ptr8.5.i = getelementptr inbounds nuw i8, ptr %0, i64 57
   %.val.i2.5.i = load i8, ptr %.ptr8.5.i, align 1, !range !20, !alias.scope !1933
-  %.val.i2.5.i.fr = freeze i8 %.val.i2.5.i
+  %3 = trunc nuw i8 %.val.i2.5.i to i1
   %.ptr8.6.i = getelementptr inbounds nuw i8, ptr %0, i64 58
   %.val.i2.6.i = load i8, ptr %.ptr8.6.i, align 2, !range !20, !alias.scope !1933
   %i.t = trunc nuw i8 %.val.i2.6.i to i1
   %i.u = bitcast <4 x i1> %i.s to i4
   %i.v = icmp ne i4 %i.u, 0
-  %2 = or i8 %.val.i2.5.i.fr, %.val.i2.4.i.fr
-  %3 = trunc i8 %2 to i1
-  %4 = or i1 %i.v, %3
-  %5 = or i1 %.not.i.6.i, %4
-  %op.rdx7 = select i1 %5, i1 true, i1 %i.t
+  %op.rdx = or i1 %i.v, %.not.i.6.i
+  %4 = select i1 %op.rdx, i1 true, i1 %2
+  %op.rdx6 = select i1 %4, i1 true, i1 %3
+  %op.rdx7 = select i1 %op.rdx6, i1 true, i1 %i.t
   br i1 %op.rdx7, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %.split, %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, %_RNvNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compression21parse_accept_encoding.exit
@@ -630,15 +626,14 @@ bb.a:
   %.fr = freeze <4 x i32> %i.e
   %.ptr.4.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i.4.i = load i32, ptr %.ptr.4.i, align 8, !alias.scope !1947
-  %.val.i.4.i.fr = freeze i32 %.val.i.4.i
-  %.not.i.4.i = icmp eq i32 %.val.i.4.i.fr, 0
+  %.not.i.4.i = icmp eq i32 %.val.i.4.i, 0
   %.ptr.5.i = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.val.i.5.i = load i32, ptr %.ptr.5.i, align 4, !alias.scope !1947
   %.not.i.5.i = icmp eq i32 %.val.i.5.i, 0
   %i.f = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.g = bitcast <4 x i1> %i.f to i4
   %i.h = icmp eq i4 %i.g, 0
-  %op.rdx24 = and i1 %i.h, %.not.i.4.i
+  %op.rdx24 = select i1 %i.h, i1 %.not.i.4.i, i1 false
   %op.rdx25 = select i1 %op.rdx24, i1 %.not.i.5.i, i1 false
   br i1 %op.rdx25, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread
 
@@ -658,20 +653,19 @@ _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22Respon
   %i.l = trunc <4 x i8> %.fr26 to <4 x i1>
   %.ptr8.4.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i2.4.i = load i8, ptr %.ptr8.4.i, align 8, !range !20, !alias.scope !1947
-  %.val.i2.4.i.fr = freeze i8 %.val.i2.4.i
+  %2 = trunc nuw i8 %.val.i2.4.i to i1
   %.ptr8.5.i = getelementptr inbounds nuw i8, ptr %0, i64 57
   %.val.i2.5.i = load i8, ptr %.ptr8.5.i, align 1, !range !20, !alias.scope !1947
-  %.val.i2.5.i.fr = freeze i8 %.val.i2.5.i
+  %3 = trunc nuw i8 %.val.i2.5.i to i1
   %.ptr8.6.i = getelementptr inbounds nuw i8, ptr %0, i64 58
   %.val.i2.6.i = load i8, ptr %.ptr8.6.i, align 2, !range !20, !alias.scope !1947
   %i.m = trunc nuw i8 %.val.i2.6.i to i1
   %i.n = bitcast <4 x i1> %i.l to i4
   %i.o = icmp ne i4 %i.n, 0
-  %2 = or i8 %.val.i2.5.i.fr, %.val.i2.4.i.fr
-  %3 = trunc i8 %2 to i1
-  %4 = or i1 %i.o, %3
-  %5 = or i1 %.not.i.6.i, %4
-  %op.rdx23 = select i1 %5, i1 true, i1 %i.m
+  %op.rdx = or i1 %i.o, %.not.i.6.i
+  %4 = select i1 %op.rdx, i1 true, i1 %2
+  %op.rdx22 = select i1 %4, i1 true, i1 %3
+  %op.rdx23 = select i1 %op.rdx22, i1 true, i1 %i.m
   br i1 %op.rdx23, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEECskeugdADtBsi_12pingora_core.exit18
 
 _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread: ; preds = %.preheader.preheader.i, %.split, %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit
@@ -1008,14 +1002,13 @@ bb.a:
   %i.w = icmp eq <4 x i32> %.fr, zeroinitializer  ; 5 uses
   %.ptr.4.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i.4.i = load i32, ptr %.ptr.4.i, align 8, !alias.scope !2043
-  %.val.i.4.i.fr = freeze i32 %.val.i.4.i
-  %.not.i.4.i = icmp eq i32 %.val.i.4.i.fr, 0     ; 2 uses
+  %.not.i.4.i = icmp eq i32 %.val.i.4.i, 0        ; 2 uses
   %.ptr.5.i = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.val.i.5.i = load i32, ptr %.ptr.5.i, align 4, !alias.scope !2043
   %.not.i.5.i = icmp eq i32 %.val.i.5.i, 0        ; 2 uses
   %i.x = bitcast <4 x i1> %i.w to i4
   %i.y = icmp eq i4 %i.x, -1
-  %op.rdx191 = and i1 %i.y, %.not.i.4.i
+  %op.rdx191 = select i1 %i.y, i1 %.not.i.4.i, i1 false
   %op.rdx192 = select i1 %op.rdx191, i1 %.not.i.5.i, i1 false
   br i1 %op.rdx192, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread
 
@@ -1035,20 +1028,19 @@ _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22Respon
   %i.ac = trunc <4 x i8> %.fr193 to <4 x i1>
   %.ptr8.4.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i2.4.i = load i8, ptr %.ptr8.4.i, align 8, !range !20, !alias.scope !2043
-  %.val.i2.4.i.fr = freeze i8 %.val.i2.4.i
+  %3 = trunc nuw i8 %.val.i2.4.i to i1
   %.ptr8.5.i = getelementptr inbounds nuw i8, ptr %0, i64 57
   %.val.i2.5.i = load i8, ptr %.ptr8.5.i, align 1, !range !20, !alias.scope !2043
-  %.val.i2.5.i.fr = freeze i8 %.val.i2.5.i
+  %4 = trunc nuw i8 %.val.i2.5.i to i1
   %.ptr8.6.i = getelementptr inbounds nuw i8, ptr %0, i64 58
   %.val.i2.6.i = load i8, ptr %.ptr8.6.i, align 2, !range !20, !alias.scope !2043
   %i.ad = trunc nuw i8 %.val.i2.6.i to i1
   %i.ae = bitcast <4 x i1> %i.ac to i4
   %i.af = icmp ne i4 %i.ae, 0
-  %3 = or i8 %.val.i2.5.i.fr, %.val.i2.4.i.fr
-  %4 = trunc i8 %3 to i1
-  %5 = or i1 %i.af, %4
-  %6 = or i1 %.not.i.6.i, %5
-  %op.rdx190 = select i1 %6, i1 true, i1 %i.ad
+  %op.rdx187 = or i1 %i.af, %.not.i.6.i
+  %5 = select i1 %op.rdx187, i1 true, i1 %3
+  %op.rdx189 = select i1 %5, i1 true, i1 %4
+  %op.rdx190 = select i1 %op.rdx189, i1 true, i1 %i.ad
   br i1 %op.rdx190, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %.split, %bb.e, %bb.bl, %bb.bi, %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, %bb.bg
@@ -1077,8 +1069,8 @@ bb.d:                                             ; preds = %_RNvMNtNtNtCskeugdA
   %i.ao = and i1 %i.am, %i.an
   %i.ap = extractelement <4 x i1> %i.w, i64 3
   %i.aq = and i1 %i.ao, %i.ap
-  %7 = and i1 %i.aq, %.not.i.4.i
-  %i.ar = select i1 %7, i1 %.not.i.5.i, i1 false
+  %6 = select i1 %i.aq, i1 %.not.i.4.i, i1 false
+  %i.ar = select i1 %6, i1 %.not.i.5.i, i1 false
   %.ptr.6 = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.val.i.6 = load i32, ptr %.ptr.6, align 8
   %.not.i.6 = icmp eq i32 %.val.i.6, 0
@@ -1088,19 +1080,18 @@ bb.d:                                             ; preds = %_RNvMNtNtNtCskeugdA
   %i.at = trunc <4 x i8> %.fr195 to <4 x i1>
   %.ptr.4.i53 = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i.4.i54 = load i8, ptr %.ptr.4.i53, align 8, !range !20
-  %.val.i.4.i54.fr = freeze i8 %.val.i.4.i54
+  %7 = trunc nuw i8 %.val.i.4.i54 to i1
   %.ptr.5.i55 = getelementptr inbounds nuw i8, ptr %0, i64 57
   %.val.i.5.i56 = load i8, ptr %.ptr.5.i55, align 1, !range !20
-  %.val.i.5.i56.fr = freeze i8 %.val.i.5.i56
+  %8 = trunc nuw i8 %.val.i.5.i56 to i1
   %.ptr.6.i57 = getelementptr inbounds nuw i8, ptr %0, i64 58
   %.val.i.6.i58 = load i8, ptr %.ptr.6.i57, align 2, !range !20
   %i.au = trunc nuw i8 %.val.i.6.i58 to i1
   %i.av = bitcast <4 x i1> %i.at to i4
   %i.aw = icmp ne i4 %i.av, 0
-  %8 = or i8 %.val.i.5.i56.fr, %.val.i.4.i54.fr
-  %9 = trunc i8 %8 to i1
-  %10 = or i1 %i.aw, %9
-  %op.rdx186 = select i1 %10, i1 true, i1 %i.au
+  %op.rdx = select i1 %i.aw, i1 true, i1 %7
+  %9 = select i1 %op.rdx, i1 true, i1 %8
+  %op.rdx186 = select i1 %9, i1 true, i1 %i.au
   br i1 %op.rdx186, label %bb.f, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterbENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compression26depends_on_accept_encoding0EB1L_.exit.i
 
 bb.e:                                             ; preds = %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread
@@ -1503,15 +1494,14 @@ bb.a:
   %.fr = freeze <4 x i32> %i.d
   %.ptr.4.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.val.i.4.i = load i32, ptr %.ptr.4.i, align 8, !alias.scope !2756
-  %.val.i.4.i.fr = freeze i32 %.val.i.4.i
-  %.not.i.4.i = icmp eq i32 %.val.i.4.i.fr, 0
+  %.not.i.4.i = icmp eq i32 %.val.i.4.i, 0
   %.ptr.5.i = getelementptr inbounds nuw i8, ptr %0, i64 44
   %.val.i.5.i = load i32, ptr %.ptr.5.i, align 4, !alias.scope !2756
   %.not.i.5.i = icmp eq i32 %.val.i.5.i, 0
   %i.e = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.f = bitcast <4 x i1> %i.e to i4
   %i.g = icmp eq i4 %i.f, 0
-  %op.rdx10 = and i1 %i.g, %.not.i.4.i
+  %op.rdx10 = select i1 %i.g, i1 %.not.i.4.i, i1 false
   %op.rdx11 = select i1 %op.rdx10, i1 %.not.i.5.i, i1 false
   br i1 %op.rdx11, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread
 
@@ -1531,20 +1521,19 @@ _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22Respon
   %i.k = trunc <4 x i8> %.fr12 to <4 x i1>
   %.ptr8.4.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i2.4.i = load i8, ptr %.ptr8.4.i, align 8, !range !20, !alias.scope !2756
-  %.val.i2.4.i.fr = freeze i8 %.val.i2.4.i
+  %3 = trunc nuw i8 %.val.i2.4.i to i1
   %.ptr8.5.i = getelementptr inbounds nuw i8, ptr %0, i64 57
   %.val.i2.5.i = load i8, ptr %.ptr8.5.i, align 1, !range !20, !alias.scope !2756
-  %.val.i2.5.i.fr = freeze i8 %.val.i2.5.i
+  %4 = trunc nuw i8 %.val.i2.5.i to i1
   %.ptr8.6.i = getelementptr inbounds nuw i8, ptr %0, i64 58
   %.val.i2.6.i = load i8, ptr %.ptr8.6.i, align 2, !range !20, !alias.scope !2756
   %i.l = trunc nuw i8 %.val.i2.6.i to i1
   %i.m = bitcast <4 x i1> %i.k to i4
   %i.n = icmp ne i4 %i.m, 0
-  %3 = or i8 %.val.i2.5.i.fr, %.val.i2.4.i.fr
-  %4 = trunc i8 %3 to i1
-  %5 = or i1 %i.n, %4
-  %6 = or i1 %.not.i.6.i, %5
-  %op.rdx9 = select i1 %6, i1 true, i1 %i.l
+  %op.rdx = or i1 %i.n, %.not.i.6.i
+  %5 = select i1 %op.rdx, i1 true, i1 %3
+  %op.rdx8 = select i1 %5, i1 true, i1 %4
+  %op.rdx9 = select i1 %op.rdx8, i1 true, i1 %i.l
   br i1 %op.rdx9, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEECskeugdADtBsi_12pingora_core.exit
 
 _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread: ; preds = %.preheader.preheader.i, %.split, %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit
@@ -1601,15 +1590,14 @@ bb.a:
   %.fr = freeze <4 x i32> %i.c
   %.ptr.4.i = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.val.i.4.i = load i32, ptr %.ptr.4.i, align 8, !alias.scope !2766
-  %.val.i.4.i.fr = freeze i32 %.val.i.4.i
-  %.not.i.4.i = icmp eq i32 %.val.i.4.i.fr, 0
+  %.not.i.4.i = icmp eq i32 %.val.i.4.i, 0
   %.ptr.5.i = getelementptr inbounds nuw i8, ptr %1, i64 44
   %.val.i.5.i = load i32, ptr %.ptr.5.i, align 4, !alias.scope !2766
   %.not.i.5.i = icmp eq i32 %.val.i.5.i, 0
   %i.d = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.e = bitcast <4 x i1> %i.d to i4
   %i.f = icmp eq i4 %i.e, 0
-  %op.rdx5 = and i1 %i.f, %.not.i.4.i
+  %op.rdx5 = select i1 %i.f, i1 %.not.i.4.i, i1 false
   %op.rdx6 = select i1 %op.rdx5, i1 %.not.i.5.i, i1 false
   br i1 %op.rdx6, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread
 
@@ -1629,20 +1617,19 @@ _RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22Respon
   %i.j = trunc <4 x i8> %.fr7 to <4 x i1>
   %.ptr8.4.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.val.i2.4.i = load i8, ptr %.ptr8.4.i, align 8, !range !20, !alias.scope !2766
-  %.val.i2.4.i.fr = freeze i8 %.val.i2.4.i
+  %2 = trunc nuw i8 %.val.i2.4.i to i1
   %.ptr8.5.i = getelementptr inbounds nuw i8, ptr %1, i64 57
   %.val.i2.5.i = load i8, ptr %.ptr8.5.i, align 1, !range !20, !alias.scope !2766
-  %.val.i2.5.i.fr = freeze i8 %.val.i2.5.i
+  %3 = trunc nuw i8 %.val.i2.5.i to i1
   %.ptr8.6.i = getelementptr inbounds nuw i8, ptr %1, i64 58
   %.val.i2.6.i = load i8, ptr %.ptr8.6.i, align 2, !range !20, !alias.scope !2766
   %i.k = trunc nuw i8 %.val.i2.6.i to i1
   %i.l = bitcast <4 x i1> %i.j to i4
   %i.m = icmp ne i4 %i.l, 0
-  %2 = or i8 %.val.i2.5.i.fr, %.val.i2.4.i.fr
-  %3 = trunc i8 %2 to i1
-  %4 = or i1 %i.m, %3
-  %5 = or i1 %.not.i.6.i, %4
-  %op.rdx4 = select i1 %5, i1 true, i1 %i.k
+  %op.rdx = or i1 %i.m, %.not.i.6.i
+  %4 = select i1 %op.rdx, i1 true, i1 %2
+  %op.rdx3 = select i1 %4, i1 true, i1 %3
+  %op.rdx4 = select i1 %op.rdx3, i1 true, i1 %i.k
   br i1 %op.rdx4, label %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %.split, %_RNvMNtNtNtCskeugdADtBsi_12pingora_core9protocols4http11compressionNtB2_22ResponseCompressionCtx10is_enabled.exit

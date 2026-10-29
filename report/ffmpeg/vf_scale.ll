@@ -202,8 +202,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.by = bitcast <16 x i1> %i.bx to i16
   %i.bz = icmp ne i16 %i.by, 0
   %op.rdx54 = select i1 %i.bz, i1 true, i1 %i.br
-  %5 = freeze i1 %op.rdx54
-  %op.rdx55 = select i1 %5, i1 true, i1 %i.bu
+  %op.rdx55 = select i1 %op.rdx54, i1 true, i1 %i.bu
   br i1 %op.rdx55, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -250,8 +249,7 @@ bb.t:                                             ; preds = %bb.s
   %i.de = bitcast <16 x i1> %i.dd to i16
   %i.df = icmp ne i16 %i.de, 0
   %op.rdx51 = select i1 %i.df, i1 true, i1 %i.cx
-  %6 = freeze i1 %op.rdx51
-  %op.rdx52 = select i1 %6, i1 true, i1 %i.da
+  %op.rdx52 = select i1 %op.rdx51, i1 true, i1 %i.da
   br i1 %op.rdx52, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -280,14 +278,13 @@ bb.w:                                             ; preds = %bb.v
   %i.du = icmp ne <8 x i32> %.fr59, zeroinitializer
   %i.dv = getelementptr inbounds nuw i8, ptr %i.a, i64 160
   %i.dw = load i32, ptr %i.dv, align 16
-  %.fr61 = freeze i32 %i.dw
-  %i.dx = icmp ne i32 %.fr61, 0
+  %i.dx = icmp ne i32 %i.dw, 0
   %i.dy = getelementptr inbounds nuw i8, ptr %i.b, i64 160
   %i.dz = load i32, ptr %i.dy, align 16
   %i.ea = icmp ne i32 %i.dz, 0
   %i.eb = bitcast <8 x i1> %i.du to i8
   %i.ec = icmp ne i8 %i.eb, 0
-  %op.rdx = or i1 %i.ec, %i.dx
+  %op.rdx = select i1 %i.ec, i1 true, i1 %i.dx
   %op.rdx50 = select i1 %op.rdx, i1 true, i1 %i.ea
   br i1 %op.rdx50, label %bb.x, label %bb.y
 

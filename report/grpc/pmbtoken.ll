@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.l = tail call ptr @OPENSSL_calloc(i64 noundef %4, i64 noundef 216) #4 ; 5 uses
   %i.m = tail call ptr @OPENSSL_calloc(i64 noundef %4, i64 noundef 216) #4 ; 5 uses
   %i.n = tail call ptr @OPENSSL_calloc(i64 noundef %4, i64 noundef 216) #4 ; 5 uses
-  %i.o = tail call ptr @OPENSSL_calloc(i64 noundef %4, i64 noundef 216) #4
-  %.fr272 = freeze ptr %i.o                       ; 5 uses
+  %i.o = tail call ptr @OPENSSL_calloc(i64 noundef %4, i64 noundef 216) #4 ; 5 uses
   %i.p = tail call ptr @OPENSSL_calloc(i64 noundef %4, i64 noundef 72) #4 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #4
   call void @CBB_zero(ptr noundef nonnull %8) #4
@@ -215,11 +214,11 @@ bb.c:                                             ; preds = %bb.a
   %i.t = insertelement <4 x ptr> %i.s, ptr %i.n, i64 3
   %.fr = freeze <4 x ptr> %i.t
   %i.u = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %i.v = icmp eq ptr %.fr272, null
+  %i.v = icmp eq ptr %i.o, null
   %i.w = icmp eq ptr %i.p, null
   %i.x = bitcast <4 x i1> %i.u to i4
   %i.y = icmp ne i4 %i.x, 0
-  %op.rdx = or i1 %i.y, %i.v
+  %op.rdx = select i1 %i.y, i1 true, i1 %i.v
   %op.rdx270 = select i1 %op.rdx, i1 true, i1 %i.w
   br i1 %op.rdx270, label %.critedge, label %bb.d
 
@@ -394,7 +393,7 @@ bb.r:                                             ; preds = %_ZL22cbs_get_prefix
   call void @ec_affine_to_jacobian(ptr noundef %i.h, ptr noundef %i.bu, ptr noundef nonnull %i.bv) #4
   %i.bw = getelementptr inbounds nuw [216 x i8], ptr %i.n, i64 %.0128249 ; 2 uses
   call void @ec_affine_to_jacobian(ptr noundef %i.h, ptr noundef %i.bw, ptr noundef nonnull %9) #4
-  %i.bx = getelementptr inbounds nuw [216 x i8], ptr %.fr272, i64 %.0128249 ; 2 uses
+  %i.bx = getelementptr inbounds nuw [216 x i8], ptr %i.o, i64 %.0128249 ; 2 uses
   call void @ec_affine_to_jacobian(ptr noundef %i.h, ptr noundef %i.bx, ptr noundef nonnull %10) #4
   %i.by = load ptr, ptr %i.ax, align 8, !tbaa !27
   %i.bz = getelementptr inbounds nuw [216 x i8], ptr %i.m, i64 %.0128249 ; 3 uses
@@ -646,7 +645,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not166, label %.critedge, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %i.ef = call i32 @ec_point_mul_scalar_public_batch(ptr noundef %i.h, ptr noundef nonnull %18, ptr noundef null, ptr noundef %.fr272, ptr noundef %i.p, i64 noundef %4) #4
+  %i.ef = call i32 @ec_point_mul_scalar_public_batch(ptr noundef %i.h, ptr noundef nonnull %18, ptr noundef null, ptr noundef %i.o, ptr noundef %i.p, i64 noundef %4) #4
   %.not167 = icmp eq i32 %i.ef, 0
   br i1 %.not167, label %.critedge, label %bb.au
 
@@ -667,7 +666,7 @@ bb.aw:                                            ; preds = %bb.av
   call void @OPENSSL_free(ptr noundef %i.l) #4
   call void @OPENSSL_free(ptr noundef %i.m) #4
   call void @OPENSSL_free(ptr noundef %i.n) #4
-  call void @OPENSSL_free(ptr noundef %.fr272) #4
+  call void @OPENSSL_free(ptr noundef %i.o) #4
   call void @OPENSSL_free(ptr noundef %i.p) #4
   call void @CBB_cleanup(ptr noundef nonnull %8) #4
   br i1 %.not170.not, label %bb.ay, label %bb.ax
@@ -676,7 +675,7 @@ bb.aw:                                            ; preds = %bb.av
   call void @OPENSSL_free(ptr noundef %i.l) #4
   call void @OPENSSL_free(ptr noundef %i.m) #4
   call void @OPENSSL_free(ptr noundef %i.n) #4
-  call void @OPENSSL_free(ptr noundef %.fr272) #4
+  call void @OPENSSL_free(ptr noundef %i.o) #4
   call void @OPENSSL_free(ptr noundef %i.p) #4
   call void @CBB_cleanup(ptr noundef nonnull %8) #4
   br label %bb.ax

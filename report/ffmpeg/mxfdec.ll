@@ -205,8 +205,7 @@ bb.v:                                             ; preds = %bb.r
   %i.dr = load i8, ptr %i.cd, align 1
   %.not9.i.13 = icmp eq i8 %i.dr, 126
   %i.ds = load i8, ptr %i.cs, align 2
-  %.fr389 = freeze i8 %i.ds
-  %.not9.i.14 = icmp eq i8 %.fr389, 1
+  %.not9.i.14 = icmp eq i8 %i.ds, 1
   %i.dt = load i8, ptr %i.ct, align 1
   %.not9.i.15 = icmp eq i8 %i.dt, 0
   %i.du = shufflevector <8 x i1> %i.do, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -216,9 +215,8 @@ bb.v:                                             ; preds = %bb.r
   %i.dx = bitcast <8 x i1> %i.dw to i8
   %i.dy = icmp eq i8 %i.dx, -1
   %op.rdx = select i1 %i.dy, i1 %.not9.i.13, i1 false
-  %3 = freeze i1 %op.rdx
-  %4 = and i1 %3, %.not9.i.14
-  %op.rdx386 = select i1 %4, i1 %.not9.i.15, i1 false
+  %3 = select i1 %op.rdx, i1 %.not9.i.14, i1 false
+  %op.rdx386 = select i1 %3, i1 %.not9.i.15, i1 false
   br i1 %op.rdx386, label %mxf_match_uid.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -621,8 +619,7 @@ bb.d:                                             ; preds = %bb.c
   %i.am = load i8, ptr %i.r, align 1
   %.not9.i.13 = icmp eq i8 %i.am, 126
   %i.an = load i8, ptr %i.s, align 2
-  %.fr349 = freeze i8 %i.an
-  %.not9.i.14 = icmp eq i8 %.fr349, 1
+  %.not9.i.14 = icmp eq i8 %i.an, 1
   %i.ao = load i8, ptr %i.t, align 1
   %.not9.i.15 = icmp eq i8 %i.ao, 0
   %i.ap = shufflevector <8 x i1> %i.aj, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -632,9 +629,8 @@ bb.d:                                             ; preds = %bb.c
   %i.as = bitcast <8 x i1> %i.ar to i8
   %i.at = icmp eq i8 %i.as, -1
   %op.rdx = select i1 %i.at, i1 %.not9.i.13, i1 false
-  %3 = freeze i1 %op.rdx
-  %4 = and i1 %3, %.not9.i.14
-  %op.rdx347 = select i1 %4, i1 %.not9.i.15, i1 false
+  %3 = select i1 %op.rdx, i1 %.not9.i.14, i1 false
+  %op.rdx347 = select i1 %3, i1 %.not9.i.15, i1 false
   br i1 %op.rdx347, label %mxf_match_uid.exit, label %mxf_match_uid.exit.thread
 
 mxf_match_uid.exit:                               ; preds = %bb.d

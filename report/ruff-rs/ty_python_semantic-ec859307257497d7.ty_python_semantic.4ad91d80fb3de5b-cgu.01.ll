@@ -204,12 +204,11 @@ bb.f:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.phi.trans.insert79.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.pre80.i.i = load i64, ptr %.phi.trans.insert79.i.i, align 8, !noalias !23098
   %i.ah = call i64 @llvm.uadd.sat.i64(i64 %i.ae, i64 %.pre76.i.i)
-  %2 = freeze i64 %.pre78.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit62.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit62.i.i: ; preds = %bb.f, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
   %i.ai = phi i64 [ %.pre80.i.i, %bb.f ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
-  %.fr29 = phi i64 [ %2, %bb.f ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ] ; 2 uses
+  %.fr29 = phi i64 [ %.pre78.i.i, %bb.f ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ] ; 2 uses
   %i.aj = phi i64 [ %i.ah, %bb.f ], [ %i.ae, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !23098
   %i.ak = load i64, ptr %1, align 8, !range !28, !alias.scope !23099, !noundef !14
@@ -220,9 +219,9 @@ bb.g:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val.i.i = load ptr, ptr %i.m, align 8, !alias.scope !23099, !noundef !14
   %.not72.i.i = icmp eq ptr %.val.i.i, null
   %i.am = trunc nuw i64 %i.ad to i1
-  %i.an = trunc i64 %.fr29 to i1
-  %op.rdx27 = and i1 %.not72.i.i, %i.an
-  %op.rdx28 = select i1 %op.rdx27, i1 %i.am, i1 false
+  %i.an = trunc nuw i64 %.fr29 to i1
+  %op.rdx27 = select i1 %.not72.i.i, i1 %i.am, i1 false
+  %op.rdx28 = select i1 %op.rdx27, i1 %i.an, i1 false
   br i1 %op.rdx28, label %bb.i, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6option8IntoIterINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEEENtNtNtB9_6traits8iterator8Iterator9size_hintCsoTR8nlGN3X_18ty_python_semantic.exit
 
 bb.h:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit62.i.i
@@ -422,12 +421,11 @@ bb.q:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.pre78.i.i.i.i = load i64, ptr %.phi.trans.insert77.i.i.i.i, align 8, !range !28, !noalias !23127
   %.pre80.i.i.i.i = load i64, ptr %.phi.trans.insert79.i.i.i.i, align 8, !noalias !23127
   %i.by = call i64 @llvm.uadd.sat.i64(i64 %i.bw, i64 %.pre76.i.i.i.i)
-  %3 = freeze i64 %.pre78.i.i.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit62.i.i.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit62.i.i.i.i: ; preds = %.noexc10, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i
   %i.bz = phi i64 [ %.pre80.i.i.i.i, %.noexc10 ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ]
-  %.fr30 = phi i64 [ %3, %.noexc10 ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ] ; 2 uses
+  %.fr30 = phi i64 [ %.pre78.i.i.i.i, %.noexc10 ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ] ; 2 uses
   %i.ca = phi i64 [ %i.by, %.noexc10 ], [ %i.bw, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !23127
   %i.cb = load i64, ptr %i.j, align 8, !range !28, !alias.scope !23128, !noundef !14
@@ -438,9 +436,9 @@ bb.r:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val.i.i.i.i = load ptr, ptr %i.ba, align 8, !alias.scope !23128, !noundef !14
   %.not72.i.i.i.i = icmp eq ptr %.val.i.i.i.i, null
   %i.cd = trunc nuw i64 %i.bv to i1
-  %i.ce = trunc i64 %.fr30 to i1
-  %op.rdx = and i1 %.not72.i.i.i.i, %i.ce
-  %op.rdx26 = select i1 %op.rdx, i1 %i.cd, i1 false
+  %i.ce = trunc nuw i64 %.fr30 to i1
+  %op.rdx = select i1 %.not72.i.i.i.i, i1 %i.cd, i1 false
+  %op.rdx26 = select i1 %op.rdx, i1 %i.ce, i1 false
   br i1 %op.rdx26, label %bb.t, label %_RNvXs9_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlattenINtNtBb_6option8IntoIterINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEEENtNtNtB9_6traits8iterator8Iterator9size_hintCsoTR8nlGN3X_18ty_python_semantic.exit.i.i
 
 bb.s:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtCs2O29vuvTAEJ_14ty_python_core7use_def11place_state11LiveBindingEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit62.i.i.i.i
@@ -843,9 +841,8 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %i.bt = load ptr, ptr %i.af, align 8, !alias.scope !23230, !noundef !14 ; 2 uses
   %.not56.i.i.i.i69.i.i.i.i.i = icmp eq ptr %i.bt, null
   %.val63.i.i.i.i70.i.i.i.i.i = load ptr, ptr %i.ak, align 8, !alias.scope !23230, !nonnull !14
-  %.val63.i.i.i.i70.i.i.i.i.i.fr = freeze ptr %.val63.i.i.i.i70.i.i.i.i.i
-  %i.bu = icmp eq ptr %.val63.i.i.i.i70.i.i.i.i.i.fr, %i.bt
-  %or.cond.i.i.i.i71.i.i.i.i.i = or i1 %.not56.i.i.i.i69.i.i.i.i.i, %i.bu ; 2 uses
+  %i.bu = icmp eq ptr %.val63.i.i.i.i70.i.i.i.i.i, %i.bt
+  %or.cond.i.i.i.i71.i.i.i.i.i = select i1 %.not56.i.i.i.i69.i.i.i.i.i, i1 true, i1 %i.bu ; 2 uses
   %spec.select89.i.i.i.i.i = select i1 %or.cond.i.i.i.i71.i.i.i.i.i, i64 %i.bs, i64 undef
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementEINtNtBO_3map3MapIB1q_NtB1R_12CallableItemENvMs0_B1R_B3n_8callableENvMs1_B1R_B1P_9callablesEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1X_.exit74.i.i.i.i.i
 
@@ -858,12 +855,12 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatt
 bb.o:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementEINtNtBO_3map3MapIB1q_NtB1R_12CallableItemENvMs0_B1R_B3n_8callableENvMs1_B1R_B1P_9callablesEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1X_.exit74.i.i.i.i.i
   %.val.i.i.i.i.i = load ptr, ptr %i.al, align 8, !alias.scope !23226, !align !18, !noundef !14
   %.not.i.i.not.i.i.i.i.i = icmp eq ptr %.val.i.i.i.i.i, null
-  %op.rdx = and i1 %.not.i.i.not.i.i.i.i.i, %.sroa.582.0.i.i.i.i.i
-  %op.rdx16 = select i1 %op.rdx, i1 %.sroa.5.0.i.i.i.i.i, i1 false
+  %op.rdx = select i1 %.not.i.i.not.i.i.i.i.i, i1 %.sroa.5.0.i.i.i.i.i, i1 false
+  %op.rdx16 = select i1 %op.rdx, i1 %.sroa.582.0.i.i.i.i.i, i1 false
   br i1 %op.rdx16, label %bb.q, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtBb_6result4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind8BindingsEIBX_INtNtNtBb_5slice4iter4IterNtB1G_15BindingsElementEIBN_IB2O_NtB1G_12CallableItemENvMs0_B1G_B3K_8callableENvMs1_B1G_B3d_9callablesENvMs3_B1G_B1E_9iter_flatENCNvNtB1K_11ide_support23resolve_single_overloads_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1M_.exit.i.i
 
 bb.p:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementEINtNtBO_3map3MapIB1q_NtB1R_12CallableItemENvMs0_B1R_B3n_8callableENvMs1_B1R_B1P_9callablesEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1X_.exit74.i.i.i.i.i
-  %or.cond55.i.i.i.i.i = and i1 %.sroa.5.0.i.i.i.i.i, %.sroa.582.0.i.i.i.i.i
+  %or.cond55.i.i.i.i.i = select i1 %.sroa.5.0.i.i.i.i.i, i1 %.sroa.582.0.i.i.i.i.i, i1 false
   br i1 %or.cond55.i.i.i.i.i, label %bb.q, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtBb_6result4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind8BindingsEIBX_INtNtNtBb_5slice4iter4IterNtB1G_15BindingsElementEIBN_IB2O_NtB1G_12CallableItemENvMs0_B1G_B3K_8callableENvMs1_B1G_B3d_9callablesENvMs3_B1G_B1E_9iter_flatENCNvNtB1K_11ide_support23resolve_single_overloads_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1M_.exit.i.i
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -1266,12 +1263,11 @@ bb.g:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.phi.trans.insert80.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %.pre81.i.i = load i64, ptr %.phi.trans.insert80.i.i, align 8, !noalias !24270
   %i.at = call i64 @llvm.uadd.sat.i64(i64 %i.aq, i64 %.pre77.i.i)
-  %2 = freeze i64 %.pre79.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit64.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit64.i.i: ; preds = %bb.g, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i
   %i.au = phi i64 [ %.pre81.i.i, %bb.g ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i ]
-  %.fr48 = phi i64 [ %2, %bb.g ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i ] ; 2 uses
+  %.fr48 = phi i64 [ %.pre79.i.i, %bb.g ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i ] ; 2 uses
   %i.av = phi i64 [ %i.at, %bb.g ], [ %i.aq, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !24270
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -1286,9 +1282,9 @@ bb.h:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val63.i.i = load i64, ptr %i.az, align 8, !alias.scope !24271, !noundef !14
   %i.ba = icmp eq i64 %.val63.i.i, %.val.i.i
   %i.bb = trunc nuw i64 %i.ap to i1
-  %i.bc = trunc i64 %.fr48 to i1
-  %op.rdx46 = and i1 %i.ba, %i.bc
-  %op.rdx47 = select i1 %op.rdx46, i1 %i.bb, i1 false
+  %i.bc = trunc nuw i64 %.fr48 to i1
+  %op.rdx46 = select i1 %i.ba, i1 %i.bb, i1 false
+  %op.rdx47 = select i1 %op.rdx46, i1 %i.bc, i1 false
   br i1 %op.rdx47, label %bb.j, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3zip3ZipINtNtNtBb_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15MatchedArgumentEINtNtB7_3map3MapIB1l_NtNtB1O_9arguments12CallArgumentENCNvMs_B3k_NtB3k_13CallArguments10iter_types0EEIB2Y_INtNtB7_6copied6CopiedIB1l_NtB1M_16MatchedParameterEENCNCNCNvMs7_B1M_NtB1M_15CallableBinding37filter_overloads_using_any_or_unknown000ENCB5A_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1S_.exit
 
 bb.i:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit64.i.i
@@ -1563,12 +1559,11 @@ bb.s:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.pre79.i.i.i.i = load i64, ptr %.phi.trans.insert78.i.i.i.i, align 8, !range !28, !noalias !24310
   %.pre81.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i, align 8, !noalias !24310
   %i.do = call i64 @llvm.uadd.sat.i64(i64 %i.dm, i64 %.pre77.i.i.i.i)
-  %3 = freeze i64 %.pre79.i.i.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit64.i.i.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit64.i.i.i.i: ; preds = %.noexc16, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i.i.i
   %i.dp = phi i64 [ %.pre81.i.i.i.i, %.noexc16 ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i.i.i ]
-  %.fr49 = phi i64 [ %3, %.noexc16 ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i.i.i ] ; 2 uses
+  %.fr49 = phi i64 [ %.pre79.i.i.i.i, %.noexc16 ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i.i.i ] ; 2 uses
   %i.dq = phi i64 [ %i.do, %.noexc16 ], [ %i.dm, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !24310
   %i.dr = load ptr, ptr %i.bo, align 8, !alias.scope !24311, !noundef !14
@@ -1580,9 +1575,9 @@ bb.t:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val63.i.i.i.i = load i64, ptr %i.bq, align 8, !alias.scope !24311, !noundef !14
   %i.ds = icmp eq i64 %.val63.i.i.i.i, %.val.i.i.i.i
   %i.dt = trunc nuw i64 %i.dl to i1
-  %i.du = trunc i64 %.fr49 to i1
-  %op.rdx = and i1 %i.ds, %i.du
-  %op.rdx45 = select i1 %op.rdx, i1 %i.dt, i1 false
+  %i.du = trunc nuw i64 %.fr49 to i1
+  %op.rdx = select i1 %i.ds, i1 %i.dt, i1 false
+  %op.rdx45 = select i1 %op.rdx, i1 %i.du, i1 false
   br i1 %op.rdx45, label %bb.v, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3zip3ZipINtNtNtBb_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15MatchedArgumentEINtNtB7_3map3MapIB1l_NtNtB1O_9arguments12CallArgumentENCNvMs_B3k_NtB3k_13CallArguments10iter_types0EEIB2Y_INtNtB7_6copied6CopiedIB1l_NtB1M_16MatchedParameterEENCNCNCNvMs7_B1M_NtB1M_15CallableBinding37filter_overloads_using_any_or_unknown000ENCB5A_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1S_.exit.i.i
 
 bb.u:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3MapINtNtBO_6copied6CopiedINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind16MatchedParameterEENCNCNCNvMs7_B25_NtB25_15CallableBinding37filter_overloads_using_any_or_unknown000EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2b_.exit64.i.i.i.i
@@ -1985,12 +1980,11 @@ bb.j:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.phi.trans.insert80.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.pre81.i.i = load i64, ptr %.phi.trans.insert80.i.i, align 8, !noalias !24996
   %i.ah = call i64 @llvm.uadd.sat.i64(i64 %i.ae, i64 %.pre77.i.i)
-  %2 = freeze i64 %.pre79.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit64.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit64.i.i: ; preds = %bb.j, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i
   %i.ai = phi i64 [ %.pre81.i.i, %bb.j ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
-  %.fr41 = phi i64 [ %2, %bb.j ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ] ; 2 uses
+  %.fr41 = phi i64 [ %.pre79.i.i, %bb.j ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ] ; 2 uses
   %i.aj = phi i64 [ %i.ah, %bb.j ], [ %i.ae, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !24996
   %i.ak = load ptr, ptr %1, align 8, !alias.scope !24997, !noundef !14 ; 2 uses
@@ -2001,9 +1995,9 @@ bb.k:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val63.i.i = load ptr, ptr %i.i, align 8, !alias.scope !24997, !nonnull !14, !noundef !14
   %i.al = icmp eq ptr %.val63.i.i, %i.ak
   %i.am = trunc nuw i64 %i.ad to i1
-  %i.an = trunc i64 %.fr41 to i1
-  %op.rdx39 = and i1 %i.al, %i.an
-  %op.rdx40 = select i1 %op.rdx39, i1 %i.am, i1 false
+  %i.an = trunc nuw i64 %.fr41 to i1
+  %op.rdx39 = select i1 %i.al, i1 %i.am, i1 false
+  %op.rdx40 = select i1 %op.rdx39, i1 %i.an, i1 false
   br i1 %op.rdx40, label %bb.m, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralEINtNtB7_6copied6CopiedIB15_hEENCNvMs15_B1w_NtB1w_17BytesLiteralValue5bytes0ENtNtNtB9_6traits8iterator8Iterator9size_hintCsoTR8nlGN3X_18ty_python_semantic.exit
 
 bb.l:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit64.i.i
@@ -2179,12 +2173,11 @@ bb.w:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.pre79.i.i.i.i = load i64, ptr %.phi.trans.insert78.i.i.i.i, align 8, !range !28, !noalias !25016
   %.pre81.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i, align 8, !noalias !25016
   %i.cc = call i64 @llvm.uadd.sat.i64(i64 %i.ca, i64 %.pre77.i.i.i.i)
-  %3 = freeze i64 %.pre79.i.i.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit64.i.i.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit64.i.i.i.i: ; preds = %.noexc11, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i
   %i.cd = phi i64 [ %.pre81.i.i.i.i, %.noexc11 ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ]
-  %.fr42 = phi i64 [ %3, %.noexc11 ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ] ; 2 uses
+  %.fr42 = phi i64 [ %.pre79.i.i.i.i, %.noexc11 ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ] ; 2 uses
   %i.ce = phi i64 [ %i.cc, %.noexc11 ], [ %i.ca, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !25016
   %i.cf = load ptr, ptr %i.f, align 8, !alias.scope !25017, !noundef !14 ; 2 uses
@@ -2195,9 +2188,9 @@ bb.x:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val63.i.i.i.i = load ptr, ptr %i.ba, align 8, !alias.scope !25017, !nonnull !14, !noundef !14
   %i.cg = icmp eq ptr %.val63.i.i.i.i, %i.cf
   %i.ch = trunc nuw i64 %i.bz to i1
-  %i.ci = trunc i64 %.fr42 to i1
-  %op.rdx = and i1 %i.cg, %i.ci
-  %op.rdx38 = select i1 %op.rdx, i1 %i.ch, i1 false
+  %i.ci = trunc nuw i64 %.fr42 to i1
+  %op.rdx = select i1 %i.cg, i1 %i.ch, i1 false
+  %op.rdx38 = select i1 %op.rdx, i1 %i.ci, i1 false
   br i1 %op.rdx38, label %bb.z, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes12BytesLiteralEINtNtB7_6copied6CopiedIB15_hEENCNvMs15_B1w_NtB1w_17BytesLiteralValue5bytes0ENtNtNtB9_6traits8iterator8Iterator9size_hintCsoTR8nlGN3X_18ty_python_semantic.exit.i.i
 
 bb.y:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtB5_5slice4iter4IterhEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsoTR8nlGN3X_18ty_python_semantic.exit64.i.i.i.i
@@ -2600,9 +2593,8 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %.not56.i.i.i.i69.i.i.i.i = icmp eq ptr %i.be, null
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 88
   %.val63.i.i.i.i70.i.i.i.i = load ptr, ptr %i.bf, align 8, !alias.scope !26417, !nonnull !14
-  %.val63.i.i.i.i70.i.i.i.i.fr = freeze ptr %.val63.i.i.i.i70.i.i.i.i
-  %i.bg = icmp eq ptr %.val63.i.i.i.i70.i.i.i.i.fr, %i.be
-  %or.cond.i.i.i.i71.i.i.i.i = or i1 %.not56.i.i.i.i69.i.i.i.i, %i.bg ; 2 uses
+  %i.bg = icmp eq ptr %.val63.i.i.i.i70.i.i.i.i, %i.be
+  %or.cond.i.i.i.i71.i.i.i.i = select i1 %.not56.i.i.i.i69.i.i.i.i, i1 true, i1 %i.bg ; 2 uses
   %spec.select89.i.i.i.i = select i1 %or.cond.i.i.i.i71.i.i.i.i, i64 %i.bd, i64 undef
   %i.bh = or i64 %i.bd, %.sroa.0.0.i.i.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementEINtNtBO_3map3MapIB1q_NtB1R_12CallableItemENvMs0_B1R_B3n_8callableENvMs1_B1R_B1P_9callablesEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1X_.exit74.i.i.i.i
@@ -2618,12 +2610,12 @@ bb.k:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i.i.i.i = load ptr, ptr %i.bj, align 8, !alias.scope !26413, !align !18, !noundef !14
   %.not.i.i.not.i.i.i.i = icmp eq ptr %.val.i.i.i.i, null
-  %op.rdx = and i1 %.not.i.i.not.i.i.i.i, %.sroa.582.0.i.i.i.i
-  %op.rdx7 = select i1 %op.rdx, i1 %.sroa.5.0.i.i.i.i, i1 false
+  %op.rdx = select i1 %.not.i.i.not.i.i.i.i, i1 %.sroa.5.0.i.i.i.i, i1 false
+  %op.rdx7 = select i1 %op.rdx, i1 %.sroa.582.0.i.i.i.i, i1 false
   br i1 %op.rdx7, label %bb.m, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtBb_6result4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind8BindingsEIBX_INtNtNtBb_5slice4iter4IterNtB1G_15BindingsElementEIBN_IB2O_NtB1G_12CallableItemENvMs0_B1G_B3K_8callableENvMs1_B1G_B3d_9callablesENvMs3_B1G_B1E_9iter_flatENCNvNtB1K_11ide_support23resolve_single_overloads_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1M_.exit.i
 
 bb.l:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind15BindingsElementEINtNtBO_3map3MapIB1q_NtB1R_12CallableItemENvMs0_B1R_B3n_8callableENvMs1_B1R_B1P_9callablesEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1X_.exit74.i.i.i.i
-  %or.cond55.i.i.i.i = and i1 %.sroa.5.0.i.i.i.i, %.sroa.582.0.i.i.i.i
+  %or.cond55.i.i.i.i = select i1 %.sroa.5.0.i.i.i.i, i1 %.sroa.582.0.i.i.i.i, i1 false
   br i1 %or.cond55.i.i.i.i, label %bb.m, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7FlatMapINtNtBb_6result4IterNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind8BindingsEIBX_INtNtNtBb_5slice4iter4IterNtB1G_15BindingsElementEIBN_IB2O_NtB1G_12CallableItemENvMs0_B1G_B3K_8callableENvMs1_B1G_B3d_9callablesENvMs3_B1G_B1E_9iter_flatENCNvNtB1K_11ide_support23resolve_single_overloads_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1M_.exit.i
 
 bb.m:                                             ; preds = %bb.l, %bb.k

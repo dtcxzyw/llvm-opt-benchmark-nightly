@@ -202,9 +202,9 @@ bb.aq:                                            ; preds = %bb.ap
   %i.bl = phi i1 [ true, %bb.aq ], [ false, %bb.ap ], [ false, %bb.a ] ; 2 uses
   %.0204536 = phi i32 [ %.0204, %bb.aq ], [ %.0204, %bb.ap ], [ -1, %bb.a ]
   %.not215485499535 = phi i1 [ %.not215, %bb.aq ], [ %.not215, %bb.ap ], [ true, %bb.a ] ; 2 uses
-  %.0.lcssa484500534 = phi ptr [ %.0418.lcssa, %bb.aq ], [ %.0418.lcssa, %bb.ap ], [ null, %bb.a ]
+  %.0.lcssa484500534 = phi ptr [ %.0418.lcssa, %bb.aq ], [ %.0418.lcssa, %bb.ap ], [ null, %bb.a ] ; 4 uses
   %.0184.lcssa482502533 = phi ptr [ %.0184416.lcssa, %bb.aq ], [ %.0184416.lcssa, %bb.ap ], [ null, %bb.a ] ; 2 uses
-  %.0188.lcssa480503532 = phi ptr [ %.0188414.lcssa, %bb.aq ], [ %.0188414.lcssa, %bb.ap ], [ null, %bb.a ]
+  %.0188.lcssa480503532 = phi ptr [ %.0188414.lcssa, %bb.aq ], [ %.0188414.lcssa, %bb.ap ], [ null, %bb.a ] ; 4 uses
   %.0190.lcssa479504531 = phi ptr [ %.0190413.lcssa, %bb.aq ], [ %.0190413.lcssa, %bb.ap ], [ null, %bb.a ] ; 3 uses
   %.0192.lcssa478505530 = phi ptr [ %.0192412.lcssa, %bb.aq ], [ %.0192412.lcssa, %bb.ap ], [ null, %bb.a ] ; 4 uses
   %.0194.lcssa477506529 = phi ptr [ %.0194411.lcssa, %bb.aq ], [ %.0194411.lcssa, %bb.ap ], [ null, %bb.a ] ; 3 uses
@@ -214,8 +214,6 @@ bb.aq:                                            ; preds = %bb.ap
   %.0205510525 = phi ptr [ %.0205, %bb.aq ], [ %.0205, %bb.ap ], [ null, %bb.a ] ; 6 uses
   %i.bm = phi i1 [ %.not695, %bb.aq ], [ %.not695, %bb.ap ], [ false, %bb.a ] ; 2 uses
   %.0203 = phi i64 [ %i.bk, %bb.aq ], [ 0, %bb.ap ], [ 0, %bb.a ]
-  %.0188.lcssa480503532.fr = freeze ptr %.0188.lcssa480503532 ; 4 uses
-  %.0.lcssa484500534.fr = freeze ptr %.0.lcssa484500534 ; 4 uses
   %i.bn = tail call ptr @table_open(i32 noundef 1260, i32 noundef 3) #11 ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 64
   %i.bp = load ptr, ptr %i.bo, align 8
@@ -278,14 +276,14 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %i.cv = insertelement <4 x ptr> %i.cu, ptr %.0190.lcssa479504531, i64 3
   %.fr = freeze <4 x ptr> %i.cv
   %i.cw = icmp ne <4 x ptr> %.fr, splat (ptr null)
-  %i.cx = icmp ne ptr %.0188.lcssa480503532.fr, null
-  %i.cy = icmp ne ptr %.0.lcssa484500534.fr, null
+  %i.cx = icmp ne ptr %.0188.lcssa480503532, null
+  %i.cy = icmp ne ptr %.0.lcssa484500534, null
   %i.cz = bitcast <4 x i1> %i.cw to i4
   %i.da = icmp ne i4 %i.cz, 0
-  %i.db = or i1 %i.cy, %i.da
-  %i.dc = or i1 %i.db, %i.cx
-  %op.rdx867 = or i1 %i.dc, %i.bm
-  %op.rdx868 = or i1 %op.rdx867, %i.bl
+  %i.db = or i1 %i.da, %i.bm
+  %i.dc = or i1 %i.db, %i.bl
+  %op.rdx867 = select i1 %i.dc, i1 true, i1 %i.cx
+  %op.rdx868 = select i1 %op.rdx867, i1 true, i1 %i.cy
   br i1 %op.rdx868, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
@@ -330,7 +328,7 @@ bb.be:                                            ; preds = %bb.bd
   unreachable
 
 bb.bf:                                            ; preds = %bb.bd, %bb.bc
-  %.not219 = icmp eq ptr %.0188.lcssa480503532.fr, null
+  %.not219 = icmp eq ptr %.0188.lcssa480503532, null
   br i1 %.not219, label %bb.bi, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
@@ -346,7 +344,7 @@ bb.bh:                                            ; preds = %bb.bg
   unreachable
 
 bb.bi:                                            ; preds = %bb.bg, %bb.bf
-  %.not220 = icmp eq ptr %.0.lcssa484500534.fr, null
+  %.not220 = icmp eq ptr %.0.lcssa484500534, null
   br i1 %.not220, label %bb.bl, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -498,11 +496,11 @@ bb.ce:                                            ; preds = %bb.cd
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd
-  %.not227 = icmp eq ptr %.0188.lcssa480503532.fr, null
+  %.not227 = icmp eq ptr %.0188.lcssa480503532, null
   br i1 %.not227, label %bb.ch, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
-  %i.gd = getelementptr inbounds nuw i8, ptr %.0188.lcssa480503532.fr, i64 24
+  %i.gd = getelementptr inbounds nuw i8, ptr %.0188.lcssa480503532, i64 24
   %i.ge = load ptr, ptr %i.gd, align 8
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 4
   %i.gg = load i8, ptr %i.gf, align 4, !range !5, !noundef !6
@@ -592,11 +590,11 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs, %bb.
   store i8 %i.hg, ptr %i.hh, align 1
   %i.hi = getelementptr inbounds nuw i8, ptr %i.c, i64 11
   store i8 1, ptr %i.hi, align 1
-  %.not228 = icmp eq ptr %.0.lcssa484500534.fr, null
+  %.not228 = icmp eq ptr %.0.lcssa484500534, null
   br i1 %.not228, label %bb.cw, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.hj = getelementptr inbounds nuw i8, ptr %.0.lcssa484500534.fr, i64 24
+  %i.hj = getelementptr inbounds nuw i8, ptr %.0.lcssa484500534, i64 24
   %i.hk = load ptr, ptr %i.hj, align 8
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hk, i64 4
   %i.hm = load i8, ptr %i.hl, align 4, !range !5, !noundef !6

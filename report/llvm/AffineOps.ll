@@ -205,15 +205,11 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.bq = freeze <8 x i1> %i.bk
   %i.br = bitcast <8 x i1> %i.bq to i8
   %i.bs = icmp ne i8 %i.br, 0
-  %.fr = freeze i1 %i.bl
-  %op.rdx = or i1 %i.bs, %.fr
-  %1 = freeze i1 %i.bm
-  %2 = freeze i1 %i.bo
-  %3 = or i1 %op.rdx, %1
-  %.fr49 = freeze i1 %i.bn
-  %op.rdx47 = or i1 %3, %.fr49
-  %4 = or i1 %op.rdx47, %2
-  %op.rdx48 = select i1 %4, i1 true, i1 %i.bp
+  %op.rdx = select i1 %i.bs, i1 true, i1 %i.bl
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bm
+  %op.rdx47 = select i1 %1, i1 true, i1 %i.bn
+  %2 = select i1 %op.rdx47, i1 true, i1 %i.bo
+  %op.rdx48 = select i1 %2, i1 true, i1 %i.bp
   ret i1 %op.rdx48
 }
 
@@ -616,11 +612,9 @@ _ZN4mlir6TypeID3getINS_31InferIntDivisibilityOpInterface5TraitEEES0_v.exit: ; pr
   %i.bg = freeze <8 x i1> %i.bc
   %i.bh = bitcast <8 x i1> %i.bg to i8
   %i.bi = icmp ne i8 %i.bh, 0
-  %.fr = freeze i1 %i.bd
-  %op.rdx = or i1 %i.bi, %.fr
-  %1 = freeze i1 %i.be
-  %2 = or i1 %op.rdx, %1
-  %op.rdx40 = select i1 %2, i1 true, i1 %i.bf
+  %op.rdx = select i1 %i.bi, i1 true, i1 %i.bd
+  %1 = select i1 %op.rdx, i1 true, i1 %i.be
+  %op.rdx40 = select i1 %1, i1 true, i1 %i.bf
   ret i1 %op.rdx40
 }
 
@@ -1023,17 +1017,12 @@ _ZN4mlir6TypeID3getINS_23RegionBranchOpInterface5TraitEEES0_v.exit: ; preds = %_
   %i.bv = freeze <8 x i1> %i.bo
   %i.bw = bitcast <8 x i1> %i.bv to i8
   %i.bx = icmp ne i8 %i.bw, 0
-  %.fr = freeze i1 %i.bp
-  %op.rdx = or i1 %i.bx, %.fr
-  %1 = freeze i1 %i.bq
-  %2 = freeze i1 %i.bs
-  %.fr53 = freeze i1 %i.bt
-  %op.rdx49 = or i1 %2, %.fr53
-  %3 = or i1 %op.rdx, %1
-  %.fr54 = freeze i1 %i.br
-  %op.rdx50 = or i1 %3, %.fr54
-  %4 = or i1 %op.rdx50, %op.rdx49
-  %op.rdx52 = select i1 %4, i1 true, i1 %i.bu
+  %op.rdx = select i1 %i.bx, i1 true, i1 %i.bp
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bq
+  %op.rdx50 = select i1 %1, i1 true, i1 %i.br
+  %2 = select i1 %op.rdx50, i1 true, i1 %i.bs
+  %3 = select i1 %2, i1 true, i1 %i.bt
+  %op.rdx52 = select i1 %3, i1 true, i1 %i.bu
   ret i1 %op.rdx52
 }
 
@@ -1436,15 +1425,11 @@ _ZN4mlir6TypeID3getINS_23RegionBranchOpInterface5TraitEEES0_v.exit: ; preds = %_
   %i.bq = freeze <8 x i1> %i.bk
   %i.br = bitcast <8 x i1> %i.bq to i8
   %i.bs = icmp ne i8 %i.br, 0
-  %.fr = freeze i1 %i.bl
-  %op.rdx = or i1 %i.bs, %.fr
-  %1 = freeze i1 %i.bm
-  %2 = freeze i1 %i.bo
-  %3 = or i1 %op.rdx, %1
-  %.fr49 = freeze i1 %i.bn
-  %op.rdx47 = or i1 %3, %.fr49
-  %4 = or i1 %op.rdx47, %2
-  %op.rdx48 = select i1 %4, i1 true, i1 %i.bp
+  %op.rdx = select i1 %i.bs, i1 true, i1 %i.bl
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bm
+  %op.rdx47 = select i1 %1, i1 true, i1 %i.bn
+  %2 = select i1 %op.rdx47, i1 true, i1 %i.bo
+  %op.rdx48 = select i1 %2, i1 true, i1 %i.bp
   ret i1 %op.rdx48
 }
 
@@ -1847,12 +1832,9 @@ _ZN4mlir6TypeID3getINS_7OpTrait11ElementwiseEEES0_v.exit: ; preds = %_ZN4mlir6Ty
   %i.bl = freeze <8 x i1> %i.bg
   %i.bm = bitcast <8 x i1> %i.bl to i8
   %i.bn = icmp ne i8 %i.bm, 0
-  %.fr = freeze i1 %i.bh
-  %op.rdx = or i1 %i.bn, %.fr
-  %1 = freeze i1 %i.bi
-  %2 = or i1 %op.rdx, %1
-  %.fr45 = freeze i1 %i.bj
-  %op.rdx43 = or i1 %2, %.fr45
+  %op.rdx = select i1 %i.bn, i1 true, i1 %i.bh
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bi
+  %op.rdx43 = select i1 %1, i1 true, i1 %i.bj
   %op.rdx44 = select i1 %op.rdx43, i1 true, i1 %i.bk
   ret i1 %op.rdx44
 }
@@ -2255,11 +2237,9 @@ _ZN4mlir6TypeID3getINS_23MemoryEffectOpInterface5TraitEEES0_v.exit: ; preds = %_
   %i.bg = freeze <8 x i1> %i.bc
   %i.bh = bitcast <8 x i1> %i.bg to i8
   %i.bi = icmp ne i8 %i.bh, 0
-  %.fr = freeze i1 %i.bd
-  %op.rdx = or i1 %i.bi, %.fr
-  %1 = freeze i1 %i.be
-  %2 = or i1 %op.rdx, %1
-  %op.rdx40 = select i1 %2, i1 true, i1 %i.bf
+  %op.rdx = select i1 %i.bi, i1 true, i1 %i.bd
+  %1 = select i1 %op.rdx, i1 true, i1 %i.be
+  %op.rdx40 = select i1 %1, i1 true, i1 %i.bf
   ret i1 %op.rdx40
 }
 
@@ -2662,12 +2642,9 @@ _ZN4mlir6TypeID3getINS_20InferTypeOpInterface5TraitEEES0_v.exit: ; preds = %_ZN4
   %i.bl = freeze <8 x i1> %i.bg
   %i.bm = bitcast <8 x i1> %i.bl to i8
   %i.bn = icmp ne i8 %i.bm, 0
-  %.fr = freeze i1 %i.bh
-  %op.rdx = or i1 %i.bn, %.fr
-  %1 = freeze i1 %i.bi
-  %2 = or i1 %op.rdx, %1
-  %.fr45 = freeze i1 %i.bj
-  %op.rdx43 = or i1 %2, %.fr45
+  %op.rdx = select i1 %i.bn, i1 true, i1 %i.bh
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bi
+  %op.rdx43 = select i1 %1, i1 true, i1 %i.bj
   %op.rdx44 = select i1 %op.rdx43, i1 true, i1 %i.bk
   ret i1 %op.rdx44
 }
@@ -3070,17 +3047,12 @@ _ZN4mlir6TypeID3getINS_7OpTrait19MemRefsNormalizableEEES0_v.exit: ; preds = %_ZN
   %i.bv = freeze <8 x i1> %i.bo
   %i.bw = bitcast <8 x i1> %i.bv to i8
   %i.bx = icmp ne i8 %i.bw, 0
-  %.fr = freeze i1 %i.bp
-  %op.rdx = or i1 %i.bx, %.fr
-  %1 = freeze i1 %i.bq
-  %2 = freeze i1 %i.bs
-  %.fr53 = freeze i1 %i.bt
-  %op.rdx49 = or i1 %2, %.fr53
-  %3 = or i1 %op.rdx, %1
-  %.fr54 = freeze i1 %i.br
-  %op.rdx50 = or i1 %3, %.fr54
-  %4 = or i1 %op.rdx50, %op.rdx49
-  %op.rdx52 = select i1 %4, i1 true, i1 %i.bu
+  %op.rdx = select i1 %i.bx, i1 true, i1 %i.bp
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bq
+  %op.rdx50 = select i1 %1, i1 true, i1 %i.br
+  %2 = select i1 %op.rdx50, i1 true, i1 %i.bs
+  %3 = select i1 %2, i1 true, i1 %i.bt
+  %op.rdx52 = select i1 %3, i1 true, i1 %i.bu
   ret i1 %op.rdx52
 }
 
@@ -3483,8 +3455,7 @@ _ZN4mlir6TypeID3getINS_23MemoryEffectOpInterface5TraitEEES0_v.exit: ; preds = %_
   %i.bb = freeze <8 x i1> %i.ay
   %i.bc = bitcast <8 x i1> %i.bb to i8
   %i.bd = icmp ne i8 %i.bc, 0
-  %.fr = freeze i1 %i.az
-  %op.rdx = or i1 %i.bd, %.fr
+  %op.rdx = select i1 %i.bd, i1 true, i1 %i.az
   %op.rdx36 = select i1 %op.rdx, i1 true, i1 %i.ba
   ret i1 %op.rdx36
 }
@@ -3887,11 +3858,9 @@ _ZN4mlir6TypeID3getINS_23MemoryEffectOpInterface5TraitEEES0_v.exit: ; preds = %_
   %i.bg = freeze <8 x i1> %i.bc
   %i.bh = bitcast <8 x i1> %i.bg to i8
   %i.bi = icmp ne i8 %i.bh, 0
-  %.fr = freeze i1 %i.bd
-  %op.rdx = or i1 %i.bi, %.fr
-  %1 = freeze i1 %i.be
-  %2 = or i1 %op.rdx, %1
-  %op.rdx40 = select i1 %2, i1 true, i1 %i.bf
+  %op.rdx = select i1 %i.bi, i1 true, i1 %i.bd
+  %1 = select i1 %op.rdx, i1 true, i1 %i.be
+  %op.rdx40 = select i1 %1, i1 true, i1 %i.bf
   ret i1 %op.rdx40
 }
 
@@ -4294,12 +4263,9 @@ _ZN4mlir6TypeID3getINS_7OpTrait19MemRefsNormalizableEEES0_v.exit: ; preds = %_ZN
   %i.bl = freeze <8 x i1> %i.bg
   %i.bm = bitcast <8 x i1> %i.bl to i8
   %i.bn = icmp ne i8 %i.bm, 0
-  %.fr = freeze i1 %i.bh
-  %op.rdx = or i1 %i.bn, %.fr
-  %1 = freeze i1 %i.bi
-  %2 = or i1 %op.rdx, %1
-  %.fr45 = freeze i1 %i.bj
-  %op.rdx43 = or i1 %2, %.fr45
+  %op.rdx = select i1 %i.bn, i1 true, i1 %i.bh
+  %1 = select i1 %op.rdx, i1 true, i1 %i.bi
+  %op.rdx43 = select i1 %1, i1 true, i1 %i.bj
   %op.rdx44 = select i1 %op.rdx43, i1 true, i1 %i.bk
   ret i1 %op.rdx44
 }

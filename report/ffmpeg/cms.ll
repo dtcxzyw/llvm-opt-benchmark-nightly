@@ -202,8 +202,7 @@ ingamut.exit24:                                   ; preds = %bb.d
   %i.cc = freeze <4 x i1> %i.bx
   %i.cd = bitcast <4 x i1> %i.cc to i4
   %i.ce = icmp eq i4 %i.cd, -1
-  %.fr = freeze i1 %i.bz
-  %op.rdx56 = and i1 %i.ce, %.fr
+  %op.rdx56 = select i1 %i.ce, i1 %i.bz, i1 false
   %op.rdx57 = select i1 %op.rdx56, i1 %i.cb, i1 false
   br i1 %op.rdx57, label %clip_gamma.exit, label %ingamut.exit24.thread
 
@@ -312,11 +311,10 @@ ingamut.exit:                                     ; preds = %bb.f
   %i.fm = freeze <4 x i1> %i.fh
   %i.fn = bitcast <4 x i1> %i.fm to i4
   %i.fo = icmp eq i4 %i.fn, -1
-  %.fr60 = freeze i1 %i.fj
-  %op.rdx = and i1 %i.fo, %.fr60
-  %.fr61 = freeze i1 %i.fl
-  %op.rdx54 = and i1 %op.rdx, %.fr61
-  br i1 %op.rdx54, label %.thread, label %bb.g
+  %op.rdx = select i1 %i.fo, i1 %i.fj, i1 false
+  %op.rdx54 = select i1 %op.rdx, i1 %i.fl, i1 false
+  %.fr61 = freeze i1 %op.rdx54
+  br i1 %.fr61, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %ingamut.exit
   br label %.thread
@@ -719,8 +717,7 @@ ingamut.exit50:                                   ; preds = %bb.d
   %i.ho = freeze <4 x i1> %i.hj
   %i.hp = bitcast <4 x i1> %i.ho to i4
   %i.hq = icmp eq i4 %i.hp, -1
-  %.fr = freeze i1 %i.hl
-  %op.rdx97 = and i1 %i.hq, %.fr
+  %op.rdx97 = select i1 %i.hq, i1 %i.hl, i1 false
   %op.rdx98 = select i1 %op.rdx97, i1 %i.hn, i1 false
   br i1 %op.rdx98, label %clip_gamma.exit, label %ingamut.exit50.thread
 
@@ -830,11 +827,10 @@ ingamut.exit:                                     ; preds = %bb.f
   %i.kz = freeze <4 x i1> %i.ku
   %i.la = bitcast <4 x i1> %i.kz to i4
   %i.lb = icmp eq i4 %i.la, -1
-  %.fr104 = freeze i1 %i.kw
-  %op.rdx = and i1 %i.lb, %.fr104
-  %.fr105 = freeze i1 %i.ky
-  %op.rdx95 = and i1 %op.rdx, %.fr105
-  br i1 %op.rdx95, label %.thread, label %bb.g
+  %op.rdx = select i1 %i.lb, i1 %i.kw, i1 false
+  %op.rdx95 = select i1 %op.rdx, i1 %i.ky, i1 false
+  %.fr105 = freeze i1 %op.rdx95
+  br i1 %.fr105, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %ingamut.exit
   br label %.thread
@@ -1237,8 +1233,7 @@ bb.c:                                             ; preds = %bb.b
   %i.cc = freeze <4 x i1> %i.bw
   %i.cd = bitcast <4 x i1> %i.cc to i4
   %i.ce = icmp eq i4 %i.cd, -1
-  %.fr = freeze i1 %i.bz
-  %op.rdx = and i1 %i.ce, %.fr
+  %op.rdx = select i1 %i.ce, i1 %i.bz, i1 false
   %op.rdx70 = select i1 %op.rdx, i1 %i.cb, i1 false
   br label %bb.d
 
@@ -1482,11 +1477,10 @@ ingamut.exit:                                     ; preds = %bb.m
   %i.ee = freeze <4 x i1> %i.dz
   %i.ef = bitcast <4 x i1> %i.ee to i4
   %i.eg = icmp eq i4 %i.ef, -1
-  %.fr200 = freeze i1 %i.eb
-  %op.rdx = and i1 %i.eg, %.fr200
-  %.fr201 = freeze i1 %i.ed
-  %op.rdx192 = and i1 %op.rdx, %.fr201
-  br i1 %op.rdx192, label %.thread, label %bb.n
+  %op.rdx = select i1 %i.eg, i1 %i.eb, i1 false
+  %op.rdx192 = select i1 %op.rdx, i1 %i.ed, i1 false
+  %.fr201 = freeze i1 %op.rdx192
+  br i1 %.fr201, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %ingamut.exit
   br label %.thread
@@ -1595,11 +1589,10 @@ ingamut.exit151:                                  ; preds = %bb.s
   %i.hb = freeze <4 x i1> %i.gw
   %i.hc = bitcast <4 x i1> %i.hb to i4
   %i.hd = icmp eq i4 %i.hc, -1
-  %.fr = freeze i1 %i.gy
-  %op.rdx194 = and i1 %i.hd, %.fr
-  %.fr199 = freeze i1 %i.ha
-  %op.rdx195 = and i1 %op.rdx194, %.fr199
-  br i1 %op.rdx195, label %.thread164, label %bb.t
+  %op.rdx194 = select i1 %i.hd, i1 %i.gy, i1 false
+  %op.rdx195 = select i1 %op.rdx194, i1 %i.ha, i1 false
+  %.fr199 = freeze i1 %op.rdx195
+  br i1 %.fr199, label %.thread164, label %bb.t
 
 bb.t:                                             ; preds = %ingamut.exit151
   br label %.thread164

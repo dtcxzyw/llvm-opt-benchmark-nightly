@@ -204,21 +204,20 @@ bb.ab:                                            ; preds = %.lr.ph.i
   %i.ix = shufflevector <2 x ptr> %i.iu, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.iy = shufflevector <4 x ptr> %i.iw, <4 x ptr> %i.ix, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %.fr = freeze <4 x ptr> %i.iy
-  %i.iz = load ptr, ptr %i.ec, align 8
-  %.fr164 = freeze ptr %i.iz                      ; 2 uses
-  %.not4.i.i.i19.i = icmp ne ptr %.fr164, null
+  %i.iz = load ptr, ptr %i.ec, align 8            ; 2 uses
+  %.not4.i.i.i19.i = icmp ne ptr %i.iz, null
   %i.ja = load i8, ptr %i.ed, align 8, !range !22
   %i.jb = trunc nuw i8 %i.ja to i1
   %i.jc = icmp eq <4 x ptr> %.fr, splat (ptr null)
   %i.jd = bitcast <4 x i1> %i.jc to i4
   %i.je = icmp eq i4 %i.jd, 0
-  %op.rdx = and i1 %i.je, %.not4.i.i.i19.i
+  %op.rdx = select i1 %i.je, i1 %.not4.i.i.i19.i, i1 false
   %op.rdx163 = select i1 %op.rdx, i1 %i.jb, i1 false
   br i1 %op.rdx163, label %bb.ac, label %_ZNK12_GLOBAL__N_115FusionCandidate19isEligibleForFusionERN4llvm15ScalarEvolutionE.exit.thread.i.i
 
 bb.ac:                                            ; preds = %.lr.ph18.i.i
   %i.jf = load ptr, ptr %i.dv, align 8, !tbaa !143, !nonnull !23, !align !144
-  %i.jg = call noundef zeroext i1 @_ZN4llvm15ScalarEvolution34hasLoopInvariantBackedgeTakenCountEPKNS_4LoopE(ptr noundef nonnull align 8 dereferenceable(1152) %i.jf, ptr noundef nonnull %.fr164) #17
+  %i.jg = call noundef zeroext i1 @_ZN4llvm15ScalarEvolution34hasLoopInvariantBackedgeTakenCountEPKNS_4LoopE(ptr noundef nonnull align 8 dereferenceable(1152) %i.jf, ptr noundef nonnull %i.iz) #17
   br i1 %i.jg, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac

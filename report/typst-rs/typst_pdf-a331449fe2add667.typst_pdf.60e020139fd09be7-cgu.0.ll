@@ -205,17 +205,16 @@ bb.n:                                             ; preds = %_RNvXs4_NtNtCsidf7B
   %i.bv = load <4 x float>, ptr %i.ba, align 16, !noalias !543
   %.fr34 = freeze <4 x float> %i.bv               ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
-  %i.bx = load <2 x float>, ptr %i.bw, align 16, !noalias !543
-  %.fr37 = freeze <2 x float> %i.bx               ; 3 uses
-  %i.by = extractelement <2 x float> %.fr37, i64 0
+  %i.bx = load <2 x float>, ptr %i.bw, align 16, !noalias !543 ; 3 uses
+  %i.by = extractelement <2 x float> %i.bx, i64 0
   %i.bz = fcmp oeq float %i.by, 0.000000e+00
-  %i.ca = extractelement <2 x float> %.fr37, i64 1
+  %i.ca = extractelement <2 x float> %i.bx, i64 1
   %i.cb = fcmp oeq float %i.ca, 0.000000e+00
   %i.cc = fcmp une <4 x float> %.fr34, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.cd = bitcast <4 x i1> %i.cc to i4
   %i.ce = icmp eq i4 %i.cd, 0
-  %op.rdx = and i1 %i.ce, %i.bz
-  %op.rdx20 = and i1 %op.rdx, %i.cb
+  %op.rdx = select i1 %i.ce, i1 %i.bz, i1 false
+  %op.rdx20 = select i1 %op.rdx, i1 %i.cb, i1 false
   br i1 %op.rdx20, label %bb.o, label %_RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread.i.i
 
 _RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread.i.i: ; preds = %.noexc5.i
@@ -224,7 +223,7 @@ _RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLW
   %i.cg = shufflevector <4 x float> %.fr34, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x float> %i.cg, ptr %i.az, align 16, !noalias !543
   %i.ch = getelementptr inbounds nuw i8, ptr %i.az, i64 16
-  store <2 x float> %.fr37, ptr %i.ch, align 16, !noalias !543
+  store <2 x float> %i.bx, ptr %i.ch, align 16, !noalias !543
   %i.ci = invoke fastcc noundef nonnull align 8 ptr @_RNvMs5_NtCsltn4C36Q1Af_10pdf_writer7contentNtB5_7Content9transform(ptr noalias nofree noundef align 8 dereferenceable(80) %i.cf, ptr noalias nofree noundef align 4 captures(address) dereferenceable(24) %i.az) #40
           to label %.noexc6.i unwind label %bb.cq, !noalias !542 ; 0 uses
 
@@ -627,17 +626,16 @@ bb.da:                                            ; preds = %_RNvXs4_NtNtCsidf7B
   %i.lr = load <4 x float>, ptr %i.am, align 16, !noalias !647
   %.fr29 = freeze <4 x float> %i.lr               ; 2 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %i.am, i64 16
-  %i.lt = load <2 x float>, ptr %i.ls, align 16, !noalias !647
-  %.fr32 = freeze <2 x float> %i.lt               ; 3 uses
-  %i.lu = extractelement <2 x float> %.fr32, i64 0
+  %i.lt = load <2 x float>, ptr %i.ls, align 16, !noalias !647 ; 3 uses
+  %i.lu = extractelement <2 x float> %i.lt, i64 0
   %i.lv = fcmp oeq float %i.lu, 0.000000e+00
-  %i.lw = extractelement <2 x float> %.fr32, i64 1
+  %i.lw = extractelement <2 x float> %i.lt, i64 1
   %i.lx = fcmp oeq float %i.lw, 0.000000e+00
   %i.ly = fcmp une <4 x float> %.fr29, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.lz = bitcast <4 x i1> %i.ly to i4
   %i.ma = icmp eq i4 %i.lz, 0
-  %op.rdx21 = and i1 %i.ma, %i.lv
-  %op.rdx22 = and i1 %op.rdx21, %i.lx
+  %op.rdx21 = select i1 %i.ma, i1 %i.lv, i1 false
+  %op.rdx22 = select i1 %op.rdx21, i1 %i.lx, i1 false
   br i1 %op.rdx22, label %bb.db, label %_RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread.i.i52
 
 _RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread.i.i52: ; preds = %.noexc5.i46
@@ -646,7 +644,7 @@ _RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLW
   %i.mc = shufflevector <4 x float> %.fr29, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x float> %i.mc, ptr %i.al, align 16, !noalias !647
   %i.md = getelementptr inbounds nuw i8, ptr %i.al, i64 16
-  store <2 x float> %.fr32, ptr %i.md, align 16, !noalias !647
+  store <2 x float> %i.lt, ptr %i.md, align 16, !noalias !647
   %i.me = invoke fastcc noundef nonnull align 8 ptr @_RNvMs5_NtCsltn4C36Q1Af_10pdf_writer7contentNtB5_7Content9transform(ptr noalias nofree noundef align 8 dereferenceable(80) %i.mb, ptr noalias nofree noundef align 4 captures(address) dereferenceable(24) %i.al) #40
           to label %.noexc6.i53 unwind label %bb.gd, !noalias !646 ; 0 uses
 
@@ -1049,17 +1047,16 @@ bb.gj:                                            ; preds = %_RNvXs4_NtNtCsidf7B
   %i.vp = load <4 x float>, ptr %i.y, align 16, !noalias !751
   %.fr = freeze <4 x float> %i.vp                 ; 2 uses
   %i.vq = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %i.vr = load <2 x float>, ptr %i.vq, align 16, !noalias !751
-  %.fr27 = freeze <2 x float> %i.vr               ; 3 uses
-  %i.vs = extractelement <2 x float> %.fr27, i64 0
+  %i.vr = load <2 x float>, ptr %i.vq, align 16, !noalias !751 ; 3 uses
+  %i.vs = extractelement <2 x float> %i.vr, i64 0
   %i.vt = fcmp oeq float %i.vs, 0.000000e+00
-  %i.vu = extractelement <2 x float> %.fr27, i64 1
+  %i.vu = extractelement <2 x float> %i.vr, i64 1
   %i.vv = fcmp oeq float %i.vu, 0.000000e+00
   %i.vw = fcmp une <4 x float> %.fr, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.vx = bitcast <4 x i1> %i.vw to i4
   %i.vy = icmp eq i4 %i.vx, 0
-  %op.rdx23 = and i1 %i.vy, %i.vt
-  %op.rdx24 = and i1 %op.rdx23, %i.vv
+  %op.rdx23 = select i1 %i.vy, i1 %i.vt, i1 false
+  %op.rdx24 = select i1 %op.rdx23, i1 %i.vv, i1 false
   br i1 %op.rdx24, label %bb.gk, label %_RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread.i.i131
 
 _RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread.i.i131: ; preds = %.noexc5.i129
@@ -1068,7 +1065,7 @@ _RNvXs4_NtCsd315radwPZ_14tiny_skia_path9transformNtB5_9TransformNtNtCs3oUPovFnLW
   %i.wa = shufflevector <4 x float> %.fr, <4 x float> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x float> %i.wa, ptr %i.x, align 16, !noalias !751
   %i.wb = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  store <2 x float> %.fr27, ptr %i.wb, align 16, !noalias !751
+  store <2 x float> %i.vr, ptr %i.wb, align 16, !noalias !751
   %i.wc = invoke fastcc noundef nonnull align 8 ptr @_RNvMs5_NtCsltn4C36Q1Af_10pdf_writer7contentNtB5_7Content9transform(ptr noalias nofree noundef align 8 dereferenceable(80) %i.vz, ptr noalias nofree noundef align 4 captures(address) dereferenceable(24) %i.x) #40
           to label %.noexc6.i132 unwind label %bb.jr, !noalias !750 ; 0 uses
 

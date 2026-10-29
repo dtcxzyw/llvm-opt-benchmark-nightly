@@ -106,8 +106,7 @@ bb.k:                                             ; preds = %bb.i, %bb.g
   %i.ac = tail call ptr @BN_new() #2              ; 11 uses
   %i.ad = tail call ptr @BN_new() #2              ; 5 uses
   %i.ae = tail call ptr @BN_new() #2              ; 6 uses
-  %i.af = tail call ptr @BN_new() #2
-  %.fr238 = freeze ptr %i.af                      ; 11 uses
+  %i.af = tail call ptr @BN_new() #2              ; 11 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !32
   %i.ai = tail call ptr @BN_CTX_new_ex(ptr noundef %i.ah) #2 ; 19 uses
@@ -117,11 +116,11 @@ bb.k:                                             ; preds = %bb.i, %bb.g
   %i.am = insertelement <4 x ptr> %i.al, ptr %i.ae, i64 3
   %.fr = freeze <4 x ptr> %i.am
   %i.an = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %i.ao = icmp eq ptr %.fr238, null
+  %i.ao = icmp eq ptr %i.af, null
   %i.ap = icmp eq ptr %i.ai, null
   %i.aq = bitcast <4 x i1> %i.an to i4
   %i.ar = icmp ne i4 %i.aq, 0
-  %op.rdx = or i1 %i.ar, %i.ao
+  %op.rdx = select i1 %i.ar, i1 true, i1 %i.ao
   %op.rdx236 = select i1 %op.rdx, i1 true, i1 %i.ap
   br i1 %op.rdx236, label %bb.l, label %bb.m
 
@@ -278,12 +277,12 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not168, label %.loopexit, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.by = tail call i32 @BN_gcd(ptr noundef %.fr238, ptr noundef %i.ab, ptr noundef %i.ac, ptr noundef nonnull %i.ai) #2
+  %i.by = tail call i32 @BN_gcd(ptr noundef %i.af, ptr noundef %i.ab, ptr noundef %i.ac, ptr noundef nonnull %i.ai) #2
   %.not169 = icmp eq i32 %i.by, 0
   br i1 %.not169, label %.loopexit, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bz = tail call i32 @BN_div(ptr noundef %.fr238, ptr noundef null, ptr noundef %i.ae, ptr noundef %.fr238, ptr noundef nonnull %i.ai) #2
+  %i.bz = tail call i32 @BN_div(ptr noundef %i.af, ptr noundef null, ptr noundef %i.ae, ptr noundef %i.af, ptr noundef nonnull %i.ai) #2
   %.not170 = icmp eq i32 %i.bz, 0
   br i1 %.not170, label %.loopexit, label %.preheader
 
@@ -310,24 +309,24 @@ bb.ag:                                            ; preds = %.lr.ph204, %bb.af
   br i1 %.not189, label %.loopexit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ch = tail call i32 @BN_mul(ptr noundef %i.ae, ptr noundef %.fr238, ptr noundef %i.ad, ptr noundef nonnull %i.ai) #2
+  %i.ch = tail call i32 @BN_mul(ptr noundef %i.ae, ptr noundef %i.af, ptr noundef %i.ad, ptr noundef nonnull %i.ai) #2
   %.not190 = icmp eq i32 %i.ch, 0
   br i1 %.not190, label %.loopexit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.ci = tail call i32 @BN_gcd(ptr noundef %.fr238, ptr noundef %.fr238, ptr noundef %i.ad, ptr noundef nonnull %i.ai) #2
+  %i.ci = tail call i32 @BN_gcd(ptr noundef %i.af, ptr noundef %i.af, ptr noundef %i.ad, ptr noundef nonnull %i.ai) #2
   %.not191 = icmp eq i32 %i.ci, 0
   br i1 %.not191, label %.loopexit, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.cj = tail call i32 @BN_div(ptr noundef %.fr238, ptr noundef null, ptr noundef %i.ae, ptr noundef %.fr238, ptr noundef nonnull %i.ai) #2
+  %i.cj = tail call i32 @BN_div(ptr noundef %i.af, ptr noundef null, ptr noundef %i.ae, ptr noundef %i.af, ptr noundef nonnull %i.ai) #2
   %.not192 = icmp eq i32 %i.cj, 0
   br i1 %.not192, label %.loopexit, label %bb.af
 
 ._crit_edge205:                                   ; preds = %bb.af, %.preheader
   %i.ck = load ptr, ptr %i.m, align 8, !tbaa !29
   %i.cl = load ptr, ptr %i.j, align 8, !tbaa !28
-  %i.cm = tail call i32 @BN_mod_mul(ptr noundef %i.ab, ptr noundef %i.ck, ptr noundef %i.cl, ptr noundef %.fr238, ptr noundef nonnull %i.ai) #2
+  %i.cm = tail call i32 @BN_mod_mul(ptr noundef %i.ab, ptr noundef %i.ck, ptr noundef %i.cl, ptr noundef %i.af, ptr noundef nonnull %i.ai) #2
   %.not171 = icmp eq i32 %i.cm, 0
   br i1 %.not171, label %.loopexit, label %bb.ak
 
@@ -501,7 +500,7 @@ bb.bh:                                            ; preds = %bb.bf, %bb.bg
   tail call void @BN_free(ptr noundef %i.ac) #2
   tail call void @BN_free(ptr noundef %i.ad) #2
   tail call void @BN_free(ptr noundef %i.ae) #2
-  tail call void @BN_free(ptr noundef %.fr238) #2
+  tail call void @BN_free(ptr noundef %i.af) #2
   tail call void @BN_CTX_free(ptr noundef %i.ai) #2
   br label %bb.bi
 

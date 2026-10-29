@@ -204,14 +204,13 @@ bb.a:
   %i.c = trunc <4 x i8> %.fr to <4 x i1>
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.e = load i8, ptr %i.d, align 4, !range !80
-  %.fr14 = freeze i8 %i.e
-  %i.f = trunc i8 %.fr14 to i1
+  %i.f = trunc nuw i8 %i.e to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 45
   %i.h = load i8, ptr %i.g, align 1, !range !80
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = bitcast <4 x i1> %i.c to i4
   %i.k = icmp ne i4 %i.j, 0
-  %op.rdx = or i1 %i.k, %i.f
+  %op.rdx = select i1 %i.k, i1 true, i1 %i.f
   %op.rdx12 = select i1 %op.rdx, i1 true, i1 %i.i
   %i.l = xor i1 %op.rdx12, true
   ret i1 %i.l
@@ -226,14 +225,13 @@ bb.a:
   %i.c = trunc <4 x i8> %.fr to <4 x i1>
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.e = load i8, ptr %i.d, align 4, !range !80
-  %.fr14 = freeze i8 %i.e
-  %i.f = trunc i8 %.fr14 to i1
+  %i.f = trunc nuw i8 %i.e to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 45
   %i.h = load i8, ptr %i.g, align 1, !range !80
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = bitcast <4 x i1> %i.c to i4
   %i.k = icmp eq i4 %i.j, -1
-  %op.rdx = and i1 %i.k, %i.f
+  %op.rdx = select i1 %i.k, i1 %i.f, i1 false
   %op.rdx12 = select i1 %op.rdx, i1 %i.i, i1 false
   ret i1 %op.rdx12
 }

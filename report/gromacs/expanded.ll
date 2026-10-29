@@ -205,12 +205,11 @@ bb.af:                                            ; preds = %bb.ae
   %i.ajr = getelementptr [4 x i8], ptr %i.ajq, i64 %indvars.iv565.i
   %i.ajs = load float, ptr %i.ajr, align 4, !tbaa !53
   %i.ajt = fdiv float %i.ajs, %i.ajl
-  %7 = freeze float %i.ajt
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.0367.i = phi float [ %i.ajm, %bb.af ], [ 0.000000e+00, %bb.ae ] ; 6 uses
-  %.0366.i = phi float [ %7, %bb.af ], [ 0.000000e+00, %bb.ae ] ; 2 uses
+  %.0366.i = phi float [ %i.ajt, %bb.af ], [ 0.000000e+00, %bb.ae ] ; 2 uses
   %i.aju = icmp sgt i32 %.0372.i, 0               ; 3 uses
   %or.cond3.i = select i1 %i.zt, i1 %i.aju, i1 false
   br i1 %or.cond3.i, label %bb.ah, label %bb.ai
@@ -231,13 +230,11 @@ bb.ah:                                            ; preds = %bb.ag
   %i.akh = getelementptr [4 x i8], ptr %i.akg, i64 %indvars.iv565.i
   %i.aki = load float, ptr %i.akh, align 4, !tbaa !53
   %i.akj = fdiv float %i.aki, %i.akb
-  %8 = freeze float %i.akc
-  %9 = freeze float %i.akj
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %.0365.i = phi float [ %8, %bb.ah ], [ 0.000000e+00, %bb.ag ] ; 6 uses
-  %.0364.i = phi float [ %9, %bb.ah ], [ 0.000000e+00, %bb.ag ] ; 2 uses
+  %.0365.i = phi float [ %i.akc, %bb.ah ], [ 0.000000e+00, %bb.ag ] ; 6 uses
+  %.0364.i = phi float [ %i.akj, %bb.ah ], [ 0.000000e+00, %bb.ag ] ; 2 uses
   %i.akk = insertelement <4 x float> poison, float %.0371.i, i64 0
   %i.akl = shufflevector <2 x float> %i.ajd, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.akm = shufflevector <4 x float> %i.akk, <4 x float> %i.akl, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
@@ -249,10 +246,10 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.akr = fcmp ult <4 x float> %.fr, zeroinitializer
   %i.aks = bitcast <4 x i1> %i.akr to i4
   %i.akt = icmp eq i4 %i.aks, 0
-  %op.rdx = and i1 %i.akt, %i.ako
-  %10 = and i1 %op.rdx, %i.akp
-  %op.rdx870 = and i1 %10, %i.akq
-  %op.rdx871 = select i1 %op.rdx870, i1 %.0368.i, i1 false
+  %op.rdx = select i1 %i.akt, i1 %.0368.i, i1 false
+  %7 = select i1 %op.rdx, i1 %i.ako, i1 false
+  %op.rdx870 = select i1 %7, i1 %i.akp, i1 false
+  %op.rdx871 = select i1 %op.rdx870, i1 %i.akq, i1 false
   br i1 %op.rdx871, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai

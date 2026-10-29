@@ -204,10 +204,9 @@ bb.f:                                             ; preds = %bb.d
   store ptr %i.au, ptr %i.av, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ax = load ptr, ptr %i.aw, align 8
-  %i.ay = call noalias ptr @strdup(ptr noundef %i.ax) #19
-  %.fr58 = freeze ptr %i.ay                       ; 2 uses
+  %i.ay = call noalias ptr @strdup(ptr noundef %i.ax) #19 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  store ptr %.fr58, ptr %i.az, align 8
+  store ptr %i.ay, ptr %i.az, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.bb = load ptr, ptr %i.ba, align 8
   %i.bc = call noalias ptr @strdup(ptr noundef %i.bb) #19 ; 2 uses
@@ -227,12 +226,12 @@ bb.f:                                             ; preds = %bb.d
   %i.bn = insertelement <8 x ptr> %i.bm, ptr %i.aq, i64 6
   %i.bo = insertelement <8 x ptr> %i.bn, ptr %i.au, i64 7
   %.fr = freeze <8 x ptr> %i.bo
-  %i.bp = icmp ne ptr %.fr58, null
+  %i.bp = icmp ne ptr %i.ay, null
   %i.bq = icmp ne ptr %i.bc, null
   %i.br = icmp eq <8 x ptr> %.fr, splat (ptr null)
   %i.bs = bitcast <8 x i1> %i.br to i8
   %i.bt = icmp eq i8 %i.bs, 0
-  %op.rdx = and i1 %i.bt, %i.bp
+  %op.rdx = select i1 %i.bt, i1 %i.bp, i1 false
   %op.rdx56 = select i1 %op.rdx, i1 %i.bq, i1 false
   br i1 %op.rdx56, label %bb.g, label %struct_lconv_is_valid.exit.thread
 

@@ -204,18 +204,17 @@ bb.a:
   %i.q = fsub <2 x float> %i.n, %i.p
   %i.r = insertelement <2 x float> poison, float %i.j, i64 0
   %i.s = shufflevector <2 x float> %i.r, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.t = fdiv <2 x float> %i.q, %i.s
-  %.fr59 = freeze <2 x float> %i.t                ; 4 uses
+  %i.t = fdiv <2 x float> %i.q, %i.s              ; 4 uses
   %i.u = sitofp i32 %i.f to float
   %i.v = fdiv float %i.u, %i.j                    ; 2 uses
-  %i.w = extractelement <2 x float> %.fr59, i64 0 ; 3 uses
+  %i.w = extractelement <2 x float> %i.t, i64 0   ; 3 uses
   %i.x = tail call noundef float @llvm.floor.f32(float %i.w)
   %i.y = fsub float %i.w, %i.x
   %i.z = fcmp olt float %i.y, %i.v
   br i1 %i.z, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.aa = extractelement <2 x float> %.fr59, i64 1 ; 2 uses
+  %i.aa = extractelement <2 x float> %i.t, i64 1  ; 2 uses
   %i.ab = tail call noundef float @llvm.floor.f32(float %i.aa)
   %i.ac = fsub float %i.aa, %i.ab
   %i.ad = fcmp olt float %i.ac, %i.v
@@ -223,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ae = phi i1 [ false, %bb.a ], [ %i.ad, %bb.b ]
-  %i.af = fptosi <2 x float> %.fr59 to <2 x i32>  ; 3 uses
+  %i.af = fptosi <2 x float> %i.t to <2 x i32>    ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ah = load i32, ptr %i.ag, align 16, !tbaa !17
   %.neg54 = mul i32 %i.c, -2
@@ -246,7 +245,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.aw = add i32 %.sroa.speculated.i, %i.av
   %i.ax = sdiv i32 %i.aw, %i.am
   %i.ay = fcmp oge float %i.w, 0.000000e+00
-  %i.az = extractelement <2 x float> %.fr59, i64 1
+  %i.az = extractelement <2 x float> %i.t, i64 1
   %i.ba = fcmp oge float %i.az, 0.000000e+00
   %i.bb = insertelement <4 x i32> poison, i32 %i.ax, i64 2
   %i.bc = insertelement <4 x i32> %i.bb, i32 %.sroa.speculated.i, i64 3
@@ -264,11 +263,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bn = freeze <4 x i1> %i.bi
   %i.bo = bitcast <4 x i1> %i.bn to i4
   %i.bp = icmp eq i4 %i.bo, -1
-  %.not.fr = freeze i1 %.not
-  %op.rdx = and i1 %i.bp, %.not.fr
-  %op.rdx56 = and i1 %i.ay, %i.ba
-  %op.rdx57 = and i1 %op.rdx, %op.rdx56
-  %op.rdx58 = and i1 %op.rdx57, %i.ae
+  %op.rdx = select i1 %i.bp, i1 %.not, i1 false
+  %op.rdx56 = and i1 %i.ba, %i.ay
+  %op.rdx57 = select i1 %op.rdx, i1 %op.rdx56, i1 false
+  %op.rdx58 = select i1 %op.rdx57, i1 %i.ae, i1 false
   %i.bq = select i1 %op.rdx58, i32 %i.bm, i32 -1
   ret i32 %i.bq
 }

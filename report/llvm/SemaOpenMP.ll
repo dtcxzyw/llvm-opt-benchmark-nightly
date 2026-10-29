@@ -205,11 +205,9 @@ bb.e:                                             ; preds = %bb.d
   %i.az = freeze <4 x i1> %i.as
   %i.ba = bitcast <4 x i1> %i.az to i4
   %i.bb = icmp ne i4 %i.ba, 0
-  %.fr = freeze i1 %i.au
-  %op.rdx = or i1 %i.bb, %.fr
-  %26 = freeze i1 %i.aw
-  %27 = or i1 %op.rdx, %26
-  %op.rdx89 = select i1 %27, i1 true, i1 %i.ay
+  %op.rdx = select i1 %i.bb, i1 true, i1 %i.au
+  %26 = select i1 %op.rdx, i1 true, i1 %i.aw
+  %op.rdx89 = select i1 %26, i1 true, i1 %i.ay
   br i1 %op.rdx89, label %_ZN4llvm12is_containedIRA7_N5clang21OpenMPMapModifierKindES2_EEbOT_RKT0_.exit.thread, label %bb.f
 
 _ZN4llvm12is_containedIRA7_N5clang21OpenMPMapModifierKindES2_EEbOT_RKT0_.exit.thread: ; preds = %bb.e

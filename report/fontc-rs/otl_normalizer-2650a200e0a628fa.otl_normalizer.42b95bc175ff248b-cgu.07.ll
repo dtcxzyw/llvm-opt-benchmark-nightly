@@ -202,9 +202,8 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %.not54.i.i.i.i66.i = icmp eq ptr %i.ar, null
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 72
   %.val60.i.i.i.i67.i = load ptr, ptr %i.as, align 8, !alias.scope !390, !nonnull !4
-  %.val60.i.i.i.i67.i.fr = freeze ptr %.val60.i.i.i.i67.i
-  %i.at = icmp eq ptr %.val60.i.i.i.i67.i.fr, %i.ar
-  %or.cond84.i.i.i.i68.i = or i1 %.not54.i.i.i.i66.i, %i.at ; 2 uses
+  %i.at = icmp eq ptr %.val60.i.i.i.i67.i, %i.ar
+  %or.cond84.i.i.i.i68.i = select i1 %.not54.i.i.i.i66.i, i1 true, i1 %i.at ; 2 uses
   %spec.select88.i = select i1 %or.cond84.i.i.i.i68.i, i64 %i.aq, i64 undef
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables6layout11RangeRecordEINtNtBO_3map3MapINtNtNtB5_3ops5range14RangeInclusivetENvMNtCsbZq13ASDQ8l_10font_types8glyph_idNtB3I_9GlyphId163newENvMs6_B1R_B1P_4iterEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECs5JazJsyow1H_14otl_normalizer.exit73.i
 
@@ -220,12 +219,12 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatt
 
 bb.l:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables6layout11RangeRecordEINtNtBO_3map3MapINtNtNtB5_3ops5range14RangeInclusivetENvMNtCsbZq13ASDQ8l_10font_types8glyph_idNtB3I_9GlyphId163newENvMs6_B1R_B1P_4iterEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECs5JazJsyow1H_14otl_normalizer.exit73.i
   %.not90.i = icmp eq i8 %i.aw, -1
-  %op.rdx = and i1 %.not90.i, %.sroa.581.0.i
-  %op.rdx11 = select i1 %op.rdx, i1 %.sroa.5.0.i, i1 false
+  %op.rdx = select i1 %.not90.i, i1 %.sroa.5.0.i, i1 false
+  %op.rdx11 = select i1 %op.rdx, i1 %.sroa.581.0.i, i1 false
   br i1 %op.rdx11, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtCs8n5UXKvQVD9_10read_fonts6tables6layout11RangeRecordEINtNtBO_3map3MapINtNtNtB5_3ops5range14RangeInclusivetENvMNtCsbZq13ASDQ8l_10font_types8glyph_idNtB3I_9GlyphId163newENvMs6_B1R_B1P_4iterEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECs5JazJsyow1H_14otl_normalizer.exit73.i
-  %or.cond55.i = and i1 %.sroa.5.0.i, %.sroa.581.0.i
+  %or.cond55.i = select i1 %.sroa.5.0.i, i1 %.sroa.581.0.i, i1 false
   br i1 %or.cond55.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
