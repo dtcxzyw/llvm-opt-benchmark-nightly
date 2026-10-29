@@ -1,0 +1,904 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index ff507918b782d6..8f6226a034b4b8 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -157,6 +157,14 @@ class VectorCombine {
+   bool foldBitcastOfVPLoad(Instruction &I);
+   bool foldBitOrderReverseAndSwap(Instruction &I);
+   bool shrinkType(Instruction &I);
++  using LoadPair = std::pair<LoadInst *, LoadInst *>;
++  bool collectShuffleLoadConcats(ShuffleVectorInst *Root,
++                                 SmallVectorImpl<LoadPair> &Pairs,
++                                 SmallVectorImpl<int> &Mask) const;
++  InstructionCost getLoadConcatCost(LoadPair In,
++                                    FixedVectorType *InputTy) const;
++  bool foldShuffleOfLoadConcatsFromLoad(Instruction &I);
++  bool foldShuffleOfLoadConcats(Instruction &I);
+   bool shrinkLoadForShuffles(Instruction &I);
+   bool shrinkPhiOfShuffles(Instruction &I);
+   bool foldInterleaveOfDeinterleaveChains(Instruction &I);
+@@ -3665,6 +3673,208 @@ static InstLane lookThroughShuffles(Value *V, int Lane) {
+   return InstLane{V, Lane};
+ }
+ 
++/// Find adjacent load pairs that can serve as the inputs of one shuffle.
++bool VectorCombine::collectShuffleLoadConcats(
++    ShuffleVectorInst *Root, SmallVectorImpl<LoadPair> &Pairs,
++    SmallVectorImpl<int> &Mask) const {
++  // Bound the walk before tracing individual lanes through the same DAG.
++  SmallPtrSet<ShuffleVectorInst *, 16> Visited;
++  SmallVector<ShuffleVectorInst *, 16> Pending{Root};
++  while (!Pending.empty()) {
++    auto *S = Pending.pop_back_val();
++    if (!Visited.insert(S).second)
++      continue;
++    if (S->getParent() != Root->getParent() ||
++        Visited.size() > Opts.vector_combine_max_scan_instrs)
++      return false;
++    for (Value *V : S->operands())
++      if (auto *Op = dyn_cast<ShuffleVectorInst>(V))
++        Pending.push_back(Op);
++  }
++
++  SmallVector<InstLane> Lanes;
++  SmallVector<LoadInst *, 4> Sources;
++  for (unsigned Lane = 0, E = Root->getShuffleMask().size(); Lane != E;
++       ++Lane) {
++    auto IL = lookThroughShuffles(Root, Lane);
++    if (isa_and_nonnull<PoisonValue>(IL.first))
++      IL = {nullptr, PoisonMaskElem};
++    if (IL.first) {
++      auto *LI = dyn_cast<LoadInst>(IL.first);
++      if (!LI || !LI->isSimple() || LI->getParent() != Root->getParent())
++        return false;
++      if (!is_contained(Sources, LI))
++        Sources.push_back(LI);
++    }
++    Lanes.push_back(IL);
++  }
++  // A shuffle can already select from two source vectors without concats.
++  if (Sources.size() <= Root->getNumOperands())
++    return false;
++  auto *Ty = dyn_cast<FixedVectorType>(Sources.front()->getType());
++  if (!Ty || any_of(Sources, [&](LoadInst *L) { return L->getType() != Ty; }))
++    return false;
++  auto *ConcatTy = FixedVectorType::getDoubleElementsVectorType(Ty);
++  if (Root->getType() != ConcatTy || !TTI.isTypeLegal(ConcatTy))
++    return false;
++
++  struct LoadInfo {
++    LoadInst *Load;
++    Value *Base;
++    int64_t Offset;
++  };
++  SmallVector<LoadInfo, 4> Loads;
++  for (LoadInst *L : Sources) {
++    int64_t Offset;
++    Value *Base =
++        GetPointerBaseWithConstantOffset(L->getPointerOperand(), Offset, *DL);
++    Loads.push_back({L, Base, Offset});
++  }
++  // Group each address stream in memory order, independent of lane order.
++  while (!Loads.empty()) {
++    auto First = Loads.begin();
++    for (auto It = std::next(First); It != Loads.end(); ++It)
++      if (It->Base == First->Base && It->Offset < First->Offset)
++        First = It;
++    LoadInfo Low = *First;
++    Loads.erase(First);
++    auto Next = find_if(Loads, [&](const LoadInfo &L) {
++      return L.Base == Low.Base && uint64_t(L.Offset) - uint64_t(Low.Offset) ==
++                                       DL->getTypeStoreSize(Ty);
++    });
++    if (Next == Loads.end())
++      return false;
++    Pairs.emplace_back(Low.Load, Next->Load);
++    Loads.erase(Next);
++    if (Pairs.size() > Root->getNumOperands())
++      return false;
++  }
++
++  for (auto [V, Lane] : Lanes) {
++    int M = PoisonMaskElem;
++    if (V) {
++      for (auto [Index, Pair] : enumerate(Pairs)) {
++        if (V == Pair.first)
++          M = Index * ConcatTy->getNumElements() + Lane;
++        else if (V == Pair.second)
++          M = Index * ConcatTy->getNumElements() + Ty->getNumElements() + Lane;
++      }
++      assert(M != PoisonMaskElem && "Unmapped source lane");
++    }
++    Mask.push_back(M);
++  }
++  return true;
++}
++
++/// Estimate a concat, conservatively checking load-folding opportunities for
++/// code size. These checks do not guarantee that codegen combines the loads.
++InstructionCost
++VectorCombine::getLoadConcatCost(LoadPair In, FixedVectorType *InputTy) const {
++  auto Mask = createSequentialMask(0, InputTy->getNumElements(), 0);
++  InstructionCost ConcatCost =
++      TTI.getShuffleCost(TTI::SK_PermuteTwoSrc, InputTy,
++                         cast<VectorType>(In.first->getType()), CostKind, Mask);
++  if (CostKind == TTI::TCK_CodeSize && ConcatCost != 0) {
++    // A paid concat may retain separate loads and insertions. Do not
++    // speculate on folding it into a wider load when that access is slow
++    // or unsupported; the shuffle costs do not account for this choice.
++    auto *Low = In.first;
++    auto *High = In.second;
++    uint64_t WideSize = DL->getTypeStoreSize(InputTy);
++    if (WideSize != DL->getTypeStoreSize(Low->getType()) +
++                        DL->getTypeStoreSize(High->getType()) ||
++        Low->getPointerAddressSpace() != High->getPointerAddressSpace())
++      return InstructionCost::getInvalid();
++    unsigned Fast = 0;
++    if (Low->getAlign().value() < WideSize &&
++        (!TTI.allowsMisalignedMemoryAccesses(
++             In.first->getContext(), DL->getTypeSizeInBits(InputTy),
++             Low->getPointerAddressSpace(), Low->getAlign(), &Fast) ||
++         !Fast))
++      return InstructionCost::getInvalid();
++    auto *First = Low, *Last = High;
++    if (Last->comesBefore(First))
++      std::swap(First, Last);
++    MemoryLocation Loc(Low->getPointerOperand(),
++                       LocationSize::precise(WideSize));
++    auto Begin = std::next(First->getIterator());
++    auto End = Last->getIterator();
++    if (isMemModifiedBetween(Opts, Begin, End, Loc, AA))
++      return InstructionCost::getInvalid();
++    // Even a readonly call can prevent load folding across the call's
++    // register clobbers. Only free intrinsics are transparent here.
++    if (any_of(make_range(Begin, End), [&](Instruction &Inst) {
++          return isa<CallBase>(Inst) &&
++                 (!isa<IntrinsicInst>(Inst) ||
++                  TTI.getInstructionCost(&Inst, CostKind) != 0);
++        }))
++      return InstructionCost::getInvalid();
++  }
++  return ConcatCost;
++}
++
++/// Reconstruct a shuffle from concatenations of adjacent load pairs.
++/// The result has the concat width; its mask follows from the source lanes.
++bool VectorCombine::foldShuffleOfLoadConcats(Instruction &I) {
++  auto *Root = cast<ShuffleVectorInst>(&I);
++  if (Root->use_empty() || none_of(Root->operands(), [](Value *V) {
++        return isa<ShuffleVectorInst>(V);
++      }))
++    return false;
++
++  SmallVector<LoadPair, 2> Pairs;
++  SmallVector<int, 16> Mask;
++  if (!collectShuffleLoadConcats(Root, Pairs, Mask))
++    return false;
++  auto *Ty = cast<FixedVectorType>(Root->getType());
++
++  SmallPtrSet<User *, 16> Dead{Root};
++  SmallVector<ShuffleVectorInst *, 16> Removed{Root};
++  InstructionCost OldCost = 0, NewCost = 0;
++  // Credit only shuffles whose users will all be removed, counting each once.
++  for (unsigned Index = 0; Index != Removed.size(); ++Index) {
++    auto *S = Removed[Index];
++    OldCost += TTI.getInstructionCost(S, CostKind);
++    for (Value *V : S->operands())
++      if (auto *Op = dyn_cast<ShuffleVectorInst>(V);
++          Op && !Dead.contains(Op) &&
++          all_of(Op->users(), [&](User *U) { return Dead.contains(U); })) {
++        Dead.insert(Op);
++        Removed.push_back(Op);
++      }
++  }
++  for (auto Pair : Pairs) {
++    // Retained loads are outside this load-concat cost estimate.
++    if (any_of(Pair.first->users(),
++               [&](User *U) { return !Dead.contains(U); }) ||
++        any_of(Pair.second->users(),
++               [&](User *U) { return !Dead.contains(U); }))
++      return false;
++    InstructionCost Cost = getLoadConcatCost(Pair, Ty);
++    if (!Cost.isValid())
++      return false;
++    NewCost += Cost;
++  }
++  NewCost += TTI.getShuffleCost(TTI::SK_PermuteTwoSrc, Ty, Ty, CostKind, Mask);
++  if (!OldCost.isValid() || !NewCost.isValid() || NewCost >= OldCost)
++    return false;
++
++  LLVM_DEBUG(dbgs() << "Reconstructing shuffle from load concats: " << I
++                    << "\n  OldCost: " << OldCost << " vs NewCost: " << NewCost
++                    << "\n");
++  Builder.SetInsertPoint(Root);
++  Builder.SetCurrentDebugLocation(Root->getDebugLoc());
++  auto ConcatMask = createSequentialMask(0, Ty->getNumElements(), 0);
++  SmallVector<Value *, 2> Args;
++  for (auto Pair : Pairs)
++    Args.push_back(
++        Builder.CreateShuffleVector(Pair.first, Pair.second, ConcatMask));
++  Value *New = Builder.CreateShuffleVector(Args.front(), Args.back(), Mask);
++  // The root may be ahead of the load entry point in the forward scan.
++  replaceValue(*Root, *New, /*Erase=*/false);
++  return true;
++}
++
+ static SmallVector<InstLane>
+ generateInstLaneVectorFromOperand(ArrayRef<InstLane> Item, int Op) {
+   SmallVector<InstLane> NItem;
+@@ -6739,6 +6949,24 @@ bool VectorCombine::foldBitOrderReverseAndSwap(Instruction &I) {
+   return true;
+ }
+ 
++/// Expose load concats before shrinking their source loads.
++bool VectorCombine::foldShuffleOfLoadConcatsFromLoad(Instruction &I) {
++  auto *Load = cast<LoadInst>(&I);
++  if (!Load->isSimple())
++    return false;
++  Instruction *Root = Load;
++  unsigned NumVisited = 0;
++  while (Root->hasOneUse()) {
++    auto *Shuf = dyn_cast<ShuffleVectorInst>(*Root->user_begin());
++    if (!Shuf || Shuf->getParent() != Load->getParent())
++      break;
++    if (++NumVisited > Opts.vector_combine_max_scan_instrs)
++      return false;
++    Root = Shuf;
++  }
++  return Root != Load && foldShuffleOfLoadConcats(*Root);
++}
++
+ /// Given the maximum shuffle index and load vector type, compute the number of
+ /// elements for the shrunk load, rounding up to the next full vector register
+ /// boundary to avoid scalar remainders that legalize poorly.
+@@ -7095,6 +7323,8 @@ bool VectorCombine::run() {
+           return true;
+         if (foldShuffleOfShuffles(I))
+           return true;
++        if (foldShuffleOfLoadConcats(I))
++          return true;
+         if (foldPermuteOfIntrinsic(I))
+           return true;
+         if (foldShufflesOfLengthChangingShuffles(I))
+@@ -7107,6 +7337,8 @@ bool VectorCombine::run() {
+           return true;
+         break;
+       case Instruction::Load:
++        if (foldShuffleOfLoadConcatsFromLoad(I))
++          return true;
+         if (shrinkLoadForShuffles(I))
+           return true;
+         break;
+diff --git a/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll b/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll
+index 7eae698a23dd6d..5776f67921e596 100644
+--- a/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll
++++ b/llvm/test/CodeGen/X86/vector-shuffle-consecutive-loads.ll
+@@ -7,11 +7,8 @@
+ define <4 x double> @interleave_loads(ptr %px, ptr %py) {
+ ; CHECK-LABEL: interleave_loads:
+ ; CHECK:       # %bb.0:
+-; CHECK-NEXT:    vmovapd (%rsi), %xmm0
+-; CHECK-NEXT:    vmovupd (%rdi), %ymm1
+-; CHECK-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[1],ymm0[0],ymm1[3],ymm0[3]
+-; CHECK-NEXT:    vbroadcastsd 16(%rsi), %ymm1
+-; CHECK-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1,2],ymm1[3]
++; CHECK-NEXT:    vmovupd (%rdi), %ymm0
++; CHECK-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[1],mem[0],ymm0[3],mem[2]
+ ; CHECK-NEXT:    retq
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+diff --git a/llvm/test/CodeGen/X86/vector-shuffle-reconstruction-size.ll b/llvm/test/CodeGen/X86/vector-shuffle-reconstruction-size.ll
+index 9b2c2a28d0ebc0..3eab064c9ba5a4 100644
+--- a/llvm/test/CodeGen/X86/vector-shuffle-reconstruction-size.ll
++++ b/llvm/test/CodeGen/X86/vector-shuffle-reconstruction-size.ll
+@@ -7,21 +7,17 @@ define <4 x double> @throughput(ptr %px, ptr %py) {
+ ; SNB-LABEL: throughput:
+ ; SNB:       # %bb.0:
+ ; SNB-NEXT:    vmovaps (%rdi), %xmm0
+-; SNB-NEXT:    vunpcklpd {{.*#+}} xmm0 = xmm0[0],mem[0]
+-; SNB-NEXT:    vmovddup {{.*#+}} xmm1 = mem[0,0]
+-; SNB-NEXT:    vmovlps {{.*#+}} xmm1 = mem[0,1],xmm1[2,3]
+-; SNB-NEXT:    vinsertf128 $1, %xmm1, %ymm0, %ymm0
++; SNB-NEXT:    vmovaps (%rsi), %xmm1
++; SNB-NEXT:    vinsertf128 $1, 16(%rdi), %ymm0, %ymm0
++; SNB-NEXT:    vinsertf128 $1, 16(%rsi), %ymm1, %ymm1
++; SNB-NEXT:    vmovddup {{.*#+}} ymm1 = ymm1[0,0,2,2]
++; SNB-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0],ymm1[1,2],ymm0[3]
+ ; SNB-NEXT:    retq
+ ;
+ ; HSW-LABEL: throughput:
+ ; HSW:       # %bb.0:
+-; HSW-NEXT:    vmovapd (%rsi), %xmm0
+-; HSW-NEXT:    vmovupd (%rdi), %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[0],ymm0[0],ymm1[3],ymm0[3]
+-; HSW-NEXT:    vmovsd {{.*#+}} xmm1 = mem[0],zero
+-; HSW-NEXT:    vinsertf128 $1, %xmm1, %ymm0, %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[0,1,2,2]
+-; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1],ymm1[2],ymm0[3]
++; HSW-NEXT:    vmovddup {{.*#+}} ymm0 = mem[0,0,2,2]
++; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = mem[0],ymm0[1,2],mem[3]
+ ; HSW-NEXT:    retq
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -50,13 +46,8 @@ define <4 x double> @optsize(ptr %px, ptr %py) optsize {
+ ;
+ ; HSW-LABEL: optsize:
+ ; HSW:       # %bb.0:
+-; HSW-NEXT:    vmovapd (%rsi), %xmm0
+-; HSW-NEXT:    vmovupd (%rdi), %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[0],ymm0[0],ymm1[3],ymm0[3]
+-; HSW-NEXT:    vmovsd {{.*#+}} xmm1 = mem[0],zero
+-; HSW-NEXT:    vinsertf128 $1, %xmm1, %ymm0, %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[0,1,2,2]
+-; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1],ymm1[2],ymm0[3]
++; HSW-NEXT:    vmovddup {{.*#+}} ymm0 = mem[0,0,2,2]
++; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = mem[0],ymm0[1,2],mem[3]
+ ; HSW-NEXT:    retq
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -85,13 +76,8 @@ define <4 x double> @minsize(ptr %px, ptr %py) optsize minsize {
+ ;
+ ; HSW-LABEL: minsize:
+ ; HSW:       # %bb.0:
+-; HSW-NEXT:    vmovapd (%rsi), %xmm0
+-; HSW-NEXT:    vmovupd (%rdi), %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[0],ymm0[0],ymm1[3],ymm0[3]
+-; HSW-NEXT:    vmovsd {{.*#+}} xmm1 = mem[0],zero
+-; HSW-NEXT:    vinsertf128 $1, %xmm1, %ymm0, %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[0,1,2,2]
+-; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1],ymm1[2],ymm0[3]
++; HSW-NEXT:    vmovddup {{.*#+}} ymm0 = mem[0,0,2,2]
++; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = mem[0],ymm0[1,2],mem[3]
+ ; HSW-NEXT:    retq
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -111,24 +97,14 @@ define <4 x double> @minsize(ptr %px, ptr %py) optsize minsize {
+ define <4 x double> @aligned(ptr %px, ptr %py) optsize minsize {
+ ; SNB-LABEL: aligned:
+ ; SNB:       # %bb.0:
+-; SNB-NEXT:    vmovapd (%rsi), %xmm0
+-; SNB-NEXT:    vmovapd (%rdi), %ymm1
+-; SNB-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[0],ymm0[0],ymm1[3],ymm0[3]
+-; SNB-NEXT:    vmovsd {{.*#+}} xmm1 = mem[0],zero
+-; SNB-NEXT:    vinsertf128 $1, %xmm1, %ymm0, %ymm1
+-; SNB-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[0,1,2,2]
+-; SNB-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1],ymm1[2],ymm0[3]
++; SNB-NEXT:    vmovddup {{.*#+}} ymm0 = mem[0,0,2,2]
++; SNB-NEXT:    vblendpd {{.*#+}} ymm0 = mem[0],ymm0[1,2],mem[3]
+ ; SNB-NEXT:    retq
+ ;
+ ; HSW-LABEL: aligned:
+ ; HSW:       # %bb.0:
+-; HSW-NEXT:    vmovapd (%rsi), %xmm0
+-; HSW-NEXT:    vmovapd (%rdi), %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm1[0],ymm0[0],ymm1[3],ymm0[3]
+-; HSW-NEXT:    vmovsd {{.*#+}} xmm1 = mem[0],zero
+-; HSW-NEXT:    vinsertf128 $1, %xmm1, %ymm0, %ymm1
+-; HSW-NEXT:    vshufpd {{.*#+}} ymm0 = ymm0[0,1,2,2]
+-; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = ymm0[0,1],ymm1[2],ymm0[3]
++; HSW-NEXT:    vmovddup {{.*#+}} ymm0 = mem[0,0,2,2]
++; HSW-NEXT:    vblendpd {{.*#+}} ymm0 = mem[0],ymm0[1,2],mem[3]
+ ; HSW-NEXT:    retq
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+diff --git a/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll b/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll
+index bce9daaf00c876..0b4278b2c4a18f 100644
+--- a/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll
++++ b/llvm/test/Transforms/VectorCombine/X86/shuffle-consecutive-loads.ll
+@@ -6,20 +6,33 @@
+ ; PR140234: Expose the consecutive pairs before load shrinking.
+ 
+ define <4 x double> @interleave_loads(ptr %px, ptr %py) {
+-; CHECK-LABEL: define <4 x double> @interleave_loads(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; AVX-LABEL: define <4 x double> @interleave_loads(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 1, i32 4, i32 3, i32 6>
++; AVX-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; SSE-LABEL: define <4 x double> @interleave_loads(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SSE-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
++; SSE-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+@@ -38,7 +51,7 @@ define <4 x double> @interleave_loads(ptr %px, ptr %py) {
+ ; The X loads must be adjacent.
+ define <4 x double> @nonconsecutive(ptr %px, ptr %py) {
+ ; CHECK-LABEL: define <4 x double> @nonconsecutive(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0:[0-9]+]] {
+ ; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 32
+ ; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+ ; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+@@ -68,20 +81,33 @@ define <4 x double> @nonconsecutive(ptr %px, ptr %py) {
+ 
+ ; Different lane selections can also benefit from the same reconstruction.
+ define <4 x double> @different_elements(ptr %px, ptr %py) {
+-; CHECK-LABEL: define <4 x double> @different_elements(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; AVX-LABEL: define <4 x double> @different_elements(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 3, i32 6>
++; AVX-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; SSE-LABEL: define <4 x double> @different_elements(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SSE-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
++; SSE-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+@@ -163,19 +189,33 @@ define <4 x double> @volatile_load(ptr %px, ptr %py) {
+ 
+ ; Match by element provenance, including commuted operands and multiple root uses.
+ define <4 x double> @balanced_tree(ptr %px, ptr %py, ptr %out) {
+-; CHECK-LABEL: define <4 x double> @balanced_tree(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[LO:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[HI:%.*]] = shufflevector <2 x double> [[Y1]], <2 x double> [[X1]], <4 x i32> <i32 3, i32 0, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[R:%.*]] = shufflevector <4 x double> [[HI]], <4 x double> [[LO]], <4 x i32> <i32 4, i32 5, i32 0, i32 1>
+-; CHECK-NEXT:    store <4 x double> [[R]], ptr [[OUT]], align 1
+-; CHECK-NEXT:    ret <4 x double> [[R]]
++; AVX-LABEL: define <4 x double> @balanced_tree(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[R:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 1, i32 4, i32 3, i32 6>
++; AVX-NEXT:    store <4 x double> [[R]], ptr [[OUT]], align 1
++; AVX-NEXT:    ret <4 x double> [[R]]
++;
++; SSE-LABEL: define <4 x double> @balanced_tree(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr [[OUT:%.*]]) #[[ATTR0]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[LO:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 2, i32 poison, i32 poison>
++; SSE-NEXT:    [[HI:%.*]] = shufflevector <2 x double> [[Y1]], <2 x double> [[X1]], <4 x i32> <i32 3, i32 0, i32 poison, i32 poison>
++; SSE-NEXT:    [[R:%.*]] = shufflevector <4 x double> [[HI]], <4 x double> [[LO]], <4 x i32> <i32 4, i32 5, i32 0, i32 1>
++; SSE-NEXT:    store <4 x double> [[R]], ptr [[OUT]], align 1
++; SSE-NEXT:    ret <4 x double> [[R]]
+ ;
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+@@ -350,18 +390,31 @@ define <4 x i32> @interleave_i32_cost(ptr %px, ptr %py) {
+ 
+ ; Wider sources use the same lane-origin reconstruction.
+ define <8 x float> @interleave_v4f32(ptr %px, ptr %py) {
+-; CHECK-LABEL: define <8 x float> @interleave_v4f32(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <4 x float>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <4 x float>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <4 x float>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[Y1:%.*]] = load <4 x float>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[LO:%.*]] = shufflevector <4 x float> [[X0]], <4 x float> [[Y0]], <8 x i32> <i32 1, i32 0, i32 5, i32 4, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[HI:%.*]] = shufflevector <4 x float> [[Y1]], <4 x float> [[X1]], <8 x i32> <i32 5, i32 4, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[R:%.*]] = shufflevector <8 x float> [[LO]], <8 x float> [[HI]], <8 x i32> <i32 0, i32 1, i32 2, i32 poison, i32 8, i32 9, i32 10, i32 11>
+-; CHECK-NEXT:    ret <8 x float> [[R]]
++; AVX-LABEL: define <8 x float> @interleave_v4f32(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <4 x float>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <4 x float>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <4 x float>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <4 x float>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <4 x float> [[X0]], <4 x float> [[X1]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[Y0]], <4 x float> [[Y1]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; AVX-NEXT:    [[R:%.*]] = shufflevector <8 x float> [[TMP1]], <8 x float> [[TMP2]], <8 x i32> <i32 1, i32 0, i32 9, i32 poison, i32 5, i32 4, i32 13, i32 12>
++; AVX-NEXT:    ret <8 x float> [[R]]
++;
++; SSE-LABEL: define <8 x float> @interleave_v4f32(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <4 x float>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <4 x float>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <4 x float>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[Y1:%.*]] = load <4 x float>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[LO:%.*]] = shufflevector <4 x float> [[X0]], <4 x float> [[Y0]], <8 x i32> <i32 1, i32 0, i32 5, i32 4, i32 poison, i32 poison, i32 poison, i32 poison>
++; SSE-NEXT:    [[HI:%.*]] = shufflevector <4 x float> [[Y1]], <4 x float> [[X1]], <8 x i32> <i32 5, i32 4, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
++; SSE-NEXT:    [[R:%.*]] = shufflevector <8 x float> [[LO]], <8 x float> [[HI]], <8 x i32> <i32 0, i32 1, i32 2, i32 poison, i32 8, i32 9, i32 10, i32 11>
++; SSE-NEXT:    ret <8 x float> [[R]]
+ ;
+   %pxhi = getelementptr i8, ptr %px, i64 16
+   %pyhi = getelementptr i8, ptr %py, i64 16
+@@ -377,20 +430,33 @@ define <8 x float> @interleave_v4f32(ptr %px, ptr %py) {
+ 
+ ; Integer vectors use the same reconstruction as floating-point vectors.
+ define <4 x i64> @interleave_i64(ptr %px, ptr %py) {
+-; CHECK-LABEL: define <4 x i64> @interleave_i64(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x i64>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x i64>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x i64>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x i64>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x i64> [[X0]], <2 x i64> [[Y0]], <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x i64> [[X1]], <2 x i64> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x i64> [[SHUF0]], <4 x i64> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x i64> [[TMP1]], <1 x i64> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x i64> [[SHUF2]], <4 x i64> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+-; CHECK-NEXT:    ret <4 x i64> [[SHUF4]]
++; AVX-LABEL: define <4 x i64> @interleave_i64(
++; AVX-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; AVX-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; AVX-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; AVX-NEXT:    [[X0:%.*]] = load <2 x i64>, ptr [[PX]], align 16
++; AVX-NEXT:    [[Y0:%.*]] = load <2 x i64>, ptr [[PY]], align 16
++; AVX-NEXT:    [[X1:%.*]] = load <2 x i64>, ptr [[PXHI]], align 16
++; AVX-NEXT:    [[Y1:%.*]] = load <2 x i64>, ptr [[PYHI]], align 16
++; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <2 x i64> [[X0]], <2 x i64> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <2 x i64> [[Y0]], <2 x i64> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; AVX-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x i64> [[TMP1]], <4 x i64> [[TMP2]], <4 x i32> <i32 0, i32 5, i32 3, i32 6>
++; AVX-NEXT:    ret <4 x i64> [[SHUF4]]
++;
++; SSE-LABEL: define <4 x i64> @interleave_i64(
++; SSE-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR0]] {
++; SSE-NEXT:    [[PXHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PX]], i64 16
++; SSE-NEXT:    [[PYHI:%.*]] = getelementptr inbounds nuw i8, ptr [[PY]], i64 16
++; SSE-NEXT:    [[X0:%.*]] = load <2 x i64>, ptr [[PX]], align 16
++; SSE-NEXT:    [[Y0:%.*]] = load <2 x i64>, ptr [[PY]], align 16
++; SSE-NEXT:    [[X1:%.*]] = load <2 x i64>, ptr [[PXHI]], align 16
++; SSE-NEXT:    [[TMP1:%.*]] = load <1 x i64>, ptr [[PYHI]], align 16
++; SSE-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x i64> [[X0]], <2 x i64> [[Y0]], <4 x i32> <i32 0, i32 3, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x i64> [[X1]], <2 x i64> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x i64> [[SHUF0]], <4 x i64> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SSE-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x i64> [[TMP1]], <1 x i64> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SSE-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x i64> [[SHUF2]], <4 x i64> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
++; SSE-NEXT:    ret <4 x i64> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds nuw i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds nuw i8, ptr %py, i64 16
+@@ -405,6 +471,3 @@ define <4 x i64> @interleave_i64(ptr %px, ptr %py) {
+   %shuf4 = shufflevector <4 x i64> %shuf2, <4 x i64> %shuf3, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+   ret <4 x i64> %shuf4
+ }
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; AVX: {{.*}}
+-; SSE: {{.*}}
+diff --git a/llvm/test/Transforms/VectorCombine/X86/shuffle-reconstruction-size.ll b/llvm/test/Transforms/VectorCombine/X86/shuffle-reconstruction-size.ll
+index 98ed612d3b3ddf..2fbc5626b3e64b 100644
+--- a/llvm/test/Transforms/VectorCombine/X86/shuffle-reconstruction-size.ll
++++ b/llvm/test/Transforms/VectorCombine/X86/shuffle-reconstruction-size.ll
+@@ -12,12 +12,10 @@ define <4 x double> @throughput(ptr %px, ptr %py) {
+ ; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+ ; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+ ; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
++; CHECK-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 6, i32 3>
+ ; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+@@ -36,20 +34,33 @@ define <4 x double> @throughput(ptr %px, ptr %py) {
+ 
+ ; Size mode must not assume an expensive wide load will combine the concats.
+ define <4 x double> @optsize(ptr %px, ptr %py) optsize {
+-; CHECK-LABEL: define <4 x double> @optsize(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR1:[0-9]+]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; SNB-LABEL: define <4 x double> @optsize(
++; SNB-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR1:[0-9]+]] {
++; SNB-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; SNB-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; SNB-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SNB-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SNB-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SNB-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SNB-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SNB-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
++; SNB-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; HSW-LABEL: define <4 x double> @optsize(
++; HSW-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR1:[0-9]+]] {
++; HSW-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; HSW-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; HSW-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; HSW-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; HSW-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; HSW-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; HSW-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 6, i32 3>
++; HSW-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -67,20 +78,33 @@ define <4 x double> @optsize(ptr %px, ptr %py) optsize {
+ 
+ ; MinSize uses the same conservative profitability check.
+ define <4 x double> @minsize(ptr %px, ptr %py) optsize minsize {
+-; CHECK-LABEL: define <4 x double> @minsize(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2:[0-9]+]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; SNB-LABEL: define <4 x double> @minsize(
++; SNB-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2:[0-9]+]] {
++; SNB-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; SNB-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; SNB-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SNB-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SNB-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SNB-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SNB-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SNB-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
++; SNB-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; HSW-LABEL: define <4 x double> @minsize(
++; HSW-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2:[0-9]+]] {
++; HSW-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; HSW-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; HSW-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; HSW-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; HSW-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; HSW-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; HSW-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 6, i32 3>
++; HSW-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -98,20 +122,33 @@ define <4 x double> @minsize(ptr %px, ptr %py) optsize minsize {
+ 
+ ; The decision is independent of the particular output mask.
+ define <4 x double> @other_lanes(ptr %px, ptr %py) optsize minsize {
+-; CHECK-LABEL: define <4 x double> @other_lanes(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; SNB-LABEL: define <4 x double> @other_lanes(
++; SNB-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2]] {
++; SNB-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; SNB-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; SNB-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SNB-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SNB-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SNB-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SNB-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SNB-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
++; SNB-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; HSW-LABEL: define <4 x double> @other_lanes(
++; HSW-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2]] {
++; HSW-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; HSW-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; HSW-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; HSW-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; HSW-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; HSW-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; HSW-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 1, i32 5, i32 6, i32 3>
++; HSW-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -130,18 +167,16 @@ define <4 x double> @other_lanes(ptr %px, ptr %py) optsize minsize {
+ ; Naturally aligned wide accesses still expose code-size wins on the same CPU.
+ define <4 x double> @aligned(ptr %px, ptr %py) optsize minsize {
+ ; CHECK-LABEL: define <4 x double> @aligned(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2]] {
++; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]]) #[[ATTR2:[0-9]+]] {
+ ; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
+ ; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
+ ; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 32
+ ; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 32
+ ; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
++; CHECK-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 6, i32 3>
+ ; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+@@ -226,21 +261,35 @@ define <4 x double> @readonly_call(ptr %px, ptr %py) optsize minsize {
+ 
+ ; Alias analysis permits a store to an unrelated object.
+ define <4 x double> @disjoint_store(ptr %px, ptr %py, ptr noalias %out) optsize minsize {
+-; CHECK-LABEL: define <4 x double> @disjoint_store(
+-; CHECK-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr noalias [[OUT:%.*]]) #[[ATTR2]] {
+-; CHECK-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
+-; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
+-; CHECK-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
+-; CHECK-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
+-; CHECK-NEXT:    store double 0.000000e+00, ptr [[OUT]], align 8
+-; CHECK-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
+-; CHECK-NEXT:    ret <4 x double> [[SHUF4]]
++; SNB-LABEL: define <4 x double> @disjoint_store(
++; SNB-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr noalias [[OUT:%.*]]) #[[ATTR2]] {
++; SNB-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; SNB-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; SNB-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; SNB-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; SNB-NEXT:    store double 0.000000e+00, ptr [[OUT]], align 8
++; SNB-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; SNB-NEXT:    [[TMP1:%.*]] = load <1 x double>, ptr [[PYHI]], align 16
++; SNB-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF1:%.*]] = shufflevector <2 x double> [[X1]], <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x double> [[SHUF0]], <4 x double> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
++; SNB-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x double> [[TMP1]], <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; SNB-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[SHUF2]], <4 x double> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 4, i32 2>
++; SNB-NEXT:    ret <4 x double> [[SHUF4]]
++;
++; HSW-LABEL: define <4 x double> @disjoint_store(
++; HSW-SAME: ptr [[PX:%.*]], ptr [[PY:%.*]], ptr noalias [[OUT:%.*]]) #[[ATTR2]] {
++; HSW-NEXT:    [[PXHI:%.*]] = getelementptr inbounds i8, ptr [[PX]], i64 16
++; HSW-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 16
++; HSW-NEXT:    [[X0:%.*]] = load <2 x double>, ptr [[PX]], align 16
++; HSW-NEXT:    [[Y0:%.*]] = load <2 x double>, ptr [[PY]], align 16
++; HSW-NEXT:    store double 0.000000e+00, ptr [[OUT]], align 8
++; HSW-NEXT:    [[X1:%.*]] = load <2 x double>, ptr [[PXHI]], align 16
++; HSW-NEXT:    [[Y1:%.*]] = load <2 x double>, ptr [[PYHI]], align 16
++; HSW-NEXT:    [[TMP1:%.*]] = shufflevector <2 x double> [[X0]], <2 x double> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[TMP2:%.*]] = shufflevector <2 x double> [[Y0]], <2 x double> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; HSW-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x double> [[TMP1]], <4 x double> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 6, i32 3>
++; HSW-NEXT:    ret <4 x double> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 16
+   %pyhi = getelementptr inbounds i8, ptr %py, i64 16
+@@ -265,13 +314,11 @@ define <4 x float> @narrow_sources(ptr %px, ptr %py) optsize minsize {
+ ; CHECK-NEXT:    [[PYHI:%.*]] = getelementptr inbounds i8, ptr [[PY]], i64 8
+ ; CHECK-NEXT:    [[X0:%.*]] = load <2 x float>, ptr [[PX]], align 8
+ ; CHECK-NEXT:    [[Y0:%.*]] = load <2 x float>, ptr [[PY]], align 8
+-; CHECK-NEXT:    [[TMP1:%.*]] = load <1 x float>, ptr [[PXHI]], align 8
+-; CHECK-NEXT:    [[TMP2:%.*]] = load <1 x float>, ptr [[PYHI]], align 8
+-; CHECK-NEXT:    [[SHUF0:%.*]] = shufflevector <2 x float> [[X0]], <2 x float> [[Y0]], <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF1:%.*]] = shufflevector <1 x float> [[TMP1]], <1 x float> poison, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF2:%.*]] = shufflevector <4 x float> [[SHUF0]], <4 x float> [[SHUF1]], <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+-; CHECK-NEXT:    [[SHUF3:%.*]] = shufflevector <1 x float> [[TMP2]], <1 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x float> [[SHUF2]], <4 x float> [[SHUF3]], <4 x i32> <i32 0, i32 1, i32 2, i32 4>
++; CHECK-NEXT:    [[X1:%.*]] = load <2 x float>, ptr [[PXHI]], align 8
++; CHECK-NEXT:    [[Y1:%.*]] = load <2 x float>, ptr [[PYHI]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x float> [[X0]], <2 x float> [[X1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <2 x float> [[Y0]], <2 x float> [[Y1]], <4 x i32> <i32 0, i32 1, i32 2, i32 3>
++; CHECK-NEXT:    [[SHUF4:%.*]] = shufflevector <4 x float> [[TMP1]], <4 x float> [[TMP2]], <4 x i32> <i32 0, i32 4, i32 2, i32 6>
+ ; CHECK-NEXT:    ret <4 x float> [[SHUF4]]
+ ;
+   %pxhi = getelementptr inbounds i8, ptr %px, i64 8
+@@ -289,6 +336,3 @@ define <4 x float> @narrow_sources(ptr %px, ptr %py) optsize minsize {
+ }
+ 
+ declare void @observe(ptr) nounwind nofree nosync willreturn memory(argmem: read)
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; HSW: {{.*}}
+-; SNB: {{.*}}
