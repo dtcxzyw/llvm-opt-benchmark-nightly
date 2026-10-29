@@ -205,34 +205,30 @@ bb.b:                                             ; preds = %bb.a, %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !384
   %.sroa.0203.0.copyload = load ptr, ptr %i.i, align 8, !tbaa !394 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0203.0.copyload, i64 24
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !383  ; 4 uses
-  %15 = icmp ne i32 %i.k, 229                     ; 3 uses
-  switch i32 %i.k, label %switch.edge [
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !383  ; 3 uses
+  switch i32 %i.k, label %bb.ag [
     i32 236, label %switch.edge.thread
     i32 227, label %switch.edge.thread
     i32 3, label %switch.edge.thread
+    i32 229, label %switch.early.test
+    i32 228, label %switch.early.test
+    i32 193, label %switch.early.test
+    i32 4, label %switch.early.test
   ]
 
-switch.edge:                                      ; preds = %bb.b
-  br i1 %15, label %switch.early.test, label %switch.edge.thread.thread
+switch.early.test:                                ; preds = %bb.b, %bb.b, %bb.b, %bb.b
+  br label %switch.edge.thread
 
-switch.early.test:                                ; preds = %switch.edge
-  switch i32 %i.k, label %bb.ag [
-    i32 228, label %switch.edge.thread
-    i32 193, label %switch.edge.thread
-    i32 4, label %switch.edge.thread
-  ]
-
-switch.edge.thread:                               ; preds = %bb.b, %bb.b, %bb.b, %switch.early.test, %switch.early.test, %switch.early.test
-  %16 = phi i8 [ 1, %bb.b ], [ 0, %switch.early.test ], [ 0, %switch.early.test ], [ 0, %switch.early.test ], [ 1, %bb.b ], [ 1, %bb.b ]
+switch.edge.thread:                               ; preds = %bb.b, %bb.b, %bb.b, %switch.early.test
+  %15 = phi i8 [ 1, %bb.b ], [ 1, %bb.b ], [ 1, %bb.b ], [ 0, %switch.early.test ] ; 2 uses
   %i.l = icmp eq i32 %i.g, 171
+  %16 = icmp ne i32 %i.k, 229                     ; 2 uses
   %i.m = add nsw i32 %i.k, -230
   %i.n = icmp ult i32 %i.m, -3
   %or.cond16 = and i1 %i.l, %i.n
   br i1 %or.cond16, label %bb.ag, label %switch.edge.thread.thread
 
-switch.edge.thread.thread:                        ; preds = %switch.edge, %switch.edge.thread
-  %17 = phi i8 [ %16, %switch.edge.thread ], [ 0, %switch.edge ] ; 2 uses
+switch.edge.thread.thread:                        ; preds = %switch.edge.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #35
   %i.o = tail call fastcc { i16, ptr } @_ZL22calculatePreExtendTypeN4llvm7SDValueE(ptr nonnull %.sroa.0203.0.copyload) ; 4 uses
   %i.p = extractvalue { i16, ptr } %i.o, 0        ; 5 uses
@@ -370,7 +366,7 @@ bb.m:                                             ; preds = %_ZNK4llvm3EVT19getS
   br i1 %.not160241, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m
-  %i.bk = zext i1 %15 to i8
+  %i.bk = zext i1 %16 to i8
   %.0154240 = getelementptr inbounds nuw i8, ptr %i.bf, i64 40
   %.sroa.0102.0.copyload = load i16, ptr %8, align 8
   %.sroa.2104.0.copyload = load ptr, ptr %i.q, align 8
@@ -378,7 +374,7 @@ bb.m:                                             ; preds = %_ZNK4llvm3EVT19getS
 
 bb.n:                                             ; preds = %.lr.ph, %bb.t
   %.0154245 = phi ptr [ %.0154240, %.lr.ph ], [ %.0154, %bb.t ] ; 2 uses
-  %.0145244 = phi i8 [ %17, %.lr.ph ], [ %.3148, %bb.t ] ; 3 uses
+  %.0145244 = phi i8 [ %15, %.lr.ph ], [ %.3148, %bb.t ] ; 3 uses
   %.0149243 = phi i8 [ %i.bk, %.lr.ph ], [ %.3152, %bb.t ] ; 3 uses
   %.sroa.0195.0.copyload = load ptr, ptr %.0154245, align 8, !tbaa !394 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0195.0.copyload, i64 24
@@ -419,8 +415,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q, %bb.q, %bb.r
   %i.bz = phi i8 [ %i.by, %bb.r ], [ 1, %bb.q ], [ 1, %bb.q ] ; 2 uses
   %i.ca = trunc nuw i8 %.0149243 to i1
-  %18 = and i8 %.0145244, 1
-  %.not161 = icmp ne i8 %i.bz, %18
+  %.not161 = icmp ne i8 %i.bz, %.0145244
   %or.cond.not = select i1 %i.ca, i1 %.not161, i1 false
   br i1 %or.cond.not, label %.loopexit, label %bb.t
 
@@ -436,8 +431,8 @@ bb.t:                                             ; preds = %bb.n, %bb.s, %bb.q
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.m
-  %.0149.lcssa = phi i1 [ %15, %bb.m ], [ %i.cb, %._crit_edge.loopexit ]
-  %.0145.lcssa = phi i8 [ %17, %bb.m ], [ %.3148, %._crit_edge.loopexit ]
+  %.0149.lcssa = phi i1 [ %16, %bb.m ], [ %i.cb, %._crit_edge.loopexit ]
+  %.0145.lcssa = phi i8 [ %15, %bb.m ], [ %.3148, %._crit_edge.loopexit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #35
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !389
@@ -633,9 +628,9 @@ bb.af:                                            ; preds = %bb.ae, %_ZN4llvm11S
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #35
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.a, %.loopexit, %switch.early.test, %switch.edge.thread
-  %.sroa.16.5 = phi i32 [ 0, %bb.a ], [ %.sroa.16.3, %.loopexit ], [ 0, %switch.early.test ], [ 0, %switch.edge.thread ]
-  %.sroa.0220.5 = phi ptr [ null, %bb.a ], [ %.sroa.0220.3, %.loopexit ], [ null, %switch.early.test ], [ null, %switch.edge.thread ]
+bb.ag:                                            ; preds = %bb.b, %bb.a, %.loopexit, %switch.edge.thread
+  %.sroa.16.5 = phi i32 [ 0, %bb.a ], [ %.sroa.16.3, %.loopexit ], [ 0, %bb.b ], [ 0, %switch.edge.thread ]
+  %.sroa.0220.5 = phi ptr [ null, %bb.a ], [ %.sroa.0220.3, %.loopexit ], [ null, %bb.b ], [ null, %switch.edge.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #35
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.0220.5, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.16.5, 1

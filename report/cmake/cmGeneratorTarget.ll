@@ -204,32 +204,27 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 bb.l:                                             ; preds = %.thread
   %i.ey = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !264 ; 2 uses
-  %i.fa = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
+  %i.fa = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %.not3445 = icmp eq ptr %i.ez, %i.fa
   br i1 %.not3445, label %.noexc25._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l, %bb.m
-  %.sroa.030.046 = phi ptr [ %i.fe, %bb.m ], [ %i.ez, %bb.l ] ; 3 uses
+  %.sroa.030.046 = phi ptr [ %i.fe, %bb.m ], [ %i.ez, %bb.l ] ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.030.046, i64 32
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !342
   %i.fd = invoke noundef zeroext i1 @_ZNK17cmGeneratorTarget18HaveFortranSourcesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(3187) %i.fc, ptr noundef nonnull align 8 dereferenceable(32) %1)
-          to label %.noexc25 unwind label %bb.p, !inline_history !3490
+          to label %.noexc25 unwind label %bb.p, !inline_history !3490 ; 3 uses
 
 .noexc25:                                         ; preds = %.lr.ph
-  br i1 %i.fd, label %.noexc25._crit_edge.loopexit, label %bb.m
+  br i1 %i.fd, label %.noexc25._crit_edge, label %bb.m
 
 bb.m:                                             ; preds = %.noexc25
   %i.fe = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.030.046) #33, !inline_history !3490 ; 2 uses
   %.not34 = icmp eq ptr %i.fe, %i.fa
-  br i1 %.not34, label %.noexc25._crit_edge.loopexit, label %.lr.ph, !llvm.loop !3491
+  br i1 %.not34, label %.noexc25._crit_edge, label %.lr.ph, !llvm.loop !3491
 
-.noexc25._crit_edge.loopexit:                     ; preds = %.noexc25, %bb.m
-  %.sroa.030.0.lcssa.ph = phi ptr [ %i.fa, %bb.m ], [ %.sroa.030.046, %.noexc25 ]
-  %11 = icmp ne ptr %i.fa, %.sroa.030.0.lcssa.ph
-  br label %.noexc25._crit_edge
-
-.noexc25._crit_edge:                              ; preds = %.noexc25._crit_edge.loopexit, %bb.l
-  %.sroa.030.0.lcssa = phi i1 [ false, %bb.l ], [ %11, %.noexc25._crit_edge.loopexit ]
+.noexc25._crit_edge:                              ; preds = %bb.m, %.noexc25, %bb.l
+  %.lcssa = phi i1 [ false, %bb.l ], [ %i.fd, %.noexc25 ], [ %i.fd, %bb.m ]
   %i.ff = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !263
   invoke void @_ZNSt8_Rb_treeIPK17cmGeneratorTargetS2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E(ptr noundef nonnull align 8 dereferenceable(48) %10, ptr noundef %i.fg)
@@ -268,7 +263,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br label %.loopexit.split-lp
 
 bb.r:                                             ; preds = %_ZNSt3setIPK17cmGeneratorTargetSt4lessIS2_ESaIS2_EED2Ev.exit, %.loopexit35
-  %.014 = phi i1 [ true, %.loopexit35 ], [ %.sroa.030.0.lcssa, %_ZNSt3setIPK17cmGeneratorTargetSt4lessIS2_ESaIS2_EED2Ev.exit ]
+  %.014 = phi i1 [ true, %.loopexit35 ], [ %.lcssa, %_ZNSt3setIPK17cmGeneratorTargetSt4lessIS2_ESaIS2_EED2Ev.exit ]
   %i.fl = load ptr, ptr %9, align 8, !tbaa !505   ; 3 uses
   %i.fm = load ptr, ptr %i.b, align 8, !tbaa !506 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.fl, %i.fm

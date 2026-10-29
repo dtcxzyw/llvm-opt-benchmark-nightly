@@ -204,28 +204,28 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not50.i.i.i, label %worse_candidate.exit.thread356.i.i, label %.thread.i.i.i
 
 .thread.i.i.i:                                    ; preds = %bb.k, %bb.j
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bd, i64 12 ; 3 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bd, i64 12 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bf, i64 12 ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !83 ; 2 uses
   %i.bo = zext i32 %i.bn to i64
   %.idx.i.i.i = shl nuw nsw i64 %i.bo, 2
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.idx.i.i.i ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.idx.i.i.i
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !83 ; 2 uses
   %i.bs = zext i32 %i.br to i64
   %.idx17.i.i.i = shl nuw nsw i64 %i.bs, 2
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bl, i64 %.idx17.i.i.i ; 2 uses
   %i.bu = icmp ne i32 %i.bn, 0                    ; 2 uses
-  %i.bv = icmp ne i32 %i.br, 0                    ; 2 uses
+  %i.bv = icmp ne i32 %i.br, 0
   %i.bw = select i1 %i.bu, i1 %i.bv, i1 false
   br i1 %i.bw, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i
   %i.bx = getelementptr inbounds nuw i8, ptr %.04411.i.i.i, i64 4 ; 3 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %.04510.i.i.i, i64 4 ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %.04510.i.i.i, i64 4 ; 2 uses
   %i.bz = icmp ne ptr %i.by, %i.bp                ; 2 uses
-  %i.ca = icmp ne ptr %i.bx, %i.bt                ; 2 uses
+  %i.ca = icmp ne ptr %i.bx, %i.bt
   %i.cb = select i1 %i.bz, i1 %i.ca, i1 false
   br i1 %i.cb, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !111
 
@@ -249,20 +249,17 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i
   br i1 %cond.i.i.i, label %bb.l, label %worse_candidate.exit.i.i, !llvm.loop !111
 
 ._crit_edge.i.i.i:                                ; preds = %bb.l, %.thread.i.i.i
-  %.045.lcssa.i.i.i = phi ptr [ %i.bk, %.thread.i.i.i ], [ %i.by, %bb.l ]
   %.044.lcssa.i.i.i = phi ptr [ %i.bl, %.thread.i.i.i ], [ %i.bx, %bb.l ]
   %.043.lcssa.i.i.i = phi i32 [ -1, %.thread.i.i.i ], [ %i.cc, %bb.l ] ; 2 uses
   %.0.lcssa.i.i.i = phi i32 [ -1, %.thread.i.i.i ], [ %i.cd, %bb.l ] ; 2 uses
-  %.lcssa3.i.i.i = phi i1 [ %i.bu, %.thread.i.i.i ], [ %i.bz, %bb.l ]
-  %.lcssa.i.i.i = phi i1 [ %i.bv, %.thread.i.i.i ], [ %i.ca, %bb.l ]
-  %i.cm = icmp eq ptr %.044.lcssa.i.i.i, %i.bt
+  %.lcssa3.i.i.i = phi i1 [ %i.bu, %.thread.i.i.i ], [ %i.bz, %bb.l ] ; 2 uses
+  %i.cm = icmp eq ptr %.044.lcssa.i.i.i, %i.bt    ; 2 uses
   %or.cond.i.i.i = select i1 %.lcssa3.i.i.i, i1 %i.cm, i1 false
   br i1 %or.cond.i.i.i, label %worse_candidate.exit.thread.i.i, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge.i.i.i
-  %2 = icmp eq ptr %.045.lcssa.i.i.i, %i.bp
-  %brmerge.not.i.i.i = select i1 %2, i1 %.lcssa.i.i.i, i1 false
-  br i1 %brmerge.not.i.i.i, label %worse_candidate.exit.thread356.i.i, label %bb.n
+  %brmerge.not.i.i.i = select i1 %.lcssa3.i.i.i, i1 true, i1 %i.cm
+  br i1 %brmerge.not.i.i.i, label %bb.n, label %worse_candidate.exit.thread356.i.i
 
 bb.n:                                             ; preds = %bb.m
   %i.cn = icmp ult i32 %.043.lcssa.i.i.i, %.0.lcssa.i.i.i
@@ -310,28 +307,28 @@ bb.p:                                             ; preds = %worse_candidate.exi
   br i1 %.not50.i211.i.i, label %worse_candidate.exit233.thread360.i.i, label %.thread.i212.i.i
 
 .thread.i212.i.i:                                 ; preds = %bb.p, %bb.o
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cv, i64 12 ; 3 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cv, i64 12 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cw, i64 12 ; 3 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !83 ; 2 uses
   %i.dd = zext i32 %i.dc to i64
   %.idx.i213.i.i = shl nuw nsw i64 %i.dd, 2
-  %i.de = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.idx.i213.i.i ; 2 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %i.cz, i64 %.idx.i213.i.i
   %i.df = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !83 ; 2 uses
   %i.dh = zext i32 %i.dg to i64
   %.idx17.i214.i.i = shl nuw nsw i64 %i.dh, 2
   %i.di = getelementptr inbounds nuw i8, ptr %i.da, i64 %.idx17.i214.i.i ; 2 uses
   %i.dj = icmp ne i32 %i.dc, 0                    ; 2 uses
-  %i.dk = icmp ne i32 %i.dg, 0                    ; 2 uses
+  %i.dk = icmp ne i32 %i.dg, 0
   %i.dl = select i1 %i.dj, i1 %i.dk, i1 false
   br i1 %i.dl, label %.lr.ph.i226.i.i, label %._crit_edge.i215.i.i
 
 bb.q:                                             ; preds = %.lr.ph.i226.i.i
   %i.dm = getelementptr inbounds nuw i8, ptr %.04411.i227.i.i, i64 4 ; 3 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %.04510.i228.i.i, i64 4 ; 3 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %.04510.i228.i.i, i64 4 ; 2 uses
   %i.do = icmp ne ptr %i.dn, %i.de                ; 2 uses
-  %i.dp = icmp ne ptr %i.dm, %i.di                ; 2 uses
+  %i.dp = icmp ne ptr %i.dm, %i.di
   %i.dq = select i1 %i.do, i1 %i.dp, i1 false
   br i1 %i.dq, label %.lr.ph.i226.i.i, label %._crit_edge.i215.i.i, !llvm.loop !111
 
@@ -355,20 +352,17 @@ bb.q:                                             ; preds = %.lr.ph.i226.i.i
   br i1 %cond.i232.i.i, label %bb.q, label %worse_candidate.exit233.i.i, !llvm.loop !111
 
 ._crit_edge.i215.i.i:                             ; preds = %bb.q, %.thread.i212.i.i
-  %.045.lcssa.i216.i.i = phi ptr [ %i.cz, %.thread.i212.i.i ], [ %i.dn, %bb.q ]
   %.044.lcssa.i217.i.i = phi ptr [ %i.da, %.thread.i212.i.i ], [ %i.dm, %bb.q ]
   %.043.lcssa.i218.i.i = phi i32 [ -1, %.thread.i212.i.i ], [ %i.dr, %bb.q ] ; 2 uses
   %.0.lcssa.i219.i.i = phi i32 [ -1, %.thread.i212.i.i ], [ %i.ds, %bb.q ] ; 2 uses
-  %.lcssa3.i220.i.i = phi i1 [ %i.dj, %.thread.i212.i.i ], [ %i.do, %bb.q ]
-  %.lcssa.i221.i.i = phi i1 [ %i.dk, %.thread.i212.i.i ], [ %i.dp, %bb.q ]
-  %i.eb = icmp eq ptr %.044.lcssa.i217.i.i, %i.di
+  %.lcssa3.i220.i.i = phi i1 [ %i.dj, %.thread.i212.i.i ], [ %i.do, %bb.q ] ; 2 uses
+  %i.eb = icmp eq ptr %.044.lcssa.i217.i.i, %i.di ; 2 uses
   %or.cond.i222.i.i = select i1 %.lcssa3.i220.i.i, i1 %i.eb, i1 false
   br i1 %or.cond.i222.i.i, label %worse_candidate.exit233.thread.i.i, label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge.i215.i.i
-  %3 = icmp eq ptr %.045.lcssa.i216.i.i, %i.de
-  %brmerge.not.i223.i.i = select i1 %3, i1 %.lcssa.i221.i.i, i1 false
-  br i1 %brmerge.not.i223.i.i, label %worse_candidate.exit233.thread360.i.i, label %bb.s
+  %brmerge.not.i223.i.i = select i1 %.lcssa3.i220.i.i, i1 true, i1 %i.eb
+  br i1 %brmerge.not.i223.i.i, label %bb.s, label %worse_candidate.exit233.thread360.i.i
 
 bb.s:                                             ; preds = %bb.r
   %i.ec = icmp ult i32 %.043.lcssa.i218.i.i, %.0.lcssa.i219.i.i
@@ -412,28 +406,28 @@ bb.u:                                             ; preds = %worse_candidate.exi
   br i1 %.not50.i235.i.i, label %worse_candidate.exit257.thread365.i.i, label %.thread.i236.i.i
 
 .thread.i236.i.i:                                 ; preds = %bb.u, %bb.t
-  %i.eo = getelementptr inbounds nuw i8, ptr %i.ei, i64 12 ; 3 uses
+  %i.eo = getelementptr inbounds nuw i8, ptr %i.ei, i64 12 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.ek, i64 12 ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !83 ; 2 uses
   %i.es = zext i32 %i.er to i64
   %.idx.i237.i.i = shl nuw nsw i64 %i.es, 2
-  %i.et = getelementptr inbounds nuw i8, ptr %i.eo, i64 %.idx.i237.i.i ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %i.eo, i64 %.idx.i237.i.i
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !83 ; 2 uses
   %i.ew = zext i32 %i.ev to i64
   %.idx17.i238.i.i = shl nuw nsw i64 %i.ew, 2
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ep, i64 %.idx17.i238.i.i ; 2 uses
   %i.ey = icmp ne i32 %i.er, 0                    ; 2 uses
-  %i.ez = icmp ne i32 %i.ev, 0                    ; 2 uses
+  %i.ez = icmp ne i32 %i.ev, 0
   %i.fa = select i1 %i.ey, i1 %i.ez, i1 false
   br i1 %i.fa, label %.lr.ph.i250.i.i, label %._crit_edge.i239.i.i
 
 bb.v:                                             ; preds = %.lr.ph.i250.i.i
   %i.fb = getelementptr inbounds nuw i8, ptr %.04411.i251.i.i, i64 4 ; 3 uses
-  %i.fc = getelementptr inbounds nuw i8, ptr %.04510.i252.i.i, i64 4 ; 3 uses
+  %i.fc = getelementptr inbounds nuw i8, ptr %.04510.i252.i.i, i64 4 ; 2 uses
   %i.fd = icmp ne ptr %i.fc, %i.et                ; 2 uses
-  %i.fe = icmp ne ptr %i.fb, %i.ex                ; 2 uses
+  %i.fe = icmp ne ptr %i.fb, %i.ex
   %i.ff = select i1 %i.fd, i1 %i.fe, i1 false
   br i1 %i.ff, label %.lr.ph.i250.i.i, label %._crit_edge.i239.i.i, !llvm.loop !111
 
@@ -457,20 +451,17 @@ bb.v:                                             ; preds = %.lr.ph.i250.i.i
   br i1 %cond.i256.i.i, label %bb.v, label %worse_candidate.exit257.i.i, !llvm.loop !111
 
 ._crit_edge.i239.i.i:                             ; preds = %bb.v, %.thread.i236.i.i
-  %.045.lcssa.i240.i.i = phi ptr [ %i.eo, %.thread.i236.i.i ], [ %i.fc, %bb.v ]
   %.044.lcssa.i241.i.i = phi ptr [ %i.ep, %.thread.i236.i.i ], [ %i.fb, %bb.v ]
   %.043.lcssa.i242.i.i = phi i32 [ -1, %.thread.i236.i.i ], [ %i.fg, %bb.v ] ; 2 uses
   %.0.lcssa.i243.i.i = phi i32 [ -1, %.thread.i236.i.i ], [ %i.fh, %bb.v ] ; 2 uses
-  %.lcssa3.i244.i.i = phi i1 [ %i.ey, %.thread.i236.i.i ], [ %i.fd, %bb.v ]
-  %.lcssa.i245.i.i = phi i1 [ %i.ez, %.thread.i236.i.i ], [ %i.fe, %bb.v ]
-  %i.fq = icmp eq ptr %.044.lcssa.i241.i.i, %i.ex
+  %.lcssa3.i244.i.i = phi i1 [ %i.ey, %.thread.i236.i.i ], [ %i.fd, %bb.v ] ; 2 uses
+  %i.fq = icmp eq ptr %.044.lcssa.i241.i.i, %i.ex ; 2 uses
   %or.cond.i246.i.i = select i1 %.lcssa3.i244.i.i, i1 %i.fq, i1 false
   br i1 %or.cond.i246.i.i, label %worse_candidate.exit257.thread.i.i, label %bb.w
 
 bb.w:                                             ; preds = %._crit_edge.i239.i.i
-  %4 = icmp eq ptr %.045.lcssa.i240.i.i, %i.et
-  %brmerge.not.i247.i.i = select i1 %4, i1 %.lcssa.i245.i.i, i1 false
-  br i1 %brmerge.not.i247.i.i, label %worse_candidate.exit257.thread365.i.i, label %bb.x
+  %brmerge.not.i247.i.i = select i1 %.lcssa3.i244.i.i, i1 true, i1 %i.fq
+  br i1 %brmerge.not.i247.i.i, label %bb.x, label %worse_candidate.exit257.thread365.i.i
 
 bb.x:                                             ; preds = %bb.w
   %i.fr = icmp ult i32 %.043.lcssa.i242.i.i, %.0.lcssa.i243.i.i
@@ -494,7 +485,7 @@ worse_candidate.exit257.thread365.i.i:            ; preds = %worse_candidate.exi
   %.pre-phi554.i.i = phi i64 [ %i.ej, %bb.w ], [ %i.ej, %bb.u ], [ %i.ej, %.split367.i.i.a ], [ %.pre-phi.i.i, %worse_candidate.exit257.thread.i.i ], [ %i.ej, %worse_candidate.exit257.i.i ]
   %i.fu = phi i32 [ %i.eg, %bb.w ], [ %i.eg, %bb.u ], [ %i.eg, %.split367.i.i.a ], [ %i.eh, %worse_candidate.exit257.thread.i.i ], [ %i.eg, %worse_candidate.exit257.i.i ] ; 2 uses
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %.val209.i.i, i64 %.pre-phi554.i.i ; 3 uses
-  %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 12 ; 6 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 12 ; 5 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fv, i64 8 ; 2 uses
   %i.fy = add i64 %.0189.i.i, 2
   br label %bb.y
@@ -526,26 +517,26 @@ bb.aa:                                            ; preds = %.backedge.i.i
   br i1 %.not50.i259.i.i, label %.preheader387.i.i, label %.thread.i260.i.i
 
 .thread.i260.i.i:                                 ; preds = %bb.aa, %bb.z
-  %i.gi = getelementptr inbounds nuw i8, ptr %i.gf, i64 12 ; 3 uses
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.gf, i64 12 ; 2 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gf, i64 8
   %i.gk = load i32, ptr %i.gj, align 4, !tbaa !83 ; 2 uses
   %i.gl = zext i32 %i.gk to i64
   %.idx.i261.i.i = shl nuw nsw i64 %i.gl, 2
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.gi, i64 %.idx.i261.i.i ; 2 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %i.gi, i64 %.idx.i261.i.i
   %i.gn = load i32, ptr %i.fx, align 4, !tbaa !83 ; 2 uses
   %i.go = zext i32 %i.gn to i64
   %.idx17.i262.i.i = shl nuw nsw i64 %i.go, 2
   %i.gp = getelementptr inbounds nuw i8, ptr %i.fw, i64 %.idx17.i262.i.i ; 2 uses
   %i.gq = icmp ne i32 %i.gk, 0                    ; 2 uses
-  %i.gr = icmp ne i32 %i.gn, 0                    ; 2 uses
+  %i.gr = icmp ne i32 %i.gn, 0
   %i.gs = select i1 %i.gq, i1 %i.gr, i1 false
   br i1 %i.gs, label %.lr.ph.i274.i.i, label %._crit_edge.i263.i.i
 
 bb.ab:                                            ; preds = %.lr.ph.i274.i.i
   %i.gt = getelementptr inbounds nuw i8, ptr %.04411.i275.i.i, i64 4 ; 3 uses
-  %i.gu = getelementptr inbounds nuw i8, ptr %.04510.i276.i.i, i64 4 ; 3 uses
+  %i.gu = getelementptr inbounds nuw i8, ptr %.04510.i276.i.i, i64 4 ; 2 uses
   %i.gv = icmp ne ptr %i.gu, %i.gm                ; 2 uses
-  %i.gw = icmp ne ptr %i.gt, %i.gp                ; 2 uses
+  %i.gw = icmp ne ptr %i.gt, %i.gp
   %i.gx = select i1 %i.gv, i1 %i.gw, i1 false
   br i1 %i.gx, label %.lr.ph.i274.i.i, label %._crit_edge.i263.i.i, !llvm.loop !111
 
@@ -569,20 +560,17 @@ bb.ab:                                            ; preds = %.lr.ph.i274.i.i
   br i1 %cond.i280.i.i, label %bb.ab, label %worse_candidate.exit281.i.i, !llvm.loop !111
 
 ._crit_edge.i263.i.i:                             ; preds = %bb.ab, %.thread.i260.i.i
-  %.045.lcssa.i264.i.i = phi ptr [ %i.gi, %.thread.i260.i.i ], [ %i.gu, %bb.ab ]
   %.044.lcssa.i265.i.i = phi ptr [ %i.fw, %.thread.i260.i.i ], [ %i.gt, %bb.ab ]
   %.043.lcssa.i266.i.i = phi i32 [ -1, %.thread.i260.i.i ], [ %i.gy, %bb.ab ] ; 2 uses
   %.0.lcssa.i267.i.i = phi i32 [ -1, %.thread.i260.i.i ], [ %i.gz, %bb.ab ] ; 2 uses
-  %.lcssa3.i268.i.i = phi i1 [ %i.gq, %.thread.i260.i.i ], [ %i.gv, %bb.ab ]
-  %.lcssa.i269.i.i = phi i1 [ %i.gr, %.thread.i260.i.i ], [ %i.gw, %bb.ab ]
-  %i.hi = icmp eq ptr %.044.lcssa.i265.i.i, %i.gp
+  %.lcssa3.i268.i.i = phi i1 [ %i.gq, %.thread.i260.i.i ], [ %i.gv, %bb.ab ] ; 2 uses
+  %i.hi = icmp eq ptr %.044.lcssa.i265.i.i, %i.gp ; 2 uses
   %or.cond.i270.i.i = select i1 %.lcssa3.i268.i.i, i1 %i.hi, i1 false
   br i1 %or.cond.i270.i.i, label %.backedge.i.i.backedge, label %bb.ac
 
 bb.ac:                                            ; preds = %._crit_edge.i263.i.i
-  %5 = icmp eq ptr %.045.lcssa.i264.i.i, %i.gm
-  %brmerge.not.i271.i.i = select i1 %5, i1 %.lcssa.i269.i.i, i1 false
-  br i1 %brmerge.not.i271.i.i, label %.preheader387.i.i, label %bb.ad
+  %brmerge.not.i271.i.i = select i1 %.lcssa3.i268.i.i, i1 true, i1 %i.hi
+  br i1 %brmerge.not.i271.i.i, label %bb.ad, label %.preheader387.i.i
 
 bb.ad:                                            ; preds = %bb.ac
   %i.hj = icmp ult i32 %.043.lcssa.i266.i.i, %.0.lcssa.i267.i.i
@@ -627,22 +615,22 @@ bb.ag:                                            ; preds = %bb.ae
   %i.hv = load i32, ptr %i.fx, align 4, !tbaa !83 ; 2 uses
   %i.hw = zext i32 %i.hv to i64
   %.idx.i285.i.i = shl nuw nsw i64 %i.hw, 2
-  %i.hx = getelementptr inbounds nuw i8, ptr %i.fw, i64 %.idx.i285.i.i ; 2 uses
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.fw, i64 %.idx.i285.i.i
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hr, i64 8
   %i.hz = load i32, ptr %i.hy, align 4, !tbaa !83 ; 2 uses
   %i.ia = zext i32 %i.hz to i64
   %.idx17.i286.i.i = shl nuw nsw i64 %i.ia, 2
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hu, i64 %.idx17.i286.i.i ; 2 uses
   %i.ic = icmp ne i32 %i.hv, 0                    ; 2 uses
-  %i.id = icmp ne i32 %i.hz, 0                    ; 2 uses
+  %i.id = icmp ne i32 %i.hz, 0
   %i.ie = select i1 %i.ic, i1 %i.id, i1 false
   br i1 %i.ie, label %.lr.ph.i298.i.i, label %._crit_edge.i287.i.i
 
 bb.ah:                                            ; preds = %.lr.ph.i298.i.i
   %i.if = getelementptr inbounds nuw i8, ptr %.04411.i299.i.i, i64 4 ; 3 uses
-  %i.ig = getelementptr inbounds nuw i8, ptr %.04510.i300.i.i, i64 4 ; 3 uses
+  %i.ig = getelementptr inbounds nuw i8, ptr %.04510.i300.i.i, i64 4 ; 2 uses
   %i.ih = icmp ne ptr %i.ig, %i.hx                ; 2 uses
-  %i.ii = icmp ne ptr %i.if, %i.ib                ; 2 uses
+  %i.ii = icmp ne ptr %i.if, %i.ib
   %i.ij = select i1 %i.ih, i1 %i.ii, i1 false
   br i1 %i.ij, label %.lr.ph.i298.i.i, label %._crit_edge.i287.i.i, !llvm.loop !111
 
@@ -666,20 +654,17 @@ bb.ah:                                            ; preds = %.lr.ph.i298.i.i
   br i1 %cond.i304.i.i, label %bb.ah, label %worse_candidate.exit305.i.i, !llvm.loop !111
 
 ._crit_edge.i287.i.i:                             ; preds = %bb.ah, %.thread.i284.i.i
-  %.045.lcssa.i288.i.i = phi ptr [ %i.fw, %.thread.i284.i.i ], [ %i.ig, %bb.ah ]
   %.044.lcssa.i289.i.i = phi ptr [ %i.hu, %.thread.i284.i.i ], [ %i.if, %bb.ah ]
   %.043.lcssa.i290.i.i = phi i32 [ -1, %.thread.i284.i.i ], [ %i.ik, %bb.ah ] ; 2 uses
   %.0.lcssa.i291.i.i = phi i32 [ -1, %.thread.i284.i.i ], [ %i.il, %bb.ah ] ; 2 uses
-  %.lcssa3.i292.i.i = phi i1 [ %i.ic, %.thread.i284.i.i ], [ %i.ih, %bb.ah ]
-  %.lcssa.i293.i.i = phi i1 [ %i.id, %.thread.i284.i.i ], [ %i.ii, %bb.ah ]
-  %i.iu = icmp eq ptr %.044.lcssa.i289.i.i, %i.ib
+  %.lcssa3.i292.i.i = phi i1 [ %i.ic, %.thread.i284.i.i ], [ %i.ih, %bb.ah ] ; 2 uses
+  %i.iu = icmp eq ptr %.044.lcssa.i289.i.i, %i.ib ; 2 uses
   %or.cond.i294.i.i = select i1 %.lcssa3.i292.i.i, i1 %i.iu, i1 false
   br i1 %or.cond.i294.i.i, label %worse_candidate.exit305.i.i, label %bb.ai
 
 bb.ai:                                            ; preds = %._crit_edge.i287.i.i
-  %6 = icmp eq ptr %.045.lcssa.i288.i.i, %i.hx
-  %brmerge.not.i295.i.i = select i1 %6, i1 %.lcssa.i293.i.i, i1 false
-  br i1 %brmerge.not.i295.i.i, label %worse_candidate.exit305.thread.i.i, label %bb.aj
+  %brmerge.not.i295.i.i = select i1 %.lcssa3.i292.i.i, i1 true, i1 %i.iu
+  br i1 %brmerge.not.i295.i.i, label %bb.aj, label %worse_candidate.exit305.thread.i.i
 
 bb.aj:                                            ; preds = %bb.ai
   %i.iv = icmp ult i32 %.043.lcssa.i290.i.i, %.0.lcssa.i291.i.i
@@ -817,28 +802,28 @@ bb.ax:                                            ; preds = %bb.av
   br i1 %.not50.i307.i.i, label %worse_candidate.exit329.thread377.i.i, label %.thread.i308.i.i
 
 .thread.i308.i.i:                                 ; preds = %bb.ax, %bb.aw
-  %i.kl = getelementptr inbounds nuw i8, ptr %i.ke, i64 12 ; 3 uses
+  %i.kl = getelementptr inbounds nuw i8, ptr %i.ke, i64 12 ; 2 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.kg, i64 12 ; 3 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %i.ke, i64 8
   %i.ko = load i32, ptr %i.kn, align 4, !tbaa !83 ; 2 uses
   %i.kp = zext i32 %i.ko to i64
   %.idx.i309.i.i = shl nuw nsw i64 %i.kp, 2
-  %i.kq = getelementptr inbounds nuw i8, ptr %i.kl, i64 %.idx.i309.i.i ; 2 uses
+  %i.kq = getelementptr inbounds nuw i8, ptr %i.kl, i64 %.idx.i309.i.i
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kg, i64 8
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !83 ; 2 uses
   %i.kt = zext i32 %i.ks to i64
   %.idx17.i310.i.i = shl nuw nsw i64 %i.kt, 2
   %i.ku = getelementptr inbounds nuw i8, ptr %i.km, i64 %.idx17.i310.i.i ; 2 uses
   %i.kv = icmp ne i32 %i.ko, 0                    ; 2 uses
-  %i.kw = icmp ne i32 %i.ks, 0                    ; 2 uses
+  %i.kw = icmp ne i32 %i.ks, 0
   %i.kx = select i1 %i.kv, i1 %i.kw, i1 false
   br i1 %i.kx, label %.lr.ph.i322.i.i, label %._crit_edge.i311.i.i
 
 bb.ay:                                            ; preds = %.lr.ph.i322.i.i
   %i.ky = getelementptr inbounds nuw i8, ptr %.04411.i323.i.i, i64 4 ; 3 uses
-  %i.kz = getelementptr inbounds nuw i8, ptr %.04510.i324.i.i, i64 4 ; 3 uses
+  %i.kz = getelementptr inbounds nuw i8, ptr %.04510.i324.i.i, i64 4 ; 2 uses
   %i.la = icmp ne ptr %i.kz, %i.kq                ; 2 uses
-  %i.lb = icmp ne ptr %i.ky, %i.ku                ; 2 uses
+  %i.lb = icmp ne ptr %i.ky, %i.ku
   %i.lc = select i1 %i.la, i1 %i.lb, i1 false
   br i1 %i.lc, label %.lr.ph.i322.i.i, label %._crit_edge.i311.i.i, !llvm.loop !111
 
@@ -862,20 +847,17 @@ bb.ay:                                            ; preds = %.lr.ph.i322.i.i
   br i1 %cond.i328.i.i, label %bb.ay, label %worse_candidate.exit329.i.i, !llvm.loop !111
 
 ._crit_edge.i311.i.i:                             ; preds = %bb.ay, %.thread.i308.i.i
-  %.045.lcssa.i312.i.i = phi ptr [ %i.kl, %.thread.i308.i.i ], [ %i.kz, %bb.ay ]
   %.044.lcssa.i313.i.i = phi ptr [ %i.km, %.thread.i308.i.i ], [ %i.ky, %bb.ay ]
   %.043.lcssa.i314.i.i = phi i32 [ -1, %.thread.i308.i.i ], [ %i.ld, %bb.ay ] ; 2 uses
   %.0.lcssa.i315.i.i = phi i32 [ -1, %.thread.i308.i.i ], [ %i.le, %bb.ay ] ; 2 uses
-  %.lcssa3.i316.i.i = phi i1 [ %i.kv, %.thread.i308.i.i ], [ %i.la, %bb.ay ]
-  %.lcssa.i317.i.i = phi i1 [ %i.kw, %.thread.i308.i.i ], [ %i.lb, %bb.ay ]
-  %i.ln = icmp eq ptr %.044.lcssa.i313.i.i, %i.ku
+  %.lcssa3.i316.i.i = phi i1 [ %i.kv, %.thread.i308.i.i ], [ %i.la, %bb.ay ] ; 2 uses
+  %i.ln = icmp eq ptr %.044.lcssa.i313.i.i, %i.ku ; 2 uses
   %or.cond.i318.i.i = select i1 %.lcssa3.i316.i.i, i1 %i.ln, i1 false
   br i1 %or.cond.i318.i.i, label %worse_candidate.exit329.thread.i.i, label %bb.az
 
 bb.az:                                            ; preds = %._crit_edge.i311.i.i
-  %7 = icmp eq ptr %.045.lcssa.i312.i.i, %i.kq
-  %brmerge.not.i319.i.i = select i1 %7, i1 %.lcssa.i317.i.i, i1 false
-  br i1 %brmerge.not.i319.i.i, label %worse_candidate.exit329.thread377.i.i, label %bb.ba
+  %brmerge.not.i319.i.i = select i1 %.lcssa3.i316.i.i, i1 true, i1 %i.ln
+  br i1 %brmerge.not.i319.i.i, label %bb.ba, label %worse_candidate.exit329.thread377.i.i
 
 bb.ba:                                            ; preds = %bb.az
   %i.lo = icmp ult i32 %.043.lcssa.i314.i.i, %.0.lcssa.i315.i.i
@@ -906,7 +888,7 @@ bb.bb:                                            ; preds = %worse_candidate.exi
   %i.lt = load i32, ptr %i.ls, align 4, !tbaa !68 ; 3 uses
   %i.lu = zext i32 %i.lt to i64
   %i.lv = getelementptr inbounds nuw [8 x i8], ptr %.val.i8.i, i64 %i.lu ; 3 uses
-  %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 12 ; 3 uses
+  %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 12 ; 2 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lv, i64 8
   br label %bb.bc
 
@@ -936,22 +918,22 @@ bb.be:                                            ; preds = %bb.bc
   %i.mi = load i32, ptr %i.lx, align 4, !tbaa !83 ; 2 uses
   %i.mj = zext i32 %i.mi to i64
   %.idx.i333.i.i = shl nuw nsw i64 %i.mj, 2
-  %i.mk = getelementptr inbounds nuw i8, ptr %i.lw, i64 %.idx.i333.i.i ; 2 uses
+  %i.mk = getelementptr inbounds nuw i8, ptr %i.lw, i64 %.idx.i333.i.i
   %i.ml = getelementptr inbounds nuw i8, ptr %i.mc, i64 8
   %i.mm = load i32, ptr %i.ml, align 4, !tbaa !83 ; 2 uses
   %i.mn = zext i32 %i.mm to i64
   %.idx17.i334.i.i = shl nuw nsw i64 %i.mn, 2
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mh, i64 %.idx17.i334.i.i ; 2 uses
   %i.mp = icmp ne i32 %i.mi, 0                    ; 2 uses
-  %i.mq = icmp ne i32 %i.mm, 0                    ; 2 uses
+  %i.mq = icmp ne i32 %i.mm, 0
   %i.mr = select i1 %i.mp, i1 %i.mq, i1 false
   br i1 %i.mr, label %.lr.ph.i346.i.i, label %._crit_edge.i335.i.i
 
 bb.bf:                                            ; preds = %.lr.ph.i346.i.i
   %i.ms = getelementptr inbounds nuw i8, ptr %.04411.i347.i.i, i64 4 ; 3 uses
-  %i.mt = getelementptr inbounds nuw i8, ptr %.04510.i348.i.i, i64 4 ; 3 uses
+  %i.mt = getelementptr inbounds nuw i8, ptr %.04510.i348.i.i, i64 4 ; 2 uses
   %i.mu = icmp ne ptr %i.mt, %i.mk                ; 2 uses
-  %i.mv = icmp ne ptr %i.ms, %i.mo                ; 2 uses
+  %i.mv = icmp ne ptr %i.ms, %i.mo
   %i.mw = select i1 %i.mu, i1 %i.mv, i1 false
   br i1 %i.mw, label %.lr.ph.i346.i.i, label %._crit_edge.i335.i.i, !llvm.loop !111
 
@@ -975,20 +957,17 @@ bb.bf:                                            ; preds = %.lr.ph.i346.i.i
   br i1 %cond.i352.i.i, label %bb.bf, label %worse_candidate.exit353.i.i, !llvm.loop !111
 
 ._crit_edge.i335.i.i:                             ; preds = %bb.bf, %.thread.i332.i.i
-  %.045.lcssa.i336.i.i = phi ptr [ %i.lw, %.thread.i332.i.i ], [ %i.mt, %bb.bf ]
   %.044.lcssa.i337.i.i = phi ptr [ %i.mh, %.thread.i332.i.i ], [ %i.ms, %bb.bf ]
   %.043.lcssa.i338.i.i = phi i32 [ -1, %.thread.i332.i.i ], [ %i.mx, %bb.bf ] ; 2 uses
   %.0.lcssa.i339.i.i = phi i32 [ -1, %.thread.i332.i.i ], [ %i.my, %bb.bf ] ; 2 uses
-  %.lcssa3.i340.i.i = phi i1 [ %i.mp, %.thread.i332.i.i ], [ %i.mu, %bb.bf ]
-  %.lcssa.i341.i.i = phi i1 [ %i.mq, %.thread.i332.i.i ], [ %i.mv, %bb.bf ]
-  %i.nh = icmp eq ptr %.044.lcssa.i337.i.i, %i.mo
+  %.lcssa3.i340.i.i = phi i1 [ %i.mp, %.thread.i332.i.i ], [ %i.mu, %bb.bf ] ; 2 uses
+  %i.nh = icmp eq ptr %.044.lcssa.i337.i.i, %i.mo ; 2 uses
   %or.cond.i342.i.i = select i1 %.lcssa3.i340.i.i, i1 %i.nh, i1 false
   br i1 %or.cond.i342.i.i, label %worse_candidate.exit353.thread.i.i, label %bb.bg
 
 bb.bg:                                            ; preds = %._crit_edge.i335.i.i
-  %8 = icmp eq ptr %.045.lcssa.i336.i.i, %i.mk
-  %brmerge.not.i343.i.i = select i1 %8, i1 %.lcssa.i341.i.i, i1 false
-  br i1 %brmerge.not.i343.i.i, label %worse_candidate.exit353.thread382.i.i, label %bb.bh
+  %brmerge.not.i343.i.i = select i1 %.lcssa3.i340.i.i, i1 true, i1 %i.nh
+  br i1 %brmerge.not.i343.i.i, label %bb.bh, label %worse_candidate.exit353.thread382.i.i
 
 bb.bh:                                            ; preds = %bb.bg
   %i.ni = icmp ult i32 %.043.lcssa.i338.i.i, %.0.lcssa.i339.i.i

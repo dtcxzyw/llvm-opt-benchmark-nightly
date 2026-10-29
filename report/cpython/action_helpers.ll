@@ -205,9 +205,9 @@ _make_posonlyargs.exit.thread89.loopexit.unr-lcssa: ; preds = %bb.k
 
 _make_posonlyargs.exit.thread89:                  ; preds = %.epil.preheader234, %_make_posonlyargs.exit.thread89.loopexit.unr-lcssa, %.preheader.i.i, %bb.a, %_make_posonlyargs.exit
   %.sink.i91 = phi ptr [ %i.cr, %_make_posonlyargs.exit ], [ %i.at, %.preheader.i.i ], [ %1, %bb.a ], [ %i.at, %_make_posonlyargs.exit.thread89.loopexit.unr-lcssa ], [ %i.at, %.epil.preheader234 ]
-  %.not.i30 = icmp ne ptr %4, null                ; 4 uses
+  %.not.i30 = icmp eq ptr %4, null                ; 4 uses
   %.not24.i = icmp eq ptr %3, null                ; 2 uses
-  br i1 %.not.i30, label %bb.l, label %bb.t
+  br i1 %.not.i30, label %bb.t, label %bb.l
 
 bb.l:                                             ; preds = %_make_posonlyargs.exit.thread89
   %i.cz = load i64, ptr %4, align 8, !tbaa !31    ; 8 uses
@@ -512,7 +512,8 @@ _make_posargs.exit.thread96.loopexit225.unr-lcssa: ; preds = %bb.q
 _make_posargs.exit.thread96:                      ; preds = %.epil.preheader255, %_make_posargs.exit.thread96.loopexit225.unr-lcssa, %_make_posargs.exit.thread96.loopexit.unr-lcssa, %bb.v, %.preheader.i.i35, %_make_posargs.exit
   %.sink.i3898 = phi ptr [ %.sink.i38, %_make_posargs.exit ], [ %i.dc, %_make_posargs.exit.thread96.loopexit.unr-lcssa ], [ %i.el, %.preheader.i.i35 ], [ %i.dc, %bb.v ], [ %i.el, %_make_posargs.exit.thread96.loopexit225.unr-lcssa ], [ %i.el, %.epil.preheader255 ] ; 7 uses
   %i.hv = icmp ne ptr %2, null                    ; 3 uses
-  %or.cond.i = and i1 %i.hv, %.not.i30
+  %.not.i30.not = xor i1 %.not.i30, true
+  %or.cond.i = and i1 %i.hv, %.not.i30.not
   br i1 %or.cond.i, label %bb.w, label %bb.af
 
 bb.w:                                             ; preds = %_make_posargs.exit.thread96
@@ -806,9 +807,8 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph34.i.
   br i1 %niter310.ncmp.1, label %_make_posdefaults.exit.thread104.loopexit.unr-lcssa, label %bb.ae, !llvm.loop !1
 
 bb.af:                                            ; preds = %_make_posargs.exit.thread96
-  %.not64.i = xor i1 %i.hv, true
-  %or.cond3.i = and i1 %.not.i30, %.not64.i
-  br i1 %or.cond3.i, label %bb.ag, label %bb.ai
+  %or.cond3.i.not = or i1 %.not.i30, %i.hv
+  br i1 %or.cond3.i.not, label %bb.ai, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.mz = load i64, ptr %4, align 8, !tbaa !31    ; 5 uses
@@ -826,7 +826,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.ng = getelementptr i8, ptr %i.nc, i64 16     ; 5 uses
   %xtraiter277 = and i64 %i.mz, 3                 ; 3 uses
   %i.nh = icmp ult i64 %i.mz, 4
-  br i1 %i.nh, label %.epil.preheader276, label %.lr.ph.i51.i.new
+  br i1 %i.nh, label %.epil.preheader269, label %.lr.ph.i51.i.new
 
 .lr.ph.i51.i.new:                                 ; preds = %.lr.ph.i51.i
   %unroll_iter281 = and i64 %i.mz, 9223372036854775804
@@ -865,13 +865,12 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph.i51.
   %i.of = add nuw nsw i64 %.01417.i52.i, 4        ; 2 uses
   %niter282.next.3 = add nuw nsw i64 %niter282, 4 ; 2 uses
   %niter282.ncmp.3 = icmp eq i64 %niter282.next.3, %unroll_iter281
-  br i1 %niter282.ncmp.3, label %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa, label %bb.ah, !llvm.loop !151
+  br i1 %niter282.ncmp.3, label %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa, label %bb.ah, !llvm.loop !151
 
 bb.ai:                                            ; preds = %.thread, %bb.af
   %.sink.i3898154209.a = phi ptr [ %3, %.thread ], [ %.sink.i3898, %bb.af ] ; 4 uses
   %i.og = phi i1 [ %i.hf, %.thread ], [ %i.hv, %bb.af ]
-  %.not65.i = xor i1 %.not.i30, true
-  %or.cond5.i = and i1 %i.og, %.not65.i
+  %or.cond5.i = and i1 %.not.i30, %i.og
   br i1 %or.cond5.i, label %bb.aj, label %bb.an
 
 bb.aj:                                            ; preds = %bb.ai
@@ -900,7 +899,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.os = getelementptr i8, ptr %i.oo, i64 16     ; 5 uses
   %xtraiter270 = and i64 %i.ol, 3                 ; 3 uses
   %i.ot = icmp ult i64 %i.ol, 4
-  br i1 %i.ot, label %.epil.preheader269, label %.lr.ph.i57.i.new
+  br i1 %i.ot, label %.epil.preheader276, label %.lr.ph.i57.i.new
 
 .lr.ph.i57.i.new:                                 ; preds = %.lr.ph.i57.i
   %unroll_iter274 = and i64 %i.ol, 9223372036854775804
@@ -939,7 +938,7 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph.i57.
   %i.pr = add nuw nsw i64 %.01417.i58.i, 4        ; 2 uses
   %niter275.next.3 = add nuw nsw i64 %niter275, 4 ; 2 uses
   %niter275.ncmp.3 = icmp eq i64 %niter275.next.3, %unroll_iter274
-  br i1 %niter275.ncmp.3, label %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa, label %bb.am, !llvm.loop !151
+  br i1 %niter275.ncmp.3, label %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa, label %bb.am, !llvm.loop !151
 
 bb.an:                                            ; preds = %bb.ai
   %i.ps = getelementptr i8, ptr %0, i64 32
@@ -971,57 +970,57 @@ _make_posdefaults.exit.thread104.loopexit.unr-lcssa: ; preds = %bb.ae
   store ptr %i.py, ptr %i.qb, align 8, !tbaa !30
   br label %_make_posdefaults.exit.thread104
 
-_make_posdefaults.exit.thread104.loopexit223.unr-lcssa: ; preds = %bb.ah
-  %lcmp.mod279.not = icmp eq i64 %xtraiter277, 0
+_make_posdefaults.exit.thread104.loopexit223.unr-lcssa: ; preds = %bb.am
+  %lcmp.mod279.not = icmp eq i64 %xtraiter270, 0
   br i1 %lcmp.mod279.not, label %_make_posdefaults.exit.thread104, label %.epil.preheader276
 
-.epil.preheader276:                               ; preds = %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa, %.lr.ph.i51.i
-  %.01417.i52.i.epil.init.a = phi i64 [ 0, %.lr.ph.i51.i ], [ %i.of, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa ]
-  %lcmp.mod280 = icmp ne i64 %xtraiter277, 0
+.epil.preheader276:                               ; preds = %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa, %.lr.ph.i57.i
+  %.01417.i52.i.epil.init.a = phi i64 [ 0, %.lr.ph.i57.i ], [ %i.pr, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa ]
+  %lcmp.mod280 = icmp ne i64 %xtraiter270, 0
   tail call void @llvm.assume(i1 %lcmp.mod280)
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ao, %.epil.preheader276
   %.01417.i52.i.epil.a = phi i64 [ %.01417.i52.i.epil.init.a, %.epil.preheader276 ], [ %i.qh, %bb.ao ] ; 3 uses
   %epil.iter278 = phi i64 [ 0, %.epil.preheader276 ], [ %epil.iter278.next, %bb.ao ]
-  %i.qc = getelementptr [8 x i8], ptr %i.nf, i64 %.01417.i52.i.epil.a
+  %i.qc = getelementptr [8 x i8], ptr %i.or, i64 %.01417.i52.i.epil.a
   %i.qd = load ptr, ptr %i.qc, align 8, !tbaa !30
   %i.qe = getelementptr i8, ptr %i.qd, i64 8
   %i.qf = load ptr, ptr %i.qe, align 8, !tbaa !61
-  %i.qg = getelementptr [8 x i8], ptr %i.ng, i64 %.01417.i52.i.epil.a
+  %i.qg = getelementptr [8 x i8], ptr %i.os, i64 %.01417.i52.i.epil.a
   store ptr %i.qf, ptr %i.qg, align 8, !tbaa !46
   %i.qh = add nuw nsw i64 %.01417.i52.i.epil.a, 1
   %epil.iter278.next = add i64 %epil.iter278, 1   ; 2 uses
-  %epil.iter278.cmp.not = icmp eq i64 %epil.iter278.next, %xtraiter277
+  %epil.iter278.cmp.not = icmp eq i64 %epil.iter278.next, %xtraiter270
   br i1 %epil.iter278.cmp.not, label %_make_posdefaults.exit.thread104, label %bb.ao, !llvm.loop !154
 
-_make_posdefaults.exit.thread104.loopexit224.unr-lcssa: ; preds = %bb.am
-  %lcmp.mod272.not = icmp eq i64 %xtraiter270, 0
+_make_posdefaults.exit.thread104.loopexit224.unr-lcssa: ; preds = %bb.ah
+  %lcmp.mod272.not = icmp eq i64 %xtraiter277, 0
   br i1 %lcmp.mod272.not, label %_make_posdefaults.exit.thread104, label %.epil.preheader269
 
-.epil.preheader269:                               ; preds = %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa, %.lr.ph.i57.i
-  %.01417.i58.i.epil.init = phi i64 [ 0, %.lr.ph.i57.i ], [ %i.pr, %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa ]
-  %lcmp.mod273 = icmp ne i64 %xtraiter270, 0
+.epil.preheader269:                               ; preds = %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa, %.lr.ph.i51.i
+  %.01417.i58.i.epil.init = phi i64 [ 0, %.lr.ph.i51.i ], [ %i.of, %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa ]
+  %lcmp.mod273 = icmp ne i64 %xtraiter277, 0
   tail call void @llvm.assume(i1 %lcmp.mod273)
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ap, %.epil.preheader269
   %.01417.i58.i.epil = phi i64 [ %.01417.i58.i.epil.init, %.epil.preheader269 ], [ %i.qn, %bb.ap ] ; 3 uses
   %epil.iter271 = phi i64 [ 0, %.epil.preheader269 ], [ %epil.iter271.next, %bb.ap ]
-  %i.qi = getelementptr [8 x i8], ptr %i.or, i64 %.01417.i58.i.epil
+  %i.qi = getelementptr [8 x i8], ptr %i.nf, i64 %.01417.i58.i.epil
   %i.qj = load ptr, ptr %i.qi, align 8, !tbaa !30
   %i.qk = getelementptr i8, ptr %i.qj, i64 8
   %i.ql = load ptr, ptr %i.qk, align 8, !tbaa !61
-  %i.qm = getelementptr [8 x i8], ptr %i.os, i64 %.01417.i58.i.epil
+  %i.qm = getelementptr [8 x i8], ptr %i.ng, i64 %.01417.i58.i.epil
   store ptr %i.ql, ptr %i.qm, align 8, !tbaa !46
   %i.qn = add nuw nsw i64 %.01417.i58.i.epil, 1
   %epil.iter271.next = add i64 %epil.iter271, 1   ; 2 uses
-  %epil.iter271.cmp.not = icmp eq i64 %epil.iter271.next, %xtraiter270
+  %epil.iter271.cmp.not = icmp eq i64 %epil.iter271.next, %xtraiter277
   br i1 %epil.iter271.cmp.not, label %_make_posdefaults.exit.thread104, label %bb.ap, !llvm.loop !155
 
 _make_posdefaults.exit.thread104:                 ; preds = %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa, %bb.ap, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa, %bb.ao, %.epil.preheader304, %_make_posdefaults.exit.thread104.loopexit.unr-lcssa, %.preheader.i.i54, %_make_posdefaults.exit
-  %.sink.i3898152 = phi ptr [ %.sink.i3898154208, %_make_posdefaults.exit ], [ %.sink.i3898, %.epil.preheader304 ], [ %.sink.i3898, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa ], [ %.sink.i3898, %.preheader.i.i54 ], [ %.sink.i3898, %_make_posdefaults.exit.thread104.loopexit.unr-lcssa ], [ %.sink.i3898, %bb.ao ], [ %.sink.i3898154209.a, %bb.ap ], [ %.sink.i3898154209.a, %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa ]
-  %.sink.i50106 = phi ptr [ %.sink.i50, %_make_posdefaults.exit ], [ %i.ld, %.epil.preheader304 ], [ %i.nc, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa ], [ %i.ld, %.preheader.i.i54 ], [ %i.ld, %_make_posdefaults.exit.thread104.loopexit.unr-lcssa ], [ %i.nc, %bb.ao ], [ %i.oo, %bb.ap ], [ %i.oo, %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa ]
+  %.sink.i3898152 = phi ptr [ %.sink.i3898154208, %_make_posdefaults.exit ], [ %.sink.i3898154209.a, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa ], [ %.sink.i3898, %.epil.preheader304 ], [ %.sink.i3898, %.preheader.i.i54 ], [ %.sink.i3898, %_make_posdefaults.exit.thread104.loopexit.unr-lcssa ], [ %.sink.i3898154209.a, %bb.ao ], [ %.sink.i3898, %bb.ap ], [ %.sink.i3898, %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa ]
+  %.sink.i50106 = phi ptr [ %.sink.i50, %_make_posdefaults.exit ], [ %i.oo, %_make_posdefaults.exit.thread104.loopexit223.unr-lcssa ], [ %i.ld, %.epil.preheader304 ], [ %i.ld, %.preheader.i.i54 ], [ %i.ld, %_make_posdefaults.exit.thread104.loopexit.unr-lcssa ], [ %i.oo, %bb.ao ], [ %i.nc, %bb.ap ], [ %i.nc, %_make_posdefaults.exit.thread104.loopexit224.unr-lcssa ]
   %.not = icmp eq ptr %5, null
   br i1 %.not, label %_get_names.exit.i74, label %bb.aq
 

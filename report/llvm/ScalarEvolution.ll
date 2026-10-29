@@ -205,13 +205,13 @@ bb.af:                                            ; preds = %.lr.ph219.a, %bb.an
 
 bb.ag:                                            ; preds = %bb.af
   %i.ev = getelementptr inbounds nuw i8, ptr %i.es, i64 56
-  %i.ew = getelementptr inbounds nuw i8, ptr %i.es, i64 48 ; 3 uses
+  %i.ew = getelementptr inbounds nuw i8, ptr %i.es, i64 48 ; 2 uses
   %.sroa.0175.0211 = load ptr, ptr %i.ev, align 8, !tbaa !314 ; 2 uses
   %.not199212 = icmp eq ptr %.sroa.0175.0211, %i.ew
   br i1 %.not199212, label %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit.thread, label %.lr.ph214
 
 .lr.ph214:                                        ; preds = %bb.ag, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread"
-  %.sroa.0175.0213 = phi ptr [ %.sroa.0175.0, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread" ], [ %.sroa.0175.0211, %bb.ag ] ; 5 uses
+  %.sroa.0175.0213 = phi ptr [ %.sroa.0175.0, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread" ], [ %.sroa.0175.0211, %bb.ag ] ; 4 uses
   %i.ex = getelementptr inbounds i8, ptr %.sroa.0175.0213, i64 -24 ; 2 uses
   %i.ey = load i8, ptr %i.ex, align 8, !tbaa !427
   %.not.i.i.i.i = icmp eq i8 %i.ey, 88
@@ -247,7 +247,7 @@ bb.aj:                                            ; preds = %_ZNK4llvm12PatternM
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit": ; preds = %bb.aj
   %i.fn = tail call noundef zeroext i1 @_ZN4llvm15ScalarEvolution13isImpliedCondENS_12CmpPredicateEPKNS_4SCEVES4_PKNS_5ValueEbPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(1152) %0, i64 %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull %i.fm, i1 noundef zeroext false, ptr noundef null), !inline_history !1198
-  br i1 %i.fn, label %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread"
+  br i1 %i.fn, label %select.unfold193, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread": ; preds = %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_11InstructionEEEbPT_.exit.i.i.i, %bb.aj, %.lr.ph214, %bb.ai, %bb.ah, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit"
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.0175.0213, i64 8
@@ -255,11 +255,7 @@ bb.aj:                                            ; preds = %_ZNK4llvm12PatternM
   %.not199 = icmp eq ptr %.sroa.0175.0, %i.ew
   br i1 %.not199, label %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit.thread, label %.lr.ph214, !llvm.loop !10
 
-_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit"
-  %5 = icmp eq ptr %i.ew, %.sroa.0175.0213
-  br i1 %5, label %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit.thread, label %select.unfold193
-
-_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit.thread: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread", %bb.ag, %bb.af, %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit
+_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit.thread: ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit.thread", %bb.ag, %bb.af
   %i.fp = tail call noundef ptr @_ZNK4llvm10BasicBlock20getSinglePredecessorEv(ptr noundef nonnull align 8 dereferenceable(80) %i.es) #29 ; 2 uses
   %.not106 = icmp eq ptr %i.fp, null
   br i1 %.not106, label %bb.an, label %bb.ak
@@ -293,8 +289,8 @@ bb.an:                                            ; preds = %_ZN4llvm15ScalarEvo
   %.not105.not = icmp eq ptr %i.ge, %i.eq
   br i1 %.not105.not, label %select.unfold193, label %bb.af, !llvm.loop !1199
 
-select.unfold193:                                 ; preds = %bb.aa, %bb.am, %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit, %bb.an, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EEixEPKS1_.exit111, %.critedge, %_ZN4llvm15ScalarEvolution11getConstantEPNS_4TypeEmb.exit115
-  %.11 = phi i1 [ true, %_ZN4llvm15ScalarEvolution11getConstantEPNS_4TypeEmb.exit115 ], [ true, %.critedge ], [ false, %bb.an ], [ false, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EEixEPKS1_.exit111 ], [ true, %bb.am ], [ true, %_ZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_.exit ], [ true, %bb.aa ]
+select.unfold193:                                 ; preds = %bb.aa, %bb.am, %bb.an, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit", %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EEixEPKS1_.exit111, %.critedge, %_ZN4llvm15ScalarEvolution11getConstantEPNS_4TypeEmb.exit115
+  %.11 = phi i1 [ true, %_ZN4llvm15ScalarEvolution11getConstantEPNS_4TypeEmb.exit115 ], [ true, %.critedge ], [ true, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS2_10BasicBlockENS2_12CmpPredicateEPKNS2_4SCEVESA_E3$_0EclINS2_21ilist_iterator_w_bitsINS2_12ilist_detail12node_optionsINS2_11InstructionELb0ELb0EvLb1ES4_EELb0ELb1EEEEEbT_.exit" ], [ false, %bb.an ], [ false, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EEixEPKS1_.exit111 ], [ true, %bb.am ], [ true, %bb.aa ]
   store i8 0, ptr %i.ai, align 8, !tbaa !122
   br label %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread
 
@@ -697,13 +693,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %.sroa.061.074 = load ptr, ptr %i.d, align 8, !tbaa !314 ; 2 uses
   %.not75 = icmp eq ptr %.sroa.061.074, %i.e
   br i1 %.not75, label %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit", label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread"
-  %.sroa.061.076 = phi ptr [ %.sroa.061.0, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread" ], [ %.sroa.061.074, %bb.b ] ; 5 uses
+  %.sroa.061.076 = phi ptr [ %.sroa.061.0, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread" ], [ %.sroa.061.074, %bb.b ] ; 4 uses
   %i.f = getelementptr inbounds i8, ptr %.sroa.061.076, i64 -24 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !427
   %.not.i.i.i.i = icmp eq i8 %i.g, 88
@@ -739,21 +735,16 @@ bb.e:                                             ; preds = %_ZNK4llvm12PatternM
 
 "_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit": ; preds = %bb.e
   %i.v = tail call noundef zeroext i1 @_ZN4llvm15ScalarEvolution13isImpliedCondENS_12CmpPredicateEPKNS_4SCEVES4_PKNS_5ValueEbPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(1152) %0, i64 %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull %i.u, i1 noundef zeroext false, ptr noundef null), !inline_history !2834
-  br i1 %i.v, label %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit.loopexit", label %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread"
+  br i1 %i.v, label %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit", label %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread"
 
 "_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread": ; preds = %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_11InstructionEEEbPT_.exit.i.i.i, %bb.e, %.lr.ph, %bb.d, %bb.c, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit"
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.061.076, i64 8
   %.sroa.061.0 = load ptr, ptr %i.w, align 8, !tbaa !314 ; 2 uses
   %.not = icmp eq ptr %.sroa.061.0, %i.e
-  br i1 %.not, label %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit.loopexit", label %.lr.ph, !llvm.loop !10
+  br i1 %.not, label %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit", label %.lr.ph, !llvm.loop !10
 
-"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit.loopexit": ; preds = %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread", %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit"
-  %.sroa.061.0.lcssa.ph = phi ptr [ %.sroa.061.076, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit" ], [ %i.e, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread" ]
-  %5 = icmp ne ptr %i.e, %.sroa.061.0.lcssa.ph
-  br label %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit"
-
-"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit": ; preds = %bb.b, %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit.loopexit", %bb.a
-  %.0 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ %5, %"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit.loopexit" ]
+"_ZSt7find_ifIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEEZNS0_15ScalarEvolution17isImpliedViaGuardEPKS5_NS0_12CmpPredicateEPKNS0_4SCEVESE_E3$_0ET_SG_SG_T0_.exit": ; preds = %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread", %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit", %bb.b, %bb.a
+  %.0 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit.thread" ], [ true, %"_ZZN4llvm15ScalarEvolution17isImpliedViaGuardEPKNS_10BasicBlockENS_12CmpPredicateEPKNS_4SCEVES7_ENK3$_0clERKNS_11InstructionE.exit" ]
   ret i1 %.0
 }
 
