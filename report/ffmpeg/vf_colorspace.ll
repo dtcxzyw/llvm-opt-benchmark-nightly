@@ -205,14 +205,12 @@ bb.r:                                             ; preds = %bb.q
   %i.dt = load <2 x ptr>, ptr %i.cp, align 16, !tbaa !96 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, <2 x ptr> %i.dt, i64 4
   store <2 x ptr> %i.du, ptr %i.ds, align 16, !tbaa !96
-  %i.dv = load ptr, ptr %i.cr, align 16, !tbaa !96
-  %.fr157 = freeze ptr %i.dv                      ; 2 uses
-  %i.dw = getelementptr inbounds nuw i8, ptr %.fr157, i64 4
+  %i.dv = load ptr, ptr %i.cr, align 16, !tbaa !96 ; 2 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
   %i.dx = getelementptr inbounds nuw i8, ptr %i.r, i64 608
   store ptr %i.dw, ptr %i.dx, align 16, !tbaa !96
-  %i.dy = load ptr, ptr %i.cs, align 8, !tbaa !96
-  %.fr156 = freeze ptr %i.dy                      ; 2 uses
-  %i.dz = getelementptr inbounds nuw i8, ptr %.fr156, i64 4
+  %i.dy = load ptr, ptr %i.cs, align 8, !tbaa !96 ; 2 uses
+  %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 4
   %i.ea = getelementptr inbounds nuw i8, ptr %i.r, i64 616
   store ptr %i.dz, ptr %i.ea, align 8, !tbaa !96
   %i.eb = getelementptr inbounds nuw i8, ptr %i.do, i64 4
@@ -235,13 +233,13 @@ bb.t:                                             ; preds = %bb.s
   %i.ej = shufflevector <4 x ptr> %i.eh, <4 x ptr> %i.ei, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %.fr = freeze <4 x ptr> %i.ej
   %i.ek = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %.not112 = icmp eq ptr %.fr157, null
-  %.not113 = icmp eq ptr %.fr156, null
+  %.not112 = icmp eq ptr %i.dv, null
+  %.not113 = icmp eq ptr %i.dy, null
   %.not114 = icmp eq ptr %i.do, null
   %i.el = bitcast <4 x i1> %i.ek to i4
   %i.em = icmp ne i4 %i.el, 0
-  %op.rdx = or i1 %i.em, %.not112
-  %3 = or i1 %op.rdx, %.not113
+  %op.rdx = select i1 %i.em, i1 true, i1 %.not112
+  %3 = select i1 %op.rdx, i1 true, i1 %.not113
   %op.rdx155 = select i1 %3, i1 true, i1 %.not114
   br i1 %op.rdx155, label %bb.u, label %.critedge
 

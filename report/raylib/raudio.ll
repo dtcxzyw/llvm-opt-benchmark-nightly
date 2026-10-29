@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.be = shufflevector <8 x i1> %i.bd, <8 x i1> %i.ay, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
   %i.bf = bitcast <8 x i1> %i.be to i8
   %i.bg = icmp eq i8 %i.bf, -1
-  %op.rdx1827 = select i1 %.not468, i1 %i.bg, i1 false
+  %op.rdx1827 = select i1 %i.bg, i1 %.not468, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #61
   br i1 %op.rdx1827, label %bb.g, label %drwav_free.exit779
 
@@ -608,11 +608,9 @@ drwav_fourcc_equal.exit674.thread:                ; preds = %bb.ar
 
 bb.as:                                            ; preds = %drwav_fourcc_equal.exit674.thread, %.critedge542._crit_edge1484
   %.pre1488 = phi i8 [ %.pre1488.pre, %.critedge542._crit_edge1484 ], [ %i.ju, %drwav_fourcc_equal.exit674.thread ] ; 2 uses
-  %.pre1487 = phi i8 [ %.pre1487.pre, %.critedge542._crit_edge1484 ], [ %i.js, %drwav_fourcc_equal.exit674.thread ]
-  %.pre1486 = phi i8 [ %.pre1486.pre, %.critedge542._crit_edge1484 ], [ %i.jq, %drwav_fourcc_equal.exit674.thread ]
+  %.pre1487 = phi i8 [ %.pre1487.pre, %.critedge542._crit_edge1484 ], [ %i.js, %drwav_fourcc_equal.exit674.thread ] ; 2 uses
+  %.pre1486 = phi i8 [ %.pre1486.pre, %.critedge542._crit_edge1484 ], [ %i.jq, %drwav_fourcc_equal.exit674.thread ] ; 2 uses
   %.pr1009 = phi i8 [ %.pre1485, %.critedge542._crit_edge1484 ], [ %i.jo, %drwav_fourcc_equal.exit674.thread ] ; 2 uses
-  %.pre1486.fr = freeze i8 %.pre1486              ; 2 uses
-  %.pre1487.fr = freeze i8 %.pre1487              ; 2 uses
   %.not.i675 = icmp eq i8 %.pr1009, 102
   %i.jw = load <4 x i8>, ptr %i.gz, align 4
   %i.jx = load <4 x i8>, ptr %i.ha, align 8
@@ -624,8 +622,8 @@ bb.as:                                            ; preds = %drwav_fourcc_equal.
 bb.at:                                            ; preds = %bb.as
   %i.jz = load <4 x i8>, ptr %i.ha, align 8
   %i.ka = load <4 x i8>, ptr %i.gz, align 4
-  %.not.1.i = icmp eq i8 %.pre1486.fr, 109
-  %.not.2.i = icmp eq i8 %.pre1487.fr, 116
+  %.not.1.i = icmp eq i8 %.pre1486, 109
+  %.not.2.i = icmp eq i8 %.pre1487, 116
   %i.kb = shufflevector <4 x i8> %i.ka, <4 x i8> %i.jz, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
   %i.kc = insertelement <8 x i8> %i.kb, i8 %.pre1488, i64 0
   %.fr1831 = freeze <8 x i8> %i.kc
@@ -635,12 +633,11 @@ bb.at:                                            ; preds = %bb.as
   %i.kf = shufflevector <8 x i1> %i.kd, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %rdx.op1822 = and <4 x i1> %i.kf, %i.ke
   %i.kg = shufflevector <4 x i1> %rdx.op1822, <4 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %.fr1948 = freeze <8 x i1> %i.kg
-  %i.kh = shufflevector <8 x i1> %.fr1948, <8 x i1> %i.kd, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
+  %i.kh = shufflevector <8 x i1> %i.kg, <8 x i1> %i.kd, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
   %i.ki = bitcast <8 x i1> %i.kh to i8
   %i.kj = icmp eq i8 %i.ki, -1
-  %op.rdx1823 = and i1 %.not.1.i, %i.kj
-  %9 = and i1 %op.rdx1823, %.not.2.i
+  %op.rdx1823 = select i1 %i.kj, i1 %.not.1.i, i1 false
+  %9 = select i1 %op.rdx1823, i1 %.not.2.i, i1 false
   %op.rdx1825 = select i1 %9, i1 %.not.15.i.not, i1 false
   br i1 %op.rdx1825, label %bb.au, label %drwav_guid_equal.exit.thread
 
@@ -943,8 +940,8 @@ bb.bp:                                            ; preds = %drwav_fourcc_equal.
 
 drwav_guid_equal.exit.thread:                     ; preds = %bb.at, %bb.as
   %.not.i686 = icmp eq i8 %.pr1009, 100
-  %.not.1.i688 = icmp eq i8 %.pre1486.fr, 97
-  %.not.2.i689 = icmp eq i8 %.pre1487.fr, 116
+  %.not.1.i688 = icmp eq i8 %.pre1486, 97
+  %.not.2.i689 = icmp eq i8 %.pre1487, 116
   %i.pk = shufflevector <4 x i8> %i.jw, <4 x i8> %i.jx, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
   %i.pl = insertelement <8 x i8> %i.pk, i8 %.pre1488, i64 0
   %.fr1833 = freeze <8 x i8> %i.pl
@@ -957,10 +954,9 @@ drwav_guid_equal.exit.thread:                     ; preds = %bb.at, %bb.as
   %i.pq = shufflevector <8 x i1> %i.pp, <8 x i1> %i.pm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
   %i.pr = bitcast <8 x i1> %i.pq to i8
   %i.ps = icmp eq i8 %i.pr, -1
-  %op.rdx = select i1 %.not.i686, i1 %i.ps, i1 false
-  %op.rdx1819 = and i1 %.not.1.i688, %.not.2.i689
-  %10 = freeze i1 %op.rdx
-  %op.rdx1820 = and i1 %10, %op.rdx1819
+  %op.rdx1819 = and i1 %i.ps, %.not.i686
+  %10 = select i1 %op.rdx1819, i1 %.not.1.i688, i1 false
+  %op.rdx1820 = select i1 %10, i1 %.not.2.i689, i1 false
   %op.rdx1821 = select i1 %op.rdx1820, i1 %.not.15.i702.not, i1 false
   br i1 %op.rdx1821, label %bb.bq, label %drwav_guid_equal.exit704.thread
 
@@ -1363,15 +1359,14 @@ bb.k:                                             ; preds = %bb.j
   %.fr = freeze <4 x i8> %i.u
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.w = load i8, ptr %i.v, align 4
-  %.fr1882 = freeze i8 %i.w
-  %i.x = icmp eq i8 %.fr1882, 101
+  %i.x = icmp eq i8 %i.w, 101
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = icmp eq i8 %i.z, 97
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.ab = icmp eq i32 %.fr.scalar, 1752394086
-  %op.rdx = and i1 %i.ab, %i.x
-  %i.ac = select i1 %op.rdx, i1 %i.t, i1 false
+  %op.rdx = select i1 %i.ab, i1 %i.t, i1 false
+  %i.ac = select i1 %op.rdx, i1 %i.x, i1 false
   %op.rdx1880 = select i1 %i.ac, i1 %i.aa, i1 false
   br i1 %op.rdx1880, label %bb.l, label %bb.o
 

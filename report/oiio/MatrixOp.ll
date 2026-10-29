@@ -204,8 +204,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.o = load double, ptr %i.n, align 8, !tbaa !22 ; 2 uses
   %i.p = fsub double %i.m, %i.o
-  %.fr22 = freeze double %i.p
-  %i.q = fdiv double 1.000000e+00, %.fr22         ; 3 uses
+  %i.q = fdiv double 1.000000e+00, %i.p           ; 3 uses
   %i.r = fneg double %i.o
   %i.s = fmul double %i.q, %i.r                   ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -214,7 +213,7 @@ bb.a:
   %i.v = fcmp une double %i.s, 0.000000e+00
   %i.w = bitcast <4 x i1> %i.k to i4
   %i.x = icmp ne i4 %i.w, 0
-  %op.rdx = or i1 %i.x, %i.u
+  %op.rdx = select i1 %i.x, i1 true, i1 %i.u
   %op.rdx19 = select i1 %op.rdx, i1 true, i1 %i.v
   br i1 %op.rdx19, label %bb.b, label %bb.c
 

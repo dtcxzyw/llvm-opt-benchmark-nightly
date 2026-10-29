@@ -202,14 +202,13 @@ bb.ho:                                            ; preds = %bb.hl
   %i.my = insertelement <4 x ptr> %i.mx, ptr %i.mu, i64 3
   %.fr = freeze <4 x ptr> %i.my
   %i.mz = load ptr, ptr @opt_tls_trusted, align 8
-  %.fr432 = freeze ptr %i.mz
-  %i.na = icmp eq ptr %.fr432, null
+  %i.na = icmp eq ptr %i.mz, null
   %i.nb = load ptr, ptr @opt_tls_host, align 8
   %i.nc = icmp eq ptr %i.nb, null
   %i.nd = icmp ne <4 x ptr> %.fr, splat (ptr null)
   %i.ne = bitcast <4 x i1> %i.nd to i4
   %i.nf = icmp eq i4 %i.ne, 0
-  %op.rdx = and i1 %i.nf, %i.na
+  %op.rdx = select i1 %i.nf, i1 %i.na, i1 false
   %op.rdx430 = select i1 %op.rdx, i1 %i.nc, i1 false
   %i.ng = load i32, ptr @opt_tls_used, align 4, !tbaa !17 ; 2 uses
   %i.nh = load i32, ptr @opt_verbosity, align 4
@@ -612,12 +611,11 @@ bb.a:
   %i.l = and i32 %i.k, -2
   %i.m = icmp eq i32 %i.l, 4
   %i.n = load i32, ptr @opt_verbosity, align 4
-  %.fr430 = freeze i32 %i.n
-  %i.o = icmp slt i32 %.fr430, 4
+  %i.o = icmp slt i32 %i.n, 4
   %i.p = bitcast <4 x i1> %i.j to i4
   %i.q = icmp ne i4 %i.p, 0
-  %op.rdx427 = or i1 %i.q, %i.o
-  %op.rdx428 = select i1 %op.rdx427, i1 true, i1 %i.m
+  %op.rdx427 = select i1 %i.q, i1 true, i1 %i.m
+  %op.rdx428 = select i1 %op.rdx427, i1 true, i1 %i.o
   br i1 %op.rdx428, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1020,13 +1018,12 @@ bb.cx:                                            ; preds = %bb.cu
   %.fr431 = freeze <4 x ptr> %i.ka
   %i.kb = icmp ne <4 x ptr> %.fr431, splat (ptr null)
   %i.kc = load ptr, ptr @opt_cert, align 8
-  %.fr433 = freeze ptr %i.kc
-  %i.kd = icmp ne ptr %.fr433, null
+  %i.kd = icmp ne ptr %i.kc, null
   %i.ke = load i32, ptr @opt_verbosity, align 4
   %i.kf = icmp slt i32 %i.ke, 4
   %i.kg = bitcast <4 x i1> %i.kb to i4
   %i.kh = icmp ne i4 %i.kg, 0
-  %op.rdx = or i1 %i.kh, %i.kd
+  %op.rdx = select i1 %i.kh, i1 true, i1 %i.kd
   %op.rdx426 = select i1 %op.rdx, i1 true, i1 %i.kf
   br i1 %op.rdx426, label %bb.cz, label %bb.cy
 

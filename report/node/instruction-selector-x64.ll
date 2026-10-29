@@ -204,10 +204,8 @@ bb.w:                                             ; preds = %bb.u
   %i.eb = bitcast <8 x i1> %i.ea to i8
   %i.ec = icmp eq i8 %i.eb, -1
   %op.rdx = select i1 %i.ec, i1 %.not29.1.5.i, i1 false
-  %7 = freeze i1 %.not29.6.i
-  %8 = freeze i1 %op.rdx
-  %9 = and i1 %8, %7
-  %op.rdx252 = select i1 %9, i1 %.not29.1.6.i, i1 false
+  %7 = select i1 %op.rdx, i1 %.not29.6.i, i1 false
+  %op.rdx252 = select i1 %7, i1 %.not29.1.6.i, i1 false
   br i1 %op.rdx252, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.preheader34.i
@@ -290,10 +288,8 @@ bb.ac:                                            ; preds = %bb.t
   %i.ga = bitcast <8 x i1> %i.fz to i8
   %i.gb = icmp eq i8 %i.ga, -1
   %op.rdx254 = select i1 %i.gb, i1 %.not.12.i, i1 false
-  %10 = freeze i1 %.not.13.i
-  %11 = freeze i1 %op.rdx254
-  %12 = and i1 %11, %10
-  %op.rdx256 = select i1 %12, i1 %.not.14.i, i1 false
+  %8 = select i1 %op.rdx254, i1 %.not.13.i, i1 false
+  %op.rdx256 = select i1 %8, i1 %.not.14.i, i1 false
   br i1 %op.rdx256, label %.thread112.thread144, label %bb.ad
 
 .thread112.thread144:                             ; preds = %bb.ac

@@ -205,8 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit12.i: ; preds = %_
   %i.lt = bitcast <8 x i1> %i.ls to i8
   %i.lu = icmp ne i8 %i.lt, 0
   %op.rdx = select i1 %i.lu, i1 true, i1 %i.ll
-  %20 = freeze i1 %op.rdx
-  %op.rdx560 = select i1 %20, i1 true, i1 %i.ln
+  %op.rdx560 = select i1 %op.rdx, i1 true, i1 %i.ln
   br i1 %op.rdx560, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i, label %bb.by, !prof !3386
 
 bb.by:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit12.i

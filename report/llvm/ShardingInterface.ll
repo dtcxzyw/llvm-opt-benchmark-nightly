@@ -204,7 +204,7 @@ _ZN4mlir9Operation13getOpOperandsEv.exit:         ; preds = %_ZN4llvm4castIN4mli
 
 .lr.ph:                                           ; preds = %_ZN4mlir9Operation13getOpOperandsEv.exit
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 328 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 264
@@ -223,7 +223,7 @@ _ZN4mlir9Operation13getOpOperandsEv.exit:         ; preds = %_ZN4llvm4castIN4mli
 bb.a:                                             ; preds = %_ZNSt14_Optional_baseIN4mlir5shard8ShardingELb0ELb0EED2Ev.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %.050, i64 32 ; 2 uses
   %.not = icmp eq ptr %i.ac, %i.n
-  br i1 %.not, label %.critedge.loopexit, label %bb.b
+  br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.a
   %i.ad = phi i8 [ %.promoted, %.lr.ph ], [ %i.ao, %bb.a ] ; 2 uses
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZNSt6vectorIN4mlir5shard8ShardingESaIS2_EE9push_backERKS2_.exit
 
 _ZNSt6vectorIN4mlir5shard8ShardingESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.b, %bb.e, %bb.d
-  %i.ao = phi i8 [ %i.ad, %bb.e ], [ %i.ad, %bb.d ], [ 0, %bb.b ] ; 3 uses
+  %i.ao = phi i8 [ %i.ad, %bb.e ], [ %i.ad, %bb.d ], [ 0, %bb.b ] ; 2 uses
   %i.ap = load i8, ptr %i.o, align 8, !tbaa !139, !range !113, !noundef !114
   %i.aq = trunc nuw i8 %i.ap to i1
   store i8 0, ptr %i.o, align 8, !tbaa !139
@@ -312,12 +312,8 @@ _ZNSt14_Optional_baseIN4mlir5shard8ShardingELb0ELb0EED2Ev.exit: ; preds = %_ZNSt
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br i1 %i.aj, label %bb.a, label %.loopexit.loopexit
 
-.critedge.loopexit:                               ; preds = %bb.a
-  store i8 %i.ao, ptr %i.p, align 8
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %_ZN4llvm4castIN4mlir5shard17ShardingInterfaceENS1_9OperationEEEDcPT0_.exit, %_ZN4mlir9Operation13getOpOperandsEv.exit
-  %i.bb = phi i32 [ 0, %_ZN4llvm4castIN4mlir5shard17ShardingInterfaceENS1_9OperationEEEDcPT0_.exit ], [ %i.i, %_ZN4mlir9Operation13getOpOperandsEv.exit ], [ %i.i, %.critedge.loopexit ]
+.critedge:                                        ; preds = %bb.a, %_ZN4llvm4castIN4mlir5shard17ShardingInterfaceENS1_9OperationEEEDcPT0_.exit, %_ZN4mlir9Operation13getOpOperandsEv.exit
+  %i.bb = phi i32 [ %i.i, %_ZN4mlir9Operation13getOpOperandsEv.exit ], [ 0, %_ZN4llvm4castIN4mlir5shard17ShardingInterfaceENS1_9OperationEEEDcPT0_.exit ], [ %i.i, %bb.a ]
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !96 ; 2 uses
   %i.be = getelementptr inbounds i8, ptr %1, i64 -16

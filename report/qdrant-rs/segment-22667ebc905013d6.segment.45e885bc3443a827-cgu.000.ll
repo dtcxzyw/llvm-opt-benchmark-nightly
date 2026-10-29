@@ -205,9 +205,8 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtCsexYYUdYSQU6_5alloc3vec9
   %.not54.i.i.i.i69.i.i = icmp eq ptr %i.bb, null
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 168
   %.val61.i.i.i.i70.i.i = load ptr, ptr %i.bc, align 8, !alias.scope !18147, !nonnull !14
-  %.val61.i.i.i.i70.i.i.fr = freeze ptr %.val61.i.i.i.i70.i.i
-  %i.bd = icmp eq ptr %.val61.i.i.i.i70.i.i.fr, %i.bb
-  %or.cond.i.i.i.i71.i.i = or i1 %.not54.i.i.i.i69.i.i, %i.bd ; 2 uses
+  %i.bd = icmp eq ptr %.val61.i.i.i.i70.i.i, %i.bb
+  %or.cond.i.i.i.i71.i.i = select i1 %.not54.i.i.i.i69.i.i, i1 true, i1 %i.bd ; 2 uses
   %spec.select89.i.i = select i1 %or.cond.i.i.i.i71.i.i, i64 %i.az, i64 undef
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB4S_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex5files00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i
 
@@ -225,12 +224,12 @@ bb.k:                                             ; preds = %_RINvMNtCskKLDkoKar
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 208
   %.val.i.i = load i64, ptr %i.bh, align 8, !alias.scope !18143, !noundef !14
   %i.bi = icmp eq i64 %.val.i.i, 0
-  %op.rdx13 = and i1 %i.bi, %.sroa.582.0.i.i
-  %op.rdx14 = select i1 %op.rdx13, i1 %.sroa.5.0.i.i, i1 false
+  %op.rdx13 = select i1 %i.bi, i1 %.sroa.5.0.i.i, i1 false
+  %op.rdx14 = select i1 %op.rdx13, i1 %.sroa.582.0.i.i, i1 false
   br i1 %op.rdx14, label %bb.m, label %bb.q
 
 bb.l:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB4S_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex5files00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i
-  %or.cond53.i.i = and i1 %.sroa.5.0.i.i, %.sroa.582.0.i.i
+  %or.cond53.i.i = select i1 %.sroa.5.0.i.i, i1 %.sroa.582.0.i.i, i1 false
   br i1 %or.cond53.i.i, label %bb.m, label %bb.q
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -450,9 +449,8 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtCsexYYUdYSQU6_5alloc3vec9
   %i.dy = load ptr, ptr %i.cl, align 8, !alias.scope !18165, !noundef !14 ; 2 uses
   %.not54.i.i.i.i69.i.i.i.i = icmp eq ptr %i.dy, null
   %.val61.i.i.i.i70.i.i.i.i = load ptr, ptr %i.cm, align 8, !alias.scope !18165, !nonnull !14
-  %.val61.i.i.i.i70.i.i.i.i.fr = freeze ptr %.val61.i.i.i.i70.i.i.i.i
-  %i.dz = icmp eq ptr %.val61.i.i.i.i70.i.i.i.i.fr, %i.dy
-  %or.cond.i.i.i.i71.i.i.i.i = or i1 %.not54.i.i.i.i69.i.i.i.i, %i.dz ; 2 uses
+  %i.dz = icmp eq ptr %.val61.i.i.i.i70.i.i.i.i, %i.dy
+  %or.cond.i.i.i.i71.i.i.i.i = select i1 %.not54.i.i.i.i69.i.i.i.i, i1 true, i1 %i.dz ; 2 uses
   %spec.select89.i.i.i.i = select i1 %or.cond.i.i.i.i71.i.i.i.i, i64 %i.dx, i64 undef
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB4S_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex5files00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i.i.i
 
@@ -467,12 +465,12 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatt
 bb.ae:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB4S_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex5files00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i.i.i
   %.val.i.i.i.i = load i64, ptr %i.co, align 8, !alias.scope !18161, !noundef !14
   %i.eb = icmp eq i64 %.val.i.i.i.i, 0
-  %op.rdx = and i1 %i.eb, %.sroa.582.0.i.i.i.i
-  %op.rdx12 = select i1 %op.rdx, i1 %.sroa.5.0.i.i.i.i, i1 false
+  %op.rdx = select i1 %i.eb, i1 %.sroa.5.0.i.i.i.i, i1 false
+  %op.rdx12 = select i1 %op.rdx, i1 %.sroa.582.0.i.i.i.i, i1 false
   br i1 %op.rdx12, label %bb.ag, label %bb.ai
 
 bb.af:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB4S_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex5files00EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i.i.i
-  %or.cond53.i.i.i.i = and i1 %.sroa.5.0.i.i.i.i, %.sroa.582.0.i.i.i.i
+  %or.cond53.i.i.i.i = select i1 %.sroa.5.0.i.i.i.i, i1 %.sroa.582.0.i.i.i.i, i1 false
   br i1 %or.cond53.i.i.i.i, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
@@ -875,9 +873,8 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %.not54.i.i.i.i69.i.i = icmp eq ptr %i.bb, null
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 128
   %.val61.i.i.i.i70.i.i = load ptr, ptr %i.bc, align 8, !alias.scope !18299, !nonnull !14
-  %.val61.i.i.i.i70.i.i.fr = freeze ptr %.val61.i.i.i.i70.i.i
-  %i.bd = icmp eq ptr %.val61.i.i.i.i70.i.i.fr, %i.bb
-  %or.cond.i.i.i.i71.i.i = or i1 %.not54.i.i.i.i69.i.i, %i.bd ; 2 uses
+  %i.bd = icmp eq ptr %.val61.i.i.i.i70.i.i, %i.bb
+  %or.cond.i.i.i.i71.i.i = select i1 %.not54.i.i.i.i69.i.i, i1 true, i1 %i.bd ; 2 uses
   %spec.select89.i.i = select i1 %or.cond.i.i.i.i71.i.i, i64 %i.ba, i64 undef
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtBO_3map3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB5a_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex15immutable_files000ENCB53_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i
 
@@ -895,12 +892,12 @@ bb.k:                                             ; preds = %_RINvMNtCskKLDkoKar
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 256
   %.val.i.i = load i64, ptr %i.bh, align 8, !alias.scope !18295, !noundef !14
   %i.bi = icmp eq i64 %.val.i.i, 0
-  %op.rdx13 = and i1 %i.bi, %.sroa.582.0.i.i
-  %op.rdx14 = select i1 %op.rdx13, i1 %.sroa.5.0.i.i, i1 false
+  %op.rdx13 = select i1 %i.bi, i1 %.sroa.5.0.i.i, i1 false
+  %op.rdx14 = select i1 %op.rdx13, i1 %.sroa.582.0.i.i, i1 false
   br i1 %op.rdx14, label %bb.m, label %bb.q
 
 bb.l:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtBO_3map3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB5a_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex15immutable_files000ENCB53_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i
-  %or.cond53.i.i = and i1 %.sroa.5.0.i.i, %.sroa.582.0.i.i
+  %or.cond53.i.i = select i1 %.sroa.5.0.i.i, i1 %.sroa.582.0.i.i, i1 false
   br i1 %or.cond53.i.i, label %bb.m, label %bb.q
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -1120,9 +1117,8 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters3map3M
   %i.dy = load ptr, ptr %i.cf, align 8, !alias.scope !18317, !noundef !14 ; 2 uses
   %.not54.i.i.i.i69.i.i.i.i = icmp eq ptr %i.dy, null
   %.val61.i.i.i.i70.i.i.i.i = load ptr, ptr %i.cm, align 8, !alias.scope !18317, !nonnull !14
-  %.val61.i.i.i.i70.i.i.i.i.fr = freeze ptr %.val61.i.i.i.i70.i.i.i.i
-  %i.dz = icmp eq ptr %.val61.i.i.i.i70.i.i.i.i.fr, %i.dy
-  %or.cond.i.i.i.i71.i.i.i.i = or i1 %.not54.i.i.i.i69.i.i.i.i, %i.dz ; 2 uses
+  %i.dz = icmp eq ptr %.val61.i.i.i.i70.i.i.i.i, %i.dy
+  %or.cond.i.i.i.i71.i.i.i.i = select i1 %.not54.i.i.i.i69.i.i.i.i, i1 true, i1 %i.dz ; 2 uses
   %spec.select89.i.i.i.i = select i1 %or.cond.i.i.i.i71.i.i.i.i, i64 %i.dx, i64 undef
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtBO_3map3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB5a_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex15immutable_files000ENCB53_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i.i.i
 
@@ -1137,12 +1133,12 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatt
 bb.af:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtBO_3map3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB5a_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex15immutable_files000ENCB53_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i.i.i
   %.val.i.i.i.i = load i64, ptr %i.co, align 8, !alias.scope !18313, !noundef !14
   %i.eb = icmp eq i64 %.val.i.i.i.i, 0
-  %op.rdx = and i1 %i.eb, %.sroa.582.0.i.i.i.i
-  %op.rdx12 = select i1 %op.rdx, i1 %.sroa.5.0.i.i.i.i, i1 false
+  %op.rdx = select i1 %i.eb, i1 %.sroa.5.0.i.i.i.i, i1 false
+  %op.rdx12 = select i1 %op.rdx, i1 %.sroa.582.0.i.i.i.i, i1 false
   br i1 %op.rdx12, label %bb.ah, label %bb.aj
 
 bb.ag:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtNtNtNtCs607s0NAIaWN_7segment5index11field_index16field_index_base11field_index10FieldIndexEINtNtBO_3map3MapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtCsG258MDvU3F_3std4path7PathBufENCNCNCNvXNtNtB1X_20struct_payload_index13payload_indexNtB5a_18StructPayloadIndexNtNtB1X_18payload_index_base12PayloadIndex15immutable_files000ENCB53_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB1Z_.exit74.i.i.i.i
-  %or.cond53.i.i.i.i = and i1 %.sroa.5.0.i.i.i.i, %.sroa.582.0.i.i.i.i
+  %or.cond53.i.i.i.i = select i1 %.sroa.5.0.i.i.i.i, i1 %.sroa.582.0.i.i.i.i, i1 false
   br i1 %or.cond53.i.i.i.i, label %bb.ah, label %bb.aj
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af

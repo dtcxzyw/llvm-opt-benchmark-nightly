@@ -204,8 +204,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit458:     ; preds = %_ZN5boost9container
   %i.zg = freeze <4 x i1> %i.zd
   %i.zh = bitcast <4 x i1> %i.zg to i4
   %i.zi = icmp eq i4 %i.zh, -1
-  %.fr = freeze i1 %i.ze
-  %op.rdx2427 = and i1 %i.zi, %.fr
+  %op.rdx2427 = select i1 %i.zi, i1 %i.ze, i1 false
   %op.rdx2428 = select i1 %op.rdx2427, i1 %i.zf, i1 false
   %i.zj = zext i1 %op.rdx2428 to i8
   store i8 %i.zj, ptr %i.a, align 1, !tbaa !49
@@ -608,8 +607,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit562:     ; preds = %_ZN5boost9container
   %i.ami = freeze <4 x i1> %i.amf
   %i.amj = bitcast <4 x i1> %i.ami to i4
   %i.amk = icmp eq i4 %i.amj, -1
-  %.fr2429 = freeze i1 %i.amg
-  %op.rdx2425 = and i1 %i.amk, %.fr2429
+  %op.rdx2425 = select i1 %i.amk, i1 %i.amg, i1 false
   %op.rdx2426 = select i1 %op.rdx2425, i1 %i.amh, i1 false
   %i.aml = zext i1 %op.rdx2426 to i8
   store i8 %i.aml, ptr %i.c, align 1, !tbaa !49
@@ -1012,8 +1010,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit669:     ; preds = %_ZN5boost9container
   %i.aza = freeze <4 x i1> %i.ayx
   %i.azb = bitcast <4 x i1> %i.aza to i4
   %i.azc = icmp eq i4 %i.azb, -1
-  %.fr2430 = freeze i1 %i.ayy
-  %op.rdx2423 = and i1 %i.azc, %.fr2430
+  %op.rdx2423 = select i1 %i.azc, i1 %i.ayy, i1 false
   %op.rdx2424 = select i1 %op.rdx2423, i1 %i.ayz, i1 false
   %i.azd = zext i1 %op.rdx2424 to i8
   store i8 %i.azd, ptr %i.e, align 1, !tbaa !49
@@ -1416,8 +1413,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit776:     ; preds = %_ZN5boost9container
   %i.bly = freeze <4 x i1> %i.blv
   %i.blz = bitcast <4 x i1> %i.bly to i4
   %i.bma = icmp eq i4 %i.blz, -1
-  %.fr2431 = freeze i1 %i.blw
-  %op.rdx2421 = and i1 %i.bma, %.fr2431
+  %op.rdx2421 = select i1 %i.bma, i1 %i.blw, i1 false
   %op.rdx2422 = select i1 %op.rdx2421, i1 %i.blx, i1 false
   %i.bmb = zext i1 %op.rdx2422 to i8
   store i8 %i.bmb, ptr %i.g, align 1, !tbaa !49
@@ -1820,8 +1816,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit883:     ; preds = %_ZN5boost9container
   %i.byw = freeze <4 x i1> %i.byt
   %i.byx = bitcast <4 x i1> %i.byw to i4
   %i.byy = icmp eq i4 %i.byx, -1
-  %.fr2432 = freeze i1 %i.byu
-  %op.rdx2419 = and i1 %i.byy, %.fr2432
+  %op.rdx2419 = select i1 %i.byy, i1 %i.byu, i1 false
   %op.rdx2420 = select i1 %op.rdx2419, i1 %i.byv, i1 false
   %i.byz = zext i1 %op.rdx2420 to i8
   store i8 %i.byz, ptr %i.i, align 1, !tbaa !49
@@ -2224,8 +2219,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit990:     ; preds = %_ZN5boost9container
   %i.clo = freeze <4 x i1> %i.cll
   %i.clp = bitcast <4 x i1> %i.clo to i4
   %i.clq = icmp eq i4 %i.clp, -1
-  %.fr2433 = freeze i1 %i.clm
-  %op.rdx2417 = and i1 %i.clq, %.fr2433
+  %op.rdx2417 = select i1 %i.clq, i1 %i.clm, i1 false
   %op.rdx2418 = select i1 %op.rdx2417, i1 %i.cln, i1 false
   %i.clr = zext i1 %op.rdx2418 to i8
   store i8 %i.clr, ptr %i.k, align 1, !tbaa !49
@@ -2628,8 +2622,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1075:    ; preds = %_ZN5boost9container
   %i.cuw = freeze <4 x i1> %i.cut
   %i.cux = bitcast <4 x i1> %i.cuw to i4
   %i.cuy = icmp eq i4 %i.cux, -1
-  %.fr2434 = freeze i1 %i.cuu
-  %op.rdx2415 = and i1 %i.cuy, %.fr2434
+  %op.rdx2415 = select i1 %i.cuy, i1 %i.cuu, i1 false
   %op.rdx2416 = select i1 %op.rdx2415, i1 %i.cuv, i1 false
   %i.cuz = zext i1 %op.rdx2416 to i8
   store i8 %i.cuz, ptr %i.m, align 1, !tbaa !49
@@ -3032,8 +3025,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1162:    ; preds = %_ZN5boost9container
   %i.dee = freeze <4 x i1> %i.deb
   %i.def = bitcast <4 x i1> %i.dee to i4
   %i.deg = icmp eq i4 %i.def, -1
-  %.fr2435 = freeze i1 %i.dec
-  %op.rdx2413 = and i1 %i.deg, %.fr2435
+  %op.rdx2413 = select i1 %i.deg, i1 %i.dec, i1 false
   %op.rdx2414 = select i1 %op.rdx2413, i1 %i.ded, i1 false
   %i.deh = zext i1 %op.rdx2414 to i8
   store i8 %i.deh, ptr %i.o, align 1, !tbaa !49
@@ -3436,8 +3428,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1249:    ; preds = %_ZN5boost9container
   %i.dng = freeze <4 x i1> %i.dnd
   %i.dnh = bitcast <4 x i1> %i.dng to i4
   %i.dni = icmp eq i4 %i.dnh, -1
-  %.fr2436 = freeze i1 %i.dne
-  %op.rdx2411 = and i1 %i.dni, %.fr2436
+  %op.rdx2411 = select i1 %i.dni, i1 %i.dne, i1 false
   %op.rdx2412 = select i1 %op.rdx2411, i1 %i.dnf, i1 false
   %i.dnj = zext i1 %op.rdx2412 to i8
   store i8 %i.dnj, ptr %i.q, align 1, !tbaa !49
@@ -3840,8 +3831,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1336:    ; preds = %_ZN5boost9container
   %i.dwo = freeze <4 x i1> %i.dwl
   %i.dwp = bitcast <4 x i1> %i.dwo to i4
   %i.dwq = icmp eq i4 %i.dwp, -1
-  %.fr2437 = freeze i1 %i.dwm
-  %op.rdx2409 = and i1 %i.dwq, %.fr2437
+  %op.rdx2409 = select i1 %i.dwq, i1 %i.dwm, i1 false
   %op.rdx2410 = select i1 %op.rdx2409, i1 %i.dwn, i1 false
   %i.dwr = zext i1 %op.rdx2410 to i8
   store i8 %i.dwr, ptr %i.s, align 1, !tbaa !49
@@ -4244,8 +4234,7 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1423:    ; preds = %_ZN5boost9container
   %i.efw = freeze <4 x i1> %i.eft
   %i.efx = bitcast <4 x i1> %i.efw to i4
   %i.efy = icmp eq i4 %i.efx, -1
-  %.fr2438 = freeze i1 %i.efu
-  %op.rdx2407 = and i1 %i.efy, %.fr2438
+  %op.rdx2407 = select i1 %i.efy, i1 %i.efu, i1 false
   %op.rdx2408 = select i1 %op.rdx2407, i1 %i.efv, i1 false
   %i.efz = zext i1 %op.rdx2408 to i8
   store i8 %i.efz, ptr %i.u, align 1, !tbaa !49
@@ -4648,15 +4637,14 @@ _ZN5boost9container6vectorI1XvvED2Ev.exit1510:    ; preds = %_ZN5boost9container
   call void @llvm.lifetime.end.p0(ptr nonnull %229) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w) #23
   %i.eox = icmp eq <4 x i32> %i.eke, %i.eop
-  %i.eoy = icmp eq <2 x i32> %i.ekf, %i.eoq
-  %.fr2440 = freeze <2 x i1> %i.eoy               ; 2 uses
+  %i.eoy = icmp eq <2 x i32> %i.ekf, %i.eoq       ; 2 uses
   %i.eoz = freeze <4 x i1> %i.eox
   %i.epa = bitcast <4 x i1> %i.eoz to i4
   %i.epb = icmp eq i4 %i.epa, -1
-  %i.epc = extractelement <2 x i1> %.fr2440, i64 0
-  %op.rdx = and i1 %i.epb, %i.epc
-  %i.epd = extractelement <2 x i1> %.fr2440, i64 1
-  %op.rdx2406 = and i1 %op.rdx, %i.epd
+  %i.epc = extractelement <2 x i1> %i.eoy, i64 0
+  %op.rdx = select i1 %i.epb, i1 %i.epc, i1 false
+  %i.epd = extractelement <2 x i1> %i.eoy, i64 1
+  %op.rdx2406 = select i1 %op.rdx, i1 %i.epd, i1 false
   %i.epe = zext i1 %op.rdx2406 to i8
   store i8 %i.epe, ptr %i.w, align 1, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x) #23

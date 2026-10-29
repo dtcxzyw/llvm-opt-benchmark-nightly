@@ -203,10 +203,8 @@ bb.a:
   %i.g = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.45) #7 ; 3 uses
   %i.h = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.46) #7 ; 3 uses
   %i.i = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.47) #7 ; 3 uses
-  %i.j = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.48) #7
-  %.fr402 = freeze ptr %i.j                       ; 2 uses
-  %i.k = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.49) #7
-  %.fr400 = freeze ptr %i.k                       ; 3 uses
+  %i.j = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.48) #7 ; 2 uses
+  %i.k = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.49) #7 ; 3 uses
   %i.l = tail call ptr %0(ptr noundef %1, ptr noundef nonnull @.str.50) #7 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
@@ -216,14 +214,14 @@ bb.a:
   %i.o = insertelement <4 x ptr> %i.n, ptr %i.h, i64 2
   %i.p = insertelement <4 x ptr> %i.o, ptr %i.i, i64 3
   %.fr = freeze <4 x ptr> %i.p
-  %i.q = icmp ne ptr %.fr402, null
-  %i.r = icmp ne ptr %.fr400, null
+  %i.q = icmp ne ptr %i.j, null
+  %i.r = icmp ne ptr %i.k, null
   %i.s = icmp ne ptr %i.l, null
   %i.t = icmp eq <4 x ptr> %.fr, splat (ptr null)
   %i.u = bitcast <4 x i1> %i.t to i4
   %i.v = icmp eq i4 %i.u, 0
-  %op.rdx = and i1 %i.v, %i.q
-  %6 = and i1 %op.rdx, %i.r
+  %op.rdx = select i1 %i.v, i1 %i.q, i1 false
+  %6 = select i1 %op.rdx, i1 %i.r, i1 false
   %op.rdx399 = select i1 %6, i1 %i.s, i1 false
   br i1 %op.rdx399, label %bb.c, label %bb.b
 
@@ -487,7 +485,7 @@ bb.af:                                            ; preds = %.lr.ph289, %bb.aq
 
 bb.ag:                                            ; preds = %bb.af
   %i.dm = trunc nuw i64 %indvars.iv323 to i32     ; 7 uses
-  %i.dn = call i32 %.fr400(ptr noundef %i.al, i32 noundef %i.dm, ptr noundef nonnull %i.e, ptr noundef null) #7
+  %i.dn = call i32 %i.k(ptr noundef %i.al, i32 noundef %i.dm, ptr noundef nonnull %i.e, ptr noundef null) #7
   %i.do = icmp ne i32 %i.dn, 0
   %i.dp = load i32, ptr %i.e, align 4             ; 2 uses
   %i.dq = icmp eq i32 %i.dp, 0
@@ -504,7 +502,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not232, label %.thread246, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.dv = call i32 %.fr400(ptr noundef %i.al, i32 noundef %i.dm, ptr noundef nonnull %i.e, ptr noundef nonnull %i.du) #7
+  %i.dv = call i32 %i.k(ptr noundef %i.al, i32 noundef %i.dm, ptr noundef nonnull %i.e, ptr noundef nonnull %i.du) #7
   %i.dw = icmp ne i32 %i.dv, 0
   %i.dx = load i32, ptr %i.e, align 4             ; 3 uses
   %i.dy = icmp eq i32 %i.dx, 0
@@ -544,7 +542,7 @@ bb.ak:                                            ; preds = %.preheader
   br i1 %i.ee, label %bb.aq, label %bb.al
 
 bb.al:                                            ; preds = %.critedge
-  %i.ef = call i32 %.fr402(ptr noundef %i.al, ptr noundef %i.cl, i32 noundef %i.dm, ptr noundef nonnull %5) #7
+  %i.ef = call i32 %i.j(ptr noundef %i.al, ptr noundef %i.cl, i32 noundef %i.dm, ptr noundef nonnull %5) #7
   %.not234 = icmp eq i32 %i.ef, 0
   br i1 %.not234, label %bb.an, label %bb.am
 

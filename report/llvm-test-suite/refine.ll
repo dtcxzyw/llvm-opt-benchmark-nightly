@@ -203,16 +203,14 @@ bb.f:                                             ; preds = %bb.e
   %spec.store.select = sext i1 %i.ai to i32       ; 2 uses
   store i32 %spec.store.select, ptr %i.af, align 4, !tbaa !24
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 28 ; 2 uses
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !7
-  %.fr66 = freeze i32 %i.ak                       ; 4 uses
-  %.inv69 = icmp slt i32 %.fr66, 0
-  %spec.store.select49 = select i1 %.inv69, i32 0, i32 %spec.store.select ; 2 uses
+  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !7  ; 3 uses
+  %0 = icmp sgt i32 %i.ak, -1                     ; 2 uses
+  %spec.store.select49 = select i1 %0, i32 %spec.store.select, i32 0 ; 2 uses
   store i32 %spec.store.select49, ptr %i.af, align 4, !tbaa !24
   %i.al = getelementptr inbounds nuw i8, ptr %i.ac, i64 32 ; 2 uses
   %i.am = load i32, ptr %i.al, align 4, !tbaa !7
-  %.fr68 = freeze i32 %i.am                       ; 2 uses
-  %.inv = icmp slt i32 %.fr68, 0
-  %spec.store.select51 = select i1 %.inv, i32 0, i32 %spec.store.select49 ; 2 uses
+  %1 = icmp sgt i32 %i.am, -1                     ; 2 uses
+  %spec.store.select51 = select i1 %1, i32 %spec.store.select49, i32 0 ; 2 uses
   store i32 %spec.store.select51, ptr %i.af, align 4, !tbaa !24
   %i.an = getelementptr inbounds nuw i8, ptr %i.ac, i64 36 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
@@ -242,9 +240,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.bd = bitcast <4 x i1> %i.as to i4
   %i.be = icmp eq i4 %i.bd, -1
-  %0 = or i32 %.fr66, %.fr68
-  %1 = icmp sgt i32 %0, -1
-  %2 = and i1 %i.be, %1
+  %op.rdx = select i1 %i.be, i1 %1, i1 false
+  %2 = select i1 %op.rdx, i1 %0, i1 false
   %op.rdx65 = select i1 %2, i1 %i.ai, i1 false
   br i1 %op.rdx65, label %.loopexit, label %.preheader
 
@@ -267,7 +264,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader, %bb.i, %bb.h
-  %i.bm = phi i32 [ %.fr66, %.preheader ], [ %.pre41, %bb.i ], [ %.fr66, %bb.h ] ; 2 uses
+  %i.bm = phi i32 [ %i.ak, %.preheader ], [ %.pre41, %bb.i ], [ %i.ak, %bb.h ] ; 2 uses
   %i.bn = icmp sgt i32 %i.bm, -1
   br i1 %i.bn, label %bb.k, label %bb.m
 

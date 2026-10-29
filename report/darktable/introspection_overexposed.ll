@@ -204,9 +204,8 @@ bb.s:                                             ; preds = %bb.q
   %i.ev = freeze <4 x i1> %i.es
   %i.ew = bitcast <4 x i1> %i.ev to i4
   %i.ex = icmp eq i4 %i.ew, -1
-  %.fr346 = freeze i1 %i.eu
-  %op.rdx = and i1 %i.ex, %.fr346
-  %op.rdx343 = select i1 %op.rdx, i1 %i.ea, i1 false
+  %op.rdx = select i1 %i.ex, i1 %i.ea, i1 false
+  %op.rdx343 = select i1 %op.rdx, i1 %i.eu, i1 false
   br i1 %op.rdx343, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
@@ -312,9 +311,8 @@ bb.af:                                            ; preds = %bb.ae
   %i.gy = freeze <4 x i1> %i.gv
   %i.gz = bitcast <4 x i1> %i.gy to i4
   %i.ha = icmp eq i4 %i.gz, -1
-  %.fr = freeze i1 %i.gx
-  %op.rdx344 = and i1 %i.ha, %.fr
-  %op.rdx345 = select i1 %op.rdx344, i1 %i.gd, i1 false
+  %op.rdx344 = select i1 %i.ha, i1 %i.gd, i1 false
+  %op.rdx345 = select i1 %op.rdx344, i1 %i.gx, i1 false
   br i1 %op.rdx345, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af

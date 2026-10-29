@@ -205,12 +205,11 @@ bb.j:                                             ; preds = %_RINvMNtCskKLDkoKar
   %.phi.trans.insert77.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.pre78.i.i = load i64, ptr %.phi.trans.insert77.i.i, align 8, !noalias !14263
   %i.ak = call i64 @llvm.uadd.sat.i64(i64 %i.ah, i64 %.pre74.i.i)
-  %2 = freeze i64 %.pre76.i.i
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit61.i.i
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit61.i.i: ; preds = %bb.j, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i
   %i.al = phi i64 [ %.pre78.i.i, %bb.j ], [ 0, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i ]
-  %.fr40 = phi i64 [ %2, %bb.j ], [ 1, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i ] ; 2 uses
+  %.fr40 = phi i64 [ %.pre76.i.i, %bb.j ], [ 1, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i ] ; 2 uses
   %i.am = phi i64 [ %i.ak, %bb.j ], [ %i.ah, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !14263
   %i.an = load ptr, ptr %1, align 8, !alias.scope !14264, !noundef !32
@@ -222,9 +221,9 @@ bb.k:                                             ; preds = %_RINvMNtCskKLDkoKar
   %.val.i.i = load i64, ptr %i.ao, align 8, !alias.scope !14264, !noundef !32
   %i.ap = icmp eq i64 %.val.i.i, 0
   %i.aq = trunc nuw i64 %i.ag to i1
-  %i.ar = trunc i64 %.fr40 to i1
-  %op.rdx38 = and i1 %i.ap, %i.ar
-  %op.rdx39 = select i1 %op.rdx38, i1 %i.aq, i1 false
+  %i.ar = trunc nuw i64 %.fr40 to i1
+  %op.rdx38 = select i1 %i.ap, i1 %i.aq, i1 false
+  %op.rdx39 = select i1 %op.rdx38, i1 %i.ar, i1 false
   br i1 %op.rdx39, label %bb.m, label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtNtCsG258MDvU3F_3std11collections4hash3map6ValuesNtNtCs607s0NAIaWN_7segment5types8ShardKeyINtNtB19_3set7HashSetmEEINtNtB7_6copied6CopiedINtB2F_4ItermEENCNvMs0_NtNtNtCsPYQCUnoTxQ_10collection6shards12shard_holder13shard_mappingNtB3J_15ShardKeyMapping14iter_shard_ids0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3P_.exit
 
 bb.l:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit61.i.i
@@ -428,12 +427,11 @@ bb.y:                                             ; preds = %_RINvMNtCskKLDkoKar
   %.pre76.i.i.i.i = load i64, ptr %.phi.trans.insert75.i.i.i.i, align 8, !range !41, !noalias !14283
   %.pre78.i.i.i.i = load i64, ptr %.phi.trans.insert77.i.i.i.i, align 8, !noalias !14283
   %i.ci = call i64 @llvm.uadd.sat.i64(i64 %i.cg, i64 %.pre74.i.i.i.i)
-  %3 = freeze i64 %.pre76.i.i.i.i
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit61.i.i.i.i
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit61.i.i.i.i: ; preds = %.noexc14, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i.i.i
   %i.cj = phi i64 [ %.pre78.i.i.i.i, %.noexc14 ], [ 0, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i.i.i ]
-  %.fr41 = phi i64 [ %3, %.noexc14 ], [ 1, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i.i.i ] ; 2 uses
+  %.fr41 = phi i64 [ %.pre76.i.i.i.i, %.noexc14 ], [ 1, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i.i.i ] ; 2 uses
   %i.ck = phi i64 [ %i.ci, %.noexc14 ], [ %i.cg, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !14283
   %i.cl = load ptr, ptr %i.h, align 8, !alias.scope !14284, !noundef !32
@@ -444,9 +442,9 @@ bb.z:                                             ; preds = %_RINvMNtCskKLDkoKar
   %.val.i.i.i.i = load i64, ptr %i.bf, align 8, !alias.scope !14284, !noundef !32
   %i.cm = icmp eq i64 %.val.i.i.i.i, 0
   %i.cn = trunc nuw i64 %i.cf to i1
-  %i.co = trunc i64 %.fr41 to i1
-  %op.rdx = and i1 %i.cm, %i.co
-  %op.rdx37 = select i1 %op.rdx, i1 %i.cn, i1 false
+  %i.co = trunc nuw i64 %.fr41 to i1
+  %op.rdx = select i1 %i.cm, i1 %i.cn, i1 false
+  %op.rdx37 = select i1 %op.rdx, i1 %i.co, i1 false
   br i1 %op.rdx37, label %bb.ab, label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtNtCsG258MDvU3F_3std11collections4hash3map6ValuesNtNtCs607s0NAIaWN_7segment5types8ShardKeyINtNtB19_3set7HashSetmEEINtNtB7_6copied6CopiedINtB2F_4ItermEENCNvMs0_NtNtNtCsPYQCUnoTxQ_10collection6shards12shard_holder13shard_mappingNtB3J_15ShardKeyMapping14iter_shard_ids0ENtNtNtB9_6traits8iterator8Iterator9size_hintB3P_.exit.i.i
 
 bb.aa:                                            ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintECsPYQCUnoTxQ_10collection.exit61.i.i.i.i

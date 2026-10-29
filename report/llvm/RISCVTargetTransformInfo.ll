@@ -205,10 +205,9 @@ bb.ae:                                            ; preds = %bb.aa
 _ZN4llvmmlERKNS_15InstructionCostES2_.exit137:    ; preds = %bb.ac, %bb.ad, %.thread.i.i136, %bb.ae
   %.0.i.i131 = phi i64 [ %i.di, %bb.ae ], [ -9223372036854775808, %.thread.i.i136 ], [ 9223372036854775807, %bb.ad ], [ 9223372036854775807, %bb.ac ] ; 3 uses
   %i.dj = load i32, ptr %i.c, align 4, !tbaa !252
-  %i.dk = call { i64, i32 } @_ZNK4llvm12RISCVTTIImpl16getCastInstrCostEjPNS_4TypeES2_NS_19TargetTransformInfo15CastContextHintENS3_14TargetCostKindEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef 47, ptr noundef %i.cp, ptr noundef %i.ct, i8 noundef zeroext 0, i32 noundef %i.dj, ptr noundef null)
-  %.fr = freeze { i64, i32 } %i.dk                ; 2 uses
-  %.fca.0.extract50 = extractvalue { i64, i32 } %.fr, 0 ; 3 uses
-  %.fca.1.extract51 = extractvalue { i64, i32 } %.fr, 1
+  %i.dk = call { i64, i32 } @_ZNK4llvm12RISCVTTIImpl16getCastInstrCostEjPNS_4TypeES2_NS_19TargetTransformInfo15CastContextHintENS3_14TargetCostKindEPKNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef 47, ptr noundef %i.cp, ptr noundef %i.ct, i8 noundef zeroext 0, i32 noundef %i.dj, ptr noundef null) ; 2 uses
+  %.fca.0.extract50 = extractvalue { i64, i32 } %i.dk, 0 ; 3 uses
+  %.fca.1.extract51 = extractvalue { i64, i32 } %i.dk, 1
   %i.dl = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.0.i.i131, i64 %.fca.0.extract50) ; 2 uses
   %i.dm = extractvalue { i64, i1 } %i.dl, 1
   br i1 %i.dm, label %bb.af, label %bb.ai
@@ -224,7 +223,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.af
   %i.dp = icmp ne i64 %.0.i.i131, 0
   %i.dq = icmp slt i64 %.fca.0.extract50, 0
-  %or.cond.i.i145 = and i1 %i.dp, %i.dq
+  %or.cond.i.i145 = select i1 %i.dp, i1 %i.dq, i1 false
   br i1 %or.cond.i.i145, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit147, label %.thread.i.i146
 
 .thread.i.i146:                                   ; preds = %bb.ah, %bb.ag
@@ -271,8 +270,8 @@ bb.am:                                            ; preds = %_ZN4llvmmlERKNS_15I
 _ZN4llvmmlERKNS_15InstructionCostES2_.exit158:    ; preds = %bb.ak, %bb.al, %.thread.i.i157, %bb.am
   %.0.i.i152 = phi i64 [ %i.ed, %bb.am ], [ -9223372036854775808, %.thread.i.i157 ], [ 9223372036854775807, %bb.al ], [ 9223372036854775807, %bb.ak ]
   %i.ee = icmp eq i32 %.fca.1.extract43, 1
-  %op.rdx = or i1 %.not390391.not, %i.dt
-  %op.rdx406 = select i1 %op.rdx, i1 true, i1 %i.ee
+  %op.rdx = select i1 %.not390391.not, i1 true, i1 %i.ee
+  %op.rdx406 = select i1 %op.rdx, i1 true, i1 %i.dt
   %spec.select384 = zext i1 %op.rdx406 to i32
   %.0.i159 = call i64 @llvm.sadd.sat.i64(i64 %.0.i.i141, i64 %.0.i.i152)
   br label %.critedge

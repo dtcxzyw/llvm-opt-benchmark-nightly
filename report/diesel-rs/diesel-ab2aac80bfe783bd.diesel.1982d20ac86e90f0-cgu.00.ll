@@ -204,8 +204,7 @@ bb.m:                                             ; preds = %bb.i
 
 _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemTINtNtB1q_6borrow3CoweEIBw_RSNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEL_EINtNtNtBQ_7sources4once4OnceB2z_EEE6map_orTjIBw_jEENvYBJ_B1V_9size_hintEB38_.exit69.i.i: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemTINtNtB1q_6borrow3CoweEIBw_RSNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEL_EINtNtNtBQ_7sources4once4OnceB2z_EEE6map_orTjIBw_jEENvYBJ_B1V_9size_hintEB38_.exit.i.i
   %i.aj = phi i64 [ %i.z, %bb.k ], [ 0, %bb.j ], [ %.sroa.46.0.i.i.i66.i.i, %bb.l ], [ %.pre86.i.i, %bb.m ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemTINtNtB1q_6borrow3CoweEIBw_RSNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEL_EINtNtNtBQ_7sources4once4OnceB2z_EEE6map_orTjIBw_jEENvYBJ_B1V_9size_hintEB38_.exit.i.i ]
-  %i.ak = phi i64 [ 1, %bb.k ], [ 1, %bb.j ], [ %.sroa.05.0.i.i.i68.i.i, %bb.l ], [ %.pre84.i.i, %bb.m ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemTINtNtB1q_6borrow3CoweEIBw_RSNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEL_EINtNtNtBQ_7sources4once4OnceB2z_EEE6map_orTjIBw_jEENvYBJ_B1V_9size_hintEB38_.exit.i.i ]
-  %.fr5 = freeze i64 %i.ak                        ; 2 uses
+  %i.ak = phi i64 [ 1, %bb.k ], [ 1, %bb.j ], [ %.sroa.05.0.i.i.i68.i.i, %bb.l ], [ %.pre84.i.i, %bb.m ], [ 1, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemTINtNtB1q_6borrow3CoweEIBw_RSNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEL_EINtNtNtBQ_7sources4once4OnceB2z_EEE6map_orTjIBw_jEENvYBJ_B1V_9size_hintEB38_.exit.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !8068
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !alias.scope !8069, !noundef !77 ; 2 uses
@@ -217,13 +216,13 @@ bb.n:                                             ; preds = %_RINvMNtCscI6d9CVNm
   %.val63.i.i = load ptr, ptr %i.an, align 8, !alias.scope !8069, !nonnull !77, !noundef !77
   %i.ao = icmp eq ptr %.val63.i.i, %i.am
   %i.ap = trunc nuw i64 %i.t to i1
-  %i.aq = trunc i64 %.fr5 to i1
-  %op.rdx = and i1 %i.ao, %i.aq
-  %op.rdx4 = select i1 %op.rdx, i1 %i.ap, i1 false
+  %i.aq = trunc nuw i64 %i.ak to i1
+  %op.rdx = select i1 %i.ao, i1 %i.ap, i1 false
+  %op.rdx4 = select i1 %op.rdx, i1 %i.aq, i1 false
   br i1 %op.rdx4, label %bb.p, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures16ColumnDefinitionEINtNtB7_5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTINtNtB3i_6borrow3CoweEINtNtBb_6option6OptionRSNtB1w_10ColumnTypeEEEL_EINtNtNtB9_7sources4once4OnceB4r_EENCNvNtNtB1A_10migrations11diff_schema20collect_record_types0EB3N_9size_hintB1A_.exit
 
 bb.o:                                             ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemTINtNtB1q_6borrow3CoweEIBw_RSNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEL_EINtNtNtBQ_7sources4once4OnceB2z_EEE6map_orTjIBw_jEENvYBJ_B1V_9size_hintEB38_.exit69.i.i
-  %i.ar = and i64 %.fr5, %i.t
+  %i.ar = and i64 %i.ak, %i.t
   %or.cond57.not.i.i = icmp eq i64 %i.ar, 0
   br i1 %or.cond57.not.i.i, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5slice4iter4IterNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures16ColumnDefinitionEINtNtB7_5chain5ChainINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtNtB9_6traits8iterator8Iteratorp4ItemTINtNtB3i_6borrow3CoweEINtNtBb_6option6OptionRSNtB1w_10ColumnTypeEEEL_EINtNtNtB9_7sources4once4OnceB4r_EENCNvNtNtB1A_10migrations11diff_schema20collect_record_types0EB3N_9size_hintB1A_.exit, label %bb.p
 

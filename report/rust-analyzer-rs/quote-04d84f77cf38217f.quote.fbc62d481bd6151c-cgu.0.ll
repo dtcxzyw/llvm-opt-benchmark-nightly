@@ -202,9 +202,8 @@ _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro2
 
 bb.k:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro25rcvec13RcVecIntoIterNtBO_9TokenTreeEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECslCbDOIcU2Dw_5quote.exit63.i.i
   %.not74.i.i = icmp eq i64 %i.y, -2
-  %op.rdx = select i1 %.not74.i.i, i1 %i.w, i1 false
-  %2 = freeze i1 %op.rdx
-  %op.rdx7 = select i1 %2, i1 %i.q, i1 false
+  %op.rdx = select i1 %.not74.i.i, i1 %i.q, i1 false
+  %op.rdx7 = select i1 %op.rdx, i1 %i.w, i1 false
   br i1 %op.rdx7, label %bb.m, label %bb.o
 
 bb.l:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro25rcvec13RcVecIntoIterNtBO_9TokenTreeEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECslCbDOIcU2Dw_5quote.exit63.i.i
@@ -607,9 +606,8 @@ _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro2
 
 bb.e:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro25rcvec13RcVecIntoIterNtBO_9TokenTreeEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECslCbDOIcU2Dw_5quote.exit63.i
   %.not74.i = icmp eq i64 %i.p, -2
-  %op.rdx = select i1 %.not74.i, i1 %i.n, i1 false
-  %2 = freeze i1 %op.rdx
-  %op.rdx1 = select i1 %2, i1 %i.g, i1 false
+  %op.rdx = select i1 %.not74.i, i1 %i.g, i1 false
+  %op.rdx1 = select i1 %op.rdx, i1 %i.n, i1 false
   br i1 %op.rdx1, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro25rcvec13RcVecIntoIterNtBO_9TokenTreeEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECslCbDOIcU2Dw_5quote.exit63.i
@@ -1012,9 +1010,8 @@ bb.e:                                             ; preds = %bb.h, %bb.i
 
 bb.f:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro25rcvec13RcVecIntoIterNtBO_9TokenTreeEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECslCbDOIcU2Dw_5quote.exit63
   %.not74 = icmp eq i64 %i.p, -2
-  %op.rdx = select i1 %.not74, i1 %i.n, i1 false
-  %2 = freeze i1 %op.rdx
-  %op.rdx85 = select i1 %2, i1 %i.g, i1 false
+  %op.rdx = select i1 %.not74, i1 %i.g, i1 false
+  %op.rdx85 = select i1 %op.rdx, i1 %i.n, i1 false
   br i1 %op.rdx85, label %bb.i, label %bb.h
 
 bb.g:                                             ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRINtNtCs1K5DUQUZc67_11proc_macro25rcvec13RcVecIntoIterNtBO_9TokenTreeEE6map_orTjIBw_jEENvYBJ_NtNtNtNtB5_4iter6traits8iterator8Iterator9size_hintECslCbDOIcU2Dw_5quote.exit63

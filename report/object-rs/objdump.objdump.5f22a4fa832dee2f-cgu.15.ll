@@ -202,19 +202,17 @@ bb.e:                                             ; preds = %bb.c
   %.fr99 = freeze <4 x i8> %i.i
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 13
   %i.k = load i8, ptr %i.j, align 1
-  %.fr102 = freeze i8 %i.k
-  %i.l = icmp eq i8 %.fr102, 52
+  %i.l = icmp eq i8 %i.k, 52
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 14
   %i.n = load i8, ptr %i.m, align 1
-  %.fr100 = freeze i8 %i.n
-  %i.o = icmp eq i8 %.fr100, 104
+  %i.o = icmp eq i8 %i.n, 104
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 15
   %i.q = load i8, ptr %i.p, align 1
   %i.r = icmp eq i8 %i.q, 0
   %.fr99.scalar = bitcast <4 x i8> %.fr99 to i32
   %i.s = icmp eq i32 %.fr99.scalar, 912209464
-  %op.rdx96 = and i1 %i.s, %i.l
-  %2 = and i1 %op.rdx96, %i.o
+  %op.rdx96 = select i1 %i.s, i1 %i.l, i1 false
+  %2 = select i1 %op.rdx96, i1 %i.o, i1 false
   %op.rdx98 = select i1 %2, i1 %i.r, i1 false
   br i1 %op.rdx98, label %bb.m, label %bb.b
 
@@ -232,14 +230,13 @@ bb.g:                                             ; preds = %bb.d
   %.fr103 = freeze <4 x i8> %i.w
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 14
   %i.y = load i8, ptr %i.x, align 1
-  %.fr105 = freeze i8 %i.y
-  %i.z = icmp eq i8 %.fr105, 52
+  %i.z = icmp eq i8 %i.y, 52
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 15
   %i.ab = load i8, ptr %i.aa, align 1
   %i.ac = icmp eq i8 %i.ab, 0
   %.fr103.scalar = bitcast <4 x i8> %.fr103 to i32
   %i.ad = icmp eq i32 %.fr103.scalar, 912209464
-  %op.rdx = and i1 %i.ad, %i.z
+  %op.rdx = select i1 %i.ad, i1 %i.z, i1 false
   %op.rdx95 = select i1 %op.rdx, i1 %i.ac, i1 false
   br i1 %op.rdx95, label %bb.m, label %bb.b
 

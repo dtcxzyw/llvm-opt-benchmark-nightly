@@ -204,14 +204,13 @@ define dso_local noundef zeroext i1 @_ZNK12lldb_private24ProcessInstanceInfoMatc
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 408
   %i.b = load i32, ptr %i.a, align 8, !tbaa !113
-  %.fr39 = freeze i32 %i.b
-  %.not = icmp eq i32 %.fr39, 0
+  %.not = icmp eq i32 %i.b, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.d = load i64, ptr %i.c, align 8
-  %.fr37 = freeze i64 %i.d
+  %1 = icmp eq i64 %i.d, 0
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.f = load i64, ptr %i.e, align 8
-  %.fr41 = freeze i64 %i.f
+  %2 = icmp eq i64 %i.f, 0
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.i = load <2 x i32>, ptr %i.g, align 8
@@ -220,8 +219,7 @@ bb.a:
   %.fr = freeze <4 x i32> %i.k
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.m = load i32, ptr %i.l, align 8
-  %.fr38 = freeze i32 %i.m
-  %spec.select.i = icmp ugt i32 %.fr38, 175
+  %spec.select.i = icmp ugt i32 %i.m, 175
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 412
   %i.o = load i8, ptr %i.n, align 4, !range !105
   %i.p = trunc nuw i8 %i.o to i1
@@ -229,12 +227,11 @@ bb.a:
   %i.q = icmp ne <4 x i32> %.fr, splat (i32 -1)
   %i.r = bitcast <4 x i1> %i.q to i4
   %i.s = icmp eq i4 %i.r, 0
-  %op.rdx = and i1 %i.s, %.not
-  %1 = or i64 %.fr41, %.fr37
-  %2 = icmp eq i64 %1, 0
-  %op.rdx35 = and i1 %op.rdx, %2
-  %3 = and i1 %op.rdx35, %spec.select.i
-  %op.rdx36 = select i1 %3, i1 %not., i1 false
+  %op.rdx = select i1 %i.s, i1 %.not, i1 false
+  %3 = select i1 %op.rdx, i1 %1, i1 false
+  %op.rdx35 = select i1 %3, i1 %2, i1 false
+  %4 = select i1 %op.rdx35, i1 %spec.select.i, i1 false
+  %op.rdx36 = select i1 %4, i1 %not., i1 false
   ret i1 %op.rdx36
 }
 

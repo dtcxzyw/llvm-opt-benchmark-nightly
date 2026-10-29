@@ -204,12 +204,11 @@ bb.e:                                             ; preds = %bb.d
   %i.ly = load i64, ptr %i.lx, align 8
   %i.lz = icmp ne i64 %i.ly, 0
   %i.ma = load i32, ptr %i.af, align 8
-  %.fr177 = freeze i32 %i.ma
-  %i.mb = icmp ne i32 %.fr177, -1
+  %i.mb = icmp ne i32 %i.ma, -1
   %i.mc = bitcast <4 x i1> %i.lw to i4
   %i.md = icmp ne i4 %i.mc, 0
-  %op.rdx = or i1 %i.md, %i.mb
-  %op.rdx175 = select i1 %op.rdx, i1 true, i1 %i.lz
+  %op.rdx = select i1 %i.md, i1 true, i1 %i.lz
+  %op.rdx175 = select i1 %op.rdx, i1 true, i1 %i.mb
   br i1 %op.rdx175, label %.thread.sink.split, label %thread-pre-split.thread
 
 .thread.sink.split:                               ; preds = %bb.e, %bb.d

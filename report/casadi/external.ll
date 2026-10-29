@@ -204,17 +204,16 @@ bb.a:
   %.fr29 = freeze <4 x ptr> %i.m
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.o = load ptr, ptr %i.n, align 8
-  %.fr30 = freeze ptr %i.o
-  %.not4 = icmp eq ptr %.fr30, null
+  %.not4 = icmp eq ptr %i.o, null
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 496
   %i.q = load ptr, ptr %i.p, align 8
   %.not5 = icmp eq ptr %i.q, null
   %i.r = icmp ne <4 x ptr> %.fr29, splat (ptr null)
   %i.s = bitcast <4 x i1> %i.r to i4
   %i.t = icmp eq i4 %i.s, 0
-  %op.rdx.a = and i1 %i.t, %.not4
-  %1 = and i1 %op.rdx.a, %i.h
-  %i.u = select i1 %1, i1 %i.f, i1 false
+  %op.rdx.a = and i1 %i.t, %i.h
+  %op.rdx = select i1 %op.rdx.a, i1 %i.f, i1 false
+  %i.u = select i1 %op.rdx, i1 %.not4, i1 false
   %op.rdx26 = select i1 %i.u, i1 %.not5, i1 false
   br i1 %op.rdx26, label %bb.b, label %_ZNK6casadi8External16any_symbol_foundEv.exit.thread
 

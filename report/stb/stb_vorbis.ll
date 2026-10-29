@@ -205,15 +205,14 @@ bb.k:                                             ; preds = %bb.j
   %.fr1951 = freeze <4 x i8> %i.w
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.y = load i8, ptr %i.x, align 4
-  %.fr1953 = freeze i8 %i.y
-  %i.z = icmp eq i8 %.fr1953, 101
+  %i.z = icmp eq i8 %i.y, 101
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.ab = load i8, ptr %i.aa, align 1
   %i.ac = icmp eq i8 %i.ab, 97
   %.fr1951.scalar = bitcast <4 x i8> %.fr1951 to i32
   %i.ad = icmp eq i32 %.fr1951.scalar, 1752394086
-  %op.rdx = and i1 %i.ad, %i.z
-  %i.ae = select i1 %op.rdx, i1 %i.v, i1 false
+  %op.rdx = select i1 %i.ad, i1 %i.v, i1 false
+  %i.ae = select i1 %op.rdx, i1 %i.z, i1 false
   %op.rdx1950 = select i1 %i.ae, i1 %i.ac, i1 false
   br i1 %op.rdx1950, label %bb.l, label %bb.o
 

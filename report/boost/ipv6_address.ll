@@ -202,18 +202,17 @@ bb.a:
   %.fr = freeze <8 x i8> %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i8, ptr %i.b, align 1
-  %.fr34 = freeze i8 %i.c
+  %1 = icmp eq i8 %i.c, 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.e = load i8, ptr %i.d, align 1
-  %.fr32 = freeze i8 %i.e
+  %2 = icmp eq i8 %i.e, 0
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 10
   %i.g = load i8, ptr %i.f, align 1
   %i.h = icmp eq i8 %i.g, -1
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.i = icmp eq i64 %.fr.scalar, 0
-  %1 = or i8 %.fr32, %.fr34
-  %2 = icmp eq i8 %1, 0
-  %3 = and i1 %i.i, %2
+  %op.rdx = select i1 %i.i, i1 %1, i1 false
+  %3 = select i1 %op.rdx, i1 %2, i1 false
   %op.rdx31 = select i1 %3, i1 %i.h, i1 false
   br i1 %op.rdx31, label %bb.b, label %bb.c
 

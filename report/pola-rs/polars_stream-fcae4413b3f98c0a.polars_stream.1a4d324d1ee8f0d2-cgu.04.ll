@@ -205,9 +205,8 @@ bb.a:
   %.not.i.i = icmp eq i64 %i.a, 3, !dbg !124087
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !124088
   %.val.i.i.i = load ptr, ptr %i.b, align 8, !dbg !124088, !alias.scope !124083
-  %.val.i.i.i.fr = freeze ptr %.val.i.i.i, !dbg !124088
-  %.not.i.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i.fr, null, !dbg !124088
-  %narrow.i.i = or i1 %.not.i.i, %.not.i.i.i.i.i.i.i, !dbg !124088 ; 2 uses
+  %.not.i.i.i.i.i.i.i = icmp eq ptr %.val.i.i.i, null, !dbg !124088
+  %narrow.i.i = select i1 %.not.i.i, i1 true, i1 %.not.i.i.i.i.i.i.i, !dbg !124088 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !124089
   %i.d = load i64, ptr %i.c, align 8, !dbg !124089, !range !3522, !alias.scope !124083, !noundef !3164
   %.not54.i.i = icmp eq i64 %i.d, 3, !dbg !124089
@@ -224,7 +223,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 152, !dbg !124093
   %.val62.i.i = load ptr, ptr %i.h, align 8, !dbg !124093, !alias.scope !124083, !nonnull !3164, !noundef !3164
   %i.i = icmp eq ptr %.val62.i.i, %i.g, !dbg !124094
-  %op.rdx = and i1 %i.i, %narrow.i.i, !dbg !124094
+  %op.rdx = select i1 %i.i, i1 %narrow.i.i, i1 false, !dbg !124094
   %op.rdx1 = select i1 %op.rdx, i1 %narrow80.i.i, i1 false, !dbg !124094
   br i1 %op.rdx1, label %bb.e, label %bb.d, !dbg !124094
 

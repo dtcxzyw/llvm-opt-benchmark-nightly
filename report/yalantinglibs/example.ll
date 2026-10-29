@@ -205,8 +205,7 @@ _ZNK4asio2ip7address5to_v6Ev.exit.i.i:            ; preds = %bb.bq
   %.fr426 = freeze <4 x i8> %i.he
   %i.hf = icmp eq <4 x i8> %.fr426, zeroinitializer
   %i.hg = icmp eq i8 %.sroa.5.sroa.16.0.copyload.i.i, 0
-  %.sroa.5.sroa.17.0.copyload.i.i.fr = freeze i8 %.sroa.5.sroa.17.0.copyload.i.i
-  %i.hh = icmp eq i8 %.sroa.5.sroa.17.0.copyload.i.i.fr, 0
+  %i.hh = icmp eq i8 %.sroa.5.sroa.17.0.copyload.i.i, 0
   %i.hi = icmp eq i8 %.sroa.5.sroa.18.0.copyload.i.i, 0
   %i.hj = shufflevector <8 x i1> %i.hd, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %rdx.op = and <4 x i1> %i.hj, %i.hf
@@ -215,9 +214,8 @@ _ZNK4asio2ip7address5to_v6Ev.exit.i.i:            ; preds = %bb.bq
   %i.hm = bitcast <8 x i1> %i.hl to i8
   %i.hn = icmp eq i8 %i.hm, -1
   %op.rdx = select i1 %i.hn, i1 %i.hg, i1 false
-  %29 = freeze i1 %op.rdx
-  %30 = and i1 %29, %i.hh
-  %op.rdx425 = select i1 %30, i1 %i.hi, i1 false
+  %29 = select i1 %op.rdx, i1 %i.hh, i1 false
+  %op.rdx425 = select i1 %29, i1 %i.hi, i1 false
   br i1 %op.rdx425, label %_ZN7coro_io6detail33should_create_dual_stack_acceptorERKN4asio2ip14basic_endpointINS2_3tcpEEE.exit, label %_ZN7coro_io6detail33should_create_dual_stack_acceptorERKN4asio2ip14basic_endpointINS2_3tcpEEE.exit.thread
 
 _ZN7coro_io6detail33should_create_dual_stack_acceptorERKN4asio2ip14basic_endpointINS2_3tcpEEE.exit: ; preds = %_ZNK4asio2ip7address5to_v6Ev.exit.i.i

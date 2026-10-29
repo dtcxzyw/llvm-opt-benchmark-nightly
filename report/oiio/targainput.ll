@@ -205,14 +205,13 @@ bb.aj:                                            ; preds = %bb.ai
   %.fr = freeze <4 x i16> %i.cs
   %i.ct = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.cu = load i16, ptr %i.ct, align 8
-  %.fr194 = freeze i16 %i.cu
-  %i.cv = icmp ne i16 %.fr194, 0
+  %i.cv = icmp ne i16 %i.cu, 0
   %i.cw = getelementptr inbounds nuw i8, ptr %8, i64 10 ; 2 uses
   %i.cx = load i16, ptr %i.cw, align 2
   %i.cy = icmp ne i16 %i.cx, 0
   %.fr.scalar = bitcast <4 x i16> %.fr to i64
   %i.cz = icmp ne i64 %.fr.scalar, 0
-  %op.rdx = or i1 %i.cz, %i.cv
+  %op.rdx = select i1 %i.cz, i1 true, i1 %i.cv
   %op.rdx192 = select i1 %op.rdx, i1 true, i1 %i.cy
   br i1 %op.rdx192, label %bb.ak, label %bb.ap
 

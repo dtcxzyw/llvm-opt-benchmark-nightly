@@ -204,8 +204,7 @@ _ZN4node10cares_wrap12_GLOBAL__N_120getSoaRecordTemplateEPNS_11EnvironmentE.exit
   %.sroa.04.0.i = phi ptr [ %i.ak, %_ZN4node11Environment23set_soa_record_templateEN2v85LocalINS1_18DictionaryTemplateEEE.exit.i ], [ %i.ah, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   %i.as = load ptr, ptr %i.o, align 8
-  %.fr128 = freeze ptr %i.as
-  %i.at = ptrtoint ptr %.fr128 to i64
+  %i.at = ptrtoint ptr %i.as to i64
   %i.au = add i64 %i.at, 648                      ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -288,9 +287,8 @@ _ZN4node13OneByteStringEPN2v87IsolateEPKciNS0_13NewStringTypeE.exit50: ; preds =
   %i.cp = load ptr, ptr %i.a, align 8
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 32
   %i.cr = load i32, ptr %i.cq, align 8
-  %i.cs = call ptr @_ZN2v87Integer15NewFromUnsignedEPNS_7IsolateEj(ptr noundef %i.co, i32 noundef %i.cr) #26
-  %.fr130 = freeze ptr %i.cs                      ; 2 uses
-  %i.ct = ptrtoint ptr %.fr130 to i64
+  %i.cs = call ptr @_ZN2v87Integer15NewFromUnsignedEPNS_7IsolateEj(ptr noundef %i.co, i32 noundef %i.cr) #26 ; 2 uses
+  %i.ct = ptrtoint ptr %i.cs to i64
   store i64 %i.ct, ptr %i.ba, align 16
   %i.cu = insertelement <4 x ptr> poison, ptr %i.bu, i64 0
   %i.cv = insertelement <4 x ptr> %i.cu, ptr %i.ca, i64 1
@@ -298,14 +296,14 @@ _ZN4node13OneByteStringEPN2v87IsolateEPKciNS0_13NewStringTypeE.exit50: ; preds =
   %i.cx = insertelement <4 x ptr> %i.cw, ptr %i.cm, i64 3
   %.fr = freeze <4 x ptr> %i.cx
   %i.cy = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %i.cz = icmp eq ptr %.fr130, null
+  %i.cz = icmp eq ptr %i.cs, null
   %i.da = icmp eq i64 %i.au, 0
   %i.db = bitcast <4 x i1> %i.cy to i4
   %i.dc = icmp ne i4 %i.db, 0
-  %i.dd = or i1 %i.da, %i.dc
-  %i.de = or i1 %i.dd, %i.cz
-  %op.rdx124 = or i1 %i.de, %i.bo
-  %op.rdx125 = or i1 %op.rdx124, %i.bh
+  %i.dd = or i1 %i.dc, %i.bh
+  %i.de = or i1 %i.dd, %i.bo
+  %op.rdx124 = select i1 %i.de, i1 true, i1 %i.cz
+  %op.rdx125 = select i1 %op.rdx124, i1 true, i1 %i.da
   br i1 %op.rdx125, label %"_ZN4node16OnScopeLeaveImplIZNS_10cares_wrap9SoaTraits5ParseEPNS1_9QueryWrapIS2_EERKSt10unique_ptrINS1_12ResponseDataESt14default_deleteIS7_EEE3$_0ED2Ev.exit", label %_ZN4node21NewDictionaryInstanceEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit
 
 _ZN4node21NewDictionaryInstanceEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit: ; preds = %_ZN4node13OneByteStringEPN2v87IsolateEPKciNS0_13NewStringTypeE.exit50

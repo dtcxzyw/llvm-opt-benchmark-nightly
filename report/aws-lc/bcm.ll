@@ -205,8 +205,7 @@ BN_CTX_start.exit.i:                              ; preds = %bb.h, %BN_STACK_pus
   %i.bz = tail call ptr @BN_CTX_get(ptr noundef nonnull %i.bk) ; 4 uses
   %i.ca = tail call ptr @BN_CTX_get(ptr noundef nonnull %i.bk) ; 4 uses
   %i.cb = tail call ptr @BN_CTX_get(ptr noundef nonnull %i.bk) ; 9 uses
-  %i.cc = tail call ptr @BN_CTX_get(ptr noundef nonnull %i.bk)
-  %.fr175 = freeze ptr %i.cc                      ; 4 uses
+  %i.cc = tail call ptr @BN_CTX_get(ptr noundef nonnull %i.bk) ; 4 uses
   %i.cd = tail call ptr @BN_CTX_get(ptr noundef nonnull %i.bk) ; 3 uses
   %i.ce = insertelement <4 x ptr> poison, ptr %i.by, i64 0
   %i.cf = insertelement <4 x ptr> %i.ce, ptr %i.bz, i64 1
@@ -214,16 +213,16 @@ BN_CTX_start.exit.i:                              ; preds = %bb.h, %BN_STACK_pus
   %i.ch = insertelement <4 x ptr> %i.cg, ptr %i.cb, i64 3
   %.fr = freeze <4 x ptr> %i.ch
   %i.ci = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %i.cj = icmp eq ptr %.fr175, null
+  %i.cj = icmp eq ptr %i.cc, null
   %i.ck = icmp eq ptr %i.cd, null
   %i.cl = bitcast <4 x i1> %i.ci to i4
   %i.cm = icmp ne i4 %i.cl, 0
-  %op.rdx = or i1 %i.cm, %i.cj
+  %op.rdx = select i1 %i.cm, i1 true, i1 %i.cj
   %op.rdx173 = select i1 %op.rdx, i1 true, i1 %i.ck
   br i1 %op.rdx173, label %.critedge.i, label %bb.i
 
 bb.i:                                             ; preds = %BN_CTX_start.exit.i
-  %i.cn = tail call i32 @BN_set_bit(ptr noundef nonnull %.fr175, i32 noundef %i.f)
+  %i.cn = tail call i32 @BN_set_bit(ptr noundef nonnull %i.cc, i32 noundef %i.f)
   %.not.i = icmp eq i32 %i.cn, 0
   br i1 %.not.i, label %.critedge.i, label %bb.j
 
@@ -417,7 +416,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.preheader, %bb.ai
   %i.el = load ptr, ptr %i.dh, align 8, !tbaa !524
   %i.em = load ptr, ptr %i.db, align 8, !tbaa !527
-  %i.en = tail call fastcc i32 @generate_prime(ptr noundef %i.el, i32 noundef %i.e, ptr noundef %i.em, ptr noundef null, ptr noundef nonnull %i.cb, ptr noundef nonnull %.fr175, ptr noundef %i.bk, ptr noundef %3)
+  %i.en = tail call fastcc i32 @generate_prime(ptr noundef %i.el, i32 noundef %i.e, ptr noundef %i.em, ptr noundef null, ptr noundef nonnull %i.cb, ptr noundef nonnull %i.cc, ptr noundef %i.bk, ptr noundef %3)
   %.not143.i = icmp eq i32 %i.en, 0
   br i1 %.not143.i, label %.critedge.i, label %bb.z
 
@@ -430,7 +429,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ep = load ptr, ptr %i.dn, align 8, !tbaa !525
   %i.eq = load ptr, ptr %i.db, align 8, !tbaa !527
   %i.er = load ptr, ptr %i.dh, align 8, !tbaa !524
-  %i.es = tail call fastcc i32 @generate_prime(ptr noundef %i.ep, i32 noundef %i.e, ptr noundef %i.eq, ptr noundef %i.er, ptr noundef nonnull %i.cb, ptr noundef nonnull %.fr175, ptr noundef %i.bk, ptr noundef %3)
+  %i.es = tail call fastcc i32 @generate_prime(ptr noundef %i.ep, i32 noundef %i.e, ptr noundef %i.eq, ptr noundef %i.er, ptr noundef nonnull %i.cb, ptr noundef nonnull %i.cc, ptr noundef %i.bk, ptr noundef %3)
   %.not145.i = icmp eq i32 %i.es, 0
   br i1 %.not145.i, label %.critedge.i, label %bb.ab
 

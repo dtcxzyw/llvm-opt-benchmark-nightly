@@ -204,9 +204,8 @@ bb.h:                                             ; preds = %bb.g
   call void %i.ap(ptr dead_on_unwind nonnull writable sret(%class.QModelIndex) align 8 %9, ptr noundef align 8 dereferenceable_or_null(16) %i.ak, i32 noundef %1, i32 noundef 4, ptr noundef nonnull align 8 dereferenceable(24) %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   %i.aq = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.ar = load ptr, ptr %i.aq, align 8
-  %.fr87 = freeze ptr %i.ar                       ; 3 uses
-  %i.as = icmp ne ptr %.fr87, null
+  %i.ar = load ptr, ptr %i.aq, align 8            ; 3 uses
+  %i.as = icmp ne ptr %i.ar, null
   %i.at = load <2 x i32>, ptr %7, align 8
   %i.au = load <2 x i32>, ptr %9, align 8
   %i.av = shufflevector <2 x i32> %i.at, <2 x i32> %i.au, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -217,17 +216,17 @@ bb.h:                                             ; preds = %bb.g
   %i.az = icmp slt <4 x i32> %.fr, zeroinitializer
   %i.ba = bitcast <4 x i1> %i.az to i4
   %i.bb = icmp eq i4 %i.ba, 0
-  %op.rdx = and i1 %i.bb, %i.as
+  %op.rdx = select i1 %i.bb, i1 %i.as, i1 false
   %op.rdx85 = select i1 %op.rdx, i1 %i.ay, i1 false
   br i1 %op.rdx85, label %_ZNK11QModelIndex4dataEi.exit31, label %.thread55
 
 _ZNK11QModelIndex4dataEi.exit31:                  ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #26
-  %i.bc = load ptr, ptr %.fr87, align 8, !noalias !83
+  %i.bc = load ptr, ptr %i.ar, align 8, !noalias !83
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 144
   %i.be = load ptr, ptr %i.bd, align 8, !noalias !83
-  call void %i.be(ptr dead_on_unwind nonnull writable sret(%class.QVariant) align 8 %12, ptr noundef nonnull align 8 dereferenceable_or_null(16) %.fr87, ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %7, i32 noundef 0), !inline_history !1
+  call void %i.be(ptr dead_on_unwind nonnull writable sret(%class.QVariant) align 8 %12, ptr noundef nonnull align 8 dereferenceable_or_null(16) %i.ar, ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %7, i32 noundef 0), !inline_history !1
   invoke void @_ZNK8QVariant8toStringEv(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %11, ptr noundef nonnull align 8 dereferenceable_or_null(32) %12)
           to label %bb.i unwind label %bb.p
 

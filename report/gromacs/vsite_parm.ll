@@ -205,8 +205,7 @@ bb.ie:                                            ; preds = %bb.id
 
 bb.if:                                            ; preds = %bb.ie, %bb.ic
   %i.bjh = load float, ptr %.sroa.0.027.i97.i, align 4, !tbaa !134
-  %.fr1148 = freeze float %i.bjh
-  %i.bji = fpext float %.fr1148 to double
+  %i.bji = fpext float %i.bjh to double
   %i.bjj = fmul double %i.bji, f0x3F91DF46A2529D39
   %i.bjk = fptrunc double %i.bjj to float
   br label %_ZL9get_angleN3gmx8ArrayRefIK22VsiteBondedInteractionEEiii.exit101.i
@@ -294,7 +293,7 @@ _ZL9get_angleN3gmx8ArrayRefIK22VsiteBondedInteractionEEiii.exit108.i: ; preds = 
   %i.bkv = bitcast <4 x i1> %i.bkr to i4
   %i.bkw = icmp ne i4 %i.bkv, 0
   %op.rdx1143 = select i1 %i.bkw, i1 true, i1 %i.bks
-  %23 = or i1 %op.rdx1143, %i.bkt
+  %23 = select i1 %op.rdx1143, i1 true, i1 %i.bkt
   %op.rdx1145 = select i1 %23, i1 true, i1 %i.bku
   br i1 %op.rdx1145, label %_ZL17calc_vsite3_paramP22PreprocessingAtomTypesP17InteractionOfTypeP7t_atomsN3gmx8ArrayRefIK22VsiteBondedInteractionEES9_.exit.thread, label %bb.in
 

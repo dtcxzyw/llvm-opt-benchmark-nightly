@@ -205,19 +205,18 @@ bb.as:                                            ; preds = %bb.ao
   %i.ep = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.eq = fmul <2 x float> %i.ep, %i.eb
   %i.er = fadd <2 x float> %i.eo, %i.eq
-  %i.es = fadd <2 x float> %i.em, %i.er
-  %.fr318 = freeze <2 x float> %i.es              ; 3 uses
-  %i.et = extractelement <2 x float> %.fr318, i64 0
+  %i.es = fadd <2 x float> %i.em, %i.er           ; 3 uses
+  %i.et = extractelement <2 x float> %i.es, i64 0
   %i.eu = fcmp oeq float %i.et, 0.000000e+00
-  %i.ev = extractelement <2 x float> %.fr318, i64 1
+  %i.ev = extractelement <2 x float> %i.es, i64 1
   %i.ew = fcmp oeq float %i.ev, 0.000000e+00
   %i.ex = fcmp une <4 x float> %.fr315, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
   %i.ey = bitcast <4 x i1> %i.ex to i4
   %i.ez = icmp eq i4 %i.ey, 0
-  %op.rdx = and i1 %i.ez, %i.eu
-  %op.rdx314 = and i1 %op.rdx, %i.ew
+  %op.rdx = select i1 %i.ez, i1 %i.eu, i1 false
+  %op.rdx314 = select i1 %op.rdx, i1 %i.ew, i1 false
   %.sroa.046.0 = zext i1 %op.rdx314 to i8
-  store <2 x float> %.fr318, ptr %.sroa.12113.0..sroa_idx, align 8
+  store <2 x float> %i.es, ptr %.sroa.12113.0..sroa_idx, align 8
   store i8 %.sroa.046.0, ptr %i.y, align 4
   store i32 0, ptr %i.z, align 8
   store i32 0, ptr %i.aa, align 4

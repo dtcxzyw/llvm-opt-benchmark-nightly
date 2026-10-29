@@ -205,8 +205,7 @@ _ZNK2v88internal6maglev10BasicBlock23HasPhisOrRegisterMergesEv.exit140.i.i.i.i: 
   %.sroa.0.0.copyload.i9.1.i.i89.i.i.i.i = load i64, ptr %i.uj, align 8
   %i.uk = getelementptr inbounds nuw i8, ptr %i.tw, i64 72
   %.sroa.0.0.copyload.i9.2.i.i90.i.i.i.i = load i64, ptr %i.uk, align 8
-  %.sroa.0.0.copyload.i9.2.i.i90.i.i.i.i.fr = freeze i64 %.sroa.0.0.copyload.i9.2.i.i90.i.i.i.i
-  %.not.i.i.i.2.i.i91.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i90.i.i.i.i.fr to i1
+  %.not.i.i.i.2.i.i91.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i90.i.i.i.i to i1
   %i.ul = getelementptr inbounds nuw i8, ptr %i.tw, i64 80
   %i.um = load <8 x i64>, ptr %i.ul, align 8
   %.fr129 = freeze <8 x i64> %i.um
@@ -223,7 +222,7 @@ _ZNK2v88internal6maglev10BasicBlock23HasPhisOrRegisterMergesEv.exit140.i.i.i.i: 
   %rdx.op125 = trunc <8 x i64> %i.uu to <8 x i1>
   %i.uv = bitcast <8 x i1> %rdx.op125 to i8
   %i.uw = icmp ne i8 %i.uv, 0
-  %op.rdx126 = or i1 %i.uw, %.not.i.i.i.2.i.i91.i.i.i.i
+  %op.rdx126 = select i1 %i.uw, i1 true, i1 %.not.i.i.i.2.i.i91.i.i.i.i
   %op.rdx127 = select i1 %op.rdx126, i1 true, i1 %i.us
   br i1 %op.rdx127, label %_ZN2v88internal6maglev10BasicBlock21ComputeRealJumpTargetEv.exit.i.i.i.i.i, label %_ZNK2v88internal6maglev10BasicBlock23HasPhisOrRegisterMergesEv.exit140.thread161.i.i.i.i
 
@@ -267,8 +266,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.i.i.i.i: ; pr
   %.sroa.0.0.copyload.i9.1.i.i.i.i.i.i = load i64, ptr %i.vq, align 8
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vi, i64 72
   %.sroa.0.0.copyload.i9.2.i.i.i.i.i.i = load i64, ptr %i.vr, align 8
-  %.sroa.0.0.copyload.i9.2.i.i.i.i.i.i.fr = freeze i64 %.sroa.0.0.copyload.i9.2.i.i.i.i.i.i
-  %.not.i.i.i.2.i.i.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i.i.i.i.i.fr to i1
+  %.not.i.i.i.2.i.i.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i.i.i.i.i to i1
   %i.vs = getelementptr inbounds nuw i8, ptr %i.vi, i64 80
   %i.vt = load <8 x i64>, ptr %i.vs, align 8
   %.fr132 = freeze <8 x i64> %i.vt
@@ -285,7 +283,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.i.i.i.i: ; pr
   %rdx.op122 = trunc <8 x i64> %i.wb to <8 x i1>
   %i.wc = bitcast <8 x i1> %rdx.op122 to i8
   %i.wd = icmp ne i8 %i.wc, 0
-  %op.rdx = or i1 %i.wd, %.not.i.i.i.2.i.i.i.i.i.i
+  %op.rdx = select i1 %i.wd, i1 true, i1 %.not.i.i.i.2.i.i.i.i.i.i
   %op.rdx123 = select i1 %op.rdx, i1 true, i1 %i.vz
   br i1 %op.rdx123, label %_ZN2v88internal6maglev10BasicBlock21ComputeRealJumpTargetEv.exit.i.i.i.i.i, label %.preheader.i69.backedge.i.i.i.i
 
@@ -688,8 +686,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i: ; preds = %bb.
   %.sroa.0.0.copyload.i9.1.i = load i64, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   %.sroa.0.0.copyload.i9.2.i = load i64, ptr %i.m, align 8
-  %.sroa.0.0.copyload.i9.2.i.fr = freeze i64 %.sroa.0.0.copyload.i9.2.i
-  %.not.i.i.i.2.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.fr to i1
+  %.not.i.i.i.2.i = trunc i64 %.sroa.0.0.copyload.i9.2.i to i1
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 80
   %i.o = load <8 x i64>, ptr %i.n, align 8
   %.fr58 = freeze <8 x i64> %i.o
@@ -706,7 +703,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i: ; preds = %bb.
   %rdx.op55 = trunc <8 x i64> %i.w to <8 x i1>
   %i.x = bitcast <8 x i1> %rdx.op55 to i8
   %i.y = icmp ne i8 %i.x, 0
-  %op.rdx = or i1 %i.y, %.not.i.i.i.2.i
+  %op.rdx = select i1 %i.y, i1 true, i1 %.not.i.i.i.2.i
   %op.rdx56 = select i1 %op.rdx, i1 true, i1 %i.u
   br label %bb.c
 
@@ -1109,8 +1106,7 @@ _ZNK2v88internal6maglev10BasicBlock23HasPhisOrRegisterMergesEv.exit86.i.i.i: ; p
   %.sroa.0.0.copyload.i9.1.i.i35.i.i.i = load i64, ptr %i.bq, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bd, i64 72
   %.sroa.0.0.copyload.i9.2.i.i36.i.i.i = load i64, ptr %i.br, align 8
-  %.sroa.0.0.copyload.i9.2.i.i36.i.i.i.fr = freeze i64 %.sroa.0.0.copyload.i9.2.i.i36.i.i.i
-  %.not.i.i.i.2.i.i37.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i36.i.i.i.fr to i1
+  %.not.i.i.i.2.i.i37.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i36.i.i.i to i1
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bd, i64 80
   %i.bt = load <8 x i64>, ptr %i.bs, align 8
   %.fr22 = freeze <8 x i64> %i.bt
@@ -1127,7 +1123,7 @@ _ZNK2v88internal6maglev10BasicBlock23HasPhisOrRegisterMergesEv.exit86.i.i.i: ; p
   %rdx.op18 = trunc <8 x i64> %i.cb to <8 x i1>
   %i.cc = bitcast <8 x i1> %rdx.op18 to i8
   %i.cd = icmp ne i8 %i.cc, 0
-  %op.rdx19 = or i1 %i.cd, %.not.i.i.i.2.i.i37.i.i.i
+  %op.rdx19 = select i1 %i.cd, i1 true, i1 %.not.i.i.i.2.i.i37.i.i.i
   %op.rdx20 = select i1 %op.rdx19, i1 true, i1 %i.bz
   br i1 %op.rdx20, label %_ZN2v88internal6maglev10BasicBlock21ComputeRealJumpTargetEv.exit.i.i.i.i, label %_ZNK2v88internal6maglev10BasicBlock23HasPhisOrRegisterMergesEv.exit86.thread88.i.i.i
 
@@ -1171,8 +1167,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.i.i.i: ; pred
   %.sroa.0.0.copyload.i9.1.i.i.i.i.i = load i64, ptr %i.cx, align 8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cp, i64 72
   %.sroa.0.0.copyload.i9.2.i.i.i.i.i = load i64, ptr %i.cy, align 8
-  %.sroa.0.0.copyload.i9.2.i.i.i.i.i.fr = freeze i64 %.sroa.0.0.copyload.i9.2.i.i.i.i.i
-  %.not.i.i.i.2.i.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i.i.i.i.fr to i1
+  %.not.i.i.i.2.i.i.i.i.i = trunc i64 %.sroa.0.0.copyload.i9.2.i.i.i.i.i to i1
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cp, i64 80
   %i.da = load <8 x i64>, ptr %i.cz, align 8
   %.fr25 = freeze <8 x i64> %i.da
@@ -1189,7 +1184,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.i.i.i: ; pred
   %rdx.op15 = trunc <8 x i64> %i.di to <8 x i1>
   %i.dj = bitcast <8 x i1> %rdx.op15 to i8
   %i.dk = icmp ne i8 %i.dj, 0
-  %op.rdx = or i1 %i.dk, %.not.i.i.i.2.i.i.i.i.i
+  %op.rdx = select i1 %i.dk, i1 true, i1 %.not.i.i.i.2.i.i.i.i.i
   %op.rdx16 = select i1 %op.rdx, i1 true, i1 %i.dg
   br i1 %op.rdx16, label %_ZN2v88internal6maglev10BasicBlock21ComputeRealJumpTargetEv.exit.i.i.i.i, label %.preheader.i.backedge.i.i.i
 

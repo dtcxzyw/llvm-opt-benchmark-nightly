@@ -204,15 +204,14 @@ bb.fh:                                            ; preds = %bb.fg, %bb.ff
   %i.wy = icmp eq i32 %i.wx, 0
   %i.wz = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.xa = load i16, ptr %i.wz, align 4
-  %.fr148 = freeze i16 %i.xa
-  %i.xb = icmp eq i16 %.fr148, 0
+  %i.xb = icmp eq i16 %i.xa, 0
   %i.xc = getelementptr inbounds nuw i8, ptr %7, i64 6
   %i.xd = load i16, ptr %i.xc, align 2
   %i.xe = icmp eq i16 %i.xd, 0
   %.fr146.scalar = bitcast <8 x i8> %.fr146 to i64
   %i.xf = icmp eq i64 %.fr146.scalar, 0
-  %op.rdx = and i1 %i.xf, %i.xb
-  %i.xg = select i1 %op.rdx, i1 %i.wy, i1 false
+  %op.rdx = select i1 %i.xf, i1 %i.wy, i1 false
+  %i.xg = select i1 %op.rdx, i1 %i.xb, i1 false
   %op.rdx134 = select i1 %i.xg, i1 %i.xe, i1 false
   br i1 %op.rdx134, label %bb.fi, label %bb.fj
 
@@ -319,15 +318,14 @@ bb.gb:                                            ; preds = %bb.ga, %bb.fz
   %i.yg = icmp eq i32 %i.yf, 0
   %i.yh = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.yi = load i16, ptr %i.yh, align 4
-  %.fr145 = freeze i16 %i.yi
-  %i.yj = icmp eq i16 %.fr145, 0
+  %i.yj = icmp eq i16 %i.yi, 0
   %i.yk = getelementptr inbounds nuw i8, ptr %8, i64 6
   %i.yl = load i16, ptr %i.yk, align 2
   %i.ym = icmp eq i16 %i.yl, 0
   %.fr143.scalar = bitcast <8 x i8> %.fr143 to i64
   %i.yn = icmp eq i64 %.fr143.scalar, 0
-  %op.rdx135 = and i1 %i.yn, %i.yj
-  %i.yo = select i1 %op.rdx135, i1 %i.yg, i1 false
+  %op.rdx135 = select i1 %i.yn, i1 %i.yg, i1 false
+  %i.yo = select i1 %op.rdx135, i1 %i.yj, i1 false
   %op.rdx137 = select i1 %i.yo, i1 %i.ym, i1 false
   br i1 %op.rdx137, label %bb.gc, label %bb.gd
 
@@ -368,15 +366,14 @@ bb.gh:                                            ; preds = %bb.gg
   %i.za = icmp eq i32 %i.yz, 0
   %i.zb = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.zc = load i16, ptr %i.zb, align 4
-  %.fr142 = freeze i16 %i.zc
-  %i.zd = icmp eq i16 %.fr142, 0
+  %i.zd = icmp eq i16 %i.zc, 0
   %i.ze = getelementptr inbounds nuw i8, ptr %9, i64 6
   %i.zf = load i16, ptr %i.ze, align 2
   %i.zg = icmp eq i16 %i.zf, 0
   %.fr.scalar = bitcast <8 x i8> %.fr to i64
   %i.zh = icmp eq i64 %.fr.scalar, 0
-  %op.rdx138 = and i1 %i.zh, %i.zd
-  %i.zi = select i1 %op.rdx138, i1 %i.za, i1 false
+  %op.rdx138 = select i1 %i.zh, i1 %i.za, i1 false
+  %i.zi = select i1 %op.rdx138, i1 %i.zd, i1 false
   %op.rdx140 = select i1 %i.zi, i1 %i.zg, i1 false
   br i1 %op.rdx140, label %bb.gi, label %bb.gj
 

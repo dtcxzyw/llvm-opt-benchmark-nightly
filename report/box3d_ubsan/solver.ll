@@ -204,8 +204,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.yc = freeze <4 x i1> %i.xx
   %i.yd = bitcast <4 x i1> %i.yc to i4
   %i.ye = icmp eq i4 %i.yd, -1
-  %.fr = freeze i1 %i.xz
-  %op.rdx = and i1 %i.ye, %.fr
+  %op.rdx = select i1 %i.ye, i1 %i.xz, i1 false
   %op.rdx7278 = select i1 %op.rdx, i1 %i.yb, i1 false
   br i1 %op.rdx7278, label %.preheader.split.us.split.us, label %b3AABB_Contains.exit.thread.us.us
 
@@ -608,8 +607,7 @@ bb.ak:                                            ; preds = %bb.ai
   %i.na = freeze <4 x i1> %i.mv
   %i.nb = bitcast <4 x i1> %i.na to i4
   %i.nc = icmp eq i4 %i.nb, -1
-  %.fr1407 = freeze i1 %i.mx
-  %op.rdx = and i1 %i.nc, %.fr1407
+  %op.rdx = select i1 %i.nc, i1 %i.mx, i1 false
   %op.rdx1354 = select i1 %op.rdx, i1 %i.mz, i1 false
   br i1 %op.rdx1354, label %bb.al, label %b3AABB_Contains.exit.thread
 
@@ -708,8 +706,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ov = freeze <4 x i1> %i.os
   %i.ow = bitcast <4 x i1> %i.ov to i4
   %i.ox = icmp eq i4 %i.ow, -1
-  %.fr = freeze i1 %i.ot
-  %op.rdx1355 = and i1 %i.ox, %.fr
+  %op.rdx1355 = select i1 %i.ox, i1 %i.ot, i1 false
   %op.rdx1356 = select i1 %op.rdx1355, i1 %i.ou, i1 false
   br i1 %op.rdx1356, label %.split.us, label %b3AABB_Contains.exit429.thread.us
 

@@ -205,9 +205,8 @@ png_get_int_32_checked.exit:                      ; preds = %png_crc_read.exit
   %i.ce = icmp slt i32 %i.bp, 0
   %notsub.i29 = add i32 %i.cd, -1
   %i.cf = icmp sgt i32 %notsub.i29, -1
-  %or.cond.i30.not = select i1 %i.ce, i1 %i.cf, i1 false
-  %3 = freeze i1 %or.cond.i30.not                 ; 2 uses
-  %.0.i31 = select i1 %3, i32 0, i32 %i.cd        ; 2 uses
+  %or.cond.i30.not = select i1 %i.ce, i1 %i.cf, i1 false ; 2 uses
+  %.0.i31 = select i1 %or.cond.i30.not, i32 0, i32 %i.cd ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %i.ch = load i8, ptr %i.cg, align 4, !tbaa !8
   %i.ci = zext i8 %i.ch to i32
@@ -233,10 +232,9 @@ png_get_int_32_checked.exit:                      ; preds = %png_crc_read.exit
   %i.da = bitcast <4 x i1> %i.bk to i4
   %i.db = icmp ne i4 %i.da, 0
   %op.rdx = select i1 %i.db, i1 true, i1 %or.cond.i34.not61
-  %4 = or i1 %op.rdx, %3
-  %op.rdx64.a = select i1 %4, i1 true, i1 %or.cond.i10.not
-  %5 = freeze i1 %op.rdx64.a
-  %op.rdx65 = select i1 %5, i1 true, i1 %or.cond.i.not
+  %op.rdx64.a = select i1 %op.rdx, i1 true, i1 %or.cond.i30.not
+  %op.rdx64 = select i1 %op.rdx64.a, i1 true, i1 %or.cond.i10.not
+  %op.rdx65 = select i1 %op.rdx64, i1 true, i1 %or.cond.i.not
   br i1 %op.rdx65, label %png_get_int_32_checked.exit36.thread, label %bb.c
 
 png_get_int_32_checked.exit36.thread:             ; preds = %png_get_int_32_checked.exit

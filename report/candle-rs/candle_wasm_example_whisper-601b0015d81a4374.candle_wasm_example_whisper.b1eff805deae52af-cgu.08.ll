@@ -202,14 +202,13 @@ bb.z:                                             ; preds = %bb.y
   %.fr222 = freeze <4 x i8> %i.bw
   %i.bx = getelementptr inbounds nuw i8, ptr %i.d, i64 14
   %i.by = load i8, ptr %i.bx, align 1
-  %.fr224 = freeze i8 %i.by
-  %i.bz = icmp eq i8 %.fr224, -101
+  %i.bz = icmp eq i8 %i.by, -101
   %i.ca = getelementptr inbounds nuw i8, ptr %i.d, i64 15
   %i.cb = load i8, ptr %i.ca, align 1
   %i.cc = icmp eq i8 %i.cb, 113
   %.fr222.scalar = bitcast <4 x i8> %.fr222 to i32
   %i.cd = icmp eq i32 %.fr222.scalar, 939567616
-  %op.rdx = and i1 %i.cd, %i.bz
+  %op.rdx = select i1 %i.cd, i1 %i.bz, i1 false
   %op.rdx213 = select i1 %op.rdx, i1 %i.cc, i1 false
   br i1 %op.rdx213, label %bb.aa, label %bb.v
 
@@ -244,14 +243,13 @@ bb.ac:                                            ; preds = %bb.ab
   %.fr218 = freeze <4 x i8> %i.ct
   %i.cu = getelementptr inbounds nuw i8, ptr %i.d, i64 14
   %i.cv = load i8, ptr %i.cu, align 1
-  %.fr220 = freeze i8 %i.cv
-  %i.cw = icmp eq i8 %.fr220, -101
+  %i.cw = icmp eq i8 %i.cv, -101
   %i.cx = getelementptr inbounds nuw i8, ptr %i.d, i64 15
   %i.cy = load i8, ptr %i.cx, align 1
   %i.cz = icmp eq i8 %i.cy, 113
   %.fr218.scalar = bitcast <4 x i8> %.fr218 to i32
   %i.da = icmp eq i32 %.fr218.scalar, 939567616
-  %op.rdx215 = and i1 %i.da, %i.cw
+  %op.rdx215 = select i1 %i.da, i1 %i.cw, i1 false
   %op.rdx216 = select i1 %op.rdx215, i1 %i.cz, i1 false
   br i1 %op.rdx216, label %bb.aa, label %bb.v
 

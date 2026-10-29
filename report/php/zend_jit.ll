@@ -205,10 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = bitcast <8 x i1> %i.aj to i8
   %i.al = icmp ne i8 %i.ak, 0
   %op.rdx = select i1 %i.al, i1 true, i1 %i.aa
-  %2 = freeze i1 %i.ac
-  %3 = freeze i1 %op.rdx
-  %4 = or i1 %3, %2
-  %op.rdx155 = select i1 %4, i1 true, i1 %i.ae
+  %2 = select i1 %op.rdx, i1 true, i1 %i.ac
+  %op.rdx155 = select i1 %2, i1 true, i1 %i.ae
   br i1 %op.rdx155, label %bb.p, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

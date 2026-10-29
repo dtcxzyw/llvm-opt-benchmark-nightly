@@ -204,10 +204,9 @@ bb.ab:                                            ; preds = %.lr.ph187, %bb.ae
   %i.dv = load i32, ptr %i.du, align 4
   call void @op_input_types(i32 noundef %i.dv, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #9
   %i.dw = load i32, ptr %i.d, align 4
-  %i.dx = load i32, ptr %i.e, align 4
-  %.fr = freeze i32 %i.dx                         ; 2 uses
+  %i.dx = load i32, ptr %i.e, align 4             ; 2 uses
   %i.dy = insertelement <14 x i32> poison, i32 %i.dw, i64 0 ; 2 uses
-  %i.dz = insertelement <14 x i32> %i.dy, i32 %.fr, i64 1
+  %i.dz = insertelement <14 x i32> %i.dy, i32 %i.dx, i64 1
   %i.ea = shufflevector <14 x i32> %i.dz, <14 x i32> poison, <14 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.eb = icmp eq <14 x i32> %i.ea, <i32 2283, i32 2277, i32 2776, i32 3500, i32 3831, i32 4537, i32 4538, i32 2283, i32 2277, i32 2776, i32 3500, i32 3831, i32 4537, i32 4538>
   %i.ec = shufflevector <14 x i32> %i.dy, <14 x i32> poison, <2 x i32> zeroinitializer
@@ -219,9 +218,9 @@ bb.ab:                                            ; preds = %.lr.ph187, %bb.ae
   %i.ei = freeze <16 x i1> %i.eh
   %i.ej = bitcast <16 x i1> %i.ei to i16
   %i.ek = icmp ne i16 %i.ej, 0
-  %i.el = add i32 %.fr, -5077
+  %i.el = add i32 %i.dx, -5077
   %i.em = icmp ult i32 %i.el, 4
-  %op.rdx203 = or i1 %i.ek, %i.em
+  %op.rdx203 = select i1 %i.ek, i1 true, i1 %i.em
   br i1 %op.rdx203, label %bb.ac, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.ab

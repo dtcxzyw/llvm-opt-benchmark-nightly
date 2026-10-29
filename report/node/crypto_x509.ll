@@ -204,17 +204,15 @@ _ZNSt14_Function_baseD2Ev.exit61.i:               ; preds = %bb.y, %_ZNSt14_Func
   %.fr = freeze <16 x ptr> %i.gp
   %i.gq = icmp eq <16 x ptr> %.fr, splat (ptr null)
   %i.gr = load ptr, ptr %i.fy, align 16
-  %.fr31 = freeze ptr %i.gr
-  %i.gs = icmp eq ptr %.fr31, null
+  %i.gs = icmp eq ptr %i.gr, null
   %i.gt = load ptr, ptr %i.ga, align 8
-  %.fr29 = freeze ptr %i.gt
-  %i.gu = icmp eq ptr %.fr29, null
+  %i.gu = icmp eq ptr %i.gt, null
   %i.gv = load ptr, ptr %i.ge, align 16
   %i.gw = icmp eq ptr %i.gv, null
   %i.gx = bitcast <16 x i1> %i.gq to i16
   %i.gy = icmp ne i16 %i.gx, 0
-  %op.rdx = or i1 %i.gy, %i.gs
-  %17 = or i1 %op.rdx, %i.gu
+  %op.rdx = select i1 %i.gy, i1 true, i1 %i.gs
+  %17 = select i1 %op.rdx, i1 true, i1 %i.gu
   %op.rdx28 = select i1 %17, i1 true, i1 %i.gw
   br i1 %op.rdx28, label %_ZN2v820EscapableHandleScope11EscapeMaybeINS_6ObjectEEENS_10MaybeLocalIT_EES5_.exit.i, label %_ZN4node21NewDictionaryInstanceEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.i
 

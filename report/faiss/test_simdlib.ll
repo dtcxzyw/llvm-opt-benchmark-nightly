@@ -204,18 +204,16 @@ _ZN5faiss18cmplt_min_max_fastENS_16simd16uint16_tplILNS_9SIMDLevelE0EEES2_S2_S2_
   %i.ad = load <4 x i32>, ptr %5, align 16
   %.fr = freeze <4 x i32> %i.ad
   %i.ae = load i32, ptr %i.a, align 16
-  %.fr379 = freeze i32 %i.ae
-  %.not.4.i = icmp eq i32 %.fr379, 65602536
+  %.not.4.i = icmp eq i32 %i.ae, 65602536
   %i.af = load i32, ptr %i.b, align 4
-  %.fr378 = freeze i32 %i.af
-  %.not.5.i = icmp eq i32 %.fr378, 65733610
+  %.not.5.i = icmp eq i32 %i.af, 65733610
   %i.ag = load i32, ptr %i.c, align 8
   %.not.6.i = icmp eq i32 %i.ag, 65864684
   %i.ah = icmp ne <4 x i32> %.fr, <i32 65536, i32 196610, i32 327684, i32 327685>
   %i.ai = bitcast <4 x i1> %i.ah to i4
   %i.aj = icmp eq i4 %i.ai, 0
-  %op.rdx375 = and i1 %i.aj, %.not.4.i
-  %25 = and i1 %op.rdx375, %.not.5.i
+  %op.rdx375 = select i1 %i.aj, i1 %.not.4.i, i1 false
+  %25 = select i1 %op.rdx375, i1 %.not.5.i, i1 false
   %op.rdx377 = select i1 %25, i1 %.not.6.i, i1 false
   br i1 %op.rdx377, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit.thread
 
@@ -370,18 +368,16 @@ bb.n:                                             ; preds = %_ZNK5faiss14simd256
   %i.bs = load <4 x i32>, ptr %6, align 16
   %.fr380.a = freeze <4 x i32> %i.bs
   %i.bt = load i32, ptr %i.e, align 16
-  %.fr382 = freeze i32 %i.bt
-  %.not.4.i64 = icmp eq i32 %.fr382, 65602536
+  %.not.4.i64 = icmp eq i32 %i.bt, 65602536
   %i.bu = load i32, ptr %i.f, align 4
-  %.fr381 = freeze i32 %i.bu
-  %.not.5.i65 = icmp eq i32 %.fr381, 65733610
+  %.not.5.i65 = icmp eq i32 %i.bu, 65733610
   %i.bv = load i32, ptr %i.g, align 8
   %.not.6.i66 = icmp eq i32 %i.bv, 65864684
   %i.bw = icmp ne <4 x i32> %.fr380.a, <i32 65536, i32 196610, i32 327684, i32 1114128>
   %i.bx = bitcast <4 x i1> %i.bw to i4
   %i.by = icmp eq i4 %i.bx, 0
-  %op.rdx372 = and i1 %i.by, %.not.4.i64
-  %26 = and i1 %op.rdx372, %.not.5.i65
+  %op.rdx372 = select i1 %i.by, i1 %.not.4.i64, i1 false
+  %26 = select i1 %op.rdx372, i1 %.not.5.i65, i1 false
   %op.rdx374 = select i1 %26, i1 %.not.6.i66, i1 false
   br i1 %op.rdx374, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit68, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit68.thread
 
@@ -536,18 +532,16 @@ bb.z:                                             ; preds = %_ZNK5faiss14simd256
   %i.dh = load <4 x i32>, ptr %7, align 16
   %.fr383 = freeze <4 x i32> %i.dh
   %i.di = load i32, ptr %i.i, align 16
-  %.fr385 = freeze i32 %i.di
-  %.not.4.i96 = icmp eq i32 %.fr385, 65864685
+  %.not.4.i96 = icmp eq i32 %i.di, 65864685
   %i.dj = load i32, ptr %i.j, align 4
-  %.fr384 = freeze i32 %i.dj
-  %.not.5.i97 = icmp eq i32 %.fr384, 65864685
+  %.not.5.i97 = icmp eq i32 %i.dj, 65864685
   %i.dk = load i32, ptr %i.k, align 8
   %.not.6.i98 = icmp eq i32 %i.dk, 65864685
   %i.dl = icmp ne <4 x i32> %.fr383, <i32 327685, i32 327685, i32 327685, i32 458758>
   %i.dm = bitcast <4 x i1> %i.dl to i4
   %i.dn = icmp eq i4 %i.dm, 0
-  %op.rdx369 = and i1 %i.dn, %.not.4.i96
-  %27 = and i1 %op.rdx369, %.not.5.i97
+  %op.rdx369 = select i1 %i.dn, i1 %.not.4.i96, i1 false
+  %27 = select i1 %op.rdx369, i1 %.not.5.i97, i1 false
   %op.rdx371 = select i1 %27, i1 %.not.6.i98, i1 false
   br i1 %op.rdx371, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit100, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit100.thread
 
@@ -702,18 +696,16 @@ bb.al:                                            ; preds = %_ZNK5faiss14simd256
   %i.ew = load <4 x i32>, ptr %8, align 16
   %.fr386 = freeze <4 x i32> %i.ew
   %i.ex = load i32, ptr %i.m, align 16
-  %.fr388 = freeze i32 %i.ex
-  %.not.4.i128 = icmp eq i32 %.fr388, 66257906
+  %.not.4.i128 = icmp eq i32 %i.ex, 66257906
   %i.ey = load i32, ptr %i.n, align 4
-  %.fr387 = freeze i32 %i.ey
-  %.not.5.i129 = icmp eq i32 %.fr387, 66388980
+  %.not.5.i129 = icmp eq i32 %i.ey, 66388980
   %i.ez = load i32, ptr %i.o, align 8
   %.not.6.i130 = icmp eq i32 %i.ez, 66520054
   %i.fa = icmp ne <4 x i32> %.fr386, <i32 720906, i32 851980, i32 983054, i32 458758>
   %i.fb = bitcast <4 x i1> %i.fa to i4
   %i.fc = icmp eq i4 %i.fb, 0
-  %op.rdx = and i1 %i.fc, %.not.4.i128
-  %28 = and i1 %op.rdx, %.not.5.i129
+  %op.rdx = select i1 %i.fc, i1 %.not.4.i128, i1 false
+  %28 = select i1 %op.rdx, i1 %.not.5.i129, i1 false
   %op.rdx368 = select i1 %28, i1 %.not.6.i130, i1 false
   br i1 %op.rdx368, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit132, label %_ZNK5faiss14simd256bit_tplILNS_9SIMDLevelE0EE10is_same_asES2_.exit132.thread
 

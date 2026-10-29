@@ -205,17 +205,12 @@ bb.c:                                             ; preds = %bb.a
   %.not19.i = icmp eq i32 %.val47, %i.o
   %i.p = load i32, ptr @fol_EQUIV, align 4
   %i.q = icmp eq i32 %.val47, %i.p
-  %op.rdx = select i1 %.not.i56, i1 true, i1 %.not16.i
-  %5 = freeze i1 %op.rdx
-  %.not15.i.fr = freeze i1 %.not15.i
-  %op.rdx82 = or i1 %5, %.not15.i.fr
-  %.not17.i.fr = freeze i1 %.not17.i
-  %op.rdx83 = or i1 %op.rdx82, %.not17.i.fr
-  %.not18.i.fr = freeze i1 %.not18.i
-  %op.rdx84 = or i1 %op.rdx83, %.not18.i.fr
-  %.not19.i.fr = freeze i1 %.not19.i
-  %op.rdx85 = or i1 %op.rdx84, %.not19.i.fr
-  %op.rdx86 = select i1 %op.rdx85, i1 true, i1 %i.q
+  %op.rdx = select i1 %.not.i56, i1 true, i1 %.not15.i
+  %5 = select i1 %op.rdx, i1 true, i1 %.not16.i
+  %op.rdx84 = select i1 %5, i1 true, i1 %.not17.i
+  %6 = select i1 %op.rdx84, i1 true, i1 %.not18.i
+  %7 = select i1 %6, i1 true, i1 %.not19.i
+  %op.rdx86 = select i1 %7, i1 true, i1 %i.q
   br i1 %op.rdx86, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c

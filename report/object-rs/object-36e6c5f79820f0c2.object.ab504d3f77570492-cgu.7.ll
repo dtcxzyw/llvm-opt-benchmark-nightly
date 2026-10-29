@@ -202,19 +202,18 @@ bb.e:                                             ; preds = %bb.b
   %.fr = freeze <4 x i32> %i.k
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.05.0.copyload.i = load i32, ptr %i.l, align 1, !alias.scope !82
-  %.sroa.05.0.copyload.i.fr = freeze i32 %.sroa.05.0.copyload.i
+  %2 = icmp eq i32 %.sroa.05.0.copyload.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %.sroa.06.0.copyload.i = load i32, ptr %i.m, align 1, !alias.scope !82
-  %.sroa.06.0.copyload.i.fr = freeze i32 %.sroa.06.0.copyload.i
+  %3 = icmp eq i32 %.sroa.06.0.copyload.i, 0
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %.sroa.07.0.copyload.i = load i32, ptr %i.n, align 1, !alias.scope !82
   %i.o = icmp eq i32 %.sroa.07.0.copyload.i, 0
   %i.p = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp eq i4 %i.q, 0
-  %2 = or i32 %.sroa.06.0.copyload.i.fr, %.sroa.05.0.copyload.i.fr
-  %3 = icmp eq i32 %2, 0
-  %4 = and i1 %i.r, %3
+  %op.rdx = select i1 %i.r, i1 %2, i1 false
+  %4 = select i1 %op.rdx, i1 %3, i1 false
   %op.rdx6 = select i1 %4, i1 %i.o, i1 false
   br i1 %op.rdx6, label %_RNvMs8_NtCseHTIzroA4w0_6object2peNtB5_24ImageDelayloadDescriptor7is_null.exit, label %_RNvMs8_NtCseHTIzroA4w0_6object2peNtB5_24ImageDelayloadDescriptor7is_null.exit.thread
 
@@ -617,19 +616,18 @@ bb.c:                                             ; preds = %bb.b
   %.fr = freeze <4 x i32> %i.j
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.05.0.copyload.i.i = load i32, ptr %i.k, align 1, !alias.scope !135, !noalias !136
-  %.sroa.05.0.copyload.i.i.fr = freeze i32 %.sroa.05.0.copyload.i.i
+  %2 = icmp eq i32 %.sroa.05.0.copyload.i.i, 0
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %.sroa.06.0.copyload.i.i = load i32, ptr %i.l, align 1, !alias.scope !135, !noalias !136
-  %.sroa.06.0.copyload.i.i.fr = freeze i32 %.sroa.06.0.copyload.i.i
+  %3 = icmp eq i32 %.sroa.06.0.copyload.i.i, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %.sroa.07.0.copyload.i.i = load i32, ptr %i.m, align 1, !alias.scope !135, !noalias !136
   %i.n = icmp eq i32 %.sroa.07.0.copyload.i.i, 0
   %i.o = icmp ne <4 x i32> %.fr, zeroinitializer
   %i.p = bitcast <4 x i1> %i.o to i4
   %i.q = icmp eq i4 %i.p, 0
-  %2 = or i32 %.sroa.06.0.copyload.i.i.fr, %.sroa.05.0.copyload.i.i.fr
-  %3 = icmp eq i32 %2, 0
-  %4 = and i1 %i.q, %3
+  %op.rdx = select i1 %i.q, i1 %2, i1 false
+  %4 = select i1 %op.rdx, i1 %3, i1 false
   %op.rdx11 = select i1 %4, i1 %i.n, i1 false
   br i1 %op.rdx11, label %_RNvMs8_NtCseHTIzroA4w0_6object2peNtB5_24ImageDelayloadDescriptor7is_null.exit.i, label %bb.f
 

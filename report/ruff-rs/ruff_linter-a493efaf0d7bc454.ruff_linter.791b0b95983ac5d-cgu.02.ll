@@ -205,12 +205,11 @@ bb.d:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.phi.trans.insert80.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.pre81.i.i.i.i.i = load i64, ptr %.phi.trans.insert80.i.i.i.i.i, align 8, !noalias !12317
   %i.p = call i64 @llvm.uadd.sat.i64(i64 %i.m, i64 %.pre77.i.i.i.i.i)
-  %2 = freeze i64 %.pre79.i.i.i.i.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit64.i.i.i.i.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit64.i.i.i.i.i: ; preds = %bb.d, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i.i
   %i.q = phi i64 [ %.pre81.i.i.i.i.i, %bb.d ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i.i ]
-  %.fr7 = phi i64 [ %2, %bb.d ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i.i ] ; 2 uses
+  %.fr7 = phi i64 [ %.pre79.i.i.i.i.i, %bb.d ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i.i ] ; 2 uses
   %i.r = phi i64 [ %i.p, %bb.d ], [ %i.m, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !12317
   %i.s = load ptr, ptr %i.h, align 8, !alias.scope !12318, !noundef !12 ; 2 uses
@@ -222,9 +221,9 @@ bb.e:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val63.i.i.i.i.i = load ptr, ptr %i.t, align 8, !alias.scope !12318, !nonnull !12, !noundef !12
   %i.u = icmp eq ptr %.val63.i.i.i.i.i, %i.s
   %i.v = trunc nuw i64 %i.l to i1
-  %i.w = trunc i64 %.fr7 to i1
-  %op.rdx5 = and i1 %i.u, %i.w
-  %op.rdx6 = select i1 %op.rdx5, i1 %i.v, i1 false
+  %i.w = trunc nuw i64 %.fr7 to i1
+  %op.rdx5 = select i1 %i.u, i1 %i.v, i1 false
+  %op.rdx6 = select i1 %op.rdx5, i1 %i.w, i1 false
   br i1 %op.rdx6, label %bb.g, label %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i.i
 
 bb.f:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit64.i.i.i.i.i
@@ -304,12 +303,11 @@ bb.j:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.phi.trans.insert80.i.i.i.i72.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.pre81.i.i.i.i73.i = load i64, ptr %.phi.trans.insert80.i.i.i.i72.i, align 8, !noalias !12331
   %i.al = call i64 @llvm.uadd.sat.i64(i64 %i.ai, i64 %.pre77.i.i.i.i69.i)
-  %3 = freeze i64 %.pre79.i.i.i.i71.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit64.i.i.i.i74.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit64.i.i.i.i74.i: ; preds = %bb.j, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i67.i
   %i.am = phi i64 [ %.pre81.i.i.i.i73.i, %bb.j ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i67.i ]
-  %.fr8 = phi i64 [ %3, %bb.j ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i67.i ] ; 2 uses
+  %.fr8 = phi i64 [ %.pre79.i.i.i.i71.i, %bb.j ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i67.i ] ; 2 uses
   %i.an = phi i64 [ %i.al, %bb.j ], [ %i.ai, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i67.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !12331
   %i.ao = load ptr, ptr %i.ad, align 8, !alias.scope !12332, !noundef !12 ; 2 uses
@@ -321,9 +319,9 @@ bb.k:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val63.i.i.i.i76.i = load ptr, ptr %i.ap, align 8, !alias.scope !12332, !nonnull !12, !noundef !12
   %i.aq = icmp eq ptr %.val63.i.i.i.i76.i, %i.ao
   %i.ar = trunc nuw i64 %i.ah to i1
-  %i.as = trunc i64 %.fr8 to i1
-  %op.rdx3 = and i1 %i.aq, %i.as
-  %op.rdx4 = select i1 %op.rdx3, i1 %i.ar, i1 false
+  %i.as = trunc nuw i64 %.fr8 to i1
+  %op.rdx3 = select i1 %i.aq, i1 %i.ar, i1 false
+  %op.rdx4 = select i1 %op.rdx3, i1 %i.as, i1 false
   br i1 %op.rdx4, label %bb.m, label %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i80.i
 
 bb.l:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEL_EE6map_orTjIBw_jEENvYBJ_B1i_9size_hintECsEhZmuQNqkz_11ruff_linter.exit64.i.i.i.i74.i
@@ -345,12 +343,11 @@ _RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5sli
   %i.aw = call i64 @llvm.uadd.sat.i64(i64 %.sroa.0.1.i, i64 %i.an)
   %.sroa.695.i.0..sroa.695.i.0..sroa.695.i.0..sroa.695.0..sroa.695.0..sroa.695.8..pre.i = load i64, ptr %.sroa.695.i, align 8, !range !17, !noalias !12322
   %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i = load i64, ptr %.sroa.10.i, align 8, !noalias !12322
-  %4 = freeze i64 %.sroa.695.i.0..sroa.695.i.0..sroa.695.i.0..sroa.695.0..sroa.695.0..sroa.695.8..pre.i
   br label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit85.i
 
 _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit85.i: ; preds = %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i80.i, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit.i
   %.sroa.10.0..sroa.10.0..sroa.10.16..i = phi i64 [ %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i80.i ], [ 0, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit.i ]
-  %.sroa.695.0..sroa.695.0..sroa.695.8..i = phi i64 [ %4, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i80.i ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit.i ] ; 2 uses
+  %.sroa.695.0..sroa.695.0..sroa.695.8..i = phi i64 [ %.sroa.695.i.0..sroa.695.i.0..sroa.695.i.0..sroa.695.0..sroa.695.0..sroa.695.8..pre.i, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i80.i ], [ 1, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit.i ] ; 2 uses
   %.sroa.094.1.i = phi i64 [ %i.aw, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtBe_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemRNtB1t_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEB2P_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceB3X_.exit.i80.i ], [ %.sroa.0.1.i, %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.695.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
@@ -363,9 +360,9 @@ bb.n:                                             ; preds = %_RINvMNtCs4NRVxsYgn
   %.val.i = load ptr, ptr %i.az, align 8, !alias.scope !12308, !align !19, !noundef !12
   %.not.i = icmp eq ptr %.val.i, null
   %i.ba = trunc nuw i64 %.sroa.6.0..sroa.6.0..sroa.6.8..i to i1
-  %i.bb = trunc i64 %.sroa.695.0..sroa.695.0..sroa.695.8..i to i1
-  %op.rdx = and i1 %.not.i, %i.bb
-  %op.rdx2 = select i1 %op.rdx, i1 %i.ba, i1 false
+  %i.bb = trunc nuw i64 %.sroa.695.0..sroa.695.0..sroa.695.8..i to i1
+  %op.rdx = select i1 %.not.i, i1 %i.ba, i1 false
+  %op.rdx2 = select i1 %op.rdx, i1 %i.bb, i1 false
   br i1 %op.rdx2, label %bb.q, label %bb.p
 
 bb.o:                                             ; preds = %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtNtB5_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemRNtB1R_8ExprNameEL_ENvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules9pyupgrade5rules17yield_in_for_loop13collect_namesEE6map_orTjIBw_jEENvYBJ_B3d_9size_hintEB4l_.exit85.i

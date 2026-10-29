@@ -204,14 +204,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !158
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !158
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 
@@ -262,14 +261,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !161
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !161
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 
@@ -320,14 +318,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !164
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !164
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 
@@ -378,14 +375,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !167
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !167
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 
@@ -436,14 +432,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !170
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !170
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 
@@ -529,14 +524,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !179
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !179
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 
@@ -587,14 +581,13 @@ bb.a:
   %.fr = freeze <4 x i8> %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.f = load i8, ptr %i.e, align 1, !range !8, !alias.scope !182
-  %.fr20 = freeze i8 %i.f
-  %.not7.i = icmp eq i8 %.fr20, -1
+  %.not7.i = icmp eq i8 %i.f, -1
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 10
   %i.h = load i8, ptr %i.g, align 1, !range !8, !alias.scope !182
   %.not8.i = icmp eq i8 %i.h, -1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.i = icmp eq i32 %.fr.scalar, -10195339
-  %op.rdx = and i1 %i.i, %.not7.i
+  %op.rdx = select i1 %i.i, i1 %.not7.i, i1 false
   %op.rdx19 = select i1 %op.rdx, i1 %.not8.i, i1 false
   br i1 %op.rdx19, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit, label %_RNvMs9_NtCs96xUavsWfLi_15icu_locale_core4dataNtB5_10DataLocale10is_unknown.exit.thread
 

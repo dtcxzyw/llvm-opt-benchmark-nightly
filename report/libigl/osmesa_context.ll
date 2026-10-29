@@ -125,13 +125,12 @@ bb.b:                                             ; preds = %.preheader.1
   %i.w = shufflevector <4 x ptr> %i.u, <4 x ptr> %i.v, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %.fr = freeze <4 x ptr> %i.w
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 136264), align 8
-  %.fr27 = freeze ptr %i.x
-  %i.y = icmp ne ptr %.fr27, null
+  %i.y = icmp ne ptr %i.x, null
   %i.z = icmp ne ptr %i.p, null
   %i.aa = icmp eq <4 x ptr> %.fr, splat (ptr null)
   %i.ab = bitcast <4 x i1> %i.aa to i4
   %i.ac = icmp eq i4 %i.ab, 0
-  %op.rdx = and i1 %i.ac, %i.y
+  %op.rdx = select i1 %i.ac, i1 %i.y, i1 false
   %op.rdx25 = select i1 %op.rdx, i1 %i.z, i1 false
   br i1 %op.rdx25, label %_glfwTerminateOSMesa.exit, label %bb.c
 

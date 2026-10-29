@@ -205,9 +205,8 @@ declare noundef zeroext i16 @_Z19getSmoothLightSolidRKN4core8vector3dIsEES3_S3_P
 define dso_local noundef zeroext range(i8 0, 64) i8 @_ZNK21MapblockMeshGenerator14getNodeBoxMaskEN4core8aabbox3dIfEEhh(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(496) %0, ptr nofree noundef readonly byval(%"class.core::aabbox3d") align 8 captures(none) %1, i8 noundef zeroext %2, i8 noundef zeroext %3) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load float, ptr %i.a, align 8
-  %.fr35 = freeze float %i.b                      ; 2 uses
-  %i.c = fcmp nsz ogt float %.fr35, 5.000000e+00
+  %i.b = load float, ptr %i.a, align 8            ; 2 uses
+  %i.c = fcmp nsz ogt float %i.b, 5.000000e+00
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.e = load float, ptr %i.d, align 4            ; 2 uses
   %i.f = fcmp nsz ogt float %i.e, 5.000000e+00
@@ -218,12 +217,12 @@ bb.a:
   %i.k = freeze <4 x i1> %i.j
   %i.l = bitcast <4 x i1> %i.k to i4
   %i.m = icmp ne i4 %i.l, 0
-  %op.rdx = or i1 %i.m, %i.c
+  %op.rdx = select i1 %i.m, i1 true, i1 %i.c
   %op.rdx34 = select i1 %op.rdx, i1 true, i1 %i.f
   br i1 %op.rdx34, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = fcmp nsz oeq float %.fr35, 5.000000e+00
+  %i.n = fcmp nsz oeq float %i.b, 5.000000e+00
   %i.o = zext i1 %i.n to i8
   %i.p = extractelement <4 x float> %i.g, i64 1
   %i.q = fcmp nsz oeq float %i.p, -5.000000e+00
@@ -626,11 +625,10 @@ _ZNSt6vectorIfSaIfEED2Ev.exit211.thread:          ; preds = %bb.a, %bb.p, %_ZNSt
   %.sroa.0269.0519 = phi ptr [ %i.lm, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ], [ %i.ja, %_ZNSt6vectorIhSaIhEE7reserveEm.exit ] ; 4 uses
   %.sroa.27.0518 = phi ptr [ %.sroa.27.10, %_ZNSt6vectorIhSaIhEE9push_backEOh.exit ], [ %.sroa.27.9, %_ZNSt6vectorIhSaIhEE7reserveEm.exit ] ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0269.0519, i64 16
-  %.sroa.5.0.copyload = load float, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !44
-  %.sroa.5.0.copyload.fr = freeze float %.sroa.5.0.copyload ; 2 uses
+  %.sroa.5.0.copyload = load float, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !44 ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0269.0519, i64 20
   %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !44 ; 2 uses
-  %i.jd = fcmp nsz ogt float %.sroa.5.0.copyload.fr, 5.000000e+00
+  %i.jd = fcmp nsz ogt float %.sroa.5.0.copyload, 5.000000e+00
   %i.je = fcmp nsz ogt float %.sroa.6.0.copyload, 5.000000e+00
   %i.jf = load <4 x float>, ptr %.sroa.0269.0519, align 4, !tbaa !44 ; 6 uses
   %i.jg = fcmp nsz olt <4 x float> %i.jf, <float -5.000000e+00, float -5.000000e+00, float -5.000000e+00, float 5.000000e+00>
@@ -639,12 +637,12 @@ _ZNSt6vectorIfSaIfEED2Ev.exit211.thread:          ; preds = %bb.a, %bb.p, %_ZNSt
   %i.jj = freeze <4 x i1> %i.ji
   %i.jk = bitcast <4 x i1> %i.jj to i4
   %i.jl = icmp ne i4 %i.jk, 0
-  %op.rdx = or i1 %i.jl, %i.jd
+  %op.rdx = select i1 %i.jl, i1 true, i1 %i.jd
   %op.rdx904 = select i1 %op.rdx, i1 true, i1 %i.je
   br i1 %op.rdx904, label %_ZNK21MapblockMeshGenerator14getNodeBoxMaskEN4core8aabbox3dIfEEhh.exit, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph
-  %i.jm = fcmp nsz oeq float %.sroa.5.0.copyload.fr, 5.000000e+00
+  %i.jm = fcmp nsz oeq float %.sroa.5.0.copyload, 5.000000e+00
   %i.jn = zext i1 %i.jm to i8
   %i.jo = extractelement <4 x float> %i.jf, i64 1
   %i.jp = fcmp nsz oeq float %i.jo, -5.000000e+00

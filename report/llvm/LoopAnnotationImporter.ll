@@ -204,14 +204,12 @@ _ZN12_GLOBAL__N_122LoopMetadataConversion19initConversionStateEv.exit.thread: ; 
   %i.hv = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion13lookupIntNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.15, i64 25), !inline_history !130 ; 2 uses
   %i.hw = extractvalue { ptr, i8 } %i.hv, 0       ; 2 uses
   %i.hx = extractvalue { ptr, i8 } %i.hv, 1
-  %i.hy = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.16, i64 39), !inline_history !130
-  %.fr464 = freeze { ptr, i8 } %i.hy              ; 2 uses
-  %i.hz = extractvalue { ptr, i8 } %.fr464, 0     ; 2 uses
-  %i.ia = extractvalue { ptr, i8 } %.fr464, 1
-  %i.ib = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.17, i64 37), !inline_history !130
-  %.fr461 = freeze { ptr, i8 } %i.ib              ; 2 uses
-  %i.ic = extractvalue { ptr, i8 } %.fr461, 0     ; 2 uses
-  %i.id = extractvalue { ptr, i8 } %.fr461, 1
+  %i.hy = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.16, i64 39), !inline_history !130 ; 2 uses
+  %i.hz = extractvalue { ptr, i8 } %i.hy, 0       ; 2 uses
+  %i.ia = extractvalue { ptr, i8 } %i.hy, 1
+  %i.ib = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.17, i64 37), !inline_history !130 ; 2 uses
+  %i.ic = extractvalue { ptr, i8 } %i.ib, 0       ; 2 uses
+  %i.id = extractvalue { ptr, i8 } %i.ib, 1
   %i.ie = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.18, i64 32), !inline_history !130 ; 2 uses
   %i.if = extractvalue { ptr, i8 } %i.ie, 0       ; 2 uses
   %i.ig = extractvalue { ptr, i8 } %i.ie, 1
@@ -243,8 +241,8 @@ bb.ba:                                            ; preds = %_ZN12_GLOBAL__N_122
   %i.jc = icmp ne <4 x ptr> %.fr, splat (ptr null)
   %i.jd = bitcast <4 x i1> %i.jc to i4
   %i.je = icmp eq i4 %i.jd, 0
-  %op.rdx457 = and i1 %i.je, %i.iz
-  %36 = and i1 %op.rdx457, %i.ja
+  %op.rdx457 = select i1 %i.je, i1 %i.iz, i1 false
+  %36 = select i1 %op.rdx457, i1 %i.ja, i1 false
   %op.rdx459 = select i1 %36, i1 %i.jb, i1 false
   br i1 %op.rdx459, label %_ZN12_GLOBAL__N_122LoopMetadataConversion20convertVectorizeAttrEv.exit, label %.critedge44.i.i145
 
@@ -283,14 +281,12 @@ _ZN12_GLOBAL__N_122LoopMetadataConversion21convertInterleaveAttrEv.exit: ; preds
   %i.jy = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion14lookupUnitNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.27, i64 21), !inline_history !131 ; 2 uses
   %i.jz = extractvalue { ptr, i8 } %i.jy, 0       ; 2 uses
   %i.ka = extractvalue { ptr, i8 } %i.jy, 1
-  %i.kb = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.28, i64 34), !inline_history !131
-  %.fr470 = freeze { ptr, i8 } %i.kb              ; 2 uses
-  %i.kc = extractvalue { ptr, i8 } %.fr470, 0     ; 2 uses
-  %i.kd = extractvalue { ptr, i8 } %.fr470, 1
-  %i.ke = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.29, i64 35), !inline_history !131
-  %.fr467 = freeze { ptr, i8 } %i.ke              ; 2 uses
-  %i.kf = extractvalue { ptr, i8 } %.fr467, 0     ; 2 uses
-  %i.kg = extractvalue { ptr, i8 } %.fr467, 1
+  %i.kb = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.28, i64 34), !inline_history !131 ; 2 uses
+  %i.kc = extractvalue { ptr, i8 } %i.kb, 0       ; 2 uses
+  %i.kd = extractvalue { ptr, i8 } %i.kb, 1
+  %i.ke = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.29, i64 35), !inline_history !131 ; 2 uses
+  %i.kf = extractvalue { ptr, i8 } %i.ke, 0       ; 2 uses
+  %i.kg = extractvalue { ptr, i8 } %i.ke, 1
   %i.kh = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.30, i64 29), !inline_history !131 ; 2 uses
   %i.ki = extractvalue { ptr, i8 } %i.kh, 0       ; 2 uses
   %i.kj = extractvalue { ptr, i8 } %i.kh, 1
@@ -322,8 +318,8 @@ bb.bc:                                            ; preds = %_ZN12_GLOBAL__N_122
   %i.lf = icmp ne <4 x ptr> %.fr465, splat (ptr null)
   %i.lg = bitcast <4 x i1> %i.lf to i4
   %i.lh = icmp eq i4 %i.lg, 0
-  %op.rdx454 = and i1 %i.lh, %i.lc
-  %37 = and i1 %op.rdx454, %i.ld
+  %op.rdx454 = select i1 %i.lh, i1 %i.lc, i1 false
+  %37 = select i1 %op.rdx454, i1 %i.ld, i1 false
   %op.rdx456 = select i1 %37, i1 %i.le, i1 false
   br i1 %op.rdx456, label %_ZN12_GLOBAL__N_122LoopMetadataConversion17convertUnrollAttrEv.exit, label %.critedge44.i.i114
 
@@ -347,14 +343,12 @@ _ZN12_GLOBAL__N_122LoopMetadataConversion17convertUnrollAttrEv.exit: ; preds = %
   %i.lu = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.38, i64 39), !inline_history !132 ; 2 uses
   %i.lv = extractvalue { ptr, i8 } %i.lu, 0       ; 2 uses
   %i.lw = extractvalue { ptr, i8 } %i.lu, 1
-  %i.lx = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.39, i64 49), !inline_history !132
-  %.fr476 = freeze { ptr, i8 } %i.lx              ; 2 uses
-  %i.ly = extractvalue { ptr, i8 } %.fr476, 0     ; 2 uses
-  %i.lz = extractvalue { ptr, i8 } %.fr476, 1
-  %i.ma = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.40, i64 49), !inline_history !132
-  %.fr473 = freeze { ptr, i8 } %i.ma              ; 2 uses
-  %i.mb = extractvalue { ptr, i8 } %.fr473, 0     ; 2 uses
-  %i.mc = extractvalue { ptr, i8 } %.fr473, 1
+  %i.lx = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.39, i64 49), !inline_history !132 ; 2 uses
+  %i.ly = extractvalue { ptr, i8 } %i.lx, 0       ; 2 uses
+  %i.lz = extractvalue { ptr, i8 } %i.lx, 1
+  %i.ma = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.40, i64 49), !inline_history !132 ; 2 uses
+  %i.mb = extractvalue { ptr, i8 } %i.ma, 0       ; 2 uses
+  %i.mc = extractvalue { ptr, i8 } %i.ma, 1
   %i.md = call fastcc { ptr, i8 } @_ZN12_GLOBAL__N_122LoopMetadataConversion18lookupFollowupNodeEN4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(88) %35, ptr nonnull @.str.41, i64 37), !inline_history !132 ; 2 uses
   %i.me = extractvalue { ptr, i8 } %i.md, 0       ; 2 uses
   %i.mf = extractvalue { ptr, i8 } %i.md, 1
@@ -386,8 +380,8 @@ bb.bd:                                            ; preds = %_ZN12_GLOBAL__N_122
   %i.nb = icmp ne <4 x ptr> %.fr471, splat (ptr null)
   %i.nc = bitcast <4 x i1> %i.nb to i4
   %i.nd = icmp eq i4 %i.nc, 0
-  %op.rdx451 = and i1 %i.nd, %i.my
-  %38 = and i1 %op.rdx451, %i.mz
+  %op.rdx451 = select i1 %i.nd, i1 %i.my, i1 false
+  %38 = select i1 %op.rdx451, i1 %i.mz, i1 false
   %op.rdx453 = select i1 %38, i1 %i.na, i1 false
   br i1 %op.rdx453, label %_ZN12_GLOBAL__N_122LoopMetadataConversion23convertUnrollAndJamAttrEv.exit, label %.critedge44.i.i
 
@@ -790,8 +784,7 @@ bb.du:                                            ; preds = %bb.dn
   %i.aaq = load ptr, ptr %i.aap, align 8, !tbaa !168
   %i.aar = getelementptr inbounds nuw i8, ptr %i.aaq, i64 144
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.aar, align 8, !tbaa !170
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.fr = freeze ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i
-  %i.aas = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.fr, @_ZN4mlir6detail14TypeIDResolverINS_8FusedLocEvE2idE
+  %i.aas = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_8FusedLocEvE2idE
   %spec.select.i.i.i = select i1 %i.aas, ptr %i.aap, ptr null
   br label %_ZN12_GLOBAL__N_122LoopMetadataConversion13convertEndLocEv.exit
 
@@ -840,9 +833,8 @@ bb.dv:                                            ; preds = %_ZN12_GLOBAL__N_122
   %i.abw = bitcast <8 x i1> %i.abv to i8
   %i.abx = icmp eq i8 %i.abw, -1
   %op.rdx = select i1 %i.abx, i1 %i.abq, i1 false
-  %39 = freeze i1 %op.rdx
-  %40 = and i1 %39, %i.abr
-  %op.rdx449 = select i1 %40, i1 %.not.i.i.i, i1 false
+  %39 = select i1 %op.rdx, i1 %i.abr, i1 false
+  %op.rdx449 = select i1 %39, i1 %.not.i.i.i, i1 false
   br i1 %op.rdx449, label %_ZL15createIfNonNullIN4mlir4LLVM18LoopAnnotationAttrEJN4llvm9FailureOrINS0_8BoolAttrEEENS4_INS1_17LoopVectorizeAttrEEENS4_INS1_18LoopInterleaveAttrEEENS4_INS1_14LoopUnrollAttrEEENS4_INS1_20LoopUnrollAndJamAttrEEENS4_INS1_12LoopLICMAttrEEENS4_INS1_18LoopDistributeAttrEEENS4_INS1_16LoopPipelineAttrEEENS4_INS1_14LoopPeeledAttrEEENS4_INS1_16LoopUnswitchAttrEEES6_S6_NS4_INS0_8FusedLocEEESQ_NS4_INS3_11SmallVectorINS1_15AccessGroupAttrELj6EEEEEEET_PNS0_11MLIRContextEDpRKT0_.exit, label %.critedge90.i
 
 .critedge90.i:                                    ; preds = %bb.dv

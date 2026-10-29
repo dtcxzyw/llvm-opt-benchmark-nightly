@@ -204,15 +204,14 @@ bb.m:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.db = extractelement <2 x float> %i.da, i64 0
   %i.dc = fsub float 1.000000e+00, %i.db
   %i.dd = extractelement <2 x float> %i.da, i64 1
-  %i.de = fsub float %i.dc, %i.dd
-  %.fr117 = freeze float %i.de                    ; 4 uses
+  %i.de = fsub float %i.dc, %i.dd                 ; 4 uses
   %i.df = and i32 %2, 1
   %.not67 = icmp eq i32 %i.df, 0
   br i1 %.not67, label %bb.w, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.dg = fcmp ole float %.fr117, 1.000000e+00
-  %i.dh = fcmp oge float %.fr117, 0.000000e+00
+  %i.dg = fcmp ole float %i.de, 1.000000e+00
+  %i.dh = fcmp oge float %i.de, 0.000000e+00
   %i.di = shufflevector <2 x double> %i.cz, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
   %i.dj = fcmp ole <4 x double> %i.di, <double f0x3FF0000010000000, double f0x3FF0000010000000, double f0xB690000000000000, double f0xB690000000000000>
   %i.dk = fcmp oge <4 x double> %i.di, <double f0x3FF0000010000000, double f0x3FF0000010000000, double f0xB690000000000000, double f0xB690000000000000>
@@ -220,16 +219,16 @@ bb.n:                                             ; preds = %bb.m
   %i.dm = freeze <4 x i1> %i.dl
   %i.dn = bitcast <4 x i1> %i.dm to i4
   %i.do = icmp eq i4 %i.dn, -1
-  %op.rdx = and i1 %i.do, %i.dg
-  %op.rdx115 = and i1 %op.rdx, %i.dh
+  %op.rdx = and i1 %i.dh, %i.dg
+  %op.rdx115 = select i1 %i.do, i1 %op.rdx, i1 false
   %i.dp = icmp eq i32 %2, 1
   %or.cond16 = or i1 %i.dp, %op.rdx115
   br i1 %or.cond16, label %bb.o, label %bb.w
 
 bb.o:                                             ; preds = %bb.n
   %i.dq = fcmp ogt <2 x double> %i.cz, splat (double f0x3690000000000000)
-  %i.dr = fcmp ogt float %.fr117, 0.000000e+00
-  %.sroa.speculated80 = select i1 %i.dr, float %.fr117, float 0.000000e+00 ; 2 uses
+  %i.dr = fcmp ogt float %i.de, 0.000000e+00
+  %.sroa.speculated80 = select i1 %i.dr, float %i.de, float 0.000000e+00 ; 2 uses
   %i.ds = fcmp ogt float %.sroa.speculated80, 1.000000e+00
   %.sroa.speculated = select i1 %i.ds, float 1.000000e+00, float %.sroa.speculated80
   %i.dt = select <2 x i1> %i.dq, <2 x float> %i.da, <2 x float> zeroinitializer ; 2 uses

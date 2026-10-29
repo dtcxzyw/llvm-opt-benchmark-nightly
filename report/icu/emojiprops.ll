@@ -166,21 +166,19 @@ bb.a:
   %.fr = freeze <4 x i8> %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 10
   %i.i = load i8, ptr %i.h, align 2
-  %.fr6 = freeze i8 %i.i
-  %i.j = icmp eq i8 %.fr6, 111
+  %i.j = icmp eq i8 %i.i, 111
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 11
   %i.l = load i8, ptr %i.k, align 1
-  %.fr4 = freeze i8 %i.l
-  %i.m = icmp eq i8 %.fr4, 106
+  %i.m = icmp eq i8 %i.l, 106
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.o = load i8, ptr %i.n, align 2
   %i.p = icmp eq i8 %i.o, 1
   %.fr.scalar = bitcast <4 x i8> %.fr to i32
   %i.q = icmp eq i32 %.fr.scalar, 1833238528
-  %op.rdx = and i1 %i.q, %i.j
-  %4 = and i1 %op.rdx, %i.m
-  %5 = and i1 %i.b, %4
-  %op.rdx3 = select i1 %5, i1 %i.p, i1 false
+  %op.rdx = select i1 %i.q, i1 %i.b, i1 false
+  %4 = select i1 %op.rdx, i1 %i.j, i1 false
+  %op.rdx2 = select i1 %4, i1 %i.m, i1 false
+  %op.rdx3 = select i1 %op.rdx2, i1 %i.p, i1 false
   %i.r = zext i1 %op.rdx3 to i8
   ret i8 %i.r
 }

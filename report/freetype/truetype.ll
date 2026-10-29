@@ -205,12 +205,10 @@ tt_check_trickyness_sfnt_ids.exit:                ; preds = %.preheader.i
   %i.fy = icmp ne i32 %i.fx, 3
   %i.fz = getelementptr inbounds nuw i8, ptr %i.a, i64 116
   %i.ga = load i32, ptr %i.fz, align 4
-  %.fr59 = freeze i32 %i.ga
-  %i.gb = icmp ne i32 %.fr59, 3
+  %i.gb = icmp ne i32 %i.ga, 3
   %i.gc = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   %i.gd = load i32, ptr %i.gc, align 8
-  %.fr61 = freeze i32 %i.gd
-  %i.ge = icmp ne i32 %.fr61, 3
+  %i.ge = icmp ne i32 %i.gd, 3
   %i.gf = shufflevector <16 x i1> %i.fp, <16 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %rdx.op = and <8 x i1> %i.gf, %i.fs             ; 2 uses
   %i.gg = shufflevector <8 x i1> %rdx.op, <8 x i1> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -222,11 +220,11 @@ tt_check_trickyness_sfnt_ids.exit:                ; preds = %.preheader.i
   %i.gl = bitcast <16 x i1> %i.gk to i16
   %i.gm = icmp eq i16 %i.gl, -1
   %op.rdx = select i1 %i.gm, i1 %i.fy, i1 false
-  %1 = freeze i1 %op.rdx
-  %2 = and i1 %1, %i.gb
-  %op.rdx56 = and i1 %2, %i.ge
+  %1 = select i1 %op.rdx, i1 %i.gb, i1 false
+  %op.rdx56 = select i1 %1, i1 %i.ge, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
-  br i1 %op.rdx56, label %bb.au, label %tt_check_trickyness_family.exit.thread
+  %cond.fr = freeze i1 %op.rdx56
+  br i1 %cond.fr, label %bb.au, label %tt_check_trickyness_family.exit.thread
 
 bb.au:                                            ; preds = %tt_check_trickyness_sfnt_ids.exit.thread16, %tt_check_trickyness_sfnt_ids.exit
   br label %tt_check_trickyness_family.exit.thread

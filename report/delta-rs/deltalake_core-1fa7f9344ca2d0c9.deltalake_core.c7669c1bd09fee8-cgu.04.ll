@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %_RINvMNtCsbvkFyIu7l
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.s, align 8, !alias.scope !20324, !noundef !30
   %.not75.i = icmp eq ptr %.val.i, null
-  %op.rdx = select i1 %.not75.i, i1 %.sroa.569.0.i, i1 false
-  %op.rdx1 = select i1 %op.rdx, i1 %.sroa.5.0.i, i1 false
+  %op.rdx = select i1 %.not75.i, i1 %.sroa.5.0.i, i1 false
+  %op.rdx1 = select i1 %op.rdx, i1 %.sroa.569.0.i, i1 false
   br i1 %op.rdx1, label %bb.g, label %bb.f
 
 bb.e:                                             ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6filter6FilterINtNtBO_3map3MapIB1o_INtNtCs6Po7BT7Nknu_5alloc5boxed3BoxIB1o_IB1o_IB1J_INtNtNtB1N_3vec9into_iter8IntoIterNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchEENCINvMs1_NtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot4scanNtB4b_4Scan18scan_metadata_fromB2w_E0ENCB44_s_0EENCINvMs6_NtCs8ulvy0Wg6Ot_12delta_kernel4scanNtB62_4Scan18scan_metadata_fromB1I_E0ENCINvYNtNtB62_10log_replay22ScanLogReplayProcessorNtNtB64_10log_replay18LogReplayProcessor20process_actions_iterB1D_E0ENCB7f_s_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB4h_.exit61.i
@@ -608,8 +608,7 @@ bb.k:                                             ; preds = %bb.j
   call void @_RNvXNtCscVxtfYSVfE7_9itertools10flatten_okINtB2_9FlattenOkINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB11_6traits8iterator8Iteratorp4ItemINtNtB13_6result6ResultIB1J_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB3u_5error5ErrorENtNtB13_6marker4SendEL_ENCNvMNtB3u_11log_segmentNtB5d_10LogSegment24create_checkpoint_streams_0EINtNtNtB4_8adaptors3map14MapSpecialCaseINtNtBZ_5chain5ChainINtNtNtB11_7sources4once4OnceB2X_EINtNtBZ_7flatten7FlattenINtNtB13_6option8IntoIterB1I_EEEINtB6l_18MapSpecialCaseFnOkNCNCB5a_s_00EEB4p_EB2i_9size_hintCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(672) dereferenceable_or_null(672) %i.p), !noalias !20590
   %.phi.trans.insert.i.i.i65.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.pre.i.i.i66.i = load i64, ptr %.phi.trans.insert.i.i.i65.i, align 8, !range !31, !noalias !20584
-  %.pre.i.i.i66.i.fr = freeze i64 %.pre.i.i.i66.i
-  %i.s = trunc i64 %.pre.i.i.i66.i.fr to i1
+  %i.s = trunc nuw i64 %.pre.i.i.i66.i to i1
   br label %_RNvYNvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters6filter6FilterINtNtBa_3map3MapINtNtBa_5chain5ChainNtNtNtCs8ulvy0Wg6Ot_12delta_kernel10log_reader6commit12CommitReaderIB10_INtNtCscVxtfYSVfE7_9itertools10flatten_ok9FlattenOkIB10_INtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBc_6traits8iterator8Iteratorp4ItemINtNtBe_6result6ResultIB3E_DNtNtB1F_11engine_data10EngineDataEL_ENtNtB1F_5error5ErrorENtNtBe_6marker4SendEL_ENCNvMNtB1F_11log_segmentNtB6H_10LogSegment24create_checkpoint_streams_0EINtNtNtB2O_8adaptors3map14MapSpecialCaseIB1g_INtNtNtBc_7sources4once4OnceB4R_EINtNtBa_7flatten7FlattenINtNtBe_6option8IntoIterB3D_EEEINtB7P_18MapSpecialCaseFnOkNCNCB6E_s_00EEB5U_ENCB6E_s0_0EENCINvYNtNtNtB1F_4scan10log_replay22ScanLogReplayProcessorNtNtB1F_10log_replay18LogReplayProcessor20process_actions_iterB1f_E0ENCBaT_s_0EB4d_9size_hintINtNtNtBe_3ops8function6FnOnceTRB5_EE9call_onceCs14kWLkQVSKO_14deltalake_core.exit.i64.i
 
 bb.l:                                             ; preds = %bb.j
@@ -640,12 +639,12 @@ _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6filte
 
 bb.n:                                             ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6filter6FilterINtNtBO_3map3MapINtNtBO_5chain5ChainNtNtNtCs8ulvy0Wg6Ot_12delta_kernel10log_reader6commit12CommitReaderIB1o_INtNtCscVxtfYSVfE7_9itertools10flatten_ok9FlattenOkIB1o_INtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIB42_DNtNtB23_11engine_data10EngineDataEL_ENtNtB23_5error5ErrorENtNtB5_6marker4SendEL_ENCNvMNtB23_11log_segmentNtB75_10LogSegment24create_checkpoint_streams_0EINtNtNtB3c_8adaptors3map14MapSpecialCaseIB1E_INtNtNtBQ_7sources4once4OnceB5f_EINtNtBO_7flatten7FlattenINtB3_8IntoIterB41_EEEINtB8d_18MapSpecialCaseFnOkNCNCB72_s_00EEB6i_ENCB72_s0_0EENCINvYNtNtNtB23_4scan10log_replay22ScanLogReplayProcessorNtNtB23_10log_replay18LogReplayProcessor20process_actions_iterB1D_E0ENCBb8_s_0EE6map_orTjIBw_jEENvYBJ_B4B_9size_hintECs14kWLkQVSKO_14deltalake_core.exit67.i
   %.not81.i = icmp eq i64 %i.y, 5
-  %op.rdx = and i1 %.not81.i, %.sroa.575.0.i
-  %op.rdx3 = select i1 %op.rdx, i1 %.sroa.5.0.i, i1 false
+  %op.rdx = select i1 %.not81.i, i1 %.sroa.5.0.i, i1 false
+  %op.rdx3 = select i1 %op.rdx, i1 %.sroa.575.0.i, i1 false
   br i1 %op.rdx3, label %bb.q, label %bb.p
 
 bb.o:                                             ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters6filter6FilterINtNtBO_3map3MapINtNtBO_5chain5ChainNtNtNtCs8ulvy0Wg6Ot_12delta_kernel10log_reader6commit12CommitReaderIB1o_INtNtCscVxtfYSVfE7_9itertools10flatten_ok9FlattenOkIB1o_INtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtBQ_6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIB42_DNtNtB23_11engine_data10EngineDataEL_ENtNtB23_5error5ErrorENtNtB5_6marker4SendEL_ENCNvMNtB23_11log_segmentNtB75_10LogSegment24create_checkpoint_streams_0EINtNtNtB3c_8adaptors3map14MapSpecialCaseIB1E_INtNtNtBQ_7sources4once4OnceB5f_EINtNtBO_7flatten7FlattenINtB3_8IntoIterB41_EEEINtB8d_18MapSpecialCaseFnOkNCNCB72_s_00EEB6i_ENCB72_s0_0EENCINvYNtNtNtB23_4scan10log_replay22ScanLogReplayProcessorNtNtB23_10log_replay18LogReplayProcessor20process_actions_iterB1D_E0ENCBb8_s_0EE6map_orTjIBw_jEENvYBJ_B4B_9size_hintECs14kWLkQVSKO_14deltalake_core.exit67.i
-  %or.cond56.i = and i1 %.sroa.5.0.i, %.sroa.575.0.i
+  %or.cond56.i = select i1 %.sroa.5.0.i, i1 %.sroa.575.0.i, i1 false
   br i1 %or.cond56.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -1048,12 +1047,11 @@ bb.c:                                             ; preds = %_RINvMNtCsbvkFyIu7l
   %.phi.trans.insert79.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.pre80.i = load i64, ptr %.phi.trans.insert79.i, align 8, !noalias !20649
   %i.j = call i64 @llvm.uadd.sat.i64(i64 %i.g, i64 %.pre76.i)
-  %2 = freeze i64 %.pre78.i
   br label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit63.i
 
 _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit63.i: ; preds = %bb.c, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit.i
   %i.k = phi i64 [ %.pre80.i, %bb.c ], [ 0, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit.i ]
-  %.fr2 = phi i64 [ %2, %bb.c ], [ 1, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit.i ] ; 2 uses
+  %.fr2 = phi i64 [ %.pre78.i, %bb.c ], [ 1, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit.i ] ; 2 uses
   %i.l = phi i64 [ %i.j, %bb.c ], [ %i.g, %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !20649
   %i.m = load ptr, ptr %1, align 8, !alias.scope !20648, !noundef !30
@@ -1067,9 +1065,9 @@ bb.d:                                             ; preds = %_RINvMNtCsbvkFyIu7l
   %.val62.i = load ptr, ptr %i.o, align 8, !alias.scope !20648, !nonnull !30, !noundef !30
   %i.p = icmp eq ptr %.val62.i, %.val.i
   %i.q = trunc nuw i64 %i.f to i1
-  %i.r = trunc i64 %.fr2 to i1
-  %op.rdx = and i1 %i.p, %i.r
-  %op.rdx1 = select i1 %op.rdx, i1 %i.q, i1 false
+  %i.r = trunc nuw i64 %.fr2 to i1
+  %op.rdx = select i1 %i.p, i1 %i.q, i1 false
+  %op.rdx1 = select i1 %op.rdx, i1 %i.r, i1 false
   br i1 %op.rdx1, label %bb.g, label %bb.f
 
 bb.e:                                             ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtNtB5_4iter6traits8iterator8Iteratorp4ItemINtNtB5_6result6ResultIBK_DNtNtCs8ulvy0Wg6Ot_12delta_kernel11engine_data10EngineDataEL_ENtNtB2z_5error5ErrorENtNtB5_6marker4SendEL_EE6map_orTjIBw_jEENvYBJ_B1j_9size_hintECs14kWLkQVSKO_14deltalake_core.exit63.i

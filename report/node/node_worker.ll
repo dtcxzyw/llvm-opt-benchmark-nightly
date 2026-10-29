@@ -204,9 +204,8 @@ _ZN2v87Boolean3NewEPNS_7IsolateEb.exit.i:         ; preds = %_ZN4node11Environme
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 56
   %i.ds = load i64, ptr %i.dr, align 8
   %i.dt = uitofp i64 %i.ds to double
-  %i.du = call ptr @_ZN2v86Number3NewEPNS_7IsolateEd(ptr noundef %i.c, double noundef %i.dt) #28
-  %.fr9 = freeze ptr %i.du                        ; 2 uses
-  %i.dv = ptrtoint ptr %.fr9 to i64
+  %i.du = call ptr @_ZN2v86Number3NewEPNS_7IsolateEd(ptr noundef %i.c, double noundef %i.dt) #28 ; 2 uses
+  %i.dv = ptrtoint ptr %i.du to i64
   store i64 %i.dv, ptr %i.dp, align 8
   %i.dw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.dx = call noundef i64 @_ZN2v87Isolate22GetTotalAllocatedBytesEv(ptr noundef nonnull align 1 dereferenceable(1) %i.c) #28
@@ -232,7 +231,7 @@ _ZN2v87Boolean3NewEPNS_7IsolateEb.exit.i:         ; preds = %_ZN4node11Environme
   %.fr8 = freeze <4 x ptr> %i.eo
   %i.ep = icmp eq <4 x ptr> %.fr8, splat (ptr null)
   %i.eq = icmp eq ptr %i.dn, null
-  %i.er = icmp eq ptr %.fr9, null
+  %i.er = icmp eq ptr %i.du, null
   %i.es = icmp eq ptr %i.dz, null
   %i.et = shufflevector <8 x i1> %i.ek, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %rdx.op = or <4 x i1> %i.et, %i.ep
@@ -241,9 +240,8 @@ _ZN2v87Boolean3NewEPNS_7IsolateEb.exit.i:         ; preds = %_ZN4node11Environme
   %i.ew = bitcast <8 x i1> %i.ev to i8
   %i.ex = icmp ne i8 %i.ew, 0
   %op.rdx = select i1 %i.ex, i1 true, i1 %i.eq
-  %7 = freeze i1 %op.rdx
-  %8 = or i1 %7, %i.er
-  %op.rdx7 = select i1 %8, i1 true, i1 %i.es
+  %7 = select i1 %op.rdx, i1 true, i1 %i.er
+  %op.rdx7 = select i1 %7, i1 true, i1 %i.es
   br i1 %op.rdx7, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.thread.i, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.i
 
 _ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.i: ; preds = %_ZN2v87Boolean3NewEPNS_7IsolateEb.exit.i
