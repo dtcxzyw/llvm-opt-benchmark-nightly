@@ -202,8 +202,8 @@ bb.bo:                                            ; preds = %bb.bn
   %i.el = invoke i24 @_RNvMs_NtNtCscOzg5arm0FQ_17build_script_main5build5cargoNtNtB6_1c7Profile12new_from_env(ptr %i.ei, i64 %i.eh)
           to label %bb.bp unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-.body.thread.i:                                   ; preds = %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.en, %bb.cm, %bb.cf, %bb.by, %.body.i
-  %.pn.i10 = phi { ptr, i32 } [ %lpad.thr_comm.i.i, %bb.cm ], [ %eh.lpad-body.i, %bb.en ], [ %eh.lpad-body.i, %.body.i ], [ %i.ff, %bb.by ], [ %.pn.i.i, %bb.cf ], [ %lpad.loopexit.split-lp89, %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body.thread.i:                                   ; preds = %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.en, %bb.cm, %bb.cf, %bb.by, %.body.i, %.loopexit.split-lp.i
+  %.pn.i10 = phi { ptr, i32 } [ %lpad.loopexit.split-lp41.i, %.loopexit.split-lp.i ], [ %eh.lpad-body52.i, %bb.en ], [ %eh.lpad-body.i, %.body.i ], [ %i.ff, %bb.by ], [ %.pn.i.i, %bb.cf ], [ %lpad.thr_comm.i.i, %bb.cm ], [ %lpad.loopexit.split-lp89, %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCscOzg5arm0FQ_17build_script_main5build6target6TargetEBH_(ptr nonnull align 8 %i.au) #24
           to label %.body16 unwind label %bb.eo
 
@@ -239,7 +239,7 @@ bb.br:                                            ; preds = %.noexc._crit_edge.i
   %i.ew = phi i8 [ %i.eq, %bb.bp ], [ %.pre.i, %.noexc._crit_edge.i ]
   %.sroa.0.0.i.i = phi ptr [ null, %bb.bp ], [ %i.ev, %.noexc._crit_edge.i ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar)
-  %i.ex = trunc nuw i8 %i.ew to i1
+  %i.ex = trunc nuw i8 %i.ew to i1                ; 4 uses
   br i1 %i.ex, label %bb.bt, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
@@ -249,34 +249,30 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %bb.br
   %i.ey = getelementptr inbounds nuw i8, ptr %i.au, i64 72 ; 2 uses
   %i.ez = invoke { ptr, i64 } @_RNvXsH_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufNtNtNtCs3oUPovFnLWP_4core3ops5deref5Deref5derefCscOzg5arm0FQ_17build_script_main(ptr nonnull align 8 %i.ey)
-          to label %bb.bv unwind label %.loopexit.split-lp.i ; 2 uses
+          to label %bb.bv unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.bu:                                            ; preds = %_RINvNtNtCscOzg5arm0FQ_17build_script_main5build4core32generate_sources_and_preassembleINtNtCs3oUPovFnLWP_4core6option8IntoIterRNtB2_9AsmTargetEEB6_.exit.i, %bb.bs
-  %.sroa.01.0.i = phi i8 [ 1, %bb.bs ], [ 0, %_RINvNtNtCscOzg5arm0FQ_17build_script_main5build4core32generate_sources_and_preassembleINtNtCs3oUPovFnLWP_4core6option8IntoIterRNtB2_9AsmTargetEEB6_.exit.i ] ; 11 uses
   %.sroa.0.0.i = phi ptr [ %i.as, %bb.bs ], [ %i.ey, %_RINvNtNtCscOzg5arm0FQ_17build_script_main5build4core32generate_sources_and_preassembleINtNtCs3oUPovFnLWP_4core6option8IntoIterRNtB2_9AsmTargetEEB6_.exit.i ]
   %i.fa = invoke { ptr, i64 } @_RNvXsH_NtCsaL1QbXo9JQH_3std4pathNtB5_7PathBufNtNtNtCs3oUPovFnLWP_4core3ops5deref5Deref5derefCscOzg5arm0FQ_17build_script_main(ptr nonnull align 8 %.sroa.0.0.i)
           to label %bb.cn unwind label %.loopexit.split-lp.i ; 2 uses
 
-.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.critedge.i.i, %.noexc12.i, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsaL1QbXo9JQH_3std4path7PathBufENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCscOzg5arm0FQ_17build_script_main.exit.thread.i.i, %bb.cd, %bb.cb, %bb.em, %bb.bs, %.noexc.i11, %bb.bq, %.noexc14
+.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.critedge.i.i, %.noexc12.i, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsaL1QbXo9JQH_3std4path7PathBufENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCscOzg5arm0FQ_17build_script_main.exit.thread.i.i, %bb.cd, %bb.cb, %bb.em, %.noexc8.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCscOzg5arm0FQ_17build_script_main.exit.i.i, %bb.bw, %bb.bv, %bb.bt, %bb.bs, %.noexc.i11, %bb.bq, %.noexc14
   %lpad.loopexit.split-lp89 = landingpad { ptr, i32 }
           cleanup
   br label %.body.thread.i
 
-.loopexit.split-lp.i:                             ; preds = %.loopexit5.i.i, %bb.ec, %bb.eb, %bb.cw, %.noexc24.i12, %bb.co, %.noexc8.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCscOzg5arm0FQ_17build_script_main.exit.i.i, %bb.bw, %bb.bv, %bb.bu, %bb.bt
-  %.sroa.01.1.ph.i = phi i8 [ %.sroa.01.0.i, %bb.cw ], [ %.sroa.01.0.i, %.noexc24.i12 ], [ %.sroa.01.0.i, %bb.co ], [ 0, %.noexc8.i ], [ 0, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCscOzg5arm0FQ_17build_script_main.exit.i.i ], [ 0, %bb.bw ], [ 0, %bb.bt ], [ 0, %bb.bv ], [ %.sroa.01.0.i, %bb.ec ], [ %.sroa.01.0.i, %bb.bu ], [ %.sroa.01.0.i, %bb.eb ], [ %.sroa.01.0.i, %.loopexit5.i.i ]
+.loopexit.split-lp.i:                             ; preds = %.loopexit5.i.i, %bb.ec, %bb.eb, %bb.cw, %.noexc24.i12, %bb.co, %bb.bu
   %lpad.loopexit.split-lp41.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i
+          cleanup                                 ; 2 uses
+  br i1 %i.ex, label %.body.thread.i, label %bb.en
 
-.body.i:                                          ; preds = %.body.i.i, %bb.dz, %bb.cp, %.loopexit.split-lp.i
-  %.sroa.01.1.lpad-body.i = phi i8 [ %.sroa.01.0.i, %bb.cp ], [ %.sroa.01.0.i, %.body.i.i ], [ %.sroa.01.0.i, %bb.dz ], [ %.sroa.01.1.ph.i, %.loopexit.split-lp.i ]
-  %eh.lpad-body.i = phi { ptr, i32 } [ %i.gk, %bb.cp ], [ %eh.lpad-body.i.i, %.body.i.i ], [ %.pn23.i.i, %bb.dz ], [ %lpad.loopexit.split-lp41.i, %.loopexit.split-lp.i ] ; 2 uses
-  %0 = trunc nuw i8 %.sroa.01.1.lpad-body.i to i1
-  br i1 %0, label %bb.en, label %.body.thread.i
+.body.i:                                          ; preds = %.body.i.i, %bb.dz, %bb.cp
+  %eh.lpad-body.i = phi { ptr, i32 } [ %i.gk, %bb.cp ], [ %eh.lpad-body.i.i, %.body.i.i ], [ %.pn23.i.i, %bb.dz ] ; 2 uses
+  br i1 %i.ex, label %.body.thread.i, label %bb.en
 
 bb.bv:                                            ; preds = %bb.bt
   %i.fb = invoke align 8 ptr @_RNvXs8_NtCs3oUPovFnLWP_4core6optionINtB5_6OptionRNtNtNtCscOzg5arm0FQ_17build_script_main5build4core9AsmTargetENtNtNtNtB7_4iter6traits7collect12IntoIterator9into_iterBR_(ptr align 8 %.sroa.0.0.i.i)
-          to label %bb.bw unwind label %.loopexit.split-lp.i
+          to label %bb.bw unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.bw:                                            ; preds = %bb.bv
   %i.fc = extractvalue { ptr, i64 } %i.ez, 1      ; 4 uses
@@ -287,7 +283,7 @@ bb.bw:                                            ; preds = %bb.bv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
   %i.fe = invoke ptr @_RNvNtNtCscOzg5arm0FQ_17build_script_main5build8prefixed31generate_prefix_symbols_headers(ptr %i.fd, i64 %i.fc, ptr %i.ej, i64 %i.ek, ptr nonnull align 8 @334, i64 7, ptr nonnull align 8 @326, i64 151)
-          to label %.noexc7.i unwind label %.loopexit.split-lp.i ; 2 uses
+          to label %.noexc7.i unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc7.i:                                        ; preds = %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
@@ -317,12 +313,12 @@ bb.ca:                                            ; preds = %bb.by
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCscOzg5arm0FQ_17build_script_main.exit.i.i: ; preds = %.noexc7.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
   %i.fh = invoke align 8 ptr @_RNvXNtNtNtCs3oUPovFnLWP_4core4iter6traits7collectINtNtB8_6option8IntoIterRNtNtNtCscOzg5arm0FQ_17build_script_main5build4core9AsmTargetENtB2_12IntoIterator9into_iterB1g_(ptr align 8 %i.fb) #26
-          to label %.noexc8.i unwind label %.loopexit.split-lp.i
+          to label %.noexc8.i unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc8.i:                                        ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCscOzg5arm0FQ_17build_script_main.exit.i.i
   store ptr %i.fh, ptr %i.aq, align 8
   %i.fi = invoke align 8 ptr @_RNvXsy_NtCs3oUPovFnLWP_4core6optionINtB5_8IntoIterRNtNtNtCscOzg5arm0FQ_17build_script_main5build4core9AsmTargetENtNtNtNtB7_4iter6traits8iterator8Iterator4nextBT_(ptr nonnull align 8 %i.aq) #26
-          to label %.noexc9.i unwind label %.loopexit.split-lp.i ; 2 uses
+          to label %.noexc9.i unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc9.i:                                        ; preds = %.noexc8.i
   %.not29.i.i = icmp eq ptr %i.fi, null
@@ -725,8 +721,7 @@ bb.ej:                                            ; preds = %.body.i.i
 
 bb.ek:                                            ; preds = %.loopexit5.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  %1 = trunc nuw i8 %.sroa.01.0.i to i1
-  br i1 %1, label %bb.em, label %bb.el
+  br i1 %i.ex, label %bb.el, label %bb.em
 
 bb.el:                                            ; preds = %bb.em, %bb.ek
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCscOzg5arm0FQ_17build_script_main5build6target6TargetEBH_(ptr nonnull align 8 %i.au)
@@ -736,7 +731,8 @@ bb.em:                                            ; preds = %bb.ek
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.as)
           to label %bb.el unwind label %.body.thread49.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.en:                                            ; preds = %.body.i
+bb.en:                                            ; preds = %.body.i, %.loopexit.split-lp.i
+  %eh.lpad-body52.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp41.i, %.loopexit.split-lp.i ], [ %eh.lpad-body.i, %.body.i ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.as) #24
           to label %.body.thread.i unwind label %bb.eo
 

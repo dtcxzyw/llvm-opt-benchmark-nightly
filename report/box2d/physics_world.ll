@@ -205,7 +205,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ph = load ptr, ptr %i.h, align 8, !tbaa !154
   call void @b2RecWrite_StateHash(ptr noundef %i.ph, ptr noundef nonnull %5) #23
   %i.pi = call i32 @b2DynamicTree_GetProxyCount(ptr noundef nonnull %i.x) #23
-  %i.pj = icmp eq i32 %i.pi, 0
+  %i.pj = icmp eq i32 %i.pi, 0                    ; 2 uses
   br i1 %i.pj, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
@@ -215,7 +215,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
-  %.1.i = phi i8 [ 0, %bb.ah ], [ 1, %bb.ai ]     ; 2 uses
+  %.1.i = phi i8 [ 0, %bb.ah ], [ 1, %bb.ai ]
   %.sroa.07.2.i = phi <2 x float> [ zeroinitializer, %bb.ah ], [ %i.pl, %bb.ai ] ; 3 uses
   %.sroa.7.2.i = phi <2 x float> [ zeroinitializer, %bb.ah ], [ %i.pm, %bb.ai ] ; 3 uses
   %i.pn = getelementptr i8, ptr %i.c, i64 -2632   ; 2 uses
@@ -227,8 +227,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.pq = call { <2 x float>, <2 x float> } @b2DynamicTree_GetRootBounds(ptr noundef nonnull %i.pn) #23 ; 2 uses
   %i.pr = extractvalue { <2 x float>, <2 x float> } %i.pq, 0 ; 3 uses
   %i.ps = extractvalue { <2 x float>, <2 x float> } %i.pq, 1 ; 3 uses
-  %6 = trunc nuw i8 %.1.i to i1
-  br i1 %6, label %bb.al, label %bb.am
+  br i1 %i.pj, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.pt = fcmp olt <2 x float> %.sroa.07.2.i, %i.pr
@@ -311,7 +310,7 @@ define hidden zeroext i1 @b2ComputeWorldBounds(ptr noundef %0, ptr nofree nounde
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = tail call i32 @b2DynamicTree_GetProxyCount(ptr noundef nonnull %i.a) #23
-  %i.c = icmp eq i32 %i.b, 0
+  %i.c = icmp eq i32 %i.b, 0                      ; 2 uses
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -321,7 +320,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1 = phi i8 [ 0, %bb.a ], [ 1, %bb.b ]         ; 2 uses
+  %.1 = phi i8 [ 0, %bb.a ], [ 1, %bb.b ]
   %.sroa.07.2 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %i.e, %bb.b ] ; 3 uses
   %.sroa.7.2 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %i.f, %bb.b ] ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -333,8 +332,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = tail call { <2 x float>, <2 x float> } @b2DynamicTree_GetRootBounds(ptr noundef nonnull %i.g) #23 ; 2 uses
   %i.k = extractvalue { <2 x float>, <2 x float> } %i.j, 0 ; 3 uses
   %i.l = extractvalue { <2 x float>, <2 x float> } %i.j, 1 ; 3 uses
-  %2 = trunc nuw i8 %.1 to i1
-  br i1 %2, label %bb.e, label %bb.f
+  br i1 %i.c, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.m = fcmp olt <2 x float> %.sroa.07.2, %i.k
@@ -737,8 +735,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %i.c, i64 -2704    ; 2 uses
   %i.k = tail call i32 @b2DynamicTree_GetProxyCount(ptr noundef nonnull %i.j) #23
-  %1 = icmp eq i32 %i.k, 0
-  br i1 %1, label %bb.d, label %bb.c
+  %.not.i = icmp ne i32 %i.k, 0                   ; 3 uses
+  br i1 %.not.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.l = tail call { <2 x float>, <2 x float> } @b2DynamicTree_GetRootBounds(ptr noundef nonnull %i.j) #23 ; 2 uses
@@ -747,7 +745,6 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.1.i = phi i8 [ 0, %bb.b ], [ 1, %bb.c ]       ; 2 uses
   %.sroa.07.2.i = phi <2 x float> [ zeroinitializer, %bb.b ], [ %i.m, %bb.c ] ; 3 uses
   %.sroa.7.2.i = phi <2 x float> [ zeroinitializer, %bb.b ], [ %i.n, %bb.c ] ; 3 uses
   %i.o = getelementptr i8, ptr %i.c, i64 -2632    ; 2 uses
@@ -759,8 +756,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = tail call { <2 x float>, <2 x float> } @b2DynamicTree_GetRootBounds(ptr noundef nonnull %i.o) #23 ; 2 uses
   %i.s = extractvalue { <2 x float>, <2 x float> } %i.r, 0 ; 3 uses
   %i.t = extractvalue { <2 x float>, <2 x float> } %i.r, 1 ; 3 uses
-  %2 = trunc nuw i8 %.1.i to i1
-  br i1 %2, label %bb.f, label %bb.g
+  br i1 %.not.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.u = fcmp olt <2 x float> %.sroa.07.2.i, %i.s
@@ -770,7 +766,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
-  %.1.1.i = phi i8 [ %.1.i, %bb.d ], [ 1, %bb.e ], [ 1, %bb.f ]
+  %.1.1.i = phi i1 [ %.not.i, %bb.d ], [ true, %bb.e ], [ true, %bb.f ]
   %.sroa.07.2.1.i = phi <2 x float> [ %.sroa.07.2.i, %bb.d ], [ %i.s, %bb.e ], [ %i.v, %bb.f ] ; 3 uses
   %.sroa.7.2.1.i = phi <2 x float> [ %.sroa.7.2.i, %bb.d ], [ %i.t, %bb.e ], [ %i.x, %bb.f ] ; 3 uses
   %i.y = getelementptr i8, ptr %i.c, i64 -2560    ; 2 uses
@@ -782,8 +778,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ab = tail call { <2 x float>, <2 x float> } @b2DynamicTree_GetRootBounds(ptr noundef nonnull %i.y) #23 ; 2 uses
   %i.ac = extractvalue { <2 x float>, <2 x float> } %i.ab, 0 ; 3 uses
   %i.ad = extractvalue { <2 x float>, <2 x float> } %i.ab, 1 ; 3 uses
-  %3 = trunc nuw i8 %.1.1.i to i1
-  br i1 %3, label %bb.i, label %b2ComputeWorldBounds.exit
+  br i1 %.1.1.i, label %bb.i, label %b2ComputeWorldBounds.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.ae = fcmp olt <2 x float> %.sroa.07.2.1.i, %i.ac

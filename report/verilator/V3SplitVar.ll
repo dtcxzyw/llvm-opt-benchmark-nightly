@@ -205,12 +205,11 @@ bb.b:                                             ; preds = %._crit_edge212
   ret void
 
 bb.c:                                             ; preds = %bb.a, %._crit_edge212
-  %.not = phi i1 [ false, %bb.a ], [ true, %._crit_edge212 ]
-  %.083.idx213.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %._crit_edge212 ] ; 3 uses
-  %5 = trunc nuw i8 %.083.idx213.sroa.phi.sroa.speculated to i1
+  %.not = phi i1 [ false, %bb.a ], [ true, %._crit_edge212 ] ; 2 uses
+  %.083.idx213.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %._crit_edge212 ] ; 2 uses
   %i.f = load i8, ptr %i.a, align 8, !tbaa !410, !range !137, !noundef !138
   %i.g = trunc nuw i8 %i.f to i1                  ; 2 uses
-  br i1 %5, label %bb.d, label %bb.f
+  br i1 %.not, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   br i1 %i.g, label %_ZN12PackedVarRef3lhsEv.exit, label %bb.e, !prof !139

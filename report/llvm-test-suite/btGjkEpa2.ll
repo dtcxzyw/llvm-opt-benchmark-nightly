@@ -204,14 +204,11 @@ bb.g:                                             ; preds = %bb.e
   br label %_ZN12gjkepa2_impl3GJK13projectoriginERK9btVector3S3_PfRj.exit
 
 _ZN12gjkepa2_impl3GJK13projectoriginERK9btVector3S3_PfRj.exit: ; preds = %bb.g, %bb.f, %bb.d, %bb.b
-  %.not49 = phi i32 [ 2, %bb.g ], [ 0, %bb.f ], [ 2, %bb.d ], [ 0, %bb.b ]
   %.2132 = phi i32 [ 3, %bb.g ], [ 1, %bb.f ], [ 2, %bb.d ], [ 0, %bb.b ] ; 2 uses
   %.sroa.0111.2 = phi float [ %i.ca, %bb.g ], [ 1.000000e+00, %bb.f ], [ 0.000000e+00, %bb.d ], [ 0.000000e+00, %bb.b ] ; 2 uses
   %.sroa.7.2 = phi float [ %i.br, %bb.g ], [ 0.000000e+00, %bb.f ], [ 1.000000e+00, %bb.d ], [ 0.000000e+00, %bb.b ] ; 2 uses
   %.1.i = phi float [ %i.cj, %bb.g ], [ %i.bz, %bb.f ], [ %i.bv, %bb.d ], [ -1.000000e+00, %bb.b ]
-  %5 = and i32 %.2132, 1
-  %6 = or disjoint i32 %5, %.not49
-  store i32 %6, ptr %4, align 4, !tbaa !10
+  store i32 %.2132, ptr %4, align 4, !tbaa !10
   store float %.sroa.0111.2, ptr %3, align 4, !tbaa !27
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 4
   store float %.sroa.7.2, ptr %i.ck, align 4, !tbaa !27

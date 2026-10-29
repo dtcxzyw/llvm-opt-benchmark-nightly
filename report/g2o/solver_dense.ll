@@ -205,10 +205,6 @@ _ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EE
   %i.oj = load ptr, ptr %1, align 8, !tbaa !501
   br label %bb.p
 
-._crit_edge:                                      ; preds = %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit
-  %6 = trunc nuw i8 %i.ox to i1
-  br label %.loopexit420
-
 bb.p:                                             ; preds = %.lr.ph428, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit
   %.0427 = phi i64 [ 0, %.lr.ph428 ], [ %i.oy, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit ] ; 5 uses
   %.1119426 = phi i8 [ %.0118.ph, %.lr.ph428 ], [ %i.ox, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit ]
@@ -237,14 +233,15 @@ bb.r:                                             ; preds = %.preheader.us.i
   %.01324.us.i = phi i64 [ %i.ot, %bb.r ], [ 0, %bb.q ] ; 2 uses
   %i.ou = getelementptr [8 x i8], ptr %i.os, i64 %.01324.us.i
   %i.ov = load double, ptr %i.ou, align 8, !tbaa !370
-  %i.ow = fcmp oeq double %i.ov, 0.000000e+00
+  %i.ow = fcmp oeq double %i.ov, 0.000000e+00     ; 3 uses
   br i1 %i.ow, label %bb.r, label %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit
 
 _ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit: ; preds = %.preheader.us.i, %bb.r, %bb.q, %bb.p
-  %i.ox = phi i8 [ 0, %bb.p ], [ 1, %bb.q ], [ 0, %.preheader.us.i ], [ 1, %bb.r ] ; 2 uses
+  %6 = phi i1 [ false, %bb.p ], [ true, %bb.q ], [ %i.ow, %bb.r ], [ %i.ow, %.preheader.us.i ]
+  %i.ox = phi i8 [ 0, %bb.p ], [ 1, %bb.q ], [ 0, %.preheader.us.i ], [ 1, %bb.r ]
   %i.oy = add nuw nsw i64 %.0427, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.oy, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %bb.p, !llvm.loop !1817
+  br i1 %exitcond.not, label %.loopexit420, label %bb.p, !llvm.loop !1817
 
 .loopexit453:                                     ; preds = %_ZN5Eigen7NoAliasINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEENS_10MatrixBaseEEmIINS_7ProductINS1_IS3_Lin1ELin1ELb0EEENS1_INS2_IdLin1ELi1ELi0ELin1ELi1EEELin1ELi1ELb0EEELi0EEEEERS4_RKNS5_IT_EE.exit
   %i.oz = add nsw i64 %i.v, -1
@@ -462,8 +459,8 @@ bb.z:                                             ; preds = %.sink.split, %bb.v,
   %i.rq = trunc nuw i8 %.0118.ph to i1
   br label %.loopexit420
 
-.loopexit420:                                     ; preds = %._crit_edge, %bb.c, %bb.g, %bb.h, %bb.e, %.thread410
-  %.3126 = phi i1 [ true, %bb.c ], [ %i.rq, %.thread410 ], [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.g ], [ %6, %._crit_edge ]
+.loopexit420:                                     ; preds = %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit, %bb.c, %bb.g, %bb.h, %bb.e, %.thread410
+  %.3126 = phi i1 [ true, %bb.c ], [ %i.rq, %.thread410 ], [ true, %bb.e ], [ true, %bb.h ], [ true, %bb.g ], [ %6, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELin1ELi1EEEEEEEE3allEv.exit ]
   ret i1 %.3126
 }
 

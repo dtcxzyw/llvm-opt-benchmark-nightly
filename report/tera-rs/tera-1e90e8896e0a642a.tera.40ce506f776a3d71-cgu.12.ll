@@ -204,17 +204,15 @@ bb.fb:                                            ; preds = %bb.ez
 
 .thread1018:                                      ; preds = %bb.fk, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4NodeENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread, %bb.fj, %bb.fh, %bb.m, %bb.ff, %bb.fc
   %.sroa.068.1.ph = phi i1 [ true, %bb.fc ], [ true, %bb.ff ], [ true, %bb.m ], [ true, %bb.fh ], [ true, %bb.fj ], [ true, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4NodeENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread ], [ false, %bb.fk ]
-  %.sroa.060.1.ph = phi i8 [ 1, %bb.fc ], [ 1, %bb.ff ], [ 1, %bb.m ], [ 1, %bb.fh ], [ 1, %bb.fj ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4NodeENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread ], [ %.sroa.060.2, %bb.fk ]
+  %.sroa.060.1.ph = phi i1 [ true, %bb.fc ], [ true, %bb.ff ], [ true, %bb.m ], [ true, %bb.fh ], [ true, %bb.fj ], [ false, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4NodeENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit.thread ], [ %i.ri, %bb.fk ]
   %lpad.thr_comm1016 = landingpad { ptr, i32 }
           cleanup
-  %2 = trunc nuw i8 %.sroa.060.1.ph to i1, !dbg !15356
   br label %.thread1003, !dbg !15356
 
 .thread1033:                                      ; preds = %bb.fu, %bb.ft
   %lpad.thr_comm.split-lp1017 = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %3 = trunc nuw i8 %.sroa.060.2 to i1, !dbg !15356
-  br i1 %3, label %bb.gg, label %common.resume, !dbg !15356
+  br i1 %i.ri, label %bb.gg, label %common.resume, !dbg !15356
 
 bb.fc:                                            ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !15357
@@ -367,7 +365,7 @@ bb.fi:                                            ; preds = %bb.fg, %bb.fh
   store i64 %i.rf, ptr %i.qy, align 8, !dbg !15378, !alias.scope !14633
   %i.rg = getelementptr inbounds nuw i8, ptr %i.ar, i64 72, !dbg !15379 ; 2 uses
   %i.rh = load i8, ptr %i.rg, align 8, !dbg !15379, !range !2544, !noundef !1394
-  %i.ri = trunc nuw i8 %i.rh to i1, !dbg !15379
+  %i.ri = trunc nuw i8 %i.rh to i1, !dbg !15379   ; 4 uses
   br i1 %i.ri, label %bb.fk, label %bb.fj, !dbg !15379
 
 bb.fj:                                            ; preds = %bb.fi
@@ -379,7 +377,6 @@ bb.fj:                                            ; preds = %bb.fi
           to label %bb.fl unwind label %.thread1018, !dbg !15382 ; 0 uses
 
 bb.fk:                                            ; preds = %bb.fq, %bb.fi
-  %.sroa.060.2 = phi i8 [ 1, %bb.fi ], [ 0, %bb.fq ], !dbg !14125 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !15383
   %i.rk = getelementptr inbounds nuw i8, ptr %i.ar, i64 24, !dbg !15383
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(24) %i.rk, i64 24, i1 false), !dbg !15383
@@ -565,8 +562,7 @@ bb.fv:                                            ; preds = %bb.ft
   br label %bb.fw, !dbg !15419
 
 bb.fw:                                            ; preds = %bb.fx, %bb.fv
-  %4 = trunc nuw i8 %.sroa.060.2 to i1, !dbg !15356
-  br i1 %4, label %bb.fy, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4NodeEEB1e_.exit, !dbg !15356
+  br i1 %i.ri, label %bb.fy, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast4NodeEEB1e_.exit, !dbg !15356
 
 bb.fx:                                            ; preds = %bb.fu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !dbg !15420
@@ -668,7 +664,7 @@ bb.gd:                                            ; preds = %.thread1003
 
 .thread1003:                                      ; preds = %bb.fo, %bb.fm, %.thread1018
   %.pn5651013 = phi { ptr, i32 } [ %lpad.thr_comm1016, %.thread1018 ], [ %i.rt, %bb.fo ], [ %i.rq, %bb.fm ] ; 2 uses
-  %.sroa.060.01011 = phi i1 [ %2, %.thread1018 ], [ false, %bb.fo ], [ false, %bb.fm ]
+  %.sroa.060.01011 = phi i1 [ %.sroa.060.1.ph, %.thread1018 ], [ false, %bb.fo ], [ false, %bb.fm ]
   %.sroa.068.01009 = phi i1 [ %.sroa.068.1.ph, %.thread1018 ], [ true, %bb.fo ], [ true, %bb.fm ]
   invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECs5yXxDE1DkoT_4tera(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ar) #30
           to label %bb.gd unwind label %bb.x, !dbg !15356

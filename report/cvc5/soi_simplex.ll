@@ -204,11 +204,10 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.e
-  %2 = trunc nuw i8 %.1 to i1
   br i1 %2, label %bb.f, label %._crit_edge.thread
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
-  %.088 = phi i8 [ 0, %.lr.ph ], [ %.1, %bb.e ]
+  %.088 = phi i1 [ false, %.lr.ph ], [ %2, %bb.e ]
   %.sroa.081.087 = phi ptr [ %i.d, %.lr.ph ], [ %i.aa, %bb.e ] ; 2 uses
   %i.i = load i32, ptr %.sroa.081.087, align 4, !tbaa !20
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !98, !nonnull !99, !align !100
@@ -225,8 +224,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 %.v
   %i.u = load ptr, ptr %i.h, align 8, !tbaa !550
   tail call void @_ZN4cvc58internal6theory5arith6linear21FarkasConflictBuilder13addConstraintEPKNS3_10ConstraintERKNS0_8RationalE(ptr noundef nonnull align 8 dereferenceable(58) %i.u, ptr noundef %i.p, ptr noundef nonnull align 8 dereferenceable(32) %i.t)
-  %3 = trunc nuw i8 %.088 to i1
-  br i1 %3, label %bb.e, label %bb.c
+  br i1 %.088, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 88
@@ -242,7 +240,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.1 = phi i8 [ 1, %bb.b ], [ 0, %bb.c ], [ 1, %bb.d ] ; 2 uses
+  %2 = phi i1 [ true, %bb.b ], [ false, %bb.c ], [ true, %bb.d ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.081.087, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.aa, %i.f
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !547
