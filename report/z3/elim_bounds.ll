@@ -205,8 +205,9 @@ _ZNK10arith_util10is_numeralEPK4expr.exit43:      ; preds = %bb.j
 
 bb.k:                                             ; preds = %_ZNK10arith_util10is_numeralEPK4expr.exit43, %_ZNK10arith_util10is_numeralEPK4expr.exit
   %.052 = phi ptr [ %i.ak, %_ZNK10arith_util10is_numeralEPK4expr.exit ], [ %i.bl, %_ZNK10arith_util10is_numeralEPK4expr.exit43 ] ; 6 uses
+  %5 = phi i1 [ false, %_ZNK10arith_util10is_numeralEPK4expr.exit ], [ true, %_ZNK10arith_util10is_numeralEPK4expr.exit43 ]
   %.034 = phi i1 [ true, %_ZNK10arith_util10is_numeralEPK4expr.exit ], [ false, %_ZNK10arith_util10is_numeralEPK4expr.exit43 ]
-  %spec.select = xor i1 %i.s, %.034
+  %spec.select = select i1 %i.s, i1 %5, i1 %.034
   %i.cc = getelementptr inbounds nuw i8, ptr %.052, i64 4
   %i.cd = load i32, ptr %i.cc, align 4
   %trunc = trunc i32 %i.cd to i16

@@ -204,6 +204,7 @@ bb.cp:                                            ; preds = %bb.co, %bb.cn
   br label %bb.cx
 
 bb.cq:                                            ; preds = %bb.ck
+  %.0 = xor i1 %.not732.not, true                 ; 2 uses
   %i.abw = getelementptr i8, ptr %1, i64 80
   %i.abx = load ptr, ptr %i.abw, align 8
   %i.aby = getelementptr i8, ptr %i.abx, i64 53
@@ -281,6 +282,7 @@ bb.cw:                                            ; preds = %bb.cv
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cp, %bb.cm, %bb.cr, %bb.cw, %bb.cv, %bb.cq
+  %.1 = phi i1 [ false, %bb.cv ], [ false, %bb.cm ], [ %.0, %bb.cq ], [ false, %bb.cp ], [ %.0, %bb.cr ], [ true, %bb.cw ]
   %i.adk = getelementptr i8, ptr %1, i64 80
   %i.adl = load ptr, ptr %i.adk, align 8
   %i.adm = getelementptr i8, ptr %i.adl, i64 53
@@ -294,7 +296,7 @@ bb.cy:                                            ; preds = %bb.cx
   %i.adq = call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %.8)
   %i.adr = add i32 %i.adq, -3
   %i.ads = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.adp, ptr noundef %0, i32 noundef %.8, i32 noundef %i.adr, i32 noundef 0) ; 0 uses
-  br i1 %.not732.not, label %bb.df, label %bb.cz
+  br i1 %.1, label %bb.cz, label %bb.df
 
 bb.cz:                                            ; preds = %bb.cy
   %i.adt = call ptr @wmem_file_scope()

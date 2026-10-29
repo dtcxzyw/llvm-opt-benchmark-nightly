@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.q, %bb.a
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ba, i64 136 ; 4 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.ba, i64 144 ; 3 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   br label %.loopexit
 
@@ -607,18 +607,18 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.gh, label %bb.bg, label %bb.bp
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
-  %.val = load ptr, ptr %i.bb, align 8            ; 8 uses
+  %.val = load ptr, ptr %i.bb, align 8            ; 10 uses
   %i.gi = load ptr, ptr %.val, align 8
   %i.gj = load i32, ptr @backtick_start_offset, align 4
   %i.gk = sext i32 %i.gj to i64
-  %i.gl = getelementptr inbounds i8, ptr %i.gi, i64 %i.gk ; 4 uses
+  %i.gl = getelementptr inbounds i8, ptr %i.gi, i64 %i.gk ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   call void @initPQExpBuffer(ptr noundef nonnull %2) #29
   %i.gm = call i32 @fflush(ptr noundef null)      ; 0 uses
   %i.gn = call noalias ptr @popen(ptr noundef %i.gl, ptr noundef nonnull @.str.16) ; 5 uses
   %.not.i412 = icmp eq ptr %i.gn, null
-  br i1 %.not.i412, label %.thread438, label %.preheader.i
+  br i1 %.not.i412, label %bb.bj, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.bg, %bb.bi
   %i.go = call i64 @fread(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 512, ptr noundef nonnull %i.gn)
@@ -639,14 +639,30 @@ bb.bi:                                            ; preds = %.preheader.i
 .loopexit.i:                                      ; preds = %bb.bi, %bb.bh
   %i.gr = call i32 @pclose(ptr noundef nonnull %i.gn) ; 4 uses
   %i.gs = icmp eq i32 %i.gr, -1
-  br i1 %i.gs, label %.thread438, label %bb.bj
+  br i1 %i.gs, label %.thread438, label %3
 
-bb.bj:                                            ; preds = %.loopexit.i
+3:                                                ; preds = %.loopexit.i
+  %4 = load i64, ptr %i.bv, align 8
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %.thread7.i, label %bb.bk
+
+bb.bj:                                            ; preds = %bb.bg
+  call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 0, ptr noundef nonnull @.str.17, ptr noundef %i.gl) #29
   %i.gt = load i64, ptr %i.bv, align 8
   %i.gu = icmp eq i64 %i.gt, 0
-  br i1 %i.gu, label %.thread7.i, label %bb.bk
+  br i1 %i.gu, label %.thread7.i, label %.thread27.i
 
-.thread438:                                       ; preds = %bb.bg, %.loopexit.i
+.thread27.i:                                      ; preds = %bb.bj
+  %6 = load i32, ptr @backtick_start_offset, align 4
+  %7 = sext i32 %6 to i64                         ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.val, i64 8
+  store i64 %7, ptr %8, align 8
+  %9 = load ptr, ptr %.val, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %7
+  store i8 0, ptr %10, align 1
+  br label %evaluate_backtick.exit
+
+.thread438:                                       ; preds = %.loopexit.i
   call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 0, ptr noundef nonnull @.str.17, ptr noundef %i.gl) #29
   %i.gv = load i64, ptr %i.bv, align 8
   %i.gw = icmp eq i64 %i.gv, 0
@@ -662,8 +678,8 @@ bb.bj:                                            ; preds = %.loopexit.i
   store i8 0, ptr %i.hb, align 1
   br label %evaluate_backtick.exit
 
-.thread7.i:                                       ; preds = %.thread438, %bb.bj
-  %.1.i444 = phi i32 [ -1, %.thread438 ], [ %i.gr, %bb.bj ]
+.thread7.i:                                       ; preds = %.thread438, %bb.bj, %3
+  %.113.i = phi i32 [ -1, %.thread438 ], [ %i.gr, %3 ], [ -1, %bb.bj ]
   call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 4, i32 noundef 0, ptr noundef nonnull @.str.18, ptr noundef %i.gl) #29
   %i.hc = load i32, ptr @backtick_start_offset, align 4
   %i.hd = sext i32 %i.hc to i64                   ; 2 uses
@@ -674,7 +690,7 @@ bb.bj:                                            ; preds = %.loopexit.i
   store i8 0, ptr %i.hg, align 1
   br label %evaluate_backtick.exit
 
-bb.bk:                                            ; preds = %bb.bj
+bb.bk:                                            ; preds = %3
   %i.hh = load i32, ptr @backtick_start_offset, align 4
   %i.hi = sext i32 %i.hh to i64                   ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %.val, i64 8
@@ -707,9 +723,9 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.
   call void @appendBinaryPQExpBuffer(ptr noundef nonnull %.val, ptr noundef %.pre.i, i64 noundef %i.hs) #29
   br label %evaluate_backtick.exit
 
-evaluate_backtick.exit:                           ; preds = %.thread445, %.thread7.i, %bb.bk, %bb.bo
-  %.1.i442 = phi i32 [ %.1.i444, %.thread7.i ], [ %i.gr, %bb.bk ], [ %i.gr, %bb.bo ], [ -1, %.thread445 ]
-  call void @SetShellResultVariables(i32 noundef %.1.i442) #29
+evaluate_backtick.exit:                           ; preds = %.thread27.i, %.thread445, %.thread7.i, %bb.bk, %bb.bo
+  %.111.i = phi i32 [ %.113.i, %.thread7.i ], [ %i.gr, %bb.bo ], [ %i.gr, %bb.bk ], [ -1, %.thread445 ], [ -1, %.thread27.i ]
+  call void @SetShellResultVariables(i32 noundef %.111.i) #29
   call void @termPQExpBuffer(ptr noundef nonnull %2) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29

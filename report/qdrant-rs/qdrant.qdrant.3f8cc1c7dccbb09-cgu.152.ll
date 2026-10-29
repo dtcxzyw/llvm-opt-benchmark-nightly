@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.a
           to label %_RINvYNtNtCshE3sgg5Qsfb_6config2de9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess12next_elementINtNtCskKLDkoKarTP_4core6option6OptionbEECsl8OoimOLbh_6qdrant.exit.i.i.i unwind label %bb.m, !noalias !603
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsG258MDvU3F_3std11collections4hash3set7HashSetNtNtNtCsl8OoimOLbh_6qdrant7tracing6config9SpanEventEEEB1X_.exit233.i.i.i: ; preds = %bb.bs, %bb.bq, %bb.bn, %.body249.i.i.i, %bb.at, %bb.ap, %bb.l
-  %.pn225.i.i.i = phi { ptr, i32 } [ %i.bx, %bb.l ], [ %.pn223.i.i.i, %bb.bn ], [ %.pn223.i.i.i, %.body249.i.i.i ], [ %.pn221.i.i.i, %bb.bs ], [ %.pn221.i.i.i, %bb.bq ], [ %.pn.i.i.i, %bb.ap ], [ %.pn.i.i.i, %bb.at ]
+  %.pn225.i.i.i = phi { ptr, i32 } [ %i.bx, %bb.l ], [ %.pn223.i.i.i, %bb.bn ], [ %.pn223.i.i.i, %.body249.i.i.i ], [ %.pn221303.i.i.i, %bb.bs ], [ %.pn221303.i.i.i, %bb.bq ], [ %.pn.i.i.i, %bb.ap ], [ %.pn.i.i.i, %bb.at ]
   invoke void @_RNvXse_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCshE3sgg5Qsfb_6config5value5ValueENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ak)
           to label %.body.i.i unwind label %bb.as, !noalias !603
 
@@ -213,21 +213,21 @@ bb.l:                                             ; preds = %.invoke.i.i.i
           cleanup
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsG258MDvU3F_3std11collections4hash3set7HashSetNtNtNtCsl8OoimOLbh_6qdrant7tracing6config9SpanEventEEEB1X_.exit233.i.i.i
 
-.body237.i.i.i:                                   ; preds = %bb.az, %.body.i.i.i, %bb.m
-  %.sroa.0102.0.i.i.i = phi i8 [ %.sroa.0102.2.i.i.i, %.body.i.i.i ], [ %.sroa.0102.1.i.i.i, %bb.m ], [ %.sroa.0102.9.i.i.i, %bb.az ]
-  %.sroa.0107.0.i.i.i = phi i8 [ %.sroa.0107.2.i.i.i, %.body.i.i.i ], [ %.sroa.0107.1.i.i.i, %bb.m ], [ %.sroa.0107.5.i.i.i, %bb.az ]
-  %.sroa.0112.0.i.i.i = phi i8 [ %.sroa.0112.2.i.i.i, %.body.i.i.i ], [ %.sroa.0112.1.i.i.i, %bb.m ], [ %.sroa.0112.2.i.i.i, %bb.az ]
-  %.pn221.i.i.i = phi { ptr, i32 } [ %.pn219.i.i.i, %.body.i.i.i ], [ %i.by, %bb.m ], [ %i.dy, %bb.az ] ; 2 uses
-  %2 = trunc nuw i8 %.sroa.0112.0.i.i.i to i1
-  br i1 %2, label %bb.bp, label %bb.bo
+.body237.i.i.i:                                   ; preds = %bb.az, %.body.i.i.i
+  %.sroa.0102.0.i.i.i = phi i8 [ %.sroa.0102.2.i.i.i, %.body.i.i.i ], [ %.sroa.0102.9.i.i.i, %bb.az ] ; 2 uses
+  %.sroa.0107.0.i.i.i = phi i8 [ %.sroa.0107.2.i.i.i, %.body.i.i.i ], [ %.sroa.0107.5.i.i.i, %bb.az ] ; 2 uses
+  %.pn221.i.i.i = phi { ptr, i32 } [ %.pn219.i.i.i, %.body.i.i.i ], [ %i.dy, %bb.az ] ; 2 uses
+  br i1 %.not208.not.not.i.i.i, label %bb.bp, label %bb.bo
 
-bb.m:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i, %bb.o, %bb.k
-  %.sroa.0102.1.i.i.i = phi i8 [ %.sroa.0102.9.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i ], [ 1, %bb.o ], [ 1, %bb.k ]
-  %.sroa.0107.1.i.i.i = phi i8 [ %.sroa.0107.5.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i ], [ 1, %bb.o ], [ 1, %bb.k ]
-  %.sroa.0112.1.i.i.i = phi i8 [ %.sroa.0112.2.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i ], [ 1, %bb.o ], [ 1, %bb.k ]
+bb.m:                                             ; preds = %bb.o, %bb.k
   %i.by = landingpad { ptr, i32 }
           cleanup
-  br label %.body237.i.i.i
+  br label %bb.bp
+
+.split.i.i.i:                                     ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i
+  %lpad.thr_comm.split-lp.i.i.i = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  br i1 %.not208.not.not.i.i.i, label %bb.bp, label %bb.bo
 
 _RINvYNtNtCshE3sgg5Qsfb_6config2de9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess12next_elementINtNtCskKLDkoKarTP_4core6option6OptionbEECsl8OoimOLbh_6qdrant.exit.i.i.i: ; preds = %bb.k
   %i.bz = getelementptr inbounds nuw i8, ptr %i.ab, i64 72
@@ -290,8 +290,8 @@ bb.p:                                             ; preds = %_RINvYNtNtCshE3sgg5
 
 bb.q:                                             ; preds = %_RINvYNtNtCshE3sgg5Qsfb_6config2de9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess12next_elementINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !601
-  %.not208.i.i.i = icmp eq i64 %.sroa.0127.0.copyload.i.i.i, -2
-  br i1 %.not208.i.i.i, label %bb.s, label %bb.r
+  %.not208.not.not.i.i.i = icmp ne i64 %.sroa.0127.0.copyload.i.i.i, -2 ; 5 uses
+  br i1 %.not208.not.not.i.i.i, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %.sroa.426.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -304,7 +304,6 @@ bb.s:                                             ; preds = %bb.q
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %.sroa.0112.2.i.i.i = phi i8 [ 1, %bb.r ], [ 0, %bb.s ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !601
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !601
   invoke void @_RINvXs1_NtCshE3sgg5Qsfb_6config2deNtB6_9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess17next_element_seedINtNtCskKLDkoKarTP_4core6marker11PhantomDataINtNtB1Q_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([96 x i8]) align 16 captures(none) dereferenceable(96) %i.x, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ak)
@@ -352,7 +351,7 @@ bb.v:                                             ; preds = %_RINvYNtNtCshE3sgg5
 
 bb.w:                                             ; preds = %_RINvYNtNtCshE3sgg5Qsfb_6config2de9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess12next_elementINtNtCskKLDkoKarTP_4core6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit227.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !601
-  %.not210.i.i.i.a = icmp eq i64 %.sroa.0144.0.copyload.i.i.i, -2
+  %.not210.i.i.i.a = icmp eq i64 %.sroa.0144.0.copyload.i.i.i, -2 ; 3 uses
   br i1 %.not210.i.i.i.a, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -366,7 +365,7 @@ bb.y:                                             ; preds = %bb.w
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %.sroa.0107.4.i.i.i = phi i8 [ 1, %bb.x ], [ 0, %bb.y ] ; 7 uses
+  %.sroa.0107.4.i.i.i = phi i8 [ 1, %bb.x ], [ 0, %bb.y ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !601
   invoke void @_RINvXs1_NtCshE3sgg5Qsfb_6config2deNtB6_9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess17next_element_seedINtNtCskKLDkoKarTP_4core6marker11PhantomDataINtNtB1Q_6option6OptionNtNtNtCsl8OoimOLbh_6qdrant7tracing6config9LogFormatEEEB2W_(ptr noalias nofree noundef nonnull sret([96 x i8]) align 16 captures(none) dereferenceable(96) %i.w, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ak)
           to label %_RINvYNtNtCshE3sgg5Qsfb_6config2de9SeqAccessNtNtCs4NSHK7GLW4I_10serde_core2de9SeqAccess12next_elementINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsl8OoimOLbh_6qdrant7tracing6config9LogFormatEEB2i_.exit.i.i.i unwind label %bb.aa, !noalias !603
@@ -520,12 +519,10 @@ bb.aj:                                            ; preds = %_RINvYNtNtCshE3sgg5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !601
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !601
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !601
-  %3 = trunc nuw i8 %.sroa.0112.2.i.i.i to i1
-  br i1 %3, label %bb.al, label %bb.ak
+  br i1 %.not208.not.not.i.i.i, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.al, %bb.aj
-  %4 = trunc nuw i8 %.sroa.0107.4.i.i.i to i1
-  br i1 %4, label %bb.ao, label %bb.an
+  br i1 %.not210.i.i.i.a, label %bb.an, label %bb.ao
 
 bb.al:                                            ; preds = %bb.aj
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bt)
@@ -534,8 +531,7 @@ bb.al:                                            ; preds = %bb.aj
 bb.am:                                            ; preds = %bb.al
   %i.dl = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %5 = trunc nuw i8 %.sroa.0107.4.i.i.i to i1
-  br i1 %5, label %bb.ar, label %bb.ap
+  br i1 %.not210.i.i.i.a, label %bb.ap, label %bb.ar
 
 bb.an:                                            ; preds = %bb.ao, %bb.ak
   %i.dm = load ptr, ptr %i.bw, align 8, !noalias !601
@@ -610,8 +606,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit.i.i.i unwind label %bb.u, !noalias !603
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i, %bb.au, %bb.v
-  %.sroa.0102.9.i.i.i = phi i8 [ 1, %bb.v ], [ %.sroa.0102.8.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ %.sroa.0102.8.i.i.i, %bb.au ] ; 6 uses
-  %.sroa.0107.5.i.i.i = phi i8 [ 1, %bb.v ], [ %.sroa.0107.4.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ %.sroa.0107.4.i.i.i, %bb.au ] ; 5 uses
+  %.sroa.0102.9.i.i.i = phi i8 [ 1, %bb.v ], [ %.sroa.0102.8.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ %.sroa.0102.8.i.i.i, %bb.au ] ; 7 uses
+  %.sroa.0107.5.i.i.i = phi i8 [ 1, %bb.v ], [ %.sroa.0107.4.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ %.sroa.0107.4.i.i.i, %bb.au ] ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !601
   %i.dw = load i64, ptr %i.aa, align 8, !range !5, !alias.scope !609, !noalias !601, !noundef !6
   %i.dx = icmp eq i64 %i.dw, -1
@@ -635,14 +631,13 @@ bb.ba:                                            ; preds = %bb.az
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i: ; preds = %bb.ay
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aa)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit240.i.i.i unwind label %bb.m, !noalias !603
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit240.i.i.i unwind label %.split.i.i.i, !noalias !603
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit240.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i236.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !601
-  %6 = trunc nuw i8 %.sroa.0112.2.i.i.i to i1
   %i.ea = load i64, ptr %i.bt, align 8, !range !5, !noalias !601
   %i.eb = icmp ne i64 %i.ea, -1
-  %or.cond279.not.i.i.i = select i1 %6, i1 %i.eb, i1 false
+  %or.cond279.not.i.i.i = select i1 %.not208.not.not.i.i.i, i1 %i.eb, i1 false
   br i1 %or.cond279.not.i.i.i, label %bb.bb, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit246.i.i.i
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit246.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsl8OoimOLbh_6qdrant.exit.i242.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant.exit240.i.i.i
@@ -770,16 +765,22 @@ bb.bn:                                            ; preds = %.body249.i.i.i
   invoke void @_RNvXsg_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtNtCsl8OoimOLbh_6qdrant7tracing6config9SpanEventuEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropBV_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.bw)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsG258MDvU3F_3std11collections4hash3set7HashSetNtNtNtCsl8OoimOLbh_6qdrant7tracing6config9SpanEventEEEB1X_.exit233.i.i.i unwind label %bb.as, !noalias !603
 
-bb.bo:                                            ; preds = %bb.bp, %.body237.i.i.i
-  %i.ew = trunc nuw i8 %.sroa.0107.0.i.i.i to i1
+bb.bo:                                            ; preds = %bb.bp, %.split.i.i.i, %.body237.i.i.i
+  %.pn221303.i.i.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.i.i, %.split.i.i.i ], [ %.pn221304.i.i.i, %bb.bp ], [ %.pn221.i.i.i, %.body237.i.i.i ] ; 2 uses
+  %.sroa.0107.0301.i.i.i = phi i8 [ %.sroa.0107.5.i.i.i, %.split.i.i.i ], [ %.sroa.0107.0302.i.i.i, %bb.bp ], [ %.sroa.0107.0.i.i.i, %.body237.i.i.i ]
+  %.sroa.0102.0299.i.i.i = phi i8 [ %.sroa.0102.9.i.i.i, %.split.i.i.i ], [ %.sroa.0102.0300.i.i.i, %bb.bp ], [ %.sroa.0102.0.i.i.i, %.body237.i.i.i ]
+  %i.ew = trunc nuw i8 %.sroa.0107.0301.i.i.i to i1
   br i1 %i.ew, label %bb.br, label %bb.bq
 
-bb.bp:                                            ; preds = %.body237.i.i.i
+bb.bp:                                            ; preds = %.split.i.i.i, %bb.m, %.body237.i.i.i
+  %.pn221304.i.i.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.i.i, %.split.i.i.i ], [ %.pn221.i.i.i, %.body237.i.i.i ], [ %i.by, %bb.m ]
+  %.sroa.0107.0302.i.i.i = phi i8 [ %.sroa.0107.5.i.i.i, %.split.i.i.i ], [ %.sroa.0107.0.i.i.i, %.body237.i.i.i ], [ 1, %bb.m ]
+  %.sroa.0102.0300.i.i.i = phi i8 [ %.sroa.0102.9.i.i.i, %.split.i.i.i ], [ %.sroa.0102.0.i.i.i, %.body237.i.i.i ], [ 1, %bb.m ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bt) #21
           to label %bb.bo unwind label %bb.as, !noalias !603
 
 bb.bq:                                            ; preds = %bb.br, %bb.bo
-  %i.ex = trunc i8 %.sroa.0102.0.i.i.i to i1
+  %i.ex = trunc i8 %.sroa.0102.0299.i.i.i to i1
   %i.ey = load ptr, ptr %i.bw, align 8, !noalias !601
   %i.ez = icmp ne ptr %i.ey, null
   %or.cond288.not.i.i.i = select i1 %i.ex, i1 %i.ez, i1 false

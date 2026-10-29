@@ -202,13 +202,13 @@ bb.j:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !61
   %i.al = getelementptr inbounds nuw i8, ptr %i.o, i64 2440
-  %i.am = tail call zeroext i1 %i.ak(ptr noundef nonnull %i.al) #11
+  %i.am = tail call zeroext i1 %i.ak(ptr noundef nonnull %i.al) #11 ; 3 uses
   br i1 %i.am, label %bb.v, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.an = tail call i32 @H5D__chunk_create(ptr noundef nonnull %0) #11
   %i.ao = icmp slt i32 %i.an, 0
-  br i1 %i.ao, label %bb.l, label %.thread75
+  br i1 %i.ao, label %bb.l, label %bb.v
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = load i64, ptr @H5E_IO_g, align 8, !tbaa !15
@@ -262,17 +262,19 @@ bb.u:                                             ; preds = %bb.d
   %i.bf = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5D__alloc_storage, i32 noundef 2413, i64 noundef %i.bd, i64 noundef %i.be, ptr noundef nonnull @.str.66) #11 ; 0 uses
   br label %.thread.thread
 
-bb.v:                                             ; preds = %bb.j
+bb.v:                                             ; preds = %bb.j, %bb.k
+  %.059 = xor i1 %i.am, true                      ; 2 uses
   %i.bg = load ptr, ptr %i.i, align 8, !tbaa !54
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 128
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !74
-  %4 = icmp eq i32 %i.bi, 1
-  %5 = icmp eq i32 %1, 2
-  %or.cond = and i1 %5, %4
-  br i1 %or.cond, label %.thread75, label %.thread.thread
+  %4 = icmp ne i32 %i.bi, 1
+  %5 = icmp ne i32 %1, 2
+  %or.cond.not88 = or i1 %5, %4
+  %or.cond = and i1 %i.am, %or.cond.not88
+  br i1 %or.cond, label %.thread, label %.thread75
 
-.thread75:                                        ; preds = %bb.k, %bb.g, %bb.s, %bb.v
-  %.16078 = phi i1 [ false, %bb.v ], [ true, %bb.g ], [ false, %bb.s ], [ true, %bb.k ] ; 3 uses
+.thread75:                                        ; preds = %bb.g, %bb.s, %bb.v
+  %.16078 = phi i1 [ %.059, %bb.v ], [ true, %bb.g ], [ false, %bb.s ] ; 3 uses
   %i.bj = load i32, ptr %i.r, align 8, !tbaa !71
   %i.bk = icmp eq i32 %i.bj, 2
   br i1 %i.bk, label %bb.w, label %bb.z
@@ -344,8 +346,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %.thread.thread
 
-.thread:                                          ; preds = %bb.i, %.thread80, %bb.x, %bb.w
-  %.16072 = phi i1 [ %.16078, %bb.w ], [ %.16078, %bb.x ], [ %.16078, %.thread80 ], [ true, %bb.i ]
+.thread:                                          ; preds = %bb.i, %.thread80, %bb.x, %bb.w, %bb.v
+  %.16072 = phi i1 [ %.16078, %bb.w ], [ %.16078, %bb.x ], [ %.16078, %.thread80 ], [ %.059, %bb.v ], [ true, %bb.i ]
   %i.co = icmp ne i32 %1, 0
   %or.cond7 = and i1 %i.co, %.16072
   br i1 %or.cond7, label %bb.ag, label %.thread.thread
@@ -361,8 +363,8 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ct = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5D__alloc_storage, i32 noundef 2463, i64 noundef %i.cr, i64 noundef %i.cs, ptr noundef nonnull @.str.84) #11 ; 0 uses
   br label %.thread.thread
 
-.thread.thread:                                   ; preds = %bb.v, %bb.e, %bb.d, %bb.t, %bb.m, %bb.af, %bb.a, %bb.b, %bb.c, %bb.ag, %.thread, %bb.ah, %bb.y, %bb.u, %bb.p, %bb.l, %bb.h
-  %.2 = phi i32 [ 0, %bb.b ], [ 0, %bb.c ], [ -1, %bb.u ], [ -1, %bb.ah ], [ 0, %bb.ag ], [ 0, %.thread ], [ -1, %bb.y ], [ -1, %bb.af ], [ -1, %bb.h ], [ -1, %bb.l ], [ -1, %bb.p ], [ 0, %bb.a ], [ 0, %bb.m ], [ 0, %bb.t ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.v ]
+.thread.thread:                                   ; preds = %bb.e, %bb.d, %bb.t, %bb.m, %bb.af, %bb.a, %bb.b, %bb.c, %bb.ag, %.thread, %bb.ah, %bb.y, %bb.u, %bb.p, %bb.l, %bb.h
+  %.2 = phi i32 [ 0, %bb.b ], [ 0, %bb.c ], [ -1, %bb.u ], [ -1, %bb.ah ], [ 0, %bb.ag ], [ 0, %.thread ], [ -1, %bb.y ], [ -1, %bb.af ], [ -1, %bb.h ], [ -1, %bb.l ], [ -1, %bb.p ], [ 0, %bb.a ], [ 0, %bb.m ], [ 0, %bb.t ], [ 0, %bb.d ], [ 0, %bb.e ]
   ret i32 %.2
 }
 

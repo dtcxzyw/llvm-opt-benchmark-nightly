@@ -205,7 +205,7 @@ bb.ci:                                            ; preds = %.split, %_ZN8ImVect
   %i.oh = phi i1 [ %i.of, %bb.cg ], [ %i.of, %bb.ch ], [ %i.of, %bb.cf ], [ %i.oe, %bb.ce ], [ %i.kf, %.thread1549 ], [ %i.ji, %_ZN8ImVectorIcE6resizeEi.exit ], [ %i.ob, %.split ] ; 6 uses
   %.312541547 = phi i1 [ %.312541548.a, %bb.cg ], [ %.312541548.a, %bb.ch ], [ %.312541548.a, %bb.cf ], [ %.21253, %bb.ce ], [ false, %.thread1549 ], [ false, %_ZN8ImVectorIcE6resizeEi.exit ], [ %.21253, %.split ] ; 2 uses
   %.012601537 = phi ptr [ %.012601538.a, %bb.cg ], [ %.012601538.a, %bb.ch ], [ %.012601538.a, %bb.cf ], [ %i.ki, %bb.ce ], [ %i.dg, %.thread1549 ], [ %i.dg, %_ZN8ImVectorIcE6resizeEi.exit ], [ %i.ki, %.split ] ; 126 uses
-  %.not1636 = phi i8 [ 0, %bb.cg ], [ 0, %bb.ch ], [ 0, %bb.cf ], [ 1, %bb.ce ], [ 1, %.thread1549 ], [ 1, %_ZN8ImVectorIcE6resizeEi.exit ], [ 1, %.split ]
+  %.not1637 = phi i1 [ false, %bb.cg ], [ false, %bb.ch ], [ false, %bb.cf ], [ true, %bb.ce ], [ true, %.thread1549 ], [ true, %_ZN8ImVectorIcE6resizeEi.exit ], [ true, %.split ]
   %i.oi = load i32, ptr %i.ei, align 4, !tbaa !218
   %i.oj = icmp eq i32 %i.oi, %i.s
   br i1 %i.oj, label %.preheader1650.preheader, label %bb.cs
@@ -335,11 +335,14 @@ bb.cv:                                            ; preds = %.thread1555
 bb.cw:                                            ; preds = %.thread1555.thread
   %i.pp = getelementptr inbounds nuw i8, ptr %i.i, i64 2880
   %i.pq = load i8, ptr %i.pp, align 8, !tbaa !231, !range !184, !noundef !185
-  %or.cond34.not = and i8 %i.pq, %.not1636
+  %23 = trunc nuw i8 %i.pq to i1
+  %or.cond34.not = and i1 %.not1637, %23          ; 2 uses
+  %spec.select1357 = zext i1 %or.cond34.not to i8
   br label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %.thread1555.thread
-  %.01255 = phi i8 [ %or.cond34.not, %bb.cw ], [ 0, %.thread1555.thread ] ; 26 uses
+  %24 = phi i1 [ %or.cond34.not, %bb.cw ], [ false, %.thread1555.thread ]
+  %.01255 = phi i8 [ %spec.select1357, %bb.cw ], [ 0, %.thread1555.thread ] ; 25 uses
   %i.pr = and i1 %i.pm, %i.fl
   %i.ps = or i1 %i.po, %i.pr                      ; 6 uses
   br i1 %i.pm, label %bb.cy, label %bb.cz
@@ -742,9 +745,9 @@ bb.fk:                                            ; preds = %bb.fb, %_ZN8ImVecto
 bb.fl:                                            ; preds = %bb.fk
   %i.yb = getelementptr inbounds nuw i8, ptr %i.i, i64 5440
   %i.yc = load i8, ptr %i.yb, align 8, !tbaa !230, !range !184, !noundef !185
-  %23 = or i8 %i.yc, %.01255
-  %or.cond66.not = icmp eq i8 %23, 0
-  br i1 %or.cond66.not, label %bb.fm, label %.thread1808
+  %25 = trunc nuw i8 %i.yc to i1
+  %or.cond66 = or i1 %24, %25
+  br i1 %or.cond66, label %.thread1808, label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fl
   %i.yd = load float, ptr %i.ab, align 8, !tbaa !203
@@ -1147,13 +1150,13 @@ bb.a:
   %7 = alloca %struct.ImVec2, align 8             ; 4 uses
   %8 = alloca %struct.ImRect, align 4             ; 8 uses
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = alloca i8, align 1                       ; 6 uses
+  %i.b = alloca i8, align 1                       ; 7 uses
   %i.c = alloca i8, align 1                       ; 5 uses
   %i.d = alloca i8, align 1                       ; 5 uses
-  %i.e = alloca i8, align 1                       ; 4 uses
+  %i.e = alloca i8, align 1                       ; 7 uses
   %9 = alloca %struct.ImVec2, align 4             ; 5 uses
   %10 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %i.f = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 37 uses
+  %i.f = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 38 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 5312
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !158  ; 31 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 206
@@ -1384,7 +1387,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y, %bb.z
   %i.dp = phi i32 [ %i.do, %bb.z ], [ %0, %bb.y ] ; 2 uses
-  %i.dq = call noundef zeroext i1 @_ZN5ImGui22TreeNodeUpdateNextOpenEji(i32 noundef %i.dp, i32 noundef %1) ; 9 uses
+  %i.dq = call noundef zeroext i1 @_ZN5ImGui22TreeNodeUpdateNextOpenEji(i32 noundef %i.dp, i32 noundef %1) ; 12 uses
   %or.cond = select i1 %i.au, i1 true, i1 %i.az   ; 2 uses
   br i1 %or.cond, label %bb.ab, label %bb.ac
 
@@ -1606,7 +1609,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   %i.hj = getelementptr inbounds nuw i8, ptr %i.f, i64 7852
   %i.hk = load i32, ptr %i.hj, align 4, !tbaa !255
   %i.hl = and i32 %i.hk, 4194304
-  %i.hm = icmp ne i32 %i.hl, 0                    ; 5 uses
+  %i.hm = icmp ne i32 %i.hl, 0                    ; 6 uses
   %i.hn = and i32 %.0273, 192
   %i.ho = icmp eq i32 %i.hn, 0
   %i.hp = select i1 %i.ho, i32 192, i32 128
@@ -1654,7 +1657,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bf, %bb.
   br i1 %.not298, label %bb.bj, label %bb.bx
 
 bb.bj:                                            ; preds = %bb.bi
-  br i1 %i.ie, label %bb.bk, label %.critedge
+  br i1 %i.ie, label %bb.bk, label %.critedge.thread
 
 bb.bk:                                            ; preds = %bb.bj
   %i.if = getelementptr inbounds nuw i8, ptr %i.f, i64 8920
@@ -1678,7 +1681,8 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm
-  %.0277 = phi i8 [ 1, %bb.bn ], [ 0, %bb.bm ]    ; 2 uses
+  %11 = phi i32 [ 1, %bb.bn ], [ 0, %bb.bm ]      ; 2 uses
+  %.0277 = phi i1 [ true, %bb.bn ], [ false, %bb.bm ]
   %i.im = and i32 %.1274, 128
   %.not306 = icmp eq i32 %i.im, 0
   br i1 %.not306, label %bb.bs, label %bb.bp
@@ -1691,18 +1695,16 @@ bb.bq:                                            ; preds = %bb.bp
   %i.io = load i8, ptr %i.in, align 1, !tbaa !223, !range !184, !noundef !185
   %i.ip = xor i8 %i.io, 1
   %i.iq = zext nneg i8 %i.ip to i32
+  %12 = or i32 %11, %i.iq
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp
-  %i.ir = phi i32 [ 0, %bb.bp ], [ %i.iq, %bb.bq ]
-  %11 = zext nneg i8 %.0277 to i32
-  %12 = or i32 %i.ir, %11
-  %i.is = icmp ne i32 %12, 0
-  %13 = zext i1 %i.is to i8
+  %i.ir = phi i32 [ %11, %bb.bp ], [ %12, %bb.bq ]
+  %i.is = icmp ne i32 %i.ir, 0
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bo
-  %.1278 = phi i8 [ %13, %bb.br ], [ %.0277, %bb.bo ] ; 2 uses
+  %.1278 = phi i1 [ %i.is, %bb.br ], [ %.0277, %bb.bo ] ; 2 uses
   %i.it = and i32 %.1274, 64
   %.not307 = icmp eq i32 %i.it, 0
   br i1 %.not307, label %.critedge, label %bb.bt
@@ -1711,23 +1713,34 @@ bb.bt:                                            ; preds = %bb.bs
   %i.iu = getelementptr inbounds nuw i8, ptr %i.f, i64 2890
   %i.iv = load i16, ptr %i.iu, align 2, !tbaa !219
   %i.iw = icmp eq i16 %i.iv, 2
-  %spec.select316 = select i1 %i.iw, i8 1, i8 %.1278
+  %spec.select316 = select i1 %i.iw, i1 true, i1 %.1278
   br label %.critedge
 
 bb.bu:                                            ; preds = %bb.bk
   %not. = xor i1 %i.dq, true                      ; 2 uses
-  %.317 = zext i1 %not. to i8
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.bt, %bb.bj, %bb.bu, %bb.bs
-  %.0279 = phi i1 [ %not., %bb.bu ], [ false, %bb.bj ], [ true, %bb.bs ], [ true, %bb.bt ] ; 2 uses
-  %.2 = phi i8 [ %.317, %bb.bu ], [ 0, %bb.bj ], [ %.1278, %bb.bs ], [ %spec.select316, %bb.bt ] ; 2 uses
+.critedge:                                        ; preds = %bb.bt, %bb.bu, %bb.bs
+  %.0279 = phi i1 [ %not., %bb.bu ], [ true, %bb.bt ], [ true, %bb.bs ] ; 3 uses
+  %.2 = phi i1 [ %not., %bb.bu ], [ %spec.select316, %bb.bt ], [ %.1278, %bb.bs ] ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.f, i64 8220 ; 2 uses
   %i.iy = load i32, ptr %i.ix, align 4, !tbaa !222
   %i.iz = icmp eq i32 %i.iy, %0
-  br i1 %i.iz, label %bb.bv, label %.thread356.a
+  br i1 %i.iz, label %bb.bv, label %.thread356
 
-bb.bv:                                            ; preds = %.critedge
+.critedge.thread:                                 ; preds = %bb.bj
+  %13 = getelementptr inbounds nuw i8, ptr %i.f, i64 8220 ; 2 uses
+  %14 = load i32, ptr %13, align 4, !tbaa !222
+  %15 = icmp eq i32 %14, %0
+  br i1 %15, label %bb.bv, label %.thread369
+
+.thread356:                                       ; preds = %.critedge
+  br i1 %.2, label %.thread358, label %bb.bx
+
+bb.bv:                                            ; preds = %.critedge.thread, %.critedge
+  %16 = phi ptr [ %13, %.critedge.thread ], [ %i.ix, %.critedge ]
+  %.2365 = phi i1 [ false, %.critedge.thread ], [ %.2, %.critedge ]
+  %.0279364 = phi i1 [ false, %.critedge.thread ], [ %.0279, %.critedge ] ; 4 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %i.f, i64 8400
   %i.jb = load i32, ptr %i.ja, align 8, !tbaa !473
   %i.jc = icmp eq i32 %i.jb, 0
@@ -1737,12 +1750,12 @@ bb.bv:                                            ; preds = %.critedge
 bb.bw:                                            ; preds = %bb.bv
   call void @_ZN5ImGui27NavClearPreferredPosForAxisE9ImGuiAxis(i32 noundef 0)
   call void @_ZN5ImGui20NavMoveRequestCancelEv()
-  %.pre344 = load i32, ptr %i.ix, align 4, !tbaa !222
+  %.pre344 = load i32, ptr %16, align 4, !tbaa !222
   %i.jd = icmp eq i32 %.pre344, %0
   br i1 %i.jd, label %.thread, label %.thread358
 
 .thread:                                          ; preds = %bb.bv, %bb.bw
-  %.3355 = phi i8 [ 1, %bb.bw ], [ %.2, %bb.bv ]
+  %.3355 = phi i1 [ true, %bb.bw ], [ %.2365, %bb.bv ]
   %i.je = getelementptr inbounds nuw i8, ptr %i.f, i64 8400
   %i.jf = load i32, ptr %i.je, align 8, !tbaa !473
   %i.jg = icmp ne i32 %i.jf, 1
@@ -1754,12 +1767,11 @@ bb.bw:                                            ; preds = %bb.bv
   call void @_ZN5ImGui20NavMoveRequestCancelEv()
   br label %.thread358
 
-.thread356.a:                                     ; preds = %.critedge, %.thread
-  %.3354 = phi i8 [ %.3355, %.thread ], [ %.2, %.critedge ]
-  %14 = trunc nuw i8 %.3354 to i1
-  br i1 %14, label %.thread358, label %bb.bx
+.thread356.a:                                     ; preds = %.thread
+  br i1 %.3355, label %.thread358, label %bb.bx
 
-.thread358:                                       ; preds = %bb.bw, %.thread340, %.thread356.a
+.thread358:                                       ; preds = %bb.bw, %.thread356, %.thread340, %.thread356.a
+  %.0279362 = phi i1 [ %.0279, %.thread356 ], [ %.0279364, %.thread356.a ], [ %.0279364, %.thread340 ], [ %.0279364, %bb.bw ]
   %i.jh = xor i1 %i.dq, true                      ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.h, i64 448
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !481
@@ -1770,11 +1782,20 @@ bb.bw:                                            ; preds = %bb.bv
   store i32 %i.jm, ptr %i.eb, align 8, !tbaa !275
   br label %bb.bx
 
-bb.bx:                                            ; preds = %.thread356.a, %.thread358, %bb.bi
-  %.0283.in = phi i1 [ %i.dq, %bb.bi ], [ %i.jh, %.thread358 ], [ %i.dq, %.thread356.a ] ; 5 uses
-  %.1280 = phi i1 [ %i.ie, %bb.bi ], [ %.0279, %.thread358 ], [ %.0279, %.thread356.a ] ; 2 uses
-  %.5 = phi i8 [ 1, %bb.bi ], [ 0, %.thread358 ], [ 1, %.thread356.a ]
+bb.bx:                                            ; preds = %.thread356, %.thread356.a, %.thread358, %bb.bi
+  %.0283.in = phi i1 [ %i.dq, %bb.bi ], [ %i.jh, %.thread358 ], [ %i.dq, %.thread356.a ], [ %i.dq, %.thread356 ] ; 3 uses
+  %.1280 = phi i1 [ %i.ie, %bb.bi ], [ %.0279362, %.thread358 ], [ %.0279364, %.thread356.a ], [ %.0279, %.thread356 ] ; 2 uses
+  %.5 = phi i8 [ 1, %bb.bi ], [ 0, %.thread358 ], [ 1, %.thread356.a ], [ 1, %.thread356 ]
   br i1 %i.hm, label %bb.by, label %bb.cb
+
+.thread369:                                       ; preds = %.critedge.thread
+  br i1 %i.hm, label %.thread378, label %bb.cb
+
+.thread378:                                       ; preds = %.thread369
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #41
+  store i8 0, ptr %i.e, align 1, !tbaa !231
+  call void @_ZN5ImGui21MultiSelectItemFooterEjPbS0_i(i32 noundef %0, ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, i32 noundef 0)
+  br label %bb.ca
 
 bb.by:                                            ; preds = %bb.bx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #41
@@ -1791,11 +1812,13 @@ bb.bz:                                            ; preds = %bb.by
   call void @_ZN5ImGui8SetNavIDEj13ImGuiNavLayerjRK6ImRect(i32 noundef %0, i32 noundef %i.jp, i32 noundef %i.jr, ptr noundef nonnull align 4 dereferenceable(16) %8)
   br label %bb.ca
 
-bb.ca:                                            ; preds = %bb.bz, %bb.by
+bb.ca:                                            ; preds = %.thread378, %bb.bz, %bb.by
+  %.0283.in374382 = phi i1 [ %i.dq, %.thread378 ], [ %.0283.in, %bb.bz ], [ %.0283.in, %bb.by ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #41
   br label %bb.cb
 
-bb.cb:                                            ; preds = %bb.ca, %bb.bx
+bb.cb:                                            ; preds = %.thread369, %bb.ca, %bb.bx
+  %.0283.in373 = phi i1 [ %i.dq, %.thread369 ], [ %.0283.in374382, %bb.ca ], [ %.0283.in, %bb.bx ] ; 5 uses
   %i.js = load i8, ptr %i.b, align 1, !tbaa !231, !range !184, !noundef !185 ; 2 uses
   %i.jt = zext nneg i8 %i.js to i32
   %i.ju = and i32 %.0273, 1
@@ -1862,7 +1885,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.kt = and i32 %.0273, 536870912
   %.not312 = icmp eq i32 %i.kt, 0
   %i.ku = select i1 %.not312, i32 3, i32 2
-  %i.kv = select i1 %.0283.in, i32 %i.ku, i32 1
+  %i.kv = select i1 %.0283.in373, i32 %i.ku, i32 1
   call void @_ZN5ImGui11RenderArrowEP10ImDrawList6ImVec2j8ImGuiDirf(ptr noundef %i.kq, <2 x float> %i.ks, i32 noundef %i.jx, i32 noundef %i.kv, float noundef 1.000000e+00)
   br label %bb.cl
 
@@ -1957,7 +1980,7 @@ bb.cw:                                            ; preds = %bb.cv
   %i.me = and i32 %.0273, 536870912
   %.not310 = icmp eq i32 %i.me, 0
   %i.mf = select i1 %.not310, i32 3, i32 2
-  %i.mg = select i1 %.0283.in, i32 %i.mf, i32 1
+  %i.mg = select i1 %.0283.in373, i32 %i.mf, i32 1
   call void @_ZN5ImGui11RenderArrowEP10ImDrawList6ImVec2j8ImGuiDirf(ptr noundef %i.lz, <2 x float> %.sroa.0.4.vec.insert, i32 noundef %i.jx, i32 noundef %i.mg, float noundef f0x3F333333)
   br label %bb.cx
 
@@ -2012,7 +2035,7 @@ bb.df:                                            ; preds = %bb.de
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %bb.de
-  %or.cond26 = select i1 %.0283.in, i1 %.0281.shrunk, i1 false
+  %or.cond26 = select i1 %.0283.in373, i1 %.0281.shrunk, i1 false
   br i1 %or.cond26, label %bb.dh, label %bb.di
 
 bb.dh:                                            ; preds = %bb.dg
@@ -2022,7 +2045,7 @@ bb.dh:                                            ; preds = %bb.dg
   br label %bb.di
 
 bb.di:                                            ; preds = %bb.dh, %bb.dg
-  %or.cond319 = and i1 %.not296, %.0283.in
+  %or.cond319 = and i1 %.not296, %.0283.in373
   br i1 %or.cond319, label %bb.dj, label %bb.dk
 
 bb.dj:                                            ; preds = %bb.di
@@ -2045,7 +2068,7 @@ bb.dk:                                            ; preds = %bb.dj, %bb.di
   br label %bb.dl
 
 bb.dl:                                            ; preds = %bb.aw, %bb.av, %bb.dk
-  %.0 = phi i1 [ %.0283.in, %bb.dk ], [ %i.dq, %bb.av ], [ true, %bb.aw ]
+  %.0 = phi i1 [ %.0283.in373, %bb.dk ], [ %i.dq, %bb.av ], [ true, %bb.aw ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #41

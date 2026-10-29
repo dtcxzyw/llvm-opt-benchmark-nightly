@@ -202,10 +202,10 @@ bb.ag:                                            ; preds = %bb.af
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #24, !dbg !16094, !noalias !15876
   unreachable, !dbg !16094
 
-.body.i:                                          ; preds = %.thread.i, %bb.bx, %bb.bw, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a, %bb.ah
-  %.pn71.i = phi { ptr, i32 } [ %.pn67.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ %.pn67.pn7.i, %.thread.i ], [ %i.hs, %bb.bw ], [ %i.ei, %bb.ah ], [ %i.hs, %bb.bx ] ; 4 uses
-  %.sroa.09.0.i = phi i1 [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ true, %.thread.i ], [ true, %bb.bw ], [ %.sroa.09.1.i, %bb.ah ], [ true, %bb.bx ], !dbg !16105
-  %.sroa.08.0.i = phi i1 [ false, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ false, %.thread.i ], [ false, %bb.bw ], [ %.sroa.08.1.i, %bb.ah ], [ false, %bb.bx ], !dbg !16105
+.body.i:                                          ; preds = %.thread.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i, %bb.bx, %bb.bw, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a, %bb.ah
+  %.pn71.i = phi { ptr, i32 } [ %.pn67.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ %.pn67.pn7.i, %.thread.i ], [ %i.hs, %bb.bw ], [ %i.ei, %bb.ah ], [ %.pn67.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i ], [ %i.hs, %bb.bx ] ; 4 uses
+  %.sroa.09.0.i = phi i1 [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ true, %.thread.i ], [ true, %bb.bw ], [ %.sroa.09.1.i, %bb.ah ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i ], [ true, %bb.bx ], !dbg !16105
+  %.sroa.08.0.i = phi i1 [ false, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ false, %.thread.i ], [ false, %bb.bw ], [ %.sroa.08.1.i, %bb.ah ], [ false, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i ], [ false, %bb.bx ], !dbg !16105
   %i.eg = load i128, ptr %i.m, align 16, !dbg !16106, !range !4661, !noalias !15876, !noundef !1213
   %.not73.i = icmp eq i128 %i.eg, 2, !dbg !16106
   br i1 %.not73.i, label %bb.cj, label %bb.ci, !dbg !16106
@@ -251,7 +251,7 @@ bb.ak:                                            ; preds = %_RINvNtCsj6eKBz9Db1
   invoke void @_RNvMs7_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_7Builder3new(ptr noalias nofree noundef nonnull sret([592 x i8]) align 16 captures(none) dereferenceable(592) %i.g)
           to label %bb.am unwind label %bb.al, !dbg !16114, !noalias !15876
 
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a: ; preds = %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a: ; preds = %bb.cf, %bb.ce, %bb.cd
   br i1 %.sroa.07.1.i, label %.thread.i, label %.body.i, !dbg !16115
 
 bb.al:                                            ; preds = %bb.ak
@@ -467,8 +467,8 @@ bb.bc:                                            ; preds = %bb.bb
   unreachable, !dbg !16149
 
 .body103.i:                                       ; preds = %bb.bs, %.body109.i, %bb.bd, %bb.bb
-  %.pn67.i = phi { ptr, i32 } [ %i.ga, %bb.bb ], [ %i.hj, %bb.bs ], [ %i.gf, %bb.bd ], [ %eh.lpad-body110.i, %.body109.i ] ; 2 uses
-  %.sroa.07.1.i = phi i1 [ true, %bb.bb ], [ true, %bb.bs ], [ true, %bb.bd ], [ false, %.body109.i ], !dbg !16160
+  %.pn67.i = phi { ptr, i32 } [ %i.ga, %bb.bb ], [ %i.hj, %bb.bs ], [ %i.gf, %bb.bd ], [ %eh.lpad-body110.i, %.body109.i ] ; 4 uses
+  %.sroa.07.1.i = phi i1 [ true, %bb.bb ], [ true, %bb.bs ], [ true, %bb.bd ], [ false, %.body109.i ], !dbg !16160 ; 2 uses
   %.sroa.06.0.i = phi i1 [ true, %bb.bb ], [ true, %bb.bs ], [ %.sroa.06.1.i, %bb.bd ], [ true, %.body109.i ], !dbg !16161
   %.sroa.05.0.i = phi i1 [ true, %bb.bb ], [ false, %bb.bs ], [ true, %bb.bd ], [ false, %.body109.i ], !dbg !16161
   %i.ge = load i128, ptr %i.h, align 16, !dbg !16162, !range !4661, !noalias !15876, !noundef !1213
@@ -840,14 +840,17 @@ bb.cg:                                            ; preds = %bb.ce
   %i.ii = load i64, ptr %i.ih, align 16, !dbg !16246, !range !4803, !alias.scope !15987, !noalias !15876, !noundef !1213
   %i.ij = add i64 %i.ii, 9223372036854775798, !dbg !16246
   %i.ik = icmp ult i64 %i.ij, -3, !dbg !16246
-  br i1 %i.ik, label %bb.ch, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a, !dbg !16246
+  br i1 %i.ik, label %bb.ch, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i, !dbg !16246
 
 bb.ch:                                            ; preds = %bb.cg
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson5error10BuildErrorEBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(128) %i.ih)
-          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a unwind label %bb.br, !dbg !16246, !noalias !15876
+          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i unwind label %bb.br, !dbg !16246, !noalias !15876
 
-.thread.i:                                        ; preds = %bb.ar, %bb.al, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a
-  %.pn67.pn7.i = phi { ptr, i32 } [ %.pn67.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ %i.ep, %bb.al ], [ %i.ez, %bb.ar ]
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i: ; preds = %bb.ch, %bb.cg
+  br i1 %.sroa.07.1.i, label %.thread.i, label %.body.i, !dbg !16115
+
+.thread.i:                                        ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i, %bb.ar, %bb.al, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a
+  %.pn67.pn7.i = phi { ptr, i32 } [ %.pn67.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i ], [ %.pn67.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid5error10BuildErrorEBH_.exit123.i.a ], [ %i.ep, %bb.al ], [ %i.ez, %bb.ar ]
   invoke void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfa3DFAEBH_(ptr noalias nofree noundef nonnull align 16 dereferenceable(720) %i.j) #25
           to label %.body.i unwind label %bb.br, !dbg !16115, !noalias !15876
 

@@ -204,29 +204,26 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !49   ; 2 uses
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %bb.b, label %_ZNSt8optionalINSt6chrono10time_pointINS0_3_V212steady_clockENS0_8durationIlSt5ratioILl1ELl1000000000EEEEEEEaSIRS8_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS9_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESD_ISt6__and_IJSt9is_scalarIS8_ESE_IS8_NSt5decayISH_E4typeEEEEESt16is_constructibleIS8_JSH_EESt13is_assignableISB_SH_EEERS9_E4typeEOSH_.exit
+  br i1 %.not, label %bb.c, label %bb.b
 
-_ZNSt8optionalINSt6chrono10time_pointINS0_3_V212steady_clockENS0_8durationIlSt5ratioILl1ELl1000000000EEEEEEEaSIRS8_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS9_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESD_ISt6__and_IJSt9is_scalarIS8_ESE_IS8_NSt5decayISH_E4typeEEEEESt16is_constructibleIS8_JSH_EESt13is_assignableISB_SH_EEERS9_E4typeEOSH_.exit: ; preds = %bb.a
+bb.b:                                             ; preds = %bb.a
   %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %6 = load i64, ptr %5, align 8, !tbaa !51
-  br label %bb.b
-
-bb.b:                                             ; preds = %_ZNSt8optionalINSt6chrono10time_pointINS0_3_V212steady_clockENS0_8durationIlSt5ratioILl1ELl1000000000EEEEEEEaSIRS8_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS9_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESD_ISt6__and_IJSt9is_scalarIS8_ESE_IS8_NSt5decayISH_E4typeEEEEESt16is_constructibleIS8_JSH_EESt13is_assignableISB_SH_EEERS9_E4typeEOSH_.exit, %bb.a
-  %.sroa.041.0 = phi i64 [ undef, %bb.a ], [ %6, %_ZNSt8optionalINSt6chrono10time_pointINS0_3_V212steady_clockENS0_8durationIlSt5ratioILl1ELl1000000000EEEEEEEaSIRS8_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS9_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESD_ISt6__and_IJSt9is_scalarIS8_ESE_IS8_NSt5decayISH_E4typeEEEEESt16is_constructibleIS8_JSH_EESt13is_assignableISB_SH_EEERS9_E4typeEOSH_.exit ] ; 3 uses
-  %.sroa.7.0 = phi i8 [ 0, %bb.a ], [ 1, %_ZNSt8optionalINSt6chrono10time_pointINS0_3_V212steady_clockENS0_8durationIlSt5ratioILl1ELl1000000000EEEEEEEaSIRS8_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS9_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEESD_ISt6__and_IJSt9is_scalarIS8_ESE_IS8_NSt5decayISH_E4typeEEEEESt16is_constructibleIS8_JSH_EESt13is_assignableISB_SH_EEERS9_E4typeEOSH_.exit ] ; 3 uses
+  %6 = load i64, ptr %5, align 8, !tbaa !51       ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %7 = trunc nuw i8 %.sroa.7.0 to i1              ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !100, !range !45, !noundef !46
-  %8 = icmp eq i8 %.sroa.7.0, %i.g                ; 2 uses
-  %brmerge.not.i = and i1 %8, %7
+  %7 = icmp ne i8 %i.g, 0
   %.sroa.0.0.copyload.i2.i.i = load i64, ptr %i.e, align 8
-  %i.h = icmp eq i64 %.sroa.041.0, %.sroa.0.0.copyload.i2.i.i
-  %i.i = select i1 %brmerge.not.i, i1 %i.h, i1 %8
-  br i1 %i.i, label %bb.m, label %bb.c
+  %i.h = icmp eq i64 %6, %.sroa.0.0.copyload.i2.i.i
+  %i.i = select i1 %7, i1 %i.h, i1 false
+  br i1 %i.i, label %bb.m, label %bb.h
 
-bb.c:                                             ; preds = %bb.b
-  br i1 %7, label %bb.h, label %bb.d
+bb.c:                                             ; preds = %bb.a
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %10 = load i8, ptr %9, align 8, !tbaa !100, !range !45, !noundef !46
+  %11 = icmp eq i8 %10, 0
+  br i1 %11, label %bb.m, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
@@ -269,9 +266,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   br label %bb.n
 
-bb.h:                                             ; preds = %bb.c
+bb.h:                                             ; preds = %bb.b
   %i.p = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #20
-  %i.q = sub nsw i64 %.sroa.041.0, %i.p
+  %i.q = sub nsw i64 %6, %i.p
   %i.r = sdiv i64 %i.q, 1000
   %spec.select = tail call i64 @llvm.smax.i64(i64 %i.r, i64 1000) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
@@ -322,11 +319,15 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br label %bb.n
 
 bb.l:                                             ; preds = %.critedge28, %.critedge25
-  store i64 %.sroa.041.0, ptr %i.e, align 8
-  store i8 %.sroa.7.0, ptr %i.f, align 8
+  %.sroa.041.04855 = phi i64 [ %6, %.critedge28 ], [ undef, %.critedge25 ]
+  %.sroa.7.04953 = phi i8 [ 1, %.critedge28 ], [ 0, %.critedge25 ]
+  %12 = phi ptr [ %i.e, %.critedge28 ], [ %8, %.critedge25 ]
+  %13 = phi ptr [ %i.f, %.critedge28 ], [ %9, %.critedge25 ]
+  store i64 %.sroa.041.04855, ptr %12, align 8
+  store i8 %.sroa.7.04953, ptr %13, align 8
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.b, %bb.l
+bb.m:                                             ; preds = %bb.c, %bb.b, %bb.l
   ret void
 
 bb.n:                                             ; preds = %bb.k, %bb.g

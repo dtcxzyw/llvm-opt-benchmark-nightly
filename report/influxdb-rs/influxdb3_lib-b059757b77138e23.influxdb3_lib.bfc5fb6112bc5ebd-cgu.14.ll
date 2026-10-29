@@ -205,6 +205,8 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   store i64 1, ptr %i.dx, align 8
+  call void @llvm.experimental.noalias.scope.decl(metadata !15889)
+  call void @llvm.experimental.noalias.scope.decl(metadata !15890)
   store i64 0, ptr %i.dy, align 8, !alias.scope !15892
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !15892
   store i64 0, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !15892
@@ -456,7 +458,7 @@ bb.au:                                            ; preds = %bb.at
   store i64 %.sroa.0.0.copyload315.i, ptr %i.hq, align 8
   store i64 %i.my, ptr %.sroa.4345.0..sroa_idx.i, align 8
   store i64 %i.mx, ptr %.sroa.5346.0..sroa_idx.i, align 8
-  br i1 %i.na, label %bb.be, label %bb.bd
+  br i1 %i.na, label %bb.bd, label %bb.be
 
 bb.av:                                            ; preds = %.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   %i.nb = landingpad { ptr, i32 }
@@ -859,20 +861,22 @@ bb.bc:                                            ; preds = %bb.ax
   br label %.noexc108.invoke
 
 bb.bd:                                            ; preds = %bb.au
+  store i64 1, ptr %i.dx, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !15889)
   call void @llvm.experimental.noalias.scope.decl(metadata !15890)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dy, ptr noundef nonnull align 8 dereferenceable(24) %i.hq, i64 24, i1 false), !alias.scope !15891
-  br label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringE17unwrap_or_defaultCsgsNUVCRJO2f_13influxdb3_lib.exit.i
-
-bb.be:                                            ; preds = %bb.au
-  store i64 1, ptr %i.dx, align 8
   store i64 0, ptr %i.dy, align 8, !alias.scope !15892
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !15892
   store i64 0, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !15892
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.hq)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i unwind label %.split333.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !15889
 
-.split333.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ad, %bb.be
+bb.be:                                            ; preds = %bb.au
+  call void @llvm.experimental.noalias.scope.decl(metadata !15889)
+  call void @llvm.experimental.noalias.scope.decl(metadata !15890)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dy, ptr noundef nonnull align 8 dereferenceable(24) %i.hq, i64 24, i1 false), !alias.scope !15891
+  br label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringE17unwrap_or_defaultCsgsNUVCRJO2f_13influxdb3_lib.exit.i
+
+.split333.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ad, %bb.bd
   %lpad.loopexit.split-lp562 = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.hq)
@@ -884,11 +888,11 @@ bb.bf:                                            ; preds = %.split333.loopexit.
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #46, !noalias !15889
   unreachable
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i: ; preds = %bb.be
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i: ; preds = %bb.bd
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsgsNUVCRJO2f_13influxdb3_lib(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.hq)
           to label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringE17unwrap_or_defaultCsgsNUVCRJO2f_13influxdb3_lib.exit.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringE17unwrap_or_defaultCsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i, %bb.bd
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringE17unwrap_or_defaultCsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtNtCs2AWtUsOyxgP_3std3ffi6os_str8OsStringEECsgsNUVCRJO2f_13influxdb3_lib.exit.i.i, %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dx)
   %i.pl = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !nonnull !14, !noundef !14 ; 5 uses
   %i.pm = load i64, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noundef !14
@@ -1291,7 +1295,7 @@ bb.t:                                             ; preds = %bb.g
           to label %bb.r unwind label %bb.s
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs3tYbhKVn990_6flate29bufreader9BufReaderRShEECsgsNUVCRJO2f_13influxdb3_lib.exit: ; preds = %bb.b, %bb.u, %.thread56, %bb.r
-  %.pn2147 = phi { ptr, i32 } [ %.pn2159, %bb.u ], [ %.pn.pn32, %bb.r ], [ %.pn2159, %.thread56 ], [ %i.q, %bb.b ]
+  %.pn2147 = phi { ptr, i32 } [ %i.q, %bb.b ], [ %.pn.pn32, %bb.r ], [ %.pn2159, %.thread56 ], [ %.pn2159, %bb.u ]
   resume { ptr, i32 } %.pn2147
 
 .thread56:                                        ; preds = %bb.t, %.thread34, %bb.r

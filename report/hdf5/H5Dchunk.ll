@@ -205,8 +205,8 @@ bb.a:
   %i.j = alloca i32, align 4                      ; 5 uses
   %6 = alloca %struct.H5Z_cb_t, align 8           ; 6 uses
   %i.k = alloca i64, align 8                      ; 5 uses
-  %7 = alloca %struct.H5D_chunk_ud_t, align 16    ; 12 uses
-  %i.l = alloca i8, align 1                       ; 9 uses
+  %7 = alloca %struct.H5D_chunk_ud_t, align 16    ; 13 uses
+  %i.l = alloca i8, align 1                       ; 10 uses
   %i.m = alloca i32, align 4                      ; 5 uses
   %8 = alloca %struct.H5Z_cb_t, align 8           ; 6 uses
   %i.n = alloca i64, align 8                      ; 6 uses
@@ -379,7 +379,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.m
   %.not235 = icmp eq i64 %i.bz, 0
   br i1 %.not235, label %bb.af, label %bb.q
 
-bb.q:                                             ; preds = %bb.n, %bb.p, %bb.o
+bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   %i.ca = getelementptr inbounds nuw i8, ptr %i.p, i64 552
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !24 ; 2 uses
   store i64 %i.cb, ptr %i.d, align 8, !tbaa !25
@@ -492,11 +492,10 @@ bb.af:                                            ; preds = %bb.p
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.t, %bb.s, %bb.af
-  %.0..0..0.224431 = phi ptr [ null, %bb.af ], [ %.0..0..0.224430, %bb.ae ], [ null, %bb.s ], [ null, %bb.t ] ; 2 uses
-  %.0210.not247 = phi i1 [ true, %bb.af ], [ false, %bb.ae ], [ false, %bb.s ], [ false, %bb.t ] ; 4 uses
+  %.0..0..0.224431 = phi ptr [ null, %bb.af ], [ %.0..0..0.224430, %bb.ae ], [ null, %bb.s ], [ null, %bb.t ] ; 7 uses
+  %.0210.not247 = phi i1 [ false, %bb.af ], [ true, %bb.ae ], [ true, %bb.s ], [ true, %bb.t ] ; 6 uses
   %.0211.in = phi ptr [ %i.ds, %bb.af ], [ %i.d, %bb.ae ], [ %i.d, %bb.s ], [ %i.d, %bb.t ]
   %.0200 = phi ptr [ null, %bb.af ], [ %i.cl, %bb.ae ], [ %i.cl, %bb.s ], [ %i.cl, %bb.t ]
-  %.0192 = phi i1 [ false, %bb.af ], [ true, %bb.ae ], [ true, %bb.s ], [ true, %bb.t ] ; 2 uses
   %.0211 = load i64, ptr %.0211.in, align 8, !tbaa !24
   %i.dt = load ptr, ptr %0, align 8, !tbaa !160
   store ptr %i.dt, ptr %3, align 8, !tbaa !71
@@ -511,6 +510,7 @@ bb.ag:                                            ; preds = %bb.ae, %bb.t, %bb.s
 
 .lr.ph389:                                        ; preds = %bb.ag
   %i.dz = shl nuw nsw i64 %i.ah, 3
+  %.not = xor i1 %.0210.not247, true              ; 3 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %5, i64 144 ; 3 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.p, i64 552 ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 6 uses
@@ -627,7 +627,7 @@ bb.am:                                            ; preds = %.preheader.epil.pre
   %.2181.lcssa = phi i32 [ %.2181.1, %.unr-lcssa ], [ %.1180339.epil.init, %.preheader.epil.preheader ], [ %spec.select.epil, %bb.am ] ; 3 uses
   %i.fy = load i8, ptr %i.ea, align 8, !range !12
   %i.fz = trunc nuw i8 %i.fy to i1
-  %or.cond5 = select i1 %.0210.not247, i1 true, i1 %i.fz
+  %or.cond5 = select i1 %.not, i1 true, i1 %i.fz
   br i1 %or.cond5, label %bb.aq, label %bb.an
 
 bb.an:                                            ; preds = %.epilog-lcssa
@@ -664,7 +664,7 @@ bb.aq:                                            ; preds = %.epilog-lcssa, %bb.
   %.4183383535 = phi i32 [ %.9188, %.loopexit ], [ %.3182, %bb.aq ] ; 6 uses
   %i.gh = load i8, ptr %i.ea, align 8, !range !12
   %i.gi = trunc nuw i8 %i.gh to i1
-  %or.cond8 = select i1 %.0192, i1 %i.gi, i1 false
+  %or.cond8 = select i1 %.0210.not247, i1 %i.gi, i1 false
   br i1 %or.cond8, label %bb.ar, label %bb.bi
 
 bb.ar:                                            ; preds = %.lr.ph539
@@ -813,7 +813,7 @@ bb.bj:                                            ; preds = %bb.bi
   br label %bb.ce
 
 bb.bk:                                            ; preds = %bb.bi
-  br i1 %.0210.not247, label %bb.bn, label %bb.bl
+  br i1 %.0210.not247, label %bb.bl, label %bb.bn
 
 bb.bl:                                            ; preds = %bb.bk
   %i.il = load ptr, ptr %0, align 8, !tbaa !160
@@ -828,7 +828,9 @@ bb.bm:                                            ; preds = %bb.bl
   %i.ir = load i64, ptr @H5E_IO_g, align 8, !tbaa !25
   %i.is = load i64, ptr @H5E_WRITEERROR_g, align 8, !tbaa !25
   %i.it = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5D__chunk_allocate, i32 noundef 5585, i64 noundef %i.ir, i64 noundef %i.is, ptr noundef nonnull @.str.8) #15 ; 0 uses
-  br label %bb.ce
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
+  br label %bb.ch
 
 bb.bn:                                            ; preds = %bb.bl, %bb.bk
   %i.iu = load i8, ptr %i.l, align 1, !tbaa !11, !range !12, !noundef !13
@@ -859,7 +861,7 @@ bb.br:                                            ; preds = %bb.bp, %bb.bo, %bb.
   %.fr394 = freeze i8 %i.jc                       ; 2 uses
   %i.jd = trunc i8 %.fr394 to i1
   %i.je = load i64, ptr %i.d, align 8
-  %i.jf = or i1 %.0210.not247, %i.jd
+  %i.jf = or i1 %i.jd, %.not
   %i.jg = load i64, ptr %i.eo, align 8, !tbaa !25
   %i.jh = add i64 %i.jg, 1                        ; 4 uses
   store i64 %i.jh, ptr %i.eo, align 8, !tbaa !25
@@ -974,7 +976,7 @@ bb.bz:                                            ; preds = %.split.us
 bb.ca:                                            ; preds = %bb.bz
   %i.kz = add i32 %.us-phi355, 1
   %i.la = icmp ne i32 %.us-phi355, 0
-  %or.cond17 = select i1 %.0210.not247, i1 true, i1 %i.la
+  %or.cond17 = select i1 %.not, i1 true, i1 %i.la
   %i.lb = trunc nuw i8 %.fr394 to i1
   %or.cond20 = select i1 %or.cond17, i1 true, i1 %i.lb
   br i1 %or.cond20, label %.loopexit, label %bb.cb
@@ -1018,10 +1020,10 @@ bb.cd:                                            ; preds = %.loopexit456
   store i64 %i.lh, ptr %i.et, align 8, !tbaa !25
   br label %bb.cf
 
-bb.ce:                                            ; preds = %._crit_edge540, %.loopexit292, %bb.ay, %bb.bj, %bb.bm, %bb.bq, %.thread254
+bb.ce:                                            ; preds = %._crit_edge540, %.loopexit292, %bb.ay, %bb.bj, %bb.bq, %.thread254
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
-  br label %H5D__chunk_cinfo_cache_reset.exit244
+  br i1 %.0210.not247, label %bb.ch, label %H5D__chunk_cinfo_cache_reset.exit244.thread
 
 bb.cf:                                            ; preds = %bb.cd, %bb.ah
   %.11222.ph = phi i64 [ %.1212384, %bb.ah ], [ %.10221.ph, %bb.cd ]
@@ -1045,15 +1047,14 @@ bb.cg:                                            ; preds = %.loopexit293
   %i.lo = load ptr, ptr %i.o, align 8, !tbaa !23
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lo, i64 3728
   store i8 0, ptr %i.lp, align 8, !tbaa !67
-  br label %H5D__chunk_cinfo_cache_reset.exit244
+  br i1 %.0210.not247, label %bb.ch, label %H5D__chunk_cinfo_cache_reset.exit244.thread
 
-H5D__chunk_cinfo_cache_reset.exit244:             ; preds = %bb.cg, %.loopexit293, %bb.ce
-  %.10 = phi i32 [ 0, %bb.cg ], [ -1, %bb.ce ], [ 0, %.loopexit293 ] ; 2 uses
-  br i1 %.0192, label %bb.ch, label %H5D__chunk_cinfo_cache_reset.exit244.thread
+H5D__chunk_cinfo_cache_reset.exit244:             ; preds = %.loopexit293
+  br i1 %.0210.not247, label %bb.ch, label %H5D__chunk_cinfo_cache_reset.exit244.thread
 
-bb.ch:                                            ; preds = %H5D__chunk_cinfo_cache_reset.exit244.thread287, %H5D__chunk_cinfo_cache_reset.exit244
-  %.0..0..0.224428 = phi ptr [ %.0..0..0.224429, %H5D__chunk_cinfo_cache_reset.exit244.thread287 ], [ %.0..0..0.224431, %H5D__chunk_cinfo_cache_reset.exit244 ] ; 2 uses
-  %.10290 = phi i32 [ -1, %H5D__chunk_cinfo_cache_reset.exit244.thread287 ], [ %.10, %H5D__chunk_cinfo_cache_reset.exit244 ]
+bb.ch:                                            ; preds = %bb.bm, %bb.ce, %bb.cg, %H5D__chunk_cinfo_cache_reset.exit244.thread287, %H5D__chunk_cinfo_cache_reset.exit244
+  %.0..0..0.224433 = phi ptr [ %.0..0..0.224429, %H5D__chunk_cinfo_cache_reset.exit244.thread287 ], [ %.0..0..0.224431, %H5D__chunk_cinfo_cache_reset.exit244 ], [ %.0..0..0.224431, %bb.cg ], [ %.0..0..0.224431, %bb.ce ], [ %.0..0..0.224431, %bb.bm ] ; 2 uses
+  %.10290 = phi i32 [ -1, %H5D__chunk_cinfo_cache_reset.exit244.thread287 ], [ 0, %H5D__chunk_cinfo_cache_reset.exit244 ], [ 0, %bb.cg ], [ -1, %bb.ce ], [ -1, %bb.bm ]
   %i.lq = call i32 @H5D__fill_term(ptr noundef nonnull %5) #15
   %i.lr = icmp slt i32 %i.lq, 0
   br i1 %i.lr, label %bb.ci, label %H5D__chunk_cinfo_cache_reset.exit244.thread
@@ -1064,9 +1065,9 @@ bb.ci:                                            ; preds = %bb.ch
   %i.lu = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.1, ptr noundef nonnull @__func__.H5D__chunk_allocate, i32 noundef 5658, i64 noundef %i.ls, i64 noundef %i.lt, ptr noundef nonnull @.str.34) #15 ; 0 uses
   br label %H5D__chunk_cinfo_cache_reset.exit244.thread
 
-H5D__chunk_cinfo_cache_reset.exit244.thread:      ; preds = %bb.ci, %bb.ch, %H5D__chunk_cinfo_cache_reset.exit244
-  %.0..0..0.224 = phi ptr [ %.0..0..0.224428, %bb.ci ], [ %.0..0..0.224428, %bb.ch ], [ %.0..0..0.224431, %H5D__chunk_cinfo_cache_reset.exit244 ] ; 2 uses
-  %.11 = phi i32 [ -1, %bb.ci ], [ %.10290, %bb.ch ], [ %.10, %H5D__chunk_cinfo_cache_reset.exit244 ] ; 2 uses
+H5D__chunk_cinfo_cache_reset.exit244.thread:      ; preds = %bb.ce, %bb.cg, %bb.ci, %bb.ch, %H5D__chunk_cinfo_cache_reset.exit244
+  %.0..0..0.224 = phi ptr [ %.0..0..0.224433, %bb.ci ], [ %.0..0..0.224433, %bb.ch ], [ %.0..0..0.224431, %H5D__chunk_cinfo_cache_reset.exit244 ], [ %.0..0..0.224431, %bb.ce ], [ %.0..0..0.224431, %bb.cg ] ; 2 uses
+  %.11 = phi i32 [ -1, %bb.ci ], [ %.10290, %bb.ch ], [ 0, %H5D__chunk_cinfo_cache_reset.exit244 ], [ -1, %bb.ce ], [ 0, %bb.cg ] ; 2 uses
   %i.lv = load i8, ptr @H5D_init_g, align 1, !tbaa !11, !range !12, !noundef !13
   %i.lw = trunc nuw i8 %i.lv to i1
   %i.lx = load i8, ptr @H5_libterm_g, align 1, !range !12

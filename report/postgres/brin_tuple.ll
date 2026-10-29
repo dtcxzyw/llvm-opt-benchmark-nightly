@@ -123,7 +123,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.q
 bb.g:                                             ; preds = %bb.f
   %i.bh = inttoptr i64 %i.bb to ptr               ; 3 uses
   %.val = load i8, ptr %i.bh, align 1             ; 2 uses
-  %i.bi = icmp eq i8 %.val, 1                     ; 3 uses
+  %i.bi = icmp eq i8 %.val, 1                     ; 6 uses
   br i1 %i.bi, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -135,7 +135,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.pre-phi = phi ptr [ %i.bj, %bb.h ], [ %i.bh, %bb.g ] ; 2 uses
   %.val162 = phi i8 [ %.val162.pre, %bb.h ], [ %.val, %bb.g ]
-  %.0133 = phi i64 [ %i.bk, %bb.h ], [ %i.bb, %bb.g ] ; 3 uses
+  %.0133 = phi i64 [ %i.bk, %bb.h ], [ %i.bb, %bb.g ] ; 5 uses
   %i.bl = and i8 %.val162, 3
   %.not168 = icmp eq i8 %i.bl, 0
   br i1 %.not168, label %bb.j, label %bb.p
@@ -175,29 +175,31 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l, %bb.m
   %.0129 = phi i8 [ %i.cb, %bb.m ], [ 0, %bb.l ]
   %i.cc = tail call i64 @toast_compress_datum(i64 noundef %.0133, i8 noundef signext %.0129) #9 ; 3 uses
-  %.not161 = icmp eq i64 %i.cc, 0
-  br i1 %.not161, label %bb.p, label %4
+  %.not161 = icmp ne i64 %i.cc, 0                 ; 3 uses
+  %brmerge.not = and i1 %i.bi, %.not161
+  %.0133.mux = select i1 %.not161, i64 %i.cc, i64 %.0133
+  %.mux = or i1 %i.bi, %.not161
+  br i1 %brmerge.not, label %bb.o, label %bb.p
 
-4:                                                ; preds = %bb.n
-  br i1 %i.bi, label %bb.o, label %.thread
-
-bb.o:                                             ; preds = %4
+bb.o:                                             ; preds = %bb.n
   tail call void @pfree(ptr noundef nonnull %.pre-phi) #9
   br label %.thread
 
 bb.p:                                             ; preds = %bb.n, %bb.k, %bb.j, %bb.i
-  br i1 %i.bi, label %.thread, label %bb.q
+  %.2135 = phi i64 [ %.0133, %bb.i ], [ %.0133, %bb.j ], [ %.0133, %bb.k ], [ %.0133.mux, %bb.n ] ; 2 uses
+  %.2132 = phi i1 [ %i.bi, %bb.i ], [ %i.bi, %bb.j ], [ %i.bi, %bb.k ], [ %.mux, %bb.n ]
+  br i1 %.2132, label %.thread, label %bb.q
 
-.thread:                                          ; preds = %4, %bb.o, %bb.p
-  %.2135166 = phi i64 [ %.0133, %bb.p ], [ %i.cc, %bb.o ], [ %i.cc, %4 ] ; 2 uses
+.thread:                                          ; preds = %bb.o, %bb.p
+  %.2135167 = phi i64 [ %i.cc, %bb.o ], [ %.2135, %bb.p ] ; 2 uses
   %i.cd = add i32 %.1139174, 1
   %i.ce = sext i32 %.1139174 to i64
   %i.cf = getelementptr inbounds [8 x i8], ptr %i.p, i64 %i.ce
-  store i64 %.2135166, ptr %i.cf, align 8
+  store i64 %.2135167, ptr %i.cf, align 8
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.thread, %bb.f
-  %.2135167.sink = phi i64 [ %i.bb, %bb.f ], [ %.2135166, %.thread ], [ %.0133, %bb.p ]
+  %.2135167.sink = phi i64 [ %i.bb, %bb.f ], [ %.2135167, %.thread ], [ %.2135, %bb.p ]
   %.3141 = phi i32 [ %.1139174, %bb.f ], [ %i.cd, %.thread ], [ %.1139174, %bb.p ] ; 2 uses
   %i.cg = sext i32 %.2146173 to i64
   %i.ch = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.cg

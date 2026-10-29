@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.ao, %bb.an, %bb.d
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %bb.ao ], [ %.pn.pn.pn, %bb.an ], [ %i.af, %bb.d ]
-  %cond = phi i1 [ false, %bb.ao ], [ true, %bb.an ], [ false, %bb.d ], !dbg !12119
+  %.sroa.01.0 = phi i8 [ %.sroa.0.0, %bb.ao ], [ %.sroa.0.0, %bb.an ], [ 1, %bb.d ], !dbg !12119
   call void @llvm.experimental.noalias.scope.decl(metadata !12197), !dbg !12403
     #dbg_value(ptr %i.v, !5910, !DIExpression(), !11860)
   call void @llvm.experimental.noalias.scope.decl(metadata !12198), !dbg !12404
@@ -245,6 +245,7 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %.body37, %bb.g
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body37 ], [ %i.aj, %bb.g ] ; 2 uses
   %.sroa.0.0.a = phi i1 [ false, %.body37 ], [ true, %bb.g ], !dbg !12119
+  %.sroa.0.0 = phi i8 [ 0, %.body37 ], [ 1, %bb.g ], !dbg !12119 ; 2 uses
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECsB8MOEg02Qk_5quinn(ptr noalias nofree noundef align 8 dereferenceable(8) %i.t) #21
           to label %bb.an unwind label %bb.am, !dbg !12403
 
@@ -647,6 +648,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcDNtNtCsB8MOEg02Qk_5quinn7runtime7RuntimeEL_EEB1e_.exit41, !dbg !12505
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcDNtNtCsB8MOEg02Qk_5quinn7runtime7RuntimeEL_EEB1e_.exit: ; preds = %bb.b, %bb.c
+  %cond = icmp eq i8 %.sroa.01.0, 0, !dbg !12403
   br i1 %cond, label %bb.as, label %bb.ap, !dbg !12403
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcDNtNtCsB8MOEg02Qk_5quinn7runtime7RuntimeEL_EEB1e_.exit41: ; preds = %bb.al, %bb.ak

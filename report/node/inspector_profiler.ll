@@ -204,7 +204,7 @@ bb.cn:                                            ; preds = %bb.cm
   store i32 1, ptr %i.ap, align 4, !noalias !94
   br label %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread
 
-_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread1488: ; preds = %.critedge81.i, %bb.bp, %._crit_edge1543, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit87.i, %bb.bn, %._crit_edge1540, %bb.bm, %bb.by, %._crit_edge1550, %bb.az, %.loopexit1674
+_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread1488: ; preds = %.critedge81.i, %bb.by, %bb.bp, %._crit_edge1543, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit87.i, %bb.bn, %._crit_edge1540, %bb.bm, %._crit_edge1550, %bb.az, %.loopexit1674
   %i.tq = load ptr, ptr @stderr, align 8
   %i.tr = load ptr, ptr %i.b, align 8
   %i.ts = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.tq, ptr noundef nonnull @.str.27, ptr noundef %i.tr) #34 ; 0 uses
@@ -559,11 +559,11 @@ bb.p:                                             ; preds = %.loopexit574
   store i32 0, ptr %i.db, align 4, !noalias !103
   br label %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand6objectEE3getIS3_EENS_10error_codeERT_.exit
 
-.critedge.i7:                                     ; preds = %bb.d, %bb.e, %bb.p, %.loopexit574, %bb.a
-  %.1 = phi i1 [ false, %bb.p ], [ true, %bb.a ], [ true, %.loopexit574 ], [ false, %bb.e ], [ true, %bb.d ]
-  %.052.shrunk.i = phi i1 [ false, %bb.p ], [ true, %bb.a ], [ false, %.loopexit574 ], [ true, %bb.e ], [ true, %bb.d ]
-  %.0.i8 = phi ptr [ %i.ci, %bb.p ], [ %i.c, %bb.a ], [ %i.ci, %.loopexit574 ], [ %i.c, %bb.e ], [ %i.c, %bb.d ]
-  %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
+.critedge.i7:                                     ; preds = %.loopexit574, %bb.p, %bb.e, %bb.d, %bb.a
+  %.1 = phi i1 [ true, %bb.a ], [ true, %bb.d ], [ false, %bb.e ], [ true, %.loopexit574 ], [ false, %bb.p ]
+  %.052.shrunk.i = phi i1 [ true, %bb.a ], [ true, %bb.d ], [ true, %bb.e ], [ false, %.loopexit574 ], [ false, %bb.p ]
+  %.0.i8 = phi ptr [ %i.c, %bb.a ], [ %i.c, %bb.d ], [ %i.c, %bb.e ], [ %i.ci, %.loopexit574 ], [ %i.ci, %bb.p ]
+  %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
   br i1 %.1, label %.lr.ph669, label %bb.ad
 
 .lr.ph669:                                        ; preds = %.critedge.i7, %.critedge75.i
@@ -966,7 +966,8 @@ bb.at:                                            ; preds = %bb.as
   tail call void @llvm.assume(i1 %i.nj), !noalias !104
   %i.nk = getelementptr inbounds nuw i8, ptr %i.nf, i64 36 ; 8 uses
   %i.nl = load i32, ptr %i.nk, align 4, !noalias !104 ; 5 uses
-  %i.nm = load i32, ptr %i.dc, align 8, !noalias !104 ; 11 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.nm = load i32, ptr %3, align 8, !noalias !104 ; 11 uses
   %i.nn = add nuw nsw i32 %i.nm, 1
   %i.no = icmp eq i32 %i.nl, %i.nn
   tail call void @llvm.assume(i1 %i.no), !noalias !104
@@ -999,7 +1000,7 @@ _ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.t
   %i.of = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.oe
   br label %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit
 
-_ZN8simdjson15simdjson_resultINS_8fallback8ondemand6objectEE3getIS3_EENS_10error_codeERT_.exit: ; preds = %.critedge81.i, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit87.i, %bb.ad, %.loopexit642, %bb.ae, %._crit_edge585, %bb.c, %bb.s, %._crit_edge579, %._crit_edge, %.critedge, %bb.q
+_ZN8simdjson15simdjson_resultINS_8fallback8ondemand6objectEE3getIS3_EENS_10error_codeERT_.exit: ; preds = %.critedge81.i, %bb.ad, %bb.ae, %bb.s, %._crit_edge579, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit87.i, %._crit_edge585, %._crit_edge, %.critedge, %bb.q, %bb.c, %.loopexit642
   %i.og = load ptr, ptr @stderr, align 8
   %i.oh = load ptr, ptr %1, align 8
   %i.oi = getelementptr inbounds nuw i8, ptr %i.oh, i64 32
