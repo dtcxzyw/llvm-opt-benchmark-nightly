@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.o = load x86_fp80, ptr %i.d, align 16, !tbaa !164
-  %i.p = call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.o)
+  %i.p = call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.o) #17
   %or.cond = fcmp ueq x86_fp80 %i.p, +inf
   br i1 %or.cond, label %bb.c, label %bb.d
 
@@ -364,7 +364,7 @@ bb.q:                                             ; preds = %._crit_edge, %hashT
   %i.ci = load x86_fp80, ptr %i.d, align 16, !tbaa !164
   %i.cj = fadd x86_fp80 %i.ci, %i.ch              ; 3 uses
   store x86_fp80 %i.cj, ptr %i.c, align 16, !tbaa !164
-  %i.ck = call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.cj)
+  %i.ck = call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.cj) #17
   %or.cond48 = fcmp ueq x86_fp80 %i.ck, +inf
   br i1 %or.cond48, label %bb.r, label %bb.s
 
@@ -767,6 +767,7 @@ attributes #13 = { nounwind }
 attributes #14 = { noreturn nounwind }
 attributes #15 = { nounwind allocsize(0) }
 attributes #16 = { nounwind willreturn memory(read) }
+attributes #17 = { memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}
