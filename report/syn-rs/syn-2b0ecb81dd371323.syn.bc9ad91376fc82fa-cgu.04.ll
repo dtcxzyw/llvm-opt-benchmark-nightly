@@ -204,9 +204,7 @@ bb.a:
   %i.c = alloca [12 x i8], align 4                ; 4 uses
   %i.d = alloca [1 x i8], align 1                 ; 5 uses
   %i.e = alloca [12 x i8], align 4                ; 4 uses
-  %i.f = alloca [1 x i8], align 1                 ; 3 uses
-  %3 = zext i1 %2 to i8
-  store i8 %3, ptr %i.f, align 1
+  %i.f = alloca [1 x i8], align 1                 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !6 ; 2 uses
   %i.i = icmp ult i64 %i.h, 37191016277640226

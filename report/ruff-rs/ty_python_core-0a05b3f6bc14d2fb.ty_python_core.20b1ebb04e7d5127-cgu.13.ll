@@ -204,13 +204,13 @@ bb.g:                                             ; preds = %_RNvXs1_NtNtNtCs4NR
 _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2O29vuvTAEJ_14ty_python_core.exit: ; preds = %bb.d, %bb.f
   %.sroa.10.0 = phi i64 [ %i.t, %bb.f ], [ 4, %bb.d ]
   %.sroa.429.0 = phi i64 [ %i.o, %bb.f ], [ 0, %bb.d ] ; 2 uses
-  %i.u = inttoptr i64 %.sroa.10.0 to ptr
+  %i.u = inttoptr i64 %.sroa.10.0 to ptr          ; 2 uses
   %i.v = icmp samesign ule i64 %i.o, %.sroa.429.0
   call void @llvm.assume(i1 %i.v)
   store i64 %.sroa.429.0, ptr %i.l, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   store ptr %i.u, ptr %i.w, align 8
-  %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   store i64 0, ptr %i.x, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -279,6 +279,8 @@ bb.n:                                             ; preds = %_RNvMs4_NtCscdodAO9
   br label %bb.o
 
 bb.o:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit, %bb.n
+  %2 = phi ptr [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit ], [ %i.u, %bb.n ] ; 2 uses
+  %3 = phi i64 [ %6, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit ], [ 0, %bb.n ] ; 4 uses
   %i.an = phi ptr [ %i.bp, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit ], [ %i.ah, %bb.n ] ; 2 uses
   %i.ao = phi i64 [ %i.bq, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit ], [ 0, %bb.n ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
@@ -385,14 +387,17 @@ bb.aa:                                            ; preds = %bb.z
   %i.bj = extractvalue { ptr, i64 } %i.bg, 0
   %i.bk = load <2 x i32>, ptr %i.bj, align 4
   call void @llvm.experimental.noalias.scope.decl(metadata !1337)
-  %2 = load i64, ptr %i.x, align 8, !alias.scope !1337, !noundef !8 ; 3 uses
   %i.bl = load i64, ptr %i.l, align 8, !range !22, !alias.scope !1337, !noundef !8
-  %i.bm = icmp eq i64 %2, %i.bl
+  %i.bm = icmp eq i64 %3, %i.bl
   br i1 %i.bm, label %bb.ab, label %bb.ae
 
 bb.ab:                                            ; preds = %bb.aa
   invoke void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecTNtNtCs2O29vuvTAEJ_14ty_python_core10definition17DefinitionNodeKeyNtBO_10DefinitionEE8grow_oneBQ_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.l)
-          to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %._crit_edge79 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+._crit_edge79:                                    ; preds = %bb.ab
+  %.pre80 = load ptr, ptr %i.w, align 8, !alias.scope !1337
+  br label %bb.ae
 
 bb.ac:                                            ; preds = %bb.z
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef 0, i64 noundef 0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @99) #33
@@ -401,18 +406,20 @@ bb.ac:                                            ; preds = %bb.z
 bb.ad:                                            ; preds = %bb.ac, %bb.l, %bb.g
   unreachable
 
-bb.ae:                                            ; preds = %bb.aa, %bb.ab
-  %3 = load ptr, ptr %i.w, align 8, !alias.scope !1337, !nonnull !8, !noundef !8
-  %i.bn = getelementptr inbounds nuw [12 x i8], ptr %3, i64 %2 ; 2 uses
+bb.ae:                                            ; preds = %._crit_edge79, %bb.aa
+  %4 = phi ptr [ %.pre80, %._crit_edge79 ], [ %2, %bb.aa ] ; 2 uses
+  %i.bn = getelementptr inbounds nuw [12 x i8], ptr %4, i64 %3 ; 2 uses
   store i32 %i.ap, ptr %i.bn, align 4, !noalias !1337
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
   store <2 x i32> %i.bk, ptr %.sroa.4.0..sroa_idx, align 4, !noalias !1337
-  %i.bo = add i64 %2, 1
+  %i.bo = add i64 %3, 1                           ; 2 uses
   store i64 %i.bo, ptr %i.x, align 8, !alias.scope !1337
   invoke void @_RNvXsw_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2O29vuvTAEJ_14ty_python_core10definition10Definitionj1_ENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBM_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.h)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit unwind label %.body
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2O29vuvTAEJ_14ty_python_core10definition11DefinitionsEBF_.exit: ; preds = %bb.ae, %bb.ai
+  %5 = phi ptr [ %4, %bb.ae ], [ %2, %bb.ai ]
+  %6 = phi i64 [ %i.bo, %bb.ae ], [ %3, %bb.ai ]
   %i.bp = phi ptr [ %i.an, %bb.ae ], [ %i.by, %bb.ai ]
   %i.bq = phi i64 [ %i.ao, %bb.ae ], [ %i.ca, %bb.ai ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)

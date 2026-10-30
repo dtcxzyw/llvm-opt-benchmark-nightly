@@ -204,11 +204,13 @@ bb.ao:                                            ; preds = %bb.an
   %.0124.ph = phi i32 [ %i.dh, %bb.am ], [ 5, %bb.ao ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  %.pre267 = load ptr, ptr %i.f, align 8, !tbaa !26
   br label %bb.bp
 
 bb.ap:                                            ; preds = %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  %.pre266 = load ptr, ptr %i.f, align 8, !tbaa !26
   br label %bb.ba
 
 bb.aq:                                            ; preds = %bb.al
@@ -277,7 +279,7 @@ ftp_control_addr_dup.exit185:                     ; preds = %bb.ax
   br label %bb.ay
 
 bb.ay:                                            ; preds = %ftp_control_addr_dup.exit185, %bb.ar, %bb.aq
-  %i.ei = phi ptr [ %storemerge.i181, %ftp_control_addr_dup.exit185 ], [ %.pre, %bb.ar ], [ %.pre, %bb.aq ] ; 2 uses
+  %i.ei = phi ptr [ %storemerge.i181, %ftp_control_addr_dup.exit185 ], [ %.pre, %bb.ar ], [ %.pre, %bb.aq ] ; 4 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.l, i64 803
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !142
   %i.el = call zeroext i8 @Curl_resolv_dns_queries(ptr noundef nonnull %0, i8 noundef zeroext %i.ek) #9
@@ -293,6 +295,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %bb.bp
 
 bb.ba:                                            ; preds = %bb.ap, %bb.ay
+  %6 = phi ptr [ %.pre266, %bb.ap ], [ %i.ei, %bb.ay ]
   %.1123 = phi i16 [ %i.do, %bb.ap ], [ %.6, %bb.ay ]
   %i.eq = load ptr, ptr @Curl_cfree, align 8, !tbaa !25
   %i.er = getelementptr inbounds nuw i8, ptr %i.l, i64 176 ; 3 uses
@@ -300,7 +303,6 @@ bb.ba:                                            ; preds = %bb.ap, %bb.ay
   call void %i.eq(ptr noundef %i.es) #9
   %i.et = getelementptr inbounds nuw i8, ptr %i.l, i64 800
   store i16 %.6, ptr %i.et, align 8, !tbaa !255
-  %6 = load ptr, ptr %i.f, align 8, !tbaa !26
   store ptr %6, ptr %i.er, align 8, !tbaa !254
   store ptr null, ptr %i.f, align 8, !tbaa !26
   %i.eu = load ptr, ptr %i.e, align 8, !tbaa !135
@@ -410,10 +412,10 @@ ftp_state_low.exit:                               ; preds = %bb.bj, %bb.bk, %bb.
   br label %bb.bp
 
 bb.bp:                                            ; preds = %ftp_control_addr_dup.exit185.thread, %.thread241, %bb.ba, %bb.bb, %bb.bc, %ftp_state_low.exit, %bb.az
+  %7 = phi ptr [ null, %bb.bc ], [ null, %bb.bb ], [ null, %bb.ba ], [ null, %ftp_state_low.exit ], [ %.pre267, %.thread241 ], [ %i.ei, %bb.az ], [ null, %ftp_control_addr_dup.exit185.thread ]
   %.1125 = phi i32 [ %i.fc, %bb.bc ], [ %i.ez, %bb.bb ], [ %i.ez, %bb.ba ], [ 0, %ftp_state_low.exit ], [ %.0124.ph, %.thread241 ], [ 15, %bb.az ], [ %.0.i183.ph, %ftp_control_addr_dup.exit185.thread ]
   call void @Curl_dns_entry_unlink(ptr noundef nonnull %0, ptr noundef nonnull %i.e) #9
   %i.gh = load ptr, ptr @Curl_cfree, align 8, !tbaa !25
-  %7 = load ptr, ptr %i.f, align 8, !tbaa !26
   call void %i.gh(ptr noundef %7) #9
   br label %.thread208
 

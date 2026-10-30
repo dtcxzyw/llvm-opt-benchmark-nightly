@@ -205,12 +205,12 @@ _ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit: ; preds = %.noexc30, %.t
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = sub i64 %i.af, %i.ae
   %i.ah = ashr exact i64 %i.ag, 3                 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.aj = zext i32 %4 to i64
   br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us
-  %i.ak = phi ptr [ %i.bf, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %.promoted, %.lr.ph ] ; 4 uses
+  %i.ak = phi ptr [ %5, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %.promoted, %.lr.ph ] ; 6 uses
   %.044.us = phi i64 [ %i.an, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %i.ah, %.lr.ph ]
   %i.al = phi ptr [ %i.bh, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %.promoted, %.lr.ph ] ; 7 uses
   %i.am = phi ptr [ %i.bg, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %.promoted39, %.lr.ph ] ; 4 uses
@@ -223,8 +223,6 @@ _ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit: ; preds = %.noexc30, %.t
 
 bb.f:                                             ; preds = %.lr.ph.split.us
   store ptr %i.aq, ptr %i.ak, align 8, !tbaa !276
-  %5 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
-  store ptr %5, ptr %i.ai, align 8, !tbaa !274
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us
 
 bb.g:                                             ; preds = %.lr.ph.split.us
@@ -258,7 +256,6 @@ bb.h:                                             ; preds = %.noexc32.us
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.us
 
 _ZNSt6vectorIP15CraftDefinitionSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.us: ; preds = %bb.h, %.noexc32.us
-  %6 = getelementptr inbounds nuw i8, ptr %i.bc, i64 8 ; 2 uses
   %.not.i17.i.i.us = icmp eq ptr %i.al, null
   br i1 %.not.i17.i.i.us, label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us, label %bb.i
 
@@ -267,16 +264,16 @@ bb.i:                                             ; preds = %_ZNSt6vectorIP15Cra
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us
 
 _ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us: ; preds = %bb.i, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.us
-  store ptr %6, ptr %i.ai, align 8, !tbaa !274
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.az
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us
 
 _ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us: ; preds = %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us, %bb.f
-  %i.bf = phi ptr [ %6, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us ], [ %5, %bb.f ]
+  %i.bf = phi ptr [ %i.bc, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us ], [ %i.ak, %bb.f ]
   %i.bg = phi ptr [ %i.be, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us ], [ %i.am, %bb.f ] ; 2 uses
   %i.bh = phi ptr [ %i.bb, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.us ], [ %i.al, %bb.f ] ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses
   %.not26.us = icmp eq i64 %i.an, 0
-  br i1 %.not26.us, label %.critedge.loopexit, label %.lr.ph.split.us, !llvm.loop !509
+  br i1 %.not26.us, label %.critedge.loopexit.sink.split, label %.lr.ph.split.us, !llvm.loop !509
 
 .loopexit.split.us:                               ; preds = %_ZNKSt6vectorIP15CraftDefinitionSaIS1_EE12_M_check_lenEmPKc.exit.i.i.us
   %lpad.loopexit.us = landingpad { ptr, i32 }
@@ -284,7 +281,7 @@ _ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us: ; preds = %_ZNS
   br label %.loopexit
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit
-  %i.bi = phi ptr [ %i.cb, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ], [ %.promoted, %.lr.ph ] ; 4 uses
+  %i.bi = phi ptr [ %6, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ], [ %.promoted, %.lr.ph ] ; 7 uses
   %.044 = phi i64 [ %i.bl, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ], [ %i.ah, %.lr.ph ]
   %i.bj = phi ptr [ %i.cd, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ], [ %.promoted, %.lr.ph ] ; 8 uses
   %i.bk = phi ptr [ %i.cc, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ], [ %.promoted39, %.lr.ph ] ; 5 uses
@@ -297,7 +294,7 @@ _ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us: ; preds = %_ZNS
   %i.br = sub i64 %i.bp, %i.bq                    ; 6 uses
   %i.bs = ashr exact i64 %i.br, 3                 ; 3 uses
   %.not27 = icmp ult i64 %i.bs, %i.aj
-  br i1 %.not27, label %bb.j, label %.critedge.loopexit
+  br i1 %.not27, label %bb.j, label %.critedge.loopexit.sink.split
 
 bb.j:                                             ; preds = %.lr.ph.split
   %.not.i = icmp eq ptr %i.bi, %i.bk
@@ -305,8 +302,6 @@ bb.j:                                             ; preds = %.lr.ph.split
 
 bb.k:                                             ; preds = %bb.j
   store ptr %i.bo, ptr %i.bi, align 8, !tbaa !276
-  %7 = getelementptr inbounds nuw i8, ptr %i.bi, i64 8 ; 2 uses
-  store ptr %7, ptr %i.ai, align 8, !tbaa !274
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit
 
 bb.l:                                             ; preds = %bb.j
@@ -314,8 +309,10 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.bt, label %.split.us, label %_ZNKSt6vectorIP15CraftDefinitionSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
 .split.us:                                        ; preds = %bb.l, %bb.g
+  %.us-phi = phi ptr [ %i.ak, %bb.g ], [ %i.bi, %bb.l ]
   %.us-phi.a = phi ptr [ %i.am, %bb.g ], [ %i.bk, %bb.l ] ; 2 uses
   %.us-phi49 = phi ptr [ %i.al, %bb.g ], [ %i.bj, %bb.l ] ; 2 uses
+  store ptr %.us-phi, ptr %i.ai, align 8
   store ptr %.us-phi49, ptr %0, align 8
   store ptr %.us-phi.a, ptr %i.x, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.30) #26
@@ -343,7 +340,6 @@ bb.m:                                             ; preds = %.noexc32
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
 
 _ZNSt6vectorIP15CraftDefinitionSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; preds = %bb.m, %.noexc32
-  %8 = getelementptr inbounds nuw i8, ptr %i.by, i64 8 ; 2 uses
   %.not.i17.i.i = icmp eq ptr %i.bj, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.n
 
@@ -352,16 +348,16 @@ bb.n:                                             ; preds = %_ZNSt6vectorIP15Cra
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.n, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  store ptr %8, ptr %i.ai, align 8, !tbaa !274
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %i.bv
   br label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit
 
 _ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.k
-  %i.cb = phi ptr [ %8, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %7, %bb.k ]
+  %i.cb = phi ptr [ %i.by, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.bi, %bb.k ]
   %i.cc = phi ptr [ %i.ca, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.bk, %bb.k ] ; 2 uses
   %i.cd = phi ptr [ %i.bx, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.bj, %bb.k ] ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8 ; 2 uses
   %.not26 = icmp eq i64 %i.bl, 0
-  br i1 %.not26, label %.critedge.loopexit, label %.lr.ph.split, !llvm.loop !509
+  br i1 %.not26, label %.critedge.loopexit.sink.split, label %.lr.ph.split, !llvm.loop !509
 
 .loopexit.split:                                  ; preds = %_ZNKSt6vectorIP15CraftDefinitionSaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -369,9 +365,11 @@ _ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6v
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.split.us, %.loopexit.split
+  %.us-phi56 = phi ptr [ %i.bi, %.loopexit.split ], [ %i.ak, %.loopexit.split.us ]
   %.us-phi50 = phi ptr [ %i.bk, %.loopexit.split ], [ %i.am, %.loopexit.split.us ] ; 2 uses
   %.us-phi51 = phi ptr [ %i.bj, %.loopexit.split ], [ %i.al, %.loopexit.split.us ] ; 2 uses
   %.us-phi52 = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit.split ], [ %lpad.loopexit.us, %.loopexit.split.us ]
+  store ptr %.us-phi56, ptr %i.ai, align 8
   store ptr %.us-phi51, ptr %0, align 8
   store ptr %.us-phi50, ptr %i.x, align 8
   br label %bb.o
@@ -390,9 +388,16 @@ bb.o:                                             ; preds = %.loopexit.split-lp,
   %.not.i.i.i33 = icmp eq ptr %i.ch, null
   br i1 %.not.i.i.i33, label %_ZNSt6vectorIP15CraftDefinitionSaIS1_EED2Ev.exit, label %bb.p
 
-.critedge.loopexit:                               ; preds = %.lr.ph.split, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit
-  %.lcssa40 = phi ptr [ %.promoted39, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit ], [ %i.bg, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %i.bk, %.lr.ph.split ], [ %i.cc, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ]
-  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit ], [ %i.bh, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %i.bj, %.lr.ph.split ], [ %i.cd, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ]
+.critedge.loopexit.sink.split:                    ; preds = %.lr.ph.split, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us
+  %.lcssa139.sink = phi ptr [ %5, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %i.bi, %.lr.ph.split ], [ %6, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ]
+  %.lcssa40.ph = phi ptr [ %i.bg, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %i.bk, %.lr.ph.split ], [ %i.cc, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ]
+  %.lcssa.ph = phi ptr [ %i.bh, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit.us ], [ %i.bj, %.lr.ph.split ], [ %i.cd, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE9push_backERKS1_.exit ]
+  store ptr %.lcssa139.sink, ptr %i.ai, align 8
+  br label %.critedge.loopexit
+
+.critedge.loopexit:                               ; preds = %.critedge.loopexit.sink.split, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit
+  %.lcssa40 = phi ptr [ %.promoted39, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit ], [ %.lcssa40.ph, %.critedge.loopexit.sink.split ]
+  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIP15CraftDefinitionSaIS1_EE7reserveEm.exit ], [ %.lcssa.ph, %.critedge.loopexit.sink.split ]
   store ptr %.lcssa, ptr %0, align 8
   store ptr %.lcssa40, ptr %i.x, align 8
   br label %.critedge

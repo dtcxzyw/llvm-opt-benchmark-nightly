@@ -202,8 +202,8 @@ _RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAhj18_E6tripleCsdsTQD3x2eOp_3exr.e
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXss_Cs8zlGlznUR0G_8smallvecINtB6_8SmallVecAINtNtCsdsTQD3x2eOp_3exr5image10AnyChannelNtBM_11FlatSamplesEj4_EINtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect6ExtendBJ_E6extendINtNtNtB1S_8adapters3map3MapINtB6_8IntoIterBI_ENCNvXs5_NtBM_4cropINtBM_5LayerINtB3I_15CroppedChannelsINtBM_11AnyChannelsB1o_EEENtB3I_16ApplyCroppedView18reallocate_cropped0EEBO_(ptr noalias nofree noundef align 8 dereferenceable(400) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(448) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [96 x i8], align 8                ; 5 uses
-  %i.b = alloca [96 x i8], align 8                ; 6 uses
+  %i.a = alloca [96 x i8], align 8                ; 4 uses
+  %i.b = alloca [96 x i8], align 8                ; 7 uses
   %i.c = alloca [448 x i8], align 8               ; 6 uses
   %i.d = alloca [96 x i8], align 8                ; 3 uses
   %i.e = alloca [448 x i8], align 8               ; 9 uses
@@ -383,7 +383,7 @@ bb.s:                                             ; preds = %bb.o, %_RNvMsc_Cs8z
   %.sroa.04.0.i = phi ptr [ %i.ao, %bb.o ], [ %.sink12.i.i, %_RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAINtNtCsdsTQD3x2eOp_3exr5image10AnyChannelNtBL_11FlatSamplesEj4_E10triple_mutBN_.exit.i ]
   %.sroa.0.0.i15 = phi ptr [ %i.l, %bb.o ], [ %.sink11.i.i, %_RNvMsc_Cs8zlGlznUR0G_8smallvecINtB5_8SmallVecAINtNtCsdsTQD3x2eOp_3exr5image10AnyChannelNtBL_11FlatSamplesEj4_E10triple_mutBN_.exit.i ] ; 2 uses
   %i.ar = getelementptr inbounds nuw [96 x i8], ptr %.sroa.04.0.i, i64 %i.aq
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.ar, ptr noundef nonnull align 8 dereferenceable(96) %i.a, i64 96, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.ar, ptr noundef nonnull align 8 dereferenceable(96) %i.b, i64 96, i1 false)
   %i.as = load i64, ptr %.sroa.0.0.i15, align 8, !alias.scope !80, !noundef !4
   %i.at = add i64 %i.as, 1
   store i64 %i.at, ptr %.sroa.0.0.i15, align 8, !alias.scope !80
@@ -785,9 +785,6 @@ declare i64 @llvm.umin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #13
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #13

@@ -202,8 +202,7 @@ _ZN4entt8resourceI7derivedEC2ERKS2_.exit:         ; preds = %bb.cw, %bb.cy, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #18
   %i.il = load ptr, ptr %10, align 8, !tbaa !64   ; 4 uses
   store ptr %i.il, ptr %25, align 8, !tbaa !64
-  %i.im = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 6 uses
-  store ptr null, ptr %i.im, align 8, !tbaa !59
+  %i.im = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 5 uses
   %i.in = load ptr, ptr %i.cg, align 8, !tbaa !59 ; 3 uses
   store ptr null, ptr %i.cg, align 8, !tbaa !59
   store ptr %i.in, ptr %i.im, align 8, !tbaa !59

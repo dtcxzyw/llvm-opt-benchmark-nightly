@@ -205,7 +205,11 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.m = icmp eq i64 %2, 0
-  br i1 %i.m, label %._crit_edge, label %.lr.ph95
+  br i1 %i.m, label %._crit_edge, label %.lr.ph95.preheader
+
+.lr.ph95.preheader:                               ; preds = %.lr.ph
+  store ptr null, ptr %i.j, align 8, !tbaa !243
+  br label %.lr.ph95
 
 bb.b:                                             ; preds = %_ZSt27__unguarded_partition_pivotIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEESJ_SJ_SJ_T0_.exit
   %i.n = icmp eq i64 %i.cx, 0
@@ -375,11 +379,11 @@ _ZSt10__pop_heapIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mol
   %i.ct = icmp sgt i64 %i.cs, 1
   br i1 %i.ct, label %.lr.ph.i1.split.i, label %_ZSt14__partial_sortIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEEvSJ_SJ_SJ_T0_.exit, !llvm.loop !1018
 
-.lr.ph95:                                         ; preds = %.lr.ph, %bb.b
-  %.05494 = phi i64 [ %i.cx, %bb.b ], [ %2, %.lr.ph ]
-  %i.cu = phi i64 [ %.us-phi, %bb.b ], [ %i.c, %.lr.ph ] ; 2 uses
-  %i.cv = phi i64 [ %i.lz, %bb.b ], [ %i.d, %.lr.ph ] ; 8 uses
-  %i.cw = phi i64 [ %i.ma, %bb.b ], [ %i.e, %.lr.ph ]
+.lr.ph95:                                         ; preds = %.lr.ph95.preheader, %bb.b
+  %.05494 = phi i64 [ %i.cx, %bb.b ], [ %2, %.lr.ph95.preheader ]
+  %i.cu = phi i64 [ %.us-phi, %bb.b ], [ %i.c, %.lr.ph95.preheader ] ; 2 uses
+  %i.cv = phi i64 [ %i.lz, %bb.b ], [ %i.d, %.lr.ph95.preheader ] ; 8 uses
+  %i.cw = phi i64 [ %i.ma, %bb.b ], [ %i.e, %.lr.ph95.preheader ]
   %i.cx = add nsw i64 %.05494, -1                 ; 3 uses
   %i.cy = load ptr, ptr %0, align 8, !tbaa !241   ; 9 uses
   %i.cz = load ptr, ptr %i.g, align 8, !tbaa !243 ; 11 uses
@@ -764,7 +768,6 @@ _ZSt9iter_swapIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold1
 _ZSt27__unguarded_partition_pivotIN3tbb6detail2d115vector_iteratorINS2_17concurrent_vectorIPN4mold12InputSectionINS5_6X86_64EEENS2_23cache_aligned_allocatorIS9_EEEES9_EEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS5_L18print_icf_sectionsIS7_EEvRNS5_7ContextIT_EEEUlS9_S9_E_EEESJ_SJ_SJ_T0_.exit: ; preds = %bb.j
   store ptr %i.cy, ptr %5, align 8, !tbaa !241
   store i64 %.us-phi, ptr %i.i, align 8, !tbaa !242
-  store ptr null, ptr %i.j, align 8, !tbaa !243
   %i.lw = load ptr, ptr %1, align 8, !tbaa !241
   store ptr %i.lw, ptr %6, align 8, !tbaa !241
   %i.lx = load i64, ptr %i.a, align 8, !tbaa !242

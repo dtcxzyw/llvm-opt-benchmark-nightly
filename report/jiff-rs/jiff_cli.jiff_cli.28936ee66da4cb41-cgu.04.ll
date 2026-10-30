@@ -204,6 +204,7 @@ bb.l:                                             ; preds = %bb.n, %bb.j
 
 .lr.ph.i:                                         ; preds = %bb.l
   %.val13.i40 = load ptr, ptr %i.ba, align 8, !alias.scope !149 ; 2 uses
+  %.val14.i = load i64, ptr %i.bo, align 8, !alias.scope !149
   br label %bb.m
 
 ._crit_edge.i:                                    ; preds = %bb.m, %bb.l
@@ -219,13 +220,12 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %.sroa.19.19.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i ], [ %i.ce, %bb.m ]
   %.val.i = load ptr, ptr %.sroa.5.111.i, align 8, !alias.scope !149, !nonnull !5, !noundef !5
   %i.bs = getelementptr i8, ptr %.sroa.5.111.i, i64 8
-  %.val12.i41 = load i64, ptr %i.bs, align 8, !alias.scope !149, !noundef !5
-  %.val14.i.a = load i64, ptr %i.bo, align 8, !alias.scope !149
-  %i.bt = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val.i, i64 %.val12.i41) #13, !noalias !151 ; 2 uses
+  %.val14.i.a = load i64, ptr %i.bs, align 8, !alias.scope !149, !noundef !5
+  %i.bt = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val.i, i64 %.val14.i.a) #13, !noalias !151 ; 2 uses
   %i.bu = extractvalue { ptr, i64 } %i.bt, 0      ; 2 uses
   %i.bv = extractvalue { ptr, i64 } %i.bt, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i40) ]
-  %i.bw = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13.i40, i64 %.val14.i.a) #13, !noalias !151 ; 2 uses
+  %i.bw = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13.i40, i64 %.val14.i) #13, !noalias !151 ; 2 uses
   %i.bx = extractvalue { ptr, i64 } %i.bw, 0      ; 2 uses
   %i.by = extractvalue { ptr, i64 } %i.bw, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bu), "nonnull"(ptr %i.bx) ]
@@ -348,6 +348,7 @@ bb.u:                                             ; preds = %bb.w, %bb.s
 
 .lr.ph.i59:                                       ; preds = %bb.u
   %.val13.i60 = load ptr, ptr %i.ba, align 8, !alias.scope !156, !nonnull !5, !noundef !5
+  %.val14.i61 = load i64, ptr %i.df, align 8, !alias.scope !156, !noundef !5
   br label %bb.v
 
 ._crit_edge.i51:                                  ; preds = %bb.v, %bb.u
@@ -363,13 +364,12 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i59
   %.sroa.19.19.i63 = phi ptr [ %.sroa.19.0.i47, %.lr.ph.i59 ], [ %i.dv, %bb.v ]
   %.val.i64 = load ptr, ptr %.sroa.5.111.i61, align 8, !alias.scope !156 ; 2 uses
   %i.dj = getelementptr i8, ptr %.sroa.5.111.i61, i64 8
-  %.val12.i65 = load i64, ptr %i.dj, align 8, !alias.scope !156
-  %.val14.i66 = load i64, ptr %i.df, align 8, !alias.scope !156, !noundef !5
-  %i.dk = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13.i60, i64 %.val14.i66) #13, !noalias !158 ; 2 uses
+  %.val14.i66 = load i64, ptr %i.dj, align 8, !alias.scope !156
+  %i.dk = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val13.i60, i64 %.val14.i61) #13, !noalias !158 ; 2 uses
   %i.dl = extractvalue { ptr, i64 } %i.dk, 0      ; 2 uses
   %i.dm = extractvalue { ptr, i64 } %i.dk, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i64) ]
-  %i.dn = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val.i64, i64 %.val12.i65) #13, !noalias !158 ; 2 uses
+  %i.dn = call fastcc { ptr, i64 } @_RNCNvNtCs3tZ2SXJA1qv_8jiff_cli4args9configure0B5_(ptr %.val.i64, i64 %.val14.i66) #13, !noalias !158 ; 2 uses
   %i.do = extractvalue { ptr, i64 } %i.dn, 0      ; 2 uses
   %i.dp = extractvalue { ptr, i64 } %i.dn, 1      ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dl), "nonnull"(ptr %i.do) ]
@@ -625,7 +625,11 @@ bb.o:                                             ; preds = %bb.q, %bb.m
   %.sroa.0.0.i39 = phi i64 [ %.sroa.0.0.i, %bb.m ], [ %.sroa.16.097227, %bb.q ] ; 2 uses
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph104, i64 %.sroa.0.0.i39 ; 2 uses
   %i.ap = icmp ult ptr %.sroa.5.0.i, %i.ao
-  br i1 %i.ap, label %.lr.ph.i.a, label %._crit_edge.i
+  br i1 %i.ap, label %.lr.ph.i, label %._crit_edge.i
+
+.lr.ph.i:                                         ; preds = %bb.o
+  %.val14.i = load i64, ptr %i.an, align 8, !alias.scope !184, !noundef !5 ; 3 uses
+  br label %.lr.ph.i.a
 
 ._crit_edge.i:                                    ; preds = %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41, %bb.o
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.o ], [ %i.aw, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ]
@@ -634,21 +638,20 @@ bb.o:                                             ; preds = %bb.q, %bb.m
   %i.aq = icmp eq i64 %.sroa.0.0.i39, %.sroa.16.097227
   br i1 %i.aq, label %bb.r, label %bb.q
 
-.lr.ph.i.a:                                       ; preds = %bb.o, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41
-  %.sroa.5.111.i = phi ptr [ %i.ba, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ], [ %.sroa.5.0.i, %bb.o ] ; 4 uses
-  %.sroa.11.110.i = phi i64 [ %i.az, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ], [ %.sroa.11.0.i, %bb.o ] ; 2 uses
-  %.sroa.19.19.i = phi ptr [ %i.aw, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ], [ %.sroa.19.0.i, %bb.o ]
+.lr.ph.i.a:                                       ; preds = %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41, %.lr.ph.i
+  %.sroa.5.111.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i ], [ %i.ba, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ] ; 4 uses
+  %.sroa.11.110.i = phi i64 [ %.sroa.11.0.i, %.lr.ph.i ], [ %i.az, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ] ; 2 uses
+  %.sroa.19.19.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i ], [ %i.aw, %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41 ]
   %i.ar = getelementptr i8, ptr %.sroa.5.111.i, i64 8
-  %.val12.i40 = load i64, ptr %i.ar, align 8, !alias.scope !184, !noundef !5 ; 3 uses
-  %.val14.i.a = load i64, ptr %i.an, align 8, !alias.scope !184, !noundef !5 ; 2 uses
-  %i.as = icmp eq i64 %.val12.i40, %.val14.i.a
-  %i.at = icmp ult i64 %.val14.i.a, %.val12.i40
+  %.val14.i.a = load i64, ptr %i.ar, align 8, !alias.scope !184, !noundef !5 ; 2 uses
+  %i.as = icmp eq i64 %.val14.i.a, %.val14.i
+  %i.at = icmp ult i64 %.val14.i, %.val14.i.a
   br i1 %i.as, label %bb.p, label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41
 
 bb.p:                                             ; preds = %.lr.ph.i.a
   %.val13.i43 = load ptr, ptr %i.ag, align 8, !alias.scope !184, !nonnull !5, !noundef !5
   %.val.i = load ptr, ptr %.sroa.5.111.i, align 8, !alias.scope !184, !nonnull !5, !noundef !5
-  %i.au = call i32 @memcmp(ptr nonnull readonly %.val.i, ptr nonnull readonly %.val13.i43, i64 %.val12.i40), !noalias !186
+  %i.au = call i32 @memcmp(ptr nonnull readonly %.val.i, ptr nonnull readonly %.val13.i43, i64 %.val14.i), !noalias !186
   %i.av = icmp sgt i32 %i.au, 0
   br label %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit.i41
 
@@ -762,7 +765,11 @@ bb.x:                                             ; preds = %bb.z, %bb.v
   %.sroa.0.0.i50 = phi i64 [ %.sroa.0.0.i, %bb.v ], [ %.sroa.16.097227, %bb.z ] ; 2 uses
   %i.bz = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph104, i64 %.sroa.0.0.i50 ; 2 uses
   %i.ca = icmp ult ptr %.sroa.5.0.i49, %i.bz
-  br i1 %i.ca, label %.lr.ph.i59.a, label %._crit_edge.i51
+  br i1 %i.ca, label %.lr.ph.i59, label %._crit_edge.i51
+
+.lr.ph.i59:                                       ; preds = %bb.x
+  %.val14.i60 = load i64, ptr %i.by, align 8, !alias.scope !190, !noundef !5 ; 3 uses
+  br label %.lr.ph.i59.a
 
 ._crit_edge.i51:                                  ; preds = %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i, %bb.x
   %.sroa.19.1.lcssa.i52 = phi ptr [ %.sroa.19.0.i47, %bb.x ], [ %i.ci, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ]
@@ -771,21 +778,20 @@ bb.x:                                             ; preds = %bb.z, %bb.v
   %i.cb = icmp eq i64 %.sroa.0.0.i50, %.sroa.16.097227
   br i1 %i.cb, label %bb.aa, label %bb.z
 
-.lr.ph.i59.a:                                     ; preds = %bb.x, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i
-  %.sroa.5.111.i60 = phi ptr [ %i.cm, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ], [ %.sroa.5.0.i49, %bb.x ] ; 4 uses
-  %.sroa.11.110.i61 = phi i64 [ %i.cl, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ], [ %.sroa.11.0.i48, %bb.x ] ; 2 uses
-  %.sroa.19.19.i62 = phi ptr [ %i.ci, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ], [ %.sroa.19.0.i47, %bb.x ]
+.lr.ph.i59.a:                                     ; preds = %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i, %.lr.ph.i59
+  %.sroa.5.111.i60 = phi ptr [ %.sroa.5.0.i49, %.lr.ph.i59 ], [ %i.cm, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ] ; 4 uses
+  %.sroa.11.110.i61 = phi i64 [ %.sroa.11.0.i48, %.lr.ph.i59 ], [ %i.cl, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ] ; 2 uses
+  %.sroa.19.19.i62 = phi ptr [ %.sroa.19.0.i47, %.lr.ph.i59 ], [ %i.ci, %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i ]
   %i.cc = getelementptr i8, ptr %.sroa.5.111.i60, i64 8
-  %.val12.i63 = load i64, ptr %i.cc, align 8, !alias.scope !190, !noundef !5 ; 3 uses
-  %.val14.i64 = load i64, ptr %i.by, align 8, !alias.scope !190, !noundef !5 ; 2 uses
-  %i.cd = icmp eq i64 %.val14.i64, %.val12.i63
-  %i.ce = icmp ult i64 %.val12.i63, %.val14.i64
+  %.val14.i64 = load i64, ptr %i.cc, align 8, !alias.scope !190, !noundef !5 ; 2 uses
+  %i.cd = icmp eq i64 %.val14.i60, %.val14.i64
+  %i.ce = icmp ult i64 %.val14.i64, %.val14.i60
   br i1 %i.cd, label %bb.y, label %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i
 
 bb.y:                                             ; preds = %.lr.ph.i59.a
   %.val13.i66 = load ptr, ptr %i.ag, align 8, !alias.scope !190, !nonnull !5, !noundef !5
   %.val.i67 = load ptr, ptr %.sroa.5.111.i60, align 8, !alias.scope !190, !nonnull !5, !noundef !5
-  %i.cf = call i32 @memcmp(ptr nonnull readonly %.val13.i66, ptr nonnull readonly %.val.i67, i64 %.val12.i63), !noalias !192
+  %i.cf = call i32 @memcmp(ptr nonnull readonly %.val13.i66, ptr nonnull readonly %.val.i67, i64 %.val14.i60), !noalias !192
   %i.cg = icmp sgt i32 %i.cf, 0
   br label %_RNCINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitENCINvMNtCs1xwejQucwHj_5alloc5sliceSB17_7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0E0B2D_.exit.i
 

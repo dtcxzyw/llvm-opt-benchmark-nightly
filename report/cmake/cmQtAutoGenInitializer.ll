@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cmake/original/cmQtAutoGenInitializer?download=true
 inline.NumInlined: 6784
-inline.NumDeleted: 2253
+inline.NumDeleted: 2252
 loop-unroll.NumCompletelyUnrolled: 15
 loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZN22cmQtAutoGenInitializer12GetQtVersionEPK17cmGeneratorTargetNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:.noexc.i
@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit123.2: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit120.2, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i121.2
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26
-  %i.gd = load ptr, ptr %18, align 8, !tbaa !1558 ; 3 uses
+  %i.gd = load ptr, ptr %18, align 8, !tbaa !1558 ; 5 uses
   %i.ge = load ptr, ptr %i.ah, align 8, !tbaa !1558 ; 2 uses
   %i.gf = icmp eq ptr %i.gd, %i.ge
   br i1 %i.gf, label %.thread, label %bb.ak
@@ -607,6 +607,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
+  %.pre262 = load ptr, ptr %18, align 8, !tbaa !465
   br label %bb.cx
 
 bb.cw:                                            ; preds = %_ZNSt12_Vector_baseIN11cmQtAutoGen14IntegerVersionESaIS1_EE11_M_allocateEm.exit.i
@@ -615,9 +616,9 @@ bb.cw:                                            ; preds = %_ZNSt12_Vector_base
   br label %.body148
 
 bb.cx:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit
+  %24 = phi ptr [ %i.gd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135 ], [ %.pre262, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i ], [ %i.gd, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit ] ; 3 uses
   %.sroa.0165.2 = phi i64 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135 ], [ %.sroa.02.0.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i ], [ %.sroa.0165.1.in, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit ]
   %.sroa.6169.sroa.0.2 = phi i64 [ %.sroa.6169.sroa.0.1189, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135 ], [ %.sroa.6.0.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i ], [ %.sroa.6169.sroa.0.1.in, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit ]
-  %24 = load ptr, ptr %18, align 8, !tbaa !465    ; 3 uses
   %.not.i.i.i = icmp eq ptr %24, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EED2Ev.exit, label %bb.cy
 
@@ -770,7 +771,7 @@ _ZNKSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE12_M_check_lenEmPKc.exit.i.
 
 _ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.y, %_ZNKSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.ac, %.lr.ph.i.i.i.i.i ]
-  %i.ad = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 8
+  %i.ad = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 8
   %.not.i23.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.j
 
@@ -781,7 +782,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN11cmQ
   call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.ag) #27
   br label %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
-_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.j, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i
+_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, %bb.j
   store ptr %i.y, ptr %.0.val, align 8, !tbaa !465
   store ptr %i.ad, ptr %i.i, align 8, !tbaa !466
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.w

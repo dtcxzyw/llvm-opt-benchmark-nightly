@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXs2_NtNtCsiHzErX7aQFk_12futures_util6future6eitherINtB5_6EitherNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set6updateNtB1b_15ShardReplicaSet11update_impl0s1_0NCNCB14_s0_00ENtNtNtCskKLDkoKarTP_4core6future6future6Future4pollCsl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noundef nonnull align 8 %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [56 x i8], align 8                ; 24 uses
+  %i.a = alloca [56 x i8], align 8                ; 22 uses
   %.sroa.3.sroa.3.i.i = alloca [31 x i8], align 1 ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 9 uses
   %i.c = alloca [120 x i8], align 8               ; 5 uses
@@ -313,7 +313,6 @@ bb.j:                                             ; preds = %bb.g
 bb.k:                                             ; preds = %bb.h
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.13.0..sroa_idx.i.i, i64 24, i1 false), !noalias !1442
-  store i64 0, ptr %i.a, align 8, !noalias !1442
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %.sroa.11.0.copyload.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !noalias !1442
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48
@@ -347,7 +346,6 @@ bb.n:                                             ; preds = %bb.ar, %bb.ap, %bb.
   %i.ac = phi ptr [ %i.bm, %bb.ap ], [ %i.bm, %bb.ar ], [ %i.ai, %bb.ah ], [ %i.u, %bb.l ]
   %.sroa.528.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.528.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sink60.i, i64 32, i1 false), !noalias !1442
-  store i64 1, ptr %i.a, align 8, !noalias !1442
   %.sroa.427.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %.sink59.i, ptr %.sroa.427.0..sroa_idx.i.i, align 8, !noalias !1442
   %.sroa.629.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48

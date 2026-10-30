@@ -15,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @jinit_c_master_control(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [10 x i32], align 16              ; 5 uses
+  %i.a = alloca [10 x i32], align 16              ; 6 uses
   %i.b = alloca [10 x [64 x i32]], align 16       ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !25   ; 13 uses
@@ -71,9 +71,15 @@ bb.f:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 308
   store i32 0, ptr %i.y, align 4, !tbaa !92
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !41  ; 3 uses
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !41  ; 4 uses
   %i.ab = icmp sgt i32 %i.aa, 0
-  br i1 %i.ab, label %.loopexit247.sink.split.i, label %.loopexit247.i
+  br i1 %i.ab, label %.lr.ph.preheader.i, label %.loopexit247.i
+
+.lr.ph.preheader.i:                               ; preds = %bb.f
+  %2 = zext nneg i32 %i.aa to i64
+  %3 = shl nuw nsw i64 %2, 2
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 0, i64 %3, i1 false), !tbaa !42
+  br label %.loopexit247.i
 
 bb.g:                                             ; preds = %bb.d
   %.not223.i = icmp eq i32 %i.v, 63
@@ -101,20 +107,19 @@ bb.i:                                             ; preds = %bb.g
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 308
   store i32 0, ptr %i.ak, align 4, !tbaa !92
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !41 ; 3 uses
+  %i.am = load i32, ptr %i.al, align 4, !tbaa !41 ; 4 uses
   %i.an = icmp sgt i32 %i.am, 0
   br i1 %i.an, label %.loopexit247.sink.split.i, label %.loopexit247.i
 
-.loopexit247.sink.split.i:                        ; preds = %bb.i, %bb.f
-  %.sink.i = phi i32 [ %i.aa, %bb.f ], [ %i.am, %bb.i ] ; 2 uses
-  %i.ao = zext nneg i32 %.sink.i to i64
+.loopexit247.sink.split.i:                        ; preds = %bb.i
+  %i.ao = zext nneg i32 %i.am to i64
   %i.ap = shl nuw nsw i64 %i.ao, 2
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 %i.ap, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 0, i64 %i.ap, i1 false), !tbaa !42
   br label %.loopexit247.i
 
-.loopexit247.i:                                   ; preds = %.preheader248.i.preheader, %.loopexit247.sink.split.i, %bb.i, %bb.h, %bb.f
-  %2 = phi i32 [ %i.af, %bb.h ], [ %i.am, %bb.i ], [ %.sink.i, %.loopexit247.sink.split.i ], [ %i.aa, %bb.f ], [ %i.af, %.preheader248.i.preheader ]
-  %3 = phi i32 [ 1, %bb.h ], [ 0, %bb.i ], [ 0, %.loopexit247.sink.split.i ], [ 0, %bb.f ], [ 1, %.preheader248.i.preheader ]
+.loopexit247.i:                                   ; preds = %.loopexit247.sink.split.i, %bb.i, %.preheader248.i.preheader, %bb.h, %.lr.ph.preheader.i, %bb.f
+  %4 = phi i32 [ %i.aa, %.lr.ph.preheader.i ], [ %i.af, %.preheader248.i.preheader ], [ %i.am, %.loopexit247.sink.split.i ], [ %i.aa, %bb.f ], [ %i.af, %bb.h ], [ %i.am, %bb.i ]
+  %5 = phi i32 [ 0, %.lr.ph.preheader.i ], [ 1, %.preheader248.i.preheader ], [ 0, %.loopexit247.sink.split.i ], [ 0, %bb.f ], [ 1, %bb.h ], [ 0, %bb.i ]
   %i.aq = load i32, ptr %i.j, align 8, !tbaa !89
   %.not224271.i = icmp slt i32 %i.aq, 1
   br i1 %.not224271.i, label %._crit_edge278.i, label %.lr.ph277.i
@@ -513,8 +518,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   br label %._crit_edge278.i
 
 ._crit_edge278.i:                                 ; preds = %._crit_edge278.loopexit.i, %.loopexit247.i
-  %i.fz = phi i32 [ %.pre92, %._crit_edge278.loopexit.i ], [ %2, %.loopexit247.i ] ; 3 uses
-  %i.ga = phi i32 [ %.pre.i, %._crit_edge278.loopexit.i ], [ %3, %.loopexit247.i ]
+  %i.fz = phi i32 [ %.pre92, %._crit_edge278.loopexit.i ], [ %4, %.loopexit247.i ] ; 3 uses
+  %i.ga = phi i32 [ %.pre.i, %._crit_edge278.loopexit.i ], [ %5, %.loopexit247.i ]
   %.not225.i = icmp eq i32 %i.ga, 0
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 76 ; 2 uses
   %i.gc = icmp sgt i32 %i.fz, 0                   ; 2 uses

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/DngDecoder?download=true
-inline.NumInlined: 1619
-inline.NumDeleted: 868
+inline.NumInlined: 1620
+inline.NumDeleted: 867
 loop-unroll.NumCompletelyUnrolled: 15
 loop-unroll.NumUnrolled: 15
 begin_hunk_0_@_ZNK8rawspeed10DngDecoder17decodeMaskedAreasEPKNS_7TiffIFDE:bb.a
@@ -204,7 +204,7 @@ _ZNKSt6vectorIN8rawspeed9BlackAreaESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds
 
 _ZNSt6vectorIN8rawspeed9BlackAreaESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34.i.i: ; preds = %.lr.ph.i.i.i.i.i, %.noexc43
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.bv, %.noexc43 ], [ %i.ca, %.lr.ph.i.i.i.i.i ]
-  %i.cb = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 12
+  %i.cb = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 12
   %.not.i35.i.i = icmp eq ptr %i.bk, null
   br i1 %.not.i35.i.i, label %_ZNSt6vectorIN8rawspeed9BlackAreaESaIS1_EE17_M_realloc_insertIJRiibEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.p
 
@@ -296,7 +296,7 @@ _ZNKSt6vectorIN8rawspeed9BlackAreaESaIS1_EE12_M_check_lenEmPKc.exit.i.i45: ; pre
 
 _ZNSt6vectorIN8rawspeed9BlackAreaESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34.i.i53: ; preds = %.lr.ph.i.i.i.i.i49, %.noexc58
   %.0.lcssa.i.i.i.i.i54 = phi ptr [ %i.de, %.noexc58 ], [ %i.dj, %.lr.ph.i.i.i.i.i49 ]
-  %i.dk = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i54, i64 12
+  %i.dk = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i54, i64 12
   %.not.i35.i.i55 = icmp eq ptr %i.ct, null
   br i1 %.not.i35.i.i55, label %_ZNSt6vectorIN8rawspeed9BlackAreaESaIS1_EE17_M_realloc_insertIJRiibEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i56, label %bb.v
 
@@ -699,9 +699,9 @@ bb.a:
 define linkonce_odr hidden void @_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE17_M_realloc_insertIJRKNS0_20DngTilingDescriptionERjRNS0_10ByteStreamEEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 4 dereferenceable(4) %3, ptr noundef nonnull align 8 dereferenceable(24) %4) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !161  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !161  ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !160    ; 5 uses
-  %i.d = ptrtoint ptr %i.b to i64
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
@@ -718,7 +718,7 @@ _ZNKSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE12_M_check_lenEmPKc.exit: ; pr
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 128102389400760775)
   %i.l = select i1 %i.j, i64 128102389400760775, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -803,22 +803,25 @@ _ZNKSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE12_M_check_lenEmPKc.exit: ; pr
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i, !llvm.loop !1
 
 _ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %.lr.ph.i.i.i, %_ZNKSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE12_M_check_lenEmPKc.exit
-  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE12_M_check_lenEmPKc.exit ], [ %i.bn, %.lr.ph.i.i.i ]
-  %i.bo = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 72 ; 2 uses
+  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE12_M_check_lenEmPKc.exit ], [ %i.bn, %.lr.ph.i.i.i ] ; 2 uses
+  %i.bo = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 72 ; 2 uses
   %.not10.i.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i28, label %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34, label %.lr.ph.i.i.i29
 
-.lr.ph.i.i.i29:                                   ; preds = %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, %.lr.ph.i.i.i29
-  %.012.i.i.i30 = phi ptr [ %i.bp, %.lr.ph.i.i.i29 ], [ %i.bo, %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ] ; 2 uses
-  %.0911.i.i.i31 = phi ptr [ %5, %.lr.ph.i.i.i29 ], [ %1, %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.012.i.i.i30, ptr noundef nonnull align 8 dereferenceable(72) %.0911.i.i.i31, i64 72, i1 false), !alias.scope !483
-  %5 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i31, i64 72 ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %.012.i.i.i30, i64 72 ; 2 uses
-  %.not.i.i.i32 = icmp eq ptr %5, %i.b
-  br i1 %.not.i.i.i32, label %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34, label %.lr.ph.i.i.i29, !llvm.loop !1
+.lr.ph.i.i.i29:                                   ; preds = %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
+  %5 = add i64 %i.d, -72
+  %6 = sub i64 %5, %i.m
+  %.fr = freeze i64 %6                            ; 2 uses
+  %7 = urem i64 %.fr, 72
+  %8 = sub nuw i64 %.fr, %7                       ; 2 uses
+  %9 = add i64 %8, 72
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bo, ptr align 8 %1, i64 %9, i1 false), !alias.scope !483
+  %i.bp = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %8
+  %scevgep = getelementptr i8, ptr %i.bp, i64 144
+  br label %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34
 
 _ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit34: ; preds = %.lr.ph.i.i.i29, %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
-  %.0.lcssa.i.i.i33 = phi ptr [ %i.bo, %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ], [ %i.bp, %.lr.ph.i.i.i29 ]
+  %.0.lcssa.i.i.i33 = phi ptr [ %i.bo, %_ZNSt6vectorIN8rawspeed15DngSliceElementESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ], [ %scevgep, %.lr.ph.i.i.i29 ]
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not.i35 = icmp eq ptr %i.c, null
   br i1 %.not.i35, label %_ZNSt12_Vector_baseIN8rawspeed15DngSliceElementESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.c

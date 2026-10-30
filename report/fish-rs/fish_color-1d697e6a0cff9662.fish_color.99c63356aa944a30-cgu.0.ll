@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.noexc, %bb.c
-  %i.f = phi ptr [ %i.b, %bb.c ], [ %i.v, %.noexc ]
+  %i.f = phi ptr [ %i.b, %bb.c ], [ %i.v, %.noexc ] ; 2 uses
   %i.g = phi i64 [ 0, %bb.c ], [ %i.y, %.noexc ]  ; 8 uses
   %.sroa.0.0.idx.i = phi i64 [ 0, %bb.c ], [ %.sroa.0.2.idx.i, %.noexc ]
   br label %bb.e
@@ -284,10 +284,14 @@ _RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utf
 
 bb.i:                                             ; preds = %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE16extend_desugaredINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtB1T_5slice4iter4IterNtCsdcxgzuWc7wi_10fish_color10NamedColorENCNvMs_B3f_NtB3f_5Color17named_color_names0EEB3f_.exit
   invoke void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8grow_oneCsdcxgzuWc7wi_10fish_color(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22
-          to label %bb.j unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %._crit_edge unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.j:                                             ; preds = %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE16extend_desugaredINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtB1T_5slice4iter4IterNtCsdcxgzuWc7wi_10fish_color10NamedColorENCNvMs_B3f_NtB3f_5Color17named_color_names0EEB3f_.exit, %bb.i
-  %1 = load ptr, ptr %i.d, align 8, !alias.scope !132, !nonnull !5, !noundef !5
+._crit_edge:                                      ; preds = %bb.i
+  %.pre5 = load ptr, ptr %i.d, align 8, !alias.scope !132
+  br label %bb.j
+
+bb.j:                                             ; preds = %._crit_edge, %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE16extend_desugaredINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtB1T_5slice4iter4IterNtCsdcxgzuWc7wi_10fish_color10NamedColorENCNvMs_B3f_NtB3f_5Color17named_color_names0EEB3f_.exit
+  %1 = phi ptr [ %.pre5, %._crit_edge ], [ %i.f, %_RINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE16extend_desugaredINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters10filter_map9FilterMapINtNtNtB1T_5slice4iter4IterNtCsdcxgzuWc7wi_10fish_color10NamedColorENCNvMs_B3f_NtB3f_5Color17named_color_names0EEB3f_.exit ]
   %i.ad = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.g ; 2 uses
   store ptr @48, ptr %i.ad, align 8, !noalias !132, !captures !131
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8

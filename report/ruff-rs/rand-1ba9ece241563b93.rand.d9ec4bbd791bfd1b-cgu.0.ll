@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.c, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -212,16 +212,19 @@ bb.b:                                             ; preds = %.lr.ph, %_RINvNtCs4
   %.sroa.0.033 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.114, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit ] ; 6 uses
   %.sroa.6.032 = phi i64 [ %2, %.lr.ph ], [ %.sroa.6.112, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit ] ; 9 uses
   %i.h = call { i64, ptr } @_RNvXs3_NtNtNtCs2AWtUsOyxgP_3std3sys5stdio4unixNtB5_6StderrNtNtBb_2io5Write5write(ptr %0, ptr %.sroa.0.033, i64 %.sroa.6.032) ; 2 uses
-  %i.i = extractvalue { i64, ptr } %i.h, 0        ; 2 uses
-  %i.j = extractvalue { i64, ptr } %i.h, 1        ; 10 uses
-  store i64 %i.i, ptr %i.b, align 8
-  store ptr %i.j, ptr %i.d, align 8
+  %i.i = extractvalue { i64, ptr } %i.h, 0
+  %i.j = extractvalue { i64, ptr } %i.h, 1        ; 14 uses
   %i.k = trunc nuw i64 %i.i to i1
   %i.l = ptrtoint ptr %i.j to i64                 ; 6 uses
   br i1 %i.k, label %bb.c, label %bb.d
 
-._crit_edge:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit, %bb.d, %.split18, %.split17, %.split, %bb.j, %bb.a
-  %.sroa.07.0 = phi ptr [ null, %bb.a ], [ @54, %bb.d ], [ %i.j, %.split18 ], [ %i.j, %.split17 ], [ %i.j, %.split ], [ %i.j, %bb.j ], [ null, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit ]
+._crit_edge.loopexit:                             ; preds = %bb.j, %.split, %.split17, %.split18, %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit
+  %.sroa.07.0.ph = phi ptr [ null, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit ], [ @54, %bb.d ], [ %i.j, %.split18 ], [ %i.j, %.split17 ], [ %i.j, %.split ], [ %i.j, %bb.j ]
+  store ptr %i.j, ptr %i.d, align 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.sroa.07.0 = phi ptr [ null, %bb.a ], [ %.sroa.07.0.ph, %._crit_edge.loopexit ]
   ret ptr %.sroa.07.0
 
 bb.c:                                             ; preds = %bb.b
@@ -230,13 +233,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.m = icmp eq ptr %i.j, null
-  br i1 %i.m, label %._crit_edge, label %bb.e
+  br i1 %i.m, label %._crit_edge.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.n = icmp ult i64 %.sroa.6.032, %i.l
   br i1 %i.n, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
+  store ptr %i.j, ptr %i.d, align 8
   call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 %i.l, i64 %.sroa.6.032, i64 %.sroa.6.032, ptr nonnull align 8 @55) #37
   unreachable
 
@@ -260,26 +264,26 @@ bb.i:                                             ; preds = %bb.h
 .split:                                           ; preds = %bb.h
   %i.r = load i32, ptr %i.g, align 4
   %i.s = icmp eq i32 %i.r, 4
-  br i1 %i.s, label %.thread, label %._crit_edge
+  br i1 %i.s, label %.thread, label %._crit_edge.loopexit
 
 .split18:                                         ; preds = %bb.h
   %i.t = load ptr, ptr %i.e, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.v = load i8, ptr %i.u, align 8
   %i.w = icmp eq i8 %i.v, 35
-  br i1 %i.w, label %.thread, label %._crit_edge
+  br i1 %i.w, label %.thread, label %._crit_edge.loopexit
 
 .split17:                                         ; preds = %bb.h
   %i.x = load ptr, ptr %i.e, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.z = load i8, ptr %i.y, align 8
   %i.aa = icmp eq i8 %i.z, 35
-  br i1 %i.aa, label %.thread, label %._crit_edge
+  br i1 %i.aa, label %.thread, label %._crit_edge.loopexit
 
 bb.j:                                             ; preds = %bb.h
   %i.ab = load i8, ptr %i.f, align 1
   %i.ac = icmp eq i8 %i.ab, 35
-  br i1 %i.ac, label %.thread, label %._crit_edge
+  br i1 %i.ac, label %.thread, label %._crit_edge.loopexit
 
 .thread:                                          ; preds = %bb.j, %.split, %.split17, %.split18
   %i.ad = and i64 %i.l, 3
@@ -301,6 +305,7 @@ bb.k:                                             ; preds = %.thread
   br i1 %.not.i.i.i.i, label %bb.l, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand.exit
 
 bb.l:                                             ; preds = %bb.k
+  store ptr %i.j, ptr %i.d, align 8
   call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsiHZWQiD2H9v_4rand() #36
   unreachable
 
@@ -316,6 +321,7 @@ common.resume:                                    ; preds = %bb.o, %bb.n
 bb.n:                                             ; preds = %bb.m
   %i.ah = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.j, ptr %i.d, align 8
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr %i.ag, i64 24, i64 8) #36
   br label %common.resume
 
@@ -327,11 +333,13 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorE
   %.sroa.0.114 = phi ptr [ %i.p, %bb.g ], [ %.sroa.0.033, %.thread ], [ %.sroa.0.033, %.thread ], [ %.sroa.0.033, %bb.k ], [ %.sroa.0.033, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsiHZWQiD2H9v_4rand.exit.i.i.i.i ]
   %.sroa.6.112 = phi i64 [ %i.o, %bb.g ], [ %.sroa.6.032, %.thread ], [ %.sroa.6.032, %.thread ], [ %.sroa.6.032, %bb.k ], [ %.sroa.6.032, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsiHZWQiD2H9v_4rand.exit.i.i.i.i ] ; 2 uses
   %i.ai = icmp eq i64 %.sroa.6.112, 0
-  br i1 %i.ai, label %._crit_edge, label %bb.b
+  br i1 %i.ai, label %._crit_edge.loopexit, label %bb.b
 
 bb.o:                                             ; preds = %bb.c
   %i.aj = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.j, ptr %i.d, align 8
+  store i64 1, ptr %i.b, align 8
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsiHZWQiD2H9v_4rand(ptr nonnull align 8 %i.d) #38
           to label %common.resume unwind label %bb.p
 

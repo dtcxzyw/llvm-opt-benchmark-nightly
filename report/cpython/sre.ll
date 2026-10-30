@@ -205,7 +205,7 @@ sre_ucs1_search.exit:                             ; preds = %bb.bd, %bb.bc, %bb.
 define internal fastcc ptr @pattern_subx(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, i64 noundef range(i64 0, 2) %5) unnamed_addr #0 {
 bb.a:
   %6 = alloca %struct.SRE_STATE, align 8          ; 26 uses
-  %i.a = alloca i64, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 3 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %7 = alloca %struct.Py_buffer, align 8          ; 6 uses
@@ -363,10 +363,9 @@ Py_DECREF.exit143:                                ; preds = %bb.x, %bb.y, %bb.z
   br label %.critedge
 
 bb.aa:                                            ; preds = %bb.w
-  store i64 0, ptr %i.a, align 8, !tbaa !64
   %.not110 = icmp eq i64 %4, 0
   %i.an = icmp sgt i64 %4, -1
-  br i1 %i.an, label %.lr.ph, label %.loopexit.a
+  br i1 %i.an, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.aa
   %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 156
@@ -385,8 +384,8 @@ bb.aa:                                            ; preds = %bb.w
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph, %bb.bf
-  %i.bb = phi i64 [ 0, %.lr.ph ], [ %i.db, %bb.bf ]
-  %.078194 = phi i64 [ 0, %.lr.ph ], [ %i.bv, %bb.bf ] ; 6 uses
+  %i.bb = phi i64 [ 0, %.lr.ph ], [ %i.bv, %bb.bf ] ; 6 uses
+  %.078194 = phi i64 [ 0, %.lr.ph ], [ %i.db, %bb.bf ] ; 3 uses
   store i32 -1, ptr %i.ao, align 4, !tbaa !74
   store i32 -1, ptr %i.ap, align 8, !tbaa !75
   store ptr null, ptr %i.aq, align 8, !tbaa !76
@@ -413,6 +412,7 @@ bb.ad:                                            ; preds = %state_reset.exit
   br i1 %i.bg, label %bb.ae, label %bb.ai
 
 bb.ae:                                            ; preds = %bb.ad
+  store i64 %.078194, ptr %i.a, align 8
   switch i64 %i.be, label %bb.ah [
     i64 0, label %.loopexit.a
     i64 -3, label %bb.af
@@ -447,7 +447,7 @@ bb.ai:                                            ; preds = %bb.ad
   %i.bt = ptrtoint ptr %i.bs to i64
   %i.bu = sub i64 %i.bt, %i.bn
   %i.bv = sdiv i64 %i.bu, %i.bq                   ; 2 uses
-  %i.bw = icmp slt i64 %.078194, %i.br
+  %i.bw = icmp slt i64 %i.bb, %i.br
   br i1 %i.bw, label %bb.aj, label %bb.as
 
 bb.aj:                                            ; preds = %bb.ai
@@ -458,7 +458,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %.val.i = load ptr, ptr %i.ay, align 8, !tbaa !28
   %i.by = icmp eq ptr %.val.i, @PyBytes_Type
-  %i.bz = icmp eq i64 %.078194, 0
+  %i.bz = icmp eq i64 %i.bb, 0
   %or.cond.i = and i1 %i.bz, %i.by
   br i1 %or.cond.i, label %bb.al, label %bb.ao
 
@@ -478,13 +478,13 @@ bb.an:                                            ; preds = %bb.am
   br label %getslice.exit.thread
 
 bb.ao:                                            ; preds = %bb.al, %bb.ak
-  %i.ce = getelementptr i8, ptr %i.bl, i64 %.078194
-  %i.cf = sub i64 %i.br, %.078194
+  %i.ce = getelementptr i8, ptr %i.bl, i64 %i.bb
+  %i.cf = sub i64 %i.br, %i.bb
   %i.cg = call ptr @PyBytes_FromStringAndSize(ptr noundef %i.ce, i64 noundef %i.cf) #13
   br label %getslice.exit
 
 bb.ap:                                            ; preds = %bb.aj
-  %i.ch = call ptr @PyUnicode_Substring(ptr noundef %3, i64 noundef %.078194, i64 noundef %i.br) #13
+  %i.ch = call ptr @PyUnicode_Substring(ptr noundef %3, i64 noundef %i.bb, i64 noundef %i.br) #13
   br label %getslice.exit
 
 getslice.exit:                                    ; preds = %bb.ao, %bb.ap
@@ -588,9 +588,7 @@ Py_DECREF.exit137:                                ; preds = %bb.bc, %bb.bd, %bb.
   br i1 %i.da, label %pattern_error.exit, label %bb.bf
 
 bb.bf:                                            ; preds = %Py_DECREF.exit137, %_Py_NewRef.exit165
-  %8 = load i64, ptr %i.a, align 8, !tbaa !64
-  %i.db = add i64 %8, 1                           ; 4 uses
-  store i64 %i.db, ptr %i.a, align 8, !tbaa !64
+  %i.db = add i64 %.078194, 1                     ; 3 uses
   %i.dc = load ptr, ptr %6, align 8, !tbaa !70    ; 2 uses
   %i.dd = load ptr, ptr %i.at, align 8, !tbaa !69
   %i.de = icmp eq ptr %i.dc, %i.dd
@@ -599,11 +597,17 @@ bb.bf:                                            ; preds = %Py_DECREF.exit137, 
   store ptr %i.dc, ptr %i.at, align 8, !tbaa !69
   %i.dg = icmp slt i64 %i.db, %4
   %i.dh = select i1 %.not110, i1 true, i1 %i.dg
-  br i1 %i.dh, label %bb.ab, label %.loopexit.a, !llvm.loop !252
+  br i1 %i.dh, label %bb.ab, label %.loopexit, !llvm.loop !252
 
-.loopexit.a:                                      ; preds = %bb.bf, %bb.aa, %bb.ae
-  %.078191 = phi i64 [ %.078194, %bb.ae ], [ 0, %bb.aa ], [ %i.bv, %bb.bf ] ; 5 uses
-  %9 = phi i64 [ %i.bb, %bb.ae ], [ 0, %bb.aa ], [ %i.db, %bb.bf ]
+.loopexit:                                        ; preds = %bb.bf, %bb.aa
+  %.lcssa194 = phi i64 [ 0, %bb.aa ], [ %i.db, %bb.bf ] ; 2 uses
+  %.078.lcssa = phi i64 [ 0, %bb.aa ], [ %i.bv, %bb.bf ]
+  store i64 %.lcssa194, ptr %i.a, align 8
+  br label %.loopexit.a
+
+.loopexit.a:                                      ; preds = %.loopexit, %bb.ae
+  %.078191 = phi i64 [ %.078.lcssa, %.loopexit ], [ %i.bb, %bb.ae ] ; 5 uses
+  %8 = phi i64 [ %.lcssa194, %.loopexit ], [ %.078194, %bb.ae ]
   %i.di = getelementptr inbounds nuw i8, ptr %6, i64 128
   %i.dj = load i64, ptr %i.di, align 8, !tbaa !83 ; 4 uses
   %i.dk = icmp slt i64 %.078191, %i.dj
@@ -827,7 +831,7 @@ Py_DECREF.exit129:                                ; preds = %bb.cd, %bb.cc, %bb.
   br i1 %.not121, label %.critedge, label %bb.cm
 
 bb.cm:                                            ; preds = %Py_DECREF.exit129
-  %i.fn = call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.73, ptr noundef nonnull %.3, i64 noundef %9) #13
+  %i.fn = call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.73, ptr noundef nonnull %.3, i64 noundef %8) #13
   br label %.critedge
 
 pattern_error.exit:                               ; preds = %Py_DECREF.exit137, %Py_DECREF.exit139, %bb.at, %Py_DECREF.exit141, %getslice.exit, %state_reset.exit, %bb.ae, %bb.ah, %bb.ag, %bb.af, %Py_DECREF.exit135, %getslice.exit171

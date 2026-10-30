@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/H5Dscatgath?download=true
 inline.NumInlined: 3
 inline.NumDeleted: 2
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 @.str.14 = private unnamed_addr constant [30 x i8] c"can't get data transform info\00", align 1
 @H5E_BADVALUE_g = external local_unnamed_addr global i64, align 8
@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define i64 @H5D__gather_mem(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 5 uses
+  %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
@@ -232,7 +232,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.o = load i64, ptr %i.c, align 8, !tbaa !15
   %. = call i64 @llvm.umax.i64(i64 %i.o, i64 1024) ; 3 uses
-  %i.p = call noalias ptr @H5FL_seq_malloc(ptr noundef nonnull @H5_size_t_seq_free_list, i64 noundef %.) #8 ; 5 uses
+  %i.p = call noalias ptr @H5FL_seq_malloc(ptr noundef nonnull @H5_size_t_seq_free_list, i64 noundef %.) #8 ; 7 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.e, label %bb.f
 
@@ -243,7 +243,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.thread59
 
 bb.f:                                             ; preds = %bb.d
-  %i.u = call noalias ptr @H5FL_seq_malloc(ptr noundef nonnull @H5_hsize_t_seq_free_list, i64 noundef %.) #8 ; 4 uses
+  %i.u = call noalias ptr @H5FL_seq_malloc(ptr noundef nonnull @H5_hsize_t_seq_free_list, i64 noundef %.) #8 ; 6 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %.thread51.thread79, label %.preheader63
 
@@ -259,16 +259,25 @@ bb.f:                                             ; preds = %bb.d
   br label %.thread59
 
 .lr.ph69:                                         ; preds = %.preheader63, %._crit_edge
-  %.03568 = phi ptr [ %.136.lcssa, %._crit_edge ], [ %3, %.preheader63 ] ; 2 uses
+  %.03568 = phi ptr [ %.136.lcssa, %._crit_edge ], [ %3, %.preheader63 ] ; 3 uses
   %.03767 = phi i64 [ %i.ao, %._crit_edge ], [ %2, %.preheader63 ] ; 2 uses
   %i.aa = call i32 @H5S_select_iter_get_seq_list(ptr noundef %1, i64 noundef %., i64 noundef %.03767, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.u, ptr noundef nonnull %i.p) #8
   %i.ab = icmp slt i32 %i.aa, 0
   br i1 %i.ab, label %bb.g, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph69
-  %i.ac = load i64, ptr %i.a, align 8, !tbaa !15
+  %i.ac = load i64, ptr %i.a, align 8, !tbaa !15  ; 5 uses
   %.not70 = icmp eq i64 %i.ac, 0
-  br i1 %.not70, label %._crit_edge, label %.lr.ph
+  br i1 %.not70, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %xtraiter = and i64 %i.ac, 1
+  %4 = icmp eq i64 %i.ac, 1
+  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %i.ac, -2
+  br label %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph69
   %i.ad = load i64, ptr @H5E_INTERNAL_g, align 8, !tbaa !15
@@ -276,23 +285,50 @@ bb.g:                                             ; preds = %.lr.ph69
   %i.af = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5D__gather_mem, i32 noundef 408, i64 noundef %i.ad, i64 noundef %i.ae, ptr noundef nonnull @.str.4) #8 ; 0 uses
   br label %.thread51.thread
 
-.lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.03265 = phi i64 [ %i.am, %.lr.ph ], [ 0, %.preheader ] ; 3 uses
-  %.13664 = phi ptr [ %i.al, %.lr.ph ], [ %.03568, %.preheader ] ; 2 uses
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.03265
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %.03265 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.am, %.lr.ph ] ; 4 uses
+  %.13664 = phi ptr [ %.03568, %.lr.ph.preheader.new ], [ %i.al, %.lr.ph ] ; 2 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.03265
+  %6 = load i64, ptr %5, align 8, !tbaa !15       ; 2 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03265
+  %8 = load i64, ptr %7, align 8, !tbaa !15
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 %8
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.13664, ptr align 1 %9, i64 %6, i1 false)
+  %10 = getelementptr inbounds nuw i8, ptr %.13664, i64 %6 ; 2 uses
+  %11 = or disjoint i64 %.03265, 1                ; 2 uses
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %11
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !15 ; 2 uses
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03265
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %11
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !15
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 %i.aj
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.13664, ptr align 1 %i.ak, i64 %i.ah, i1 false)
-  %i.al = getelementptr inbounds nuw i8, ptr %.13664, i64 %i.ah ; 2 uses
-  %i.am = add nuw i64 %.03265, 1                  ; 2 uses
-  %4 = load i64, ptr %i.a, align 8, !tbaa !15
-  %5 = icmp ult i64 %i.am, %4
-  br i1 %5, label %.lr.ph, label %._crit_edge, !llvm.loop !86
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %10, ptr align 1 %i.ak, i64 %i.ah, i1 false)
+  %i.al = getelementptr inbounds nuw i8, ptr %10, i64 %i.ah ; 3 uses
+  %i.am = add nuw i64 %.03265, 2                  ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !86
 
-._crit_edge:                                      ; preds = %.lr.ph, %.preheader
-  %.136.lcssa = phi ptr [ %.03568, %.preheader ], [ %i.al, %.lr.ph ]
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.03265.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.am, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.13664.epil.init = phi ptr [ %.03568, %.lr.ph.preheader ], [ %i.al, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod85 = trunc i64 %i.ac to i1
+  call void @llvm.assume(i1 %lcmp.mod85)
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.03265.epil.init
+  %13 = load i64, ptr %12, align 8, !tbaa !15     ; 2 uses
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03265.epil.init
+  %15 = load i64, ptr %14, align 8, !tbaa !15
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 %15
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.13664.epil.init, ptr align 1 %16, i64 %13, i1 false)
+  %17 = getelementptr inbounds nuw i8, ptr %.13664.epil.init, i64 %13
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.preheader
+  %.136.lcssa = phi ptr [ %.03568, %.preheader ], [ %i.al, %._crit_edge.loopexit.unr-lcssa ], [ %17, %.lr.ph.epil.preheader ]
   %i.an = load i64, ptr %i.b, align 8, !tbaa !15
   %i.ao = sub i64 %.03767, %i.an                  ; 2 uses
   %.not = icmp eq i64 %i.ao, 0

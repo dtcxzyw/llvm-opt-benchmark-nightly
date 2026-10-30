@@ -205,18 +205,18 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @x509_crt_verify_restartable_ca_cb(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, ptr noundef %4, ptr nofree noundef captures(none) initializes((0, 4)) %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr noundef %7) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = alloca [64 x i8], align 16               ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   %i.d = alloca i64, align 8                      ; 4 uses
   %i.e = alloca [64 x i8], align 16               ; 4 uses
-  %8 = alloca %struct.mbedtls_x509_time, align 4  ; 10 uses
+  %8 = alloca %struct.mbedtls_x509_time, align 4  ; 11 uses
   %i.f = alloca [4 x i32], align 16               ; 5 uses
   %9 = alloca %struct.mbedtls_x509_crt_verify_chain, align 8 ; 30 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   store i32 0, ptr %5, align 4, !tbaa !35
   store ptr null, ptr %9, align 8, !tbaa !111
-  %i.g = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
   store i32 -1, ptr %i.g, align 8, !tbaa !112
   %i.h = getelementptr inbounds nuw i8, ptr %9, i64 16
   store ptr null, ptr %i.h, align 8, !tbaa !111
@@ -254,7 +254,7 @@ bb.a:
   store ptr null, ptr %i.x, align 8, !tbaa !111
   %i.y = getelementptr inbounds nuw i8, ptr %9, i64 152
   store i32 -1, ptr %i.y, align 8, !tbaa !112
-  %i.z = getelementptr inbounds nuw i8, ptr %9, i64 160 ; 5 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %9, i64 160 ; 4 uses
   %i.aa = icmp eq ptr %3, null
   br i1 %i.aa, label %.thread, label %bb.b
 
@@ -504,7 +504,7 @@ bb.n:                                             ; preds = %x509_profile_check_
   %i.dd = call fastcc i32 @x509_profile_check_key(ptr noundef %3, ptr noundef nonnull %i.cu)
   %.not31 = icmp eq i32 %i.dd, 0
   %i.de = or i32 %.2, 65536
-  %spec.select = select i1 %.not31, i32 %.2, i32 %i.de
+  %spec.select = select i1 %.not31, i32 %.2, i32 %i.de ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.df = call i64 @time(ptr noundef null) #18
   %i.dg = call i32 @mbedtls_x509_time_gmtime(i64 noundef %i.df, ptr noundef nonnull %8) #18
@@ -554,7 +554,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.not44.i = icmp eq i32 %.041.i, 0
-  br i1 %.not44.i, label %bb.t, label %.loopexit31
+  br i1 %.not44.i, label %bb.t, label %.loopexit31.loopexit75
 
 bb.t:                                             ; preds = %bb.s
   %i.dx = getelementptr inbounds nuw i8, ptr %.042.i, i64 1288 ; 3 uses
@@ -597,8 +597,8 @@ x509_profile_check_pk_alg.exit.thread.i:          ; preds = %x509_profile_check_
   br label %bb.v
 
 bb.v:                                             ; preds = %x509_profile_check_pk_alg.exit.thread.i, %x509_profile_check_pk_alg.exit.i
-  %i.ep = load i32, ptr %i.z, align 8, !tbaa !117 ; 2 uses
-  %i.eq = icmp eq i32 %i.ep, 1
+  %i.ep = load i32, ptr %i.z, align 8, !tbaa !117 ; 4 uses
+  %i.eq = icmp eq i32 %i.ep, 1                    ; 2 uses
   br i1 %i.eq, label %bb.w, label %x509_crt_check_ee_locally_trusted.exit.thread.i
 
 bb.w:                                             ; preds = %bb.v
@@ -630,7 +630,15 @@ bb.y:                                             ; preds = %bb.x
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !31
   %bcmp.i.i = call i32 @bcmp(ptr %i.fa, ptr %i.fc, i64 %i.ew)
   %i.fd = icmp eq i32 %bcmp.i.i, 0
-  br i1 %i.fd, label %.loopexit31, label %bb.z
+  br i1 %i.fd, label %.loopexit31.thread, label %bb.z
+
+.loopexit31.thread:                               ; preds = %bb.y
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
+  %10 = load i32, ptr %i.g, align 8, !tbaa !112
+  %11 = or i32 %10, %spec.select
+  store i32 %11, ptr %i.g, align 8, !tbaa !112
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
+  br label %.lr.ph.i
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   %i.fe = getelementptr inbounds nuw i8, ptr %.014.i.i, i64 1296
@@ -911,9 +919,7 @@ x509_crt_find_parent.exit.i:                      ; preds = %x509_crt_find_paren
 .loopexit.i:                                      ; preds = %x509_crt_find_parent_in.exit.i.i, %bb.ay
   %.2.ph.i = phi ptr [ %.0345.i.i.i, %bb.ay ], [ %.133.i.i.i, %x509_crt_find_parent_in.exit.i.i ] ; 5 uses
   %.07.ph.i = phi i32 [ %i.ja, %bb.ay ], [ %.1.i.i.i, %x509_crt_find_parent_in.exit.i.i ]
-  %10 = load i32, ptr %i.z, align 8, !tbaa !117   ; 2 uses
-  %.not47.i = icmp eq i32 %10, 1
-  br i1 %.not47.i, label %.thread23.i, label %bb.ba
+  br i1 %i.eq, label %.thread23.i, label %bb.ba
 
 bb.ba:                                            ; preds = %.loopexit.i
   %i.jm = getelementptr inbounds nuw i8, ptr %.042.i, i64 224
@@ -921,8 +927,8 @@ bb.ba:                                            ; preds = %.loopexit.i
   %i.jo = icmp eq i32 %i.jn, 0
   %i.jp = zext i1 %i.jo to i32
   %spec.select.i = add i32 %.0.i37, %i.jp
-  %i.jq = icmp ugt i32 %10, 8
-  %or.cond.i = and i1 %.not.i55.i, %i.jq
+  %i.jq = icmp ugt i32 %i.ep, 8
+  %or.cond.i = and i1 %i.jq, %.not.i55.i
   br i1 %or.cond.i, label %x509_crt_verify_chain.exit, label %.thread23.i
 
 .thread23.i:                                      ; preds = %bb.ba, %.loopexit.i
@@ -1143,31 +1149,36 @@ x509_crt_verify_chain.exit:                       ; preds = %bb.ba, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   br label %.thread
 
-.loopexit31:                                      ; preds = %bb.s, %bb.y, %x509_crt_find_parent.exit.i
+.loopexit31.loopexit75:                           ; preds = %bb.s
+  %.pre115 = load i32, ptr %i.z, align 8, !tbaa !117
+  br label %.loopexit31
+
+.loopexit31:                                      ; preds = %.loopexit31.loopexit75, %x509_crt_find_parent.exit.i
+  %12 = phi i32 [ %.pre115, %.loopexit31.loopexit75 ], [ %i.ep, %x509_crt_find_parent.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
   %i.mz = load i32, ptr %i.g, align 8, !tbaa !112
   %i.na = or i32 %i.mz, %spec.select
   store i32 %i.na, ptr %i.g, align 8, !tbaa !112
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  %11 = load i32, ptr %i.z, align 8, !tbaa !117   ; 4 uses
-  %.not18.i = icmp eq i32 %11, 0
+  %.not18.i = icmp eq i32 %12, 0
   br i1 %.not18.i, label %.loopexit31..loopexit27_crit_edge, label %.lr.ph.i
 
 .loopexit31..loopexit27_crit_edge:                ; preds = %.loopexit31
   %.pre115.a = load i32, ptr %5, align 4, !tbaa !35
   br label %.loopexit27
 
-.lr.ph.i:                                         ; preds = %.loopexit31
+.lr.ph.i:                                         ; preds = %.loopexit31.thread, %.loopexit31
+  %13 = phi i32 [ 1, %.loopexit31.thread ], [ %12, %.loopexit31 ] ; 3 uses
   %.not16.i42 = icmp eq ptr %6, null
   br i1 %.not16.i42, label %.lr.ph.split.us.i, label %.lr.ph.split.preheader.i
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
-  %i.nb = zext i32 %11 to i64
+  %i.nb = zext i32 %13 to i64
   br label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
   %.promoted.i = load i32, ptr %5, align 4, !tbaa !35 ; 2 uses
-  %i.nc = zext i32 %11 to i64                     ; 3 uses
+  %i.nc = zext i32 %13 to i64                     ; 3 uses
   %xtraiter = and i64 %i.nc, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -1189,7 +1200,7 @@ x509_crt_verify_chain.exit:                       ; preds = %bb.ba, %bb.n
   %.lcssa.unr = phi i32 [ poison, %.lr.ph.split.us.i ], [ %i.ni, %.prol.preheader ]
   %indvars.iv23.i.unr = phi i64 [ %i.nc, %.lr.ph.split.us.i ], [ %i.ne, %.prol.preheader ]
   %.unr = phi i32 [ %.promoted.i, %.lr.ph.split.us.i ], [ %i.ni, %.prol.preheader ]
-  %i.nj = icmp ult i32 %11, 4
+  %i.nj = icmp ult i32 %13, 4
   br i1 %i.nj, label %.loopexit, label %.lr.ph.split.us.i.new
 
 .lr.ph.split.us.i.new:                            ; preds = %.prol.loopexit, %.lr.ph.split.us.i.new

@@ -1,6 +1,4 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openmpi/original/base64?download=true
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -10,6 +8,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden i32 @hwloc_encode_to_base64(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
+  %4 = alloca [3 x i8], align 1                   ; 9 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.a = icmp ugt i64 %1, 2
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
@@ -64,35 +64,37 @@ bb.b:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.046.lcssa = phi i64 [ %1, %bb.a ], [ %i.s, %bb.b ] ; 3 uses
-  %.044.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %bb.b ] ; 2 uses
+  %.044.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %bb.b ]
   %.042.lcssa = phi i64 [ 0, %bb.a ], [ %i.b, %bb.b ] ; 4 uses
   %.not = icmp eq i64 %.046.lcssa, 0
-  br i1 %.not, label %bb.g, label %4
+  br i1 %.not, label %bb.g, label %bb.c
 
-4:                                                ; preds = %._crit_edge
-  %5 = load i8, ptr %.044.lcssa, align 1, !tbaa !11 ; 2 uses
-  %exitcond.not = icmp eq i64 %.046.lcssa, 1
-  br i1 %exitcond.not, label %bb.c, label %6
-
-6:                                                ; preds = %4
-  %7 = getelementptr inbounds nuw i8, ptr %.044.lcssa, i64 1
-  %8 = load i8, ptr %7, align 1, !tbaa !11
-  br label %bb.c
-
-bb.c:                                             ; preds = %6, %4
-  %.sroa.5.0 = phi i8 [ 0, %4 ], [ %8, %6 ]       ; 2 uses
-  %i.al = shl i8 %.sroa.5.0, 2
+bb.c:                                             ; preds = %._crit_edge
+  %.2..2..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 2
+  store i8 0, ptr %.2..2..sroa_idx, align 1, !tbaa !11
+  %.1..1..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 1
+  store i8 0, ptr %.1..1..sroa_idx, align 1, !tbaa !11
+  store i8 0, ptr %4, align 1, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %.044.lcssa, i64 %.046.lcssa, i1 false), !tbaa !11
+  %.1..1..sroa_idx95 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.1..1. = load i8, ptr %.1..1..sroa_idx95, align 1, !tbaa !11 ; 2 uses
+  %i.al = shl i8 %.1..1., 2
   %i.am = and i8 %i.al, 60
+  %.2..2..sroa_idx96 = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %.2..2. = load i8, ptr %.2..2..sroa_idx96, align 1, !tbaa !11
+  %5 = lshr i8 %.2..2., 6
+  %6 = or disjoint i8 %i.am, %5
   %i.an = add i64 %.042.lcssa, 4                  ; 2 uses
   %i.ao = icmp ugt i64 %i.an, %3
   br i1 %i.ao, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.ap = shl i8 %5, 4
+  %.0..0. = load i8, ptr %4, align 1, !tbaa !11   ; 2 uses
+  %i.ap = shl i8 %.0..0., 4
   %i.aq = and i8 %i.ap, 48
-  %i.ar = lshr i8 %.sroa.5.0, 4
+  %i.ar = lshr i8 %.1..1., 4
   %i.as = or disjoint i8 %i.aq, %i.ar
-  %i.at = lshr i8 %5, 2
+  %i.at = lshr i8 %.0..0., 2
   %i.au = zext nneg i8 %i.at to i64
   %i.av = getelementptr inbounds nuw i8, ptr @Base64, i64 %i.au
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !11
@@ -107,9 +109,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bc, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.bd = zext nneg i8 %i.am to i64
+  %i.bd = zext nneg i8 %6 to i64
   %i.be = getelementptr inbounds nuw i8, ptr @Base64, i64 %i.bd
-  %i.bf = load i8, ptr %i.be, align 4, !tbaa !11
+  %i.bf = load i8, ptr %i.be, align 1, !tbaa !11
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
@@ -134,11 +136,18 @@ bb.h:                                             ; preds = %bb.g
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.g, %bb.c, %bb.h
   %.043 = phi i32 [ %i.bk, %bb.h ], [ -1, %bb.g ], [ -1, %bb.c ], [ -1, %.lr.ph ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   ret i32 %.043
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
 ; Function Attrs: nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden i32 @hwloc_decode_from_base64(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #1 {
+define hidden i32 @hwloc_decode_from_base64(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %.not74 = icmp eq ptr %1, null                  ; 5 uses
   br label %.outer.outer
@@ -167,7 +176,7 @@ bb.b:                                             ; preds = %.outer, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %.060, i64 1 ; 4 uses
-  %i.e = tail call ptr @__ctype_b_loc() #4
+  %i.e = tail call ptr @__ctype_b_loc() #5
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19   ; 3 uses
   %i.g = sext i8 %i.c to i64
   %i.h = getelementptr inbounds [2 x i8], ptr %i.f, i64 %i.g
@@ -382,16 +391,20 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %._cr
 }
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
-declare ptr @__ctype_b_loc() local_unnamed_addr #2
+declare ptr @__ctype_b_loc() local_unnamed_addr #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #3
+declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #4
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #4 = { nounwind willreturn memory(none) }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #5 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

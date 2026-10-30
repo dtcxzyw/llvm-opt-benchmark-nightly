@@ -204,14 +204,17 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph817:                                        ; preds = %.preheader687, %.lr.ph817
   %i.bm = phi ptr [ %i.bn, %.lr.ph817 ], [ %i.bj, %.preheader687 ]
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 1 ; 4 uses
-  store ptr %i.bn, ptr %i.c, align 8, !tbaa !29
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !27  ; 2 uses
   %i.bp = icmp eq i8 %i.bo, 32
-  br i1 %i.bp, label %.lr.ph817, label %._crit_edge818
+  br i1 %i.bp, label %.lr.ph817, label %._crit_edge818.loopexit
 
-._crit_edge818:                                   ; preds = %.lr.ph817, %.preheader687
-  %i.bq = phi i8 [ %i.bk, %.preheader687 ], [ %i.bo, %.lr.ph817 ]
-  %.lcssa778 = phi ptr [ %i.bj, %.preheader687 ], [ %i.bn, %.lr.ph817 ] ; 2 uses
+._crit_edge818.loopexit:                          ; preds = %.lr.ph817
+  store ptr %i.bn, ptr %i.c, align 8, !tbaa !29
+  br label %._crit_edge818
+
+._crit_edge818:                                   ; preds = %._crit_edge818.loopexit, %.preheader687
+  %i.bq = phi i8 [ %i.bk, %.preheader687 ], [ %i.bo, %._crit_edge818.loopexit ]
+  %.lcssa778 = phi ptr [ %i.bj, %.preheader687 ], [ %i.bn, %._crit_edge818.loopexit ] ; 2 uses
   %i.br = ptrtoint ptr %.lcssa778 to i64
   %i.bs = sub i64 %i.br, %i.r
   %.not464 = icmp slt i64 %i.bs, %i.aw

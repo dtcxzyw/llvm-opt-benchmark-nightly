@@ -204,7 +204,7 @@ _ZN8facebook5velox6common3hll14HllAccumulatorIlLb1ENS0_19HashStringAllocatorEE14
   br label %._crit_edge89
 
 ._crit_edge89:                                    ; preds = %._crit_edge89.loopexit, %._crit_edge
-  %i.ab = phi ptr [ %i.n, %._crit_edge ], [ %.pre105, %._crit_edge89.loopexit ] ; 2 uses
+  %i.ab = phi ptr [ %i.n, %._crit_edge ], [ %.pre105, %._crit_edge89.loopexit ] ; 5 uses
   %.0.lcssa = phi i32 [ 0, %._crit_edge ], [ %.sroa.speculated, %._crit_edge89.loopexit ] ; 3 uses
   %.sroa.12.0.lcssa = phi i32 [ 17, %._crit_edge ], [ %i.an, %._crit_edge89.loopexit ] ; 2 uses
   %i.ac = icmp eq ptr %i.ab, %i.l
@@ -254,6 +254,7 @@ _ZN8facebook5velox6common3hll14HllAccumulatorIlLb1ENS0_19HashStringAllocatorEE14
   %i.au = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #27 ; 2 uses
   store ptr %i.au, ptr %2, align 8, !tbaa !111
   store i64 %i.aq, ptr %i.ar, align 8, !tbaa !43
+  %.pre106.pre = load ptr, ptr %i.j, align 8, !tbaa !103
   br label %bb.h
 
 bb.f:                                             ; preds = %._crit_edge96
@@ -267,6 +268,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f, %.thread7.i.i
+  %.pre106 = phi ptr [ %.pre106.pre, %.thread7.i.i ], [ %i.ab, %bb.f ]
   %i.av = phi ptr [ %i.au, %.thread7.i.i ], [ %i.ar, %bb.f ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.av, i8 0, i64 %i.aq, i1 false)
   br label %bb.i
@@ -285,12 +287,12 @@ bb.h:                                             ; preds = %bb.f, %.thread7.i.i
   br i1 %i.bc, label %._crit_edge96, label %.lr.ph95
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
+  %3 = phi ptr [ %i.ab, %bb.f ], [ %.pre106, %bb.h ], [ %i.ab, %bb.g ] ; 2 uses
   %i.bd = phi ptr [ %i.ar, %bb.f ], [ %i.av, %bb.h ], [ %i.ar, %bb.g ]
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %i.aq, ptr %i.be, align 8, !tbaa !113
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.aq
   store i8 0, ptr %i.bf, align 1, !tbaa !43
-  %3 = load ptr, ptr %i.j, align 8, !tbaa !103    ; 2 uses
   %i.bg = icmp eq ptr %3, %i.l
   br i1 %i.bg, label %._crit_edge102, label %.lr.ph101
 

@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 .preheader:                                       ; preds = %bb.a, %bb.e
-  %.032 = phi ptr [ %i.h, %bb.e ], [ %1, %bb.a ]  ; 4 uses
+  %.032 = phi ptr [ %i.h, %bb.e ], [ %1, %bb.a ]  ; 3 uses
   %.029 = phi ptr [ %.130, %bb.e ], [ %i.a, %bb.a ] ; 4 uses
   %.0 = phi i32 [ %.1, %bb.e ], [ 0, %bb.a ]      ; 3 uses
-  %i.d = load i8, ptr %.032, align 1              ; 2 uses
+  %i.d = load i8, ptr %.032, align 1              ; 3 uses
   switch i8 %i.d, label %bb.c [
     i8 61, label %.critedge
     i8 0, label %.critedge
@@ -229,8 +229,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 .critedge:                                        ; preds = %.preheader, %.preheader
   store i8 0, ptr %.029, align 1
-  %2 = load i8, ptr %.032, align 1
-  %i.i = icmp eq i8 %2, 61
+  %i.i = icmp eq i8 %i.d, 61
   %i.j = getelementptr inbounds nuw i8, ptr %.032, i64 1
   %.031 = select i1 %i.i, ptr %i.j, ptr @.str.60
   %i.k = load ptr, ptr %0, align 8

@@ -204,7 +204,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.gd, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i, label %.preheader600.preheader.i
 
 .preheader600.preheader.i:                        ; preds = %bb.bx
-  %.val.i.i.i.i = load i8, ptr %.ptr583.i, align 1, !noalias !572, !noundef !4
+  %.val.i.i.i.i = load i8, ptr %.ptr583.i, align 1, !noalias !572, !noundef !4 ; 2 uses
   %i.ge = add i8 %.val.i.i.i.i, -48               ; 2 uses
   %.sroa.0.0.i.i.i.i.i.i = icmp ult i8 %i.ge, 10
   br i1 %.sroa.0.0.i.i.i.i.i.i, label %.preheader600.1.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i
@@ -509,7 +509,7 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4ti
   %.sroa.16.sroa.7.0.in.i = phi i64 [ %.sroa.16.sroa.7.0.extract.shift.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit131.i.i.i ], [ %.sroa.16.sroa.7.0.extract.shift277.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit.i.i.i ], [ %i.fq, %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i ], [ %i.fq, %bb.bx ]
   %.sroa.16.sroa.0.0.i = phi i64 [ %.sroa.4291.sroa.0.4.insert.shift.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit131.i.i.i ], [ %.sroa.4305.i.sroa.0.4.insert.insert, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit.i.i.i ], [ 0, %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i ], [ 0, %bb.bx ]
   %.sroa.12.0.i = phi i64 [ %i.gm, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit131.i.i.i ], [ %.sroa.693.0.copyload.i.i533.i8, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit.i.i.i ], [ %i.fl, %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i ], [ %i.fl, %bb.bx ] ; 2 uses
-  %.sroa.0213.0.i = phi ptr [ %.ptr589.i64, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit131.i.i.i ], [ %.sroa.592.0.copyload.i.i532.i9, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit.i.i.i ], [ %.ptr583.i, %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i ], [ %.ptr583.i, %bb.bx ] ; 2 uses
+  %.sroa.0213.0.i = phi ptr [ %.ptr589.i64, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit131.i.i.i ], [ %.sroa.592.0.copyload.i.i532.i9, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit.i.i.i ], [ %.ptr583.i, %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i ], [ %.ptr583.i, %bb.bx ] ; 3 uses
   %.sroa.20214.0.i = zext i1 %i.gc to i8          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !563
   %.sroa.16.sroa.7.0.insert.shift.i = shl nuw nsw i64 %.sroa.16.sroa.7.0.in.i, 32
@@ -518,18 +518,22 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4ti
   tail call void @llvm.experimental.noalias.scope.decl(metadata !599)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !600)
   %.not.i.i.i.i = icmp eq i64 %.sroa.12.0.i, 0
-  br i1 %.not.i.i.i.i, label %.thread750.i, label %bb.dc
+  br i1 %.not.i.i.i.i, label %.thread750.i, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge
+
+_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge: ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i
+  %.pre22 = load i8, ptr %.sroa.0213.0.i, align 1, !alias.scope !601, !noalias !562
+  br label %bb.dc
 
 .thread750.i:                                     ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap), !noalias !563
   br label %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser17parse_annotations.exit.i.thread.i
 
-bb.dc:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i
-  %.sroa.16.sroa.0.0.insert.insert771.i = phi i64 [ %.sroa.16.sroa.7.0.insert.shift764.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.16.sroa.0.0.insert.insert.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i ] ; 3 uses
-  %.sroa.20214.0770.i = phi i8 [ 0, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.20214.0.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i ] ; 3 uses
-  %.sroa.0213.0769.i = phi ptr [ %.ptr583.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.0213.0.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i ] ; 3 uses
-  %.sroa.12.0768.i = phi i64 [ %i.fl, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.12.0.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i ] ; 2 uses
-  %4 = load i8, ptr %.sroa.0213.0769.i, align 1, !alias.scope !601, !noalias !562, !noundef !4
+bb.dc:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i
+  %4 = phi i8 [ %.val.i.i.i.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.pre22, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge ]
+  %.sroa.16.sroa.0.0.insert.insert771.i = phi i64 [ %.sroa.16.sroa.7.0.insert.shift764.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.16.sroa.0.0.insert.insert.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge ] ; 3 uses
+  %.sroa.20214.0770.i = phi i8 [ 0, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.20214.0.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge ] ; 3 uses
+  %.sroa.0213.0769.i = phi ptr [ %.ptr583.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.0213.0.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge ] ; 2 uses
+  %.sroa.12.0768.i = phi i64 [ %i.fl, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.thread.i ], [ %.sroa.12.0.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i._crit_edge ] ; 2 uses
   switch i8 %4, label %.thread722.i [
     i8 122, label %bb.dd
     i8 90, label %bb.dd

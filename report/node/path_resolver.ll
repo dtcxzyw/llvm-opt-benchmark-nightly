@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %6 = alloca %struct.uv_fs_s, align 8            ; 9 uses
-  %i.c = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = alloca ptr, align 8                      ; 7 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = alloca i32, align 4                      ; 4 uses
@@ -245,6 +245,7 @@ bb.b:                                             ; preds = %uvwasi__is_absolute
   br label %bb.ad
 
 bb.c:                                             ; preds = %.lr.ph, %.critedge
+  %7 = phi ptr [ null, %.lr.ph ], [ %8, %.critedge ] ; 2 uses
   %.0194 = phi i32 [ 0, %.lr.ph ], [ %i.bz, %.critedge ] ; 2 uses
   %.061193 = phi i32 [ %3, %.lr.ph ], [ %.1, %.critedge ] ; 7 uses
   %.062192 = phi ptr [ null, %.lr.ph ], [ %i.cf, %.critedge ] ; 8 uses
@@ -468,7 +469,6 @@ uvwasi__is_absolute_path.exit89:                  ; preds = %bb.y
   br i1 %.not153, label %.critedge, label %uvwasi__is_absolute_path.exit89.thread
 
 uvwasi__is_absolute_path.exit89.thread:           ; preds = %bb.y, %uvwasi__is_absolute_path.exit89
-  %7 = load ptr, ptr %i.c, align 8, !tbaa !13
   call void @uvwasi__free(ptr noundef %0, ptr noundef %7) #9
   %i.cj = load ptr, ptr %i.d, align 8, !tbaa !13
   call void @uvwasi__free(ptr noundef %0, ptr noundef %i.cj) #9
@@ -477,7 +477,7 @@ uvwasi__is_absolute_path.exit89.thread:           ; preds = %bb.y, %uvwasi__is_a
   br i1 %.not80, label %bb.z, label %.thread
 
 bb.z:                                             ; preds = %uvwasi__is_absolute_path.exit89.thread
-  %i.cl = load ptr, ptr %i.c, align 8, !tbaa !13
+  %i.cl = load ptr, ptr %i.c, align 8, !tbaa !13  ; 2 uses
   %i.cm = load i32, ptr %i.e, align 4, !tbaa !14
   %i.cn = call fastcc zeroext i16 @uvwasi__combine_paths(ptr noundef %0, ptr noundef %i.cl, i32 noundef %i.cm, ptr noundef nonnull %i.cf, i32 noundef %i.cc, ptr noundef %i.d, ptr noundef %i.f) ; 2 uses
   %.not81 = icmp eq i16 %i.cn, 0
@@ -489,6 +489,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %.critedge
 
 .critedge:                                        ; preds = %uvwasi__is_absolute_path.exit89, %bb.aa
+  %8 = phi ptr [ %i.cl, %bb.aa ], [ %7, %uvwasi__is_absolute_path.exit89 ]
   %.165 = phi ptr [ %i.co, %bb.aa ], [ %i.cf, %uvwasi__is_absolute_path.exit89 ] ; 2 uses
   %.1 = phi i32 [ %i.cp, %bb.aa ], [ %i.cc, %uvwasi__is_absolute_path.exit89 ] ; 3 uses
   call void @uvwasi__free(ptr noundef %0, ptr noundef nonnull %.0101111) #9

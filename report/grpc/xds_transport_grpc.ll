@@ -204,7 +204,8 @@ bb.z:                                             ; preds = %bb.y
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 184
   store i64 0, ptr %i.bo, align 8, !tbaa !93
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #36
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %11, i8 0, i64 160, i1 false)
+  %18 = getelementptr inbounds nuw i8, ptr %11, i64 32
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %18, i8 0, i64 128, i1 false)
   %i.bp = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !96 ; 4 uses
   %i.br = load ptr, ptr %5, align 8, !tbaa !97    ; 4 uses

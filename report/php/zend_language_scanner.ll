@@ -204,7 +204,11 @@ bb.az:                                            ; preds = %bb.bf, %zend_string
 .preheader6625:                                   ; preds = %.preheader6625.loopexit.split.loop.exit, %bb.az, %.prol.preheader
   %.04960.lcssa = phi ptr [ %i.hs, %.prol.preheader ], [ %i.ic, %.preheader6625.loopexit.split.loop.exit ], [ %.04960, %bb.az ] ; 4 uses
   %i.id = icmp ult ptr %.04960.lcssa, %i.ht
-  br i1 %i.id, label %.lr.ph10126, label %._crit_edge10127
+  br i1 %i.id, label %.lr.ph10126.preheader, label %._crit_edge10127
+
+.lr.ph10126.preheader:                            ; preds = %.preheader6625
+  %.promoted = load i32, ptr getelementptr inbounds nuw (i8, ptr @compiler_globals, i64 40), align 8
+  br label %.lr.ph10126
 
 bb.ba:                                            ; preds = %bb.az
   %i.ie = getelementptr inbounds nuw i8, ptr %.04960, i64 1
@@ -248,10 +252,11 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd, %bb.
   %.pr = load i8, ptr %i.jc, align 1, !tbaa !44
   br label %.lr.ph10126
 
-.lr.ph10126:                                      ; preds = %.preheader6625, %.lr.ph10126thread-pre-split
-  %i.iq = phi i8 [ %.pr, %.lr.ph10126thread-pre-split ], [ 92, %.preheader6625 ] ; 2 uses
-  %.1496110125 = phi ptr [ %i.jc, %.lr.ph10126thread-pre-split ], [ %.04960.lcssa, %.preheader6625 ] ; 2 uses
-  %.0496410124 = phi ptr [ %.14965, %.lr.ph10126thread-pre-split ], [ %.04960.lcssa, %.preheader6625 ] ; 6 uses
+.lr.ph10126:                                      ; preds = %.lr.ph10126.preheader, %.lr.ph10126thread-pre-split
+  %13 = phi i32 [ %14, %.lr.ph10126thread-pre-split ], [ %.promoted, %.lr.ph10126.preheader ] ; 3 uses
+  %i.iq = phi i8 [ %.pr, %.lr.ph10126thread-pre-split ], [ 92, %.lr.ph10126.preheader ] ; 2 uses
+  %.1496110125 = phi ptr [ %i.jc, %.lr.ph10126thread-pre-split ], [ %.04960.lcssa, %.lr.ph10126.preheader ] ; 2 uses
+  %.0496410124 = phi ptr [ %.14965, %.lr.ph10126thread-pre-split ], [ %.04960.lcssa, %.lr.ph10126.preheader ] ; 6 uses
   %i.ir = icmp eq i8 %i.iq, 92
   br i1 %i.ir, label %bb.bg, label %bb.bj
 
@@ -296,12 +301,12 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %.not6136, label %bb.bn, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bk, %bb.bl
-  %13 = load i32, ptr getelementptr inbounds nuw (i8, ptr @compiler_globals, i64 40), align 8, !tbaa !66
-  %i.jb = add nsw i32 %13, 1
+  %i.jb = add nsw i32 %13, 1                      ; 2 uses
   store i32 %i.jb, ptr getelementptr inbounds nuw (i8, ptr @compiler_globals, i64 40), align 8, !tbaa !66
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bk, %bb.bm, %bb.bl
+  %14 = phi i32 [ %13, %bb.bk ], [ %i.jb, %bb.bm ], [ %13, %bb.bl ]
   %i.jc = getelementptr inbounds nuw i8, ptr %.24962, i64 1 ; 3 uses
   %i.jd = icmp ult ptr %i.jc, %i.ht
   br i1 %i.jd, label %.lr.ph10126thread-pre-split, label %._crit_edge10127, !llvm.loop !174

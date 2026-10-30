@@ -205,11 +205,11 @@ _ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryA
 bb.ap:                                            ; preds = %_ZNSt17_Temporary_bufferIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEES5_EC2ESA_l.exit.i.i
   %i.og = getelementptr inbounds [16 x i8], ptr %.sroa.01141.1, i64 %i.no ; 4 uses
   call fastcc void @"_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEES6_NS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_T1_"(ptr %.sroa.01141.1, ptr %i.og, ptr noundef %.sroa.12.0.i.i)
-  call fastcc void @"_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEES6_NS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_T1_"(ptr %i.og, ptr nonnull %.sroa.14.1, ptr noundef %.sroa.12.0.i.i)
+  call fastcc void @"_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEES6_NS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_T1_"(ptr %i.og, ptr %.sroa.14.1, ptr noundef %.sroa.12.0.i.i)
   %i.oh = ptrtoint ptr %i.og to i64
   %i.oi = sub i64 %i.nj, %i.oh
   %i.oj = ashr exact i64 %i.oi, 4
-  call fastcc void @"_ZSt16__merge_adaptiveIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_SK_T0_SL_T1_T2_"(ptr %.sroa.01141.1, ptr %i.og, ptr nonnull %.sroa.14.1, i64 noundef %i.no, i64 noundef %i.oj, ptr noundef %.sroa.12.0.i.i)
+  call fastcc void @"_ZSt16__merge_adaptiveIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEElS6_NS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_SK_T0_SL_T1_T2_"(ptr %.sroa.01141.1, ptr %i.og, ptr %.sroa.14.1, i64 noundef %i.no, i64 noundef %i.oj, ptr noundef %.sroa.12.0.i.i)
   br label %"_ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEEZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EvT_SH_T0_.exit"
 
 bb.aq:                                            ; preds = %bb.at
@@ -224,11 +224,11 @@ bb.ar:                                            ; preds = %_ZNSt17_Temporary_b
   br i1 %i.om, label %bb.as, label %bb.at, !prof !128
 
 bb.as:                                            ; preds = %bb.ar
-  call fastcc void @"_ZSt21__inplace_stable_sortIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_"(ptr %.sroa.01141.1, ptr nonnull %.sroa.14.1)
+  call fastcc void @"_ZSt21__inplace_stable_sortIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_"(ptr %.sroa.01141.1, ptr %.sroa.14.1)
   br label %"_ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEEZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EvT_SH_T0_.exit"
 
 bb.at:                                            ; preds = %bb.ar
-  invoke fastcc void @"_ZSt29__stable_sort_adaptive_resizeIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEES6_lNS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_T1_T2_"(ptr %.sroa.01141.1, ptr nonnull %.sroa.14.1, ptr noundef nonnull %.sroa.12.0.i.i, i64 noundef %.sroa.5.0.i.i)
+  invoke fastcc void @"_ZSt29__stable_sort_adaptive_resizeIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEES6_lNS0_5__ops15_Iter_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_SK_T0_T1_T2_"(ptr %.sroa.01141.1, ptr %.sroa.14.1, ptr noundef nonnull %.sroa.12.0.i.i, i64 noundef %.sroa.5.0.i.i)
           to label %"_ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEEZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EvT_SH_T0_.exit" unwind label %bb.aq
 
 "_ZSt11stable_sortIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEEZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EvT_SH_T0_.exit": ; preds = %bb.ap, %bb.as, %bb.at
@@ -623,7 +623,7 @@ _ZNSt6vectorIN11flatbuffers15BinaryAnnotator6VTable5EntryESaIS3_EE9push_backERKS
   %.sroa.21.1 = phi ptr [ %i.abg, %_ZNSt6vectorIN11flatbuffers15BinaryAnnotator6VTable5EntryESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.sroa.21.01699, %bb.au ] ; 7 uses
   %.0.lcssa.i.i.i.i.i434.pn = phi ptr [ %.0.lcssa.i.i.i.i.i434, %_ZNSt6vectorIN11flatbuffers15BinaryAnnotator6VTable5EntryESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.sroa.14.01700, %bb.au ]
   %.sroa.01141.1 = phi ptr [ %i.abc, %_ZNSt6vectorIN11flatbuffers15BinaryAnnotator6VTable5EntryESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.sroa.01141.01701, %bb.au ] ; 18 uses
-  %.sroa.14.1 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i434.pn, i64 16 ; 7 uses
+  %.sroa.14.1 = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i434.pn, i64 16 ; 7 uses
   %i.abh = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.01138.01698) #31 ; 2 uses
   %.not = icmp eq ptr %i.abh, %i.nh
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -1026,7 +1026,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
   %.sroa.0.022 = phi ptr [ %.sroa.0.019, %.lr.ph ], [ %.sroa.0.0, %bb.h ] ; 7 uses
-  %.pn21 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.022, %bb.h ] ; 16 uses
+  %.pn21 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.022, %bb.h ] ; 19 uses
   %i.p = call noundef zeroext i1 %2(ptr noundef nonnull align 8 dereferenceable(160) %.sroa.0.022, ptr noundef nonnull align 8 dereferenceable(160) %0), !inline_history !24
   br i1 %i.p, label %bb.c, label %bb.g
 
@@ -1045,7 +1045,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %.pn21, i64 216
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !85   ; 2 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !85   ; 3 uses
   %i.y = icmp ult i64 %i.x, 16
   call void @llvm.assume(i1 %i.y)
   %i.z = add nuw nsw i64 %i.x, 1
@@ -1056,14 +1056,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store ptr %i.t, ptr %i.c, align 8, !tbaa !95
   %i.aa = load i64, ptr %i.u, align 8, !tbaa !86
   store i64 %i.aa, ptr %i.d, align 8, !tbaa !86
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pn21, i64 216
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !85
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %.pn21, i64 216 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !85
-  store i64 %5, ptr %i.e, align 8, !tbaa !85
+  %4 = phi i64 [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %i.x, %bb.d ]
+  %5 = getelementptr inbounds nuw i8, ptr %.pn21, i64 216
+  store i64 %4, ptr %i.e, align 8, !tbaa !85
   store ptr %i.u, ptr %i.s, align 8, !tbaa !95
-  store i64 0, ptr %4, align 8, !tbaa !85
+  store i64 0, ptr %5, align 8, !tbaa !85
   store i8 0, ptr %i.u, align 8, !tbaa !86
   %i.ab = getelementptr inbounds nuw i8, ptr %.pn21, i64 240
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !88
@@ -1077,7 +1079,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds =
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %.pn21, i64 256
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !85 ; 2 uses
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !85 ; 3 uses
   %i.aj = icmp ult i64 %i.ai, 16
   call void @llvm.assume(i1 %i.aj)
   %i.ak = add nuw nsw i64 %i.ai, 1
@@ -1088,14 +1090,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i7.i.
   store ptr %i.ae, ptr %i.g, align 8, !tbaa !95
   %i.al = load i64, ptr %i.af, align 8, !tbaa !86
   store i64 %i.al, ptr %i.h, align 8, !tbaa !86
+  %.phi.trans.insert23 = getelementptr inbounds nuw i8, ptr %.pn21, i64 256
+  %.pre24 = load i64, ptr %.phi.trans.insert23, align 8, !tbaa !85
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit8.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit8.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i7.i.i, %bb.e
-  %6 = getelementptr inbounds nuw i8, ptr %.pn21, i64 256 ; 2 uses
-  %7 = load i64, ptr %6, align 8, !tbaa !85
-  store i64 %7, ptr %i.i, align 8, !tbaa !85
+  %6 = phi i64 [ %.pre24, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i7.i.i ], [ %i.ai, %bb.e ]
+  %7 = getelementptr inbounds nuw i8, ptr %.pn21, i64 256
+  store i64 %6, ptr %i.i, align 8, !tbaa !85
   store ptr %i.af, ptr %i.ad, align 8, !tbaa !95
-  store i64 0, ptr %6, align 8, !tbaa !85
+  store i64 0, ptr %7, align 8, !tbaa !85
   store i8 0, ptr %i.af, align 8, !tbaa !86
   %i.am = getelementptr inbounds nuw i8, ptr %.pn21, i64 280 ; 2 uses
   store ptr %i.k, ptr %i.j, align 8, !tbaa !84
@@ -1106,7 +1110,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit8.i.i: ; preds 
 
 bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit8.i.i
   %i.aq = getelementptr inbounds nuw i8, ptr %.pn21, i64 288
-  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !85 ; 2 uses
+  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !85 ; 3 uses
   %i.as = icmp ult i64 %i.ar, 16
   call void @llvm.assume(i1 %i.as)
   %i.at = add nuw nsw i64 %i.ar, 1
@@ -1117,14 +1121,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.
   store ptr %i.an, ptr %i.j, align 8, !tbaa !95
   %i.au = load i64, ptr %i.ao, align 8, !tbaa !86
   store i64 %i.au, ptr %i.k, align 8, !tbaa !86
+  %.phi.trans.insert25 = getelementptr inbounds nuw i8, ptr %.pn21, i64 288
+  %.pre26 = load i64, ptr %.phi.trans.insert25, align 8, !tbaa !85
   br label %_ZN11flatbuffers12BinaryRegionC2EOS0_.exit
 
 _ZN11flatbuffers12BinaryRegionC2EOS0_.exit:       ; preds = %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.i
-  %8 = getelementptr inbounds nuw i8, ptr %.pn21, i64 288 ; 2 uses
-  %9 = load i64, ptr %8, align 8, !tbaa !85
-  store i64 %9, ptr %i.l, align 8, !tbaa !85
+  %8 = phi i64 [ %i.ar, %bb.f ], [ %.pre26, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i9.i.i ]
+  %9 = getelementptr inbounds nuw i8, ptr %.pn21, i64 288
+  store i64 %8, ptr %i.l, align 8, !tbaa !85
   store ptr %i.ao, ptr %i.am, align 8, !tbaa !95
-  store i64 0, ptr %8, align 8, !tbaa !85
+  store i64 0, ptr %9, align 8, !tbaa !85
   store i8 0, ptr %i.ao, align 8, !tbaa !86
   %i.av = getelementptr inbounds nuw i8, ptr %.pn21, i64 312
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !87

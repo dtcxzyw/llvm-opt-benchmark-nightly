@@ -204,7 +204,7 @@ declare i32 @PyDict_SetItemString(ptr noundef, ptr noundef, ptr noundef) local_u
 define dso_local range(i32 -1, 1) i32 @_PyConfig_FromDict(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %2 = alloca %struct.PyWideStringList, align 8   ; 14 uses
+  %2 = alloca %struct.PyWideStringList, align 8   ; 16 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 8 uses
   %i.d = alloca ptr, align 8                      ; 8 uses
@@ -221,7 +221,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 7 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   br label %bb.c
 
@@ -624,8 +624,9 @@ bb.bv:                                            ; preds = %bb.bu
 
 .split.us.i:                                      ; preds = %.lr.ph.split.i, %.lr.ph.split.us.i
   %.us-phi.i = phi ptr [ %i.ez, %.lr.ph.split.us.i ], [ %i.fq, %.lr.ph.split.i ] ; 2 uses
-  %.us-phi27.i = phi i64 [ %.019.us.i, %.lr.ph.split.us.i ], [ %.019.i, %.lr.ph.split.i ]
+  %.us-phi27.i = phi i64 [ %.019.us.i, %.lr.ph.split.us.i ], [ %.019.i, %.lr.ph.split.i ] ; 2 uses
   store ptr %.us-phi.i, ptr %i.k, align 8
+  store i64 %.us-phi27.i, ptr %2, align 8
   %i.ft = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !24
   %i.fu = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.ft, ptr noundef nonnull @.str.134, ptr noundef nonnull %i.n) #28 ; 0 uses
   br label %bb.cg
@@ -641,8 +642,9 @@ bb.bw:                                            ; preds = %.lr.ph.split.i
 
 .split29.us.i:                                    ; preds = %bb.bw, %bb.br
   %.us-phi30.i = phi ptr [ %i.ez, %bb.br ], [ %i.fq, %bb.bw ] ; 2 uses
-  %.us-phi31.i = phi i64 [ %.019.us.i, %bb.br ], [ %.019.i, %bb.bw ]
+  %.us-phi31.i = phi i64 [ %.019.us.i, %bb.br ], [ %.019.i, %bb.bw ] ; 2 uses
   store ptr %.us-phi30.i, ptr %i.k, align 8
+  store i64 %.us-phi31.i, ptr %2, align 8
   %i.fy = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !24
   %i.fz = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.fy, ptr noundef nonnull @.str.133, ptr noundef nonnull %i.n) #28 ; 0 uses
   br label %bb.cg
@@ -665,8 +667,8 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.gh, label %.split38.us.i, label %bb.cb
 
 .split38.us.i:                                    ; preds = %bb.bz, %bb.bu
-  %.us-phi39.i = phi ptr [ %i.ez, %bb.bu ], [ %i.fq, %bb.bz ]
-  %.us-phi40.i = phi i64 [ %.019.us.i, %bb.bu ], [ %.019.i, %bb.bz ]
+  %.us-phi39.i = phi ptr [ %i.ez, %bb.bu ], [ %i.fq, %bb.bz ] ; 2 uses
+  %.us-phi40.i = phi i64 [ %.019.us.i, %bb.bu ], [ %.019.i, %bb.bz ] ; 2 uses
   %.us-phi41.i = phi ptr [ %i.fi, %bb.bu ], [ %i.gc, %bb.bz ]
   %.us-phi42.i = phi ptr [ %i.fg, %bb.bu ], [ %i.ga, %bb.bz ]
   store ptr %.us-phi39.i, ptr %i.k, align 8
@@ -675,19 +677,19 @@ bb.bz:                                            ; preds = %bb.by
   br label %bb.ca
 
 .loopexit10.i:                                    ; preds = %bb.by, %bb.bt
-  %.us-phi34.i = phi ptr [ %i.ez, %bb.bt ], [ %i.fq, %bb.by ]
-  %.us-phi35.i = phi i64 [ %.019.us.i, %bb.bt ], [ %.019.i, %bb.by ]
+  %.us-phi34.i = phi ptr [ %i.ez, %bb.bt ], [ %i.fq, %bb.by ] ; 2 uses
+  %.us-phi35.i = phi i64 [ %.019.us.i, %bb.bt ], [ %.019.i, %bb.by ] ; 2 uses
   %.us-phi36.i = phi ptr [ %i.fg, %bb.bt ], [ %i.ga, %bb.by ]
   store ptr %.us-phi34.i, ptr %i.k, align 8
   store i64 %.us-phi35.i, ptr %2, align 8
   br label %bb.ca
 
 bb.ca:                                            ; preds = %.loopexit10.i, %.split38.us.i
-  %i.gi = phi ptr [ %.us-phi36.i, %.loopexit10.i ], [ %.us-phi42.i, %.split38.us.i ]
-  call void @PyMem_Free(ptr noundef nonnull %i.gi) #28
-  %4 = call ptr @PyErr_NoMemory() #28             ; 0 uses
-  %.pre.i = load i64, ptr %2, align 8, !tbaa !29
-  %.pre = load ptr, ptr %i.k, align 8, !tbaa !30
+  %i.gi = phi ptr [ %.us-phi34.i, %.loopexit10.i ], [ %.us-phi39.i, %.split38.us.i ]
+  %4 = phi i64 [ %.us-phi35.i, %.loopexit10.i ], [ %.us-phi40.i, %.split38.us.i ]
+  %5 = phi ptr [ %.us-phi36.i, %.loopexit10.i ], [ %.us-phi42.i, %.split38.us.i ]
+  call void @PyMem_Free(ptr noundef nonnull %5) #28
+  %6 = call ptr @PyErr_NoMemory() #28             ; 0 uses
   br label %bb.cg
 
 bb.cb:                                            ; preds = %bb.bz
@@ -743,13 +745,14 @@ bb.cf:                                            ; preds = %_PyWideStringList_C
 
 .loopexit.i78:                                    ; preds = %bb.bx, %bb.bs
   %.us-phi32.i = phi ptr [ %i.ez, %bb.bs ], [ %i.fq, %bb.bx ] ; 2 uses
-  %.us-phi33.i = phi i64 [ %.019.us.i, %bb.bs ], [ %.019.i, %bb.bx ]
+  %.us-phi33.i = phi i64 [ %.019.us.i, %bb.bs ], [ %.019.i, %bb.bx ] ; 2 uses
   store ptr %.us-phi32.i, ptr %i.k, align 8
+  store i64 %.us-phi33.i, ptr %2, align 8
   br label %bb.cg
 
 bb.cg:                                            ; preds = %.loopexit.i78, %bb.cd, %bb.ca, %.split29.us.i, %.split.us.i
-  %i.gx = phi ptr [ %.us-phi32.i, %.loopexit.i78 ], [ %.pre, %bb.ca ], [ %.us-phi30.i, %.split29.us.i ], [ %.us-phi.i, %.split.us.i ], [ %i.gl, %bb.cd ] ; 2 uses
-  %i.gy = phi i64 [ %.us-phi33.i, %.loopexit.i78 ], [ %.pre.i, %bb.ca ], [ %.us-phi31.i, %.split29.us.i ], [ %.us-phi27.i, %.split.us.i ], [ %i.gm, %bb.cd ] ; 2 uses
+  %i.gx = phi ptr [ %.us-phi32.i, %.loopexit.i78 ], [ %i.gi, %bb.ca ], [ %.us-phi30.i, %.split29.us.i ], [ %.us-phi.i, %.split.us.i ], [ %i.gl, %bb.cd ] ; 2 uses
+  %i.gy = phi i64 [ %.us-phi33.i, %.loopexit.i78 ], [ %4, %bb.ca ], [ %.us-phi31.i, %.split29.us.i ], [ %.us-phi27.i, %.split.us.i ], [ %i.gm, %bb.cd ] ; 2 uses
   %i.gz = icmp sgt i64 %i.gy, 0
   br i1 %i.gz, label %.lr.ph.split.i.i55.i, label %_PyWideStringList_Clear.exit57.i
 

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.thread60, %._crit_
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden range(i32 0, 2) i32 @FLAC__bitreader_read_rice_signed_block(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(address) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #9 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
@@ -257,6 +257,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.preheader142
 
 .preheader142:                                    ; preds = %bb.d, %bb.r
+  %.promoted165 = phi i32 [ undef, %bb.d ], [ %i.ch, %bb.r ]
   %.0114.ph = phi i32 [ %i.p, %bb.d ], [ %i.cp, %bb.r ] ; 2 uses
   %.0113.ph = phi i32 [ %i.r, %bb.d ], [ %i.cq, %bb.r ] ; 5 uses
   %.pn = phi i32 [ %i.t, %bb.d ], [ %i.cs, %bb.r ]
@@ -275,15 +276,16 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph, %bb.j
   %.1165 = phi ptr [ %.1.ph, %.lr.ph ], [ %i.bv, %bb.j ] ; 4 uses
   %.0100164 = phi i64 [ %.0100.ph, %.lr.ph ], [ %.2102, %bb.j ] ; 3 uses
-  %.0103163 = phi i32 [ %.0103.ph, %.lr.ph ], [ %.1104, %bb.j ] ; 3 uses
-  %.0114162 = phi i32 [ %.0114.ph, %.lr.ph ], [ %.3117, %bb.j ] ; 3 uses
+  %.0103173 = phi i32 [ %.0103.ph, %.lr.ph ], [ %.1104, %bb.j ] ; 3 uses
+  %.0103163 = phi i32 [ %.0114.ph, %.lr.ph ], [ %.3117, %bb.j ] ; 3 uses
+  %.0114162 = phi i32 [ %.promoted165, %.lr.ph ], [ %.2110, %bb.j ] ; 2 uses
   %i.ae = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.0100164, i1 false) ; 2 uses
   %i.af = trunc nuw nsw i64 %i.ae to i32
   %i.ag = icmp eq i64 %.0100164, 0
   br i1 %i.ag, label %.preheader140.preheader, label %.loopexit141
 
 .preheader140.preheader:                          ; preds = %bb.e
-  %i.ah = add i32 %.0114162, 1                    ; 2 uses
+  %i.ah = add i32 %.0103163, 1                    ; 2 uses
   %.not135237 = icmp ult i32 %i.ah, %.0113.ph
   br i1 %.not135237, label %.lr.ph239.preheader, label %.preheader140.preheader._crit_edge
 
@@ -298,7 +300,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.j
 
 .lr.ph239:                                        ; preds = %.lr.ph239.preheader, %.preheader140
   %i.ak = phi i32 [ %i.aj, %.preheader140 ], [ %i.ah, %.lr.ph239.preheader ] ; 3 uses
-  %.0108238 = phi i32 [ %i.aq, %.preheader140 ], [ %.0103163, %.lr.ph239.preheader ]
+  %.0108238 = phi i32 [ %i.aq, %.preheader140 ], [ %.0103173, %.lr.ph239.preheader ]
   %i.al = zext i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.al
   %i.an = load i64, ptr %i.am, align 8, !tbaa !25 ; 3 uses
@@ -309,14 +311,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.j
   br i1 %i.ar, label %.preheader140, label %.loopexit141, !llvm.loop !46
 
 .loopexit141:                                     ; preds = %.lr.ph239, %bb.e
-  %.2116 = phi i32 [ %.0114162, %bb.e ], [ %i.ak, %.lr.ph239 ] ; 2 uses
+  %.2116 = phi i32 [ %.0103163, %bb.e ], [ %i.ak, %.lr.ph239 ] ; 2 uses
   %.1109 = phi i32 [ %i.af, %bb.e ], [ %i.aq, %.lr.ph239 ] ; 4 uses
   %.0107 = phi i64 [ %i.ae, %bb.e ], [ %i.ao, %.lr.ph239 ]
   %.1101 = phi i64 [ %.0100164, %bb.e ], [ %i.an, %.lr.ph239 ]
   %i.as = shl i64 %.1101, %.0107
   %i.at = shl i64 %i.as, 1                        ; 2 uses
   %i.au = xor i32 %.1109, -1
-  %i.av = add i32 %.0103163, %i.au
+  %i.av = add i32 %.0103173, %i.au
   %i.aw = and i32 %i.av, 63                       ; 4 uses
   %i.ax = icmp ugt i32 %.1109, %i.c
   br i1 %i.ax, label %.loopexit, label %bb.f
@@ -357,7 +359,6 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   %.2110 = phi i32 [ %i.az, %bb.g ], [ %i.bl, %bb.i ] ; 2 uses
   %.1104 = phi i32 [ %i.ba, %bb.g ], [ %i.bh, %bb.i ] ; 2 uses
   %.2102 = phi i64 [ %i.bb, %bb.g ], [ %i.bo, %bb.i ]
-  store i32 %.2110, ptr %i.a, align 4, !tbaa !21
   %i.bp = shl i32 %.1109, %3
   %i.bq = or i32 %.2110, %i.bp                    ; 2 uses
   %i.br = lshr i32 %i.bq, 1
@@ -370,9 +371,10 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br i1 %i.bw, label %bb.e, label %._crit_edge, !llvm.loop !47
 
 .preheader140.preheader._crit_edge:               ; preds = %.preheader140.preheader, %.preheader140
-  %.0108.lcssa = phi i32 [ %i.aq, %.preheader140 ], [ %.0103163, %.preheader140.preheader ]
-  %i.bx = add i32 %.0114162, 1
+  %.0108.lcssa = phi i32 [ %i.aq, %.preheader140 ], [ %.0103173, %.preheader140.preheader ]
+  %i.bx = add i32 %.0103163, 1
   %umax.le = tail call i32 @llvm.umax.i32(i32 %.0113.ph, i32 %i.bx)
+  store i32 %.0114162, ptr %i.a, align 4
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.by, align 8, !tbaa !19
   store i32 %umax.le, ptr %i.o, align 4, !tbaa !18
@@ -392,6 +394,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.h
+  store i32 %.0114162, ptr %i.a, align 4
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.cc, align 8, !tbaa !19
   store i32 %i.bc, ptr %i.o, align 4, !tbaa !18
@@ -409,7 +412,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cg = load i32, ptr %i.a, align 4, !tbaa !21
-  %i.ch = or i32 %i.cg, %.5                       ; 2 uses
+  %i.ch = or i32 %i.cg, %.5                       ; 3 uses
   store i32 %i.ch, ptr %i.a, align 4, !tbaa !21
   %i.ci = shl i32 %i.cd, %3
   %i.cj = or i32 %i.ci, %i.ch                     ; 2 uses
@@ -464,7 +467,7 @@ bb.r:                                             ; preds = %bb.q
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit141, %.lr.ph168, %bb.b, %.preheader, %bb.n, %bb.k, %._crit_edge
-  %.0119 = phi i32 [ 1, %.preheader ], [ 0, %bb.k ], [ 0, %bb.n ], [ 1, %._crit_edge ], [ 1, %bb.b ], [ 0, %.lr.ph168 ], [ 0, %.loopexit141 ]
+  %.0119 = phi i32 [ 0, %.lr.ph168 ], [ 0, %bb.k ], [ 0, %bb.n ], [ 1, %._crit_edge ], [ 1, %.preheader ], [ 1, %bb.b ], [ 0, %.loopexit141 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   ret i32 %.0119
@@ -473,7 +476,7 @@ bb.r:                                             ; preds = %bb.q
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden range(i32 0, 2) i32 @FLAC__bitreader_read_rice_signed_block_bmi2(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(address) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #12 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 6 uses
+  %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
@@ -525,6 +528,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.preheader142
 
 .preheader142:                                    ; preds = %bb.d, %bb.r
+  %.promoted165 = phi i32 [ undef, %bb.d ], [ %i.ch, %bb.r ]
   %.0114.ph = phi i32 [ %i.p, %bb.d ], [ %i.cp, %bb.r ] ; 2 uses
   %.0113.ph = phi i32 [ %i.r, %bb.d ], [ %i.cq, %bb.r ] ; 5 uses
   %.pn = phi i32 [ %i.t, %bb.d ], [ %i.cs, %bb.r ]
@@ -543,15 +547,16 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph, %bb.j
   %.1165 = phi ptr [ %.1.ph, %.lr.ph ], [ %i.bv, %bb.j ] ; 4 uses
   %.0100164 = phi i64 [ %.0100.ph, %.lr.ph ], [ %.2102, %bb.j ] ; 3 uses
-  %.0103163 = phi i32 [ %.0103.ph, %.lr.ph ], [ %.1104, %bb.j ] ; 3 uses
-  %.0114162 = phi i32 [ %.0114.ph, %.lr.ph ], [ %.3117, %bb.j ] ; 3 uses
+  %.0103173 = phi i32 [ %.0103.ph, %.lr.ph ], [ %.1104, %bb.j ] ; 3 uses
+  %.0103163 = phi i32 [ %.0114.ph, %.lr.ph ], [ %.3117, %bb.j ] ; 3 uses
+  %.0114162 = phi i32 [ %.promoted165, %.lr.ph ], [ %.2110, %bb.j ] ; 2 uses
   %i.ae = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.0100164, i1 false) ; 2 uses
   %i.af = trunc nuw nsw i64 %i.ae to i32
   %i.ag = icmp eq i64 %.0100164, 0
   br i1 %i.ag, label %.preheader140.preheader, label %.loopexit141
 
 .preheader140.preheader:                          ; preds = %bb.e
-  %i.ah = add i32 %.0114162, 1                    ; 2 uses
+  %i.ah = add i32 %.0103163, 1                    ; 2 uses
   %.not135237 = icmp ult i32 %i.ah, %.0113.ph
   br i1 %.not135237, label %.lr.ph239.preheader, label %.preheader140.preheader._crit_edge
 
@@ -566,7 +571,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.j
 
 .lr.ph239:                                        ; preds = %.lr.ph239.preheader, %.preheader140
   %i.ak = phi i32 [ %i.aj, %.preheader140 ], [ %i.ah, %.lr.ph239.preheader ] ; 3 uses
-  %.0108238 = phi i32 [ %i.aq, %.preheader140 ], [ %.0103163, %.lr.ph239.preheader ]
+  %.0108238 = phi i32 [ %i.aq, %.preheader140 ], [ %.0103173, %.lr.ph239.preheader ]
   %i.al = zext i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.al
   %i.an = load i64, ptr %i.am, align 8, !tbaa !25 ; 3 uses
@@ -577,14 +582,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.j
   br i1 %i.ar, label %.preheader140, label %.loopexit141, !llvm.loop !50
 
 .loopexit141:                                     ; preds = %.lr.ph239, %bb.e
-  %.2116 = phi i32 [ %.0114162, %bb.e ], [ %i.ak, %.lr.ph239 ] ; 2 uses
+  %.2116 = phi i32 [ %.0103163, %bb.e ], [ %i.ak, %.lr.ph239 ] ; 2 uses
   %.1109 = phi i32 [ %i.af, %bb.e ], [ %i.aq, %.lr.ph239 ] ; 4 uses
   %.0107 = phi i64 [ %i.ae, %bb.e ], [ %i.ao, %.lr.ph239 ]
   %.1101 = phi i64 [ %.0100164, %bb.e ], [ %i.an, %.lr.ph239 ]
   %i.as = shl i64 %.1101, %.0107
   %i.at = shl i64 %i.as, 1                        ; 2 uses
   %i.au = xor i32 %.1109, -1
-  %i.av = add i32 %.0103163, %i.au
+  %i.av = add i32 %.0103173, %i.au
   %i.aw = and i32 %i.av, 63                       ; 4 uses
   %i.ax = icmp ugt i32 %.1109, %i.c
   br i1 %i.ax, label %.loopexit, label %bb.f
@@ -625,7 +630,6 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   %.2110 = phi i32 [ %i.az, %bb.g ], [ %i.bl, %bb.i ] ; 2 uses
   %.1104 = phi i32 [ %i.ba, %bb.g ], [ %i.bh, %bb.i ] ; 2 uses
   %.2102 = phi i64 [ %i.bb, %bb.g ], [ %i.bo, %bb.i ]
-  store i32 %.2110, ptr %i.a, align 4, !tbaa !21
   %i.bp = shl i32 %.1109, %3
   %i.bq = or i32 %.2110, %i.bp                    ; 2 uses
   %i.br = lshr i32 %i.bq, 1
@@ -638,9 +642,10 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br i1 %i.bw, label %bb.e, label %._crit_edge, !llvm.loop !51
 
 .preheader140.preheader._crit_edge:               ; preds = %.preheader140.preheader, %.preheader140
-  %.0108.lcssa = phi i32 [ %i.aq, %.preheader140 ], [ %.0103163, %.preheader140.preheader ]
-  %i.bx = add i32 %.0114162, 1
+  %.0108.lcssa = phi i32 [ %i.aq, %.preheader140 ], [ %.0103173, %.preheader140.preheader ]
+  %i.bx = add i32 %.0103163, 1
   %umax.le = tail call i32 @llvm.umax.i32(i32 %.0113.ph, i32 %i.bx)
+  store i32 %.0114162, ptr %i.a, align 4
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.by, align 8, !tbaa !19
   store i32 %umax.le, ptr %i.o, align 4, !tbaa !18
@@ -660,6 +665,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.h
+  store i32 %.0114162, ptr %i.a, align 4
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.cc, align 8, !tbaa !19
   store i32 %i.bc, ptr %i.o, align 4, !tbaa !18
@@ -677,7 +683,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cg = load i32, ptr %i.a, align 4, !tbaa !21
-  %i.ch = or i32 %i.cg, %.5                       ; 2 uses
+  %i.ch = or i32 %i.cg, %.5                       ; 3 uses
   store i32 %i.ch, ptr %i.a, align 4, !tbaa !21
   %i.ci = shl i32 %i.cd, %3
   %i.cj = or i32 %i.ci, %i.ch                     ; 2 uses
@@ -732,7 +738,7 @@ bb.r:                                             ; preds = %bb.q
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit141, %.lr.ph168, %bb.b, %.preheader, %bb.n, %bb.k, %._crit_edge
-  %.0119 = phi i32 [ 1, %.preheader ], [ 0, %bb.k ], [ 0, %bb.n ], [ 1, %._crit_edge ], [ 1, %bb.b ], [ 0, %.lr.ph168 ], [ 0, %.loopexit141 ]
+  %.0119 = phi i32 [ 0, %.lr.ph168 ], [ 0, %bb.k ], [ 0, %bb.n ], [ 1, %._crit_edge ], [ 1, %.preheader ], [ 1, %bb.b ], [ 0, %.loopexit141 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   ret i32 %.0119

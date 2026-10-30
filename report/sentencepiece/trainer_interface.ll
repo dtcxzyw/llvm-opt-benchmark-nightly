@@ -205,7 +205,7 @@ _ZNR4absl12lts_2026052613StatusBuilderlsIA49_cEERS1_RKT_.exit: ; preds = %bb.a, 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN13sentencepiece6SortedIDiSt4pairIblEEESt6vectorIS1_IT_T0_ESaIS6_EERKN4absl12lts_2026052613flat_hash_mapIS4_S5_NSA_18container_internal17FlatHashMapPolicyIS4_S5_E11DefaultHashENSE_9DefaultEqENSE_12DefaultAllocEEE(ptr dead_on_unwind noalias writable sret(%"class.std::vector.117") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::vector.117", align 8   ; 13 uses
+  %2 = alloca %"class.std::vector.117", align 8   ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #34
   %i.a = load i64, ptr %1, align 8                ; 3 uses
   %i.b = icmp ult i64 %i.a, 562949953552384
@@ -248,7 +248,6 @@ bb.d:                                             ; preds = %bb.b
 _ZNK4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIDiSt4pairIblEEEJEE5beginEv.exit: ; preds = %.lr.ph.i.i.i, %bb.c, %bb.d
   %.sroa.6.0.i.i = phi ptr [ %.sroa.0.0.copyload.i.i.i.i, %bb.d ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.i, %bb.c ], [ %i.m, %.lr.ph.i.i.i ]
   %.sroa.0.0.i.i = phi ptr [ %.sroa.0.0.copyload.i.i.i.i.i, %bb.d ], [ @_ZN4absl12lts_2026052618container_internal11kSooControlE, %bb.c ], [ %i.l, %.lr.ph.i.i.i ] ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   br label %.lr.ph.i.i.i7
 
 .lr.ph.i.i.i7:                                    ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIDiSt4pairIblEEEJEE8iterator21skip_empty_or_deletedEv.exit.i.i.i.i.i, %_ZNK4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyIDiSt4pairIblEEEJEE5beginEv.exit
@@ -651,7 +650,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.q
   %.sroa.0.025 = phi ptr [ %.sroa.0.022, %.lr.ph ], [ %.sroa.0.0, %bb.q ] ; 8 uses
-  %.pn24 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.025, %bb.q ] ; 6 uses
+  %.pn24 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.025, %bb.q ] ; 7 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.pn24, i64 72
   %i.j = load i64, ptr %i.i, align 8, !tbaa !170  ; 3 uses
   %i.k = load i64, ptr %i.b, align 8, !tbaa !170  ; 2 uses
@@ -699,7 +698,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN13sentencepiece6SortedINSt7__cxx1112basic
 
 bb.e:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN13sentencepiece6SortedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEESt6vectorISt4pairIT_T0_ESaISE_EERKSG_EUlRKSB_IS9_lESL_E_EclINS_17__normal_iteratorIPSJ_SA_ISJ_SaISJ_EEEEST_EEbSC_SD_.exit.thread
   %i.z = getelementptr inbounds nuw i8, ptr %.pn24, i64 48
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !47  ; 2 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !47  ; 3 uses
   %i.ab = icmp ult i64 %i.aa, 16
   call void @llvm.assume(i1 %i.ab)
   %i.ac = add nuw nsw i64 %i.aa, 1
@@ -710,14 +709,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   store ptr %i.w, ptr %2, align 8, !tbaa !50
   %i.ad = load i64, ptr %i.x, align 8, !tbaa !48
   store i64 %i.ad, ptr %i.d, align 8, !tbaa !48
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pn24, i64 48
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !47
   br label %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEC2EOS6_.exit
 
 _ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEC2EOS6_.exit: ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24, i64 48 ; 2 uses
-  %4 = load i64, ptr %3, align 8, !tbaa !47
-  store i64 %4, ptr %i.e, align 8, !tbaa !47
+  %3 = phi i64 [ %i.aa, %bb.e ], [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.pn24, i64 48
+  store i64 %3, ptr %i.e, align 8, !tbaa !47
   store ptr %i.x, ptr %.sroa.0.025, align 8, !tbaa !50
-  store i64 0, ptr %3, align 8, !tbaa !47
+  store i64 0, ptr %4, align 8, !tbaa !47
   store i8 0, ptr %i.x, align 8, !tbaa !48
   store i64 %i.j, ptr %i.f, align 8, !tbaa !170
   %i.ae = ptrtoint ptr %.sroa.0.025 to i64

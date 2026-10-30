@@ -204,9 +204,8 @@ _ZN13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11cha
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !29, !noalias !473 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !68, !noalias !473 ; 5 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %i.ac, ptr %i.ad, align 8, !tbaa !68, !alias.scope !473
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !68, !noalias !473 ; 4 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !68
   %i.ag = load ptr, ptr %i.aa, align 8, !tbaa !68 ; 2 uses

@@ -204,7 +204,7 @@ _ZN11CStringBaseIcED2Ev.exit:                     ; preds = %bb.o, %bb.p
 _ZN11CStringBaseIcEC2Ev.exit:                     ; preds = %_ZN11CStringBaseIcED2Ev.exit
   store i8 0, ptr %i.at, align 1, !tbaa !44
   %i.au = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  %i.av = load i32, ptr %i.au, align 8, !tbaa !24
+  %i.av = load i32, ptr %i.au, align 8, !tbaa !24 ; 2 uses
   %i.aw = icmp sgt i32 %i.av, 0
   br i1 %i.aw, label %.lr.ph, label %.critedge
 
@@ -229,6 +229,7 @@ bb.s:                                             ; preds = %_ZN11CStringBaseIcE
   br label %bb.aa
 
 .lr.ph:                                           ; preds = %_ZN11CStringBaseIcEC2Ev.exit, %bb.x
+  %9 = phi i32 [ %10, %bb.x ], [ %i.av, %_ZN11CStringBaseIcEC2Ev.exit ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ 0, %_ZN11CStringBaseIcEC2Ev.exit ] ; 16 uses
   %.sroa.20.0103 = phi i32 [ %.sroa.20.1, %bb.x ], [ 4, %_ZN11CStringBaseIcEC2Ev.exit ] ; 9 uses
   %.sroa.0.0101 = phi ptr [ %.sroa.0.1, %bb.x ], [ %i.at, %_ZN11CStringBaseIcEC2Ev.exit ] ; 13 uses
@@ -389,9 +390,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.w:                                             ; preds = %._crit_edge.thread.i.i.i, %.noexc64
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bt, i64 %indvars.iv
   store i8 0, ptr %i.cx, align 1, !tbaa !44
+  %.pre = load i32, ptr %i.au, align 8, !tbaa !24
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.u, %bb.t
+  %10 = phi i32 [ %9, %bb.u ], [ %.pre, %bb.w ], [ %9, %bb.t ] ; 2 uses
   %.sroa.0.1 = phi ptr [ %.sroa.0.0101, %bb.u ], [ %i.bt, %bb.w ], [ %.sroa.0.0101, %bb.t ] ; 4 uses
   %.sroa.20.1 = phi i32 [ %.sroa.20.0103, %bb.u ], [ %i.bq, %bb.w ], [ %.sroa.20.0103, %bb.t ]
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 %indvars.iv
@@ -399,8 +402,7 @@ bb.x:                                             ; preds = %bb.w, %bb.u, %bb.t
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 %indvars.iv.next
   store i8 0, ptr %i.cz, align 1, !tbaa !44
-  %9 = load i32, ptr %i.au, align 8, !tbaa !24
-  %i.da = sext i32 %9 to i64
+  %i.da = sext i32 %10 to i64
   %i.db = icmp slt i64 %indvars.iv.next, %i.da
   br i1 %i.db, label %.lr.ph, label %.critedge, !llvm.loop !40
 

@@ -205,12 +205,15 @@ Cba_ObjNtk.exit:                                  ; preds = %bb.gm, %Cba_ObjNtkI
   %i.wb = getelementptr inbounds nuw [4 x i8], ptr %.val970, i64 %.pre3199
   %i.wc = load i32, ptr %i.wb, align 4, !tbaa !28
   %i.wd = icmp slt i32 %i.wa, %i.wc
-  br i1 %i.wd, label %.lr.ph3027.a, label %.lr.ph.i1246
+  br i1 %i.wd, label %.lr.ph3027, label %.lr.ph.i1246
 
-.lr.ph3027.a:                                     ; preds = %Cba_ObjNtk.exit, %Vec_StrPrintStr.exit1245
-  %.val9693129 = phi ptr [ %.val969, %Vec_StrPrintStr.exit1245 ], [ %.val970, %Cba_ObjNtk.exit ]
-  %.07753026 = phi i32 [ %i.yp, %Vec_StrPrintStr.exit1245 ], [ %i.wa, %Cba_ObjNtk.exit ] ; 5 uses
+.lr.ph3027:                                       ; preds = %Cba_ObjNtk.exit
   %.val985 = load ptr, ptr %i.x, align 8, !tbaa !92
+  br label %.lr.ph3027.a
+
+.lr.ph3027.a:                                     ; preds = %.lr.ph3027, %Vec_StrPrintStr.exit1245
+  %.val9693129 = phi ptr [ %.val970, %.lr.ph3027 ], [ %.val969, %Vec_StrPrintStr.exit1245 ]
+  %.07753026 = phi i32 [ %i.wa, %.lr.ph3027 ], [ %i.yp, %Vec_StrPrintStr.exit1245 ] ; 5 uses
   %i.we = ashr i32 %.07753026, 5
   %i.wf = sext i32 %i.we to i64
   %i.wg = getelementptr inbounds [4 x i8], ptr %.val985, i64 %i.wf

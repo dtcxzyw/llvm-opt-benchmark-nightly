@@ -205,9 +205,9 @@ bb.bb:                                            ; preds = %_ZN4pugi4impl12_GLO
 ; Function Attrs: mustprogress uwtable
 define { ptr, ptr } @_ZNK4pugi11xpath_query13evaluate_nodeERKNS_10xpath_nodeE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.pugi::xpath_node", align 16 ; 5 uses
+  %2 = alloca %"class.pugi::xpath_node", align 8  ; 6 uses
   %3 = alloca %"struct.pugi::xpath_parse_result", align 8 ; 5 uses
-  %4 = alloca %"class.pugi::xpath_node", align 16 ; 4 uses
+  %4 = alloca %"class.pugi::xpath_node", align 8  ; 3 uses
   %5 = alloca %"struct.pugi::impl::(anonymous namespace)::xpath_context", align 8 ; 7 uses
   %6 = alloca %"struct.pugi::impl::(anonymous namespace)::xpath_stack_data", align 8 ; 18 uses
   %7 = alloca %"class.pugi::impl::(anonymous namespace)::xpath_node_set_raw", align 8 ; 7 uses
@@ -247,6 +247,9 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.a
   call void @_ZN4pugi10xpath_nodeC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %4)
+  %.fca.0.load.pre = load ptr, ptr %4, align 8
+  %.fca.1.gep.phi.trans.insert = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.fca.1.load.pre = load ptr, ptr %.fca.1.gep.phi.trans.insert, align 8
   br label %bb.n
 
 _ZN4pugi4impl12_GLOBAL__N_125evaluate_node_set_prepareEPNS1_16xpath_query_implE.exit: ; preds = %bb.b
@@ -350,13 +353,14 @@ bb.l:                                             ; preds = %bb.j
 
 .sink.split:                                      ; preds = %.noexc5, %bb.l, %bb.j, %bb.k
   %.010.lcssa.i.i.i.sink = phi ptr [ %i.x, %bb.j ], [ %i.ac, %bb.k ], [ %i.x, %bb.l ], [ %spec.select.i.i.i, %.noexc5 ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.010.lcssa.i.i.i.sink, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.010.lcssa.i.i.i.sink, i64 16, i1 false)
   br label %bb.m
 
 bb.m:                                             ; preds = %.sink.split, %.invoke
-  %8 = load <2 x ptr>, ptr %2, align 16
+  %.fca.0.load.i.i = load ptr, ptr %2, align 8
+  %.fca.1.gep.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.fca.1.load.i.i = load ptr, ptr %.fca.1.gep.i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  store <2 x ptr> %8, ptr %4, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #50
   %.val1.i = load ptr, ptr %i.h, align 8          ; 2 uses
   %i.ae = load ptr, ptr %.val1.i, align 8         ; 2 uses
@@ -406,10 +410,9 @@ _ZN4pugi4impl12_GLOBAL__N_116xpath_stack_dataD2Ev.exit: ; preds = %.noexc6.i, %_
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN4pugi4impl12_GLOBAL__N_116xpath_stack_dataD2Ev.exit, %bb.f
-  %.fca.0.load = load ptr, ptr %4, align 16
+  %.fca.1.load = phi ptr [ %.fca.1.load.i.i, %_ZN4pugi4impl12_GLOBAL__N_116xpath_stack_dataD2Ev.exit ], [ %.fca.1.load.pre, %bb.f ]
+  %.fca.0.load = phi ptr [ %.fca.0.load.i.i, %_ZN4pugi4impl12_GLOBAL__N_116xpath_stack_dataD2Ev.exit ], [ %.fca.0.load.pre, %bb.f ]
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.fca.0.load, 0
-  %.fca.1.gep = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %.fca.1.load = load ptr, ptr %.fca.1.gep, align 8
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.fca.1.load, 1
   ret { ptr, ptr } %.fca.1.insert
 

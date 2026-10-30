@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4Type21make_all_struct_typesEiRSt6vectorIPKS_SaIS2_EE(i32 noundef %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.std::vector.13", align 8    ; 13 uses
+  %2 = alloca %"class.std::vector.13", align 8    ; 15 uses
   %3 = alloca %"class.std::vector.18", align 8    ; 11 uses
   %4 = alloca %"class.std::vector.18", align 8    ; 11 uses
   %5 = alloca %class.Enumerator, align 8          ; 14 uses
@@ -226,16 +226,17 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.f, label %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i, %.lr.ph.i
-  %.pre51 = phi ptr [ %i.e, %.lr.ph.i ], [ %.pre52, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 2 uses
-  %i.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.ac, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ]
-  %i.j = phi ptr [ null, %.lr.ph.i ], [ %i.ad, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 7 uses
+  %.pre70 = phi ptr [ %i.e, %.lr.ph.i ], [ %.pre71, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 2 uses
+  %.pre51 = phi ptr [ %i.e, %.lr.ph.i ], [ %.pre52, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ]
+  %i.i = phi ptr [ null, %.lr.ph.i ], [ %i.ac, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 3 uses
+  %i.j = phi ptr [ null, %.lr.ph.i ], [ %i.ad, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 9 uses
   %i.k = phi ptr [ null, %.lr.ph.i ], [ %i.ae, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 3 uses
-  %i.l = phi ptr [ null, %.lr.ph.i ], [ %i.af, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 3 uses
+  %i.l = phi ptr [ null, %.lr.ph.i ], [ %6, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 5 uses
   %.sroa.03.06.i = phi ptr [ %i.c, %.lr.ph.i ], [ %i.ag, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 3 uses
   %.not.i.i = icmp eq ptr %i.l, %i.k
   br i1 %.not.i.i, label %bb.f, label %bb.e
@@ -243,8 +244,6 @@ bb.d:                                             ; preds = %_ZNSt6vectorIPK4Typ
 bb.e:                                             ; preds = %bb.d
   %i.m = load ptr, ptr %.sroa.03.06.i, align 8, !tbaa !50
   store ptr %i.m, ptr %i.l, align 8, !tbaa !50
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
-  store ptr %6, ptr %i.g, align 8, !tbaa !80
   br label %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i
 
 bb.f:                                             ; preds = %bb.d
@@ -255,6 +254,9 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.q, label %bb.g, label %_ZNKSt6vectorIPK4TypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.f
+  store ptr %i.l, ptr %i.g, align 8
+  store ptr %i.j, ptr %2, align 8
+  store ptr %i.i, ptr %i.h, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.77) #30
           to label %.noexc unwind label %.loopexit.split-lp43.loopexit.split-lp
 
@@ -272,7 +274,7 @@ _ZNKSt6vectorIPK4TypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.f
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.w = shl nuw nsw i64 %i.v, 3
   %i.x = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #28
-          to label %.noexc21 unwind label %.loopexit.split-lp43.loopexit ; 5 uses
+          to label %.noexc21 unwind label %.loopexit.split-lp43.loopexit ; 4 uses
 
 .noexc21:                                         ; preds = %_ZNKSt6vectorIPK4TypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.y = getelementptr inbounds i8, ptr %i.x, i64 %i.p ; 2 uses
@@ -286,7 +288,6 @@ bb.h:                                             ; preds = %.noexc21
   br label %_ZNSt6vectorIPK4TypeSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
 
 _ZNSt6vectorIPK4TypeSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i: ; preds = %bb.h, %.noexc21
-  %7 = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 2 uses
   %.not.i17.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.i
 
@@ -296,25 +297,30 @@ bb.i:                                             ; preds = %_ZNSt6vectorIPK4Typ
   br label %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPK4TypeSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
-  %.pre = phi ptr [ %.pre.pre, %bb.i ], [ %.pre51, %_ZNSt6vectorIPK4TypeSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i ] ; 2 uses
-  store ptr %i.x, ptr %2, align 8, !tbaa !81
-  store ptr %7, ptr %i.g, align 8, !tbaa !80
+  %.pre = phi ptr [ %.pre.pre, %bb.i ], [ %.pre70, %_ZNSt6vectorIPK4TypeSaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i ] ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.v ; 2 uses
-  store ptr %i.ab, ptr %i.h, align 8, !tbaa !91
   br label %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i
 
 _ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i: ; preds = %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, %bb.e
-  %.pre52 = phi ptr [ %.pre51, %bb.e ], [ %.pre, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
-  %i.ac = phi ptr [ %i.i, %bb.e ], [ %.pre, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.ad = phi ptr [ %i.j, %bb.e ], [ %i.x, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
+  %.pre71 = phi ptr [ %.pre70, %bb.e ], [ %.pre, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
+  %.pre52 = phi ptr [ %.pre51, %bb.e ], [ %.pre, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.ac = phi ptr [ %i.i, %bb.e ], [ %i.ab, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.ad = phi ptr [ %i.j, %bb.e ], [ %i.x, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 3 uses
   %i.ae = phi ptr [ %i.k, %bb.e ], [ %i.ab, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
-  %i.af = phi ptr [ %6, %bb.e ], [ %7, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
+  %i.af = phi ptr [ %i.l, %bb.e ], [ %i.y, %_ZNSt6vectorIPK4TypeSaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
+  %6 = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i, i64 8 ; 2 uses
-  %i.ah = icmp eq ptr %i.ag, %i.ac
-  br i1 %i.ah, label %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit, label %bb.d, !llvm.loop !7
+  %i.ah = icmp eq ptr %i.ag, %.pre52
+  br i1 %i.ah, label %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit.loopexit, label %bb.d, !llvm.loop !7
 
-_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit: ; preds = %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i, %bb.c
-  %i.ai = phi ptr [ null, %bb.c ], [ %i.ad, %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i ] ; 4 uses
+_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit.loopexit: ; preds = %_ZNSt6vectorIPK4TypeSaIS2_EE9push_backERKS2_.exit.i
+  store ptr %6, ptr %i.g, align 8
+  store ptr %i.ad, ptr %2, align 8
+  store ptr %i.ac, ptr %i.h, align 8
+  br label %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit
+
+_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit: ; preds = %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit.loopexit, %bb.c
+  %i.ai = phi ptr [ %i.ad, %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit.loopexit ], [ null, %bb.c ] ; 4 uses
   invoke void @_ZN4Type17reset_accum_typesERSt6vectorIPKS_SaIS2_EE(ptr noundef nonnull align 8 dereferenceable(24) %1)
           to label %bb.j unwind label %.loopexit.split-lp43.loopexit.split-lp
 
@@ -572,10 +578,13 @@ _ZNSt6vectorIPK4TypeSaIS2_EED2Ev.exit:            ; preds = %_ZNSt6vectorI12CVQu
 .loopexit.split-lp43.loopexit:                    ; preds = %_ZNKSt6vectorIPK4TypeSaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit48 = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.l, ptr %i.g, align 8
+  store ptr %i.j, ptr %2, align 8
+  store ptr %i.i, ptr %i.h, align 8
   br label %.loopexit.split-lp43
 
-.loopexit.split-lp43.loopexit.split-lp:           ; preds = %bb.g, %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit
-  %i.dk = phi ptr [ %i.j, %bb.g ], [ %i.ai, %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit ]
+.loopexit.split-lp43.loopexit.split-lp:           ; preds = %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit, %bb.g
+  %i.dk = phi ptr [ %i.ai, %_ZN4Type21copy_all_fields_typesERSt6vectorIPKS_SaIS2_EES5_.exit ], [ %i.j, %bb.g ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp43

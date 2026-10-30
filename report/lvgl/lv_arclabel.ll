@@ -115,7 +115,7 @@ bb.c:                                             ; preds = %bb.b
   %i.aa = call fastcc i32 @arclabel_calc_arc_text_total_angle(ptr noundef %i.l, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 96
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !27
-  %i.ad = load i32, ptr %i.b, align 4, !tbaa !25  ; 2 uses
+  %i.ad = load i32, ptr %i.b, align 4, !tbaa !25  ; 3 uses
   %i.ae = mul i32 %i.ac, 46080
   %i.af = sdiv i32 %i.ae, 804
   %i.ag = sdiv i32 %i.af, %i.ad                   ; 2 uses
@@ -178,6 +178,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   br label %bb.h
 
 bb.h:                                             ; preds = %.critedge.i, %.lr.ph.i
+  %6 = phi i32 [ %i.ad, %.lr.ph.i ], [ %7, %.critedge.i ]
   %i.bm = phi ptr [ %i.n, %.lr.ph.i ], [ %i.bq, %.critedge.i ]
   %.065105.i = phi i32 [ %i.az, %.lr.ph.i ], [ %.4.i, %.critedge.i ]
   %.067104.i = phi i32 [ 0, %.lr.ph.i ], [ %.168.i9, %.critedge.i ]
@@ -200,16 +201,17 @@ bb.i:                                             ; preds = %bb.h
   %i.bp = call fastcc ptr @recolor_cmd_get_next(ptr noundef %.086100.i, ptr noundef %i.a, ptr noundef %i.h, ptr noundef nonnull %3)
   %.pre.i = load i32, ptr %i.h, align 4, !tbaa !25
   %.pre106.i = load ptr, ptr %i.a, align 8
+  %.pre107.i = load i32, ptr %i.b, align 4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
+  %7 = phi i32 [ %.pre107.i, %bb.i ], [ %6, %bb.h ] ; 4 uses
   %i.bq = phi ptr [ %.pre106.i, %bb.i ], [ %i.bm, %bb.h ] ; 2 uses
   %i.br = phi i32 [ %.pre.i, %bb.i ], [ -1, %bb.h ] ; 2 uses
   %.187.i = phi ptr [ %i.bp, %bb.i ], [ null, %bb.h ] ; 2 uses
   %i.bs = load i32, ptr %i.d, align 4
   %i.bt = load i8, ptr %i.c, align 1, !range !44
   %i.bu = trunc nuw i8 %i.bt to i1
-  %6 = load i32, ptr %i.b, align 4                ; 3 uses
   br label %.outer.i
 
 .outer.i:                                         ; preds = %bb.r, %bb.j
@@ -294,14 +296,14 @@ bb.t:                                             ; preds = %bb.s, %bb.o
   %i.cu = select i1 %i.cs, i32 %.2.i, i32 %i.ct
   %i.cv = mul i32 %i.cu, 46080
   %i.cw = sdiv i32 %i.cv, 804
-  %i.cx = sdiv i32 %i.cw, %6
+  %i.cx = sdiv i32 %i.cw, %7
   %i.cy = add nsw i32 %i.cx, %i.cq                ; 2 uses
   %i.cz = trunc i32 %i.cy to i16                  ; 2 uses
   %i.da = call i32 @lv_trigo_cos(i16 noundef signext %i.cz) #6
-  %i.db = mul nsw i32 %i.da, %6
+  %i.db = mul nsw i32 %i.da, %7
   %i.dc = sdiv i32 %i.db, 32767
   %i.dd = call i32 @lv_trigo_sin(i16 noundef signext %i.cz) #6
-  %i.de = mul nsw i32 %i.dd, %6
+  %i.de = mul nsw i32 %i.dd, %7
   %i.df = sdiv i32 %i.de, 32767
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   %i.dg = call i32 @lv_area_get_width(ptr noundef nonnull %2) #6

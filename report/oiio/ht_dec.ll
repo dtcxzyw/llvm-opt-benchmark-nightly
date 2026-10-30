@@ -205,13 +205,15 @@ bb.bg:                                            ; preds = %bb.be, %bb.bf, %bb.
   %.41519 = phi i32 [ %i.lx, %bb.bf ], [ %i.lt, %bb.be ], [ %.31518, %bb.bd ] ; 2 uses
   %i.ly = call fastcc i32 @decode_init_uvlc(i32 noundef %.01526, i32 noundef %.01554, ptr noundef %i.a) ; 2 uses
   %i.lz = load i32, ptr %i.a, align 4, !tbaa !9   ; 5 uses
-  %13 = icmp ugt i32 %i.lz, %i.fr
-  %14 = load i32, ptr %i.hc, align 4              ; 5 uses
-  %i.ma = icmp ugt i32 %14, %i.fr
-  %or.cond2013 = select i1 %13, i1 true, i1 %i.ma
-  br i1 %or.cond2013, label %bb.bh, label %bb.bj
+  %i.ma = icmp ugt i32 %i.lz, %i.fr
+  br i1 %i.ma, label %bb.bh, label %13
 
-bb.bh:                                            ; preds = %bb.bg
+13:                                               ; preds = %bb.bg
+  %14 = load i32, ptr %i.hc, align 4, !tbaa !9    ; 5 uses
+  %15 = icmp ugt i32 %14, %i.fr
+  br i1 %15, label %bb.bh, label %bb.bj
+
+bb.bh:                                            ; preds = %13, %bb.bg
   %.not1733 = icmp eq ptr %6, null
   br i1 %.not1733, label %.critedge1761, label %bb.bi
 
@@ -225,7 +227,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.mc = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %5, i32 noundef 1, ptr noundef nonnull @.str.9) #10 ; 0 uses
   br label %.thread1797
 
-bb.bj:                                            ; preds = %bb.bg
+bb.bj:                                            ; preds = %13
   %i.md = zext nneg i32 %i.ly to i64
   %i.me = lshr i64 %i.lb, %i.md
   store i64 %i.me, ptr %i.ha, align 8, !tbaa !16

@@ -205,7 +205,7 @@ set_jumps.exit:                                   ; preds = %sljit_set_label.exi
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @compile_assert_matchingpath(ptr noundef nonnull %0, ptr noundef %1, ptr nofree noundef captures(none) %2, i32 noundef range(i32 0, 2) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 8 uses
+  %i.a = alloca i32, align 4                      ; 10 uses
   %4 = alloca %struct.backtrack_common, align 8   ; 8 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !128    ; 252 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -608,7 +608,7 @@ emit_mov.exit1146.thread:                         ; preds = %bb.dk
   br label %sljit_emit_op1.exit615
 
 sljit_emit_op1.exit615:                           ; preds = %bb.dk, %bb.dj, %emit_mov.exit1146.thread, %sljit_emit_op1.exit610
-  %i.ps = load i32, ptr %i.a, align 4, !tbaa !46  ; 8 uses
+  %i.ps = load i32, ptr %i.a, align 4, !tbaa !46
   %.not446 = icmp eq i32 %i.ps, 0
   br i1 %.not446, label %sljit_emit_op1.exit620, label %bb.dl
 
@@ -798,7 +798,6 @@ bb.ed:                                            ; preds = %add_jump.exit630.th
   br label %sljit_emit_op1.exit593
 
 sljit_emit_op1.exit593:                           ; preds = %sljit_emit_op1.exit620, %bb.df, %bb.dg, %bb.cx, %bb.cy, %bb.ds, %bb.dz, %bb.dl, %bb.ec, %sljit_emit_jump.exit, %bb.ed, %add_jump.exit630, %bb.de, %emit_mov.exit1140.thread, %bb.cw, %emit_mov.exit1133.thread, %sljit_emit_op1.exit600, %sljit_emit_op1.exit588
-  %5 = phi i32 [ 1, %bb.df ], [ 1, %bb.dg ], [ 1, %bb.cx ], [ 1, %bb.cy ], [ %i.ps, %bb.ds ], [ %i.ps, %bb.dz ], [ 1, %bb.dl ], [ %i.ps, %bb.ec ], [ %i.ps, %sljit_emit_jump.exit ], [ %i.ps, %bb.ed ], [ %i.ps, %add_jump.exit630 ], [ 1, %bb.de ], [ 1, %emit_mov.exit1140.thread ], [ 1, %bb.cw ], [ 1, %emit_mov.exit1133.thread ], [ 0, %sljit_emit_op1.exit600 ], [ 0, %sljit_emit_op1.exit588 ], [ %i.ps, %sljit_emit_op1.exit620 ] ; 2 uses
   switch i8 %i.aj, label %sljit_emit_op1.exit638 [
     i8 -126, label %bb.ee
     i8 -128, label %bb.ee
@@ -816,6 +815,7 @@ bb.eg:                                            ; preds = %bb.ef
   br i1 %.not.i634, label %bb.eh, label %add_jump.exit692, !prof !130
 
 bb.eh:                                            ; preds = %bb.eg
+  %5 = load i32, ptr %i.a, align 4, !tbaa !46
   %.not450 = icmp eq i32 %5, 0
   %.neg451 = select i1 %.not450, i32 -1, i32 -2
   %i.sa = sub nuw nsw i32 %.neg451, %.0425
@@ -1218,7 +1218,8 @@ emit_mov.exit1181.thread:                         ; preds = %bb.hf
   br label %sljit_emit_op1.exit764
 
 sljit_emit_op1.exit764:                           ; preds = %bb.hf, %bb.he, %emit_mov.exit1181.thread, %sljit_set_label.exit
-  %.not456 = icmp eq i32 %5, 0
+  %6 = load i32, ptr %i.a, align 4, !tbaa !46
+  %.not456 = icmp eq i32 %6, 0
   br i1 %.not456, label %sljit_emit_op1.exit769, label %bb.hg
 
 bb.hg:                                            ; preds = %sljit_emit_op1.exit764

@@ -204,15 +204,15 @@ bb.eh:                                            ; preds = %bb.ef
   br label %bb.ei
 
 bb.ei:                                            ; preds = %bb.fh, %bb.eh
-  %i.ok = phi i64 [ 0, %bb.eh ], [ %i.qz, %bb.fh ] ; 4 uses
-  %i.ol = phi i64 [ 0, %bb.eh ], [ %i.ra, %bb.fh ] ; 4 uses
-  %i.om = phi i64 [ %i.nv, %bb.eh ], [ %.pre729.i, %bb.fh ]
-  %i.on = phi i64 [ %i.nr, %bb.eh ], [ %.pre728.i, %bb.fh ]
+  %i.ok = phi i64 [ %i.nr, %bb.eh ], [ %.pre728.i, %bb.fh ] ; 3 uses
+  %i.ol = phi i64 [ 0, %bb.eh ], [ %i.qz, %bb.fh ] ; 4 uses
+  %i.om = phi i64 [ 0, %bb.eh ], [ %i.ra, %bb.fh ] ; 4 uses
+  %i.on = phi i64 [ %i.nv, %bb.eh ], [ %.pre729.i, %bb.fh ]
   %.sroa.0252.0.i = phi i32 [ 0, %bb.eh ], [ %.sroa.0252.2.i.1, %bb.fh ] ; 6 uses
   %.sroa.0.8.i = phi i64 [ %i.my, %bb.eh ], [ %.sroa.0.10.i.1, %bb.fh ] ; 5 uses
-  %i.oo = trunc nuw i64 %i.on to i1               ; 3 uses
+  %i.oo = trunc nuw i64 %i.ok to i1               ; 3 uses
   %.sroa.2263.0..sroa_idx..i = select i1 %i.oo, ptr %.sroa.2263.0..sroa_idx.i, ptr null
-  %i.op = trunc nuw i64 %i.om to i1
+  %i.op = trunc nuw i64 %i.on to i1
   %.sroa.0282.0.i = select i1 %i.op, ptr %.sroa.2273.0..sroa_idx.i, ptr null
   %i.oq = invoke fastcc i16 @_RNvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard14set_operations16get_next_actions(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.sroa.2263.0..sroa_idx..i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) %.sroa.0282.0.i)
           to label %bb.ej unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
@@ -247,8 +247,9 @@ bb.el:                                            ; preds = %bb.ej
   ]
 
 bb.em:                                            ; preds = %bb.el, %bb.el, %bb.fr, %bb.gf
-  %i.ov = phi i64 [ %i.rg, %bb.fr ], [ %i.ok, %bb.gf ], [ %i.ok, %bb.el ], [ %i.ok, %bb.el ] ; 4 uses
-  %i.ow = phi i64 [ %i.rd, %bb.fr ], [ %i.ol, %bb.gf ], [ %i.ol, %bb.el ], [ %i.ol, %bb.el ] ; 4 uses
+  %.pre728.i409 = phi i64 [ %i.sb, %bb.fr ], [ %i.td, %bb.gf ], [ %i.ok, %bb.el ], [ %i.ok, %bb.el ] ; 3 uses
+  %i.ov = phi i64 [ %i.rg, %bb.fr ], [ %i.ol, %bb.gf ], [ %i.ol, %bb.el ], [ %i.ol, %bb.el ] ; 4 uses
+  %i.ow = phi i64 [ %i.rd, %bb.fr ], [ %i.om, %bb.gf ], [ %i.om, %bb.el ], [ %i.om, %bb.el ] ; 4 uses
   %.sroa.0252.2.i = phi i32 [ %i.sa, %bb.fr ], [ %.sroa.0252.0.i, %bb.gf ], [ %.sroa.0252.0.i, %bb.el ], [ %.sroa.0252.0.i, %bb.el ] ; 6 uses
   %.sroa.0.10.i = phi i64 [ %.sroa.0.11.lcssa.i, %bb.fr ], [ %.sroa.0.8.i, %bb.gf ], [ %.sroa.0.8.i, %bb.el ], [ %.sroa.0.8.i, %bb.el ] ; 4 uses
   switch i8 %.sroa.4.0.extract.trunc, label %default.unreachable [
@@ -421,14 +422,15 @@ bb.fg:                                            ; preds = %bb.ff
   store i64 %i.qx, ptr %i.nz, align 8, !noalias !1966
   store i64 %.sroa.5564.0.copyload.i.1, ptr %i.oi, align 8, !noalias !1966
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6311.i)
+  %.pre728.i.pre = load i64, ptr %i.x, align 8, !range !11, !noalias !1966
   br label %bb.fh
 
 bb.fh:                                            ; preds = %bb.fg, %bb.es, %bb.em, %bb.em
+  %.pre728.i = phi i64 [ %.pre728.i.pre, %bb.fg ], [ %.pre728.i409, %bb.es ], [ %.pre728.i409, %bb.em ], [ %.pre728.i409, %bb.em ]
   %i.qz = phi i64 [ %i.po, %bb.fg ], [ %i.ov, %bb.es ], [ %i.ov, %bb.em ], [ %i.ov, %bb.em ]
   %i.ra = phi i64 [ %i.pl, %bb.fg ], [ %i.ow, %bb.es ], [ %i.ow, %bb.em ], [ %i.ow, %bb.em ]
   %.sroa.0252.2.i.1 = phi i32 [ %i.qw, %bb.fg ], [ %.sroa.0252.2.i, %bb.es ], [ %.sroa.0252.2.i, %bb.em ], [ %.sroa.0252.2.i, %bb.em ]
   %.sroa.0.10.i.1 = phi i64 [ %.sroa.0.11.lcssa.i.1, %bb.fg ], [ %.sroa.0.10.i, %bb.es ], [ %.sroa.0.10.i, %bb.em ], [ %.sroa.0.10.i, %bb.em ]
-  %.pre728.i = load i64, ptr %i.x, align 8, !range !11, !noalias !1966
   %.pre729.i = load i64, ptr %i.nz, align 8, !range !11, !noalias !1966
   br label %bb.ei
 
@@ -438,11 +440,11 @@ bb.fi:                                            ; preds = %bb.el
 bb.fj:                                            ; preds = %bb.fi
   %i.rb = load i32, ptr %i.oc, align 4, !noalias !1966, !noundef !9
   %i.rc = zext i32 %i.rb to i64
-  %i.rd = add i64 %i.ol, %i.rc                    ; 2 uses
+  %i.rd = add i64 %i.om, %i.rc                    ; 2 uses
   store i64 %i.rd, ptr %i.bl, align 8, !noalias !1966
   %i.re = load i32, ptr %.sroa.3264.0..sroa_idx.i, align 8, !noalias !1966, !noundef !9
   %i.rf = zext i32 %i.re to i64
-  %i.rg = add i64 %i.ok, %i.rf                    ; 2 uses
+  %i.rg = add i64 %i.ol, %i.rf                    ; 2 uses
   store i64 %i.rg, ptr %i.bn, align 8, !noalias !1966
   %i.rh = invoke { i64, ptr } @_RINvMNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12xorb_structsNtB3_23XorbChunkSequenceHeader9serializeINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs9SMuO7kbZ2K_7git_xet(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.sroa.2263.0..sroa_idx.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %5)
           to label %bb.fk unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1965 ; 2 uses
@@ -514,7 +516,7 @@ bb.fo:                                            ; preds = %bb.fn, %._crit_edge
           to label %bb.fp unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1965
 
 bb.fp:                                            ; preds = %bb.fo
-  %i.sb = load i64, ptr %i.s, align 8, !range !16, !noalias !1966, !noundef !9 ; 2 uses
+  %i.sb = load i64, ptr %i.s, align 8, !range !16, !noalias !1966, !noundef !9 ; 3 uses
   %i.sc = icmp eq i64 %i.sb, 2
   br i1 %i.sc, label %bb.fq, label %bb.fr
 
@@ -630,7 +632,7 @@ bb.gc:                                            ; preds = %bb.ga
           to label %bb.gd unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1965
 
 bb.gd:                                            ; preds = %bb.gc
-  %i.td = load i64, ptr %i.r, align 8, !range !16, !noalias !1966, !noundef !9 ; 2 uses
+  %i.td = load i64, ptr %i.r, align 8, !range !16, !noalias !1966, !noundef !9 ; 3 uses
   %i.te = icmp eq i64 %i.td, 2
   br i1 %i.te, label %bb.ge, label %bb.gf
 

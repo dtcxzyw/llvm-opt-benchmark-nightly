@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIPKN4Luau4TypeESaIS3_EE11_M_allocateEm.exit.i.i.i: ; preds = 
 _ZNSt12_Vector_baseIPKN4Luau4TypeESaIS3_EE13_M_deallocateEPS3_m.exit.i.i.i: ; preds = %_ZNSt12_Vector_baseIPKN4Luau4TypeESaIS3_EE11_M_allocateEm.exit.i.i.i
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.p ; 2 uses
   %i.u = load ptr, ptr %3, align 8, !tbaa !213    ; 3 uses
-  %i.v = load ptr, ptr %i.i, align 8              ; 3 uses
+  %i.v = load ptr, ptr %i.i, align 8              ; 4 uses
   %i.w = icmp ne i64 %.val3, 0
   %i.x = icmp ne ptr %i.u, %i.v
   %or.cond90.i.i = select i1 %i.w, i1 %i.x, i1 false
@@ -237,6 +237,7 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit41.thread.i.i: ; preds = %_ZNSt12_Ve
   br i1 %or.cond.i.i, label %.lr.ph.i.i, label %.critedge.preheader.i.i, !llvm.loop !211
 
 .lr.ph98.i.i:                                     ; preds = %.critedge.preheader.i.i, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i
+  %5 = phi ptr [ %6, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i ], [ %i.v, %.critedge.preheader.i.i ]
   %.sroa.053.097.i.i = phi ptr [ %.sroa.053.3.i.i, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i ], [ %i.s, %.critedge.preheader.i.i ] ; 6 uses
   %.sroa.048.196.i.i = phi ptr [ %i.aw, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i ], [ %.sroa.048.0.lcssa.i.i, %.critedge.preheader.i.i ] ; 3 uses
   %.sroa.21.095.i.i = phi ptr [ %.sroa.21.3.i.i, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i ], [ %i.t, %.critedge.preheader.i.i ] ; 5 uses
@@ -290,16 +291,17 @@ bb.i:                                             ; preds = %.noexc33.i.i
 _ZNSt6vectorIPKN4Luau4TypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i: ; preds = %bb.i, %.noexc33.i.i
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.053.097.i.i, i64 noundef %i.aj) #28
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.ap
+  %.pre.i.i = load ptr, ptr %i.i, align 8, !tbaa !213
   br label %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i
 
 _ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i: ; preds = %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i, %bb.f
+  %6 = phi ptr [ %.pre.i.i, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i ], [ %5, %bb.f ] ; 2 uses
   %.pn.i.i = phi ptr [ %i.as, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i ], [ %.sroa.13.094.i.i, %bb.f ]
   %.sroa.21.3.i.i = phi ptr [ %i.av, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i ], [ %.sroa.21.095.i.i, %bb.f ] ; 7 uses
   %.sroa.053.3.i.i = phi ptr [ %i.ar, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i ], [ %.sroa.053.097.i.i, %bb.f ] ; 11 uses
   %.sroa.13.2.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 8 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.048.196.i.i, i64 8 ; 2 uses
-  %5 = load ptr, ptr %i.i, align 8, !tbaa !213
-  %.not77.i.i = icmp eq ptr %i.aw, %5
+  %.not77.i.i = icmp eq ptr %i.aw, %6
   br i1 %.not77.i.i, label %.critedge._crit_edge.i.i, label %.lr.ph98.i.i, !llvm.loop !212
 
 .critedge._crit_edge.i.i:                         ; preds = %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit.i.i
@@ -348,7 +350,7 @@ _ZNSt15__new_allocatorIPKN4Luau4TypeEE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds =
   br i1 %i.bl, label %bb.k, label %bb.l, !prof !106
 
 bb.k:                                             ; preds = %.noexc35.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bh, ptr align 8 %.sroa.053.3.i.i, i64 %i.bb, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bh, ptr align 8 %.sroa.053.3.i.i, i64 %i.bb, i1 false)
   br label %bb.n
 
 bb.l:                                             ; preds = %.noexc35.i.i

@@ -204,7 +204,11 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %.sroa.9.1.lcssa.i = phi ptr [ %.sroa.9.0.i, %bb.l ], [ %i.dk, %bb.m ] ; 3 uses
   %i.dm = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph108, i64 %.sroa.0.0.i37 ; 2 uses
   %i.dn = icmp ult ptr %.sroa.9.1.lcssa.i, %i.dm
-  br i1 %i.dn, label %.lr.ph42.i.a, label %._crit_edge43.i
+  br i1 %i.dn, label %.lr.ph42.i, label %._crit_edge43.i
+
+.lr.ph42.i:                                       ; preds = %._crit_edge.i
+  %.val14.i = load i32, ptr %i.bj, align 8, !alias.scope !504
+  br label %.lr.ph42.i.a
 
 ._crit_edge43.i:                                  ; preds = %.lr.ph42.i.a, %._crit_edge.i
   %.sroa.43.2.lcssa.i = phi ptr [ %.sroa.43.1.lcssa.i, %._crit_edge.i ], [ %i.dv, %.lr.ph42.i.a ]
@@ -213,16 +217,15 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i
   %i.do = icmp eq i64 %.sroa.0.0.i37, %.sroa.16.0101251
   br i1 %i.do, label %bb.o, label %bb.n
 
-.lr.ph42.i.a:                                     ; preds = %._crit_edge.i, %.lr.ph42.i.a
-  %.sroa.9.240.i = phi ptr [ %i.dz, %.lr.ph42.i.a ], [ %.sroa.9.1.lcssa.i, %._crit_edge.i ] ; 3 uses
-  %.sroa.27.239.i = phi i64 [ %i.dy, %.lr.ph42.i.a ], [ %.sroa.27.1.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %.sroa.43.238.i = phi ptr [ %i.dv, %.lr.ph42.i.a ], [ %.sroa.43.1.lcssa.i, %._crit_edge.i ]
-  %.val.i = load i32, ptr %.sroa.9.240.i, align 8, !alias.scope !504
-  %.val14.i.a = load i32, ptr %i.bj, align 8, !alias.scope !504
+.lr.ph42.i.a:                                     ; preds = %.lr.ph42.i.a, %.lr.ph42.i
+  %.sroa.9.240.i = phi ptr [ %.sroa.9.1.lcssa.i, %.lr.ph42.i ], [ %i.dz, %.lr.ph42.i.a ] ; 3 uses
+  %.sroa.27.239.i = phi i64 [ %.sroa.27.1.lcssa.i, %.lr.ph42.i ], [ %i.dy, %.lr.ph42.i.a ] ; 2 uses
+  %.sroa.43.238.i = phi ptr [ %.sroa.43.1.lcssa.i, %.lr.ph42.i ], [ %i.dv, %.lr.ph42.i.a ]
+  %.val14.i.a = load i32, ptr %.sroa.9.240.i, align 8, !alias.scope !504
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !506
-  store i32 %.val.i, ptr %i.l, align 4, !noalias !506
+  store i32 %.val14.i.a, ptr %i.l, align 4, !noalias !506
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !506
-  store i32 %.val14.i.a, ptr %i.k, align 4, !noalias !506
+  store i32 %.val14.i, ptr %i.k, align 4, !noalias !506
   %i.dp = load i32, ptr %i.l, align 4
   %i.dq = load i32, ptr %i.k, align 4
   %i.dr = call i32 @llvm.bswap.i32(i32 %i.dp)
@@ -435,7 +438,11 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i56
   %.sroa.9.1.lcssa.i48 = phi ptr [ %.sroa.9.0.i43, %bb.u ], [ %i.gn, %bb.v ] ; 3 uses
   %i.gp = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph108, i64 %.sroa.0.0.i44 ; 2 uses
   %i.gq = icmp ult ptr %.sroa.9.1.lcssa.i48, %i.gp
-  br i1 %i.gq, label %.lr.ph38.i.a, label %._crit_edge39.i
+  br i1 %i.gq, label %.lr.ph38.i, label %._crit_edge39.i
+
+.lr.ph38.i:                                       ; preds = %._crit_edge.i45
+  %.val14.i53 = load i32, ptr %i.bj, align 8, !alias.scope !514
+  br label %.lr.ph38.i.a
 
 ._crit_edge39.i:                                  ; preds = %.lr.ph38.i.a, %._crit_edge.i45
   %.sroa.43.2.lcssa.i49 = phi ptr [ %.sroa.43.1.lcssa.i46, %._crit_edge.i45 ], [ %i.gx, %.lr.ph38.i.a ]
@@ -444,16 +451,15 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph.i56
   %i.gr = icmp eq i64 %.sroa.0.0.i44, %.sroa.16.0101251
   br i1 %i.gr, label %bb.x, label %bb.w
 
-.lr.ph38.i.a:                                     ; preds = %._crit_edge.i45, %.lr.ph38.i.a
-  %.sroa.9.236.i = phi ptr [ %i.hb, %.lr.ph38.i.a ], [ %.sroa.9.1.lcssa.i48, %._crit_edge.i45 ] ; 3 uses
-  %.sroa.27.235.i = phi i64 [ %i.ha, %.lr.ph38.i.a ], [ %.sroa.27.1.lcssa.i47, %._crit_edge.i45 ] ; 2 uses
-  %.sroa.43.234.i = phi ptr [ %i.gx, %.lr.ph38.i.a ], [ %.sroa.43.1.lcssa.i46, %._crit_edge.i45 ]
-  %.val.i53 = load i32, ptr %.sroa.9.236.i, align 8, !alias.scope !514
-  %.val14.i54 = load i32, ptr %i.bj, align 8, !alias.scope !514
+.lr.ph38.i.a:                                     ; preds = %.lr.ph38.i.a, %.lr.ph38.i
+  %.sroa.9.236.i = phi ptr [ %.sroa.9.1.lcssa.i48, %.lr.ph38.i ], [ %i.hb, %.lr.ph38.i.a ] ; 3 uses
+  %.sroa.27.235.i = phi i64 [ %.sroa.27.1.lcssa.i47, %.lr.ph38.i ], [ %i.ha, %.lr.ph38.i.a ] ; 2 uses
+  %.sroa.43.234.i = phi ptr [ %.sroa.43.1.lcssa.i46, %.lr.ph38.i ], [ %i.gx, %.lr.ph38.i.a ]
+  %.val14.i54 = load i32, ptr %.sroa.9.236.i, align 8, !alias.scope !514
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !516
-  store i32 %.val14.i54, ptr %i.b, align 4, !noalias !516
+  store i32 %.val14.i53, ptr %i.b, align 4, !noalias !516
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !516
-  store i32 %.val.i53, ptr %i.a, align 4, !noalias !516
+  store i32 %.val14.i54, ptr %i.a, align 4, !noalias !516
   %i.gs = load i32, ptr %i.b, align 4
   %i.gt = load i32, ptr %i.a, align 4
   %i.gu = call i32 @llvm.bswap.i32(i32 %i.gs)
@@ -856,7 +862,7 @@ bb.f:                                             ; preds = %bb.h
 bb.g:                                             ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterINtNtCsgdm2QMcbaeA_10fontdrasil6coords8LocationNtBZ_15NormalizedSpaceEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsjceHdiZFn9b_13glyphs2fontir.exit.i.i.i
   %.sroa.6.0..sroa_idx2.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 %.sroa.0.0.copyload1.i.i.i, ptr %1, align 8, !alias.scope !1146
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx2.i.i.i, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx2.i.i.i, i64 16, i1 false)
   %i.n = icmp ne i64 %.sroa.0.0.copyload1.i.i.i, -2
   call void @llvm.assume(i1 %i.n)
   %.val9 = load i64, ptr %i.e, align 8, !noundef !4 ; 2 uses
@@ -961,7 +967,7 @@ bb.b:                                             ; preds = %_RNvXs4_NtNtCsgCecv
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24 ; 2 uses
   store ptr %i.h, ptr %i.c, align 8, !alias.scope !1162, !noalias !1163
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
   %.val5.peel = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !noundef !4
   %.not23.peel = icmp eq i32 %.sroa.6.sroa.0.019.peel, %.val5.peel
   br i1 %.not23.peel, label %.peel.next, label %.loopexit37
@@ -993,7 +999,7 @@ bb.d:                                             ; preds = %.loopexit37, %.loop
 bb.e:                                             ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTNtNtCsbZq13ASDQ8l_10font_types3tag3TagTINtNtCsgdm2QMcbaeA_10fontdrasil6coords5CoordNtB1D_15NormalizedSpaceEB1A_EEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsjceHdiZFn9b_13glyphs2fontir.exit
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 2 uses
   store ptr %i.j, ptr %i.c, align 8, !alias.scope !1162, !noalias !1163
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   %.val5 = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !noundef !4
   %.not23 = icmp eq i32 %.sroa.6.sroa.0.019.peel, %.val5
   br i1 %.not23, label %bb.f, label %.loopexit37

@@ -204,17 +204,18 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.277 = phi i32 [ 0, %bb.p ], [ %i.br, %bb.q ]  ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.e, i64 1048
   %i.bt = load ptr, ptr %i.bs, align 8
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 4 ; 2 uses
   %i.bv = add i32 %.277, -1
   %i.bw = zext i32 %i.bv to i64
+  %.pre = load i8, ptr %i.bu, align 1
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.z, %bb.r
+  %6 = phi i8 [ %i.co, %bb.z ], [ %.pre, %bb.r ]  ; 3 uses
   %indvars.iv91 = phi i64 [ %indvars.iv.next92, %bb.z ], [ 0, %bb.r ] ; 3 uses
-  %.075 = phi ptr [ %.08.lcssa.i.i, %bb.z ], [ %i.bu, %bb.r ] ; 4 uses
+  %.075 = phi ptr [ %.08.lcssa.i.i, %bb.z ], [ %i.bu, %bb.r ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.075, ptr %i.a, align 8
-  %6 = load i8, ptr %.075, align 1                ; 3 uses
   %i.bx = icmp eq i8 %6, 45
   switch i8 %6, label %bb.u [
     i8 45, label %bb.t
@@ -276,7 +277,7 @@ _ZN6Assimp8strtol10EPKcPS1_.exit:                 ; preds = %._crit_edge.i.i, %b
   br i1 %i.cn, label %.critedge, label %bb.y
 
 bb.y:                                             ; preds = %_ZN6Assimp8strtol10EPKcPS1_.exit
-  %i.co = load i8, ptr %.08.lcssa.i.i, align 1
+  %i.co = load i8, ptr %.08.lcssa.i.i, align 1    ; 2 uses
   switch i8 %i.co, label %.critedge47 [
     i8 32, label %bb.z
     i8 9, label %bb.z

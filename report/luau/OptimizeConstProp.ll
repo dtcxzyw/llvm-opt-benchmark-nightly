@@ -205,7 +205,7 @@ _ZNSt6vectorIhSaIhEE7reserveEm.exit.i.i:          ; preds = %bb.z
 
 .noexc35:                                         ; preds = %_ZNSt6vectorIhSaIhEE7reserveEm.exit.i.i
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 %i.dl ; 2 uses
-  %.pre.i.i = load i32, ptr %i.al, align 8, !tbaa !136
+  %.pre.i.i = load i32, ptr %i.al, align 8, !tbaa !136 ; 2 uses
   %.not49.i.i = icmp slt i32 %.pre.i.i, 0
   br i1 %.not49.i.i, label %._crit_edge.i.i, label %.lr.ph.i61.i
 
@@ -238,6 +238,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i
   br label %_ZN4Luau7CodeGenL18saveBlockExitStateERNS0_10IrFunctionERKNS0_7IrBlockERNS0_14ConstPropStateE.exit.i
 
 .lr.ph.i61.i:                                     ; preds = %.noexc35, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i
+  %2 = phi i32 [ %3, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ %.pre.i.i, %.noexc35 ]
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ 0, %.noexc35 ] ; 3 uses
   %.sroa.21.052.i.i = phi ptr [ %.sroa.21.3.i.i, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ %i.do, %.noexc35 ] ; 3 uses
   %.sroa.13.051.i.i = phi ptr [ %.sroa.13.2.i.i, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ %i.dn, %.noexc35 ] ; 3 uses
@@ -290,16 +291,17 @@ bb.ae:                                            ; preds = %.noexc17.i.i
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i: ; preds = %bb.ae, %.noexc17.i.i
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.050.i.i, i64 noundef %i.eh) #26
   %i.er = getelementptr inbounds nuw i8, ptr %i.en, i64 %i.em
+  %.pre83.i = load i32, ptr %i.al, align 8, !tbaa !136
   br label %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i: ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i, %bb.ab
+  %3 = phi i32 [ %.pre83.i, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %2, %bb.ab ] ; 2 uses
   %.sroa.0.3.i.i = phi ptr [ %i.en, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.0.050.i.i, %bb.ab ] ; 2 uses
   %.pn.i.i = phi ptr [ %i.eo, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.13.051.i.i, %bb.ab ]
   %.sroa.21.3.i.i = phi ptr [ %i.er, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.21.052.i.i, %bb.ab ] ; 2 uses
   %.sroa.13.2.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 1 ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
-  %2 = load i32, ptr %i.al, align 8, !tbaa !136
-  %i.es = sext i32 %2 to i64
+  %i.es = sext i32 %3 to i64
   %.not.not.i.i = icmp slt i64 %indvars.iv.i.i, %i.es
   br i1 %.not.not.i.i, label %.lr.ph.i61.i, label %._crit_edge.i.i, !llvm.loop !331
 
@@ -702,7 +704,7 @@ _ZNKSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE12_M_check_lenEmPKc.exit.i
 
 _ZNSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.r, %_ZNKSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.u, %.lr.ph.i.i.i.i.i ]
-  %i.v = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 12
+  %i.v = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 12
   %.not.i23.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.e
 
@@ -1105,7 +1107,7 @@ _ZNKSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE12_M_check_lenEmPKc.exit.i
 
 _ZNSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.ce, %_ZNKSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %i.ch, %.lr.ph.i.i.i.i.i.i ]
-  %i.ci = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 12
+  %i.ci = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 12
   %.not.i23.i.i.i = icmp eq ptr %i.bt, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.n
 
@@ -1508,7 +1510,7 @@ _ZNKSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE12_M_check_lenEmPKc.ex
 
 _ZNSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.kp, %_ZNKSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.ks, %.lr.ph.i.i.i.i.i ]
-  %i.kt = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 16
+  %i.kt = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 16
   %.not.i23.i.i = icmp eq ptr %i.ke, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.ca
 
@@ -1911,7 +1913,7 @@ _ZNKSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE12_M_check_lenEmPKc.ex
 
 _ZNSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.fz, %_ZNKSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.gc, %.lr.ph.i.i.i.i.i ]
-  %i.gd = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 16
+  %i.gd = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 16
   %.not.i23.i.i = icmp eq ptr %i.fo, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4Luau7CodeGen19BufferLoadStoreInfoESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.ae
 
@@ -2314,7 +2316,7 @@ _ZNKSt6vectorIN4Luau7CodeGen19NumberedInstructionESaIS2_EE12_M_check_lenEmPKc.ex
 
 _ZNSt6vectorIN4Luau7CodeGen19NumberedInstructionESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen19NumberedInstructionESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.r, %_ZNKSt6vectorIN4Luau7CodeGen19NumberedInstructionESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.u, %.lr.ph.i.i.i.i.i ]
-  %i.v = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 12
+  %i.v = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 12
   %.not.i23.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4Luau7CodeGen19NumberedInstructionESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.e
 
@@ -2717,7 +2719,7 @@ _ZNKSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE12_M_check_lenEmPKc.exit.i: ; 
 
 _ZNSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i: ; preds = %.lr.ph.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE12_M_check_lenEmPKc.exit.i
   %.0.lcssa.i.i.i.i = phi ptr [ %i.r, %_ZNKSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE12_M_check_lenEmPKc.exit.i ], [ %i.u, %.lr.ph.i.i.i.i ]
-  %i.v = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 40
+  %i.v = getelementptr i8, ptr %.0.lcssa.i.i.i.i, i64 40
   %.not.i23.i = icmp eq ptr %i.g, null
   br i1 %.not.i23.i, label %_ZNSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit, label %bb.e
 
@@ -2795,7 +2797,7 @@ _ZNKSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE12_M_check_lenEmPKc.exit.i.i: 
 
 _ZNSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.r, %_ZNKSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.u, %.lr.ph.i.i.i.i.i ]
-  %i.v = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 40
+  %i.v = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 40
   %.not.i23.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4Luau7CodeGen11RegisterSetESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.e
 

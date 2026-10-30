@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.a, ptr %4, align 8, !tbaa !32, !noalias !1019
   store i64 55, ptr %5, align 8, !tbaa !32, !noalias !1019
   %i.e = invoke noundef ptr @_ZN4absl12lts_2026052613StatusBuilder11InitRepImplENS0_6StatusE(ptr noundef nonnull align 8 %4)
-          to label %bb.c unwind label %.body.i.i, !noalias !1019 ; 4 uses
+          to label %bb.c unwind label %.body.i.i, !noalias !1019 ; 5 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load i64, ptr %4, align 8, !tbaa !32, !noalias !1019 ; 2 uses
@@ -342,7 +342,7 @@ _ZN4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacrosD2Ev.exit.i
 .critedge.i:                                      ; preds = %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.i, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.thread.i
   %i.af = phi ptr [ null, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.thread.i ], [ %i.o, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.i ]
   %i.ag = phi ptr [ %i.d, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.thread.i ], [ %i.n, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.i ]
-  %i.ah = phi ptr [ %i.c, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.thread.i ], [ %i.l, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.i ]
+  %i.ah = phi ptr [ %i.c, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.thread.i ], [ %i.l, %_ZNK4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacroscvbEv.exit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2), !noalias !1017
   %i.ai = ptrtoint ptr %i.af to i64
   store i64 %i.ai, ptr %2, align 8, !tbaa !81, !noalias !1017
@@ -368,6 +368,7 @@ bb.p:                                             ; preds = %.critedge.i
   unreachable
 
 _ZNSt10unique_ptrIN4absl12lts_2026052613StatusBuilder3RepESt14default_deleteIS3_EED2Ev.exit.i.i18.i: ; preds = %bb.o, %_ZNKSt14default_deleteIN4absl12lts_2026052613StatusBuilder3RepEEclEPS3_.exit.i.i.i17.i
+  %.pre.pre.i = load ptr, ptr %i.ah, align 8, !noalias !1017
   call void @llvm.lifetime.end.p0(ptr nonnull %2), !noalias !1017
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20, !noalias !1017
   store i64 1, ptr %11, align 8, !tbaa !32, !alias.scope !1036
@@ -381,12 +382,12 @@ _ZNSt10unique_ptrIN4absl12lts_2026052613StatusBuilder3RepESt14default_deleteIS3_
   br label %common.resume
 
 bb.q:                                             ; preds = %_ZNSt10unique_ptrIN4absl12lts_2026052613StatusBuilder3RepESt14default_deleteIS3_EED2Ev.exit.i.i18.i, %_ZN4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacrosD2Ev.exit.i
-  %i.am = phi ptr [ %i.ah, %_ZNSt10unique_ptrIN4absl12lts_2026052613StatusBuilder3RepESt14default_deleteIS3_EED2Ev.exit.i.i18.i ], [ %i.l, %_ZN4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacrosD2Ev.exit.i ] ; 2 uses
+  %i.am = phi ptr [ %.pre.pre.i, %_ZNSt10unique_ptrIN4absl12lts_2026052613StatusBuilder3RepESt14default_deleteIS3_EED2Ev.exit.i.i18.i ], [ %i.e, %_ZN4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacrosD2Ev.exit.i ]
+  %14 = phi ptr [ %i.ah, %_ZNSt10unique_ptrIN4absl12lts_2026052613StatusBuilder3RepESt14default_deleteIS3_EED2Ev.exit.i.i18.i ], [ %i.l, %_ZN4absl12lts_2026052621status_macro_internal22StatusAdaptorForMacrosD2Ev.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %1), !noalias !1017
-  %14 = load ptr, ptr %i.am, align 8, !noalias !1017
-  %i.an = ptrtoint ptr %14 to i64
+  %i.an = ptrtoint ptr %i.am to i64
   store i64 %i.an, ptr %1, align 8, !tbaa !81, !noalias !1017
-  store ptr null, ptr %i.am, align 8, !tbaa !81, !noalias !1017
+  store ptr null, ptr %14, align 8, !tbaa !81, !noalias !1017
   invoke void @_ZN4absl12lts_2026052613StatusBuilder7DestroyESt10unique_ptrINS1_3RepESt14default_deleteIS3_EE(ptr noundef nonnull align 8 %1)
           to label %bb.r unwind label %bb.s
 

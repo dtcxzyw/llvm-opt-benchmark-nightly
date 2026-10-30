@@ -204,7 +204,12 @@ bb.k:                                             ; preds = %bb.l, %bb.i
   %.sroa.0.0.i45 = phi i64 [ %.sroa.0.0.i, %bb.i ], [ %.sroa.17.096224, %bb.l ] ; 2 uses
   %i.am = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph103, i64 %.sroa.0.0.i45 ; 2 uses
   %i.an = icmp ult ptr %.sroa.5.0.i, %i.am
-  br i1 %i.an, label %.lr.ph.i.a, label %._crit_edge.i
+  br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i
+
+.lr.ph.i:                                         ; preds = %bb.k
+  %.val26.i = load ptr, ptr %i.ak, align 8, !alias.scope !114, !nonnull !5, !noundef !5
+  %.val27.i = load i64, ptr %i.al, align 8, !alias.scope !114, !noundef !5
+  br label %.lr.ph.i.a
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.a, %bb.k
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.k ], [ %i.at, %.lr.ph.i.a ]
@@ -213,17 +218,15 @@ bb.k:                                             ; preds = %bb.l, %bb.i
   %i.ao = icmp eq i64 %.sroa.0.0.i45, %.sroa.17.096224
   br i1 %i.ao, label %bb.m, label %bb.l
 
-.lr.ph.i.a:                                       ; preds = %bb.k, %.lr.ph.i.a
-  %.sroa.5.111.i = phi ptr [ %i.ax, %.lr.ph.i.a ], [ %.sroa.5.0.i, %bb.k ] ; 4 uses
-  %.sroa.11.110.i = phi i64 [ %i.aw, %.lr.ph.i.a ], [ %.sroa.11.0.i, %bb.k ] ; 2 uses
-  %.sroa.19.19.i = phi ptr [ %i.at, %.lr.ph.i.a ], [ %.sroa.19.0.i, %bb.k ]
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.sroa.5.111.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i ], [ %i.ax, %.lr.ph.i.a ] ; 4 uses
+  %.sroa.11.110.i = phi i64 [ %.sroa.11.0.i, %.lr.ph.i ], [ %i.aw, %.lr.ph.i.a ] ; 2 uses
+  %.sroa.19.19.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i ], [ %i.at, %.lr.ph.i.a ]
   %i.ap = getelementptr i8, ptr %.sroa.5.111.i, i64 8
   %.val.i = load ptr, ptr %i.ap, align 8, !alias.scope !114, !nonnull !5, !noundef !5
   %i.aq = getelementptr i8, ptr %.sroa.5.111.i, i64 16
-  %.val25.i = load i64, ptr %i.aq, align 8, !alias.scope !114, !noundef !5
-  %.val26.i = load ptr, ptr %i.ak, align 8, !alias.scope !114, !nonnull !5, !noundef !5
-  %.val27.i.a = load i64, ptr %i.al, align 8, !alias.scope !114, !noundef !5
-  %i.ar = call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h363f41e972b3c1c7E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i, i64 noundef %.val25.i, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val26.i, i64 noundef %.val27.i.a), !noalias !117 ; 2 uses
+  %.val27.i.a = load i64, ptr %i.aq, align 8, !alias.scope !114, !noundef !5
+  %i.ar = call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h363f41e972b3c1c7E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i, i64 noundef %.val27.i.a, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val26.i, i64 noundef %.val27.i), !noalias !117 ; 2 uses
   %i.as = icmp slt i8 %i.ar, 0
   %i.at = getelementptr inbounds i8, ptr %.sroa.19.19.i, i64 -24 ; 3 uses
   %.sroa.01.0.i.i = select i1 %i.as, ptr %2, ptr %i.at
@@ -323,7 +326,12 @@ bb.r:                                             ; preds = %bb.s, %bb.p
   %.sroa.0.0.i51 = phi i64 [ %.sroa.0.0.i, %bb.p ], [ %.sroa.17.096224, %bb.s ] ; 2 uses
   %i.bv = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph103, i64 %.sroa.0.0.i51 ; 2 uses
   %i.bw = icmp ult ptr %.sroa.5.0.i50, %i.bv
-  br i1 %i.bw, label %.lr.ph.i60.a, label %._crit_edge.i52
+  br i1 %i.bw, label %.lr.ph.i60, label %._crit_edge.i52
+
+.lr.ph.i60:                                       ; preds = %bb.r
+  %.val26.i61 = load ptr, ptr %i.bt, align 8, !alias.scope !120, !nonnull !5, !noundef !5
+  %.val27.i62 = load i64, ptr %i.bu, align 8, !alias.scope !120, !noundef !5
+  br label %.lr.ph.i60.a
 
 ._crit_edge.i52:                                  ; preds = %.lr.ph.i60.a, %bb.r
   %.sroa.19.1.lcssa.i53 = phi ptr [ %.sroa.19.0.i48, %bb.r ], [ %i.cc, %.lr.ph.i60.a ]
@@ -332,17 +340,15 @@ bb.r:                                             ; preds = %bb.s, %bb.p
   %i.bx = icmp eq i64 %.sroa.0.0.i51, %.sroa.17.096224
   br i1 %i.bx, label %bb.t, label %bb.s
 
-.lr.ph.i60.a:                                     ; preds = %bb.r, %.lr.ph.i60.a
-  %.sroa.5.111.i61 = phi ptr [ %i.cg, %.lr.ph.i60.a ], [ %.sroa.5.0.i50, %bb.r ] ; 4 uses
-  %.sroa.11.110.i62 = phi i64 [ %i.cf, %.lr.ph.i60.a ], [ %.sroa.11.0.i49, %bb.r ] ; 2 uses
-  %.sroa.19.19.i63 = phi ptr [ %i.cc, %.lr.ph.i60.a ], [ %.sroa.19.0.i48, %bb.r ]
+.lr.ph.i60.a:                                     ; preds = %.lr.ph.i60.a, %.lr.ph.i60
+  %.sroa.5.111.i61 = phi ptr [ %.sroa.5.0.i50, %.lr.ph.i60 ], [ %i.cg, %.lr.ph.i60.a ] ; 4 uses
+  %.sroa.11.110.i62 = phi i64 [ %.sroa.11.0.i49, %.lr.ph.i60 ], [ %i.cf, %.lr.ph.i60.a ] ; 2 uses
+  %.sroa.19.19.i63 = phi ptr [ %.sroa.19.0.i48, %.lr.ph.i60 ], [ %i.cc, %.lr.ph.i60.a ]
   %i.by = getelementptr i8, ptr %.sroa.5.111.i61, i64 8
   %.val.i64 = load ptr, ptr %i.by, align 8, !alias.scope !120, !nonnull !5, !noundef !5
   %i.bz = getelementptr i8, ptr %.sroa.5.111.i61, i64 16
-  %.val25.i65 = load i64, ptr %i.bz, align 8, !alias.scope !120, !noundef !5
-  %.val26.i66 = load ptr, ptr %i.bt, align 8, !alias.scope !120, !nonnull !5, !noundef !5
-  %.val27.i67 = load i64, ptr %i.bu, align 8, !alias.scope !120, !noundef !5
-  %i.ca = call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h363f41e972b3c1c7E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val26.i66, i64 noundef %.val27.i67, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i64, i64 noundef %.val25.i65), !noalias !122
+  %.val27.i67 = load i64, ptr %i.bz, align 8, !alias.scope !120, !noundef !5
+  %i.ca = call noundef range(i8 -1, 3) i8 @"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17h363f41e972b3c1c7E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val26.i61, i64 noundef %.val27.i62, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val.i64, i64 noundef %.val27.i67), !noalias !122
   %i.cb = icmp sgt i8 %i.ca, -1                   ; 2 uses
   %i.cc = getelementptr inbounds i8, ptr %.sroa.19.19.i63, i64 -24 ; 3 uses
   %.sroa.01.0.i.i68 = select i1 %i.cb, ptr %2, ptr %i.cc

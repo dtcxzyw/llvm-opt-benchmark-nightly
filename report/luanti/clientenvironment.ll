@@ -202,9 +202,9 @@ declare double @llvm.fabs.f64(double) #11
 define linkonce_odr dso_local void @_ZNSt6vectorI12PointedThingSaIS0_EE17_M_realloc_insertIJtRN4core8vector3dIfEES7_S7_fR16PointabilityTypeEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef nonnull align 2 dereferenceable(2) %2, ptr noundef nonnull align 4 dereferenceable(12) %3, ptr noundef nonnull align 4 dereferenceable(12) %4, ptr noundef nonnull align 4 dereferenceable(12) %5, ptr noundef nonnull align 4 dereferenceable(4) %6, ptr noundef nonnull align 1 dereferenceable(1) %7) local_unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !221  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !221  ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !548    ; 5 uses
-  %i.d = ptrtoint ptr %i.b to i64
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775744
@@ -221,7 +221,7 @@ _ZNKSt6vectorI12PointedThingSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 144115188075855871)
   %i.l = select i1 %i.j, i64 144115188075855871, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64
+  %i.m = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
@@ -276,22 +276,23 @@ _ZNKSt6vectorI12PointedThingSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   br i1 %.not.i.i.i, label %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit, label %.lr.ph.i.i.i, !llvm.loop !544
 
 _ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit: ; preds = %.lr.ph.i.i.i, %_ZNKSt6vectorI12PointedThingSaIS0_EE12_M_check_lenEmPKc.exit
-  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorI12PointedThingSaIS0_EE12_M_check_lenEmPKc.exit ], [ %i.ad, %.lr.ph.i.i.i ]
-  %i.ae = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 64 ; 2 uses
+  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorI12PointedThingSaIS0_EE12_M_check_lenEmPKc.exit ], [ %i.ad, %.lr.ph.i.i.i ] ; 2 uses
+  %i.ae = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 64 ; 2 uses
   %.not10.i.i.i32 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i32, label %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit38, label %.lr.ph.i.i.i33
 
-.lr.ph.i.i.i33:                                   ; preds = %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit, %.lr.ph.i.i.i33
-  %.012.i.i.i34 = phi ptr [ %i.af, %.lr.ph.i.i.i33 ], [ %i.ae, %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit ] ; 2 uses
-  %.0911.i.i.i35 = phi ptr [ %8, %.lr.ph.i.i.i33 ], [ %1, %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %.012.i.i.i34, ptr noundef nonnull align 4 dereferenceable(64) %.0911.i.i.i35, i64 64, i1 false), !tbaa.struct !550, !alias.scope !552
-  %8 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i35, i64 64 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %.012.i.i.i34, i64 64 ; 2 uses
-  %.not.i.i.i36 = icmp eq ptr %8, %i.b
-  br i1 %.not.i.i.i36, label %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit38, label %.lr.ph.i.i.i33, !llvm.loop !544
+.lr.ph.i.i.i33:                                   ; preds = %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
+  %8 = add i64 %i.d, -64
+  %9 = sub i64 %8, %i.m
+  %10 = and i64 %9, -64                           ; 2 uses
+  %11 = add i64 %10, 64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ae, ptr align 4 %1, i64 %11, i1 false), !alias.scope !552
+  %i.af = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %10
+  %scevgep = getelementptr i8, ptr %i.af, i64 128
+  br label %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit38
 
 _ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit38: ; preds = %.lr.ph.i.i.i33, %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit
-  %.0.lcssa.i.i.i37 = phi ptr [ %i.ae, %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit ], [ %i.af, %.lr.ph.i.i.i33 ]
+  %.0.lcssa.i.i.i37 = phi ptr [ %i.ae, %_ZNSt6vectorI12PointedThingSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit ], [ %scevgep, %.lr.ph.i.i.i33 ]
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not.i39 = icmp eq ptr %i.c, null
   br i1 %.not.i39, label %_ZNSt12_Vector_baseI12PointedThingSaIS0_EE13_M_deallocateEPS0_m.exit, label %bb.c

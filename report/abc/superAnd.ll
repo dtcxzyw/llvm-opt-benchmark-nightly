@@ -204,7 +204,7 @@ Super2_LibAddGate.exit.i:                         ; preds = %bb.u, %bb.q
   br label %bb.v
 
 bb.v:                                             ; preds = %Super2_LibAddGate.exit.i, %.lr.ph
-  %i.gs = phi ptr [ %.pre, %Super2_LibAddGate.exit.i ], [ %i.fq, %.lr.ph ] ; 2 uses
+  %i.gs = phi ptr [ %.pre, %Super2_LibAddGate.exit.i ], [ %i.fq, %.lr.ph ] ; 4 uses
   %i.gt = phi ptr [ %i.gh, %Super2_LibAddGate.exit.i ], [ %i.ff, %.lr.ph ] ; 2 uses
   %i.gu = phi i32 [ %i.gi, %Super2_LibAddGate.exit.i ], [ %i.fe, %.lr.ph ] ; 2 uses
   %i.gv = phi ptr [ %i.gj, %Super2_LibAddGate.exit.i ], [ %i.fd, %.lr.ph ] ; 2 uses
@@ -248,6 +248,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.ht = call ptr @realloc(ptr noundef nonnull %i.gx, i64 noundef %i.hs) #22
+  %.pre99.pre.pre = load ptr, ptr %i.i, align 8, !tbaa !31
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.x
@@ -255,12 +256,14 @@ bb.z:                                             ; preds = %bb.x
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
+  %.pre99.pre = phi ptr [ %i.gs, %bb.z ], [ %.pre99.pre.pre, %bb.y ]
   %i.hv = phi ptr [ %i.hu, %bb.z ], [ %i.ht, %bb.y ] ; 4 uses
   store ptr %i.hv, ptr %i.ch, align 8, !tbaa !40
   store i32 %i.hq, ptr %i.cd, align 8, !tbaa !38
   br label %Super2_LibAddGate.exit155.i
 
 Super2_LibAddGate.exit155.i:                      ; preds = %bb.aa, %bb.w
+  %.pre99 = phi ptr [ %.pre99.pre, %bb.aa ], [ %i.gs, %bb.w ]
   %i.hw = phi ptr [ %i.hv, %bb.aa ], [ %i.gt, %bb.w ]
   %i.hx = phi i32 [ %i.hq, %bb.aa ], [ %i.gu, %bb.w ]
   %i.hy = phi ptr [ %i.hv, %bb.aa ], [ %i.gv, %bb.w ]
@@ -272,11 +275,10 @@ Super2_LibAddGate.exit155.i:                      ; preds = %bb.aa, %bb.w
   %i.id = sext i32 %i.hb to i64
   %i.ie = getelementptr inbounds [8 x i8], ptr %i.ia, i64 %i.id
   store ptr %i.hk, ptr %i.ie, align 8, !tbaa !10
-  %.pre99 = load ptr, ptr %i.i, align 8, !tbaa !31
   br label %bb.ab
 
 bb.ab:                                            ; preds = %Super2_LibAddGate.exit155.i, %bb.v
-  %i.if = phi ptr [ %.pre99, %Super2_LibAddGate.exit155.i ], [ %i.gs, %bb.v ]
+  %i.if = phi ptr [ %.pre99, %Super2_LibAddGate.exit155.i ], [ %i.gs, %bb.v ] ; 3 uses
   %i.ig = phi ptr [ %i.hw, %Super2_LibAddGate.exit155.i ], [ %i.gt, %bb.v ] ; 2 uses
   %i.ih = phi i32 [ %i.hx, %Super2_LibAddGate.exit155.i ], [ %i.gu, %bb.v ] ; 2 uses
   %i.ii = phi ptr [ %i.hy, %Super2_LibAddGate.exit155.i ], [ %i.gv, %bb.v ] ; 4 uses
@@ -334,9 +336,11 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.jm = phi ptr [ %i.jl, %bb.af ], [ %i.jk, %bb.ae ] ; 3 uses
   store ptr %i.jm, ptr %i.ch, align 8, !tbaa !40
   store i32 %i.jh, ptr %i.cd, align 8, !tbaa !38
+  %.pre100.pre = load ptr, ptr %i.i, align 8, !tbaa !31
   br label %Super2_LibAddGate.exit162.i
 
 Super2_LibAddGate.exit162.i:                      ; preds = %bb.ag, %bb.ac
+  %.pre100 = phi ptr [ %.pre100.pre, %bb.ag ], [ %i.if, %bb.ac ]
   %i.jn = phi ptr [ %i.jm, %bb.ag ], [ %i.ig, %bb.ac ]
   %i.jo = phi i32 [ %i.jh, %bb.ag ], [ %i.ih, %bb.ac ]
   %i.jp = phi ptr [ %i.jm, %bb.ag ], [ %i.ii, %bb.ac ] ; 4 uses
@@ -349,6 +353,7 @@ Super2_LibAddGate.exit162.i:                      ; preds = %bb.ag, %bb.ac
   br label %bb.ah
 
 bb.ah:                                            ; preds = %Super2_LibAddGate.exit162.i, %bb.ab
+  %7 = phi ptr [ %.pre100, %Super2_LibAddGate.exit162.i ], [ %i.if, %bb.ab ]
   %i.ju = phi ptr [ %i.jn, %Super2_LibAddGate.exit162.i ], [ %i.ig, %bb.ab ] ; 4 uses
   %i.jv = phi i32 [ %i.jo, %Super2_LibAddGate.exit162.i ], [ %i.ih, %bb.ab ] ; 4 uses
   %i.jw = phi ptr [ %i.jp, %Super2_LibAddGate.exit162.i ], [ %i.ii, %bb.ab ]
@@ -363,7 +368,6 @@ bb.ah:                                            ; preds = %Super2_LibAddGate.e
   %.not138.i = icmp eq i32 %i.ke, 0
   %i.kf = select i1 %.not138.i, i32 0, i32 %i.bw
   %i.kg = xor i32 %i.kf, %i.kd
-  %7 = load ptr, ptr %i.i, align 8, !tbaa !31
   %i.kh = zext i32 %i.kg to i64
   %i.ki = inttoptr i64 %i.kh to ptr
   %i.kj = call i32 @stmm_find_or_add(ptr noundef %7, ptr noundef %i.ki, ptr noundef nonnull %i.f) #20

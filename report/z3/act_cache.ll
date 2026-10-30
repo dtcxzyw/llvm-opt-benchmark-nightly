@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.j = add i32 %i.d, -1
   %i.k = zext i32 %i.d to i64
   %i.l = add i32 %i.d, -1
@@ -444,6 +444,7 @@ _ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS
   br i1 %.not63.i, label %_ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS4_EE9key_valueENS9_19key_value_hash_procENS9_17key_value_eq_procEE10copy_tableEPNSD_4cellEjjSF_jjRj.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS4_EE9key_valueENS9_19key_value_hash_procENS9_17key_value_eq_procEE11alloc_tableEj.exit, %.loopexit.i
+  %7 = phi i32 [ %10, %.loopexit.i ], [ 0, %_ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS4_EE9key_valueENS9_19key_value_hash_procENS9_17key_value_eq_procEE11alloc_tableEj.exit ] ; 2 uses
   %.04465.i = phi ptr [ %i.dv, %.loopexit.i ], [ %i.cb, %_ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS4_EE9key_valueENS9_19key_value_hash_procENS9_17key_value_eq_procEE11alloc_tableEj.exit ] ; 3 uses
   %.04564.i = phi ptr [ %.4.i, %.loopexit.i ], [ %i.cf, %_ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS4_EE9key_valueENS9_19key_value_hash_procENS9_17key_value_eq_procEE11alloc_tableEj.exit ] ; 2 uses
   %i.ch = load ptr, ptr %.04465.i, align 8, !tbaa !33
@@ -453,6 +454,7 @@ _ZN10chashtableIN4cmapISt4pairIP4exprjES3_N9act_cache10entry_hashE10default_eqIS
   br i1 %i.ck, label %.loopexit.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph.i, %bb.r
+  %8 = phi i32 [ %9, %bb.r ], [ %7, %.lr.ph.i ]   ; 2 uses
   %.146.i = phi ptr [ %.247.i, %bb.r ], [ %.04564.i, %.lr.ph.i ] ; 8 uses
   %.0.i = phi ptr [ %i.du, %bb.r ], [ %.04465.i, %.lr.ph.i ] ; 5 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 2 uses
@@ -481,8 +483,7 @@ bb.o:                                             ; preds = %.preheader.i
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
   store ptr %i.dc, ptr %i.dd, align 8, !tbaa !39
   store ptr null, ptr %i.cu, align 8, !tbaa !33
-  %7 = load i32, ptr %i.i, align 8, !tbaa !14
-  %i.de = add i32 %7, 1
+  %i.de = add i32 %8, 1                           ; 2 uses
   store i32 %i.de, ptr %i.i, align 8, !tbaa !14
   br label %bb.r
 
@@ -516,12 +517,14 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.o
+  %9 = phi i32 [ %i.de, %bb.o ], [ %8, %bb.q ]    ; 2 uses
   %.247.i = phi ptr [ %.146.i, %bb.o ], [ %i.dt, %bb.q ] ; 2 uses
   %i.du = load ptr, ptr %.0.i, align 8, !tbaa !33 ; 2 uses
   %.not54.i = icmp eq ptr %i.du, null
   br i1 %.not54.i, label %.loopexit.i, label %.preheader.i, !llvm.loop !78
 
 .loopexit.i:                                      ; preds = %bb.r, %.lr.ph.i
+  %10 = phi i32 [ %7, %.lr.ph.i ], [ %9, %bb.r ]
   %.4.i = phi ptr [ %.04564.i, %.lr.ph.i ], [ %.247.i, %bb.r ] ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %.04465.i, i64 32 ; 2 uses
   %.not.i = icmp eq ptr %i.dv, %i.ce

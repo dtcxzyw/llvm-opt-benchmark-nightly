@@ -204,10 +204,9 @@ bb.p:                                             ; preds = %.thread, %bb.o, %bb
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @cf_ssl_add_peer(ptr noundef %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 8)) %4) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca [64 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  store ptr null, ptr %i.a, align 8, !tbaa !133
   store ptr null, ptr %4, align 8, !tbaa !133
   %.not = icmp eq ptr %2, null                    ; 2 uses
   br i1 %.not, label %.thread, label %bb.b

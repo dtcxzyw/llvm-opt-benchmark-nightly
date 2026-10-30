@@ -204,15 +204,16 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit.i71:      ; preds = %_ZNSt10filesystem7_
 bb.ch:                                            ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit.i71
   %i.ms = zext nneg i32 %i.ml to i64
   %i.mt = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0118.4.i, i64 %i.ms ; 3 uses
-  %i.mu = load i32, ptr %i.mj, align 4, !tbaa !12, !noalias !82
+  %i.mu = load i32, ptr %i.mj, align 4, !tbaa !12, !noalias !82 ; 2 uses
   %i.mv = load i32, ptr %i.mt, align 4, !tbaa !12
   %i.mw = call i32 @llvm.smin.i32(i32 %i.mu, i32 %i.mv)
   store i32 %i.mw, ptr %i.mt, align 4, !tbaa !34
   %i.mx = getelementptr inbounds nuw i8, ptr %i.mt, i64 4 ; 2 uses
-  %i.my = load i32, ptr %i.mx, align 4, !tbaa !12
-  %i.mz = load i32, ptr %i.mj, align 4, !tbaa !12, !noalias !82
-  %12 = call i32 @llvm.smax.i32(i32 %i.my, i32 %i.mz)
-  store i32 %12, ptr %i.mx, align 4, !tbaa !35
+  %i.my = load i32, ptr %i.mx, align 4, !tbaa !12 ; 2 uses
+  %12 = icmp slt i32 %i.my, %i.mu
+  %i.mz = load i32, ptr %i.mj, align 4, !noalias !82
+  %13 = select i1 %12, i32 %i.mz, i32 %i.my
+  store i32 %13, ptr %i.mx, align 4, !tbaa !35
   br label %bb.cl
 
 bb.ci:                                            ; preds = %bb.cd

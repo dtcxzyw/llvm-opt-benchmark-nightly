@@ -204,7 +204,7 @@ _RINvXs7_NtNtCs4NRVxsYgnAr_4core3str4iterNtB6_5BytesNtNtNtNtBa_4iter6traits8iter
 
 bb.c:                                             ; preds = %_RINvXs7_NtNtCs4NRVxsYgnAr_4core3str4iterNtB6_5BytesNtNtNtNtBa_4iter6traits8iterator8Iterator3allNCNvCsflha3QUX5Q5_19wasm_bindgen_shared18export_name_suffix0EB1A_.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32, !noalias !200
-  %i.p = tail call ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 range(i64 0, -9223372036854775807) %2, i64 1) #32, !noalias !200 ; 3 uses
+  %i.p = tail call ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 range(i64 0, -9223372036854775807) %2, i64 1) #32, !noalias !200 ; 4 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.d, label %bb.g
 
@@ -243,6 +243,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.x, label %_RNvXNtNtCs4NRVxsYgnAr_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i: ; preds = %bb.g, %.backedge
+  %3 = phi ptr [ %4, %.backedge ], [ %i.p, %bb.g ] ; 4 uses
   %i.y = phi ptr [ %i.cw, %.backedge ], [ %i.p, %bb.g ] ; 3 uses
   %i.z = phi i64 [ %i.cx, %.backedge ], [ 0, %bb.g ] ; 14 uses
   %.sroa.017.026 = phi ptr [ %.sroa.017.1.ph, %.backedge ], [ %1, %bb.g ] ; 6 uses
@@ -366,7 +367,7 @@ bb.v:                                             ; preds = %bb.u
           to label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i unwind label %bb.e
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i: ; preds = %bb.v, %bb.u
-  %i.bu = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 2 uses
+  %i.bu = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 %i.z ; 10 uses
   br i1 %i.bo, label %bb.x, label %bb.w
 
@@ -436,11 +437,13 @@ bb.ac:                                            ; preds = %bb.q
 
 .backedge.sink.split:                             ; preds = %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit
   %.sink = phi i64 [ %i.cv, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit ], [ %i.dc, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12 ], [ %i.dh, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16 ] ; 2 uses
-  %.ph.a = phi ptr [ %i.bu, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit ], [ %3, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12 ], [ %i.df, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16 ]
+  %.ph = phi ptr [ %i.bu, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit ], [ %5, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12 ], [ %6, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16 ]
+  %.ph.a = phi ptr [ %i.bu, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit ], [ %5, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12 ], [ %i.df, %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16 ]
   store i64 %.sink, ptr %.sroa.3.0..sroa_idx.i, align 8
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.sink.split, %bb.ac, %bb.ac
+  %4 = phi ptr [ %3, %bb.ac ], [ %3, %bb.ac ], [ %.ph, %.backedge.sink.split ]
   %i.cw = phi ptr [ %i.y, %bb.ac ], [ %i.y, %bb.ac ], [ %.ph.a, %.backedge.sink.split ]
   %i.cx = phi i64 [ %i.z, %bb.ac ], [ %i.z, %bb.ac ], [ %.sink, %.backedge.sink.split ]
   %i.cy = icmp eq ptr %.sroa.017.1.ph, %i.b
@@ -453,11 +456,15 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   invoke void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 %i.a, i64 %i.z, i64 1, i64 1, i64 1)
-          to label %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12 unwind label %bb.e
+          to label %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12_crit_edge unwind label %bb.e
 
-_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12: ; preds = %bb.ae, %bb.ad
-  %3 = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 2 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %3, i64 %i.z
+._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12_crit_edge: ; preds = %bb.ae
+  %.pre27 = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8
+  br label %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12
+
+_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12: ; preds = %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12_crit_edge, %bb.ad
+  %5 = phi ptr [ %.pre27, %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit12_crit_edge ], [ %3, %bb.ad ] ; 3 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %5, i64 %i.z
   store i8 95, ptr %i.db, align 1
   %i.dc = add i64 %i.z, 1
   br label %.backedge.sink.split
@@ -472,10 +479,11 @@ bb.ag:                                            ; preds = %bb.af
           to label %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16_crit_edge unwind label %bb.e
 
 ._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16_crit_edge: ; preds = %bb.ag
-  %.pre = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8
+  %.pre = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 2 uses
   br label %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16
 
 _RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16: ; preds = %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16_crit_edge, %bb.af
+  %6 = phi ptr [ %.pre, %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16_crit_edge ], [ %3, %bb.af ]
   %i.df = phi ptr [ %.pre, %._RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String4pushCsflha3QUX5Q5_19wasm_bindgen_shared.exit16_crit_edge ], [ %i.y, %bb.af ] ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 %i.z
   store i8 95, ptr %i.dg, align 1
@@ -878,21 +886,15 @@ define noundef zeroext i1 @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   call fastcc void @_RNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_chars(ptr noalias align 8 %i.a, ptr %0, i64 %1)
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load i32, ptr %i.b, align 8
-  switch i32 %i.c, label %2 [
-    i32 -3, label %bb.b
-    i32 -1, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit
-  ]
+  %cond = icmp eq i32 %i.c, -1
+  br i1 %cond, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit, label %bb.b
 
-bb.b:                                             ; preds = %bb.a, %2
+bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.a, align 8              ; 3 uses
   %.not6.i.i = icmp eq ptr %i.d, null
   br i1 %.not6.i.i, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit, label %bb.c
-
-2:                                                ; preds = %bb.a
-  store i32 -3, ptr %i.b, align 8
-  br label %bb.b
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -979,7 +981,7 @@ thread-pre-split:                                 ; preds = %bb.j, %bb.h, %bb.f,
   %or.cond.not = select i1 %i.aq, i1 %i.ar, i1 false
   br i1 %or.cond.not, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.i.preheader, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit
 
-_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit: ; preds = %thread-pre-split, %bb.c, %bb.a, %bb.b
+_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain5ChainINtNtNtBa_7sources4once4OnceINtNtBc_6option6OptioncEEINtNtB8_3map3MapNtNtNtBc_3str4iter5CharsNCNvNtCsflha3QUX5Q5_19wasm_bindgen_shared10identifier17maybe_valid_charss_0EENtNtNtBa_6traits8iterator8Iterator3allNCNvB2u_14is_valid_ident0EB2w_.exit: ; preds = %thread-pre-split, %bb.a, %bb.c, %bb.b
   %.sroa.0.0.i.i = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ true, %bb.c ], [ %i.aq, %thread-pre-split ]
   ret i1 %.sroa.0.0.i.i
 }

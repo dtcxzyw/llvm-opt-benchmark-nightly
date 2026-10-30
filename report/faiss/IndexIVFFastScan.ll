@@ -205,8 +205,8 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #33
 define internal void @_ZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS0_15CoarseQuantizedEiRKNS_30FastScanDistancePostProcessingEPKNS_19SearchParametersIVFE.omp_outlined(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %3, ptr noundef %4, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(1) %5, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %6, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %7, ptr noundef nonnull align 8 dereferenceable(26) %8, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %9, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %10, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %11, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %12, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %13, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %14, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %15, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(1) %16, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %17, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %18, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %19, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %20, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %21, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %22, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %23) #28 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = alloca i64, align 8                      ; 8 uses
-  %i.c = alloca i64, align 8                      ; 8 uses
+  %i.b = alloca i64, align 8                      ; 7 uses
+  %i.c = alloca i64, align 8                      ; 7 uses
   %24 = alloca %"class.std::unique_ptr", align 8  ; 6 uses
   %25 = alloca %"class.std::set", align 8         ; 8 uses
   %26 = alloca %"class.std::vector.74", align 8   ; 12 uses
@@ -463,17 +463,23 @@ bb.m:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br label %bb.n
 
 .loopexit252:                                     ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit166, %bb.n
+  %27 = phi i64 [ %29, %bb.n ], [ %i.fs, %_ZNSt6vectorIiSaIiEED2Ev.exit166 ]
+  %28 = phi i64 [ %30, %bb.n ], [ %i.da, %_ZNSt6vectorIiSaIiEED2Ev.exit166 ]
   %i.cr = call i32 @__kmpc_dispatch_next_8(ptr nonnull @2, i32 %.pre294, ptr nonnull %i.g, ptr nonnull %i.d, ptr nonnull %i.e, ptr nonnull %i.f)
   %.not117 = icmp eq i32 %i.cr, 0
   br i1 %.not117, label %._crit_edge267, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph266, %.loopexit252
+  %29 = phi i64 [ 0, %.lr.ph266 ], [ %27, %.loopexit252 ] ; 2 uses
+  %30 = phi i64 [ 0, %.lr.ph266 ], [ %28, %.loopexit252 ] ; 2 uses
   %i.cs = load i64, ptr %i.d, align 8, !tbaa !72  ; 2 uses
   %i.ct = load i64, ptr %i.e, align 8, !tbaa !72, !llvm.access.group !338
   %.not120260 = icmp sgt i64 %i.cs, %i.ct
   br i1 %.not120260, label %.loopexit252, label %.lr.ph263
 
 .lr.ph263:                                        ; preds = %bb.n, %_ZNSt6vectorIiSaIiEED2Ev.exit166
+  %31 = phi i64 [ %i.fs, %_ZNSt6vectorIiSaIiEED2Ev.exit166 ], [ %29, %bb.n ]
+  %32 = phi i64 [ %i.da, %_ZNSt6vectorIiSaIiEED2Ev.exit166 ], [ %30, %bb.n ]
   %.0113261 = phi i64 [ %i.ln, %_ZNSt6vectorIiSaIiEED2Ev.exit166 ], [ %i.cs, %bb.n ] ; 3 uses
   %.val128 = load ptr, ptr %11, align 8, !tbaa !154
   %i.cu = getelementptr inbounds nuw [24 x i8], ptr %.val128, i64 %.0113261 ; 3 uses
@@ -481,9 +487,8 @@ bb.n:                                             ; preds = %.lr.ph266, %.loopex
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cx = load i64, ptr %i.cw, align 8, !tbaa !368, !llvm.access.group !338 ; 8 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
-  %27 = load i64, ptr %i.cy, align 8, !tbaa !369, !llvm.access.group !338 ; 3 uses
-  %i.cz = load i64, ptr %i.c, align 8, !tbaa !72, !llvm.access.group !338
-  %i.da = add i64 %i.cz, 1
+  %i.cz = load i64, ptr %i.cy, align 8, !tbaa !369, !llvm.access.group !338 ; 3 uses
+  %i.da = add i64 %32, 1                          ; 3 uses
   store i64 %i.da, ptr %i.c, align 8, !tbaa !72, !llvm.access.group !338
   %.val123 = load ptr, ptr %13, align 8, !tbaa !149
   %i.db = getelementptr inbounds nuw [12 x i8], ptr %.val123, i64 %i.cv
@@ -693,9 +698,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
           to label %bb.z unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.access.group !338 ; 0 uses
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.fr = mul i64 %i.de, %27
-  %28 = load i64, ptr %i.b, align 8, !tbaa !72, !llvm.access.group !338
-  %i.fs = add i64 %28, %i.fr
+  %i.fr = mul i64 %i.de, %i.cz
+  %i.fs = add i64 %31, %i.fr                      ; 3 uses
   store i64 %i.fs, ptr %i.b, align 8, !tbaa !72, !llvm.access.group !338
   %i.ft = load ptr, ptr %i.cm, align 8, !tbaa !71, !llvm.access.group !338 ; 4 uses
   %i.fu = sext i32 %i.dd to i64                   ; 5 uses
@@ -714,7 +718,7 @@ _ZN5faiss13InvertedLists11ScopedCodesC2EPKS0_m.exit: ; preds = %bb.z
           to label %_ZN5faiss13InvertedLists9ScopedIdsC2EPKS0_m.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !9 ; 2 uses
 
 _ZN5faiss13InvertedLists9ScopedIdsC2EPKS0_m.exit: ; preds = %_ZN5faiss13InvertedLists11ScopedCodesC2EPKS0_m.exit
-  store i64 %27, ptr %i.cn, align 8, !tbaa !167, !llvm.access.group !338
+  store i64 %i.cz, ptr %i.cn, align 8, !tbaa !167, !llvm.access.group !338
   store ptr %.sroa.0212.0240, ptr %i.co, align 8, !tbaa !168, !llvm.access.group !338
   store ptr %i.gd, ptr %i.cp, align 8, !tbaa !169, !llvm.access.group !338
   %i.ge = load ptr, ptr %i.cq, align 8, !tbaa !165, !llvm.access.group !338 ; 4 uses
@@ -970,7 +974,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ku = load ptr, ptr %i.kp, align 8, !tbaa !25, !llvm.access.group !338
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ku, i64 32
   %i.kw = load ptr, ptr %i.kv, align 8, !llvm.access.group !338
-  invoke void %i.kw(ptr noundef nonnull align 8 dereferenceable(8) %i.kp, i32 noundef %i.dz, i64 noundef %27, i32 noundef %i.kt, ptr noundef %i.fy, ptr noundef %.sroa.0202.0, i32 noundef %i.kr, i64 noundef %i.ks)
+  invoke void %i.kw(ptr noundef nonnull align 8 dereferenceable(8) %i.kp, i32 noundef %i.dz, i64 noundef %i.cz, i32 noundef %i.kt, ptr noundef %i.fy, ptr noundef %.sroa.0202.0, i32 noundef %i.kr, i64 noundef %i.ks)
           to label %bb.ai unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !llvm.access.group !338
 
 bb.ai:                                            ; preds = %bb.ah

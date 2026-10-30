@@ -205,7 +205,7 @@ _ZNKSt6vectorISt17reference_wrapperIN6duckdb12ValidityMaskEESaIS3_EE12_M_check_l
 
 _ZNSt6vectorISt17reference_wrapperIN6duckdb12ValidityMaskEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc94
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.bw, %.noexc94 ], [ %i.ca, %.lr.ph.i.i.i.i.i.i ]
-  %i.cb = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 8
+  %i.cb = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 8
   %.not.i23.i.i = icmp eq ptr %i.bl, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorISt17reference_wrapperIN6duckdb12ValidityMaskEESaIS3_EE17_M_realloc_insertIJRS2_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.y
 
@@ -608,7 +608,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.m
   %.sroa.0.025 = phi ptr [ %.sroa.0.022, %.lr.ph ], [ %.sroa.0.0, %bb.m ] ; 5 uses
-  %.pn24 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.025, %bb.m ] ; 10 uses
+  %.pn24 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.025, %bb.m ] ; 11 uses
   %i.v = call noundef zeroext i1 %2(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.0.025, ptr noundef nonnull align 8 dereferenceable(104) %0), !inline_history !46
   br i1 %i.v, label %bb.c, label %bb.l
 
@@ -627,7 +627,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %.pn24, i64 128
-  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !136 ; 2 uses
+  %i.ad = load i64, ptr %i.ac, align 8, !tbaa !136 ; 3 uses
   %i.ae = icmp ult i64 %i.ad, 16
   call void @llvm.assume(i1 %i.ae)
   %i.af = add nuw nsw i64 %i.ad, 1
@@ -638,14 +638,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   store ptr %i.z, ptr %i.c, align 8, !tbaa !134
   %i.ag = load i64, ptr %i.aa, align 8, !tbaa !129
   store i64 %i.ag, ptr %i.d, align 8, !tbaa !129
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pn24, i64 128
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !136
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %.pn24, i64 128 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !136
-  store i64 %5, ptr %i.e, align 8, !tbaa !136
+  %4 = phi i64 [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.ad, %bb.d ]
+  %5 = getelementptr inbounds nuw i8, ptr %.pn24, i64 128
+  store i64 %4, ptr %i.e, align 8, !tbaa !136
   store ptr %i.aa, ptr %i.y, align 8, !tbaa !134
-  store i64 0, ptr %4, align 8, !tbaa !136
+  store i64 0, ptr %5, align 8, !tbaa !136
   store i8 0, ptr %i.aa, align 8, !tbaa !129
   %i.ah = getelementptr inbounds nuw i8, ptr %.pn24, i64 152
   call void @_ZN6duckdb11LogicalTypeC1EOS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.ah) #28
@@ -1048,7 +1050,7 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.f, ptr %i.d, align 8, !tbaa !134
   br label %_ZN6duckdb11LogicalTypeaSEOS0_.exit
 
-_ZN6duckdb11LogicalTypeaSEOS0_.exit:              ; preds = %bb.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9, %bb.o, %bb.p
+_ZN6duckdb11LogicalTypeaSEOS0_.exit:              ; preds = %bb.p, %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9, %bb.k
   %i.co = phi ptr [ %i.bx, %bb.o ], [ %i.f, %bb.p ], [ %i.ca, %bb.k ], [ %.pre.i.i10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i9 ]
   store i64 0, ptr %i.q, align 8, !tbaa !136
   store i8 0, ptr %i.co, align 1, !tbaa !129

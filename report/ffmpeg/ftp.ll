@@ -204,9 +204,13 @@ bb.d:                                             ; preds = %bb.c, %.loopexit
   %.not5579 = phi i1 [ true, %bb.c ], [ %.not55, %.loopexit ]
   %.04278 = phi i32 [ 0, %bb.c ], [ %.14365, %.loopexit ] ; 3 uses
   %.04477 = phi i32 [ 0, %bb.c ], [ %.145, %.loopexit ] ; 6 uses
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !67
+  %.pre83 = load ptr, ptr %i.c, align 8, !tbaa !68
   br label %.outer
 
 .outer:                                           ; preds = %bb.l, %bb.d
+  %.ph = phi ptr [ %6, %bb.l ], [ %.pre83, %bb.d ]
+  %.ph93 = phi ptr [ %i.s, %bb.l ], [ %.pre, %bb.d ]
   %.0.i.ph = phi ptr [ %i.z, %bb.l ], [ %i.a, %bb.d ] ; 7 uses
   %i.j = ptrtoint ptr %.0.i.ph to i64
   %i.k = sub i64 %i.j, %i.f
@@ -214,9 +218,9 @@ bb.d:                                             ; preds = %bb.c, %.loopexit
   br label %bb.e
 
 bb.e:                                             ; preds = %.outer, %bb.k
-  %4 = load ptr, ptr %i.b, align 8, !tbaa !67     ; 2 uses
-  %5 = load ptr, ptr %i.c, align 8, !tbaa !68
-  %.not.i.i = icmp ult ptr %4, %5
+  %4 = phi ptr [ %6, %bb.k ], [ %.ph, %.outer ]   ; 2 uses
+  %5 = phi ptr [ %i.s, %bb.k ], [ %.ph93, %.outer ] ; 2 uses
+  %.not.i.i = icmp ult ptr %5, %4
   br i1 %.not.i.i, label %ftp_getc.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -231,13 +235,14 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.p = zext nneg i32 %i.n to i64
-  %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.p
+  %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.p ; 2 uses
   store ptr %i.q, ptr %i.c, align 8, !tbaa !68
   br label %ftp_getc.exit.i
 
 ftp_getc.exit.i:                                  ; preds = %bb.h, %bb.e
-  %i.r = phi ptr [ %i.e, %bb.h ], [ %4, %bb.e ]   ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 1
+  %6 = phi ptr [ %i.q, %bb.h ], [ %4, %bb.e ]     ; 2 uses
+  %i.r = phi ptr [ %i.e, %bb.h ], [ %5, %bb.e ]   ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 1 ; 3 uses
   store ptr %i.s, ptr %i.b, align 8, !tbaa !67
   %i.t = load i8, ptr %i.r, align 1, !tbaa !31    ; 2 uses
   %i.u = icmp eq i8 %i.t, 10

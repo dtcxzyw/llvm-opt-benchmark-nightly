@@ -205,12 +205,16 @@ _ZNSt6vectorIiSaIiEE7reserveEm.exit:              ; preds = %.noexc38, %bb.l
   br i1 %.not.i.i.i.i, label %._crit_edge85.a, label %.lr.ph84
 
 .lr.ph84:                                         ; preds = %_ZNSt6vectorIiSaIiEE7reserveEm.exit
-  %i.do = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   br label %bb.o
 
-._crit_edge85.a:                                  ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, %_ZNSt6vectorIiSaIiEE7reserveEm.exit
-  %.lcssa79 = phi ptr [ %.promoted78, %_ZNSt6vectorIiSaIiEE7reserveEm.exit ], [ %i.ek, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
-  %.lcssa75 = phi ptr [ %.promoted, %_ZNSt6vectorIiSaIiEE7reserveEm.exit ], [ %i.el, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
+._crit_edge85:                                    ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
+  store ptr %2, ptr %i.do, align 8
+  br label %._crit_edge85.a
+
+._crit_edge85.a:                                  ; preds = %._crit_edge85, %_ZNSt6vectorIiSaIiEE7reserveEm.exit
+  %.lcssa79 = phi ptr [ %i.ek, %._crit_edge85 ], [ %.promoted78, %_ZNSt6vectorIiSaIiEE7reserveEm.exit ]
+  %.lcssa75 = phi ptr [ %i.el, %._crit_edge85 ], [ %.promoted, %_ZNSt6vectorIiSaIiEE7reserveEm.exit ]
   store ptr %.lcssa75, ptr %i.dj, align 8
   store ptr %.lcssa79, ptr %0, align 8
   %.not.i.i.i = icmp eq ptr %.sroa.053.0115, null
@@ -229,7 +233,7 @@ bb.n:                                             ; preds = %.noexc35, %bb.c
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
 bb.o:                                             ; preds = %.lr.ph84, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
-  %i.dq = phi ptr [ %.promoted78, %.lr.ph84 ], [ %i.ej, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 4 uses
+  %i.dq = phi ptr [ %.promoted78, %.lr.ph84 ], [ %2, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 6 uses
   %.sroa.045.083 = phi ptr [ %.sroa.053.0115, %.lr.ph84 ], [ %i.em, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 3 uses
   %i.dr = phi ptr [ %.promoted, %.lr.ph84 ], [ %i.el, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 4 uses
   %i.ds = phi ptr [ %.promoted78, %.lr.ph84 ], [ %i.ek, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 9 uses
@@ -239,8 +243,6 @@ bb.o:                                             ; preds = %.lr.ph84, %_ZNSt6ve
 bb.p:                                             ; preds = %bb.o
   %i.dt = load i32, ptr %.sroa.045.083, align 4, !tbaa !164
   store i32 %i.dt, ptr %i.dq, align 4, !tbaa !164
-  %2 = getelementptr inbounds nuw i8, ptr %i.dq, i64 4 ; 2 uses
-  store ptr %2, ptr %i.do, align 8, !tbaa !176
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 bb.q:                                             ; preds = %bb.o
@@ -251,6 +253,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.dx, label %bb.r, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
 
 bb.r:                                             ; preds = %bb.q
+  store ptr %i.dq, ptr %i.do, align 8
   store ptr %i.dr, ptr %i.dj, align 8
   store ptr %i.ds, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.21) #17
@@ -284,7 +287,6 @@ bb.s:                                             ; preds = %.noexc41
   br label %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i: ; preds = %bb.s, %.noexc41
-  %3 = getelementptr inbounds nuw i8, ptr %i.ef, i64 4 ; 2 uses
   %.not.i17.i.i = icmp eq ptr %i.ds, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i, label %bb.t
 
@@ -293,21 +295,22 @@ bb.t:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i: ; preds = %bb.t, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i
-  store ptr %3, ptr %i.do, align 8, !tbaa !176
   %i.ei = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %i.ec
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i, %bb.p
-  %i.ej = phi ptr [ %3, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %2, %bb.p ]
+  %i.ej = phi ptr [ %i.ef, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.dq, %bb.p ]
   %i.ek = phi ptr [ %i.ee, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.ds, %bb.p ] ; 2 uses
   %i.el = phi ptr [ %i.ei, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i ], [ %i.dr, %bb.p ] ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.ej, i64 4 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.sroa.045.083, i64 8 ; 2 uses
   %.not63 = icmp eq ptr %i.em, %.0.i.i.i.i.i116
-  br i1 %.not63, label %._crit_edge85.a, label %bb.o
+  br i1 %.not63, label %._crit_edge85, label %bb.o
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.dq, ptr %i.do, align 8
   store ptr %i.dr, ptr %i.dj, align 8
   store ptr %i.ds, ptr %0, align 8
   br label %bb.u
