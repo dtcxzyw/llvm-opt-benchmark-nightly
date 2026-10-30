@@ -52,8 +52,7 @@ bb.c:                                             ; preds = %bb.d
   br i1 %exitcond.not.a, label %bb.b, label %.preheader
 
 bb.d:                                             ; preds = %.preheader, %bb.d
-  %0 = phi i1 [ true, %.preheader ], [ false, %bb.d ]
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ 1, %bb.d ] ; 15 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.d ] ; 16 uses
   %i.p = getelementptr inbounds nuw [32 x i8], ptr %i.a, i64 %indvars.iv
   %i.q = getelementptr inbounds nuw [152 x i8], ptr %i.b, i64 %indvars.iv ; 19 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 40
@@ -106,7 +105,9 @@ bb.d:                                             ; preds = %.preheader, %bb.d
   store ptr %i.ap, ptr %i.au, align 8, !tbaa !11
   %i.av = getelementptr inbounds nuw i8, ptr %i.q, i64 136
   store ptr %i.ag, ptr %i.av, align 8, !tbaa !11
-  br i1 %0, label %bb.d, label %bb.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 2
+  br i1 %exitcond.not, label %bb.c, label %bb.d
 }
 
 attributes #0 = { cold nofree norecurse nosync nounwind optsize memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

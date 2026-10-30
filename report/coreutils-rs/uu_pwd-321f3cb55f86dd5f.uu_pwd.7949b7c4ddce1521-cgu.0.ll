@@ -58,6 +58,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.preheader.i:                         ; preds = %.lr.ph.i.i.i.preheader.backedge.i, %.lr.ph.i.i.i.preheader.preheader.i
   %i.m = phi ptr [ %i.l, %.lr.ph.i.i.i.preheader.preheader.i ], [ %.be.i, %.lr.ph.i.i.i.preheader.backedge.i ]
   %i.n = phi ptr [ %.sroa.415.0.copyload, %.lr.ph.i.i.i.preheader.preheader.i ], [ %i.x, %.lr.ph.i.i.i.preheader.backedge.i ] ; 5 uses
+  %1 = phi i1 [ false, %.lr.ph.i.i.i.preheader.preheader.i ], [ %3, %.lr.ph.i.i.i.preheader.backedge.i ]
   %i.o = phi i64 [ %.sroa.516.0.copyload, %.lr.ph.i.i.i.preheader.preheader.i ], [ %i.w, %.lr.ph.i.i.i.preheader.backedge.i ] ; 3 uses
   br label %.lr.ph.i.i.i.i
 
@@ -65,8 +66,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.02.07.i.i.i.i = phi i64 [ %i.r, %bb.c ], [ 0, %.lr.ph.i.i.i.preheader.i ] ; 3 uses
   %i.p = phi ptr [ %i.q, %bb.c ], [ %i.n, %.lr.ph.i.i.i.preheader.i ] ; 2 uses
   %.val.i.i.i.i = load i8, ptr %i.p, align 1, !alias.scope !27, !noalias !29, !noundef !5
-  %.not.not.not.i.not.not.not.not.not = icmp ne i8 %.val.i.i.i.i, 47 ; 4 uses
-  br i1 %.not.not.not.i.not.not.not.not.not, label %bb.c, label %bb.d
+  %2 = icmp eq i8 %.val.i.i.i.i, 47
+  br i1 %2, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 1 ; 2 uses
@@ -83,6 +84,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i
 .loopexit.i.i.i:                                  ; preds = %bb.c, %bb.d
   %i.w = phi i64 [ %i.u, %bb.d ], [ %i.o, %bb.c ] ; 4 uses
   %i.x = phi ptr [ %i.v, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
+  %3 = phi i1 [ %1, %bb.d ], [ true, %bb.c ]      ; 4 uses
   %.sroa.5.1.i.ph.i.i = phi i64 [ %.sroa.02.07.i.i.i.i, %bb.d ], [ %i.o, %bb.c ]
   switch i64 %.sroa.5.1.i.ph.i.i, label %.backedge.i.i [
     i64 1, label %bb.e
@@ -92,7 +94,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i
 bb.e:                                             ; preds = %.loopexit.i.i.i
   %i.y = load i8, ptr %i.n, align 1, !alias.scope !30, !noalias !31, !noundef !5
   %i.z = icmp eq i8 %i.y, 46                      ; 2 uses
-  %brmerge.i.i = or i1 %.not.not.not.i.not.not.not.not.not, %i.z
+  %brmerge.i.i = select i1 %i.z, i1 true, i1 %3
   br i1 %brmerge.i.i, label %_RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter5SplithNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonable0ENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvB1K_3any5checkRShNCBN_s_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBR_.exit.i, label %.backedge.i
 
 .backedge.i:                                      ; preds = %_RNCINvNvNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonables_0E0B1k_.exit.i.i, %bb.e
@@ -106,12 +108,12 @@ bb.e:                                             ; preds = %.loopexit.i.i.i
 _RNCINvNvNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonables_0E0B1k_.exit.i.i: ; preds = %.loopexit.i.i.i
   %i.aa = load i16, ptr %i.n, align 1, !alias.scope !30, !noalias !31, !noundef !5
   %i.ab = icmp eq i16 %i.aa, 11822                ; 2 uses
-  %brmerge23.i.i = or i1 %.not.not.not.i.not.not.not.not.not, %i.ab
+  %brmerge23.i.i = select i1 %i.ab, i1 true, i1 %3
   br i1 %brmerge23.i.i, label %_RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter5SplithNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonable0ENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvB1K_3any5checkRShNCBN_s_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBR_.exit.i, label %.backedge.i
 
 .backedge.i.i:                                    ; preds = %.loopexit.i.i.i
   %i.ac = icmp samesign eq i64 %i.w, 0
-  %or.cond40.i = select i1 %.not.not.not.i.not.not.not.not.not, i1 true, i1 %i.ac
+  %or.cond40.i = select i1 %3, i1 true, i1 %i.ac
   br i1 %or.cond40.i, label %_RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter5SplithNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonable0ENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvB1K_3any5checkRShNCBN_s_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBR_.exit.thread.i, label %.lr.ph.i.i.i.preheader.backedge.i
 
 _RINvYINtNtNtCs6JMX4GRUq9U_4core5slice4iter5SplithNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonable0ENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvB1K_3any5checkRShNCBN_s_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEEBR_.exit.i: ; preds = %_RNCINvNvNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNvCsapC0faAc3Mj_6uu_pwd12logical_path16looks_reasonables_0E0B1k_.exit.i.i, %bb.e

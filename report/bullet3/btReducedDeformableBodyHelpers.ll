@@ -205,15 +205,17 @@ bb.e:                                             ; preds = %bb.d
   %i.j = sext i32 %1 to i64
   %i.k = shl nsw i64 %i.j, 2
   %i.l = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.k, i32 noundef 16)
-          to label %.noexc unwind label %bb.h
+          to label %.noexc unwind label %bb.h     ; 2 uses
 
 .noexc:                                           ; preds = %bb.e
   %.pre.i = load i32, ptr %i.d, align 4, !tbaa !83
+  %4 = ptrtoaddr ptr %i.l to i64
   br label %_ZN20btAlignedObjectArrayIfE8allocateEi.exit.i.i
 
 _ZN20btAlignedObjectArrayIfE8allocateEi.exit.i.i: ; preds = %.noexc, %bb.d
   %i.m = phi i32 [ %.pre.i, %.noexc ], [ %i.e, %bb.d ] ; 3 uses
-  %.0.i.i.i.a = phi ptr [ %i.l, %.noexc ], [ null, %bb.d ] ; 9 uses
+  %.0.i.i.i = phi i64 [ %4, %.noexc ], [ 0, %bb.d ]
+  %.0.i.i.i.a = phi ptr [ %i.l, %.noexc ], [ null, %bb.d ] ; 8 uses
   %i.n = icmp sgt i32 %i.m, 0
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !82   ; 9 uses
@@ -221,10 +223,9 @@ _ZN20btAlignedObjectArrayIfE8allocateEi.exit.i.i: ; preds = %.noexc, %bb.d
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN20btAlignedObjectArrayIfE8allocateEi.exit.i.i
   %i.q = ptrtoaddr ptr %i.p to i64
-  %.0.i.i.i24 = ptrtoaddr ptr %.0.i.i.i.a to i64
   %wide.trip.count.i.i.i = zext nneg i32 %i.m to i64 ; 5 uses
   %min.iters.check = icmp ult i32 %i.m, 8
-  %i.r = sub i64 %i.q, %.0.i.i.i24
+  %i.r = sub i64 %i.q, %.0.i.i.i
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph

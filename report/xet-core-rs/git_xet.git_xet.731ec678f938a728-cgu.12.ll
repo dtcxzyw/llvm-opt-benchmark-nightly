@@ -204,8 +204,13 @@ bb.a:
   %.sink39.sroa.gep48 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   br i1 %.not26, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.l, %bb.a
-  %.sroa.0.0.lcssa.a = phi i64 [ 0, %bb.a ], [ %.sroa.0.1, %bb.l ] ; 3 uses
+._crit_edge.loopexit:                             ; preds = %bb.l
+  %4 = shl i64 %.sroa.0.1, 3
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.sroa.0.0.lcssa = phi i64 [ 0, %bb.a ], [ %4, %._crit_edge.loopexit ]
+  %.sroa.0.0.lcssa.a = phi i64 [ 0, %bb.a ], [ %.sroa.0.1, %._crit_edge.loopexit ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !108)
   %i.g = add i64 %i.f, 1                          ; 2 uses
   %.not.i = icmp ult i64 %.sroa.0.0.lcssa.a, %i.g
@@ -213,9 +218,8 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge
   %i.h = shl i64 %i.g, 4
-  %4 = shl i64 %.sroa.0.0.lcssa.a, 3
   %i.i = or disjoint i64 %i.h, 8
-  %i.j = add i64 %i.i, %4                         ; 4 uses
+  %i.j = add i64 %i.i, %.sroa.0.0.lcssa           ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !108, !nonnull !12, !align !19, !noundef !12 ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 8
@@ -308,9 +312,9 @@ bb.k:                                             ; preds = %bb.f
 
 bb.l:                                             ; preds = %bb.f, %bb.k
   %.sroa.04.1 = phi i64 [ %.sroa.04.024, %bb.k ], [ %i.t, %bb.f ] ; 2 uses
-  %.sroa.0.1 = phi i64 [ %i.al, %bb.k ], [ %.sroa.0.025, %bb.f ] ; 3 uses
+  %.sroa.0.1 = phi i64 [ %i.al, %bb.k ], [ %.sroa.0.025, %bb.f ] ; 4 uses
   %i.am = icmp ult i64 %.sroa.0.1, %.sroa.04.1
-  br i1 %i.am, label %.lr.ph, label %._crit_edge
+  br i1 %i.am, label %.lr.ph, label %._crit_edge.loopexit
 
 bb.m:                                             ; preds = %bb.h
   tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #19

@@ -28,13 +28,15 @@ bb.a:
 .outer:                                           ; preds = %bb.g, %bb.a
   %.058.i.ph = phi i32 [ %i.j, %bb.g ], [ -1, %bb.a ] ; 8 uses
   %.054.i.ph = phi i64 [ %i.n, %bb.g ], [ 0, %bb.a ]
+  %.051.i.ph = phi i1 [ false, %bb.g ], [ true, %bb.a ]
   %.051.i.ph.a = phi ptr [ %i.a, %bb.g ], [ null, %bb.a ]
   %i.h = icmp slt i32 %.058.i.ph, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %.outer
   %.054.i = phi i64 [ %.054.i.ph, %.outer ], [ %.054.i.be, %.backedge ] ; 7 uses
-  %.051.i.a = phi ptr [ %.051.i.ph.a, %.outer ], [ %.051.i.be.a, %.backedge ] ; 6 uses
+  %.051.i = phi i1 [ %.051.i.ph, %.outer ], [ %.051.i.be, %.backedge ]
+  %.051.i.a = phi ptr [ %.051.i.ph.a, %.outer ], [ %.051.i.be.a, %.backedge ] ; 5 uses
   br i1 %i.h, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
@@ -63,8 +65,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.r, label %.thread.i, label %.outer
 
 bb.h:                                             ; preds = %bb.b
-  %3 = icmp eq ptr %.051.i.a, null
-  br i1 %3, label %bb.i, label %bb.n
+  br i1 %.051.i, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %bb.h
   %i.s = call i64 @je_malloc_read_fd(i32 noundef %.058.i.ph, ptr noundef nonnull %i.a, i64 noundef 4096) #7 ; 5 uses
@@ -131,7 +132,7 @@ bb.s:                                             ; preds = %bb.r
 
 .thread89.i:                                      ; preds = %bb.s, %bb.r
   %i.ao = call ptr @memchr(ptr noundef nonnull %.051.i.a, i32 noundef 10, i64 noundef %.054.i) #9 ; 2 uses
-  %.not79.i = icmp eq ptr %i.ao, null             ; 2 uses
+  %.not79.i = icmp eq ptr %i.ao, null             ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 1 ; 2 uses
   %i.aq = ptrtoint ptr %i.ap to i64
   %i.ar = ptrtoint ptr %.051.i.a to i64
@@ -144,6 +145,7 @@ bb.s:                                             ; preds = %bb.r
 
 .backedge:                                        ; preds = %.thread89.i, %bb.q, %bb.m, %bb.l
   %.054.i.be = phi i64 [ %i.aj, %bb.q ], [ %.256.i, %.thread89.i ], [ %i.aa, %bb.m ], [ %i.s, %bb.l ]
+  %.051.i.be = phi i1 [ false, %bb.q ], [ %.not79.i, %.thread89.i ], [ false, %bb.m ], [ true, %bb.l ]
   %.051.i.be.a = phi ptr [ %i.a, %bb.q ], [ %.152.i, %.thread89.i ], [ %i.y, %bb.m ], [ null, %bb.l ]
   br label %bb.b
 

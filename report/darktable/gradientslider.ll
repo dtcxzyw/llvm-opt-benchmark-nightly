@@ -205,16 +205,17 @@ DTGTK_IS_GRADIENT_SLIDER.exit.thread32:           ; preds = %bb.e, %DTGTK_IS_GRA
 
 bb.f:                                             ; preds = %DTGTK_IS_GRADIENT_SLIDER.exit.thread32
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !35
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !35   ; 2 uses
+  %3 = icmp ne i32 %i.m, -1
   br label %_get_active_marker.exit
 
 _get_active_marker.exit:                          ; preds = %DTGTK_IS_GRADIENT_SLIDER.exit.thread32, %bb.f
-  %i.n = phi i32 [ %i.m, %bb.f ], [ %i.j, %DTGTK_IS_GRADIENT_SLIDER.exit.thread32 ] ; 3 uses
+  %4 = phi i1 [ %3, %bb.f ], [ true, %DTGTK_IS_GRADIENT_SLIDER.exit.thread32 ]
+  %i.n = phi i32 [ %i.m, %bb.f ], [ %i.j, %DTGTK_IS_GRADIENT_SLIDER.exit.thread32 ] ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.p = load i32, ptr %i.o, align 4, !tbaa !119
   %i.q = icmp eq i32 %i.p, 1
-  %3 = icmp ne i32 %i.n, -1
-  %or.cond = select i1 %i.q, i1 %3, i1 false
+  %or.cond = select i1 %i.q, i1 %4, i1 false
   br i1 %or.cond, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %_get_active_marker.exit

@@ -204,25 +204,27 @@ bb.x:                                             ; preds = %.thread42
   br label %.thread44
 
 .thread44:                                        ; preds = %bb.t, %bb.m, %bb.o, %bb.n, %bb.w, %bb.x, %.thread42
+  %.2 = phi i1 [ false, %bb.w ], [ true, %bb.x ], [ false, %.thread42 ], [ false, %bb.n ], [ false, %bb.o ], [ false, %bb.m ], [ false, %bb.t ]
   %.2.a = phi i32 [ 1, %bb.w ], [ -1, %bb.x ], [ %i.bn, %.thread42 ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.m ], [ 1, %bb.t ]
   %i.bp = call i32 @cdf_zero_stream(ptr noundef nonnull %7) #6 ; 0 uses
   %i.bq = call i32 @cdf_zero_stream(ptr noundef nonnull %6) #6 ; 0 uses
   br label %bb.y
 
 bb.y:                                             ; preds = %.thread44, %bb.h
+  %.3 = phi i1 [ true, %bb.h ], [ %.2, %.thread44 ]
   %.3.a = phi i32 [ -1, %bb.h ], [ %.2.a, %.thread44 ]
   %i.br = load ptr, ptr %8, align 8, !tbaa !25
   call void @_efree(ptr noundef %i.br) #6
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.f, %bb.y
-  %.4.a = phi i32 [ -1, %bb.f ], [ %.3.a, %bb.y ] ; 2 uses
+  %.4 = phi i1 [ true, %bb.f ], [ %.3, %bb.y ]
+  %.4.a = phi i32 [ -1, %bb.f ], [ %.3.a, %bb.y ]
   %i.bs = load ptr, ptr %5, align 8, !tbaa !42
   call void @_efree(ptr noundef %i.bs) #6
   %i.bt = load ptr, ptr %4, align 8, !tbaa !42
   call void @_efree(ptr noundef %i.bt) #6
-  %.not37 = icmp eq i32 %.4.a, -1
-  br i1 %.not37, label %bb.aa, label %bb.ah
+  br i1 %.4, label %bb.aa, label %bb.ah
 
 bb.aa:                                            ; preds = %.thread49, %.thread46, %bb.z
   %i.bu = load i32, ptr %i.j, align 4, !tbaa !22  ; 2 uses

@@ -202,7 +202,7 @@ bb.cu:                                            ; preds = %bb.ct
   %i.nr = getelementptr inbounds nuw i8, ptr %.sroa.0350.0404, i64 56
   %i.ns = load ptr, ptr %i.nr, align 8, !tbaa !193
   %i.nt = getelementptr inbounds nuw i8, ptr %i.ns, i64 16
-  %i.nu = load i32, ptr %i.nt, align 8, !tbaa !68 ; 5 uses
+  %i.nu = load i32, ptr %i.nt, align 8, !tbaa !68 ; 6 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %0, i64 192
   store i32 %i.nu, ptr %i.nv, align 8, !tbaa !94
   %.not = icmp eq i32 %i.nu, 0
@@ -396,7 +396,7 @@ bb.do:                                            ; preds = %bb.dn
 
 _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit243:     ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit241, %bb.dn, %bb.do
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit509, label %bb.dh, !llvm.loop !172
+  br i1 %exitcond.not, label %.loopexit509.loopexit, label %bb.dh, !llvm.loop !172
 
 bb.dp:                                            ; preds = %bb.dj
   %i.pu = landingpad { ptr, i32 }
@@ -443,8 +443,13 @@ bb.ds:                                            ; preds = %bb.ct
   store i32 0, ptr %i.qk, align 8, !tbaa !94
   br label %.loopexit509
 
-.loopexit509:                                     ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit243, %.preheader508, %bb.ds
-  %.158.a = phi i32 [ 0, %bb.ds ], [ 0, %.preheader508 ], [ %i.nu, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit243 ] ; 4 uses
+.loopexit509.loopexit:                            ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit243
+  %29 = zext nneg i32 %i.nu to i64
+  br label %.loopexit509
+
+.loopexit509:                                     ; preds = %.loopexit509.loopexit, %.preheader508, %bb.ds
+  %.158 = phi i64 [ 0, %bb.ds ], [ 0, %.preheader508 ], [ %29, %.loopexit509.loopexit ]
+  %.158.a = phi i32 [ 0, %bb.ds ], [ 0, %.preheader508 ], [ %i.nu, %.loopexit509.loopexit ] ; 3 uses
   %.not507 = icmp eq ptr %.sroa.0344.0424, null   ; 2 uses
   br i1 %.not507, label %.loopexit, label %bb.dt
 
@@ -464,7 +469,6 @@ bb.dt:                                            ; preds = %.loopexit509
 .lr.ph516:                                        ; preds = %.preheader
   %i.qr = getelementptr inbounds nuw i8, ptr %.sroa.0344.0424, i64 104
   %i.qs = getelementptr inbounds nuw i8, ptr %.sroa.0344.0424, i64 80
-  %29 = zext nneg i32 %.158.a to i64
   %wide.trip.count535 = zext nneg i32 %i.qo to i64
   br label %bb.ef
 
@@ -562,7 +566,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit253: ; preds = %bb
   br label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247
 
 bb.ef:                                            ; preds = %.lr.ph516, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit266
-  %indvars.iv530 = phi i64 [ %29, %.lr.ph516 ], [ %indvars.iv.next531, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit266 ] ; 3 uses
+  %indvars.iv530 = phi i64 [ %.158, %.lr.ph516 ], [ %indvars.iv.next531, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit266 ] ; 3 uses
   %indvars.iv528 = phi i64 [ 0, %.lr.ph516 ], [ %indvars.iv.next529, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit266 ] ; 3 uses
   %i.rk = load ptr, ptr %i.qr, align 8, !tbaa !90, !noalias !221
   %i.rl = getelementptr inbounds nuw [8 x i8], ptr %i.rk, i64 %indvars.iv528
@@ -965,7 +969,8 @@ bb.ft:                                            ; preds = %_ZN5Ipopt8SmartPtrI
 _ZN5Ipopt8SmartPtrINS_6VectorEED2Ev.exit215:      ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247, %bb.db, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread, %bb.ft, %bb.ck, %bb.cl, %bb.bz, %bb.ca, %bb.cb
   %.sroa.0344.0416 = phi ptr [ %.sroa.0344.0424, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247 ], [ %.sroa.0344.0.ph, %bb.bz ], [ %.sroa.0344.0424, %bb.db ], [ %.sroa.0344.0424, %bb.ck ], [ %.sroa.0344.0424, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread ], [ %.sroa.0344.0424, %bb.ft ], [ %.sroa.0344.0.ph, %bb.cb ], [ %.sroa.0344.0.ph, %bb.ca ], [ %.sroa.0344.0424, %bb.cl ] ; 4 uses
   %.sroa.0350.0406 = phi ptr [ %.sroa.0350.0404, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247 ], [ %.sroa.0350.0.ph, %bb.bz ], [ %.sroa.0350.0404, %bb.db ], [ %.sroa.0350.0404, %bb.ck ], [ %.sroa.0350.0404, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread ], [ %.sroa.0350.0404, %bb.ft ], [ %.sroa.0350.0.ph, %bb.cb ], [ %.sroa.0350.0.ph, %bb.ca ], [ %.sroa.0350.0404, %bb.cl ] ; 4 uses
-  %.sroa.0356.2.a = phi ptr [ %.sroa.0356.1, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247 ], [ null, %bb.bz ], [ %.sroa.0356.1, %bb.db ], [ %.sroa.0356.1, %bb.ck ], [ %.sroa.0356.1, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread ], [ %.sroa.0356.1, %bb.ft ], [ null, %bb.cb ], [ null, %bb.ca ], [ %.sroa.0356.1, %bb.cl ] ; 3 uses
+  %.sroa.0356.2 = phi i1 [ false, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247 ], [ true, %bb.bz ], [ false, %bb.db ], [ false, %bb.ck ], [ false, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread ], [ false, %bb.ft ], [ true, %bb.cb ], [ true, %bb.ca ], [ false, %bb.cl ]
+  %.sroa.0356.2.a = phi ptr [ %.sroa.0356.1, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247 ], [ null, %bb.bz ], [ %.sroa.0356.1, %bb.db ], [ %.sroa.0356.1, %bb.ck ], [ %.sroa.0356.1, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread ], [ %.sroa.0356.1, %bb.ft ], [ null, %bb.cb ], [ null, %bb.ca ], [ %.sroa.0356.1, %bb.cl ] ; 2 uses
   %.pn140.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn140.pn.pn.pn.pn, %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit247 ], [ %i.jy, %bb.bz ], [ %i.oc, %bb.db ], [ %i.lu, %bb.ck ], [ %.pn140.pn.pn.pn.pn476, %_ZN5Ipopt8SmartPtrINS_11DenseVectorEED2Ev.exit299.thread ], [ %.pn140.pn.pn.pn.pn476, %bb.ft ], [ %i.jz, %bb.cb ], [ %i.jz, %bb.ca ], [ %i.lu, %bb.cl ] ; 3 uses
   %.not.i.i302 = icmp eq ptr %.sroa.0344.0416, null
   br i1 %.not.i.i302, label %_ZN5Ipopt8SmartPtrIKNS_17MultiVectorMatrixEED2Ev.exit303, label %_ZN5Ipopt8SmartPtrINS_6VectorEED2Ev.exit215.thread
@@ -1005,8 +1010,7 @@ bb.fw:                                            ; preds = %bb.fv
   br label %_ZN5Ipopt8SmartPtrIKNS_17MultiVectorMatrixEED2Ev.exit305
 
 _ZN5Ipopt8SmartPtrIKNS_17MultiVectorMatrixEED2Ev.exit305: ; preds = %_ZN5Ipopt8SmartPtrIKNS_17MultiVectorMatrixEED2Ev.exit303, %bb.fv, %bb.fw
-  %.not.i.i306 = icmp eq ptr %.sroa.0356.2.a, null
-  br i1 %.not.i.i306, label %_ZN5Ipopt8SmartPtrIKNS_15ExpansionMatrixEED2Ev.exit186, label %bb.fx
+  br i1 %.sroa.0356.2, label %_ZN5Ipopt8SmartPtrIKNS_15ExpansionMatrixEED2Ev.exit186, label %bb.fx
 
 bb.fx:                                            ; preds = %_ZN5Ipopt8SmartPtrIKNS_17MultiVectorMatrixEED2Ev.exit305
   %i.yk = getelementptr inbounds nuw i8, ptr %.sroa.0356.2.a, i64 8 ; 2 uses

@@ -204,12 +204,12 @@ bb.j:                                             ; preds = %bb.i
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 5, %.lr.ph.preheader ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 5, %.lr.ph.preheader ] ; 2 uses
   %.12634 = phi i32 [ %i.bm, %.lr.ph ], [ %.12634.ph, %.lr.ph.preheader ] ; 3 uses
   %i.bi = urem i32 %.12634, 10
   %i.bj = trunc nuw nsw i32 %i.bi to i8
   %i.bk = or disjoint i8 %i.bj, 48
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 4 uses
   %i.bl = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !19
   %i.bm = udiv i32 %.12634, 10
@@ -217,34 +217,37 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not40, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !26
 
 .loopexit.loopexit:                               ; preds = %.lr.ph
-  %i.bn = trunc nsw i64 %indvars.iv.next to i32
+  %i.bn = trunc nsw i64 %indvars.iv.next to i32   ; 2 uses
+  %5 = sub nsw i32 5, %i.bn
+  %6 = shl i64 %indvars.iv, 32
+  %sext = add i64 %6, -8589934592
+  %7 = ashr exact i64 %sext, 32
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.j
-  %.1.a = phi i32 [ 4, %bb.j ], [ %i.bn, %.loopexit.loopexit ] ; 5 uses
+  %.1 = phi i32 [ 1, %bb.j ], [ %5, %.loopexit.loopexit ] ; 2 uses
+  %8 = phi i64 [ 3, %bb.j ], [ %7, %.loopexit.loopexit ]
+  %9 = phi i64 [ 4, %bb.j ], [ %indvars.iv.next, %.loopexit.loopexit ]
+  %.1.a = phi i32 [ 4, %bb.j ], [ %i.bn, %.loopexit.loopexit ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !14
   %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.bp, i32 5) ; 3 uses
-  %5 = sub nsw i32 5, %.1.a                       ; 2 uses
-  %i.bq = icmp slt i32 %5, %.sroa.speculated
+  %i.bq = icmp slt i32 %.1, %.sroa.speculated
   br i1 %i.bq, label %.lr.ph37.preheader, label %._crit_edge
 
 .lr.ph37.preheader:                               ; preds = %.loopexit
-  %6 = add i32 %.1.a, -1
-  %7 = sext i32 %6 to i64
   %i.br = add i32 %.1.a, %.sroa.speculated
   %i.bs = add i32 %i.br, -6
   %i.bt = zext i32 %i.bs to i64                   ; 2 uses
-  %i.bu = sub nsw i64 %7, %i.bt
+  %i.bu = sub nsw i64 %8, %i.bt
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.bu
   %i.bv = add nuw nsw i64 %i.bt, 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 48, i64 %i.bv, i1 false), !tbaa !19
-  %8 = sext i32 %.1.a to i64
   %i.bw = sext i32 %.sroa.speculated to i64
   br label %.lr.ph37
 
 .lr.ph37:                                         ; preds = %.lr.ph37.preheader, %.lr.ph37
-  %indvars.iv45 = phi i64 [ %8, %.lr.ph37.preheader ], [ %indvars.iv.next46, %.lr.ph37 ] ; 2 uses
+  %indvars.iv45 = phi i64 [ %9, %.lr.ph37.preheader ], [ %indvars.iv.next46, %.lr.ph37 ] ; 2 uses
   %indvars.iv.next46 = add nsw i64 %indvars.iv45, -1 ; 2 uses
   %i.bx = sub nsw i64 6, %indvars.iv45            ; 2 uses
   %i.by = icmp slt i64 %i.bx, %i.bw
@@ -257,7 +260,7 @@ bb.j:                                             ; preds = %bb.i
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.loopexit
   %.2.lcssa = phi i32 [ %.1.a, %.loopexit ], [ %i.ca, %._crit_edge.loopexit ]
-  %.lcssa = phi i32 [ %5, %.loopexit ], [ %i.bz, %._crit_edge.loopexit ] ; 2 uses
+  %.lcssa = phi i32 [ %.1, %.loopexit ], [ %i.bz, %._crit_edge.loopexit ] ; 2 uses
   %i.cb = sext i32 %.2.lcssa to i64
   %i.cc = getelementptr inbounds i8, ptr %i.a, i64 %i.cb
   %i.cd = load i32, ptr %i.c, align 8, !tbaa !17
@@ -660,19 +663,20 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bj, label %.thread51, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %.sroa.speculated31 = call i32 @llvm.smax.i32(i32 %i.ax, i32 1)
+  %.sroa.speculated31 = call i32 @llvm.smax.i32(i32 %i.ax, i32 1) ; 2 uses
+  %4 = zext nneg i32 %.sroa.speculated31 to i64
   br label %.thread51
 
 .thread51:                                        ; preds = %.thread, %bb.o, %bb.p
   %i.bm = phi i1 [ false, %bb.p ], [ true, %bb.o ], [ true, %.thread ]
-  %i.bn = phi i32 [ %.sroa.speculated31, %bb.p ], [ 1, %bb.o ], [ 1, %.thread ] ; 3 uses
+  %5 = phi i64 [ %4, %bb.p ], [ 1, %bb.o ], [ 1, %.thread ]
+  %i.bn = phi i32 [ %.sroa.speculated31, %bb.p ], [ 1, %bb.o ], [ 1, %.thread ] ; 2 uses
   %.promoted = load i32, ptr %i.c, align 4, !tbaa !14 ; 6 uses
   %i.bo = icmp sgt i32 %.promoted, %i.bn
   br i1 %i.bo, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %.thread51
   %i.bp = zext nneg i32 %.promoted to i64         ; 2 uses
-  %4 = zext nneg i32 %i.bn to i64
   %i.bq = getelementptr i8, ptr %i.b, i64 %i.bp
   %i.br = getelementptr i8, ptr %i.bq, i64 -1
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !19
@@ -690,7 +694,7 @@ bb.p:                                             ; preds = %bb.o
   %indvars.iv77 = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.bp, %.lr.ph.preheader ]
   %indvars.iv.next = add nsw i64 %indvars.iv77, -1 ; 5 uses
   %i.by = trunc nuw nsw i64 %indvars.iv.next to i32 ; 4 uses
-  %i.bz = icmp sgt i64 %indvars.iv.next, %4
+  %i.bz = icmp sgt i64 %indvars.iv.next, %5
   br i1 %i.bz, label %.lr.ph, label %.critedge.loopexit, !llvm.loop !33
 
 .lr.ph..critedge.loopexit.split.loop.exit70_crit_edge: ; preds = %.lr.ph

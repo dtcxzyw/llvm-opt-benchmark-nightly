@@ -204,7 +204,9 @@ bb.a:
   br i1 %.not7, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph16
-  %i.d = sub nuw nsw i64 %i.c, %1
+  %i.d = sub nuw nsw i64 %i.c, %1                 ; 2 uses
+  %3 = shl nuw nsw i64 %i.d, 1                    ; 2 uses
+  %4 = or disjoint i64 %3, 1
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph16
@@ -212,21 +214,21 @@ bb.c:                                             ; preds = %.lr.ph16
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.sroa.04.0.a = phi i64 [ %i.d, %bb.b ], [ 0, %bb.c ] ; 3 uses
+  %.sroa.04.0 = phi i64 [ %4, %bb.b ], [ 1, %bb.c ] ; 2 uses
+  %5 = phi i64 [ %3, %bb.b ], [ 0, %bb.c ]
+  %.sroa.04.0.a = phi i64 [ %i.d, %bb.b ], [ 0, %bb.c ] ; 2 uses
   %i.e = tail call i64 @llvm.umin.i64(i64 %i.c, i64 %1) ; 4 uses
   %i.f = icmp ule i64 %.sroa.04.0.a, %i.e
   tail call void @llvm.assume(i1 %i.f)
-  %3 = shl nuw nsw i64 %.sroa.04.0.a, 1           ; 2 uses
-  %4 = or disjoint i64 %3, 1                      ; 2 uses
-  %.not.i11 = icmp samesign ult i64 %4, %i.e
+  %.not.i11 = icmp ult i64 %.sroa.04.0, %i.e
   br i1 %.not.i11, label %.lr.ph, label %_RINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort8unstable8heapsort9sift_downTNtNtCsgdm2QMcbaeA_10fontdrasil10variations15LocationSortKeyjENvYB16_NtNtBa_3cmp10PartialOrd2ltEB1b_.exit
 
 .lr.ph:                                           ; preds = %bb.d, %bb.i
-  %i.g = phi i64 [ %i.ae, %bb.i ], [ %4, %bb.d ]  ; 3 uses
-  %i.h = phi i64 [ %i.ad, %bb.i ], [ %3, %bb.d ]
+  %i.g = phi i64 [ %i.ae, %bb.i ], [ %.sroa.04.0, %bb.d ] ; 3 uses
+  %i.h = phi i64 [ %i.ad, %bb.i ], [ %5, %bb.d ]
   %.sroa.0.0.i12 = phi i64 [ %.sroa.04.0.i, %bb.i ], [ %.sroa.04.0.a, %bb.d ]
   %i.i = add nuw nsw i64 %i.h, 2                  ; 2 uses
-  %i.j = icmp samesign ult i64 %i.i, %i.e
+  %i.j = icmp ult i64 %i.i, %i.e
   br i1 %i.j, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %.lr.ph

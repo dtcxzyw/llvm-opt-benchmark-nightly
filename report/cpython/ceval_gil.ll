@@ -202,8 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !104
   %i.f = tail call ptr @_PyInterpreterState_Main() #13
   %i.g = icmp eq ptr %i.e, %i.f
-  %i.h = freeze i1 %i.g
+  %i.h = freeze i1 %i.g                           ; 2 uses
   %i.i = getelementptr i8, ptr %i.b, i64 44       ; 2 uses
+  %1 = select i1 %i.h, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 2924), ptr inttoptr (i64 12 to ptr)
   br i1 %i.h, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %.thread, %bb.b
@@ -224,7 +225,7 @@ bb.c:                                             ; preds = %.split.us
 
 bb.d:                                             ; preds = %bb.c, %.split.us
   %i.n = load atomic i32, ptr %i.i monotonic, align 4
-  %i.o = load atomic i32, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 2924) monotonic, align 4
+  %i.o = load atomic i32, ptr %1 monotonic, align 4
   %i.p = add i32 %i.o, %i.n
   %i.q = icmp sgt i32 %i.p, 0
   br i1 %i.q, label %.split.us, label %.split11.us, !llvm.loop !211

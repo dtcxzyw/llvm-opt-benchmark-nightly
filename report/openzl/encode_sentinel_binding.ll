@@ -202,11 +202,13 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %.0.copyload = load i64, ptr %i.u, align 1
-  %i.ab = and i64 %.0.copyload, %.0.i
+  %i.ab = and i64 %.0.copyload, %.0.i             ; 2 uses
+  %6 = icmp eq i64 %i.ab, %.0.i
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %.084.a = phi i64 [ %i.ab, %bb.f ], [ %.0.i, %bb.c ] ; 5 uses
+  %.084 = phi i1 [ %6, %bb.f ], [ true, %bb.c ]
+  %.084.a = phi i64 [ %i.ab, %bb.f ], [ %.0.i, %bb.c ] ; 4 uses
   %i.ac = call ptr @ZL_Encoder_createTypedStream(ptr noundef %0, i32 noundef 0, i64 noundef %i.f, i64 noundef %i.e) #5 ; 3 uses
   %.not94 = icmp eq ptr %i.ac, null
   br i1 %.not94, label %.thread108, label %bb.h, !prof !20
@@ -249,8 +251,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.p
 
 bb.k:                                             ; preds = %bb.i
-  %6 = icmp eq i64 %.084.a, %.0.i
-  br i1 %6, label %sendSentinelHeader.exit, label %bb.l
+  br i1 %.084, label %sendSentinelHeader.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5

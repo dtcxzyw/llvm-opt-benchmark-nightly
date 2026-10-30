@@ -205,18 +205,19 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_Z17luaD_reallocstackP9lua_Stateii(ptr noundef nonnull %0, i32 noundef 40, i32 noundef 0)
   %.pre32 = load i32, ptr %i.u, align 8, !tbaa !44 ; 2 uses
   %i.w = icmp sgt i32 %.pre32, 0
+  %1 = zext nneg i32 %.pre32 to i64
   br i1 %i.w, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
-  %1 = phi i32 [ %.pre32, %bb.d ], [ 45, %bb.c ]  ; 2 uses
+  %wide.trip.count34 = phi i64 [ %1, %bb.d ], [ 45, %bb.c ] ; 3 uses
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !39   ; 9 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 7         ; 3 uses
-  %i.y = icmp samesign ult i32 %1, 8
+  %2 = add nsw i64 %wide.trip.count34, -1
+  %xtraiter = and i64 %wide.trip.count34, 7       ; 3 uses
+  %i.y = icmp ult i64 %2, 7
   br i1 %i.y, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483640
+  %unroll_iter = and i64 %wide.trip.count34, 2147483640
   br label %bb.f
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.f

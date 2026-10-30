@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.0.0.i.a = phi i64 [ 0, %bb.b ], [ 4, %bb.c ] ; 4 uses
+  %.sroa.0.0.i = phi i64 [ 2, %bb.b ], [ 6, %bb.c ]
+  %.sroa.0.0.i.a = phi i64 [ 0, %bb.b ], [ 4, %bb.c ] ; 3 uses
   %i.z = and i64 %2, 2
   %i.aa = icmp eq i64 %i.z, 0
   br i1 %i.aa, label %bb.f, label %bb.e
@@ -216,11 +217,10 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.02.0.copyload.i10.i = load i16, ptr %i.ac, align 1
   store i16 %.sroa.02.0.copyload.i10.i, ptr %i.ab, align 1
   store i16 %.sroa.0.0.copyload.i9.i, ptr %i.ac, align 1
-  %3 = or disjoint i64 %.sroa.0.0.i.a, 2
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i.a, %bb.d ], [ %3, %bb.e ] ; 2 uses
+  %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i.a, %bb.d ], [ %.sroa.0.0.i, %bb.e ] ; 2 uses
   %i.ad = and i64 %2, 1
   %i.ae = icmp eq i64 %i.ad, 0
   br i1 %i.ae, label %_RNvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_shortCsbi23obv45GP_19pyo3_macros_backend.exit, label %bb.g
@@ -623,32 +623,33 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define ptr @_RNvYNtNtNtNtCsG258MDvU3F_3std3sys5stdio4unix6StderrNtNtNtCskKLDkoKarTP_4core2io5write5Write9write_allCsbi23obv45GP_19pyo3_macros_backend(ptr %0, ptr %1, i64 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = icmp eq i64 %2, 0
   br i1 %i.b, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 6 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.l
-  %.sroa.0.017 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.127, %bb.l ] ; 4 uses
-  %.sroa.6.016 = phi i64 [ %2, %.lr.ph ], [ %.sroa.6.126, %bb.l ] ; 7 uses
+bb.b:                                             ; preds = %.thread, %.lr.ph
+  %.sroa.0.017 = phi ptr [ %i.l, %.thread ], [ %1, %.lr.ph ] ; 3 uses
+  %.sroa.6.016 = phi i64 [ %i.k, %.thread ], [ %2, %.lr.ph ] ; 6 uses
   %i.d = call { i64, ptr } @_RNvXs3_NtNtNtCsG258MDvU3F_3std3sys5stdio4unixNtB5_6StderrNtNtNtCskKLDkoKarTP_4core2io5write5Write5write(ptr %0, ptr %.sroa.0.017, i64 %.sroa.6.016) ; 2 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0        ; 2 uses
-  %i.f = extractvalue { i64, ptr } %i.d, 1        ; 3 uses
+  %i.f = extractvalue { i64, ptr } %i.d, 1        ; 2 uses
   store i64 %i.e, ptr %i.a, align 8
   store ptr %i.f, ptr %i.c, align 8
   %i.g = trunc nuw i64 %i.e to i1
-  %3 = ptrtoint ptr %i.f to i64                   ; 4 uses
   br i1 %i.g, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.l
   %i.h = invoke zeroext i1 @_RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error14is_interruptedCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.c)
           to label %bb.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.d:                                             ; preds = %bb.b
-  %i.i = icmp eq ptr %i.f, null
+bb.d:                                             ; preds = %bb.l, %bb.b
+  %.lcssa = phi ptr [ %i.f, %bb.b ], [ %7, %bb.l ] ; 2 uses
+  %3 = ptrtoint ptr %.lcssa to i64                ; 4 uses
+  %i.i = icmp eq ptr %.lcssa, null
   br i1 %i.i, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -656,9 +657,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.j, label %bb.f, label %.thread
 
 .thread:                                          ; preds = %bb.e
-  %i.k = sub nuw i64 %.sroa.6.016, %3
+  %i.k = sub nuw i64 %.sroa.6.016, %3             ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.017, i64 %3
-  br label %bb.l
+  %4 = icmp eq i64 %i.k, 0
+  br i1 %4, label %.loopexit, label %bb.b
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 %3, i64 %.sroa.6.016, i64 %.sroa.6.016, ptr nonnull align 8 @7) #16
@@ -686,19 +688,22 @@ bb.j:                                             ; preds = %bb.i
   %i.p = load ptr, ptr %i.c, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.l, %bb.d, %bb.a, %bb.j
-  %.sroa.07.0 = phi ptr [ %i.p, %bb.j ], [ null, %bb.a ], [ null, %bb.l ], [ @5, %bb.d ]
+.loopexit:                                        ; preds = %.thread, %bb.d, %bb.a, %bb.j
+  %.sroa.07.0 = phi ptr [ %i.p, %bb.j ], [ null, %bb.a ], [ null, %.thread ], [ @5, %bb.d ]
   ret ptr %.sroa.07.0
 
 bb.k:                                             ; preds = %bb.g
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.c)
   br label %bb.l
 
-bb.l:                                             ; preds = %.thread, %bb.k, %bb.g
-  %.sroa.0.127 = phi ptr [ %i.l, %.thread ], [ %.sroa.0.017, %bb.k ], [ %.sroa.0.017, %bb.g ]
-  %.sroa.6.126 = phi i64 [ %i.k, %.thread ], [ %.sroa.6.016, %bb.k ], [ %.sroa.6.016, %bb.g ] ; 2 uses
-  %4 = icmp eq i64 %.sroa.6.126, 0
-  br i1 %4, label %.loopexit, label %bb.b
+bb.l:                                             ; preds = %bb.k, %bb.g
+  %5 = call { i64, ptr } @_RNvXs3_NtNtNtCsG258MDvU3F_3std3sys5stdio4unixNtB5_6StderrNtNtNtCskKLDkoKarTP_4core2io5write5Write5write(ptr %0, ptr %.sroa.0.017, i64 %.sroa.6.016) ; 2 uses
+  %6 = extractvalue { i64, ptr } %5, 0            ; 2 uses
+  %7 = extractvalue { i64, ptr } %5, 1            ; 2 uses
+  store i64 %6, ptr %i.a, align 8
+  store ptr %7, ptr %i.c, align 8
+  %8 = trunc nuw i64 %6 to i1
+  br i1 %8, label %bb.c, label %bb.d
 
 bb.m:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.c) #13

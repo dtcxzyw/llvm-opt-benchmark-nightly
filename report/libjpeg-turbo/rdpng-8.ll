@@ -203,7 +203,9 @@ bb.bd:                                            ; preds = %bb.bc, %.epil.prehe
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.bc, %bb.bd, %._crit_edge.unr-lcssa
-  %.1.lcssa = phi i32 [ %.1.1, %._crit_edge.unr-lcssa ], [ 0, %bb.bd ], [ %.0202238.epil.init, %bb.bc ] ; 2 uses
+  %.1.lcssa = phi i32 [ %.1.1, %._crit_edge.unr-lcssa ], [ 0, %bb.bd ], [ %.0202238.epil.init, %bb.bc ] ; 3 uses
+  %3 = icmp ne i32 %.1.lcssa, 0
+  %4 = icmp ne i32 %.1.lcssa, 0
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !48 ; 2 uses
   %i.gb = icmp eq i32 %i.ga, 0
@@ -218,10 +220,10 @@ bb.bd:                                            ; preds = %bb.bc, %.epil.prehe
 bb.be:                                            ; preds = %._crit_edge.thread, %._crit_edge
   %i.gf = phi i32 [ %i.gd, %._crit_edge.thread ], [ %i.ga, %._crit_edge ] ; 2 uses
   %i.gg = phi ptr [ %i.gc, %._crit_edge.thread ], [ %i.fz, %._crit_edge ]
-  %.0202.lcssa262 = phi i32 [ 1, %._crit_edge.thread ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
-  %3 = icmp eq i32 %i.gf, 2
-  %4 = icmp ne i32 %.0202.lcssa262, 0
-  %or.cond9 = select i1 %3, i1 %4, i1 false
+  %5 = phi i1 [ true, %._crit_edge.thread ], [ %4, %._crit_edge ]
+  %.0202.lcssa263 = phi i1 [ true, %._crit_edge.thread ], [ %3, %._crit_edge ]
+  %6 = icmp eq i32 %i.gf, 2
+  %or.cond9 = select i1 %6, i1 %.0202.lcssa263, i1 false
   br i1 %or.cond9, label %.thread234, label %bb.bg
 
 bb.bf:                                            ; preds = %._crit_edge
@@ -235,7 +237,6 @@ bb.bf:                                            ; preds = %._crit_edge
 
 bb.bg:                                            ; preds = %bb.be
   %i.gi = icmp ne i32 %i.gf, 1
-  %5 = icmp ne i32 %.0202.lcssa262, 0
   %or.cond12 = select i1 %i.gi, i1 true, i1 %5
   br i1 %or.cond12, label %.thread268, label %bb.bh
 

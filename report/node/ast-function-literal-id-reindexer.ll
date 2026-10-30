@@ -202,8 +202,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  %.pre21.pre = load i8, ptr %i.f, align 8, !range !9
-  %i.g = trunc nuw i8 %.pre21.pre to i1           ; 2 uses
+  %.pre21.pre = load i8, ptr %i.f, align 8, !range !9 ; 2 uses
+  %2 = trunc nuw i8 %.pre21.pre to i1
+  %i.g = trunc nuw i8 %.pre21.pre to i1
   %i.h = load ptr, ptr %i.b, align 8
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
   %i.j = load i64, ptr %i.i, align 8
@@ -216,7 +217,7 @@ bb.a:
   br i1 %i.p, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  br i1 %i.g, label %.critedge, label %bb.c
+  br i1 %2, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.q = tail call noundef i64 @_ZN2v88internal23GetCurrentStackPositionEv() #5, !inline_history !0

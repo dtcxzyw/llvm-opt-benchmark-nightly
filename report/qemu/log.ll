@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x,
   %i.bn = getelementptr inbounds nuw i8, ptr %.0385968, i64 8 ; 2 uses
   %i.bo = load ptr, ptr %i.bn, align 8            ; 2 uses
   %.not44 = icmp eq ptr %i.bo, null
-  br i1 %.not44, label %.critedge, label %.lr.ph70
+  br i1 %.not44, label %.critedge, label %.lr.ph70, !llvm.loop !18
 
 .critedge:                                        ; preds = %bb.z, %.loopexit, %.lr.ph.preheader, %bb.a
   %.0 = phi i32 [ 0, %bb.a ], [ 0, %.lr.ph.preheader ], [ %.2, %.loopexit ], [ 0, %bb.z ]
@@ -379,4 +379,5 @@ attributes #20 = { nounwind allocsize(0) }
 !15 = distinct !{null, null, null}
 !16 = distinct !{!16, !12}
 !17 = distinct !{!17, !12}
+!18 = distinct !{!18, !12}
 end_hunk_0

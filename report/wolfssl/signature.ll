@@ -202,9 +202,9 @@ bb.i:                                             ; preds = %bb.h
   ]
 
 bb.j:                                             ; preds = %bb.i
-  %i.p = tail call i32 @wc_ecc_sign_hash(ptr noundef nonnull %2, i32 noundef %3, ptr noundef nonnull %4, ptr noundef nonnull %5, ptr noundef %8, ptr noundef nonnull %6) #6 ; 2 uses
+  %i.p = tail call i32 @wc_ecc_sign_hash(ptr noundef nonnull %2, i32 noundef %3, ptr noundef nonnull %4, ptr noundef nonnull %5, ptr noundef %8, ptr noundef nonnull %6) #6 ; 3 uses
   %i.q = icmp eq i32 %i.p, -108
-  br i1 %i.q, label %.preheader.peel.next, label %.loopexit
+  br i1 %i.q, label %.preheader.peel.next, label %.loopexit.loopexit
 
 .preheader.peel.next:                             ; preds = %bb.j, %.preheader.peel.next
   br label %.preheader.peel.next
@@ -226,11 +226,15 @@ bb.m:                                             ; preds = %bb.l
   store i32 %i.s, ptr %5, align 4, !tbaa !8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.j, %bb.m
-  %.4 = phi i32 [ 0, %bb.m ], [ %i.p, %bb.j ]     ; 2 uses
-  %10 = icmp eq i32 %.4, 0
+.loopexit.loopexit:                               ; preds = %bb.j
+  %10 = icmp eq i32 %i.p, 0
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.m
+  %.4 = phi i1 [ true, %bb.m ], [ %10, %.loopexit.loopexit ]
+  %11 = phi i32 [ 0, %bb.m ], [ %i.p, %.loopexit.loopexit ]
   %i.v = icmp ne i32 %9, 0
-  %or.cond11 = and i1 %i.v, %10
+  %or.cond11 = and i1 %i.v, %.4
   br i1 %or.cond11, label %bb.n, label %.thread
 
 bb.n:                                             ; preds = %.loopexit
@@ -239,7 +243,7 @@ bb.n:                                             ; preds = %.loopexit
   br label %.thread
 
 .thread:                                          ; preds = %bb.i, %bb.l, %.loopexit, %bb.n, %bb.h, %wc_SignatureGetSize.exit, %bb.a, %bb.b
-  %.056 = phi i32 [ %i.n, %bb.h ], [ -173, %bb.a ], [ -173, %wc_SignatureGetSize.exit ], [ -173, %bb.b ], [ %i.x, %bb.n ], [ %.4, %.loopexit ], [ -173, %bb.i ], [ %i.s, %bb.l ]
+  %.056 = phi i32 [ %i.n, %bb.h ], [ -173, %bb.a ], [ -173, %wc_SignatureGetSize.exit ], [ -173, %bb.b ], [ %i.x, %bb.n ], [ %11, %.loopexit ], [ -173, %bb.i ], [ %i.s, %bb.l ]
   ret i32 %.056
 }
 

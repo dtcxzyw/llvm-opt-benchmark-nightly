@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/draco/original/draco_decoder?download=true
-inline.NumInlined: 364
+inline.NumInlined: 369
 inline.NumDeleted: 227
 begin_hunk_0_@main:bb.a
   %puts118 = call i32 @puts(ptr nonnull dereferenceable(1) @str.9) ; 0 uses
@@ -202,11 +202,12 @@ bb.ah:                                            ; preds = %_ZNSt10unique_ptrIN
   %i.dx = landingpad { ptr, i32 }
           cleanup
   call void @_ZN5draco8StatusOrISt10unique_ptrINS_10PointCloudESt14default_deleteIS2_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %10) #18
+  %18 = icmp eq ptr %i.dz, null
   br label %bb.aj
 
 _ZNSt10unique_ptrIN5draco10PointCloudESt14default_deleteIS1_EEaSEOS4_.exit: ; preds = %bb.ae
   %i.dy = getelementptr inbounds nuw i8, ptr %10, i64 40 ; 2 uses
-  %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !31 ; 2 uses
+  %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !31 ; 3 uses
   store ptr null, ptr %i.dy, align 8, !tbaa !31
   invoke void @_ZN5draco10DracoTimer4StopEv(ptr noundef nonnull align 8 dereferenceable(32) %5)
           to label %bb.ai unwind label %bb.ah
@@ -221,6 +222,7 @@ bb.ai:                                            ; preds = %bb.af, %_ZNSt10uniq
   br i1 %i.dt, label %bb.ak, label %bb.ci
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ag
+  %.sroa.0164.3 = phi i1 [ %18, %bb.ah ], [ true, %bb.ag ]
   %.sroa.0164.3.a = phi ptr [ %i.dz, %bb.ah ], [ null, %bb.ag ]
   %.pn = phi { ptr, i32 } [ %i.dx, %bb.ah ], [ %i.dw, %bb.ag ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #18
@@ -592,7 +594,8 @@ _ZNSt10unique_ptrIN5draco10PointCloudESt14default_deleteIS1_EED2Ev.exit: ; preds
   br label %bb.cm
 
 bb.cj:                                            ; preds = %bb.x, %bb.ab, %bb.aj, %bb.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit147
-  %.sroa.0164.6.a = phi ptr [ %.sroa.0164.4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit147 ], [ %.sroa.0164.4, %bb.ao ], [ null, %bb.ab ], [ null, %bb.x ], [ %.sroa.0164.3.a, %bb.aj ] ; 3 uses
+  %.sroa.0164.6 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit147 ], [ false, %bb.ao ], [ true, %bb.ab ], [ true, %bb.x ], [ %.sroa.0164.3, %bb.aj ]
+  %.sroa.0164.6.a = phi ptr [ %.sroa.0164.4, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit147 ], [ %.sroa.0164.4, %bb.ao ], [ null, %bb.ab ], [ null, %bb.x ], [ %.sroa.0164.3.a, %bb.aj ] ; 2 uses
   %.pn108.pn.pn.pn = phi { ptr, i32 } [ %.pn108.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit147 ], [ %i.ei, %bb.ao ], [ %.pn88.pn, %bb.ab ], [ %i.cz, %bb.x ], [ %.pn, %bb.aj ] ; 2 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.gq = load ptr, ptr %i.gp, align 8, !tbaa !20 ; 2 uses
@@ -608,8 +611,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN5draco8StatusOrINS_19EncodedGeometryTypeEED2Ev.exit151: ; preds = %bb.cj, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i149
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  %.not.i152 = icmp eq ptr %.sroa.0164.6.a, null
-  br i1 %.not.i152, label %_ZNSt10unique_ptrIN5draco10PointCloudESt14default_deleteIS1_EED2Ev.exit154, label %_ZNKSt14default_deleteIN5draco10PointCloudEEclEPS1_.exit.i153
+  br i1 %.sroa.0164.6, label %_ZNSt10unique_ptrIN5draco10PointCloudESt14default_deleteIS1_EED2Ev.exit154, label %_ZNKSt14default_deleteIN5draco10PointCloudEEclEPS1_.exit.i153
 
 _ZNKSt14default_deleteIN5draco10PointCloudEEclEPS1_.exit.i153: ; preds = %_ZN5draco8StatusOrINS_19EncodedGeometryTypeEED2Ev.exit151
   %i.gv = load ptr, ptr %.sroa.0164.6.a, align 8, !tbaa !29

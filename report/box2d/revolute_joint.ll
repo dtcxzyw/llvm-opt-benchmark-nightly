@@ -202,12 +202,14 @@ bb.t:                                             ; preds = %bb.s
   %i.ij = shufflevector <2 x float> %i.ii, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ik = fmul <2 x float> %i.ij, %i.ih
   %i.il = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %i.im = load <2 x float>, ptr %i.il, align 4, !tbaa !81
+  %i.im = load <2 x float>, ptr %i.il, align 4, !tbaa !81 ; 2 uses
+  %4 = shufflevector <2 x float> %i.im, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.sroa.025.0 = phi <2 x float> [ %i.ik, %bb.t ], [ zeroinitializer, %bb.s ]
-  %i.in = phi <2 x float> [ %i.im, %bb.t ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.s ] ; 2 uses
+  %5 = phi <2 x float> [ %4, %bb.t ], [ zeroinitializer, %bb.s ]
+  %i.in = phi <2 x float> [ %i.im, %bb.t ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.s ]
   %i.io = fmul <2 x float> %i.ha, %i.ha
   %i.ip = shufflevector <2 x float> %i.io, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.iq = fmul <2 x float> %i.hi, %i.hi
@@ -256,8 +258,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ke = shufflevector <2 x float> %i.kd, <2 x float> poison, <2 x i32> zeroinitializer
   %i.kf = fmul <2 x float> %i.kc, %i.ke
   %i.kg = load <2 x float>, ptr %i.i, align 4, !tbaa !81 ; 2 uses
-  %4 = shufflevector <2 x float> %i.in, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.kh = fmul <2 x float> %4, %i.kg
+  %i.kh = fmul <2 x float> %5, %i.kg
   %i.ki = fsub <2 x float> %i.kf, %i.kh           ; 5 uses
   %i.kj = extractelement <2 x float> %i.ki, i64 0 ; 2 uses
   %i.kk = extractelement <2 x float> %i.ki, i64 1 ; 2 uses

@@ -200,20 +200,21 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !29   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !31   ; 4 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !31   ; 5 uses
   %.not = icmp slt i32 %i.f, %i.h
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !30  ; 2 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = shl i32 %i.h, 4
-  %i.j = icmp eq i32 %i.h, 0
+  %i.j = icmp eq i32 %i.h, 0                      ; 2 uses
   %i.k = shl nsw i32 %i.h, 1
-  %spec.select = select i1 %i.j, i32 8, i32 %i.k  ; 2 uses
-  %2 = shl i32 %spec.select, 4
-  %i.l = tail call ptr @b3GrowAlloc(ptr noundef %.pre, i32 noundef %i.i, i32 noundef %2) #5 ; 2 uses
+  %2 = shl i32 %i.h, 5
+  %spec.select = select i1 %i.j, i32 128, i32 %2
+  %3 = select i1 %i.j, i32 8, i32 %i.k
+  %i.l = tail call ptr @b3GrowAlloc(ptr noundef %.pre, i32 noundef %i.i, i32 noundef %spec.select) #5 ; 2 uses
   store ptr %i.l, ptr %i.b, align 8, !tbaa !30
-  store i32 %spec.select, ptr %i.g, align 4, !tbaa !31
+  store i32 %3, ptr %i.g, align 4, !tbaa !31
   %.pre20 = load i32, ptr %i.e, align 8, !tbaa !29
   br label %bb.c
 

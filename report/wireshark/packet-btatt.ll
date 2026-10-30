@@ -202,11 +202,13 @@ is_request.exit.i:                                ; preds = %bb.k
   br i1 %.not34.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %is_request.exit.i
-  %i.cv = call ptr @wmem_tree_lookup32_le(ptr noundef nonnull %i.cu, i32 noundef %i.ct)
+  %i.cv = call ptr @wmem_tree_lookup32_le(ptr noundef nonnull %i.cu, i32 noundef %i.ct) ; 2 uses
+  %28 = icmp eq ptr %i.cv, null
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %is_request.exit.i
-  %i.cw = phi ptr [ %i.cv, %bb.m ], [ null, %is_request.exit.i ] ; 3 uses
+  %.not35.i = phi i1 [ %28, %bb.m ], [ true, %is_request.exit.i ]
+  %i.cw = phi ptr [ %i.cv, %bb.m ], [ null, %is_request.exit.i ] ; 2 uses
   switch i8 %i.bj, label %bb.s [
     i8 1, label %bb.o
     i8 3, label %bb.q
@@ -248,7 +250,6 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n
   %.027.i = phi i8 [ %i.dc, %bb.p ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ], [ %i.bj, %bb.n ]
-  %.not35.i = icmp eq ptr %i.cw, null
   br i1 %.not35.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q

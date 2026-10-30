@@ -205,17 +205,19 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %.252 = phi i32 [ %i.x, %bb.m ], [ %.151, %bb.l ], [ %.151, %bb.k ] ; 7 uses
-  %3 = lshr i32 %.252, 4
-  %.lobit = and i32 %3, 1
-  %i.y = lshr i32 %.252, 5
-  %i.z = and i32 %i.y, 1
-  %.1 = add nuw nsw i32 %.lobit, %i.z
+  %3 = and i32 %.252, 16                          ; 2 uses
+  %.not58.not = icmp eq i32 %3, 0
+  %spec.select62 = select i1 %.not58.not, i32 1, i32 2
+  %i.y = lshr exact i32 %3, 4
+  %i.z = and i32 %.252, 32
+  %.not59 = icmp eq i32 %i.z, 0
+  %.1 = select i1 %.not59, i32 %i.y, i32 %spec.select62
   %i.aa = lshr i32 %.252, 6
   %i.ab = and i32 %i.aa, 1
-  %.2 = add nuw nsw i32 %.1, %i.ab
   %4 = lshr i32 %.252, 7
   %5 = and i32 %4, 1
-  %.3 = add nuw nsw i32 %.2, %5
+  %.2 = add nuw nsw i32 %5, %i.ab
+  %.3 = add nuw nsw i32 %.2, %.1
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 628
   %i.ad = load i8, ptr %i.ac, align 4, !tbaa !81
   %i.ae = zext i8 %i.ad to i32
@@ -618,11 +620,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load i32, ptr %i.n, align 8, !tbaa !102
-  %i.p = icmp eq i32 %i.o, 0
+  %i.p = icmp eq i32 %i.o, 0                      ; 3 uses
+  %2 = select i1 %i.p, i32 16, i32 8
+  %3 = select i1 %i.p, ptr @png_write_image_16bit, ptr @png_write_image_8bit
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.q = phi i1 [ false, %bb.a ], [ %i.p, %bb.b ] ; 3 uses
+  %4 = phi i32 [ 8, %bb.a ], [ %2, %bb.b ]
+  %png_write_image_16bit.png_write_image_8bit = phi ptr [ @png_write_image_8bit, %bb.a ], [ %3, %bb.b ]
+  %i.q = phi i1 [ false, %bb.a ], [ %i.p, %bb.b ]
   tail call void @png_set_benign_errors(ptr noundef %i.d, i32 noundef 0) #16
   %i.r = load i32, ptr %i.g, align 4, !tbaa !112  ; 2 uses
   %i.s = and i32 %i.r, 8
@@ -1025,12 +1031,11 @@ bb.ag:                                            ; preds = %bb.m, %bb.l
   unreachable
 
 bb.ah:                                            ; preds = %bb.j
-  %2 = select i1 %i.q, i32 16, i32 8
   %trunc = trunc i32 %i.h to i3
   %i.lm = and i3 %trunc, 3
   %mask = tail call i3 @llvm.bitreverse.i3(i3 %i.lm)
   %i.ln = zext i3 %mask to i32
-  tail call void @png_set_IHDR(ptr noundef %i.d, ptr noundef %i.f, i32 noundef %i.x, i32 noundef %i.af, i32 noundef %2, i32 noundef %i.ln, i32 noundef 0, i32 noundef 0, i32 noundef 0) #16
+  tail call void @png_set_IHDR(ptr noundef %i.d, ptr noundef %i.f, i32 noundef %i.x, i32 noundef %i.af, i32 noundef %4, i32 noundef %i.ln, i32 noundef 0, i32 noundef 0, i32 noundef 0) #16
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %png_image_set_PLTE.exit
@@ -1236,7 +1241,6 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
   %i.oc = call noalias ptr @png_malloc(ptr noundef %i.d, i64 noundef %i.ob) #16 ; 2 uses
   %i.od = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   store ptr %i.oc, ptr %i.od, align 8, !tbaa !118
-  %png_write_image_16bit.png_write_image_8bit = select i1 %i.q, ptr @png_write_image_16bit, ptr @png_write_image_8bit
   %i.oe = call i32 @png_safe_execute(ptr noundef nonnull %i.b, ptr noundef nonnull %png_write_image_16bit.png_write_image_8bit, ptr noundef nonnull %0) #16
   store ptr null, ptr %i.od, align 8, !tbaa !118
   call void @png_free(ptr noundef %i.d, ptr noundef %i.oc) #16

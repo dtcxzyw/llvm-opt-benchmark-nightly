@@ -202,8 +202,9 @@ bb.c:                                             ; preds = %.lr.ph, %bb.h
 bb.d:                                             ; preds = %bb.c
   %i.an = and i16 %i.am, 31
   %.tr.i.i = trunc i64 %i.aj to i16
-  %i.ao = shl i16 %.tr.i.i, 5
+  %i.ao = shl i16 %.tr.i.i, 5                     ; 2 uses
   %i.ap = or disjoint i16 %i.ao, %i.an
+  %5 = icmp slt i16 %i.ao, 0
   br label %_ZN6icu_7813UnicodeString9setLengthEi.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -212,7 +213,8 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN6icu_7813UnicodeString9setLengthEi.exit
 
 _ZN6icu_7813UnicodeString9setLengthEi.exit:       ; preds = %bb.d, %bb.e
-  %i.ar = phi i16 [ %i.ap, %bb.d ], [ %i.aq, %bb.e ] ; 3 uses
+  %6 = phi i1 [ %5, %bb.d ], [ true, %bb.e ]
+  %i.ar = phi i16 [ %i.ap, %bb.d ], [ %i.aq, %bb.e ] ; 2 uses
   store i16 %i.ar, ptr %i.k, align 8, !tbaa !10
   %i.as = load i32, ptr %i.c, align 4, !tbaa !12  ; 3 uses
   %i.at = icmp eq i32 %i.as, 15
@@ -231,11 +233,10 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %_ZN6icu_7813UnicodeString9setLengthEi.exit
-  %5 = icmp slt i16 %i.ar, 0
   %i.av = ashr i16 %i.ar, 5
   %i.aw = sext i16 %i.av to i32
   %i.ax = load i32, ptr %i.n, align 4
-  %i.ay = select i1 %5, i32 %i.ax, i32 %i.aw
+  %i.ay = select i1 %6, i32 %i.ax, i32 %i.aw
   %i.az = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.ba = ptrtoint ptr %i.az to i64
   %i.bb = sub i64 %i.p, %i.ba

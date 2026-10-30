@@ -202,6 +202,7 @@ bb.t:                                             ; preds = %.thread
   br i1 %i.dq, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.v, %.thread, %bb.t
+  %.sroa.028.0 = phi i1 [ true, %.thread ], [ true, %bb.t ], [ false, %bb.v ]
   %.sroa.028.0.a = phi i1 [ false, %.thread ], [ false, %bb.t ], [ true, %bb.v ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
@@ -354,8 +355,7 @@ bb.ah:                                            ; preds = %"_ZN4core3ptr66drop
 
 bb.ai:                                            ; preds = %bb.ef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
-  %4 = trunc nuw i8 %.sroa.0138.9.a to i1
-  br i1 %4, label %bb.eh, label %bb.du
+  br i1 %.sroa.0138.9, label %bb.eh, label %bb.du
 
 .thread382:                                       ; preds = %bb.aq, %bb.aj, %bb.aa
   %lpad.thr_comm = landingpad { ptr, i32 }
@@ -732,7 +732,7 @@ bb.cg:                                            ; preds = %bb.ce
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cr, %bb.cg
-  %.sroa.0138.7 = phi i8 [ 0, %bb.cr ], [ 1, %bb.cg ] ; 11 uses
+  %.sroa.0138.7 = phi i8 [ 0, %bb.cr ], [ 1, %bb.cg ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   %i.gu = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.gv = load ptr, ptr %i.gu, align 8, !nonnull !4, !noundef !4
@@ -1017,8 +1017,7 @@ bb.dr:                                            ; preds = %bb.dq
 
 bb.ds:                                            ; preds = %bb.dr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
-  %5 = trunc nuw i8 %.sroa.0138.7 to i1
-  br i1 %5, label %bb.dt, label %bb.du
+  br i1 %.sroa.028.0, label %bb.dt, label %bb.du
 
 bb.dt:                                            ; preds = %bb.ds
   %i.iv = call noundef i32 @close(i32 noundef %i.dw) #16 ; 0 uses
@@ -1063,8 +1062,9 @@ bb.ea:                                            ; preds = %bb.cl
 
 "_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit": ; preds = %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17h22828b7800b2480bE.exit.i", %bb.cj
   %.sroa.0.1409 = phi ptr [ %.sroa.0.4, %bb.cj ], [ %.sroa.0.1410, %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17h22828b7800b2480bE.exit.i" ]
-  %.sroa.0138.8407 = phi i8 [ %.sroa.0138.7, %bb.cj ], [ %.sroa.0138.8408, %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17h22828b7800b2480bE.exit.i" ]
+  %.sroa.0138.8407 = phi i8 [ %.sroa.0138.7, %bb.cj ], [ %.sroa.0138.8408, %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17h22828b7800b2480bE.exit.i" ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
+  %4 = trunc nuw i8 %.sroa.0138.8407 to i1
   br label %bb.ed
 
 .thread403:                                       ; preds = %bb.ci, %bb.dz, %.thread411, %bb.cj
@@ -1090,7 +1090,8 @@ bb.ec:                                            ; preds = %bb.eb
           to label %"_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit" unwind label %bb.bj
 
 bb.ed:                                            ; preds = %bb.bp, %"_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit"
-  %.sroa.0138.9.a = phi i8 [ %.sroa.0138.8407, %"_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit" ], [ 1, %bb.bp ] ; 3 uses
+  %.sroa.0138.9 = phi i1 [ %4, %"_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit" ], [ true, %bb.bp ]
+  %.sroa.0138.9.a = phi i8 [ %.sroa.0138.8407, %"_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit" ], [ 1, %bb.bp ] ; 2 uses
   %.sroa.0.7 = phi ptr [ %.sroa.0.1409, %"_ZN4core3ptr40drop_in_place$LT$camino..Utf8PathBuf$GT$17h442765fba03a3515E.exit" ], [ %i.gc, %bb.bp ] ; 2 uses
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17ha3f255f5b51e12f3E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ag)
           to label %bb.ef unwind label %bb.ee
@@ -1493,7 +1494,7 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !992 = !{!977}
 !993 = !{!976, !975}
 !994 = !{i64 0, i64 -9223372036854775801}
-!995 = !{!"branch_weights", i32 -2147483648, i32 0, i32 -2147483648}
+!995 = !{!"branch_weights", i32 2000, i32 2, i32 2000}
 !996 = distinct !{!996, i1 true, !"_ZN55_$LT$sha2..Sha256$u20$as$u20$core..default..Default$GT$7default17h126ccb7e67b83e45E"}
 !997 = distinct !{!997, !996, !"_ZN55_$LT$sha2..Sha256$u20$as$u20$core..default..Default$GT$7default17h126ccb7e67b83e45E: argument 0"}
 !998 = distinct !{!998, i1 true, !"_ZN44_$LT$D$u20$as$u20$digest..digest..Digest$GT$6update17h5af15433bbb7a7deE"}

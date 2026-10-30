@@ -75,7 +75,8 @@ bb.d:                                             ; preds = %bb.b
   br label %._crit_edge
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  %.promoted = load i32, ptr %i.f, align 8, !tbaa !159
+  %.promoted = load i32, ptr %i.f, align 8, !tbaa !159 ; 2 uses
+  %3 = sext i32 %.promoted to i64
   br label %bb.e
 
 ._crit_edge.split:                                ; preds = %_ZN7CaDiCaL8Internal12init_enqueueEi.exit
@@ -86,20 +87,20 @@ bb.d:                                             ; preds = %bb.b
   ret void
 
 bb.e:                                             ; preds = %.lr.ph.split, %_ZN7CaDiCaL8Internal12init_enqueueEi.exit
-  %indvars.iv.a = phi i64 [ %i.m, %.lr.ph.split ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal12init_enqueueEi.exit ]
-  %i.y = phi i32 [ %.promoted, %.lr.ph.split ], [ %i.an, %_ZN7CaDiCaL8Internal12init_enqueueEi.exit ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, 1 ; 7 uses
+  %indvars.iv = phi i64 [ %i.m, %.lr.ph.split ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal12init_enqueueEi.exit ]
+  %indvars.iv.a = phi i64 [ %3, %.lr.ph.split ], [ %indvars.iv.next, %_ZN7CaDiCaL8Internal12init_enqueueEi.exit ] ; 2 uses
+  %i.y = phi i32 [ %.promoted, %.lr.ph.split ], [ %i.an, %_ZN7CaDiCaL8Internal12init_enqueueEi.exit ] ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 8 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.next ; 2 uses
   store i32 0, ptr %i.z, align 4, !tbaa !161
   %.not16.i = icmp eq i32 %i.y, 0
   br i1 %.not16.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = sext i32 %i.y to i64                       ; 2 uses
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %3
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.a
   %i.ab = trunc nsw i64 %indvars.iv.next to i32
   store i32 %i.ab, ptr %i.aa, align 4, !tbaa !161
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %3
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.a
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !160
   %i.ae = add nsw i64 %i.ad, -1
   br label %bb.h

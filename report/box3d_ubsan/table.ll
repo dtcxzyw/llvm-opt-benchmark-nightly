@@ -70,13 +70,14 @@ bb.c:                                             ; preds = %bb.b
 
 b3RoundUpPowerOf2.exit:                           ; preds = %bb.b
   %i.f = shl nuw i32 1, %i.d
-  %.sroa.3.8.insert.ext = zext i32 %i.f to i64
+  %.sroa.3.8.insert.ext = zext i32 %i.f to i64    ; 2 uses
+  %1 = shl nuw nsw i64 %.sroa.3.8.insert.ext, 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %b3RoundUpPowerOf2.exit
-  %.sroa.3.0 = phi i64 [ %.sroa.3.8.insert.ext, %b3RoundUpPowerOf2.exit ], [ 16, %bb.a ] ; 2 uses
-  %1 = shl nuw nsw i64 %.sroa.3.0, 4              ; 2 uses
-  %i.g = tail call ptr @b3Alloc(i64 noundef %1) #8 ; 3 uses
+  %.sroa.3.0 = phi i64 [ %1, %b3RoundUpPowerOf2.exit ], [ 256, %bb.a ] ; 2 uses
+  %2 = phi i64 [ %.sroa.3.8.insert.ext, %b3RoundUpPowerOf2.exit ], [ 16, %bb.a ]
+  %i.g = tail call ptr @b3Alloc(i64 noundef %.sroa.3.0) #8 ; 3 uses
   %.not = icmp eq ptr %i.g, null, !nosanitize !10
   br i1 %.not, label %bb.e, label %bb.f, !prof !9, !nosanitize !10
 
@@ -85,9 +86,9 @@ bb.e:                                             ; preds = %bb.d
   unreachable, !nosanitize !10
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.g, i8 0, i64 %1, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.g, i8 0, i64 %.sroa.3.0, i1 false)
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %i.g, 0
-  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.3.0, 1
+  %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %2, 1
   ret { ptr, i64 } %.fca.1.insert
 }
 

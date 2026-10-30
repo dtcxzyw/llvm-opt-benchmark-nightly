@@ -204,12 +204,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 844
-  %i.aa = load i8, ptr %i.z, align 4, !tbaa !50, !range !23, !noundef !24
+  %i.aa = load i8, ptr %i.z, align 4, !tbaa !50, !range !23, !noundef !24 ; 2 uses
   %i.ab = xor i8 %i.aa, 1
+  %11 = icmp eq i8 %i.aa, 0
   br label %.peel.begin
 
 .peel.begin:                                      ; preds = %bb.k, %bb.j, %bb.i
-  %i.ac = phi i8 [ 0, %bb.j ], [ 0, %bb.i ], [ %i.ab, %bb.k ] ; 2 uses
+  %12 = phi i1 [ false, %bb.j ], [ false, %bb.i ], [ %11, %bb.k ]
+  %i.ac = phi i8 [ 0, %bb.j ], [ 0, %bb.i ], [ %i.ab, %bb.k ]
   %i.ad = ptrtoint ptr %i.r to i64
   %i.ae = ptrtoint ptr %i.p to i64
   %i.af = sub i64 %i.ad, %i.ae
@@ -222,8 +224,7 @@ bb.k:                                             ; preds = %bb.j
   %i.am = icmp eq i32 %.0105, 1                   ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 844 ; 6 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 845 ; 6 uses
-  %11 = trunc nuw i8 %i.ac to i1
-  %i.ap = call noundef i32 @_Z26pj_get_suggested_operationP6pj_ctxRKSt6vectorI16PJCoordOperationSaIS2_EEPKib12PJ_DIRECTION8PJ_COORD(ptr poison, ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull %i.b, i1 noundef zeroext %11, i32 noundef %.0105, ptr noundef nonnull byval(%union.PJ_COORD) align 8 %3) ; 5 uses
+  %i.ap = call noundef i32 @_Z26pj_get_suggested_operationP6pj_ctxRKSt6vectorI16PJCoordOperationSaIS2_EEPKib12PJ_DIRECTION8PJ_COORD(ptr poison, ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull %i.b, i1 noundef zeroext %12, i32 noundef %.0105, ptr noundef nonnull byval(%union.PJ_COORD) align 8 %3) ; 5 uses
   %i.aq = icmp slt i32 %i.ap, 0
   br i1 %i.aq, label %.thread149, label %._crit_edge
 

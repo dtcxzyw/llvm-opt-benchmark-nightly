@@ -204,19 +204,20 @@ bb.k:                                             ; preds = %bb.i
 
 trc_print_ids.exit:                               ; preds = %bb.g, %bb.h, %bb.j, %bb.k
   %.0.in.i = phi i32 [ %i.u, %bb.g ], [ %i.v, %bb.h ], [ %i.w, %bb.j ], [ %i.x, %bb.k ]
-  %.0.i = sext i32 %.0.in.i to i64
+  %.0.i = sext i32 %.0.in.i to i64                ; 2 uses
+  %6 = sub nsw i64 2048, %.0.i
   br label %bb.l
 
 bb.l:                                             ; preds = %trc_print_ids.exit, %bb.d, %bb.c, %bb.a
-  %.0.a = phi i64 [ %.0.i, %trc_print_ids.exit ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.a ] ; 4 uses
+  %.0 = phi i64 [ %6, %trc_print_ids.exit ], [ 2048, %bb.c ], [ 2048, %bb.d ], [ 2048, %bb.a ]
+  %.0.a = phi i64 [ %.0.i, %trc_print_ids.exit ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.a ] ; 3 uses
   %.not38 = icmp eq ptr %1, null
   br i1 %.not38, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.a
-  %6 = sub nsw i64 2048, %.0.a
   %i.z = load ptr, ptr %1, align 8, !tbaa !82
-  %i.aa = call i32 (ptr, i64, ptr, ...) @curl_msnprintf(ptr noundef nonnull %i.y, i64 noundef %6, ptr noundef nonnull @.str.19, ptr noundef %i.z) #7
+  %i.aa = call i32 (ptr, i64, ptr, ...) @curl_msnprintf(ptr noundef nonnull %i.y, i64 noundef %.0, ptr noundef nonnull @.str.19, ptr noundef %i.z) #7
   %i.ab = sext i32 %i.aa to i64
   %i.ac = add nsw i64 %.0.a, %i.ab
   br label %bb.n

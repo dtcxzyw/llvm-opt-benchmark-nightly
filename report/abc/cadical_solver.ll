@@ -204,13 +204,15 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = shl nuw i64 1, %i.aa
   %i.ac = load i64, ptr %i.z, align 8, !tbaa !218
   %i.ad = and i64 %i.ac, %i.ab
-  %i.ae = icmp ne i64 %i.ad, 0
+  %i.ae = icmp ne i64 %i.ad, 0                    ; 2 uses
+  %3 = xor i1 %i.ae, true
   br label %_ZNK7CaDiCaL8External4ivalEi.exit
 
 _ZNK7CaDiCaL8External4ivalEi.exit:                ; preds = %bb.c, %bb.d, %bb.e
+  %.0.i = phi i1 [ %3, %bb.e ], [ true, %bb.d ], [ true, %bb.c ]
   %.0.i.a = phi i1 [ %i.ae, %bb.e ], [ false, %bb.d ], [ false, %bb.c ]
   %i.af = icmp slt i32 %1, 0
-  %spec.select.i = xor i1 %i.af, %.0.i.a
+  %spec.select.i = select i1 %i.af, i1 %.0.i, i1 %.0.i.a
   %i.ag = sub nsw i32 0, %1
   %i.ah = select i1 %spec.select.i, i32 %1, i32 %i.ag
   ret i32 %i.ah

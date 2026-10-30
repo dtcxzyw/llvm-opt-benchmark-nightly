@@ -202,9 +202,10 @@ bb.b:                                             ; preds = %._crit_edge
   %.245 = phi i32 [ 0, %.thread ], [ %.0.lcssa, %bb.b ] ; 2 uses
   %i.y = zext nneg i32 %.245 to i64
   %scevgep40 = getelementptr i8, ptr %0, i64 %i.y
-  %narrow = sub nsw i32 56, %.245
+  %narrow = sub nsw i32 52, %.245
   %i.z = zext i32 %narrow to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep40, i8 0, i64 %i.z, i1 false), !tbaa !12
+  %2 = add nuw nsw i64 %i.z, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep40, i8 0, i64 %2, i1 false), !tbaa !12
   br label %._crit_edge37
 
 ._crit_edge37:                                    ; preds = %.lr.ph36.preheader, %bb.b

@@ -202,21 +202,22 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %i.f = call noundef ptr @_ZNSt15__new_allocatorIPNSt8__detail15_Hash_node_baseEE8allocateEmPKv(ptr noundef nonnull align 1 dereferenceable(1) %3, i64 noundef %i.c, ptr noundef null) #24 ; 2 uses
+  %i.f = call noundef ptr @_ZNSt15__new_allocatorIPNSt8__detail15_Hash_node_baseEE8allocateEmPKv(ptr noundef nonnull align 1 dereferenceable(1) %3, i64 noundef %i.c, ptr noundef null) #24 ; 3 uses
   %i.g = shl i64 %i.c, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.f, i8 0, i64 %i.g, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
+  %4 = icmp eq ptr %i.f, null
   br label %_ZNSt10_HashtableIN8nanobind6objectES1_SaIS1_ENSt8__detail9_IdentityEN13callback_data5py_eqENS5_7py_hashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit
 
 _ZNSt10_HashtableIN8nanobind6objectES1_SaIS1_ENSt8__detail9_IdentityEN13callback_data5py_eqENS5_7py_hashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit: ; preds = %bb.c, %bb.d
-  %.0.i.a = phi ptr [ %i.e, %bb.c ], [ %i.f, %bb.d ] ; 3 uses
+  %.0.i = phi i1 [ false, %bb.c ], [ %4, %bb.d ]
+  %.0.i.a = phi ptr [ %i.e, %bb.c ], [ %i.f, %bb.d ] ; 2 uses
   store ptr %.0.i.a, ptr %0, align 8, !tbaa !31
-  %4 = icmp eq ptr %.0.i.a, null
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt10_HashtableIN8nanobind6objectES1_SaIS1_ENSt8__detail9_IdentityEN13callback_data5py_eqENS5_7py_hashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit, %bb.a
   %i.h = phi ptr [ %i.a, %bb.a ], [ %.0.i.a, %_ZNSt10_HashtableIN8nanobind6objectES1_SaIS1_ENSt8__detail9_IdentityEN13callback_data5py_eqENS5_7py_hashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
-  %.028 = phi i1 [ true, %bb.a ], [ %4, %_ZNSt10_HashtableIN8nanobind6objectES1_SaIS1_ENSt8__detail9_IdentityEN13callback_data5py_eqENS5_7py_hashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit ]
+  %.028 = phi i1 [ true, %bb.a ], [ %.0.i, %_ZNSt10_HashtableIN8nanobind6objectES1_SaIS1_ENSt8__detail9_IdentityEN13callback_data5py_eqENS5_7py_hashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE19_M_allocate_bucketsEm.exit ]
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !43   ; 4 uses
   %.not29 = icmp eq ptr %i.j, null

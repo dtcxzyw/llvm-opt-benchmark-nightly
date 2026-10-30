@@ -20,11 +20,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !9
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
   %i.f = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %i.f, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %5 = lshr i32 %i.e, 17
-  %i.g = and i32 %5, 4
-  %.1.i = or disjoint i32 %spec.select.i, %i.g    ; 3 uses
+  %.not24.i = icmp eq i32 %i.f, 0                 ; 2 uses
+  %spec.select.i = select i1 %.not24.i, i32 5, i32 7
+  %spec.select31.i = select i1 %.not24.i, i32 1, i32 3
+  %i.g = and i32 %i.e, 524288
+  %.not25.i = icmp eq i32 %i.g, 0
+  %.1.i = select i1 %.not25.i, i32 %spec.select31.i, i32 %spec.select.i ; 3 uses
   %i.h = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.h, 0
   br i1 %.not26.i, label %bb.g, label %bb.c
@@ -125,11 +126,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !9
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
   %i.f = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %i.f, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %6 = lshr i32 %i.e, 17
-  %i.g = and i32 %6, 4
-  %.1.i = or disjoint i32 %spec.select.i, %i.g    ; 3 uses
+  %.not24.i = icmp eq i32 %i.f, 0                 ; 2 uses
+  %spec.select.i = select i1 %.not24.i, i32 5, i32 7
+  %spec.select31.i = select i1 %.not24.i, i32 1, i32 3
+  %i.g = and i32 %i.e, 524288
+  %.not25.i = icmp eq i32 %i.g, 0
+  %.1.i = select i1 %.not25.i, i32 %spec.select31.i, i32 %spec.select.i ; 3 uses
   %i.h = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.h, 0
   br i1 %.not26.i, label %bb.g, label %bb.c
@@ -230,11 +232,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !9
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
   %i.f = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %i.f, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %10 = lshr i32 %i.e, 17
-  %i.g = and i32 %10, 4
-  %.1.i = or disjoint i32 %spec.select.i, %i.g    ; 3 uses
+  %.not24.i = icmp eq i32 %i.f, 0                 ; 2 uses
+  %spec.select.i = select i1 %.not24.i, i32 5, i32 7
+  %spec.select31.i = select i1 %.not24.i, i32 1, i32 3
+  %i.g = and i32 %i.e, 524288
+  %.not25.i = icmp eq i32 %i.g, 0
+  %.1.i = select i1 %.not25.i, i32 %spec.select31.i, i32 %spec.select.i ; 3 uses
   %i.h = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.h, 0
   br i1 %.not26.i, label %bb.g, label %bb.c
@@ -346,11 +349,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid\0A", "={ax},={bx},={cx},={dx},{ax},~{dirflag},~{fpsr},~{flags}"(i32 1) #2, !srcloc !9
   %i.e = extractvalue { i32, i32, i32, i32 } %i.d, 2 ; 4 uses
   %i.f = and i32 %i.e, 512
-  %.not24.i = icmp eq i32 %i.f, 0
-  %spec.select.i = select i1 %.not24.i, i32 1, i32 3
-  %0 = lshr i32 %i.e, 17
-  %i.g = and i32 %0, 4
-  %.1.i = or disjoint i32 %spec.select.i, %i.g    ; 3 uses
+  %.not24.i = icmp eq i32 %i.f, 0                 ; 2 uses
+  %spec.select.i = select i1 %.not24.i, i32 5, i32 7
+  %spec.select31.i = select i1 %.not24.i, i32 1, i32 3
+  %i.g = and i32 %i.e, 524288
+  %.not25.i = icmp eq i32 %i.g, 0
+  %.1.i = select i1 %.not25.i, i32 %spec.select31.i, i32 %spec.select.i ; 3 uses
   %i.h = and i32 %i.e, 134217728
   %.not26.i = icmp eq i32 %i.h, 0
   br i1 %.not26.i, label %bb.g, label %bb.c

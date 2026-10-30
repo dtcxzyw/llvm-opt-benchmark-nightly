@@ -204,6 +204,7 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.i, !dbg !2046
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
+  %5 = phi i1 [ false, %bb.f ], [ false, %bb.g ], [ true, %bb.h ], !dbg !2051 ; 2 uses
   %.sroa.0.0 = phi i64 [ 8, %bb.f ], [ 4, %bb.g ], [ 1, %bb.h ], !dbg !2051 ; 4 uses
   %i.ea = sub nuw nsw i64 %1, %i.d                ; 2 uses
   %i.eb = icmp samesign ult i64 %.sroa.0.0, %i.d, !dbg !2052
@@ -216,7 +217,8 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   br i1 %i.ee, label %.lr.ph.1, label %.loopexit.1, !dbg !1884
 
 .lr.ph.1:                                         ; preds = %.loopexit, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit.1
-  %.sroa.05.050.1.a = phi i64 [ %i.ex, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 4 uses
+  %.sroa.05.050.1 = phi i1 [ false, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit.1 ], [ %5, %.loopexit ]
+  %.sroa.05.050.1.a = phi i64 [ %i.ex, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 3 uses
   %i.ef = getelementptr inbounds nuw [16 x i8], ptr %i.ec, i64 %.sroa.05.050.1.a, !dbg !2055
   %.idx84 = shl nuw nsw i64 %.sroa.05.050.1.a, 4, !dbg !2056
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ed, i64 %.idx84, !dbg !2056 ; 5 uses
@@ -237,8 +239,7 @@ bb.j:                                             ; preds = %.lr.ph.1
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eg, i64 8, !dbg !2067
   %i.eq = load i64, ptr %i.ep, align 8, !dbg !2067, !noundef !229
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.eg, ptr noundef nonnull align 8 dereferenceable(16) %i.eh, i64 16, i1 false), !dbg !2068
-  %5 = icmp eq i64 %.sroa.05.050.1.a, 1, !dbg !2069
-  br i1 %5, label %._crit_edge80, label %.lr.ph79, !dbg !2069
+  br i1 %.sroa.05.050.1, label %._crit_edge80, label %.lr.ph79, !dbg !2069
 
 bb.k:                                             ; preds = %.lr.ph79
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i41.177, ptr noundef nonnull align 8 dereferenceable(16) %i.es, i64 16, i1 false), !dbg !2068
@@ -364,7 +365,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort19bidirectional_merg
   ret void, !dbg !2137
 
 .lr.ph:                                           ; preds = %bb.i, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit
-  %.sroa.05.050.a = phi i64 [ %i.hh, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit ], [ %.sroa.0.0, %bb.i ] ; 4 uses
+  %.sroa.05.050 = phi i1 [ false, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit ], [ %5, %bb.i ]
+  %.sroa.05.050.a = phi i64 [ %i.hh, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTdyENCINvMNtCs1xwejQucwHj_5alloc5sliceSB18_7sort_byNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB23_9Histogram3newINtNtNtNtBa_4iter8adapters6copied6CopiedINtNtB8_4iter4IterdEEEs_0E0EB27_.exit ], [ %.sroa.0.0, %bb.i ] ; 3 uses
   %i.gp = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.05.050.a, !dbg !2055
   %.idx = shl nuw nsw i64 %.sroa.05.050.a, 4, !dbg !2056
   %i.gq = getelementptr inbounds nuw i8, ptr %2, i64 %.idx, !dbg !2056 ; 5 uses
@@ -385,8 +387,7 @@ bb.p:                                             ; preds = %.lr.ph
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gq, i64 8, !dbg !2067
   %i.ha = load i64, ptr %i.gz, align 8, !dbg !2067, !noundef !229
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gq, ptr noundef nonnull align 8 dereferenceable(16) %i.gr, i64 16, i1 false), !dbg !2068
-  %6 = icmp eq i64 %.sroa.05.050.a, 1, !dbg !2069
-  br i1 %6, label %._crit_edge, label %.lr.ph74, !dbg !2069
+  br i1 %.sroa.05.050, label %._crit_edge, label %.lr.ph74, !dbg !2069
 
 bb.q:                                             ; preds = %.lr.ph74
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.0.i4173, ptr noundef nonnull align 8 dereferenceable(16) %i.hc, i64 16, i1 false), !dbg !2068
@@ -608,6 +609,7 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.i, !dbg !2503
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
+  %5 = phi i1 [ false, %bb.f ], [ false, %bb.g ], [ true, %bb.h ], !dbg !2508 ; 2 uses
   %.sroa.0.0 = phi i64 [ 8, %bb.f ], [ 4, %bb.g ], [ 1, %bb.h ], !dbg !2508 ; 4 uses
   %i.ec = sub nuw nsw i64 %1, %i.d                ; 2 uses
   %i.ed = icmp samesign ult i64 %.sroa.0.0, %i.d, !dbg !2509
@@ -620,7 +622,8 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   br i1 %i.eg, label %.lr.ph.1, label %.loopexit.1, !dbg !2341
 
 .lr.ph.1:                                         ; preds = %.loopexit, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.1
-  %.sroa.05.056.1.a = phi i64 [ %i.ey, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 4 uses
+  %.sroa.05.056.1 = phi i1 [ false, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.1 ], [ %5, %.loopexit ]
+  %.sroa.05.056.1.a = phi i64 [ %i.ey, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 3 uses
   %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %.sroa.05.056.1.a, !dbg !2512
   %.idx85 = shl nuw nsw i64 %.sroa.05.056.1.a, 3, !dbg !2513
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ef, i64 %.idx85, !dbg !2513 ; 3 uses
@@ -639,8 +642,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
 
 .preheader.1.preheader:                           ; preds = %.lr.ph.1
   store i64 %.val10.i.1, ptr %i.ei, align 8, !dbg !2524
-  %5 = icmp eq i64 %.sroa.05.056.1.a, 1, !dbg !2525
-  br i1 %5, label %._crit_edge82, label %.lr.ph81, !dbg !2525
+  br i1 %.sroa.05.056.1, label %._crit_edge82, label %.lr.ph81, !dbg !2525
 
 .preheader.1:                                     ; preds = %.lr.ph81
   store i64 %.val8.i48.1, ptr %.sroa.0.0.i47.180, align 8, !dbg !2524
@@ -766,7 +768,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort19bidirectional_merg
   ret void, !dbg !2594
 
 .lr.ph:                                           ; preds = %bb.i, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit
-  %.sroa.05.056.a = phi i64 [ %i.hk, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit ], [ %.sroa.0.0, %bb.i ] ; 4 uses
+  %.sroa.05.056 = phi i1 [ false, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit ], [ %5, %bb.i ]
+  %.sroa.05.056.a = phi i64 [ %i.hk, %_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_taildNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNvMNtBa_3f64d9total_cmpE0ECsim2LhUzKY4R_19foundations_metrics.exit ], [ %.sroa.0.0, %bb.i ] ; 3 uses
   %i.gt = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.05.056.a, !dbg !2512
   %.idx = shl nuw nsw i64 %.sroa.05.056.a, 3, !dbg !2513
   %i.gu = getelementptr inbounds nuw i8, ptr %2, i64 %.idx, !dbg !2513 ; 3 uses
@@ -785,8 +788,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort19bidirectional_merg
 
 .preheader.preheader:                             ; preds = %.lr.ph
   store i64 %.val10.i, ptr %i.gu, align 8, !dbg !2524
-  %6 = icmp eq i64 %.sroa.05.056.a, 1, !dbg !2525
-  br i1 %6, label %._crit_edge, label %.lr.ph78, !dbg !2525
+  br i1 %.sroa.05.056, label %._crit_edge, label %.lr.ph78, !dbg !2525
 
 .preheader:                                       ; preds = %.lr.ph78
   store i64 %.val8.i48, ptr %.sroa.0.0.i4777, align 8, !dbg !2524

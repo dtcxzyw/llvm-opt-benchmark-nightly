@@ -202,32 +202,33 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define ptr @_RNvYNtNtNtNtCsaL1QbXo9JQH_3std3sys5stdio4unix6StderrNtNtNtCs3oUPovFnLWP_4core2io5write5Write9write_allCsiHivYpkJ4Hu_2cc(ptr %0, ptr %1, i64 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = icmp eq i64 %2, 0
   br i1 %i.b, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 6 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.l
-  %.sroa.0.017 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.127, %bb.l ] ; 4 uses
-  %.sroa.6.016 = phi i64 [ %2, %.lr.ph ], [ %.sroa.6.126, %bb.l ] ; 7 uses
+bb.b:                                             ; preds = %.thread, %.lr.ph
+  %.sroa.0.017 = phi ptr [ %i.l, %.thread ], [ %1, %.lr.ph ] ; 3 uses
+  %.sroa.6.016 = phi i64 [ %i.k, %.thread ], [ %2, %.lr.ph ] ; 6 uses
   %i.d = call { i64, ptr } @_RNvXs3_NtNtNtCsaL1QbXo9JQH_3std3sys5stdio4unixNtB5_6StderrNtNtNtCs3oUPovFnLWP_4core2io5write5Write5write(ptr %0, ptr %.sroa.0.017, i64 %.sroa.6.016) ; 2 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0        ; 2 uses
-  %i.f = extractvalue { i64, ptr } %i.d, 1        ; 3 uses
+  %i.f = extractvalue { i64, ptr } %i.d, 1        ; 2 uses
   store i64 %i.e, ptr %i.a, align 8
   store ptr %i.f, ptr %i.c, align 8
   %i.g = trunc nuw i64 %i.e to i1
-  %3 = ptrtoint ptr %i.f to i64                   ; 4 uses
   br i1 %i.g, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.l
   %i.h = invoke zeroext i1 @_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.c)
           to label %bb.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.d:                                             ; preds = %bb.b
-  %i.i = icmp eq ptr %i.f, null
+bb.d:                                             ; preds = %bb.l, %bb.b
+  %.lcssa = phi ptr [ %i.f, %bb.b ], [ %7, %bb.l ] ; 2 uses
+  %3 = ptrtoint ptr %.lcssa to i64                ; 4 uses
+  %i.i = icmp eq ptr %.lcssa, null
   br i1 %i.i, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -235,9 +236,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.j, label %bb.f, label %.thread
 
 .thread:                                          ; preds = %bb.e
-  %i.k = sub nuw i64 %.sroa.6.016, %3
+  %i.k = sub nuw i64 %.sroa.6.016, %3             ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.017, i64 %3
-  br label %bb.l
+  %4 = icmp eq i64 %i.k, 0
+  br i1 %4, label %.loopexit, label %bb.b
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 %3, i64 %.sroa.6.016, i64 %.sroa.6.016, ptr nonnull align 8 @123) #25
@@ -265,19 +267,22 @@ bb.j:                                             ; preds = %bb.i
   %i.p = load ptr, ptr %i.c, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.l, %bb.d, %bb.a, %bb.j
-  %.sroa.07.0 = phi ptr [ %i.p, %bb.j ], [ null, %bb.a ], [ null, %bb.l ], [ @121, %bb.d ]
+.loopexit:                                        ; preds = %.thread, %bb.d, %bb.a, %bb.j
+  %.sroa.07.0 = phi ptr [ %i.p, %bb.j ], [ null, %bb.a ], [ null, %.thread ], [ @121, %bb.d ]
   ret ptr %.sroa.07.0
 
 bb.k:                                             ; preds = %bb.g
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.c)
   br label %bb.l
 
-bb.l:                                             ; preds = %.thread, %bb.k, %bb.g
-  %.sroa.0.127 = phi ptr [ %i.l, %.thread ], [ %.sroa.0.017, %bb.k ], [ %.sroa.0.017, %bb.g ]
-  %.sroa.6.126 = phi i64 [ %i.k, %.thread ], [ %.sroa.6.016, %bb.k ], [ %.sroa.6.016, %bb.g ] ; 2 uses
-  %4 = icmp eq i64 %.sroa.6.126, 0
-  br i1 %4, label %.loopexit, label %bb.b
+bb.l:                                             ; preds = %bb.k, %bb.g
+  %5 = call { i64, ptr } @_RNvXs3_NtNtNtCsaL1QbXo9JQH_3std3sys5stdio4unixNtB5_6StderrNtNtNtCs3oUPovFnLWP_4core2io5write5Write5write(ptr %0, ptr %.sroa.0.017, i64 %.sroa.6.016) ; 2 uses
+  %6 = extractvalue { i64, ptr } %5, 0            ; 2 uses
+  %7 = extractvalue { i64, ptr } %5, 1            ; 2 uses
+  store i64 %6, ptr %i.a, align 8
+  store ptr %7, ptr %i.c, align 8
+  %8 = trunc nuw i64 %6 to i1
+  br i1 %8, label %bb.c, label %bb.d
 
 bb.m:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.c) #23

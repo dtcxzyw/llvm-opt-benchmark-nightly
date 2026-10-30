@@ -204,9 +204,10 @@ bb.a:
   %i.ba = and i64 %wide.trip.count, 7             ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
   %i.bc = select i1 %i.bb, i64 8, i64 %i.ba
-  %n.vec = sub nsw i64 %wide.trip.count, %i.bc    ; 2 uses
+  %n.vec = sub nsw i64 %wide.trip.count, %i.bc    ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.k, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %4 = add nuw nsw i64 %n.vec, 1
   %i.bd = add nsw i64 %wide.trip.count, -1
   br label %bb.b
 
@@ -417,7 +418,8 @@ middle.block178:                                  ; preds = %vector.body168
   br i1 %min.iters.check, label %.lr.ph106.preheader180, label %vector.memcheck
 
 .lr.ph106.preheader180:                           ; preds = %vector.body, %vector.memcheck, %.lr.ph106.preheader
-  %indvars.iv127.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph106.preheader ], [ %n.vec, %vector.body ] ; 7 uses
+  %indvars.iv.next128.prol = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph106.preheader ], [ %4, %vector.body ]
+  %indvars.iv127.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph106.preheader ], [ %n.vec, %vector.body ] ; 6 uses
   %i.ek = sub nsw i64 %wide.trip.count, %indvars.iv127.ph
   %xtraiter186 = and i64 %i.ek, 1
   %lcmp.mod187.not = icmp eq i64 %xtraiter186, 0
@@ -433,7 +435,6 @@ middle.block178:                                  ; preds = %vector.body168
   %i.er = load float, ptr %i.eq, align 4, !tbaa !62
   %i.es = call nsz float @llvm.fmuladd.f32(float %i.ep, float %i.k, float %i.er)
   store float %i.es, ptr %i.eq, align 4, !tbaa !62
-  %indvars.iv.next128.prol = add nuw nsw i64 %indvars.iv127.ph, 1
   br label %.lr.ph106.prol.loopexit
 
 .lr.ph106.prol.loopexit:                          ; preds = %.lr.ph106.prol, %.lr.ph106.preheader180

@@ -202,21 +202,22 @@ bb.a:
   %i.an = load ptr, ptr %i.g, align 8, !tbaa !32  ; 2 uses
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = ptrtoint ptr %i.an to i64
-  %i.aq = sub i64 %i.ao, %i.ap                    ; 2 uses
+  %i.aq = sub i64 %i.ao, %i.ap                    ; 3 uses
   %i.ar = ashr exact i64 %i.aq, 1
   %i.as = icmp ult i64 %i.al, %i.ar
   br i1 %i.as, label %.lr.ph, label %.loopexit.loopexit, !llvm.loop !41
 
 .loopexit.loopexit:                               ; preds = %.lr.ph
   %.pre = load ptr, ptr %i.x, align 8, !tbaa !27
+  %3 = and i64 %i.aq, 2
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.a, %.loopexit.loopexit
-  %.pre-phi17.a = phi i64 [ %i.aq, %.loopexit.loopexit ], [ 0, %bb.a ] ; 2 uses
+  %.pre-phi17 = phi i64 [ %3, %.loopexit.loopexit ], [ 0, %bb.a ]
+  %.pre-phi17.a = phi i64 [ %i.aq, %.loopexit.loopexit ], [ 0, %bb.a ]
   %i.at = phi ptr [ %.pre, %.loopexit.loopexit ], [ %i.aa, %bb.a ]
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %.pre-phi17.a
-  %3 = and i64 %.pre-phi17.a, 2
-  %spec.select = getelementptr inbounds nuw i8, ptr %i.au, i64 %3
+  %spec.select = getelementptr inbounds nuw i8, ptr %i.au, i64 %.pre-phi17
   store ptr %spec.select, ptr %i.x, align 8, !tbaa !27
   ret void
 }

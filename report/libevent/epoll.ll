@@ -202,7 +202,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.v
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.v ] ; 2 uses
   %i.aw = getelementptr inbounds nuw [12 x i8], ptr %i.c, i64 %indvars.iv ; 2 uses
-  %i.ax = load i32, ptr %i.aw, align 1            ; 4 uses
+  %i.ax = load i32, ptr %i.aw, align 1            ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 4
   %i.az = load i32, ptr %i.ay, align 1            ; 2 uses
   %i.ba = load i32, ptr %i.d, align 8
@@ -219,17 +219,20 @@ bb.s:                                             ; preds = %.lr.ph
 
 bb.t:                                             ; preds = %bb.s
   %i.be = and i32 %i.ax, 8192
-  %.not78.a = icmp eq i32 %i.be, 0
-  %3 = trunc i32 %i.ax to i16                     ; 2 uses
-  %4 = shl i16 %3, 1
-  %spec.select84 = and i16 %4, 2
-  %5 = and i16 %3, 4
-  %.1 = or disjoint i16 %spec.select84, %5        ; 3 uses
+  %.not78 = icmp eq i32 %i.be, 0
+  %3 = and i32 %i.ax, 1
+  %.not78.a = icmp eq i32 %3, 0                   ; 2 uses
+  %spec.select84 = select i1 %.not78.a, i16 4, i16 6
+  %spec.select85 = select i1 %.not78.a, i16 0, i16 2
+  %4 = and i32 %i.ax, 4
+  %.not80 = icmp eq i32 %4, 0
+  %.1 = select i1 %.not80, i16 %spec.select85, i16 %spec.select84 ; 2 uses
   %i.bf = or disjoint i16 %.1, 128
-  br i1 %.not78.a, label %bb.u, label %.thread
+  br i1 %.not78, label %bb.u, label %.thread
 
 bb.u:                                             ; preds = %bb.t
-  %.not82 = icmp eq i16 %.1, 0
+  %5 = and i32 %i.ax, 5
+  %.not82 = icmp eq i32 %5, 0
   br i1 %.not82, label %bb.v, label %.thread
 
 .thread:                                          ; preds = %bb.t, %bb.s, %bb.u

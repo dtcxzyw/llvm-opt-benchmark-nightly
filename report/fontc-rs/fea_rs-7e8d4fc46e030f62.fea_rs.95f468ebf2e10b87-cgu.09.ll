@@ -204,7 +204,7 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionRNtNtNtNtCscScJTt9VrQp_6fea_rs7co
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.d = load i32, ptr %i.c, align 4, !range !407, !noundef !5
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.val.i = load i64, ptr %i.e, align 4
+  %.val.i = load i64, ptr %i.e, align 4           ; 2 uses
   %i.f = load i32, ptr %1, align 4, !range !407, !noundef !5
   %i.g = trunc nuw i32 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -242,8 +242,12 @@ bb.b:                                             ; preds = %_RINvMNtCsf3Ta7LF99
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.ac = trunc nuw i32 %i.d to i1
-  %.sroa.05.0.i = select i1 %i.ac, i64 %.val.i, i64 0 ; 2 uses
+  %i.ac = trunc nuw i32 %i.d to i1                ; 2 uses
+  %2 = trunc i64 %.val.i to i32
+  %.sroa.057.0.extract.trunc = select i1 %i.ac, i32 %2, i32 0
+  %3 = lshr i64 %.val.i, 32
+  %4 = trunc nuw i64 %3 to i32
+  %.sroa.05.0.i = select i1 %i.ac, i32 %4, i32 0
   %i.ad = trunc nuw i16 %i.x to i1
   %.sroa.016.0 = select i1 %i.ad, i16 %i.z, i16 0
   %i.ae = trunc nuw i16 %i.t to i1
@@ -278,9 +282,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 62
   %i.az = load i16, ptr %i.ay, align 2
   %.sroa.051.0 = select i1 %i.ax, i16 %i.az, i16 0
-  %.sroa.458.0.extract.shift = lshr i64 %.sroa.05.0.i, 32
-  %.sroa.458.0.extract.trunc = trunc nuw i64 %.sroa.458.0.extract.shift to i32
-  %.sroa.057.0.extract.trunc = trunc i64 %.sroa.05.0.i to i32
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 76
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvXs0_NtNtCs6WnK4nVnpEz_11write_fonts6tables3os2NtB5_3Os2NtNtCsf3Ta7LF998c_4core7default7Default7default(ptr noalias nofree noundef nonnull sret([120 x i8]) align 4 captures(none) dereferenceable(120) %i.a)
@@ -334,7 +335,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 1, ptr %i.cg, align 4
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.458.0.extract.trunc, ptr %i.ch, align 4
+  store i32 %.sroa.05.0.i, ptr %i.ch, align 4
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i16 1, ptr %i.ci, align 4
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 18

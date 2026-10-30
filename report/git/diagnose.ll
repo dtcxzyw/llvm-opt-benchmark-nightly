@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %strbuf_setlen.exit
 
 .split50:                                         ; preds = %bb.q
   %i.ao = load ptr, ptr %i.n, align 8, !tbaa !17
-  %i.ap = call fastcc i32 @add_directory_to_archiver(ptr noundef %0, ptr noundef %i.ao, i32 noundef %2)
+  %i.ap = call fastcc i32 @add_directory_to_archiver(ptr noundef %0, ptr noundef %i.ao, i32 noundef %2) ; 3 uses
   %i.aq = icmp sgt i32 %i.ap, -1
   call void @strbuf_release(ptr noundef nonnull %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
@@ -216,12 +216,13 @@ bb.q:                                             ; preds = %strbuf_setlen.exit
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.sink.split, %.split50
+  %.042.be = phi i32 [ %i.ap, %.split50 ], [ 0, %.backedge.sink.split ]
   %i.ar = call ptr @readdir_skip_dot_and_dotdot(ptr noundef nonnull %i.c) #12 ; 2 uses
   %.not31 = icmp eq ptr %i.ar, null
   br i1 %.not31, label %.critedge, label %.lr.ph, !llvm.loop !79
 
 .critedge:                                        ; preds = %.backedge, %.split50, %bb.i
-  %.0.lcssa = phi i32 [ 0, %bb.i ], [ 0, %.backedge ], [ -1, %.split50 ]
+  %.0.lcssa = phi i32 [ 0, %bb.i ], [ %.042.be, %.backedge ], [ %i.ap, %.split50 ]
   %i.as = call i32 @closedir(ptr noundef nonnull %i.c) ; 0 uses
   call void @strbuf_release(ptr noundef nonnull %3) #12
   br label %bb.r

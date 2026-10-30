@@ -156,16 +156,18 @@ bb.p:                                             ; preds = %bb.m, %bb.o, %bb.k
   br i1 %.not48.not, label %._crit_edge.loopexit, label %bb.k, !llvm.loop !164
 
 ._crit_edge.loopexit:                             ; preds = %bb.l, %bb.n, %bb.p
-  %.sroa.037.0.lcssa.ph = phi ptr [ %.sroa.037.1.ph, %bb.p ], [ %.sroa.037.052, %bb.n ], [ %.sroa.037.052, %bb.l ]
+  %.sroa.037.0.lcssa.ph = phi ptr [ %.sroa.037.1.ph, %bb.p ], [ %.sroa.037.052, %bb.n ], [ %.sroa.037.052, %bb.l ] ; 2 uses
   %.not48.not.lcssa.ph = phi i1 [ true, %bb.p ], [ false, %bb.n ], [ false, %bb.l ]
   %.pre68 = load ptr, ptr %i.y, align 8, !tbaa !159
-  %.pre69 = load ptr, ptr %i.z, align 8, !tbaa !11
+  %.pre69 = load ptr, ptr %i.z, align 8, !tbaa !11 ; 2 uses
+  %2 = icmp eq ptr %.pre69, %.sroa.037.0.lcssa.ph
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.j
-  %i.bb = phi ptr [ %i.aa, %bb.j ], [ %.pre69, %._crit_edge.loopexit ] ; 3 uses
+  %.not.i.i = phi i1 [ true, %bb.j ], [ %2, %._crit_edge.loopexit ]
+  %i.bb = phi ptr [ %i.aa, %bb.j ], [ %.pre69, %._crit_edge.loopexit ] ; 2 uses
   %i.bc = phi ptr [ %i.ab, %bb.j ], [ %.pre68, %._crit_edge.loopexit ] ; 4 uses
-  %.sroa.037.0.lcssa = phi ptr [ %i.aa, %bb.j ], [ %.sroa.037.0.lcssa.ph, %._crit_edge.loopexit ] ; 2 uses
+  %.sroa.037.0.lcssa = phi ptr [ %i.aa, %bb.j ], [ %.sroa.037.0.lcssa.ph, %._crit_edge.loopexit ]
   %.not48.not.lcssa = phi i1 [ true, %bb.j ], [ %.not48.not.lcssa.ph, %._crit_edge.loopexit ]
   %i.bd = ptrtoint ptr %.sroa.037.0.lcssa to i64
   %i.be = ptrtoint ptr %i.bc to i64               ; 2 uses
@@ -186,7 +188,6 @@ bb.q:                                             ; preds = %._crit_edge
 
 bb.r:                                             ; preds = %._crit_edge
   %i.bm = icmp uge i64 %i.bg, %i.bj
-  %.not.i.i = icmp eq ptr %i.bb, %.sroa.037.0.lcssa
   %or.cond = or i1 %i.bm, %.not.i.i
   br i1 %or.cond, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
 

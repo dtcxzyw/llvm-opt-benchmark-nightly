@@ -204,15 +204,17 @@ bb.a:
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.b = add nsw i32 %2, -1
+  %i.b = add nsw i32 %2, -1                       ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %wide.trip.count = zext nneg i32 %2 to i64
+  %5 = zext nneg i32 %i.b to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit ] ; 4 uses
   %.032 = phi i1 [ false, %.lr.ph ], [ %.1, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit ] ; 2 uses
-  %.02831.a = phi i32 [ %i.b, %.lr.ph ], [ %i.be, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit ] ; 2 uses
+  %.02831 = phi i64 [ %5, %.lr.ph ], [ %indvars.iv, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit ] ; 2 uses
+  %.02831.a = phi i32 [ %i.b, %.lr.ph ], [ %i.be, %_Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit ]
   %.idx = mul nuw nsw i64 %indvars.iv, 12
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 2 uses
   %i.e = mul nsw i32 %.02831.a, 3
@@ -244,8 +246,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.1 = phi i1 [ %.032, %bb.b ], [ %spec.select, %bb.c ] ; 2 uses
-  %5 = sext i32 %.02831.a to i64                  ; 2 uses
-  %i.v = getelementptr inbounds [4 x i8], ptr %4, i64 %5 ; 2 uses
+  %i.v = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.02831 ; 2 uses
   %i.w = insertelement <2 x float> poison, float %.pre34, i64 0
   %i.x = insertelement <2 x float> %i.w, float %.pre, i64 1
   %i.y = insertelement <2 x float> poison, float %.pre33, i64 0
@@ -292,7 +293,7 @@ _Z20dtDistancePtSegSqr2DPKfS0_S0_Rf.exit:         ; preds = %bb.e, %.sink.split.
   %i.ba = fsub float %i.ay, %i.az                 ; 2 uses
   %i.bb = fmul float %i.ba, %i.ba
   %i.bc = tail call noundef float @llvm.fmuladd.f32(float %i.av, float %i.av, float %i.bb)
-  %i.bd = getelementptr inbounds [4 x i8], ptr %3, i64 %5
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02831
   store float %i.bc, ptr %i.bd, align 4, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.be = trunc nuw nsw i64 %indvars.iv to i32

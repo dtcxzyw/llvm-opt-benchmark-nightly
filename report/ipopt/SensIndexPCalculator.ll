@@ -204,9 +204,14 @@ bb.k:                                             ; preds = %_ZN5Ipopt8SmartPtrI
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 80
   br label %bb.u
 
-._crit_edge160:                                   ; preds = %bb.bh, %bb.k
-  %.sroa.0110.0.lcssa.a = phi ptr [ null, %bb.k ], [ %.sroa.0110.3, %bb.bh ] ; 4 uses
-  %.029.lcssa = phi i1 [ true, %bb.k ], [ %.130, %bb.bh ]
+._crit_edge160.loopexit:                          ; preds = %bb.bh
+  %7 = icmp eq ptr %.sroa.0110.3, null
+  br label %._crit_edge160
+
+._crit_edge160:                                   ; preds = %._crit_edge160.loopexit, %bb.k
+  %.sroa.0110.0.lcssa = phi i1 [ true, %bb.k ], [ %7, %._crit_edge160.loopexit ]
+  %.sroa.0110.0.lcssa.a = phi ptr [ null, %bb.k ], [ %.sroa.0110.3, %._crit_edge160.loopexit ] ; 3 uses
+  %.029.lcssa = phi i1 [ true, %bb.k ], [ %.130, %._crit_edge160.loopexit ]
   %i.au = load ptr, ptr %4, align 8, !tbaa !176   ; 4 uses
   %.not.i.i51 = icmp eq ptr %i.au, null
   br i1 %.not.i.i51, label %_ZN5Ipopt8SmartPtrINS_14IteratesVectorEED2Ev.exit, label %bb.l
@@ -249,8 +254,7 @@ bb.o:                                             ; preds = %bb.n
 
 _ZN5Ipopt8SmartPtrINS_14IteratesVectorEED2Ev.exit53: ; preds = %_ZN5Ipopt8SmartPtrINS_14IteratesVectorEED2Ev.exit, %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %.not.i.i54 = icmp eq ptr %.sroa.0110.0.lcssa.a, null
-  br i1 %.not.i.i54, label %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit, label %bb.p
+  br i1 %.sroa.0110.0.lcssa, label %_ZN5Ipopt8SmartPtrIKNS_11DenseVectorEED2Ev.exit, label %bb.p
 
 bb.p:                                             ; preds = %_ZN5Ipopt8SmartPtrINS_14IteratesVectorEED2Ev.exit53
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0110.0.lcssa.a, i64 8 ; 2 uses
@@ -653,12 +657,12 @@ bb.bg:                                            ; preds = %bb.az
 
 bb.bh:                                            ; preds = %_ZN5Ipopt8SmartPtrINS_7PColumnEEaSEPS1_.exit, %_ZNSt3mapIiN5Ipopt8SmartPtrINS0_7PColumnEEESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit
   %i.jb = phi ptr [ %.pre, %_ZN5Ipopt8SmartPtrINS_7PColumnEEaSEPS1_.exit ], [ %i.ca, %_ZNSt3mapIiN5Ipopt8SmartPtrINS0_7PColumnEEESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit ] ; 2 uses
-  %.sroa.0110.3 = phi ptr [ %.sroa.0110.1.lcssa, %_ZN5Ipopt8SmartPtrINS_7PColumnEEaSEPS1_.exit ], [ %.sroa.0110.0155, %_ZNSt3mapIiN5Ipopt8SmartPtrINS0_7PColumnEEESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit ] ; 2 uses
+  %.sroa.0110.3 = phi ptr [ %.sroa.0110.1.lcssa, %_ZN5Ipopt8SmartPtrINS_7PColumnEEaSEPS1_.exit ], [ %.sroa.0110.0155, %_ZNSt3mapIiN5Ipopt8SmartPtrINS0_7PColumnEEESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit ] ; 3 uses
   %.130 = phi i1 [ %i.do, %_ZN5Ipopt8SmartPtrINS_7PColumnEEaSEPS1_.exit ], [ %.029156, %_ZNSt3mapIiN5Ipopt8SmartPtrINS0_7PColumnEEESt4lessIiESaISt4pairIKiS3_EEE4findERS7_.exit ] ; 2 uses
   %i.jc = add nuw nsw i32 %.015157, 1
   %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.0103.0154, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.jd, %i.jb
-  br i1 %.not, label %._crit_edge160, label %bb.u, !llvm.loop !172
+  br i1 %.not, label %._crit_edge160.loopexit, label %bb.u, !llvm.loop !172
 
 _ZN5Ipopt8SmartPtrIKNS_9SchurDataEED2Ev.exit70:   ; preds = %.loopexit, %.loopexit.split-lp, %_ZN5Ipopt8SmartPtrINS_14IteratesVectorEED2Ev.exit74, %bb.aq, %bb.aj, %bb.ak, %bb.bg
   %.sroa.0110.4 = phi ptr [ %.sroa.0110.0155, %bb.aj ], [ %.sroa.0110.1.lcssa, %bb.bg ], [ %.sroa.0110.0155, %_ZN5Ipopt8SmartPtrINS_14IteratesVectorEED2Ev.exit74 ], [ %.sroa.0110.0155, %bb.aq ], [ %.sroa.0110.0155, %bb.ak ], [ %i.gv, %.loopexit ], [ %.sroa.0110.2.ph, %.loopexit.split-lp ] ; 3 uses

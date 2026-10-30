@@ -95,9 +95,10 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i.i
   %spec.select.i.i.i.i.lobit.i.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
-  %i.z = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 2 uses
+  %i.z = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 3 uses
   %i.aa = icmp ule i64 %i.z, %i.g
   tail call void @llvm.assume(i1 %i.aa)
+  %4 = icmp samesign ult i64 %i.z, %i.g
   br label %bb.r
 
 bb.c:                                             ; preds = %._crit_edge.i.i
@@ -205,7 +206,8 @@ bb.q:                                             ; preds = %bb.o
           to label %.thread unwind label %bb.p
 
 bb.r:                                             ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph.a = phi i64 [ %i.z, %bb.b ], [ %i.g, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph = phi i1 [ %4, %bb.b ], [ false, %bb.a ]
+  %.sroa.4.0.i.i.ph.a = phi i64 [ %i.z, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.ao, ptr noundef nonnull align 8 dereferenceable(120) %3, i64 120, i1 false)
@@ -231,8 +233,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %._crit_edge, %bb.r
   %i.as = phi ptr [ %.pre, %._crit_edge ], [ %i.e, %bb.r ]
   %i.at = getelementptr inbounds nuw [144 x i8], ptr %i.as, i64 %.sroa.4.0.i.i.ph.a ; 3 uses
-  %4 = icmp samesign ult i64 %.sroa.4.0.i.i.ph.a, %i.g
-  br i1 %4, label %bb.v, label %bb.x
+  br i1 %.sroa.4.0.i.i.ph, label %bb.v, label %bb.x
 
 bb.u:                                             ; preds = %bb.s
   %i.au = landingpad { ptr, i32 }
@@ -635,7 +636,7 @@ bb.a:
   br i1 %i.s, label %bb.b, label %_RNCINvNtCs8frGy5WneL6_4fish5wutil30unescape_bytes_and_write_to_fdRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0Cs4RW8js5ES7g_4fish.exit.thread
 
 _RNCINvNtCs8frGy5WneL6_4fish5wutil30unescape_bytes_and_write_to_fdRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0Cs4RW8js5ES7g_4fish.exit.thread: ; preds = %bb.c, %bb.a
-  %.sroa.01.0.in6 = phi i64 [ %2, %bb.c ], [ 0, %bb.a ]
+  %.sroa.01.0.in6 = phi i64 [ %spec.select, %bb.c ], [ 0, %bb.a ]
   %i.t = phi i64 [ %spec.select7, %bb.c ], [ undef, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -659,8 +660,8 @@ bb.c:                                             ; preds = %bb.b
   %i.y = load i32, ptr %.val, align 4, !noalias !103, !noundef !5
   %i.z = call noundef zeroext i1 @_RNvNvNtCs8frGy5WneL6_4fish5wutil30unescape_bytes_and_write_to_fd8do_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b, i32 noundef %i.y, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef %i.w), !noalias !101 ; 2 uses
   %i.aa = load i64, ptr %i.d, align 8
+  %spec.select = zext i1 %i.z to i64
   %spec.select7 = select i1 %i.z, i64 %i.aa, i64 undef
-  %2 = zext i1 %i.z to i64
   br label %_RNCINvNtCs8frGy5WneL6_4fish5wutil30unescape_bytes_and_write_to_fdRNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE0Cs4RW8js5ES7g_4fish.exit.thread
 
 bb.d:                                             ; preds = %bb.b

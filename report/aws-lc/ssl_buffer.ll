@@ -80,12 +80,14 @@ bb.h:                                             ; preds = %bb.f
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = add i64 %1, %i.k
   %i.m = sub i64 0, %i.l
-  %i.n = and i64 %i.m, 7
+  %i.n = and i64 %i.m, 7                          ; 2 uses
+  %3 = trunc nuw nsw i64 %i.n to i32
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.e
   %.016 = phi ptr [ %i.g, %bb.e ], [ %i.i, %bb.h ] ; 2 uses
-  %.0.a = phi i64 [ 0, %bb.e ], [ %i.n, %bb.h ]   ; 2 uses
+  %.0 = phi i32 [ 0, %bb.e ], [ %3, %bb.h ]
+  %.0.a = phi i64 [ 0, %bb.e ], [ %i.n, %bb.h ]
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.q = load i32, ptr %i.p, align 4, !tbaa !20   ; 2 uses
@@ -119,8 +121,7 @@ bb.l:                                             ; preds = %bb.k, %_ZL15OPENSSL
   store i8 %i.ac, ptr %i.y, align 8, !tbaa !13
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %1, ptr %i.ad, align 8, !tbaa !22
-  %3 = trunc nuw nsw i64 %.0.a to i32
-  store i32 %3, ptr %i.o, align 8, !tbaa !21
+  store i32 %.0, ptr %i.o, align 8, !tbaa !21
   %i.ae = trunc nuw nsw i64 %2 to i32
   store i32 %i.ae, ptr %i.b, align 8, !tbaa !18
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16

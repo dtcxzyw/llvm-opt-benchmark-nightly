@@ -202,6 +202,7 @@ proto_item_set_generated.exit.i:                  ; preds = %bb.u, %bb.t, %bb.s,
   br label %bb.v
 
 bb.v:                                             ; preds = %.critedge.i, %._crit_edge.i, %bb.p
+  %.2.i = phi i8 [ 1, %bb.p ], [ 1, %.critedge.i ], [ 0, %._crit_edge.i ]
   %.2.i.a = phi i1 [ true, %bb.p ], [ true, %.critedge.i ], [ false, %._crit_edge.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   store ptr %2, ptr %4, align 8
@@ -218,10 +219,10 @@ bb.v:                                             ; preds = %.critedge.i, %._cri
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.o
-  %.3.i.a = phi i1 [ %.2.i.a, %bb.v ], [ true, %bb.o ] ; 3 uses
+  %.3.i = phi i8 [ %.2.i, %bb.v ], [ 1, %bb.o ]
+  %.3.i.a = phi i1 [ %.2.i.a, %bb.v ], [ true, %bb.o ] ; 2 uses
   %i.ic = getelementptr i8, ptr %i.as, i64 48
-  %6 = zext i1 %.3.i.a to i8
-  store i8 %6, ptr %i.ic, align 8
+  store i8 %.3.i, ptr %i.ic, align 8
   %i.id = add i8 %i.fw, -1
   %or.cond3.i = icmp ult i8 %i.id, 3
   br i1 %or.cond3.i, label %bb.x, label %bb.ag

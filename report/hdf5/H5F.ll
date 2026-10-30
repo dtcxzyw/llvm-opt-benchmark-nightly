@@ -200,13 +200,15 @@ bb.m:                                             ; preds = %bb.l
   br label %.thread61
 
 bb.n:                                             ; preds = %bb.l
-  %i.ak = call ptr @H5VL_obj_get_connector(ptr noundef nonnull %i.af) #6 ; 2 uses
+  %i.ak = call ptr @H5VL_obj_get_connector(ptr noundef nonnull %i.af) #6 ; 3 uses
   %i.al = call i64 @H5VL_conn_inc_rc(ptr noundef %i.ak) #6 ; 0 uses
+  %6 = icmp eq ptr %i.ak, null
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.k
   %.032 = phi ptr [ %i.af, %bb.n ], [ null, %bb.k ]
-  %.030.a = phi ptr [ %i.ak, %bb.n ], [ null, %bb.k ] ; 2 uses
+  %.030 = phi i1 [ %6, %bb.n ], [ true, %bb.k ]
+  %.030.a = phi ptr [ %i.ak, %bb.n ], [ null, %bb.k ]
   %.029 = phi ptr [ %i.a, %bb.n ], [ null, %bb.k ]
   %i.am = call i32 @H5I_dec_app_ref_async(i64 noundef %3, ptr noundef %.029) #6
   %i.an = icmp slt i32 %i.am, 0
@@ -239,8 +241,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.q, %bb.r, %bb.s, %bb.p
   %.027 = phi i32 [ 0, %bb.q ], [ -1, %bb.p ], [ -1, %bb.s ], [ 0, %bb.r ] ; 2 uses
   %.0 = phi i1 [ false, %bb.q ], [ true, %bb.p ], [ true, %bb.s ], [ false, %bb.r ]
-  %.not36 = icmp eq ptr %.030.a, null
-  br i1 %.not36, label %bb.v, label %bb.u
+  br i1 %.030, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.az = call i64 @H5VL_conn_dec_rc(ptr noundef nonnull %.030.a) #6

@@ -204,9 +204,10 @@ bb.d:                                             ; preds = %_RNvXs0_NtNtNtCs3oU
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i
   %spec.select.i.i.i.i.lobit.i.i.i = lshr i64 %spec.select.i.i.i.i.i.i.i, 63
-  %i.ap = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i.i, %.sroa.05.0.lcssa.i.i.i ; 2 uses
+  %i.ap = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i.i, %.sroa.05.0.lcssa.i.i.i ; 3 uses
   %i.aq = icmp ule i64 %i.ap, %i.w
   call void @llvm.assume(i1 %i.aq)
+  %2 = icmp samesign ult i64 %i.ap, %i.w
   br label %bb.q
 
 bb.f:                                             ; preds = %._crit_edge.i.i.i
@@ -289,7 +290,8 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 bb.q:                                             ; preds = %bb.e, %bb.d
-  %.sroa.4.0.i.i.ph.i.a = phi i64 [ %i.ap, %bb.e ], [ %i.w, %bb.d ] ; 3 uses
+  %.sroa.4.0.i.i.ph.i = phi i1 [ %2, %bb.e ], [ false, %bb.d ]
+  %.sroa.4.0.i.i.ph.i.a = phi i64 [ %i.ap, %bb.e ], [ %i.w, %bb.d ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !256
   store i64 %.sroa.619.0.copyload, ptr %i.o, align 8, !noalias !264
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.724.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(112) %.sroa.9, i64 112, i1 false)
@@ -313,8 +315,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %._crit_edge.i, %bb.q
   %i.bf = phi ptr [ %.pre.i, %._crit_edge.i ], [ %i.v, %bb.q ]
   %i.bg = getelementptr inbounds nuw [144 x i8], ptr %i.bf, i64 %.sroa.4.0.i.i.ph.i.a ; 3 uses
-  %2 = icmp samesign ult i64 %.sroa.4.0.i.i.ph.i.a, %i.w
-  br i1 %2, label %bb.u, label %bb.w
+  br i1 %.sroa.4.0.i.i.ph.i, label %bb.u, label %bb.w
 
 bb.t:                                             ; preds = %bb.r
   %i.bh = landingpad { ptr, i32 }

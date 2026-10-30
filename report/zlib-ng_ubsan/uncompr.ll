@@ -67,10 +67,12 @@ bb.g:                                             ; preds = %bb.f
 .thread:                                          ; preds = %bb.f, %bb.g
   %i.o = phi i64 [ %i.n, %bb.g ], [ %i.m, %bb.f ]
   store i64 0, ptr %1, align 8, !tbaa !13
+  %5 = icmp eq ptr %0, %i.a
   br label %bb.h
 
 bb.h:                                             ; preds = %.thread, %bb.e
-  %.029.a = phi ptr [ %0, %.thread ], [ %i.a, %bb.e ] ; 2 uses
+  %.029 = phi i1 [ %5, %.thread ], [ true, %bb.e ]
+  %.029.a = phi ptr [ %0, %.thread ], [ %i.a, %bb.e ]
   %.0 = phi i64 [ %i.o, %.thread ], [ 1, %bb.e ]
   store ptr %2, ptr %4, align 8, !tbaa !22
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
@@ -169,10 +171,9 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   store i64 %i.ar, ptr %3, align 8, !tbaa !13
-  %.not33 = icmp eq ptr %.029.a, %i.a
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.au = load i64, ptr %i.at, align 8, !tbaa !28 ; 2 uses
-  br i1 %.not33, label %bb.aa, label %bb.x
+  br i1 %.029, label %bb.aa, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   br i1 %i.k, label %bb.z, label %bb.y, !prof !17, !nosanitize !16

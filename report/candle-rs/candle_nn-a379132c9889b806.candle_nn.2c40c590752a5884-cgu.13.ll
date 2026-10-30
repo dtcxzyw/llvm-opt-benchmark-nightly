@@ -204,7 +204,8 @@ middle.block69:                                   ; preds = %vector.body64
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %middle.block69, %bb.bb
   %i.ka = fmul float %.sroa.02.044.i, %i.jq
-  %i.kb = fadd float %i.ka, 1.000000e+00
+  %.fr.i = freeze float %i.ka
+  %i.kb = fadd float %.fr.i, 1.000000e+00
   call fastcc void @_RNCNCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6varlen21flash_attn_varlen_cpus1_0s_0Bb_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull align 4 %.val, i64 noundef range(i64 0, 2305843009213693952) %.val1, float noundef 1.000000e+00) #24, !noalias !1297
   br label %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus1_0s_0EB8_.exit.i
 
@@ -607,7 +608,7 @@ bb.ac:                                            ; preds = %bb.z
 
 bb.ad:                                            ; preds = %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i, %.split.i
   %.sroa.01.077.i = phi float [ -inf, %.split.i ], [ %.sroa.01.1.i, %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i ] ; 4 uses
-  %.sroa.02.076.i = phi float [ 0.000000e+00, %.split.i ], [ %.sroa.02.1.i, %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i ] ; 2 uses
+  %.sroa.02.076.i = phi float [ 0.000000e+00, %.split.i ], [ %.sroa.02.1.fr.i, %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i ] ; 2 uses
   %.sroa.05.075.i = phi i64 [ %.sroa.07.0.i.i, %.split.i ], [ %i.el, %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i ] ; 5 uses
   %i.el = add i64 %.sroa.05.075.i, 1
   %i.em = add i64 %.sroa.05.075.i, %i.be          ; 2 uses
@@ -623,8 +624,8 @@ bb.ad:                                            ; preds = %_RINvNtNtNtCs3NyA1p
   br i1 %or.cond47.i, label %bb.aj, label %bb.ai, !prof !9
 
 ._crit_edge79.i:                                  ; preds = %_RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i
-  %i.eu = fcmp ogt float %.sroa.02.1.i, 0.000000e+00
-  %i.ev = fdiv nnan float 1.000000e+00, %.sroa.02.1.i
+  %i.eu = fcmp ogt float %.sroa.02.1.fr.i, 0.000000e+00
+  %i.ev = fdiv nnan float 1.000000e+00, %.sroa.02.1.fr.i
   %.sroa.09.0.i = select i1 %i.eu, float %i.ev, float 0.000000e+00 ; 2 uses
   %i.ew = load i64, ptr %i.db, align 8, !noalias !1327, !noundef !5 ; 3 uses
   %.not83.i = icmp eq i64 %i.ew, 0
@@ -1017,8 +1018,9 @@ bb.ax:                                            ; preds = %bb.au
   unreachable
 
 _RINvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash14online_softmax19online_softmax_stepNCNCNvNtB4_6varlen21flash_attn_varlen_cpus_0s_0EB8_.exit.i: ; preds = %bb.aw, %._crit_edge.i, %_RNCNCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6varlen21flash_attn_varlen_cpus_0s_0Bb_.exit.i
-  %.sroa.02.1.i = phi float [ %i.it, %_RNCNCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6varlen21flash_attn_varlen_cpus_0s_0Bb_.exit.i ], [ %i.jh, %._crit_edge.i ], [ %i.jh, %bb.aw ] ; 3 uses
+  %.sroa.02.1.i = phi float [ %i.it, %_RNCNCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6varlen21flash_attn_varlen_cpus_0s_0Bb_.exit.i ], [ %i.jh, %._crit_edge.i ], [ %i.jh, %bb.aw ]
   %.sroa.01.1.i = phi float [ %.sroa.01.077.i, %_RNCNCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6varlen21flash_attn_varlen_cpus_0s_0Bb_.exit.i ], [ %.sroa.07.0.i, %._crit_edge.i ], [ %.sroa.07.0.i, %bb.aw ]
+  %.sroa.02.1.fr.i = freeze float %.sroa.02.1.i   ; 3 uses
   %exitcond.not.i = icmp eq i64 %.sroa.05.075.i, %i.bz
   br i1 %exitcond.not.i, label %._crit_edge79.i, label %bb.ad
 

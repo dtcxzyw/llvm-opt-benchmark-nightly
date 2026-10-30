@@ -202,7 +202,7 @@ _ZNSt10unique_ptrI17llm_graph_input_iSt14default_deleteIS0_EED2Ev.exit: ; preds 
 bb.aa:                                            ; preds = %_ZNSt10unique_ptrI17llm_graph_input_iSt14default_deleteIS0_EED2Ev.exit
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !194, !nonnull !71, !align !99 ; 2 uses
-  %i.cg = icmp eq ptr %i.cd, null                 ; 2 uses
+  %i.cg = icmp eq ptr %i.cd, null
   br i1 %i.cg, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -214,11 +214,13 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cf, i64 74
   %i.cl = load i8, ptr %i.ck, align 2, !tbaa !197, !range !196, !noundef !71
-  %i.cm = trunc nuw i8 %i.cl to i1
+  %i.cm = trunc nuw i8 %i.cl to i1                ; 2 uses
+  %5 = xor i1 %i.cm, true
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ab, %bb.ac, %bb.aa
-  %i.cn = phi i1 [ false, %bb.aa ], [ true, %bb.ab ], [ %i.cm, %bb.ac ] ; 2 uses
+  %.not = phi i1 [ false, %bb.aa ], [ false, %bb.ab ], [ %5, %bb.ac ]
+  %i.cn = phi i1 [ false, %bb.aa ], [ true, %bb.ab ], [ %i.cm, %bb.ac ]
   %i.co = invoke noundef ptr @_ZNK17llm_graph_context17build_attn_inp_kvEv(ptr noundef nonnull align 8 dereferenceable(336) %0)
           to label %bb.ae unwind label %_ZNSt10unique_ptrI17llm_graph_input_iSt14default_deleteIS0_EED2Ev.exit192.thread219
 
@@ -452,12 +454,11 @@ bb.bo:                                            ; preds = %bb.bn
   %i.gb = load ptr, ptr %i.bw, align 8, !tbaa !189
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 48
   store ptr %i.ga, ptr %i.gc, align 8, !tbaa !249
-  %or.cond.not = or i1 %i.cg, %i.cn
-  br i1 %or.cond.not, label %bb.bq, label %bb.bp
+  br i1 %.not, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bo
   %i.gd = load ptr, ptr %i.ar, align 8, !tbaa !181
-  %i.ge = invoke ptr @ggml_get_rows(ptr noundef %i.gd, ptr noundef %i.ga, ptr noundef nonnull %i.cd)
+  %i.ge = invoke ptr @ggml_get_rows(ptr noundef %i.gd, ptr noundef %i.ga, ptr noundef %i.cd)
           to label %bb.bq unwind label %_ZNSt10unique_ptrI17llm_graph_input_iSt14default_deleteIS0_EED2Ev.exit192.thread219
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
@@ -474,12 +475,12 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
 bb.br:                                            ; preds = %bb.bq
   %i.gi = getelementptr inbounds nuw i8, ptr %1, i64 36200
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !251 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 36224
-  %.not171 = icmp eq ptr %i.gj, null
-  br i1 %.not171, label %.invoke, label %bb.bs
+  %6 = icmp eq ptr %i.gj, null
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 36224
+  br i1 %6, label %.invoke, label %bb.bs
 
 bb.bs:                                            ; preds = %.thread210, %bb.br
-  %.in213 = phi ptr [ %i.gh, %.thread210 ], [ %5, %bb.br ]
+  %.in213 = phi ptr [ %i.gh, %.thread210 ], [ %7, %bb.br ]
   %i.gk = phi ptr [ %i.gg, %.thread210 ], [ %i.gj, %bb.br ]
   %i.gl = load ptr, ptr %.in213, align 8, !tbaa !252
   %i.gm = invoke noundef ptr @_ZNK17llm_graph_context13build_lora_mmEP11ggml_tensorS1_S1_(ptr noundef nonnull align 8 dereferenceable(336) %0, ptr noundef nonnull %i.gk, ptr noundef %.1, ptr noundef %i.gl)

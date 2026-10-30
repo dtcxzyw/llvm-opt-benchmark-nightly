@@ -156,7 +156,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bj = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %i.bi)
   store <16 x bfloat> %i.bj, ptr %.065156, align 1, !tbaa !39
   %i.bk = getelementptr inbounds nuw i8, ptr %.065156, i64 32 ; 2 uses
-  %i.bl = add nuw nsw i32 %.064157, 16            ; 3 uses
+  %i.bl = add nuw nsw i32 %.064157, 16            ; 4 uses
   %i.bm = or disjoint i32 %i.bl, 15
   %i.bn = load i32, ptr %6, align 4, !tbaa !16    ; 2 uses
   %i.bo = icmp slt i32 %i.bm, %i.bn
@@ -166,6 +166,7 @@ bb.b:                                             ; preds = %bb.a
   %.pre189 = load float, ptr %4, align 4, !tbaa !10
   %.pre190 = load float, ptr %5, align 4, !tbaa !10 ; 2 uses
   %.pre193 = fdiv fast float %.pre189, %.pre190
+  %7 = or disjoint i32 %i.bl, 7
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.noexc
@@ -173,13 +174,13 @@ bb.b:                                             ; preds = %bb.a
   %i.bp = phi i32 [ %i.bn, %._crit_edge.loopexit ], [ %i.p, %.noexc ] ; 2 uses
   %i.bq = phi float [ %.pre190, %._crit_edge.loopexit ], [ %i.x, %.noexc ] ; 2 uses
   %.065.lcssa = phi ptr [ %i.bk, %._crit_edge.loopexit ], [ %i.v, %.noexc ] ; 2 uses
-  %.064.lcssa.a = phi i32 [ %i.bl, %._crit_edge.loopexit ], [ 0, %.noexc ] ; 3 uses
+  %.064.lcssa = phi i32 [ %7, %._crit_edge.loopexit ], [ 7, %.noexc ]
+  %.064.lcssa.a = phi i32 [ %i.bl, %._crit_edge.loopexit ], [ 0, %.noexc ] ; 2 uses
   %i.br = insertelement <8 x float> poison, float %.pre-phi, i64 0
   %i.bs = shufflevector <8 x float> %i.br, <8 x float> poison, <8 x i32> zeroinitializer
   %i.bt = insertelement <8 x float> poison, float %i.bq, i64 0
   %i.bu = shufflevector <8 x float> %i.bt, <8 x float> poison, <8 x i32> zeroinitializer
-  %7 = or disjoint i32 %.064.lcssa.a, 7
-  %i.bv = icmp slt i32 %7, %i.bp
+  %i.bv = icmp slt i32 %.064.lcssa, %i.bp
   br i1 %i.bv, label %.lr.ph162, label %._crit_edge163
 
 .lr.ph162:                                        ; preds = %._crit_edge, %.lr.ph162

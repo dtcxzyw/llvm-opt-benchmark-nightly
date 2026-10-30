@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %._crit_edge
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
-  %.1399 = phi i64 [ %i.ev, %bb.b ], [ %i.cj, %._crit_edge ] ; 3 uses
-  %.1397 = phi i64 [ %i.ew, %bb.b ], [ %i.cl, %._crit_edge ] ; 4 uses
+  %.1399 = phi i64 [ %i.ev, %bb.b ], [ %i.cj, %._crit_edge ] ; 4 uses
+  %.1397 = phi i64 [ %i.ew, %bb.b ], [ %i.cl, %._crit_edge ] ; 5 uses
   %.1395 = phi i64 [ %i.ex, %bb.b ], [ %i.cn, %._crit_edge ] ; 4 uses
   %.1393 = phi i64 [ %i.ey, %bb.b ], [ %i.cp, %._crit_edge ] ; 4 uses
   %.0391 = phi i64 [ %i.ez, %bb.b ], [ %.0365.lcssa, %._crit_edge ] ; 3 uses
@@ -227,18 +227,19 @@ bb.e:                                             ; preds = %bb.d
   %i.fk = tail call reassoc nsz arcp double @log(double noundef %i.fj) #4
   %i.fl = fmul reassoc nsz arcp double %i.fk, f0x3FF71547652B82FE
   %i.fm = fptrunc reassoc nsz arcp double %i.fl to float
+  %3 = tail call i64 @llvm.umin.i64(i64 %.1397, i64 %.1399)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d
   %storemerge = phi float [ 0.000000e+00, %bb.d ], [ %i.fm, %bb.e ], [ 3.400000e+01, %bb.c ]
-  %.1384.a = phi i64 [ 0, %bb.d ], [ %.1399, %bb.e ], [ -1, %bb.c ] ; 3 uses
+  %.1384 = phi i64 [ 0, %bb.d ], [ %3, %bb.e ], [ %.1397, %bb.c ] ; 2 uses
+  %.1384.a = phi i64 [ 0, %bb.d ], [ %.1399, %bb.e ], [ -1, %bb.c ] ; 2 uses
   store float %storemerge, ptr %2, align 4, !tbaa !12
   %i.fn = icmp ult i64 %.1380, 2147483648
   br i1 %i.fn, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %i.fo = icmp ult i64 %.1397, %.1384.a           ; 2 uses
-  %spec.select425 = tail call i64 @llvm.umin.i64(i64 %.1397, i64 %.1384.a) ; 2 uses
   %.not418 = icmp eq i64 %.1397, 0
   br i1 %.not418, label %bb.i, label %bb.h
 
@@ -254,7 +255,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f, %bb.h, %bb.g
   %.sink = phi float [ 0.000000e+00, %bb.g ], [ %i.fv, %bb.h ], [ 3.400000e+01, %bb.f ]
-  %.3386 = phi i64 [ %spec.select425, %bb.g ], [ %spec.select425, %bb.h ], [ %.1384.a, %bb.f ] ; 3 uses
+  %.3386 = phi i64 [ %.1384, %bb.g ], [ %.1384, %bb.h ], [ %.1384.a, %bb.f ] ; 3 uses
   %.3.shrunk = phi i1 [ %i.fo, %bb.g ], [ %i.fo, %bb.h ], [ false, %bb.f ]
   %.3 = zext i1 %.3.shrunk to i32                 ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %2, i64 4

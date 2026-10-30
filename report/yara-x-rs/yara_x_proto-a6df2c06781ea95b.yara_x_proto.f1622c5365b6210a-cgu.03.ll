@@ -204,11 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %.lhs.trunc.i.i = sub nuw nsw i8 70, %i.j
   %i.k = udiv i8 %.lhs.trunc.i.i, 7
   %narrow.i = add nuw nsw i8 %i.k, 1
-  %i.l = zext nneg i8 %narrow.i to i64
+  %i.l = zext nneg i8 %narrow.i to i64            ; 2 uses
+  %1 = add nuw nsw i64 %i.l, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.sroa.0.0.a = phi i64 [ %i.l, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %.sroa.0.0 = phi i64 [ %1, %bb.b ], [ 1, %bb.a ]
+  %.sroa.0.0.a = phi i64 [ %i.l, %bb.b ], [ 0, %bb.a ]
   %i.m = load i64, ptr %0, align 8, !range !4, !noundef !5
   %.not = icmp eq i64 %i.m, -1
   br i1 %.not, label %bb.e, label %bb.d
@@ -222,8 +224,7 @@ bb.d:                                             ; preds = %bb.c
   %.lhs.trunc19 = sub nuw nsw i8 70, %i.r
   %i.s = udiv i8 %.lhs.trunc19, 7
   %.zext20 = zext nneg i8 %i.s to i64
-  %1 = add nuw nsw i64 %.sroa.0.0.a, 1
-  %i.t = add i64 %1, %i.o
+  %i.t = add i64 %.sroa.0.0, %i.o
   %i.u = add i64 %i.t, %.zext20
   br label %bb.e
 

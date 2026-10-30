@@ -204,16 +204,17 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %i.dl, label %bb.dg, label %bb.df
 
 bb.df:                                            ; preds = %bb.de
-  %i.dm = icmp sgt i64 %1, -1
+  %i.dm = icmp sgt i64 %1, -1                     ; 2 uses
+  %spec.select33 = select i1 %i.dm, i64 52, i64 53
   %spec.select33.a = select i1 %i.dm, i32 52, i32 53
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cx, %bb.cw, %bb.cv, %bb.cu, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %.preheader
-  %storemerge.lcssa28.a = phi i32 [ 1, %.preheader ], [ 44, %bb.cx ], [ 2, %bb.bh ], [ 28, %bb.ch ], [ 3, %bb.bi ], [ 47, %bb.da ], [ 4, %bb.bj ], [ 49, %bb.dc ], [ 5, %bb.bk ], [ 33, %bb.cm ], [ 6, %bb.bl ], [ 29, %bb.ci ], [ 7, %bb.bm ], [ 40, %bb.ct ], [ 8, %bb.bn ], [ 39, %bb.cs ], [ 9, %bb.bo ], [ 34, %bb.cn ], [ 10, %bb.bp ], [ 30, %bb.cj ], [ 11, %bb.bq ], [ 46, %bb.cz ], [ 12, %bb.br ], [ 48, %bb.db ], [ 13, %bb.bs ], [ 35, %bb.co ], [ 14, %bb.bt ], [ 31, %bb.ck ], [ 15, %bb.bu ], [ 43, %bb.cw ], [ 16, %bb.bv ], [ 42, %bb.cv ], [ 17, %bb.bw ], [ 36, %bb.cp ], [ 18, %bb.bx ], [ 32, %bb.cl ], [ 19, %bb.by ], [ 45, %bb.cy ], [ 20, %bb.bz ], [ 27, %bb.cg ], [ 21, %bb.ca ], [ 37, %bb.cq ], [ 22, %bb.cb ], [ %spec.select33.a, %bb.df ], [ 23, %bb.cc ], [ 41, %bb.cu ], [ 24, %bb.cd ], [ 51, %bb.de ], [ 25, %bb.ce ], [ 38, %bb.cr ], [ 26, %bb.cf ], [ 50, %bb.dd ] ; 2 uses
+  %storemerge.lcssa28 = phi i64 [ 1, %.preheader ], [ 44, %bb.cx ], [ 2, %bb.bh ], [ 28, %bb.ch ], [ 3, %bb.bi ], [ 47, %bb.da ], [ 4, %bb.bj ], [ 49, %bb.dc ], [ 5, %bb.bk ], [ 33, %bb.cm ], [ 6, %bb.bl ], [ 29, %bb.ci ], [ 7, %bb.bm ], [ 40, %bb.ct ], [ 8, %bb.bn ], [ 39, %bb.cs ], [ 9, %bb.bo ], [ 34, %bb.cn ], [ 10, %bb.bp ], [ 30, %bb.cj ], [ 11, %bb.bq ], [ 46, %bb.cz ], [ 12, %bb.br ], [ 48, %bb.db ], [ 13, %bb.bs ], [ 35, %bb.co ], [ 14, %bb.bt ], [ 31, %bb.ck ], [ 15, %bb.bu ], [ 43, %bb.cw ], [ 16, %bb.bv ], [ 42, %bb.cv ], [ 17, %bb.bw ], [ 36, %bb.cp ], [ 18, %bb.bx ], [ 32, %bb.cl ], [ 19, %bb.by ], [ 45, %bb.cy ], [ 20, %bb.bz ], [ 27, %bb.cg ], [ 21, %bb.ca ], [ 37, %bb.cq ], [ 22, %bb.cb ], [ %spec.select33, %bb.df ], [ 23, %bb.cc ], [ 41, %bb.cu ], [ 24, %bb.cd ], [ 51, %bb.de ], [ 25, %bb.ce ], [ 38, %bb.cr ], [ 26, %bb.cf ], [ 50, %bb.dd ]
+  %storemerge.lcssa28.a = phi i32 [ 1, %.preheader ], [ 44, %bb.cx ], [ 2, %bb.bh ], [ 28, %bb.ch ], [ 3, %bb.bi ], [ 47, %bb.da ], [ 4, %bb.bj ], [ 49, %bb.dc ], [ 5, %bb.bk ], [ 33, %bb.cm ], [ 6, %bb.bl ], [ 29, %bb.ci ], [ 7, %bb.bm ], [ 40, %bb.ct ], [ 8, %bb.bn ], [ 39, %bb.cs ], [ 9, %bb.bo ], [ 34, %bb.cn ], [ 10, %bb.bp ], [ 30, %bb.cj ], [ 11, %bb.bq ], [ 46, %bb.cz ], [ 12, %bb.br ], [ 48, %bb.db ], [ 13, %bb.bs ], [ 35, %bb.co ], [ 14, %bb.bt ], [ 31, %bb.ck ], [ 15, %bb.bu ], [ 43, %bb.cw ], [ 16, %bb.bv ], [ 42, %bb.cv ], [ 17, %bb.bw ], [ 36, %bb.cp ], [ 18, %bb.bx ], [ 32, %bb.cl ], [ 19, %bb.by ], [ 45, %bb.cy ], [ 20, %bb.bz ], [ 27, %bb.cg ], [ 21, %bb.ca ], [ 37, %bb.cq ], [ 22, %bb.cb ], [ %spec.select33.a, %bb.df ], [ 23, %bb.cc ], [ 41, %bb.cu ], [ 24, %bb.cd ], [ 51, %bb.de ], [ 25, %bb.ce ], [ 38, %bb.cr ], [ 26, %bb.cf ], [ 50, %bb.dd ]
   store i32 %storemerge.lcssa28.a, ptr %2, align 4
   %i.dn = lshr i64 %spec.store.select, 2
-  %5 = zext nneg i32 %storemerge.lcssa28.a to i64
-  %i.do = lshr i64 %i.dn, %5
+  %i.do = lshr i64 %i.dn, %storemerge.lcssa28
   %spec.store.select1 = tail call i64 @llvm.umin.i64(i64 %i.do, i64 1073741823)
   %i.dp = trunc nuw nsw i64 %spec.store.select1 to i32
   %i.dq = load i32, ptr %4, align 4

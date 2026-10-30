@@ -202,11 +202,13 @@ _ZN5folly10canNallocxEv.exit.i:                   ; preds = %bb.b
 bb.c:                                             ; preds = %_ZN5folly10canNallocxEv.exit.i, %.split.i
   %i.f = tail call i64 @nallocx(i64 noundef %i.a, i32 noundef 0) #18 ; 2 uses
   %.not.i = icmp eq i64 %i.f, 0
-  %i.g = select i1 %.not.i, i64 %i.a, i64 %i.f
+  %i.g = select i1 %.not.i, i64 %i.a, i64 %i.f    ; 2 uses
+  %3 = add i64 %i.g, -1
   br label %_ZN5folly14goodMallocSizeEm.exit
 
 _ZN5folly14goodMallocSizeEm.exit:                 ; preds = %bb.a, %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.c
-  %.0.i.a = phi i64 [ 0, %bb.a ], [ %i.g, %bb.c ], [ %i.a, %_ZN5folly10canNallocxEv.exit.i ], [ %i.a, %.split.i ] ; 2 uses
+  %.0.i = phi i64 [ -1, %bb.a ], [ %3, %bb.c ], [ %2, %_ZN5folly10canNallocxEv.exit.i ], [ %2, %.split.i ]
+  %.0.i.a = phi i64 [ 0, %bb.a ], [ %i.g, %bb.c ], [ %i.a, %_ZN5folly10canNallocxEv.exit.i ], [ %i.a, %.split.i ]
   %i.h = tail call noalias ptr @malloc(i64 noundef %.0.i.a) #22 ; 4 uses
   %.not.i9 = icmp eq ptr %i.h, null
   br i1 %.not.i9, label %bb.d, label %_ZN5folly13checkedMallocEm.exit
@@ -227,8 +229,7 @@ bb.e:                                             ; preds = %_ZN5folly13checkedM
 bb.f:                                             ; preds = %bb.e, %_ZN5folly13checkedMallocEm.exit
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %i.i, align 8, !tbaa !12
-  %3 = add i64 %.0.i.a, 9223372036854775807
-  %i.j = or i64 %3, -9223372036854775808
+  %i.j = or i64 %.0.i, -9223372036854775808
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.j, ptr %i.k, align 8, !tbaa !18
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 %2

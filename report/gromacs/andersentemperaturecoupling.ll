@@ -202,6 +202,7 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 bb.x:                                             ; preds = %_ZNKSt6vectorISt10unique_ptrIN3gmx17ISimulatorElementESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit
+  %.sroa.0105.0 = phi i1 [ false, %_ZNKSt6vectorISt10unique_ptrIN3gmx17ISimulatorElementESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i ], [ true, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit ]
   %.sroa.0105.0.a = phi ptr [ %i.v, %_ZNKSt6vectorISt10unique_ptrIN3gmx17ISimulatorElementESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i ], [ null, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit ]
   %i.fq = landingpad { ptr, i32 }
           cleanup
@@ -361,7 +362,8 @@ bb.ag:                                            ; preds = %bb.z
   br label %.body44
 
 .body44:                                          ; preds = %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit57, %bb.n, %bb.y, %bb.ag, %bb.x
-  %.sroa.0105.1.a = phi ptr [ %.sroa.0105.0.a, %bb.x ], [ null, %bb.ag ], [ null, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit57 ], [ null, %bb.y ], [ null, %bb.n ] ; 2 uses
+  %.sroa.0105.1 = phi i1 [ %.sroa.0105.0, %bb.x ], [ true, %bb.ag ], [ true, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit57 ], [ true, %bb.y ], [ true, %bb.n ]
+  %.sroa.0105.1.a = phi ptr [ %.sroa.0105.0.a, %bb.x ], [ null, %bb.ag ], [ null, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit57 ], [ null, %bb.y ], [ null, %bb.n ]
   %.pn32 = phi { ptr, i32 } [ %i.fq, %bb.x ], [ %i.hi, %bb.ag ], [ %i.fs, %_ZNSt10unique_ptrIN3gmx18ConstraintsElementILNS0_18ConstraintVariableE1EEESt14default_deleteIS3_EED2Ev.exit57 ], [ %i.fr, %bb.y ], [ %i.bt, %bb.n ] ; 2 uses
   call void @_ZNSt6vectorISt10unique_ptrIN3gmx17ISimulatorElementESt14default_deleteIS2_EESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %10) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #27
@@ -385,8 +387,7 @@ _ZNSt14_Function_baseD2Ev.exit54.thread124:       ; preds = %bb.j, %bb.i
 _ZNSt14_Function_baseD2Ev.exit54:                 ; preds = %.body44, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #27
-  %.not.i67 = icmp eq ptr %.sroa.0105.1.a, null
-  br i1 %.not.i67, label %common.resume, label %_ZNKSt14default_deleteIN3gmx27AndersenTemperatureCouplingEEclEPS1_.exit.i68
+  br i1 %.sroa.0105.1, label %common.resume, label %_ZNKSt14default_deleteIN3gmx27AndersenTemperatureCouplingEEclEPS1_.exit.i68
 
 _ZNKSt14default_deleteIN3gmx27AndersenTemperatureCouplingEEclEPS1_.exit.i68: ; preds = %bb.v, %bb.u, %_ZNSt14_Function_baseD2Ev.exit54.thread124, %_ZNSt14_Function_baseD2Ev.exit54
   %.pn32.pn.pn121 = phi { ptr, i32 } [ %i.an, %_ZNSt14_Function_baseD2Ev.exit54.thread124 ], [ %.pn32, %_ZNSt14_Function_baseD2Ev.exit54 ], [ %i.fl, %bb.u ], [ %i.fl, %bb.v ]

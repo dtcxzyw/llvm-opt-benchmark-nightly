@@ -202,18 +202,19 @@ bb.aa:                                            ; preds = %.lr.ph.i.i.i.i.i43
 _ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE2atERS5_.exit53: ; preds = %bb.z, %bb.x, %bb.y
   %.sroa.06.1.i.i.i49 = phi ptr [ %.sroa.06.0.i.i.i51, %bb.x ], [ %i.dw, %bb.y ], [ %i.eb, %bb.z ]
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i49, i64 16
-  %i.eh = load double, ptr %i.eg, align 8, !tbaa !162
+  %i.eh = load double, ptr %i.eg, align 8, !tbaa !162 ; 2 uses
+  %2 = fcmp uno double %i.eh, 0.000000e+00
   br label %_ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE5countERS5_.exit40.thread
 
 _ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE5countERS5_.exit40.thread: ; preds = %.lr.ph.i.i.i.i.i29, %.preheader174, %bb.t, %..loopexit_crit_edge21.i.i.i.i.i33, %_ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE2atERS5_.exit53
-  %i.ei = phi double [ %i.eh, %_ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE2atERS5_.exit53 ], [ 0.000000e+00, %..loopexit_crit_edge21.i.i.i.i.i33 ], [ 0.000000e+00, %.preheader174 ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %.lr.ph.i.i.i.i.i29 ] ; 2 uses
+  %3 = phi i1 [ %2, %_ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE2atERS5_.exit53 ], [ false, %..loopexit_crit_edge21.i.i.i.i.i33 ], [ false, %.preheader174 ], [ false, %bb.t ], [ false, %.lr.ph.i.i.i.i.i29 ]
+  %i.ei = phi double [ %i.eh, %_ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE2atERS5_.exit53 ], [ 0.000000e+00, %..loopexit_crit_edge21.i.i.i.i.i33 ], [ 0.000000e+00, %.preheader174 ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %.lr.ph.i.i.i.i.i29 ]
   %i.ej = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.cx
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !163 ; 2 uses
   %i.el = lshr i8 %i.ek, 2
   %i.em = and i8 %i.el, 3                         ; 2 uses
-  %2 = fcmp uno double %i.ei, 0.000000e+00
   %i.en = icmp ne i8 %i.em, 2
-  %or.cond.i = and i1 %2, %i.en
+  %or.cond.i = and i1 %3, %i.en
   %.017.i = select i1 %or.cond.i, double 0.000000e+00, double %i.ei ; 3 uses
   switch i8 %i.em, label %bb.ae [
     i8 1, label %bb.ab

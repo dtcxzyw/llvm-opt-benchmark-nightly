@@ -203,11 +203,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 12
   %i.x = load i32, ptr %i.w, align 4, !tbaa !150
-  %i.y = icmp eq i32 %i.x, 0
+  %i.y = icmp eq i32 %i.x, 0                      ; 2 uses
+  %spec.select = select i1 %i.y, i32 2, i32 1
   %spec.select.a = zext i1 %i.y to i32
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
+  %.0126 = phi i32 [ 1, %bb.d ], [ %spec.select, %bb.e ]
   %.0126.a = phi i32 [ 0, %bb.d ], [ %spec.select.a, %bb.e ] ; 2 uses
   %i.z = load i32, ptr %i.e, align 8, !tbaa !151  ; 3 uses
   %i.aa = icmp sgt i32 %i.z, 0
@@ -217,12 +219,11 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !151
   %i.ad = icmp eq i32 %i.ac, 0
-  %3 = zext i1 %i.ad to i32
-  %spec.select159 = add nuw nsw i32 %.0126.a, %3
+  %spec.select160 = select i1 %i.ad, i32 %.0126, i32 %.0126.a
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.1127 = phi i32 [ %.0126.a, %bb.f ], [ %spec.select159, %bb.g ] ; 2 uses
+  %.1127 = phi i32 [ %.0126.a, %bb.f ], [ %spec.select160, %bb.g ] ; 2 uses
   %i.ae = load i32, ptr %i.f, align 4, !tbaa !152 ; 3 uses
   %i.af = icmp sgt i32 %i.ae, 0
   br i1 %i.af, label %bb.i, label %bb.j

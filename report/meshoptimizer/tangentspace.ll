@@ -204,19 +204,24 @@ _ZN17meshopt_Allocator8allocateIhEEPT_m.exit:     ; preds = %bb.u
   %min.iters.check326 = icmp ult i64 %2, 51
   br i1 %min.iters.check326, label %.lr.ph218.preheader357, label %vector.memcheck
 
-.lr.ph218.preheader357:                           ; preds = %vector.body336, %vector.memcheck, %.lr.ph218.preheader
-  %.0132217.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph218.preheader ], [ %n.vec335, %vector.body336 ] ; 8 uses
-  %12 = sub i64 %i.a, %.0132217.ph
-  %.neg = add i64 %.0132217.ph, 1
-  %xtraiter374 = and i64 %12, 1
+.lr.ph218.preheader357.loopexit:                  ; preds = %vector.body336
+  %12 = trunc i64 %n.vec335 to i32
+  %13 = add nuw nsw i64 %n.vec335, 1
+  br label %.lr.ph218.preheader357
+
+.lr.ph218.preheader357:                           ; preds = %.lr.ph218.preheader357.loopexit, %vector.memcheck, %.lr.ph218.preheader
+  %14 = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph218.preheader ], [ %12, %.lr.ph218.preheader357.loopexit ]
+  %.0132217.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph218.preheader ], [ %13, %.lr.ph218.preheader357.loopexit ]
+  %15 = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph218.preheader ], [ %n.vec335, %.lr.ph218.preheader357.loopexit ] ; 6 uses
+  %16 = sub i64 %i.a, %15
+  %xtraiter374 = and i64 %16, 1
   %lcmp.mod375.not = icmp eq i64 %xtraiter374, 0
   br i1 %lcmp.mod375.not, label %.lr.ph218.prol.loopexit, label %.lr.ph218.prol
 
 .lr.ph218.prol:                                   ; preds = %.lr.ph218.preheader357
-  %13 = trunc i64 %.0132217.ph to i32
-  %i.of = getelementptr inbounds nuw [4 x i8], ptr %i.nv, i64 %.0132217.ph
-  store i32 %13, ptr %i.of, align 4, !tbaa !50
-  %i.og = getelementptr inbounds nuw [16 x i8], ptr %i.jg, i64 %.0132217.ph
+  %i.of = getelementptr inbounds nuw [4 x i8], ptr %i.nv, i64 %15
+  store i32 %14, ptr %i.of, align 4, !tbaa !50
+  %i.og = getelementptr inbounds nuw [16 x i8], ptr %i.jg, i64 %15
   %i.oh = getelementptr inbounds nuw i8, ptr %i.og, i64 12
   %i.oi = load float, ptr %i.oh, align 4, !tbaa !57 ; 2 uses
   %i.oj = fcmp ogt float %i.oi, 0.000000e+00
@@ -224,14 +229,14 @@ _ZN17meshopt_Allocator8allocateIhEEPT_m.exit:     ; preds = %bb.u
   %i.ol = fcmp olt float %i.oi, 0.000000e+00
   %i.om = select i1 %i.ol, i8 2, i8 0
   %i.on = or disjoint i8 %i.om, %i.ok
-  %i.oo = getelementptr inbounds nuw i8, ptr %i.oc, i64 %.0132217.ph
+  %i.oo = getelementptr inbounds nuw i8, ptr %i.oc, i64 %15
   store i8 %i.on, ptr %i.oo, align 1, !tbaa !58
-  %14 = add nuw nsw i64 %.0132217.ph, 1
   br label %.lr.ph218.prol.loopexit
 
 .lr.ph218.prol.loopexit:                          ; preds = %.lr.ph218.prol, %.lr.ph218.preheader357
-  %.0132217.unr = phi i64 [ %.0132217.ph, %.lr.ph218.preheader357 ], [ %14, %.lr.ph218.prol ]
-  %i.op = icmp eq i64 %i.a, %.neg
+  %.0132217.unr = phi i64 [ %15, %.lr.ph218.preheader357 ], [ %.0132217.ph, %.lr.ph218.prol ]
+  %17 = add nsw i64 %i.a, -1
+  %i.op = icmp eq i64 %15, %17
   br i1 %i.op, label %.preheader207, label %.lr.ph218
 
 vector.memcheck:                                  ; preds = %.lr.ph218.preheader
@@ -258,7 +263,7 @@ vector.ph334:                                     ; preds = %vector.memcheck
   %i.ow = and i64 %i.a, 3                         ; 2 uses
   %i.ox = icmp eq i64 %i.ow, 0
   %i.oy = select i1 %i.ox, i64 4, i64 %i.ow
-  %n.vec335 = sub nsw i64 %i.a, %i.oy             ; 2 uses
+  %n.vec335 = sub nsw i64 %i.a, %i.oy             ; 4 uses
   br label %vector.body336
 
 vector.body336:                                   ; preds = %vector.body336, %vector.ph334
@@ -292,7 +297,7 @@ vector.body336:                                   ; preds = %vector.body336, %ve
   %index.next339 = add nuw i64 %index337, 4       ; 2 uses
   %vec.ind.next340 = add <4 x i32> %vec.ind338, splat (i32 4)
   %i.pw = icmp eq i64 %index.next339, %n.vec335
-  br i1 %i.pw, label %.lr.ph218.preheader357, label %vector.body336, !llvm.loop !37
+  br i1 %i.pw, label %.lr.ph218.preheader357.loopexit, label %vector.body336, !llvm.loop !37
 
 .preheader207:                                    ; preds = %.lr.ph218.prol.loopexit, %.lr.ph218, %_ZN17meshopt_Allocator8allocateIhEEPT_m.exit
   br i1 %.not.i, label %.preheader206, label %.lr.ph220

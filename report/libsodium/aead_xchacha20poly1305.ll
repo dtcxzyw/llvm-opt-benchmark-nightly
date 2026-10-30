@@ -179,18 +179,19 @@ bb.b:                                             ; preds = %bb.a
   %i.b = add i64 %4, -16
   %i.c = getelementptr i8, ptr %3, i64 %4
   %i.d = getelementptr i8, ptr %i.c, i64 -16
-  %i.e = tail call i32 @crypto_aead_xchacha20poly1305_ietf_decrypt_detached(ptr noundef %0, ptr poison, ptr noundef %3, i64 noundef %i.b, ptr noundef %i.d, ptr noundef %5, i64 noundef %6, ptr noundef %7, ptr noundef %8)
+  %i.e = tail call i32 @crypto_aead_xchacha20poly1305_ietf_decrypt_detached(ptr noundef %0, ptr poison, ptr noundef %3, i64 noundef %i.b, ptr noundef %i.d, ptr noundef %5, i64 noundef %6, ptr noundef %7, ptr noundef %8) ; 2 uses
+  %9 = icmp eq i32 %i.e, 0
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0.a = phi i32 [ %i.e, %bb.b ], [ -1, %bb.a ]  ; 2 uses
+  %.0 = phi i1 [ %9, %bb.b ], [ false, %bb.a ]
+  %.0.a = phi i32 [ %i.e, %bb.b ], [ -1, %bb.a ]
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %9 = icmp eq i32 %.0.a, 0
   %i.f = add i64 %4, -16
-  %spec.select = select i1 %9, i64 %i.f, i64 0
+  %spec.select = select i1 %.0, i64 %i.f, i64 0
   store i64 %spec.select, ptr %1, align 8
   br label %bb.e
 

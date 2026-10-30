@@ -204,14 +204,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !33
-  %i.e = tail call i32 @GM_getLastRegisteredGraph(ptr noundef %i.d) #10
+  %i.e = tail call i32 @GM_getLastRegisteredGraph(ptr noundef %i.d) #10 ; 2 uses
+  %2 = icmp ne i32 %i.e, 0
   br label %CGRAPH_getStartingGraphID.exit
 
 CGRAPH_getStartingGraphID.exit:                   ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i.a = phi i32 [ %i.e, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
+  %.sroa.0.0.i = phi i1 [ %2, %bb.b ], [ true, %bb.a ]
+  %.sroa.0.0.i.a = phi i32 [ %i.e, %bb.b ], [ %i.b, %bb.a ]
   store i32 %.sroa.0.0.i.a, ptr %1, align 4, !tbaa !34
-  %2 = icmp ne i32 %.sroa.0.0.i.a, 0
-  ret i1 %2
+  ret i1 %.sroa.0.0.i
 }
 
 ; Function Attrs: nounwind uwtable

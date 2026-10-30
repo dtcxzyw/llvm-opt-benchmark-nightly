@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.lr.ph.lr.ph
 
 .lr.ph.lr.ph:                                     ; preds = %.lr.ph.lr.ph.lr.ph, %.outer.backedge
-  %.0139.ph435 = phi i32 [ %4, %.lr.ph.lr.ph.lr.ph ], [ %.0139.ph.be, %.outer.backedge ]
+  %.0139.ph435 = phi i32 [ %4, %.lr.ph.lr.ph.lr.ph ], [ %.0139.ph.be, %.outer.backedge ] ; 3 uses
   %.0140.ph434 = phi i32 [ %5, %.lr.ph.lr.ph.lr.ph ], [ %.0140.ph.be, %.outer.backedge ]
   %.0143.ph433 = phi i32 [ 0, %.lr.ph.lr.ph.lr.ph ], [ %.0143.ph.be, %.outer.backedge ]
   %.0146.ph432 = phi i32 [ 0, %.lr.ph.lr.ph.lr.ph ], [ %.0146.ph.be, %.outer.backedge ]
@@ -212,11 +212,15 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.0154.ph430 = phi i32 [ 0, %.lr.ph.lr.ph.lr.ph ], [ %.0154.ph.be, %.outer.backedge ]
   %.0162.ph429 = phi i32 [ 0, %.lr.ph.lr.ph.lr.ph ], [ %.0162.ph.be, %.outer.backedge ]
   %.0164.ph428 = phi i32 [ 0, %.lr.ph.lr.ph.lr.ph ], [ %.0164.ph.be, %.outer.backedge ] ; 2 uses
+  %7 = icmp sgt i32 %.0139.ph435, 0
+  %8 = icmp eq i32 %.0139.ph435, 0
   %i.p = icmp eq i32 %.0162.ph429, 0
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer265
-  %.0139.ph272405.a = phi i32 [ %.0139.ph435, %.lr.ph.lr.ph ], [ %.1, %.outer265 ] ; 6 uses
+  %.0139.ph272405 = phi i1 [ %7, %.lr.ph.lr.ph ], [ false, %.outer265 ]
+  %9 = phi i1 [ %8, %.lr.ph.lr.ph ], [ false, %.outer265 ]
+  %.0139.ph272405.a = phi i32 [ %.0139.ph435, %.lr.ph.lr.ph ], [ %.1, %.outer265 ] ; 4 uses
   %.0140.ph271404 = phi i32 [ %.0140.ph434, %.lr.ph.lr.ph ], [ %.1141, %.outer265 ] ; 6 uses
   %.0143.ph270403 = phi i32 [ %.0143.ph433, %.lr.ph.lr.ph ], [ %i.aq, %.outer265 ] ; 5 uses
   %.0146.ph269400 = phi i32 [ %.0146.ph432, %.lr.ph.lr.ph ], [ %i.er, %.outer265 ] ; 11 uses
@@ -300,16 +304,14 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %7 = icmp sgt i32 %.0139.ph272405.a, 0
-  br i1 %7, label %bb.l, label %bb.m
+  br i1 %.0139.ph272405, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ak = add nsw i32 %.0139.ph272405.a, -1
   br label %bb.bd
 
 bb.m:                                             ; preds = %bb.k
-  %8 = icmp eq i32 %.0139.ph272405.a, 0
-  br i1 %8, label %bb.n, label %bb.o
+  br i1 %9, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.al = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.9, i32 noundef %i.d) ; 0 uses

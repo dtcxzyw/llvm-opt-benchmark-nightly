@@ -204,11 +204,13 @@ bb.dp:                                            ; preds = %bb.dm
   br i1 %i.ey, label %.noexc, label %bb.dq
 
 bb.dq:                                            ; preds = %.backedge
-  %i.ez = call noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 %1, i16 noundef 28)
+  %i.ez = call noundef zeroext i1 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser2at(ptr noundef nonnull align 8 %1, i16 noundef 28) ; 2 uses
+  %6 = select i1 %i.ez, i16 269, i16 179
   br label %.noexc
 
 .noexc:                                           ; preds = %bb.dq, %.backedge
-  %.sroa.02.0.a = phi i1 [ true, %.backedge ], [ %i.ez, %bb.dq ] ; 2 uses
+  %.sroa.02.0 = phi i16 [ 269, %.backedge ], [ %6, %bb.dq ]
+  %.sroa.02.0.a = phi i1 [ true, %.backedge ], [ %i.ez, %bb.dq ]
   %i.fa = call noundef i16 @_RNvMNtCsdVrXiLXuAnx_6parser6parserNtB2_6Parser7current(ptr noundef nonnull align 8 %1)
   switch i16 %i.fa, label %_RNvNtNtCsdVrXiLXuAnx_6parser7grammar11expressions10current_op.exit [
     i16 11, label %.noexc25
@@ -432,8 +434,7 @@ bb.eg:                                            ; preds = %bb.dz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ao)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ao, ptr noundef nonnull align 8 dereferenceable(40) %i.at, i64 40, i1 false)
-  %. = select i1 %.sroa.02.0.a, i16 269, i16 179
-  call void @_RNvMs_NtCsdVrXiLXuAnx_6parser6parserNtB4_6Marker8complete(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.ap, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.ao, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i16 noundef %.)
+  call void @_RNvMs_NtCsdVrXiLXuAnx_6parser6parserNtB4_6Marker8complete(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.ap, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.ao, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1, i16 noundef %.sroa.02.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   br label %.backedge.backedge

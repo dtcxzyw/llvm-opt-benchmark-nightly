@@ -204,7 +204,8 @@ propagateall.exit53:                              ; preds = %.lr.ph.i51, %propag
   br label %bb.n
 
 bb.n:                                             ; preds = %._crit_edge.i, %propagateall.exit53
-  %.011.i.a = phi i32 [ 0, %propagateall.exit53 ], [ %1, %._crit_edge.i ] ; 2 uses
+  %.011.i = phi i1 [ true, %propagateall.exit53 ], [ %2, %._crit_edge.i ] ; 2 uses
+  %.011.i.a = phi i32 [ 0, %propagateall.exit53 ], [ %1, %._crit_edge.i ]
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !87 ; 2 uses
   store ptr null, ptr %i.az, align 8, !tbaa !87
   %.not16.i = icmp eq ptr %i.ba, null
@@ -241,7 +242,8 @@ propagateall.exit.i:                              ; preds = %.lr.ph.i.i, %bb.o, 
 
 ._crit_edge.i:                                    ; preds = %propagateall.exit.i
   %i.bk = icmp eq i32 %.1.i55, 0
-  %1 = xor i32 %.011.i.a, 1
+  %1 = zext i1 %.011.i to i32
+  %2 = xor i1 %.011.i, true
   br i1 %i.bk, label %convergeephemerons.exit, label %bb.n
 
 convergeephemerons.exit:                          ; preds = %bb.n, %._crit_edge.i
@@ -348,7 +350,8 @@ propagateall.exit70.preheader:                    ; preds = %.lr.ph.i67, %markbe
   br label %propagateall.exit70
 
 propagateall.exit70:                              ; preds = %propagateall.exit70.preheader, %._crit_edge.i83
-  %.011.i71.a = phi i32 [ %2, %._crit_edge.i83 ], [ 0, %propagateall.exit70.preheader ] ; 2 uses
+  %.011.i71 = phi i1 [ %4, %._crit_edge.i83 ], [ true, %propagateall.exit70.preheader ] ; 2 uses
+  %.011.i71.a = phi i32 [ %3, %._crit_edge.i83 ], [ 0, %propagateall.exit70.preheader ]
   %i.co = load ptr, ptr %i.az, align 8, !tbaa !87 ; 2 uses
   store ptr null, ptr %i.az, align 8, !tbaa !87
   %.not16.i72 = icmp eq ptr %i.co, null
@@ -385,7 +388,8 @@ propagateall.exit.i80:                            ; preds = %.lr.ph.i.i78, %bb.v
 
 ._crit_edge.i83:                                  ; preds = %propagateall.exit.i80
   %i.cy = icmp eq i32 %.1.i81, 0
-  %2 = xor i32 %.011.i71.a, 1
+  %3 = zext i1 %.011.i71 to i32
+  %4 = xor i1 %.011.i71, true
   br i1 %i.cy, label %convergeephemerons.exit84, label %propagateall.exit70
 
 convergeephemerons.exit84:                        ; preds = %._crit_edge.i83

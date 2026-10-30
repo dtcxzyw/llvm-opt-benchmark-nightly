@@ -204,11 +204,13 @@ bb.h:                                             ; preds = %.lr.ph
   br i1 %i.z, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !42
 
 ._crit_edge.loopexit:                             ; preds = %bb.h
-  %i.aa = trunc nuw i64 %indvars.iv.next to i32
+  %i.aa = trunc nuw i64 %indvars.iv.next to i32   ; 2 uses
+  %4 = add nuw nsw i32 %i.aa, 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
-  %.0.lcssa.a = phi i32 [ 0, %bb.e ], [ %i.aa, %._crit_edge.loopexit ] ; 2 uses
+  %.0.lcssa = phi i32 [ 1, %bb.e ], [ %4, %._crit_edge.loopexit ]
+  %.0.lcssa.a = phi i32 [ 0, %bb.e ], [ %i.aa, %._crit_edge.loopexit ]
   %.lcssa = phi i64 [ %i.n, %bb.e ], [ %i.w, %._crit_edge.loopexit ]
   br i1 %spec.select, label %bb.l, label %bb.i
 
@@ -229,11 +231,10 @@ bb.k:                                             ; preds = %bb.i
   %i.ag = select i1 %i.af, i64 -1, i64 %i.ac
   call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.ag) #9
   call void @lua_insert(ptr noundef %0, i32 noundef 2) #9
-  %4 = add nuw nsw i32 %.0.lcssa.a, 1
   br label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge, %bb.k, %bb.g, %bb.f, %bb.d, %bb.b
-  %.029 = phi i32 [ %i.g, %bb.b ], [ %i.l, %bb.d ], [ %i.u, %bb.f ], [ %i.v, %bb.g ], [ %.0.lcssa.a, %._crit_edge ], [ %4, %bb.k ]
+  %.029 = phi i32 [ %i.g, %bb.b ], [ %i.l, %bb.d ], [ %i.u, %bb.f ], [ %i.v, %bb.g ], [ %.0.lcssa.a, %._crit_edge ], [ %.0.lcssa, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.029

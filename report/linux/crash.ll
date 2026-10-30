@@ -202,7 +202,8 @@ bb.i:                                             ; preds = %bb.h
 elf_header_exclude_ranges.exit.i:                 ; preds = %bb.i
   %i.z = load i64, ptr @crashk_low_res, align 8
   %i.aa = call i32 @crash_exclude_mem_range(ptr noundef nonnull %i.r, i64 noundef %i.z, i64 noundef %i.y) #7
-  %.not17.i = icmp eq i32 %i.aa, 0
+  %.fr.i.i = freeze i32 %i.aa
+  %.not17.i = icmp eq i32 %.fr.i.i, 0
   br i1 %.not17.i, label %prepare_elf_headers.exit, label %prepare_elf_headers.exit.thread31
 
 prepare_elf_headers.exit.thread31:                ; preds = %bb.f, %elf_header_exclude_ranges.exit.i, %bb.g, %bb.h

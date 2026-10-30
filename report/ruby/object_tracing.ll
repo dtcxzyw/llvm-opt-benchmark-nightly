@@ -202,7 +202,7 @@ RSTRING_PTR.exit44:                               ; preds = %bb.f, %bb.g
   br i1 %.not, label %bb.q, label %bb.h
 
 bb.h:                                             ; preds = %.thread
-  %i.at = load i64, ptr %i.c, align 8, !tbaa !17
+  %i.at = load i64, ptr %i.c, align 8, !tbaa !17  ; 3 uses
   %i.au = inttoptr i64 %i.at to ptr               ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !24 ; 4 uses
@@ -270,11 +270,13 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br label %delete_unique_str.exit47
 
 bb.q:                                             ; preds = %.thread
-  %i.bu = call noalias nonnull dereferenceable(64) ptr @ruby_xmalloc(i64 noundef 64) #13
+  %i.bu = call noalias nonnull dereferenceable(64) ptr @ruby_xmalloc(i64 noundef 64) #13 ; 2 uses
+  %2 = ptrtoint ptr %i.bu to i64
   br label %delete_unique_str.exit47
 
 delete_unique_str.exit47:                         ; preds = %bb.p, %delete_unique_str.exit, %bb.q
-  %.0.a = phi ptr [ %i.bu, %bb.q ], [ %i.au, %delete_unique_str.exit ], [ %i.au, %bb.p ] ; 8 uses
+  %.0 = phi i64 [ %2, %bb.q ], [ %i.at, %delete_unique_str.exit ], [ %i.at, %bb.p ]
+  %.0.a = phi ptr [ %i.bu, %bb.q ], [ %i.au, %delete_unique_str.exit ], [ %i.au, %bb.p ] ; 7 uses
   store i32 1, ptr %.0.a, align 8, !tbaa !36
   %i.bv = inttoptr i64 %i.e to ptr
   %i.bw = getelementptr inbounds nuw i8, ptr %.0.a, i64 8
@@ -307,8 +309,7 @@ rb_num2int_inline.exit:                           ; preds = %bb.r, %bb.s
   %i.ci = getelementptr inbounds nuw i8, ptr %.0.a, i64 56
   store i64 %i.ch, ptr %i.ci, align 8, !tbaa !33
   %i.cj = load ptr, ptr %i.aq, align 8, !tbaa !16
-  %2 = ptrtoint ptr %.0.a to i64
-  %i.ck = call i32 @rb_st_insert(ptr noundef %i.cj, i64 noundef %i.e, i64 noundef %2) #12 ; 0 uses
+  %i.ck = call i32 @rb_st_insert(ptr noundef %i.cj, i64 noundef %i.e, i64 noundef %.0) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   ret void
 }

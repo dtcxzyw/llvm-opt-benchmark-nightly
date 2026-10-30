@@ -204,7 +204,7 @@ _ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit.thread.i.i.i.i.i: ; pred
 
 .backedge.i.i.i.i.i.a:                            ; preds = %.backedge.i.i.i.i.i.backedge, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit.thread.i.i.i.i.i
   %.old46.i.i.i.i.i = phi i1 [ true, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit.thread.i.i.i.i.i ], [ false, %.backedge.i.i.i.i.i.backedge ] ; 2 uses
-  %.045.i.i.i.i.i = phi i64 [ 0, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit.thread.i.i.i.i.i ], [ 1, %.backedge.i.i.i.i.i.backedge ]
+  %.045.i.i.i.i.i = phi i64 [ 0, %_ZN12lldb_private6GetLogINS_7LLDBLogEEEPNS_3LogET_.exit.thread.i.i.i.i.i ], [ %.be.i.i.i.i.i, %.backedge.i.i.i.i.i.backedge ] ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr @"__const._ZZN12lldb_private13HostInfoLinux17GetDistributionIdEvENK3$_0clEv.exe_paths", i64 %.045.i.i.i.i.i
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !19   ; 5 uses
   %i.o = call i32 @access(ptr noundef %i.n, i32 noundef 0) #13
@@ -607,6 +607,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %.old46.i.i.i.i.i, label %.backedge.i.i.i.i.i.backedge, label %"_ZZNSt9once_flag18_Prepare_executionC1IZSt9call_onceIZN12lldb_private13HostInfoLinux17GetDistributionIdEvE3$_0JEEvRS_OT_DpOT0_EUlvE_EERS7_ENKUlvE_clEv.exit"
 
 .backedge.i.i.i.i.i.backedge:                     ; preds = %.thread35.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i45.i.i.i.i.i
+  %.be.i.i.i.i.i = add nuw nsw i64 %.045.i.i.i.i.i, 1
   br label %.backedge.i.i.i.i.i.a, !llvm.loop !49
 
 "_ZZNSt9once_flag18_Prepare_executionC1IZSt9call_onceIZN12lldb_private13HostInfoLinux17GetDistributionIdEvE3$_0JEEvRS_OT_DpOT0_EUlvE_EERS7_ENKUlvE_clEv.exit": ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i45.i.i.i.i.i, %.thread35.i.i.i.i.i

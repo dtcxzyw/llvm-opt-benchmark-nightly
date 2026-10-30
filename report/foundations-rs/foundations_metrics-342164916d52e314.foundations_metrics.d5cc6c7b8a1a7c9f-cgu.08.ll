@@ -204,7 +204,7 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCskerazqDcV1J_28fou
   br i1 %i.gx, label %.critedge.i.i.us.i, label %.lr.ph.i.i.us.i, !dbg !2406
 
 .lr.ph.i.i.us.i:                                  ; preds = %.noexc35, %.noexc36
-  %.sroa.012.051.i.i.us.i = phi i1 [ %4, %.noexc36 ], [ false, %.noexc35 ]
+  %.sroa.012.051.i.i.us.i = phi i1 [ %.sroa.016.0.i.i.us.i, %.noexc36 ], [ false, %.noexc35 ] ; 2 uses
   %.sroa.014.050.i.i.us.i = phi ptr [ %i.jc, %.noexc36 ], [ %i.ik, %.noexc35 ] ; 6 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.014.050.i.i.us.i, i64 112, !dbg !2407 ; 2 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.014.050.i.i.us.i, i64 32, !dbg !2408
@@ -214,17 +214,18 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtNtCskerazqDcV1J_28fou
 
 bb.ai:                                            ; preds = %.lr.ph.i.i.us.i
   %i.jg = getelementptr inbounds nuw i8, ptr %.sroa.014.050.i.i.us.i, i64 40, !dbg !2408
-  %i.jh = load double, ptr %i.jg, align 8, !dbg !2408, !noalias !2119
-  br label %bb.aj, !dbg !2410
+  %i.jh = load double, ptr %i.jg, align 8, !dbg !2408, !noalias !2119 ; 2 uses
+  %3 = fcmp oeq double %i.jh, +inf, !dbg !2410
+  %4 = or i1 %.sroa.012.051.i.i.us.i, %3, !dbg !2411
+  br label %bb.aj, !dbg !2412
 
 bb.aj:                                            ; preds = %bb.ai, %.lr.ph.i.i.us.i
-  %.sroa.016.0.i.i.us.i = phi double [ %i.jh, %bb.ai ], [ 0.000000e+00, %.lr.ph.i.i.us.i ], !dbg !2411 ; 2 uses
-  %3 = fcmp oeq double %.sroa.016.0.i.i.us.i, +inf, !dbg !2412
-  %4 = or i1 %.sroa.012.051.i.i.us.i, %3, !dbg !2413 ; 2 uses
+  %.sroa.016.0.i.i.us.i = phi i1 [ %4, %bb.ai ], [ %.sroa.012.051.i.i.us.i, %.lr.ph.i.i.us.i ], !dbg !2413 ; 2 uses
+  %5 = phi double [ %i.jh, %bb.ai ], [ 0.000000e+00, %.lr.ph.i.i.us.i ], !dbg !2413
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !2414, !noalias !2104
   store ptr @27, ptr %i.i, align 8, !dbg !2414, !noalias !2104
   store i64 2, ptr %.sroa.422.0..sroa_idx.i.i.i, align 8, !dbg !2414, !noalias !2104
-  store double %.sroa.016.0.i.i.us.i, ptr %.sroa.523.0..sroa_idx.i.i.i, align 8, !dbg !2414, !noalias !2104
+  store double %5, ptr %.sroa.523.0..sroa_idx.i.i.i, align 8, !dbg !2414, !noalias !2104
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !2415, !noalias !2104
   %i.ji = load i64, ptr %.sroa.014.050.i.i.us.i, align 8, !dbg !2416, !range !184, !noalias !2119, !noundef !103
   %i.jj = trunc nuw i64 %i.ji to i1, !dbg !2417
@@ -255,7 +256,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %i.jq, label %._crit_edge.i.i.us.i, label %.lr.ph.i.i.us.i, !dbg !2406
 
 ._crit_edge.i.i.us.i:                             ; preds = %.noexc36
-  br i1 %4, label %_RNvNtNtCsim2LhUzKY4R_19foundations_metrics8encoding4text16encode_histogram.exit.i.us.i, label %.critedge.i.i.us.i, !dbg !2425
+  br i1 %.sroa.016.0.i.i.us.i, label %_RNvNtNtCsim2LhUzKY4R_19foundations_metrics8encoding4text16encode_histogram.exit.i.us.i, label %.critedge.i.i.us.i, !dbg !2425
 
 .critedge.i.i.us.i:                               ; preds = %._crit_edge.i.i.us.i, %.noexc35
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !2426, !noalias !2104
@@ -658,10 +659,10 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !2407 = !DILocation(line: 627, column: 28, scope: !2006, inlinedAt: !2007)
 !2408 = !DILocation(line: 221, column: 27, scope: !2008, inlinedAt: !1905)
 !2409 = !DILocation(line: 1095, column: 9, scope: !1984, inlinedAt: !2009)
-!2410 = !DILocation(line: 1099, column: 5, scope: !1984, inlinedAt: !2009)
-!2411 = !DILocation(line: 0, scope: !1984, inlinedAt: !2009)
-!2412 = !DILocation(line: 222, column: 33, scope: !2010, inlinedAt: !1905)
-!2413 = !DILocation(line: 222, column: 9, scope: !2010, inlinedAt: !1905)
+!2410 = !DILocation(line: 222, column: 33, scope: !2010, inlinedAt: !1905)
+!2411 = !DILocation(line: 222, column: 9, scope: !2010, inlinedAt: !1905)
+!2412 = !DILocation(line: 1099, column: 5, scope: !1984, inlinedAt: !2009)
+!2413 = !DILocation(line: 0, scope: !1984, inlinedAt: !2009)
 !2414 = !DILocation(line: 229, column: 13, scope: !2010, inlinedAt: !1905)
 !2415 = !DILocation(line: 230, column: 13, scope: !2010, inlinedAt: !1905)
 !2416 = !DILocation(line: 230, column: 35, scope: !2010, inlinedAt: !1905)

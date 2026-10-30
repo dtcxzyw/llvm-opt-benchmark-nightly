@@ -202,6 +202,7 @@ _ZN6icu_785Grego10isLeapYearEi.exit.thread:       ; preds = %bb.k, %bb.j
   br label %_ZN6icu_785Grego10isLeapYearEi.exit.thread58
 
 _ZN6icu_785Grego10isLeapYearEi.exit.thread58:     ; preds = %bb.k, %_ZN6icu_785Grego10isLeapYearEi.exit.thread, %bb.i, %bb.h
+  %5 = phi i32 [ -7, %bb.i ], [ 7, %bb.h ], [ -7, %_ZN6icu_785Grego10isLeapYearEi.exit.thread ], [ -7, %bb.k ]
   %.040 = phi i32 [ %i.at, %bb.i ], [ %i.at, %bb.h ], [ 28, %_ZN6icu_785Grego10isLeapYearEi.exit.thread ], [ 29, %bb.k ]
   %i.bb = tail call noundef i64 @_ZN6icu_785Grego11fieldsToDayEiii(i32 noundef %1, i32 noundef %i.ar, i32 noundef %.040)
   %i.bc = sitofp i64 %i.bb to double
@@ -209,7 +210,8 @@ _ZN6icu_785Grego10isLeapYearEi.exit.thread58:     ; preds = %bb.k, %_ZN6icu_785G
 
 bb.l:                                             ; preds = %bb.e, %_ZN6icu_785Grego11monthLengthEii.exit, %_ZN6icu_785Grego10isLeapYearEi.exit.thread58
   %.143 = phi double [ %i.bc, %_ZN6icu_785Grego10isLeapYearEi.exit.thread58 ], [ %i.y, %bb.e ], [ %i.aq, %_ZN6icu_785Grego11monthLengthEii.exit ] ; 2 uses
-  %.2.a = phi i1 [ %i.au, %_ZN6icu_785Grego10isLeapYearEi.exit.thread58 ], [ false, %bb.e ], [ true, %_ZN6icu_785Grego11monthLengthEii.exit ] ; 2 uses
+  %.2 = phi i32 [ %5, %_ZN6icu_785Grego10isLeapYearEi.exit.thread58 ], [ 7, %bb.e ], [ -7, %_ZN6icu_785Grego11monthLengthEii.exit ]
+  %.2.a = phi i1 [ %i.au, %_ZN6icu_785Grego10isLeapYearEi.exit.thread58 ], [ false, %bb.e ], [ true, %_ZN6icu_785Grego11monthLengthEii.exit ]
   %i.bd = fptosi double %.143 to i32
   %i.be = tail call noundef i32 @_ZN6icu_785Grego9dayOfWeekEi(i32 noundef %i.bd)
   %i.bf = load ptr, ptr %i.g, align 8, !tbaa !24
@@ -217,9 +219,8 @@ bb.l:                                             ; preds = %bb.e, %_ZN6icu_785G
   %i.bh = sub nsw i32 %i.bg, %i.be                ; 3 uses
   %i.bi = icmp sgt i32 %i.bh, 0
   %i.bj = icmp slt i32 %i.bh, 0
-  %.sink64 = select i1 %.2.a, i32 -7, i32 7
   %.sink = select i1 %.2.a, i1 %i.bi, i1 %i.bj
-  %i.bk = select i1 %.sink, i32 %.sink64, i32 0
+  %i.bk = select i1 %.sink, i32 %.2, i32 0
   %i.bl = add nsw i32 %i.bh, %i.bk
   %i.bm = sitofp i32 %i.bl to double
   %i.bn = fadd double %.143, %i.bm

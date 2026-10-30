@@ -204,12 +204,14 @@ _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i: ; preds = %_ZNSt12_Vector
   %.pre97 = ptrtoint ptr %.pre90 to i64
   %.pre99 = sub i64 %.pre96, %.pre97              ; 2 uses
   %.pre101 = sdiv exact i64 %.pre99, 24
-  %i.m = add nsw i64 %.pre101, 1
+  %i.m = add nsw i64 %.pre101, 1                  ; 2 uses
   %i.n = icmp sgt i64 %.pre99, -24
+  %3 = shl nuw nsw i64 %i.m, 2
   br label %_ZNSt6vectorIiSaIiEE7reserveEm.exit
 
 _ZNSt6vectorIiSaIiEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i, %bb.c
-  %.pre-phi102.a = phi i64 [ %i.m, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ 1, %bb.c ] ; 3 uses
+  %.pre-phi102 = phi i64 [ %3, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ 4, %bb.c ]
+  %.pre-phi102.a = phi i64 [ %i.m, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ 1, %bb.c ] ; 2 uses
   %.pre-phi100 = phi i1 [ %i.n, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ true, %bb.c ]
   %i.o = phi ptr [ %.pre90, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %i.c, %bb.c ]
   %i.p = phi ptr [ %.pre, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %i.b, %bb.c ]
@@ -226,8 +228,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %.pre-phi100, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i, label %.sink.split.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i: ; preds = %bb.d
-  %3 = shl nuw nsw i64 %.pre-phi102.a, 2
-  %i.s = tail call noalias ptr @malloc(i64 noundef %3) #16 ; 2 uses
+  %i.s = tail call noalias ptr @malloc(i64 noundef %.pre-phi102) #16 ; 2 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.e, label %.sink.split.i.i
 

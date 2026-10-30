@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/vcpkg/original/commands.format-manifest?download=true
-inline.NumInlined: 559
+inline.NumInlined: 564
 inline.NumDeleted: 333
 begin_hunk_0
 %"struct.std::_Rb_tree<vcpkg::StringLiteral, std::pair<const vcpkg::StringLiteral, std::__cxx11::basic_string<char>>, std::_Select1st<std::pair<const vcpkg::StringLiteral, std::__cxx11::basic_string<char>>>, std::less<void>>::_Rb_tree_impl" = type { [8 x i8], %"struct.std::_Rb_tree_header" }
@@ -202,12 +202,13 @@ bb.c:                                             ; preds = %_ZNKSt8_Rb_treeIN5v
   %.19.i.i.i.i.sroa.sel520.v.sroa.sel.v.sroa.sel.v = select i1 %i.p, ptr %.0811.i.i.i.i, ptr %.012.i.i.i.i
   %.19.i.i.i.i.sroa.sel520.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.sroa.sel520.v.sroa.sel.v.sroa.sel.v, i64 40
   %.sroa.2.0.copyload.i.i.i.i.i = load i64, ptr %.19.i.i.i.i.sroa.sel520.v.sroa.sel.v.sroa.sel, align 8, !tbaa !91
-  %i.r = call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr nonnull @.str.6, i64 3, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %.sroa.2.0.copyload.i.i.i.i.i) #16
+  %i.r = call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr nonnull @.str.6, i64 3, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %.sroa.2.0.copyload.i.i.i.i.i) #16 ; 2 uses
   %not..i = xor i1 %i.r, true
   br label %_ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbRKT_RKT0_.exit
 
 _ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbRKT_RKT0_.exit: ; preds = %bb.c, %_ZNKSt8_Rb_treeIN5vcpkg13StringLiteralES1_St9_IdentityIS1_ESt4lessIvESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i
-  %.sroa.0.0.i.i.i.ph.a = phi i1 [ %not..i, %bb.c ], [ false, %_ZNKSt8_Rb_treeIN5vcpkg13StringLiteralES1_St9_IdentityIS1_ESt4lessIvESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i ] ; 3 uses
+  %.sroa.0.0.i.i.i.ph = phi i1 [ %i.r, %bb.c ], [ true, %_ZNKSt8_Rb_treeIN5vcpkg13StringLiteralES1_St9_IdentityIS1_ESt4lessIvESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i ]
+  %.sroa.0.0.i.i.i.ph.a = phi i1 [ %not..i, %bb.c ], [ false, %_ZNKSt8_Rb_treeIN5vcpkg13StringLiteralES1_St9_IdentityIS1_ESt4lessIvESaIS1_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS1_EPKSt18_Rb_tree_node_baseRKS1_.exit.i.i.i ] ; 2 uses
   %.pr = load ptr, ptr %i.l, align 8, !tbaa !21   ; 2 uses
   %.not10.i.i.i.i159 = icmp eq ptr %.pr, null
   br i1 %.not10.i.i.i.i159, label %_ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbRKT_RKT0_.exit177.thread, label %.lr.ph.i.i.i.i160
@@ -241,10 +242,10 @@ _ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbR
   %.19.i.i.i.i166.sroa.sel523.v.sroa.sel.v.sroa.sel.v = select i1 %i.t, ptr %.0811.i.i.i.i162, ptr %.012.i.i.i.i161
   %.19.i.i.i.i166.sroa.sel523.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i166.sroa.sel523.v.sroa.sel.v.sroa.sel.v, i64 40
   %.sroa.2.0.copyload.i.i.i.i.i174 = load i64, ptr %.19.i.i.i.i166.sroa.sel523.v.sroa.sel.v.sroa.sel, align 8, !tbaa !91
-  %i.v = call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr nonnull @.str.7, i64 15, ptr %.sroa.0.0.copyload.i.i.i.i.i172, i64 %.sroa.2.0.copyload.i.i.i.i.i174) #16 ; 2 uses
-  %not..i175 = xor i1 %i.v, true                  ; 2 uses
-  %or.cond.not = or i1 %.sroa.0.0.i.i.i.ph.a, %i.v
-  br i1 %or.cond.not, label %bb.f, label %bb.d
+  %i.v = call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr nonnull @.str.7, i64 15, ptr %.sroa.0.0.copyload.i.i.i.i.i172, i64 %.sroa.2.0.copyload.i.i.i.i.i174) #16
+  %not..i175 = xor i1 %i.v, true                  ; 3 uses
+  %or.cond = and i1 %.sroa.0.0.i.i.i.ph, %not..i175
+  br i1 %or.cond, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %_ZN5vcpkg4Util4Sets8containsISt3setINS_13StringLiteralESt4lessIvESaIS4_EES4_EEbRKT_RKT0_.exit177
   %.sroa.042.0.copyload = load i64, ptr @_ZN5vcpkg27msgMissingArgFormatManifestE, align 8, !tbaa !91
@@ -373,10 +374,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bw, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.o
-  br i1 %i.by, label %bb.p, label %.thread.i.i
+  br i1 %i.by, label %bb.p, label %bb.s
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %bb.o
-  br i1 %i.by, label %bb.p, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i
+  br i1 %i.by, label %bb.p, label %.thread.i.i
 
 bb.p:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.bz = load i64, ptr %i.al, align 8, !tbaa !29 ; 3 uses
@@ -405,31 +406,31 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i: ;
   %.pre.i.i = load ptr, ptr %24, align 8, !tbaa !28
   br label %_ZN5vcpkg4PathaSEOS0_.exit
 
-.thread.i.i:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+.thread.i.i:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
+  %44 = load i64, ptr %i.aj, align 8, !tbaa !30
+  %45 = icmp eq ptr %i.bv, null
   store ptr %i.bx, ptr %23, align 8, !tbaa !28
   %i.cf = load <2 x i64>, ptr %i.al, align 8, !tbaa !30
   store <2 x i64> %i.cf, ptr %i.am, align 8, !tbaa !30
-  br label %bb.t
+  br i1 %45, label %bb.t, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
-  %44 = load i64, ptr %i.aj, align 8, !tbaa !30
-  store ptr %i.bx, ptr %23, align 8, !tbaa !28
-  %45 = load <2 x i64>, ptr %i.al, align 8, !tbaa !30
-  store <2 x i64> %45, ptr %i.am, align 8, !tbaa !30
-  %.not.i.i = icmp eq ptr %i.bv, null
-  br i1 %.not.i.i, label %bb.t, label %bb.s
-
-bb.s:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i: ; preds = %.thread.i.i
   store ptr %i.bv, ptr %24, align 8, !tbaa !28
   store i64 %44, ptr %i.ak, align 8, !tbaa !30
   br label %_ZN5vcpkg4PathaSEOS0_.exit
 
-bb.t:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i, %.thread.i.i
+bb.s:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  store ptr %i.bx, ptr %23, align 8, !tbaa !28
+  %46 = load <2 x i64>, ptr %i.al, align 8, !tbaa !30
+  store <2 x i64> %46, ptr %i.am, align 8, !tbaa !30
+  br label %bb.t
+
+bb.t:                                             ; preds = %bb.s, %.thread.i.i
   store ptr %i.ak, ptr %24, align 8, !tbaa !28
   br label %_ZN5vcpkg4PathaSEOS0_.exit
 
-_ZN5vcpkg4PathaSEOS0_.exit:                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %bb.s, %bb.t
-  %i.cg = phi ptr [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ], [ %i.bv, %bb.s ], [ %i.ak, %bb.t ]
+_ZN5vcpkg4PathaSEOS0_.exit:                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i, %bb.t
+  %i.cg = phi ptr [ %.pre.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i ], [ %i.bv, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i ], [ %i.ak, %bb.t ]
   store i64 0, ptr %i.al, align 8, !tbaa !29
   store i8 0, ptr %i.cg, align 1, !tbaa !30
   %i.ch = load ptr, ptr %24, align 8, !tbaa !28   ; 2 uses

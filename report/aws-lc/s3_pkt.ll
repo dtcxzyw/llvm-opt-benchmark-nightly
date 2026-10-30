@@ -202,11 +202,13 @@ _ZNK4bssl4SpanIKhE7subspanEmm.exit:               ; preds = %bb.o
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !194
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ag
-  %i.al = sub nuw i64 %i.ad, %i.ag
+  %i.al = sub nuw i64 %i.ad, %i.ag                ; 2 uses
+  %5 = icmp eq i64 %i.al, 0
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZNK4bssl4SpanIKhE7subspanEmm.exit, %bb.n
-  %.sroa.7.0.a = phi i64 [ %i.al, %_ZNK4bssl4SpanIKhE7subspanEmm.exit ], [ 0, %bb.n ] ; 7 uses
+  %.sroa.7.0 = phi i1 [ %5, %_ZNK4bssl4SpanIKhE7subspanEmm.exit ], [ true, %bb.n ]
+  %.sroa.7.0.a = phi i64 [ %i.al, %_ZNK4bssl4SpanIKhE7subspanEmm.exit ], [ 0, %bb.n ] ; 6 uses
   %.sroa.077.0 = phi ptr [ %i.ak, %_ZNK4bssl4SpanIKhE7subspanEmm.exit ], [ null, %bb.n ]
   %i.am = icmp eq i64 %4, 0                       ; 3 uses
   br i1 %i.am, label %bb.s, label %bb.r
@@ -240,8 +242,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.av, label %bb.v, label %bb.ae
 
 bb.v:                                             ; preds = %bb.u
-  %5 = icmp eq i64 %.sroa.7.0.a, 0
-  br i1 %5, label %bb.x, label %_ZL14OPENSSL_memcpyPvPKvm.exit
+  br i1 %.sroa.7.0, label %bb.x, label %_ZL14OPENSSL_memcpyPvPKvm.exit
 
 _ZL14OPENSSL_memcpyPvPKvm.exit:                   ; preds = %bb.v
   %i.aw = load ptr, ptr %i.v, align 8, !tbaa !195

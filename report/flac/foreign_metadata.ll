@@ -204,10 +204,11 @@ bb.z:                                             ; preds = %bb.y
   br label %read_from_wave_.exit
 
 bb.aa:                                            ; preds = %fread.inline.exit196.i
-  %i.bd = load i32, ptr %i.an, align 1
+  %i.bd = load i32, ptr %i.an, align 1            ; 2 uses
   %i.be = zext i32 %i.bd to i64                   ; 2 uses
-  %i.bf = and i64 %i.be, 1
-  %spec.select188.i.a = add nuw nsw i64 %i.bf, %i.be ; 2 uses
+  %i.bf = and i64 %i.be, 1                        ; 2 uses
+  %3 = trunc nuw nsw i64 %i.bf to i32
+  %spec.select188.i.a = add nuw nsw i64 %i.bf, %i.be
   %i.bg = load i32, ptr %i.a, align 1
   %i.bh = icmp ne i32 %i.bg, 544501094
   %i.bi = zext i1 %i.bh to i32
@@ -300,8 +301,8 @@ bb.as:                                            ; preds = %bb.ap, %bb.ai, %bb.
   %i.bv = icmp ne i32 %i.bu, 1635017060
   %i.bw = zext i1 %i.bv to i32
   %.not155.i = icmp eq i32 %i.bw, 0
-  %3 = trunc i64 %spec.select188.i.a to i32
-  %i.bx = add i32 %3, 8
+  %.0.i = add i32 %i.bd, 8
+  %i.bx = add i32 %.0.i, %3
   %i.by = select i1 %.not155.i, i32 8, i32 %i.bx  ; 2 uses
   %.not.i205.i = icmp ult i32 %i.by, %i.aa
   br i1 %.not.i205.i, label %bb.av, label %bb.at

@@ -205,19 +205,20 @@ bb.dz:                                            ; preds = %bb.dy, %bb.dx
 
 bb.ea:                                            ; preds = %bb.dz
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(144) %79, ptr noundef nonnull %i.akd, i64 noundef %i.aoh, i64 noundef 8) #18
-  %.pre9.i.i = load i32, ptr %i.ake, align 8, !tbaa !194
+  %.pre9.i.i = load i32, ptr %i.ake, align 8, !tbaa !194 ; 2 uses
+  %85 = zext i32 %.pre9.i.i to i64
   %.pre.pre = load ptr, ptr %79, align 8, !tbaa !108
   br label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
   %.pre = phi ptr [ %.pre.pre, %bb.ea ], [ %i.akd, %bb.dz ] ; 2 uses
-  %i.aoj = phi i32 [ %.pre9.i.i, %bb.ea ], [ 0, %bb.dz ] ; 2 uses
+  %86 = phi i64 [ %85, %bb.ea ], [ 0, %bb.dz ]
+  %i.aoj = phi i32 [ %.pre9.i.i, %bb.ea ], [ 0, %bb.dz ]
   %i.aok = icmp sgt i64 %i.aoh, 0
   br i1 %i.aok, label %.lr.ph.i.i.i.i.preheader.i.i.i.i.i.i, label %_ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj16EEC2ISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPS3_St6vectorIS3_SaIS3_EEEEEvEET_SF_.exit
 
 .lr.ph.i.i.i.i.preheader.i.i.i.i.i.i:             ; preds = %bb.eb
-  %85 = zext i32 %i.aoj to i64
-  %i.aol = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %85 ; 2 uses
+  %i.aol = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %86 ; 2 uses
   %xtraiter = and i64 %i.aoh, 7                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol

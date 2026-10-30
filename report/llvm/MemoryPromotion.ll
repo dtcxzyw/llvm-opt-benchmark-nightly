@@ -204,11 +204,13 @@ _ZN4llvm15SmallVectorImplIN4mlir5ValueEE6appendEmS2_.exit.i63: ; preds = %.lr.ph
   br label %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68thread-pre-split
 
 _ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68thread-pre-split: ; preds = %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit55, %.sink.split.i64
+  %22 = icmp eq i64 %i.g, 0
   %.pre = load i32, ptr %i.i, align 8, !tbaa !46
   br label %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68
 
 _ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68: ; preds = %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68thread-pre-split, %bb.a
   %i.cf = phi i32 [ %.pre, %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68thread-pre-split ], [ %.pre117, %bb.a ] ; 2 uses
+  %.not7.i.i.i.i = phi i1 [ %22, %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68thread-pre-split ], [ false, %bb.a ]
   %i.cg = zext i32 %i.cf to i64
   %i.ch = add i64 %i.g, %i.cg                     ; 2 uses
   %i.ci = load i32, ptr %i.j, align 4, !tbaa !47
@@ -223,7 +225,6 @@ bb.l:                                             ; preds = %_ZN4llvm15SmallVect
 
 _ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE28reserveForParamAndGetAddressERS2_m.exit.i: ; preds = %bb.l, %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68
   %i.ck = phi i32 [ %i.cf, %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6resizeEmS2_.exit68 ], [ %.pre.i70, %bb.l ] ; 2 uses
-  %.not7.i.i.i.i = icmp eq i64 %i.g, 0
   br i1 %.not7.i.i.i.i, label %_ZN4llvm15SmallVectorImplIN4mlir5ValueEE6appendEmS2_.exit, label %.lr.ph.preheader.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE28reserveForParamAndGetAddressERS2_m.exit.i

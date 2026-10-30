@@ -202,11 +202,13 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 
 bb.e:                                             ; preds = %.noexc44
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 24
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !141
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !141  ; 2 uses
+  %8 = icmp eq ptr %i.u, null
   br label %_ZNK4cvc57context9CDHashMapISt4pairINS_8internal12NodeTemplateILb1EEENS4_ILb0EEEEjNS3_16PairHashFunctionIS6_S6_St4hashIS6_ESA_EEE4findERKS7_.exit
 
 _ZNK4cvc57context9CDHashMapISt4pairINS_8internal12NodeTemplateILb1EEENS4_ILb0EEEEjNS3_16PairHashFunctionIS6_S6_St4hashIS6_ESA_EEE4findERKS7_.exit: ; preds = %bb.e, %.noexc44
-  %.sroa.04.0.i.a = phi ptr [ %i.u, %bb.e ], [ null, %.noexc44 ] ; 2 uses
+  %.sroa.04.0.i = phi i1 [ %8, %bb.e ], [ true, %.noexc44 ]
+  %.sroa.04.0.i.a = phi ptr [ %i.u, %bb.e ], [ null, %.noexc44 ]
   %i.v = load ptr, ptr %4, align 8, !tbaa !111    ; 3 uses
   %i.w = load i64, ptr %i.v, align 8              ; 3 uses
   %i.x = and i64 %i.w, 1152920405095219200
@@ -235,8 +237,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.f, %_ZNK4cvc57context9CDHashMapISt4pairINS_8internal12NodeTemplateILb1EEENS4_ILb0EEEEjNS3_16PairHashFunctionIS6_S6_St4hashIS6_ESA_EEE4findERKS7_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  %8 = icmp eq ptr %.sroa.04.0.i.a, null
-  br i1 %8, label %bb.j, label %bb.at
+  br i1 %.sroa.04.0.i, label %bb.j, label %bb.at
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22

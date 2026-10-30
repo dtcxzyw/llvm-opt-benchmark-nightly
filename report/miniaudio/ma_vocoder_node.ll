@@ -205,23 +205,24 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph162, %._crit_edge
   %indvars.iv171 = phi i64 [ 0, %.lr.ph162 ], [ %indvars.iv.next172, %._crit_edge ] ; 7 uses
   %.0151160 = phi double [ 0.000000e+00, %.lr.ph162 ], [ %.1152, %._crit_edge ] ; 3 uses
-  %i.y = fcmp ogt double %.0151160, 0.000000e+00
-  %i.z = fmul double %i.j, %.0151160
-  %.1152 = select i1 %i.y, double %i.z, double 8.000000e+01 ; 5 uses
+  %i.y = fcmp ogt double %.0151160, 0.000000e+00  ; 2 uses
+  %i.z = fmul double %i.j, %.0151160              ; 2 uses
+  %.1152 = select i1 %i.y, double %i.z, double 8.000000e+01 ; 4 uses
   %i.aa = fmul double %i.j, %.1152
   %i.ab = fsub double %i.aa, %.0151160
   %i.ac = fdiv double %i.ab, %.1152               ; 2 uses
   br i1 %.not, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv171 ; 7 uses
-  %i.ad = insertelement <2 x double> poison, double %.1152, i64 0
-  %3 = insertelement <2 x double> %i.ad, double %i.ac, i64 1
-  %4 = fptrunc <2 x double> %3 to <2 x float>
-  %i.ae = fpext <2 x float> %4 to <2 x double>
+  %2 = insertelement <2 x double> poison, double %i.z, i64 0
+  %i.ad = insertelement <2 x double> %2, double %i.ac, i64 1
+  %3 = fptrunc <2 x double> %i.ad to <2 x float>
+  %4 = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv171 ; 7 uses
+  %i.ae = fpext <2 x float> %3 to <2 x double>
   %i.af = fmul <2 x double> %i.ae, <double f0x401921FB54442D18, double f0x3FD62E42FEFA39EF> ; 2 uses
   %i.ag = extractelement <2 x double> %i.af, i64 0
-  %i.ah = fdiv double %i.ag, %i.l
+  %5 = select i1 %i.y, double %i.ag, double f0x407F6A7A2955385E
+  %i.ah = fdiv double %5, %i.l
   %i.ai = fptrunc double %i.ah to float
   %i.aj = fpext float %i.ai to double             ; 3 uses
   %i.ak = tail call double @sin(double noundef %i.aj) #11
@@ -245,9 +246,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bc = insertelement <4 x float> poison, float %i.ax, i64 0
   %i.bd = shufflevector <4 x float> %i.bc, <4 x float> poison, <4 x i32> zeroinitializer
   %i.be = fdiv <4 x float> %i.bb, %i.bd           ; 6 uses
-  store <4 x float> %i.be, ptr %2, align 4, !tbaa !12
+  store <4 x float> %i.be, ptr %4, align 4, !tbaa !12
   %i.bf = fdiv float %i.au, %i.ax                 ; 6 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 16
   store float %i.bf, ptr %i.bg, align 4, !tbaa !25
   br i1 %i.t, label %.lr.ph.preheader, label %.loopexit
 
@@ -257,21 +258,21 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph ], [ 1, %.lr.ph.preheader ] ; 5 uses
   %niter = phi i64 [ %niter.next.3, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %i.bh = getelementptr inbounds nuw [36 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %i.bh = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   store <4 x float> %i.be, ptr %i.bh, align 4, !tbaa !12
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
   store float %i.bf, ptr %i.bi, align 4, !tbaa !25
-  %i.bj = getelementptr inbounds nuw [36 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %i.bj = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 36
   store <4 x float> %i.be, ptr %i.bk, align 4, !tbaa !12
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bj, i64 52
   store float %i.bf, ptr %i.bl, align 4, !tbaa !25
-  %i.bm = getelementptr inbounds nuw [36 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %i.bm = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 72
   store <4 x float> %i.be, ptr %i.bn, align 4, !tbaa !12
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 88
   store float %i.bf, ptr %i.bo, align 4, !tbaa !25
-  %i.bp = getelementptr inbounds nuw [36 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %i.bp = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 108
   store <4 x float> %i.be, ptr %i.bq, align 4, !tbaa !12
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 124
@@ -292,7 +293,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
   %indvars.iv.epil = phi i64 [ %indvars.iv.next.epil, %.lr.ph.epil ], [ %indvars.iv.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
-  %i.bs = getelementptr inbounds nuw [36 x i8], ptr %2, i64 %indvars.iv.epil ; 2 uses
+  %i.bs = getelementptr inbounds nuw [36 x i8], ptr %4, i64 %indvars.iv.epil ; 2 uses
   store <4 x float> %i.be, ptr %i.bs, align 4, !tbaa !12
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   store float %i.bf, ptr %i.bt, align 4, !tbaa !25

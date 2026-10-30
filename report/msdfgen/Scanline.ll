@@ -202,11 +202,18 @@ bb.d:                                             ; preds = %_ZNK7msdfgen8Scanli
   %i.ab = zext nneg i32 %storemerge.i.i to i64
   %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.ab
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
-  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !17
+  %i.ae = load i32, ptr %i.ad, align 8, !tbaa !17 ; 4 uses
+  %3 = icmp slt i32 %i.ae, 0
+  %4 = icmp sgt i32 %i.ae, 0
+  %5 = trunc i32 %i.ae to i1
+  %6 = icmp ne i32 %i.ae, 0
   br label %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit
 
 _ZNK7msdfgen8Scanline16sumIntersectionsEd.exit:   ; preds = %bb.a, %_ZNK7msdfgen8Scanline6moveToEd.exit.thread6.i, %_ZNK7msdfgen8Scanline6moveToEd.exit.i, %bb.d
-  %.0.i = phi i32 [ %i.ae, %bb.d ], [ 0, %_ZNK7msdfgen8Scanline6moveToEd.exit.i ], [ 0, %_ZNK7msdfgen8Scanline6moveToEd.exit.thread6.i ], [ 0, %bb.a ] ; 4 uses
+  %.0.i = phi i1 [ %3, %bb.d ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.i ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.thread6.i ], [ false, %bb.a ]
+  %7 = phi i1 [ %4, %bb.d ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.i ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.thread6.i ], [ false, %bb.a ]
+  %8 = phi i1 [ %5, %bb.d ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.i ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.thread6.i ], [ false, %bb.a ]
+  %9 = phi i1 [ %6, %bb.d ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.i ], [ false, %_ZNK7msdfgen8Scanline6moveToEd.exit.thread6.i ], [ false, %bb.a ]
   switch i32 %2, label %_ZN7msdfgen17interpretFillRuleEiNS_8FillRuleE.exit [
     i32 0, label %bb.e
     i32 1, label %bb.f
@@ -215,23 +222,19 @@ _ZNK7msdfgen8Scanline16sumIntersectionsEd.exit:   ; preds = %bb.a, %_ZNK7msdfgen
   ]
 
 bb.e:                                             ; preds = %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit
-  %3 = icmp ne i32 %.0.i, 0
   br label %_ZN7msdfgen17interpretFillRuleEiNS_8FillRuleE.exit
 
 bb.f:                                             ; preds = %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit
-  %4 = trunc i32 %.0.i to i1
   br label %_ZN7msdfgen17interpretFillRuleEiNS_8FillRuleE.exit
 
 bb.g:                                             ; preds = %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit
-  %5 = icmp sgt i32 %.0.i, 0
   br label %_ZN7msdfgen17interpretFillRuleEiNS_8FillRuleE.exit
 
 bb.h:                                             ; preds = %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit
-  %6 = icmp slt i32 %.0.i, 0
   br label %_ZN7msdfgen17interpretFillRuleEiNS_8FillRuleE.exit
 
 _ZN7msdfgen17interpretFillRuleEiNS_8FillRuleE.exit: ; preds = %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit, %bb.e, %bb.f, %bb.g, %bb.h
-  %.0.i2 = phi i1 [ %6, %bb.h ], [ %3, %bb.e ], [ %4, %bb.f ], [ %5, %bb.g ], [ false, %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit ]
+  %.0.i2 = phi i1 [ %.0.i, %bb.h ], [ %9, %bb.e ], [ %8, %bb.f ], [ %7, %bb.g ], [ false, %_ZNK7msdfgen8Scanline16sumIntersectionsEd.exit ]
   ret i1 %.0.i2
 }
 

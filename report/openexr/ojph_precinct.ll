@@ -205,14 +205,15 @@ bb.ar:                                            ; preds = %bb.ap, %._ZN4ojph5l
   %.ph438 = phi i32 [ %i.og, %bb.ap ], [ %.pre.i282, %._ZN4ojph5localL7bb_readEPNS0_12bit_read_bufE.exit_crit_edge.i280 ]
   %i.or = add nsw i32 %.ph, -1                    ; 2 uses
   store i32 %i.or, ptr %i.p, align 4, !tbaa !60
-  %i.os = lshr i32 %.ph438, %i.or                 ; 2 uses
-  %12 = trunc i32 %i.os to i1
-  %13 = trunc i32 %i.os to i8
-  %14 = and i8 %13, 1
+  %i.os = lshr i32 %.ph438, %i.or
+  %.fr474 = freeze i32 %i.os
+  %12 = and i32 %.fr474, 1                        ; 2 uses
+  %13 = icmp eq i32 %12, 0
+  %14 = trunc nuw nsw i32 %12 to i8
   %i.ot = xor i8 %14, 1
   store i8 %i.ot, ptr %i.nk, align 1, !tbaa !41
   store i8 1, ptr %i.nu, align 1, !tbaa !41
-  br i1 %12, label %.thread443, label %.thread447
+  br i1 %13, label %.thread447, label %.thread443
 
 .thread443:                                       ; preds = %bb.ak, %bb.ar
   %.not218 = icmp eq i32 %i.my, 0

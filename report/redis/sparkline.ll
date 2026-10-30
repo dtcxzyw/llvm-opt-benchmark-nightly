@@ -30,11 +30,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call noalias ptr @zstrdup(ptr noundef nonnull %2) #9
+  %i.d = tail call noalias ptr @zstrdup(ptr noundef nonnull %2) #9 ; 2 uses
+  %3 = icmp eq ptr %i.d, null
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %i.e = phi ptr [ %i.d, %bb.c ], [ null, %bb.b ], [ null, %bb.a ] ; 2 uses
+  %.not = phi i1 [ %3, %bb.c ], [ true, %bb.b ], [ true, %bb.a ]
+  %i.e = phi ptr [ %i.d, %bb.c ], [ null, %bb.b ], [ null, %bb.a ]
   %i.f = load i32, ptr %0, align 8, !tbaa !18     ; 2 uses
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.e, label %bb.f
@@ -82,7 +84,6 @@ bb.j:                                             ; preds = %bb.g, %bb.i, %bb.h,
   store ptr %i.e, ptr %i.y, align 8, !tbaa !25
   %i.z = add nsw i32 %i.v, 1
   store i32 %i.z, ptr %0, align 8, !tbaa !18
-  %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j

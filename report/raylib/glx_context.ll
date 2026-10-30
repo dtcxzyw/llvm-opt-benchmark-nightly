@@ -204,7 +204,7 @@ declare void @_glfwPlatformFreeModule(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 0, 2) i32 @_glfwCreateContextGLX(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [40 x i32], align 16              ; 11 uses
+  %i.a = alloca [40 x i32], align 16              ; 12 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -344,12 +344,18 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %.sink.split, %bb.r
+  %.088 = phi i32 [ 2, %bb.r ], [ 4, %.sink.split ]
+  %3 = phi i64 [ 1, %bb.r ], [ 3, %.sink.split ]
+  %4 = phi i64 [ 0, %bb.r ], [ 2, %.sink.split ]
   %.088.a = phi i32 [ 0, %bb.r ], [ 2, %.sink.split ]
   %i.an = or disjoint i32 %spec.select110, 4
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.q
-  %.189.a = phi i32 [ %.088.a, %bb.t ], [ 0, %bb.q ] ; 4 uses
+  %.189 = phi i32 [ %.088, %bb.t ], [ 2, %bb.q ]
+  %5 = phi i64 [ %3, %bb.t ], [ 1, %bb.q ]
+  %6 = phi i64 [ %4, %bb.t ], [ 0, %bb.q ]
+  %.189.a = phi i32 [ %.088.a, %bb.t ], [ 0, %bb.q ] ; 2 uses
   %.3 = phi i32 [ %i.an, %bb.t ], [ %spec.select110, %bb.q ] ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ap = load i32, ptr %i.ao, align 4            ; 2 uses
@@ -370,16 +376,14 @@ bb.w:                                             ; preds = %bb.v
 
 .sink.split117:                                   ; preds = %bb.v, %bb.w
   %.sink118 = phi i32 [ 8344, %bb.w ], [ 0, %bb.v ]
-  %3 = zext nneg i32 %.189.a to i64
-  %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %3 ; 2 uses
+  %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %6
   store i32 8343, ptr %i.at, align 4
-  %4 = add nuw nsw i32 %.189.a, 2
-  %5 = getelementptr inbounds nuw i8, ptr %i.at, i64 4
-  store i32 %.sink118, ptr %5, align 4
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %5
+  store i32 %.sink118, ptr %7, align 4
   br label %bb.x
 
 bb.x:                                             ; preds = %.sink.split117, %bb.v, %bb.u
-  %.290 = phi i32 [ %.189.a, %bb.v ], [ %.189.a, %bb.u ], [ %4, %.sink.split117 ] ; 3 uses
+  %.290 = phi i32 [ %.189.a, %bb.v ], [ %.189.a, %bb.u ], [ %.189, %.sink.split117 ] ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.av = load i32, ptr %i.au, align 8
   %i.aw = icmp ne i32 %i.av, 0

@@ -202,7 +202,7 @@ _RNvMNtNtCs5GOyS9hQAaF_13futures_timer6native5delayNtB2_5Delay5reset.exit: ; pre
   call void @_RNvXNtNtCsexYYUdYSQU6_5alloc3vec14spec_from_iterINtB4_3VecTNtCsbli3iz7XG76_9multiaddr9MultiaddrNtNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v26client9behaviour11AddressInfoEEINtB2_12SpecFromIterBU_INtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB38_6filter6FilterINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterBV_B1v_ENCNvMs1_B1x_NtB1x_9Behaviour19untested_candidates0ENCB5f_s_0EE9from_iterCsieOd0lErO6i_16autonatv2_client(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.m), !noalias !3141
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !3140
   %i.bs = load ptr, ptr %i.ag, align 8, !noalias !3140, !nonnull !12, !noundef !12 ; 5 uses
-  %i.bt = load i64, ptr %i.ah, align 8, !noalias !3140, !noundef !12 ; 7 uses
+  %i.bt = load i64, ptr %i.ah, align 8, !noalias !3140, !noundef !12 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !3142
   store ptr %i.a, ptr %i.e, align 8, !noalias !3142
   %i.bu = icmp samesign ult i64 %i.bt, 2
@@ -227,8 +227,8 @@ bb.m:                                             ; preds = %bb.ac, %bb.aa, %bb.
           to label %common.resume unwind label %bb.af, !noalias !3141
 
 thread-pre-split.thread.i.i:                      ; preds = %bb.l, %bb.k
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !3142
   %3 = icmp ult i64 %i.bt, 164703072086692426
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !3142
   call void @llvm.assume(i1 %3)
   br label %_RNvMs1_NtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v26client9behaviourNtB5_9Behaviour19untested_candidatesCsieOd0lErO6i_16autonatv2_client.exit.i
 
@@ -403,6 +403,8 @@ bb.af:                                            ; preds = %bb.m
 
 _RNvMs1_NtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v26client9behaviourNtB5_9Behaviour19untested_candidatesCsieOd0lErO6i_16autonatv2_client.exit.i: ; preds = %bb.ad, %bb.y, %bb.x, %_RNCNvMs1_NtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v26client9behaviourNtB7_9Behaviour19untested_candidatess2_0CsieOd0lErO6i_16autonatv2_client.exit.i.i, %thread-pre-split.i.i, %thread-pre-split.thread.i.i
   %i.do = load i64, ptr %i.n, align 8, !range !23, !noalias !3140, !noundef !12
+  %4 = icmp samesign ult i64 %i.bt, 164703072086692426
+  call void @llvm.assume(i1 %4)
   %i.dp = getelementptr inbounds nuw [56 x i8], ptr %i.bs, i64 %i.bt
   %i.dq = load i64, ptr %i.ap, align 8, !alias.scope !3144, !noundef !12 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !3140

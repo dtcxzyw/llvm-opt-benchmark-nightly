@@ -204,9 +204,11 @@ bb.d:                                             ; preds = %_RNvMs4_NtCscdodAO9
   %i.aa = shl nuw nsw i64 %i.t, 3
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.y, ptr nonnull readonly align 8 %i.s, i64 %i.aa, i1 false), !noalias !75
   store i64 %i.t, ptr %i.j, align 8, !alias.scope !74, !noalias !67
+  %2 = add nuw i64 %i.t, 1
   br label %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecRNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBL_.exit.i.i
 
 _RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecRNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBL_.exit.i.i: ; preds = %bb.d, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i.i.i
+  %3 = phi i64 [ 1, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i.i.i ], [ %2, %bb.d ]
   %i.ab = icmp eq i64 %i.t, %i.w
   br i1 %i.ab, label %bb.e, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map4IterNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueNtB1Q_14LastCacheStateENCNvMs0_B1Q_NtB1Q_9LastCache17to_record_batchess0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1U_.exit
 
@@ -238,8 +240,7 @@ _RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB5_3MapINtNtNtNtCs2AWtUsOy
   %i.ae = phi ptr [ %.pre.i.i, %._crit_edge.i.i ], [ %i.y, %_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VecRNtNtNtCsidB8gjke19X_15influxdb3_cache10last_cache5cache8KeyValueENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneBL_.exit.i.i ]
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.t
   store ptr %i.n, ptr %i.af, align 8, !noalias !77
-  %2 = add nuw i64 %i.t, 1
-  store i64 %2, ptr %i.j, align 8, !alias.scope !76, !noalias !67
+  store i64 %3, ptr %i.j, align 8, !alias.scope !76, !noalias !67
   %.sroa.0.0.copyload4 = load i64, ptr %i.b, align 8, !noalias !66 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false), !noalias !66
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !67
@@ -642,7 +643,8 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8g
 
 .lr.ph.i.i:                                       ; preds = %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i, %_RNvXsC_NtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_exprNtB5_14LexRequirementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i
   %.sroa.015.044.i.i = phi ptr [ %i.ak, %_RNvXsC_NtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_exprNtB5_14LexRequirementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ], [ %.val2.i.i, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i ] ; 4 uses
-  %.sroa.7.043.i.i.a = phi i64 [ %i.al, %_RNvXsC_NtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_exprNtB5_14LexRequirementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ], [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i ] ; 7 uses
+  %.sroa.7.043.i.i = phi i1 [ false, %_RNvXsC_NtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_exprNtB5_14LexRequirementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ], [ true, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i ]
+  %.sroa.7.043.i.i.a = phi i64 [ %i.al, %_RNvXsC_NtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_exprNtB5_14LexRequirementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ], [ 0, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i ] ; 6 uses
   %.sroa.10.042.i.i = phi i64 [ %i.ai, %_RNvXsC_NtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_exprNtB5_14LexRequirementNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ], [ %i.ac, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsidB8gjke19X_15influxdb3_cache.exit.i.i ]
   %i.ai = add i64 %.sroa.10.042.i.i, -1           ; 2 uses
   %i.aj = icmp eq ptr %.sroa.015.044.i.i, %i.ag
@@ -742,8 +744,7 @@ bb.k:                                             ; preds = %_RNvXso_NtCscdodAO9
   %lpad.loopexit.split-lp149 = landingpad { ptr, i32 }
           cleanup
   store i64 %.sroa.7.043.i.i.a, ptr %i.u, align 8, !noalias !1080
-  %3 = icmp eq i64 %.sroa.7.043.i.i.a, 0
-  br i1 %3, label %_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_expr14LexRequirementENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsidB8gjke19X_15influxdb3_cache.exit.i, label %.lr.ph144
+  br i1 %.sroa.7.043.i.i, label %_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCs3bxdDoT6cu5_31datafusion_physical_expr_common9sort_expr14LexRequirementENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsidB8gjke19X_15influxdb3_cache.exit.i, label %.lr.ph144
 
 bb.l:                                             ; preds = %.lr.ph144
   %i.bn = icmp eq i64 %i.bp, %.sroa.7.043.i.i.a
@@ -1146,8 +1147,8 @@ bb.h:                                             ; preds = %.noexc
 
 bb.i:                                             ; preds = %.noexc9
   %i.x = extractvalue { ptr, ptr } %i.v, 1        ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1789
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
   %i.y = load i64, ptr %.sroa.64.0..sroa_idx, align 8, !alias.scope !1791, !noundef !4 ; 5 uses
   %i.z = icmp ult i64 %i.y, 576460752303423488
   call void @llvm.assume(i1 %i.z)
@@ -1297,8 +1298,8 @@ bb.h:                                             ; preds = %.noexc
 
 bb.i:                                             ; preds = %.noexc9
   %i.ab = extractvalue { ptr, ptr } %i.z, 1       ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1818
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %i.ac = load i64, ptr %.sroa.64.0..sroa_idx, align 8, !alias.scope !1820, !noundef !4 ; 5 uses
   %i.ad = icmp ult i64 %i.ac, 576460752303423488
   call void @llvm.assume(i1 %i.ad)

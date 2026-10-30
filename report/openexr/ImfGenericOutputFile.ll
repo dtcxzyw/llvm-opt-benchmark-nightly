@@ -88,15 +88,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.i = call noundef zeroext i1 @_ZNK7Imf_3_46Header18hasTileDescriptionEv(ptr noundef nonnull align 8 dereferenceable(49) %2)
+  %i.i = call noundef zeroext i1 @_ZNK7Imf_3_46Header18hasTileDescriptionEv(ptr noundef nonnull align 8 dereferenceable(49) %2) ; 2 uses
+  %spec.select = select i1 %i.i, i32 1538, i32 1026
   %spec.select.a = select i1 %i.i, i32 514, i32 2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0.a = phi i32 [ %spec.select.a, %bb.c ], [ 2050, %bb.b ] ; 2 uses
+  %.0 = phi i32 [ %spec.select, %bb.c ], [ 3074, %bb.b ]
+  %.0.a = phi i32 [ %spec.select.a, %bb.c ], [ 2050, %bb.b ]
   %i.j = call noundef zeroext i1 @_ZN7Imf_3_413usesLongNamesERKNS_6HeaderE(ptr noundef nonnull align 8 dereferenceable(49) %2)
-  %3 = or disjoint i32 %.0.a, 1024
-  %spec.select9 = select i1 %i.j, i32 %3, i32 %.0.a
+  %spec.select9 = select i1 %i.j, i32 %.0, i32 %.0.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 %spec.select9, ptr %i.a, align 4
   %i.k = load ptr, ptr %1, align 8, !tbaa !10

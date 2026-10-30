@@ -31,14 +31,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.f = tail call { i64, ptr } @_RNvNtCsgQ7e0lqRvgo_7memmap22os8file_len(i32 noundef %.val.i), !noalias !13 ; 2 uses
   %i.g = extractvalue { i64, ptr } %i.f, 0
-  %i.h = extractvalue { i64, ptr } %i.f, 1        ; 2 uses
+  %i.h = extractvalue { i64, ptr } %i.f, 1        ; 3 uses
   %i.i = ptrtoint ptr %i.h to i64                 ; 2 uses
   %i.j = trunc nuw i64 %i.g to i1
   br i1 %i.j, label %bb.e, label %bb.f
 
 bb.d:                                             ; preds = %bb.g, %bb.b
   %.sroa.01.0.i = phi i64 [ %i.e, %bb.b ], [ %i.p, %bb.g ]
-  %i.k = tail call { i64, ptr } @_RNvMs0_CsgQ7e0lqRvgo_7memmap2NtB5_11MmapOptions12validate_len(i64 noundef %.sroa.01.0.i), !noalias !13
+  %i.k = tail call { i64, ptr } @_RNvMs0_CsgQ7e0lqRvgo_7memmap2NtB5_11MmapOptions12validate_len(i64 noundef %.sroa.01.0.i), !noalias !13 ; 2 uses
+  %3 = extractvalue { i64, ptr } %i.k, 1
   br label %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -56,19 +57,19 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.d
 
 bb.h:                                             ; preds = %bb.f
-  %i.q = tail call noundef nonnull ptr @_RINvMNtNtCsexYYUdYSQU6_5alloc2io5errorNtNtNtCskKLDkoKarTP_4core2io5error5Error3newReECsG258MDvU3F_3std(i8 noundef 21, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 39) #14, !noalias !13
+  %i.q = tail call noundef nonnull ptr @_RINvMNtNtCsexYYUdYSQU6_5alloc2io5errorNtNtNtCskKLDkoKarTP_4core2io5error5Error3newReECsG258MDvU3F_3std(i8 noundef 21, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 39) #14, !noalias !13 ; 2 uses
   %i.r = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.q, 1
   br label %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit
 
 _RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit: ; preds = %bb.d, %bb.e, %bb.h
-  %.merged.i.a = phi { i64, ptr } [ %i.k, %bb.d ], [ %i.l, %bb.e ], [ %i.r, %bb.h ] ; 2 uses
+  %.merged.i = phi ptr [ %3, %bb.d ], [ %i.h, %bb.e ], [ %i.q, %bb.h ] ; 2 uses
+  %.merged.i.a = phi { i64, ptr } [ %i.k, %bb.d ], [ %i.l, %bb.e ], [ %i.r, %bb.h ]
   %i.s = extractvalue { i64, ptr } %.merged.i.a, 0
-  %3 = extractvalue { i64, ptr } %.merged.i.a, 1  ; 2 uses
   %i.t = trunc nuw i64 %i.s to i1
   br i1 %i.t, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit
-  %i.u = ptrtoint ptr %3 to i64
+  %i.u = ptrtoint ptr %.merged.i to i64
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.w = load i64, ptr %i.v, align 8, !noundef !5
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 27
@@ -92,7 +93,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit
-  %.sink = phi ptr [ %3, %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit ], [ %i.ag, %bb.i ], [ %i.ag, %bb.j ]
+  %.sink = phi ptr [ %.merged.i, %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit ], [ %i.ag, %bb.i ], [ %i.ag, %bb.j ]
   %storemerge.sink = phi i64 [ 1, %_RINvMs0_CsgQ7e0lqRvgo_7memmap2NtB6_11MmapOptions7get_lenRNtNtCsG258MDvU3F_3std2fs4FileECs1yfHPQhS7hZ_13dyldcachedump.exit ], [ 1, %bb.i ], [ 0, %bb.j ]
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sink, ptr %i.ak, align 8

@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   br i1 %.not, label %bb.h, label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.c, %bb.d, %bb.b
-  %.1.ph = phi ptr [ @ft_bitmap_glyph_class, %bb.b ], [ @ft_svg_glyph_class, %bb.d ], [ @ft_outline_glyph_class, %bb.c ], [ %i.e, %bb.e ] ; 3 uses
+bb.f:                                             ; preds = %bb.b, %bb.d, %bb.c, %bb.e
+  %.1.ph = phi ptr [ %i.e, %bb.e ], [ @ft_bitmap_glyph_class, %bb.b ], [ @ft_svg_glyph_class, %bb.d ], [ @ft_outline_glyph_class, %bb.c ] ; 3 uses
   %i.f = load ptr, ptr %0, align 8, !tbaa !40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   store ptr null, ptr %2, align 8, !tbaa !61
@@ -273,7 +273,7 @@ bb.g:                                             ; preds = %bb.d
   br i1 %.not.i, label %FT_New_Glyph.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d
-  %i.g = phi ptr [ @ft_bitmap_glyph_class, %bb.d ], [ @ft_svg_glyph_class, %bb.f ], [ @ft_outline_glyph_class, %bb.e ], [ %i.f, %bb.g ] ; 6 uses
+  %i.g = phi ptr [ %i.f, %bb.g ], [ @ft_bitmap_glyph_class, %bb.d ], [ @ft_svg_glyph_class, %bb.f ], [ @ft_outline_glyph_class, %bb.e ] ; 6 uses
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.i = load i64, ptr %i.g, align 8, !tbaa !63
@@ -538,10 +538,14 @@ FT_Glyph_Transform.exit:                          ; preds = %bb.j, %bb.i, %bb.h,
 
 bb.k:                                             ; preds = %FT_Glyph_Transform.exit
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !28
-  %i.ab = call i32 @FT_Render_Glyph_Internal(ptr noundef %i.aa, ptr noundef nonnull %4, i32 noundef %1) #5
+  %i.ab = call i32 @FT_Render_Glyph_Internal(ptr noundef %i.aa, ptr noundef nonnull %4, i32 noundef %1) #5 ; 2 uses
+  %7 = icmp eq i32 %i.ab, 0                       ; 2 uses
+  %.not76 = xor i1 %7, true
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %FT_Glyph_Transform.exit
+  %.0 = phi i1 [ false, %FT_Glyph_Transform.exit ], [ %7, %bb.k ]
+  %8 = phi i1 [ true, %FT_Glyph_Transform.exit ], [ %.not76, %bb.k ]
   %.0.a = phi i32 [ %i.z, %FT_Glyph_Transform.exit ], [ %i.ab, %bb.k ] ; 2 uses
   %i.ac = icmp eq ptr %i.d, @ft_svg_glyph_class
   br i1 %i.ac, label %bb.m, label %bb.n
@@ -583,8 +587,7 @@ FT_Glyph_Transform.exit67:                        ; preds = %bb.o, %bb.p, %bb.q
   br label %bb.r
 
 bb.r:                                             ; preds = %FT_Glyph_Transform.exit67, %bb.n
-  %.not60 = icmp eq i32 %.0.a, 0
-  br i1 %.not60, label %bb.s, label %bb.v
+  br i1 %.0, label %bb.s, label %9
 
 bb.s:                                             ; preds = %bb.r
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 192
@@ -607,7 +610,10 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   store ptr %i.q, ptr %0, align 8, !tbaa !61
   br label %.thread
 
-bb.v:                                             ; preds = %bb.r
+9:                                                ; preds = %bb.r
+  br i1 %8, label %bb.v, label %.thread
+
+bb.v:                                             ; preds = %9
   %i.at = load ptr, ptr %i.q, align 8, !tbaa !28
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !40
   %i.av = load ptr, ptr %i.s, align 8, !tbaa !59
@@ -624,8 +630,8 @@ FT_Done_Glyph.exit:                               ; preds = %bb.v, %bb.w
   call void @ft_mem_free(ptr noundef %i.au, ptr noundef nonnull %i.q) #5
   br label %.thread
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %bb.e, %ft_new_glyph.exit, %bb.u, %bb.d, %FT_Done_Glyph.exit
-  %.175 = phi i32 [ 0, %bb.d ], [ %.0.a, %FT_Done_Glyph.exit ], [ 6, %bb.a ], [ 6, %bb.b ], [ 6, %bb.c ], [ 6, %bb.e ], [ 0, %bb.u ], [ %i.r, %ft_new_glyph.exit ]
+.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %bb.e, %ft_new_glyph.exit, %bb.u, %bb.d, %FT_Done_Glyph.exit, %9
+  %.175 = phi i32 [ %.0.a, %9 ], [ %.0.a, %FT_Done_Glyph.exit ], [ 6, %bb.a ], [ 6, %bb.b ], [ 6, %bb.c ], [ 6, %bb.e ], [ 0, %bb.u ], [ %i.r, %ft_new_glyph.exit ], [ 0, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   ret i32 %.175

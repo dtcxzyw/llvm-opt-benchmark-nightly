@@ -204,11 +204,13 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = lshr i32 %i.ac, 6
   %i.ae = zext nneg i32 %i.ad to i64
   %i.af = add i64 %i.v, 1
-  %i.ag = add i64 %i.af, %i.ae
+  %1 = add i64 %i.af, %i.ae                       ; 2 uses
+  %i.ag = add i64 %1, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  %.0.a = phi i64 [ 0, %bb.b ], [ %i.ag, %bb.c ], [ 0, %bb.a ] ; 3 uses
+  %.0 = phi i64 [ 1, %bb.b ], [ %i.ag, %bb.c ], [ 1, %bb.a ]
+  %.0.a = phi i64 [ 0, %bb.b ], [ %1, %bb.c ], [ 0, %bb.a ] ; 2 uses
   %i.ah = and i32 %i.m, 2
   %.not15 = icmp eq i32 %i.ah, 0
   br i1 %.not15, label %bb.g, label %bb.e
@@ -233,8 +235,7 @@ bb.f:                                             ; preds = %bb.e
   %i.av = add nuw nsw i32 %i.au, 73
   %i.aw = lshr i32 %i.av, 6
   %i.ax = zext nneg i32 %i.aw to i64
-  %1 = add i64 %.0.a, 1
-  %i.ay = add i64 %1, %i.ao
+  %i.ay = add i64 %.0, %i.ao
   %i.az = add i64 %i.ay, %i.ax
   br label %bb.g
 

@@ -203,7 +203,7 @@ ReplicateValue.exit:                              ; preds = %.lr.ph, %ReplicateV
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gh, i64 8
   store i32 %.sroa.0.0.insert.insert.i, ptr %i.gw, align 2
   store i32 %.sroa.0.0.insert.insert.i, ptr %i.gh, align 2
-  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 2 uses
+  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 3 uses
   %i.gx = add nuw nsw i64 %.28290, 128            ; 2 uses
   %i.gy = add nsw i32 %.07691, -1                 ; 2 uses
   %.not84 = icmp eq i32 %i.gy, 0
@@ -215,18 +215,18 @@ ReplicateValue.exit:                              ; preds = %.lr.ph, %ReplicateV
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader.preheader
   %.282.lcssa = phi i64 [ 0, %.preheader.preheader ], [ %i.gx, %._crit_edge.loopexit ] ; 2 uses
-  %.2.lcssa.a = phi i32 [ 0, %.preheader.preheader ], [ %i.gz, %._crit_edge.loopexit ] ; 2 uses
+  %.2.lcssa = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next100, %._crit_edge.loopexit ]
+  %.2.lcssa.a = phi i32 [ 0, %.preheader.preheader ], [ %i.gz, %._crit_edge.loopexit ]
   %i.ha = load i16, ptr %i.h, align 2, !tbaa !9   ; 2 uses
   %.not8489.1 = icmp eq i16 %i.ha, 0
   br i1 %.not8489.1, label %._crit_edge.1, label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %._crit_edge
   %i.hb = zext i16 %i.ha to i32
-  %3 = sext i32 %.2.lcssa.a to i64
   br label %ReplicateValue.exit.1
 
 ReplicateValue.exit.1:                            ; preds = %ReplicateValue.exit.1, %.lr.ph.1
-  %indvars.iv99.1 = phi i64 [ %3, %.lr.ph.1 ], [ %indvars.iv.next100.1, %ReplicateValue.exit.1 ] ; 2 uses
+  %indvars.iv99.1 = phi i64 [ %.2.lcssa, %.lr.ph.1 ], [ %indvars.iv.next100.1, %ReplicateValue.exit.1 ] ; 2 uses
   %.07691.1 = phi i32 [ %i.hb, %.lr.ph.1 ], [ %i.hq, %ReplicateValue.exit.1 ]
   %.28290.1 = phi i64 [ %.282.lcssa, %.lr.ph.1 ], [ %i.hp, %ReplicateValue.exit.1 ] ; 2 uses
   %i.hc = getelementptr inbounds [4 x i8], ptr %i.a, i64 %indvars.iv99.1
@@ -629,11 +629,13 @@ bb.i:                                             ; preds = %bb.h
   br i1 %exitcond.not, label %NextTableBitSize.exit.us, label %bb.h, !llvm.loop !19
 
 NextTableBitSize.exit.us.split.loop.exit:         ; preds = %bb.h
-  %i.bg = trunc nsw i64 %indvars.iv192 to i32
+  %i.bg = trunc nsw i64 %indvars.iv192 to i32     ; 2 uses
+  %4 = and i32 %i.bg, 255
   br label %NextTableBitSize.exit.us
 
 NextTableBitSize.exit.us:                         ; preds = %bb.i, %NextTableBitSize.exit.us.split.loop.exit
-  %.010.i.lcssa.us.a = phi i32 [ %i.bg, %NextTableBitSize.exit.us.split.loop.exit ], [ 15, %bb.i ] ; 2 uses
+  %.010.i.lcssa.us = phi i32 [ %4, %NextTableBitSize.exit.us.split.loop.exit ], [ 15, %bb.i ]
+  %.010.i.lcssa.us.a = phi i32 [ %i.bg, %NextTableBitSize.exit.us.split.loop.exit ], [ 15, %bb.i ]
   %i.bh = sub nsw i32 %.010.i.lcssa.us.a, %1
   %i.bi = shl nuw i32 1, %i.bh                    ; 2 uses
   %i.bj = add nsw i32 %i.bi, %.189150.us
@@ -648,8 +650,7 @@ NextTableBitSize.exit.us:                         ; preds = %bb.i, %NextTableBit
   %i.bs = sub nsw i64 %i.br, %i.bm
   %i.bt = trunc i64 %i.bs to i32
   %.sroa.22.0.insert.ext.i118.us = shl i32 %i.bt, 16
-  %.sroa.0.0.insert.ext.i120.us = and i32 %.010.i.lcssa.us.a, 255
-  %.sroa.0.0.insert.insert.i121.us = or disjoint i32 %.sroa.22.0.insert.ext.i118.us, %.sroa.0.0.insert.ext.i120.us
+  %.sroa.0.0.insert.insert.i121.us = or disjoint i32 %.sroa.22.0.insert.ext.i118.us, %.010.i.lcssa.us
   store i32 %.sroa.0.0.insert.insert.i121.us, ptr %i.bo, align 2
   br label %bb.j
 

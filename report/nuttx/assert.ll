@@ -148,10 +148,13 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.ai = load i32, ptr %i.ae, align 8
   %i.aj = call ptr @nxsched_get_tcb(i32 noundef %i.ai) #9
+  %.fr.i = freeze ptr %i.aj                       ; 2 uses
+  %6 = icmp eq ptr %.fr.i, null
   br label %dump_assert_info.exit
 
 dump_assert_info.exit:                            ; preds = %bb.m, %bb.n, %bb.o
-  %.0.i.a = phi ptr [ %i.aj, %bb.o ], [ null, %bb.n ], [ null, %bb.m ] ; 2 uses
+  %.0.i = phi i1 [ %6, %bb.o ], [ true, %bb.n ], [ true, %bb.m ]
+  %.0.i.a = phi ptr [ %.fr.i, %bb.o ], [ null, %bb.n ], [ null, %bb.m ]
   %i.ak = call i32 @uname(ptr noundef nonnull %4) #10 ; 0 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 21
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 53
@@ -163,9 +166,8 @@ dump_assert_info.exit:                            ; preds = %bb.m, %bb.n, %bb.o
   %.not16.i = icmp eq ptr %0, null
   %i.aq = select i1 %.not16.i, ptr @.str.2, ptr %0
   %i.ar = getelementptr inbounds nuw i8, ptr %i.h, i64 312
-  %.not17.i = icmp eq ptr %.0.i.a, null
   %i.as = getelementptr inbounds nuw i8, ptr %.0.i.a, i64 312
-  %i.at = select i1 %.not17.i, ptr @.str.3, ptr %i.as
+  %i.at = select i1 %.0.i, ptr @.str.3, ptr %i.as
   %i.au = getelementptr inbounds nuw i8, ptr %i.h, i64 112
   %i.av = load ptr, ptr %i.au, align 8
   call void (i32, ptr, ...) @syslog(i32 noundef 1, ptr noundef nonnull @.str.1, ptr noundef nonnull @__FUNCTION__.dump_assert_info, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.aq, i32 noundef %1, ptr noundef nonnull %i.ar, ptr noundef nonnull %i.at, ptr noundef %i.av) #9

@@ -202,12 +202,11 @@ bb.u:                                             ; preds = %bb.t
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !126 ; 3 uses
   %i.bl = ptrtoint ptr %i.bf to i64
   %i.bm = ptrtoint ptr %i.bk to i64
-  %i.bn = sub i64 %i.bl, %i.bm                    ; 2 uses
-  %i.bo = icmp eq ptr %i.bf, %i.bk
-  %2 = ashr exact i64 %i.bn, 3
-  %.0.i.i.i.i = select i1 %i.bo, i64 4, i64 %2    ; 2 uses
-  %3 = shl i64 %.0.i.i.i.i, 4
-  %i.bp = tail call ptr @realloc(ptr noundef %i.bk, i64 noundef %3) #33 ; 4 uses
+  %i.bn = sub i64 %i.bl, %i.bm                    ; 3 uses
+  %i.bo = icmp eq ptr %i.bf, %i.bk                ; 2 uses
+  %2 = shl i64 %i.bn, 1
+  %.0.i.i.i.i = select i1 %i.bo, i64 64, i64 %2
+  %i.bp = tail call ptr @realloc(ptr noundef %i.bk, i64 noundef %.0.i.i.i.i) #33 ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.bp, null
   br i1 %.not.i.i.i.i, label %bb.v, label %_ZN7msgpack2v14zone15finalizer_array11push_expandEPFvPvES3_.exit.i.i.i
 
@@ -221,8 +220,10 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 _ZN7msgpack2v14zone15finalizer_array11push_expandEPFvPvES3_.exit.i.i.i: ; preds = %bb.u
+  %3 = ashr exact i64 %i.bn, 3
+  %4 = select i1 %i.bo, i64 4, i64 %3
   store ptr %i.bp, ptr %i.bj, align 8, !tbaa !126
-  %i.br = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %.0.i.i.i.i
+  %i.br = getelementptr inbounds nuw [16 x i8], ptr %i.bp, i64 %4
   store ptr %i.br, ptr %i.bg, align 8, !tbaa !143
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bn ; 2 uses
   store ptr @_ZN7msgpack2v16detail10decr_countEPv, ptr %i.bs, align 8, !tbaa !128
@@ -530,12 +531,11 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !126  ; 3 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = ptrtoint ptr %i.n to i64
-  %i.q = sub i64 %i.o, %i.p                       ; 2 uses
-  %i.r = icmp eq ptr %i.i, %i.n
-  %1 = ashr exact i64 %i.q, 3
-  %.0.i.i.i.i = select i1 %i.r, i64 4, i64 %1     ; 2 uses
-  %2 = shl i64 %.0.i.i.i.i, 4
-  %i.s = tail call ptr @realloc(ptr noundef %i.n, i64 noundef %2) #33 ; 4 uses
+  %i.q = sub i64 %i.o, %i.p                       ; 3 uses
+  %i.r = icmp eq ptr %i.i, %i.n                   ; 2 uses
+  %1 = shl i64 %i.q, 1
+  %.0.i.i.i.i = select i1 %i.r, i64 64, i64 %1
+  %i.s = tail call ptr @realloc(ptr noundef %i.n, i64 noundef %.0.i.i.i.i) #33 ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.s, null
   br i1 %.not.i.i.i.i, label %bb.d, label %_ZN7msgpack2v14zone15finalizer_array11push_expandEPFvPvES3_.exit.i.i.i
 
@@ -549,8 +549,10 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN7msgpack2v14zone15finalizer_array11push_expandEPFvPvES3_.exit.i.i.i: ; preds = %bb.c
+  %2 = ashr exact i64 %i.q, 3
+  %3 = select i1 %i.r, i64 4, i64 %2
   store ptr %i.s, ptr %i.m, align 8, !tbaa !126
-  %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %.0.i.i.i.i
+  %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %3
   store ptr %i.u, ptr %i.j, align 8, !tbaa !143
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.q ; 2 uses
   store ptr @_ZN7msgpack2v16detail10decr_countEPv, ptr %i.v, align 8, !tbaa !128

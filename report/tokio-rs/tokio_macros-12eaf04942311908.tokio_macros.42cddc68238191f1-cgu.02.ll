@@ -202,23 +202,27 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ak = invoke noundef i32 @_RNvXsa_NtNtCsa5ERaWwhjCQ_10proc_macro6bridge6clientNtB5_11TokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.ai)
-          to label %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i unwind label %bb.r, !noalias !3950
+          to label %.noexc12.i unwind label %bb.r, !noalias !3950 ; 2 uses
 
-_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i: ; preds = %bb.h, %bb.g
-  %storemerge.i.i.i.i.i.i.a = phi i32 [ 0, %bb.g ], [ %i.ak, %bb.h ] ; 2 uses
+.noexc12.i:                                       ; preds = %bb.h
+  %2 = trunc i32 %i.ak to i8
+  %3 = and i32 %i.ak, -256
+  br label %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i
+
+_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i: ; preds = %.noexc12.i, %bb.g
+  %storemerge.i.i.i.i.i.i = phi i8 [ %2, %.noexc12.i ], [ 0, %bb.g ]
+  %storemerge.i.i.i.i.i.i.a = phi i32 [ %3, %.noexc12.i ], [ 0, %bb.g ]
   %.val2.i.i.i.i.i.i.i = load i32, ptr %i.af, align 4, !range !118, !alias.scope !3952, !noundef !76
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.015.065.i, i64 16
   %.val1.i.i.i.i.i.i.i = load i64, ptr %i.al, align 8, !alias.scope !3952
   %i.am = inttoptr i64 %.val1.i.i.i.i.i.i.i to ptr
-  %.sroa.6.sroa.0.0.extract.trunc.i.i.i = trunc i32 %storemerge.i.i.i.i.i.i.a to i8
   %i.an = zext i32 %.val2.i.i.i.i.i.i.i to i64
   %i.ao = shl nuw i64 %i.an, 32
-  %2 = and i32 %storemerge.i.i.i.i.i.i.a, -256
   br label %_RNvXsP_Csfr4kGEjnBfC_11proc_macro2NtB5_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i
 
 _RNvXsP_Csfr4kGEjnBfC_11proc_macro2NtB5_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i: ; preds = %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i, %bb.f
-  %.sroa.6.sroa.3.sroa.0.0.i.i.i = phi i32 [ %2, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ 0, %bb.f ]
-  %.sroa.6.sroa.0.0.i.i.i = phi i8 [ %.sroa.6.sroa.0.0.extract.trunc.i.i.i, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ %.val.i.i.i.i.i, %bb.f ]
+  %.sroa.6.sroa.3.sroa.0.0.i.i.i = phi i32 [ %storemerge.i.i.i.i.i.i.a, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ 0, %bb.f ]
+  %.sroa.6.sroa.0.0.i.i.i = phi i8 [ %storemerge.i.i.i.i.i.i, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ %.val.i.i.i.i.i, %bb.f ]
   %.sroa.8.0.i.i.i = phi i8 [ %i.ah, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ undef, %bb.f ]
   %.sroa.3.0.i.i.i = phi ptr [ %i.am, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ %i.ae, %bb.f ]
   %.sroa.518.4.insert.insert.i = phi i64 [ %i.ao, %_RNvXs1c_Csa5ERaWwhjCQ_10proc_macroNtB6_5GroupNtNtCs3oUPovFnLWP_4core5clone5Clone5clone.exit.i.i.i.i ], [ 1, %bb.f ]

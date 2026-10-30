@@ -204,15 +204,16 @@ bb.d:                                             ; preds = %bb.c
   %i.dc = insertelement <2 x float> <float poison, float 5.000000e-01>, float %i.cw, i64 0
   %i.dd = fmul <2 x float> %i.db, %i.dc
   %.sroa.022.0.vec.insert25.i = insertelement <2 x float> poison, float %i.cy, i64 0
-  %.sroa.022.4.vec.insert27.i = insertelement <2 x float> %.sroa.022.0.vec.insert25.i, float %i.cz, i64 1
+  %.sroa.022.4.vec.insert27.i = insertelement <2 x float> %.sroa.022.0.vec.insert25.i, float %i.cz, i64 1 ; 3 uses
+  %10 = fmul <2 x float> %.sroa.022.4.vec.insert27.i, %.sroa.022.4.vec.insert27.i
   br label %_Z15shortestArcQuatRK9btVector3S1_.exit
 
 _Z15shortestArcQuatRK9btVector3S1_.exit:          ; preds = %bb.c, %bb.d
-  %.sroa.022.0.i.a = phi <2 x float> [ %.sroa.022.4.vec.insert27.i, %bb.d ], [ <float 0.000000e+00, float -1.000000e+00>, %bb.c ] ; 6 uses
+  %.sroa.022.0.i = phi <2 x float> [ %10, %bb.d ], [ <float 0.000000e+00, float 1.000000e+00>, %bb.c ]
+  %.sroa.022.0.i.a = phi <2 x float> [ %.sroa.022.4.vec.insert27.i, %bb.d ], [ <float 0.000000e+00, float -1.000000e+00>, %bb.c ] ; 4 uses
   %.sroa.528.0.i = phi <2 x float> [ %i.dd, %bb.d ], [ zeroinitializer, %bb.c ] ; 4 uses
   %.sroa.0129.0.vec.extract = extractelement <2 x float> %.sroa.022.0.i.a, i64 0 ; 2 uses
-  %foldExtExtBinop215 = fmul <2 x float> %.sroa.022.0.i.a, %.sroa.022.0.i.a
-  %i.de = extractelement <2 x float> %foldExtExtBinop215, i64 1
+  %i.de = extractelement <2 x float> %.sroa.022.0.i, i64 1
   %i.df = tail call float @llvm.fmuladd.f32(float %.sroa.0129.0.vec.extract, float %.sroa.0129.0.vec.extract, float %i.de)
   %.sroa.9.8.vec.extract = extractelement <2 x float> %.sroa.528.0.i, i64 0 ; 2 uses
   %i.dg = tail call float @llvm.fmuladd.f32(float %.sroa.9.8.vec.extract, float %.sroa.9.8.vec.extract, float %i.df)

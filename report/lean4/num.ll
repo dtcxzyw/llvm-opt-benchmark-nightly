@@ -202,16 +202,17 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o
   %i.ao = atomicrmw add ptr %i.aj, i32 -1 monotonic, align 4, !noalias !68 ; 0 uses
-  %.pr = load i32, ptr %i.aj, align 4, !tbaa !16
+  %.pr = load i32, ptr %i.aj, align 4, !tbaa !16  ; 2 uses
+  %4 = icmp eq i32 %.pr, 0
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.n, %bb.p
-  %i.ap = phi i32 [ %i.an, %bb.n ], [ %.pr, %bb.p ] ; 3 uses
+  %.not.i1.i.i.i = phi i1 [ false, %bb.n ], [ %4, %bb.p ]
+  %i.ap = phi i32 [ %i.an, %bb.n ], [ %.pr, %bb.p ] ; 2 uses
   %i.aq = icmp sgt i32 %i.ap, 1
   br i1 %i.aq, label %.critedge18.thread.sink.split.sink.split, label %bb.r, !prof !69
 
 bb.r:                                             ; preds = %bb.q
-  %.not.i1.i.i.i = icmp eq i32 %i.ap, 0
   br i1 %.not.i1.i.i.i, label %.critedge18.thread.sink.split, label %bb.s
 
 bb.s:                                             ; preds = %bb.r

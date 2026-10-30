@@ -204,26 +204,27 @@ begin_hunk_0_@stbcc_init_grid:bb.a
   br i1 %i.asn, label %.lr.ph, label %._crit_edge71
 
 .preheader61:                                     ; preds = %._crit_edge71
-  %4 = icmp sgt i32 %i.ass, 0
-  %i.aso = icmp sgt i32 %i.ast, 0
-  %or.cond113 = and i1 %4, %i.aso
+  %i.aso = icmp sgt i32 %i.ass, 0
+  %or.cond113 = and i1 %i.aso, %5
   br i1 %or.cond113, label %.preheader60, label %._crit_edge77
 
 .lr.ph:                                           ; preds = %.preheader62, %.lr.ph
   %.15670 = phi i32 [ %i.asp, %.lr.ph ], [ 0, %.preheader62 ] ; 2 uses
   tail call void @stbcc__build_clumps_for_cluster(ptr noundef nonnull %0, i32 noundef %.15670, i32 noundef %.15472)
   %i.asp = add nuw nsw i32 %.15670, 1             ; 2 uses
-  %i.asq = load i32, ptr %i.c, align 4, !tbaa !21 ; 2 uses
+  %i.asq = load i32, ptr %i.c, align 4, !tbaa !21 ; 3 uses
   %i.asr = icmp slt i32 %i.asp, %i.asq
   br i1 %i.asr, label %.lr.ph, label %._crit_edge71.loopexit, !llvm.loop !71
 
 ._crit_edge71.loopexit:                           ; preds = %.lr.ph
   %.pre = load i32, ptr %i.e, align 4, !tbaa !22
+  %4 = icmp sgt i32 %i.asq, 0
   br label %._crit_edge71
 
 ._crit_edge71:                                    ; preds = %._crit_edge71.loopexit, %.preheader62
   %i.ass = phi i32 [ %.pre, %._crit_edge71.loopexit ], [ %i.asl, %.preheader62 ] ; 4 uses
-  %i.ast = phi i32 [ %i.asq, %._crit_edge71.loopexit ], [ %i.asm, %.preheader62 ] ; 3 uses
+  %5 = phi i1 [ %4, %._crit_edge71.loopexit ], [ false, %.preheader62 ]
+  %i.ast = phi i32 [ %i.asq, %._crit_edge71.loopexit ], [ %i.asm, %.preheader62 ] ; 2 uses
   %i.asu = add nuw nsw i32 %.15472, 1             ; 2 uses
   %i.asv = icmp slt i32 %i.asu, %i.ass
   br i1 %i.asv, label %.preheader62, label %.preheader61, !llvm.loop !72
