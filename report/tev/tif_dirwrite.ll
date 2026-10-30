@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 123
 inline.NumDeleted: 53
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@TIFFWriteDirectoryTagLongLong8Array:bb.a
   %.val124 = load i16, ptr %i.aq, align 8, !tbaa !31
   switch i16 %.val124, label %.thread147 [
@@ -205,7 +205,7 @@ define internal fastcc range(i32 0, 2) i32 @TIFFWriteDirectoryTagSampleformatArr
 bb.a:
   %i.a = shl nuw nsw i32 %4, 3                    ; 2 uses
   %i.b = zext nneg i32 %i.a to i64                ; 3 uses
-  %i.c = tail call ptr @_TIFFmallocExt(ptr noundef %0, i64 noundef %i.b) #8 ; 33 uses
+  %i.c = tail call ptr @_TIFFmallocExt(ptr noundef %0, i64 noundef %i.b) #8 ; 32 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.b, label %bb.c
 
@@ -356,38 +356,34 @@ bb.p:                                             ; preds = %bb.c
   %indvars.iv216 = phi i64 [ 0, %.lr.ph184.preheader.new ], [ %indvars.iv.next217.1, %TIFFClampDoubleToInt8.exit.1 ] ; 4 uses
   %niter276 = phi i64 [ 0, %.lr.ph184.preheader.new ], [ %niter276.next.1, %TIFFClampDoubleToInt8.exit.1 ]
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv216
-  %i.az = load double, ptr %i.ay, align 8, !tbaa !41 ; 4 uses
+  %i.az = load double, ptr %i.ay, align 8, !tbaa !41 ; 3 uses
   %i.ba = fcmp ogt double %i.az, 1.270000e+02
   br i1 %i.ba, label %TIFFClampDoubleToInt8.exit, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph184
-  %6 = fcmp olt double %i.az, -1.280000e+02
-  %7 = fcmp uno double %i.az, 0.000000e+00
-  %or.cond.i = or i1 %6, %7
-  %i.bb = fptosi double %i.az to i8
-  %spec.select.i = select i1 %or.cond.i, i8 -128, i8 %i.bb
+  %6 = fcmp ogt double %i.az, -1.280000e+02
+  %spec.select6.i = select i1 %6, double %i.az, double -1.280000e+02
+  %i.bb = fptosi double %spec.select6.i to i8
   br label %TIFFClampDoubleToInt8.exit
 
 TIFFClampDoubleToInt8.exit:                       ; preds = %.lr.ph184, %bb.q
-  %.0.i = phi i8 [ %spec.select.i, %bb.q ], [ 127, %.lr.ph184 ]
+  %.0.i = phi i8 [ %i.bb, %bb.q ], [ 127, %.lr.ph184 ]
   %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv216
   store i8 %.0.i, ptr %i.bc, align 1, !tbaa !47
   %indvars.iv.next217 = or disjoint i64 %indvars.iv216, 1 ; 2 uses
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next217
-  %i.be = load double, ptr %i.bd, align 8, !tbaa !41 ; 4 uses
+  %i.be = load double, ptr %i.bd, align 8, !tbaa !41 ; 3 uses
   %i.bf = fcmp ogt double %i.be, 1.270000e+02
   br i1 %i.bf, label %TIFFClampDoubleToInt8.exit.1, label %bb.r
 
 bb.r:                                             ; preds = %TIFFClampDoubleToInt8.exit
-  %8 = fcmp olt double %i.be, -1.280000e+02
-  %9 = fcmp uno double %i.be, 0.000000e+00
-  %or.cond.i.1 = or i1 %8, %9
-  %i.bg = fptosi double %i.be to i8
-  %spec.select.i.1 = select i1 %or.cond.i.1, i8 -128, i8 %i.bg
+  %7 = fcmp ogt double %i.be, -1.280000e+02
+  %spec.select6.i.1 = select i1 %7, double %i.be, double -1.280000e+02
+  %i.bg = fptosi double %spec.select6.i.1 to i8
   br label %TIFFClampDoubleToInt8.exit.1
 
 TIFFClampDoubleToInt8.exit.1:                     ; preds = %bb.r, %TIFFClampDoubleToInt8.exit
-  %.0.i.1 = phi i8 [ %spec.select.i.1, %bb.r ], [ 127, %TIFFClampDoubleToInt8.exit ]
+  %.0.i.1 = phi i8 [ %i.bg, %bb.r ], [ 127, %TIFFClampDoubleToInt8.exit ]
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next217
   store i8 %.0.i.1, ptr %i.bh, align 1, !tbaa !47
   %indvars.iv.next217.1 = add nuw nsw i64 %indvars.iv216, 2 ; 2 uses
@@ -404,20 +400,18 @@ TIFFClampDoubleToInt8.exit.1:                     ; preds = %bb.r, %TIFFClampDou
   %lcmp.mod274 = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod274)
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv216.epil.init
-  %i.bj = load double, ptr %i.bi, align 8, !tbaa !41 ; 4 uses
+  %i.bj = load double, ptr %i.bi, align 8, !tbaa !41 ; 3 uses
   %i.bk = fcmp ogt double %i.bj, 1.270000e+02
   br i1 %i.bk, label %TIFFClampDoubleToInt8.exit.epil, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph184.epil.preheader
-  %10 = fcmp olt double %i.bj, -1.280000e+02
-  %11 = fcmp uno double %i.bj, 0.000000e+00
-  %or.cond.i.epil = or i1 %10, %11
-  %i.bl = fptosi double %i.bj to i8
-  %spec.select.i.epil = select i1 %or.cond.i.epil, i8 -128, i8 %i.bl
+  %8 = fcmp ogt double %i.bj, -1.280000e+02
+  %spec.select6.i.epil = select i1 %8, double %i.bj, double -1.280000e+02
+  %i.bl = fptosi double %spec.select6.i.epil to i8
   br label %TIFFClampDoubleToInt8.exit.epil
 
 TIFFClampDoubleToInt8.exit.epil:                  ; preds = %bb.s, %.lr.ph184.epil.preheader
-  %.0.i.epil = phi i8 [ %spec.select.i.epil, %bb.s ], [ 127, %.lr.ph184.epil.preheader ]
+  %.0.i.epil = phi i8 [ %i.bl, %bb.s ], [ 127, %.lr.ph184.epil.preheader ]
   %i.bm = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv216.epil.init
   store i8 %.0.i.epil, ptr %i.bm, align 1, !tbaa !47
   br label %._crit_edge185
@@ -458,19 +452,50 @@ bb.v:                                             ; preds = %._crit_edge185
 bb.w:                                             ; preds = %bb.p
   %i.cb = icmp ult i16 %i.av, 17
   %.not192 = icmp eq i32 %4, 0                    ; 2 uses
-  br i1 %i.cb, label %.preheader165, label %.preheader166.a
+  br i1 %i.cb, label %.preheader165, label %.preheader166
 
-.preheader166.a:                                  ; preds = %bb.w
-  br i1 %.not192, label %._crit_edge179, label %.lr.ph178.preheader
+.preheader166:                                    ; preds = %bb.w
+  br i1 %.not192, label %._crit_edge179, label %.preheader166.a
 
-.lr.ph178.preheader:                              ; preds = %.preheader166.a
-  %wide.trip.count209 = zext nneg i32 %4 to i64   ; 2 uses
-  %xtraiter262 = and i64 %wide.trip.count209, 1
-  %i.cc = icmp eq i32 %4, 1
-  br i1 %i.cc, label %.lr.ph178.epil.preheader, label %.lr.ph178.preheader.new
+.preheader166.a:                                  ; preds = %.preheader166
+  %wide.trip.count209 = zext nneg i32 %4 to i64   ; 3 uses
+  %min.iters.check = icmp samesign ult i32 %4, 4
+  br i1 %min.iters.check, label %.lr.ph178.preheader.new, label %vector.ph
 
-.lr.ph178.preheader.new:                          ; preds = %.lr.ph178.preheader
-  %unroll_iter265 = and i64 %wide.trip.count209, 65534
+vector.ph:                                        ; preds = %.preheader166.a
+  %n.vec = and i64 %wide.trip.count209, 65532     ; 3 uses
+  br label %.lr.ph178.preheader
+
+.lr.ph178.preheader:                              ; preds = %.lr.ph178.preheader, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %.lr.ph178.preheader ] ; 3 uses
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %index ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %wide.load = load <2 x double>, ptr %9, align 8, !tbaa !41 ; 3 uses
+  %wide.load251 = load <2 x double>, ptr %10, align 8, !tbaa !41 ; 3 uses
+  %11 = fcmp ogt <2 x double> %wide.load, splat (double f0x41DFFFFFFFC00000)
+  %12 = fcmp ogt <2 x double> %wide.load251, splat (double f0x41DFFFFFFFC00000)
+  %13 = fcmp ogt <2 x double> %wide.load, splat (double f0xC1E0000000000000)
+  %14 = fcmp ogt <2 x double> %wide.load251, splat (double f0xC1E0000000000000)
+  %15 = select <2 x i1> %13, <2 x double> %wide.load, <2 x double> splat (double f0xC1E0000000000000)
+  %16 = select <2 x i1> %14, <2 x double> %wide.load251, <2 x double> splat (double f0xC1E0000000000000)
+  %17 = fptosi <2 x double> %15 to <2 x i32>
+  %18 = fptosi <2 x double> %16 to <2 x i32>
+  %predphi = select <2 x i1> %11, <2 x i32> splat (i32 2147483647), <2 x i32> %17
+  %predphi252 = select <2 x i1> %12, <2 x i32> splat (i32 2147483647), <2 x i32> %18
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %index ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 8
+  store <2 x i32> %predphi, ptr %19, align 4, !tbaa !30
+  store <2 x i32> %predphi252, ptr %20, align 4, !tbaa !30
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.cc = icmp eq i64 %index.next, %n.vec
+  br i1 %i.cc, label %middle.block, label %.lr.ph178.preheader, !llvm.loop !122
+
+middle.block:                                     ; preds = %.lr.ph178.preheader
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count209
+  br i1 %cmp.n, label %._crit_edge179, label %.lr.ph178.preheader.new
+
+.lr.ph178.preheader.new:                          ; preds = %.preheader166.a, %middle.block
+  %indvars.iv206.ph = phi i64 [ 0, %.preheader166.a ], [ %n.vec, %middle.block ]
   br label %.lr.ph178
 
 .preheader165:                                    ; preds = %bb.w
@@ -490,38 +515,34 @@ bb.w:                                             ; preds = %bb.p
   %indvars.iv211 = phi i64 [ 0, %.lr.ph181.preheader.new ], [ %indvars.iv.next212.1, %TIFFClampDoubleToInt16.exit.1 ] ; 4 uses
   %niter271 = phi i64 [ 0, %.lr.ph181.preheader.new ], [ %niter271.next.1, %TIFFClampDoubleToInt16.exit.1 ]
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv211
-  %i.cf = load double, ptr %i.ce, align 8, !tbaa !41 ; 4 uses
+  %i.cf = load double, ptr %i.ce, align 8, !tbaa !41 ; 3 uses
   %i.cg = fcmp ogt double %i.cf, 3.276700e+04
   br i1 %i.cg, label %TIFFClampDoubleToInt16.exit, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph181
-  %12 = fcmp olt double %i.cf, -3.276800e+04
-  %13 = fcmp uno double %i.cf, 0.000000e+00
-  %or.cond.i129 = or i1 %12, %13
-  %i.ch = fptosi double %i.cf to i16
-  %spec.select.i130 = select i1 %or.cond.i129, i16 -32768, i16 %i.ch
+  %21 = fcmp ogt double %i.cf, -3.276800e+04
+  %spec.select6.i129 = select i1 %21, double %i.cf, double -3.276800e+04
+  %i.ch = fptosi double %spec.select6.i129 to i16
   br label %TIFFClampDoubleToInt16.exit
 
 TIFFClampDoubleToInt16.exit:                      ; preds = %.lr.ph181, %bb.x
-  %.0.i131 = phi i16 [ %spec.select.i130, %bb.x ], [ 32767, %.lr.ph181 ]
+  %.0.i131 = phi i16 [ %i.ch, %bb.x ], [ 32767, %.lr.ph181 ]
   %i.ci = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv211
   store i16 %.0.i131, ptr %i.ci, align 2, !tbaa !34
   %indvars.iv.next212 = or disjoint i64 %indvars.iv211, 1 ; 2 uses
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next212
-  %i.ck = load double, ptr %i.cj, align 8, !tbaa !41 ; 4 uses
+  %i.ck = load double, ptr %i.cj, align 8, !tbaa !41 ; 3 uses
   %i.cl = fcmp ogt double %i.ck, 3.276700e+04
   br i1 %i.cl, label %TIFFClampDoubleToInt16.exit.1, label %bb.y
 
 bb.y:                                             ; preds = %TIFFClampDoubleToInt16.exit
-  %14 = fcmp olt double %i.ck, -3.276800e+04
-  %15 = fcmp uno double %i.ck, 0.000000e+00
-  %or.cond.i129.1 = or i1 %14, %15
-  %i.cm = fptosi double %i.ck to i16
-  %spec.select.i130.1 = select i1 %or.cond.i129.1, i16 -32768, i16 %i.cm
+  %22 = fcmp ogt double %i.ck, -3.276800e+04
+  %spec.select6.i129.1 = select i1 %22, double %i.ck, double -3.276800e+04
+  %i.cm = fptosi double %spec.select6.i129.1 to i16
   br label %TIFFClampDoubleToInt16.exit.1
 
 TIFFClampDoubleToInt16.exit.1:                    ; preds = %bb.y, %TIFFClampDoubleToInt16.exit
-  %.0.i131.1 = phi i16 [ %spec.select.i130.1, %bb.y ], [ 32767, %TIFFClampDoubleToInt16.exit ]
+  %.0.i131.1 = phi i16 [ %i.cm, %bb.y ], [ 32767, %TIFFClampDoubleToInt16.exit ]
   %i.cn = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.next212
   store i16 %.0.i131.1, ptr %i.cn, align 2, !tbaa !34
   %indvars.iv.next212.1 = add nuw nsw i64 %indvars.iv211, 2 ; 2 uses
@@ -538,20 +559,18 @@ TIFFClampDoubleToInt16.exit.1:                    ; preds = %bb.y, %TIFFClampDou
   %lcmp.mod269 = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod269)
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv211.epil.init
-  %i.cp = load double, ptr %i.co, align 8, !tbaa !41 ; 4 uses
+  %i.cp = load double, ptr %i.co, align 8, !tbaa !41 ; 3 uses
   %i.cq = fcmp ogt double %i.cp, 3.276700e+04
   br i1 %i.cq, label %TIFFClampDoubleToInt16.exit.epil, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph181.epil.preheader
-  %16 = fcmp olt double %i.cp, -3.276800e+04
-  %17 = fcmp uno double %i.cp, 0.000000e+00
-  %or.cond.i129.epil = or i1 %16, %17
-  %i.cr = fptosi double %i.cp to i16
-  %spec.select.i130.epil = select i1 %or.cond.i129.epil, i16 -32768, i16 %i.cr
+  %23 = fcmp ogt double %i.cp, -3.276800e+04
+  %spec.select6.i129.epil = select i1 %23, double %i.cp, double -3.276800e+04
+  %i.cr = fptosi double %spec.select6.i129.epil to i16
   br label %TIFFClampDoubleToInt16.exit.epil
 
 TIFFClampDoubleToInt16.exit.epil:                 ; preds = %bb.z, %.lr.ph181.epil.preheader
-  %.0.i131.epil = phi i16 [ %spec.select.i130.epil, %bb.z ], [ 32767, %.lr.ph181.epil.preheader ]
+  %.0.i131.epil = phi i16 [ %i.cr, %bb.z ], [ 32767, %.lr.ph181.epil.preheader ]
   %i.cs = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv211.epil.init
   store i16 %.0.i131.epil, ptr %i.cs, align 2, !tbaa !34
   br label %._crit_edge182
@@ -601,77 +620,28 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.dl = tail call fastcc i32 @TIFFWriteDirectoryTagData(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %2, i16 noundef zeroext %3, i16 noundef zeroext 8, i32 noundef %4, i32 noundef %i.dk, ptr noundef nonnull %i.c)
   br label %TIFFWriteDirectoryTagFloatArray.exit
 
-.lr.ph178:                                        ; preds = %TIFFClampDoubleToInt32.exit.1, %.lr.ph178.preheader.new
-  %indvars.iv206 = phi i64 [ 0, %.lr.ph178.preheader.new ], [ %indvars.iv.next207.1, %TIFFClampDoubleToInt32.exit.1 ] ; 4 uses
-  %niter266 = phi i64 [ 0, %.lr.ph178.preheader.new ], [ %niter266.next.1, %TIFFClampDoubleToInt32.exit.1 ]
-  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv206
-  %i.dn = load double, ptr %i.dm, align 8, !tbaa !41 ; 4 uses
+.lr.ph178:                                        ; preds = %.lr.ph178.preheader.new, %TIFFClampDoubleToInt32.exit.1
+  %niter266 = phi i64 [ %niter266.next.1, %TIFFClampDoubleToInt32.exit.1 ], [ %indvars.iv206.ph, %.lr.ph178.preheader.new ] ; 3 uses
+  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %niter266
+  %i.dn = load double, ptr %i.dm, align 8, !tbaa !41 ; 3 uses
   %i.do = fcmp ogt double %i.dn, f0x41DFFFFFFFC00000
-  br i1 %i.do, label %TIFFClampDoubleToInt32.exit, label %18
+  br i1 %i.do, label %TIFFClampDoubleToInt32.exit.1, label %bb.af
 
-18:                                               ; preds = %.lr.ph178
-  %19 = fcmp olt double %i.dn, f0xC1E0000000000000
-  %20 = fcmp uno double %i.dn, 0.000000e+00
-  %or.cond.i136 = or i1 %19, %20
-  %21 = fptosi double %i.dn to i32
-  %spec.select.i137 = select i1 %or.cond.i136, i32 -2147483648, i32 %21
-  br label %TIFFClampDoubleToInt32.exit
-
-TIFFClampDoubleToInt32.exit:                      ; preds = %.lr.ph178, %18
-  %.0.i138 = phi i32 [ %spec.select.i137, %18 ], [ 2147483647, %.lr.ph178 ]
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv206
-  store i32 %.0.i138, ptr %22, align 4, !tbaa !30
-  %indvars.iv.next207 = or disjoint i64 %indvars.iv206, 1 ; 2 uses
-  %23 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next207
-  %24 = load double, ptr %23, align 8, !tbaa !41  ; 4 uses
-  %25 = fcmp ogt double %24, f0x41DFFFFFFFC00000
-  br i1 %25, label %TIFFClampDoubleToInt32.exit.1, label %bb.af
-
-bb.af:                                            ; preds = %TIFFClampDoubleToInt32.exit
-  %26 = fcmp olt double %24, f0xC1E0000000000000
-  %27 = fcmp uno double %24, 0.000000e+00
-  %or.cond.i136.1 = or i1 %26, %27
-  %i.dp = fptosi double %24 to i32
-  %spec.select.i137.1 = select i1 %or.cond.i136.1, i32 -2147483648, i32 %i.dp
+bb.af:                                            ; preds = %.lr.ph178
+  %24 = fcmp ogt double %i.dn, f0xC1E0000000000000
+  %spec.select6.i136 = select i1 %24, double %i.dn, double f0xC1E0000000000000
+  %i.dp = fptosi double %spec.select6.i136 to i32
   br label %TIFFClampDoubleToInt32.exit.1
 
-TIFFClampDoubleToInt32.exit.1:                    ; preds = %bb.af, %TIFFClampDoubleToInt32.exit
-  %.0.i138.1 = phi i32 [ %spec.select.i137.1, %bb.af ], [ 2147483647, %TIFFClampDoubleToInt32.exit ]
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next207
+TIFFClampDoubleToInt32.exit.1:                    ; preds = %.lr.ph178, %bb.af
+  %.0.i138.1 = phi i32 [ %i.dp, %bb.af ], [ 2147483647, %.lr.ph178 ]
+  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %niter266
   store i32 %.0.i138.1, ptr %i.dq, align 4, !tbaa !30
-  %indvars.iv.next207.1 = add nuw nsw i64 %indvars.iv206, 2 ; 2 uses
-  %niter266.next.1 = add i64 %niter266, 2         ; 2 uses
-  %niter266.ncmp.1 = icmp eq i64 %niter266.next.1, %unroll_iter265
-  br i1 %niter266.ncmp.1, label %._crit_edge179.loopexit.unr-lcssa, label %.lr.ph178
+  %niter266.next.1 = add nuw nsw i64 %niter266, 1 ; 2 uses
+  %niter266.ncmp.1 = icmp eq i64 %niter266.next.1, %wide.trip.count209
+  br i1 %niter266.ncmp.1, label %._crit_edge179, label %.lr.ph178, !llvm.loop !123
 
-._crit_edge179.loopexit.unr-lcssa:                ; preds = %TIFFClampDoubleToInt32.exit.1
-  %lcmp.mod263.not = icmp eq i64 %xtraiter262, 0
-  br i1 %lcmp.mod263.not, label %._crit_edge179, label %.lr.ph178.epil.preheader
-
-.lr.ph178.epil.preheader:                         ; preds = %._crit_edge179.loopexit.unr-lcssa, %.lr.ph178.preheader
-  %indvars.iv206.epil.init = phi i64 [ 0, %.lr.ph178.preheader ], [ %indvars.iv.next207.1, %._crit_edge179.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod264 = trunc i32 %4 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod264)
-  %28 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv206.epil.init
-  %29 = load double, ptr %28, align 8, !tbaa !41  ; 4 uses
-  %30 = fcmp ogt double %29, f0x41DFFFFFFFC00000
-  br i1 %30, label %TIFFClampDoubleToInt32.exit.epil, label %31
-
-31:                                               ; preds = %.lr.ph178.epil.preheader
-  %32 = fcmp olt double %29, f0xC1E0000000000000
-  %33 = fcmp uno double %29, 0.000000e+00
-  %or.cond.i136.epil = or i1 %32, %33
-  %34 = fptosi double %29 to i32
-  %spec.select.i137.epil = select i1 %or.cond.i136.epil, i32 -2147483648, i32 %34
-  br label %TIFFClampDoubleToInt32.exit.epil
-
-TIFFClampDoubleToInt32.exit.epil:                 ; preds = %31, %.lr.ph178.epil.preheader
-  %.0.i138.epil = phi i32 [ %spec.select.i137.epil, %31 ], [ 2147483647, %.lr.ph178.epil.preheader ]
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv206.epil.init
-  store i32 %.0.i138.epil, ptr %35, align 4, !tbaa !30
-  br label %._crit_edge179
-
-._crit_edge179:                                   ; preds = %TIFFClampDoubleToInt32.exit.epil, %._crit_edge179.loopexit.unr-lcssa, %.preheader166.a
+._crit_edge179:                                   ; preds = %TIFFClampDoubleToInt32.exit.1, %middle.block, %.preheader166
   %i.dr = icmp eq ptr %2, null
   br i1 %i.dr, label %bb.ag, label %bb.ai
 
@@ -740,38 +710,34 @@ bb.al:                                            ; preds = %bb.c
   %indvars.iv201 = phi i64 [ 0, %.lr.ph175.preheader.new ], [ %indvars.iv.next202.1, %TIFFClampDoubleToUInt8.exit.1 ] ; 4 uses
   %niter261 = phi i64 [ 0, %.lr.ph175.preheader.new ], [ %niter261.next.1, %TIFFClampDoubleToUInt8.exit.1 ]
   %i.eo = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv201
-  %i.ep = load double, ptr %i.eo, align 8, !tbaa !41 ; 4 uses
+  %i.ep = load double, ptr %i.eo, align 8, !tbaa !41 ; 3 uses
   %i.eq = fcmp olt double %i.ep, 0.000000e+00
   br i1 %i.eq, label %TIFFClampDoubleToUInt8.exit, label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph175
-  %36 = fcmp ogt double %i.ep, 2.550000e+02
-  %37 = fcmp uno double %i.ep, 0.000000e+00
-  %or.cond.i143 = or i1 %36, %37
-  %i.er = fptoui double %i.ep to i8
-  %spec.select.i144 = select i1 %or.cond.i143, i8 -1, i8 %i.er
+  %25 = fcmp olt double %i.ep, 2.550000e+02
+  %spec.select6.i143 = select i1 %25, double %i.ep, double 2.550000e+02
+  %i.er = fptoui double %spec.select6.i143 to i8
   br label %TIFFClampDoubleToUInt8.exit
 
 TIFFClampDoubleToUInt8.exit:                      ; preds = %.lr.ph175, %bb.am
-  %.0.i145 = phi i8 [ %spec.select.i144, %bb.am ], [ 0, %.lr.ph175 ]
+  %.0.i145 = phi i8 [ %i.er, %bb.am ], [ 0, %.lr.ph175 ]
   %i.es = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv201
   store i8 %.0.i145, ptr %i.es, align 1, !tbaa !47
   %indvars.iv.next202 = or disjoint i64 %indvars.iv201, 1 ; 2 uses
   %i.et = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next202
-  %i.eu = load double, ptr %i.et, align 8, !tbaa !41 ; 4 uses
+  %i.eu = load double, ptr %i.et, align 8, !tbaa !41 ; 3 uses
   %i.ev = fcmp olt double %i.eu, 0.000000e+00
   br i1 %i.ev, label %TIFFClampDoubleToUInt8.exit.1, label %bb.an
 
 bb.an:                                            ; preds = %TIFFClampDoubleToUInt8.exit
-  %38 = fcmp ogt double %i.eu, 2.550000e+02
-  %39 = fcmp uno double %i.eu, 0.000000e+00
-  %or.cond.i143.1 = or i1 %38, %39
-  %i.ew = fptoui double %i.eu to i8
-  %spec.select.i144.1 = select i1 %or.cond.i143.1, i8 -1, i8 %i.ew
+  %26 = fcmp olt double %i.eu, 2.550000e+02
+  %spec.select6.i143.1 = select i1 %26, double %i.eu, double 2.550000e+02
+  %i.ew = fptoui double %spec.select6.i143.1 to i8
   br label %TIFFClampDoubleToUInt8.exit.1
 
 TIFFClampDoubleToUInt8.exit.1:                    ; preds = %bb.an, %TIFFClampDoubleToUInt8.exit
-  %.0.i145.1 = phi i8 [ %spec.select.i144.1, %bb.an ], [ 0, %TIFFClampDoubleToUInt8.exit ]
+  %.0.i145.1 = phi i8 [ %i.ew, %bb.an ], [ 0, %TIFFClampDoubleToUInt8.exit ]
   %i.ex = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next202
   store i8 %.0.i145.1, ptr %i.ex, align 1, !tbaa !47
   %indvars.iv.next202.1 = add nuw nsw i64 %indvars.iv201, 2 ; 2 uses
@@ -788,20 +754,18 @@ TIFFClampDoubleToUInt8.exit.1:                    ; preds = %bb.an, %TIFFClampDo
   %lcmp.mod259 = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod259)
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv201.epil.init
-  %i.ez = load double, ptr %i.ey, align 8, !tbaa !41 ; 4 uses
+  %i.ez = load double, ptr %i.ey, align 8, !tbaa !41 ; 3 uses
   %i.fa = fcmp olt double %i.ez, 0.000000e+00
   br i1 %i.fa, label %TIFFClampDoubleToUInt8.exit.epil, label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph175.epil.preheader
-  %40 = fcmp ogt double %i.ez, 2.550000e+02
-  %41 = fcmp uno double %i.ez, 0.000000e+00
-  %or.cond.i143.epil = or i1 %40, %41
-  %i.fb = fptoui double %i.ez to i8
-  %spec.select.i144.epil = select i1 %or.cond.i143.epil, i8 -1, i8 %i.fb
+  %27 = fcmp olt double %i.ez, 2.550000e+02
+  %spec.select6.i143.epil = select i1 %27, double %i.ez, double 2.550000e+02
+  %i.fb = fptoui double %spec.select6.i143.epil to i8
   br label %TIFFClampDoubleToUInt8.exit.epil
 
 TIFFClampDoubleToUInt8.exit.epil:                 ; preds = %bb.ao, %.lr.ph175.epil.preheader
-  %.0.i145.epil = phi i8 [ %spec.select.i144.epil, %bb.ao ], [ 0, %.lr.ph175.epil.preheader ]
+  %.0.i145.epil = phi i8 [ %i.fb, %bb.ao ], [ 0, %.lr.ph175.epil.preheader ]
   %i.fc = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv201.epil.init
   store i8 %.0.i145.epil, ptr %i.fc, align 1, !tbaa !47
   br label %._crit_edge176
@@ -874,38 +838,34 @@ bb.as:                                            ; preds = %bb.al
   %indvars.iv196 = phi i64 [ 0, %.lr.ph172.preheader.new ], [ %indvars.iv.next197.1, %TIFFClampDoubleToUInt16.exit.1 ] ; 4 uses
   %niter256 = phi i64 [ 0, %.lr.ph172.preheader.new ], [ %niter256.next.1, %TIFFClampDoubleToUInt16.exit.1 ]
   %i.fu = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv196
-  %i.fv = load double, ptr %i.fu, align 8, !tbaa !41 ; 4 uses
+  %i.fv = load double, ptr %i.fu, align 8, !tbaa !41 ; 3 uses
   %i.fw = fcmp olt double %i.fv, 0.000000e+00
   br i1 %i.fw, label %TIFFClampDoubleToUInt16.exit, label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph172
-  %42 = fcmp ogt double %i.fv, 6.553500e+04
-  %43 = fcmp uno double %i.fv, 0.000000e+00
-  %or.cond.i150 = or i1 %42, %43
-  %i.fx = fptoui double %i.fv to i16
-  %spec.select.i151 = select i1 %or.cond.i150, i16 -1, i16 %i.fx
+  %28 = fcmp olt double %i.fv, 6.553500e+04
+  %spec.select6.i150 = select i1 %28, double %i.fv, double 6.553500e+04
+  %i.fx = fptoui double %spec.select6.i150 to i16
   br label %TIFFClampDoubleToUInt16.exit
 
 TIFFClampDoubleToUInt16.exit:                     ; preds = %.lr.ph172, %bb.at
-  %.0.i152 = phi i16 [ %spec.select.i151, %bb.at ], [ 0, %.lr.ph172 ]
+  %.0.i152 = phi i16 [ %i.fx, %bb.at ], [ 0, %.lr.ph172 ]
   %i.fy = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv196
   store i16 %.0.i152, ptr %i.fy, align 2, !tbaa !34
   %indvars.iv.next197 = or disjoint i64 %indvars.iv196, 1 ; 2 uses
   %i.fz = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next197
-  %i.ga = load double, ptr %i.fz, align 8, !tbaa !41 ; 4 uses
+  %i.ga = load double, ptr %i.fz, align 8, !tbaa !41 ; 3 uses
   %i.gb = fcmp olt double %i.ga, 0.000000e+00
   br i1 %i.gb, label %TIFFClampDoubleToUInt16.exit.1, label %bb.au
 
 bb.au:                                            ; preds = %TIFFClampDoubleToUInt16.exit
-  %44 = fcmp ogt double %i.ga, 6.553500e+04
-  %45 = fcmp uno double %i.ga, 0.000000e+00
-  %or.cond.i150.1 = or i1 %44, %45
-  %i.gc = fptoui double %i.ga to i16
-  %spec.select.i151.1 = select i1 %or.cond.i150.1, i16 -1, i16 %i.gc
+  %29 = fcmp olt double %i.ga, 6.553500e+04
+  %spec.select6.i150.1 = select i1 %29, double %i.ga, double 6.553500e+04
+  %i.gc = fptoui double %spec.select6.i150.1 to i16
   br label %TIFFClampDoubleToUInt16.exit.1
 
 TIFFClampDoubleToUInt16.exit.1:                   ; preds = %bb.au, %TIFFClampDoubleToUInt16.exit
-  %.0.i152.1 = phi i16 [ %spec.select.i151.1, %bb.au ], [ 0, %TIFFClampDoubleToUInt16.exit ]
+  %.0.i152.1 = phi i16 [ %i.gc, %bb.au ], [ 0, %TIFFClampDoubleToUInt16.exit ]
   %i.gd = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.next197
   store i16 %.0.i152.1, ptr %i.gd, align 2, !tbaa !34
   %indvars.iv.next197.1 = add nuw nsw i64 %indvars.iv196, 2 ; 2 uses
@@ -922,20 +882,18 @@ TIFFClampDoubleToUInt16.exit.1:                   ; preds = %bb.au, %TIFFClampDo
   %lcmp.mod254.a = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod254.a)
   %i.ge = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv196.epil.init
-  %i.gf = load double, ptr %i.ge, align 8, !tbaa !41 ; 4 uses
+  %i.gf = load double, ptr %i.ge, align 8, !tbaa !41 ; 3 uses
   %i.gg = fcmp olt double %i.gf, 0.000000e+00
   br i1 %i.gg, label %TIFFClampDoubleToUInt16.exit.epil, label %bb.av
 
 bb.av:                                            ; preds = %.lr.ph172.epil.preheader
-  %46 = fcmp ogt double %i.gf, 6.553500e+04
-  %47 = fcmp uno double %i.gf, 0.000000e+00
-  %or.cond.i150.epil = or i1 %46, %47
-  %i.gh = fptoui double %i.gf to i16
-  %spec.select.i151.epil = select i1 %or.cond.i150.epil, i16 -1, i16 %i.gh
+  %30 = fcmp olt double %i.gf, 6.553500e+04
+  %spec.select6.i150.epil = select i1 %30, double %i.gf, double 6.553500e+04
+  %i.gh = fptoui double %spec.select6.i150.epil to i16
   br label %TIFFClampDoubleToUInt16.exit.epil
 
 TIFFClampDoubleToUInt16.exit.epil:                ; preds = %bb.av, %.lr.ph172.epil.preheader
-  %.0.i152.epil = phi i16 [ %spec.select.i151.epil, %bb.av ], [ 0, %.lr.ph172.epil.preheader ]
+  %.0.i152.epil = phi i16 [ %i.gh, %bb.av ], [ 0, %.lr.ph172.epil.preheader ]
   %i.gi = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv196.epil.init
   store i16 %.0.i152.epil, ptr %i.gi, align 2, !tbaa !34
   br label %._crit_edge173
@@ -989,38 +947,34 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %TIFFClampDoubleToUInt32.exit.1 ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %TIFFClampDoubleToUInt32.exit.1 ]
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv
-  %i.hd = load double, ptr %i.hc, align 8, !tbaa !41 ; 4 uses
+  %i.hd = load double, ptr %i.hc, align 8, !tbaa !41 ; 3 uses
   %i.he = fcmp olt double %i.hd, 0.000000e+00
   br i1 %i.he, label %TIFFClampDoubleToUInt32.exit, label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph
-  %48 = fcmp ogt double %i.hd, f0x41EFFFFFFFE00000
-  %49 = fcmp uno double %i.hd, 0.000000e+00
-  %or.cond.i157 = or i1 %48, %49
-  %i.hf = fptoui double %i.hd to i32
-  %spec.select.i158 = select i1 %or.cond.i157, i32 -1, i32 %i.hf
+  %31 = fcmp olt double %i.hd, f0x41EFFFFFFFE00000
+  %spec.select6.i157 = select i1 %31, double %i.hd, double f0x41EFFFFFFFE00000
+  %i.hf = fptoui double %spec.select6.i157 to i32
   br label %TIFFClampDoubleToUInt32.exit
 
 TIFFClampDoubleToUInt32.exit:                     ; preds = %.lr.ph, %bb.bb
-  %.0.i159 = phi i32 [ %spec.select.i158, %bb.bb ], [ 0, %.lr.ph ]
+  %.0.i159 = phi i32 [ %i.hf, %bb.bb ], [ 0, %.lr.ph ]
   %i.hg = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   store i32 %.0.i159, ptr %i.hg, align 4, !tbaa !30
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.hh = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next
-  %i.hi = load double, ptr %i.hh, align 8, !tbaa !41 ; 4 uses
+  %i.hi = load double, ptr %i.hh, align 8, !tbaa !41 ; 3 uses
   %i.hj = fcmp olt double %i.hi, 0.000000e+00
   br i1 %i.hj, label %TIFFClampDoubleToUInt32.exit.1, label %bb.bc
 
 bb.bc:                                            ; preds = %TIFFClampDoubleToUInt32.exit
-  %50 = fcmp ogt double %i.hi, f0x41EFFFFFFFE00000
-  %51 = fcmp uno double %i.hi, 0.000000e+00
-  %or.cond.i157.1 = or i1 %50, %51
-  %i.hk = fptoui double %i.hi to i32
-  %spec.select.i158.1 = select i1 %or.cond.i157.1, i32 -1, i32 %i.hk
+  %32 = fcmp olt double %i.hi, f0x41EFFFFFFFE00000
+  %spec.select6.i157.1 = select i1 %32, double %i.hi, double f0x41EFFFFFFFE00000
+  %i.hk = fptoui double %spec.select6.i157.1 to i32
   br label %TIFFClampDoubleToUInt32.exit.1
 
 TIFFClampDoubleToUInt32.exit.1:                   ; preds = %bb.bc, %TIFFClampDoubleToUInt32.exit
-  %.0.i159.1 = phi i32 [ %spec.select.i158.1, %bb.bc ], [ 0, %TIFFClampDoubleToUInt32.exit ]
+  %.0.i159.1 = phi i32 [ %i.hk, %bb.bc ], [ 0, %TIFFClampDoubleToUInt32.exit ]
   %i.hl = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next
   store i32 %.0.i159.1, ptr %i.hl, align 4, !tbaa !30
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
@@ -1037,20 +991,18 @@ TIFFClampDoubleToUInt32.exit.1:                   ; preds = %bb.bc, %TIFFClampDo
   %lcmp.mod251 = trunc i32 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod251)
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.epil.init
-  %i.hn = load double, ptr %i.hm, align 8, !tbaa !41 ; 4 uses
+  %i.hn = load double, ptr %i.hm, align 8, !tbaa !41 ; 3 uses
   %i.ho = fcmp olt double %i.hn, 0.000000e+00
   br i1 %i.ho, label %TIFFClampDoubleToUInt32.exit.epil, label %bb.bd
 
 bb.bd:                                            ; preds = %.lr.ph.epil.preheader
-  %52 = fcmp ogt double %i.hn, f0x41EFFFFFFFE00000
-  %53 = fcmp uno double %i.hn, 0.000000e+00
-  %or.cond.i157.epil = or i1 %52, %53
-  %i.hp = fptoui double %i.hn to i32
-  %spec.select.i158.epil = select i1 %or.cond.i157.epil, i32 -1, i32 %i.hp
+  %33 = fcmp olt double %i.hn, f0x41EFFFFFFFE00000
+  %spec.select6.i157.epil = select i1 %33, double %i.hn, double f0x41EFFFFFFFE00000
+  %i.hp = fptoui double %spec.select6.i157.epil to i32
   br label %TIFFClampDoubleToUInt32.exit.epil
 
 TIFFClampDoubleToUInt32.exit.epil:                ; preds = %bb.bd, %.lr.ph.epil.preheader
-  %.0.i159.epil = phi i32 [ %spec.select.i158.epil, %bb.bd ], [ 0, %.lr.ph.epil.preheader ]
+  %.0.i159.epil = phi i32 [ %i.hp, %bb.bd ], [ 0, %.lr.ph.epil.preheader ]
   %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.epil.init
   store i32 %.0.i159.epil, ptr %i.hq, align 4, !tbaa !30
   br label %._crit_edge
@@ -1246,7 +1198,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %wide.trip.count
   %i.j = add nsw i64 %wide.trip.count, -1         ; 2 uses
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.j
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false), !tbaa.struct !126
   br label %.lr.ph97.prol.loopexit
 
 .lr.ph97.prol.loopexit:                           ; preds = %.lr.ph97.prol, %.lr.ph97.preheader
@@ -1265,11 +1217,11 @@ bb.b:                                             ; preds = %.lr.ph
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %indvars.iv106
   %i.o = add nsw i64 %indvars.iv106, -1           ; 2 uses
   %i.p = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.o
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) %i.p, i64 32, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) %i.p, i64 32, i1 false), !tbaa.struct !126
   %i.q = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.o
   %i.r = add nsw i64 %indvars.iv106, -2           ; 3 uses
   %i.s = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.r
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %i.s, i64 32, i1 false), !tbaa.struct !122
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %i.s, i64 32, i1 false), !tbaa.struct !126
   %.wide.1 = icmp ugt i64 %i.r, %indvars.iv
   br i1 %.wide.1, label %.lr.ph97, label %.thread
 
@@ -1672,5 +1624,9 @@ attributes #9 = { nounwind willreturn memory(read) }
 !119 = !{!27, !13, i64 258}
 !120 = !{!27, !11, i64 296}
 !121 = !{!27, !13, i64 290}
-!122 = !{i64 0, i64 2, !34, i64 2, i64 2, !34, i64 8, i64 8, !39, i64 16, i64 8, !47, i64 24, i64 1, !47}
+!122 = distinct !{!122, !124, !125}
+!123 = distinct !{!123, !125, !124}
+!124 = !{!"llvm.loop.isvectorized", i32 1}
+!125 = !{!"llvm.loop.unroll.runtime.disable"}
+!126 = !{i64 0, i64 2, !34, i64 2, i64 2, !34, i64 8, i64 8, !39, i64 16, i64 8, !47, i64 24, i64 1, !47}
 end_hunk_1

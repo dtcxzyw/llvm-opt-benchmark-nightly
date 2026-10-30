@@ -205,11 +205,9 @@ bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %i.o, align 8, !tbaa !298
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 48
   store double %1, ptr %i.p, align 8, !tbaa !443
-  %3 = fcmp ogt double %1, f0x41DFFFFFFFC00000
   %i.q = fcmp olt double %1, f0xC1E0000000000000
-  %or.cond.i.i.i = or i1 %3, %i.q
-  %4 = fcmp uno double %1, 0.000000e+00
-  %or.cond1.i.i.i = or i1 %4, %or.cond.i.i.i
+  %3 = fcmp ugt double %1, f0x41DFFFFFFFC00000
+  %or.cond1.i.i.i = or i1 %3, %i.q
   br i1 %or.cond1.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

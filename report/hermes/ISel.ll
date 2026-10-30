@@ -205,10 +205,10 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %i.l = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 48
   %i.n = load double, ptr %i.m, align 8, !tbaa !307 ; 3 uses
-  %3 = fcmp ule double %i.n, f0x41EFFFFFFFE00000
-  %4 = fcmp oge double %i.n, 0.000000e+00
-  tail call void @llvm.assume(i1 %3)
+  %3 = fcmp uge double %i.n, 0.000000e+00
+  %4 = fcmp ole double %i.n, f0x41EFFFFFFFE00000
   tail call void @llvm.assume(i1 %4)
+  tail call void @llvm.assume(i1 %3)
   %i.o = fptoui double %i.n to i32
   %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %i.o, i32 65535) ; 3 uses
   %i.p = icmp eq i32 %i.k, 0
@@ -611,10 +611,10 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %i.m = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %i.o = load double, ptr %i.n, align 8, !tbaa !307 ; 3 uses
-  %3 = fcmp ule double %i.o, f0x41EFFFFFFFE00000
-  %4 = fcmp oge double %i.o, 0.000000e+00
-  tail call void @llvm.assume(i1 %3)
+  %3 = fcmp uge double %i.o, 0.000000e+00
+  %4 = fcmp ole double %i.o, f0x41EFFFFFFFE00000
   tail call void @llvm.assume(i1 %4)
+  tail call void @llvm.assume(i1 %3)
   %i.p = fptoui double %i.o to i32
   %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %i.p, i32 65535)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1017,11 +1017,9 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %i.n = zext i32 %.0.i to i64                    ; 2 uses
   %i.o = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(144) %1, i32 noundef 0) #20
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 48
-  %i.q = load double, ptr %i.p, align 8, !tbaa !307 ; 4 uses
-  %3 = fcmp ule double %i.q, f0x41DFFFFFFFC00000
+  %i.q = load double, ptr %i.p, align 8, !tbaa !307 ; 3 uses
   %i.r = fcmp uge double %i.q, f0xC1E0000000000000
-  %4 = fcmp ord double %i.q, 0.000000e+00
-  tail call void @llvm.assume(i1 %4)
+  %3 = fcmp ole double %i.q, f0x41DFFFFFFFC00000
   tail call void @llvm.assume(i1 %3)
   tail call void @llvm.assume(i1 %i.r)
   %i.s = fptosi double %i.q to i32
@@ -1424,11 +1422,9 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %i.k = zext i32 %.0.i to i64
   %i.l = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 48
-  %i.n = load double, ptr %i.m, align 8, !tbaa !307 ; 4 uses
-  %3 = fcmp ule double %i.n, f0x41DFFFFFFFC00000
+  %i.n = load double, ptr %i.m, align 8, !tbaa !307 ; 3 uses
   %i.o = fcmp uge double %i.n, f0xC1E0000000000000
-  %4 = fcmp ord double %i.n, 0.000000e+00
-  tail call void @llvm.assume(i1 %4)
+  %3 = fcmp ole double %i.n, f0x41DFFFFFFFC00000
   tail call void @llvm.assume(i1 %3)
   tail call void @llvm.assume(i1 %i.o)
   %i.p = fptosi double %i.n to i32
@@ -1831,9 +1827,9 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.ae
 
 bb.l:                                             ; preds = %bb.j
-  %9 = fcmp ogt double %i.af, 2.550000e+02
-  %10 = fcmp ult double %i.af, 0.000000e+00
-  %or.cond1.i.i = or i1 %9, %10
+  %9 = fcmp olt double %i.af, 0.000000e+00
+  %10 = fcmp ugt double %i.af, 2.550000e+02
+  %or.cond1.i.i = or i1 %10, %9
   br i1 %or.cond1.i.i, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -1857,11 +1853,9 @@ _ZNK6hermes13LiteralNumber7asUInt8Ev.exit:        ; preds = %bb.n
   br label %bb.ae
 
 bb.o:                                             ; preds = %bb.m, %bb.n, %bb.l
-  %11 = fcmp ogt double %i.af, f0x41DFFFFFFFC00000
   %i.ax = fcmp olt double %i.af, f0xC1E0000000000000
-  %or.cond.i.i = or i1 %11, %i.ax
-  %12 = fcmp uno double %i.af, 0.000000e+00       ; 2 uses
-  %or.cond1.i.i39 = or i1 %12, %or.cond.i.i
+  %11 = fcmp ugt double %i.af, f0x41DFFFFFFFC00000
+  %or.cond1.i.i39 = or i1 %11, %i.ax
   br i1 %or.cond1.i.i39, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -1888,6 +1882,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q, %bb.o
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !108
   %i.bj = zext i32 %.0.i to i64
+  %12 = fcmp uno double %i.af, 0.000000e+00
   %.sink.i = select i1 %12, i64 -2251799813685248, i64 %i.ah, !prof !151
   %i.bk = tail call noundef i32 @_ZN6hermes3hbc28BytecodeInstructionGenerator19emitLoadConstDoubleEll(ptr noundef nonnull align 8 dereferenceable(25) %i.bi, i64 noundef %i.bj, i64 noundef %.sink.i) ; 0 uses
   br label %bb.ae
@@ -2290,10 +2285,10 @@ _ZN6hermes3hbc7HBCISel11encodeValueEPNS_5ValueE.exit: ; preds = %bb.b, %bb.c
   %i.i = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #20
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   %i.k = load double, ptr %i.j, align 8, !tbaa !307 ; 3 uses
-  %3 = fcmp ule double %i.k, f0x41EFFFFFFFE00000
-  %4 = fcmp oge double %i.k, 0.000000e+00
-  tail call void @llvm.assume(i1 %3)
+  %3 = fcmp uge double %i.k, 0.000000e+00
+  %4 = fcmp ole double %i.k, f0x41EFFFFFFFE00000
   tail call void @llvm.assume(i1 %4)
+  tail call void @llvm.assume(i1 %3)
   %i.l = fptoui double %i.k to i32                ; 2 uses
   %i.m = icmp ult i32 %i.l, 256
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -2696,18 +2691,18 @@ bb.a:
   %i.b = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 2) #20
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.d = load double, ptr %i.c, align 8, !tbaa !307 ; 3 uses
-  %3 = fcmp ule double %i.d, f0x41EFFFFFFFE00000
-  %4 = fcmp oge double %i.d, 0.000000e+00
-  tail call void @llvm.assume(i1 %3)
+  %3 = fcmp uge double %i.d, 0.000000e+00
+  %4 = fcmp ole double %i.d, f0x41EFFFFFFFE00000
   tail call void @llvm.assume(i1 %4)
+  tail call void @llvm.assume(i1 %3)
   %i.e = fptoui double %i.d to i32                ; 3 uses
   %i.f = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 3) #20
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   %i.h = load double, ptr %i.g, align 8, !tbaa !307 ; 3 uses
-  %5 = fcmp ule double %i.h, f0x41EFFFFFFFE00000
-  %6 = fcmp oge double %i.h, 0.000000e+00
-  tail call void @llvm.assume(i1 %5)
+  %5 = fcmp uge double %i.h, 0.000000e+00
+  %6 = fcmp ole double %i.h, f0x41EFFFFFFFE00000
   tail call void @llvm.assume(i1 %6)
+  tail call void @llvm.assume(i1 %5)
   %i.i = fptoui double %i.h to i32                ; 3 uses
   %i.j = zext i32 %i.i to i64                     ; 4 uses
   %.not = icmp eq i32 %i.i, 0                     ; 2 uses
@@ -2754,10 +2749,10 @@ _ZNSt6vectorIPN6hermes10BasicBlockESaIS2_EE6resizeEm.exit: ; preds = %bb.a, %_ZN
   %i.z = select i1 %i.x, ptr null, ptr %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 48
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !307 ; 3 uses
-  %7 = fcmp ule double %i.ab, f0x41EFFFFFFFE00000
-  %8 = fcmp oge double %i.ab, 0.000000e+00
-  tail call void @llvm.assume(i1 %7)
+  %7 = fcmp uge double %i.ab, 0.000000e+00
+  %8 = fcmp ole double %i.ab, f0x41EFFFFFFFE00000
   tail call void @llvm.assume(i1 %8)
+  tail call void @llvm.assume(i1 %7)
   %i.ac = fptoui double %i.ab to i32
   %i.ad = sub i32 %i.ac, %i.e
   %i.ae = zext i32 %i.ad to i64

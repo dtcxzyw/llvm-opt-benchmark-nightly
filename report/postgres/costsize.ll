@@ -62,9 +62,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef double @clamp_row_est(double noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = fcmp ogt double %0, 1.000000e+100
-  %2 = fcmp uno double %0, 0.000000e+00
-  %or.cond = or i1 %1, %2
+  %or.cond = fcmp ugt double %0, 1.000000e+100
   br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -194,10 +192,8 @@ bb.e:                                             ; preds = %bb.d
 get_parallel_divisor.exit:                        ; preds = %bb.d, %bb.e
   %.1.i = phi double [ %.0.i, %bb.e ], [ %i.au, %bb.d ] ; 2 uses
   %i.ba = fdiv double %i.aq, %.1.i
-  %i.bb = fdiv double %i.ap, %.1.i                ; 4 uses
-  %5 = fcmp ogt double %i.bb, 1.000000e+100
-  %6 = fcmp uno double %i.bb, 0.000000e+00
-  %or.cond.i = or i1 %5, %6
+  %i.bb = fdiv double %i.ap, %.1.i                ; 3 uses
+  %or.cond.i = fcmp ugt double %i.bb, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %get_parallel_divisor.exit
@@ -600,10 +596,8 @@ extract_nonindex_conditions.exit132:              ; preds = %bb.l, %.lr.ph.i125,
   %i.cr = fadd double %i.cq, 0.000000e+00
   %i.cs = getelementptr inbounds nuw i8, ptr %i.k, i64 200
   %i.ct = load double, ptr %i.cs, align 8
-  %i.cu = fmul double %i.cm, %i.ct                ; 4 uses
-  %5 = fcmp ogt double %i.cu, 1.000000e+100
-  %6 = fcmp uno double %i.cu, 0.000000e+00
-  %or.cond.i = or i1 %5, %6
+  %i.cu = fmul double %i.cm, %i.ct                ; 3 uses
+  %or.cond.i = fcmp ugt double %i.cu, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.m
 
 bb.m:                                             ; preds = %extract_nonindex_conditions.exit132
@@ -969,10 +963,8 @@ bb.ax:                                            ; preds = %bb.aw
 
 get_parallel_divisor.exit:                        ; preds = %bb.aw, %bb.ax
   %.1.i147 = phi double [ %.0.i148, %bb.ax ], [ %i.jx, %bb.aw ] ; 2 uses
-  %i.kd = fdiv double %i.js, %.1.i147             ; 4 uses
-  %7 = fcmp ogt double %i.kd, 1.000000e+100
-  %8 = fcmp uno double %i.kd, 0.000000e+00
-  %or.cond.i149 = or i1 %7, %8
+  %i.kd = fdiv double %i.js, %.1.i147             ; 3 uses
+  %or.cond.i149 = fcmp ugt double %i.kd, 1.000000e+100
   br i1 %or.cond.i149, label %clamp_row_est.exit151, label %bb.ay
 
 bb.ay:                                            ; preds = %get_parallel_divisor.exit
@@ -1244,10 +1236,8 @@ get_parallel_divisor.exit:                        ; preds = %bb.g, %bb.h
   %.1.i = phi double [ %.0.i, %bb.h ], [ %i.ba, %bb.g ] ; 2 uses
   %i.bg = fdiv double %i.aw, %.1.i
   %i.bh = load double, ptr %i.e, align 8
-  %i.bi = fdiv double %i.bh, %.1.i                ; 4 uses
-  %7 = fcmp ogt double %i.bi, 1.000000e+100
-  %8 = fcmp uno double %i.bi, 0.000000e+00
-  %or.cond.i = or i1 %7, %8
+  %i.bi = fdiv double %i.bh, %.1.i                ; 3 uses
+  %or.cond.i = fcmp ugt double %i.bi, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.i
 
 bb.i:                                             ; preds = %get_parallel_divisor.exit
@@ -1345,10 +1335,8 @@ cost_bitmap_tree_node.exit:                       ; preds = %bb.b, %bb.c, %bb.d
   %.0 = load double, ptr %.0.in, align 8          ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 2 uses
   %i.t = load double, ptr %i.s, align 8
-  %i.u = fmul double %.0, %i.t                    ; 4 uses
-  %6 = fcmp ogt double %i.u, 1.000000e+100
-  %7 = fcmp uno double %i.u, 0.000000e+00
-  %or.cond.i = or i1 %6, %7
+  %i.u = fmul double %.0, %i.t                    ; 3 uses
+  %or.cond.i = fcmp ugt double %i.u, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %cost_bitmap_tree_node.exit
@@ -1471,10 +1459,8 @@ bb.q:                                             ; preds = %bb.p
   %i.cp = fmul <2 x double> %i.co, %i.cm          ; 2 uses
   %i.cq = extractelement <2 x double> %i.cp, i64 0
   %i.cr = extractelement <2 x double> %i.cp, i64 1
-  %i.cs = tail call double @llvm.fmuladd.f64(double %i.cq, double %i.ch, double %i.cr) ; 4 uses
-  %8 = fcmp ogt double %i.cs, 1.000000e+100
-  %9 = fcmp uno double %i.cs, 0.000000e+00
-  %or.cond.i59 = or i1 %8, %9
+  %i.cs = tail call double @llvm.fmuladd.f64(double %i.cq, double %i.ch, double %i.cr) ; 3 uses
+  %or.cond.i59 = fcmp ugt double %i.cs, 1.000000e+100
   br i1 %or.cond.i59, label %clamp_row_est.exit61, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -1877,10 +1863,8 @@ bb.e:                                             ; preds = %bb.d
 get_parallel_divisor.exit:                        ; preds = %bb.d, %bb.e
   %.1.i = phi double [ %.0.i, %bb.e ], [ %i.bn, %bb.d ] ; 2 uses
   %i.bt = fdiv double %i.bj, %.1.i
-  %i.bu = fdiv double %i.bi, %.1.i                ; 4 uses
-  %7 = fcmp ogt double %i.bu, 1.000000e+100
-  %8 = fcmp uno double %i.bu, 0.000000e+00
-  %or.cond.i = or i1 %7, %8
+  %i.bu = fdiv double %i.bi, %.1.i                ; 3 uses
+  %or.cond.i = fcmp ugt double %i.bu, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %get_parallel_divisor.exit
@@ -1957,10 +1941,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %i.k = load double, ptr %i.j, align 8
   %i.l = tail call double @clauselist_selectivity(ptr noundef %1, ptr noundef %.036, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.m = fmul double %i.k, %i.l                   ; 4 uses
-  %6 = fcmp ogt double %i.m, 1.000000e+100
-  %7 = fcmp uno double %i.m, 0.000000e+00
-  %or.cond.i = or i1 %6, %7
+  %i.m = fmul double %i.k, %i.l                   ; 3 uses
+  %or.cond.i = fcmp ugt double %i.m, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -2363,14 +2345,12 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o, %get_parallel_divisor.exit128.peel
   %i.ev = phi double [ %i.eq, %get_parallel_divisor.exit128.peel ], [ 0.000000e+00, %bb.o ] ; 2 uses
-  %i.ew = phi double [ %i.en, %get_parallel_divisor.exit128.peel ], [ %i.eu, %bb.o ] ; 4 uses
+  %i.ew = phi double [ %i.en, %get_parallel_divisor.exit128.peel ], [ %i.eu, %bb.o ] ; 3 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.eb, i64 48
   %i.ey = load i32, ptr %i.ex, align 8
   %i.ez = add i32 %i.ey, %i.m                     ; 2 uses
   store i32 %i.ez, ptr %i.n, align 8
-  %3 = fcmp ogt double %i.ew, 1.000000e+100
-  %4 = fcmp uno double %i.ew, 0.000000e+00
-  %or.cond.i129.peel = or i1 %3, %4
+  %or.cond.i129.peel = fcmp ugt double %i.ew, 1.000000e+100
   br i1 %or.cond.i129.peel, label %clamp_row_est.exit.peel, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -2726,14 +2706,12 @@ get_parallel_divisor.exit128:                     ; preds = %bb.x, %bb.y
 
 bb.z:                                             ; preds = %get_parallel_divisor.exit128, %bb.w
   %i.kc = phi double [ %i.kb, %get_parallel_divisor.exit128 ], [ %i.ja, %bb.w ] ; 2 uses
-  %i.kd = phi double [ %i.jy, %get_parallel_divisor.exit128 ], [ %i.jp, %bb.w ] ; 4 uses
+  %i.kd = phi double [ %i.jy, %get_parallel_divisor.exit128 ], [ %i.jp, %bb.w ] ; 3 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %i.jf, i64 48
   %i.kf = load i32, ptr %i.ke, align 8
   %i.kg = add i32 %i.iz, %i.kf                    ; 2 uses
   store i32 %i.kg, ptr %i.n, align 8
-  %5 = fcmp ogt double %i.kd, 1.000000e+100
-  %6 = fcmp uno double %i.kd, 0.000000e+00
-  %or.cond.i129 = or i1 %5, %6
+  %or.cond.i129 = fcmp ugt double %i.kd, 1.000000e+100
   br i1 %or.cond.i129, label %clamp_row_est.exit, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -3131,10 +3109,8 @@ cost_qual_eval.exit:                              ; preds = %cost_qual_eval.exit
   %i.dq = call double @llvm.fmuladd.f64(double %.0112209, double %.sroa.4.0.copyload, double %.sroa.0.0.copyload)
   %i.dr = fadd double %.1, %i.dq                  ; 3 uses
   %i.ds = call double @clauselist_selectivity(ptr noundef %1, ptr noundef nonnull %6, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.dt = fmul double %.0112209, %i.ds            ; 4 uses
-  %13 = fcmp ogt double %i.dt, 1.000000e+100
-  %14 = fcmp uno double %i.dt, 0.000000e+00
-  %or.cond.i = or i1 %13, %14
+  %i.dt = fmul double %.0112209, %i.ds            ; 3 uses
+  %or.cond.i = fcmp ugt double %i.dt, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.j
 
 bb.j:                                             ; preds = %cost_qual_eval.exit
@@ -3426,10 +3402,8 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.1.sink75.i = phi double [ %i.dg, %bb.z ], [ %.1.i, %bb.y ] ; 2 uses
   %i.dh = fcmp olt double %.1.sink75.i, %.056.i
-  %i.di = select i1 %i.dh, double %.1.sink75.i, double %.056.i ; 4 uses
-  %11 = fcmp ogt double %i.di, 1.000000e+100
-  %12 = fcmp uno double %i.di, 0.000000e+00
-  %or.cond.i.i = or i1 %11, %12
+  %i.di = select i1 %i.dh, double %.1.sink75.i, double %.056.i ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.di, 1.000000e+100
   br i1 %or.cond.i.i, label %get_windowclause_startup_tuples.exit.thread, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -3503,10 +3477,8 @@ cost_qual_eval.exit:                              ; preds = %cost_qual_eval.exit
   %i.r = call double @llvm.fmuladd.f64(double %3, double %.sroa.4.0.copyload, double %.sroa.0.0.copyload)
   %i.s = fadd double %i.d, %i.r                   ; 3 uses
   %i.t = call double @clauselist_selectivity(ptr noundef %1, ptr noundef nonnull %4, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.u = fmul double %3, %i.t                     ; 4 uses
-  %10 = fcmp ogt double %i.u, 1.000000e+100
-  %11 = fcmp uno double %i.u, 0.000000e+00
-  %or.cond.i = or i1 %10, %11
+  %i.u = fmul double %3, %i.t                     ; 3 uses
+  %or.cond.i = fcmp ugt double %i.u, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.b
 
 bb.b:                                             ; preds = %cost_qual_eval.exit
@@ -3909,10 +3881,8 @@ bb.e:                                             ; preds = %bb.d
 
 get_parallel_divisor.exit:                        ; preds = %bb.d, %bb.e
   %.1.i = phi double [ %.0.i, %bb.e ], [ %i.z, %bb.d ]
-  %i.af = fdiv double %i.u, %.1.i                 ; 4 uses
-  %5 = fcmp ogt double %i.af, 1.000000e+100
-  %6 = fcmp uno double %i.af, 0.000000e+00
-  %or.cond.i = or i1 %5, %6
+  %i.af = fdiv double %i.u, %.1.i                 ; 3 uses
+  %or.cond.i = fcmp ugt double %i.af, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %get_parallel_divisor.exit
@@ -4315,10 +4285,8 @@ bb.s:                                             ; preds = %bb.a, %bb.r
   %i.dn = phi <2 x double> [ %i.dj, %bb.r ], [ %i.p, %bb.a ] ; 2 uses
   %i.do = fmul <2 x double> %i.p, %i.dm
   %i.dp = call <2 x double> @llvm.rint.v2f64(<2 x double> %i.do) ; 3 uses
-  %i.dq = extractelement <2 x double> %i.dn, i64 0 ; 4 uses
-  %11 = fcmp ogt double %i.dq, 1.000000e+100
-  %12 = fcmp uno double %i.dq, 0.000000e+00
-  %or.cond.i = or i1 %11, %12
+  %i.dq = extractelement <2 x double> %i.dn, i64 0 ; 3 uses
+  %or.cond.i = fcmp ugt double %i.dq, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
@@ -4331,10 +4299,8 @@ bb.u:                                             ; preds = %bb.t
 
 clamp_row_est.exit:                               ; preds = %bb.s, %bb.t, %bb.u
   %.0.i = phi double [ %i.ds, %bb.u ], [ 1.000000e+100, %bb.s ], [ 1.000000e+00, %bb.t ] ; 2 uses
-  %i.dt = extractelement <2 x double> %i.dn, i64 1 ; 4 uses
-  %13 = fcmp ogt double %i.dt, 1.000000e+100
-  %14 = fcmp uno double %i.dt, 0.000000e+00
-  %or.cond.i175 = or i1 %13, %14
+  %i.dt = extractelement <2 x double> %i.dn, i64 1 ; 3 uses
+  %or.cond.i175 = fcmp ugt double %i.dt, 1.000000e+100
   br i1 %or.cond.i175, label %clamp_row_est.exit177, label %bb.v
 
 bb.v:                                             ; preds = %clamp_row_est.exit
@@ -4581,10 +4547,8 @@ bb.e:                                             ; preds = %bb.d
 
 get_parallel_divisor.exit:                        ; preds = %bb.d, %bb.e
   %.1.i = phi double [ %.0.i, %bb.e ], [ %i.ai, %bb.d ]
-  %i.ao = fdiv double %i.ad, %.1.i                ; 4 uses
-  %7 = fcmp ogt double %i.ao, 1.000000e+100
-  %8 = fcmp uno double %i.ao, 0.000000e+00
-  %or.cond.i = or i1 %7, %8
+  %i.ao = fdiv double %i.ad, %.1.i                ; 3 uses
+  %or.cond.i = fcmp ugt double %i.ao, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %get_parallel_divisor.exit
@@ -4758,10 +4722,8 @@ bb.n:                                             ; preds = %list_length.exit131
 
 .critedge.i:                                      ; preds = %.critedge.loopexit.i, %.lr.ph.i133, %bb.n
   %.017.lcssa.i = phi double [ %.val118.val120, %bb.n ], [ %.val118.val120, %.lr.ph.i133 ], [ %i.dc, %.critedge.loopexit.i ]
-  %i.dd = fmul double %.val119.val121, %.017.lcssa.i ; 4 uses
-  %9 = fcmp ogt double %i.dd, 1.000000e+100
-  %10 = fcmp uno double %i.dd, 0.000000e+00
-  %or.cond.i.i = or i1 %9, %10
+  %i.dd = fmul double %.val119.val121, %.017.lcssa.i ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.dd, 1.000000e+100
   br i1 %or.cond.i.i, label %approx_tuple_count.exit, label %bb.o
 
 bb.o:                                             ; preds = %.critedge.i
@@ -5150,10 +5112,8 @@ bb.e:                                             ; preds = %bb.d
 
 get_parallel_divisor.exit:                        ; preds = %bb.d, %bb.e
   %.1.i = phi double [ %.0.i, %bb.e ], [ %i.ag, %bb.d ]
-  %i.am = fdiv double %i.ab, %.1.i                ; 4 uses
-  %7 = fcmp ogt double %i.am, 1.000000e+100
-  %8 = fcmp uno double %i.am, 0.000000e+00
-  %or.cond.i = or i1 %7, %8
+  %i.am = fdiv double %i.ab, %.1.i                ; 3 uses
+  %or.cond.i = fcmp ugt double %i.am, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %get_parallel_divisor.exit
@@ -5325,10 +5285,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 .critedge:                                        ; preds = %bb.u, %.lr.ph, %bb.l, %bb.k
   %.2121 = phi double [ %i.bn, %bb.k ], [ 1.000000e+00, %bb.l ], [ 1.000000e+00, %.lr.ph ], [ %.1120, %bb.u ]
-  %i.dk = fmul double %i.i, %.2121                ; 4 uses
-  %9 = fcmp ogt double %i.dk, 1.000000e+100
-  %10 = fcmp uno double %i.dk, 0.000000e+00
-  %or.cond.i144 = or i1 %9, %10
+  %i.dk = fmul double %i.i, %.2121                ; 3 uses
+  %or.cond.i144 = fcmp ugt double %i.dk, 1.000000e+100
   br i1 %or.cond.i144, label %clamp_row_est.exit146, label %bb.v
 
 bb.v:                                             ; preds = %.critedge
@@ -5439,10 +5397,8 @@ bb.y:                                             ; preds = %cost_qual_eval.exit
   %i.fl = fmul double %i.fk, %i.ff
   %i.fm = load double, ptr %i.a, align 8
   %i.fn = fmul double %i.i, %i.fm
-  %i.fo = fmul double %i.fn, %i.fj                ; 4 uses
-  %11 = fcmp ogt double %i.fo, 1.000000e+100
-  %12 = fcmp uno double %i.fo, 0.000000e+00
-  %or.cond.i154 = or i1 %11, %12
+  %i.fo = fmul double %i.fn, %i.fj                ; 3 uses
+  %or.cond.i154 = fcmp ugt double %i.fo, 1.000000e+100
   br i1 %or.cond.i154, label %clamp_row_est.exit156, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -5459,10 +5415,8 @@ clamp_row_est.exit156:                            ; preds = %bb.y, %bb.z, %bb.aa
   %i.fs = call double @llvm.fmuladd.f64(double %i.fr, double 5.000000e-01, double %i.q)
   %i.ft = fsub double %i.g, %i.ff                 ; 2 uses
   %i.fu = fmul double %i.fk, %i.ft
-  %i.fv = fdiv double %i.i, %i.at                 ; 4 uses
-  %13 = fcmp ogt double %i.fv, 1.000000e+100
-  %14 = fcmp uno double %i.fv, 0.000000e+00
-  %or.cond.i157 = or i1 %13, %14
+  %i.fv = fdiv double %i.i, %i.at                 ; 3 uses
+  %or.cond.i157 = fcmp ugt double %i.fv, 1.000000e+100
   br i1 %or.cond.i157, label %clamp_row_est.exit159, label %bb.ab
 
 bb.ab:                                            ; preds = %clamp_row_est.exit156
@@ -5485,10 +5439,8 @@ bb.ad:                                            ; preds = %bb.x
   %i.gb = extractelement <2 x double> %i.eg, i64 1
   %i.gc = fmul double %i.g, %i.gb
   %i.gd = load double, ptr %i.a, align 8
-  %i.ge = fmul double %i.i, %i.gd                 ; 4 uses
-  %15 = fcmp ogt double %i.ge, 1.000000e+100
-  %16 = fcmp uno double %i.ge, 0.000000e+00
-  %or.cond.i160 = or i1 %15, %16
+  %i.ge = fmul double %i.i, %i.gd                 ; 3 uses
+  %or.cond.i160 = fcmp ugt double %i.ge, 1.000000e+100
   br i1 %or.cond.i160, label %clamp_row_est.exit162, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
@@ -5547,10 +5499,8 @@ clamp_row_est.exit162:                            ; preds = %bb.ad, %bb.ae, %bb.
 
 .critedge.i:                                      ; preds = %.critedge.loopexit.i, %.lr.ph.i164, %clamp_row_est.exit162
   %.017.lcssa.i = phi double [ %.val134.val136, %clamp_row_est.exit162 ], [ %.val134.val136, %.lr.ph.i164 ], [ %i.ha, %.critedge.loopexit.i ]
-  %i.hb = fmul double %.val135.val137, %.017.lcssa.i ; 4 uses
-  %17 = fcmp ogt double %i.hb, 1.000000e+100
-  %18 = fcmp uno double %i.hb, 0.000000e+00
-  %or.cond.i.i = or i1 %17, %18
+  %i.hb = fmul double %.val135.val137, %.017.lcssa.i ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.hb, 1.000000e+100
   br i1 %or.cond.i.i, label %approx_tuple_count.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %.critedge.i
@@ -5683,10 +5633,8 @@ bb.c:                                             ; preds = %cost_qual_eval.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.af = load double, ptr %i.ae, align 8         ; 4 uses
-  %4 = fcmp ogt double %i.af, 1.000000e+100
-  %5 = fcmp uno double %i.af, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.af = load double, ptr %i.ae, align 8         ; 3 uses
+  %or.cond.i = fcmp ugt double %i.af, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -6089,10 +6037,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.d, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.f = fmul double %i.b, %i.e                   ; 4 uses
-  %3 = fcmp ogt double %i.f, 1.000000e+100
-  %4 = fcmp uno double %i.f, 0.000000e+00
-  %or.cond.i = or i1 %3, %4
+  %i.f = fmul double %i.b, %i.e                   ; 3 uses
+  %or.cond.i = fcmp ugt double %i.f, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -6463,10 +6409,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.g = load i32, ptr %i.f, align 8
   %i.h = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.c, i32 noundef %i.g, i32 noundef 0, ptr noundef null) #14
-  %i.i = fmul double %i.e, %i.h                   ; 4 uses
-  %3 = fcmp ogt double %i.i, 1.000000e+100
-  %4 = fcmp uno double %i.i, 0.000000e+00
-  %or.cond.i = or i1 %3, %4
+  %i.i = fmul double %i.e, %i.h                   ; 3 uses
+  %or.cond.i = fcmp ugt double %i.i, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -6869,10 +6813,8 @@ bb.ai:                                            ; preds = %bb.ac
   unreachable
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad
-  %.3 = phi double [ %i.ee, %bb.ad ], [ %i.ej, %bb.ae ], [ %i.ep, %bb.af ], [ %i.er, %bb.ag ], [ %i.ev, %bb.ah ] ; 4 uses
-  %6 = fcmp ogt double %.3, 1.000000e+100
-  %7 = fcmp uno double %.3, 0.000000e+00
-  %or.cond.i81 = or i1 %6, %7
+  %.3 = phi double [ %i.ee, %bb.ad ], [ %i.ej, %bb.ae ], [ %i.ep, %bb.af ], [ %i.er, %bb.ag ], [ %i.ev, %bb.ah ] ; 3 uses
+  %or.cond.i81 = fcmp ugt double %.3, 1.000000e+100
   br i1 %or.cond.i81, label %clamp_row_est.exit, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
@@ -6963,10 +6905,8 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.ae, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.ag = fmul double %i.ac, %i.af                ; 4 uses
-  %3 = fcmp ogt double %i.ag, 1.000000e+100
-  %4 = fcmp uno double %i.ag, 0.000000e+00
-  %or.cond.i.i = or i1 %3, %4
+  %i.ag = fmul double %i.ac, %i.af                ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.ag, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %.critedge
@@ -7147,10 +7087,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8
   %i.aj = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.ai, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.ak = fmul double %i.ag, %i.aj                ; 4 uses
-  %3 = fcmp ogt double %i.ak, 1.000000e+100
-  %4 = fcmp uno double %i.ak, 0.000000e+00
-  %or.cond.i.i = or i1 %3, %4
+  %i.ak = fmul double %i.ag, %i.aj                ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.ak, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %.critedge
@@ -7223,10 +7161,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.c, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.e = fmul double %i.d, 1.000000e+02           ; 4 uses
-  %3 = fcmp ogt double %i.e, 1.000000e+100
-  %4 = fcmp uno double %i.e, 0.000000e+00
-  %or.cond.i.i = or i1 %3, %4
+  %i.e = fmul double %i.d, 1.000000e+02           ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.e, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -7327,10 +7263,8 @@ list_length.exit:                                 ; preds = %bb.d, %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.z = load ptr, ptr %i.y, align 8
   %i.aa = tail call double @clauselist_selectivity(ptr noundef nonnull %0, ptr noundef %i.z, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.ab = fmul double %i.w, %i.aa                 ; 4 uses
-  %3 = fcmp ogt double %i.ab, 1.000000e+100
-  %4 = fcmp uno double %i.ab, 0.000000e+00
-  %or.cond.i.i = or i1 %3, %4
+  %i.ab = fmul double %i.w, %i.aa                 ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.ab, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %list_length.exit
@@ -7420,10 +7354,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.u = load double, ptr @recursive_worktable_factor, align 8
-  %i.v = fmul double %2, %i.u                     ; 4 uses
-  %4 = fcmp ogt double %i.v, 1.000000e+100
-  %5 = fcmp uno double %i.v, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.v = fmul double %2, %i.u                     ; 3 uses
+  %or.cond.i = fcmp ugt double %i.v, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -7441,10 +7373,8 @@ clamp_row_est.exit:                               ; preds = %bb.d, %bb.g, %bb.f,
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = tail call double @clauselist_selectivity(ptr noundef nonnull %0, ptr noundef %i.aa, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.ac = fmul double %.sink, %i.ab               ; 4 uses
-  %6 = fcmp ogt double %i.ac, 1.000000e+100
-  %7 = fcmp uno double %i.ac, 0.000000e+00
-  %or.cond.i.i = or i1 %6, %7
+  %i.ac = fmul double %.sink, %i.ab               ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.ac, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %clamp_row_est.exit
@@ -7536,10 +7466,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = tail call double @clauselist_selectivity(ptr noundef nonnull %0, ptr noundef %i.w, i32 noundef 0, i32 noundef 0, ptr noundef null) #14
-  %i.y = fmul double %storemerge, %i.x            ; 4 uses
-  %3 = fcmp ogt double %i.y, 1.000000e+100
-  %4 = fcmp uno double %i.y, 0.000000e+00
-  %or.cond.i.i = or i1 %3, %4
+  %i.y = fmul double %storemerge, %i.x            ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.y, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -7597,10 +7525,8 @@ bb.a:
   store double 1.000000e+00, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.c, i32 noundef 0, i32 noundef 0, ptr noundef null) #14 ; 4 uses
-  %3 = fcmp ogt double %i.d, 1.000000e+100
-  %4 = fcmp uno double %i.d, 0.000000e+00
-  %or.cond.i.i = or i1 %3, %4
+  %i.d = tail call double @clauselist_selectivity(ptr noundef %0, ptr noundef %i.c, i32 noundef 0, i32 noundef 0, ptr noundef null) #14 ; 3 uses
+  %or.cond.i.i = fcmp ugt double %i.d, 1.000000e+100
   br i1 %or.cond.i.i, label %clamp_row_est.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -7927,10 +7853,8 @@ bb.b:                                             ; preds = %bb.a
 
 get_parallel_divisor.exit:                        ; preds = %bb.a, %bb.b
   %.1.i = phi double [ %.0.i, %bb.b ], [ %i.d, %bb.a ]
-  %i.j = fmul double %i.b, %.1.i                  ; 4 uses
-  %1 = fcmp ogt double %i.j, 1.000000e+100
-  %2 = fcmp uno double %i.j, 0.000000e+00
-  %or.cond.i = or i1 %1, %2
+  %i.j = fmul double %i.b, %.1.i                  ; 3 uses
+  %or.cond.i = fcmp ugt double %i.j, 1.000000e+100
   br i1 %or.cond.i, label %clamp_row_est.exit, label %bb.c
 
 bb.c:                                             ; preds = %get_parallel_divisor.exit

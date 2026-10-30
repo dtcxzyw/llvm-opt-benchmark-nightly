@@ -205,11 +205,9 @@ bb.ap:                                            ; preds = %bb.ac
 
 _ZNSt12__shared_ptrIN7xgboost16GHistIndexMatrixELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZSt11make_sharedIN7xgboost16GHistIndexMatrixEJPNS0_7ContextERNS0_8MetaInfoERNS0_11EllpackPageERKNS0_10BatchParamEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESD_E4typeEEDpOT0_.exit, %bb.x, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i28, %bb.ab, %_ZSt11make_sharedIN7xgboost16GHistIndexMatrixEJRPKNS0_7ContextERNS0_8MetaInfoERNS0_11EllpackPageERKNS0_10BatchParamEEESt10shared_ptrINSt9enable_ifIXntsr8is_arrayIT_EE5valueESF_E4typeEEDpOT0_.exit, %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.t, %_ZN7xgboost7ContextD2Ev.exit, %bb.l
   %i.ec = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.ed = load double, ptr %i.ec, align 8, !tbaa !37 ; 2 uses
-  %11 = fcmp ord double %i.ed, 0.000000e+00
-  %12 = fcmp une double %i.ed, 2.000000e-01
-  %or.cond = and i1 %11, %12
-  br i1 %or.cond, label %bb.aq, label %bb.aw
+  %i.ed = load double, ptr %i.ec, align 8, !tbaa !37
+  %or.cond = fcmp ueq double %i.ed, 2.000000e-01
+  br i1 %or.cond, label %bb.aw, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNSt12__shared_ptrIN7xgboost16GHistIndexMatrixELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.ee = call noundef zeroext i1 @_ZN7xgboost13ConsoleLogger9ShouldLogENS0_12LogVerbosityE(i32 noundef 1)

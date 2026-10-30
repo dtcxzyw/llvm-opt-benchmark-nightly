@@ -204,11 +204,9 @@ bb.dn:                                            ; preds = %_ZNK2cv7MatExprcvNS
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %10) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
-  %i.zo = fsub float 1.000000e+00, %i.zn          ; 3 uses
-  %94 = fcmp ord float %i.zo, 0.000000e+00
-  %95 = fcmp une float %i.zo, 1.000000e+00
-  %or.cond5.i = and i1 %94, %95
-  br i1 %or.cond5.i, label %bb.do, label %bb.en
+  %i.zo = fsub float 1.000000e+00, %i.zn          ; 2 uses
+  %or.cond5.i = fcmp ueq float %i.zo, 1.000000e+00
+  br i1 %or.cond5.i, label %bb.en, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
   %i.zp = extractvalue { <2 x float>, <2 x float> } %i.za, 1 ; 2 uses

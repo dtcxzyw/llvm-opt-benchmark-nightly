@@ -205,10 +205,9 @@ bb.n:                                             ; preds = %.lr.ph
           to label %bb.o unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 bb.o:                                             ; preds = %bb.n
-  %6 = fcmp uno double %i.ay, 0.000000e+00
-  %7 = tail call double @llvm.fabs.f64(double %i.ay)
-  %i.az = fcmp ogt double %7, f0x471A36E2E0000000
-  %or.cond117.peel = or i1 %6, %i.az
+  %or.cond.peel = fcmp ult double %i.ay, f0xC71A36E2E0000000
+  %i.az = fcmp ogt double %i.ay, f0x471A36E2E0000000
+  %or.cond117.peel = or i1 %or.cond.peel, %i.az
   br i1 %or.cond117.peel, label %.thread, label %bb.p
 
 .thread:                                          ; preds = %bb.o
@@ -238,10 +237,9 @@ bb.q:                                             ; preds = %bb.p
   %i.bp = fmul double %i.bo, 2.000000e+00
   %i.bq = fdiv double %i.bp, %i.c
   %i.br = fsub double %i.bj, %i.bq                ; 3 uses
-  %8 = fcmp uno double %i.br, 0.000000e+00
-  %9 = tail call double @llvm.fabs.f64(double %i.br)
-  %i.bs = fcmp ogt double %9, f0x471A36E2E0000000
-  %or.cond119.peel = or i1 %8, %i.bs              ; 2 uses
+  %or.cond118.peel = fcmp ult double %i.br, f0xC71A36E2E0000000
+  %i.bs = fcmp ogt double %i.br, f0x471A36E2E0000000
+  %or.cond119.peel = or i1 %or.cond118.peel, %i.bs ; 2 uses
   %spec.select.peel = select i1 %or.cond119.peel, double %i.bj, double %i.br
   %spec.select120.peel = zext i1 %or.cond119.peel to i8
   br label %.peel.next
@@ -305,10 +303,9 @@ bb.v:                                             ; preds = %bb.u
           to label %bb.w unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
 bb.w:                                             ; preds = %bb.v
-  %10 = fcmp uno double %i.cn, 0.000000e+00
-  %11 = tail call double @llvm.fabs.f64(double %i.cn)
-  %i.co = fcmp ogt double %11, f0x471A36E2E0000000
-  %or.cond117 = or i1 %10, %i.co
+  %or.cond = fcmp ult double %i.cn, f0xC71A36E2E0000000
+  %i.co = fcmp ogt double %i.cn, f0x471A36E2E0000000
+  %or.cond117 = or i1 %or.cond, %i.co
   %i.cp = trunc nuw i8 %.0100150 to i1
   %i.cq = select i1 %or.cond117, i1 true, i1 %i.cp
   br i1 %i.cq, label %.thread179, label %bb.x
@@ -348,10 +345,9 @@ bb.y:                                             ; preds = %bb.x
   %i.do = fmul double %i.dn, 2.000000e+00
   %i.dp = fdiv double %i.do, %i.c
   %i.dq = fsub double %i.dg, %i.dp                ; 3 uses
-  %12 = fcmp uno double %i.dq, 0.000000e+00
-  %13 = tail call double @llvm.fabs.f64(double %i.dq)
-  %i.dr = fcmp ogt double %13, f0x471A36E2E0000000
-  %or.cond119 = or i1 %12, %i.dr                  ; 2 uses
+  %or.cond118 = fcmp ult double %i.dq, f0xC71A36E2E0000000
+  %i.dr = fcmp ogt double %i.dq, f0x471A36E2E0000000
+  %or.cond119 = or i1 %or.cond118, %i.dr          ; 2 uses
   %spec.select = select i1 %or.cond119, double %i.dg, double %i.dq
   %spec.select120 = zext i1 %or.cond119 to i8
   br label %bb.z

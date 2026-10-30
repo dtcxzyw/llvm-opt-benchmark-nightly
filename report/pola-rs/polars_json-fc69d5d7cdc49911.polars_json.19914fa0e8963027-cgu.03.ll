@@ -204,7 +204,7 @@ select.unfold:                                    ; preds = %bb.g, %bb.i
   %.sroa.17.3.ph.ph = phi i64 [ %.sroa.17.075, %bb.i ], [ %.sroa.17.2, %bb.g ] ; 2 uses
   %.sroa.3.0.i.pn.i.ph.ph = phi ptr [ %.sroa.5.073, %bb.i ], [ %i.u, %bb.g ]
   %i.y = load double, ptr %.sroa.3.0.i.pn.i.ph.ph, align 8, !dbg !2456, !alias.scope !2412, !noundef !635 ; 2 uses
-  %i.z = call double @llvm.fabs.f64(double %i.y), !dbg !2457
+  %i.z = call double @llvm.fabs.f64(double %i.y)
   %or.cond.i = fcmp ueq double %i.z, +inf, !dbg !2457
   br i1 %or.cond.i, label %bb.l, label %bb.k, !dbg !2457
 
@@ -607,7 +607,7 @@ select.unfold:                                    ; preds = %bb.g, %bb.i
   %.sroa.17.3.ph.ph = phi i64 [ %.sroa.17.075, %bb.i ], [ %.sroa.17.2, %bb.g ] ; 2 uses
   %.sroa.3.0.i.pn.i.ph.ph = phi ptr [ %.sroa.5.073, %bb.i ], [ %i.u, %bb.g ]
   %i.y = load float, ptr %.sroa.3.0.i.pn.i.ph.ph, align 4, !dbg !3145, !alias.scope !3101, !noundef !635 ; 2 uses
-  %i.z = call float @llvm.fabs.f32(float %i.y), !dbg !3146
+  %i.z = call float @llvm.fabs.f32(float %i.y)
   %or.cond.i = fcmp ueq float %i.z, +inf, !dbg !3146
   br i1 %or.cond.i, label %bb.l, label %bb.k, !dbg !3146
 
@@ -1010,7 +1010,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = load double, ptr %i.ay, align 8, !dbg !8946, !alias.scope !8872, !noundef !635 ; 2 uses
-  %i.bb = call double @llvm.fabs.f64(double %i.ba), !dbg !8947
+  %i.bb = call double @llvm.fabs.f64(double %i.ba)
   %or.cond.i = fcmp ueq double %i.bb, +inf, !dbg !8947
   br i1 %or.cond.i, label %bb.t, label %bb.s, !dbg !8947
 
@@ -1413,7 +1413,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = load float, ptr %i.ay, align 4, !dbg !9833, !alias.scope !9759, !noundef !635 ; 2 uses
-  %i.bb = call float @llvm.fabs.f32(float %i.ba), !dbg !9834
+  %i.bb = call float @llvm.fabs.f32(float %i.ba)
   %or.cond.i = fcmp ueq float %i.bb, +inf, !dbg !9834
   br i1 %or.cond.i, label %bb.t, label %bb.s, !dbg !9834
 

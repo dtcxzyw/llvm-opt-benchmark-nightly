@@ -9,63 +9,38 @@ target triple = "amdgpu-amd-amdhsa"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
 define hidden <2 x half> @__ocml_atanh_2f16(<2 x half> noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = extractelement <2 x half> %0, i64 0      ; 3 uses
-  %1 = tail call half @llvm.fabs.f16(half %i.a)   ; 5 uses
-  %i.b = fpext half %1 to float                   ; 2 uses
+  %1 = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !10, !range !11, !noundef !12
+  %2 = trunc nuw i8 %1 to i1
+  %3 = tail call <2 x half> @llvm.fabs.v2f16(<2 x half> %0) ; 6 uses
+  %i.a = extractelement <2 x half> %3, i64 0
+  %4 = fpext half %i.a to float                   ; 2 uses
+  %5 = fadd float %4, 1.000000e+00
+  %6 = fsub float 1.000000e+00, %4
+  %7 = tail call float @llvm.amdgcn.rcp.f32(float %6)
+  %8 = fmul float %5, %7
+  %9 = tail call float @llvm.amdgcn.log.f32(float %8)
+  %10 = extractelement <2 x half> %3, i64 1
+  %i.b = fpext half %10 to float                  ; 2 uses
   %i.c = fadd float %i.b, 1.000000e+00
   %i.d = fsub float 1.000000e+00, %i.b
   %i.e = tail call float @llvm.amdgcn.rcp.f32(float %i.d)
   %i.f = fmul float %i.c, %i.e
   %i.g = tail call float @llvm.amdgcn.log.f32(float %i.f)
-  %2 = fmul float %i.g, f0x3EB17218
-  %3 = fptrunc float %2 to half
-  %4 = fcmp olt half %1, 7.812500e-03
-  %5 = select i1 %4, half %1, half %3             ; 2 uses
-  %6 = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !10, !range !11, !noundef !12
-  %7 = trunc nuw i8 %6 to i1                      ; 2 uses
-  br i1 %7, label %__ocml_atanh_f16.exit, label %8
-
-8:                                                ; preds = %bb.a
-  %9 = fcmp oeq half %1, 1.000000e+00
-  %10 = select i1 %9, half +inf, half %5
-  %11 = fcmp ogt half %1, 1.000000e+00
-  %12 = fcmp uno half %i.a, 0.000000e+00
-  %13 = or i1 %12, %11
-  %14 = select i1 %13, half +qnan, half %10
-  br label %__ocml_atanh_f16.exit
-
-__ocml_atanh_f16.exit:                            ; preds = %bb.a, %8
-  %.0.i = phi half [ %5, %bb.a ], [ %14, %8 ]
-  %15 = extractelement <2 x half> %0, i64 1       ; 3 uses
-  %16 = tail call half @llvm.fabs.f16(half %15)   ; 5 uses
-  %17 = fpext half %16 to float                   ; 2 uses
-  %18 = fadd float %17, 1.000000e+00
-  %19 = fsub float 1.000000e+00, %17
-  %20 = tail call float @llvm.amdgcn.rcp.f32(float %19)
-  %21 = fmul float %18, %20
-  %22 = tail call float @llvm.amdgcn.log.f32(float %21)
-  %23 = fmul float %22, f0x3EB17218
-  %24 = fptrunc float %23 to half
-  %25 = fcmp olt half %16, 7.812500e-03
-  %26 = select i1 %25, half %16, half %24         ; 2 uses
-  br i1 %7, label %__ocml_atanh_f16.exit4, label %27
-
-27:                                               ; preds = %__ocml_atanh_f16.exit
-  %28 = fcmp oeq half %16, 1.000000e+00
-  %29 = select i1 %28, half +inf, half %26
-  %30 = fcmp ogt half %16, 1.000000e+00
-  %31 = fcmp uno half %15, 0.000000e+00
-  %32 = or i1 %31, %30
-  %33 = select i1 %32, half +qnan, half %29
-  br label %__ocml_atanh_f16.exit4
-
-__ocml_atanh_f16.exit4:                           ; preds = %__ocml_atanh_f16.exit, %27
-  %.0.i3 = phi half [ %26, %__ocml_atanh_f16.exit ], [ %33, %27 ]
-  %34 = tail call half @llvm.copysign.f16(half %.0.i, half %i.a)
-  %35 = insertelement <2 x half> poison, half %34, i64 0
-  %36 = tail call half @llvm.copysign.f16(half %.0.i3, half %15)
-  %37 = insertelement <2 x half> %35, half %36, i64 1
-  ret <2 x half> %37
+  %11 = insertelement <2 x float> poison, float %9, i64 0
+  %12 = insertelement <2 x float> %11, float %i.g, i64 1
+  %13 = fmul <2 x float> %12, splat (float f0x3EB17218)
+  %14 = fptrunc <2 x float> %13 to <2 x half>
+  %15 = fcmp olt <2 x half> %3, splat (half 7.812500e-03)
+  %16 = select <2 x i1> %15, <2 x half> %3, <2 x half> %14 ; 2 uses
+  %17 = fcmp oeq <2 x half> %3, splat (half 1.000000e+00)
+  %18 = select <2 x i1> %17, <2 x half> splat (half +inf), <2 x half> %16
+  %19 = fcmp ugt <2 x half> %3, splat (half 1.000000e+00)
+  %20 = select <2 x i1> %19, <2 x half> splat (half +qnan), <2 x half> %18
+  %21 = insertelement <2 x i1> poison, i1 %2, i64 0
+  %22 = shufflevector <2 x i1> %21, <2 x i1> poison, <2 x i32> zeroinitializer
+  %23 = select <2 x i1> %22, <2 x half> %16, <2 x half> %20
+  %24 = tail call <2 x half> @llvm.copysign.v2f16(<2 x half> %23, <2 x half> %0)
+  ret <2 x half> %24
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable
@@ -84,21 +59,13 @@ bb.a:
   %i.k = select i1 %i.j, half %i.a, half %i.i     ; 2 uses
   %i.l = load i8, ptr addrspace(4) @__oclc_finite_only_opt, align 1, !tbaa !10, !range !11, !noundef !12
   %i.m = trunc nuw i8 %i.l to i1
-  br i1 %i.m, label %8, label %1
-
-1:                                                ; preds = %bb.a
-  %2 = fcmp oeq half %i.a, 1.000000e+00
-  %3 = select i1 %2, half +inf, half %i.k
-  %4 = fcmp ogt half %i.a, 1.000000e+00
-  %5 = fcmp uno half %0, 0.000000e+00
-  %6 = or i1 %5, %4
-  %7 = select i1 %6, half +qnan, half %3
-  br label %8
-
-8:                                                ; preds = %1, %bb.a
-  %.0 = phi half [ %i.k, %bb.a ], [ %7, %1 ]
-  %9 = tail call half @llvm.copysign.f16(half %.0, half %0)
-  ret half %9
+  %1 = fcmp oeq half %i.a, 1.000000e+00
+  %2 = select i1 %1, half +inf, half %i.k
+  %3 = fcmp ugt half %i.a, 1.000000e+00
+  %4 = select i1 %3, half +qnan, half %2
+  %.0 = select i1 %i.m, half %i.k, half %4
+  %5 = tail call half @llvm.copysign.f16(half %.0, half %0)
+  ret half %5
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -112,6 +79,12 @@ declare float @llvm.amdgcn.log.f32(float) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare half @llvm.copysign.f16(half, half) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x half> @llvm.fabs.v2f16(<2 x half>) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x half> @llvm.copysign.v2f16(<2 x half>, <2 x half>) #1
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn denormal_fpenv(dynamic) memory(none) uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

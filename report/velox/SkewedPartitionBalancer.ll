@@ -205,10 +205,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = sub i64 %i.x, %i.aa
   %i.ac = uitofp i64 %i.ab to double
   %i.ad = uitofp i64 %i.x to double
-  %i.ae = fdiv double %i.ac, %i.ad                ; 2 uses
-  %4 = fcmp ole double %i.ae, f0x3FE6666666666666
-  %5 = fcmp uno double %i.ae, 0.000000e+00
-  %or.cond = or i1 %4, %5
+  %i.ae = fdiv double %i.ac, %i.ad
+  %or.cond = fcmp ule double %i.ae, f0x3FE6666666666666
   br i1 %or.cond, label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread, label %bb.d
 
 .loopexit:                                        ; preds = %bb.d, %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i

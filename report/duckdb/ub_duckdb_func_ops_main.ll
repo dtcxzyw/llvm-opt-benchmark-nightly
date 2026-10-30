@@ -205,12 +205,10 @@ bb.a:
   %.sroa.0.0.extract.trunc = trunc i64 %0 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.b = sitofp i32 %.sroa.0.0.extract.trunc to double ; 2 uses
-  %i.c = fmul double %2, %i.b                     ; 4 uses
-  %4 = fcmp uno double %i.c, 0.000000e+00
-  %5 = fcmp olt double %i.c, f0xC1E0000000000000
-  %or.cond = or i1 %4, %5
+  %i.c = fmul double %2, %i.b                     ; 3 uses
+  %or.cond = fcmp ult double %i.c, f0xC1E0000000000000
   %i.d = fcmp ogt double %i.c, f0x41DFFFFFFFC00000
-  %or.cond21 = or i1 %i.d, %or.cond
+  %or.cond21 = or i1 %or.cond, %i.d
   br i1 %or.cond21, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -219,13 +217,11 @@ bb.b:                                             ; preds = %bb.a
   %i.e = fptosi double %i.c to i32                ; 2 uses
   store i32 %i.e, ptr %3, align 8, !tbaa !183
   %i.f = sitofp i32 %.sroa.3.0.extract.trunc to double ; 2 uses
-  %i.g = fmul double %2, %i.f                     ; 5 uses
+  %i.g = fmul double %2, %i.f                     ; 4 uses
   store double %i.g, ptr %i.a, align 8, !tbaa !185
-  %6 = fcmp uno double %i.g, 0.000000e+00
-  %7 = fcmp olt double %i.g, f0xC1E0000000000000
-  %or.cond22 = or i1 %6, %7
+  %or.cond22 = fcmp ult double %i.g, f0xC1E0000000000000
   %i.h = fcmp ogt double %i.g, f0x41DFFFFFFFC00000
-  %or.cond23 = or i1 %i.h, %or.cond22
+  %or.cond23 = or i1 %or.cond22, %i.h
   br i1 %or.cond23, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -628,12 +624,10 @@ _ZN6duckdb21TemplatedValidityMaskImE10SetInvalidEm.exit.i.us.i.i.i.i: ; preds = 
   %.sroa.0.0.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.021.0.copyload.i.i.i.i to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25, !noalias !486
   %i.db = sitofp i32 %.sroa.0.0.extract.trunc.i.i.i.i.i to double ; 2 uses
-  %i.dc = fmul double %i.ci, %i.db                ; 4 uses
-  %14 = fcmp uno double %i.dc, 0.000000e+00
-  %15 = fcmp olt double %i.dc, f0xC1E0000000000000
-  %or.cond.i.i.i.i.i = or i1 %14, %15
+  %i.dc = fmul double %i.ci, %i.db                ; 3 uses
+  %or.cond.i.i.i.i.i = fcmp ult double %i.dc, f0xC1E0000000000000
   %i.dd = fcmp ogt double %i.dc, f0x41DFFFFFFFC00000
-  %or.cond21.i.i.i.i.i = or i1 %i.dd, %or.cond.i.i.i.i.i
+  %or.cond21.i.i.i.i.i = or i1 %or.cond.i.i.i.i.i, %i.dd
   br i1 %or.cond21.i.i.i.i.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i.i.i, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph.split.i.i.i.i
@@ -642,13 +636,11 @@ bb.n:                                             ; preds = %.lr.ph.split.i.i.i.
   %i.de = fptosi double %i.dc to i32              ; 2 uses
   store i32 %i.de, ptr %11, align 16, !tbaa !183, !noalias !486
   %i.df = sitofp i32 %.sroa.3.0.extract.trunc.i.i.i.i.i to double ; 2 uses
-  %i.dg = fmul double %i.ci, %i.df                ; 5 uses
+  %i.dg = fmul double %i.ci, %i.df                ; 4 uses
   store double %i.dg, ptr %i.c, align 8, !tbaa !185, !noalias !486
-  %16 = fcmp uno double %i.dg, 0.000000e+00
-  %17 = fcmp olt double %i.dg, f0xC1E0000000000000
-  %or.cond22.i.i.i.i.i = or i1 %16, %17
+  %or.cond22.i.i.i.i.i = fcmp ult double %i.dg, f0xC1E0000000000000
   %i.dh = fcmp ogt double %i.dg, f0x41DFFFFFFFC00000
-  %or.cond23.i.i.i.i.i = or i1 %i.dh, %or.cond22.i.i.i.i.i
+  %or.cond23.i.i.i.i.i = or i1 %or.cond22.i.i.i.i.i, %i.dh
   br i1 %or.cond23.i.i.i.i.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i.i.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -1005,24 +997,20 @@ bb.ak:                                            ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %8), !noalias !490
   %i.ii = fdiv double 1.000000e+00, %i.hw         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25, !noalias !490
-  %i.ij = fmul double %i.ii, %i.hs                ; 4 uses
-  %18 = fcmp uno double %i.ij, 0.000000e+00
-  %19 = fcmp olt double %i.ij, f0xC1E0000000000000
-  %or.cond.i.i.i64.i.i = or i1 %18, %19
+  %i.ij = fmul double %i.ii, %i.hs                ; 3 uses
+  %or.cond.i.i.i64.i.i = fcmp ult double %i.ij, f0xC1E0000000000000
   %i.ik = fcmp ogt double %i.ij, f0x41DFFFFFFFC00000
-  %or.cond21.i.i.i65.i.i = or i1 %i.ik, %or.cond.i.i.i64.i.i
+  %or.cond21.i.i.i65.i.i = or i1 %or.cond.i.i.i64.i.i, %i.ik
   br i1 %or.cond21.i.i.i65.i.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i69.i.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.il = fptosi double %i.ij to i32              ; 2 uses
   store i32 %i.il, ptr %8, align 16, !tbaa !183, !noalias !490
-  %i.im = fmul double %i.ii, %i.ht                ; 5 uses
+  %i.im = fmul double %i.ii, %i.ht                ; 4 uses
   store double %i.im, ptr %i.b, align 8, !tbaa !185, !noalias !490
-  %20 = fcmp uno double %i.im, 0.000000e+00
-  %21 = fcmp olt double %i.im, f0xC1E0000000000000
-  %or.cond22.i.i.i66.i.i = or i1 %20, %21
+  %or.cond22.i.i.i66.i.i = fcmp ult double %i.im, f0xC1E0000000000000
   %i.in = fcmp ogt double %i.im, f0x41DFFFFFFFC00000
-  %or.cond23.i.i.i67.i.i = or i1 %i.in, %or.cond22.i.i.i66.i.i
+  %or.cond23.i.i.i67.i.i = or i1 %or.cond22.i.i.i66.i.i, %i.in
   br i1 %or.cond23.i.i.i67.i.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i69.i.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -1397,12 +1385,10 @@ bb.bn:                                            ; preds = %.lr.ph.i.i109.i.i
   %.sroa.0.0.extract.trunc.i.i.i110.i.i = trunc i64 %.sroa.022.0.copyload.i.i.i.i to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25, !noalias !494
   %i.nt = sitofp i32 %.sroa.0.0.extract.trunc.i.i.i110.i.i to double ; 2 uses
-  %i.nu = fmul double %i.ns, %i.nt                ; 4 uses
-  %22 = fcmp uno double %i.nu, 0.000000e+00
-  %23 = fcmp olt double %i.nu, f0xC1E0000000000000
-  %or.cond.i.i.i111.i.i = or i1 %22, %23
+  %i.nu = fmul double %i.ns, %i.nt                ; 3 uses
+  %or.cond.i.i.i111.i.i = fcmp ult double %i.nu, f0xC1E0000000000000
   %i.nv = fcmp ogt double %i.nu, f0x41DFFFFFFFC00000
-  %or.cond21.i.i.i112.i.i = or i1 %i.nv, %or.cond.i.i.i111.i.i
+  %or.cond21.i.i.i112.i.i = or i1 %or.cond.i.i.i111.i.i, %i.nv
   br i1 %or.cond21.i.i.i112.i.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i118.i.i, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
@@ -1411,13 +1397,11 @@ bb.bo:                                            ; preds = %bb.bn
   %i.nw = fptosi double %i.nu to i32              ; 2 uses
   store i32 %i.nw, ptr %5, align 8, !tbaa !183, !noalias !494
   %i.nx = sitofp i32 %.sroa.3.0.extract.trunc.i.i.i114.i.i to double ; 2 uses
-  %i.ny = fmul double %i.ns, %i.nx                ; 5 uses
+  %i.ny = fmul double %i.ns, %i.nx                ; 4 uses
   store double %i.ny, ptr %i.a, align 8, !tbaa !185, !noalias !494
-  %24 = fcmp uno double %i.ny, 0.000000e+00
-  %25 = fcmp olt double %i.ny, f0xC1E0000000000000
-  %or.cond22.i.i.i115.i.i = or i1 %24, %25
+  %or.cond22.i.i.i115.i.i = fcmp ult double %i.ny, f0xC1E0000000000000
   %i.nz = fcmp ogt double %i.ny, f0x41DFFFFFFFC00000
-  %or.cond23.i.i.i116.i.i = or i1 %i.nz, %or.cond22.i.i.i115.i.i
+  %or.cond23.i.i.i116.i.i = or i1 %or.cond22.i.i.i115.i.i, %i.nz
   br i1 %or.cond23.i.i.i116.i.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread.i.i118.i.i, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
@@ -1820,12 +1804,10 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.021.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.y = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
-  %i.z = fmul double %i.t, %i.y                   ; 4 uses
-  %12 = fcmp uno double %i.z, 0.000000e+00
-  %13 = fcmp olt double %i.z, f0xC1E0000000000000
-  %or.cond.i = or i1 %12, %13
+  %i.z = fmul double %i.t, %i.y                   ; 3 uses
+  %or.cond.i = fcmp ult double %i.z, f0xC1E0000000000000
   %i.aa = fcmp ogt double %i.z, f0x41DFFFFFFFC00000
-  %or.cond21.i = or i1 %i.aa, %or.cond.i
+  %or.cond21.i = or i1 %or.cond.i, %i.aa
   br i1 %or.cond21.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1834,13 +1816,11 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = fptosi double %i.z to i32               ; 2 uses
   store i32 %i.ab, ptr %9, align 16, !tbaa !183
   %i.ac = sitofp i32 %.sroa.3.0.extract.trunc.i to double ; 2 uses
-  %i.ad = fmul double %i.t, %i.ac                 ; 5 uses
+  %i.ad = fmul double %i.t, %i.ac                 ; 4 uses
   store double %i.ad, ptr %i.b, align 8, !tbaa !185
-  %14 = fcmp uno double %i.ad, 0.000000e+00
-  %15 = fcmp olt double %i.ad, f0xC1E0000000000000
-  %or.cond22.i = or i1 %14, %15
+  %or.cond22.i = fcmp ult double %i.ad, f0xC1E0000000000000
   %i.ae = fcmp ogt double %i.ad, f0x41DFFFFFFFC00000
-  %or.cond23.i = or i1 %i.ae, %or.cond22.i
+  %or.cond23.i = or i1 %or.cond22.i, %i.ae
   br i1 %or.cond23.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1987,12 +1967,10 @@ bb.n:                                             ; preds = %.lr.ph113
   %.sroa.0.0.extract.trunc.i85 = trunc i64 %.sroa.013.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.cg = sitofp i32 %.sroa.0.0.extract.trunc.i85 to double ; 2 uses
-  %i.ch = fmul double %i.cf, %i.cg                ; 4 uses
-  %16 = fcmp uno double %i.ch, 0.000000e+00
-  %17 = fcmp olt double %i.ch, f0xC1E0000000000000
-  %or.cond.i86 = or i1 %16, %17
+  %i.ch = fmul double %i.cf, %i.cg                ; 3 uses
+  %or.cond.i86 = fcmp ult double %i.ch, f0xC1E0000000000000
   %i.ci = fcmp ogt double %i.ch, f0x41DFFFFFFFC00000
-  %or.cond21.i87 = or i1 %i.ci, %or.cond.i86
+  %or.cond21.i87 = or i1 %or.cond.i86, %i.ci
   br i1 %or.cond21.i87, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -2001,13 +1979,11 @@ bb.o:                                             ; preds = %bb.n
   %i.cj = fptosi double %i.ch to i32              ; 2 uses
   store i32 %i.cj, ptr %6, align 16, !tbaa !183
   %i.ck = sitofp i32 %.sroa.3.0.extract.trunc.i89 to double ; 2 uses
-  %i.cl = fmul double %i.cf, %i.ck                ; 5 uses
+  %i.cl = fmul double %i.cf, %i.ck                ; 4 uses
   store double %i.cl, ptr %i.a, align 8, !tbaa !185
-  %18 = fcmp uno double %i.cl, 0.000000e+00
-  %19 = fcmp olt double %i.cl, f0xC1E0000000000000
-  %or.cond22.i90 = or i1 %18, %19
+  %or.cond22.i90 = fcmp ult double %i.cl, f0xC1E0000000000000
   %i.cm = fcmp ogt double %i.cl, f0x41DFFFFFFFC00000
-  %or.cond23.i91 = or i1 %i.cm, %or.cond22.i90
+  %or.cond23.i91 = or i1 %or.cond22.i90, %i.cm
   br i1 %or.cond23.i91, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -2242,24 +2218,20 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb
   %i.x = load double, ptr %i.w, align 8, !tbaa !185 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.y = fmul double %i.x, %i.t                   ; 4 uses
-  %12 = fcmp uno double %i.y, 0.000000e+00
-  %13 = fcmp olt double %i.y, f0xC1E0000000000000
-  %or.cond.i = or i1 %12, %13
+  %i.y = fmul double %i.x, %i.t                   ; 3 uses
+  %or.cond.i = fcmp ult double %i.y, f0xC1E0000000000000
   %i.z = fcmp ogt double %i.y, f0x41DFFFFFFFC00000
-  %or.cond21.i = or i1 %i.z, %or.cond.i
+  %or.cond21.i = or i1 %or.cond.i, %i.z
   br i1 %or.cond21.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = fptosi double %i.y to i32               ; 2 uses
   store i32 %i.aa, ptr %9, align 16, !tbaa !183
-  %i.ab = fmul double %i.x, %i.u                  ; 5 uses
+  %i.ab = fmul double %i.x, %i.u                  ; 4 uses
   store double %i.ab, ptr %i.b, align 8, !tbaa !185
-  %14 = fcmp uno double %i.ab, 0.000000e+00
-  %15 = fcmp olt double %i.ab, f0xC1E0000000000000
-  %or.cond22.i = or i1 %14, %15
+  %or.cond22.i = fcmp ult double %i.ab, f0xC1E0000000000000
   %i.ac = fcmp ogt double %i.ab, f0x41DFFFFFFFC00000
-  %or.cond23.i = or i1 %i.ac, %or.cond22.i
+  %or.cond23.i = or i1 %or.cond22.i, %i.ac
   br i1 %or.cond23.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -2406,12 +2378,10 @@ bb.n:                                             ; preds = %.lr.ph113
   %.sroa.0.0.extract.trunc.i85 = trunc i64 %.sroa.013.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.cf = sitofp i32 %.sroa.0.0.extract.trunc.i85 to double ; 2 uses
-  %i.cg = fmul double %i.ce, %i.cf                ; 4 uses
-  %16 = fcmp uno double %i.cg, 0.000000e+00
-  %17 = fcmp olt double %i.cg, f0xC1E0000000000000
-  %or.cond.i86 = or i1 %16, %17
+  %i.cg = fmul double %i.ce, %i.cf                ; 3 uses
+  %or.cond.i86 = fcmp ult double %i.cg, f0xC1E0000000000000
   %i.ch = fcmp ogt double %i.cg, f0x41DFFFFFFFC00000
-  %or.cond21.i87 = or i1 %i.ch, %or.cond.i86
+  %or.cond21.i87 = or i1 %or.cond.i86, %i.ch
   br i1 %or.cond21.i87, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -2420,13 +2390,11 @@ bb.o:                                             ; preds = %bb.n
   %i.ci = fptosi double %i.cg to i32              ; 2 uses
   store i32 %i.ci, ptr %6, align 16, !tbaa !183
   %i.cj = sitofp i32 %.sroa.3.0.extract.trunc.i89 to double ; 2 uses
-  %i.ck = fmul double %i.ce, %i.cj                ; 5 uses
+  %i.ck = fmul double %i.ce, %i.cj                ; 4 uses
   store double %i.ck, ptr %i.a, align 8, !tbaa !185
-  %18 = fcmp uno double %i.ck, 0.000000e+00
-  %19 = fcmp olt double %i.ck, f0xC1E0000000000000
-  %or.cond22.i90 = or i1 %18, %19
+  %or.cond22.i90 = fcmp ult double %i.ck, f0xC1E0000000000000
   %i.cl = fcmp ogt double %i.ck, f0x41DFFFFFFFC00000
-  %or.cond23.i91 = or i1 %i.cl, %or.cond22.i90
+  %or.cond23.i91 = or i1 %or.cond22.i90, %i.cl
   br i1 %or.cond23.i91, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -2650,12 +2618,10 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.022.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.w = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
-  %i.x = fmul double %i.v, %i.w                   ; 4 uses
-  %12 = fcmp uno double %i.x, 0.000000e+00
-  %13 = fcmp olt double %i.x, f0xC1E0000000000000
-  %or.cond.i = or i1 %12, %13
+  %i.x = fmul double %i.v, %i.w                   ; 3 uses
+  %or.cond.i = fcmp ult double %i.x, f0xC1E0000000000000
   %i.y = fcmp ogt double %i.x, f0x41DFFFFFFFC00000
-  %or.cond21.i = or i1 %i.y, %or.cond.i
+  %or.cond21.i = or i1 %or.cond.i, %i.y
   br i1 %or.cond21.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
@@ -2664,13 +2630,11 @@ bb.d:                                             ; preds = %.lr.ph
   %i.z = fptosi double %i.x to i32                ; 2 uses
   store i32 %i.z, ptr %9, align 16, !tbaa !183
   %i.aa = sitofp i32 %.sroa.3.0.extract.trunc.i to double ; 2 uses
-  %i.ab = fmul double %i.v, %i.aa                 ; 5 uses
+  %i.ab = fmul double %i.v, %i.aa                 ; 4 uses
   store double %i.ab, ptr %i.b, align 8, !tbaa !185
-  %14 = fcmp uno double %i.ab, 0.000000e+00
-  %15 = fcmp olt double %i.ab, f0xC1E0000000000000
-  %or.cond22.i = or i1 %14, %15
+  %or.cond22.i = fcmp ult double %i.ab, f0xC1E0000000000000
   %i.ac = fcmp ogt double %i.ab, f0x41DFFFFFFFC00000
-  %or.cond23.i = or i1 %i.ac, %or.cond22.i
+  %or.cond23.i = or i1 %or.cond22.i, %i.ac
   br i1 %or.cond23.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -2820,12 +2784,10 @@ bb.m:                                             ; preds = %.lr.ph122
   %.sroa.0.0.extract.trunc.i94 = trunc i64 %.sroa.014.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.ch = sitofp i32 %.sroa.0.0.extract.trunc.i94 to double ; 2 uses
-  %i.ci = fmul double %i.cg, %i.ch                ; 4 uses
-  %16 = fcmp uno double %i.ci, 0.000000e+00
-  %17 = fcmp olt double %i.ci, f0xC1E0000000000000
-  %or.cond.i95 = or i1 %16, %17
+  %i.ci = fmul double %i.cg, %i.ch                ; 3 uses
+  %or.cond.i95 = fcmp ult double %i.ci, f0xC1E0000000000000
   %i.cj = fcmp ogt double %i.ci, f0x41DFFFFFFFC00000
-  %or.cond21.i96 = or i1 %i.cj, %or.cond.i95
+  %or.cond21.i96 = or i1 %or.cond.i95, %i.cj
   br i1 %or.cond21.i96, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit103.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -2834,13 +2796,11 @@ bb.n:                                             ; preds = %bb.m
   %i.ck = fptosi double %i.ci to i32              ; 2 uses
   store i32 %i.ck, ptr %6, align 16, !tbaa !183
   %i.cl = sitofp i32 %.sroa.3.0.extract.trunc.i98 to double ; 2 uses
-  %i.cm = fmul double %i.cg, %i.cl                ; 5 uses
+  %i.cm = fmul double %i.cg, %i.cl                ; 4 uses
   store double %i.cm, ptr %i.a, align 8, !tbaa !185
-  %18 = fcmp uno double %i.cm, 0.000000e+00
-  %19 = fcmp olt double %i.cm, f0xC1E0000000000000
-  %or.cond22.i99 = or i1 %18, %19
+  %or.cond22.i99 = fcmp ult double %i.cm, f0xC1E0000000000000
   %i.cn = fcmp ogt double %i.cm, f0x41DFFFFFFFC00000
-  %or.cond23.i100 = or i1 %i.cn, %or.cond22.i99
+  %or.cond23.i100 = or i1 %or.cond22.i99, %i.cn
   br i1 %or.cond23.i100, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit103.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -3243,24 +3203,20 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb
   %i.x = load double, ptr %i.w, align 8, !tbaa !185 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.y = fmul double %i.x, %i.t                   ; 4 uses
-  %12 = fcmp uno double %i.y, 0.000000e+00
-  %13 = fcmp olt double %i.y, f0xC1E0000000000000
-  %or.cond.i = or i1 %12, %13
+  %i.y = fmul double %i.x, %i.t                   ; 3 uses
+  %or.cond.i = fcmp ult double %i.y, f0xC1E0000000000000
   %i.z = fcmp ogt double %i.y, f0x41DFFFFFFFC00000
-  %or.cond21.i = or i1 %i.z, %or.cond.i
+  %or.cond21.i = or i1 %or.cond.i, %i.z
   br i1 %or.cond21.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = fptosi double %i.y to i32               ; 2 uses
   store i32 %i.aa, ptr %9, align 16, !tbaa !183
-  %i.ab = fmul double %i.x, %i.u                  ; 5 uses
+  %i.ab = fmul double %i.x, %i.u                  ; 4 uses
   store double %i.ab, ptr %i.b, align 8, !tbaa !185
-  %14 = fcmp uno double %i.ab, 0.000000e+00
-  %15 = fcmp olt double %i.ab, f0xC1E0000000000000
-  %or.cond22.i = or i1 %14, %15
+  %or.cond22.i = fcmp ult double %i.ab, f0xC1E0000000000000
   %i.ac = fcmp ogt double %i.ab, f0x41DFFFFFFFC00000
-  %or.cond23.i = or i1 %i.ac, %or.cond22.i
+  %or.cond23.i = or i1 %or.cond22.i, %i.ac
   br i1 %or.cond23.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -3407,12 +3363,10 @@ bb.n:                                             ; preds = %.lr.ph113
   %.sroa.0.0.extract.trunc.i85 = trunc i64 %.sroa.012.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.cf = sitofp i32 %.sroa.0.0.extract.trunc.i85 to double ; 2 uses
-  %i.cg = fmul double %i.ce, %i.cf                ; 4 uses
-  %16 = fcmp uno double %i.cg, 0.000000e+00
-  %17 = fcmp olt double %i.cg, f0xC1E0000000000000
-  %or.cond.i86 = or i1 %16, %17
+  %i.cg = fmul double %i.ce, %i.cf                ; 3 uses
+  %or.cond.i86 = fcmp ult double %i.cg, f0xC1E0000000000000
   %i.ch = fcmp ogt double %i.cg, f0x41DFFFFFFFC00000
-  %or.cond21.i87 = or i1 %i.ch, %or.cond.i86
+  %or.cond21.i87 = or i1 %or.cond.i86, %i.ch
   br i1 %or.cond21.i87, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -3421,13 +3375,11 @@ bb.o:                                             ; preds = %bb.n
   %i.ci = fptosi double %i.cg to i32              ; 2 uses
   store i32 %i.ci, ptr %6, align 16, !tbaa !183
   %i.cj = sitofp i32 %.sroa.3.0.extract.trunc.i89 to double ; 2 uses
-  %i.ck = fmul double %i.ce, %i.cj                ; 5 uses
+  %i.ck = fmul double %i.ce, %i.cj                ; 4 uses
   store double %i.ck, ptr %i.a, align 8, !tbaa !185
-  %18 = fcmp uno double %i.ck, 0.000000e+00
-  %19 = fcmp olt double %i.ck, f0xC1E0000000000000
-  %or.cond22.i90 = or i1 %18, %19
+  %or.cond22.i90 = fcmp ult double %i.ck, f0xC1E0000000000000
   %i.cl = fcmp ogt double %i.ck, f0x41DFFFFFFFC00000
-  %or.cond23.i91 = or i1 %i.cl, %or.cond22.i90
+  %or.cond23.i91 = or i1 %or.cond22.i90, %i.cl
   br i1 %or.cond23.i91, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -3659,12 +3611,10 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN6duckdb
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.020.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.y = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
-  %i.z = fmul double %i.t, %i.y                   ; 4 uses
-  %12 = fcmp uno double %i.z, 0.000000e+00
-  %13 = fcmp olt double %i.z, f0xC1E0000000000000
-  %or.cond.i = or i1 %12, %13
+  %i.z = fmul double %i.t, %i.y                   ; 3 uses
+  %or.cond.i = fcmp ult double %i.z, f0xC1E0000000000000
   %i.aa = fcmp ogt double %i.z, f0x41DFFFFFFFC00000
-  %or.cond21.i = or i1 %i.aa, %or.cond.i
+  %or.cond21.i = or i1 %or.cond.i, %i.aa
   br i1 %or.cond21.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -3673,13 +3623,11 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = fptosi double %i.z to i32               ; 2 uses
   store i32 %i.ab, ptr %9, align 16, !tbaa !183
   %i.ac = sitofp i32 %.sroa.3.0.extract.trunc.i to double ; 2 uses
-  %i.ad = fmul double %i.t, %i.ac                 ; 5 uses
+  %i.ad = fmul double %i.t, %i.ac                 ; 4 uses
   store double %i.ad, ptr %i.b, align 8, !tbaa !185
-  %14 = fcmp uno double %i.ad, 0.000000e+00
-  %15 = fcmp olt double %i.ad, f0xC1E0000000000000
-  %or.cond22.i = or i1 %14, %15
+  %or.cond22.i = fcmp ult double %i.ad, f0xC1E0000000000000
   %i.ae = fcmp ogt double %i.ad, f0x41DFFFFFFFC00000
-  %or.cond23.i = or i1 %i.ae, %or.cond22.i
+  %or.cond23.i = or i1 %or.cond22.i, %i.ae
   br i1 %or.cond23.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -3826,12 +3774,10 @@ bb.n:                                             ; preds = %.lr.ph113
   %.sroa.0.0.extract.trunc.i85 = trunc i64 %.sroa.012.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.cg = sitofp i32 %.sroa.0.0.extract.trunc.i85 to double ; 2 uses
-  %i.ch = fmul double %i.ce, %i.cg                ; 4 uses
-  %16 = fcmp uno double %i.ch, 0.000000e+00
-  %17 = fcmp olt double %i.ch, f0xC1E0000000000000
-  %or.cond.i86 = or i1 %16, %17
+  %i.ch = fmul double %i.ce, %i.cg                ; 3 uses
+  %or.cond.i86 = fcmp ult double %i.ch, f0xC1E0000000000000
   %i.ci = fcmp ogt double %i.ch, f0x41DFFFFFFFC00000
-  %or.cond21.i87 = or i1 %i.ci, %or.cond.i86
+  %or.cond21.i87 = or i1 %or.cond.i86, %i.ci
   br i1 %or.cond21.i87, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -3840,13 +3786,11 @@ bb.o:                                             ; preds = %bb.n
   %i.cj = fptosi double %i.ch to i32              ; 2 uses
   store i32 %i.cj, ptr %6, align 16, !tbaa !183
   %i.ck = sitofp i32 %.sroa.3.0.extract.trunc.i89 to double ; 2 uses
-  %i.cl = fmul double %i.ce, %i.ck                ; 5 uses
+  %i.cl = fmul double %i.ce, %i.ck                ; 4 uses
   store double %i.cl, ptr %i.a, align 8, !tbaa !185
-  %18 = fcmp uno double %i.cl, 0.000000e+00
-  %19 = fcmp olt double %i.cl, f0xC1E0000000000000
-  %or.cond22.i90 = or i1 %18, %19
+  %or.cond22.i90 = fcmp ult double %i.cl, f0xC1E0000000000000
   %i.cm = fcmp ogt double %i.cl, f0x41DFFFFFFFC00000
-  %or.cond23.i91 = or i1 %i.cm, %or.cond22.i90
+  %or.cond23.i91 = or i1 %or.cond22.i90, %i.cm
   br i1 %or.cond23.i91, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit94.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -4072,12 +4016,10 @@ _ZNK6duckdb21TemplatedValidityMaskImE16GetValidityEntryEm.exit: ; preds = %bb.c
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.021.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.w = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
-  %i.x = fmul double %i.u, %i.w                   ; 4 uses
-  %12 = fcmp uno double %i.x, 0.000000e+00
-  %13 = fcmp olt double %i.x, f0xC1E0000000000000
-  %or.cond.i = or i1 %12, %13
+  %i.x = fmul double %i.u, %i.w                   ; 3 uses
+  %or.cond.i = fcmp ult double %i.x, f0xC1E0000000000000
   %i.y = fcmp ogt double %i.x, f0x41DFFFFFFFC00000
-  %or.cond21.i = or i1 %i.y, %or.cond.i
+  %or.cond21.i = or i1 %or.cond.i, %i.y
   br i1 %or.cond21.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
@@ -4086,13 +4028,11 @@ bb.d:                                             ; preds = %.lr.ph
   %i.z = fptosi double %i.x to i32                ; 2 uses
   store i32 %i.z, ptr %9, align 16, !tbaa !183
   %i.aa = sitofp i32 %.sroa.3.0.extract.trunc.i to double ; 2 uses
-  %i.ab = fmul double %i.u, %i.aa                 ; 5 uses
+  %i.ab = fmul double %i.u, %i.aa                 ; 4 uses
   store double %i.ab, ptr %i.b, align 8, !tbaa !185
-  %14 = fcmp uno double %i.ab, 0.000000e+00
-  %15 = fcmp olt double %i.ab, f0xC1E0000000000000
-  %or.cond22.i = or i1 %14, %15
+  %or.cond22.i = fcmp ult double %i.ab, f0xC1E0000000000000
   %i.ac = fcmp ogt double %i.ab, f0x41DFFFFFFFC00000
-  %or.cond23.i = or i1 %i.ac, %or.cond22.i
+  %or.cond23.i = or i1 %or.cond22.i, %i.ac
   br i1 %or.cond23.i, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -4242,12 +4182,10 @@ bb.m:                                             ; preds = %.lr.ph122
   %.sroa.0.0.extract.trunc.i94 = trunc i64 %.sroa.013.0.copyload to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.ch = sitofp i32 %.sroa.0.0.extract.trunc.i94 to double ; 2 uses
-  %i.ci = fmul double %i.cf, %i.ch                ; 4 uses
-  %16 = fcmp uno double %i.ci, 0.000000e+00
-  %17 = fcmp olt double %i.ci, f0xC1E0000000000000
-  %or.cond.i95 = or i1 %16, %17
+  %i.ci = fmul double %i.cf, %i.ch                ; 3 uses
+  %or.cond.i95 = fcmp ult double %i.ci, f0xC1E0000000000000
   %i.cj = fcmp ogt double %i.ci, f0x41DFFFFFFFC00000
-  %or.cond21.i96 = or i1 %i.cj, %or.cond.i95
+  %or.cond21.i96 = or i1 %or.cond.i95, %i.cj
   br i1 %or.cond21.i96, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit103.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -4256,13 +4194,11 @@ bb.n:                                             ; preds = %bb.m
   %i.ck = fptosi double %i.ci to i32              ; 2 uses
   store i32 %i.ck, ptr %6, align 16, !tbaa !183
   %i.cl = sitofp i32 %.sroa.3.0.extract.trunc.i98 to double ; 2 uses
-  %i.cm = fmul double %i.cf, %i.cl                ; 5 uses
+  %i.cm = fmul double %i.cf, %i.cl                ; 4 uses
   store double %i.cm, ptr %i.a, align 8, !tbaa !185
-  %18 = fcmp uno double %i.cm, 0.000000e+00
-  %19 = fcmp olt double %i.cm, f0xC1E0000000000000
-  %or.cond22.i99 = or i1 %18, %19
+  %or.cond22.i99 = fcmp ult double %i.cm, f0xC1E0000000000000
   %i.cn = fcmp ogt double %i.cm, f0x41DFFFFFFFC00000
-  %or.cond23.i100 = or i1 %i.cn, %or.cond22.i99
+  %or.cond23.i100 = or i1 %or.cond22.i99, %i.cn
   br i1 %or.cond23.i100, label %_ZN6duckdb19TryMultiplyOperator9OperationINS_10interval_tEdS2_EEbT_T0_RT1_.exit103.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n

@@ -22,13 +22,11 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = load i32, ptr %i.d, align 1, !tbaa !11
   %i.f = tail call i32 @llvm.bswap.i32(i32 %i.e)
-  %i.g = bitcast i32 %i.f to float                ; 3 uses
+  %i.g = bitcast i32 %i.f to float                ; 2 uses
   %i.h = fpext nsz float %i.g to double
   %i.i = fcmp nsz olt double %i.h, 1.000000e-01
-  %1 = fcmp nsz ogt float %i.g, 1.000000e+03
-  %or.cond = or i1 %1, %i.i
-  %2 = fcmp uno float %i.g, 0.000000e+00
-  %or.cond7 = or i1 %2, %or.cond
+  %1 = fcmp ugt float %i.g, 1.000000e+03
+  %or.cond7 = or i1 %1, %i.i
   %spec.select = select i1 %or.cond7, i32 25, i32 100
   br label %bb.c
 

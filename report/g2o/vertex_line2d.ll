@@ -204,10 +204,8 @@ bb.a:
   %i.m = fadd double %1, %i.l                     ; 3 uses
   %i.n = fneg double %i.j
   %i.o = fmul double %i.g, %i.n
-  %i.p = tail call noundef double @llvm.fmuladd.f64(double %i.c, double %i.m, double %i.o) ; 3 uses
-  %3 = fcmp uno double %i.p, 0.000000e+00
-  %4 = fcmp olt double %i.p, f0x3CB0000000000000
-  %or.cond = or i1 %3, %4
+  %i.p = tail call noundef double @llvm.fmuladd.f64(double %i.c, double %i.m, double %i.o) ; 2 uses
+  %or.cond = fcmp ult double %i.p, f0x3CB0000000000000
   br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

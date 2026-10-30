@@ -204,7 +204,7 @@ _ZN7testing15AssertionResultD2Ev.exit199:         ; preds = %bb.an, %_ZNKSt14def
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #24
   %.sroa.031.0.copyload = load i64, ptr %15, align 8, !tbaa !50 ; 2 uses
   %.sroa.232.0.copyload = load i32, ptr %.sroa.262.0..sroa_idx, align 8, !tbaa !50 ; 2 uses
-  %i.db = call noundef double @_ZN4absl12lts_2026052615ToDoubleSecondsENS0_8DurationE(i64 %.sroa.031.0.copyload, i32 %.sroa.232.0.copyload) #30 ; 12 uses
+  %i.db = call noundef double @_ZN4absl12lts_2026052615ToDoubleSecondsENS0_8DurationE(i64 %.sroa.031.0.copyload, i32 %.sroa.232.0.copyload) #30 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #24
   %i.dc = fcmp ult double %i.db, 0.000000e+00
@@ -231,9 +231,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
 bb.ar:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit199
-  %36 = fcmp ord double %i.db, 0.000000e+00
-  %37 = fcmp ugt double %i.db, f0xC3E0000000000000
-  %or.cond.i = and i1 %36, %37
+  %or.cond.i = fcmp ogt double %i.db, f0xC3E0000000000000
   br i1 %or.cond.i, label %bb.as, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
 bb.as:                                            ; preds = %bb.ar
@@ -485,7 +483,7 @@ _ZN7testing15AssertionResultD2Ev.exit226:         ; preds = %bb.bk, %_ZNKSt14def
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #24
   %.sroa.019.0.copyload = load i64, ptr %16, align 8, !tbaa !50 ; 2 uses
   %.sroa.220.0.copyload = load i32, ptr %.sroa.254.0..sroa_idx, align 8, !tbaa !50 ; 2 uses
-  %i.fw = call noundef double @_ZN4absl12lts_2026052615ToDoubleSecondsENS0_8DurationE(i64 %.sroa.019.0.copyload, i32 %.sroa.220.0.copyload) #30 ; 11 uses
+  %i.fw = call noundef double @_ZN4absl12lts_2026052615ToDoubleSecondsENS0_8DurationE(i64 %.sroa.019.0.copyload, i32 %.sroa.220.0.copyload) #30 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #24
   %i.fx = fcmp ult double %i.fw, 0.000000e+00
@@ -512,9 +510,7 @@ bb.bn:                                            ; preds = %bb.bm
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit239
 
 bb.bo:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit226
-  %38 = fcmp ord double %i.fw, 0.000000e+00
-  %39 = fcmp ugt double %i.fw, f0xC3E0000000000000
-  %or.cond.i232 = and i1 %38, %39
+  %or.cond.i232 = fcmp ogt double %i.fw, f0xC3E0000000000000
   br i1 %or.cond.i232, label %bb.bp, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit239
 
 bb.bp:                                            ; preds = %bb.bo
@@ -773,7 +769,7 @@ _ZN7testing15AssertionResultD2Ev.exit265:         ; preds = %bb.ch, %_ZNKSt14def
   br i1 %or.cond364, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN7testing15AssertionResultD2Ev.exit265, %bb.dh
-  %i.iw = phi double [ %i.lv, %bb.dh ], [ %i.it, %_ZN7testing15AssertionResultD2Ev.exit265 ] ; 9 uses
+  %i.iw = phi double [ %i.lv, %bb.dh ], [ %i.it, %_ZN7testing15AssertionResultD2Ev.exit265 ] ; 8 uses
   %.0130366 = phi double [ %.1131, %bb.dh ], [ %i.db, %_ZN7testing15AssertionResultD2Ev.exit265 ]
   %.0133365 = phi double [ %.1134, %bb.dh ], [ %i.fw, %_ZN7testing15AssertionResultD2Ev.exit265 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #24
@@ -801,9 +797,7 @@ bb.ck:                                            ; preds = %bb.cj
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit278
 
 bb.cl:                                            ; preds = %.lr.ph
-  %40 = fcmp ord double %i.iw, 0.000000e+00
-  %41 = fcmp ugt double %i.iw, f0xC3E0000000000000
-  %or.cond.i271 = and i1 %40, %41
+  %or.cond.i271 = fcmp ogt double %i.iw, f0xC3E0000000000000
   br i1 %or.cond.i271, label %bb.cm, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit278
 
 bb.cm:                                            ; preds = %bb.cl
@@ -1138,9 +1132,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
 bb.d:                                             ; preds = %bb.a
-  %12 = fcmp ord double %0, 0.000000e+00
-  %13 = fcmp ugt double %0, f0xC3E0000000000000
-  %or.cond.i = and i1 %12, %13
+  %or.cond.i = fcmp ogt double %0, f0xC3E0000000000000
   br i1 %or.cond.i, label %bb.e, label %_ZN4absl12lts_202605267SecondsIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEENS0_8DurationES3_.exit
 
 bb.e:                                             ; preds = %bb.d

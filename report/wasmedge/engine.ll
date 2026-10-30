@@ -205,10 +205,10 @@ bb.a:
   %i.a = load <4 x float>, ptr %2, align 16, !tbaa !93 ; 2 uses
   %i.b = tail call <4 x float> @llvm.trunc.v4f32(<4 x float> %i.a) ; 3 uses
   %i.c = fptosi <4 x float> %i.a to <4 x i32>
-  %3 = fcmp ord <4 x float> %i.b, zeroinitializer
-  %4 = fcmp ugt <4 x float> %i.b, splat (float f0xCF000000)
-  %i.d = select <4 x i1> %3, <4 x i32> %i.c, <4 x i32> zeroinitializer
-  %i.e = select <4 x i1> %4, <4 x i32> %i.d, <4 x i32> splat (i32 -2147483648)
+  %3 = fcmp ugt <4 x float> %i.b, splat (float f0xCF000000)
+  %4 = fcmp ogt <4 x float> %i.b, splat (float f0xCF000000)
+  %i.d = select <4 x i1> %4, <4 x i32> %i.c, <4 x i32> zeroinitializer
+  %i.e = select <4 x i1> %3, <4 x i32> %i.d, <4 x i32> splat (i32 -2147483648)
   %i.f = fcmp ult <4 x float> %i.b, splat (float f0x4F000000)
   %i.g = select <4 x i1> %i.f, <4 x i32> %i.e, <4 x i32> splat (i32 2147483647)
   store <4 x i32> %i.g, ptr %2, align 16, !tbaa !93

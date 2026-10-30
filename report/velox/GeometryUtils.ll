@@ -204,12 +204,10 @@ bb.a:
   %i.a = insertelement <2 x double> poison, double %1, i64 0
   %i.b = insertelement <2 x double> %i.a, double %2, i64 1
   %i.c = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.b)
-  %5 = fcmp ogt <2 x double> %i.c, <double 9.000000e+01, double 1.800000e+02>
+  %5 = fcmp ugt <2 x double> %i.c, <double 9.000000e+01, double 1.800000e+02>
   %i.d = bitcast <2 x i1> %5 to i2
-  %6 = icmp ne i2 %i.d, 0
-  %7 = fcmp uno double %2, %1
-  %or.cond12 = or i1 %7, %6
-  br i1 %or.cond12, label %.critedge, label %bb.d, !prof !176
+  %.not = icmp eq i2 %i.d, 0
+  br i1 %.not, label %bb.d, label %.critedge, !prof !176
 
 .critedge:                                        ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
@@ -612,7 +610,7 @@ attributes #30 = { nounwind willreturn memory(read) }
 !173 = distinct !{!173, !172, !"_ZN3fmt3v116formatIJRKdS3_S3_S3_RdS4_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_7fstringIJDpT_EE1tEDpOSC_: argument 0"}
 !174 = distinct !{!174, i1 true, !"_ZN8facebook5velox6Status2OKEv"}
 !175 = distinct !{!175, !174, !"_ZN8facebook5velox6Status2OKEv: argument 0"}
-!176 = !{!"branch_weights", i32 11189848, i32 -569676999}
+!176 = !{!"branch_weights", i32 -569676999, i32 11189848}
 !177 = !{!173}
 !178 = !{!"p1 _ZTSN8facebook5velox6Status5StateE", !11, i64 0}
 !179 = !{!"_ZTSN8facebook5velox6StatusE", !178, i64 0}

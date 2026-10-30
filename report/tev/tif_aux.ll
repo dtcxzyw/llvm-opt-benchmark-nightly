@@ -204,15 +204,13 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = fcmp ogt double %0, f0x41EFFFFFFFE00000
-  %2 = fcmp uno double %0, 0.000000e+00
-  %or.cond = or i1 %1, %2
-  %i.b = fptoui double %0 to i32
-  %spec.select = select i1 %or.cond, i32 -1, i32 %i.b
+  %1 = fcmp olt double %0, f0x41EFFFFFFFE00000
+  %spec.select6 = select i1 %1, double %0, double f0x41EFFFFFFFE00000
+  %i.b = fptoui double %spec.select6 to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i32 [ %spec.select, %bb.b ], [ 0, %bb.a ]
+  %.0 = phi i32 [ %i.b, %bb.b ], [ 0, %bb.a ]
   ret i32 %.0
 }
 

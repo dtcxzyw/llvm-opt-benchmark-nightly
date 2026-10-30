@@ -202,10 +202,8 @@ bb.a:
   %i.b = load double, ptr %i.a, align 8, !tbaa !37
   %or.cond = fcmp oge double %i.b, 0.000000e+00
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %i.d = load double, ptr %i.c, align 8           ; 2 uses
-  %1 = fcmp ord double %i.d, 0.000000e+00
-  %2 = fcmp ule double %i.d, 1.000000e+00
-  %spec.select = and i1 %1, %2
+  %i.d = load double, ptr %i.c, align 8
+  %spec.select = fcmp ole double %i.d, 1.000000e+00
   %.0 = select i1 %or.cond, i1 %spec.select, i1 false
   ret i1 %.0
 }
