@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.preheader
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   %i.x = load double, ptr %i.w, align 8, !tbaa !31 ; 5 uses
-  %5 = fcmp ogt double %i.x, f0x41EFFFFFFFE00000
-  %6 = fcmp ult double %i.x, 0.000000e+00
-  %or.cond1.i.peel = or i1 %5, %6
+  %5 = fcmp olt double %i.x, 0.000000e+00
+  %6 = fcmp ugt double %i.x, f0x41EFFFFFFFE00000
+  %or.cond1.i.peel = or i1 %6, %5
   br i1 %or.cond1.i.peel, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -281,9 +281,9 @@ _ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE9push_backERKS3_.ex
 bb.h:                                             ; preds = %.lr.ph
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
   %i.ba = load double, ptr %i.az, align 8, !tbaa !31 ; 5 uses
-  %7 = fcmp ogt double %i.ba, f0x41EFFFFFFFE00000
-  %8 = fcmp ult double %i.ba, 0.000000e+00
-  %or.cond1.i = or i1 %7, %8
+  %7 = fcmp olt double %i.ba, 0.000000e+00
+  %8 = fcmp ugt double %i.ba, f0x41EFFFFFFFE00000
+  %or.cond1.i = or i1 %8, %7
   br i1 %or.cond1.i, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

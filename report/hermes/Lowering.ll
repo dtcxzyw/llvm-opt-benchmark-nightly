@@ -204,10 +204,10 @@ _ZN4llvh11SmallVectorISt4pairIPN6hermes7LiteralES4_ELj4EEC2ERKS6_.exit: ; preds 
   %i.aw = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #12
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
   %i.ay = load double, ptr %i.ax, align 8, !tbaa !236 ; 3 uses
-  %7 = fcmp ule double %i.ay, f0x41EFFFFFFFE00000
-  %8 = fcmp oge double %i.ay, 0.000000e+00
-  call void @llvm.assume(i1 %7)
+  %7 = fcmp uge double %i.ay, 0.000000e+00
+  %8 = fcmp ole double %i.ay, f0x41EFFFFFFFE00000
   call void @llvm.assume(i1 %8)
+  call void @llvm.assume(i1 %7)
   %i.az = fptoui double %i.ay to i32
   %i.ba = call noundef ptr @_ZN6hermes9IRBuilder34createHBCAllocObjectFromBufferInstEN4llvh11SmallVectorISt4pairIPNS_7LiteralES5_ELj4EEEj(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull %6, i32 noundef %i.az) #12 ; 4 uses
   %i.bb = load ptr, ptr %6, align 8, !tbaa !17    ; 2 uses

@@ -202,7 +202,7 @@ select.unfold:                                    ; preds = %bb.f, %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !11127 ; 7 uses
   store i64 0, ptr %i.am, align 8, !dbg !11127
   %i.an = load double, ptr %.sroa.3.0.i.pn.i.ph.ph, align 8, !dbg !11128, !alias.scope !11074, !noundef !1151 ; 2 uses
-  %i.ao = tail call double @llvm.fabs.f64(double %i.an), !dbg !11129
+  %i.ao = tail call double @llvm.fabs.f64(double %i.an)
   %or.cond.i = fcmp ueq double %i.ao, +inf, !dbg !11129
   br i1 %or.cond.i, label %bb.l, label %bb.j, !dbg !11129
 
@@ -605,7 +605,7 @@ select.unfold:                                    ; preds = %bb.f, %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !11600 ; 7 uses
   store i64 0, ptr %i.am, align 8, !dbg !11600
   %i.an = load float, ptr %.sroa.3.0.i.pn.i.ph.ph, align 4, !dbg !11601, !alias.scope !11547, !noundef !1151 ; 2 uses
-  %i.ao = tail call float @llvm.fabs.f32(float %i.an), !dbg !11602
+  %i.ao = tail call float @llvm.fabs.f32(float %i.an)
   %or.cond.i = fcmp ueq float %i.ao, +inf, !dbg !11602
   br i1 %or.cond.i, label %bb.l, label %bb.j, !dbg !11602
 
@@ -1008,7 +1008,7 @@ bb.l:                                             ; preds = %_RNvXs_NtNtNtCscgRA
 
 bb.m:                                             ; preds = %bb.l
   %i.ax = load double, ptr %i.at, align 8, !dbg !16995, !alias.scope !16926, !noundef !1151 ; 2 uses
-  %i.ay = tail call double @llvm.fabs.f64(double %i.ax), !dbg !16996
+  %i.ay = tail call double @llvm.fabs.f64(double %i.ax)
   %or.cond.i = fcmp ueq double %i.ay, +inf, !dbg !16996
   br i1 %or.cond.i, label %bb.q, label %bb.o, !dbg !16996
 
@@ -1411,7 +1411,7 @@ bb.l:                                             ; preds = %_RNvXs_NtNtNtCscgRA
 
 bb.m:                                             ; preds = %bb.l
   %i.ax = load float, ptr %i.at, align 4, !dbg !17648, !alias.scope !17579, !noundef !1151 ; 2 uses
-  %i.ay = tail call float @llvm.fabs.f32(float %i.ax), !dbg !17649
+  %i.ay = tail call float @llvm.fabs.f32(float %i.ax)
   %or.cond.i = fcmp ueq float %i.ay, +inf, !dbg !17649
   br i1 %or.cond.i, label %bb.q, label %bb.o, !dbg !17649
 
