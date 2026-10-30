@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 26 ; 2 uses
   %i.i = load i8, ptr %i.h, align 2, !range !6351, !alias.scope !6371
   %i.j = trunc nuw i8 %i.i to i1
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   br i1 %i.j, label %bb.ah, label %.lr.ph.preheader.i, !dbg !6808
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
@@ -466,19 +466,13 @@ bb.n:                                             ; preds = %bb.m, %.split.i.i.u
     #dbg_value(ptr poison, !6565, !DIExpression(), !6070)
     #dbg_value(ptr poison, !6568, !DIExpression(), !6071)
   %i.bn = icmp samesign eq i64 %i.bh, %.val13, !dbg !6818
-  br i1 %i.bn, label %.split186.us.i.thread, label %bb.o, !dbg !6819
-
-.split186.us.i.thread:                            ; preds = %bb.n
-  store i8 0, ptr %i.k, align 8, !dbg !6857, !alias.scope !6619
-    #dbg_value(i32 0, !6578, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !6119)
-    #dbg_value(i32 undef, !6578, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !6119)
-  br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !6851
+  br i1 %i.bn, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %bb.o, !dbg !6819
 
 bb.o:                                             ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %.val, i64 %i.bh, !dbg !6817
     #dbg_value(ptr %i.bo, !6553, !DIExpression(), !6066)
     #dbg_value(ptr %i.bo, !6561, !DIExpression(), !6065)
-  %i.bp = load i8, ptr %i.bo, align 1, !dbg !6820, !noalias !6620, !noundef !520 ; 3 uses
+  %i.bp = load i8, ptr %i.bo, align 1, !dbg !6820, !noalias !6619, !noundef !520 ; 3 uses
     #dbg_value(i8 %i.bp, !6526, !DIExpression(), !6074)
     #dbg_value(i8 %i.bp, !6541, !DIExpression(), !6052)
   %i.bq = icmp sgt i8 %i.bp, -1, !dbg !6821
@@ -543,27 +537,27 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %.lcssa43 = phi i64 [ %.promoted177.i, %.split.i.i.us.i.peel ], [ %.promoted177.i, %bb.d ], [ %i.bh, %.split.i.i.us.i ], [ %i.bh, %bb.m ]
   %.lcssa40 = phi i8 [ %.promoted226.i, %.split.i.i.us.i.peel ], [ %.promoted226.i, %bb.d ], [ 1, %.split.i.i.us.i ], [ 1, %bb.m ]
   %i.bz = xor i8 %.lcssa40, 1
-  store i8 %i.bz, ptr %i.k, align 8, !dbg !6857, !alias.scope !6619
+  store i8 %i.bz, ptr %i.k, align 8, !dbg !6857, !alias.scope !6629
   tail call void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val, i64 noundef %.val13, i64 noundef %.lcssa43, i64 noundef %.val13, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @83) #21, !dbg !6858, !noalias !6618
   unreachable, !dbg !6858
 
 .split186.us.i:                                   ; preds = %bb.e
   %i.ca = xor i8 %.promoted226.i, 1
-  store i8 %i.ca, ptr %i.k, align 8, !dbg !6857, !alias.scope !6619
+  store i8 %i.ca, ptr %i.k, align 8, !dbg !6857, !alias.scope !6629
     #dbg_value(i32 0, !6578, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !6119)
     #dbg_value(i32 undef, !6578, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !6119)
   br i1 %i.l, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %bb.p, !dbg !6851
 
 .loopexit62.split.us.i:                           ; preds = %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshhfsHpF03Qr_6netlog.exit30.i.i.us.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshhfsHpF03Qr_6netlog.exit28.i.i.us.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshhfsHpF03Qr_6netlog.exit26.i.i.us.i, %bb.o, %bb.h
   %.lcssa45 = phi i64 [ %.promoted177.i, %bb.h ], [ %i.bh, %bb.o ], [ %i.bh, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshhfsHpF03Qr_6netlog.exit26.i.i.us.i ], [ %i.bh, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshhfsHpF03Qr_6netlog.exit28.i.i.us.i ], [ %i.bh, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshhfsHpF03Qr_6netlog.exit30.i.i.us.i ] ; 2 uses
-  store i8 0, ptr %i.k, align 8, !dbg !6857, !alias.scope !6619
+  store i8 0, ptr %i.k, align 8, !dbg !6857, !alias.scope !6629
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !6859
 
 default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.p:                                             ; preds = %.split186.us.i
-  store i8 1, ptr %i.h, align 2, !dbg !6860, !alias.scope !6619
+  store i8 1, ptr %i.h, align 2, !dbg !6860, !alias.scope !6629
   br label %bb.ah, !dbg !6861
 
 bb.q:                                             ; preds = %bb.b
@@ -966,9 +960,9 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %.sp
   store i64 %i.ga, ptr %i.cj, align 8, !dbg !6961, !alias.scope !6776
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !6962
 
-_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %.split186.us.i.thread, %.split.us.i41.i, %.split.us.i31.i, %.loopexit63.i, %.loopexit62.split.us.i, %.split186.us.i
-  %.sroa.9.0 = phi i64 [ %.val13, %.split186.us.i ], [ %i.eg, %.split.us.i31.i ], [ %.lcssa45, %.loopexit62.split.us.i ], [ %i.da, %.loopexit63.i ], [ %i.ga, %.split.us.i41.i ], [ %.val13, %.split186.us.i.thread ], !dbg !6963
-  %.sroa.4.015 = phi i64 [ %.val13, %.split186.us.i ], [ %i.dl, %.split.us.i31.i ], [ %.lcssa45, %.loopexit62.split.us.i ], [ %i.cz, %.loopexit63.i ], [ %i.fa, %.split.us.i41.i ], [ %.val13, %.split186.us.i.thread ], !dbg !6963
+_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.n, %.split.us.i41.i, %.split.us.i31.i, %.loopexit63.i, %.loopexit62.split.us.i, %.split186.us.i
+  %.sroa.9.0 = phi i64 [ %.val13, %.split186.us.i ], [ %i.eg, %.split.us.i31.i ], [ %.lcssa45, %.loopexit62.split.us.i ], [ %i.da, %.loopexit63.i ], [ %i.ga, %.split.us.i41.i ], [ %.val13, %bb.n ], !dbg !6963
+  %.sroa.4.015 = phi i64 [ %.val13, %.split186.us.i ], [ %i.dl, %.split.us.i31.i ], [ %.lcssa45, %.loopexit62.split.us.i ], [ %i.cz, %.loopexit63.i ], [ %i.fa, %.split.us.i41.i ], [ %.val13, %bb.n ], !dbg !6963
     #dbg_value(ptr %.val, !6345, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6352)
     #dbg_value(ptr %.val, !6353, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6360)
     #dbg_value(ptr %.val, !6361, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6370)
@@ -1371,8 +1365,8 @@ begin_hunk_2_@llvm.umax.i64
 !6616 = !{!5982, !5945}
 !6617 = !{!6140}
 !6618 = !{!6017, !6140, !6015, !5945}
-!6619 = !{!6140, !5945}
-!6620 = !{!6073, !6017, !6140, !6015, !5945}
+!6619 = !{!6073, !6017, !6140, !6015, !5945}
+!6629 = !{!6140, !5945}
 !6630 = !DILocalVariable(name: "self", arg: 1, scope: !6143, file: !926, line: 18, type: !161)
 !6631 = !DINamespace(name: "{impl#0}", scope: !931)
 !6632 = !{!161, !161, !5985, !748}

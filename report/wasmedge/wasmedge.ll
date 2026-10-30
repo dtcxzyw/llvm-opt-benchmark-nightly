@@ -205,11 +205,11 @@ _ZNSt6vectorIhSaIhEED2Ev.exit2:                   ; preds = %_ZNSt6vectorIhSaIhE
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !222, !range !101, !noundef !102
   %i.q = trunc nuw i8 %i.p to i1
-  store i8 0, ptr %i.o, align 8, !tbaa !222
   br i1 %i.q, label %bb.d, label %_ZNSt14_Optional_baseISt6vectorIhSaIhEELb0ELb0EED2Ev.exit.i
 
 bb.d:                                             ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit2
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 232
+  store i8 0, ptr %i.o, align 8, !tbaa !222
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !246  ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.s, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIhSaIhEELb0ELb0EED2Ev.exit.i, label %bb.e
@@ -227,11 +227,11 @@ _ZNSt14_Optional_baseISt6vectorIhSaIhEELb0ELb0EED2Ev.exit.i: ; preds = %bb.e, %b
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
   %i.z = load i8, ptr %i.y, align 8, !tbaa !221, !range !101, !noundef !102
   %i.aa = trunc nuw i8 %i.z to i1
-  store i8 0, ptr %i.y, align 8, !tbaa !221
   br i1 %i.aa, label %bb.f, label %_ZN8WasmEdge7FileMgrD2Ev.exit
 
 bb.f:                                             ; preds = %_ZNSt14_Optional_baseISt6vectorIhSaIhEELb0ELb0EED2Ev.exit.i
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 216
+  store i8 0, ptr %i.y, align 8, !tbaa !221
   tail call void @_ZN8WasmEdge4MMapD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %i.ab) #33
   br label %_ZN8WasmEdge7FileMgrD2Ev.exit
 

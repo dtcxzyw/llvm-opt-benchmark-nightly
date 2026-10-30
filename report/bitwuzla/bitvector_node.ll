@@ -204,10 +204,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.d, label %bb.c, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.e = load ptr, ptr %4, align 8, !tbaa !21     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -287,10 +287,10 @@ bb.i:                                             ; preds = %bb.a
           cleanup
   %i.y = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.z = trunc nuw i8 %i.y to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.z, label %bb.j, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit21
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.aa = load ptr, ptr %4, align 8, !tbaa !21    ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.ac = icmp eq ptr %i.aa, %i.ab
@@ -394,10 +394,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.d, label %bb.c, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.e = load ptr, ptr %4, align 8, !tbaa !21     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -477,10 +477,10 @@ bb.i:                                             ; preds = %bb.a
           cleanup
   %i.y = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.z = trunc nuw i8 %i.y to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.z, label %bb.j, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit22
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.aa = load ptr, ptr %4, align 8, !tbaa !21    ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.ac = icmp eq ptr %i.aa, %i.ab
@@ -575,10 +575,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.d, label %bb.c, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.e = load ptr, ptr %5, align 8, !tbaa !21     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -658,10 +658,10 @@ bb.i:                                             ; preds = %bb.a
           cleanup
   %i.y = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.z = trunc nuw i8 %i.y to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.z, label %bb.j, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit23
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.aa = load ptr, ptr %5, align 8, !tbaa !21    ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.ac = icmp eq ptr %i.aa, %i.ab
@@ -756,10 +756,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.d, label %bb.c, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.e = load ptr, ptr %6, align 8, !tbaa !21     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -839,10 +839,10 @@ bb.i:                                             ; preds = %bb.a
           cleanup
   %i.y = load i8, ptr %i.b, align 8, !tbaa !13, !range !14, !noundef !15
   %i.z = trunc nuw i8 %i.y to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !13
   br i1 %i.z, label %bb.j, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit24
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.b, align 8, !tbaa !13
   %i.aa = load ptr, ptr %6, align 8, !tbaa !21    ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.ac = icmp eq ptr %i.aa, %i.ab

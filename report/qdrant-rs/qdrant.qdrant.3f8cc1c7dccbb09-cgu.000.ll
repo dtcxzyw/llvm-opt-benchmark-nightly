@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   %.sroa.0.0.copyload.i = load ptr, ptr %i.c, align 8, !noalias !7871, !nonnull !11, !noundef !11 ; 2 uses
   %.sroa.4.0.copyload.i = load ptr, ptr %i.ab, align 8, !noalias !7871, !nonnull !11, !noundef !11 ; 2 uses
   %i.af = icmp eq ptr %.sroa.4.0.copyload.i, %.sroa.0.0.copyload.i
-  br i1 %i.af, label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit.sink.split, label %bb.i, !prof !14
+  br i1 %i.af, label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit, label %bb.i, !prof !14
 
 bb.i:                                             ; preds = %bb.h
   %.sroa.5.0.copyload.i = load i64, ptr %i.ac, align 8, !noalias !7871 ; 2 uses
@@ -217,14 +217,10 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !7872
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.al, ptr %i.am, align 8, !alias.scope !7870
-  br label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit.sink.split
-
-_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit.sink.split: ; preds = %bb.h, %bb.i
-  %.sink = phi i8 [ 1, %bb.i ], [ 0, %bb.h ]
-  store i8 %.sink, ptr %0, align 8, !alias.scope !7870
+  store i8 1, ptr %0, align 8, !alias.scope !7870
   br label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit
 
-_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit: ; preds = %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit.sink.split, %bb.g
+_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refINtNtNtCs4R3jSB693Zs_4uuid8external13serde_support16UuidBytesVisitorNtB1f_4UuidENtNtCs8O45qwFIwQX_10serde_json5error5ErrorECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.h, %bb.g, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !7871
   br label %bb.j
 
@@ -627,7 +623,6 @@ bb.z:                                             ; preds = %_RNvMsc_NtNtNtCs5pR
 
 _RNvMsc_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18SeqRefDeserializerNtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorE3endCsl8OoimOLbh_6qdrant.exit.thread.i: ; preds = %_RNvMsc_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18SeqRefDeserializerNtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorE3endCsl8OoimOLbh_6qdrant.exit.i, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !22860
-  store i64 0, ptr %0, align 8, !alias.scope !22859
   br label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refNtNtCsadazKHFPhDw_11serde_value2de12ValueVisitorNtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorECsl8OoimOLbh_6qdrant.exit
 
 bb.aa:                                            ; preds = %bb.y
@@ -707,7 +702,6 @@ bb.af:                                            ; preds = %_RNvMse_NtNtNtCs5pR
 
 _RNvMse_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18MapRefDeserializerNtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorE3endCsl8OoimOLbh_6qdrant.exit.thread.i: ; preds = %_RNvMse_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18MapRefDeserializerNtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorE3endCsl8OoimOLbh_6qdrant.exit.i, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !22864
-  store i64 0, ptr %0, align 8, !alias.scope !22863
   br label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_map_refNtNtCsadazKHFPhDw_11serde_value2de12ValueVisitorNtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorECsl8OoimOLbh_6qdrant.exit
 
 bb.ag:                                            ; preds = %bb.ae
@@ -1110,7 +1104,6 @@ bb.z:                                             ; preds = %_RNvMsc_NtNtNtCs5pR
 
 _RNvMsc_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18SeqRefDeserializerNtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorE3endCsl8OoimOLbh_6qdrant.exit.thread.i: ; preds = %_RNvMsc_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18SeqRefDeserializerNtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorE3endCsl8OoimOLbh_6qdrant.exit.i, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !30539
-  store i64 0, ptr %0, align 8, !alias.scope !30538
   br label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_seq_refNtNtCsadazKHFPhDw_11serde_value2de12ValueVisitorNtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorECsl8OoimOLbh_6qdrant.exit
 
 bb.aa:                                            ; preds = %bb.y
@@ -1190,7 +1183,6 @@ bb.af:                                            ; preds = %_RNvMse_NtNtNtCs5pR
 
 _RNvMse_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18MapRefDeserializerNtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorE3endCsl8OoimOLbh_6qdrant.exit.thread.i: ; preds = %_RNvMse_NtNtNtCs5pRimKDHYSy_5serde7private2de7contentINtB5_18MapRefDeserializerNtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorE3endCsl8OoimOLbh_6qdrant.exit.i, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !30543
-  store i64 0, ptr %0, align 8, !alias.scope !30542
   br label %_RINvNtNtNtCs5pRimKDHYSy_5serde7private2de7content21visit_content_map_refNtNtCsadazKHFPhDw_11serde_value2de12ValueVisitorNtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorECsl8OoimOLbh_6qdrant.exit
 
 bb.ag:                                            ; preds = %bb.ae
@@ -1593,7 +1585,6 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs4NSHK7GLW4I_10serde_core7priv
   store i8 19, ptr %i.d, align 8
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.e, ptr %.sroa.41.0..sroa_idx, align 8
-  store i64 0, ptr %0, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs4NSHK7GLW4I_10serde_core7private7content7ContentE3newCsl8OoimOLbh_6qdrant.exit

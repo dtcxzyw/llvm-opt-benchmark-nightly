@@ -204,7 +204,8 @@ _RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta.exit.thread: ; preds =
   %.sink = phi i8 [ 0, %bb.b ], [ 1, %bb.c ]
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %.sink, ptr %i.g, align 1, !alias.scope !27
-  br label %.sink.split
+  store i8 1, ptr %0, align 8, !alias.scope !28
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8ln_gamma(double noundef %1)
@@ -216,14 +217,9 @@ bb.d:                                             ; preds = %bb.c
   %i.n = tail call double @llvm.exp.f64(double %i.m)
   %i.o = fmul double %i.d, %i.n
   store double %i.o, ptr %i.c, align 8
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.d, %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta.exit.thread
-  %.sink4 = phi i8 [ 1, %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta.exit.thread ], [ 0, %bb.d ]
-  store i8 %.sink4, ptr %0, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %.sink.split, %bb.a
+bb.e:                                             ; preds = %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta.exit.thread, %bb.d, %bb.a
   ret void
 }
 
@@ -428,9 +424,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.4.0.ph = phi i8 [ 1, %bb.b ], [ 0, %bb.a ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !31
-  store i8 %.sroa.4.0.ph, ptr %i.a, align 1, !noalias !31
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #15, !noalias !32
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !32
+  store i8 %.sroa.4.0.ph, ptr %i.a, align 1, !noalias !32
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #15, !noalias !33
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_.exit: ; preds = %bb.b
@@ -457,9 +453,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.4.0.ph = phi i8 [ 1, %bb.b ], [ 0, %bb.a ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !36
-  store i8 %.sroa.4.0.ph, ptr %i.a, align 1, !noalias !36
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #15, !noalias !37
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !37
+  store i8 %.sroa.4.0.ph, ptr %i.a, align 1, !noalias !37
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #15, !noalias !38
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_.exit: ; preds = %bb.b
@@ -478,14 +474,14 @@ bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_reg(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1, double noundef %2), !alias.scope !47
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !47, !noundef !5
+  call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_reg(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1, double noundef %2), !alias.scope !48
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !48, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread, label %bb.b, !prof !48
+  br i1 %i.d, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread, label %bb.b, !prof !49
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.f = load double, ptr %i.e, align 8, !alias.scope !47, !noundef !5
+  %i.f = load double, ptr %i.e, align 8, !alias.scope !48, !noundef !5
   %i.g = fcmp ugt double %0, 0.000000e+00
   br i1 %i.g, label %bb.c, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread2
 
@@ -493,18 +489,18 @@ bb.c:                                             ; preds = %bb.b
   %i.h = fcmp ugt double %1, 0.000000e+00
   br i1 %i.h, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_.exit, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread2
 
-_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread2: ; preds = %bb.b, %bb.c
+_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread2: ; preds = %bb.c, %bb.b
   %.sink.i = phi i8 [ 0, %bb.b ], [ 1, %bb.c ]
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %.sink.i, ptr %i.i, align 1, !alias.scope !49
+  store i8 %.sink.i, ptr %i.i, align 1, !alias.scope !50
   br label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread
 
 _RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread: ; preds = %bb.a, %_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc.exit.thread2
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !50
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !51
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.k = load i8, ptr %i.j, align 1, !range !7, !alias.scope !51, !noundef !5
-  store i8 %i.k, ptr %i.a, align 1, !noalias !50
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #15, !noalias !51
+  %i.k = load i8, ptr %i.j, align 1, !range !7, !alias.scope !52, !noundef !5
+  store i8 %i.k, ptr %i.a, align 1, !noalias !51
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #15, !noalias !52
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_.exit: ; preds = %bb.c
@@ -516,8 +512,8 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8funct
   %i.q = fsub double %i.n, %i.p
   %i.r = tail call double @llvm.exp.f64(double %i.q)
   %i.s = fmul double %i.f, %i.r                   ; 2 uses
-  store double %i.s, ptr %i.e, align 8, !alias.scope !47
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !51)
+  store double %i.s, ptr %i.e, align 8, !alias.scope !48
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret double %i.s
 }
@@ -529,22 +525,22 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_reg(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1, double noundef %2)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !55, !noundef !5
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !56, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_.exit, !prof !6
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !56
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !57
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !range !7, !alias.scope !55, !noundef !5
-  store i8 %i.f, ptr %i.a, align 1, !noalias !56
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #15, !noalias !55
+  %i.f = load i8, ptr %i.e, align 1, !range !7, !alias.scope !56, !noundef !5
+  store i8 %i.f, ptr %i.a, align 1, !noalias !57
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #15, !noalias !56
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.h = load double, ptr %i.g, align 8, !alias.scope !55, !noundef !5
+  %i.h = load double, ptr %i.g, align 8, !alias.scope !56, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret double %i.h
 }
@@ -610,7 +606,6 @@ bb.b:                                             ; preds = %bb.a
   %i.e = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma5gamma(double noundef %1)
   %i.f = fmul double %i.d, %i.e
   store double %i.f, ptr %i.c, align 8
-  store i8 0, ptr %0, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -805,7 +800,6 @@ bb.b:                                             ; preds = %bb.a
   %i.e = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma5gamma(double noundef %1)
   %i.f = fmul double %i.d, %i.e
   store double %i.f, ptr %i.c, align 8
-  store i8 0, ptr %0, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -852,22 +846,22 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_lr(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %1, double noundef %2)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
-  %i.h = load i8, ptr %i.b, align 8, !range !4, !alias.scope !60, !noundef !5
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !61)
+  %i.h = load i8, ptr %i.b, align 8, !range !4, !alias.scope !61, !noundef !5
   %i.i = trunc nuw i8 %i.h to i1
   br i1 %i.i, label %bb.i, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8gamma_lr.exit, !prof !6
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !61
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !62
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.k = load i8, ptr %i.j, align 1, !range !4, !alias.scope !60, !noundef !5
-  store i8 %i.k, ptr %i.a, align 1, !noalias !61
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #15, !noalias !60
+  %i.k = load i8, ptr %i.j, align 1, !range !4, !alias.scope !61, !noundef !5
+  store i8 %i.k, ptr %i.a, align 1, !noalias !62
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #15, !noalias !61
   unreachable
 
 _RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8gamma_lr.exit: ; preds = %bb.h
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.m = load double, ptr %i.l, align 8, !alias.scope !60, !noundef !5
+  %i.m = load double, ptr %i.l, align 8, !alias.scope !61, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.n = fsub double 1.000000e+00, %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1161,26 +1155,25 @@ bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_lr(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1), !alias.scope !67
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !67, !noundef !5
+  call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_lr(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1), !alias.scope !68
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !68, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !68
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !69
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !69, !noundef !5
-  store i8 %i.f, ptr %i.a, align 1, !noalias !68
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #15, !noalias !69
+  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !70, !noundef !5
+  store i8 %i.f, ptr %i.a, align 1, !noalias !69
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #15, !noalias !70
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit: ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.h = load double, ptr %i.g, align 8, !alias.scope !67, !noundef !5
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.h = load double, ptr %i.g, align 8, !alias.scope !68, !noundef !5
   %i.i = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma5gamma(double noundef %0)
-  %i.j = fmul double %i.h, %i.i                   ; 2 uses
-  store double %i.j, ptr %i.g, align 8, !alias.scope !67
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !69)
+  %i.j = fmul double %i.h, %i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !70)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret double %i.j
 }
@@ -1192,22 +1185,22 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_lr(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !73, !noundef !5
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !74)
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !74, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit, !prof !6
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !74
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !75
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !73, !noundef !5
-  store i8 %i.f, ptr %i.a, align 1, !noalias !74
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #15, !noalias !73
+  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !74, !noundef !5
+  store i8 %i.f, ptr %i.a, align 1, !noalias !75
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #15, !noalias !74
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.h = load double, ptr %i.g, align 8, !alias.scope !73, !noundef !5
+  %i.h = load double, ptr %i.g, align 8, !alias.scope !74, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret double %i.h
 }
@@ -1219,25 +1212,24 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ur(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1)
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !80, !noundef !5
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !81, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !81
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !82
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !82, !noundef !5
-  store i8 %i.f, ptr %i.a, align 1, !noalias !81
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #15, !noalias !82
+  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !83, !noundef !5
+  store i8 %i.f, ptr %i.a, align 1, !noalias !82
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #15, !noalias !83
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit: ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.h = load double, ptr %i.g, align 8, !alias.scope !80, !noundef !5
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.h = load double, ptr %i.g, align 8, !alias.scope !81, !noundef !5
   %i.i = tail call noundef double @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma5gamma(double noundef %0)
-  %i.j = fmul double %i.h, %i.i                   ; 2 uses
-  store double %i.j, ptr %i.g, align 8, !alias.scope !80
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
+  %i.j = fmul double %i.h, %i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret double %i.j
 }
@@ -1249,22 +1241,22 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ur(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %0, double noundef %1)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
-  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !86, !noundef !5
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
+  %i.c = load i8, ptr %i.b, align 8, !range !4, !alias.scope !87, !noundef !5
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit, !prof !6
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !87
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !88
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !86, !noundef !5
-  store i8 %i.f, ptr %i.a, align 1, !noalias !87
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #15, !noalias !86
+  %i.f = load i8, ptr %i.e, align 1, !range !4, !alias.scope !87, !noundef !5
+  store i8 %i.f, ptr %i.a, align 1, !noalias !88
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #15, !noalias !87
   unreachable
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.h = load double, ptr %i.g, align 8, !alias.scope !86, !noundef !5
+  %i.h = load double, ptr %i.g, align 8, !alias.scope !87, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret double %i.h
 }
@@ -1555,22 +1547,22 @@ bb.c:                                             ; preds = %bb.b
   %i.h = fdiv double %i.g, %1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_lr(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %i.e, double noundef %i.h)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !91)
-  %i.i = load i8, ptr %i.b, align 8, !range !4, !alias.scope !91, !noundef !5
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !92)
+  %i.i = load i8, ptr %i.b, align 8, !range !4, !alias.scope !92, !noundef !5
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.d, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8gamma_lr.exit, !prof !6
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !92
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !93
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.l = load i8, ptr %i.k, align 1, !range !4, !alias.scope !91, !noundef !5
-  store i8 %i.l, ptr %i.a, align 1, !noalias !92
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #15, !noalias !91
+  %i.l = load i8, ptr %i.k, align 1, !range !4, !alias.scope !92, !noundef !5
+  store i8 %i.l, ptr %i.a, align 1, !noalias !93
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #15, !noalias !92
   unreachable
 
 _RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8gamma_lr.exit: ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.n = load double, ptr %i.m, align 8, !alias.scope !91, !noundef !5
+  %i.n = load double, ptr %i.m, align 8, !alias.scope !92, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.e
 
@@ -1598,22 +1590,22 @@ bb.c:                                             ; preds = %bb.b
   %i.h = fdiv double %i.g, %1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ur(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, double noundef %i.e, double noundef %i.h)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !96)
-  %i.i = load i8, ptr %i.b, align 8, !range !4, !alias.scope !96, !noundef !5
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
+  %i.i = load i8, ptr %i.b, align 8, !range !4, !alias.scope !97, !noundef !5
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.d, label %_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8gamma_ur.exit, !prof !6
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !97
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !98
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.l = load i8, ptr %i.k, align 1, !range !4, !alias.scope !96, !noundef !5
-  store i8 %i.l, ptr %i.a, align 1, !noalias !97
-  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #15, !noalias !96
+  %i.l = load i8, ptr %i.k, align 1, !range !4, !alias.scope !97, !noundef !5
+  store i8 %i.l, ptr %i.a, align 1, !noalias !98
+  call void @_RNvNtCs3oUPovFnLWP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #15, !noalias !97
   unreachable
 
 _RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma8gamma_ur.exit: ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.n = load double, ptr %i.m, align 8, !alias.scope !96, !noundef !5
+  %i.n = load double, ptr %i.m, align 8, !alias.scope !97, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.e
 
@@ -1740,10 +1732,10 @@ bb.a:
   br i1 %or.cond.i, label %_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution13inverse_gammaNtB5_12InverseGammaINtB7_10ContinuousddE3pdf.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load double, ptr %0, align 8, !alias.scope !100, !noundef !5 ; 4 uses
+  %i.a = load double, ptr %0, align 8, !alias.scope !101, !noundef !5 ; 4 uses
   %i.b = fcmp oeq double %i.a, 1.000000e+00
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load double, ptr %i.c, align 8, !alias.scope !100, !noundef !5 ; 4 uses
+  %i.d = load double, ptr %i.c, align 8, !alias.scope !101, !noundef !5 ; 4 uses
   br i1 %i.b, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -1898,77 +1890,78 @@ attributes #17 = { inlinehint }
 !25 = distinct !{!25, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta15checked_ln_beta"}
 !26 = distinct !{!26, !25, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta15checked_ln_beta: argument 0"}
 !27 = !{!26, !24}
-!28 = distinct !{!28, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
-!29 = distinct !{!29, !28, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
-!30 = distinct !{!30, !28, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
-!31 = !{!30, !29}
-!32 = !{!30}
-!33 = distinct !{!33, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
-!34 = distinct !{!34, !33, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
-!35 = distinct !{!35, !33, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
-!36 = !{!35, !34}
-!37 = !{!35}
-!38 = distinct !{!38, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc"}
-!39 = distinct !{!39, !38, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc: argument 0"}
-!40 = distinct !{!40, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta"}
-!41 = distinct !{!41, !40, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta: argument 0"}
-!42 = distinct !{!42, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta15checked_ln_beta"}
-!43 = distinct !{!43, !42, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta15checked_ln_beta: argument 0"}
-!44 = distinct !{!44, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
-!45 = distinct !{!45, !44, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
-!46 = distinct !{!46, !44, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
-!47 = !{!39}
-!48 = !{!"branch_weights", i32 1073205, i32 2146410443}
-!49 = !{!43, !41, !39}
-!50 = !{!46, !45}
-!51 = !{!46}
-!52 = distinct !{!52, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
-!53 = distinct !{!53, !52, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
-!54 = distinct !{!54, !52, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
-!55 = !{!53}
-!56 = !{!53, !54}
-!57 = distinct !{!57, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!58 = distinct !{!58, !57, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!59 = distinct !{!59, !57, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!60 = !{!58}
-!61 = !{!58, !59}
-!62 = distinct !{!62, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_li"}
-!63 = distinct !{!63, !62, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_li: argument 0"}
-!64 = distinct !{!64, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!65 = distinct !{!65, !64, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!66 = distinct !{!66, !64, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!67 = !{!63}
-!68 = !{!66, !65}
-!69 = !{!66}
-!70 = distinct !{!70, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!71 = distinct !{!71, !70, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!72 = distinct !{!72, !70, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!73 = !{!71}
-!74 = !{!71, !72}
-!75 = distinct !{!75, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ui"}
-!76 = distinct !{!76, !75, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ui: argument 0"}
-!77 = distinct !{!77, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!78 = distinct !{!78, !77, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!79 = distinct !{!79, !77, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!80 = !{!76}
-!81 = !{!79, !78}
-!82 = !{!79}
-!83 = distinct !{!83, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!84 = distinct !{!84, !83, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!85 = distinct !{!85, !83, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!86 = !{!84}
-!87 = !{!84, !85}
-!88 = distinct !{!88, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!89 = distinct !{!89, !88, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!90 = distinct !{!90, !88, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!91 = !{!89}
-!92 = !{!89, !90}
-!93 = distinct !{!93, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
-!94 = distinct !{!94, !93, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
-!95 = distinct !{!95, !93, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
-!96 = !{!94}
-!97 = !{!94, !95}
-!98 = distinct !{!98, i1 true, !"_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution13inverse_gammaNtB5_12InverseGammaINtB7_10ContinuousddE3pdf"}
-!99 = distinct !{!99, !98, !"_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution13inverse_gammaNtB5_12InverseGammaINtB7_10ContinuousddE3pdf: argument 0"}
-!100 = !{!99}
+!28 = !{!24}
+!29 = distinct !{!29, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
+!30 = distinct !{!30, !29, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
+!31 = distinct !{!31, !29, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
+!32 = !{!31, !30}
+!33 = !{!31}
+!34 = distinct !{!34, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
+!35 = distinct !{!35, !34, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
+!36 = distinct !{!36, !34, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
+!37 = !{!36, !35}
+!38 = !{!36}
+!39 = distinct !{!39, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc"}
+!40 = distinct !{!40, !39, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta16checked_beta_inc: argument 0"}
+!41 = distinct !{!41, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta"}
+!42 = distinct !{!42, !41, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta12checked_beta: argument 0"}
+!43 = distinct !{!43, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta15checked_ln_beta"}
+!44 = distinct !{!44, !43, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function4beta15checked_ln_beta: argument 0"}
+!45 = distinct !{!45, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
+!46 = distinct !{!46, !45, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
+!47 = distinct !{!47, !45, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
+!48 = !{!40}
+!49 = !{!"branch_weights", i32 1073205, i32 2146410443}
+!50 = !{!44, !42, !40}
+!51 = !{!47, !46}
+!52 = !{!47}
+!53 = distinct !{!53, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_"}
+!54 = distinct !{!54, !53, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 0"}
+!55 = distinct !{!55, !53, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function4beta13BetaFuncErrorE6unwrapBO_: argument 1"}
+!56 = !{!54}
+!57 = !{!54, !55}
+!58 = distinct !{!58, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!59 = distinct !{!59, !58, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!60 = distinct !{!60, !58, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!61 = !{!59}
+!62 = !{!59, !60}
+!63 = distinct !{!63, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_li"}
+!64 = distinct !{!64, !63, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_li: argument 0"}
+!65 = distinct !{!65, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!66 = distinct !{!66, !65, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!67 = distinct !{!67, !65, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!68 = !{!64}
+!69 = !{!67, !66}
+!70 = !{!67}
+!71 = distinct !{!71, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!72 = distinct !{!72, !71, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!73 = distinct !{!73, !71, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!74 = !{!72}
+!75 = !{!72, !73}
+!76 = distinct !{!76, i1 true, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ui"}
+!77 = distinct !{!77, !76, !"_RNvNtNtCs8lmMd0ZksV9_6statrs8function5gamma16checked_gamma_ui: argument 0"}
+!78 = distinct !{!78, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!79 = distinct !{!79, !78, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!80 = distinct !{!80, !78, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!81 = !{!77}
+!82 = !{!80, !79}
+!83 = !{!80}
+!84 = distinct !{!84, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!85 = distinct !{!85, !84, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!86 = distinct !{!86, !84, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!87 = !{!85}
+!88 = !{!85, !86}
+!89 = distinct !{!89, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!90 = distinct !{!90, !89, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!91 = distinct !{!91, !89, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!92 = !{!90}
+!93 = !{!90, !91}
+!94 = distinct !{!94, i1 true, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_"}
+!95 = distinct !{!95, !94, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 0"}
+!96 = distinct !{!96, !94, !"_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultdNtNtNtCs8lmMd0ZksV9_6statrs8function5gamma14GammaFuncErrorE6unwrapBO_: argument 1"}
+!97 = !{!95}
+!98 = !{!95, !96}
+!99 = distinct !{!99, i1 true, !"_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution13inverse_gammaNtB5_12InverseGammaINtB7_10ContinuousddE3pdf"}
+!100 = distinct !{!100, !99, !"_RNvXs8_NtNtCs8lmMd0ZksV9_6statrs12distribution13inverse_gammaNtB5_12InverseGammaINtB7_10ContinuousddE3pdf: argument 0"}
+!101 = !{!100}
 end_hunk_0

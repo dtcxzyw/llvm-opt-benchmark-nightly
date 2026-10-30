@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %_RNvMs3_NtCsiWcPrHi
   br label %bb.j
 
 .loopexit.i:                                      ; preds = %bb.e, %bb.c
-  store i8 0, ptr %0, align 8, !alias.scope !70
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsiAynQAjgDuT_10xet_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.b)
           to label %_RINvNtCsiWcPrHiWZDL_10serde_json2de10from_traitNtNtB4_4read9SliceReadNtNtCsiAynQAjgDuT_10xet_client9cas_types18UploadXorbResponseEB19_.exit unwind label %bb.h, !noalias !71
 
@@ -331,7 +330,6 @@ bb.g:                                             ; preds = %_RNvMs3_NtCsiWcPrHi
   br label %bb.j
 
 .loopexit.i:                                      ; preds = %bb.e, %bb.c
-  store i8 0, ptr %0, align 8, !alias.scope !94
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsiAynQAjgDuT_10xet_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.b)
           to label %_RINvNtCsiWcPrHiWZDL_10serde_json2de10from_traitNtNtB4_4read9SliceReadNtNtCsiAynQAjgDuT_10xet_client9cas_types19UploadShardResponseEB19_.exit unwind label %bb.h, !noalias !95
 

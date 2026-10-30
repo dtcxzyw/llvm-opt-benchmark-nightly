@@ -205,10 +205,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !634, !range !146, !noundef !147
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !634
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN5arrow6FutureINS0_23RecordBatchWithMetadataEEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !634
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !180  ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -611,10 +611,10 @@ _ZN5arrow6FutureINS_8internal5EmptyEED2Ev.exit:   ; preds = %_ZN5arrow4util5Mute
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.y = load i8, ptr %i.x, align 8, !tbaa !634, !range !146, !noundef !147
   %i.z = trunc nuw i8 %i.y to i1
-  store i8 0, ptr %i.x, align 8, !tbaa !634
   br i1 %i.z, label %bb.j, label %_ZNSt14_Optional_baseIN5arrow6FutureINS0_23RecordBatchWithMetadataEEELb0ELb0EED2Ev.exit
 
 bb.j:                                             ; preds = %_ZN5arrow6FutureINS_8internal5EmptyEED2Ev.exit
+  store i8 0, ptr %i.x, align 8, !tbaa !634
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !180 ; 8 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ab, null
@@ -1017,10 +1017,10 @@ _ZN5arrow6FutureINS_23RecordBatchWithMetadataEEaSEOS2_.exit: ; preds = %_ZNRSt8o
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 152 ; 2 uses
   %i.bx = load i8, ptr %i.bw, align 8, !tbaa !634, !range !146, !noundef !147
   %i.by = trunc nuw i8 %i.bx to i1
-  store i8 0, ptr %i.bw, align 8, !tbaa !634
   br i1 %i.by, label %bb.y, label %_ZNSt8optionalIN5arrow6FutureINS0_23RecordBatchWithMetadataEEEE5resetEv.exit
 
 bb.y:                                             ; preds = %_ZN5arrow6FutureINS_23RecordBatchWithMetadataEEaSEOS2_.exit
+  store i8 0, ptr %i.bw, align 8, !tbaa !634
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bv, i64 144
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !180 ; 8 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ca, null

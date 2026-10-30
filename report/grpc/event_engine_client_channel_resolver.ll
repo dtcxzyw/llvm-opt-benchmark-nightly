@@ -202,10 +202,10 @@ bb.cc:                                            ; preds = %bb.cb
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i: ; preds = %bb.cc, %bb.cb, %bb.ca
   %i.hl = load i8, ptr %i.r, align 8, !tbaa !196, !range !147, !noundef !148
   %i.hm = trunc nuw i8 %i.hl to i1
-  store i8 0, ptr %i.r, align 8, !tbaa !196
   br i1 %i.hm, label %bb.cd, label %bb.cg
 
 bb.cd:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i
+  store i8 0, ptr %i.r, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.q, align 8, !tbaa !50
   %i.hn = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !202
@@ -392,11 +392,11 @@ _ZN9grpc_core4Fork15DecExecCtxCountEv.exit:       ; preds = %bb.e, %bb.f, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !196, !range !147, !noundef !148
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !196
   br i1 %i.n, label %bb.g, label %_ZNSt14_Optional_baseIN9grpc_core15ScopedTimeCacheELb0ELb0EED2Ev.exit
 
 bb.g:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i8 0, ptr %i.l, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !50
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !202
@@ -465,11 +465,11 @@ _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.f, %bb.e, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !196, !range !147, !noundef !148
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !196
   br i1 %i.n, label %bb.g, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.g:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i8 0, ptr %i.l, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !50
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !202
@@ -872,7 +872,7 @@ declare void @_ZN9grpc_core17EndpointAddressesC1ERKS0_(ptr noundef nonnull align
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE14_M_move_assignEOS3_(ptr noundef nonnull align 8 dereferenceable(121) %0, ptr noundef nonnull align 8 dereferenceable(121) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !205, !range !147, !noundef !148
   %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -994,17 +994,13 @@ _ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE12_M_constructIJS2_EE
   br label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
 
 bb.k:                                             ; preds = %bb.c
-  br i1 %i.c, label %bb.l, label %2
+  br i1 %i.c, label %bb.l, label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
 
 bb.l:                                             ; preds = %bb.k
   tail call void @_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(121) %0) #26
   br label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
 
-2:                                                ; preds = %bb.k
-  store i8 0, ptr %i.a, align 8, !tbaa !205
-  br label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
-
-_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit: ; preds = %2, %bb.l, %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE12_M_constructIJS2_EEEvDpOT_.exit, %bb.b
+_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit: ; preds = %bb.l, %bb.k, %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE12_M_constructIJS2_EEEvDpOT_.exit, %bb.b
   ret void
 }
 
@@ -1407,10 +1403,10 @@ bb.cn:                                            ; preds = %bb.cm
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i: ; preds = %bb.cn, %bb.cm, %bb.cl
   %i.ir = load i8, ptr %i.t, align 8, !tbaa !196, !range !147, !noundef !148
   %i.is = trunc nuw i8 %i.ir to i1
-  store i8 0, ptr %i.t, align 8, !tbaa !196
   br i1 %i.is, label %bb.co, label %bb.cr
 
 bb.co:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i
+  store i8 0, ptr %i.t, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.s, align 8, !tbaa !50
   %i.it = getelementptr inbounds nuw i8, ptr %12, i64 56
   %i.iu = load ptr, ptr %i.it, align 8, !tbaa !202
@@ -1813,10 +1809,10 @@ bb.br:                                            ; preds = %bb.bq
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i: ; preds = %bb.br, %bb.bq, %bb.bp
   %i.gh = load i8, ptr %i.t, align 8, !tbaa !196, !range !147, !noundef !148
   %i.gi = trunc nuw i8 %i.gh to i1
-  store i8 0, ptr %i.t, align 8, !tbaa !196
   br i1 %i.gi, label %bb.bs, label %bb.bv
 
 bb.bs:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i
+  store i8 0, ptr %i.t, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.s, align 8, !tbaa !50
   %i.gj = getelementptr inbounds nuw i8, ptr %13, i64 56
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !202
@@ -2219,10 +2215,10 @@ bb.di:                                            ; preds = %bb.dh
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i: ; preds = %bb.di, %bb.dh, %bb.dg
   %i.on = load i8, ptr %i.u, align 8, !tbaa !196, !range !147, !noundef !148
   %i.oo = trunc nuw i8 %i.on to i1
-  store i8 0, ptr %i.u, align 8, !tbaa !196
   br i1 %i.oo, label %bb.dj, label %bb.dm
 
 bb.dj:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i
+  store i8 0, ptr %i.u, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.t, align 8, !tbaa !50
   %i.op = getelementptr inbounds nuw i8, ptr %14, i64 56
   %i.oq = load ptr, ptr %i.op, align 8, !tbaa !202
@@ -2625,10 +2621,10 @@ bb.ac:                                            ; preds = %bb.ab
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i: ; preds = %bb.ac, %bb.ab, %bb.aa
   %i.ax = load i8, ptr %i.d, align 8, !tbaa !196, !range !147, !noundef !148
   %i.ay = trunc nuw i8 %i.ax to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !196
   br i1 %i.ay, label %bb.ad, label %"_ZN4absl12lts_2025051222internal_any_invocable7InvokeRIvRZN9grpc_core12_GLOBAL__N_135EventEngineClientChannelDNSResolver28EventEngineDNSRequestWrapperC1ENS3_13RefCountedPtrIS5_EESt10unique_ptrIN17grpc_event_engine12experimental11EventEngine11DNSResolverESt14default_deleteISD_EEE3$_3JEEET_OT0_DpOT1_.exit"
 
 bb.ad:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i
+  store i8 0, ptr %i.d, align 8, !tbaa !196
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.c, align 8, !tbaa !50
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !202

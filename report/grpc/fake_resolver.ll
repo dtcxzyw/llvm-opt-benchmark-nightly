@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.f, %_ZN9grpc_cor
 
 bb.k:                                             ; preds = %bb.j
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.x = load i8, ptr %i.w, align 8, !tbaa !30, !range !60, !noundef !61
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %bb.l, label %.critedge
@@ -214,17 +214,13 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.aa = load i8, ptr %i.w, align 8, !tbaa !30, !range !60, !noundef !61
   %i.ab = trunc nuw i8 %i.aa to i1
-  br i1 %i.ab, label %bb.n, label %5
+  br i1 %i.ab, label %bb.n, label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
 
 bb.n:                                             ; preds = %bb.m
   call void @_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(128) %i.v) #26
   br label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
 
-5:                                                ; preds = %bb.m
-  store i8 0, ptr %i.w, align 8, !tbaa !30
-  br label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
-
-_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit: ; preds = %bb.n, %5
+_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit: ; preds = %bb.m, %bb.n
   invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a)
           to label %_ZN4absl12lts_202505129MutexLockD2Ev.exit10 unwind label %bb.o
 
@@ -627,7 +623,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.i = load i8, ptr %i.h, align 8, !tbaa !30, !range !60, !noundef !61
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.c, label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
@@ -892,14 +888,10 @@ bb.w:                                             ; preds = %bb.v
 _ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt6vectorIN9grpc_core17EndpointAddressesESaIS5_EEED2Ev.exit: ; preds = %_ZSt8_DestroyIPN9grpc_core17EndpointAddressesES1_EvT_S3_RSaIT0_E.exit.i.i, %bb.t, %bb.u, %bb.v
   %i.cz = load i8, ptr %i.h, align 8, !tbaa !30, !range !60, !noundef !61
   %i.da = trunc nuw i8 %i.cz to i1
-  br i1 %i.da, label %bb.x, label %4
+  br i1 %i.da, label %bb.x, label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
 
 bb.x:                                             ; preds = %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt6vectorIN9grpc_core17EndpointAddressesESaIS5_EEED2Ev.exit
   call void @_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(128) %i.g) #26
-  br label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
-
-4:                                                ; preds = %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt6vectorIN9grpc_core17EndpointAddressesESaIS5_EEED2Ev.exit
-  store i8 0, ptr %i.h, align 8, !tbaa !30
   br label %_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit
 
 bb.y:                                             ; preds = %bb.c
@@ -915,7 +907,7 @@ bb.z:                                             ; preds = %_ZN9grpc_core8Resol
   call void @_ZN9grpc_core8Resolver6ResultD2Ev(ptr noundef nonnull align 8 dead_on_return(120) dereferenceable(120) %3) #26
   br label %bb.aa
 
-_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit: ; preds = %4, %bb.x, %bb.a, %bb.b
+_ZNSt8optionalIN9grpc_core8Resolver6ResultEE5resetEv.exit: ; preds = %bb.x, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt6vectorIN9grpc_core17EndpointAddressesESaIS5_EEED2Ev.exit, %bb.a, %bb.b
   ret void
 
 bb.aa:                                            ; preds = %bb.z, %bb.y

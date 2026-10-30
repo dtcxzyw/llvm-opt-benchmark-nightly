@@ -204,13 +204,12 @@ bb.a:
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.o = tail call noundef ptr @_ZNK10cmMakefile18GetGlobalGeneratorEv(ptr noundef nonnull align 8 dereferenceable(2952) %2) ; 2 uses
   tail call void @_ZNK17cmGlobalGenerator26GetXcFrameworkPListContentERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind writable sret(%"class.std::optional") align 8 %0, ptr noundef nonnull align 8 dereferenceable(2202) %i.o, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 6 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
   %i.q = load i8, ptr %i.p, align 8, !tbaa !108, !range !42, !noundef !43
   %i.r = trunc nuw i8 %i.q to i1
   br i1 %i.r, label %.critedge52, label %_ZNSt14_Optional_baseI18cmXcFrameworkPlistLb0ELb0EED2Ev.exit
 
 _ZNSt14_Optional_baseI18cmXcFrameworkPlistLb0ELb0EED2Ev.exit: ; preds = %bb.a
-  store i8 0, ptr %i.p, align 8, !tbaa !108
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20, !noalias !195
   %i.s = load ptr, ptr %1, align 8, !tbaa !54, !noalias !195
@@ -613,10 +612,10 @@ _ZN12_GLOBAL__N_113PlistMetadataD2Ev.exit:        ; preds = %_ZNSt7__cxx1112basi
 bb.dc:                                            ; preds = %_ZN12_GLOBAL__N_113PlistMetadataD2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.lp = load i8, ptr %i.y, align 8, !tbaa !199, !range !42, !noundef !43
   %i.lq = trunc nuw i8 %i.lp to i1
-  store i8 0, ptr %i.y, align 8, !tbaa !199
   br i1 %i.lq, label %bb.dd, label %_ZNSt14_Optional_baseIN4Json5ValueELb0ELb0EED2Ev.exit
 
 bb.dd:                                            ; preds = %bb.dc
+  store i8 0, ptr %i.y, align 8, !tbaa !199
   call void @_ZN4Json5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(48) %15) #20
   br label %_ZNSt14_Optional_baseIN4Json5ValueELb0ELb0EED2Ev.exit
 
@@ -641,10 +640,10 @@ bb.de:                                            ; preds = %.body, %_ZNSt7__cxx
   %.pn46.pn.pn = phi { ptr, i32 } [ %.pn46.pn, %.body ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57 ], [ %i.ao, %bb.h ] ; 2 uses
   %i.lw = load i8, ptr %i.y, align 8, !tbaa !199, !range !42, !noundef !43
   %i.lx = trunc nuw i8 %i.lw to i1
-  store i8 0, ptr %i.y, align 8, !tbaa !199
   br i1 %i.lx, label %bb.df, label %_ZNSt14_Optional_baseIN4Json5ValueELb0ELb0EED2Ev.exit97
 
 bb.df:                                            ; preds = %bb.de
+  store i8 0, ptr %i.y, align 8, !tbaa !199
   call void @_ZN4Json5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(48) %15) #20
   br label %_ZNSt14_Optional_baseIN4Json5ValueELb0ELb0EED2Ev.exit97
 

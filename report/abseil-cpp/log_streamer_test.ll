@@ -202,28 +202,24 @@ declare void @_ZN4absl12lts_2026052613ScopedMockLog18StartCapturingLogsEv(ptr no
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052611LogStreamerD2Ev(ptr noundef nonnull align 8 dead_on_return(424) dereferenceable(424) %0) unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.absl::lts_20260526::log_internal::LogMessage", align 8 ; 5 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.f = load i8, ptr %i.a, align 8, !tbaa !114, !range !115, !noundef !116
   %i.g = trunc nuw i8 %i.f to i1
-  br i1 %i.g, label %.split12, label %.split14.us.thread
-
-.split14.us.thread:                               ; preds = %bb.a
-  store i8 0, ptr %i.a, align 8, !tbaa !114
-  br label %_ZNSt14_Optional_baseIN4absl12lts_2026052616strings_internal13OStringStreamELb0ELb0EED2Ev.exit
+  br i1 %i.g, label %.split12, label %_ZNSt14_Optional_baseIN4absl12lts_2026052616strings_internal13OStringStreamELb0ELb0EED2Ev.exit
 
 .split14.us:                                      ; preds = %bb.e
   call void @_ZN4absl12lts_2026052612log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #27
   %.pre = load i8, ptr %i.a, align 8, !tbaa !114, !range !115
   %i.h = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !114
   br i1 %i.h, label %bb.b, label %_ZNSt14_Optional_baseIN4absl12lts_2026052616strings_internal13OStringStreamELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %.split14.us
+  store i8 0, ptr %i.a, align 8, !tbaa !114
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.i, align 8, !tbaa !26
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -232,7 +228,7 @@ bb.b:                                             ; preds = %.split14.us
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.k) #27, !inline_history !117
   br label %_ZNSt14_Optional_baseIN4absl12lts_2026052616strings_internal13OStringStreamELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseIN4absl12lts_2026052616strings_internal13OStringStreamELb0ELb0EED2Ev.exit: ; preds = %.split14.us.thread, %.split14.us, %bb.b
+_ZNSt14_Optional_baseIN4absl12lts_2026052616strings_internal13OStringStreamELb0ELb0EED2Ev.exit: ; preds = %bb.a, %.split14.us, %bb.b
   %i.l = load ptr, ptr %i.e, align 8, !tbaa !102  ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.n = icmp eq ptr %i.l, %i.m
@@ -635,10 +631,10 @@ bb.d:                                             ; preds = %_ZNSt22_Optional_pa
 _ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEEC2EOS4_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit8, %bb.d
   %i.ak = load i8, ptr %i.ad, align 8, !tbaa !114, !range !115, !noundef !116
   %i.al = trunc nuw i8 %i.ak to i1
-  store i8 0, ptr %i.ad, align 8, !tbaa !114
   br i1 %i.al, label %bb.e, label %_ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEE5resetEv.exit
 
 bb.e:                                             ; preds = %_ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEEC2EOS4_.exit
+  store i8 0, ptr %i.ad, align 8, !tbaa !114
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.am, align 8, !tbaa !26
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 136
@@ -1041,10 +1037,10 @@ bb.p:                                             ; preds = %bb.o
   br label %_ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEEaSEOS4_.exit
 
 bb.q:                                             ; preds = %bb.o
-  store i8 0, ptr %i.a, align 8, !tbaa !114
   br i1 %i.bk, label %bb.r, label %_ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEEaSEOS4_.exit
 
 bb.r:                                             ; preds = %bb.q
+  store i8 0, ptr %i.a, align 8, !tbaa !114
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.bp, align 8, !tbaa !26
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -1099,10 +1095,10 @@ bb.v:                                             ; preds = %_ZNSt8optionalIN4ab
 bb.w:                                             ; preds = %bb.v, %_ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEEaSEOS4_.exit
   %i.cd = load i8, ptr %i.bl, align 8, !tbaa !114, !range !115, !noundef !116
   %i.ce = trunc nuw i8 %i.cd to i1
-  store i8 0, ptr %i.bl, align 8, !tbaa !114
   br i1 %i.ce, label %bb.x, label %_ZNSt8optionalIN4absl12lts_2026052616strings_internal13OStringStreamEE5resetEv.exit
 
 bb.x:                                             ; preds = %bb.w
+  store i8 0, ptr %i.bl, align 8, !tbaa !114
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.cf, align 8, !tbaa !26
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 136

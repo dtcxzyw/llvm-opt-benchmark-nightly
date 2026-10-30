@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.k, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @_ZN2v88internal8compiler10turboshaft10TypeParser16ParseSetElementsIjEESt8optionalISt6vectorIT_SaIS7_EEEv(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.34") align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.m = load i8, ptr %i.l, align 8, !range !15, !noundef !16
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.e, label %.thread43
@@ -242,7 +242,6 @@ bb.g:                                             ; preds = %bb.f
 .thread:                                          ; preds = %bb.g, %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 0, ptr %i.w, align 8
-  store i8 0, ptr %i.l, align 8
   br label %bb.x
 
 bb.h:                                             ; preds = %bb.f
@@ -391,10 +390,10 @@ bb.w:                                             ; preds = %bb.o, %_ZN2v88inter
   store i64 0, ptr %.sroa.15.0..sroa_idx, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.bx, align 8
-  store i8 0, ptr %i.l, align 8
   br i1 %.pre, label %bb.x, label %_ZNSt14_Optional_baseISt6vectorIjSaIjEELb0ELb0EED2Ev.exit
 
 bb.x:                                             ; preds = %.thread, %bb.w
+  store i8 0, ptr %i.l, align 8
   %i.by = load ptr, ptr %2, align 8               ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.by, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIjSaIjEELb0ELb0EED2Ev.exit, label %bb.y
@@ -568,7 +567,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.k, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @_ZN2v88internal8compiler10turboshaft10TypeParser16ParseSetElementsImEESt8optionalISt6vectorIT_SaIS7_EEEv(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.57") align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.m = load i8, ptr %i.l, align 8, !range !15, !noundef !16
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.e, label %.thread44
@@ -606,7 +605,6 @@ bb.g:                                             ; preds = %bb.f
 .thread:                                          ; preds = %bb.g, %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 0, ptr %i.w, align 8
-  store i8 0, ptr %i.l, align 8
   br label %bb.w
 
 bb.h:                                             ; preds = %bb.f
@@ -746,10 +744,10 @@ bb.v:                                             ; preds = %bb.n, %bb.m, %_ZN2v
   store i64 %.sink.i.i, ptr %.sroa.9.0..sroa_idx, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.bu, align 8
-  store i8 0, ptr %i.l, align 8
   br i1 %.pre, label %bb.w, label %_ZNSt14_Optional_baseISt6vectorImSaImEELb0ELb0EED2Ev.exit
 
 bb.w:                                             ; preds = %.thread, %bb.v
+  store i8 0, ptr %i.l, align 8
   %i.bv = load ptr, ptr %2, align 8               ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.bv, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorImSaImEELb0ELb0EED2Ev.exit, label %bb.x
@@ -923,7 +921,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.k, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @_ZN2v88internal8compiler10turboshaft10TypeParser16ParseSetElementsIfEESt8optionalISt6vectorIT_SaIS7_EEEv(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.91") align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.m = load i8, ptr %i.l, align 8, !range !15, !noundef !16
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.e, label %.thread45
@@ -961,7 +959,6 @@ bb.g:                                             ; preds = %bb.f
 .thread:                                          ; preds = %bb.g, %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 0, ptr %i.w, align 8
-  store i8 0, ptr %i.l, align 8
   br label %bb.ai
 
 bb.h:                                             ; preds = %bb.f
@@ -1221,10 +1218,10 @@ bb.ah:                                            ; preds = %bb.t, %bb.q
   store i64 0, ptr %.sroa.16.0..sroa_idx, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.cv, align 8
-  store i8 0, ptr %i.l, align 8
   br i1 %.pre, label %bb.ai, label %_ZNSt14_Optional_baseISt6vectorIfSaIfEELb0ELb0EED2Ev.exit
 
 bb.ai:                                            ; preds = %.thread, %bb.ah
+  store i8 0, ptr %i.l, align 8
   %i.cw = load ptr, ptr %2, align 8               ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.cw, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIfSaIfEELb0ELb0EED2Ev.exit, label %bb.aj
@@ -1455,7 +1452,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.k, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @_ZN2v88internal8compiler10turboshaft10TypeParser16ParseSetElementsIdEESt8optionalISt6vectorIT_SaIS7_EEEv(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.127") align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.m = load i8, ptr %i.l, align 8, !range !15, !noundef !16
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.e, label %.thread44
@@ -1493,7 +1490,6 @@ bb.g:                                             ; preds = %bb.f
 .thread:                                          ; preds = %bb.g, %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 0, ptr %i.w, align 8
-  store i8 0, ptr %i.l, align 8
   br label %bb.ag
 
 bb.h:                                             ; preds = %bb.f
@@ -1731,10 +1727,10 @@ bb.af:                                            ; preds = %_ZN2v88internal8com
   store i64 %.sroa.15.0, ptr %.sroa.15.0..sroa_idx, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.cj, align 8
-  store i8 0, ptr %i.l, align 8
   br i1 %.pre, label %bb.ag, label %_ZNSt14_Optional_baseISt6vectorIdSaIdEELb0ELb0EED2Ev.exit
 
 bb.ag:                                            ; preds = %.thread, %bb.af
+  store i8 0, ptr %i.l, align 8
   %i.ck = load ptr, ptr %2, align 8               ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ck, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIdSaIdEELb0ELb0EED2Ev.exit, label %bb.ah

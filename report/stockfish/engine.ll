@@ -205,10 +205,10 @@ _ZN9Stockfish10NumaConfigaSEOS0_.exit:            ; preds = %_ZNSt6vectorISt3set
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.be, ptr noundef nonnull align 8 dereferenceable(9) %i.bf, i64 9, i1 false)
   %i.bg = load i8, ptr %i.aa, align 8, !tbaa !114, !range !61, !noundef !62
   %i.bh = trunc nuw i8 %i.bg to i1
-  store i8 0, ptr %i.aa, align 8, !tbaa !114
   br i1 %i.bh, label %bb.k, label %_ZNSt14_Optional_baseIN9Stockfish10NumaConfigELb0ELb0EED2Ev.exit
 
 bb.k:                                             ; preds = %_ZN9Stockfish10NumaConfigaSEOS0_.exit
+  store i8 0, ptr %i.aa, align 8, !tbaa !114
   %i.bi = getelementptr inbounds nuw i8, ptr %6, i64 24
   call void @_ZNSt8_Rb_treeImSt4pairIKmmESt10_Select1stIS2_ESt4lessImESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E(ptr noundef nonnull align 8 dereferenceable(48) %i.bi, ptr noundef null)
   %i.bj = load ptr, ptr %6, align 16, !tbaa !75   ; 3 uses
@@ -611,11 +611,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %_ZN
   %i.bg = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 40 ; 2 uses
   %i.bh = load i8, ptr %i.bg, align 8, !tbaa !60, !range !61, !noundef !62
   %i.bi = trunc nuw i8 %i.bh to i1
-  store i8 0, ptr %i.bg, align 8, !tbaa !60
   br i1 %i.bi, label %bb.h, label %_ZSt8_DestroyISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvPT_.exit.i.i.i
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i
   %i.bj = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8
+  store i8 0, ptr %i.bg, align 8, !tbaa !60
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !67 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 24 ; 2 uses
   %i.bm = icmp eq ptr %i.bk, %i.bl
@@ -1018,10 +1018,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
   %i.hb = load i8, ptr %i.as, align 8, !tbaa !60, !range !61, !noundef !62
   %i.hc = trunc nuw i8 %i.hb to i1
-  store i8 0, ptr %i.as, align 8, !tbaa !60
   br i1 %i.hc, label %bb.ao, label %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit
 
 bb.ao:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47
+  store i8 0, ptr %i.as, align 8, !tbaa !60
   %i.hd = load ptr, ptr %i.ar, align 8, !tbaa !67 ; 2 uses
   %i.he = icmp eq ptr %i.hd, %i.at
   br i1 %i.he, label %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
@@ -1424,10 +1424,10 @@ bb.r:                                             ; preds = %_ZNK9Stockfish24Sys
 _ZNSt6vectorISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaISB_EE12emplace_backIJS2_SA_EEERSB_DpOT_.exit: ; preds = %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEC2IS1_S9_TnNSt9enable_ifIXaaclsr5_PCCPE22_MoveConstructiblePairIT_T0_EEclsr5_PCCPE30_ImplicitlyMoveConvertiblePairISD_SE_EEEbE4typeELb1EEEOSD_OSE_.exit.i, %bb.r
   %i.bi = load i8, ptr %i.p, align 8, !tbaa !60, !range !61, !noundef !62
   %i.bj = trunc nuw i8 %i.bi to i1
-  store i8 0, ptr %i.p, align 8, !tbaa !60
   br i1 %i.bj, label %bb.s, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.s:                                             ; preds = %_ZNSt6vectorISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaISB_EE12emplace_backIJS2_SA_EEERSB_DpOT_.exit
+  store i8 0, ptr %i.p, align 8, !tbaa !60
   %i.bk = load ptr, ptr %2, align 8, !tbaa !67    ; 2 uses
   %i.bl = icmp eq ptr %i.bk, %i.m
   br i1 %i.bl, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -1830,10 +1830,10 @@ _ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit: 
 bb.ad:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17, %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit
   %i.gp = phi i8 [ %i.dh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17 ], [ %.pre129, %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit ]
   %i.gq = trunc nuw i8 %i.gp to i1
-  store i8 0, ptr %i.m, align 8, !tbaa !60
   br i1 %i.gq, label %bb.ae, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.ae:                                            ; preds = %bb.ad
+  store i8 0, ptr %i.m, align 8, !tbaa !60
   %i.gr = load ptr, ptr %8, align 8, !tbaa !67    ; 2 uses
   %i.gs = icmp eq ptr %i.gr, %i.ab
   br i1 %i.gs, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -2236,10 +2236,10 @@ _ZZN9Stockfish10NumaConfig11from_systemERKSt7variantIJNS_16SystemNumaPolicyENS_1
 bb.v:                                             ; preds = %_ZNSt6vectorImSaImEED2Ev.exit, %bb.r
   %i.fs = load i8, ptr %i.ak, align 8, !tbaa !60, !range !61, !noundef !62
   %i.ft = trunc nuw i8 %i.fs to i1
-  store i8 0, ptr %i.ak, align 8, !tbaa !60
   br i1 %i.ft, label %bb.w, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.w:                                             ; preds = %bb.v
+  store i8 0, ptr %i.ak, align 8, !tbaa !60
   %i.fu = load ptr, ptr %11, align 8, !tbaa !67   ; 2 uses
   %i.fv = icmp eq ptr %i.fu, %i.ao
   br i1 %i.fv, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -2355,10 +2355,10 @@ _ZZN9Stockfish10NumaConfig11from_systemERKSt7variantIJNS_16SystemNumaPolicyENS_1
 .loopexit:                                        ; preds = %_ZZN9Stockfish10NumaConfig11from_systemERKSt7variantIJNS_16SystemNumaPolicyENS_15L3DomainsPolicyENS_15BundledL3PolicyEEEbENKUlmE_clEm.exit49.thread, %bb.y
   %i.hf = load i8, ptr %i.t, align 8, !tbaa !60, !range !61, !noundef !62
   %i.hg = trunc nuw i8 %i.hf to i1
-  store i8 0, ptr %i.t, align 8, !tbaa !60
   br i1 %i.hg, label %bb.ab, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit52
 
 bb.ab:                                            ; preds = %.loopexit
+  store i8 0, ptr %i.t, align 8, !tbaa !60
   %i.hh = load ptr, ptr %4, align 8, !tbaa !67    ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.hj = icmp eq ptr %i.hh, %i.hi
@@ -2761,10 +2761,10 @@ _ZNSt7variantIJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8Netwo
 _ZNSt7variantIJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8NetworksEEENS1_27SharedMemoryBackendFallbackIS5_EEEEaSIS6_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS0_S6_S8_EE4typeEE18is_constructible_vISG_SD_E15is_assignable_vIRSG_SD_EERS9_E4typeESE_.exit: ; preds = %_ZSt3getILm2EJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8NetworksEEENS1_27SharedMemoryBackendFallbackIS5_EEEERNSt19variant_alternativeIXT_ESt7variantIJDpT0_EEE4typeERSD_.exit.i, %_ZNK9Stockfish16LargePageDeleterINS_4Eval4NNUE8NetworksEEclEPS3_.exit.i.i.i.i.i.i, %_ZNSt7variantIJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8NetworksEEENS1_27SharedMemoryBackendFallbackIS5_EEEE7emplaceILm2EJS8_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS0_S6_S8_EE4typeEDpT0_EERSE_E4typeEDpOSF_.exit.i, %_ZNSt7variantIJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8NetworksEEENS1_27SharedMemoryBackendFallbackIS5_EEEE7emplaceILm1EJS6_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS0_S6_S8_EE4typeEDpT0_EERSE_E4typeEDpOSF_.exit.i, %_ZSt3getILm1EJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8NetworksEEENS1_27SharedMemoryBackendFallbackIS5_EEEERNSt19variant_alternativeIXT_ESt7variantIJDpT0_EEE4typeERSD_.exit.i
   %i.iz = load i8, ptr %i.ic, align 8, !tbaa !185, !range !61, !noundef !62
   %i.ja = trunc nuw i8 %i.iz to i1
-  store i8 0, ptr %i.ic, align 8, !tbaa !185
   br i1 %i.ja, label %bb.ad, label %_ZN9Stockfish19SharedMemoryBackendINS_4Eval4NNUE8NetworksEED2Ev.exit
 
 bb.ad:                                            ; preds = %_ZNSt7variantIJSt9monostateN9Stockfish19SharedMemoryBackendINS1_4Eval4NNUE8NetworksEEENS1_27SharedMemoryBackendFallbackIS5_EEEEaSIS6_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS0_S6_S8_EE4typeEE18is_constructible_vISG_SD_E15is_assignable_vIRSG_SD_EERS9_E4typeESE_.exit
+  store i8 0, ptr %i.ic, align 8, !tbaa !185
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEEE, i64 16), ptr %10, align 8, !tbaa !126
   call void @_ZN9Stockfish3shm6detail20SharedMemoryRegistry19unregister_instanceEPNS1_16SharedMemoryBaseE(ptr noundef nonnull align 8 dereferenceable(152) %10), !inline_history !259
   %i.jb = load ptr, ptr %10, align 8, !tbaa !126
@@ -3167,10 +3167,10 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt22_Optional_payload_baseIN9Stockfish3shm12SharedMemoryINS0_4Eval4NNUE8NetworksEEEE8_M_resetEv.exit
 
 bb.e:                                             ; preds = %bb.c
-  store i8 0, ptr %i.a, align 8, !tbaa !185
   br i1 %i.c, label %bb.f, label %_ZNSt22_Optional_payload_baseIN9Stockfish3shm12SharedMemoryINS0_4Eval4NNUE8NetworksEEEE8_M_resetEv.exit
 
 bb.f:                                             ; preds = %bb.e
+  store i8 0, ptr %i.a, align 8, !tbaa !185
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEEE, i64 16), ptr %0, align 8, !tbaa !126
   tail call void @_ZN9Stockfish3shm6detail20SharedMemoryRegistry19unregister_instanceEPNS1_16SharedMemoryBaseE(ptr noundef nonnull align 8 dereferenceable(145) %0), !inline_history !259
   %i.h = load ptr, ptr %0, align 8, !tbaa !126
@@ -3518,10 +3518,10 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !185, !range !61, !noundef !62
   %i.e = trunc nuw i8 %i.d to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !185
   br i1 %i.e, label %bb.c, label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFvOZNS0_16_Variant_storageILb0EJSt9monostateN9Stockfish19SharedMemoryBackendINS5_4Eval4NNUE8NetworksEEENS5_27SharedMemoryBackendFallbackIS9_EEEE8_M_resetEvEUlOT_E_RSt7variantIJS4_SA_SC_EEEJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESH_SK_.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.c, align 8, !tbaa !185
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEEE, i64 16), ptr %1, align 8, !tbaa !126
   tail call void @_ZN9Stockfish3shm6detail20SharedMemoryRegistry19unregister_instanceEPNS1_16SharedMemoryBaseE(ptr noundef nonnull align 8 dereferenceable(153) %1), !inline_history !259
   %i.f = load ptr, ptr %1, align 8, !tbaa !126
@@ -3924,10 +3924,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   store i64 0, ptr %i.ai, align 8, !tbaa !68, !alias.scope !772
   store i8 0, ptr %i.aa, align 8, !tbaa !69, !alias.scope !772
   store i8 1, ptr %i.v, align 8, !tbaa !60, !alias.scope !771
+  store i8 0, ptr %i.u, align 8, !tbaa !60, !alias.scope !772
   br label %_ZSt19__relocate_object_aISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i
 
 _ZSt19__relocate_object_aISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i
-  store i8 0, ptr %i.u, align 8, !tbaa !60, !alias.scope !772
   %i.ak = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 48 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 48
   %.not.i.i.i = icmp eq ptr %i.ak, %i.q
@@ -4092,10 +4092,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   store i64 0, ptr %i.ba, align 8, !tbaa !68, !alias.scope !781
   store i8 0, ptr %i.as, align 8, !tbaa !69, !alias.scope !781
   store i8 1, ptr %i.an, align 8, !tbaa !60, !alias.scope !780
+  store i8 0, ptr %i.am, align 8, !tbaa !60, !alias.scope !781
   br label %_ZSt19__relocate_object_aISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i
 
 _ZSt19__relocate_object_aISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i
-  store i8 0, ptr %i.am, align 8, !tbaa !60, !alias.scope !781
   %i.bc = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 48 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 48 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bc, %1
@@ -4157,10 +4157,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   store i64 0, ptr %i.bw, align 8, !tbaa !68, !alias.scope !784
   store i8 0, ptr %i.bo, align 8, !tbaa !69, !alias.scope !784
   store i8 1, ptr %i.bj, align 8, !tbaa !60, !alias.scope !783
+  store i8 0, ptr %i.bi, align 8, !tbaa !60, !alias.scope !784
   br label %_ZSt19__relocate_object_aISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i21
 
 _ZSt19__relocate_object_aISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i21: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i.i.i.i.i27, %.lr.ph.i.i.i18
-  store i8 0, ptr %i.bi, align 8, !tbaa !60, !alias.scope !784
   %i.by = getelementptr inbounds nuw i8, ptr %.0911.i.i.i20, i64 48 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 48 ; 2 uses
   %.not.i.i.i22 = icmp eq ptr %i.by, %i.b

@@ -204,10 +204,10 @@ bb.dm:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.abh = getelementptr inbounds nuw i8, ptr %17, i64 32 ; 2 uses
   %i.abi = load i8, ptr %i.abh, align 8, !tbaa !135, !range !44, !noalias !215, !noundef !45
   %i.abj = trunc nuw i8 %i.abi to i1
-  store i8 0, ptr %i.abh, align 8, !tbaa !135, !noalias !215
   br i1 %i.abj, label %bb.dn, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.dn:                                            ; preds = %bb.dm
+  store i8 0, ptr %i.abh, align 8, !tbaa !135, !noalias !215
   %i.abk = load ptr, ptr %17, align 8, !tbaa !33, !noalias !215 ; 2 uses
   %i.abl = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
   %i.abm = icmp eq ptr %i.abk, %i.abl
@@ -610,7 +610,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @_Z39messageWhenOpenMPLibraryWillSetAffinityB5cxx11v(ptr dead_on_unwind nonnull writable sret(%"class.std::optional") align 8 %6)
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 5 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !135, !range !44, !noundef !45
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.f, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit38
@@ -694,10 +694,10 @@ _ZN3gmx14LogEntryWriterD2Ev.exit35:               ; preds = %bb.k, %_ZNKSt7__cxx
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   %i.ak = load i8, ptr %i.f, align 8, !tbaa !135, !range !44, !noundef !45
   %i.al = trunc nuw i8 %i.ak to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !135
   br i1 %i.al, label %bb.l, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.l:                                             ; preds = %_ZN3gmx14LogEntryWriterD2Ev.exit35
+  store i8 0, ptr %i.f, align 8, !tbaa !135
   %i.am = load ptr, ptr %6, align 8, !tbaa !33    ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.ao = icmp eq ptr %i.am, %i.an
@@ -715,7 +715,6 @@ _ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb
 
 .thread106:                                       ; preds = %bb.h, %bb.g
   store i32 4, ptr %i.d, align 8, !tbaa !22
-  store i8 0, ptr %i.f, align 8, !tbaa !135
   br label %bb.m
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i: ; preds = %_ZN3gmx14LogWriteHelperaSERKNS_14LogEntryWriterE.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -723,10 +722,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %.pre.pre = load i8, ptr %i.f, align 8, !tbaa !135, !range !44
   %i.ar = trunc nuw i8 %.pre.pre to i1
   store i32 4, ptr %i.d, align 8, !tbaa !22
-  store i8 0, ptr %i.f, align 8, !tbaa !135
   br i1 %i.ar, label %bb.m, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit38
 
 bb.m:                                             ; preds = %.thread106, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
+  store i8 0, ptr %i.f, align 8, !tbaa !135
   %i.as = load ptr, ptr %6, align 8, !tbaa !33    ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.au = icmp eq ptr %i.as, %i.at

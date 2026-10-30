@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.c
 _RINvMs3_NtNtCs9OSMwK5JXHk_12aho_corasick6packed3apiNtB6_8Searcher7find_inRShEBa_.exit: ; preds = %_RNvMs3_NtNtCs9OSMwK5JXHk_12aho_corasick6packed3apiNtB5_8Searcher12find_in_slow.exit.i, %_RINvMsb_NtNtCs9OSMwK5JXHk_12aho_corasick4util6searchNtB6_5Match3newNtB6_4SpanEBa_.exit.i, %bb.j, %bb.k
   %i.an = load i64, ptr %0, align 8, !range !6, !noundef !4
   %i.ao = trunc nuw i64 %i.an to i1
-  br i1 %i.ao, label %bb.n, label %2
+  br i1 %i.ao, label %bb.n, label %bb.o
 
 bb.m:                                             ; preds = %bb.a
   store i64 0, ptr %0, align 8
@@ -217,11 +217,7 @@ bb.n:                                             ; preds = %_RINvMs3_NtNtCs9OSM
   store i64 %.sroa.3.0.copyload, ptr %i.b, align 8
   br label %bb.o
 
-2:                                                ; preds = %_RINvMs3_NtNtCs9OSMwK5JXHk_12aho_corasick6packed3apiNtB6_8Searcher7find_inRShEBa_.exit
-  store i64 0, ptr %0, align 8
-  br label %bb.o
-
-bb.o:                                             ; preds = %bb.n, %2, %bb.m
+bb.o:                                             ; preds = %_RINvMs3_NtNtCs9OSMwK5JXHk_12aho_corasick6packed3apiNtB6_8Searcher7find_inRShEBa_.exit, %bb.n, %bb.m
   ret void
 }
 

@@ -204,10 +204,10 @@ bb.t:                                             ; preds = %bb.s
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i: ; preds = %bb.t, %bb.s, %bb.r
   %i.ax = load i8, ptr %i.d, align 8, !tbaa !241, !range !147, !noundef !148
   %i.ay = trunc nuw i8 %i.ax to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !241
   br i1 %i.ay, label %bb.u, label %"_ZN4absl12lts_2025051222internal_any_invocable7InvokeRIvRZN9grpc_core12_GLOBAL__N_117XdsOverrideHostLb9IdleTimerC1ENS3_13RefCountedPtrIS5_EENS3_8DurationEE3$_0JEEET_OT0_DpOT1_.exit"
 
 bb.u:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i.i.i.i.i.i
+  store i8 0, ptr %i.d, align 8, !tbaa !241
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.c, align 8, !tbaa !41
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !246
@@ -322,11 +322,11 @@ _ZN9grpc_core4Fork15DecExecCtxCountEv.exit:       ; preds = %bb.e, %bb.f, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !241, !range !147, !noundef !148
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !241
   br i1 %i.n, label %bb.g, label %_ZNSt14_Optional_baseIN9grpc_core15ScopedTimeCacheELb0ELb0EED2Ev.exit
 
 bb.g:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i8 0, ptr %i.l, align 8, !tbaa !241
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !41
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !246
@@ -395,11 +395,11 @@ _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.f, %bb.e, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !241, !range !147, !noundef !148
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !241
   br i1 %i.n, label %bb.g, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.g:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i8 0, ptr %i.l, align 8, !tbaa !241
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !41
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !246
@@ -802,7 +802,7 @@ _ZNK9grpc_core12_GLOBAL__N_117XdsOverrideHostLb6Picker18PickOverriddenHostEPNS_2
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
   call void @llvm.lifetime.end.p0(ptr nonnull %19)
-  %i.mn = getelementptr inbounds nuw i8, ptr %21, i64 208 ; 4 uses
+  %i.mn = getelementptr inbounds nuw i8, ptr %21, i64 208 ; 3 uses
   %i.mo = load i8, ptr %i.mn, align 8, !tbaa !680, !range !147, !noundef !148
   %i.mp = trunc nuw i8 %i.mo to i1
   br i1 %i.mp, label %bb.er, label %_ZNSt14_Optional_baseIN9grpc_core19LoadBalancingPolicy10PickResultELb0ELb0EED2Ev.exit32
@@ -921,7 +921,6 @@ bb.et:                                            ; preds = %bb.es
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.od, ptr noundef nonnull align 8 dereferenceable(32) %i.oe, i64 32, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.oe, i8 0, i64 32, i1 false), !noalias !701
   store i8 %.pre.i.i.i.i.i.i31.pre.pre, ptr %i.mq, align 8, !tbaa !212
-  store i8 0, ptr %i.mn, align 8, !tbaa !680
   br i1 %i.oc, label %bb.ev, label %_ZNSt14_Optional_baseIN9grpc_core19LoadBalancingPolicy10PickResultELb0ELb0EED2Ev.exit
 
 bb.eu:                                            ; preds = %bb.er
@@ -944,10 +943,10 @@ _ZN9grpc_core19LoadBalancingPolicy10PickResultC2EOS1_.exit.thread.sink.split: ; 
 .sink.split212:                                   ; preds = %.critedge, %_ZN9grpc_core19LoadBalancingPolicy10PickResultC2EOS1_.exit.thread.sink.split, %bb.er, %bb.er, %.critedge211
   %.sink213 = phi i8 [ 0, %.critedge211 ], [ 0, %.critedge ], [ %i.ms, %_ZN9grpc_core19LoadBalancingPolicy10PickResultC2EOS1_.exit.thread.sink.split ], [ %i.ms, %bb.er ], [ %i.ms, %bb.er ]
   store i8 %.sink213, ptr %i.mq, align 8, !tbaa !212
-  store i8 0, ptr %i.mn, align 8, !tbaa !680
   br label %bb.ev
 
 bb.ev:                                            ; preds = %.sink.split212, %.loopexit.loopexit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  store i8 0, ptr %i.mn, align 8, !tbaa !680
   call void @_ZNSt8__detail9__variant16_Variant_storageILb0EJN9grpc_core19LoadBalancingPolicy10PickResult8CompleteENS4_5QueueENS4_4FailENS4_4DropEEED2Ev(ptr noundef nonnull align 8 dead_on_return(201) dereferenceable(216) %21) #38
   br label %_ZNSt14_Optional_baseIN9grpc_core19LoadBalancingPolicy10PickResultELb0ELb0EED2Ev.exit
 

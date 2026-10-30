@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %.promoted = load i8, ptr %i.ab, align 8, !tbaa !447
   %i.ac = trunc nuw i8 %.promoted to i1
-  br i1 %i.ac, label %bb.j, label %split89.invoke.sink.split
+  br i1 %i.ac, label %bb.j, label %split89.invoke
 
 bb.j:                                             ; preds = %.preheader57
   %i.ad = load ptr, ptr %i.aa, align 16, !tbaa !446 ; 3 uses
@@ -218,13 +218,12 @@ bb.k:                                             ; preds = %bb.j
   %i.ag = trunc nuw i8 %i.af to i1
   br i1 %i.ag, label %bb.l, label %split89.invoke.sink.split
 
-split89.invoke.sink.split:                        ; preds = %bb.k, %.preheader57
-  %.sink = phi i8 [ 0, %.preheader57 ], [ 1, %bb.k ]
-  store i8 %.sink, ptr %i.ab, align 8
+split89.invoke.sink.split:                        ; preds = %bb.k
+  store i8 1, ptr %i.ab, align 8
   br label %split89.invoke
 
-split89.invoke:                                   ; preds = %bb.h, %bb.g, %bb.f, %_ZNSt11unique_lockIS_ISt5mutexEE4lockEv.exit, %bb.e, %bb.d, %bb.c, %bb.b, %split89.invoke.sink.split
-  %3 = phi i32 [ 1, %split89.invoke.sink.split ], [ 1, %_ZNSt11unique_lockIS_ISt5mutexEE4lockEv.exit ], [ %i.l, %bb.e ], [ 35, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ], [ 35, %bb.h ], [ 1, %bb.g ], [ 35, %bb.f ]
+split89.invoke:                                   ; preds = %.preheader57, %bb.h, %bb.g, %bb.f, %_ZNSt11unique_lockIS_ISt5mutexEE4lockEv.exit, %bb.e, %bb.d, %bb.c, %bb.b, %split89.invoke.sink.split
+  %3 = phi i32 [ 1, %split89.invoke.sink.split ], [ 35, %bb.h ], [ 1, %bb.g ], [ 35, %bb.f ], [ 1, %_ZNSt11unique_lockIS_ISt5mutexEE4lockEv.exit ], [ %i.l, %bb.e ], [ 35, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ], [ 1, %.preheader57 ]
   invoke void @_ZSt20__throw_system_errori(i32 noundef %3) #33
           to label %split89.cont unwind label %bb.n
 

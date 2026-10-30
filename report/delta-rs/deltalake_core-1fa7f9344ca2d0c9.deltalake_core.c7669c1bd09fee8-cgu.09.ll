@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %.split.i.i.i.i, %bb.m
   %i.bw = icmp samesign eq i64 %i.bq, %.val1.i
-  br i1 %i.bw, label %.sink.split.i, label %bb.q
+  br i1 %i.bw, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.bq
@@ -250,13 +250,13 @@ bb.r:                                             ; preds = %.loopexit19.i
   store i8 1, ptr %i.j, align 2, !alias.scope !20605
   br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.thread7.i.i
 
-.sink.split.i:                                    ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit12.i.i.i.i, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit14.i.i.i.i, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit16.i.i.i.i, %bb.q, %bb.p, %bb.h
-  %.ph.i = phi i64 [ %.val1.i, %bb.p ], [ %.promoted.i.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit16.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit14.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit12.i.i.i.i ]
+.sink.split.i:                                    ; preds = %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit12.i.i.i.i, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit14.i.i.i.i, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit16.i.i.i.i, %bb.q, %bb.h
+  %.lcssa14.i = phi i64 [ %.promoted.i.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit16.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit14.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit12.i.i.i.i ]
   store i8 0, ptr %i.m, align 8, !alias.scope !20605
   br label %bb.s
 
-bb.s:                                             ; preds = %.sink.split.i, %.loopexit19.i
-  %1 = phi i64 [ %.val1.i, %.loopexit19.i ], [ %.ph.i, %.sink.split.i ] ; 2 uses
+bb.s:                                             ; preds = %.sink.split.i, %.loopexit19.i, %bb.p
+  %1 = phi i64 [ %.lcssa14.i, %.sink.split.i ], [ %.val1.i, %.loopexit19.i ], [ %.val1.i, %bb.p ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.ck, align 8, !alias.scope !20602, !noalias !20601
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 16

@@ -205,7 +205,7 @@ _ZN4mlir6detail11PassOptionsD2Ev.exit:            ; preds = %_ZN4llvm11SmallVect
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !1021 ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.ab, null
-  br i1 %.not.i.i.i, label %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a, label %bb.f
+  br i1 %.not.i.i.i, label %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN4mlir6detail11PassOptionsD2Ev.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -214,19 +214,20 @@ bb.f:                                             ; preds = %_ZN4mlir6detail11Pa
   %i.af = ptrtoint ptr %i.ab to i64
   %i.ag = sub i64 %i.ae, %i.af
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ab, i64 noundef %i.ag) #25
-  br label %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a
+  br label %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit
 
-_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a: ; preds = %_ZN4mlir6detail11PassOptionsD2Ev.exit, %bb.f
+_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit: ; preds = %_ZN4mlir6detail11PassOptionsD2Ev.exit, %bb.f
   %1 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %2 = load i8, ptr %1, align 8, !tbaa !113, !range !48, !noundef !49
   %3 = trunc nuw i8 %2 to i1
+  br i1 %3, label %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a, label %_ZNSt14_Optional_baseIN4mlir6detail18PassExecutionStateELb0ELb0EED2Ev.exit
+
+_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a: ; preds = %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit
   store i8 0, ptr %1, align 8, !tbaa !113
-  %.not.i.i.i1 = xor i1 %3, true
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.ai = load i8, ptr %i.ah, align 8, !range !48
+  %i.ai = load i8, ptr %i.ah, align 8, !tbaa !47, !range !48, !noundef !49
   %i.aj = trunc nuw i8 %i.ai to i1
-  %or.cond.i.i.i = select i1 %.not.i.i.i1, i1 true, i1 %i.aj
-  br i1 %or.cond.i.i.i, label %_ZNSt14_Optional_baseIN4mlir6detail18PassExecutionStateELb0ELb0EED2Ev.exit, label %bb.g
+  br i1 %i.aj, label %_ZNSt14_Optional_baseIN4mlir6detail18PassExecutionStateELb0ELb0EED2Ev.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -234,7 +235,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIPN4mli
   tail call void @free(ptr noundef %i.al) #23
   br label %_ZNSt14_Optional_baseIN4mlir6detail18PassExecutionStateELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseIN4mlir6detail18PassExecutionStateELb0ELb0EED2Ev.exit: ; preds = %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a, %bb.g
+_ZNSt14_Optional_baseIN4mlir6detail18PassExecutionStateELb0ELb0EED2Ev.exit: ; preds = %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit, %_ZNSt6vectorIPN4mlir4Pass9StatisticESaIS3_EED2Ev.exit.a, %bb.g
   ret void
 }
 

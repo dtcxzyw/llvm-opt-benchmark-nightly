@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %.split.i.i.i.i, %bb.m
   %i.bw = icmp samesign eq i64 %i.bq, %.val1.i
-  br i1 %i.bw, label %.sink.split.i, label %bb.q
+  br i1 %i.bw, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.bq
@@ -249,13 +249,13 @@ bb.r:                                             ; preds = %.loopexit19.i
   store i8 1, ptr %i.j, align 2, !alias.scope !9542
   br label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.thread7.i.i
 
-.sink.split.i:                                    ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit12.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit14.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit16.i.i.i.i, %bb.q, %bb.p, %bb.h
-  %.ph.i = phi i64 [ %.val1.i, %bb.p ], [ %.promoted.i.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit16.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit14.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit12.i.i.i.i ]
+.sink.split.i:                                    ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit12.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit14.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit16.i.i.i.i, %bb.q, %bb.h
+  %.lcssa14.i = phi i64 [ %.promoted.i.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit16.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit14.i.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit12.i.i.i.i ]
   store i8 0, ptr %i.m, align 8, !alias.scope !9542
   br label %bb.s
 
-bb.s:                                             ; preds = %.sink.split.i, %.loopexit19.i
-  %1 = phi i64 [ %.val1.i, %.loopexit19.i ], [ %.ph.i, %.sink.split.i ] ; 2 uses
+bb.s:                                             ; preds = %.sink.split.i, %.loopexit19.i, %bb.p
+  %1 = phi i64 [ %.lcssa14.i, %.sink.split.i ], [ %.val1.i, %.loopexit19.i ], [ %.val1.i, %bb.p ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.ck, align 8, !alias.scope !9539, !noalias !9538
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -658,7 +658,7 @@ _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12
   %.sroa.018.0.peel = load i64, ptr %.sroa.018.0.peel.in, align 8 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.824, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sink, i64 20, i1 false)
   %.not.peel = icmp eq i32 %.sroa.6.0.peel, 0
-  br i1 %.not.peel, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.thread, label %bb.c
+  br i1 %.not.peel, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.peel
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.8.sroa.6, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.824, i64 20, i1 false)
@@ -716,8 +716,11 @@ _RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_TTNtCsbFlE7Gjht9i_12influxdb3
   %.not6 = icmp eq i32 %.sroa.411.0.copyload12.i, 0
   br i1 %.not6, label %.loopexit51, label %bb.f
 
-_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.thread: ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.peel, %bb.a
+.loopexit:                                        ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.peel
   store i64 0, ptr %1, align 8
+  br label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.thread
+
+_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtBZ_7TableIdETNtCsk0FzFVI8urx_8iox_time4TimexEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs844E4pPEVZX_17influxdb3_catalog.exit.thread: ; preds = %bb.a, %.loopexit
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.m, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.824)

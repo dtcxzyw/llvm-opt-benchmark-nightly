@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %.promoted.i = load i64, ptr %i.h, align 8, !alias.scope !642 ; 13 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %.promoted51.i = load i8, ptr %i.l, align 8, !alias.scope !643 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !644)
   %i.m = trunc nuw i8 %.promoted51.i to i1        ; 2 uses
@@ -337,11 +337,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %.split.i.i.i, %bb.m
   %i.bx = icmp samesign eq i64 %i.br, %.val1
-  br i1 %i.bx, label %.loopexit51.thread, label %bb.q
-
-.loopexit51.thread:                               ; preds = %bb.p
-  store i8 0, ptr %i.l, align 8, !alias.scope !643
-  br label %bb.ah
+  br i1 %i.bx, label %bb.ah, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.by = getelementptr inbounds nuw i8, ptr %.val, i64 %i.br
@@ -675,9 +671,9 @@ bb.ag:                                            ; preds = %.lr.ph
   %i.gj = add i64 %.reass.i.reass.reass, %.sroa.04.0.i.i96
   br label %bb.ac
 
-bb.ah:                                            ; preds = %.loopexit51.thread, %.split.us.i9.i, %.split.us.i.i, %.loopexit.i, %.loopexit51
-  %.sroa.8.0.ph = phi i64 [ %.val1, %.loopexit51 ], [ %.lcssa46, %.loopexit.i ], [ %i.fz, %.split.us.i9.i ], [ %i.es, %.split.us.i.i ], [ %.val1, %.loopexit51.thread ]
-  %.sroa.4.02.ph = phi i64 [ %.val1, %.loopexit51 ], [ %.lcssa46, %.loopexit.i ], [ %i.fd, %.split.us.i9.i ], [ %.us-phi.i, %.split.us.i.i ], [ %.val1, %.loopexit51.thread ]
+bb.ah:                                            ; preds = %bb.p, %.split.us.i9.i, %.split.us.i.i, %.loopexit.i, %.loopexit51
+  %.sroa.8.0.ph = phi i64 [ %.val1, %.loopexit51 ], [ %.lcssa46, %.loopexit.i ], [ %i.fz, %.split.us.i9.i ], [ %i.es, %.split.us.i.i ], [ %.val1, %bb.p ]
+  %.sroa.4.02.ph = phi i64 [ %.val1, %.loopexit51 ], [ %.lcssa46, %.loopexit.i ], [ %i.fd, %.split.us.i9.i ], [ %.us-phi.i, %.split.us.i.i ], [ %.val1, %bb.p ]
   %i.gk = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.gl = load i64, ptr %i.gk, align 8, !noundef !10 ; 2 uses
   %i.gm = sub nuw i64 %.sroa.4.02.ph, %i.gl

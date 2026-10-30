@@ -205,10 +205,10 @@ _ZNSt6vectorISt4pairImSt10unique_ptrIN7rocksdb13PinnableSliceESt14default_delete
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.u = load i8, ptr %i.t, align 8, !tbaa !73, !range !74, !noundef !75
   %i.v = trunc nuw i8 %i.u to i1
-  store i8 0, ptr %i.t, align 8, !tbaa !73
   br i1 %i.v, label %bb.c, label %_ZNSt8optionalIN7rocksdb6StatusEE5resetEv.exit
 
 bb.c:                                             ; preds = %_ZNSt6vectorISt4pairImSt10unique_ptrIN7rocksdb13PinnableSliceESt14default_deleteIS3_EEESaIS7_EE5clearEv.exit
+  store i8 0, ptr %i.t, align 8, !tbaa !73
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !62   ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.x, null
@@ -611,14 +611,13 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ed, label %bb.af, label %_ZNSt8optionalIN7rocksdb6StatusEE7emplaceIJRS1_EEENSt9enable_ifIX18is_constructible_vIS1_DpT_EES4_E4typeEDpOS6_.exit
 
 bb.af:                                            ; preds = %bb.ae
-  %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
+  %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.ef = load i8, ptr %i.ee, align 8, !tbaa !73, !range !74, !noundef !75
   %i.eg = trunc nuw i8 %i.ef to i1
   br i1 %i.eg, label %_ZNSt8optionalIN7rocksdb6StatusEE7emplaceIJRS1_EEENSt9enable_ifIX18is_constructible_vIS1_DpT_EES4_E4typeEDpOS6_.exit, label %_ZNSt19_Optional_base_implIN7rocksdb6StatusESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i
 
 _ZNSt19_Optional_base_implIN7rocksdb6StatusESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.af
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 96
-  store i8 0, ptr %i.ee, align 8, !tbaa !73
   invoke void @_ZNSt22_Optional_payload_baseIN7rocksdb6StatusEE12_M_constructIJRS1_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %i.eh, ptr noundef nonnull align 8 dereferenceable(16) %0)
           to label %_ZNSt8optionalIN7rocksdb6StatusEE7emplaceIJRS1_EEENSt9enable_ifIX18is_constructible_vIS1_DpT_EES4_E4typeEDpOS6_.exit unwind label %bb.ag
 
@@ -1021,10 +1020,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !73, !range !74, !noundef !75
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !73
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN7rocksdb6StatusELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !73
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !62   ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -1287,10 +1286,10 @@ _ZNSt6vectorImSaImEED2Ev.exit:                    ; preds = %bb.a, %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1280 ; 2 uses
   %i.j = load i8, ptr %i.i, align 8, !tbaa !73, !range !74, !noundef !75
   %i.k = trunc nuw i8 %i.j to i1
-  store i8 0, ptr %i.i, align 8, !tbaa !73
   br i1 %i.k, label %bb.c, label %_ZNSt14_Optional_baseIN7rocksdb6StatusELb0ELb0EED2Ev.exit.i
 
 bb.c:                                             ; preds = %_ZNSt6vectorImSaImEED2Ev.exit
+  store i8 0, ptr %i.i, align 8, !tbaa !73
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1272
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !62   ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.m, null
@@ -1693,10 +1692,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !73, !range !74, !noundef !75
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !73
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN7rocksdb6StatusELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !73
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !62   ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.e, null

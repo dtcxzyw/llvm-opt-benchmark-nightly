@@ -205,14 +205,16 @@ bb.gn:                                            ; preds = %_ZN4llvm5APIntD2Ev.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #24
   %.pre887 = load i8, ptr %i.aez, align 8, !tbaa !362, !range !46
   %i.aia = trunc nuw i8 %.pre887 to i1
-  store i8 0, ptr %i.aez, align 8, !tbaa !362
-  %62 = getelementptr inbounds nuw i8, ptr %37, i64 8
-  %63 = load i32, ptr %62, align 8
-  %64 = icmp ugt i32 %63, 64
-  %or.cond.i.i.i = select i1 %i.aia, i1 %64, i1 false
-  br i1 %or.cond.i.i.i, label %bb.go, label %.thread1001
+  br i1 %i.aia, label %62, label %.thread1001
 
-bb.go:                                            ; preds = %bb.gn
+62:                                               ; preds = %bb.gn
+  store i8 0, ptr %i.aez, align 8, !tbaa !362
+  %63 = getelementptr inbounds nuw i8, ptr %37, i64 8
+  %64 = load i32, ptr %63, align 8, !tbaa !126
+  %65 = icmp ugt i32 %64, 64
+  br i1 %65, label %bb.go, label %.thread1001
+
+bb.go:                                            ; preds = %62
   %i.aib = load ptr, ptr %37, align 8, !tbaa !127 ; 2 uses
   %i.aic = icmp eq ptr %i.aib, null
   br i1 %i.aic, label %.thread1001, label %bb.gp
@@ -225,7 +227,7 @@ bb.gp:                                            ; preds = %bb.go
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24
   br label %.thread799
 
-.thread1001:                                      ; preds = %bb.gp, %bb.go, %bb.gn
+.thread1001:                                      ; preds = %bb.gp, %bb.go, %62, %bb.gn
   call void @llvm.lifetime.end.p0(ptr nonnull %37) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24

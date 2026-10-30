@@ -204,7 +204,7 @@ bb.a:
   %8 = alloca %"struct.Luau::NonStrictContext", align 8 ; 15 uses
   %9 = alloca %"struct.Luau::NonStrictContext", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
-  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 7 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
   store i8 0, ptr %i.a, align 8, !tbaa !173
   %i.b = load i8, ptr @_ZN5FFlag45LuauAddRecursionCounterToNonStrictTypeCheckerE, align 8, !tbaa !176, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
@@ -239,7 +239,6 @@ bb.c:                                             ; preds = %bb.b
   store float 1.000000e+00, ptr %i.l, align 8, !tbaa !182
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br label %bb.ay
 
 bb.d:                                             ; preds = %_ZNSt19_Optional_base_implIN4Luau16RecursionCounterESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i
@@ -642,10 +641,10 @@ bb.ax:                                            ; preds = %bb.h, %bb.g, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %.pre104 = load i8, ptr %i.a, align 8, !tbaa !173, !range !177
   %i.gv = trunc nuw i8 %.pre104 to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br i1 %i.gv, label %bb.ay, label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit
 
 bb.ay:                                            ; preds = %.thread, %bb.ax
+  store i8 0, ptr %i.a, align 8, !tbaa !173
   call void @_ZN4Luau16RecursionCounterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %5) #23
   br label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit
 
@@ -657,10 +656,10 @@ bb.az:                                            ; preds = %_ZNSt14_Optional_ba
   %.pn31.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn31.pn.pn.pn, %_ZNSt14_Optional_baseIN4Luau11StackPusherELb0ELb0EED2Ev.exit56 ], [ %i.n, %bb.d ]
   %i.gw = load i8, ptr %i.a, align 8, !tbaa !173, !range !177, !noundef !178
   %i.gx = trunc nuw i8 %i.gw to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br i1 %i.gx, label %bb.ba, label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit57
 
 bb.ba:                                            ; preds = %bb.az
+  store i8 0, ptr %i.a, align 8, !tbaa !173
   call void @_ZN4Luau16RecursionCounterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %5) #23
   br label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit57
 
@@ -1063,11 +1062,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !272, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !272
   br i1 %i.c, label %bb.b, label %_ZN4Luau26CannotInferBinaryOperationD2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !272
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !151  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1470,10 +1469,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !272, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !272
   br i1 %i.c, label %bb.b, label %_ZN4Luau30TypeInstantiationCountMismatchD2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !272
   %i.d = load ptr, ptr %0, align 8, !tbaa !151    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = icmp eq ptr %i.d, %i.e
@@ -1876,7 +1875,7 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %7 = alloca %"class.std::allocator.79", align 1 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 6 uses
   store i8 0, ptr %i.a, align 8, !tbaa !173
   %i.b = load i8, ptr @_ZN5FFlag45LuauAddRecursionCounterToNonStrictTypeCheckerE, align 8, !tbaa !176, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
@@ -1911,7 +1910,6 @@ bb.c:                                             ; preds = %bb.b
   store float 1.000000e+00, ptr %i.l, align 8, !tbaa !182
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br label %bb.ay
 
 bb.d:                                             ; preds = %_ZNSt19_Optional_base_implIN4Luau16RecursionCounterESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i
@@ -2214,10 +2212,10 @@ bb.ax:                                            ; preds = %bb.at, %bb.as, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #23
   %.pre = load i8, ptr %i.a, align 8, !tbaa !173, !range !177
   %i.cn = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br i1 %i.cn, label %bb.ay, label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit
 
 bb.ay:                                            ; preds = %.thread, %bb.ax
+  store i8 0, ptr %i.a, align 8, !tbaa !173
   call void @_ZN4Luau16RecursionCounterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %4) #23
   br label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit
 
@@ -2229,10 +2227,10 @@ bb.az:                                            ; preds = %_ZNSt14_Optional_ba
   %.pn171.pn.pn = phi { ptr, i32 } [ %.pn171.pn, %_ZNSt14_Optional_baseIN4Luau11StackPusherELb0ELb0EED2Ev.exit196 ], [ %i.n, %bb.d ]
   %i.co = load i8, ptr %i.a, align 8, !tbaa !173, !range !177, !noundef !178
   %i.cp = trunc nuw i8 %i.co to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br i1 %i.cp, label %bb.ba, label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit197
 
 bb.ba:                                            ; preds = %bb.az
+  store i8 0, ptr %i.a, align 8, !tbaa !173
   call void @_ZN4Luau16RecursionCounterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %4) #23
   br label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit197
 
@@ -2635,7 +2633,7 @@ bb.a:
   %4 = alloca %"struct.Luau::NonStrictContext", align 8 ; 6 uses
   %5 = alloca %"struct.Luau::NonStrictContext", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store i8 0, ptr %i.a, align 8, !tbaa !173
   %i.b = load i8, ptr @_ZN5FFlag45LuauAddRecursionCounterToNonStrictTypeCheckerE, align 8, !tbaa !176, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
@@ -2670,7 +2668,6 @@ bb.c:                                             ; preds = %bb.b
   store float 1.000000e+00, ptr %i.l, align 8, !tbaa !182
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br label %bb.l
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
@@ -2743,7 +2740,6 @@ bb.h:                                             ; preds = %_ZNSt10_HashtableIP
           cleanup
   %i.ah = load i8, ptr %i.a, align 8, !tbaa !173, !range !177, !noundef !178
   %i.ai = trunc nuw i8 %i.ah to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br i1 %i.ai, label %bb.m, label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit21
 
 _ZN4Luau16NonStrictContextD2Ev.exit:              ; preds = %bb.h, %_ZNSt10_HashtableIPKN4Luau3DefESt4pairIKS3_PKNS0_4TypeEESaIS9_ENSt8__detail10_Select1stESt8equal_toIS3_ESt4hashIS3_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb0ELb0ELb1EEEE5clearEv.exit.i.i.i, %bb.e
@@ -2798,10 +2794,10 @@ bb.k:                                             ; preds = %bb.d, %._crit_edge.
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ay, i8 0, i64 16, i1 false)
   %i.az = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !173
   br i1 %i.az, label %bb.l, label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit
 
 bb.l:                                             ; preds = %.thread, %bb.k
+  store i8 0, ptr %i.a, align 8, !tbaa !173
   call void @_ZN4Luau16RecursionCounterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %3) #23
   br label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit
 
@@ -2810,6 +2806,7 @@ _ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit: ; preds = %bb
   ret void
 
 bb.m:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  store i8 0, ptr %i.a, align 8, !tbaa !173
   call void @_ZN4Luau16RecursionCounterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %3) #23
   br label %_ZNSt14_Optional_baseIN4Luau16RecursionCounterELb0ELb0EED2Ev.exit21
 
@@ -3212,11 +3209,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = load i8, ptr %i.e, align 8, !tbaa !272, !range !177, !noundef !178
   %i.i = trunc nuw i8 %i.h to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !272
   br i1 %i.i, label %bb.c, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 344
+  store i8 0, ptr %i.e, align 8, !tbaa !272
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !151  ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 360 ; 2 uses
   %i.m = icmp eq ptr %i.k, %i.l
@@ -3462,11 +3459,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !272, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !272
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 344
+  store i8 0, ptr %i.a, align 8, !tbaa !272
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !151  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -3625,11 +3622,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !272, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !272
   br i1 %i.c, label %bb.b, label %_ZN4Luau13MetatableTypeD2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i8 0, ptr %i.a, align 8, !tbaa !272
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !151  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -3966,10 +3963,10 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   %i.bc = getelementptr inbounds nuw i8, ptr %.05.i.i.i8, i64 48 ; 2 uses
   %i.bd = load i8, ptr %i.bc, align 8, !tbaa !766, !range !177, !noundef !178
   %i.be = trunc nuw i8 %i.bd to i1
-  store i8 0, ptr %i.bc, align 8, !tbaa !766
   br i1 %i.be, label %bb.o, label %_ZSt8_DestroyISt8optionalIN4Luau16FunctionArgumentEEEvPT_.exit.i.i.i
 
 bb.o:                                             ; preds = %.lr.ph.i.i.i7
+  store i8 0, ptr %i.bc, align 8, !tbaa !766
   %i.bf = load ptr, ptr %.05.i.i.i8, align 8, !tbaa !151 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.05.i.i.i8, i64 16 ; 2 uses
   %i.bh = icmp eq ptr %i.bf, %i.bg
@@ -4038,17 +4035,17 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit:     ; preds = %_ZNSt6vectorIPKN4Lu
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.cg = load i8, ptr %i.cf, align 8, !tbaa !768, !range !177, !noundef !178
   %i.ch = trunc nuw i8 %i.cg to i1
-  store i8 0, ptr %i.cf, align 8, !tbaa !768
   br i1 %i.ch, label %bb.s, label %_ZNSt14_Optional_baseIN4Luau18FunctionDefinitionELb0ELb0EED2Ev.exit
 
 bb.s:                                             ; preds = %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit
+  store i8 0, ptr %i.cf, align 8, !tbaa !768
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.cj = load i8, ptr %i.ci, align 8, !tbaa !272, !range !177, !noundef !178
   %i.ck = trunc nuw i8 %i.cj to i1
-  store i8 0, ptr %i.ci, align 8, !tbaa !272
   br i1 %i.ck, label %bb.t, label %_ZNSt14_Optional_baseIN4Luau18FunctionDefinitionELb0ELb0EED2Ev.exit
 
 bb.t:                                             ; preds = %bb.s
+  store i8 0, ptr %i.ci, align 8, !tbaa !272
   %i.cl = load ptr, ptr %0, align 8, !tbaa !151   ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.cn = icmp eq ptr %i.cl, %i.cm
@@ -4157,11 +4154,11 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit:     ; preds = %_ZNSt6vectorIPKN4Lu
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !272, !range !177, !noundef !178
   %i.am = trunc nuw i8 %i.al to i1
-  store i8 0, ptr %i.ak, align 8, !tbaa !272
   br i1 %i.am, label %bb.e, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.e:                                             ; preds = %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 144
+  store i8 0, ptr %i.ak, align 8, !tbaa !272
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !151 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.aq = icmp eq ptr %i.ao, %i.ap
@@ -4177,11 +4174,11 @@ _ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.au = load i8, ptr %i.at, align 8, !tbaa !272, !range !177, !noundef !178
   %i.av = trunc nuw i8 %i.au to i1
-  store i8 0, ptr %i.at, align 8, !tbaa !272
   br i1 %i.av, label %bb.f, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit7
 
 bb.f:                                             ; preds = %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 104
+  store i8 0, ptr %i.at, align 8, !tbaa !272
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !151 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.az = icmp eq ptr %i.ax, %i.ay
@@ -4239,11 +4236,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !272, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !272
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136
+  store i8 0, ptr %i.a, align 8, !tbaa !272
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !151  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -4334,11 +4331,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !772, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !772
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN4Luau7VariantIJNS0_3ObjENS0_5KlassEEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 240
+  store i8 0, ptr %i.a, align 8, !tbaa !772
   %i.e = load i32, ptr %i.d, align 8, !tbaa !774
   %i.f = sext i32 %i.e to i64
   %i.g = getelementptr inbounds [8 x i8], ptr @_ZN4Luau7VariantIJNS_3ObjENS_5KlassEEE9tableDtorE, i64 %i.f
@@ -4741,10 +4738,10 @@ bb.p:                                             ; preds = %bb.o
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 2 uses
   %i.av = load i8, ptr %i.au, align 8, !tbaa !470, !range !177, !noundef !178
   %i.aw = trunc nuw i8 %i.av to i1                ; 2 uses
-  store i8 0, ptr %i.au, align 8, !tbaa !470
   br i1 %i.aw, label %bb.q, label %_ZNSt14_Optional_baseIN4Luau7TypeFunELb0ELb0EED2Ev.exit
 
 bb.q:                                             ; preds = %bb.p
+  store i8 0, ptr %i.au, align 8, !tbaa !470
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !256 ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.ay, null
@@ -5147,10 +5144,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !470, !range !177, !noundef !178
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !470
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN4Luau7TypeFunELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !470
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !256  ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -5553,10 +5550,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit439: ; preds = %bb
 bb.ef:                                            ; preds = %_ZN4Luau30IncorrectGenericParameterCountD2Ev.exit, %._crit_edge538, %_ZN4Luau27SwappedGenericTypeParameterD2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit431
   %i.zb = load i8, ptr %i.di, align 8, !tbaa !470, !range !177, !noundef !178
   %i.zc = trunc nuw i8 %i.zb to i1
-  store i8 0, ptr %i.di, align 8, !tbaa !470
   br i1 %i.zc, label %bb.eg, label %_ZNSt14_Optional_baseIN4Luau7TypeFunELb0ELb0EED2Ev.exit
 
 bb.eg:                                            ; preds = %bb.ef
+  store i8 0, ptr %i.di, align 8, !tbaa !470
   %i.zd = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ze = load ptr, ptr %i.zd, align 8, !tbaa !256 ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.ze, null

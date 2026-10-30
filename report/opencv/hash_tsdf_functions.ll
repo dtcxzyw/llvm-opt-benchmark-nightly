@@ -205,7 +205,7 @@ bb.a:
   %21 = alloca %"class.cv::Rect_", align 4        ; 8 uses
   %22 = alloca %"class.cv::Size_", align 4        ; 6 uses
   %23 = alloca %"class.cv::Size_", align 4        ; 6 uses
-  %i.e = alloca i8, align 1                       ; 11 uses
+  %i.e = alloca i8, align 1                       ; 10 uses
   %24 = alloca %"class.cv::Range", align 4        ; 6 uses
   %25 = alloca %"class.std::function", align 8    ; 10 uses
   %26 = alloca %"class.cv::CustomHashSet", align 8 ; 9 uses
@@ -563,7 +563,6 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.p, %bb.q
   br i1 %i.ez, label %.critedge, label %bb.s, !llvm.loop !248
 
 bb.s:                                             ; preds = %_ZNSt14_Function_baseD2Ev.exit
-  store i8 0, ptr %i.e, align 1, !tbaa !139
   %i.fa = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 3 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 4 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.e
           to label %_RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context10park_yield.exit.i unwind label %.loopexit
 
 _RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context10park_yield.exit.i: ; preds = %bb.h
-  %i.bn = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context13park_internal(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull align 8 %.sroa.0.2225, i32 noundef 0) ; 9 uses
+  %i.bn = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context13park_internal(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull align 8 %.sroa.0.2225, i32 noundef 0) ; 8 uses
   %i.bo = load ptr, ptr %0, align 8, !noalias !516, !nonnull !7, !noundef !7 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !517)
@@ -228,7 +228,7 @@ bb.i:                                             ; preds = %_RNvMs_NtNtNtNtCslg
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bn, i64 114 ; 2 uses
   %i.cb = load i8, ptr %i.ca, align 2, !range !8, !alias.scope !517, !noundef !7
   %i.cc = trunc nuw i8 %i.cb to i1
-  br i1 %i.cc, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i, label %bb.k
+  br i1 %i.cc, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i, label %bb.k
 
 bb.j:                                             ; preds = %_RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context10park_yield.exit.i
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.bs, i64 noundef %i.bu, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #25
@@ -244,12 +244,6 @@ bb.k:                                             ; preds = %.noexc.i
   %i.cg = extractvalue { i8, i1 } %i.cf, 1
   br i1 %i.cg, label %.noexc3.i, label %bb.l, !prof !10
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i: ; preds = %bb.m, %.noexc3.i, %.noexc.i
-  %2 = getelementptr inbounds nuw i8, ptr %i.bn, i64 115 ; 2 uses
-  %3 = load i8, ptr %2, align 1, !range !8, !alias.scope !517, !noundef !7
-  %4 = trunc nuw i8 %3 to i1
-  br i1 %4, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i, label %5
-
 bb.l:                                             ; preds = %bb.k
   %i.ch = invoke noundef zeroext i1 @_RNvMs1_NtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB5_8RawMutex9lock_slow(ptr noundef nonnull %i.ce, i64 undef, i32 noundef -1)
           to label %.noexc3.i unwind label %.loopexit ; 0 uses
@@ -260,17 +254,13 @@ bb.l:                                             ; preds = %bb.k
   store i8 %i.cj, ptr %i.ca, align 2, !alias.scope !517
   %i.ck = cmpxchg ptr %i.ce, i8 1, i8 0 release monotonic, align 1
   %i.cl = extractvalue { i8, i1 } %i.ck, 1
-  br i1 %i.cl, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i, label %bb.m, !prof !10
+  br i1 %i.cl, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i, label %bb.m, !prof !10
 
 bb.m:                                             ; preds = %.noexc3.i
   invoke void @_RNvMs1_NtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB5_8RawMutex11unlock_slow(ptr noundef nonnull %i.ce, i1 noundef zeroext false)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i unwind label %.loopexit
+          to label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i unwind label %.loopexit
 
-5:                                                ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i
-  store i8 0, ptr %2, align 1, !alias.scope !517
-  br label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i
-
-_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i: ; preds = %5, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i
+_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i: ; preds = %bb.m, %.noexc3.i, %.noexc.i
   invoke void @_RNvMNtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread5statsNtB2_5Stats32start_processing_scheduled_tasks(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.by)
           to label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i._RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context11maintenance.exit_crit_edge unwind label %.loopexit
 
@@ -673,7 +663,7 @@ bb.bt:                                            ; preds = %bb.bs
   unreachable
 
 .noexc49:                                         ; preds = %bb.br
-  %i.lc = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context13park_internal(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull align 8 %.sroa.0.2.i, i32 noundef -1) ; 18 uses
+  %i.lc = call fastcc noundef nonnull align 8 ptr @_RNvMs_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB4_7Context13park_internal(ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull align 8 %.sroa.0.2.i, i32 noundef -1) ; 17 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 64 ; 2 uses
   %i.le = load i64, ptr %i.ld, align 8, !noundef !7
   %i.lf = add i64 %i.le, 1
@@ -701,7 +691,7 @@ bb.bu:                                            ; preds = %.noexc49
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lc, i64 114 ; 2 uses
   %i.lt = load i8, ptr %i.ls, align 2, !range !8, !alias.scope !535, !noundef !7
   %i.lu = trunc nuw i8 %i.lt to i1
-  br i1 %i.lu, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i45, label %bb.bw
+  br i1 %i.lu, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46, label %bb.bw
 
 bb.bv:                                            ; preds = %.noexc49
   invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.lk, i64 noundef %i.lm, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #25
@@ -717,12 +707,6 @@ bb.bw:                                            ; preds = %.noexc11.i
   %i.ly = extractvalue { i8, i1 } %i.lx, 1
   br i1 %i.ly, label %.noexc13.i, label %bb.bx, !prof !10
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i45: ; preds = %bb.by, %.noexc13.i, %.noexc11.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.lc, i64 115 ; 2 uses
-  %7 = load i8, ptr %6, align 1, !range !8, !alias.scope !535, !noundef !7
-  %8 = trunc nuw i8 %7 to i1
-  br i1 %8, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46, label %9
-
 bb.bx:                                            ; preds = %bb.bw
   %i.lz = invoke noundef zeroext i1 @_RNvMs1_NtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB5_8RawMutex9lock_slow(ptr noundef nonnull %i.lw, i64 undef, i32 noundef -1)
           to label %.noexc13.i unwind label %.loopexit.i ; 0 uses
@@ -733,17 +717,13 @@ bb.bx:                                            ; preds = %bb.bw
   store i8 %i.mb, ptr %i.ls, align 2, !alias.scope !535
   %i.mc = cmpxchg ptr %i.lw, i8 1, i8 0 release monotonic, align 1
   %i.md = extractvalue { i8, i1 } %i.mc, 1
-  br i1 %i.md, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i45, label %bb.by, !prof !10
+  br i1 %i.md, label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46, label %bb.by, !prof !10
 
 bb.by:                                            ; preds = %.noexc13.i
   invoke void @_RNvMs1_NtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB5_8RawMutex11unlock_slow(ptr noundef nonnull %i.lw, i1 noundef zeroext false)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i45 unwind label %.loopexit.i
+          to label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46 unwind label %.loopexit.i
 
-9:                                                ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i45
-  store i8 0, ptr %6, align 1, !alias.scope !535
-  br label %_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46
-
-_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46: ; preds = %9, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtNtBK_7runtime9scheduler12multi_thread6worker6SyncedEEBK_.exit.i.i45
+_RNvMs0_NtNtNtNtCslghKHtsL3a4_5tokio7runtime9scheduler12multi_thread6workerNtB5_4Core11maintenance.exit.i46: ; preds = %bb.by, %.noexc13.i, %.noexc11.i
   %i.me = load ptr, ptr %0, align 8, !noalias !530, !nonnull !7, !noundef !7 ; 3 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !536)

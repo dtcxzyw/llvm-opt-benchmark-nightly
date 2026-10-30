@@ -202,16 +202,16 @@ bb.k:                                             ; preds = %_ZNK9grpc_core5Slic
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #28
-  %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
   %i.ay = load i8, ptr %i.ax, align 8, !tbaa !87, !range !55, !noundef !56
   %i.az = trunc nuw i8 %i.ay to i1                ; 2 uses
-  store i8 0, ptr %i.ax, align 8, !tbaa !87
   br i1 %i.an, label %.critedge74, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   br i1 %i.az, label %bb.n, label %.critedge77
 
 bb.n:                                             ; preds = %bb.m
+  store i8 0, ptr %i.ax, align 8, !tbaa !87
   %i.ba = load ptr, ptr %8, align 8, !tbaa !85    ; 4 uses
   %i.bb = icmp ugt ptr %i.ba, inttoptr (i64 1 to ptr)
   br i1 %i.bb, label %bb.o, label %.critedge77
@@ -238,6 +238,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.az, label %bb.r, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit85
 
 bb.r:                                             ; preds = %.critedge74
+  store i8 0, ptr %i.ax, align 8, !tbaa !87
   %i.bi = load ptr, ptr %8, align 8, !tbaa !85    ; 4 uses
   %i.bj = icmp ugt ptr %i.bi, inttoptr (i64 1 to ptr)
   br i1 %i.bj, label %bb.s, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit85
@@ -421,10 +422,10 @@ bb.aj:                                            ; preds = %bb.ai
   %i.dn = getelementptr inbounds nuw i8, ptr %16, i64 32 ; 2 uses
   %i.do = load i8, ptr %i.dn, align 8, !tbaa !87, !range !55, !noundef !56
   %i.dp = trunc nuw i8 %i.do to i1
-  store i8 0, ptr %i.dn, align 8, !tbaa !87
   br i1 %i.dp, label %bb.ak, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit93
 
 bb.ak:                                            ; preds = %bb.aj
+  store i8 0, ptr %i.dn, align 8, !tbaa !87
   %i.dq = load ptr, ptr %16, align 8, !tbaa !85   ; 4 uses
   %i.dr = icmp ugt ptr %i.dq, inttoptr (i64 1 to ptr)
   br i1 %i.dr, label %bb.al, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit93
@@ -677,10 +678,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !87, !range !55, !noundef !56
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !87
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN9grpc_core5SliceELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !87
   %i.d = load ptr, ptr %0, align 8, !tbaa !85     ; 4 uses
   %i.e = icmp ugt ptr %i.d, inttoptr (i64 1 to ptr)
   br i1 %i.e, label %bb.c, label %_ZNSt17_Optional_payloadIN9grpc_core5SliceELb0ELb0ELb0EED2Ev.exit

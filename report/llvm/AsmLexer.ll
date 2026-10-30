@@ -204,11 +204,15 @@ bb.al:                                            ; preds = %bb.ak
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 131
   %.pre191 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !78, !range !72
   %i.fu = trunc nuw i8 %.pre191 to i1             ; 2 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 3 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 4 uses
   br i1 %i.dg, label %.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  br i1 %i.fu, label %bb.an, label %.sink.split
+  br i1 %i.fu, label %bb.an, label %.thread.thread
+
+.thread.thread:                                   ; preds = %bb.am
+  store i8 0, ptr %i.fv, align 8, !tbaa !90
+  br label %bb.as
 
 bb.an:                                            ; preds = %bb.am
   store i8 1, ptr %i.fv, align 8, !tbaa !90
@@ -333,13 +337,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.ar
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   br label %bb.dl
 
-.sink.split:                                      ; preds = %.thread, %bb.am
-  %.sink219 = phi i8 [ 0, %bb.am ], [ 1, %.thread ] ; 2 uses
-  store i8 %.sink219, ptr %i.fv, align 8, !tbaa !90
-  store i8 %.sink219, ptr %i.de, align 1, !tbaa !86
+.sink.split:                                      ; preds = %.thread
+  store i8 1, ptr %i.fv, align 8, !tbaa !90
+  store i8 1, ptr %i.de, align 1, !tbaa !86
   br label %bb.as
 
-bb.as:                                            ; preds = %.sink.split, %.thread
+bb.as:                                            ; preds = %.thread.thread, %.sink.split, %.thread
   store i32 0, ptr %0, align 8, !tbaa !20
   %i.gp = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.cy, ptr %i.gp, align 8, !tbaa !22

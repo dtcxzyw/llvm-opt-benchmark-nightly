@@ -176,11 +176,16 @@ bb.a:
   br i1 %.not25, label %.critedge21, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
-  %.sroa.022.026 = phi ptr [ %i.a, %.lr.ph ], [ %6, %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit ] ; 2 uses
+6:                                                ; preds = %bb.d
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.022.026, i64 8 ; 2 uses
+  %.not = icmp eq ptr %7, %i.c
+  br i1 %.not, label %.critedge21, label %bb.b
+
+bb.b:                                             ; preds = %.lr.ph, %6
+  %.sroa.022.026 = phi ptr [ %i.a, %.lr.ph ], [ %7, %6 ] ; 2 uses
   %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN9grpc_core11ChannelArgsaSERKS0_(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.c unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -195,15 +200,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = load i8, ptr %i.d, align 8, !tbaa !26, !range !20, !noundef !21
   %i.k = trunc nuw i8 %i.j to i1
-  br i1 %i.k, label %.critedge, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
+  br i1 %i.k, label %.critedge, label %6
 
-_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit: ; preds = %bb.d
-  store i8 0, ptr %i.d, align 8, !tbaa !26
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.022.026, i64 8 ; 2 uses
-  %.not = icmp eq ptr %6, %i.c
-  br i1 %.not, label %.critedge21, label %bb.b
-
-.critedge21:                                      ; preds = %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, %bb.a
+.critedge21:                                      ; preds = %6, %bb.a
   %i.l = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN9grpc_core11ChannelArgsaSERKS0_(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.e unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 

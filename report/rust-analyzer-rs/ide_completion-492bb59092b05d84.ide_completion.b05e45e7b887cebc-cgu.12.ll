@@ -143,7 +143,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i.i:                                   ; preds = %.preheader.i.i.i.i
   %.promoted.i.i.i.i = load i64, ptr %i.h, align 8, !alias.scope !66 ; 13 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   %.promoted52.i.i.i.i = load i8, ptr %i.l, align 8, !alias.scope !67 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
   %i.m = trunc nuw i8 %.promoted52.i.i.i.i to i1  ; 2 uses
@@ -278,11 +278,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %.split.i.i.i.i.i.i, %bb.m
   %i.bx = icmp samesign eq i64 %i.br, %.val1.i.i.i
-  br i1 %i.bx, label %.loopexit51.thread.i.i.i, label %bb.q
-
-.loopexit51.thread.i.i.i:                         ; preds = %bb.p
-  store i8 0, ptr %i.l, align 8, !alias.scope !67
-  br label %bb.ah
+  br i1 %i.bx, label %bb.ah, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.by = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.br
@@ -613,9 +609,9 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   store i64 %i.gf, ptr %i.bp, align 8, !alias.scope !85
   br label %bb.ah
 
-bb.ah:                                            ; preds = %.split.us.i12.i.i.i.i, %.split.us.i.i.i.i.i, %.loopexit.i.i.i.i, %.loopexit51.i.i.i, %.loopexit51.thread.i.i.i
-  %.sroa.8.0.ph.i.i.i = phi i64 [ %.val1.i.i.i, %.loopexit51.i.i.i ], [ %.lcssa46.i.i.i, %.loopexit.i.i.i.i ], [ %i.dp, %.split.us.i.i.i.i.i ], [ %i.gf, %.split.us.i12.i.i.i.i ], [ %.val1.i.i.i, %.loopexit51.thread.i.i.i ]
-  %.sroa.4.02.ph.i.i.i = phi i64 [ %.val1.i.i.i, %.loopexit51.i.i.i ], [ %.lcssa46.i.i.i, %.loopexit.i.i.i.i ], [ %i.cu, %.split.us.i.i.i.i.i ], [ %.us-phi.i.i.i.i, %.split.us.i12.i.i.i.i ], [ %.val1.i.i.i, %.loopexit51.thread.i.i.i ]
+bb.ah:                                            ; preds = %.split.us.i12.i.i.i.i, %.split.us.i.i.i.i.i, %.loopexit.i.i.i.i, %.loopexit51.i.i.i, %bb.p
+  %.sroa.8.0.ph.i.i.i = phi i64 [ %.val1.i.i.i, %.loopexit51.i.i.i ], [ %.lcssa46.i.i.i, %.loopexit.i.i.i.i ], [ %i.dp, %.split.us.i.i.i.i.i ], [ %i.gf, %.split.us.i12.i.i.i.i ], [ %.val1.i.i.i, %bb.p ]
+  %.sroa.4.02.ph.i.i.i = phi i64 [ %.val1.i.i.i, %.loopexit51.i.i.i ], [ %.lcssa46.i.i.i, %.loopexit.i.i.i.i ], [ %i.cu, %.split.us.i.i.i.i.i ], [ %.us-phi.i.i.i.i, %.split.us.i12.i.i.i.i ], [ %.val1.i.i.i, %bb.p ]
   %i.gg = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 2 uses
   %i.gh = load i64, ptr %i.gg, align 8, !alias.scope !64, !noundef !5 ; 2 uses
   %i.gi = sub nuw i64 %.sroa.4.02.ph.i.i.i, %i.gh

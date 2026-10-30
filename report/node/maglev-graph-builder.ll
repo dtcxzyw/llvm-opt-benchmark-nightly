@@ -205,7 +205,7 @@ bb.az:                                            ; preds = %bb.ar
   %i.lu = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 3 uses
   store i8 0, ptr %i.lu, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #33
-  %i.lv = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 5 uses
+  %i.lv = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 4 uses
   store i8 0, ptr %i.lv, align 8
   %i.lw = icmp sgt i32 %.0.i.i.lcssa, -1
   br i1 %i.lw, label %bb.bf, label %bb.bg
@@ -608,7 +608,6 @@ bb.ci:                                            ; preds = %bb.bz
 
 bb.cj:                                            ; preds = %bb.ci
   %i.sk = sub i64 %i.la, %indvars.iv170
-  store i8 0, ptr %i.lv, align 8
   %i.sl = trunc i64 %i.sk to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %8, ptr noundef nonnull %4, i32 noundef %i.sl)
   store i8 1, ptr %i.lv, align 8
@@ -1011,10 +1010,10 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.ii = zext i1 %spec.select.i.not.i.i to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %21, ptr noundef nonnull align 8 dereferenceable(953) %0, i32 noundef %i.ii)
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #33
-  %i.ij = getelementptr inbounds nuw i8, ptr %22, i64 32 ; 7 uses
+  %i.ij = getelementptr inbounds nuw i8, ptr %22, i64 32 ; 6 uses
   store i8 0, ptr %i.ij, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #33
-  %i.ik = getelementptr inbounds nuw i8, ptr %23, i64 32 ; 5 uses
+  %i.ik = getelementptr inbounds nuw i8, ptr %23, i64 32 ; 4 uses
   store i8 0, ptr %i.ik, align 8
   %i.il = call i64 @_ZN2v88internal6maglev18MaglevGraphBuilder20BuildCheckHeapObjectEPNS1_9ValueNodeE(ptr noundef nonnull align 8 dereferenceable(953) %0, ptr noundef %1)
   %i.im = icmp eq i64 %i.il, 1
@@ -1145,7 +1144,6 @@ bb.ba:                                            ; preds = %bb.az, %bb.az
 
 bb.bb:                                            ; preds = %bb.ba
   %i.kt = sub i64 %i.ih, %indvars.iv.i.i
-  store i8 0, ptr %i.ij, align 8
   %i.ku = trunc i64 %i.kt to i32
   %i.kv = add i32 %i.ku, 1
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %22, ptr noundef nonnull %21, i32 noundef %i.kv)
@@ -1225,7 +1223,6 @@ bb.bi:                                            ; preds = %bb.bg
 
 bb.bj:                                            ; preds = %.thread.i.i
   %i.ls = sub i64 %i.ih, %indvars.iv.i.i
-  store i8 0, ptr %i.ik, align 8
   %i.lt = trunc i64 %i.ls to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %23, ptr noundef nonnull %21, i32 noundef %i.lt)
   store i8 1, ptr %i.ik, align 8
@@ -1628,13 +1625,13 @@ bb.ba:                                            ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #33
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(953) %0, i32 noundef 0), !inline_history !179
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #33
-  %i.mm = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 6 uses
+  %i.mm = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 5 uses
   store i8 0, ptr %i.mm, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #33
   %i.mn = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
   store i8 0, ptr %i.mn, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
-  %i.mo = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 5 uses
+  %i.mo = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 4 uses
   store i8 0, ptr %i.mo, align 8
   %i.mp = icmp sgt i32 %.0.lcssa.i, -1
   br i1 %i.mp, label %bb.bo, label %bb.bp
@@ -2037,7 +2034,6 @@ bb.co:                                            ; preds = %bb.cn, %bb.cn
 bb.cp:                                            ; preds = %bb.co
   %i.wj = trunc nuw nsw i64 %indvars.iv224.i to i32
   %i.wk = sub i32 %i.uc, %i.wj
-  store i8 0, ptr %i.mm, align 8
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %7, ptr noundef nonnull %6, i32 noundef %i.wk), !inline_history !179
   store i8 1, ptr %i.mm, align 8
   br label %bb.cq
@@ -2085,7 +2081,6 @@ bb.cv:                                            ; preds = %bb.cn
 
 bb.cw:                                            ; preds = %bb.cv
   %i.xa = sub i64 %i.lt, %indvars.iv224.i
-  store i8 0, ptr %i.mo, align 8
   %i.xb = trunc i64 %i.xa to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef nonnull %6, i32 noundef %i.xb), !inline_history !179
   store i8 1, ptr %i.mo, align 8
@@ -2488,13 +2483,13 @@ bb.at:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #33
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(953) %0, i32 noundef 0), !inline_history !189
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #33
-  %i.kn = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 6 uses
+  %i.kn = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 5 uses
   store i8 0, ptr %i.kn, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #33
   %i.ko = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
   store i8 0, ptr %i.ko, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
-  %i.kp = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 5 uses
+  %i.kp = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 4 uses
   store i8 0, ptr %i.kp, align 8
   %i.kq = icmp sgt i32 %.0.i.lcssa, -1
   br i1 %i.kq, label %bb.az, label %bb.ba
@@ -2897,7 +2892,6 @@ bb.bz:                                            ; preds = %bb.by, %bb.by
 bb.ca:                                            ; preds = %bb.bz
   %i.sb = trunc nuw nsw i64 %indvars.iv162 to i32
   %i.sc = sub i32 %i.pu, %i.sb
-  store i8 0, ptr %i.kn, align 8
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %7, ptr noundef nonnull %6, i32 noundef %i.sc), !inline_history !189
   store i8 1, ptr %i.kn, align 8
   br label %bb.cb
@@ -2945,7 +2939,6 @@ bb.cg:                                            ; preds = %bb.by
 
 bb.ch:                                            ; preds = %bb.cg
   %i.ss = sub i64 %i.jv, %indvars.iv162
-  store i8 0, ptr %i.kp, align 8
   %i.st = trunc i64 %i.ss to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %9, ptr noundef nonnull %6, i32 noundef %i.st), !inline_history !189
   store i8 1, ptr %i.kp, align 8
@@ -3348,10 +3341,10 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.iu = zext i1 %spec.select.i.not.i.i to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(953) %0, i32 noundef %i.iu)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
-  %i.iv = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 7 uses
+  %i.iv = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 6 uses
   store i8 0, ptr %i.iv, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
-  %i.iw = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 5 uses
+  %i.iw = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 4 uses
   store i8 0, ptr %i.iw, align 8
   %i.ix = call i64 @_ZN2v88internal6maglev18MaglevGraphBuilder20BuildCheckHeapObjectEPNS1_9ValueNodeE(ptr noundef nonnull align 8 dereferenceable(953) %0, ptr noundef %i.o)
   %i.iy = icmp eq i64 %i.ix, 1
@@ -3482,7 +3475,6 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   %i.lf = sub i64 %i.it, %indvars.iv.i.i
-  store i8 0, ptr %i.iv, align 8
   %i.lg = trunc i64 %i.lf to i32
   %i.lh = add i32 %i.lg, 1
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %1, i32 noundef %i.lh)
@@ -3562,7 +3554,6 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %.thread.i.i
   %i.me = sub i64 %i.it, %indvars.iv.i.i
-  store i8 0, ptr %i.iw, align 8
   %i.mf = trunc i64 %i.me to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull %1, i32 noundef %i.mf)
   store i8 1, ptr %i.iw, align 8
@@ -3965,10 +3956,10 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.iv = zext i1 %spec.select.i.not.i.i to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(953) %0, i32 noundef %i.iv)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
-  %i.iw = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 7 uses
+  %i.iw = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 6 uses
   store i8 0, ptr %i.iw, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
-  %i.ix = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 5 uses
+  %i.ix = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 4 uses
   store i8 0, ptr %i.ix, align 8
   %i.iy = call i64 @_ZN2v88internal6maglev18MaglevGraphBuilder20BuildCheckHeapObjectEPNS1_9ValueNodeE(ptr noundef nonnull align 8 dereferenceable(953) %0, ptr noundef %i.o)
   %i.iz = icmp eq i64 %i.iy, 1
@@ -4099,7 +4090,6 @@ bb.bb:                                            ; preds = %bb.ba, %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   %i.lg = sub i64 %i.iu, %indvars.iv.i.i
-  store i8 0, ptr %i.iw, align 8
   %i.lh = trunc i64 %i.lg to i32
   %i.li = add i32 %i.lh, 1
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull %1, i32 noundef %i.li)
@@ -4179,7 +4169,6 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %.thread.i.i
   %i.mf = sub i64 %i.iu, %indvars.iv.i.i
-  store i8 0, ptr %i.ix, align 8
   %i.mg = trunc i64 %i.mf to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull %1, i32 noundef %i.mg)
   store i8 1, ptr %i.ix, align 8
@@ -4582,13 +4571,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #33
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull %0, i32 noundef 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #33
-  %i.am = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 8 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 7 uses
   store i8 0, ptr %i.am, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #33
   %i.an = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 3 uses
   store i8 0, ptr %i.an, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #33
-  %i.ao = getelementptr inbounds nuw i8, ptr %14, i64 32 ; 5 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %14, i64 32 ; 4 uses
   store i8 0, ptr %i.ao, align 8
   %i.ap = icmp sgt i32 %.0.lcssa, -1
   br i1 %i.ap, label %bb.o, label %bb.p
@@ -4991,7 +4980,6 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ap
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.aq
   %i.ks = trunc nuw nsw i64 %indvars.iv229 to i32
   %i.kt = sub i32 %i.ih, %i.ks
-  store i8 0, ptr %i.am, align 8
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %12, ptr noundef nonnull %11, i32 noundef %i.kt)
   %i.ku = load ptr, ptr %i.ii, align 8
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ku, i64 24
@@ -5189,7 +5177,6 @@ bb.bj:                                            ; preds = %bb.ap
 
 bb.bk:                                            ; preds = %bb.bj
   %i.ns = sub i64 %i.q, %indvars.iv229
-  store i8 0, ptr %i.ao, align 8
   %i.nt = trunc i64 %i.ns to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %14, ptr noundef nonnull %11, i32 noundef %i.nt)
   store i8 1, ptr %i.ao, align 8
@@ -5592,13 +5579,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #33
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilderC2EPS2_i(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull %0, i32 noundef 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #33
-  %i.am = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 8 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 7 uses
   store i8 0, ptr %i.am, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #33
   %i.an = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 3 uses
   store i8 0, ptr %i.an, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #33
-  %i.ao = getelementptr inbounds nuw i8, ptr %14, i64 32 ; 5 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %14, i64 32 ; 4 uses
   store i8 0, ptr %i.ao, align 8
   %i.ap = icmp sgt i32 %.0.lcssa, -1
   br i1 %i.ap, label %bb.o, label %bb.p
@@ -6001,7 +5988,6 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ap
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.aq
   %i.ks = trunc nuw nsw i64 %indvars.iv225 to i32
   %i.kt = sub i32 %i.ih, %i.ks
-  store i8 0, ptr %i.am, align 8
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %12, ptr noundef nonnull %11, i32 noundef %i.kt)
   %i.ku = load ptr, ptr %i.ii, align 8
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ku, i64 24
@@ -6199,7 +6185,6 @@ bb.bj:                                            ; preds = %bb.ap
 
 bb.bk:                                            ; preds = %bb.bj
   %i.ns = sub i64 %i.q, %indvars.iv225
-  store i8 0, ptr %i.ao, align 8
   %i.nt = trunc i64 %i.ns to i32
   call void @_ZN2v88internal6maglev18MaglevGraphBuilder21MaglevSubGraphBuilder5LabelC2EPS3_i(ptr noundef nonnull align 8 dereferenceable(40) %14, ptr noundef nonnull %11, i32 noundef %i.nt)
   store i8 1, ptr %i.ao, align 8

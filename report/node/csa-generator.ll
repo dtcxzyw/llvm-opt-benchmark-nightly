@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 11 uses
@@ -359,7 +359,6 @@ bb.k:                                             ; preds = %bb.j
           to label %_ZN2v88internal6torque11VisitResultD2Ev.exit unwind label %bb.u
 
 _ZN2v88internal6torque11VisitResultD2Ev.exit:     ; preds = %bb.k
-  store i8 0, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !87)
   call void @llvm.experimental.noalias.scope.decl(metadata !88)
@@ -554,7 +553,7 @@ bb.v:                                             ; preds = %bb.q
   br label %_ZN2v88internal6torque11VisitResultD2Ev.exit56
 
 _ZN2v88internal6torque11VisitResultD2Ev.exit56:   ; preds = %.body, %bb.u
-  %.pn22.pn.pn = phi { ptr, i32 } [ %i.ds, %bb.u ], [ %.pn, %.body ]
+  %.pn22.pn.pn = phi { ptr, i32 } [ %.pn, %.body ], [ %i.ds, %bb.u ]
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(128) %5) #22
   br label %bb.w
 
@@ -732,10 +731,10 @@ bb.l:                                             ; preds = %_ZN2v88internal6tor
 bb.m:                                             ; preds = %bb.l
   %i.bg = load i8, ptr %i.ar, align 8, !range !15, !noundef !12
   %i.bh = trunc nuw i8 %i.bg to i1
-  store i8 0, ptr %i.ar, align 8
   br i1 %i.bh, label %bb.n, label %_ZN2v88internal6torque11VisitResultD2Ev.exit.peel
 
 bb.n:                                             ; preds = %bb.m
+  store i8 0, ptr %i.ar, align 8
   %i.bi = load ptr, ptr %i.as, align 8            ; 2 uses
   %i.bj = icmp eq ptr %i.bi, %i.at
   br i1 %i.bj, label %_ZN2v88internal6torque11VisitResultD2Ev.exit.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.peel
@@ -749,10 +748,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN2v88internal6torque11VisitResultD2Ev.exit.peel: ; preds = %bb.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.peel, %bb.m
   %i.bm = load i8, ptr %i.ak, align 8, !range !15, !noundef !12
   %i.bn = trunc nuw i8 %i.bm to i1
-  store i8 0, ptr %i.ak, align 8
   br i1 %i.bn, label %bb.o, label %_ZN2v88internal6torque11VisitResultD2Ev.exit23.peel
 
 bb.o:                                             ; preds = %_ZN2v88internal6torque11VisitResultD2Ev.exit.peel
+  store i8 0, ptr %i.ak, align 8
   %i.bo = load ptr, ptr %i.ai, align 8            ; 2 uses
   %i.bp = icmp eq ptr %i.bo, %i.am
   br i1 %i.bp, label %_ZN2v88internal6torque11VisitResultD2Ev.exit23.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i21.peel
@@ -866,10 +865,10 @@ bb.v:                                             ; preds = %_ZN2v88internal6tor
 bb.w:                                             ; preds = %bb.v
   %i.cq = load i8, ptr %i.ar, align 8, !range !15, !noundef !12
   %i.cr = trunc nuw i8 %i.cq to i1
-  store i8 0, ptr %i.ar, align 8
   br i1 %i.cr, label %bb.x, label %_ZN2v88internal6torque11VisitResultD2Ev.exit
 
 bb.x:                                             ; preds = %bb.w
+  store i8 0, ptr %i.ar, align 8
   %i.cs = load ptr, ptr %i.as, align 8            ; 2 uses
   %i.ct = icmp eq ptr %i.cs, %i.at
   br i1 %i.ct, label %_ZN2v88internal6torque11VisitResultD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
@@ -883,10 +882,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN2v88internal6torque11VisitResultD2Ev.exit:     ; preds = %bb.x, %bb.w, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
   %i.cw = load i8, ptr %i.ak, align 8, !range !15, !noundef !12
   %i.cx = trunc nuw i8 %i.cw to i1
-  store i8 0, ptr %i.ak, align 8
   br i1 %i.cx, label %bb.y, label %_ZN2v88internal6torque11VisitResultD2Ev.exit23
 
 bb.y:                                             ; preds = %_ZN2v88internal6torque11VisitResultD2Ev.exit
+  store i8 0, ptr %i.ak, align 8
   %i.cy = load ptr, ptr %i.ai, align 8            ; 2 uses
   %i.cz = icmp eq ptr %i.cy, %i.am
   br i1 %i.cz, label %_ZN2v88internal6torque11VisitResultD2Ev.exit23, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i21
@@ -912,10 +911,10 @@ _ZN2v88internal6torque11VisitResultD2Ev.exit23:   ; preds = %bb.y, %_ZN2v88inter
           cleanup                                 ; 3 uses
   %i.de = load i8, ptr %i.ar, align 8, !range !15, !noundef !12
   %i.df = trunc nuw i8 %i.de to i1
-  store i8 0, ptr %i.ar, align 8
   br i1 %i.df, label %bb.z, label %_ZN2v88internal6torque11VisitResultD2Ev.exit26
 
 bb.z:                                             ; preds = %.loopexit.split-lp58.loopexit.split-lp.loopexit.split-lp
+  store i8 0, ptr %i.ar, align 8
   %i.dg = load ptr, ptr %i.as, align 8            ; 2 uses
   %i.dh = icmp eq ptr %i.dg, %i.at
   br i1 %i.dh, label %_ZN2v88internal6torque11VisitResultD2Ev.exit26, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i24
@@ -930,10 +929,10 @@ _ZN2v88internal6torque11VisitResultD2Ev.exit26:   ; preds = %bb.z, %.loopexit.sp
   %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp95, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i24 ], [ %lpad.loopexit.split-lp95, %.loopexit.split-lp58.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp93, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp95, %bb.z ] ; 3 uses
   %i.dk = load i8, ptr %i.ak, align 8, !range !15, !noundef !12
   %i.dl = trunc nuw i8 %i.dk to i1
-  store i8 0, ptr %i.ak, align 8
   br i1 %i.dl, label %bb.aa, label %_ZN2v88internal6torque11VisitResultD2Ev.exit29
 
 bb.aa:                                            ; preds = %_ZN2v88internal6torque11VisitResultD2Ev.exit26
+  store i8 0, ptr %i.ak, align 8
   %i.dm = load ptr, ptr %i.ai, align 8            ; 2 uses
   %i.dn = icmp eq ptr %i.dm, %i.am
   br i1 %i.dn, label %_ZN2v88internal6torque11VisitResultD2Ev.exit29, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i27

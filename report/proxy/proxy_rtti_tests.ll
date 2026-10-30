@@ -202,10 +202,10 @@ bb.g:                                             ; preds = %bb.e, %bb.f
           cleanup
   %i.v = load i8, ptr %i.q, align 8, !tbaa !67, !range !39, !noalias !118, !noundef !40
   %i.w = trunc nuw i8 %i.v to i1
-  store i8 0, ptr %i.q, align 8, !tbaa !67, !noalias !118
   br i1 %i.w, label %bb.h, label %_ZNSt14_Optional_baseISt6vectorIiSaIiEELb0ELb0EED2Ev.exit.i
 
 bb.h:                                             ; preds = %bb.g
+  store i8 0, ptr %i.q, align 8, !tbaa !67, !noalias !118
   %i.x = load ptr, ptr %2, align 8, !tbaa !59, !noalias !118 ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.x, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIiSaIiEELb0ELb0EED2Ev.exit.i, label %bb.i
@@ -608,10 +608,10 @@ bb.c:                                             ; preds = %_ZNSt6vectorIiSaIiE
           catch ptr @_ZTIN3pro2v414bad_proxy_castE ; 3 uses
   %i.l = load i8, ptr %i.g, align 8, !tbaa !134, !range !39, !noalias !132, !noundef !40
   %i.m = trunc nuw i8 %i.l to i1
-  store i8 0, ptr %i.g, align 8, !tbaa !134, !noalias !132
   br i1 %i.m, label %bb.d, label %_ZNSt14_Optional_baseISt6vectorIdSaIdEELb0ELb0EED2Ev.exit.i
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.g, align 8, !tbaa !134, !noalias !132
   %i.n = load ptr, ptr %2, align 8, !tbaa !136, !noalias !132 ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIdSaIdEELb0ELb0EED2Ev.exit.i, label %bb.e
@@ -1014,10 +1014,10 @@ bb.c:                                             ; preds = %_ZNKSt9type_infoeqE
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 3 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !67, !range !39, !noundef !40
   %i.q = trunc nuw i8 %i.p to i1
-  store i8 0, ptr %i.o, align 8, !tbaa !67
   br i1 %i.q, label %bb.d, label %_ZNSt19_Optional_base_implISt6vectorIiSaIiEESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.o, align 8, !tbaa !67
   %i.r = load ptr, ptr %i.n, align 8, !tbaa !59   ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.r, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt19_Optional_base_implISt6vectorIiSaIiEESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i, label %bb.e
@@ -1127,10 +1127,10 @@ bb.c:                                             ; preds = %_ZNKSt9type_infoeqE
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 3 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !67, !range !39, !noundef !40
   %i.q = trunc nuw i8 %i.p to i1
-  store i8 0, ptr %i.o, align 8, !tbaa !67
   br i1 %i.q, label %bb.d, label %_ZNSt19_Optional_base_implISt6vectorIiSaIiEESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.o, align 8, !tbaa !67
   %i.r = load ptr, ptr %i.n, align 8, !tbaa !59   ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.r, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt19_Optional_base_implISt6vectorIiSaIiEESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i, label %bb.e
@@ -1240,10 +1240,10 @@ bb.c:                                             ; preds = %_ZNKSt9type_infoeqE
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.44.0.copyload.i, i64 24 ; 3 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !67, !range !39, !noundef !40
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !67
   br i1 %i.n, label %bb.d, label %_ZNSt8optionalISt6vectorIiSaIiEEE7emplaceIJS2_EEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.l, align 8, !tbaa !67
   %i.o = load ptr, ptr %.sroa.44.0.copyload.i, align 8, !tbaa !59 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZNSt8optionalISt6vectorIiSaIiEEE7emplaceIJS2_EEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i, label %bb.e
@@ -1296,10 +1296,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !89, !range !39, !noundef !40
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !89
   br i1 %i.c, label %bb.b, label %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !89
   %i.d = load ptr, ptr %0, align 8, !tbaa !65     ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !59   ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -1401,10 +1401,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !89, !range !39, !noundef !40
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !89
   br i1 %i.c, label %bb.b, label %_ZNSt19_Optional_base_implIN3pro2v46detail13allocated_ptrISt6vectorIiSaIiEESaIvEEESt14_Optional_baseIS8_Lb0ELb0EEE8_M_resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !89
   %i.d = load ptr, ptr %0, align 8, !tbaa !65     ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !59   ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.e, null

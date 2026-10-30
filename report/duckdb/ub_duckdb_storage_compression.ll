@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   br label %bb.f
 
 .lr.ph56:                                         ; preds = %._crit_edge.thread, %._crit_edge
-  %i.ap = phi ptr [ %i.o, %._crit_edge.thread ], [ %i.al, %._crit_edge ] ; 4 uses
+  %i.ap = phi ptr [ %i.o, %._crit_edge.thread ], [ %i.al, %._crit_edge ] ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 67696 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 32792
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 67680 ; 2 uses
@@ -217,7 +217,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 67680 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 32792
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.av, ptr noundef nonnull align 8 dereferenceable(16) %i.au, i64 16, i1 false), !tbaa.struct !465
-  br i1 %i.at, label %bb.f, label %.critedge
+  br i1 %i.at, label %bb.f, label %bb.h
 
 bb.e:                                             ; preds = %.lr.ph56, %bb.e
   %.04454 = phi i64 [ 1, %.lr.ph56 ], [ %i.bn, %bb.e ] ; 2 uses
@@ -286,13 +286,9 @@ bb.g:                                             ; preds = %bb.f
   %i.cd = zext i1 %i.cc to i8
   br label %bb.h
 
-.critedge:                                        ; preds = %._crit_edge57
-  store i8 0, ptr %i.ap, align 4, !tbaa !1342
-  br label %bb.h
-
-bb.h:                                             ; preds = %.critedge, %bb.g, %bb.f
-  %i.ce = phi ptr [ %i.br, %bb.f ], [ %i.br, %bb.g ], [ %i.ap, %.critedge ]
-  %i.cf = phi i8 [ 0, %bb.f ], [ %i.cd, %bb.g ], [ 0, %.critedge ]
+bb.h:                                             ; preds = %._crit_edge57, %bb.g, %bb.f
+  %i.ce = phi ptr [ %i.br, %bb.f ], [ %i.br, %bb.g ], [ %i.ap, %._crit_edge57 ]
+  %i.cf = phi i8 [ 0, %bb.f ], [ %i.cd, %bb.g ], [ 0, %._crit_edge57 ]
   store i8 %i.cf, ptr %i.ce, align 4, !tbaa !1342
   br label %bb.i
 

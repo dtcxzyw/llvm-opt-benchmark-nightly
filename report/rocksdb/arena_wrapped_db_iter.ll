@@ -205,11 +205,11 @@ _ZN7rocksdb7IterKeyD2Ev.exit9:                    ; preds = %bb.ab, %bb.ac
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 1816 ; 2 uses
   %i.cb = load i8, ptr %i.ca, align 8, !tbaa !325, !range !79, !noundef !80
   %i.cc = trunc nuw i8 %i.cb to i1
-  store i8 0, ptr %i.ca, align 8, !tbaa !325
   br i1 %i.cc, label %bb.ad, label %_ZNSt14_Optional_baseIN7rocksdb13MultiScanArgsELb0ELb0EED2Ev.exit
 
 bb.ad:                                            ; preds = %_ZN7rocksdb7IterKeyD2Ev.exit9
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 1744
+  store i8 0, ptr %i.ca, align 8, !tbaa !325
   tail call void @_ZN7rocksdb13MultiScanArgsD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(80) %i.cd) #21
   br label %_ZNSt14_Optional_baseIN7rocksdb13MultiScanArgsELb0ELb0EED2Ev.exit
 
@@ -275,10 +275,10 @@ _ZN7rocksdb6StatusD2Ev.exit:                      ; preds = %_ZN7rocksdb22Pinned
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 1496 ; 2 uses
   %i.da = load i8, ptr %i.cz, align 8, !tbaa !327, !range !79, !noundef !80
   %i.db = trunc nuw i8 %i.da to i1
-  store i8 0, ptr %i.cz, align 8, !tbaa !327
   br i1 %i.db, label %bb.ai, label %_ZNSt14_Optional_baseIN7rocksdb7IterKeyELb0ELb0EED2Ev.exit
 
 bb.ai:                                            ; preds = %_ZN7rocksdb6StatusD2Ev.exit
+  store i8 0, ptr %i.cz, align 8, !tbaa !327
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 1296 ; 2 uses
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !207 ; 3 uses
   %i.de = load ptr, ptr %i.cy, align 8, !tbaa !321 ; 4 uses
@@ -681,11 +681,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 88 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !527, !range !79, !noundef !80
   %i.g = trunc nuw i8 %i.f to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !527
   br i1 %i.g, label %bb.b, label %_ZSt8_DestroyIN7rocksdb11ScanOptionsEEvPT_.exit.i.i.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 32
+  store i8 0, ptr %i.e, align 8, !tbaa !527
   tail call void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.h) #21
   br label %_ZSt8_DestroyIN7rocksdb11ScanOptionsEEvPT_.exit.i.i.i
 
