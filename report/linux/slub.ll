@@ -205,7 +205,7 @@ hweight_long.exit.i:                              ; preds = %bb.t
 
 get_order.exit52.i:                               ; preds = %hweight_long.exit.i, %bb.t
   %.040.i = phi i32 [ %i.bg, %bb.t ], [ %i.br, %hweight_long.exit.i ]
-  %i.bs = load i32, ptr @slub_max_order, align 4  ; 10 uses
+  %i.bs = load i32, ptr @slub_max_order, align 4  ; 9 uses
   %i.bt = load i32, ptr @slub_min_order, align 4
   %i.bu = shl i32 4096, %i.bs
   %i.bv = udiv i32 %i.bu, %i.bc
@@ -217,7 +217,7 @@ get_order.exit52.i:                               ; preds = %hweight_long.exit.i
   %i.cb = lshr i64 %i.ca, 12
   %i.cc = tail call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 0, -1) %i.cb, i32 -1) #32, !srcloc !59
   %i.cd = add i32 %i.cc, 1
-  %i.ce = tail call i32 @llvm.umax.i32(i32 %i.bt, i32 %i.cd) ; 6 uses
+  %i.ce = tail call i32 @llvm.umax.i32(i32 %i.bt, i32 %i.cd) ; 7 uses
   %i.cf = shl i32 4096, %i.ce
   %i.cg = udiv i32 %i.cf, %i.bc
   %i.ch = icmp ugt i32 %i.cg, 32767
@@ -251,10 +251,16 @@ bb.u:                                             ; preds = %.lr.ph.i.i
 calc_slab_order.exit.i:                           ; preds = %bb.u, %.lr.ph.i.i
   %.012.lcssa.i.i = phi i32 [ %i.cq, %bb.u ], [ %.01215.i.i, %.lr.ph.i.i ] ; 2 uses
   %.not46.i = icmp ugt i32 %.012.lcssa.i.i, %i.bs
-  br i1 %.not46.i, label %.lr.ph.i.1.i, label %calculate_order.exit
+  br i1 %.not46.i, label %calc_slab_order.exit.thread.i, label %calculate_order.exit
 
-.lr.ph.i.1.i:                                     ; preds = %calc_slab_order.exit.i, %bb.v
-  %.01215.i.1.i = phi i32 [ %i.cu, %bb.v ], [ %i.ce, %calc_slab_order.exit.i ] ; 3 uses
+calc_slab_order.exit.thread.i:                    ; preds = %calc_slab_order.exit.i
+  %2 = add nuw i32 %i.bs, 1
+  %3 = add i32 %i.ce, 1
+  %umax78.i = tail call i32 @llvm.umax.i32(i32 %2, i32 %3) ; 5 uses
+  br label %.lr.ph.i.1.i
+
+.lr.ph.i.1.i:                                     ; preds = %bb.v, %calc_slab_order.exit.thread.i
+  %.01215.i.1.i = phi i32 [ %i.cu, %bb.v ], [ %i.ce, %calc_slab_order.exit.thread.i ] ; 3 uses
   %i.cr = shl i32 4096, %.01215.i.1.i             ; 2 uses
   %i.cs = urem i32 %i.cr, %i.bc
   %i.ct = lshr exact i32 %i.cr, 3
@@ -262,12 +268,12 @@ calc_slab_order.exit.i:                           ; preds = %bb.u, %.lr.ph.i.i
   br i1 %.not13.i.1.i, label %bb.v, label %calc_slab_order.exit.1.i
 
 bb.v:                                             ; preds = %.lr.ph.i.1.i
-  %i.cu = add i32 %.01215.i.1.i, 1                ; 3 uses
+  %i.cu = add i32 %.01215.i.1.i, 1                ; 2 uses
   %.not.i65.1.i = icmp ugt i32 %i.cu, %i.bs
   br i1 %.not.i65.1.i, label %calc_slab_order.exit.1.i, label %.lr.ph.i.1.i, !llvm.loop !340
 
 calc_slab_order.exit.1.i:                         ; preds = %bb.v, %.lr.ph.i.1.i
-  %.012.lcssa.i.1.i = phi i32 [ %i.cu, %bb.v ], [ %.01215.i.1.i, %.lr.ph.i.1.i ] ; 2 uses
+  %.012.lcssa.i.1.i = phi i32 [ %umax78.i, %bb.v ], [ %.01215.i.1.i, %.lr.ph.i.1.i ] ; 2 uses
   %.not46.1.i = icmp ugt i32 %.012.lcssa.i.1.i, %i.bs
   br i1 %.not46.1.i, label %.lr.ph.i.2.i, label %calculate_order.exit
 
@@ -280,12 +286,12 @@ calc_slab_order.exit.1.i:                         ; preds = %bb.v, %.lr.ph.i.1.i
   br i1 %.not13.i.2.i, label %bb.w, label %calc_slab_order.exit.2.i
 
 bb.w:                                             ; preds = %.lr.ph.i.2.i
-  %i.cy = add i32 %.01215.i.2.i, 1                ; 3 uses
-  %.not.i65.2.i = icmp ugt i32 %i.cy, %i.bs
-  br i1 %.not.i65.2.i, label %calc_slab_order.exit.2.i, label %.lr.ph.i.2.i, !llvm.loop !340
+  %i.cy = add i32 %.01215.i.2.i, 1                ; 2 uses
+  %exitcond = icmp eq i32 %i.cy, %umax78.i
+  br i1 %exitcond, label %calc_slab_order.exit.2.i, label %.lr.ph.i.2.i, !llvm.loop !340
 
 calc_slab_order.exit.2.i:                         ; preds = %bb.w, %.lr.ph.i.2.i
-  %.012.lcssa.i.2.i = phi i32 [ %i.cy, %bb.w ], [ %.01215.i.2.i, %.lr.ph.i.2.i ] ; 2 uses
+  %.012.lcssa.i.2.i = phi i32 [ %umax78.i, %bb.w ], [ %.01215.i.2.i, %.lr.ph.i.2.i ] ; 2 uses
   %.not46.2.i = icmp ugt i32 %.012.lcssa.i.2.i, %i.bs
   br i1 %.not46.2.i, label %.lr.ph.i.3.i, label %calculate_order.exit
 
@@ -298,12 +304,12 @@ calc_slab_order.exit.2.i:                         ; preds = %bb.w, %.lr.ph.i.2.i
   br i1 %.not13.i.3.i, label %bb.x, label %calc_slab_order.exit.3.i
 
 bb.x:                                             ; preds = %.lr.ph.i.3.i
-  %i.dc = add i32 %.01215.i.3.i, 1                ; 3 uses
-  %.not.i65.3.i = icmp ugt i32 %i.dc, %i.bs
-  br i1 %.not.i65.3.i, label %calc_slab_order.exit.3.i, label %.lr.ph.i.3.i, !llvm.loop !340
+  %i.dc = add i32 %.01215.i.3.i, 1                ; 2 uses
+  %exitcond101 = icmp eq i32 %i.dc, %umax78.i
+  br i1 %exitcond101, label %calc_slab_order.exit.3.i, label %.lr.ph.i.3.i, !llvm.loop !340
 
 calc_slab_order.exit.3.i:                         ; preds = %bb.x, %.lr.ph.i.3.i
-  %.012.lcssa.i.3.i = phi i32 [ %i.dc, %bb.x ], [ %.01215.i.3.i, %.lr.ph.i.3.i ] ; 2 uses
+  %.012.lcssa.i.3.i = phi i32 [ %umax78.i, %bb.x ], [ %.01215.i.3.i, %.lr.ph.i.3.i ] ; 2 uses
   %.not46.3.i = icmp ugt i32 %.012.lcssa.i.3.i, %i.bs
   br i1 %.not46.3.i, label %.thread.split.i, label %calculate_order.exit
 
@@ -706,6 +712,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.w = getelementptr i8, ptr %0, i64 88
   %i.x = getelementptr i8, ptr %1, i64 32         ; 3 uses
   %i.y = getelementptr i8, ptr %0, i64 28         ; 2 uses
+  %6 = add nuw nsw i32 %4, 1
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -713,7 +720,7 @@ bb.f:                                             ; preds = %bb.e
   br label %free_debug_processing.exit
 
 bb.g:                                             ; preds = %bb.y, %.lr.ph.i
-  %i.z = phi i32 [ 1, %.lr.ph.i ], [ %i.db, %bb.y ] ; 4 uses
+  %i.z = phi i32 [ 1, %.lr.ph.i ], [ %i.db, %bb.y ] ; 5 uses
   %.04285.i = phi ptr [ %2, %.lr.ph.i ], [ %i.da, %bb.y ] ; 23 uses
   %i.aa = load i32, ptr %i.e, align 8             ; 3 uses
   %i.ab = and i32 %i.aa, 1
@@ -916,16 +923,16 @@ bb.y:                                             ; preds = %init_object.exit.i
   %i.cz = inttoptr i64 %i.cy to ptr
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.cz, align 8
   %i.da = inttoptr i64 %.sroa.0.0.copyload.i.i to ptr ; 2 uses
-  %i.db = add i32 %i.z, 1                         ; 3 uses
-  %.not70.i = icmp sgt i32 %i.db, %4
-  br i1 %.not70.i, label %.split.i.thread, label %bb.g
+  %i.db = add nuw nsw i32 %i.z, 1
+  %exitcond = icmp eq i32 %i.z, %4
+  br i1 %exitcond, label %.split.i.thread, label %bb.g
 
 init_object.exit._crit_edge.i:                    ; preds = %init_object.exit.i
   %.not55.i = icmp eq i32 %i.z, %4
   br i1 %.not55.i, label %bb.z, label %.split.i
 
 .split.i.thread:                                  ; preds = %bb.y
-  tail call void (ptr, ptr, ptr, ...) @slab_err(ptr noundef readonly %0, ptr noundef %1, ptr noundef @.str.64, i32 noundef %4, i32 noundef %i.db) #34, !srcloc !460
+  tail call void (ptr, ptr, ptr, ...) @slab_err(ptr noundef readonly %0, ptr noundef %1, ptr noundef @.str.64, i32 noundef %4, i32 noundef %6) #34, !srcloc !460
   br label %free_debug_processing.exit
 
 .split.thread.i:                                  ; preds = %.preheader.i

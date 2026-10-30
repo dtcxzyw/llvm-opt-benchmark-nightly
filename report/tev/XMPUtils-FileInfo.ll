@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.v, label %.lr.ph.split, label %.loopexit61, !llvm.loop !64
 
 .loopexit61:                                      ; preds = %bb.f, %bb.f, %bb.f, %bb.e, %bb.g, %bb.c, %bb.d, %bb.b, %bb.b, %bb.a
-  %.1 = phi i64 [ %.03966.us, %bb.c ], [ 0, %bb.a ], [ %i.p, %bb.d ], [ %.03966.us, %bb.b ], [ %.03966.us, %bb.b ], [ %.03966, %bb.e ], [ %i.u, %bb.g ], [ %.03966, %bb.f ], [ %.03966, %bb.f ], [ %.03966, %bb.f ] ; 2 uses
+  %.1 = phi i64 [ %.03966.us, %bb.c ], [ 0, %bb.a ], [ %i.p, %bb.d ], [ %.03966.us, %bb.b ], [ %.03966.us, %bb.b ], [ %.03966, %bb.e ], [ %i.u, %bb.g ], [ %.03966, %bb.f ], [ %.03966, %bb.f ], [ %.03966, %bb.f ] ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.x = icmp ult i64 %.1, %.pre91
   br i1 %i.x, label %bb.h, label %.loopexit61.thread
@@ -210,22 +210,23 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %.loopexit61
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
+  %6 = add nuw i64 %.1, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.j
-  %.03878 = phi i64 [ 0, %bb.h ], [ %i.aa, %bb.j ] ; 3 uses
+  %.03878 = phi i64 [ 0, %bb.h ], [ %i.aa, %bb.j ] ; 4 uses
   call fastcc void @_ZL17ClassifyCharacterPKcmP11UniCharKindPmS3_(ptr noundef %i.k, i64 noundef %.03878, ptr noundef %i.d, ptr noundef %i.c, ptr noundef %i.e)
   %i.y = load i32, ptr %i.d, align 4, !tbaa !23
   %i.z = icmp eq i32 %i.y, 4
   br i1 %i.z, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aa = add i64 %.03878, 1                      ; 3 uses
-  %.not43 = icmp ugt i64 %i.aa, %.1
-  br i1 %.not43, label %bb.k, label %bb.i, !llvm.loop !65
+  %i.aa = add nuw i64 %.03878, 1
+  %exitcond = icmp eq i64 %.03878, %.1
+  br i1 %exitcond, label %bb.k, label %bb.i, !llvm.loop !65
 
 bb.k:                                             ; preds = %bb.i, %bb.j
-  %.038.lcssa = phi i64 [ %.03878, %bb.i ], [ %i.aa, %bb.j ] ; 3 uses
+  %.038.lcssa = phi i64 [ %.03878, %bb.i ], [ %6, %bb.j ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   %i.ab = icmp ult i64 %1, 128
   br i1 %i.ab, label %bb.l, label %.preheader.i

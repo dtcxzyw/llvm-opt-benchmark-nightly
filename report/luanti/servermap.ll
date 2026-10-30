@@ -204,13 +204,15 @@ bb.l:                                             ; preds = %bb.k
   %i.dl = getelementptr inbounds nuw i8, ptr %2, i64 168
   store ptr %i.dk, ptr %i.dl, align 8, !tbaa !503
   %.not144 = icmp sgt i16 %i.bo, %i.bv
-  %.not76141 = icmp sgt i16 %i.bs, %i.cb
-  %or.cond = select i1 %.not144, i1 true, i1 %.not76141
-  %.not77139 = icmp sgt i16 %i.bq, %i.by
-  %or.cond169 = select i1 %or.cond, i1 true, i1 %.not77139
-  br i1 %or.cond169, label %._crit_edge146, label %.preheader138.preheader
+  br i1 %.not144, label %._crit_edge146, label %.preheader138.lr.ph
 
-.preheader138.preheader:                          ; preds = %bb.l
+.preheader138.lr.ph:                              ; preds = %bb.l
+  %.not76141 = icmp sgt i16 %i.bs, %i.cb
+  %.not77139 = icmp sgt i16 %i.bq, %i.by
+  %brmerge = select i1 %.not76141, i1 true, i1 %.not77139
+  br i1 %brmerge, label %._crit_edge146, label %.preheader138.preheader
+
+.preheader138.preheader:                          ; preds = %.preheader138.lr.ph
   %i.dm = add i16 %i.bx, 1
   %i.dn = add i16 %i.ca, 1
   %i.do = add i16 %i.bu, 1
@@ -221,7 +223,7 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.0.0.insert.ext112 = zext i16 %.071145 to i48
   br label %.preheader
 
-._crit_edge146:                                   ; preds = %._crit_edge143.split, %bb.l
+._crit_edge146:                                   ; preds = %._crit_edge143.split, %.preheader138.lr.ph, %bb.l
   %i.dp = call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #34 ; 4 uses
   invoke void @_ZN8MMVManipC1EP3Map(ptr noundef nonnull align 8 dereferenceable(88) %i.dp, ptr noundef nonnull %0)
           to label %bb.s unwind label %bb.t

@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %Classifier_destroy.exit.i, %.lr.ph.i
   %.03783.i = phi i64 [ 0, %.lr.ph.i ], [ %i.bt, %Classifier_destroy.exit.i ]
   %.06082.i = phi ptr [ %i.aj, %.lr.ph.i ], [ %i.bk, %Classifier_destroy.exit.i ] ; 4 uses
-  %.06181.i = phi i64 [ %i.al, %.lr.ph.i ], [ %i.bl, %Classifier_destroy.exit.i ] ; 2 uses
+  %.06181.i = phi i64 [ %i.al, %.lr.ph.i ], [ %i.bl, %Classifier_destroy.exit.i ] ; 3 uses
   %i.ao = load ptr, ptr %i.am, align 8, !tbaa !30
   %i.ap = icmp ult i64 %.06181.i, 4
   br i1 %i.ap, label %DwaCompressor_readChannelRules.exit.thread, label %bb.j
@@ -213,13 +213,13 @@ bb.i:                                             ; preds = %Classifier_destroy.
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(129) %i.b, i8 0, i64 129, i1 false)
-  %i.aq = add i64 %.06181.i, -3                   ; 4 uses
+  %i.aq = add i64 %.06181.i, -2                   ; 3 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.q, %bb.j
-  %.04560.i.i = phi i64 [ 0, %bb.j ], [ %i.bf, %bb.q ] ; 8 uses
-  %7 = icmp ugt i64 %.04560.i.i, %i.aq
-  br i1 %7, label %.thread53.i.i, label %bb.l
+  %.04560.i.i = phi i64 [ 0, %bb.j ], [ %i.bf, %bb.q ] ; 7 uses
+  %exitcond.i.i = icmp eq i64 %.04560.i.i, %i.aq
+  br i1 %exitcond.i.i, label %.thread53.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ar = getelementptr inbounds nuw i8, ptr %.06082.i, i64 %.04560.i.i
@@ -230,9 +230,9 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 %.04560.i.i
   store i8 %i.as, ptr %i.au, align 1, !tbaa !58
-  %i.av = add nuw nsw i64 %.04560.i.i, 1          ; 3 uses
-  %.not = icmp ult i64 %.04560.i.i, %i.aq
-  br i1 %.not, label %bb.n, label %.thread53.i.i
+  %i.av = add nuw nsw i64 %.04560.i.i, 1          ; 4 uses
+  %exitcond.i.i.1 = icmp eq i64 %i.av, %i.aq
+  br i1 %exitcond.i.i.1, label %.thread53.i.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.aw = getelementptr inbounds nuw i8, ptr %.06082.i, i64 %i.av
@@ -244,8 +244,8 @@ bb.o:                                             ; preds = %bb.n
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.av
   store i8 %i.ax, ptr %i.az, align 1, !tbaa !58
   %i.ba = add nuw nsw i64 %.04560.i.i, 2          ; 4 uses
-  %8 = icmp ugt i64 %i.ba, %i.aq
-  br i1 %8, label %.thread53.i.i, label %bb.p
+  %exitcond.i.i.2 = icmp eq i64 %i.ba, %i.aq
+  br i1 %exitcond.i.i.2, label %.thread53.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bb = getelementptr inbounds nuw i8, ptr %.06082.i, i64 %i.ba
@@ -278,7 +278,8 @@ bb.r:                                             ; preds = %.thread.i.i
   %i.bi = getelementptr inbounds nuw i8, ptr %.06082.i, i64 %i.bg ; 3 uses
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !58  ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 2
-  %i.bl = sub i64 %i.aq, %.04560.i.i.lcssa768     ; 2 uses
+  %.neg = add i64 %.06181.i, -3
+  %i.bl = sub i64 %.neg, %.04560.i.i.lcssa768     ; 2 uses
   %i.bm = icmp ugt i8 %i.bj, 63
   br i1 %i.bm, label %Classifier_destroy.exit.i, label %bb.s
 
@@ -325,7 +326,7 @@ bb.t:                                             ; preds = %._crit_edge.thread.
 
 .lr.ph91.i:                                       ; preds = %bb.t, %Classifier_read.exit51.i
   %.089.i = phi i64 [ %i.dv, %Classifier_read.exit51.i ], [ 0, %bb.t ] ; 2 uses
-  %.16287.i = phi i64 [ %.3.i, %Classifier_read.exit51.i ], [ %i.al, %bb.t ] ; 4 uses
+  %.16287.i = phi i64 [ %.3.i, %Classifier_read.exit51.i ], [ %i.al, %bb.t ] ; 5 uses
   %.06486.i = phi ptr [ %.165.i, %Classifier_read.exit51.i ], [ %i.aj, %bb.t ] ; 6 uses
   %i.cd = load ptr, ptr %i.by, align 8, !tbaa !30
   %i.ce = load ptr, ptr %i.cc, align 8, !tbaa !49
@@ -336,13 +337,13 @@ bb.t:                                             ; preds = %._crit_edge.thread.
 bb.u:                                             ; preds = %.lr.ph91.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(129) %i.a, i8 0, i64 129, i1 false)
-  %i.ch = add i64 %.16287.i, -3                   ; 4 uses
+  %i.ch = add i64 %.16287.i, -2                   ; 3 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.ab, %bb.u
-  %.04560.i44.i = phi i64 [ 0, %bb.u ], [ %i.cw, %bb.ab ] ; 8 uses
-  %9 = icmp ugt i64 %.04560.i44.i, %i.ch
-  br i1 %9, label %.thread53.i46.i, label %bb.w
+  %.04560.i44.i = phi i64 [ 0, %bb.u ], [ %i.cw, %bb.ab ] ; 7 uses
+  %exitcond.i45.i = icmp eq i64 %.04560.i44.i, %i.ch
+  br i1 %exitcond.i45.i, label %.thread53.i46.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.ci = getelementptr inbounds nuw i8, ptr %.06486.i, i64 %.04560.i44.i
@@ -353,9 +354,9 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 %.04560.i44.i
   store i8 %i.cj, ptr %i.cl, align 1, !tbaa !58
-  %i.cm = add nuw nsw i64 %.04560.i44.i, 1        ; 3 uses
-  %.not780 = icmp ult i64 %.04560.i44.i, %i.ch
-  br i1 %.not780, label %bb.y, label %.thread53.i46.i
+  %i.cm = add nuw nsw i64 %.04560.i44.i, 1        ; 4 uses
+  %exitcond.i45.i.1 = icmp eq i64 %i.cm, %i.ch
+  br i1 %exitcond.i45.i.1, label %.thread53.i46.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.cn = getelementptr inbounds nuw i8, ptr %.06486.i, i64 %i.cm
@@ -367,8 +368,8 @@ bb.z:                                             ; preds = %bb.y
   %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cm
   store i8 %i.co, ptr %i.cq, align 1, !tbaa !58
   %i.cr = add nuw nsw i64 %.04560.i44.i, 2        ; 4 uses
-  %10 = icmp ugt i64 %i.cr, %i.ch
-  br i1 %10, label %.thread53.i46.i, label %bb.aa
+  %exitcond.i45.i.2 = icmp eq i64 %i.cr, %i.ch
+  br i1 %exitcond.i45.i.2, label %.thread53.i46.i, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cs = getelementptr inbounds nuw i8, ptr %.06486.i, i64 %i.cr
@@ -405,7 +406,8 @@ bb.ac:                                            ; preds = %.thread.i49.i
   %i.dc = getelementptr inbounds nuw i8, ptr %i.da, i64 1
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !58  ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.da, i64 2 ; 4 uses
-  %i.df = sub i64 %i.ch, %.04560.i44.i.lcssa765   ; 4 uses
+  %.neg550 = add i64 %.16287.i, -3
+  %i.df = sub i64 %.neg550, %.04560.i44.i.lcssa765 ; 4 uses
   %i.dg = zext i8 %i.db to i32                    ; 2 uses
   %i.dh = lshr i32 %i.dg, 4
   %i.di = add nsw i32 %i.dh, -1
