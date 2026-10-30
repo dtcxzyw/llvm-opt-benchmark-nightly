@@ -204,19 +204,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.p = load i64, ptr %i.o, align 8
   %i.q = sub i64 %i.p, %.0.i                      ; 3 uses
   %i.r = load i32, ptr %0, align 8
-  %.not24.i.a = icmp eq i32 %i.r, 0
-  br i1 %.not24.i.a, label %exynos4210_ltick_cnt_get_cnto.exit, label %bb.f
+  %.not24.i = icmp eq i32 %i.r, 0
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.pre = load i32, ptr %.phi.trans.insert, align 4
+  %.not24.i.a = icmp eq i32 %.pre, 0              ; 2 uses
+  br i1 %.not24.i, label %exynos4210_ltick_cnt_get_cnto.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load i32, ptr %1, align 4
-  %.not25.i = icmp eq i32 %2, 0
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = load i32, ptr %i.s, align 8
   %i.u = zext i32 %i.t to i64                     ; 3 uses
   %i.v = udiv i64 %i.q, %i.u
   %i.w = urem i64 %i.q, %i.u
-  br i1 %.not25.i, label %exynos4210_ltick_cnt_get_cnto.exit.thread13, label %exynos4210_ltick_cnt_get_cnto.exit.thread
+  br i1 %.not24.i.a, label %exynos4210_ltick_cnt_get_cnto.exit.thread13, label %exynos4210_ltick_cnt_get_cnto.exit.thread
 
 exynos4210_ltick_cnt_get_cnto.exit.thread13:      ; preds = %bb.f
   %i.x = trunc nuw i64 %i.w to i32
@@ -235,14 +235,7 @@ exynos4210_ltick_cnt_get_cnto.exit.thread:        ; preds = %bb.f
   br label %bb.g
 
 exynos4210_ltick_cnt_get_cnto.exit:               ; preds = %bb.e
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %4 = load i32, ptr %3, align 4
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %.pre = load i32, ptr %.phi.trans.insert, align 4
-  %5 = icmp eq i32 %.pre, 0
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %4, ptr %6, align 4
-  br i1 %5, label %bb.m, label %bb.g
+  br i1 %.not24.i.a, label %bb.m, label %bb.g
 
 bb.g:                                             ; preds = %exynos4210_ltick_cnt_get_cnto.exit.thread, %exynos4210_ltick_cnt_get_cnto.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses

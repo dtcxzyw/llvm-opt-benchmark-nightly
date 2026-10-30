@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %bb.d, %_ZNK11ast_ma
   br label %_ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.sink.split.i
 
 _ZN7obj_refI4expr11ast_managerEC2EPS0_RS1_.exit.sink.split.i: ; preds = %bb.f, %bb.e
-  %.sroa.0.0 = phi ptr [ %i.u, %bb.f ], [ %i.s, %bb.e ] ; 6 uses
+  %.sroa.0.0 = phi ptr [ %i.u, %bb.f ], [ %i.s, %bb.e ] ; 5 uses
   %.sroa.5.0 = load ptr, ptr %0, align 8, !tbaa !184, !noalias !349, !nonnull !60, !align !61
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !164, !noalias !349 ; 2 uses
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !164, !noalias !349
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 12
   %i.y = load i32, ptr %i.x, align 4, !tbaa !187  ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -283,8 +283,6 @@ bb.l:                                             ; preds = %bb.j
 
 _ZNK14core_hashtableI14obj_hash_entryI4exprE12obj_ptr_hashIS1_E6ptr_eqIS1_EE8containsERKPS1_.exit: ; preds = %bb.g, %bb.h, %bb.j, %bb.k, %bb.l, %.preheader.i.i
   %.026.i.i = phi i1 [ false, %.preheader.i.i ], [ true, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ %.not.i.not.not, %bb.h ], [ %.not.i.not.not, %bb.g ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 8
-  store i32 %i.w, ptr %3, align 4, !tbaa !164
   %i.ax = icmp eq i32 %i.w, 0
   br i1 %i.ax, label %bb.m, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit
 

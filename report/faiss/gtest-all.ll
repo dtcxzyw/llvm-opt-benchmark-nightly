@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.testing::internal::FilePath", align 8 ; 10 uses
   %5 = alloca %"class.testing::internal::FilePath", align 8 ; 14 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %7 = alloca %"class.testing::internal::FilePath", align 8 ; 32 uses
+  %7 = alloca %"class.testing::internal::FilePath", align 8 ; 33 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %9 = alloca %"class.testing::internal::FilePath", align 8 ; 17 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -589,43 +589,37 @@ bb.ab:                                            ; preds = %.sink.split.i.i.1, 
   store i64 11, ptr %i.cr, align 8, !tbaa !79
   %i.cs = getelementptr inbounds nuw i8, ptr %7, i64 27
   store i8 0, ptr %i.cs, align 1, !tbaa !81
-  %i.ct = getelementptr inbounds nuw i8, ptr %7, i64 17 ; 2 uses
-  %.sroa.012.020.i.i86.ptr.1 = getelementptr inbounds nuw i8, ptr %7, i64 17
-  %i.cu = load i8, ptr %.sroa.012.020.i.i86.ptr.1, align 1, !tbaa !81 ; 2 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %7, i64 17
+  %19 = load i8, ptr %i.ct, align 1, !tbaa !81
+  %.not = icmp eq i8 %19, 47
+  %.sroa.012.020.i.i86.ptr.1 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.cu = load i8, ptr %.sroa.012.020.i.i86.ptr.1, align 8
   %.not.a = icmp eq i8 %i.cu, 47
-  %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %19 = load i8, ptr %i.cv, align 8
-  %.not.i.i92.1 = icmp eq i8 %19, 47
-  %or.cond455 = select i1 %.not.a, i1 %.not.i.i92.1, i1 false
-  br i1 %or.cond455, label %.lr.ph.i.i84.2, label %.sink.split.i.i87.1
+  %or.cond455 = select i1 %.not, i1 %.not.a, i1 false ; 3 uses
+  %.sroa.015.1.i.i88.1.v.sroa.sel.v = select i1 %or.cond455, i64 17, i64 18
+  %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 %.sroa.015.1.i.i88.1.v.sroa.sel.v ; 2 uses
+  %.sroa.012.020.i.i86.ptr.2 = getelementptr inbounds nuw i8, ptr %7, i64 18
+  %20 = load i8, ptr %.sroa.012.020.i.i86.ptr.2, align 2, !tbaa !81 ; 2 uses
+  %.not451 = icmp eq i8 %20, 47
+  br i1 %.not451, label %.lr.ph.i.i84.2, label %.sink.split.i.i87.2
 
-.sink.split.i.i87.1:                              ; preds = %.lr.ph.i.i84.1
-  %20 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  store i8 %i.cu, ptr %i.ct, align 1, !tbaa !81
-  br label %.lr.ph.i.i84.2
-
-.lr.ph.i.i84.2:                                   ; preds = %.lr.ph.i.i84.1, %.sink.split.i.i87.1
-  %.sroa.015.1.i.i88.1 = phi ptr [ %i.ct, %.lr.ph.i.i84.1 ], [ %20, %.sink.split.i.i87.1 ] ; 4 uses
-  %.sroa.012.020.i.i86.ptr.2.a = getelementptr inbounds nuw i8, ptr %7, i64 18
-  %i.cw = load i8, ptr %.sroa.012.020.i.i86.ptr.2.a, align 2, !tbaa !81 ; 2 uses
+.lr.ph.i.i84.2:                                   ; preds = %.lr.ph.i.i84.1
+  %.sroa.015.1.i.i88.1.v.sroa.sel.sroa.sel.v = select i1 %or.cond455, i64 16, i64 17
+  %.sroa.012.020.i.i86.ptr.2.a = getelementptr inbounds nuw i8, ptr %7, i64 %.sroa.015.1.i.i88.1.v.sroa.sel.sroa.sel.v
+  %i.cw = load i8, ptr %.sroa.012.020.i.i86.ptr.2.a, align 1, !tbaa !81
   %.not451.a = icmp eq i8 %i.cw, 47
-  br i1 %.not451.a, label %21, label %.sink.split.i.i87.2
+  br i1 %.not451.a, label %.lr.ph.i.i84.3, label %.sink.split.i.i87.2
 
-21:                                               ; preds = %.lr.ph.i.i84.2
-  %22 = getelementptr inbounds i8, ptr %.sroa.015.1.i.i88.1, i64 -1
-  %23 = load i8, ptr %22, align 1, !tbaa !81
-  %.not.i.i92.2 = icmp eq i8 %23, 47
-  br i1 %.not.i.i92.2, label %.lr.ph.i.i84.3, label %.sink.split.i.i87.2
-
-.sink.split.i.i87.2:                              ; preds = %21, %.lr.ph.i.i84.2
-  %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.015.1.i.i88.1, i64 1
-  store i8 %i.cw, ptr %.sroa.015.1.i.i88.1, align 1, !tbaa !81
+.sink.split.i.i87.2:                              ; preds = %.lr.ph.i.i84.2, %.lr.ph.i.i84.1
+  %.sroa.015.1.i.i88.1.v.sroa.sel.sroa.sel468.v = select i1 %or.cond455, i64 18, i64 19
+  %i.cx = getelementptr inbounds nuw i8, ptr %7, i64 %.sroa.015.1.i.i88.1.v.sroa.sel.sroa.sel468.v
+  store i8 %20, ptr %i.cv, align 1, !tbaa !81
   %.pre328 = load ptr, ptr %7, align 8
   br label %.lr.ph.i.i84.3
 
-.lr.ph.i.i84.3:                                   ; preds = %.sink.split.i.i87.2, %21
-  %i.cy = phi ptr [ %i.cq, %21 ], [ %.pre328, %.sink.split.i.i87.2 ] ; 2 uses
-  %.sroa.015.1.i.i88.2 = phi ptr [ %.sroa.015.1.i.i88.1, %21 ], [ %i.cx, %.sink.split.i.i87.2 ] ; 5 uses
+.lr.ph.i.i84.3:                                   ; preds = %.sink.split.i.i87.2, %.lr.ph.i.i84.2
+  %i.cy = phi ptr [ %i.cq, %.lr.ph.i.i84.2 ], [ %.pre328, %.sink.split.i.i87.2 ] ; 2 uses
+  %.sroa.015.1.i.i88.2 = phi ptr [ %i.cv, %.lr.ph.i.i84.2 ], [ %i.cx, %.sink.split.i.i87.2 ] ; 5 uses
   %.sroa.012.020.i.i86.ptr.3 = getelementptr inbounds nuw i8, ptr %7, i64 19
   %i.cz = load i8, ptr %.sroa.012.020.i.i86.ptr.3, align 1, !tbaa !81 ; 2 uses
   %i.da = icmp ne i8 %i.cz, 47
