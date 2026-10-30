@@ -115,8 +115,13 @@ bb.a:
   %i.s = load double, ptr %i.d, align 8, !tbaa !107
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.u = load float, ptr %i.t, align 4, !tbaa !108
+  %6 = fpext reassoc nsz arcp contract afn float %i.u to double
+  %7 = fmul reassoc nsz arcp contract afn double %i.s, %6
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.w = load float, ptr %i.v, align 8, !tbaa !109
+  %8 = fpext reassoc nsz arcp contract afn float %i.w to double
+  %9 = fdiv reassoc nsz arcp contract afn double %7, %8
+  %10 = fptosi double %9 to i32                   ; 6 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.y = load double, ptr %i.x, align 8, !tbaa !110
   %i.z = add nsw i64 %i.m, 60
@@ -128,11 +133,6 @@ bb.a:
   br i1 %i.ad, label %.lr.ph271, label %._crit_edge272
 
 .lr.ph271:                                        ; preds = %._crit_edge229.split
-  %6 = fpext reassoc nsz arcp contract afn float %i.u to double
-  %7 = fmul reassoc nsz arcp contract afn double %i.s, %6
-  %8 = fpext reassoc nsz arcp contract afn float %i.w to double
-  %9 = fdiv reassoc nsz arcp contract afn double %7, %8
-  %10 = fptosi double %9 to i32                   ; 6 uses
   %i.ae = fptrunc reassoc nsz arcp contract afn double %i.y to float
   %i.af = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.ag = add i32 %10, 1
@@ -141,7 +141,6 @@ bb.a:
   %i.aj = tail call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %i.ai, double 0.000000e+00)
   %i.ak = fptosi double %i.aj to i32              ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %11 = sitofp reassoc nsz arcp contract afn i32 %10 to double
   %i.am = fmul reassoc nsz arcp contract afn float %i.ae, 3.906250e-03
   %i.an = sext i32 %i.f to i64                    ; 3 uses
   %i.ao = zext nneg i32 %i.ak to i64              ; 4 uses
@@ -299,33 +298,28 @@ bb.c:                                             ; preds = %.lr.ph271, %._crit_
   %i.fg = tail call reassoc nsz arcp contract afn double @llvm.maxnum.f64(double %i.ff, double 0.000000e+00)
   %i.fh = fptosi double %i.fg to i32              ; 4 uses
   %i.fi = load i32, ptr %i.af, align 4, !tbaa !105
-  %12 = sitofp reassoc nsz arcp contract afn i32 %i.fi to double
   %i.fj = trunc nuw nsw i64 %indvars.iv331 to i32
   %i.fk = add i32 %i.ag, %i.fj
-  %13 = sitofp reassoc nsz arcp contract afn i32 %i.fk to double
-  %14 = tail call reassoc nsz arcp contract afn double @llvm.minnum.f64(double %12, double %13)
-  %15 = fptosi double %14 to i32                  ; 5 uses
-  %i.fl = sub nsw i32 %15, %i.fh
+  %11 = tail call i32 @llvm.smin.i32(i32 %i.fi, i32 %i.fk) ; 5 uses
+  %i.fl = sub nsw i32 %11, %i.fh
   %i.fm = load i32, ptr %i.al, align 4, !tbaa !104 ; 2 uses
-  %i.fn = add nsw i32 %i.fm, -1
-  %16 = sitofp reassoc nsz arcp contract afn i32 %i.fn to double
-  %17 = tail call reassoc nsz arcp contract afn double @llvm.minnum.f64(double %16, double %11)
-  %18 = fptosi double %17 to i32                  ; 2 uses
+  %i.fn = add i32 %i.fm, -1
+  %12 = tail call i32 @llvm.smin.i32(i32 %i.fn, i32 %10) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1028) %i.a, i8 0, i64 1028, i1 false)
-  %19 = icmp sge i32 %i.fh, %15                   ; 3 uses
-  br i1 %19, label %._crit_edge234.split, label %.preheader222.lr.ph
+  %13 = icmp sle i32 %11, %i.fh                   ; 3 uses
+  br i1 %13, label %._crit_edge234.split, label %.preheader222.lr.ph
 
 .preheader222.lr.ph:                              ; preds = %bb.c
-  %20 = icmp slt i32 %i.ak, %18
+  %14 = icmp sgt i32 %12, %i.ak
   %i.fo = sext i32 %i.fm to i64
-  br i1 %20, label %.preheader222.preheader, label %._crit_edge234.split
+  br i1 %14, label %.preheader222.preheader, label %._crit_edge234.split
 
 .preheader222.preheader:                          ; preds = %.preheader222.lr.ph
   %i.fp = zext nneg i32 %i.fh to i64
-  %wide.trip.count287 = zext i32 %15 to i64
-  %wide.trip.count282 = zext i32 %18 to i64       ; 3 uses
+  %sext = sext i32 %11 to i64
+  %wide.trip.count282 = zext i32 %12 to i64       ; 3 uses
   %i.fq = sub nsw i64 %wide.trip.count282, %i.ao
   %xtraiter = and i64 %i.fq, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -376,14 +370,13 @@ bb.c:                                             ; preds = %.lr.ph271, %._crit_
   %i.gl = sext i32 %i.gk to i64                   ; 12 uses
   %i.gm = mul nsw i64 %indvars.iv331, %i.gl
   %i.gn = getelementptr [4 x i8], ptr %i.o, i64 %i.gm
-  %21 = sitofp reassoc nsz arcp contract afn i32 %i.gk to double
   %i.go = zext nneg i32 %i.fh to i64              ; 6 uses
   %wide.trip.count324 = zext nneg i32 %i.gi to i64
-  %wide.trip.count292 = zext i32 %15 to i64       ; 3 uses
-  %wide.trip.count297 = zext i32 %15 to i64
-  %i.gp = sub nsw i64 %wide.trip.count292, %i.go  ; 2 uses
+  %sext289 = sext i32 %11 to i64                  ; 3 uses
+  %sext293 = sext i32 %11 to i64
+  %i.gp = sub nsw i64 %sext289, %i.go             ; 2 uses
   %i.gq = xor i64 %i.go, -1
-  %i.gr = add nsw i64 %i.gq, %wide.trip.count292  ; 2 uses
+  %i.gr = add nsw i64 %i.gq, %sext289             ; 2 uses
   %xtraiter479 = and i64 %i.gp, 3                 ; 2 uses
   %lcmp.mod480.not = icmp eq i64 %xtraiter479, 0
   %i.gs = icmp ult i64 %i.gr, 3
@@ -394,8 +387,8 @@ bb.c:                                             ; preds = %.lr.ph271, %._crit_
 
 ._crit_edge232:                                   ; preds = %.preheader222.new, %.prol.loopexit
   %indvars.iv.next285 = add nuw nsw i64 %indvars.iv284, 1 ; 2 uses
-  %exitcond288.not = icmp eq i64 %indvars.iv.next285, %wide.trip.count287
-  br i1 %exitcond288.not, label %._crit_edge234.split, label %.preheader222
+  %15 = icmp slt i64 %indvars.iv.next285, %sext
+  br i1 %15, label %.preheader222, label %._crit_edge234.split
 
 .preheader222.new:                                ; preds = %.prol.loopexit, %.preheader222.new
   %indvars.iv279 = phi i64 [ %indvars.iv.next280.3, %.preheader222.new ], [ %indvars.iv279.unr, %.prol.loopexit ] ; 5 uses
@@ -476,18 +469,15 @@ bb.d:                                             ; preds = %.lr.ph259, %._crit_
   %i.jb = add nsw i64 %indvars.iv321, %i.ap       ; 3 uses
   %i.jc = trunc i64 %i.jb to i32
   %i.jd = add i32 %i.jc, 1
-  %22 = sitofp reassoc nsz arcp contract afn i32 %i.jd to double
-  %23 = tail call reassoc nsz arcp contract afn double @llvm.minnum.f64(double %21, double %22)
-  %24 = uitofp nsz nneg i32 %i.ja to double
-  %25 = fsub reassoc nsz arcp contract afn double %23, %24
-  %26 = fptosi double %25 to i32
-  %i.je = mul nsw i32 %i.fl, %26
+  %16 = tail call i32 @llvm.smin.i32(i32 %i.gk, i32 %i.jd)
+  %17 = sub i32 %16, %i.ja
+  %i.je = mul nsw i32 %i.fl, %17
   %i.jf = sitofp reassoc nsz arcp contract afn i32 %i.je to float
   %i.jg = fmul reassoc nsz arcp contract afn float %i.am, %i.jf
   %i.jh = fadd reassoc nsz arcp contract afn float %i.jg, 5.000000e-01
   %i.ji = fptosi float %i.jh to i32               ; 3 uses
   %.not = icmp eq i32 %i.ja, 0
-  %brmerge = or i1 %.not, %19
+  %brmerge = or i1 %.not, %13
   br i1 %brmerge, label %.loopexit221, label %.lr.ph236
 
 .lr.ph236:                                        ; preds = %bb.d
@@ -578,12 +568,12 @@ bb.d:                                             ; preds = %.lr.ph259, %._crit_
   %i.lm = add nsw i32 %i.ll, -1
   store i32 %i.lm, ptr %i.lk, align 4, !tbaa !112
   %indvars.iv.next290.3 = add nuw nsw i64 %indvars.iv289, 4 ; 2 uses
-  %exitcond293.not.3 = icmp eq i64 %indvars.iv.next290.3, %wide.trip.count292
-  br i1 %exitcond293.not.3, label %.loopexit221, label %.lr.ph236.new
+  %18 = icmp slt i64 %indvars.iv.next290.3, %sext289
+  br i1 %18, label %.lr.ph236.new, label %.loopexit221
 
 .loopexit221:                                     ; preds = %.prol.loopexit478, %.lr.ph236.new, %bb.d
   %.not202.not = icmp sge i64 %i.jb, %i.gl
-  %brmerge275 = or i1 %.not202.not, %19
+  %brmerge275 = or i1 %.not202.not, %13
   br i1 %brmerge275, label %.loopexit219, label %.lr.ph238
 
 .lr.ph238:                                        ; preds = %.loopexit221
@@ -668,8 +658,8 @@ bb.d:                                             ; preds = %.lr.ph259, %._crit_
   %i.nk = add nsw i32 %i.nj, 1
   store i32 %i.nk, ptr %i.ni, align 4, !tbaa !112
   %indvars.iv.next295.3 = add nuw nsw i64 %indvars.iv294, 4 ; 2 uses
-  %exitcond298.not.3 = icmp eq i64 %indvars.iv.next295.3, %wide.trip.count297
-  br i1 %exitcond298.not.3, label %.loopexit219, label %.lr.ph238.new
+  %19 = icmp slt i64 %indvars.iv.next295.3, %sext293
+  br i1 %19, label %.lr.ph238.new, label %.loopexit219
 
 .loopexit219:                                     ; preds = %.prol.loopexit483, %.lr.ph238.new, %.loopexit221
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1028) %i.b, ptr noundef nonnull align 16 dereferenceable(1028) %i.a, i64 1028, i1 false)
@@ -1072,9 +1062,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.maxnum.f64(double, double) #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.minnum.f64(double, double) #5
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
 
@@ -1284,6 +1271,9 @@ declare ptr @dt_alloc_aligned(i64 noundef) local_unnamed_addr #13
 declare float @dt_bauhaus_slider_get(ptr noundef) local_unnamed_addr #13
 
 declare void @dt_dev_add_history_item(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #5

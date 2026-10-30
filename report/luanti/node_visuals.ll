@@ -204,11 +204,9 @@ bb.h:                                             ; preds = %bb.g, %.thread
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !287
   %i.aj = sitofp nsz i32 %i.ai to float           ; 2 uses
-  %8 = uitofp nsz i32 %.sroa.0100.1 to double
-  %9 = uitofp nsz i32 %.sroa.8.1 to double
-  %10 = call nsz noundef double @llvm.minnum.f64(double %8, double %9)
-  %11 = fptrunc nsz double %10 to float
-  %i.ak = call nsz noundef float @llvm.maxnum.f32(float %i.aj, float %11)
+  %8 = call i32 @llvm.umin.i32(i32 %.sroa.0100.1, i32 %.sroa.8.1)
+  %9 = uitofp i32 %8 to float
+  %i.ak = call nsz noundef float @llvm.maxnum.f32(float %i.aj, float %9)
   %i.al = fdiv nsz float %i.ak, %i.aj
   %i.am = fptoui float %i.al to i8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -609,9 +607,6 @@ declare void @_Z21createAnimationFramesP14ITextureSourceRKNSt7__cxx1112basic_str
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.minnum.f64(double, double) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.maxnum.f32(float, float) #19
@@ -1016,6 +1011,9 @@ declare extern_weak void @_ZTH13verbosestream() #8
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #19
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
@@ -1027,9 +1025,6 @@ declare i64 @llvm.umin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

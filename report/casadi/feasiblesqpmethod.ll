@@ -205,10 +205,9 @@ bb.d:                                             ; preds = %bb.a
   tail call void (ptr, ptr, ...) @_ZNK6casadi13ProtoFunction5printEPKcz(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull @.str.140)
   %i.ox = add nsw i64 %2, 1
   %i.oy = load i64, ptr %i.a, align 8, !tbaa !166
-  %3 = sitofp nsz i64 %i.ox to double
-  %i.oz = sitofp nsz i64 %i.oy to double
-  %4 = tail call nsz noundef double @llvm.minnum.f64(double %3, double %i.oz)
-  %i.pa = fptosi double %4 to i64                 ; 9 uses
+  %3 = tail call i64 @llvm.smin.i64(i64 %i.ox, i64 %i.oy)
+  %i.oz = sitofp i64 %3 to double
+  %i.pa = fptosi double %i.oz to i64              ; 9 uses
   %i.pb = getelementptr inbounds nuw i8, ptr %1, i64 488 ; 3 uses
   %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !246 ; 6 uses
   %i.pd = ptrtoaddr ptr %i.pc to i64
@@ -611,6 +610,9 @@ __cxx_global_var_init.2.exit:                     ; preds = %_ZNSt7__cxx1112basi
 declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.log10.f64(double) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
@@ -627,9 +629,6 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #15

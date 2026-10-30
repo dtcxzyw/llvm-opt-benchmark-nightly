@@ -205,18 +205,15 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ck, label %.thread168.i, label %bb.l
 
 .thread168.i:                                     ; preds = %bb.k
-  %4 = sitofp <2 x i32> %i.by to <2 x float>
   %i.cl = shufflevector <4 x i32> %i.an, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  %5 = sitofp <2 x i32> %i.cl to <2 x float>
-  %6 = call reassoc nsz arcp contract afn <2 x float> @llvm.minnum.v2f32(<2 x float> %4, <2 x float> %5)
+  %4 = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.by, <2 x i32> %i.cl)
   %i.cm = insertelement <2 x i32> poison, i32 %i.ci, i64 0
   %i.cn = insertelement <2 x i32> %i.cm, i32 %i.ce, i64 1
-  %7 = sitofp <2 x i32> %i.cn to <2 x float>
   %i.co = shufflevector <4 x i32> %i.an, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  %8 = sitofp <2 x i32> %i.co to <2 x float>
-  %9 = call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %7, <2 x float> %8)
-  %10 = shufflevector <2 x float> %6, <2 x float> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.cp = fptosi <4 x float> %10 to <4 x i32>
+  %5 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.cn, <2 x i32> %i.co)
+  %6 = shufflevector <2 x i32> %4, <2 x i32> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = sitofp <4 x i32> %6 to <4 x float>
+  %i.cp = fptosi <4 x float> %7 to <4 x i32>
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.k
@@ -602,8 +599,8 @@ bb.ag:                                            ; preds = %rt_masks_get_delta_
   %i.ka = load i32, ptr %i.a, align 4, !tbaa !13
   %i.kb = load float, ptr %i.e, align 4, !tbaa !12
   %i.kc = insertelement <2 x i32> poison, i32 %i.ka, i64 0
-  %i.kd = insertelement <2 x i32> %i.kc, i32 %i.jy, i64 1 ; 2 uses
-  %i.ke = sitofp <2 x i32> %i.kd to <2 x float>   ; 2 uses
+  %i.kd = insertelement <2 x i32> %i.kc, i32 %i.jy, i64 1 ; 3 uses
+  %i.ke = sitofp <2 x i32> %i.kd to <2 x float>
   %i.kf = insertelement <2 x float> poison, float %i.kb, i64 0
   %i.kg = insertelement <2 x float> %i.kf, float %i.jz, i64 1 ; 2 uses
   %i.kh = fadd reassoc nsz arcp contract afn <2 x float> %i.kg, %i.ke ; 3 uses
@@ -627,19 +624,19 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %or.cond131.i.i, label %bb.ai, label %rt_masks_get_delta_to_destination.exit.thread.i.i
 
 bb.ai:                                            ; preds = %bb.ah
-  %11 = sitofp <2 x i32> %i.id to <2 x float>
+  %8 = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.kd, <2 x i32> %i.id)
   %i.ku = insertelement <2 x i32> poison, i32 %i.kq, i64 0
   %i.kv = insertelement <2 x i32> %i.ku, i32 %i.kk, i64 1
-  %i.kw = add nsw <2 x i32> %i.kv, %i.kd
-  %i.kx = sitofp <2 x i32> %i.ie to <2 x float>
-  %12 = call reassoc nsz arcp contract afn <2 x float> @llvm.minnum.v2f32(<2 x float> %i.ke, <2 x float> %11)
-  %i.ky = fptosi <2 x float> %12 to <2 x i32>
+  %i.kw = add nsw <2 x i32> %i.kv, %i.kd          ; 2 uses
+  %i.kx = sitofp <2 x i32> %8 to <2 x float>
+  %i.ky = fptosi <2 x float> %i.kx to <2 x i32>
   %i.kz = sitofp <2 x i32> %i.ky to <2 x float>
   %i.la = call reassoc nsz arcp contract afn <2 x float> @llvm.minnum.v2f32(<2 x float> %i.kh, <2 x float> %i.kz)
   %i.lb = fptosi <2 x float> %i.la to <2 x i32>
-  %i.lc = sitofp <2 x i32> %i.kw to <2 x float>   ; 2 uses
-  %13 = call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.lc, <2 x float> %i.kx)
-  %i.ld = fptosi <2 x float> %13 to <2 x i32>
+  %i.lc = sitofp <2 x i32> %i.kw to <2 x float>
+  %9 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.kw, <2 x i32> %i.ie)
+  %10 = sitofp <2 x i32> %9 to <2 x float>
+  %i.ld = fptosi <2 x float> %10 to <2 x i32>
   %i.le = fadd reassoc nsz arcp contract afn <2 x float> %i.kg, %i.lc
   %i.lf = sitofp <2 x i32> %i.ld to <2 x float>
   %i.lg = call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.le, <2 x float> %i.lf)
@@ -1042,6 +1039,9 @@ declare void @llvm.masked.scatter.v8i32.v8p0(<8 x i32>, <8 x ptr>, <8 x i1>) #26
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.minnum.v2f32(<2 x float>, <2 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1058,9 +1058,6 @@ declare void @llvm.masked.scatter.v4f32.v4p0(<4 x float>, <4 x ptr>, <4 x i1>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #7
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
