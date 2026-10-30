@@ -21,7 +21,7 @@ bb.a:
   %i.c = load float, ptr %1, align 4, !tbaa !10   ; 4 uses
   %i.d = fmul float %i.c, %i.c
   %i.e = tail call float @llvm.fmuladd.f32(float %i.b, float %i.b, float %i.d)
-  %i.f = tail call noundef float @sqrtf(float noundef %i.e) #8, !tbaa !6 ; 2 uses
+  %i.f = tail call float @llvm.sqrt.f32(float %i.e) ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.h = load float, ptr %i.g, align 4, !tbaa !11 ; 5 uses
   %i.i = tail call noundef float @llvm.fabs.f32(float %i.h)
@@ -41,7 +41,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.p = tail call noundef float @sqrtf(float noundef %i.m) #8, !tbaa !6
+  %i.p = tail call float @llvm.sqrt.f32(float %i.m)
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit
 
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit:             ; preds = %bb.c, %bb.d
@@ -64,7 +64,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit18
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = tail call noundef float @sqrtf(float noundef %i.m) #8, !tbaa !6
+  %i.z = tail call float @llvm.sqrt.f32(float %i.m)
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit18
 
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit18:           ; preds = %bb.f, %bb.g
@@ -172,7 +172,7 @@ bb.a:
   %i.c = load float, ptr %2, align 4, !tbaa !10, !noalias !27 ; 4 uses
   %i.d = fmul float %i.c, %i.c
   %i.e = tail call float @llvm.fmuladd.f32(float %i.b, float %i.b, float %i.d)
-  %i.f = tail call noundef float @sqrtf(float noundef %i.e) #8, !tbaa !6, !noalias !27 ; 2 uses
+  %i.f = tail call float @llvm.sqrt.f32(float %i.e) ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.h = load float, ptr %i.g, align 4, !tbaa !11, !noalias !27 ; 5 uses
   %i.i = tail call noundef float @llvm.fabs.f32(float %i.h)
@@ -192,7 +192,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.p = tail call noundef float @sqrtf(float noundef %i.m) #8, !tbaa !6, !noalias !27
+  %i.p = tail call float @llvm.sqrt.f32(float %i.m)
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i
 
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit.i:           ; preds = %bb.d, %bb.c
@@ -215,7 +215,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit18.i
 
 bb.g:                                             ; preds = %bb.e
-  %i.z = tail call noundef float @sqrtf(float noundef %i.m) #8, !tbaa !6, !noalias !27
+  %i.z = tail call float @llvm.sqrt.f32(float %i.m)
   br label %_ZNK9Imath_3_14Vec3IfE6lengthEv.exit18.i
 
 _ZNK9Imath_3_14Vec3IfE6lengthEv.exit18.i:         ; preds = %bb.g, %bb.f
@@ -618,9 +618,6 @@ bb.h:                                             ; preds = %.sink.split, %bb.c
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #5
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #1
 
@@ -670,7 +667,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = tail call float @llvm.fmuladd.f32(float %i.o, float %i.o, float %i.s)
   %i.u = extractelement <2 x float> %i.r, i64 1   ; 2 uses
   %i.v = tail call float @llvm.fmuladd.f32(float %i.u, float %i.u, float %i.t)
-  %i.w = tail call noundef float @sqrtf(float noundef %i.v) #8, !tbaa !6
+  %i.w = tail call float @llvm.sqrt.f32(float %i.v)
   %i.x = fmul float %.1, %i.w
   br label %bb.c
 
@@ -678,6 +675,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.023 = phi float [ %i.x, %bb.b ], [ 0.000000e+00, %bb.a ]
   ret float %.023
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #7

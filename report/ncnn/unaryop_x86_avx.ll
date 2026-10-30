@@ -202,7 +202,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bg = fmul fast <16 x float> %i.bf, %i.bf
   %i.bh = bitcast <16 x float> %i.bg to <16 x i32>
   %i.bi = lshr <16 x i32> %i.bh, splat (i32 16)
-  %i.bj = trunc nuw <16 x i32> %i.bi to <16 x i16>
+  %i.bj = trunc nuw nsw <16 x i32> %i.bi to <16 x i16>
   store <16 x i16> %i.bj, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bk = icmp eq i64 %index.next, %n.vec
@@ -236,7 +236,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.bt = fmul fast <4 x float> %i.bs, %i.bs
   %i.bu = bitcast <4 x float> %i.bt to <4 x i32>
   %i.bv = lshr <4 x i32> %i.bu, splat (i32 16)
-  %i.bw = trunc nuw <4 x i32> %i.bv to <4 x i16>
+  %i.bw = trunc nuw nsw <4 x i32> %i.bv to <4 x i16>
   store <4 x i16> %i.bw, ptr %next.gep91, align 2, !tbaa !51
   %index.next93 = add nuw i64 %index90, 4         ; 2 uses
   %i.bx = icmp eq i64 %index.next93, %n.vec89
@@ -283,7 +283,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cs = fmul fast float %i.cr, %i.cr
   %i.ct = bitcast float %i.cs to i32
   %i.cu = lshr i32 %i.ct, 16
-  %i.cv = trunc nuw i32 %i.cu to i16
+  %i.cv = trunc nuw nsw i32 %i.cu to i16
   store i16 %i.cv, ptr %.23258, align 2, !tbaa !51
   %i.cw = getelementptr inbounds nuw i8, ptr %.23258, i64 2
   %i.cx = add nuw nsw i32 %.259, 1                ; 2 uses

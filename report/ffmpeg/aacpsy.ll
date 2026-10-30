@@ -142,7 +142,7 @@ bb.m:                                             ; preds = %.thread395, %bb.k, 
   %i.be = fdiv nsz float %i.bb, 7.500000e+03      ; 2 uses
   %i.bf = fmul nsz float %i.be, %i.be
   %i.bg = tail call nsz float @llvm.atan.f32(float %i.bf)
-  %i.bh = fmul nsz float %i.bg, 3.500000e+00
+  %i.bh = fmul nnan nsz float %i.bg, 3.500000e+00
   %i.bi = tail call nsz float @llvm.fmuladd.f32(float %i.bd, float 1.330000e+01, float %i.bh)
   %i.bj = icmp slt i32 %i.ba, 1
   br i1 %i.bj, label %bb.w, label %bb.n

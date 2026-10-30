@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
   %i.bt = load float, ptr %i.w, align 4, !noundef !4
   %i.bu = fadd float %i.bs, %i.bt                 ; 2 uses
   %i.bv = fadd float %i.ad, %i.bu                 ; 4 uses
-  %i.bw = fsub float %i.bv, %i.ad
-  %2 = fsub float %i.bu, %i.bw
+  %i.bw = fsub float %i.ad, %i.bv
+  %2 = fadd float %i.bu, %i.bw
   store float %2, ptr %i.w, align 4
   store float %i.bv, ptr %i.v, align 8
   %i.bx = add i32 %i.ac, 1                        ; 3 uses

@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.de, label %bb.k, label %.preheader95, !llvm.loop !84
 
 bb.k:                                             ; preds = %.preheader95
-  %i.df = tail call nsz double @llvm.log.f64(double %i.dd)
-  %i.dg = fmul nsz double %i.df, -2.000000e+00
+  %i.df = tail call nnan nsz double @llvm.log.f64(double %i.dd)
+  %i.dg = fmul nnan nsz double %i.df, -2.000000e+00
   %i.dh = fdiv nsz double %i.dg, %i.dd
   %i.di = tail call nsz double @llvm.sqrt.f64(double %i.dh)
   %i.dj = fmul nsz double %i.ci, %i.di
