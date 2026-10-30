@@ -205,7 +205,7 @@ bb.hk:                                            ; preds = %bb.id, %.lr.ph19.i
   %i.dbw = sitofp nsz i32 %i.dbs to float         ; 2 uses
   %i.dbx = fmul nnan nsz float %i.dbw, %i.dbw
   %i.dby = bitcast float %i.dbx to i32
-  %i.dbz = uitofp nsz i32 %i.dby to float
+  %i.dbz = uitofp nsz nneg i32 %i.dby to float
   %storemerge.i = select i1 %.not162.i, float %i.dbu, float %i.dbz ; 3 uses
   store float %storemerge.i, ptr %i.dbv, align 4, !tbaa !349
   br i1 %i.dax, label %.lr.ph7.split.preheader.i, label %.preheader.i636

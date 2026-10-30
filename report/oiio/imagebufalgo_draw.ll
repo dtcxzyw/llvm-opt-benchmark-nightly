@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %.noexc25.i.i.i
   %i.ga = fpext float %i.fw to double
-  %i.gb = call noundef float @llvm.log.f32(float %i.fw)
+  %i.gb = call ninf float @llvm.log.f32(float %i.fw)
   %i.gc = fpext ninf float %i.gb to double
   %i.gd = fmul double %i.gc, -2.000000e+00
   %i.ge = fdiv double %i.gd, %i.ga
@@ -608,7 +608,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %.noexc25.i.i.i
   %i.ga = fpext float %i.fw to double
-  %i.gb = call noundef float @llvm.log.f32(float %i.fw)
+  %i.gb = call ninf float @llvm.log.f32(float %i.fw)
   %i.gc = fpext ninf float %i.gb to double
   %i.gd = fmul double %i.gc, -2.000000e+00
   %i.ge = fdiv double %i.gd, %i.ga
@@ -1011,7 +1011,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %.noexc25.i.i.i
   %i.ga = fpext float %i.fw to double
-  %i.gb = call noundef float @llvm.log.f32(float %i.fw)
+  %i.gb = call ninf float @llvm.log.f32(float %i.fw)
   %i.gc = fpext ninf float %i.gb to double
   %i.gd = fmul double %i.gc, -2.000000e+00
   %i.ge = fdiv double %i.gd, %i.ga
@@ -1414,7 +1414,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %.noexc25.i.i.i
   %i.ga = fpext float %i.fw to double
-  %i.gb = call noundef float @llvm.log.f32(float %i.fw)
+  %i.gb = call ninf float @llvm.log.f32(float %i.fw)
   %i.gc = fpext ninf float %i.gb to double
   %i.gd = fmul double %i.gc, -2.000000e+00
   %i.ge = fdiv double %i.gd, %i.ga

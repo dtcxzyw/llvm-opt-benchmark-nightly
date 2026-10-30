@@ -136,7 +136,6 @@ _ZN5Eigen5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEaSINS_5SolveINS_4
   %shift58 = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop59 = fadd <2 x double> %i.af, %shift58
   %i.ag = extractelement <2 x double> %foldExtExtBinop59, i64 0
-  %7 = fadd double %i.ag, 0.000000e+00
   %i.ah = shufflevector <2 x double> %i.x, <2 x double> %i.aa, <2 x i32> <i32 0, i32 2>
   %i.ai = shufflevector <2 x double> %i.x, <2 x double> %i.aa, <2 x i32> <i32 1, i32 3>
   %i.aj = fadd <2 x double> %i.ah, %i.ai
@@ -146,7 +145,7 @@ _ZN5Eigen5BlockINS_6MatrixIdLi6ELi1ELi0ELi6ELi1EEELi3ELi1ELb0EEaSINS_5SolveINS_4
   %i.an = fadd <2 x double> %i.aj, %i.am
   %i.ao = fadd <2 x double> %i.an, <double 1.000000e-09, double 0.000000e+00> ; 4 uses
   %i.ap = fadd double %i.ad, 1.000000e-09
-  %i.aq = fadd double %7, 1.000000e-09            ; 2 uses
+  %i.aq = fadd double %i.ag, 1.000000e-09         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 120 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 124 ; 2 uses

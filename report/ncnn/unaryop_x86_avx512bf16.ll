@@ -202,10 +202,10 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.cb = lshr <32 x i32> %i.bx, splat (i32 16)
   %i.cc = lshr <32 x i32> %i.by, splat (i32 16)
   %i.cd = lshr <32 x i32> %i.bz, splat (i32 16)
-  %i.ce = trunc nuw <32 x i32> %i.ca to <32 x i16>
-  %i.cf = trunc nuw <32 x i32> %i.cb to <32 x i16>
-  %i.cg = trunc nuw <32 x i32> %i.cc to <32 x i16>
-  %i.ch = trunc nuw <32 x i32> %i.cd to <32 x i16>
+  %i.ce = trunc nuw nsw <32 x i32> %i.ca to <32 x i16>
+  %i.cf = trunc nuw nsw <32 x i32> %i.cb to <32 x i16>
+  %i.cg = trunc nuw nsw <32 x i32> %i.cc to <32 x i16>
+  %i.ch = trunc nuw nsw <32 x i32> %i.cd to <32 x i16>
   store <32 x i16> %i.ce, ptr %next.gep, align 2, !tbaa !21
   store <32 x i16> %i.cf, ptr %i.bd, align 2, !tbaa !21
   store <32 x i16> %i.cg, ptr %i.be, align 2, !tbaa !21
@@ -242,7 +242,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.cr = fmul fast <16 x float> %i.cq, %i.cq
   %i.cs = bitcast <16 x float> %i.cr to <16 x i32>
   %i.ct = lshr <16 x i32> %i.cs, splat (i32 16)
-  %i.cu = trunc nuw <16 x i32> %i.ct to <16 x i16>
+  %i.cu = trunc nuw nsw <16 x i32> %i.ct to <16 x i16>
   store <16 x i16> %i.cu, ptr %next.gep86, align 2, !tbaa !21
   %index.next88 = add nuw i64 %index85, 16        ; 2 uses
   %i.cv = icmp eq i64 %index.next88, %n.vec84
@@ -267,7 +267,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.da = fmul fast float %i.cz, %i.cz
   %i.db = bitcast float %i.da to i32
   %i.dc = lshr i32 %i.db, 16
-  %i.dd = trunc nuw i32 %i.dc to i16
+  %i.dd = trunc nuw nsw i32 %i.dc to i16
   store i16 %i.dd, ptr %.13557, align 2, !tbaa !21
   %i.de = getelementptr inbounds nuw i8, ptr %.13557, i64 2
   %i.df = add nuw nsw i32 %.258, 1                ; 2 uses
@@ -670,9 +670,9 @@ bb.b:                                             ; preds = %bb.a
   %.059 = phi i32 [ %i.ay, %.lr.ph ], [ 0, %.noexc ]
   %.03458 = phi ptr [ %i.ax, %.lr.ph ], [ %i.u, %.noexc ] ; 3 uses
   %i.w = load <16 x bfloat>, ptr %.03458, align 1, !tbaa !18 ; 2 uses
-  %i.x = fpext fast <16 x bfloat> %i.w to <16 x float> ; 2 uses
+  %i.x = fpext fast <16 x bfloat> %i.w to <16 x float> ; 3 uses
   %i.y = bitcast <16 x float> %i.x to <16 x i32>
-  %i.z = and <16 x i32> %i.y, splat (i32 -2147483648) ; 2 uses
+  %i.z = and <16 x i32> %i.y, splat (i32 -2147483648)
   %i.aa = call <16 x float> @llvm.fabs.v16f32(<16 x float> %i.x) ; 3 uses
   %i.ab = fcmp fast ole <16 x float> %i.aa, splat (float 5.000000e-01) ; 2 uses
   %i.ac = fmul fast <16 x float> %i.aa, splat (float 5.000000e-01)
@@ -687,10 +687,8 @@ bb.b:                                             ; preds = %bb.a
   %i.al = call fast noundef nofpclass(nan inf) <16 x float> @llvm.fma.v16f32(<16 x float> nofpclass(nan inf) %i.ah, <16 x float> nofpclass(nan inf) %i.ak, <16 x float> splat (float 1.000000e+00))
   %i.am = call fast noundef nofpclass(nan inf) <16 x float> @llvm.fma.v16f32(<16 x float> nofpclass(nan inf) %i.ag, <16 x float> nofpclass(nan inf) %i.aj, <16 x float> nofpclass(nan inf) %i.al)
   %i.an = fmul fast <16 x float> %i.am, %i.af     ; 2 uses
-  %6 = bitcast <16 x float> %i.an to <16 x i32>
-  %7 = or <16 x i32> %i.z, %6
-  %8 = bitcast <16 x i32> %7 to <16 x float>
-  %i.ao = fsub fast <16 x float> splat (float f0x3FC90FDB), %8
+  %6 = call <16 x float> @llvm.copysign.v16f32(<16 x float> %i.an, <16 x float> %i.x)
+  %i.ao = fsub fast <16 x float> splat (float f0x3FC90FDB), %6
   %i.ap = fcmp fast olt <16 x bfloat> %i.w, zeroinitializer
   %i.aq = select fast <16 x i1> %i.ap, <16 x float> splat (float f0x40490FDB), <16 x float> zeroinitializer
   %factor57 = fmul fast <16 x float> %i.an, splat (float 2.000000e+00)
@@ -723,9 +721,9 @@ bb.c:                                             ; preds = %._crit_edge
   %i.bh = bitcast i16 %i.bg to <16 x i1>          ; 2 uses
   %i.bi = call <16 x i16> @llvm.masked.load.v16i16.p0(ptr align 1 %.034.lcssa, <16 x i1> %i.bh, <16 x i16> zeroinitializer)
   %i.bj = bitcast <16 x i16> %i.bi to <16 x bfloat> ; 2 uses
-  %i.bk = fpext fast <16 x bfloat> %i.bj to <16 x float> ; 2 uses
+  %i.bk = fpext fast <16 x bfloat> %i.bj to <16 x float> ; 3 uses
   %i.bl = bitcast <16 x float> %i.bk to <16 x i32>
-  %i.bm = and <16 x i32> %i.bl, splat (i32 -2147483648) ; 2 uses
+  %i.bm = and <16 x i32> %i.bl, splat (i32 -2147483648)
   %i.bn = call <16 x float> @llvm.fabs.v16f32(<16 x float> %i.bk) ; 3 uses
   %i.bo = fcmp fast ole <16 x float> %i.bn, splat (float 5.000000e-01) ; 2 uses
   %i.bp = fmul fast <16 x float> %i.bn, splat (float 5.000000e-01)
@@ -740,10 +738,8 @@ bb.c:                                             ; preds = %._crit_edge
   %i.by = call fast noundef nofpclass(nan inf) <16 x float> @llvm.fma.v16f32(<16 x float> nofpclass(nan inf) %i.bu, <16 x float> nofpclass(nan inf) %i.bx, <16 x float> splat (float 1.000000e+00))
   %i.bz = call fast noundef nofpclass(nan inf) <16 x float> @llvm.fma.v16f32(<16 x float> nofpclass(nan inf) %i.bt, <16 x float> nofpclass(nan inf) %i.bw, <16 x float> nofpclass(nan inf) %i.by)
   %i.ca = fmul fast <16 x float> %i.bz, %i.bs     ; 2 uses
-  %9 = bitcast <16 x float> %i.ca to <16 x i32>
-  %10 = or <16 x i32> %i.bm, %9
-  %11 = bitcast <16 x i32> %10 to <16 x float>
-  %i.cb = fsub fast <16 x float> splat (float f0x3FC90FDB), %11
+  %7 = call <16 x float> @llvm.copysign.v16f32(<16 x float> %i.ca, <16 x float> %i.bk)
+  %i.cb = fsub fast <16 x float> splat (float f0x3FC90FDB), %7
   %i.cc = fcmp fast olt <16 x bfloat> %i.bj, zeroinitializer
   %i.cd = select fast <16 x i1> %i.cc, <16 x float> splat (float f0x40490FDB), <16 x float> zeroinitializer
   %factor = fmul fast <16 x float> %i.ca, splat (float 2.000000e+00)
@@ -1144,6 +1140,9 @@ declare <16 x float> @llvm.fabs.v16f32(<16 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x bfloat> @llvm.fabs.v16bf16(<16 x bfloat>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x float> @llvm.copysign.v16f32(<16 x float>, <16 x float>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x float> @llvm.maxnum.v16f32(<16 x float>, <16 x float>) #9

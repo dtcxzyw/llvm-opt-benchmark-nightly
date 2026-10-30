@@ -204,9 +204,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.i
   %i.u = load float, ptr %i.t, align 4, !tbaa !75
   %i.v = fsub float %i.s, %i.u                    ; 4 uses
   %i.w = fmul float %i.p, %i.p
-  %5 = fadd float %i.w, 0.000000e+00
   %i.x = fmul float %i.v, %i.v
-  %i.y = fadd float %5, %i.x                      ; 2 uses
+  %i.y = fadd float %i.w, %i.x                    ; 2 uses
   %i.z = fcmp ogt float %i.y, f0x358637BD
   br i1 %i.z, label %bb.c, label %_ZL16rcVsafeNormalizePf.exit
 
@@ -230,9 +229,8 @@ _ZL16rcVsafeNormalizePf.exit:                     ; preds = %bb.b, %bb.c
   %i.aj = load float, ptr %i.ai, align 4, !tbaa !75
   %i.ak = fsub float %i.aj, %i.ae                 ; 4 uses
   %i.al = fmul float %i.ah, %i.ah
-  %6 = fadd float %i.al, 0.000000e+00
   %i.am = fmul float %i.ak, %i.ak
-  %i.an = fadd float %6, %i.am                    ; 2 uses
+  %i.an = fadd float %i.al, %i.am                 ; 2 uses
   %i.ao = fcmp ogt float %i.an, f0x358637BD
   br i1 %i.ao, label %bb.d, label %_ZL16rcVsafeNormalizePf.exit102
 

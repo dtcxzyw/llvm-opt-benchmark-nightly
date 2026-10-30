@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.pf = extractelement <2 x double> %i.md, i64 0
   %i.pg = call double @llvm.fmuladd.f64(double %i.pf, double %i.pe, double %i.pd)
   %i.ph = call double @llvm.fmuladd.f64(double %i.pg, double -2.000000e+00, double %i.oo)
-  %i.pi = call double @sqrt(double noundef %i.mo) #18 ; 2 uses
+  %i.pi = call double @llvm.sqrt.f64(double %i.mo) ; 2 uses
   %i.pj = load float, ptr %i.z, align 8, !tbaa !250
   %i.pk = fpext float %i.pj to double
   %i.pl = fmul double %i.ph, %i.pk
@@ -608,7 +608,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.xp = extractelement <2 x double> %i.un, i64 0
   %i.xq = call double @llvm.fmuladd.f64(double %i.xp, double %i.xo, double %i.xn)
   %i.xr = call double @llvm.fmuladd.f64(double %i.xq, double -2.000000e+00, double %i.wy)
-  %i.xs = call double @sqrt(double noundef %i.uy) #18 ; 2 uses
+  %i.xs = call double @llvm.sqrt.f64(double %i.uy) ; 2 uses
   %i.xt = load float, ptr %i.z, align 8, !tbaa !250
   %i.xu = fpext float %i.xt to double
   %i.xv = fmul double %i.xr, %i.xu
@@ -1011,7 +1011,7 @@ bb.an:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.np = fmul double %i.nn, %i.no
   %i.nq = fmul double %i.nn, %i.lx
   %i.nr = fneg double %i.my
-  %i.ns = call double @sqrt(double noundef %i.mk) #18 ; 3 uses
+  %i.ns = call double @llvm.sqrt.f64(double %i.mk) ; 3 uses
   %i.nt = load <2 x float>, ptr %i.x, align 4, !tbaa !47
   %i.nu = fpext <2 x float> %i.nt to <2 x double> ; 2 uses
   %i.nv = load float, ptr %i.mz, align 4, !tbaa !47 ; 2 uses
@@ -1414,7 +1414,7 @@ bb.be:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.ym = fmul double %i.yk, %i.yl
   %i.yn = fmul double %i.yk, %i.wu
   %i.yo = fneg double %i.xv
-  %i.yp = call double @sqrt(double noundef %i.xh) #18 ; 3 uses
+  %i.yp = call double @llvm.sqrt.f64(double %i.xh) ; 3 uses
   %i.yq = load <2 x float>, ptr %i.x, align 4, !tbaa !47
   %i.yr = fpext <2 x float> %i.yq to <2 x double> ; 2 uses
   %i.ys = load float, ptr %i.xw, align 4, !tbaa !47 ; 2 uses
@@ -1817,7 +1817,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.os = extractelement <2 x double> %i.mf, i64 0
   %i.ot = call double @llvm.fmuladd.f64(double %i.os, double %i.od, double %i.or)
   %i.ou = call double @llvm.fmuladd.f64(double %i.ot, double -2.000000e+00, double %i.nc)
-  %i.ov = call double @sqrt(double noundef %i.ml) #18 ; 2 uses
+  %i.ov = call double @llvm.sqrt.f64(double %i.ml) ; 2 uses
   %i.ow = load double, ptr %i.z, align 8, !tbaa !373
   %i.ox = fmul double %i.ow, %i.ou
   %i.oy = fmul double %i.ov, %i.ov
@@ -2220,7 +2220,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.wr = extractelement <2 x double> %i.ue, i64 0
   %i.ws = call double @llvm.fmuladd.f64(double %i.wr, double %i.wc, double %i.wq)
   %i.wt = call double @llvm.fmuladd.f64(double %i.ws, double -2.000000e+00, double %i.vb)
-  %i.wu = call double @sqrt(double noundef %i.uk) #18 ; 2 uses
+  %i.wu = call double @llvm.sqrt.f64(double %i.uk) ; 2 uses
   %i.wv = load double, ptr %i.z, align 8, !tbaa !373
   %i.ww = fmul double %i.wv, %i.wt
   %i.wx = fmul double %i.wu, %i.wu
@@ -2623,7 +2623,7 @@ bb.an:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.mw = extractelement <2 x double> %i.ma, i64 1 ; 2 uses
   %i.mx = fmul double %i.mt, %i.mw
   %i.my = fneg double %i.mp
-  %i.mz = call double @sqrt(double noundef %i.mg) #18 ; 3 uses
+  %i.mz = call double @llvm.sqrt.f64(double %i.mg) ; 3 uses
   %i.na = load <2 x double>, ptr %i.x, align 8
   %i.nb = load double, ptr %i.z, align 8, !tbaa !373
   %i.nc = fneg double %i.nb
@@ -3026,7 +3026,7 @@ bb.be:                                            ; preds = %_ZN7openvdb5v13_04m
   %i.vz = extractelement <2 x double> %i.vd, i64 1 ; 2 uses
   %i.wa = fmul double %i.vw, %i.vz
   %i.wb = fneg double %i.vs
-  %i.wc = call double @sqrt(double noundef %i.vj) #18 ; 3 uses
+  %i.wc = call double @llvm.sqrt.f64(double %i.vj) ; 3 uses
   %i.wd = load <2 x double>, ptr %i.x, align 8
   %i.we = load double, ptr %i.z, align 8, !tbaa !373
   %i.wf = fneg double %i.we
@@ -3427,6 +3427,9 @@ declare i64 @llvm.smin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.cttz.i64(i64, i1 immarg) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9

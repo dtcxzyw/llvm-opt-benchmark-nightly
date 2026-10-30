@@ -39,7 +39,7 @@ define void @_ZN4geos9operation7overlay8validate20OffsetPointGenerator9getPoints
 bb.a:
   %2 = alloca %"class.std::vector.10", align 8    ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.b = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #11 ; 2 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #10 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !20   ; 3 uses
   store ptr %i.b, ptr %i.a, align 8, !tbaa !20
@@ -52,15 +52,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i, label %_ZNKSt14default_deleteISt6vectorIN4geos4geom10CoordinateESaIS3_EEEclEPS5_.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_ZdlPv(ptr noundef nonnull %i.d) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %i.d) #11
   br label %_ZNKSt14default_deleteISt6vectorIN4geos4geom10CoordinateESaIS3_EEEclEPS5_.exit.i.i
 
 _ZNKSt14default_deleteISt6vectorIN4geos4geom10CoordinateESaIS3_EEEclEPS5_.exit.i.i: ; preds = %bb.c, %bb.b
-  tail call void @_ZdlPv(ptr noundef nonnull %i.c) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %i.c) #11
   br label %_ZNSt10unique_ptrISt6vectorIN4geos4geom10CoordinateESaIS3_EESt14default_deleteIS5_EE5resetEPS5_.exit
 
 _ZNSt10unique_ptrISt6vectorIN4geos4geom10CoordinateESaIS3_EESt14default_deleteIS5_EE5resetEPS5_.exit: ; preds = %bb.a, %_ZNKSt14default_deleteISt6vectorIN4geos4geom10CoordinateESaIS3_EEEclEPS5_.exit.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   %i.e = load ptr, ptr %1, align 8, !tbaa !30, !nonnull !31, !align !32
   invoke void @_ZN4geos4geom4util24LinearComponentExtracter8getLinesERKNS0_8GeometryERSt6vectorIPKNS0_10LineStringESaIS9_EE(ptr noundef nonnull align 8 dereferenceable(40) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %2)
@@ -86,11 +86,11 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIS
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge
-  call void @_ZdlPv(ptr noundef nonnull %i.i) #12
+  call void @_ZdlPv(ptr noundef nonnull %i.i) #11
   br label %_ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit
 
 _ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit: ; preds = %._crit_edge, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void
 
 .lr.ph:                                           ; preds = %bb.d, %_ZN4geos9operation7overlay8validate20OffsetPointGenerator13extractPointsEPKNS_4geom10LineStringE.exit
@@ -148,11 +148,11 @@ _ZN4geos9operation7overlay8validate20OffsetPointGenerator13extractPointsEPKNS_4g
   br i1 %.not.i.i.i11, label %_ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit12, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-  call void @_ZdlPv(ptr noundef nonnull %i.ab) #12
+  call void @_ZdlPv(ptr noundef nonnull %i.ab) #11
   br label %_ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit12
 
 _ZNSt6vectorIPKN4geos4geom10LineStringESaIS4_EED2Ev.exit12: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   resume { ptr, i32 } %lpad.loopexit.split-lp36
 }
 
@@ -209,6 +209,7 @@ declare noundef ptr @_ZNK4geos4geom10LineString16getCoordinatesROEv(ptr noundef 
 define void @_ZN4geos9operation7overlay8validate20OffsetPointGenerator14computeOffsetsERKNS_4geom10CoordinateES7_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load <1 x double>, ptr %i.a, align 8
   %i.b = load <2 x double>, ptr %2, align 8, !tbaa !50 ; 2 uses
   %i.c = load <2 x double>, ptr %1, align 8, !tbaa !50 ; 2 uses
   %i.d = fsub <2 x double> %i.b, %i.c             ; 3 uses
@@ -216,10 +217,9 @@ bb.a:
   %shift = shufflevector <2 x double> %i.e, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.e, %shift
   %i.f = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.g = tail call double @sqrt(double noundef %i.f) #13
-  %3 = load <1 x double>, ptr %i.a, align 8
+  %i.g = tail call double @llvm.sqrt.f64(double %i.f)
   %i.h = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> zeroinitializer
-  %i.i = fmul <2 x double> %i.d, %i.h
+  %i.i = fmul <2 x double> %i.h, %i.d
   %i.j = insertelement <2 x double> poison, double %i.g, i64 0
   %i.k = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.l = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer
@@ -256,7 +256,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.ae, label %bb.d, label %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #14
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #13
   unreachable
 
 _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
@@ -269,7 +269,7 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; pr
   %.not.i.i.i = icmp ne i64 %i.aj, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.ak = mul nuw nsw i64 %i.aj, 24
-  %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #11 ; 5 uses
+  %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #10 ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ad ; 2 uses
   store <2 x double> %i.r, ptr %i.am, align 8, !tbaa !50
   %.sroa.649.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %i.am, i64 16
@@ -293,7 +293,7 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.aa) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %i.aa) #11
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.e, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
@@ -334,7 +334,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN4geos
   br i1 %i.bb, label %bb.h, label %_ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #14
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #13
   unreachable
 
 _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26: ; preds = %bb.g
@@ -347,7 +347,7 @@ _ZNKSt6vectorIN4geos4geom10CoordinateESaIS2_EE12_M_check_lenEmPKc.exit.i.i26: ; 
   %.not.i.i.i28 = icmp ne i64 %i.bg, 0
   tail call void @llvm.assume(i1 %.not.i.i.i28)
   %i.bh = mul nuw nsw i64 %i.bg, 24
-  %i.bi = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bh) #11 ; 5 uses
+  %i.bi = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bh) #10 ; 5 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.ba ; 2 uses
   store <2 x double> %i.s, ptr %i.bj, align 8, !tbaa !50
   %.sroa.6.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
@@ -371,7 +371,7 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22
   br i1 %.not.i23.i.i36, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i37, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34
-  tail call void @_ZdlPv(ptr noundef nonnull %i.ax) #12
+  tail call void @_ZdlPv(ptr noundef nonnull %i.ax) #11
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i37
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i37: ; preds = %bb.i, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i34
@@ -385,26 +385,26 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backERKS2_.exit38: ; preds = 
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPv(ptr noundef) local_unnamed_addr #7
+declare void @_ZdlPv(ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: noreturn
-declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #8
+declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #9
+declare i64 @llvm.umax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #9
+declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
+declare void @llvm.assume(i1 noundef) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -412,15 +412,14 @@ attributes #2 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { builtin allocsize(0) }
-attributes #12 = { builtin nounwind }
-attributes #13 = { nounwind }
-attributes #14 = { noreturn }
+attributes #6 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #7 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { builtin nounwind }
+attributes #12 = { nounwind }
+attributes #13 = { noreturn }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

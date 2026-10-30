@@ -205,7 +205,7 @@ _ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647
 
 bb.g:                                             ; preds = %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit27
   store i64 %i.ac, ptr %1, align 8, !tbaa !83
-  %i.aq = tail call double @llvm.log.f64(double %i.am)
+  %i.aq = tail call ninf double @llvm.log.f64(double %i.am)
   %i.ar = fmul double %i.aq, -2.000000e+00
   %i.as = fdiv double %i.ar, %i.am
   %i.at = tail call double @sqrt(double noundef %i.as) #33 ; 2 uses

@@ -205,7 +205,7 @@ _ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm256
   br i1 %i.fu, label %select.unfold.i.i.backedge, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt8__detail8_AdaptorISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEfEclEv.exit25
-  %i.fv = tail call noundef float @logf(float noundef %i.fr) #16
+  %i.fv = tail call ninf float @llvm.log.f32(float %i.fr)
   %i.fw = fmul float %i.fv, -2.000000e+00
   %i.fx = fdiv float %i.fw, %i.fr
   %i.fy = tail call noundef float @sqrtf(float noundef %i.fx) #16 ; 2 uses
@@ -224,9 +224,6 @@ bb.h:                                             ; preds = %bb.g, %bb.b
   %i.gf = tail call float @llvm.fmuladd.f32(float %.0, float %i.gd, float %i.ge)
   ret float %i.gf
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @logf(float noundef) local_unnamed_addr #18
 
 declare void @_ZNK5faiss17AdditiveQuantizer10pack_codesEmPKiPhlPKfS5_(ptr noundef nonnull align 8 dereferenceable(412), i64 noundef, ptr noundef, ptr noundef, i64 noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
@@ -629,6 +626,9 @@ declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare x86_fp80 @llvm.log.f80(x86_fp80) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.log.f32(float) #17
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

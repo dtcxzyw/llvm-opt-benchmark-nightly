@@ -205,9 +205,9 @@ bb.a:
   %i.at = fadd float %i.as, %i.aq
   %i.au = extractelement <2 x float> %i.ar, i64 0
   %i.av = fadd float %i.au, %i.at
-  %i.aw = tail call noundef float @sqrtf(float noundef %i.av) #18
+  %i.aw = tail call float @llvm.sqrt.f32(float %i.av)
   %i.ax = fdiv float 1.000000e+00, %i.aw
-  %i.ay = fmul float %i.ax, %i.am
+  %i.ay = fmul float %i.am, %i.ax
   %i.az = fcmp ogt float %i.ay, %i.c
   br i1 %i.az, label %bb.b, label %bb.c
 
@@ -288,9 +288,9 @@ bb.a:
   %i.at = fadd float %i.as, %i.aq
   %i.au = extractelement <2 x float> %i.ar, i64 0
   %i.av = fadd float %i.au, %i.at
-  %i.aw = tail call noundef float @sqrtf(float noundef %i.av) #18
+  %i.aw = tail call float @llvm.sqrt.f32(float %i.av)
   %i.ax = fdiv float 1.000000e+00, %i.aw
-  %i.ay = fmul float %i.ax, %i.am
+  %i.ay = fmul float %i.am, %i.ax
   %i.az = fcmp ugt float %i.ay, %i.c
   br i1 %i.az, label %bb.c, label %bb.b
 
@@ -691,6 +691,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #14

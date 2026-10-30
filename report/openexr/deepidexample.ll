@@ -204,10 +204,10 @@ bb.l:                                             ; preds = %.preheader, %_ZNSt6
   %i.bj = fneg float %i.bi
   %i.bk = fdiv float %i.bj, %i.c
   %i.bl = tail call noundef float @expf(float noundef %i.bk) #21
-  %i.bm = tail call noundef float @sqrtf(float noundef %i.bi) #21
+  %i.bm = tail call float @llvm.sqrt.f32(float %i.bi)
   %i.bn = fdiv float %i.bm, %i.c
   %i.bo = fsub float 1.000000e+00, %i.bn
-  %i.bp = fmul float %i.bl, %i.bo                 ; 6 uses
+  %i.bp = fmul float %i.bo, %i.bl                 ; 6 uses
   %i.bq = fpext float %i.bp to double
   %i.br = fcmp ogt double %i.bq, 1.000000e-03
   br i1 %i.br, label %bb.m, label %_ZNSt6vectorI5RgbazSaIS0_EE9push_backERKS0_.exit
@@ -610,9 +610,6 @@ _ZNSt8_Rb_treeImSt4pairIKmSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIc
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @expf(float noundef) local_unnamed_addr #6
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #6
-
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #14
 
@@ -1013,6 +1010,9 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9

@@ -204,7 +204,7 @@ _Z14b3IsAlmostZeroRK9b3Vector3.exit.thread:       ; preds = %bb.s, %.lr.ph294, %
   %i.om = extractelement <2 x float> %foldExtExtBinop337, i64 1
   %i.on = call float @llvm.fmuladd.f32(float %i.ob, float %i.ob, float %i.om)
   %i.oo = call noundef float @llvm.fmuladd.f32(float %i.oa, float %i.oa, float %i.on)
-  %i.op = call noundef float @sqrtf(float noundef %i.oo) #19
+  %i.op = call noundef float @llvm.sqrt.f32(float %i.oo)
   %i.oq = fdiv float 1.000000e+00, %i.op          ; 2 uses
   %i.or = insertelement <2 x float> poison, float %i.oq, i64 0
   %i.os = shufflevector <2 x float> %i.or, <2 x float> poison, <2 x i32> zeroinitializer
@@ -607,23 +607,18 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   %i.ba = insertelement <2 x float> %i.ag, float %i.aq, i64 1 ; 2 uses
   %i.bb = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ba, <2 x float> %i.ba, <2 x float> %i.az)
   %i.bc = insertelement <2 x float> %i.ax, float %i.al, i64 0 ; 2 uses
-  %i.bd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.bc, <2 x float> %i.bb) ; 2 uses
-  %4 = extractelement <2 x float> %i.bd, i64 0
-  %5 = tail call noundef float @sqrtf(float noundef %4) #19
-  %6 = extractelement <2 x float> %i.bd, i64 1
-  %7 = tail call noundef float @sqrtf(float noundef %6) #19
-  %8 = insertelement <2 x float> poison, float %5, i64 0
-  %9 = insertelement <2 x float> %8, float %7, i64 1
-  %i.be = fdiv <2 x float> splat (float 1.000000e+00), %9 ; 4 uses
-  %10 = extractelement <2 x float> %i.be, i64 1
+  %i.bd = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.bc, <2 x float> %i.bb)
+  %4 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.bd)
+  %i.be = fdiv <2 x float> splat (float 1.000000e+00), %4 ; 4 uses
   %i.bf = extractelement <2 x float> %i.be, i64 0 ; 2 uses
   %foldExtExtBinop = fmul <2 x float> %i.ag, %i.be
   %i.bg = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
-  %i.bh = fmul float %i.bf, %i.am                 ; 2 uses
+  %i.bh = fmul float %i.am, %i.bf                 ; 2 uses
   %i.bi = fmul float %i.al, %i.bf                 ; 2 uses
-  %i.bj = fmul float %10, %i.aq                   ; 2 uses
+  %5 = extractelement <2 x float> %i.be, i64 1
+  %i.bj = fmul float %i.aq, %5                    ; 2 uses
   %i.bk = shufflevector <2 x float> %i.be, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.bl = fmul <2 x float> %i.bk, %i.ax           ; 3 uses
+  %i.bl = fmul <2 x float> %i.ax, %i.bk           ; 3 uses
   %i.bm = fneg float %i.bg
   %i.bn = fneg float %i.bh
   %i.bo = fneg float %i.bi
@@ -1026,6 +1021,9 @@ bb.p:                                             ; preds = %bb.m, %bb.n, %bb.o
 declare noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
@@ -1036,6 +1034,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #15
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

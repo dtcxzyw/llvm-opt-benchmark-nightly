@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.e, %bb.a
   %i.av = fadd float %.sroa.0257.0262.i, %i.al    ; 3 uses
   %i.aw = fadd float %.sroa.11258.0263.i, %i.am   ; 3 uses
   %i.ax = fmul float %i.aw, %i.aw
-  %i.ay = tail call noundef float @llvm.fmuladd.f32(float %i.av, float %i.av, float %i.ax)
-  %5 = tail call float @sqrtf(float noundef %i.ay) #12 ; 2 uses
-  %i.az = fcmp oeq float %5, 0.000000e+00
+  %i.ay = tail call noundef float @llvm.fmuladd.f32(float %i.av, float %i.av, float %i.ax) ; 2 uses
+  %i.az = fcmp oeq float %i.ay, 0.000000e+00
   br i1 %i.az, label %_ZL23hb_vector_svg_normalizeRK21hb_vector_svg_point_t.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ba = fdiv float 1.000000e+00, %5             ; 2 uses
+  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %i.ay)
+  %i.ba = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
   %i.bb = fmul float %i.av, %i.ba
   %.sroa.0.0.vec.insert.i.i.i = insertelement <2 x float> poison, float %i.bb, i64 0
   %i.bc = fmul float %i.aw, %i.ba
@@ -332,9 +332,6 @@ declare float @cosf(float noundef) local_unnamed_addr #10
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @sinf(float noundef) local_unnamed_addr #10
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #10
-
 declare i32 @hb_set_has(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 declare void @hb_set_add(ptr noundef, i32 noundef) local_unnamed_addr #2
@@ -350,6 +347,9 @@ declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

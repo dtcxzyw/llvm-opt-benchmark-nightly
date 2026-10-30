@@ -32,7 +32,7 @@ bb.a:
   store i64 1, ptr %i.e, align 8, !tbaa !14
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   store i64 1, ptr %i.f, align 8, !tbaa !15
-  %i.g = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #15 ; 10 uses
+  %i.g = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znam(i64 noundef 8) #14 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.g, ptr %i.h, align 8, !tbaa !16
   %i.i = load i32, ptr %i.b, align 4, !tbaa !21   ; 2 uses
@@ -272,7 +272,7 @@ bb.a:
   %i.v = icmp ugt i64 %i.u, 2305843009213693951
   %i.w = shl nuw i64 %i.u, 3
   %i.x = select i1 %i.v, i64 -1, i64 %i.w
-  %i.y = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.x) #15 ; 10 uses
+  %i.y = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.x) #14 ; 10 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.y, ptr %i.z, align 8, !tbaa !16
   %i.aa = load i32, ptr %i.e, align 4, !tbaa !21  ; 2 uses
@@ -385,7 +385,7 @@ bb.a:
   br i1 %i.k, label %_ZN7Imf_3_47Array2DINS_4RgbaEE17resizeEraseUnsafeEll.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %i.j) #16
+  tail call void @_ZdaPv(ptr noundef nonnull %i.j) #15
   br label %_ZN7Imf_3_47Array2DINS_4RgbaEE17resizeEraseUnsafeEll.exit
 
 _ZN7Imf_3_47Array2DINS_4RgbaEE17resizeEraseUnsafeEll.exit: ; preds = %bb.a, %bb.b
@@ -398,7 +398,7 @@ _ZN7Imf_3_47Array2DINS_4RgbaEE17resizeEraseUnsafeEll.exit: ; preds = %bb.a, %bb.
   %i.r = shl nuw i64 %i.p, 3
   %i.s = select i1 %i.q, i64 -1, i64 %i.r
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
-  %i.t = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.s) #15 ; 6 uses
+  %i.t = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.s) #14 ; 6 uses
   store ptr %i.t, ptr %i.i, align 8, !tbaa !16
   %i.u = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   %i.v = sext <2 x i32> %i.u to <2 x i64>
@@ -525,12 +525,11 @@ bb.a:
   %4 = alloca %"class.Imath_3_2::Vec3", align 8   ; 6 uses
   %5 = alloca %"class.Imath_3_2::Vec3", align 8   ; 7 uses
   %6 = alloca %"class.Imath_3_2::Vec3", align 8   ; 6 uses
-  %7 = alloca %"class.Imath_3_2::Vec2.0", align 4 ; 4 uses
-  %8 = alloca %"class.Imath_3_2::Vec3", align 8   ; 5 uses
+  %7 = alloca %"class.Imath_3_2::Vec2.0", align 4 ; 5 uses
+  %8 = alloca %"class.Imath_3_2::Vec3", align 8   ; 6 uses
   %i.a = load i32, ptr %0, align 8, !tbaa !29
   %i.b = icmp eq i32 %i.a, 0
-  %_ZN12_GLOBAL__N_115dirToPosLatLongERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE._ZN12_GLOBAL__N_112dirToPosCubeERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE = select i1 %i.b, ptr @_ZN12_GLOBAL__N_115dirToPosLatLongERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE, ptr @_ZN12_GLOBAL__N_112dirToPosCubeERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE
-  %i.c = load float, ptr %1, align 4, !tbaa !35   ; 2 uses
+  %i.c = load float, ptr %1, align 4, !tbaa !35   ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 5 uses
   %i.e = load float, ptr %i.d, align 4, !tbaa !66 ; 2 uses
   %i.f = fmul float %i.e, %i.e
@@ -542,41 +541,42 @@ bb.a:
   br i1 %i.k, label %bb.b, label %bb.c, !prof !36
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %1) #17
+  %i.l = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %1) #16
+  %.pre.pre = load float, ptr %1, align 4, !tbaa !35
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.m = tail call noundef float @sqrtf(float noundef %i.j) #17
+  %i.m = tail call float @llvm.sqrt.f32(float %i.j)
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i
 
 _ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i:           ; preds = %bb.c, %bb.b
-  %.0.i.i.a = phi float [ %i.l, %bb.b ], [ %i.m, %bb.c ] ; 3 uses
-  %9 = fcmp une float %.0.i.i.a, 0.000000e+00
-  %.pre = load float, ptr %1, align 4, !tbaa !35  ; 2 uses
+  %.0.i.i.a = phi float [ %.pre.pre, %bb.b ], [ %i.c, %bb.c ] ; 2 uses
+  %.0.i.i = phi float [ %i.l, %bb.b ], [ %i.m, %bb.c ] ; 3 uses
+  %9 = fcmp une float %.0.i.i, 0.000000e+00
   br i1 %9, label %bb.d, label %_ZN9Imath_3_24Vec3IfE9normalizeEv.exit, !prof !68
 
 bb.d:                                             ; preds = %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i
   %i.n = load float, ptr %i.d, align 4, !tbaa !66
-  %i.o = insertelement <2 x float> poison, float %.pre, i64 0
+  %i.o = insertelement <2 x float> poison, float %.0.i.i.a, i64 0
   %i.p = insertelement <2 x float> %i.o, float %i.n, i64 1
-  %i.q = insertelement <2 x float> poison, float %.0.i.i.a, i64 0
+  %i.q = insertelement <2 x float> poison, float %.0.i.i, i64 0
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <2 x i32> zeroinitializer
   %i.s = fdiv <2 x float> %i.p, %i.r              ; 2 uses
   store <2 x float> %i.s, ptr %1, align 4, !tbaa !37
   %i.t = load float, ptr %i.h, align 4, !tbaa !67
-  %i.u = fdiv float %i.t, %.0.i.i.a
+  %i.u = fdiv float %i.t, %.0.i.i
   store float %i.u, ptr %i.h, align 4, !tbaa !67
   %i.v = extractelement <2 x float> %i.s, i64 0
   br label %_ZN9Imath_3_24Vec3IfE9normalizeEv.exit
 
 _ZN9Imath_3_24Vec3IfE9normalizeEv.exit:           ; preds = %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i, %bb.d
-  %i.w = phi float [ %.pre, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i ], [ %i.v, %bb.d ] ; 5 uses
+  %i.w = phi float [ %.0.i.i.a, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i ], [ %i.v, %bb.d ] ; 5 uses
   %i.x = tail call noundef float @llvm.fabs.f32(float %i.w)
   %i.y = fcmp ogt float %i.x, 7.070000e-01
   br i1 %i.y, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %_ZN9Imath_3_24Vec3IfE9normalizeEv.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !69)
   %i.z = fmul float %i.w, -0.000000e+00
   %i.aa = load <2 x float>, ptr %i.d, align 4, !tbaa !37, !noalias !69 ; 3 uses
@@ -600,11 +600,11 @@ bb.e:                                             ; preds = %_ZN9Imath_3_24Vec3I
   br i1 %i.ao, label %bb.f, label %bb.g, !prof !36
 
 bb.f:                                             ; preds = %bb.e
-  %i.ap = call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %4) #17, !noalias !70
+  %i.ap = call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %4) #16, !noalias !70
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i51
 
 bb.g:                                             ; preds = %bb.e
-  %i.aq = tail call noundef float @sqrtf(float noundef %i.an) #17, !noalias !70
+  %i.aq = tail call float @llvm.sqrt.f32(float %i.an)
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i51
 
 _ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i51:         ; preds = %bb.g, %bb.f
@@ -624,11 +624,11 @@ bb.h:                                             ; preds = %_ZNK9Imath_3_24Vec3
 _ZNK9Imath_3_24Vec3IfE10normalizedEv.exit:        ; preds = %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i51, %bb.h
   %.sink.i = phi float [ %i.ax, %bb.h ], [ 0.000000e+00, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i51 ]
   %i.ay = phi <2 x float> [ %i.av, %bb.h ], [ zeroinitializer, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i51 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   br label %bb.m
 
 bb.i:                                             ; preds = %_ZN9Imath_3_24Vec3IfE9normalizeEv.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !71)
   %i.az = load float, ptr %i.d, align 4, !tbaa !66, !noalias !71 ; 2 uses
   %i.ba = load float, ptr %i.h, align 4, !tbaa !67, !noalias !71 ; 2 uses
@@ -650,11 +650,11 @@ bb.i:                                             ; preds = %_ZN9Imath_3_24Vec3I
   br i1 %i.bm, label %bb.j, label %bb.k, !prof !36
 
 bb.j:                                             ; preds = %bb.i
-  %i.bn = call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %5) #17, !noalias !72
+  %i.bn = call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %5) #16, !noalias !72
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i53
 
 bb.k:                                             ; preds = %bb.i
-  %i.bo = tail call noundef float @sqrtf(float noundef %i.bl) #17, !noalias !72
+  %i.bo = tail call float @llvm.sqrt.f32(float %i.bl)
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i53
 
 _ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i53:         ; preds = %bb.k, %bb.j
@@ -674,7 +674,7 @@ bb.l:                                             ; preds = %_ZNK9Imath_3_24Vec3
 _ZNK9Imath_3_24Vec3IfE10normalizedEv.exit58:      ; preds = %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i53, %bb.l
   %.sink.i57 = phi float [ %i.bv, %bb.l ], [ 0.000000e+00, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i53 ]
   %i.bw = phi <2 x float> [ %i.bt, %bb.l ], [ zeroinitializer, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i53 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZNK9Imath_3_24Vec3IfE10normalizedEv.exit58, %_ZNK9Imath_3_24Vec3IfE10normalizedEv.exit
@@ -684,7 +684,7 @@ bb.m:                                             ; preds = %_ZNK9Imath_3_24Vec3
   %i.by = insertelement <2 x float> poison, float %2, i64 0
   %i.bz = shufflevector <2 x float> %i.by, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ca = fmul <2 x float> %i.bz, %i.bx           ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
   call void @llvm.experimental.noalias.scope.decl(metadata !73)
   %i.cb = extractelement <2 x float> %i.ca, i64 1 ; 2 uses
   %i.cc = load float, ptr %1, align 4, !tbaa !35, !noalias !73 ; 2 uses
@@ -716,11 +716,11 @@ bb.m:                                             ; preds = %_ZNK9Imath_3_24Vec3
   br i1 %i.cy, label %bb.n, label %bb.o, !prof !36
 
 bb.n:                                             ; preds = %bb.m
-  %i.cz = call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %6) #17, !noalias !74
+  %i.cz = call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %6) #16, !noalias !74
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i59
 
 bb.o:                                             ; preds = %bb.m
-  %i.da = call noundef float @sqrtf(float noundef %i.cx) #17, !noalias !74
+  %i.da = call float @llvm.sqrt.f32(float %i.cx)
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i59
 
 _ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i59:         ; preds = %bb.o, %bb.n
@@ -742,14 +742,14 @@ _ZNK9Imath_3_24Vec3IfE10normalizedEv.exit64:      ; preds = %_ZNK9Imath_3_24Vec3
   %i.di = phi <2 x float> [ %i.df, %bb.p ], [ zeroinitializer, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i59 ]
   %i.dj = fmul <2 x float> %i.bz, %i.di
   %i.dk = fmul float %2, %.sink.i63
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
   %i.dl = icmp sgt i32 %3, 0
   br i1 %i.dl, label %.lr.ph136, label %._crit_edge137
 
 .lr.ph136:                                        ; preds = %_ZNK9Imath_3_24Vec3IfE10normalizedEv.exit64
   %i.dm = add nuw nsw i32 %3, 1
   %i.dn = uitofp nneg i32 %i.dm to float          ; 2 uses
-  %i.do = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.do = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %8, i64 8
   br label %.lr.ph.us
 
@@ -768,42 +768,52 @@ _ZNK9Imath_3_24Vec3IfE10normalizedEv.exit64:      ; preds = %_ZNK9Imath_3_24Vec3
   %i.dz = shufflevector <2 x float> %i.dy, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ea = fmul <2 x float> %i.dj, %i.dz
   %i.eb = fmul float %i.dk, %i.dv
+  br label %10
+
+10:                                               ; preds = %.lr.ph.us, %bb.q
+  %.1128.us = phi float [ %.039135.us, %.lr.ph.us ], [ %i.ee, %bb.q ]
+  %.042126.us = phi i32 [ 0, %.lr.ph.us ], [ %i.ey, %bb.q ] ; 2 uses
+  %11 = phi <4 x float> [ %i.dq, %.lr.ph.us ], [ %i.ex, %bb.q ]
+  %12 = shl nuw nsw i32 %.042126.us, 1
+  %13 = add nuw nsw i32 %12, 2
+  %14 = uitofp nneg i32 %13 to float
+  %15 = fdiv float %14, %i.dn
+  %16 = fadd float %15, -1.000000e+00             ; 3 uses
+  %17 = call noundef float @llvm.fabs.f32(float %16)
+  %18 = fsub float 1.000000e+00, %17
+  %19 = fmul float %.sroa.10.0, %16
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
+  %20 = load float, ptr %i.h, align 4, !tbaa !67, !noalias !75
+  %21 = fadd float %19, %20
+  %22 = fadd float %i.eb, %21
+  %23 = insertelement <2 x float> poison, float %16, i64 0
+  %24 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
+  %25 = fmul <2 x float> %i.ca, %24
+  %26 = load <2 x float>, ptr %1, align 4, !tbaa !37, !noalias !75
+  %27 = fadd <2 x float> %25, %26
+  %28 = fadd <2 x float> %i.ea, %27
+  store <2 x float> %28, ptr %8, align 8, !tbaa !37, !alias.scope !76
+  store float %22, ptr %i.dp, align 8, !tbaa !67, !alias.scope !76
+  br i1 %i.b, label %call.1.us, label %call.0.us
+
+call.0.us:                                        ; preds = %10
+  call fastcc void @_ZN12_GLOBAL__N_112dirToPosCubeERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind nonnull writable sret(%"class.Imath_3_2::Vec2.0") align 4 %7, ptr noundef nonnull align 4 dereferenceable(16) %i.do, ptr noundef nonnull align 4 dereferenceable(12) %8), !callees !77
   br label %bb.q
 
-bb.q:                                             ; preds = %.lr.ph.us, %bb.q
-  %.1125.us = phi float [ %.039135.us, %.lr.ph.us ], [ %i.ee, %bb.q ]
-  %.042123.us = phi i32 [ 0, %.lr.ph.us ], [ %i.ey, %bb.q ] ; 2 uses
-  %10 = phi <4 x float> [ %i.dq, %.lr.ph.us ], [ %i.ex, %bb.q ]
-  %11 = shl nuw nsw i32 %.042123.us, 1
-  %12 = add nuw nsw i32 %11, 2
-  %13 = uitofp nneg i32 %12 to float
-  %14 = fdiv float %13, %i.dn
-  %15 = fadd float %14, -1.000000e+00             ; 3 uses
-  %16 = call noundef float @llvm.fabs.f32(float %15)
-  %17 = fsub float 1.000000e+00, %16
-  %18 = fmul float %.sroa.10.0, %15
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
-  %19 = load float, ptr %i.h, align 4, !tbaa !67, !noalias !75
-  %20 = fadd float %18, %19
-  %21 = fadd float %i.eb, %20
-  %22 = insertelement <2 x float> poison, float %15, i64 0
-  %23 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer
-  %24 = fmul <2 x float> %i.ca, %23
-  %25 = load <2 x float>, ptr %1, align 4, !tbaa !37, !noalias !75
-  %26 = fadd <2 x float> %24, %25
-  %27 = fadd <2 x float> %i.ea, %26
-  store <2 x float> %27, ptr %8, align 8, !tbaa !37, !alias.scope !76
-  store float %21, ptr %i.dp, align 8, !tbaa !67, !alias.scope !76
-  call void %_ZN12_GLOBAL__N_115dirToPosLatLongERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE._ZN12_GLOBAL__N_112dirToPosCubeERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind nonnull writable sret(%"class.Imath_3_2::Vec2.0") align 4 %7, ptr noundef nonnull align 4 dereferenceable(16) %i.do, ptr noundef nonnull align 4 dereferenceable(12) %8), !callees !77
+call.1.us:                                        ; preds = %10
+  call fastcc void @_ZN12_GLOBAL__N_115dirToPosLatLongERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind nonnull writable sret(%"class.Imath_3_2::Vec2.0") align 4 %7, ptr noundef nonnull align 4 dereferenceable(16) %i.do, ptr noundef nonnull align 4 dereferenceable(12) %8), !callees !77
+  br label %bb.q
+
+bb.q:                                             ; preds = %call.1.us, %call.0.us
   %i.ec = call i64 @_ZNK11EnvmapImage6sampleERKN9Imath_3_24Vec2IfEE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(8) %7) ; 4 uses
   %.sroa.478.0.extract.shift.us = lshr i64 %i.ec, 16
   %.sroa.5.0.extract.shift.us = lshr i64 %i.ec, 32
   %.sroa.679.0.extract.shift.us = lshr i64 %i.ec, 48
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
-  %i.ed = fmul float %i.dx, %17                   ; 2 uses
-  %i.ee = fadd float %.1125.us, %i.ed             ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
+  %i.ed = fmul float %i.dx, %18                   ; 2 uses
+  %i.ee = fadd float %.1128.us, %i.ed             ; 3 uses
   %i.ef = load ptr, ptr @imath_half_to_float_table, align 8, !tbaa !39 ; 4 uses
   %i.eg = and i64 %i.ec, 65535
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %i.eg
@@ -822,10 +832,10 @@ bb.q:                                             ; preds = %.lr.ph.us, %bb.q
   %i.eu = insertelement <4 x float> %i.et, float %i.eq, i64 3
   %i.ev = insertelement <4 x float> poison, float %i.ed, i64 0
   %i.ew = shufflevector <4 x float> %i.ev, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.ex = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.eu, <4 x float> %i.ew, <4 x float> %10) ; 3 uses
-  %i.ey = add nuw nsw i32 %.042123.us, 1          ; 2 uses
+  %i.ex = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.eu, <4 x float> %i.ew, <4 x float> %11) ; 3 uses
+  %i.ey = add nuw nsw i32 %.042126.us, 1          ; 2 uses
   %exitcond.not = icmp eq i32 %i.ey, %3
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.q, !llvm.loop !64
+  br i1 %exitcond.not, label %._crit_edge.us, label %10, !llvm.loop !64
 
 ._crit_edge.us:                                   ; preds = %bb.q
   %i.ez = add nuw nsw i32 %.043133.us, 1          ; 2 uses
@@ -1165,27 +1175,27 @@ _ZN9Imath_3_24halfaSEf.exit76:                    ; preds = %bb.aw, %bb.ax, %bb.
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZN12_GLOBAL__N_115dirToPosLatLongERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind noalias writable sret(%"class.Imath_3_2::Vec2.0") align 4 %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(12) %2) unnamed_addr #0 {
+define internal fastcc void @_ZN12_GLOBAL__N_115dirToPosLatLongERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind noalias writable sret(%"class.Imath_3_2::Vec2.0") align 4 %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(12) %2) unnamed_addr #0 {
 bb.a:
   tail call void @_ZN7Imf_3_410LatLongMap13pixelPositionERKN9Imath_3_23BoxINS1_4Vec2IiEEEERKNS1_4Vec3IfEE(ptr dead_on_unwind writable sret(%"class.Imath_3_2::Vec2.0") align 4 %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(12) %2)
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal void @_ZN12_GLOBAL__N_112dirToPosCubeERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind noalias writable sret(%"class.Imath_3_2::Vec2.0") align 4 %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(12) %2) unnamed_addr #0 {
+define internal fastcc void @_ZN12_GLOBAL__N_112dirToPosCubeERKN9Imath_3_23BoxINS0_4Vec2IiEEEERKNS0_4Vec3IfEE(ptr dead_on_unwind noalias writable sret(%"class.Imath_3_2::Vec2.0") align 4 %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(12) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %3 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 4 uses
   %4 = alloca %"class.Imath_3_2::Vec2.0", align 8 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   call void @_ZN7Imf_3_47CubeMap20faceAndPixelPositionERKN9Imath_3_24Vec3IfEERKNS1_3BoxINS1_4Vec2IiEEEERNS_11CubeMapFaceERNS7_IfEE(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(8) %3)
   %i.b = load i32, ptr %i.a, align 4, !tbaa !79
   %i.c = load <2 x float>, ptr %3, align 8, !tbaa !37
   store <2 x float> %i.c, ptr %4, align 8, !tbaa !37
   call void @_ZN7Imf_3_47CubeMap13pixelPositionENS_11CubeMapFaceERKN9Imath_3_23BoxINS2_4Vec2IiEEEENS4_IfEE(ptr dead_on_unwind writable sret(%"class.Imath_3_2::Vec2.0") align 4 %0, i32 noundef %i.b, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dead_on_return %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   ret void
 }
 
@@ -1588,7 +1598,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = tail call float @llvm.fmuladd.f32(float %i.o, float %i.o, float %i.s)
   %i.u = extractelement <2 x float> %i.r, i64 1   ; 2 uses
   %i.v = tail call float @llvm.fmuladd.f32(float %i.u, float %i.u, float %i.t)
-  %i.w = tail call noundef float @sqrtf(float noundef %i.v) #17
+  %i.w = tail call float @llvm.sqrt.f32(float %i.v)
   %i.x = fmul float %.1, %i.w
   br label %bb.c
 
@@ -1597,20 +1607,20 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret float %.023
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #11
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+declare void @llvm.assume(i1 noundef) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #6
@@ -1629,13 +1639,12 @@ attributes #7 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #8 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #15 = { builtin allocsize(0) }
-attributes #16 = { builtin nounwind }
-attributes #17 = { nounwind }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { builtin allocsize(0) }
+attributes #15 = { builtin nounwind }
+attributes #16 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3}
 !llvm.ident = !{!4}

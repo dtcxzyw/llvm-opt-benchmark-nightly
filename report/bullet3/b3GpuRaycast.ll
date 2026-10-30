@@ -204,15 +204,19 @@ bb.d:                                             ; preds = %.lr.ph, %_Z9rayConv
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !112
   switch i32 %i.ak, label %bb.q [
     i32 7, label %bb.e
-    i32 3, label %_Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread
+    i32 3, label %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge
   ]
+
+._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge: ; preds = %bb.d
+  %.sroa.30.48.copyload.pre = load float, ptr %i.ae, align 16
+  br label %_Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
   %i.am = load float, ptr %i.al, align 4, !tbaa !62 ; 2 uses
-  %i.an = load float, ptr %i.ae, align 16, !tbaa !62
+  %i.an = load float, ptr %i.ae, align 16, !tbaa !62 ; 2 uses
   %i.ao = fsub float %i.r, %i.an                  ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ae, i64 4 ; 2 uses
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !62
   %i.ar = fsub float %.sroa.6135.0.copyload, %i.aq ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
@@ -240,6 +244,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bl = fcmp oge float %i.bk, 0.000000e+00
   %i.bm = fcmp olt float %i.bk, %.0141157
   %or.cond = select i1 %i.bl, i1 %i.bm, i1 false
+  %.sroa.30.48.copyload.pre169 = load float, ptr %i.ae, align 16 ; 3 uses
   br i1 %or.cond, label %bb.g, label %_Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread
 
 bb.g:                                             ; preds = %bb.f
@@ -251,6 +256,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
   %i.bt = load float, ptr %i.bs, align 8, !tbaa !62
   %i.bu = fmul float %i.bk, %i.bt
+  %8 = load float, ptr %i.ap, align 4, !tbaa !62
   %i.bv = load float, ptr %i.as, align 8, !tbaa !62
   %i.bw = fsub float 1.000000e+00, %i.bk          ; 2 uses
   %i.bx = load <2 x float>, ptr %i.bo, align 16, !tbaa !62
@@ -262,15 +268,16 @@ bb.g:                                             ; preds = %bb.f
   %i.cd = shufflevector <2 x float> %i.cc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ce = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cd, <2 x float> %i.bx, <2 x float> %i.cb)
   %i.cf = tail call float @llvm.fmuladd.f32(float %i.bw, float %i.br, float %i.bu)
-  %8 = load <2 x float>, ptr %i.ae, align 16, !tbaa !62
-  %i.cg = fsub <2 x float> %i.ce, %8              ; 4 uses
+  %9 = insertelement <2 x float> poison, float %.sroa.30.48.copyload.pre169, i64 0
+  %10 = insertelement <2 x float> %9, float %8, i64 1
+  %i.cg = fsub <2 x float> %i.ce, %10             ; 4 uses
   %i.ch = fsub float %i.cf, %i.bv                 ; 3 uses
   %foldExtExtBinop = fmul <2 x float> %i.cg, %i.cg
   %i.ci = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.cj = extractelement <2 x float> %i.cg, i64 0 ; 2 uses
   %i.ck = tail call float @llvm.fmuladd.f32(float %i.cj, float %i.cj, float %i.ci)
   %i.cl = tail call noundef float @llvm.fmuladd.f32(float %i.ch, float %i.ch, float %i.ck)
-  %i.cm = tail call noundef float @sqrtf(float noundef %i.cl) #19
+  %i.cm = tail call noundef float @llvm.sqrt.f32(float %i.cl)
   %i.cn = fdiv float 1.000000e+00, %i.cm          ; 2 uses
   %i.co = insertelement <2 x float> poison, float %i.cn, i64 0
   %i.cp = shufflevector <2 x float> %i.co, <2 x float> poison, <2 x i32> zeroinitializer
@@ -286,12 +293,12 @@ bb.h:                                             ; preds = %bb.r, %bb.s
   invoke void @b3LeaveProfileZone()
           to label %_ZN13b3ProfileZoneD2Ev.exit82 unwind label %bb.t
 
-_Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread: ; preds = %bb.e, %bb.f, %bb.g, %bb.d
-  %.1 = phi float [ %i.bk, %bb.g ], [ %.0141157, %bb.d ], [ %.0141157, %bb.e ], [ %.0141157, %bb.f ] ; 2 uses
-  %.sroa.6123.1 = phi <2 x float> [ %.sroa.11116.8.vec.insert, %bb.g ], [ %.sroa.6123.0158, %bb.d ], [ %.sroa.6123.0158, %bb.e ], [ %.sroa.6123.0158, %bb.f ]
-  %.sroa.0122.1 = phi <2 x float> [ %i.cq, %bb.g ], [ %.sroa.0122.0159, %bb.d ], [ %.sroa.0122.0159, %bb.e ], [ %.sroa.0122.0159, %bb.f ]
-  %.2 = phi i32 [ %i.cs, %bb.g ], [ %.056160, %bb.d ], [ %.056160, %bb.e ], [ %.056160, %bb.f ]
-  %.sroa.30.48.copyload = load float, ptr %i.ae, align 16
+_Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread: ; preds = %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge, %bb.e, %bb.f, %bb.g
+  %.sroa.30.48.copyload = phi float [ %.sroa.30.48.copyload.pre169, %bb.g ], [ %.sroa.30.48.copyload.pre, %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge ], [ %i.an, %bb.e ], [ %.sroa.30.48.copyload.pre169, %bb.f ]
+  %.1 = phi float [ %i.bk, %bb.g ], [ %.0141157, %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge ], [ %.0141157, %bb.e ], [ %.0141157, %bb.f ] ; 2 uses
+  %.sroa.6123.1 = phi <2 x float> [ %.sroa.11116.8.vec.insert, %bb.g ], [ %.sroa.6123.0158, %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge ], [ %.sroa.6123.0158, %bb.e ], [ %.sroa.6123.0158, %bb.f ]
+  %.sroa.0122.1 = phi <2 x float> [ %i.cq, %bb.g ], [ %.sroa.0122.0159, %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge ], [ %.sroa.0122.0159, %bb.e ], [ %.sroa.0122.0159, %bb.f ]
+  %.2 = phi i32 [ %i.cs, %bb.g ], [ %.056160, %._Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread_crit_edge ], [ %.056160, %bb.e ], [ %.056160, %bb.f ]
   %.sroa.32107.48..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
   %.sroa.32107.48.copyload = load float, ptr %.sroa.32107.48..sroa_idx, align 4
   %.sroa.33108.48..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
@@ -692,6 +699,9 @@ declare void @_Z21b3AlignedFreeInternalPv(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9

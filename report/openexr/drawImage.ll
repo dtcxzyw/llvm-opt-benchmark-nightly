@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ar
   %i.al = fsub float %i.ak, %2
   %i.am = fdiv float %i.al, %4                    ; 3 uses
   %i.an = tail call float @llvm.fmuladd.f32(float %i.am, float %i.am, float %i.ad)
-  %i.ao = tail call noundef float @sqrtf(float noundef %i.an) #8 ; 4 uses
+  %i.ao = tail call float @llvm.sqrt.f32(float %i.an) ; 4 uses
   %i.ap = fcmp ult float %i.ao, 1.000000e+00
   br i1 %i.ap, label %bb.c, label %bb.ar
 
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.q, %.preheader.i
   %i.dg = fdiv float %i.df, %i.bm                 ; 3 uses
   %i.dh = fmul float %i.dg, %i.dg
   %i.di = tail call float @llvm.fmuladd.f32(float %i.db, float %i.db, float %i.dh)
-  %i.dj = tail call noundef float @sqrtf(float noundef %i.di) #8 ; 3 uses
+  %i.dj = tail call float @llvm.sqrt.f32(float %i.di) ; 3 uses
   %i.dk = fcmp ult float %i.dj, 1.000000e+00
   br i1 %i.dk, label %bb.e, label %bb.q
 
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN9Imath_
   %i.k = tail call float @llvm.fmuladd.f32(float %i.i, float %i.i, float %i.d)
   %sqrt = tail call float @llvm.sqrt.f32(float %i.k) ; 3 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv ; 4 uses
-  %i.m = fmul float %sqrt, 1.000000e-01
+  %i.m = fmul nnan float %sqrt, 1.000000e-01
   %i.n = tail call noundef float @sinf(float noundef %i.m) #8
   %i.o = fmul float %i.n, 3.000000e-01
   %i.p = tail call float @llvm.fmuladd.f32(float %i.j, float 3.000000e+00, float %i.o)
@@ -1096,7 +1096,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 _ZN9Imath_3_24halfaSEf.exit:                      ; preds = %bb.d, %bb.e, %bb.g, %bb.h, %bb.i, %bb.k, %bb.l
   %.033.i.i.i = phi i16 [ %i.x, %bb.i ], [ %i.ai, %bb.e ], [ %i.ak, %bb.g ], [ %i.as, %bb.h ], [ %i.aa, %bb.d ], [ %i.bh, %bb.l ], [ %i.bd, %bb.k ]
   store i16 %.033.i.i.i, ptr %i.l, align 2, !tbaa !10
-  %i.bi = fmul float %sqrt, 1.100000e-01
+  %i.bi = fmul nnan float %sqrt, 1.100000e-01
   %i.bj = tail call noundef float @sinf(float noundef %i.bi) #8
   %i.bk = fmul float %i.bj, 3.000000e-01
   %i.bl = tail call float @llvm.fmuladd.f32(float %i.j, float 3.000000e+00, float %i.bk)
@@ -1182,7 +1182,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 _ZN9Imath_3_24halfaSEf.exit29:                    ; preds = %bb.n, %bb.o, %bb.q, %bb.r, %bb.s, %bb.u, %bb.v
   %.033.i.i.i28 = phi i16 [ %i.bu, %bb.s ], [ %i.cf, %bb.o ], [ %i.ch, %bb.q ], [ %i.cp, %bb.r ], [ %i.bx, %bb.n ], [ %i.de, %bb.v ], [ %i.da, %bb.u ]
   store i16 %.033.i.i.i28, ptr %i.bo, align 2, !tbaa !10
-  %i.df = fmul float %sqrt, 1.200000e-01
+  %i.df = fmul nnan float %sqrt, 1.200000e-01
   %i.dg = tail call noundef float @sinf(float noundef %i.df) #8
   %i.dh = fmul float %i.dg, 3.000000e-01
   %i.di = tail call float @llvm.fmuladd.f32(float %i.j, float 3.000000e+00, float %i.dh)
@@ -1295,11 +1295,11 @@ declare float @sinf(float noundef) local_unnamed_addr #1
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #2
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #2
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2

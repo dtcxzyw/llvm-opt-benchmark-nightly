@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.preheader, %bb.h
   %i.fa = fadd double %i.ez, %i.ey
   %i.fb = extractelement <2 x double> %i.ex, i64 0
   %i.fc = fadd double %i.fb, %i.fa
-  %i.fd = call noundef double @sqrt(double noundef %i.fc) #47, !tbaa !165
+  %i.fd = call noundef double @llvm.sqrt.f64(double %i.fc)
   %i.fe = load double, ptr %i.cq, align 8, !tbaa !350
   %i.ff = call noundef double @pow(double noundef %i.fd, double noundef %i.fe) #47, !tbaa !165
   %i.fg = fmul double %i.dw, %i.ff
@@ -606,6 +606,9 @@ declare i64 @llvm.smin.i64(i64, i64) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #34
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #34

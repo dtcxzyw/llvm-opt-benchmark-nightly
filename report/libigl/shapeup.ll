@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.fb = fdiv double %i.fa, %i.ex                ; 3 uses
   %i.fc = fmul double %i.fb, %i.fb
   %i.fd = fadd double %i.fc, 1.000000e+00
-  %i.fe = tail call double @sqrt(double noundef %i.fd) #27
+  %i.fe = tail call double @llvm.sqrt.f64(double %i.fd)
   %i.ff = insertelement <2 x double> <double 1.000000e+00, double poison>, double %i.fb, i64 1
   %i.fg = insertelement <2 x double> poison, double %i.fe, i64 0
   %i.fh = shufflevector <2 x double> %i.fg, <2 x double> poison, <2 x i32> zeroinitializer
@@ -252,7 +252,7 @@ bb.r:                                             ; preds = %_ZN5Eigen10MatrixBa
   %i.ge = fdiv double %i.gd, %i.gb                ; 4 uses
   %i.gf = fmul double %i.ge, %i.ge
   %i.gg = fadd double %i.gf, 1.000000e+00
-  %i.gh = tail call double @sqrt(double noundef %i.gg) #27 ; 2 uses
+  %i.gh = tail call double @llvm.sqrt.f64(double %i.gg) ; 2 uses
   %i.gi = fcmp ogt double %i.ge, 0.000000e+00
   %i.gj = fneg double %i.gh
   %.pn.p.i.i.i.us = select i1 %i.gi, double %i.gh, double %i.gj
@@ -261,14 +261,14 @@ bb.r:                                             ; preds = %_ZN5Eigen10MatrixBa
   %i.gk = fcmp ogt double %storemerge.i.i.i.us, 0.000000e+00
   %i.gl = fmul double %storemerge.i.i.i.us, %storemerge.i.i.i.us
   %i.gm = fadd double %i.gl, 1.000000e+00
-  %i.gn = tail call double @sqrt(double noundef %i.gm) #27
+  %i.gn = tail call double @llvm.sqrt.f64(double %i.gm)
   %i.go = fdiv double 1.000000e+00, %i.gn         ; 2 uses
   %i.gp = fdiv double %.sroa.9.0.i.us, %.pre-phi  ; 2 uses
   %i.gq = fneg double %i.gp
   %i.gr = select i1 %i.gk, double %i.gq, double %i.gp
   %i.gs = tail call noundef double @llvm.fabs.f64(double %storemerge.i.i.i.us)
   %i.gt = fmul double %i.gs, %i.gr
-  %i.gu = fmul double %i.go, %i.gt
+  %i.gu = fmul double %i.gt, %i.go
   br label %_ZN5Eigen8internal19real_2x2_jacobi_svdINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEdlEEvRKT_T1_S7_PNS_14JacobiRotationIT0_EESB_.exit.us
 
 _ZN5Eigen8internal19real_2x2_jacobi_svdINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEdlEEvRKT_T1_S7_PNS_14JacobiRotationIT0_EESB_.exit.us: ; preds = %bb.r, %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEEE14applyOnTheLeftIdEEvllRKNS_14JacobiRotationIT_EE.exit.i.us
@@ -670,9 +670,6 @@ bb.ac:                                            ; preds = %.loopexit, %bb.c
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #17
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN5Eigen8internal19gemv_dense_selectorILi2ELi1ELb1EE3runINS_9TransposeIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEEENS4_IKNS_5BlockIS6_Li1ELin1ELb0EEEEENS4_INS5_IdLi1ELin1ELi1ELi1ELin1EEEEEEEvRKT_RKT0_RT1_RKNSL_6ScalarE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {

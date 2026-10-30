@@ -93,12 +93,10 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.r = fdiv double %1, f0x3FF921FB54442D18      ; 3 uses
   %i.s = fneg double %i.r
-  %i.t = tail call double @sin(double noundef %1) #6 ; 6 uses
-  %i.u = tail call double @cos(double noundef %1) #6 ; 2 uses
-  %3 = fmul double %i.u, %i.u
+  %i.t = tail call double @sin(double noundef %1) #6 ; 5 uses
+  %i.u = tail call double @cos(double noundef %1) #6
   %i.v = insertelement <2 x double> %i.c, double %0, i64 0
   %i.w = fcmp olt <2 x double> %i.v, zeroinitializer
-  %4 = fmul double %i.t, %i.t
   %i.x = fdiv double f0x3FF921FB54442D18, %0
   %i.y = fsub double %i.t, %i.r
   %i.z = tail call double @llvm.fmuladd.f64(double %i.s, double %i.r, double 1.000000e+00)
@@ -122,28 +120,34 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = fdiv double 1.000000e+00, %i.ai
   %i.as = insertelement <2 x double> poison, double %i.ai, i64 0
   %i.at = insertelement <2 x double> %i.as, double %i.ar, i64 1
-  %i.au = fadd <2 x double> %i.at, splat (double 1.000000e+00) ; 2 uses
+  %i.au = fadd <2 x double> %i.at, splat (double 1.000000e+00) ; 3 uses
   %i.av = fdiv <2 x double> %i.aq, %i.au          ; 3 uses
-  %5 = fdiv double %4, %i.ai
-  %6 = tail call double @llvm.fmuladd.f64(double %i.ae, double %i.t, double %5)
-  %7 = fadd double %6, -1.000000e+00
-  %8 = fneg double %7
-  %i.aw = insertelement <2 x double> poison, double %3, i64 0
-  %9 = insertelement <2 x double> %i.aw, double %8, i64 1
-  %10 = fdiv <2 x double> %9, %i.au
-  %11 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.av, <2 x double> %i.av, <2 x double> %10) ; 2 uses
-  %i.ax = extractelement <2 x double> %11, i64 0
-  %12 = tail call double @sqrt(double noundef %i.ax) #6 ; 2 uses
+  %3 = extractelement <2 x double> %i.av, i64 0   ; 2 uses
+  %4 = insertelement <2 x double> poison, double %i.u, i64 0
+  %5 = insertelement <2 x double> %4, double %i.t, i64 1 ; 2 uses
+  %6 = fmul <2 x double> %5, %5
+  %i.aw = insertelement <2 x double> %i.au, double %i.ai, i64 1
+  %7 = fdiv <2 x double> %6, %i.aw                ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = tail call double @llvm.fmuladd.f64(double %3, double %3, double %8)
+  %sqrt = tail call double @llvm.sqrt.f64(double %9) ; 2 uses
+  %10 = fneg double %sqrt
+  %i.ax = extractelement <2 x double> %7, i64 1
+  %11 = tail call double @llvm.fmuladd.f64(double %i.ae, double %i.t, double %i.ax)
+  %12 = fadd double %11, -1.000000e+00
   %i.ay = fneg double %12
-  %i.az = extractelement <2 x double> %11, i64 1
-  %i.ba = tail call double @sqrt(double noundef %i.az) #6 ; 2 uses
+  %13 = extractelement <2 x double> %i.au, i64 1
+  %14 = fdiv double %i.ay, %13
+  %i.az = extractelement <2 x double> %i.av, i64 1 ; 2 uses
+  %15 = tail call double @llvm.fmuladd.f64(double %i.az, double %i.az, double %14)
+  %i.ba = tail call double @sqrt(double noundef %15) #6 ; 2 uses
   %i.bb = fneg double %i.ba
-  %i.bc = insertelement <2 x double> poison, double %i.ay, i64 0
+  %i.bc = insertelement <2 x double> poison, double %10, i64 0
   %i.bd = insertelement <2 x double> %i.bc, double %i.ba, i64 1
-  %i.be = insertelement <2 x double> poison, double %12, i64 0
+  %i.be = insertelement <2 x double> poison, double %sqrt, i64 0
   %i.bf = insertelement <2 x double> %i.be, double %i.bb, i64 1
   %i.bg = select <2 x i1> %i.w, <2 x double> %i.bd, <2 x double> %i.bf
-  %i.bh = fadd <2 x double> %i.bg, %i.av
+  %i.bh = fadd <2 x double> %i.av, %i.bg
   %i.bi = fmul <2 x double> %i.bh, splat (double f0x3FF921FB54442D18)
   br label %bb.g
 
@@ -170,6 +174,9 @@ declare double @llvm.fmuladd.f64(double, double, double) #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sqrt(double noundef) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4

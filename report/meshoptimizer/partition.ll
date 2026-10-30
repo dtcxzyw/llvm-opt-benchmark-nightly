@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.rq = fmul float %i.rl, %i.rl
   %i.rr = tail call float @llvm.fmuladd.f32(float %i.rh, float %i.rh, float %i.rq)
   %i.rs = tail call float @llvm.fmuladd.f32(float %i.rp, float %i.rp, float %i.rr)
-  %i.rt = tail call float @sqrtf(float noundef %i.rs) #12 ; 2 uses
+  %i.rt = tail call float @llvm.sqrt.f32(float %i.rs) ; 2 uses
   %i.ru = fadd float %i.rb, %i.rt
   %i.rv = fcmp olt float %i.ru, %i.rd
   br i1 %i.rv, label %_ZN7meshoptL11boundsScoreERKNS_12ClusterGroupES2_.exit.us.us.i, label %bb.ac
@@ -434,8 +434,8 @@ bb.am:                                            ; preds = %bb.al
   %i.wg = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.wh = extractelement <2 x float> %i.wa, i64 0 ; 2 uses
   %i.wi = tail call float @llvm.fmuladd.f32(float %i.wh, float %i.wh, float %i.wg)
-  %i.wj = tail call float @llvm.fmuladd.f32(float %i.wf, float %i.wf, float %i.wi)
-  %i.wk = tail call float @sqrtf(float noundef %i.wj) #12 ; 4 uses
+  %i.wj = tail call float @llvm.fmuladd.f32(float %i.wf, float %i.wf, float %i.wi) ; 2 uses
+  %i.wk = tail call float @llvm.sqrt.f32(float %i.wj) ; 3 uses
   %i.wl = fadd float %i.vt, %i.wk
   %i.wm = fcmp olt float %i.wl, %i.vv
   br i1 %i.wm, label %bb.an, label %bb.ao
@@ -451,7 +451,7 @@ bb.ao:                                            ; preds = %bb.am
   br i1 %i.wo, label %bb.ap, label %_ZN7meshoptL11mergeBoundsERNS_12ClusterGroupERKS0_.exit
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.wp = fcmp ogt float %i.wk, 0.000000e+00
+  %i.wp = fcmp ogt float %i.wj, 0.000000e+00
   %i.wq = fsub float %i.wn, %i.vt
   %i.wr = fmul nnan float %i.wk, 2.000000e+00
   %i.ws = fdiv float %i.wq, %i.wr
@@ -745,7 +745,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
-; Function Attrs: mustprogress nofree nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
+; Function Attrs: mustprogress nofree nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN7meshoptL12mergeSpatialEPNS_12ClusterGroupEPjmmmmi(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i32 noundef %5) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [3 x float], align 8              ; 5 uses
@@ -909,7 +909,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ck = fmul float %i.cf, %i.cf
   %i.cl = tail call float @llvm.fmuladd.f32(float %i.cb, float %i.cb, float %i.ck)
   %i.cm = tail call float @llvm.fmuladd.f32(float %i.cj, float %i.cj, float %i.cl)
-  %i.cn = tail call float @sqrtf(float noundef %i.cm) #12 ; 2 uses
+  %i.cn = tail call float @llvm.sqrt.f32(float %i.cm) ; 2 uses
   %i.co = fadd float %i.bv, %i.cn
   %i.cp = fcmp olt float %i.co, %i.bx
   br i1 %i.cp, label %_ZN7meshoptL11boundsScoreERKNS_12ClusterGroupES2_.exit.i, label %bb.f
@@ -975,8 +975,8 @@ bb.i:                                             ; preds = %.preheader.i
   %i.dw = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.dx = extractelement <2 x float> %i.dr, i64 0 ; 2 uses
   %i.dy = tail call float @llvm.fmuladd.f32(float %i.dx, float %i.dx, float %i.dw)
-  %i.dz = tail call float @llvm.fmuladd.f32(float %i.dv, float %i.dv, float %i.dy)
-  %i.ea = tail call float @sqrtf(float noundef %i.dz) #12 ; 4 uses
+  %i.dz = tail call float @llvm.fmuladd.f32(float %i.dv, float %i.dv, float %i.dy) ; 2 uses
+  %i.ea = tail call float @llvm.sqrt.f32(float %i.dz) ; 3 uses
   %i.eb = fadd float %i.dm, %i.ea
   %i.ec = fcmp olt float %i.eb, %i.dn
   br i1 %i.ec, label %bb.j, label %bb.k
@@ -992,7 +992,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ee, label %bb.l, label %_ZN7meshoptL11mergeBoundsERNS_12ClusterGroupERKS0_.exit.i
 
 bb.l:                                             ; preds = %bb.k
-  %i.ef = fcmp ogt float %i.ea, 0.000000e+00
+  %i.ef = fcmp ogt float %i.dz, 0.000000e+00
   %i.eg = fsub float %i.ed, %i.dm
   %i.eh = fmul nnan float %i.ea, 2.000000e+00
   %i.ei = fdiv float %i.eg, %i.eh
@@ -1239,6 +1239,9 @@ declare void @_ZSt9terminatev() local_unnamed_addr #10
 declare i64 @llvm.umin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
@@ -1247,7 +1250,7 @@ declare void @llvm.assume(i1 noundef) #11
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #3 = { mustprogress nofree nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

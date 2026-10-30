@@ -204,7 +204,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader137
   %.0103.lcssa = phi i64 [ 1, %.preheader137 ], [ %i.k, %._crit_edge.loopexit ] ; 2 uses
-  %i.l = tail call noalias ptr @calloc(i64 noundef range(i64 -844424929738752, 844424930131969) %.0103.lcssa, i64 noundef 24) #20 ; 11 uses
+  %i.l = tail call noalias ptr @calloc(i64 noundef range(i64 -844424929738752, 844424930131969) %.0103.lcssa, i64 noundef 24) #20 ; 13 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %bb.b, label %gv_calloc.exit
 
@@ -248,10 +248,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.2105.in = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.d ]
-  %.2105 = trunc i64 %.2105.in to i32             ; 4 uses
+  %.2105 = trunc i64 %.2105.in to i32             ; 5 uses
   %i.ad = call i32 @llvm.smax.i32(i32 %.2105, i32 1)
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
-  %i.af = call noalias ptr @calloc(i64 noundef range(i64 -844424929738752, 844424930131969) %i.ae, i64 noundef 8) #20 ; 15 uses
+  %i.af = call noalias ptr @calloc(i64 noundef range(i64 -844424929738752, 844424930131969) %i.ae, i64 noundef 8) #20 ; 16 uses
   %i.ag = icmp eq ptr %i.af, null
   br i1 %i.ag, label %bb.f, label %gv_calloc.exit120
 
@@ -268,29 +268,89 @@ gv_calloc.exit120:                                ; preds = %bb.e
   br i1 %i.al, label %.lr.ph141.preheader, label %._crit_edge145
 
 .lr.ph141.preheader:                              ; preds = %gv_calloc.exit120
-  %wide.trip.count = zext nneg i32 %i.ak to i64   ; 3 uses
-  %.sroa.0.0.copyload.pre = load double, ptr %i.l, align 8
+  %wide.trip.count = zext i32 %i.ak to i64        ; 5 uses
+  %.sroa.0.0.copyload.pre = load double, ptr %i.l, align 8 ; 2 uses
   %.sroa.4.0..sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %.sroa.4.0.copyload.pre = load double, ptr %.sroa.4.0..sroa_idx.phi.trans.insert, align 8
+  %.sroa.4.0.copyload.pre = load double, ptr %.sroa.4.0..sroa_idx.phi.trans.insert, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %.sroa.5.0.copyload.pre = load double, ptr %.sroa.5.0..sroa_idx.phi.trans.insert, align 8
+  %.sroa.5.0.copyload.pre = load double, ptr %.sroa.5.0..sroa_idx.phi.trans.insert, align 8 ; 2 uses
+  %min.iters.check = icmp eq i32 %.2105, 2
+  br i1 %min.iters.check, label %.lr.ph141.preheader199, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph141.preheader
+  %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
+  %vector.recur.init = insertelement <2 x double> poison, double %.sroa.5.0.copyload.pre, i64 1
+  %vector.recur.init192 = insertelement <2 x double> poison, double %.sroa.4.0.copyload.pre, i64 1
+  %vector.recur.init194 = insertelement <2 x double> poison, double %.sroa.0.0.copyload.pre, i64 1
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
+  %vector.recur = phi <2 x double> [ %vector.recur.init, %vector.ph ], [ %24, %vector.body ]
+  %vector.recur193 = phi <2 x double> [ %vector.recur.init192, %vector.ph ], [ %17, %vector.body ]
+  %vector.recur195 = phi <2 x double> [ %vector.recur.init194, %vector.ph ], [ %10, %vector.body ]
+  %3 = or disjoint i64 %index, 1                  ; 2 uses
+  %4 = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %3 ; 3 uses
+  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %index ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %7 = load double, ptr %4, align 8
+  %8 = load double, ptr %6, align 8               ; 2 uses
+  %9 = insertelement <2 x double> poison, double %7, i64 0 ; 2 uses
+  %10 = insertelement <2 x double> %9, double %8, i64 1 ; 2 uses
+  %11 = shufflevector <2 x double> %vector.recur195, <2 x double> %9, <2 x i32> <i32 1, i32 2>
+  %12 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %13 = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %14 = load double, ptr %12, align 8
+  %15 = load double, ptr %13, align 8             ; 2 uses
+  %16 = insertelement <2 x double> poison, double %14, i64 0 ; 2 uses
+  %17 = insertelement <2 x double> %16, double %15, i64 1 ; 2 uses
+  %18 = shufflevector <2 x double> %vector.recur193, <2 x double> %16, <2 x i32> <i32 1, i32 2>
+  %19 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %20 = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %21 = load double, ptr %19, align 8
+  %22 = load double, ptr %20, align 8             ; 2 uses
+  %23 = insertelement <2 x double> poison, double %21, i64 0 ; 2 uses
+  %24 = insertelement <2 x double> %23, double %22, i64 1 ; 2 uses
+  %25 = shufflevector <2 x double> %vector.recur, <2 x double> %23, <2 x i32> <i32 1, i32 2>
+  %26 = fsub <2 x double> %11, %10                ; 2 uses
+  %27 = fsub <2 x double> %18, %17                ; 2 uses
+  %28 = fmul <2 x double> %27, %27
+  %29 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %26, <2 x double> %26, <2 x double> %28)
+  %30 = fsub <2 x double> %25, %24                ; 2 uses
+  %31 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %30, <2 x double> %30, <2 x double> %29)
+  %32 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %31)
+  %33 = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %3
+  store <2 x double> %32, ptr %33, align 8, !tbaa !19
+  %index.next = add nuw i64 %index, 2             ; 2 uses
+  %34 = icmp eq i64 %index.next, %n.vec
+  br i1 %34, label %middle.block, label %vector.body, !llvm.loop !54
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  br i1 %cmp.n, label %.lr.ph144.preheader, label %.lr.ph141.preheader199
+
+.lr.ph141.preheader199:                           ; preds = %.lr.ph141.preheader, %middle.block
+  %.sroa.5.0.copyload.ph = phi double [ %.sroa.5.0.copyload.pre, %.lr.ph141.preheader ], [ %22, %middle.block ]
+  %.sroa.4.0.copyload.ph = phi double [ %.sroa.4.0.copyload.pre, %.lr.ph141.preheader ], [ %15, %middle.block ]
+  %.sroa.0.0.copyload.ph = phi double [ %.sroa.0.0.copyload.pre, %.lr.ph141.preheader ], [ %8, %middle.block ]
+  %indvars.iv159.ph = phi i64 [ 0, %.lr.ph141.preheader ], [ %n.vec, %middle.block ]
   br label %.lr.ph141
 
-.lr.ph144.preheader:                              ; preds = %.lr.ph141
+.lr.ph144.preheader:                              ; preds = %.lr.ph141, %middle.block
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.am = add nsw i32 %.2105, -2
   %i.an = icmp ult i32 %i.am, 3
   br i1 %i.an, label %.lr.ph144.epil.preheader, label %.lr.ph144.preheader.new
 
 .lr.ph144.preheader.new:                          ; preds = %.lr.ph144.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 4294967292
   br label %.lr.ph144
 
-.lr.ph141:                                        ; preds = %.lr.ph141.preheader, %.lr.ph141
-  %.sroa.5.0.copyload = phi double [ %.sroa.5.0.copyload.pre, %.lr.ph141.preheader ], [ %.sroa.5126.0.copyload, %.lr.ph141 ]
-  %.sroa.4.0.copyload = phi double [ %.sroa.4.0.copyload.pre, %.lr.ph141.preheader ], [ %.sroa.4125.0.copyload, %.lr.ph141 ]
-  %.sroa.0.0.copyload = phi double [ %.sroa.0.0.copyload.pre, %.lr.ph141.preheader ], [ %.sroa.0124.0.copyload, %.lr.ph141 ]
-  %indvars.iv159 = phi i64 [ 0, %.lr.ph141.preheader ], [ %indvars.iv.next160, %.lr.ph141 ]
+.lr.ph141:                                        ; preds = %.lr.ph141.preheader199, %.lr.ph141
+  %.sroa.5.0.copyload = phi double [ %.sroa.5126.0.copyload, %.lr.ph141 ], [ %.sroa.5.0.copyload.ph, %.lr.ph141.preheader199 ]
+  %.sroa.4.0.copyload = phi double [ %.sroa.4125.0.copyload, %.lr.ph141 ], [ %.sroa.4.0.copyload.ph, %.lr.ph141.preheader199 ]
+  %.sroa.0.0.copyload = phi double [ %.sroa.0124.0.copyload, %.lr.ph141 ], [ %.sroa.0.0.copyload.ph, %.lr.ph141.preheader199 ]
+  %indvars.iv159 = phi i64 [ %indvars.iv.next160, %.lr.ph141 ], [ %indvars.iv159.ph, %.lr.ph141.preheader199 ]
   %indvars.iv.next160 = add nuw nsw i64 %indvars.iv159, 1 ; 4 uses
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %indvars.iv.next160 ; 3 uses
   %.sroa.0124.0.copyload = load double, ptr %i.ao, align 8 ; 2 uses
@@ -304,11 +364,11 @@ gv_calloc.exit120:                                ; preds = %bb.e
   %i.as = call double @llvm.fmuladd.f64(double %i.ap, double %i.ap, double %i.ar)
   %i.at = fsub double %.sroa.5.0.copyload, %.sroa.5126.0.copyload ; 2 uses
   %i.au = call double @llvm.fmuladd.f64(double %i.at, double %i.at, double %i.as)
-  %i.av = call double @sqrt(double noundef %i.au) #18
+  %i.av = call double @llvm.sqrt.f64(double %i.au)
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv.next160
   store double %i.av, ptr %i.aw, align 8, !tbaa !19
   %exitcond.not = icmp eq i64 %indvars.iv.next160, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph144.preheader, label %.lr.ph141, !llvm.loop !54
+  br i1 %exitcond.not, label %.lr.ph144.preheader, label %.lr.ph141, !llvm.loop !55
 
 .lr.ph144:                                        ; preds = %.lr.ph144, %.lr.ph144.preheader.new
   %i.ax = phi double [ 0.000000e+00, %.lr.ph144.preheader.new ], [ %i.bm, %.lr.ph144 ]
@@ -336,7 +396,7 @@ gv_calloc.exit120:                                ; preds = %bb.e
   store double %i.bm, ptr %i.bk, align 8, !tbaa !19
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge145.loopexit.unr-lcssa, label %.lr.ph144, !llvm.loop !55
+  br i1 %niter.ncmp.3, label %._crit_edge145.loopexit.unr-lcssa, label %.lr.ph144, !llvm.loop !56
 
 ._crit_edge145.loopexit.unr-lcssa:                ; preds = %.lr.ph144
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -360,7 +420,7 @@ gv_calloc.exit120:                                ; preds = %bb.e
   store double %i.bq, ptr %i.bo, align 8, !tbaa !19
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge145, label %.lr.ph144.epil, !llvm.loop !56
+  br i1 %epil.iter.cmp.not, label %._crit_edge145, label %.lr.ph144.epil, !llvm.loop !57
 
 ._crit_edge145:                                   ; preds = %._crit_edge145.loopexit.unr-lcssa, %.lr.ph144.epil, %gv_calloc.exit120
   %i.br = load i8, ptr @Verbose, align 1, !tbaa !21
@@ -417,7 +477,7 @@ bb.l:                                             ; preds = %bb.l, %bb.k
   %i.cq = load double, ptr %i.cp, align 8, !tbaa !19
   %i.cr = fcmp olt double %i.cq, %i.co
   %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1
-  br i1 %i.cr, label %bb.l, label %.lr.ph157.preheader, !llvm.loop !57
+  br i1 %i.cr, label %bb.l, label %.lr.ph157.preheader, !llvm.loop !58
 
 .lr.ph157.preheader:                              ; preds = %bb.l
   %i.cs = trunc nuw nsw i64 %indvars.iv169 to i32
@@ -481,7 +541,7 @@ bb.m:                                             ; preds = %.lr.ph148, %bb.n
 bb.n:                                             ; preds = %bb.m
   %indvars.iv.next174 = add nsw i64 %indvars.iv173, 1 ; 2 uses
   %exitcond177.not = icmp eq i64 %indvars.iv.next174, %i.cj
-  br i1 %exitcond177.not, label %.critedge, label %bb.m, !llvm.loop !58
+  br i1 %exitcond177.not, label %.critedge, label %bb.m, !llvm.loop !59
 
 .critedge.loopexit.split.loop.exit:               ; preds = %bb.m
   %i.ea = trunc nsw i64 %indvars.iv173 to i32
@@ -491,7 +551,7 @@ bb.n:                                             ; preds = %bb.m
   %.2.lcssa = phi i32 [ %.197154, %.lr.ph157 ], [ %i.ea, %.critedge.loopexit.split.loop.exit ], [ %i.ak, %bb.n ]
   %i.eb = add nuw nsw i32 %.2102152, 1            ; 2 uses
   %exitcond178.not = icmp eq i32 %i.eb, %1
-  br i1 %exitcond178.not, label %.loopexit, label %.lr.ph157, !llvm.loop !59
+  br i1 %exitcond178.not, label %.loopexit, label %.lr.ph157, !llvm.loop !60
 
 .loopexit:                                        ; preds = %.critedge, %bb.j
   call void @free(ptr noundef nonnull %i.af) #18
@@ -528,9 +588,6 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 ; Function Attrs: nofree noreturn nounwind
 declare void @exit(i32 noundef) local_unnamed_addr #15
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #6
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #3
 
@@ -541,7 +598,13 @@ declare i32 @llvm.smin.i32(i32, i32) #3
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
@@ -629,10 +692,13 @@ attributes #23 = { cold noreturn nounwind }
 !51 = !{!50, !50, i64 0}
 !52 = distinct !{!52, !26}
 !53 = distinct !{!53, !26}
-!54 = distinct !{!54, !26}
-!55 = distinct !{!55, !26}
-!56 = distinct !{!56, !25}
-!57 = distinct !{!57, !26}
+!54 = distinct !{!54, !26, !61, !62}
+!55 = distinct !{!55, !26, !62, !61}
+!56 = distinct !{!56, !26}
+!57 = distinct !{!57, !25}
 !58 = distinct !{!58, !26}
 !59 = distinct !{!59, !26}
+!60 = distinct !{!60, !26}
+!61 = !{!"llvm.loop.isvectorized", i32 1}
+!62 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

@@ -205,8 +205,7 @@ vector.body:                                      ; preds = %vector.body, %.preh
   %i.ek = fmul reassoc nsz arcp contract afn <8 x float> %i.ej, %i.ej
   %i.el = fmul reassoc nsz arcp contract afn <8 x float> %i.ek, splat (float f0x37800000)
   %i.em = fptosi <8 x float> %i.el to <8 x i32>
-  %1 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.em, <8 x i32> zeroinitializer)
-  %i.en = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %1, <8 x i32> splat (i32 65535))
+  %i.en = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %i.em, <8 x i32> splat (i32 65535))
   %i.eo = trunc nuw <8 x i32> %i.en to <8 x i16>
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %index
   %i.eq = shufflevector <8 x i16> %i.eo, <8 x i16> poison, <29 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 1, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 poison, i32 poison, i32 3, i32 poison, i32 poison, i32 poison, i32 4, i32 poison, i32 poison, i32 poison, i32 5, i32 poison, i32 poison, i32 poison, i32 6, i32 poison, i32 poison, i32 poison, i32 7>
@@ -609,8 +608,7 @@ scalar.ph:                                        ; preds = %middle.block, %scal
   %i.ajv = fmul reassoc nsz arcp contract afn float %i.aju, %i.aju
   %i.ajw = fmul reassoc nsz arcp contract afn float %i.ajv, f0x37800000
   %i.ajx = fptosi float %i.ajw to i32
-  %2 = tail call i32 @llvm.smax.i32(i32 %i.ajx, i32 0)
-  %i.ajy = tail call i32 @llvm.umin.i32(i32 %2, i32 65535)
+  %i.ajy = tail call i32 @llvm.umin.i32(i32 %i.ajx, i32 65535)
   %i.ajz = trunc nuw i32 %i.ajy to i16
   %gep326 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv382
   store i16 %i.ajz, ptr %gep326, align 2, !tbaa !82
@@ -862,8 +860,7 @@ bb.m:                                             ; preds = %.lr.ph342, %bb.m
   %i.aqm = fpext reassoc nsz arcp contract afn float %i.aql to double
   %i.aqn = fadd reassoc nsz arcp contract afn double %i.aqm, 5.000000e-01
   %i.aqo = fptosi double %i.aqn to i32
-  %3 = tail call i32 @llvm.smax.i32(i32 %i.aqo, i32 0)
-  %i.aqp = tail call i32 @llvm.umin.i32(i32 %3, i32 65535)
+  %i.aqp = tail call i32 @llvm.umin.i32(i32 %i.aqo, i32 65535)
   %i.aqq = trunc nuw i32 %i.aqp to i16
   store i16 %i.aqq, ptr %gep447, align 2, !tbaa !82
   %indvars.iv.next408 = add nuw nsw i64 %indvars.iv407, 2 ; 2 uses
@@ -1266,16 +1263,13 @@ declare float @llvm.ldexp.f32.i32(float, i32) #4
 declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #4
+declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #4
+declare i64 @llvm.smax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #4

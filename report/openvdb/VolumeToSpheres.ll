@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ap = fmul float %i.ai, %i.ai
   %i.aq = tail call float @llvm.fmuladd.f32(float %i.ae, float %i.ae, float %i.ap)
   %i.ar = tail call float @llvm.fmuladd.f32(float %i.ao, float %i.ao, float %i.aq)
-  %sqrtf.i.i.i.i.i.i.i = tail call noundef float @sqrtf(float noundef %i.ar) #21 ; 2 uses
+  %sqrtf.i.i.i.i.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.ar) ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.z, i64 12
   %i.at = load float, ptr %i.as, align 4, !tbaa !558 ; 2 uses
   %i.au = fcmp olt float %sqrtf.i.i.i.i.i.i.i, %i.at
@@ -608,7 +608,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.nr = fmul float %i.nk, %i.nk
   %i.ns = call float @llvm.fmuladd.f32(float %i.ng, float %i.ng, float %i.nr)
   %i.nt = call float @llvm.fmuladd.f32(float %i.nq, float %i.nq, float %i.ns)
-  %sqrtf.i.i.i.i.i.i.i20 = call noundef float @sqrtf(float noundef %i.nt) #21 ; 2 uses
+  %sqrtf.i.i.i.i.i.i.i20 = call noundef float @llvm.sqrt.f32(float %i.nt) ; 2 uses
   %i.nu = getelementptr inbounds nuw i8, ptr %i.nb, i64 12
   %i.nv = load float, ptr %i.nu, align 4, !tbaa !558 ; 2 uses
   %i.nw = fcmp olt float %sqrtf.i.i.i.i.i.i.i20, %i.nv
@@ -1009,6 +1009,9 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare x86_fp80 @llvm.log.f80(x86_fp80) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i64> @llvm.ctpop.v8i64(<8 x i64>) #10

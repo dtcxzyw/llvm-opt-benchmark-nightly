@@ -46,7 +46,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.p = fdiv double %.0167, %i.m                 ; 2 uses
-  %i.q = tail call double @dlamch_(ptr noundef nonnull @.str) #4
+  %i.q = tail call double @dlamch_(ptr noundef nonnull @.str) #3
   %i.r = fcmp olt double %i.p, %i.q
   br i1 %i.r, label %.thread, label %bb.g
 
@@ -90,7 +90,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.an = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
   %i.ao = fmul double %i.am, %i.am
   %i.ap = fadd double %i.ao, %i.an
-  %i.aq = tail call double @sqrt(double noundef %i.ap) #4 ; 2 uses
+  %i.aq = tail call double @llvm.sqrt.f64(double %i.ap) ; 2 uses
   %i.ar = fcmp oeq double %.0172, 0.000000e+00    ; 2 uses
   br i1 %i.ar, label %bb.h, label %bb.i
 
@@ -102,7 +102,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.av = tail call double @llvm.fmuladd.f64(double %.0172, double %.0172, double %i.an)
-  %i.aw = tail call double @sqrt(double noundef %i.av) #4
+  %i.aw = tail call double @llvm.sqrt.f64(double %i.av)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -236,20 +236,16 @@ bb.q:                                             ; preds = %bb.p
 
 declare double @dlamch_(ptr noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #2
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fmuladd.f64(double, double, double) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #3
+declare double @llvm.sqrt.f64(double) #2
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { nounwind }
+attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -204,7 +204,7 @@ define void @_ZN14dtPathCorridorD2Ev(ptr nofree noundef nonnull readonly align 8
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18
-  tail call void @_Z6dtFreePv(ptr noundef %i.b) #11
+  tail call void @_Z6dtFreePv(ptr noundef %i.b) #10
   ret void
 }
 
@@ -215,7 +215,7 @@ define noundef zeroext i1 @_ZN14dtPathCorridor4initEi(ptr nofree noundef nonnull
 bb.a:
   %i.a = sext i32 %1 to i64
   %i.b = shl nsw i64 %i.a, 2
-  %i.c = tail call noundef ptr @_Z7dtAllocm11dtAllocHint(i64 noundef %i.b, i32 noundef 0) #11 ; 2 uses
+  %i.c = tail call noundef ptr @_Z7dtAllocm11dtAllocHint(i64 noundef %i.b, i32 noundef 0) #10 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.c, ptr %i.d, align 8, !tbaa !18
   %.not = icmp ne ptr %i.c, null                  ; 2 uses
@@ -268,14 +268,14 @@ bb.a:
 define noundef i32 @_ZN14dtPathCorridor11findCornersEPfPhPjiP14dtNavMeshQueryPK13dtQueryFilter(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef nonnull %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 0, ptr %i.a, align 4, !tbaa !11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !18
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load i32, ptr %i.e, align 8, !tbaa !19
-  %i.g = call noundef i32 @_ZNK14dtNavMeshQuery16findStraightPathEPKfS1_PKjiPfPhPjPiii(ptr noundef nonnull align 8 dereferenceable(104) %5, ptr noundef nonnull %0, ptr noundef nonnull %i.b, ptr noundef %i.d, i32 noundef %i.f, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull %i.a, i32 noundef %4, i32 noundef 0) #11 ; 0 uses
+  %i.g = call noundef i32 @_ZNK14dtNavMeshQuery16findStraightPathEPKfS1_PKjiPfPhPjPiii(ptr noundef nonnull align 8 dereferenceable(104) %5, ptr noundef nonnull %0, ptr noundef nonnull %i.b, ptr noundef %i.d, i32 noundef %i.f, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef nonnull %i.a, i32 noundef %4, i32 noundef 0) #10 ; 0 uses
   %.promoted = load i32, ptr %i.a, align 4, !tbaa !11 ; 4 uses
   %.not23 = icmp eq i32 %.promoted, 0
   br i1 %.not23, label %.loopexit, label %.lr.ph
@@ -353,7 +353,7 @@ bb.e:                                             ; preds = %.lr.ph30
 
 .loopexit:                                        ; preds = %bb.b, %bb.e, %bb.a, %._crit_edge, %bb.d
   %i.ak = phi i32 [ %.lcssa, %bb.e ], [ %.lcssa, %._crit_edge ], [ %i.aj, %bb.d ], [ 0, %bb.a ], [ 0, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %i.ak
 }
 
@@ -368,10 +368,8 @@ bb.a:
   %i.d = alloca float, align 4                    ; 4 uses
   %i.e = alloca [3 x float], align 4              ; 3 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.g = load float, ptr %1, align 4, !tbaa !22
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = load float, ptr %5, align 4, !tbaa !22
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.i = load float, ptr %i.h, align 4, !tbaa !22
   %i.j = load float, ptr %0, align 8, !tbaa !22   ; 2 uses
@@ -381,12 +379,14 @@ bb.a:
   %i.n = fsub float %i.i, %i.m                    ; 3 uses
   %i.o = fmul float %i.n, %i.n
   %i.p = tail call float @llvm.fmuladd.f32(float %i.k, float %i.k, float %i.o)
-  %i.q = tail call noundef float @sqrtf(float noundef %i.p) #11 ; 2 uses
+  %i.q = tail call noundef float @llvm.sqrt.f32(float %i.p) ; 2 uses
   %i.r = fcmp olt float %i.q, f0x3C23D70A
   br i1 %i.r, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %6 = load float, ptr %5, align 4, !tbaa !22
   %i.t = fadd float %i.q, f0x3C23D70A             ; 2 uses
   %i.u = fcmp olt float %i.t, %2
   %i.v = select i1 %i.u, float %i.t, float %2
@@ -404,15 +404,15 @@ bb.b:                                             ; preds = %bb.a
   store <2 x float> %i.ag, ptr %i.a, align 8, !tbaa !22
   %i.ah = tail call float @llvm.fmuladd.f32(float %i.n, float %i.z, float %i.m)
   store float %i.ah, ptr %i.s, align 8, !tbaa !22
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #10
   store i32 0, ptr %i.f, align 4, !tbaa !11
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !18
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !11
-  %i.al = call noundef i32 @_ZNK14dtNavMeshQuery7raycastEjPKfS1_PK13dtQueryFilterPfS5_PjPii(ptr noundef nonnull align 8 dereferenceable(104) %3, i32 noundef %i.ak, ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.b, ptr noundef nonnull %i.f, i32 noundef 32) #11 ; 0 uses
+  %i.al = call noundef i32 @_ZNK14dtNavMeshQuery7raycastEjPKfS1_PK13dtQueryFilterPfS5_PjPii(ptr noundef nonnull align 8 dereferenceable(104) %3, i32 noundef %i.ak, ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef %4, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.b, ptr noundef nonnull %i.f, i32 noundef 32) #10 ; 0 uses
   %i.am = load i32, ptr %i.f, align 4, !tbaa !11  ; 3 uses
   %i.an = icmp sgt i32 %i.am, 1
   %i.ao = load float, ptr %i.d, align 4
@@ -641,14 +641,14 @@ _Z28dtMergeCorridorStartShortcutPjiiPKji.exit:    ; preds = %.split66.us.i, %._c
   br label %bb.e
 
 bb.e:                                             ; preds = %_Z28dtMergeCorridorStartShortcutPjiiPKji.exit, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret void
 }
 
@@ -666,8 +666,8 @@ bb.a:
   br i1 %i.f, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   store i32 0, ptr %i.c, align 4, !tbaa !11
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !18   ; 2 uses
@@ -677,11 +677,11 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr i8, ptr %i.k, i64 -4
   %i.m = load i32, ptr %i.l, align 4, !tbaa !11
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.o = tail call noundef i32 @_ZN14dtNavMeshQuery18initSlicedFindPathEjjPKfS1_PK13dtQueryFilterj(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef %i.i, i32 noundef %i.m, ptr noundef nonnull %0, ptr noundef nonnull %i.n, ptr noundef %2, i32 noundef 0) #11 ; 0 uses
-  %i.p = tail call noundef i32 @_ZN14dtNavMeshQuery20updateSlicedFindPathEiPi(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef 32, ptr noundef null) #11 ; 0 uses
+  %i.o = tail call noundef i32 @_ZN14dtNavMeshQuery18initSlicedFindPathEjjPKfS1_PK13dtQueryFilterj(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef %i.i, i32 noundef %i.m, ptr noundef nonnull %0, ptr noundef nonnull %i.n, ptr noundef %2, i32 noundef 0) #10 ; 0 uses
+  %i.p = tail call noundef i32 @_ZN14dtNavMeshQuery20updateSlicedFindPathEiPi(ptr noundef nonnull align 8 dereferenceable(104) %1, i32 noundef 32, ptr noundef null) #10 ; 0 uses
   %i.q = load ptr, ptr %i.g, align 8, !tbaa !18
   %i.r = load i32, ptr %i.d, align 8, !tbaa !19
-  %i.s = call noundef i32 @_ZN14dtNavMeshQuery29finalizeSlicedFindPathPartialEPKjiPjPii(ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef %i.q, i32 noundef %i.r, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, i32 noundef 32) #11
+  %i.s = call noundef i32 @_ZN14dtNavMeshQuery29finalizeSlicedFindPathPartialEPKjiPjPii(ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef %i.q, i32 noundef %i.r, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, i32 noundef 32) #10
   %i.t = and i32 %i.s, 1073741824
   %i.u = icmp ne i32 %i.t, 0
   %i.v = load i32, ptr %i.c, align 4              ; 3 uses
@@ -909,8 +909,8 @@ _Z28dtMergeCorridorStartShortcutPjiiPKji.exit:    ; preds = %.split66.us.i, %._c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %_Z28dtMergeCorridorStartShortcutPjiiPKji.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %bb.e
@@ -980,7 +980,7 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %.028.lcssa, ptr %i.s, align 4, !tbaa !11
   %i.t = load ptr, ptr %5, align 8, !tbaa !57
-  %i.u = tail call noundef i32 @_ZNK9dtNavMesh33getOffMeshConnectionPolyEndPointsEjjPfS0_(ptr noundef nonnull align 8 dereferenceable(100) %i.t, i32 noundef %.029.lcssa, i32 noundef %.028.lcssa, ptr noundef %3, ptr noundef %4) #11
+  %i.u = tail call noundef i32 @_ZNK9dtNavMesh33getOffMeshConnectionPolyEndPointsEjjPfS0_(ptr noundef nonnull align 8 dereferenceable(100) %i.t, i32 noundef %.029.lcssa, i32 noundef %.028.lcssa, ptr noundef %3, ptr noundef %4) #10
   %i.v = and i32 %i.u, 1073741824
   %.not = icmp eq i32 %i.v, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -1025,14 +1025,14 @@ bb.a:
   %i.b = alloca [16 x i32], align 16              ; 11 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca float, align 4                    ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   store i32 0, ptr %i.c, align 4, !tbaa !11
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.g = load i32, ptr %i.f, align 4, !tbaa !11
-  %i.h = call noundef i32 @_ZNK14dtNavMeshQuery16moveAlongSurfaceEjPKfS1_PK13dtQueryFilterPfPjPii(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.g, ptr noundef nonnull %0, ptr noundef %1, ptr noundef %3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 16) #11
+  %i.h = call noundef i32 @_ZNK14dtNavMeshQuery16moveAlongSurfaceEjPKfS1_PK13dtQueryFilterPfPjPii(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.g, ptr noundef nonnull %0, ptr noundef %1, ptr noundef %3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 16) #10
   %i.i = and i32 %i.h, 1073741824
   %i.j = icmp ne i32 %i.i, 0                      ; 2 uses
   br i1 %i.j, label %bb.b, label %bb.f
@@ -1296,12 +1296,12 @@ _Z25dtMergeCorridorStartMovedPjiiPKji.exit:       ; preds = %bb.b, %.split67.us.
   %i.dp = phi ptr [ %.pre, %._crit_edge.i ], [ %i.k, %.split67.us.i ], [ %i.k, %bb.b ]
   %.058.i = phi i32 [ %i.da, %._crit_edge.i ], [ %i.m, %.split67.us.i ], [ %i.m, %bb.b ]
   store i32 %.058.i, ptr %i.l, align 8, !tbaa !19
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.dr = load float, ptr %i.dq, align 4, !tbaa !22
   store float %i.dr, ptr %i.d, align 4, !tbaa !22
   %i.ds = load i32, ptr %i.dp, align 4, !tbaa !11
-  %i.dt = call noundef i32 @_ZNK14dtNavMeshQuery13getPolyHeightEjPKfPf(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.ds, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d) #11 ; 0 uses
+  %i.dt = call noundef i32 @_ZNK14dtNavMeshQuery13getPolyHeightEjPKfPf(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.ds, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d) #10 ; 0 uses
   %i.du = load float, ptr %i.d, align 4, !tbaa !22
   %i.dv = load float, ptr %i.a, align 4, !tbaa !22
   store float %i.dv, ptr %0, align 8, !tbaa !22
@@ -1310,13 +1310,13 @@ _Z25dtMergeCorridorStartMovedPjiiPKji.exit:       ; preds = %bb.b, %.split67.us.
   %i.dx = load float, ptr %i.dw, align 4, !tbaa !22
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.dx, ptr %i.dy, align 8, !tbaa !22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %_Z25dtMergeCorridorStartMovedPjiiPKji.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i1 %i.j
 }
 
@@ -1330,9 +1330,9 @@ bb.a:
   %i.a = alloca [3 x float], align 8              ; 5 uses
   %i.b = alloca [16 x i32], align 16              ; 6 uses
   %i.c = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   store i32 0, ptr %i.c, align 4, !tbaa !11
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -1343,7 +1343,7 @@ bb.a:
   %i.j = getelementptr i8, ptr %i.i, i64 -4
   %i.k = load i32, ptr %i.j, align 4, !tbaa !11
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.m = call noundef i32 @_ZNK14dtNavMeshQuery16moveAlongSurfaceEjPKfS1_PK13dtQueryFilterPfPjPii(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.k, ptr noundef nonnull %i.l, ptr noundef %1, ptr noundef %3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 16) #11
+  %i.m = call noundef i32 @_ZNK14dtNavMeshQuery16moveAlongSurfaceEjPKfS1_PK13dtQueryFilterPfPjPii(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.k, ptr noundef nonnull %i.l, ptr noundef %1, ptr noundef %3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 16) #10
   %i.n = and i32 %i.m, 1073741824
   %i.o = icmp ne i32 %i.n, 0                      ; 2 uses
   br i1 %i.o, label %bb.b, label %bb.f
@@ -1493,9 +1493,9 @@ _Z23dtMergeCorridorEndMovedPjiiPKji.exit:         ; preds = %bb.b, %._crit_edge5
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %_Z23dtMergeCorridorEndMovedPjiiPKji.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i1 %i.o
 }
 
@@ -1585,7 +1585,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv
   %i.h = load i32, ptr %i.g, align 4, !tbaa !11
-  %i.i = tail call noundef zeroext i1 @_ZNK14dtNavMeshQuery14isValidPolyRefEjPK13dtQueryFilter(ptr noundef nonnull align 8 dereferenceable(104) %3, i32 noundef %i.h, ptr noundef %4) #11
+  %i.i = tail call noundef zeroext i1 @_ZNK14dtNavMeshQuery14isValidPolyRefEjPK13dtQueryFilter(ptr noundef nonnull align 8 dereferenceable(104) %3, i32 noundef %i.h, ptr noundef %4) #10
   %.pre.pre = load i32, ptr %i.b, align 8, !tbaa !19 ; 2 uses
   br i1 %i.i, label %bb.c, label %.critedge
 
@@ -1634,7 +1634,7 @@ bb.e:                                             ; preds = %._crit_edge, %.thre
   %i.x = phi ptr [ %i.w, %.thread ], [ %.pre17, %._crit_edge ]
   %storemerge = phi i32 [ 1, %.thread ], [ %.0.lcssa.ph, %._crit_edge ] ; 2 uses
   store i32 %storemerge, ptr %i.b, align 8, !tbaa !19
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.z = load <2 x float>, ptr %i.y, align 4, !tbaa !22
   store <2 x float> %i.z, ptr %i.a, align 8, !tbaa !22
@@ -1646,8 +1646,8 @@ bb.e:                                             ; preds = %._crit_edge, %.thre
   %i.ae = getelementptr [4 x i8], ptr %i.x, i64 %i.ad
   %i.af = getelementptr i8, ptr %i.ae, i64 -4
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !11
-  %i.ah = call noundef i32 @_ZNK14dtNavMeshQuery26closestPointOnPolyBoundaryEjPKfPf(ptr noundef nonnull align 8 dereferenceable(104) %3, i32 noundef %i.ag, ptr noundef nonnull %i.a, ptr noundef nonnull %i.y) #11 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  %i.ah = call noundef i32 @_ZNK14dtNavMeshQuery26closestPointOnPolyBoundaryEjPKfPf(ptr noundef nonnull align 8 dereferenceable(104) %3, i32 noundef %i.ag, ptr noundef nonnull %i.a, ptr noundef nonnull %i.y) #10 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %.critedge.thread, %.critedge, %bb.e
@@ -1677,7 +1677,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv
   %i.g = load i32, ptr %i.f, align 4, !tbaa !11
-  %i.h = tail call noundef zeroext i1 @_ZNK14dtNavMeshQuery14isValidPolyRefEjPK13dtQueryFilter(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.g, ptr noundef %3) #11 ; 2 uses
+  %i.h = tail call noundef zeroext i1 @_ZNK14dtNavMeshQuery14isValidPolyRefEjPK13dtQueryFilter(ptr noundef nonnull align 8 dereferenceable(104) %2, i32 noundef %i.g, ptr noundef %3) #10 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp ne i64 %indvars.iv.next, %wide.trip.count
   %or.cond.not = select i1 %i.h, i1 %exitcond.not, i1 false
@@ -1691,9 +1691,6 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #7
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #8
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
 
@@ -1701,10 +1698,13 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.experimental.vector.extract.last.active.v4i32(<4 x i32>, <4 x i1>, i32) #10
+declare i32 @llvm.experimental.vector.extract.last.active.v4i32(<4 x i32>, <4 x i1>, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7
@@ -1717,10 +1717,9 @@ attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nounwind }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

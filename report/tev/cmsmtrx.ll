@@ -100,8 +100,8 @@ bb.a:
   ret double %i.m
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
-define double @_cmsVEC3length(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define double @_cmsVEC3length(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !10  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -111,15 +111,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load double, ptr %i.f, align 8, !tbaa !10 ; 2 uses
   %i.h = tail call double @llvm.fmuladd.f64(double %i.g, double %i.g, double %i.e)
-  %i.i = tail call double @sqrt(double noundef %i.h) #7
+  %i.i = tail call double @llvm.sqrt.f64(double %i.h)
   ret double %i.i
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #5
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
-define double @_cmsVEC3distance(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define double @_cmsVEC3distance(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !10
   %i.b = load double, ptr %1, align 8, !tbaa !10
@@ -137,7 +134,7 @@ bb.a:
   %i.n = fmul double %i.h, %i.h
   %i.o = tail call double @llvm.fmuladd.f64(double %i.c, double %i.c, double %i.n)
   %i.p = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double %i.o)
-  %i.q = tail call double @sqrt(double noundef %i.p) #7
+  %i.q = tail call double @llvm.sqrt.f64(double %i.p)
   ret double %i.q
 }
 
@@ -540,8 +537,11 @@ bb.a:
   ret void
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #2
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
@@ -550,10 +550,7 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #7 = { nounwind }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

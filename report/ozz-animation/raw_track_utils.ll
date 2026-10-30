@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %_ZSt11lower_boundIP
   %i.bo = tail call float @llvm.fmuladd.f32(float %i.bn, float %i.bn, float %i.bm)
   %i.bp = tail call float @llvm.fmuladd.f32(float %i.bj, float %i.bj, float %i.bo)
   %i.bq = tail call float @llvm.fmuladd.f32(float %i.bk, float %i.bk, float %i.bp)
-  %i.br = tail call noundef float @sqrtf(float noundef %i.bq) #5
+  %i.br = tail call float @llvm.sqrt.f32(float %i.bq)
   %i.bs = fdiv float 1.000000e+00, %i.br
   %i.bt = insertelement <2 x float> poison, float %i.bs, i64 0
   %i.bu = shufflevector <2 x float> %i.bt, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -235,8 +235,8 @@ declare noundef zeroext i1 @_ZNK3ozz9animation7offline8internal8RawTrackINS_4mat
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #3
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #4
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
@@ -245,8 +245,6 @@ attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { mustprogress uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

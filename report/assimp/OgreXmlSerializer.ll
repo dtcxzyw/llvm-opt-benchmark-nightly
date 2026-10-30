@@ -202,27 +202,33 @@ bb.bn:                                            ; preds = %_ZSteqIcSt11char_tr
 
 bb.bo:                                            ; preds = %bb.bn
   %i.hn = invoke noundef float @_ZNK6Assimp4Ogre17OgreXmlSerializer13ReadAttributeIfEET_RN4pugi8xml_nodeEPKc(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(8) %19, ptr noundef nonnull @.str.105)
-          to label %bb.bp unwind label %.loopexit.split-lp186.loopexit.split-lp.loopexit.split-lp ; 4 uses
+          to label %21 unwind label %.loopexit.split-lp186.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
-bb.bp:                                            ; preds = %bb.bo
-  %21 = fmul float %i.hm, %i.hm
-  %22 = call float @llvm.fmuladd.f32(float %i.hl, float %i.hl, float %21)
-  %23 = call noundef float @llvm.fmuladd.f32(float %i.hn, float %i.hn, float %22) ; 2 uses
-  %sqrt = call float @llvm.sqrt.f32(float %23)
-  %24 = fcmp oeq float %23, 0.000000e+00          ; 3 uses
-  %25 = fdiv float 1.000000e+00, %sqrt            ; 3 uses
-  %26 = fmul float %i.hl, %25
-  %27 = fmul float %i.hm, %25
-  %28 = fmul float %i.hn, %25
-  %.sroa.0.4.vec.extract.pre-phi.i = select i1 %24, float %i.hm, float %27
-  %.sroa.0.0.vec.extract.pre-phi.i = select i1 %24, float %i.hl, float %26
-  %.sroa.11.0.i = select i1 %24, float %i.hn, float %28
+21:                                               ; preds = %bb.bo
+  %22 = fmul float %i.hm, %i.hm
+  %23 = call float @llvm.fmuladd.f32(float %i.hl, float %i.hl, float %22)
+  %24 = call noundef float @llvm.fmuladd.f32(float %i.hn, float %i.hn, float %23) ; 2 uses
+  %25 = fcmp oeq float %24, 0.000000e+00
+  br i1 %25, label %bb.bp, label %_ZN10aiVector3tIfEdVEf.exit.i.i
+
+_ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %21
+  %sqrt.i.i.i = call noundef float @llvm.sqrt.f32(float %24)
+  %26 = fdiv float 1.000000e+00, %sqrt.i.i.i      ; 3 uses
+  %27 = fmul float %i.hl, %26
+  %28 = fmul float %i.hm, %26
+  %29 = fmul float %i.hn, %26
+  br label %bb.bp
+
+bb.bp:                                            ; preds = %_ZN10aiVector3tIfEdVEf.exit.i.i, %21
+  %.sroa.0.4.vec.extract.pre-phi.i = phi float [ %i.hm, %21 ], [ %28, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %.sroa.0.0.vec.extract.pre-phi.i = phi float [ %i.hl, %21 ], [ %27, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %.sroa.7.0.i = phi float [ %i.hn, %21 ], [ %29, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %i.ho = call noundef float @sinf(float noundef %i.gn) #28
   %i.hp = call noundef float @cosf(float noundef %i.gn) #28
   %i.hq = insertelement <4 x float> poison, float %i.hp, i64 0
   %i.hr = insertelement <4 x float> %i.hq, float %.sroa.0.0.vec.extract.pre-phi.i, i64 1
   %i.hs = insertelement <4 x float> %i.hr, float %.sroa.0.4.vec.extract.pre-phi.i, i64 2
-  %i.ht = insertelement <4 x float> %i.hs, float %.sroa.11.0.i, i64 3
+  %i.ht = insertelement <4 x float> %i.hs, float %.sroa.7.0.i, i64 3
   %i.hu = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.ho, i64 1
   %i.hv = shufflevector <4 x float> %i.hu, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.hw = fmul <4 x float> %i.ht, %i.hv
@@ -625,7 +631,7 @@ bb.am:                                            ; preds = %bb.al
   %.sroa.0123.0.vec.insert = insertelement <2 x float> poison, float %i.cz, i64 0
   %.sroa.0123.4.vec.insert = insertelement <2 x float> %.sroa.0123.0.vec.insert, float %i.da, i64 1 ; 2 uses
   %i.db = invoke noundef float @_ZNK6Assimp4Ogre17OgreXmlSerializer13ReadAttributeIfEET_RN4pugi8xml_nodeEPKc(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(8) %i.ch, ptr noundef nonnull @.str.105)
-          to label %bb.an unwind label %bb.as     ; 4 uses
+          to label %bb.an unwind label %bb.as     ; 5 uses
 
 bb.an:                                            ; preds = %bb.am
   %i.dc = call noundef float @llvm.fabs.f32(float %i.cz)
@@ -636,11 +642,11 @@ bb.an:                                            ; preds = %bb.am
   %i.dg = call float @llvm.fabs.f32(float %i.db)
   %i.dh = fcmp ole float %i.dg, f0x358637BD
   %or.cond146 = and i1 %or.cond.not148, %i.dh
-  br i1 %or.cond146, label %bb.ao, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a
+  br i1 %or.cond146, label %bb.ao, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
 
 bb.ao:                                            ; preds = %bb.an
   %.sroa.0123.0.vec.insert126 = insertelement <2 x float> %.sroa.0123.4.vec.insert, float 1.000000e+00, i64 0 ; 2 uses
-  br i1 %i.cd, label %bb.ap, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a
+  br i1 %i.cd, label %bb.ap, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
 
 bb.ap:                                            ; preds = %bb.ao
   %i.di = invoke noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
@@ -648,7 +654,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   invoke void @_ZN6Assimp6Logger4warnIJRA67_KcRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.di, ptr noundef nonnull align 1 dereferenceable(67) @.str.81, ptr noundef nonnull align 8 dereferenceable(32) %i.s)
-          to label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a unwind label %bb.as
+          to label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread unwind label %bb.as
 
 bb.ar:                                            ; preds = %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.ad
   %i.dj = landingpad { ptr, i32 }
@@ -667,35 +673,37 @@ bb.as:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %i.dm = icmp eq ptr %i.dl, %i.q
   br i1 %i.dm, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i104
 
-_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a:   ; preds = %bb.an, %bb.aq, %bb.ao
-  %.sroa.0123.0 = phi <2 x float> [ %.sroa.0123.0.vec.insert126, %bb.aq ], [ %.sroa.0123.0.vec.insert126, %bb.ao ], [ %.sroa.0123.4.vec.insert, %bb.an ] ; 4 uses
-  %.sroa.0.0.vec.extract8.i = extractelement <2 x float> %.sroa.0123.0, i64 0 ; 4 uses
+_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread:     ; preds = %bb.an, %bb.ao, %bb.aq
+  %.sroa.0123.0 = phi <2 x float> [ %.sroa.0123.0.vec.insert126, %bb.aq ], [ %.sroa.0123.0.vec.insert126, %bb.ao ], [ %.sroa.0123.4.vec.insert, %bb.an ] ; 5 uses
+  %.sroa.0.0.vec.extract8.i = extractelement <2 x float> %.sroa.0123.0, i64 0 ; 2 uses
   %foldExtExtBinop = fmul <2 x float> %.sroa.0123.0, %.sroa.0123.0
   %17 = extractelement <2 x float> %foldExtExtBinop, i64 1
   %18 = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract8.i, float %.sroa.0.0.vec.extract8.i, float %17)
-  %19 = call noundef float @llvm.fmuladd.f32(float %i.db, float %i.db, float %18)
-  %20 = call noundef float @sqrtf(float noundef %19) #28 ; 2 uses
-  %21 = fcmp oeq float %20, 0.000000e+00          ; 2 uses
-  %22 = fdiv float 1.000000e+00, %20              ; 2 uses
-  %23 = fmul float %.sroa.0.0.vec.extract8.i, %22
-  %.sroa.0.0.vec.extract.pre-phi.i = select i1 %21, float %.sroa.0.0.vec.extract8.i, float %23
-  %24 = shufflevector <2 x float> %.sroa.0123.0, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %25 = insertelement <2 x float> %24, float %i.db, i64 1 ; 2 uses
-  %26 = insertelement <2 x float> poison, float %22, i64 0
-  %27 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
-  %28 = fmul <2 x float> %25, %27
-  %29 = insertelement <2 x i1> poison, i1 %21, i64 0
-  %30 = shufflevector <2 x i1> %29, <2 x i1> poison, <2 x i32> zeroinitializer
-  %31 = select <2 x i1> %30, <2 x float> %25, <2 x float> %28
+  %19 = call noundef float @llvm.fmuladd.f32(float %i.db, float %i.db, float %18) ; 2 uses
+  %20 = fcmp oeq float %19, 0.000000e+00
+  br i1 %20, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a, label %_ZN10aiVector3tIfEdVEf.exit.i.i
+
+_ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
+  %sqrt.i.i.i = call noundef float @llvm.sqrt.f32(float %19)
+  %21 = fdiv float 1.000000e+00, %sqrt.i.i.i      ; 2 uses
+  %22 = insertelement <2 x float> poison, float %21, i64 0
+  %23 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer
+  %24 = fmul <2 x float> %.sroa.0123.0, %23
+  %25 = fmul float %i.db, %21
+  br label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a
+
+_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread.a:   ; preds = %_ZN10aiVector3tIfEdVEf.exit.i.i, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
+  %.sroa.7.0.i = phi float [ %i.db, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread ], [ %25, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %26 = phi <2 x float> [ %.sroa.0123.0, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread ], [ %24, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %i.dn = call noundef float @sinf(float noundef %i.ce) #28
   %i.do = call noundef float @cosf(float noundef %i.ce) #28
-  %i.dp = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.dn, i64 1
-  %32 = shufflevector <4 x float> %i.dp, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %33 = insertelement <4 x float> poison, float %i.do, i64 0
-  %i.dq = insertelement <4 x float> %33, float %.sroa.0.0.vec.extract.pre-phi.i, i64 1
-  %34 = shufflevector <2 x float> %31, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %35 = shufflevector <4 x float> %i.dq, <4 x float> %34, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.dr = fmul <4 x float> %32, %35
+  %i.dp = insertelement <4 x float> poison, float %i.do, i64 0
+  %27 = shufflevector <2 x float> %26, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %28 = shufflevector <4 x float> %i.dp, <4 x float> %27, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.dq = insertelement <4 x float> %28, float %.sroa.7.0.i, i64 3
+  %29 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.dn, i64 1
+  %30 = shufflevector <4 x float> %29, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %i.dr = fmul <4 x float> %i.dq, %30
   store <4 x float> %i.dr, ptr %i.t, align 4
   %.pre193 = load ptr, ptr %16, align 8
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit103.thread142
@@ -1096,9 +1104,6 @@ _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit: ; pred
   call void @_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %4) #28
   resume { ptr, i32 } %i.r
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #23
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @sinf(float noundef) local_unnamed_addr #23

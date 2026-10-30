@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond944, label %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread, label %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread880
 
 _ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread880: ; preds = %bb.q
-  %i.afo = tail call float @sqrtf(float noundef %i.aeu) #8
+  %i.afo = tail call float @llvm.sqrt.f32(float %i.aeu)
   br label %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread
 
 _ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread: ; preds = %bb.q, %bb.o, %bb.n, %bb.p, %_ZNK6embree13InstanceArray14getLocal2WorldEm.exit, %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread880
@@ -605,7 +605,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %or.cond1970, label %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread, label %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread1897
 
 _ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread1897: ; preds = %bb.bn
-  %i.ctf = tail call float @sqrtf(float noundef %i.csl) #8
+  %i.ctf = tail call float @llvm.sqrt.f32(float %i.csl)
   br label %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread
 
 _ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread: ; preds = %bb.bn, %bb.bl, %bb.bk, %bb.bm, %_ZNK6embree13InstanceArray14getLocal2WorldEmf.exit, %_ZN6embree19similarityTransformERKNS_12AffineSpaceTINS_12LinearSpace3INS_6Vec3faEEEEEPf.exit.thread1897
@@ -840,6 +840,9 @@ declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
