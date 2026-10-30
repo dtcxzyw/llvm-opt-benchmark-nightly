@@ -1,0 +1,894 @@
+diff --git a/llvm/include/llvm/IR/PatternMatch.h b/llvm/include/llvm/IR/PatternMatch.h
+index 2550b7907747ca..5e27be3767d2bc 100644
+--- a/llvm/include/llvm/IR/PatternMatch.h
++++ b/llvm/include/llvm/IR/PatternMatch.h
+@@ -1239,7 +1239,7 @@ inline BinaryOp_match<LHS, RHS, Instruction::FSub> m_FSub(const LHS &L,
+   return BinaryOp_match<LHS, RHS, Instruction::FSub>(L, R);
+ }
+ 
+-template <typename Op_t> struct FNeg_match {
++template <typename Op_t, bool AllowFSubNegZero = false> struct FNeg_match {
+   Op_t X;
+ 
+   FNeg_match(const Op_t &Op) : X(Op) {}
+@@ -1251,30 +1251,37 @@ template <typename Op_t> struct FNeg_match {
+     if (FPMO->getOpcode() == Instruction::FNeg)
+       return X.match(FPMO->getOperand(0));
+ 
+-    if (FPMO->getOpcode() == Instruction::FSub) {
+-      if (FPMO->hasNoSignedZeros()) {
+-        // With 'nsz', any zero goes.
+-        if (!cstfp_pred_ty<is_any_zero_fp>().match(FPMO->getOperand(0)))
+-          return false;
+-      } else {
+-        // Without 'nsz', we need fsub -0.0, X exactly.
+-        if (!cstfp_pred_ty<is_neg_zero_fp>().match(FPMO->getOperand(0)))
+-          return false;
+-      }
++    if constexpr (AllowFSubNegZero) {
++      if (FPMO->getOpcode() == Instruction::FSub) {
++        if (FPMO->hasNoSignedZeros()) {
++          // With 'nsz', any zero goes.
++          if (!cstfp_pred_ty<is_any_zero_fp>().match(FPMO->getOperand(0)))
++            return false;
++        } else {
++          // Without 'nsz', we need fsub -0.0, X exactly.
++          if (!cstfp_pred_ty<is_neg_zero_fp>().match(FPMO->getOperand(0)))
++            return false;
++        }
+ 
+-      return X.match(FPMO->getOperand(1));
++        return X.match(FPMO->getOperand(1));
++      }
+     }
+ 
+     return false;
+   }
+ };
+ 
+-/// Match 'fneg X' as 'fsub -0.0, X'.
+-template <typename OpTy> inline FNeg_match<OpTy> m_FNeg(const OpTy &X) {
+-  return FNeg_match<OpTy>(X);
++/// Match fneg X only
++template <typename OpTy> inline FNeg_match<OpTy, false> m_FNeg(const OpTy &X) {
++  return FNeg_match<OpTy, false>(X);
++}
++
++/// Match fneg X or fsub -0.0, X.
++template <typename OpTy>
++inline FNeg_match<OpTy, true> m_FNegOrFSubNegZero(const OpTy &X) {
++  return FNeg_match<OpTy, true>(X);
+ }
+ 
+-/// Match 'fneg X' as 'fsub +-0.0, X'.
+ template <typename RHS>
+ inline BinaryOp_match<cstfp_pred_ty<is_any_zero_fp>, RHS, Instruction::FSub>
+ m_FNegNSZ(const RHS &X) {
+diff --git a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+index 64d1df6d5a7e2d..1135bc41494b3d 100644
+--- a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
++++ b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+@@ -163,8 +163,9 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+       return isa<UndefValue>(V) ? 0 : 1;
+ 
+     using namespace llvm::PatternMatch;
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+     if (isa<CastInst>(V) || match(V, m_Neg(m_Value())) ||
+-        match(V, m_Not(m_Value())) || match(V, m_FNeg(m_Value())))
++        match(V, m_Not(m_Value())) || match(V, m_FNegOrFSubNegZero(m_Value())))
+       return 2;
+ 
+     return 3;
+@@ -352,7 +353,8 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+   static Value *stripSignOnlyFPOps(Value *Val) {
+     using namespace llvm::PatternMatch;
+ 
+-    match(Val, m_FNeg(m_Value(Val)));
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    match(Val, m_FNegOrFSubNegZero(m_Value(Val)));
+     match(Val, m_FAbs(m_Value(Val)));
+     match(Val, m_CopySign(m_Value(Val), m_Value()));
+     return Val;
+diff --git a/llvm/lib/Analysis/InlineCost.cpp b/llvm/lib/Analysis/InlineCost.cpp
+index d418968a4a41c1..138584df3fa035 100644
+--- a/llvm/lib/Analysis/InlineCost.cpp
++++ b/llvm/lib/Analysis/InlineCost.cpp
+@@ -2313,9 +2313,10 @@ bool CallAnalyzer::visitBinaryOperator(BinaryOperator &I) {
+   // is expensive, this may eventually become a library call. Treat the cost
+   // as such. Unless it's fneg which can be implemented with an xor.
+   using namespace llvm::PatternMatch;
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+   if (I.getType()->isFloatingPointTy() &&
+       TTI.getFPOpCost(I.getType()) == TargetTransformInfo::TCC_Expensive &&
+-      !match(&I, m_FNeg(m_Value())))
++      !match(&I, m_FNegOrFSubNegZero(m_Value())))
+     onCallPenalty();
+ 
+   return false;
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index fcf4d13c4e2d16..b363ae4a0ea047 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -6013,7 +6013,8 @@ static Value *simplifyFNegInst(Value *Op, FastMathFlags FMF,
+ 
+   Value *X;
+   // fneg (fneg X) ==> X
+-  if (match(Op, m_FNeg(m_Value(X))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op, m_FNegOrFSubNegZero(m_Value(X))))
+     return X;
+ 
+   return nullptr;
+@@ -6157,8 +6158,9 @@ simplifyFAddInst(Value *Op0, Value *Op1, FastMathFlags FMF,
+         match(Op1, m_FSub(m_AnyZeroFP(), m_Specific(Op0))))
+       return ConstantFP::getZero(Op0->getType());
+ 
+-    if (match(Op0, m_FNeg(m_Specific(Op1))) ||
+-        match(Op1, m_FNeg(m_Specific(Op0))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Op0, m_FNegOrFSubNegZero(m_Specific(Op1))) ||
++        match(Op1, m_FNegOrFSubNegZero(m_Specific(Op0))))
+       return ConstantFP::getZero(Op0->getType());
+   }
+ 
+@@ -6204,7 +6206,9 @@ simplifyFSubInst(Value *Op0, Value *Op1, FastMathFlags FMF,
+   // fsub -0.0, (fneg X) ==> X
+   Value *X;
+   if (canIgnoreSNaN(ExBehavior, FMF))
+-    if (match(Op0, m_NegZeroFP()) && match(Op1, m_FNeg(m_Value(X))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Op0, m_NegZeroFP()) &&
++        match(Op1, m_FNegOrFSubNegZero(m_Value(X))))
+       return X;
+ 
+   // fsub 0.0, (fsub 0.0, X) ==> X if signed zeros are ignored.
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 1f49a7204fa0b8..0fcd71c831a99c 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -11062,7 +11062,8 @@ void llvm::findValuesAffectedByCondition(
+       // fcmp fneg(x), y
+       // fcmp fabs(x), y
+       // fcmp fneg(fabs(x)), y
+-      if (match(A, m_FNeg(m_Value(A))))
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++      if (match(A, m_FNegOrFSubNegZero(m_Value(A))))
+         AddAffected(A);
+       if (match(A, m_FAbs(m_Value(A))))
+         AddAffected(A);
+diff --git a/llvm/lib/CodeGen/ComplexDeinterleavingPass.cpp b/llvm/lib/CodeGen/ComplexDeinterleavingPass.cpp
+index da02814f642e0d..419e645f936c3d 100644
+--- a/llvm/lib/CodeGen/ComplexDeinterleavingPass.cpp
++++ b/llvm/lib/CodeGen/ComplexDeinterleavingPass.cpp
+@@ -599,7 +599,8 @@ static bool isDeinterleavingMask(ArrayRef<int> Mask) {
+ }
+ 
+ bool isNeg(Value *V) {
+-  return match(V, m_FNeg(m_Value())) || match(V, m_Neg(m_Value()));
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  return match(V, m_FNegOrFSubNegZero(m_Value())) || match(V, m_Neg(m_Value()));
+ }
+ 
+ Value *getNegOperand(Value *V) {
+diff --git a/llvm/lib/Target/AArch64/AArch64TargetTransformInfo.cpp b/llvm/lib/Target/AArch64/AArch64TargetTransformInfo.cpp
+index 128c557445e675..8d7346a5e4c2d4 100644
+--- a/llvm/lib/Target/AArch64/AArch64TargetTransformInfo.cpp
++++ b/llvm/lib/Target/AArch64/AArch64TargetTransformInfo.cpp
+@@ -7949,7 +7949,10 @@ static bool shouldSinkVScale(Value *Op, SmallVectorImpl<Use *> &Ops) {
+   return false;
+ }
+ 
+-static bool isFNeg(Value *Op) { return match(Op, m_FNeg(m_Value())); }
++static bool isFNeg(Value *Op) {
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  return match(Op, m_FNegOrFSubNegZero(m_Value()));
++}
+ 
+ /// Check if sinking \p I's operands to I's basic block is profitable, because
+ /// the operands can be folded into a target instruction, e.g.
+diff --git a/llvm/lib/Target/AMDGPU/AMDGPUTargetTransformInfo.cpp b/llvm/lib/Target/AMDGPU/AMDGPUTargetTransformInfo.cpp
+index 7dc8e05ca10b64..db9b5c6c1ef7f7 100644
+--- a/llvm/lib/Target/AMDGPU/AMDGPUTargetTransformInfo.cpp
++++ b/llvm/lib/Target/AMDGPU/AMDGPUTargetTransformInfo.cpp
+@@ -1847,7 +1847,9 @@ bool GCNTTIImpl::isProfitableToSinkOperands(Instruction *I,
+     if (any_of(Ops, [&](Use *U) { return U->get() == Op.get(); }))
+       continue;
+ 
+-    if (match(&Op, m_FAbs(m_Value())) || match(&Op, m_FNeg(m_Value()))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(&Op, m_FAbs(m_Value())) ||
++        match(&Op, m_FNegOrFSubNegZero(m_Value()))) {
+       Ops.push_back(&Op);
+       continue;
+     }
+diff --git a/llvm/lib/Target/ARM/ARMTargetTransformInfo.cpp b/llvm/lib/Target/ARM/ARMTargetTransformInfo.cpp
+index a27fe1c056ddfc..412e4aa6319989 100644
+--- a/llvm/lib/Target/ARM/ARMTargetTransformInfo.cpp
++++ b/llvm/lib/Target/ARM/ARMTargetTransformInfo.cpp
+@@ -2878,8 +2878,9 @@ bool ARMTTIImpl::isProfitableToSinkOperands(Instruction *I,
+     return Sub->getOpcode() == Instruction::FSub && Sub->getOperand(1) == I;
+   };
+   auto IsFMS = [&](Instruction *I) {
+-    if (match(I->getOperand(0), m_FNeg(m_Value())) ||
+-        match(I->getOperand(1), m_FNeg(m_Value())))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(I->getOperand(0), m_FNegOrFSubNegZero(m_Value())) ||
++        match(I->getOperand(1), m_FNegOrFSubNegZero(m_Value())))
+       return true;
+     return false;
+   };
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 1c0a6a10f7eacb..e7ce333991c5d6 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2145,22 +2145,28 @@ Instruction *InstCombinerImpl::visitFAdd(BinaryOperator &I) {
+ 
+   // (-X) + Y --> Y - X
+   Value *X, *Y;
+-  if (match(&I, m_c_FAdd(m_FNeg(m_Value(X)), m_Value(Y))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(&I, m_c_FAdd(m_FNegOrFSubNegZero(m_Value(X)), m_Value(Y))))
+     return BinaryOperator::CreateFSubFMF(Y, X, &I);
+ 
+   // Similar to above, but look through fmul/fdiv for the negated term.
+   // (-X * Y) + Z --> Z - (X * Y) [4 commuted variants]
+   Value *Z;
+-  if (match(&I, m_c_FAdd(m_OneUse(m_c_FMul(m_FNeg(m_Value(X)), m_Value(Y))),
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(&I, m_c_FAdd(m_OneUse(m_c_FMul(m_FNegOrFSubNegZero(m_Value(X)),
++                                           m_Value(Y))),
+                          m_Value(Z)))) {
+     Value *XY = Builder.CreateFMulFMF(X, Y, &I);
+     return BinaryOperator::CreateFSubFMF(Z, XY, &I);
+   }
+   // (-X / Y) + Z --> Z - (X / Y) [2 commuted variants]
+   // (X / -Y) + Z --> Z - (X / Y) [2 commuted variants]
+-  if (match(&I, m_c_FAdd(m_OneUse(m_FDiv(m_FNeg(m_Value(X)), m_Value(Y))),
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(&I, m_c_FAdd(m_OneUse(m_FDiv(m_FNegOrFSubNegZero(m_Value(X)),
++                                         m_Value(Y))),
+                          m_Value(Z))) ||
+-      match(&I, m_c_FAdd(m_OneUse(m_FDiv(m_Value(X), m_FNeg(m_Value(Y)))),
++      match(&I, m_c_FAdd(m_OneUse(m_FDiv(m_Value(X),
++                                         m_FNegOrFSubNegZero(m_Value(Y)))),
+                          m_Value(Z)))) {
+     Value *XY = Builder.CreateFDivFMF(X, Y, &I);
+     return BinaryOperator::CreateFSubFMF(Z, XY, &I);
+@@ -2213,7 +2219,8 @@ Instruction *InstCombinerImpl::visitFAdd(BinaryOperator &I) {
+     }
+ 
+     // (-X - Y) + (X + Z) --> Z - Y
+-    if (match(&I, m_c_FAdd(m_FSub(m_FNeg(m_Value(X)), m_Value(Y)),
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(&I, m_c_FAdd(m_FSub(m_FNegOrFSubNegZero(m_Value(X)), m_Value(Y)),
+                            m_c_FAdd(m_Deferred(X), m_Value(Z)))))
+       return BinaryOperator::CreateFSubFMF(Z, Y, &I);
+ 
+@@ -3112,7 +3119,8 @@ static Instruction *foldFNegIntoConstant(Instruction &I, const DataLayout &DL) {
+   // reassociation and cheaper in codegen than fmul/fdiv.
+   // TODO: Should the m_OneUse restriction be removed?
+   Instruction *FNegOp;
+-  if (!match(&I, m_FNeg(m_OneUse(m_Instruction(FNegOp)))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (!match(&I, m_FNegOrFSubNegZero(m_OneUse(m_Instruction(FNegOp)))))
+     return nullptr;
+ 
+   Value *X;
+@@ -3244,7 +3252,8 @@ Instruction *InstCombinerImpl::visitFNeg(UnaryOperator &I) {
+     };
+     // -(Cond ? -P : Y) --> Cond ? P : -Y
+     Value *P;
+-    if (match(X, m_FNeg(m_Value(P)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(X, m_FNegOrFSubNegZero(m_Value(P)))) {
+       Value *NegY = Builder.CreateFNegFMF(Y, &I, Y->getName() + ".neg");
+       SelectInst *NewSel = SelectInst::Create(
+           Cond, P, NegY, "", nullptr,
+@@ -3253,7 +3262,8 @@ Instruction *InstCombinerImpl::visitFNeg(UnaryOperator &I) {
+       return NewSel;
+     }
+     // -(Cond ? X : -P) --> Cond ? -X : P
+-    if (match(Y, m_FNeg(m_Value(P)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Y, m_FNegOrFSubNegZero(m_Value(P)))) {
+       Value *NegX = Builder.CreateFNegFMF(X, &I, X->getName() + ".neg");
+       SelectInst *NewSel = SelectInst::Create(
+           Cond, NegX, P, "", nullptr,
+@@ -3320,7 +3330,8 @@ Instruction *InstCombinerImpl::visitFSub(BinaryOperator &I) {
+   // fsub -0.0, Denorm ==> +-0
+   // fneg Denorm ==> -Denorm
+   Value *Op;
+-  if (match(&I, m_FNeg(m_Value(Op))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(&I, m_FNegOrFSubNegZero(m_Value(Op))))
+     return UnaryOperator::CreateFNegFMF(Op, &I);
+ 
+   if (Instruction *X = foldFNegIntoConstant(I, DL))
+@@ -3348,8 +3359,9 @@ Instruction *InstCombinerImpl::visitFSub(BinaryOperator &I) {
+   }
+ 
+   // (-X) - Op1 --> -(X + Op1)
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+   if (I.hasNoSignedZeros() && !isa<ConstantExpr>(Op0) &&
+-      match(Op0, m_OneUse(m_FNeg(m_Value(X))))) {
++      match(Op0, m_OneUse(m_FNegOrFSubNegZero(m_Value(X))))) {
+     Value *FAdd = Builder.CreateFAddFMF(X, Op1, &I);
+     return UnaryOperator::CreateFNegFMF(FAdd, &I);
+   }
+@@ -3367,30 +3379,38 @@ Instruction *InstCombinerImpl::visitFSub(BinaryOperator &I) {
+       return BinaryOperator::CreateFAddFMF(Op0, NegC, &I);
+ 
+   // X - (-Y) --> X + Y
+-  if (match(Op1, m_FNeg(m_Value(Y))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op1, m_FNegOrFSubNegZero(m_Value(Y))))
+     return BinaryOperator::CreateFAddFMF(Op0, Y, &I);
+ 
+   // Similar to above, but look through a cast of the negated value:
+   // X - (fptrunc(-Y)) --> X + fptrunc(Y)
+   Type *Ty = I.getType();
+-  if (match(Op1, m_OneUse(m_FPTrunc(m_FNeg(m_Value(Y))))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op1, m_OneUse(m_FPTrunc(m_FNegOrFSubNegZero(m_Value(Y))))))
+     return BinaryOperator::CreateFAddFMF(Op0, Builder.CreateFPTrunc(Y, Ty), &I);
+ 
+   // X - (fpext(-Y)) --> X + fpext(Y)
+-  if (match(Op1, m_OneUse(m_FPExt(m_FNeg(m_Value(Y))))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op1, m_OneUse(m_FPExt(m_FNegOrFSubNegZero(m_Value(Y))))))
+     return BinaryOperator::CreateFAddFMF(Op0, Builder.CreateFPExt(Y, Ty), &I);
+ 
+   // Similar to above, but look through fmul/fdiv of the negated value:
+   // Op0 - (-X * Y) --> Op0 + (X * Y)
+   // Op0 - (Y * -X) --> Op0 + (X * Y)
+-  if (match(Op1, m_OneUse(m_c_FMul(m_FNeg(m_Value(X)), m_Value(Y))))) {
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op1,
++            m_OneUse(m_c_FMul(m_FNegOrFSubNegZero(m_Value(X)), m_Value(Y))))) {
+     Value *FMul = Builder.CreateFMulFMF(X, Y, &I);
+     return BinaryOperator::CreateFAddFMF(Op0, FMul, &I);
+   }
+   // Op0 - (-X / Y) --> Op0 + (X / Y)
+   // Op0 - (X / -Y) --> Op0 + (X / Y)
+-  if (match(Op1, m_OneUse(m_FDiv(m_FNeg(m_Value(X)), m_Value(Y)))) ||
+-      match(Op1, m_OneUse(m_FDiv(m_Value(X), m_FNeg(m_Value(Y)))))) {
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op1,
++            m_OneUse(m_FDiv(m_FNegOrFSubNegZero(m_Value(X)), m_Value(Y)))) ||
++      match(Op1,
++            m_OneUse(m_FDiv(m_Value(X), m_FNegOrFSubNegZero(m_Value(Y)))))) {
+     Value *FDiv = Builder.CreateFDivFMF(X, Y, &I);
+     return BinaryOperator::CreateFAddFMF(Op0, FDiv, &I);
+   }
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 90595282115783..c63a0a25ff8847 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -1074,7 +1074,8 @@ Instruction *InstCombinerImpl::foldIntrinsicIsFPClass(IntrinsicInst &II) {
+ 
+   Value *FNegSrc;
+   // is.fpclass (fneg x), mask -> is.fpclass x, (fneg mask)
+-  if (match(Src0, m_FNeg(m_Value(FNegSrc))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Src0, m_FNegOrFSubNegZero(m_Value(FNegSrc))))
+     return CallInst::Create(
+         II.getCalledFunction(),
+         {FNegSrc, ConstantInt::get(Src1->getType(), fneg(Mask))});
+@@ -2667,7 +2668,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         // powi(-x, p) -> powi(x, p)
+         // powi(fabs(x), p) -> powi(x, p)
+         // powi(copysign(x, y), p) -> powi(x, p)
+-        if (match(II->getArgOperand(0), m_FNeg(m_Value(X))) ||
++        // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++        if (match(II->getArgOperand(0), m_FNegOrFSubNegZero(m_Value(X))) ||
+             match(II->getArgOperand(0), m_FAbs(m_Value(X))) ||
+             match(II->getArgOperand(0),
+                   m_Intrinsic<Intrinsic::copysign>(m_Value(X), m_Value())))
+@@ -3067,7 +3069,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     Value *Arg0 = II->getArgOperand(0);
+     Value *Arg1 = II->getArgOperand(1);
+     Value *X, *Y;
+-    if (match(Arg0, m_FNeg(m_Value(X))) && match(Arg1, m_FNeg(m_Value(Y))) &&
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Arg0, m_FNegOrFSubNegZero(m_Value(X))) &&
++        match(Arg1, m_FNegOrFSubNegZero(m_Value(Y))) &&
+         (Arg0->hasOneUse() || Arg1->hasOneUse())) {
+       // If both operands are negated, invert the call and negate the result:
+       // min(-X, -Y) --> -(max(X, Y))
+@@ -3170,7 +3174,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     // it would be an extra instruction for min (fnabs), but
+     // that is still likely better for analysis and codegen.
+     auto IsMinMaxOrXNegX = [IID, &X](Value *Op0, Value *Op1) {
+-      if (match(Op0, m_FNeg(m_Value(X))) && match(Op1, m_Specific(X)))
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++      if (match(Op0, m_FNegOrFSubNegZero(m_Value(X))) &&
++          match(Op1, m_Specific(X)))
+         return Op0->hasOneUse() ||
+                (IID != Intrinsic::minimum && IID != Intrinsic::minnum &&
+                 IID != Intrinsic::minimumnum);
+@@ -3192,8 +3198,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+ 
+     // -A * -B -> A * B
+     Value *A, *B;
+-    if (match(II->getArgOperand(0), m_FNeg(m_Value(A))) &&
+-        match(II->getArgOperand(1), m_FNeg(m_Value(B)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(II->getArgOperand(0), m_FNegOrFSubNegZero(m_Value(A))) &&
++        match(II->getArgOperand(1), m_FNegOrFSubNegZero(m_Value(B)))) {
+       replaceOperand(*II, 0, A);
+       replaceOperand(*II, 1, B);
+       return II;
+@@ -3203,11 +3210,12 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     Value *Op1 = II->getOperand(1);
+     Value *OpNotNeg, *NegatedOp;
+     unsigned NegatedOpArg, OtherOpArg;
+-    if (match(Op0, m_FNeg(m_Value(OpNotNeg)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Op0, m_FNegOrFSubNegZero(m_Value(OpNotNeg)))) {
+       NegatedOp = Op0;
+       NegatedOpArg = 0;
+       OtherOpArg = 1;
+-    } else if (match(Op1, m_FNeg(m_Value(OpNotNeg)))) {
++    } else if (match(Op1, m_FNegOrFSubNegZero(m_Value(OpNotNeg)))) {
+       NegatedOp = Op1;
+       NegatedOpArg = 1;
+       OtherOpArg = 0;
+@@ -3259,7 +3267,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     Value *Src1 = II->getArgOperand(1);
+     Value *Src2 = II->getArgOperand(2);
+     Value *X, *Y;
+-    if (match(Src0, m_FNeg(m_Value(X))) && match(Src1, m_FNeg(m_Value(Y))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Src0, m_FNegOrFSubNegZero(m_Value(X))) &&
++        match(Src1, m_FNegOrFSubNegZero(m_Value(Y))))
+       return replaceInstUsesWith(
+           *II, Builder.CreateIntrinsic(IID, II->getType(), {X, Y, Src2}, II));
+ 
+@@ -3328,7 +3338,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     // Peek through changes of magnitude's sign-bit. This call rewrites those:
+     // copysign (fabs X), Sign --> copysign X, Sign
+     // copysign (fneg X), Sign --> copysign X, Sign
+-    if (match(Mag, m_FAbs(m_Value(X))) || match(Mag, m_FNeg(m_Value(X))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Mag, m_FAbs(m_Value(X))) ||
++        match(Mag, m_FNegOrFSubNegZero(m_Value(X))))
+       return replaceInstUsesWith(*II, Builder.CreateCopySign(X, Sign, II));
+ 
+     // copysign(floor(fabs(X)), X) --> copysign(trunc(X), X)
+@@ -3364,7 +3376,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     Value *Arg = II->getArgOperand(0);
+     Value *X;
+     // fabs (-X) --> fabs (X)
+-    if (match(Arg, m_FNeg(m_Value(X)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Arg, m_FNegOrFSubNegZero(m_Value(X)))) {
+       Value *Fabs = Builder.CreateFAbs(X, II);
+       return replaceInstUsesWith(CI, Fabs);
+     }
+@@ -3388,10 +3401,12 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         return SI;
+       }
+       // fabs (select Cond, -FVal, FVal) --> fabs FVal
+-      if (match(TVal, m_FNeg(m_Specific(FVal))))
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++      if (match(TVal, m_FNegOrFSubNegZero(m_Specific(FVal))))
+         return replaceInstUsesWith(*II, Builder.CreateFAbs(FVal, II));
+       // fabs (select Cond, TVal, -TVal) --> fabs TVal
+-      if (match(FVal, m_FNeg(m_Specific(TVal))))
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++      if (match(FVal, m_FNegOrFSubNegZero(m_Specific(TVal))))
+         return replaceInstUsesWith(*II, Builder.CreateFAbs(TVal, II));
+     }
+ 
+@@ -3425,7 +3440,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+   case Intrinsic::cosh: {
+     Value *X, *Sign;
+     Value *Src = II->getArgOperand(0);
+-    if (match(Src, m_FNeg(m_Value(X))) || match(Src, m_FAbs(m_Value(X))) ||
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Src, m_FNegOrFSubNegZero(m_Value(X))) ||
++        match(Src, m_FAbs(m_Value(X))) ||
+         match(Src, m_CopySign(m_Value(X), m_Value(Sign)))) {
+       // f(-x) --> f(x)
+       // f(fabs(x)) --> f(x)
+@@ -3445,7 +3462,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+   case Intrinsic::tan:
+   case Intrinsic::tanh: {
+     Value *X;
+-    if (match(II->getArgOperand(0), m_OneUse(m_FNeg(m_Value(X)))) &&
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(II->getArgOperand(0),
++              m_OneUse(m_FNegOrFSubNegZero(m_Value(X)))) &&
+         !mayFlushDenormalsToPositiveZero(II)) {
+       // f(-x) --> -f(x)
+       // for f in {sin, sinh, tan, tanh}
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 647c5b6d589e10..6515548f943d16 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -2427,7 +2427,8 @@ Instruction *InstCombinerImpl::visitFPTrunc(FPTruncInst &FPT) {
+     if (auto *FPMO = dyn_cast<FPMathOperator>(Op))
+       FMF &= FPMO->getFastMathFlags();
+ 
+-    if (match(Op, m_FNeg(m_Value(X)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(Op, m_FNegOrFSubNegZero(m_Value(X)))) {
+       Value *InnerTrunc = Builder.CreateFPTruncFMF(X, Ty, FMF);
+       Value *Neg = Builder.CreateFNegFMF(InnerTrunc, FMF);
+       return replaceInstUsesWith(FPT, Neg);
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index dd2e86c9c4c5a4..30df60c748a8e3 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -9127,12 +9127,15 @@ static Instruction *foldFCmpFNegCommonOp(FCmpInst &I) {
+   Value *Op0 = I.getOperand(0), *Op1 = I.getOperand(1);
+ 
+   // Canonicalize fneg as Op1.
+-  if (match(Op0, m_FNeg(m_Value())) && !match(Op1, m_FNeg(m_Value()))) {
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op0, m_FNegOrFSubNegZero(m_Value())) &&
++      !match(Op1, m_FNegOrFSubNegZero(m_Value()))) {
+     std::swap(Op0, Op1);
+     Pred = I.getSwappedPredicate();
+   }
+ 
+-  if (!match(Op1, m_FNeg(m_Specific(Op0))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (!match(Op1, m_FNegOrFSubNegZero(m_Specific(Op0))))
+     return nullptr;
+ 
+   // Replace the negated operand with 0.0:
+@@ -9458,7 +9461,9 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+ 
+   // fcmp pred (fneg X), (fneg Y) -> fcmp swap(pred) X, Y
+   Value *X, *Y;
+-  if (match(Op0, m_FNeg(m_Value(X))) && match(Op1, m_FNeg(m_Value(Y))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op0, m_FNegOrFSubNegZero(m_Value(X))) &&
++      match(Op1, m_FNegOrFSubNegZero(m_Value(Y))))
+     return new FCmpInst(I.getSwappedPredicate(), X, Y, "", &I);
+ 
+   if (Instruction *R = foldFCmpFNegCommonOp(I))
+@@ -9561,8 +9566,10 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+     switch (LHSI->getOpcode()) {
+     case Instruction::Select:
+       // fcmp eq (cond ? x : -x), 0 --> fcmp eq x, 0
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+       if (FCmpInst::isEquality(Pred) && match(RHSC, m_AnyZeroFP()) &&
+-          match(LHSI, m_c_Select(m_FNeg(m_Value(X)), m_Deferred(X))))
++          match(LHSI,
++                m_c_Select(m_FNegOrFSubNegZero(m_Value(X)), m_Deferred(X))))
+         return replaceOperand(I, 0, X);
+       if (Instruction *NV = FoldOpIntoSelect(I, cast<SelectInst>(LHSI)))
+         return NV;
+@@ -9613,7 +9620,8 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+   if (Instruction *R = foldCmpSelectOfConstants(I))
+     return R;
+ 
+-  if (match(Op0, m_FNeg(m_Value(X)))) {
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op0, m_FNegOrFSubNegZero(m_Value(X)))) {
+     // fcmp pred (fneg X), C --> fcmp swap(pred) X, -C
+     Constant *C;
+     if (match(Op1, m_Constant(C)))
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp b/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
+index 102c451cc135a5..a02b3727a8bc34 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
+@@ -654,7 +654,9 @@ Instruction *InstCombinerImpl::foldFPSignBitOps(BinaryOperator &I) {
+ 
+   // -X * -Y --> X * Y
+   // -X / -Y --> X / Y
+-  if (match(Op0, m_FNeg(m_Value(X))) && match(Op1, m_FNeg(m_Value(Y))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op0, m_FNegOrFSubNegZero(m_Value(X))) &&
++      match(Op1, m_FNegOrFSubNegZero(m_Value(Y))))
+     return BinaryOperator::CreateWithCopiedFlags(Opcode, X, Y, &I);
+ 
+   // fabs(X) * fabs(X) -> X * X
+@@ -1045,7 +1047,8 @@ Instruction *InstCombinerImpl::visitFMul(BinaryOperator &I) {
+   // -X * C --> X * -C
+   Value *X, *Y;
+   Constant *C;
+-  if (match(Op0, m_FNeg(m_Value(X))) && match(Op1, m_Constant(C)))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Op0, m_FNegOrFSubNegZero(m_Value(X))) && match(Op1, m_Constant(C)))
+     if (Constant *NegC = ConstantFoldUnaryOpOperand(Instruction::FNeg, C, DL))
+       return BinaryOperator::CreateFMulFMF(X, NegC, &I);
+ 
+@@ -2058,7 +2061,8 @@ Instruction *InstCombinerImpl::foldFDivConstantDivisor(BinaryOperator &I) {
+   // -X / C --> X / -C
+   Value *X;
+   const DataLayout &DL = I.getDataLayout();
+-  if (match(I.getOperand(0), m_FNeg(m_Value(X))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(I.getOperand(0), m_FNegOrFSubNegZero(m_Value(X))))
+     if (Constant *NegC = ConstantFoldUnaryOpOperand(Instruction::FNeg, C, DL))
+       return BinaryOperator::CreateFDivFMF(X, NegC, &I);
+ 
+@@ -2103,7 +2107,8 @@ static Instruction *foldFDivConstantDividend(BinaryOperator &I) {
+   // C / -X --> -C / X
+   Value *X;
+   const DataLayout &DL = I.getDataLayout();
+-  if (match(I.getOperand(1), m_FNeg(m_Value(X))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(I.getOperand(1), m_FNegOrFSubNegZero(m_Value(X))))
+     if (Constant *NegC = ConstantFoldUnaryOpOperand(Instruction::FNeg, C, DL))
+       return BinaryOperator::CreateFDivFMF(NegC, X, &I);
+ 
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 8ba2768d2e9921..7c63754021acdc 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -358,7 +358,9 @@ Instruction *InstCombinerImpl::foldSelectOpOp(SelectInst &SI, Instruction *TI,
+   if (TI->hasOneUse() || FI->hasOneUse()) {
+     // Cond ? -X : -Y --> -(Cond ? X : Y)
+     Value *X, *Y;
+-    if (match(TI, m_FNeg(m_Value(X))) && match(FI, m_FNeg(m_Value(Y)))) {
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (match(TI, m_FNegOrFSubNegZero(m_Value(X))) &&
++        match(FI, m_FNegOrFSubNegZero(m_Value(Y)))) {
+       // Intersect FMF from the fneg instructions and union those with the
+       // select.
+       FastMathFlags FMF = TI->getFastMathFlags();
+@@ -3419,7 +3421,8 @@ static Instruction *foldSelectWithFCmpToFabs(SelectInst &SI,
+       }
+     }
+ 
+-    if (!match(TrueVal, m_FNeg(m_Specific(X))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (!match(TrueVal, m_FNegOrFSubNegZero(m_Specific(X))))
+       return nullptr;
+ 
+     // Forward-propagate nnan and ninf from the fcmp to the select.
+@@ -3496,7 +3499,8 @@ static Instruction *foldSelectWithFCmpToFabs(SelectInst &SI,
+                m_ICmp(Pred, m_ElementWiseBitCast(m_Specific(X)), m_APInt(C))) ||
+         !isSignBitCheck(Pred, *C, TrueIfSigned))
+       continue;
+-    if (!match(TrueVal, m_FNeg(m_Specific(X))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (!match(TrueVal, m_FNegOrFSubNegZero(m_Specific(X))))
+       return nullptr;
+     if (Swap == TrueIfSigned && !CondVal->hasOneUse() && !TrueVal->hasOneUse())
+       return nullptr;
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp b/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
+index 7a132cdbef3104..ac8e370e17830e 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
+@@ -2660,7 +2660,9 @@ static Instruction *foldShuffleOfUnaryOps(ShuffleVectorInst &Shuf,
+                                           InstCombiner::BuilderTy &Builder) {
+   auto *S0 = dyn_cast<Instruction>(Shuf.getOperand(0));
+   Value *X;
+-  if (!S0 || !match(S0, m_CombineOr(m_FNeg(m_Value(X)), m_FAbs(m_Value(X)))))
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (!S0 || !match(S0, m_CombineOr(m_FNegOrFSubNegZero(m_Value(X)),
++                                    m_FAbs(m_Value(X)))))
+     return nullptr;
+ 
+   bool IsFNeg = S0->getOpcode() == Instruction::FNeg;
+@@ -2668,7 +2670,10 @@ static Instruction *foldShuffleOfUnaryOps(ShuffleVectorInst &Shuf,
+   // Match 2-input (binary) shuffle.
+   auto *S1 = dyn_cast<Instruction>(Shuf.getOperand(1));
+   Value *Y;
+-  if (!S1 || !match(S1, m_CombineOr(m_FNeg(m_Value(Y)), m_FAbs(m_Value(Y)))) ||
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (!S1 ||
++      !match(S1, m_CombineOr(m_FNegOrFSubNegZero(m_Value(Y)),
++                             m_FAbs(m_Value(Y)))) ||
+       S0->getOpcode() != S1->getOpcode() ||
+       (!S0->hasOneUse() && !S1->hasOneUse()))
+     return nullptr;
+diff --git a/llvm/lib/Transforms/Scalar/Reassociate.cpp b/llvm/lib/Transforms/Scalar/Reassociate.cpp
+index 3dd5e14f2087ae..c65c813afec5d3 100644
+--- a/llvm/lib/Transforms/Scalar/Reassociate.cpp
++++ b/llvm/lib/Transforms/Scalar/Reassociate.cpp
+@@ -256,8 +256,9 @@ unsigned ReassociatePass::getRank(Value *V) {
+       Rank = Item.Rank;
+       // If this is a 'not' or 'neg' instruction, do not count it for rank.
+       // This assures us that X and ~X will have the same rank.
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+       if (!match(I, m_Not(m_Value())) && !match(I, m_Neg(m_Value())) &&
+-          !match(I, m_FNeg(m_Value())))
++          !match(I, m_FNegOrFSubNegZero(m_Value())))
+         ++Rank;
+ 
+       LLVM_DEBUG(dbgs() << "Calculated Rank[" << I->getName() << "] = " << Rank
+@@ -550,9 +551,11 @@ static bool LinearizeExprTree(Instruction *I,
+       // reassociation opportunities that are exposed will be reassociated
+       // further.
+       Instruction *Neg;
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+       if (((Opcode == Instruction::Mul && match(Op, m_Neg(m_Value()))) ||
+-           (Opcode == Instruction::FMul && match(Op, m_FNeg(m_Value())))) &&
+-           match(Op, m_Instruction(Neg))) {
++           (Opcode == Instruction::FMul &&
++            match(Op, m_FNegOrFSubNegZero(m_Value())))) &&
++          match(Op, m_Instruction(Neg))) {
+         LLVM_DEBUG(dbgs()
+                    << "MORPH LEAF: " << *Op << " (" << Weight << ") TO ");
+         Instruction *Mul = LowerNegateToMultiply(Neg);
+@@ -859,7 +862,9 @@ static Value *NegateValue(Value *V, Instruction *BI,
+   // Okay, we need to materialize a negated version of V with an instruction.
+   // Scan the use lists of V to see if we have one already.
+   for (User *U : V->users()) {
+-    if (!match(U, m_Neg(m_Value())) && !match(U, m_FNeg(m_Value())))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (!match(U, m_Neg(m_Value())) &&
++        !match(U, m_FNegOrFSubNegZero(m_Value())))
+       continue;
+ 
+     // We found one!  Now we have to make sure that the definition dominates
+@@ -1075,7 +1080,9 @@ static BinaryOperator *BreakUpDistribute(Instruction *Mul,
+ /// Return true if we should break up this subtract of X-Y into (X + -Y).
+ static bool ShouldBreakUpSubtract(Instruction *Sub) {
+   // If this is a negation, we can't split it up!
+-  if (match(Sub, m_Neg(m_Value())) || match(Sub, m_FNeg(m_Value()))) 
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Sub, m_Neg(m_Value())) ||
++      match(Sub, m_FNegOrFSubNegZero(m_Value())))
+     return false;
+ 
+   // Don't breakup X - undef.
+@@ -1648,8 +1655,9 @@ Value *ReassociatePass::OptimizeAdd(Instruction *I,
+ 
+     // Check for X and -X or X and ~X in the operand list.
+     Value *X;
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+     if (!match(TheOp, m_Neg(m_Value(X))) && !match(TheOp, m_Not(m_Value(X))) &&
+-        !match(TheOp, m_FNeg(m_Value(X))))
++        !match(TheOp, m_FNegOrFSubNegZero(m_Value(X))))
+       continue;
+ 
+     unsigned FoundX = FindInOperandList(Ops, i, X);
+@@ -1657,8 +1665,9 @@ Value *ReassociatePass::OptimizeAdd(Instruction *I,
+       continue;
+ 
+     // Remove X and -X from the operand list.
+-    if (Ops.size() == 2 &&
+-        (match(TheOp, m_Neg(m_Value())) || match(TheOp, m_FNeg(m_Value()))))
++    // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++    if (Ops.size() == 2 && (match(TheOp, m_Neg(m_Value())) ||
++                            match(TheOp, m_FNegOrFSubNegZero(m_Value()))))
+       return Constant::getNullValue(X->getType());
+ 
+     // Remove X and ~X from the operand list.
+@@ -2383,7 +2392,8 @@ void ReassociatePass::OptimizeInst(Instruction *I) {
+       RedoInsts.insert(I);
+       MadeChange = true;
+       I = NI;
+-    } else if (match(I, m_FNeg(m_Value()))) {
++    } else if (match(I, m_FNegOrFSubNegZero(m_Value()))) {
++      // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+       // Otherwise, this is a negation.  See if the operand is a multiply tree
+       // and if this is not an inner node of a multiply tree.
+       Value *Op = isa<BinaryOperator>(I) ? I->getOperand(1) :
+diff --git a/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp b/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp
+index 4b21e3a02b1d77..16fa62da2092fb 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp
+@@ -3155,7 +3155,8 @@ static Value *optimizeSymmetricCall(CallInst *CI, bool IsEven,
+   Value *X;
+   Value *Src = CI->getArgOperand(0);
+ 
+-  if (match(Src, m_OneUse(m_FNeg(m_Value(X)))) &&
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (match(Src, m_OneUse(m_FNegOrFSubNegZero(m_Value(X)))) &&
+       (IsEven || !mayFlushDenormalsToPositiveZero(CI))) {
+     auto *Call = B.CreateCall(CI->getCalledFunction(), {X}, /*FMFSource=*/CI);
+     auto *CallInst = copyFlags(*CI, Call);
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+index 496a511ba0f61a..c067eed0f7c537 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+@@ -34620,10 +34620,11 @@ class HorizontalReduction {
+         // For flattened fadd reductions the reduced value may be consumed by
+         // an fsub/fneg chain link instead of an fadd. No reassoc/nsz gating
+         // is needed: the result is only a cost context.
++        // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
+         if (getRdxKind(U) == RdxKind ||
+             (RdxKind == RecurKind::FAdd &&
+              (match(U, m_FSub(m_Value(), m_Value())) ||
+-              match(U, m_FNeg(m_Value())))))
++              match(U, m_FNegOrFSubNegZero(m_Value())))))
+           return cast<Instruction>(U);
+       return cast<Instruction>(RdxVal);
+     };
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index 5c9e513406f80a..81eb0bec18cbfc 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -742,7 +742,8 @@ bool VectorCombine::foldInsExtFNeg(Instruction &I) {
+   // Note: This handles the canonical fneg instruction and "fsub -0.0, X".
+   Value *SrcVec;
+   Instruction *Extract;
+-  if (!match(FNeg, m_FNeg(m_CombineAnd(
++  // TODO: Confirm whether m_FNegOrFSubNegZero is correct.
++  if (!match(FNeg, m_FNegOrFSubNegZero(m_CombineAnd(
+                        m_Instruction(Extract),
+                        m_ExtractElt(m_Value(SrcVec), m_ConstantInt(ExtIdx))))))
+     return false;
+diff --git a/llvm/test/Transforms/InstSimplify/call.ll b/llvm/test/Transforms/InstSimplify/call.ll
+index 9d79ac0304029d..7d731bd9b27212 100644
+--- a/llvm/test/Transforms/InstSimplify/call.ll
++++ b/llvm/test/Transforms/InstSimplify/call.ll
+@@ -1483,11 +1483,11 @@ define <2 x double> @copysign_same_operand_vec(<2 x double> %x) {
+ 
+ define float @negated_sign_arg(float %x) {
+ ; CHECK-LABEL: @negated_sign_arg(
+-; CHECK-NEXT:    [[NEGX:%.*]] = fsub ninf float -0.000000e+00, [[X:%.*]]
++; CHECK-NEXT:    [[NEGX:%.*]] = fneg ninf float [[X:%.*]]
+ ; CHECK-NEXT:    ret float [[NEGX]]
+ ;
+-  %negx = fsub ninf float -0.0, %x
+-  %r = call arcp float @llvm.copysign.f32(float %x, float %negx)
++  %negx = fneg ninf float %x
++  %r = call float @llvm.copysign.f32(float %x, float %negx)
+   ret float %r
+ }
+ 
+diff --git a/llvm/test/Transforms/InstSimplify/copysign-snan.ll b/llvm/test/Transforms/InstSimplify/copysign-snan.ll
+new file mode 100644
+index 00000000000000..e3191d6700e0a7
+--- /dev/null
++++ b/llvm/test/Transforms/InstSimplify/copysign-snan.ll
+@@ -0,0 +1,29 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=instsimplify -S | FileCheck %s
++
++; Must NOT fold: fsub may quiet an sNaN.
++define half @copysign_fsub_negzero(half %x) {
++; CHECK-LABEL: define half @copysign_fsub_negzero(
++; CHECK-SAME: half [[X:%.*]]) {
++; CHECK-NEXT:    [[NEGX:%.*]] = fsub half -0.000000e+00, [[X]]
++; CHECK-NEXT:    [[R:%.*]] = call half @llvm.copysign.f16(half [[X]], half [[NEGX]])
++; CHECK-NEXT:    ret half [[R]]
++;
++  %negx = fsub half -0.0, %x
++  %r = call half @llvm.copysign.f16(half %x, half %negx)
++  ret half %r
++}
++
++; Still folds with a real fneg.
++define half @copysign_fneg(half %x) {
++; CHECK-LABEL: define half @copysign_fneg(
++; CHECK-SAME: half [[X:%.*]]) {
++; CHECK-NEXT:    [[NEGX:%.*]] = fneg half [[X]]
++; CHECK-NEXT:    ret half [[NEGX]]
++;
++  %negx = fneg half %x
++  %r = call half @llvm.copysign.f16(half %x, half %negx)
++  ret half %r
++}
++
++declare half @llvm.copysign.f16(half, half)
+diff --git a/llvm/unittests/IR/PatternMatch.cpp b/llvm/unittests/IR/PatternMatch.cpp
+index 33a0013abac9e4..cd85eb199068d9 100644
+--- a/llvm/unittests/IR/PatternMatch.cpp
++++ b/llvm/unittests/IR/PatternMatch.cpp
+@@ -1968,21 +1968,21 @@ TEST_F(PatternMatchTest, FloatingPointFNeg) {
+   Value *Match;
+ 
+   // Test FNeg(1.0)
+-  EXPECT_TRUE(match(V, m_FNeg(m_Value(Match))));
++  EXPECT_TRUE(match(V, m_FNegOrFSubNegZero(m_Value(Match))));
+   EXPECT_EQ(One, Match);
+ 
+   // Test FSub(-0.0, 1.0)
+-  EXPECT_TRUE(match(V1, m_FNeg(m_Value(Match))));
++  EXPECT_TRUE(match(V1, m_FNegOrFSubNegZero(m_Value(Match))));
+   EXPECT_EQ(One, Match);
+ 
+   // Test FSub(0.0, 1.0)
+-  EXPECT_FALSE(match(V2, m_FNeg(m_Value(Match))));
++  EXPECT_FALSE(match(V2, m_FNegOrFSubNegZero(m_Value(Match))));
+   cast<Instruction>(V2)->setHasNoSignedZeros(true);
+-  EXPECT_TRUE(match(V2, m_FNeg(m_Value(Match))));
++  EXPECT_TRUE(match(V2, m_FNegOrFSubNegZero(m_Value(Match))));
+   EXPECT_EQ(One, Match);
+ 
+   // Test FAdd(-0.0, 1.0)
+-  EXPECT_FALSE(match(V3, m_FNeg(m_Value(Match))));
++  EXPECT_FALSE(match(V3, m_FNegOrFSubNegZero(m_Value(Match))));
+ }
+ 
+ TEST_F(PatternMatchTest, CondBranchTest) {
