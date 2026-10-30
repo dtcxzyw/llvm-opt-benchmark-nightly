@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %i.m, label %bb.d, label %.DTransformMap_iterMut.exit.loopexit_crit_edge.i, !llvm.loop !63
 
 .DTransformMap_iterMut.exit.loopexit_crit_edge.i: ; preds = %.lr.ph.i
-  %indvars.i.i.i = trunc i64 %indvars.iv.next.i.i.i to i32
+  %indvars.i.i.i = trunc nuw i64 %indvars.iv.next.i.i.i to i32
   br label %.lr.ph39.i, !llvm.loop !63
 
 .lr.ph39.i:                                       ; preds = %.DTransformMap_iterMut.exit.loopexit_crit_edge.i, %bb.c

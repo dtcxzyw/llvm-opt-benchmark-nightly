@@ -204,11 +204,10 @@ bb.u:                                             ; preds = %bb.t
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %7, i64 24
   %.pre365.a = load i64, ptr %.phi.trans.insert, align 8, !tbaa !395
   %i.au = icmp eq i64 %.pre365.a, 0
-  %35 = select i1 %i.au, i32 2, i32 1
   br label %._crit_edge330
 
 ._crit_edge330:                                   ; preds = %._crit_edge330.loopexit, %bb.u
-  %36 = phi i32 [ %35, %._crit_edge330.loopexit ], [ 2, %bb.u ]
+  %35 = phi i1 [ %i.au, %._crit_edge330.loopexit ], [ true, %bb.u ]
   %i.av = getelementptr inbounds nuw i8, ptr %7, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   store i32 0, ptr %i.c, align 4, !tbaa !131
@@ -384,7 +383,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.af, %._crit_edge
   br i1 %.not, label %._crit_edge330.loopexit, label %.lr.ph329
 
 .preheader:                                       ; preds = %._crit_edge330, %bb.aq
-  %.051333 = phi i32 [ 0, %._crit_edge330 ], [ %37, %bb.aq ]
+  %36 = phi i1 [ %35, %._crit_edge330 ], [ false, %bb.aq ]
   %i.ch = load i64, ptr %i.av, align 8, !tbaa !395
   %.not.not.i.i = icmp eq i64 %i.ch, 0
   %.promoted = load i32, ptr %i.c, align 4        ; 3 uses
@@ -470,9 +469,7 @@ _ZNSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE4findERKj.exit: ; preds = %b
 
 bb.aq:                                            ; preds = %.loopexit307.split.us
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
-  %37 = add nuw nsw i32 %.051333, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %37, %36
-  br i1 %exitcond.not, label %bb.ar, label %.preheader, !llvm.loop !470
+  br i1 %36, label %.preheader, label %bb.ar, !llvm.loop !470
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dm = load ptr, ptr %i.ao, align 8, !tbaa !397 ; 2 uses

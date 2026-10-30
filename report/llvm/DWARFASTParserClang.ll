@@ -204,20 +204,20 @@ _ZL23GetDefaultAccessibilityRKN12lldb_private6plugin5dwarf8DWARFDIEE.exit: ; pre
   br i1 %i.s, label %bb.t, label %bb.u
 
 bb.d:                                             ; preds = %.lr.ph, %bb.s
-  %.063 = phi i32 [ 0, %.lr.ph ], [ %20, %bb.s ]  ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 3 uses
   %.02162 = phi i64 [ 0, %.lr.ph ], [ %.2, %bb.s ] ; 6 uses
   %.02261 = phi i1 [ false, %.lr.ph ], [ %.123, %bb.s ] ; 5 uses
   %.02460 = phi i32 [ %.0.i, %.lr.ph ], [ %.125, %bb.s ] ; 5 uses
-  %19 = zext i32 %.063 to i64
   %i.t = load ptr, ptr %9, align 8, !tbaa !196
-  %i.u = getelementptr inbounds nuw [48 x i8], ptr %i.t, i64 %19
+  %i.u = getelementptr inbounds nuw [48 x i8], ptr %i.t, i64 %indvars.iv
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.w = load i16, ptr %i.v, align 8, !tbaa !217
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   store ptr null, ptr %11, align 8, !tbaa !93
   store i16 0, ptr %i.k, align 8, !tbaa !94
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 16, i1 false)
-  %i.x = call noundef zeroext i1 @_ZNK12lldb_private6plugin5dwarf15DWARFAttributes23ExtractFormValueAtIndexEjRNS1_14DWARFFormValueE(ptr noundef nonnull align 8 dereferenceable(400) %9, i32 noundef %.063, ptr noundef nonnull align 8 dereferenceable(40) %11) #24
+  %19 = trunc nuw i64 %indvars.iv to i32
+  %i.x = call noundef zeroext i1 @_ZNK12lldb_private6plugin5dwarf15DWARFAttributes23ExtractFormValueAtIndexEjRNS1_14DWARFFormValueE(ptr noundef nonnull align 8 dereferenceable(400) %9, i32 noundef %19, ptr noundef nonnull align 8 dereferenceable(40) %11) #24
   br i1 %i.x, label %bb.e, label %bb.s
 
 bb.e:                                             ; preds = %bb.d
@@ -326,9 +326,10 @@ bb.s:                                             ; preds = %_ZNSt12__shared_ptr
   %.123 = phi i1 [ %.02261, %bb.e ], [ %.02261, %bb.f ], [ %.02261, %bb.d ], [ %.02261, %bb.q ], [ %i.ba, %bb.r ], [ %.02261, %_ZNSt12__shared_ptrIN12lldb_private6ModuleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 2 uses
   %.2 = phi i64 [ %.02162, %bb.e ], [ %.02162, %bb.f ], [ %.02162, %bb.d ], [ %.02162, %bb.q ], [ %.02162, %bb.r ], [ %spec.select, %_ZNSt12__shared_ptrIN12lldb_private6ModuleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
-  %20 = add nuw i32 %.063, 1                      ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bb = load i32, ptr %i.b, align 8, !tbaa !214
-  %21 = icmp ugt i32 %i.bb, %20
+  %20 = zext i32 %i.bb to i64
+  %21 = icmp samesign ult i64 %indvars.iv.next, %20
   br i1 %21, label %bb.d, label %._crit_edge, !llvm.loop !1334
 
 bb.t:                                             ; preds = %._crit_edge

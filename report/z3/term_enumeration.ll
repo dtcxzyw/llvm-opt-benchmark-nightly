@@ -204,6 +204,7 @@ bb.a:
   store ptr null, ptr %0, align 8, !tbaa !173
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %4 = add i32 %3, 1
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %_ZNK7obj_mapI4sort10ptr_vectorI4exprEE8containsEPS0_.exit.thread
@@ -417,8 +418,8 @@ _ZNK7obj_mapI4sort10ptr_vectorI4exprEE8containsEPS0_.exit.thread: ; preds = %bb.
   %i.by = phi ptr [ %i.c, %bb.i ], [ %i.c, %.loopexit ], [ %i.bs, %bb.q ], [ %i.c, %_ZN6vectorIP4exprLb0EjE3endEv.exit ], [ %i.c, %.preheader.i.i.i ], [ %i.c, %bb.h ], [ %i.c, %bb.e ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %indvars = trunc nuw i64 %indvars.iv.next to i32
-  %.not = icmp ult i32 %3, %indvars
-  br i1 %.not, label %.critedge, label %bb.b, !llvm.loop !322
+  %exitcond.not = icmp eq i32 %4, %indvars
+  br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !322
 
 .critedge:                                        ; preds = %bb.b, %_ZNK6vectorIP7obj_mapI4sort10ptr_vectorI4exprEELb0EjE4sizeEv.exit, %_ZNK7obj_mapI4sort10ptr_vectorI4exprEE8containsEPS0_.exit.thread
   ret void

@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/ipfs_kad_example.ipfs_kad_example.349af03398bf6694-cgu.02?download=true
 inline.NumInlined: 2055
 inline.NumDeleted: 1019
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCs4LZN9PPmi2I_11hickory_net4xfer11ignore_senduINtNtCskKLDkoKarTP_4core6result6ResultNtNtNtCsbTgMbcnmcyu_13hickory_proto2op12dns_response11DnsResponseNtNtB4_5error8NetErrorEECs4w110Okq5IC_16ipfs_kad_example:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -204,7 +205,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsgV0iE8Xkxi
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueANtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6Recordj1_ECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %0) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6domain4name4NameECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %0)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECs4w110Okq5IC_16ipfs_kad_example.exit.i unwind label %bb.b
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECs4w110Okq5IC_16ipfs_kad_example.exit unwind label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = landingpad { ptr, i32 }
@@ -212,11 +213,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr11record_data5RDataECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef align 8 dereferenceable(184) %i.b) #24
           to label %bb.d unwind label %bb.c
-
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECs4w110Okq5IC_16ipfs_kad_example.exit.i: ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr11record_data5RDataECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef align 8 dereferenceable(184) %1)
-  ret void
 
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
@@ -226,6 +222,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.a
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECs4w110Okq5IC_16ipfs_kad_example.exit: ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr11record_data5RDataECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef align 8 dereferenceable(184) %1)
+  ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -628,7 +629,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph17
-  %i.k = add i64 %.sroa.0.1.i.i16, 1              ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i.i16, 1      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.b
   br i1 %i.l, label %._crit_edge, label %.lr.ph17
 
@@ -685,7 +686,7 @@ bb.b:                                             ; preds = %.lr.ph, %_RINvNtCsk
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCs4LZN9PPmi2I_11hickory_net4xfer8ProtocolINtNtBE_12dns_exchange11DnsExchangeNtNtNtBG_7runtime13tokio_runtime20TokioRuntimeProviderEEECs4w110Okq5IC_16ipfs_kad_example.exit.i.i unwind label %bb.c
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCs4LZN9PPmi2I_11hickory_net4xfer8ProtocolINtNtBE_12dns_exchange11DnsExchangeNtNtNtBG_7runtime13tokio_runtime20TokioRuntimeProviderEEECs4w110Okq5IC_16ipfs_kad_example.exit7.i.i: ; preds = %.lr.ph5
-  %i.h = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.i = icmp eq i64 %i.h, %i.b
   br i1 %i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCs4LZN9PPmi2I_11hickory_net4xfer8ProtocolINtNtBE_12dns_exchange11DnsExchangeNtNtNtBG_7runtime13tokio_runtime20TokioRuntimeProviderEEECs4w110Okq5IC_16ipfs_kad_example.exit7.i.i._crit_edge, label %.lr.ph5
 

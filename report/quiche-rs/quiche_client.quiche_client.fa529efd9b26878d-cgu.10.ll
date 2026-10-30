@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_RNvXs0_NtNtNtCskKL
   %.sroa.449.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bv, i64 2, !dbg !3926
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(30) %.sroa.449.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(30) %.sroa.449, i64 30, i1 false), !dbg !3926
     #dbg_value(ptr undef, !3491, !DIExpression(), !3495)
-  %i.bw = add nuw i64 %.sroa.7.076, 1, !dbg !3927 ; 2 uses
+  %i.bw = add i64 %.sroa.7.076, 1, !dbg !3927     ; 2 uses
     #dbg_value(i64 %i.bw, !3460, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3540)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.449), !dbg !3928
   %exitcond.not = icmp eq i64 %i.bw, %.sink.i.i, !dbg !3857
@@ -607,44 +607,20 @@ bb.a:
     #dbg_declare(ptr %i.a, !7424, !DIExpression(), !7431)
     #dbg_declare(ptr poison, !7432, !DIExpression(), !7442)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128, !dbg !7494
-  %i.c = load i64, ptr %i.b, align 8, !dbg !7494, !noundef !453 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !dbg !7494, !noundef !453 ; 3 uses
   %i.d = icmp ugt i64 %i.c, 1, !dbg !7494
-  br i1 %i.d, label %bb.c, label %.preheader.preheader, !dbg !7495
+  br i1 %i.d, label %bb.c, label %bb.b, !dbg !7495
 
-.preheader.preheader:                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.c, 0, !dbg !7496
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit, label %.lr.ph, !dbg !7496
+bb.b:                                             ; preds = %bb.a
+  %i.e = icmp eq i64 %i.c, 0, !dbg !7496
+  br i1 %i.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit, label %.lr.ph11, !dbg !7496
 
-.lr.ph:                                           ; preds = %.preheader.preheader
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client(ptr noalias nofree noundef align 8 dereferenceable(128) %0)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit unwind label %bb.b, !dbg !7496
+.lr.ph11:                                         ; preds = %bb.b
+  tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client(ptr noalias nofree noundef align 8 dereferenceable(128) %0), !dbg !7496
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit, !dbg !7496
 
-2:                                                ; preds = %.lr.ph11
-  %3 = add nuw nsw i64 %.sroa.0.1.i10, 1, !dbg !7496 ; 2 uses
-  %4 = icmp eq i64 %3, %i.c, !dbg !7496
-  br i1 %4, label %common.resume, label %.lr.ph11, !dbg !7496
-
-bb.b:                                             ; preds = %.lr.ph
-  %5 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %i.e = icmp eq i64 %i.c, 1, !dbg !7496
-  br i1 %i.e, label %common.resume, label %.lr.ph11, !dbg !7496
-
-.lr.ph11:                                         ; preds = %bb.b, %2
-  %.sroa.0.1.i10 = phi i64 [ %3, %2 ], [ 1, %bb.b ] ; 2 uses
-  %6 = getelementptr inbounds nuw [128 x i8], ptr %0, i64 %.sroa.0.1.i10, !dbg !7496
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client(ptr noalias nofree noundef align 8 dereferenceable(128) %6) #26
-          to label %2 unwind label %7, !dbg !7496
-
-common.resume:                                    ; preds = %2, %bb.b, %bb.d
-  %common.resume.op = phi { ptr, i32 } [ %i.k, %bb.d ], [ %5, %bb.b ], [ %5, %2 ]
-  resume { ptr, i32 } %common.resume.op, !dbg !7419
-
-7:                                                ; preds = %.lr.ph11
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #21, !dbg !7496
-  unreachable, !dbg !7496
+common.resume:                                    ; preds = %bb.d
+  resume { ptr, i32 } %i.k, !dbg !7419
 
 bb.c:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !7466, !DIExpression(), !7477)
@@ -689,7 +665,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !7504
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit, !dbg !7505
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit: ; preds = %.preheader.preheader, %.lr.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3f36owOmepS_6quiche5frame5FrameEECslusEaBCZKLp_13quiche_client.exit
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECslusEaBCZKLp_13quiche_client.exit: ; preds = %bb.b, %.lr.ph11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3f36owOmepS_6quiche5frame5FrameEECslusEaBCZKLp_13quiche_client.exit
   ret void, !dbg !7506
 }
 
@@ -1092,7 +1068,6 @@ attributes #22 = { noinline }
 attributes #23 = { noreturn }
 attributes #24 = { noinline noreturn }
 attributes #25 = { nounwind }
-attributes #26 = { cold }
 
 !llvm.module.flags = !{!289, !290, !291, !292, !293, !294}
 !llvm.ident = !{!295}

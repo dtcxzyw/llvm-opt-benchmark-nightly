@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not87, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 2 uses
+  %wide.trip.count = zext i32 %1 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK11ast_manager6is_andEPK4expr.exit.thread
@@ -607,7 +607,8 @@ _ZN6bufferIP4exprLb0ELj16EE9push_backERKS1_.exit65: ; preds = %_ZNK11ast_manager
   %i.fk = phi i32 [ %i.fe, %_ZN6bufferIP4exprLb0ELj16EE9push_backERKS1_.exit65 ], [ %i.bo, %bb.g ], [ %i.du, %._crit_edge.i ]
   %i.fl = phi i32 [ %i.fi, %_ZN6bufferIP4exprLb0ELj16EE9push_backERKS1_.exit65 ], [ %i.bp, %bb.g ], [ %i.dy, %._crit_edge.i ] ; 2 uses
   %indvars.iv.next99 = add nuw nsw i64 %indvars.iv98, 1 ; 2 uses
-  %exitcond102.not = icmp eq i64 %indvars.iv.next99, %wide.trip.count
+  %lftr.wideiv = trunc i64 %indvars.iv.next99 to i32
+  %exitcond102.not = icmp eq i32 %1, %lftr.wideiv
   br i1 %exitcond102.not, label %._crit_edge, label %.lr.ph86, !llvm.loop !286
 
 ._crit_edge:                                      ; preds = %.loopexit, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit
@@ -1010,7 +1011,7 @@ bb.a:
   br i1 %.not105, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64           ; 2 uses
+  %wide.trip.count = zext i32 %1 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK11ast_manager5is_orEPK4expr.exit.thread
@@ -1413,7 +1414,8 @@ bb.o:                                             ; preds = %bb.n
   %.139 = phi i1 [ %i.fj, %bb.o ], [ false, %bb.g ], [ %.038102, %bb.m ], [ false, %bb.j ] ; 2 uses
   %.137 = phi ptr [ %i.bo, %bb.o ], [ %.036103, %bb.g ], [ %i.bo, %bb.m ], [ %.036103, %bb.j ]
   %indvars.iv.next117 = add nuw nsw i64 %indvars.iv116, 1 ; 2 uses
-  %exitcond119.not = icmp eq i64 %indvars.iv.next117, %wide.trip.count
+  %lftr.wideiv = trunc i64 %indvars.iv.next117 to i32
+  %exitcond119.not = icmp eq i32 %1, %lftr.wideiv
   br i1 %exitcond119.not, label %._crit_edge.loopexit, label %.lr.ph104, !llvm.loop !325
 
 ._crit_edge.loopexit:                             ; preds = %.loopexit

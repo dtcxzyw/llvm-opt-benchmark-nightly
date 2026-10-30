@@ -205,7 +205,11 @@ bb.g:                                             ; preds = %_ZNK4llvm3EVT20getV
   store i32 8, ptr %i.ab, align 4, !tbaa !182
   %i.ac = load ptr, ptr %7, align 8, !tbaa !482
   %.not361 = icmp ugt i32 %i.k, %i.t
-  br i1 %.not361, label %.split4, label %.lr.ph
+  br i1 %.not361, label %.split4, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.g
+  %12 = zext i32 %i.k to i64
+  br label %.lr.ph
 
 .split4.loopexit:                                 ; preds = %._crit_edge
   %.sroa.03.0.copyload.pre = load i16, ptr %8, align 8, !tbaa !157
@@ -238,8 +242,8 @@ _ZN4llvm11SmallVectorIiLj8EED2Ev.exit:            ; preds = %.split4, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #18
   br label %bb.m
 
-.lr.ph:                                           ; preds = %bb.g, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %bb.g ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %._crit_edge
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %indvars.iv
   %i.an = load i32, ptr %i.am, align 4, !tbaa !168 ; 2 uses
   %i.ao = icmp slt i32 %i.an, 0
@@ -274,8 +278,7 @@ _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit.us: ; preds = %bb.j, %
 
 ._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %i.k, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %12
   br i1 %exitcond, label %.split4.loopexit, label %.lr.ph, !llvm.loop !841
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit

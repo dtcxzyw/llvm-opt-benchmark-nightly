@@ -202,44 +202,20 @@ bb.a:
     #dbg_declare(ptr %i.a, !11217, !DIExpression(), !11231)
     #dbg_declare(ptr poison, !11232, !DIExpression(), !11242)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128, !dbg !11294
-  %i.c = load i64, ptr %i.b, align 8, !dbg !11294, !noundef !1467 ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !dbg !11294, !noundef !1467 ; 3 uses
   %i.d = icmp ugt i64 %i.c, 1, !dbg !11294
-  br i1 %i.d, label %bb.c, label %.preheader.preheader, !dbg !11295
+  br i1 %i.d, label %bb.c, label %bb.b, !dbg !11295
 
-.preheader.preheader:                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.c, 0, !dbg !11296
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit, label %.lr.ph, !dbg !11296
+bb.b:                                             ; preds = %bb.a
+  %i.e = icmp eq i64 %i.c, 0, !dbg !11296
+  br i1 %i.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit, label %.lr.ph11, !dbg !11296
 
-.lr.ph:                                           ; preds = %.preheader.preheader
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server(ptr noalias nofree noundef align 8 dereferenceable(128) %0)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit unwind label %bb.b, !dbg !11296
+.lr.ph11:                                         ; preds = %bb.b
+  tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server(ptr noalias nofree noundef align 8 dereferenceable(128) %0), !dbg !11296
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit, !dbg !11296
 
-2:                                                ; preds = %.lr.ph11
-  %3 = add nuw nsw i64 %.sroa.0.1.i10, 1, !dbg !11296 ; 2 uses
-  %4 = icmp eq i64 %3, %i.c, !dbg !11296
-  br i1 %4, label %common.resume, label %.lr.ph11, !dbg !11296
-
-bb.b:                                             ; preds = %.lr.ph
-  %5 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %i.e = icmp eq i64 %i.c, 1, !dbg !11296
-  br i1 %i.e, label %common.resume, label %.lr.ph11, !dbg !11296
-
-.lr.ph11:                                         ; preds = %bb.b, %2
-  %.sroa.0.1.i10 = phi i64 [ %3, %2 ], [ 1, %bb.b ] ; 2 uses
-  %6 = getelementptr inbounds nuw [128 x i8], ptr %0, i64 %.sroa.0.1.i10, !dbg !11296
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server(ptr noalias nofree noundef align 8 dereferenceable(128) %6) #19
-          to label %2 unwind label %7, !dbg !11296
-
-common.resume:                                    ; preds = %2, %bb.b, %bb.d
-  %common.resume.op = phi { ptr, i32 } [ %i.k, %bb.d ], [ %5, %bb.b ], [ %5, %2 ]
-  resume { ptr, i32 } %common.resume.op, !dbg !11212
-
-7:                                                ; preds = %.lr.ph11
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #20, !dbg !11296
-  unreachable, !dbg !11296
+common.resume:                                    ; preds = %bb.d
+  resume { ptr, i32 } %i.k, !dbg !11212
 
 bb.c:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !11266, !DIExpression(), !11277)
@@ -284,7 +260,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !11304
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit, !dbg !11305
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit: ; preds = %.preheader.preheader, %.lr.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3f36owOmepS_6quiche5frame5FrameEECs9WTr9tUZcLm_13quiche_server.exit
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit: ; preds = %bb.b, %.lr.ph11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3f36owOmepS_6quiche5frame5FrameEECs9WTr9tUZcLm_13quiche_server.exit
   ret void, !dbg !11306
 }
 

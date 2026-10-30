@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %_ZN7openvdb5v13_04t
   %i.aw = phi ptr [ %.pre19, %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EED2Ev.exit ], [ %i.e, %.lr.ph ] ; 2 uses
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.013
   store ptr null, ptr %i.ax, align 8, !tbaa !833
-  %i.ay = add nuw i64 %.013, 1                    ; 2 uses
+  %i.ay = add i64 %.013, 1                        ; 2 uses
   %exitcond.not = icmp eq i64 %i.ay, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2681
 }

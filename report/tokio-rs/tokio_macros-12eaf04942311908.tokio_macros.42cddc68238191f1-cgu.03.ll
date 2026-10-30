@@ -1,6 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokio-rs/original/tokio_macros-12eaf04942311908.tokio_macros.42cddc68238191f1-cgu.03?download=true
 inline.NumInlined: 699
 inline.NumDeleted: 296
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCscBrinq2mG3I_3syn10punctuated10PunctuatedNtNtBG_8generics12GenericParamNtNtBG_5token5CommaEECs5JB0sjZZtVB_12tokio_macros:bb.a
   %i.m = select i1 %i.l, i64 %i.k, i64 2
   switch i64 %i.m, label %bb.h [
@@ -202,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.k = add i64 %.sroa.0.1.i.i.i.i.i.i4, 1       ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i4, 1 ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.f
   br i1 %i.l, label %._crit_edge, label %.lr.ph5
 
@@ -605,7 +608,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.d = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.d = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.e = icmp eq i64 %i.d, %.8.val
   br i1 %i.e, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i, label %.lr.ph3
 
@@ -1008,7 +1011,7 @@ bb.b:                                             ; preds = %_RNCNvNtCs5JB0sjZZt
 bb.c:                                             ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjNtCsfr4kGEjnBfC_11proc_macro25IdentuNCNvNtCs5JB0sjZZtVB_12tokio_macros6select19declare_output_enum0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB3B_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1v_EE0E0E0B1B_.exit.i, %.lr.ph.i
   %.val4.i = phi i64 [ %.sroa.5.0.copyload, %.lr.ph.i ], [ %i.r, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjNtCsfr4kGEjnBfC_11proc_macro25IdentuNCNvNtCs5JB0sjZZtVB_12tokio_macros6select19declare_output_enum0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB3B_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1v_EE0E0E0B1B_.exit.i ] ; 3 uses
   %.sroa.0.011.i = phi i64 [ %0, %.lr.ph.i ], [ %i.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjNtCsfr4kGEjnBfC_11proc_macro25IdentuNCNvNtCs5JB0sjZZtVB_12tokio_macros6select19declare_output_enum0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB3B_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1v_EE0E0E0B1B_.exit.i ] ; 2 uses
-  %i.i = add i64 %.sroa.0.011.i, 1                ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.011.i, 1            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1266
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1267
   store i64 %.sroa.0.011.i, ptr %i.c, align 8, !noalias !1268
@@ -1132,8 +1135,8 @@ bb.c:                                             ; preds = %.split.loopexit.spl
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #20, !noalias !1323
   unreachable
 
-common.resume:                                    ; preds = %bb.i, %bb.d, %bb.j, %.body, %.split.loopexit.split-lp.i.i.i
-  %common.resume.op = phi { ptr, i32 } [ %i.z, %bb.j ], [ %eh.lpad-body, %.body ], [ %lpad.loopexit.split-lp.i.i.i, %.split.loopexit.split-lp.i.i.i ], [ %i.l, %bb.d ], [ %i.z, %bb.i ]
+common.resume:                                    ; preds = %bb.i, %bb.j, %.body, %.split.loopexit.split-lp.i.i.i, %bb.d
+  %common.resume.op = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.l, %bb.d ], [ %lpad.loopexit.split-lp.i.i.i, %.split.loopexit.split-lp.i.i.i ], [ %i.z, %bb.j ], [ %i.z, %bb.i ]
   resume { ptr, i32 } %common.resume.op
 
 bb.d:                                             ; preds = %bb.b
@@ -1215,7 +1218,7 @@ bb.h:                                             ; preds = %.lr.ph35
           to label %bb.h unwind label %bb.j
 
 bb.i:                                             ; preds = %.lr.ph37
-  %i.x = add i64 %.sroa.0.1.i.i.i.i.i.i.i36, 1    ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i.i36, 1 ; 2 uses
   %i.y = icmp eq i64 %i.x, %i.r
   br i1 %i.y, label %common.resume, label %.lr.ph37
 
@@ -1618,7 +1621,7 @@ bb.v:                                             ; preds = %.lr.ph
           to label %bb.v unwind label %bb.x, !noalias !1540
 
 bb.w:                                             ; preds = %.lr.ph18
-  %i.ar = add i64 %.sroa.0.1.i.i.i.i17, 1         ; 2 uses
+  %i.ar = add nuw nsw i64 %.sroa.0.1.i.i.i.i17, 1 ; 2 uses
   %i.as = icmp eq i64 %i.ar, %i.k
   br i1 %i.as, label %common.resume.sink.split.i, label %.lr.ph18
 
@@ -1747,7 +1750,7 @@ bb.ak:                                            ; preds = %.lr.ph20
           to label %bb.ak unwind label %bb.am, !noalias !1540
 
 bb.al:                                            ; preds = %.lr.ph22
-  %i.bt = add i64 %.sroa.0.1.i.i.i21.i21, 1       ; 2 uses
+  %i.bt = add nuw nsw i64 %.sroa.0.1.i.i.i21.i21, 1 ; 2 uses
   %i.bu = icmp eq i64 %i.bt, %i.k
   br i1 %i.bu, label %common.resume.sink.split.i, label %.lr.ph22
 

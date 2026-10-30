@@ -205,7 +205,7 @@ bb.fr:                                            ; preds = %_ZNSt10shared_ptrIN
   %i.ux = getelementptr inbounds nuw i8, ptr %i.uw, i64 8
   %i.uy = load i64, ptr %i.ux, align 8, !tbaa !288
   %i.uz = trunc i64 %i.uy to i32
-  %i.va = add i32 %.0, 1
+  %i.va = add nsw i32 %.0, 1
   %i.vb = add i32 %i.va, %i.uz                    ; 2 uses
   %i.vc = icmp eq i32 %i.vb, %i.l
   br i1 %i.vc, label %bb.fs, label %_ZNSt14_Function_baseD2Ev.exit343
@@ -608,7 +608,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i21:   ; preds = %bb.k, %bb.l
   br i1 %.not13.not.i.i23, label %bb.l, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit25
 
 bb.l:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i21
-  %i.au = add i64 %.01116.i.i22, 1                ; 2 uses
+  %i.au = add nuw i64 %.01116.i.i22, 1            ; 2 uses
   %exitcond.not.i.i24 = icmp eq i64 %i.au, %1
   br i1 %exitcond.not.i.i24, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit25, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i21, !llvm.loop !9432
 
@@ -1011,7 +1011,7 @@ _ZSt4findIPKciET_S2_S2_RKT0_.exit.i:              ; preds = %bb.ff, %_ZSt4findIP
   %i.zl = ptrtoint ptr %.028.i.i.i.i to i64
   %i.zm = sub i64 %i.zl, %i.yp
   %i.zn = trunc i64 %i.zm to i32                  ; 2 uses
-  %i.zo = add i64 %.018108.i, 2                   ; 3 uses
+  %i.zo = add nuw i64 %.018108.i, 2               ; 3 uses
   %i.zp = icmp eq i64 %i.zo, %i.ya
   br i1 %i.zp, label %bb.fg, label %bb.fi
 

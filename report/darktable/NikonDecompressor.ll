@@ -205,20 +205,20 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.i, %bb.i
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.x = load i32, ptr %i.w, align 8, !tbaa !29   ; 5 uses
+  %i.x = load i32, ptr %i.w, align 8, !tbaa !29   ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.z = load i32, ptr %i.y, align 8, !tbaa !30   ; 10 uses
   %.not.i.not.i.i.i.i.i = icmp ult i32 %i.x, %i.z
   br i1 %.not.i.not.i.i.i.i.i, label %bb.m, label %.invoke
 
 bb.m:                                             ; preds = %bb.l
-  %i.aa = zext i32 %i.x to i64                    ; 2 uses
+  %i.aa = zext i32 %i.x to i64
   %i.ab = load ptr, ptr %2, align 8, !tbaa !32    ; 6 uses
   %i.ac = icmp sgt i32 %i.z, -1
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.aa
   %.0.copyload.i.i.i.i.i.i = load i8, ptr %i.ad, align 1 ; 3 uses
-  %i.ae = add nuw i32 %i.x, 1                     ; 2 uses
+  %i.ae = add nuw nsw i32 %i.x, 1                 ; 2 uses
   %i.af = zext i8 %.0.copyload.i.i.i.i.i.i to i32 ; 2 uses
   %.not.i.not.i.i.i.i.i23 = icmp ult i32 %i.ae, %i.z
   br i1 %.not.i.not.i.i.i.i.i23, label %bb.n, label %.invoke
@@ -239,13 +239,14 @@ bb.o:                                             ; preds = %bb.n
   br i1 %or.cond, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  %i.am = add nuw nsw i64 %i.aa, 2112
+  %5 = zext nneg i32 %i.x to i64
+  %i.am = add nuw nsw i64 %5, 2112
   %i.an = zext nneg i32 %i.z to i64
   %.not.i.i = icmp samesign ugt i64 %i.am, %i.an
   br i1 %.not.i.i, label %.invoke, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit
 
 _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.p
-  %i.ao = add nuw i32 %i.x, 2112                  ; 2 uses
+  %i.ao = add nuw nsw i32 %i.x, 2112              ; 2 uses
   %i.ap = icmp samesign ule i32 %i.ao, %i.z
   tail call void @llvm.assume(i1 %i.ap)
   br label %bb.r
@@ -276,7 +277,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %i.ax = zext i32 %i.ar to i64                   ; 2 uses
+  %i.ax = zext nneg i32 %i.ar to i64              ; 2 uses
   %i.ay = add nuw nsw i64 %i.ax, 2
   %i.az = zext nneg i32 %i.z to i64               ; 4 uses
   %.not.i.i.i.i.i.i = icmp samesign ugt i64 %i.ay, %i.az

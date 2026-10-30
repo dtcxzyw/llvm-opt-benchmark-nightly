@@ -205,7 +205,7 @@ bb.a:
   %i.bd = icmp samesign ult i32 %i.ay, 2
   %i.be = add nuw i64 %.0257308.us, 1             ; 2 uses
   %i.bf = icmp ult i64 %i.be, %3
-  %or.cond331 = and i1 %i.bd, %i.bf
+  %or.cond331 = select i1 %i.bd, i1 %i.bf, i1 false
   br i1 %or.cond331, label %.preheader302.split.us, label %.split.us, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %.split.us
@@ -280,7 +280,7 @@ bb.a:
   %brmerge = select i1 %i.de, i1 true, i1 %.not281
   %i.dg = add nuw i64 %.0257308, 1                ; 2 uses
   %i.dh = icmp ult i64 %i.dg, %3
-  %or.cond333 = and i1 %brmerge, %i.dh
+  %or.cond333 = select i1 %brmerge, i1 %i.dh, i1 false
   br i1 %or.cond333, label %.preheader302.split, label %.split.us, !llvm.loop !28
 
 .split.us:                                        ; preds = %.preheader302.split, %.preheader302.split.us

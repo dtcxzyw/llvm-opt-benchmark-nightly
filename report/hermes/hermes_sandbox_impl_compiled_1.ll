@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %.preheader
   %.val498 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.de = getelementptr inbounds nuw i8, ptr %.val498, i64 %i.dd
   store i32 %i.dc, ptr %i.de, align 1
-  %i.df = shl i32 %.3452, 1
+  %i.df = shl nuw i32 %.3452, 1
   %i.dg = add i32 %i.df, %.0448
   %i.dh = zext i32 %i.c to i64
   %i.di = add nuw nsw i64 %i.dh, 12               ; 2 uses
@@ -607,7 +607,7 @@ bb.me:                                            ; preds = %bb.mc, %bb.md, %bb.
   %.2543859 = phi i32 [ %.2443858, %bb.lz ], [ %i.cug, %bb.md ], [ %i.cug, %bb.mc ]
   %.1243743 = phi i32 [ %.1143742, %bb.lz ], [ %i.cuf, %bb.md ], [ %i.cuf, %bb.mc ] ; 2 uses
   %.2143957 = add i32 %.2143957.in, 16            ; 2 uses
-  %i.cuh = add i32 %.344254, 1                    ; 2 uses
+  %i.cuh = add nuw i32 %.344254, 1                ; 2 uses
   %.not45583 = icmp eq i32 %.0.copyload.i51667, %i.cuh
   br i1 %.not45583, label %.loopexit54737, label %.preheader54735
 
@@ -1010,16 +1010,16 @@ bb.aul:                                           ; preds = %bb.auk, %.loopexit5
   %i.ltq = getelementptr inbounds nuw i8, ptr %.val47997, i64 %i.lnm
   %.0.copyload.i52836 = load i32, ptr %i.ltq, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52836) #7, !srcloc !19
-  %i.ltr = add i32 %.0.copyload.i52836, 31
+  %i.ltr = add i32 %.0.copyload.i52836, 31        ; 2 uses
   %i.lts = lshr i32 %i.ltr, 5                     ; 2 uses
   %i.ltt = add nuw nsw i64 %.pre-phi55800.a, 36   ; 2 uses
   %.val47996 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ltu = getelementptr inbounds nuw i8, ptr %.val47996, i64 %i.ltt
   %.0.copyload.i52837 = load i32, ptr %i.ltu, align 1 ; 9 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52837) #7, !srcloc !19
-  %i.ltv = add i32 %.0.copyload.i52837, 31        ; 2 uses
+  %i.ltv = add i32 %.0.copyload.i52837, 31        ; 3 uses
   %i.ltw = lshr i32 %i.ltv, 5                     ; 9 uses
-  %i.ltx = tail call i32 @llvm.umin.i32(i32 %i.lts, i32 %i.ltw) ; 3 uses
+  %i.ltx = tail call i32 @llvm.umin.i32(i32 %i.lts, i32 %i.ltw) ; 2 uses
   %.not46010 = icmp eq i32 %i.ltx, 0
   br i1 %.not46010, label %.loopexit54359, label %bb.aum
 
@@ -1073,11 +1073,17 @@ bb.aup:                                           ; preds = %.loopexit54359
   %i.lun = getelementptr inbounds nuw i8, ptr %i.lum, i64 28
   %.0.copyload.i52842 = load i32, ptr %i.lun, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52842) #7, !srcloc !19
+  %6 = lshr i32 %i.ltv, 5
+  %7 = lshr i32 %i.ltr, 5
+  %8 = tail call i32 @llvm.umin.i32(i32 %6, i32 %7)
+  %umin = zext nneg i32 %8 to i64
+  %9 = zext nneg i32 %i.ltw to i64
   br label %bb.auq
 
 bb.auq:                                           ; preds = %bb.aur, %bb.aup
-  %.4144137 = phi i32 [ %i.ltx, %bb.aup ], [ %6, %bb.aur ] ; 2 uses
-  %i.luo = shl i32 %.4144137, 2
+  %indvars.iv55673 = phi i64 [ %indvars.iv.next55674, %bb.aur ], [ %umin, %bb.aup ] ; 2 uses
+  %10 = trunc nuw nsw i64 %indvars.iv55673 to i32
+  %i.luo = shl i32 %10, 2
   %i.lup = add i32 %i.luo, %.0.copyload.i52842
   %i.luq = zext i32 %i.lup to i64
   %.val47990 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -1088,8 +1094,8 @@ bb.auq:                                           ; preds = %bb.aur, %bb.aup
   br i1 %.not46014, label %bb.aur, label %.loopexit54357
 
 bb.aur:                                           ; preds = %bb.auq
-  %6 = add i32 %.4144137, 1                       ; 2 uses
-  %.not46015 = icmp eq i32 %i.ltw, %6
+  %indvars.iv.next55674 = add nuw nsw i64 %indvars.iv55673, 1 ; 2 uses
+  %.not46015 = icmp eq i64 %indvars.iv.next55674, %9
   br i1 %.not46015, label %.loopexit54357, label %bb.auq
 
 .loopexit54357:                                   ; preds = %bb.aun, %bb.auq, %bb.aur, %.loopexit54359

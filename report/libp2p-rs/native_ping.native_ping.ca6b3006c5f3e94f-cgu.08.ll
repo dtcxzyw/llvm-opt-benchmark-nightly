@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/native_ping.native_ping.ca6b3006c5f3e94f-cgu.08?download=true
 inline.NumInlined: 2541
 inline.NumDeleted: 1083
-loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvMs0_NtNtNtCsc13h7DQFCSE_5tokio7runtime2io6driverNtB6_6Handle17deregister_sourceNtNtNtNtCsc2nZRnW43Xw_3mio3sys4unix8sourcefd8SourceFdECshnt8FRa5Rut_11native_ping:bb.a
   %i.f = landingpad { ptr, i32 }
           cleanup
@@ -204,7 +205,7 @@ bb.a:
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueANtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6Recordj1_ECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6domain4name4NameECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef nonnull align 8 dereferenceable(280) %0)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECshnt8FRa5Rut_11native_ping.exit.i unwind label %bb.b
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECshnt8FRa5Rut_11native_ping.exit unwind label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = landingpad { ptr, i32 }
@@ -212,11 +213,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr11record_data5RDataECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %i.b) #26
           to label %bb.d unwind label %bb.c
-
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECshnt8FRa5Rut_11native_ping.exit.i: ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  tail call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr11record_data5RDataECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %1)
-  ret void
 
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
@@ -226,6 +222,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.a
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr6record6RecordECshnt8FRa5Rut_11native_ping.exit: ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  tail call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsbTgMbcnmcyu_13hickory_proto2rr11record_data5RDataECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %1)
+  ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -628,7 +629,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph17
-  %i.k = add i64 %.sroa.0.1.i.i16, 1              ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i.i16, 1      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.b
   br i1 %i.l, label %._crit_edge, label %.lr.ph17
 
@@ -684,7 +685,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.g = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph5
 

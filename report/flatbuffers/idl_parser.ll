@@ -205,7 +205,7 @@ bb.at:                                            ; preds = %bb.as
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 %.05.i.i.i.i1561
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 3
   store i8 0, ptr %i.kr, align 1, !tbaa !81
-  %i.ks = add nuw i64 %.05.i.i.i.i1561, 4         ; 2 uses
+  %i.ks = add nuw nsw i64 %.05.i.i.i.i1561, 4     ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE20ForceVectorAlignmentEmmm.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i1560, !llvm.loop !12
@@ -226,7 +226,7 @@ _ZN11flatbuffers21FlatBufferBuilderImplILb0EE20ForceVectorAlignmentEmmm.exit.i.l
   %i.kt = load ptr, ptr %.phi.trans.insert.i.i.i.i.i1557, align 8, !tbaa !359
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 %.05.i.i.i.i1561.epil
   store i8 0, ptr %i.ku, align 1, !tbaa !81
-  %i.kv = add nuw i64 %.05.i.i.i.i1561.epil, 1
+  %i.kv = add nuw nsw i64 %.05.i.i.i.i1561.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN11flatbuffers21FlatBufferBuilderImplILb0EE20ForceVectorAlignmentEmmm.exit.i.loopexit, label %.lr.ph.i.i.i.i1560.epil, !llvm.loop !1058
