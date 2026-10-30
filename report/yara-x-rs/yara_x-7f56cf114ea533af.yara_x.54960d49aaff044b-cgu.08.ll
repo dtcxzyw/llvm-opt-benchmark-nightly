@@ -205,7 +205,7 @@ _RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7
   %i.bd = or i64 %i.bc, %i.av
   %i.be = or i64 %i.bd, %i.as                     ; 4 uses
   %i.bf = icmp ult i64 %.sroa.0.2.i.i.i.i, %.sroa.0.2.us.i.i.i.i
-  %.6.i.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.0.2.i.i.i.i, i64 %.sroa.0.2.us.i.i.i.i) ; 25 uses
+  %.6.i.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.0.2.i.i.i.i, i64 %.sroa.0.2.us.i.i.i.i) ; 26 uses
   %.sroa.03.0.i.i.i = select i1 %i.bf, i64 %.sroa.5.2.i.i.i.i, i64 %.sroa.5.2.us.i.i.i.i
   %i.bg = tail call { i64, i64 } @_RNvMs0_NtNtNtCslssDYltVX0B_6memchr4arch3all6twowayNtB5_5Shift7reverse(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef range(i64 2, -9223372036854775808) 4, i64 noundef %.sroa.03.0.i.i.i, i64 noundef %.6.i.i.i), !noalias !4802 ; 2 uses
   %i.bh = extractvalue { i64, i64 } %i.bg, 1      ; 5 uses
@@ -253,7 +253,6 @@ bb.r:                                             ; preds = %_RINvMs4_NtCslssDYl
   br i1 %.first_iter.i.i, label %.lr.ph69.i.split.us.i.preheader, label %.lr.ph69.i.split.i
 
 .lr.ph69.i.split.us.i.preheader:                  ; preds = %.lr.ph69.i.i
-  %3 = icmp eq i64 %.6.i.i.i, 4
   %i.bw = add nuw nsw i64 %.6.i.i.i, -4
   %.not33.i.i.us.us.i67 = icmp eq i64 %.6.i.i.i, 0
   %i.bx = add nsw i64 %.6.i.i.i, -1               ; 5 uses
@@ -268,13 +267,13 @@ bb.r:                                             ; preds = %_RINvMs4_NtCslssDYl
   %i.cd = add nsw i64 %.6.i.i.i, -4               ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 %i.cd
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 %.6.i.i.i
-  %i.cg = add nuw nsw i64 %.6.i.i.i, 1            ; 3 uses
+  %i.cg = add nuw nsw i64 %.6.i.i.i, 1            ; 4 uses
   %exitcond120.not.i.us.i = icmp eq i64 %i.cg, 4
   %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 %i.cg
-  %i.ci = add nuw nsw i64 %.6.i.i.i, 2            ; 3 uses
+  %i.ci = add nuw nsw i64 %.6.i.i.i, 2            ; 4 uses
   %exitcond120.not.i.us.i.1 = icmp eq i64 %i.ci, 4
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 %i.ci
-  %i.ck = add nuw nsw i64 %.6.i.i.i, 3            ; 3 uses
+  %i.ck = add nuw nsw i64 %.6.i.i.i, 3            ; 4 uses
   %exitcond120.not.i.us.i.2 = icmp eq i64 %i.ck, 4
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 %i.ck
   br label %.lr.ph69.i.split.us.i
@@ -380,7 +379,7 @@ bb.aa:                                            ; preds = %.lr.ph62.i.us.i
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 %i.du
   %i.dy = load i8, ptr %i.dx, align 1, !alias.scope !4809, !noundef !5
   %i.dz = icmp eq i8 %i.dw, %i.dy
-  br i1 %i.dz, label %bb.ab, label %._crit_edge.i.us.i.thread
+  br i1 %i.dz, label %bb.ab, label %._crit_edge.i.us.i
 
 bb.ab:                                            ; preds = %bb.aa
   br i1 %exitcond120.not.i.us.i, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %.lr.ph62.i.us.i.1
@@ -395,7 +394,7 @@ bb.ac:                                            ; preds = %.lr.ph62.i.us.i.1
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 %i.ea
   %i.ee = load i8, ptr %i.ed, align 1, !alias.scope !4809, !noundef !5
   %i.ef = icmp eq i8 %i.ec, %i.ee
-  br i1 %i.ef, label %bb.ad, label %._crit_edge.i.us.i.thread
+  br i1 %i.ef, label %bb.ad, label %._crit_edge.i.us.i
 
 bb.ad:                                            ; preds = %bb.ac
   br i1 %exitcond120.not.i.us.i.1, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %.lr.ph62.i.us.i.2
@@ -410,7 +409,7 @@ bb.ae:                                            ; preds = %.lr.ph62.i.us.i.2
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 %i.eg
   %i.ek = load i8, ptr %i.ej, align 1, !alias.scope !4809, !noundef !5
   %i.el = icmp eq i8 %i.ei, %i.ek
-  br i1 %i.el, label %bb.af, label %._crit_edge.i.us.i.thread
+  br i1 %i.el, label %bb.af, label %._crit_edge.i.us.i
 
 bb.af:                                            ; preds = %bb.ae
   br i1 %exitcond120.not.i.us.i.2, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %.lr.ph62.i.us.i.3
@@ -425,12 +424,14 @@ bb.ag:                                            ; preds = %.lr.ph62.i.us.i.3
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 %i.em
   %i.eq = load i8, ptr %i.ep, align 1, !alias.scope !4809, !noundef !5
   %i.er = icmp eq i8 %i.eo, %i.eq
-  br i1 %i.er, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %._crit_edge.i.us.i.thread
+  br i1 %i.er, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %._crit_edge.i.us.i
 
-._crit_edge.i.us.i:                               ; preds = %.preheader.i.us.i
+._crit_edge.i.us.i:                               ; preds = %bb.aa, %bb.ac, %bb.ae, %bb.ag, %.preheader.i.us.i
+  %.sroa.018.0.i.lcssa.i.us.i = phi i64 [ %.6.i.i.i, %.preheader.i.us.i ], [ %.6.i.i.i, %bb.aa ], [ %i.cg, %bb.ac ], [ %i.ci, %bb.ae ], [ %i.ck, %bb.ag ]
+  %3 = icmp eq i64 %.sroa.018.0.i.lcssa.i.us.i, 4
   br i1 %3, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %._crit_edge.i.us.i.thread
 
-._crit_edge.i.us.i.thread:                        ; preds = %bb.aa, %bb.ac, %bb.ae, %bb.ag, %._crit_edge.i.us.i
+._crit_edge.i.us.i.thread:                        ; preds = %._crit_edge.i.us.i
   %i.es = sub i64 %.sroa.01.0.i67.i.us.i, %i.bh
   br label %.backedge.i.us.i
 
@@ -669,7 +670,7 @@ bb.at:                                            ; preds = %bb.as
   unreachable
 
 bb.au:                                            ; preds = %bb.at
-  %i.ha = add i64 %.sroa.021.0.i55.i.i, 1         ; 2 uses
+  %i.ha = add nuw i64 %.sroa.021.0.i55.i.i, 1     ; 2 uses
   %exitcond119.not.i.i = icmp eq i64 %i.ha, %.sroa.011.0.i58.i.i
   br i1 %exitcond119.not.i.i, label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit, label %.lr.ph.i.i
 
@@ -762,8 +763,8 @@ bb.az:                                            ; preds = %bb.ax
   br label %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit
 
 _RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev5rfind.exit: ; preds = %.preheader14.i.i, %.backedge18.i.i, %bb.au, %.backedge.i.i, %.backedge.i.us71.us.i, %bb.ak, %.backedge.i.us.i, %._crit_edge.i.us.i, %bb.ag, %bb.ab, %bb.ad, %bb.af, %bb.aw, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs7gfv9tzbXmh_6yara_x.exit.sink.split.i.i, %.noexc, %_RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7gfv9tzbXmh_6yara_x.exit, %bb.az, %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev3new.exit
-  %.sroa.0.0.i16.pn = phi i64 [ 0, %bb.aw ], [ 1, %bb.az ], [ 0, %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev3new.exit ], [ 1, %bb.ag ], [ 1, %bb.au ], [ 1, %_RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7gfv9tzbXmh_6yara_x.exit ], [ 0, %.noexc ], [ 0, %.backedge.i.us71.us.i ], [ 1, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs7gfv9tzbXmh_6yara_x.exit.sink.split.i.i ], [ 1, %._crit_edge.i.us.i ], [ 0, %.backedge.i.i ], [ 1, %bb.af ], [ 1, %bb.ad ], [ 1, %bb.ab ], [ 0, %.backedge.i.us.i ], [ 1, %bb.ak ], [ 1, %.preheader14.i.i ], [ 0, %.backedge18.i.i ]
-  %.sroa.3.0.i15.pn = phi i64 [ undef, %bb.aw ], [ %i.ir, %bb.az ], [ undef, %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev3new.exit ], [ %i.cm, %bb.ag ], [ %i.fz, %bb.au ], [ %1, %_RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7gfv9tzbXmh_6yara_x.exit ], [ undef, %.noexc ], [ %i.eu, %.backedge.i.us71.us.i ], [ %i.br, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs7gfv9tzbXmh_6yara_x.exit.sink.split.i.i ], [ %i.cm, %.backedge.i.us.i ], [ %i.fq, %.backedge.i.i ], [ %i.cm, %bb.af ], [ %i.cm, %bb.ad ], [ %i.cm, %bb.ab ], [ %i.cm, %._crit_edge.i.us.i ], [ %i.eu, %bb.ak ], [ %i.fz, %.backedge18.i.i ], [ %i.fz, %.preheader14.i.i ]
+  %.sroa.0.0.i16.pn = phi i64 [ 1, %bb.au ], [ 1, %bb.az ], [ 0, %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev3new.exit ], [ 1, %bb.ag ], [ 0, %bb.aw ], [ 1, %_RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7gfv9tzbXmh_6yara_x.exit ], [ 0, %.noexc ], [ 0, %.backedge.i.us71.us.i ], [ 1, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs7gfv9tzbXmh_6yara_x.exit.sink.split.i.i ], [ 1, %._crit_edge.i.us.i ], [ 0, %.backedge.i.i ], [ 1, %bb.af ], [ 1, %bb.ad ], [ 1, %bb.ab ], [ 0, %.backedge.i.us.i ], [ 1, %bb.ak ], [ 1, %.preheader14.i.i ], [ 0, %.backedge18.i.i ]
+  %.sroa.3.0.i15.pn = phi i64 [ %i.fz, %bb.au ], [ %i.ir, %bb.az ], [ undef, %_RNvMs_NtNtNtCslssDYltVX0B_6memchr4arch3all9rabinkarpNtB4_9FinderRev3new.exit ], [ %i.cm, %bb.ag ], [ undef, %bb.aw ], [ %1, %_RINvMs4_NtCslssDYltVX0B_6memchr6memmemNtB6_13FinderBuilder13build_reverseShECs7gfv9tzbXmh_6yara_x.exit ], [ undef, %.noexc ], [ %i.eu, %.backedge.i.us71.us.i ], [ %i.br, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memrchr0ECs7gfv9tzbXmh_6yara_x.exit.sink.split.i.i ], [ %i.cm, %.backedge.i.us.i ], [ %i.fq, %.backedge.i.i ], [ %i.cm, %bb.af ], [ %i.cm, %bb.ad ], [ %i.cm, %bb.ab ], [ %i.cm, %._crit_edge.i.us.i ], [ %i.eu, %bb.ak ], [ %i.fz, %.backedge18.i.i ], [ %i.fz, %.preheader14.i.i ]
   %.pn30 = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i16.pn, 0
   %.pn = insertvalue { i64, i64 } %.pn30, i64 %.sroa.3.0.i15.pn, 1
   ret { i64, i64 } %.pn
@@ -1166,7 +1167,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs7g
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs7gfv9tzbXmh_6yara_x.exit.i73 unwind label %bb.ah
 
 bb.ag:                                            ; preds = %.lr.ph112
-  %i.cq = add i64 %.sroa.0.1.i111, 1              ; 2 uses
+  %i.cq = add nuw nsw i64 %.sroa.0.1.i111, 1      ; 2 uses
   %i.cr = icmp eq i64 %i.cq, %i.cj
   br i1 %i.cr, label %common.resume88, label %.lr.ph112
 
@@ -1213,7 +1214,7 @@ bb.aj:                                            ; preds = %.lr.ph114
           to label %bb.aj unwind label %bb.al
 
 bb.ak:                                            ; preds = %.lr.ph116
-  %i.de = add i64 %.sroa.0.1.i75115, 1            ; 2 uses
+  %i.de = add nuw nsw i64 %.sroa.0.1.i75115, 1    ; 2 uses
   %i.df = icmp eq i64 %i.de, %i.cz
   br i1 %i.df, label %common.resume88, label %.lr.ph116
 
@@ -1616,7 +1617,7 @@ bb.n:                                             ; preds = %.lr.ph
           to label %bb.n unwind label %bb.p
 
 bb.o:                                             ; preds = %.lr.ph153
-  %i.bw = add i64 %.sroa.0.1.i152, 1              ; 2 uses
+  %i.bw = add nuw nsw i64 %.sroa.0.1.i152, 1      ; 2 uses
   %i.bx = icmp eq i64 %i.bw, %i.br
   br i1 %i.bx, label %common.resume78, label %.lr.ph153
 
@@ -1718,7 +1719,7 @@ bb.w:                                             ; preds = %.lr.ph155
           to label %bb.w unwind label %bb.y
 
 bb.x:                                             ; preds = %.lr.ph157
-  %i.ct = add i64 %.sroa.0.1.i55156, 1            ; 2 uses
+  %i.ct = add nuw nsw i64 %.sroa.0.1.i55156, 1    ; 2 uses
   %i.cu = icmp eq i64 %i.ct, %i.co
   br i1 %i.cu, label %common.resume78, label %.lr.ph157
 
@@ -1780,7 +1781,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6pr
   br i1 %i.dk, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos2pe8DirEntryEBK_.exit, label %.lr.ph.i
 
 bb.ab:                                            ; preds = %.lr.ph159
-  %i.dl = add i64 %.sroa.0.1.i56158, 1            ; 2 uses
+  %i.dl = add nuw nsw i64 %.sroa.0.1.i56158, 1    ; 2 uses
   %i.dm = icmp eq i64 %i.dl, %i.dc
   br i1 %i.dm, label %common.resume78, label %.lr.ph159
 
@@ -1853,7 +1854,7 @@ bb.af:                                            ; preds = %.lr.ph161
           to label %bb.af unwind label %bb.ah
 
 bb.ag:                                            ; preds = %.lr.ph163
-  %i.ed = add i64 %.sroa.0.1.i64162, 1            ; 2 uses
+  %i.ed = add nuw nsw i64 %.sroa.0.1.i64162, 1    ; 2 uses
   %i.ee = icmp eq i64 %i.ed, %i.dy
   br i1 %i.ee, label %common.resume78, label %.lr.ph163
 
@@ -1896,7 +1897,7 @@ bb.aj:                                            ; preds = %.lr.ph165
           to label %bb.aj unwind label %bb.al
 
 bb.ak:                                            ; preds = %.lr.ph167
-  %i.er = add i64 %.sroa.0.1.i66166, 1            ; 2 uses
+  %i.er = add nuw nsw i64 %.sroa.0.1.i66166, 1    ; 2 uses
   %i.es = icmp eq i64 %i.er, %i.em
   br i1 %i.es, label %common.resume78, label %.lr.ph167
 
@@ -1939,7 +1940,7 @@ bb.an:                                            ; preds = %.lr.ph169
           to label %bb.an unwind label %bb.ap
 
 bb.ao:                                            ; preds = %.lr.ph171
-  %i.ff = add i64 %.sroa.0.1.i68170, 1            ; 2 uses
+  %i.ff = add nuw nsw i64 %.sroa.0.1.i68170, 1    ; 2 uses
   %i.fg = icmp eq i64 %i.ff, %i.fa
   br i1 %i.fg, label %common.resume78, label %.lr.ph171
 
@@ -1982,7 +1983,7 @@ bb.ar:                                            ; preds = %.lr.ph173
           to label %bb.ar unwind label %bb.at
 
 bb.as:                                            ; preds = %.lr.ph175
-  %i.ft = add i64 %.sroa.0.1.i71174, 1            ; 2 uses
+  %i.ft = add nuw nsw i64 %.sroa.0.1.i71174, 1    ; 2 uses
   %i.fu = icmp eq i64 %i.ft, %i.fo
   br i1 %i.fu, label %common.resume78, label %.lr.ph175
 
@@ -2027,7 +2028,7 @@ bb.av:                                            ; preds = %.lr.ph177
           to label %bb.av unwind label %bb.ax
 
 bb.aw:                                            ; preds = %.lr.ph179
-  %i.gi = add i64 %.sroa.0.1.i73178, 1            ; 2 uses
+  %i.gi = add nuw nsw i64 %.sroa.0.1.i73178, 1    ; 2 uses
   %i.gj = icmp eq i64 %i.gi, %i.gd
   br i1 %i.gj, label %common.resume78, label %.lr.ph179
 
@@ -2430,7 +2431,7 @@ bb.ai:                                            ; preds = %.lr.ph
           to label %bb.ai unwind label %bb.ak
 
 bb.aj:                                            ; preds = %.lr.ph82
-  %i.bs = add i64 %.sroa.0.1.i81, 1               ; 2 uses
+  %i.bs = add nuw nsw i64 %.sroa.0.1.i81, 1       ; 2 uses
   %i.bt = icmp eq i64 %i.bs, %i.bn
   br i1 %i.bt, label %common.resume79, label %.lr.ph82
 
@@ -2703,7 +2704,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.j = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.e
   br i1 %i.k, label %._crit_edge, label %.lr.ph3
 
@@ -3106,7 +3107,7 @@ bb.j:                                             ; preds = %.lr.ph
           to label %bb.j unwind label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph17
-  %i.v = add i64 %.sroa.0.1.i16, 1                ; 2 uses
+  %i.v = add nuw nsw i64 %.sroa.0.1.i16, 1        ; 2 uses
   %i.w = icmp eq i64 %i.v, %i.q
   br i1 %i.w, label %common.resume, label %.lr.ph17
 
@@ -3509,7 +3510,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6pr
   br i1 %i.aa, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos2pe8RichToolEBK_.exit, label %.lr.ph.i
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.ab = add i64 %.sroa.0.1.i24, 1               ; 2 uses
+  %i.ab = add nuw nsw i64 %.sroa.0.1.i24, 1       ; 2 uses
   %i.ac = icmp eq i64 %i.ab, %i.s
   br i1 %i.ac, label %common.resume, label %.lr.ph
 
@@ -3912,7 +3913,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.j = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.e
   br i1 %i.k, label %._crit_edge, label %.lr.ph3
 
@@ -4315,7 +4316,7 @@ bb.am:                                            ; preds = %.lr.ph
           to label %bb.am unwind label %bb.ao
 
 bb.an:                                            ; preds = %.lr.ph103
-  %i.bs = add i64 %.sroa.0.1.i102, 1              ; 2 uses
+  %i.bs = add nuw nsw i64 %.sroa.0.1.i102, 1      ; 2 uses
   %i.bt = icmp eq i64 %i.bs, %i.bn
   br i1 %i.bt, label %common.resume91, label %.lr.ph103
 
@@ -4358,7 +4359,7 @@ bb.aq:                                            ; preds = %.lr.ph105
           to label %bb.aq unwind label %bb.as
 
 bb.ar:                                            ; preds = %.lr.ph107
-  %i.cg = add i64 %.sroa.0.1.i90106, 1            ; 2 uses
+  %i.cg = add nuw nsw i64 %.sroa.0.1.i90106, 1    ; 2 uses
   %i.ch = icmp eq i64 %i.cg, %i.cb
   br i1 %i.ch, label %common.resume91, label %.lr.ph107
 
@@ -4761,7 +4762,7 @@ bb.r:                                             ; preds = %.lr.ph
           to label %bb.r unwind label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph37
-  %i.ag = add i64 %.sroa.0.1.i36, 1               ; 2 uses
+  %i.ag = add nuw nsw i64 %.sroa.0.1.i36, 1       ; 2 uses
   %i.ah = icmp eq i64 %i.ag, %i.ab
   br i1 %i.ah, label %common.resume, label %.lr.ph37
 
@@ -5164,7 +5165,7 @@ bb.l:                                             ; preds = %bb.j
 ._crit_edge:                                      ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs7gfv9tzbXmh_6yara_x.exit119, %bb.h
   %.sroa.023.0.lcssa = phi i64 [ %.sroa.576.0.lcssa.ph386, %bb.h ], [ %i.au, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs7gfv9tzbXmh_6yara_x.exit119 ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.bb = add i64 %.sroa.023.0.lcssa, 2           ; 12 uses
+  %i.bb = add i64 %.sroa.023.0.lcssa, 2           ; 11 uses
   %i.bc = or disjoint i64 %.sroa.023.0.lcssa, 1
   %or.cond.i103.not = icmp ult i64 %i.bc, %2
   br i1 %or.cond.i103.not, label %bb.m, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread229.invoke, !prof !6381
@@ -5536,35 +5537,36 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
   br i1 %or.cond.i100, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread229.invoke, label %bb.an, !prof !6387
 
 bb.an:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs7gfv9tzbXmh_6yara_x.exit145
-  br i1 %i.be, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread, label %bb.ao
+  br i1 %i.be, label %bb.ao, label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
-  %3 = icmp eq i64 %i.bb, 0
-  br i1 %3, label %bb.ap, label %bb.aq
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 %2
+  %.pr.i147.pre = load i8, ptr %.phi.trans.insert, align 1, !alias.scope !6388
+  br label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread
 
-bb.ap:                                            ; preds = %bb.aq, %bb.ao
+bb.ap:                                            ; preds = %bb.aq
   %i.fi = icmp eq i64 %i.ff, %2
   br i1 %i.fi, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102
 
-bb.aq:                                            ; preds = %bb.ao
+bb.aq:                                            ; preds = %bb.an
   %i.fj = getelementptr inbounds nuw i8, ptr %1, i64 %i.bb
-  %i.fk = load i8, ptr %i.fj, align 1, !alias.scope !6388, !noundef !5
+  %i.fk = load i8, ptr %i.fj, align 1, !alias.scope !6389, !noundef !5 ; 3 uses
   %i.fl = icmp sgt i8 %i.fk, -65
   br i1 %i.fl, label %bb.ap, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread229.invoke, !prof !6381
 
 _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102: ; preds = %bb.ap
   %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 %i.ff
-  %i.fn = load i8, ptr %i.fm, align 1, !alias.scope !6388, !noundef !5
+  %i.fn = load i8, ptr %i.fm, align 1, !alias.scope !6389, !noundef !5
   %i.fo = icmp sgt i8 %i.fn, -65
   br i1 %i.fo, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread229.invoke, !prof !6384
 
-_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread: ; preds = %bb.ap, %bb.an, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %i.bb ; 2 uses
-  %.pr.i147 = load i8, ptr %4, align 1, !alias.scope !6389
+_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread: ; preds = %bb.ao, %bb.ap, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102
+  %.pr.i147 = phi i8 [ %.pr.i147.pre, %bb.ao ], [ %i.fk, %bb.ap ], [ %i.fk, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102 ]
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %i.bb
   %cond.i148 = icmp eq i8 %.pr.i147, 43           ; 2 uses
   %.sroa.0.0.idx.i150 = zext i1 %cond.i148 to i64
-  %.sroa.0.0.i151 = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.0.0.idx.i150 ; 2 uses
-  %i.fp = load i8, ptr %.sroa.0.0.i151, align 1, !alias.scope !6389, !noundef !5 ; 2 uses
+  %.sroa.0.0.i151 = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.0.0.idx.i150 ; 2 uses
+  %i.fp = load i8, ptr %.sroa.0.0.i151, align 1, !alias.scope !6388, !noundef !5 ; 2 uses
   %i.fq = zext i8 %i.fp to i32                    ; 2 uses
   %i.fr = icmp ugt i8 %i.fp, 57
   %i.fs = add nsw i32 %i.fq, -65
@@ -5581,7 +5583,7 @@ bb.ar:                                            ; preds = %_RNvNtNtCskKLDkoKar
   br i1 %cond.i148, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit176, label %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread.peel.newph
 
 _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit102.thread.peel.newph: ; preds = %bb.ar
-  %i.fz = load i8, ptr %i.fx, align 1, !alias.scope !6389, !noundef !5 ; 2 uses
+  %i.fz = load i8, ptr %i.fx, align 1, !alias.scope !6388, !noundef !5 ; 2 uses
   %i.ga = zext i8 %i.fz to i32                    ; 2 uses
   %i.gb = icmp ugt i8 %i.fz, 57
   %i.gc = add nsw i32 %i.ga, -65
@@ -5984,7 +5986,7 @@ bb.f:                                             ; preds = %.lr.ph
           to label %bb.f unwind label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph6
-  %i.o = add i64 %.sroa.0.1.i5, 1                 ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.1.i5, 1         ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.j
   br i1 %i.p, label %common.resume, label %.lr.ph6
 
@@ -6387,10 +6389,10 @@ begin_hunk_11_@llvm.smax.i32
 !6367 = distinct !{!6367, !6366, !"_RNvMsx_NtCskKLDkoKarTP_4core3numh27from_ascii_bytes_radix_impl: argument 0"}
 !6368 = distinct !{!6368, i1 true, !"_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl"}
 !6369 = distinct !{!6369, !6368, !"_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl: argument 1"}
-!6370 = distinct !{!6370, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range"}
-!6371 = distinct !{!6371, !6370, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range: argument 0"}
-!6372 = distinct !{!6372, i1 true, !"_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl"}
-!6373 = distinct !{!6373, !6372, !"_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl: argument 1"}
+!6370 = distinct !{!6370, i1 true, !"_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl"}
+!6371 = distinct !{!6371, !6370, !"_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl: argument 1"}
+!6372 = distinct !{!6372, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range"}
+!6373 = distinct !{!6373, !6372, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range: argument 0"}
 !6374 = distinct !{!6374, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range"}
 !6375 = distinct !{!6375, !6374, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range: argument 0"}
 !6376 = distinct !{!6376, i1 true, !"_RNvMsx_NtCskKLDkoKarTP_4core3numh27from_ascii_bytes_radix_impl"}

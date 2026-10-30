@@ -205,24 +205,27 @@ bb.a:
   %i.i = call fastcc noundef i64 @_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc17compress_fragment30BuildAndStoreLiteralPrefixCodeNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocECsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.0.0.i, ptr noalias noundef nonnull %i.e, ptr noalias noundef nonnull align 2 %i.d, ptr noalias noundef align 8 dereferenceable(8) %15, ptr noalias noundef nonnull %16, i64 noundef %17), !dbg !7462
   %i.j = load i64, ptr %12, align 8, !dbg !7463, !noundef !1738 ; 4 uses
   %i.k = icmp ugt i64 %i.j, 7, !dbg !7464
-  br i1 %i.k, label %.lr.ph, label %._crit_edge, !dbg !7464
+  br i1 %i.k, label %.lr.ph.preheader, label %._crit_edge, !dbg !7464
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %.not2271 = icmp eq i64 %14, 0, !dbg !7465
+  br i1 %.not2271, label %bb.di, label %bb.dh, !dbg !7465
 
 ._crit_edge:                                      ; preds = %bb.dh, %bb.a
-  %i.l = lshr i64 %i.j, 3, !dbg !7465             ; 3 uses
-  %i.m = icmp samesign ult i64 %i.l, %14, !dbg !7466
-  br i1 %i.m, label %bb.b, label %bb.c, !dbg !7466
+  %i.l = lshr i64 %i.j, 3, !dbg !7466             ; 3 uses
+  %i.m = icmp samesign ult i64 %i.l, %14, !dbg !7467
+  br i1 %i.m, label %bb.b, label %bb.c, !dbg !7467
 
-.lr.ph:                                           ; preds = %bb.a, %bb.dh
-  %.sroa.022.0763 = phi i64 [ %i.km, %bb.dh ], [ 0, %bb.a ] ; 2 uses
-  %i.n = lshr exact i64 %.sroa.022.0763, 3, !dbg !7467 ; 3 uses
-  %i.o = icmp samesign ult i64 %i.n, %14, !dbg !7468
-  br i1 %i.o, label %bb.dh, label %bb.di, !dbg !7468
+.lr.ph:                                           ; preds = %bb.dh
+  %i.n = lshr exact i64 %i.km, 3, !dbg !7468      ; 2 uses
+  %i.o = icmp samesign ult i64 %i.n, %14, !dbg !7465
+  br i1 %i.o, label %bb.dh, label %bb.di, !dbg !7465
 
 bb.b:                                             ; preds = %._crit_edge
   %i.p = and i64 %i.j, 7, !dbg !7469
-  %i.q = getelementptr inbounds nuw i8, ptr %13, i64 %i.l, !dbg !7466
-  %i.r = load i8, ptr %i.q, align 1, !dbg !7466, !noundef !1738
-  %i.s = zext i8 %i.r to i64, !dbg !7466
+  %i.q = getelementptr inbounds nuw i8, ptr %13, i64 %i.l, !dbg !7467
+  %i.r = load i8, ptr %i.q, align 1, !dbg !7467, !noundef !1738
+  %i.s = zext i8 %i.r to i64, !dbg !7467
   call void @_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc26compress_fragment_two_pass15BrotliWriteBits(i64 noundef %i.p, i64 noundef %i.s, ptr noalias noundef nonnull align 8 dereferenceable(8) %15, ptr noalias noundef nonnull %16, i64 noundef %17), !dbg !7470
   %i.t = icmp samesign ugt i64 %9, 64
   %i.u = icmp samesign ugt i64 %11, 64
@@ -249,8 +252,8 @@ bb.b:                                             ; preds = %._crit_edge
   br label %bb.d, !dbg !7473
 
 bb.c:                                             ; preds = %._crit_edge
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.l, i64 noundef %14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #31, !dbg !7466
-  unreachable, !dbg !7466
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.l, i64 noundef %14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #31, !dbg !7467
+  unreachable, !dbg !7467
 
 bb.d:                                             ; preds = %.outer, %bb.cq
   %.sroa.0.01394 = phi i64 [ %i.hy, %bb.cq ], [ %.sroa.0.01394.ph, %.outer ], !dbg !7474 ; 3 uses
@@ -653,19 +656,21 @@ bb.dg:                                            ; preds = %bb.dc
   call void @_RNvNtNtCscgRAwXFJnXP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.1.jt2, i64 noundef %2, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @53) #31, !dbg !7772
   unreachable, !dbg !7772
 
-bb.dh:                                            ; preds = %.lr.ph
-  %i.kj = getelementptr inbounds nuw i8, ptr %13, i64 %i.n, !dbg !7468
-  %i.kk = load i8, ptr %i.kj, align 1, !dbg !7468, !noundef !1738
-  %i.kl = zext i8 %i.kk to i64, !dbg !7468
+bb.dh:                                            ; preds = %.lr.ph.preheader, %.lr.ph
+  %18 = phi i64 [ %i.n, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.sroa.022.07632269 = phi i64 [ %i.km, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %i.kj = getelementptr inbounds nuw i8, ptr %13, i64 %18, !dbg !7465
+  %i.kk = load i8, ptr %i.kj, align 1, !dbg !7465, !noundef !1738
+  %i.kl = zext i8 %i.kk to i64, !dbg !7465
   call void @_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc26compress_fragment_two_pass15BrotliWriteBits(i64 noundef 8, i64 noundef %i.kl, ptr noalias noundef nonnull align 8 dereferenceable(8) %15, ptr noalias noundef nonnull %16, i64 noundef %17), !dbg !7773
-  %i.km = add i64 %.sroa.022.0763, 8, !dbg !7774  ; 2 uses
+  %i.km = add nuw i64 %.sroa.022.07632269, 8, !dbg !7774 ; 3 uses
   %i.kn = or disjoint i64 %i.km, 7, !dbg !7775
   %i.ko = icmp ult i64 %i.kn, %i.j, !dbg !7464
   br i1 %i.ko, label %.lr.ph, label %._crit_edge, !dbg !7464
 
-bb.di:                                            ; preds = %.lr.ph
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %i.n, i64 noundef %14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @54) #31, !dbg !7468
-  unreachable, !dbg !7468
+bb.di:                                            ; preds = %.lr.ph, %.lr.ph.preheader
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %14, i64 noundef %14, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @54) #31, !dbg !7465
+  unreachable, !dbg !7465
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1068,10 +1073,10 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !7462 = !DILocation(line: 684, column: 21, scope: !7108)
 !7463 = !DILocation(line: 695, column: 35, scope: !7109)
 !7464 = !DILocation(line: 695, column: 15, scope: !7109)
-!7465 = !DILocation(line: 702, column: 18, scope: !7108)
-!7466 = !DILocation(line: 702, column: 9, scope: !7108)
-!7467 = !DILocation(line: 696, column: 46, scope: !7109)
-!7468 = !DILocation(line: 696, column: 37, scope: !7109)
+!7465 = !DILocation(line: 696, column: 37, scope: !7109)
+!7466 = !DILocation(line: 702, column: 18, scope: !7108)
+!7467 = !DILocation(line: 702, column: 9, scope: !7108)
+!7468 = !DILocation(line: 696, column: 46, scope: !7109)
 !7469 = !DILocation(line: 701, column: 9, scope: !7108)
 !7470 = !DILocation(line: 700, column: 5, scope: !7108)
 !7471 = !DILocation(line: 709, column: 12, scope: !7111)

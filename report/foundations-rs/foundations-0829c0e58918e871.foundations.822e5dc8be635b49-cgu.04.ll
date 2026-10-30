@@ -1,9 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/foundations-rs/original/foundations-0829c0e58918e871.foundations.822e5dc8be635b49-cgu.04?download=true
 inline.NumInlined: 1416
 inline.NumDeleted: 767
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 12
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumUnrolled: 14
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvMNtNtCsefgzIPu8p8D_14http_body_util11combinators8box_bodyINtB3_7BoxBodyNtNtCs8QTyv2gZm5j_5bytes5bytes5BytesINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtB2p_6marker4SendNtB2W_4SyncEL_EE3newINtNtB5_7map_err6MapErrINtNtB7_4full4FullB1b_ENvYzINtNtB2p_7convert4IntoB1L_E4intoEECsbaWXNhtWAp9_11foundations:bb.a
   %i.m = load i64, ptr %i.l, align 8, !dbg !1339, !alias.scope !1323, !noundef !718
   invoke void %i.i(ptr noundef %i.g, ptr noundef %i.k, i64 noundef %i.m)
@@ -205,7 +206,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5lJabBKj2Vx_15crossbeam_utils12ca
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5lJabBKj2Vx_15crossbeam_utils12cache_padded11CachePaddedINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsdra7vpBasQ9_7dashmap4lock9RawRwLockINtNtNtCscYIHOBAkUpv_9hashbrown3raw5inner8RawTableTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtB2m_4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEEEEECsbaWXNhtWAp9_11foundations.exit.i.i unwind label %bb.b, !dbg !1447
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5lJabBKj2Vx_15crossbeam_utils12cache_padded11CachePaddedINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsdra7vpBasQ9_7dashmap4lock9RawRwLockINtNtNtCscYIHOBAkUpv_9hashbrown3raw5inner8RawTableTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtB2m_4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEEEEECsbaWXNhtWAp9_11foundations.exit7.i.i: ; preds = %.lr.ph3
-  %i.e = add i64 %.sroa.0.1.i.i2, 1, !dbg !1445   ; 2 uses
+  %i.e = add nuw nsw i64 %.sroa.0.1.i.i2, 1, !dbg !1445 ; 2 uses
   %i.f = icmp eq i64 %i.e, %.8.val, !dbg !1445
   br i1 %i.f, label %.body.i, label %.lr.ph3, !dbg !1445
 
@@ -608,7 +609,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5lJabBKj2Vx_15crossbeam_utils12ca
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5lJabBKj2Vx_15crossbeam_utils12cache_padded11CachePaddedINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsdra7vpBasQ9_7dashmap4lock9RawRwLockINtNtNtCscYIHOBAkUpv_9hashbrown3raw5inner8RawTableTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtB2m_4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEEEEECsbaWXNhtWAp9_11foundations.exit.i.i.i.i.i unwind label %bb.b, !dbg !4081
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs5lJabBKj2Vx_15crossbeam_utils12cache_padded11CachePaddedINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsdra7vpBasQ9_7dashmap4lock9RawRwLockINtNtNtCscYIHOBAkUpv_9hashbrown3raw5inner8RawTableTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtB2m_4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEEEEECsbaWXNhtWAp9_11foundations.exit7.i.i.i.i.i: ; preds = %.lr.ph6
-  %i.h = add i64 %.sroa.0.1.i.i.i.i.i5, 1, !dbg !4079 ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i5, 1, !dbg !4079 ; 2 uses
   %i.i = icmp eq i64 %i.h, %.val1, !dbg !4079
   br i1 %i.i, label %.body.i.i.i.i, label %.lr.ph6, !dbg !4079
 
@@ -1011,7 +1012,7 @@ bb.i:                                             ; preds = %_RINvNtCs3oUPovFnLW
   tail call void @_RNvMsn_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcINtNtNtCs3zuhHmEJ01l_5tokio4sync5mutex5MutexINtNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing7channel8ReceiverINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEEE9drop_slowB1x_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.o) #37, !dbg !4474
   br label %common.ret, !dbg !4474
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.m, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit, %bb.h, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit, %bb.p, %bb.s
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.s, %bb.p, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit, %bb.m, %bb.h, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #36, !dbg !4451
@@ -1414,7 +1415,7 @@ bb.b:                                             ; preds = %_RNCINvNtNtNtCs3oUP
           to label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtCs5lJabBKj2Vx_15crossbeam_utils12cache_padded11CachePaddedINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsdra7vpBasQ9_7dashmap4lock9RawRwLockINtNtNtCscYIHOBAkUpv_9hashbrown3raw5inner8RawTableTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtB2G_4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEEEEuNCNvMs1_B2G_INtB2G_7DashMapB46_B59_E41with_capacity_and_hasher_and_shard_amount0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB4b_3vecINtB8A_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB6d_EE0E0E0CsbaWXNhtWAp9_11foundations.exit.i unwind label %bb.c, !dbg !7153, !noalias !7133
 
 _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtCs5lJabBKj2Vx_15crossbeam_utils12cache_padded11CachePaddedINtNtCs7hp7eIiX3bT_8lock_api6rwlock6RwLockNtNtCsdra7vpBasQ9_7dashmap4lock9RawRwLockINtNtNtCscYIHOBAkUpv_9hashbrown3raw5inner8RawTableTINtNtCs1xwejQucwHj_5alloc6borrow3CoweEINtNtB2G_4util11SharedValueNtNtNtCsgtgatFLTNh8_8governor5state9in_memory13InMemoryStateEEEEEuNCNvMs1_B2G_INtB2G_7DashMapB46_B59_E41with_capacity_and_hasher_and_shard_amount0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB4b_3vecINtB8A_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB6d_EE0E0E0CsbaWXNhtWAp9_11foundations.exit.i: ; preds = %bb.b
-  %i.i = add i64 %.sroa.0.010.i, 1, !dbg !7154    ; 2 uses
+  %i.i = add nuw i64 %.sroa.0.010.i, 1, !dbg !7154 ; 2 uses
   store i64 0, ptr %i.a, align 128, !dbg !7155, !noalias !7141
   %i.j = getelementptr inbounds nuw [128 x i8], ptr %.sroa.7.0.copyload, i64 %.val4.i, !dbg !7156
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 128 dereferenceable(128) %i.j, ptr noundef nonnull readonly align 128 dereferenceable(128) %i.a, i64 128, i1 false), !dbg !7157, !noalias !7141
@@ -1653,7 +1654,7 @@ bb.b:                                             ; preds = %bb.c
 bb.c:                                             ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtBa_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtBa_6future6future6Futurep6OutputuNtNtBa_6marker4SendEL_EEuNCNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing16output_otlp_grpc5start0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB1g_3vecINtB5a_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2N_EE0E0E0B2X_.exit.i, %.lr.ph.i
   %.val4.i = phi i64 [ %.sroa.5.0.copyload, %.lr.ph.i ], [ %i.aw, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtBa_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtBa_6future6future6Futurep6OutputuNtNtBa_6marker4SendEL_EEuNCNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing16output_otlp_grpc5start0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB1g_3vecINtB5a_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2N_EE0E0E0B2X_.exit.i ] ; 3 uses
   %.sroa.0.010.i = phi i64 [ %i.e, %.lr.ph.i ], [ %i.x, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtBa_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtBa_6future6future6Futurep6OutputuNtNtBa_6marker4SendEL_EEuNCNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing16output_otlp_grpc5start0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB1g_3vecINtB5a_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2N_EE0E0E0B2X_.exit.i ]
-  %i.x = add i64 %.sroa.0.010.i, 1, !dbg !7374    ; 2 uses
+  %i.x = add nuw i64 %.sroa.0.010.i, 1, !dbg !7374 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !7375, !noalias !7364
   %i.y = invoke { ptr, i64 } @_RNvMs1_NtNtCs3zuhHmEJ01l_5tokio4sync9broadcastINtB5_6SenderNtNtNtCsfUalJnHtWpm_5tonic9transport7channel7ChannelE9subscribeCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.sroa.8.24.copyload)
           to label %.noexc.i unwind label %bb.b, !dbg !7376, !noalias !7365 ; 2 uses
@@ -1799,7 +1800,7 @@ bb.a:
 bb.b:                                             ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtBa_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtBa_6future6future6Futurep6OutputuNtNtBa_6marker4SendEL_EEuNCNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing24output_jaeger_thrift_udp5start0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB1g_3vecINtB5i_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2N_EE0E0E0B2X_.exit.i, %.lr.ph.i
   %.val4.i = phi i64 [ %.sroa.5.0.copyload, %.lr.ph.i ], [ %i.z, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtBa_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtBa_6future6future6Futurep6OutputuNtNtBa_6marker4SendEL_EEuNCNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing24output_jaeger_thrift_udp5start0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB1g_3vecINtB5i_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2N_EE0E0E0B2X_.exit.i ] ; 3 uses
   %.sroa.0.010.i = phi i64 [ %i.c, %.lr.ph.i ], [ %i.j, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldjINtNtBa_3pin3PinINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtNtBa_6future6future6Futurep6OutputuNtNtBa_6marker4SendEL_EEuNCNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing24output_jaeger_thrift_udp5start0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtB1g_3vecINtB5i_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2N_EE0E0E0B2X_.exit.i ]
-  %i.j = add i64 %.sroa.0.010.i, 1, !dbg !7504    ; 2 uses
+  %i.j = add nuw i64 %.sroa.0.010.i, 1, !dbg !7504 ; 2 uses
   %i.k = load ptr, ptr %.sroa.8.24.copyload, align 8, !dbg !7505, !noalias !7492, !nonnull !718, !noundef !718
   %i.l = atomicrmw add ptr %i.k, i64 1 monotonic, align 8, !dbg !7506, !noalias !7492
   %i.m = icmp slt i64 %i.l, 0, !dbg !7507
@@ -2202,7 +2203,7 @@ bb.hu:                                            ; preds = %bb.hr
 
 bb.hv:                                            ; preds = %bb.hw, %.preheader.split.i.i.i
   %.sroa.021.4.i.i.i = phi i8 [ %.sroa.021.3.i.i.i, %.preheader.split.i.i.i ], [ 1, %bb.hw ], !dbg !10815 ; 2 uses
-  %i.yb = add nuw i64 %.sroa.07.3.i.i.i, 1, !dbg !10829 ; 2 uses
+  %i.yb = add nuw nsw i64 %.sroa.07.3.i.i.i, 1, !dbg !10829 ; 2 uses
   %exitcond67.not.i.i.i = icmp eq i64 %i.yb, %i.xe, !dbg !10830
   br i1 %exitcond67.not.i.i.i, label %.thread.i.i74.i, label %.preheader.split.i.i.i, !dbg !10830
 
@@ -2605,7 +2606,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span
   invoke void @_RNvXs5_NtNtCs1xwejQucwHj_5alloc3vec5drainINtB5_5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ox)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12134
 
-.loopexit.split-lp105.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.ep, %bb.eu
+.loopexit.split-lp105.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.eu, %bb.ep
   %lpad.loopexit.split-lp123 = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59
@@ -2629,7 +2630,7 @@ bb.ew:                                            ; preds = %bb.ek, %bb.en
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs26L2cHvO7VQ_13cf_rustracing5error5ErrorECsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef align 8 dereferenceable(40) %i.v) #38
           to label %bb.es unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !12127
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit, %bb.ew, %bb.ey, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit, %bb.d, %bb.eh, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59, %bb.fk
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCNvMNtCs7qAQKZbgfvS_20cf_rustracing_jaeger8reporterNtBG_21JaegerCompactReporter6report0ECsbaWXNhtWAp9_11foundations.exit, %bb.fk, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueAINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEj1_ECsbaWXNhtWAp9_11foundations.exit59, %bb.eh, %bb.d, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec5drain5DrainINtNtCs26L2cHvO7VQ_13cf_rustracing4span12FinishedSpanNtNtCs7qAQKZbgfvS_20cf_rustracing_jaeger4span16SpanContextStateEEECsbaWXNhtWAp9_11foundations.exit, %bb.ey, %bb.ew
   %lpad.loopexit.split-lp121 = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #36, !dbg !11872
@@ -3032,7 +3033,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
           to label %bb.f unwind label %bb.i, !dbg !13934
 
 bb.h:                                             ; preds = %.lr.ph19
-  %i.af = add i64 %.sroa.0.1.i18, 1, !dbg !13934  ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.0.1.i18, 1, !dbg !13934 ; 2 uses
   %i.ag = icmp eq i64 %i.af, %i.g, !dbg !13934
   br i1 %i.ag, label %.body, label %.lr.ph19, !dbg !13934
 
@@ -3177,7 +3178,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i:                                         ; preds = %bb.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs49WdmBbiWyj_17crossbeam_channel5waker5EntryECsbaWXNhtWAp9_11foundations.exit8.i
   %.sroa.0.110.i = phi i64 [ %i.al, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs49WdmBbiWyj_17crossbeam_channel5waker5EntryECsbaWXNhtWAp9_11foundations.exit8.i ], [ %i.ad, %bb.i ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %.sroa.0.110.i, !dbg !14094 ; 2 uses
-  %i.al = add i64 %.sroa.0.110.i, 1, !dbg !14094  ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.0.110.i, 1, !dbg !14094 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14063), !dbg !14094
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14064), !dbg !14103
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14065), !dbg !14104
@@ -3325,7 +3326,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i:                                         ; preds = %bb.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5waker5EntryECsbaWXNhtWAp9_11foundations.exit8.i
   %.sroa.0.110.i = phi i64 [ %i.al, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsaL1QbXo9JQH_3std4sync4mpmc5waker5EntryECsbaWXNhtWAp9_11foundations.exit8.i ], [ %i.ad, %bb.i ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %.sroa.0.110.i, !dbg !14270 ; 2 uses
-  %i.al = add i64 %.sroa.0.110.i, 1, !dbg !14270  ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.0.110.i, 1, !dbg !14270 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14239), !dbg !14270
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14240), !dbg !14279
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14241), !dbg !14280

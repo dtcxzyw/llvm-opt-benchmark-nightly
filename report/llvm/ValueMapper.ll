@@ -205,15 +205,15 @@ bb.ae:                                            ; preds = %_ZN4llvm12is_contai
 .lr.ph74:                                         ; preds = %.critedge, %bb.ag
   %i.dl = phi i32 [ %i.dp, %bb.ag ], [ %.pre, %.critedge ]
   %i.dm = phi ptr [ %i.dq, %bb.ag ], [ %.pre85.pre.pre.pre, %.critedge ] ; 2 uses
-  %.073 = phi i32 [ %8, %bb.ag ], [ 0, %.critedge ] ; 3 uses
-  %7 = zext i32 %.073 to i64
-  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.dm, i64 %7
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ag ], [ 0, %.critedge ] ; 3 uses
+  %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.dm, i64 %indvars.iv
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !102 ; 2 uses
   %.not45 = icmp eq ptr %i.do, null
   br i1 %.not45, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph74
-  call void @_ZN4llvm17DbgVariableRecord25replaceVariableLocationOpEjPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(96) %1, i32 noundef %.073, ptr noundef nonnull %i.do) #20
+  %7 = trunc nuw i64 %indvars.iv to i32
+  call void @_ZN4llvm17DbgVariableRecord25replaceVariableLocationOpEjPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(96) %1, i32 noundef %7, ptr noundef nonnull %i.do) #20
   %.pre81 = load ptr, ptr %6, align 8, !tbaa !45
   %.pre83 = load i32, ptr %i.ah, align 8, !tbaa !49
   br label %bb.ag
@@ -221,8 +221,9 @@ bb.af:                                            ; preds = %.lr.ph74
 bb.ag:                                            ; preds = %.lr.ph74, %bb.af
   %i.dp = phi i32 [ %i.dl, %.lr.ph74 ], [ %.pre83, %bb.af ] ; 2 uses
   %i.dq = phi ptr [ %i.dm, %.lr.ph74 ], [ %.pre81, %bb.af ] ; 2 uses
-  %8 = add nuw i32 %.073, 1                       ; 2 uses
-  %9 = icmp ugt i32 %i.dp, %8
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %8 = zext i32 %i.dp to i64
+  %9 = icmp samesign ult i64 %indvars.iv.next, %8
   br i1 %9, label %.lr.ph74, label %_ZNK4llvm15SmallVectorImplIPNS_5ValueEEeqERKS3_.exit.thread, !llvm.loop !285
 
 _ZNK4llvm15SmallVectorImplIPNS_5ValueEEeqERKS3_.exit.thread: ; preds = %bb.ag, %.critedge, %bb.r, %bb.ae, %_ZNK4llvm15SmallVectorImplIPNS_5ValueEEeqERKS3_.exit

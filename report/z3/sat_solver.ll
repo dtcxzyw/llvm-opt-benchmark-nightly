@@ -205,7 +205,6 @@ _ZNK6vectorIN3sat14clause_wrapperELb0EjE4sizeEv.exit: ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2336
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 3264 ; 2 uses
   %i.l = zext i32 %1 to i64
-  %wide.trip.count = zext i32 %i.e to i64
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNK3sat6solver23has_variables_to_reinitENS_7literalES1_.exit.thread65
@@ -378,7 +377,8 @@ _ZNK3sat6solver23has_variables_to_reinitERKNS_6clauseE.exit.thread: ; preds = %b
 _ZNK3sat6solver23has_variables_to_reinitENS_7literalES1_.exit.thread65: ; preds = %bb.c, %_ZNK3sat14clause_wrapperixEj.exit31, %bb.h, %_ZNK3sat6solver23has_variables_to_reinitERKNS_6clauseE.exit.thread, %bb.l, %bb.d, %_ZNK3sat6solver23has_variables_to_reinitENS_7literalES1_.exit.thread, %_ZNK3sat6solver23has_variables_to_reinitENS_7literalES1_.exit
   %.2 = phi i32 [ %i.bh, %bb.h ], [ %i.ag, %_ZNK3sat6solver23has_variables_to_reinitENS_7literalES1_.exit.thread ], [ %.069, %_ZNK3sat6solver23has_variables_to_reinitENS_7literalES1_.exit ], [ %i.t, %bb.d ], [ %.069, %_ZNK3sat6solver23has_variables_to_reinitERKNS_6clauseE.exit.thread ], [ %i.by, %bb.l ], [ %.069, %_ZNK3sat14clause_wrapperixEj.exit31 ], [ %.069, %bb.c ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %i.e, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !952
 }
 
@@ -781,7 +781,7 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i:   ; preds = %bb.ae
   br label %bb.af
 
 bb.af:                                            ; preds = %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i, %.lr.ph.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i ] ; 2 uses
   %i.lg = load ptr, ptr %i.ky, align 8, !tbaa !267
   %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.lg, i64 %indvars.iv
   %.sroa.01.0.copyload.i = load i32, ptr %i.lh, align 4, !tbaa !250 ; 2 uses
@@ -1068,10 +1068,9 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i82: ; preds = %bb.ba
 
 .lr.ph.i84.preheader:                             ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i82
   %i.ot = zext i32 %.0 to i64
-  %10 = zext i32 %i.or to i64
   br label %.lr.ph.i84
 
-.lr.ph.i84:                                       ; preds = %.lr.ph.i84.preheader, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92
+.lr.ph.i84:                                       ; preds = %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92, %.lr.ph.i84.preheader
   %indvars.iv282 = phi i64 [ %i.ot, %.lr.ph.i84.preheader ], [ %indvars.iv.next283, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92 ] ; 2 uses
   %i.ou = load ptr, ptr %i.ky, align 8, !tbaa !267
   %i.ov = getelementptr inbounds nuw [4 x i8], ptr %i.ou, i64 %indvars.iv282
@@ -1150,7 +1149,8 @@ bb.bf:                                            ; preds = %bb.be, %.noexc98
 
 _ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92: ; preds = %bb.bf, %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit.i.i88
   %indvars.iv.next283 = add nuw nsw i64 %indvars.iv282, 1 ; 2 uses
-  %exitcond.not.i93 = icmp eq i64 %indvars.iv.next283, %10
+  %lftr.wideiv.i94 = trunc i64 %indvars.iv.next283 to i32
+  %exitcond.not.i93 = icmp eq i32 %i.or, %lftr.wideiv.i94
   br i1 %exitcond.not.i93, label %_ZN3sat6solver26extract_fixed_consequencesERjRKNS_11literal_setER16tracked_uint_setR6vectorI7svectorINS_7literalEjELb1EjE.exit99, label %.lr.ph.i84, !llvm.loop !37
 
 _ZN3sat6solver26extract_fixed_consequencesERjRKNS_11literal_setER16tracked_uint_setR6vectorI7svectorINS_7literalEjELb1EjE.exit99: ; preds = %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92, %.lr.ph.i84, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i82, %bb.ba
@@ -1553,13 +1553,13 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit:     ; preds = %bb.a
 .lr.ph:                                           ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3280
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4256 ; 4 uses
+  %5 = zext i32 %i.f to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit
-  %.012 = phi i32 [ %i.f, %.lr.ph ], [ %6, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ %indvars.iv.next, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit ] ; 2 uses
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !267
-  %5 = zext i32 %.012 to i64
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %5
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv
   %.sroa.01.0.copyload = load i32, ptr %i.k, align 4, !tbaa !250 ; 2 uses
   %i.l = lshr i32 %.sroa.01.0.copyload, 1
   %i.m = load ptr, ptr %i.h, align 8, !tbaa !291
@@ -1633,8 +1633,9 @@ bb.g:                                             ; preds = %bb.f, %_ZN6vectorIN
   br i1 %i.ap, label %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit, label %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit.i, !llvm.loop !36
 
 _ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit: ; preds = %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit.i, %bb.g
-  %6 = add nuw i32 %.012, 1                       ; 2 uses
-  %exitcond.not = icmp eq i32 %6, %i.e
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %i.e, %lftr.wideiv
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !37
 }
 

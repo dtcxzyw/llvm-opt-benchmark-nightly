@@ -31,8 +31,8 @@ bb.a:
   %6 = alloca %"class.std::__1::vector.1", align 8 ; 7 uses
   %i.a = shl nuw i32 1, %1                        ; 5 uses
   %i.b = trunc i64 %2 to i32                      ; 5 uses
-  %i.c = shl nuw i32 1, %i.b                      ; 2 uses
-  %i.d = sext i32 %i.c to i64                     ; 7 uses
+  %i.c = shl nuw i32 1, %i.b
+  %i.d = sext i32 %i.c to i64                     ; 8 uses
   %i.e = zext i32 %i.a to i64
   %.not = icmp ugt i64 %i.d, %i.e
   br i1 %.not, label %.thread211, label %.preheader221
@@ -282,7 +282,7 @@ bb.n:                                             ; preds = %bb.n, %.preheader21
   store i16 0, ptr %i.cq, align 1, !tbaa !93
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cl, i64 6
   store i16 4096, ptr %i.cr, align 1, !tbaa !94
-  %i.cs = add nuw i64 %.096257, 2
+  %i.cs = add nuw nsw i64 %.096257, 2
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.thread211, label %bb.n, !llvm.loop !21
@@ -319,20 +319,22 @@ _ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit:    ; preds = %bb.o
   %i.dc = getelementptr inbounds nuw i8, ptr %5, i64 16
   br label %bb.q
 
-._crit_edge260:                                   ; preds = %bb.ae, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit
-  %i.dd = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hb, %bb.ae ] ; 2 uses
-  %i.de = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hc, %bb.ae ] ; 2 uses
-  %i.df = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.ha, %bb.ae ] ; 3 uses
-  %i.dg = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hd, %bb.ae ] ; 2 uses
-  %i.dh = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.he, %bb.ae ] ; 2 uses
-  %i.di = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hf, %bb.ae ] ; 2 uses
-  %.lcssa232 = phi i64 [ 0, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hm, %bb.ae ] ; 2 uses
-  %7 = and i64 %.lcssa232, 4294967295             ; 2 uses
-  %i.dj = icmp ult i64 %7, %i.d
+._crit_edge260.loopexit:                          ; preds = %bb.ae
+  %7 = and i64 %i.hm, 4294967295
+  br label %._crit_edge260
+
+._crit_edge260:                                   ; preds = %._crit_edge260.loopexit, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit
+  %i.dd = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hb, %._crit_edge260.loopexit ] ; 2 uses
+  %i.de = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hc, %._crit_edge260.loopexit ] ; 2 uses
+  %i.df = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.ha, %._crit_edge260.loopexit ] ; 3 uses
+  %i.dg = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hd, %._crit_edge260.loopexit ] ; 2 uses
+  %i.dh = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.he, %._crit_edge260.loopexit ] ; 2 uses
+  %i.di = phi ptr [ null, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %i.hf, %._crit_edge260.loopexit ] ; 2 uses
+  %.lcssa232 = phi i64 [ 0, %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2Em.exit ], [ %7, %._crit_edge260.loopexit ] ; 2 uses
+  %i.dj = icmp ult i64 %.lcssa232, %i.d
   br i1 %i.dj, label %.lr.ph264, label %.preheader217
 
 .lr.ph264:                                        ; preds = %._crit_edge260
-  %8 = trunc i64 %.lcssa232 to i32
   %i.dk = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.dl = getelementptr inbounds nuw i8, ptr %4, i64 16
   br label %bb.af
@@ -616,7 +618,7 @@ bb.ae:                                            ; preds = %_ZNSt3__16vectorIjN
   %i.hl = sub i64 %i.hj, %i.hk
   %i.hm = ashr exact i64 %i.hl, 2                 ; 2 uses
   %i.hn = icmp ult i64 %i.hg, %i.hm
-  br i1 %i.hn, label %bb.q, label %._crit_edge260, !llvm.loop !42
+  br i1 %i.hn, label %bb.q, label %._crit_edge260.loopexit, !llvm.loop !42
 
 .preheader217:                                    ; preds = %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit, %._crit_edge260
   %i.ho = phi ptr [ %i.dh, %._crit_edge260 ], [ %i.jn, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 2 uses
@@ -637,15 +639,15 @@ bb.af:                                            ; preds = %.lr.ph264, %_ZNSt3_
   %i.hw = phi ptr [ %i.dg, %.lr.ph264 ], [ %i.jm, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 6 uses
   %i.hx = phi ptr [ %i.dh, %.lr.ph264 ], [ %i.jn, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 3 uses
   %i.hy = phi ptr [ %i.di, %.lr.ph264 ], [ %.0.i149, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 8 uses
-  %i.hz = phi i64 [ %7, %.lr.ph264 ], [ %10, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ]
-  %storemerge262 = phi i32 [ %8, %.lr.ph264 ], [ %9, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 3 uses
+  %i.hz = phi i64 [ %.lcssa232, %.lr.ph264 ], [ %indvars.iv.next, %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit ] ; 4 uses
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %i.hz
   store i32 0, ptr %i.ia, align 4, !tbaa !82
   %i.ib = icmp ult ptr %i.hy, %i.hx
   br i1 %i.ib, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  store i32 %storemerge262, ptr %i.hy, align 4, !tbaa !82
+  %8 = trunc nuw nsw i64 %i.hz to i32
+  store i32 %8, ptr %i.hy, align 4, !tbaa !82
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hy, i64 4
   br label %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit
 
@@ -683,7 +685,8 @@ _ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorIjEEEENS_19__allocation_re
   %i.ip = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.io) #11 ; 3 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 %i.if ; 6 uses
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.ip, i64 %.0.i.i.i140 ; 3 uses
-  store i32 %storemerge262, ptr %i.iq, align 4, !tbaa !82
+  %9 = trunc nuw nsw i64 %i.hz to i32
+  store i32 %9, ptr %i.iq, align 4, !tbaa !82
   %i.is = getelementptr inbounds nuw i8, ptr %i.iq, i64 4 ; 2 uses
   %.not4.i.i.i.i.i.i.i.i.i142 = icmp eq ptr %i.hy, %i.hw
   br i1 %.not4.i.i.i.i.i.i.i.i.i142, label %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i146, label %.lr.ph.i.i.i.i.i.i.i.i.i143.preheader
@@ -759,9 +762,8 @@ _ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit: ; preds = %bb
   %i.jn = phi ptr [ %i.hx, %bb.ag ], [ %i.ir, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i146 ], [ %i.ir, %bb.ak ] ; 2 uses
   %.0.i149 = phi ptr [ %i.ic, %bb.ag ], [ %i.is, %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEE5clearB8nn180100Ev.exit.i.i.i146 ], [ %i.is, %bb.ak ] ; 3 uses
   store ptr %.0.i149, ptr %i.dk, align 8, !tbaa !100
-  %9 = add i32 %storemerge262, 1                  ; 3 uses
-  %10 = zext i32 %9 to i64
-  %i.jo = icmp ult i32 %9, %i.c
+  %indvars.iv.next = add nuw nsw i64 %i.hz, 1     ; 2 uses
+  %i.jo = icmp ult i64 %indvars.iv.next, %i.d
   br i1 %i.jo, label %bb.af, label %.preheader217, !llvm.loop !53
 
 .preheader.loopexit:                              ; preds = %_ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177
@@ -1072,7 +1074,7 @@ _ZNSt3__16vectorIjNS_9allocatorIjEEE9push_backB8nn180100ERKj.exit177: ; preds = 
   br i1 %i.oc, label %.preheader.loopexit, label %bb.al
 
 bb.ba:                                            ; preds = %.preheader, %bb.bh
-  %i.od = phi i64 [ 0, %.preheader ], [ %11, %bb.bh ] ; 8 uses
+  %i.od = phi i64 [ 0, %.preheader ], [ %i.pk, %bb.bh ] ; 8 uses
   %i.oe = getelementptr inbounds nuw [4 x i8], ptr %i.jt, i64 %i.od
   %i.of = load i32, ptr %i.oe, align 4, !tbaa !82 ; 3 uses
   %i.og = icmp eq i32 %i.of, %i.bq
@@ -1133,10 +1135,9 @@ bb.bh:                                            ; preds = %bb.bf, %bb.bg
   %i.pi = trunc i64 %i.pf to i16
   %i.pj = getelementptr inbounds nuw i8, ptr %i.ow, i64 6
   store i16 %i.pi, ptr %i.pj, align 1, !tbaa !94
-  %i.pk = add nuw nsw i64 %i.od, 1
-  %11 = and i64 %i.pk, 4294967295                 ; 2 uses
-  %12 = icmp ult i64 %11, %i.d
-  br i1 %12, label %bb.ba, label %.thread215.thread, !llvm.loop !74
+  %i.pk = add nuw i64 %i.od, 1                    ; 2 uses
+  %exitcond302.not = icmp eq i64 %i.pk, %i.d
+  br i1 %exitcond302.not, label %.thread215.thread, label %bb.ba, !llvm.loop !74
 
 .thread215:                                       ; preds = %bb.al
   store ptr %i.ki, ptr %i.hr, align 8, !tbaa !100

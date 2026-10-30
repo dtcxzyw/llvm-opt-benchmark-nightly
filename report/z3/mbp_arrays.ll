@@ -205,15 +205,20 @@ bb.cg:                                            ; preds = %bb.cf
   store i64 %i.nb, ptr %13, align 8, !tbaa !31
   %i.nc = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 5 uses
   store ptr null, ptr %i.nc, align 8, !tbaa !35
-  br i1 %i.cm, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, label %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186
+  br i1 %i.cm, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, label %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186.preheader
 
-_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186: ; preds = %bb.cg, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit
-  %i.nd = phi ptr [ %i.ot, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ], [ %i.ck, %bb.cg ] ; 3 uses
-  %i.ne = phi ptr [ %i.ou, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ], [ null, %bb.cg ] ; 3 uses
-  %.067325 = phi i32 [ %25, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ], [ %.0.i, %bb.cg ] ; 3 uses
+_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186.preheader: ; preds = %bb.cg
+  %24 = zext i32 %.0.i to i64
+  br label %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186
+
+_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186: ; preds = %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186.preheader, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit
+  %i.nd = phi ptr [ %i.ck, %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186.preheader ], [ %i.ot, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ] ; 3 uses
+  %i.ne = phi ptr [ null, %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186.preheader ], [ %i.ou, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ] ; 3 uses
+  %indvars.iv348 = phi i64 [ %24, %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186.preheader ], [ %indvars.iv.next349, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit ] ; 3 uses
   %i.nf = getelementptr inbounds i8, ptr %i.nd, i64 -4
   %i.ng = load i32, ptr %i.nf, align 4, !tbaa !72
-  %i.nh = icmp ult i32 %.067325, %i.ng
+  %25 = zext i32 %i.ng to i64
+  %i.nh = icmp samesign ult i64 %indvars.iv348, %25
   br i1 %i.nh, label %bb.ci, label %.critedge288
 
 .critedge288:                                     ; preds = %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit
@@ -235,8 +240,7 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit:
           to label %bb.cn unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.ci:                                            ; preds = %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186
-  %24 = zext i32 %.067325 to i64
-  %i.np = getelementptr inbounds nuw [40 x i8], ptr %i.nd, i64 %24
+  %i.np = getelementptr inbounds nuw [40 x i8], ptr %i.nd, i64 %indvars.iv348
   %i.nq = getelementptr inbounds nuw i8, ptr %i.np, i64 8 ; 2 uses
   %i.nr = load ptr, ptr %i.nq, align 8, !tbaa !35 ; 2 uses
   %i.ns = icmp eq ptr %i.nr, null
@@ -310,7 +314,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.
 _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit: ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit.loopexit, %bb.ci
   %i.ot = phi ptr [ %.pre353, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit.loopexit ], [ %i.nd, %bb.ci ] ; 2 uses
   %i.ou = phi ptr [ %i.os, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6appendERKS4_.exit.loopexit ], [ %i.ne, %bb.ci ] ; 2 uses
-  %25 = add i32 %.067325, 1
+  %indvars.iv.next349 = add nuw nsw i64 %indvars.iv348, 1
   %i.ov = icmp eq ptr %i.ot, null
   br i1 %i.ov, label %.critedge288, label %_ZNK6vectorIN3mbp26array_project_selects_util7idx_valELb1EjE4sizeEv.exit186, !llvm.loop !430
 

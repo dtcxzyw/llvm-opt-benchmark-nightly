@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/candle-rs/original/candle_wasm_example_whisper-601b0015d81a4374.candle_wasm_example_whisper.b1eff805deae52af-cgu.12?download=true
 inline.NumInlined: 730
 inline.NumDeleted: 376
-loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringECsfh9HxMbthk9_27candle_wasm_example_whisper:bb.a
   ret void
 }
@@ -204,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph12.i.i:                                     ; preds = %bb.d, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc2rc2RcDNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners8ListenerEL_EEECsfh9HxMbthk9_27candle_wasm_example_whisper.exit8.i.i
   %.sroa.0.110.i.i = phi i64 [ %i.n, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsgCecv3eZDcN_5alloc2rc2RcDNtNtNtCs9OLX912zl7o_3yew11virtual_dom9listeners8ListenerEL_EEECsfh9HxMbthk9_27candle_wasm_example_whisper.exit8.i.i ], [ %i.d, %bb.d ] ; 2 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %.0.val, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.n = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !447)
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !448, !noundef !5 ; 3 uses
   %i.p = icmp eq ptr %i.o, null
@@ -556,7 +557,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs9OLX912zl7o_
   ret void
 
 bb.h:                                             ; preds = %.lr.ph15
-  %i.s = add i64 %.sroa.0.113, 1                  ; 2 uses
+  %i.s = add nuw nsw i64 %.sroa.0.113, 1          ; 2 uses
   %i.t = icmp eq i64 %i.s, %1
   br i1 %i.t, label %._crit_edge16, label %.lr.ph15
 
@@ -959,7 +960,7 @@ bb.o:                                             ; preds = %.lr.ph
           to label %bb.o unwind label %bb.q
 
 bb.p:                                             ; preds = %.lr.ph195
-  %i.bq = add i64 %.sroa.0.1.i194, 1              ; 2 uses
+  %i.bq = add nuw nsw i64 %.sroa.0.1.i194, 1      ; 2 uses
   %i.br = icmp eq i64 %i.bq, %i.bl
   br i1 %i.br, label %common.resume, label %.lr.ph195
 

@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yara-x-rs/original/yr.yr.f14c8b45f5cb0649-cgu.14?download=true
 inline.NumInlined: 1677
 inline.NumDeleted: 809
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsg2CeFYmfPbl_8protobuf13message_field12MessageFieldNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos6dotnet8AssemblyEECskIqAKC4t9Ft_2yr:bb.a
 
 bb.p:                                             ; preds = %.body11.i.i.i, %.body7.i.i.i, %.body.i.i.i
@@ -204,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !979
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.l = add i64 %.sroa.0.1.i.i2, 1               ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.1.i.i2, 1       ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.g
   br i1 %i.m, label %.body.i, label %.lr.ph3
 
@@ -290,7 +291,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECskI
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECskIqAKC4t9Ft_2yr.exit.i.i unwind label %bb.e, !noalias !982
 
 bb.d:                                             ; preds = %.lr.ph15
-  %i.n = add i64 %.sroa.0.1.i.i14, 1              ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i.i14, 1      ; 2 uses
   %i.o = icmp eq i64 %i.n, %i.g
   br i1 %i.o, label %.body.i, label %.lr.ph15
 

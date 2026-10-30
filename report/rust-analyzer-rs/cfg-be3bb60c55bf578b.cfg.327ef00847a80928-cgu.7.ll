@@ -1,6 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/cfg-be3bb60c55bf578b.cfg.327ef00847a80928-cgu.7?download=true
 inline.NumInlined: 94
 inline.NumDeleted: 46
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -124,7 +127,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !inline_history !13
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.d = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.d = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.e = icmp eq i64 %i.d, %.8.val
   br i1 %i.e, label %.body, label %.lr.ph3
 
@@ -505,12 +508,12 @@ bb.f:                                             ; preds = %.lr.ph27
 .lr.ph27:                                         ; preds = %bb.e, %bb.f
   %.sroa.0.0.i26 = phi i64 [ %i.m, %bb.f ], [ 0, %bb.e ] ; 2 uses
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %.sroa.0.0.i26
-  %i.m = add i64 %.sroa.0.0.i26, 1                ; 4 uses
+  %i.m = add nuw i64 %.sroa.0.0.i26, 1            ; 4 uses
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprEBF_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l)
           to label %bb.f unwind label %bb.h, !noalias !26, !inline_history !22
 
 bb.g:                                             ; preds = %.lr.ph29
-  %i.n = add i64 %.sroa.0.1.i28, 1                ; 2 uses
+  %i.n = add nuw i64 %.sroa.0.1.i28, 1            ; 2 uses
   %i.o = icmp eq i64 %i.n, %i.j
   br i1 %i.o, label %.body, label %.lr.ph29
 
@@ -558,12 +561,12 @@ bb.k:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.j, %bb.k
   %.sroa.0.0.i1223 = phi i64 [ %i.ab, %bb.k ], [ 0, %bb.j ] ; 2 uses
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %.sroa.0.0.i1223
-  %i.ab = add i64 %.sroa.0.0.i1223, 1             ; 4 uses
+  %i.ab = add nuw i64 %.sroa.0.0.i1223, 1         ; 4 uses
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprEBF_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aa)
           to label %bb.k unwind label %bb.m, !noalias !27, !inline_history !22
 
 bb.l:                                             ; preds = %.lr.ph25
-  %i.ac = add i64 %.sroa.0.1.i1324, 1             ; 2 uses
+  %i.ac = add nuw i64 %.sroa.0.1.i1324, 1         ; 2 uses
   %i.ad = icmp eq i64 %i.ac, %i.y
   br i1 %i.ad, label %.body14, label %.lr.ph25
 
@@ -966,8 +969,8 @@ bb.p:                                             ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !68
   br label %_RNvMs4_NtCs4kMRW8zVVbM_3cfg3dnfNtB5_7Builder5lower.exit
 
-.body.thread.i:                                   ; preds = %bb.w, %bb.ae, %.body.i
-  %.pn.i = phi { ptr, i32 } [ %i.bo, %.body.i ], [ %i.bu, %bb.ae ], [ %i.bk, %bb.w ]
+.body.thread.i:                                   ; preds = %bb.ae, %.body.i, %bb.w
+  %.pn.i = phi { ptr, i32 } [ %i.bo, %.body.i ], [ %i.bk, %bb.w ], [ %i.bu, %bb.ae ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprEEB1c_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #15
           to label %.thread57.i unwind label %bb.ah, !noalias !65
 
@@ -1151,8 +1154,8 @@ bb.an:                                            ; preds = %.thread57.i
 bb.ao:                                            ; preds = %.thread.i
   resume { ptr, i32 } %.pn1044.i
 
-.thread.i:                                        ; preds = %bb.g, %bb.an, %.thread57.i, %bb.ak, %bb.n, %bb.l
-  %.pn1044.i = phi { ptr, i32 } [ %i.ca, %bb.ak ], [ %.pn853.i, %.thread57.i ], [ %lpad.thr_comm.split-lp69.i, %bb.l ], [ %.pn853.i, %bb.an ], [ %i.av, %bb.n ], [ %i.z, %bb.g ]
+.thread.i:                                        ; preds = %bb.an, %.thread57.i, %bb.ak, %bb.n, %bb.l, %bb.g
+  %.pn1044.i = phi { ptr, i32 } [ %i.z, %bb.g ], [ %.pn853.i, %.thread57.i ], [ %lpad.thr_comm.split-lp69.i, %bb.l ], [ %.pn853.i, %bb.an ], [ %i.ca, %bb.ak ], [ %i.av, %bb.n ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4kMRW8zVVbM_3cfg3dnf7DnfExprEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i) #15
           to label %bb.ao unwind label %bb.ah, !noalias !65
 
@@ -1555,7 +1558,7 @@ bb.g:                                             ; preds = %.lr.ph65
           to label %bb.g unwind label %bb.i, !inline_history !118
 
 bb.h:                                             ; preds = %.lr.ph67
-  %i.x = add i64 %.sroa.0.1.i.i66, 1              ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.0.1.i.i66, 1      ; 2 uses
   %i.y = icmp eq i64 %i.x, %i.g
   br i1 %i.y, label %.body35, label %.lr.ph67
 
@@ -1635,7 +1638,7 @@ bb.n:                                             ; preds = %.lr.ph
           to label %bb.n unwind label %bb.p, !inline_history !118
 
 bb.o:                                             ; preds = %.lr.ph63
-  %i.aq = add i64 %.sroa.0.1.i.i3262, 1           ; 2 uses
+  %i.aq = add nuw nsw i64 %.sroa.0.1.i.i3262, 1   ; 2 uses
   %i.ar = icmp eq i64 %i.aq, %i.m
   br i1 %i.ar, label %.body35, label %.lr.ph63
 

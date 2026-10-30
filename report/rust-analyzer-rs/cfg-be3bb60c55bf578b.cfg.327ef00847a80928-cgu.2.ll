@@ -1,6 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/cfg-be3bb60c55bf578b.cfg.327ef00847a80928-cgu.2?download=true
 inline.NumInlined: 101
 inline.NumDeleted: 57
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -117,7 +120,7 @@ bb.b:                                             ; preds = %.lr.ph
           to label %bb.b unwind label %bb.d, !noalias !12
 
 bb.c:                                             ; preds = %.lr.ph3
-  %i.e = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.e = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.f = icmp eq i64 %i.e, %.8.val
   br i1 %i.f, label %.body, label %.lr.ph3
 

@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/rust_analyzer-8b8982baf95623f0.rust_analyzer.4b86991ef7848226-cgu.01?download=true
 inline.NumInlined: 4381
 inline.NumDeleted: 1899
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCs8yjYO7b73r2_10serde_json3ser13to_vec_prettyNtNtCs6u1mgJOKDyY_13rust_analyzer6config18InvocationStrategyEBR_:bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 0, ptr %i.m, align 8
@@ -204,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %1 unwind label %bb.c
+          to label %.body.i unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
@@ -212,12 +213,12 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #33
   unreachable
 
+.body.i:                                          ; preds = %bb.b
+  resume { ptr, i32 } %i.b
+
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs6u1mgJOKDyY_13rust_analyzer.exit.i.i: ; preds = %bb.a
   tail call void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
   ret void
-
-1:                                                ; preds = %bb.b
-  resume { ptr, i32 } %i.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -620,7 +621,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand8mod_path7
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand8mod_path7ModPathECs6u1mgJOKDyY_13rust_analyzer.exit.i unwind label %bb.b
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand8mod_path7ModPathECs6u1mgJOKDyY_13rust_analyzer.exit7.i: ; preds = %.lr.ph3
-  %i.d = add i64 %.sroa.0.1.i2, 1                 ; 2 uses
+  %i.d = add nuw nsw i64 %.sroa.0.1.i2, 1         ; 2 uses
   %i.e = icmp eq i64 %i.d, %.8.val
   br i1 %i.e, label %.body, label %.lr.ph3
 
@@ -1023,7 +1024,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand8mod_path7
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand8mod_path7ModPathECs6u1mgJOKDyY_13rust_analyzer.exit.i.i unwind label %bb.h
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand8mod_path7ModPathECs6u1mgJOKDyY_13rust_analyzer.exit7.i.i: ; preds = %.lr.ph31
-  %i.ag = add i64 %.sroa.0.1.i.i30, 1             ; 2 uses
+  %i.ag = add nuw nsw i64 %.sroa.0.1.i.i30, 1     ; 2 uses
   %i.ah = icmp eq i64 %i.ag, %.val16
   br i1 %i.ah, label %.body.i, label %.lr.ph31
 
@@ -1426,7 +1427,7 @@ bb.lq:                                            ; preds = %.lr.ph675
           to label %bb.lq unwind label %bb.ls
 
 bb.lr:                                            ; preds = %.lr.ph678
-  %i.ys = add i64 %.sroa.0.1.i676, 1              ; 2 uses
+  %i.ys = add nuw nsw i64 %.sroa.0.1.i676, 1      ; 2 uses
   %i.yt = icmp eq i64 %i.ys, %i.yn
   br i1 %i.yt, label %.body282, label %.lr.ph678
 

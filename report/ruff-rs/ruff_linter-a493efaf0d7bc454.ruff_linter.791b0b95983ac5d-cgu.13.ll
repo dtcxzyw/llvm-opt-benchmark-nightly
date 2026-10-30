@@ -1,9 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ruff_linter-a493efaf0d7bc454.ruff_linter.791b0b95983ac5d-cgu.13?download=true
 inline.NumInlined: 4418
 inline.NumDeleted: 1702
-loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 82
-loop-unroll.NumUnrolled: 89
+loop-unroll.NumUnrolled: 90
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtNtCs2AWtUsOyxgP_3std4sync4mpmc5waker5EntryEECsEhZmuQNqkz_11ruff_linter
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtNtCs2AWtUsOyxgP_3std4sync4mpmc5waker5EntryEECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
@@ -205,12 +206,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !inline_history !666
 
 bb.c:                                             ; preds = %.lr.ph7
-  %i.g = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i6, 1             ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.c
   br i1 %i.h, label %.body, label %.lr.ph7
 
@@ -613,12 +614,12 @@ bb.b:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i5 = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.sroa.0.0.i5
-  %i.f = add i64 %.sroa.0.0.i5, 1                 ; 4 uses
+  %i.f = add nuw i64 %.sroa.0.0.i5, 1             ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.e)
           to label %bb.b unwind label %bb.d, !noalias !844, !inline_history !835
 
 bb.c:                                             ; preds = %.lr.ph7
-  %i.g = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.g = add nuw i64 %.sroa.0.1.i6, 1             ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.c
   br i1 %i.h, label %.body3, label %.lr.ph7
 
@@ -1021,12 +1022,12 @@ bb.bh:                                            ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated11ExprCompareECsEhZmuQNqkz_11ruff_linter.exit, %bb.bh
   %.sroa.0.0.i.i154 = phi i64 [ %i.di, %bb.bh ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated11ExprCompareECsEhZmuQNqkz_11ruff_linter.exit ] ; 2 uses
   %i.dh = getelementptr inbounds nuw [72 x i8], ptr %i.dd, i64 %.sroa.0.0.i.i154
-  %i.di = add i64 %.sroa.0.0.i.i154, 1            ; 4 uses
+  %i.di = add nuw i64 %.sroa.0.0.i.i154, 1        ; 4 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.dh)
           to label %bb.bh unwind label %bb.bj, !noalias !1069, !inline_history !941
 
 bb.bi:                                            ; preds = %.lr.ph156
-  %i.dj = add i64 %.sroa.0.1.i.i155, 1            ; 2 uses
+  %i.dj = add nuw i64 %.sroa.0.1.i.i155, 1        ; 2 uses
   %i.dk = icmp eq i64 %i.dj, %i.df
   br i1 %i.dk, label %.body.i, label %.lr.ph156
 
@@ -1429,7 +1430,7 @@ bb.bj:                                            ; preds = %bb.bi
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #39, !noalias !6889
   unreachable
 
-.body.i:                                          ; preds = %bb.bi, %bb.bl
+.body.i:                                          ; preds = %bb.bl, %bb.bi
   %.pn.i = phi { ptr, i32 } [ %i.ga, %bb.bl ], [ %i.fx, %bb.bi ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(8) %i.j) #38
           to label %.thread15.thread37.i unwind label %bb.bs, !noalias !6889

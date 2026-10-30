@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 .preheader:                                       ; preds = %._crit_edge.split, %._crit_edge.split.us.us, %.preheader268
   %.1163.lcssa = phi i32 [ %.0162, %.preheader268 ], [ %.2164.lcssa.us, %._crit_edge.split.us.us ], [ %.2164.lcssa, %._crit_edge.split ] ; 3 uses
   %.0155.lcssa = phi i32 [ 0, %.preheader268 ], [ %.1156.lcssa.us, %._crit_edge.split.us.us ], [ %.1156.lcssa, %._crit_edge.split ] ; 2 uses
-  %i.cl = add i32 %4, %3                          ; 2 uses
+  %i.cl = add i32 %4, %3                          ; 3 uses
   %i.cm = icmp ult i32 %3, %i.cl
   br i1 %i.cm, label %.lr.ph312, label %._crit_edge313
 
@@ -214,14 +214,17 @@ bb.r:                                             ; preds = %bb.q
   %i.co = getelementptr i8, ptr %0, i64 32        ; 2 uses
   %i.cp = getelementptr i8, ptr %0, i64 216       ; 3 uses
   %i.cq = zext i32 %3 to i64                      ; 2 uses
-  %wide.trip.count354 = zext i32 %i.cl to i64     ; 2 uses
-  br i1 %7, label %.lr.ph312.split.us, label %.lr.ph312.split
+  br i1 %7, label %.lr.ph312.split.us.preheader, label %.lr.ph312.split
 
-.lr.ph312.split.us:                               ; preds = %.lr.ph312, %._crit_edge.split305.us.us
-  %indvars.iv351 = phi i64 [ %indvars.iv.next352, %._crit_edge.split305.us.us ], [ %i.cq, %.lr.ph312 ] ; 2 uses
-  %.0152311.us = phi i32 [ %.1153.lcssa.us, %._crit_edge.split305.us.us ], [ 0, %.lr.ph312 ] ; 2 uses
-  %.2157310.us = phi i32 [ %.3.lcssa.us, %._crit_edge.split305.us.us ], [ %.0155.lcssa, %.lr.ph312 ] ; 2 uses
-  %.4308.us = phi i32 [ %.5.lcssa.us, %._crit_edge.split305.us.us ], [ %.1163.lcssa, %.lr.ph312 ] ; 2 uses
+.lr.ph312.split.us.preheader:                     ; preds = %.lr.ph312
+  %wide.trip.count353 = zext i32 %i.cl to i64
+  br label %.lr.ph312.split.us
+
+.lr.ph312.split.us:                               ; preds = %.lr.ph312.split.us.preheader, %._crit_edge.split305.us.us
+  %indvars.iv351 = phi i64 [ %i.cq, %.lr.ph312.split.us.preheader ], [ %indvars.iv.next352, %._crit_edge.split305.us.us ] ; 2 uses
+  %.0152311.us = phi i32 [ 0, %.lr.ph312.split.us.preheader ], [ %.1153.lcssa.us, %._crit_edge.split305.us.us ] ; 2 uses
+  %.2157310.us = phi i32 [ %.0155.lcssa, %.lr.ph312.split.us.preheader ], [ %.3.lcssa.us, %._crit_edge.split305.us.us ] ; 2 uses
+  %.4308.us = phi i32 [ %.1163.lcssa, %.lr.ph312.split.us.preheader ], [ %.5.lcssa.us, %._crit_edge.split305.us.us ] ; 2 uses
   %i.cr = getelementptr [8 x i8], ptr %1, i64 %indvars.iv351
   %i.cs = load ptr, ptr %i.cr, align 8            ; 2 uses
   %.not173295.us = icmp eq ptr %i.cs, null
@@ -284,7 +287,7 @@ sg_next.exit211.us.us:                            ; preds = %bb.t, %bb.s
   %.3.lcssa.us = phi i32 [ %.2157310.us, %.lr.ph312.split.us ], [ %i.ct, %sg_next.exit211.us.us ], [ %i.ct, %vring_mapping_error.exit.thread.i200.us.us ]
   %.1153.lcssa.us = phi i32 [ %.0152311.us, %.lr.ph312.split.us ], [ %i.dj, %sg_next.exit211.us.us ], [ %i.dj, %vring_mapping_error.exit.thread.i200.us.us ] ; 2 uses
   %indvars.iv.next352 = add nuw nsw i64 %indvars.iv351, 1 ; 2 uses
-  %exitcond355.not = icmp eq i64 %indvars.iv.next352, %wide.trip.count354
+  %exitcond355.not = icmp eq i64 %indvars.iv.next352, %wide.trip.count353
   br i1 %exitcond355.not, label %._crit_edge313, label %.lr.ph312.split.us, !llvm.loop !146
 
 .lr.ph288.split:                                  ; preds = %.lr.ph288, %._crit_edge.split
@@ -552,7 +555,8 @@ sg_next.exit211:                                  ; preds = %bb.ai, %bb.aj
   %.3.lcssa = phi i32 [ %.2157310, %.lr.ph312.split ], [ %i.ft, %sg_next.exit211 ], [ %i.ft, %vring_mapping_error.exit.thread.i200 ]
   %.1153.lcssa = phi i32 [ %.0152311, %.lr.ph312.split ], [ %i.ho, %sg_next.exit211 ], [ %i.ho, %vring_mapping_error.exit.thread.i200 ] ; 2 uses
   %indvars.iv.next347 = add nuw nsw i64 %indvars.iv346, 1 ; 2 uses
-  %exitcond350.not = icmp eq i64 %indvars.iv.next347, %wide.trip.count354
+  %lftr.wideiv = trunc i64 %indvars.iv.next347 to i32
+  %exitcond350.not = icmp eq i32 %i.cl, %lftr.wideiv
   br i1 %exitcond350.not, label %._crit_edge313, label %.lr.ph312.split, !llvm.loop !146
 
 ._crit_edge313:                                   ; preds = %._crit_edge.split305, %._crit_edge.split305.us.us, %.preheader

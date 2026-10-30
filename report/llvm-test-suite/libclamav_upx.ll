@@ -61,7 +61,7 @@ bb.f:                                             ; preds = %bb.e
   %.val.i = load i32, ptr %i.h, align 1           ; 2 uses
   %i.i = shl i32 %.val.i, 1
   %i.j = or disjoint i32 %i.i, 1
-  %i.k = add i32 %.1208, 4
+  %i.k = add nuw i32 %.1208, 4
   br label %doubleebx.exit
 
 doubleebx.exit:                                   ; preds = %bb.c, %bb.f
@@ -125,7 +125,7 @@ doubleebx.exit154.thread:                         ; preds = %bb.l
   %.val.i153 = load i32, ptr %i.aa, align 1       ; 2 uses
   %i.ab = shl i32 %.val.i153, 1
   %i.ac = or disjoint i32 %i.ab, 1                ; 2 uses
-  %i.ad = add i32 %.2, 4
+  %i.ad = add nuw i32 %.2, 4
   %i.ae = tail call i32 @llvm.fshl.i32(i32 %.0110, i32 %.val.i153, i32 1)
   %i.af = shl i32 %i.ac, 1
   br label %doubleebx.exit160
@@ -144,7 +144,7 @@ bb.o:                                             ; preds = %bb.n
   %.val.i159 = load i32, ptr %i.ai, align 1       ; 2 uses
   %i.aj = shl i32 %.val.i159, 1
   %i.ak = or disjoint i32 %i.aj, 1
-  %i.al = add i32 %.2, 4
+  %i.al = add nuw i32 %.2, 4
   br label %doubleebx.exit160
 
 doubleebx.exit160:                                ; preds = %doubleebx.exit154.thread, %doubleebx.exit154, %bb.o
@@ -207,7 +207,7 @@ doubleebx.exit166.thread:                         ; preds = %bb.v
   %.val.i165 = load i32, ptr %i.bd, align 1       ; 2 uses
   %i.be = shl i32 %.val.i165, 1
   %i.bf = or disjoint i32 %i.be, 1                ; 2 uses
-  %i.bg = add i32 %.3, 4
+  %i.bg = add nuw i32 %.3, 4
   %i.bh = shl i32 %i.bf, 1
   br label %doubleebx.exit172
 
@@ -225,7 +225,7 @@ bb.y:                                             ; preds = %bb.x
   %.val.i171 = load i32, ptr %i.bk, align 1       ; 2 uses
   %i.bl = shl i32 %.val.i171, 1
   %i.bm = or disjoint i32 %i.bl, 1
-  %i.bn = add i32 %.3, 4
+  %i.bn = add nuw i32 %.3, 4
   br label %doubleebx.exit172
 
 doubleebx.exit172:                                ; preds = %doubleebx.exit166.thread, %doubleebx.exit166, %bb.y
@@ -270,7 +270,7 @@ doubleebx.exit178.thread:                         ; preds = %bb.aa
   %.val.i177 = load i32, ptr %i.bz, align 1       ; 2 uses
   %i.ca = shl i32 %.val.i177, 1
   %i.cb = or disjoint i32 %i.ca, 1                ; 2 uses
-  %i.cc = add i32 %.4, 4
+  %i.cc = add nuw i32 %.4, 4
   %i.cd = tail call i32 @llvm.fshl.i32(i32 %.0106, i32 %.val.i177, i32 1)
   %i.ce = shl i32 %i.cb, 1
   br label %doubleebx.exit184
@@ -289,7 +289,7 @@ bb.ad:                                            ; preds = %bb.ac
   %.val.i183 = load i32, ptr %i.ch, align 1       ; 2 uses
   %i.ci = shl i32 %.val.i183, 1
   %i.cj = or disjoint i32 %i.ci, 1
-  %i.ck = add i32 %.4, 4
+  %i.ck = add nuw i32 %.4, 4
   br label %doubleebx.exit184
 
 doubleebx.exit184:                                ; preds = %doubleebx.exit178.thread, %doubleebx.exit178, %bb.ad
@@ -307,11 +307,11 @@ bb.ae:                                            ; preds = %doubleebx.exit184
 bb.af:                                            ; preds = %bb.ae, %doubleebx.exit172
   %.4213 = phi i32 [ %.17226, %bb.ae ], [ %.13222, %doubleebx.exit172 ]
   %.5 = phi i32 [ %.18, %bb.ae ], [ %.14, %doubleebx.exit172 ]
-  %.1107 = phi i32 [ %i.cm, %bb.ae ], [ %i.br, %doubleebx.exit172 ]
+  %.1107 = phi i32 [ %i.cm, %bb.ae ], [ %i.br, %doubleebx.exit172 ] ; 3 uses
   %i.cn = icmp ult i32 %.1109, -3328
-  %i.co = zext i1 %i.cn to i32
-  %spec.select = add i32 %.1107, %i.co            ; 7 uses
-  %i.cp = add nuw i32 %spec.select, 1             ; 2 uses
+  %i.co = zext i1 %i.cn to i32                    ; 3 uses
+  %spec.select = add i32 %.1107, %i.co            ; 6 uses
+  %i.cp = add nuw i32 %spec.select, 1             ; 3 uses
   %i.cq = load i32, ptr %3, align 4, !tbaa !7     ; 3 uses
   %i.cr = icmp eq i32 %i.cq, 0
   %i.cs = icmp uge i32 %spec.select, %i.cq
@@ -325,7 +325,7 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %.not138, label %doubleebx.exit.thread, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.cv = zext i32 %i.cp to i64                   ; 9 uses
+  %i.cv = zext i32 %i.cp to i64                   ; 7 uses
   %i.cw = zext i32 %i.cq to i64                   ; 2 uses
   %i.cx = add nuw nsw i64 %i.cu, %i.cv
   %.not139 = icmp samesign ugt i64 %i.cx, %i.cw
@@ -418,10 +418,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv274.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec329, %vec.epilog.middle.block ] ; 5 uses
-  %7 = zext i32 %spec.select to i64
-  %xtraiter = and i64 %i.cv, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
+  %7 = trunc nuw i64 %indvars.iv274.ph to i32
+  %8 = add i32 %.1107, %i.co
+  %9 = sub i32 %.1107, %i.co
+  %10 = and i32 %9, 1
+  %lcmp.mod.not = icmp eq i32 %10, 0
+  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol, label %vec.epilog.scalar.ph.prol.loopexit
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.ec = trunc nuw i64 %indvars.iv274.ph to i32
@@ -438,7 +440,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
   %indvars.iv274.unr = phi i64 [ %indvars.iv274.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next275.prol, %vec.epilog.scalar.ph.prol ]
-  %i.ek = icmp eq i64 %indvars.iv274.ph, %7
+  %i.ek = icmp eq i32 %8, %7
   br i1 %i.ek, label %._crit_edge, label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
@@ -463,7 +465,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fa = getelementptr inbounds nuw i8, ptr %2, i64 %i.ez
   store i8 %i.ex, ptr %i.fa, align 1, !tbaa !8
   %indvars.iv.next275.1 = add nuw nsw i64 %indvars.iv274, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next275.1, %i.cv
+  %lftr.wideiv.1 = trunc i64 %indvars.iv.next275.1 to i32
+  %exitcond.not.1 = icmp eq i32 %i.cp, %lftr.wideiv.1
   br i1 %exitcond.not.1, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
@@ -866,7 +869,7 @@ bb.f:                                             ; preds = %bb.e
   %.val.i = load i32, ptr %i.h, align 1           ; 2 uses
   %i.i = shl i32 %.val.i, 1
   %i.j = or disjoint i32 %i.i, 1
-  %i.k = add i32 %.1225, 4
+  %i.k = add nuw i32 %.1225, 4
   br label %doubleebx.exit
 
 doubleebx.exit:                                   ; preds = %bb.c, %bb.f
@@ -930,7 +933,7 @@ doubleebx.exit162.thread:                         ; preds = %bb.l
   %.val.i161 = load i32, ptr %i.aa, align 1       ; 2 uses
   %i.ab = shl i32 %.val.i161, 1
   %i.ac = or disjoint i32 %i.ab, 1                ; 2 uses
-  %i.ad = add i32 %.2226, 4
+  %i.ad = add nuw i32 %.2226, 4
   %i.ae = tail call i32 @llvm.fshl.i32(i32 %.0117, i32 %.val.i161, i32 1)
   %i.af = shl i32 %i.ac, 1
   br label %doubleebx.exit168
@@ -949,7 +952,7 @@ bb.o:                                             ; preds = %bb.n
   %.val.i167 = load i32, ptr %i.ai, align 1       ; 2 uses
   %i.aj = shl i32 %.val.i167, 1
   %i.ak = or disjoint i32 %i.aj, 1
-  %i.al = add i32 %.2226, 4
+  %i.al = add nuw i32 %.2226, 4
   br label %doubleebx.exit168
 
 doubleebx.exit168:                                ; preds = %doubleebx.exit162.thread, %doubleebx.exit162, %bb.o
@@ -980,7 +983,7 @@ bb.s:                                             ; preds = %bb.r
   %.val.i173 = load i32, ptr %i.ar, align 1       ; 2 uses
   %i.as = shl i32 %.val.i173, 1
   %i.at = or disjoint i32 %i.as, 1
-  %i.au = add i32 %.10, 4
+  %i.au = add nuw i32 %.10, 4
   br label %doubleebx.exit174
 
 doubleebx.exit174:                                ; preds = %bb.p, %bb.s
@@ -1039,7 +1042,7 @@ bb.aa:                                            ; preds = %bb.z
   %.val.i179 = load i32, ptr %i.bp, align 1       ; 2 uses
   %i.bq = shl i32 %.val.i179, 1
   %i.br = or disjoint i32 %i.bq, 1
-  %i.bs = add i32 %.10, 4
+  %i.bs = add nuw i32 %.10, 4
   br label %doubleebx.exit180
 
 doubleebx.exit180:                                ; preds = %bb.x, %bb.aa
@@ -1073,7 +1076,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.val.i185 = load i32, ptr %i.by, align 1       ; 2 uses
   %i.bz = shl i32 %.val.i185, 1
   %i.ca = or disjoint i32 %i.bz, 1
-  %i.cb = add i32 %.3, 4
+  %i.cb = add nuw i32 %.3, 4
   br label %doubleebx.exit186
 
 doubleebx.exit186:                                ; preds = %bb.ab, %bb.ae
@@ -1114,7 +1117,7 @@ doubleebx.exit192.thread:                         ; preds = %bb.ag
   %.val.i191 = load i32, ptr %i.ck, align 1       ; 2 uses
   %i.cl = shl i32 %.val.i191, 1
   %i.cm = or disjoint i32 %i.cl, 1                ; 2 uses
-  %i.cn = add i32 %.4, 4
+  %i.cn = add nuw i32 %.4, 4
   %i.co = tail call i32 @llvm.fshl.i32(i32 %.1114, i32 %.val.i191, i32 1)
   %i.cp = shl i32 %i.cm, 1
   br label %doubleebx.exit198
@@ -1133,7 +1136,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.val.i197 = load i32, ptr %i.cs, align 1       ; 2 uses
   %i.ct = shl i32 %.val.i197, 1
   %i.cu = or disjoint i32 %i.ct, 1
-  %i.cv = add i32 %.4, 4
+  %i.cv = add nuw i32 %.4, 4
   br label %doubleebx.exit198
 
 doubleebx.exit198:                                ; preds = %doubleebx.exit192.thread, %doubleebx.exit192, %bb.aj
@@ -1151,11 +1154,11 @@ bb.ak:                                            ; preds = %doubleebx.exit198
 bb.al:                                            ; preds = %bb.ak, %doubleebx.exit186
   %.5232 = phi i32 [ %.20247, %bb.ak ], [ %.16243, %doubleebx.exit186 ]
   %.5 = phi i32 [ %.20, %bb.ak ], [ %.16, %doubleebx.exit186 ]
-  %.2 = phi i32 [ %i.cx, %bb.ak ], [ %i.cc, %doubleebx.exit186 ]
+  %.2 = phi i32 [ %i.cx, %bb.ak ], [ %i.cc, %doubleebx.exit186 ] ; 3 uses
   %i.cy = icmp ult i32 %.1116, -1280
-  %i.cz = zext i1 %i.cy to i32
-  %spec.select = add i32 %.2, %i.cz               ; 7 uses
-  %i.da = add nuw i32 %spec.select, 1             ; 2 uses
+  %i.cz = zext i1 %i.cy to i32                    ; 3 uses
+  %spec.select = add i32 %.2, %i.cz               ; 6 uses
+  %i.da = add nuw i32 %spec.select, 1             ; 3 uses
   %i.db = load i32, ptr %3, align 4, !tbaa !7     ; 3 uses
   %i.dc = icmp eq i32 %i.db, 0
   %i.dd = icmp uge i32 %spec.select, %i.db
@@ -1169,7 +1172,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %.not146, label %doubleebx.exit.thread, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.dg = zext i32 %i.da to i64                   ; 9 uses
+  %i.dg = zext i32 %i.da to i64                   ; 7 uses
   %i.dh = zext i32 %i.db to i64                   ; 2 uses
   %i.di = add nuw nsw i64 %i.df, %i.dg
   %.not147 = icmp samesign ugt i64 %i.di, %i.dh
@@ -1262,10 +1265,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv298.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec341, %vec.epilog.middle.block ] ; 5 uses
-  %7 = zext i32 %spec.select to i64
-  %xtraiter = and i64 %i.dg, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
+  %7 = trunc nuw i64 %indvars.iv298.ph to i32
+  %8 = add i32 %.2, %i.cz
+  %9 = sub i32 %.2, %i.cz
+  %10 = and i32 %9, 1
+  %lcmp.mod.not = icmp eq i32 %10, 0
+  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol, label %vec.epilog.scalar.ph.prol.loopexit
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.en = trunc nuw i64 %indvars.iv298.ph to i32
@@ -1282,7 +1287,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
   %indvars.iv298.unr = phi i64 [ %indvars.iv298.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next299.prol, %vec.epilog.scalar.ph.prol ]
-  %i.ev = icmp eq i64 %indvars.iv298.ph, %7
+  %i.ev = icmp eq i32 %8, %7
   br i1 %i.ev, label %._crit_edge, label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
@@ -1307,7 +1312,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.fl = getelementptr inbounds nuw i8, ptr %2, i64 %i.fk
   store i8 %i.fi, ptr %i.fl, align 1, !tbaa !8
   %indvars.iv.next299.1 = add nuw nsw i64 %indvars.iv298, 2 ; 2 uses
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next299.1, %i.dg
+  %lftr.wideiv.1 = trunc i64 %indvars.iv.next299.1 to i32
+  %exitcond.not.1 = icmp eq i32 %i.da, %lftr.wideiv.1
   br i1 %exitcond.not.1, label %._crit_edge, label %vec.epilog.scalar.ph, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
@@ -1361,7 +1367,7 @@ bb.f:                                             ; preds = %bb.e
   %.val.i = load i32, ptr %i.h, align 1           ; 2 uses
   %i.i = shl i32 %.val.i, 1
   %i.j = or disjoint i32 %i.i, 1
-  %i.k = add i32 %.1248, 4
+  %i.k = add nuw i32 %.1248, 4
   br label %doubleebx.exit
 
 doubleebx.exit:                                   ; preds = %bb.c, %bb.f
@@ -1425,7 +1431,7 @@ doubleebx.exit167.thread:                         ; preds = %bb.l
   %.val.i166 = load i32, ptr %i.aa, align 1       ; 2 uses
   %i.ab = shl i32 %.val.i166, 1
   %i.ac = or disjoint i32 %i.ab, 1                ; 2 uses
-  %i.ad = add i32 %.2249, 4
+  %i.ad = add nuw i32 %.2249, 4
   %i.ae = tail call i32 @llvm.fshl.i32(i32 %.0120, i32 %.val.i166, i32 1)
   %i.af = shl i32 %i.ac, 1
   br label %doubleebx.exit173
@@ -1444,7 +1450,7 @@ bb.o:                                             ; preds = %bb.n
   %.val.i172 = load i32, ptr %i.ai, align 1       ; 2 uses
   %i.aj = shl i32 %.val.i172, 1
   %i.ak = or disjoint i32 %i.aj, 1
-  %i.al = add i32 %.2249, 4
+  %i.al = add nuw i32 %.2249, 4
   br label %doubleebx.exit173
 
 doubleebx.exit173:                                ; preds = %doubleebx.exit167.thread, %doubleebx.exit167, %bb.o
@@ -1475,7 +1481,7 @@ bb.s:                                             ; preds = %bb.r
   %.val.i178 = load i32, ptr %i.ar, align 1       ; 2 uses
   %i.as = shl i32 %.val.i178, 1
   %i.at = or disjoint i32 %i.as, 1
-  %i.au = add i32 %.10, 4
+  %i.au = add nuw i32 %.10, 4
   br label %doubleebx.exit179
 
 doubleebx.exit179:                                ; preds = %bb.p, %bb.s
@@ -1534,7 +1540,7 @@ bb.aa:                                            ; preds = %bb.z
   %.val.i184 = load i32, ptr %i.bp, align 1       ; 2 uses
   %i.bq = shl i32 %.val.i184, 1
   %i.br = or disjoint i32 %i.bq, 1
-  %i.bs = add i32 %.10, 4
+  %i.bs = add nuw i32 %.10, 4
   br label %doubleebx.exit185
 
 doubleebx.exit185:                                ; preds = %bb.x, %bb.aa
@@ -1572,7 +1578,7 @@ bb.af:                                            ; preds = %bb.ae
   %.val.i190 = load i32, ptr %i.by, align 1       ; 2 uses
   %i.bz = shl i32 %.val.i190, 1
   %i.ca = or disjoint i32 %i.bz, 1
-  %i.cb = add i32 %.3, 4
+  %i.cb = add nuw i32 %.3, 4
   br label %doubleebx.exit191
 
 doubleebx.exit191:                                ; preds = %bb.ac, %bb.af
@@ -1599,7 +1605,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.val.i196 = load i32, ptr %i.cf, align 1       ; 2 uses
   %i.cg = shl i32 %.val.i196, 1
   %i.ch = or disjoint i32 %i.cg, 1
-  %i.ci = add i32 %.3, 4
+  %i.ci = add nuw i32 %.3, 4
   br label %doubleebx.exit197
 
 doubleebx.exit197:                                ; preds = %bb.ag, %bb.aj
@@ -1629,7 +1635,7 @@ bb.an:                                            ; preds = %bb.am
   %.val.i202 = load i32, ptr %i.cn, align 1       ; 2 uses
   %i.co = shl i32 %.val.i202, 1
   %i.cp = or disjoint i32 %i.co, 1
-  %i.cq = add i32 %.18, 4
+  %i.cq = add nuw i32 %.18, 4
   br label %doubleebx.exit203
 
 doubleebx.exit203:                                ; preds = %bb.ak, %bb.an
@@ -1670,7 +1676,7 @@ doubleebx.exit209.thread:                         ; preds = %bb.ap
   %.val.i208 = load i32, ptr %i.da, align 1       ; 2 uses
   %i.db = shl i32 %.val.i208, 1
   %i.dc = or disjoint i32 %i.db, 1                ; 2 uses
-  %i.dd = add i32 %.4, 4
+  %i.dd = add nuw i32 %.4, 4
   %i.de = tail call i32 @llvm.fshl.i32(i32 %.1117, i32 %.val.i208, i32 1)
   %i.df = shl i32 %i.dc, 1
   br label %doubleebx.exit215
@@ -1689,7 +1695,7 @@ bb.as:                                            ; preds = %bb.ar
   %.val.i214 = load i32, ptr %i.di, align 1       ; 2 uses
   %i.dj = shl i32 %.val.i214, 1
   %i.dk = or disjoint i32 %i.dj, 1
-  %i.dl = add i32 %.4, 4
+  %i.dl = add nuw i32 %.4, 4
   br label %doubleebx.exit215
 
 doubleebx.exit215:                                ; preds = %doubleebx.exit209.thread, %doubleebx.exit209, %bb.as

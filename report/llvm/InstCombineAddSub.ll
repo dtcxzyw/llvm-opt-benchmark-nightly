@@ -205,6 +205,7 @@ _ZN12_GLOBAL__N_17FAddendaSERKS0_.exit:           ; preds = %bb.j, %_ZN12_GLOBAL
   %i.au = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 17 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.ad, i64 10 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ad, i64 9
+  %12 = zext i32 %i.q to i64
   br label %bb.q
 
 ._crit_edge79:                                    ; preds = %_ZN12_GLOBAL__N_17FAddendpLERKS0_.exit, %_ZN12_GLOBAL__N_17FAddendaSERKS0_.exit
@@ -270,10 +271,9 @@ _ZNK12_GLOBAL__N_17FAddend6isZeroEv.exit:         ; preds = %_ZN4llvm15SmallVect
   br i1 %i.bn, label %_ZN4llvm23SmallVectorTemplateBaseIPKN12_GLOBAL__N_17FAddendELb1EE9push_backES4_.exit64, label %bb.at
 
 bb.q:                                             ; preds = %.lr.ph78, %_ZN12_GLOBAL__N_17FAddendpLERKS0_.exit
-  %.03677 = phi i32 [ %i.q, %.lr.ph78 ], [ %13, %_ZN12_GLOBAL__N_17FAddendpLERKS0_.exit ] ; 2 uses
-  %12 = zext i32 %.03677 to i64
+  %indvars.iv90 = phi i64 [ %12, %.lr.ph78 ], [ %indvars.iv.next91, %_ZN12_GLOBAL__N_17FAddendpLERKS0_.exit ] ; 2 uses
   %.val = load ptr, ptr %11, align 8, !tbaa !148
-  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %12
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %indvars.iv90
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !801 ; 5 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
   %.val14.i.i = load i8, ptr %i.ah, align 8, !tbaa !259, !range !136, !noundef !76 ; 2 uses
@@ -440,9 +440,10 @@ _ZN4llvm7APFloat3addERKS0_NS_12RoundingModeE.exit20.i.i: ; preds = %bb.as, %bb.a
   br label %_ZN12_GLOBAL__N_17FAddendpLERKS0_.exit
 
 _ZN12_GLOBAL__N_17FAddendpLERKS0_.exit:           ; preds = %bb.s, %bb.u, %bb.v, %bb.ag, %bb.ah, %_ZN4llvm7APFloat3addERKS0_NS_12RoundingModeE.exit20.i.i
-  %13 = add nuw i32 %.03677, 1                    ; 2 uses
+  %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1 ; 2 uses
   %i.cx = load i32, ptr %i.d, align 8, !tbaa !142 ; 2 uses
-  %14 = icmp ugt i32 %i.cx, %13
+  %13 = zext i32 %i.cx to i64
+  %14 = icmp samesign ult i64 %indvars.iv.next91, %13
   br i1 %14, label %bb.q, label %._crit_edge79, !llvm.loop !798
 
 bb.at:                                            ; preds = %.split, %_ZNK12_GLOBAL__N_17FAddend6isZeroEv.exit

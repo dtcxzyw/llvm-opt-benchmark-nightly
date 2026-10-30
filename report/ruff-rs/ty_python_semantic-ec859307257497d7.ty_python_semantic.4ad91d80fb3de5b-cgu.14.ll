@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ty_python_semantic-ec859307257497d7.ty_python_semantic.4ad91d80fb3de5b-cgu.14?download=true
 inline.NumInlined: 8769
 inline.NumDeleted: 4183
-loop-unroll.NumCompletelyUnrolled: 11
-loop-unroll.NumUnrolled: 11
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumUnrolled: 12
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mro3MroNtB1l_14StaticMroErrorEEEB1p_:bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2940)
   %i.f = add nsw i64 %i.a, -2
@@ -204,7 +205,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCs2O29vuvTAEJ_14ty_python_core5place13ScopedPlaceIdNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow19NarrowingConstraintEEB1B_.exit.i.i.i unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph15
-  %i.j = add i64 %.sroa.0.1.i.i.i14, 1            ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i.i14, 1    ; 2 uses
   %i.k = icmp eq i64 %i.j, %.8.val
   br i1 %i.k, label %.body.i.i, label %.lr.ph15
 
@@ -554,7 +555,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph15.i.i:                                     ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11ide_support22unused_binding_support13UnusedBindingEBJ_.exit11.i.i
   %.sroa.0.113.i.i = phi i64 [ %i.o, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11ide_support22unused_binding_support13UnusedBindingEBJ_.exit11.i.i ], [ %i.d, %bb.d ] ; 2 uses
   %i.n = getelementptr inbounds nuw [24 x i8], ptr %.0.val, i64 %.sroa.0.113.i.i ; 2 uses
-  %i.o = add i64 %.sroa.0.113.i.i, 1              ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.113.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3007)
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3008)
@@ -653,7 +654,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoT
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBG_14semantic_model31ExpectedStringLiteralCompletionEEEBG_.exit.i.i.i.i.i.i.i unwind label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph17
-  %i.q = add i64 %.sroa.0.1.i.i.i.i.i.i.i16, 1    ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i.i16, 1 ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.i
   br i1 %i.r, label %._crit_edge, label %.lr.ph17
 
@@ -993,7 +994,7 @@ bb.d:                                             ; preds = %.lr.ph
           to label %bb.d unwind label %bb.f, !noalias !3090
 
 bb.e:                                             ; preds = %.lr.ph3
-  %i.i = add i64 %.sroa.0.1.i.i.i2, 1             ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i.i.i2, 1     ; 2 uses
   %i.j = icmp eq i64 %i.i, %.val1.i
   br i1 %i.j, label %.body.i.i, label %.lr.ph3
 
@@ -1396,7 +1397,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph15.i.i.i:                                   ; preds = %bb.e, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameINtNtB4_6option6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literal20LiteralValueTypeKindEEEB1N_.exit11.i.i.i
   %.sroa.0.113.i.i.i = phi i64 [ %i.q, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameINtNtB4_6option6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literal20LiteralValueTypeKindEEEB1N_.exit11.i.i.i ], [ %i.g, %bb.e ] ; 2 uses
   %i.p = getelementptr inbounds nuw [32 x i8], ptr %.val, i64 %.sroa.0.113.i.i.i ; 3 uses
-  %i.q = add i64 %.sroa.0.113.i.i.i, 1            ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.113.i.i.i, 1    ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3173)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3174)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3175)
@@ -1799,7 +1800,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs8U8Khs6SiIu_15crossbeam_utils12ca
   br i1 %i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSINtNtCs8U8Khs6SiIu_15crossbeam_utils12cache_padded11CachePaddedINtNtCsejIXhd4qXh6_8lock_api5mutex5MutexNtNtCs6ZNDpZDiPlA_11parking_lot9raw_mutex8RawMutexNtNtCs45bxiIjzMqg_5salsa8interned15IngredientShardEEECsoTR8nlGN3X_18ty_python_semantic.exit, label %.lr.ph.i
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.j = add i64 %.sroa.0.1.i15, 1                ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i15, 1        ; 2 uses
   %i.k = icmp eq i64 %i.j, %.8.val
   br i1 %i.k, label %._crit_edge, label %.lr.ph
 
@@ -1879,7 +1880,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph15.i:                                       ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameECsoTR8nlGN3X_18ty_python_semantic.exit11.i
   %.sroa.0.113.i = phi i64 [ %i.m, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameECsoTR8nlGN3X_18ty_python_semantic.exit11.i ], [ %i.c, %bb.d ] ; 2 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %.0.val, i64 %.sroa.0.113.i ; 3 uses
-  %i.m = add i64 %.sroa.0.113.i, 1                ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.113.i, 1        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3392)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3393)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3394)
@@ -1979,7 +1980,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11constraints9PathBoundEBH_.exit.i unwind label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph23
-  %i.j = add i64 %.sroa.0.1.i22, 1                ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i22, 1        ; 2 uses
   %i.k = icmp eq i64 %i.j, %.8.val
   br i1 %i.k, label %.body, label %.lr.ph23
 
@@ -2382,7 +2383,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCs2O29vuvTAEJ_14ty_python_core5place13ScopedPlaceIdNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types6narrow19NarrowingConstraintEEB1B_.exit.i.i.i.i.i.i unwind label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph17
-  %i.p = add i64 %.sroa.0.1.i.i.i.i.i.i16, 1      ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i16, 1 ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.f
   br i1 %i.q, label %._crit_edge, label %.lr.ph17
 
@@ -2467,7 +2468,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtNtCsoTR8nlGN3X_18ty_python_semantic
   br i1 %i.q, label %_RNvXs4_NtNtCs4NRVxsYgnAr_4core5array4iterINtB5_8IntoIterTNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer11TypeContextNtNtBV_7builder20ExpressionCacheEntryEKj2_ENtNtNtB9_3ops4drop4Drop4dropBZ_.exit, label %bb.c
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.r = add i64 %.sroa.0.1.i.i.i.i.i.i7, 1       ; 2 uses
+  %i.r = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i7, 1 ; 2 uses
   %i.s = icmp eq i64 %i.r, %i.f
   br i1 %i.s, label %._crit_edge, label %.lr.ph
 
@@ -2870,7 +2871,7 @@ bb.l:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 .lr.ph57:                                         ; preds = %.body.i.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCsoTR8nlGN3X_18ty_python_semantic5fixes10QueuedFileINtNtCscdodAO9FK5_5alloc3vec3VecNtBE_13ApplicableFixEEEBG_.exit
   %.sroa.0.1.i.i56 = phi i64 [ %i.ap, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCsoTR8nlGN3X_18ty_python_semantic5fixes10QueuedFileINtNtCscdodAO9FK5_5alloc3vec3VecNtBE_13ApplicableFixEEEBG_.exit ], [ %i.ae, %.body.i.i ] ; 2 uses
   %i.ao = getelementptr inbounds nuw [104 x i8], ptr %i.ab, i64 %.sroa.0.1.i.i56 ; 3 uses
-  %i.ap = add i64 %.sroa.0.1.i.i56, 1             ; 2 uses
+  %i.ap = add nuw nsw i64 %.sroa.0.1.i.i56, 1     ; 2 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsoTR8nlGN3X_18ty_python_semantic5fixes10QueuedFileEBF_(ptr noalias noundef nonnull align 8 dereferenceable(104) %i.ao)
           to label %bb.n unwind label %bb.m, !noalias !3501
 
@@ -3172,7 +3173,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoT
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBG_14semantic_model31ExpectedStringLiteralCompletionEEEBG_.exit.i.i.i.i.i.i.i.i unwind label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph17
-  %i.q = add i64 %.sroa.0.1.i.i.i.i.i.i.i.i16, 1  ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i.i.i16, 1 ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.i
   br i1 %i.r, label %.body, label %.lr.ph17
 
@@ -3575,7 +3576,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsoTR8nlGN3X_18ty_python_semantic5
   br i1 %i.w, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10signatures9SignatureEBI_.exit, label %bb.c
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.x = add i64 %.sroa.0.1.i6, 1                 ; 2 uses
+  %i.x = add nuw nsw i64 %.sroa.0.1.i6, 1         ; 2 uses
   %i.y = icmp eq i64 %i.x, %i.b
   br i1 %i.y, label %._crit_edge, label %.lr.ph
 
@@ -3978,7 +3979,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
           to label %bb.f unwind label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph20
-  %i.af = add i64 %.sroa.0.1.i19, 1               ; 2 uses
+  %i.af = add nuw nsw i64 %.sroa.0.1.i19, 1       ; 2 uses
   %i.ag = icmp eq i64 %i.af, %i.g
   br i1 %i.ag, label %.body, label %.lr.ph20
 
@@ -4381,7 +4382,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsoTR8nlGN3X
   br i1 %i.n, label %_RNvXNtNtNtCs4NRVxsYgnAr_4core5array4iter10iter_innerSINtNtNtB8_3mem12maybe_uninit11MaybeUninitINtNtB8_6option6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types12list_members20MemberWithDefinitionEENtB2_11PartialDrop12partial_dropB1W_.exit, label %bb.c
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.o = add i64 %.sroa.0.1.i.i7, 1               ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.1.i.i7, 1       ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.b
   br i1 %i.p, label %._crit_edge, label %.lr.ph
 
@@ -4523,7 +4524,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.g = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph5
 
@@ -4575,7 +4576,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.g = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph5
 
@@ -4627,7 +4628,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.g = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph5
 
@@ -4679,7 +4680,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.g = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph5
 
@@ -4731,7 +4732,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
           to label %bb.b unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph5
-  %i.g = add i64 %.sroa.0.1.i.i4, 1               ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i4, 1       ; 2 uses
   %i.h = icmp eq i64 %i.g, %i.b
   br i1 %i.h, label %._crit_edge, label %.lr.ph5
 
@@ -4839,7 +4840,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCsoTR8nlGN3X_18ty_python_semanti
   br i1 %i.r, label %_RNvXNtNtNtCs4NRVxsYgnAr_4core5array4iter10iter_innerSINtNtNtB8_3mem12maybe_uninit11MaybeUninitNtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bind8BindingsENtB2_11PartialDrop12partial_dropB1C_.exit, label %bb.c
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.s = add i64 %.sroa.0.1.i.i15, 1              ; 2 uses
+  %i.s = add nuw nsw i64 %.sroa.0.1.i.i15, 1      ; 2 uses
   %i.t = icmp eq i64 %i.s, %i.b
   br i1 %i.t, label %._crit_edge, label %.lr.ph
 
@@ -4906,7 +4907,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCs2O29vuvTAEJ_14ty_python_core10definition10DefinitionNtNtCscdodAO9FK5_5alloc6string6StringEECsoTR8nlGN3X_18ty_python_semantic.exit.i.i unwind label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph17
-  %i.j = add i64 %.sroa.0.1.i.i16, 1              ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i16, 1      ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.b
   br i1 %i.k, label %._crit_edge, label %.lr.ph17
 
@@ -4990,7 +4991,7 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.i.i:                                       ; preds = %bb.f, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldEEB1r_.exit11.i.i
   %.sroa.0.113.i.i = phi i64 [ %i.o, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10typed_dict14TypedDictFieldEEB1r_.exit11.i.i ], [ %i.e, %bb.f ] ; 2 uses
   %i.n = getelementptr inbounds nuw [48 x i8], ptr %i.c, i64 %.sroa.0.113.i.i ; 3 uses
-  %i.o = add i64 %.sroa.0.113.i.i, 1              ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.113.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19711)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19712)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19713)
@@ -5071,7 +5072,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoT
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBG_14semantic_model31ExpectedStringLiteralCompletionEEEBG_.exit.i.i unwind label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph17
-  %i.j = add i64 %.sroa.0.1.i.i16, 1              ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i16, 1      ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.b
   br i1 %i.k, label %._crit_edge, label %.lr.ph17
 
@@ -5144,7 +5145,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoT
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeINtNtCscdodAO9FK5_5alloc3vec3VecNtNtBG_14semantic_model31ExpectedStringLiteralCompletionEEEBG_.exit.i.i unwind label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph17
-  %i.j = add i64 %.sroa.0.1.i.i16, 1              ; 2 uses
+  %i.j = add nuw nsw i64 %.sroa.0.1.i.i16, 1      ; 2 uses
   %i.k = icmp eq i64 %i.j, %i.b
   br i1 %i.k, label %._crit_edge, label %.lr.ph17
 
