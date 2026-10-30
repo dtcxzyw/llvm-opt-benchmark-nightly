@@ -1,0 +1,215 @@
+diff --git a/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp b/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp
+index 3f19914fe90f90..bcc9a696b9d114 100644
+--- a/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp
++++ b/llvm/lib/Transforms/Scalar/JumpTableToSwitch.cpp
+@@ -38,6 +38,16 @@ struct JumpTable {
+ };
+ } // anonymous namespace
+ 
++static Function *getExpandableCallee(const ScalarOptions &Opts, Value *V,
++                                     FunctionType *CallFTy) {
++  auto *Func = dyn_cast<Function>(V);
++  if (!Func || Func->isDeclaration() || Func->getFunctionType() != CallFTy ||
++      Func->getInstructionCount() >
++          Opts.jump_table_to_switch_function_size_threshold)
++    return nullptr;
++  return Func;
++}
++
+ static std::optional<JumpTable> parseJumpTable(const ScalarOptions &Opts,
+                                                GetElementPtrInst *GEP,
+                                                PointerType *PtrTy,
+@@ -86,10 +96,8 @@ static std::optional<JumpTable> parseJumpTable(const ScalarOptions &Opts,
+          !NullPointerIsDefined(&F, PtrTy->getAddressSpace())) ||
+         isa<UndefValue>(C))
+       continue;
+-    auto *Func = dyn_cast<Function>(C);
+-    if (!Func || Func->isDeclaration() || Func->getFunctionType() != CallFTy ||
+-        Func->getInstructionCount() >
+-            Opts.jump_table_to_switch_function_size_threshold)
++    Function *Func = getExpandableCallee(Opts, C, CallFTy);
++    if (!Func)
+       return std::nullopt;
+     JT.Funcs.push_back({Index, Func});
+   }
+@@ -183,12 +191,22 @@ expandToSwitch(CallBase *CB, const JumpTable &JT, DomTreeUpdater &DTU,
+     return OptimizationRemark(DEBUG_TYPE, "ReplacedJumpTableWithSwitch", CB)
+            << "expanded indirect call into switch";
+   });
++  auto *Select = dyn_cast<SelectInst>(CB->getCalledOperand());
++  SmallVector<uint32_t, 2> SelectWeights;
+   // Only set branch weights on the switch if we have non-zero branch weights.
+   // We can have no non-zero branch weights while having VP metadata if for
+   // example, all of the functions are external and not instrumented.
+   if (HadProfile && llvm::any_of(BranchWeights, not_equal_to(0))) {
+     setBranchWeights(*Switch, downscaleWeights(BranchWeights),
+                      /*IsExpected=*/false);
++  } else if (Select && extractBranchWeights(*Select, SelectWeights) &&
++             llvm::any_of(SelectWeights, not_equal_to(0))) {
++    // Switch branches:
++    // - default (never taken)
++    // - 0: false case (branch 1) of select
++    // - 1: true case (branch 0) of select
++    setBranchWeights(*Switch, {0, SelectWeights[1], SelectWeights[0]},
++                     /*IsExpected=*/false);
+   } else
+     setExplicitlyUnknownBranchWeights(*Switch, DEBUG_TYPE);
+   if (PHI)
+@@ -222,18 +240,32 @@ PreservedAnalyses JumpTableToSwitchPass::run(Function &F,
+         auto *Call = dyn_cast<CallInst>(&I);
+         if (!Call || Call->getCalledFunction() || Call->isMustTailCall())
+           continue;
+-        auto *L = dyn_cast<LoadInst>(Call->getCalledOperand());
+-        // Skip atomic or volatile loads.
+-        if (!L || !L->isSimple())
+-          continue;
+-        auto *GEP = dyn_cast<GetElementPtrInst>(L->getPointerOperand());
+-        if (!GEP ||
+-            (!GEP->hasNoUnsignedWrap() && !GEP->hasNoUnsignedSignedWrap()))
+-          continue;
+-        auto *PtrTy = dyn_cast<PointerType>(L->getType());
+-        assert(PtrTy && "call operand must be a pointer");
+-        std::optional<JumpTable> JT =
+-            parseJumpTable(Opts, GEP, PtrTy, Call->getFunctionType());
++        std::optional<JumpTable> JT;
++        if (auto *S = dyn_cast<SelectInst>(Call->getCalledOperand())) {
++          Function *F0 = getExpandableCallee(Opts, S->getFalseValue(),
++                                             Call->getFunctionType());
++          if (!F0)
++            continue;
++          Function *F1 = getExpandableCallee(Opts, S->getTrueValue(),
++                                             Call->getFunctionType());
++          if (!F1)
++            continue;
++          JT = JumpTable();
++          JT->Index = S->getCondition();
++          JT->Funcs.push_back({0, F0});
++          JT->Funcs.push_back({1, F1});
++        } else if (auto *L = dyn_cast<LoadInst>(Call->getCalledOperand())) {
++          // Skip atomic or volatile loads.
++          if (!L || !L->isSimple())
++            continue;
++          auto *GEP = dyn_cast<GetElementPtrInst>(L->getPointerOperand());
++          if (!GEP ||
++              (!GEP->hasNoUnsignedWrap() && !GEP->hasNoUnsignedSignedWrap()))
++            continue;
++          auto *PtrTy = dyn_cast<PointerType>(L->getType());
++          assert(PtrTy && "call operand must be a pointer");
++          JT = parseJumpTable(Opts, GEP, PtrTy, Call->getFunctionType());
++        }
+         if (!JT)
+           continue;
+         SplittedOutTail = expandToSwitch(Call, *JT, DTU, ORE, FuncToGuid);
+diff --git a/llvm/test/Transforms/Coroutines/coro-retcon-once-value.ll b/llvm/test/Transforms/Coroutines/coro-retcon-once-value.ll
+index 74a3f8d449d0ce..4bdc3fa3d73219 100644
+--- a/llvm/test/Transforms/Coroutines/coro-retcon-once-value.ll
++++ b/llvm/test/Transforms/Coroutines/coro-retcon-once-value.ll
+@@ -144,14 +144,12 @@ declare void @print(i32)
+ ;
+ ; CHECK-LABEL: @test.f(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = alloca [8 x i8], align 8
+-; CHECK-NEXT:    store ptr [[ARRAY:%.*]], ptr [[TMP0]], align 8
+-; CHECK-NEXT:    [[LOAD_I:%.*]] = load i32, ptr [[ARRAY]], align 4
+-; CHECK-NEXT:    [[LOAD_POS_I:%.*]] = icmp sgt i32 [[LOAD_I]], 0
+-; CHECK-NEXT:    [[SPEC_SELECT_I:%.*]] = select i1 [[LOAD_POS_I]], ptr @f.resume.0, ptr @f.resume.1
++; CHECK-NEXT:    [[LOAD_I:%.*]] = load i32, ptr [[ARRAY:%.*]], align 4
+ ; CHECK-NEXT:    [[SPEC_SELECT4_I:%.*]] = tail call i32 @llvm.smax.i32(i32 [[LOAD_I]], i32 0)
+ ; CHECK-NEXT:    tail call void @print(i32 [[SPEC_SELECT4_I]])
+-; CHECK-NEXT:    call void [[SPEC_SELECT_I]](ptr nonnull [[TMP0]], i1 zeroext false)
++; CHECK-NEXT:    [[LOAD_POS_I_INV:%.*]] = icmp sgt i32 [[LOAD_I]], 0
++; CHECK-NEXT:    [[DOT:%.*]] = select i1 [[LOAD_POS_I_INV]], i32 0, i32 10
++; CHECK-NEXT:    store i32 [[DOT]], ptr [[ARRAY]], align 4, !noalias [[META0:![0-9]+]]
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
+diff --git a/llvm/test/Transforms/JumpTableToSwitch/select.ll b/llvm/test/Transforms/JumpTableToSwitch/select.ll
+new file mode 100644
+index 00000000000000..491027e0bc41cd
+--- /dev/null
++++ b/llvm/test/Transforms/JumpTableToSwitch/select.ll
+@@ -0,0 +1,84 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=jump-table-to-switch -verify-dom-info -S | FileCheck %s
++
++define i32 @f0() !guid !0 {
++; CHECK-LABEL: define i32 @f0(
++; CHECK-SAME: ) !guid [[META0:![0-9]+]] {
++; CHECK-NEXT:    ret i32 0
++;
++  ret i32 0
++}
++
++define i32 @f1() !guid !1 {
++; CHECK-LABEL: define i32 @f1(
++; CHECK-SAME: ) !guid [[META1:![0-9]+]] {
++; CHECK-NEXT:    ret i32 1
++;
++  ret i32 1
++}
++
++define i32 @select(i1 %c) !prof !2 {
++; CHECK-LABEL: define i32 @select(
++; CHECK-SAME: i1 [[C:%.*]]) !prof [[PROF2:![0-9]+]] {
++; CHECK-NEXT:    [[FPTR:%.*]] = select i1 [[C]], ptr @f1, ptr @f0
++; CHECK-NEXT:    switch i1 [[C]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
++; CHECK-NEXT:      i1 false, label %[[CALL_0:.*]]
++; CHECK-NEXT:      i1 true, label %[[CALL_1:.*]]
++; CHECK-NEXT:    ], !prof [[PROF3:![0-9]+]]
++; CHECK:       [[DEFAULT_SWITCH_CASE_UNREACHABLE]]:
++; CHECK-NEXT:    unreachable
++; CHECK:       [[CALL_0]]:
++; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @f0()
++; CHECK-NEXT:    br label %[[DOTTAIL:.*]]
++; CHECK:       [[CALL_1]]:
++; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @f1()
++; CHECK-NEXT:    br label %[[DOTTAIL]]
++; CHECK:       [[DOTTAIL]]:
++; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[TMP1]], %[[CALL_0]] ], [ [[TMP2]], %[[CALL_1]] ]
++; CHECK-NEXT:    ret i32 [[TMP3]]
++;
++  %fptr = select i1 %c, ptr @f1, ptr @f0
++  %result = call i32 %fptr(), !prof !3
++  ret i32 %result
++}
++
++define i32 @select_with_branch_weights(i1 %c) !prof !4  {
++; CHECK-LABEL: define i32 @select_with_branch_weights(
++; CHECK-SAME: i1 [[C:%.*]]) !prof [[PROF4:![0-9]+]] {
++; CHECK-NEXT:    [[FPTR:%.*]] = select i1 [[C]], ptr @f1, ptr @f0, !prof [[PROF5:![0-9]+]]
++; CHECK-NEXT:    switch i1 [[C]], label %[[DEFAULT_SWITCH_CASE_UNREACHABLE:.*]] [
++; CHECK-NEXT:      i1 false, label %[[CALL_0:.*]]
++; CHECK-NEXT:      i1 true, label %[[CALL_1:.*]]
++; CHECK-NEXT:    ], !prof [[PROF6:![0-9]+]]
++; CHECK:       [[DEFAULT_SWITCH_CASE_UNREACHABLE]]:
++; CHECK-NEXT:    unreachable
++; CHECK:       [[CALL_0]]:
++; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @f0()
++; CHECK-NEXT:    br label %[[DOTTAIL:.*]]
++; CHECK:       [[CALL_1]]:
++; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @f1()
++; CHECK-NEXT:    br label %[[DOTTAIL]]
++; CHECK:       [[DOTTAIL]]:
++; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[TMP1]], %[[CALL_0]] ], [ [[TMP2]], %[[CALL_1]] ]
++; CHECK-NEXT:    ret i32 [[TMP3]]
++;
++  %fptr = select i1 %c, ptr @f1, ptr @f0, !prof !5
++  %result = call i32 %fptr()
++  ret i32 %result
++}
++
++!0 = !{i64 5678}
++!1 = !{i64 5555}
++!2 = !{!"function_entry_count", i32 60}
++!3 = !{!"VP", i32 0, i64 25, i64 5678, i64 20, i64 5555, i64 5}
++!4 = !{!"function_entry_count", i32 70}
++!5 = !{!"branch_weights", i32 90, i32 10}
++;.
++; CHECK: [[META0]] = !{i64 5678}
++; CHECK: [[META1]] = !{i64 5555}
++; CHECK: [[PROF2]] = !{!"function_entry_count", i32 60}
++; CHECK: [[PROF3]] = !{!"branch_weights", i32 0, i32 20, i32 5}
++; CHECK: [[PROF4]] = !{!"function_entry_count", i32 70}
++; CHECK: [[PROF5]] = !{!"branch_weights", i32 90, i32 10}
++; CHECK: [[PROF6]] = !{!"branch_weights", i32 0, i32 10, i32 90}
++;.
