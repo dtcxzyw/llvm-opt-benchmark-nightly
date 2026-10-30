@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   store i64 %i.f, ptr %.sroa.5.0..sroa_idx, align 8
-  br label %.loopexit.sink.split
+  store i64 1, ptr %0, align 8
+  br label %.loopexit
 
 bb.d:                                             ; preds = %bb.b
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @26, i64 noundef 37, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28) #23
@@ -250,15 +251,9 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %.sroa.0.0.ptr.5 = getelementptr inbounds nuw i8, ptr %i.h, i64 5200
   tail call void @_RNvMNtNtNtNtCslghKHtsL3a4_5tokio7runtime4time5wheel5levelNtB2_5Level15next_expiration(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1040) %.sroa.0.0.ptr.5, i64 noundef %i.j)
-  %2 = load i64, ptr %0, align 8, !range !6, !noundef !4
-  br label %.loopexit.sink.split
-
-.loopexit.sink.split:                             ; preds = %bb.c, %bb.j
-  %spec.store.select.sink = phi i64 [ %2, %bb.j ], [ 1, %bb.c ]
-  store i64 %spec.store.select.sink, ptr %0, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.sink.split, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
+.loopexit:                                        ; preds = %bb.j, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.c
   ret void
 }
 

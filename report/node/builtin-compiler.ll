@@ -202,10 +202,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !range !6, !noundef !7
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8
   br i1 %i.d, label %bb.b, label %_ZN2v88internal8compiler10turboshaft12ZoneWithNameIXtlNS_4base3tmp13StringLiteralILm11EEEtlSt5arrayIcLm11EEtlA11_cLc103ELc114ELc97ELc112ELc104ELc45ELc122ELc111ELc110ELc101EEEEEE3NewINS2_5GraphEJRSB_EEEPT_DpOT0_.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.b, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.f, null
@@ -313,10 +313,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 480 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !range !6, !noundef !7
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail17RegisterComponentELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -332,10 +332,10 @@ _ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail17RegisterCompone
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 2 uses
   %i.i = load i8, ptr %i.h, align 8, !range !6, !noundef !7
   %i.j = trunc nuw i8 %i.i to i1
-  store i8 0, ptr %i.h, align 8
   br i1 %i.j, label %bb.d, label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail20InstructionComponentELb0ELb0EED2Ev.exit
 
 bb.d:                                             ; preds = %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail17RegisterComponentELb0ELb0EED2Ev.exit
+  store i8 0, ptr %i.h, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 408
   %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %.not.i.i.i.i.i.i.i.i1 = icmp eq ptr %i.l, null
@@ -348,28 +348,24 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail20InstructionComponentELb0ELb0EED2Ev.exit
 
 _ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail20InstructionComponentELb0ELb0EED2Ev.exit: ; preds = %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail17RegisterComponentELb0ELb0EED2Ev.exit, %bb.d, %bb.e
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.p = load i8, ptr %i.o, align 8, !range !6, !noundef !7
   %i.q = trunc nuw i8 %i.p to i1
-  br i1 %i.q, label %bb.f, label %1
+  br i1 %i.q, label %bb.f, label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentELb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail20InstructionComponentELb0ELb0EED2Ev.exit
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 288
   tail call void @_ZNSt22_Optional_payload_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(104) %i.r) #10
   br label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentELb0ELb0EED2Ev.exit
 
-1:                                                ; preds = %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail20InstructionComponentELb0ELb0EED2Ev.exit
-  store i8 0, ptr %i.o, align 8
-  br label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentELb0ELb0EED2Ev.exit
-
-_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentELb0ELb0EED2Ev.exit: ; preds = %bb.f, %1
+_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentELb0ELb0EED2Ev.exit: ; preds = %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail20InstructionComponentELb0ELb0EED2Ev.exit, %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
   %i.t = load i8, ptr %i.s, align 8, !range !6, !noundef !7
   %i.u = trunc nuw i8 %i.t to i1
-  store i8 0, ptr %i.s, align 8
   br i1 %i.u, label %bb.g, label %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail14GraphComponentELb0ELb0EED2Ev.exit
 
 bb.g:                                             ; preds = %_ZNSt14_Optional_baseIN2v88internal8compiler10turboshaft6detail16CodegenComponentELb0ELb0EED2Ev.exit
+  store i8 0, ptr %i.s, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
   %.not.i.i.i.i.i.i.i.i2 = icmp eq ptr %i.w, null

@@ -205,13 +205,12 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n, %bb.o
   %.sroa.07.1.3 = phi i1 [ %.sroa.07.1.2, %bb.n ], [ true, %bb.o ]
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.t, i64 681 ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.t, i64 681
   %i.ap = load i8, ptr %i.ao, align 1, !range !6, !noundef !3
   %i.aq = trunc nuw i8 %i.ap to i1
   br i1 %i.aq, label %bb.q, label %.thread
 
 .thread:                                          ; preds = %bb.p
-  store i8 0, ptr %i.ao, align 1
   %i.ar = getelementptr inbounds nuw i8, ptr %i.t, i64 664
   store i32 1, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.t, i64 668

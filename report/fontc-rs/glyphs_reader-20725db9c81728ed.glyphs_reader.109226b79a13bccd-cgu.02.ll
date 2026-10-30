@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 26 ; 2 uses
   %i.k = load i8, ptr %i.j, align 2, !range !25, !alias.scope !3181
   %i.l = trunc nuw i8 %i.k to i1
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   br i1 %i.l, label %bb.ak, label %.lr.ph.preheader.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.preheader.i.i.i
@@ -332,15 +332,11 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %.split.i.i.us.i.i.i, %.lr.ph.i.i.i
   %i.bp = icmp samesign eq i64 %i.bj, %.val1.i.i
-  br i1 %i.bp, label %.split165.us.i.thread.i.i, label %bb.o
-
-.split165.us.i.thread.i.i:                        ; preds = %bb.n
-  store i8 0, ptr %i.m, align 8, !alias.scope !3189
-  br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i
+  br i1 %i.bp, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bq = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.bj
-  %i.br = load i8, ptr %i.bq, align 1, !noalias !3190, !noundef !4 ; 3 uses
+  %i.br = load i8, ptr %i.bq, align 1, !noalias !3189, !noundef !4 ; 3 uses
   %i.bs = icmp sgt i8 %i.br, -1
   br i1 %i.bs, label %.loopexit41.split.us.i.i.i, label %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit12.i.i.us.i.i.i
 
@@ -368,25 +364,25 @@ _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %.lcssa31.i.i = phi i64 [ %.promoted156.i.i.i, %.split.i.i.us.i.peel.i.i ], [ %.promoted156.i.i.i, %bb.d ], [ %i.bj, %.split.i.i.us.i.i.i ], [ %i.bj, %bb.m ]
   %.lcssa28.i.i = phi i8 [ %.promoted205.i.i.i, %.split.i.i.us.i.peel.i.i ], [ %.promoted205.i.i.i, %bb.d ], [ 1, %.split.i.i.us.i.i.i ], [ 1, %bb.m ]
   %i.cb = xor i8 %.lcssa28.i.i, 1
-  store i8 %i.cb, ptr %i.m, align 8, !alias.scope !3189
+  store i8 %i.cb, ptr %i.m, align 8, !alias.scope !3190
   tail call void @_RNvNtCsf3Ta7LF998c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i.i, i64 noundef %.val1.i.i, i64 noundef %.lcssa31.i.i, i64 noundef %.val1.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #24, !noalias !3188
   unreachable
 
 .split165.us.i.i.i:                               ; preds = %bb.e
   %i.cc = xor i8 %.promoted205.i.i.i, 1
-  store i8 %i.cc, ptr %i.m, align 8, !alias.scope !3189
+  store i8 %i.cc, ptr %i.m, align 8, !alias.scope !3190
   br i1 %i.n, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, label %bb.p
 
 .loopexit41.split.us.i.i.i:                       ; preds = %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit12.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit14.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit16.i.i.us.i.i.i, %bb.o, %bb.h
   %.lcssa33.i.i = phi i64 [ %.promoted156.i.i.i, %bb.h ], [ %i.bj, %bb.o ], [ %i.bj, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit16.i.i.us.i.i.i ], [ %i.bj, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit14.i.i.us.i.i.i ], [ %i.bj, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs1qcNTItuk7F_13glyphs_reader.exit12.i.i.us.i.i.i ] ; 2 uses
-  store i8 0, ptr %i.m, align 8, !alias.scope !3189
+  store i8 0, ptr %i.m, align 8, !alias.scope !3190
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i
 
 default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.p:                                             ; preds = %.split165.us.i.i.i
-  store i8 1, ptr %i.j, align 2, !alias.scope !3189
+  store i8 1, ptr %i.j, align 2, !alias.scope !3190
   br label %bb.ak
 
 bb.q:                                             ; preds = %bb.b
@@ -730,9 +726,9 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   store i64 %i.gx, ptr %i.cl, align 8, !alias.scope !3201
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i
 
-_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %.split.us.i20.i.i.i, %.split.us.i10.i.i.i, %.loopexit42.i.i.i, %.loopexit41.split.us.i.i.i, %.split165.us.i.i.i, %.split165.us.i.thread.i.i
-  %.sroa.9.0.i.i = phi i64 [ %.val1.i.i, %.split165.us.i.i.i ], [ %i.ej, %.split.us.i10.i.i.i ], [ %.lcssa33.i.i, %.loopexit41.split.us.i.i.i ], [ %i.dc, %.loopexit42.i.i.i ], [ %i.gx, %.split.us.i20.i.i.i ], [ %.val1.i.i, %.split165.us.i.thread.i.i ]
-  %.sroa.4.03.i.i = phi i64 [ %.val1.i.i, %.split165.us.i.i.i ], [ %i.dn, %.split.us.i10.i.i.i ], [ %.lcssa33.i.i, %.loopexit41.split.us.i.i.i ], [ %i.db, %.loopexit42.i.i.i ], [ %i.gw, %.split.us.i20.i.i.i ], [ %.val1.i.i, %.split165.us.i.thread.i.i ]
+_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %.split.us.i20.i.i.i, %.split.us.i10.i.i.i, %.loopexit42.i.i.i, %.loopexit41.split.us.i.i.i, %.split165.us.i.i.i, %bb.n
+  %.sroa.9.0.i.i = phi i64 [ %.val1.i.i, %.split165.us.i.i.i ], [ %i.ej, %.split.us.i10.i.i.i ], [ %.lcssa33.i.i, %.loopexit41.split.us.i.i.i ], [ %i.dc, %.loopexit42.i.i.i ], [ %i.gx, %.split.us.i20.i.i.i ], [ %.val1.i.i, %bb.n ]
+  %.sroa.4.03.i.i = phi i64 [ %.val1.i.i, %.split165.us.i.i.i ], [ %i.dn, %.split.us.i10.i.i.i ], [ %.lcssa33.i.i, %.loopexit41.split.us.i.i.i ], [ %i.db, %.loopexit42.i.i.i ], [ %i.gw, %.split.us.i20.i.i.i ], [ %.val1.i.i, %bb.n ]
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.gz = load i64, ptr %i.gy, align 8, !alias.scope !3179, !noundef !4 ; 2 uses
   %i.ha = sub nuw i64 %.sroa.4.03.i.i, %i.gz
@@ -1135,8 +1131,8 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !3186 = !{!3150, !3148, !3146, !3144}
 !3187 = !{!3158}
 !3188 = !{!3155, !3158, !3153, !3148, !3146, !3144}
-!3189 = !{!3158, !3148, !3146, !3144}
-!3190 = !{!3157, !3155, !3158, !3153, !3148, !3146, !3144}
+!3189 = !{!3157, !3155, !3158, !3153, !3148, !3146, !3144}
+!3190 = !{!3158, !3148, !3146, !3144}
 !3191 = !{!3153, !3148, !3146, !3144}
 !3192 = !{!3160}
 !3193 = !{!3162}

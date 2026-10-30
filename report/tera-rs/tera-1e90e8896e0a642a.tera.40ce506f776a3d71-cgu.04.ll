@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 26 ; 2 uses
   %i.i = load i8, ptr %i.h, align 2, !range !3505, !alias.scope !24011
   %i.j = trunc nuw i8 %i.i to i1
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   br i1 %i.j, label %bb.ak, label %.lr.ph.preheader.i.i.i, !dbg !24329
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.preheader.i.i.i
@@ -464,19 +464,13 @@ bb.n:                                             ; preds = %bb.m, %.split.i.i.u
     #dbg_value(ptr poison, !4905, !DIExpression(), !23679)
     #dbg_value(ptr poison, !4908, !DIExpression(), !23680)
   %i.bn = icmp samesign eq i64 %i.bh, %.val13.i.i, !dbg !24339
-  br i1 %i.bn, label %.split185.us.i.thread.i.i, label %bb.o, !dbg !24340
-
-.split185.us.i.thread.i.i:                        ; preds = %bb.n
-  store i8 0, ptr %i.k, align 8, !dbg !24378, !alias.scope !24134
-    #dbg_value(i32 0, !24101, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !23727)
-    #dbg_value(i32 undef, !24101, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !23727)
-  br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !24372
+  br i1 %i.bn, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, label %bb.o, !dbg !24340
 
 bb.o:                                             ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.bh, !dbg !24338
     #dbg_value(ptr %i.bo, !4851, !DIExpression(), !23676)
     #dbg_value(ptr %i.bo, !4902, !DIExpression(), !23675)
-  %i.bp = load i8, ptr %i.bo, align 1, !dbg !24341, !noalias !24135, !noundef !1322 ; 3 uses
+  %i.bp = load i8, ptr %i.bo, align 1, !dbg !24341, !noalias !24134, !noundef !1322 ; 3 uses
     #dbg_value(i8 %i.bp, !4869, !DIExpression(), !23683)
     #dbg_value(i8 %i.bp, !4896, !DIExpression(), !23671)
   %i.bq = icmp sgt i8 %i.bp, -1, !dbg !24342
@@ -541,27 +535,27 @@ _RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %.lcssa43.i.i = phi i64 [ %.promoted176.i.i.i, %.split.i.i.us.i.peel.i.i ], [ %.promoted176.i.i.i, %bb.d ], [ %i.bh, %.split.i.i.us.i.i.i ], [ %i.bh, %bb.m ]
   %.lcssa40.i.i = phi i8 [ %.promoted225.i.i.i, %.split.i.i.us.i.peel.i.i ], [ %.promoted225.i.i.i, %bb.d ], [ 1, %.split.i.i.us.i.i.i ], [ 1, %bb.m ]
   %i.bz = xor i8 %.lcssa40.i.i, 1
-  store i8 %i.bz, ptr %i.k, align 8, !dbg !24378, !alias.scope !24134
+  store i8 %i.bz, ptr %i.k, align 8, !dbg !24378, !alias.scope !24143
   tail call void @_RNvNtCsf3Ta7LF998c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i.i, i64 noundef %.val13.i.i, i64 noundef %.lcssa43.i.i, i64 noundef %.val13.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #28, !dbg !24379, !noalias !24133
   unreachable, !dbg !24379
 
 .split185.us.i.i.i:                               ; preds = %bb.e
   %i.ca = xor i8 %.promoted225.i.i.i, 1
-  store i8 %i.ca, ptr %i.k, align 8, !dbg !24378, !alias.scope !24134
+  store i8 %i.ca, ptr %i.k, align 8, !dbg !24378, !alias.scope !24143
     #dbg_value(i32 0, !24101, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !23727)
     #dbg_value(i32 undef, !24101, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !23727)
   br i1 %i.l, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, label %bb.p, !dbg !24372
 
 .loopexit61.split.us.i.i.i:                       ; preds = %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5yXxDE1DkoT_4tera.exit26.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5yXxDE1DkoT_4tera.exit28.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5yXxDE1DkoT_4tera.exit30.i.i.us.i.i.i, %bb.o, %bb.h
   %.lcssa45.i.i = phi i64 [ %.promoted176.i.i.i, %bb.h ], [ %i.bh, %bb.o ], [ %i.bh, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5yXxDE1DkoT_4tera.exit30.i.i.us.i.i.i ], [ %i.bh, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5yXxDE1DkoT_4tera.exit28.i.i.us.i.i.i ], [ %i.bh, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5yXxDE1DkoT_4tera.exit26.i.i.us.i.i.i ] ; 2 uses
-  store i8 0, ptr %i.k, align 8, !dbg !24378, !alias.scope !24134
+  store i8 0, ptr %i.k, align 8, !dbg !24378, !alias.scope !24143
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !24380
 
 default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.p:                                             ; preds = %.split185.us.i.i.i
-  store i8 1, ptr %i.h, align 2, !dbg !24381, !alias.scope !24134
+  store i8 1, ptr %i.h, align 2, !dbg !24381, !alias.scope !24143
   br label %bb.ak, !dbg !24382
 
 bb.q:                                             ; preds = %bb.b
@@ -964,9 +958,9 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   store i64 %i.gv, ptr %i.cj, align 8, !dbg !24482, !alias.scope !24270
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !24483
 
-_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %.split.us.i40.i.i.i, %.split.us.i30.i.i.i, %.loopexit62.i.i.i, %.loopexit61.split.us.i.i.i, %.split185.us.i.i.i, %.split185.us.i.thread.i.i
-  %.sroa.9.0.i.i = phi i64 [ %.val13.i.i, %.split185.us.i.i.i ], [ %i.eh, %.split.us.i30.i.i.i ], [ %.lcssa45.i.i, %.loopexit61.split.us.i.i.i ], [ %i.da, %.loopexit62.i.i.i ], [ %i.gv, %.split.us.i40.i.i.i ], [ %.val13.i.i, %.split185.us.i.thread.i.i ], !dbg !24484
-  %.sroa.4.015.i.i = phi i64 [ %.val13.i.i, %.split185.us.i.i.i ], [ %i.dl, %.split.us.i30.i.i.i ], [ %.lcssa45.i.i, %.loopexit61.split.us.i.i.i ], [ %i.cz, %.loopexit62.i.i.i ], [ %i.gu, %.split.us.i40.i.i.i ], [ %.val13.i.i, %.split185.us.i.thread.i.i ], !dbg !24484
+_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %.split.us.i40.i.i.i, %.split.us.i30.i.i.i, %.loopexit62.i.i.i, %.loopexit61.split.us.i.i.i, %.split185.us.i.i.i, %bb.n
+  %.sroa.9.0.i.i = phi i64 [ %.val13.i.i, %.split185.us.i.i.i ], [ %i.eh, %.split.us.i30.i.i.i ], [ %.lcssa45.i.i, %.loopexit61.split.us.i.i.i ], [ %i.da, %.loopexit62.i.i.i ], [ %i.gv, %.split.us.i40.i.i.i ], [ %.val13.i.i, %bb.n ], !dbg !24484
+  %.sroa.4.015.i.i = phi i64 [ %.val13.i.i, %.split185.us.i.i.i ], [ %i.dl, %.split.us.i30.i.i.i ], [ %.lcssa45.i.i, %.loopexit61.split.us.i.i.i ], [ %i.cz, %.loopexit62.i.i.i ], [ %i.gu, %.split.us.i40.i.i.i ], [ %.val13.i.i, %bb.n ], !dbg !24484
     #dbg_value(ptr %.val.i.i, !23970, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23581)
     #dbg_value(ptr %.val.i.i, !23977, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23584)
     #dbg_value(ptr %.val.i.i, !23985, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23589)
@@ -1369,8 +1363,8 @@ begin_hunk_2_@llvm.memset.p0.i64
 !24131 = !{!23623, !23591, !23574, !23569}
 !24132 = !{!23748}
 !24133 = !{!23658, !23748, !23656, !23591, !23574, !23569}
-!24134 = !{!23748, !23591, !23574, !23569}
-!24135 = !{!23682, !23658, !23748, !23656, !23591, !23574, !23569}
+!24134 = !{!23682, !23658, !23748, !23656, !23591, !23574, !23569}
+!24143 = !{!23748, !23591, !23574, !23569}
 !24144 = !DILocalVariable(name: "self", arg: 1, scope: !23751, file: !4944, line: 18, type: !597)
 !24145 = !{!597, !597, !23626, !3445}
 !24146 = !DISubroutineType(types: !24145)

@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 64
   %i.e = load ptr, ptr %i.d, align 8
   tail call void %i.e(ptr noundef nonnull align 8 dereferenceable(40) %i.b)
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -259,11 +259,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aj = sub i64 %i.ah, %i.ai
   %i.ak = ashr exact i64 %i.aj, 3
   %.not = icmp ugt i64 %i.ak, %i.ac
-  br i1 %.not, label %bb.e, label %2
-
-2:                                                ; preds = %bb.d
-  store i8 0, ptr %i.f, align 8, !tbaa !508
-  br label %.loopexit
+  br i1 %.not, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.j, i8 0, i64 6, i1 false)
@@ -296,7 +292,7 @@ bb.f:                                             ; preds = %_ZN7rocksdb20Forwar
   call void %i.as(ptr noundef nonnull align 8 dereferenceable(40) %i.ap)
   br label %bb.b, !llvm.loop !803
 
-.loopexit:                                        ; preds = %_ZN7rocksdb20ForwardLevelIterator12SetFileIndexEj.exit, %bb.c, %_ZN7rocksdb6StatusD2Ev.exit, %2
+.loopexit:                                        ; preds = %_ZN7rocksdb20ForwardLevelIterator12SetFileIndexEj.exit, %bb.c, %_ZN7rocksdb6StatusD2Ev.exit, %bb.d
   ret void
 }
 

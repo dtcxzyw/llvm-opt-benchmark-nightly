@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph102, %.loopex
   br i1 %i.v, label %bb.c, label %.loopexit71
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = getelementptr inbounds nuw i8, ptr %.05599, i64 357 ; 5 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.05599, i64 357 ; 3 uses
   %i.x = load i8, ptr %i.w, align 1, !range !66, !noundef !53
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %.loopexit71, label %.preheader70
@@ -432,7 +432,6 @@ IsAudioBufferPlayingInLockedState.exit.i.i.i:     ; preds = %bb.l, %bb.j
 
 bb.m:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i.i.i
   store i8 0, ptr %i.t, align 4
-  store i8 0, ptr %i.w, align 1
   store i32 0, ptr %i.ai, align 4
   store i32 0, ptr %i.ag, align 8
   store i8 1, ptr %i.aj, align 4
@@ -730,7 +729,6 @@ IsAudioBufferPlayingInLockedState.exit.i:         ; preds = %bb.t
 
 bb.u:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i
   store i8 0, ptr %i.t, align 4
-  store i8 0, ptr %i.w, align 1
   store i32 0, ptr %i.ai, align 4
   store i32 0, ptr %i.ag, align 8
   store i8 1, ptr %i.aj, align 4
@@ -1133,14 +1131,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %IsAudioBufferPlayingInLockedState.exit.i, label %StopAudioBufferInLockedState.exit
 
 IsAudioBufferPlayingInLockedState.exit.i:         ; preds = %bb.b
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 357 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 357
   %i.f = load i8, ptr %i.e, align 1, !range !66, !noundef !53
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %StopAudioBufferInLockedState.exit, label %bb.c
 
 bb.c:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i
   store i8 0, ptr %i.b, align 4
-  store i8 0, ptr %i.e, align 1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 372
   store i32 0, ptr %i.h, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 376
@@ -1543,14 +1540,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %IsAudioBufferPlayingInLockedState.exit.i.i, label %StopAudioBuffer.exit
 
 IsAudioBufferPlayingInLockedState.exit.i.i:       ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 357 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 357
   %i.g = load i8, ptr %i.f, align 1, !range !66, !noundef !53
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %StopAudioBuffer.exit, label %bb.c
 
 bb.c:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i.i
   store i8 0, ptr %i.c, align 4
-  store i8 0, ptr %i.f, align 1
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 372
   store i32 0, ptr %i.i, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 376
@@ -1953,14 +1949,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %IsAudioBufferPlayingInLockedState.exit.i.i, label %StopAudioBuffer.exit
 
 IsAudioBufferPlayingInLockedState.exit.i.i:       ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 357 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 357
   %i.g = load i8, ptr %i.f, align 1, !range !66, !noundef !53
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %StopAudioBuffer.exit, label %bb.c
 
 bb.c:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i.i
   store i8 0, ptr %i.c, align 4
-  store i8 0, ptr %i.f, align 1
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 372
   store i32 0, ptr %i.i, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 376
@@ -2363,14 +2358,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %IsAudioBufferPlayingInLockedState.exit.i.i.i, label %StopAudioStream.exit
 
 IsAudioBufferPlayingInLockedState.exit.i.i.i:     ; preds = %bb.b
-  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 357 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 357
   %i.f = load i8, ptr %i.e, align 1, !range !66, !noundef !53
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %StopAudioStream.exit, label %bb.c
 
 bb.c:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i.i.i
   store i8 0, ptr %i.b, align 4
-  store i8 0, ptr %i.e, align 1
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 372
   store i32 0, ptr %i.h, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 376
@@ -2773,14 +2767,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %IsAudioBufferPlayingInLockedState.exit.i.i, label %StopAudioBuffer.exit
 
 IsAudioBufferPlayingInLockedState.exit.i.i:       ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 357 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 357
   %i.g = load i8, ptr %i.f, align 1, !range !66, !noundef !53
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %StopAudioBuffer.exit, label %bb.c
 
 bb.c:                                             ; preds = %IsAudioBufferPlayingInLockedState.exit.i.i
   store i8 0, ptr %i.c, align 4
-  store i8 0, ptr %i.f, align 1
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 372
   store i32 0, ptr %i.i, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 376

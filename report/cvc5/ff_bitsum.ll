@@ -204,10 +204,10 @@ bb.am:                                            ; preds = %.critedge.i, %.thre
 _ZNSt13unordered_setIN4cvc58internal12NodeTemplateILb1EEESt4hashIS3_ESt8equal_toIS3_ESaIS3_EE6insertERKS3_.exit: ; preds = %bb.v, %bb.y, %bb.x, %_ZNSt10_HashtableIN4cvc58internal12NodeTemplateILb1EEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE12_Scoped_nodeD2Ev.exit.i, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
   %i.ep = load i8, ptr %i.o, align 8, !tbaa !53, !range !54, !noundef !55
   %i.eq = trunc nuw i8 %i.ep to i1
-  store i8 0, ptr %i.o, align 8, !tbaa !53
   br i1 %i.eq, label %bb.an, label %_ZNSt14_Optional_baseIN4cvc58internal12NodeTemplateILb1EEELb0ELb0EED2Ev.exit
 
 bb.an:                                            ; preds = %_ZNSt13unordered_setIN4cvc58internal12NodeTemplateILb1EEESt4hashIS3_ESt8equal_toIS3_ESaIS3_EE6insertERKS3_.exit
+  store i8 0, ptr %i.o, align 8, !tbaa !53
   %i.er = load ptr, ptr %20, align 8, !tbaa !27   ; 3 uses
   %i.es = load i64, ptr %i.er, align 8            ; 3 uses
   %i.et = and i64 %i.es, 1152920405095219200
@@ -300,7 +300,7 @@ bb.au:                                            ; preds = %._crit_edge485
   %i.ga = getelementptr inbounds nuw i8, ptr %15, i64 24
   %i.gb = getelementptr inbounds nuw i8, ptr %37, i64 32
   %i.gc = getelementptr inbounds nuw i8, ptr %37, i64 48 ; 2 uses
-  %i.gd = getelementptr inbounds nuw i8, ptr %36, i64 48 ; 6 uses
+  %i.gd = getelementptr inbounds nuw i8, ptr %36, i64 48 ; 5 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %36, i64 8 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %36, i64 32 ; 6 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %36, i64 40 ; 2 uses
@@ -703,11 +703,7 @@ bb.eq:                                            ; preds = %_ZNSt10_HashtableIN
   %i.sk = load ptr, ptr %i.ge, align 8, !tbaa !80 ; 2 uses
   %i.sl = load ptr, ptr %36, align 8, !tbaa !81   ; 2 uses
   %.not = icmp eq ptr %i.sk, %i.sl
-  br i1 %.not, label %.thread, label %.preheader
-
-.thread:                                          ; preds = %bb.eq
-  store i8 0, ptr %i.gd, align 8, !tbaa !135
-  br label %bb.gu
+  br i1 %.not, label %bb.gu, label %.preheader
 
 bb.er:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit236
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #19
@@ -1110,10 +1106,10 @@ bb.gt:                                            ; preds = %bb.gp, %bb.go, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %41) #19
   %.pre513 = load i8, ptr %i.gd, align 8, !tbaa !135, !range !54
   %i.xz = trunc nuw i8 %.pre513 to i1
-  store i8 0, ptr %i.gd, align 8, !tbaa !135
   br i1 %i.xz, label %bb.gu, label %_ZNSt14_Optional_baseISt4pairISt6vectorIS0_IN4cvc58internal16FiniteFieldValueES1_INS3_12NodeTemplateILb1EEESaIS6_EEESaIS9_EES8_ELb0ELb0EED2Ev.exit
 
-bb.gu:                                            ; preds = %.thread, %bb.gt
+bb.gu:                                            ; preds = %bb.eq, %bb.gt
+  store i8 0, ptr %i.gd, align 8, !tbaa !135
   %i.ya = load ptr, ptr %i.gh, align 8, !tbaa !24 ; 3 uses
   %i.yb = load ptr, ptr %i.gf, align 8, !tbaa !23 ; 2 uses
   %.not4.i.i.i.i = icmp eq ptr %i.ya, %i.yb
@@ -1288,10 +1284,10 @@ bb.hg:                                            ; preds = %.body200, %.body204
   %.pn109.pn.pn.pn = phi { ptr, i32 } [ %.pn109.pn.pn, %.body204 ], [ %.pn105, %.body200 ] ; 2 uses
   %i.aaa = load i8, ptr %i.gd, align 8, !tbaa !135, !range !54, !noundef !55
   %i.aab = trunc nuw i8 %i.aaa to i1
-  store i8 0, ptr %i.gd, align 8, !tbaa !135
   br i1 %i.aab, label %bb.hh, label %_ZNSt14_Optional_baseISt4pairISt6vectorIS0_IN4cvc58internal16FiniteFieldValueES1_INS3_12NodeTemplateILb1EEESaIS6_EEESaIS9_EES8_ELb0ELb0EED2Ev.exit246
 
 bb.hh:                                            ; preds = %bb.hg
+  store i8 0, ptr %i.gd, align 8, !tbaa !135
   call void @_ZNSt4pairISt6vectorIS_IN4cvc58internal16FiniteFieldValueES0_INS2_12NodeTemplateILb1EEESaIS5_EEESaIS8_EES7_ED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(56) %36) #19
   br label %_ZNSt14_Optional_baseISt4pairISt6vectorIS0_IN4cvc58internal16FiniteFieldValueES1_INS3_12NodeTemplateILb1EEESaIS6_EEESaIS9_EES8_ELb0ELb0EED2Ev.exit246
 
@@ -1694,10 +1690,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !53, !range !54, !noundef !55
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !53
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN4cvc58internal12NodeTemplateILb1EEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !53
   %i.d = load ptr, ptr %0, align 8, !tbaa !27     ; 3 uses
   %i.e = load i64, ptr %i.d, align 8              ; 3 uses
   %i.f = and i64 %i.e, 1152920405095219200

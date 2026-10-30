@@ -205,7 +205,7 @@ _RINvNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering8ir_g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !120123
   %i.ic = inttoptr i64 %.sroa.2.0.copyload.i211 to ptr, !dbg !120127 ; 2 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.bt, i64 8, !dbg !120128
-  %i.ie = getelementptr inbounds nuw i8, ptr %i.bt, i64 48, !dbg !120128 ; 5 uses
+  %i.ie = getelementptr inbounds nuw i8, ptr %i.bt, i64 48, !dbg !120128 ; 4 uses
   %i.if = load i8, ptr %i.ie, align 16, !dbg !120128, !range !3721, !noundef !3394
   %i.ig = trunc nuw i8 %i.if to i1, !dbg !120128
   br i1 %i.ig, label %bb.es, label %bb.er, !dbg !120128
@@ -608,25 +608,21 @@ bb.ew:                                            ; preds = %bb.ev
   %i.vc = getelementptr inbounds nuw i8, ptr %i.bt, i64 49, !dbg !120555
   %i.vd = load i8, ptr %i.vc, align 1, !dbg !120555, !range !3859, !noundef !3394
   %switch106 = icmp samesign ult i8 %i.vd, 2, !dbg !120556
-  br i1 %switch106, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering7EdgeKeyENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMs_BS_NtBS_19SimplifyIRNodeOrder23simplify_ir_node_orderss5_0EBY_.exit, label %.thread431, !dbg !120556
-
-.thread431:                                       ; preds = %bb.ew
-  store i8 0, ptr %i.ie, align 16, !dbg !120557
-  br label %bb.ez, !dbg !120558
+  br i1 %switch106, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering7EdgeKeyENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMs_BS_NtBS_19SimplifyIRNodeOrder23simplify_ir_node_orderss5_0EBY_.exit, label %bb.ez, !dbg !120556
 
 bb.ex:                                            ; preds = %bb.eu
   %.phi.trans.insert387 = getelementptr inbounds nuw i8, ptr %i.bt, i64 49
-  %.pre388 = load i8, ptr %.phi.trans.insert387, align 1, !dbg !120559, !range !3859
+  %.pre388 = load i8, ptr %.phi.trans.insert387, align 1, !dbg !120557, !range !3859
   %i.ve = icmp samesign ult i8 %.pre388, 2, !dbg !120558
-  store i8 0, ptr %i.ie, align 16, !dbg !120557
+  store i8 0, ptr %i.ie, align 16, !dbg !120559
   br i1 %i.ve, label %bb.ey, label %bb.ez, !dbg !120558
 
 bb.ey:                                            ; preds = %bb.ex
-  %i.vf = getelementptr inbounds nuw i8, ptr %i.bt, i64 49, !dbg !120559
+  %i.vf = getelementptr inbounds nuw i8, ptr %i.bt, i64 49, !dbg !120557
   store i8 3, ptr %i.vf, align 1, !dbg !120560
   br label %bb.ez, !dbg !120561
 
-bb.ez:                                            ; preds = %.thread431, %bb.ex, %bb.ey
+bb.ez:                                            ; preds = %bb.ew, %bb.ex, %bb.ey
   store i8 1, ptr %i.ib, align 1, !dbg !120562
   br label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering7EdgeKeyENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvMs_BS_NtBS_19SimplifyIRNodeOrder23simplify_ir_node_orderss5_0EBY_.exit, !dbg !120563
 
@@ -1029,9 +1025,9 @@ begin_hunk_2_@llvm.umin.i16
 !120554 = !DILocation(line: 299, column: 26, scope: !118897)
 !120555 = !DILocation(line: 300, column: 34, scope: !118897)
 !120556 = !DILocation(line: 300, column: 28, scope: !118897)
-!120557 = !DILocation(line: 305, column: 21, scope: !118897)
+!120557 = !DILocation(line: 307, column: 27, scope: !118897)
 !120558 = !DILocation(line: 307, column: 21, scope: !118897)
-!120559 = !DILocation(line: 307, column: 27, scope: !118897)
+!120559 = !DILocation(line: 305, column: 21, scope: !118897)
 !120560 = !DILocation(line: 308, column: 47, scope: !118897)
 !120561 = !DILocation(line: 308, column: 76, scope: !118897)
 !120562 = !DILocation(line: 312, column: 21, scope: !118897)

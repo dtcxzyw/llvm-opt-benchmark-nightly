@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.sink.split, %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 7 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 65 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 7 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 5 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 7 uses
   %i.ax = add i64 %.054, -1                       ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 5 uses
@@ -306,7 +306,6 @@ _ZN6duckdb10SkipResult12UnsetCommentERS0_m.exit:  ; preds = %bb.o
   %i.cl = load i64, ptr %i.bg, align 8, !tbaa !366
   %.not.i.i71.not = icmp ult i64 %i.ck, %i.cl
   store i8 0, ptr %i.aw, align 1, !tbaa !215
-  store i8 0, ptr %i.av, align 8, !tbaa !99
   br i1 %.not.i.i71.not, label %.sink.split203, label %bb.p
 
 bb.p:                                             ; preds = %_ZN6duckdb10SkipResult12UnsetCommentERS0_m.exit
@@ -398,7 +397,6 @@ _ZN6duckdb10SkipResult12UnsetCommentERS0_m.exit75: ; preds = %bb.x
   %i.dq = load i64, ptr %i.bg, align 8, !tbaa !366
   %.not.i.i73.not = icmp ult i64 %i.dp, %i.dq
   store i8 0, ptr %i.aw, align 1, !tbaa !215
-  store i8 0, ptr %i.av, align 8, !tbaa !99
   br i1 %.not.i.i73.not, label %bb.ac, label %bb.y
 
 bb.y:                                             ; preds = %_ZN6duckdb10SkipResult12UnsetCommentERS0_m.exit75

@@ -205,10 +205,10 @@ _ZNKSt8functionIFvRKN3gmx19PlumedInputFilenameEEEclES3_.exit.i: ; preds = %.lr.p
 _ZNK3gmx17MDModulesNotifierIRKNS_19PlumedInputFilenameENS_22BuildMDModulesNotifierIJEE15NoCallParameterEE6notifyES3_.exit: ; preds = %.noexc846, %bb.fn
   %i.uz = load i8, ptr %i.sh, align 8, !tbaa !680, !range !38, !noundef !39
   %i.va = trunc nuw i8 %i.uz to i1
-  store i8 0, ptr %i.sh, align 8, !tbaa !680
   br i1 %i.va, label %bb.fp, label %_ZN3gmx19PlumedInputFilenameD2Ev.exit
 
 bb.fp:                                            ; preds = %_ZNK3gmx17MDModulesNotifierIRKNS_19PlumedInputFilenameENS_22BuildMDModulesNotifierIJEE15NoCallParameterEE6notifyES3_.exit
+  store i8 0, ptr %i.sh, align 8, !tbaa !680
   %i.vb = load ptr, ptr %43, align 8, !tbaa !23   ; 2 uses
   %i.vc = getelementptr inbounds nuw i8, ptr %43, i64 16 ; 2 uses
   %i.vd = icmp eq ptr %i.vb, %i.vc
@@ -263,10 +263,10 @@ bb.fr:                                            ; preds = %bb.fq
   %.pn500 = phi { ptr, i32 } [ %i.uq, %bb.fm ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp1868.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %i.vq = load i8, ptr %i.sh, align 8, !tbaa !680, !range !38, !noundef !39
   %i.vr = trunc nuw i8 %i.vq to i1
-  store i8 0, ptr %i.sh, align 8, !tbaa !680
   br i1 %i.vr, label %bb.fs, label %_ZN3gmx19PlumedInputFilenameD2Ev.exit851
 
 bb.fs:                                            ; preds = %.loopexit.split-lp1868
+  store i8 0, ptr %i.sh, align 8, !tbaa !680
   %i.vs = load ptr, ptr %43, align 8, !tbaa !23   ; 2 uses
   %i.vt = getelementptr inbounds nuw i8, ptr %43, i64 16 ; 2 uses
   %i.vu = icmp eq ptr %i.vs, %i.vt
@@ -669,7 +669,7 @@ _ZNSt10unique_ptrIN3gmx26DomainDecompositionBuilderESt14default_deleteIS1_EE5res
           to label %bb.nx unwind label %bb.oe
 
 bb.nx:                                            ; preds = %_ZNSt10unique_ptrIN3gmx26DomainDecompositionBuilderESt14default_deleteIS1_EE5resetEPS1_.exit
-  %i.asb = getelementptr inbounds nuw i8, ptr %70, i64 32 ; 6 uses
+  %i.asb = getelementptr inbounds nuw i8, ptr %70, i64 32 ; 5 uses
   %i.asc = load i8, ptr %i.asb, align 8, !tbaa !680, !range !38, !noundef !39
   %i.asd = trunc nuw i8 %i.asc to i1
   br i1 %i.asd, label %bb.ny, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit1002
@@ -678,11 +678,7 @@ bb.ny:                                            ; preds = %bb.nx
   %i.ase = getelementptr inbounds nuw i8, ptr %24, i64 32
   %i.asf = load ptr, ptr %i.ase, align 8, !tbaa !710 ; 3 uses
   %i.asg = icmp eq ptr %i.asf, null
-  br i1 %i.asg, label %.thread2359, label %bb.of
-
-.thread2359:                                      ; preds = %bb.ny
-  store i8 0, ptr %i.asb, align 8, !tbaa !680
-  br label %bb.oj
+  br i1 %i.asg, label %bb.oj, label %bb.of
 
 bb.nz:                                            ; preds = %_ZL8usingPmeRK22CoulombInteractionType.exit, %bb.np, %bb.nm
   %i.ash = landingpad { ptr, i32 }
@@ -777,10 +773,10 @@ _ZN3gmx14LogEntryWriterD2Ev.exit999:              ; preds = %bb.oh, %_ZNKSt7__cx
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #31
   %i.ati = load i8, ptr %i.asb, align 8, !tbaa !680, !range !38, !noundef !39
   %i.atj = trunc nuw i8 %i.ati to i1
-  store i8 0, ptr %i.asb, align 8, !tbaa !680
   br i1 %i.atj, label %bb.oi, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.oi:                                            ; preds = %_ZN3gmx14LogEntryWriterD2Ev.exit999
+  store i8 0, ptr %i.asb, align 8, !tbaa !680
   %i.atk = load ptr, ptr %70, align 8, !tbaa !23  ; 2 uses
   %i.atl = getelementptr inbounds nuw i8, ptr %70, i64 16 ; 2 uses
   %i.atm = icmp eq ptr %i.atk, %i.atl
@@ -796,10 +792,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #31
   %.pre1949 = load i8, ptr %i.asb, align 8, !tbaa !680, !range !38
   %i.atp = trunc nuw i8 %.pre1949 to i1
-  store i8 0, ptr %i.asb, align 8, !tbaa !680
   br i1 %i.atp, label %bb.oj, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit1002
 
-bb.oj:                                            ; preds = %.thread2359, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i995
+bb.oj:                                            ; preds = %bb.ny, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i995
+  store i8 0, ptr %i.asb, align 8, !tbaa !680
   %i.atq = load ptr, ptr %70, align 8, !tbaa !23  ; 2 uses
   %i.atr = getelementptr inbounds nuw i8, ptr %70, i64 16 ; 2 uses
   %i.ats = icmp eq ptr %i.atq, %i.atr

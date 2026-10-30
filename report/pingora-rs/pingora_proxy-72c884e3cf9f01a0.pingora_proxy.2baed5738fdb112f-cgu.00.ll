@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 26 ; 2 uses
   %i.i = load i8, ptr %i.h, align 2, !range !11, !alias.scope !434
   %i.j = trunc nuw i8 %i.i to i1
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   br i1 %i.j, label %bb.ah, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
@@ -331,15 +331,11 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %.split.i.i.us.i, %.lr.ph.i
   %i.bn = icmp samesign eq i64 %i.bh, %.val1
-  br i1 %i.bn, label %.split166.us.i.thread, label %bb.o
-
-.split166.us.i.thread:                            ; preds = %bb.n
-  store i8 0, ptr %i.k, align 8, !alias.scope !442
-  br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
+  br i1 %i.bn, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %.val, i64 %i.bh
-  %i.bp = load i8, ptr %i.bo, align 1, !noalias !443, !noundef !5 ; 3 uses
+  %i.bp = load i8, ptr %i.bo, align 1, !noalias !442, !noundef !5 ; 3 uses
   %i.bq = icmp sgt i8 %i.bp, -1
   br i1 %i.bq, label %.loopexit42.split.us.i, label %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit12.i.i.us.i
 
@@ -367,25 +363,25 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %.lcssa31 = phi i64 [ %.promoted157.i, %.split.i.i.us.i.peel ], [ %.promoted157.i, %bb.d ], [ %i.bh, %.split.i.i.us.i ], [ %i.bh, %bb.m ]
   %.lcssa28 = phi i8 [ %.promoted206.i, %.split.i.i.us.i.peel ], [ %.promoted206.i, %bb.d ], [ 1, %.split.i.i.us.i ], [ 1, %bb.m ]
   %i.bz = xor i8 %.lcssa28, 1
-  store i8 %i.bz, ptr %i.k, align 8, !alias.scope !442
+  store i8 %i.bz, ptr %i.k, align 8, !alias.scope !443
   tail call void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val, i64 noundef %.val1, i64 noundef %.lcssa31, i64 noundef %.val1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @65) #24, !noalias !441
   unreachable
 
 .split166.us.i:                                   ; preds = %bb.e
   %i.ca = xor i8 %.promoted206.i, 1
-  store i8 %i.ca, ptr %i.k, align 8, !alias.scope !442
+  store i8 %i.ca, ptr %i.k, align 8, !alias.scope !443
   br i1 %i.l, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %bb.p
 
 .loopexit42.split.us.i:                           ; preds = %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit16.i.i.us.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit14.i.i.us.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit12.i.i.us.i, %bb.o, %bb.h
   %.lcssa33 = phi i64 [ %.promoted157.i, %bb.h ], [ %i.bh, %bb.o ], [ %i.bh, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit12.i.i.us.i ], [ %i.bh, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit14.i.i.us.i ], [ %i.bh, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3Kwrwkha1e5_13pingora_proxy.exit16.i.i.us.i ] ; 2 uses
-  store i8 0, ptr %i.k, align 8, !alias.scope !442
+  store i8 0, ptr %i.k, align 8, !alias.scope !443
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.p:                                             ; preds = %.split166.us.i
-  store i8 1, ptr %i.h, align 2, !alias.scope !442
+  store i8 1, ptr %i.h, align 2, !alias.scope !443
   br label %bb.ah
 
 bb.q:                                             ; preds = %bb.b
@@ -675,9 +671,9 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %.sp
   store i64 %i.ga, ptr %i.cj, align 8, !alias.scope !454
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
-_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %.split166.us.i.thread, %.split.us.i21.i, %.split.us.i11.i, %.loopexit43.i, %.loopexit42.split.us.i, %.split166.us.i
-  %.sroa.9.0 = phi i64 [ %.val1, %.split166.us.i ], [ %i.eg, %.split.us.i11.i ], [ %.lcssa33, %.loopexit42.split.us.i ], [ %i.da, %.loopexit43.i ], [ %i.ga, %.split.us.i21.i ], [ %.val1, %.split166.us.i.thread ]
-  %.sroa.4.03 = phi i64 [ %.val1, %.split166.us.i ], [ %i.dl, %.split.us.i11.i ], [ %.lcssa33, %.loopexit42.split.us.i ], [ %i.cz, %.loopexit43.i ], [ %i.fa, %.split.us.i21.i ], [ %.val1, %.split166.us.i.thread ]
+_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.n, %.split.us.i21.i, %.split.us.i11.i, %.loopexit43.i, %.loopexit42.split.us.i, %.split166.us.i
+  %.sroa.9.0 = phi i64 [ %.val1, %.split166.us.i ], [ %i.eg, %.split.us.i11.i ], [ %.lcssa33, %.loopexit42.split.us.i ], [ %i.da, %.loopexit43.i ], [ %i.ga, %.split.us.i21.i ], [ %.val1, %bb.n ]
+  %.sroa.4.03 = phi i64 [ %.val1, %.split166.us.i ], [ %i.dl, %.split.us.i11.i ], [ %.lcssa33, %.loopexit42.split.us.i ], [ %i.cz, %.loopexit43.i ], [ %i.fa, %.split.us.i21.i ], [ %.val1, %bb.n ]
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.gc = load i64, ptr %i.gb, align 8, !noundef !5 ; 2 uses
   %i.gd = sub nuw i64 %.sroa.4.03, %i.gc
@@ -1080,8 +1076,8 @@ begin_hunk_1_@llvm.umax.i64
 !439 = !{!411, !409}
 !440 = !{!419}
 !441 = !{!416, !419, !414, !409}
-!442 = !{!419, !409}
-!443 = !{!418, !416, !419, !414, !409}
+!442 = !{!418, !416, !419, !414, !409}
+!443 = !{!419, !409}
 !444 = !{!414, !409}
 !445 = !{!421}
 !446 = !{!423}

@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.a
   %i.eq = getelementptr inbounds nuw i8, ptr %7, i64 112
   %i.er = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 4 uses
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.et = getelementptr inbounds nuw i8, ptr %20, i64 24 ; 6 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %20, i64 24 ; 5 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 10 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 9 uses
@@ -366,10 +366,10 @@ bb.ao:                                            ; preds = %bb.al, %_ZSteqIcSt1
 .critedge121:                                     ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEaSEOS7_.exit176
   %i.ha = load i8, ptr %i.fc, align 8, !tbaa !63, !range !57, !noundef !58
   %i.hb = trunc nuw i8 %i.ha to i1
-  store i8 0, ptr %i.fc, align 8, !tbaa !63
   br i1 %i.hb, label %bb.ap, label %_ZNSt14_Optional_baseISt6vectorI20cmGccStyleDependencySaIS1_EELb0ELb0EED2Ev.exit
 
 bb.ap:                                            ; preds = %.critedge121
+  store i8 0, ptr %i.fc, align 8, !tbaa !63
   %i.hc = load ptr, ptr %16, align 8, !tbaa !66
   %i.hd = load ptr, ptr %i.fd, align 8, !tbaa !67
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIP20cmGccStyleDependencyEEvT_S4_(ptr noundef %i.hc, ptr noundef %i.hd)
@@ -772,11 +772,7 @@ bb.cg:                                            ; preds = %bb.cf
   %i.np = load ptr, ptr %20, align 8, !tbaa !139  ; 3 uses
   %i.nq = load ptr, ptr %i.eu, align 8, !tbaa !139
   %i.nr = icmp eq ptr %i.np, %i.nq
-  br i1 %i.nr, label %.critedge125.thread, label %bb.ci
-
-.critedge125.thread:                              ; preds = %bb.cg
-  store i8 0, ptr %i.et, align 8, !tbaa !63
-  br label %bb.dm
+  br i1 %i.nr, label %bb.dm, label %bb.ci
 
 bb.ch:                                            ; preds = %bb.ce, %_ZSteqIcSt11char_traitsIcEEbNSt15__type_identityISt17basic_string_viewIT_T0_EE4typeES6_.exit208
   %i.ns = landingpad { ptr, i32 }
@@ -921,10 +917,10 @@ bb.cq:                                            ; preds = %bb.cn, %_ZStneIcSt1
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS5_S7_EE.exit226: ; preds = %bb.cp, %bb.cn, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS5_S7_EE.exit, %bb.co, %_ZN2cm5eraseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_ES6_EEvRSt6vectorIT_T0_ERKT1_.exit
   %i.px = load i8, ptr %i.et, align 8, !tbaa !63, !range !57, !noundef !58
   %i.py = trunc nuw i8 %i.px to i1
-  store i8 0, ptr %i.et, align 8, !tbaa !63
   br i1 %i.py, label %bb.cr, label %_ZNSt14_Optional_baseISt6vectorI20cmGccStyleDependencySaIS1_EELb0ELb0EED2Ev.exit229
 
 bb.cr:                                            ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS5_S7_EE.exit226
+  store i8 0, ptr %i.et, align 8, !tbaa !63
   %i.pz = load ptr, ptr %20, align 8, !tbaa !66
   %i.qa = load ptr, ptr %i.eu, align 8, !tbaa !67
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIP20cmGccStyleDependencyEEvT_S4_(ptr noundef %i.pz, ptr noundef %i.qa)
@@ -1098,10 +1094,10 @@ bb.dl:                                            ; preds = %_ZSt8_DestroyIPNSt7
 .critedge125:                                     ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEaSEOS7_.exit218
   %.pre = load i8, ptr %i.et, align 8, !tbaa !63, !range !57
   %i.rw = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.et, align 8, !tbaa !63
   br i1 %i.rw, label %bb.dm, label %_ZNSt14_Optional_baseISt6vectorI20cmGccStyleDependencySaIS1_EELb0ELb0EED2Ev.exit253
 
-bb.dm:                                            ; preds = %.critedge125.thread, %.critedge125
+bb.dm:                                            ; preds = %bb.cg, %.critedge125
+  store i8 0, ptr %i.et, align 8, !tbaa !63
   %i.rx = load ptr, ptr %20, align 8, !tbaa !66
   %i.ry = load ptr, ptr %i.eu, align 8, !tbaa !67
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIP20cmGccStyleDependencyEEvT_S4_(ptr noundef %i.rx, ptr noundef %i.ry)
@@ -1504,10 +1500,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !63, !range !57, !noundef !58
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !63
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadISt6vectorI20cmGccStyleDependencySaIS1_EELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !63
   %i.d = load ptr, ptr %0, align 8, !tbaa !66
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !67

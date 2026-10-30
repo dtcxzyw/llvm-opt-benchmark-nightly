@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.critedge.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23, !noalias !176
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, i8 0, i64 24, i1 false), !noalias !176
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 9 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 7 uses
   store i8 0, ptr %i.y, align 8, !tbaa !44, !noalias !176
   store i8 1, ptr %3, align 8, !tbaa !185, !noalias !176
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
@@ -476,7 +476,6 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIjSaIjE
 .critedge36.i.thread112:                          ; preds = %bb.ad
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 1, ptr %i.da, align 8, !tbaa !174, !alias.scope !176
-  store i8 0, ptr %i.y, align 8, !tbaa !44, !noalias !176
   br label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i
 
 bb.ae:                                            ; preds = %bb.ad
@@ -515,7 +514,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store i8 1, ptr %i.cx, align 8, !tbaa !44, !alias.scope !176
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 1, ptr %i.dn, align 8, !tbaa !174, !alias.scope !176
-  store i8 0, ptr %i.y, align 8, !tbaa !44, !noalias !176
   br label %bb.ar
 
 bb.ag:                                            ; preds = %_ZNSt6vectorIjSaIjEE9push_backEOj.exit.i
@@ -684,11 +682,11 @@ common.resume:                                    ; preds = %_ZNSt7__cxx1112basi
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i8 %.sink.i, ptr %i.fh, align 8, !tbaa !174, !alias.scope !176
   %i.fi = trunc nuw i8 %i.fg to i1
-  store i8 0, ptr %i.y, align 8, !tbaa !44, !noalias !176
   br i1 %i.fi, label %bb.ar, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i
 
 bb.ar:                                            ; preds = %.critedge36.i.thread, %.critedge36.i
   %i.fj = getelementptr inbounds nuw i8, ptr %3, i64 32
+  store i8 0, ptr %i.y, align 8, !tbaa !44, !noalias !176
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !18, !noalias !176 ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
   %i.fm = icmp eq ptr %i.fk, %i.fl
@@ -1091,10 +1089,10 @@ bb.hg:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.hh:                                            ; preds = %bb.hg
   %i.apm = load i8, ptr %i.aoj, align 16, !tbaa !79, !range !45, !noundef !46
   %i.apn = trunc nuw i8 %i.apm to i1
-  store i8 0, ptr %i.aoj, align 16, !tbaa !79
   br i1 %i.apn, label %bb.hi, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit.i
 
 bb.hi:                                            ; preds = %bb.hh
+  store i8 0, ptr %i.aoj, align 16, !tbaa !79
   %i.apo = load ptr, ptr %i.aoh, align 8, !tbaa !74 ; 8 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.apo, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit.i, label %bb.hj
@@ -1288,10 +1286,10 @@ bb.ia:                                            ; preds = %.noexc640
 bb.ib:                                            ; preds = %bb.ia
   %i.ark = load i8, ptr %i.aoq, align 16, !tbaa !79, !range !45, !noundef !46
   %i.arl = trunc nuw i8 %i.ark to i1
-  store i8 0, ptr %i.aoq, align 16, !tbaa !79
   br i1 %i.arl, label %bb.ic, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit33.i
 
 bb.ic:                                            ; preds = %bb.ib
+  store i8 0, ptr %i.aoq, align 16, !tbaa !79
   %i.arm = load ptr, ptr %i.aoo, align 8, !tbaa !74 ; 8 uses
   %.not.i.i.i.i.i.i.i29.i = icmp eq ptr %i.arm, null
   br i1 %.not.i.i.i.i.i.i.i29.i, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit33.i, label %bb.id
@@ -1694,10 +1692,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.w = load i8, ptr %i.v, align 16, !tbaa !79, !range !45, !noundef !46
   %i.x = trunc nuw i8 %i.w to i1
-  store i8 0, ptr %i.v, align 16, !tbaa !79
   br i1 %i.x, label %bb.f, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %bb.e
+  store i8 0, ptr %i.v, align 16, !tbaa !79
   %i.y = load ptr, ptr %i.s, align 8, !tbaa !74   ; 8 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.y, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit, label %bb.g
@@ -1871,10 +1869,10 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x
   %i.bv = load i8, ptr %i.bu, align 16, !tbaa !79, !range !45, !noundef !46
   %i.bw = trunc nuw i8 %i.bv to i1
-  store i8 0, ptr %i.bu, align 16, !tbaa !79
   br i1 %i.bw, label %bb.z, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit27
 
 bb.z:                                             ; preds = %bb.y
+  store i8 0, ptr %i.bu, align 16, !tbaa !79
   %i.bx = load ptr, ptr %i.br, align 8, !tbaa !74 ; 8 uses
   %.not.i.i.i.i.i.i.i23 = icmp eq ptr %i.bx, null
   br i1 %.not.i.i.i.i.i.i.i23, label %_ZNSt14_Optional_baseI19cmListFileBacktraceLb0ELb0EED2Ev.exit27, label %bb.aa
@@ -2277,11 +2275,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !44, !range !45, !noundef !46
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !44
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i8 0, ptr %i.a, align 8, !tbaa !44
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !18   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -2684,10 +2682,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !79, !range !45, !noundef !46
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !79
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadI19cmListFileBacktraceLb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !79
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !74   ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -3039,11 +3037,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   %i.l = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 192 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !726, !range !45, !noundef !46
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !726
   br i1 %i.n, label %bb.b, label %_ZNSt14_Optional_baseIN19cmCxxModuleMetadata18LocalArgumentsDataELb0ELb0EED2Ev.exit.i.i.i.i.i.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   %i.o = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 72
+  store i8 0, ptr %i.l, align 8, !tbaa !726
   tail call void @_ZN19cmCxxModuleMetadata18LocalArgumentsDataD2Ev(ptr noundef nonnull align 8 dead_on_return(120) dereferenceable(128) %i.o) #23
   br label %_ZNSt14_Optional_baseIN19cmCxxModuleMetadata18LocalArgumentsDataELb0ELb0EED2Ev.exit.i.i.i.i.i.i
 
@@ -3202,11 +3200,11 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
   %i.ak = getelementptr inbounds nuw i8, ptr %.05.i.i.i15, i64 64 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !44, !range !45, !noundef !46
   %i.am = trunc nuw i8 %i.al to i1
-  store i8 0, ptr %i.ak, align 8, !tbaa !44
   br i1 %i.am, label %bb.d, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i.i.i.i
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i14
   %i.an = getelementptr inbounds nuw i8, ptr %.05.i.i.i15, i64 32
+  store i8 0, ptr %i.ak, align 8, !tbaa !44
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !18 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.05.i.i.i15, i64 48 ; 2 uses
   %i.aq = icmp eq ptr %i.ao, %i.ap

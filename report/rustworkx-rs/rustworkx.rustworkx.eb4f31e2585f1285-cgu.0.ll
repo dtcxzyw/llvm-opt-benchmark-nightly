@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   store ptr %i.o, ptr %i.h, align 8, !alias.scope !45526
-  store i64 0, ptr %0, align 8, !alias.scope !45526
   br label %_RNCINvXs_NtNtCsi0YPOvDEjiZ_4pyo35types3anyINtNtBb_8instance5BoundNtB7_5PyAnyENtB7_12PyAnyMethods11call_methodReTBE_EE0CskcxRuJ53GpR_9rustworkx.exit
 
 bb.i:                                             ; preds = %bb.g

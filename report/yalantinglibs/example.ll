@@ -205,11 +205,11 @@ _ZNSt6threadD2Ev.exit:                            ; preds = %_ZNSt12__shared_ptr
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.el = load i8, ptr %i.ek, align 8, !tbaa !478, !range !518, !noundef !469
   %i.em = trunc nuw i8 %i.el to i1
-  store i8 0, ptr %i.ek, align 8, !tbaa !478
   br i1 %i.em, label %bb.ai, label %_ZNSt14_Optional_baseIN4asio21basic_socket_acceptorINS0_2ip3tcpENS0_15any_io_executorEEELb0ELb0EED2Ev.exit
 
 bb.ai:                                            ; preds = %_ZNSt6threadD2Ev.exit
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 168
+  store i8 0, ptr %i.ek, align 8, !tbaa !478
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !471
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 40
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -612,10 +612,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !478, !range !518, !noundef !469
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !478
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN4asio21basic_socket_acceptorINS0_2ip3tcpENS0_15any_io_executorEEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !478
   %i.d = load ptr, ptr %0, align 8, !tbaa !471
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1018,10 +1018,10 @@ _ZN7coro_io6detail18close_acceptor_nowERN4asio21basic_socket_acceptorINS1_2ip3tc
   %i.ta = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %i.tb = load i8, ptr %i.ta, align 8, !tbaa !478, !range !518, !noundef !469
   %i.tc = trunc nuw i8 %i.tb to i1
-  store i8 0, ptr %i.ta, align 8, !tbaa !478
   br i1 %i.tc, label %bb.fj, label %_ZNSt8optionalIN4asio21basic_socket_acceptorINS0_2ip3tcpENS0_15any_io_executorEEEE5resetEv.exit
 
 bb.fj:                                            ; preds = %_ZN7coro_io6detail18close_acceptor_nowERN4asio21basic_socket_acceptorINS1_2ip3tcpENS1_15any_io_executorEEE.exit
+  store i8 0, ptr %i.ta, align 8, !tbaa !478
   %i.td = load ptr, ptr %i.pq, align 8, !tbaa !471
   %i.te = getelementptr inbounds nuw i8, ptr %i.td, i64 40
   %i.tf = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -1424,10 +1424,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !478, !range !518, !noundef !469
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !478
   br i1 %i.d, label %bb.b, label %_ZNSt19_Optional_base_implIN4asio21basic_socket_acceptorINS0_2ip3tcpENS0_15any_io_executorEEESt14_Optional_baseIS5_Lb0ELb0EEE8_M_resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.b, align 8, !tbaa !478
   %i.e = load ptr, ptr %0, align 8, !tbaa !471
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1830,13 +1830,13 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_head
 
 bb.d:                                             ; preds = %bb.c
   %.not.i.i.not.i.i = icmp eq i64 %i.h, 0
-  br i1 %.not.i.i.not.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17, label %bb.e
+  br i1 %.not.i.i.not.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %.pn22, i64 56
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !1112 ; 3 uses
   %.not2531.i.i.i.i = icmp ult i64 %i.h, %.sroa.0.0.copyload.i.i
-  br i1 %.not2531.i.i.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17, label %.lr.ph.i.i.i.i
+  br i1 %.not2531.i.i.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.h
@@ -1851,12 +1851,12 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.i.i.i
   %.02032.i.i.i.i = phi ptr [ %i.j, %.lr.ph.i.i.i.i ], [ %i.r, %bb.g ]
   %.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.reass = add i64 %.033.i.i.i.i, %invariant.op ; 2 uses
   %i.o = icmp eq i64 %.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.reass, 0
-  br i1 %i.o, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i
+  br i1 %i.o, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i: ; preds = %bb.f
   %i.p = tail call ptr @memchr(ptr noundef %.02032.i.i.i.i, i32 noundef %i.m, i64 noundef %.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.reass) #45 ; 4 uses
   %.not26.i.i.i.i = icmp eq ptr %i.p, null
-  br i1 %.not26.i.i.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i
+  br i1 %.not26.i.i.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i
   %bcmp.i.i.i.i = tail call i32 @bcmp(ptr nonnull %i.p, ptr nonnull %.sroa.2.0.copyload.i.i, i64 %.sroa.0.0.copyload.i.i)
@@ -1868,11 +1868,7 @@ bb.g:                                             ; preds = %_ZNSt11char_traitsI
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = sub i64 %i.n, %i.s                       ; 2 uses
   %.not25.i.i.i.i = icmp ult i64 %i.t, %.sroa.0.0.copyload.i.i
-  br i1 %.not25.i.i.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17, label %bb.f, !llvm.loop !3
-
-_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17: ; preds = %bb.f, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i, %bb.g, %bb.d, %bb.e
-  store i8 0, ptr %2, align 1, !tbaa !592
-  br label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread
+  br i1 %.not25.i.i.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread, label %bb.f, !llvm.loop !3
 
 _ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i
   %i.u = ptrtoint ptr %i.p to i64
@@ -1883,7 +1879,7 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_head
   store i8 %i.y, ptr %2, align 1, !tbaa !592
   br i1 %i.x, label %bb.h, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread
 
-_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread: ; preds = %bb.b, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread17, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit
+_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit.thread: ; preds = %bb.g, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i, %bb.f, %bb.e, %bb.d, %bb.b, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.013.023, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.07.026, i64 32, i1 false), !tbaa.struct !9864
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.013.023, i64 32
   br label %bb.h
@@ -2242,13 +2238,13 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_head
 
 bb.y:                                             ; preds = %bb.x
   %.not.i.i.not.i.i76 = icmp eq i64 %i.cv, 0
-  br i1 %.not.i.i.not.i.i76, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175, label %bb.z
+  br i1 %.not.i.i.not.i.i76, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.0145.0.lcssa, i64 24
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !1112 ; 3 uses
   %.not2531.i.i.i.i77 = icmp ult i64 %i.cv, %.sroa.0.0.copyload.i.i73
-  br i1 %.not2531.i.i.i.i77, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175, label %.lr.ph.i.i.i.i78
+  br i1 %.not2531.i.i.i.i77, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread, label %.lr.ph.i.i.i.i78
 
 .lr.ph.i.i.i.i78:                                 ; preds = %bb.z
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cv
@@ -2263,12 +2259,12 @@ bb.aa:                                            ; preds = %bb.ab, %.lr.ph.i.i.
   %.02032.i.i.i.i80 = phi ptr [ %i.cx, %.lr.ph.i.i.i.i78 ], [ %i.df, %bb.ab ]
   %.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.i82.reass.reass.reass = add i64 %.033.i.i.i.i79, %invariant.op357 ; 2 uses
   %i.dc = icmp eq i64 %.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.i82.reass.reass.reass, 0
-  br i1 %i.dc, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83
+  br i1 %i.dc, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83: ; preds = %bb.aa
   %i.dd = tail call ptr @memchr(ptr noundef %.02032.i.i.i.i80, i32 noundef %i.da, i64 noundef %.reass.reass.i.reass.reass.i.reass.reass.i.reass.reass.i82.reass.reass.reass) #45 ; 4 uses
   %.not26.i.i.i.i84 = icmp eq ptr %i.dd, null
-  br i1 %.not26.i.i.i.i84, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i85
+  br i1 %.not26.i.i.i.i84, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i85
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i85: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83
   %bcmp.i.i.i.i86 = tail call i32 @bcmp(ptr nonnull %i.dd, ptr nonnull %.sroa.2.0.copyload.i.i75, i64 %.sroa.0.0.copyload.i.i73)
@@ -2280,11 +2276,7 @@ bb.ab:                                            ; preds = %_ZNSt11char_traitsI
   %i.dg = ptrtoint ptr %i.df to i64
   %i.dh = sub i64 %i.db, %i.dg                    ; 2 uses
   %.not25.i.i.i.i87 = icmp ult i64 %i.dh, %.sroa.0.0.copyload.i.i73
-  br i1 %.not25.i.i.i.i87, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175, label %bb.aa, !llvm.loop !3
-
-_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175: ; preds = %bb.aa, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83, %bb.ab, %bb.y, %bb.z
-  store i8 0, ptr %2, align 1, !tbaa !592
-  br label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread
+  br i1 %.not25.i.i.i.i87, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread, label %bb.aa, !llvm.loop !3
 
 _ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i85
   %i.di = ptrtoint ptr %i.dd to i64
@@ -2295,8 +2287,8 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_head
   store i8 %i.dm, ptr %2, align 1, !tbaa !592
   br i1 %i.dl, label %.loopexit, label %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread
 
-_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread: ; preds = %bb.w, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91
-  %4 = phi i8 [ 1, %bb.w ], [ 0, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread175 ], [ 0, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91 ]
+_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91.thread: ; preds = %bb.ab, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83, %bb.aa, %bb.z, %bb.y, %bb.w, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91
+  %4 = phi i8 [ 1, %bb.w ], [ 0, %_ZN9__gnu_cxx5__ops10_Iter_predIZN7cinatra16coro_http_server21remove_result_headersERNS2_9resp_dataESt17basic_string_viewIcSt11char_traitsIcEEEUlRNS2_11http_headerEE_EclINS_17__normal_iteratorIPSA_St4spanISA_Lm18446744073709551615EEEEEEbT_.exit91 ], [ 0, %bb.z ], [ 0, %bb.y ], [ 0, %bb.aa ], [ 0, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i83 ], [ 0, %bb.ab ]
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.0145.0.lcssa, i64 32
   br label %bb.ac
 

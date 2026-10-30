@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
-  %i.c = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 8 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 7 uses
   store i8 0, ptr %i.c, align 8, !tbaa !85
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #17
   %i.d = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 9 uses
@@ -220,7 +220,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not6, label %bb.h, label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i
 
 _ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.b
-  store i8 0, ptr %i.c, align 8, !tbaa !85
   invoke void @_ZN6icu_7818CharStringByteSinkC1EPNS_10CharStringE(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull %2)
           to label %_ZNSt8optionalIN6icu_7818CharStringByteSinkEE7emplaceIJRPNS0_10CharStringEEEENSt9enable_ifIX18is_constructible_vIS1_DpT_EERS1_E4typeEDpOS8_.exit unwind label %bb.c
 
@@ -233,10 +232,10 @@ bb.c:                                             ; preds = %_ZNSt19_Optional_ba
           cleanup
   %i.h = load i8, ptr %i.f, align 8, !tbaa !85, !range !31, !noundef !32
   %i.i = trunc nuw i8 %i.h to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !85
   br i1 %i.i, label %bb.d, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.f, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %11) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit
 
@@ -244,10 +243,10 @@ _ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
   %i.j = load i8, ptr %i.e, align 8, !tbaa !85, !range !31, !noundef !32
   %i.k = trunc nuw i8 %i.j to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !85
   br i1 %i.k, label %bb.e, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit10
 
 bb.e:                                             ; preds = %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit
+  store i8 0, ptr %i.e, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %10) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit10
 
@@ -255,10 +254,10 @@ _ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit10: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
   %i.l = load i8, ptr %i.d, align 8, !tbaa !85, !range !31, !noundef !32
   %i.m = trunc nuw i8 %i.l to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !85
   br i1 %i.m, label %bb.f, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit11
 
 bb.f:                                             ; preds = %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit10
+  store i8 0, ptr %i.d, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %9) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit11
 
@@ -266,10 +265,10 @@ _ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit11: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #17
   %i.n = load i8, ptr %i.c, align 8, !tbaa !85, !range !31, !noundef !32
   %i.o = trunc nuw i8 %i.n to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !85
   br i1 %i.o, label %bb.g, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit12
 
 bb.g:                                             ; preds = %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit11
+  store i8 0, ptr %i.c, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %8) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit12
 
@@ -284,10 +283,10 @@ bb.h:                                             ; preds = %_ZNSt8optionalIN6ic
 bb.i:                                             ; preds = %bb.h
   %i.p = load i8, ptr %i.d, align 8, !tbaa !85, !range !31, !noundef !32
   %i.q = trunc nuw i8 %i.p to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !85
   br i1 %i.q, label %bb.j, label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i13
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.d, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %9) #17
   br label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i13
 
@@ -306,10 +305,10 @@ bb.k:                                             ; preds = %_ZNSt8optionalIN6ic
 bb.l:                                             ; preds = %bb.k
   %i.r = load i8, ptr %i.e, align 8, !tbaa !85, !range !31, !noundef !32
   %i.s = trunc nuw i8 %i.r to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !85
   br i1 %i.s, label %bb.m, label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i15
 
 bb.m:                                             ; preds = %bb.l
+  store i8 0, ptr %i.e, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %10) #17
   br label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i15
 
@@ -328,10 +327,10 @@ bb.n:                                             ; preds = %_ZNSt8optionalIN6ic
 
 bb.o:                                             ; preds = %bb.n
   %i.t = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !85
   br i1 %i.t, label %bb.p, label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i17
 
 bb.p:                                             ; preds = %bb.o
+  store i8 0, ptr %i.f, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %11) #17
   br label %_ZNSt19_Optional_base_implIN6icu_7818CharStringByteSinkESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i17
 
@@ -362,10 +361,10 @@ bb.q:                                             ; preds = %_ZNSt8optionalIN6ic
 bb.r:                                             ; preds = %bb.q
   %i.af = load i8, ptr %i.f, align 8, !tbaa !85, !range !31, !noundef !32
   %i.ag = trunc nuw i8 %i.af to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !85
   br i1 %i.ag, label %bb.s, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit19
 
 bb.s:                                             ; preds = %bb.r
+  store i8 0, ptr %i.f, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %11) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit19
 
@@ -373,10 +372,10 @@ _ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit19: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
   %i.ah = load i8, ptr %i.e, align 8, !tbaa !85, !range !31, !noundef !32
   %i.ai = trunc nuw i8 %i.ah to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !85
   br i1 %i.ai, label %bb.t, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit20
 
 bb.t:                                             ; preds = %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit19
+  store i8 0, ptr %i.e, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %10) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit20
 
@@ -384,10 +383,10 @@ _ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit20: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
   %i.aj = load i8, ptr %i.d, align 8, !tbaa !85, !range !31, !noundef !32
   %i.ak = trunc nuw i8 %i.aj to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !85
   br i1 %i.ak, label %bb.u, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit21
 
 bb.u:                                             ; preds = %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit20
+  store i8 0, ptr %i.d, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %9) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit21
 
@@ -395,10 +394,10 @@ _ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit21: ; preds
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #17
   %i.al = load i8, ptr %i.c, align 8, !tbaa !85, !range !31, !noundef !32
   %i.am = trunc nuw i8 %i.al to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !85
   br i1 %i.am, label %bb.v, label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit22
 
 bb.v:                                             ; preds = %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit21
+  store i8 0, ptr %i.c, align 8, !tbaa !85
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %8) #17
   br label %_ZNSt14_Optional_baseIN6icu_7818CharStringByteSinkELb0ELb0EED2Ev.exit22
 

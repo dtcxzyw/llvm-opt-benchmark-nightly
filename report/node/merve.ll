@@ -204,7 +204,7 @@ _ZL21merve_error_loc_clearP15merve_error_loc.exit: ; preds = %bb.a, %bb.b
   br i1 %i.c, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZL21merve_error_loc_clearP15merve_error_loc.exit
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 5 uses
   %.not19 = icmp eq ptr %0, null
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %i.b, i8 0, i64 56, i1 false)
   br i1 %.not19, label %bb.i, label %bb.d
@@ -244,14 +244,10 @@ _ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit.thread30: ; preds = %bb.e
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %i.f, label %bb.g, label %5
+  br i1 %i.f, label %bb.g, label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit
 
 bb.g:                                             ; preds = %bb.f
   tail call void @_ZNSt22_Optional_payload_baseIN5lexer14lexer_analysisEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(56) %i.b) #20
-  br label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit
-
-5:                                                ; preds = %bb.f
-  store i8 0, ptr %i.d, align 16
   br label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit
 
 _ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit: ; preds = %bb.d
@@ -264,7 +260,7 @@ bb.h:                                             ; preds = %_ZNSt8optionalIN5le
   call void @_ZNSt22_Optional_payload_baseIN5lexer14lexer_analysisEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(56) %3) #20
   br label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit: ; preds = %5, %bb.g, %_ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit, %bb.h
+_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit: ; preds = %bb.g, %bb.f, %_ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   br label %bb.n
 
@@ -303,14 +299,10 @@ _ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit22.thread31: ; preds = %bb.j
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.j
-  br i1 %i.y, label %bb.l, label %6
+  br i1 %i.y, label %bb.l, label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit23
 
 bb.l:                                             ; preds = %bb.k
   tail call void @_ZNSt22_Optional_payload_baseIN5lexer14lexer_analysisEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(56) %i.b) #20
-  br label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit23
-
-6:                                                ; preds = %bb.k
-  store i8 0, ptr %i.d, align 16
   br label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit23
 
 _ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit22: ; preds = %bb.i
@@ -323,7 +315,7 @@ bb.m:                                             ; preds = %_ZNSt8optionalIN5le
   call void @_ZNSt22_Optional_payload_baseIN5lexer14lexer_analysisEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(56) %4) #20
   br label %_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit23
 
-_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit23: ; preds = %6, %bb.l, %_ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit22, %bb.m
+_ZNSt14_Optional_baseIN5lexer14lexer_analysisELb0ELb0EED2Ev.exit23: ; preds = %bb.l, %bb.k, %_ZNSt8optionalIN5lexer14lexer_analysisEEaSEOS2_.exit22, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.n
 
@@ -726,10 +718,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
   %.pre19 = load i8, ptr %i.y, align 8, !range !10
   %i.bs = trunc nuw i8 %.pre19 to i1
-  store i8 0, ptr %i.y, align 8
   br i1 %i.bs, label %bb.o, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.o:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i10
+  store i8 0, ptr %i.y, align 8
   %i.bt = load ptr, ptr %5, align 8               ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.bv = icmp eq ptr %i.bt, %i.bu
@@ -1132,7 +1124,7 @@ _ZN5lexer12export_entryD2Ev.exit:                 ; preds = %bb.h, %_ZNSt6vector
 bb.i:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   call void @_ZN5lexer16unescapeJsStringB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind nonnull writable sret(%"class.std::optional") align 8 %5, i64 %.sroa.051.0, ptr %.sroa.10.0)
-  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 4 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
   %i.ak = load i8, ptr %i.aj, align 8, !range !10, !noundef !11
   %i.al = trunc nuw i8 %i.ak to i1
   br i1 %i.al, label %_ZNRSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE5valueEv.exit, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
@@ -1168,12 +1160,12 @@ bb.j:                                             ; preds = %.lr.ph, %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.az = icmp eq ptr %.pn9.v.i.i.i28, null
-  br i1 %i.az, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i32
+  br i1 %i.az, label %bb.t, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i32
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i32: ; preds = %bb.k
   %bcmp.i33 = call i32 @bcmp(ptr %.pn7.i.i.i27, ptr %.pre, i64 %i.at)
   %i.ba = icmp eq i32 %bcmp.i33, 0
-  br i1 %i.ba, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, label %bb.l
+  br i1 %i.ba, label %bb.t, label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i32
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.044.059, i64 48 ; 2 uses
@@ -1297,18 +1289,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.cm, i64 noundef %i.cp) #23
   br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i32, %bb.k
-  store i8 0, ptr %i.aj, align 8
-  br label %bb.t
-
 _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %bb.s, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i41, %_ZNSt6vectorIN5lexer12export_entryESaIS1_EE9push_backEOS1_.exit40
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
   %.pre65 = load i8, ptr %i.aj, align 8, !range !10
   %i.cq = trunc nuw i8 %.pre65 to i1
-  store i8 0, ptr %i.aj, align 8
   br i1 %i.cq, label %bb.t, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
-bb.t:                                             ; preds = %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit.thread, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
+bb.t:                                             ; preds = %bb.k, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i32, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
+  store i8 0, ptr %i.aj, align 8
   %i.cr = load ptr, ptr %5, align 8               ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.ct = icmp eq ptr %i.cr, %i.cs

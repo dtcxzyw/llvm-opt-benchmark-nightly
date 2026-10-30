@@ -205,17 +205,13 @@ bb.e:                                             ; preds = %bb.d
 .preheader47:                                     ; preds = %bb.e
   %i.r = zext nneg i32 %.030 to i64
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.r ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %.promoted = load i8, ptr %i.t, align 8, !tbaa !1873
   %i.u = trunc nuw i8 %.promoted to i1
-  br i1 %i.u, label %bb.f, label %split63
+  br i1 %i.u, label %bb.f, label %split63.invoke
 
-split63:                                          ; preds = %.preheader47
-  store i8 0, ptr %i.t, align 8
-  br label %split63.invoke
-
-split63.invoke:                                   ; preds = %bb.d, %_ZNSt11unique_lockISt5mutexE4lockEv.exit, %bb.c, %bb.b, %split63
-  %i.v = phi i32 [ 1, %split63 ], [ 1, %_ZNSt11unique_lockISt5mutexE4lockEv.exit ], [ %i.g, %bb.c ], [ 1, %bb.b ], [ 35, %bb.d ]
+split63.invoke:                                   ; preds = %.preheader47, %bb.d, %_ZNSt11unique_lockISt5mutexE4lockEv.exit, %bb.c, %bb.b
+  %i.v = phi i32 [ 35, %bb.d ], [ 1, %_ZNSt11unique_lockISt5mutexE4lockEv.exit ], [ %i.g, %bb.c ], [ 1, %bb.b ], [ 1, %.preheader47 ]
   invoke void @_ZSt20__throw_system_errori(i32 noundef %i.v) #37
           to label %split63.cont unwind label %bb.h
 

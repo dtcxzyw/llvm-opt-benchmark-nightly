@@ -203,7 +203,6 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 .loopexit:                                        ; preds = %bb.f, %bb.d
-  store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1hTjP0dFAwJ_12fontc_crater(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2xcxdQoJA8F_10serde_json2de12DeserializerNtNtBG_4read7StrReadEECs1hTjP0dFAwJ_12fontc_crater.exit7 unwind label %bb.k
@@ -498,7 +497,6 @@ bb.h:                                             ; preds = %_RNvMs3_NtCs2xcxdQo
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtBK_6string6StringB1A_EECs1hTjP0dFAwJ_12fontc_crater.exit7 unwind label %bb.b
 
 .loopexit:                                        ; preds = %bb.f, %bb.d
-  store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1hTjP0dFAwJ_12fontc_crater(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2xcxdQoJA8F_10serde_json2de12DeserializerNtNtBG_4read7StrReadEECs1hTjP0dFAwJ_12fontc_crater.exit9 unwind label %bb.i
@@ -638,7 +636,6 @@ bb.h:                                             ; preds = %_RNvMs3_NtCs2xcxdQo
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtCs1hTjP0dFAwJ_12fontc_crater6target6TargetINtNtBK_3vec3VecNtNtNtB1E_2ci4html10AnnotationEEEB1E_.exit7 unwind label %bb.b
 
 .loopexit:                                        ; preds = %bb.f, %bb.d
-  store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1hTjP0dFAwJ_12fontc_crater(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2xcxdQoJA8F_10serde_json2de12DeserializerNtNtBG_4read7StrReadEECs1hTjP0dFAwJ_12fontc_crater.exit9 unwind label %bb.i
@@ -778,7 +775,6 @@ bb.h:                                             ; preds = %_RNvMs3_NtCs2xcxdQo
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc11collections5btree3map8BTreeMapNtNtCs5Xr050g3D4S_3std4path7PathBufNtNtBK_6string6StringEECs1hTjP0dFAwJ_12fontc_crater.exit7 unwind label %bb.b
 
 .loopexit:                                        ; preds = %bb.f, %bb.d
-  store i64 0, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   invoke void @_RNvXsp_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs1hTjP0dFAwJ_12fontc_crater(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs2xcxdQoJA8F_10serde_json2de12DeserializerNtNtBG_4read7StrReadEECs1hTjP0dFAwJ_12fontc_crater.exit9 unwind label %bb.i

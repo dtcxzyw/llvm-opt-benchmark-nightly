@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %.body, %bb.f
   tail call void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN17grpc_event_engine12experimental11EventEngine10TaskHandleEEENS5_20TaskHandleComparatorIS7_E4HashESt8equal_toIS7_ESaIS7_EED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.aq) #35
   %i.be = load i8, ptr %i.an, align 8, !tbaa !166, !range !89, !noundef !90
   %i.bf = trunc nuw i8 %i.be to i1
-  store i8 0, ptr %i.an, align 8, !tbaa !166
   br i1 %i.bf, label %bb.i, label %_ZNSt14_Optional_baseIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleELb0ELb0EED2Ev.exit
 
 bb.i:                                             ; preds = %bb.h
+  store i8 0, ptr %i.an, align 8, !tbaa !166
   tail call void @_ZN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.am) #35
   br label %_ZNSt14_Optional_baseIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleELb0ELb0EED2Ev.exit
 
@@ -610,10 +610,10 @@ bb.ah:                                            ; preds = %.body, %bb.ac
   call void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN17grpc_event_engine12experimental11EventEngine10TaskHandleEEENS5_20TaskHandleComparatorIS7_E4HashESt8equal_toIS7_ESaIS7_EED2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.an) #35
   %i.dl = load i8, ptr %i.ak, align 8, !tbaa !166, !range !89, !noundef !90
   %i.dm = trunc nuw i8 %i.dl to i1
-  store i8 0, ptr %i.ak, align 8, !tbaa !166
   br i1 %i.dm, label %bb.ai, label %_ZNSt14_Optional_baseIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleELb0ELb0EED2Ev.exit
 
 bb.ai:                                            ; preds = %bb.ah
+  store i8 0, ptr %i.ak, align 8, !tbaa !166
   call void @_ZN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.aj) #35
   br label %_ZNSt14_Optional_baseIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleELb0ELb0EED2Ev.exit
 
@@ -642,7 +642,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
   tail call void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c)
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !166, !range !89, !noundef !90
   %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %bb.c, label %_ZNSt19_Optional_base_implIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i, !prof !73
@@ -674,7 +674,6 @@ bb.f:                                             ; preds = %bb.d
 
 _ZNSt19_Optional_base_implIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store i8 0, ptr %i.d, align 8, !tbaa !166
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 200
   invoke void @_ZSt10_ConstructIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleEJRSt10shared_ptrINS1_10ThreadPoolEERS4_INS1_16PosixEventPollerEEEEvPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(64) %i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.j, ptr noundef nonnull align 8 dereferenceable(16) %i.a)
           to label %bb.g unwind label %bb.i
@@ -1077,10 +1076,10 @@ _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %.critedge
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !166, !range !89, !noundef !90
   %i.aq = trunc nuw i8 %i.ap to i1
-  store i8 0, ptr %i.ao, align 8, !tbaa !166
   br i1 %i.aq, label %bb.j, label %_ZNSt8optionalIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleEE5resetEv.exit
 
 bb.j:                                             ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit
+  store i8 0, ptr %i.ao, align 8, !tbaa !166
   call void @_ZN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.an) #35
   br label %_ZNSt8optionalIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleEE5resetEv.exit
 
@@ -1225,10 +1224,10 @@ bb.z:                                             ; preds = %bb.y
 _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN17grpc_event_engine12experimental11EventEngine10TaskHandleEEENS5_20TaskHandleComparatorIS7_E4HashESt8equal_toIS7_ESaIS7_EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIN17grpc_event_engine12experimental10ThreadPoolELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.y
   %i.cq = load i8, ptr %i.ao, align 8, !tbaa !166, !range !89, !noundef !90
   %i.cr = trunc nuw i8 %i.cq to i1
-  store i8 0, ptr %i.ao, align 8, !tbaa !166
   br i1 %i.cr, label %bb.aa, label %_ZNSt14_Optional_baseIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleELb0ELb0EED2Ev.exit
 
 bb.aa:                                            ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIN17grpc_event_engine12experimental11EventEngine10TaskHandleEEENS5_20TaskHandleComparatorIS7_E4HashESt8equal_toIS7_ESaIS7_EED2Ev.exit
+  store i8 0, ptr %i.ao, align 8, !tbaa !166
   call void @_ZN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.an) #35
   br label %_ZNSt14_Optional_baseIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleELb0ELb0EED2Ev.exit
 
@@ -1631,11 +1630,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !166, !range !89, !noundef !90
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !166
   br i1 %i.d, label %bb.b, label %_ZNSt8optionalIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleEE5resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80
+  store i8 0, ptr %i.b, align 8, !tbaa !166
   tail call void @_ZN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.e) #35
   br label %_ZNSt8optionalIN17grpc_event_engine12experimental16PosixEventEngine12PollingCycleEE5resetEv.exit
 

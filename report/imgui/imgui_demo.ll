@@ -205,7 +205,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.r
 bb.ai:                                            ; preds = %bb.ah
   %i.cj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE3app, i64 8), align 8, !tbaa !23 ; 4 uses
   tail call void @_ZN5ImGui6PushIDEPKv(ptr noundef nonnull %i.cj)
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 36 ; 3 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 36 ; 2 uses
   %i.cl = tail call noundef zeroext i1 @_ZN5ImGui8CheckboxEPKcPb(ptr noundef nonnull %i.cj, ptr noundef nonnull %i.ck)
   br i1 %i.cl, label %bb.aj, label %bb.al
 
@@ -215,7 +215,6 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.cn, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  store i8 0, ptr %i.ck, align 4, !tbaa !28
   %i.co = getelementptr inbounds nuw i8, ptr %i.cj, i64 38
   store i8 0, ptr %i.co, align 2, !tbaa !37
   br label %bb.al
@@ -237,7 +236,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.
   %i.ct = getelementptr inbounds nuw [56 x i8], ptr %i.cs, i64 %indvars.iv.i ; 4 uses
   tail call void @_ZN5ImGui8SameLineEff(float noundef 0.000000e+00, float noundef -1.000000e+00)
   tail call void @_ZN5ImGui6PushIDEPKv(ptr noundef nonnull %i.ct)
-  %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 36 ; 3 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 36 ; 2 uses
   %i.cv = tail call noundef zeroext i1 @_ZN5ImGui8CheckboxEPKcPb(ptr noundef nonnull %i.ct, ptr noundef nonnull %i.cu)
   br i1 %i.cv, label %bb.am, label %bb.ao
 
@@ -247,7 +246,6 @@ bb.am:                                            ; preds = %.lr.ph18.peel.next.
   br i1 %i.cx, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  store i8 0, ptr %i.cu, align 4, !tbaa !28
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ct, i64 38
   store i8 0, ptr %i.cy, align 2, !tbaa !37
   br label %bb.ao

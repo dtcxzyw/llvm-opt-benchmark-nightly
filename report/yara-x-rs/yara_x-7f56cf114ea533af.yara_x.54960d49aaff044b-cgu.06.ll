@@ -205,7 +205,7 @@ bb.a:
   %i.ar = alloca [24 x i8], align 8               ; 6 uses
   %i.as = alloca [24 x i8], align 8               ; 9 uses
   %i.at = alloca [16 x i8], align 8               ; 6 uses
-  %i.au = alloca [24 x i8], align 4               ; 18 uses
+  %i.au = alloca [24 x i8], align 4               ; 16 uses
   %i.av = alloca [24 x i8], align 8               ; 4 uses
   %i.aw = alloca [48 x i8], align 8               ; 5 uses
   %i.ax = alloca [48 x i8], align 16              ; 5 uses
@@ -257,7 +257,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cb = load ptr, ptr %i.ca, align 8, !nonnull !9, !noundef !9 ; 2 uses
   %i.cc = getelementptr inbounds nuw [24 x i8], ptr %i.cb, i64 %i.bo ; 6 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.au, i64 20
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.au, i64 4 ; 7 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.au, i64 4 ; 6 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 6 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.au, i64 12 ; 4 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -660,18 +660,15 @@ bb.cs:                                            ; preds = %.lr.ph900
   br i1 %i.kh, label %bb.cw, label %bb.cv
 
 bb.ct:                                            ; preds = %.lr.ph900
-  br i1 %i.kh, label %bb.cu, label %4
+  br i1 %i.kh, label %bb.cu, label %bb.cv
 
-bb.cu:                                            ; preds = %bb.ct
+bb.cu:                                            ; preds = %bb.ct, %bb.cw
+  %.sink = phi i32 [ %i.kn, %bb.cw ], [ %i.kf, %bb.ct ]
   store i32 1, ptr %i.au, align 4
-  store i32 %i.kf, ptr %i.ce, align 4
+  store i32 %.sink, ptr %i.ce, align 4
   br label %bb.cv
 
-4:                                                ; preds = %bb.ct
-  store i32 0, ptr %i.au, align 4
-  br label %bb.cv
-
-bb.cv:                                            ; preds = %bb.cs, %bb.cw, %4, %bb.cu
+bb.cv:                                            ; preds = %bb.cu, %bb.ct, %bb.cs
   %i.ki = load i32, ptr %i.cf, align 4, !range !21, !noundef !9
   %i.kj = load i32, ptr %i.cg, align 4
   %i.kk = getelementptr inbounds nuw i8, ptr %.sroa.13.3456899, i64 12
@@ -681,9 +678,7 @@ bb.cv:                                            ; preds = %bb.cs, %bb.cw, %4, 
 
 bb.cw:                                            ; preds = %bb.cs
   %i.kn = add i32 %i.kf, %i.kd
-  store i32 1, ptr %i.au, align 4
-  store i32 %i.kn, ptr %i.ce, align 4
-  br label %bb.cv
+  br label %bb.cu
 
 bb.cx:                                            ; preds = %bb.cv
   %i.ko = getelementptr inbounds nuw i8, ptr %.sroa.13.3456899, i64 8
