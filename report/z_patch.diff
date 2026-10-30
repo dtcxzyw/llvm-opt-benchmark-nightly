@@ -1,0 +1,739 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index bd368b1dbb9e08..f6d3abdc7f9289 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -662,8 +662,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+   /// Given a binary operator, cast instruction, or select which has a PHI node
+   /// as operand #0, see if we can fold the instruction into the PHI (which is
+   /// only possible if all operands to the PHI are constants).
+-  Instruction *foldOpIntoPhi(Instruction &I, PHINode *PN,
+-                             bool AllowMultipleUses = false);
++  Instruction *foldOpIntoPhi(Instruction &I, PHINode *PN);
+ 
+   /// Try to fold binary operators whose operands are simple interleaved
+   /// recurrences to a single recurrence. This is a common pattern in reduction
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp b/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
+index 7a132cdbef3104..f824d2b1622999 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
+@@ -706,8 +706,7 @@ Instruction *InstCombinerImpl::visitExtractElementInst(ExtractElementInst &EI) {
+         if (!DemandedElts.isAllOnes()) {
+           APInt PoisonElts(NumElts, 0);
+           if (Value *V = SimplifyDemandedVectorElts(
+-                  SrcVec, DemandedElts, PoisonElts, 0 /* Depth */,
+-                  true /* AllowMultipleUsers */)) {
++                  SrcVec, DemandedElts, PoisonElts, 0 /* Depth */)) {
+             if (V != SrcVec) {
+               Worklist.addValue(SrcVec);
+               SrcVec->replaceAllUsesWith(V);
+@@ -3111,7 +3110,7 @@ Instruction *InstCombinerImpl::visitShuffleVectorInst(ShuffleVectorInst &SVI) {
+       }
+     }
+     if (auto *PN = dyn_cast<PHINode>(LHS)) {
+-      if (Instruction *I = foldOpIntoPhi(SVI, PN, /*AllowMultipleUses=*/true))
++      if (Instruction *I = foldOpIntoPhi(SVI, PN))
+         return I;
+     }
+   }
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 61836ce0b3286b..a45285d42a985d 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -1966,8 +1966,7 @@ Instruction *InstCombinerImpl::foldBinOpSelectBinOp(BinaryOperator &Op) {
+   return BinaryOperator::Create(Op.getOpcode(), NewSI, Input);
+ }
+ 
+-Instruction *InstCombinerImpl::foldOpIntoPhi(Instruction &I, PHINode *PN,
+-                                             bool AllowMultipleUses) {
++Instruction *InstCombinerImpl::foldOpIntoPhi(Instruction &I, PHINode *PN) {
+   unsigned NumPHIValues = PN->getNumIncomingValues();
+   if (NumPHIValues == 0)
+     return nullptr;
+@@ -1976,16 +1975,13 @@ Instruction *InstCombinerImpl::foldOpIntoPhi(Instruction &I, PHINode *PN,
+   // multiple uses and they are all the same operation, we can fold *all* of the
+   // uses into the PHI.
+   bool OneUse = PN->hasOneUse();
+-  bool IdenticalUsers = false;
+-  if (!AllowMultipleUses && !OneUse) {
+-    // Walk the use list for the instruction, comparing them to I.
+-    for (User *U : PN->users()) {
+-      Instruction *UI = cast<Instruction>(U);
+-      if (UI != &I && !I.isIdenticalTo(UI))
+-        return nullptr;
++  bool IdenticalUsers = true;
++  for (User *U : PN->users()) {
++    Instruction *UI = cast<Instruction>(U);
++    if (UI != &I && !I.isIdenticalTo(UI)) {
++      IdenticalUsers = false;
++      break;
+     }
+-    // Otherwise, we can replace *all* users with the new PHI we form.
+-    IdenticalUsers = true;
+   }
+ 
+   // Check that all operands are phi-translatable.
+@@ -2053,9 +2049,6 @@ Instruction *InstCombinerImpl::foldOpIntoPhi(Instruction &I, PHINode *PN,
+       continue;
+     }
+ 
+-    if (!OneUse && !IdenticalUsers)
+-      return nullptr;
+-
+     if (SeenNonSimplifiedInVal)
+       return nullptr; // More than one non-simplified value.
+     SeenNonSimplifiedInVal = true;
+@@ -2129,9 +2122,8 @@ Instruction *InstCombinerImpl::foldOpIntoPhi(Instruction &I, PHINode *PN,
+     OneUse = true;
+   }
+ 
+-  if (OneUse) {
++  if (OneUse)
+     replaceAllDbgUsesWith(*PN, *NewPN, *PN, DT);
+-  }
+   return replaceInstUsesWith(I, NewPN);
+ }
+ 
+@@ -6327,6 +6319,7 @@ static bool combineInstructionsOverFunction(
+     ++NumWorklistIterations;
+     LLVM_DEBUG(dbgs() << "\n\nINSTCOMBINE ITERATION #" << Iteration << " on "
+                       << F.getName() << "\n");
++    LLVM_DEBUG(F.dump());
+ 
+     InstCombinerImpl IC(Worklist, F, AA, AC, TLI, TTI, DT, ORE, BFI, BPI, PSI,
+                         DL, RPOT, CLOpts);
+diff --git a/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll b/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll
+index afabf6ce0fdf21..ac95173f83a64c 100644
+--- a/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll
++++ b/llvm/test/Analysis/ValueTracking/known-power-of-two-urem.ll
+@@ -358,14 +358,15 @@ define i64 @known_power_of_two_urem_loop_negative(i64 %size, i64 %a) {
+ ; CHECK-LABEL: @known_power_of_two_urem_loop_negative(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[START:%.*]] = shl nuw i64 1, [[A:%.*]]
++; CHECK-NEXT:    [[TMP0:%.*]] = icmp ne i64 [[A]], 0
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[PHI:%.*]] = phi i64 [ [[START]], [[ENTRY:%.*]] ], [ [[I:%.*]], [[FOR_BODY]] ]
++; CHECK-NEXT:    [[ICMP:%.*]] = phi i1 [ [[TMP0]], [[ENTRY:%.*]] ], [ true, [[FOR_BODY]] ]
++; CHECK-NEXT:    [[PHI:%.*]] = phi i64 [ [[START]], [[ENTRY]] ], [ [[I:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[SUM:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[ADD:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[UREM:%.*]] = urem i64 [[SIZE:%.*]], [[PHI]]
+ ; CHECK-NEXT:    [[ADD]] = add nuw i64 [[SUM]], [[UREM]]
+ ; CHECK-NEXT:    [[I]] = add nuw i64 [[PHI]], 1
+-; CHECK-NEXT:    [[ICMP:%.*]] = icmp ugt i64 [[PHI]], 1
+ ; CHECK-NEXT:    br i1 [[ICMP]], label [[FOR_BODY]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret i64 [[SUM]]
+diff --git a/llvm/test/Analysis/ValueTracking/phi-known-bits.ll b/llvm/test/Analysis/ValueTracking/phi-known-bits.ll
+index b8a5be58349938..a9d9f0892fcb65 100644
+--- a/llvm/test/Analysis/ValueTracking/phi-known-bits.ll
++++ b/llvm/test/Analysis/ValueTracking/phi-known-bits.ll
+@@ -695,13 +695,13 @@ define i1 @recursiveGEP_withPtrSub_maybeZero(ptr %val1) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[WHILE_COND_I:%.*]]
+ ; CHECK:       while.cond.i:
+-; CHECK-NEXT:    [[A_PN_I:%.*]] = phi ptr [ [[TEST_0_I:%.*]], [[WHILE_COND_I]] ], [ [[VAL1:%.*]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[BOOL:%.*]] = phi i1 [ false, [[WHILE_COND_I]] ], [ true, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[A_PN_I:%.*]] = phi ptr [ [[TEST_0_I:%.*]], [[WHILE_COND_I]] ], [ [[VAL1:%.*]], [[ENTRY]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i8, ptr [[A_PN_I]], align 2
+ ; CHECK-NEXT:    [[TEST_0_I]] = getelementptr inbounds nuw i8, ptr [[A_PN_I]], i64 1
+ ; CHECK-NEXT:    [[CMP3_NOT_I:%.*]] = icmp eq i8 [[TMP0]], 0
+ ; CHECK-NEXT:    br i1 [[CMP3_NOT_I]], label [[WHILE_END_I:%.*]], label [[WHILE_COND_I]]
+ ; CHECK:       while.end.i:
+-; CHECK-NEXT:    [[BOOL:%.*]] = icmp eq ptr [[A_PN_I]], [[VAL1]]
+ ; CHECK-NEXT:    ret i1 [[BOOL]]
+ ;
+ entry:
+@@ -1123,10 +1123,11 @@ define i32 @issue_124275_wrong_br_direction(i32 noundef %inp) {
+ ; CHECK-NEXT:    br i1 [[CMP_NE_NOT]], label [[B1:%.*]], label [[B0:%.*]]
+ ; CHECK:       B0:
+ ; CHECK-NEXT:    [[PHI_B0:%.*]] = phi i32 [ [[PHI_B1:%.*]], [[B1]] ], [ [[XOR_INP_NEG]], [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i32 [[PHI_B0]], 0
+ ; CHECK-NEXT:    br label [[B1]]
+ ; CHECK:       B1:
++; CHECK-NEXT:    [[CMP_NE_B1_NOT:%.*]] = phi i1 [ [[TMP1]], [[B0]] ], [ true, [[ENTRY]] ]
+ ; CHECK-NEXT:    [[PHI_B1]] = phi i32 [ [[PHI_B0]], [[B0]] ], [ 0, [[ENTRY]] ]
+-; CHECK-NEXT:    [[CMP_NE_B1_NOT:%.*]] = icmp eq i32 [[PHI_B1]], 0
+ ; CHECK-NEXT:    br i1 [[CMP_NE_B1_NOT]], label [[B0]], label [[END:%.*]]
+ ; CHECK:       end:
+ ; CHECK-NEXT:    ret i32 0
+diff --git a/llvm/test/Analysis/ValueTracking/recurrence-knownbits.ll b/llvm/test/Analysis/ValueTracking/recurrence-knownbits.ll
+index 7b74da291ab5fb..a33216bcf14fef 100644
+--- a/llvm/test/Analysis/ValueTracking/recurrence-knownbits.ll
++++ b/llvm/test/Analysis/ValueTracking/recurrence-knownbits.ll
+@@ -275,11 +275,13 @@ exit:
+ define i64 @test_ashr_wrong_op(i1 %c, i64 %start) {
+ ; CHECK-LABEL: @test_ashr_wrong_op(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp eq i64 [[START:%.*]], 0
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV_ASHR:%.*]] = phi i64 [ [[START:%.*]], [[ENTRY:%.*]] ], [ [[IV_ASHR_NEXT:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i64 [[IV_ASHR]], 0
++; CHECK-NEXT:    [[TMP0:%.*]] = phi i1 [ [[TMP1]], [[ENTRY:%.*]] ], [ [[TMP2:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_ASHR:%.*]] = phi i64 [ [[START]], [[ENTRY]] ], [ [[IV_ASHR_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_ASHR_NEXT]] = zext i1 [[TMP0]] to i64
++; CHECK-NEXT:    [[TMP2]] = xor i1 [[TMP0]], true
+ ; CHECK-NEXT:    br i1 [[C:%.*]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[RES:%.*]] = or i64 [[IV_ASHR]], 1023
+diff --git a/llvm/test/Transforms/InstCombine/2010-01-28-NegativeSRem.ll b/llvm/test/Transforms/InstCombine/2010-01-28-NegativeSRem.ll
+index 949a5057efc928..d1d1f4baa77041 100644
+--- a/llvm/test/Transforms/InstCombine/2010-01-28-NegativeSRem.ll
++++ b/llvm/test/Transforms/InstCombine/2010-01-28-NegativeSRem.ll
+@@ -7,9 +7,8 @@ define i32 @f() {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[BB1:%.*]]
+ ; CHECK:       BB1:
+-; CHECK-NEXT:    [[X:%.*]] = phi i32 [ -29, [[ENTRY:%.*]] ], [ 0, [[BB1]] ]
+-; CHECK-NEXT:    [[REM:%.*]] = srem i32 [[X]], 2
+-; CHECK-NEXT:    [[T:%.*]] = icmp eq i32 [[REM]], -1
++; CHECK-NEXT:    [[T:%.*]] = phi i1 [ true, [[ENTRY:%.*]] ], [ false, [[BB1]] ]
++; CHECK-NEXT:    [[X:%.*]] = phi i32 [ -29, [[ENTRY]] ], [ 0, [[BB1]] ]
+ ; CHECK-NEXT:    br i1 [[T]], label [[BB2:%.*]], label [[BB1]]
+ ; CHECK:       BB2:
+ ; CHECK-NEXT:    ret i32 [[X]]
+diff --git a/llvm/test/Transforms/InstCombine/2012-06-06-LoadOfPHIs.ll b/llvm/test/Transforms/InstCombine/2012-06-06-LoadOfPHIs.ll
+index b3a4b4fbdf853b..13e178e1a352aa 100644
+--- a/llvm/test/Transforms/InstCombine/2012-06-06-LoadOfPHIs.ll
++++ b/llvm/test/Transforms/InstCombine/2012-06-06-LoadOfPHIs.ll
+@@ -1,7 +1,133 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
+ ; RUN: opt < %s -passes=instcombine -S | FileCheck %s
+ ; <rdar://problem/10889741>
+ 
+ define void @func(double %r, double %g, double %b, ptr %outH, ptr %outS, ptr %outL) nounwind uwtable ssp {
++; CHECK-LABEL: define void @func(
++; CHECK-SAME: double [[R:%.*]], double [[G:%.*]], double [[B:%.*]], ptr [[OUTH:%.*]], ptr [[OUTS:%.*]], ptr [[OUTL:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[BB:.*:]]
++; CHECK-NEXT:    [[TMP:%.*]] = alloca double, align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = alloca double, align 8
++; CHECK-NEXT:    [[TMP2:%.*]] = alloca double, align 8
++; CHECK-NEXT:    store double [[R]], ptr [[TMP]], align 8
++; CHECK-NEXT:    store double [[G]], ptr [[TMP1]], align 8
++; CHECK-NEXT:    store double [[B]], ptr [[TMP2]], align 8
++; CHECK-NEXT:    [[TMP3:%.*]] = fcmp ogt double [[R]], [[G]]
++; CHECK-NEXT:    br i1 [[TMP3]], label %[[BB4:.*]], label %[[BB8:.*]]
++; CHECK:       [[BB4]]:
++; CHECK-NEXT:    [[TMP5:%.*]] = fcmp ogt double [[R]], [[B]]
++; CHECK-NEXT:    br i1 [[TMP5]], label %[[BB6:.*]], label %[[BB7:.*]]
++; CHECK:       [[BB6]]:
++; CHECK-NEXT:    br label %[[BB12:.*]]
++; CHECK:       [[BB7]]:
++; CHECK-NEXT:    br label %[[BB12]]
++; CHECK:       [[BB8]]:
++; CHECK-NEXT:    [[TMP9:%.*]] = fcmp ogt double [[G]], [[B]]
++; CHECK-NEXT:    br i1 [[TMP9]], label %[[BB10:.*]], label %[[BB11:.*]]
++; CHECK:       [[BB10]]:
++; CHECK-NEXT:    br label %[[BB12]]
++; CHECK:       [[BB11]]:
++; CHECK-NEXT:    br label %[[BB12]]
++; CHECK:       [[BB12]]:
++; CHECK-NEXT:    [[MAX_0:%.*]] = phi i1 [ true, %[[BB6]] ], [ false, %[[BB7]] ], [ false, %[[BB10]] ], [ false, %[[BB11]] ]
++; CHECK-NEXT:    [[TMP56:%.*]] = phi i1 [ false, %[[BB6]] ], [ false, %[[BB7]] ], [ true, %[[BB10]] ], [ false, %[[BB11]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = phi ptr [ [[TMP]], %[[BB6]] ], [ [[TMP2]], %[[BB7]] ], [ [[TMP1]], %[[BB10]] ], [ [[TMP2]], %[[BB11]] ]
++; CHECK-NEXT:    [[TMP13:%.*]] = load double, ptr [[TMP]], align 8
++; CHECK-NEXT:    [[TMP14:%.*]] = load double, ptr [[TMP1]], align 8
++; CHECK-NEXT:    [[TMP15:%.*]] = fcmp olt double [[TMP13]], [[TMP14]]
++; CHECK-NEXT:    br i1 [[TMP15]], label %[[BB16:.*]], label %[[BB21:.*]]
++; CHECK:       [[BB16]]:
++; CHECK-NEXT:    [[TMP17:%.*]] = load double, ptr [[TMP2]], align 8
++; CHECK-NEXT:    [[TMP18:%.*]] = fcmp olt double [[TMP13]], [[TMP17]]
++; CHECK-NEXT:    br i1 [[TMP18]], label %[[BB19:.*]], label %[[BB20:.*]]
++; CHECK:       [[BB19]]:
++; CHECK-NEXT:    br label %[[BB26:.*]]
++; CHECK:       [[BB20]]:
++; CHECK-NEXT:    br label %[[BB26]]
++; CHECK:       [[BB21]]:
++; CHECK-NEXT:    [[TMP22:%.*]] = load double, ptr [[TMP2]], align 8
++; CHECK-NEXT:    [[TMP23:%.*]] = fcmp olt double [[TMP14]], [[TMP22]]
++; CHECK-NEXT:    br i1 [[TMP23]], label %[[BB24:.*]], label %[[BB25:.*]]
++; CHECK:       [[BB24]]:
++; CHECK-NEXT:    br label %[[BB26]]
++; CHECK:       [[BB25]]:
++; CHECK-NEXT:    br label %[[BB26]]
++; CHECK:       [[BB26]]:
++; CHECK-NEXT:    [[MIN_0:%.*]] = phi ptr [ [[TMP]], %[[BB19]] ], [ [[TMP2]], %[[BB20]] ], [ [[TMP1]], %[[BB24]] ], [ [[TMP2]], %[[BB25]] ]
++; CHECK-NEXT:    [[TMP27:%.*]] = load double, ptr [[MIN_0]], align 8
++; CHECK-NEXT:    [[TMP28:%.*]] = load double, ptr [[TMP0]], align 8
++; CHECK-NEXT:    [[TMP29:%.*]] = fadd double [[TMP27]], [[TMP28]]
++; CHECK-NEXT:    [[TMP30:%.*]] = fmul double [[TMP29]], 5.000000e-01
++; CHECK-NEXT:    store double [[TMP30]], ptr [[OUTL]], align 8
++; CHECK-NEXT:    [[TMP33:%.*]] = fcmp oeq double [[TMP27]], [[TMP28]]
++; CHECK-NEXT:    br i1 [[TMP33]], label %[[BB34:.*]], label %[[BB35:.*]]
++; CHECK:       [[BB34]]:
++; CHECK-NEXT:    store double 0.000000e+00, ptr [[OUTS]], align 8
++; CHECK-NEXT:    store double 0.000000e+00, ptr [[OUTH]], align 8
++; CHECK-NEXT:    br label %[[BB81:.*]]
++; CHECK:       [[BB35]]:
++; CHECK-NEXT:    [[TMP36:%.*]] = fcmp olt double [[TMP30]], 5.000000e-01
++; CHECK-NEXT:    [[TMP37:%.*]] = fsub double [[TMP28]], [[TMP27]]
++; CHECK-NEXT:    br i1 [[TMP36]], label %[[BB38:.*]], label %[[BB41:.*]]
++; CHECK:       [[BB38]]:
++; CHECK-NEXT:    [[TMP39:%.*]] = fadd double [[TMP28]], [[TMP27]]
++; CHECK-NEXT:    br label %[[BB45:.*]]
++; CHECK:       [[BB41]]:
++; CHECK-NEXT:    [[TMP42:%.*]] = fsub double 2.000000e+00, [[TMP28]]
++; CHECK-NEXT:    [[TMP43:%.*]] = fsub double [[TMP42]], [[TMP27]]
++; CHECK-NEXT:    br label %[[BB45]]
++; CHECK:       [[BB45]]:
++; CHECK-NEXT:    [[TMP43_PN:%.*]] = phi double [ [[TMP43]], %[[BB41]] ], [ [[TMP39]], %[[BB38]] ]
++; CHECK-NEXT:    [[STOREMERGE:%.*]] = fdiv double [[TMP37]], [[TMP43_PN]]
++; CHECK-NEXT:    store double [[STOREMERGE]], ptr [[OUTS]], align 8
++; CHECK-NEXT:    br i1 [[MAX_0]], label %[[BB47:.*]], label %[[BB55:.*]]
++; CHECK:       [[BB47]]:
++; CHECK-NEXT:    [[TMP48:%.*]] = load double, ptr [[TMP1]], align 8
++; CHECK-NEXT:    [[TMP49:%.*]] = load double, ptr [[TMP2]], align 8
++; CHECK-NEXT:    [[TMP50:%.*]] = fsub double [[TMP48]], [[TMP49]]
++; CHECK-NEXT:    [[TMP51:%.*]] = load double, ptr [[TMP0]], align 8
++; CHECK-NEXT:    [[TMP52:%.*]] = load double, ptr [[MIN_0]], align 8
++; CHECK-NEXT:    [[TMP53:%.*]] = fsub double [[TMP51]], [[TMP52]]
++; CHECK-NEXT:    [[TMP54:%.*]] = fdiv double [[TMP50]], [[TMP53]]
++; CHECK-NEXT:    store double [[TMP54]], ptr [[OUTH]], align 8
++; CHECK-NEXT:    br label %[[BB75:.*]]
++; CHECK:       [[BB55]]:
++; CHECK-NEXT:    br i1 [[TMP56]], label %[[BB57:.*]], label %[[BB66:.*]]
++; CHECK:       [[BB57]]:
++; CHECK-NEXT:    [[TMP58:%.*]] = load double, ptr [[TMP2]], align 8
++; CHECK-NEXT:    [[TMP59:%.*]] = load double, ptr [[TMP]], align 8
++; CHECK-NEXT:    [[TMP60:%.*]] = fsub double [[TMP58]], [[TMP59]]
++; CHECK-NEXT:    [[TMP61:%.*]] = load double, ptr [[TMP0]], align 8
++; CHECK-NEXT:    [[TMP62:%.*]] = load double, ptr [[MIN_0]], align 8
++; CHECK-NEXT:    [[TMP63:%.*]] = fsub double [[TMP61]], [[TMP62]]
++; CHECK-NEXT:    [[TMP64:%.*]] = fdiv double [[TMP60]], [[TMP63]]
++; CHECK-NEXT:    [[TMP65:%.*]] = fadd double [[TMP64]], 2.000000e+00
++; CHECK-NEXT:    store double [[TMP65]], ptr [[OUTH]], align 8
++; CHECK-NEXT:    br label %[[BB75]]
++; CHECK:       [[BB66]]:
++; CHECK-NEXT:    [[TMP67:%.*]] = load double, ptr [[TMP]], align 8
++; CHECK-NEXT:    [[TMP68:%.*]] = load double, ptr [[TMP1]], align 8
++; CHECK-NEXT:    [[TMP69:%.*]] = fsub double [[TMP67]], [[TMP68]]
++; CHECK-NEXT:    [[TMP70:%.*]] = load double, ptr [[TMP0]], align 8
++; CHECK-NEXT:    [[TMP71:%.*]] = load double, ptr [[MIN_0]], align 8
++; CHECK-NEXT:    [[TMP72:%.*]] = fsub double [[TMP70]], [[TMP71]]
++; CHECK-NEXT:    [[TMP73:%.*]] = fdiv double [[TMP69]], [[TMP72]]
++; CHECK-NEXT:    [[TMP74:%.*]] = fadd double [[TMP73]], 4.000000e+00
++; CHECK-NEXT:    store double [[TMP74]], ptr [[OUTH]], align 8
++; CHECK-NEXT:    br label %[[BB75]]
++; CHECK:       [[BB75]]:
++; CHECK-NEXT:    [[TMP76:%.*]] = load double, ptr [[OUTH]], align 8
++; CHECK-NEXT:    [[TMP77:%.*]] = fdiv double [[TMP76]], 6.000000e+00
++; CHECK-NEXT:    store double [[TMP77]], ptr [[OUTH]], align 8
++; CHECK-NEXT:    [[TMP78:%.*]] = fcmp olt double [[TMP77]], 0.000000e+00
++; CHECK-NEXT:    br i1 [[TMP78]], label %[[BB79:.*]], label %[[BB81]]
++; CHECK:       [[BB79]]:
++; CHECK-NEXT:    [[TMP80:%.*]] = fadd double [[TMP77]], 1.000000e+00
++; CHECK-NEXT:    store double [[TMP80]], ptr [[OUTH]], align 8
++; CHECK-NEXT:    br label %[[BB81]]
++; CHECK:       [[BB81]]:
++; CHECK-NEXT:    ret void
++;
+ bb:
+   %tmp = alloca double, align 8
+   %tmp1 = alloca double, align 8
+@@ -34,9 +160,6 @@ bb11:                                             ; preds = %bb8
+ 
+ bb12:                                             ; preds = %bb11, %bb10, %bb7, %bb6
+   %max.0 = phi ptr [ %tmp, %bb6 ], [ %tmp2, %bb7 ], [ %tmp1, %bb10 ], [ %tmp2, %bb11 ]
+-; CHECK: %tmp13 = load double, ptr %tmp, align 8
+-; CHECK: %tmp14 = load double, ptr %tmp1, align 8
+-; CHECK: %tmp15 = fcmp olt double %tmp13, %tmp14
+   %tmp13 = load double, ptr %tmp, align 8
+   %tmp14 = load double, ptr %tmp1, align 8
+   %tmp15 = fcmp olt double %tmp13, %tmp14
+@@ -66,9 +189,6 @@ bb25:                                             ; preds = %bb21
+ 
+ bb26:                                             ; preds = %bb25, %bb24, %bb20, %bb19
+   %min.0 = phi ptr [ %tmp, %bb19 ], [ %tmp2, %bb20 ], [ %tmp1, %bb24 ], [ %tmp2, %bb25 ]
+-; CHECK: %tmp27 = load double, ptr %min.0, align 8
+-; CHECK: %tmp28 = load double, ptr %max.0
+-; CHECK: %tmp29 = fadd double %tmp27, %tmp28
+   %tmp27 = load double, ptr %min.0, align 8
+   %tmp28 = load double, ptr %max.0
+   %tmp29 = fadd double %tmp27, %tmp28
+diff --git a/llvm/test/Transforms/InstCombine/X86/x86-amx.ll b/llvm/test/Transforms/InstCombine/X86/x86-amx.ll
+index a4c6770b4cb7ba..e1ca77fe99f25d 100644
+--- a/llvm/test/Transforms/InstCombine/X86/x86-amx.ll
++++ b/llvm/test/Transforms/InstCombine/X86/x86-amx.ll
+@@ -9,9 +9,11 @@ define void @foo(ptr %arrayidx16, ptr %arrayidx29, ptr %arrayidx35, i1 %c1, i1 %
+ ; CHECK-NEXT:    br i1 [[C1:%.*]], label [[FOR_BODY14:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       for.body14:
+ ; CHECK-NEXT:    [[T5:%.*]] = load <256 x i32>, ptr [[ARRAYIDX16:%.*]], align 64
++; CHECK-NEXT:    [[TMP0:%.*]] = bitcast <256 x i32> [[T5]] to x86_amx
+ ; CHECK-NEXT:    br label [[FOR_COND18:%.*]]
+ ; CHECK:       for.cond18:
+-; CHECK-NEXT:    [[SUB_C_SROA_0_0:%.*]] = phi <256 x i32> [ [[T5]], [[FOR_BODY14]] ], [ [[T12:%.*]], [[FOR_BODY24:%.*]] ]
++; CHECK-NEXT:    [[T8:%.*]] = phi x86_amx [ [[TMP0]], [[FOR_BODY14]] ], [ [[T11:%.*]], [[FOR_BODY24:%.*]] ]
++; CHECK-NEXT:    [[SUB_C_SROA_0_0:%.*]] = phi <256 x i32> [ [[T5]], [[FOR_BODY14]] ], [ [[T12:%.*]], [[FOR_BODY24]] ]
+ ; CHECK-NEXT:    br i1 [[C2:%.*]], label [[FOR_BODY24]], label [[FOR_COND_CLEANUP23:%.*]]
+ ; CHECK:       for.cond.cleanup23:
+ ; CHECK-NEXT:    store <256 x i32> [[SUB_C_SROA_0_0]], ptr [[ARRAYIDX16]], align 64
+@@ -19,10 +21,9 @@ define void @foo(ptr %arrayidx16, ptr %arrayidx29, ptr %arrayidx35, i1 %c1, i1 %
+ ; CHECK:       for.body24:
+ ; CHECK-NEXT:    [[T6:%.*]] = load <256 x i32>, ptr [[ARRAYIDX29:%.*]], align 64
+ ; CHECK-NEXT:    [[T7:%.*]] = load <256 x i32>, ptr [[ARRAYIDX35:%.*]], align 64
+-; CHECK-NEXT:    [[T8:%.*]] = bitcast <256 x i32> [[SUB_C_SROA_0_0]] to x86_amx
+ ; CHECK-NEXT:    [[T9:%.*]] = bitcast <256 x i32> [[T6]] to x86_amx
+ ; CHECK-NEXT:    [[T10:%.*]] = bitcast <256 x i32> [[T7]] to x86_amx
+-; CHECK-NEXT:    [[T11:%.*]] = call x86_amx @llvm.x86.tdpbssd.internal(i16 1, i16 4, i16 4, x86_amx [[T8]], x86_amx [[T9]], x86_amx [[T10]])
++; CHECK-NEXT:    [[T11]] = call x86_amx @llvm.x86.tdpbssd.internal(i16 1, i16 4, i16 4, x86_amx [[T8]], x86_amx [[T9]], x86_amx [[T10]])
+ ; CHECK-NEXT:    [[T12]] = bitcast x86_amx [[T11]] to <256 x i32>
+ ; CHECK-NEXT:    br label [[FOR_COND18]]
+ ; CHECK:       exit:
+diff --git a/llvm/test/Transforms/InstCombine/bitcast-phi-uselistorder.ll b/llvm/test/Transforms/InstCombine/bitcast-phi-uselistorder.ll
+index bff97777b6e4ea..ca075c11d15a03 100644
+--- a/llvm/test/Transforms/InstCombine/bitcast-phi-uselistorder.ll
++++ b/llvm/test/Transforms/InstCombine/bitcast-phi-uselistorder.ll
+@@ -9,10 +9,12 @@ define double @test(i1 %c, ptr %p) {
+ ; CHECK-NEXT:    br i1 [[C:%.*]], label [[IF:%.*]], label [[END:%.*]]
+ ; CHECK:       if:
+ ; CHECK-NEXT:    [[LOAD1:%.*]] = load double, ptr @Q, align 8
++; CHECK-NEXT:    [[TMP2:%.*]] = bitcast double [[LOAD1]] to i64
+ ; CHECK-NEXT:    br label [[END]]
+ ; CHECK:       end:
+-; CHECK-NEXT:    [[TMP0:%.*]] = phi double [ 0.000000e+00, [[ENTRY:%.*]] ], [ [[LOAD1]], [[IF]] ]
+-; CHECK-NEXT:    store double [[TMP0]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[TMP2]], [[IF]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = phi double [ 0.000000e+00, [[ENTRY]] ], [ [[LOAD1]], [[IF]] ]
++; CHECK-NEXT:    store i64 [[TMP1]], ptr [[P:%.*]], align 8
+ ; CHECK-NEXT:    ret double [[TMP0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/freeze.ll b/llvm/test/Transforms/InstCombine/freeze.ll
+index d08198bd3c3a9e..853e9825cf0f05 100644
+--- a/llvm/test/Transforms/InstCombine/freeze.ll
++++ b/llvm/test/Transforms/InstCombine/freeze.ll
+@@ -1843,15 +1843,15 @@ define i32 @pr171435_2(ptr noundef %arg, i32 noundef %arg1) "instcombine-no-veri
+ ; CHECK:       [[BB_5]]:
+ ; CHECK-NEXT:    [[LOAD:%.*]] = load i32, ptr [[CALL]], align 1
+ ; CHECK-NEXT:    [[CALL6:%.*]] = call i32 @llvm.bswap.i32(i32 [[LOAD]])
++; CHECK-NEXT:    [[TMP0:%.*]] = and i32 [[CALL6]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = ashr i32 [[CALL6]], 1
++; CHECK-NEXT:    [[TMP2:%.*]] = add nsw i32 [[TMP1]], [[TMP0]]
+ ; CHECK-NEXT:    br label %[[BB_8:.*]]
+ ; CHECK:       [[BB_7]]:
+ ; CHECK-NEXT:    br label %[[BB_8]]
+ ; CHECK:       [[BB_8]]:
+-; CHECK-NEXT:    [[PHI9_FR:%.*]] = phi i32 [ [[CALL6]], %[[BB_5]] ], [ poison, %[[BB_7]] ]
+-; CHECK-NEXT:    [[AND:%.*]] = and i32 [[PHI9_FR]], 1
+-; CHECK-NEXT:    [[ASHR:%.*]] = lshr i32 [[PHI9_FR]], 1
+-; CHECK-NEXT:    [[ADD:%.*]] = add nuw i32 [[ASHR]], [[AND]]
+-; CHECK-NEXT:    [[ADD10:%.*]] = add i32 [[PHI]], [[ADD]]
++; CHECK-NEXT:    [[ADD:%.*]] = phi i32 [ [[TMP2]], %[[BB_5]] ], [ poison, %[[BB_7]] ]
++; CHECK-NEXT:    [[ADD10:%.*]] = add nsw i32 [[PHI]], [[ADD]]
+ ; CHECK-NEXT:    [[ADD10_FR:%.*]] = freeze i32 [[ADD10]]
+ ; CHECK-NEXT:    [[AND11:%.*]] = and i32 [[ADD10_FR]], 255
+ ; CHECK-NEXT:    [[ICMP12:%.*]] = icmp eq i32 [[AND11]], 0
+diff --git a/llvm/test/Transforms/InstCombine/intptr8.ll b/llvm/test/Transforms/InstCombine/intptr8.ll
+index 99016b465a7c5a..ca9c244ae3f6db 100644
+--- a/llvm/test/Transforms/InstCombine/intptr8.ll
++++ b/llvm/test/Transforms/InstCombine/intptr8.ll
+@@ -1,3 +1,4 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
+ ; RUN: opt < %s -passes=instcombine -S | FileCheck %s
+ 
+ ; PR45033: Don't try to insert a cast into a catchswich block.
+@@ -17,12 +18,12 @@ declare dso_local i32 @__CxxFrameHandler3(...)
+ define dso_local void @"?crash@@YAXXZ"() local_unnamed_addr #0 personality ptr @__CxxFrameHandler3 {
+ entry:
+   %call1 = invoke ptr @"?mk@@YAPEAUC@@XZ"()
+-          to label %invoke.cont2 unwind label %catch.dispatch
++  to label %invoke.cont2 unwind label %catch.dispatch
+ 
+ invoke.cont2:                                     ; preds = %entry
+   %0 = ptrtoint ptr %call1 to i64
+   %call5 = invoke ptr @"?mk@@YAPEAUC@@XZ"()
+-          to label %try.cont unwind label %catch.dispatch
++  to label %try.cont unwind label %catch.dispatch
+ 
+ catch.dispatch:                                   ; preds = %invoke.cont2, %entry
+   %a.sroa.0.0 = phi i64 [ %0, %invoke.cont2 ], [ 0, %entry ]
+@@ -40,7 +41,7 @@ try.cont:                                         ; preds = %invoke.cont2, %catc
+ 
+ if.then.i4:                                       ; preds = %try.cont
+   invoke void @"?intrusive_ptr_release@@YAXPEBUintrusive_ref_counter@@@Z"(ptr %3)
+-          to label %"??1?$intrusive_ptr@UC@@@@QEAA@XZ.exit6" unwind label %terminate.i5
++  to label %"??1?$intrusive_ptr@UC@@@@QEAA@XZ.exit6" unwind label %terminate.i5
+ 
+ terminate.i5:                                     ; preds = %if.then.i4
+   %4 = cleanuppad within none []
+@@ -58,7 +59,7 @@ ehcleanup:                                        ; preds = %catch.dispatch
+ 
+ if.then.i:                                        ; preds = %ehcleanup
+   invoke void @"?intrusive_ptr_release@@YAXPEBUintrusive_ref_counter@@@Z"(ptr %6) [ "funclet"(token %5) ]
+-          to label %"??1?$intrusive_ptr@UC@@@@QEAA@XZ.exit" unwind label %terminate.i
++  to label %"??1?$intrusive_ptr@UC@@@@QEAA@XZ.exit" unwind label %terminate.i
+ 
+ terminate.i:                                      ; preds = %if.then.i
+   %7 = cleanuppad within %5 []
+@@ -69,7 +70,5 @@ terminate.i:                                      ; preds = %if.then.i
+   cleanupret from %5 unwind to caller
+ }
+ 
+-; CHECK-LABEL: define dso_local void @"?crash@@YAXXZ"
+-; CHECK: catch.dispatch:
+-; CHECK-NEXT: %a.sroa.0.0 = phi i64
+-; CHECK-NEXT: catchswitch within none [label %catch] unwind label %ehcleanup
++;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
++; CHECK: {{.*}}
+diff --git a/llvm/test/Transforms/InstCombine/known-non-zero.ll b/llvm/test/Transforms/InstCombine/known-non-zero.ll
+index ead43b2ea29a81..fb5a9a0eb09438 100644
+--- a/llvm/test/Transforms/InstCombine/known-non-zero.ll
++++ b/llvm/test/Transforms/InstCombine/known-non-zero.ll
+@@ -99,16 +99,14 @@ define void @D60846_miscompile(ptr %p) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[I:%.*]] = phi i16 [ 0, [[ENTRY:%.*]] ], [ [[I_INC:%.*]], [[COMMON:%.*]] ]
+-; CHECK-NEXT:    [[IS_ZERO:%.*]] = icmp eq i16 [[I]], 0
++; CHECK-NEXT:    [[IS_ZERO:%.*]] = phi i1 [ true, [[ENTRY:%.*]] ], [ false, [[COMMON:%.*]] ]
++; CHECK-NEXT:    [[IS_ONE:%.*]] = phi i1 [ false, [[ENTRY]] ], [ true, [[COMMON]] ]
+ ; CHECK-NEXT:    br i1 [[IS_ZERO]], label [[COMMON]], label [[NON_ZERO:%.*]]
+ ; CHECK:       non_zero:
+-; CHECK-NEXT:    store i1 true, ptr [[P:%.*]], align 1
++; CHECK-NEXT:    store i1 [[IS_ONE]], ptr [[P:%.*]], align 1
+ ; CHECK-NEXT:    br label [[COMMON]]
+ ; CHECK:       common:
+-; CHECK-NEXT:    [[I_INC]] = add nuw nsw i16 [[I]], 1
+-; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp eq i16 [[I]], 0
+-; CHECK-NEXT:    br i1 [[LOOP_COND]], label [[LOOP]], label [[EXIT:%.*]]
++; CHECK-NEXT:    br i1 [[IS_ZERO]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/phi-extractvalue.ll b/llvm/test/Transforms/InstCombine/phi-extractvalue.ll
+index 26893c178f590f..68538392c1f619 100644
+--- a/llvm/test/Transforms/InstCombine/phi-extractvalue.ll
++++ b/llvm/test/Transforms/InstCombine/phi-extractvalue.ll
+@@ -495,10 +495,7 @@ define i32 @extractvalue_of_constant_phi_multiuse(i1 %c) {
+ ; CHECK:       else:
+ ; CHECK-NEXT:    br label [[JOIN]]
+ ; CHECK:       join:
+-; CHECK-NEXT:    [[PHI:%.*]] = phi { i32, i32 } [ { i32 1, i32 2 }, [[IF]] ], [ { i32 3, i32 4 }, [[ELSE]] ]
+-; CHECK-NEXT:    [[EV0:%.*]] = extractvalue { i32, i32 } [[PHI]], 0
+-; CHECK-NEXT:    [[EV1:%.*]] = extractvalue { i32, i32 } [[PHI]], 1
+-; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[EV0]], [[EV1]]
++; CHECK-NEXT:    [[ADD:%.*]] = phi i32 [ 3, [[IF]] ], [ 7, [[ELSE]] ]
+ ; CHECK-NEXT:    ret i32 [[ADD]]
+ ;
+   br i1 %c, label %if, label %else
+diff --git a/llvm/test/Transforms/InstCombine/phi.ll b/llvm/test/Transforms/InstCombine/phi.ll
+index acbe0ff6b97ec2..31054e366d6abc 100644
+--- a/llvm/test/Transforms/InstCombine/phi.ll
++++ b/llvm/test/Transforms/InstCombine/phi.ll
+@@ -614,8 +614,8 @@ define i64 @test15b(i64 %A, i1 %b) {
+ ; CHECK-NEXT:    [[C:%.*]] = call i64 @test15a(i64 [[X_OFF64]])
+ ; CHECK-NEXT:    br label [[TWO]]
+ ; CHECK:       two:
+-; CHECK-NEXT:    [[Y_OFF0:%.*]] = phi i64 [ [[A]], [[ENTRY]] ], [ [[C]], [[ONE]] ]
+ ; CHECK-NEXT:    [[Y_OFF64]] = phi i64 [ [[A]], [[ENTRY]] ], [ 0, [[ONE]] ]
++; CHECK-NEXT:    [[Y_OFF0:%.*]] = phi i64 [ [[A]], [[ENTRY]] ], [ [[C]], [[ONE]] ]
+ ; CHECK-NEXT:    [[D:%.*]] = call i64 @test15a(i64 [[Y_OFF64]])
+ ; CHECK-NEXT:    [[D1:%.*]] = trunc i64 [[D]] to i1
+ ; CHECK-NEXT:    br i1 [[D1]], label [[ONE]], label [[END:%.*]]
+@@ -923,15 +923,16 @@ define i1 @test_multiple_identical_users_fmf(i1 %c, float %x) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br i1 [[C:%.*]], label [[IF:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       if:
++; CHECK-NEXT:    [[TMP0:%.*]] = fadd nnan float [[X:%.*]], 1.000000e+00
++; CHECK-NEXT:    [[TMP1:%.*]] = fadd float [[X]], 1.000000e+00
++; CHECK-NEXT:    [[TMP2:%.*]] = fcmp uno float [[TMP1]], 0.000000e+00
+ ; CHECK-NEXT:    br label [[M:%.*]]
+ ; CHECK:       else:
+ ; CHECK-NEXT:    br label [[M]]
+ ; CHECK:       join:
+-; CHECK-NEXT:    [[P:%.*]] = phi float [ [[X:%.*]], [[IF]] ], [ 2.000000e+00, [[ELSE]] ]
+-; CHECK-NEXT:    [[U1:%.*]] = fadd nnan float [[P]], 1.000000e+00
++; CHECK-NEXT:    [[U1:%.*]] = phi float [ [[TMP0]], [[IF]] ], [ 3.000000e+00, [[ELSE]] ]
++; CHECK-NEXT:    [[R:%.*]] = phi i1 [ [[TMP2]], [[IF]] ], [ false, [[ELSE]] ]
+ ; CHECK-NEXT:    call void @use.float(float [[U1]])
+-; CHECK-NEXT:    [[U2:%.*]] = fadd float [[P]], 1.000000e+00
+-; CHECK-NEXT:    [[R:%.*]] = fcmp uno float [[U2]], 0.000000e+00
+ ; CHECK-NEXT:    ret i1 [[R]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/pr44242.ll b/llvm/test/Transforms/InstCombine/pr44242.ll
+index bce22734127da2..4be8d77ddeae36 100644
+--- a/llvm/test/Transforms/InstCombine/pr44242.ll
++++ b/llvm/test/Transforms/InstCombine/pr44242.ll
+@@ -10,12 +10,12 @@ define float @sitofp(float %x) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP_HEADER:%.*]]
+ ; CHECK:       loop_header:
+-; CHECK-NEXT:    [[VAL:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[VAL_INCR_CASTED:%.*]], [[LOOP:%.*]] ]
+-; CHECK-NEXT:    [[VAL_CASTED:%.*]] = bitcast i32 [[VAL]] to float
+-; CHECK-NEXT:    [[CMP:%.*]] = fcmp olt float [[X:%.*]], [[VAL_CASTED]]
++; CHECK-NEXT:    [[VAL_CASTED:%.*]] = phi float [ 0.000000e+00, [[ENTRY:%.*]] ], [ [[VAL_INCR:%.*]], [[LOOP:%.*]] ]
++; CHECK-NEXT:    [[VAL:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[VAL_INCR_CASTED:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp ogt float [[VAL_CASTED]], [[X:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[END:%.*]], label [[LOOP]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[VAL_INCR:%.*]] = fadd float [[VAL_CASTED]], 1.000000e+00
++; CHECK-NEXT:    [[VAL_INCR]] = fadd float [[VAL_CASTED]], 1.000000e+00
+ ; CHECK-NEXT:    [[VAL_INCR_CASTED]] = bitcast float [[VAL_INCR]] to i32
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       end:
+@@ -44,12 +44,12 @@ define <2 x i16> @bitcast(float %x) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP_HEADER:%.*]]
+ ; CHECK:       loop_header:
+-; CHECK-NEXT:    [[VAL:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[VAL_INCR_CASTED:%.*]], [[LOOP:%.*]] ]
+-; CHECK-NEXT:    [[VAL_CASTED:%.*]] = bitcast i32 [[VAL]] to float
+-; CHECK-NEXT:    [[CMP:%.*]] = fcmp olt float [[X:%.*]], [[VAL_CASTED]]
++; CHECK-NEXT:    [[VAL_CASTED:%.*]] = phi float [ 0.000000e+00, [[ENTRY:%.*]] ], [ [[VAL_INCR:%.*]], [[LOOP:%.*]] ]
++; CHECK-NEXT:    [[VAL:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[VAL_INCR_CASTED:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp ogt float [[VAL_CASTED]], [[X:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[END:%.*]], label [[LOOP]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[VAL_INCR:%.*]] = fadd float [[VAL_CASTED]], 1.000000e+00
++; CHECK-NEXT:    [[VAL_INCR]] = fadd float [[VAL_CASTED]], 1.000000e+00
+ ; CHECK-NEXT:    [[VAL_INCR_CASTED]] = bitcast float [[VAL_INCR]] to i32
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       end:
+@@ -80,12 +80,12 @@ define void @store_volatile(float %x) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP_HEADER:%.*]]
+ ; CHECK:       loop_header:
+-; CHECK-NEXT:    [[VAL:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[VAL_INCR_CASTED:%.*]], [[LOOP:%.*]] ]
+-; CHECK-NEXT:    [[VAL_CASTED:%.*]] = bitcast i32 [[VAL]] to float
+-; CHECK-NEXT:    [[CMP:%.*]] = fcmp olt float [[X:%.*]], [[VAL_CASTED]]
++; CHECK-NEXT:    [[VAL_CASTED:%.*]] = phi float [ 0.000000e+00, [[ENTRY:%.*]] ], [ [[VAL_INCR:%.*]], [[LOOP:%.*]] ]
++; CHECK-NEXT:    [[VAL:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[VAL_INCR_CASTED:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp ogt float [[VAL_CASTED]], [[X:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[END:%.*]], label [[LOOP]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[VAL_INCR:%.*]] = fadd float [[VAL_CASTED]], 1.000000e+00
++; CHECK-NEXT:    [[VAL_INCR]] = fadd float [[VAL_CASTED]], 1.000000e+00
+ ; CHECK-NEXT:    [[VAL_INCR_CASTED]] = bitcast float [[VAL_INCR]] to i32
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       end:
+diff --git a/llvm/test/Transforms/InstCombine/pr71330.ll b/llvm/test/Transforms/InstCombine/pr71330.ll
+index 8eb98b2f6436b7..f0710e8af47bcf 100644
+--- a/llvm/test/Transforms/InstCombine/pr71330.ll
++++ b/llvm/test/Transforms/InstCombine/pr71330.ll
+@@ -9,7 +9,7 @@ define void @pr71330(i32 %conv, i1 %tobool19.not4, i16 %lb) {
+ ; CHECK:       for.cond7.preheader:
+ ; CHECK-NEXT:    br i1 [[TOBOOL19_NOT4]], label [[FOR_COND7_PREHEADER_SPLIT_US:%.*]], label [[FOR_COND7:%.*]]
+ ; CHECK:       for.cond7.preheader.split.us:
+-; CHECK-NEXT:    br i1 true, label [[FOR_COND7_PREHEADER_SPLIT_US_SPLIT:%.*]], label [[FOR_COND7_US_US:%.*]]
++; CHECK-NEXT:    br i1 false, label [[FOR_COND7_US_US:%.*]], label [[FOR_COND7_PREHEADER_SPLIT_US_SPLIT:%.*]]
+ ; CHECK:       for.cond7.us.us:
+ ; CHECK-NEXT:    br i1 poison, label [[FOR_COND7_US_US]], label [[FOR_END25:%.*]]
+ ; CHECK:       for.cond7.preheader.split.us.split:
+diff --git a/llvm/test/Transforms/InstCombine/recurrence-binary-intrinsic.ll b/llvm/test/Transforms/InstCombine/recurrence-binary-intrinsic.ll
+index a4e247efc4d239..6941dd923847cd 100644
+--- a/llvm/test/Transforms/InstCombine/recurrence-binary-intrinsic.ll
++++ b/llvm/test/Transforms/InstCombine/recurrence-binary-intrinsic.ll
+@@ -289,12 +289,12 @@ define i8 @simple_recurrence_intrinsic_multiuse_phi(i8 %n, i8 %a, i8 %b) {
+ ; CHECK-LABEL: define i8 @simple_recurrence_intrinsic_multiuse_phi(
+ ; CHECK-SAME: i8 [[N:%.*]], i8 [[A:%.*]], i8 [[B:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[UMAX:%.*]] = call i8 @llvm.umax.i8(i8 [[A]], i8 [[B]])
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    [[UMAX_ACC:%.*]] = phi i8 [ [[UMAX:%.*]], %[[LOOP]] ], [ [[A]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[UMAX_ACC:%.*]] = phi i8 [ [[UMAX]], %[[LOOP]] ], [ [[A]], %[[ENTRY]] ]
+ ; CHECK-NEXT:    call void @use(i8 [[UMAX_ACC]])
+-; CHECK-NEXT:    [[UMAX]] = call i8 @llvm.umax.i8(i8 [[A]], i8 [[B]])
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw i8 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i8 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT:.*]]
+diff --git a/llvm/test/Transforms/InstCombine/shift-shift.ll b/llvm/test/Transforms/InstCombine/shift-shift.ll
+index fa58de3528d37b..517115bc05d636 100644
+--- a/llvm/test/Transforms/InstCombine/shift-shift.ll
++++ b/llvm/test/Transforms/InstCombine/shift-shift.ll
+@@ -52,11 +52,10 @@ define i32 @pr8547(ptr %g) {
+ ; CHECK-NEXT:  codeRepl:
+ ; CHECK-NEXT:    br label [[FOR_COND:%.*]]
+ ; CHECK:       for.cond:
+-; CHECK-NEXT:    [[STOREMERGE:%.*]] = phi i32 [ 0, [[CODEREPL:%.*]] ], [ 5, [[FOR_COND]] ]
++; CHECK-NEXT:    [[TOBOOL:%.*]] = phi i1 [ true, [[CODEREPL:%.*]] ], [ false, [[FOR_COND]] ]
++; CHECK-NEXT:    [[CONV2:%.*]] = phi i32 [ 0, [[CODEREPL]] ], [ 64, [[FOR_COND]] ]
++; CHECK-NEXT:    [[STOREMERGE:%.*]] = phi i32 [ 0, [[CODEREPL]] ], [ 5, [[FOR_COND]] ]
+ ; CHECK-NEXT:    store i32 [[STOREMERGE]], ptr [[G:%.*]], align 4
+-; CHECK-NEXT:    [[TMP0:%.*]] = shl nuw nsw i32 [[STOREMERGE]], 6
+-; CHECK-NEXT:    [[CONV2:%.*]] = and i32 [[TMP0]], 64
+-; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp eq i32 [[CONV2]], 0
+ ; CHECK-NEXT:    br i1 [[TOBOOL]], label [[FOR_COND]], label [[CODEREPL2:%.*]]
+ ; CHECK:       codeRepl2:
+ ; CHECK-NEXT:    ret i32 [[CONV2]]
+diff --git a/llvm/test/Transforms/LoopUnroll/unroll-cleanup.ll b/llvm/test/Transforms/LoopUnroll/unroll-cleanup.ll
+index 91c74cbbbd290c..0d68330cacb7aa 100644
+--- a/llvm/test/Transforms/LoopUnroll/unroll-cleanup.ll
++++ b/llvm/test/Transforms/LoopUnroll/unroll-cleanup.ll
+@@ -29,24 +29,20 @@ define void @_Z3fn1v(ptr %r, ptr %a) #0 {
+ ; CHECK:       [[FOR_COND_LOOPEXIT_LOOPEXIT:.*]]:
+ ; CHECK-NEXT:    [[ADD_PTR_LCSSA:%.*]] = phi ptr [ [[ADD_PTR_LCSSA_UNR:%.*]], %[[FOR_BODY3_PROL_LOOPEXIT:.*]] ], [ [[ADD_PTR_1:%.*]], %[[FOR_INC_1:.*]] ]
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A_021:%.*]], i64 1
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[T2:%.*]], -1
+-; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[TMP0]] to i64
+-; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP1]]
++; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP1:%.*]]
+ ; CHECK-NEXT:    [[T1_PRE:%.*]] = load i32, ptr @b, align 4
+-; CHECK-NEXT:    br label %[[FOR_COND_LOOPEXIT:.*]]
+-; CHECK:       [[FOR_COND_LOOPEXIT]]:
+-; CHECK-NEXT:    [[T1:%.*]] = phi i32 [ [[T12:%.*]], %[[FOR_BODY]] ], [ [[T1_PRE]], %[[FOR_COND_LOOPEXIT_LOOPEXIT]] ]
+-; CHECK-NEXT:    [[R_1_LCSSA:%.*]] = phi ptr [ [[R_022:%.*]], %[[FOR_BODY]] ], [ [[ADD_PTR_LCSSA]], %[[FOR_COND_LOOPEXIT_LOOPEXIT]] ]
+-; CHECK-NEXT:    [[A_1_LCSSA:%.*]] = phi ptr [ [[A_021]], %[[FOR_BODY]] ], [ [[SCEVGEP1]], %[[FOR_COND_LOOPEXIT_LOOPEXIT]] ]
+-; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp eq i32 [[T1]], 0
++; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp eq i32 [[T1_PRE]], 0
+ ; CHECK-NEXT:    br i1 [[TOBOOL]], label %[[FOR_END6]], label %[[FOR_BODY]]
+ ; CHECK:       [[FOR_BODY]]:
+-; CHECK-NEXT:    [[T12]] = phi i32 [ [[T1]], %[[FOR_COND_LOOPEXIT]] ], [ [[T]], %[[ENTRY]] ]
+-; CHECK-NEXT:    [[R_022]] = phi ptr [ [[R_1_LCSSA]], %[[FOR_COND_LOOPEXIT]] ], [ [[R]], %[[ENTRY]] ]
+-; CHECK-NEXT:    [[A_021]] = phi ptr [ [[A_1_LCSSA]], %[[FOR_COND_LOOPEXIT]] ], [ [[A]], %[[ENTRY]] ]
+-; CHECK-NEXT:    [[T2]] = load i32, ptr @c, align 4
++; CHECK-NEXT:    [[R_022:%.*]] = phi ptr [ [[ADD_PTR_LCSSA]], %[[FOR_COND_LOOPEXIT_LOOPEXIT]] ], [ [[R]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[A_021]] = phi ptr [ [[SCEVGEP1]], %[[FOR_COND_LOOPEXIT_LOOPEXIT]] ], [ [[A]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[T2:%.*]] = load i32, ptr @c, align 4
+ ; CHECK-NEXT:    [[TOBOOL215:%.*]] = icmp eq i32 [[T2]], 0
+-; CHECK-NEXT:    br i1 [[TOBOOL215]], label %[[FOR_COND_LOOPEXIT]], label %[[FOR_BODY3_PREHEADER:.*]]
++; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[T2]], -1
++; CHECK-NEXT:    [[TMP1]] = zext i32 [[TMP3]] to i64
++; CHECK-NEXT:    br i1 [[TOBOOL215]], label %[[FOR_COND_LOOPEXIT:.*]], label %[[FOR_BODY3_PREHEADER:.*]]
++; CHECK:       [[FOR_COND_LOOPEXIT]]:
++; CHECK-NEXT:    br label %[[FOR_COND_LOOPEXIT]], !llvm.loop [[LOOP0:![0-9]+]]
+ ; CHECK:       [[FOR_BODY3_PREHEADER]]:
+ ; CHECK-NEXT:    [[XTRAITER:%.*]] = and i32 [[T2]], 1
+ ; CHECK-NEXT:    [[LCMP_MOD_NOT:%.*]] = icmp eq i32 [[XTRAITER]], 0
+@@ -106,7 +102,7 @@ define void @_Z3fn1v(ptr %r, ptr %a) #0 {
+ ; CHECK-NEXT:    [[INCDEC_PTR_1]] = getelementptr inbounds nuw i8, ptr [[A_116]], i64 2
+ ; CHECK-NEXT:    [[ADD_PTR_1]] = getelementptr inbounds nuw i8, ptr [[R_117]], i64 12
+ ; CHECK-NEXT:    [[TOBOOL2_1:%.*]] = icmp eq i32 [[DEC18_1]], 0
+-; CHECK-NEXT:    br i1 [[TOBOOL2_1]], label %[[FOR_COND_LOOPEXIT_LOOPEXIT]], label %[[FOR_BODY3]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TOBOOL2_1]], label %[[FOR_COND_LOOPEXIT_LOOPEXIT]], label %[[FOR_BODY3]], !llvm.loop [[LOOP2:![0-9]+]]
+ ; CHECK:       [[FOR_END6]]:
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -174,5 +170,7 @@ for.end6:                                         ; preds = %for.cond.for.end6_c
+ !1 = !{!"llvm.loop.unroll.count", i32 2}
+ ;.
+ ; CHECK: [[LOOP0]] = distinct !{[[LOOP0]], [[META1:![0-9]+]]}
+-; CHECK: [[META1]] = !{!"llvm.loop.unroll.disable"}
++; CHECK: [[META1]] = !{!"llvm.loop.peeled.count", i32 1}
++; CHECK: [[LOOP2]] = distinct !{[[LOOP2]], [[META3:![0-9]+]]}
++; CHECK: [[META3]] = !{!"llvm.loop.unroll.disable"}
+ ;.
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
+index 0086bad9bce74d..0afc0e3a344cf0 100644
+--- a/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
+@@ -140,14 +140,14 @@ define void @iterator_distance_index(ptr %out, ptr %arr, i1 %skip) {
+ ; CHECK-NEXT:    [[I2:%.*]] = phi i32 [ [[I_NEXT:%.*]], %[[OUTER_LATCH:.*]] ], [ 0, %[[ENTRY]] ]
+ ; CHECK-NEXT:    br label %[[INNER_BODY_PREHEADER:.*]]
+ ; CHECK:       [[INNER_BODY_PREHEADER]]:
+-; CHECK-NEXT:    [[J1:%.*]] = phi i32 [ 0, %[[INNER_PREHEADER]] ], [ [[J_NEXT:%.*]], %[[INNER_EXIT:.*]] ]
+-; CHECK-NEXT:    [[K_LT_J_PEEL_NOT:%.*]] = icmp eq i32 [[J1]], 0
++; CHECK-NEXT:    [[K_LT_J_PEEL_NOT:%.*]] = phi i1 [ true, %[[INNER_PREHEADER]] ], [ false, %[[INNER_EXIT:.*]] ]
++; CHECK-NEXT:    [[J1:%.*]] = phi i32 [ 0, %[[INNER_PREHEADER]] ], [ [[J_NEXT:%.*]], %[[INNER_EXIT]] ]
+ ; CHECK-NEXT:    br i1 [[K_LT_J_PEEL_NOT]], label %[[INNER_EXIT]], label %[[INNER_BODY_PEEL_NEXT:.*]]
+ ; CHECK:       [[INNER_BODY_PEEL_NEXT]]:
+-; CHECK-NEXT:    [[K_LT_J_NOT:%.*]] = icmp eq i32 [[J1]], 1
++; CHECK-NEXT:    [[K_LT_J:%.*]] = icmp samesign ugt i32 [[J1]], 1
+ ; CHECK-NEXT:    br label %[[INNER_BODY:.*]]
+ ; CHECK:       [[INNER_BODY]]:
+-; CHECK-NEXT:    br i1 [[K_LT_J_NOT]], label %[[INNER_EXIT]], label %[[INNER_BODY]], !llvm.loop [[LOOP4:![0-9]+]]
++; CHECK-NEXT:    br i1 [[K_LT_J]], label %[[INNER_BODY]], label %[[INNER_EXIT]], !llvm.loop [[LOOP4:![0-9]+]]
+ ; CHECK:       [[INNER_EXIT]]:
+ ; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 [[I2]], [[J1]]
+ ; CHECK-NEXT:    [[IDX:%.*]] = zext nneg i32 [[SUB]] to i64
