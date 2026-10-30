@@ -202,7 +202,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 define ptr @optparse(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) local_unnamed_addr #5 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 17 uses
+  %i.b = alloca ptr, align 8                      ; 15 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca [1024 x i8], align 16             ; 6 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
@@ -541,14 +541,24 @@ bb.ai:                                            ; preds = %bb.ad, %bb.ah
   br label %.outer.a
 
 .outer.a:                                         ; preds = %.outer.backedge, %bb.ai
-  %i.dj = phi ptr [ %.pre647, %bb.ai ], [ %.be, %.outer.backedge ] ; 3 uses
+  %i.dj = phi ptr [ %.pre647, %bb.ai ], [ %.ph823.be, %.outer.backedge ] ; 5 uses
   %.0282.ph.a = phi i32 [ 0, %bb.ai ], [ %.1283, %.outer.backedge ]
-  %.0276.ph.a = phi i32 [ 5, %bb.ai ], [ %.2434, %.outer.backedge ] ; 3 uses
+  %.0276.ph.a = phi i32 [ 5, %bb.ai ], [ %.2434, %.outer.backedge ]
   %.not17.i = icmp eq ptr %i.dj, null
+  br label %.outer.outer824
+
+.outer.outer824:                                  ; preds = %.outer.a, %.critedge420.thread447
+  %.0282.ph.ph826 = phi i32 [ %.0282.ph.a, %.outer.a ], [ %.1283, %.critedge420.thread447 ]
+  %.0276.ph.ph827 = phi i32 [ %.0276.ph.a, %.outer.a ], [ %.2434, %.critedge420.thread447 ]
+  br label %.outer
+
+.outer:                                           ; preds = %.outer.outer824, %.critedge420.thread
+  %.0282.ph = phi i32 [ %.1283, %.critedge420.thread ], [ %.0282.ph.ph826, %.outer.outer824 ]
+  %.0276.ph = phi i32 [ %.2434, %.critedge420.thread ], [ %.0276.ph.ph827, %.outer.outer824 ] ; 3 uses
   br label %.backedge
 
-.backedge:                                        ; preds = %.backedge.backedge, %.outer.a
-  %.0282 = phi i32 [ %.0282.ph.a, %.outer.a ], [ %.0282.be, %.backedge.backedge ] ; 2 uses
+.backedge:                                        ; preds = %.backedge.backedge, %.outer
+  %.0282 = phi i32 [ %.0282.ph, %.outer ], [ %.0282.be, %.backedge.backedge ] ; 2 uses
   br i1 %.not406682, label %bb.ba, label %bb.aj
 
 bb.aj:                                            ; preds = %.backedge
@@ -800,7 +810,7 @@ bb.bf:                                            ; preds = %bb.bc
 bb.bg:                                            ; preds = %bb.ax, %.critedge8.thread, %bb.be
   %.1302 = phi ptr [ %i.ds, %bb.ax ], [ %i.ds, %.critedge8.thread ], [ %.0301, %bb.be ] ; 14 uses
   %.0296 = phi ptr [ %i.fb, %bb.ax ], [ %i.em, %.critedge8.thread ], [ %i.fv, %bb.be ] ; 3 uses
-  %.1283 = phi i32 [ %i.dt, %bb.ax ], [ %i.dt, %.critedge8.thread ], [ %.0282, %bb.be ] ; 15 uses
+  %.1283 = phi i32 [ %i.dt, %bb.ax ], [ %i.dt, %.critedge8.thread ], [ %.0282, %bb.be ] ; 17 uses
   br i1 %.not17.i, label %.loopexit457, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.bg, %bb.bk
@@ -976,7 +986,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.hx = lshr i32 %i.hw, 2
   %i.hy = and i32 %i.hx, 2
   %i.hz = xor i32 %i.hy, 2
-  %spec.select = or i32 %i.hz, %.0276.ph.a        ; 2 uses
+  %spec.select = or i32 %i.hz, %.0276.ph          ; 2 uses
   %i.ia = call i32 @cli_regcomp(ptr noundef nonnull %8, ptr noundef nonnull %i.hu, i32 noundef %spec.select) #20
   %.not371 = icmp eq i32 %i.ia, 0
   br i1 %.not371, label %bb.cl, label %bb.ck
@@ -1021,11 +1031,11 @@ bb.cq:                                            ; preds = %bb.co
   br label %.critedge421
 
 bb.cr:                                            ; preds = %bb.ci, %bb.cl
-  %.2 = phi i32 [ %spec.select, %bb.cl ], [ %.0276.ph.a, %bb.ci ] ; 2 uses
+  %.2 = phi i32 [ %spec.select, %bb.cl ], [ %.0276.ph, %bb.ci ] ; 2 uses
   br i1 %i.hp, label %.critedge13, label %.thread428
 
 .thread428:                                       ; preds = %bb.ch, %bb.cr
-  %.2433 = phi i32 [ %.2, %bb.cr ], [ %.0276.ph.a, %bb.ch ] ; 4 uses
+  %.2433 = phi i32 [ %.2, %bb.cr ], [ %.0276.ph, %bb.ch ] ; 4 uses
   %.1297432 = phi ptr [ %.0296, %bb.cr ], [ @.str.170, %bb.ch ] ; 3 uses
   %i.ir = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.1297432, i32 noundef 35) #19
   %.not373 = icmp eq ptr %i.ir, null
@@ -1057,7 +1067,7 @@ bb.cs:                                            ; preds = %.thread428
   br i1 %.not374, label %.critedge13, label %.lr.ph554
 
 .critedge13:                                      ; preds = %.critedge15, %.lr.ph554, %bb.cs, %.thread428, %bb.cr
-  %.2434 = phi i32 [ %.2433, %.thread428 ], [ %.2, %bb.cr ], [ %.2433, %bb.cs ], [ %.2433, %.lr.ph554 ], [ %.2433, %.critedge15 ]
+  %.2434 = phi i32 [ %.2433, %.thread428 ], [ %.2, %bb.cr ], [ %.2433, %bb.cs ], [ %.2433, %.lr.ph554 ], [ %.2433, %.critedge15 ] ; 3 uses
   %.2298 = phi ptr [ %.1297432, %.thread428 ], [ null, %bb.cr ], [ %i.is, %bb.cs ], [ %i.is, %.lr.ph554 ], [ %i.is, %.critedge15 ] ; 11 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %i.gk, i64 20
   %i.ix = load i32, ptr %i.iw, align 4, !tbaa !34
@@ -1244,16 +1254,16 @@ sub_0:                                            ; preds = %bb.dt
   %spec.select422 = zext i1 %.not377 to i64
   br label %.critedge420
 
-.critedge420:                                     ; preds = %.thread437, %bb.ds, %bb.dr, %.tail.thread, %.critedge13, %bb.da, %bb.db, %bb.dc, %bb.dt, %.tail
-  %.4300 = phi ptr [ %.2298, %.critedge13 ], [ null, %.thread437 ], [ null, %bb.ds ], [ null, %bb.dc ], [ null, %.tail ], [ null, %bb.dt ], [ null, %bb.da ], [ null, %bb.db ], [ null, %.tail.thread ], [ null, %bb.dr ]
-  %.2281 = phi i64 [ -1, %.critedge13 ], [ %spec.select456, %.thread437 ], [ 9223372036854775807, %bb.ds ], [ 0, %bb.dc ], [ 1, %.tail ], [ 1, %bb.dt ], [ 0, %bb.da ], [ %i.jk, %bb.db ], [ %spec.select422, %.tail.thread ], [ 9223372036854775807, %bb.dr ]
+.critedge420:                                     ; preds = %.critedge13, %.thread437, %bb.ds, %bb.dr, %.tail.thread, %bb.da, %bb.db, %bb.dc, %bb.dt, %.tail
+  %.4300 = phi ptr [ null, %bb.dr ], [ null, %.thread437 ], [ null, %bb.ds ], [ null, %bb.dc ], [ null, %.tail ], [ null, %bb.dt ], [ null, %bb.da ], [ null, %bb.db ], [ null, %.tail.thread ], [ %.2298, %.critedge13 ]
+  %.2281 = phi i64 [ 9223372036854775807, %bb.dr ], [ %spec.select456, %.thread437 ], [ 9223372036854775807, %bb.ds ], [ 0, %bb.dc ], [ 1, %.tail ], [ 1, %bb.dt ], [ 0, %bb.da ], [ %i.jk, %bb.db ], [ %spec.select422, %.tail.thread ], [ -1, %.critedge13 ]
   %i.ku = load ptr, ptr %i.b, align 8, !tbaa !23  ; 2 uses
   %i.kv = call fastcc i32 @optaddarg(ptr noundef %i.ku, ptr noundef nonnull %.1302, ptr noundef %.4300, i64 noundef %.2281)
   %i.kw = icmp slt i32 %i.kv, 0
   br i1 %i.kw, label %bb.du, label %.outer.backedge
 
-.outer.backedge:                                  ; preds = %.critedge420, %.critedge420.thread, %.critedge420.thread447, %.critedge420.thread451
-  %.be = phi ptr [ %i.ku, %.critedge420 ], [ %10, %.critedge420.thread ], [ %9, %.critedge420.thread447 ], [ %i.kz, %.critedge420.thread451 ]
+.outer.backedge:                                  ; preds = %.critedge420, %.critedge420.thread451
+  %.ph823.be = phi ptr [ %i.kz, %.critedge420.thread451 ], [ %i.ku, %.critedge420 ]
   br label %.outer.a
 
 .critedge420.thread451:                           ; preds = %.thread435
@@ -1265,21 +1275,19 @@ sub_0:                                            ; preds = %bb.dt
   br i1 %i.lb, label %.thread450, label %.outer.backedge
 
 .critedge420.thread447:                           ; preds = %bb.cv
-  %9 = load ptr, ptr %i.b, align 8, !tbaa !23     ; 2 uses
-  %i.lc = call fastcc i32 @optaddarg(ptr noundef %9, ptr noundef nonnull %.1302, ptr noundef %.3299, i64 noundef -1)
+  %i.lc = call fastcc i32 @optaddarg(ptr noundef %i.dj, ptr noundef nonnull %.1302, ptr noundef %.3299, i64 noundef -1)
   %i.ld = icmp slt i32 %i.lc, 0
-  br i1 %i.ld, label %.thread450, label %.outer.backedge
+  br i1 %i.ld, label %.thread450, label %.outer.outer824
 
 .critedge420.thread:                              ; preds = %bb.cw
-  %10 = load ptr, ptr %i.b, align 8, !tbaa !23    ; 2 uses
-  %i.le = call fastcc i32 @optaddarg(ptr noundef %10, ptr noundef nonnull %.1302, ptr noundef nonnull %.3299, i64 noundef -1)
+  %i.le = call fastcc i32 @optaddarg(ptr noundef nonnull %i.dj, ptr noundef nonnull %.1302, ptr noundef nonnull %.3299, i64 noundef -1)
   %i.lf = icmp slt i32 %i.le, 0
-  br i1 %i.lf, label %.thread446, label %.outer.backedge
+  br i1 %i.lf, label %.thread446, label %.outer
 
 bb.du:                                            ; preds = %.critedge420
   br i1 %.not406682, label %.thread446, label %.thread450
 
-.thread450:                                       ; preds = %.critedge420.thread451, %.critedge420.thread447, %bb.du
+.thread450:                                       ; preds = %.critedge420.thread447, %.critedge420.thread451, %bb.du
   %i.lg = load ptr, ptr @stderr, align 8, !tbaa !36
   %i.lh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.lg, ptr noundef nonnull @.str.751, ptr noundef nonnull %.1302) #22 ; 0 uses
   br label %.critedge421

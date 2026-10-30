@@ -204,41 +204,42 @@ bb.a:
   %.sroa.5.0..sroa_idx.promoted = load i32, ptr %.sroa.5.0..sroa_idx, align 4
   %.promoted = load ptr, ptr %i.d, align 8
   %.sroa.01.sroa.0.0.copyload.pre = load ptr, ptr %i.a, align 8
+  %.sroa.01.sroa.4.0.copyload.pre = load i64, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge, %bb.a
-  %.sroa.01.sroa.0.0.copyload = phi ptr [ %.sroa.01.sroa.0.0.copyload.pre, %bb.a ], [ %.val17, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ]
-  %i.e = phi ptr [ %.promoted, %bb.a ], [ %i.k, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ] ; 7 uses
-  %.sroa.5.0.copyload68 = phi i32 [ %.sroa.5.0..sroa_idx.promoted, %bb.a ], [ %.sroa.5.0.copyload10.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ]
-  %.sroa.4.0.copyload66.a = phi i32 [ %.sroa.4.0..sroa_idx.promoted, %bb.a ], [ %.sroa.4.0.copyload8.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ] ; 2 uses
-  %.sroa.01.sroa.4.0.copyload = load i64, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8
+  %.sroa.01.sroa.4.0.copyload = phi i64 [ %.sroa.01.sroa.4.0.copyload.pre, %bb.a ], [ %.sroa.030.sroa.6.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ]
+  %i.e = phi ptr [ %.sroa.01.sroa.0.0.copyload.pre, %bb.a ], [ %.val17, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ]
+  %2 = phi ptr [ %.promoted, %bb.a ], [ %i.k, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ] ; 7 uses
+  %.sroa.4.0.copyload66.a = phi i32 [ %.sroa.5.0..sroa_idx.promoted, %bb.a ], [ %.sroa.5.0.copyload10.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ]
+  %.sroa.4.0.copyload66 = phi i32 [ %.sroa.4.0..sroa_idx.promoted, %bb.a ], [ %.sroa.4.0.copyload8.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19.backedge ] ; 2 uses
   store i32 -2, ptr %.sroa.4.0..sroa_idx, align 8
-  %.not = icmp eq i32 %.sroa.4.0.copyload66.a, -2
+  %.not = icmp eq i32 %.sroa.4.0.copyload66, -2
   br i1 %.not, label %bb.b, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTINtNtB9_5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1n_.exit
 
 bb.b:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2452)
-  %i.f = icmp eq ptr %i.e, %i.c
+  %i.f = icmp eq ptr %2, %i.c
   br i1 %i.f, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTINtNtB9_5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1n_.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %i.g, ptr %i.d, align 8, !alias.scope !2452
-  %.sroa.030.sroa.0.0.copyload = load ptr, ptr %i.e, align 8, !noalias !2452
-  %.sroa.030.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %.sroa.030.sroa.0.0.copyload = load ptr, ptr %2, align 8, !noalias !2452
+  %.sroa.030.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.030.sroa.6.0.copyload = load i64, ptr %.sroa.030.sroa.6.0..sroa_idx, align 8, !noalias !2452
-  %.sroa.6.0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
+  %.sroa.6.0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.sroa.6.0.copyload32 = load i32, ptr %.sroa.6.0..sroa_idx31, align 8, !noalias !2452
-  %.sroa.933.0..sroa_idx34 = getelementptr inbounds nuw i8, ptr %i.e, i64 20
+  %.sroa.933.0..sroa_idx34 = getelementptr inbounds nuw i8, ptr %2, i64 20
   %.sroa.933.0.copyload35 = load i32, ptr %.sroa.933.0..sroa_idx34, align 4, !noalias !2452
   br label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTINtNtB9_5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1n_.exit
 
 _RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTINtNtB9_5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1n_.exit: ; preds = %bb.c, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19
-  %i.h = phi ptr [ %i.e, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %i.g, %bb.c ] ; 5 uses
-  %.sroa.030.sroa.0.0 = phi ptr [ %.sroa.01.sroa.0.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.030.sroa.0.0.copyload, %bb.c ] ; 5 uses
-  %.sroa.030.sroa.6.0 = phi i64 [ %.sroa.01.sroa.4.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.030.sroa.6.0.copyload, %bb.c ] ; 6 uses
-  %.sroa.933.0 = phi i32 [ %.sroa.5.0.copyload68, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.933.0.copyload35, %bb.c ] ; 2 uses
-  %.sroa.6.0 = phi i32 [ %.sroa.4.0.copyload66.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.6.0.copyload32, %bb.c ] ; 3 uses
+  %i.h = phi ptr [ %2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %i.g, %bb.c ] ; 5 uses
+  %.sroa.030.sroa.0.0 = phi ptr [ %i.e, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.030.sroa.0.0.copyload, %bb.c ] ; 5 uses
+  %.sroa.030.sroa.6.0 = phi i64 [ %.sroa.01.sroa.4.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.030.sroa.6.0.copyload, %bb.c ] ; 7 uses
+  %.sroa.933.0 = phi i32 [ %.sroa.4.0.copyload66.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.933.0.copyload35, %bb.c ] ; 2 uses
+  %.sroa.6.0 = phi i32 [ %.sroa.4.0.copyload66, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEEB1j_.exit19 ], [ %.sroa.6.0.copyload32, %bb.c ] ; 3 uses
   %.not10 = icmp eq i32 %.sroa.6.0, -1
   br i1 %.not10, label %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterTINtNtB9_5boxed3BoxeENtNtNtCsefoF4u9kbII_5wasmi6module6export9ExternIdxEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB1n_.exit.thread, label %bb.d
 
@@ -265,11 +266,11 @@ bb.e:                                             ; preds = %_RNvXsg_NtCsexYYUdY
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   store ptr %i.k, ptr %i.d, align 8, !alias.scope !2457
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 16, i1 false), !noalias !2454
   %.sroa.4.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.sroa.4.0.copyload8.i = load i32, ptr %.sroa.4.0..sroa_idx7.i, align 8, !noalias !2458 ; 4 uses
   %.sroa.5.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %i.h, i64 20
   %.sroa.5.0.copyload10.i = load i32, ptr %.sroa.5.0..sroa_idx9.i, align 4, !noalias !2458 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 16, i1 false)
   store i32 %.sroa.4.0.copyload8.i, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !2453
   store i32 %.sroa.5.0.copyload10.i, ptr %.sroa.5.0..sroa_idx, align 4, !alias.scope !2453
   %i.l = icmp ne i32 %.sroa.4.0.copyload8.i, -2

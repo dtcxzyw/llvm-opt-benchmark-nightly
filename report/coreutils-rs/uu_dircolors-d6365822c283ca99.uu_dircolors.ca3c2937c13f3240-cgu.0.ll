@@ -205,8 +205,9 @@ bb.a:
   br i1 %i.c, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.q
+  %3 = phi ptr [ %8, %bb.q ], [ inttoptr (i64 1 to ptr), %bb.a ] ; 2 uses
   %i.d = phi ptr [ %i.cg, %bb.q ], [ inttoptr (i64 1 to ptr), %bb.a ]
-  %i.e = phi i64 [ %.sink, %bb.q ], [ 0, %bb.a ]  ; 13 uses
+  %i.e = phi i64 [ %.sink, %bb.q ], [ 0, %bb.a ]  ; 14 uses
   %.sroa.0.019 = phi i32 [ %.sroa.4.0.i.ph, %bb.q ], [ 32, %bb.a ]
   %.sroa.0.01118 = phi ptr [ %.sroa.0.1.ph, %bb.q ], [ %1, %bb.a ] ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.01118, i64 1 ; 3 uses
@@ -304,7 +305,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i
 
 _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i: ; preds = %bb.h, %bb.g
-  %i.aw = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !487, !nonnull !5, !noundef !5 ; 2 uses
+  %i.aw = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !487, !nonnull !5, !noundef !5 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.e ; 10 uses
   br i1 %i.as, label %bb.j, label %bb.i
 
@@ -370,21 +371,27 @@ bb.o:                                             ; preds = %bb.c
   %i.by = load i64, ptr %i.a, align 8, !range !4, !alias.scope !490, !noundef !5
   %i.bz = sub i64 %i.by, %i.e
   %i.ca = icmp ult i64 %i.bz, 4
-  br i1 %i.ca, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit, !prof !10
+  br i1 %i.ca, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i7, !prof !10
 
 _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i: ; preds = %bb.o
   call fastcc void @_RINvNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECshmuvWokFoRg_12uu_dircolors(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %i.e, i64 noundef 4, i64 noundef 1, i64 noundef 1) #19
-  %i.cb = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !489, !noundef !5
+  %i.cb = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !489, !noundef !5 ; 2 uses
+  %4 = icmp sgt i64 %i.cb, -1
+  tail call void @llvm.assume(i1 %4)
+  %.pre20 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !489
   br label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit
 
-_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit: ; preds = %bb.o, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i
-  %.sink21 = phi i64 [ %i.cb, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i ], [ %i.e, %bb.o ] ; 3 uses
-  %3 = icmp sgt i64 %.sink21, -1
-  tail call void @llvm.assume(i1 %3)
-  %4 = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !489, !nonnull !5, !noundef !5 ; 2 uses
-  %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 %.sink21
+_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i7: ; preds = %bb.o
+  %5 = icmp sgt i64 %i.e, -1
+  tail call void @llvm.assume(i1 %5)
+  br label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit
+
+_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit: ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i7
+  %6 = phi ptr [ %.pre20, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i ], [ %3, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i7 ] ; 3 uses
+  %7 = phi i64 [ %i.cb, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i ], [ %i.e, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i7 ] ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %6, i64 %7
   store i32 656890919, ptr %i.cc, align 1, !noalias !489
-  %i.cd = add nuw i64 %.sink21, 4
+  %i.cd = add nuw i64 %7, 4
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.c
@@ -398,7 +405,8 @@ bb.p:                                             ; preds = %bb.c
 
 bb.q:                                             ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit, %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit
   %.sink = phi i64 [ %i.cr, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10 ], [ %i.cd, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit ], [ %i.bx, %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit ] ; 2 uses
-  %i.cg = phi ptr [ %i.co, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10 ], [ %4, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit ], [ %i.aw, %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit ]
+  %8 = phi ptr [ %9, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10 ], [ %6, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit ], [ %i.aw, %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit ]
+  %i.cg = phi ptr [ %i.co, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10 ], [ %6, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit ], [ %i.aw, %_RNvMNtCs7tKScEop1B6_5alloc6stringNtB2_6String4push.exit ]
   store i64 %.sink, ptr %.sroa.5.0..sroa_idx, align 8
   %i.ch = icmp eq ptr %.sroa.0.1.ph, %i.b
   br i1 %i.ch, label %._crit_edge, label %.lr.ph
@@ -415,7 +423,7 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolor
   %i.cl = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !491, !noundef !5 ; 2 uses
   %i.cm = icmp sgt i64 %i.cl, -1
   tail call void @llvm.assume(i1 %i.cm)
-  %.pre = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !491
+  %.pre = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !491 ; 2 uses
   br label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10
 
 _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i8: ; preds = %bb.r
@@ -424,6 +432,7 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolor
   br label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10
 
 _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE15append_elementsCshmuvWokFoRg_12uu_dircolors.exit10: ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i9, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i8
+  %9 = phi ptr [ %.pre, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i9 ], [ %3, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i8 ]
   %i.co = phi ptr [ %.pre, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i9 ], [ %i.d, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i8 ] ; 2 uses
   %i.cp = phi i64 [ %i.cl, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.thread.i9 ], [ %i.e, %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VechE7reserveCshmuvWokFoRg_12uu_dircolors.exit.i8 ] ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 %i.cp
@@ -826,8 +835,8 @@ _RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.g
 
 bb.g:                                             ; preds = %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit16.i.i.i.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit14.i.i.i.i.i.i, %bb.f, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit12.i.i.i.i.i.i
-  %.sroa.4.0.i = phi ptr [ %i.u, %bb.f ], [ %i.at, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit16.i.i.i.i.i.i ], [ %i.aj, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit14.i.i.i.i.i.i ], [ %i.aa, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit12.i.i.i.i.i.i ] ; 6 uses
-  %.sroa.4.0.i.ph.i.i.i.i.i = phi i32 [ %i.ah, %bb.f ], [ %i.bb, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit16.i.i.i.i.i.i ], [ %i.aq, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit14.i.i.i.i.i.i ], [ %i.af, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit12.i.i.i.i.i.i ] ; 8 uses
+  %.sroa.4.0.i = phi ptr [ %i.aj, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit14.i.i.i.i.i.i ], [ %i.at, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit16.i.i.i.i.i.i ], [ %i.aa, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit12.i.i.i.i.i.i ], [ %i.u, %bb.f ] ; 6 uses
+  %.sroa.4.0.i.ph.i.i.i.i.i = phi i32 [ %i.aq, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit14.i.i.i.i.i.i ], [ %i.bb, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit16.i.i.i.i.i.i ], [ %i.af, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshmuvWokFoRg_12uu_dircolors.exit12.i.i.i.i.i.i ], [ %i.ah, %bb.f ] ; 8 uses
   %i.bc = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i.i, 1114112
   tail call void @llvm.assume(i1 %i.bc)
   %i.bd = ptrtoint ptr %.sroa.4.0.i to i64

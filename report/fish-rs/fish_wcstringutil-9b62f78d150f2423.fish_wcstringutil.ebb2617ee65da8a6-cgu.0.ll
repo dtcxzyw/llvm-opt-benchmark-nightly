@@ -137,7 +137,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph.split.us.split, label %.lr.ph.split
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph, %bb.d
-  %i.g = phi ptr [ %i.l, %bb.d ], [ inttoptr (i64 8 to ptr), %.lr.ph ]
+  %i.g = phi ptr [ %i.l, %bb.d ], [ inttoptr (i64 8 to ptr), %.lr.ph ] ; 2 uses
   %i.h = phi i64 [ %i.o, %bb.d ], [ 0, %.lr.ph ]  ; 4 uses
   %.sroa.0.099.us = phi i64 [ %i.p, %bb.d ], [ %5, %.lr.ph ]
   %.sroa.019.098.us = phi ptr [ %i.r, %bb.d ], [ %1, %.lr.ph ] ; 3 uses
@@ -160,7 +160,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %..noexc48.us_crit_edge
-  %i.l = phi ptr [ %.pre262, %..noexc48.us_crit_edge ], [ %i.g, %bb.b ] ; 2 uses
+  %i.l = phi ptr [ %.pre262, %..noexc48.us_crit_edge ], [ %i.g, %bb.b ] ; 3 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %i.h ; 2 uses
   store ptr %.sroa.019.098.us, ptr %i.m, align 8, !noalias !30, !captures !6
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -177,7 +177,7 @@ bb.d:                                             ; preds = %bb.b, %..noexc48.us
   br i1 %6, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.i
-  %i.s = phi ptr [ %i.ag, %bb.i ], [ inttoptr (i64 8 to ptr), %.lr.ph.split ]
+  %i.s = phi ptr [ %i.ag, %bb.i ], [ inttoptr (i64 8 to ptr), %.lr.ph.split ] ; 4 uses
   %i.t = phi i64 [ %i.aj, %bb.i ], [ 0, %.lr.ph.split ] ; 6 uses
   %.sroa.0.099.us135 = phi i64 [ %i.an, %bb.i ], [ %5, %.lr.ph.split ]
   %.sroa.019.098.us136 = phi ptr [ %i.ap, %bb.i ], [ %1, %.lr.ph.split ] ; 6 uses
@@ -227,7 +227,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.noexc48.us139
 
 .noexc48.us139:                                   ; preds = %..noexc48.us139_crit_edge, %bb.g
-  %i.ag = phi ptr [ %.pre, %..noexc48.us139_crit_edge ], [ %i.s, %bb.g ] ; 2 uses
+  %i.ag = phi ptr [ %.pre, %..noexc48.us139_crit_edge ], [ %i.s, %bb.g ] ; 3 uses
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %i.t ; 2 uses
   store ptr %.sroa.019.098.us136, ptr %i.ah, align 8, !noalias !30, !captures !6
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
@@ -252,6 +252,7 @@ bb.i:                                             ; preds = %.thread59.us140
   br i1 %or.cond.us142, label %.loopexit, label %.lr.ph.split.split.us
 
 .loopexit:                                        ; preds = %bb.i, %bb.q, %bb.a
+  %7 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ %i.bu, %bb.q ], [ %i.ag, %bb.i ]
   %i.ar = phi i64 [ 0, %bb.a ], [ %i.bv, %bb.q ], [ %i.aj, %bb.i ]
   %.sroa.11.093 = phi i64 [ %2, %bb.a ], [ %i.bz, %bb.q ], [ %i.ao, %bb.i ]
   %.sroa.019.084 = phi ptr [ %1, %bb.a ], [ %i.ca, %bb.q ], [ %i.ap, %bb.i ]
@@ -260,7 +261,7 @@ bb.i:                                             ; preds = %.thread59.us140
   br i1 %or.cond46, label %bb.s, label %.thread
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.q
-  %i.at = phi ptr [ %i.bu, %bb.q ], [ inttoptr (i64 8 to ptr), %.lr.ph.split ] ; 2 uses
+  %i.at = phi ptr [ %i.bu, %bb.q ], [ inttoptr (i64 8 to ptr), %.lr.ph.split ] ; 5 uses
   %i.au = phi i64 [ %i.bv, %bb.q ], [ 0, %.lr.ph.split ] ; 7 uses
   %.sroa.0.099 = phi i64 [ %i.by, %bb.q ], [ %5, %.lr.ph.split ]
   %.sroa.019.098 = phi ptr [ %i.ca, %bb.q ], [ %1, %.lr.ph.split ] ; 6 uses
@@ -360,7 +361,7 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 .thread59:                                        ; preds = %bb.m, %.noexc48
-  %i.bu = phi ptr [ %i.bi, %.noexc48 ], [ %i.at, %bb.m ]
+  %i.bu = phi ptr [ %i.bi, %.noexc48 ], [ %i.at, %bb.m ] ; 2 uses
   %i.bv = phi i64 [ %i.bl, %.noexc48 ], [ %i.au, %bb.m ] ; 2 uses
   %i.bw = phi i64 [ %i.bm, %.noexc48 ], [ %4, %bb.m ] ; 4 uses
   %i.bx = icmp ugt i64 %i.bw, %.sroa.11.097
@@ -380,6 +381,7 @@ bb.q:                                             ; preds = %.thread59
   br i1 %or.cond, label %.loopexit, label %.lr.ph.split.split
 
 .thread:                                          ; preds = %bb.e, %.lr.ph.split.split.us, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i.us, %bb.l, %.lr.ph.split.split, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i, %bb.d, %.lr.ph.split.us.split, %.loopexit
+  %8 = phi ptr [ %7, %.loopexit ], [ %i.g, %.lr.ph.split.us.split ], [ %i.at, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i ], [ %i.s, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i.us ], [ %i.at, %bb.l ], [ %i.l, %bb.d ], [ %i.at, %.lr.ph.split.split ], [ %i.s, %.lr.ph.split.split.us ], [ %i.s, %bb.e ]
   %i.cc = phi i64 [ %i.ar, %.loopexit ], [ %i.h, %.lr.ph.split.us.split ], [ %i.au, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i ], [ %i.t, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i.us ], [ %i.au, %bb.l ], [ %i.o, %bb.d ], [ %i.au, %.lr.ph.split.split ], [ %i.t, %.lr.ph.split.split.us ], [ %i.t, %bb.e ] ; 3 uses
   %.sroa.11.092 = phi i64 [ %.sroa.11.093, %.loopexit ], [ 1, %.lr.ph.split.us.split ], [ %.sroa.11.097, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i ], [ %.sroa.11.097.us137, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i.us ], [ %.sroa.11.097, %bb.l ], [ %i.q, %bb.d ], [ %.sroa.11.097, %.lr.ph.split.split ], [ %.sroa.11.097.us137, %.lr.ph.split.split.us ], [ %.sroa.11.097.us137, %bb.e ]
   %.sroa.019.083 = phi ptr [ %.sroa.019.084, %.loopexit ], [ %.sroa.019.098.us, %.lr.ph.split.us.split ], [ %.sroa.019.098, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i ], [ %.sroa.019.098.us136, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8position5checkRScNCNvCskeBJdk8gjxq_17fish_wcstringutil11split_about0E0B1n_.exit.us.i.us ], [ %.sroa.019.098, %bb.l ], [ %i.r, %bb.d ], [ %.sroa.019.098, %.lr.ph.split.split ], [ %.sroa.019.098.us136, %.lr.ph.split.split.us ], [ %.sroa.019.098.us136, %bb.e ]
@@ -390,11 +392,15 @@ bb.q:                                             ; preds = %.thread59
 
 bb.r:                                             ; preds = %.thread
   invoke void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8grow_oneCskeBJdk8gjxq_17fish_wcstringutil(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #21
-          to label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50 unwind label %.loopexit64.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50_crit_edge unwind label %.loopexit64.split.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50: ; preds = %bb.r, %.thread
-  %7 = load ptr, ptr %i.b, align 8, !alias.scope !32, !nonnull !4, !noundef !4
-  %i.cf = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %i.cc ; 2 uses
+._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50_crit_edge: ; preds = %bb.r
+  %.pre263 = load ptr, ptr %i.b, align 8, !alias.scope !32
+  br label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50
+
+_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50: ; preds = %._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50_crit_edge, %.thread
+  %9 = phi ptr [ %.pre263, %._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit50_crit_edge ], [ %8, %.thread ]
+  %i.cf = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %i.cc ; 2 uses
   store ptr %.sroa.019.083, ptr %i.cf, align 8, !noalias !33, !captures !6
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
   store i64 %.sroa.11.092, ptr %i.cg, align 8, !noalias !32
@@ -712,6 +718,7 @@ bb.b:                                             ; preds = %bb.t
   br i1 %i.o, label %.lr.ph.i, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.t, %.lr.ph, %bb.a
+  %7 = phi ptr [ inttoptr (i64 8 to ptr), %bb.a ], [ inttoptr (i64 8 to ptr), %.lr.ph ], [ %i.ce, %bb.t ], [ %i.ce, %bb.b ]
   %i.p = phi i64 [ 0, %bb.a ], [ 0, %.lr.ph ], [ %i.u, %bb.t ], [ %i.u, %bb.b ] ; 5 uses
   %.lcssa = phi i64 [ 0, %bb.a ], [ 0, %.lr.ph ], [ %i.ci, %bb.t ], [ %i.ci, %bb.b ] ; 3 uses
   %i.q = icmp ult i64 %.lcssa, %2
@@ -830,11 +837,15 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8grow_oneCskeBJdk8gjxq_17fish_wcstringutil(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c) #21
-          to label %.thread.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit_crit_edge unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.thread.thread:                                   ; preds = %bb.i, %bb.j
-  %7 = load ptr, ptr %i.d, align 8, !alias.scope !125, !nonnull !4, !noundef !4
-  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %i.p ; 2 uses
+._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit_crit_edge: ; preds = %bb.j
+  %.pre103 = load ptr, ptr %i.d, align 8, !alias.scope !125
+  br label %.thread.thread
+
+.thread.thread:                                   ; preds = %bb.i, %._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit_crit_edge
+  %8 = phi ptr [ %.pre103, %._RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8push_mutCskeBJdk8gjxq_17fish_wcstringutil.exit_crit_edge ], [ %7, %bb.i ]
+  %i.ba = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %i.p ; 2 uses
   store ptr %i.ax, ptr %i.ba, align 8, !noalias !126, !captures !6
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store i64 %i.aw, ptr %i.bb, align 8, !noalias !125
@@ -957,7 +968,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %._crit_edge102, %bb.q
-  %i.ce = phi ptr [ %.pre, %._crit_edge102 ], [ %i.x, %bb.q ] ; 2 uses
+  %i.ce = phi ptr [ %.pre, %._crit_edge102 ], [ %i.x, %bb.q ] ; 4 uses
   %i.cf = getelementptr inbounds nuw [16 x i8], ptr %i.ce, i64 %i.w ; 2 uses
   store ptr %i.be, ptr %i.cf, align 8, !noalias !133, !captures !6
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8

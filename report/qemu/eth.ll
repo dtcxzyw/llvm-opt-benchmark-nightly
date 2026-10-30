@@ -202,7 +202,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i64 0, 19) i64 @eth_strip_vlan_ex(ptr noundef %0, i32 noundef %1, i64 noundef %2, i32 noundef %3, i16 noundef zeroext %4, i16 noundef zeroext %5, ptr noundef %6, ptr nofree noundef writeonly captures(none) %7, ptr nofree noundef writeonly captures(none) %8) local_unnamed_addr #2 {
 bb.a:
-  %9 = alloca %struct.vlan_header, align 4        ; 7 uses
+  %9 = alloca %struct.vlan_header, align 4        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #7
   switch i32 %3, label %bb.m [
     i32 0, label %bb.b
@@ -275,13 +275,13 @@ iov_to_buf.exit:                                  ; preds = %bb.d, %iov_to_buf.e
 bb.i:                                             ; preds = %iov_to_buf.exit.thread, %iov_to_buf.exit
   %.03048 = phi i64 [ 14, %iov_to_buf.exit.thread ], [ %.030, %iov_to_buf.exit ] ; 2 uses
   %.03147 = phi ptr [ %i.a, %iov_to_buf.exit.thread ], [ %.031, %iov_to_buf.exit ] ; 2 uses
-  store i32 0, ptr %9, align 4, !annotation !7
   %.031.val = load i16, ptr %.03147, align 1
   %i.s = tail call i16 @llvm.bswap.i16(i16 %.031.val)
   %.not33 = icmp eq i16 %i.s, %4
   br i1 %.not33, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
+  store i32 0, ptr %9, align 4, !annotation !7
   %i.t = add i64 %.03048, %2                      ; 5 uses
   %.not52 = icmp eq i32 %1, 0
   br i1 %.not52, label %iov_to_buf.exit43, label %bb.k
@@ -299,9 +299,9 @@ iov_to_buf.exit43.thread:                         ; preds = %bb.k
   %i.x = load ptr, ptr %0, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.t
   %i.z = load i32, ptr %i.y, align 1              ; 2 uses
-  store i32 %i.z, ptr %9, align 4
   %10 = lshr i32 %i.z, 16
-  %i.aa = trunc nuw i32 %10 to i16
+  %11 = trunc nuw i32 %10 to i16
+  %i.aa = trunc i32 %i.z to i16
   br label %bb.l
 
 iov_to_buf.exit43:                                ; preds = %bb.j, %bb.k
@@ -311,17 +311,18 @@ iov_to_buf.exit43:                                ; preds = %bb.j, %bb.k
 
 iov_to_buf.exit43._crit_edge:                     ; preds = %iov_to_buf.exit43
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %9, i64 2
-  %.pre.a = load i16, ptr %.phi.trans.insert, align 2
+  %.pre = load i16, ptr %.phi.trans.insert, align 2
+  %.pre.a = load i16, ptr %9, align 4
   br label %bb.l
 
 bb.l:                                             ; preds = %iov_to_buf.exit43._crit_edge, %iov_to_buf.exit43.thread
   %i.ad = phi i16 [ %.pre.a, %iov_to_buf.exit43._crit_edge ], [ %i.aa, %iov_to_buf.exit43.thread ]
-  store i16 %i.ad, ptr %.03147, align 1
+  %12 = phi i16 [ %.pre, %iov_to_buf.exit43._crit_edge ], [ %11, %iov_to_buf.exit43.thread ]
+  store i16 %12, ptr %.03147, align 1
   %i.ae = trunc i64 %i.t to i16
   %i.af = add i16 %i.ae, 4
   store i16 %i.af, ptr %7, align 2
-  %11 = load i16, ptr %9, align 4
-  %i.ag = call noundef i16 @llvm.bswap.i16(i16 %11)
+  %i.ag = call noundef i16 @llvm.bswap.i16(i16 %i.ad)
   store i16 %i.ag, ptr %8, align 2
   br label %bb.m
 

@@ -205,6 +205,7 @@ _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_125DecimalArithmeticBindDataESt14default_
   resume { ptr, i32 } %lpad.phi30
 
 bb.i:                                             ; preds = %bb.b
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !354)
   switch i8 %i.f, label %bb.j [
     i8 11, label %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread
     i8 12, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit8.i
@@ -247,15 +248,15 @@ _ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataC
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread, %.noexc
+  %.sroa.4.sroa.0.0 = phi i64 [ %.sroa.5.0, %.noexc ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %.sroa.0.0 = phi ptr [ %.sroa.039.0, %.noexc ], [ %_ZN6duckdb14ScalarFunction14BinaryFunctionIdddNS_11AddOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
-  %.sroa.4.0 = phi i64 [ %.sroa.5.0, %.noexc ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ad = phi ptr [ %i.z, %.noexc ], [ %i.ab, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ae = phi ptr [ %i.y, %.noexc ], [ %i.aa, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.af = phi ptr [ %i.v, %.noexc ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ag = phi ptr [ %i.x, %.noexc ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   store ptr %.sroa.0.0, ptr %4, align 16
   %.sroa.4.0..sroa_idx35 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx35, align 8, !tbaa !41
+  store i64 %.sroa.4.sroa.0.0, ptr %.sroa.4.0..sroa_idx35, align 8, !tbaa !41
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i17
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i17: ; preds = %bb.k, %.noexc
@@ -582,14 +583,14 @@ _ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataC
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread
+  %.sroa.4.sroa.0.0 = phi i64 [ %.sroa.5.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %.sroa.0.0 = phi ptr [ %.sroa.049.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ %_ZN6duckdb14ScalarFunction14BinaryFunctionIdddNS_11AddOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
-  %.sroa.4.0 = phi i64 [ %.sroa.5.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ba = phi ptr [ %i.ay, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ %i.ax, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.bb = phi ptr [ %i.at, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.bc = phi ptr [ %i.av, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   store ptr %.sroa.0.0, ptr %3, align 16
   %.sroa.4.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx46, align 8, !tbaa !41
+  store i64 %.sroa.4.sroa.0.0, ptr %.sroa.4.0..sroa_idx46, align 8, !tbaa !41
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i22
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i22: ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_11AddOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread51, %bb.k
@@ -992,6 +993,7 @@ _ZNSt10unique_ptrIN6duckdb12_GLOBAL__N_125DecimalArithmeticBindDataESt14default_
   resume { ptr, i32 } %lpad.phi30
 
 bb.i:                                             ; preds = %bb.b
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !398)
   switch i8 %i.f, label %bb.j [
     i8 11, label %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread
     i8 12, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit8.i
@@ -1034,15 +1036,15 @@ _ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread, %.noexc
+  %.sroa.4.sroa.0.0 = phi i64 [ %.sroa.5.0, %.noexc ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %.sroa.0.0 = phi ptr [ %.sroa.039.0, %.noexc ], [ %_ZN6duckdb14ScalarFunction14BinaryFunctionIdddNS_16SubtractOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
-  %.sroa.4.0 = phi i64 [ %.sroa.5.0, %.noexc ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ad = phi ptr [ %i.z, %.noexc ], [ %i.ab, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ae = phi ptr [ %i.y, %.noexc ], [ %i.aa, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.af = phi ptr [ %i.v, %.noexc ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ag = phi ptr [ %i.x, %.noexc ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   store ptr %.sroa.0.0, ptr %4, align 16
   %.sroa.4.0..sroa_idx35 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx35, align 8, !tbaa !41
+  store i64 %.sroa.4.sroa.0.0, ptr %.sroa.4.0..sroa_idx35, align 8, !tbaa !41
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i17
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i17: ; preds = %bb.k, %.noexc
@@ -1281,14 +1283,14 @@ _ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread
+  %.sroa.4.sroa.0.0 = phi i64 [ %.sroa.5.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %.sroa.0.0 = phi ptr [ %.sroa.049.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ %_ZN6duckdb14ScalarFunction14BinaryFunctionIdddNS_16SubtractOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
-  %.sroa.4.0 = phi i64 [ %.sroa.5.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ba = phi ptr [ %i.ay, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ %i.ax, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.bb = phi ptr [ %i.at, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.bc = phi ptr [ %i.av, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   store ptr %.sroa.0.0, ptr %3, align 16
   %.sroa.4.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx46, align 8, !tbaa !41
+  store i64 %.sroa.4.sroa.0.0, ptr %.sroa.4.0..sroa_idx46, align 8, !tbaa !41
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i22
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i22: ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_16SubtractOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread51, %bb.k
@@ -1691,6 +1693,7 @@ _ZN6duckdb14ScalarFunction19SetFunctionCallbackESt8functionIFvRNS_9DataChunkERNS
   br label %_ZNSt14_Function_baseD2Ev.exit
 
 bb.bw:                                            ; preds = %bb.bq
+  call void @llvm.experimental.noalias.scope.decl(metadata !427)
   switch i8 %i.fv, label %bb.bx [
     i8 11, label %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread
     i8 12, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSIPS7_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS8_E4typeEOSC_.exit8.i
@@ -1733,15 +1736,15 @@ _ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9
   br label %bb.by
 
 bb.by:                                            ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread, %.noexc
+  %.sroa.4.sroa.0.0 = phi i64 [ %.sroa.5.0, %.noexc ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %.sroa.0.0 = phi ptr [ %.sroa.0218.0, %.noexc ], [ %_ZN6duckdb14ScalarFunction14BinaryFunctionIdddNS_16MultiplyOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
-  %.sroa.4.0 = phi i64 [ %.sroa.5.0, %.noexc ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.gq = phi ptr [ %i.gm, %.noexc ], [ %i.go, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.gr = phi ptr [ %i.gl, %.noexc ], [ %i.gn, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.gs = phi ptr [ %i.gi, %.noexc ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.gt = phi ptr [ %i.gk, %.noexc ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   store ptr %.sroa.0.0, ptr %4, align 16
   %.sroa.4.0..sroa_idx214 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx214, align 8, !tbaa !41
+  store i64 %.sroa.4.sroa.0.0, ptr %.sroa.4.0..sroa_idx214, align 8, !tbaa !41
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i94
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i94: ; preds = %bb.by, %.noexc
@@ -2005,14 +2008,14 @@ _ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread
+  %.sroa.4.sroa.0.0 = phi i64 [ %.sroa.5.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %.sroa.0.0 = phi ptr [ %.sroa.049.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ %_ZN6duckdb14ScalarFunction14BinaryFunctionIdddNS_16MultiplyOperatorEEEvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorE.sink, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
-  %.sroa.4.0 = phi i64 [ %.sroa.5.0.copyload, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ 0, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.ba = phi ptr [ %i.ay, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ %i.ax, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.bb = phi ptr [ %i.at, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E9_M_invokeERKSt9_Any_dataS2_S4_S6_, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   %i.bc = phi ptr [ %i.av, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit ], [ @_ZNSt17_Function_handlerIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEPS7_E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread ]
   store ptr %.sroa.0.0, ptr %3, align 16
   %.sroa.4.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx46, align 8, !tbaa !41
+  store i64 %.sroa.4.sroa.0.0, ptr %.sroa.4.0..sroa_idx46, align 8, !tbaa !41
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i22
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i.i22: ; preds = %_ZN6duckdbL23GetScalarBinaryFunctionINS_16MultiplyOperatorEEESt8functionIFvRNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEEENS_12PhysicalTypeE.exit.thread51, %bb.k

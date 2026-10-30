@@ -202,7 +202,7 @@ _ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit49: ; preds = %_ZNSt10file
 
 bb.n:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit49
   %.0 = phi i32 [ 0, %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit49 ], [ %spec.select, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
-  %i.aq = load ptr, ptr %i.aj, align 8, !tbaa !44
+  %i.aq = load ptr, ptr %i.aj, align 8, !tbaa !44 ; 2 uses
   %.not = icmp eq ptr %i.aq, %.pre
   br i1 %.not, label %bb.o, label %bb.ai
 
@@ -229,7 +229,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 24
   %i.bb = load ptr, ptr %i.ba, align 8
   call void %i.bb(ptr noundef nonnull align 8 dereferenceable(16) %.pre) #13, !inline_history !89
-  br label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54
+  br label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54thread-pre-split
 
 bb.r:                                             ; preds = %bb.p
   %i.bc = load i8, ptr @__libc_single_threaded, align 1, !tbaa !19
@@ -248,15 +248,19 @@ bb.t:                                             ; preds = %bb.r
 _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i52: ; preds = %bb.t, %bb.s
   %.0.i.i.i.i.i53 = phi i32 [ %i.au, %bb.s ], [ %i.be, %bb.t ]
   %i.bf = icmp eq i32 %.0.i.i.i.i.i53, 1
-  br i1 %i.bf, label %bb.u, label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54, !prof !33
+  br i1 %i.bf, label %bb.u, label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54thread-pre-split, !prof !33
 
 bb.u:                                             ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i52
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %.pre) #13
+  br label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54thread-pre-split
+
+_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54thread-pre-split: ; preds = %bb.u, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i52, %bb.q
+  %.pr96 = load ptr, ptr %i.aj, align 8, !tbaa !44
   br label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54
 
-_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54: ; preds = %bb.o, %bb.q, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i52, %bb.u
+_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54: ; preds = %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54thread-pre-split, %bb.o
+  %11 = phi ptr [ %.pr96, %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit54thread-pre-split ], [ %i.aq, %bb.o ] ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
-  %11 = load ptr, ptr %i.aj, align 8, !tbaa !44   ; 8 uses
   %.not.i.i.i55 = icmp eq ptr %11, null
   br i1 %.not.i.i.i55, label %_ZNSt10filesystem7__cxx1118directory_iteratorD2Ev.exit59, label %bb.v
 

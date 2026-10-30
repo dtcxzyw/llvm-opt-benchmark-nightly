@@ -204,12 +204,12 @@ bb.an:                                            ; preds = %.thread114
 
 bb.ao:                                            ; preds = %.thread114
   call fastcc void @apply_pitch_filters(ptr noundef nonnull %i.n, ptr noundef %i.r)
-  %i.es = load i32, ptr %i.en, align 8, !tbaa !37
+  %i.es = load i32, ptr %i.en, align 8, !tbaa !37 ; 2 uses
   %i.et = icmp eq i32 %i.es, -1
   br i1 %i.et, label %.thread117, label %bb.ap
 
 .thread117:                                       ; preds = %bb.ag, %codebook_sanity_check_for_rate_quarter.exit.thread, %bb.w, %bb.ao, %bb.an, %bb.s, %determine_bitrate.exit.thread
-  %i.eu = phi ptr [ %i.en, %bb.ao ], [ %i.en, %bb.an ], [ %i.af, %determine_bitrate.exit.thread ], [ %i.ai, %bb.s ], [ %i.ai, %bb.w ], [ %i.ai, %codebook_sanity_check_for_rate_quarter.exit.thread ], [ %i.ai, %bb.ag ] ; 2 uses
+  %i.eu = phi ptr [ %i.en, %bb.ao ], [ %i.en, %bb.an ], [ %i.af, %determine_bitrate.exit.thread ], [ %i.ai, %bb.s ], [ %i.ai, %bb.w ], [ %i.ai, %codebook_sanity_check_for_rate_quarter.exit.thread ], [ %i.ai, %bb.ag ] ; 3 uses
   store i32 -1, ptr %i.eu, align 8, !tbaa !37
   %i.ev = getelementptr inbounds nuw i8, ptr %i.n, i64 99 ; 2 uses
   %i.ew = load i8, ptr %i.ev, align 1, !tbaa !40
@@ -219,6 +219,7 @@ bb.ao:                                            ; preds = %.thread114
   call fastcc void @compute_svector(ptr noundef nonnull %i.n, ptr noundef %i.h, ptr noundef %i.r)
   %i.ey = call fastcc i32 @decode_lspf(ptr noundef nonnull %i.n, ptr noundef %i.f) ; 0 uses
   call fastcc void @apply_pitch_filters(ptr noundef nonnull %i.n, ptr noundef %i.r)
+  %.pre132 = load i32, ptr %i.eu, align 8, !tbaa !37
   br label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
@@ -227,11 +228,11 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %.thread117
-  %i.fa = phi ptr [ %i.en, %bb.ap ], [ %i.eu, %.thread117 ] ; 5 uses
+  %4 = phi i32 [ %i.es, %bb.ap ], [ %.pre132, %.thread117 ] ; 2 uses
+  %i.fa = phi ptr [ %i.en, %bb.ap ], [ %i.eu, %.thread117 ] ; 4 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.n, i64 3368 ; 4 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %i.n, i64 104 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
-  %4 = load i32, ptr %i.fa, align 8, !tbaa !37    ; 2 uses
   %i.fd = icmp sgt i32 %4, 1
   br i1 %i.fd, label %.thread.i93, label %bb.ar
 

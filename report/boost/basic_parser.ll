@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !351, !noalias !1576 ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !351, !noalias !1576 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.g = load i8, ptr %i.f, align 8, !tbaa !352, !noalias !1576 ; 6 uses
@@ -269,7 +269,7 @@ bb.g:                                             ; preds = %bb.a
 .sink.split.i.i.i.i.i.i:                          ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS0_12const_bufferES5_S5_S5_EEEEEEEDTcldtfp_5beginEERT_NS0_10constraintIXntsr14is_convertibleIPKS9_PKNS0_14mutable_bufferEEE5valueEiE4typeENSB_IXntsr14is_convertibleISD_PKS5_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_SE_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_S5_EE5valueEiE4typeE.exit.thread
   %.sink = phi i8 [ 0, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS0_12const_bufferES5_S5_S5_EEEEEEEDTcldtfp_5beginEERT_NS0_10constraintIXntsr14is_convertibleIPKS9_PKNS0_14mutable_bufferEEE5valueEiE4typeENSB_IXntsr14is_convertibleISD_PKS5_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_SE_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_S5_EE5valueEiE4typeE.exit.thread ], [ %i.g, %bb.g ], [ %i.g, %bb.f ], [ %i.g, %bb.e ], [ %i.g, %bb.d ], [ %i.g, %bb.c ]
   %i.y = phi ptr [ %i.i, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS0_12const_bufferES5_S5_S5_EEEEEEEDTcldtfp_5beginEERT_NS0_10constraintIXntsr14is_convertibleIPKS9_PKNS0_14mutable_bufferEEE5valueEiE4typeENSB_IXntsr14is_convertibleISD_PKS5_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_SE_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_S5_EE5valueEiE4typeE.exit.thread ], [ %i.x, %bb.g ], [ %i.u, %bb.f ], [ %i.r, %bb.e ], [ %i.o, %bb.d ], [ %i.l, %bb.c ] ; 5 uses
-  %i.z = phi ptr [ %i.h, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS0_12const_bufferES5_S5_S5_EEEEEEEDTcldtfp_5beginEERT_NS0_10constraintIXntsr14is_convertibleIPKS9_PKNS0_14mutable_bufferEEE5valueEiE4typeENSB_IXntsr14is_convertibleISD_PKS5_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_SE_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_S5_EE5valueEiE4typeE.exit.thread ], [ %i.w, %bb.g ], [ %i.t, %bb.f ], [ %i.q, %bb.e ], [ %i.n, %bb.d ], [ %i.k, %bb.c ] ; 3 uses
+  %i.z = phi ptr [ %i.h, %_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_16buffers_cat_viewIJNS0_12const_bufferES5_S5_S5_EEEEEEEDTcldtfp_5beginEERT_NS0_10constraintIXntsr14is_convertibleIPKS9_PKNS0_14mutable_bufferEEE5valueEiE4typeENSB_IXntsr14is_convertibleISD_PKS5_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_SE_EE5valueEiE4typeENSB_IXntsr14is_convertibleIS9_S5_EE5valueEiE4typeE.exit.thread ], [ %i.w, %bb.g ], [ %i.t, %bb.f ], [ %i.q, %bb.e ], [ %i.n, %bb.d ], [ %i.k, %bb.c ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   store i8 %.sink, ptr %i.aa, align 8, !tbaa !352
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
@@ -280,29 +280,30 @@ bb.g:                                             ; preds = %bb.a
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.t, %.sink.split.i.i.i.i.i.i
+  %.pre59 = phi ptr [ %i.d, %.sink.split.i.i.i.i.i.i ], [ %.pre59.pre, %bb.t ] ; 2 uses
   %i.af = phi ptr [ %0, %.sink.split.i.i.i.i.i.i ], [ %.pre, %bb.t ] ; 2 uses
   %.011 = phi i64 [ %1, %.sink.split.i.i.i.i.i.i ], [ %i.bp, %bb.t ] ; 4 uses
   %i.ag = icmp eq ptr %i.af, %0
-  br i1 %i.ag, label %bb.i, label %bb.k
+  br i1 %i.ag, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %6 = load ptr, ptr %i.z, align 8, !tbaa !351
-  %7 = icmp eq ptr %6, %0
-  br i1 %7, label %bb.j, label %bb.k
+  %.pre60 = load i8, ptr %i.aa, align 8, !tbaa !352, !noalias !1577
+  br label %bb.k
 
-bb.j:                                             ; preds = %bb.i
-  %i.ah = load i8, ptr %i.aa, align 8, !tbaa !352
+bb.j:                                             ; preds = %bb.h
+  %6 = icmp eq ptr %.pre59, %0
+  %i.ah = load i8, ptr %i.aa, align 8, !tbaa !352 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.ah, 5
-  br i1 %.not.i.i.i.i, label %_ZNK5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorneERKS7_.exit, label %bb.k
+  %or.cond = select i1 %6, i1 %.not.i.i.i.i, i1 false
+  br i1 %or.cond, label %_ZNK5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorneERKS7_.exit, label %bb.k
 
-bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
+bb.k:                                             ; preds = %bb.i, %bb.j
+  %7 = phi i8 [ %.pre60, %bb.i ], [ %i.ah, %bb.j ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
   call void @llvm.experimental.noalias.scope.decl(metadata !1577)
-  %8 = load ptr, ptr %i.z, align 8, !tbaa !351, !noalias !1577
-  store ptr %8, ptr %5, align 8, !tbaa !351, !alias.scope !1577
+  store ptr %.pre59, ptr %5, align 8, !tbaa !351, !alias.scope !1577
   store i8 0, ptr %i.ad, align 8, !tbaa !352, !alias.scope !1577
-  %9 = load i8, ptr %i.aa, align 8, !tbaa !352, !noalias !1577 ; 3 uses
-  switch i8 %9, label %bb.l [
+  switch i8 %7, label %bb.l [
     i8 0, label %_ZN5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorC2ERKS7_.exit.i
     i8 1, label %bb.m
     i8 2, label %bb.n
@@ -340,12 +341,12 @@ bb.q:                                             ; preds = %bb.k
   br label %.sink.split.i.i.i.i.i.i.i
 
 .sink.split.i.i.i.i.i.i.i:                        ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
-  store i8 %9, ptr %i.ad, align 8, !tbaa !352, !alias.scope !1577
+  store i8 %7, ptr %i.ad, align 8, !tbaa !352, !alias.scope !1577
   br label %_ZN5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorC2ERKS7_.exit.i
 
 _ZN5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorC2ERKS7_.exit.i: ; preds = %.sink.split.i.i.i.i.i.i.i, %bb.k
   store ptr %i.af, ptr %i.ae, align 8, !tbaa !366, !alias.scope !1577
-  %i.an = zext nneg i8 %9 to i64
+  %i.an = zext nneg i8 %7 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31, !noalias !1577
   store ptr %i.z, ptr %4, align 8, !tbaa !363, !noalias !1577
   call void @_ZN5boost4mp116detail19mp_with_index_impl_ILm6EE4callILm0ENS_5beast16buffers_cat_viewIJNS_4asio12const_bufferES8_S8_S8_EE14const_iterator9incrementEEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSC_(i64 noundef %i.an, ptr noundef nonnull align 8 dereferenceable(8) %4)
@@ -423,6 +424,7 @@ bb.t:                                             ; preds = %_ZNK5boost5beast14b
   %i.br = add i64 %i.bq, %.pn.i
   store i64 %i.br, ptr %i.a, align 8, !tbaa !371
   %.pre = load ptr, ptr %i.ab, align 8, !tbaa !366
+  %.pre59.pre = load ptr, ptr %i.z, align 8, !tbaa !351
   br label %bb.h
 
 _ZNK5boost5beast14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES4_S4_S4_EEEE14const_iteratorneERKS7_.exit: ; preds = %bb.j, %.thread

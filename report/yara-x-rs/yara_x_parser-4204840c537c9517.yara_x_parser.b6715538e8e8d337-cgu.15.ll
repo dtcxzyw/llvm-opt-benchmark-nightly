@@ -202,10 +202,10 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i64
   %i.dl = icmp eq i64 %.sroa.0.0.i44, %.sroa.16.0113264
   br i1 %i.dl, label %bb.t, label %bb.s
 
-.lr.ph38.i57:                                     ; preds = %.lr.ph38.i57.preheader, %.lr.ph38.i57
-  %.sroa.9.236.i58 = phi ptr [ %i.dr, %.lr.ph38.i57 ], [ %.sroa.9.1.lcssa.i48, %.lr.ph38.i57.preheader ] ; 2 uses
-  %.sroa.27.235.i59 = phi i64 [ %i.dq, %.lr.ph38.i57 ], [ %.sroa.27.1.lcssa.i47, %.lr.ph38.i57.preheader ] ; 2 uses
-  %.sroa.43.234.i60 = phi ptr [ %i.dn, %.lr.ph38.i57 ], [ %.sroa.43.1.lcssa.i46, %.lr.ph38.i57.preheader ]
+.lr.ph38.i57:                                     ; preds = %.lr.ph38.i57, %.lr.ph38.i57.preheader
+  %.sroa.9.236.i58 = phi ptr [ %.sroa.9.1.lcssa.i48, %.lr.ph38.i57.preheader ], [ %i.dr, %.lr.ph38.i57 ] ; 2 uses
+  %.sroa.27.235.i59 = phi i64 [ %.sroa.27.1.lcssa.i47, %.lr.ph38.i57.preheader ], [ %i.dq, %.lr.ph38.i57 ] ; 2 uses
+  %.sroa.43.234.i60 = phi ptr [ %.sroa.43.1.lcssa.i46, %.lr.ph38.i57.preheader ], [ %i.dn, %.lr.ph38.i57 ]
   %.val.i61 = load i64, ptr %.sroa.9.236.i58, align 8, !alias.scope !83, !noundef !7 ; 2 uses
   %i.dm = icmp uge i64 %.val14.i62, %.val.i61     ; 2 uses
   %i.dn = getelementptr inbounds i8, ptr %.sroa.43.234.i60, i64 -8 ; 3 uses
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = icmp samesign ult i64 %i.e, %i.f
   tail call void @llvm.assume(i1 %i.g)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 31 uses
-  %i.i = load ptr, ptr %i.h, align 8, !nonnull !7, !noundef !7 ; 17 uses
+  %i.i = load ptr, ptr %i.h, align 8, !nonnull !7, !noundef !7 ; 19 uses
   %i.j = icmp ult i64 %i.c, 288230376151711745
   tail call void @llvm.assume(i1 %i.j)
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %i.e ; 5 uses
@@ -861,7 +861,7 @@ bb.p:                                             ; preds = %bb.o
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit159.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit159.i: ; preds = %bb.p, %bb.o
-  %i.bt = phi ptr [ %.pre30, %bb.p ], [ %i.i, %bb.o ] ; 3 uses
+  %i.bt = phi ptr [ %.pre30, %bb.p ], [ %i.i, %bb.o ] ; 5 uses
   %i.bu = getelementptr inbounds nuw [32 x i8], ptr %i.bt, i64 %i.c ; 4 uses
   store i64 0, ptr %i.bu, align 8, !noalias !367
   %.sroa.4278.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
@@ -1121,7 +1121,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit168.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit168.i: ; preds = %bb.ag, %bb.af
-  %i.ek = phi ptr [ %.pre46.a, %bb.ag ], [ %i.ef, %bb.af ] ; 2 uses
+  %i.ek = phi ptr [ %.pre46.a, %bb.ag ], [ %i.ef, %bb.af ] ; 3 uses
   %i.el = getelementptr inbounds nuw [32 x i8], ptr %i.ek, i64 %i.eg ; 4 uses
   store i64 0, ptr %i.el, align 8, !noalias !399
   %.sroa.4222.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.el, i64 8
@@ -1136,6 +1136,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser
   br i1 %i.en, label %._crit_edge.i, label %bb.af
 
 ._crit_edge.i:                                    ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit168.i, %bb.k
+  %1 = phi ptr [ %i.i, %bb.k ], [ %i.ek, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit168.i ]
   %i.eo = phi i64 [ %i.c, %bb.k ], [ %i.em, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit168.i ] ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.at, i64 24 ; 2 uses
   %i.eq = load i32, ptr %i.ep, align 8, !range !351, !noundef !7
@@ -1150,11 +1151,12 @@ bb.ah:                                            ; preds = %._crit_edge.i
 
 bb.ai:                                            ; preds = %bb.ah
   tail call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBR_4ExprNtBP_10DFSContextEEE8grow_oneBT_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22, !noalias !405
+  %.pre51 = load ptr, ptr %i.h, align 8, !alias.scope !404
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit169.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit169.i: ; preds = %bb.ai, %bb.ah
-  %1 = load ptr, ptr %i.h, align 8, !alias.scope !404, !nonnull !7, !noundef !7
-  %i.et = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %i.eo ; 4 uses
+  %2 = phi ptr [ %.pre51, %bb.ai ], [ %1, %bb.ah ]
+  %i.et = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.eo ; 4 uses
   store i64 0, ptr %i.et, align 8, !noalias !403
   %.sroa.4226.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   store ptr %i.ep, ptr %.sroa.4226.0..sroa_idx.i, align 8, !noalias !403
@@ -1336,6 +1338,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser
   %.sink86 = phi ptr [ %i.hi, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit177.i ], [ %i.he, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit176.i ] ; 3 uses
   %.sink85 = phi ptr [ %i.hf, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit177.i ], [ %i.hb, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit176.i ]
   %.sink83 = phi i64 [ 1, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit177.i ], [ 2, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit176.i ]
+  %.ph = phi ptr [ %i.hh, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit177.i ], [ %i.hd, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit176.i ]
   %.sroa.4250.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sink86, i64 8
   store ptr %.sink85, ptr %.sroa.4250.0..sroa_idx.i, align 8, !noalias !7
   %.sroa.5251.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sink86, i64 16
@@ -1347,6 +1350,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser
   br label %bb.au
 
 bb.au:                                            ; preds = %.sink.split, %bb.l
+  %3 = phi ptr [ %i.i, %bb.l ], [ %.ph, %.sink.split ]
   %.pre.i = phi i64 [ %i.c, %bb.l ], [ %i.gr, %.sink.split ] ; 3 uses
   %i.gs = load i64, ptr %i.bb, align 8, !range !11, !noundef !7
   %i.gt = trunc nuw i64 %i.gs to i1
@@ -1389,7 +1393,7 @@ bb.ax:                                            ; preds = %_RNvMsG_NtCsexYYUdY
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit176.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit176.i: ; preds = %bb.ax, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit175.i
-  %i.hd = phi ptr [ %.pre38.a, %bb.ax ], [ %i.gy, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit175.i ]
+  %i.hd = phi ptr [ %.pre38.a, %bb.ax ], [ %i.gy, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit175.i ] ; 2 uses
   %i.he = getelementptr inbounds nuw [32 x i8], ptr %i.hd, i64 %i.ha ; 2 uses
   store i64 0, ptr %i.he, align 8, !noalias !430
   br label %.sink.split
@@ -1406,7 +1410,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit177.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit177.i: ; preds = %bb.az, %bb.ay
-  %i.hh = phi ptr [ %.pre35.a, %bb.az ], [ %i.i, %bb.ay ]
+  %i.hh = phi ptr [ %.pre35.a, %bb.az ], [ %i.i, %bb.ay ] ; 2 uses
   %i.hi = getelementptr inbounds nuw [32 x i8], ptr %i.hh, i64 %i.c ; 2 uses
   store i64 0, ptr %i.hi, align 8, !noalias !435
   br label %.sink.split
@@ -1432,6 +1436,7 @@ bb.ba:                                            ; preds = %bb.au
   br i1 %i.hs, label %bb.bd, label %_RNvNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs9dfs_enter.exit
 
 bb.bb:                                            ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit178.i, %.lr.ph318.i
+  %4 = phi ptr [ %3, %.lr.ph318.i ], [ %5, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit178.i ]
   %i.ht = phi i64 [ %.pre.i, %.lr.ph318.i ], [ %i.hy, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit178.i ] ; 3 uses
   %.sroa.482.0317.i = phi ptr [ %i.ho, %.lr.ph318.i ], [ %i.hu, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit178.i ]
   %i.hu = getelementptr inbounds i8, ptr %.sroa.482.0317.i, i64 -16 ; 3 uses
@@ -1442,11 +1447,12 @@ bb.bb:                                            ; preds = %_RNvMsG_NtCsexYYUdY
 
 bb.bc:                                            ; preds = %bb.bb
   tail call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBR_4ExprNtBP_10DFSContextEEE8grow_oneBT_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22, !noalias !438
+  %.pre43 = load ptr, ptr %i.h, align 8, !alias.scope !437
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit178.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit178.i: ; preds = %bb.bc, %bb.bb
-  %2 = load ptr, ptr %i.h, align 8, !alias.scope !437, !nonnull !7, !noundef !7
-  %i.hx = getelementptr inbounds nuw [32 x i8], ptr %2, i64 %i.ht ; 4 uses
+  %5 = phi ptr [ %.pre43, %bb.bc ], [ %4, %bb.bb ] ; 2 uses
+  %i.hx = getelementptr inbounds nuw [32 x i8], ptr %5, i64 %i.ht ; 4 uses
   store i64 0, ptr %i.hx, align 8, !noalias !436
   %.sroa.4262.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.hx, i64 8
   store ptr %i.hu, ptr %.sroa.4262.0..sroa_idx.i, align 8, !noalias !436
@@ -1513,17 +1519,19 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser
 bb.bh:                                            ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit159.i
   %i.ik = getelementptr inbounds nuw i8, ptr %i.bq, i64 80
   tail call void @llvm.experimental.noalias.scope.decl(metadata !445)
-  %i.il = load i64, ptr %i.a, align 8, !range !10, !alias.scope !446, !noundef !7
+  %i.il = load i64, ptr %i.a, align 8, !range !10, !alias.scope !446, !noundef !7 ; 2 uses
   %i.im = icmp eq i64 %i.bv, %i.il
   br i1 %i.im, label %bb.bi, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i
 
 bb.bi:                                            ; preds = %bb.bh
   tail call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBR_4ExprNtBP_10DFSContextEEE8grow_oneBT_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22, !noalias !447
   %.pre32 = load ptr, ptr %i.h, align 8, !alias.scope !446
+  %.pre33 = load i64, ptr %i.a, align 8, !range !10, !alias.scope !448
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i: ; preds = %bb.bi, %bb.bh
-  %i.in = phi ptr [ %.pre32, %bb.bi ], [ %i.bt, %bb.bh ]
+  %6 = phi i64 [ %.pre33, %bb.bi ], [ %i.il, %bb.bh ] ; 2 uses
+  %i.in = phi ptr [ %.pre32, %bb.bi ], [ %i.bt, %bb.bh ] ; 2 uses
   %i.io = getelementptr inbounds nuw [32 x i8], ptr %i.in, i64 %i.bv ; 4 uses
   store i64 0, ptr %i.io, align 8, !noalias !445
   %.sroa.4282.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.io, i64 8
@@ -1532,10 +1540,9 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser
   store i64 7, ptr %.sroa.5283.0..sroa_idx.i, align 8, !noalias !445
   %.sroa.6284.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.io, i64 24
   store ptr %.sroa.420.0.copyload, ptr %.sroa.6284.0..sroa_idx.i, align 8, !noalias !445
-  %i.ip = add nuw nsw i64 %i.c, 2                 ; 4 uses
+  %i.ip = add nuw nsw i64 %i.c, 2                 ; 3 uses
   store i64 %i.ip, ptr %i.b, align 8, !alias.scope !446
-  %3 = load i64, ptr %i.a, align 8, !range !10, !alias.scope !448, !noundef !7
-  %i.iq = icmp eq i64 %i.ip, %3
+  %i.iq = icmp eq i64 %i.ip, %6
   br i1 %i.iq, label %.loopexit312.sink.split.sink.split.i, label %.loopexit312.sink.split.i
 
 bb.bj:                                            ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit159.i
@@ -1558,18 +1565,19 @@ bb.bk:                                            ; preds = %_RNvMsG_NtCsexYYUdY
   br i1 %i.iz, label %.loopexit312.sink.split.sink.split.i, label %.loopexit312.sink.split.i
 
 .loopexit312.sink.split.sink.split.i:             ; preds = %bb.bk, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i
-  %.sink362.ph.i = phi i64 [ %i.ip, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %i.bv, %bb.bk ]
+  %.sink362.ph.i = phi i64 [ %6, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %i.bv, %bb.bk ]
   %.sink358.ph.i = phi ptr [ %i.bw, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %i.ix, %bb.bk ]
   %.sink356.ph.i = phi i64 [ 3, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ 2, %bb.bk ]
   tail call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBR_4ExprNtBP_10DFSContextEEE8grow_oneBT_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22, !noalias !7
+  %.pre34 = load ptr, ptr %i.h, align 8, !alias.scope !348
   br label %.loopexit312.sink.split.i
 
 .loopexit312.sink.split.i:                        ; preds = %.loopexit312.sink.split.sink.split.i, %bb.bk, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i
+  %7 = phi ptr [ %i.bt, %bb.bk ], [ %i.in, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %.pre34, %.loopexit312.sink.split.sink.split.i ] ; 2 uses
   %.sink362.i = phi i64 [ %i.bv, %bb.bk ], [ %i.ip, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %.sink362.ph.i, %.loopexit312.sink.split.sink.split.i ]
   %.sink358.i = phi ptr [ %i.ix, %bb.bk ], [ %i.bw, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %.sink358.ph.i, %.loopexit312.sink.split.sink.split.i ]
   %.sink356.i = phi i64 [ 2, %bb.bk ], [ 3, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit181.i ], [ %.sink356.ph.i, %.loopexit312.sink.split.sink.split.i ]
-  %4 = load ptr, ptr %i.h, align 8, !alias.scope !348, !nonnull !7, !noundef !7
-  %i.ja = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %.sink362.i ; 4 uses
+  %i.ja = getelementptr inbounds nuw [32 x i8], ptr %7, i64 %.sink362.i ; 4 uses
   store i64 0, ptr %i.ja, align 8, !noalias !7
   %.sroa.4294.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ja, i64 8
   store ptr %.sink358.i, ptr %.sroa.4294.0..sroa_idx.i, align 8, !noalias !7
@@ -1582,6 +1590,7 @@ bb.bk:                                            ; preds = %_RNvMsG_NtCsexYYUdY
   br label %.loopexit312.i
 
 .loopexit312.i:                                   ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit184.i, %.loopexit312.sink.split.i, %bb.bj
+  %8 = phi ptr [ %7, %.loopexit312.sink.split.i ], [ %i.bt, %bb.bj ], [ %i.jl, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit184.i ]
   %i.jc = phi i64 [ %i.jb, %.loopexit312.sink.split.i ], [ %i.bv, %bb.bj ], [ %i.jn, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit184.i ] ; 3 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %i.bq, i64 24
   %i.je = load i32, ptr %i.jd, align 8, !range !363, !noundef !7
@@ -1604,7 +1613,7 @@ bb.bl:                                            ; preds = %.lr.ph316.i
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit184.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit184.i: ; preds = %bb.bl, %.lr.ph316.i
-  %i.jl = phi ptr [ %.pre31, %bb.bl ], [ %i.jg, %.lr.ph316.i ] ; 2 uses
+  %i.jl = phi ptr [ %.pre31, %bb.bl ], [ %i.jg, %.lr.ph316.i ] ; 3 uses
   %i.jm = getelementptr inbounds nuw [32 x i8], ptr %i.jl, i64 %i.jh ; 4 uses
   store i64 0, ptr %i.jm, align 8, !noalias !450
   %.sroa.4290.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jm, i64 8
@@ -1627,11 +1636,12 @@ bb.bm:                                            ; preds = %.loopexit312.i
 
 bb.bn:                                            ; preds = %bb.bm
   tail call void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBR_4ExprNtBP_10DFSContextEEE8grow_oneBT_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a) #22, !noalias !455
+  %.pre35 = load ptr, ptr %i.h, align 8, !alias.scope !454
   br label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit185.i
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsfF8zpZz1lvn_13yara_x_parser3ast3dfs8DFSEventTRNtBK_4ExprNtBI_10DFSContextEEE8push_mutBM_.exit185.i: ; preds = %bb.bn, %bb.bm
-  %5 = load ptr, ptr %i.h, align 8, !alias.scope !454, !nonnull !7, !noundef !7
-  %i.jr = getelementptr inbounds nuw [32 x i8], ptr %5, i64 %i.jc ; 4 uses
+  %9 = phi ptr [ %.pre35, %bb.bn ], [ %8, %bb.bm ]
+  %i.jr = getelementptr inbounds nuw [32 x i8], ptr %9, i64 %i.jc ; 4 uses
   store i64 0, ptr %i.jr, align 8, !noalias !453
   %.sroa.4298.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jr, i64 8
   store ptr %.sroa.0120.0.i, ptr %.sroa.4298.0..sroa_idx.i, align 8, !noalias !453

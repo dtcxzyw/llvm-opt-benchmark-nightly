@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !67   ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 264 ; 3 uses
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !68   ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 264 ; 2 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !68   ; 3 uses
   %i.i = tail call noalias ptr @png_realloc_array(ptr noundef nonnull %0, ptr noundef %i.f, i32 noundef %i.h, i32 noundef %3, i64 noundef 32) #11 ; 3 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.c, label %.lr.ph
@@ -226,6 +226,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.l
+  %4 = phi i32 [ %i.h, %.lr.ph ], [ %5, %bb.l ]   ; 2 uses
   %.057 = phi ptr [ %i.o, %.lr.ph ], [ %.1, %bb.l ] ; 8 uses
   %.04656 = phi i32 [ %3, %.lr.ph ], [ %i.au, %bb.l ] ; 2 uses
   %.04755 = phi ptr [ %2, %.lr.ph ], [ %i.av, %bb.l ] ; 5 uses
@@ -304,12 +305,12 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.g
   %i.as = getelementptr inbounds nuw i8, ptr %.057, i64 32
-  %4 = load i32, ptr %i.g, align 8, !tbaa !68
-  %i.at = add nsw i32 %4, 1
+  %i.at = add nsw i32 %4, 1                       ; 2 uses
   store i32 %i.at, ptr %i.g, align 8, !tbaa !68
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.i
+  %5 = phi i32 [ %i.at, %bb.k ], [ %4, %bb.i ]
   %.1 = phi ptr [ %i.as, %bb.k ], [ %.057, %bb.i ]
   %i.au = add nsw i32 %.04656, -1
   %i.av = getelementptr inbounds nuw i8, ptr %.04755, i64 32

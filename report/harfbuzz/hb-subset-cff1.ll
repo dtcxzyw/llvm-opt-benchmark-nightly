@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit
   %i.i = phi ptr [ %.promoted37, %.lr.ph ], [ %i.gq, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 4 uses
-  %i.j = phi i32 [ %.promoted, %.lr.ph ], [ %2, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ]
-  %i.k = phi i32 [ %.promoted31, %.lr.ph ], [ %3, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ]
+  %i.j = phi i32 [ %.promoted, %.lr.ph ], [ %2, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 3 uses
+  %i.k = phi i32 [ %.promoted31, %.lr.ph ], [ %3, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 3 uses
   %i.l = phi ptr [ %.promoted33, %.lr.ph ], [ %i.gp, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 3 uses
   %i.m = load ptr, ptr %0, align 8, !tbaa !818, !nonnull !127, !align !323 ; 4 uses
   %i.n = load ptr, ptr %.pre, align 8, !tbaa !452 ; 4 uses
@@ -609,12 +609,16 @@ bb.am:                                            ; preds = %bb.al
   br label %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit
 
 _ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit: ; preds = %bb.am, %.critedge.i.i
-  %2 = add i32 %i.j, -1                           ; 2 uses
-  %i.gp = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  %3 = add i32 %i.k, -1                           ; 2 uses
-  %i.gq = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %4 = icmp ne i32 %2, 0
-  %5 = icmp ne i32 %3, 0
+  %.not.i.i.i.i.i.i1.not = icmp eq i32 %i.j, 0
+  %.idx = select i1 %.not.i.i.i.i.i.i1.not, i64 0, i64 24, !prof !86
+  %i.gp = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
+  %2 = tail call i32 @llvm.usub.sat.i32(i32 %i.j, i32 1)
+  %.not.i.i1.i.i.i.i2.not = icmp eq i32 %i.k, 0
+  %.idx43 = select i1 %.not.i.i1.i.i.i.i2.not, i64 0, i64 24, !prof !86
+  %i.gq = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx43
+  %3 = tail call i32 @llvm.usub.sat.i32(i32 %i.k, i32 1)
+  %4 = icmp ugt i32 %i.j, 1
+  %5 = icmp ugt i32 %i.k, 1
   %i.gr = select i1 %4, i1 %5, i1 false
   br i1 %i.gr, label %bb.b, label %._crit_edge, !llvm.loop !813
 

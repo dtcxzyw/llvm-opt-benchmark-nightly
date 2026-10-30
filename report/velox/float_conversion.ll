@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20240
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !29 ; 5 uses
   %i.ak = icmp slt i32 %i.aj, 0
   %narrow = select i1 %i.ak, i32 6, i32 %i.aj     ; 3 uses
-  %spec.select = zext i32 %narrow to i64          ; 10 uses
+  %spec.select = zext i32 %narrow to i64          ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
   store i32 0, ptr %i.f, align 4, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
@@ -456,14 +456,15 @@ _ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.s
 
 bb.aa:                                            ; preds = %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit51.i.i
   %i.dp = call fastcc noundef ptr @_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastENS0_7uint128EPcim(i64 %i.ap, i64 0, ptr noundef %i.cr, i32 noundef %i.cj, i64 noundef %spec.select)
+  %.val.i.i.pre.pre = load i64, ptr %i.as, align 8, !tbaa !41
   br label %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i
 
 _ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i: ; preds = %.lr.ph.i52.i.i, %bb.aa, %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.sink.split.i.i.i, %bb.x, %._crit_edge.i.i.i
+  %.val.i.i.pre = phi i64 [ %.val.i.i.pre.pre, %bb.aa ], [ %spec.select, %._crit_edge.i.i.i ], [ %spec.select, %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.sink.split.i.i.i ], [ %spec.select, %bb.x ], [ %spec.select, %.lr.ph.i52.i.i ]
   %i.dq = phi ptr [ %i.dp, %bb.aa ], [ %.0.lcssa.i54.i.i, %._crit_edge.i.i.i ], [ %.0.lcssa.i54.i.i, %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.sink.split.i.i.i ], [ %.0.lcssa.i54.i.i, %bb.x ], [ %.024.i.i.i, %.lr.ph.i52.i.i ]
   %i.dr = load i8, ptr %i.cs, align 1, !tbaa !26
   %.not.i.i = icmp eq i8 %i.dr, 48
   %spec.select.i.i = select i1 %.not.i.i, ptr %i.cq, ptr %i.cs
-  %.val.i.i.pre = load i64, ptr %i.as, align 8, !tbaa !41
   br label %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i
 
 _ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i: ; preds = %.preheader.i.i.i, %bb.r, %_ZN4absl12lts_2024011619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i

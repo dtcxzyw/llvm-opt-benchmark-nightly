@@ -204,7 +204,11 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ah
   %i.cw = add nsw i64 %i.cv, -1
   %i.cx = icmp eq i64 %i.cw, %indvars.iv
   %or.cond = and i1 %i.bl, %i.cx
-  br i1 %or.cond, label %bb.al, label %bb.aq
+  br i1 %or.cond, label %bb.al, label %._crit_edge131
+
+._crit_edge131:                                   ; preds = %bb.ak
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !202
+  br label %bb.aq
 
 bb.al:                                            ; preds = %bb.ak
   %i.cy = load ptr, ptr %i.au, align 8, !tbaa !195
@@ -215,7 +219,7 @@ bb.am:                                            ; preds = %bb.al
   %i.da = load ptr, ptr %i.au, align 8, !tbaa !195
   %i.db = load ptr, ptr %i.b, align 8, !tbaa !202
   %i.dc = invoke ptr @ggml_get_rows(ptr noundef %i.da, ptr noundef %i.db, ptr noundef nonnull %i.ao)
-          to label %bb.an unwind label %bb.ai
+          to label %bb.an unwind label %bb.ai     ; 2 uses
 
 bb.an:                                            ; preds = %bb.am
   store ptr %i.dc, ptr %i.b, align 8, !tbaa !202
@@ -240,11 +244,11 @@ bb.ap:                                            ; preds = %bb.ao
   %i.dp = invoke ptr @ggml_reshape_3d(ptr noundef %i.dl, ptr noundef nonnull %i.dk, i64 noundef %i.dm, i64 noundef %i.r, i64 noundef %i.do)
           to label %bb.aq unwind label %bb.ai
 
-bb.aq:                                            ; preds = %bb.ap, %bb.ak
-  %.2.a = phi ptr [ %.196, %bb.ak ], [ %i.dp, %bb.ap ]
-  %.1.a = phi ptr [ %.0, %bb.ak ], [ %i.cz, %bb.ap ]
-  %3 = load ptr, ptr %i.b, align 8, !tbaa !202
-  %i.dq = invoke noundef ptr @_ZN20llama_model_qwen4exp5graph16build_hc_combineEP11ggml_tensorS2_S2_i(ptr noundef nonnull align 8 dereferenceable(440) %0, ptr noundef %.2.a, ptr noundef %.1.a, ptr noundef %3, i32 noundef %i.by)
+bb.aq:                                            ; preds = %._crit_edge131, %bb.ap
+  %.2.a = phi ptr [ %.pre, %._crit_edge131 ], [ %i.dc, %bb.ap ]
+  %.1.a = phi ptr [ %.196, %._crit_edge131 ], [ %i.dp, %bb.ap ]
+  %.1 = phi ptr [ %.0, %._crit_edge131 ], [ %i.cz, %bb.ap ]
+  %i.dq = invoke noundef ptr @_ZN20llama_model_qwen4exp5graph16build_hc_combineEP11ggml_tensorS2_S2_i(ptr noundef nonnull align 8 dereferenceable(440) %0, ptr noundef %.1.a, ptr noundef %.1, ptr noundef %.2.a, i32 noundef %i.by)
           to label %bb.ar unwind label %bb.ai     ; 2 uses
 
 bb.ar:                                            ; preds = %bb.aq

@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.bv = zext i32 %i.bb to i64                   ; 5 uses
-  %i.bw = tail call ptr @slurm_xcalloc(i64 noundef %i.bv, i64 noundef 16, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 186, ptr noundef nonnull @__func__.part_data_build_row_bitmaps) #7 ; 8 uses
+  %i.bw = tail call ptr @slurm_xcalloc(i64 noundef %i.bv, i64 noundef 16, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 186, ptr noundef nonnull @__func__.part_data_build_row_bitmaps) #7 ; 9 uses
   store ptr %i.bw, ptr %i.c, align 8
   %i.bx = load i16, ptr %i.i, align 8
   %.not193 = icmp eq i16 %i.bx, 0
@@ -224,13 +224,13 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph169:                                        ; preds = %.lr.ph169.preheader, %.lr.ph169
   %indvars.iv210 = phi i64 [ 0, %.lr.ph169.preheader ], [ %indvars.iv.next211, %.lr.ph169 ] ; 3 uses
-  %indvars.iv208 = phi i64 [ %i.cc, %.lr.ph169.preheader ], [ %indvars.iv.next209, %.lr.ph169 ] ; 2 uses
+  %indvars.iv208 = phi i64 [ %i.cc, %.lr.ph169.preheader ], [ %indvars.iv.next209, %.lr.ph169 ] ; 3 uses
   %i.cd = phi ptr [ %i.bz, %.lr.ph169.preheader ], [ %i.da, %.lr.ph169 ]
   %i.ce = load ptr, ptr %i.cd, align 8
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.ce, i64 %indvars.iv210
   %i.cg = load ptr, ptr %i.cf, align 8
-  %i.ch = getelementptr inbounds [16 x i8], ptr %i.bw, i64 %indvars.iv208 ; 5 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 3 uses
+  %i.ch = getelementptr inbounds [16 x i8], ptr %i.bw, i64 %indvars.iv208 ; 3 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 2 uses
   store ptr %i.cg, ptr %i.ci, align 8
   %i.cj = load ptr, ptr %i.g, align 8
   %i.ck = getelementptr inbounds nuw [32 x i8], ptr %i.cj, i64 %indvars.iv215
@@ -245,13 +245,15 @@ bb.o:                                             ; preds = %bb.n
   store i32 %i.cr, ptr %i.ch, align 8
   %i.cs = tail call i32 @cr_get_coremap_offset(i32 noundef %i.cr) #7
   store i32 %i.cs, ptr %i.ch, align 8
-  %i.ct = load ptr, ptr %i.ci, align 8
+  %3 = getelementptr inbounds [16 x i8], ptr %i.bw, i64 %indvars.iv208 ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ct = load ptr, ptr %4, align 8
   %i.cu = load ptr, ptr %i.ct, align 8
   %i.cv = tail call i64 @bit_ffs(ptr noundef %i.cu) #7
-  %i.cw = load i32, ptr %i.ch, align 8
+  %i.cw = load i32, ptr %3, align 8
   %i.cx = trunc i64 %i.cv to i32
   %i.cy = add i32 %i.cw, %i.cx
-  store i32 %i.cy, ptr %i.ch, align 8
+  store i32 %i.cy, ptr %3, align 8
   %indvars.iv.next209 = add nsw i64 %indvars.iv208, 1 ; 2 uses
   %indvars.iv.next211 = add nuw nsw i64 %indvars.iv210, 1 ; 2 uses
   %i.cz = load ptr, ptr %i.g, align 8             ; 2 uses

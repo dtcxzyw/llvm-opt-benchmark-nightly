@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.an, %bb.al
   %i.fp = call fastcc ptr @decAddOp(ptr noundef nonnull %.0170, ptr noundef nonnull %.0170, ptr noundef nonnull %.0176, ptr noundef nonnull %4, i8 noundef zeroext 0, ptr noundef %3) ; 0 uses
   %i.fq = call fastcc ptr @decMultiplyOp(ptr noundef nonnull %.0176, ptr noundef nonnull %.0176, ptr noundef nonnull %.1188, ptr noundef nonnull %5, ptr noundef %i.c) ; 0 uses
   %i.fr = call fastcc ptr @decDivideOp(ptr noundef nonnull %.0176, ptr noundef nonnull %.0176, ptr noundef nonnull %10, ptr noundef nonnull %5, i8 noundef zeroext -128, ptr noundef %i.c) ; 0 uses
-  %i.fs = load i32, ptr %.0170, align 4, !tbaa !19 ; 2 uses
+  %i.fs = load i32, ptr %.0170, align 4, !tbaa !19 ; 3 uses
   %i.ft = load i32, ptr %i.fh, align 4, !tbaa !18
   %i.fu = add nsw i32 %i.ft, %i.fs
   %i.fv = load i32, ptr %.0176, align 4, !tbaa !19
@@ -228,10 +228,10 @@ bb.ao:                                            ; preds = %bb.am
 .thread240:                                       ; preds = %bb.s, %bb.r, %bb.ao
   %.1169257 = phi i32 [ %spec.select, %bb.ao ], [ 8, %bb.r ], [ 8, %bb.s ]
   %.2256 = phi ptr [ %.0170, %bb.ao ], [ %9, %bb.r ], [ %9, %bb.s ]
-  %.2174255 = phi ptr [ %.0172, %bb.ao ], [ null, %bb.r ], [ null, %bb.s ] ; 4 uses
-  %.2178253 = phi ptr [ %.0176, %bb.ao ], [ %8, %bb.r ], [ %8, %bb.s ] ; 14 uses
-  %.2181252 = phi ptr [ %.0179, %bb.ao ], [ null, %bb.r ], [ null, %bb.s ] ; 4 uses
-  %.4250 = phi ptr [ %.2185, %bb.ao ], [ null, %bb.r ], [ null, %bb.s ] ; 4 uses
+  %.2174255 = phi ptr [ %.0172, %bb.ao ], [ null, %bb.r ], [ null, %bb.s ]
+  %.2178253 = phi ptr [ %.0176, %bb.ao ], [ %8, %bb.r ], [ %8, %bb.s ] ; 12 uses
+  %.2181252 = phi ptr [ %.0179, %bb.ao ], [ null, %bb.r ], [ null, %bb.s ]
+  %.4250 = phi ptr [ %.2185, %bb.ao ], [ null, %bb.r ], [ null, %bb.s ]
   %.1190248 = phi i32 [ %i.dw, %bb.ao ], [ 9, %bb.r ], [ 9, %bb.s ]
   %i.ga = zext nneg i32 %.1169257 to i64
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr @DECPOWERS, i64 %i.ga
@@ -259,7 +259,7 @@ bb.ap:                                            ; preds = %bb.ax, %.thread240
 bb.aq:                                            ; preds = %bb.ap
   %i.gj = and i32 %i.gh, 512
   %.not219 = icmp eq i32 %i.gj, 0
-  br i1 %.not219, label %bb.ar, label %.loopexit
+  br i1 %.not219, label %bb.ar, label %.loopexit.loopexit
 
 bb.ar:                                            ; preds = %bb.aq
   %i.gk = load i16, ptr %i.gg, align 2, !tbaa !21
@@ -275,7 +275,7 @@ bb.at:                                            ; preds = %bb.as
   %i.go = load i8, ptr %i.ge, align 4, !tbaa !17
   %i.gp = and i8 %i.go, 112
   %i.gq = icmp eq i8 %i.gp, 0
-  br i1 %i.gq, label %.loopexit, label %bb.au
+  br i1 %i.gq, label %.loopexit.loopexit, label %bb.au
 
 bb.au:                                            ; preds = %bb.ar, %bb.as, %bb.at, %bb.ap
   %i.gr = shl i32 %.0, 1                          ; 2 uses
@@ -284,12 +284,12 @@ bb.au:                                            ; preds = %bb.ar, %bb.as, %bb.
 
 bb.av:                                            ; preds = %bb.au
   %i.gt = icmp eq i32 %.0162, 31
-  br i1 %i.gt, label %.loopexit, label %bb.aw
+  br i1 %i.gt, label %.loopexit.loopexit, label %bb.aw
 
 .thread258:                                       ; preds = %bb.au
   %i.gu = call fastcc ptr @decMultiplyOp(ptr noundef nonnull %.2178253, ptr noundef nonnull %.2178253, ptr noundef nonnull %.2256, ptr noundef nonnull %4, ptr noundef %3) ; 0 uses
   %i.gv = icmp eq i32 %.0162, 31
-  br i1 %i.gv, label %.loopexit, label %.thread261
+  br i1 %i.gv, label %.loopexit.loopexit, label %.thread261
 
 bb.aw:                                            ; preds = %bb.av
   %.not220 = icmp eq i32 %.0163, 0
@@ -304,17 +304,21 @@ bb.ax:                                            ; preds = %bb.aw, %.thread261
   %i.gx = add nuw nsw i32 %.0162, 1
   br label %bb.ap
 
-.loopexit:                                        ; preds = %.thread258, %bb.at, %bb.aq, %bb.av, %bb.ao
-  %.2174254 = phi ptr [ %.0172, %bb.ao ], [ %.2174255, %bb.av ], [ %.2174255, %bb.aq ], [ %.2174255, %bb.at ], [ %.2174255, %.thread258 ]
-  %.2181251 = phi ptr [ %.0179, %bb.ao ], [ %.2181252, %bb.av ], [ %.2181252, %bb.aq ], [ %.2181252, %bb.at ], [ %.2181252, %.thread258 ]
-  %.4249 = phi ptr [ %.2185, %bb.ao ], [ %.4250, %bb.av ], [ %.4250, %bb.aq ], [ %.4250, %bb.at ], [ %.4250, %.thread258 ]
-  %.3 = phi ptr [ %.0170, %bb.ao ], [ %.2178253, %bb.av ], [ %.2178253, %bb.aq ], [ %.2178253, %bb.at ], [ %.2178253, %.thread258 ] ; 6 uses
+.loopexit.loopexit:                               ; preds = %bb.av, %bb.aq, %bb.at, %.thread258
+  %.pre295.pre = load i32, ptr %.2178253, align 4, !tbaa !19
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.ao
+  %.pre295 = phi i32 [ %i.fs, %bb.ao ], [ %.pre295.pre, %.loopexit.loopexit ] ; 2 uses
+  %.2174254 = phi ptr [ %.0172, %bb.ao ], [ %.2174255, %.loopexit.loopexit ]
+  %.2181251 = phi ptr [ %.0179, %bb.ao ], [ %.2181252, %.loopexit.loopexit ]
+  %.4249 = phi ptr [ %.2185, %bb.ao ], [ %.4250, %.loopexit.loopexit ]
+  %.3 = phi ptr [ %.0170, %bb.ao ], [ %.2178253, %.loopexit.loopexit ] ; 4 uses
   store i32 1, ptr %i.d, align 4, !tbaa !23
   %i.gy = getelementptr inbounds nuw i8, ptr %.3, i64 10 ; 2 uses
   %i.gz = load i16, ptr %i.gy, align 2, !tbaa !21
   %i.ha = icmp eq i16 %i.gz, 0
-  %.pre296 = load i32, ptr %.3, align 4, !tbaa !19 ; 2 uses
-  %i.hb = icmp eq i32 %.pre296, 1
+  %i.hb = icmp eq i32 %.pre295, 1
   %or.cond314 = select i1 %i.ha, i1 %i.hb, i1 false
   br i1 %or.cond314, label %bb.ay, label %bb.ba
 
@@ -327,11 +331,9 @@ bb.ay:                                            ; preds = %.loopexit
 
 bb.az:                                            ; preds = %bb.ay
   store i32 0, ptr %i.d, align 4, !tbaa !23
-  %.pre295 = load i32, ptr %.3, align 4, !tbaa !19
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay, %.loopexit
-  %12 = phi i32 [ %.pre295, %bb.az ], [ 1, %bb.ay ], [ %.pre296, %.loopexit ]
   %i.hg = load i32, ptr %2, align 4, !tbaa !27
   store i32 %i.hg, ptr %4, align 4, !tbaa !27
   %i.hh = getelementptr inbounds nuw i8, ptr %.3, i64 8
@@ -342,7 +344,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %.lo
   %i.hl = load i32, ptr %i.hk, align 4, !tbaa !18
   %i.hm = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.hl, ptr %i.hm, align 4, !tbaa !18
-  call fastcc void @decSetCoeff(ptr noundef %0, ptr noundef nonnull readonly %4, ptr noundef nonnull readonly %i.gy, i32 noundef %12, ptr noundef nonnull %i.d, ptr noundef nonnull %3)
+  call fastcc void @decSetCoeff(ptr noundef %0, ptr noundef nonnull readonly %4, ptr noundef nonnull readonly %i.gy, i32 noundef %.pre295, ptr noundef nonnull %i.d, ptr noundef nonnull %3)
   call fastcc void @decFinalize(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %i.d, ptr noundef %3)
   br label %decNumberCopy.exit
 

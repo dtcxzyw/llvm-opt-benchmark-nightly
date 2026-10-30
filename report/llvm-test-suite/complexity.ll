@@ -204,15 +204,15 @@ bb.h:                                             ; preds = %_ZN9benchmark8inter
   %i.cn = extractelement <2 x double> %i.cm, i64 1
   %i.co = tail call double @sqrt(double noundef %i.cn) #21, !tbaa !9, !noalias !91
   %i.cp = extractelement <2 x double> %i.cm, i64 0
-  %i.cq = fdiv double %i.co, %i.cp                ; 2 uses
-  store double %.sroa.076.0, ptr %0, align 8, !tbaa !30
+  %i.cq = fdiv double %i.co, %i.cp
   %.sroa.677.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store double %i.cq, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !30
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store i32 1, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !25
   br label %bb.i
 
 _ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit:  ; preds = %bb.k
+  store double %i.fd, ptr %.sroa.677.0..sroa_idx, align 8
+  store double %.sroa.069.0109, ptr %0, align 8
+  store i32 %6, ptr %.sroa.7.0..sroa_idx, align 8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef 20) #23
   br label %bb.q
 
@@ -220,7 +220,9 @@ bb.i:                                             ; preds = %.loopexit86, %bb.k
   %i.cr = phi ptr [ %i.m, %.loopexit86 ], [ %i.eq, %bb.k ] ; 4 uses
   %i.cs = phi ptr [ %i.l, %.loopexit86 ], [ %i.er, %bb.k ]
   %.sroa.073.0.idx106 = phi i64 [ 0, %.loopexit86 ], [ %.sroa.073.0.add, %bb.k ] ; 2 uses
-  %i.ct = phi double [ %i.cq, %.loopexit86 ], [ %i.fd, %bb.k ] ; 2 uses
+  %4 = phi double [ %i.cq, %.loopexit86 ], [ %i.fd, %bb.k ] ; 3 uses
+  %i.ct = phi double [ %.sroa.076.0, %.loopexit86 ], [ %.sroa.069.0109, %bb.k ] ; 2 uses
+  %5 = phi i32 [ 1, %.loopexit86 ], [ %6, %bb.k ] ; 2 uses
   %.sroa.073.0.ptr107 = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.073.0.idx106 ; 2 uses
   %i.cu = load i32, ptr %.sroa.073.0.ptr107, align 4, !tbaa !36
   %switch.tableidx = add i32 %i.cu, -2            ; 2 uses
@@ -320,25 +322,27 @@ _ZN9benchmark12FittingCurveENS_4BigOE.exit:       ; preds = %bb.i, %switch.looku
   %i.ex = extractelement <2 x double> %i.ew, i64 1
   %i.ey = tail call double @sqrt(double noundef %i.ex) #21, !tbaa !9, !noalias !93
   %i.ez = extractelement <2 x double> %i.ew, i64 0
-  %i.fa = fdiv double %i.ey, %i.ez                ; 3 uses
-  %i.fb = fcmp olt double %i.fa, %i.ct
+  %i.fa = fdiv double %i.ey, %i.ez                ; 2 uses
+  %i.fb = fcmp olt double %i.fa, %4
   br i1 %i.fb, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.loopexit
-  store double %.sroa.069.0, ptr %0, align 8, !tbaa !30
-  store double %i.fa, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !30
   %i.fc = load i32, ptr %.sroa.073.0.ptr107, align 4, !tbaa !36
-  store i32 %i.fc, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !25
   br label %bb.k
 
 _ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph47.i32, %.lr.ph.i26
   %lpad.loopexit.split-lp185 = landingpad { ptr, i32 }
           cleanup
+  store double %4, ptr %.sroa.677.0..sroa_idx, align 8
+  store double %i.ct, ptr %0, align 8
+  store i32 %5, ptr %.sroa.7.0..sroa_idx, align 8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef 20) #23
   resume { ptr, i32 } %lpad.loopexit.split-lp185
 
 bb.k:                                             ; preds = %bb.j, %.loopexit
-  %i.fd = phi double [ %i.fa, %bb.j ], [ %i.ct, %.loopexit ]
+  %6 = phi i32 [ %i.fc, %bb.j ], [ %5, %.loopexit ] ; 2 uses
+  %.sroa.069.0109 = phi double [ %.sroa.069.0, %bb.j ], [ %i.ct, %.loopexit ] ; 2 uses
+  %i.fd = phi double [ %i.fa, %bb.j ], [ %4, %.loopexit ] ; 2 uses
   %.sroa.073.0.add = add nuw nsw i64 %.sroa.073.0.idx106, 4 ; 2 uses
   %.not = icmp eq i64 %.sroa.073.0.add, 20
   br i1 %.not, label %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit, label %bb.i

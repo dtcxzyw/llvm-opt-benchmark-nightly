@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.o
   %.sroa.0.023 = phi ptr [ %.sroa.0.020, %.lr.ph ], [ %.sroa.0.0, %bb.o ] ; 7 uses
-  %.pn22 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.023, %bb.o ] ; 15 uses
+  %.pn22 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.023, %bb.o ] ; 18 uses
   %i.q = call noundef zeroext i1 %2(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.0.023, ptr noundef nonnull align 8 dereferenceable(120) %0), !inline_history !11
   br i1 %i.q, label %bb.c, label %bb.n
 
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %.pn22, i64 128
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !38   ; 2 uses
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !38   ; 3 uses
   %i.w = icmp ult i64 %i.v, 16
   call void @llvm.assume(i1 %i.w)
   %i.x = add nuw nsw i64 %i.v, 1
@@ -229,14 +229,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store ptr %i.r, ptr %3, align 8, !tbaa !37
   %i.y = load i64, ptr %i.s, align 8, !tbaa !40
   store i64 %i.y, ptr %i.b, align 8, !tbaa !40
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pn22, i64 128
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !38
   br label %_ZN5vcpkg11PackageSpecC2EOS0_.exit.i
 
 _ZN5vcpkg11PackageSpecC2EOS0_.exit.i:             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %.pn22, i64 128 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !38
-  store i64 %5, ptr %i.c, align 8, !tbaa !38
+  %4 = phi i64 [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %i.v, %bb.d ]
+  %5 = getelementptr inbounds nuw i8, ptr %.pn22, i64 128
+  store i64 %4, ptr %i.c, align 8, !tbaa !38
   store ptr %i.s, ptr %.sroa.0.023, align 8, !tbaa !37
-  store i64 0, ptr %4, align 8, !tbaa !38
+  store i64 0, ptr %5, align 8, !tbaa !38
   store i8 0, ptr %i.s, align 8, !tbaa !40
   %i.z = getelementptr inbounds nuw i8, ptr %.pn22, i64 152
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !159
@@ -250,7 +252,7 @@ _ZN5vcpkg11PackageSpecC2EOS0_.exit.i:             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.e:                                             ; preds = %_ZN5vcpkg11PackageSpecC2EOS0_.exit.i
   %i.af = getelementptr inbounds nuw i8, ptr %.pn22, i64 168
-  %i.ag = load i64, ptr %i.af, align 8, !tbaa !38 ; 2 uses
+  %i.ag = load i64, ptr %i.af, align 8, !tbaa !38 ; 3 uses
   %i.ah = icmp ult i64 %i.ag, 16
   call void @llvm.assume(i1 %i.ah)
   %i.ai = add nuw nsw i64 %i.ag, 1
@@ -261,14 +263,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store ptr %i.ac, ptr %i.e, align 8, !tbaa !37
   %i.aj = load i64, ptr %i.ad, align 8, !tbaa !40
   store i64 %i.aj, ptr %i.f, align 8, !tbaa !40
+  %.phi.trans.insert24 = getelementptr inbounds nuw i8, ptr %.pn22, i64 168
+  %.pre25 = load i64, ptr %.phi.trans.insert24, align 8, !tbaa !38
   br label %_ZN5vcpkg7VersionC2EOS0_.exit.i.i
 
 _ZN5vcpkg7VersionC2EOS0_.exit.i.i:                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i, %bb.e
-  %6 = getelementptr inbounds nuw i8, ptr %.pn22, i64 168 ; 2 uses
-  %7 = load i64, ptr %6, align 8, !tbaa !38
-  store i64 %7, ptr %i.g, align 8, !tbaa !38
+  %6 = phi i64 [ %.pre25, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.ag, %bb.e ]
+  %7 = getelementptr inbounds nuw i8, ptr %.pn22, i64 168
+  store i64 %6, ptr %i.g, align 8, !tbaa !38
   store ptr %i.ad, ptr %i.ab, align 8, !tbaa !37
-  store i64 0, ptr %6, align 8, !tbaa !38
+  store i64 0, ptr %7, align 8, !tbaa !38
   store i8 0, ptr %i.ad, align 8, !tbaa !40
   %i.ak = getelementptr inbounds nuw i8, ptr %.pn22, i64 192
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !42
@@ -282,7 +286,7 @@ _ZN5vcpkg7VersionC2EOS0_.exit.i.i:                ; preds = %_ZNKSt7__cxx1112bas
 
 bb.f:                                             ; preds = %_ZN5vcpkg7VersionC2EOS0_.exit.i.i
   %i.aq = getelementptr inbounds nuw i8, ptr %.pn22, i64 208
-  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !38 ; 2 uses
+  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !38 ; 3 uses
   %i.as = icmp ult i64 %i.ar, 16
   call void @llvm.assume(i1 %i.as)
   %i.at = add nuw nsw i64 %i.ar, 1
@@ -293,14 +297,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i3.
   store ptr %i.an, ptr %i.i, align 8, !tbaa !37
   %i.au = load i64, ptr %i.ao, align 8, !tbaa !40
   store i64 %i.au, ptr %i.j, align 8, !tbaa !40
+  %.phi.trans.insert26 = getelementptr inbounds nuw i8, ptr %.pn22, i64 208
+  %.pre27 = load i64, ptr %.phi.trans.insert26, align 8, !tbaa !38
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i3.i.i, %bb.f
-  %8 = getelementptr inbounds nuw i8, ptr %.pn22, i64 208 ; 2 uses
-  %9 = load i64, ptr %8, align 8, !tbaa !38
-  store i64 %9, ptr %i.k, align 8, !tbaa !38
+  %8 = phi i64 [ %.pre27, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i3.i.i ], [ %i.ar, %bb.f ]
+  %9 = getelementptr inbounds nuw i8, ptr %.pn22, i64 208
+  store i64 %8, ptr %i.k, align 8, !tbaa !38
   store ptr %i.ao, ptr %i.am, align 8, !tbaa !37
-  store i64 0, ptr %8, align 8, !tbaa !38
+  store i64 0, ptr %9, align 8, !tbaa !38
   store i8 0, ptr %i.ao, align 8, !tbaa !40
   %i.av = getelementptr inbounds nuw i8, ptr %.pn22, i64 232
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !42

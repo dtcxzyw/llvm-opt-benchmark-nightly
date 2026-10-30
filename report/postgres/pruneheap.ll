@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
   store i16 16, ptr %15, align 2
   %i.aa = zext nneg i32 %8 to i64                 ; 2 uses
   tail call void @pg_qsort(ptr noundef %7, i64 noundef %i.aa, i64 noundef 12, ptr noundef nonnull @heap_log_freeze_cmp) #8
-  %i.ab = load i32, ptr %7, align 4
+  %i.ab = load i32, ptr %7, align 4               ; 2 uses
   store i32 %i.ab, ptr %16, align 16
   %i.ac = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.ad = getelementptr inbounds nuw i8, ptr %16, i64 4
@@ -223,20 +223,25 @@ bb.l:                                             ; preds = %bb.k
   br i1 %exitcond.peel.not.i, label %heap_log_freeze_plan.exit, label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %bb.l, %bb.q
+  %21 = phi i32 [ %i.ak, %bb.q ], [ %i.ab, %bb.l ]
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.q ], [ 1, %bb.l ] ; 3 uses
   %.02126.i = phi i32 [ %.1.i, %bb.q ], [ 1, %bb.l ] ; 2 uses
-  %.02225.i = phi ptr [ %.123.i, %bb.q ], [ %16, %bb.l ] ; 11 uses
+  %.02225.i = phi ptr [ %.123.i, %bb.q ], [ %16, %bb.l ] ; 10 uses
   %i.aj = getelementptr inbounds nuw [12 x i8], ptr %7, i64 %indvars.iv.i ; 8 uses
-  %21 = load i32, ptr %.02225.i, align 4
-  %i.ak = load i32, ptr %i.aj, align 4            ; 2 uses
+  %i.ak = load i32, ptr %i.aj, align 4            ; 3 uses
   %i.al = icmp eq i32 %21, %i.ak
-  br i1 %i.al, label %bb.m, label %heap_log_freeze_eq.exit.i
+  br i1 %i.al, label %bb.m, label %.peel.next.i.heap_log_freeze_eq.exit.i_crit_edge
+
+.peel.next.i.heap_log_freeze_eq.exit.i_crit_edge: ; preds = %.peel.next.i
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
+  %.pre = load i16, ptr %.phi.trans.insert, align 4
+  br label %heap_log_freeze_eq.exit.i
 
 bb.m:                                             ; preds = %.peel.next.i
   %i.am = getelementptr inbounds nuw i8, ptr %.02225.i, i64 4
-  %i.an = load i16, ptr %i.am, align 4
+  %i.an = load i16, ptr %i.am, align 4            ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
-  %i.ap = load i16, ptr %i.ao, align 4
+  %i.ap = load i16, ptr %i.ao, align 4            ; 2 uses
   %i.aq = icmp eq i16 %i.an, %i.ap
   br i1 %i.aq, label %bb.n, label %heap_log_freeze_eq.exit.i
 
@@ -263,13 +268,12 @@ bb.p:                                             ; preds = %bb.o
   store i16 %i.bd, ptr %i.bb, align 2
   br label %bb.q
 
-heap_log_freeze_eq.exit.i:                        ; preds = %bb.o, %bb.n, %bb.m, %.peel.next.i
-  %22 = getelementptr inbounds nuw i8, ptr %.02225.i, i64 12 ; 2 uses
-  store i32 %i.ak, ptr %22, align 4
-  %i.be = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
-  %23 = load i16, ptr %i.be, align 4
+heap_log_freeze_eq.exit.i:                        ; preds = %.peel.next.i.heap_log_freeze_eq.exit.i_crit_edge, %bb.o, %bb.n, %bb.m
+  %22 = phi i16 [ %.pre, %.peel.next.i.heap_log_freeze_eq.exit.i_crit_edge ], [ %i.an, %bb.o ], [ %i.an, %bb.n ], [ %i.ap, %bb.m ]
+  %i.be = getelementptr inbounds nuw i8, ptr %.02225.i, i64 12 ; 2 uses
+  store i32 %i.ak, ptr %i.be, align 4
   %i.bf = getelementptr inbounds nuw i8, ptr %.02225.i, i64 16
-  store i16 %23, ptr %i.bf, align 4
+  store i16 %22, ptr %i.bf, align 4
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aj, i64 6
   %i.bh = load i16, ptr %i.bg, align 2
   %i.bi = getelementptr inbounds nuw i8, ptr %.02225.i, i64 18
@@ -284,7 +288,7 @@ heap_log_freeze_eq.exit.i:                        ; preds = %bb.o, %bb.n, %bb.m,
   br label %bb.q
 
 bb.q:                                             ; preds = %heap_log_freeze_eq.exit.i, %bb.p
-  %.123.i = phi ptr [ %22, %heap_log_freeze_eq.exit.i ], [ %.02225.i, %bb.p ]
+  %.123.i = phi ptr [ %i.be, %heap_log_freeze_eq.exit.i ], [ %.02225.i, %bb.p ]
   %.1.i = phi i32 [ %i.bn, %heap_log_freeze_eq.exit.i ], [ %.02126.i, %bb.p ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.aj, i64 10
   %i.bp = load i16, ptr %i.bo, align 2

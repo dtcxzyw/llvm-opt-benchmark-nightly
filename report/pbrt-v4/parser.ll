@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/parser?download=true
 inline.NumInlined: 5493
-inline.NumDeleted: 1043
+inline.NumDeleted: 1042
 loop-unroll.NumCompletelyUnrolled: 12
 loop-unroll.NumRuntimeUnrolled: 16
 loop-unroll.NumUnrolled: 28
@@ -205,7 +205,7 @@ _ZNKSt6vectorISt4pairIPN4pbrt8AsyncJobIiEEPNS1_17BasicSceneBuilderEESaIS7_EE12_M
 
 _ZNSt6vectorISt4pairIPN4pbrt8AsyncJobIiEEPNS1_17BasicSceneBuilderEESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc1064
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.aov, %.noexc1064 ], [ %i.aoy, %.lr.ph.i.i.i.i.i.i ]
-  %i.aoz = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 16
+  %i.aoz = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 16
   %.not.i23.i.i.i = icmp eq ptr %.sroa.02199.04387, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorISt4pairIPN4pbrt8AsyncJobIiEEPNS1_17BasicSceneBuilderEESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i, label %bb.jd
 
@@ -608,7 +608,7 @@ bb.a:
   %i.f = tail call noundef ptr @_ZN4pstd3pmr19new_delete_resourceEv() #35
   %i.g = ptrtoint ptr %i.f to i64
   store i64 %i.g, ptr %0, align 8, !tbaa !160
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr null, ptr %i.h, align 8, !tbaa !162
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
@@ -644,6 +644,8 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %.lr.ph365, %bb.ba
+  %.pre.pre.i.i = phi ptr [ null, %.lr.ph365 ], [ %i.oe, %bb.ba ] ; 5 uses
+  %.pre.i177 = phi i64 [ 0, %.lr.ph365 ], [ %i.oi, %bb.ba ] ; 17 uses
   %i.w = load ptr, ptr %i.l, align 8, !tbaa !111, !noalias !706
   invoke void %i.w(ptr dead_on_unwind nonnull writable sret(%"class.pstd::optional") align 8 %7, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 4 dereferenceable(4) %i.c)
           to label %bb.c unwind label %.loopexit.split-lp231.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !1
@@ -1046,21 +1048,19 @@ bb.aw:                                            ; preds = %_ZN4pbrt5ErrorIJRKN
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142.thread214: ; preds = %bb.aj, %_ZN4pstd6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_3pmr21polymorphic_allocatorIS6_EEE5clearEv.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit140
-  %16 = load i64, ptr %i.u, align 8, !tbaa !161   ; 16 uses
-  %17 = load ptr, ptr %i.h, align 8, !tbaa !162   ; 5 uses
-  %.not.i.i176 = icmp eq ptr %17, null            ; 3 uses
+  %.not.i.i176 = icmp eq ptr %.pre.pre.i.i, null  ; 3 uses
   %i.lu = load i64, ptr %i.i, align 8             ; 2 uses
   %i.lv = select i1 %.not.i.i176, i64 8, i64 %i.lu
-  %i.lw = icmp eq i64 %16, %i.lv
+  %i.lw = icmp eq i64 %.pre.i177, %i.lv
   br i1 %i.lw, label %bb.ax, label %bb.ba
 
 bb.ax:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142.thread214
-  %i.lx = shl nuw i64 %16, 1
-  %.not.i3.i = icmp sgt i64 %16, 0
+  %i.lx = shl nuw i64 %.pre.i177, 1
+  %.not.i3.i = icmp sgt i64 %.pre.i177, 0
   br i1 %.not.i3.i, label %bb.ay, label %bb.ba
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.ly = shl i64 %16, 4                          ; 2 uses
+  %i.ly = shl i64 %.pre.i177, 4                   ; 2 uses
   %i.lz = icmp eq i64 %i.ly, 0
   br i1 %i.lz, label %iter.check, label %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE15allocate_objectIS4_EEPT_m.exit.i.i
 
@@ -1074,8 +1074,8 @@ _ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE15allocate_objectI
 
 iter.check:                                       ; preds = %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE15allocate_objectIS4_EEPT_m.exit.i.i, %bb.ay
   %.0.i.i.i.i14.i = phi ptr [ null, %bb.ay ], [ %i.me, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE15allocate_objectIS4_EEPT_m.exit.i.i ] ; 14 uses
-  %i.mf = select i1 %.not.i.i176, ptr %i.v, ptr %17 ; 12 uses
-  %min.iters.check = icmp ult i64 %16, 4
+  %i.mf = select i1 %.not.i.i176, ptr %i.v, ptr %.pre.pre.i.i ; 12 uses
+  %min.iters.check = icmp ult i64 %.pre.i177, 4
   %i.mg = ptrtoaddr ptr %i.mf to i64
   %.0.i.i.i.i14.i686 = ptrtoaddr ptr %.0.i.i.i.i14.i to i64
   %i.mh = sub i64 %i.mg, %.0.i.i.i.i14.i686
@@ -1084,12 +1084,12 @@ iter.check:                                       ; preds = %_ZN4pstd3pmr21polym
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check687 = icmp ult i64 %16, 16
+  %min.iters.check687 = icmp ult i64 %.pre.i177, 16
   br i1 %min.iters.check687, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.mi = and i64 %16, 12
-  %n.vec = and i64 %16, 9223372036854775792       ; 4 uses
+  %i.mi = and i64 %.pre.i177, 12
+  %n.vec = and i64 %.pre.i177, 9223372036854775792 ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
@@ -1115,7 +1115,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.mr, label %middle.block, label %vector.body, !llvm.loop !701
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %16, %n.vec
+  %cmp.n = icmp eq i64 %.pre.i177, %n.vec
   br i1 %cmp.n, label %._crit_edge.i.i181, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -1124,7 +1124,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec691 = and i64 %16, 9223372036854775804    ; 3 uses
+  %n.vec691 = and i64 %.pre.i177, 9223372036854775804 ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -1138,12 +1138,12 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.mu, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !702
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n695 = icmp eq i64 %16, %n.vec691
+  %cmp.n695 = icmp eq i64 %.pre.i177, %n.vec691
   br i1 %cmp.n695, label %._crit_edge.i.i181, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.i179.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec691, %vec.epilog.middle.block ] ; 4 uses
-  %i.mv = sub nsw i64 %16, %indvars.iv.i.i179.ph
+  %i.mv = sub nsw i64 %.pre.i177, %indvars.iv.i.i179.ph
   %xtraiter = and i64 %i.mv, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
@@ -1162,7 +1162,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
   %indvars.iv.i.i179.unr = phi i64 [ %indvars.iv.i.i179.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next.i.i180.prol, %vec.epilog.scalar.ph.prol ]
-  %i.mz = sub nsw i64 %indvars.iv.i.i179.ph, %16
+  %i.mz = sub nsw i64 %indvars.iv.i.i179.ph, %.pre.i177
   %i.na = icmp ugt i64 %i.mz, -8
   br i1 %i.na, label %._crit_edge.i.i181, label %vec.epilog.scalar.ph
 
@@ -1175,10 +1175,15 @@ bb.az:                                            ; preds = %._crit_edge.i.i181
   %i.nd = load ptr, ptr %i.nc, align 8, !tbaa !30
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nd, i64 24
   %i.nf = load ptr, ptr %i.ne, align 8
-  invoke void %i.nf(ptr noundef nonnull align 8 dereferenceable(8) %i.nc, ptr noundef nonnull %17, i64 noundef %i.nb, i64 noundef 8)
-          to label %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !700
+  invoke void %i.nf(ptr noundef nonnull align 8 dereferenceable(8) %i.nc, ptr noundef nonnull %.pre.pre.i.i, i64 noundef %i.nb, i64 noundef 8)
+          to label %.noexc184 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !700
 
-_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i: ; preds = %bb.az, %._crit_edge.i.i181
+.noexc184:                                        ; preds = %bb.az
+  %.pre5.pre.i = load i64, ptr %i.u, align 8, !tbaa !161
+  br label %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i
+
+_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i: ; preds = %.noexc184, %._crit_edge.i.i181
+  %.pre5.i = phi i64 [ %.pre5.pre.i, %.noexc184 ], [ %.pre.i177, %._crit_edge.i.i181 ]
   store i64 %i.lx, ptr %i.i, align 8, !tbaa !165
   store ptr %.0.i.i.i.i14.i, ptr %i.h, align 8, !tbaa !162
   br label %bb.ba
@@ -1225,17 +1230,18 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.od = load ptr, ptr %i.oc, align 8, !tbaa !164
   store ptr %i.od, ptr %i.ob, align 8, !tbaa !164
   %indvars.iv.next.i.i180.7 = add nuw nsw i64 %indvars.iv.i.i179, 8 ; 2 uses
-  %exitcond.not.i.i.7 = icmp eq i64 %indvars.iv.next.i.i180.7, %16
+  %exitcond.not.i.i.7 = icmp eq i64 %indvars.iv.next.i.i180.7, %.pre.i177
   br i1 %exitcond.not.i.i.7, label %._crit_edge.i.i181, label %vec.epilog.scalar.ph, !llvm.loop !704
 
 bb.ba:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142.thread214, %bb.ax, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i
-  %i.oe = phi ptr [ %.0.i.i.i.i14.i, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i ], [ %17, %bb.ax ], [ %17, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142.thread214 ] ; 2 uses
+  %i.oe = phi ptr [ %.0.i.i.i.i14.i, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i ], [ %.pre.pre.i.i, %bb.ax ], [ %.pre.pre.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142.thread214 ] ; 3 uses
+  %16 = phi i64 [ %.pre5.i, %_ZN4pstd3pmr21polymorphic_allocatorIPN4pbrt15ParsedParameterEE17deallocate_objectIS4_EEvPT_m.exit.i.i ], [ %.pre.i177, %bb.ax ], [ %.pre.i177, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit142.thread214 ] ; 2 uses
   %.not.i4.i = icmp eq ptr %i.oe, null
   %i.of = select i1 %.not.i4.i, ptr %i.v, ptr %i.oe
   %i.og = getelementptr inbounds nuw [8 x i8], ptr %i.of, i64 %16
   %i.oh = load ptr, ptr %i.d, align 8, !tbaa !164
   store ptr %i.oh, ptr %i.og, align 8, !tbaa !164
-  %i.oi = add i64 %16, 1
+  %i.oi = add i64 %16, 1                          ; 2 uses
   store i64 %i.oi, ptr %i.u, align 8, !tbaa !161
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #35
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #35
@@ -1638,7 +1644,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block, %vec.epilog.middle.block, %.noexc32
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.bs, %.noexc32 ], [ %i.cn, %vec.epilog.middle.block ], [ %i.cc, %middle.block ], [ %i.ct, %.lr.ph.i.i.i.i.i.i ]
-  %i.cu = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 8 ; 2 uses
+  %i.cu = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i23.i.i.i = icmp eq ptr %i.bh, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN4pbrt6Point2IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i, label %bb.q
 

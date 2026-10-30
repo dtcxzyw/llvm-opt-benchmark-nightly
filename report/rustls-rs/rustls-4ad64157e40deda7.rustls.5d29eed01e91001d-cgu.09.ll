@@ -204,12 +204,12 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.cq, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
 .lr.ph.i.split.us:                                ; preds = %.lr.ph.i, %bb.t
-  %i.cr = phi ptr [ %i.cs, %bb.t ], [ %2, %.lr.ph.i ] ; 4 uses
+  %i.cr = phi ptr [ %i.cs, %bb.t ], [ %2, %.lr.ph.i ] ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !2612
-  %i.ct = load ptr, ptr %i.cr, align 8, !noalias !2612, !nonnull !9, !noundef !9
+  %i.ct = load ptr, ptr %i.cr, align 8, !noalias !2612, !nonnull !9, !noundef !9 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  %i.cv = load ptr, ptr %i.cu, align 8, !noalias !2612, !nonnull !9, !align !13, !noundef !9
+  %i.cv = load ptr, ptr %i.cu, align 8, !noalias !2612, !nonnull !9, !align !13, !noundef !9 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 80
   %i.cx = load ptr, ptr %i.cw, align 8, !invariant.load !9, !noalias !2612, !nonnull !9
   invoke void %i.cx(ptr noalias nofree noundef nonnull sret([12 x i8]) align 2 captures(address) dereferenceable(12) %i.k, ptr noundef nonnull %i.ct) #33
@@ -253,12 +253,12 @@ bb.t:                                             ; preds = %_RNCNvMs1_NtNtCs7ZU
   br i1 %i.dk, label %.loopexit140, label %.lr.ph.i.split.us
 
 .lr.ph.i.split:                                   ; preds = %.lr.ph.i, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread.i
-  %i.dl = phi ptr [ %i.dm, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread.i ], [ %2, %.lr.ph.i ] ; 4 uses
+  %i.dl = phi ptr [ %i.dm, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread.i ], [ %2, %.lr.ph.i ] ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !2612
-  %i.dn = load ptr, ptr %i.dl, align 8, !noalias !2612, !nonnull !9, !noundef !9
+  %i.dn = load ptr, ptr %i.dl, align 8, !noalias !2612, !nonnull !9, !noundef !9 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
-  %i.dp = load ptr, ptr %i.do, align 8, !noalias !2612, !nonnull !9, !align !13, !noundef !9
+  %i.dp = load ptr, ptr %i.do, align 8, !noalias !2612, !nonnull !9, !align !13, !noundef !9 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 80
   %i.dr = load ptr, ptr %i.dq, align 8, !invariant.load !9, !noalias !2612, !nonnull !9
   invoke void %i.dr(ptr noalias nofree noundef nonnull sret([12 x i8]) align 2 captures(address) dereferenceable(12) %i.k, ptr noundef nonnull %i.dn) #33
@@ -305,7 +305,8 @@ _RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thr
   br i1 %i.ed, label %.backedge144, label %.lr.ph.split
 
 .loopexit139.split.us:                            ; preds = %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.i.us, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread5.i
-  %i.ee = phi ptr [ %i.dl, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread5.i ], [ %i.cr, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.i.us ]
+  %4 = phi ptr [ %i.dp, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread5.i ], [ %i.cv, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.i.us ]
+  %i.ee = phi ptr [ %i.dn, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.thread5.i ], [ %i.ct, %_RNCNvMs1_NtNtCs7ZUl82OSlxp_6rustls6client3echNtB7_9EchConfig3news_0Bb_.exit.i.us ]
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.0.0189, i64 32
   %i.eg = load atomic i64, ptr @_RNvCs4KeUGOPwGKr_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8 ; 2 uses
   %i.eh = icmp ult i64 %i.eg, 6
@@ -505,11 +506,12 @@ bb.ak:                                            ; preds = %bb.w
   br label %bb.x
 
 _RNvXs4z_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_16EchConfigPayloadNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit: ; preds = %_RNvXs4v_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_17EchConfigContentsNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i, %.noexc71
-  %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %4 = load <2 x ptr>, ptr %i.ee, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(112) %i.m, i64 112, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  store <2 x ptr> %4, ptr %.sroa.428.0..sroa_idx, align 8
+  %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
+  store ptr %i.ee, ptr %.sroa.428.0..sroa_idx, align 8
+  %.sroa.529.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
+  store ptr %4, ptr %.sroa.529.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16EchConfigPayloadENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.v)

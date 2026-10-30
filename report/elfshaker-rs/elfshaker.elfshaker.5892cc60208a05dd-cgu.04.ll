@@ -205,7 +205,12 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   %.sroa.0.0.i39 = phi i64 [ %.sroa.0.0.i, %bb.j ], [ %.sroa.16.097225, %bb.m ] ; 2 uses
   %i.ax = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph104, i64 %.sroa.0.0.i39 ; 2 uses
   %i.ay = icmp ult ptr %.sroa.5.0.i, %i.ax
-  br i1 %i.ay, label %.lr.ph.i.a, label %._crit_edge.i
+  br i1 %i.ay, label %.lr.ph.i, label %._crit_edge.i
+
+.lr.ph.i:                                         ; preds = %bb.l
+  %.val13.i40 = load ptr, ptr %i.av, align 8, !alias.scope !266, !nonnull !5, !noundef !5
+  %.val14.i = load i64, ptr %i.aw, align 8, !alias.scope !266, !noundef !5 ; 2 uses
+  br label %.lr.ph.i.a
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.a, %bb.l
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.l ], [ %i.bh, %.lr.ph.i.a ]
@@ -214,21 +219,19 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   %i.az = icmp eq i64 %.sroa.0.0.i39, %.sroa.16.097225
   br i1 %i.az, label %bb.n, label %bb.m
 
-.lr.ph.i.a:                                       ; preds = %bb.l, %.lr.ph.i.a
-  %.sroa.5.111.i = phi ptr [ %i.bk, %.lr.ph.i.a ], [ %.sroa.5.0.i, %bb.l ] ; 4 uses
-  %.sroa.11.110.i = phi i64 [ %i.bj, %.lr.ph.i.a ], [ %.sroa.11.0.i, %bb.l ] ; 2 uses
-  %.sroa.19.19.i = phi ptr [ %i.bh, %.lr.ph.i.a ], [ %.sroa.19.0.i, %bb.l ]
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.sroa.5.111.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i ], [ %i.bk, %.lr.ph.i.a ] ; 4 uses
+  %.sroa.11.110.i = phi i64 [ %.sroa.11.0.i, %.lr.ph.i ], [ %i.bj, %.lr.ph.i.a ] ; 2 uses
+  %.sroa.19.19.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i ], [ %i.bh, %.lr.ph.i.a ]
   %i.ba = getelementptr i8, ptr %.sroa.5.111.i, i64 8
   %.val.i = load ptr, ptr %i.ba, align 8, !alias.scope !266, !nonnull !5, !noundef !5
   %i.bb = getelementptr i8, ptr %.sroa.5.111.i, i64 16
-  %.val12.i40 = load i64, ptr %i.bb, align 8, !alias.scope !266, !noundef !5 ; 2 uses
-  %.val13.i41 = load ptr, ptr %i.av, align 8, !alias.scope !266, !nonnull !5, !noundef !5
-  %.val14.i.a = load i64, ptr %i.aw, align 8, !alias.scope !266, !noundef !5 ; 2 uses
-  %spec.store.select.i.i.i.i.i.i42 = call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val12.i40, i64 range(i64 0, -9223372036854775808) %.val14.i.a)
-  %i.bc = call i32 @memcmp(ptr nonnull readonly %.val.i, ptr nonnull readonly %.val13.i41, i64 %spec.store.select.i.i.i.i.i.i42), !alias.scope !269, !noalias !270 ; 2 uses
+  %.val14.i.a = load i64, ptr %i.bb, align 8, !alias.scope !266, !noundef !5 ; 2 uses
+  %spec.store.select.i.i.i.i.i.i42 = call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val14.i.a, i64 range(i64 0, -9223372036854775808) %.val14.i)
+  %i.bc = call i32 @memcmp(ptr nonnull readonly %.val.i, ptr nonnull readonly %.val13.i40, i64 %spec.store.select.i.i.i.i.i.i42), !alias.scope !269, !noalias !270 ; 2 uses
   %i.bd = sext i32 %i.bc to i64
   %i.be = icmp eq i32 %i.bc, 0
-  %i.bf = sub nsw i64 %.val12.i40, %.val14.i.a
+  %i.bf = sub nsw i64 %.val14.i.a, %.val14.i
   %spec.select.i.i.i.i.i.i43 = select i1 %i.be, i64 %i.bf, i64 %i.bd ; 2 uses
   %i.bg = icmp slt i64 %spec.select.i.i.i.i.i.i43, 0
   %i.bh = getelementptr inbounds i8, ptr %.sroa.19.19.i, i64 -24 ; 3 uses
@@ -340,7 +343,12 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.sroa.0.0.i50 = phi i64 [ %.sroa.0.0.i, %bb.r ], [ %.sroa.16.097225, %bb.u ] ; 2 uses
   %i.ck = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph104, i64 %.sroa.0.0.i50 ; 2 uses
   %i.cl = icmp ult ptr %.sroa.5.0.i49, %i.ck
-  br i1 %i.cl, label %.lr.ph.i59.a, label %._crit_edge.i51
+  br i1 %i.cl, label %.lr.ph.i59, label %._crit_edge.i51
+
+.lr.ph.i59:                                       ; preds = %bb.t
+  %.val13.i60 = load ptr, ptr %i.ci, align 8, !alias.scope !274, !nonnull !5, !noundef !5
+  %.val14.i61 = load i64, ptr %i.cj, align 8, !alias.scope !274, !noundef !5 ; 2 uses
+  br label %.lr.ph.i59.a
 
 ._crit_edge.i51:                                  ; preds = %.lr.ph.i59.a, %bb.t
   %.sroa.19.1.lcssa.i52 = phi ptr [ %.sroa.19.0.i47, %bb.t ], [ %i.cu, %.lr.ph.i59.a ]
@@ -349,21 +357,19 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %i.cm = icmp eq i64 %.sroa.0.0.i50, %.sroa.16.097225
   br i1 %i.cm, label %bb.v, label %bb.u
 
-.lr.ph.i59.a:                                     ; preds = %bb.t, %.lr.ph.i59.a
-  %.sroa.5.111.i60 = phi ptr [ %i.cy, %.lr.ph.i59.a ], [ %.sroa.5.0.i49, %bb.t ] ; 4 uses
-  %.sroa.11.110.i61 = phi i64 [ %i.cx, %.lr.ph.i59.a ], [ %.sroa.11.0.i48, %bb.t ] ; 2 uses
-  %.sroa.19.19.i62 = phi ptr [ %i.cu, %.lr.ph.i59.a ], [ %.sroa.19.0.i47, %bb.t ]
+.lr.ph.i59.a:                                     ; preds = %.lr.ph.i59.a, %.lr.ph.i59
+  %.sroa.5.111.i60 = phi ptr [ %.sroa.5.0.i49, %.lr.ph.i59 ], [ %i.cy, %.lr.ph.i59.a ] ; 4 uses
+  %.sroa.11.110.i61 = phi i64 [ %.sroa.11.0.i48, %.lr.ph.i59 ], [ %i.cx, %.lr.ph.i59.a ] ; 2 uses
+  %.sroa.19.19.i62 = phi ptr [ %.sroa.19.0.i47, %.lr.ph.i59 ], [ %i.cu, %.lr.ph.i59.a ]
   %i.cn = getelementptr i8, ptr %.sroa.5.111.i60, i64 8
   %.val.i63 = load ptr, ptr %i.cn, align 8, !alias.scope !274, !nonnull !5, !noundef !5
   %i.co = getelementptr i8, ptr %.sroa.5.111.i60, i64 16
-  %.val12.i64 = load i64, ptr %i.co, align 8, !alias.scope !274, !noundef !5 ; 2 uses
-  %.val13.i65 = load ptr, ptr %i.ci, align 8, !alias.scope !274, !nonnull !5, !noundef !5
-  %.val14.i66 = load i64, ptr %i.cj, align 8, !alias.scope !274, !noundef !5 ; 2 uses
-  %spec.store.select.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val14.i66, i64 range(i64 0, -9223372036854775808) %.val12.i64)
-  %i.cp = call i32 @memcmp(ptr nonnull readonly %.val13.i65, ptr nonnull readonly %.val.i63, i64 %spec.store.select.i.i.i.i.i.i.i), !alias.scope !276, !noalias !277 ; 2 uses
+  %.val14.i66 = load i64, ptr %i.co, align 8, !alias.scope !274, !noundef !5 ; 2 uses
+  %spec.store.select.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %.val14.i61, i64 range(i64 0, -9223372036854775808) %.val14.i66)
+  %i.cp = call i32 @memcmp(ptr nonnull readonly %.val13.i60, ptr nonnull readonly %.val.i63, i64 %spec.store.select.i.i.i.i.i.i.i), !alias.scope !276, !noalias !277 ; 2 uses
   %i.cq = sext i32 %i.cp to i64
   %i.cr = icmp eq i32 %i.cp, 0
-  %i.cs = sub nsw i64 %.val14.i66, %.val12.i64
+  %i.cs = sub nsw i64 %.val14.i61, %.val14.i66
   %spec.select.i.i.i.i.i.i.i = select i1 %i.cr, i64 %i.cs, i64 %i.cq
   %i.ct = icmp sgt i64 %spec.select.i.i.i.i.i.i.i, -1 ; 2 uses
   %i.cu = getelementptr inbounds i8, ptr %.sroa.19.19.i62, i64 -24 ; 3 uses

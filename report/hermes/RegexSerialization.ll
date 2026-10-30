@@ -205,15 +205,19 @@ _ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit: ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.d
 
-._crit_edge.a:                                    ; preds = %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit
-  %.lcssa24 = phi ptr [ %.promoted23, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit ], [ %i.ao, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ]
-  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit ], [ %i.ap, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit
+  store ptr %2, ptr %i.n, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit
+  %.lcssa24 = phi ptr [ %i.ao, %._crit_edge ], [ %.promoted23, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit ]
+  %.lcssa = phi ptr [ %i.ap, %._crit_edge ], [ %.promoted, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE7reserveEm.exit ]
   store ptr %.lcssa, ptr %i.h, align 8
   store ptr %.lcssa24, ptr %0, align 8
   ret void
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit
-  %i.o = phi ptr [ %.promoted23, %.lr.ph ], [ %i.an, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ] ; 4 uses
+  %i.o = phi ptr [ %.promoted23, %.lr.ph ], [ %2, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ] ; 5 uses
   %.028 = phi i32 [ 0, %.lr.ph ], [ %i.aq, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %.sroa.019.027 = phi ptr [ %i.m, %.lr.ph ], [ %i.ar, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ] ; 2 uses
   %i.p = phi ptr [ %.promoted, %.lr.ph ], [ %i.ap, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit ] ; 3 uses
@@ -234,8 +238,6 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.0.0.insert.ext = zext i32 %.028 to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.ext, %.sroa.0.0.insert.ext
   store i64 %.sroa.0.0.insert.insert, ptr %i.o, align 4, !tbaa !8
-  %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
-  store ptr %2, ptr %i.n, align 8, !tbaa !373
   br label %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -246,6 +248,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.ac, label %bb.g, label %_ZNKSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.f
+  store ptr %i.o, ptr %i.n, align 8
   store ptr %i.p, ptr %i.h, align 8
   store ptr %i.q, ptr %0, align 8
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.96) #23
@@ -275,7 +278,6 @@ bb.h:                                             ; preds = %_ZNKSt6vectorIN6her
   br label %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
 
 _ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; preds = %bb.h, %_ZNKSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   %.not.i17.i.i.i = icmp eq ptr %i.q, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.i
 
@@ -284,18 +286,18 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN6herm
   br label %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  store ptr %3, ptr %i.n, align 8, !tbaa !373
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %i.ah
   br label %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit
 
 _ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE9push_backEOS1_.exit: ; preds = %bb.e, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
-  %i.an = phi ptr [ %2, %bb.e ], [ %3, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
+  %i.an = phi ptr [ %i.o, %bb.e ], [ %i.ak, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
   %i.ao = phi ptr [ %i.q, %bb.e ], [ %i.aj, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ] ; 2 uses
   %i.ap = phi ptr [ %i.p, %bb.e ], [ %i.am, %_ZNSt6vectorIN6hermes16RegExpTableEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ] ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
   %i.aq = add i32 %.028, %i.y
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.019.027, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ar, %i.l
-  br i1 %.not, label %._crit_edge.a, label %bb.d
+  br i1 %.not, label %._crit_edge, label %bb.d
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

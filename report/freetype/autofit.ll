@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge255.thre
   %.not166.i = icmp eq i16 %i.ae, 0
   %.0149.v.i = select i1 %.not166.i, i64 984, i64 88
   %.0149.i = getelementptr inbounds nuw i8, ptr %0, i64 %.0149.v.i ; 4 uses
-  %i.af = load i8, ptr %i.ab, align 1, !tbaa !68
+  %i.af = load i8, ptr %i.ab, align 1, !tbaa !68  ; 2 uses
   %.not167248.i = icmp eq i8 %i.af, 0
   br i1 %.not167248.i, label %._crit_edge255.thread.i, label %.lr.ph254.i
 
@@ -218,6 +218,7 @@ bb.d:                                             ; preds = %._crit_edge255.thre
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.q, %.lr.ph254.i
+  %2 = phi i8 [ %i.af, %.lr.ph254.i ], [ %i.ek, %bb.q ]
   %.0144252.i = phi ptr [ %i.ab, %.lr.ph254.i ], [ %.2146.i, %bb.q ]
   %.0150251.i = phi i8 [ 1, %.lr.ph254.i ], [ %.1151.i, %bb.q ] ; 4 uses
   %.0152250.i = phi i32 [ 0, %.lr.ph254.i ], [ %.2154.i, %bb.q ] ; 7 uses
@@ -226,15 +227,16 @@ bb.e:                                             ; preds = %bb.q, %.lr.ph254.i
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
-  %.1145.i = phi ptr [ %.0144252.i, %bb.e ], [ %i.aj, %bb.g ] ; 4 uses
-  %2 = load i8, ptr %.1145.i, align 1, !tbaa !68
-  switch i8 %2, label %bb.i [
+  %3 = phi i8 [ %.pr.i, %bb.g ], [ %2, %bb.e ]
+  %.1145.i = phi ptr [ %i.aj, %bb.g ], [ %.0144252.i, %bb.e ] ; 3 uses
+  switch i8 %3, label %bb.i [
     i8 32, label %bb.g
     i8 124, label %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.aj = getelementptr inbounds nuw i8, ptr %.1145.i, i64 1
+  %i.aj = getelementptr inbounds nuw i8, ptr %.1145.i, i64 1 ; 2 uses
+  %.pr.i = load i8, ptr %i.aj, align 1, !tbaa !68
   br label %bb.f, !llvm.loop !295
 
 bb.h:                                             ; preds = %bb.f
@@ -637,7 +639,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
   %.1151.i = phi i8 [ 0, %bb.h ], [ %.0150251.i, %bb.n ], [ %.0150251.i, %bb.i ], [ %.0150251.i, %af_shaper_get_elem.exit.i ], [ 1, %bb.o ], [ 0, %bb.p ]
   %.2146.i = phi ptr [ %i.ak, %bb.h ], [ %i.al, %bb.n ], [ %i.al, %bb.i ], [ %i.al, %af_shaper_get_elem.exit.i ], [ %i.al, %bb.o ], [ %i.al, %bb.p ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #18
-  %i.ek = load i8, ptr %.2146.i, align 1, !tbaa !68
+  %i.ek = load i8, ptr %.2146.i, align 1, !tbaa !68 ; 2 uses
   %.not167.i = icmp eq i8 %i.ek, 0
   br i1 %.not167.i, label %._crit_edge255.i, label %bb.e
 

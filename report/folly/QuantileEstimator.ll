@@ -62,11 +62,11 @@ _ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit:  ; preds = %_ZNSt12_Vector_base
   br i1 %.not30, label %._crit_edge.a, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit
-  %i.o = phi ptr [ %.promoted26, %.lr.ph ], [ %i.am, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 8 uses
+  %i.o = phi ptr [ %.promoted26, %.lr.ph ], [ %4, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 10 uses
   %.031 = phi ptr [ %2, %.lr.ph ], [ %i.ap, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 4 uses
   %i.p = phi ptr [ %.promoted, %.lr.ph ], [ %i.ao, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 5 uses
   %i.q = phi ptr [ %.promoted26, %.lr.ph ], [ %i.an, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ] ; 10 uses
@@ -83,8 +83,6 @@ bb.f:                                             ; preds = %bb.e
   store double %i.t, ptr %i.o, align 8, !tbaa !25
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store double %i.s, ptr %i.u, align 8, !tbaa !26
-  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 16 ; 2 uses
-  store ptr %4, ptr %i.n, align 8, !tbaa !20
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -95,6 +93,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.y, label %bb.h, label %_ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
+  store ptr %i.o, ptr %i.n, align 8
   store ptr %i.p, ptr %i.g, align 8
   store ptr %i.q, ptr %i.a, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #9
@@ -136,7 +135,6 @@ _ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.g
 
 _ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i: ; preds = %.lr.ph.i.i.i.i.i, %.noexc18
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.af, %.noexc18 ], [ %i.ak, %.lr.ph.i.i.i.i.i ]
-  %5 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i24.i.i = icmp eq ptr %i.q, null
   br i1 %.not.i24.i.i, label %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.i
 
@@ -145,21 +143,22 @@ bb.i:                                             ; preds = %_ZNSt6vectorISt4pai
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.i, %_ZNSt6vectorISt4pairIddESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i
-  store ptr %5, ptr %i.n, align 8, !tbaa !20
   %i.al = getelementptr inbounds nuw [16 x i8], ptr %i.af, i64 %i.ad
   br label %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit
 
 _ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit: ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.f
-  %i.am = phi ptr [ %5, %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %4, %bb.f ]
+  %i.am = phi ptr [ %.0.lcssa.i.i.i.i.i, %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.o, %bb.f ]
   %i.an = phi ptr [ %i.af, %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.q, %bb.f ] ; 2 uses
   %i.ao = phi ptr [ %i.al, %_ZNSt6vectorISt4pairIddESaIS1_EE17_M_realloc_insertIJRKddEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.p, %bb.f ] ; 2 uses
+  %4 = getelementptr i8, ptr %i.am, i64 16        ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.031, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ap, %3
-  br i1 %.not, label %._crit_edge.a, label %bb.d
+  br i1 %.not, label %._crit_edge, label %bb.d
 
 .loopexit:                                        ; preds = %bb.d, %_ZNKSt6vectorISt4pairIddESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.o, ptr %i.n, align 8
   store ptr %i.p, ptr %i.g, align 8
   store ptr %i.q, ptr %i.a, align 8
   br label %bb.j
@@ -178,9 +177,13 @@ bb.j:                                             ; preds = %.loopexit.split-lp,
   %.not.i.i.i.i19 = icmp eq ptr %i.at, null
   br i1 %.not.i.i.i.i19, label %_ZN5folly17QuantileEstimatesD2Ev.exit, label %bb.k
 
-._crit_edge.a:                                    ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
-  %.lcssa27 = phi ptr [ %.promoted26, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ], [ %i.an, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ]
-  %.lcssa23 = phi ptr [ %.promoted, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ], [ %i.ao, %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorISt4pairIddESaIS1_EE12emplace_backIJRKddEEERS1_DpOT_.exit
+  store ptr %4, ptr %i.n, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit
+  %.lcssa27 = phi ptr [ %i.an, %._crit_edge ], [ %.promoted26, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ]
+  %.lcssa23 = phi ptr [ %i.ao, %._crit_edge ], [ %.promoted, %_ZNSt6vectorISt4pairIddESaIS1_EE7reserveEm.exit ]
   store ptr %.lcssa23, ptr %i.g, align 8
   store ptr %.lcssa27, ptr %i.a, align 8
   ret void

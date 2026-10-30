@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %ocb_ntz.exit
 bb.h:                                             ; preds = %.thread109, %bb.c
   %.496 = phi ptr [ %i.u, %bb.c ], [ %.193.lcssa, %.thread109 ] ; 5 uses
   %.491 = phi ptr [ %i.v, %bb.c ], [ %.188.lcssa, %.thread109 ] ; 6 uses
-  %i.bc = and i64 %3, 15                          ; 4 uses
+  %i.bc = and i64 %3, 15                          ; 6 uses
   %.not106 = icmp eq i64 %i.bc, 0
   br i1 %.not106, label %bb.l, label %bb.i
 
@@ -294,7 +294,9 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %ocb_block_xor.exit, label %bb.k, !llvm.loop !34
 
 ocb_block_xor.exit:                               ; preds = %bb.k, %ocb_block_xor.exit.unr-lcssa
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  %6 = sub nuw nsw i64 16, %i.bc
+  %7 = getelementptr i8, ptr %5, i64 %i.bc
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %7, i8 0, i64 %6, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %5, ptr nonnull align 1 %.491, i64 %i.bc, i1 false)
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 %i.bc
   store i8 -128, ptr %i.cv, align 1, !tbaa !23

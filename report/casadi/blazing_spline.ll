@@ -205,12 +205,16 @@ _ZNSt6vectorIxSaIxEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIxSaIxEE7reserveEm.exit
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   br label %bb.c
 
-._crit_edge.a:                                    ; preds = %_ZNSt6vectorIxSaIxEE9push_backERKx.exit, %_ZNSt6vectorIxSaIxEE7reserveEm.exit
-  %.lcssa196 = phi ptr [ %.promoted195, %_ZNSt6vectorIxSaIxEE7reserveEm.exit ], [ %i.hc, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ]
-  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIxSaIxEE7reserveEm.exit ], [ %i.hd, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorIxSaIxEE9push_backERKx.exit
+  store ptr %31, ptr %i.q, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %_ZNSt6vectorIxSaIxEE7reserveEm.exit
+  %.lcssa196 = phi ptr [ %i.hc, %._crit_edge ], [ %.promoted195, %_ZNSt6vectorIxSaIxEE7reserveEm.exit ]
+  %.lcssa = phi ptr [ %i.hd, %._crit_edge ], [ %.promoted, %_ZNSt6vectorIxSaIxEE7reserveEm.exit ]
   store ptr %.lcssa, ptr %i.j, align 8
   store ptr %.lcssa196, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
@@ -219,7 +223,7 @@ _ZNSt6vectorIxSaIxEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit
   %i.r = phi ptr [ %i.n, %.lr.ph ], [ %i.gz, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 2 uses
   %i.s = phi ptr [ %i.o, %.lr.ph ], [ %i.ha, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ]
-  %i.t = phi ptr [ %.promoted195, %.lr.ph ], [ %i.hb, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 4 uses
+  %i.t = phi ptr [ %.promoted195, %.lr.ph ], [ %31, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 8 uses
   %storemerge201 = phi i64 [ 0, %.lr.ph ], [ %i.hf, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ]
   %i.u = phi ptr [ %.promoted, %.lr.ph ], [ %i.hd, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 7 uses
   %i.v = phi ptr [ %.promoted195, %.lr.ph ], [ %i.hc, %_ZNSt6vectorIxSaIxEE9push_backERKx.exit ] ; 12 uses
@@ -231,6 +235,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   br i1 %i.y, label %bb.ad, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  store ptr %i.t, ptr %i.q, align 8
   store ptr %i.u, ptr %i.j, align 8
   store ptr %i.v, ptr %0, align 8
   %i.z = tail call ptr @__cxa_allocate_exception(i64 40) #26 ; 3 uses
@@ -588,6 +593,7 @@ bb.ad:                                            ; preds = %bb.c
   br i1 %i.dg, label %bb.be, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
+  store ptr %i.t, ptr %i.q, align 8
   store ptr %i.u, ptr %i.j, align 8
   store ptr %i.v, ptr %0, align 8
   %i.dh = tail call ptr @__cxa_allocate_exception(i64 40) #26 ; 3 uses
@@ -942,8 +948,6 @@ bb.be:                                            ; preds = %bb.ad
 bb.bf:                                            ; preds = %bb.be
   %i.gj = load i64, ptr %i.gi, align 8, !tbaa !129
   store i64 %i.gj, ptr %i.t, align 8, !tbaa !129
-  %31 = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
-  store ptr %31, ptr %i.q, align 8, !tbaa !130
   br label %_ZNSt6vectorIxSaIxEE9push_backERKx.exit
 
 bb.bg:                                            ; preds = %bb.be
@@ -954,6 +958,7 @@ bb.bg:                                            ; preds = %bb.be
   br i1 %i.gn, label %bb.bh, label %_ZNKSt6vectorIxSaIxEE12_M_check_lenEmPKc.exit.i.i
 
 bb.bh:                                            ; preds = %bb.bg
+  store ptr %i.t, ptr %i.q, align 8
   store ptr %i.u, ptr %i.j, align 8
   store ptr %i.v, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.69) #27
@@ -987,7 +992,6 @@ bb.bi:                                            ; preds = %.noexc161
   br label %_ZNSt6vectorIxSaIxEE11_S_relocateEPxS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIxSaIxEE11_S_relocateEPxS2_S2_RS0_.exit16.i.i: ; preds = %bb.bi, %.noexc161
-  %32 = getelementptr inbounds nuw i8, ptr %i.gv, i64 8 ; 2 uses
   %.not.i17.i.i = icmp eq ptr %i.v, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i, label %bb.bj
 
@@ -996,7 +1000,6 @@ bb.bj:                                            ; preds = %_ZNSt6vectorIxSaIxE
   br label %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i: ; preds = %bb.bj, %_ZNSt6vectorIxSaIxEE11_S_relocateEPxS2_S2_RS0_.exit16.i.i
-  store ptr %32, ptr %i.q, align 8, !tbaa !130
   %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gu, i64 %i.gs
   %.pre218 = load ptr, ptr %i.c, align 8, !tbaa !130
   %.pre219 = load ptr, ptr %2, align 8, !tbaa !121
@@ -1005,9 +1008,10 @@ _ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIxSaIxEE9push_backERKx.exit:          ; preds = %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i, %bb.bf
   %i.gz = phi ptr [ %.pre219, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i ], [ %i.r, %bb.bf ] ; 2 uses
   %i.ha = phi ptr [ %.pre218, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i ], [ %i.s, %bb.bf ] ; 2 uses
-  %i.hb = phi ptr [ %32, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i ], [ %31, %bb.bf ]
+  %i.hb = phi ptr [ %i.gv, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i ], [ %i.t, %bb.bf ]
   %i.hc = phi ptr [ %i.gu, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i ], [ %i.v, %bb.bf ] ; 2 uses
   %i.hd = phi ptr [ %i.gy, %_ZNSt6vectorIxSaIxEE17_M_realloc_insertIJRKxEEEvN9__gnu_cxx17__normal_iteratorIPxS1_EEDpOT_.exit.i ], [ %i.u, %bb.bf ] ; 2 uses
+  %31 = getelementptr inbounds nuw i8, ptr %i.hb, i64 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   %i.he = load i64, ptr %i.a, align 8, !tbaa !129
   %i.hf = add nsw i64 %i.he, 1                    ; 3 uses
@@ -1017,11 +1021,12 @@ _ZNSt6vectorIxSaIxEE9push_backERKx.exit:          ; preds = %_ZNSt6vectorIxSaIxE
   %i.hi = sub i64 %i.hg, %i.hh
   %i.hj = ashr exact i64 %i.hi, 3
   %i.hk = icmp ult i64 %i.hf, %i.hj
-  br i1 %i.hk, label %bb.c, label %._crit_edge.a, !llvm.loop !455
+  br i1 %i.hk, label %bb.c, label %._crit_edge, !llvm.loop !455
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIxSaIxEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.t, ptr %i.q, align 8
   store ptr %i.u, ptr %i.j, align 8
   store ptr %i.v, ptr %0, align 8
   br label %bb.bk

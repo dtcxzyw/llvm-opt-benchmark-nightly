@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hermes/original/SourceErrorManager?download=true
 inline.NumInlined: 1564
-inline.NumDeleted: 774
+inline.NumDeleted: 773
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 3
@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %_ZNSt6vectorISt4pai
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0161.0225, i64 noundef %i.dn) #25
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
-_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.aa, %_ZNSt6vectorISt4pairIjjESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i
+_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %_ZNSt6vectorISt4pairIjjESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit23.i.i, %bb.aa
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %i.dt
   br label %_ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJjjEEERS1_DpOT_.exit
 
@@ -213,7 +213,7 @@ _ZNSt6vectorISt4pairIjjESaIS1_EE12emplace_backIJjjEEERS1_DpOT_.exit: ; preds = %
   %.sroa.0161.1 = phi ptr [ %i.dv, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.0161.0225, %bb.x ] ; 2 uses
   %.0.lcssa.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.8.0226, %bb.x ]
   %.sroa.13.1 = phi ptr [ %i.eb, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_M_realloc_insertIJjjEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %.sroa.13.0227, %bb.x ] ; 2 uses
-  %.sroa.8.1 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.pn, i64 8 ; 2 uses
+  %.sroa.8.1 = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i.pn, i64 8 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.052228, i64 8 ; 2 uses
   %.not62 = icmp eq ptr %i.ec, %i.cr
   br i1 %.not62, label %._crit_edge230.loopexit, label %bb.u
@@ -616,7 +616,7 @@ _ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit: ; preds = %bb.b, %_
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit, %_ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit
-  %i.s = phi i64 [ %i.l, %_ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit ], [ %.pre21, %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit ] ; 6 uses
+  %i.s = phi i64 [ %i.l, %_ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit ], [ %.pre21, %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit ] ; 3 uses
   %.sroa.015.0 = phi ptr [ %0, %_ZN6hermes18SourceErrorManager15BufferedMessageC2EOS1_.exit ], [ %.sroa.0.0, %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit ] ; 22 uses
   %.sroa.0.0 = getelementptr inbounds i8, ptr %.sroa.015.0, i64 -72 ; 3 uses
   %i.t = load i32, ptr %1, align 8, !tbaa !116
@@ -756,6 +756,7 @@ _ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit: ; preds = %_ZNSt7__
   br label %bb.c, !llvm.loop !327
 
 "_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS3_15BufferedMessageENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit.thread19": ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i, %"_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS3_15BufferedMessageENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit"
+  %.lcssa = phi i64 [ %i.s, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit10.i.i ], [ 23, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i.i ], [ %i.s, %"_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN6hermes18SourceErrorManager16disableBufferingEvE3$_0EclINS3_15BufferedMessageENS_17__normal_iteratorIPS7_St6vectorIS7_SaIS7_EEEEEEbRT_T0_.exit" ] ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.015.0, ptr noundef nonnull align 8 dereferenceable(72) %1, i64 32, i1 false)
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.015.0, i64 32 ; 4 uses
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !83 ; 6 uses
@@ -772,13 +773,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %i.cd, label %bb.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i.i3
 
 bb.i:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i2, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i8
-  %i.ce = icmp ult i64 %i.s, 16
+  %i.ce = icmp ult i64 %.lcssa, 16
   call void @llvm.assume(i1 %i.ce)
   %.not21.i.i.i5 = icmp eq ptr %1, %.sroa.015.0
   br i1 %.not21.i.i.i5, label %_ZN6hermes18SourceErrorManager15BufferedMessageaSEOS1_.exit10, label %bb.j, !prof !152
 
 bb.j:                                             ; preds = %bb.i
-  switch i64 %i.s, label %bb.l [
+  switch i64 %.lcssa, label %bb.l [
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i6
     i64 1, label %bb.k
   ]
@@ -789,7 +790,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i6
 
 bb.l:                                             ; preds = %bb.j
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bz, ptr align 1 %i.cc, i64 %i.s, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bz, ptr align 1 %i.cc, i64 %.lcssa, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i6
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i6: ; preds = %bb.l, %bb.k, %bb.j
@@ -805,7 +806,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i.i6
 .thread.i.i.i9:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i8
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.015.0, i64 40
   store ptr %i.cc, ptr %i.by, align 8, !tbaa !83
-  store i64 %i.s, ptr %i.ck, align 8, !tbaa !84
+  store i64 %.lcssa, ptr %i.ck, align 8, !tbaa !84
   %i.cl = load i64, ptr %i.c, align 8, !tbaa !107
   store i64 %i.cl, ptr %i.ca, align 8, !tbaa !107
   br label %bb.n
@@ -814,7 +815,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thr
   %i.cm = load i64, ptr %i.ca, align 8, !tbaa !107
   store ptr %i.cc, ptr %i.by, align 8, !tbaa !83
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.015.0, i64 40
-  store i64 %i.s, ptr %i.cn, align 8, !tbaa !84
+  store i64 %.lcssa, ptr %i.cn, align 8, !tbaa !84
   %i.co = load i64, ptr %i.c, align 8, !tbaa !107
   store i64 %i.co, ptr %i.ca, align 8, !tbaa !107
   %.not.i.i.i4 = icmp eq ptr %i.bz, null

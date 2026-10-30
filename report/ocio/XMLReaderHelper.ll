@@ -202,13 +202,13 @@ _ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit: ; preds = %.preheader, %bb
   br i1 %.not21, label %._crit_edge.a, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit
-  %i.g = phi ptr [ null, %.lr.ph ], [ %i.al, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 4 uses
-  %i.h = phi ptr [ null, %.lr.ph ], [ %i.am, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
+  %i.g = phi ptr [ null, %.lr.ph ], [ %i.al, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 6 uses
+  %i.h = phi ptr [ null, %.lr.ph ], [ %3, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 5 uses
   %.022 = phi i64 [ %.1.i, %.lr.ph ], [ %.sink.i, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
   %i.i = phi ptr [ null, %.lr.ph ], [ %i.an, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
@@ -304,8 +304,6 @@ _ZN16OpenColorIO_v2_513GetNextNumberIdEEvPKcmRmRT_.exit: ; preds = %_ZN16OpenCol
 bb.h:                                             ; preds = %_ZN16OpenColorIO_v2_513GetNextNumberIdEEvPKcmRmRT_.exit
   %i.v = load double, ptr %i.a, align 8, !tbaa !82
   store double %i.v, ptr %i.h, align 8, !tbaa !82
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  store ptr %3, ptr %i.e, align 8, !tbaa !76
   br label %_ZNSt6vectorIdSaIdEE9push_backERKd.exit
 
 bb.i:                                             ; preds = %_ZN16OpenColorIO_v2_513GetNextNumberIdEEvPKcmRmRT_.exit
@@ -316,6 +314,8 @@ bb.i:                                             ; preds = %_ZN16OpenColorIO_v2
   br i1 %i.z, label %bb.j, label %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i.i
 
 bb.j:                                             ; preds = %bb.i
+  store ptr %i.h, ptr %i.e, align 8
+  store ptr %i.g, ptr %i.f, align 8
   store ptr %i.i, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.21) #32
           to label %.noexc12 unwind label %.loopexit.split-lp
@@ -348,7 +348,6 @@ bb.k:                                             ; preds = %.noexc13
   br label %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i
 
 _ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i: ; preds = %bb.k, %.noexc13
-  %4 = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
   %.not.i17.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i, label %bb.l
 
@@ -357,22 +356,23 @@ bb.l:                                             ; preds = %_ZNSt6vectorIdSaIdE
   br label %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i: ; preds = %bb.l, %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit16.i.i
-  store ptr %4, ptr %i.e, align 8, !tbaa !76
-  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.ae ; 2 uses
-  store ptr %i.ak, ptr %i.f, align 8, !tbaa !77
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.ae
   br label %_ZNSt6vectorIdSaIdEE9push_backERKd.exit
 
 _ZNSt6vectorIdSaIdEE9push_backERKd.exit:          ; preds = %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i, %bb.h
-  %i.al = phi ptr [ %i.ak, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i ], [ %i.g, %bb.h ]
-  %i.am = phi ptr [ %4, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i ], [ %3, %bb.h ]
+  %i.al = phi ptr [ %i.ak, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i ], [ %i.g, %bb.h ] ; 2 uses
+  %i.am = phi ptr [ %i.ah, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i ], [ %i.h, %bb.h ]
   %i.an = phi ptr [ %i.ag, %_ZNSt6vectorIdSaIdEE17_M_realloc_insertIJRKdEEEvN9__gnu_cxx17__normal_iteratorIPdS1_EEDpOT_.exit.i ], [ %i.i, %bb.h ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %.not = icmp eq i64 %.sink.i, %2
-  br i1 %.not, label %._crit_edge.a, label %bb.b, !llvm.loop !129
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !129
 
 .loopexit:                                        ; preds = %_ZN16OpenColorIO_v2_59FindDelimEPKcmm.exit.thread.i, %_ZN16OpenColorIO_v2_59FindDelimEPKcmm.exit.i, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.h, ptr %i.e, align 8
+  store ptr %i.g, ptr %i.f, align 8
   store ptr %i.i, ptr %0, align 8
   br label %bb.m
 
@@ -387,8 +387,13 @@ bb.m:                                             ; preds = %.loopexit.split-lp,
   %.not.i.i.i14 = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i14, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %bb.n
 
-._crit_edge.a:                                    ; preds = %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit
-  %.lcssa = phi ptr [ null, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit ], [ %i.an, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ], [ null, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorIdSaIdEE9push_backERKd.exit
+  store ptr %3, ptr %i.e, align 8
+  store ptr %i.al, ptr %i.f, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i, %._crit_edge, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit
+  %.lcssa = phi ptr [ %i.an, %._crit_edge ], [ null, %_ZN16OpenColorIO_v2_518FindNextTokenStartEPKcmm.exit ], [ null, %_ZN16OpenColorIO_v2_517IsNumberDelimiterEc.exit.thread.i ]
   store ptr %.lcssa, ptr %0, align 8
   ret void
 

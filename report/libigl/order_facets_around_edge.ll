@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.ai, %bb.aj
   store i64 0, ptr %i.gi, align 16, !tbaa !231
   %i.gj = load i64, ptr %i.gc, align 16, !tbaa !231
   %spec.select.i.i352 = tail call i64 @llvm.umin.i64(i64 %i.gj, i64 288230376151711744) ; 4 uses
-  %i.gk = getelementptr inbounds nuw i8, ptr %3, i64 25 ; 16 uses
+  %i.gk = getelementptr inbounds nuw i8, ptr %3, i64 25 ; 17 uses
   %i.gl = load i8, ptr %i.gk, align 1, !tbaa !75, !range !76, !noundef !77
   %i.gm = trunc nuw i8 %i.gl to i1                ; 2 uses
   %i.gn = load i64, ptr %3, align 16
@@ -608,9 +608,9 @@ _ZN5boost14multiprecision8backends13eval_subtractILm0ELm0ELNS0_16cpp_integer_typ
   br label %_ZN5boost14multiprecision8backends13eval_subtractILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELm0ELm0ELS3_1ELS4_0ES5_EENSt9enable_ifIXaantsr18is_trivial_cpp_intINS1_15cpp_int_backendIXT_EXT0_EXT1_EXT2_ET3_EEEE5valuentsr18is_trivial_cpp_intINS7_IXT4_EXT5_EXT6_EXT7_ET8_EEEE5valueEvE4typeERS9_RKSB_.exit318
 
 _ZN5boost14multiprecision8backends13eval_subtractILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELm0ELm0ELS3_1ELS4_0ES5_EENSt9enable_ifIXaantsr18is_trivial_cpp_intINS1_15cpp_int_backendIXT_EXT0_EXT1_EXT2_ET3_EEEE5valuentsr18is_trivial_cpp_intINS7_IXT4_EXT5_EXT6_EXT7_ET8_EEEE5valueEvE4typeERS9_RKSB_.exit318: ; preds = %.invoke604, %.invoke, %_ZN5boost14multiprecision8backends13eval_subtractILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELm0ELm0ELS3_1ELS4_0ES5_EENSt9enable_ifIXaantsr18is_trivial_cpp_intINS1_15cpp_int_backendIXT_EXT0_EXT1_EXT2_ET3_EEEE5valuentsr18is_trivial_cpp_intINS7_IXT4_EXT5_EXT6_EXT7_ET8_EEEE5valueEvE4typeERS9_RKSB_.exit318.sink.split, %bb.bt
-  %i.rq = load i64, ptr %i.ff, align 16, !tbaa !231
+  %i.rq = load i64, ptr %i.ff, align 16, !tbaa !231 ; 2 uses
   %i.rr = add i64 %i.nv, 1                        ; 2 uses
-  %i.rs = add i64 %i.rr, %i.rq
+  %i.rs = add i64 %i.rr, %i.rq                    ; 2 uses
   %spec.select.i399 = call i64 @llvm.umin.i64(i64 %i.rs, i64 288230376151711744) ; 7 uses
   %i.rt = load i8, ptr %i.li, align 1, !tbaa !75, !range !76, !noundef !77
   %i.ru = trunc nuw i8 %i.rt to i1                ; 2 uses
@@ -656,7 +656,9 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm
   store i64 %spec.select.i399, ptr %i.lg, align 16, !tbaa !231
   store i64 %.sroa.speculated.i403, ptr %7, align 16, !tbaa !86
   store ptr %i.rz, ptr %i.mj, align 8, !tbaa !86
+  %.pre532 = load i64, ptr %i.ff, align 16, !tbaa !231 ; 2 uses
   %.pre532.a = load i8, ptr %i.li, align 1, !tbaa !75, !range !76
+  %.pre551 = add i64 %i.rr, %.pre532
   %.pre550 = trunc nuw i8 %.pre532.a to i1
   br label %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit405
 
@@ -667,10 +669,10 @@ bb.cp:                                            ; preds = %_ZN5boost14multipre
 
 _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit405: ; preds = %bb.cp, %bb.co
   %.pre-phi551 = phi i1 [ %i.ru, %bb.cp ], [ %.pre550, %bb.co ] ; 2 uses
+  %.pre-phi552 = phi i64 [ %i.rs, %bb.cp ], [ %.pre551, %bb.co ]
   %8 = phi ptr [ %.pre533, %bb.cp ], [ %i.rz, %bb.co ]
-  %9 = load i64, ptr %i.ff, align 16, !tbaa !231  ; 6 uses
-  %10 = add i64 %i.rr, %9
-  %i.sk = icmp ne i64 %spec.select.i399, %10      ; 3 uses
+  %9 = phi i64 [ %i.rq, %bb.cp ], [ %.pre532, %bb.co ] ; 5 uses
+  %i.sk = icmp ne i64 %spec.select.i399, %.pre-phi552 ; 3 uses
   %i.sl = select i1 %.pre-phi551, ptr %7, ptr %8  ; 3 uses
   %.not505 = icmp eq i64 %.2254, %i.fh
   br i1 %.not505, label %.preheader470, label %.lr.ph490.preheader
@@ -841,7 +843,7 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0
 
 .preheader469:                                    ; preds = %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit412
   %i.uq = load i8, ptr %i.gk, align 1, !tbaa !75, !range !76, !noundef !77
-  %i.ur = trunc nuw i8 %i.uq to i1                ; 5 uses
+  %i.ur = trunc nuw i8 %i.uq to i1                ; 3 uses
   %i.us = add i64 %.2254, 1                       ; 2 uses
   %umax522 = call i64 @llvm.umax.i64(i64 %i.us, i64 1) ; 3 uses
   %xtraiter666 = and i64 %umax522, 1
@@ -870,8 +872,10 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0
   br label %bb.cz
 
 bb.cz:                                            ; preds = %.unr-lcssa, %.epil.preheader665
+  %10 = load i8, ptr %i.gk, align 1, !tbaa !75, !range !76, !noundef !77
+  %11 = trunc nuw i8 %10 to i1                    ; 2 uses
   %i.va = load ptr, ptr %i.mf, align 8
-  %i.vb = select i1 %i.ur, ptr %3, ptr %i.va      ; 5 uses
+  %i.vb = select i1 %11, ptr %3, ptr %i.va        ; 5 uses
   %.pr = load i64, ptr %i.gi, align 16, !tbaa !231 ; 2 uses
   %i.vc = add i64 %.pr, -1                        ; 3 uses
   %.not.i496 = icmp eq i64 %i.vc, 0
@@ -934,7 +938,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.vo = add i64 %i.vm, -1
   store i64 %i.vo, ptr %i.vb, align 8, !tbaa !233
   %i.vp = load ptr, ptr %i.mf, align 8
-  %i.vq = select i1 %i.ur, ptr %3, ptr %i.vp
+  %i.vq = select i1 %11, ptr %3, ptr %i.vp
   %i.vr = load i64, ptr %i.vq, align 8, !tbaa !233
   %.not11.i = icmp eq i64 %i.vr, 0
   %or.cond458 = and i1 %.lcssa476, %.not11.i

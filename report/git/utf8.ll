@@ -204,7 +204,7 @@ display_mode_esc_sequence_len.exit.thread:        ; preds = %display_mode_esc_se
 
 bb.c:                                             ; preds = %display_mode_esc_sequence_len.exit.thread
   %i.z = call fastcc i32 @pick_one_utf8_char(ptr noundef nonnull %i.b, ptr noundef null) ; 9 uses
-  %i.aa = load ptr, ptr %i.b, align 8, !tbaa !18  ; 2 uses
+  %i.aa = load ptr, ptr %i.b, align 8, !tbaa !18  ; 4 uses
   %.not.i36 = icmp eq ptr %i.aa, null             ; 2 uses
   %i.ab = icmp eq i32 %i.z, 0
   %or.cond.i37 = select i1 %.not.i36, i1 true, i1 %i.ab
@@ -312,6 +312,7 @@ bb.o:                                             ; preds = %utf8_width.exit.thr
 bb.p:                                             ; preds = %bb.o
   %i.bf = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.02363) #21
   call void @strbuf_add(ptr noundef nonnull %4, ptr noundef nonnull %.02363, i64 noundef %i.bf) #22
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !18
   br label %bb.r
 
 bb.q:                                             ; preds = %utf8_width.exit.thread
@@ -322,9 +323,9 @@ bb.q:                                             ; preds = %utf8_width.exit.thr
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
+  %5 = phi ptr [ %.pre, %bb.p ], [ %i.aa, %bb.o ], [ %i.aa, %bb.q ] ; 2 uses
   %.124 = phi ptr [ null, %bb.p ], [ null, %bb.o ], [ %.02363, %bb.q ]
   %i.bj = add nuw nsw i32 %spec.store.select, %.02264
-  %5 = load ptr, ptr %i.b, align 8, !tbaa !18     ; 2 uses
   %i.bk = icmp ult ptr %5, %i.g
   br i1 %i.bk, label %.preheader, label %.thread
 

@@ -204,7 +204,6 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.d, %.critedge
   %i.g = phi ptr [ %storemerge.lcssa, %.critedge ], [ %i.i, %bb.d ] ; 8 uses
-  store ptr %i.g, ptr %i.a, align 8, !tbaa !195
   %i.h = load i8, ptr %i.g, align 1, !tbaa !46
   switch i8 %i.h, label %bb.d [
     i8 0, label %.critedge2
@@ -216,6 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.c, !llvm.loop !192
 
 .critedge2:                                       ; preds = %bb.c, %bb.c
+  store ptr %i.g, ptr %i.a, align 8, !tbaa !195
   %.not2748 = icmp eq ptr %i.g, %storemerge.lcssa
   br i1 %.not2748, label %.critedge4, label %.lr.ph50
 
@@ -253,9 +253,11 @@ bb.f:                                             ; preds = %.critedge4
 
 bb.g:                                             ; preds = %.critedge4, %bb.f
   %.promoted39 = phi ptr [ %i.t, %bb.f ], [ %i.g, %.critedge4 ] ; 3 uses
+  %.promoted = load ptr, ptr %i.a, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %bb.g
+  %3 = phi ptr [ %i.w, %bb.i ], [ %.promoted, %bb.g ]
   %i.u = phi ptr [ %i.w, %bb.i ], [ %.promoted39, %bb.g ] ; 5 uses
   %i.v = load i8, ptr %i.u, align 1, !tbaa !46
   switch i8 %i.v, label %bb.i [
@@ -265,16 +267,16 @@ bb.h:                                             ; preds = %bb.i, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 1 ; 2 uses
-  store ptr %i.w, ptr %i.a, align 8, !tbaa !195
   br label %bb.h, !llvm.loop !194
 
 bb.j:                                             ; preds = %bb.h
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 1 ; 2 uses
-  store ptr %i.x, ptr %i.a, align 8, !tbaa !195
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.h, %bb.j
+  %storemerge = phi ptr [ %i.x, %bb.j ], [ %3, %bb.h ]
   %i.y = phi ptr [ %i.x, %bb.j ], [ %i.u, %bb.h ]
+  store ptr %storemerge, ptr %i.a, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.aa = ptrtoint ptr %i.u to i64
   %i.ab = ptrtoint ptr %.promoted39 to i64

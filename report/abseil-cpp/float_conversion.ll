@@ -205,8 +205,8 @@ _ZNK4absl12lts_2026052619str_format_internal12_GLOBAL__N_111FormatState14ShouldP
 _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_111FormatFFastINS0_7uint128EEEvT_iRKNS2_11FormatStateE.exit.i.i: ; preds = %_ZNK4absl12lts_2026052619str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.thread.i.i.i, %_ZNK4absl12lts_2026052619str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.i.i.i
   %i.eo = phi i64 [ %i.ej, %_ZNK4absl12lts_2026052619str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.thread.i.i.i ], [ %i.en, %_ZNK4absl12lts_2026052619str_format_internal12_GLOBAL__N_111FormatState14ShouldPrintDotEv.exit.i.i.i ]
   %i.ep = ptrtoint ptr %i.eg to i64
-  %.neg.i.i.i = sub i64 %i.ep, %i.eh
-  %16 = add i64 %.neg.i.i.i, %.val.i.i.i
+  %.neg.i.i.i = add i64 %.val.i.i.i, %i.ep
+  %16 = sub i64 %.neg.i.i.i, %i.eh
   call fastcc void @_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_110FinalPrintERKNS2_11FormatStateESt17basic_string_viewIcSt11char_traitsIcEEmmS9_(ptr noundef nonnull readonly align 8 dereferenceable(32) %10, i64 %i.eo, ptr nonnull %.041.i.i.i, i64 noundef 0, i64 noundef %16, i64 0, ptr nonnull @.str.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #15
   br label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_17FormatFINS0_7uint128EEEvT_iRKNS2_11FormatStateE.exit.i
@@ -609,7 +609,7 @@ bb.j:                                             ; preds = %_ZN4absl12lts_20260
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !28 ; 5 uses
   %i.ar = icmp slt i32 %i.aq, 0
   %narrow = select i1 %i.ar, i32 6, i32 %i.aq     ; 4 uses
-  %spec.select = zext i32 %narrow to i64          ; 12 uses
+  %spec.select = zext i32 %narrow to i64          ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #15
   %i.as = call double @frexp(double noundef %.069108, ptr noundef nonnull %i.l) #15
   %i.at = call double @ldexp(double noundef %i.as, i32 noundef 53) #15
@@ -865,14 +865,15 @@ _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.s
 
 bb.aa:                                            ; preds = %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit51.i.i
   %i.dx = call fastcc noundef ptr @_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastENS0_7uint128EPcim(i64 %i.aw, i64 0, ptr noundef %i.cz, i32 noundef %i.cr, i64 noundef %spec.select)
+  %.val.i.i.pre.pre = load i64, ptr %i.az, align 8, !tbaa !37
   br label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i
 
 _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i: ; preds = %.lr.ph.i52.i.i, %bb.aa, %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.sink.split.i.i.i, %bb.x, %._crit_edge.i.i.i
+  %.val.i.i.pre = phi i64 [ %.val.i.i.pre.pre, %bb.aa ], [ %spec.select, %._crit_edge.i.i.i ], [ %spec.select, %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.sink.split.i.i.i ], [ %spec.select, %bb.x ], [ %spec.select, %.lr.ph.i52.i.i ]
   %i.dy = phi ptr [ %i.dx, %bb.aa ], [ %.0.lcssa.i54.i.i, %._crit_edge.i.i.i ], [ %.0.lcssa.i54.i.i, %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_111RoundToEvenEPc.exit.sink.split.i.i.i ], [ %.0.lcssa.i54.i.i, %bb.x ], [ %.024.i.i.i, %.lr.ph.i52.i.i ]
   %i.dz = load i8, ptr %i.da, align 1, !tbaa !25
   %.not.i.i = icmp eq i8 %i.dz, 48
   %spec.select.i.i = select i1 %.not.i.i, ptr %i.cy, ptr %i.da
-  %.val.i.i.pre = load i64, ptr %i.az, align 8, !tbaa !37
   br label %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i
 
 _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_132PrintIntegralDigitsFromRightFastEmPc.exit.i.i: ; preds = %.preheader.i.i.i, %bb.r, %_ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_125PrintFractionalDigitsFastEmPcim.exit.i.i

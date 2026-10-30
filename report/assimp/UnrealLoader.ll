@@ -205,7 +205,7 @@ _ZNSt6vectorIN6Assimp6Unreal7TempMatESaIS2_EE9push_backERKS2_.exit: ; preds = %_
   %.sroa.0657.5 = phi ptr [ %i.adb, %_ZNSt6vectorIN6Assimp6Unreal7TempMatESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.0657.0892, %bb.hq ]
   %.0.lcssa.i.i.i.i.i562.pn = phi ptr [ %.0.lcssa.i.i.i.i.i562, %_ZNSt6vectorIN6Assimp6Unreal7TempMatESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.22.0893, %bb.hq ]
   %.sroa.33.5 = phi ptr [ %i.adh, %_ZNSt6vectorIN6Assimp6Unreal7TempMatESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i ], [ %.sroa.33.0894, %bb.hq ]
-  %.sroa.22.3 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i562.pn, i64 12
+  %.sroa.22.3 = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i562.pn, i64 12
   %i.adi = load i32, ptr %i.ace, align 8
   %i.adj = add i32 %i.adi, 1
   store i32 %i.adj, ptr %i.ace, align 8
@@ -459,7 +459,7 @@ bb.ij:                                            ; preds = %bb.ii
   %i.ahc = getelementptr inbounds nuw i8, ptr %i.aez, i64 4 ; 2 uses
   %i.ahd = load i32, ptr %i.ahc, align 4
   %i.ahe = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.aem, i64 noundef 1024, ptr noundef nonnull @.str.32, i32 noundef %i.agy, i32 noundef %i.ahd) #25 ; 0 uses
-  %i.ahf = load i32, ptr %i.aez, align 4
+  %i.ahf = load i32, ptr %i.aez, align 4          ; 2 uses
   %i.ahg = icmp eq i32 %i.ahf, 1
   br i1 %i.ahg, label %bb.ik, label %bb.im
 
@@ -474,6 +474,7 @@ _ZN10aiMaterial11AddPropertyEPKijPKcjj.exit:      ; preds = %bb.ik
   %endptr217 = getelementptr inbounds i8, ptr %i.aem, i64 %strlen216
   store i32 6255476, ptr %endptr217, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25
+  %.pre971 = load i32, ptr %i.aez, align 4
   br label %bb.in
 
 .loopexit825:                                     ; preds = %.loopexit822, %bb.ic, %.loopexit823, %.loopexit824, %bb.id
@@ -507,7 +508,7 @@ bb.im:                                            ; preds = %bb.ij
   br label %bb.in
 
 bb.in:                                            ; preds = %bb.im, %_ZN10aiMaterial11AddPropertyEPKijPKcjj.exit
-  %32 = load i32, ptr %i.aez, align 4
+  %32 = phi i32 [ %i.ahf, %bb.im ], [ %.pre971, %_ZN10aiMaterial11AddPropertyEPKijPKcjj.exit ] ; 2 uses
   %i.ahk = icmp eq i32 %32, 2
   br i1 %i.ahk, label %bb.io, label %bb.iq
 
@@ -522,6 +523,7 @@ _ZN10aiMaterial11AddPropertyEPKfjPKcjj.exit:      ; preds = %bb.io
   %endptr221 = getelementptr inbounds i8, ptr %i.aem, i64 %strlen220
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %endptr221, ptr noundef nonnull align 1 dereferenceable(6) @.str.37, i64 6, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #25
+  %.pre972 = load i32, ptr %i.aez, align 4
   br label %bb.ir
 
 bb.ip:                                            ; preds = %bb.io
@@ -537,7 +539,7 @@ bb.iq:                                            ; preds = %bb.in
   br label %bb.ir
 
 bb.ir:                                            ; preds = %bb.iq, %_ZN10aiMaterial11AddPropertyEPKfjPKcjj.exit
-  %33 = load i32, ptr %i.aez, align 4
+  %33 = phi i32 [ %32, %bb.iq ], [ %.pre972, %_ZN10aiMaterial11AddPropertyEPKfjPKcjj.exit ]
   %i.ahn = icmp eq i32 %33, 8
   br i1 %i.ahn, label %bb.is, label %bb.it
 

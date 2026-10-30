@@ -204,7 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %2, align 8, !tbaa !193    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !68
-  %i.e = load ptr, ptr %i.b, align 8, !tbaa !69
+  %i.e = load ptr, ptr %i.b, align 8, !tbaa !69   ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.h = sub i64 %i.f, %i.g
@@ -230,13 +230,14 @@ _ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.ex
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.l, i1 false)
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.m, i64 %i.l
   %.pre = load ptr, ptr %2, align 8, !tbaa !193   ; 2 uses
-  %.pre36 = load ptr, ptr %.pre, align 8, !tbaa !69
+  %.pre36 = load ptr, ptr %.pre, align 8, !tbaa !69 ; 2 uses
   %.pre39 = ptrtoint ptr %.pre36 to i64
   br label %_ZNSt12_Vector_baseISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2EmRKS4_.exit.thread.i
 
 _ZNSt12_Vector_baseISt10shared_ptrIN5arrow5ArrayEESaIS3_EEC2EmRKS4_.exit.thread.i: ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i, %.lr.ph.preheader.i.i.i.i.i
   %.pre-phi = phi i64 [ %.pre39, %.lr.ph.preheader.i.i.i.i.i ], [ %i.g, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
-  %i.o = phi ptr [ %.pre, %.lr.ph.preheader.i.i.i.i.i ], [ %i.b, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ] ; 2 uses
+  %7 = phi ptr [ %.pre36, %.lr.ph.preheader.i.i.i.i.i ], [ %i.e, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
+  %i.o = phi ptr [ %.pre, %.lr.ph.preheader.i.i.i.i.i ], [ %i.b, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
   %.sink.i = phi ptr [ %i.n, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
   %.0.lcssa.i.i.i.i.i = phi ptr [ %scevgep.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i ]
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -282,11 +283,10 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN5arrow12ChunkedArrayESaIv
   br label %.body
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit32
+  %i.ah = phi ptr [ %7, %.lr.ph ], [ %i.en, %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit32 ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit32 ] ; 3 uses
-  %i.ah = phi ptr [ %i.o, %.lr.ph ], [ %i.ek, %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit32 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
-  %7 = load ptr, ptr %i.ah, align 8, !tbaa !69
-  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %indvars.iv
+  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.ah, i64 %indvars.iv
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !56
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !59
@@ -609,10 +609,10 @@ bb.al:                                            ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit32: ; preds = %_ZNSt12__shared_ptrIN5arrow9ArrayDataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.ah, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i30, %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.ek = load ptr, ptr %2, align 8, !tbaa !193   ; 3 uses
+  %i.ek = load ptr, ptr %2, align 8, !tbaa !193   ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !68
-  %i.en = load ptr, ptr %i.ek, align 8, !tbaa !69
+  %i.en = load ptr, ptr %i.ek, align 8, !tbaa !69 ; 2 uses
   %i.eo = ptrtoint ptr %i.em to i64
   %i.ep = ptrtoint ptr %i.en to i64
   %i.eq = sub i64 %i.eo, %i.ep
@@ -1015,7 +1015,8 @@ bb.m:                                             ; preds = %_ZNSt10shared_ptrIN
           to label %bb.n unwind label %bb.bb
 
 bb.n:                                             ; preds = %bb.m
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %9, align 8
   %i.an = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #26
           to label %.noexc3.i unwind label %.body ; 7 uses
 

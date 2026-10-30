@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %_ZZN5boost5beast4te
   br i1 %.not.i.i13, label %_ZZN5boost5beast4test12basic_streamINS_4asio15any_io_executorEE9read_someINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEEEmRKT_RNS_6system10error_codeEENKUlvE_clEv.exit.i, label %_ZNSt18condition_variable4waitIZN5boost5beast4test12basic_streamINS1_4asio15any_io_executorEE9read_someINS2_18basic_multi_bufferISaIcEE8subrangeILb1EEEEEmRKT_RNS1_6system10error_codeEEUlvE_EEvRSt11unique_lockISt5mutexESE_.exit, !llvm.loop !1148
 
 _ZNSt18condition_variable4waitIZN5boost5beast4test12basic_streamINS1_4asio15any_io_executorEE9read_someINS2_18basic_multi_bufferISaIcEE8subrangeILb1EEEEEmRKT_RNS1_6system10error_codeEEUlvE_EEvRSt11unique_lockISt5mutexESE_.exit: ; preds = %.noexc, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
-  %i.ao = phi ptr [ %i.af, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ %i.an, %.noexc ] ; 2 uses
-  %i.ap = phi ptr [ %i.ad, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ %i.al, %.noexc ] ; 3 uses
+  %i.ao = phi ptr [ %i.af, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ %i.an, %.noexc ] ; 3 uses
+  %i.ap = phi ptr [ %i.ad, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ %i.al, %.noexc ] ; 4 uses
   %i.aq = phi ptr [ %i.aa, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ %i.aj, %.noexc ] ; 2 uses
   %.not11 = icmp eq ptr %i.ao, %i.ap
   br i1 %.not11, label %_ZNSt18condition_variable4waitIZN5boost5beast4test12basic_streamINS1_4asio15any_io_executorEE9read_someINS2_18basic_multi_bufferISaIcEE8subrangeILb1EEEEEmRKT_RNS1_6system10error_codeEEUlvE_EEvRSt11unique_lockISt5mutexESE_.exit.thread, label %bb.g
@@ -278,27 +278,31 @@ _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_buffer
 
 _ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit.loopexit: ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i, %bb.h
   %.0.lcssa.i.i.ph = phi i64 [ %.021.i.i, %bb.h ], [ %i.bj, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i ]
-  %.pre27 = load ptr, ptr %0, align 8, !tbaa !202
+  %.pre27 = load ptr, ptr %0, align 8, !tbaa !202 ; 3 uses
+  %.phi.trans.insert28 = getelementptr inbounds nuw i8, ptr %.pre27, i64 120
+  %.pre29 = load ptr, ptr %.phi.trans.insert28, align 8, !tbaa !407
+  %.phi.trans.insert30 = getelementptr inbounds nuw i8, ptr %.pre27, i64 128
+  %.pre31 = load ptr, ptr %.phi.trans.insert30, align 8, !tbaa !405
   br label %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit
 
 _ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit: ; preds = %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit.loopexit, %bb.g
+  %4 = phi ptr [ %i.ao, %bb.g ], [ %.pre31, %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit.loopexit ]
+  %5 = phi ptr [ %i.ap, %bb.g ], [ %.pre29, %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit.loopexit ] ; 2 uses
   %i.bm = phi ptr [ %i.aq, %bb.g ], [ %.pre27, %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit.loopexit ] ; 4 uses
   %.0.lcssa.i.i = phi i64 [ 0, %bb.g ], [ %.0.lcssa.i.i.ph, %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit.loopexit ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.2.i)
-  %4 = getelementptr inbounds nuw i8, ptr %i.bm, i64 120 ; 2 uses
-  %5 = load ptr, ptr %4, align 8, !tbaa !407      ; 2 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 128 ; 2 uses
-  %6 = load ptr, ptr %i.bn, align 8, !tbaa !405
-  %i.bo = ptrtoint ptr %6 to i64
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 120
+  %i.bo = ptrtoint ptr %4 to i64
   %i.bp = ptrtoint ptr %5 to i64
   %i.bq = sub i64 %i.bo, %i.bp
   %.not.i17 = icmp ult i64 %.0.lcssa.i.i, %i.bq
   br i1 %.not.i17, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit
+  %6 = getelementptr inbounds nuw i8, ptr %i.bm, i64 128
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 112
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !408 ; 2 uses
-  store ptr %i.bs, ptr %i.bn, align 8, !tbaa !405
+  store ptr %i.bs, ptr %6, align 8, !tbaa !405
   br label %_ZN5boost5beast17basic_flat_bufferISaIcEE7consumeEm.exit
 
 bb.m:                                             ; preds = %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_14mutable_bufferEEEmRKT_RKT0_m.exit
@@ -307,7 +311,7 @@ bb.m:                                             ; preds = %_ZN5boost4asio11buf
 
 _ZN5boost5beast17basic_flat_bufferISaIcEE7consumeEm.exit: ; preds = %bb.l, %bb.m
   %.sink.i = phi ptr [ %i.bt, %bb.m ], [ %i.bs, %bb.l ]
-  store ptr %.sink.i, ptr %4, align 8, !tbaa !407
+  store ptr %.sink.i, ptr %i.bn, align 8, !tbaa !407
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bm, i64 240 ; 2 uses
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !416
   %i.bw = add i64 %i.bv, %.0.lcssa.i.i

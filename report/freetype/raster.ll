@@ -204,7 +204,7 @@ Convert_Glyph.exit.thread165:                     ; preds = %.lr.ph.i47.i.prol.l
   br i1 %.not.not175.i, label %.preheader157.i, label %Draw_Sweep.exit
 
 .preheader157.i:                                  ; preds = %Convert_Glyph.exit.thread165, %bb.bx
-  %.0..098160.pre184.i = phi ptr [ %.0..098160.pre185.i, %bb.bx ], [ null, %Convert_Glyph.exit.thread165 ]
+  %.0..098160.pre184.i = phi ptr [ %.0..098160.pre187.i, %bb.bx ], [ null, %Convert_Glyph.exit.thread165 ]
   %.0104176.i = phi i32 [ %i.oc, %bb.bx ], [ %i.iq, %Convert_Glyph.exit.thread165 ] ; 2 uses
   %.0..0..0..0..i = load ptr, ptr %i.a, align 8, !tbaa !144 ; 2 uses
   %.not158.i = icmp eq ptr %.0..0..0..0..i, null
@@ -271,7 +271,7 @@ bb.au:                                            ; preds = %.sink.split.i, %.lr
   br label %._crit_edge.i36
 
 ._crit_edge.i36:                                  ; preds = %._crit_edge.loopexit.i, %.preheader157.i
-  %.0..098160.pre.i = phi ptr [ %.0..0..0..0..098160.pre.pre.i, %._crit_edge.loopexit.i ], [ %.0..098160.pre184.i, %.preheader157.i ]
+  %.0..098160.pre.i = phi ptr [ %.0..0..0..0..098160.pre.pre.i, %._crit_edge.loopexit.i ], [ %.0..098160.pre184.i, %.preheader157.i ] ; 2 uses
   %i.jp = load ptr, ptr %i.m, align 8, !tbaa !92
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 8 ; 2 uses
   store ptr %i.jq, ptr %i.m, align 8, !tbaa !92
@@ -280,7 +280,8 @@ bb.au:                                            ; preds = %.sink.split.i, %.lr
   br label %bb.av
 
 bb.av:                                            ; preds = %Increment.exit153.i, %._crit_edge.i36
-  %.0..098160.i = phi ptr [ %.0..098160.pre.i, %._crit_edge.i36 ], [ %.0..098160.pre185.i, %Increment.exit153.i ] ; 2 uses
+  %.0..098160.pre189.i = phi ptr [ %.0..098160.pre.i, %._crit_edge.i36 ], [ %.0..098160.pre187.i, %Increment.exit153.i ] ; 3 uses
+  %.0..098160.i = phi ptr [ %.0..098160.pre.i, %._crit_edge.i36 ], [ %.0..098160.pre185.i, %Increment.exit153.i ] ; 5 uses
   %.1105.i = phi i32 [ %.0104176.i, %._crit_edge.i36 ], [ %i.oc, %Increment.exit153.i ] ; 3 uses
   %.0..0..0..0..0100161.i = load ptr, ptr %i.b, align 8, !tbaa !144 ; 3 uses
   %i.jt = icmp ne ptr %.0..0..0..0..0100161.i, null ; 2 uses
@@ -521,15 +522,20 @@ bb.br:                                            ; preds = %bb.bq, %.lr.ph42.i.
   %.1.i.i = phi ptr [ %.0..0..0..0..0.156.i, %bb.bq ], [ %i.mz, %.lr.ph42.i.i ] ; 2 uses
   %i.nf = load ptr, ptr %.1.i.i, align 8, !tbaa !90 ; 2 uses
   %.not34.i.i = icmp eq ptr %i.nf, null
-  br i1 %.not34.i.i, label %Increment.exit.i, label %.lr.ph42.i.i, !llvm.loop !135
+  br i1 %.not34.i.i, label %Increment.exit.loopexit.i, label %.lr.ph42.i.i, !llvm.loop !135
 
-Increment.exit.i:                                 ; preds = %bb.br, %.preheader.i.i, %._crit_edge.i.i39, %._crit_edge174.i
-  %.0..0..0..0..0..i = load ptr, ptr %i.c, align 8, !tbaa !144 ; 2 uses
-  %.not37.i134.i = icmp eq ptr %.0..0..0..0..0..i, null
+Increment.exit.loopexit.i:                        ; preds = %bb.br
+  %.0..0..0..0..0..pre.i = load ptr, ptr %i.c, align 8, !tbaa !144 ; 2 uses
+  br label %Increment.exit.i
+
+Increment.exit.i:                                 ; preds = %Increment.exit.loopexit.i, %.preheader.i.i, %._crit_edge.i.i39, %._crit_edge174.i
+  %.0..098160.pre188.i = phi ptr [ %.0..0..0..0..0..pre.i, %Increment.exit.loopexit.i ], [ %.0..098160.pre189.i, %._crit_edge174.i ], [ %.0..098160.pre189.i, %._crit_edge.i.i39 ], [ %.0..098160.pre189.i, %.preheader.i.i ]
+  %.0..0..i = phi ptr [ %.0..0..0..0..0..pre.i, %Increment.exit.loopexit.i ], [ %.0..098160.i, %._crit_edge174.i ], [ %.0..098160.i, %._crit_edge.i.i39 ], [ %.0..098160.i, %.preheader.i.i ] ; 2 uses
+  %.not37.i134.i = icmp eq ptr %.0..0..i, null
   br i1 %.not37.i134.i, label %Increment.exit153.i, label %.lr.ph.i135.i
 
 .lr.ph.i135.i:                                    ; preds = %Increment.exit.i, %bb.bu
-  %i.ng = phi ptr [ %i.nt, %bb.bu ], [ %.0..0..0..0..0..i, %Increment.exit.i ] ; 7 uses
+  %i.ng = phi ptr [ %i.nt, %bb.bu ], [ %.0..0..i, %Increment.exit.i ] ; 7 uses
   %.02838.i136.i = phi ptr [ %.129.i139.i, %bb.bu ], [ %i.c, %Increment.exit.i ] ; 2 uses
   %i.nh = getelementptr inbounds nuw i8, ptr %i.ng, i64 20 ; 2 uses
   %i.ni = load i32, ptr %i.nh, align 4, !tbaa !96
@@ -564,7 +570,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   br i1 %.not.i140.i, label %._crit_edge.i141.i, label %.lr.ph.i135.i, !llvm.loop !134
 
 ._crit_edge.i141.i:                               ; preds = %bb.bu
-  %.0..0..0..0..0..pre43.i142.i = load ptr, ptr %i.c, align 8, !tbaa !144 ; 5 uses
+  %.0..0..0..0..0..pre43.i142.i = load ptr, ptr %i.c, align 8, !tbaa !144 ; 6 uses
   %.not33.i143.i = icmp eq ptr %.0..0..0..0..0..pre43.i142.i, null
   br i1 %.not33.i143.i, label %Increment.exit153.i, label %.preheader.i144.i
 
@@ -594,7 +600,7 @@ bb.bv:                                            ; preds = %.lr.ph42.i146.i
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %.lr.ph42.i146.i
-  %.0..098160180.i = phi ptr [ %.0..0..0..0..0.154.i, %bb.bv ], [ %.0..098160181.i, %.lr.ph42.i146.i ] ; 2 uses
+  %.0..098160180.i = phi ptr [ %.0..0..0..0..0.154.i, %bb.bv ], [ %.0..098160181.i, %.lr.ph42.i146.i ] ; 3 uses
   %.3.i150.i = phi ptr [ %i.c, %bb.bv ], [ %.041.i147.i, %.lr.ph42.i146.i ]
   %.1.i151.i = phi ptr [ %.0..0..0..0..0.154.i, %bb.bv ], [ %i.nv, %.lr.ph42.i146.i ] ; 2 uses
   %i.ob = load ptr, ptr %.1.i151.i, align 8, !tbaa !90 ; 2 uses
@@ -602,7 +608,8 @@ bb.bw:                                            ; preds = %bb.bv, %.lr.ph42.i1
   br i1 %.not34.i152.i, label %Increment.exit153.i, label %.lr.ph42.i146.i, !llvm.loop !135
 
 Increment.exit153.i:                              ; preds = %bb.bw, %.preheader.i144.i, %._crit_edge.i141.i, %Increment.exit.i
-  %.0..098160.pre185.i = phi ptr [ %.0..0..0..0..0..pre43.i142.i, %.preheader.i144.i ], [ null, %Increment.exit.i ], [ null, %._crit_edge.i141.i ], [ %.0..098160180.i, %bb.bw ] ; 2 uses
+  %.0..098160.pre187.i = phi ptr [ %.0..0..0..0..0..pre43.i142.i, %.preheader.i144.i ], [ %.0..098160.pre188.i, %Increment.exit.i ], [ null, %._crit_edge.i141.i ], [ %.0..098160180.i, %bb.bw ] ; 2 uses
+  %.0..098160.pre185.i = phi ptr [ %.0..0..0..0..0..pre43.i142.i, %.preheader.i144.i ], [ null, %Increment.exit.i ], [ null, %._crit_edge.i141.i ], [ %.0..098160180.i, %bb.bw ]
   %i.oc = add nsw i32 %.1105.i, 1                 ; 4 uses
   %i.od = icmp slt i32 %i.oc, %i.js
   br i1 %i.od, label %bb.av, label %bb.bx, !llvm.loop !136

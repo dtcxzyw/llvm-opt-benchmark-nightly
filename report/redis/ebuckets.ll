@@ -204,7 +204,7 @@ declare void @abort() local_unnamed_addr #4
 ; Function Attrs: nounwind uwtable
 define dso_local void @ebExpire(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) initializes((32, 48)) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 9 uses
+  %i.a = alloca ptr, align 8                      ; 10 uses
   %3 = alloca %struct.raxIterator, align 8        ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   store ptr null, ptr %i.a, align 8, !tbaa !31
@@ -427,9 +427,11 @@ bb.n:                                             ; preds = %bb.l
 .lr.ph120.i:                                      ; preds = %bb.n
   %i.dj = load ptr, ptr %i.cy, align 8, !tbaa !16
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cy, i64 8 ; 2 uses
+  %.promoted80 = load ptr, ptr %i.a, align 8
   br label %bb.o
 
 bb.o:                                             ; preds = %.thread99.i, %.lr.ph120.i
+  %.185111.i77.lcssa83 = phi ptr [ %.promoted80, %.lr.ph120.i ], [ %.185111.i77.lcssa81, %.thread99.i ] ; 2 uses
   %.080119.i = phi i32 [ 0, %.lr.ph120.i ], [ %i.eo, %.thread99.i ] ; 2 uses
   %.084118.i = phi ptr [ %i.dj, %.lr.ph120.i ], [ %.5101.i, %.thread99.i ] ; 3 uses
   %i.dl = load ptr, ptr %1, align 8, !tbaa !18
@@ -447,6 +449,7 @@ bb.o:                                             ; preds = %.thread99.i, %.lr.p
   br label %.lr.ph.i45
 
 .lr.ph.i45:                                       ; preds = %bb.s, %.lr.ph.preheader.i
+  %.185111.i78 = phi ptr [ %.185111.i77, %bb.s ], [ %.185111.i77.lcssa83, %.lr.ph.preheader.i ] ; 4 uses
   %i.ds = phi i64 [ %i.ej, %bb.s ], [ %.pre.i, %.lr.ph.preheader.i ]
   %.079112.i = phi i32 [ %i.em, %bb.s ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
   %.185111.i = phi ptr [ %i.dy, %bb.s ], [ %.084118.i, %.lr.ph.preheader.i ] ; 5 uses
@@ -472,9 +475,7 @@ bb.p:                                             ; preds = %.lr.ph.i45
   ]
 
 bb.q:                                             ; preds = %bb.p
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !31
-  store ptr %4, ptr %i.dx, align 8, !tbaa !28
-  store ptr %.185111.i, ptr %i.a, align 8, !tbaa !31
+  store ptr %.185111.i78, ptr %i.dx, align 8, !tbaa !28
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.p
@@ -485,6 +486,7 @@ bb.r:                                             ; preds = %bb.p
   br label %.critedge.i
 
 bb.s:                                             ; preds = %bb.q, %bb.p
+  %.185111.i77 = phi ptr [ %.185111.i, %bb.q ], [ %.185111.i78, %bb.p ] ; 2 uses
   %i.ei = load i64, ptr %i.c, align 8, !tbaa !21
   %i.ej = add i64 %i.ei, 1                        ; 2 uses
   store i64 %i.ej, ptr %i.c, align 8, !tbaa !21
@@ -496,12 +498,14 @@ bb.s:                                             ; preds = %bb.q, %bb.p
   br i1 %exitcond.not.i, label %.critedge.thread.i, label %.lr.ph.i45, !llvm.loop !104
 
 .critedge.i:                                      ; preds = %.lr.ph.i45, %bb.r, %bb.o
+  %.185111.i77.lcssa82 = phi ptr [ %.185111.i78, %bb.r ], [ %.185111.i77.lcssa83, %bb.o ], [ %.185111.i78, %.lr.ph.i45 ] ; 2 uses
   %.185107.i = phi ptr [ %.185111.i, %bb.r ], [ %.084118.i, %bb.o ], [ %.185111.i, %.lr.ph.i45 ] ; 3 uses
   %.079105.i = phi i32 [ %.079112.i, %bb.r ], [ 0, %bb.o ], [ %.079112.i, %.lr.ph.i45 ] ; 2 uses
   %i.en = icmp eq i32 %.079105.i, %i.dr
   br i1 %i.en, label %.critedge.thread.i, label %bb.u
 
 .critedge.thread.i:                               ; preds = %bb.s, %.critedge.i
+  %.185111.i77.lcssa81 = phi ptr [ %.185111.i77.lcssa82, %.critedge.i ], [ %.185111.i77, %bb.s ] ; 2 uses
   %.185107142.i = phi ptr [ %.185107.i, %.critedge.i ], [ %i.dy, %bb.s ] ; 3 uses
   %i.eo = add nuw i32 %.080119.i, 1               ; 3 uses
   %i.ep = icmp ult i32 %i.eo, %i.di
@@ -523,6 +527,7 @@ bb.t:                                             ; preds = %.critedge.thread.i
   br label %.thread99.i
 
 bb.u:                                             ; preds = %.critedge.i
+  store ptr %.185111.i77.lcssa82, ptr %i.a, align 8
   store ptr %.185107.i, ptr %i.cy, align 8, !tbaa !16
   %i.ey = load ptr, ptr %1, align 8, !tbaa !18
   %i.ez = call ptr %i.ey(ptr noundef %.185107.i) #8, !inline_history !103 ; 5 uses
@@ -596,9 +601,13 @@ bb.x:                                             ; preds = %._crit_edge.i
 .thread99.i:                                      ; preds = %bb.t, %.critedge.thread.i
   %.5101.i = phi ptr [ %i.eq, %bb.t ], [ %.185107142.i, %.critedge.thread.i ]
   %exitcond134.not.i = icmp eq i32 %i.eo, %i.di
-  br i1 %exitcond134.not.i, label %ebSegExpire.exit.thread49, label %bb.o, !llvm.loop !106
+  br i1 %exitcond134.not.i, label %ebSegExpire.exit.thread49.loopexit, label %bb.o, !llvm.loop !106
 
-ebSegExpire.exit.thread49:                        ; preds = %.thread99.i, %bb.n
+ebSegExpire.exit.thread49.loopexit:               ; preds = %.thread99.i
+  store ptr %.185111.i77.lcssa81, ptr %i.a, align 8
+  br label %ebSegExpire.exit.thread49
+
+ebSegExpire.exit.thread49:                        ; preds = %ebSegExpire.exit.thread49.loopexit, %bb.n
   call void @zfree(ptr noundef nonnull %i.cy) #8
   br label %bb.y
 

@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [80 x i8], align 16               ; 4 uses
   %i.b = alloca [4096 x i8], align 16             ; 10 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
-  %i.d = alloca i64, align 8                      ; 12 uses
+  %i.d = alloca i64, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
@@ -361,7 +361,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 stripcr.exit:                                     ; preds = %.lr.ph.i.prol.loopexit, %bb.r, %bb.i
   %.3 = phi i64 [ 0, %bb.i ], [ %.2.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.2.1, %bb.r ] ; 3 uses
-  %i.at = load i64, ptr %i.d, align 8, !tbaa !13  ; 5 uses
+  %i.at = load i64, ptr %i.d, align 8, !tbaa !13  ; 8 uses
   %.not15.i27 = icmp eq i64 %i.at, 0
   br i1 %.not15.i27, label %stripcr.exit35, label %.lr.ph.i28.preheader
 
@@ -380,18 +380,19 @@ bb.s:                                             ; preds = %.lr.ph.i28.prol
   br label %.lr.ph.i28.prol.loopexit.unr-lcssa
 
 bb.t:                                             ; preds = %.lr.ph.i28.prol
-  %3 = load i64, ptr %i.d, align 8, !tbaa !13
-  %i.ax = add i64 %3, -1
+  %i.ax = add nsw i64 %i.at, -1                   ; 2 uses
   store i64 %i.ax, ptr %i.d, align 8, !tbaa !13
   br label %.lr.ph.i28.prol.loopexit.unr-lcssa
 
 .lr.ph.i28.prol.loopexit.unr-lcssa:               ; preds = %bb.t, %bb.s
+  %3 = phi i64 [ %i.ax, %bb.t ], [ %i.at, %bb.s ]
   %.1.i33.prol = phi ptr [ %i.b, %bb.t ], [ %i.aw, %bb.s ]
   %i.ay = add nsw i64 %i.at, -1
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   br label %.lr.ph.i28.prol.loopexit
 
 .lr.ph.i28.prol.loopexit:                         ; preds = %.lr.ph.i28.prol.loopexit.unr-lcssa, %.lr.ph.i28.preheader
+  %.unr = phi i64 [ %i.at, %.lr.ph.i28.preheader ], [ %3, %.lr.ph.i28.prol.loopexit.unr-lcssa ]
   %.018.i29.unr = phi ptr [ %i.b, %.lr.ph.i28.preheader ], [ %.1.i33.prol, %.lr.ph.i28.prol.loopexit.unr-lcssa ]
   %.01217.i30.unr = phi ptr [ %i.b, %.lr.ph.i28.preheader ], [ %i.az, %.lr.ph.i28.prol.loopexit.unr-lcssa ]
   %.01316.i31.unr = phi i64 [ %i.at, %.lr.ph.i28.preheader ], [ %i.ay, %.lr.ph.i28.prol.loopexit.unr-lcssa ]
@@ -399,6 +400,7 @@ bb.t:                                             ; preds = %.lr.ph.i28.prol
   br i1 %i.ba, label %stripcr.exit35, label %.lr.ph.i28
 
 .lr.ph.i28:                                       ; preds = %.lr.ph.i28.prol.loopexit, %bb.ac
+  %4 = phi i64 [ %6, %bb.ac ], [ %.unr, %.lr.ph.i28.prol.loopexit ] ; 2 uses
   %.018.i29 = phi ptr [ %.1.i33.1, %bb.ac ], [ %.018.i29.unr, %.lr.ph.i28.prol.loopexit ] ; 4 uses
   %.01217.i30 = phi ptr [ %i.bl, %bb.ac ], [ %.01217.i30.unr, %.lr.ph.i28.prol.loopexit ] ; 4 uses
   %.01316.i31 = phi i64 [ %i.bk, %bb.ac ], [ %.01316.i31.unr, %.lr.ph.i28.prol.loopexit ]
@@ -407,8 +409,7 @@ bb.t:                                             ; preds = %.lr.ph.i28.prol
   br i1 %i.bc, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.lr.ph.i28
-  %4 = load i64, ptr %i.d, align 8, !tbaa !13
-  %i.bd = add i64 %4, -1
+  %i.bd = add i64 %4, -1                          ; 2 uses
   store i64 %i.bd, ptr %i.d, align 8, !tbaa !13
   br label %.lr.ph.i28.1
 
@@ -425,6 +426,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %.lr.ph.i28.1
 
 .lr.ph.i28.1:                                     ; preds = %bb.x, %bb.u
+  %5 = phi i64 [ %i.bd, %bb.u ], [ %4, %bb.x ]    ; 2 uses
   %.1.i33 = phi ptr [ %.018.i29, %bb.u ], [ %i.be, %bb.x ] ; 4 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.01217.i30, i64 1 ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !29  ; 2 uses
@@ -444,12 +446,12 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br label %bb.ac
 
 bb.ab:                                            ; preds = %.lr.ph.i28.1
-  %5 = load i64, ptr %i.d, align 8, !tbaa !13
-  %i.bj = add i64 %5, -1
+  %i.bj = add i64 %5, -1                          ; 2 uses
   store i64 %i.bj, ptr %i.d, align 8, !tbaa !13
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
+  %6 = phi i64 [ %i.bj, %bb.ab ], [ %5, %bb.aa ]
   %.1.i33.1 = phi ptr [ %.1.i33, %bb.ab ], [ %i.bi, %bb.aa ]
   %i.bk = add i64 %.01316.i31, -2                 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.01217.i30, i64 2

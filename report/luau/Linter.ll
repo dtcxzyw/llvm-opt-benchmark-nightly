@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luau/original/Linter?download=true
-inline.NumInlined: 2494
-inline.NumDeleted: 1090
+inline.NumInlined: 2493
+inline.NumDeleted: 1089
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 11
 loop-unroll.NumUnrolled: 12
@@ -205,7 +205,7 @@ _ZNSt4pairIN4Luau7AstNameENS0_15LintGlobalLocal6GlobalEEaSEOS4_.exit: ; preds = 
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt4pairIN4Luau7AstNameENS0_15LintGlobalLocal6GlobalEEaSEOS4_.exit, %bb.e
-  %i.bz = phi i64 [ %i.ao, %bb.e ], [ %.pre33, %_ZNSt4pairIN4Luau7AstNameENS0_15LintGlobalLocal6GlobalEEaSEOS4_.exit ] ; 4 uses
+  %i.bz = phi i64 [ %.pre33, %_ZNSt4pairIN4Luau7AstNameENS0_15LintGlobalLocal6GlobalEEaSEOS4_.exit ], [ %i.ao, %bb.e ] ; 4 uses
   %i.ca = add nuw i64 %.01122, 1                  ; 2 uses
   %i.cb = icmp ult i64 %i.ca, %i.bz
   br i1 %i.cb, label %bb.e, label %._crit_edge24, !llvm.loop !581
@@ -398,7 +398,7 @@ _ZNKSt6vectorIN4Luau22LintMultiLineStatement9StatementESaIS2_EE12_M_check_lenEmP
 
 _ZNSt6vectorIN4Luau22LintMultiLineStatement9StatementESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorIN4Luau22LintMultiLineStatement9StatementESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.aa, %_ZNKSt6vectorIN4Luau22LintMultiLineStatement9StatementESaIS2_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.ad, %.lr.ph.i.i.i.i.i ]
-  %i.ae = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 24
+  %i.ae = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i, i64 24
   %.not.i23.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorIN4Luau22LintMultiLineStatement9StatementESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.f
 
@@ -801,7 +801,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.t
   %.sroa.0.027 = phi ptr [ %.sroa.0.024, %.lr.ph ], [ %.sroa.0.0, %bb.t ] ; 7 uses
-  %.pn26 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.027, %bb.t ] ; 9 uses
+  %.pn26 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.027, %bb.t ] ; 10 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.pn26, i64 60
   %i.n = load i32, ptr %i.m, align 4, !tbaa !503  ; 2 uses
   %i.o = load i32, ptr %i.b, align 4, !tbaa !503  ; 2 uses
@@ -863,7 +863,7 @@ bb.f:                                             ; preds = %.split22, %.split21
 
 bb.g:                                             ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %.pn26, i64 88
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !97 ; 2 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !97 ; 3 uses
   %i.al = icmp ult i64 %i.ak, 16
   call void @llvm.assume(i1 %i.al)
   %i.am = add nuw nsw i64 %i.ak, 1
@@ -874,14 +874,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   store ptr %i.ag, ptr %i.f, align 8, !tbaa !95
   %i.an = load i64, ptr %i.ah, align 8, !tbaa !59
   store i64 %i.an, ptr %i.g, align 8, !tbaa !59
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pn26, i64 88
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !97
   br label %_ZN4Luau11LintWarningC2EOS0_.exit
 
 _ZN4Luau11LintWarningC2EOS0_.exit:                ; preds = %bb.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %.pn26, i64 88 ; 2 uses
-  %4 = load i64, ptr %3, align 8, !tbaa !97
-  store i64 %4, ptr %i.h, align 8, !tbaa !97
+  %3 = phi i64 [ %i.ak, %bb.g ], [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.pn26, i64 88
+  store i64 %3, ptr %i.h, align 8, !tbaa !97
   store ptr %i.ah, ptr %i.af, align 8, !tbaa !95
-  store i64 0, ptr %3, align 8, !tbaa !97
+  store i64 0, ptr %4, align 8, !tbaa !97
   store i8 0, ptr %i.ah, align 8, !tbaa !59
   %i.ao = ptrtoint ptr %.sroa.0.027 to i64
   %i.ap = sub i64 %i.ao, %i.i                     ; 2 uses

@@ -85,8 +85,8 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed
 bb.a:
   %2 = alloca %"class.icu_78::IcuToolErrorCode", align 8 ; 10 uses
   %3 = alloca %"class.icu_78::LocalPointer", align 8 ; 7 uses
-  %4 = alloca %"class.icu_78::LocalPointer", align 8 ; 10 uses
-  %5 = alloca %"class.icu_78::LocalPointer", align 8 ; 9 uses
+  %4 = alloca %"class.icu_78::LocalPointer", align 8 ; 7 uses
+  %5 = alloca %"class.icu_78::LocalPointer", align 8 ; 10 uses
   %6 = alloca %"class.icu_78::CharString", align 8 ; 18 uses
   %7 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %8 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
@@ -261,6 +261,8 @@ bb.u:                                             ; preds = %bb.o
   br i1 %i.bb, label %bb.be, label %bb.bf
 
 bb.v:                                             ; preds = %.lr.ph, %bb.bc
+  %10 = phi ptr [ null, %.lr.ph ], [ %13, %bb.bc ] ; 2 uses
+  %11 = phi ptr [ null, %.lr.ph ], [ %14, %bb.bc ] ; 4 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.bc ] ; 2 uses
   %.03896 = phi i8 [ 0, %.lr.ph ], [ %.1, %bb.bc ] ; 2 uses
   %.04095 = phi ptr [ %i.y, %.lr.ph ], [ %.141, %bb.bc ] ; 3 uses
@@ -289,7 +291,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   %i.bk = invoke noalias noundef nonnull dereferenceable(872) ptr @_Znwm(i64 noundef 872) #18
-          to label %bb.z unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
+          to label %bb.z unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 6 uses
 
 bb.z:                                             ; preds = %bb.y
   invoke void @_ZN6icu_7822Normalizer2DataBuilderC1ER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(868) %i.bk, ptr noundef nonnull align 4 dereferenceable(4) %i.w)
@@ -301,13 +303,12 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.bm, label %bb.ae, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %10 = load ptr, ptr %4, align 8, !tbaa !24      ; 3 uses
-  %i.bn = icmp eq ptr %10, null
+  %i.bn = icmp eq ptr %11, null
   br i1 %i.bn, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @_ZN6icu_7822Normalizer2DataBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(868) dereferenceable(868) %10) #17
-  call void @_ZdlPvm(ptr noundef nonnull %10, i64 noundef 872) #19
+  call void @_ZN6icu_7822Normalizer2DataBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(868) dereferenceable(868) %11) #17
+  call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef 872) #19
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
@@ -320,6 +321,7 @@ bb.ae:                                            ; preds = %bb.aa
   br label %_ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErrorCodeEPS1_R10UErrorCode.exit
 
 _ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErrorCodeEPS1_R10UErrorCode.exit: ; preds = %bb.ae, %bb.ad
+  %12 = phi ptr [ %10, %bb.ae ], [ %i.bk, %bb.ad ] ; 8 uses
   %i.bo = invoke noalias noundef nonnull dereferenceable(872) ptr @_Znwm(i64 noundef 872) #18
           to label %bb.af unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
@@ -356,14 +358,13 @@ _ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErro
           to label %bb.al unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.al:                                            ; preds = %_ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErrorCodeEPS1_R10UErrorCode.exit75
-  %11 = load ptr, ptr %4, align 8, !tbaa !24      ; 4 uses
   %i.bt = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_78L7optionsE, i64 274), align 2, !tbaa !44
   %.not63 = icmp eq i8 %i.bt, 0
   br i1 %.not63, label %bb.ap, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.bu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_78L7optionsE, i64 248), align 8, !tbaa !43
-  invoke void @_ZN6icu_7822Normalizer2DataBuilder17setUnicodeVersionEPKc(ptr noundef nonnull align 8 dereferenceable(868) %11, ptr noundef %i.bu)
+  invoke void @_ZN6icu_7822Normalizer2DataBuilder17setUnicodeVersionEPKc(ptr noundef nonnull align 8 dereferenceable(868) %12, ptr noundef %i.bu)
           to label %bb.ap unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.an:                                            ; preds = %bb.z
@@ -384,7 +385,7 @@ bb.ap:                                            ; preds = %bb.am, %bb.al
   br i1 %.not71, label %bb.bc, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.by = getelementptr inbounds nuw i8, ptr %11, i64 432
+  %i.by = getelementptr inbounds nuw i8, ptr %12, i64 432
   store i32 1, ptr %i.by, align 8, !tbaa !62
   br label %bb.bc
 
@@ -451,7 +452,9 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.ap, %bb.aq, %bb.bb
-  %.141 = phi ptr [ %.04095, %bb.bb ], [ %11, %bb.aq ], [ %11, %bb.ap ] ; 4 uses
+  %13 = phi ptr [ %10, %bb.bb ], [ %12, %bb.aq ], [ %12, %bb.ap ] ; 2 uses
+  %14 = phi ptr [ %11, %bb.bb ], [ %12, %bb.aq ], [ %12, %bb.ap ]
+  %.141 = phi ptr [ %.04095, %bb.bb ], [ %12, %bb.aq ], [ %12, %bb.ap ] ; 4 uses
   %.1 = phi i8 [ %.03896, %bb.bb ], [ 1, %bb.aq ], [ 1, %bb.ap ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -463,14 +466,17 @@ bb.bd:                                            ; preds = %bb.ax, %bb.aw
   br label %.loopexit.split-lp
 
 bb.be:                                            ; preds = %._crit_edge
-  %12 = load ptr, ptr %3, align 8, !tbaa !24
-  %i.cq = load ptr, ptr %4, align 8, !tbaa !24
-  %i.cr = load ptr, ptr %5, align 8, !tbaa !24    ; 2 uses
-  invoke void @_ZN6icu_7822Normalizer2DataBuilder11computeDiffERKS0_S2_RS0_(ptr noundef nonnull align 8 dereferenceable(868) %12, ptr noundef nonnull align 8 dereferenceable(868) %i.cq, ptr noundef nonnull align 8 dereferenceable(868) %i.cr)
-          to label %.invoke unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %i.cq = load ptr, ptr %3, align 8, !tbaa !24
+  %i.cr = load ptr, ptr %5, align 8, !tbaa !24
+  invoke void @_ZN6icu_7822Normalizer2DataBuilder11computeDiffERKS0_S2_RS0_(ptr noundef nonnull align 8 dereferenceable(868) %i.cq, ptr noundef nonnull align 8 dereferenceable(868) %13, ptr noundef nonnull align 8 dereferenceable(868) %i.cr)
+          to label %15 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.invoke:                                          ; preds = %bb.be, %bb.bf
-  %i.cs = phi ptr [ %.141, %bb.bf ], [ %i.cr, %bb.be ]
+15:                                               ; preds = %bb.be
+  %16 = load ptr, ptr %5, align 8, !tbaa !24
+  br label %.invoke
+
+.invoke:                                          ; preds = %bb.bf, %15
+  %i.cs = phi ptr [ %16, %15 ], [ %.141, %bb.bf ]
   %i.ct = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_78L7optionsE, i64 208), align 16, !tbaa !43
   invoke void @_ZNK6icu_7822Normalizer2DataBuilder13writeDataFileEPKcb(ptr noundef nonnull align 8 dereferenceable(868) %i.cs, ptr noundef %i.ct, i1 noundef zeroext %i.bb)
           to label %bb.bj unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

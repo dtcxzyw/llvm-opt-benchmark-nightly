@@ -205,7 +205,7 @@ begin_hunk_0_@_RINvMNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object13byte
   br i1 %i.tm, label %.lr.ph53, label %.preheader
 
 ._crit_edge:                                      ; preds = %.lr.ph58, %.preheader
-  %.sroa.017.2.lcssa = phi i64 [ %.sroa.017.1.lcssa, %.preheader ], [ %i.wx, %.lr.ph58 ] ; 6 uses
+  %.sroa.017.2.lcssa = phi i64 [ %.sroa.017.1.lcssa, %.preheader ], [ %i.wx, %.lr.ph58 ] ; 8 uses
   %.sroa.0.2.lcssa = phi ptr [ %.sroa.0.1.lcssa, %.preheader ], [ %i.ww, %.lr.ph58 ]
   %.not = icmp eq i64 %.sroa.017.2.lcssa, 0
   br i1 %.not, label %bb.j, label %bb.h
@@ -340,7 +340,9 @@ begin_hunk_0_@_RINvMNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object13byte
 
 bb.h:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.016)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.016, i8 0, i64 16, i1 false)
+  %4 = sub nuw nsw i64 16, %.sroa.017.2.lcssa
+  %5 = getelementptr i8, ptr %.sroa.016, i64 %.sroa.017.2.lcssa
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %5, i8 0, i64 %4, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %.sroa.016, ptr nonnull align 1 %.sroa.0.2.lcssa, i64 %.sroa.017.2.lcssa, i1 false)
   %.sroa.016.0..sroa.016.0..sroa.016.0..sroa.016.0..sroa.016.0..sroa.015.0.copyload = load i128, ptr %.sroa.016, align 16 ; 2 uses
   %i.wz = lshr i128 %.sroa.016.0..sroa.016.0..sroa.016.0..sroa.016.0..sroa.016.0..sroa.015.0.copyload, 1

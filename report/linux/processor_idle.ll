@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.as = load i32, ptr %.03870.i, align 8        ; 3 uses
   %i.at = getelementptr i8, ptr %.03870.i, i64 8  ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8            ; 2 uses
-  %i.av = getelementptr i8, ptr %.03870.i, i64 4  ; 5 uses
+  %i.av = getelementptr i8, ptr %.03870.i, i64 4  ; 4 uses
   store i32 0, ptr %i.av, align 4
   %i.aw = icmp sgt i32 %i.as, 0
   br i1 %i.aw, label %.lr.ph61.i52.i, label %flatten_lpi_states.exit61.i
@@ -218,6 +218,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not43.i.i, label %.lr.ph61.split.us.i54.i, label %.lr.ph61.split.i.i
 
 .lr.ph61.split.us.i54.i:                          ; preds = %.lr.ph61.i52.i, %bb.o
+  %2 = phi i32 [ %3, %bb.o ], [ 0, %.lr.ph61.i52.i ] ; 3 uses
   %.060.us.i55.i = phi i32 [ %.4.ph.us.i59.i, %bb.o ], [ %.071.i, %.lr.ph61.i52.i ] ; 5 uses
   %.03858.us.i56.i = phi ptr [ %i.bl, %bb.o ], [ %i.au, %.lr.ph61.i52.i ] ; 3 uses
   %.03957.us.i57.i = phi i32 [ %i.bk, %bb.o ], [ 0, %.lr.ph61.i52.i ]
@@ -235,8 +236,7 @@ bb.n:                                             ; preds = %bb.m
   %i.be = zext nneg i32 %.060.us.i55.i to i64
   %i.bf = getelementptr [72 x i8], ptr %i.ak, i64 %i.be ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(72) %i.bf, ptr noundef align 8 dereferenceable(72) %.03858.us.i56.i, i64 72, i1 false)
-  %2 = load i32, ptr %i.av, align 4               ; 2 uses
-  %i.bg = add i32 %2, 1
+  %i.bg = add i32 %2, 1                           ; 2 uses
   store i32 %i.bg, ptr %i.av, align 4
   %i.bh = zext i32 %2 to i64
   %i.bi = getelementptr [8 x i8], ptr %i.az, i64 %i.bh
@@ -245,6 +245,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.lr.ph61.split.us.i54.i
+  %3 = phi i32 [ %i.bg, %bb.n ], [ %2, %.lr.ph61.split.us.i54.i ]
   %.4.ph.us.i59.i = phi i32 [ %i.bj, %bb.n ], [ %.060.us.i55.i, %.lr.ph61.split.us.i54.i ] ; 2 uses
   %i.bk = add nuw nsw i32 %.03957.us.i57.i, 1     ; 2 uses
   %i.bl = getelementptr i8, ptr %.03858.us.i56.i, i64 72

@@ -205,7 +205,7 @@ _ZNK11ast_manager10is_impliesEPK4expr.exit:       ; preds = %_ZNK11ast_manager6i
 bb.aa:                                            ; preds = %_ZNK11ast_manager10is_impliesEPK4expr.exit, %_ZNK11ast_manager6is_notEPK4expr.exit, %_ZNK11ast_manager6is_iffEPK4expr.exit, %_ZNK11ast_manager5is_orEPK4expr.exit, %_ZNK11ast_manager6is_andEPK4expr.exit
   %i.ec = phi ptr [ %i.dj, %_ZNK11ast_manager10is_impliesEPK4expr.exit ], [ %i.dj, %_ZNK11ast_manager6is_notEPK4expr.exit ], [ %i.cg, %_ZNK11ast_manager6is_iffEPK4expr.exit ], [ %i.cg, %_ZNK11ast_manager5is_orEPK4expr.exit ], [ %i.cg, %_ZNK11ast_manager6is_andEPK4expr.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
-  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !332, !nonnull !79, !align !83 ; 2 uses
+  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !332, !nonnull !79, !align !83 ; 3 uses
   store ptr null, ptr %6, align 8, !tbaa !385
   %i.ee = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store ptr %i.ed, ptr %i.ee, align 8, !tbaa !287
@@ -224,17 +224,18 @@ bb.aa:                                            ; preds = %_ZNK11ast_manager10
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.ah
+  %.pre111 = load ptr, ptr %i.ec, align 8, !tbaa !332
   %i.ek = getelementptr inbounds i8, ptr %i.fd, i64 -4
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !70
   br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit: ; preds = %bb.aa, %bb.ab
-  %i.em = phi ptr [ %i.fd, %bb.ab ], [ null, %bb.aa ]
+  %i.em = phi ptr [ %.pre111, %bb.ab ], [ %i.ed, %bb.aa ]
+  %11 = phi ptr [ %i.fd, %bb.ab ], [ null, %bb.aa ]
   %.0.i.i = phi i32 [ %i.el, %bb.ab ], [ 0, %bb.aa ]
-  %11 = load ptr, ptr %i.ec, align 8, !tbaa !332, !nonnull !79, !align !83
   %.in = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.en = load ptr, ptr %.in, align 8, !tbaa !421
-  %i.eo = invoke noundef ptr @_ZN11ast_manager6mk_appEP9func_decljPKP4expr(ptr noundef nonnull align 8 dereferenceable(952) %11, ptr noundef %i.en, i32 noundef %.0.i.i, ptr noundef %i.em)
+  %i.eo = invoke noundef ptr @_ZN11ast_manager6mk_appEP9func_decljPKP4expr(ptr noundef nonnull align 8 dereferenceable(952) %i.em, ptr noundef %i.en, i32 noundef %.0.i.i, ptr noundef %11)
           to label %bb.ai unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 6 uses
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.ah
