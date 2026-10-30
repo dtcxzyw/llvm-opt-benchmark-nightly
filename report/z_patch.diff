@@ -1,0 +1,20 @@
+diff --git a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+index e81cce2b9299f..1ff28cee2964c 100644
+--- a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+@@ -2132,7 +2132,14 @@ bool DSEState::eliminateRedundantStoresViaDominatingConditions() {
+     Instruction *ICmpL;
+     CmpPredicate Pred;
+     Value *StorePtr, *StoreVal;
+-    if (!match(BI->getCondition(),
++    Value *Cond = BI->getCondition();
++    if (match(Cond,
++              m_NUWTrunc(m_Instruction(ICmpL, m_Load(m_Value(StorePtr))))))
++      return {
++          {ConditionInfo(StorePtr, ConstantInt::getNullValue(ICmpL->getType())),
++           ICmpL, BI->getSuccessor(1)}};
++
++    if (!match(Cond,
+                m_c_ICmp(Pred, m_Instruction(ICmpL, m_Load(m_Value(StorePtr))),
+                         m_Value(StoreVal))) ||
+         !ICmpInst::isEquality(Pred))
