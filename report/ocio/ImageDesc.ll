@@ -202,7 +202,9 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %bb.b
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !23
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !23 ; 3 uses
+  %3 = icmp eq i64 %.pre, 0
+  %4 = trunc i64 %.pre to i32
   br label %bb.q
 
 bb.c:                                             ; preds = %bb.b
@@ -297,7 +299,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.p,
   resume { ptr, i32 } %.pn
 
 bb.q:                                             ; preds = %._crit_edge, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %i.ae = phi i64 [ %.pre, %._crit_edge ], [ 4, %bb.h ], [ 2, %bb.g ], [ 2, %bb.f ], [ 2, %bb.e ], [ 2, %bb.d ], [ 1, %bb.c ] ; 5 uses
+  %5 = phi i1 [ %3, %._crit_edge ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.f ], [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.c ]
+  %6 = phi i32 [ %4, %._crit_edge ], [ 4, %bb.h ], [ 2, %bb.g ], [ 2, %bb.f ], [ 2, %bb.e ], [ 2, %bb.d ], [ 1, %bb.c ]
+  %i.ae = phi i64 [ %.pre, %._crit_edge ], [ 4, %bb.h ], [ 2, %bb.g ], [ 2, %bb.f ], [ 2, %bb.e ], [ 2, %bb.d ], [ 1, %bb.c ] ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !45
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -320,16 +324,14 @@ bb.s:                                             ; preds = %bb.r
   %i.aq = ptrtoint ptr %i.b to i64
   %i.ar = sub i64 %i.aq, %i.ao
   %.not21 = icmp ne i64 %i.ar, %i.ae
-  %3 = icmp eq i64 %i.ae, 0
-  %or.cond = or i1 %3, %.not21
+  %or.cond = or i1 %5, %.not21
   br i1 %or.cond, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.at = load i64, ptr %i.as, align 8, !tbaa !40
-  %4 = trunc i64 %i.at to i32
-  %i.au = trunc i64 %i.ae to i32
-  %i.av = tail call i64 @div(i32 noundef %4, i32 noundef %i.au) #26
+  %i.au = trunc i64 %i.at to i32
+  %i.av = tail call i64 @div(i32 noundef %i.au, i32 noundef %6) #26
   %.not23 = icmp eq i64 %i.av, 4
   br label %bb.u
 

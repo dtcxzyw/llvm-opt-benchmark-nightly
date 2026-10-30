@@ -202,6 +202,7 @@ bb.ao:                                            ; preds = %.noexc25
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.split.i.i.i.i.backedge, %bb.ao
   %i.du = phi i64 [ 0, %bb.ao ], [ %i.eo, %.lr.ph.split.i.i.i.i.backedge ] ; 3 uses
+  %2 = phi i1 [ false, %bb.ao ], [ %.be, %.lr.ph.split.i.i.i.i.backedge ]
   %.lcssa151920.i.i.i.i = phi i64 [ 0, %bb.ao ], [ %.lcssa1518.i.i.i.i, %.lr.ph.split.i.i.i.i.backedge ] ; 7 uses
   %i.dv = icmp ult i64 %i.dt, %i.du
   br i1 %i.dv, label %select.unfold.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i.i
@@ -262,7 +263,7 @@ bb.as:                                            ; preds = %.loopexit.i.i.i.i.i
 select.unfold.i.i.i.i:                            ; preds = %bb.as, %bb.ar, %.noexc4.i.i.i, %.preheader.i.i.i.i.i.i.i.i, %bb.aq, %.lr.ph.split.i.i.i.i
   %i.eo = phi i64 [ %i.dt, %bb.aq ], [ %i.du, %.lr.ph.split.i.i.i.i ], [ %i.dt, %.preheader.i.i.i.i.i.i.i.i ], [ %i.dt, %.noexc4.i.i.i ], [ %i.ek, %bb.as ], [ %i.ek, %bb.ar ]
   %.lcssa1518.i.i.i.i = phi i64 [ %.lcssa151920.i.i.i.i, %bb.aq ], [ %.lcssa151920.i.i.i.i, %.lr.ph.split.i.i.i.i ], [ %.lcssa151920.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i ], [ %.lcssa151920.i.i.i.i, %.noexc4.i.i.i ], [ %i.ek, %bb.as ], [ %.lcssa151920.i.i.i.i, %bb.ar ]
-  %i.ep = phi i1 [ true, %bb.aq ], [ true, %.lr.ph.split.i.i.i.i ], [ true, %.preheader.i.i.i.i.i.i.i.i ], [ true, %.noexc4.i.i.i ], [ false, %bb.as ], [ true, %bb.ar ] ; 2 uses
+  %i.ep = phi i1 [ true, %bb.aq ], [ true, %.lr.ph.split.i.i.i.i ], [ true, %.preheader.i.i.i.i.i.i.i.i ], [ true, %.noexc4.i.i.i ], [ %2, %bb.as ], [ true, %bb.ar ] ; 3 uses
   %.pn.i.i.i.i = phi i64 [ %i.dt, %bb.aq ], [ %i.dt, %.lr.ph.split.i.i.i.i ], [ %i.dt, %.preheader.i.i.i.i.i.i.i.i ], [ %i.dt, %.noexc4.i.i.i ], [ %i.el, %bb.as ], [ %i.dt, %bb.ar ]
   %.sroa.4.1.i.i.ph.i.i.i.i = sub nuw i64 %.pn.i.i.i.i, %.lcssa151920.i.i.i.i
   %.sroa.0.1.i.i.ph.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.dr, i64 %.lcssa151920.i.i.i.i
@@ -286,13 +287,14 @@ select.unfold.i.i.i.i:                            ; preds = %bb.as, %bb.ar, %.no
   %i.fb = icmp ne i64 %i.fa, 0
   %i.fc = zext i1 %i.fb to i32
   %i.fd = icmp eq i32 %i.fc, 0                    ; 2 uses
-  %brmerge.i.i.i.i = or i1 %i.ep, %i.fd
+  %brmerge.i.i.i.i = select i1 %i.fd, i1 true, i1 %i.ep
   br i1 %brmerge.i.i.i.i, label %bb.at, label %.lr.ph.split.i.i.i.i.backedge
 
 _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3any5checkReNCNCNvMNtNtNtCsl8OoimOLbh_6qdrant6common15pyroscope_state4pyroNtB1k_14PyroscopeState29is_jemalloc_profiling_enabled00E0B1q_.exit.backedge.i.i.i.i: ; preds = %.noexc5.i.i.i
   br i1 %i.ep, label %bb.at, label %.lr.ph.split.i.i.i.i.backedge
 
 .lr.ph.split.i.i.i.i.backedge:                    ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3any5checkReNCNCNvMNtNtNtCsl8OoimOLbh_6qdrant6common15pyroscope_state4pyroNtB1k_14PyroscopeState29is_jemalloc_profiling_enabled00E0B1q_.exit.backedge.i.i.i.i, %.split.i.i.i.i
+  %.be = phi i1 [ false, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3any5checkReNCNCNvMNtNtNtCsl8OoimOLbh_6qdrant6common15pyroscope_state4pyroNtB1k_14PyroscopeState29is_jemalloc_profiling_enabled00E0B1q_.exit.backedge.i.i.i.i ], [ %i.ep, %.split.i.i.i.i ]
   br label %.lr.ph.split.i.i.i.i
 
 bb.at:                                            ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3any5checkReNCNCNvMNtNtNtCsl8OoimOLbh_6qdrant6common15pyroscope_state4pyroNtB1k_14PyroscopeState29is_jemalloc_profiling_enabled00E0B1q_.exit.backedge.i.i.i.i, %.split.i.i.i.i

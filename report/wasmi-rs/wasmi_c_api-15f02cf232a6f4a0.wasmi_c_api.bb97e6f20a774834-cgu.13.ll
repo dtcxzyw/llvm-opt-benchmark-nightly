@@ -202,13 +202,13 @@ bb.a:
   br i1 %i.g, label %bb.c, label %bb.b, !prof !12
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load i64, ptr %1, align 8, !range !11, !noundef !4 ; 2 uses
+  %i.h = load i64, ptr %1, align 8, !range !11, !noundef !4
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.j = load i64, ptr %i.i, align 8              ; 2 uses
-  %i.k = trunc nuw i64 %i.h to i1
-  %. = select i1 %i.k, i64 %i.j, i64 4294967295   ; 2 uses
-  %2 = icmp ugt i64 %., 4294967295
-  br i1 %2, label %bb.e, label %bb.d, !prof !12
+  %i.j = load i64, ptr %i.i, align 8              ; 3 uses
+  %i.k = trunc nuw i64 %i.h to i1                 ; 2 uses
+  %2 = icmp ugt i64 %i.j, 4294967295
+  %.sroa.05.0 = select i1 %i.k, i1 %2, i1 false
+  br i1 %.sroa.05.0, label %bb.e, label %bb.d, !prof !12
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -221,18 +221,19 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.l = trunc nuw i64 %i.f to i32
-  %i.m = trunc nuw i64 %. to i32
+  %i.l = trunc nuw i64 %i.j to i32
+  %3 = select i1 %i.k, i32 %i.l, i32 -1
+  %i.m = trunc nuw i64 %i.f to i32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %i.l, ptr %i.n, align 8
+  store i32 %i.m, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store i32 %i.m, ptr %i.o, align 4
+  store i32 %3, ptr %i.o, align 4
   ret void
 
 bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store i64 %i.h, ptr %i.b, align 8
+  store i64 1, ptr %i.b, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.j, ptr %i.p, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

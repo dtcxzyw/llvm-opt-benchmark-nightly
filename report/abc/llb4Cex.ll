@@ -204,8 +204,10 @@ Vec_IntPush.exit240:                              ; preds = %Vec_IntPush.exit240
   %.val230 = phi i64 [ %indvars.iv.next351, %.critedge2..critedge4_crit_edge ], [ %indvars.iv.next, %.critedge2.preheader ], [ 0, %bb.g ]
   %.val227 = phi ptr [ %storemerge276303, %.critedge2..critedge4_crit_edge ], [ %storemerge277292, %.critedge2.preheader ], [ %.val227383, %bb.g ] ; 6 uses
   %.promoted287377 = phi i32 [ %spec.select.sink.i237299, %.critedge2..critedge4_crit_edge ], [ %spec.select.sink.i288, %.critedge2.preheader ], [ %.promoted287, %bb.g ] ; 2 uses
-  %4 = getelementptr inbounds [4 x i8], ptr %.val227, i64 %.val230
-  %i.db = tail call i32 @sat_solver_solve(ptr noundef nonnull %i.d, ptr noundef %.val227, ptr noundef %4, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0) #13
+  %sext = shl i64 %.val230, 32
+  %4 = ashr exact i64 %sext, 30
+  %5 = getelementptr inbounds i8, ptr %.val227, i64 %4
+  %i.db = tail call i32 @sat_solver_solve(ptr noundef nonnull %i.d, ptr noundef %.val227, ptr noundef %5, i64 noundef 0, i64 noundef 0, i64 noundef 0, i64 noundef 0) #13
   %.not179 = icmp eq i32 %i.db, 1
   br i1 %.not179, label %.preheader281, label %bb.s
 

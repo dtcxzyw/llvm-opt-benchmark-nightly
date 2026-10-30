@@ -202,8 +202,8 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 4 uses
-  %.not.i.i.i.i = icmp eq ptr %i.c, %i.d
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
+  %.not.i.i.i.i = icmp eq ptr %i.c, %i.d          ; 2 uses
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -215,15 +215,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
-  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #25
+  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #25 ; 2 uses
+  %2 = ptrtoint ptr %i.i to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i, %bb.a
-  %i.j = phi ptr [ null, %bb.a ], [ %i.i, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ] ; 6 uses
+  %3 = phi i64 [ 0, %bb.a ], [ %2, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ]
+  %i.j = phi ptr [ null, %bb.a ], [ %i.i, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i ] ; 5 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !46
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %i.j, ptr %i.k, align 8, !tbaa !48
-  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g
+  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.g ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.l, ptr %i.m, align 8, !tbaa !47
   %i.n = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.d, ptr %i.c, ptr noundef %i.j)
@@ -232,11 +234,12 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
 bb.d:                                             ; preds = %bb.c
   %i.o = landingpad { ptr, i32 }
           cleanup
-  %.not.i.i.i = icmp eq ptr %i.j, null
-  br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i, label %bb.e
+  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.g) #24
+  %4 = ptrtoint ptr %i.l to i64
+  %5 = sub i64 %4, %3
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %5) #24
   br label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit.i: ; preds = %bb.e, %bb.d

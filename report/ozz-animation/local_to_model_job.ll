@@ -87,7 +87,7 @@ bb.b:                                             ; preds = %_ZNK3ozz9animation1
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !34, !range !35, !noundef !36 ; 2 uses
   %i.ac = zext nneg i8 %i.ab to i32
   %i.ad = add nsw i32 %i.z, %i.ac
-  %i.ae = tail call noundef i32 @llvm.smax.i32(i32 %i.ad, i32 0) ; 3 uses
+  %i.ae = tail call noundef i32 @llvm.smax.i32(i32 %i.ad, i32 0) ; 4 uses
   %i.af = icmp slt i32 %i.ae, %i.x
   br i1 %i.af, label %bb.c, label %_ZNK3ozz9animation15LocalToModelJob8ValidateEv.exit.thread
 
@@ -122,10 +122,12 @@ bb.d:                                             ; preds = %bb.c
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 240
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.bc = zext nneg i32 %i.x to i64
+  %2 = zext nneg i32 %i.ae to i64
   br label %.outer
 
 .outer:                                           ; preds = %._crit_edge.loopexit, %.lr.ph63
-  %.02761.ph.a = phi i32 [ %i.er, %._crit_edge.loopexit ], [ %i.ae, %.lr.ph63 ] ; 4 uses
+  %.02761.ph = phi i64 [ %indvars.iv.next, %._crit_edge.loopexit ], [ %2, %.lr.ph63 ]
+  %.02761.ph.a = phi i32 [ %i.er, %._crit_edge.loopexit ], [ %i.ae, %.lr.ph63 ] ; 3 uses
   %i.bd = lshr i32 %.02761.ph.a, 2
   %i.be = zext nneg i32 %i.bd to i64
   %i.bf = load ptr, ptr %i.al, align 8, !tbaa !39
@@ -240,7 +242,6 @@ bb.e:                                             ; preds = %.outer, %._crit_edg
   br i1 %i.ep, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %2 = zext nneg i32 %.02761.ph.a to i64
   %i.eq = zext nneg i32 %i.eo to i64
   br label %.lr.ph
 
@@ -254,7 +255,7 @@ bb.e:                                             ; preds = %.outer, %._crit_edg
   br label %bb.e, !llvm.loop !26
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 4 uses
+  %indvars.iv = phi i64 [ %.02761.ph, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 4 uses
   %i.es = getelementptr inbounds nuw [2 x i8], ptr %i.p, i64 %indvars.iv
   %i.et = load i16, ptr %i.es, align 2, !tbaa !38 ; 2 uses
   %i.eu = icmp eq i16 %i.et, -1
@@ -330,8 +331,8 @@ bb.e:                                             ; preds = %.outer, %._crit_edg
   store <4 x float> %i.gs, ptr %.sroa.7.0..sroa_idx, align 16
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hg, i64 48
   store <4 x float> %i.hf, ptr %.sroa.9.0..sroa_idx, align 16, !tbaa !40
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 5 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next, %i.bc
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 6 uses
+  %3 = icmp slt i64 %indvars.iv.next, %i.bc
   br i1 %3, label %bb.f, label %._crit_edge.loopexit.thread
 
 ._crit_edge.loopexit.thread:                      ; preds = %.lr.ph

@@ -53,12 +53,12 @@ declare void @__ubsan_handle_add_overflow(ptr, i64, i64) local_unnamed_addr #2
 define dso_local ptr @zng_zError(i32 noundef %0) local_unnamed_addr #3 !func_sanitize !17 {
 bb.a:
   %i.a = add i32 %0, -3
-  %or.cond = icmp ult i32 %i.a, -9
-  %i.b = sub nsw i32 2, %0
-  %narrow = select i1 %or.cond, i32 9, i32 %i.b
-  %1 = zext i32 %narrow to i64                    ; 2 uses
+  %or.cond = icmp ult i32 %i.a, -9                ; 2 uses
+  %i.b = sub i32 2, %0
+  %1 = zext nneg i32 %i.b to i64                  ; 2 uses
   %2 = shl nuw nsw i64 %1, 3
-  %i.c = add i64 %2, ptrtoint (ptr @zng_z_errmsg to i64), !nosanitize !12 ; 2 uses
+  %3 = select i1 %or.cond, i64 72, i64 %2
+  %i.c = add i64 %3, ptrtoint (ptr @zng_z_errmsg to i64), !nosanitize !12 ; 2 uses
   %.not = icmp ult i64 %i.c, ptrtoint (ptr @zng_z_errmsg to i64), !nosanitize !12
   br i1 %.not, label %bb.b, label %bb.c, !prof !13, !nosanitize !12
 
@@ -67,7 +67,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c, !nosanitize !12
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr @zng_z_errmsg, i64 %1
+  %4 = select i1 %or.cond, i64 9, i64 %1
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr @zng_z_errmsg, i64 %4
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !19
   ret ptr %i.e
 }

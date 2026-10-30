@@ -204,12 +204,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.a = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %1, i1 true), !dbg !2920
   %i.b = lshr i64 -1, %i.a, !dbg !2921
-  %i.c = add i64 %i.b, 1, !dbg !2922
-  br label %bb.d, !dbg !2923
+  %i.c = add i64 %i.b, 1, !dbg !2922              ; 2 uses
+  %2 = shl i64 %i.c, 1, !dbg !2923
+  br label %bb.d, !dbg !2924
 
 bb.d:                                             ; preds = %bb.a, %bb.c
-  %.sroa.04.0 = phi i64 [ %i.c, %bb.c ], [ 1, %bb.a ], !dbg !2924 ; 2 uses
-  %2 = shl i64 %.sroa.04.0, 1, !dbg !2925
+  %.sroa.04.0 = phi i64 [ %2, %bb.c ], [ 2, %bb.a ], !dbg !2925
+  %3 = phi i64 [ %i.c, %bb.c ], [ 1, %bb.a ], !dbg !2925
   %i.d = tail call { ptr, i64 } @_RINvXsb_NtNtCsgZ49sUHp3tW_5alloc5boxed4iterINtB8_3BoxSINtNtNtNtCsh8eZTKRCwoO_3std4sync4mpmc5array4SlotINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEEINtNtNtNtB1H_4iter6traits7collect12FromIteratorBQ_E9from_iterINtNtNtB42_8adapters3map3MapINtNtNtB1H_3ops5range5RangejENCNvMs_BT_INtBT_7ChannelB1C_E13with_capacity0EECs7Ga9Brpi21q_11polars_lazy(i64 noundef 0, i64 noundef %1), !dbg !2926 ; 2 uses
   %i.e = extractvalue { ptr, i64 } %i.d, 0, !dbg !2926
   %i.f = extractvalue { ptr, i64 } %i.d, 1, !dbg !2926
@@ -223,9 +224,9 @@ bb.d:                                             ; preds = %bb.a, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 384, !dbg !2927
   store i64 %1, ptr %i.j, align 128, !dbg !2927
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 392, !dbg !2927
-  store i64 %2, ptr %i.k, align 8, !dbg !2927
+  store i64 %.sroa.04.0, ptr %i.k, align 8, !dbg !2927
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 400, !dbg !2927
-  store i64 %.sroa.04.0, ptr %i.l, align 16, !dbg !2927
+  store i64 %3, ptr %i.l, align 16, !dbg !2927
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 256, !dbg !2927
   store i32 0, ptr %i.m, align 128, !dbg !2927
   %.sroa.06.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 260, !dbg !2927
@@ -628,9 +629,9 @@ begin_hunk_1_@llvm.umin.i64
 !2920 = !DILocation(line: 3837, column: 30, scope: !2905, inlinedAt: !2916)
 !2921 = !DILocation(line: 3838, column: 13, scope: !2907, inlinedAt: !2916)
 !2922 = !DILocation(line: 3861, column: 13, scope: !2906, inlinedAt: !2915)
-!2923 = !DILocation(line: 3839, column: 10, scope: !2904, inlinedAt: !2916)
-!2924 = !DILocation(line: 0, scope: !2904, inlinedAt: !2916)
-!2925 = !DILocation(line: 95, column: 23, scope: !2908)
+!2923 = !DILocation(line: 95, column: 23, scope: !2908)
+!2924 = !DILocation(line: 3839, column: 10, scope: !2904, inlinedAt: !2916)
+!2925 = !DILocation(line: 0, scope: !2904, inlinedAt: !2916)
 !2926 = !DILocation(line: 2104, column: 9, scope: !2909, inlinedAt: !2917)
 !2927 = !DILocation(line: 111, column: 9, scope: !2913)
 !2928 = !DILocation(line: 121, column: 6, scope: !2903)

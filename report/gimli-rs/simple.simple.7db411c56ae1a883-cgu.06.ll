@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.e
   %.sroa.03.0.i.i.i.i = select i1 %i.ag, i64 %i.ai, i64 %.val.i
   %i.aj = tail call i64 @llvm.bswap.i64(i64 %.val4.i)
   %.sroa.03.0.i.i3.i.i = select i1 %i.ag, i64 %i.aj, i64 %.val4.i ; 2 uses
-  %i.ak = lshr i64 %.sroa.03.0.i.i3.i.i, 32
+  %i.ak = lshr i64 %.sroa.03.0.i.i3.i.i, 32       ; 2 uses
   %i.al = trunc nuw i64 %i.ak to i32
   %i.am = trunc i64 %.sroa.03.0.i.i3.i.i to i32
   br label %bb.l
@@ -218,7 +218,7 @@ bb.i:                                             ; preds = %bb.f
   %i.as = tail call i64 @llvm.bswap.i64(i64 %.val.i.i)
   %.sroa.03.0.i.i.i5.i = select i1 %i.ap, i64 %i.as, i64 %.val.i.i
   %i.at = tail call noundef i64 @_RNvMs5_NtCs9Jn0q30Ea0B_6object3elfINtB5_6Rela64NtNtB7_6endian10EndiannessE10get_r_infoCsaN7cMqnSAH7_6simple(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(24) %i.aa, i1 noundef zeroext %i.ap, i1 noundef zeroext %i.ar), !noalias !143
-  %i.au = lshr i64 %i.at, 32
+  %i.au = lshr i64 %i.at, 32                      ; 2 uses
   %i.av = trunc nuw i64 %i.au to i32
   %i.aw = tail call noundef i64 @_RNvMs5_NtCs9Jn0q30Ea0B_6object3elfINtB5_6Rela64NtNtB7_6endian10EndiannessE10get_r_infoCsaN7cMqnSAH7_6simple(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(24) %i.aa, i1 noundef zeroext %i.ap, i1 noundef zeroext %i.ar), !noalias !143
   %i.ax = trunc i64 %i.aw to i32
@@ -234,9 +234,10 @@ bb.j:                                             ; preds = %bb.g
   %.sroa.9.8..sroa.4.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.9.8.copyload = load i64, ptr %.sroa.9.8..sroa.4.0..sroa_idx.i.sroa_idx, align 8, !noalias !139
   %.sroa.12.8..sroa.4.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.sroa.12.8.copyload = load i32, ptr %.sroa.12.8..sroa.4.0..sroa_idx.i.sroa_idx, align 8, !noalias !139
+  %.sroa.12.8.copyload = load i32, ptr %.sroa.12.8..sroa.4.0..sroa_idx.i.sroa_idx, align 8, !noalias !139 ; 2 uses
   %.sroa.14.8..sroa.4.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %.sroa.14.8.copyload = load i32, ptr %.sroa.14.8..sroa.4.0..sroa_idx.i.sroa_idx, align 4, !noalias !139
+  %2 = zext i32 %.sroa.12.8.copyload to i64
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.m, %bb.b
@@ -249,7 +250,8 @@ bb.k:                                             ; preds = %bb.m, %bb.b
 
 bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h
   %.sroa.14.0 = phi i32 [ %i.ax, %bb.i ], [ %i.am, %bb.h ], [ %.sroa.14.8.copyload, %bb.j ] ; 94 uses
-  %.sroa.12.0.a = phi i32 [ %i.av, %bb.i ], [ %i.al, %bb.h ], [ %.sroa.12.8.copyload, %bb.j ] ; 2 uses
+  %.sroa.12.0 = phi i64 [ %i.au, %bb.i ], [ %i.ak, %bb.h ], [ %2, %bb.j ]
+  %.sroa.12.0.a = phi i32 [ %i.av, %bb.i ], [ %i.al, %bb.h ], [ %.sroa.12.8.copyload, %bb.j ]
   %.sroa.9.0 = phi i64 [ %.sroa.03.0.i.i2.i.i, %bb.i ], [ 0, %bb.h ], [ %.sroa.9.8.copyload, %bb.j ]
   %.sroa.538.0 = phi i64 [ %.sroa.03.0.i.i.i5.i, %bb.i ], [ %.sroa.03.0.i.i.i.i, %bb.h ], [ %.sroa.538.8.copyload, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -652,7 +654,6 @@ _RINvNtNtNtCs9Jn0q30Ea0B_6object4read3elf10relocation16parse_relocationINtNtB8_3
   %.sroa.06.0.i = phi i8 [ 0, %bb.an ], [ 0, %bb.q ], [ 1, %bb.ap ], [ 1, %bb.aq ], [ 1, %bb.ar ], [ 1, %bb.as ], [ 1, %bb.at ], [ 1, %bb.au ], [ 1, %bb.av ], [ 7, %bb.aw ], [ 0, %bb.ad ], [ 1, %switch.lookup112 ], [ 0, %bb.ai ], [ 0, %bb.r ], [ 0, %bb.ao ], [ 8, %bb.az ], [ 8, %bb.ba ], [ 0, %bb.am ], [ 8, %bb.bb ], [ 0, %bb.ab ], [ 0, %bb.s ], [ 0, %bb.ag ], [ 0, %bb.al ], [ 0, %bb.t ], [ 1, %switch.lookup87 ], [ 0, %bb.y ], [ 1, %switch.lookup129 ], [ 0, %bb.u ], [ 1, %bb.bc ], [ 1, %switch.lookup119 ], [ 0, %bb.aa ], [ 0, %bb.v ], [ %switch.load156, %switch.lookup146 ], [ 1, %switch.lookup159 ], [ 1, %switch.lookup ], [ 0, %bb.w ], [ 0, %bb.ah ], [ 0, %bb.z ], [ %switch.load109, %switch.lookup99 ], [ 11, %bb.ax ], [ 12, %bb.ay ], [ 0, %bb.ak ], [ 0, %bb.x ], [ 0, %bb.ac ], [ 0, %bb.ae ], [ 0, %bb.af ], [ 0, %bb.aj ], [ %switch.load141, %switch.lookup132 ]
   %.sroa.05.0.i = phi i8 [ 0, %bb.an ], [ 0, %bb.q ], [ 1, %bb.ap ], [ 2, %bb.aq ], [ 2, %bb.ar ], [ 2, %bb.as ], [ 3, %bb.at ], [ 3, %bb.au ], [ 3, %bb.av ], [ 8, %bb.aw ], [ 0, %bb.ad ], [ %switch.load116, %switch.lookup112 ], [ 0, %bb.ai ], [ 0, %bb.r ], [ 0, %bb.ao ], [ 3, %bb.az ], [ 3, %bb.ba ], [ 0, %bb.am ], [ 3, %bb.bb ], [ 0, %bb.ab ], [ 0, %bb.s ], [ 0, %bb.ag ], [ 0, %bb.al ], [ 0, %bb.t ], [ %switch.load96, %switch.lookup87 ], [ 0, %bb.y ], [ %switch.masked, %switch.lookup129 ], [ 0, %bb.u ], [ 4, %bb.bc ], [ %switch.load128, %switch.lookup119 ], [ 0, %bb.aa ], [ 0, %bb.v ], [ %switch.load158, %switch.lookup146 ], [ %switch.offset, %switch.lookup159 ], [ %switch.load84, %switch.lookup ], [ 0, %bb.w ], [ 0, %bb.ah ], [ 0, %bb.z ], [ %switch.load111, %switch.lookup99 ], [ 2, %bb.ax ], [ 3, %bb.ay ], [ 0, %bb.ak ], [ 0, %bb.x ], [ 0, %bb.ac ], [ 0, %bb.ae ], [ 0, %bb.af ], [ 0, %bb.aj ], [ %switch.load143, %switch.lookup132 ]
   %i.cu = icmp eq i32 %.sroa.12.0.a, 0
-  %2 = zext i32 %.sroa.12.0.a to i64
   %.sroa.02.0.i = select i1 %i.cu, i64 2, i64 0
   store i64 %.sroa.538.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -660,7 +661,7 @@ _RINvNtNtNtCs9Jn0q30Ea0B_6object4read3elf10relocation16parse_relocationINtNtB8_3
   %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.02.0.i, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %2, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.12.0, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.9.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 44

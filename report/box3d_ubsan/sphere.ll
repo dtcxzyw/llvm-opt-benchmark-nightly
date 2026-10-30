@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.c
   %i.an = fadd <2 x float> %i.o, %i.am
   %i.ao = fmul float %i.al, 2.000000e+00
   %i.ap = fadd float %i.p, %i.ao
-  %6 = shufflevector <2 x float> %.sroa.513.0.copyload, <2 x float> %.sroa.7.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
-  %i.aq = fmul <4 x float> %6, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float poison> ; 5 uses
+  %6 = shufflevector <2 x float> %.sroa.513.0.copyload, <2 x float> %.sroa.7.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.aq = fmul <4 x float> %6, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00> ; 5 uses
   %i.ar = extractelement <4 x float> %i.aq, i64 1 ; 2 uses
   %i.as = extractelement <4 x float> %i.aq, i64 2
   %i.at = extractelement <4 x float> %i.aq, i64 0 ; 2 uses
@@ -606,20 +606,21 @@ bb.l:                                             ; preds = %bb.j
   store float 0.000000e+00, ptr %.sroa.0.i, align 8, !tbaa !54
   %.sroa.0.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 4
   store float %.sroa.5.0.i87, ptr %.sroa.0.i.4.i.4.i.4..sroa_idx, align 4, !tbaa !55
-  %.sroa.017.4.vec.extract.i = extractelement <2 x float> %.sroa.010.0.i86, i64 1
+  %.sroa.017.4.vec.extract.i = extractelement <2 x float> %.sroa.010.0.i86, i64 1 ; 3 uses
   %i.ay = fneg float %.sroa.017.4.vec.extract.i
+  %3 = fmul float %.sroa.017.4.vec.extract.i, %.sroa.017.4.vec.extract.i
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.sroa.05.0.in.i = phi ptr [ %.sroa.014.i, %bb.k ], [ %.sroa.0.i, %bb.l ]
-  %.sroa.5.0.i93.a = phi float [ 0.000000e+00, %bb.k ], [ %i.ay, %bb.l ] ; 3 uses
+  %.sroa.5.0.i93 = phi float [ 0.000000e+00, %bb.k ], [ %3, %bb.l ]
+  %.sroa.5.0.i93.a = phi float [ 0.000000e+00, %bb.k ], [ %i.ay, %bb.l ]
   %.sroa.05.0.i = load <2 x float>, ptr %.sroa.05.0.in.i, align 8, !tbaa !15 ; 3 uses
   %i.az = fmul <2 x float> %.sroa.05.0.i, %.sroa.05.0.i ; 2 uses
   %shift112 = shufflevector <2 x float> %i.az, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop113 = fadd <2 x float> %i.az, %shift112
   %i.ba = extractelement <2 x float> %foldExtExtBinop113, i64 0
-  %3 = fmul float %.sroa.5.0.i93.a, %.sroa.5.0.i93.a
-  %i.bb = fadd float %3, %i.ba                    ; 2 uses
+  %i.bb = fadd float %.sroa.5.0.i93, %i.ba        ; 2 uses
   %i.bc = fcmp ogt float %i.bb, f0x057A0000
   br i1 %i.bc, label %bb.n, label %b3Perp.exit
 

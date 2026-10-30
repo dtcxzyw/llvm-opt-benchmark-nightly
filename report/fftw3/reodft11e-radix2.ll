@@ -202,7 +202,8 @@ bb.a:
   %smax = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4)
   %i.ad = add nsw i64 %smax, -3
   %i.ae = lshr i64 %i.ad, 1                       ; 4 uses
-  %i.af = add nuw nsw i64 %i.ae, 2                ; 5 uses
+  %i.af = add nuw nsw i64 %i.ae, 2                ; 6 uses
+  %3 = shl nuw nsw i64 %i.af, 4                   ; 2 uses
   %i.ag = mul nsw i64 %i.x, %i.d
   %i.ah = sub nsw i64 %i.f, %i.g
   %i.ai = mul nsw i64 %i.ah, %i.d
@@ -549,7 +550,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !62
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.b
-  %.0227.lcssa.a = phi i64 [ 1, %bb.b ], [ %i.af, %middle.block ], [ %i.af, %.lr.ph ] ; 3 uses
+  %.0227.lcssa = phi i64 [ 16, %bb.b ], [ %3, %middle.block ], [ %3, %.lr.ph ]
+  %.0227.lcssa.a = phi i64 [ 1, %bb.b ], [ %i.af, %middle.block ], [ %i.af, %.lr.ph ] ; 2 uses
   %.lcssa = phi i64 [ 2, %bb.b ], [ %i.dm, %middle.block ], [ %i.jj, %.lr.ph ]
   %i.jk = icmp eq i64 %.lcssa, %i.g
   br i1 %i.jk, label %bb.c, label %bb.d
@@ -560,8 +562,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.jn = getelementptr inbounds [8 x i8], ptr %.0249, i64 %i.z
   %i.jo = load double, ptr %i.jn, align 8, !tbaa !22 ; 2 uses
   %i.jp = fadd double %i.jm, %i.jo
-  %.idx = shl nuw nsw i64 %.0227.lcssa.a, 4
-  %i.jq = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx ; 2 uses
+  %i.jq = getelementptr inbounds nuw i8, ptr %i.p, i64 %.0227.lcssa ; 2 uses
   %i.jr = load double, ptr %i.jq, align 8, !tbaa !22
   %i.js = fmul double %i.jr, 2.000000e+00
   %i.jt = fmul double %i.jp, %i.js
@@ -743,7 +744,8 @@ bb.a:
   %smax = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4)
   %i.ad = add nsw i64 %smax, -3
   %i.ae = lshr i64 %i.ad, 1                       ; 4 uses
-  %i.af = add nuw nsw i64 %i.ae, 2                ; 5 uses
+  %i.af = add nuw nsw i64 %i.ae, 2                ; 6 uses
+  %3 = shl nuw nsw i64 %i.af, 4                   ; 2 uses
   %i.ag = mul nsw i64 %i.y, %i.d
   %i.ah = sub nsw i64 %i.f, %i.g
   %i.ai = mul nsw i64 %i.ah, %i.d
@@ -1090,7 +1092,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !89
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.b
-  %.0227.lcssa.a = phi i64 [ 1, %bb.b ], [ %i.af, %middle.block ], [ %i.af, %.lr.ph ] ; 3 uses
+  %.0227.lcssa = phi i64 [ 16, %bb.b ], [ %3, %middle.block ], [ %3, %.lr.ph ]
+  %.0227.lcssa.a = phi i64 [ 1, %bb.b ], [ %i.af, %middle.block ], [ %i.af, %.lr.ph ] ; 2 uses
   %.lcssa = phi i64 [ 2, %bb.b ], [ %i.dm, %middle.block ], [ %i.jj, %.lr.ph ]
   %i.jk = icmp eq i64 %.lcssa, %i.g
   br i1 %i.jk, label %bb.c, label %bb.d
@@ -1101,8 +1104,7 @@ bb.c:                                             ; preds = %._crit_edge
   %i.jn = getelementptr inbounds [8 x i8], ptr %.0249, i64 %i.z
   %i.jo = load double, ptr %i.jn, align 8, !tbaa !22 ; 2 uses
   %i.jp = fadd double %i.jm, %i.jo
-  %.idx = shl nuw nsw i64 %.0227.lcssa.a, 4
-  %i.jq = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx ; 2 uses
+  %i.jq = getelementptr inbounds nuw i8, ptr %i.p, i64 %.0227.lcssa ; 2 uses
   %i.jr = load double, ptr %i.jq, align 8, !tbaa !22
   %i.js = fmul double %i.jr, 2.000000e+00
   %i.jt = fmul double %i.jp, %i.js

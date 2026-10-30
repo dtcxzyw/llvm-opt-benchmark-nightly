@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
     #dbg_value(ptr %2, !3843, !DIExpression(), !3846)
     #dbg_value(ptr %2, !3863, !DIExpression(), !3882)
     #dbg_value(ptr %2, !3863, !DIExpression(), !3887)
-  %5 = icmp samesign ugt i64 %1, 7, !dbg !4082
-  br i1 %5, label %bb.f, label %bb.e, !dbg !4082
+  %5 = icmp samesign ult i64 %1, 8, !dbg !4082    ; 3 uses
+  br i1 %5, label %bb.e, label %bb.f, !dbg !4082
 
 bb.d:                                             ; preds = %bb.b
   tail call void @llvm.trap(), !dbg !4083
@@ -608,7 +608,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.do, label %.lr.ph.1, label %.loopexit.1, !dbg !3831
 
 .lr.ph.1:                                         ; preds = %.loopexit, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1
-  %.sroa.05.086.1.a = phi i64 [ %i.eh, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 4 uses
+  %.sroa.05.086.1 = phi i1 [ false, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %5, %.loopexit ]
+  %.sroa.05.086.1.a = phi i64 [ %i.eh, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 3 uses
     #dbg_value(i64 %.sroa.05.086.1.a, !3836, !DIExpression(), !3961)
     #dbg_value(i64 %.sroa.05.086.1.a, !3850, !DIExpression(), !3853)
     #dbg_value(i64 %.sroa.05.086.1.a, !3855, !DIExpression(), !3858)
@@ -684,8 +685,7 @@ bb.h:                                             ; preds = %.lr.ph.1
     #dbg_value(ptr %i.dr, !1033, !DIExpression(), !3604)
     #dbg_value(ptr %i.dq, !1034, !DIExpression(), !3604)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.dq, ptr noundef nonnull align 8 dereferenceable(48) %i.dr, i64 48, i1 false), !dbg !4185
-  %6 = icmp eq i64 %.sroa.05.086.1.a, 1, !dbg !4186
-  br i1 %6, label %._crit_edge114, label %.lr.ph113, !dbg !4186
+  br i1 %.sroa.05.086.1, label %._crit_edge114, label %.lr.ph113, !dbg !4186
 
 bb.i:                                             ; preds = %.lr.ph113
     #dbg_value(ptr %.sroa.0.0.i78.1111, !994, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3597)
@@ -1042,7 +1042,8 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort19bidirectional_merg
   ret void, !dbg !4243
 
 .lr.ph:                                           ; preds = %bb.g, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
-  %.sroa.05.086.a = phi i64 [ %i.gp, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %.sroa.0.0, %bb.g ] ; 4 uses
+  %.sroa.05.086 = phi i1 [ false, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %5, %bb.g ]
+  %.sroa.05.086.a = phi i64 [ %i.gp, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3ast4SpanNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %.sroa.0.0, %bb.g ] ; 3 uses
     #dbg_value(i64 %.sroa.05.086.a, !3836, !DIExpression(), !3961)
     #dbg_value(i64 %.sroa.05.086.a, !3850, !DIExpression(), !3853)
     #dbg_value(i64 %.sroa.05.086.a, !3855, !DIExpression(), !3858)
@@ -1118,8 +1119,7 @@ bb.n:                                             ; preds = %.lr.ph
     #dbg_value(ptr %i.fz, !1033, !DIExpression(), !3604)
     #dbg_value(ptr %i.fy, !1034, !DIExpression(), !3604)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.fy, ptr noundef nonnull align 8 dereferenceable(48) %i.fz, i64 48, i1 false), !dbg !4185
-  %7 = icmp eq i64 %.sroa.05.086.a, 1, !dbg !4186
-  br i1 %7, label %._crit_edge, label %.lr.ph108, !dbg !4186
+  br i1 %.sroa.05.086, label %._crit_edge, label %.lr.ph108, !dbg !4186
 
 bb.o:                                             ; preds = %.lr.ph108
     #dbg_value(ptr %.sroa.0.0.i78107, !994, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3597)
@@ -1522,6 +1522,7 @@ begin_hunk_2_@_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort31smal
   br label %bb.i, !dbg !4934
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
+  %5 = phi i1 [ false, %bb.f ], [ false, %bb.h ], [ true, %bb.g ], !dbg !4862 ; 2 uses
   %.sroa.0.0 = phi i64 [ 8, %bb.f ], [ 4, %bb.h ], [ 1, %bb.g ], !dbg !4862 ; 4 uses
     #dbg_value(i64 %.sroa.0.0, !4794, !DIExpression(), !4867)
     #dbg_value(i64 0, !4795, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4868)
@@ -1571,7 +1572,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %i.ee, label %.lr.ph.1, label %.loopexit.1, !dbg !4810
 
 .lr.ph.1:                                         ; preds = %.loopexit, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1
-  %.sroa.05.087.1.a = phi i64 [ %i.fa, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 4 uses
+  %.sroa.05.087.1 = phi i1 [ false, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %5, %.loopexit ]
+  %.sroa.05.087.1.a = phi i64 [ %i.fa, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 3 uses
     #dbg_value(i64 %.sroa.05.087.1.a, !4815, !DIExpression(), !4881)
     #dbg_value(i64 %.sroa.05.087.1.a, !4829, !DIExpression(), !4832)
     #dbg_value(i64 %.sroa.05.087.1.a, !4834, !DIExpression(), !4837)
@@ -1638,8 +1640,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
     #dbg_value(ptr %i.eg, !1135, !DIExpression(), !4630)
   %i.er = load i16, ptr %i.ei, align 1, !dbg !5029
   store i16 %i.er, ptr %i.eg, align 1, !dbg !5029
-  %5 = icmp eq i64 %.sroa.05.087.1.a, 1, !dbg !5030
-  br i1 %5, label %._crit_edge111, label %.lr.ph110, !dbg !5030
+  br i1 %.sroa.05.087.1, label %._crit_edge111, label %.lr.ph110, !dbg !5030
 
 .preheader.1:                                     ; preds = %.lr.ph110
     #dbg_value(ptr %.sroa.0.0.i79.1109, !1102, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4623)
@@ -1986,7 +1987,8 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort19bidirectional_merg
   ret void, !dbg !5087
 
 .lr.ph:                                           ; preds = %bb.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
-  %.sroa.05.087.a = phi i64 [ %i.ho, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %.sroa.0.0, %bb.i ] ; 4 uses
+  %.sroa.05.087 = phi i1 [ false, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %5, %bb.i ]
+  %.sroa.05.087.a = phi i64 [ %i.ho, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %.sroa.0.0, %bb.i ] ; 3 uses
     #dbg_value(i64 %.sroa.05.087.a, !4815, !DIExpression(), !4881)
     #dbg_value(i64 %.sroa.05.087.a, !4829, !DIExpression(), !4832)
     #dbg_value(i64 %.sroa.05.087.a, !4834, !DIExpression(), !4837)
@@ -2053,8 +2055,7 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort19bidirectional_merg
     #dbg_value(ptr %i.gu, !1135, !DIExpression(), !4630)
   %i.hf = load i16, ptr %i.gw, align 1, !dbg !5029
   store i16 %i.hf, ptr %i.gu, align 1, !dbg !5029
-  %6 = icmp eq i64 %.sroa.05.087.a, 1, !dbg !5030
-  br i1 %6, label %._crit_edge, label %.lr.ph107, !dbg !5030
+  br i1 %.sroa.05.087, label %._crit_edge, label %.lr.ph107, !dbg !5030
 
 .preheader:                                       ; preds = %.lr.ph107
     #dbg_value(ptr %.sroa.0.0.i79106, !1102, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4623)
@@ -2457,6 +2458,7 @@ begin_hunk_3_@_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort31smal
   br label %bb.i, !dbg !5778
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
+  %5 = phi i1 [ false, %bb.f ], [ false, %bb.h ], [ true, %bb.g ], !dbg !5706 ; 2 uses
   %.sroa.0.0 = phi i64 [ 8, %bb.f ], [ 4, %bb.h ], [ 1, %bb.g ], !dbg !5706 ; 4 uses
     #dbg_value(i64 %.sroa.0.0, !5638, !DIExpression(), !5711)
     #dbg_value(i64 0, !5639, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5712)
@@ -2506,7 +2508,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %i.ee, label %.lr.ph.1, label %.loopexit.1, !dbg !5654
 
 .lr.ph.1:                                         ; preds = %.loopexit, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1
-  %.sroa.05.087.1.a = phi i64 [ %i.fa, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 4 uses
+  %.sroa.05.087.1 = phi i1 [ false, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %5, %.loopexit ]
+  %.sroa.05.087.1.a = phi i64 [ %i.fa, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit.1 ], [ %.sroa.0.0, %.loopexit ] ; 3 uses
     #dbg_value(i64 %.sroa.05.087.1.a, !5659, !DIExpression(), !5725)
     #dbg_value(i64 %.sroa.05.087.1.a, !5673, !DIExpression(), !5676)
     #dbg_value(i64 %.sroa.05.087.1.a, !5678, !DIExpression(), !5681)
@@ -2573,8 +2576,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
     #dbg_value(ptr %i.eg, !1179, !DIExpression(), !5474)
   %i.er = load i64, ptr %i.ei, align 4, !dbg !5873
   store i64 %i.er, ptr %i.eg, align 4, !dbg !5873
-  %5 = icmp eq i64 %.sroa.05.087.1.a, 1, !dbg !5874
-  br i1 %5, label %._crit_edge111, label %.lr.ph110, !dbg !5874
+  br i1 %.sroa.05.087.1, label %._crit_edge111, label %.lr.ph110, !dbg !5874
 
 .preheader.1:                                     ; preds = %.lr.ph110
     #dbg_value(ptr %.sroa.0.0.i79.1109, !1147, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !5467)
@@ -2921,7 +2923,8 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort19bidirectional_merg
   ret void, !dbg !5931
 
 .lr.ph:                                           ; preds = %bb.i, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
-  %.sroa.05.087.a = phi i64 [ %i.ho, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %.sroa.0.0, %bb.i ] ; 4 uses
+  %.sroa.05.087 = phi i1 [ false, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %5, %bb.i ]
+  %.sroa.05.087.a = phi i64 [ %i.ho, %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeNvYB18_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit ], [ %.sroa.0.0, %bb.i ] ; 3 uses
     #dbg_value(i64 %.sroa.05.087.a, !5659, !DIExpression(), !5725)
     #dbg_value(i64 %.sroa.05.087.a, !5673, !DIExpression(), !5676)
     #dbg_value(i64 %.sroa.05.087.a, !5678, !DIExpression(), !5681)
@@ -2988,8 +2991,7 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort19bidirectional_merg
     #dbg_value(ptr %i.gu, !1179, !DIExpression(), !5474)
   %i.hf = load i64, ptr %i.gw, align 4, !dbg !5873
   store i64 %i.hf, ptr %i.gu, align 4, !dbg !5873
-  %6 = icmp eq i64 %.sroa.05.087.a, 1, !dbg !5874
-  br i1 %6, label %._crit_edge, label %.lr.ph107, !dbg !5874
+  br i1 %.sroa.05.087, label %._crit_edge, label %.lr.ph107, !dbg !5874
 
 .preheader:                                       ; preds = %.lr.ph107
     #dbg_value(ptr %.sroa.0.0.i79106, !1147, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !5467)

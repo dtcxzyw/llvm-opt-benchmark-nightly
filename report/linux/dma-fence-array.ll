@@ -54,7 +54,7 @@ to_dma_fence_array.exit:                          ; preds = %bb.a
   %i.b = load volatile ptr, ptr %i.a, align 8
   %.fr29 = freeze ptr %i.b
   %i.c = icmp eq ptr %.fr29, @dma_fence_array_ops
-  %spec.select.i = select i1 %i.c, ptr %0, ptr null ; 8 uses
+  %spec.select.i = select i1 %i.c, ptr %0, ptr null ; 9 uses
   %i.d = getelementptr i8, ptr %spec.select.i, i64 112 ; 2 uses
   %i.e = getelementptr i8, ptr %spec.select.i, i64 64 ; 3 uses
   %i.f = load i32, ptr %i.e, align 8
@@ -78,6 +78,7 @@ dma_fence_get.exit.us.preheader:                  ; preds = %to_dma_fence_array.
   %i.n = phi ptr [ %i.m, %.lr.ph ], [ inttoptr (i64 68 to ptr), %to_dma_fence_array.exit.thread ] ; 2 uses
   %i.o = phi ptr [ %i.l, %.lr.ph ], [ inttoptr (i64 60 to ptr), %to_dma_fence_array.exit.thread ] ; 3 uses
   %i.p = phi ptr [ %i.k, %.lr.ph ], [ inttoptr (i64 72 to ptr), %to_dma_fence_array.exit.thread ] ; 2 uses
+  %1 = phi ptr [ %spec.select.i, %.lr.ph ], [ null, %to_dma_fence_array.exit.thread ]
   %i.q = phi ptr [ %i.d, %.lr.ph ], [ inttoptr (i64 112 to ptr), %to_dma_fence_array.exit.thread ]
   %i.r = phi ptr [ %i.e, %.lr.ph ], [ inttoptr (i64 64 to ptr), %to_dma_fence_array.exit.thread ]
   br label %dma_fence_get.exit.us
@@ -86,7 +87,7 @@ dma_fence_get.exit.us:                            ; preds = %dma_fence_get.exit.
   %indvars.iv35 = phi i64 [ 0, %dma_fence_get.exit.us.preheader ], [ %indvars.iv.next36, %.critedge.us ] ; 4 uses
   %i.s = getelementptr [32 x i8], ptr %i.q, i64 %indvars.iv35 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 24
-  store ptr null, ptr %i.t, align 8
+  store ptr %1, ptr %i.t, align 8
   %i.u = load ptr, ptr %i.p, align 8
   %i.v = getelementptr [8 x i8], ptr %i.u, i64 %indvars.iv35
   %i.w = load ptr, ptr %i.v, align 8

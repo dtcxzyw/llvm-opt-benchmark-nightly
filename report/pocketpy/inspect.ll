@@ -172,11 +172,14 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 ._crit_edge.loopexit:                             ; preds = %bb.f
-  %i.ad = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.ad = trunc nuw nsw i64 %indvars.iv.next to i32 ; 2 uses
+  %2 = add nuw nsw i32 %i.ad, 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.e
-  %.054.lcssa.a = phi i32 [ 0, %bb.e ], [ %i.ad, %._crit_edge.loopexit ] ; 3 uses
+  %.054.lcssa = phi i32 [ 1, %bb.e ], [ %2, %._crit_edge.loopexit ]
+  %3 = phi i64 [ 0, %bb.e ], [ %indvars.iv.next, %._crit_edge.loopexit ]
+  %.054.lcssa.a = phi i32 [ 0, %bb.e ], [ %i.ad, %._crit_edge.loopexit ]
   br i1 %i.j, label %bb.g, label %bb.h
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
@@ -188,7 +191,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.ai = sext i32 %i.ag to i64
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.ai
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !45
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
   %i.al = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %indvars.iv
   %i.am = tail call ptr @py_newtuple(ptr noundef %i.al, i32 noundef 2) #6 ; 2 uses
   %i.an = tail call ptr @py_name2str(ptr noundef %i.ak) #6
@@ -207,8 +210,6 @@ bb.g:                                             ; preds = %._crit_edge
   %i.av = sext i32 %i.au to i64
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.at, i64 %i.av
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !45
-  %2 = add nuw nsw i32 %.054.lcssa.a, 1
-  %3 = zext nneg i32 %.054.lcssa.a to i64
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.z, i64 %3
   %i.az = tail call ptr @py_newtuple(ptr noundef %i.ay, i32 noundef 2) #6 ; 2 uses
   %i.ba = tail call ptr @py_name2str(ptr noundef %i.ax) #6
@@ -218,7 +219,7 @@ bb.g:                                             ; preds = %._crit_edge
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge
-  %.1 = phi i32 [ %2, %bb.g ], [ %.054.lcssa.a, %._crit_edge ] ; 2 uses
+  %.1 = phi i32 [ %.054.lcssa, %bb.g ], [ %.054.lcssa.a, %._crit_edge ] ; 2 uses
   %i.bc = load i32, ptr %i.r, align 8, !tbaa !41
   %i.bd = icmp sgt i32 %i.bc, 0
   br i1 %i.bd, label %.lr.ph62, label %._crit_edge63

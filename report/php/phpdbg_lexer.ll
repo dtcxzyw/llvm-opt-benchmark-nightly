@@ -56,7 +56,8 @@ bb.a:
 
 .outer:                                           ; preds = %.outer.backedge, %bb.a
   %.promoted12021371.ph = phi ptr [ %.promoted1183, %bb.a ], [ %.promoted12021371.ph.be, %.outer.backedge ] ; 122 uses
-  %.ph2032 = phi i32 [ %.promoted, %bb.a ], [ %.ph2032.be, %.outer.backedge ]
+  %.ph2032 = phi i32 [ %.promoted, %bb.a ], [ %.ph2032.be, %.outer.backedge ] ; 2 uses
+  %1 = icmp eq i32 %.ph2032, 1
   store ptr %.promoted12021371.ph, ptr getelementptr inbounds nuw (i8, ptr @phpdbg_globals, i64 792), align 8, !tbaa !44
   %i.a = getelementptr inbounds nuw i8, ptr %.promoted12021371.ph, i64 1 ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.promoted12021371.ph, i64 1 ; 6 uses
@@ -77,13 +78,13 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %.outer
-  %i.q = phi i32 [ %.ph2032, %.outer ], [ %.be2033, %.backedge ] ; 5 uses
+  %.not976 = phi i1 [ %1, %.outer ], [ false, %.backedge ]
+  %i.q = phi i32 [ %.ph2032, %.outer ], [ %.be2033, %.backedge ] ; 4 uses
   %i.r = icmp slt i32 %i.q, 2
   %i.s = load i8, ptr %.promoted12021371.ph, align 1, !tbaa !51 ; 24 uses
   br i1 %i.r, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %.not976 = icmp eq i32 %i.q, 1
   br i1 %.not976, label %bb.hn, label %bb.e
 
 bb.d:                                             ; preds = %bb.b

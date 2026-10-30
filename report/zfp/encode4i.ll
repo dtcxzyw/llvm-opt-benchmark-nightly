@@ -205,15 +205,18 @@ select.unfold.i.i:                                ; preds = %vector.body487, %se
 
 rev_precision_uint32.exit.loopexit.i:             ; preds = %select.unfold.i.i
   %i.aqd = tail call i32 @llvm.umin.i32(i32 %spec.select.i.i, i32 %i.m)
-  %i.aqe = tail call i32 @llvm.umax.i32(i32 %i.aqd, i32 1)
+  %i.aqe = tail call i32 @llvm.umax.i32(i32 %i.aqd, i32 1) ; 2 uses
+  %2 = add i32 %i.aqe, -1
+  %3 = zext i32 %2 to i64                         ; 2 uses
+  %4 = lshr i64 %3, 1
   br label %rev_precision_uint32.exit.i
 
 rev_precision_uint32.exit.i:                      ; preds = %rev_precision_uint32.exit.loopexit.i, %vector.body487
-  %.013.lcssa.i.i = phi i32 [ 1, %vector.body487 ], [ %i.aqe, %rev_precision_uint32.exit.loopexit.i ] ; 2 uses
-  %2 = add i32 %.013.lcssa.i.i, -1
-  %3 = zext i32 %2 to i64                         ; 2 uses
+  %.013.lcssa.i.i = phi i64 [ 0, %vector.body487 ], [ %4, %rev_precision_uint32.exit.loopexit.i ]
+  %5 = phi i64 [ 0, %vector.body487 ], [ %3, %rev_precision_uint32.exit.loopexit.i ]
+  %6 = phi i32 [ 1, %vector.body487 ], [ %i.aqe, %rev_precision_uint32.exit.loopexit.i ]
   %i.aqf = load i64, ptr %i.h, align 8, !tbaa !29 ; 3 uses
-  %i.aqg = shl i64 %3, %i.aqf
+  %i.aqg = shl i64 %5, %i.aqf
   %i.aqh = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 5 uses
   %i.aqi = load i64, ptr %i.aqh, align 8, !tbaa !30
   %i.aqj = add i64 %i.aqg, %i.aqi                 ; 2 uses
@@ -223,7 +226,6 @@ rev_precision_uint32.exit.i:                      ; preds = %rev_precision_uint3
   br i1 %i.aql, label %bb.c, label %stream_write_bits.exit.i
 
 bb.c:                                             ; preds = %rev_precision_uint32.exit.i
-  %4 = lshr i64 %3, 1
   %i.aqm = add i64 %i.aqf, -59
   store i64 %i.aqm, ptr %i.h, align 8, !tbaa !29
   %i.aqn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
@@ -233,7 +235,7 @@ bb.c:                                             ; preds = %rev_precision_uint3
   store i64 %i.aqj, ptr %i.aqo, align 8, !tbaa !13
   %i.aqq = load i64, ptr %i.h, align 8, !tbaa !29 ; 2 uses
   %i.aqr = sub i64 4, %i.aqq
-  %i.aqs = lshr i64 %4, %i.aqr
+  %i.aqs = lshr i64 %.013.lcssa.i.i, %i.aqr
   br label %stream_write_bits.exit.i
 
 stream_write_bits.exit.i:                         ; preds = %bb.c, %rev_precision_uint32.exit.i
@@ -244,7 +246,7 @@ stream_write_bits.exit.i:                         ; preds = %bb.c, %rev_precisio
   %i.aqw = and i64 %i.aqt, %i.aqv
   store i64 %i.aqw, ptr %i.aqh, align 8, !tbaa !30
   %i.aqx = add i32 %i.k, -5
-  %i.aqy = call fastcc i32 @encode_ints_uint32(ptr noundef nonnull %i.h, i32 noundef %i.aqx, i32 noundef %.013.lcssa.i.i, ptr noundef %i.b)
+  %i.aqy = call fastcc i32 @encode_ints_uint32(ptr noundef nonnull %i.h, i32 noundef %i.aqx, i32 noundef %6, ptr noundef %i.b)
   %i.aqz = add i32 %i.aqy, 5                      ; 3 uses
   %i.ara = icmp ult i32 %i.aqz, %i.i
   br i1 %i.ara, label %bb.d, label %rev_encode_block_int32_4.exit

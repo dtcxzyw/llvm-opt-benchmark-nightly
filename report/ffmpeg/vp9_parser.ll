@@ -42,7 +42,8 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.c, %bb.d
   %.02150 = phi i32 [ 3, %bb.d ], [ %i.h, %bb.c ]
-  %.sroa.9.049.a = phi i32 [ 5, %bb.d ], [ 4, %bb.c ] ; 2 uses
+  %.sroa.9.049 = phi i32 [ 6, %bb.d ], [ 5, %bb.c ]
+  %.sroa.9.049.a = phi i32 [ 5, %bb.d ], [ 4, %bb.c ]
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 688
   store i32 %.02150, ptr %i.k, align 8, !tbaa !31
   %i.l = load i8, ptr %4, align 1, !tbaa !13
@@ -53,7 +54,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not25, label %bb.e, label %.sink.split
 
 bb.e:                                             ; preds = %.thread
-  %i.p = lshr exact i32 64, %.sroa.9.049.a
+  %i.p = lshr exact i32 128, %.sroa.9.049
   %i.q = and i32 %i.p, %i.m
   %.not54 = icmp eq i32 %i.q, 0                   ; 2 uses
   %spec.select = select i1 %.not54, i32 1, i32 2

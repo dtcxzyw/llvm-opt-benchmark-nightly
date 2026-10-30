@@ -204,7 +204,8 @@ bb.j:                                             ; preds = %bb.i
           to label %bb.o unwind label %bb.m       ; 2 uses
 
 bb.k:                                             ; preds = %bb.i, %bb.o
-  %.sroa.6.0.a = phi i32 [ %i.av, %bb.o ], [ -1, %bb.i ] ; 2 uses
+  %.sroa.6.0 = phi i1 [ %1, %bb.o ], [ false, %bb.i ]
+  %.sroa.6.0.a = phi i32 [ %i.av, %bb.o ], [ -1, %bb.i ]
   %.sroa.02.0 = phi i64 [ %i.au, %bb.o ], [ undef, %bb.i ]
   %i.ap = cmpxchg ptr %i.ah, i8 1, i8 0 release monotonic, align 1
   %i.aq = extractvalue { i8, i1 } %i.ap, 1
@@ -227,7 +228,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.j
   %i.au = extractvalue { i64, i32 } %i.ao, 0
-  %i.av = extractvalue { i64, i32 } %i.ao, 1
+  %i.av = extractvalue { i64, i32 } %i.ao, 1      ; 2 uses
+  %1 = icmp ne i32 %i.av, -1
   br label %bb.k
 
 bb.p:                                             ; preds = %bb.l, %bb.k
@@ -426,8 +428,7 @@ bb.ad:                                            ; preds = %_RINvMs_NtCscdodAO9
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs6gU0GsN6MoR_8lock_api5mutex10MutexGuardNtNtCsgIGNhOnZR2a_11parking_lot9raw_mutex8RawMutexINtNtCscdodAO9FK5_5alloc3vec3VecTRejEEEECsigIpOYTm7sT_18influxdb3_shutdown.exit62 unwind label %.thread87
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs6gU0GsN6MoR_8lock_api5mutex10MutexGuardNtNtCsgIGNhOnZR2a_11parking_lot9raw_mutex8RawMutexINtNtCscdodAO9FK5_5alloc3vec3VecTRejEEEECsigIpOYTm7sT_18influxdb3_shutdown.exit62: ; preds = %_RINvMs_NtCscdodAO9FK5_5alloc3vecINtB5_3VecTRejEE6retainNCNvMs_CsigIpOYTm7sT_18influxdb3_shutdownNtBY_13ShutdownToken8completes_0EBY_.exit, %bb.ad
-  %.not48 = icmp eq i32 %.sroa.6.0.a, -1
-  br i1 %.not48, label %bb.ay, label %bb.ae
+  br i1 %.sroa.6.0, label %bb.ae, label %bb.ay
 
 bb.ae:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs6gU0GsN6MoR_8lock_api5mutex10MutexGuardNtNtCsgIGNhOnZR2a_11parking_lot9raw_mutex8RawMutexINtNtCscdodAO9FK5_5alloc3vec3VecTRejEEEECsigIpOYTm7sT_18influxdb3_shutdown.exit62
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)

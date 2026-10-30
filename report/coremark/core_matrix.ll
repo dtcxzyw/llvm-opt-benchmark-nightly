@@ -203,7 +203,7 @@ bb.a:
   br label %.preheader.preheader
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.04653 = phi i32 [ %i.f, %.lr.ph ], [ 0, %bb.a ] ; 5 uses
+  %.04653 = phi i32 [ %i.f, %.lr.ph ], [ 0, %bb.a ] ; 6 uses
   %i.f = add i32 %.04653, 1                       ; 3 uses
   %i.g = shl i32 %i.f, 3
   %i.h = mul i32 %i.g, %i.f
@@ -211,22 +211,23 @@ bb.a:
   br i1 %i.i, label %.lr.ph, label %._crit_edge, !llvm.loop !60
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %4 = ptrtoint ptr %1 to i64
-  %5 = add i64 %4, 3
-  %6 = and i64 %5, 4294967292
-  %7 = inttoptr i64 %6 to ptr                     ; 3 uses
-  %8 = mul i32 %.04653, %.04653
-  %9 = zext i32 %8 to i64                         ; 3 uses
-  %10 = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %9 ; 2 uses
-  %.not61 = icmp eq i32 %.04653, 0
-  br i1 %.not61, label %._crit_edge60, label %.preheader.preheader
+  %4 = mul i32 %.04653, %.04653
+  %5 = zext i32 %4 to i64                         ; 3 uses
+  %6 = icmp eq i32 %.04653, 0
+  %7 = zext i32 %.04653 to i64
+  %8 = ptrtoint ptr %1 to i64
+  %9 = add i64 %8, 3
+  %10 = and i64 %9, 4294967292
+  %11 = inttoptr i64 %10 to ptr                   ; 3 uses
+  %12 = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %5 ; 2 uses
+  br i1 %6, label %._crit_edge60, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %._crit_edge.thread, %._crit_edge
-  %i.j = phi ptr [ %i.e, %._crit_edge.thread ], [ %10, %._crit_edge ] ; 2 uses
-  %11 = phi i64 [ 1, %._crit_edge.thread ], [ %9, %._crit_edge ]
-  %i.k = phi ptr [ %i.d, %._crit_edge.thread ], [ %7, %._crit_edge ] ; 2 uses
-  %.046.lcssa68 = phi i32 [ -1, %._crit_edge.thread ], [ %.04653, %._crit_edge ] ; 4 uses
-  %wide.trip.count = zext i32 %.046.lcssa68 to i64
+  %i.j = phi ptr [ %i.e, %._crit_edge.thread ], [ %12, %._crit_edge ] ; 2 uses
+  %i.k = phi ptr [ %i.d, %._crit_edge.thread ], [ %11, %._crit_edge ] ; 2 uses
+  %.046.lcssa68 = phi i32 [ -1, %._crit_edge.thread ], [ %.04653, %._crit_edge ] ; 3 uses
+  %wide.trip.count71 = phi i64 [ 4294967295, %._crit_edge.thread ], [ %7, %._crit_edge ]
+  %.046.lcssa69 = phi i64 [ 1, %._crit_edge.thread ], [ %5, %._crit_edge ]
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.c
@@ -256,7 +257,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   store i16 %i.w, ptr %i.x, align 2, !tbaa !29
   %i.y = add nsw i32 %.14955, 1                   ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count71
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !61
 
 bb.c:                                             ; preds = %bb.b
@@ -265,15 +266,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond64.not, label %._crit_edge60, label %.preheader, !llvm.loop !62
 
 ._crit_edge60:                                    ; preds = %bb.c, %._crit_edge
-  %i.aa = phi ptr [ %10, %._crit_edge ], [ %i.j, %bb.c ] ; 2 uses
-  %12 = phi i64 [ %9, %._crit_edge ], [ %11, %bb.c ]
-  %i.ab = phi ptr [ %7, %._crit_edge ], [ %i.k, %bb.c ]
+  %i.aa = phi ptr [ %12, %._crit_edge ], [ %i.j, %bb.c ] ; 2 uses
+  %i.ab = phi ptr [ %11, %._crit_edge ], [ %i.k, %bb.c ]
   %.046.lcssa69.a = phi i32 [ 0, %._crit_edge ], [ %.046.lcssa68, %bb.c ] ; 2 uses
+  %.046.lcssa70 = phi i64 [ %5, %._crit_edge ], [ %.046.lcssa69, %bb.c ]
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.ab, ptr %i.ac, align 8, !tbaa !26
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.aa, ptr %i.ad, align 8, !tbaa !27
-  %i.ae = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %12
+  %i.ae = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %.046.lcssa70
   %i.af = ptrtoint ptr %i.ae to i64
   %i.ag = add nuw nsw i64 %i.af, 3
   %i.ah = and i64 %i.ag, 4294967292

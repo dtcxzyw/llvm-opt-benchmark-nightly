@@ -204,6 +204,7 @@ envoy_extensions_filters_http_composite_v3_FilterChainConfiguration_typed_config
   %i.ad = and i64 %i.ac, -8
   %i.ae = inttoptr i64 %i.ad to ptr
   %.not117 = icmp eq i64 %i.ab, 0
+  %10 = tail call i64 @llvm.umax.i64(i64 %i.ab, i64 1)
   br i1 %.not117, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %envoy_extensions_filters_http_composite_v3_FilterChainConfiguration_typed_config.exit
@@ -308,7 +309,7 @@ _ZN9grpc_core15CompositeFilter19ExecuteFilterAction6FilterD2Ev.exit: ; preds = %
   %i.bl = phi ptr [ %i.bh, %.noexc ], [ %i.ap, %bb.h ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
   %i.bm = add nuw i64 %.0116, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bm, %i.ab
+  %exitcond.not = icmp eq i64 %i.bm, %10
   br i1 %exitcond.not, label %.loopexit, label %bb.f, !llvm.loop !208
 
 bb.l:                                             ; preds = %bb.f

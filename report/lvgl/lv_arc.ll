@@ -202,11 +202,13 @@ bb.an:                                            ; preds = %bb.af
 
 bb.ao:                                            ; preds = %bb.an
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 56
-  %i.fm = load i32, ptr %i.fl, align 8, !tbaa !44
+  %i.fm = load i32, ptr %i.fl, align 8, !tbaa !44 ; 2 uses
+  %10 = shl nsw i32 %i.fm, 1
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
-  %.0256.a = phi i32 [ %i.fm, %bb.ao ], [ 0, %bb.an ] ; 2 uses
+  %.0256 = phi i32 [ %10, %bb.ao ], [ 0, %bb.an ]
+  %.0256.a = phi i32 [ %i.fm, %bb.ao ], [ 0, %bb.an ]
   %i.fn = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %i.f, i32 noundef 0, i8 noundef zeroext 76) #8
   %i.fo = ptrtoint ptr %i.fn to i64
   %.sroa.0.0.extract.trunc.i326 = trunc i64 %i.fo to i32 ; 2 uses
@@ -274,8 +276,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br i1 %i.hh, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %.preheader342.preheader
-  %10 = shl nsw i32 %.0256.a, 1
-  %i.hi = add nsw i32 %10, %.sroa.0.0.extract.trunc.i326 ; 2 uses
+  %i.hi = add nsw i32 %.0256, %.sroa.0.0.extract.trunc.i326 ; 2 uses
   call void @lv_area_increase(ptr noundef nonnull %9, i32 noundef %i.hi, i32 noundef %i.hi) #8
   %i.hj = load ptr, ptr %i.fi, align 8, !tbaa !46
   %i.hk = call zeroext i1 @lv_area_is_point_on(ptr noundef nonnull %9, ptr noundef %i.hj, i32 noundef 32767) #8

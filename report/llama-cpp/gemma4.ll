@@ -202,10 +202,15 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ac = invoke noundef ptr @_ZN18llama_model_gemma45graph24project_per_layer_inputsEP11ggml_tensorS2_(ptr noundef nonnull align 8 dereferenceable(352) %0, ptr noundef %i.t, ptr noundef %i.z)
-          to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %3 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-bb.m:                                             ; preds = %bb.l, %bb.i
-  %.0298.a = phi ptr [ null, %bb.i ], [ %i.ac, %bb.l ] ; 7 uses
+3:                                                ; preds = %bb.l
+  %4 = icmp eq ptr %i.ac, null
+  br label %bb.m
+
+bb.m:                                             ; preds = %3, %bb.i
+  %.0298 = phi i1 [ %4, %3 ], [ true, %bb.i ]
+  %.0298.a = phi ptr [ %i.ac, %3 ], [ null, %bb.i ] ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !179
   %i.af = icmp sgt i64 %i.ae, 0
@@ -227,7 +232,6 @@ bb.m:                                             ; preds = %bb.l, %bb.i
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %.not344 = icmp eq ptr %.0298.a, null
   %i.av = getelementptr inbounds nuw i8, ptr %.0298.a, i64 32
   %i.aw = getelementptr inbounds nuw i8, ptr %.0298.a, i64 16 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.0298.a, i64 24 ; 2 uses
@@ -630,7 +634,7 @@ bb.cd:                                            ; preds = %bb.cc
           to label %bb.ce unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 bb.ce:                                            ; preds = %bb.cd
-  br i1 %.not344, label %bb.cr, label %bb.cf
+  br i1 %.0298, label %bb.cr, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
   invoke void @_ZNK17llm_graph_context2cbEP11ggml_tensorPKci(ptr noundef nonnull align 8 dereferenceable(336) %0, ptr noundef %i.ju, ptr noundef nonnull @.str.28, i32 noundef %i.bc)

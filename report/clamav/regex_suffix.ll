@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.x
-  %.066133 = phi ptr [ %0, %.lr.ph ], [ %.268, %bb.x ] ; 9 uses
+  %.066133 = phi ptr [ %0, %.lr.ph ], [ %7, %bb.x ] ; 9 uses
   %.069132 = phi ptr [ %2, %.lr.ph ], [ %.066133, %bb.x ]
   %i.c = load i32, ptr %.066133, align 8, !tbaa !18
   switch i32 %i.c, label %bb.x [
@@ -501,13 +501,14 @@ textbuffer_putc.exit118:                          ; preds = %bb.v, %bb.w
 
 .sink.split:                                      ; preds = %bb.b, %bb.s, %bb.h, %bb.g
   %i.dn = getelementptr inbounds nuw i8, ptr %.066133, i64 8
-  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !14
+  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !14 ; 2 uses
+  %6 = icmp eq ptr %i.do, null
   br label %bb.x
 
 bb.x:                                             ; preds = %.sink.split, %bb.b
-  %.268 = phi ptr [ %.066133, %bb.b ], [ %i.do, %.sink.split ] ; 2 uses
-  %.not = icmp eq ptr %.268, null
-  br i1 %.not, label %.thread120, label %bb.b
+  %.268 = phi i1 [ false, %bb.b ], [ %6, %.sink.split ]
+  %7 = phi ptr [ %.066133, %bb.b ], [ %i.do, %.sink.split ]
+  br i1 %.268, label %.thread120, label %bb.b
 
 .thread120:                                       ; preds = %bb.x, %textbuffer_putc.exit109, %bb.r, %bb.a, %textbuffer_putc.exit118, %textbuffer_putc.exit100, %bb.t, %textbuffer_putc.exit
   %.5 = phi i32 [ 20, %textbuffer_putc.exit109 ], [ %., %textbuffer_putc.exit ], [ %.82, %textbuffer_putc.exit118 ], [ %.80, %textbuffer_putc.exit100 ], [ %.81, %bb.t ], [ 0, %bb.a ], [ 0, %bb.r ], [ 0, %bb.x ]

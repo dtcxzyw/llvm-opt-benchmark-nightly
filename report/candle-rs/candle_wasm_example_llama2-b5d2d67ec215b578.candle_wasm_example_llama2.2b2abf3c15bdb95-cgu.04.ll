@@ -204,15 +204,16 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4.0..sroa_idx.i.i32.i, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.6.0..sroa_idx.i.i.i, i64 31, i1 false)
   store i8 %.sroa.01.0.copyload.i.i29.i, ptr %i.a, align 8, !noalias !704
   %i.aq = invoke { i64, ptr } @_RINvXsr_NtNtNtCsiOg657KYfD4_5serde7private2de7contentINtB6_19ContentDeserializerNtNtCsaPlfBUY5LAj_10serde_json5error5ErrorENtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_u64NtNvXs1a_NtB1Z_5implsjNtB1Z_11Deserialize11deserialize16PrimitiveVisitorECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.a)
-          to label %.noexc33.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc33.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc33.i:                                       ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !704
+  %5 = extractvalue { i64, ptr } %i.aq, 1
   br label %_RINvYINtNtNtCsiOg657KYfD4_5serde7private2de16FlatStructAccessNtNtCsaPlfBUY5LAj_10serde_json5error5ErrorENtNtCseZbltJ5Yqe_10serde_core2de9MapAccess10next_valuejECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i
 
 bb.q:                                             ; preds = %bb.o
   %i.ar = invoke noundef nonnull align 8 ptr @_RINvXs6_NtCsaPlfBUY5LAj_10serde_json5errorNtB6_5ErrorNtNtCseZbltJ5Yqe_10serde_core2de5Error6customReECsemnSGAKhbl_26candle_wasm_example_llama2(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @72, i64 noundef 16)
-          to label %.noexc34.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc34.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc34.i:                                       ; preds = %bb.q
   %i.as = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.ar, 1
@@ -223,10 +224,10 @@ bb.r:                                             ; preds = %bb.n
           to label %bb.t unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _RINvYINtNtNtCsiOg657KYfD4_5serde7private2de16FlatStructAccessNtNtCsaPlfBUY5LAj_10serde_json5error5ErrorENtNtCseZbltJ5Yqe_10serde_core2de9MapAccess10next_valuejECsemnSGAKhbl_26candle_wasm_example_llama2.exit.i: ; preds = %.noexc34.i, %.noexc33.i
-  %.merged.i.i.i.a = phi { i64, ptr } [ %i.aq, %.noexc33.i ], [ %i.as, %.noexc34.i ] ; 2 uses
+  %.merged.i.i.i = phi ptr [ %5, %.noexc33.i ], [ %i.ar, %.noexc34.i ]
+  %.merged.i.i.i.a = phi { i64, ptr } [ %i.aq, %.noexc33.i ], [ %i.as, %.noexc34.i ]
   %i.au = extractvalue { i64, ptr } %.merged.i.i.i.a, 0
-  %5 = extractvalue { i64, ptr } %.merged.i.i.i.a, 1
-  %i.av = ptrtoint ptr %5 to i64                  ; 2 uses
+  %i.av = ptrtoint ptr %.merged.i.i.i to i64      ; 2 uses
   %i.aw = trunc nuw i64 %i.au to i1
   br i1 %i.aw, label %.loopexit57.i, label %bb.s
 

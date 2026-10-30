@@ -180,7 +180,8 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 bb.f:                                             ; preds = %.thread
   %i.dh = load i32, ptr %5, align 4, !tbaa !8
   %i.di = add nsw i32 %i.dg, %i.dh
-  %i.dj = tail call i32 @llvm.smax.i32(i32 %i.di, i32 -1)
+  %.fr = freeze i32 %i.di
+  %i.dj = tail call i32 @llvm.smax.i32(i32 %.fr, i32 -1)
   br label %bb.x
 
 .critedge:                                        ; preds = %bb.d

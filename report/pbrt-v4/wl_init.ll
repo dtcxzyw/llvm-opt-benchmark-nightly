@@ -203,13 +203,16 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i32 %i.d, 0
   %i.f = add i64 %i.c, -1
   %i.g = icmp ult i64 %i.f, 2147483646
-  %or.cond3 = select i1 %i.e, i1 %i.g, i1 false
-  %i.h = trunc nuw nsw i64 %i.c to i32
+  %or.cond3 = select i1 %i.e, i1 %i.g, i1 false   ; 2 uses
+  %i.h = trunc nuw nsw i64 %i.c to i32            ; 2 uses
+  %0 = shl nuw nsw i32 %i.h, 1
+  %.0 = select i1 %or.cond3, i32 %0, i32 32
   %spec.select = select i1 %or.cond3, i32 %i.h, i32 16
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.1.a = phi i32 [ %spec.select, %bb.b ], [ 16, %bb.a ] ; 2 uses
+  %.1 = phi i32 [ %.0, %bb.b ], [ 32, %bb.a ]
+  %.1.a = phi i32 [ %spec.select, %bb.b ], [ 16, %bb.a ]
   %i.i = tail call ptr @getenv(ptr noundef nonnull @.str.355) #9 ; 2 uses
   %i.j = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137544), align 8, !tbaa !107
   %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133920), align 8, !tbaa !123
@@ -224,9 +227,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137544), align 8, !tbaa !107
-  %0 = shl nuw nsw i32 %.1.a, 1
   %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133920), align 8, !tbaa !123
-  %i.o = tail call ptr %i.m(ptr noundef %i.i, i32 noundef %0, ptr noundef %i.n) #9
+  %i.o = tail call ptr %i.m(ptr noundef %i.i, i32 noundef %.1, ptr noundef %i.n) #9
   store ptr %i.o, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134104), align 8, !tbaa !127
   %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133904), align 8, !tbaa !130 ; 2 uses
   %i.q = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137528), align 8, !tbaa !105

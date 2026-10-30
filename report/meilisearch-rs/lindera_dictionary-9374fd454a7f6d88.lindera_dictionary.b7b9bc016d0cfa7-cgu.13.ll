@@ -202,11 +202,13 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 
 bb.g:                                             ; preds = %bb.e
   %i.r = extractvalue { ptr, i64 } %i.n, 0
-  %i.s = extractvalue { ptr, i64 } %i.n, 1
+  %i.s = extractvalue { ptr, i64 } %i.n, 1        ; 2 uses
+  %3 = icmp eq i64 %i.s, 0
   br label %bb.h
 
 bb.h:                                             ; preds = %.split11, %.split10, %.split, %bb.k, %bb.g
-  %.sroa.5.1.a = phi i64 [ %.sroa.5.014, %bb.k ], [ %i.s, %bb.g ], [ %.sroa.5.014, %.split ], [ %.sroa.5.014, %.split10 ], [ %.sroa.5.014, %.split11 ] ; 2 uses
+  %.sroa.5.1 = phi i1 [ false, %bb.k ], [ %3, %bb.g ], [ false, %.split ], [ false, %.split10 ], [ false, %.split11 ]
+  %.sroa.5.1.a = phi i64 [ %.sroa.5.014, %bb.k ], [ %i.s, %bb.g ], [ %.sroa.5.014, %.split ], [ %.sroa.5.014, %.split10 ], [ %.sroa.5.014, %.split11 ]
   %.sroa.0.1 = phi ptr [ %.sroa.0.015, %bb.k ], [ %i.r, %bb.g ], [ %.sroa.0.015, %.split ], [ %.sroa.0.015, %.split10 ], [ %.sroa.0.015, %.split11 ]
   %i.t = load i64, ptr %i.b, align 8
   %i.u = trunc nuw i64 %i.t to i1
@@ -257,8 +259,7 @@ bb.m:                                             ; preds = %bb.h
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.h
-  %3 = icmp eq i64 %.sroa.5.1.a, 0
-  br i1 %3, label %.loopexit, label %bb.b
+  br i1 %.sroa.5.1, label %.loopexit, label %bb.b
 
 bb.o:                                             ; preds = %bb.f
   invoke void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17hda4bf98b397becb6E"(ptr nonnull align 8 %i.d) #23

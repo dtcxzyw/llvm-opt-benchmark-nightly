@@ -202,18 +202,19 @@ be_readbuf_full.exit.thread.split.us.preheader:   ; preds = %bb.c, %be_readbuf_f
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 632 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 688
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 384
-  %.pre = load i64, ptr %i.k, align 8
+  %.pre = load i64, ptr %i.k, align 8             ; 2 uses
+  %3 = icmp eq i64 %.pre, 0
   br label %be_readbuf_full.exit.thread.split.us
 
 be_readbuf_full.exit.thread.split.us:             ; preds = %be_readbuf_full.exit.thread.split.us.backedge, %be_readbuf_full.exit.thread.split.us.preheader
-  %3 = phi i64 [ %.pre, %be_readbuf_full.exit.thread.split.us.preheader ], [ %.be, %be_readbuf_full.exit.thread.split.us.backedge ] ; 2 uses
-  %.not32.us = icmp eq i64 %3, 0
+  %.not32.us = phi i1 [ %3, %be_readbuf_full.exit.thread.split.us.preheader ], [ %.not.i40.us, %be_readbuf_full.exit.thread.split.us.backedge ]
+  %4 = phi i64 [ %.pre, %be_readbuf_full.exit.thread.split.us.preheader ], [ %.be, %be_readbuf_full.exit.thread.split.us.backedge ]
   br i1 %.not32.us, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %be_readbuf_full.exit.thread.split.us
   %i.q = load ptr, ptr %i.l, align 8
   %i.r = tail call i64 @evbuffer_get_length(ptr noundef %i.q) #3
-  %i.s = sub i64 %3, %i.r
+  %i.s = sub i64 %4, %i.r
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %be_readbuf_full.exit.thread.split.us
@@ -245,7 +246,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ah = load i64, ptr %i.k, align 8
-  %.not.i40.us = icmp eq i64 %i.ah, 0
+  %.not.i40.us = icmp eq i64 %i.ah, 0             ; 2 uses
   br i1 %.not.i40.us, label %be_readbuf_full.exit.thread.split.us.backedge, label %be_readbuf_full.exit41.us
 
 be_readbuf_full.exit.thread.split.us.backedge:    ; preds = %bb.h, %be_readbuf_full.exit41.us

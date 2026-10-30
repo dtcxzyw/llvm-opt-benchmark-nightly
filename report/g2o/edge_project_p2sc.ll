@@ -205,11 +205,11 @@ bb.a:
   br i1 %i.g, label %bb.c, label %.critedge
 
 .critedge:                                        ; preds = %bb.b, %bb.d, %bb.c, %.critedge2.2, %.critedge2.1, %.critedge2, %bb.a
-  %2 = phi i32 [ %.pre54.pre.pre, %.critedge2.2 ], [ %.pre48.pre, %.critedge2.1 ], [ %.pre40.pre, %.critedge2 ], [ %i.f, %bb.a ], [ %i.ak, %bb.c ], [ %i.au, %bb.d ], [ %i.v, %bb.b ] ; 2 uses
-  %3 = icmp eq i32 %2, 0
-  %i.h = and i32 %2, 2
+  %2 = phi i1 [ %4, %.critedge2.2 ], [ false, %.critedge2.1 ], [ false, %.critedge2 ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.b ]
+  %3 = phi i32 [ %.pre54.pre.pre, %.critedge2.2 ], [ %.pre48.pre, %.critedge2.1 ], [ %.pre40.pre, %.critedge2 ], [ %i.f, %bb.a ], [ %i.ak, %bb.c ], [ %i.au, %bb.d ], [ %i.v, %bb.b ]
+  %i.h = and i32 %3, 2
   %i.i = icmp ne i32 %i.h, 0
-  %i.j = or i1 %3, %i.i
+  %i.j = or i1 %2, %i.i
   ret i1 %i.j
 
 .critedge2:                                       ; preds = %bb.d
@@ -262,7 +262,8 @@ bb.b:                                             ; preds = %.critedge2
   %.pre51.pre.pre = load i64, ptr %.phi.trans.insert50.phi.trans.insert.phi.trans.insert, align 8
   %.phi.trans.insert52.phi.trans.insert.phi.trans.insert = getelementptr inbounds i8, ptr %1, i64 %.pre51.pre.pre
   %.phi.trans.insert53.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.phi.trans.insert52.phi.trans.insert.phi.trans.insert, i64 32
-  %.pre54.pre.pre = load i32, ptr %.phi.trans.insert53.phi.trans.insert.phi.trans.insert, align 8, !tbaa !57
+  %.pre54.pre.pre = load i32, ptr %.phi.trans.insert53.phi.trans.insert.phi.trans.insert, align 8, !tbaa !57 ; 2 uses
+  %4 = icmp eq i32 %.pre54.pre.pre, 0
   br label %.critedge
 
 bb.c:                                             ; preds = %bb.a

@@ -204,11 +204,13 @@ bb.e:                                             ; preds = %bb.d
   %i.r = udiv i8 %.lhs.trunc.i.i11, 7
   %.zext.i.i = zext nneg i8 %i.r to i64
   %i.s = add nuw i64 %i.l, 1
-  %i.t = add nuw i64 %i.s, %.zext.i.i
+  %1 = add nuw i64 %i.s, %.zext.i.i               ; 2 uses
+  %i.t = add nuw i64 %1, 1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sroa.0.0.i.a = phi i64 [ 0, %bb.d ], [ %i.t, %bb.e ] ; 3 uses
+  %.sroa.0.0.i = phi i64 [ 1, %bb.d ], [ %i.t, %bb.e ]
+  %.sroa.0.0.i.a = phi i64 [ 0, %bb.d ], [ %1, %bb.e ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %i.v = load i64, ptr %i.u, align 8, !noundef !5 ; 4 uses
   %i.w = icmp sgt i64 %i.v, -1
@@ -223,8 +225,7 @@ bb.g:                                             ; preds = %bb.f
   %.lhs.trunc.i10.i = sub nuw nsw i8 70, %i.aa
   %i.ab = udiv i8 %.lhs.trunc.i10.i, 7
   %.zext.i11.i = zext nneg i8 %i.ab to i64
-  %1 = add nuw i64 %.sroa.0.0.i.a, 1
-  %i.ac = add i64 %1, %i.v
+  %i.ac = add i64 %i.v, %.sroa.0.0.i
   %i.ad = add i64 %i.ac, %.zext.i11.i             ; 2 uses
   %i.ae = icmp ult i64 %i.ad, %.sroa.0.0.i.a
   br i1 %i.ae, label %bb.i, label %bb.h
@@ -627,11 +628,13 @@ bb.b:                                             ; preds = %bb.a
   %i.h = udiv i8 %.lhs.trunc.i, 7
   %.zext.i = zext nneg i8 %i.h to i64
   %i.i = add nuw i64 %i.b, 1
-  %i.j = add nuw i64 %i.i, %.zext.i
+  %1 = add nuw i64 %i.i, %.zext.i                 ; 2 uses
+  %i.j = add nuw i64 %1, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.0.0.a = phi i64 [ 0, %bb.a ], [ %i.j, %bb.b ] ; 3 uses
+  %.sroa.0.0 = phi i64 [ 1, %bb.a ], [ %i.j, %bb.b ]
+  %.sroa.0.0.a = phi i64 [ 0, %bb.a ], [ %1, %bb.b ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = load i64, ptr %i.k, align 8, !noundef !5 ; 4 uses
   %i.m = icmp sgt i64 %i.l, -1
@@ -646,8 +649,7 @@ bb.d:                                             ; preds = %bb.c
   %.lhs.trunc.i10 = sub nuw nsw i8 70, %i.q
   %i.r = udiv i8 %.lhs.trunc.i10, 7
   %.zext.i11 = zext nneg i8 %i.r to i64
-  %1 = add nuw i64 %.sroa.0.0.a, 1
-  %i.s = add i64 %1, %i.l
+  %i.s = add i64 %.sroa.0.0, %i.l
   %i.t = add i64 %i.s, %.zext.i11                 ; 2 uses
   %i.u = icmp ult i64 %i.t, %.sroa.0.0.a
   br i1 %i.u, label %bb.f, label %bb.e
@@ -1050,19 +1052,21 @@ bb.b:                                             ; preds = %bb.a
   %.lhs.trunc.i.i = sub nuw nsw i8 70, %i.f
   %i.g = udiv i8 %.lhs.trunc.i.i, 7
   %narrow.i = add nuw nsw i8 %i.g, 1
-  %i.h = zext nneg i8 %narrow.i to i64
+  %i.h = zext nneg i8 %narrow.i to i64            ; 2 uses
+  %1 = add nuw nsw i64 %i.h, 5
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.h, %bb.b ] ; 4 uses
+  %2 = phi i64 [ 5, %bb.a ], [ %1, %bb.b ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.h, %bb.b ] ; 3 uses
   %i.i = load i64, ptr %0, align 8, !range !4, !noundef !5
   switch i64 %i.i, label %bb.e [
     i64 -2, label %bb.d
     i64 -1, label %bb.f
   ]
 
-bb.d:                                             ; preds = %bb.g, %bb.c, %bb.f
-  %.sroa.0.1 = phi i64 [ %.sroa.0.0, %bb.c ], [ %1, %bb.f ], [ %i.u, %bb.g ] ; 2 uses
+bb.d:                                             ; preds = %bb.f, %bb.g, %bb.c
+  %.sroa.0.1 = phi i64 [ %2, %bb.f ], [ %.sroa.0.0, %bb.c ], [ %i.u, %bb.g ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.k = tail call noundef i64 @_RNvNtNtCsh1373Z0TDxr_8protobuf2rt16unknown_or_group19unknown_fields_size(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.j)
   %i.l = add i64 %i.k, %.sroa.0.1                 ; 3 uses
@@ -1083,7 +1087,6 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not12, label %bb.g, label %bb.h
 
 bb.f:                                             ; preds = %bb.c
-  %1 = add nuw nsw i64 %.sroa.0.0, 5
   br label %bb.d
 
 bb.g:                                             ; preds = %bb.e

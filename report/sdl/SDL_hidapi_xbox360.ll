@@ -202,12 +202,14 @@ bb.c:                                             ; preds = %.lr.ph.split
 
 bb.d:                                             ; preds = %bb.c
   %spec.select.i = and i8 %i.ah, 1
-  %i.ai = shl i8 %i.ah, 1
-  %i.aj = and i8 %i.ai, 12
-  %.2.i = or disjoint i8 %i.aj, %spec.select.i
+  %i.ai = shl i8 %i.ah, 1                         ; 2 uses
+  %i.aj = and i8 %i.ai, 4
+  %1 = and i8 %i.ai, 8
   %i.ak = lshr i8 %i.ah, 2
   %i.al = and i8 %i.ak, 2
-  %.3.i = or disjoint i8 %.2.i, %i.al
+  %.1.i = or disjoint i8 %1, %spec.select.i
+  %.2.i = or disjoint i8 %.1.i, %i.al
+  %.3.i = or disjoint i8 %.2.i, %i.aj
   call void @SDL_SendJoystickHat(i64 noundef %i.af, ptr noundef nonnull %i.j, i8 noundef zeroext 0, i8 noundef zeroext %.3.i) #8
   %i.am = load i8, ptr %i.p, align 2
   %i.an = and i8 %i.am, 16

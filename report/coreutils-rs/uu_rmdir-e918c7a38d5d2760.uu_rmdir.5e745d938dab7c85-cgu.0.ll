@@ -101,13 +101,15 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i.i
   %spec.select.i.i.i.i.lobit.i.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
-  %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 2 uses
+  %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 3 uses
   %i.x = icmp ule i64 %i.w, %i.d
   tail call void @llvm.assume(i1 %i.x)
+  %4 = icmp samesign ult i64 %i.w, %i.d
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph.a = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph = phi i1 [ %4, %bb.b ], [ false, %bb.a ]
+  %.sroa.4.0.i.i.ph.a = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
   %i.y = icmp ult i64 %i.d, 64051194700380388
   tail call void @llvm.assume(i1 %i.y)
   %i.z = load i64, ptr %0, align 8, !range !5, !alias.scope !44, !noundef !4
@@ -122,8 +124,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ab = phi ptr [ %.pre, %bb.d ], [ %i.b, %bb.c ]
   %i.ac = getelementptr inbounds nuw [144 x i8], ptr %i.ab, i64 %.sroa.4.0.i.i.ph.a ; 7 uses
-  %4 = icmp samesign ult i64 %.sroa.4.0.i.i.ph.a, %i.d
-  br i1 %4, label %bb.f, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCs86MjTkXjVIv_8uu_rmdir.exit
+  br i1 %.sroa.4.0.i.i.ph, label %bb.f, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCs86MjTkXjVIv_8uu_rmdir.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 144
@@ -229,15 +230,17 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i.i
   %spec.select.i.i.i.i.lobit.i.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
-  %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 2 uses
+  %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 3 uses
   %i.x = icmp ule i64 %i.w, %i.d
   tail call void @llvm.assume(i1 %i.x)
   %i.y = icmp ult i64 %i.d, 64051194700380388
   tail call void @llvm.assume(i1 %i.y)
+  %4 = icmp samesign ult i64 %i.w, %i.d
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph60.a = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph60 = phi i1 [ %4, %bb.b ], [ false, %bb.a ]
+  %.sroa.4.0.i.i.ph60.a = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
   %i.z = load i64, ptr %0, align 8, !range !5, !alias.scope !82, !noundef !4
   %i.aa = icmp eq i64 %i.d, %i.z
   br i1 %i.aa, label %bb.c, label %bb.d
@@ -250,8 +253,7 @@ bb.c:                                             ; preds = %.thread
 bb.d:                                             ; preds = %bb.c, %.thread
   %i.ab = phi ptr [ %.pre, %bb.c ], [ %i.b, %.thread ]
   %i.ac = getelementptr inbounds nuw [144 x i8], ptr %i.ab, i64 %.sroa.4.0.i.i.ph60.a ; 13 uses
-  %4 = icmp samesign ult i64 %.sroa.4.0.i.i.ph60.a, %i.d
-  br i1 %4, label %bb.e, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCs86MjTkXjVIv_8uu_rmdir.exit
+  br i1 %.sroa.4.0.i.i.ph60, label %bb.e, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCs86MjTkXjVIv_8uu_rmdir.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 144
@@ -381,15 +383,17 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i.i
   %spec.select.i.i.i.i.lobit.i.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
-  %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 2 uses
+  %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 3 uses
   %i.x = icmp ule i64 %i.w, %i.d
   tail call void @llvm.assume(i1 %i.x)
   %i.y = icmp ult i64 %i.d, 64051194700380388
   tail call void @llvm.assume(i1 %i.y)
+  %4 = icmp samesign ult i64 %i.w, %i.d
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
-  %.sroa.4.0.i.i.ph60.a = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.sroa.4.0.i.i.ph60 = phi i1 [ %4, %bb.b ], [ false, %bb.a ]
+  %.sroa.4.0.i.i.ph60.a = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
   %i.z = sitofp i64 %3 to double
   %i.aa = load i64, ptr %0, align 8, !range !5, !alias.scope !120, !noundef !4
   %i.ab = icmp eq i64 %i.d, %i.aa
@@ -403,8 +407,7 @@ bb.c:                                             ; preds = %.thread
 bb.d:                                             ; preds = %bb.c, %.thread
   %i.ac = phi ptr [ %.pre, %bb.c ], [ %i.b, %.thread ]
   %i.ad = getelementptr inbounds nuw [144 x i8], ptr %i.ac, i64 %.sroa.4.0.i.i.ph60.a ; 13 uses
-  %4 = icmp samesign ult i64 %.sroa.4.0.i.i.ph60.a, %i.d
-  br i1 %4, label %bb.e, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCs86MjTkXjVIv_8uu_rmdir.exit
+  br i1 %.sroa.4.0.i.i.ph60, label %bb.e, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCs86MjTkXjVIv_8uu_rmdir.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 144

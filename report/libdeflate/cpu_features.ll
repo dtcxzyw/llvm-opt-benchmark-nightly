@@ -61,21 +61,23 @@ bb.e:                                             ; preds = %bb.d
   %i.y = tail call { i32, i32 } asm sideeffect ".byte 0x0f, 0x01, 0xd0", "={dx},={ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 0) #2, !srcloc !10
   %i.z = extractvalue { i32, i32 } %i.y, 1
   %i.aa = zext i32 %i.z to i64                    ; 2 uses
-  %0 = and i32 %i.l, 268435456
-  %.not18 = icmp ne i32 %0, 0
-  %1 = and i64 %i.aa, 6
-  %2 = icmp eq i64 %1, 6                          ; 2 uses
-  %or.cond27 = select i1 %.not18, i1 %2, i1 false
+  %0 = and i64 %i.aa, 6
+  %1 = icmp eq i64 %0, 6                          ; 3 uses
+  %2 = and i32 %i.l, 268435456
+  %.not18 = icmp ne i32 %2, 0
+  %or.cond27 = select i1 %.not18, i1 %1, i1 false
   %i.ab = or disjoint i32 %.1, 4
   %spec.select61.a = select i1 %or.cond27, i32 %i.ab, i32 %.1
   %i.ac = and i64 %i.aa, 230
   %i.ad = icmp eq i64 %i.ac, 230
+  %3 = xor i1 %1, true
   br label %.thread
 
 .thread:                                          ; preds = %bb.e, %bb.d
-  %i.ae = phi i1 [ false, %bb.d ], [ %2, %bb.e ]  ; 2 uses
-  %.059 = phi i1 [ false, %bb.d ], [ %i.ad, %bb.e ]
-  %.2 = phi i32 [ %.1, %bb.d ], [ %spec.select61.a, %bb.e ] ; 2 uses
+  %4 = phi i1 [ %i.ad, %bb.e ], [ false, %bb.d ]
+  %i.ae = phi i1 [ %3, %bb.e ], [ true, %bb.d ]
+  %.059 = phi i1 [ %1, %bb.e ], [ false, %bb.d ]
+  %.2 = phi i32 [ %spec.select61.a, %bb.e ], [ %.1, %bb.d ] ; 2 uses
   %i.af = icmp ult i32 %i.e, 7
   br i1 %i.af, label %bb.m, label %bb.f
 
@@ -86,7 +88,7 @@ bb.f:                                             ; preds = %.thread
   %i.aj = lshr i32 %i.ah, 4
   %i.ak = and i32 %i.aj, 16
   %spec.select62 = or i32 %i.ak, %.2              ; 2 uses
-  br i1 %i.ae, label %bb.g, label %bb.h
+  br i1 %.059, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.al = lshr i32 %i.ah, 2
@@ -99,7 +101,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.5 = phi i32 [ %spec.select66.a, %bb.g ], [ %spec.select62, %bb.f ] ; 8 uses
-  br i1 %.059, label %bb.i, label %bb.l
+  br i1 %4, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
   %i.aq = load i64, ptr %i.a, align 4
@@ -146,10 +148,10 @@ bb.l:                                             ; preds = %allow_512bit_vector
   %i.bd = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 7, i32 1) #2, !srcloc !8
   %i.be = extractvalue { i32, i32, i32, i32 } %i.bd, 0
   %i.bf = and i32 %i.be, 16
-  %.not25 = icmp ne i32 %i.bf, 0
-  %brmerge.not = and i1 %i.ae, %.not25
+  %.not25 = icmp eq i32 %i.bf, 0
+  %brmerge27 = select i1 %.not25, i1 true, i1 %i.ae
   %i.bg = or i32 %.9, 1024
-  %spec.select65 = select i1 %brmerge.not, i32 %i.bg, i32 %.9
+  %spec.select65 = select i1 %brmerge27, i32 %.9, i32 %i.bg
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.thread, %bb.a

@@ -202,7 +202,8 @@ _ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.preheader:
   br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit
 
 _ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit: ; preds = %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.preheader
-  %.sroa.0.0.a = phi i32 [ 0, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.preheader ], [ %.sroa.0.0.be.a, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge ] ; 19 uses
+  %.sroa.0.0 = phi i32 [ 0, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.preheader ], [ %.sroa.0.0.be, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge ] ; 15 uses
+  %.sroa.0.0.a = phi i32 [ 0, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.preheader ], [ %.sroa.0.0.be.a, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge ] ; 10 uses
   %.088 = phi ptr [ %1, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.preheader ], [ %.088.be, %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge ] ; 4 uses
   %i.n = load i32, ptr %i.a, align 4, !tbaa !53
   %i.o = load ptr, ptr %2, align 8, !tbaa !54
@@ -258,13 +259,15 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ao = tail call { ptr, i32 } @_ZN6google8protobuf8internal15ReadTagFallbackEPKcj(ptr noundef nonnull %.394, i32 noundef %i.al) ; 2 uses
-  %.fca.0.extract.i = extractvalue { ptr, i32 } %i.ao, 0
+  %.fca.0.extract.i = extractvalue { ptr, i32 } %i.ao, 0 ; 2 uses
   %.fca.1.extract.i = extractvalue { ptr, i32 } %i.ao, 1
+  %3 = icmp eq ptr %.fca.0.extract.i, null
   br label %_ZN6google8protobuf8internal7ReadTagEPKcPjj.exit
 
 _ZN6google8protobuf8internal7ReadTagEPKcPjj.exit: ; preds = %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread91, %bb.d, %bb.e
   %.0 = phi i32 [ %.fca.1.extract.i, %bb.e ], [ %i.al, %bb.d ], [ %i.ae, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread91 ] ; 13 uses
-  %.1.i.a = phi ptr [ %.fca.0.extract.i, %bb.e ], [ %i.an, %bb.d ], [ %i.ag, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread91 ] ; 26 uses
+  %.1.i = phi i1 [ %3, %bb.e ], [ false, %bb.d ], [ false, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread91 ]
+  %.1.i.a = phi ptr [ %.fca.0.extract.i, %bb.e ], [ %i.an, %bb.d ], [ %i.ag, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread91 ] ; 25 uses
   %i.ap = lshr i32 %.0, 3
   switch i32 %i.ap, label %bb.ao [
     i32 1, label %bb.f
@@ -283,7 +286,7 @@ bb.f:                                             ; preds = %_ZN6google8protobuf
   br i1 %i.ar, label %bb.g, label %bb.ao, !prof !12
 
 bb.g:                                             ; preds = %bb.f
-  %i.as = or i32 %.sroa.0.0.a, 16                 ; 3 uses
+  %i.as = or i32 %.sroa.0.0.a, 16                 ; 5 uses
   %i.at = load i8, ptr %.1.i.a, align 1, !tbaa !35 ; 2 uses
   %i.au = zext i8 %i.at to i32                    ; 2 uses
   %.not.i.i = icmp sgt i8 %i.at, -1
@@ -323,7 +326,7 @@ bb.j:                                             ; preds = %_ZN6google8protobuf
   br i1 %i.be, label %bb.k, label %bb.ao, !prof !12
 
 bb.k:                                             ; preds = %bb.j
-  %i.bf = or i32 %.sroa.0.0.a, 8                  ; 3 uses
+  %i.bf = or i32 %.sroa.0.0.a, 8                  ; 5 uses
   %i.bg = load i8, ptr %.1.i.a, align 1, !tbaa !35 ; 3 uses
   %.not.i.i45 = icmp sgt i8 %i.bg, -1
   %i.bh = getelementptr inbounds nuw i8, ptr %.1.i.a, i64 1 ; 2 uses
@@ -394,7 +397,7 @@ bb.r:                                             ; preds = %_ZN6google8protobuf
   br i1 %i.cg, label %bb.s, label %bb.ao, !prof !12
 
 bb.s:                                             ; preds = %bb.r
-  %i.ch = or i32 %.sroa.0.0.a, 32                 ; 3 uses
+  %i.ch = or i32 %.sroa.0.0.a, 32                 ; 5 uses
   %i.ci = load i8, ptr %.1.i.a, align 1, !tbaa !35 ; 3 uses
   %.not.i.i49 = icmp sgt i8 %i.ci, -1
   %i.cj = getelementptr inbounds nuw i8, ptr %.1.i.a, i64 1 ; 2 uses
@@ -571,7 +574,7 @@ bb.ak:                                            ; preds = %_ZN6google8protobuf
   br i1 %i.ew, label %bb.al, label %bb.ao, !prof !12
 
 bb.al:                                            ; preds = %bb.ak
-  %i.ex = or i32 %.sroa.0.0.a, 128                ; 3 uses
+  %i.ex = or i32 %.sroa.0.0.a, 128                ; 5 uses
   %i.ey = load i8, ptr %.1.i.a, align 1, !tbaa !35 ; 2 uses
   %i.ez = zext i8 %i.ey to i32                    ; 2 uses
   %.not.i.i62 = icmp sgt i8 %i.ey, -1
@@ -598,6 +601,7 @@ _ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68.thread: ; preds = %bb.an,
   br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge
 
 _ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge: ; preds = %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68.thread, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53.thread, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit.thread, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit.thread, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit, %_ZN4i18n12phonenumbers11PhoneNumber22mutable_unknown_fieldsB5cxx11Ev.exit, %bb.ae
+  %.sroa.0.0.be = phi i32 [ %.sroa.0.0, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ], [ %i.as, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit.thread ], [ %i.as, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit ], [ %i.bf, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit.thread ], [ %i.bf, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit ], [ %i.ch, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53.thread ], [ %i.ch, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53 ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber22mutable_unknown_fieldsB5cxx11Ev.exit ], [ %.sroa.0.0, %bb.ae ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit ], [ %i.ex, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68.thread ], [ %i.ex, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68 ]
   %.sroa.0.0.be.a = phi i32 [ %.sroa.0.0.a, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ], [ %i.as, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit.thread ], [ %i.as, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit ], [ %i.bf, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit.thread ], [ %i.bf, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit ], [ %i.ch, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53.thread ], [ %i.ch, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53 ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber22mutable_unknown_fieldsB5cxx11Ev.exit ], [ %.sroa.0.0.a, %bb.ae ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit ], [ %i.ex, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68.thread ], [ %i.ex, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68 ]
   %.088.be = phi ptr [ %i.ft, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ], [ %.1.i.i44.ph, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit.thread ], [ %.fca.0.extract.i.i.i, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit ], [ %.1.i.i48.ph, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit.thread ], [ %i.bs, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit ], [ %i.ce, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit ], [ %.1.i.i52.ph, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53.thread ], [ %i.cw, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53 ], [ %i.dk, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit ], [ %.1.i.i5899, %_ZN4i18n12phonenumbers11PhoneNumber22mutable_unknown_fieldsB5cxx11Ev.exit ], [ %.1.i.i5899, %bb.ae ], [ %i.eu, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit ], [ %.1.i.i67.ph, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68.thread ], [ %.fca.0.extract.i.i.i64, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68 ]
   br label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit
@@ -618,8 +622,7 @@ bb.ao:                                            ; preds = %_ZN6google8protobuf
   br i1 %or.cond, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
-  %.not34 = icmp eq ptr %.1.i.a, null
-  br i1 %.not34, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread, label %.thread110, !prof !37
+  br i1 %.1.i, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread, label %.thread110, !prof !37
 
 .thread110:                                       ; preds = %bb.ap
   %i.fl = add i32 %.0, -1
@@ -649,7 +652,7 @@ _ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx
   br i1 %.not33, label %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread, label %_ZN6google8protobuf8internal7HasBitsILm1EEC2Ev.exit.backedge, !prof !37
 
 _ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit.thread: ; preds = %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit59, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit, %bb.b, %bb.ap, %.thread110
-  %.sroa.0.2 = phi i32 [ %.sroa.0.0.a, %bb.ap ], [ %.sroa.0.0.a, %.thread110 ], [ %.sroa.0.0.a, %bb.b ], [ %.sroa.0.0.a, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ], [ %i.ex, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68 ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit ], [ %.sroa.0.0.a, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit59 ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit ], [ %i.ch, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53 ], [ %.sroa.0.0.a, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit ], [ %i.bf, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit ], [ %i.as, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit ], [ %.sroa.0.0.a, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ]
+  %.sroa.0.2 = phi i32 [ %.sroa.0.0, %bb.ap ], [ %.sroa.0.0, %.thread110 ], [ %.sroa.0.0, %bb.b ], [ %.sroa.0.0, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ], [ %i.ex, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68 ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit ], [ %.sroa.0.0, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit59 ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit ], [ %i.ch, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53 ], [ %.sroa.0.0, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit ], [ %i.bf, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit ], [ %i.as, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit ], [ %.sroa.0.0, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ]
   %.2 = phi ptr [ null, %bb.ap ], [ %.1.i.a, %.thread110 ], [ %spec.select, %bb.b ], [ %.fca.0.extract.i.i, %_ZN6google8protobuf8internal12ParseContext4DoneEPPKc.exit ], [ null, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit68 ], [ null, %_ZN4i18n12phonenumbers11PhoneNumber49_internal_mutable_preferred_domestic_carrier_codeB5cxx11Ev.exit ], [ null, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit59 ], [ null, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_raw_inputB5cxx11Ev.exit ], [ null, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit53 ], [ null, %_ZN4i18n12phonenumbers11PhoneNumber27_internal_mutable_extensionB5cxx11Ev.exit ], [ null, %_ZN6google8protobuf8internal12ReadVarint64EPPKc.exit ], [ null, %_ZN6google8protobuf8internal12ReadVarint32EPPKc.exit ], [ null, %_ZN6google8protobuf8internal16InternalMetadata22mutable_unknown_fieldsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPT_v.exit ]
   %i.fu = load i32, ptr %i.e, align 8, !tbaa !20
   %i.fv = or i32 %i.fu, %.sroa.0.2
@@ -1052,23 +1055,24 @@ define linkonce_odr dso_local noundef ptr @_ZN6google8protobuf8internal16Interna
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !22     ; 4 uses
   %i.b = trunc i64 %i.a to i1
-  %i.c = and i64 %i.a, -4
+  %i.c = and i64 %i.a, -4                         ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   br i1 %i.b, label %bb.b, label %_ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit, !prof !37
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !40
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !40   ; 2 uses
+  %1 = ptrtoint ptr %i.e to i64
   br label %_ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit
 
 _ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit: ; preds = %bb.a, %bb.b
-  %.0.i.a = phi ptr [ %i.e, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %.0.i = phi i64 [ %1, %bb.b ], [ %i.c, %bb.a ]
+  %.0.i.a = phi ptr [ %i.e, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
   %.not = icmp eq ptr %.0.i.a, null
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit
   %i.f = and i64 %i.a, 2
-  %1 = ptrtoint ptr %.0.i.a to i64
-  %i.g = or i64 %i.f, %1
+  %i.g = or i64 %.0.i, %i.f
   br label %bb.f
 
 bb.d:                                             ; preds = %_ZNK6google8protobuf8internal16InternalMetadata5arenaEv.exit

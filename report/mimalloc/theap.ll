@@ -202,11 +202,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ak = udiv i64 %i.aj, %.val.i
   %i.al = add nuw i64 %i.ak, 1
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !94 ; 2 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !94 ; 3 uses
   %.not108128 = icmp eq ptr %i.an, null
   br i1 %.not108128, label %.preheader122, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.i
+  %4 = ptrtoint ptr %i.an to i64
   %i.ao = ptrtoint ptr %i.j to i64
   br label %bb.j
 
@@ -219,9 +220,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph, %bb.j
-  %.096129.a = phi ptr [ %i.an, %.lr.ph ], [ %i.bb, %bb.j ] ; 2 uses
-  %4 = ptrtoint ptr %.096129.a to i64
-  %i.aq = sub i64 %4, %i.ao                       ; 2 uses
+  %.096129.a = phi ptr [ %i.an, %.lr.ph ], [ %i.bb, %bb.j ]
+  %.096129 = phi i64 [ %4, %.lr.ph ], [ %.096.val, %bb.j ]
+  %i.aq = sub i64 %.096129, %i.ao                 ; 2 uses
   %i.ar = mul i64 %i.aq, %i.al
   %i.as = lshr i64 %i.ar, 32
   %i.at = add i64 %i.as, %i.aq
@@ -233,7 +234,7 @@ bb.j:                                             ; preds = %.lr.ph, %bb.j
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !41
   %i.ba = or i64 %i.az, %i.ax
   store i64 %i.ba, ptr %i.ay, align 8, !tbaa !41
-  %.096.val = load i64, ptr %.096129.a, align 8, !tbaa !96 ; 2 uses
+  %.096.val = load i64, ptr %.096129.a, align 8, !tbaa !96 ; 3 uses
   %i.bb = inttoptr i64 %.096.val to ptr
   %.not108 = icmp eq i64 %.096.val, 0
   br i1 %.not108, label %.preheader122, label %bb.j, !llvm.loop !89

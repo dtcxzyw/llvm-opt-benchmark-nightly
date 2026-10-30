@@ -202,8 +202,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.e:                                             ; preds = %bb.c
-  %3 = fcmp oeq double %1, 0.000000e+00
-  %i.c = select i1 %3, double 1.000000e-05, double %1 ; 3 uses
+  %3 = fcmp une double %1, 0.000000e+00           ; 2 uses
+  %4 = fcmp ogt double %1, 9.000000e-01
+  %5 = and i1 %3, %4
+  %i.c = select i1 %3, double %1, double 1.000000e-05 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 688
   store double %i.c, ptr %i.d, align 8, !tbaa !47
   %i.e = fcmp olt double %2, 0.000000e+00
@@ -218,8 +220,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.f, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %bb.g
-  %4 = fcmp ogt double %i.c, 9.000000e-01
-  br i1 %4, label %bb.i, label %bb.j
+  br i1 %5, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @KINProcessError(ptr noundef nonnull %0, i32 noundef -2, i32 noundef 600, ptr noundef nonnull @__func__.KINSetResMonParams, ptr noundef nonnull @.str, ptr noundef nonnull @.str.13) #8

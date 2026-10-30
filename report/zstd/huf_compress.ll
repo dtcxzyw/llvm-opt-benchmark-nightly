@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.g, %HUF_sort.exi
 bb.h:                                             ; preds = %bb.g
   %i.dw = getelementptr inbounds [8 x i8], ptr %i.h, i64 %indvars.iv.i24 ; 4 uses
   %i.dx = icmp eq i32 %3, 0
-  %spec.store.select = select i1 %i.dx, i32 11, i32 %3 ; 15 uses
+  %spec.store.select = select i1 %i.dx, i32 11, i32 %3 ; 16 uses
   %i.dy = trunc nsw i64 %indvars.iv.i24 to i32    ; 3 uses
   %i.dz = add nsw i32 %i.dy, 255                  ; 2 uses
   %i.ea = getelementptr i8, ptr %i.dw, i64 -8
@@ -462,7 +462,7 @@ HUF_buildTree.exit:                               ; preds = %HUF_buildTree.exit.
   %i.it = and i64 %indvars.iv.i24, 4294967295
   %i.iu = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.it
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iu, i64 7
-  %i.iw = load i8, ptr %i.iv, align 1, !tbaa !73
+  %i.iw = load i8, ptr %i.iv, align 1, !tbaa !73  ; 2 uses
   %i.ix = zext i8 %i.iw to i32                    ; 4 uses
   %.not.i30 = icmp ult i32 %spec.store.select, %i.ix
   br i1 %.not.i30, label %bb.i, label %HUF_setMaxHeight.exit
@@ -627,7 +627,7 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph120.i.
   br label %.lr.ph122.i
 
 .lr.ph122.i:                                      ; preds = %select.unfold.i, %.lr.ph122.preheader.i
-  %indvars.iv160.i = phi i64 [ %i.ld, %.lr.ph122.preheader.i ], [ %indvars.iv.next161.i, %select.unfold.i ] ; 5 uses
+  %indvars.iv160.i = phi i64 [ %i.ld, %.lr.ph122.preheader.i ], [ %indvars.iv.next161.i, %select.unfold.i ] ; 6 uses
   %i.le = getelementptr [4 x i8], ptr %i.c, i64 %indvars.iv160.i ; 2 uses
   %i.lf = load i32, ptr %i.le, align 4, !tbaa !17 ; 2 uses
   %i.lg = getelementptr i8, ptr %i.le, i64 -4
@@ -665,7 +665,7 @@ select.unfold.i:                                  ; preds = %bb.r, %.lr.ph122.i
   br label %.lr.ph129.i
 
 .lr.ph129.i:                                      ; preds = %.lr.ph129.i.preheader, %bb.s
-  %indvars.iv163.i = phi i64 [ %indvars.iv.next164.i, %bb.s ], [ %indvars.iv163.i.ph, %.lr.ph129.i.preheader ] ; 3 uses
+  %indvars.iv163.i = phi i64 [ %indvars.iv.next164.i, %bb.s ], [ %indvars.iv163.i.ph, %.lr.ph129.i.preheader ] ; 4 uses
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv163.i
   %i.lv = load i32, ptr %i.lu, align 4, !tbaa !17
   %i.lw = icmp eq i32 %i.lv, -252645136
@@ -681,12 +681,12 @@ bb.s:                                             ; preds = %.lr.ph129.i
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.s, %.critedge.loopexit.split.loop.exit188.i, %.thread.i
-  %.1.lcssa.i.a = phi i32 [ %i.ls, %.thread.i ], [ %i.lx, %.critedge.loopexit.split.loop.exit188.i ], [ 13, %bb.s ] ; 3 uses
+  %.1.lcssa.i = phi i64 [ %indvars.iv160.i, %.thread.i ], [ %indvars.iv163.i, %.critedge.loopexit.split.loop.exit188.i ], [ 13, %bb.s ]
+  %.1.lcssa.i.a = phi i32 [ %i.ls, %.thread.i ], [ %i.lx, %.critedge.loopexit.split.loop.exit188.i ], [ 13, %bb.s ] ; 2 uses
   %i.ly = add nsw i32 %.1.lcssa.i.a, -1           ; 2 uses
   %.neg.i = shl nsw i32 -1, %i.ly
   %i.lz = add nsw i32 %.neg.i, %.191133.i         ; 3 uses
-  %6 = zext nneg i32 %.1.lcssa.i.a to i64
-  %i.ma = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %6 ; 2 uses
+  %i.ma = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.1.lcssa.i ; 2 uses
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !17 ; 4 uses
   %i.mc = zext i32 %i.mb to i64
   %i.md = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.mc
@@ -770,10 +770,12 @@ bb.w:                                             ; preds = %bb.v
 
 .outer._crit_edge.i:                              ; preds = %.outer.i, %bb.w, %.preheader111.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
+  %6 = trunc nuw nsw i32 %spec.store.select to i8
   br label %HUF_setMaxHeight.exit
 
 HUF_setMaxHeight.exit:                            ; preds = %HUF_buildTree.exit, %.outer._crit_edge.i
-  %.095.i.a = phi i32 [ %spec.store.select, %.outer._crit_edge.i ], [ %i.ix, %HUF_buildTree.exit ] ; 6 uses
+  %.095.i = phi i8 [ %6, %.outer._crit_edge.i ], [ %i.iw, %HUF_buildTree.exit ]
+  %.095.i.a = phi i32 [ %spec.store.select, %.outer._crit_edge.i ], [ %i.ix, %HUF_buildTree.exit ] ; 5 uses
   %i.ns = icmp samesign ugt i32 %.095.i.a, 12
   br i1 %i.ns, label %bb.z, label %bb.x
 
@@ -1051,9 +1053,8 @@ HUF_setValue.exit.i:                              ; preds = %bb.y, %.preheader.i
 HUF_buildCTableFromTree.exit:                     ; preds = %HUF_setValue.exit.i
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 6, i1 false)
-  %7 = trunc nuw nsw i32 %.095.i.a to i8
   %i.sg = trunc nuw i32 %2 to i8
-  store i8 %7, ptr %0, align 8
+  store i8 %.095.i, ptr %0, align 8
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.sg, ptr %.sroa.5.0..sroa_idx.i.i, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14

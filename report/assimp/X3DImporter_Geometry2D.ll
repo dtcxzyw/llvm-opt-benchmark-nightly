@@ -202,9 +202,9 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %3 = ptrtoint ptr %.08.i.i.i.i to i64
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.i = load ptr, ptr %i.h, align 8, !noalias !61 ; 2 uses
-  %3 = ptrtoint ptr %.08.i.i.i.i to i64
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %3, %i.j
   %i.l = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef %i.i, i64 noundef %i.k)
@@ -584,7 +584,8 @@ _ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ER
   %i.p = add i64 %i.o, %i.m
   store i64 %i.p, ptr %i.n, align 8
   store i64 0, ptr %i.b, align 8
-  %.pre10 = load ptr, ptr %4, align 8
+  %.pre10 = load ptr, ptr %4, align 8             ; 2 uses
+  %5 = icmp eq ptr %.pre10, %4
   br label %bb.c
 
 .body:                                            ; preds = %.lr.ph.i.i.i, %bb.b
@@ -592,9 +593,9 @@ _ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ER
   resume { ptr, i32 } %i.i
 
 bb.c:                                             ; preds = %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EEC2ISt20_List_const_iteratorIS2_EvEET_S8_RKS3_.exit, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ERS4_.exit
-  %i.q = phi ptr [ %.pre10, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ERS4_.exit ], [ %.pre, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EEC2ISt20_List_const_iteratorIS2_EvEET_S8_RKS3_.exit ] ; 2 uses
+  %.not8.i.i = phi i1 [ %5, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ERS4_.exit ], [ true, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EEC2ISt20_List_const_iteratorIS2_EvEET_S8_RKS3_.exit ]
+  %i.q = phi ptr [ %.pre10, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ERS4_.exit ], [ %.pre, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EEC2ISt20_List_const_iteratorIS2_EvEET_S8_RKS3_.exit ]
   %.sroa.06.0 = phi ptr [ %.pre, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EE6spliceESt20_List_const_iteratorIS2_ERS4_.exit ], [ %1, %_ZNSt7__cxx114listI10aiVector3tIfESaIS2_EEC2ISt20_List_const_iteratorIS2_EvEET_S8_RKS3_.exit ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %i.q, %4
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseI10aiVector3tIfESaIS2_EED2Ev.exit, label %.lr.ph.i.i7
 
 .lr.ph.i.i7:                                      ; preds = %bb.c, %.lr.ph.i.i7

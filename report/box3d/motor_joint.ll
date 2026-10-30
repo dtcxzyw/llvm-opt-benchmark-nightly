@@ -202,11 +202,13 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !100
   %i.ab = sext i32 %i.x to i64
   %i.ac = getelementptr inbounds [56 x i8], ptr %i.aa, i64 %i.ab ; 2 uses
-  %.sroa.0798.0.copyload.pre = load <2 x float>, ptr %i.ac, align 4, !tbaa !68
+  %.sroa.0798.0.copyload.pre = load <2 x float>, ptr %i.ac, align 4, !tbaa !68 ; 2 uses
+  %3 = shufflevector <2 x float> %.sroa.0798.0.copyload.pre, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %.sroa.0798.0.copyload.a = phi <2 x float> [ %.sroa.0798.0.copyload.pre, %bb.d ], [ zeroinitializer, %bb.c ] ; 5 uses
+  %.sroa.0798.0.copyload = phi <2 x float> [ %3, %bb.d ], [ <float poison, float 0.000000e+00>, %bb.c ]
+  %.sroa.0798.0.copyload.a = phi <2 x float> [ %.sroa.0798.0.copyload.pre, %bb.d ], [ zeroinitializer, %bb.c ] ; 4 uses
   %i.ad = phi ptr [ %i.ac, %bb.d ], [ %2, %bb.c ] ; 9 uses
   %.sroa.0818.0.copyload = load <2 x float>, ptr %i.v, align 4, !tbaa !68 ; 5 uses
   %.sroa.10823.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 2 uses
@@ -609,8 +611,7 @@ bb.r:                                             ; preds = %bb.q
   %i.aax = insertelement <2 x float> poison, float %i.aat, i64 0
   %i.aay = insertelement <2 x float> %i.aax, float %i.aaw, i64 1
   %i.aaz = fsub <2 x float> %i.aav, %i.aay
-  %3 = shufflevector <2 x float> %.sroa.0798.0.copyload.a, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.aba = insertelement <2 x float> %3, float %.sroa.10803.0.copyload, i64 0
+  %i.aba = insertelement <2 x float> %.sroa.0798.0.copyload, float %.sroa.10803.0.copyload, i64 0
   %i.abb = fadd <2 x float> %i.aba, %i.aaz
   %i.abc = fmul <2 x float> %.sroa.0806.1, %i.tm
   %i.abd = shufflevector <2 x float> %.sroa.0806.1, <2 x float> poison, <2 x i32> <i32 1, i32 poison>

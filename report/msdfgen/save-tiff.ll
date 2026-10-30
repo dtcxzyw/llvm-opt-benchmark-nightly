@@ -202,6 +202,11 @@ bb.b:                                             ; preds = %bb.a
   store i32 194, ptr %i.bt, align 4, !tbaa !11
   %i.cz = call i64 @fwrite(ptr noundef nonnull %i.bt, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bt)
+  %4 = mul nuw nsw i32 %3, 12
+  %5 = add nuw nsw i32 %4, 210
+  %6 = shl nuw nsw i32 %3, 1                      ; 2 uses
+  %7 = add nuw nsw i32 %6, 194
+  %8 = add nuw nsw i32 %6, 202
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -216,7 +221,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.dc = phi i32 [ 0, %bb.c ], [ %3, %bb.b ]     ; 2 uses
+  %9 = phi i32 [ 210, %bb.c ], [ %5, %bb.b ]
+  %10 = phi i32 [ 194, %bb.c ], [ %7, %bb.b ]
+  %i.dc = phi i32 [ 202, %bb.c ], [ %8, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq)
   store i16 259, ptr %i.bq, align 2, !tbaa !21
   %i.dd = call i64 @fwrite(ptr noundef nonnull %i.bq, i64 noundef 2, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
@@ -271,10 +278,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 1, ptr %i.be, align 4, !tbaa !11
   %i.dr = call i64 @fwrite(ptr noundef nonnull %i.be, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
-  %4 = mul nuw nsw i32 %i.dc, 12
-  %5 = add nuw nsw i32 %4, 210
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd)
-  store i32 %5, ptr %i.bd, align 4, !tbaa !11
+  store i32 %9, ptr %i.bd, align 4, !tbaa !11
   %i.ds = call i64 @fwrite(ptr noundef nonnull %i.bd, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bd)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bc)
@@ -345,10 +350,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 1, ptr %i.an, align 4, !tbaa !11
   %i.em = call i64 @fwrite(ptr noundef nonnull %i.an, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an)
-  %6 = shl nuw nsw i32 %i.dc, 1                   ; 2 uses
-  %7 = add nuw nsw i32 %6, 194
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am)
-  store i32 %7, ptr %i.am, align 4, !tbaa !11
+  store i32 %10, ptr %i.am, align 4, !tbaa !11
   %i.en = call i64 @fwrite(ptr noundef nonnull %i.am, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.al)
@@ -363,9 +366,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 1, ptr %i.aj, align 4, !tbaa !11
   %i.eq = call i64 @fwrite(ptr noundef nonnull %i.aj, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  %8 = add nuw nsw i32 %6, 202
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai)
-  store i32 %8, ptr %i.ai, align 4, !tbaa !11
+  store i32 %i.dc, ptr %i.ai, align 4, !tbaa !11
   %i.er = call i64 @fwrite(ptr noundef nonnull %i.ai, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)

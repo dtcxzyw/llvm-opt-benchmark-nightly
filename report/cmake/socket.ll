@@ -202,7 +202,8 @@ bb.d:                                             ; preds = %bb.c, %_ZN3dap5RLoc
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0.a = phi i1 [ false, %bb.d ], [ true, %bb.c ] ; 2 uses
+  %.0 = phi i1 [ true, %bb.d ], [ false, %bb.c ]
+  %.0.a = phi i1 [ false, %bb.d ], [ true, %bb.c ]
   %i.m = call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #18 ; 2 uses
   %.not.i.i.i.i.i4 = icmp eq i32 %i.m, 0
   br i1 %.not.i.i.i.i.i4, label %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.i.i, label %bb.f
@@ -241,7 +242,7 @@ bb.i:                                             ; preds = %bb.f
 
 _ZN3dap5RLockD2Ev.exit:                           ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.i.i, %bb.g, %bb.h
   %i.w = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #18 ; 0 uses
-  br i1 %.0.a, label %bb.q, label %bb.j
+  br i1 %.0, label %bb.j, label %bb.q
 
 bb.j:                                             ; preds = %_ZN3dap5RLockD2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18

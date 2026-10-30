@@ -202,20 +202,22 @@ bb.be:                                            ; preds = %bb.ay
   store i64 %i.ek, ptr %.sroa.530.sroa.2.0..sroa.530.0..sroa_idx.sroa_idx, align 8
   %i.eo = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.ep = load ptr, ptr %i.eo, align 8, !alias.scope !711, !nonnull !6
-  %.sroa.530.0..sroa_idx.promoted = load ptr, ptr %.sroa.530.0..sroa_idx, align 8, !alias.scope !712
+  %.sroa.530.0..sroa_idx.promoted = load ptr, ptr %.sroa.530.0..sroa_idx, align 8, !alias.scope !712 ; 2 uses
+  %3 = icmp eq ptr %.sroa.530.0..sroa_idx.promoted, null
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.bl, %bb.be
   %.promoted19.i121 = phi i64 [ %i.ev, %bb.bl ], [ %i.ek, %bb.be ]
+  %.promoted.i120 = phi i1 [ false, %bb.bl ], [ %3, %bb.be ]
   %.promoted.i120.a = phi ptr [ %i.et, %bb.bl ], [ %.sroa.530.0..sroa_idx.promoted, %bb.be ]
   call void @llvm.experimental.noalias.scope.decl(metadata !711)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtNtNtB4_4task4wake5WakerEECs9RFwvXNxPyg_16hickory_resolver.exit11.i
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtNtNtB4_4task4wake5WakerEECs9RFwvXNxPyg_16hickory_resolver.exit11.i: ; preds = %bb.bj, %bb.bf
   %i.eq = phi i64 [ %i.ev, %bb.bj ], [ %.promoted19.i121, %bb.bf ]
-  %3 = phi ptr [ %i.et, %bb.bj ], [ %.promoted.i120.a, %bb.bf ] ; 2 uses
+  %.not.i.i = phi i1 [ false, %bb.bj ], [ %.promoted.i120, %bb.bf ]
+  %4 = phi ptr [ %i.et, %bb.bj ], [ %.promoted.i120.a, %bb.bf ]
   call void @llvm.experimental.noalias.scope.decl(metadata !713)
-  %.not.i.i = icmp eq ptr %3, null
   br i1 %.not.i.i, label %.loopexit, label %bb.bg
 
 bb.bg:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtNtNtB4_4task4wake5WakerEECs9RFwvXNxPyg_16hickory_resolver.exit11.i
@@ -223,7 +225,7 @@ bb.bg:                                            ; preds = %_RINvNtCsj6eKBz9Db1
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bi, %bb.bg
-  %i.er = phi ptr [ %i.et, %bb.bi ], [ %3, %bb.bg ] ; 5 uses
+  %i.er = phi ptr [ %i.et, %bb.bi ], [ %4, %bb.bg ] ; 5 uses
   %i.es = icmp eq ptr %i.er, %i.ep
   br i1 %i.es, label %.loopexit, label %bb.bi
 

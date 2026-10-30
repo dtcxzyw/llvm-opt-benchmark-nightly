@@ -200,7 +200,8 @@ bb.a:
   %fwrite434 = tail call i64 @fwrite(ptr nonnull @.str.7, i64 2, i64 1, ptr %i.m) ; 0 uses
   %i.n = load ptr, ptr @stdout, align 8, !tbaa !11
   %i.o = tail call i32 @fflush(ptr noundef %i.n)  ; 0 uses
-  %i.p = tail call ptr @wolfSSL_Malloc(i64 noundef 5048) #7
+  %i.p = tail call ptr @wolfSSL_Malloc(i64 noundef 5048) #7 ; 2 uses
+  %1 = icmp eq ptr %i.p, null
   br label %.critedge
 
 bb.b:                                             ; preds = %bb.a
@@ -243,6 +244,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.critedge495
 
 .critedge:                                        ; preds = %.thread, %bb.c
+  %2 = phi i1 [ %1, %.thread ], [ true, %bb.c ]
   %i.aj = phi ptr [ %i.p, %.thread ], [ null, %bb.c ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, i8 0, i64 40, i1 false)
   br label %.critedge495
@@ -442,16 +444,17 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 .critedge495:                                     ; preds = %.critedge491, %.critedge489, %.critedge487, %.critedge485, %.critedge483, %.critedge481, %.critedge478, %bb.f, %bb.e, %.critedge
+  %3 = phi i1 [ false, %.critedge491 ], [ false, %.critedge489 ], [ false, %.critedge487 ], [ false, %.critedge485 ], [ false, %.critedge483 ], [ false, %.critedge481 ], [ false, %.critedge478 ], [ false, %bb.f ], [ false, %bb.e ], [ %2, %.critedge ]
   %i.ek = phi ptr [ %i.q, %.critedge491 ], [ %i.q, %.critedge489 ], [ %i.q, %.critedge487 ], [ %i.q, %.critedge485 ], [ %i.q, %.critedge483 ], [ %i.q, %.critedge481 ], [ %i.q, %.critedge478 ], [ %i.q, %bb.f ], [ %i.q, %bb.e ], [ %i.aj, %.critedge ]
   %i.el = call i32 @wc_FreeRng(ptr noundef nonnull %0) #7 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.critedge493, %bb.h, %.critedge495, %bb.g
-  %i.em = phi ptr [ %i.q, %bb.h ], [ %i.ek, %.critedge495 ], [ %i.q, %.critedge493 ], [ %i.q, %bb.g ] ; 3 uses
+  %.not471 = phi i1 [ false, %bb.h ], [ %3, %.critedge495 ], [ false, %.critedge493 ], [ false, %bb.g ]
+  %i.em = phi ptr [ %i.q, %bb.h ], [ %i.ek, %.critedge495 ], [ %i.q, %.critedge493 ], [ %i.q, %bb.g ] ; 2 uses
   %.22 = phi i32 [ 0, %bb.h ], [ 0, %.critedge495 ], [ 0, %.critedge493 ], [ 1, %bb.g ]
   %i.en = call i32 @wc_MlKemKey_Free(ptr noundef %i.em) #7 ; 0 uses
   %i.eo = call i32 @wc_MlKemKey_Free(ptr noundef %i.g) #7 ; 0 uses
-  %.not471 = icmp eq ptr %i.em, null
   br i1 %.not471, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i

@@ -204,13 +204,14 @@ _RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.e
-  %.sroa.11.32.copyload = load ptr, ptr %i.p, align 8, !noalias !87
+  %.sroa.11.32.copyload = load ptr, ptr %i.p, align 8, !noalias !87 ; 2 uses
   %.sroa.14.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14.32..sroa_idx, i64 16, i1 false), !noalias !87
   %.sroa.0.0.copyload5 = load i64, ptr %1, align 8, !alias.scope !86
   %.sroa.7.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx7, i64 16, i1 false), !alias.scope !86
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !84
+  %2 = icmp eq ptr %.sroa.11.32.copyload, null
   br label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtB7_7set_val9SetValZSTE5entryCs3tZ2SXJA1qv_8jiff_cli.exit
 
 bb.j:                                             ; preds = %bb.b
@@ -220,7 +221,8 @@ bb.j:                                             ; preds = %bb.b
           to label %common.resume unwind label %bb.d, !noalias !85
 
 _RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtB7_7set_val9SetValZSTE5entryCs3tZ2SXJA1qv_8jiff_cli.exit: ; preds = %bb.c, %bb.i
-  %.sroa.11.0.a = phi ptr [ null, %bb.c ], [ %.sroa.11.32.copyload, %bb.i ] ; 3 uses
+  %.sroa.11.0 = phi i1 [ true, %bb.c ], [ %2, %bb.i ]
+  %.sroa.11.0.a = phi ptr [ null, %bb.c ], [ %.sroa.11.32.copyload, %bb.i ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload6, %bb.c ], [ %.sroa.0.0.copyload5, %bb.i ] ; 2 uses
   %i.t = icmp eq i64 %.sroa.0.0, -1
   br i1 %i.t, label %bb.k, label %bb.l
@@ -253,8 +255,7 @@ bb.l:                                             ; preds = %_RNvMsi_NtNtNtCs1xw
   tail call void @llvm.experimental.noalias.scope.decl(metadata !88)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !90
-  %.not.i2 = icmp eq ptr %.sroa.11.0.a, null
-  br i1 %.not.i2, label %bb.m, label %bb.o
+  br i1 %.sroa.11.0, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
   %i.v = invoke { ptr, i64 } @_RINvMs8_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker5OwnedNtNtBc_6string6StringNtNtB8_7set_val9SetValZSTNtB1a_4LeafE8new_leafNtNtBc_5alloc6GlobalECs3tZ2SXJA1qv_8jiff_cli()
@@ -406,13 +407,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
           to label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate13windows_zones7MappingE5entryB1A_.exit.thread unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.e
-  %.sroa.11.32.copyload = load ptr, ptr %i.s, align 8, !noalias !108
+  %.sroa.11.32.copyload = load ptr, ptr %i.s, align 8, !noalias !108 ; 2 uses
   %.sroa.14.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14.32..sroa_idx, i64 16, i1 false), !noalias !108
   %.sroa.0.0.copyload14 = load i64, ptr %2, align 8, !alias.scope !107
   %.sroa.7.0..sroa_idx16 = getelementptr inbounds nuw i8, ptr %2, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx16, i64 16, i1 false), !alias.scope !107
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !105
+  %4 = icmp eq ptr %.sroa.11.32.copyload, null
   br label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate13windows_zones7MappingE5entryB1A_.exit
 
 bb.j:                                             ; preds = %bb.b
@@ -427,7 +429,8 @@ bb.k:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br label %.thread24
 
 _RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate13windows_zones7MappingE5entryB1A_.exit: ; preds = %bb.i, %bb.c
-  %.sroa.11.0.a = phi ptr [ null, %bb.c ], [ %.sroa.11.32.copyload, %bb.i ] ; 3 uses
+  %.sroa.11.0 = phi i1 [ true, %bb.c ], [ %4, %bb.i ]
+  %.sroa.11.0.a = phi ptr [ null, %bb.c ], [ %.sroa.11.32.copyload, %bb.i ] ; 2 uses
   %.sroa.0.020 = phi i64 [ %.sroa.0.0.copyload15, %bb.c ], [ %.sroa.0.0.copyload14, %bb.i ] ; 2 uses
   %i.w = icmp eq i64 %.sroa.0.020, -1
   br i1 %i.w, label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate13windows_zones7MappingE5entryB1A_.exit.thread, label %bb.n
@@ -475,8 +478,7 @@ bb.n:                                             ; preds = %_RNvMsi_NtNtNtCs1xw
   tail call void @llvm.experimental.noalias.scope.decl(metadata !111)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !112)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !113
-  %.not.i5 = icmp eq ptr %.sroa.11.0.a, null
-  br i1 %.not.i5, label %bb.o, label %.noexc9
+  br i1 %.sroa.11.0, label %bb.o, label %.noexc9
 
 bb.o:                                             ; preds = %bb.n
   %i.aa = invoke { ptr, i64 } @_RINvMs8_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker5OwnedNtNtBc_6string6StringNtNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate13windows_zones7MappingNtB1a_4LeafE8new_leafNtNtBc_5alloc6GlobalEB1V_()
@@ -658,13 +660,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
           to label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringTB17_INtNtNtCs3oUPovFnLWP_4core3ops5range5RangemEEE5entryCs3tZ2SXJA1qv_8jiff_cli.exit.thread unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.e
-  %.sroa.11.32.copyload = load ptr, ptr %i.s, align 8, !noalias !133
+  %.sroa.11.32.copyload = load ptr, ptr %i.s, align 8, !noalias !133 ; 2 uses
   %.sroa.14.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14.32..sroa_idx, i64 16, i1 false), !noalias !133
   %.sroa.0.0.copyload14 = load i64, ptr %2, align 8, !alias.scope !132
   %.sroa.7.0..sroa_idx16 = getelementptr inbounds nuw i8, ptr %2, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx16, i64 16, i1 false), !alias.scope !132
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !130
+  %4 = icmp eq ptr %.sroa.11.32.copyload, null
   br label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringTB17_INtNtNtCs3oUPovFnLWP_4core3ops5range5RangemEEE5entryCs3tZ2SXJA1qv_8jiff_cli.exit
 
 bb.j:                                             ; preds = %bb.b
@@ -679,7 +682,8 @@ bb.k:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br label %.thread24
 
 _RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringTB17_INtNtNtCs3oUPovFnLWP_4core3ops5range5RangemEEE5entryCs3tZ2SXJA1qv_8jiff_cli.exit: ; preds = %bb.i, %bb.c
-  %.sroa.11.0.a = phi ptr [ null, %bb.c ], [ %.sroa.11.32.copyload, %bb.i ] ; 3 uses
+  %.sroa.11.0 = phi i1 [ true, %bb.c ], [ %4, %bb.i ]
+  %.sroa.11.0.a = phi ptr [ null, %bb.c ], [ %.sroa.11.32.copyload, %bb.i ] ; 2 uses
   %.sroa.0.020 = phi i64 [ %.sroa.0.0.copyload15, %bb.c ], [ %.sroa.0.0.copyload14, %bb.i ] ; 2 uses
   %i.w = icmp eq i64 %.sroa.0.020, -1
   br i1 %i.w, label %_RNvMsi_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringTB17_INtNtNtCs3oUPovFnLWP_4core3ops5range5RangemEEE5entryCs3tZ2SXJA1qv_8jiff_cli.exit.thread, label %bb.n
@@ -727,8 +731,7 @@ bb.n:                                             ; preds = %_RNvMsi_NtNtNtCs1xw
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !137)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !138
-  %.not.i5 = icmp eq ptr %.sroa.11.0.a, null
-  br i1 %.not.i5, label %bb.o, label %.noexc9
+  br i1 %.sroa.11.0, label %bb.o, label %.noexc9
 
 bb.o:                                             ; preds = %bb.n
   %i.aa = invoke { ptr, i64 } @_RINvMs8_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker5OwnedNtNtBc_6string6StringTB1s_INtNtNtCs3oUPovFnLWP_4core3ops5range5RangemEENtB1a_4LeafE8new_leafNtNtBc_5alloc6GlobalECs3tZ2SXJA1qv_8jiff_cli()

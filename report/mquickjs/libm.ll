@@ -34,26 +34,25 @@ bb.a:
   %i.c = trunc nuw nsw i64 %i.b to i32
   %i.d = lshr i64 %i.a, 52
   %i.e = trunc nuw nsw i64 %i.d to i32
-  %i.f = and i32 %i.e, 2047                       ; 3 uses
+  %i.f = and i32 %i.e, 2047                       ; 4 uses
   %i.g = and i64 %i.a, 4503599627370495           ; 2 uses
   %i.h = icmp eq i32 %i.f, 2047
   %i.i = icmp ne i64 %i.g, 0
   %or.cond.i.i = and i1 %i.i, %i.h
   %spec.select.i.i = select i1 %or.cond.i.i, i32 0, i32 %i.c ; 2 uses
   %i.j = icmp eq i32 %i.f, 0                      ; 2 uses
-  %1 = add nsw i32 %i.f, -1075
-  %.043.i.i = select i1 %i.j, i32 -1074, i32 %1   ; 2 uses
+  %.neg.i.i = sub nsw i32 1075, %i.f
+  %1 = icmp samesign ugt i32 %i.f, 1074
+  %.043.i.i = select i1 %i.j, i32 1074, i32 %.neg.i.i ; 2 uses
   %i.k = shl nuw nsw i64 %i.g, 10                 ; 2 uses
   %i.l = or disjoint i64 %i.k, 4611686018427387904
   %i.m = select i1 %i.j, i64 %i.k, i64 %i.l       ; 3 uses
   %i.n = xor i32 %spec.select.i.i, 1
   %i.o = sub nuw i32 -2147483648, %i.n            ; 3 uses
-  %2 = icmp sgt i32 %.043.i.i, -1
-  br i1 %2, label %cvt_sf64_i32.exit, label %bb.b
+  br i1 %1, label %cvt_sf64_i32.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sub nsw i32 0, %.043.i.i                   ; 2 uses
-  %i.p = icmp samesign ugt i32 %3, 63
+  %i.p = icmp samesign ugt i32 %.043.i.i, 63
   br i1 %i.p, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -62,7 +61,7 @@ bb.c:                                             ; preds = %bb.b
   br label %rshift_rnd64.exit.i.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.s = zext nneg i32 %3 to i64                  ; 2 uses
+  %i.s = zext nneg i32 %.043.i.i to i64           ; 2 uses
   %notmask.i.i.i = shl nsw i64 -1, %i.s
   %i.t = xor i64 %notmask.i.i.i, -1
   %i.u = lshr i64 %i.m, %i.s
@@ -465,8 +464,8 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
   %i.x = phi double [ %i.aa, %bb.e ], [ %i.p, %.lr.ph.preheader ]
-  %2 = phi i1 [ true, %bb.e ], [ false, %.lr.ph.preheader ]
   %indvars.iv60 = phi i64 [ 2, %bb.e ], [ 1, %.lr.ph.preheader ] ; 2 uses
+  %2 = phi i1 [ true, %bb.e ], [ false, %.lr.ph.preheader ]
   %i.y = getelementptr inbounds nuw [8 x i8], ptr @pio2_tab, i64 %indvars.iv60
   %i.z = load double, ptr %i.y, align 8, !tbaa !15
   %i.aa = tail call double @llvm.fmuladd.f64(double %i.o, double %i.z, double %i.x) ; 4 uses
@@ -869,10 +868,12 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.ag = icmp eq i32 %i.i, 2146435072
-  %i.ah = icmp eq i32 %i.j, 2146435072            ; 2 uses
+  %i.ah = icmp eq i32 %i.j, 2146435072            ; 4 uses
   br i1 %i.ag, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
+  %. = select i1 %i.ah, double f0x3FE921FB54442D17, double f0xBCA1A62633145C07
+  %.49 = select i1 %i.ah, double f0xC002D97C7F3321D2, double f0xC00921FB54442D18
   %..a = select i1 %i.ah, double f0x3FE921FB54442D18, double 0.000000e+00
   br label %bb.p
 
@@ -898,11 +899,15 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.ao = fdiv double %0, %1
   %i.ap = tail call double @llvm.fabs.f64(double %i.ao)
-  %i.aq = tail call double @js_atan(double noundef %i.ap) #8
+  %i.aq = tail call double @js_atan(double noundef %i.ap) #8 ; 2 uses
+  %2 = fadd double %i.aq, f0xBCA1A62633145C07     ; 2 uses
+  %3 = fadd double %2, f0xC00921FB54442D18
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.m, %bb.j, %bb.f, %bb.o
-  %.045.a = phi double [ %i.aq, %bb.o ], [ %..a, %bb.j ], [ 0.000000e+00, %bb.f ], [ f0x3FF921FB54442D18, %bb.m ], [ 0.000000e+00, %bb.n ] ; 4 uses
+  %.045 = phi double [ %2, %bb.o ], [ %., %bb.j ], [ f0xBCA1A62633145C07, %bb.f ], [ f0x3FF921FB54442D17, %bb.m ], [ f0xBCA1A62633145C07, %bb.n ]
+  %4 = phi double [ %3, %bb.o ], [ %.49, %bb.j ], [ f0xC00921FB54442D18, %bb.f ], [ f0xBFF921FB54442D19, %bb.m ], [ f0xC00921FB54442D18, %bb.n ]
+  %.045.a = phi double [ %i.aq, %bb.o ], [ %..a, %bb.j ], [ 0.000000e+00, %bb.f ], [ f0x3FF921FB54442D18, %bb.m ], [ 0.000000e+00, %bb.n ] ; 2 uses
   switch i32 %i.aa, label %default.unreachable [
     i32 0, label %bb.t
     i32 1, label %bb.q
@@ -915,16 +920,13 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.t
 
 bb.r:                                             ; preds = %bb.p
-  %2 = fadd double %.045.a, f0xBCA1A62633145C07
-  %i.as = fsub double f0x400921FB54442D18, %2
+  %i.as = fsub double f0x400921FB54442D18, %.045
   br label %bb.t
 
 default.unreachable:                              ; preds = %bb.p
   unreachable
 
 bb.s:                                             ; preds = %bb.p
-  %3 = fadd double %.045.a, f0xBCA1A62633145C07
-  %4 = fadd double %3, f0xC00921FB54442D18
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.p, %bb.s, %bb.r, %bb.q, %bb.l, %bb.h, %bb.e, %bb.c
@@ -1012,12 +1014,12 @@ bb.k:                                             ; preds = %bb.j
   %i.ak = fneg double %i.aj
   %i.al = tail call double @llvm.fmuladd.f64(double %i.ak, double f0x3FE62E42FEE00000, double %0) ; 2 uses
   %i.am = fmul nnan double %i.aj, f0x3DEA39EF35793C76 ; 2 uses
-  %1 = fsub double %i.al, %i.am                   ; 2 uses
-  %2 = icmp eq i32 %i.ai, 0
-  br i1 %2, label %.split45, label %.split
+  %1 = icmp eq i32 %i.ai, 0
+  %2 = fsub double %i.al, %i.am                   ; 2 uses
+  br i1 %1, label %.split45, label %.split
 
 .split:                                           ; preds = %.thread56, %.thread49
-  %i.an = phi double [ %i.z, %.thread56 ], [ %1, %.thread49 ]
+  %i.an = phi double [ %i.z, %.thread56 ], [ %2, %.thread49 ]
   %.062 = phi i32 [ %i.y, %.thread56 ], [ %i.ai, %.thread49 ]
   %.03761 = phi double [ %i.w, %.thread56 ], [ %i.am, %.thread49 ]
   %.03960 = phi double [ %i.u, %.thread56 ], [ %i.al, %.thread49 ]
@@ -1025,7 +1027,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 .split45:                                         ; preds = %bb.j, %.thread49
-  %.04255 = phi double [ %1, %.thread49 ], [ %0, %bb.j ] ; 2 uses
+  %.04255 = phi double [ %2, %.thread49 ], [ %0, %bb.j ] ; 2 uses
   %i.ap = tail call fastcc double @kernel_exp(double noundef %.04255, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef %.04255, i32 noundef 0) #8
   br label %bb.l
 
@@ -1428,15 +1430,15 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   %.180 = phi i32 [ %i.p, %bb.c ], [ %i.k, %bb.a ], [ %i.k, %bb.b ]
   %.1 = phi i32 [ %i.q, %bb.c ], [ %i.m, %bb.a ], [ %i.m, %bb.b ] ; 2 uses
-  %.0.a = phi i32 [ 0, %bb.c ], [ 0, %bb.a ], [ 1, %bb.b ] ; 2 uses
+  %.0 = phi i64 [ 0, %bb.c ], [ 0, %bb.a ], [ 1, %bb.b ] ; 3 uses
+  %.0.a = phi i32 [ 0, %bb.c ], [ 0, %bb.a ], [ 262144, %bb.b ]
   %i.r = bitcast double %.081 to i64
   %i.s = and i64 %i.r, 4294967295
   %i.t = zext nneg i32 %.1 to i64
   %i.u = shl nuw nsw i64 %i.t, 32
   %i.v = or disjoint i64 %i.u, %i.s
   %i.w = bitcast i64 %i.v to double               ; 3 uses
-  %3 = zext nneg i32 %.0.a to i64                 ; 3 uses
-  %i.x = getelementptr inbounds nuw [8 x i8], ptr @bp, i64 %3
+  %i.x = getelementptr inbounds nuw [8 x i8], ptr @bp, i64 %.0
   %i.y = load double, ptr %i.x, align 8, !tbaa !15 ; 3 uses
   %i.z = fsub double %i.w, %i.y                   ; 2 uses
   %i.aa = fadd double %i.y, %i.w
@@ -1464,8 +1466,7 @@ eval_poly.exit:                                   ; preds = %bb.e
   %i.am = lshr i32 %.1, 1
   %i.an = or i32 %i.am, 536870912
   %i.ao = add nuw nsw i32 %i.an, 524288
-  %4 = shl nuw nsw i32 %.0.a, 18
-  %i.ap = add nuw nsw i32 %i.ao, %4
+  %i.ap = add nuw nsw i32 %i.ao, %.0.a
   %i.aq = zext nneg i32 %i.ap to i64
   %i.ar = shl nuw nsw i64 %i.aq, 32
   %i.as = bitcast i64 %i.ar to double             ; 2 uses
@@ -1498,12 +1499,12 @@ eval_poly.exit:                                   ; preds = %bb.e
   %i.bt = fmul double %i.bq, f0x3FEEC709E0000000  ; 2 uses
   %i.bu = fmul double %i.bs, f0x3FEEC709DC3A03FD
   %i.bv = tail call double @llvm.fmuladd.f64(double %i.bq, double f0xBE3E2FE0145B01F5, double %i.bu)
-  %i.bw = getelementptr inbounds nuw [8 x i8], ptr @dp_l, i64 %3
+  %i.bw = getelementptr inbounds nuw [8 x i8], ptr @dp_l, i64 %.0
   %i.bx = load double, ptr %i.bw, align 8, !tbaa !15
   %i.by = fadd double %i.bv, %i.bx                ; 2 uses
   %i.bz = sitofp i32 %.180 to double              ; 2 uses
   %i.ca = fadd double %i.bt, %i.by
-  %i.cb = getelementptr inbounds nuw [8 x i8], ptr @dp_h, i64 %3
+  %i.cb = getelementptr inbounds nuw [8 x i8], ptr @dp_h, i64 %.0
   %i.cc = load double, ptr %i.cb, align 8, !tbaa !15 ; 2 uses
   %i.cd = fadd double %i.cc, %i.ca
   %i.ce = fadd double %i.cd, %i.bz

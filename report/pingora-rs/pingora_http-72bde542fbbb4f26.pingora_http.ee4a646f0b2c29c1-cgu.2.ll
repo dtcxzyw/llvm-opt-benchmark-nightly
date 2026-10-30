@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
           to label %.noexc.i unwind label %.loopexit.i, !noalias !452, !inline_history !436
 
 .noexc.i:                                         ; preds = %bb.f
-  %.sroa.010.0.copyload.i.i = load ptr, ptr %i.a, align 8, !noalias !454
+  %.sroa.010.0.copyload.i.i = load ptr, ptr %i.a, align 8, !noalias !454 ; 2 uses
   %.sroa.411.0.copyload.i.i = load i8, ptr %.sroa.411.0..sroa_idx.i.i, align 8, !noalias !454
   %.sroa.512.sroa.0.0.copyload.i.i = load i56, ptr %.sroa.512.0..sroa_idx.i.i, align 1, !noalias !454
   %.sroa.512.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.512.sroa.4.0..sroa.512.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !454
@@ -210,6 +210,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !454
   %i.af = zext i56 %.sroa.512.sroa.0.0.copyload.i.i to i64
   %i.ag = shl nuw i64 %i.af, 8
+  %2 = icmp eq ptr %.sroa.010.0.copyload.i.i, null
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -222,7 +223,8 @@ bb.h:                                             ; preds = %bb.g, %.noexc.i
   %.sroa.66.sroa.4.0.i.i = phi i64 [ undef, %bb.g ], [ %.sroa.512.sroa.4.0.copyload.i.i, %.noexc.i ] ; 2 uses
   %.sroa.66.sroa.0.0.i.i = phi i64 [ 0, %bb.g ], [ %i.ag, %.noexc.i ]
   %.sroa.53.0.i.i = phi i8 [ %i.ai, %bb.g ], [ %.sroa.411.0.copyload.i.i, %.noexc.i ]
-  %.sroa.01.0.i.i.a = phi ptr [ null, %bb.g ], [ %.sroa.010.0.copyload.i.i, %.noexc.i ] ; 3 uses
+  %.sroa.01.0.i.i = phi i1 [ true, %bb.g ], [ %2, %.noexc.i ]
+  %.sroa.01.0.i.i.a = phi ptr [ null, %bb.g ], [ %.sroa.010.0.copyload.i.i, %.noexc.i ] ; 2 uses
   %.sroa.5.0.insert.ext.i.i = zext i8 %.sroa.53.0.i.i to i64
   %.sroa.5.1.insert.insert.i.i = or disjoint i64 %.sroa.66.sroa.0.0.i.i, %.sroa.5.0.insert.ext.i.i
   %i.aj = inttoptr i64 %.sroa.5.1.insert.insert.i.i to ptr ; 2 uses
@@ -242,8 +244,7 @@ bb.h:                                             ; preds = %bb.g, %.noexc.i
 bb.i:                                             ; preds = %bb.h
   %i.as = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %2 = icmp eq ptr %.sroa.01.0.i.i.a, null
-  br i1 %2, label %bb.p, label %bb.j
+  br i1 %.sroa.01.0.i.i, label %bb.p, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.a, i64 32
@@ -399,7 +400,7 @@ bb.f:                                             ; preds = %bb.e
           to label %.noexc.i unwind label %.loopexit.i, !noalias !480, !inline_history !464
 
 .noexc.i:                                         ; preds = %bb.f
-  %.sroa.010.0.copyload.i.i = load ptr, ptr %i.a, align 8, !noalias !482
+  %.sroa.010.0.copyload.i.i = load ptr, ptr %i.a, align 8, !noalias !482 ; 2 uses
   %.sroa.411.0.copyload.i.i = load i8, ptr %.sroa.411.0..sroa_idx.i.i, align 8, !noalias !482
   %.sroa.512.sroa.0.0.copyload.i.i = load i56, ptr %.sroa.512.0..sroa_idx.i.i, align 1, !noalias !482
   %.sroa.512.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.512.sroa.4.0..sroa.512.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !482
@@ -407,6 +408,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !482
   %i.ae = zext i56 %.sroa.512.sroa.0.0.copyload.i.i to i64
   %i.af = shl nuw i64 %i.ae, 8
+  %2 = icmp eq ptr %.sroa.010.0.copyload.i.i, null
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -419,7 +421,8 @@ bb.h:                                             ; preds = %bb.g, %.noexc.i
   %.sroa.66.sroa.4.0.i.i = phi i64 [ undef, %bb.g ], [ %.sroa.512.sroa.4.0.copyload.i.i, %.noexc.i ] ; 2 uses
   %.sroa.66.sroa.0.0.i.i = phi i64 [ 0, %bb.g ], [ %i.af, %.noexc.i ]
   %.sroa.53.0.i.i = phi i8 [ %i.ah, %bb.g ], [ %.sroa.411.0.copyload.i.i, %.noexc.i ]
-  %.sroa.01.0.i.i.a = phi ptr [ null, %bb.g ], [ %.sroa.010.0.copyload.i.i, %.noexc.i ] ; 3 uses
+  %.sroa.01.0.i.i = phi i1 [ true, %bb.g ], [ %2, %.noexc.i ]
+  %.sroa.01.0.i.i.a = phi ptr [ null, %bb.g ], [ %.sroa.010.0.copyload.i.i, %.noexc.i ] ; 2 uses
   %.sroa.5.0.insert.ext.i.i = zext i8 %.sroa.53.0.i.i to i64
   %.sroa.5.1.insert.insert.i.i = or disjoint i64 %.sroa.66.sroa.0.0.i.i, %.sroa.5.0.insert.ext.i.i
   %i.ai = inttoptr i64 %.sroa.5.1.insert.insert.i.i to ptr ; 2 uses
@@ -438,8 +441,7 @@ bb.h:                                             ; preds = %bb.g, %.noexc.i
 bb.i:                                             ; preds = %bb.h
   %i.ar = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %2 = icmp eq ptr %.sroa.01.0.i.i.a, null
-  br i1 %2, label %bb.o, label %bb.j
+  br i1 %.sroa.01.0.i.i, label %bb.o, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.a, i64 32

@@ -202,20 +202,21 @@ bb.a:
   br i1 %.not.i, label %_is_writable.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = tail call zeroext i1 %i.j(ptr noundef nonnull %0) #9, !inline_history !18
+  %i.k = tail call zeroext i1 %i.j(ptr noundef nonnull %0) #9, !inline_history !18 ; 2 uses
   %.pre = load ptr, ptr %i.g, align 8
+  %2 = select i1 %i.k, i16 8213, i16 8193
   br label %_is_writable.exit
 
 _is_writable.exit:                                ; preds = %bb.a, %bb.b
   %i.l = phi ptr [ %i.h, %bb.a ], [ %.pre, %bb.b ]
-  %i.m = phi i1 [ false, %bb.a ], [ %i.k, %bb.b ] ; 3 uses
+  %.mux = phi i16 [ 8193, %bb.a ], [ %2, %bb.b ]
+  %i.m = phi i1 [ false, %bb.a ], [ %i.k, %bb.b ] ; 2 uses
   %i.n = load ptr, ptr %i.l, align 8              ; 2 uses
   %.not.i40 = icmp eq ptr %i.n, null
   br i1 %.not.i40, label %.thread, label %_is_readable.exit
 
 _is_readable.exit:                                ; preds = %_is_writable.exit
   %i.o = tail call zeroext i1 %i.n(ptr noundef nonnull %0) #9, !inline_history !19 ; 2 uses
-  %.mux = select i1 %i.m, i16 8213, i16 8193
   %brmerge53 = or i1 %i.o, %i.m
   %.mux.mux = select i1 %i.o, i16 %.mux, i16 20
   br i1 %brmerge53, label %.thread42, label %bb.c

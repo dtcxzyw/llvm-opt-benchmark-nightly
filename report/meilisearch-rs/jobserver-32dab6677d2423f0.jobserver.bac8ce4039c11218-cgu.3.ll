@@ -204,11 +204,13 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 
 bb.g:                                             ; preds = %bb.e
   %i.r = extractvalue { ptr, i64 } %i.n, 0
-  %i.s = extractvalue { ptr, i64 } %i.n, 1
+  %i.s = extractvalue { ptr, i64 } %i.n, 1        ; 2 uses
+  %3 = icmp eq i64 %i.s, 0
   br label %bb.h
 
 bb.h:                                             ; preds = %.split11, %.split10, %.split, %bb.k, %bb.g
-  %.sroa.5.1.a = phi i64 [ %.sroa.5.014, %bb.k ], [ %i.s, %bb.g ], [ %.sroa.5.014, %.split ], [ %.sroa.5.014, %.split10 ], [ %.sroa.5.014, %.split11 ] ; 2 uses
+  %.sroa.5.1 = phi i1 [ false, %bb.k ], [ %3, %bb.g ], [ false, %.split ], [ false, %.split10 ], [ false, %.split11 ]
+  %.sroa.5.1.a = phi i64 [ %.sroa.5.014, %bb.k ], [ %i.s, %bb.g ], [ %.sroa.5.014, %.split ], [ %.sroa.5.014, %.split10 ], [ %.sroa.5.014, %.split11 ]
   %.sroa.0.1 = phi ptr [ %.sroa.0.015, %bb.k ], [ %i.r, %bb.g ], [ %.sroa.0.015, %.split ], [ %.sroa.0.015, %.split10 ], [ %.sroa.0.015, %.split11 ]
   %i.t = load i64, ptr %i.b, align 8
   %i.u = trunc nuw i64 %i.t to i1
@@ -259,8 +261,7 @@ bb.m:                                             ; preds = %bb.h
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.h
-  %3 = icmp eq i64 %.sroa.5.1.a, 0
-  br i1 %3, label %.loopexit, label %bb.b
+  br i1 %.sroa.5.1, label %.loopexit, label %bb.b
 
 bb.o:                                             ; preds = %bb.f
   invoke void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17hf4189814bdca878fE"(ptr nonnull align 8 %i.d) #22
@@ -663,7 +664,7 @@ bb.a:
   store ptr %2, ptr %i.e, align 8
   %i.f = tail call { ptr, i1 } @_ZN9jobserver11HelperState4lock17h1fe799baea22d1d8E(ptr align 8 %0) ; 2 uses
   %i.g = extractvalue { ptr, i1 } %i.f, 0         ; 4 uses
-  %i.h = extractvalue { ptr, i1 } %i.f, 1
+  %i.h = extractvalue { ptr, i1 } %i.f, 1         ; 2 uses
   store ptr %i.g, ptr %i.c, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   %i.j = zext i1 %i.h to i8                       ; 2 uses
@@ -685,7 +686,8 @@ bb.a:
   resume { ptr, i32 } %eh.lpad-body5
 
 bb.b:                                             ; preds = %.lr.ph, %.backedge
-  %i.r = phi i8 [ %i.j, %.lr.ph ], [ %storemerge, %.backedge ] ; 3 uses
+  %3 = phi i1 [ %i.h, %.lr.ph ], [ %storemerge.in, %.backedge ]
+  %i.r = phi i8 [ %i.j, %.lr.ph ], [ %storemerge, %.backedge ] ; 2 uses
   %i.s = phi ptr [ %i.g, %.lr.ph ], [ %storemerge10, %.backedge ] ; 6 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %i.u = load i64, ptr %i.t, align 8              ; 2 uses
@@ -729,7 +731,6 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.b
   %i.ac = add i64 %i.u, -1
   store i64 %i.ac, ptr %i.t, align 8
-  %3 = trunc nuw i8 %i.r to i1
   call void @_ZN4core3mem4drop17h69fd03ac8640b519E(ptr nonnull align 8 %i.s, i1 zeroext %3)
   call void @"_ZN9jobserver3imp12spawn_helper28_$u7b$$u7b$closure$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$17h056449ae10c0a7c4E"(ptr nonnull align 8 %i.d, ptr align 8 %0)
   %i.ad = call { ptr, i1 } @_ZN9jobserver11HelperState4lock17h1fe799baea22d1d8E(ptr align 8 %0)
@@ -739,7 +740,7 @@ bb.h:                                             ; preds = %bb.b
   %.pn = phi { ptr, i1 } [ %i.ad, %bb.h ], [ %i.ab, %bb.g ] ; 2 uses
   %storemerge10 = extractvalue { ptr, i1 } %.pn, 0 ; 4 uses
   store ptr %storemerge10, ptr %i.c, align 8
-  %storemerge.in = extractvalue { ptr, i1 } %.pn, 1
+  %storemerge.in = extractvalue { ptr, i1 } %.pn, 1 ; 2 uses
   %storemerge = zext i1 %storemerge.in to i8      ; 2 uses
   store i8 %storemerge, ptr %i.i, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %storemerge10, i64 16

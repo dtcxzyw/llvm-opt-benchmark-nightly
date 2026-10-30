@@ -202,15 +202,16 @@ bb.a:
   %1 = alloca %"class.std::vector.3", align 8     ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i32, ptr %i.a, align 8, !tbaa !110
-  %2 = icmp eq i32 %i.b, 1
+  %2 = icmp ne i32 %i.b, 1                        ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.d = load ptr, ptr %i.c, align 8
-  %3 = select i1 %2, ptr %0, ptr %i.d             ; 9 uses
-  %.not = icmp eq ptr %3, null
+  %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
+  %3 = icmp eq ptr %i.d, null
+  %.not = select i1 %2, i1 %3, i1 false
+  %4 = select i1 %2, ptr %i.d, ptr %0             ; 8 uses
   br i1 %.not, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !109  ; 3 uses
   %.not18 = icmp eq ptr %i.f, null
   br i1 %.not18, label %.thread, label %.preheader
@@ -274,25 +275,25 @@ bb.f:                                             ; preds = %bb.j, %.lr.ph.i.i.i
   %.052.i.i.i = phi i64 [ %i.ah, %.lr.ph.i.i.i ], [ %i.aw, %bb.j ] ; 2 uses
   %.sroa.032.051.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i ], [ %i.av, %bb.j ] ; 9 uses
   %i.ak = load ptr, ptr %.sroa.032.051.i.i.i, align 8, !tbaa !123
-  %i.al = icmp eq ptr %i.ak, %3
+  %i.al = icmp eq ptr %i.ak, %4
   br i1 %i.al, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 8
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !123
-  %i.ao = icmp eq ptr %i.an, %3
+  %i.ao = icmp eq ptr %i.an, %4
   br i1 %i.ao, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit.loopexit.split.loop.exit52, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 16
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !123
-  %i.ar = icmp eq ptr %i.aq, %3
+  %i.ar = icmp eq ptr %i.aq, %4
   br i1 %i.ar, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit.loopexit.split.loop.exit50, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i, i64 24
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !123
-  %i.au = icmp eq ptr %i.at, %3
+  %i.au = icmp eq ptr %i.at, %4
   br i1 %i.au, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit.loopexit.split.loop.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -318,7 +319,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %._crit_edge.i.i.i
   %i.az = load ptr, ptr %.sroa.032.0.lcssa.i.i.i, align 8, !tbaa !123
-  %i.ba = icmp eq ptr %i.az, %3
+  %i.ba = icmp eq ptr %i.az, %4
   br i1 %i.ba, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -328,7 +329,7 @@ bb.l:                                             ; preds = %bb.k
 ._crit_edge._crit_edge.i.i.i:                     ; preds = %._crit_edge.i.i.i, %bb.l
   %.sroa.032.1.i.i.i = phi ptr [ %i.bb, %bb.l ], [ %.sroa.032.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %i.bc = load ptr, ptr %.sroa.032.1.i.i.i, align 8, !tbaa !123
-  %i.bd = icmp eq ptr %i.bc, %3
+  %i.bd = icmp eq ptr %i.bc, %4
   br i1 %i.bd, label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge._crit_edge.i.i.i
@@ -338,7 +339,7 @@ bb.m:                                             ; preds = %._crit_edge._crit_e
 ._crit_edge._crit_edge57.i.i.i:                   ; preds = %._crit_edge.i.i.i, %bb.m
   %.sroa.032.2.i.i.i = phi ptr [ %i.be, %bb.m ], [ %.sroa.032.0.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %i.bf = load ptr, ptr %.sroa.032.2.i.i.i, align 8, !tbaa !123
-  %i.bg = icmp eq ptr %i.bf, %3
+  %i.bg = icmp eq ptr %i.bf, %4
   %spec.select.i.i.i = select i1 %i.bg, ptr %.sroa.032.2.i.i.i, ptr %i.ad
   br label %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPK5BlockSt6vectorIS4_SaIS4_EEEES4_ET_SA_SA_RKT0_.exit
 

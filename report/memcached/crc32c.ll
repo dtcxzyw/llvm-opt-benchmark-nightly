@@ -205,18 +205,21 @@ bb.k:                                             ; preds = %gf2_matrix_times.ex
   ret void
 
 bb.l:                                             ; preds = %crc32c_zeros_op.exit, %gf2_matrix_times.exit44
-  %indvars.iv = phi i64 [ 0, %crc32c_zeros_op.exit ], [ %indvars.iv.next, %gf2_matrix_times.exit44 ] ; 10 uses
-  %.not9.i = icmp eq i64 %indvars.iv, 0
-  br i1 %.not9.i, label %gf2_matrix_times.exit34.thread, label %.lr.ph.i.preheader
+  %indvars.iv = phi i64 [ 0, %crc32c_zeros_op.exit ], [ %indvars.iv.next, %gf2_matrix_times.exit44 ] ; 12 uses
+  %.052 = phi i1 [ true, %crc32c_zeros_op.exit ], [ false, %gf2_matrix_times.exit44 ]
+  br i1 %.052, label %gf2_matrix_times.exit34.thread, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.l
   %i.au = trunc nuw nsw i64 %indvars.iv to i32
   br label %.lr.ph.i
 
 gf2_matrix_times.exit34.thread:                   ; preds = %bb.l
-  store i32 0, ptr %0, align 4, !tbaa !13
-  store i32 0, ptr %i.as, align 4, !tbaa !13
-  store i32 0, ptr %i.at, align 4, !tbaa !13
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
+  store i32 0, ptr %2, align 4, !tbaa !13
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %indvars.iv
+  store i32 0, ptr %3, align 4, !tbaa !13
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %indvars.iv
+  store i32 0, ptr %4, align 4, !tbaa !13
   br label %gf2_matrix_times.exit44
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.n
@@ -321,8 +324,9 @@ bb.t:                                             ; preds = %bb.s, %.lr.ph.i36
   br i1 %.not.i42, label %gf2_matrix_times.exit44, label %.lr.ph.i36, !llvm.loop !43
 
 gf2_matrix_times.exit44:                          ; preds = %bb.t, %gf2_matrix_times.exit34.thread
+  %5 = phi i64 [ 0, %gf2_matrix_times.exit34.thread ], [ %indvars.iv, %bb.t ]
   %.0.lcssa.i43 = phi i32 [ 0, %gf2_matrix_times.exit34.thread ], [ %.1.i41, %bb.t ]
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %indvars.iv
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %5
   store i32 %.0.lcssa.i43, ptr %i.bv, align 4, !tbaa !13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 256

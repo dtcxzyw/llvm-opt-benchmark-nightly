@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.h, ptr nonnull readonly align 1 %i.e, i64 %i.g, i1 false)
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !20 ; 2 uses
+  %2 = icmp eq ptr %.pre, null
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load i64, ptr %i.n, align 8, !tbaa !16
   store i64 %i.o, ptr %i.a, align 8, !tbaa !16
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !20   ; 2 uses
-  %.not.i61 = icmp eq ptr %.pre, null
-  br i1 %.not.i61, label %bb.e, label %bb.d
+  br i1 %2, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ArrowFree(ptr noundef nonnull %.pre) #17
@@ -614,7 +614,7 @@ bb.at:                                            ; preds = %bb.a
   br label %ArrowSchemaViewValidateNChildren.exit
 
 ArrowSchemaViewValidateNChildren.exit:            ; preds = %bb.ae, %bb.y, %bb.s, %bb.k, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %.tail.thread.i, %bb.al, %bb.aj, %bb.ah, %bb.ag, %bb.ad, %bb.ab, %bb.z, %bb.x, %bb.v, %bb.t, %bb.q, %bb.o, %bb.n, %bb.l, %bb.j, %bb.i, %bb.g, %bb.f, %bb.c, %bb.b, %bb.at, %bb.e
-  %.0 = phi i32 [ 22, %bb.at ], [ 22, %bb.aj ], [ 22, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %i.cq, %bb.as ], [ 0, %bb.y ], [ 0, %bb.t ], [ 0, %bb.s ], [ 22, %bb.c ], [ 22, %bb.g ], [ 22, %bb.i ], [ 22, %bb.j ], [ 22, %bb.l ], [ 22, %bb.n ], [ 22, %bb.o ], [ 22, %bb.q ], [ 0, %bb.k ], [ 22, %bb.v ], [ 22, %bb.x ], [ 0, %bb.z ], [ 22, %bb.ab ], [ 22, %bb.ad ], [ 22, %bb.al ], [ 22, %.tail.thread.i ], [ 22, %bb.an ], [ 22, %bb.ap ], [ 0, %bb.ao ], [ 22, %bb.ag ], [ 22, %bb.ah ], [ 22, %bb.ar ], [ 0, %bb.ae ]
+  %.0 = phi i32 [ 22, %bb.at ], [ 22, %bb.aj ], [ 22, %bb.e ], [ 0, %bb.b ], [ 0, %bb.f ], [ %i.cq, %bb.as ], [ 0, %bb.k ], [ 0, %bb.t ], [ 0, %bb.y ], [ 22, %bb.c ], [ 22, %bb.g ], [ 22, %bb.i ], [ 22, %bb.j ], [ 22, %bb.l ], [ 22, %bb.n ], [ 22, %bb.o ], [ 22, %bb.q ], [ 0, %bb.s ], [ 22, %bb.v ], [ 22, %bb.x ], [ 0, %bb.z ], [ 22, %bb.ab ], [ 22, %bb.ad ], [ 22, %bb.al ], [ 22, %.tail.thread.i ], [ 22, %bb.an ], [ 22, %bb.ap ], [ 0, %bb.ao ], [ 22, %bb.ag ], [ 22, %bb.ah ], [ 22, %bb.ar ], [ 0, %bb.ae ]
   ret i32 %.0
 }
 
@@ -1017,7 +1017,7 @@ ArrowMetadataReaderInit.exit.i:                   ; preds = %bb.a
 
 ArrowMetadataSizeOf.exit.loopexit.unr-lcssa:      ; preds = %.lr.ph.i
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %ArrowMetadataSizeOf.exit, label %.lr.ph.i.epil.preheader
+  br i1 %lcmp.mod.not, label %ArrowMetadataSizeOf.exit.loopexit, label %.lr.ph.i.epil.preheader
 
 .lr.ph.i.epil.preheader:                          ; preds = %ArrowMetadataSizeOf.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.020.i.epil.init = phi i64 [ 4, %.lr.ph.i.preheader ], [ %i.y, %ArrowMetadataSizeOf.exit.loopexit.unr-lcssa ]
@@ -1034,13 +1034,19 @@ ArrowMetadataSizeOf.exit.loopexit.unr-lcssa:      ; preds = %.lr.ph.i
   %i.ae = add nsw i64 %i.aa, 8
   %i.af = add i64 %i.ae, %.020.i.epil.init
   %i.ag = add i64 %i.af, %i.ad
+  br label %ArrowMetadataSizeOf.exit.loopexit
+
+ArrowMetadataSizeOf.exit.loopexit:                ; preds = %ArrowMetadataSizeOf.exit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader
+  %.lcssa = phi i64 [ %i.y, %ArrowMetadataSizeOf.exit.loopexit.unr-lcssa ], [ %i.ag, %.lr.ph.i.epil.preheader ] ; 2 uses
+  %3 = icmp sgt i64 %.lcssa, 0
   br label %ArrowMetadataSizeOf.exit
 
-ArrowMetadataSizeOf.exit:                         ; preds = %.lr.ph.i.epil.preheader, %ArrowMetadataSizeOf.exit.loopexit.unr-lcssa, %bb.a, %ArrowMetadataReaderInit.exit.i
-  %.1.i = phi i64 [ 0, %bb.a ], [ 4, %ArrowMetadataReaderInit.exit.i ], [ %i.y, %ArrowMetadataSizeOf.exit.loopexit.unr-lcssa ], [ %i.ag, %.lr.ph.i.epil.preheader ] ; 4 uses
+ArrowMetadataSizeOf.exit:                         ; preds = %ArrowMetadataSizeOf.exit.loopexit, %bb.a, %ArrowMetadataReaderInit.exit.i
+  %.1.i = phi i1 [ false, %bb.a ], [ true, %ArrowMetadataReaderInit.exit.i ], [ %3, %ArrowMetadataSizeOf.exit.loopexit ]
+  %4 = phi i64 [ 0, %bb.a ], [ 4, %ArrowMetadataReaderInit.exit.i ], [ %.lcssa, %ArrowMetadataSizeOf.exit.loopexit ] ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !48
-  %i.aj = add nsw i64 %i.ai, %.1.i                ; 2 uses
+  %i.aj = add nsw i64 %i.ai, %4                   ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !49 ; 3 uses
   %.not.i.i = icmp sgt i64 %i.aj, %i.al
@@ -1067,16 +1073,15 @@ ArrowBufferReserve.exit.i:                        ; preds = %bb.b
   br label %ArrowBufferAppend.exit
 
 bb.d:                                             ; preds = %bb.c, %ArrowMetadataSizeOf.exit
-  %3 = icmp sgt i64 %.1.i, 0
-  br i1 %3, label %bb.e, label %ArrowBufferAppend.exit
+  br i1 %.1.i, label %bb.e, label %ArrowBufferAppend.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.as = load ptr, ptr %0, align 8, !tbaa !51
   %i.at = load i64, ptr %i.ah, align 8, !tbaa !48
   %i.au = getelementptr inbounds i8, ptr %i.as, i64 %i.at
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.au, ptr readonly align 1 %1, i64 %.1.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.au, ptr readonly align 1 %1, i64 %4, i1 false)
   %i.av = load i64, ptr %i.ah, align 8, !tbaa !48
-  %i.aw = add nsw i64 %i.av, %.1.i
+  %i.aw = add nsw i64 %i.av, %4
   store i64 %i.aw, ptr %i.ah, align 8, !tbaa !48
   br label %ArrowBufferAppend.exit
 

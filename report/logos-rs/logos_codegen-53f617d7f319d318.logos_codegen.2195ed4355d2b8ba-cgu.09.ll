@@ -202,7 +202,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.sroa.0.0.i.i.a = phi i64 [ 0, %bb.e ], [ 4, %bb.f ] ; 4 uses
+  %.sroa.0.0.i.i = phi i64 [ 2, %bb.e ], [ 6, %bb.f ]
+  %.sroa.0.0.i.i.a = phi i64 [ 0, %bb.e ], [ 4, %bb.f ] ; 3 uses
   %i.h = and i64 %i.a, 2
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %bb.i, label %bb.h
@@ -211,11 +212,10 @@ bb.h:                                             ; preds = %bb.g
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sroa.0.0.i.i.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.0.0.i.i.a
   tail call void @_RINvNtCskKLDkoKarTP_4core3ptr10swap_chunkKj2_ECs8UJyeeIGyGC_12regex_syntax(ptr %i.j, ptr %i.k) #18
-  %4 = or disjoint i64 %.sroa.0.0.i.i.a, 2
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.sroa.0.1.i.i = phi i64 [ %.sroa.0.0.i.i.a, %bb.g ], [ %4, %bb.h ] ; 2 uses
+  %.sroa.0.1.i.i = phi i64 [ %.sroa.0.0.i.i.a, %bb.g ], [ %.sroa.0.0.i.i, %bb.h ] ; 2 uses
   %i.l = and i64 %i.a, 1
   %i.m = icmp eq i64 %i.l, 0
   br i1 %i.m, label %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytesCs2SM5xCHwwDm_13logos_codegen.exit, label %bb.j
@@ -618,11 +618,13 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br label %bb.ao
 
 bb.v:                                             ; preds = %bb.s
-  %i.ai = load i32, ptr %i.h, align 8
-  switch i32 %i.ai, label %bb.aa [
-    i32 -1, label %bb.w
-    i32 0, label %bb.z
-  ]
+  %i.ai = load i32, ptr %i.h, align 8             ; 2 uses
+  %.not41 = icmp eq i32 %i.ai, -1
+  br i1 %.not41, label %bb.w, label %3
+
+3:                                                ; preds = %bb.v
+  %.not = icmp eq i32 %i.ai, 0                    ; 3 uses
+  br i1 %.not, label %bb.z, label %bb.aa
 
 bb.w:                                             ; preds = %bb.v
   %i.aj = invoke align 8 ptr @_RINvMNtCs2SM5xCHwwDm_13logos_codegen5errorNtB3_6Errors3errReEB5_(ptr align 8 %1, ptr nonnull @3, i64 23, i32 %i.u)
@@ -647,13 +649,13 @@ _RINvMNtCs2SM5xCHwwDm_13logos_codegen6parserNtB3_6Parser3errReEB5_.exit60: ; pre
   store i64 -3, ptr %0, align 8
   br label %.invoke
 
-bb.z:                                             ; preds = %bb.v
+bb.z:                                             ; preds = %3
   %i.ao = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %i.ao, i64 24, i1 false)
   invoke void @_RNvMsn_CsgSMwPvzVUxY_11proc_macro2NtB5_5Group6stream(ptr nonnull sret([32 x i8]) align 8 %i.i, ptr nonnull align 8 %i.g)
           to label %bb.ac unwind label %bb.ab
 
-bb.aa:                                            ; preds = %bb.v
+bb.aa:                                            ; preds = %3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 32, i1 false)
   invoke void @_RNvXs3_CsgSMwPvzVUxY_11proc_macro2NtB5_11TokenStreamINtNtCskKLDkoKarTP_4core7convert4FromNtB5_9TokenTreeE4from(ptr nonnull sret([32 x i8]) align 8 %i.f, ptr nonnull align 8 %i.b)
           to label %bb.ae unwind label %bb.y
@@ -690,7 +692,6 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.thread102, %bb.ad, %bb.ah
-  %3 = phi i1 [ false, %.thread102 ], [ true, %bb.ad ], [ true, %bb.ah ] ; 2 uses
   %.sroa.020.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.020, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.020.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.020, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
@@ -707,11 +708,11 @@ bb.ah:                                            ; preds = %bb.ad
 .split:                                           ; preds = %bb.ag
   %i.as = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  br i1 %3, label %.thread114, label %.thread
+  br i1 %.not, label %.thread114, label %.thread
 
 bb.ai:                                            ; preds = %bb.ag
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %i.d, i64 64, i1 false)
-  br i1 %3, label %bb.aj, label %bb.ak
+  br i1 %.not, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgSMwPvzVUxY_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.t)
@@ -815,13 +816,13 @@ bb.ba:                                            ; preds = %bb.m, %bb.l
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsgSMwPvzVUxY_11proc_macro29TokenTreeEECs36YJ3mR2EUy_5quote(ptr nonnull align 8 %i.n) #16
           to label %.thread114 unwind label %bb.k
 
-.thread114:                                       ; preds = %.split, %bb.aw, %bb.av, %bb.aq, %bb.az, %bb.ay, %bb.ax, %.thread87, %bb.ba, %bb.c
-  %.pn5272 = phi { ptr, i32 } [ %i.au, %bb.ax ], [ %.pn46.ph, %bb.c ], [ %lpad.thr_comm.split-lp86, %bb.ba ], [ %lpad.thr_comm85, %.thread87 ], [ %i.av, %bb.aw ], [ %i.av, %bb.av ], [ %i.av, %bb.aq ], [ %i.au, %bb.az ], [ %i.au, %bb.ay ], [ %i.as, %.split ]
+.thread114:                                       ; preds = %bb.aw, %bb.av, %bb.aq, %bb.az, %bb.ay, %bb.ax, %.thread87, %bb.ba, %.split, %bb.c
+  %.pn5272 = phi { ptr, i32 } [ %i.au, %bb.ax ], [ %.pn46.ph, %bb.c ], [ %i.as, %.split ], [ %lpad.thr_comm.split-lp86, %bb.ba ], [ %lpad.thr_comm85, %.thread87 ], [ %i.av, %bb.aw ], [ %i.av, %bb.av ], [ %i.av, %bb.aq ], [ %i.au, %bb.az ], [ %i.au, %bb.ay ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgSMwPvzVUxY_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.t) #16
           to label %.thread unwind label %bb.k
 
 .thread:                                          ; preds = %.split, %bb.i, %bb.c, %.thread114, %bb.bb
-  %.pn5463 = phi { ptr, i32 } [ %i.w, %bb.i ], [ %lpad.thr_comm.split-lp, %bb.bb ], [ %.pn46.ph, %bb.c ], [ %.pn5272, %.thread114 ], [ %i.as, %.split ]
+  %.pn5463 = phi { ptr, i32 } [ %i.as, %.split ], [ %lpad.thr_comm.split-lp, %bb.bb ], [ %.pn46.ph, %bb.c ], [ %.pn5272, %.thread114 ], [ %i.w, %bb.i ]
   resume { ptr, i32 } %.pn5463
 
 bb.bb:                                            ; preds = %bb.a
@@ -1224,7 +1225,8 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sroa.0.0.i.a = phi i64 [ 0, %bb.d ], [ 4, %bb.e ] ; 4 uses
+  %.sroa.0.0.i = phi i64 [ 2, %bb.d ], [ 6, %bb.e ]
+  %.sroa.0.0.i.a = phi i64 [ 0, %bb.d ], [ 4, %bb.e ] ; 3 uses
   %i.g = and i64 %2, 2
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %bb.h, label %bb.g
@@ -1233,11 +1235,10 @@ bb.g:                                             ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.0.0.i.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sroa.0.0.i.a
   tail call void @_RINvNtCskKLDkoKarTP_4core3ptr10swap_chunkKj2_ECs8UJyeeIGyGC_12regex_syntax(ptr %i.i, ptr %i.j) #18
-  %3 = or disjoint i64 %.sroa.0.0.i.a, 2
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i.a, %bb.f ], [ %3, %bb.g ] ; 2 uses
+  %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i.a, %bb.f ], [ %.sroa.0.0.i, %bb.g ] ; 2 uses
   %i.k = and i64 %2, 1
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %_RNvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_shortCs2SM5xCHwwDm_13logos_codegen.exit, label %bb.i

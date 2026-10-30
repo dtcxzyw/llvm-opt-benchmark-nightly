@@ -201,11 +201,13 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.022 = phi i32 [ %i.l, %bb.f ], [ %i.g, %bb.e ]
-  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %.022, i32 0)
+  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %.022, i32 0) ; 2 uses
+  %2 = zext nneg i32 %spec.store.select to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.c
-  %.123.a = phi i32 [ %spec.store.select, %bb.g ], [ 0, %bb.c ] ; 2 uses
+  %.123 = phi i64 [ %2, %bb.g ], [ 0, %bb.c ]
+  %.123.a = phi i32 [ %spec.store.select, %bb.g ], [ 0, %bb.c ]
   %i.m = tail call ptr @py_touserdata(ptr noundef %1) #5
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.o = load i32, ptr %i.n, align 8, !tbaa !10
@@ -214,11 +216,10 @@ bb.h:                                             ; preds = %bb.g, %bb.c
 
 .lr.ph:                                           ; preds = %bb.h
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %2 = zext nneg i32 %.123.a to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.k
-  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 3 uses
+  %indvars.iv = phi i64 [ %.123, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 3 uses
   %i.q = tail call ptr @py_touserdata(ptr noundef %1) #5
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !11
   %i.s = getelementptr inbounds nuw [24 x i8], ptr %i.r, i64 %indvars.iv

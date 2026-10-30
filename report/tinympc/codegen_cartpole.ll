@@ -205,7 +205,7 @@ define linkonce_odr dso_local void @_ZN5Eigen8internal10AssignmentINS_6MatrixIdL
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !35, !nonnull !36, !align !37
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !28   ; 11 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !28   ; 12 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !31
   %.not = icmp eq i64 %i.e, %i.c
@@ -233,13 +233,15 @@ bb.d:                                             ; preds = %bb.c
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit: ; preds = %bb.b, %bb.c
   %i.l = mul nsw i64 %i.c, %i.c
   tail call void @_ZN5Eigen12DenseStorageIdLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.c, i64 noundef %i.c)
-  %.pre = load i64, ptr %i.d, align 8, !tbaa !31
-  %.pre13 = load i64, ptr %i.f, align 8, !tbaa !32
+  %.pre = load i64, ptr %i.d, align 8, !tbaa !31  ; 2 uses
+  %.pre13 = load i64, ptr %i.f, align 8, !tbaa !32 ; 2 uses
+  %3 = tail call i64 @llvm.smin.i64(i64 %.pre13, i64 %.pre)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
-  %i.m = phi i64 [ %i.c, %bb.a ], [ %.pre13, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit ] ; 2 uses
-  %i.n = phi i64 [ %i.c, %bb.a ], [ %.pre, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit ] ; 7 uses
+  %.sroa.speculated.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.c, %bb.a ], [ %3, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit ] ; 4 uses
+  %i.m = phi i64 [ %i.c, %bb.a ], [ %.pre13, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit ]
+  %i.n = phi i64 [ %i.c, %bb.a ], [ %.pre, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit ] ; 6 uses
   %i.o = mul nsw i64 %i.m, %i.n                   ; 2 uses
   %i.p = icmp slt i64 %i.o, 1
   %.pre14 = load ptr, ptr %0, align 8, !tbaa !30  ; 6 uses
@@ -253,7 +255,6 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE11setConstantERKd.exi
 _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE7setZeroEv.exit: ; preds = %bb.e, %_ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE11setConstantERKd.exit.loopexit.i
   %i.q = load ptr, ptr %1, align 8, !tbaa !35, !nonnull !36, !align !37
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !27   ; 5 uses
-  %.sroa.speculated.i.i.i.i.i.i.i.i.i.i.i.i = tail call noundef i64 @llvm.smin.i64(i64 %i.m, i64 %i.n) ; 4 uses
   %i.s = icmp sgt i64 %.sroa.speculated.i.i.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.s, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit
 
@@ -297,7 +298,7 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE7setZeroEv.exit: ; pr
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !24
   store double %i.aq, ptr %i.ao, align 8, !tbaa !24
   %i.ar = add nuw nsw i64 %.05.i.i.i.i.i.i.i.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw nsw i64 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN5Eigen8DiagonalINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !46
 

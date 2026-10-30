@@ -204,13 +204,15 @@ bb.z:                                             ; preds = %bb.y, %bb.x
           to label %.noexc77 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc77:                                         ; preds = %bb.z
-  %.pre.i74 = load ptr, ptr %5, align 8, !tbaa !197 ; 2 uses
+  %.pre.i74 = load ptr, ptr %5, align 8, !tbaa !197 ; 3 uses
   %.phi.trans.insert.i75 = getelementptr inbounds i8, ptr %.pre.i74, i64 -4
   %.pre2.i76 = load i32, ptr %.phi.trans.insert.i75, align 4, !tbaa !175
+  %7 = icmp eq ptr %.pre.i74, null
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.noexc77, %bb.y
   %i.ch = phi i32 [ %.pre2.i76, %.noexc77 ], [ %i.cd, %bb.y ] ; 2 uses
+  %8 = phi i1 [ %7, %.noexc77 ], [ false, %bb.y ]
   %i.ci = phi ptr [ %.pre.i74, %.noexc77 ], [ %i.cb, %bb.y ] ; 3 uses
   %i.cj = getelementptr inbounds i8, ptr %i.ci, i64 -4
   %i.ck = zext i32 %i.ch to i64
@@ -230,7 +232,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 _ZNK6vectorIP4sortLb0EjE4sizeEv.exit:             ; preds = %bb.ab, %bb.aa
   %i.cs = phi ptr [ %i.cr, %bb.ab ], [ null, %bb.aa ]
-  %i.ct = invoke noundef ptr @_ZN11ast_manager12mk_func_declEiijPK9parameterjPKP4sortS4_(ptr noundef nonnull align 8 dereferenceable(952) %i.e, i32 noundef %i.cn, i32 noundef 0, i32 noundef 2, ptr noundef %i.cs, i32 noundef %i.cm, ptr noundef nonnull %i.ci, ptr noundef null)
+  %spec.select = select i1 %8, i32 0, i32 %i.cm
+  %i.ct = invoke noundef ptr @_ZN11ast_manager12mk_func_declEiijPK9parameterjPKP4sortS4_(ptr noundef nonnull align 8 dereferenceable(952) %i.e, i32 noundef %i.cn, i32 noundef 0, i32 noundef 2, ptr noundef %i.cs, i32 noundef %spec.select, ptr noundef nonnull %i.ci, ptr noundef null)
           to label %bb.ac unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ac:                                            ; preds = %_ZNK6vectorIP4sortLb0EjE4sizeEv.exit

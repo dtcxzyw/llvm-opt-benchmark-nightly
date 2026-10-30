@@ -202,12 +202,16 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.g = load i64, ptr %i.c, align 16, !tbaa !18
-  %i.h = tail call i64 @llvm.smax.i64(i64 %i.g, i64 0)
+  %i.g = load i64, ptr %i.c, align 16, !tbaa !18  ; 2 uses
+  %i.h = tail call i64 @llvm.smax.i64(i64 %i.g, i64 0) ; 2 uses
+  %1 = icmp sgt i64 %i.g, 18014398509481983
+  %2 = shl i64 %i.h, 10
+  %3 = select i1 %1, i64 9223372036854775807, i64 %2
   br label %mi_option_get.exit
 
 mi_option_get.exit:                               ; preds = %bb.a, %bb.d
-  %.0.i.a = phi i64 [ %i.h, %bb.d ], [ 0, %bb.a ] ; 3 uses
+  %.0.i = phi i64 [ %3, %bb.d ], [ 0, %bb.a ]
+  %.0.i.a = phi i64 [ %i.h, %bb.d ], [ 0, %bb.a ]
   switch i32 %0, label %mi_option_has_size_in_kib.exit [
     i32 44, label %bb.e
     i32 23, label %bb.e
@@ -216,13 +220,10 @@ mi_option_get.exit:                               ; preds = %bb.a, %bb.d
   ]
 
 bb.e:                                             ; preds = %mi_option_get.exit, %mi_option_get.exit, %mi_option_get.exit, %mi_option_get.exit
-  %1 = icmp samesign ugt i64 %.0.i.a, 18014398509481983
-  %2 = shl i64 %.0.i.a, 10
-  %spec.select = select i1 %1, i64 9223372036854775807, i64 %2
   br label %mi_option_has_size_in_kib.exit
 
 mi_option_has_size_in_kib.exit:                   ; preds = %bb.e, %mi_option_get.exit
-  %.0 = phi i64 [ %.0.i.a, %mi_option_get.exit ], [ %spec.select, %bb.e ]
+  %.0 = phi i64 [ %.0.i.a, %mi_option_get.exit ], [ %.0.i, %bb.e ]
   ret i64 %.0
 }
 

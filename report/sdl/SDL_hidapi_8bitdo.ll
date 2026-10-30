@@ -204,12 +204,13 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.d = load i8, ptr %i.c, align 4, !range !3, !noundef !4
-  %2 = shl nuw nsw i8 %i.d, 4
+  %2 = trunc nuw i8 %i.d to i1                    ; 2 uses
+  %spec.select = select i1 %2, i32 18, i32 2
+  %spec.select5 = select i1 %2, i32 16, i32 0
   %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
   %4 = load i8, ptr %3, align 1, !range !3, !noundef !4
-  %5 = shl nuw nsw i8 %4, 1
-  %.15 = or disjoint i8 %5, %2
-  %.1 = zext nneg i8 %.15 to i32
+  %5 = trunc nuw i8 %4 to i1
+  %.1 = select i1 %5, i32 %spec.select, i32 %spec.select5
   ret i32 %.1
 }
 

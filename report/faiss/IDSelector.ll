@@ -202,11 +202,19 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
 
 bb.g:                                             ; preds = %bb.e
   %.not47 = icmp slt i64 %i.i, %i.k
-  br i1 %.not47, label %.preheader51, label %.loopexit
+  br i1 %.not47, label %.preheader51, label %.thread
 
 .preheader51:                                     ; preds = %bb.g
   %.not58 = icmp eq i64 %1, 1
-  br i1 %.not58, label %.loopexit, label %.lr.ph
+  br i1 %.not58, label %._crit_edge.thread, label %.lr.ph
+
+._crit_edge.thread:                               ; preds = %.preheader51
+  store i64 1, ptr %3, align 8, !tbaa !20
+  br label %bb.i
+
+.thread:                                          ; preds = %bb.g
+  store i64 0, ptr %3, align 8, !tbaa !20
+  br label %bb.h
 
 .lr.ph:                                           ; preds = %.preheader51, %.lr.ph
   %.03953 = phi i64 [ %.039., %.lr.ph ], [ %1, %.preheader51 ] ; 2 uses
@@ -217,36 +225,37 @@ bb.g:                                             ; preds = %bb.e
   %i.s = load i64, ptr %i.r, align 8, !tbaa !20
   %.not48 = icmp slt i64 %i.s, %i.k               ; 2 uses
   %..041 = select i1 %.not48, i64 %i.q, i64 %.04152 ; 2 uses
-  %.039. = select i1 %.not48, i64 %.03953, i64 %i.q ; 3 uses
+  %.039. = select i1 %.not48, i64 %.03953, i64 %i.q ; 5 uses
   %i.t = add nuw i64 %..041, 1
   %i.u = icmp ugt i64 %.039., %i.t
   br i1 %i.u, label %.lr.ph, label %.loopexit, !llvm.loop !57
 
-.loopexit:                                        ; preds = %.lr.ph, %.preheader51, %bb.g
-  %storemerge = phi i64 [ 0, %bb.g ], [ 1, %.preheader51 ], [ %.039., %.lr.ph ] ; 6 uses
-  store i64 %storemerge, ptr %3, align 8, !tbaa !20
-  %5 = icmp eq i64 %storemerge, %1
+.loopexit:                                        ; preds = %.lr.ph
+  %5 = icmp eq i64 %.039., %1
+  store i64 %.039., ptr %3, align 8, !tbaa !20
   br i1 %5, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %.loopexit
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %storemerge
+bb.h:                                             ; preds = %.thread, %.loopexit
+  %6 = phi i64 [ 0, %.thread ], [ %.039., %.loopexit ] ; 4 uses
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %6
   %i.w = load i64, ptr %i.v, align 8, !tbaa !20
   %i.x = load i64, ptr %i.g, align 8, !tbaa !51   ; 2 uses
   %.not49 = icmp slt i64 %i.w, %i.x
   br i1 %.not49, label %.preheader, label %bb.i
 
 .preheader:                                       ; preds = %bb.h
-  %i.y = add nuw i64 %storemerge, 1
+  %i.y = add nuw i64 %6, 1
   %i.z = icmp ugt i64 %1, %i.y
   br i1 %i.z, label %.lr.ph56, label %._crit_edge
 
-bb.i:                                             ; preds = %bb.h, %.loopexit
-  store i64 %storemerge, ptr %4, align 8, !tbaa !20
+bb.i:                                             ; preds = %._crit_edge.thread, %bb.h, %.loopexit
+  %7 = phi i64 [ %6, %bb.h ], [ %1, %.loopexit ], [ 1, %._crit_edge.thread ]
+  store i64 %7, ptr %4, align 8, !tbaa !20
   br label %bb.j
 
 .lr.ph56:                                         ; preds = %.preheader, %.lr.ph56
   %.055 = phi i64 [ %.0., %.lr.ph56 ], [ %1, %.preheader ] ; 2 uses
-  %.03754 = phi i64 [ %..037, %.lr.ph56 ], [ %storemerge, %.preheader ] ; 2 uses
+  %.03754 = phi i64 [ %..037, %.lr.ph56 ], [ %6, %.preheader ] ; 2 uses
   %i.aa = add i64 %.055, %.03754
   %i.ab = lshr i64 %i.aa, 1                       ; 3 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ab

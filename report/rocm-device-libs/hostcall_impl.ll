@@ -25,7 +25,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load atomic i64, ptr addrspace(1) %i.i syncscope("one-as") monotonic, align 8
   %i.k = cmpxchg ptr addrspace(1) %i.e, i64 %i.f, i64 %i.j syncscope("one-as") acquire monotonic, align 8 ; 2 uses
   %i.l = extractvalue { i64, i1 } %i.k, 1
-  br i1 %i.l, label %pop_free_stack.exit, label %.lr.ph.i.i
+  br i1 %i.l, label %pop.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph.i.i
   %i.m = phi { i64, i1 } [ %i.r, %.lr.ph.i.i ], [ %i.k, %bb.b ]
@@ -38,15 +38,20 @@ bb.b:                                             ; preds = %bb.a
   %i.q = load atomic i64, ptr addrspace(1) %i.p syncscope("one-as") monotonic, align 8
   %i.r = cmpxchg ptr addrspace(1) %i.e, i64 %i.n, i64 %i.q syncscope("one-as") acquire monotonic, align 8 ; 2 uses
   %i.s = extractvalue { i64, i1 } %i.r, 1
-  br i1 %i.s, label %pop_free_stack.exit, label %.lr.ph.i.i
+  br i1 %i.s, label %pop.exit.i, label %.lr.ph.i.i
 
-pop_free_stack.exit:                              ; preds = %.lr.ph.i.i, %bb.a, %bb.b
-  %.0.i = phi i64 [ 0, %bb.a ], [ %i.f, %bb.b ], [ %i.n, %.lr.ph.i.i ] ; 2 uses
-  %10 = trunc i64 %.0.i to i32
-  %11 = lshr i64 %.0.i, 32
+pop.exit.i:                                       ; preds = %.lr.ph.i.i, %bb.b
+  %.012.lcssa.i.i = phi i64 [ %i.f, %bb.b ], [ %i.n, %.lr.ph.i.i ] ; 2 uses
+  %10 = trunc i64 %.012.lcssa.i.i to i32
+  %11 = lshr i64 %.012.lcssa.i.i, 32
   %12 = trunc nuw i64 %11 to i32
-  %i.t = tail call i32 @llvm.amdgcn.readfirstlane.i32(i32 %10)
-  %i.u = tail call i32 @llvm.amdgcn.readfirstlane.i32(i32 %12)
+  br label %pop_free_stack.exit
+
+pop_free_stack.exit:                              ; preds = %bb.a, %pop.exit.i
+  %.0.i = phi i32 [ %10, %pop.exit.i ], [ 0, %bb.a ]
+  %13 = phi i32 [ %12, %pop.exit.i ], [ 0, %bb.a ]
+  %i.t = tail call i32 @llvm.amdgcn.readfirstlane.i32(i32 %.0.i)
+  %i.u = tail call i32 @llvm.amdgcn.readfirstlane.i32(i32 %13)
   %i.v = zext i32 %i.u to i64
   %i.w = shl nuw i64 %i.v, 32
   %i.x = zext i32 %i.t to i64

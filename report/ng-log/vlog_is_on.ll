@@ -117,8 +117,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit._crit_edge: ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
-  %2 = trunc nuw i8 %.250.a to i1
-  br i1 %2, label %.loopexit, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit._crit_edge.thread
+  br i1 %.250, label %.loopexit, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit._crit_edge.thread
 
 .lr.ph:                                           ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
   %.04762 = phi ptr [ %.047, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit ], [ %.04758, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader ] ; 7 uses
@@ -170,7 +169,8 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.e, %bb.g, %bb.f, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread57
-  %.250.a = phi i8 [ 1, %bb.e ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread57 ], [ 1, %bb.g ], [ 0, %bb.f ] ; 2 uses
+  %.250 = phi i1 [ true, %bb.e ], [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread57 ], [ true, %bb.g ], [ false, %bb.f ]
+  %.250.a = phi i8 [ 1, %bb.e ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread57 ], [ 1, %bb.g ], [ 0, %bb.f ]
   %.2 = phi i32 [ %.1, %bb.e ], [ %.061, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread57 ], [ %i.s, %bb.g ], [ %.061, %bb.f ] ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.04762, i64 40
   %.047 = load ptr, ptr %i.t, align 8, !tbaa !13  ; 2 uses
@@ -284,7 +284,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
-  %.b = load i1, ptr @_ZN5nglogL14inited_vmoduleE, align 1 ; 2 uses
+  %.b = load i1, ptr @_ZN5nglogL14inited_vmoduleE, align 1 ; 3 uses
   br i1 %.b, label %bb.p, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
@@ -472,7 +472,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.038 = phi i64 [ %i.ax, %bb.s ], [ %spec.select, %bb.t ] ; 2 uses
   %.050 = load ptr, ptr @_ZN5nglogL12vmodule_listE, align 8, !tbaa !13 ; 2 uses
   %.not4551 = icmp eq ptr %.050, null
-  br i1 %.not4551, label %.loopexit, label %.lr.ph
+  br i1 %.not4551, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.u, %bb.w
   %.052 = phi ptr [ %.0, %bb.w ], [ %.050, %bb.u ] ; 4 uses
@@ -480,11 +480,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bh = getelementptr inbounds nuw i8, ptr %.052, i64 8
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !18
   %i.bj = call noundef zeroext i1 @_ZN5nglog5tools12SafeFNMatch_EPKcmS2_m(ptr noundef %i.bg, i64 noundef %i.bi, ptr noundef nonnull %i.ar, i64 noundef %.038)
-  br i1 %i.bj, label %5, label %bb.w
-
-5:                                                ; preds = %.lr.ph
-  %6 = getelementptr inbounds nuw i8, ptr %.052, i64 32
-  br label %.loopexit
+  br i1 %i.bj, label %.loopexit, label %bb.w
 
 bb.v:                                             ; preds = %.noexc.i.i
   %i.bk = landingpad { ptr, i32 }
@@ -500,18 +496,26 @@ bb.w:                                             ; preds = %.lr.ph
   %i.bm = getelementptr inbounds nuw i8, ptr %.052, i64 40
   %.0 = load ptr, ptr %i.bm, align 8, !tbaa !13   ; 2 uses
   %.not45 = icmp eq ptr %.0, null
-  br i1 %.not45, label %.loopexit, label %.lr.ph, !llvm.loop !36
+  br i1 %.not45, label %.thread, label %.lr.ph, !llvm.loop !36
 
-.loopexit:                                        ; preds = %bb.w, %bb.u, %5
-  %.039 = phi ptr [ %6, %5 ], [ %1, %bb.u ], [ %1, %bb.w ] ; 3 uses
+.loopexit:                                        ; preds = %.lr.ph
+  %5 = getelementptr inbounds nuw i8, ptr %.052, i64 32 ; 5 uses
   br i1 %.b, label %bb.x, label %bb.aa
 
-bb.x:                                             ; preds = %.loopexit
-  store ptr %.039, ptr %0, align 8, !tbaa !30
-  %7 = icmp eq ptr %.039, %1
-  br i1 %7, label %bb.y, label %bb.aa
+.thread:                                          ; preds = %bb.w, %bb.u
+  br i1 %.b, label %.thread51, label %bb.aa
 
-bb.y:                                             ; preds = %bb.x
+.thread51:                                        ; preds = %.thread
+  store ptr %1, ptr %0, align 8, !tbaa !30
+  br label %bb.y
+
+bb.x:                                             ; preds = %.loopexit
+  %6 = icmp eq ptr %5, %1
+  store ptr %5, ptr %0, align 8, !tbaa !30
+  br i1 %6, label %bb.y, label %bb.aa
+
+bb.y:                                             ; preds = %.thread51, %bb.x
+  %7 = phi ptr [ %1, %.thread51 ], [ %5, %bb.x ]  ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !28
   %.not47 = icmp eq ptr %i.bo, null
@@ -527,8 +531,9 @@ bb.z:                                             ; preds = %bb.y
   store ptr %0, ptr @_ZN5nglogL16cached_site_listE, align 8, !tbaa !25
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.x, %bb.y, %bb.z, %.loopexit
-  %i.bs = load i32, ptr %.039, align 4, !tbaa !10
+bb.aa:                                            ; preds = %.thread, %bb.x, %bb.y, %bb.z, %.loopexit
+  %8 = phi ptr [ %1, %.thread ], [ %5, %bb.x ], [ %7, %bb.y ], [ %7, %bb.z ], [ %5, %.loopexit ]
+  %i.bs = load i32, ptr %8, align 4, !tbaa !10
   %i.bt = icmp sge i32 %i.bs, %3
   %i.bu = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) @_ZN5nglogL13vmodule_mutexE) #11 ; 0 uses
   ret i1 %i.bt

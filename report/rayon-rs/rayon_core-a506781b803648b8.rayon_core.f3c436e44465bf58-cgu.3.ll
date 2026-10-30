@@ -202,7 +202,7 @@ define hidden void @_RINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_unchecke
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
-  %i.c = alloca [24 x i8], align 8                ; 5 uses
+  %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [48 x i8], align 8                ; 8 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [144 x i8], align 8               ; 4 uses
@@ -228,7 +228,7 @@ bb.c:                                             ; preds = %bb.b
 .noexc:                                           ; preds = %bb.c
   %i.o = load i64, ptr %i.c, align 8, !range !8, !noundef !5
   %.not.i = icmp eq i64 %i.o, -1
-  br i1 %.not.i, label %bb.q, label %bb.e
+  br i1 %.not.i, label %.noexc36.a, label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %i.p = add i64 %i.m, -1
@@ -318,7 +318,7 @@ bb.l:                                             ; preds = %.preheader56.i.i.i.
   %i.am = add nsw i32 %i.al, -48                  ; 2 uses
   %i.an = icmp ugt i32 %i.am, 9
   %i.ao = zext nneg i32 %i.am to i64
-  %i.ap = add i64 %i.aj, %i.ao                    ; 3 uses
+  %i.ap = add i64 %i.aj, %i.ao                    ; 4 uses
   %i.aq = icmp ult i64 %i.ap, %i.aj
   %or.cond.i.i = select i1 %i.an, i1 true, i1 %i.aq, !prof !204
   br i1 %or.cond.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %.preheader56.i.i.i, !prof !204
@@ -330,20 +330,22 @@ bb.l:                                             ; preds = %.preheader56.i.i.i.
   %i.ar = load i8, ptr %.sroa.0.269.i.i.i, align 1, !alias.scope !203, !noalias !202, !noundef !5
   %i.as = zext i8 %i.ar to i32
   %i.at = add nsw i32 %i.as, -48                  ; 2 uses
-  %7 = icmp ugt i32 %i.at, 9
-  br i1 %7, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.m
+  %7 = icmp ult i32 %i.at, 10                     ; 3 uses
+  br i1 %7, label %bb.m, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i
 
 bb.m:                                             ; preds = %.lr.ph.i.i.i
   %i.au = mul i64 %.sroa.042.267.i.i.i, 10
   %i.av = add nsw i64 %.sroa.15.268.i.i.i, -1     ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0.269.i.i.i, i64 1
   %i.ax = zext nneg i32 %i.at to i64
-  %i.ay = add i64 %i.au, %i.ax                    ; 2 uses
+  %i.ay = add i64 %i.au, %i.ax                    ; 3 uses
   %.not53.i.i.i = icmp eq i64 %i.av, 0
   br i1 %.not53.i.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %.lr.ph.i.i.i
 
 _RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i: ; preds = %bb.l, %.preheader56.i.i.i.preheader, %.preheader56.i.i.i, %bb.m, %.lr.ph.i.i.i, %.preheader.i.i.i, %bb.j, %bb.j, %bb.i, %bb.h
-  %.sroa.0.1.i.i = phi i64 [ 2097152, %bb.h ], [ 0, %.preheader.i.i.i ], [ 2097152, %bb.j ], [ 2097152, %bb.i ], [ 2097152, %bb.j ], [ %i.ay, %bb.m ], [ 2097152, %.lr.ph.i.i.i ], [ 2097152, %bb.l ], [ 2097152, %.preheader56.i.i.i.preheader ], [ %i.ap, %.preheader56.i.i.i ]
+  %.sroa.4.1.i.i = phi i64 [ undef, %bb.h ], [ undef, %bb.j ], [ 0, %.preheader.i.i.i ], [ undef, %bb.i ], [ undef, %bb.j ], [ undef, %.lr.ph.i.i.i ], [ %i.ay, %bb.m ], [ undef, %bb.l ], [ %i.ap, %.preheader56.i.i.i ], [ undef, %.preheader56.i.i.i.preheader ]
+  %.sroa.0.1.i.i = phi i64 [ 2097152, %bb.h ], [ 2097152, %bb.j ], [ 0, %.preheader.i.i.i ], [ 2097152, %bb.i ], [ 2097152, %bb.j ], [ 2097152, %.lr.ph.i.i.i ], [ %i.ay, %bb.m ], [ 2097152, %bb.l ], [ %i.ap, %.preheader56.i.i.i ], [ 2097152, %.preheader56.i.i.i.preheader ]
+  %8 = phi i1 [ false, %bb.h ], [ false, %bb.j ], [ true, %.preheader.i.i.i ], [ false, %bb.i ], [ false, %bb.j ], [ %7, %bb.m ], [ %7, %.lr.ph.i.i.i ], [ false, %bb.l ], [ true, %.preheader56.i.i.i ], [ false, %.preheader56.i.i.i.preheader ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskVyUMSjkkSy_10rayon_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %_RNCNCINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB18_12DefaultSpawnNtB18_11ThreadSpawn5spawn0uE00B1a_.exit.i unwind label %bb.n
 
@@ -367,17 +369,23 @@ bb.p:                                             ; preds = %bb.f
 
 _RNCNCINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB18_12DefaultSpawnNtB18_11ThreadSpawn5spawn0uE00B1a_.exit.i: ; preds = %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskVyUMSjkkSy_10rayon_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
-          to label %.noexc36.a unwind label %bb.r
+          to label %.noexc36 unwind label %bb.r
 
-.noexc36.a:                                       ; preds = %_RNCNCINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB18_12DefaultSpawnNtB18_11ThreadSpawn5spawn0uE00B1a_.exit.i
+.noexc36:                                         ; preds = %_RNCNCINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB18_12DefaultSpawnNtB18_11ThreadSpawn5spawn0uE00B1a_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  %9 = add i64 %.sroa.4.1.i.i, 1
+  %spec.select.i = select i1 %8, i64 %9, i64 2097153
   br label %bb.q
 
-bb.q:                                             ; preds = %.noexc36.a, %.noexc
-  %.sroa.0.0.i = phi i64 [ %.sroa.0.1.i.i, %.noexc36.a ], [ 2097152, %.noexc ] ; 2 uses
+.noexc36.a:                                       ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %8 = add i64 %.sroa.0.0.i, 1
-  store atomic i64 %8, ptr @_RNvNCNvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_unchecked03MIN monotonic, align 8
+  br label %bb.q
+
+bb.q:                                             ; preds = %.noexc36.a, %.noexc36
+  %.sroa.0.0.i = phi i64 [ %spec.select.i, %.noexc36 ], [ 2097153, %.noexc36.a ]
+  %10 = phi i64 [ %.sroa.0.1.i.i, %.noexc36 ], [ 2097152, %.noexc36.a ]
+  store atomic i64 %.sroa.0.0.i, ptr @_RNvNCNvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_unchecked03MIN monotonic, align 8
   br label %_RNCINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB16_12DefaultSpawnNtB16_11ThreadSpawn5spawn0uE0B18_.exit
 
 .body34:                                          ; preds = %.thread, %bb.w, %bb.r
@@ -396,7 +404,7 @@ bb.r:                                             ; preds = %bb.aw, %_RNCNCINvNt
   br label %.body34
 
 _RNCINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB16_12DefaultSpawnNtB16_11ThreadSpawn5spawn0uE0B18_.exit: ; preds = %bb.q, %bb.d, %bb.a
-  %.sroa.02.0 = phi i64 [ %3, %bb.a ], [ %.sroa.0.0.i, %bb.q ], [ %i.p, %bb.d ]
+  %.sroa.02.0 = phi i64 [ %3, %bb.a ], [ %10, %bb.q ], [ %i.p, %bb.d ]
   %i.be = invoke noundef i64 @_RNvMNtNtCsaL1QbXo9JQH_3std6thread2idNtB2_8ThreadId3new()
           to label %bb.s unwind label %bb.r
 

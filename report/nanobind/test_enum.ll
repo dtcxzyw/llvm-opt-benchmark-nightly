@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanobind/original/test_enum?download=true
-inline.NumInlined: 370
+inline.NumInlined: 375
 inline.NumDeleted: 199
 begin_hunk_0_@_ZZN8nanobind6detail11func_createILb1ELb1EZNS_12cpp_functionI12EnumProperty4EnumS3_JEJNS_9is_methodENS_9is_getterENS_9rv_policy10policy_tagILNS7_5valueE6EEEEEENS_6objectEMT1_FT0_DpT2_EDpRKT3_EUlPS3_E_S4_JSM_EJLm0EEJS5_S6_SA_EEEP7_objectOSC_PFT2_DpSI_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENUlPvPSP_jPNS0_12cleanup_listEE_8__invokeES11_S12_jS14_:bb.a
   %i.l = inttoptr i64 %.unpack.i to ptr
@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.c, align 8, !tbaa !46
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 8 uses
   store ptr %i.m, ptr %5, align 8, !tbaa !48
-  %i.n = load ptr, ptr %4, align 8, !tbaa !51     ; 3 uses
+  %i.n = load ptr, ptr %4, align 8, !tbaa !51     ; 4 uses
   %i.o = icmp eq ptr %i.n, %i.a
   br i1 %i.o, label %bb.d, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
 
@@ -219,10 +219,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; 
   %i.s = load i64, ptr %i.a, align 8, !tbaa !13
   store i64 %i.s, ptr %i.m, align 8, !tbaa !13
   %.pr = load i64, ptr %i.b, align 8, !tbaa !50
+  %6 = icmp eq ptr %i.n, %i.m
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
-  %i.t = phi ptr [ %i.m, %bb.d ], [ %i.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i ] ; 3 uses
+  %7 = phi i1 [ true, %bb.d ], [ %6, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i ]
+  %i.t = phi ptr [ %i.m, %bb.d ], [ %i.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i ] ; 2 uses
   %i.u = phi i64 [ %i.p, %bb.d ], [ %.pr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %i.u, ptr %i.v, align 8, !tbaa !50
@@ -263,8 +265,7 @@ bb.f:                                             ; preds = %_ZSteqIcSt11char_tr
 bb.g:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %.fold.split
   %storemerge.i = phi i32 [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i ], [ 1, %.fold.split ]
   store i32 %storemerge.i, ptr %i.l, align 4, !tbaa !44
-  %6 = icmp eq ptr %i.t, %i.m
-  br i1 %6, label %"_ZZN8nanobind6detail11func_createILb0ELb1EZL32nanobind_test_enum_ext_exec_implNS_7module_EE4$_18vJP10OpaqueEnumNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEJLm0ELm1EEJNS_5scopeENS_4nameENS_9is_methodEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSG_jPNS0_12cleanup_listEE_clESU_SV_jSX_.exit", label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  br i1 %7, label %"_ZZN8nanobind6detail11func_createILb0ELb1EZL32nanobind_test_enum_ext_exec_implNS_7module_EE4$_18vJP10OpaqueEnumNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEJLm0ELm1EEJNS_5scopeENS_4nameENS_9is_methodEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSG_jPNS0_12cleanup_listEE_clESU_SV_jSX_.exit", label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.g
   %i.y = load i64, ptr %i.m, align 8, !tbaa !13

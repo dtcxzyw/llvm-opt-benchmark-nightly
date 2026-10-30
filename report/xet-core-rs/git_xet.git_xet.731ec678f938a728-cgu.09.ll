@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %.thread
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXs4_NtNtNtCsUrhh0HcRih_5tokio7runtime4task4joinINtB5_10JoinHandleINtNtCskKLDkoKarTP_4core6result6ResultNtCs6rZvBWPOMOk_4sha26Sha256NtNtB7_5error9JoinErrorEENtNtNtB19_6future6future6Future4pollCs9SMuO7kbZ2K_7git_xet(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([112 x i8]) align 8 captures(none) dereferenceable(112) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [3 x i8], align 4                 ; 8 uses
+  %i.a = alloca [3 x i8], align 4                 ; 9 uses
   %i.b = alloca [2 x i8], align 1                 ; 7 uses
   %i.c = alloca [112 x i8], align 8               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -219,7 +219,7 @@ bb.a:
 _RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i: ; preds = %bb.a
   %i.h = tail call noundef ptr @_RNvMNtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native5eagerINtB2_7StorageNtNtNtCsUrhh0HcRih_5tokio7runtime7context7ContextE16get_or_init_slowCs9SMuO7kbZ2K_7git_xet(ptr noundef nonnull align 8 %i.d) ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %.thread31.a, label %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.thread.i
+  br i1 %i.i, label %.thread31, label %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.thread.i
 
 _RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.thread.i: ; preds = %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i, %bb.a
   %.sroa.0.0.i.i2.i = phi ptr [ %i.h, %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i ], [ %i.d, %bb.a ] ; 2 uses
@@ -255,12 +255,16 @@ bb.d:                                             ; preds = %bb.c, %_RNvYNCNKNvN
   store i24 0, ptr %i.a, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   call void @_RNvXs4_NtNtCsUrhh0HcRih_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.q)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %.thread31.a
 
-.thread31.a:                                      ; preds = %bb.d, %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i
-  %.sroa.03.011.i33.off8 = phi i8 [ %i.k, %bb.d ], [ 0, %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i ]
-  %.sroa.03.011.i33.off16 = phi i8 [ %i.n, %bb.d ], [ 0, %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i ]
+.thread31:                                        ; preds = %_RNvYNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT00INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTINtNtB12_6option6OptionQIB1H_NtB8_7ContextEEEE9call_onceCs9SMuO7kbZ2K_7git_xet.exit.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  br label %.thread31.a
+
+.thread31.a:                                      ; preds = %bb.d, %.thread31
+  %.sroa.03.011.i33.off8 = phi i8 [ 0, %.thread31 ], [ %i.k, %bb.d ]
+  %.sroa.03.011.i33.off16 = phi i8 [ 0, %.thread31 ], [ %i.n, %bb.d ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store i8 %.sroa.03.011.i33.off8, ptr %i.b, align 1
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i33.off16, ptr %i.r, align 1

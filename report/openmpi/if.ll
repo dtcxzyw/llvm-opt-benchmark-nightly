@@ -204,7 +204,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.1, i64 16
   %i.f = load volatile ptr, ptr %i.e, align 8, !tbaa !18 ; 3 uses
   %.not20 = icmp eq ptr %i.f, getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 16)
-  br i1 %.not20, label %.loopexit, label %.thread
+  %cond.fr = freeze i1 %.not20
+  br i1 %cond.fr, label %.loopexit, label %.thread
 
 .thread:                                          ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 72
@@ -218,7 +219,7 @@ bb.b:                                             ; preds = %.lr.ph
   %.not = icmp eq ptr %i.k, getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 16)
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !58
 
-.loopexit:                                        ; preds = %bb.b, %.thread, %.preheader, %bb.a
+.loopexit:                                        ; preds = %bb.b, %.preheader, %.thread, %bb.a
   %.216 = phi i32 [ %i.h, %.thread ], [ -1, %bb.a ], [ -1, %.preheader ], [ -1, %bb.b ]
   ret i32 %.216
 }

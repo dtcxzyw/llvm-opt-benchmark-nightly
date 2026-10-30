@@ -202,14 +202,16 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.h = call i32 @lv_obj_get_width(ptr noundef nonnull %0) #6
   %i.i = call i32 @lv_obj_get_height(ptr noundef nonnull %0) #6
-  %i.j = icmp sge i32 %i.h, %i.i
+  %i.j = icmp sge i32 %i.h, %i.i                  ; 2 uses
+  %4 = select i1 %i.j, i32 512, i32 256
   br label %is_slider_horizontal.exit
 
 bb.e:                                             ; preds = %bb.c
   br label %is_slider_horizontal.exit
 
 is_slider_horizontal.exit:                        ; preds = %bb.c, %bb.d, %bb.e
-  %.0.i.a = phi i1 [ %i.j, %bb.d ], [ false, %bb.e ], [ true, %bb.c ] ; 3 uses
+  %.0.i = phi i32 [ %4, %bb.d ], [ 256, %bb.e ], [ 512, %bb.c ]
+  %.0.i.a = phi i1 [ %i.j, %bb.d ], [ false, %bb.e ], [ true, %bb.c ] ; 2 uses
   br i1 %1, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %is_slider_horizontal.exit
@@ -612,8 +614,7 @@ bb.am:                                            ; preds = %.sink.split, %bb.ai
 
 bb.an:                                            ; preds = %bb.am
   store i32 %i.gn, ptr %i.gi, align 4, !tbaa !27
-  %. = select i1 %.0.i.a, i32 512, i32 256
-  call void @lv_obj_remove_flag(ptr noundef nonnull %0, i32 noundef %.) #6
+  call void @lv_obj_remove_flag(ptr noundef nonnull %0, i32 noundef %.0.i) #6
   %i.gp = call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #6 ; 0 uses
   %i.gq = call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 35, ptr noundef null) #6 ; 0 uses
   br label %bb.ao

@@ -202,9 +202,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ai = load i64, ptr %i.f, align 8, !range !10, !noalias !85, !noundef !3
-  %i.aj = trunc nuw i64 %i.ai to i1
+  %i.aj = trunc nuw i64 %i.ai to i1               ; 2 uses
   %i.ak = load ptr, ptr %i.u, align 8, !noalias !85, !nonnull !3 ; 2 uses
   %i.al = load i64, ptr %i.v, align 8, !noalias !85 ; 15 uses
+  %2 = xor i1 %i.aj, true
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !85
   %.val.i.i.i.i.i.i = load ptr, ptr %i.w, align 8, !noalias !85, !nonnull !3, !noundef !3
   %.val21.i.i.i.i.i.i = load i64, ptr %i.x, align 8, !noalias !85, !noundef !3
@@ -228,6 +229,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.aj, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
+  call void @llvm.assume(i1 %2)
   %i.aq = invoke noundef zeroext i1 @_RNvMNtCsbvkFyIu7lgC_4core5sliceSh11starts_withCs62u4JVtZyFF_13deltalake_gcp(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ak, i64 noundef %i.al, ptr noalias noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 7)
           to label %bb.p unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !86
 

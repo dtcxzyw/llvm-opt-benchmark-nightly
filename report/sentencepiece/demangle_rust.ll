@@ -202,11 +202,13 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
   %.0.i.i = phi i32 [ %i.x, %bb.d ], [ %i.ab, %bb.f ], [ %i.ad, %bb.g ]
   %i.ae = mul nsw i32 %.01529.i.i, 62
   %i.af = add nsw i32 %.0.i.i, %i.ae
-  %i.ag = freeze i32 %i.af
+  %i.ag = freeze i32 %i.af                        ; 2 uses
+  %2 = icmp sgt i32 %i.ag, -2
   br label %_ZN4absl12lts_2026052618debugging_internal12_GLOBAL__N_116RustSymbolParser3EatEc.exit.i.i
 
 _ZN4absl12lts_2026052618debugging_internal12_GLOBAL__N_116RustSymbolParser3EatEc.exit.i.i: ; preds = %bb.h, %.critedge.i.i
-  %.116.i.i.a = phi i32 [ %i.ag, %bb.h ], [ %.01529.i.i, %.critedge.i.i ] ; 3 uses
+  %.116.i.i = phi i1 [ %2, %bb.h ], [ true, %.critedge.i.i ]
+  %.116.i.i.a = phi i32 [ %i.ag, %bb.h ], [ %.01529.i.i, %.critedge.i.i ] ; 2 uses
   %.1.i.i = phi i1 [ %.01430.i.i, %bb.h ], [ true, %.critedge.i.i ] ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.b, i64 %indvars.iv.next.i.i ; 2 uses
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !16  ; 3 uses
@@ -229,8 +231,7 @@ _ZN4absl12lts_2026052618debugging_internal12_GLOBAL__N_116RustSymbolParser3EatEc
 
 bb.i:                                             ; preds = %_ZN4absl12lts_2026052618debugging_internal12_GLOBAL__N_116RustSymbolParser3EatEc.exit24.i.i
   %i.aq = add nsw i32 %.116.i.i.a, 2
-  %.inv.inv.i = icmp slt i32 %.116.i.i.a, -1
-  %spec.select.i = select i1 %.inv.inv.i, i32 -1, i32 %i.aq
+  %spec.select.i = select i1 %.116.i.i, i32 %i.aq, i32 -1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_ZN4absl12lts_2026052618debugging_internal12_GLOBAL__N_116RustSymbolParser3EatEc.exit24.i.i, %.thread.i, %bb.a

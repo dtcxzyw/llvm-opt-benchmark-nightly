@@ -38,7 +38,7 @@ bb.a:
   store <2 x i64> zeroinitializer, ptr %.sroa.0, align 16
   %i.b = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %3, i64 0
   %i.c = bitcast <4 x i32> %i.b to <2 x i64>      ; 6 uses
-  %i.d = icmp ne i32 %3, 0                        ; 2 uses
+  %i.d = icmp ne i32 %3, 0                        ; 3 uses
   %i.e = load <2 x i64>, ptr %0, align 16, !tbaa !8 ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load <2 x i64>, ptr %i.f, align 16, !tbaa !8 ; 6 uses
@@ -65,6 +65,7 @@ bb.c:                                             ; preds = %bb.a
   %i.p = sub i64 0, %i.o
   %i.q = and i64 %i.p, 15                         ; 5 uses
   %.not = icmp eq i64 %i.q, 0
+  %4 = xor i1 %i.d, true
   br i1 %.not, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -153,13 +154,13 @@ bb.i:                                             ; preds = %.thread, %bb.c
   %.1509 = phi <2 x i64> [ %i.k, %bb.c ], [ %i.bl, %.thread ] ; 3 uses
   %.1315 = phi i64 [ %2, %bb.c ], [ %i.bn, %.thread ] ; 5 uses
   %.1310 = phi ptr [ %1, %bb.c ], [ %i.bm, %.thread ] ; 3 uses
-  %.1.a = phi i32 [ %i.n, %bb.c ], [ 0, %.thread ] ; 3 uses
+  %.1 = phi i1 [ %4, %bb.c ], [ true, %.thread ]
+  %.1.a = phi i32 [ %i.n, %bb.c ], [ 0, %.thread ] ; 2 uses
   %i.bo = icmp ugt i64 %.1315, 703
   br i1 %i.bo, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.i
-  %4 = icmp eq i32 %.1.a, 0
-  %i.bp = select i1 %4, <2 x i64> zeroinitializer, <2 x i64> %i.c
+  %i.bp = select i1 %.1, <2 x i64> zeroinitializer, <2 x i64> %i.c
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.i

@@ -202,14 +202,16 @@ _ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit28: ; 
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit28, %.loopexit
-  %i.cu = phi i32 [ %.pre161, %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit28 ], [ %i.bv, %.loopexit ] ; 2 uses
+  %i.cu = phi i32 [ %.pre161, %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit28 ], [ %i.bv, %.loopexit ] ; 3 uses
   %i.cv = add nsw i32 %i.cu, 1
   store i32 %i.cv, ptr %i.a, align 8, !tbaa !48
-  %i.cw = add nsw i32 %i.cu, 2
+  %4 = add nsw i32 %i.cu, 2
+  %i.cw = add nsw i32 %i.cu, 3
   br label %.loopexit94
 
 .loopexit94:                                      ; preds = %bb.b, %bb.o
-  %i.cx = phi i32 [ %i.cw, %bb.o ], [ 5, %bb.b ]  ; 2 uses
+  %5 = phi i32 [ %i.cw, %bb.o ], [ 6, %bb.b ]
+  %i.cx = phi i32 [ %4, %bb.o ], [ 5, %bb.b ]
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.cz = load i8, ptr %i.cy, align 8, !tbaa !33, !range !84, !noundef !52
   %i.da = trunc nuw i8 %i.cz to i1
@@ -255,7 +257,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.dl = load ptr, ptr %i.b, align 8, !tbaa !79  ; 2 uses
   store ptr %i.dl, ptr %i.f, align 8, !tbaa !81
   store i32 %i.cx, ptr %i.a, align 8, !tbaa !48
-  %4 = add nsw i32 %i.cx, 1
   br label %.loopexit95
 
 .loopexit95.loopexit:                             ; preds = %bb.b
@@ -264,7 +265,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br label %.loopexit95
 
 .loopexit95:                                      ; preds = %.loopexit95.loopexit, %.critedge
-  %i.dm = phi i32 [ 6, %.loopexit95.loopexit ], [ %4, %.critedge ]
+  %i.dm = phi i32 [ 6, %.loopexit95.loopexit ], [ %5, %.critedge ]
   %.promoted.i32 = phi ptr [ %.promoted.i32.pre, %.loopexit95.loopexit ], [ %.ptr88.ptr, %.critedge ] ; 2 uses
   %i.dn = phi ptr [ %.pre162, %.loopexit95.loopexit ], [ %i.dl, %.critedge ] ; 2 uses
   %i.do = icmp ult ptr %.promoted.i32, %i.dn

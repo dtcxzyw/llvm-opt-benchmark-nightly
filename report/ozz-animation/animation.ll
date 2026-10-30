@@ -202,17 +202,23 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.ap = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ao) #15
+  %i.ap = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ao) #15 ; 4 uses
+  %2 = trunc i64 %i.ap to i32                     ; 2 uses
+  %3 = call i32 @llvm.bswap.i32(i32 %2)
+  %4 = icmp eq i64 %i.ap, 0
+  %5 = call i64 @llvm.umax.i64(i64 %i.ap, i64 1)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.aq = phi i64 [ %i.ap, %bb.b ], [ 0, %bb.a ]  ; 4 uses
-  %2 = trunc i64 %i.aq to i32                     ; 2 uses
+  %.sroa.0.0.insert.insert.i47 = phi i32 [ %3, %bb.b ], [ 0, %bb.a ]
+  %6 = phi i32 [ %2, %bb.b ], [ 0, %bb.a ]
+  %.not.i.i.i = phi i1 [ %4, %bb.b ], [ true, %bb.a ]
+  %i.aq = phi i64 [ %5, %bb.b ], [ 1, %bb.a ]
+  %7 = phi i64 [ %i.ap, %bb.b ], [ 0, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #14
   %i.ar = load i8, ptr %i.t, align 8, !tbaa !63, !range !64, !noundef !65
   %i.as = trunc nuw i8 %i.ar to i1
-  %.sroa.0.0.insert.insert.i47 = call i32 @llvm.bswap.i32(i32 %2)
-  %spec.select.i48 = select i1 %i.as, i32 %.sroa.0.0.insert.insert.i47, i32 %2
+  %spec.select.i48 = select i1 %i.as, i32 %.sroa.0.0.insert.insert.i47, i32 %6
   store i32 %spec.select.i48, ptr %i.p, align 4, !tbaa !14
   %i.at = load ptr, ptr %1, align 8, !tbaa !66    ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !50
@@ -383,7 +389,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %i.fd, label %.preheader.i.i.i, label %bb.d
 
 .preheader.i.i.i:                                 ; preds = %bb.c
-  %.not.i.i.i = icmp eq i64 %i.aq, 0
   br i1 %.not.i.i.i, label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
@@ -407,7 +412,7 @@ bb.d:                                             ; preds = %bb.c
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !50
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 16
   %i.fp = load ptr, ptr %i.fo, align 8
-  %i.fq = call noundef i64 %i.fp(ptr noundef nonnull align 8 dereferenceable(8) %i.fm, ptr noundef %i.fb, i64 noundef %i.aq), !inline_history !91 ; 0 uses
+  %i.fq = call noundef i64 %i.fp(ptr noundef nonnull align 8 dereferenceable(8) %i.fm, ptr noundef %i.fb, i64 noundef %7), !inline_history !91 ; 0 uses
   br label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit
 
 _ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit: ; preds = %.lr.ph.i.i.i, %.preheader.i.i.i, %bb.d
@@ -809,6 +814,9 @@ declare i32 @llvm.bswap.i32(i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.bswap.i16(i16) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

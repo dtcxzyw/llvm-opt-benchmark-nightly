@@ -202,7 +202,7 @@ BufferGetPage.exit49.i:                           ; preds = %bb.br, %bb.bq
   %i.mt = load i32, ptr %i.kl, align 4
   %i.mu = getelementptr inbounds nuw i8, ptr %.0.i.i48.i, i64 48
   store i32 %i.mt, ptr %i.mu, align 8
-  %i.mv = call ptr @XLogRecGetBlockData(ptr noundef nonnull %0, i8 noundef zeroext 2, ptr noundef nonnull %i.ac) #5 ; 2 uses
+  %i.mv = call ptr @XLogRecGetBlockData(ptr noundef nonnull %0, i8 noundef zeroext 2, ptr noundef nonnull %i.ac) #5 ; 3 uses
   %i.mw = getelementptr inbounds nuw i8, ptr %i.kl, i64 8 ; 2 uses
   %i.mx = load i8, ptr %i.mw, align 4             ; 2 uses
   %i.my = and i8 %i.mx, 1
@@ -219,15 +219,16 @@ bb.bs:                                            ; preds = %BufferGetPage.exit4
 
 bb.bt:                                            ; preds = %bb.bs, %BufferGetPage.exit49.i
   %i.nc = phi i8 [ %.pre55.i, %bb.bs ], [ %i.mx, %BufferGetPage.exit49.i ]
+  %.0.i24 = phi i64 [ 3, %bb.bs ], [ 1, %BufferGetPage.exit49.i ]
   %.0.i24.a = phi i64 [ 2, %bb.bs ], [ 0, %BufferGetPage.exit49.i ]
   %i.nd = and i8 %i.nc, 2
   %.not45.i = icmp eq i8 %i.nd, 0
   br i1 %.not45.i, label %bb.bv, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.ne = getelementptr inbounds nuw [4 x i8], ptr %i.mv, i64 %.0.i24.a ; 2 uses
+  %i.ne = getelementptr inbounds nuw [4 x i8], ptr %i.mv, i64 %.0.i24.a
   %i.nf = load i32, ptr %i.ne, align 4            ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.ne, i64 4
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.mv, i64 %.0.i24
   %i.ng = load i32, ptr %2, align 4
   %i.nh = getelementptr inbounds nuw i8, ptr %.0.i.i48.i, i64 60
   store i32 %i.nf, ptr %i.nh, align 4

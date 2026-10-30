@@ -100,17 +100,18 @@ bb.a:
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %i.f = add nuw i32 %1, 2147483644
   %i.g = and i32 %i.f, 2147483644
-  %narrow = add nuw i32 %i.g, 4
+  %narrow = add nuw i32 %i.g, 4                   ; 2 uses
+  %2 = zext nneg i32 %narrow to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.0.lcssa.a = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 3 uses
+  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %2, %._crit_edge.loopexit ]
+  %.0.lcssa.a = phi i32 [ 0, %bb.a ], [ %narrow, %._crit_edge.loopexit ] ; 2 uses
   %.not19 = icmp eq i32 %.0.lcssa.a, %1
   br i1 %.not19, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %2 = zext nneg i32 %.0.lcssa.a to i64
-  %i.h = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %2
+  %i.h = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa
   %i.i = sub nuw nsw i32 %1, %.0.lcssa.a
   tail call void @VP8LSubtractGreenFromBlueAndRed_C(ptr noundef %i.h, i32 noundef %i.i) #6
   br label %bb.c

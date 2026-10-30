@@ -204,7 +204,9 @@ bb.p:                                             ; preds = %_ZL13supportScalard
   br i1 %i.du, label %..critedge_crit_edge.i, label %bb.q, !prof !22
 
 ..critedge_crit_edge.i:                           ; preds = %bb.p
-  %.pre.i = load i32, ptr %i.e, align 4, !tbaa !18
+  %.pre.i = load i32, ptr %i.e, align 4, !tbaa !18 ; 2 uses
+  %6 = add i32 %.pre.i, 1
+  %7 = zext i32 %.pre.i to i64
   br label %.critedge.i
 
 bb.q:                                             ; preds = %bb.p
@@ -212,13 +214,12 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZN11hb_vector_tI9hb_pair_tId6TripleELb0EE4pushIJS0_IRdS1_EEEEPS2_DpOT_.exit
 
 .critedge.i:                                      ; preds = %..critedge_crit_edge.i, %_ZL13supportScalardRK6Triple.exit120
-  %i.dv = phi i32 [ %.pre.i, %..critedge_crit_edge.i ], [ 0, %_ZL13supportScalardRK6Triple.exit120 ] ; 2 uses
+  %i.dv = phi i32 [ %6, %..critedge_crit_edge.i ], [ 1, %_ZL13supportScalardRK6Triple.exit120 ]
+  %8 = phi i64 [ %7, %..critedge_crit_edge.i ], [ 0, %_ZL13supportScalardRK6Triple.exit120 ]
   %i.dw = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !19
-  %6 = add i32 %i.dv, 1
-  store i32 %6, ptr %i.e, align 4, !tbaa !18
-  %7 = zext i32 %i.dv to i64
-  %i.dy = getelementptr inbounds nuw [32 x i8], ptr %i.dx, i64 %7 ; 2 uses
+  store i32 %i.dv, ptr %i.e, align 4, !tbaa !18
+  %i.dy = getelementptr inbounds nuw [32 x i8], ptr %i.dx, i64 %8 ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dz, i8 0, i64 24, i1 false)
   store double %.0.i118, ptr %i.dy, align 8, !tbaa !21, !alias.scope !67
@@ -621,5 +622,5 @@ attributes #8 = { nounwind }
 !81 = !{!5, !5, i64 0}
 !82 = !{!"llvm.loop.mustprogress"}
 !83 = !{!80, !79}
-!84 = !{!"branch_weights", !"expected", i32 1914245, i32 2145569403}
+!84 = !{!"branch_weights", !"expected", i32 2242515, i32 2145241133}
 end_hunk_1

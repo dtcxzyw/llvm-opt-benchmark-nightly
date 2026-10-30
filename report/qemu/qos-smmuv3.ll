@@ -204,15 +204,16 @@ qsmmu_apply_space_offs.exit81:                    ; preds = %qsmmu_apply_space_o
 
 qsmmu_get_pte_attrs.exit83:                       ; preds = %qsmmu_apply_space_offs.exit72
   %i.n = or i64 %1, -9223372036854775805
+  %5 = and i64 %1, 281474976706560
   br label %bb.c
 
 bb.c:                                             ; preds = %qsmmu_get_pte_attrs.exit83, %qsmmu_apply_space_offs.exit81
-  %.0.a = phi i64 [ %i.n, %qsmmu_get_pte_attrs.exit83 ], [ %i.m, %qsmmu_apply_space_offs.exit81 ] ; 2 uses
+  %.0 = phi i64 [ %5, %qsmmu_get_pte_attrs.exit83 ], [ 1321967616, %qsmmu_apply_space_offs.exit81 ]
+  %.0.a = phi i64 [ %i.n, %qsmmu_get_pte_attrs.exit83 ], [ %i.m, %qsmmu_apply_space_offs.exit81 ]
   %i.o = xor i1 %3, true
   tail call fastcc void @qsmmu_setup_s2_walk_for_ipa(ptr noundef %0, i32 noundef 1, i64 noundef %.0.a, i64 noundef 1313669120, i1 noundef zeroext %i.o)
-  %5 = and i64 %.0.a, 281474976706560
   %i.p = and i64 %1, 4095
-  %i.q = or disjoint i64 %5, %i.p
+  %i.q = or disjoint i64 %.0, %i.p
   tail call void (ptr, ...) @g_test_message(ptr noundef nonnull @.str.23, i64 noundef %i.q) #8
   ret void
 }

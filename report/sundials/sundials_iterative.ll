@@ -202,14 +202,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 bb.d:                                             ; preds = %._crit_edge
   %i.bf = load ptr, ptr %i.g, align 8, !tbaa !10  ; 2 uses
   %i.bg = tail call double @N_VDotProd(ptr noundef %i.bf, ptr noundef %i.bf) #7
-  %i.bh = tail call double @sqrt(double noundef %i.bg) #7
+  %i.bh = tail call double @sqrt(double noundef %i.bg) #7 ; 2 uses
+  %7 = fmul double %i.bh, 1.000000e+03
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge, %bb.d
-  %i.bi = phi double [ %i.bh, %bb.d ], [ 0.000000e+00, %._crit_edge ] ; 2 uses
-  store double %i.bi, ptr %4, align 8, !tbaa !14
-  %7 = fmul double %i.bi, 1.000000e+03
-  %i.bj = fcmp olt double %7, %i.q
+  %i.bi = phi double [ %7, %bb.d ], [ 0.000000e+00, %._crit_edge ]
+  %8 = phi double [ %i.bh, %bb.d ], [ 0.000000e+00, %._crit_edge ]
+  store double %8, ptr %4, align 8, !tbaa !14
+  %i.bj = fcmp olt double %i.bi, %i.q
   br i1 %i.bj, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e

@@ -202,6 +202,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ek = add i64 %i.ej, 1
   %i.el = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ek) #15 ; 3 uses
   %.not2492 = icmp eq i64 %i.ej, 0
+  %166 = tail call i64 @llvm.umax.i64(i64 %i.ej, i64 1)
   br i1 %.not2492, label %.loopexit3158, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
@@ -249,11 +250,11 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.f, %.loopexit
   %.1364 = phi ptr [ %i.ex, %.loopexit ], [ %.03632490, %bb.f ]
   %i.ey = add nuw i64 %.03622491, 1               ; 2 uses
-  %exitcond2495.not = icmp eq i64 %i.ey, %i.ej
+  %exitcond2495.not = icmp eq i64 %i.ey, %166
   br i1 %exitcond2495.not, label %.loopexit3158, label %bb.f, !llvm.loop !36
 
 .loopexit3158:                                    ; preds = %bb.k, %bb.e
-  tail call void @_ZdaPv(ptr noundef nonnull %i.el) #16
+  tail call void @_ZdaPv(ptr noundef %i.el) #16
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.d, %.loopexit3158
@@ -655,6 +656,9 @@ declare i8 @llvm.umax.i8(i8, i8) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

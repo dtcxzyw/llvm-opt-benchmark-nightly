@@ -202,13 +202,15 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   call void @_ZN6vectorIP4exprLb0EjE13expand_vectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.c)
-  %.pre.i = load ptr, ptr %i.c, align 8, !tbaa !14 ; 2 uses
+  %.pre.i = load ptr, ptr %i.c, align 8, !tbaa !14 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds i8, ptr %.pre.i, i64 -4
   %.pre2.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !15
+  %2 = icmp eq ptr %.pre.i, null
   br label %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit
 
 _ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit:     ; preds = %bb.d, %bb.e
   %i.t = phi i32 [ %.pre2.i, %bb.e ], [ %i.p, %bb.d ] ; 2 uses
+  %3 = phi i1 [ %2, %bb.e ], [ false, %bb.d ]
   %i.u = phi ptr [ %.pre.i, %bb.e ], [ %i.m, %bb.d ] ; 3 uses
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -4
   %i.w = zext i32 %i.t to i64
@@ -228,7 +230,8 @@ _ZNK6vectorIP4exprLb0EjE4sizeEv.exit:             ; preds = %._crit_edge
   %i.ac = load ptr, ptr %0, align 8, !tbaa !47, !nonnull !21, !align !22
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !76
-  %i.af = call noundef ptr @_ZN11ast_manager6mk_appEP9func_decljPKP4expr(ptr noundef nonnull align 8 dereferenceable(952) %i.ac, ptr noundef %i.ae, i32 noundef %i.y, ptr noundef nonnull %i.u)
+  %spec.select22 = select i1 %3, i32 0, i32 %i.y
+  %i.af = call noundef ptr @_ZN11ast_manager6mk_appEP9func_decljPKP4expr(ptr noundef nonnull align 8 dereferenceable(952) %i.ac, ptr noundef %i.ae, i32 noundef %spec.select22, ptr noundef nonnull %i.u)
   call void @_ZN8expr_map6insertEP4exprS1_P3app(ptr noundef nonnull align 8 dereferenceable(64) %i.i, ptr noundef nonnull %1, ptr noundef %i.af, ptr noundef null)
   br label %bb.f
 

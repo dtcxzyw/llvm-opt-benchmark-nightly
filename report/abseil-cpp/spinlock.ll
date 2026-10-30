@@ -202,20 +202,22 @@ _ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16: ; preds = %bb.q,
   %i.bs = ashr i64 %i.br, 7
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %i.bs, i64 536870911)
   %.tr.i = trunc i64 %.sroa.speculated.i to i32
-  %i.bt = shl i32 %.tr.i, 3                       ; 2 uses
+  %i.bt = shl i32 %.tr.i, 3                       ; 3 uses
   switch i32 %i.bt, label %bb.s [
     i32 0, label %_ZN4absl12lts_2026052613base_internal8SpinLock16EncodeWaitCyclesEll.exit
     i32 8, label %bb.t
   ]
 
 bb.s:                                             ; preds = %_ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16
+  %1 = or disjoint i32 %i.bt, 4
   br label %_ZN4absl12lts_2026052613base_internal8SpinLock16EncodeWaitCyclesEll.exit
 
 bb.t:                                             ; preds = %_ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16
   br label %_ZN4absl12lts_2026052613base_internal8SpinLock16EncodeWaitCyclesEll.exit
 
 _ZN4absl12lts_2026052613base_internal8SpinLock16EncodeWaitCyclesEll.exit: ; preds = %_ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16, %bb.s, %bb.t
-  %.1.i.a = phi i32 [ 8, %_ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16 ], [ %i.bt, %bb.s ], [ 16, %bb.t ] ; 4 uses
+  %.1.i = phi i32 [ 12, %_ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16 ], [ %1, %bb.s ], [ 20, %bb.t ]
+  %.1.i.a = phi i32 [ 8, %_ZN4absl12lts_2026052613base_internal10CycleClock3NowEv.exit16 ], [ %i.bt, %bb.s ], [ 16, %bb.t ] ; 3 uses
   %i.bu = and i32 %i.bi, 1
   %.not.i17 = icmp eq i32 %i.bu, 0
   br i1 %.not.i17, label %bb.u, label %_ZN4absl12lts_2026052613base_internal8SpinLock15TryLockInternalEjj.exit22
@@ -242,8 +244,8 @@ bb.w:                                             ; preds = %bb.v
   %i.cd = load atomic i32, ptr %i.cc monotonic, align 4
   %i.ce = add nsw i32 %i.cd, 1
   store atomic i32 %i.ce, ptr %i.cc monotonic, align 4
-  %i.cf = or i32 %i.bi, %.1.i.a
-  %i.cg = or i32 %i.cf, 5
+  %i.cf = or i32 %i.bi, %.1.i
+  %i.cg = or i32 %i.cf, 1
   %i.ch = cmpxchg ptr %0, i32 %i.bi, i32 %i.cg acquire monotonic, align 4 ; 2 uses
   %i.ci = extractvalue { i32, i1 } %i.ch, 1
   br i1 %i.ci, label %_ZN4absl12lts_2026052613base_internal8SpinLock15TryLockInternalEjj.exit22, label %bb.x

@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %_ZN32ColorStronglyC
 thread-pre-split88:                               ; preds = %.noexc33
   %.sroa.08.0.i27 = load ptr, ptr %i.aw, align 8, !tbaa !66 ; 2 uses
   %.not.not.not.not.i28.not.not.not.not = icmp eq ptr %.sroa.08.0.i27, null
-  br i1 %.not.not.not.not.i28.not.not.not.not, label %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34, label %.lr.ph115
+  br i1 %.not.not.not.not.i28.not.not.not.not, label %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit, label %.lr.ph115
 
 .lr.ph115:                                        ; preds = %bb.k, %thread-pre-split88
   %.sroa.08.0.i27113 = phi ptr [ %.sroa.08.0.i27, %thread-pre-split88 ], [ %.sroa.08.0.i27110, %bb.k ] ; 3 uses
@@ -231,16 +231,21 @@ _ZNKSt8functionIFbRK9DfgVertexEEclES2_.exit.i31:  ; preds = %.lr.ph115
 
 .noexc33:                                         ; preds = %_ZNKSt8functionIFbRK9DfgVertexEEclES2_.exit.i31
   %.pre66 = load ptr, ptr %i.as, align 8, !tbaa !44 ; 3 uses
-  br i1 %i.bc, label %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34, label %thread-pre-split88
+  br i1 %i.bc, label %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit, label %thread-pre-split88
 
-_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34: ; preds = %thread-pre-split88, %.noexc33, %bb.k
-  %.not.not.not.not.i28.not.not.not106 = phi i1 [ %.not, %bb.k ], [ %.not, %thread-pre-split88 ], [ true, %.noexc33 ]
-  %4 = phi ptr [ @_ZNSt17_Function_handlerIFbRK9DfgVertexEZN32ColorStronglyConnectedComponents14visitColorSCCsES2_EUlS2_E0_E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation, %bb.k ], [ %.pre66, %.noexc33 ], [ %.pre66, %thread-pre-split88 ] ; 2 uses
-  %.not.i35 = icmp eq ptr %4, null
+_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit: ; preds = %.noexc33, %thread-pre-split88
+  %.not.not.not.not.i28.not.not.not106.ph = phi i1 [ %.not, %thread-pre-split88 ], [ true, %.noexc33 ]
+  %4 = icmp eq ptr %.pre66, null
+  br label %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34
+
+_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34: ; preds = %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit, %bb.k
+  %.not.not.not.not.i28.not.not.not106 = phi i1 [ %.not, %bb.k ], [ %.not.not.not.not.i28.not.not.not106.ph, %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit ]
+  %.not.i35 = phi i1 [ false, %bb.k ], [ %4, %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit ]
+  %5 = phi ptr [ @_ZNSt17_Function_handlerIFbRK9DfgVertexEZN32ColorStronglyConnectedComponents14visitColorSCCsES2_EUlS2_E0_E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation, %bb.k ], [ %.pre66, %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34.loopexit ]
   br i1 %.not.i35, label %_ZNSt14_Function_baseD2Ev.exit36, label %bb.m
 
 bb.m:                                             ; preds = %_ZNK9DfgVertex11foreachSinkESt8functionIFbRKS_EE.exit34
-  %i.bd = invoke noundef zeroext i1 %4(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %3, i32 noundef 3)
+  %i.bd = invoke noundef zeroext i1 %5(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %3, i32 noundef 3)
           to label %_ZNSt14_Function_baseD2Ev.exit36 unwind label %bb.n ; 0 uses
 
 bb.n:                                             ; preds = %bb.m

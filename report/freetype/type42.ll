@@ -202,9 +202,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !117
-  %i.u = tail call i64 %i.t(ptr noundef nonnull %1) #13
+  %i.u = tail call i64 %i.t(ptr noundef nonnull %1) #13 ; 2 uses
   %i.v = trunc i64 %i.u to i32                    ; 2 uses
   %i.w = icmp sgt i32 %i.v, 256
+  %sext = shl i64 %i.u, 32
+  %2 = ashr exact i64 %sext, 32
   br i1 %i.w, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -213,7 +215,8 @@ bb.f:                                             ; preds = %bb.e
   br label %.critedge
 
 bb.g:                                             ; preds = %.thread, %bb.e
-  %.0139171 = phi i32 [ 256, %.thread ], [ %i.v, %bb.e ] ; 7 uses
+  %.0139171 = phi i32 [ 256, %.thread ], [ %i.v, %bb.e ] ; 6 uses
+  %3 = phi i64 [ 256, %.thread ], [ %2, %bb.e ]   ; 2 uses
   %i.y = load ptr, ptr %i.f, align 8, !tbaa !72
   tail call void %i.y(ptr noundef nonnull %1) #13
   %i.z = load ptr, ptr %1, align 8, !tbaa !69
@@ -246,15 +249,14 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
   store i32 %.0139171, ptr %i.n, align 8, !tbaa !250
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 176
   store i32 %.0139171, ptr %i.ag, align 8, !tbaa !88
-  %2 = sext i32 %.0139171 to i64                  ; 2 uses
-  %i.ah = call ptr @ft_mem_qrealloc(ptr noundef %i.q, i64 noundef 2, i64 noundef 0, i64 noundef %2, ptr noundef null, ptr noundef nonnull %i.a) #13
+  %i.ah = call ptr @ft_mem_qrealloc(ptr noundef %i.q, i64 noundef 2, i64 noundef 0, i64 noundef %3, ptr noundef null, ptr noundef nonnull %i.a) #13
   store ptr %i.ah, ptr %i.aa, align 8, !tbaa !247
   %i.ai = load i32, ptr %i.a, align 4, !tbaa !68  ; 2 uses
   %.not159 = icmp eq i32 %i.ai, 0
   br i1 %.not159, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.aj = call ptr @ft_mem_qrealloc(ptr noundef %i.q, i64 noundef 8, i64 noundef 0, i64 noundef %2, ptr noundef null, ptr noundef nonnull %i.a) #13
+  %i.aj = call ptr @ft_mem_qrealloc(ptr noundef %i.q, i64 noundef 8, i64 noundef 0, i64 noundef %3, ptr noundef null, ptr noundef nonnull %i.a) #13
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 576
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !248
   %i.al = load i32, ptr %i.a, align 4, !tbaa !68  ; 2 uses
@@ -657,6 +659,7 @@ t42_is_space.exit.thread:                         ; preds = %.thread260, %bb.ag,
   %.4190.ph = phi i32 [ %.3189, %.thread260 ], [ %.0186273, %bb.v ], [ %.0186273, %bb.v ], [ %.0186273, %bb.v ], [ %.0186273, %bb.v ], [ %.0186273, %bb.v ], [ %.0186273, %bb.r ], [ %.0186273, %bb.v ], [ %.1187, %bb.ag ] ; 3 uses
   %.4.ph = phi i8 [ %.3, %.thread260 ], [ %.0184274, %bb.v ], [ %.0184274, %bb.v ], [ %.0184274, %bb.v ], [ %.0184274, %bb.v ], [ %.0184274, %bb.v ], [ %.0184274, %bb.r ], [ %.0184274, %bb.v ], [ %.1185, %bb.ag ]
   %i.ee = icmp eq i8 %.4.ph, 0
+  %2 = sext i32 %.4190.ph to i64                  ; 4 uses
   store i32 %.3194.ph, ptr %i.bb, align 8, !tbaa !80
   br i1 %i.ee, label %.thread254, label %bb.ah
 
@@ -693,7 +696,6 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %i.ex = load ptr, ptr %i.ej, align 8, !tbaa !120
   %i.ey = load ptr, ptr %i.ef, align 8, !tbaa !121
-  %2 = sext i32 %.4190.ph to i64                  ; 4 uses
   %i.ez = getelementptr inbounds [8 x i8], ptr %i.ey, i64 %2
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !87
   %i.fb = load ptr, ptr %i.el, align 8, !tbaa !254
@@ -832,7 +834,8 @@ bb.d:                                             ; preds = %bb.b
   %i.y = phi ptr [ %i.cy, %.thread ], [ %i.w, %.preheader291 ] ; 4 uses
   %.0144776 = phi i32 [ %.5, %.thread ], [ 0, %.preheader291 ]
   %.0149775 = phi i8 [ %.1150229, %.thread ], [ 0, %.preheader291 ] ; 7 uses
-  %.0154774 = phi ptr [ %.2156228, %.thread ], [ null, %.preheader291 ] ; 9 uses
+  %.0154774 = phi ptr [ %.2156228, %.thread ], [ null, %.preheader291 ] ; 8 uses
+  %.0154771 = phi i1 [ false, %.thread ], [ true, %.preheader291 ]
   %.0160773 = phi i64 [ %.1161227, %.thread ], [ 0, %.preheader291 ] ; 3 uses
   %.0163772 = phi i64 [ %.3166233, %.thread ], [ 0, %.preheader291 ]
   %.0169771 = phi i64 [ %.7, %.thread ], [ 12, %.preheader291 ]
@@ -852,9 +855,8 @@ bb.e:                                             ; preds = %.lr.ph777
   br label %.thread261
 
 bb.f:                                             ; preds = %.lr.ph777
-  %2 = icmp eq ptr %.0154774, null
   %i.ab = icmp ne i8 %.0149775, 0
-  %or.cond = select i1 %2, i1 true, i1 %i.ab
+  %or.cond = select i1 %.0154771, i1 true, i1 %i.ab
   br i1 %or.cond, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

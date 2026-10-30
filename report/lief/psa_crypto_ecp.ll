@@ -202,15 +202,16 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 %i.k
-  %i.y = call i32 @mbedtls_mpi_write_binary(ptr noundef nonnull %10, ptr noundef %i.x, i64 noundef %i.k) #7
+  %i.y = call i32 @mbedtls_mpi_write_binary(ptr noundef nonnull %10, ptr noundef %i.x, i64 noundef %i.k) #7 ; 2 uses
+  %11 = icmp eq i32 %i.y, 0
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.f, %bb.b, %bb.i, %bb.h, %bb.g
-  %.033.a = phi i32 [ %i.v, %bb.g ], [ %i.w, %bb.h ], [ %i.y, %bb.i ], [ %i.t, %bb.f ], [ -138, %bb.b ] ; 2 uses
+  %.033 = phi i1 [ false, %bb.g ], [ false, %bb.h ], [ %11, %bb.i ], [ false, %bb.f ], [ false, %bb.b ]
+  %.033.a = phi i32 [ %i.v, %bb.g ], [ %i.w, %bb.h ], [ %i.y, %bb.i ], [ %i.t, %bb.f ], [ -138, %bb.b ]
   call void @mbedtls_mpi_free(ptr noundef nonnull %9) #7
   call void @mbedtls_mpi_free(ptr noundef nonnull %10) #7
-  %11 = icmp eq i32 %.033.a, 0
-  br i1 %11, label %bb.k, label %bb.l
+  br i1 %.033, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   store i64 %i.l, ptr %8, align 8, !tbaa !24
@@ -415,12 +416,12 @@ bb.g:                                             ; preds = %bb.f
   %.not34 = icmp eq i64 %i.ab, %i.ac
   br i1 %.not34, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.g
   %.0.ph = phi i32 [ -151, %bb.g ], [ %i.y, %bb.f ], [ %i.w, %bb.e ], [ %i.u, %bb.d ], [ %i.s, %bb.c ]
   call void @mbedtls_platform_zeroize(ptr noundef %6, i64 noundef %7) #7
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h
+bb.i:                                             ; preds = %bb.h, %bb.g
   %.040 = phi i32 [ %.0.ph, %bb.h ], [ 0, %bb.g ]
   call void @mbedtls_ecdh_free(ptr noundef nonnull %9) #7
   call void @mbedtls_ecp_keypair_free(ptr noundef %.pre.pre) #7

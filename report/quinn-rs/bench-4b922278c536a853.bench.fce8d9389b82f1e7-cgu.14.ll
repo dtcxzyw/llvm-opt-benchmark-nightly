@@ -204,9 +204,10 @@ _RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit: ; pr
   %.not.i = icmp ne i8 %i.ae, 0, !dbg !4641
   call void @_RINvNtNtCsG258MDvU3F_3std4sync6poison10map_resultuINtNtB2_6rwlock15RwLockReadGuardINtNtNtNtB6_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core8callsite10IdentifierINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB2U_5field13CallsiteMatchEEENCNvMsd_BP_BM_3new0ECslIemzedAtQF_5bench(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i1 noundef zeroext %.not.i, ptr noundef nonnull align 8 %i.y), !dbg !4642
   %i.af = load i64, ptr %i.b, align 8, !dbg !4643, !range !2109, !noundef !856
-  %i.ag = trunc nuw i64 %i.af to i1, !dbg !4644
+  %i.ag = trunc nuw i64 %i.af to i1, !dbg !4644   ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !4644
-  %i.ai = load ptr, ptr %i.ah, align 8, !dbg !4644 ; 8 uses
+  %i.ai = load ptr, ptr %i.ah, align 8, !dbg !4644 ; 7 uses
+  %4 = xor i1 %i.ag, true, !dbg !4645
     #dbg_value(ptr poison, !4346, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4350)
     #dbg_value(ptr poison, !4346, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4350)
   br i1 %i.ag, label %bb.j, label %bb.k, !dbg !4645
@@ -234,7 +235,7 @@ bb.k:                                             ; preds = %_RNvMNtNtNtNtCsG258
   %i.an = load ptr, ptr %i.am, align 8, !dbg !4644, !nonnull !856
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !4647
     #dbg_value(ptr undef, !4327, !DIExpression(), !4350)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
+  tail call void @llvm.assume(i1 %4)
     #dbg_value(ptr poison, !4347, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4574)
     #dbg_value(ptr poison, !4347, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4574)
     #dbg_value(ptr undef, !4287, !DIExpression(DW_OP_deref), !4366)

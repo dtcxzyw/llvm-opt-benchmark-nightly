@@ -178,13 +178,14 @@ bb.c:                                             ; preds = %bb.b
   %.pre11.i = load i64, ptr %.phi.trans.insert.i, align 8
   %.phi.trans.insert12.i.a = getelementptr inbounds i8, ptr %1, i64 %.pre11.i
   %.phi.trans.insert13.i = getelementptr inbounds nuw i8, ptr %.phi.trans.insert12.i.a, i64 32
-  %.pre14.i = load i32, ptr %.phi.trans.insert13.i, align 8, !tbaa !36
+  %.pre14.i = load i32, ptr %.phi.trans.insert13.i, align 8, !tbaa !36 ; 2 uses
+  %2 = icmp eq i32 %.pre14.i, 0
   br label %_ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9DenseBaseIT_EE.exit
 
 _ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9DenseBaseIT_EE.exit: ; preds = %bb.a, %bb.b, %bb.c
-  %2 = phi i32 [ %.pre14.i, %bb.c ], [ %i.o, %bb.b ], [ %i.f, %bb.a ] ; 2 uses
-  %3 = icmp eq i32 %2, 0
-  %i.s = and i32 %2, 2
+  %3 = phi i1 [ %2, %bb.c ], [ false, %bb.b ], [ false, %bb.a ]
+  %4 = phi i32 [ %.pre14.i, %bb.c ], [ %i.o, %bb.b ], [ %i.f, %bb.a ]
+  %i.s = and i32 %4, 2
   %i.t = icmp ne i32 %i.s, 0
   %i.u = or i1 %3, %i.t
   ret i1 %i.u

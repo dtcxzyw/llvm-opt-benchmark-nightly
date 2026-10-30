@@ -202,13 +202,18 @@ bb.a:
   store i8 46, ptr %i.a, align 1, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !110)
-  %i.b = tail call i32 @llvm.abs.i32(i32 %2, i1 false) ; 5 uses
+  %i.b = tail call i32 @llvm.abs.i32(i32 %2, i1 false) ; 6 uses
   %i.c = icmp ult i32 %i.b, 10
-  br i1 %i.c, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i
+  br i1 %i.c, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.preheader.i.i
 
-.lr.ph.i.i:                                       ; preds = %bb.a, %bb.g
-  %.030.i.i = phi i32 [ %i.j, %bb.g ], [ 1, %bb.a ] ; 4 uses
-  %.02329.i.i.a = phi i32 [ %4, %bb.g ], [ %i.b, %bb.a ] ; 5 uses
+.lr.ph.preheader.i.i:                             ; preds = %bb.a
+  %4 = zext i32 %i.b to i64
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.preheader.i.i
+  %.030.i.i = phi i32 [ %i.j, %bb.g ], [ 1, %.lr.ph.preheader.i.i ] ; 4 uses
+  %.02329.i.i.a = phi i32 [ %6, %bb.g ], [ %i.b, %.lr.ph.preheader.i.i ] ; 2 uses
+  %.02329.i.i = phi i64 [ %5, %bb.g ], [ %4, %.lr.ph.preheader.i.i ] ; 3 uses
   %i.d = icmp ult i32 %.02329.i.i.a, 100
   br i1 %i.d, label %bb.b, label %bb.c
 
@@ -225,7 +230,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.e:                                             ; preds = %bb.c
-  %i.h = icmp ult i32 %.02329.i.i.a, 10000
+  %i.h = icmp samesign ult i64 %.02329.i.i, 10000
   br i1 %i.h, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -233,9 +238,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.g:                                             ; preds = %bb.e
-  %4 = udiv i32 %.02329.i.i.a, 10000
+  %5 = udiv i64 %.02329.i.i, 10000                ; 2 uses
+  %6 = trunc nuw nsw i64 %5 to i32
   %i.j = add i32 %.030.i.i, 4                     ; 2 uses
-  %i.k = icmp ult i32 %.02329.i.i.a, 100000
+  %i.k = icmp samesign ult i64 %.02329.i.i, 100000
   br i1 %i.k, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i, !llvm.loop !108
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.g, %bb.f, %bb.d, %bb.b, %bb.a

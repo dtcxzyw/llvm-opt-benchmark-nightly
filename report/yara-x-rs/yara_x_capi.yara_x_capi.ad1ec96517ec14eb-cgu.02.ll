@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %switch, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %.noexc.i
-  %i.ao = phi i64 [ %i.an, %bb.d ], [ %.sroa.03.0.copyload.i.i, %.noexc.i ] ; 2 uses
+  %2 = phi i1 [ true, %bb.d ], [ %3, %.noexc.i ]
+  %i.ao = phi i64 [ %i.an, %bb.d ], [ %.sroa.03.0.copyload.i.i, %.noexc.i ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.012.047.i, i64 72
   %i.aq = load i8, ptr %i.ap, align 8, !range !37, !alias.scope !1466, !noundef !6
   store i64 %i.ao, ptr %i.f, align 8, !noalias !1465
@@ -219,12 +220,12 @@ bb.f:                                             ; preds = %bb.d
           to label %.noexc.i unwind label %.loopexit18.i, !noalias !1468
 
 .noexc.i:                                         ; preds = %bb.f
-  %.sroa.03.0.copyload.i.i = load i64, ptr %i.d, align 8, !noalias !1465
+  %.sroa.03.0.copyload.i.i = load i64, ptr %i.d, align 8, !noalias !1465 ; 2 uses
+  %3 = icmp ugt i64 %.sroa.03.0.copyload.i.i, -4
   br label %bb.e
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECseRvVZ55ETAB_11yara_x_capi.exit.i.i: ; preds = %.body.i.i, %bb.h
   %.pn.i.i = phi { ptr, i32 } [ %i.ar, %bb.h ], [ %eh.lpad-body.i.i, %.body.i.i ] ; 2 uses
-  %2 = icmp ugt i64 %i.ao, -4
   br i1 %2, label %bb.p, label %bb.g
 
 bb.g:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECseRvVZ55ETAB_11yara_x_capi.exit.i.i

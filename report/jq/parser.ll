@@ -202,7 +202,7 @@ bb.hn:                                            ; preds = %bb.w
   br i1 %i.buu, label %bb.hp, label %.thread1446
 
 .thread1446:                                      ; preds = %bb.t, %bb.hn
-  %.61448 = phi i32 [ %.4, %bb.hn ], [ %.3, %bb.t ] ; 4 uses
+  %.61448 = phi i32 [ %.4, %bb.hn ], [ %.3, %bb.t ] ; 5 uses
   %or.cond7 = icmp ult i32 %.61448, 304
   br i1 %or.cond7, label %bb.ho, label %bb.hp
 
@@ -211,10 +211,12 @@ bb.ho:                                            ; preds = %.thread1446
   %i.buw = getelementptr inbounds nuw i8, ptr @yytranslate, i64 %i.buv
   %i.bux = load i8, ptr %i.buw, align 1, !tbaa !16
   %i.buy = sext i8 %i.bux to i32
+  %9 = icmp eq i32 %.61448, 0
   br label %bb.hp
 
 bb.hp:                                            ; preds = %bb.ho, %.thread1446, %bb.hn
-  %.61449.a = phi i32 [ -2, %bb.hn ], [ %.61448, %bb.ho ], [ %.61448, %.thread1446 ] ; 6 uses
+  %.61449 = phi i1 [ false, %bb.hn ], [ %9, %bb.ho ], [ false, %.thread1446 ]
+  %.61449.a = phi i32 [ -2, %bb.hn ], [ %.61448, %bb.ho ], [ %.61448, %.thread1446 ] ; 5 uses
   %i.buz = phi i32 [ -2, %bb.hn ], [ %i.buy, %bb.ho ], [ 2, %.thread1446 ] ; 3 uses
   %.not1262 = icmp eq i32 %.11172, 0
   br i1 %.not1262, label %bb.hq, label %bb.hy
@@ -277,8 +279,7 @@ bb.hz:                                            ; preds = %bb.hy
   br i1 %i.bvj, label %bb.ia, label %bb.ib
 
 bb.ia:                                            ; preds = %bb.hz
-  %9 = icmp eq i32 %.61449.a, 0
-  br i1 %9, label %.thread1476, label %bb.ic
+  br i1 %.61449, label %.thread1476, label %bb.ic
 
 bb.ib:                                            ; preds = %bb.hz
   call fastcc void @yydestruct(i32 noundef %i.buz, ptr noundef %4)

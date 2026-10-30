@@ -41,7 +41,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7rocksdb17PlainTableBloomV112SetTotalBitsEPNS_9AllocatorEjjmPNS_6LoggerE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) initializes((0, 8), (16, 24)) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i64 noundef %4, ptr noundef %5) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.not = icmp eq i32 %3, 0                       ; 2 uses
+  %.not = icmp eq i32 %3, 0                       ; 3 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -60,12 +60,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.g = phi i32 [ %spec.select.i, %bb.b ], [ %i.f, %bb.c ] ; 3 uses
   store i32 %i.g, ptr %0, align 8, !tbaa !12
-  %i.h = lshr i32 %i.g, 9
-  %spec.select = select i1 %.not, i32 0, i32 %i.h ; 2 uses
+  %i.h = lshr i32 %i.g, 9                         ; 2 uses
+  %6 = icmp eq i32 %i.h, 0
+  %.not19 = or i1 %.not, %6
+  %spec.select = select i1 %.not, i32 0, i32 %i.h
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   store i32 %spec.select, ptr %i.i, align 4, !tbaa !13
   %i.j = lshr i32 %i.g, 3                         ; 2 uses
-  %.not19 = icmp eq i32 %spec.select, 0
   %i.k = add nuw nsw i32 %i.j, 63
   %.017 = select i1 %.not19, i32 %i.j, i32 %i.k
   %i.l = zext nneg i32 %.017 to i64               ; 2 uses
