@@ -202,8 +202,8 @@ bb.eb:                                            ; preds = %bb.dz
     #dbg_value(ptr undef, !19890, !DIExpression(DW_OP_plus_uconst, 1952, DW_OP_stack_value), !17798)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kh) ]
     #dbg_value(ptr %i.kh, !19895, !DIExpression(DW_OP_plus_uconst, 184, DW_OP_stack_value), !17801)
-  %i.kk = getelementptr inbounds nuw i8, ptr %i.kh, i64 184, !dbg !21000 ; 3 uses
-  %i.kl = load ptr, ptr %i.kk, align 8, !dbg !21000, !noalias !19898, !nonnull !1995, !noundef !1995 ; 2 uses
+  %i.kk = getelementptr inbounds nuw i8, ptr %i.kh, i64 184, !dbg !21000 ; 2 uses
+  %i.kl = load ptr, ptr %i.kk, align 8, !dbg !21000, !noalias !19898, !nonnull !1995, !noundef !1995 ; 3 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 64, !dbg !21000
   %i.kn = load i32, ptr %i.km, align 8, !dbg !21000, !noalias !19898, !noundef !1995
     #dbg_value(i32 %i.kn, !19887, !DIExpression(), !17793)
@@ -313,8 +313,7 @@ bb.eh:                                            ; preds = %bb.ef
 bb.ei:                                            ; preds = %bb.eg
     #dbg_value(ptr %i.ar, !19918, !DIExpression(DW_OP_plus_uconst, 1952, DW_OP_stack_value), !17840)
     #dbg_value(ptr %i.kh, !19924, !DIExpression(DW_OP_plus_uconst, 184, DW_OP_stack_value), !17843)
-  %4 = load ptr, ptr %i.kk, align 8, !dbg !21019, !noalias !19922, !nonnull !1995, !noundef !1995
-  %i.kx = getelementptr inbounds nuw i8, ptr %4, i64 60, !dbg !21019
+  %i.kx = getelementptr inbounds nuw i8, ptr %i.kl, i64 60, !dbg !21019
   %i.ky = load i32, ptr %i.kx, align 4, !dbg !21019, !noalias !19922, !noundef !1995
     #dbg_value(i32 %i.ky, !19916, !DIExpression(), !17832)
   %i.kz = and i32 %i.ky, 1, !dbg !21020

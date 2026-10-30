@@ -11,13 +11,13 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.2 = private unnamed_addr constant [3 x i8] c"]\0A\00", align 1
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
-define range(i32 -9997, 1) i32 @SUNHashMap_New(i64 noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #0 {
+define range(i32 -9997, 1) i32 @SUNHashMap_New(i64 noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i64 %0, 1
   br i1 %i.a, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #16 ; 2 uses
+  %i.b = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #16 ; 3 uses
   store ptr %i.b, ptr %2, align 8, !tbaa !10
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.f, label %bb.c
@@ -90,8 +90,7 @@ bb.k:                                             ; preds = %bb.g, %bb.h, %bb.j
   br i1 %exitcond.not, label %._crit_edge, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.k
-  %.pre = load ptr, ptr %2, align 8, !tbaa !10
-  %i.w = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.c, ptr %i.w, align 8, !tbaa !23
   br label %.thread
 

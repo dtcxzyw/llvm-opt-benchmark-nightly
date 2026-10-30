@@ -202,7 +202,7 @@ lean_dec.exit:                                    ; preds = %bb.n, %bb.m, %bb.l,
 ; Function Attrs: nounwind uwtable
 define noalias nonnull ptr @l_Lean_Compiler_LCNF_ScopeM_isInScope___redArg(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @lean_st_ref_get(ptr noundef %1) #5 ; 6 uses
+  %i.a = tail call ptr @lean_st_ref_get(ptr noundef %1) #5 ; 5 uses
   tail call void @lean_inc_heartbeat() #5
   %i.b = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 5 uses
   %i.c = icmp eq ptr %i.b, null
@@ -216,8 +216,6 @@ bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 1, ptr %i.b, align 4, !tbaa !10
   store i32 65552, ptr %i.d, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  store ptr %i.a, ptr %2, align 8, !tbaa !12
   br label %bb.d
 
 bb.d:                                             ; preds = %.backedge, %bb.c
@@ -289,6 +287,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %l_Std_DTreeMap_Internal_Impl_contains___at___00Lean_Compiler_LCNF_ScopeM_isInScope_spec__0___redArg.exit
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.x = inttoptr i64 %.2.i to ptr
   store ptr %i.x, ptr %2, align 8, !tbaa !12
   ret ptr %i.b

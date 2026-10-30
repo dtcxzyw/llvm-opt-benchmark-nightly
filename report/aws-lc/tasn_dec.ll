@@ -202,10 +202,9 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 7 uses
-  %i.e = alloca ptr, align 8                      ; 7 uses
+  %i.e = alloca ptr, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
-  %i.f = load ptr, ptr %1, align 8, !tbaa !14     ; 3 uses
-  store ptr %i.f, ptr %i.e, align 8, !tbaa !14
+  %i.f = load ptr, ptr %1, align 8, !tbaa !14     ; 2 uses
   %i.g = and i8 %3, 1
   %.not = icmp eq i8 %i.g, 0                      ; 2 uses
   %i.h = icmp sgt i64 %2, 0
