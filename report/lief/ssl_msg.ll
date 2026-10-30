@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.ai, %.epil.prehe
   %i.fc = load i64, ptr %i.u, align 8, !tbaa !40
   %i.fd = add i64 %i.fc, %i.ee
   store i64 %i.fd, ptr %i.u, align 8, !tbaa !40
-  %i.fe = sub nuw i64 %.1222303, %i.ee
+  %i.fe = sub i64 %.1222303, %i.ee
   %i.ff = load i64, ptr %i.q, align 8, !tbaa !39
   %i.fg = load i64, ptr %i.dx, align 8, !tbaa !46 ; 2 uses
   %i.fh = icmp ult i64 %i.ff, %i.fg

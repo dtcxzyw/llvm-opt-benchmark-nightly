@@ -204,7 +204,7 @@ _ZNSt13_Bit_iteratorppEv.exit:                    ; preds = %_ZNSt13_Bit_iterato
   %i.ac = icmp eq i32 %spec.select, %.sroa.2.0.copyload.i
   %.not3.i.not54 = select i1 %i.ab, i1 %i.ac, i1 false
   %i.ad = icmp eq i64 %i.y, %i.k
-  %or.cond = or i1 %.not3.i.not54, %i.ad
+  %or.cond = select i1 %.not3.i.not54, i1 true, i1 %i.ad, !prof !114
   br i1 %or.cond, label %.critedge, label %_ZNSt13_Bit_iteratorppEv.exit, !prof !115
 
 .critedge:                                        ; preds = %_ZNSt13_Bit_iteratorppEv.exit, %bb.c
