@@ -205,7 +205,7 @@ _ZNKSt9type_infoeqERKS_.exit733.thread791:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !139  ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 9 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !140  ; 24 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !140  ; 25 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.h = load i8, ptr %i.g, align 8, !tbaa !141, !range !44, !noundef !45
   %i.i = trunc nuw i8 %i.h to i1                  ; 4 uses
@@ -276,7 +276,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit739: ; preds = %bb
   br label %bb.bx
 
 bb.j:                                             ; preds = %bb.d
-  %21 = add nsw i32 %i.f, -2                      ; 2 uses
   %.not713811 = icmp slt i32 %i.f, 2              ; 2 uses
   br i1 %i.i, label %.preheader804, label %.preheader805
 
@@ -284,18 +283,22 @@ bb.j:                                             ; preds = %bb.d
   br i1 %.not713811, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader805
+  %21 = add nsw i32 %i.f, -2
   %i.ad = sext i32 %i.s to i64
   %i.ae = shl nsw i32 %i.s, 1
   %i.af = sext i32 %i.ae to i64
+  %22 = zext nneg i32 %21 to i64
   br label %bb.k
 
 .preheader804:                                    ; preds = %bb.j
   br i1 %.not713811, label %._crit_edge815, label %.lr.ph814
 
 .lr.ph814:                                        ; preds = %.preheader804
+  %23 = add nsw i32 %i.f, -2
   %i.ag = sext i32 %i.s to i64
   %i.ah = shl nsw i32 %i.s, 1
   %i.ai = sext i32 %i.ah to i64
+  %24 = zext nneg i32 %23 to i64
   br label %bb.s
 
 bb.k:                                             ; preds = %.lr.ph, %bb.q
@@ -358,14 +361,17 @@ bb.q:                                             ; preds = %bb.k
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %i.bc = load i64, ptr %i.ba, align 4, !tbaa !109
   store i64 %i.bc, ptr %i.bb, align 4, !tbaa !109
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.bd = getelementptr inbounds [4 x i8], ptr %.0810, i64 %i.af
-  %22 = trunc nuw i64 %indvars.iv.next to i32     ; 2 uses
-  %.not710 = icmp slt i32 %21, %22
-  br i1 %.not710, label %._crit_edge, label %bb.k, !llvm.loop !438
+  %.not710 = icmp samesign ugt i64 %indvars.iv.next, %22
+  br i1 %.not710, label %._crit_edge.loopexit, label %bb.k, !llvm.loop !438
 
-._crit_edge:                                      ; preds = %bb.q, %.preheader805
-  %.0641.lcssa = phi i32 [ 0, %.preheader805 ], [ %22, %bb.q ]
+._crit_edge.loopexit:                             ; preds = %bb.q
+  %25 = trunc nuw nsw i64 %indvars.iv.next to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader805
+  %.0641.lcssa = phi i32 [ 0, %.preheader805 ], [ %25, %._crit_edge.loopexit ]
   %i.be = icmp slt i32 %.0641.lcssa, %i.f
   br i1 %i.be, label %bb.r, label %bb.bd
 
@@ -448,14 +454,17 @@ bb.y:                                             ; preds = %bb.s
   store i32 %i.cf, ptr %i.cj, align 4, !tbaa !109
   %.sroa_idx762 = getelementptr inbounds nuw i8, ptr %i.cc, i64 12
   store float %i.ci, ptr %.sroa_idx762, align 4, !tbaa !109
-  %indvars.iv.next934 = add nuw nsw i64 %indvars.iv933, 2 ; 2 uses
+  %indvars.iv.next934 = add nuw nsw i64 %indvars.iv933, 2 ; 3 uses
   %i.ck = getelementptr inbounds [4 x i8], ptr %.1813, i64 %i.ai
-  %23 = trunc nuw i64 %indvars.iv.next934 to i32  ; 2 uses
-  %.not713 = icmp slt i32 %21, %23
-  br i1 %.not713, label %._crit_edge815, label %bb.s, !llvm.loop !439
+  %.not713 = icmp samesign ugt i64 %indvars.iv.next934, %24
+  br i1 %.not713, label %._crit_edge815.loopexit, label %bb.s, !llvm.loop !439
 
-._crit_edge815:                                   ; preds = %bb.y, %.preheader804
-  %.1642.lcssa = phi i32 [ 0, %.preheader804 ], [ %23, %bb.y ] ; 2 uses
+._crit_edge815.loopexit:                          ; preds = %bb.y
+  %26 = trunc nuw nsw i64 %indvars.iv.next934 to i32
+  br label %._crit_edge815
+
+._crit_edge815:                                   ; preds = %._crit_edge815.loopexit, %.preheader804
+  %.1642.lcssa = phi i32 [ 0, %.preheader804 ], [ %26, %._crit_edge815.loopexit ] ; 2 uses
   %i.cl = icmp slt i32 %.1642.lcssa, %i.f
   br i1 %i.cl, label %bb.z, label %bb.bd
 
@@ -858,7 +867,7 @@ _ZNKSt9type_infoeqERKS_.exit.thread804:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !139  ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 10 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !140  ; 22 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !140  ; 23 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.h = load i8, ptr %i.g, align 8, !tbaa !141, !range !44, !noundef !45
   %i.i = trunc nuw i8 %i.h to i1                  ; 4 uses
@@ -928,7 +937,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit739: ; preds = %bb
   br label %bb.bx
 
 bb.j:                                             ; preds = %bb.d
-  %21 = add nsw i32 %i.f, -2                      ; 2 uses
   %.not713824 = icmp slt i32 %i.f, 2              ; 2 uses
   br i1 %i.i, label %.preheader817, label %.preheader818
 
@@ -936,18 +944,22 @@ bb.j:                                             ; preds = %bb.d
   br i1 %.not713824, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader818
+  %21 = add nsw i32 %i.f, -2
   %i.ac = sext i32 %i.r to i64
   %i.ad = shl nsw i32 %i.r, 1
   %i.ae = sext i32 %i.ad to i64
+  %22 = zext nneg i32 %21 to i64
   br label %bb.k
 
 .preheader817:                                    ; preds = %bb.j
   br i1 %.not713824, label %._crit_edge828, label %.lr.ph827
 
 .lr.ph827:                                        ; preds = %.preheader817
+  %23 = add nsw i32 %i.f, -2
   %i.af = sext i32 %i.r to i64
   %i.ag = shl nsw i32 %i.r, 1
   %i.ah = sext i32 %i.ag to i64
+  %24 = zext nneg i32 %23 to i64
   br label %bb.s
 
 bb.k:                                             ; preds = %.lr.ph, %bb.q
@@ -1008,14 +1020,17 @@ bb.q:                                             ; preds = %bb.k
   %i.ay = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.az, ptr noundef nonnull align 8 dereferenceable(16) %i.ay, i64 16, i1 false), !tbaa.struct !535
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.ba = getelementptr inbounds [4 x i8], ptr %.0823, i64 %i.ae
-  %22 = trunc nuw i64 %indvars.iv.next to i32     ; 2 uses
-  %.not710 = icmp slt i32 %21, %22
-  br i1 %.not710, label %._crit_edge, label %bb.k, !llvm.loop !510
+  %.not710 = icmp samesign ugt i64 %indvars.iv.next, %22
+  br i1 %.not710, label %._crit_edge.loopexit, label %bb.k, !llvm.loop !510
 
-._crit_edge:                                      ; preds = %bb.q, %.preheader818
-  %.0641.lcssa = phi i32 [ 0, %.preheader818 ], [ %22, %bb.q ]
+._crit_edge.loopexit:                             ; preds = %bb.q
+  %25 = trunc nuw nsw i64 %indvars.iv.next to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader818
+  %.0641.lcssa = phi i32 [ 0, %.preheader818 ], [ %25, %._crit_edge.loopexit ]
   %i.bb = icmp slt i32 %.0641.lcssa, %i.f
   br i1 %i.bb, label %bb.r, label %bb.bd
 
@@ -1097,14 +1112,17 @@ bb.y:                                             ; preds = %bb.s
   store double %i.cb, ptr %i.cf, align 8, !tbaa !113
   %.sroa.18.0..sroa_idx769 = getelementptr inbounds nuw i8, ptr %i.by, i64 24
   store double %i.ce, ptr %.sroa.18.0..sroa_idx769, align 8, !tbaa !113
-  %indvars.iv.next947 = add nuw nsw i64 %indvars.iv946, 2 ; 2 uses
+  %indvars.iv.next947 = add nuw nsw i64 %indvars.iv946, 2 ; 3 uses
   %i.cg = getelementptr inbounds [4 x i8], ptr %.1826, i64 %i.ah
-  %23 = trunc nuw i64 %indvars.iv.next947 to i32  ; 2 uses
-  %.not713 = icmp slt i32 %21, %23
-  br i1 %.not713, label %._crit_edge828, label %bb.s, !llvm.loop !511
+  %.not713 = icmp samesign ugt i64 %indvars.iv.next947, %24
+  br i1 %.not713, label %._crit_edge828.loopexit, label %bb.s, !llvm.loop !511
 
-._crit_edge828:                                   ; preds = %bb.y, %.preheader817
-  %.1642.lcssa = phi i32 [ 0, %.preheader817 ], [ %23, %bb.y ] ; 2 uses
+._crit_edge828.loopexit:                          ; preds = %bb.y
+  %26 = trunc nuw nsw i64 %indvars.iv.next947 to i32
+  br label %._crit_edge828
+
+._crit_edge828:                                   ; preds = %._crit_edge828.loopexit, %.preheader817
+  %.1642.lcssa = phi i32 [ 0, %.preheader817 ], [ %26, %._crit_edge828.loopexit ] ; 2 uses
   %i.ch = icmp slt i32 %.1642.lcssa, %i.f
   br i1 %i.ch, label %bb.z, label %bb.bd
 

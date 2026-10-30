@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.aa, %bb.x
-  %.02566.i17 = phi i64 [ 0, %bb.x ], [ %i.eu, %bb.aa ] ; 6 uses
+  %.02566.i17 = phi i64 [ 0, %bb.x ], [ %i.eu, %bb.aa ] ; 7 uses
   %i.eo = sub nsw i64 0, %.02566.i17              ; 2 uses
   %i.ep = getelementptr inbounds i8, ptr %i.em, i64 %i.eo
   %i.eq = load i8, ptr %i.ep, align 1             ; 2 uses
@@ -219,9 +219,9 @@ bb.z:                                             ; preds = %bb.y
   br i1 %or.cond.i23, label %bb.ab, label %_ZN7simdutf6scalar12_GLOBAL__N_114utf8_to_latin130rewind_and_convert_with_errorsEmPKcmPc.exit26
 
 bb.aa:                                            ; preds = %bb.y
-  %i.eu = add i64 %.02566.i17, 1                  ; 2 uses
-  %.not.i18 = icmp ugt i64 %i.eu, %.0.i.lcssa
-  br i1 %.not.i18, label %_ZN7simdutf6scalar12_GLOBAL__N_114utf8_to_latin130rewind_and_convert_with_errorsEmPKcmPc.exit26.thread, label %bb.y, !llvm.loop !29
+  %i.eu = add nuw i64 %.02566.i17, 1
+  %exitcond = icmp eq i64 %.02566.i17, %.0.i.lcssa
+  br i1 %exitcond, label %_ZN7simdutf6scalar12_GLOBAL__N_114utf8_to_latin130rewind_and_convert_with_errorsEmPKcmPc.exit26.thread, label %bb.y, !llvm.loop !29
 
 bb.ab:                                            ; preds = %bb.z
   %i.ev = sub i64 1, %.02566.i17
@@ -624,7 +624,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %bb.al
-  %.02566.i16 = phi i64 [ 0, %bb.al ], [ %i.jn, %bb.ao ] ; 6 uses
+  %.02566.i16 = phi i64 [ 0, %bb.al ], [ %i.jn, %bb.ao ] ; 7 uses
   %i.jh = sub nsw i64 0, %.02566.i16              ; 2 uses
   %i.ji = getelementptr inbounds i8, ptr %i.jf, i64 %i.jh
   %i.jj = load i8, ptr %i.ji, align 1             ; 2 uses
@@ -638,9 +638,9 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond.i22, label %bb.ap, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE0EEENS_6resultEmPKcmPDs.exit25
 
 bb.ao:                                            ; preds = %bb.am
-  %i.jn = add i64 %.02566.i16, 1                  ; 2 uses
-  %.not.i17 = icmp ugt i64 %i.jn, %.0.i.lcssa1037
-  br i1 %.not.i17, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE0EEENS_6resultEmPKcmPDs.exit25.thread, label %bb.am, !llvm.loop !30
+  %i.jn = add nuw i64 %.02566.i16, 1
+  %exitcond = icmp eq i64 %.02566.i16, %.0.i.lcssa1037
+  br i1 %exitcond, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE0EEENS_6resultEmPKcmPDs.exit25.thread, label %bb.am, !llvm.loop !30
 
 bb.ap:                                            ; preds = %bb.an
   %i.jo = sub i64 1, %.02566.i16
@@ -1043,7 +1043,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %bb.al
-  %.02566.i16 = phi i64 [ 0, %bb.al ], [ %i.ko, %bb.ao ] ; 6 uses
+  %.02566.i16 = phi i64 [ 0, %bb.al ], [ %i.ko, %bb.ao ] ; 7 uses
   %i.ki = sub nsw i64 0, %.02566.i16              ; 2 uses
   %i.kj = getelementptr inbounds i8, ptr %i.kg, i64 %i.ki
   %i.kk = load i8, ptr %i.kj, align 1             ; 2 uses
@@ -1057,9 +1057,9 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond.i22, label %bb.ap, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE1EEENS_6resultEmPKcmPDs.exit25
 
 bb.ao:                                            ; preds = %bb.am
-  %i.ko = add i64 %.02566.i16, 1                  ; 2 uses
-  %.not.i17 = icmp ugt i64 %i.ko, %.0.i.lcssa1052
-  br i1 %.not.i17, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE1EEENS_6resultEmPKcmPDs.exit25.thread, label %bb.am, !llvm.loop !31
+  %i.ko = add nuw i64 %.02566.i16, 1
+  %exitcond = icmp eq i64 %.02566.i16, %.0.i.lcssa1052
+  br i1 %exitcond, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE1EEENS_6resultEmPKcmPDs.exit25.thread, label %bb.am, !llvm.loop !31
 
 bb.ap:                                            ; preds = %bb.an
   %i.kp = sub i64 1, %.02566.i16
@@ -1462,7 +1462,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.aa, %bb.x
-  %.02566.i20 = phi i64 [ 0, %bb.x ], [ %i.gq, %bb.aa ] ; 6 uses
+  %.02566.i20 = phi i64 [ 0, %bb.x ], [ %i.gq, %bb.aa ] ; 7 uses
   %i.gk = sub nsw i64 0, %.02566.i20              ; 2 uses
   %i.gl = getelementptr inbounds i8, ptr %i.gi, i64 %i.gk
   %i.gm = load i8, ptr %i.gl, align 1             ; 2 uses
@@ -1476,9 +1476,9 @@ bb.z:                                             ; preds = %bb.y
   br i1 %or.cond.i26, label %bb.ab, label %_ZN7simdutf6scalar12_GLOBAL__N_114utf8_to_latin130rewind_and_convert_with_errorsEmPKcmPc.exit29
 
 bb.aa:                                            ; preds = %bb.y
-  %i.gq = add i64 %.02566.i20, 1                  ; 2 uses
-  %.not.i21 = icmp ugt i64 %i.gq, %.0.i.lcssa
-  br i1 %.not.i21, label %_ZN7simdutf6scalar12_GLOBAL__N_114utf8_to_latin130rewind_and_convert_with_errorsEmPKcmPc.exit29.thread, label %bb.y, !llvm.loop !29
+  %i.gq = add nuw i64 %.02566.i20, 1
+  %exitcond = icmp eq i64 %.02566.i20, %.0.i.lcssa
+  br i1 %exitcond, label %_ZN7simdutf6scalar12_GLOBAL__N_114utf8_to_latin130rewind_and_convert_with_errorsEmPKcmPc.exit29.thread, label %bb.y, !llvm.loop !29
 
 bb.ab:                                            ; preds = %bb.z
   %i.gr = sub i64 1, %.02566.i20
@@ -1881,7 +1881,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %bb.al
-  %.02566.i23 = phi i64 [ 0, %bb.al ], [ %i.mb, %bb.ao ] ; 6 uses
+  %.02566.i23 = phi i64 [ 0, %bb.al ], [ %i.mb, %bb.ao ] ; 7 uses
   %i.lv = sub nsw i64 0, %.02566.i23              ; 2 uses
   %i.lw = getelementptr inbounds i8, ptr %i.lt, i64 %i.lv
   %i.lx = load i8, ptr %i.lw, align 1             ; 2 uses
@@ -1895,9 +1895,9 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond.i29, label %bb.ap, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE0EEENS_6resultEmPKcmPDs.exit32
 
 bb.ao:                                            ; preds = %bb.am
-  %i.mb = add i64 %.02566.i23, 1                  ; 2 uses
-  %.not.i24 = icmp ugt i64 %i.mb, %.0.i.lcssa441
-  br i1 %.not.i24, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE0EEENS_6resultEmPKcmPDs.exit32.thread, label %bb.am, !llvm.loop !30
+  %i.mb = add nuw i64 %.02566.i23, 1
+  %exitcond = icmp eq i64 %.02566.i23, %.0.i.lcssa441
+  br i1 %exitcond, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE0EEENS_6resultEmPKcmPDs.exit32.thread, label %bb.am, !llvm.loop !30
 
 bb.ap:                                            ; preds = %bb.an
   %i.mc = sub i64 1, %.02566.i23
@@ -2300,7 +2300,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %bb.al
-  %.02566.i23 = phi i64 [ 0, %bb.al ], [ %i.nm, %bb.ao ] ; 6 uses
+  %.02566.i23 = phi i64 [ 0, %bb.al ], [ %i.nm, %bb.ao ] ; 7 uses
   %i.ng = sub nsw i64 0, %.02566.i23              ; 2 uses
   %i.nh = getelementptr inbounds i8, ptr %i.ne, i64 %i.ng
   %i.ni = load i8, ptr %i.nh, align 1             ; 2 uses
@@ -2314,9 +2314,9 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond.i29, label %bb.ap, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE1EEENS_6resultEmPKcmPDs.exit32
 
 bb.ao:                                            ; preds = %bb.am
-  %i.nm = add i64 %.02566.i23, 1                  ; 2 uses
-  %.not.i24 = icmp ugt i64 %i.nm, %.0.i.lcssa440
-  br i1 %.not.i24, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE1EEENS_6resultEmPKcmPDs.exit32.thread, label %bb.am, !llvm.loop !31
+  %i.nm = add nuw i64 %.02566.i23, 1
+  %exitcond = icmp eq i64 %.02566.i23, %.0.i.lcssa440
+  br i1 %exitcond, label %_ZN7simdutf6scalar12_GLOBAL__N_113utf8_to_utf1630rewind_and_convert_with_errorsILNS_10endiannessE1EEENS_6resultEmPKcmPDs.exit32.thread, label %bb.am, !llvm.loop !31
 
 bb.ap:                                            ; preds = %bb.an
   %i.nn = sub i64 1, %.02566.i23

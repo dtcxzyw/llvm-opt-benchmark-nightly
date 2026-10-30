@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bn_is_bit_set_words
   br i1 %i.bl, label %.preheader.split.us, label %.preheader.split
 
 .preheader.split.us:                              ; preds = %.preheader, %bn_mod_mul_montgomery_small.exit.us
-  %.082130.us = phi i32 [ %i.ct, %bn_mod_mul_montgomery_small.exit.us ], [ 0, %.preheader ]
+  %.082130.us = phi i32 [ %i.ct, %bn_mod_mul_montgomery_small.exit.us ], [ 0, %.preheader ] ; 2 uses
   %i.cp = load i32, ptr %i.f, align 8, !tbaa !122
   %i.cq = sext i32 %i.cp to i64
   %.not136 = icmp eq i64 %2, %i.cq
@@ -218,9 +218,9 @@ bb.n:                                             ; preds = %.preheader.split.us
   br i1 %.not27.i.us, label %.split132.us, label %bn_mod_mul_montgomery_small.exit.us
 
 bn_mod_mul_montgomery_small.exit.us:              ; preds = %bb.n
-  %i.ct = add i32 %.082130.us, 1                  ; 2 uses
-  %.not97.us = icmp ugt i32 %i.ct, %.084.lcssa
-  br i1 %.not97.us, label %.split134.us, label %.preheader.split.us, !llvm.loop !1222
+  %i.ct = add nuw i32 %.082130.us, 1
+  %exitcond147 = icmp eq i32 %.082130.us, %.084.lcssa
+  br i1 %exitcond147, label %.split134.us, label %.preheader.split.us, !llvm.loop !1222
 
 bn_is_bit_set_words.exit106:                      ; preds = %.lr.ph127.preheader
   %i.cu = and i64 %i.cj, 63
@@ -319,7 +319,7 @@ bb.q:                                             ; preds = %bn_is_bit_set_words
   br label %._crit_edge128.loopexit
 
 .preheader.split:                                 ; preds = %.preheader, %bn_mod_mul_montgomery_small.exit
-  %.082130 = phi i32 [ %i.eq, %bn_mod_mul_montgomery_small.exit ], [ 0, %.preheader ]
+  %.082130 = phi i32 [ %i.eq, %bn_mod_mul_montgomery_small.exit ], [ 0, %.preheader ] ; 2 uses
   %i.en = load i32, ptr %i.f, align 8, !tbaa !122
   %i.eo = sext i32 %i.en to i64
   %.not135 = icmp eq i64 %2, %i.eo
@@ -350,9 +350,9 @@ bb.s:                                             ; preds = %bb.r
 bn_mod_mul_montgomery_small.exit:                 ; preds = %bb.r
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.b, i64 noundef %i.bm) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #46
-  %i.eq = add i32 %.082130, 1                     ; 2 uses
-  %.not97 = icmp ugt i32 %i.eq, %.084.lcssa
-  br i1 %.not97, label %.split134.us, label %.preheader.split, !llvm.loop !1222
+  %i.eq = add nuw i32 %.082130, 1
+  %exitcond146 = icmp eq i32 %.082130, %.084.lcssa
+  br i1 %exitcond146, label %.split134.us, label %.preheader.split, !llvm.loop !1222
 
 .critedge100:                                     ; preds = %._crit_edge128
   br i1 %i.az, label %OPENSSL_memcpy.exit109, label %bb.t

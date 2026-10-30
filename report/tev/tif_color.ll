@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 4
 inline.NumDeleted: 1
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@TIFFCIELab16ToXYZ:bb.a
   %i.j = fdiv float %i.h, %i.i
   %i.k = tail call float @llvm.fmuladd.f32(float %i.j, float 7.787000e+00, float f0x3E0D3DCB)
@@ -204,7 +205,7 @@ define dso_local noundef i32 @TIFFCIELabToRGBInit(ptr noundef initializes((0, 4)
 bb.a:
   store i32 1500, ptr %0, align 4, !tbaa !18
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28
-  tail call void @_TIFFmemcpy(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef 84) #6
+  tail call void @_TIFFmemcpy(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef 84) #7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.c = load float, ptr %i.b, align 4, !tbaa !33
   %i.d = fpext float %i.c to double
@@ -219,11 +220,11 @@ bb.a:
   %i.m = fdiv float %i.j, %i.l                    ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 4
   store float %i.m, ptr %i.n, align 4, !tbaa !17
-  %i.o = sext i32 %i.k to i64                     ; 3 uses
+  %i.o = sext i32 %i.k to i64                     ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.q = load i32, ptr %i.p, align 4, !tbaa !20
   %i.r = uitofp i32 %i.q to float
-  %i.s = sitofp i32 %i.k to double                ; 3 uses
+  %i.s = sitofp i32 %i.k to double                ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 112
   br label %bb.b
 
@@ -231,7 +232,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %.052 = phi i64 [ 0, %bb.a ], [ %i.aa, %bb.b ]  ; 3 uses
   %i.u = uitofp i64 %.052 to double
   %i.v = fdiv double %i.u, %i.s
-  %i.w = tail call double @pow(double noundef %i.v, double noundef %i.e) #6
+  %i.w = tail call double @pow(double noundef %i.v, double noundef %i.e) #7
   %i.x = fptrunc double %i.w to float
   %i.y = fmul float %i.r, %i.x
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %.052
@@ -244,55 +245,123 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !35
   %i.ad = fpext float %i.ac to double
-  %i.ae = fdiv double 1.000000e+00, %i.ad
+  %i.ae = fdiv double 1.000000e+00, %i.ad         ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.m, ptr %i.af, align 4, !tbaa !36
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !21
-  %i.ai = uitofp i32 %i.ah to float
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 6116
+  %i.ai = uitofp i32 %i.ah to float               ; 3 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 6116 ; 3 uses
+  %3 = add nsw i64 %i.o, 1                        ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 1) ; 6 uses
+  %xtraiter = and i64 %umax, 1
+  %4 = icmp ult i64 %3, 2
+  br i1 %4, label %.epil.preheader, label %.new
+
+.new:                                             ; preds = %bb.c
+  %unroll_iter = and i64 %umax, -2
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.d
-  %.153.a = phi i64 [ 0, %bb.c ], [ %i.aq, %bb.d ] ; 3 uses
-  %i.ak = uitofp i64 %.153.a to double
+bb.d:                                             ; preds = %bb.d, %.new
+  %.153 = phi i64 [ 0, %.new ], [ %12, %bb.d ]    ; 4 uses
+  %.153.a = phi i64 [ 0, %.new ], [ %i.aq, %bb.d ]
+  %5 = uitofp i64 %.153 to double
+  %6 = fdiv double %5, %i.s
+  %7 = tail call double @pow(double noundef %6, double noundef %i.ae) #7
+  %8 = fptrunc double %7 to float
+  %9 = fmul float %i.ai, %8
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %.153
+  store float %9, ptr %10, align 4, !tbaa !13
+  %11 = or disjoint i64 %.153, 1                  ; 2 uses
+  %i.ak = uitofp i64 %11 to double
   %i.al = fdiv double %i.ak, %i.s
-  %i.am = tail call double @pow(double noundef %i.al, double noundef %i.ae) #6
+  %i.am = tail call double @pow(double noundef %i.al, double noundef %i.ae) #7
   %i.an = fptrunc double %i.am to float
   %i.ao = fmul float %i.ai, %i.an
-  %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %.153.a
+  %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %11
   store float %i.ao, ptr %i.ap, align 4, !tbaa !13
-  %i.aq = add i64 %.153.a, 1                      ; 2 uses
-  %.not50 = icmp ugt i64 %i.aq, %i.o
-  br i1 %.not50, label %bb.e, label %bb.d
+  %12 = add nuw i64 %.153, 2                      ; 2 uses
+  %i.aq = add i64 %.153.a, 2                      ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %i.aq, %unroll_iter
+  br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.d
 
-bb.e:                                             ; preds = %bb.d
+.unr-lcssa:                                       ; preds = %bb.d
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %bb.e, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.unr-lcssa, %bb.c
+  %.153.epil.init = phi i64 [ 0, %bb.c ], [ %12, %.unr-lcssa ] ; 2 uses
+  %lcmp.mod56 = trunc i64 %umax to i1
+  tail call void @llvm.assume(i1 %lcmp.mod56)
+  %13 = uitofp i64 %.153.epil.init to double
+  %14 = fdiv double %13, %i.s
+  %15 = tail call double @pow(double noundef %14, double noundef %i.ae) #7
+  %16 = fptrunc double %15 to float
+  %17 = fmul float %i.ai, %16
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %.153.epil.init
+  store float %17, ptr %18, align 4, !tbaa !13
+  br label %bb.e
+
+bb.e:                                             ; preds = %.unr-lcssa, %.epil.preheader
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 108
   %i.as = load float, ptr %i.ar, align 4, !tbaa !37
   %i.at = fpext float %i.as to double
-  %i.au = fdiv double 1.000000e+00, %i.at
+  %i.au = fdiv double 1.000000e+00, %i.at         ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 12
   store float %i.m, ptr %i.av, align 4, !tbaa !38
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !22
-  %i.ay = uitofp i32 %i.ax to float
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 12120
+  %i.ay = uitofp i32 %i.ax to float               ; 3 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 12120 ; 3 uses
+  %xtraiter60 = and i64 %umax, 1
+  %19 = icmp ult i64 %3, 2
+  br i1 %19, label %.epil.preheader59, label %.new57
+
+.new57:                                           ; preds = %bb.e
+  %unroll_iter64 = and i64 %umax, -2
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.f
-  %.254.a = phi i64 [ 0, %bb.e ], [ %i.bg, %bb.f ] ; 3 uses
-  %i.ba = uitofp i64 %.254.a to double
+bb.f:                                             ; preds = %bb.f, %.new57
+  %.254 = phi i64 [ 0, %.new57 ], [ %27, %bb.f ]  ; 4 uses
+  %.254.a = phi i64 [ 0, %.new57 ], [ %i.bg, %bb.f ]
+  %20 = uitofp i64 %.254 to double
+  %21 = fdiv double %20, %i.s
+  %22 = tail call double @pow(double noundef %21, double noundef %i.au) #7
+  %23 = fptrunc double %22 to float
+  %24 = fmul float %i.ay, %23
+  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %.254
+  store float %24, ptr %25, align 4, !tbaa !13
+  %26 = or disjoint i64 %.254, 1                  ; 2 uses
+  %i.ba = uitofp i64 %26 to double
   %i.bb = fdiv double %i.ba, %i.s
-  %i.bc = tail call double @pow(double noundef %i.bb, double noundef %i.au) #6
+  %i.bc = tail call double @pow(double noundef %i.bb, double noundef %i.au) #7
   %i.bd = fptrunc double %i.bc to float
   %i.be = fmul float %i.ay, %i.bd
-  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %.254.a
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %26
   store float %i.be, ptr %i.bf, align 4, !tbaa !13
-  %i.bg = add i64 %.254.a, 1                      ; 2 uses
-  %.not51 = icmp ugt i64 %i.bg, %i.o
-  br i1 %.not51, label %bb.g, label %bb.f
+  %27 = add nuw i64 %.254, 2                      ; 2 uses
+  %i.bg = add i64 %.254.a, 2                      ; 2 uses
+  %niter65.ncmp.1 = icmp eq i64 %i.bg, %unroll_iter64
+  br i1 %niter65.ncmp.1, label %.unr-lcssa58, label %bb.f
 
-bb.g:                                             ; preds = %bb.f
+.unr-lcssa58:                                     ; preds = %bb.f
+  %lcmp.mod61.not = icmp eq i64 %xtraiter60, 0
+  br i1 %lcmp.mod61.not, label %bb.g, label %.epil.preheader59
+
+.epil.preheader59:                                ; preds = %.unr-lcssa58, %bb.e
+  %.254.epil.init = phi i64 [ 0, %bb.e ], [ %27, %.unr-lcssa58 ] ; 2 uses
+  %lcmp.mod63 = trunc i64 %umax to i1
+  tail call void @llvm.assume(i1 %lcmp.mod63)
+  %28 = uitofp i64 %.254.epil.init to double
+  %29 = fdiv double %28, %i.s
+  %30 = tail call double @pow(double noundef %29, double noundef %i.au) #7
+  %31 = fptrunc double %30 to float
+  %32 = fmul float %i.ay, %31
+  %33 = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %.254.epil.init
+  store float %32, ptr %33, align 4, !tbaa !13
+  br label %bb.g
+
+bb.g:                                             ; preds = %.unr-lcssa58, %.epil.preheader59
   %i.bh = load float, ptr %2, align 4, !tbaa !13
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16
   store float %i.bh, ptr %i.bi, align 4, !tbaa !14
@@ -366,7 +435,7 @@ bb.a:
 define dso_local noundef i32 @TIFFYCbCrToRGBInit(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #2 {
 vector.ph:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
-  tail call void @_TIFFmemset(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef 256) #6
+  tail call void @_TIFFmemset(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef 256) #7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
   store ptr %i.b, ptr %0, align 8, !tbaa !40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -401,7 +470,7 @@ vector.ph:
   store <16 x i8> <i8 -32, i8 -31, i8 -30, i8 -29, i8 -28, i8 -27, i8 -26, i8 -25, i8 -24, i8 -23, i8 -22, i8 -21, i8 -20, i8 -19, i8 -18, i8 -17>, ptr %i.p, align 8, !tbaa !41
   store <16 x i8> <i8 -16, i8 -15, i8 -14, i8 -13, i8 -12, i8 -11, i8 -10, i8 -9, i8 -8, i8 -7, i8 -6, i8 -5, i8 -4, i8 -3, i8 -2, i8 -1>, ptr %i.q, align 8, !tbaa !41
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 560
-  tail call void @_TIFFmemset(ptr noundef nonnull %i.r, i32 noundef 255, i64 noundef 512) #6
+  tail call void @_TIFFmemset(ptr noundef nonnull %i.r, i32 noundef 255, i64 noundef 512) #7
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1072 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.s, ptr %i.t, align 8, !tbaa !28
@@ -598,7 +667,13 @@ declare i32 @llvm.smax.i32(i32, i32) #1
 declare i64 @llvm.umin.i64(i64, i64) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #1
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
@@ -606,7 +681,8 @@ attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

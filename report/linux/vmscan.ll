@@ -205,21 +205,25 @@ bb.bz:                                            ; preds = %bb.by, %.lr.ph.spli
   br i1 %.not.i.i135.i, label %clear_reclaim_active.exit.i, label %.lr.ph.split.i.i.i, !llvm.loop !147
 
 clear_reclaim_active.exit.i:                      ; preds = %bb.bz
-  br i1 %i.fd, label %.lr.ph172.i, label %bb.cc
+  br i1 %i.fd, label %.lr.ph172.i.preheader, label %bb.cc
+
+.lr.ph172.i.preheader:                            ; preds = %clear_reclaim_active.exit.i
+  %4 = add nuw nsw i32 %i.dp, 1
+  %wide.trip.count = zext nneg i32 %4 to i64
+  br label %.lr.ph172.i
 
 clear_reclaim_active.exit.thread.i:               ; preds = %trace_mm_vmscan_kswapd_reclaim_fail.exit.i
   br i1 %i.fd, label %._crit_edge173.i, label %bb.cc
 
-.lr.ph172.i:                                      ; preds = %clear_reclaim_active.exit.i, %bb.cb
-  %.2171.i = phi i32 [ %5, %bb.cb ], [ 0, %clear_reclaim_active.exit.i ] ; 2 uses
-  %4 = sext i32 %.2171.i to i64                   ; 2 uses
-  %i.lk = getelementptr [8 x i8], ptr %i.a, i64 %4
+.lr.ph172.i:                                      ; preds = %.lr.ph172.i.preheader, %bb.cb
+  %indvars.iv = phi i64 [ 0, %.lr.ph172.i.preheader ], [ %indvars.iv.next, %bb.cb ] ; 3 uses
+  %i.lk = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.ll = load i64, ptr %i.lk, align 8            ; 2 uses
   %.not128.i = icmp eq i64 %i.ll, 0
   br i1 %.not128.i, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %.lr.ph172.i
-  %i.lm = getelementptr [1344 x i8], ptr %0, i64 %4 ; 2 uses
+  %i.lm = getelementptr [1344 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.ln = getelementptr i8, ptr %i.lm, i64 992    ; 2 uses
   %i.lo = call i64 @_raw_spin_lock_irqsave(ptr noundef %i.ln) #14
   %i.lp = getelementptr i8, ptr %i.lm, i64 32     ; 2 uses
@@ -230,9 +234,9 @@ bb.ca:                                            ; preds = %.lr.ph172.i
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %.lr.ph172.i
-  %5 = add i32 %.2171.i, 1                        ; 2 uses
-  %.not127.i = icmp sgt i32 %5, %i.dp
-  br i1 %.not127.i, label %._crit_edge173.i, label %.lr.ph172.i, !llvm.loop !150
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge173.i, label %.lr.ph172.i, !llvm.loop !150
 
 ._crit_edge173.i:                                 ; preds = %bb.cb, %clear_reclaim_active.exit.thread.i
   call void @wakeup_kcompactd(ptr noundef %0, i32 noundef 9, i32 noundef %i.dp) #14

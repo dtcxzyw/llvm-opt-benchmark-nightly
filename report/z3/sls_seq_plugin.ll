@@ -205,7 +205,7 @@ bb.a:
   %19 = alloca %class.vector.60, align 8          ; 6 uses
   %20 = alloca %class.vector.60, align 8          ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !218  ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !218  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load i32, ptr %i.c, align 8, !tbaa !218  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #22
@@ -263,7 +263,7 @@ _ZN6vectorIN3sls10seq_plugin13string_updateELb0EjE5resetEv.exit: ; preds = %_ZN6
   br label %bb.d
 
 .preheader375:                                    ; preds = %_ZN6vectorIjLb0EjE6resizeIiEEvjRKT_.exit179
-  %wide.trip.count = zext i32 %i.e to i64         ; 2 uses
+  %wide.trip.count = zext i32 %i.e to i64         ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.u = icmp ult i32 %i.b, 3
   br i1 %i.u, label %.epil.preheader, label %.preheader375.new
@@ -666,11 +666,10 @@ _ZN6vectorI7svectorIjjELb1EjED2Ev.exit192:        ; preds = %_ZN6vectorI7svector
   br i1 %.not153, label %_ZNK6vectorI7svectorIjjELb1EjE4sizeEv.exit.i.i.i, label %.preheader, !llvm.loop !448
 
 bb.ai:                                            ; preds = %.preheader, %.thread556
-  %.0380 = phi i32 [ 1, %.preheader ], [ %25, %.thread556 ] ; 4 uses
-  %21 = add i32 %.0380, -1                        ; 6 uses
+  %indvars.iv390 = phi i64 [ 1, %.preheader ], [ %indvars.iv.next391, %.thread556 ] ; 6 uses
+  %21 = add nsw i64 %indvars.iv390, -1            ; 18 uses
   %i.hh = load ptr, ptr %1, align 8, !tbaa !179
-  %22 = zext i32 %21 to i64                       ; 13 uses
-  %i.hi = getelementptr inbounds nuw [4 x i8], ptr %i.hh, i64 %22
+  %i.hi = getelementptr inbounds nuw [4 x i8], ptr %i.hh, i64 %21
   %i.hj = load i32, ptr %i.hi, align 4, !tbaa !173
   %i.hk = load ptr, ptr %2, align 8, !tbaa !179
   %i.hl = getelementptr inbounds nuw [4 x i8], ptr %i.hk, i64 %i.gc
@@ -679,20 +678,19 @@ bb.ai:                                            ; preds = %.preheader, %.threa
   br i1 %i.hn, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %22
+  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %21
   %i.hp = load ptr, ptr %i.ho, align 8, !tbaa !180
   %i.hq = getelementptr inbounds nuw [4 x i8], ptr %i.hp, i64 %i.gc
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !173
-  %23 = zext i32 %.0380 to i64                    ; 2 uses
-  %i.hs = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %23
+  %i.hs = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %indvars.iv390
   %i.ht = load ptr, ptr %i.hs, align 8, !tbaa !180
   %i.hu = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %i.gd
   store i32 %i.hr, ptr %i.hu, align 4, !tbaa !173
-  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %22
+  %i.hv = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %21
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !180
   %i.hx = getelementptr inbounds nuw [4 x i8], ptr %i.hw, i64 %i.gc
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !173
-  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %23
+  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %indvars.iv390
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !180
   %i.ib = getelementptr inbounds nuw [4 x i8], ptr %i.ia, i64 %i.gd
   store i32 %i.hy, ptr %i.ib, align 4, !tbaa !173
@@ -704,11 +702,10 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.body
 
 bb.ak:                                            ; preds = %bb.ai
-  %i.ic = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %22
+  %i.ic = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %21
   %i.id = load ptr, ptr %i.ic, align 8, !tbaa !180 ; 2 uses
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.id, i64 %i.gd
-  %24 = zext i32 %.0380 to i64                    ; 2 uses
-  %i.if = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %24 ; 6 uses
+  %i.if = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i, i64 %indvars.iv390 ; 6 uses
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !180 ; 5 uses
   %i.ih = getelementptr inbounds nuw [4 x i8], ptr %i.ig, i64 %i.gc
   %i.ii = getelementptr inbounds nuw [4 x i8], ptr %i.id, i64 %i.gc
@@ -720,10 +717,10 @@ bb.ak:                                            ; preds = %bb.ai
   %i.io = add i32 %i.in, 1
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.ig, i64 %i.gd ; 5 uses
   store i32 %i.io, ptr %i.ip, align 4, !tbaa !173
-  %i.iq = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %22 ; 4 uses
+  %i.iq = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %21 ; 4 uses
   %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !180 ; 2 uses
   %i.is = getelementptr inbounds nuw [4 x i8], ptr %i.ir, i64 %i.gd ; 4 uses
-  %i.it = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %24 ; 3 uses
+  %i.it = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i190, i64 %indvars.iv390 ; 3 uses
   %i.iu = load ptr, ptr %i.it, align 8, !tbaa !180 ; 5 uses
   %i.iv = getelementptr inbounds nuw [4 x i8], ptr %i.iu, i64 %i.gc ; 3 uses
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.ir, i64 %i.gc ; 3 uses
@@ -742,14 +739,14 @@ bb.ak:                                            ; preds = %bb.ai
 
 bb.al:                                            ; preds = %bb.ak
   %i.jh = load ptr, ptr %i.fl, align 8, !tbaa !269
-  %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 %22
+  %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 %21
   %i.jj = load i8, ptr %i.ji, align 1, !tbaa !270, !range !234, !noundef !65
   %i.jk = trunc nuw i8 %i.jj to i1
   br i1 %i.jk, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit.thread
 
 _ZNK3sls10seq_plugin15string_instance7can_addEj.exit: ; preds = %bb.al
   %i.jl = load ptr, ptr %i.fm, align 8, !tbaa !269
-  %i.jm = getelementptr inbounds nuw i8, ptr %i.jl, i64 %22
+  %i.jm = getelementptr inbounds nuw i8, ptr %i.jl, i64 %21
   %i.jn = load i8, ptr %i.jm, align 1, !tbaa !270, !range !234, !noundef !65
   %i.jo = trunc nuw i8 %i.jn to i1
   br i1 %i.jo, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit.thread, label %bb.an
@@ -815,14 +812,14 @@ bb.aq:                                            ; preds = %_ZN6vectorIN3sls10s
 
 bb.ar:                                            ; preds = %bb.aq
   %i.kj = load ptr, ptr %i.fl, align 8, !tbaa !269
-  %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 %22
+  %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 %21
   %i.kl = load i8, ptr %i.kk, align 1, !tbaa !270, !range !234, !noundef !65
   %i.km = trunc nuw i8 %i.kl to i1
   br i1 %i.km, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit201, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit201.thread
 
 _ZNK3sls10seq_plugin15string_instance7can_addEj.exit201: ; preds = %bb.ar
   %i.kn = load ptr, ptr %i.fm, align 8, !tbaa !269
-  %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 %22
+  %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 %21
   %i.kp = load i8, ptr %i.ko, align 1, !tbaa !270, !range !234, !noundef !65
   %i.kq = trunc nuw i8 %i.kp to i1
   br i1 %i.kq, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit201.thread, label %bb.as
@@ -865,14 +862,14 @@ bb.au:                                            ; preds = %_ZN6vectorIN3sls10s
 
 bb.av:                                            ; preds = %bb.au
   %i.lf = load ptr, ptr %i.fl, align 8, !tbaa !269
-  %i.lg = getelementptr inbounds nuw i8, ptr %i.lf, i64 %22
+  %i.lg = getelementptr inbounds nuw i8, ptr %i.lf, i64 %21
   %i.lh = load i8, ptr %i.lg, align 1, !tbaa !270, !range !234, !noundef !65
   %i.li = trunc nuw i8 %i.lh to i1
   br i1 %i.li, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit205, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit205.thread
 
 _ZNK3sls10seq_plugin15string_instance7can_addEj.exit205: ; preds = %bb.av
   %i.lj = load ptr, ptr %i.fm, align 8, !tbaa !269
-  %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 %22
+  %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 %21
   %i.ll = load i8, ptr %i.lk, align 1, !tbaa !270, !range !234, !noundef !65
   %i.lm = trunc nuw i8 %i.ll to i1
   br i1 %i.lm, label %_ZNK3sls10seq_plugin15string_instance7can_addEj.exit205.thread, label %bb.bg
@@ -1020,7 +1017,8 @@ _ZN3sls10seq_plugin17add_string_updateENS0_6side_tENS0_4op_tEjj.exit: ; preds = 
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.nd, i64 8
   store i32 %i.gb, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !173
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.nd, i64 12
-  store i32 %21, ptr %.sroa.6.0..sroa_idx.i, align 4, !tbaa !173
+  %22 = trunc nuw i64 %21 to i32
+  store i32 %22, ptr %.sroa.6.0..sroa_idx.i, align 4, !tbaa !173
   %i.ne = getelementptr inbounds i8, ptr %i.nb, i64 -4
   %i.nf = add i32 %i.na, 1
   store i32 %i.nf, ptr %i.ne, align 4, !tbaa !173
@@ -1190,7 +1188,8 @@ _ZN3sls10seq_plugin17add_string_updateENS0_6side_tENS0_4op_tEjj.exit216: ; preds
   %.sroa.4.0..sroa_idx.i209 = getelementptr inbounds nuw i8, ptr %i.pk, i64 4
   store i32 0, ptr %.sroa.4.0..sroa_idx.i209, align 4, !tbaa !451
   %.sroa.5.0..sroa_idx.i210 = getelementptr inbounds nuw i8, ptr %i.pk, i64 8
-  store i32 %21, ptr %.sroa.5.0..sroa_idx.i210, align 4, !tbaa !173
+  %23 = trunc nuw i64 %21 to i32
+  store i32 %23, ptr %.sroa.5.0..sroa_idx.i210, align 4, !tbaa !173
   %.sroa.6.0..sroa_idx.i211 = getelementptr inbounds nuw i8, ptr %i.pk, i64 12
   store i32 %i.gb, ptr %.sroa.6.0..sroa_idx.i211, align 4, !tbaa !173
   %i.pl = getelementptr inbounds i8, ptr %i.pi, i64 -4
@@ -1211,7 +1210,7 @@ bb.bs:                                            ; preds = %_ZN3sls10seq_plugin
 
 bb.bt:                                            ; preds = %bb.bs
   %i.pt = load ptr, ptr %i.fl, align 8, !tbaa !269
-  %i.pu = getelementptr inbounds nuw i8, ptr %i.pt, i64 %22
+  %i.pu = getelementptr inbounds nuw i8, ptr %i.pt, i64 %21
   %i.pv = load i8, ptr %i.pu, align 1, !tbaa !270, !range !234, !noundef !65
   %i.pw = trunc nuw i8 %i.pv to i1
   br i1 %i.pw, label %bb.cf, label %bb.bu
@@ -1355,7 +1354,8 @@ _ZN3sls10seq_plugin17add_string_updateENS0_6side_tENS0_4op_tEjj.exit224: ; preds
   %.sroa.4.0..sroa_idx.i217 = getelementptr inbounds nuw i8, ptr %i.rn, i64 4
   store i32 1, ptr %.sroa.4.0..sroa_idx.i217, align 4, !tbaa !451
   %.sroa.5.0..sroa_idx.i218 = getelementptr inbounds nuw i8, ptr %i.rn, i64 8
-  store i32 %21, ptr %.sroa.5.0..sroa_idx.i218, align 4, !tbaa !173
+  %24 = trunc nuw i64 %21 to i32
+  store i32 %24, ptr %.sroa.5.0..sroa_idx.i218, align 4, !tbaa !173
   %.sroa.6.0..sroa_idx.i219 = getelementptr inbounds nuw i8, ptr %i.rn, i64 12
   store i32 0, ptr %.sroa.6.0..sroa_idx.i219, align 4, !tbaa !173
   %i.ro = getelementptr inbounds i8, ptr %i.rl, i64 -4
@@ -1541,7 +1541,7 @@ bb.cs:                                            ; preds = %_ZN3sls10seq_plugin
 
 bb.ct:                                            ; preds = %bb.cs
   %i.tz = load ptr, ptr %i.fl, align 8, !tbaa !269
-  %i.ua = getelementptr inbounds nuw i8, ptr %i.tz, i64 %22
+  %i.ua = getelementptr inbounds nuw i8, ptr %i.tz, i64 %21
   %i.ub = load i8, ptr %i.ua, align 1, !tbaa !270, !range !234, !noundef !65
   %i.uc = trunc nuw i8 %i.ub to i1
   br i1 %i.uc, label %.thread555, label %bb.cu
@@ -1689,7 +1689,8 @@ bb.df:                                            ; preds = %.noexc239, %bb.cv
   %.sroa.5.0..sroa_idx.i234 = getelementptr inbounds nuw i8, ptr %i.vt, i64 8
   store i32 %i.gb, ptr %.sroa.5.0..sroa_idx.i234, align 4, !tbaa !173
   %.sroa.6.0..sroa_idx.i235 = getelementptr inbounds nuw i8, ptr %i.vt, i64 12
-  store i32 %21, ptr %.sroa.6.0..sroa_idx.i235, align 4, !tbaa !173
+  %25 = trunc nuw i64 %21 to i32
+  store i32 %25, ptr %.sroa.6.0..sroa_idx.i235, align 4, !tbaa !173
   %i.vu = getelementptr inbounds i8, ptr %i.vr, i64 -4
   %i.vv = add i32 %i.vq, 1
   store i32 %i.vv, ptr %i.vu, align 4, !tbaa !173
@@ -1844,7 +1845,8 @@ _ZN3sls10seq_plugin17add_string_updateENS0_6side_tENS0_4op_tEjj.exit248: ; preds
   %.sroa.4.0..sroa_idx.i241 = getelementptr inbounds nuw i8, ptr %i.xr, i64 4
   store i32 2, ptr %.sroa.4.0..sroa_idx.i241, align 4, !tbaa !451
   %.sroa.5.0..sroa_idx.i242 = getelementptr inbounds nuw i8, ptr %i.xr, i64 8
-  store i32 %21, ptr %.sroa.5.0..sroa_idx.i242, align 4, !tbaa !173
+  %26 = trunc nuw i64 %21 to i32
+  store i32 %26, ptr %.sroa.5.0..sroa_idx.i242, align 4, !tbaa !173
   %.sroa.6.0..sroa_idx.i243 = getelementptr inbounds nuw i8, ptr %i.xr, i64 12
   store i32 %i.gb, ptr %.sroa.6.0..sroa_idx.i243, align 4, !tbaa !173
   %i.xs = getelementptr inbounds i8, ptr %i.xp, i64 -4
@@ -1853,9 +1855,9 @@ _ZN3sls10seq_plugin17add_string_updateENS0_6side_tENS0_4op_tEjj.exit248: ; preds
   br label %.thread556
 
 .thread556:                                       ; preds = %bb.cs, %_ZN3sls10seq_plugin17add_string_updateENS0_6side_tENS0_4op_tEjj.exit248, %bb.aj, %.thread555, %bb.df
-  %25 = add i32 %.0380, 1                         ; 2 uses
-  %.not154 = icmp ugt i32 %25, %i.b
-  br i1 %.not154, label %._crit_edge, label %bb.ai, !llvm.loop !449
+  %indvars.iv.next391 = add nuw nsw i64 %indvars.iv390, 1 ; 2 uses
+  %exitcond394 = icmp eq i64 %indvars.iv.next391, %wide.trip.count
+  br i1 %exitcond394, label %._crit_edge, label %bb.ai, !llvm.loop !449
 
 .body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i355, %bb.do, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i339, %bb.dc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i323, %bb.cp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i307, %bb.cc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i291, %bb.bp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i276, %bb.bd, %bb.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i260, %bb.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
   %.pn.pn = phi { ptr, i32 } [ %i.dn, %bb.w ], [ %i.bm, %bb.l ], [ %i.xj, %bb.do ], [ %i.bh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i ], [ %i.xe, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i355 ], [ %i.di, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i260 ], [ %i.vl, %bb.dc ], [ %i.mv, %bb.bd ], [ %i.pc, %bb.bp ], [ %i.rf, %bb.cc ], [ %i.ti, %bb.cp ], [ %i.vg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i339 ], [ %i.mq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i276 ], [ %i.ox, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i291 ], [ %i.ra, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i307 ], [ %i.td, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i323 ], [ %lpad.loopexit.split-lp564, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]

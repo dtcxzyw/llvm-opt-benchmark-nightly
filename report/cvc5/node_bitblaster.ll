@@ -204,14 +204,14 @@ bb.ca:                                            ; preds = %.body135, %bb.bx
   br label %.loopexit
 
 bb.cb:                                            ; preds = %bb.a
-  %i.hs = ashr exact i64 %i.f, 3                  ; 2 uses
+  %i.hs = ashr exact i64 %i.f, 3                  ; 3 uses
   %i.ht = trunc i64 %i.hs to i32
   %i.hu = add nsw i64 %i.hs, 4294967295
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %42, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %43, i8 0, i64 24, i1 false)
-  %i.hv = add i32 %i.ht, -2                       ; 2 uses
+  %i.hv = add i32 %i.ht, -2
   %i.hw = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 4 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 2 uses
   br label %bb.cc
@@ -273,13 +273,14 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i
 _ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i
   %i.it = getelementptr inbounds nuw i8, ptr %43, i64 8 ; 4 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %43, i64 16 ; 2 uses
+  %54 = add nsw i64 %i.hs, 4294967295
+  %wide.trip.count = and i64 %54, 4294967295
   br label %bb.ci
 
 bb.ci:                                            ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i155, %_ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit
-  %.07.i152 = phi i32 [ 0, %_ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit ], [ %55, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i155 ] ; 2 uses
-  %54 = zext i32 %.07.i152 to i64
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i155 ], [ 0, %_ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit ] ; 2 uses
   %i.iv = load ptr, ptr %2, align 8, !tbaa !83
-  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %54 ; 2 uses
+  %i.iw = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %indvars.iv ; 2 uses
   %i.ix = load ptr, ptr %i.it, align 8, !tbaa !77 ; 3 uses
   %i.iy = load ptr, ptr %i.iu, align 8, !tbaa !78
   %.not.i.i153 = icmp eq ptr %i.ix, %i.iy
@@ -325,9 +326,9 @@ bb.cn:                                            ; preds = %bb.ci
           to label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i155 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i155: ; preds = %bb.cn, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i.i154
-  %55 = add i32 %.07.i152, 1                      ; 2 uses
-  %.not.i156 = icmp ugt i32 %55, %i.hv
-  br i1 %.not.i156, label %_ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit159, label %bb.ci, !llvm.loop !265
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %_ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit159, label %bb.ci, !llvm.loop !265
 
 _ZN4cvc58internal6theory2bv11extractBitsINS0_12NodeTemplateILb1EEEEEvRKSt6vectorIT_SaIS7_EERS9_jj.exit159: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit.i155
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #23

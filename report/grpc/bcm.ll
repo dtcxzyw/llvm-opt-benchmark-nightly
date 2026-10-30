@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bn_is_bit_set_words
   br label %._crit_edge149.loopexit
 
 .preheader:                                       ; preds = %._crit_edge149, %bn_mod_mul_montgomery_small.exit
-  %.082151 = phi i32 [ %i.lz, %bn_mod_mul_montgomery_small.exit ], [ 0, %._crit_edge149 ]
+  %.082151 = phi i32 [ %i.lz, %bn_mod_mul_montgomery_small.exit ], [ 0, %._crit_edge149 ] ; 2 uses
   %i.eo = load i32, ptr %i.f, align 8, !tbaa !132 ; 3 uses
   %i.ep = sext i32 %i.eo to i64
   %.not152 = icmp eq i64 %2, %i.ep
@@ -585,9 +585,9 @@ bb.w:                                             ; preds = %bn_sqr_small.exit.i
 bn_mod_mul_montgomery_small.exit:                 ; preds = %scalar.ph, %middle.block, %bb.v
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.b, i64 noundef %i.bk) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #36
-  %i.lz = add i32 %.082151, 1                     ; 2 uses
-  %.not97 = icmp ugt i32 %i.lz, %.084.lcssa
-  br i1 %.not97, label %bb.y, label %.preheader, !llvm.loop !686
+  %i.lz = add nuw i32 %.082151, 1
+  %exitcond171 = icmp eq i32 %.082151, %.084.lcssa
+  br i1 %exitcond171, label %bb.y, label %.preheader, !llvm.loop !686
 
 .critedge100:                                     ; preds = %._crit_edge149
   br i1 %i.az, label %_ZL14OPENSSL_memcpyPvPKvm.exit109, label %bb.x
