@@ -204,9 +204,9 @@ bb.a:
 
 ._crit_edge88:                                    ; preds = %._crit_edge, %.preheader85
   call void @_Z18rcFilterLedgeSpansP9rcContextiiR13rcHeightfield(ptr noundef nonnull %0, i32 noundef 10, i32 noundef 5, ptr noundef nonnull align 8 dereferenceable(64) %1) #12
-  %i.v = load i32, ptr %1, align 8, !tbaa !53     ; 2 uses
+  %i.v = load i32, ptr %1, align 8, !tbaa !53     ; 4 uses
   %i.w = icmp sgt i32 %i.v, 0
-  br i1 %i.w, label %.preheader83.lr.ph, label %.loopexit
+  br i1 %i.w, label %.preheader83.lr.ph, label %.preheader82
 
 .preheader83.lr.ph:                               ; preds = %._crit_edge88
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -265,7 +265,7 @@ bb.a:
   %i.bs = getelementptr inbounds nuw i8, ptr %20, i64 64
   %i.bt = load i32, ptr %i.d, align 4, !tbaa !54  ; 2 uses
   %i.bu = icmp sgt i32 %i.bt, 0
-  br i1 %i.bu, label %.preheader83, label %.loopexit
+  br i1 %i.bu, label %.preheader83, label %.preheader82
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader84
   %i.bv = phi i32 [ %i.s, %.preheader84 ], [ %i.cc, %.lr.ph ] ; 2 uses
@@ -305,8 +305,9 @@ bb.a:
   %invariant.op = or i1 %i.cn, %i.co
   br label %bb.b
 
-.preheader82:                                     ; preds = %._crit_edge91
-  %i.cp = icmp sgt i32 %i.cr, 0
+.preheader82:                                     ; preds = %._crit_edge91, %.preheader83.lr.ph, %._crit_edge88
+  %23 = phi i32 [ %i.v, %._crit_edge88 ], [ %i.v, %.preheader83.lr.ph ], [ %i.cr, %._crit_edge91 ] ; 2 uses
+  %i.cp = icmp sgt i32 %23, 0
   %.pr = load i32, ptr %i.d, align 4              ; 2 uses
   %i.cq = icmp sgt i32 %.pr, 0
   %or.cond126 = select i1 %i.cp, i1 %i.cq, i1 false
@@ -317,7 +318,7 @@ bb.a:
   br label %._crit_edge91
 
 ._crit_edge91:                                    ; preds = %._crit_edge91.loopexit, %.preheader83
-  %i.cr = phi i32 [ %.pre, %._crit_edge91.loopexit ], [ %i.ck, %.preheader83 ] ; 4 uses
+  %i.cr = phi i32 [ %.pre, %._crit_edge91.loopexit ], [ %i.ck, %.preheader83 ] ; 3 uses
   %i.cs = phi i32 [ %i.fs, %._crit_edge91.loopexit ], [ %i.cl, %.preheader83 ]
   %i.ct = add nuw nsw i32 %.05992, 1              ; 2 uses
   %i.cu = icmp slt i32 %i.ct, %i.cr
@@ -571,7 +572,7 @@ _ZN5Catch16AssertionHandlerD2Ev.exit70:           ; preds = %_ZN5Catch16Assertio
   br i1 %i.ft, label %bb.b, label %._crit_edge91.loopexit, !llvm.loop !1133
 
 .preheader:                                       ; preds = %.preheader82, %._crit_edge95
-  %i.fu = phi i32 [ %i.fx, %._crit_edge95 ], [ %i.cr, %.preheader82 ]
+  %i.fu = phi i32 [ %i.fx, %._crit_edge95 ], [ %23, %.preheader82 ]
   %i.fv = phi i32 [ %i.fy, %._crit_edge95 ], [ %.pr, %.preheader82 ] ; 2 uses
   %.05696 = phi i32 [ %i.fz, %._crit_edge95 ], [ 0, %.preheader82 ] ; 2 uses
   %i.fw = icmp sgt i32 %i.fv, 0
@@ -603,7 +604,7 @@ _ZN5Catch16AssertionHandlerD2Ev.exit70:           ; preds = %_ZN5Catch16Assertio
   %i.gk = icmp slt i32 %i.gi, %i.gj
   br i1 %i.gk, label %.lr.ph94, label %._crit_edge95.loopexit, !llvm.loop !1135
 
-.loopexit:                                        ; preds = %._crit_edge95, %.preheader83.lr.ph, %._crit_edge88, %.preheader82, %bb.a
+.loopexit:                                        ; preds = %._crit_edge95, %.preheader82, %bb.a
   call void @_ZN5Catch7SectionD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   call void @_ZN13rcHeightfieldD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %1) #12

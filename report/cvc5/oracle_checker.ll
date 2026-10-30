@@ -202,19 +202,23 @@ bb.a:
   %7 = alloca %"class.cvc5::internal::NodeTemplate.317", align 8 ; 2 uses
   %8 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %9 = alloca %"class.cvc5::internal::NodeTemplate.317", align 8 ; 2 uses
-  %i.a = load ptr, ptr %2, align 8, !tbaa !28     ; 2 uses
+  %i.a = load ptr, ptr %2, align 8, !tbaa !28
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load i64, ptr %i.b, align 8
   %i.d = and i64 %i.c, 1023
-  %i.e = icmp eq i64 %i.d, 26
-  br i1 %i.e, label %bb.b, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a
+  %i.e = icmp eq i64 %i.d, 26                     ; 2 uses
+  br i1 %i.e, label %bb.b, label %10
 
 bb.b:                                             ; preds = %bb.a
   call void @_ZNK4cvc58internal12NodeTemplateILb1EE11getOperatorEv(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %3, ptr noundef nonnull align 8 dereferenceable(8) %2)
   %i.f = invoke noundef zeroext i1 @_ZN4cvc58internal12OracleCaller16isOracleFunctionENS0_12NodeTemplateILb1EEE(ptr noundef nonnull align 8 %3)
-          to label %bb.c unwind label %bb.h
+          to label %10 unwind label %bb.h
 
-bb.c:                                             ; preds = %bb.b
+10:                                               ; preds = %bb.b, %bb.a
+  %11 = phi i1 [ %i.f, %bb.b ], [ false, %bb.a ]
+  br i1 %i.e, label %bb.c, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
+
+bb.c:                                             ; preds = %10
   %i.g = load ptr, ptr %3, align 8, !tbaa !28     ; 3 uses
   %i.h = load i64, ptr %i.g, align 8              ; 3 uses
   %i.i = and i64 %i.h, 1152920405095219200
@@ -241,9 +245,9 @@ bb.f:                                             ; preds = %bb.e
   call void @__clang_call_terminate(ptr %i.p) #23
   unreachable
 
-_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.e, %bb.d, %bb.c
+_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.e, %bb.d, %bb.c, %10
   %.pre45 = load ptr, ptr %2, align 8, !tbaa !28  ; 3 uses
-  br i1 %i.f, label %bb.g, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a
+  br i1 %11, label %bb.g, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a
 
 bb.g:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
   %i.q = getelementptr inbounds nuw i8, ptr %.pre45, i64 8
@@ -473,7 +477,7 @@ bb.ad:                                            ; preds = %bb.x, %bb.w
   br i1 %.116, label %.critedge.a, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a
 
 .critedge.a:                                      ; preds = %bb.g, %._crit_edge
-  %i.cq = phi ptr [ %i.y, %bb.g ], [ %.pre46, %._crit_edge ] ; 5 uses
+  %i.cq = phi ptr [ %.pre46, %._crit_edge ], [ %i.y, %bb.g ] ; 5 uses
   store ptr %i.cq, ptr %8, align 8, !tbaa !28
   %i.cr = load i64, ptr %i.cq, align 8            ; 3 uses
   %i.cs = lshr i64 %i.cr, 40
@@ -538,13 +542,13 @@ bb.al:                                            ; preds = %_ZN4cvc58internal12
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %8) #22
   br label %bb.am
 
-_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a: ; preds = %._crit_edge, %bb.a, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
-  %10 = phi ptr [ %.pre45, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ %i.a, %bb.a ], [ %.pre46, %._crit_edge ]
-  store ptr %10, ptr %9, align 8, !tbaa !38
+_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a: ; preds = %._crit_edge, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
+  %12 = phi ptr [ %.pre45, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ %.pre46, %._crit_edge ]
+  store ptr %12, ptr %9, align 8, !tbaa !38
   call void @_ZNK4cvc58internal6EnvObj7rewriteENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 %9)
   br label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.thread
 
-_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.thread: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a, %bb.ah, %bb.ai, %bb.aj
+_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.thread: ; preds = %bb.ah, %bb.ai, %bb.aj, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit34.a
   ret void
 
 bb.am:                                            ; preds = %bb.ad, %bb.al, %bb.h

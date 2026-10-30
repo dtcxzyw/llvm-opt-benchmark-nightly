@@ -205,8 +205,8 @@ bb.a:
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.e, label %.critedge
 
-.critedge:                                        ; preds = %bb.d, %bb.c, %bb.b, %bb.f, %bb.g, %bb.e, %.critedge2.3, %.critedge2.2, %.critedge2.1.a, %.critedge2, %bb.a
-  %2 = phi i32 [ %.pre65.pre.pre, %.critedge2.3 ], [ %.pre59.pre, %.critedge2.2 ], [ %.pre51.pre, %.critedge2.1.a ], [ %.pre42.pre, %.critedge2 ], [ %i.f, %bb.a ], [ %i.w, %bb.b ], [ %i.bh, %bb.e ], [ %i.br, %bb.f ], [ %i.cb, %bb.g ], [ %i.ag, %bb.c ], [ %i.as, %bb.d ] ; 2 uses
+.critedge:                                        ; preds = %bb.d, %bb.f, %bb.g, %bb.e, %.critedge2.3, %.critedge2.2, %.critedge2.1, %.critedge2, %bb.a
+  %2 = phi i32 [ %.pre65.pre.pre, %.critedge2.3 ], [ %.pre59.pre, %.critedge2.2 ], [ %.pre65.pre87, %.critedge2.1 ], [ %.pre42.pre, %.critedge2 ], [ %i.f, %bb.a ], [ %i.bh, %bb.e ], [ %i.br, %bb.f ], [ %i.cb, %bb.g ], [ %i.as, %bb.d ] ; 2 uses
   %i.h = icmp eq i32 %2, 0
   %i.i = and i32 %2, 2
   %i.j = icmp ne i32 %i.i, 0
@@ -238,7 +238,7 @@ bb.b:                                             ; preds = %.critedge2
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 32
   %i.w = load i32, ptr %i.v, align 8, !tbaa !56   ; 2 uses
   %i.x = icmp eq i32 %i.w, 0
-  br i1 %i.x, label %bb.c, label %.critedge
+  br i1 %i.x, label %bb.c, label %.critedge2.1
 
 bb.c:                                             ; preds = %bb.b
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
@@ -253,7 +253,7 @@ bb.c:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !56 ; 2 uses
   %i.ah = icmp eq i32 %i.ag, 0
-  br i1 %i.ah, label %.critedge2.1.a, label %.critedge
+  br i1 %i.ah, label %.critedge2.1.a, label %.critedge2.1
 
 .critedge2.1.a:                                   ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
@@ -266,11 +266,15 @@ bb.c:                                             ; preds = %bb.b
   %.pre48.pre = load i64, ptr %.phi.trans.insert47.phi.trans.insert, align 8
   %.phi.trans.insert49.phi.trans.insert = getelementptr inbounds i8, ptr %1, i64 %.pre48.pre
   %.phi.trans.insert50.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.phi.trans.insert49.phi.trans.insert, i64 32
-  %.pre51.pre = load i32, ptr %.phi.trans.insert50.phi.trans.insert, align 8, !tbaa !56 ; 2 uses
-  %3 = icmp eq i32 %.pre51.pre, 0
+  %.pre51.pre = load i32, ptr %.phi.trans.insert50.phi.trans.insert, align 8, !tbaa !56
+  br label %.critedge2.1
+
+.critedge2.1:                                     ; preds = %bb.b, %bb.c, %.critedge2.1.a
+  %.pre65.pre87 = phi i32 [ %i.w, %bb.b ], [ %.pre51.pre, %.critedge2.1.a ], [ %i.ag, %bb.c ] ; 2 uses
+  %3 = icmp eq i32 %.pre65.pre87, 0
   br i1 %3, label %bb.d, label %.critedge
 
-bb.d:                                             ; preds = %.critedge2.1.a
+bb.d:                                             ; preds = %.critedge2.1
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.am = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi10_M_extractIdEERSiRT_(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(8) %i.al) ; 0 uses
   %i.an = load ptr, ptr %1, align 8, !tbaa !42

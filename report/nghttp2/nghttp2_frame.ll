@@ -202,7 +202,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load i64, ptr %i.e, align 8, !tbaa !77   ; 3 uses
   %i.g = icmp eq i64 %i.c, %i.f
-  br i1 %i.g, label %bytes_compar.exit, label %bb.b
+  br i1 %i.g, label %2, label %bb.b
+
+2:                                                ; preds = %bb.a
+  %3 = tail call i32 @memcmp(ptr noundef readonly %i.a, ptr noundef readonly %i.d, i64 noundef %i.c) #20
+  br label %bytes_compar.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp ult i64 %i.c, %i.f
@@ -212,16 +216,16 @@ bb.c:                                             ; preds = %bb.b
   %i.i = tail call i32 @memcmp(ptr noundef readonly %i.a, ptr noundef readonly %i.d, i64 noundef %i.c) #20 ; 2 uses
   %i.j = icmp eq i32 %i.i, 0
   %spec.select = select i1 %i.j, i32 -1, i32 %i.i
-  br label %bytes_compar.exit16
+  br label %bytes_compar.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.k = tail call i32 @memcmp(ptr noundef readonly %i.a, ptr noundef readonly %i.d, i64 noundef %i.f) #20
   %.21.i = tail call i32 @llvm.umax.i32(i32 %i.k, i32 1)
-  br label %bytes_compar.exit16
+  br label %bytes_compar.exit
 
-bytes_compar.exit:                                ; preds = %bb.a
-  %2 = tail call i32 @memcmp(ptr noundef readonly %i.a, ptr noundef readonly %i.d, i64 noundef %i.c) #20 ; 2 uses
-  %i.l = icmp eq i32 %2, 0
+bytes_compar.exit:                                ; preds = %bb.c, %2, %bb.d
+  %.0.i = phi i32 [ %3, %2 ], [ %spec.select, %bb.c ], [ %.21.i, %bb.d ] ; 2 uses
+  %i.l = icmp eq i32 %.0.i, 0
   br i1 %i.l, label %bb.e, label %bytes_compar.exit16
 
 bb.e:                                             ; preds = %bytes_compar.exit
@@ -255,8 +259,8 @@ bb.i:                                             ; preds = %bb.g
   %.21.i13 = tail call i32 @llvm.umax.i32(i32 %i.z, i32 1)
   br label %bytes_compar.exit16
 
-bytes_compar.exit16:                              ; preds = %bb.c, %bb.d, %bb.i, %bb.h, %bb.f, %bytes_compar.exit
-  %.0 = phi i32 [ %.21.i13, %bb.i ], [ %2, %bytes_compar.exit ], [ %i.v, %bb.f ], [ %..i15, %bb.h ], [ %spec.select, %bb.c ], [ %.21.i, %bb.d ]
+bytes_compar.exit16:                              ; preds = %bb.i, %bb.h, %bb.f, %bytes_compar.exit
+  %.0 = phi i32 [ %.0.i, %bytes_compar.exit ], [ %i.v, %bb.f ], [ %..i15, %bb.h ], [ %.21.i13, %bb.i ]
   ret i32 %.0
 }
 

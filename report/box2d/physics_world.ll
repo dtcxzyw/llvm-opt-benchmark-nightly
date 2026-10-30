@@ -205,24 +205,25 @@ bb.an:                                            ; preds = %bb.am
   %i.qc = extractvalue { <2 x float>, <2 x float> } %i.qb, 0 ; 3 uses
   %i.qd = extractvalue { <2 x float>, <2 x float> } %i.qb, 1 ; 3 uses
   %i.qe = trunc nuw i8 %.1.1.i to i1
-  br i1 %i.qe, label %bb.ao, label %b2ComputeWorldBounds.exit.thread
+  br i1 %i.qe, label %bb.ao, label %b2ComputeWorldBounds.exit
 
 bb.ao:                                            ; preds = %bb.an
   %i.qf = fcmp olt <2 x float> %.sroa.07.2.1.i, %i.qc
   %i.qg = select <2 x i1> %i.qf, <2 x float> %.sroa.07.2.1.i, <2 x float> %i.qc
   %i.qh = fcmp ogt <2 x float> %.sroa.7.2.1.i, %i.qd
   %i.qi = select <2 x i1> %i.qh, <2 x float> %.sroa.7.2.1.i, <2 x float> %i.qd
-  br label %b2ComputeWorldBounds.exit.thread
+  br label %b2ComputeWorldBounds.exit
 
-b2ComputeWorldBounds.exit:                        ; preds = %bb.am
-  %i.qj = trunc nuw i8 %.1.1.i to i1
+b2ComputeWorldBounds.exit:                        ; preds = %bb.am, %bb.an, %bb.ao
+  %.1.2.i = phi i8 [ %.1.1.i, %bb.am ], [ 1, %bb.an ], [ 1, %bb.ao ]
+  %.sroa.07.2.2.i = phi <2 x float> [ %.sroa.07.2.1.i, %bb.am ], [ %i.qc, %bb.an ], [ %i.qg, %bb.ao ]
+  %.sroa.7.2.2.i = phi <2 x float> [ %.sroa.7.2.1.i, %bb.am ], [ %i.qd, %bb.an ], [ %i.qi, %bb.ao ]
+  %i.qj = trunc nuw i8 %.1.2.i to i1
   br i1 %i.qj, label %b2ComputeWorldBounds.exit.thread, label %bb.ap
 
-b2ComputeWorldBounds.exit.thread:                 ; preds = %bb.ao, %bb.an, %b2ComputeWorldBounds.exit
-  %.sroa.7.2.2.i114 = phi <2 x float> [ %.sroa.7.2.1.i, %b2ComputeWorldBounds.exit ], [ %i.qi, %bb.ao ], [ %i.qd, %bb.an ]
-  %.sroa.07.2.2.i113 = phi <2 x float> [ %.sroa.07.2.1.i, %b2ComputeWorldBounds.exit ], [ %i.qg, %bb.ao ], [ %i.qc, %bb.an ]
+b2ComputeWorldBounds.exit.thread:                 ; preds = %b2ComputeWorldBounds.exit
   %i.qk = load ptr, ptr %i.h, align 8, !tbaa !154
-  call void @b2RecAccumulateBounds(ptr noundef %i.qk, <2 x float> %.sroa.07.2.2.i113, <2 x float> %.sroa.7.2.2.i114) #23
+  call void @b2RecAccumulateBounds(ptr noundef %i.qk, <2 x float> %.sroa.07.2.2.i, <2 x float> %.sroa.7.2.2.i) #23
   br label %bb.ap
 
 bb.ap:                                            ; preds = %b2ComputeWorldBounds.exit.thread, %b2ComputeWorldBounds.exit

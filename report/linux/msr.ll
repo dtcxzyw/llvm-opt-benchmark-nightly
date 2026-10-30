@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   %i.z = call i32 (ptr, ...) @_printk(ptr noundef @.str.7) #11 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.f, %bb.g
+bb.i:                                             ; preds = %bb.g, %bb.f, %bb.h
   call void @add_taint(i32 noundef 2, i32 noundef 0) #10
   %i.aa = call i32 @wrmsr_safe_regs_on_cpu(i32 noundef %i.e, ptr noundef nonnull %i.a) #10 ; 2 uses
   %.not26 = icmp eq i32 %i.aa, 0
@@ -210,7 +210,8 @@ bb.i:                                             ; preds = %bb.h, %bb.f, %bb.g
 
 .sink.split:                                      ; preds = %bb.i, %bb.c
   %i.ab = call i64 @_copy_to_user(ptr noundef %i.b, ptr noundef nonnull %i.a, i64 noundef 32) #10
-  %.not27 = icmp eq i64 %i.ab, 0
+  %.fr = freeze i64 %i.ab
+  %.not27 = icmp eq i64 %.fr, 0
   %spec.select32 = select i1 %.not27, i32 0, i32 -14
   br label %bb.j
 

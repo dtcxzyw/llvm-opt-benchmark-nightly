@@ -202,7 +202,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.fh = getelementptr inbounds nuw i8, ptr %i.a, i64 224
   %i.fi = load ptr, ptr %i.fh, align 16
   tail call void @lan9118_init(i32 noundef 1308622848, ptr noundef %i.fi) #6
-  br label %.thread224
+  br label %bb.ai
 
 bb.ah:                                            ; preds = %._crit_edge236
   %i.fj = getelementptr inbounds nuw i8, ptr %i.a, i64 224
@@ -210,15 +210,16 @@ bb.ah:                                            ; preds = %._crit_edge236
   tail call void @smc91c111_init(i32 noundef 1308622848, ptr noundef %i.fk) #6
   br label %bb.ai
 
-bb.ai:                                            ; preds = %bb.ah, %._crit_edge236
-  %.not212 = icmp eq ptr %i.ex, null
+bb.ai:                                            ; preds = %.thread248, %bb.ah, %._crit_edge236
+  %.0195220 = phi ptr [ %i.ex, %._crit_edge236 ], [ null, %.thread248 ], [ %i.ex, %bb.ah ] ; 2 uses
+  %.not212 = icmp eq ptr %.0195220, null
   br i1 %.not212, label %.thread224, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  tail call void @pci_init_nic_devices(ptr noundef nonnull %i.ex, ptr noundef nonnull @.str.44) #6
+  tail call void @pci_init_nic_devices(ptr noundef nonnull %.0195220, ptr noundef nonnull @.str.44) #6
   br label %.thread224
 
-.thread224:                                       ; preds = %.thread248, %.thread, %bb.aj, %bb.ai
+.thread224:                                       ; preds = %.thread, %bb.aj, %bb.ai
   %i.fl = tail call ptr (ptr, i64, ...) @sysbus_create_varargs(ptr noundef nonnull @.str.45, i64 noundef 268443648, ptr noundef null, ptr noundef null) #6
   %i.fm = tail call ptr @qdev_get_child_bus(ptr noundef %i.fl, ptr noundef nonnull @.str.46) #6
   %i.fn = tail call ptr @i2c_slave_create_simple(ptr noundef %i.fm, ptr noundef nonnull @.str.47, i8 noundef zeroext 104) #6 ; 0 uses

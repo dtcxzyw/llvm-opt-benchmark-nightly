@@ -113,7 +113,7 @@ bb.a:
 
 .preheader.i.i.i:                                 ; preds = %bb.d, %bb.a
   %.not2736.i.i.i = icmp eq i32 %i.g, 0
-  br i1 %.not2736.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread, label %.lr.ph38.i.i.i
+  br i1 %.not2736.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, label %.lr.ph38.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %bb.d
   %.035.i.i.i = phi ptr [ %i.t, %bb.d ], [ %i.j, %bb.a ] ; 3 uses
@@ -127,11 +127,11 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i
   %i.q = icmp eq i32 %i.p, %i.c
   %i.r = icmp eq ptr %i.m, %1
   %or.cond.i.i.i = and i1 %i.r, %i.q
-  br i1 %or.cond.i.i.i, label %.loopexit, label %bb.d
+  br i1 %or.cond.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.s = icmp eq ptr %i.m, null
-  br i1 %i.s, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread, label %bb.d
+  br i1 %i.s, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %.035.i.i.i, i64 16 ; 2 uses
@@ -150,26 +150,30 @@ bb.e:                                             ; preds = %.lr.ph38.i.i.i
   %i.y = icmp eq i32 %i.x, %i.c
   %i.z = icmp eq ptr %i.u, %1
   %or.cond31.i.i.i = and i1 %i.z, %i.y
-  br i1 %or.cond31.i.i.i, label %.loopexit, label %bb.g
+  br i1 %or.cond31.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph38.i.i.i
   %i.aa = icmp eq ptr %i.u, null
   %i.ab = getelementptr inbounds nuw i8, ptr %.137.i.i.i, i64 16 ; 2 uses
   %.not27.i.i.i = icmp eq ptr %i.ab, %i.j
   %or.cond43.i.i.i = select i1 %i.aa, i1 true, i1 %.not27.i.i.i
-  br i1 %or.cond43.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread, label %.lr.ph38.i.i.i.backedge
+  br i1 %or.cond43.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, label %.lr.ph38.i.i.i.backedge
 
 bb.g:                                             ; preds = %bb.e
   %.old.i.i.i = getelementptr inbounds nuw i8, ptr %.137.i.i.i, i64 16 ; 2 uses
   %.not27.old.i.i.i = icmp eq ptr %.old.i.i.i, %i.j
-  br i1 %.not27.old.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread, label %.lr.ph38.i.i.i.backedge
+  br i1 %.not27.old.i.i.i, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, label %.lr.ph38.i.i.i.backedge
 
 .lr.ph38.i.i.i.backedge:                          ; preds = %bb.g, %bb.f
   %.137.i.i.i.be = phi ptr [ %i.ab, %bb.f ], [ %.old.i.i.i, %bb.g ]
   br label %.lr.ph38.i.i.i, !llvm.loop !35
 
-.loopexit:                                        ; preds = %bb.b, %bb.e
-  %.026.i.i.i = phi ptr [ %.137.i.i.i, %bb.e ], [ %.035.i.i.i, %bb.b ]
+_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i: ; preds = %bb.c, %bb.b, %bb.g, %bb.f, %bb.e, %.preheader.i.i.i
+  %.026.i.i.i = phi ptr [ null, %.preheader.i.i.i ], [ %.137.i.i.i, %bb.e ], [ null, %bb.g ], [ null, %bb.f ], [ null, %bb.c ], [ %.035.i.i.i, %bb.b ] ; 2 uses
+  %.not = icmp eq ptr %.026.i.i.i, null
+  br i1 %.not, label %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread, label %.loopexit
+
+.loopexit:                                        ; preds = %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i
   %i.ac = getelementptr inbounds nuw i8, ptr %.026.i.i.i, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !45 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
@@ -203,7 +207,7 @@ _ZNK14core_hashtableI14obj_hash_entryI4exprE12obj_ptr_hashIS1_E6ptr_eqIS1_EE5beg
   %i.ap = load ptr, ptr %.sroa.0.1.i, align 8, !tbaa !19
   br label %bb.k
 
-_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread: ; preds = %bb.c, %bb.g, %bb.f, %.preheader.i.i.i, %.loopexit
+_ZNK7obj_mapI4sortPN14struct_factory9value_setEE4findEPS0_RS3_.exit.thread: ; preds = %_ZNK7obj_mapI4sortPN14struct_factory9value_setEE9find_coreEPS0_.exit.i, %.loopexit
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 80
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   store ptr %1, ptr %2, align 8, !tbaa !22
@@ -296,7 +300,7 @@ bb.d:                                             ; preds = %_ZNK22finite_set_re
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNK22finite_set_recognizers13is_finite_setEP4sortRS1_.exit.a, %bb.d
-  %.033 = phi ptr [ null, %bb.d ], [ %i.s, %_ZNK22finite_set_recognizers13is_finite_setEP4sortRS1_.exit.a ]
+  %.033 = phi ptr [ %i.s, %_ZNK22finite_set_recognizers13is_finite_setEP4sortRS1_.exit.a ], [ null, %bb.d ]
   %i.t = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN14struct_factory13get_value_setEP4sort(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull %1)
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !70   ; 4 uses

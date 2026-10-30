@@ -205,30 +205,35 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN3tbb6detail2r18governor13one_time_initEv.exit: ; preds = %bb.a, %bb.b
   %i.c = tail call noundef zeroext i1 @_ZN3tbb6detail2r112dynamic_linkEPKcPKNS1_23dynamic_link_descriptorEmPPvi(ptr noundef nonnull @.str.18, ptr noundef nonnull @_ZN3tbb6detail2r1L16TbbBindLinkTableE, i64 noundef 8, ptr noundef null, i32 noundef 26)
-  br i1 %i.c, label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit.a, label %bb.c
+  br i1 %i.c, label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN3tbb6detail2r18governor13one_time_initEv.exit
   %i.d = tail call noundef zeroext i1 @_ZN3tbb6detail2r112dynamic_linkEPKcPKNS1_23dynamic_link_descriptorEmPPvi(ptr noundef nonnull @.str.19, ptr noundef nonnull @_ZN3tbb6detail2r1L16TbbBindLinkTableE, i64 noundef 8, ptr noundef null, i32 noundef 26)
-  br i1 %i.d, label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit.a, label %bb.d
+  br i1 %i.d, label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = tail call noundef zeroext i1 @_ZN3tbb6detail2r112dynamic_linkEPKcPKNS1_23dynamic_link_descriptorEmPPvi(ptr noundef nonnull @.str.20, ptr noundef nonnull @_ZN3tbb6detail2r1L16TbbBindLinkTableE, i64 noundef 8, ptr noundef null, i32 noundef 26)
-  br i1 %i.e, label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit.a, label %bb.e
+  %spec.select = select i1 %i.e, ptr @.str.20, ptr null
+  br label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit
 
-_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit.a: ; preds = %bb.d, %bb.c, %_ZN3tbb6detail2r18governor13one_time_initEv.exit
-  %.ph = phi ptr [ @.str.18, %_ZN3tbb6detail2r18governor13one_time_initEv.exit ], [ @.str.19, %bb.c ], [ @.str.20, %bb.d ] ; 2 uses
+_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit: ; preds = %bb.d, %_ZN3tbb6detail2r18governor13one_time_initEv.exit, %bb.c
+  %1 = phi ptr [ @.str.18, %_ZN3tbb6detail2r18governor13one_time_initEv.exit ], [ %spec.select, %bb.d ], [ @.str.19, %bb.c ] ; 3 uses
+  %.not.not = icmp eq ptr %1, null
+  br i1 %.not.not, label %bb.e, label %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit.a
+
+_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit.a: ; preds = %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %0, ptr noundef nonnull align 16 dereferenceable(24) @__const._ZN3tbb6detail2r115system_topology19initialization_implEv.optional_set_assertion_handler, i64 24, i1 false)
-  %i.f = call noundef zeroext i1 @_ZN3tbb6detail2r112dynamic_linkEPKcPKNS1_23dynamic_link_descriptorEmPPvi(ptr noundef nonnull %.ph, ptr noundef nonnull %0, i64 noundef 1, ptr noundef null, i32 noundef 26) ; 0 uses
+  %i.f = call noundef zeroext i1 @_ZN3tbb6detail2r112dynamic_linkEPKcPKNS1_23dynamic_link_descriptorEmPPvi(ptr noundef nonnull %1, ptr noundef nonnull %0, i64 noundef 1, ptr noundef null, i32 noundef 26) ; 0 uses
   %i.g = load ptr, ptr @_ZN3tbb6detail2r125set_assertion_handler_ptrE, align 8, !tbaa !108
   call void %i.g(ptr noundef nonnull @_ZN3tbb6detail2r117assertion_failureEPKciS3_S3_)
   %i.h = load ptr, ptr @_ZN3tbb6detail2r1L30initialize_system_topology_ptrE, align 8, !tbaa !108
   call void %i.h(i64 noundef 1, ptr noundef nonnull align 4 dereferenceable(4) @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_116numa_nodes_countE, ptr noundef nonnull align 8 dereferenceable(8) @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_118numa_nodes_indexesE, ptr noundef nonnull align 4 dereferenceable(4) @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_116core_types_countE, ptr noundef nonnull align 8 dereferenceable(8) @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_118core_types_indexesE)
-  call void (ptr, ptr, ...) @_ZN3tbb6detail2r121PrintExtraVersionInfoEPKcS3_z(ptr noundef nonnull @.str.6, ptr noundef nonnull %.ph)
+  call void (ptr, ptr, ...) @_ZN3tbb6detail2r121PrintExtraVersionInfoEPKcS3_z(ptr noundef nonnull @.str.6, ptr noundef nonnull %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #8
   br label %bb.f
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %_ZN3tbb6detail2r115system_topology12_GLOBAL__N_126load_tbbbind_shared_objectEv.exit
   store i32 1, ptr @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_116numa_nodes_countE, align 4, !tbaa !110
   store ptr @_ZZN3tbb6detail2r115system_topology19initialization_implEvE11dummy_index, ptr @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_118numa_nodes_indexesE, align 8, !tbaa !118
   store i32 1, ptr @_ZN3tbb6detail2r115system_topology12_GLOBAL__N_116core_types_countE, align 4, !tbaa !110

@@ -183,7 +183,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.f, label %bb.b, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %bb.a
-  %.2.ph = phi i8 [ 0, %bb.a ], [ %i.e, %.lr.ph ], [ 0, %bb.b ]
+  %.2.ph = phi i8 [ 0, %bb.a ], [ 0, %bb.b ], [ %i.e, %.lr.ph ]
   ret i8 %.2.ph
 }
 
@@ -327,7 +327,7 @@ bb.a:                                             ; preds = %.lr.ph.i
   %i.g = icmp eq i8 %i.f, 0
   br i1 %i.g, label %bb.a, label %l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Array_contains___at___00Lean_registerInternalExceptionId_spec__0_spec__0.exit
 
-l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Array_contains___at___00Lean_registerInternalExceptionId_spec__0_spec__0.exit: ; preds = %.lr.ph.i, %bb.a, %lean_nat_lt.exit
+l___private_Init_Data_Array_Basic_0__Array_anyMUnsafe_any___at___00Array_contains___at___00Lean_registerInternalExceptionId_spec__0_spec__0.exit: ; preds = %bb.a, %.lr.ph.i, %lean_nat_lt.exit
   %.0 = phi i8 [ 0, %lean_nat_lt.exit ], [ 0, %bb.a ], [ %i.f, %.lr.ph.i ]
   ret i8 %.0
 }
@@ -419,7 +419,7 @@ bb.a:
   %.val.i = load i64, ptr %i.c, align 8, !tbaa !16
   %.mask.i = and i64 %.val.i, 9223372036854775807 ; 2 uses
   %.not.i33 = icmp eq i64 %.mask.i, 0
-  br i1 %.not.i33, label %.loopexit, label %.lr.ph.i.preheader.i
+  br i1 %.not.i33, label %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit, label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -428,7 +428,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.i.i
   %i.e = add nuw nsw i64 %.01624.i.i, 1           ; 2 uses
   %.not.i14.i = icmp eq i64 %i.e, %.mask.i
-  br i1 %.not.i14.i, label %.loopexit, label %.lr.ph.i.i
+  br i1 %.not.i14.i, label %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph.i.preheader.i
   %.01624.i.i = phi i64 [ %i.e, %bb.b ], [ 0, %.lr.ph.i.preheader.i ] ; 2 uses
@@ -436,9 +436,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !14
   %i.h = tail call zeroext i8 @lean_name_eq(ptr noundef %0, ptr noundef %i.g) #3 ; 2 uses
   %i.i = icmp eq i8 %i.h, 0
-  br i1 %i.i, label %bb.b, label %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit.a
+  br i1 %i.i, label %bb.b, label %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit
 
-.loopexit:                                        ; preds = %bb.b, %bb.a
+l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit: ; preds = %bb.b, %.lr.ph.i.i, %bb.a
+  %.0.i = phi i8 [ 0, %bb.a ], [ %i.h, %.lr.ph.i.i ], [ 0, %bb.b ] ; 2 uses
+  %1 = icmp eq i8 %.0.i, 0
+  br i1 %1, label %.loopexit, label %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit.a
+
+.loopexit:                                        ; preds = %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit
   %i.j = tail call ptr @lean_st_ref_take(ptr noundef %i.a) #3
   %i.k = tail call ptr @lean_array_push(ptr noundef %i.j, ptr noundef %0) #3
   %i.l = tail call ptr @lean_st_ref_set(ptr noundef %i.a, ptr noundef %i.k) #3 ; 0 uses
@@ -473,7 +478,7 @@ bb.f:                                             ; preds = %lean_dec.exit27
   tail call void @lean_internal_panic_out_of_memory() #4
   unreachable
 
-l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit.a: ; preds = %.lr.ph.i.i
+l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit.a: ; preds = %l_Array_contains___at___00Lean_registerInternalExceptionId_spec__0.exit
   %i.u = load i32, ptr %i.b, align 8, !tbaa !11   ; 3 uses
   %i.v = icmp sgt i32 %i.u, 1
   br i1 %i.v, label %bb.g, label %bb.h, !prof !12
@@ -492,7 +497,7 @@ bb.i:                                             ; preds = %bb.h
   br label %lean_dec.exit
 
 lean_dec.exit:                                    ; preds = %bb.i, %bb.h, %bb.g
-  %i.x = tail call ptr @l_Lean_Name_toStringWithToken___at___00Lean_Name_toString_spec__0(ptr noundef %0, i8 noundef zeroext %i.h) #3 ; 4 uses
+  %i.x = tail call ptr @l_Lean_Name_toStringWithToken___at___00Lean_Name_toString_spec__0(ptr noundef %0, i8 noundef zeroext %.0.i) #3 ; 4 uses
   %i.y = tail call ptr @lean_string_append(ptr noundef nonnull @l_Lean_registerInternalExceptionId___closed__0_value, ptr noundef %i.x) #3
   %i.z = load i32, ptr %i.x, align 4, !tbaa !11   ; 3 uses
   %i.aa = icmp sgt i32 %i.z, 1

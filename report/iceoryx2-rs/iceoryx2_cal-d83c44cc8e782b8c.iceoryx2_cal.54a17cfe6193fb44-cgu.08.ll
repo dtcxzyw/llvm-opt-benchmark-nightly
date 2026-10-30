@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = load i64, ptr %i.r, align 8, !noalias !105, !noundef !5
   %i.t = add i64 %i.q, %i.s
   %i.u = icmp eq i64 %i.p, %i.t
-  br i1 %i.u, label %.thread, label %bb.c
+  br i1 %i.u, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !105
@@ -210,6 +210,12 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.w = cmpxchg ptr %i.v, i8 1, i8 0 acquire monotonic, align 1, !noalias !105
   %i.x = extractvalue { i8, i1 } %i.w, 1
   br i1 %i.x, label %_RNvXs9_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexINtB7_26CommunicationChannelSenderyE8try_send.exit, label %bb.d, !prof !12
+
+.critedge:                                        ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 2, ptr %3, align 8, !alias.scope !102
+  store i64 2, ptr %0, align 8, !alias.scope !102
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RNvNtCs8Chj7Szqq0n_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @74) #12, !noalias !105
@@ -228,18 +234,19 @@ _RNvXs9_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNt
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.ac, ptr %i.ad, align 8, !alias.scope !102
   %i.ae = icmp eq i64 %i.ab, 2
-  %i.af = trunc i64 %i.ac to i8                   ; 2 uses
+  %i.af = trunc i64 %i.ac to i8
   br i1 %i.ae, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %_RNvXs9_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexINtB7_26CommunicationChannelSenderyE8try_send.exit
-  %i.ag = icmp eq i8 %i.af, 2
+bb.e:                                             ; preds = %.critedge, %_RNvXs9_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexINtB7_26CommunicationChannelSenderyE8try_send.exit
+  %4 = phi i8 [ 2, %.critedge ], [ %i.af, %_RNvXs9_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexINtB7_26CommunicationChannelSenderyE8try_send.exit ] ; 2 uses
+  %i.ag = icmp eq i8 %4, 2
   br i1 %i.ag, label %.thread, label %bb.g
 
 bb.f:                                             ; preds = %_RNvXs9_NtNtCs7gufeB8TUC6_12iceoryx2_cal21communication_channel13process_localNtB5_6DuplexINtB7_26CommunicationChannelSenderyE8try_send.exit, %.thread, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   ret void
 
-.thread:                                          ; preds = %bb.b, %bb.e
+.thread:                                          ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %i.h, ptr %i.f, align 8
@@ -258,7 +265,7 @@ bb.f:                                             ; preds = %_RNvXs9_NtNtCs7gufe
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store i8 %i.af, ptr %i.d, align 1
+  store i8 %4, ptr %i.d, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.h, ptr %i.c, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8

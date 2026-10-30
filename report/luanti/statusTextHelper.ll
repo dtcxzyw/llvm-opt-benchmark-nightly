@@ -202,22 +202,26 @@ bb.f:                                             ; preds = %_ZN7irr_ptrIN3gui14
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !32   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.s = icmp eq ptr %i.q, %i.r
-  br i1 %i.s, label %_ZN7irr_ptrIN3gui14IGUIStaticTextEED2Ev.exit, label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a
+  br i1 %i.s, label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit, label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a
 
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a: ; preds = %bb.f
   %i.t = load i64, ptr %i.r, align 8, !tbaa !33
   %i.u = shl i64 %i.t, 2
   %i.v = add i64 %i.u, 4
   tail call void @_ZdlPvm(ptr noundef %i.q, i64 noundef %i.v) #14
-  %.pre = load ptr, ptr %0, align 8, !tbaa !13    ; 3 uses
-  %.not.i.i1 = icmp eq ptr %.pre, null
+  %.pre = load ptr, ptr %0, align 8, !tbaa !13
+  br label %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
+
+_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %bb.f, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a
+  %1 = phi ptr [ %.pre, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a ], [ null, %bb.f ] ; 3 uses
+  %.not.i.i1 = icmp eq ptr %1, null
   br i1 %.not.i.i1, label %_ZN7irr_ptrIN3gui14IGUIStaticTextEED2Ev.exit, label %bb.g
 
-bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a
-  %i.w = load ptr, ptr %.pre, align 8, !tbaa !28
+bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
+  %i.w = load ptr, ptr %1, align 8, !tbaa !28
   %i.x = getelementptr i8, ptr %i.w, i64 -24
   %i.y = load i64, ptr %i.x, align 8
-  %i.z = getelementptr inbounds i8, ptr %.pre, i64 %i.y ; 3 uses
+  %i.z = getelementptr inbounds i8, ptr %1, i64 %i.y ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !30
   %i.ac = add nsw i32 %i.ab, -1                   ; 2 uses
@@ -232,7 +236,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void %i.af(ptr noundef nonnull align 8 dereferenceable(12) %i.z) #13, !inline_history !0
   br label %_ZN7irr_ptrIN3gui14IGUIStaticTextEED2Ev.exit
 
-_ZN7irr_ptrIN3gui14IGUIStaticTextEED2Ev.exit:     ; preds = %bb.f, %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit.a, %bb.g, %bb.h
+_ZN7irr_ptrIN3gui14IGUIStaticTextEED2Ev.exit:     ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit, %bb.g, %bb.h
   ret void
 
 bb.i:                                             ; preds = %bb.b

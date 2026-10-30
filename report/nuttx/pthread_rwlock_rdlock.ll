@@ -69,6 +69,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %.not18 = icmp eq ptr %2, null
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   br label %bb.b
@@ -76,25 +77,29 @@ bb.a:
 bb.b:                                             ; preds = %.preheader, %bb.i
   %i.e = load i32, ptr %i.b, align 4
   %.not.i = icmp eq i32 %i.e, 0
-  br i1 %.not.i, label %bb.c, label %bb.f
+  br i1 %.not.i, label %bb.c, label %tryrdlock.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load i8, ptr %i.c, align 8, !range !7, !noundef !8
   %i.g = trunc nuw i8 %i.f to i1
-  br i1 %i.g, label %bb.f, label %bb.d
+  br i1 %i.g, label %tryrdlock.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.h = load i32, ptr %3, align 8                ; 2 uses
   %i.i = icmp eq i32 %i.h, -1
-  br i1 %i.i, label %tryrdlock.exit.a, label %bb.e
+  br i1 %i.i, label %tryrdlock.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.j = add nuw i32 %i.h, 1
   store i32 %i.j, ptr %3, align 8
   br label %tryrdlock.exit.a
 
-bb.f:                                             ; preds = %bb.b, %bb.c
+tryrdlock.exit:                                   ; preds = %bb.b, %bb.c, %bb.d
+  %4 = phi i1 [ false, %bb.d ], [ true, %bb.b ], [ true, %bb.c ]
+  %.0.i = phi i32 [ 11, %bb.d ], [ 16, %bb.b ], [ 16, %bb.c ]
+  br i1 %4, label %bb.f, label %tryrdlock.exit.a
+
+bb.f:                                             ; preds = %tryrdlock.exit
   br i1 %.not18, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -110,8 +115,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.not19 = icmp eq i32 %.0, 0
   br i1 %.not19, label %bb.b, label %tryrdlock.exit.a, !llvm.loop !9
 
-tryrdlock.exit.a:                                 ; preds = %bb.i, %bb.e, %bb.d
-  %.1 = phi i32 [ 11, %bb.d ], [ 0, %bb.e ], [ %.0, %bb.i ]
+tryrdlock.exit.a:                                 ; preds = %bb.i, %tryrdlock.exit, %bb.e
+  %.1 = phi i32 [ 0, %bb.e ], [ %.0.i, %tryrdlock.exit ], [ %.0, %bb.i ]
   %i.m = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %0) #4 ; 0 uses
   br label %bb.j
 

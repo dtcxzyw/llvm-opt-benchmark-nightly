@@ -198,7 +198,7 @@ bb.a:
   %i.c = alloca [1000 x i8], align 16             ; 13 uses
   %i.d = load i32, ptr @cmodule_list.1, align 8, !tbaa !13 ; 2 uses
   %i.e = icmp sgt i32 %i.d, 0
-  br i1 %i.e, label %.lr.ph.i, label %.loopexit
+  br i1 %i.e, label %.lr.ph.i, label %namelist_find.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.f = load ptr, ptr @cmodule_list.0, align 8, !tbaa !15
@@ -208,18 +208,24 @@ bb.a:
 bb.b:                                             ; preds = %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.c, !llvm.loop !1
+  br i1 %exitcond.not.i, label %namelist_find.exit, label %bb.c, !llvm.loop !1
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.f, i64 %indvars.iv.i ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !18   ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !18
   %i.i = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.h, ptr noundef nonnull readonly dereferenceable(1) %1) #21
   %.not.not.i = icmp eq i32 %i.i, 0
-  br i1 %.not.not.i, label %namelist_find.exit.a, label %bb.b
+  br i1 %.not.not.i, label %namelist_find.exit, label %bb.b
 
-namelist_find.exit.a:                             ; preds = %bb.c
-  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+namelist_find.exit:                               ; preds = %bb.b, %bb.c, %bb.a
+  %.2.i = phi ptr [ null, %bb.a ], [ %i.g, %bb.c ], [ null, %bb.b ] ; 3 uses
+  %.not = icmp eq ptr %.2.i, null
+  br i1 %.not, label %.loopexit, label %namelist_find.exit.a
+
+namelist_find.exit.a:                             ; preds = %namelist_find.exit
+  %3 = load ptr, ptr %.2.i, align 8, !tbaa !18
+  %i.j = getelementptr inbounds nuw i8, ptr %.2.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !19   ; 2 uses
   %i.l = load i32, ptr @init_module_list.1, align 8, !tbaa !13 ; 4 uses
   %i.m = load i32, ptr @init_module_list.2, align 4, !tbaa !14
@@ -246,7 +252,7 @@ bb.e:                                             ; preds = %bb.d, %namelist_fin
   store i32 %i.w, ptr @init_module_list.1, align 8, !tbaa !13
   %i.x = sext i32 %i.u to i64
   %i.y = getelementptr inbounds [24 x i8], ptr %i.v, i64 %i.x ; 3 uses
-  %i.z = tail call noalias ptr @strdup(ptr noundef nonnull readonly %i.h) #20
+  %i.z = tail call noalias ptr @strdup(ptr noundef readonly %3) #20
   store ptr %i.z, ptr %i.y, align 8, !tbaa !18
   %.not.i = icmp eq ptr %i.k, null
   br i1 %.not.i, label %namelist_add.exit, label %bb.f
@@ -261,10 +267,10 @@ namelist_add.exit:                                ; preds = %bb.e, %bb.f
   store ptr %.sink.i, ptr %i.ab, align 8, !tbaa !19
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store i32 0, ptr %i.ac, align 8, !tbaa !20
-  %i.ad = tail call ptr @JS_NewCModule(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull @js_module_dummy_init) #20
+  %i.ad = tail call ptr @JS_NewCModule(ptr noundef %0, ptr noundef %1, ptr noundef nonnull @js_module_dummy_init) #20
   br label %bb.q
 
-.loopexit:                                        ; preds = %bb.b, %bb.a
+.loopexit:                                        ; preds = %namelist_find.exit
   %i.ae = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #21 ; 2 uses
   %.not.i39 = icmp ult i64 %i.ae, 3
   br i1 %.not.i39, label %js__has_suffix.exit.thread, label %js__has_suffix.exit

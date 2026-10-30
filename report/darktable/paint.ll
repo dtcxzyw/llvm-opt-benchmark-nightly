@@ -204,16 +204,16 @@ bb.a:
   %i.a = add nsw i32 %2, 1
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 3
-  %i.d = tail call noalias ptr @malloc(i64 noundef %i.c) #10 ; 8 uses
+  %i.d = tail call noalias ptr @malloc(i64 noundef %i.c) #10 ; 9 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = fadd reassoc nsz arcp contract afn double %6, f0x400921FB54442D18 ; 3 uses
-  %i.f = fadd reassoc nsz arcp contract afn double %7, f0x400921FB54442D18
+  %i.f = fadd reassoc nsz arcp contract afn double %7, f0x400921FB54442D18 ; 2 uses
   %i.g = sitofp reassoc nsz arcp contract afn i32 %2 to double ; 4 uses
   %i.h = icmp sgt i32 %2, 0
-  br i1 %i.h, label %iter.check, label %._crit_edge49
+  br i1 %i.h, label %iter.check, label %._crit_edge49.critedge
 
 iter.check:                                       ; preds = %bb.b
   %i.i = fsub reassoc nsz arcp contract afn double %7, %6 ; 3 uses
@@ -344,7 +344,13 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.lr.ph48, label %vec.epilog.scalar.ph, !llvm.loop !64
 
-._crit_edge49:                                    ; preds = %bb.c, %bb.b
+._crit_edge49.critedge:                           ; preds = %bb.b
+  %11 = sext i32 %2 to i64
+  %12 = getelementptr inbounds [8 x i8], ptr %i.d, i64 %11
+  store double %i.f, ptr %12, align 8, !tbaa !15
+  br label %._crit_edge49
+
+._crit_edge49:                                    ; preds = %bb.c, %._crit_edge49.critedge
   tail call void @free(ptr noundef nonnull %i.d) #8
   br label %bb.d
 

@@ -75,7 +75,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.q = load i32, ptr %i.p, align 8, !tbaa !60
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 20
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !61   ; 4 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !61   ; 3 uses
   %.not111.i = icmp sgt i32 %2, 0                 ; 2 uses
   br i1 %.not111.i, label %.lr.ph.preheader.i, label %._crit_edge.i
 
@@ -189,7 +189,8 @@ opal_obj_run_destructors.exit93.i:                ; preds = %.lr.ph.i90.i, %bb.m
   br label %mca_topo_base_cart_allocate.exit.thread
 
 bb.n:                                             ; preds = %._crit_edge.i
-  %.not85.i = icmp sge i32 %i.s, %.075.lcssa.i
+  %.not85.i = icmp sge i32 %i.s, %.075.lcssa.i    ; 2 uses
+  %.040 = select i1 %.not85.i, i32 -32766, i32 %i.s ; 2 uses
   %i.bc = icmp eq i32 %i.s, -32766
   %or.cond = or i1 %i.bc, %.not85.i
   br i1 %or.cond, label %.thread109.i, label %bb.r
@@ -324,7 +325,7 @@ bb.x:                                             ; preds = %bb.t
 
 .lr.ph118.i:                                      ; preds = %.lr.ph118.i, %.lr.ph118.preheader.i.new
   %indvars.iv121.i = phi i64 [ 0, %.lr.ph118.preheader.i.new ], [ %indvars.iv.next122.i.1, %.lr.ph118.i ] ; 4 uses
-  %.0116.i = phi i32 [ %i.s, %.lr.ph118.preheader.i.new ], [ %i.dg, %.lr.ph118.i ] ; 2 uses
+  %.0116.i = phi i32 [ %.040, %.lr.ph118.preheader.i.new ], [ %i.dg, %.lr.ph118.i ] ; 2 uses
   %.1114.i = phi i32 [ %.075.lcssa.i, %.lr.ph118.preheader.i.new ], [ %i.dd, %.lr.ph118.i ]
   %niter = phi i64 [ 0, %.lr.ph118.preheader.i.new ], [ %niter.next.1, %.lr.ph118.i ]
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %indvars.iv121.i
@@ -353,7 +354,7 @@ mca_topo_base_cart_allocate.exit.loopexit.unr-lcssa: ; preds = %.lr.ph118.i
 
 .lr.ph118.i.epil.preheader:                       ; preds = %mca_topo_base_cart_allocate.exit.loopexit.unr-lcssa, %.lr.ph118.preheader.i
   %indvars.iv121.i.epil.init = phi i64 [ 0, %.lr.ph118.preheader.i ], [ %indvars.iv.next122.i.1, %mca_topo_base_cart_allocate.exit.loopexit.unr-lcssa ] ; 2 uses
-  %.0116.i.epil.init = phi i32 [ %i.s, %.lr.ph118.preheader.i ], [ %i.dg, %mca_topo_base_cart_allocate.exit.loopexit.unr-lcssa ]
+  %.0116.i.epil.init = phi i32 [ %.040, %.lr.ph118.preheader.i ], [ %i.dg, %mca_topo_base_cart_allocate.exit.loopexit.unr-lcssa ]
   %.1114.i.epil.init = phi i32 [ %.075.lcssa.i, %.lr.ph118.preheader.i ], [ %i.dd, %mca_topo_base_cart_allocate.exit.loopexit.unr-lcssa ]
   %lcmp.mod61 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod61)
@@ -487,8 +488,8 @@ bb.ai:                                            ; preds = %bb.ah
   store i32 %i.ff, ptr %i.fd, align 8, !tbaa !75
   br label %mca_topo_base_cart_allocate.exit.thread
 
-mca_topo_base_cart_allocate.exit.thread:          ; preds = %opal_thread_add_fetch_32.exit.i, %opal_obj_run_destructors.exit107.i, %opal_obj_run_destructors.exit93.i, %opal_thread_add_fetch_32.exit88.i, %opal_obj_run_destructors.exit.i, %bb.c, %opal_thread_add_fetch_32.exit102.i, %bb.ah, %opal_thread_add_fetch_32.exit21, %opal_obj_run_destructors.exit27, %opal_thread_add_fetch_32.exit, %opal_obj_run_destructors.exit, %bb.ai
-  %.0 = phi i32 [ 0, %bb.ai ], [ 0, %bb.ah ], [ -2, %opal_thread_add_fetch_32.exit ], [ %i.ef, %opal_thread_add_fetch_32.exit21 ], [ -2, %opal_obj_run_destructors.exit ], [ %i.ef, %opal_obj_run_destructors.exit27 ], [ -1, %opal_thread_add_fetch_32.exit.i ], [ -2, %opal_obj_run_destructors.exit107.i ], [ 12, %opal_obj_run_destructors.exit93.i ], [ 12, %opal_thread_add_fetch_32.exit88.i ], [ -1, %opal_obj_run_destructors.exit.i ], [ -2, %bb.c ], [ -2, %opal_thread_add_fetch_32.exit102.i ]
+mca_topo_base_cart_allocate.exit.thread:          ; preds = %opal_thread_add_fetch_32.exit.i, %opal_obj_run_destructors.exit107.i, %opal_obj_run_destructors.exit93.i, %opal_thread_add_fetch_32.exit88.i, %opal_obj_run_destructors.exit.i, %opal_thread_add_fetch_32.exit102.i, %bb.c, %bb.ah, %opal_thread_add_fetch_32.exit21, %opal_obj_run_destructors.exit27, %opal_thread_add_fetch_32.exit, %opal_obj_run_destructors.exit, %bb.ai
+  %.0 = phi i32 [ 0, %bb.ai ], [ 0, %bb.ah ], [ -2, %opal_thread_add_fetch_32.exit ], [ %i.ef, %opal_thread_add_fetch_32.exit21 ], [ -2, %opal_obj_run_destructors.exit ], [ %i.ef, %opal_obj_run_destructors.exit27 ], [ -1, %opal_thread_add_fetch_32.exit.i ], [ -2, %opal_obj_run_destructors.exit107.i ], [ 12, %opal_obj_run_destructors.exit93.i ], [ 12, %opal_thread_add_fetch_32.exit88.i ], [ -1, %opal_obj_run_destructors.exit.i ], [ -2, %opal_thread_add_fetch_32.exit102.i ], [ -2, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.0

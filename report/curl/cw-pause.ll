@@ -31,7 +31,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal i32 @cw_pause_write(ptr noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) #1 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !12   ; 2 uses
   %i.d = tail call zeroext i1 @Curl_cwriter_is_content_decoding(ptr noundef %0) #5
@@ -225,7 +225,7 @@ bb.w:                                             ; preds = %bb.u, %bb.t
   %i.bg = load ptr, ptr @Curl_ccalloc, align 8, !tbaa !85
   %i.bh = call ptr %i.bg(i64 noundef 1, i64 noundef 80) #5, !inline_history !89 ; 5 uses
   %.not.i = icmp eq ptr %i.bh, null
-  br i1 %.not.i, label %.thread144, label %bb.x
+  br i1 %.not.i, label %.thread141, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 72
@@ -240,6 +240,10 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.x
   call void @Curl_bufq_init(ptr noundef nonnull %i.bj, i64 noundef %.290, i64 noundef 1) #5
   br label %cw_pause_buf_create.exit
+
+.thread141:                                       ; preds = %bb.w
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  br label %.thread
 
 cw_pause_buf_create.exit:                         ; preds = %bb.z, %bb.y
   %i.bk = load ptr, ptr %i.e, align 8, !tbaa !16
@@ -288,8 +292,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   %.not129 = icmp eq i32 %i.bl, 0
   br i1 %.not129, label %bb.ah, label %.thread144
 
-.thread144:                                       ; preds = %bb.ag, %bb.w
-  %.5101.ph = phi i32 [ %i.bl, %bb.ag ], [ 27, %bb.w ]
+.thread144:                                       ; preds = %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   br label %.thread
 
@@ -304,8 +307,8 @@ bb.ah:                                            ; preds = %bb.ag
   %.not130 = icmp eq i64 %i.bz, 0
   br i1 %.not130, label %.thread, label %bb.t, !llvm.loop !90
 
-.thread:                                          ; preds = %bb.m, %bb.n, %bb.g, %.lr.ph201, %bb.ah, %.lr.ph174.split, %bb.q, %bb.r, %bb.s, %.thread144, %bb.c
-  %.6 = phi i32 [ %i.h, %bb.c ], [ %.5101.ph, %.thread144 ], [ 0, %bb.g ], [ 0, %bb.ah ], [ %i.ao, %.lr.ph174.split ], [ %i.ao, %bb.s ], [ %i.ao, %bb.r ], [ %i.ao, %bb.q ], [ %i.u, %.lr.ph201 ], [ 0, %bb.n ], [ %i.aa, %bb.m ]
+.thread:                                          ; preds = %bb.m, %bb.n, %bb.g, %.lr.ph201, %bb.ah, %.lr.ph174.split, %bb.q, %bb.r, %bb.s, %.thread141, %.thread144, %bb.c
+  %.6 = phi i32 [ %i.h, %bb.c ], [ %i.bl, %.thread144 ], [ 0, %bb.g ], [ 27, %.thread141 ], [ 0, %bb.ah ], [ %i.ao, %.lr.ph174.split ], [ %i.ao, %bb.s ], [ %i.ao, %bb.r ], [ %i.ao, %bb.q ], [ %i.u, %.lr.ph201 ], [ 0, %bb.n ], [ %i.aa, %bb.m ]
   ret i32 %.6
 }
 

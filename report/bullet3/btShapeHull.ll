@@ -89,28 +89,33 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.k = load i8, ptr %i.j, align 8, !range !29
   %i.l = trunc nuw i8 %i.k to i1
   %or.cond.i2 = select i1 %.not.i.i1, i1 %i.l, i1 false
-  br i1 %or.cond.i2, label %bb.d, label %_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit
+  br i1 %or.cond.i2, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.i)
-          to label %bb.e unwind label %bb.j
+          to label %._crit_edge unwind label %bb.j
 
-bb.e:                                             ; preds = %bb.d
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !25  ; 2 uses
+._crit_edge:                                      ; preds = %bb.d
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !25
   %.pre6 = load i8, ptr %i.c, align 8, !range !29
   %1 = trunc nuw i8 %.pre6 to i1
+  br label %bb.e
+
+bb.e:                                             ; preds = %._crit_edge, %bb.c
+  %2 = phi i1 [ %1, %._crit_edge ], [ true, %bb.c ]
+  %3 = phi ptr [ %.pre, %._crit_edge ], [ null, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i8 1, ptr %i.j, align 8, !tbaa !20
   store ptr null, ptr %i.h, align 8, !tbaa !21
   store i32 0, ptr %i.m, align 4, !tbaa !22
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.n, align 8, !tbaa !23
-  %.not.i.i.i = icmp ne ptr %.pre, null
-  %or.cond.i.i = select i1 %.not.i.i.i, i1 %1, i1 false
+  %.not.i.i.i = icmp ne ptr %3, null
+  %or.cond.i.i = select i1 %.not.i.i.i, i1 %2, i1 false
   br i1 %or.cond.i.i, label %bb.f, label %_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %.pre)
+  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %3)
           to label %_ZN20btAlignedObjectArrayIjED2Ev.exit unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -139,7 +144,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @__clang_call_terminate(ptr %i.s) #12
   unreachable
 
-_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit:   ; preds = %bb.c, %bb.e, %_ZN20btAlignedObjectArrayIjED2Ev.exit, %bb.h
+_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit:   ; preds = %bb.e, %_ZN20btAlignedObjectArrayIjED2Ev.exit, %bb.h
   ret void
 
 bb.j:                                             ; preds = %bb.d, %bb.b

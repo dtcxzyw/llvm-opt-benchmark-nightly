@@ -202,10 +202,14 @@ bb.x:                                             ; preds = %bb.v
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !39 ; 3 uses
   %i.bj = call i64 @OPENSSL_sk_num(ptr noundef %i.bi) #5
   %.not76 = icmp eq i64 %i.bj, 0
-  br i1 %.not76, label %.loopexit, label %.lr.ph.a
+  br i1 %.not76, label %.loopexit, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.x, %bb.aa
-  %.075 = phi i64 [ %i.bq, %bb.aa ], [ 0, %bb.x ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.x
+  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 28 ; 2 uses
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.aa
+  %.075 = phi i64 [ 0, %.lr.ph ], [ %i.bq, %bb.aa ] ; 2 uses
   %i.bk = call ptr @OPENSSL_sk_value(ptr noundef %i.bi, i64 noundef %.075) #5 ; 2 uses
   %i.bl = call ptr @X509_EXTENSION_get_object(ptr noundef %i.bk) #5
   %i.bm = call i32 @OBJ_obj2nid(ptr noundef %i.bl) #5
@@ -220,7 +224,6 @@ bb.y:                                             ; preds = %.lr.ph.a
   ]
 
 bb.z:                                             ; preds = %bb.y
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 28 ; 2 uses
   %i.bo = load i32, ptr %4, align 4, !tbaa !52
   %i.bp = or i32 %i.bo, 512
   store i32 %i.bp, ptr %4, align 4, !tbaa !52
@@ -232,7 +235,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.y, %.lr.p
   %i.bs = icmp ult i64 %i.bq, %i.br
   br i1 %i.bs, label %.lr.ph.a, label %.loopexit, !llvm.loop !35
 
-.loopexit:                                        ; preds = %bb.aa, %bb.x, %bb.z
+.loopexit:                                        ; preds = %bb.aa, %bb.z, %bb.x
   %i.bt = call ptr @X509_CRL_get_REVOKED(ptr noundef nonnull %i.c) #5 ; 3 uses
   %i.bu = call i64 @OPENSSL_sk_num(ptr noundef %i.bt) #5
   %.not3643.i = icmp eq i64 %i.bu, 0

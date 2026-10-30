@@ -202,13 +202,13 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.d = load i64, ptr %i.c, align 8, !tbaa !74
   %i.e = icmp eq i64 %i.d, 0
-  br i1 %i.e, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread, label %bb.b
+  br i1 %i.e, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !19   ; 2 uses
   %i.h = icmp eq ptr %1, %i.g
-  br i1 %i.h, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread, label %bb.c
+  br i1 %i.h, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -228,26 +228,31 @@ bb.d:                                             ; preds = %bb.f, %bb.c
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %.01929.i.i ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !19   ; 2 uses
   %i.s = icmp eq ptr %i.r, %1
-  br i1 %i.s, label %bb.g, label %bb.e
+  br i1 %i.s, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.t = icmp eq ptr %i.r, %i.g
-  br i1 %i.t, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread, label %bb.f
+  br i1 %i.t, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.u = add i64 %.01828.i.i, 1                   ; 3 uses
   %i.v = add i64 %i.u, %.01929.i.i
   %.not.i.i = icmp ugt i64 %i.u, %i.k
-  br i1 %.not.i.i, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread, label %bb.d, !llvm.loop !68
+  br i1 %.not.i.i, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit, label %bb.d, !llvm.loop !68
 
-bb.g:                                             ; preds = %bb.d
-  %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit: ; preds = %bb.d, %bb.e, %bb.f, %bb.a, %bb.b
+  %.4.i.i = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %bb.e ], [ null, %bb.f ], [ %i.q, %bb.d ] ; 2 uses
+  %.not.i = icmp eq ptr %.4.i.i, null
+  br i1 %.not.i, label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread, label %bb.g
+
+bb.g:                                             ; preds = %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit
+  %i.w = getelementptr inbounds nuw i8, ptr %.4.i.i, i64 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !78
   %i.z = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4Luau12DenseHashSetIPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE6insertERKS3_(ptr noundef nonnull align 8 dereferenceable(40) %i.y, ptr noundef nonnull align 8 dereferenceable(8) %i.w) ; 0 uses
   br label %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread
 
-_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread: ; preds = %bb.e, %bb.f, %bb.a, %bb.b, %bb.g
+_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit.thread: ; preds = %bb.g, %_ZNK4Luau12DenseHashMapIPKNS_7AstExprEPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE4findERKS3_.exit
   ret i1 true
 }
 

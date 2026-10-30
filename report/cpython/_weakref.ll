@@ -160,18 +160,19 @@ _PyObject_GET_WEAKREFS_LISTPTR.exit:              ; preds = %bb.e, %bb.f
   %.036 = phi ptr [ %.0, %_Py_TryIncref.exit.a ], [ %.034.a, %_PyObject_GET_WEAKREFS_LISTPTR.exit ] ; 9 uses
   %.val.i = load i32, ptr %.036, align 8, !tbaa !27 ; 3 uses
   %.not.i28 = icmp eq i32 %.val.i, 0
-  br i1 %.not.i28, label %_Py_TryIncref.exit.a, label %2
+  %2 = add i32 %.val.i, 1073741824
+  %or.cond = icmp ult i32 %2, 1073741825
+  br i1 %or.cond, label %_Py_TryIncref.exit, label %bb.g
 
-2:                                                ; preds = %.lr.ph
-  %3 = icmp ugt i32 %.val.i, -1073741825
-  br i1 %3, label %bb.h, label %bb.g
-
-bb.g:                                             ; preds = %2
+bb.g:                                             ; preds = %.lr.ph
   %i.q = add nuw i32 %.val.i, 1
   store i32 %i.q, ptr %.036, align 8, !tbaa !27
-  br label %bb.h
+  br label %_Py_TryIncref.exit
 
-bb.h:                                             ; preds = %2, %bb.g
+_Py_TryIncref.exit:                               ; preds = %.lr.ph, %bb.g
+  br i1 %.not.i28, label %_Py_TryIncref.exit.a, label %bb.h
+
+bb.h:                                             ; preds = %_Py_TryIncref.exit
   %i.r = tail call i32 @PyList_Append(ptr noundef nonnull %i.c, ptr noundef nonnull %.036) #3
   %.not20 = icmp eq i32 %i.r, 0
   %i.s = load i32, ptr %.036, align 8, !tbaa !27  ; 3 uses
@@ -219,7 +220,7 @@ bb.o:                                             ; preds = %bb.n
   tail call void @_Py_Dealloc(ptr noundef nonnull %.036) #3
   br label %_Py_TryIncref.exit.a
 
-_Py_TryIncref.exit.a:                             ; preds = %bb.o, %bb.n, %bb.m, %.lr.ph
+_Py_TryIncref.exit.a:                             ; preds = %bb.o, %bb.n, %bb.m, %_Py_TryIncref.exit
   %i.aa = getelementptr i8, ptr %.036, i64 48
   %.0 = load ptr, ptr %i.aa, align 8, !tbaa !32   ; 2 uses
   %.not18 = icmp eq ptr %.0, null

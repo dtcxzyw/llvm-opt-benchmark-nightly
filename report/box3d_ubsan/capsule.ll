@@ -202,18 +202,22 @@ bb.p:                                             ; preds = %bb.o
   %i.ee = fsub float %i.ec, %i.ed                 ; 2 uses
   %i.ef = fcmp ult float %i.ea, 0.000000e+00
   %i.eg = fcmp uge float %i.ee, 0.000000e+00
-  %or.cond.not = and i1 %i.ef, %i.eg
-  br i1 %or.cond.not, label %.thread, label %bb.q
+  %or.cond.not = and i1 %i.ef, %i.eg              ; 2 uses
+  br i1 %or.cond.not, label %.thread, label %7
+
+7:                                                ; preds = %bb.p
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %0, i8 0, i64 48, i1 false)
+  br label %bb.q
 
 .thread:                                          ; preds = %bb.p
   %i.eh = tail call float @sqrtf(float noundef %i.ee) #9
   %i.ei = fsub float %i.eh, %i.ea
   %i.ej = fdiv float %i.eb, %i.ei
-  br label %bb.t
+  br label %bb.q
 
-bb.q:                                             ; preds = %bb.p
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %0, i8 0, i64 48, i1 false)
-  br label %bb.ab
+bb.q:                                             ; preds = %.thread, %7
+  %.0331 = phi float [ undef, %7 ], [ %i.ej, %.thread ]
+  br i1 %or.cond.not, label %bb.t, label %bb.ab
 
 bb.r:                                             ; preds = %bb.o
   %i.ek = fdiv float 1.000000e+00, %i.di          ; 3 uses
@@ -247,22 +251,26 @@ bb.r:                                             ; preds = %bb.o
   %i.fi = extractelement <2 x float> %foldExtExtBinop632, i64 0
   %i.fj = fmul float %i.fg, %i.fg
   %i.fk = fadd float %i.fj, %i.fi                 ; 2 uses
-  %i.fl = fcmp ule float %i.fk, %i.bi
-  br i1 %i.fl, label %.thread594, label %bb.s
+  %i.fl = fcmp ule float %i.fk, %i.bi             ; 2 uses
+  br i1 %i.fl, label %.thread594, label %8
+
+8:                                                ; preds = %bb.r
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %0, i8 0, i64 48, i1 false)
+  br label %bb.s
 
 .thread594:                                       ; preds = %bb.r
   %i.fm = fsub float %i.bi, %i.fk
   %i.fn = fmul float %i.ek, %i.fm
   %i.fo = tail call float @sqrtf(float noundef %i.fn) #9
   %i.fp = fsub float %i.eu, %i.fo
-  br label %bb.t
+  br label %bb.s
 
-bb.s:                                             ; preds = %bb.r
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %0, i8 0, i64 48, i1 false)
-  br label %bb.ab
+bb.s:                                             ; preds = %.thread594, %8
+  %.1332 = phi float [ undef, %8 ], [ %i.fp, %.thread594 ]
+  br i1 %i.fl, label %bb.t, label %bb.ab
 
-bb.t:                                             ; preds = %.thread594, %.thread
-  %.2 = phi float [ %i.ej, %.thread ], [ %i.fp, %.thread594 ] ; 6 uses
+bb.t:                                             ; preds = %bb.s, %bb.q
+  %.2 = phi float [ %.0331, %bb.q ], [ %.1332, %bb.s ] ; 6 uses
   %i.fq = fcmp olt float %.2, 0.000000e+00
   %i.fr = fmul float %i.ci, %i.cq
   %i.fs = fcmp olt float %i.fr, %.2
@@ -361,7 +369,7 @@ b3Normalize.exit:                                 ; preds = %bb.z, %bb.aa
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.18.0..sroa_idx577, i8 0, i64 3, i1 false)
   br label %bb.ab
 
-bb.ab:                                            ; preds = %b3GetLengthAndNormalize.exit.thread, %bb.u, %b3Normalize.exit, %bb.y, %bb.w, %bb.n, %bb.q, %bb.s, %bb.j, %bb.i, %bb.d
+bb.ab:                                            ; preds = %b3GetLengthAndNormalize.exit.thread, %bb.u, %bb.s, %bb.q, %b3Normalize.exit, %bb.y, %bb.w, %bb.n, %bb.j, %bb.i, %bb.d
   ret void
 }
 

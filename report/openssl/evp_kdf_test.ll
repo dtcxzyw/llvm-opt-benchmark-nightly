@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/evp_kdf_test?download=true
 inline.NumInlined: 57
 inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@test_kdf_pbkdf2_small_iterations_pkcs5:bb.a
   %i.g = call ptr @EVP_KDF_CTX_new(ptr noundef %i.f) #5 ; 10 uses
   call void @EVP_KDF_free(ptr noundef %i.f) #5
@@ -202,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ag = zext i1 %i.af to i32
   br label %.critedge.thread29.peel
 
-.critedge.thread29.peel:                          ; preds = %bb.d, %bb.e, %.split.peel, %bb.c, %bb.b, %.lr.ph.peel
-  %i.ah = phi i32 [ 0, %.lr.ph.peel ], [ 0, %.split.peel ], [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.d ], [ %i.ag, %bb.e ] ; 2 uses
+.critedge.thread29.peel:                          ; preds = %bb.d, %bb.e, %.lr.ph.peel, %bb.b, %bb.c, %.split.peel
+  %i.ah = phi i32 [ 0, %bb.d ], [ 0, %.split.peel ], [ %i.ag, %bb.e ], [ 0, %.lr.ph.peel ], [ 0, %bb.b ], [ 0, %bb.c ] ; 2 uses
   call void @EVP_KDF_CTX_reset(ptr noundef %i.m) #5
   %.not = icmp eq i32 %i.ah, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -228,8 +230,8 @@ bb.g:                                             ; preds = %bb.f
   %i.aq = zext i1 %i.ap to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.critedge.thread29.peel, %bb.f, %bb.g, %.lr.ph, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.ah, %.critedge.thread29.peel ], [ 0, %.lr.ph ], [ 0, %bb.f ], [ %i.aq, %bb.g ]
+._crit_edge:                                      ; preds = %.critedge.thread29.peel, %bb.g, %bb.f, %.lr.ph, %bb.a
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.ah, %.critedge.thread29.peel ], [ 0, %bb.f ], [ 0, %.lr.ph ], [ %i.aq, %bb.g ]
   call void @EVP_KDF_CTX_free(ptr noundef %i.m) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5

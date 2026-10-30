@@ -202,7 +202,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = invoke noundef ptr %i.f(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 1, i64 noundef 1)
-          to label %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit unwind label %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread, !inline_history !0 ; 2 uses
+          to label %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit unwind label %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread, !inline_history !0
 
 _ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread: ; preds = %bb.a
   %i.h = landingpad { ptr, i32 }
@@ -214,22 +214,23 @@ _ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread: ; preds = %bb.
   %i.l = icmp eq i32 %i.j, %i.k
   %i.m = tail call ptr @__cxa_begin_catch(ptr %i.i) #21 ; 0 uses
   tail call void @__cxa_end_catch()
-  %0 = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 143, ptr noundef nonnull @__PRETTY_FUNCTION__._Z25test_null_memory_resourcev, i1 noundef zeroext %i.l) ; 0 uses
-  br label %bb.c
+  br label %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit
 
-_ZN5boost9container3pmr15memory_resource8allocateEmm.exit: ; preds = %bb.a
-  %i.n = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 143, ptr noundef nonnull @__PRETTY_FUNCTION__._Z25test_null_memory_resourcev, i1 noundef zeroext false) ; 0 uses
-  %.not = icmp eq ptr %i.g, null
+_ZN5boost9container3pmr15memory_resource8allocateEmm.exit: ; preds = %bb.a, %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread
+  %.08 = phi ptr [ null, %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread ], [ %i.g, %bb.a ] ; 2 uses
+  %.0 = phi i1 [ %i.l, %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread ], [ false, %bb.a ]
+  %i.n = tail call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.1, i32 noundef 143, ptr noundef nonnull @__PRETTY_FUNCTION__._Z25test_null_memory_resourcev, i1 noundef zeroext %.0) ; 0 uses
+  %.not = icmp eq ptr %.08, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit
   %i.o = load ptr, ptr %i.a, align 8, !tbaa !15
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.q = load ptr, ptr %i.p, align 8
-  tail call void %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %i.g, i64 noundef 1, i64 noundef 1), !inline_history !1
+  tail call void %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull %.08, i64 noundef 1, i64 noundef 1), !inline_history !1
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit.thread, %bb.b, %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit
+bb.c:                                             ; preds = %bb.b, %_ZN5boost9container3pmr15memory_resource8allocateEmm.exit
   ret void
 }
 

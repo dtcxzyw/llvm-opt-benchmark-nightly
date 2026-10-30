@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define dso_local noundef zeroext i1 @_ZNK23FunctionInvocationUnary6equalsEi(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(96) %0, i32 noundef %1) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = icmp eq i32 %1, 0
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.c = load i32, ptr %i.b, align 8              ; 2 uses
-  %i.d = icmp eq i32 %i.c, 2                      ; 2 uses
+  %i.d = icmp eq i32 %i.c, 2
   %or.cond = select i1 %i.a, i1 %i.d, i1 false
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -216,11 +216,17 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 112
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = tail call noundef zeroext i1 %i.j(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i32 noundef 0)
-  br i1 %i.k, label %bb.h, label %thread-pre-split.a
+  br i1 %i.k, label %bb.h, label %._crit_edge
 
-bb.c:                                             ; preds = %bb.a
+._crit_edge:                                      ; preds = %bb.b
+  %.pr.pre6.pre = load i32, ptr %i.b, align 8, !tbaa !33
+  br label %bb.c
+
+bb.c:                                             ; preds = %._crit_edge, %bb.a
+  %.pr.pre6 = phi i32 [ %.pr.pre6.pre, %._crit_edge ], [ %i.c, %bb.a ] ; 2 uses
   %i.l = icmp eq i32 %1, 1
-  %brmerge.not = select i1 %i.l, i1 %i.d, i1 false
+  %2 = icmp eq i32 %.pr.pre6, 2
+  %brmerge.not = select i1 %i.l, i1 %2, i1 false
   br i1 %brmerge.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -233,12 +239,12 @@ bb.d:                                             ; preds = %bb.c
   %i.s = tail call noundef zeroext i1 %i.r(ptr noundef nonnull align 8 dereferenceable(24) %i.o, i32 noundef 0)
   br i1 %i.s, label %bb.h, label %thread-pre-split.a
 
-thread-pre-split.a:                               ; preds = %bb.b, %bb.d
+thread-pre-split.a:                               ; preds = %bb.d
   %.pr = load i32, ptr %i.b, align 8, !tbaa !33
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %thread-pre-split.a
-  %i.t = phi i32 [ %.pr, %thread-pre-split.a ], [ %i.c, %bb.c ]
+  %i.t = phi i32 [ %.pr.pre6, %bb.c ], [ %.pr, %thread-pre-split.a ]
   %i.u = icmp eq i32 %i.t, 1
   br i1 %i.u, label %bb.f, label %bb.g
 

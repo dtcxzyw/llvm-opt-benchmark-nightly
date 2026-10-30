@@ -202,10 +202,11 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %.sroa.583.0..sroa_idx, align 4, !tbaa !14
   %.sroa.684.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 656
   store i32 1, ptr %.sroa.684.0..sroa_idx, align 8, !tbaa !14
-  br label %bb.ar
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.b
-  %i.g = icmp eq i8 %i.b, 2
+bb.c:                                             ; preds = %.thread, %bb.b
+  %10 = phi i8 [ 1, %.thread ], [ %i.b, %bb.b ]
+  %i.g = icmp eq i8 %10, 2
   %or.cond87 = and i1 %i.e, %i.g
   br i1 %or.cond87, label %bb.d, label %bb.ar
 
@@ -517,7 +518,7 @@ bb.aq:                                            ; preds = %bb.ap
   tail call void @_ZNK13GCApplication9showImageEv(ptr noundef nonnull align 8 dereferenceable(764) %0)
   br label %bb.ar
 
-bb.ar:                                            ; preds = %.thread, %bb.f, %bb.e, %bb.d, %bb.c, %bb.am, %bb.ap, %bb.aq, %bb.ao, %bb.aa, %bb.ab, %bb.v, %bb.x, %bb.w, %bb.a
+bb.ar:                                            ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.am, %bb.ap, %bb.aq, %bb.ao, %bb.aa, %bb.ab, %bb.v, %bb.x, %bb.w, %bb.a
   ret void
 
 bb.as:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit

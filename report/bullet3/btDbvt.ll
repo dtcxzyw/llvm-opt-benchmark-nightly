@@ -205,15 +205,16 @@ bb.l:                                             ; preds = %bb.k
   %i.cj = tail call noundef float @llvm.fabs.f32(float %i.ci)
   %i.ck = fptosi float %i.cj to i32
   %i.cl = icmp sgt i32 %.2.1, %i.ck
-  br i1 %i.cl, label %.thread, label %bb.m
+  %spec.select178 = select i1 %i.cl, i32 2, i32 %.259.1
+  br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.cm = icmp sgt i32 %.259.1, -1
+  %.259.2 = phi i32 [ %spec.select178, %bb.l ], [ %.259.1, %bb.k ] ; 2 uses
+  %i.cm = icmp sgt i32 %.259.2, -1
   br i1 %i.cm, label %.thread, label %bb.p
 
-.thread:                                          ; preds = %bb.l, %bb.m
-  %.259.2163 = phi i32 [ %.259.1, %bb.m ], [ 2, %bb.l ]
-  %i.cn = zext nneg i32 %.259.2163 to i64
+.thread:                                          ; preds = %bb.m
+  %i.cn = zext nneg i32 %.259.2 to i64
   %i.co = getelementptr inbounds nuw [16 x i8], ptr @_ZZL7topdownP6btDbvtPP10btDbvtNodeiiE4axis, i64 %i.cn ; 3 uses
   %i.cp = load float, ptr %i.co, align 16, !tbaa !43 ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.co, i64 4
@@ -616,7 +617,7 @@ _ZNK12btDbvtAabbMm7ContainERKS_.exit.a:           ; preds = %bb.l
   %i.ef = fcmp ult float %i.ec, %i.ee
   br i1 %i.ef, label %_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread, label %.loopexit
 
-_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
+_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
   %i.eg = getelementptr inbounds nuw i8, ptr %.044, i64 40
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !27 ; 6 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.044, i64 48
@@ -920,8 +921,8 @@ _ZNK12btDbvtAabbMm7ContainERKS_.exit.a:           ; preds = %bb.e
   %i.ab = fcmp ult float %i.y, %i.aa
   br i1 %i.ab, label %_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread, label %bb.k
 
-_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge, %bb.b, %bb.c, %bb.d, %bb.e, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
-  %i.ac = phi float [ %.pre, %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge ], [ %i.g, %bb.b ], [ %i.g, %bb.c ], [ %i.g, %bb.d ], [ %i.g, %bb.e ], [ %i.g, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a ]
+_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge, %bb.e, %bb.d, %bb.c, %bb.b, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
+  %i.ac = phi float [ %.pre, %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge ], [ %i.g, %bb.e ], [ %i.g, %bb.d ], [ %i.g, %bb.c ], [ %i.g, %bb.b ], [ %i.g, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a ]
   %i.ad = fsub float %i.b, %4                     ; 2 uses
   store float %i.ad, ptr %2, align 4, !tbaa !43
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -1063,7 +1064,7 @@ _ZNK12btDbvtAabbMm7ContainERKS_.exit.a:           ; preds = %bb.e
   %i.ab = fcmp ult float %i.y, %i.aa
   br i1 %i.ab, label %_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread, label %bb.k
 
-_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
+_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
   %i.ac = load float, ptr %3, align 4, !tbaa !43  ; 3 uses
   %i.ad = fcmp ogt float %i.ac, 0.000000e+00
   br i1 %i.ad, label %bb.f, label %bb.g
@@ -1192,8 +1193,8 @@ _ZNK12btDbvtAabbMm7ContainERKS_.exit.a:           ; preds = %bb.e
   %i.ab = fcmp ult float %i.y, %i.aa
   br i1 %i.ab, label %_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread, label %bb.i
 
-_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge, %bb.b, %bb.c, %bb.d, %bb.e, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
-  %i.ac = phi float [ %.pre, %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge ], [ %i.g, %bb.b ], [ %i.g, %bb.c ], [ %i.g, %bb.d ], [ %i.g, %bb.e ], [ %i.g, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a ]
+_ZNK12btDbvtAabbMm7ContainERKS_.exit.thread:      ; preds = %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge, %bb.e, %bb.d, %bb.c, %bb.b, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a
+  %i.ac = phi float [ %.pre, %._ZNK12btDbvtAabbMm7ContainERKS_.exit.thread_crit_edge ], [ %i.g, %bb.e ], [ %i.g, %bb.d ], [ %i.g, %bb.c ], [ %i.g, %bb.b ], [ %i.g, %_ZNK12btDbvtAabbMm7ContainERKS_.exit.a ]
   %i.ad = fsub float %i.b, %3
   store float %i.ad, ptr %2, align 4, !tbaa !43
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 4

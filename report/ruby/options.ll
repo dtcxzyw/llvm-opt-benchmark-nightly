@@ -79,7 +79,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden noundef zeroext i1 @pm_options_version_set(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 {
+define hidden zeroext i1 @pm_options_version_set(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %.thread.sink.split, label %bb.b
@@ -89,7 +89,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %sub_0, label %bb.c
 
 sub_0:                                            ; preds = %bb.b
-  %i.c = load i8, ptr %1, align 1
+  %i.c = load i8, ptr %1, align 1                 ; 2 uses
   switch i8 %i.c, label %.thread [
     i8 51, label %sub_1
     i8 52, label %sub_141
@@ -123,15 +123,19 @@ sub_136:                                          ; preds = %.tail29, %sub_131
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.o = load i8, ptr %i.n, align 1
   %.not53 = icmp eq i8 %i.o, 46
-  br i1 %.not53, label %.tail34, label %.thread
+  br i1 %.not53, label %.tail34, label %sub_040
 
 .tail34:                                          ; preds = %sub_136
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.q = load i8, ptr %i.p, align 1
   %i.r = icmp eq i8 %i.q, 53
-  br i1 %i.r, label %.thread.sink.split, label %.thread
+  br i1 %i.r, label %.thread.sink.split, label %sub_040
 
-sub_141:                                          ; preds = %sub_0
+sub_040:                                          ; preds = %sub_136, %.tail34
+  %.not54 = icmp eq i8 %i.c, 52
+  br i1 %.not54, label %sub_141, label %.thread
+
+sub_141:                                          ; preds = %sub_0, %sub_040
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.t = load i8, ptr %i.s, align 1
   %.not55 = icmp eq i8 %i.t, 46
@@ -206,8 +210,8 @@ bb.k:                                             ; preds = %bb.j
   store i32 %.sink, ptr %i.au, align 8, !tbaa !24
   br label %.thread
 
-.thread:                                          ; preds = %.thread.sink.split, %sub_0, %sub_136, %.tail34, %sub_146, %bb.c, %bb.j, %bb.k, %.tail44
-  %.0 = phi i1 [ false, %.tail34 ], [ false, %sub_136 ], [ false, %sub_0 ], [ false, %bb.k ], [ false, %bb.j ], [ false, %.tail44 ], [ false, %bb.c ], [ false, %sub_146 ], [ true, %.thread.sink.split ]
+.thread:                                          ; preds = %sub_0, %.thread.sink.split, %sub_040, %sub_146, %.tail44, %bb.c, %bb.j, %bb.k
+  %.0 = phi i1 [ false, %bb.c ], [ true, %.thread.sink.split ], [ false, %sub_146 ], [ false, %sub_040 ], [ false, %bb.k ], [ false, %.tail44 ], [ false, %bb.j ], [ false, %sub_0 ]
   ret i1 %.0
 }
 

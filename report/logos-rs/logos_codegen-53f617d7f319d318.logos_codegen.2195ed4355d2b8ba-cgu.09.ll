@@ -202,9 +202,9 @@ _RNvMNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_paramsNtB2_10TypeParams4find
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   call void @_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtCshx33xqnyVJN_3syn2ty4TypeENtNtB7_5clone5Clone5cloneBO_(ptr nonnull sret([224 x i8]) align 8 %i.c, ptr nonnull align 8 %i.r) #18
   %.pr.i = load i64, ptr %i.c, align 8
+  %2 = icmp eq i64 %.pr.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %.not.i = icmp eq i64 %.pr.i, -1
-  br i1 %.not.i, label %_RNCNvMNtCs2SM5xCHwwDm_13logos_codegen6parserNtB4_6Parser8get_type0B6_.exit, label %bb.f
+  br i1 %2, label %_RNCNvMNtCs2SM5xCHwwDm_13logos_codegen6parserNtB4_6Parser8get_type0B6_.exit, label %bb.f
 
 bb.f:                                             ; preds = %_RNvMNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_paramsNtB2_10TypeParams4find.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.b, ptr noundef nonnull align 8 dereferenceable(224) %i.c, i64 224, i1 false)
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.d unwind label %.thread87
 
 bb.c:                                             ; preds = %bb.ao
-  br i1 %.sroa.030.3.ph, label %.thread114, label %.thread
+  br i1 %.sroa.030.3101, label %.thread114, label %.thread
 
 bb.d:                                             ; preds = %bb.b
   invoke void @_RNvNtCs2SM5xCHwwDm_13logos_codegen4util12expect_punct(ptr nonnull sret([32 x i8]) align 8 %i.r, ptr nonnull align 8 %i.q, i32 124)
@@ -830,9 +830,9 @@ bb.an:                                            ; preds = %bb.q
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro29TokenTreeEBD_(ptr nonnull align 8 %i.y) #16
           to label %bb.ao unwind label %bb.k
 
-bb.ao:                                            ; preds = %bb.al, %bb.x, %bb.am, %bb.u, %bb.q, %bb.q, %bb.an, %bb.af
-  %.sroa.030.3.ph = phi i1 [ true, %bb.q ], [ true, %bb.an ], [ true, %bb.q ], [ true, %bb.u ], [ true, %bb.am ], [ true, %bb.x ], [ true, %bb.al ], [ false, %bb.af ]
-  %.pn46.ph = phi { ptr, i32 } [ %i.ae, %bb.q ], [ %i.ae, %bb.an ], [ %i.ae, %bb.q ], [ %i.ah, %bb.u ], [ %.pn, %bb.am ], [ %.pn, %bb.x ], [ %i.au, %bb.al ], [ %i.ar, %bb.af ] ; 2 uses
+bb.ao:                                            ; preds = %bb.u, %bb.x, %bb.al, %bb.am, %bb.an, %bb.q, %bb.q, %bb.af
+  %.pn46103 = phi { ptr, i32 } [ %i.ae, %bb.q ], [ %i.au, %bb.al ], [ %i.ar, %bb.af ], [ %.pn, %bb.x ], [ %.pn, %bb.am ], [ %i.ah, %bb.u ], [ %i.ae, %bb.q ], [ %i.ae, %bb.an ] ; 2 uses
+  %.sroa.030.3101 = phi i1 [ true, %bb.q ], [ true, %bb.al ], [ false, %bb.af ], [ true, %bb.x ], [ true, %bb.am ], [ true, %bb.u ], [ true, %bb.q ], [ true, %bb.an ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.k) #16
           to label %bb.c unwind label %bb.k
 
@@ -905,19 +905,19 @@ bb.az:                                            ; preds = %bb.ax
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.bd) #16
           to label %.thread114 unwind label %bb.k
 
-bb.ba:                                            ; preds = %bb.m, %bb.l
+bb.ba:                                            ; preds = %bb.l, %bb.m
   %lpad.thr_comm.split-lp86 = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsgSMwPvzVUxY_11proc_macro29TokenTreeEECs36YJ3mR2EUy_5quote(ptr nonnull align 8 %i.n) #16
           to label %.thread114 unwind label %bb.k
 
-.thread114:                                       ; preds = %.split, %bb.aw, %bb.av, %bb.aq, %bb.az, %bb.ay, %bb.ax, %.thread87, %bb.ba, %bb.c
-  %.pn5272 = phi { ptr, i32 } [ %i.av, %bb.ax ], [ %.pn46.ph, %bb.c ], [ %lpad.thr_comm.split-lp86, %bb.ba ], [ %lpad.thr_comm85, %.thread87 ], [ %i.aw, %bb.aw ], [ %i.aw, %bb.av ], [ %i.aw, %bb.aq ], [ %i.av, %bb.az ], [ %i.av, %bb.ay ], [ %i.at, %.split ]
+.thread114:                                       ; preds = %.split, %bb.ay, %bb.az, %bb.aq, %bb.av, %bb.aw, %bb.ax, %.thread87, %bb.ba, %bb.c
+  %.pn5272 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp86, %bb.ba ], [ %.pn46103, %bb.c ], [ %i.av, %bb.ay ], [ %i.av, %bb.az ], [ %i.aw, %bb.aq ], [ %i.aw, %bb.av ], [ %i.aw, %bb.aw ], [ %i.av, %bb.ax ], [ %lpad.thr_comm85, %.thread87 ], [ %i.at, %.split ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgSMwPvzVUxY_11proc_macro212token_stream8IntoIterEBF_(ptr nonnull align 8 %i.t) #16
           to label %.thread unwind label %bb.k
 
 .thread:                                          ; preds = %.split, %bb.i, %bb.c, %.thread114, %bb.bb
-  %.pn5463 = phi { ptr, i32 } [ %i.w, %bb.i ], [ %lpad.thr_comm.split-lp, %bb.bb ], [ %.pn46.ph, %bb.c ], [ %.pn5272, %.thread114 ], [ %i.at, %.split ]
+  %.pn5463 = phi { ptr, i32 } [ %i.w, %bb.i ], [ %lpad.thr_comm.split-lp, %bb.bb ], [ %.pn46103, %bb.c ], [ %.pn5272, %.thread114 ], [ %i.at, %.split ]
   resume { ptr, i32 } %.pn5463
 
 bb.bb:                                            ; preds = %bb.a
@@ -1164,12 +1164,12 @@ bb.m:                                             ; preds = %bb.l
   %i.du = invoke { ptr, i64 } @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String6as_strCs2SM5xCHwwDm_13logos_codegen(ptr nonnull align 8 %i.ca)
           to label %bb.o unwind label %bb.n       ; 2 uses
 
-.thread:                                          ; preds = %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp, %bb.fa, %bb.el, %.critedge, %bb.de, %bb.dk, %bb.ds, %.thread195, %bb.ck, %bb.bj, %bb.ba, %bb.fm, %bb.fk, %bb.dv, %bb.dl, %bb.cn, %bb.cf, %.thread146, %bb.bg, %bb.n
-  %.sroa.040.0 = phi i1 [ false, %bb.fm ], [ true, %bb.n ], [ false, %bb.dv ], [ false, %.thread195 ], [ true, %bb.fk ], [ false, %bb.dk ], [ false, %bb.dl ], [ true, %.critedge ], [ false, %bb.cn ], [ true, %bb.el ], [ true, %bb.cf ], [ true, %bb.fa ], [ true, %.thread146 ], [ true, %bb.bj ], [ false, %bb.bg ], [ true, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ], [ false, %bb.ba ], [ false, %bb.ck ], [ false, %bb.de ], [ false, %bb.ds ]
-  %.sroa.038.0 = phi i1 [ true, %bb.fm ], [ true, %bb.n ], [ true, %bb.dv ], [ true, %.thread195 ], [ false, %bb.fk ], [ true, %bb.dk ], [ true, %bb.dl ], [ false, %.critedge ], [ true, %bb.cn ], [ false, %bb.el ], [ false, %bb.cf ], [ false, %bb.fa ], [ true, %.thread146 ], [ true, %bb.bj ], [ true, %bb.bg ], [ false, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ], [ true, %bb.ba ], [ true, %bb.ck ], [ true, %bb.de ], [ true, %bb.ds ]
-  %.sroa.036.0 = phi i1 [ true, %bb.fm ], [ %.sroa.036.1, %bb.n ], [ true, %bb.dv ], [ true, %.thread195 ], [ true, %bb.fk ], [ true, %bb.dk ], [ true, %bb.dl ], [ true, %.critedge ], [ true, %bb.cn ], [ true, %bb.el ], [ true, %bb.cf ], [ true, %bb.fa ], [ true, %.thread146 ], [ true, %bb.bj ], [ true, %bb.bg ], [ true, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ], [ true, %bb.ba ], [ true, %bb.ck ], [ true, %bb.de ], [ true, %bb.ds ]
-  %.sroa.031.0 = phi i1 [ true, %bb.fm ], [ %.sroa.031.1, %bb.n ], [ true, %bb.dv ], [ true, %.thread195 ], [ true, %bb.fk ], [ true, %bb.dk ], [ true, %bb.dl ], [ true, %.critedge ], [ true, %bb.cn ], [ true, %bb.el ], [ true, %bb.cf ], [ true, %bb.fa ], [ false, %.thread146 ], [ false, %bb.bj ], [ true, %bb.bg ], [ true, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ], [ true, %bb.ba ], [ true, %bb.ck ], [ true, %bb.de ], [ true, %bb.ds ]
-  %.pn96 = phi { ptr, i32 } [ %i.ix, %bb.fm ], [ %i.dx, %bb.n ], [ %lpad.thr_comm.split-lp194, %bb.dv ], [ %lpad.thr_comm193, %.thread195 ], [ %lpad.thr_comm.split-lp205, %bb.fk ], [ %.pn73, %bb.dk ], [ %lpad.thr_comm.split-lp184, %bb.dl ], [ %.pn89, %.critedge ], [ %lpad.thr_comm.split-lp173, %bb.cn ], [ %i.ig, %bb.el ], [ %lpad.thr_comm.split-lp163, %bb.cf ], [ %.pn83.pn216, %bb.fa ], [ %.pn63149, %.thread146 ], [ %lpad.thr_comm.split-lp153, %bb.bj ], [ %lpad.thr_comm.split-lp, %bb.bg ], [ %lpad.loopexit.split-lp375, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ], [ %i.fs, %bb.ba ], [ %i.gp, %bb.ck ], [ %.pn73, %bb.de ], [ %i.hs, %bb.ds ] ; 6 uses
+.thread:                                          ; preds = %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp, %bb.fa, %bb.el, %.critedge, %bb.ds, %.thread195, %bb.de, %bb.dk, %bb.ck, %bb.bj, %bb.ba, %bb.fm, %bb.fk, %bb.dv, %bb.dl, %bb.cn, %bb.cf, %.thread146, %bb.bg, %bb.n
+  %.sroa.040.0 = phi i1 [ false, %bb.fm ], [ true, %bb.n ], [ false, %bb.dv ], [ false, %.thread195 ], [ true, %bb.fk ], [ false, %bb.ds ], [ false, %bb.dl ], [ true, %.critedge ], [ false, %bb.cn ], [ true, %bb.el ], [ true, %bb.cf ], [ false, %bb.de ], [ true, %.thread146 ], [ true, %bb.bj ], [ false, %bb.bg ], [ true, %bb.fa ], [ false, %bb.ba ], [ false, %bb.ck ], [ false, %bb.dk ], [ true, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.038.0 = phi i1 [ true, %bb.fm ], [ true, %bb.n ], [ true, %bb.dv ], [ true, %.thread195 ], [ false, %bb.fk ], [ true, %bb.ds ], [ true, %bb.dl ], [ false, %.critedge ], [ true, %bb.cn ], [ false, %bb.el ], [ false, %bb.cf ], [ true, %bb.de ], [ true, %.thread146 ], [ true, %bb.bj ], [ true, %bb.bg ], [ false, %bb.fa ], [ true, %bb.ba ], [ true, %bb.ck ], [ true, %bb.dk ], [ false, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.036.0 = phi i1 [ true, %bb.fm ], [ %.sroa.036.1, %bb.n ], [ true, %bb.dv ], [ true, %.thread195 ], [ true, %bb.fk ], [ true, %bb.ds ], [ true, %bb.dl ], [ true, %.critedge ], [ true, %bb.cn ], [ true, %bb.el ], [ true, %bb.cf ], [ true, %bb.de ], [ true, %.thread146 ], [ true, %bb.bj ], [ true, %bb.bg ], [ true, %bb.fa ], [ true, %bb.ba ], [ true, %bb.ck ], [ true, %bb.dk ], [ true, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.031.0 = phi i1 [ true, %bb.fm ], [ %.sroa.031.1, %bb.n ], [ true, %bb.dv ], [ true, %.thread195 ], [ true, %bb.fk ], [ true, %bb.ds ], [ true, %bb.dl ], [ true, %.critedge ], [ true, %bb.cn ], [ true, %bb.el ], [ true, %bb.cf ], [ true, %bb.de ], [ false, %.thread146 ], [ false, %bb.bj ], [ true, %bb.bg ], [ true, %bb.fa ], [ true, %bb.ba ], [ true, %bb.ck ], [ true, %bb.dk ], [ true, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ]
+  %.pn96 = phi { ptr, i32 } [ %i.ix, %bb.fm ], [ %i.dx, %bb.n ], [ %lpad.thr_comm.split-lp194, %bb.dv ], [ %lpad.thr_comm193, %.thread195 ], [ %lpad.thr_comm.split-lp205, %bb.fk ], [ %i.hs, %bb.ds ], [ %lpad.thr_comm.split-lp184, %bb.dl ], [ %.pn89, %.critedge ], [ %lpad.thr_comm.split-lp173, %bb.cn ], [ %i.ig, %bb.el ], [ %lpad.thr_comm.split-lp163, %bb.cf ], [ %.pn73, %bb.de ], [ %.pn63149, %.thread146 ], [ %lpad.thr_comm.split-lp153, %bb.bj ], [ %lpad.thr_comm.split-lp, %bb.bg ], [ %.pn83.pn216, %bb.fa ], [ %i.fs, %bb.ba ], [ %i.gp, %bb.ck ], [ %.pn73, %bb.dk ], [ %lpad.loopexit.split-lp375, %.loopexit.split-lp252.loopexit.split-lp.loopexit.split-lp ] ; 6 uses
   %i.dv = load i64, ptr %i.cc, align 8
   %i.dw = xor i64 %i.dv, -9223372036854775808
   switch i64 %i.dw, label %bb.fx [
@@ -1572,8 +1572,8 @@ bb.ac:                                            ; preds = %bb.x
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro25IdentEBD_(ptr nonnull align 8 %1)
   ret void
 
-.thread:                                          ; preds = %bb.o, %bb.q
-  %.pn1018 = phi { ptr, i32 } [ %i.am, %bb.q ], [ %i.ak, %bb.o ]
+.thread:                                          ; preds = %bb.q, %bb.o
+  %.pn1018 = phi { ptr, i32 } [ %i.ak, %bb.o ], [ %i.am, %bb.q ]
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshx33xqnyVJN_3syn2ty4TypeEBF_(ptr nonnull align 8 %i.s) #16
           to label %.thread19 unwind label %bb.r
 
@@ -1976,7 +1976,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.aa = extractvalue { i32, i8 } %i.z, 1        ; 2 uses
-  %.not6.not = icmp eq i8 %i.aa, -1
+  %.not6.not = icmp eq i8 %i.aa, -1               ; 2 uses
   br i1 %.not6.not, label %.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -1986,23 +1986,26 @@ bb.r:                                             ; preds = %bb.q
 
 .thread:                                          ; preds = %bb.q
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
-  br label %.invoke
+  br label %2
 
 bb.s:                                             ; preds = %bb.r
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ac, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   store i64 -2, ptr %0, align 8
-  br label %.invoke10
+  br label %2
+
+2:                                                ; preds = %bb.s, %.thread
+  br i1 %.not6.not, label %.invoke, label %.invoke10
 
 bb.t:                                             ; preds = %.invoke
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshx33xqnyVJN_3syn6buffer11TokenBufferEBF_(ptr nonnull align 8 %i.k)
   ret void
 
-.invoke10:                                        ; preds = %bb.n, %bb.s
+.invoke10:                                        ; preds = %bb.n, %2
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCsgSMwPvzVUxY_11proc_macro211TokenStreamECs36YJ3mR2EUy_5quote(ptr nonnull align 8 %i.i)
           to label %.invoke unwind label %bb.f
 
-.invoke:                                          ; preds = %.invoke10, %bb.i, %.thread
+.invoke:                                          ; preds = %.invoke10, %bb.i, %2
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshx33xqnyVJN_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.j)
           to label %bb.t unwind label %bb.c
 

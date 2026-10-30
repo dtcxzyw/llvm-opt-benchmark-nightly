@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ay = load i64, ptr %i.al, align 8, !tbaa !41 ; 2 uses
   %..i = tail call i64 @llvm.smin.i64(i64 %i.ax, i64 %i.ay) ; 2 uses
   %.not210228.i = icmp slt i64 %..i, 1
-  br i1 %.not210228.i, label %.loopexit, label %.lr.ph231.i
+  br i1 %.not210228.i, label %IBBDDQJac.exit, label %.lr.ph231.i
 
 .lr.ph231.i:                                      ; preds = %bb.f
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
@@ -481,26 +481,30 @@ middle.block:                                     ; preds = %vector.body
   %i.gl = add nuw i64 %.0180229.i, 1
   %exitcond.not.i = icmp eq i64 %.0180229.i, %..i
   %indvar.next = add i64 %indvar, 1
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.g
+  br i1 %exitcond.not.i, label %IBBDDQJac.exit, label %bb.g
 
-IBBDDQJac.exit:                                   ; preds = %._crit_edge.i, %bb.d, %bb.e
-  %.0183.i = phi i32 [ %i.ap, %bb.e ], [ %i.ai, %bb.d ], [ %i.dd, %._crit_edge.i ]
+IBBDDQJac.exit:                                   ; preds = %._crit_edge.i, %._crit_edge227.i, %bb.d, %bb.e, %bb.f
+  %.0183.i = phi i32 [ %i.ap, %bb.e ], [ %i.ai, %bb.d ], [ 0, %bb.f ], [ 0, %._crit_edge227.i ], [ %i.dd, %._crit_edge.i ] ; 2 uses
   %i.gm = icmp slt i32 %.0183.i, 0
-  br i1 %i.gm, label %bb.w, label %bb.x
+  br i1 %i.gm, label %bb.w, label %6
 
 bb.w:                                             ; preds = %IBBDDQJac.exit
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @IDAProcessError(ptr noundef %i.b, i32 noundef -1, i32 noundef 492, ptr noundef nonnull @__func__.IDABBDPrecSetup, ptr noundef nonnull @.str, ptr noundef nonnull @.str.9) #9
   br label %bb.x
 
-.loopexit:                                        ; preds = %._crit_edge227.i, %bb.f
+6:                                                ; preds = %IBBDDQJac.exit
+  %.not = icmp eq i32 %.0183.i, 0
+  br i1 %.not, label %.loopexit, label %bb.x
+
+.loopexit:                                        ; preds = %6
   %i.gn = getelementptr inbounds nuw i8, ptr %5, i64 72
   %i.go = load ptr, ptr %i.gn, align 8, !tbaa !38
   %i.gp = load ptr, ptr %i.c, align 8, !tbaa !31
   %i.gq = tail call i32 @SUNLinSolSetup_Band(ptr noundef %i.go, ptr noundef %i.gp) #9
   br label %bb.x
 
-bb.x:                                             ; preds = %IBBDDQJac.exit, %.loopexit, %bb.w
-  %.0 = phi i32 [ -1, %bb.w ], [ %i.gq, %.loopexit ], [ 1, %IBBDDQJac.exit ]
+bb.x:                                             ; preds = %6, %.loopexit, %bb.w
+  %.0 = phi i32 [ -1, %bb.w ], [ %i.gq, %.loopexit ], [ 1, %6 ]
   ret i32 %.0
 }
 

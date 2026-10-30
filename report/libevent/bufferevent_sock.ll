@@ -202,14 +202,14 @@ bb.c:                                             ; preds = %bb.b
   %.not61 = icmp eq i8 %i.h, 0
   br i1 %.not61, label %3, label %.thread68
 
+3:                                                ; preds = %bb.c
+  %4 = icmp eq i32 %i.f, 0
+  br i1 %4, label %bufferevent_trigger_nolock_.exit, label %bb.d
+
 .thread68:                                        ; preds = %bb.c
   %i.i = and i8 %i.g, -25
   store i8 %i.i, ptr %i.c, align 8
   br label %bb.e
-
-3:                                                ; preds = %bb.c
-  %4 = icmp eq i32 %i.f, 0
-  br i1 %4, label %bufferevent_trigger_nolock_.exit, label %bb.d
 
 bb.d:                                             ; preds = %3
   %i.j = and i8 %i.g, -25
@@ -410,35 +410,36 @@ bb.c:                                             ; preds = %bb.b
   %i.f = tail call i32 @evutil_socket_(i32 noundef %i.e, i32 noundef 2049, i32 noundef 0) #9 ; 2 uses
   store i32 %i.f, ptr %i.a, align 4
   %i.g = icmp slt i32 %i.f, 0
-  br i1 %i.g, label %be_socket_enable.exit, label %.thread.thread
+  br i1 %i.g, label %be_socket_enable.exit, label %.thread
 
 bb.d:                                             ; preds = %bb.a
-  br i1 %.not25, label %.thread31, label %.thread
+  br i1 %.not25, label %bb.e, label %.thread31
 
 .thread31:                                        ; preds = %bb.d
-  %3 = tail call i32 @bufferevent_setfd(ptr noundef %0, i32 noundef %i.b) #9 ; 0 uses
-  br label %bb.f
+  %3 = call i32 @evutil_socket_connect_(ptr noundef nonnull %i.a, ptr noundef nonnull %1, i32 noundef %2) #9 ; 2 uses
+  %4 = icmp slt i32 %3, 0
+  br i1 %4, label %be_socket_enable.exit, label %.thread.thread
 
-.thread:                                          ; preds = %bb.d
+.thread:                                          ; preds = %bb.c
   %i.h = call i32 @evutil_socket_connect_(ptr noundef nonnull %i.a, ptr noundef nonnull %1, i32 noundef %2) #9 ; 2 uses
   %i.i = icmp slt i32 %i.h, 0
-  br i1 %i.i, label %be_socket_enable.exit, label %bb.e
+  br i1 %i.i, label %bb.k, label %.thread.thread
 
-.thread.thread:                                   ; preds = %bb.c
-  %4 = call i32 @evutil_socket_connect_(ptr noundef nonnull %i.a, ptr noundef nonnull %1, i32 noundef %2) #9 ; 2 uses
-  %5 = icmp slt i32 %4, 0
-  br i1 %5, label %bb.k, label %bb.e
+.thread.thread:                                   ; preds = %.thread, %.thread31
+  %5 = phi i32 [ %i.h, %.thread ], [ %3, %.thread31 ]
+  %.pre = load i32, ptr %i.a, align 4
+  br label %bb.e
 
-bb.e:                                             ; preds = %.thread.thread, %.thread
-  %i.j = phi i32 [ %4, %.thread.thread ], [ %i.h, %.thread ]
-  %6 = load i32, ptr %i.a, align 4
-  %i.k = call i32 @bufferevent_setfd(ptr noundef %0, i32 noundef %6) #9 ; 0 uses
-  switch i32 %i.j, label %bb.j [
+bb.e:                                             ; preds = %.thread.thread, %bb.d
+  %i.j = phi i32 [ %.pre, %.thread.thread ], [ %i.b, %bb.d ]
+  %.021 = phi i32 [ %5, %.thread.thread ], [ 0, %bb.d ]
+  %i.k = call i32 @bufferevent_setfd(ptr noundef %0, i32 noundef %i.j) #9 ; 0 uses
+  switch i32 %.021, label %bb.j [
     i32 0, label %bb.f
     i32 1, label %bb.h
   ]
 
-bb.f:                                             ; preds = %.thread31, %bb.e
+bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.n = call i32 @bufferevent_add_event_(ptr noundef nonnull %i.l, ptr noundef nonnull %i.m) #9
@@ -474,13 +475,13 @@ bb.j:                                             ; preds = %bb.e
   %i.aa = call i32 @bufferevent_disable(ptr noundef %0, i16 noundef signext 6) #9 ; 0 uses
   br label %be_socket_enable.exit
 
-bb.k:                                             ; preds = %.thread.thread
+bb.k:                                             ; preds = %.thread
   %i.ab = load i32, ptr %i.a, align 4
   %i.ac = call i32 @evutil_closesocket(i32 noundef %i.ab) #9 ; 0 uses
   br label %be_socket_enable.exit
 
-be_socket_enable.exit:                            ; preds = %.thread, %bb.c, %bb.i, %bb.h, %bb.f, %bb.k, %bb.j, %bb.b, %bb.g
-  %.020 = phi i32 [ -1, %bb.k ], [ -1, %bb.c ], [ -1, %bb.b ], [ 0, %bb.g ], [ -1, %bb.f ], [ 0, %bb.j ], [ 0, %bb.h ], [ 0, %bb.i ], [ -1, %.thread ]
+be_socket_enable.exit:                            ; preds = %.thread31, %bb.c, %bb.i, %bb.h, %bb.k, %bb.f, %bb.j, %bb.b, %bb.g
+  %.020 = phi i32 [ -1, %bb.k ], [ -1, %bb.c ], [ -1, %bb.f ], [ 0, %bb.g ], [ -1, %bb.b ], [ 0, %bb.j ], [ 0, %bb.h ], [ 0, %bb.i ], [ -1, %.thread31 ]
   %i.ad = call i32 @bufferevent_decref_and_unlock_(ptr noundef %0) #9 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.020

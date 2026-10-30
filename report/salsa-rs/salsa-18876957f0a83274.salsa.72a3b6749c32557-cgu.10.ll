@@ -202,18 +202,24 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call { i64, ptr } @_RNvNtNtCs2AWtUsOyxgP_3std6thread9functions21available_parallelism() ; 2 uses
   %i.d = extractvalue { i64, ptr } %i.c, 0
-  %i.e = extractvalue { i64, ptr } %i.c, 1        ; 5 uses
+  %i.e = extractvalue { i64, ptr } %i.c, 1        ; 7 uses
   %i.f = trunc nuw i64 %i.d to i1
-  %2 = ptrtoint ptr %i.e to i64                   ; 3 uses
+  br i1 %i.f, label %bb.c, label %2
+
+2:                                                ; preds = %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
-  br i1 %i.f, label %bb.c, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
+  %.sroa.5.0.i.i.i = ptrtoint ptr %i.e to i64
+  %3 = shl i64 %.sroa.5.0.i.i.i, 2
+  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = and i64 %2, 3
+  %.sroa.5.09.i.i.i = ptrtoint ptr %i.e to i64    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.e) ]
+  %i.g = and i64 %.sroa.5.09.i.i.i, 3
   switch i64 %i.g, label %default.unreachable [
-    i64 2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i
+    i64 2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
     i64 3, label %bb.d
-    i64 0, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i
+    i64 0, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
     i64 1, label %bb.e
   ], !prof !32
 
@@ -222,11 +228,11 @@ default.unreachable:                              ; preds = %bb.c
 
 bb.d:                                             ; preds = %bb.c
   %i.h = icmp ult ptr %i.e, inttoptr (i64 180388626432 to ptr)
-  %i.i = and i64 %2, 1095216660480
+  %i.i = and i64 %.sroa.5.09.i.i.i, 1095216660480
   %i.j = icmp ne i64 %i.i, 1095216660480
   tail call void @llvm.assume(i1 %i.h)
   tail call void @llvm.assume(i1 %i.j)
-  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i
+  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
 
 bb.e:                                             ; preds = %bb.c
   %i.k = getelementptr i8, ptr %i.e, i64 -1       ; 4 uses
@@ -276,16 +282,15 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsC8CapfvpQ1_5salsa.exit.i.i.i.i.i.i.i.i: ; preds = %bb.h, %bb.g
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %i.k, i64 noundef 24, i64 noundef 8) #27
-  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i
+  br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i: ; preds = %bb.b
-  %3 = shl i64 %2, 2                              ; 2 uses
-  %i.y = icmp eq i64 %3, 0
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsC8CapfvpQ1_5salsa.exit.i.i.i.i.i.i.i.i, %bb.d, %bb.c, %bb.c, %2
+  %.sroa.0.012.i.i.i = phi i64 [ 4, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsC8CapfvpQ1_5salsa.exit.i.i.i.i.i.i.i.i ], [ 4, %bb.d ], [ 4, %bb.c ], [ 4, %bb.c ], [ %3, %2 ] ; 2 uses
+  %i.y = icmp eq i64 %.sroa.0.012.i.i.i, 0
   br i1 %i.y, label %_RNCINvMNtNtCs2AWtUsOyxgP_3std4sync9once_lockINtB5_8OnceLockjE10initializeNCINvB4_11get_or_initNCNvNtCsC8CapfvpQ1_5salsa8interned10new_shards0E0zE0B1A_.exit, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsC8CapfvpQ1_5salsa.exit.i.i.i.i.i.i.i.i, %bb.d, %bb.c, %bb.c
-  %.sroa.0.01114.i.i.i = phi i64 [ %3, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i ], [ 4, %bb.c ], [ 4, %bb.c ], [ 4, %bb.d ], [ 4, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs2AWtUsOyxgP_3std2io5error6CustomEECsC8CapfvpQ1_5salsa.exit.i.i.i.i.i.i.i.i ]
-  %i.z = add i64 %.sroa.0.01114.i.i.i, -1
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.thread.i.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsC8CapfvpQ1_5salsa.exit.i.i.i
+  %i.z = add i64 %.sroa.0.012.i.i.i, -1
   %i.aa = tail call range(i64 0, 63) i64 @llvm.ctlz.i64(i64 %i.z, i1 true)
   %i.ab = lshr i64 -1, %i.aa
   %i.ac = add i64 %i.ab, 1

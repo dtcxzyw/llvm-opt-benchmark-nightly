@@ -113,26 +113,27 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.e = getelementptr i8, ptr %0, i64 224        ; 3 uses
   %i.f = load i64, ptr %i.e, align 16             ; 2 uses
-  switch i64 %i.f, label %bb.d [
-    i64 168, label %.thread.i
-    i64 167, label %bb.c
-  ]
+  %3 = icmp eq i64 %i.f, 168
+  br i1 %3, label %.thread.i, label %4
 
 .thread.i:                                        ; preds = %bb.b
   tail call void @crypto_core_keccak1600_permute_12(ptr noundef nonnull %0) #4
   store i64 0, ptr %i.e, align 16
-  br label %bb.d
+  br label %4
 
-bb.c:                                             ; preds = %bb.b
-  %3 = getelementptr i8, ptr %0, i64 233
-  %i.g = load i8, ptr %3, align 1
+4:                                                ; preds = %.thread.i, %bb.b
+  %5 = phi i64 [ 0, %.thread.i ], [ %i.f, %bb.b ] ; 2 uses
+  %6 = icmp eq i64 %5, 167
+  %7 = getelementptr i8, ptr %0, i64 233          ; 2 uses
+  br i1 %6, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %4
+  %i.g = load i8, ptr %7, align 1
   %i.h = xor i8 %i.g, -128
   br label %turboshake128_finalize.exit
 
-bb.d:                                             ; preds = %.thread.i, %bb.b
-  %4 = phi i64 [ 0, %.thread.i ], [ %i.f, %bb.b ]
-  %5 = getelementptr i8, ptr %0, i64 233
-  tail call void @crypto_core_keccak1600_xor_bytes(ptr noundef nonnull %0, ptr noundef %5, i64 noundef %4, i64 noundef 1) #4
+bb.d:                                             ; preds = %4
+  tail call void @crypto_core_keccak1600_xor_bytes(ptr noundef nonnull %0, ptr noundef %7, i64 noundef %5, i64 noundef 1) #4
   br label %turboshake128_finalize.exit
 
 turboshake128_finalize.exit:                      ; preds = %bb.c, %bb.d

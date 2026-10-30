@@ -202,7 +202,7 @@ bb.a:
   %i.g = add i64 %i.d, %1                         ; 2 uses
   %i.h = add nsw i64 %i.b, -1
   %i.i = add i64 %i.h, %i.g                       ; 2 uses
-  %i.j = udiv i64 %i.i, %i.b                      ; 4 uses
+  %i.j = udiv i64 %i.i, %i.b                      ; 5 uses
   %i.k = icmp slt i64 %i.j, 0
   br i1 %i.k, label %bb.b, label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -212,7 +212,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
   %.not.i.i.i.i = icmp ult i64 %i.i, %i.b
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit, label %bb.c
+  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i.thread, label %bb.c
+
+_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i.thread: ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
+  %3 = getelementptr i8, ptr null, i64 %i.j
+  br label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
 
 bb.c:                                             ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
   %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #25 ; 5 uses
@@ -227,10 +231,10 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.n, i8 0, i64 %i.o, i1 false)
   br label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
 
-_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i, %bb.c, %bb.d
-  %.sroa.10.0 = phi ptr [ %i.m, %bb.d ], [ %i.m, %bb.c ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ]
-  %.sroa.041.0 = phi ptr [ %i.l, %bb.d ], [ %i.l, %bb.c ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 11 uses
-  %.0.i.i.i.i.i = phi ptr [ %i.m, %bb.d ], [ %i.n, %bb.c ], [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i ] ; 5 uses
+_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i.thread, %bb.c, %bb.d
+  %.sroa.10.0 = phi ptr [ %3, %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i.thread ], [ %i.m, %bb.c ], [ %i.m, %bb.d ]
+  %.sroa.041.0 = phi ptr [ null, %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i.thread ], [ %i.l, %bb.c ], [ %i.l, %bb.d ] ; 11 uses
+  %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.i.thread ], [ %i.n, %bb.c ], [ %i.m, %bb.d ] ; 5 uses
   %.sroa.041.060 = ptrtoaddr ptr %.sroa.041.0 to i64
   %.0.i.i.i.i.i61 = ptrtoaddr ptr %.0.i.i.i.i.i to i64
   %i.q = tail call i32 @mincore(ptr noundef %i.f, i64 noundef %i.g, ptr noundef %.sroa.041.0) #22

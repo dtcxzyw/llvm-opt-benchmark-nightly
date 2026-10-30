@@ -52,22 +52,23 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = load ptr, ptr %1, align 8, !tbaa !13
   %i.d = tail call noundef ptr @_Z10pj_mkparamPKc(ptr noundef %i.c) ; 17 uses
-  %.not.not = icmp eq ptr %i.d, null              ; 2 uses
-  br i1 %.not.not, label %.thread, label %bb.d
+  %.not = icmp ne ptr %i.d, null                  ; 3 uses
+  br i1 %.not, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %bb.c
   tail call void (i32, ptr, ...) @_Z5emessiPKcz(i32 noundef 1, ptr noundef nonnull @.str.1)
-  br label %._crit_edge
+  br label %bb.d
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %.thread, %bb.c
   %i.e = icmp sgt i32 %0, 1
-  br i1 %i.e, label %.lr.ph.preheader, label %._crit_edge
+  %2 = and i1 %.not, %i.e
+  br i1 %2, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.f = zext nneg i32 %0 to i64
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.f, %.thread, %bb.d
+._crit_edge:                                      ; preds = %bb.f, %bb.d
   %i.g = tail call noundef ptr @_Z18pj_get_default_ctxv()
   %i.h = call noundef i32 @_Z10pj_ell_setP6pj_ctxP8ARG_listPdS3_(ptr noundef %i.g, ptr noundef %i.d, ptr noundef nonnull @GEODESIC, ptr noundef nonnull %i.a)
   %.not68 = icmp eq i32 %i.h, 0
@@ -258,7 +259,7 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.w, %bb.v, %bb.z, %bb.aa, %bb.y, %bb.o
-  br i1 %.not.not, label %._crit_edge95, label %.lr.ph94
+  br i1 %.not, label %.lr.ph94, label %._crit_edge95
 
 .lr.ph94:                                         ; preds = %bb.ab, %.lr.ph94
   %.092 = phi ptr [ %i.bi, %.lr.ph94 ], [ %i.d, %bb.ab ] ; 2 uses

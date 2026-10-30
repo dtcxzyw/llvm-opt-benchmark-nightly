@@ -54,16 +54,20 @@ bb.b:                                             ; preds = %switch.lookup
 bb.c:                                             ; preds = %bb.b
   %i.n = call i32 @wc_HmacSetKey(ptr noundef nonnull %9, i32 noundef %switch.ext, ptr noundef %2, i32 noundef %3) #6 ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
-  br i1 %i.o, label %bb.d, label %.thread86
+  br i1 %i.o, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.p = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef %4, i32 noundef %5) #6 ; 2 uses
   %i.q = icmp eq i32 %i.p, 0
-  br i1 %i.q, label %bb.e, label %.thread86
+  br i1 %i.q, label %10, label %bb.e
 
-bb.e:                                             ; preds = %bb.d
-  %10 = call i32 @wc_HmacFinal(ptr noundef nonnull %9, ptr noundef nonnull %i.b) #6 ; 2 uses
-  %i.r = icmp eq i32 %10, 0
+10:                                               ; preds = %bb.d
+  %11 = call i32 @wc_HmacFinal(ptr noundef nonnull %9, ptr noundef nonnull %i.b) #6
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.c, %10, %bb.d
+  %.147 = phi i32 [ %11, %10 ], [ %i.p, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
+  %i.r = icmp eq i32 %.147, 0
   br i1 %i.r, label %.preheader, label %.thread86
 
 .preheader:                                       ; preds = %bb.e
@@ -165,8 +169,8 @@ bb.r:                                             ; preds = %bb.q, %bb.o
   %exitcond100.not = icmp eq i32 %i.as, %spec.select
   br i1 %exitcond100.not, label %.thread86, label %.preheader.split, !llvm.loop !11
 
-.thread86:                                        ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %.preheader.split.us, %bb.p, %bb.o, %bb.n, %bb.m, %bb.k, %.preheader.split, %bb.r, %bb.c, %bb.d, %bb.e
-  %.5 = phi i32 [ %10, %bb.e ], [ %i.n, %bb.c ], [ %i.p, %bb.d ], [ 0, %bb.r ], [ %i.aj, %bb.o ], [ %i.ah, %bb.n ], [ %i.ag, %bb.m ], [ %i.ak, %bb.p ], [ %i.ac, %bb.k ], [ %i.ab, %.preheader.split ], [ 0, %bb.j ], [ %i.y, %bb.i ], [ %i.x, %bb.h ], [ %i.w, %bb.g ], [ %i.s, %.preheader.split.us ], [ %i.t, %bb.f ]
+.thread86:                                        ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %.preheader.split.us, %bb.p, %bb.o, %bb.n, %bb.m, %bb.k, %.preheader.split, %bb.r, %bb.e
+  %.5 = phi i32 [ %.147, %bb.e ], [ 0, %bb.r ], [ %i.aj, %bb.o ], [ %i.ah, %bb.n ], [ %i.ag, %bb.m ], [ %i.ak, %bb.p ], [ %i.ac, %bb.k ], [ %i.ab, %.preheader.split ], [ 0, %bb.j ], [ %i.y, %bb.i ], [ %i.x, %bb.h ], [ %i.w, %bb.g ], [ %i.s, %.preheader.split.us ], [ %i.t, %bb.f ]
   call void @wc_HmacFree(ptr noundef nonnull %9) #6
   br label %.lr.ph25.preheader.i
 

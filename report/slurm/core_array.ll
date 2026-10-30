@@ -201,11 +201,11 @@ bb.a:
   %.not = icmp eq ptr %i.d, null
   %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 4 uses
   %.pre = load ptr, ptr %.phi.trans.insert, align 8 ; 2 uses
-  %.not34 = icmp eq ptr %.pre, null               ; 2 uses
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  br i1 %.not34, label %.thread, label %bb.c
+  %.not33 = icmp eq ptr %.pre, null
+  br i1 %.not33, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.e = tail call i64 @bit_size(ptr noundef nonnull %i.d) #3 ; 2 uses
@@ -234,15 +234,17 @@ bb.e:                                             ; preds = %.sink.split, %bb.d
   tail call void @bit_or(ptr noundef %i.n, ptr noundef %i.o) #3
   br label %.thread
 
-bb.f:                                             ; preds = %.lr.ph
+bb.f:                                             ; preds = %.lr.ph, %bb.b
+  %2 = phi ptr [ null, %bb.b ], [ %.pre, %.lr.ph ] ; 2 uses
+  %.not34 = icmp eq ptr %2, null
   br i1 %.not34, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = tail call ptr @bit_copy(ptr noundef nonnull %.pre) #3
+  %i.p = tail call ptr @bit_copy(ptr noundef nonnull %2) #3
   store ptr %i.p, ptr %i.c, align 8
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %bb.e, %bb.g, %bb.f
+.thread:                                          ; preds = %bb.e, %bb.g, %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.q = load i32, ptr @node_record_count, align 4
   %i.r = sext i32 %i.q to i64

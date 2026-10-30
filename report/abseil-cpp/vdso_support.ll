@@ -98,13 +98,13 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.j = tail call i32 (ptr, i32, ...) @open(ptr noundef nonnull @.str, i32 noundef 0) ; 3 uses
-  %.not = icmp eq i32 %i.j, -1
+  %.not = icmp eq i32 %i.j, -1                    ; 2 uses
   br i1 %.not, label %.thread, label %bb.f
 
 .thread:                                          ; preds = %bb.e
   store atomic ptr null, ptr @_ZN4absl12lts_2026052618debugging_internal11VDSOSupport10vdso_base_E monotonic, align 8
   store atomic ptr @_ZN4absl12lts_2026052618debugging_internal11VDSOSupport16GetCPUViaSyscallEPjPvS4_, ptr @_ZN4absl12lts_2026052618debugging_internal11VDSOSupport10getcpu_fn_E monotonic, align 8
-  br label %bb.q
+  br label %3
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #8
@@ -137,11 +137,14 @@ bb.j:                                             ; preds = %.loopexit
   store atomic ptr null, ptr @_ZN4absl12lts_2026052618debugging_internal11VDSOSupport10vdso_base_E monotonic, align 8
   br label %bb.k
 
-bb.k:                                             ; preds = %.loopexit, %bb.j
+bb.k:                                             ; preds = %bb.j, %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #8
-  br label %bb.l
+  br label %3
 
-bb.l:                                             ; preds = %bb.k, %bb.d
+3:                                                ; preds = %bb.k, %.thread
+  br i1 %.not, label %bb.q, label %bb.l
+
+bb.l:                                             ; preds = %3, %bb.d
   %i.u = load atomic ptr, ptr @_ZN4absl12lts_2026052618debugging_internal11VDSOSupport10vdso_base_E monotonic, align 8
   %.not10 = icmp eq ptr %i.u, null
   br i1 %.not10, label %bb.p, label %bb.m
@@ -178,8 +181,8 @@ bb.p:                                             ; preds = %_ZN4absl12lts_20260
   %i.ad = load atomic ptr, ptr @_ZN4absl12lts_2026052618debugging_internal11VDSOSupport10vdso_base_E monotonic, align 8
   br label %bb.q
 
-bb.q:                                             ; preds = %.thread, %bb.p
-  %.18 = phi ptr [ %i.ad, %bb.p ], [ null, %.thread ]
+bb.q:                                             ; preds = %3, %bb.p
+  %.18 = phi ptr [ %i.ad, %bb.p ], [ null, %3 ]
   ret ptr %.18
 }
 

@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i
 _ZN4i18n12phonenumbers13LoggerHandlerD2Ev.exit:   ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   %i.ah = icmp eq i32 %2, 0
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.aj = load i8, ptr %i.ai, align 8, !tbaa !23, !range !20, !noundef !24
   %i.ak = trunc nuw i8 %i.aj to i1                ; 3 uses
   br i1 %i.ah, label %bb.j, label %bb.m
@@ -219,10 +219,9 @@ bb.l:                                             ; preds = %bb.k
   call void @_ZdaPv(ptr noundef nonnull %i.al) #24
   br label %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread
 
-_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread: ; preds = %bb.j, %bb.k, %bb.l
+_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread: ; preds = %bb.l, %bb.k, %bb.j
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(18) %0, i8 0, i64 16, i1 false)
-  store i8 1, ptr %i.ai, align 8, !tbaa !23
-  br label %_ZN4i18n12phonenumbersL25ConvertToInterchangeValidEPci.exit
+  br label %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit
 
 bb.m:                                             ; preds = %_ZN4i18n12phonenumbers13LoggerHandlerD2Ev.exit
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
@@ -267,7 +266,7 @@ _ZN4i18n12phonenumbers11UnicodeText4Repr7reserveEi.exit.i.i: ; preds = %bb.q, %.
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !22 ; 3 uses
   %i.bb = icmp slt i32 %i.ba, %2
-  br i1 %i.bb, label %bb.r, label %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit
+  br i1 %i.bb, label %bb.r, label %5
 
 bb.r:                                             ; preds = %_ZN4i18n12phonenumbers11UnicodeText4Repr7reserveEi.exit.i.i
   %i.bc = sext i32 %i.ba to i64
@@ -276,15 +275,19 @@ bb.r:                                             ; preds = %_ZN4i18n12phonenumb
   %i.bf = zext nneg i32 %i.be to i64
   call void @llvm.memset.p0.i64(ptr align 1 %i.bd, i8 0, i64 %i.bf, i1 false)
   %.pre.pre.i = load ptr, ptr %0, align 8, !tbaa !21
+  br label %5
+
+5:                                                ; preds = %bb.r, %_ZN4i18n12phonenumbers11UnicodeText4Repr7reserveEi.exit.i.i
+  %.pre.i = phi ptr [ %.pre.pre.i, %bb.r ], [ %.pre.pre3.i, %_ZN4i18n12phonenumbers11UnicodeText4Repr7reserveEi.exit.i.i ]
+  store i32 %2, ptr %i.az, align 8, !tbaa !22
   br label %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit
 
-_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit: ; preds = %_ZN4i18n12phonenumbers11UnicodeText4Repr7reserveEi.exit.i.i, %bb.r
-  %.pre.i.a = phi ptr [ %.pre.pre.i, %bb.r ], [ %.pre.pre3.i, %_ZN4i18n12phonenumbers11UnicodeText4Repr7reserveEi.exit.i.i ]
-  store i32 %2, ptr %i.az, align 8, !tbaa !22
+_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit: ; preds = %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread, %5
+  %.pre.i.a = phi ptr [ null, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread ], [ %.pre.i, %5 ]
   store i8 1, ptr %i.ai, align 8, !tbaa !23
   %i.bg = sext i32 %2 to i64                      ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.pre.i.a, ptr readonly align 1 %1, i64 %i.bg, i1 false)
-  %i.bh = load ptr, ptr %0, align 8, !tbaa !48    ; 7 uses
+  %i.bh = load ptr, ptr %0, align 8, !tbaa !48    ; 5 uses
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 %i.bg ; 3 uses
   %i.bj = icmp sgt i32 %2, 0
   br i1 %i.bj, label %.lr.ph.i, label %_ZN4i18n12phonenumbersL25ConvertToInterchangeValidEPci.exit
@@ -343,11 +346,10 @@ bb.v:                                             ; preds = %._crit_edge.i, %bb.
   %i.bw = icmp ult ptr %.232.i, %i.bi
   br i1 %i.bw, label %bb.s, label %_ZN4i18n12phonenumbersL25ConvertToInterchangeValidEPci.exit
 
-_ZN4i18n12phonenumbersL25ConvertToInterchangeValidEPci.exit: ; preds = %._crit_edge46.i, %bb.v, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit
-  %5 = phi ptr [ %i.bh, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit ], [ null, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread ], [ %i.bh, %bb.v ], [ %i.bh, %._crit_edge46.i ]
-  %.3.i = phi ptr [ %i.bh, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit ], [ null, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit.thread ], [ %i.bq, %._crit_edge46.i ], [ %i.bv, %bb.v ]
+_ZN4i18n12phonenumbersL25ConvertToInterchangeValidEPci.exit: ; preds = %._crit_edge46.i, %bb.v, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit
+  %.3.i = phi ptr [ %i.bh, %_ZN4i18n12phonenumbers11UnicodeText4Repr4CopyEPKci.exit ], [ %i.bv, %bb.v ], [ %i.bq, %._crit_edge46.i ]
   %i.bx = ptrtoint ptr %.3.i to i64
-  %i.by = ptrtoint ptr %5 to i64
+  %i.by = ptrtoint ptr %i.bh to i64
   %i.bz = sub i64 %i.bx, %i.by
   %i.ca = trunc i64 %i.bz to i32
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 8

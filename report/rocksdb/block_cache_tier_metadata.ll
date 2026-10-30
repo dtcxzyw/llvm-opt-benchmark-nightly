@@ -202,7 +202,7 @@ bb.a:
   %3 = alloca %"class.std::unique_ptr.37", align 8 ; 5 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  %i.b = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #12 ; 9 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #12 ; 8 uses
   invoke void @_ZNK7rocksdb5Slice8ToStringB5cxx11Eb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 dereferenceable(44) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %1, i1 noundef zeroext false)
           to label %bb.b unwind label %bb.d
 
@@ -214,10 +214,11 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store ptr %i.b, ptr %i.a, align 8, !tbaa !90
   %i.e = invoke noundef zeroext i1 @_ZN7rocksdb9HashTableIPNS_9BlockInfoENS_22BlockCacheTierMetadata4HashENS3_5EqualEE6InsertERKS2_(ptr noundef nonnull align 8 dereferenceable(40) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
-          to label %bb.c unwind label %bb.e
+          to label %bb.c unwind label %bb.e       ; 2 uses
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  %spec.select = select i1 %i.e, ptr null, ptr %i.b ; 2 uses
   br i1 %i.e, label %_ZNSt10unique_ptrIN7rocksdb9BlockInfoESt14default_deleteIS1_EED2Ev.exit, label %bb.f
 
 bb.d:                                             ; preds = %bb.a
@@ -235,7 +236,7 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.c
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !71   ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %spec.select, i64 16 ; 2 uses
   %i.j = icmp eq ptr %i.h, %i.i
   br i1 %i.j, label %_ZNKSt14default_deleteIN7rocksdb9BlockInfoEEclEPS1_.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
 
@@ -246,11 +247,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNKSt14default_deleteIN7rocksdb9BlockInfoEEclEPS1_.exit.i
 
 _ZNKSt14default_deleteIN7rocksdb9BlockInfoEEclEPS1_.exit.i: ; preds = %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 48) #15
+  call void @_ZdlPvm(ptr noundef nonnull %spec.select, i64 noundef 48) #15
   br label %_ZNSt10unique_ptrIN7rocksdb9BlockInfoESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN7rocksdb9BlockInfoESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.c, %_ZNKSt14default_deleteIN7rocksdb9BlockInfoEEclEPS1_.exit.i
-  %.0610 = phi ptr [ null, %_ZNKSt14default_deleteIN7rocksdb9BlockInfoEEclEPS1_.exit.i ], [ %i.b, %bb.c ]
+  %.0610 = phi ptr [ %i.b, %bb.c ], [ null, %_ZNKSt14default_deleteIN7rocksdb9BlockInfoEEclEPS1_.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   ret ptr %.0610
 

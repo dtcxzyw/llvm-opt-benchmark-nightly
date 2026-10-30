@@ -88,7 +88,7 @@ bb.a:
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %.loopexit, label %.lr.ph
 
-bb.b:                                             ; preds = %.lr.ph
+bb.b:                                             ; preds = %2
   %i.b = add nuw i32 %.0811, 1                    ; 2 uses
   %i.c = tail call i32 @lv_obj_get_child_count(ptr noundef %1) #2
   %i.d = icmp ult i32 %i.b, %i.c
@@ -96,16 +96,21 @@ bb.b:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.0811 = phi i32 [ %i.b, %bb.b ], [ 0, %bb.a ]  ; 2 uses
+  %.0910 = phi ptr [ %.1, %bb.b ], [ undef, %bb.a ]
   %i.e = tail call ptr @lv_obj_get_child(ptr noundef %1, i32 noundef %.0811) #2 ; 2 uses
-  %i.f = tail call zeroext i1 @lv_obj_check_type(ptr noundef %i.e, ptr noundef nonnull @lv_label_class) #2
-  br i1 %i.f, label %.thread, label %bb.b
+  %i.f = tail call zeroext i1 @lv_obj_check_type(ptr noundef %i.e, ptr noundef nonnull @lv_label_class) #2 ; 2 uses
+  br i1 %i.f, label %.thread, label %2
 
 .thread:                                          ; preds = %.lr.ph
   %i.g = tail call ptr @lv_label_get_text(ptr noundef %i.e) #2
-  br label %.loopexit
+  br label %2
 
-.loopexit:                                        ; preds = %bb.b, %bb.a, %.thread
-  %.2 = phi ptr [ %i.g, %.thread ], [ @.str.3, %bb.a ], [ @.str.3, %bb.b ]
+2:                                                ; preds = %.lr.ph, %.thread
+  %.1 = phi ptr [ %i.g, %.thread ], [ %.0910, %.lr.ph ] ; 2 uses
+  br i1 %i.f, label %.loopexit, label %bb.b
+
+.loopexit:                                        ; preds = %2, %bb.b, %bb.a
+  %.2 = phi ptr [ @.str.3, %bb.a ], [ @.str.3, %bb.b ], [ %.1, %2 ]
   ret ptr %.2
 }
 

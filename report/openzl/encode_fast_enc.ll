@@ -204,13 +204,14 @@ GenericVector_reserve.exit.thread.i.i:            ; preds = %GenericVector_reall
   br label %GenericVector_resize.exit.i
 
 GenericVector_resize.exit.i:                      ; preds = %GenericVector_reserve.exit.thread.i.i, %bb.ac
-  %.0.i28.i.i276.i = phi ptr [ %.0.i28.i.i277.i, %bb.ac ], [ %.0.i28.i.i.i, %GenericVector_reserve.exit.thread.i.i ] ; 3 uses
-  %i.di = phi i32 [ %i.cs, %bb.ac ], [ %i.dh, %GenericVector_reserve.exit.thread.i.i ] ; 2 uses
-  %i.dj = icmp ult i32 %.0127.i, 65535
+  %.0.i28.i.i276.i = phi ptr [ %.0.i28.i.i.i, %GenericVector_reserve.exit.thread.i.i ], [ %.0.i28.i.i277.i, %bb.ac ] ; 3 uses
+  %i.di = phi i32 [ %i.dh, %GenericVector_reserve.exit.thread.i.i ], [ %i.cs, %bb.ac ] ; 2 uses
+  %i.dj = icmp ult i32 %.0127.i, 65535            ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.0.i28.i.i276.i, i64 %i.ct
   %i.dl = trunc nuw i32 %i.cu to i16
   store i16 %i.dl, ptr %i.dk, align 1
-  %i.dm = sub nuw i32 %.0127.i, %i.cu
+  %8 = select i1 %i.dj, i32 0, i32 %i.cu
+  %i.dm = sub nuw i32 %.0127.i, %8
   br i1 %i.dj, label %.loopexit260.i, label %bb.ac
 
 .loopexit260.i:                                   ; preds = %GenericVector_resize.exit.i
@@ -303,13 +304,14 @@ GenericVector_reserve.exit.thread.i194.i:         ; preds = %GenericVector_reall
   br label %GenericVector_resize.exit200.i
 
 GenericVector_resize.exit200.i:                   ; preds = %GenericVector_reserve.exit.thread.i194.i, %bb.ao
-  %.0.i28.i.i192287.i = phi ptr [ %.0.i28.i.i192288.i, %bb.ao ], [ %.0.i28.i.i192.i, %GenericVector_reserve.exit.thread.i194.i ] ; 3 uses
-  %i.eo = phi i32 [ %i.dy, %bb.ao ], [ %i.en, %GenericVector_reserve.exit.thread.i194.i ] ; 2 uses
-  %i.ep = icmp ult i32 %.0126.i, 65535
+  %.0.i28.i.i192287.i = phi ptr [ %.0.i28.i.i192.i, %GenericVector_reserve.exit.thread.i194.i ], [ %.0.i28.i.i192288.i, %bb.ao ] ; 3 uses
+  %i.eo = phi i32 [ %i.en, %GenericVector_reserve.exit.thread.i194.i ], [ %i.dy, %bb.ao ] ; 2 uses
+  %i.ep = icmp ult i32 %.0126.i, 65535            ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.0.i28.i.i192287.i, i64 %i.dz
   %i.er = trunc nuw i32 %i.ea to i16
   store i16 %i.er, ptr %i.eq, align 1
-  %i.es = sub nuw i32 %.0126.i, %i.ea
+  %9 = select i1 %i.ep, i32 0, i32 %i.ea
+  %i.es = sub nuw i32 %.0126.i, %9
   br i1 %i.ep, label %.loopexit.i, label %bb.ao
 
 .loopexit.i:                                      ; preds = %GenericVector_resize.exit200.i
@@ -668,7 +670,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
   br label %.thread225.i
 
 .thread225.i:                                     ; preds = %bb.al, %.critedge.i, %.thread225.loopexit259.i, %.thread225.loopexit.i, %bb.ca
-  %.0.i = phi i1 [ true, %bb.ca ], [ false, %.thread225.loopexit.i ], [ false, %.thread225.loopexit259.i ], [ false, %.critedge.i ], [ false, %bb.al ]
+  %.0.i = phi i1 [ true, %bb.ca ], [ false, %.thread225.loopexit259.i ], [ false, %.thread225.loopexit.i ], [ false, %.critedge.i ], [ false, %bb.al ]
   call void @free(ptr noundef %i.aw) #14
   call void @free(ptr noundef %i.az) #14
   %i.ja = getelementptr inbounds nuw i8, ptr %5, i64 24

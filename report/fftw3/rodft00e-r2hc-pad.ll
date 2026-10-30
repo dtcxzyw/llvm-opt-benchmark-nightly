@@ -92,7 +92,7 @@ bb.e:                                             ; preds = %bb.d
   %i.am = call ptr @fftw_mkproblem_rdft_1_d(ptr noundef %i.ab, ptr noundef %i.af, ptr noundef nonnull %i.ah, ptr noundef %i.al, i32 noundef 0) #5
   %i.an = call ptr @fftw_mkplan_d(ptr noundef nonnull %2, ptr noundef %i.am) #5 ; 3 uses
   %.not51 = icmp eq ptr %i.an, null
-  br i1 %.not51, label %bb.g, label %bb.f
+  br i1 %.not51, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   call void @fftw_ifree(ptr noundef nonnull %i.u) #5
@@ -134,14 +134,15 @@ bb.f:                                             ; preds = %bb.e
   call void @fftw_ops_madd2(i64 noundef %i.bj, ptr noundef nonnull %i.bk, ptr noundef nonnull %i.bf) #5
   br label %bb.h
 
-.thread:                                          ; preds = %bb.d, %applicable.exit, %bb.a, %bb.c, %bb.b
-  %.0.ph = phi ptr [ %i.u, %bb.d ], [ null, %applicable.exit ], [ null, %bb.a ], [ null, %bb.c ], [ null, %bb.b ]
-  tail call void @fftw_ifree0(ptr noundef %.0.ph) #5
-  br label %bb.h
+.thread:                                          ; preds = %bb.a, %bb.c, %bb.b, %bb.e, %bb.d, %applicable.exit
+  %.046 = phi ptr [ %i.y, %bb.e ], [ null, %bb.d ], [ null, %applicable.exit ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.a ] ; 2 uses
+  %.0 = phi ptr [ %i.u, %bb.e ], [ %i.u, %bb.d ], [ null, %applicable.exit ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.a ]
+  call void @fftw_ifree0(ptr noundef %.0) #5
+  %.not52 = icmp eq ptr %.046, null
+  br i1 %.not52, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %bb.e
-  call void @fftw_ifree0(ptr noundef nonnull %i.u) #5
-  call void @fftw_plan_destroy_internal(ptr noundef nonnull %i.y) #5
+bb.g:                                             ; preds = %.thread
+  call void @fftw_plan_destroy_internal(ptr noundef nonnull %.046) #5
   br label %bb.h
 
 bb.h:                                             ; preds = %.thread, %bb.g, %bb.f

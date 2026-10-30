@@ -200,7 +200,7 @@ bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.d = load i32, ptr %i.c, align 8, !tbaa !26
   %.not22 = icmp eq i32 %i.d, 0
-  br i1 %.not22, label %bb.d, label %.thread
+  br i1 %.not22, label %bb.d, label %2
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -208,7 +208,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.h = load i32, ptr %i.g, align 4, !tbaa !28
   %i.i = tail call i32 @zng_deflateInit2(ptr noundef nonnull %i.a, i32 noundef %i.f, i32 noundef 8, i32 noundef 31, i32 noundef 8, i32 noundef %i.h) #12 ; 2 uses
-  %.not23 = icmp eq i32 %i.i, 0
+  %.not23 = icmp eq i32 %i.i, 0                   ; 2 uses
   br i1 %.not23, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -218,11 +218,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   tail call void @zng_gz_error(ptr noundef nonnull %0, i32 noundef -4, ptr noundef nonnull @.str.3) #12
-  br label %.thread
+  br label %1
 
 bb.g:                                             ; preds = %bb.e
   tail call void @zng_gz_error(ptr noundef nonnull %0, i32 noundef -2, ptr noundef nonnull @.str.4) #12
-  br label %.thread
+  br label %1
 
 bb.h:                                             ; preds = %bb.d
   store ptr null, ptr %i.a, align 8, !tbaa !24
@@ -236,10 +236,16 @@ bb.h:                                             ; preds = %bb.d
   store ptr %i.o, ptr %i.p, align 8, !tbaa !31
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.o, ptr %i.q, align 8, !tbaa !32
+  br label %1
+
+1:                                                ; preds = %bb.f, %bb.g, %bb.h
+  br i1 %.not23, label %2, label %.thread
+
+2:                                                ; preds = %1, %bb.c
   br label %.thread
 
-.thread:                                          ; preds = %bb.g, %bb.f, %bb.c, %bb.h, %bb.b
-  %.1 = phi i32 [ -1, %bb.b ], [ 0, %bb.c ], [ 0, %bb.h ], [ -1, %bb.f ], [ -1, %bb.g ]
+.thread:                                          ; preds = %1, %2, %bb.b
+  %.1 = phi i32 [ -1, %bb.b ], [ 0, %2 ], [ -1, %1 ]
   ret i32 %.1
 }
 

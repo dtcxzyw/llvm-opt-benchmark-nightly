@@ -150,7 +150,7 @@ bb.a:
   %i.c = alloca [16 x i8], align 16               ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.f = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 8 uses
+  %i.f = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !align !6, !noundef !5 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !40)
@@ -209,7 +209,7 @@ bb.e:                                             ; preds = %_RINvMsF_NtCsgCecv3
 bb.f:                                             ; preds = %_RINvMsF_NtCsgCecv3eZDcN_5alloc4syncINtB6_3ArcDNtNtCsf3Ta7LF998c_4core3any3AnyNtNtBM_6marker4SendNtB1f_4SyncEL_E8downcastNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeEB1W_.exit
   %i.x = cmpxchg ptr %i.f, i64 1, i64 0 monotonic monotonic, align 8
   %i.y = extractvalue { i64, i1 } %i.x, 1
-  br i1 %i.y, label %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.thread, label %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.a
+  br i1 %i.y, label %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.thread, label %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit
 
 _RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.thread: ; preds = %bb.f
   fence acquire
@@ -217,12 +217,17 @@ _RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16Qua
   store ptr %i.f, ptr %i.b, align 8
   call void @_RNvXsO_NtCsgCecv3eZDcN_5alloc4syncINtB5_4WeakNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %bb.h
+  br label %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit
 
-_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.a: ; preds = %bb.f
+_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit: ; preds = %bb.f, %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.thread
+  %.sroa.0.0.i = phi ptr [ null, %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.thread ], [ %i.f, %bb.f ] ; 3 uses
+  %.not11 = icmp eq ptr %.sroa.0.0.i, null
+  br i1 %.not11, label %bb.h, label %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.a
+
+_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.a: ; preds = %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.f, ptr %i.a, align 8
-  %i.z = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !44
+  store ptr %.sroa.0.0.i, ptr %i.a, align 8
+  %i.z = atomicrmw add ptr %.sroa.0.0.i, i64 -1 release, align 8, !noalias !44
   %i.aa = icmp eq i64 %i.z, 1
   br i1 %i.aa, label %bb.g, label %_RNCINvMNtNtCsflt7xRw9JFr_12clap_builder4util9any_valueNtB5_8AnyValue13downcast_intoNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE0B1l_.exit
 
@@ -235,7 +240,7 @@ _RNCINvMNtNtCsflt7xRw9JFr_12clap_builder4util9any_valueNtB5_8AnyValue13downcast_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.h
 
-bb.h:                                             ; preds = %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit.thread, %_RNCINvMNtNtCsflt7xRw9JFr_12clap_builder4util9any_valueNtB5_8AnyValue13downcast_intoNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE0B1l_.exit
+bb.h:                                             ; preds = %_RNvMsf_NtCsgCecv3eZDcN_5alloc4syncINtB5_3ArcNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE10try_unwrapBI_.exit, %_RNCINvMNtNtCsflt7xRw9JFr_12clap_builder4util9any_valueNtB5_8AnyValue13downcast_intoNtCskVIURZGHVHJ_12tensor_tools16QuantizationModeE0B1l_.exit
   store ptr null, ptr %0, align 8
   br label %bb.i
 

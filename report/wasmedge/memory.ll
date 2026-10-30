@@ -202,7 +202,7 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN8WasmEdge7Runtime8Instance14ModuleInstance17unsafeAddInstanceINS1_14MemoryInstanceEJRKNS_3AST10MemoryTypeEmEEENSt9enable_ifIX11IsInstanceVIT_EEvE4typeERSt6vectorISt10unique_ptrISA_St14default_deleteISA_EESaISH_EERSD_IPSA_SaISL_EEDpOT0_(ptr noundef nonnull align 8 dereferenceable(952) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(8) %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = alloca %"class.std::unique_ptr", align 8   ; 5 uses
+  %5 = alloca %"class.std::unique_ptr", align 8   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
   %i.a = tail call noalias noundef nonnull dereferenceable(136) ptr @_Znwm(i64 noundef 136) #17, !noalias !73 ; 4 uses
@@ -219,6 +219,7 @@ bb.a:
 
 _ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit.thread: ; preds = %bb.a
   store i64 %i.g, ptr %i.d, align 8, !tbaa !21
+  store ptr null, ptr %5, align 8, !tbaa !21
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.h, ptr %i.c, align 8, !tbaa !76
   br label %_ZNSt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS3_EED2Ev.exit
@@ -254,6 +255,7 @@ _ZNKSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14def
 .noexc12:                                         ; preds = %_ZNKSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l
   store i64 %i.g, ptr %i.u, align 8, !tbaa !21
+  store ptr null, ptr %5, align 8, !tbaa !21
   %.not10.i.i.i.i = icmp eq ptr %i.i, %i.d
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
@@ -324,7 +326,7 @@ bb.d:                                             ; preds = %_ZNSt6vectorISt10un
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.l) #18
   br label %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit
 
-_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, %bb.d
+_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit: ; preds = %bb.d, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i
   store ptr %i.t, ptr %1, align 8, !tbaa !78
   store ptr %i.ak, ptr %i.c, align 8, !tbaa !76
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.r
@@ -332,25 +334,27 @@ _ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14defa
   br label %_ZNSt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS3_EED2Ev.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit.thread
-  %i.am = phi ptr [ %i.d, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit.thread ], [ %.0.lcssa.i.i.i.i, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
+  %i.am = phi ptr [ %.0.lcssa.i.i.i.i, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit ], [ %i.d, %_ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS4_EESaIS7_EE9push_backEOS7_.exit.thread ]
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !21 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !13 ; 4 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !83
+  %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !13 ; 3 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !83 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.not.i.i6 = icmp eq ptr %i.ap, %i.ar
   br i1 %.not.i.i6, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS3_EED2Ev.exit
   store ptr %i.an, ptr %i.ap, align 8, !tbaa !21
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  store ptr %i.as, ptr %i.ao, align 8, !tbaa !13
+  store ptr %i.as, ptr %6, align 8, !tbaa !13
   br label %_ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE9push_backEOS4_.exit
 
 bb.f:                                             ; preds = %_ZNSt10unique_ptrIN8WasmEdge7Runtime8Instance14MemoryInstanceESt14default_deleteIS3_EED2Ev.exit
   %i.at = load ptr, ptr %2, align 8, !tbaa !14    ; 4 uses
-  %i.au = ptrtoint ptr %i.ap to i64
+  %i.au = ptrtoint ptr %i.ar to i64
   %i.av = ptrtoint ptr %i.at to i64
   %i.aw = sub i64 %i.au, %i.av                    ; 6 uses
   %i.ax = icmp eq i64 %i.aw, 9223372036854775800
@@ -391,9 +395,9 @@ bb.i:                                             ; preds = %_ZNSt6vectorIPN8Was
 
 _ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
   store ptr %i.be, ptr %2, align 8, !tbaa !14
-  store ptr %i.bh, ptr %i.ao, align 8, !tbaa !13
+  store ptr %i.bh, ptr %6, align 8, !tbaa !13
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.bc
-  store ptr %i.bi, ptr %i.aq, align 8, !tbaa !83
+  store ptr %i.bi, ptr %7, align 8, !tbaa !83
   br label %_ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE9push_backEOS4_.exit
 
 _ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE9push_backEOS4_.exit: ; preds = %bb.e, %_ZNSt6vectorIPN8WasmEdge7Runtime8Instance14MemoryInstanceESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i
@@ -664,14 +668,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = icmp slt i64 %i.d, 0
-  br i1 %i.f, label %bb.c, label %_ZNSt15__new_allocatorIcE8allocateEmPKv.exit
+  br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.g = tail call i64 @llvm.umax.i64(i64 %1, i64 9223372036854775807)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.c
-  %.0 = phi i64 [ %1, %bb.a ], [ %i.g, %bb.c ]    ; 2 uses
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
+  %.0 = phi i64 [ %i.d, %bb.b ], [ %i.g, %bb.c ], [ %1, %bb.a ] ; 4 uses
+  %2 = load ptr, ptr %0, align 8, !tbaa !51       ; 3 uses
   %i.h = icmp slt i64 %.0, 0
   br i1 %i.h, label %bb.e, label %_ZNSt15__new_allocatorIcE8allocateEmPKv.exit, !prof !92
 
@@ -679,17 +684,15 @@ bb.e:                                             ; preds = %bb.d
   tail call void @_ZSt17__throw_bad_allocv() #15
   unreachable
 
-_ZNSt15__new_allocatorIcE8allocateEmPKv.exit:     ; preds = %bb.b, %bb.d
-  %.035 = phi i64 [ %.0, %bb.d ], [ %i.d, %bb.b ] ; 3 uses
-  %2 = load ptr, ptr %0, align 8, !tbaa !51       ; 3 uses
-  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.035) #17 ; 2 uses
+_ZNSt15__new_allocatorIcE8allocateEmPKv.exit:     ; preds = %bb.d
+  %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %.0) #17 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8, !tbaa !53   ; 2 uses
-  %i.l = icmp ule i64 %i.k, %.035
+  %i.l = icmp ule i64 %i.k, %.0
   tail call void @llvm.assume(i1 %i.l)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr align 1 %2, i64 %i.k, i1 false)
   store ptr %i.i, ptr %0, align 8, !tbaa !51
-  store i64 %.035, ptr %i.a, align 8, !tbaa !52
+  store i64 %.0, ptr %i.a, align 8, !tbaa !52
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.not = icmp eq ptr %2, %i.m
   br i1 %.not, label %bb.g, label %bb.f
@@ -984,7 +987,7 @@ attributes #18 = { builtin nounwind }
 !89 = distinct !{!89, i1 true, !"_ZN3fmt3v1116make_format_argsINS0_7contextEJmKmELm2ELm0ELy68ETnNSt9enable_ifIXeqT2_Li0EEiE4typeELi0EEENS0_6detail16format_arg_storeIT_XT1_ELm0EXT3_EEEDpRT0_"}
 !90 = distinct !{!90, !89, !"_ZN3fmt3v1116make_format_argsINS0_7contextEJmKmELm2ELm0ELy68ETnNSt9enable_ifIXeqT2_Li0EEiE4typeELi0EEENS0_6detail16format_arg_storeIT_XT1_ELm0EXT3_EEEDpRT0_: argument 0"}
 !91 = !{!90}
-!92 = !{!"branch_weights", !"expected", i32 1430940, i32 2146052708}
+!92 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !93 = distinct !{!93, !24}
 !94 = !{!38, !34, i64 16}
 !95 = !{!35, !34, i64 0}

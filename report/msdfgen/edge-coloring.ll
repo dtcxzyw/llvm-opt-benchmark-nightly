@@ -205,7 +205,7 @@ _ZNKSt6vectorIN7msdfgen10EdgeHolderESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = 
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 3                  ; 2 uses
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #19 ; 10 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #19 ; 11 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 2 uses
   invoke void @_ZN7msdfgen10EdgeHolderC1EOS0_(ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %2)
           to label %_ZNSt16allocator_traitsISaIN7msdfgen10EdgeHolderEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit unwind label %.thread
@@ -262,7 +262,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN7ms
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN7msdfgen10EdgeHolderES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %_ZSt10_ConstructIN7msdfgen10EdgeHolderEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt16allocator_traitsISaIN7msdfgen10EdgeHolderEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN7msdfgen10EdgeHolderEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.s, %_ZSt10_ConstructIN7msdfgen10EdgeHolderEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 4 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN7msdfgen10EdgeHolderEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.s, %_ZSt10_ConstructIN7msdfgen10EdgeHolderEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 3 uses
   %.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 8 ; 3 uses
   %.not14.i.i.i.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not14.i.i.i.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPN7msdfgen10EdgeHolderES2_SaIS1_EET0_T_S5_S4_RT1_.exit43, label %.lr.ph.i.i.i.i.i29
@@ -303,7 +303,7 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPN7ms
   %i.af = landingpad { ptr, i32 }
           catch ptr null
   invoke void @__cxa_end_catch()
-          to label %bb.l unwind label %bb.i
+          to label %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread unwind label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = landingpad { ptr, i32 }
@@ -353,27 +353,29 @@ _ZNSt12_Vector_baseIN7msdfgen10EdgeHolderESaIS1_EE13_M_deallocateEPS1_m.exit: ; 
 .thread:                                          ; preds = %_ZNKSt6vectorIN7msdfgen10EdgeHolderESaIS1_EE12_M_check_lenEmPKc.exit
   %i.ao = landingpad { ptr, i32 }
           catch ptr null
-  %3 = extractvalue { ptr, i32 } %i.ao, 0
-  %4 = tail call ptr @__cxa_begin_catch(ptr %3) #16 ; 0 uses
-  br label %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit
+  br label %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread
 
-_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread: ; preds = %bb.d
-  %i.ap = extractvalue { ptr, i32 } %i.x, 0
+_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread: ; preds = %.thread, %bb.h, %bb.d
+  %.0.lpad-body = phi ptr [ null, %bb.d ], [ %i.p, %.thread ], [ %.ptr, %bb.h ] ; 3 uses
+  %eh.lpad-body = phi { ptr, i32 } [ %i.x, %bb.d ], [ %i.ao, %.thread ], [ %i.af, %bb.h ]
+  %i.ap = extractvalue { ptr, i32 } %eh.lpad-body, 0
   %i.aq = tail call ptr @__cxa_begin_catch(ptr %i.ap) #16 ; 0 uses
+  %.not = icmp eq ptr %.0.lpad-body, null
+  br i1 %.not, label %3, label %bb.l
+
+3:                                                ; preds = %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread
   tail call void @_ZN7msdfgen10EdgeHolderD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.q) #16
   br label %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit
 
-bb.l:                                             ; preds = %bb.h
-  %5 = extractvalue { ptr, i32 } %i.af, 0
-  %6 = tail call ptr @__cxa_begin_catch(ptr %5) #16 ; 0 uses
-  %.not4.i.i45 = icmp eq ptr %i.p, %.ptr
+bb.l:                                             ; preds = %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread
+  %.not4.i.i45 = icmp eq ptr %i.p, %.0.lpad-body
   br i1 %.not4.i.i45, label %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit, label %.lr.ph.i.i46
 
 .lr.ph.i.i46:                                     ; preds = %bb.l, %.lr.ph.i.i46
-  %.05.i.i47 = phi ptr [ %i.ar, %.lr.ph.i.i46 ], [ %i.p, %bb.l ] ; 3 uses
+  %.05.i.i47 = phi ptr [ %i.ar, %.lr.ph.i.i46 ], [ %i.p, %bb.l ] ; 2 uses
   tail call void @_ZN7msdfgen10EdgeHolderD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.05.i.i47) #16
-  %i.ar = getelementptr inbounds nuw i8, ptr %.05.i.i47, i64 8
-  %.not.i.i48 = icmp eq ptr %.05.i.i47, %.0.lcssa.i.i.i.i.i
+  %i.ar = getelementptr inbounds nuw i8, ptr %.05.i.i47, i64 8 ; 2 uses
+  %.not.i.i48 = icmp eq ptr %i.ar, %.0.lpad-body
   br i1 %.not.i.i48, label %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit, label %.lr.ph.i.i46, !llvm.loop !0
 
 bb.m:                                             ; preds = %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit
@@ -382,7 +384,7 @@ bb.m:                                             ; preds = %_ZSt8_DestroyIPN7ms
   invoke void @__cxa_end_catch()
           to label %bb.n unwind label %bb.o
 
-_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit: ; preds = %.lr.ph.i.i46, %.thread, %bb.l, %_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit.thread
+_ZSt8_DestroyIPN7msdfgen10EdgeHolderES1_EvT_S3_RSaIT0_E.exit: ; preds = %.lr.ph.i.i46, %3, %bb.l
   tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef %i.o) #17
   invoke void @__cxa_rethrow() #18
           to label %bb.p unwind label %bb.m

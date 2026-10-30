@@ -162,10 +162,11 @@ bb.j:                                             ; preds = %bb.i
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 3664
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !78
   %.not79 = icmp eq ptr %i.be, %i.bg
-  br i1 %.not79, label %select.unfold, label %.thread94
+  %spec.select = select i1 %.not79, i32 %1, i32 -1
+  br label %select.unfold
 
 select.unfold:                                    ; preds = %bb.j, %bb.i
-  %.0 = phi i32 [ %i.e, %bb.i ], [ %1, %bb.j ]    ; 2 uses
+  %.0 = phi i32 [ %spec.select, %bb.j ], [ %i.e, %bb.i ] ; 2 uses
   %.not80 = icmp eq i32 %.0, -1
   br i1 %.not80, label %.thread94, label %bb.k
 
@@ -173,7 +174,7 @@ bb.k:                                             ; preds = %select.unfold
   call void @kissat_learned_unit(ptr noundef nonnull %0, i32 noundef %.0) #3
   br label %.thread94
 
-.thread94:                                        ; preds = %bb.j, %bb.k, %select.unfold
+.thread94:                                        ; preds = %bb.k, %select.unfold
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 3776
   store i8 1, ptr %i.bh, align 8, !tbaa !79
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 3760

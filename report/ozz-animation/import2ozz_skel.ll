@@ -202,15 +202,24 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.k, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %i.n = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.m, ptr noundef nonnull dereferenceable(1) %i.l) #13
-  %i.o = icmp slt i32 %i.n, 0
-  br i1 %i.o, label %select.unfold, label %bb.i
+  %i.o = icmp slt i32 %i.n, 0                     ; 2 uses
+  %spec.select = select i1 %i.o, ptr null, ptr %.sroa.05.0.i
+  %spec.select14 = select i1 %i.o, ptr %.019.lcssa28.i, ptr null
+  br label %select.unfold
 
 select.unfold:                                    ; preds = %bb.d, %._crit_edge.thread.i
-  %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %bb.d ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.4.0.i.ph, %i.b
-  br i1 %i.p, label %bb.f, label %bb.e
+  %.sroa.018.0.i = phi ptr [ %spec.select, %bb.d ], [ null, %._crit_edge.thread.i ] ; 2 uses
+  %.sroa.4.0.i.ph = phi ptr [ %spec.select14, %bb.d ], [ %.019.lcssa29.i, %._crit_edge.thread.i ] ; 4 uses
+  %i.p = icmp eq ptr %.sroa.4.0.i.ph, null
+  br i1 %i.p, label %bb.i, label %2
 
-bb.e:                                             ; preds = %select.unfold
+2:                                                ; preds = %select.unfold
+  %.not.i5 = icmp ne ptr %.sroa.018.0.i, null
+  %3 = icmp eq ptr %.sroa.4.0.i.ph, %i.b
+  %or.cond.i = select i1 %.not.i5, i1 true, i1 %3
+  br i1 %or.cond.i, label %bb.f, label %bb.e
+
+bb.e:                                             ; preds = %2
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph, i64 32
   %i.r = load ptr, ptr %1, align 8, !tbaa !62
   %i.s = load ptr, ptr %i.q, align 8, !tbaa !62
@@ -218,8 +227,8 @@ bb.e:                                             ; preds = %select.unfold
   %i.u = icmp slt i32 %i.t, 0
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %select.unfold
-  %i.v = phi i1 [ %i.u, %bb.e ], [ true, %select.unfold ]
+bb.f:                                             ; preds = %bb.e, %2
+  %i.v = phi i1 [ %i.u, %bb.e ], [ true, %2 ]
   %i.w = invoke noundef ptr @_ZN3ozz6memory17default_allocatorEv()
           to label %bb.g unwind label %bb.h       ; 2 uses
 
@@ -248,9 +257,9 @@ _ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10
   store i64 %i.ah, ptr %i.af, align 8, !tbaa !48
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.d, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit
-  %.sroa.010.0 = phi ptr [ %i.aa, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit ], [ %.sroa.05.0.i, %bb.d ]
-  %.sroa.3.0 = phi i8 [ 1, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit ], [ 0, %bb.d ]
+bb.i:                                             ; preds = %select.unfold, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit
+  %.sroa.010.0 = phi ptr [ %i.aa, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit ], [ %.sroa.018.0.i, %select.unfold ]
+  %.sroa.3.0 = phi i8 [ 1, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_EN3ozz8str_lessENS4_12StdAllocatorIS1_EEE10_M_insert_IRKS1_NS8_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSG_OT_RT0_.exit ], [ 0, %select.unfold ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.010.0, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.3.0, 1
   ret { ptr, i8 } %.fca.1.insert

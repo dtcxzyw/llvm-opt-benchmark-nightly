@@ -202,27 +202,31 @@ bb.a:
   %i.d = load i32, ptr %1, align 4, !tbaa !56     ; 2 uses
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !57   ; 3 uses
   %i.f = icmp eq ptr %i.e, null
-  br i1 %i.f, label %_ZNK3euf6egraph4findEP4expr.exit.thread, label %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i
+  br i1 %i.f, label %_ZNK3euf6egraph4findEP4expr.exit, label %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i
 
 _ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i:  ; preds = %bb.a
   %i.g = getelementptr inbounds i8, ptr %i.e, i64 -4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !17
   %.not.i.i = icmp ult i32 %i.d, %i.h
-  br i1 %.not.i.i, label %_ZNK3euf6egraph4findEP4expr.exit.a, label %_ZNK3euf6egraph4findEP4expr.exit.thread
+  br i1 %.not.i.i, label %_ZNK3euf6egraph4findEP4expr.exit.a, label %_ZNK3euf6egraph4findEP4expr.exit
 
 _ZNK3euf6egraph4findEP4expr.exit.a:               ; preds = %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i
   %i.i = zext i32 %i.d to i64
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.i
-  %.0.i.sroa.speculate.load..i = load ptr, ptr %i.j, align 8, !tbaa !38 ; 2 uses
-  %.not = icmp eq ptr %.0.i.sroa.speculate.load..i, null
+  %.0.i.sroa.speculate.load..i = load ptr, ptr %i.j, align 8, !tbaa !38
+  br label %_ZNK3euf6egraph4findEP4expr.exit
+
+_ZNK3euf6egraph4findEP4expr.exit:                 ; preds = %bb.a, %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i, %_ZNK3euf6egraph4findEP4expr.exit.a
+  %.0.i.sroa.speculated.i = phi ptr [ %.0.i.sroa.speculate.load..i, %_ZNK3euf6egraph4findEP4expr.exit.a ], [ null, %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i ], [ null, %bb.a ] ; 2 uses
+  %.not = icmp eq ptr %.0.i.sroa.speculated.i, null
   br i1 %.not, label %_ZNK3euf6egraph4findEP4expr.exit.thread, label %bb.b
 
-_ZNK3euf6egraph4findEP4expr.exit.thread:          ; preds = %bb.a, %_ZNK6vectorIPN3euf5enodeELb0EjE4sizeEv.exit.i.i, %_ZNK3euf6egraph4findEP4expr.exit.a
+_ZNK3euf6egraph4findEP4expr.exit.thread:          ; preds = %_ZNK3euf6egraph4findEP4expr.exit
   %i.k = tail call noundef ptr @_ZN3euf6egraph2mkEP4exprjjPKPNS_5enodeE(ptr noundef nonnull align 8 dereferenceable(536) %i.b, ptr noundef nonnull %1, i32 noundef 0, i32 noundef %2, ptr noundef %3)
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNK3euf6egraph4findEP4expr.exit.thread, %_ZNK3euf6egraph4findEP4expr.exit.a
-  %.0 = phi ptr [ %.0.i.sroa.speculate.load..i, %_ZNK3euf6egraph4findEP4expr.exit.a ], [ %i.k, %_ZNK3euf6egraph4findEP4expr.exit.thread ]
+bb.b:                                             ; preds = %_ZNK3euf6egraph4findEP4expr.exit.thread, %_ZNK3euf6egraph4findEP4expr.exit
+  %.0 = phi ptr [ %.0.i.sroa.speculated.i, %_ZNK3euf6egraph4findEP4expr.exit ], [ %i.k, %_ZNK3euf6egraph4findEP4expr.exit.thread ]
   ret ptr %.0
 }
 

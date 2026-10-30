@@ -204,9 +204,14 @@ _RNvXsf_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4
 define hidden void @_RNvXs0_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropB1l_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 4 uses
   %i.c = icmp eq i64 %i.b, 0
-  br i1 %i.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_.exit, label %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit
+  br i1 %i.c, label %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit.thread, label %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit
+
+_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit.thread: ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %2 = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit
 
 _RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit: ; preds = %bb.a
   %.val = load i64, ptr %0, align 8               ; 4 uses
@@ -215,11 +220,11 @@ _RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2
   %.not.i = icmp ult i64 %.val1, %.val
   %i.e = select i1 %.not.i, i64 0, i64 %.val
   %.sroa.04.0.i = sub nuw i64 %.val1, %i.e        ; 5 uses
-  %i.f = sub i64 %.val, %.sroa.04.0.i             ; 3 uses
+  %i.f = sub i64 %.val, %.sroa.04.0.i             ; 2 uses
   %.not11.i = icmp ult i64 %i.f, %i.b
   %i.g = add i64 %.sroa.04.0.i, %i.b
   %.sroa.58.0 = select i1 %.not11.i, i64 %.val, i64 %i.g ; 2 uses
-  %.sroa.11.0 = tail call i64 @llvm.usub.sat.i64(i64 %i.b, i64 %i.f) ; 4 uses
+  %.sroa.11.0 = tail call i64 @llvm.usub.sat.i64(i64 %i.b, i64 %i.f) ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.04.0.i ; 2 uses
@@ -286,14 +291,16 @@ bb.e:                                             ; preds = %bb.d
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_(ptr nonnull %i.i, i64 %.sroa.11.0) #25
           to label %common.resume unwind label %bb.j
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit.thread, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit
+  %3 = phi ptr [ %2, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit.thread ], [ %i.i, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit ], [ %i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i ] ; 2 uses
+  %.sroa.11.025 = phi i64 [ 0, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit.thread ], [ %.sroa.11.0, %_RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE12slice_rangesNtNtNtCskKLDkoKarTP_4core3ops5range9RangeFullEB1m_.exit ], [ %.sroa.11.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !242)
-  %.not = icmp ugt i64 %i.b, %i.f
-  br i1 %.not, label %.lr.ph.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_.exit
+  %4 = icmp eq i64 %.sroa.11.025, 0
+  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i.i.i
   %.sroa.0.09.i.i.i = phi i64 [ %i.ae, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i.i.i ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit ] ; 2 uses
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.0.09.i.i.i ; 2 uses
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.0.09.i.i.i ; 2 uses
   %i.ae = add nuw nsw i64 %.sroa.0.09.i.i.i, 1    ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !243)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !244)
@@ -309,18 +316,18 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i.i.i unwind label %bb.g, !inline_history !0
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i.i.i: ; preds = %bb.f, %.lr.ph.i.i.i
-  %i.aj = icmp eq i64 %i.ae, %.sroa.11.0
+  %i.aj = icmp eq i64 %i.ae, %.sroa.11.025
   br i1 %i.aj, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_.exit, label %.lr.ph.i.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.ak = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.al = icmp eq i64 %i.ae, %.sroa.11.0
+  %i.al = icmp eq i64 %i.ae, %.sroa.11.025
   br i1 %i.al, label %common.resume, label %.lr.ph12.i.i.i
 
 .lr.ph12.i.i.i:                                   ; preds = %bb.g, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit8.i.i.i
   %.sroa.0.110.i.i.i = phi i64 [ %i.an, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit8.i.i.i ], [ %i.ae, %bb.g ] ; 2 uses
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.0.110.i.i.i ; 2 uses
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.0.110.i.i.i ; 2 uses
   %i.an = add nuw nsw i64 %.sroa.0.110.i.i.i, 1   ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !246)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !247)
@@ -336,7 +343,7 @@ bb.h:                                             ; preds = %.lr.ph12.i.i.i
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit8.i.i.i unwind label %bb.i, !inline_history !0
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit8.i.i.i: ; preds = %bb.h, %.lr.ph12.i.i.i
-  %i.as = icmp eq i64 %i.an, %.sroa.11.0
+  %i.as = icmp eq i64 %i.an, %.sroa.11.025
   br i1 %i.as, label %common.resume, label %.lr.ph12.i.i.i
 
 common.resume:                                    ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit8.i.i.i, %.body, %bb.g
@@ -349,7 +356,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23, !noalias !242
   unreachable
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i.i.i, %bb.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque7DropperINtNtBI_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEEB1N_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB18_.exit.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEEB19_.exit
   ret void
 
 bb.j:                                             ; preds = %.body

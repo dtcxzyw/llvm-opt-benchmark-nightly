@@ -202,14 +202,18 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.m = icmp sgt i32 %1, -1
-  br i1 %i.m, label %bb.p, label %.thread, !prof !14, !nosanitize !13
+  br i1 %i.m, label %2, label %.thread, !prof !14, !nosanitize !13
 
 .thread:                                          ; preds = %bb.o
   %i.n = zext i32 %1 to i64, !nosanitize !13
   call void @__ubsan_handle_shift_out_of_bounds(ptr nonnull @38, i64 %i.n, i64 1) #14, !nosanitize !13
-  br label %bb.s
+  br label %2, !nosanitize !13
 
-bb.p:                                             ; preds = %bb.o
+2:                                                ; preds = %.thread, %bb.o
+  %3 = icmp slt i32 %1, 0
+  br i1 %3, label %bb.s, label %bb.p
+
+bb.p:                                             ; preds = %2
   %spec.store.select = call i32 @llvm.umax.i32(i32 %1, i32 8)
   br i1 %i.d, label %bb.r, label %bb.q, !prof !14, !nosanitize !13
 
@@ -222,8 +226,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   store i32 %spec.store.select, ptr %i.o, align 4, !tbaa !22
   br label %bb.s
 
-bb.s:                                             ; preds = %.thread, %bb.n, %bb.k, %bb.a, %bb.r
-  %.0 = phi i32 [ 0, %bb.r ], [ -1, %bb.a ], [ -1, %bb.k ], [ -1, %bb.n ], [ -1, %.thread ]
+bb.s:                                             ; preds = %2, %bb.n, %bb.k, %bb.a, %bb.r
+  %.0 = phi i32 [ 0, %bb.r ], [ -1, %bb.a ], [ -1, %bb.k ], [ -1, %bb.n ], [ -1, %2 ]
   ret i32 %.0
 }
 

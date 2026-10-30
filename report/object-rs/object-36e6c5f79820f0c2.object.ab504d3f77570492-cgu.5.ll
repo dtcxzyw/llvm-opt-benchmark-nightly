@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !alias.scope !74, !noundef !4 ; 2 uses
   %i.c = icmp eq i64 %i.b, 0
-  br i1 %i.c, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit.thread, label %bb.b
+  br i1 %i.c, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = add i64 %i.b, -1
@@ -214,18 +214,25 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !75, !nonnull !4, !noundef !4
   %i.h = icmp eq ptr %i.e, %i.g
-  br i1 %i.h, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit.thread, label %bb.c
+  br i1 %i.h, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   store ptr %i.i, ptr %0, align 8, !alias.scope !75
-  %1 = load i8, ptr %i.e, align 1, !noundef !4
+  br label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit
+
+_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit: ; preds = %bb.a, %bb.b, %bb.c
+  %.sroa.0.0.i = phi ptr [ null, %bb.a ], [ %i.e, %bb.c ], [ null, %bb.b ] ; 2 uses
+  %.not = icmp ne ptr %.sroa.0.0.i, null          ; 2 uses
+  br i1 %.not, label %1, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit.thread
+
+1:                                                ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit
+  %2 = load i8, ptr %.sroa.0.0.i, align 1, !noundef !4
   br label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit.thread
 
-_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit.thread: ; preds = %bb.b, %bb.a, %bb.c
-  %.not5 = phi i1 [ true, %bb.c ], [ false, %bb.a ], [ false, %bb.b ]
-  %.sroa.3.0 = phi i8 [ %1, %bb.c ], [ undef, %bb.a ], [ undef, %bb.b ]
-  %i.j = insertvalue { i1, i8 } poison, i1 %.not5, 0
+_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit.thread: ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit, %1
+  %.sroa.3.0 = phi i8 [ %2, %1 ], [ undef, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCseHTIzroA4w0_6object.exit ]
+  %i.j = insertvalue { i1, i8 } poison, i1 %.not, 0
   %i.k = insertvalue { i1, i8 } %i.j, i8 %.sroa.3.0, 1
   ret { i1, i8 } %i.k
 }

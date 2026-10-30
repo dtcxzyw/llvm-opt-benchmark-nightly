@@ -22,13 +22,13 @@ bb.b:                                             ; preds = %bb.a
   %i.e = tail call ptr @dlopen(ptr noundef nonnull %i.c, i32 noundef 1) #6 ; 2 uses
   tail call void @py_free(ptr noundef nonnull %i.c) #6
   %i.f = icmp eq ptr %i.e, null
-  br i1 %i.f, label %.thread, label %.thread39
+  br i1 %i.f, label %.thread, label %.thread35.a
 
 .thread:                                          ; preds = %bb.a, %bb.b
   %i.g = add i64 %i.a, 7
   %i.h = tail call ptr @py_malloc(i64 noundef %i.g) #6 ; 7 uses
   %.not31 = icmp eq ptr %i.h, null
-  br i1 %.not31, label %.thread35.a, label %bb.c
+  br i1 %.not31, label %.thread35, label %bb.c
 
 bb.c:                                             ; preds = %.thread
   store i32 6449516, ptr %i.h, align 1
@@ -39,16 +39,19 @@ bb.c:                                             ; preds = %.thread
   %i.j = tail call ptr @dlopen(ptr noundef nonnull %i.h, i32 noundef 1) #6 ; 2 uses
   tail call void @py_free(ptr noundef nonnull %i.h) #6
   %i.k = icmp eq ptr %i.j, null
-  br i1 %i.k, label %.thread35.a, label %.thread39
+  br i1 %i.k, label %.thread35, label %.thread35.a
 
-.thread35.a:                                      ; preds = %.thread, %bb.c
-  %1 = tail call ptr @dlopen(ptr noundef nonnull %0, i32 noundef 1) #6 ; 2 uses
-  %i.l = icmp eq ptr %1, null
+.thread35:                                        ; preds = %.thread, %bb.c
+  %1 = tail call ptr @dlopen(ptr noundef nonnull %0, i32 noundef 1) #6
+  br label %.thread35.a
+
+.thread35.a:                                      ; preds = %bb.b, %.thread35, %bb.c
+  %.2 = phi ptr [ %1, %.thread35 ], [ %i.j, %bb.c ], [ %i.e, %bb.b ] ; 2 uses
+  %i.l = icmp eq ptr %.2, null
   br i1 %i.l, label %bb.e, label %.thread39
 
-.thread39:                                        ; preds = %bb.b, %bb.c, %.thread35.a
-  %.241 = phi ptr [ %1, %.thread35.a ], [ %i.j, %bb.c ], [ %i.e, %bb.b ]
-  %i.m = tail call ptr @dlsym(ptr noundef nonnull %.241, ptr noundef nonnull @.str) #6 ; 2 uses
+.thread39:                                        ; preds = %.thread35.a
+  %i.m = tail call ptr @dlsym(ptr noundef nonnull %.2, ptr noundef nonnull @.str) #6 ; 2 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.e, label %bb.d
 

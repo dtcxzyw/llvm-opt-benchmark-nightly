@@ -84,26 +84,26 @@ lex_next.exit41:
   %i.k = tail call fastcc i32 @lex_more(ptr noundef nonnull %1) ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 5 uses
   store i32 %i.k, ptr %i.l, align 8, !tbaa !26
-  %2 = icmp ne i32 %i.k, 239                      ; 2 uses
-  br i1 %2, label %thread-pre-split, label %bb.a
+  %2 = icmp eq i32 %i.k, 239
+  br i1 %2, label %bb.a, label %thread-pre-split
 
 bb.a:                                             ; preds = %lex_next.exit41
   %i.m = load ptr, ptr %i.b, align 8, !tbaa !27   ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 2 ; 4 uses
   %i.o = load ptr, ptr %i.c, align 8, !tbaa !28   ; 2 uses
   %.not = icmp ugt ptr %i.n, %i.o
-  br i1 %.not, label %.loopexit, label %bb.b
+  br i1 %.not, label %thread-pre-split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.p = load i8, ptr %i.m, align 1, !tbaa !29
   %i.q = icmp eq i8 %i.p, -69
-  br i1 %i.q, label %bb.c, label %.loopexit
+  br i1 %i.q, label %bb.c, label %thread-pre-split
 
 bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 1
   %i.s = load i8, ptr %i.r, align 1, !tbaa !29
   %i.t = icmp eq i8 %i.s, -65
-  br i1 %i.t, label %bb.d, label %.loopexit
+  br i1 %i.t, label %bb.d, label %thread-pre-split
 
 bb.d:                                             ; preds = %bb.c
   store ptr %i.n, ptr %i.b, align 8, !tbaa !27
@@ -126,8 +126,9 @@ lex_next.exit40:                                  ; preds = %bb.e, %bb.f
   store i32 %i.z, ptr %i.l, align 8, !tbaa !26
   br label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %lex_next.exit40, %lex_next.exit41
-  %3 = phi i32 [ %i.k, %lex_next.exit41 ], [ %i.z, %lex_next.exit40 ] ; 2 uses
+thread-pre-split:                                 ; preds = %bb.c, %bb.b, %bb.a, %lex_next.exit40, %lex_next.exit41
+  %3 = phi i32 [ %i.k, %lex_next.exit41 ], [ %i.z, %lex_next.exit40 ], [ 239, %bb.a ], [ 239, %bb.b ], [ 239, %bb.c ] ; 2 uses
+  %.not39 = phi i1 [ true, %lex_next.exit41 ], [ false, %lex_next.exit40 ], [ true, %bb.a ], [ true, %bb.b ], [ true, %bb.c ]
   %i.aa = icmp eq i32 %3, 35
   br i1 %i.aa, label %.preheader, label %lex_newline.exit
 
@@ -223,7 +224,7 @@ bb.p:                                             ; preds = %bb.o
 
 lex_newline.exit:                                 ; preds = %thread-pre-split
   %i.be = icmp ne i32 %3, 27                      ; 2 uses
-  %brmerge = or i1 %2, %i.be
+  %brmerge = or i1 %.not39, %i.be
   %not. = xor i1 %i.be, true
   %.mux = zext i1 %not. to i32
   br i1 %brmerge, label %.loopexit, label %.thread
@@ -244,8 +245,8 @@ lex_newline.exit.thread:                          ; preds = %bb.o
   tail call void @lj_err_throw(ptr noundef %0, i32 noundef 3) #11
   unreachable
 
-.loopexit:                                        ; preds = %lex_next.exit, %bb.a, %bb.b, %bb.c, %lex_newline.exit, %lex_newline.exit.thread
-  %.036 = phi i32 [ 0, %lex_newline.exit.thread ], [ %.mux, %lex_newline.exit ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %lex_next.exit ]
+.loopexit:                                        ; preds = %lex_next.exit, %lex_newline.exit, %lex_newline.exit.thread
+  %.036 = phi i32 [ 0, %lex_newline.exit.thread ], [ %.mux, %lex_newline.exit ], [ 0, %lex_next.exit ]
   ret i32 %.036
 }
 

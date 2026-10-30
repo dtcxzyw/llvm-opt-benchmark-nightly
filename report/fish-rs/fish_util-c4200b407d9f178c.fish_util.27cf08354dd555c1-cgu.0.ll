@@ -204,7 +204,7 @@ _RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhile
   %i.v = icmp eq ptr %i.t, %i.l
   br i1 %i.v, label %_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtNtBc_5slice4iter4ItercENCNvCs3pTQYeTDvAj_9fish_util25wcsfilecmp_leading_digitss_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B2A_5count0EB1H_.exit, label %.lr.ph.i.i.i37
 
-_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtNtBc_5slice4iter4ItercENCNvCs3pTQYeTDvAj_9fish_util25wcsfilecmp_leading_digitss_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B2A_5count0EB1H_.exit: ; preds = %.lr.ph.i.i.i37, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvCs3pTQYeTDvAj_9fish_util25wcsfilecmp_leading_digitss_0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4ItercEB2R_EB1i_5count0E0E0B2V_.exit.i.i.i, %.loopexit
+_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtNtBc_5slice4iter4ItercENCNvCs3pTQYeTDvAj_9fish_util25wcsfilecmp_leading_digitss_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B2A_5count0EB1H_.exit: ; preds = %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvCs3pTQYeTDvAj_9fish_util25wcsfilecmp_leading_digitss_0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4ItercEB2R_EB1i_5count0E0E0B2V_.exit.i.i.i, %.lr.ph.i.i.i37, %.loopexit
   %.sroa.0.1.i.i39 = phi i64 [ 0, %.loopexit ], [ %.sroa.01.019.i.i.i38, %.lr.ph.i.i.i37 ], [ %i.p, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvCs3pTQYeTDvAj_9fish_util25wcsfilecmp_leading_digitss_0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4ItercEB2R_EB1i_5count0E0E0B2V_.exit.i.i.i ] ; 4 uses
   %i.w = icmp ult i64 %.sroa.0.1.i.i, %2
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.sroa.0.1.i.i
@@ -607,10 +607,23 @@ bb.a:
   %i.b = alloca [4 x i8], align 4                 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i32 0, ptr %i.b, align 4
-  %i.c = icmp samesign ult i32 %1, 128
+  %i.c = icmp samesign ult i32 %1, 128            ; 2 uses
+  br i1 %i.c, label %6, label %2
+
+2:                                                ; preds = %bb.a
+  %3 = icmp samesign ult i32 %1, 2048
+  br i1 %3, label %6, label %4
+
+4:                                                ; preds = %2
+  %5 = icmp samesign ult i32 %1, 65536
+  %..i = select i1 %5, i64 3, i64 4
+  br label %6
+
+6:                                                ; preds = %4, %2, %bb.a
+  %.sroa.0.0.i = phi i64 [ 2, %2 ], [ %..i, %4 ], [ 1, %bb.a ]
   br i1 %i.c, label %bb.c, label %bb.b
 
-bb.b:                                             ; preds = %bb.a
+bb.b:                                             ; preds = %6
   %i.d = icmp samesign ult i32 %1, 2048
   %i.e = trunc i32 %1 to i8
   %i.f = and i8 %i.e, 63
@@ -628,7 +641,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = or disjoint i8 %i.q, -16
   br i1 %i.d, label %bb.d, label %bb.e
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %6
   %i.s = trunc nuw nsw i32 %1 to i8
   store i8 %i.s, ptr %i.b, align 4, !alias.scope !125
   br label %_RNvNtNtCs3oUPovFnLWP_4core4char7methods15encode_utf8_raw.exit
@@ -664,10 +677,9 @@ bb.g:                                             ; preds = %bb.e
   br label %_RNvNtNtCs3oUPovFnLWP_4core4char7methods15encode_utf8_raw.exit
 
 _RNvNtNtCs3oUPovFnLWP_4core4char7methods15encode_utf8_raw.exit: ; preds = %bb.c, %bb.d, %bb.f, %bb.g
-  %.sroa.0.05.i = phi i64 [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.f ], [ 4, %bb.g ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
   %i.ac = load ptr, ptr %0, align 8, !alias.scope !126, !nonnull !4, !align !10, !noundef !4
-  %i.ad = call noundef ptr @_RNvXss_NtNtCsaL1QbXo9JQH_3std2io5stdioNtB5_10StderrLockNtNtNtCs3oUPovFnLWP_4core2io5write5Write9write_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %.sroa.0.05.i), !noalias !126 ; 3 uses
+  %i.ad = call noundef ptr @_RNvXss_NtNtCsaL1QbXo9JQH_3std2io5stdioNtB5_10StderrLockNtNtNtCs3oUPovFnLWP_4core2io5write5Write9write_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %.sroa.0.0.i), !noalias !126 ; 3 uses
   %.not.i = icmp ne ptr %i.ad, null               ; 2 uses
   br i1 %.not.i, label %bb.h, label %_RNvXNvNtNtCs3oUPovFnLWP_4core2io5write17default_write_fmtINtB2_7AdapterNtNtNtCsaL1QbXo9JQH_3std2io5stdio10StderrLockENtNtB8_3fmt5Write9write_strCs3pTQYeTDvAj_9fish_util.exit
 

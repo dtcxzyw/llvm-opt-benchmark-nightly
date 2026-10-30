@@ -202,7 +202,7 @@ bb.a:
   store i8 0, ptr %3, align 1, !tbaa !31
   %.promoted = load i32, ptr %1, align 4, !tbaa !32 ; 2 uses
   %.not21 = icmp ult i32 %.promoted, %2
-  br i1 %.not21, label %.lr.ph.preheader, label %._crit_edge.a
+  br i1 %.not21, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.a = zext i32 %.promoted to i64
@@ -211,7 +211,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.b = add i32 %.01523, 7
   %exitcond.not = icmp eq i32 %2, %i.c
-  br i1 %exitcond.not, label %._crit_edge.a, label %.lr.ph, !llvm.loop !29
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !29
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %indvars.iv = phi i64 [ %i.a, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
@@ -227,15 +227,20 @@ bb.b:                                             ; preds = %.lr.ph
   %i.h = zext nneg i32 %.01523 to i64
   %i.i = shl i64 %i.g, %i.h
   %i.j = add i64 %i.i, %.01622                    ; 2 uses
-  %4 = icmp slt i8 %i.e, 0
-  br i1 %4, label %bb.b, label %.thread
+  %4 = icmp sgt i8 %i.e, -1                       ; 3 uses
+  br i1 %4, label %._crit_edge, label %bb.b
 
-._crit_edge.a:                                    ; preds = %bb.b, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %bb.a
+  %.not.lcssa = phi i1 [ false, %bb.a ], [ %4, %bb.b ], [ %4, %.lr.ph ]
+  %.2 = phi i64 [ undef, %bb.a ], [ %i.j, %.lr.ph ], [ undef, %bb.b ]
+  br i1 %.not.lcssa, label %.thread, label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge
   store i8 1, ptr %3, align 1, !tbaa !31
   br label %.thread
 
-.thread:                                          ; preds = %.lr.ph, %._crit_edge.a
-  %.3 = phi i64 [ 0, %._crit_edge.a ], [ %i.j, %.lr.ph ]
+.thread:                                          ; preds = %._crit_edge, %._crit_edge.a
+  %.3 = phi i64 [ 0, %._crit_edge.a ], [ %.2, %._crit_edge ]
   ret i64 %.3
 }
 

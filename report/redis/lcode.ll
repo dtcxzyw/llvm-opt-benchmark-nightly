@@ -204,7 +204,7 @@ luaK_patchtohere.exit:                            ; preds = %luaK_concat.exit, %
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @jumponcond(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, i32 noundef range(i32 0, 2) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %1, align 8, !tbaa !50
+  %i.a = load i32, ptr %1, align 8, !tbaa !50     ; 2 uses
   switch i32 %i.a, label %.thread.thread [
     i32 11, label %bb.b
     i32 12, label %discharge2anyreg.exit.thread
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i32, ptr %i.h, align 4, !tbaa !9    ; 2 uses
   %i.j = and i32 %i.i, 63
   %i.k = icmp eq i32 %i.j, 19
-  br i1 %i.k, label %bb.c, label %.thread.thread
+  br i1 %i.k, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
@@ -233,7 +233,11 @@ bb.c:                                             ; preds = %bb.b
   %i.q = tail call fastcc i32 @condjump(ptr noundef nonnull %0, i32 noundef 26, i32 noundef %i.o, i32 noundef 0, i32 noundef %i.p)
   br label %bb.i
 
-.thread.thread:                                   ; preds = %bb.a, %bb.b
+.thread:                                          ; preds = %bb.b
+  %.not.i = icmp eq i32 %i.a, 12
+  br i1 %.not.i, label %discharge2anyreg.exit.thread, label %.thread.thread
+
+.thread.thread:                                   ; preds = %bb.a, %.thread
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !42   ; 3 uses
   %i.t = add nsw i32 %i.s, 1                      ; 3 uses
@@ -274,7 +278,7 @@ discharge2anyreg.exit:                            ; preds = %.thread.thread, %bb
   %i.af = icmp eq i32 %.pre, 12
   br i1 %i.af, label %discharge2anyreg.exit.thread, label %freeexp.exit
 
-discharge2anyreg.exit.thread:                     ; preds = %bb.a, %discharge2anyreg.exit
+discharge2anyreg.exit.thread:                     ; preds = %bb.a, %.thread, %discharge2anyreg.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !41 ; 2 uses
   %i.ai = and i32 %i.ah, 256
@@ -610,8 +614,8 @@ patchtestreg.exit.i37.i:                          ; preds = %bb.x, %getjumpcontr
   %.not.i39.i = select i1 %i.dc, i1 true, i1 %.not8.i38.i
   br i1 %.not.i39.i, label %codenot.exit, label %bb.u
 
-codenot.exit.sink.split.sink.split:               ; preds = %bb.a, %isnumeral.exit, %bb.c, %bb.b
-  %.sink.ph = phi i32 [ 18, %isnumeral.exit ], [ 18, %bb.b ], [ 18, %bb.c ], [ 20, %bb.a ]
+codenot.exit.sink.split.sink.split:               ; preds = %bb.a, %isnumeral.exit, %bb.b, %bb.c
+  %.sink.ph = phi i32 [ 18, %isnumeral.exit ], [ 18, %bb.c ], [ 18, %bb.b ], [ 20, %bb.a ]
   %i.df = tail call i32 @luaK_exp2anyreg(ptr noundef %0, ptr noundef %2) ; 0 uses
   br label %codenot.exit.sink.split
 
@@ -726,13 +730,13 @@ constfolding.exit.a:                              ; preds = %bb.e, %bb.o
   store double %.033.i, ptr %i.o, align 8, !tbaa !41
   br label %bb.ac
 
-bb.p:                                             ; preds = %isnumeral.exit.i, %isnumeral.exit29.i, %bb.o, %bb.a, %bb.b, %bb.d, %bb.c
+bb.p:                                             ; preds = %bb.o, %isnumeral.exit29.i, %bb.d, %bb.c, %isnumeral.exit.i, %bb.b, %bb.a
   switch i32 %1, label %.thread [
     i32 20, label %.thread36
     i32 18, label %.thread36
   ]
 
-.thread:                                          ; preds = %bb.k, %bb.i, %bb.p
+.thread:                                          ; preds = %bb.i, %bb.k, %bb.p
   %i.af = tail call i32 @luaK_exp2RK(ptr noundef %0, ptr noundef %3)
   br label %.thread36
 
@@ -1105,7 +1109,7 @@ isnumeral.exit:                                   ; preds = %bb.y
   %.not = icmp eq i32 %i.ck, -1
   br i1 %.not, label %bb.aa, label %isnumeral.exit.thread
 
-isnumeral.exit.thread:                            ; preds = %bb.x, %bb.y, %isnumeral.exit
+isnumeral.exit.thread:                            ; preds = %bb.y, %bb.x, %isnumeral.exit
   %i.cl = tail call i32 @luaK_exp2RK(ptr noundef %0, ptr noundef nonnull %2) ; 0 uses
   br label %bb.aa
 

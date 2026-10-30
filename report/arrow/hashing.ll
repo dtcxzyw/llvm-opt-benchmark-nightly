@@ -205,10 +205,10 @@ bb.a:
 define noundef i64 @_ZN5arrow8internal17ComputeBitmapHashEPKhmll(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #1 {
 bb.a:
   %i.a = mul i64 %3, -4132994306676758123
-  %i.b = xor i64 %i.a, %1                         ; 4 uses
+  %i.b = xor i64 %i.a, %1                         ; 3 uses
   %i.c = srem i64 %2, 8                           ; 7 uses
   %i.d = sdiv i64 %2, 8
-  %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 6 uses
+  %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 5 uses
   %i.f = lshr i64 %3, 6                           ; 3 uses
   %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1) ; 4 uses
   %i.g = shl nuw i64 %spec.select.i.i, 6
@@ -221,20 +221,27 @@ bb.a:
   %i.m = zext i1 %i.l to i64
   %i.n = add nsw i64 %i.j, %i.m                   ; 2 uses
   %i.o = trunc nsw i64 %i.n to i32                ; 2 uses
-  %.not.i.i = icmp ult i64 %3, 128
-  br i1 %.not.i.i, label %bb.b, label %.lr.ph.preheader.i
+  %.not.i.i = icmp ult i64 %3, 128                ; 2 uses
+  br i1 %.not.i.i, label %bb.b, label %4
+
+4:                                                ; preds = %bb.a
+  %5 = load i64, ptr %i.e, align 1
+  br label %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %.not7.i.i = icmp eq i64 %3, 0
-  br i1 %.not7.i.i, label %._crit_edge.i, label %bb.c
+  br i1 %.not7.i.i, label %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.p = load i8, ptr %i.e, align 1
   %.sroa.23.40.insert.ext.i = zext i8 %i.p to i64
-  br label %._crit_edge.i
+  br label %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.a
-  %4 = load i64, ptr %i.e, align 1                ; 2 uses
+_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i: ; preds = %bb.c, %bb.b, %4
+  %.sroa.23.2.i = phi i64 [ undef, %bb.b ], [ %.sroa.23.40.insert.ext.i, %bb.c ], [ %5, %4 ] ; 3 uses
+  br i1 %.not.i.i, label %._crit_edge.i, label %.lr.ph.preheader.i
+
+.lr.ph.preheader.i:                               ; preds = %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i
   %i.q = add nsw i64 %i.f, -1
   %i.r = icmp ne i64 %i.f, 0
   %umin.neg.neg = zext i1 %i.r to i64
@@ -247,7 +254,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
   %i.u = load i64, ptr %i.t, align 1
   %i.v = freeze i64 %i.u                          ; 3 uses
-  %.0.i.i.prol = tail call noundef i64 @llvm.fshr.i64(i64 %i.v, i64 %4, i64 %i.c)
+  %.0.i.i.prol = tail call noundef i64 @llvm.fshr.i64(i64 %i.v, i64 %.sroa.23.2.i, i64 %i.c)
   %i.w = mul i64 %.0.i.i.prol, -4132994306676758123 ; 2 uses
   %i.x = lshr i64 %i.w, 47
   %i.y = xor i64 %i.x, %i.w
@@ -263,7 +270,7 @@ bb.c:                                             ; preds = %bb.b
   %.02647.i.unr = phi i64 [ %spec.select.i.i, %.lr.ph.preheader.i ], [ %i.s, %.lr.ph.i.prol ]
   %.02746.i.unr = phi i64 [ %i.b, %.lr.ph.preheader.i ], [ %i.ab, %.lr.ph.i.prol ]
   %.sroa.6.045.i.unr = phi ptr [ %i.e, %.lr.ph.preheader.i ], [ %i.t, %.lr.ph.i.prol ]
-  %.sroa.23.044.i.unr = phi i64 [ %4, %.lr.ph.preheader.i ], [ %i.v, %.lr.ph.i.prol ]
+  %.sroa.23.044.i.unr = phi i64 [ %.sroa.23.2.i, %.lr.ph.preheader.i ], [ %i.v, %.lr.ph.i.prol ]
   %i.ac = icmp eq i64 %i.q, %umin.neg.neg
   br i1 %i.ac, label %._crit_edge.i, label %.lr.ph.i
 
@@ -296,10 +303,10 @@ bb.c:                                             ; preds = %bb.b
   %.not.i.1 = icmp eq i64 %i.am, 0
   br i1 %.not.i.1, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !33
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.c, %bb.b
-  %.sroa.23.0.lcssa.i = phi i64 [ undef, %bb.b ], [ %.sroa.23.40.insert.ext.i, %bb.c ], [ %.lcssa33.unr, %.lr.ph.i.prol.loopexit ], [ %i.ap, %.lr.ph.i ] ; 2 uses
-  %.sroa.6.0.lcssa.i = phi ptr [ %i.e, %bb.b ], [ %i.e, %bb.c ], [ %.lcssa34.unr, %.lr.ph.i.prol.loopexit ], [ %i.an, %.lr.ph.i ] ; 2 uses
-  %.027.lcssa.i = phi i64 [ %i.b, %bb.b ], [ %i.b, %bb.c ], [ %.lcssa32.unr, %.lr.ph.i.prol.loopexit ], [ %i.av, %.lr.ph.i ] ; 2 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i
+  %.sroa.23.0.lcssa.i = phi i64 [ %.sroa.23.2.i, %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i ], [ %.lcssa33.unr, %.lr.ph.i.prol.loopexit ], [ %i.ap, %.lr.ph.i ] ; 2 uses
+  %.sroa.6.0.lcssa.i = phi ptr [ %i.e, %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i ], [ %.lcssa34.unr, %.lr.ph.i.prol.loopexit ], [ %i.an, %.lr.ph.i ] ; 2 uses
+  %.027.lcssa.i = phi i64 [ %i.b, %_ZN5arrow8internal16BitmapWordReaderImLb1EEC2EPKhll.exit.i ], [ %.lcssa32.unr, %.lr.ph.i.prol.loopexit ], [ %i.av, %.lr.ph.i ] ; 2 uses
   %.not29.i = icmp eq i64 %i.n, 0
   br i1 %.not29.i, label %_ZN5arrow8internal12_GLOBAL__N_118MurmurHashBitmap64EPKhmmm.exit, label %.preheader.i
 
@@ -402,7 +409,7 @@ bb.e:                                             ; preds = %.preheader.split.us
   br label %._crit_edge.i.us.i
 
 ._crit_edge.i.us.i:                               ; preds = %._crit_edge.loopexit.i.us.i, %bb.e
-  %.015.lcssa.i.us.i = phi i32 [ %i.cc, %._crit_edge.loopexit.i.us.i ], [ 0, %bb.e ]
+  %.015.lcssa.i.us.i = phi i32 [ 0, %bb.e ], [ %i.cc, %._crit_edge.loopexit.i.us.i ]
   %i.cd = sub nsw i32 8, %.sroa.15.0.us.i
   %i.ce = lshr i32 %.015.lcssa.i.us.i, %i.cd
   %i.cf = zext nneg i32 %i.ce to i64
@@ -447,7 +454,7 @@ bb.f:                                             ; preds = %.preheader.split.i
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.f
-  %.015.lcssa.i.i = phi i32 [ %i.cp, %._crit_edge.loopexit.i.i ], [ 0, %bb.f ]
+  %.015.lcssa.i.i = phi i32 [ 0, %bb.f ], [ %i.cp, %._crit_edge.loopexit.i.i ]
   %i.cq = sub nsw i32 8, %.sroa.15.0.i
   %i.cr = lshr i32 %.015.lcssa.i.i, %i.cq
   br label %_ZN5arrow8internal16BitmapWordReaderImLb1EE16NextTrailingByteERi.exit.i

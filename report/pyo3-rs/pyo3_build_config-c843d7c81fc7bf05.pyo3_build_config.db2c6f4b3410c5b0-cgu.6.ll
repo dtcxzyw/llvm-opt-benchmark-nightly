@@ -203,23 +203,26 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define { i32, i32 } @_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultmNtNtCsiOEEQt9hBE2_17pyo3_build_config6errors5ErrorE2okBM_(ptr align 8 %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %.not = icmp eq i64 %i.a, -1
-  br i1 %.not, label %.thread, label %bb.b
+  %.not = icmp eq i64 %i.a, -1                    ; 2 uses
+  br i1 %.not, label %.thread, label %1
 
 .thread:                                          ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i32, ptr %i.b, align 8
-  br label %bb.c
+  br label %1
 
-bb.b:                                             ; preds = %bb.a
+1:                                                ; preds = %bb.a, %.thread
+  %.sroa.3.0 = phi i32 [ %i.c, %.thread ], [ undef, %bb.a ]
+  %.sroa.0.0 = phi i32 [ 1, %.thread ], [ 0, %bb.a ]
+  br i1 %.not, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %1
   tail call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultmNtNtCsiOEEQt9hBE2_17pyo3_build_config6errors5ErrorEEB12_(ptr nonnull align 8 %0)
   br label %bb.c
 
-bb.c:                                             ; preds = %.thread, %bb.b
-  %.sroa.0.05 = phi i32 [ 1, %.thread ], [ 0, %bb.b ]
-  %.sroa.3.04 = phi i32 [ %i.c, %.thread ], [ undef, %bb.b ]
-  %i.d = insertvalue { i32, i32 } poison, i32 %.sroa.0.05, 0
-  %i.e = insertvalue { i32, i32 } %i.d, i32 %.sroa.3.04, 1
+bb.c:                                             ; preds = %bb.b, %1
+  %i.d = insertvalue { i32, i32 } poison, i32 %.sroa.0.0, 0
+  %i.e = insertvalue { i32, i32 } %i.d, i32 %.sroa.3.0, 1
   ret { i32, i32 } %i.e
 }
 

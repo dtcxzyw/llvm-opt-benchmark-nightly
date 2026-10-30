@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %.not126 = icmp eq ptr %i.aa, null
-  br i1 %.not126, label %.thread.a, label %bb.i
+  br i1 %.not126, label %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread, label %bb.i
 
 bb.g:                                             ; preds = %.lr.ph250, %.loopexit243
   %indvars.iv289 = phi i64 [ 0, %.lr.ph250 ], [ %indvars.iv.next290, %.loopexit243 ] ; 2 uses
@@ -342,13 +342,13 @@ bb.i:                                             ; preds = %._crit_edge
   %i.dj = load ptr, ptr %i.di, align 8            ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %.not.i.not = icmp eq ptr %i.dj, null
-  br i1 %.not.i.not, label %.thread.a, label %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit
+  br i1 %.not.i.not, label %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread, label %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit
 
 _ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit: ; preds = %.noexc
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.dl = load ptr, ptr %i.dk, align 8            ; 2 uses
   %.not127 = icmp eq ptr %i.dl, null
-  br i1 %.not127, label %.thread.a, label %bb.j
+  br i1 %.not127, label %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit
   %i.dm = zext i32 %2 to i64
@@ -356,9 +356,15 @@ bb.j:                                             ; preds = %_ZNK6Assimp21Shared
   %i.do = getelementptr inbounds nuw [64 x i8], ptr %i.dn, i64 %i.dm ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 56
   %i.dq = load float, ptr %i.dp, align 8
-  br label %bb.m
+  br label %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread
 
-.thread.a:                                        ; preds = %.noexc, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit, %._crit_edge
+_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread: ; preds = %.noexc, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit, %bb.j, %._crit_edge
+  %.1111 = phi ptr [ null, %._crit_edge ], [ %i.do, %bb.j ], [ null, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit ], [ null, %.noexc ] ; 2 uses
+  %.1108 = phi float [ f0x3727C5AC, %._crit_edge ], [ %i.dq, %bb.j ], [ f0x3727C5AC, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit ], [ f0x3727C5AC, %.noexc ]
+  %.not128 = icmp eq ptr %.1111, null
+  br i1 %.not128, label %.thread.a, label %bb.m
+
+.thread.a:                                        ; preds = %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ds = load ptr, ptr %i.dr, align 8
   %i.dt = load i32, ptr %i.j, align 4
@@ -374,9 +380,9 @@ bb.l:                                             ; preds = %bb.i, %bb.k, %.thre
           cleanup
   br label %bb.ah
 
-bb.m:                                             ; preds = %bb.j, %bb.k
-  %.2112 = phi ptr [ %i.do, %bb.j ], [ %3, %bb.k ] ; 2 uses
-  %.2109 = phi float [ %i.dq, %bb.j ], [ %i.du, %bb.k ] ; 2 uses
+bb.m:                                             ; preds = %bb.k, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread
+  %.2112 = phi ptr [ %.1111, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread ], [ %3, %bb.k ] ; 2 uses
+  %.2109 = phi float [ %.1108, %_ZNK6Assimp21SharedPostProcessInfo11GetPropertyISt6vectorISt4pairINS_11SpatialSortEfESaIS5_EEEEbPKcRPT_.exit.thread ], [ %i.du, %bb.k ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.dw = load i32, ptr %i.j, align 4             ; 2 uses

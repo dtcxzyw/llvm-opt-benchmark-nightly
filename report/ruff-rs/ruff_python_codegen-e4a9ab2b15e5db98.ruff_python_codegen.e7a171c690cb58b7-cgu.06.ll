@@ -68,13 +68,15 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNCINvMNtNtCs4NRVxsYgnAr_4core4cell4onceINtB5_8OnceCellNtNtCs9BeaGo73rC4_16ruff_source_file8newlines10LineEndingE11get_or_initNCNvMNtCsjSXNr8pNfhj_19ruff_python_codegen7stylistNtB25_7Stylist11line_ending0E0B27_.exit
 
 _RNCINvMNtNtCs4NRVxsYgnAr_4core4cell4onceINtB5_8OnceCellNtNtCs9BeaGo73rC4_16ruff_source_file8newlines10LineEndingE11get_or_initNCNvMNtCsjSXNr8pNfhj_19ruff_python_codegen7stylistNtB25_7Stylist11line_ending0E0B27_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e
-  %i.o = phi i8 [ 1, %bb.d ], [ 1, %bb.b ], [ 0, %bb.c ], [ %spec.select.i.i.i, %bb.e ], [ 0, %bb.a ]
+  %i.o = phi i8 [ -1, %bb.a ], [ %spec.select.i.i.i, %bb.e ], [ 0, %bb.c ], [ 1, %bb.b ], [ 1, %bb.d ] ; 2 uses
   %i.p = load i8, ptr %0, align 1, !range !3, !noundef !4
   %.not.not = icmp eq i8 %i.p, -1
   br i1 %.not.not, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %_RNCINvMNtNtCs4NRVxsYgnAr_4core4cell4onceINtB5_8OnceCellNtNtCs9BeaGo73rC4_16ruff_source_file8newlines10LineEndingE11get_or_initNCNvMNtCsjSXNr8pNfhj_19ruff_python_codegen7stylistNtB25_7Stylist11line_ending0E0B27_.exit
-  store i8 %i.o, ptr %0, align 1, !alias.scope !16
+  %.not5.i.i = icmp eq i8 %i.o, -1
+  %spec.select = select i1 %.not5.i.i, i8 0, i8 %i.o
+  store i8 %spec.select, ptr %0, align 1, !alias.scope !16
   ret ptr %0
 
 .critedge:                                        ; preds = %_RNCINvMNtNtCs4NRVxsYgnAr_4core4cell4onceINtB5_8OnceCellNtNtCs9BeaGo73rC4_16ruff_source_file8newlines10LineEndingE11get_or_initNCNvMNtCsjSXNr8pNfhj_19ruff_python_codegen7stylistNtB25_7Stylist11line_ending0E0B27_.exit

@@ -52,17 +52,17 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @php_keccak_unserialize(ptr noundef %0, i64 noundef %1, ptr noundef %2) #0 {
+define internal noundef i32 @php_keccak_unserialize(ptr noundef %0, i64 noundef %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 2 uses
   %i.c = icmp eq i64 %1, 100
-  br i1 %i.c, label %bb.b, label %.thread
+  br i1 %i.c, label %bb.b, label %3
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i32 @php_hash_unserialize_spec(ptr noundef nonnull %0, ptr noundef %2, ptr noundef nonnull @.str.1) #2 ; 2 uses
   %i.e = icmp eq i32 %i.d, 0
-  br i1 %i.e, label %bb.c, label %.thread
+  br i1 %i.e, label %bb.c, label %3
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 204
@@ -71,11 +71,17 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %i.h, align 8, !tbaa !27
   %i.j = lshr i32 %i.i, 3
   %i.k = icmp ult i32 %i.g, %i.j
-  %spec.select = select i1 %i.k, i32 0, i32 -2000
+  br i1 %i.k, label %.thread, label %3
+
+3:                                                ; preds = %bb.c, %bb.b, %bb.a
+  %.0 = phi i32 [ 0, %bb.c ], [ %i.d, %bb.b ], [ -1, %bb.a ]
+  %.0.fr = freeze i32 %.0                         ; 2 uses
+  %.not = icmp eq i32 %.0.fr, 0
+  %spec.select = select i1 %.not, i32 -2000, i32 %.0.fr
   br label %.thread
 
-.thread:                                          ; preds = %bb.c, %bb.a, %bb.b
-  %.08 = phi i32 [ %spec.select, %bb.c ], [ %i.d, %bb.b ], [ -1, %bb.a ]
+.thread:                                          ; preds = %3, %bb.c
+  %.08 = phi i32 [ 0, %bb.c ], [ %spec.select, %3 ]
   ret i32 %.08
 }
 

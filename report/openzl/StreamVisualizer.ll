@@ -73,8 +73,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   call void @A1C_Item_map_builder(ptr dead_on_unwind nonnull writable sret(%struct.A1C_MapBuilder) align 8 %5, ptr noundef %2, i64 noundef 9, ptr noundef %1)
   %i.b = load ptr, ptr %5, align 8, !tbaa !25
-  %.not = icmp eq ptr %i.b, null
-  br i1 %.not, label %.thread, label %bb.b, !prof !26
+  %.not = icmp eq ptr %i.b, null                  ; 2 uses
+  br i1 %.not, label %.thread, label %6, !prof !26
 
 .thread:                                          ; preds = %bb.a
   %i.c = call { i32, ptr } (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @ZL_E_create(ptr noundef nonnull @_ZZN6openzl10visualizer6Stream15serializeStreamEP9A1C_ArenaP8A1C_ItemP21ZL_OperationContext_sE22__zl_static_error_info, ptr noundef nonnull %4, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 17, i32 noundef 70, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, i64 noundef 0, i64 noundef 0) ; 2 uses
@@ -82,9 +82,14 @@ bb.a:
   %i.e = extractvalue { i32, ptr } %i.c, 1        ; 2 uses
   call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.d, ptr %i.e, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8)
   %i.f = ptrtoint ptr %i.e to i64
-  br label %bb.ab
+  br label %6
 
-bb.b:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a, %.thread
+  %.sroa.0168.0 = phi i32 [ %i.d, %.thread ], [ undef, %bb.a ]
+  %.sroa.69.0 = phi i64 [ %i.f, %.thread ], [ undef, %bb.a ]
+  br i1 %.not, label %bb.ab, label %bb.b
+
+bb.b:                                             ; preds = %6
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.h = load i64, ptr %i.g, align 8, !tbaa !47
   %i.i = call { i32, i64 } @_ZN6openzl10visualizer11addIntValueER14A1C_MapBuilderPKcmP21ZL_OperationContext_s(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull @.str.9, i64 noundef %i.h, ptr noundef %3) ; 2 uses
@@ -314,9 +319,9 @@ bb.aa:                                            ; preds = %_ZSt3getISt6vectorI
   %i.ds = ptrtoint ptr %i.dr to i64
   br label %bb.ab
 
-bb.ab:                                            ; preds = %_ZSt3getISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJS0_IhSaIhEES0_IlSaIlEES8_EERT_RSt7variantIJDpT0_EE.exit, %_ZSt3getISt6vectorIhSaIhEEJS2_S0_IlSaIlEES0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit, %_ZSt3getISt6vectorIlSaIlEEJS0_IhSaIhEES2_S0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit, %.thread, %bb.aa, %bb.x, %bb.u, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.e, %bb.c
-  %.sroa.0168.1 = phi i32 [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %i.ai, %bb.g ], [ %i.as, %bb.i ], [ %i.bc, %bb.k ], [ %i.bm, %bb.m ], [ %i.bw, %bb.o ], [ %i.cg, %bb.q ], [ %i.cu, %bb.u ], [ %i.d, %.thread ], [ %i.df, %bb.x ], [ %i.dq, %bb.aa ], [ 0, %_ZSt3getISt6vectorIlSaIlEEJS0_IhSaIhEES2_S0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorIhSaIhEEJS2_S0_IlSaIlEES0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJS0_IhSaIhEES0_IlSaIlEES8_EERT_RSt7variantIJDpT0_EE.exit ]
-  %.sroa.69.1 = phi i64 [ %i.p, %bb.c ], [ %i.aa, %bb.e ], [ %i.ak, %bb.g ], [ %i.au, %bb.i ], [ %i.be, %bb.k ], [ %i.bo, %bb.m ], [ %i.by, %bb.o ], [ %i.ci, %bb.q ], [ %i.cw, %bb.u ], [ %i.f, %.thread ], [ %i.dh, %bb.x ], [ %i.ds, %bb.aa ], [ 0, %_ZSt3getISt6vectorIlSaIlEEJS0_IhSaIhEES2_S0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorIhSaIhEEJS2_S0_IlSaIlEES0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJS0_IhSaIhEES0_IlSaIlEES8_EERT_RSt7variantIJDpT0_EE.exit ]
+bb.ab:                                            ; preds = %_ZSt3getISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJS0_IhSaIhEES0_IlSaIlEES8_EERT_RSt7variantIJDpT0_EE.exit, %_ZSt3getISt6vectorIhSaIhEEJS2_S0_IlSaIlEES0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit, %_ZSt3getISt6vectorIlSaIlEEJS0_IhSaIhEES2_S0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit, %6, %bb.aa, %bb.x, %bb.u, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.e, %bb.c
+  %.sroa.0168.1 = phi i32 [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %i.ai, %bb.g ], [ %i.as, %bb.i ], [ %i.bc, %bb.k ], [ %i.bm, %bb.m ], [ %i.bw, %bb.o ], [ %i.cg, %bb.q ], [ %i.cu, %bb.u ], [ %.sroa.0168.0, %6 ], [ %i.df, %bb.x ], [ %i.dq, %bb.aa ], [ 0, %_ZSt3getISt6vectorIlSaIlEEJS0_IhSaIhEES2_S0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorIhSaIhEEJS2_S0_IlSaIlEES0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJS0_IhSaIhEES0_IlSaIlEES8_EERT_RSt7variantIJDpT0_EE.exit ]
+  %.sroa.69.1 = phi i64 [ %i.p, %bb.c ], [ %i.aa, %bb.e ], [ %i.ak, %bb.g ], [ %i.au, %bb.i ], [ %i.be, %bb.k ], [ %i.bo, %bb.m ], [ %i.by, %bb.o ], [ %i.ci, %bb.q ], [ %i.cw, %bb.u ], [ %.sroa.69.0, %6 ], [ %i.dh, %bb.x ], [ %i.ds, %bb.aa ], [ 0, %_ZSt3getISt6vectorIlSaIlEEJS0_IhSaIhEES2_S0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorIhSaIhEEJS2_S0_IlSaIlEES0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EEEERT_RSt7variantIJDpT0_EE.exit ], [ 0, %_ZSt3getISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJS0_IhSaIhEES0_IlSaIlEES8_EERT_RSt7variantIJDpT0_EE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.0168.1, 0

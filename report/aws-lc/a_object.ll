@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
 
 ASN1_OBJECT_create.exit.thread:                   ; preds = %bb.e
   call void @ERR_put_error(i32 noundef 12, i32 noundef 0, i32 noundef 173, ptr noundef nonnull @.str, i32 noundef 164) #5
-  br label %bb.o
+  br label %ASN1_OBJECT_create.exit
 
 ASN1_OBJECT_create.exit.a:                        ; preds = %bb.e
   %i.e = load ptr, ptr %1, align 8, !tbaa !13
@@ -217,12 +217,16 @@ ASN1_OBJECT_create.exit.a:                        ; preds = %bb.e
   store i32 %i.h, ptr %i.i, align 4, !tbaa !11
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 32
   store i32 13, ptr %i.j, align 8, !tbaa !15
-  %i.k = call ptr @OBJ_dup(ptr noundef nonnull %3) #5 ; 3 uses
+  %i.k = call ptr @OBJ_dup(ptr noundef nonnull %3) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
-  %5 = icmp eq ptr %i.k, null
+  br label %ASN1_OBJECT_create.exit
+
+ASN1_OBJECT_create.exit:                          ; preds = %ASN1_OBJECT_create.exit.thread, %ASN1_OBJECT_create.exit.a
+  %.0.i = phi ptr [ null, %ASN1_OBJECT_create.exit.thread ], [ %i.k, %ASN1_OBJECT_create.exit.a ] ; 3 uses
+  %5 = icmp eq ptr %.0.i, null
   br i1 %5, label %bb.o, label %bb.f
 
-bb.f:                                             ; preds = %ASN1_OBJECT_create.exit.a
+bb.f:                                             ; preds = %ASN1_OBJECT_create.exit
   %.not16 = icmp eq ptr %0, null
   br i1 %.not16, label %bb.n, label %bb.g
 
@@ -275,7 +279,7 @@ bb.m:                                             ; preds = %bb.l
   br label %ASN1_OBJECT_free.exit
 
 ASN1_OBJECT_free.exit:                            ; preds = %bb.g, %bb.l, %bb.m
-  store ptr %i.k, ptr %0, align 8, !tbaa !19
+  store ptr %.0.i, ptr %0, align 8, !tbaa !19
   br label %bb.n
 
 bb.n:                                             ; preds = %ASN1_OBJECT_free.exit, %bb.f
@@ -284,8 +288,8 @@ bb.n:                                             ; preds = %ASN1_OBJECT_free.ex
   store ptr %i.ab, ptr %1, align 8, !tbaa !13
   br label %bb.o
 
-bb.o:                                             ; preds = %ASN1_OBJECT_create.exit.thread, %bb.n, %ASN1_OBJECT_create.exit.a, %bb.d
-  %.1 = phi ptr [ null, %bb.d ], [ %i.k, %bb.n ], [ null, %ASN1_OBJECT_create.exit.a ], [ null, %ASN1_OBJECT_create.exit.thread ]
+bb.o:                                             ; preds = %bb.n, %ASN1_OBJECT_create.exit, %bb.d
+  %.1 = phi ptr [ null, %bb.d ], [ %.0.i, %bb.n ], [ null, %ASN1_OBJECT_create.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %bb.p
 

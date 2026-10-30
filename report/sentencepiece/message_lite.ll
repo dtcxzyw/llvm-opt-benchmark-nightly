@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %.noexc14
   br label %_ZN6google8protobuf12_GLOBAL__N_118CheckFieldPresenceERKNS0_8internal12ParseContextERKNS0_11MessageLiteENS6_10ParseFlagsE.exit
 
 _ZN6google8protobuf12_GLOBAL__N_118CheckFieldPresenceERKNS0_8internal12ParseContextERKNS0_11MessageLiteENS6_10ParseFlagsE.exit: ; preds = %bb.i, %bb.f, %.noexc14, %bb.h, %_ZN6google8protobuf8internal18EpsCopyInputStream16IsExceedingLimitEPKc.exit, %_ZN6google8protobuf8internal12ParseContextC2IJPNS0_24ZeroCopyCodedInputStreamEEEEibPPKcDpOT_.exit
-  %.011 = phi i1 [ false, %_ZN6google8protobuf8internal12ParseContextC2IJPNS0_24ZeroCopyCodedInputStreamEEEEibPPKcDpOT_.exit ], [ false, %_ZN6google8protobuf8internal18EpsCopyInputStream16IsExceedingLimitEPKc.exit ], [ false, %bb.i ], [ true, %bb.h ], [ true, %.noexc14 ], [ false, %bb.f ]
+  %.011 = phi i1 [ false, %_ZN6google8protobuf8internal12ParseContextC2IJPNS0_24ZeroCopyCodedInputStreamEEEEibPPKcDpOT_.exit ], [ false, %bb.i ], [ false, %_ZN6google8protobuf8internal18EpsCopyInputStream16IsExceedingLimitEPKc.exit ], [ true, %bb.h ], [ true, %.noexc14 ], [ false, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   ret i1 %.011
@@ -605,7 +605,7 @@ bb.n:                                             ; preds = %bb.m
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 72
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = tail call noundef i64 %i.au(ptr noundef nonnull align 8 dereferenceable(16) %0)
-  %.not.i = icmp eq i64 %i.d, %i.av
+  %.not.i = icmp eq i64 %i.d, %i.av               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   br i1 %.not.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.a, label %bb.o
 
@@ -640,25 +640,28 @@ bb.t:                                             ; preds = %bb.s
   %i.bc = load ptr, ptr %3, align 8, !tbaa !40    ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.be = icmp eq ptr %i.bc, %i.bd
-  br i1 %i.be, label %.critedge51.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+  br i1 %i.be, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.t
   %i.bf = load i64, ptr %i.bd, align 8, !tbaa !41
   %i.bg = add i64 %i.bf, 1
   call void @_ZdlPvm(ptr noundef %i.bc, i64 noundef %i.bg) #20
-  br label %.critedge51.i
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.a: ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  br label %bb.u
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
 
-.critedge51.i:                                    ; preds = %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
+  br i1 %.not.i, label %bb.u, label %.critedge51.i
+
+.critedge51.i:                                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   call void @_ZN6google8protobuf8internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   br label %bb.u
 
-bb.u:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.a, %.critedge51.i
+bb.u:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %.critedge51.i
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   call void @_ZN6google8protobuf8internal10LogMessageC1ENS0_8LogLevelEPKci(ptr noundef nonnull align 8 dereferenceable(56) %5, i32 noundef 3, ptr noundef nonnull @.str.2, i32 noundef 87)

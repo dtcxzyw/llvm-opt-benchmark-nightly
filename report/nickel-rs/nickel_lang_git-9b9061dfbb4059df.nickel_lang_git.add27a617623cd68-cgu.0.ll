@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 ; Function Attrs: cold inlinehint nonlazybind uwtable
 define internal fastcc noalias noundef nonnull ptr @_ZN6anyhow9__private10format_err17hed671fa8c37bdbceE(ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(48) %0) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [48 x i8], align 8                ; 2 uses
+  %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = load ptr, ptr %0, align 8, !nonnull !3, !align !5, !noundef !3 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -240,8 +240,10 @@ bb.f:                                             ; preds = %"_ZN4core6option15O
 
 "_ZN4core6option15Option$LT$T$GT$11map_or_else17h4fcf81409fea4fbcE.exit": ; preds = %bb.d, %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %0, i64 48, i1 false)
-  call void @_ZN5alloc3fmt6format12format_inner17hce37e7516f243f46E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !127
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(48) %0, i64 48, i1 false), !noalias !128
+  call void @_ZN5alloc3fmt6format12format_inner17hce37e7516f243f46E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.a), !noalias !129
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !127
   %i.n = call fastcc noundef nonnull ptr @"_ZN6anyhow5error31_$LT$impl$u20$anyhow..Error$GT$3msg17h177264a2b124613aE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.f
@@ -576,4 +578,14 @@ attributes #19 = { cold noreturn nounwind }
 !117 = distinct !{!117, i1 true, !"_ZN5alloc5boxed12Box$LT$T$GT$3new17h6c1c39d96ec359f2E"}
 !118 = distinct !{!118, !117, !"_ZN5alloc5boxed12Box$LT$T$GT$3new17h6c1c39d96ec359f2E: argument 0"}
 !119 = !{!118}
+!120 = distinct !{!120, i1 true, !"_ZN4core6option15Option$LT$T$GT$11map_or_else17h4fcf81409fea4fbcE"}
+!121 = distinct !{!121, !120, !"_ZN4core6option15Option$LT$T$GT$11map_or_else17h4fcf81409fea4fbcE: argument 2"}
+!122 = distinct !{!122, !120, !"_ZN4core6option15Option$LT$T$GT$11map_or_else17h4fcf81409fea4fbcE: argument 1"}
+!123 = distinct !{!123, !120, !"_ZN4core6option15Option$LT$T$GT$11map_or_else17h4fcf81409fea4fbcE: argument 0"}
+!124 = distinct !{!124, i1 true, !"_ZN5alloc3fmt6format28_$u7b$$u7b$closure$u7d$$u7d$17h4379110c5d615f33E"}
+!125 = distinct !{!125, !124, !"_ZN5alloc3fmt6format28_$u7b$$u7b$closure$u7d$$u7d$17h4379110c5d615f33E: argument 1"}
+!126 = distinct !{!126, !124, !"_ZN5alloc3fmt6format28_$u7b$$u7b$closure$u7d$$u7d$17h4379110c5d615f33E: argument 0"}
+!127 = !{!126, !125, !123, !122, !121}
+!128 = !{!126, !123, !122}
+!129 = !{!125, !122, !121}
 end_hunk_0

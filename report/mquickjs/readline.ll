@@ -202,7 +202,7 @@ define internal fastcc i32 @skip_word_backward(ptr nofree noundef readonly captu
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !17     ; 3 uses
   %i.b = icmp sgt i32 %i.a, 0
-  br i1 %i.b, label %.lr.ph, label %.critedge2
+  br i1 %i.b, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = tail call ptr @__ctype_b_loc() #15
@@ -222,14 +222,19 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.m = load i16, ptr %i.l, align 2, !tbaa !39
   %i.n = and i16 %i.m, 8192
   %.not = icmp eq i16 %i.n, 0
-  br i1 %.not, label %.lr.ph16, label %bb.c
+  br i1 %.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.o = add nsw i32 %.012, -1
   %i.p = icmp sgt i32 %.012, 1
-  br i1 %i.p, label %bb.b, label %.critedge2, !llvm.loop !55
+  br i1 %i.p, label %bb.b, label %.critedge, !llvm.loop !55
 
-.lr.ph16:                                         ; preds = %bb.b
+.critedge:                                        ; preds = %bb.b, %bb.c, %bb.a
+  %.0.lcssa = phi i32 [ %i.a, %bb.a ], [ 0, %bb.c ], [ %.012, %bb.b ] ; 3 uses
+  %1 = icmp sgt i32 %.0.lcssa, 0
+  br i1 %1, label %.lr.ph16, label %.critedge2
+
+.lr.ph16:                                         ; preds = %.critedge
   %i.q = tail call ptr @__ctype_b_loc() #15
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !37
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -237,7 +242,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph16, %bb.e
-  %.115 = phi i32 [ %.012, %.lr.ph16 ], [ %i.ac, %bb.e ] ; 4 uses
+  %.115 = phi i32 [ %.0.lcssa, %.lr.ph16 ], [ %i.ac, %bb.e ] ; 4 uses
   %i.u = zext nneg i32 %.115 to i64
   %i.v = getelementptr i8, ptr %i.t, i64 %i.u
   %i.w = getelementptr i8, ptr %i.v, i64 -1
@@ -254,8 +259,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = icmp sgt i32 %.115, 1
   br i1 %i.ad, label %bb.d, label %.critedge2, !llvm.loop !56
 
-.critedge2:                                       ; preds = %bb.c, %bb.d, %bb.e, %bb.a
-  %.1.lcssa = phi i32 [ 0, %bb.e ], [ %i.a, %bb.a ], [ %.115, %bb.d ], [ 0, %bb.c ]
+.critedge2:                                       ; preds = %bb.d, %bb.e, %.critedge
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.critedge ], [ 0, %bb.e ], [ %.115, %bb.d ]
   ret i32 %.1.lcssa
 }
 
@@ -350,14 +355,14 @@ bb.c:                                             ; preds = %bb.b
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.c, %lftr.wideiv
-  br i1 %exitcond.not, label %.critedge2, label %bb.b, !llvm.loop !58
+  br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !58
 
 .critedge.loopexit:                               ; preds = %bb.b
   %i.p = trunc nsw i64 %indvars.iv to i32
   br label %.critedge
 
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.0.lcssa = phi i32 [ %i.a, %bb.a ], [ %i.p, %.critedge.loopexit ] ; 3 uses
+.critedge:                                        ; preds = %bb.c, %.critedge.loopexit, %bb.a
+  %.0.lcssa = phi i32 [ %i.a, %bb.a ], [ %i.p, %.critedge.loopexit ], [ %i.c, %bb.c ] ; 3 uses
   %i.q = icmp slt i32 %.0.lcssa, %i.c
   br i1 %i.q, label %.lr.ph20, label %.critedge2
 
@@ -390,8 +395,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = trunc nsw i64 %indvars.iv25 to i32
   br label %.critedge2
 
-.critedge2:                                       ; preds = %bb.c, %bb.e, %.critedge2.loopexit.split.loop.exit34, %.critedge
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.critedge ], [ %i.c, %bb.e ], [ %i.ac, %.critedge2.loopexit.split.loop.exit34 ], [ %i.c, %bb.c ]
+.critedge2:                                       ; preds = %bb.e, %.critedge2.loopexit.split.loop.exit34, %.critedge
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.critedge ], [ %i.ac, %.critedge2.loopexit.split.loop.exit34 ], [ %i.c, %bb.e ]
   ret i32 %.1.lcssa
 }
 

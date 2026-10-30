@@ -202,14 +202,16 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.l = icmp eq i8 %i.f, 0
   %or.cond8.i = select i1 %i.l, i1 %i.k, i1 false
-  %spec.select.i = select i1 %or.cond8.i, i32 3, i32 99
+  %or.cond8.i.fr = freeze i1 %or.cond8.i
+  %spec.select.i = select i1 %or.cond8.i.fr, i32 3, i32 99
   br label %_ZNK8Box_av1C13configuration15get_heif_chromaEv.exit.thread
 
-_ZNK8Box_av1C13configuration15get_heif_chromaEv.exit.thread: ; preds = %bb.a, %bb.c, %bb.b, %bb.d
-  %storemerge = phi i32 [ %spec.select.i, %bb.d ], [ 2, %bb.c ], [ 1, %bb.b ], [ 0, %bb.a ]
-  %4 = phi i32 [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ 2, %bb.a ]
+_ZNK8Box_av1C13configuration15get_heif_chromaEv.exit.thread: ; preds = %bb.a, %bb.b, %bb.c, %bb.d
+  %storemerge = phi i32 [ %spec.select.i, %bb.d ], [ 0, %bb.a ], [ 1, %bb.b ], [ 2, %bb.c ] ; 2 uses
   store i32 %storemerge, ptr %3, align 4, !tbaa !30
-  store i32 %4, ptr %2, align 4, !tbaa !32
+  %4 = icmp eq i32 %storemerge, 0
+  %spec.select = select i1 %4, i32 2, i32 0
+  store i32 %spec.select, ptr %2, align 4, !tbaa !32
   %i.m = load i64, ptr @_ZN5Error2OkE, align 8
   store i64 %i.m, ptr %0, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

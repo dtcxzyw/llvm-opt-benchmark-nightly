@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %.thread31, %bb.y, %
 bb.x:                                             ; preds = %.body
   br i1 %.sroa.01.1.lpad-body, label %.thread31, label %bb.z
 
-bb.y:                                             ; preds = %bb.b, %bb.a
+bb.y:                                             ; preds = %bb.a, %bb.b
   %i.bf = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecTNtCscVvfRCjUNk2_11proc_macro25IdentNtNtCsjMPGGl8VONr_3syn5token5CommaEEECse52LceO7DeS_12typst_macros(ptr nonnull align 8 %1) #23
@@ -605,7 +605,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.ag = extractvalue { i32, i8 } %i.af, 1       ; 2 uses
-  %.not6.not = icmp eq i8 %i.ag, -1
+  %.not6.not = icmp eq i8 %i.ag, -1               ; 2 uses
   br i1 %.not6.not, label %.thread, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -615,23 +615,26 @@ bb.u:                                             ; preds = %bb.t
 
 .thread:                                          ; preds = %bb.t
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
-  br label %.invoke
+  br label %3
 
 bb.v:                                             ; preds = %bb.u
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   store i64 -1, ptr %0, align 8
-  br label %.invoke10
+  br label %3
+
+3:                                                ; preds = %bb.v, %.thread
+  br i1 %.not6.not, label %.invoke, label %.invoke10
 
 bb.w:                                             ; preds = %.invoke
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsjMPGGl8VONr_3syn6buffer11TokenBufferEBF_(ptr nonnull align 8 %i.m)
   ret void
 
-.invoke10:                                        ; preds = %bb.q, %bb.v
+.invoke10:                                        ; preds = %bb.q, %3
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsjMPGGl8VONr_3syn10punctuated10PunctuatedNtNtBG_4attr13MetaNameValueNtNtBG_5token5CommaEECse52LceO7DeS_12typst_macros(ptr nonnull align 8 %i.i)
           to label %.invoke unwind label %bb.i
 
-.invoke:                                          ; preds = %.invoke10, %bb.l, %.thread
+.invoke:                                          ; preds = %.invoke10, %bb.l, %3
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsjMPGGl8VONr_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.j)
           to label %bb.w unwind label %bb.c
 

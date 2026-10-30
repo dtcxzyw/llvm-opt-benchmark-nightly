@@ -203,13 +203,13 @@ bb.b:                                             ; preds = %bb.a
 
 zend_parse_arg_str_ex.exit:                       ; preds = %bb.b
   %i.i = call zeroext i1 @zend_parse_arg_str_slow(ptr noundef nonnull %i.e, ptr noundef nonnull %i.b, i32 noundef 1) #4
-  br i1 %i.i, label %.critedge, label %bb.c
+  br i1 %i.i, label %.critedge, label %bb.c, !prof !19
 
 bb.c:                                             ; preds = %zend_parse_arg_str_ex.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %.thread
+bb.d:                                             ; preds = %.thread, %bb.c
   %.03659 = phi i32 [ 1, %.thread ], [ 9, %bb.c ]
   %.03758 = phi i32 [ 0, %.thread ], [ 4, %bb.c ]
   %.03857 = phi ptr [ null, %.thread ], [ %i.e, %bb.c ]
@@ -222,7 +222,7 @@ bb.d:                                             ; preds = %bb.c, %.thread
   %i.j = load ptr, ptr %.in, align 8, !tbaa !14   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !22   ; 3 uses
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !23   ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 -1, ptr %i.a, align 4, !tbaa !13
@@ -338,8 +338,9 @@ attributes #4 = { nounwind }
 !16 = distinct !{!16, !15}
 !17 = !{!"branch_weights", i32 4000000, i32 4001}
 !18 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!19 = !{!"_zend_refcounted_h", !10, i64 0, !9, i64 4}
-!20 = !{!"long", !9, i64 0}
-!21 = !{!"_zend_string", !19, i64 0, !20, i64 8, !20, i64 16, !9, i64 24}
-!22 = !{!21, !20, i64 16}
+!19 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!20 = !{!"_zend_refcounted_h", !10, i64 0, !9, i64 4}
+!21 = !{!"long", !9, i64 0}
+!22 = !{!"_zend_string", !20, i64 0, !21, i64 8, !21, i64 16, !9, i64 24}
+!23 = !{!22, !21, i64 16}
 end_hunk_0

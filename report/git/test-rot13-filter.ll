@@ -204,22 +204,23 @@ bb.am:                                            ; preds = %packet_key_val_read
 
 bb.an:                                            ; preds = %.lr.ph.i34
   %i.fv = call ptr @strmap_get(ptr noundef nonnull @delay, ptr noundef nonnull %i.fp) #9 ; 3 uses
-  %.not86.i = icmp eq ptr %i.fv, null
+  %.not86.i = icmp eq ptr %i.fv, null             ; 2 uses
   br i1 %.not86.i, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.fw = load i32, ptr %i.fv, align 8, !tbaa !40
   %.not87.i = icmp eq i32 %i.fw, 0
-  br i1 %.not87.i, label %bb.ap, label %add_delay_entry.exit.i
+  br i1 %.not87.i, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
   store i32 1, ptr %i.fv, align 8, !tbaa !40
   br label %add_delay_entry.exit.i
 
-bb.aq:                                            ; preds = %bb.an
+bb.aq:                                            ; preds = %bb.ao, %bb.an
   %i.fx = load i32, ptr @always_delay, align 4
-  %.not126.i = icmp eq i32 %i.fx, 0
-  br i1 %.not126.i, label %add_delay_entry.exit.i, label %bb.ar
+  %8 = icmp ne i32 %i.fx, 0
+  %or.cond.i = select i1 %.not86.i, i1 %8, i1 false
+  br i1 %or.cond.i, label %bb.ar, label %add_delay_entry.exit.i
 
 bb.ar:                                            ; preds = %bb.aq
   %i.fy = call ptr @xcalloc(i64 noundef 1, i64 noundef 16) #9 ; 3 uses
@@ -255,7 +256,7 @@ bb.ax:                                            ; preds = %bb.av
   call void (ptr, ...) @die(ptr noundef nonnull @.str.47, ptr noundef nonnull %i.ft) #10
   unreachable
 
-add_delay_entry.exit.i:                           ; preds = %bb.aw, %bb.ar, %bb.aq, %bb.ap, %bb.ao
+add_delay_entry.exit.i:                           ; preds = %bb.aw, %bb.ar, %bb.aq, %bb.ap
   %i.gg = call ptr @packet_read_line(i32 noundef 0, ptr noundef null) #9 ; 2 uses
   %.not67.i = icmp eq ptr %i.gg, null
   br i1 %.not67.i, label %._crit_edge.i35, label %.lr.ph.i34, !llvm.loop !15

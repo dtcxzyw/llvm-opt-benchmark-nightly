@@ -15,19 +15,19 @@ $_ZN4lean4listIjED2Ev = comdat any
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN4lean13mk_list_rangeEjj(ptr dead_on_unwind noalias writable sret(%"class.lean::list") align 8 initializes((0, 8)) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.lean::list", align 8        ; 8 uses
+  %3 = alloca %"class.lean::list", align 8        ; 7 uses
   store ptr null, ptr %0, align 8, !tbaa !13
   %i.a = icmp ugt i32 %2, %1
   br i1 %i.a, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
-  %.pr = phi ptr [ %i.i, %bb.d ], [ null, %bb.a ] ; 6 uses
+  %.pr = phi ptr [ %i.i, %bb.d ], [ null, %bb.a ] ; 7 uses
   %.09 = phi i32 [ %i.b, %bb.d ], [ %2, %bb.a ]
   %i.b = add i32 %.09, -1                         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   call void @llvm.experimental.noalias.scope.decl(metadata !17)
   %i.c = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #7
-          to label %.noexc unwind label %bb.e     ; 5 uses
+          to label %.noexc unwind label %bb.e     ; 4 uses
 
 .noexc:                                           ; preds = %.lr.ph
   store i32 1, ptr %i.c, align 4, !tbaa !19, !noalias !17
@@ -36,15 +36,18 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %.pr, ptr %i.e, align 8, !tbaa !13, !noalias !17
   %.not.i.i.i.i = icmp eq ptr %.pr, null
-  br i1 %.not.i.i.i.i, label %.thread, label %bb.b
+  br i1 %.not.i.i.i.i, label %.thread, label %4
 
-.thread:                                          ; preds = %.noexc
-  store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !17
-  br label %bb.d
+4:                                                ; preds = %.noexc
+  %5 = atomicrmw add ptr %.pr, i32 1 monotonic, align 4, !noalias !17 ; 0 uses
+  br label %.thread
 
-bb.b:                                             ; preds = %.noexc
-  %4 = atomicrmw add ptr %.pr, i32 1 monotonic, align 4, !noalias !17 ; 0 uses
+.thread:                                          ; preds = %4, %.noexc
   store ptr %i.c, ptr %3, align 8, !tbaa !13, !alias.scope !17
+  %.not.i = icmp eq ptr %.pr, null
+  br i1 %.not.i, label %bb.d, label %bb.b
+
+bb.b:                                             ; preds = %.thread
   %i.f = atomicrmw add ptr %.pr, i32 -1 acq_rel, align 4
   %i.g = icmp eq i32 %i.f, 1
   br i1 %i.g, label %bb.c, label %bb.d

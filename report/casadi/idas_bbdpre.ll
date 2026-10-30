@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = load i64, ptr %i.ae, align 8, !tbaa !35 ; 2 uses
   %..i = tail call i64 @llvm.smin.i64(i64 %i.aq, i64 %i.ar) ; 2 uses
   %.not203217.i = icmp slt i64 %..i, 1
-  br i1 %.not203217.i, label %.loopexit, label %.lr.ph220.i
+  br i1 %.not203217.i, label %IBBDDQJac.exit, label %.lr.ph220.i
 
 .lr.ph220.i:                                      ; preds = %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
@@ -549,18 +549,22 @@ middle.block:                                     ; preds = %vector.body
   %i.hm = add nuw i64 %.0181218.i, 1
   %exitcond.not.i = icmp eq i64 %.0181218.i, %..i
   %indvar.next = add i64 %indvar, 1
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.g, !llvm.loop !77
+  br i1 %exitcond.not.i, label %IBBDDQJac.exit, label %bb.g, !llvm.loop !77
 
-IBBDDQJac.exit:                                   ; preds = %._crit_edge.i, %bb.d, %bb.e
-  %.0184.i = phi i32 [ %i.ai, %bb.e ], [ %i.ab, %bb.d ], [ %i.dh, %._crit_edge.i ]
+IBBDDQJac.exit:                                   ; preds = %._crit_edge.i, %._crit_edge216.i, %bb.d, %bb.e, %bb.f
+  %.0184.i = phi i32 [ %i.ai, %bb.e ], [ %i.ab, %bb.d ], [ 0, %bb.f ], [ 0, %._crit_edge216.i ], [ %i.dh, %._crit_edge.i ] ; 2 uses
   %i.hn = icmp slt i32 %.0184.i, 0
-  br i1 %i.hn, label %bb.af, label %bb.ag
+  br i1 %i.hn, label %bb.af, label %9
 
 bb.af:                                            ; preds = %IBBDDQJac.exit
   tail call void (ptr, i32, ptr, ptr, ptr, ...) @IDAProcessError(ptr noundef %i.b, i32 noundef -1, ptr noundef nonnull @.str, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15) #6
   br label %bb.ag
 
-.loopexit:                                        ; preds = %._crit_edge216.i, %bb.f
+9:                                                ; preds = %IBBDDQJac.exit
+  %.not = icmp eq i32 %.0184.i, 0
+  br i1 %.not, label %.loopexit, label %bb.ag
+
+.loopexit:                                        ; preds = %9
   %i.ho = load ptr, ptr %i.c, align 8, !tbaa !30
   %i.hp = getelementptr inbounds nuw i8, ptr %5, i64 72
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !31
@@ -569,8 +573,8 @@ bb.af:                                            ; preds = %IBBDDQJac.exit
   %. = zext i1 %i.hs to i32
   br label %bb.ag
 
-bb.ag:                                            ; preds = %IBBDDQJac.exit, %.loopexit, %bb.af
-  %.0 = phi i32 [ -1, %bb.af ], [ %., %.loopexit ], [ 1, %IBBDDQJac.exit ]
+bb.ag:                                            ; preds = %.loopexit, %9, %bb.af
+  %.0 = phi i32 [ -1, %bb.af ], [ 1, %9 ], [ %., %.loopexit ]
   ret i32 %.0
 }
 

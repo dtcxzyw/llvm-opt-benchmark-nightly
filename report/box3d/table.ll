@@ -147,14 +147,14 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.o = load i32, ptr %i.n, align 8, !tbaa !17
   %.not2.i = icmp eq i32 %i.o, 0
-  br i1 %.not2.i, label %.loopexit, label %.lr.ph.i
+  br i1 %.not2.i, label %b3FindSlot.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %bb.b
   %i.p = phi ptr [ %i.t, %bb.b ], [ %i.m, %bb.a ]
   %.03.i = phi i32 [ %.0.i, %bb.b ], [ %.01.i, %bb.a ]
   %i.q = load i64, ptr %i.p, align 8, !tbaa !18
-  %.not11.i = icmp eq i64 %i.q, %1
-  br i1 %.not11.i, label %b3FindSlot.exit.a, label %bb.b
+  %.not11.i = icmp eq i64 %i.q, %1                ; 3 uses
+  br i1 %.not11.i, label %b3FindSlot.exit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.r = add nsw i32 %.03.i, 1
@@ -164,9 +164,13 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load i32, ptr %i.u, align 8, !tbaa !17
   %.not.i = icmp eq i32 %i.v, 0
-  br i1 %.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !0
+  br i1 %.not.i, label %b3FindSlot.exit, label %.lr.ph.i, !llvm.loop !0
 
-.loopexit:                                        ; preds = %bb.b, %bb.a
+b3FindSlot.exit:                                  ; preds = %.lr.ph.i, %bb.b, %bb.a
+  %.not = phi i1 [ false, %bb.a ], [ %.not11.i, %bb.b ], [ %.not11.i, %.lr.ph.i ] ; 2 uses
+  br i1 %.not, label %b3FindSlot.exit.a, label %.loopexit
+
+.loopexit:                                        ; preds = %b3FindSlot.exit
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 6 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !14
   %i.y = shl i32 %i.x, 1
@@ -307,9 +311,8 @@ b3AddKeyHaveCapacity.exit:                        ; preds = %bb.h, %bb.g, %.lr.p
   store i32 %i.bp, ptr %i.w, align 4, !tbaa !14
   br label %b3FindSlot.exit.a
 
-b3FindSlot.exit.a:                                ; preds = %.lr.ph.i, %b3AddKeyHaveCapacity.exit
-  %.not38 = phi i1 [ false, %b3AddKeyHaveCapacity.exit ], [ true, %.lr.ph.i ]
-  ret i1 %.not38
+b3FindSlot.exit.a:                                ; preds = %b3FindSlot.exit, %b3AddKeyHaveCapacity.exit
+  ret i1 %.not
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -412,7 +415,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.f
   br i1 %i.aw, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %bb.b, %bb.g, %bb.a, %bb.c
-  %i.ax = phi i1 [ false, %bb.a ], [ true, %bb.c ], [ true, %bb.g ], [ false, %bb.b ]
+  %i.ax = phi i1 [ true, %bb.g ], [ false, %bb.a ], [ true, %bb.c ], [ false, %bb.b ]
   ret i1 %i.ax
 }
 

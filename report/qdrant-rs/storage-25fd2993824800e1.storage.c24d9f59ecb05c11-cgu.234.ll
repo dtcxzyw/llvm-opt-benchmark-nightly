@@ -202,12 +202,17 @@ bb.b:                                             ; preds = %_RINvNtCskKLDkoKarT
           to label %bb.r unwind label %bb.q
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load i8, ptr %i.e, align 8, !range !241, !noalias !240, !noundef !4
+  %i.i = load i8, ptr %i.e, align 8, !range !241, !noalias !240, !noundef !4 ; 2 uses
   %i.j = trunc nuw i8 %i.i to i1
-  br i1 %i.j, label %bb.d, label %bb.g
+  br i1 %i.j, label %1, label %bb.g
 
-bb.d:                                             ; preds = %bb.c
-  %.val11.i = load ptr, ptr %i.g, align 8, !noalias !240, !nonnull !4, !noundef !4 ; 3 uses
+1:                                                ; preds = %bb.g, %bb.g, %bb.c
+  %.val11.i = load ptr, ptr %i.g, align 8, !noalias !240 ; 4 uses
+  %2 = icmp eq i8 %i.i, 0
+  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs53Il55UEVRz_16tracing_appender6worker11WorkerStateNtNtNtB4_2io5error5ErrorEECsgGgPqgSfnMH_7storage.exit.i, label %bb.d
+
+bb.d:                                             ; preds = %1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !242
   %i.k = ptrtoint ptr %.val11.i to i64            ; 2 uses
   %i.l = and i64 %i.k, 3
@@ -247,9 +252,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgGgPqgSfnMH_7
 bb.g:                                             ; preds = %bb.c
   %i.q = load i8, ptr %i.f, align 1, !range !244, !noalias !240, !noundef !4
   switch i8 %i.q, label %default.unreachable [
-    i8 0, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs53Il55UEVRz_16tracing_appender6worker11WorkerStateNtNtNtB4_2io5error5ErrorEECsgGgPqgSfnMH_7storage.exit.i
+    i8 0, label %1
     i8 1, label %bb.h
-    i8 2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs53Il55UEVRz_16tracing_appender6worker11WorkerStateNtNtNtB4_2io5error5ErrorEECsgGgPqgSfnMH_7storage.exit.i
+    i8 2, label %1
     i8 3, label %bb.h
   ]
 
@@ -330,7 +335,7 @@ bb.q:                                             ; preds = %bb.l, %.loopexit.sp
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17
   unreachable
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs53Il55UEVRz_16tracing_appender6worker11WorkerStateNtNtNtB4_2io5error5ErrorEECsgGgPqgSfnMH_7storage.exit.i: ; preds = %bb.g, %bb.g, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgGgPqgSfnMH_7storage.exit.i.i
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs53Il55UEVRz_16tracing_appender6worker11WorkerStateNtNtNtB4_2io5error5ErrorEECsgGgPqgSfnMH_7storage.exit.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgGgPqgSfnMH_7storage.exit.i.i, %1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !240
   br label %bb.b
 

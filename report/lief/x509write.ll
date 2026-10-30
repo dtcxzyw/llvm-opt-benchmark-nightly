@@ -10,7 +10,7 @@ define hidden i32 @mbedtls_x509_write_set_san_common(ptr noundef %0, ptr noundef
 bb.a:
   %i.a = alloca ptr, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %.not146 = icmp eq ptr %1, null                 ; 2 uses
+  %.not146 = icmp eq ptr %1, null
   br i1 %.not146, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.i
@@ -94,7 +94,8 @@ bb.i:                                             ; preds = %bb.b, %bb.h
 bb.j:                                             ; preds = %._crit_edge.thread
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ab ; 2 uses
   store ptr %i.ae, ptr %i.a, align 8, !tbaa !26
-  br i1 %.not146, label %._crit_edge154, label %.lr.ph153
+  %.not125174 = icmp eq ptr %1, null
+  br i1 %.not125174, label %._crit_edge154, label %.lr.ph153
 
 .lr.ph153:                                        ; preds = %bb.j, %bb.t
   %.090151 = phi i64 [ %i.bi, %bb.t ], [ 0, %bb.j ] ; 2 uses
@@ -196,8 +197,8 @@ bb.v:                                             ; preds = %bb.u
   %spec.store.select = select i1 %i.bv, i32 -102, i32 %i.bt
   br label %.thread133
 
-.thread133:                                       ; preds = %bb.l, %bb.m, %bb.k, %bb.s, %bb.o, %bb.p, %.lr.ph153, %bb.q, %bb.v, %bb.u, %._crit_edge154
-  %.398 = phi i32 [ %spec.store.select, %bb.v ], [ %i.bj, %._crit_edge154 ], [ %i.bl, %bb.u ], [ %i.am, %bb.l ], [ %i.ak, %bb.k ], [ %i.ar, %bb.m ], [ -8320, %.lr.ph153 ], [ %i.az, %bb.q ], [ %i.ax, %bb.p ], [ %i.au, %bb.o ], [ -10240, %bb.s ]
+.thread133:                                       ; preds = %bb.l, %bb.k, %bb.m, %bb.s, %.lr.ph153, %bb.q, %bb.p, %bb.o, %bb.v, %bb.u, %._crit_edge154
+  %.398 = phi i32 [ %spec.store.select, %bb.v ], [ %i.bj, %._crit_edge154 ], [ %i.bl, %bb.u ], [ -10240, %bb.s ], [ %i.au, %bb.o ], [ %i.ax, %bb.p ], [ %i.ak, %bb.k ], [ %i.am, %bb.l ], [ -8320, %.lr.ph153 ], [ %i.az, %bb.q ], [ %i.ar, %bb.m ]
   call void @free(ptr noundef nonnull %i.ac) #5
   br label %.critedge
 

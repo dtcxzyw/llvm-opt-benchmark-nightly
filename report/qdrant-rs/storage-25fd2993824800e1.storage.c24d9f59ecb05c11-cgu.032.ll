@@ -205,16 +205,19 @@ _RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_p
 
 _RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.a: ; preds = %bb.b
   %i.k = add i32 %3, -1
-  %i.l = call noundef align 8 ptr @_RINvNtCskQk6bzzE9jJ_5prost8encoding10merge_loopNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleNCINvNtB2_7message5mergeBJ_QRShE0B2d_ECsgGgPqgSfnMH_7storage(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %i.k) ; 2 uses
-  %.not8 = icmp eq ptr %i.l, null
-  br i1 %.not8, label %bb.d, label %bb.c
+  %i.l = call noundef align 8 ptr @_RINvNtCskQk6bzzE9jJ_5prost8encoding10merge_loopNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleNCINvNtB2_7message5mergeBJ_QRShE0B2d_ECsgGgPqgSfnMH_7storage(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2, i32 noundef %i.k)
+  br label %bb.c
 
 bb.c:                                             ; preds = %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.thread, %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.a
-  %.sroa.0.0.i914 = phi ptr [ %i.j, %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.thread ], [ %i.l, %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.a ]
+  %.sroa.0.0.i914 = phi ptr [ %i.l, %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.a ], [ %i.j, %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.thread ] ; 2 uses
+  %.not8 = icmp eq ptr %.sroa.0.0.i914, null
+  br i1 %.not8, label %bb.d, label %4
+
+4:                                                ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.f
 
-bb.d:                                             ; preds = %_RINvNtNtCskQk6bzzE9jJ_5prost8encoding7message5mergeNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleQRShECsgGgPqgSfnMH_7storage.exit.a
+bb.d:                                             ; preds = %bb.c
   %i.m = load i64, ptr %i.e, align 8, !noundef !4
   %i.n = load i32, ptr %i.h, align 8, !noundef !4
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -239,8 +242,8 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs5z4TqnZpI32_10raft_proto6pro
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.f
 
-bb.f:                                             ; preds = %_RNvNtCskQk6bzzE9jJ_5prost8encoding15check_wire_type.exit, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleE8push_mutCsgGgPqgSfnMH_7storage.exit, %bb.c
-  %.sroa.0.0 = phi ptr [ null, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleE8push_mutCsgGgPqgSfnMH_7storage.exit ], [ %.sroa.0.0.i914, %bb.c ], [ %i.g, %_RNvNtCskQk6bzzE9jJ_5prost8encoding15check_wire_type.exit ]
+bb.f:                                             ; preds = %_RNvNtCskQk6bzzE9jJ_5prost8encoding15check_wire_type.exit, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleE8push_mutCsgGgPqgSfnMH_7storage.exit, %4
+  %.sroa.0.0 = phi ptr [ null, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs5z4TqnZpI32_10raft_proto6protos7eraftpb16ConfChangeSingleE8push_mutCsgGgPqgSfnMH_7storage.exit ], [ %.sroa.0.0.i914, %4 ], [ %i.g, %_RNvNtCskQk6bzzE9jJ_5prost8encoding15check_wire_type.exit ]
   ret ptr %.sroa.0.0
 }
 

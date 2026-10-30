@@ -202,16 +202,22 @@ _ZN4llvm5APInt15clearUnusedBitsEv.exit.i.a:       ; preds = %bb.b
   %i.f = zext nneg i32 %i.e to i64
   %i.g = lshr i64 -1, %i.f
   %i.h = icmp eq i32 %1, 0
-  %spec.select.i = select i1 %i.h, i64 0, i64 %i.g, !prof !37
-  %7 = and i64 %spec.select.i, %3
-  store i64 %7, ptr %4, align 8, !tbaa !10
+  br i1 %i.h, label %7, label %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i, !prof !37
+
+7:                                                ; preds = %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i.a
+  br label %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i
+
+_ZN4llvm5APInt15clearUnusedBitsEv.exit.i:         ; preds = %7, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i.a
+  %.0.i.i = phi i64 [ 0, %7 ], [ %i.g, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i.a ]
+  %8 = and i64 %.0.i.i, %3
+  store i64 %8, ptr %4, align 8, !tbaa !10
   br label %_ZN4llvm5APIntC2Ejmbb.exit
 
 bb.c:                                             ; preds = %bb.a
   call void @_ZN4llvm5APInt12initSlowCaseEmb(ptr noundef nonnull align 8 dereferenceable(12) %4, i64 noundef %3, i1 noundef zeroext %i.a) #7
   br label %_ZN4llvm5APIntC2Ejmbb.exit
 
-_ZN4llvm5APIntC2Ejmbb.exit:                       ; preds = %bb.b, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i.a, %bb.c
+_ZN4llvm5APIntC2Ejmbb.exit:                       ; preds = %bb.b, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i, %bb.c
   %i.i = call noundef nonnull align 4 dereferenceable(29) ptr @_ZN4llvm11APFloatBase15EnumToSemanticsENS0_9SemanticsE(i32 noundef %0) #7 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   %.not.i.i = icmp eq ptr %i.i, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE

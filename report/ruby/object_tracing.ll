@@ -202,25 +202,29 @@ bb.d:                                             ; preds = %bb.a, %RSTRING_PTR.
   %i.x = and i64 %i.i, 7
   %i.y = icmp eq i64 %i.x, 0
   %or.cond = and i1 %.not51, %i.y
-  br i1 %or.cond, label %RB_OBJ_FROZEN.exit, label %.thread
+  br i1 %or.cond, label %RB_OBJ_FROZEN.exit, label %bb.e
 
 RB_OBJ_FROZEN.exit:                               ; preds = %bb.d
   %i.z = inttoptr i64 %i.i to ptr
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !34
   %i.ab = and i64 %i.aa, 2048
   %.not52 = icmp eq i64 %i.ab, 0
-  br i1 %.not52, label %bb.e, label %.thread
+  br i1 %.not52, label %2, label %bb.e
 
-bb.e:                                             ; preds = %RB_OBJ_FROZEN.exit
-  %2 = tail call i64 @rb_class_path_cached(i64 noundef %i.i) #12 ; 2 uses
-  %i.ac = and i64 %2, -5
+2:                                                ; preds = %RB_OBJ_FROZEN.exit
+  %3 = tail call i64 @rb_class_path_cached(i64 noundef %i.i) #12
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %RB_OBJ_FROZEN.exit, %2
+  %4 = phi i64 [ %3, %2 ], [ 4, %RB_OBJ_FROZEN.exit ], [ 4, %bb.d ] ; 2 uses
+  %i.ac = and i64 %4, -5
   %.not53 = icmp eq i64 %i.ac, 0
   br i1 %.not53, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !24
-  %i.af = inttoptr i64 %2 to ptr                  ; 3 uses
+  %i.af = inttoptr i64 %4 to ptr                  ; 3 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !34
   %i.ah = and i64 %i.ag, 8192
   %.not.i43 = icmp eq i64 %i.ah, 0
@@ -238,8 +242,8 @@ RSTRING_PTR.exit44:                               ; preds = %bb.f, %bb.g
   %i.an = tail call fastcc ptr @make_unique_str(ptr noundef %i.ae, ptr noundef %i.ak, i64 noundef %i.am)
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %RB_OBJ_FROZEN.exit, %bb.e, %RSTRING_PTR.exit44
-  %3 = phi ptr [ %i.an, %RSTRING_PTR.exit44 ], [ null, %bb.e ], [ null, %RB_OBJ_FROZEN.exit ], [ null, %bb.d ]
+.thread:                                          ; preds = %bb.e, %RSTRING_PTR.exit44
+  %5 = phi ptr [ %i.an, %RSTRING_PTR.exit44 ], [ null, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !16
@@ -348,7 +352,7 @@ rb_num2int_inline.exit:                           ; preds = %bb.r, %bb.s
   %i.cd = getelementptr inbounds nuw i8, ptr %.0, i64 48
   store i64 %i.h, ptr %i.cd, align 8, !tbaa !32
   %i.ce = getelementptr inbounds nuw i8, ptr %.0, i64 40
-  store ptr %3, ptr %i.ce, align 8, !tbaa !31
+  store ptr %5, ptr %i.ce, align 8, !tbaa !31
   %i.cf = call i64 @rb_gc_count() #12
   %i.cg = getelementptr inbounds nuw i8, ptr %.0, i64 56
   store i64 %i.cf, ptr %i.cg, align 8, !tbaa !33

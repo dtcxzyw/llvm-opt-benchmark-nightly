@@ -202,7 +202,7 @@ _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecINtNtB7_2rc2RcNtNtCs91tTATF2stA_3syn
 
 bb.k:                                             ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ad = load ptr, ptr %i.ac, align 8, !nonnull !12, !noundef !12 ; 2 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !nonnull !12, !noundef !12 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.af = load i64, ptr %i.ae, align 8, !noundef !12 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1214)
@@ -213,8 +213,8 @@ bb.k:                                             ; preds = %bb.b
   ]
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.k
-  %.sroa.05.0.lcssa.i.i = phi i64 [ 0, %bb.k ], [ %i.ap, %.lr.ph.i.i ] ; 4 uses
-  %i.ag = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %.sroa.05.0.lcssa.i.i ; 2 uses
+  %.sroa.05.0.lcssa.i.i = phi i64 [ 0, %bb.k ], [ %i.ap, %.lr.ph.i.i ] ; 5 uses
+  %i.ag = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %.sroa.05.0.lcssa.i.i
   %.val14.i.i = load ptr, ptr %i.ag, align 8, !alias.scope !1216, !nonnull !12, !align !11, !noundef !12
   %i.ah = call noundef range(i8 -1, 2) i8 @_RNvXs4_NtCs91tTATF2stA_3syn8lifetimeNtB5_8LifetimeNtNtCscI6d9CVNmLh_4core3cmp3Ord3cmp(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.val14.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1), !noalias !1217 ; 2 uses
   %i.ai = icmp eq i8 %i.ah, 0
@@ -249,7 +249,8 @@ bb.m:                                             ; preds = %._crit_edge.i.i
   br i1 %i.aw, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %.sroa.05.0.lcssa.i.i
+  %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i8 1, ptr %i.ax, align 8
   br label %_RINvMNtCscI6d9CVNmLh_4core5sliceSTRNtNtCs91tTATF2stA_3syn8lifetime8LifetimebE20binary_search_by_keyBw_NCNvXNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericsNtB1H_7VisitorNtNtNtBB_3gen5visit5Visit14visit_lifetime0EB1N_.exit.thread
 
@@ -312,7 +313,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   tail call void @llvm.assume(i1 %i.u)
   br label %_RINvMNtCscI6d9CVNmLh_4core5sliceSTRNtCsiD8eKn5yFCp_11proc_macro25IdentbE20binary_search_by_keyBw_NCNvXNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericsNtB1C_7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit15visit_type_path0EB1I_.exit.thread
 
-_RINvMNtCscI6d9CVNmLh_4core5sliceSTRNtCsiD8eKn5yFCp_11proc_macro25IdentbE20binary_search_by_keyBw_NCNvXNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericsNtB1C_7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit15visit_type_path0EB1I_.exit.thread: ; preds = %bb.c, %bb.b, %bb.e, %bb.a
+_RINvMNtCscI6d9CVNmLh_4core5sliceSTRNtCsiD8eKn5yFCp_11proc_macro25IdentbE20binary_search_by_keyBw_NCNvXNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericsNtB1C_7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit15visit_type_path0EB1I_.exit.thread: ; preds = %bb.b, %bb.c, %bb.e, %bb.a
   tail call void @_RINvNtNtCs91tTATF2stA_3syn3gen5visit15visit_type_pathNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorEBX_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %1)
   ret void
 
@@ -549,7 +550,7 @@ bb.d:                                             ; preds = %bb.a
   %i.bd = icmp ugt i64 %i.bc, 1
   br i1 %i.bd, label %.lr.ph.i7.i, label %._crit_edge.i13.i
 
-.sink.split.i:                                    ; preds = %._crit_edge.i.i, %._crit_edge.i13.i, %bb.d, %bb.c, %bb.a
+.sink.split.i:                                    ; preds = %._crit_edge.i13.i, %bb.d, %._crit_edge.i.i, %bb.c, %bb.a
   store i64 -1, ptr %0, align 8, !alias.scope !1247
   br label %_RNCNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericss0_0B7_.exit
 
