@@ -205,7 +205,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS
   store i64 %.val1.i.i.i, ptr %i.h, align 8, !tbaa !542
   br label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_comp_iterIZN4llvm10sampleprof20ProfileGeneratorBase16calculateDensityERKNSC_16SampleProfileMapEE3$_0EEEvT_T0_.exit.i.i"
 
-"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_comp_iterIZN4llvm10sampleprof20ProfileGeneratorBase16calculateDensityERKNSC_16SampleProfileMapEE3$_0EEEvT_T0_.exit.i.i": ; preds = %.lr.ph.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i
+"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_comp_iterIZN4llvm10sampleprof20ProfileGeneratorBase16calculateDensityERKNSC_16SampleProfileMapEE3$_0EEEvT_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i, %.lr.ph.i.i
   %.val3.i.i.1.i = phi i64 [ %.val1.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ], [ %.val3.i.i.i, %.lr.ph.i.i ]
   %.val2.i.i.1.i = phi double [ %.val.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIdmESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i ], [ %.val2.i.i.i, %.lr.ph.i.i ] ; 2 uses
   %.sroa.08.020.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.sroa.044.047.i, i64 32 ; 8 uses

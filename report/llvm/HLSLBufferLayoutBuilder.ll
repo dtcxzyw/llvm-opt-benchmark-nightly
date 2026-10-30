@@ -205,7 +205,7 @@ _ZSt13move_backwardIPSt4pairIPKN5clang9FieldDeclEjES6_ET0_T_S8_S7_.exit.i.i: ; p
   store i32 %.0.val.i.i, ptr %i.h, align 8, !tbaa !112
   br label %"_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang9FieldDeclEjEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_7CodeGen23HLSLBufferLayoutBuilder12layOutStructEPKNS1_10RecordTypeERKNSA_16CGHLSLOffsetInfoEE3$_0EEEvT_T0_.exit.i.i"
 
-"_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang9FieldDeclEjEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_7CodeGen23HLSLBufferLayoutBuilder12layOutStructEPKNS1_10RecordTypeERKNSA_16CGHLSLOffsetInfoEE3$_0EEEvT_T0_.exit.i.i": ; preds = %.lr.ph.i, %_ZSt13move_backwardIPSt4pairIPKN5clang9FieldDeclEjES6_ET0_T_S8_S7_.exit.i.i
+"_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang9FieldDeclEjEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_7CodeGen23HLSLBufferLayoutBuilder12layOutStructEPKNS1_10RecordTypeERKNSA_16CGHLSLOffsetInfoEE3$_0EEEvT_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIPSt4pairIPKN5clang9FieldDeclEjES6_ET0_T_S8_S7_.exit.i.i, %.lr.ph.i
   %.val23.i.i = phi i32 [ %.0.val.i.i, %_ZSt13move_backwardIPSt4pairIPKN5clang9FieldDeclEjES6_ET0_T_S8_S7_.exit.i.i ], [ %.val.pre21.i.i, %.lr.ph.i ]
   %.019.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.039.i, i64 32 ; 6 uses
   %i.ax = getelementptr i8, ptr %.039.i, i64 40   ; 2 uses

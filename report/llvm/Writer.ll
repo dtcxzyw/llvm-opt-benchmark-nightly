@@ -205,7 +205,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt
   %.val1.i.i.1.pre.i = load i32, ptr %i.h, align 8, !tbaa !284
   br label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS3_12_GLOBAL__N_16Writer22calculateInitFunctionsEvE3$_0EEEvT_T0_.exit.i.i"
 
-"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS3_12_GLOBAL__N_16Writer22calculateInitFunctionsEvE3$_0EEEvT_T0_.exit.i.i": ; preds = %.lr.ph.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i
+"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS3_12_GLOBAL__N_16Writer22calculateInitFunctionsEvE3$_0EEEvT_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i, %.lr.ph.i.i
   %.val1.i.i.1.i = phi i32 [ %.val1.i.i.1.pre.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN3lld4wasm13WasmInitEntryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i ], [ %.val1.i.i.i, %.lr.ph.i.i ]
   %.sroa.0.019.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.sroa.034.037.i, i64 32 ; 6 uses
   %i.s = getelementptr i8, ptr %.sroa.034.037.i, i64 40 ; 2 uses

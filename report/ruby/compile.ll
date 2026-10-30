@@ -205,21 +205,16 @@ ISEQ_COMPILE_DATA.exit:
   %3 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 6 uses
   %4 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 8 uses
   %i.a = getelementptr i8, ptr %1, i64 24         ; 8 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !47   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !47
   %i.c = getelementptr i8, ptr %i.b, i64 80
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !530  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !530  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #37
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   store ptr %3, ptr %i.e, align 8, !tbaa !42
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %.not51 = icmp eq ptr %i.d, null
-  br i1 %.not51, label %ISEQ_COMPILE_DATA.exit44.thread, label %.lr.ph
-
-ISEQ_COMPILE_DATA.exit44.thread:                  ; preds = %ISEQ_COMPILE_DATA.exit
-  %5 = getelementptr i8, ptr %i.b, i64 80
-  store ptr %i.d, ptr %5, align 8, !tbaa !530
-  br label %APPEND_LIST.exit46
+  br i1 %.not51, label %APPEND_LIST.exit46, label %.lr.ph
 
 .lr.ph:                                           ; preds = %ISEQ_COMPILE_DATA.exit
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 5 uses
@@ -540,7 +535,7 @@ bb.n:                                             ; preds = %ISEQ_COMPILE_DATA.e
   store ptr %i.ej, ptr %i.ee, align 8, !tbaa !42
   br label %APPEND_LIST.exit46
 
-APPEND_LIST.exit46:                               ; preds = %ISEQ_COMPILE_DATA.exit44.thread, %ISEQ_COMPILE_DATA.exit44, %bb.n
+APPEND_LIST.exit46:                               ; preds = %ISEQ_COMPILE_DATA.exit, %ISEQ_COMPILE_DATA.exit44, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #37
   ret void
 }
@@ -943,20 +938,15 @@ ISEQ_COMPILE_DATA.exit:
   %4 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 7 uses
   %5 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 7 uses
   %i.a = getelementptr i8, ptr %1, i64 24         ; 8 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !47   ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !47
   %i.c = getelementptr i8, ptr %i.b, i64 80
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !530  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !530  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #37
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   store ptr %4, ptr %i.e, align 8, !tbaa !42
   %.not53 = icmp eq ptr %i.d, null
-  br i1 %.not53, label %ISEQ_COMPILE_DATA.exit46.thread, label %.lr.ph
-
-ISEQ_COMPILE_DATA.exit46.thread:                  ; preds = %ISEQ_COMPILE_DATA.exit
-  %6 = getelementptr i8, ptr %i.b, i64 80
-  store ptr %i.d, ptr %6, align 8, !tbaa !530
-  br label %APPEND_LIST.exit48
+  br i1 %.not53, label %APPEND_LIST.exit48, label %.lr.ph
 
 .lr.ph:                                           ; preds = %ISEQ_COMPILE_DATA.exit
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 4 uses
@@ -1269,7 +1259,7 @@ bb.m:                                             ; preds = %ISEQ_COMPILE_DATA.e
   store ptr %i.eh, ptr %i.ec, align 8, !tbaa !42
   br label %APPEND_LIST.exit48
 
-APPEND_LIST.exit48:                               ; preds = %ISEQ_COMPILE_DATA.exit46.thread, %ISEQ_COMPILE_DATA.exit46, %bb.m
+APPEND_LIST.exit48:                               ; preds = %ISEQ_COMPILE_DATA.exit, %ISEQ_COMPILE_DATA.exit46, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #37
   ret void
 }

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.loopexit99.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
-  %i.cf = load i32, ptr %i.ce, align 8, !tbaa !18 ; 2 uses
+  %i.cf = load i32, ptr %i.ce, align 8, !tbaa !18
   %i.cg = getelementptr [16 x i8], ptr %i.bx, i64 %indvars.iv127
   %i.ch = getelementptr [16 x i8], ptr %i.cg, i64 %i.v ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 12
@@ -218,12 +218,11 @@ bb.d:                                             ; preds = %bb.c
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !51
   %i.cq = add nsw i32 %i.cn, %i.cp
   %i.cr = ashr i32 %i.cq, 2                       ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.bv, i64 8 ; 2 uses
-  store i32 %i.cf, ptr %1, align 8, !tbaa !18
   %i.cs = icmp eq i32 %i.cf, 0
   br i1 %i.cs, label %bb.e, label %_ZN5zxing8ArrayRefINS_15BINARIZER_BLOCKEED2Ev.exit.i
 
 bb.e:                                             ; preds = %bb.d
+  %1 = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   store i32 -559026175, ptr %1, align 8, !tbaa !18
   %i.ct = load ptr, ptr %i.bv, align 8, !tbaa !20
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 8

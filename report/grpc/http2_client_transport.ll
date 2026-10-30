@@ -205,44 +205,25 @@ define linkonce_odr noundef zeroext i1 @_ZN9grpc_core5Party15ParticipantImplINS_
 bb.a:
   %1 = alloca %"struct.grpc_core::Waker::WakeableAndArg", align 8 ; 4 uses
   %2 = alloca %"class.grpc_core::Waker", align 8  ; 7 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !720, !range !136, !noundef !137
   %i.c = trunc nuw i8 %i.b to i1
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  br i1 %i.c, label %._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge, label %3
+  br i1 %i.c, label %._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge, label %bb.b
 
 ._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge: ; preds = %bb.a
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !1302
   br label %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit
 
-3:                                                ; preds = %bb.a
-  %4 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !663 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %6 = load i8, ptr %5, align 8, !tbaa !677, !range !136, !noundef !137
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %bb.b, label %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvEC2EOSP_.exit
-
-_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvEC2EOSP_.exit: ; preds = %3
-  %8 = inttoptr i64 %4 to ptr
+bb.b:                                             ; preds = %bb.a
+  %i.d = load i64, ptr %.phi.trans.insert, align 8, !tbaa !663
+  %i.e = inttoptr i64 %i.d to ptr
   store i8 1, ptr %i.a, align 8, !tbaa !720
   br label %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit
 
-bb.b:                                             ; preds = %3
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %10 = load ptr, ptr %9, align 8, !tbaa !591
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.d = load i64, ptr %11, align 8, !tbaa !621
-  %i.e = inttoptr i64 %4 to ptr
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr %10, ptr %12, align 8, !tbaa !591
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i64 %i.d, ptr %13, align 8, !tbaa !621
-  store i8 1, ptr %i.a, align 8, !tbaa !720
-  br label %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit
-
-_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit: ; preds = %._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge, %bb.b, %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvEC2EOSP_.exit
-  %14 = phi ptr [ %.pre, %._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge ], [ %i.e, %bb.b ], [ %8, %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvEC2EOSP_.exit ] ; 2 uses
-  %i.f = load i8, ptr %14, align 2, !tbaa !775, !range !136, !noundef !137
+_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit: ; preds = %bb.b, %._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge
+  %3 = phi ptr [ %.pre, %._ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit_crit_edge ], [ %i.e, %bb.b ] ; 2 uses
+  %i.f = load i8, ptr %3, align 2, !tbaa !775, !range !136, !noundef !137
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %_ZN9grpc_core4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS6_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSC_EUlSF_E_EESA_EEclEv.exit.thread.thread, label %bb.c
 
@@ -253,7 +234,7 @@ _ZN9grpc_core4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTra
   br i1 %i.j, label %bb.x, label %_ZN9grpc_core4RaceIJNS_4LoopIZNS_5http220Http2ClientTransport17SecurityFrameLoopEvEUlvE_Lb0EEEEED2Ev.exit.i.i1.i
 
 bb.c:                                             ; preds = %_ZN9grpc_core14promise_detail11PromiseLikeINS_4RaceIJNS_3MapIZNS_5LatchIvE4WaitEvEUlvE_ZNS_5http220Http2ClientTransport20UntilTransportClosedINS_4LoopIZNS8_17SecurityFrameLoopEvEUlvE_Lb0EEETnNSt9enable_ifIXsr3stdE9is_same_vIDTclclsr3stdE7declvalIT_EEEENS_4PollINS_5EmptyEEEEEbE4typeELb1EEEDaOSE_EUlSH_E_EESC_EEEvED2Ev.exit
-  %i.k = getelementptr inbounds nuw i8, ptr %14, i64 2 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 2 ; 2 uses
   %.not.i.i.i.i.i.i13 = icmp eq ptr @_ZTHN9grpc_core8Activity19g_current_activity_E, null ; 2 uses
   br i1 %.not.i.i.i.i.i.i13, label %_ZN9grpc_core19IntraActivityWaiter7pendingEv.exit.i, label %bb.d
 
