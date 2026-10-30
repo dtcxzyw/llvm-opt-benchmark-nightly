@@ -202,10 +202,10 @@ _ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EE
   %.0 = phi i1 [ true, %_ZZN5arrow4util12_GLOBAL__N_131ThrottledAsyncTaskSchedulerImpl7AddTaskESt10unique_ptrINS0_18AsyncTaskScheduler4TaskESt14default_deleteIS5_EEENUlRKNS_6StatusEE_D2Ev.exit ], [ %i.ce, %bb.z ], [ %i.ce, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i44 ]
   %i.cl = load i8, ptr %i.al, align 8, !tbaa !175, !range !85, !noundef !86
   %i.cm = trunc nuw i8 %i.cl to i1
-  store i8 0, ptr %i.al, align 8, !tbaa !175
   br i1 %i.cm, label %bb.ab, label %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit
 
 bb.ab:                                            ; preds = %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit45
+  store i8 0, ptr %i.al, align 8, !tbaa !175
   %i.cn = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !26 ; 8 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.co, null
@@ -522,10 +522,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !175, !range !85, !noundef !86
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !175
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN5arrow6FutureINS0_8internal5EmptyEEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !175
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !26   ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -928,21 +928,21 @@ _ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i48: 
 _ZNSt11unique_lockISt5mutexE4lockEv.exit.jt0:     ; preds = %bb.s, %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit46.jt0
   %i.ch = load i8, ptr %i.e, align 8, !tbaa !175, !range !85, !noundef !86
   %i.ci = trunc nuw i8 %i.ch to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !175
   br i1 %i.ci, label %bb.ab, label %_ZNSt14_Optional_baseIN5arrow6FutureINS0_8internal5EmptyEEELb0ELb0EED2Ev.exit.jt0
 
 _ZNSt11unique_lockISt5mutexE4lockEv.exit.jt1:     ; preds = %bb.r, %bb.p, %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit46.jt1
   %i.cj = load i8, ptr %i.e, align 8, !tbaa !175, !range !85, !noundef !86
   %i.ck = trunc nuw i8 %i.cj to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !175
   br i1 %i.ck, label %bb.ac, label %.thread106
 
 bb.ab:                                            ; preds = %_ZNSt11unique_lockISt5mutexE4lockEv.exit.jt0
+  store i8 0, ptr %i.e, align 8, !tbaa !175
   %i.cl = load ptr, ptr %i.j, align 8, !tbaa !26  ; 8 uses
   %.not.i.i.i.i.i.i.i.jt0 = icmp eq ptr %i.cl, null
   br i1 %.not.i.i.i.i.i.i.i.jt0, label %_ZNSt14_Optional_baseIN5arrow6FutureINS0_8internal5EmptyEEELb0ELb0EED2Ev.exit.jt0, label %bb.ad
 
 bb.ac:                                            ; preds = %_ZNSt11unique_lockISt5mutexE4lockEv.exit.jt1
+  store i8 0, ptr %i.e, align 8, !tbaa !175
   %i.cm = load ptr, ptr %i.j, align 8, !tbaa !26  ; 8 uses
   %.not.i.i.i.i.i.i.i.jt1 = icmp eq ptr %i.cm, null
   br i1 %.not.i.i.i.i.i.i.i.jt1, label %.thread106, label %bb.ae
@@ -1345,11 +1345,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !181, !range !85, !noundef !86
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !181
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64
+  store i8 0, ptr %i.a, align 8, !tbaa !181
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !145  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1449,11 +1449,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !181, !range !85, !noundef !86
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !181
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64
+  store i8 0, ptr %i.a, align 8, !tbaa !181
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !145  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1856,11 +1856,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !181, !range !85, !noundef !86
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !181
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i8 0, ptr %i.a, align 8, !tbaa !181
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !145  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1913,11 +1913,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !181, !range !85, !noundef !86
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !181
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i8 0, ptr %i.a, align 8, !tbaa !181
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !145  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f

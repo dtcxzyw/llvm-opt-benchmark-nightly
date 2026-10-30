@@ -202,10 +202,10 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN6open
 _ZNSt6vectorIN6openzl4TypeESaIS1_EED2Ev.exit4.i:  ; preds = %bb.k, %_ZNSt6vectorIN6openzl4TypeESaIS1_EED2Ev.exit2.i
   %i.db = load i8, ptr %i.bd, align 8, !tbaa !82, !range !78, !noundef !65
   %i.dc = trunc nuw i8 %i.db to i1
-  store i8 0, ptr %i.bd, align 8, !tbaa !82
   br i1 %i.dc, label %bb.l, label %_ZN6openzl26MultiInputCodecDescriptionD2Ev.exit
 
 bb.l:                                             ; preds = %_ZNSt6vectorIN6openzl4TypeESaIS1_EED2Ev.exit4.i
+  store i8 0, ptr %i.bd, align 8, !tbaa !82
   %i.dd = load ptr, ptr %i.bc, align 8, !tbaa !88 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.df = icmp eq ptr %i.dd, %i.de
@@ -608,11 +608,11 @@ _ZNSt6vectorIN6openzl4TypeESaIS1_EED2Ev.exit4:    ; preds = %_ZNSt6vectorIN6open
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.w = load i8, ptr %i.v, align 8, !tbaa !82, !range !78, !noundef !65
   %i.x = trunc nuw i8 %i.w to i1
-  store i8 0, ptr %i.v, align 8, !tbaa !82
   br i1 %i.x, label %bb.e, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN6openzl4TypeESaIS1_EED2Ev.exit4
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.v, align 8, !tbaa !82
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !88   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ab = icmp eq ptr %i.z, %i.aa

@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 15 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = alloca i32, align 4                      ; 5 uses
-  %i.g = zext i1 %4 to i8
+  %i.g = zext i1 %4 to i8                         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   store ptr null, ptr %i.b, align 8, !tbaa !111
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
@@ -375,7 +375,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %exitcond.not.i, label %.sink.split.i, label %.lr.ph.i, !llvm.loop !172
 
 .sink.split.i:                                    ; preds = %.lr.ph.i, %bb.p, %bb.q, %.lr.ph.preheader.i, %bb.o, %.preheader.i, %bb.n
-  %.181 = phi i8 [ 0, %bb.n ], [ 0, %bb.o ], [ 1, %.lr.ph.preheader.i ], [ 0, %.preheader.i ], [ 1, %.lr.ph.i ], [ 1, %bb.p ], [ 0, %bb.q ]
+  %.181 = phi i8 [ 0, %bb.n ], [ 0, %bb.o ], [ 1, %.lr.ph.preheader.i ], [ 0, %.preheader.i ], [ 1, %.lr.ph.i ], [ 1, %bb.p ], [ %i.g, %bb.q ]
   %.031.ph.i = phi i32 [ %i.az, %bb.n ], [ 0, %bb.o ], [ 0, %.lr.ph.preheader.i ], [ 0, %.preheader.i ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %.lr.ph.i ]
   call void @free(ptr noundef nonnull %i.ao) #22
   %.pre95.pre96.pre = load ptr, ptr %i.d, align 8, !tbaa !38

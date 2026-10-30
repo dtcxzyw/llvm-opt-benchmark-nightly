@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %_ZN8nanobind6object
   %i.m = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %4) #25 ; 0 uses
   %i.n = load i8, ptr %i.h, align 8, !tbaa !154, !range !86, !noundef !72
   %i.o = trunc nuw i8 %i.n to i1
-  store i8 0, ptr %i.h, align 8, !tbaa !154
   br i1 %i.o, label %bb.e, label %_ZN8nanobind6detail21cursor_iterator_stateINS0_19iterator_key_accessISt17_Rb_tree_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEEEELNS_9rv_policy5valueE1ESt3mapISA_lSt4lessISA_ESaISC_EEED2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr %i.h, align 8, !tbaa !154
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !141  ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.r = icmp eq ptr %i.p, %i.q
@@ -342,11 +342,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -443,11 +443,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZN8nanobind6detail21cursor_iterator_stateINS0_19iterator_key_accessISt17_Rb_tree_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEEEELNS_9rv_policy5valueE1ESt3mapISA_lSt4lessISA_ESaISC_EEED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -706,10 +706,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZNSt19_Optional_base_implINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14_Optional_baseIS5_Lb0ELb0EEE8_M_resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.d = load ptr, ptr %0, align 8, !tbaa !141    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = icmp eq ptr %i.d, %i.e
@@ -1112,10 +1112,10 @@ bb.d:                                             ; preds = %_ZN8nanobind6object
   %i.m = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %4) #25 ; 0 uses
   %i.n = load i8, ptr %i.h, align 8, !tbaa !154, !range !86, !noundef !72
   %i.o = trunc nuw i8 %i.n to i1
-  store i8 0, ptr %i.h, align 8, !tbaa !154
   br i1 %i.o, label %bb.e, label %_ZN8nanobind6detail21cursor_iterator_stateINS0_15iterator_accessISt17_Rb_tree_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEEEELNS_9rv_policy5valueE1ESt3mapISA_lSt4lessISA_ESaISC_EEED2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr %i.h, align 8, !tbaa !154
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !141  ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.r = icmp eq ptr %i.p, %i.q
@@ -1250,11 +1250,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1351,11 +1351,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZN8nanobind6detail21cursor_iterator_stateINS0_15iterator_accessISt17_Rb_tree_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEEEELNS_9rv_policy5valueE1ESt3mapISA_lSt4lessISA_ESaISC_EEED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1758,10 +1758,10 @@ bb.d:                                             ; preds = %_ZN8nanobind6object
   %i.m = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNKR8nanobind6handle7dec_refEv(ptr noundef nonnull align 8 dereferenceable(8) %4) #25 ; 0 uses
   %i.n = load i8, ptr %i.h, align 8, !tbaa !154, !range !86, !noundef !72
   %i.o = trunc nuw i8 %i.n to i1
-  store i8 0, ptr %i.h, align 8, !tbaa !154
   br i1 %i.o, label %bb.e, label %_ZN8nanobind6detail21cursor_iterator_stateINS0_21iterator_value_accessISt17_Rb_tree_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEEEELNS_9rv_policy5valueE1ESt3mapISA_lSt4lessISA_ESaISC_EEED2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr %i.h, align 8, !tbaa !154
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !141  ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.r = icmp eq ptr %i.p, %i.q
@@ -1896,11 +1896,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -1997,11 +1997,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !154, !range !86, !noundef !72
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !154
   br i1 %i.c, label %bb.b, label %_ZN8nanobind6detail21cursor_iterator_stateINS0_21iterator_value_accessISt17_Rb_tree_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEElEEEELNS_9rv_policy5valueE1ESt3mapISA_lSt4lessISA_ESaISC_EEED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !154
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !141  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f

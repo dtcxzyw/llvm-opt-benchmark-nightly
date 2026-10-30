@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %.split.i.i.i.i.i, %bb.l
   %i.bz = icmp samesign eq i64 %i.bt, %i.l
-  br i1 %i.bz, label %.sink.split.i.i, label %bb.p
+  br i1 %i.bz, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ca = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.bt
@@ -247,13 +247,13 @@ bb.q:                                             ; preds = %.loopexit19.i.i
   store i8 1, ptr %i.e, align 2, !alias.scope !106
   br label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.thread7.i.i.i
 
-.sink.split.i.i:                                  ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit12.i.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit14.i.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit16.i.i.i.i.i, %bb.p, %bb.o, %bb.g
-  %.ph.i.i = phi i64 [ %i.l, %bb.o ], [ %.promoted.i.i.i, %bb.g ], [ %i.bt, %bb.p ], [ %i.bt, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit16.i.i.i.i.i ], [ %i.bt, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit14.i.i.i.i.i ], [ %i.bt, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit12.i.i.i.i.i ]
+.sink.split.i.i:                                  ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit12.i.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit14.i.i.i.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit16.i.i.i.i.i, %bb.p, %bb.g
+  %.lcssa14.i.i = phi i64 [ %.promoted.i.i.i, %bb.g ], [ %i.bt, %bb.p ], [ %i.bt, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit16.i.i.i.i.i ], [ %i.bt, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit14.i.i.i.i.i ], [ %i.bt, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsgFeZUGsc24U_7colored.exit12.i.i.i.i.i ]
   store i8 0, ptr %i.h, align 8, !alias.scope !106
   br label %bb.r
 
-bb.r:                                             ; preds = %.sink.split.i.i, %.loopexit19.i.i
-  %1 = phi i64 [ %.promoted.i.i.i, %.loopexit19.i.i ], [ %.ph.i.i, %.sink.split.i.i ]
+bb.r:                                             ; preds = %.sink.split.i.i, %.loopexit19.i.i, %bb.o
+  %1 = phi i64 [ %.lcssa14.i.i, %.sink.split.i.i ], [ %.promoted.i.i.i, %.loopexit19.i.i ], [ %i.l, %bb.o ]
   %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.cn, align 8, !alias.scope !102, !noalias !101
   br label %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.thread7.i.i.i

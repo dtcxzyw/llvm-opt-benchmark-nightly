@@ -205,16 +205,16 @@ bb.k:                                             ; preds = %bb.h, %bb.g, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !117569, !noalias !117528
   br label %_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread4, !dbg !117566
 
-_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread4: ; preds = %_RNvXs8_NtCsk1caaszg7Cl_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit19.thread.i.i.i.i, %bb.k
-  %.sink = phi ptr [ %i.aj, %_RNvXs8_NtCsk1caaszg7Cl_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit19.thread.i.i.i.i ], [ %i.ak, %bb.k ]
-  %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !117570
-  store ptr %.sink, ptr %i.al, align 8, !dbg !117570, !alias.scope !117522
-  br label %_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread, !dbg !117532
-
 2:                                                ; preds = %bb.l, %_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread, %bb.d, %bb.b
-  ret void, !dbg !117571
+  ret void, !dbg !117570
 
-_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread: ; preds = %bb.i, %_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread4
+_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread4: ; preds = %bb.k, %_RNvXs8_NtCsk1caaszg7Cl_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit19.thread.i.i.i.i
+  %.sink = phi ptr [ %i.aj, %_RNvXs8_NtCsk1caaszg7Cl_10serde_json4readNtB5_7StrReadNtB5_4Read4peek.exit19.thread.i.i.i.i ], [ %i.ak, %bb.k ]
+  %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !117571
+  store ptr %.sink, ptr %i.al, align 8, !dbg !117571, !alias.scope !117522
+  br label %_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread, !dbg !117533
+
+_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread: ; preds = %_RINvXs3_NtCs40veMcpUDl8_10serde_core2deINtNtCscgRAwXFJnXP_4core6marker11PhantomDatamENtB6_15DeserializeSeed11deserializeINtNtCsk1caaszg7Cl_10serde_json2de6MapKeyNtNtB1Z_4read7StrReadEECseeLknQCOKOd_13polars_python.exit.thread4, %bb.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !117533
   %i.an = load ptr, ptr %i.am, align 8, !dbg !117533, !nonnull !1853, !align !1880, !noundef !1853
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !117572
@@ -617,8 +617,8 @@ begin_hunk_1_@llvm.umin.i8
 !117567 = !DILocation(line: 2186, column: 47, scope: !117475, inlinedAt: !117476)
 !117568 = !DILocation(line: 2186, column: 41, scope: !117475, inlinedAt: !117476)
 !117569 = !DILocation(line: 2186, column: 76, scope: !117475, inlinedAt: !117476)
-!117570 = !DILocation(line: 0, scope: !117475, inlinedAt: !117476)
-!117571 = !DILocation(line: 2025, column: 6, scope: !117454)
+!117570 = !DILocation(line: 2025, column: 6, scope: !117454)
+!117571 = !DILocation(line: 0, scope: !117475, inlinedAt: !117476)
 !117572 = !DILocation(line: 414, column: 54, scope: !117502)
 !117573 = !DILocation(line: 2022, column: 9, scope: !117454)
 !117574 = !DILocation(line: 0, scope: !117529)

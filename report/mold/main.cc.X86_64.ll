@@ -205,10 +205,10 @@ _ZN4moldL16get_thread_countINS_6X86_64EEElRNS_7ContextIT_EE.exit: ; preds = %bb.
   %i.ek = getelementptr inbounds nuw i8, ptr %39, i64 4016 ; 3 uses
   %i.el = load i8, ptr %i.ek, align 8, !tbaa !341, !range !58, !noundef !59
   %i.em = trunc nuw i8 %i.el to i1
-  store i8 0, ptr %i.ek, align 8, !tbaa !341
   br i1 %i.em, label %bb.ah, label %_ZNSt19_Optional_base_implIN3tbb6detail2d114global_controlESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i
 
 bb.ah:                                            ; preds = %_ZN4moldL16get_thread_countINS_6X86_64EEElRNS_7ContextIT_EE.exit
+  store i8 0, ptr %i.ek, align 8, !tbaa !341
   call void @_ZN3tbb6detail2r17destroyERNS0_2d114global_controlE(ptr noundef nonnull align 8 dereferenceable(32) %i.ed) #19
   br label %_ZNSt19_Optional_base_implIN3tbb6detail2d114global_controlESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i
 
@@ -611,11 +611,11 @@ _ZNSt6vectorIN4mold14VersionPatternESaIS1_EED2Ev.exit: ; preds = %_ZNSt6vectorIN
   %i.hn = getelementptr inbounds nuw i8, ptr %0, i64 4016 ; 2 uses
   %i.ho = load i8, ptr %i.hn, align 8, !tbaa !341, !range !58, !noundef !59
   %i.hp = trunc nuw i8 %i.ho to i1
-  store i8 0, ptr %i.hn, align 8, !tbaa !341
   br i1 %i.hp, label %bb.af, label %_ZNSt14_Optional_baseIN3tbb6detail2d114global_controlELb0ELb0EED2Ev.exit
 
 bb.af:                                            ; preds = %_ZNSt6vectorIN4mold14VersionPatternESaIS1_EED2Ev.exit
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 3992
+  store i8 0, ptr %i.hn, align 8, !tbaa !341
   tail call void @_ZN3tbb6detail2r17destroyERNS0_2d114global_controlE(ptr noundef nonnull align 8 dereferenceable(32) %i.hq) #19
   br label %_ZNSt14_Optional_baseIN3tbb6detail2d114global_controlELb0ELb0EED2Ev.exit
 
@@ -1018,10 +1018,10 @@ _ZN4mold4WarnINS_6X86_64EElsIRA47_KcEERS2_OT_.exit: ; preds = %_ZN4mold4WarnINS_
   %i.bc = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, ptr noundef nonnull align 1 dereferenceable(47) @.str.49, i64 noundef 46) #19 ; 0 uses
   %.pre19 = load i8, ptr %i.aj, align 8, !tbaa !571, !range !58
   %i.bd = trunc nuw i8 %.pre19 to i1
-  store i8 0, ptr %i.aj, align 8, !tbaa !571
   br i1 %i.bd, label %bb.q, label %_ZN4mold4WarnINS_6X86_64EED2Ev.exit
 
 bb.q:                                             ; preds = %_ZN4mold4WarnINS_6X86_64EElsIRA47_KcEERS2_OT_.exit
+  store i8 0, ptr %i.aj, align 8, !tbaa !571
   call void @_ZN4mold10SyncStream4emitEv(ptr noundef nonnull align 8 dereferenceable(416) %6)
   %i.be = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.bf = load ptr, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, align 8 ; 2 uses
@@ -1424,11 +1424,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit112: ; preds = %_Z
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 2824 ; 2 uses
   %i.jw = load i8, ptr %i.jv, align 8, !tbaa !343, !range !58, !noundef !59
   %i.jx = trunc nuw i8 %i.jw to i1
-  store i8 0, ptr %i.jv, align 8, !tbaa !343
   br i1 %i.jx, label %bb.r, label %_ZNSt14_Optional_baseISt6vectorIPN4mold6SymbolINS1_6X86_64EEESaIS5_EELb0ELb0EED2Ev.exit
 
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit112
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 2800
+  store i8 0, ptr %i.jv, align 8, !tbaa !343
   %i.jz = load ptr, ptr %i.jy, align 8, !tbaa !581 ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.jz, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorIPN4mold6SymbolINS1_6X86_64EEESaIS5_EELb0ELb0EED2Ev.exit, label %bb.s
@@ -1831,10 +1831,10 @@ _ZN4mold4WarnINS_6X86_64EElsIRA2_KcEERS2_OT_.exit: ; preds = %_ZN4mold4WarnINS_6
   %i.ba = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.az, ptr noundef nonnull align 1 dereferenceable(2) @.str.40, i64 noundef 1) #19 ; 0 uses
   %.pre17 = load i8, ptr %i.af, align 8, !tbaa !571, !range !58
   %i.bb = trunc nuw i8 %.pre17 to i1
-  store i8 0, ptr %i.af, align 8, !tbaa !571
   br i1 %i.bb, label %bb.k, label %_ZN4mold4WarnINS_6X86_64EED2Ev.exit
 
 bb.k:                                             ; preds = %_ZN4mold4WarnINS_6X86_64EElsIRA2_KcEERS2_OT_.exit
+  store i8 0, ptr %i.af, align 8, !tbaa !571
   call void @_ZN4mold10SyncStream4emitEv(ptr noundef nonnull align 8 dereferenceable(416) %4)
   %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.bd = load ptr, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, align 8 ; 2 uses

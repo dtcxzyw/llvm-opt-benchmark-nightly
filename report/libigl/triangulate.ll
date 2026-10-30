@@ -205,10 +205,10 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 .critedge:                                        ; preds = %_ZN4CGAL6HandleD2Ev.exit19, %_ZN4CGAL7Point_2INS_5EpeckEEaSERKS2_.exit
   %i.bn = phi i8 [ %i.ah, %_ZN4CGAL6HandleD2Ev.exit19 ], [ %.pre, %_ZN4CGAL7Point_2INS_5EpeckEEaSERKS2_.exit ]
   %i.bo = trunc nuw i8 %i.bn to i1
-  store i8 0, ptr %i.ag, align 8, !tbaa !408
   br i1 %i.bo, label %bb.ad, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_2INS1_5EpeckEEENS1_9Segment_2IS3_EEEELb0ELb0EED2Ev.exit
 
 bb.ad:                                            ; preds = %.critedge
+  store i8 0, ptr %i.ag, align 8, !tbaa !408
   %i.bp = load i8, ptr %i.aj, align 8, !tbaa !410 ; 2 uses
   %.not.i = icmp eq i8 %i.bp, -1
   br i1 %.not.i, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_2INS1_5EpeckEEENS1_9Segment_2IS3_EEEELb0ELb0EED2Ev.exit, label %bb.ae, !prof !317
@@ -611,10 +611,10 @@ _ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_2INS1_5EpeckEEENS1_9Segment_2IS3_
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #21
   %i.fk = load i8, ptr %i.dh, align 16, !tbaa !424, !range !125, !noundef !126
   %i.fl = trunc nuw i8 %i.fk to i1
-  store i8 0, ptr %i.dh, align 16, !tbaa !424
   br i1 %i.fl, label %bb.bz, label %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_2INS1_16Simple_cartesianIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEEEENS1_9Segment_2ISH_EEEELb0ELb0EED2Ev.exit
 
 bb.bz:                                            ; preds = %_ZNSt14_Optional_baseISt7variantIJN4CGAL7Point_2INS1_5EpeckEEENS1_9Segment_2IS3_EEEELb0ELb0EED2Ev.exit34
+  store i8 0, ptr %i.dh, align 16, !tbaa !424
   %i.fm = getelementptr inbounds nuw i8, ptr %15, i64 256
   %i.fn = load i8, ptr %i.fm, align 16, !tbaa !428
   switch i8 %i.fn, label %bb.cf [
@@ -1017,10 +1017,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !408, !range !125, !noundef !126
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !408
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadISt7variantIJN4CGAL7Point_2INS1_5EpeckEEENS1_9Segment_2IS3_EEEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !408
   invoke void @_ZNSt8__detail9__variant16_Variant_storageILb0EJN4CGAL7Point_2INS2_5EpeckEEENS2_9Segment_2IS4_EEEE8_M_resetEv(ptr noundef nonnull align 8 dereferenceable(17) %0)
           to label %_ZNSt17_Optional_payloadISt7variantIJN4CGAL7Point_2INS1_5EpeckEEENS1_9Segment_2IS3_EEEELb0ELb0ELb0EED2Ev.exit unwind label %bb.c
 
@@ -1147,10 +1147,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   %i.b = load i8, ptr %i.a, align 16, !tbaa !424, !range !125, !noundef !126
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 16, !tbaa !424
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadISt7variantIJN4CGAL7Point_2INS1_16Simple_cartesianIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEEEENS1_9Segment_2ISH_EEEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 16, !tbaa !424
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.e = load i8, ptr %i.d, align 16, !tbaa !428  ; 2 uses
   %.not.i.i.i.i.i = icmp eq i8 %i.e, -1
@@ -1305,10 +1305,10 @@ bb.s:                                             ; preds = %bb.r
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 368 ; 2 uses
   %i.ao = load i8, ptr %i.an, align 16, !tbaa !424, !range !125, !noundef !126
   %i.ap = trunc nuw i8 %i.ao to i1
-  store i8 0, ptr %i.an, align 16, !tbaa !424
   br i1 %i.ap, label %bb.t, label %_ZN4CGAL10AT_ET_wrapISt8optionalISt7variantIJNS_7Point_2INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS_9Segment_2IS7_EEEEES1_IS2_IJNS3_INS4_IN5boost14multiprecision6numberINSE_8backends16rational_adaptorINSG_15cpp_int_backendILm0ELm0ELNSE_16cpp_integer_typeE1ELNSE_18cpp_int_check_typeE0ESaIyEEEEELNSE_26expression_template_optionE1EEEEEEENS9_ISQ_EEEEEED2Ev.exit.i
 
 bb.t:                                             ; preds = %bb.s
+  store i8 0, ptr %i.an, align 16, !tbaa !424
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 352
   %i.ar = load i8, ptr %i.aq, align 16, !tbaa !428 ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq i8 %i.ar, -1
@@ -1711,10 +1711,10 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 368 ; 2 uses
   %i.g = load i8, ptr %i.f, align 16, !tbaa !424, !range !125, !noundef !126
   %i.h = trunc nuw i8 %i.g to i1
-  store i8 0, ptr %i.f, align 16, !tbaa !424
   br i1 %i.h, label %bb.d, label %_ZN4CGAL10AT_ET_wrapISt8optionalISt7variantIJNS_7Point_2INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS_9Segment_2IS7_EEEEES1_IS2_IJNS3_INS4_IN5boost14multiprecision6numberINSE_8backends16rational_adaptorINSG_15cpp_int_backendILm0ELm0ELNSE_16cpp_integer_typeE1ELNSE_18cpp_int_check_typeE0ESaIyEEEEELNSE_26expression_template_optionE1EEEEEEENS9_ISQ_EEEEEED2Ev.exit
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.f, align 16, !tbaa !424
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 352
   %i.j = load i8, ptr %i.i, align 16, !tbaa !428  ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq i8 %i.j, -1
