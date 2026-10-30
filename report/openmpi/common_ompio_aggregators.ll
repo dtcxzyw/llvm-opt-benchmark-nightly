@@ -65,7 +65,7 @@ bb.a:
   %i.d = sitofp i32 %i.c to double
   %i.e = fdiv double %i.d, 1.000000e+02           ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !90   ; 13 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !90   ; 14 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.i = load i64, ptr %i.h, align 8, !tbaa !91
   %i.j = icmp eq i64 %i.g, %i.i                   ; 2 uses
@@ -120,13 +120,13 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ag = sext i32 %i.y to i64
   %i.ah = mul i64 %i.g, %i.ag
-  %i.ai = uitofp nsz i64 %i.ah to double
-  %3 = uitofp i64 %i.g to double                  ; 2 uses
-  %4 = tail call nsz double @llvm.minnum.f64(double %i.ai, double %3)
+  %i.ai = uitofp i64 %i.g to double
+  %3 = tail call i64 @llvm.umin.i64(i64 %i.ah, i64 %i.g)
+  %4 = uitofp i64 %3 to double
   br label %cost_calc.exit
 
 cost_calc.exit:                                   ; preds = %bb.e, %bb.f, %bb.h, %bb.i
-  %.pre-phi.i = phi double [ %.pre.i, %bb.f ], [ %i.ae, %bb.h ], [ %3, %bb.i ], [ %.pre.i, %bb.e ]
+  %.pre-phi.i = phi double [ %.pre.i, %bb.f ], [ %i.ae, %bb.h ], [ %i.ai, %bb.i ], [ %.pre.i, %bb.e ]
   %.053.i = phi double [ 1.000000e+00, %bb.f ], [ %i.aa, %bb.h ], [ %i.aa, %bb.i ], [ 1.000000e+00, %bb.e ] ; 3 uses
   %.1.i = phi double [ %.pre.i, %bb.f ], [ %i.af, %bb.h ], [ %4, %bb.i ], [ %i.t, %bb.e ] ; 3 uses
   %.051.i = phi double [ %i.v, %bb.f ], [ %i.z, %bb.h ], [ %i.z, %bb.i ], [ 1.000000e+00, %bb.e ] ; 2 uses
