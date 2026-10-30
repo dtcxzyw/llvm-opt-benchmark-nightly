@@ -205,11 +205,9 @@ bb.a:
   %i.cq = fmul double %i.co, %i.cp
   %i.cr = fmul double %i.cn, %i.cq
   %i.cs = fmul double %i.ck, %i.cr
-  %i.ct = fmul double %i.cs, %i.cf                ; 3 uses
+  %i.ct = fmul double %i.cs, %i.cf                ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
-  %10 = fcmp uno double %i.ct, 0.000000e+00
-  %11 = fcmp olt double %i.ct, f0x3CB0000000000000
-  %or.cond = or i1 %10, %11
+  %or.cond = fcmp ult double %i.ct, f0x3CB0000000000000
   br i1 %or.cond, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

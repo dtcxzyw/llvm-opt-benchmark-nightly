@@ -205,12 +205,10 @@ bb.v:                                             ; preds = %.loopexit182, %.loo
   br label %_ZL7usingRFRK22CoulombInteractionType.exit
 
 _ZL7usingRFRK22CoulombInteractionType.exit:       ; preds = %.loopexit182._ZL7usingRFRK22CoulombInteractionType.exit_crit_edge, %bb.v
-  %i.lx = phi float [ %.pre230, %.loopexit182._ZL7usingRFRK22CoulombInteractionType.exit_crit_edge ], [ %i.lw, %bb.v ] ; 3 uses
+  %i.lx = phi float [ %.pre230, %.loopexit182._ZL7usingRFRK22CoulombInteractionType.exit_crit_edge ], [ %i.lw, %bb.v ] ; 2 uses
   %i.ly = phi ptr [ %.pre229, %.loopexit182._ZL7usingRFRK22CoulombInteractionType.exit_crit_edge ], [ %i.lt, %bb.v ] ; 5 uses
   %i.lz = fpext float %i.lx to double             ; 7 uses
-  %22 = fcmp uno float %i.lx, 0.000000e+00
-  %23 = fcmp ogt float %i.lx, f0x7F7FFFFF
-  %or.cond = or i1 %22, %23
+  %or.cond = fcmp ugt float %i.lx, f0x7F7FFFFF
   br i1 %or.cond, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %_ZL7usingRFRK22CoulombInteractionType.exit

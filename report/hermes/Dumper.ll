@@ -205,11 +205,9 @@ _ZN4llvh11raw_ostreamlsEPKc.exit:                 ; preds = %bb.c, %bb.d
   %.0.i.i = phi ptr [ %i.n, %bb.c ], [ %i.h, %bb.d ] ; 6 uses
   %i.q = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(144) %1, i32 noundef 0) #15
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 48
-  %i.s = load double, ptr %i.r, align 8, !tbaa !217 ; 4 uses
-  %7 = fcmp ule double %i.s, f0x41DFFFFFFFC00000
+  %i.s = load double, ptr %i.r, align 8, !tbaa !217 ; 3 uses
   %i.t = fcmp uge double %i.s, f0xC1E0000000000000
-  %8 = fcmp ord double %i.s, 0.000000e+00
-  tail call void @llvm.assume(i1 %8)
+  %7 = fcmp ole double %i.s, f0x41DFFFFFFFC00000
   tail call void @llvm.assume(i1 %7)
   tail call void @llvm.assume(i1 %i.t)
   %i.u = fptosi double %i.s to i32
@@ -295,12 +293,10 @@ _ZN4llvh11raw_ostreamlsEPKc.exit72:               ; preds = %bb.l, %bb.m
   %.0.i.i71 = phi ptr [ %i.az, %bb.l ], [ %i.at, %bb.m ] ; 6 uses
   %i.bc = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %1, i32 noundef 0) #15
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 48
-  %i.be = load double, ptr %i.bd, align 8, !tbaa !217 ; 4 uses
-  %9 = fcmp ule double %i.be, f0x41DFFFFFFFC00000
+  %i.be = load double, ptr %i.bd, align 8, !tbaa !217 ; 3 uses
   %i.bf = fcmp uge double %i.be, f0xC1E0000000000000
-  %10 = fcmp ord double %i.be, 0.000000e+00
-  tail call void @llvm.assume(i1 %10)
-  tail call void @llvm.assume(i1 %9)
+  %8 = fcmp ole double %i.be, f0x41DFFFFFFFC00000
+  tail call void @llvm.assume(i1 %8)
   tail call void @llvm.assume(i1 %i.bf)
   %i.bg = fptosi double %i.be to i32
   %i.bh = and i32 %i.bg, 255

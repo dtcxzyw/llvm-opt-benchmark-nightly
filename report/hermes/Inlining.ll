@@ -205,11 +205,9 @@ bb.j:                                             ; preds = %._crit_edge.i
 bb.k:                                             ; preds = %.lr.ph60.i
   %i.ce = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(144) %.sroa.043.058.i, i32 noundef 0) #11
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 48
-  %i.cg = load double, ptr %i.cf, align 8, !tbaa !138 ; 4 uses
-  %8 = fcmp ule double %i.cg, f0x41DFFFFFFFC00000
+  %i.cg = load double, ptr %i.cf, align 8, !tbaa !138 ; 3 uses
   %i.ch = fcmp uge double %i.cg, f0xC1E0000000000000
-  %9 = fcmp ord double %i.cg, 0.000000e+00
-  call void @llvm.assume(i1 %9)
+  %8 = fcmp ole double %i.cg, f0x41DFFFFFFFC00000
   call void @llvm.assume(i1 %8)
   call void @llvm.assume(i1 %i.ch)
   %i.ci = fptosi double %i.cg to i32

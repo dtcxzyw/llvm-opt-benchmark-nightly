@@ -204,17 +204,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.c:                                             ; preds = %bb.a
-  %3 = fcmp uno double %1, 0.000000e+00
-  %4 = tail call double @llvm.fabs.f64(double %1)
-  %i.b = fcmp ogt double %4, f0x7FEFFFFFFFFFFFFF
-  %or.cond3 = or i1 %3, %i.b
+  %or.cond = fcmp ult double %1, f0xFFEFFFFFFFFFFFFF
+  %i.b = fcmp ogt double %1, f0x7FEFFFFFFFFFFFFF
+  %or.cond3 = or i1 %or.cond, %i.b
   br i1 %or.cond3, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %5 = fcmp uno double %2, 0.000000e+00
-  %6 = tail call double @llvm.fabs.f64(double %2)
-  %i.c = fcmp ogt double %6, f0x7FEFFFFFFFFFFFFF
-  %or.cond7 = or i1 %5, %i.c
+  %or.cond5 = fcmp ult double %2, f0xFFEFFFFFFFFFFFFF
+  %i.c = fcmp ogt double %2, f0x7FEFFFFFFFFFFFFF
+  %or.cond7 = or i1 %or.cond5, %i.c
   br i1 %or.cond7, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -616,9 +614,6 @@ declare i64 @strtoul(ptr noundef readonly, ptr noundef captures(none), i32 nound
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fabs.f64(double) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

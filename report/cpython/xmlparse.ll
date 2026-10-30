@@ -205,22 +205,18 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %0, i64 944
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !48
-  %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %2, label %bb.d
+  %.not = icmp ne ptr %i.c, null
+  %or.cond = fcmp ult float %1, 1.000000e+00
+  %or.cond9 = or i1 %or.cond, %.not
+  br i1 %or.cond9, label %bb.d, label %bb.c
 
-2:                                                ; preds = %bb.b
-  %3 = fcmp uno float %1, 0.000000e+00
-  %4 = fcmp olt float %1, 1.000000e+00
-  %or.cond = or i1 %3, %4
-  br i1 %or.cond, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %0, i64 1000
   store float %1, ptr %i.d, align 8, !tbaa !138
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.b, %2, %bb.c
-  %.0 = phi i8 [ 1, %bb.c ], [ 0, %2 ], [ 0, %bb.b ], [ 0, %bb.a ]
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
+  %.0 = phi i8 [ 1, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ]
   ret i8 %.0
 }
 
@@ -255,22 +251,18 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %0, i64 944
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !48
-  %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %2, label %bb.d
+  %.not = icmp ne ptr %i.c, null
+  %or.cond = fcmp ult float %1, 1.000000e+00
+  %or.cond9 = or i1 %or.cond, %.not
+  br i1 %or.cond9, label %bb.d, label %bb.c
 
-2:                                                ; preds = %bb.b
-  %3 = fcmp uno float %1, 0.000000e+00
-  %4 = fcmp olt float %1, 1.000000e+00
-  %or.cond = or i1 %3, %4
-  br i1 %or.cond, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %0, i64 1040
   store float %1, ptr %i.d, align 8, !tbaa !53
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.b, %2, %bb.c
-  %.0 = phi i8 [ 1, %bb.c ], [ 0, %2 ], [ 0, %bb.b ], [ 0, %bb.a ]
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
+  %.0 = phi i8 [ 1, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ]
   ret i8 %.0
 }
 

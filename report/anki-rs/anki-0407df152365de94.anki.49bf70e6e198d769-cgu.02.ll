@@ -205,12 +205,10 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.d, %bb.g
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 228 ; 2 uses
-  %i.l = load float, ptr %i.k, align 4, !noundef !14 ; 3 uses
-  %1 = fcmp uno float %i.l, 0.000000e+00
-  %2 = fcmp olt float %i.l, 1.310000e+00
-  %or.cond = or i1 %1, %2
+  %i.l = load float, ptr %i.k, align 4, !noundef !14 ; 2 uses
+  %or.cond = fcmp ult float %i.l, 1.310000e+00
   %i.m = fcmp ogt float %i.l, 5.000000e+00
-  %or.cond18 = or i1 %i.m, %or.cond
+  %or.cond18 = or i1 %or.cond, %i.m
   br i1 %or.cond18, label %bb.i, label %bb.h
 
 bb.g:                                             ; preds = %bb.d
@@ -219,12 +217,10 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %bb.f, %bb.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
-  %i.o = load float, ptr %i.n, align 8, !noundef !14 ; 3 uses
-  %3 = fcmp uno float %i.o, 0.000000e+00
-  %4 = fcmp olt float %i.o, 1.000000e+00
-  %or.cond19 = or i1 %3, %4
+  %i.o = load float, ptr %i.n, align 8, !noundef !14 ; 2 uses
+  %or.cond19 = fcmp ult float %i.o, 1.000000e+00
   %i.p = fcmp ogt float %i.o, 5.000000e+00
-  %or.cond20 = or i1 %i.p, %or.cond19
+  %or.cond20 = or i1 %or.cond19, %i.p
   br i1 %or.cond20, label %bb.k, label %bb.j
 
 bb.i:                                             ; preds = %bb.f
@@ -233,12 +229,10 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.h, %bb.k
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 2 uses
-  %i.r = load float, ptr %i.q, align 4, !noundef !14 ; 3 uses
-  %5 = fcmp uno float %i.r, 0.000000e+00
-  %6 = fcmp olt float %i.r, 5.000000e-01
-  %or.cond21 = or i1 %5, %6
+  %i.r = load float, ptr %i.q, align 4, !noundef !14 ; 2 uses
+  %or.cond21 = fcmp ult float %i.r, 5.000000e-01
   %i.s = fcmp ogt float %i.r, 1.300000e+00
-  %or.cond22 = or i1 %i.s, %or.cond21
+  %or.cond22 = or i1 %or.cond21, %i.s
   br i1 %or.cond22, label %bb.m, label %bb.l
 
 bb.k:                                             ; preds = %bb.h
@@ -259,12 +253,10 @@ bb.m:                                             ; preds = %bb.j
 
 bb.n:                                             ; preds = %bb.l, %bb.o
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 244 ; 2 uses
-  %i.x = load float, ptr %i.w, align 4, !noundef !14 ; 3 uses
-  %7 = fcmp uno float %i.x, 0.000000e+00
-  %8 = fcmp olt float %i.x, 5.000000e-01
-  %or.cond25 = or i1 %7, %8
+  %i.x = load float, ptr %i.w, align 4, !noundef !14 ; 2 uses
+  %or.cond25 = fcmp ult float %i.x, 5.000000e-01
   %i.y = fcmp ogt float %i.x, 2.000000e+00
-  %or.cond26 = or i1 %i.y, %or.cond25
+  %or.cond26 = or i1 %or.cond25, %i.y
   br i1 %or.cond26, label %bb.q, label %bb.p
 
 bb.o:                                             ; preds = %bb.l
@@ -339,12 +331,10 @@ bb.aa:                                            ; preds = %bb.x
 
 bb.ab:                                            ; preds = %bb.z, %bb.ac
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 316 ; 2 uses
-  %i.as = load float, ptr %i.ar, align 4, !noundef !14 ; 3 uses
-  %9 = fcmp uno float %i.as, 0.000000e+00
-  %10 = fcmp olt float %i.as, f0x3F333333
-  %or.cond33 = or i1 %9, %10
+  %i.as = load float, ptr %i.ar, align 4, !noundef !14 ; 2 uses
+  %or.cond33 = fcmp ult float %i.as, f0x3F333333
   %i.at = fcmp ogt float %i.as, 9.900000e-01
-  %or.cond34 = or i1 %i.at, %or.cond33
+  %or.cond34 = or i1 %or.cond33, %i.at
   br i1 %or.cond34, label %bb.ae, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.z
@@ -353,12 +343,10 @@ bb.ac:                                            ; preds = %bb.z
 
 bb.ad:                                            ; preds = %bb.ab, %bb.ae
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
-  %i.av = load float, ptr %i.au, align 8, !noundef !14 ; 3 uses
-  %11 = fcmp uno float %i.av, 0.000000e+00
-  %12 = fcmp olt float %i.av, f0x3F333333
-  %or.cond35 = or i1 %11, %12
+  %i.av = load float, ptr %i.au, align 8, !noundef !14 ; 2 uses
+  %or.cond35 = fcmp ult float %i.av, f0x3F333333
   %i.aw = fcmp ogt float %i.av, 9.700000e-01
-  %or.cond36 = or i1 %i.aw, %or.cond35
+  %or.cond36 = or i1 %or.cond35, %i.aw
   br i1 %or.cond36, label %bb.ag, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ab

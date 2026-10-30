@@ -202,7 +202,7 @@ is_overloaded_INFINITE.exit43:                    ; preds = %bb.j
   br i1 %i.aa, label %bb.k, label %is_overloaded_INFINITE.exit43.thread
 
 is_overloaded_INFINITE.exit43.thread:             ; preds = %bb.j, %is_overloaded_INFINITE.exit43
-  %i.ab = load x86_fp80, ptr %1, align 16         ; 6 uses
+  %i.ab = load x86_fp80, ptr %1, align 16         ; 5 uses
   %i.ac = tail call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.ab) #20
   %i.ad = fcmp oeq x86_fp80 %i.ac, +inf
   br i1 %i.ad, label %bb.k, label %bb.l
@@ -215,9 +215,7 @@ bb.k:                                             ; preds = %is_overloaded_INFIN
   br label %bb.s
 
 bb.l:                                             ; preds = %is_overloaded_INFINITE.exit43.thread
-  %4 = fcmp oeq x86_fp80 %i.ab, f0x401EFFFFFFFE00000000
-  %5 = fcmp uno x86_fp80 %i.ab, 0.000000e+00
-  %or.cond = or i1 %4, %5
+  %or.cond = fcmp ueq x86_fp80 %i.ab, f0x401EFFFFFFFE00000000
   br i1 %or.cond, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -313,7 +311,7 @@ bb.a:
   %.not = icmp eq i32 %i.c, 0
   %i.d = load i64, ptr %1, align 8                ; 2 uses
   %i.e = icmp eq i64 %i.d, -1                     ; 2 uses
-  %i.f = bitcast i64 %i.d to double               ; 6 uses
+  %i.f = bitcast i64 %i.d to double               ; 5 uses
   br i1 %.not, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -349,9 +347,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.l
 
 bb.i:                                             ; preds = %bb.g
-  %4 = fcmp oeq double %i.f, f0x41EFFFFFFFC00000
-  %5 = fcmp uno double %i.f, 0.000000e+00
-  %or.cond = or i1 %4, %5
+  %or.cond = fcmp ueq double %i.f, f0x41EFFFFFFFC00000
   br i1 %or.cond, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i

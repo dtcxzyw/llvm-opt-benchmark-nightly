@@ -73,12 +73,10 @@ bb.c:                                             ; preds = %.lr.ph, %bb.bj
 
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  %i.q = load double, ptr %i.p, align 8, !tbaa !33 ; 6 uses
-  %5 = fcmp ogt double %i.q, f0x41DFFFFFFFC00000
+  %i.q = load double, ptr %i.p, align 8, !tbaa !33 ; 5 uses
   %i.r = fcmp olt double %i.q, f0xC1E0000000000000
-  %or.cond.i = or i1 %5, %i.r
-  %6 = fcmp uno double %i.q, 0.000000e+00
-  %or.cond1.i = or i1 %6, %or.cond.i
+  %5 = fcmp ugt double %i.q, f0x41DFFFFFFFC00000
+  %or.cond1.i = or i1 %5, %i.r
   br i1 %or.cond1.i, label %_ZNK6hermes13LiteralNumber22isIntTypeRepresentibleIiEEN4llvh8OptionalIT_EEv.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -175,11 +173,9 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.o, %bb.n, %_ZNK6
 bb.p:                                             ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 48
   %i.av = load double, ptr %i.au, align 8, !tbaa !33 ; 7 uses
-  %7 = fcmp ogt double %i.av, f0x41DFFFFFFFC00000
   %i.aw = fcmp olt double %i.av, f0xC1E0000000000000
-  %or.cond.i65 = or i1 %7, %i.aw
-  %8 = fcmp uno double %i.av, 0.000000e+00        ; 2 uses
-  %or.cond1.i66 = or i1 %8, %or.cond.i65
+  %6 = fcmp ugt double %i.av, f0x41DFFFFFFFC00000
+  %or.cond1.i66 = or i1 %6, %i.aw
   br i1 %or.cond1.i66, label %.critedge, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -352,7 +348,8 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit.i:             ; preds = %bb.af, %_ZNSt12_Vec
   %.sroa.61.4 = phi ptr [ %.sroa.61.0228, %bb.af ], [ %i.cp, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i101 ], [ %.sroa.61.0228, %bb.aa ]
   %.sroa.27.6 = phi ptr [ %spec.select182.a, %bb.af ], [ %i.co, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i101 ], [ %i.ch, %bb.aa ] ; 2 uses
   %.sroa.0135.4 = phi ptr [ %.sroa.0135.0230, %bb.af ], [ %i.cl, %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i101 ], [ %.sroa.0135.0230, %bb.aa ] ; 2 uses
-  %storemerge.i = select i1 %8, double -qnan, double %i.av, !prof !47
+  %7 = fcmp uno double %i.av, 0.000000e+00
+  %storemerge.i = select i1 %7, double -qnan, double %i.av, !prof !47
   %i.cs = ptrtoint ptr %.sroa.27.6 to i64
   %i.ct = sub i64 %i.cs, %.pre-phi
   %i.cu = getelementptr inbounds nuw i8, ptr %.sroa.0135.4, i64 %i.ct

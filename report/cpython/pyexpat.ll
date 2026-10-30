@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not25, label %bb.f, label %pyexpat_xmlparser_SetBillionLaughsAttackProtectionMaximumAmplification_impl.exit
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
-  %.0 = phi float [ %i.j, %bb.c ], [ -1.000000e+00, %bb.e ], [ %i.l, %bb.d ] ; 3 uses
+  %.0 = phi float [ %i.j, %bb.c ], [ -1.000000e+00, %bb.e ], [ %i.l, %bb.d ] ; 2 uses
   %i.o = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !51
   %i.q = call zeroext i8 @PyExpat_XML_SetBillionLaughsAttackProtectionMaximumAmplification(ptr noundef %i.p, float noundef %.0) #8, !callees !70, !inline_history !7
@@ -213,10 +213,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 
 bb.g:                                             ; preds = %bb.f
   %i.s = call ptr @PyType_GetModuleState(ptr noundef %1) #8
-  %5 = fcmp uno float %.0, 0.000000e+00
-  %6 = fcmp olt float %.0, 1.000000e+00
-  %7 = or i1 %5, %6
-  %i.t = select i1 %7, ptr @.str.126, ptr @.str.125
+  %5 = fcmp ult float %.0, 1.000000e+00
+  %i.t = select i1 %5, ptr @.str.126, ptr @.str.125
   %.val.i.i = load ptr, ptr %i.o, align 8, !tbaa !51 ; 2 uses
   %i.u = call i64 @PyExpat_XML_GetCurrentLineNumber(ptr noundef %.val.i.i) #8
   %i.v = call i64 @PyExpat_XML_GetCurrentColumnNumber(ptr noundef %.val.i.i) #8
@@ -321,7 +319,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not25, label %bb.f, label %pyexpat_xmlparser_SetAllocTrackerMaximumAmplification_impl.exit
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
-  %.0 = phi float [ %i.j, %bb.c ], [ -1.000000e+00, %bb.e ], [ %i.l, %bb.d ] ; 3 uses
+  %.0 = phi float [ %i.j, %bb.c ], [ -1.000000e+00, %bb.e ], [ %i.l, %bb.d ] ; 2 uses
   %i.o = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !51
   %i.q = call zeroext i8 @PyExpat_XML_SetAllocTrackerMaximumAmplification(ptr noundef %i.p, float noundef %.0) #8, !callees !70, !inline_history !7
@@ -330,10 +328,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 
 bb.g:                                             ; preds = %bb.f
   %i.s = call ptr @PyType_GetModuleState(ptr noundef %1) #8
-  %5 = fcmp uno float %.0, 0.000000e+00
-  %6 = fcmp olt float %.0, 1.000000e+00
-  %7 = or i1 %5, %6
-  %i.t = select i1 %7, ptr @.str.126, ptr @.str.125
+  %5 = fcmp ult float %.0, 1.000000e+00
+  %i.t = select i1 %5, ptr @.str.126, ptr @.str.125
   %.val.i.i = load ptr, ptr %i.o, align 8, !tbaa !51 ; 2 uses
   %i.u = call i64 @PyExpat_XML_GetCurrentLineNumber(ptr noundef %.val.i.i) #8
   %i.v = call i64 @PyExpat_XML_GetCurrentColumnNumber(ptr noundef %.val.i.i) #8

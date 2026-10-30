@@ -206,10 +206,8 @@ sqlite3BtreeLast.exit:                            ; preds = %bb.yk, %bb.yl
   br i1 %.not3689, label %thread-pre-split, label %.thread4900
 
 bb.ym:                                            ; preds = %bb.yi
-  %i.cyp = load double, ptr %i.cwn, align 8, !tbaa !741 ; 6 uses
-  %20 = fcmp uno double %i.cyp, 0.000000e+00
-  %21 = fcmp olt double %i.cyp, f0xC3E0000000000000
-  %or.cond.i4288 = or i1 %20, %21
+  %i.cyp = load double, ptr %i.cwn, align 8, !tbaa !741 ; 5 uses
+  %or.cond.i4288 = fcmp ult double %i.cyp, f0xC3E0000000000000
   br i1 %or.cond.i4288, label %sqlite3IntFloatCompare.exit.thread4892, label %bb.yn
 
 bb.yn:                                            ; preds = %bb.ym
@@ -612,10 +610,8 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.z = load i64, ptr %0, align 8, !tbaa !741    ; 3 uses
-  %i.aa = load double, ptr %1, align 8, !tbaa !741 ; 6 uses
-  %3 = fcmp uno double %i.aa, 0.000000e+00
-  %4 = fcmp olt double %i.aa, f0xC3E0000000000000
-  %or.cond.i = or i1 %3, %4
+  %i.aa = load double, ptr %1, align 8, !tbaa !741 ; 5 uses
+  %or.cond.i = fcmp ult double %i.aa, f0xC3E0000000000000
   br i1 %or.cond.i, label %sqlite3IntFloatCompare.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -667,10 +663,8 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.ar = load i64, ptr %1, align 8, !tbaa !741   ; 3 uses
-  %i.as = load double, ptr %0, align 8, !tbaa !741 ; 6 uses
-  %5 = fcmp uno double %i.as, 0.000000e+00
-  %6 = fcmp olt double %i.as, f0xC3E0000000000000
-  %or.cond.i61 = or i1 %5, %6
+  %i.as = load double, ptr %0, align 8, !tbaa !741 ; 5 uses
+  %or.cond.i61 = fcmp ult double %i.as, f0xC3E0000000000000
   br i1 %or.cond.i61, label %sqlite3IntFloatCompare.exit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -1073,10 +1067,8 @@ bb.v:                                             ; preds = %bb.u
   %spec.select.i = select i1 %or.cond.not.i, i16 1, i16 8
   store i16 %spec.select.i, ptr %i.cc, align 4, !tbaa !694
   %i.dw = load i64, ptr %.1118, align 8, !tbaa !741 ; 3 uses
-  %i.dx = bitcast i64 %op.rdx400 to double        ; 6 uses
-  %5 = fcmp uno double %i.dx, 0.000000e+00
-  %6 = fcmp olt double %i.dx, f0xC3E0000000000000
-  %or.cond.i = or i1 %5, %6
+  %i.dx = bitcast i64 %op.rdx400 to double        ; 5 uses
+  %or.cond.i = fcmp ult double %i.dx, f0xC3E0000000000000
   br i1 %or.cond.i, label %sqlite3IntFloatCompare.exit196.thread.loopexit.loopexit377, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -1267,10 +1259,8 @@ bb.aq:                                            ; preds = %bb.am
   %i.hu = getelementptr inbounds nuw i8, ptr %1, i64 %i.ht
   call fastcc void @sqlite3VdbeSerialGet(ptr noundef %i.hu, i32 noundef %i.gk, ptr noundef nonnull %4)
   %i.hv = load i64, ptr %4, align 8, !tbaa !741   ; 3 uses
-  %i.hw = load double, ptr %.1118, align 8, !tbaa !741 ; 6 uses
-  %7 = fcmp uno double %i.hw, 0.000000e+00
-  %8 = fcmp olt double %i.hw, f0xC3E0000000000000
-  %or.cond.i194 = or i1 %7, %8
+  %i.hw = load double, ptr %.1118, align 8, !tbaa !741 ; 5 uses
+  %or.cond.i194 = fcmp ult double %i.hw, f0xC3E0000000000000
   br i1 %or.cond.i194, label %sqlite3IntFloatCompare.exit196.thread.loopexit.loopexit377, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
@@ -1673,12 +1663,10 @@ bb.n:                                             ; preds = %bb.m
   br label %sqlite3_value_double.exit
 
 sqlite3_value_double.exit:                        ; preds = %bb.j, %bb.l, %bb.n
-  %.0.i.i118 = phi double [ %i.af, %bb.j ], [ %i.ai, %bb.l ], [ %i.ak, %bb.n ] ; 4 uses
-  %5 = fcmp ord double %.0.i.i118, 0.000000e+00
-  %6 = fcmp uge double %.0.i.i118, f0xC3E0000000000000
-  %or.cond.i.not166 = and i1 %5, %6
+  %.0.i.i118 = phi double [ %i.af, %bb.j ], [ %i.ai, %bb.l ], [ %i.ak, %bb.n ] ; 3 uses
+  %or.cond.i = fcmp oge double %.0.i.i118, f0xC3E0000000000000
   %i.al = fcmp ult double %.0.i.i118, f0x43E0000000000000
-  %or.cond160 = and i1 %i.al, %or.cond.i.not166
+  %or.cond160 = and i1 %or.cond.i, %i.al
   br i1 %or.cond160, label %.thread, label %.thread181
 
 .thread:                                          ; preds = %sqlite3_value_double.exit, %bb.m

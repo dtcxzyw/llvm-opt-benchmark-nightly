@@ -204,12 +204,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local noundef zeroext i1 @php_date_initialize_from_ts_double(ptr nofree noundef captures(none) %0, double noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call double @llvm.trunc.f64(double %1) ; 3 uses
-  %2 = fcmp uno double %i.a, 0.000000e+00
-  %3 = fcmp oge double %i.a, f0x43E0000000000000
+  %i.a = tail call double @llvm.trunc.f64(double %1) ; 2 uses
   %i.b = fcmp olt double %i.a, f0xC3E0000000000000
-  %4 = or i1 %3, %i.b
-  %i.c = or i1 %2, %4
+  %2 = fcmp uge double %i.a, f0x43E0000000000000
+  %i.c = or i1 %2, %i.b
   br i1 %i.c, label %bb.b, label %bb.c, !prof !114
 
 bb.b:                                             ; preds = %bb.a

@@ -205,10 +205,8 @@ bb.a:
   %i.bt = fsub <2 x double> %i.bp, %i.bs          ; 2 uses
   %shift = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %shift, %i.bt
-  %i.bu = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
-  %4 = fcmp uno double %i.bu, 0.000000e+00
-  %5 = fcmp olt double %i.bu, f0x3CB0000000000000
-  %or.cond = or i1 %4, %5
+  %i.bu = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
+  %or.cond = fcmp ult double %i.bu, f0x3CB0000000000000
   br i1 %or.cond, label %bb.d, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELi4ELb0EEELi1ELin1ELb0EEEE6lpNormILi1EEEdv.exit.2.i.i.i
 
 _ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELi1ELi4ELb0EEELi1ELin1ELb0EEEE6lpNormILi1EEEdv.exit.2.i.i.i: ; preds = %bb.a

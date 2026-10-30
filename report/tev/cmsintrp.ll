@@ -205,10 +205,8 @@ define internal void @LinLerp1Dfloat(ptr nofree noundef readonly captures(none) 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 200
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 3 uses
-  %i.c = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %3 = fcmp olt float %i.c, f0x3089705F
-  %4 = fcmp uno float %i.c, 0.000000e+00
-  %or.cond.i = or i1 %3, %4
+  %i.c = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.c, f0x3089705F
   %i.d = fcmp ogt float %i.c, 1.000000e+00
   %i.e = select i1 %i.d, float 1.000000e+00, float %i.c
   %i.f = select i1 %or.cond.i, float 0.000000e+00, float %i.e ; 2 uses
@@ -318,10 +316,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 200
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 15 uses
   %i.d = ptrtoaddr ptr %i.c to i64                ; 2 uses
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %3 = fcmp olt float %i.e, f0x3089705F
-  %4 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %3, %4
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -724,13 +720,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !17   ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 80
-  %i.e = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %3 = fcmp olt <2 x float> %i.e, splat (float f0x3089705F)
-  %4 = fcmp uno <2 x float> %i.e, zeroinitializer
-  %5 = or <2 x i1> %3, %4
+  %i.e = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %3 = fcmp ult <2 x float> %i.e, splat (float f0x3089705F)
   %i.f = fcmp ogt <2 x float> %i.e, splat (float 1.000000e+00)
   %i.g = select <2 x i1> %i.f, <2 x float> splat (float 1.000000e+00), <2 x float> %i.e
-  %i.h = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.g ; 2 uses
+  %i.h = select <2 x i1> %3, <2 x float> zeroinitializer, <2 x float> %i.g ; 2 uses
   %i.i = load <2 x i32>, ptr %i.d, align 8, !tbaa !21
   %i.j = uitofp <2 x i32> %i.i to <2 x float>
   %i.k = fmul <2 x float> %i.h, %i.j              ; 3 uses
@@ -1054,10 +1048,8 @@ bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !17   ; 3 uses
-  %i.d = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %3 = fcmp olt float %i.d, f0x3089705F
-  %4 = fcmp uno float %i.d, 0.000000e+00
-  %or.cond.i = or i1 %3, %4
+  %i.d = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.d, f0x3089705F
   %i.e = fcmp ogt float %i.d, 1.000000e+00
   %i.f = select i1 %i.e, float 1.000000e+00, float %i.d
   %i.g = select i1 %or.cond.i, float 0.000000e+00, float %i.f ; 2 uses
@@ -1067,13 +1059,11 @@ bb.a:
   %i.k = fmul float %i.g, %i.j                    ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 84
-  %i.n = load <2 x float>, ptr %i.l, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.n, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.n, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.n = load <2 x float>, ptr %i.l, align 4, !tbaa !25 ; 3 uses
+  %3 = fcmp ult <2 x float> %i.n, splat (float f0x3089705F)
   %i.o = fcmp ogt <2 x float> %i.n, splat (float 1.000000e+00)
   %i.p = select <2 x i1> %i.o, <2 x float> splat (float 1.000000e+00), <2 x float> %i.n
-  %i.q = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.p ; 2 uses
+  %i.q = select <2 x i1> %3, <2 x float> zeroinitializer, <2 x float> %i.p ; 2 uses
   %i.r = tail call float @llvm.floor.f32(float %i.k)
   %i.s = fptosi float %i.r to i32                 ; 2 uses
   %i.t = sitofp i32 %i.s to float
@@ -1476,22 +1466,18 @@ bb.a:
   %i.d = ptrtoaddr ptr %i.c to i64                ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = load i32, ptr %i.e, align 8, !tbaa !17   ; 15 uses
-  %i.g = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %3 = fcmp olt float %i.g, f0x3089705F
-  %4 = fcmp uno float %i.g, 0.000000e+00
-  %or.cond.i = or i1 %3, %4
+  %i.g = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.g, f0x3089705F
   %i.h = fcmp ogt float %i.g, 1.000000e+00
   %i.i = select i1 %i.h, float 1.000000e+00, float %i.g
   %i.j = select i1 %or.cond.i, float 0.000000e+00, float %i.i ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.m = load <2 x float>, ptr %i.l, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.m, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.m, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.m = load <2 x float>, ptr %i.l, align 4, !tbaa !25 ; 3 uses
+  %3 = fcmp ult <2 x float> %i.m, splat (float f0x3089705F)
   %i.n = fcmp ogt <2 x float> %i.m, splat (float 1.000000e+00)
   %i.o = select <2 x i1> %i.n, <2 x float> splat (float 1.000000e+00), <2 x float> %i.m
-  %i.p = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.o ; 2 uses
+  %i.p = select <2 x i1> %3, <2 x float> zeroinitializer, <2 x float> %i.o ; 2 uses
   %i.q = load <3 x i32>, ptr %i.k, align 8, !tbaa !21
   %i.r = shufflevector <3 x i32> %i.q, <3 x i32> poison, <4 x i32> <i32 1, i32 2, i32 2, i32 0>
   %i.s = uitofp <4 x i32> %i.r to <4 x float>
@@ -1894,10 +1880,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %4 = fcmp olt float %i.e, f0x3089705F
-  %5 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -2300,13 +2284,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.l, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.l, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %5 = fcmp ult <2 x float> %i.l, splat (float f0x3089705F)
   %i.m = fcmp ogt <2 x float> %i.l, splat (float 1.000000e+00)
   %i.n = select <2 x i1> %i.m, <2 x float> splat (float 1.000000e+00), <2 x float> %i.l
-  %i.o = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
+  %i.o = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
   %i.p = fcmp ult <2 x float> %i.o, splat (float 1.000000e+00) ; 2 uses
   %i.q = extractelement <2 x i1> %i.p, i64 0
   %spec.select = select i1 %i.q, i32 %i.k, i32 0
@@ -2699,10 +2681,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %4 = fcmp olt float %i.e, f0x3089705F
-  %5 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -3105,13 +3085,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.l, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.l, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %5 = fcmp ult <2 x float> %i.l, splat (float f0x3089705F)
   %i.m = fcmp ogt <2 x float> %i.l, splat (float 1.000000e+00)
   %i.n = select <2 x i1> %i.m, <2 x float> splat (float 1.000000e+00), <2 x float> %i.l
-  %i.o = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
+  %i.o = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
   %i.p = fcmp ult <2 x float> %i.o, splat (float 1.000000e+00) ; 2 uses
   %i.q = extractelement <2 x i1> %i.p, i64 0
   %spec.select = select i1 %i.q, i32 %i.k, i32 0
@@ -3504,10 +3482,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %4 = fcmp olt float %i.e, f0x3089705F
-  %5 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -3910,13 +3886,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.l, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.l, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %5 = fcmp ult <2 x float> %i.l, splat (float f0x3089705F)
   %i.m = fcmp ogt <2 x float> %i.l, splat (float 1.000000e+00)
   %i.n = select <2 x i1> %i.m, <2 x float> splat (float 1.000000e+00), <2 x float> %i.l
-  %i.o = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
+  %i.o = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
   %i.p = fcmp ult <2 x float> %i.o, splat (float 1.000000e+00) ; 2 uses
   %i.q = extractelement <2 x i1> %i.p, i64 0
   %spec.select = select i1 %i.q, i32 %i.k, i32 0
@@ -4309,10 +4283,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %4 = fcmp olt float %i.e, f0x3089705F
-  %5 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -4715,13 +4687,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.l, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.l, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %5 = fcmp ult <2 x float> %i.l, splat (float f0x3089705F)
   %i.m = fcmp ogt <2 x float> %i.l, splat (float 1.000000e+00)
   %i.n = select <2 x i1> %i.m, <2 x float> splat (float 1.000000e+00), <2 x float> %i.l
-  %i.o = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
+  %i.o = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
   %i.p = fcmp ult <2 x float> %i.o, splat (float 1.000000e+00) ; 2 uses
   %i.q = extractelement <2 x i1> %i.p, i64 0
   %spec.select = select i1 %i.q, i32 %i.k, i32 0
@@ -5114,10 +5084,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %4 = fcmp olt float %i.e, f0x3089705F
-  %5 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -5520,13 +5488,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.l, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.l, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %5 = fcmp ult <2 x float> %i.l, splat (float f0x3089705F)
   %i.m = fcmp ogt <2 x float> %i.l, splat (float 1.000000e+00)
   %i.n = select <2 x i1> %i.m, <2 x float> splat (float 1.000000e+00), <2 x float> %i.l
-  %i.o = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
+  %i.o = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
   %i.p = fcmp ult <2 x float> %i.o, splat (float 1.000000e+00) ; 2 uses
   %i.q = extractelement <2 x i1> %i.p, i64 0
   %spec.select = select i1 %i.q, i32 %i.k, i32 0
@@ -5919,10 +5885,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 4 uses
-  %4 = fcmp olt float %i.e, f0x3089705F
-  %5 = fcmp uno float %i.e, 0.000000e+00
-  %or.cond.i = or i1 %4, %5
+  %i.e = load float, ptr %0, align 4, !tbaa !25   ; 3 uses
+  %or.cond.i = fcmp ult float %i.e, f0x3089705F
   %i.f = fcmp ogt float %i.e, 1.000000e+00
   %i.g = select i1 %i.f, float 1.000000e+00, float %i.e
   %i.h = select i1 %or.cond.i, float 0.000000e+00, float %i.g ; 2 uses
@@ -6325,13 +6289,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 4 uses
-  %5 = fcmp olt <2 x float> %i.l, splat (float f0x3089705F)
-  %6 = fcmp uno <2 x float> %i.l, zeroinitializer
-  %7 = or <2 x i1> %5, %6
+  %i.l = load <2 x float>, ptr %0, align 4, !tbaa !25 ; 3 uses
+  %5 = fcmp ult <2 x float> %i.l, splat (float f0x3089705F)
   %i.m = fcmp ogt <2 x float> %i.l, splat (float 1.000000e+00)
   %i.n = select <2 x i1> %i.m, <2 x float> splat (float 1.000000e+00), <2 x float> %i.l
-  %i.o = select <2 x i1> %7, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
+  %i.o = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %i.n ; 2 uses
   %i.p = fcmp ult <2 x float> %i.o, splat (float 1.000000e+00) ; 2 uses
   %i.q = extractelement <2 x i1> %i.p, i64 0
   %spec.select = select i1 %i.q, i32 %i.k, i32 0

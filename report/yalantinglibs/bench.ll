@@ -205,9 +205,7 @@ _ZNSt6atomicIPN3ylt6metric6detail12summary_implImLm6EE6data_tEE23compare_exchang
 _ZN3ylt6metric6detail12summary_implImLm6EE8get_dataEv.exit: ; preds = %bb.a, %_ZNSt6atomicIPN3ylt6metric6detail12summary_implImLm6EE6data_tEE23compare_exchange_strongERS6_S6_St12memory_order.exit.thread.i
   %.0.i = phi ptr [ %i.m, %_ZNSt6atomicIPN3ylt6metric6detail12summary_implImLm6EE6data_tEE23compare_exchange_strongERS6_S6_St12memory_order.exit.thread.i ], [ %i.f, %bb.a ]
   %i.n = tail call noundef float @llvm.fabs.f32(float %1)
-  %2 = fcmp oge float %i.n, f0x5F800000
-  %3 = fcmp uno float %1, 0.000000e+00
-  %or.cond.i = or i1 %3, %2
+  %or.cond.i = fcmp uge float %i.n, f0x5F800000
   %i.o = tail call float @llvm.copysign.f32(float f0x5F800000, float %1)
   %.0.i3 = select i1 %or.cond.i, float %i.o, float %1
   %i.p = bitcast float %.0.i3 to i32              ; 3 uses

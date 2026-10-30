@@ -205,10 +205,8 @@ bb.ax:                                            ; preds = %js_dup.exit.i, %js_
   br label %bb.bb
 
 bb.ay:                                            ; preds = %js_dup.exit.i
-  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 4 uses
-  %11 = fcmp uno double %.sroa.09.0.le.i.i, 0.000000e+00
-  %12 = fcmp olt double %.sroa.09.0.le.i.i, f0xC1E0000000000000
-  %or.cond = or i1 %11, %12
+  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.09.0.le.i.i, f0xC1E0000000000000
   br i1 %or.cond, label %JS_ToInt32Clamp.exit, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
@@ -611,10 +609,8 @@ bb.f:                                             ; preds = %js_dup.exit.i.i, %j
   br label %select.unfold.i.i
 
 bb.g:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 4 uses
-  %8 = fcmp uno double %.sroa.012.0.le.i.i.i, 0.000000e+00
-  %9 = fcmp olt double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
-  %or.cond487 = or i1 %8, %9
+  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 3 uses
+  %or.cond487 = fcmp ult double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
   br i1 %or.cond487, label %JS_ToInt64Clamp.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -1017,10 +1013,8 @@ bb.bu:                                            ; preds = %js_dup.exit.i.i, %j
   br label %select.unfold.i.i
 
 bb.bv:                                            ; preds = %js_dup.exit.i.i
-  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 4 uses
-  %13 = fcmp uno double %.sroa.012.0.le.i.i.i, 0.000000e+00
-  %14 = fcmp olt double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
-  %or.cond554 = or i1 %13, %14
+  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 3 uses
+  %or.cond554 = fcmp ult double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
   br i1 %or.cond554, label %JS_ToInt64Clamp.exit.i, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
@@ -1423,10 +1417,8 @@ bb.x:                                             ; preds = %js_dup.exit.i.i, %j
   br label %select.unfold.i.i
 
 bb.y:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 4 uses
-  %8 = fcmp uno double %.sroa.012.0.le.i.i.i, 0.000000e+00
-  %9 = fcmp olt double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
-  %or.cond = or i1 %8, %9
+  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
   br i1 %or.cond, label %JS_ToInt64Clamp.exit.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -1816,10 +1808,8 @@ bb.l:                                             ; preds = %js_dup.exit.i.i, %j
   br label %select.unfold.i.i
 
 bb.m:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 4 uses
-  %7 = fcmp uno double %.sroa.012.0.le.i.i.i, 0.000000e+00
-  %8 = fcmp olt double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
-  %or.cond = or i1 %7, %8
+  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
   br i1 %or.cond, label %JS_ToInt64Clamp.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -2222,10 +2212,8 @@ bb.v:                                             ; preds = %js_dup.exit.i.i, %j
   br label %select.unfold.i.i
 
 bb.w:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 4 uses
-  %8 = fcmp uno double %.sroa.012.0.le.i.i.i, 0.000000e+00
-  %9 = fcmp olt double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
-  %or.cond131 = or i1 %8, %9
+  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 3 uses
+  %or.cond131 = fcmp ult double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
   br i1 %or.cond131, label %JS_ToInt64Clamp.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
@@ -2628,10 +2616,8 @@ bb.l:                                             ; preds = %js_dup.exit.i.i, %j
   br label %bb.p
 
 bb.m:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.09.0.le.i.i.i = bitcast i64 %.sroa.09.0.in.i.i.i to double ; 4 uses
-  %5 = fcmp uno double %.sroa.09.0.le.i.i.i, 0.000000e+00
-  %6 = fcmp olt double %.sroa.09.0.le.i.i.i, f0xC1E0000000000000
-  %or.cond11.i = or i1 %5, %6
+  %.sroa.09.0.le.i.i.i = bitcast i64 %.sroa.09.0.in.i.i.i to double ; 3 uses
+  %or.cond11.i = fcmp ult double %.sroa.09.0.le.i.i.i, f0xC1E0000000000000
   br i1 %or.cond11.i, label %.thread.i27, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -3034,10 +3020,8 @@ bb.k:                                             ; preds = %js_dup.exit.i.i, %j
   br label %select.unfold.i.i
 
 bb.l:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 4 uses
-  %6 = fcmp uno double %.sroa.012.0.le.i.i.i, 0.000000e+00
-  %7 = fcmp olt double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
-  %or.cond = or i1 %6, %7
+  %.sroa.012.0.le.i.i.i = bitcast i64 %.sroa.012.0.in.i.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.012.0.le.i.i.i, f0xC3E0000000000000
   br i1 %or.cond, label %JS_ToInt64Clamp.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -3440,10 +3424,8 @@ bb.l:                                             ; preds = %js_dup.exit.i.i, %j
   br label %bb.p
 
 bb.m:                                             ; preds = %js_dup.exit.i.i
-  %.sroa.09.0.le.i.i.i = bitcast i64 %.sroa.09.0.in.i.i.i to double ; 4 uses
-  %6 = fcmp uno double %.sroa.09.0.le.i.i.i, 0.000000e+00
-  %7 = fcmp olt double %.sroa.09.0.le.i.i.i, f0xC1E0000000000000
-  %or.cond11.i = or i1 %6, %7
+  %.sroa.09.0.le.i.i.i = bitcast i64 %.sroa.09.0.in.i.i.i to double ; 3 uses
+  %or.cond11.i = fcmp ult double %.sroa.09.0.le.i.i.i, f0xC1E0000000000000
   br i1 %or.cond11.i, label %.thread.i57, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -3846,10 +3828,8 @@ bb.q:                                             ; preds = %js_dup.exit.i66, %j
   br label %bb.u
 
 bb.r:                                             ; preds = %js_dup.exit.i66
-  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 4 uses
-  %6 = fcmp uno double %.sroa.09.0.le.i.i, 0.000000e+00
-  %7 = fcmp olt double %.sroa.09.0.le.i.i, f0xC1E0000000000000
-  %or.cond = or i1 %6, %7
+  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.09.0.le.i.i, f0xC1E0000000000000
   br i1 %or.cond, label %JS_ToInt32Clamp.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -4134,10 +4114,8 @@ bb.k:                                             ; preds = %js_dup.exit.i, %js_
   br label %bb.o
 
 bb.l:                                             ; preds = %js_dup.exit.i
-  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 4 uses
-  %6 = fcmp uno double %.sroa.09.0.le.i.i, 0.000000e+00
-  %7 = fcmp olt double %.sroa.09.0.le.i.i, f0xC1E0000000000000
-  %or.cond100 = or i1 %6, %7
+  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 3 uses
+  %or.cond100 = fcmp ult double %.sroa.09.0.le.i.i, f0xC1E0000000000000
   br i1 %or.cond100, label %JS_ToInt32Clamp.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -4540,10 +4518,8 @@ bb.d:                                             ; preds = %js_dup.exit.i, %js_
   br label %bb.h
 
 bb.e:                                             ; preds = %js_dup.exit.i
-  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 4 uses
-  %5 = fcmp uno double %.sroa.09.0.le.i.i, 0.000000e+00
-  %6 = fcmp olt double %.sroa.09.0.le.i.i, f0xC1E0000000000000
-  %or.cond = or i1 %5, %6
+  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.09.0.le.i.i, f0xC1E0000000000000
   br i1 %or.cond, label %.thread26.i.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -4635,10 +4611,8 @@ bb.m:                                             ; preds = %js_dup.exit.i45, %j
   br label %bb.q
 
 bb.n:                                             ; preds = %js_dup.exit.i45
-  %.sroa.09.0.le.i.i48 = bitcast i64 %.sroa.09.0.in.i.i46 to double ; 4 uses
-  %7 = fcmp uno double %.sroa.09.0.le.i.i48, 0.000000e+00
-  %8 = fcmp olt double %.sroa.09.0.le.i.i48, f0xC1E0000000000000
-  %or.cond88 = or i1 %7, %8
+  %.sroa.09.0.le.i.i48 = bitcast i64 %.sroa.09.0.in.i.i46 to double ; 3 uses
+  %or.cond88 = fcmp ult double %.sroa.09.0.le.i.i48, f0xC1E0000000000000
   br i1 %or.cond88, label %JS_ToInt32Clamp.exit62.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -5041,10 +5015,8 @@ bb.d:                                             ; preds = %js_dup.exit.i, %js_
   br label %bb.h
 
 bb.e:                                             ; preds = %js_dup.exit.i
-  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 4 uses
-  %7 = fcmp uno double %.sroa.09.0.le.i.i, 0.000000e+00
-  %8 = fcmp olt double %.sroa.09.0.le.i.i, f0xC1E0000000000000
-  %or.cond = or i1 %7, %8
+  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 3 uses
+  %or.cond = fcmp ult double %.sroa.09.0.le.i.i, f0xC1E0000000000000
   br i1 %or.cond, label %JS_FreeValue.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -5447,10 +5419,8 @@ bb.z:                                             ; preds = %bb.x
   unreachable
 
 bb.aa:                                            ; preds = %bb.t, %bb.v, %bb.x, %bb.y
-  %.0.ph = phi double [ %i.ct, %bb.y ], [ %i.cr, %bb.x ], [ %i.cj, %bb.t ], [ %i.cl, %bb.v ] ; 4 uses
-  %6 = fcmp uno double %.0.ph, 0.000000e+00
-  %7 = fcmp oge double %.0.ph, f0x43E0000000000000
-  %or.cond = or i1 %6, %7
+  %.0.ph = phi double [ %i.ct, %bb.y ], [ %i.cr, %bb.x ], [ %i.cj, %bb.t ], [ %i.cl, %bb.v ] ; 3 uses
+  %or.cond = fcmp uge double %.0.ph, f0x43E0000000000000
   %.inv = fcmp ole double %.0.ph, 0.000000e+00
   %spec.select81 = select i1 %.inv, double 0.000000e+00, double %.0.ph
   %spec.select = fptosi double %spec.select81 to i64
@@ -5667,10 +5637,8 @@ bb.e:                                             ; preds = %js_dup.exit.i, %js_
   br label %bb.i
 
 bb.f:                                             ; preds = %js_dup.exit.i
-  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 4 uses
-  %6 = fcmp uno double %.sroa.09.0.le.i.i, 0.000000e+00
-  %7 = fcmp olt double %.sroa.09.0.le.i.i, f0xC1E0000000000000
-  %or.cond54 = or i1 %6, %7
+  %.sroa.09.0.le.i.i = bitcast i64 %.sroa.09.0.in.i.i to double ; 3 uses
+  %or.cond54 = fcmp ult double %.sroa.09.0.le.i.i, f0xC1E0000000000000
   br i1 %or.cond54, label %JS_ToInt32Clamp.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

@@ -205,10 +205,8 @@ bb.a:
   %i.al = tail call double @llvm.fmuladd.f64(double %i.g, double %i.r, double %i.ak)
   %i.am = extractelement <2 x double> %i.u, i64 0
   %i.an = fmul double %i.am, %i.al
-  %i.ao = fadd double %i.an, %i.aj                ; 3 uses
-  %4 = fcmp uno double %i.ao, 0.000000e+00
-  %5 = fcmp olt double %i.ao, f0x3CB0000000000000
-  %or.cond = or i1 %4, %5
+  %i.ao = fadd double %i.an, %i.aj                ; 2 uses
+  %or.cond = fcmp ult double %i.ao, f0x3CB0000000000000
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
