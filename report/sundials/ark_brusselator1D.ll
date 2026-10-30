@@ -203,20 +203,21 @@ check_flag.exit272:                               ; preds = %bb.w
   br label %.loopexit
 
 bb.x:                                             ; preds = %bb.w
-  %i.gb = call double @N_VWL2Norm(ptr noundef nonnull %i.an, ptr noundef nonnull %i.ar) #10 ; 2 uses
-  %0 = fmul double %i.gb, %i.gb
-  %1 = fdiv double %0, 2.010000e+02
-  %2 = call double @sqrt(double noundef %1) #10
-  %3 = call double @N_VWL2Norm(ptr noundef nonnull %i.an, ptr noundef nonnull %i.av) #10 ; 2 uses
-  %4 = fmul double %3, %3
-  %5 = fdiv double %4, 2.010000e+02
-  %6 = call double @sqrt(double noundef %5) #10
+  %i.gb = call double @N_VWL2Norm(ptr noundef nonnull %i.an, ptr noundef nonnull %i.ar) #10
+  %0 = call double @N_VWL2Norm(ptr noundef nonnull %i.an, ptr noundef nonnull %i.av) #10
+  %1 = insertelement <2 x double> poison, double %i.gb, i64 0
+  %2 = insertelement <2 x double> %1, double %0, i64 1 ; 2 uses
+  %3 = fmul <2 x double> %2, %2
+  %4 = fdiv <2 x double> %3, splat (double 2.010000e+02)
+  %5 = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %4) ; 2 uses
   %i.gc = call double @N_VWL2Norm(ptr noundef nonnull %i.an, ptr noundef nonnull %i.az) #10 ; 2 uses
   %i.gd = fmul double %i.gc, %i.gc
   %i.ge = fdiv double %i.gd, 2.010000e+02
-  %i.gf = call double @sqrt(double noundef %i.ge) #10
+  %i.gf = call double @llvm.sqrt.f64(double %i.ge)
   %i.gg = load double, ptr %i.b, align 8, !tbaa !16
-  %i.gh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.29, double noundef %i.gg, double noundef %2, double noundef %6, double noundef %i.gf) ; 0 uses
+  %6 = extractelement <2 x double> %5, i64 0
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.gh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.29, double noundef %i.gg, double noundef %6, double noundef %7, double noundef %i.gf) ; 0 uses
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.y
@@ -619,9 +620,6 @@ declare i32 @ARKodeEvolve(ptr noundef, double noundef, ptr noundef, ptr noundef,
 
 declare double @N_VWL2Norm(ptr noundef, ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #5
-
 declare i32 @ARKodeGetNumSteps(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare i32 @ARKodeGetNumStepAttempts(ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -666,6 +664,12 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6

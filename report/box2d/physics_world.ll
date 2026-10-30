@@ -205,8 +205,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.fh, label %bb.u, label %b2Normalize.exit.i
 
 bb.u:                                             ; preds = %bb.t
-  %i.fi = tail call float @sqrtf(float noundef %i.fg) #23
-  %i.fj = fdiv float 1.000000e+00, %i.fi
+  %i.fi = tail call nnan float @llvm.sqrt.f32(float %i.fg)
+  %i.fj = fdiv nnan float 1.000000e+00, %i.fi
   %i.fk = insertelement <2 x float> poison, float %i.fj, i64 0
   %i.fl = shufflevector <2 x float> %i.fk, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fm = fmul <2 x float> %i.fe, %i.fl
@@ -609,8 +609,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.av, label %b2Normalize.exit, label %bb.f
 
 b2Normalize.exit:                                 ; preds = %bb.e
-  %i.aw = call float @sqrtf(float noundef %i.au) #23
-  %i.ax = fdiv float 1.000000e+00, %i.aw
+  %i.aw = call nnan float @llvm.sqrt.f32(float %i.au)
+  %i.ax = fdiv nnan float 1.000000e+00, %i.aw
   %i.ay = insertelement <2 x float> poison, float %i.ax, i64 0
   %i.az = shufflevector <2 x float> %i.ay, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ba = fmul <2 x float> %i.as, %i.az
@@ -996,11 +996,6 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l, %bb.m
   %i.el = phi float [ %i.ek, %bb.m ], [ 0.000000e+00, %bb.l ] ; 2 uses
-  %4 = shufflevector <2 x float> %.sroa.081.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %5 = fsub <2 x float> %4, %i.dt                 ; 2 uses
-  %6 = fmul <2 x float> %5, %5
-  %7 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %6)
-  %8 = tail call float @sqrtf(float noundef %7) #23
   %i.em = fcmp ogt float %i.dz, 9.800000e-01
   br i1 %i.em, label %bb.o, label %.thread
 
@@ -1009,6 +1004,11 @@ bb.o:                                             ; preds = %bb.n
   %shift419 = shufflevector <2 x float> %i.en, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop420 = fsub <2 x float> %shift419, %i.en
   %i.eo = extractelement <2 x float> %foldExtExtBinop420, i64 0 ; 3 uses
+  %4 = shufflevector <2 x float> %.sroa.081.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %5 = fsub <2 x float> %4, %i.dt                 ; 2 uses
+  %6 = fmul <2 x float> %5, %5
+  %7 = tail call reassoc float @llvm.vector.reduce.fadd.v2f32(float -0.000000e+00, <2 x float> %6)
+  %sqrt.i = tail call float @llvm.sqrt.f32(float %7)
   %i.ep = fcmp ogt float %i.ef, %i.el
   %i.eq = select i1 %i.ep, float %i.ef, float %i.el
   %i.er = select i1 %.not225, i1 %i.t, i1 false
@@ -1017,7 +1017,7 @@ bb.o:                                             ; preds = %bb.n
   %i.eu = fneg float %i.eo
   %i.ev = select i1 %i.et, float %i.eu, float %i.eo
   %i.ew = fmul float %i.ev, %i.eq
-  %i.ex = fadd float %8, %i.ew
+  %i.ex = fadd float %sqrt.i, %i.ew
   %i.ey = fcmp olt float %i.ex, %i.es
   br i1 %i.ey, label %bb.p, label %.thread
 
@@ -1373,6 +1373,9 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unnamed_addr #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #20

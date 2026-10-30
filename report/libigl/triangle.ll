@@ -205,24 +205,24 @@ bb.h:                                             ; preds = %bb.g
   store double %i.qn, ptr %i.v, align 16, !tbaa !23
   %i.qo = fadd double %i.pl, %i.qi                ; 5 uses
   %i.qp = fsub double %i.qo, %i.pl                ; 2 uses
-  %i.qq = fsub double %i.qo, %i.qp
-  %i.qr = fsub double %i.qi, %i.qp
-  %1 = fsub double %i.pl, %i.qq
-  %i.qs = fadd double %i.qr, %1                   ; 3 uses
+  %i.qq = fsub double %i.qi, %i.qp
+  %i.qr = fsub double %i.qp, %i.qo
+  %1 = fadd double %i.pl, %i.qr
+  %i.qs = fadd double %i.qq, %1                   ; 3 uses
   %i.qt = fadd double %i.pu, %i.qs                ; 4 uses
   %i.qu = fsub double %i.qt, %i.qs                ; 2 uses
-  %i.qv = fsub double %i.qt, %i.qu
-  %i.qw = fsub double %i.pu, %i.qu
-  %2 = fsub double %i.qs, %i.qv
-  %i.qx = fadd double %i.qw, %2
+  %i.qv = fsub double %i.pu, %i.qu
+  %i.qw = fsub double %i.qu, %i.qt
+  %2 = fadd double %i.qs, %i.qw
+  %i.qx = fadd double %i.qv, %2
   %i.qy = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store double %i.qx, ptr %i.qy, align 8, !tbaa !23
   %i.qz = fadd double %i.qo, %i.qt                ; 3 uses
   %i.ra = fsub double %i.qz, %i.qo                ; 2 uses
-  %i.rb = fsub double %i.qz, %i.ra
-  %i.rc = fsub double %i.qt, %i.ra
-  %3 = fsub double %i.qo, %i.rb
-  %i.rd = fadd double %i.rc, %3
+  %i.rb = fsub double %i.qt, %i.ra
+  %i.rc = fsub double %i.ra, %i.qz
+  %3 = fadd double %i.qo, %i.rc
+  %i.rd = fadd double %i.rb, %3
   %i.re = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   store double %i.rd, ptr %i.re, align 16, !tbaa !23
   %i.rf = getelementptr inbounds nuw i8, ptr %i.v, i64 24
@@ -282,24 +282,24 @@ bb.j:                                             ; preds = %bb.i
   store double %i.st, ptr %i.w, align 16, !tbaa !23
   %i.su = fadd double %i.rg, %i.so                ; 5 uses
   %i.sv = fsub double %i.su, %i.rg                ; 2 uses
-  %i.sw = fsub double %i.su, %i.sv
-  %i.sx = fsub double %i.so, %i.sv
-  %4 = fsub double %i.rg, %i.sw
-  %i.sy = fadd double %i.sx, %4                   ; 3 uses
+  %i.sw = fsub double %i.so, %i.sv
+  %i.sx = fsub double %i.sv, %i.su
+  %4 = fadd double %i.rg, %i.sx
+  %i.sy = fadd double %i.sw, %4                   ; 3 uses
   %i.sz = fadd double %i.ri, %i.sy                ; 4 uses
   %i.ta = fsub double %i.sz, %i.sy                ; 2 uses
-  %i.tb = fsub double %i.sz, %i.ta
-  %i.tc = fsub double %i.ri, %i.ta
-  %5 = fsub double %i.sy, %i.tb
-  %i.td = fadd double %i.tc, %5
+  %i.tb = fsub double %i.ri, %i.ta
+  %i.tc = fsub double %i.ta, %i.sz
+  %5 = fadd double %i.sy, %i.tc
+  %i.td = fadd double %i.tb, %5
   %i.te = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   store double %i.td, ptr %i.te, align 8, !tbaa !23
   %i.tf = fadd double %i.su, %i.sz                ; 3 uses
   %i.tg = fsub double %i.tf, %i.su                ; 2 uses
-  %i.th = fsub double %i.tf, %i.tg
-  %i.ti = fsub double %i.sz, %i.tg
-  %6 = fsub double %i.su, %i.th
-  %i.tj = fadd double %i.ti, %6
+  %i.th = fsub double %i.sz, %i.tg
+  %i.ti = fsub double %i.tg, %i.tf
+  %6 = fadd double %i.su, %i.ti
+  %i.tj = fadd double %i.th, %6
   %i.tk = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   store double %i.tj, ptr %i.tk, align 16, !tbaa !23
   %i.tl = getelementptr inbounds nuw i8, ptr %i.w, i64 24
@@ -357,25 +357,25 @@ bb.l:                                             ; preds = %bb.k
   store double %i.uz, ptr %i.x, align 16, !tbaa !23
   %i.va = fadd double %i.tm, %i.uu                ; 5 uses
   %i.vb = fsub double %i.va, %i.tm                ; 2 uses
-  %i.vc = fsub double %i.va, %i.vb
-  %i.vd = fsub double %i.uu, %i.vb
-  %7 = fsub double %i.tm, %i.vc
-  %i.ve = fadd double %i.vd, %7                   ; 3 uses
+  %i.vc = fsub double %i.uu, %i.vb
+  %i.vd = fsub double %i.vb, %i.va
+  %7 = fadd double %i.tm, %i.vd
+  %i.ve = fadd double %i.vc, %7                   ; 3 uses
   %i.vf = extractelement <2 x double> %i.cx, i64 0 ; 2 uses
   %i.vg = fadd double %i.vf, %i.ve                ; 4 uses
   %i.vh = fsub double %i.vg, %i.ve                ; 2 uses
-  %i.vi = fsub double %i.vg, %i.vh
-  %i.vj = fsub double %i.vf, %i.vh
-  %8 = fsub double %i.ve, %i.vi
-  %i.vk = fadd double %i.vj, %8
+  %i.vi = fsub double %i.vf, %i.vh
+  %i.vj = fsub double %i.vh, %i.vg
+  %8 = fadd double %i.ve, %i.vj
+  %i.vk = fadd double %i.vi, %8
   %i.vl = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   store double %i.vk, ptr %i.vl, align 8, !tbaa !23
   %i.vm = fadd double %i.va, %i.vg                ; 3 uses
   %i.vn = fsub double %i.vm, %i.va                ; 2 uses
-  %i.vo = fsub double %i.vm, %i.vn
-  %i.vp = fsub double %i.vg, %i.vn
-  %9 = fsub double %i.va, %i.vo
-  %i.vq = fadd double %i.vp, %9
+  %i.vo = fsub double %i.vg, %i.vn
+  %i.vp = fsub double %i.vn, %i.vm
+  %9 = fadd double %i.va, %i.vp
+  %i.vq = fadd double %i.vo, %9
   %i.vr = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   store double %i.vq, ptr %i.vr, align 16, !tbaa !23
   %i.vs = getelementptr inbounds nuw i8, ptr %i.x, i64 24
@@ -778,7 +778,7 @@ bb.q:                                             ; preds = %.critedge13
   %i.ji = fsub double %i.jf, %i.jh                ; 2 uses
   %i.jj = fmul double %i.ji, %i.ji
   %i.jk = call double @llvm.fmuladd.f64(double %i.jd, double %i.jd, double %i.jj)
-  %i.jl = call double @sqrt(double noundef %i.jk) #37 ; 5 uses
+  %i.jl = call double @llvm.sqrt.f64(double %i.jk) ; 5 uses
   %i.jm = fcmp ogt double %i.jl, 3.000000e+00
   br i1 %i.jm, label %.lr.ph232, label %.preheader
 
@@ -1179,6 +1179,9 @@ declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2

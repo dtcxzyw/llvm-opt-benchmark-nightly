@@ -205,7 +205,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 64
   %i.s = load float, ptr %i.r, align 4, !tbaa !412 ; 2 uses
   %i.t = call float @llvm.fmuladd.f32(float %i.s, float %i.s, float %i.q)
-  %sqrtf.i = call noundef float @sqrtf(float noundef %i.t) #22
+  %sqrtf.i = call noundef float @llvm.sqrt.f32(float %i.t)
   %i.u = fpext float %sqrtf.i to double           ; 2 uses
   %i.v = fcmp ogt double %.sroa.7.0.copyload, %i.u
   %.sroa.speculated.i = select i1 %i.v, double %.sroa.7.0.copyload, double %i.u
@@ -460,7 +460,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 64
   %i.s = load float, ptr %i.r, align 4, !tbaa !412 ; 2 uses
   %i.t = call float @llvm.fmuladd.f32(float %i.s, float %i.s, float %i.q)
-  %sqrtf.i = call noundef float @sqrtf(float noundef %i.t) #22
+  %sqrtf.i = call noundef float @llvm.sqrt.f32(float %i.t)
   %i.u = fpext float %sqrtf.i to double           ; 2 uses
   %i.v = fcmp ogt double %.sroa.7.0.copyload, %i.u
   %.sroa.speculated.i = select i1 %i.v, double %.sroa.7.0.copyload, double %i.u
@@ -863,7 +863,7 @@ _ZNK7openvdb5v13_04tree21TreeValueIteratorBaseIKNS1_4TreeINS1_8RootNodeINS1_12In
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
   %i.bl = load float, ptr %i.bk, align 4, !tbaa !412 ; 2 uses
   %i.bm = call float @llvm.fmuladd.f32(float %i.bl, float %i.bl, float %i.bj)
-  %sqrtf.i.i.i.i = call noundef float @sqrtf(float noundef %i.bm) #22
+  %sqrtf.i.i.i.i = call noundef float @llvm.sqrt.f32(float %i.bm)
   br label %_ZN7openvdb5v13_05tools14stats_internal7StatsOpINS0_4tree21TreeValueIteratorBaseIKNS4_4TreeINS4_8RootNodeINS4_12InternalNodeINS8_INS4_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSG_9ValueIterIKSG_St23_Rb_tree_const_iteratorISt4pairIKNSA_5CoordENSG_10NodeStructEEENSG_12ValueAllPredEKSC_EEEEKNS2_6GetValISV_NSA_7ExtremaEEESX_EclERKSV_.exit
 
 bb.c:                                             ; preds = %.split3
@@ -899,7 +899,7 @@ _ZNK7openvdb5v13_04tree21TreeValueIteratorBaseIKNS1_4TreeINS1_8RootNodeINS1_12In
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.i.i.i6.i.i, i64 8
   %i.ch = load float, ptr %i.cg, align 4, !tbaa !412 ; 2 uses
   %i.ci = call float @llvm.fmuladd.f32(float %i.ch, float %i.ch, float %i.cf)
-  %sqrtf.i.i8.i.i = call noundef float @sqrtf(float noundef %i.ci) #22 ; 2 uses
+  %sqrtf.i.i8.i.i = call noundef float @llvm.sqrt.f32(float %i.ci) ; 2 uses
   %i.cj = load i32, ptr %i.r, align 8, !tbaa !538 ; 4 uses
   %i.ck = icmp eq i32 %i.cj, 0
   br i1 %i.ck, label %_ZN7openvdb5v13_05tools14stats_internal7StatsOpINS0_4tree21TreeValueIteratorBaseIKNS4_4TreeINS4_8RootNodeINS4_12InternalNodeINS8_INS4_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSG_9ValueIterIKSG_St23_Rb_tree_const_iteratorISt4pairIKNSA_5CoordENSG_10NodeStructEEENSG_12ValueAllPredEKSC_EEEEKNS2_6GetValISV_NSA_7ExtremaEEESX_EclERKSV_.exit, label %bb.f
@@ -1302,8 +1302,6 @@ _ZNSt14_Function_base13_Base_managerISt5_BindIFMN7openvdb5v13_05tools15VolumeAdv
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #24
 
-declare float @sqrtf(float) local_unnamed_addr
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9
 
@@ -1327,6 +1325,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9

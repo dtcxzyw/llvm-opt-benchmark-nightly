@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.v = fmul float %i.u, 2.000000e+00
   %i.w = fsub float %i.v, %i.u
   %i.x = fmul float %i.u, %i.u
-  %i.y = tail call noundef float @sqrtf(float noundef %i.x) #20
+  %i.y = tail call float @llvm.sqrt.f32(float %i.x)
   %i.z = fmul float %i.y, 2.000000e+00
   %i.aa = fdiv float %i.w, %i.z
   %i.ab = tail call noundef float @acosf(float noundef %i.aa) #20
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.ad = fmul float %i.ac, 2.000000e+00
   %i.ae = fsub float %i.ad, %i.ac
   %i.af = fmul float %i.ac, %i.ac
-  %i.ag = tail call noundef float @sqrtf(float noundef %i.af) #20
+  %i.ag = tail call float @llvm.sqrt.f32(float %i.af)
   %i.ah = fmul float %i.ag, 2.000000e+00
   %i.ai = fdiv float %i.ae, %i.ah
   %i.aj = tail call noundef float @acosf(float noundef %i.ai) #20
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.am = fmul float %i.al, 2.000000e+00
   %i.an = fsub float %i.am, %i.al
   %i.ao = fmul float %i.al, %i.al
-  %i.ap = tail call noundef float @sqrtf(float noundef %i.ao) #20
+  %i.ap = tail call float @llvm.sqrt.f32(float %i.ao)
   %i.aq = fmul float %i.ap, 2.000000e+00
   %i.ar = fdiv float %i.an, %i.aq
   %i.as = tail call noundef float @acosf(float noundef %i.ar) #20
@@ -626,7 +626,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   %i.s = fmul float %i.r, 2.000000e+00
   %i.t = fsub float %i.s, %i.r
   %i.u = fmul float %i.r, %i.r
-  %i.v = tail call noundef float @sqrtf(float noundef %i.u) #20
+  %i.v = tail call float @llvm.sqrt.f32(float %i.u)
   %i.w = fmul float %i.v, 2.000000e+00
   %i.x = fdiv float %i.t, %i.w
   %i.y = tail call noundef float @acosf(float noundef %i.x) #20
@@ -635,7 +635,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   %i.aa = fmul float %i.z, 2.000000e+00
   %i.ab = fsub float %i.aa, %i.z
   %i.ac = fmul float %i.z, %i.z
-  %i.ad = tail call noundef float @sqrtf(float noundef %i.ac) #20
+  %i.ad = tail call float @llvm.sqrt.f32(float %i.ac)
   %i.ae = fmul float %i.ad, 2.000000e+00
   %i.af = fdiv float %i.ab, %i.ae
   %i.ag = tail call noundef float @acosf(float noundef %i.af) #20
@@ -645,7 +645,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   %i.aj = fmul float %i.ai, 2.000000e+00
   %i.ak = fsub float %i.aj, %i.ai
   %i.al = fmul float %i.ai, %i.ai
-  %i.am = tail call noundef float @sqrtf(float noundef %i.al) #20
+  %i.am = tail call float @llvm.sqrt.f32(float %i.al)
   %i.an = fmul float %i.am, 2.000000e+00
   %i.ao = fdiv float %i.ak, %i.an
   %i.ap = tail call noundef float @acosf(float noundef %i.ao) #20
@@ -928,7 +928,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.v = fmul double %i.u, 2.000000e+00
   %i.w = fsub double %i.v, %i.u
   %i.x = fmul double %i.u, %i.u
-  %i.y = tail call double @sqrt(double noundef %i.x) #20
+  %i.y = tail call double @llvm.sqrt.f64(double %i.x)
   %i.z = fmul double %i.y, 2.000000e+00
   %i.aa = fdiv double %i.w, %i.z
   %i.ab = tail call double @acos(double noundef %i.aa) #20
@@ -937,7 +937,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.ad = fmul double %i.ac, 2.000000e+00
   %i.ae = fsub double %i.ad, %i.ac
   %i.af = fmul double %i.ac, %i.ac
-  %i.ag = tail call double @sqrt(double noundef %i.af) #20
+  %i.ag = tail call double @llvm.sqrt.f64(double %i.af)
   %i.ah = fmul double %i.ag, 2.000000e+00
   %i.ai = fdiv double %i.ae, %i.ah
   %i.aj = tail call double @acos(double noundef %i.ai) #20
@@ -947,7 +947,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.am = fmul double %i.al, 2.000000e+00
   %i.an = fsub double %i.am, %i.al
   %i.ao = fmul double %i.al, %i.al
-  %i.ap = tail call double @sqrt(double noundef %i.ao) #20
+  %i.ap = tail call double @llvm.sqrt.f64(double %i.ao)
   %i.aq = fmul double %i.ap, 2.000000e+00
   %i.ar = fdiv double %i.an, %i.aq
   %i.as = tail call double @acos(double noundef %i.ar) #20
@@ -1350,7 +1350,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   %i.s = fmul double %i.r, 2.000000e+00
   %i.t = fsub double %i.s, %i.r
   %i.u = fmul double %i.r, %i.r
-  %i.v = tail call double @sqrt(double noundef %i.u) #20
+  %i.v = tail call double @llvm.sqrt.f64(double %i.u)
   %i.w = fmul double %i.v, 2.000000e+00
   %i.x = fdiv double %i.t, %i.w
   %i.y = tail call double @acos(double noundef %i.x) #20
@@ -1359,7 +1359,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   %i.aa = fmul double %i.z, 2.000000e+00
   %i.ab = fsub double %i.aa, %i.z
   %i.ac = fmul double %i.z, %i.z
-  %i.ad = tail call double @sqrt(double noundef %i.ac) #20
+  %i.ad = tail call double @llvm.sqrt.f64(double %i.ac)
   %i.ae = fmul double %i.ad, 2.000000e+00
   %i.af = fdiv double %i.ab, %i.ae
   %i.ag = tail call double @acos(double noundef %i.af) #20
@@ -1369,7 +1369,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i.i
   %i.aj = fmul double %i.ai, 2.000000e+00
   %i.ak = fsub double %i.aj, %i.ai
   %i.al = fmul double %i.ai, %i.ai
-  %i.am = tail call double @sqrt(double noundef %i.al) #20
+  %i.am = tail call double @llvm.sqrt.f64(double %i.al)
   %i.an = fmul double %i.am, 2.000000e+00
   %i.ao = fdiv double %i.ak, %i.an
   %i.ap = tail call double @acos(double noundef %i.ao) #20
@@ -1772,6 +1772,9 @@ bb.l:                                             ; preds = %bb.i
   unreachable
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #10
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
 
@@ -1792,6 +1795,9 @@ declare i64 @llvm.smax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #10
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

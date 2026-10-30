@@ -41,7 +41,7 @@ bb.a:
   %i.k = call double @llvm.fmuladd.f64(double %i.j, double %i.j, double %i.g)
   %i.l = extractelement <2 x double> %i.i, i64 1  ; 2 uses
   %i.m = call double @llvm.fmuladd.f64(double %i.l, double %i.l, double %i.k)
-  %i.n = call double @sqrt(double noundef %i.m) #5 ; 2 uses
+  %i.n = call double @llvm.sqrt.f64(double %i.m)  ; 2 uses
   %i.o = call double @llvm.fabs.f64(double %i.n)
   %i.p = fcmp ogt double %i.o, 1.000000e-28
   %.sink39.sroa.gep41 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -117,31 +117,27 @@ bb.a:
   %i.aj = fmul <2 x double> %i.ai, %i.ai
   %i.ak = shufflevector <2 x double> %i.y, <2 x double> %i.ah, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.al = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ak, <2 x double> %i.ak, <2 x double> %i.aj) ; 2 uses
-  %i.am = fadd <2 x double> %i.al, splat (double 1.000000e+00) ; 2 uses
-  %8 = extractelement <2 x double> %i.am, i64 0
-  %9 = tail call double @sqrt(double noundef %8) #5 ; 2 uses
-  %i.an = extractelement <2 x double> %i.am, i64 1
-  %10 = tail call double @sqrt(double noundef %i.an) #5 ; 3 uses
-  %11 = fcmp ogt double %9, f0x3D06849B86A12B9B
+  %i.am = fadd <2 x double> %i.al, splat (double 1.000000e+00)
+  %8 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.am) ; 5 uses
+  %i.an = extractelement <2 x double> %8, i64 0
+  %9 = fcmp ogt double %i.an, f0x3D06849B86A12B9B
+  %10 = extractelement <2 x double> %8, i64 1
   %i.ao = fcmp ogt double %10, f0x3D06849B86A12B9B
-  %or.cond = select i1 %11, i1 %i.ao, i1 false
+  %or.cond = select i1 %9, i1 %i.ao, i1 false
   br i1 %or.cond, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %12 = insertelement <2 x double> poison, double %9, i64 0 ; 2 uses
-  %i.ap = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ap = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aq = fdiv <2 x double> %i.y, %i.ap
   store <2 x double> %i.aq, ptr %i.a, align 16, !tbaa !10
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %13 = insertelement <2 x double> %12, double %10, i64 1
-  %i.as = fdiv <2 x double> splat (double 1.000000e+00), %13 ; 2 uses
+  %i.as = fdiv <2 x double> splat (double 1.000000e+00), %8 ; 2 uses
   %i.at = extractelement <2 x double> %i.as, i64 0
   store double %i.at, ptr %i.ar, align 16, !tbaa !10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
-  %14 = insertelement <2 x double> poison, double %10, i64 0
-  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.au = fdiv <2 x double> %i.ah, %15
+  %11 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.au = fdiv <2 x double> %i.ah, %11
   store <2 x double> %i.au, ptr %i.b, align 16, !tbaa !10
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.aw = extractelement <2 x double> %i.as, i64 1
@@ -157,10 +153,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.bc, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.bd = call double @sqrt(double noundef %i.bb) #5
-  %i.be = fadd double %i.bd, -1.000000e+00
-  %i.bf = call double @llvm.fmuladd.f64(double %i.be, double f0x3FC99999A0000000, double 1.000000e+00)
-  %i.bg = fmul double %i.ba, %i.bf
+  %i.bd = call nnan double @llvm.sqrt.f64(double %i.bb)
+  %i.be = fadd nnan double %i.bd, -1.000000e+00
+  %i.bf = call nnan double @llvm.fmuladd.f64(double %i.be, double f0x3FC99999A0000000, double 1.000000e+00)
+  %i.bg = fmul double %i.bf, %i.ba
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -220,7 +216,7 @@ bb.a:
   %i.m = extractelement <2 x float> %i.j, i64 1   ; 2 uses
   %i.n = call float @llvm.fmuladd.f32(float %i.m, float %i.m, float %i.l)
   %i.o = fpext float %i.n to double
-  %i.p = call double @sqrt(double noundef %i.o) #5 ; 2 uses
+  %i.p = call double @llvm.sqrt.f64(double %i.o)  ; 2 uses
   %i.q = call double @llvm.fabs.f64(double %i.p)
   %i.r = fcmp ogt double %i.q, 1.000000e-28
   br i1 %i.r, label %bb.b, label %bb.c
@@ -276,7 +272,7 @@ bb.a:
   %i.n = extractelement <2 x float> %i.k, i64 1   ; 2 uses
   %i.o = call float @llvm.fmuladd.f32(float %i.n, float %i.n, float %i.m)
   %i.p = fpext float %i.o to double
-  %i.q = call double @sqrt(double noundef %i.p) #5 ; 2 uses
+  %i.q = call double @llvm.sqrt.f64(double %i.p)  ; 2 uses
   %i.r = call double @llvm.fabs.f64(double %i.q)
   %i.s = fcmp ogt double %i.r, 1.000000e-28
   %.sink40.i.sroa.gep9 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -342,7 +338,7 @@ bb.a:
   %i.k = call double @llvm.fmuladd.f64(double %i.j, double %i.j, double %i.g)
   %i.l = extractelement <2 x double> %i.i, i64 1  ; 2 uses
   %i.m = call double @llvm.fmuladd.f64(double %i.l, double %i.l, double %i.k)
-  %i.n = call double @sqrt(double noundef %i.m) #5 ; 2 uses
+  %i.n = call double @llvm.sqrt.f64(double %i.m)  ; 2 uses
   %i.o = call double @llvm.fabs.f64(double %i.n)
   %i.p = fcmp ogt double %i.o, 1.000000e-28
   %.sink39.i.sroa.gep9 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -396,7 +392,13 @@ declare double @atan2(double noundef, double noundef) local_unnamed_addr #2
 declare void @_ZN3igl18axis_angle_to_quatIdEEvPKT_S1_PS1_(ptr noundef, double noundef, ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #3
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

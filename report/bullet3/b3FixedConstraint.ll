@@ -204,12 +204,12 @@ _ZNK12b3Quaternion7nearestERKS_.exit.i:           ; preds = %bb.d, %bb.c
   br i1 %i.km, label %_ZN15b3TransformUtil32calculateDiffAxisAngleQuaternionERK12b3QuaternionS2_R9b3Vector3Rf.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZNK12b3Quaternion7nearestERKS_.exit.i
-  %i.kn = tail call noundef float @sqrtf(float noundef %i.kl) #13
+  %i.kn = tail call float @llvm.sqrt.f32(float %i.kl)
   %i.ko = fdiv float 1.000000e+00, %i.kn          ; 2 uses
   %i.kp = insertelement <2 x float> poison, float %i.ko, i64 0
   %i.kq = shufflevector <2 x float> %i.kp, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.kr = fmul <2 x float> %i.kq, %i.jv
-  %i.ks = fmul float %i.ko, %i.ka
+  %i.kr = fmul <2 x float> %i.jv, %i.kq
+  %i.ks = fmul float %i.ka, %i.ko
   %.sroa.14.8.vec.insert = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ks, i64 0
   br label %_ZN15b3TransformUtil32calculateDiffAxisAngleQuaternionERK12b3QuaternionS2_R9b3Vector3Rf.exit
 
@@ -395,6 +395,9 @@ declare void @_ZSt9terminatev() local_unnamed_addr #11
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #7

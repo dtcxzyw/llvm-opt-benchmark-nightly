@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E2Ok0BL_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([30 x i8]) align 1 captures(none) dereferenceable(30) initializes((0, 30)) %0, ptr noalias nofree noundef readonly align 1 captures(none) dead_on_return dereferenceable(29) %1) unnamed_addr #1 {
+define internal fastcc void @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E2Ok0BL_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([30 x i8]) align 1 captures(none) dereferenceable(30) initializes((0, 30)) %0, ptr noalias nofree noundef readonly align 1 captures(none) dead_on_return dereferenceable(29) %1) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(29) %i.a, ptr noundef nonnull align 1 dereferenceable(29) %1, i64 29, i1 false)
@@ -213,7 +213,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E3Err0BL_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([30 x i8]) align 1 captures(none) dereferenceable(30) initializes((0, 30)) %0, ptr noalias nofree noundef readonly align 1 captures(none) dead_on_return dereferenceable(29) %1) unnamed_addr #1 {
+define internal fastcc void @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E3Err0BL_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([30 x i8]) align 1 captures(none) dereferenceable(30) initializes((0, 30)) %0, ptr noalias nofree noundef readonly align 1 captures(none) dead_on_return dereferenceable(29) %1) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(29) %i.a, ptr noundef nonnull align 1 dereferenceable(29) %1, i64 29, i1 false)
@@ -616,10 +616,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvMs2_NtNtCs96xUavsWfLi_15icu_locale_core11preferences6localeNtB5_17LocalePreferences18from_locale_strict(ptr dead_on_unwind noalias nofree noundef writable sret([30 x i8]) align 1 captures(address) dereferenceable(30) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(168) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_RNvMs2_NtNtCs96xUavsWfLi_15icu_locale_core11preferences6localeNtB5_17LocalePreferences18from_locale_strict(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([30 x i8]) align 1 captures(none) dereferenceable(30) initializes((0, 30)) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(168) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.545 = alloca [7 x i8], align 1           ; 4 uses
-  %i.a = alloca [29 x i8], align 1                ; 12 uses
+  %i.a = alloca [29 x i8], align 1                ; 13 uses
   %i.b = alloca [3 x i8], align 1                 ; 6 uses
   %i.c = alloca [7 x i8], align 1                 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
@@ -705,6 +705,7 @@ bb.i:                                             ; preds = %bb.g, %_RINvMNtCshz
   %.sroa.034.0 = phi i8 [ -1, %bb.g ], [ %.sroa.0.0.extract.trunc.i, %_RINvMNtCshzWfHUSfYae_4core6resultINtB3_6ResultNtNtNtNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences10extensions7unicode8keywords15region_override14RegionOverrideNtNtBO_6errors21PreferencesParseErrorE11inspect_errNCNCNvMs2_NtBS_6localeNtB3B_17LocalePreferences18from_locale_stricts_00EBU_.exit ]
   %.sroa.436.sroa.0.0 = phi i48 [ undef, %bb.g ], [ %.sroa.074.1.extract.trunc, %_RINvMNtCshzWfHUSfYae_4core6resultINtB3_6ResultNtNtNtNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences10extensions7unicode8keywords15region_override14RegionOverrideNtNtBO_6errors21PreferencesParseErrorE11inspect_errNCNCNvMs2_NtBS_6localeNtB3B_17LocalePreferences18from_locale_stricts_00EBU_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 139
   %.sroa.041.0.copyload = load i32, ptr %i.s, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.545)
@@ -727,8 +728,6 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i, %bb.j
   %.sroa.043.0 = phi i8 [ %.sroa.066.0.copyload, %bb.j ], [ -1, %bb.i ]
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E3Err0BL_._RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E2Ok0BL_ = select i1 %.sroa.0.4, ptr @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E3Err0BL_, ptr @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E2Ok0BL_
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.a, ptr noundef nonnull align 8 dereferenceable(3) %2, i64 3, i1 false)
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i32 %.sroa.041.0.copyload, ptr %i.y, align 1
@@ -747,7 +746,17 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   %.sroa.436.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.a, i64 23
   store i48 %.sroa.436.sroa.0.0, ptr %.sroa.436.0..sroa_idx37, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.545)
-  call void %_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E3Err0BL_._RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E2Ok0BL_(ptr noalias nofree noundef nonnull sret([30 x i8]) align 1 captures(address) dereferenceable(30) %0, ptr noalias nofree noundef nonnull align 1 captures(address) dereferenceable(29) %i.a), !callees !185
+  br i1 %.sroa.0.4, label %call.1, label %call.0
+
+call.0:                                           ; preds = %bb.k
+  call fastcc void @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E2Ok0BL_(ptr noalias nofree noundef nonnull sret([30 x i8]) align 1 captures(address) dereferenceable(30) %0, ptr noalias nofree noundef nonnull align 1 captures(address) dereferenceable(29) %i.a), !callees !185
+  br label %.tail
+
+call.1:                                           ; preds = %bb.k
+  call fastcc void @_RNcNtINtNtCshzWfHUSfYae_4core6result6ResultNtNtNtCs96xUavsWfLi_15icu_locale_core11preferences6locale17LocalePreferencesBF_E3Err0BL_(ptr noalias nofree noundef nonnull sret([30 x i8]) align 1 captures(address) dereferenceable(30) %0, ptr noalias nofree noundef nonnull align 1 captures(address) dereferenceable(29) %i.a), !callees !185
+  br label %.tail
+
+.tail:                                            ; preds = %call.1, %call.0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }

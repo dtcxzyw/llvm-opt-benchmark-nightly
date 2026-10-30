@@ -204,13 +204,12 @@ bb.a:
   %i.x = fsub <2 x double> %i.q, %i.w             ; 2 uses
   %i.y = insertelement <2 x double> poison, double %i.p, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.x, <2 x double> %i.x, <2 x double> %i.z) ; 2 uses
-  %1 = extractelement <2 x double> %i.aa, i64 1
-  %2 = tail call double @sqrt(double noundef %1) #9, !tbaa !7
+  %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.x, <2 x double> %i.x, <2 x double> %i.z)
+  %1 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.aa) ; 2 uses
+  %2 = extractelement <2 x double> %1, i64 1
   %i.ab = fdiv double 1.000000e+00, %2
-  %i.ac = extractelement <2 x double> %i.aa, i64 0
-  %3 = tail call double @sqrt(double noundef %i.ac) #9, !tbaa !7
-  %i.ad = fdiv double 1.000000e+00, %3
+  %i.ac = extractelement <2 x double> %1, i64 0
+  %i.ad = fdiv double 1.000000e+00, %i.ac
   %i.ae = fadd double %i.ab, %i.ad
   %i.af = fmul double %i.ae, 5.000000e-01
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -266,7 +265,7 @@ bb.b:                                             ; preds = %.lr.ph59, %"_Z6fora
   %i.ar = call double @llvm.fmuladd.f64(double %i.aq, double %i.u, double %i.s)
   %i.as = fsub double %i.ar, %i.e                 ; 2 uses
   %i.at = call double @llvm.fmuladd.f64(double %i.as, double %i.as, double %i.p)
-  %i.au = call double @sqrt(double noundef %i.at) #9, !tbaa !7
+  %i.au = call double @llvm.sqrt.f64(double %i.at)
   %i.av = fdiv double 1.000000e+00, %i.au
   %i.aw = fadd double %.154, %i.av
   %i.ax = or disjoint i32 %.0.i55, 1
@@ -274,7 +273,7 @@ bb.b:                                             ; preds = %.lr.ph59, %"_Z6fora
   %i.az = call double @llvm.fmuladd.f64(double %i.ay, double %i.u, double %i.s)
   %i.ba = fsub double %i.az, %i.e                 ; 2 uses
   %i.bb = call double @llvm.fmuladd.f64(double %i.ba, double %i.ba, double %i.p)
-  %i.bc = call double @sqrt(double noundef %i.bb) #9, !tbaa !7
+  %i.bc = call double @llvm.sqrt.f64(double %i.bb)
   %i.bd = fdiv double 1.000000e+00, %i.bc
   %i.be = fadd double %i.aw, %i.bd                ; 3 uses
   %i.bf = add nuw nsw i32 %.0.i55, 2              ; 2 uses
@@ -295,7 +294,7 @@ bb.b:                                             ; preds = %.lr.ph59, %"_Z6fora
   %i.bh = call double @llvm.fmuladd.f64(double %i.bg, double %i.u, double %i.s)
   %i.bi = fsub double %i.bh, %i.e                 ; 2 uses
   %i.bj = call double @llvm.fmuladd.f64(double %i.bi, double %i.bi, double %i.p)
-  %i.bk = call double @sqrt(double noundef %i.bj) #9, !tbaa !7
+  %i.bk = call double @llvm.sqrt.f64(double %i.bj)
   %i.bl = fdiv double 1.000000e+00, %i.bk
   %i.bm = fadd double %.154.epil.init, %i.bl
   br label %"_Z6forallIZL18BM_TRAP_INT_LAMBDARN9benchmark5StateEE3$_0Ev9simd_execiiT_.exit"
@@ -666,7 +665,13 @@ __cxx_global_var_init.6.exit:                     ; preds = %bb.ab, %_ZNKSt7__cx
 declare void @llvm.assume(i1 noundef) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #5
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

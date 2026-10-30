@@ -205,27 +205,33 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a:    ; preds = %.loopexit394
   %.sroa.15.12.vec.extract303.peel = extractelement <2 x float> %.sroa.6.0.copyload.peel, i64 1 ; 2 uses
   %i.yk = call float @llvm.fmuladd.f32(float %.sroa.15.12.vec.extract303.peel, float %.sroa.15.12.vec.extract303.peel, float %i.yj)
   %.sroa.0.0.vec.extract281.peel = extractelement <2 x float> %.sroa.0.0.copyload.peel, i64 0 ; 2 uses
-  %i.yl = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract281.peel, float %.sroa.0.0.vec.extract281.peel, float %i.yk)
-  %7 = call noundef float @sqrtf(float noundef %i.yl) #24 ; 2 uses
-  %i.ym = fcmp une float %7, 0.000000e+00         ; 2 uses
-  %8 = fdiv float 1.000000e+00, %7
+  %i.yl = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract281.peel, float %.sroa.0.0.vec.extract281.peel, float %i.yk) ; 2 uses
+  %i.ym = fcmp une float %i.yl, 0.000000e+00
+  br i1 %i.ym, label %7, label %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel
+
+7:                                                ; preds = %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a
+  %sqrt.i.peel = call float @llvm.sqrt.f32(float %i.yl)
+  %8 = fdiv float 1.000000e+00, %sqrt.i.peel
   %9 = insertelement <2 x float> poison, float %8, i64 0
   %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %11 = fmul <2 x float> %.sroa.6.0.copyload.peel, %10
   %12 = fmul <2 x float> %.sroa.0.0.copyload.peel, %10
-  %.sroa.15.1.peel = select i1 %i.ym, <2 x float> %11, <2 x float> %.sroa.6.0.copyload.peel ; 2 uses
-  %.sroa.0.1.peel = select i1 %i.ym, <2 x float> %12, <2 x float> %.sroa.0.0.copyload.peel ; 2 uses
+  br label %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel
+
+_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel:      ; preds = %7, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a
+  %.sroa.13.1.peel = phi <2 x float> [ %11, %7 ], [ %.sroa.6.0.copyload.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a ] ; 2 uses
+  %.sroa.0.1.peel = phi <2 x float> [ %12, %7 ], [ %.sroa.0.0.copyload.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a ] ; 2 uses
   %13 = getelementptr inbounds nuw i8, ptr %i.wu, i64 8
   store <2 x float> %.sroa.0.1.peel, ptr %13, align 8
-  %.sroa.15.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.wu, i64 16
-  store <2 x float> %.sroa.15.1.peel, ptr %.sroa.15.0..sroa_idx.peel, align 8
-  %.not557 = icmp eq i32 %i.ye, 1
-  br i1 %.not557, label %.loopexit393, label %.lr.ph463.peel.next
+  %.sroa.13.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.wu, i64 16
+  store <2 x float> %.sroa.13.1.peel, ptr %.sroa.13.0..sroa_idx.peel, align 8
+  %.not549 = icmp eq i32 %i.ye, 1
+  br i1 %.not549, label %.loopexit393, label %.lr.ph463.peel.next
 
-.lr.ph463.peel.next:                              ; preds = %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a, %.lr.ph463.peel.next
-  %indvars.iv483 = phi i64 [ %indvars.iv.next484, %.lr.ph463.peel.next ], [ 1, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a ] ; 4 uses
-  %.sroa.0.0381460 = phi <2 x float> [ %.sroa.0.1, %.lr.ph463.peel.next ], [ %.sroa.0.1.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a ] ; 4 uses
-  %.sroa.15.0459 = phi <2 x float> [ %.sroa.15.1, %.lr.ph463.peel.next ], [ %.sroa.15.1.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a ] ; 5 uses
+.lr.ph463.peel.next:                              ; preds = %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit
+  %indvars.iv483 = phi i64 [ %indvars.iv.next476, %_ZN13aiQuaterniontIfE9NormalizeEv.exit ], [ 1, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel ] ; 4 uses
+  %.sroa.0.0381460 = phi <2 x float> [ %.sroa.0.1, %_ZN13aiQuaterniontIfE9NormalizeEv.exit ], [ %.sroa.0.1.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel ] ; 4 uses
+  %.sroa.15.0459 = phi <2 x float> [ %.sroa.13.1, %_ZN13aiQuaterniontIfE9NormalizeEv.exit ], [ %.sroa.13.1.peel, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel ] ; 5 uses
   %i.yn = load ptr, ptr %i.kw, align 8
   %i.yo = getelementptr inbounds nuw [32 x i8], ptr %i.yn, i64 %indvars.iv483 ; 3 uses
   %.sroa.15.12.vec.extract = extractelement <2 x float> %.sroa.15.0459, i64 1
@@ -267,29 +273,35 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a:    ; preds = %.loopexit394
   %i.zw = extractelement <2 x float> %i.zf, i64 1 ; 2 uses
   %i.zx = call float @llvm.fmuladd.f32(float %i.zw, float %i.zw, float %i.zv)
   %i.zy = extractelement <2 x float> %i.zp, i64 0 ; 2 uses
-  %i.zz = call float @llvm.fmuladd.f32(float %i.zy, float %i.zy, float %i.zx)
-  %14 = call noundef float @sqrtf(float noundef %i.zz) #24 ; 2 uses
-  %i.aaa = fcmp une float %14, 0.000000e+00       ; 2 uses
-  %15 = fdiv float 1.000000e+00, %14
+  %i.zz = call float @llvm.fmuladd.f32(float %i.zy, float %i.zy, float %i.zx) ; 2 uses
+  %i.aaa = fcmp une float %i.zz, 0.000000e+00
+  br i1 %i.aaa, label %14, label %_ZN13aiQuaterniontIfE9NormalizeEv.exit
+
+14:                                               ; preds = %.lr.ph463.peel.next
+  %sqrt.i = call float @llvm.sqrt.f32(float %i.zz)
+  %15 = fdiv float 1.000000e+00, %sqrt.i
   %16 = insertelement <2 x float> poison, float %15, i64 0
   %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %18 = fmul <2 x float> %i.zf, %17
   %19 = fmul <2 x float> %i.zp, %17
-  %.sroa.15.1 = select i1 %i.aaa, <2 x float> %18, <2 x float> %i.zf ; 2 uses
-  %.sroa.0.1 = select i1 %i.aaa, <2 x float> %19, <2 x float> %i.zp ; 2 uses
+  br label %_ZN13aiQuaterniontIfE9NormalizeEv.exit
+
+_ZN13aiQuaterniontIfE9NormalizeEv.exit:           ; preds = %14, %.lr.ph463.peel.next
+  %.sroa.13.1 = phi <2 x float> [ %18, %14 ], [ %i.zf, %.lr.ph463.peel.next ] ; 2 uses
+  %.sroa.0.1 = phi <2 x float> [ %19, %14 ], [ %i.zp, %.lr.ph463.peel.next ] ; 2 uses
   %20 = load ptr, ptr %i.uu, align 8
   %21 = getelementptr inbounds nuw [32 x i8], ptr %20, i64 %indvars.iv483 ; 2 uses
   %22 = getelementptr inbounds nuw i8, ptr %21, i64 8
   store <2 x float> %.sroa.0.1, ptr %22, align 8
-  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %21, i64 16
-  store <2 x float> %.sroa.15.1, ptr %.sroa.15.0..sroa_idx, align 8
-  %indvars.iv.next484 = add nuw nsw i64 %indvars.iv483, 1 ; 2 uses
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %21, i64 16
+  store <2 x float> %.sroa.13.1, ptr %.sroa.13.0..sroa_idx, align 8
+  %indvars.iv.next476 = add nuw nsw i64 %indvars.iv483, 1 ; 2 uses
   %23 = load i32, ptr %i.wr, align 8
   %24 = zext i32 %23 to i64
-  %25 = icmp samesign ult i64 %indvars.iv.next484, %24
+  %25 = icmp samesign ult i64 %indvars.iv.next476, %24
   br i1 %25, label %.lr.ph463.peel.next, label %.loopexit393, !llvm.loop !37
 
-.loopexit393:                                     ; preds = %.lr.ph463.peel.next, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel.a, %.loopexit394, %bb.ba
+.loopexit393:                                     ; preds = %_ZN13aiQuaterniontIfE9NormalizeEv.exit, %_ZN13aiQuaterniontIfE9NormalizeEv.exit.peel, %.loopexit394, %bb.ba
   %i.aab = load ptr, ptr %i.nd, align 8           ; 2 uses
   %i.aac = load ptr, ptr %i.ne, align 8           ; 2 uses
   %i.aad = icmp eq ptr %i.aab, %i.aac
@@ -692,9 +704,6 @@ bb.f:                                             ; preds = %_ZSt27__uninitializ
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #20
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
 
@@ -712,6 +721,9 @@ declare i64 @llvm.umin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5

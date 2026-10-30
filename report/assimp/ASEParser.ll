@@ -205,50 +205,52 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %.critedge.i.i.i, %.
   %i.av = load i32, ptr %i.i, align 8
   %i.aw = add i32 %i.av, 1
   store i32 %i.aw, ptr %i.i, align 8
-  br label %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit.a
+  br label %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit
 
 bb.p:                                             ; preds = %.critedge.i.i.i
   %i.ax = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef nonnull %.0.lcssa.i.i.i, ptr noundef nonnull align 4 dereferenceable(4) %i.c, i1 noundef zeroext true)
   store ptr %i.ax, ptr %0, align 8
   %.pre44 = load float, ptr %i.c, align 4
   %i.ay = fmul float %.pre44, 5.000000e-01
+  br label %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit
+
+_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit:  ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i, %bb.p
+  %3 = phi float [ 0.000000e+00, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i ], [ %i.ay, %bb.p ] ; 2 uses
+  %4 = load i32, ptr %i.b, align 4
+  %5 = uitofp i32 %4 to double
+  store double %5, ptr %i.aj, align 8
+  %.sroa.01.0.copyload = load <2 x float>, ptr %2, align 8 ; 5 uses
+  %.sroa.22.0.copyload = load float, ptr %i.g, align 8 ; 4 uses
+  %.sroa.0.0.vec.extract8.i = extractelement <2 x float> %.sroa.01.0.copyload, i64 0 ; 2 uses
+  %foldExtExtBinop = fmul <2 x float> %.sroa.01.0.copyload, %.sroa.01.0.copyload
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %7 = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract8.i, float %.sroa.0.0.vec.extract8.i, float %6)
+  %8 = call noundef float @llvm.fmuladd.f32(float %.sroa.22.0.copyload, float %.sroa.22.0.copyload, float %7) ; 2 uses
+  %9 = fcmp oeq float %8, 0.000000e+00
+  br i1 %9, label %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit.a, label %_ZN10aiVector3tIfEdVEf.exit.i.i
+
+_ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit
+  %sqrt.i.i.i = call noundef float @llvm.sqrt.f32(float %8)
+  %10 = fdiv float 1.000000e+00, %sqrt.i.i.i      ; 2 uses
+  %11 = insertelement <2 x float> poison, float %10, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = fmul <2 x float> %.sroa.01.0.copyload, %12
+  %14 = fmul float %.sroa.22.0.copyload, %10
   br label %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit.a
 
-_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit.a: ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i, %bb.p
-  %i.az = phi float [ 0.000000e+00, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i ], [ %i.ay, %bb.p ] ; 2 uses
-  %3 = load i32, ptr %i.b, align 4
-  %4 = uitofp i32 %3 to double
-  store double %4, ptr %i.aj, align 8
-  %.sroa.01.0.copyload = load <2 x float>, ptr %2, align 8 ; 4 uses
-  %.sroa.22.0.copyload = load float, ptr %i.g, align 8 ; 3 uses
-  %.sroa.0.0.vec.extract8.i = extractelement <2 x float> %.sroa.01.0.copyload, i64 0 ; 4 uses
-  %foldExtExtBinop = fmul <2 x float> %.sroa.01.0.copyload, %.sroa.01.0.copyload
-  %5 = extractelement <2 x float> %foldExtExtBinop, i64 1
-  %6 = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract8.i, float %.sroa.0.0.vec.extract8.i, float %5)
-  %7 = call noundef float @llvm.fmuladd.f32(float %.sroa.22.0.copyload, float %.sroa.22.0.copyload, float %6)
-  %8 = call noundef float @sqrtf(float noundef %7) #27 ; 2 uses
-  %9 = fcmp oeq float %8, 0.000000e+00            ; 2 uses
-  %10 = fdiv float 1.000000e+00, %8               ; 2 uses
-  %11 = fmul float %.sroa.0.0.vec.extract8.i, %10
-  %.sroa.0.0.vec.extract.pre-phi.i = select i1 %9, float %.sroa.0.0.vec.extract8.i, float %11
-  %12 = shufflevector <2 x float> %.sroa.01.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %13 = insertelement <2 x float> %12, float %.sroa.22.0.copyload, i64 1 ; 2 uses
-  %14 = insertelement <2 x float> poison, float %10, i64 0
-  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
-  %16 = fmul <2 x float> %13, %15
-  %17 = insertelement <2 x i1> poison, i1 %9, i64 0
-  %18 = shufflevector <2 x i1> %17, <2 x i1> poison, <2 x i32> zeroinitializer
-  %19 = select <2 x i1> %18, <2 x float> %13, <2 x float> %16
-  %i.ba = call noundef float @sinf(float noundef %i.az) #27
+_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit.a: ; preds = %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit, %_ZN10aiVector3tIfEdVEf.exit.i.i
+  %i.az = phi float [ %.sroa.22.0.copyload, %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit ], [ %14, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %15 = phi <2 x float> [ %.sroa.01.0.copyload, %_ZN6Assimp3ASE6Parser16ParseLV4MeshRealERf.exit ], [ %13, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
+  %i.ba = call noundef float @sinf(float noundef %3) #27
   %i.bb = getelementptr inbounds i8, ptr %i.ai, i64 -24
-  %i.bc = call noundef float @cosf(float noundef %i.az) #27
-  %i.bd = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.ba, i64 1
-  %20 = shufflevector <4 x float> %i.bd, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %21 = insertelement <4 x float> poison, float %i.bc, i64 0
-  %i.be = insertelement <4 x float> %21, float %.sroa.0.0.vec.extract.pre-phi.i, i64 1
-  %22 = shufflevector <2 x float> %19, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %23 = shufflevector <4 x float> %i.be, <4 x float> %22, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.bf = fmul <4 x float> %20, %23
+  %i.bc = call noundef float @cosf(float noundef %3) #27
+  %i.bd = insertelement <4 x float> poison, float %i.bc, i64 0
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %17 = shufflevector <4 x float> %i.bd, <4 x float> %16, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.be = insertelement <4 x float> %17, float %i.az, i64 3
+  %18 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %i.ba, i64 1
+  %19 = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %i.bf = fmul <4 x float> %i.be, %19
   store <4 x float> %i.bf, ptr %i.bb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
@@ -651,17 +653,14 @@ _ZNSt12_Vector_baseI9aiQuatKeySaIS0_EE13_M_deallocateEPS0_m.exit: ; preds = %_ZN
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #21
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fmuladd.f32(float, float, float) #22
+declare float @llvm.fmuladd.f32(float, float, float) #21
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #21
+declare float @sinf(float noundef) local_unnamed_addr #22
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #21
+declare float @cosf(float noundef) local_unnamed_addr #22
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN6Assimp3ASE4BoneESaIS2_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS2_S4_EEmRKS2_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(32) %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1064,7 +1063,7 @@ _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit: ; pred
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @powf(float noundef, float noundef) local_unnamed_addr #21
+declare float @powf(float noundef, float noundef) local_unnamed_addr #22
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorI10aiVector3tIfESaIS1_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1467,13 +1466,16 @@ declare void @llvm.assume(i1 noundef) #24
 declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #22
+declare i64 @llvm.umin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #22
+declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #21
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1496,8 +1498,8 @@ attributes #17 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-si
 attributes #18 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #21 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #21 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #22 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #23 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #24 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }

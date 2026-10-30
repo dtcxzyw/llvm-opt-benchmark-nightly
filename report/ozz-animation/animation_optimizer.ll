@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.ny = fmul float %i.nu, %i.nu
   %i.nz = call float @llvm.fmuladd.f32(float %i.nr, float %i.nr, float %i.ny)
   %i.oa = call float @llvm.fmuladd.f32(float %i.nx, float %i.nx, float %i.nz)
-  %i.ob = call noundef float @sqrtf(float noundef %i.oa) #14, !noalias !132
+  %i.ob = call float @llvm.sqrt.f32(float %i.oa)
   %i.oc = fmul float %i.iu, %i.ob                 ; 3 uses
   %i.od = fcmp ogt float %i.oc, %i.iw
   %i.oe = fcmp ogt float %i.oc, %.05039.i
@@ -509,7 +509,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   %i.sf = fmul float %i.sb, %i.sb
   %i.sg = call float @llvm.fmuladd.f32(float %i.ry, float %i.ry, float %i.sf)
   %i.sh = call float @llvm.fmuladd.f32(float %i.se, float %i.se, float %i.sg)
-  %i.si = call noundef float @sqrtf(float noundef %i.sh) #14
+  %i.si = call float @llvm.sqrt.f32(float %i.sh)
   %i.sj = fmul float %i.iu, %i.si
   %i.sk = fcmp ogt float %i.sj, %i.iw
   br i1 %i.sk, label %_ZN3ozz9animation7offline8DecimateISt6vectorINS1_12RawAnimation14TranslationKeyENS_12StdAllocatorIS5_EEENS1_12_GLOBAL__N_115PositionAdapterEEET_RKSB_RKT0_f.exit, label %bb.bt
@@ -912,7 +912,7 @@ bb.eu:                                            ; preds = %bb.et
   %i.ajc = fmul float %i.aiy, %i.aiy
   %i.ajd = call float @llvm.fmuladd.f32(float %i.aiv, float %i.aiv, float %i.ajc)
   %i.aje = call float @llvm.fmuladd.f32(float %i.ajb, float %i.ajb, float %i.ajd)
-  %i.ajf = call noundef float @sqrtf(float noundef %i.aje) #14, !noalias !153
+  %i.ajf = call float @llvm.sqrt.f32(float %i.aje)
   %i.ajg = fmul float %i.im, %i.ajf               ; 3 uses
   %i.ajh = fcmp ogt float %i.ajg, %i.iw
   %i.aji = fcmp ogt float %i.ajg, %.05039.i208
@@ -1217,7 +1217,7 @@ bb.ft:                                            ; preds = %bb.fs, %bb.fr
   %i.anj = fmul float %i.anf, %i.anf
   %i.ank = call float @llvm.fmuladd.f32(float %i.anc, float %i.anc, float %i.anj)
   %i.anl = call float @llvm.fmuladd.f32(float %i.ani, float %i.ani, float %i.ank)
-  %i.anm = call noundef float @sqrtf(float noundef %i.anl) #14
+  %i.anm = call float @llvm.sqrt.f32(float %i.anl)
   %i.ann = fmul float %i.im, %i.anm
   %i.ano = fcmp ogt float %i.ann, %i.iw
   br i1 %i.ano, label %_ZN3ozz9animation7offline8DecimateISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS5_EEENS1_12_GLOBAL__N_112ScaleAdapterEEET_RKSB_RKT0_f.exit, label %bb.fv
@@ -1618,6 +1618,9 @@ declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #9

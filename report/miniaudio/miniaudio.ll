@@ -205,20 +205,20 @@ bb.a:
   ret float %i.c
 }
 
-; Function Attrs: nounwind uwtable
-define float @ma_vec3f_len(<2 x float> %0, float %1) local_unnamed_addr #36 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
+define float @ma_vec3f_len(<2 x float> %0, float %1) local_unnamed_addr #35 {
 bb.a:
   %.sroa.04.0.vec.extract.i.i = extractelement <2 x float> %0, i64 0 ; 2 uses
   %foldExtExtBinop = fmul <2 x float> %0, %0
   %i.a = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.b = tail call float @llvm.fmuladd.f32(float %.sroa.04.0.vec.extract.i.i, float %.sroa.04.0.vec.extract.i.i, float %i.a)
   %i.c = tail call float @llvm.fmuladd.f32(float %1, float %1, float %i.b)
-  %sqrtf = tail call float @sqrtf(float noundef %i.c) #55
+  %sqrtf = tail call float @llvm.sqrt.f32(float %i.c)
   ret float %sqrtf
 }
 
-; Function Attrs: nounwind uwtable
-define float @ma_vec3f_dist(<2 x float> %0, float %1, <2 x float> %2, float %3) local_unnamed_addr #36 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
+define float @ma_vec3f_dist(<2 x float> %0, float %1, <2 x float> %2, float %3) local_unnamed_addr #35 {
 bb.a:
   %foldExtExtBinop = fsub <2 x float> %0, %2
   %i.a = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
@@ -228,7 +228,7 @@ bb.a:
   %i.c = extractelement <2 x float> %foldExtExtBinop20, i64 1
   %i.d = tail call float @llvm.fmuladd.f32(float %i.a, float %i.a, float %i.c)
   %i.e = tail call float @llvm.fmuladd.f32(float %i.b, float %i.b, float %i.d)
-  %sqrtf.i = tail call float @sqrtf(float noundef %i.e) #55
+  %sqrtf.i = tail call float @llvm.sqrt.f32(float %i.e)
   ret float %sqrtf.i
 }
 
@@ -631,7 +631,7 @@ ma_spatializer_get_attenuation_model.exit:        ; preds = %bb.k, %ma_spatializ
   %i.cc = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.cd = call float @llvm.fmuladd.f32(float %.sroa.04.0.vec.extract.i.i.i, float %.sroa.04.0.vec.extract.i.i.i, float %i.cc)
   %i.ce = call float @llvm.fmuladd.f32(float %.sroa.296.0.copyload, float %.sroa.296.0.copyload, float %i.cd)
-  %sqrtf.i = call float @sqrtf(float noundef %i.ce) #55 ; 10 uses
+  %sqrtf.i = call float @llvm.sqrt.f32(float %i.ce) ; 10 uses
   %i.cf = load atomic i32, ptr %i.g seq_cst, align 8
   switch i32 %i.cf, label %ma_attenuation_inverse.exit [
     i32 1, label %bb.l
@@ -1034,12 +1034,12 @@ ma_spatializer_get_velocity.exit:                 ; preds = %.loopexit.i.i.i355,
   store atomic volatile i32 0, ptr %i.lu release, align 4
   %i.md = fmul float %i.lr, %i.lr
   %i.me = call float @llvm.fmuladd.f32(float %i.lq, float %i.lq, float %i.md)
-  %i.mf = call float @llvm.fmuladd.f32(float %i.ls, float %i.ls, float %i.me)
-  %sqrtf.i.i = call float @sqrtf(float noundef %i.mf) #55 ; 2 uses
-  %i.mg = fcmp oeq float %sqrtf.i.i, 0.000000e+00
+  %i.mf = call float @llvm.fmuladd.f32(float %i.ls, float %i.ls, float %i.me) ; 2 uses
+  %i.mg = fcmp oeq float %i.mf, 0.000000e+00
   br i1 %i.mg, label %ma_doppler_pitch.exit, label %bb.aj
 
 bb.aj:                                            ; preds = %ma_spatializer_get_velocity.exit
+  %sqrt.i.i = call float @llvm.sqrt.f32(float %i.mf)
   %i.mh = fdiv float %i.be, %i.as
   %i.mi = fneg float %i.as
   %i.mj = shufflevector <2 x float> %.sroa.03.0.copyload.i.i, <2 x float> %.sroa.03.0.copyload.i.i357, <2 x i32> <i32 1, i32 3>
@@ -1053,7 +1053,7 @@ bb.aj:                                            ; preds = %ma_spatializer_get_
   %i.mr = insertelement <2 x float> poison, float %.sroa.24.0.copyload.i.i, i64 0
   %i.ms = insertelement <2 x float> %i.mr, float %.sroa.24.0.copyload.i.i359, i64 1
   %i.mt = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.mq, <2 x float> %i.ms, <2 x float> %i.mo)
-  %i.mu = insertelement <2 x float> poison, float %sqrtf.i.i, i64 0
+  %i.mu = insertelement <2 x float> poison, float %sqrt.i.i, i64 0
   %i.mv = shufflevector <2 x float> %i.mu, <2 x float> poison, <2 x i32> zeroinitializer
   %i.mw = fdiv <2 x float> %i.mt, %i.mv           ; 2 uses
   %i.mx = insertelement <2 x float> poison, float %i.mh, i64 0
@@ -1456,7 +1456,8 @@ declare i16 @llvm.smax.i16(i16, i16) #33
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smin.i16(i16, i16) #33
 
-declare float @sqrtf(float) local_unnamed_addr
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.smax.v8i16(<8 x i16>, <8 x i16>) #33

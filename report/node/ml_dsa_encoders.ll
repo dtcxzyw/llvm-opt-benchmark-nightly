@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/ml_dsa_encoders?download=true
-inline.NumInlined: 122
-inline.NumDeleted: 29
+inline.NumInlined: 124
+inline.NumDeleted: 31
 loop-unroll.NumUnrolled: 2
 begin_hunk_0_@poly_decode_signed_two_to_power_19:bb.a
   br label %bb.b
@@ -203,137 +203,139 @@ PACKET_buf_init.exit.thread:                      ; preds = %bb.a, %bb.d, %bb.c
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @ossl_ml_dsa_w1_encode(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca %struct.wpacket_st, align 8         ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  %i.a = call i32 @WPACKET_init_static_len(ptr noundef nonnull %4, ptr noundef %2, i64 noundef %3, i64 noundef 0) #8
+  %4 = alloca ptr, align 8                        ; 10 uses
+  %5 = alloca ptr, align 8                        ; 8 uses
+  %6 = alloca %struct.wpacket_st, align 8         ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
+  %i.a = call i32 @WPACKET_init_static_len(ptr noundef nonnull %6, ptr noundef %2, i64 noundef %3, i64 noundef 0) #8
   %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  br i1 %.not, label %bb.d, label %7
 
-bb.b:                                             ; preds = %bb.a
-  %5 = icmp eq i32 %1, 261888
-  %poly_encode_4_bits.poly_encode_6_bits = select i1 %5, ptr @poly_encode_4_bits, ptr @poly_encode_6_bits
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %6 = load i64, ptr %i.b, align 8, !tbaa !50
-  %.not17 = icmp eq i64 %6, 0
-  br i1 %.not17, label %._crit_edge, label %.lr.ph.a
+7:                                                ; preds = %bb.a
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %9 = load i64, ptr %8, align 8, !tbaa !50
+  %.not18 = icmp eq i64 %9, 0
+  br i1 %.not18, label %._crit_edge, label %.lr.ph
 
-bb.c:                                             ; preds = %.lr.ph.a
-  %i.c = add nuw i64 %.014, 1                     ; 2 uses
-  %i.d = load i64, ptr %i.b, align 8, !tbaa !50
-  %i.e = icmp ult i64 %i.c, %i.d
-  br i1 %i.e, label %.lr.ph.a, label %._crit_edge, !llvm.loop !86
+.lr.ph:                                           ; preds = %7
+  %.not14 = icmp eq i32 %1, 261888
+  br i1 %.not14, label %call.1.us, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %bb.b, %bb.c
-  %.014 = phi i64 [ %i.c, %bb.c ], [ 0, %bb.b ]   ; 2 uses
-  %i.f = load ptr, ptr %0, align 8, !tbaa !49
-  %i.g = getelementptr inbounds nuw [1024 x i8], ptr %i.f, i64 %.014
-  %7 = call i32 %poly_encode_4_bits.poly_encode_6_bits(ptr noundef %i.g, ptr noundef nonnull %4) #8, !callees !87
-  %.not13 = icmp eq i32 %7, 0
-  br i1 %.not13, label %._crit_edge, label %bb.c
+call.1.us:                                        ; preds = %.lr.ph, %29
+  %.015.us = phi i64 [ %30, %29 ], [ 0, %.lr.ph ] ; 2 uses
+  %10 = load ptr, ptr %0, align 8, !tbaa !49
+  %11 = getelementptr inbounds nuw [1024 x i8], ptr %10, i64 %.015.us ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
+  %12 = call i32 @WPACKET_allocate_bytes(ptr noundef nonnull %6, i64 noundef 128, ptr noundef nonnull %5) #8
+  %.not.i = icmp eq i32 %12, 0
+  br i1 %.not.i, label %poly_encode_4_bits.exit.thread, label %bb.b
 
-._crit_edge:                                      ; preds = %.lr.ph.a, %bb.c, %bb.b
-  %.010 = phi i32 [ 1, %bb.b ], [ 1, %bb.c ], [ 0, %.lr.ph.a ]
-  %i.h = call i32 @WPACKET_finish(ptr noundef nonnull %4) #8 ; 0 uses
-  br label %bb.d
+poly_encode_4_bits.exit.thread:                   ; preds = %call.1.us
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
+  br label %._crit_edge
 
-bb.d:                                             ; preds = %bb.a, %._crit_edge
-  %.012 = phi i32 [ %.010, %._crit_edge ], [ 0, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
-  ret i32 %.012
-}
-
-; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @poly_encode_4_bits(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 {
-  %3 = alloca ptr, align 8                        ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  %4 = call i32 @WPACKET_allocate_bytes(ptr noundef %1, i64 noundef 128, ptr noundef nonnull %3) #8
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %.loopexit, label %.preheader
-
-.preheader:                                       ; preds = %2, %.preheader
-  %.09.idx = phi i64 [ %.09.add.1, %.preheader ], [ 0, %2 ] ; 3 uses
-  %.09.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.09.idx ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.09.ptr, i64 4
-  %6 = load i32, ptr %.09.ptr, align 4, !tbaa !25
-  %.09.add = or disjoint i64 %.09.idx, 8          ; 2 uses
-  %7 = load i32, ptr %5, align 4, !tbaa !25
-  %8 = shl i32 %7, 4
-  %9 = or i32 %8, %6
-  %10 = trunc i32 %9 to i8
-  %11 = load ptr, ptr %3, align 8, !tbaa !26      ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 1
-  store ptr %12, ptr %3, align 8, !tbaa !26
-  store i8 %10, ptr %11, align 1, !tbaa !27
-  %.09.ptr.1 = getelementptr inbounds nuw i8, ptr %0, i64 %.09.add ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %.09.ptr.1, i64 4
-  %14 = load i32, ptr %.09.ptr.1, align 4, !tbaa !25
-  %.09.add.1 = add nuw nsw i64 %.09.idx, 16
+bb.b:                                             ; preds = %call.1.us, %bb.b
+  %.09.idx.i = phi i64 [ %.09.add.i.1, %bb.b ], [ 0, %call.1.us ] ; 3 uses
+  %.09.ptr.i = getelementptr inbounds nuw i8, ptr %11, i64 %.09.idx.i ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.09.ptr.i, i64 4
+  %14 = load i32, ptr %.09.ptr.i, align 4, !tbaa !25
+  %.09.add.i = or disjoint i64 %.09.idx.i, 8      ; 2 uses
   %15 = load i32, ptr %13, align 4, !tbaa !25
   %16 = shl i32 %15, 4
   %17 = or i32 %16, %14
   %18 = trunc i32 %17 to i8
-  %19 = load ptr, ptr %3, align 8, !tbaa !26      ; 2 uses
+  %19 = load ptr, ptr %5, align 8, !tbaa !26      ; 2 uses
   %20 = getelementptr inbounds nuw i8, ptr %19, i64 1
-  store ptr %20, ptr %3, align 8, !tbaa !26
+  store ptr %20, ptr %5, align 8, !tbaa !26
   store i8 %18, ptr %19, align 1, !tbaa !27
-  %21 = icmp samesign ult i64 %.09.add, 1016
-  br i1 %21, label %.preheader, label %.loopexit, !llvm.loop !88
-
-.loopexit:                                        ; preds = %.preheader, %2
-  %.0 = phi i32 [ 0, %2 ], [ 1, %.preheader ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  ret i32 %.0
-}
-
-; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @poly_encode_6_bits(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 {
-  %3 = alloca ptr, align 8                        ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  %4 = call i32 @WPACKET_allocate_bytes(ptr noundef %1, i64 noundef 192, ptr noundef nonnull %3) #8
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %.loopexit, label %.preheader
-
-.preheader:                                       ; preds = %2, %.preheader
-  %.015.idx = phi i64 [ %.015.add, %.preheader ], [ 0, %2 ] ; 3 uses
-  %.015.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.015.idx ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.015.ptr, i64 4
-  %6 = load i32, ptr %.015.ptr, align 4, !tbaa !25
-  %7 = getelementptr inbounds nuw i8, ptr %.015.ptr, i64 8
-  %8 = load i32, ptr %5, align 4, !tbaa !25       ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.015.ptr, i64 12
-  %10 = load i32, ptr %7, align 4, !tbaa !25      ; 2 uses
-  %.015.add = add nuw nsw i64 %.015.idx, 16
-  %11 = load i32, ptr %9, align 4, !tbaa !25
-  %12 = shl i32 %8, 6
-  %13 = or i32 %12, %6
-  %14 = trunc i32 %13 to i8
-  %15 = load ptr, ptr %3, align 8, !tbaa !26      ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 1
-  store ptr %16, ptr %3, align 8, !tbaa !26
-  store i8 %14, ptr %15, align 1, !tbaa !27
-  %17 = lshr i32 %8, 2
-  %18 = shl i32 %10, 4
-  %19 = or i32 %18, %17
-  %20 = trunc i32 %19 to i8
-  %21 = load ptr, ptr %3, align 8, !tbaa !26      ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 1
-  store ptr %22, ptr %3, align 8, !tbaa !26
-  store i8 %20, ptr %21, align 1, !tbaa !27
-  %23 = lshr i32 %10, 4
-  %24 = shl i32 %11, 2
-  %25 = or i32 %24, %23
+  %.09.ptr.i.1 = getelementptr inbounds nuw i8, ptr %11, i64 %.09.add.i ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %.09.ptr.i.1, i64 4
+  %22 = load i32, ptr %.09.ptr.i.1, align 4, !tbaa !25
+  %.09.add.i.1 = add nuw nsw i64 %.09.idx.i, 16
+  %23 = load i32, ptr %21, align 4, !tbaa !25
+  %24 = shl i32 %23, 4
+  %25 = or i32 %24, %22
   %26 = trunc i32 %25 to i8
-  %27 = load ptr, ptr %3, align 8, !tbaa !26      ; 2 uses
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 1
-  store ptr %28, ptr %3, align 8, !tbaa !26
+  %27 = load ptr, ptr %5, align 8, !tbaa !26      ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %27, i64 1
+  store ptr %i.b, ptr %5, align 8, !tbaa !26
   store i8 %26, ptr %27, align 1, !tbaa !27
-  %29 = icmp samesign ult i64 %.015.idx, 1008
-  br i1 %29, label %.preheader, label %.loopexit, !llvm.loop !89
+  %28 = icmp samesign ult i64 %.09.add.i, 1016
+  br i1 %28, label %bb.b, label %29, !llvm.loop !86
 
-.loopexit:                                        ; preds = %.preheader, %2
-  %.0 = phi i32 [ 0, %2 ], [ 1, %.preheader ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
-  ret i32 %.0
+29:                                               ; preds = %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
+  %30 = add nuw i64 %.015.us, 1                   ; 2 uses
+  %31 = load i64, ptr %8, align 8, !tbaa !50
+  %32 = icmp ult i64 %30, %31
+  br i1 %32, label %call.1.us, label %._crit_edge, !llvm.loop !87
+
+bb.c:                                             ; preds = %.preheader.i25
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  %i.c = add nuw i64 %.014, 1                     ; 2 uses
+  %i.d = load i64, ptr %8, align 8, !tbaa !50
+  %i.e = icmp ult i64 %i.c, %i.d
+  br i1 %i.e, label %.lr.ph.a, label %._crit_edge, !llvm.loop !87
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.c
+  %.014 = phi i64 [ %i.c, %bb.c ], [ 0, %.lr.ph ] ; 2 uses
+  %i.f = load ptr, ptr %0, align 8, !tbaa !49
+  %i.g = getelementptr inbounds nuw [1024 x i8], ptr %i.f, i64 %.014
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
+  %33 = call i32 @WPACKET_allocate_bytes(ptr noundef nonnull %6, i64 noundef 192, ptr noundef nonnull %4) #8
+  %.not13 = icmp eq i32 %33, 0
+  br i1 %.not13, label %poly_encode_6_bits.exit.thread, label %.preheader.i25
+
+poly_encode_6_bits.exit.thread:                   ; preds = %.lr.ph.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  br label %._crit_edge
+
+.preheader.i25:                                   ; preds = %.lr.ph.a, %.preheader.i25
+  %.015.idx.i = phi i64 [ %.015.add.i, %.preheader.i25 ], [ 0, %.lr.ph.a ] ; 3 uses
+  %.015.ptr.i = getelementptr inbounds nuw i8, ptr %i.g, i64 %.015.idx.i ; 4 uses
+  %34 = getelementptr inbounds nuw i8, ptr %.015.ptr.i, i64 4
+  %35 = load i32, ptr %.015.ptr.i, align 4, !tbaa !25
+  %36 = getelementptr inbounds nuw i8, ptr %.015.ptr.i, i64 8
+  %37 = load i32, ptr %34, align 4, !tbaa !25     ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %.015.ptr.i, i64 12
+  %39 = load i32, ptr %36, align 4, !tbaa !25     ; 2 uses
+  %.015.add.i = add nuw nsw i64 %.015.idx.i, 16
+  %40 = load i32, ptr %38, align 4, !tbaa !25
+  %41 = shl i32 %37, 6
+  %42 = or i32 %41, %35
+  %43 = trunc i32 %42 to i8
+  %44 = load ptr, ptr %4, align 8, !tbaa !26      ; 2 uses
+  %45 = getelementptr inbounds nuw i8, ptr %44, i64 1
+  store ptr %45, ptr %4, align 8, !tbaa !26
+  store i8 %43, ptr %44, align 1, !tbaa !27
+  %46 = lshr i32 %37, 2
+  %47 = shl i32 %39, 4
+  %48 = or i32 %47, %46
+  %49 = trunc i32 %48 to i8
+  %50 = load ptr, ptr %4, align 8, !tbaa !26      ; 2 uses
+  %51 = getelementptr inbounds nuw i8, ptr %50, i64 1
+  store ptr %51, ptr %4, align 8, !tbaa !26
+  store i8 %49, ptr %50, align 1, !tbaa !27
+  %52 = lshr i32 %39, 4
+  %53 = shl i32 %40, 2
+  %54 = or i32 %53, %52
+  %55 = trunc i32 %54 to i8
+  %56 = load ptr, ptr %4, align 8, !tbaa !26      ; 2 uses
+  %57 = getelementptr inbounds nuw i8, ptr %56, i64 1
+  store ptr %57, ptr %4, align 8, !tbaa !26
+  store i8 %55, ptr %56, align 1, !tbaa !27
+  %58 = icmp samesign ult i64 %.015.idx.i, 1008
+  br i1 %58, label %.preheader.i25, label %bb.c, !llvm.loop !88
+
+._crit_edge:                                      ; preds = %bb.c, %29, %poly_encode_6_bits.exit.thread, %poly_encode_4_bits.exit.thread, %7
+  %.010 = phi i32 [ 0, %poly_encode_6_bits.exit.thread ], [ 1, %7 ], [ 0, %poly_encode_4_bits.exit.thread ], [ 1, %29 ], [ 1, %bb.c ]
+  %i.h = call i32 @WPACKET_finish(ptr noundef nonnull %6) #8 ; 0 uses
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.a, %._crit_edge
+  %.012 = phi i32 [ %.010, %._crit_edge ], [ 0, %bb.a ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
+  ret i32 %.012
 }
 
 declare i32 @WPACKET_allocate_bytes(ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
@@ -458,7 +460,6 @@ attributes #9 = { nounwind memory(none) }
 !84 = distinct !{!84, !28}
 !85 = distinct !{!85, !28}
 !86 = distinct !{!86, !28}
-!87 = !{ptr @poly_encode_4_bits, ptr @poly_encode_6_bits}
+!87 = distinct !{!87, !28}
 !88 = distinct !{!88, !28}
-!89 = distinct !{!89, !28}
 end_hunk_0

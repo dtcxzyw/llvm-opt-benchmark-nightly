@@ -204,7 +204,7 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
   %i.zx = extractelement <2 x float> %foldExtExtBinop25547, i64 0
   %i.zy = fmul float %i.yu, %i.yu
   %i.zz = fadd float %i.zy, %i.zx
-  %i.aaa = call float @sqrtf(float noundef %i.zz) #16
+  %i.aaa = call float @llvm.sqrt.f32(float %i.zz)
   %i.aab = fpext float %i.aaa to double
   %i.aac = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.e, i64 noundef 32, ptr noundef nonnull @.str.3, double noundef %i.aab) #16 ; 0 uses
   %i.aad = load ptr, ptr %i.bd, align 8, !tbaa !475 ; 4 uses
@@ -607,7 +607,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.dl, label %b3Normalize.exit, label %bb.s
 
 b3Normalize.exit:                                 ; preds = %bb.r
-  %i.dm = call float @sqrtf(float noundef %i.dk) #16
+  %i.dm = call float @llvm.sqrt.f32(float %i.dk)
   %i.dn = fdiv float 1.000000e+00, %i.dm          ; 2 uses
   %i.do = insertelement <2 x float> poison, float %i.dn, i64 0
   %i.dp = shufflevector <2 x float> %i.do, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1010,7 +1010,7 @@ bb.cm:                                            ; preds = %bb.ck, %bb.cl
   br i1 %or.cond343, label %bb.cn, label %.thread558
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.sk = tail call float @sqrtf(float noundef %i.sg) #16
+  %i.sk = tail call float @llvm.sqrt.f32(float %i.sg)
   %i.sl = fsub float %i.nx, %i.sk                 ; 2 uses
   %i.sm = shufflevector <2 x float> %.sroa.5147.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.sn = fcmp ogt float %.sroa.5143.0, %.sroa.5.0
@@ -1411,6 +1411,9 @@ declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4

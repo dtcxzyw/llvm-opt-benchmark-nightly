@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ch = fmul nnan double %i.cf, %i.cf
   %i.ci = tail call double @llvm.fmuladd.f64(double %i.ce, double %i.ce, double %i.ch)
   %i.cj = tail call double @llvm.fmuladd.f64(double %i.cg, double %i.cg, double %i.ci)
-  %i.ck = tail call noundef double @sqrt(double noundef %i.cj) #30
+  %i.ck = tail call noundef double @llvm.sqrt.f64(double %i.cj)
   %i.cl = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.077.0.lcssa, i1 true) ; 4 uses
   %i.cm = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.8.0.lcssa, i1 true) ; 4 uses
   %i.cn = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.13.0.lcssa, i1 true) ; 4 uses
@@ -608,7 +608,7 @@ _ZNK5o3dgc13AdjacencyInfo5BeginEl.exit:           ; preds = %bb.f, %bb.g
   %i.au = fmul nnan double %i.as, %i.as
   %i.av = tail call double @llvm.fmuladd.f64(double %i.ar, double %i.ar, double %i.au)
   %i.aw = tail call double @llvm.fmuladd.f64(double %i.at, double %i.at, double %i.av)
-  %i.ax = tail call noundef double @sqrt(double noundef %i.aw) #30
+  %i.ax = tail call noundef double @llvm.sqrt.f64(double %i.aw)
   %i.ay = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.095.0.lcssa, i1 true) ; 4 uses
   %i.az = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.898.0.lcssa, i1 true) ; 4 uses
   %i.ba = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.13101.0.lcssa, i1 true) ; 4 uses
@@ -743,7 +743,7 @@ _ZN5o3dgc12SphereToCubeIlEEvT_S1_S1_RS1_S2_Rc.exit: ; preds = %bb.m, %bb.n, %bb.
   %i.dy = fmul double %i.dv, %i.dv
   %i.dz = tail call double @llvm.fmuladd.f64(double %i.ds, double %i.ds, double %i.dy)
   %i.ea = tail call double @llvm.fmuladd.f64(double %i.dx, double %i.dx, double %i.dz)
-  %i.eb = tail call noundef double @sqrt(double noundef %i.ea) #30
+  %i.eb = tail call noundef double @llvm.sqrt.f64(double %i.ea)
   %i.ec = fptrunc double %i.eb to float           ; 3 uses
   %i.ed = fcmp une float %i.ec, 0.000000e+00      ; 2 uses
   %i.ee = fdiv float %i.dq, %i.ec
@@ -1145,6 +1145,9 @@ declare i32 @llvm.umin.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #23

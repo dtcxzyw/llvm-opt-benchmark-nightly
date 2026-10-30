@@ -205,7 +205,7 @@ bb.kq:                                            ; preds = %bb.kp
   %i.akp = fmul double %i.ako, %i.ako
   %i.akq = call double @llvm.fmuladd.f64(double %i.akn, double %i.akn, double %i.akp)
   %i.akr = fadd double %i.akq, 1.000000e-04
-  %i.aks = call double @sqrt(double noundef %i.akr) #27
+  %i.aks = call double @llvm.sqrt.f64(double %i.akr)
   %i.akt = fdiv double 2.000000e+00, %i.aks       ; 2 uses
   %i.aku = fmul double %i.ako, %i.akt
   %i.akv = fneg double %i.akn
@@ -223,7 +223,7 @@ bb.kr:                                            ; preds = %bb.kp
   %i.alc = fmul double %i.alb, %i.alb
   %i.ald = call double @llvm.fmuladd.f64(double %i.akz, double %i.akz, double %i.alc)
   %i.ale = fadd double %i.ald, 1.000000e-04
-  %i.alf = call double @sqrt(double noundef %i.ale) #27
+  %i.alf = call double @llvm.sqrt.f64(double %i.ale)
   %i.alg = fdiv double 2.000000e+00, %i.alf       ; 2 uses
   %i.alh = fmul double %i.alb, %i.alg
   %i.ali = fneg double %i.akz
@@ -256,7 +256,7 @@ bb.kt:                                            ; preds = %bb.ks
   %i.alz = extractelement <2 x double> %i.alx, i64 0 ; 2 uses
   %i.ama = call double @llvm.fmuladd.f64(double %i.alz, double %i.alz, double %i.aly)
   %i.amb = fadd double %i.ama, 1.000000e-04
-  %i.amc = call double @sqrt(double noundef %i.amb) #27
+  %i.amc = call double @llvm.sqrt.f64(double %i.amb)
   br label %computeoffset_qr.exit.i
 
 computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
@@ -302,7 +302,7 @@ computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
   %i.ane = fmul double %i.and, %i.and
   %i.anf = call double @llvm.fmuladd.f64(double %i.anb, double %i.anb, double %i.ane)
   %i.ang = fadd double %i.anf, 1.000000e-04
-  %i.anh = call double @sqrt(double noundef %i.ang) #27
+  %i.anh = call double @llvm.sqrt.f64(double %i.ang)
   %i.ani = fdiv double 2.000000e+00, %i.anh
   %i.anj = fneg double %i.anb
   %i.ank = getelementptr inbounds nuw [16 x i8], ptr %i.amx, i64 %.0408.lcssa.i
@@ -705,38 +705,36 @@ bb.i:                                             ; preds = %bb.h
   %i.ab = phi double [ %i.ah, %.lr.ph ], [ %.pre, %.lr.ph.preheader ]
   %.0729 = phi i64 [ %i.as, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.0738 = phi double [ %i.ar, %.lr.ph ], [ 0.000000e+00, %.lr.ph.preheader ]
-  %.0757 = phi ptr [ %i.ag, %.lr.ph ], [ %.0.val, %.lr.ph.preheader ] ; 7 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %.0757, i64 16
-  %3 = load double, ptr %i.ac, align 8, !tbaa !121 ; 2 uses
-  %4 = fsub double %i.ab, %3                      ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %.0757, i64 8
-  %i.ae = load double, ptr %i.ad, align 8, !tbaa !126
-  %5 = getelementptr inbounds nuw i8, ptr %.0757, i64 24
-  %i.af = load double, ptr %5, align 8, !tbaa !126 ; 2 uses
-  %6 = fsub double %i.ae, %i.af                   ; 2 uses
-  %7 = fmul double %6, %6
-  %8 = tail call double @llvm.fmuladd.f64(double %4, double %4, double %7)
-  %9 = tail call double @sqrt(double noundef %8) #27
-  %10 = getelementptr inbounds nuw i8, ptr %.0757, i64 32
-  %11 = load double, ptr %10, align 8, !tbaa !121 ; 2 uses
-  %12 = fsub double %3, %11                       ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %.0757, i64 40
-  %14 = load double, ptr %13, align 8, !tbaa !126 ; 2 uses
-  %15 = fsub double %i.af, %14                    ; 2 uses
-  %16 = fmul double %15, %15
-  %17 = tail call double @llvm.fmuladd.f64(double %12, double %12, double %16)
-  %18 = tail call double @sqrt(double noundef %17) #27
-  %19 = fadd double %9, %18
+  %.0757 = phi ptr [ %i.ag, %.lr.ph ], [ %.0.val, %.lr.ph.preheader ] ; 5 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.0757, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %.0757, i64 32
+  %i.ad = getelementptr inbounds nuw i8, ptr %.0757, i64 40
+  %i.ae = load double, ptr %i.ad, align 8, !tbaa !126 ; 2 uses
+  %4 = load <4 x double>, ptr %i.ac, align 8, !tbaa !110 ; 3 uses
+  %i.af = load double, ptr %3, align 8, !tbaa !121
+  %5 = shufflevector <4 x double> %4, <4 x double> poison, <2 x i32> <i32 2, i32 1> ; 2 uses
+  %6 = insertelement <2 x double> %5, double %i.ab, i64 0
+  %7 = shufflevector <4 x double> %4, <4 x double> poison, <2 x i32> <i32 1, i32 3>
+  %8 = fsub <2 x double> %6, %7                   ; 2 uses
+  %9 = shufflevector <4 x double> %4, <4 x double> poison, <2 x i32> <i32 0, i32 2>
+  %10 = insertelement <2 x double> %5, double %i.ae, i64 1
+  %11 = fsub <2 x double> %9, %10                 ; 2 uses
+  %12 = fmul <2 x double> %11, %11
+  %13 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %8, <2 x double> %12)
+  %14 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %13) ; 2 uses
+  %shift = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %14, %shift
+  %15 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.ag = getelementptr inbounds nuw i8, ptr %.0757, i64 48 ; 2 uses
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !121 ; 2 uses
-  %i.ai = fsub double %11, %i.ah                  ; 2 uses
+  %i.ai = fsub double %i.af, %i.ah                ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.0757, i64 56
   %i.ak = load double, ptr %i.aj, align 8, !tbaa !126
-  %i.al = fsub double %14, %i.ak                  ; 2 uses
+  %i.al = fsub double %i.ae, %i.ak                ; 2 uses
   %i.am = fmul double %i.al, %i.al
   %i.an = tail call double @llvm.fmuladd.f64(double %i.ai, double %i.ai, double %i.am)
-  %i.ao = tail call double @sqrt(double noundef %i.an) #27
-  %i.ap = fadd double %19, %i.ao                  ; 2 uses
+  %i.ao = tail call double @llvm.sqrt.f64(double %i.an)
+  %i.ap = fadd double %15, %i.ao                  ; 2 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %.0729
   store double %i.ap, ptr %i.aq, align 8, !tbaa !110
   %i.ar = fadd double %.0738, %i.ap               ; 2 uses
@@ -902,9 +900,6 @@ gv_calloc.exit88:                                 ; preds = %.thread4, %bb.q
 bb.s:                                             ; preds = %._crit_edge28, %gv_calloc.exit79
   ret void
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #21
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal noundef double @forfunc(double noundef %0, double noundef %1, double noundef %2) #23 {
@@ -1308,6 +1303,9 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1333,6 +1331,9 @@ declare void @llvm.assume(i1 noundef) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fabs.v4f64(<4 x double>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

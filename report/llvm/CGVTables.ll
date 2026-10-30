@@ -204,21 +204,20 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !658
   %i.c = zext i32 %3 to i64                       ; 2 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 2 uses
-  %i.e = load ptr, ptr %0, align 8, !tbaa !399, !nonnull !396, !align !397 ; 7 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !399, !nonnull !396, !align !397 ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 152
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !816, !nonnull !396, !align !397
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 176
   %i.i = load i64, ptr %i.h, align 8
   %i.j = and i64 %i.i, 16
-  %.not = icmp eq i64 %i.j, 0                     ; 6 uses
-  %_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE._ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE = select i1 %.not, ptr @_ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE, ptr @_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE ; 3 uses
+  %.not = icmp eq i64 %i.j, 0                     ; 8 uses
   %i.k = load i64, ptr %i.d, align 8, !tbaa !818  ; 4 uses
   %i.l = trunc i64 %i.k to i32
   %i.m = and i32 %i.l, 7
   switch i32 %i.m, label %default.unreachable [
-    i32 0, label %bb.b
-    i32 1, label %bb.c
-    i32 2, label %bb.d
+    i32 0, label %8
+    i32 1, label %10
+    i32 2, label %bb.b
     i32 3, label %bb.e
     i32 4, label %bb.j
     i32 5, label %bb.j
@@ -226,19 +225,40 @@ bb.a:
     i32 7, label %bb.bf
   ]
 
+8:                                                ; preds = %bb.a
+  %9 = ashr i64 %i.k, 3                           ; 2 uses
+  br i1 %.not, label %call.1, label %call.0
+
+call.0:                                           ; preds = %8
+  tail call fastcc void @_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %9) #18, !callees !1376
+  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
+
+call.1:                                           ; preds = %8
+  tail call fastcc void @_ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %9) #18, !callees !1376
+  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
+
+10:                                               ; preds = %bb.a
+  %11 = ashr i64 %i.k, 3                          ; 2 uses
+  br i1 %.not, label %call.1183, label %call.0182
+
+call.0182:                                        ; preds = %10
+  tail call fastcc void @_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %11) #18, !callees !1376
+  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
+
+call.1183:                                        ; preds = %10
+  tail call fastcc void @_ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %11) #18, !callees !1376
+  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
+
 bb.b:                                             ; preds = %bb.a
-  %i.n = ashr i64 %i.k, 3
-  tail call void %_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE._ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %i.n) #18, !callees !1376
+  %i.n = ashr i64 %i.k, 3                         ; 2 uses
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  tail call fastcc void @_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %i.n) #18, !callees !1376
   br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
 
-bb.c:                                             ; preds = %bb.a
-  %8 = ashr i64 %i.k, 3
-  tail call void %_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE._ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %8) #18, !callees !1376
-  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
-
-bb.d:                                             ; preds = %bb.a
-  %9 = ashr i64 %i.k, 3
-  tail call void %_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE._ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %9) #18, !callees !1376
+bb.d:                                             ; preds = %bb.b
+  tail call fastcc void @_ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(4008) %i.e, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 %i.n) #18, !callees !1376
   br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit
 
 bb.e:                                             ; preds = %bb.a
@@ -641,12 +661,12 @@ bb.bl:                                            ; preds = %bb.bj
 default.unreachable:                              ; preds = %bb.a
   unreachable
 
-_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit: ; preds = %bb.bl, %bb.bk, %bb.bi, %bb.bh, %bb.x, %bb.y, %bb.be, %bb.bd, %bb.bc, %bb.aw, %bb.i, %bb.h, %bb.f, %bb.d, %bb.c, %bb.b
+_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit: ; preds = %bb.c, %bb.d, %call.0182, %call.1183, %call.0, %call.1, %bb.bl, %bb.bk, %bb.bi, %bb.bh, %bb.x, %bb.y, %bb.be, %bb.bd, %bb.bc, %bb.aw, %bb.i, %bb.h, %bb.f
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal void @_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(4008) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1, i64 %2) unnamed_addr #0 {
+define internal fastcc void @_ZL23AddRelativeLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(4008) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1, i64 %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !811
@@ -679,7 +699,7 @@ _ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit: ; pr
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal void @_ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(4008) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1, i64 %2) unnamed_addr #0 {
+define internal fastcc void @_ZL22AddPointerLayoutOffsetRKN5clang7CodeGen13CodeGenModuleERNS0_20ConstantArrayBuilderENS_9CharUnitsE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(4008) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1, i64 %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !403

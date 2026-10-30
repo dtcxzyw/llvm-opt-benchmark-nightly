@@ -205,7 +205,7 @@ bb.a:
   %i.eu = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.ev = load float, ptr %i.eu, align 4, !tbaa !49 ; 3 uses
   %i.ew = call noundef float @llvm.fmuladd.f32(float %i.ev, float %i.ev, float %i.et)
-  %i.ex = call noundef float @sqrtf(float noundef %i.ew) #16
+  %i.ex = call noundef float @llvm.sqrt.f32(float %i.ew)
   %i.ey = fdiv float 1.000000e+00, %i.ex          ; 4 uses
   %i.ez = fmul float %i.em, %i.ey                 ; 3 uses
   %i.fa = fmul float %i.eo, %i.ey                 ; 3 uses
@@ -227,7 +227,7 @@ bb.a:
   br i1 %i.fk, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.fl = call noundef float @sqrtf(float noundef %i.fj) #16
+  %i.fl = call float @llvm.sqrt.f32(float %i.fj)
   %i.fm = fdiv float 1.000000e+00, %i.fl          ; 3 uses
   %i.fn = fmul float %i.ez, %i.fm
   %i.fo = fmul float %i.fa, %i.fm
@@ -366,6 +366,9 @@ declare float @acosf(float noundef) local_unnamed_addr #12
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @sqrtf(float noundef) local_unnamed_addr #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #13

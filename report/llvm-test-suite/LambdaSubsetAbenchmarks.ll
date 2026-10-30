@@ -205,7 +205,7 @@ _ZN7ADomainD2Ev.exit:                             ; preds = %_ZNK9benchmark5Stat
   %i.bt = extractelement <4 x double> %i.bm, i64 3 ; 2 uses
   %i.bu = call double @llvm.fmuladd.f64(double %i.bt, double %i.bt, double %i.bs)
   %i.bv = fadd double %i.bu, f0x38E09D8792FB4C49
-  %i.bw = call double @sqrt(double noundef %i.bv) #9, !tbaa !8 ; 2 uses
+  %i.bw = call double @llvm.sqrt.f64(double %i.bv) ; 2 uses
   %i.bx = fmul double %i.bw, 2.080000e-01
   %i.by = fmul double %i.bx, 5.000000e-01         ; 2 uses
   %i.bz = call double @sin(double noundef %i.by) #9, !tbaa !8
@@ -226,9 +226,9 @@ _ZN7ADomainD2Ev.exit:                             ; preds = %_ZNK9benchmark5Stat
   %i.co = extractelement <2 x double> %i.ck, i64 1
   %i.cp = call double @llvm.fmuladd.f64(double %i.cn, double %i.cn, double %i.co) ; 2 uses
   %i.cq = shufflevector <4 x double> %i.ch, <4 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.cr = fmul <2 x double> %i.cq, %i.cc          ; 2 uses
+  %i.cr = fmul <2 x double> %i.cc, %i.cq          ; 2 uses
   %i.cs = shufflevector <4 x double> %i.ch, <4 x double> poison, <2 x i32> <i32 2, i32 2> ; 2 uses
-  %i.ct = fmul <2 x double> %i.cs, %i.cc
+  %i.ct = fmul <2 x double> %i.cc, %i.cs
   %i.cu = shufflevector <2 x double> %i.ct, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.cv = fsub <2 x double> %i.cr, %i.cu          ; 2 uses
   %i.cw = fadd <2 x double> %i.cr, %i.cu          ; 2 uses
@@ -376,8 +376,8 @@ _ZStmlIdESt7complexIT_ERKS2_S4_.exit116.i:        ; preds = %bb.n, %bb.m, %_ZStm
   %i.go = insertelement <2 x double> poison, double %i.gn, i64 0
   %i.gp = shufflevector <2 x double> %i.go, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gq = fmul <2 x double> %i.gp, %i.gm
-  %i.gr = fmul <2 x double> %i.cq, %i.cb          ; 2 uses
-  %i.gs = fmul <2 x double> %i.cs, %i.cb
+  %i.gr = fmul <2 x double> %i.cb, %i.cq          ; 2 uses
+  %i.gs = fmul <2 x double> %i.cb, %i.cs
   %i.gt = shufflevector <2 x double> %i.gs, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.gu = fadd <2 x double> %i.gr, %i.gt          ; 2 uses
   %i.gv = fsub <2 x double> %i.gr, %i.gt          ; 2 uses
@@ -406,7 +406,7 @@ _ZStmlIdESt7complexIT_ERKS2_S4_.exit129.i:        ; preds = %bb.p, %bb.o, %_ZStm
   %i.hj = fmul <2 x double> %i.el, %i.hi          ; 4 uses
   %i.hk = insertelement <2 x double> poison, double %i.ff, i64 0
   %i.hl = shufflevector <2 x double> %i.hk, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hm = fmul <2 x double> %i.hl, %i.cc
+  %i.hm = fmul <2 x double> %i.cc, %i.hl
   %i.hn = fadd <2 x double> %i.hm, %i.gq
   %i.ho = fmul <2 x double> %i.hj, zeroinitializer ; 2 uses
   %i.hp = shufflevector <2 x double> %i.hj, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
@@ -485,8 +485,8 @@ bb.v:                                             ; preds = %bb.u
 _ZStmlIdESt7complexIT_ERKS2_S4_.exit169.i:        ; preds = %bb.v, %bb.u, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit161.i
   %i.jj = phi <2 x double> [ %i.iz, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit161.i ], [ %i.iz, %bb.u ], [ %i.ji, %bb.v ]
   %i.jk = fmul <2 x double> %i.gp, %i.jj
-  %i.jl = fmul <2 x double> %i.dl, %i.cb          ; 2 uses
-  %i.jm = fmul <2 x double> %i.dn, %i.cb
+  %i.jl = fmul <2 x double> %i.cb, %i.dl          ; 2 uses
+  %i.jm = fmul <2 x double> %i.cb, %i.dn
   %i.jn = shufflevector <2 x double> %i.jm, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.jo = fadd <2 x double> %i.jl, %i.jn          ; 2 uses
   %i.jp = fsub <2 x double> %i.jl, %i.jn          ; 2 uses
@@ -515,7 +515,7 @@ _ZStmlIdESt7complexIT_ERKS2_S4_.exit182.i:        ; preds = %bb.x, %bb.w, %_ZStm
   %i.kd = fmul <2 x double> %i.el, %i.kc          ; 4 uses
   %i.ke = insertelement <2 x double> poison, double %i.ig, i64 0
   %i.kf = shufflevector <2 x double> %i.ke, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.kg = fmul <2 x double> %i.kf, %i.cd
+  %i.kg = fmul <2 x double> %i.cd, %i.kf
   %i.kh = fadd <2 x double> %i.kg, %i.jk
   %i.ki = fmul <2 x double> %i.kd, zeroinitializer ; 2 uses
   %i.kj = shufflevector <2 x double> %i.kd, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
@@ -916,6 +916,9 @@ __cxx_global_var_init.10.exit:                    ; preds = %bb.ap, %_ZNKSt7__cx
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5

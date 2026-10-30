@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.a
 bb.k:                                             ; preds = %bb.j
   %i.akl = fmul nnan float %i.akh, %i.akh
   %i.akm = call float @llvm.fmuladd.f32(float %i.akf, float %i.akf, float %i.akl) ; 2 uses
-  %i.akn = call noundef float @sqrtf(float noundef %i.akm) #20, !tbaa !7
+  %i.akn = call float @llvm.sqrt.f32(float %i.akm)
   %i.ako = fdiv float 1.000000e+00, %i.akn        ; 3 uses
   %i.akp = fneg float %i.akh
   %i.akq = fmul float %i.ako, %i.akp              ; 2 uses
@@ -220,7 +220,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.akx = fmul float %i.akf, %i.akf
   %i.aky = call float @llvm.fmuladd.f32(float %i.akd, float %i.akd, float %i.akx) ; 2 uses
-  %i.akz = call noundef float @sqrtf(float noundef %i.aky) #20, !tbaa !7
+  %i.akz = call float @llvm.sqrt.f32(float %i.aky)
   %i.ala = fdiv float 1.000000e+00, %i.akz        ; 3 uses
   %i.alb = fneg float %i.akf
   %i.alc = fmul float %i.ala, %i.alb              ; 2 uses
@@ -623,7 +623,7 @@ bb.a:
   %i.t = tail call float @llvm.fmuladd.f32(float %i.s, float %i.s, float %i.r)
   %i.u = extractelement <2 x float> %i.q, i64 1   ; 2 uses
   %i.v = tail call noundef float @llvm.fmuladd.f32(float %i.u, float %i.u, float %i.t)
-  %i.w = tail call noundef float @sqrtf(float noundef %i.v) #20, !tbaa !7 ; 2 uses
+  %i.w = tail call noundef float @llvm.sqrt.f32(float %i.v) ; 2 uses
   %i.x = fmul float %3, %i.w
   %i.y = fcmp ogt float %i.x, f0x3F490FDB
   %i.z = fdiv float f0x3F490FDB, %3
@@ -698,12 +698,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.by = call float @llvm.fmuladd.f32(float %i.bx, float %i.bx, float %i.bw)
   %i.bz = extractelement <2 x float> %i.bt, i64 1 ; 2 uses
   %i.ca = call noundef float @llvm.fmuladd.f32(float %i.bz, float %i.bz, float %i.by)
-  %i.cb = call noundef float @sqrtf(float noundef %i.ca) #20, !tbaa !7
+  %i.cb = call noundef float @llvm.sqrt.f32(float %i.ca)
   %i.cc = fdiv float 1.000000e+00, %i.cb
   %i.cd = insertelement <2 x float> poison, float %i.cc, i64 0
   %i.ce = shufflevector <2 x float> %i.cd, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.cf = fmul <2 x float> %i.ce, %i.bh           ; 6 uses
-  %i.cg = fmul <2 x float> %i.ce, %i.bt           ; 4 uses
+  %i.cf = fmul <2 x float> %i.bh, %i.ce           ; 6 uses
+  %i.cg = fmul <2 x float> %i.bt, %i.ce           ; 4 uses
   %i.ch = extractelement <2 x float> %i.cf, i64 0
   %foldExtExtBinop73 = fmul <2 x float> %i.cf, %i.cf
   %i.ci = extractelement <2 x float> %foldExtExtBinop73, i64 0
@@ -1105,6 +1105,9 @@ declare i32 @llvm.umax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #17

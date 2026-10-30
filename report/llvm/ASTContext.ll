@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ASTContext?download=true
-inline.NumInlined: 31047
+inline.NumInlined: 31049
 inline.NumDeleted: 11167
 loop-unroll.NumCompletelyUnrolled: 17
 loop-unroll.NumRuntimeUnrolled: 5
@@ -205,7 +205,7 @@ _ZNK5clang8QualType5splitEv.exit33:               ; preds = %bb.g, %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3323)
   %i.z = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 2 uses
   store ptr %i.z, ptr %29, align 8, !tbaa !655, !alias.scope !3323
-  %i.aa = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 9 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 10 uses
   store i32 0, ptr %i.aa, align 8, !tbaa !657, !alias.scope !3323
   %i.ab = getelementptr inbounds nuw i8, ptr %29, i64 12 ; 2 uses
   store i32 8, ptr %i.ab, align 4, !tbaa !662, !alias.scope !3323
@@ -279,13 +279,13 @@ _ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit.loopexit: ; preds
 
 _ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit: ; preds = %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit.loopexit, %_ZNK5clang8QualType5splitEv.exit33
   %i.be = phi i64 [ %.sroa.3.0.i30, %_ZNK5clang8QualType5splitEv.exit33 ], [ %i.bd, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit.loopexit ] ; 2 uses
-  %.sroa.18.4 = phi i64 [ %.sroa.3.0.i, %_ZNK5clang8QualType5splitEv.exit33 ], [ %.sroa.3.0.i.i, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit.loopexit ] ; 4 uses
+  %.sroa.18.4 = phi i64 [ %.sroa.3.0.i, %_ZNK5clang8QualType5splitEv.exit33 ], [ %.sroa.3.0.i.i, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit.loopexit ] ; 5 uses
   %.sroa.0340.5 = phi ptr [ %.sroa.09.0.i, %_ZNK5clang8QualType5splitEv.exit33 ], [ %.sroa.09.0.i.i, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit.loopexit ] ; 77 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #28
   call void @llvm.experimental.noalias.scope.decl(metadata !3324)
   %i.bf = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 2 uses
   store ptr %i.bf, ptr %30, align 8, !tbaa !655, !alias.scope !3324
-  %i.bg = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 8 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 9 uses
   store i32 0, ptr %i.bg, align 8, !tbaa !657, !alias.scope !3324
   %i.bh = getelementptr inbounds nuw i8, ptr %30, i64 12 ; 2 uses
   store i32 8, ptr %i.bh, align 4, !tbaa !662, !alias.scope !3324
@@ -353,8 +353,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.ci, label %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit44, label %.lr.ph.i35
 
 _ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit44: ; preds = %bb.r, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit
-  %.promoted419 = phi i64 [ %i.be, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit ], [ %i.ce, %bb.r ] ; 3 uses
-  %.sroa.11.4 = phi i64 [ %.sroa.3.0.i30, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit ], [ %.sroa.3.0.i.i42, %bb.r ] ; 4 uses
+  %.promoted419 = phi i64 [ %i.be, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit ], [ %i.ce, %bb.r ] ; 4 uses
+  %.sroa.11.4 = phi i64 [ %.sroa.3.0.i30, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit ], [ %.sroa.3.0.i.i42, %bb.r ] ; 5 uses
   %.sroa.0326.0 = phi ptr [ %.sroa.09.0.i29, %_ZL11unwrapSugarRN5clang13SplitQualTypeERNS_10QualifiersE.exit ], [ %.sroa.09.0.i.i41, %bb.r ] ; 55 uses
   br i1 %3, label %bb.t, label %bb.s
 
@@ -374,20 +374,28 @@ bb.t:                                             ; preds = %bb.s, %_ZL11unwrapS
 
 .preheader:                                       ; preds = %bb.t
   %.promoted = load i32, ptr %i.aa, align 8, !tbaa !657 ; 2 uses
-  %.promoted418 = load i64, ptr %27, align 8      ; 3 uses
+  %.promoted418 = load i64, ptr %27, align 8      ; 4 uses
   %.not.i47421 = icmp eq i32 %.promoted, 0
   br i1 %.not.i47421, label %.critedge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
   %.promoted417 = load i32, ptr %i.bg, align 8    ; 2 uses
-  %i.co = load ptr, ptr %29, align 8
-  %i.cp = load ptr, ptr %30, align 8
+  %i.co = load ptr, ptr %29, align 8              ; 3 uses
+  %i.cp = load ptr, ptr %30, align 8              ; 3 uses
   %.not.i48557 = icmp eq i32 %.promoted417, 0
   br i1 %.not.i48557, label %.critedge.loopexit, label %.lr.ph562.a
 
 .lr.ph562.a:                                      ; preds = %.lr.ph
-  %i.cq = zext i32 %.promoted to i64
-  br label %bb.cn
+  %i.cq = zext i32 %.promoted to i64              ; 2 uses
+  %31 = zext i32 %.promoted417 to i64             ; 2 uses
+  %32 = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %i.cq
+  %33 = getelementptr inbounds i8, ptr %32, i64 -16
+  %34 = load ptr, ptr %33, align 8, !tbaa !3326   ; 2 uses
+  %35 = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %31
+  %36 = getelementptr inbounds i8, ptr %35, i64 -16
+  %37 = load ptr, ptr %36, align 8, !tbaa !3326
+  %38 = icmp eq ptr %34, %37
+  br i1 %38, label %bb.co, label %.critedge.loopexit
 
 bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %15)
@@ -790,11 +798,11 @@ bb.bu:                                            ; preds = %bb.u
   %i.op = load i32, ptr %i.oo, align 4, !tbaa !716
   %i.oq = zext i32 %i.op to i64
   %i.or = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 2 uses
-  store ptr %i.or, ptr %25, align 8, !tbaa !655, !alias.scope !3325
+  store ptr %i.or, ptr %25, align 8, !tbaa !655, !alias.scope !3327
   %i.os = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
-  store i32 0, ptr %i.os, align 8, !tbaa !657, !alias.scope !3325
+  store i32 0, ptr %i.os, align 8, !tbaa !657, !alias.scope !3327
   %i.ot = getelementptr inbounds nuw i8, ptr %25, i64 12
-  store i32 8, ptr %i.ot, align 4, !tbaa !662, !alias.scope !3325
+  store i32 8, ptr %i.ot, align 4, !tbaa !662, !alias.scope !3327
   %i.ou = call fastcc noundef zeroext i1 @_ZL26getCommonTemplateArgumentsRKN5clang10ASTContextERN4llvm15SmallVectorImplINS_16TemplateArgumentEEENS3_8ArrayRefIS5_EES9_(ptr noundef nonnull align 8 dereferenceable(23904) %0, ptr noundef nonnull align 8 dereferenceable(16) %25, ptr nonnull %i.oj, i64 %i.om, ptr nonnull %i.on, i64 %i.oq), !inline_history !3306 ; 0 uses
   %.val406.i = load i32, ptr %i.cr, align 16
   %i.ov = getelementptr i8, ptr %.sroa.0326.0, i64 16
@@ -947,13 +955,19 @@ bb.ck:                                            ; preds = %bb.u
   %i.qu = getelementptr inbounds nuw i8, ptr %.sroa.0340.5, i64 40
   %i.qv = load i8, ptr %i.qu, align 8, !tbaa !1216, !range !563, !noundef !510
   %i.qw = trunc nuw i8 %i.qv to i1
-  %31 = select i1 %i.qw, ptr @_ZNK5clang10ASTContext15getReadPipeTypeENS_8QualTypeE, ptr @_ZNK5clang10ASTContext16getWritePipeTypeENS_8QualTypeE
   %i.qx = getelementptr inbounds nuw i8, ptr %.sroa.0340.5, i64 32
   %.sroa.0.0.copyload.i.i123 = load i64, ptr %i.qx, align 16, !tbaa !716
   %i.qy = getelementptr inbounds nuw i8, ptr %.sroa.0326.0, i64 32
   %.sroa.0.0.copyload.i5.i = load i64, ptr %i.qy, align 16, !tbaa !716
-  %i.qz = call i64 @_ZNK5clang10ASTContext20getCommonSugaredTypeENS_8QualTypeES1_b(ptr noundef nonnull align 8 dereferenceable(23904) %0, i64 %.sroa.0.0.copyload.i.i123, i64 %.sroa.0.0.copyload.i5.i, i1 noundef zeroext false), !inline_history !3307
-  %32 = call i64 %31(ptr noundef nonnull align 8 dereferenceable(23904) %0, i64 %i.qz) #28, !inline_history !3292
+  %i.qz = call i64 @_ZNK5clang10ASTContext20getCommonSugaredTypeENS_8QualTypeES1_b(ptr noundef nonnull align 8 dereferenceable(23904) %0, i64 %.sroa.0.0.copyload.i.i123, i64 %.sroa.0.0.copyload.i5.i, i1 noundef zeroext false), !inline_history !3307 ; 2 uses
+  br i1 %i.qw, label %call.1, label %call.0
+
+call.0:                                           ; preds = %bb.ck
+  %39 = call range(i64 0, -7) i64 @_ZNK5clang10ASTContext11getPipeTypeENS_8QualTypeEb(ptr noundef nonnull align 8 dereferenceable(23904) %0, i64 %i.qz, i1 noundef zeroext false)
+  br label %_ZL25getCommonNonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeERNS_10QualifiersES5_S7_.exit
+
+call.1:                                           ; preds = %bb.ck
+  %40 = call range(i64 0, -7) i64 @_ZNK5clang10ASTContext11getPipeTypeENS_8QualTypeEb(ptr noundef nonnull align 8 dereferenceable(23904) %0, i64 %i.qz, i1 noundef zeroext true)
   br label %_ZL25getCommonNonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeERNS_10QualifiersES5_S7_.exit
 
 bb.cl:                                            ; preds = %bb.u
@@ -976,8 +990,8 @@ bb.cl:                                            ; preds = %bb.u
 bb.cm:                                            ; preds = %bb.u
   unreachable
 
-_ZL25getCommonNonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeERNS_10QualifiersES5_S7_.exit: ; preds = %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit206, %bb.aa, %bb.ab, %_ZN4llvm5APIntD2Ev.exit199, %_ZN4llvm5APIntD2Ev.exit, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.ay, %bb.az, %bb.ba, %bb.bb, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit169, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %_ZL20getCommonTypeKeywordIN5clang7TagTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit, %bb.ca, %bb.cb, %_ZL20getCommonTypeKeywordIN5clang17DependentNameTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit, %bb.ch, %bb.ci, %bb.cj, %bb.ck, %bb.cl
-  %.sroa.0371.0 = phi i64 [ %i.rn, %bb.cl ], [ %32, %bb.ck ], [ %i.qt, %bb.cj ], [ %i.qn, %bb.ci ], [ %i.qe, %bb.ch ], [ %i.py, %_ZL20getCommonTypeKeywordIN5clang17DependentNameTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit ], [ %i.pm, %bb.cb ], [ %i.pl, %bb.ca ], [ %i.pi, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit ], [ %i.oi, %_ZL20getCommonTypeKeywordIN5clang7TagTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit ], [ %i.nv, %bb.bo ], [ %i.nk, %bb.bn ], [ %i.nc, %bb.bm ], [ %i.mw, %bb.bl ], [ %i.mn, %bb.bk ], [ %i.mc, %bb.bj ], [ %i.lr, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit ], [ %i.kk, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit169 ], [ %i.jl, %bb.bb ], [ %i.jd, %bb.ba ], [ %i.iu, %bb.az ], [ %i.is, %bb.ay ], [ %i.ij, %bb.av ], [ %i.dt, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit206 ], [ %i.ed, %bb.aa ], [ %i.em, %bb.ab ], [ %i.fr, %_ZN4llvm5APIntD2Ev.exit199 ], [ %i.hh, %_ZN4llvm5APIntD2Ev.exit ], [ %i.hl, %bb.aq ], [ %i.hp, %bb.ar ], [ %i.ht, %bb.as ], [ %i.hx, %bb.at ], [ %i.ib, %bb.au ]
+_ZL25getCommonNonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeERNS_10QualifiersES5_S7_.exit: ; preds = %call.0, %call.1, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit206, %bb.aa, %bb.ab, %_ZN4llvm5APIntD2Ev.exit199, %_ZN4llvm5APIntD2Ev.exit, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.ay, %bb.az, %bb.ba, %bb.bb, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit169, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %bb.bo, %_ZL20getCommonTypeKeywordIN5clang7TagTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit, %bb.ca, %bb.cb, %_ZL20getCommonTypeKeywordIN5clang17DependentNameTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit, %bb.ch, %bb.ci, %bb.cj, %bb.cl
+  %.sroa.0371.0 = phi i64 [ %i.rn, %bb.cl ], [ %i.ib, %bb.au ], [ %i.qt, %bb.cj ], [ %i.qn, %bb.ci ], [ %i.qe, %bb.ch ], [ %i.py, %_ZL20getCommonTypeKeywordIN5clang17DependentNameTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit ], [ %i.pm, %bb.cb ], [ %i.pl, %bb.ca ], [ %i.pi, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit ], [ %i.oi, %_ZL20getCommonTypeKeywordIN5clang7TagTypeEENS0_21ElaboratedTypeKeywordEPKT_S5_b.exit ], [ %i.nv, %bb.bo ], [ %i.nk, %bb.bn ], [ %i.nc, %bb.bm ], [ %i.mw, %bb.bl ], [ %i.mn, %bb.bk ], [ %i.mc, %bb.bj ], [ %i.lr, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit ], [ %i.kk, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj8EED2Ev.exit169 ], [ %i.jl, %bb.bb ], [ %i.jd, %bb.ba ], [ %i.iu, %bb.az ], [ %i.is, %bb.ay ], [ %i.ij, %bb.av ], [ %i.dt, %_ZN4llvm11SmallVectorIN5clang16TemplateArgumentELj8EED2Ev.exit206 ], [ %i.ed, %bb.aa ], [ %i.em, %bb.ab ], [ %i.fr, %_ZN4llvm5APIntD2Ev.exit199 ], [ %i.hh, %_ZN4llvm5APIntD2Ev.exit ], [ %i.hl, %bb.aq ], [ %i.hp, %bb.ar ], [ %i.ht, %bb.as ], [ %i.hx, %bb.at ], [ %39, %call.0 ], [ %40, %call.1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
   call void @llvm.lifetime.end.p0(ptr nonnull %26)
   %i.ro = and i64 %.sroa.0371.0, -16
@@ -985,57 +999,52 @@ _ZL25getCommonNonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeERNS_10QualifiersE
   %i.rq = load ptr, ptr %i.rp, align 16, !tbaa !719
   br label %.critedge
 
-33:                                               ; preds = %_ZN5clang10QualifiersmIES0_.exit58
-  %.not.i48 = icmp eq i32 %38, 0
-  br i1 %.not.i48, label %.critedge.loopexit, label %bb.cn, !llvm.loop !3308
-
-bb.cn:                                            ; preds = %.lr.ph562.a, %33
-  %34 = phi i64 [ %.promoted419, %.lr.ph562.a ], [ %i.tj, %33 ] ; 4 uses
-  %35 = phi i64 [ %.promoted418, %.lr.ph562.a ], [ %i.sq, %33 ] ; 4 uses
-  %36 = phi i32 [ %.promoted417, %.lr.ph562.a ], [ %38, %33 ] ; 2 uses
-  %.sroa.18.0422561 = phi i64 [ %.sroa.18.4, %.lr.ph562.a ], [ %.sroa.2.0.copyload.i59, %33 ] ; 8 uses
-  %.sroa.0340.0423560 = phi ptr [ %.sroa.0340.5, %.lr.ph562.a ], [ %i.rt, %33 ]
-  %.sroa.11.0424559 = phi i64 [ %.sroa.11.4, %.lr.ph562.a ], [ %.sroa.2.0.copyload.i64, %33 ] ; 8 uses
-  %indvars.iv558 = phi i64 [ %i.cq, %.lr.ph562.a ], [ %indvars.iv.next, %33 ] ; 2 uses
-  %i.rr = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %indvars.iv558 ; 2 uses
+bb.cn:                                            ; preds = %_ZN5clang10QualifiersmIES0_.exit58
+  %i.rr = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %indvars.iv.next
   %i.rs = getelementptr inbounds i8, ptr %i.rr, i64 -16
-  %i.rt = load ptr, ptr %i.rs, align 8, !tbaa !3327 ; 4 uses
-  %37 = zext i32 %36 to i64
-  %i.ru = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %37 ; 2 uses
+  %i.rt = load ptr, ptr %i.rs, align 8, !tbaa !3326 ; 2 uses
+  %i.ru = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %indvars.iv.next588
   %i.rv = getelementptr inbounds i8, ptr %i.ru, i64 -16
-  %i.rw = load ptr, ptr %i.rv, align 8, !tbaa !3327
+  %i.rw = load ptr, ptr %i.rv, align 8, !tbaa !3326
   %i.rx = icmp eq ptr %i.rt, %i.rw
-  br i1 %i.rx, label %bb.co, label %.critedge.loopexit
+  br i1 %i.rx, label %bb.co, label %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge, !llvm.loop !3308
 
-bb.co:                                            ; preds = %bb.cn
-  %.not.i.i49 = icmp ult i64 %.sroa.18.0422561, 8
+bb.co:                                            ; preds = %.lr.ph562.a, %bb.cn
+  %41 = phi ptr [ %i.rt, %bb.cn ], [ %34, %.lr.ph562.a ] ; 2 uses
+  %indvars.iv558683 = phi i64 [ %indvars.iv.next, %bb.cn ], [ %i.cq, %.lr.ph562.a ] ; 2 uses
+  %.sroa.11.0424559682 = phi i64 [ %.sroa.2.0.copyload.i64, %bb.cn ], [ %.sroa.11.4, %.lr.ph562.a ] ; 7 uses
+  %.sroa.18.0422561681 = phi i64 [ %.sroa.2.0.copyload.i59, %bb.cn ], [ %.sroa.18.4, %.lr.ph562.a ] ; 7 uses
+  %42 = phi i64 [ %i.sq, %bb.cn ], [ %.promoted418, %.lr.ph562.a ] ; 3 uses
+  %43 = phi i64 [ %i.tj, %bb.cn ], [ %.promoted419, %.lr.ph562.a ] ; 3 uses
+  %indvars.iv680 = phi i64 [ %indvars.iv.next588, %bb.cn ], [ %31, %.lr.ph562.a ] ; 2 uses
+  %.not.i.i49 = icmp ult i64 %.sroa.18.0422561681, 8
   br i1 %.not.i.i49, label %bb.cp, label %bb.cq
 
 bb.cp:                                            ; preds = %bb.co
-  %i.ry = xor i64 %.sroa.18.0422561, -1
-  %i.rz = and i64 %35, %i.ry
+  %i.ry = xor i64 %.sroa.18.0422561681, -1
+  %i.rz = and i64 %42, %i.ry
   br label %_ZN5clang10QualifiersmIES0_.exit
 
 bb.cq:                                            ; preds = %bb.co
-  %i.sa = and i64 %.sroa.18.0422561, 7
+  %i.sa = and i64 %.sroa.18.0422561681, 7
   %i.sb = xor i64 %i.sa, -1
-  %i.sc = and i64 %35, %i.sb                      ; 2 uses
-  %i.sd = xor i64 %35, %.sroa.18.0422561
+  %i.sc = and i64 %42, %i.sb                      ; 2 uses
+  %i.sd = xor i64 %42, %.sroa.18.0422561681
   %i.se = and i64 %i.sd, 48
   %i.sf = icmp eq i64 %i.se, 0
   %i.sg = and i64 %i.sc, -49
   %spec.select.i.i = select i1 %i.sf, i64 %i.sg, i64 %i.sc ; 3 uses
-  %i.sh = xor i64 %spec.select.i.i, %.sroa.18.0422561
+  %i.sh = xor i64 %spec.select.i.i, %.sroa.18.0422561681
   %i.si = and i64 %i.sh, 448
   %i.sj = icmp eq i64 %i.si, 0
   %i.sk = and i64 %spec.select.i.i, -449
   %storemerge5.i.i = select i1 %i.sj, i64 %i.sk, i64 %spec.select.i.i ; 3 uses
-  %.unshifted6.i.i = xor i64 %storemerge5.i.i, %.sroa.18.0422561
+  %.unshifted6.i.i = xor i64 %storemerge5.i.i, %.sroa.18.0422561681
   %i.sl = and i64 %.unshifted6.i.i, 4294966784
   %i.sm = icmp eq i64 %i.sl, 0
   %i.sn = and i64 %storemerge5.i.i, -4294966785
   %storemerge7.i.i = select i1 %i.sm, i64 %i.sn, i64 %storemerge5.i.i ; 3 uses
-  %.unshifted.i.i = xor i64 %storemerge7.i.i, %.sroa.18.0422561
+  %.unshifted.i.i = xor i64 %storemerge7.i.i, %.sroa.18.0422561681
   %i.so = icmp ult i64 %.unshifted.i.i, 4294967296
   %i.sp = and i64 %storemerge7.i.i, 4294967295
   %spec.select = select i1 %i.so, i64 %i.sp, i64 %storemerge7.i.i
@@ -1043,34 +1052,34 @@ bb.cq:                                            ; preds = %bb.co
 
 _ZN5clang10QualifiersmIES0_.exit:                 ; preds = %bb.cq, %bb.cp
   %i.sq = phi i64 [ %spec.select, %bb.cq ], [ %i.rz, %bb.cp ] ; 3 uses
-  %.not.i.i50 = icmp ult i64 %.sroa.11.0424559, 8
+  %.not.i.i50 = icmp ult i64 %.sroa.11.0424559682, 8
   br i1 %.not.i.i50, label %bb.cr, label %bb.cs
 
 bb.cr:                                            ; preds = %_ZN5clang10QualifiersmIES0_.exit
-  %i.sr = xor i64 %.sroa.11.0424559, -1
-  %i.ss = and i64 %34, %i.sr
+  %i.sr = xor i64 %.sroa.11.0424559682, -1
+  %i.ss = and i64 %43, %i.sr
   br label %_ZN5clang10QualifiersmIES0_.exit58
 
 bb.cs:                                            ; preds = %_ZN5clang10QualifiersmIES0_.exit
-  %i.st = and i64 %.sroa.11.0424559, 7
+  %i.st = and i64 %.sroa.11.0424559682, 7
   %i.su = xor i64 %i.st, -1
-  %i.sv = and i64 %34, %i.su                      ; 2 uses
-  %i.sw = xor i64 %34, %.sroa.11.0424559
+  %i.sv = and i64 %43, %i.su                      ; 2 uses
+  %i.sw = xor i64 %43, %.sroa.11.0424559682
   %i.sx = and i64 %i.sw, 48
   %i.sy = icmp eq i64 %i.sx, 0
   %i.sz = and i64 %i.sv, -49
   %spec.select.i.i51 = select i1 %i.sy, i64 %i.sz, i64 %i.sv ; 3 uses
-  %i.ta = xor i64 %spec.select.i.i51, %.sroa.11.0424559
+  %i.ta = xor i64 %spec.select.i.i51, %.sroa.11.0424559682
   %i.tb = and i64 %i.ta, 448
   %i.tc = icmp eq i64 %i.tb, 0
   %i.td = and i64 %spec.select.i.i51, -449
   %storemerge5.i.i52 = select i1 %i.tc, i64 %i.td, i64 %spec.select.i.i51 ; 3 uses
-  %.unshifted6.i.i53 = xor i64 %storemerge5.i.i52, %.sroa.11.0424559
+  %.unshifted6.i.i53 = xor i64 %storemerge5.i.i52, %.sroa.11.0424559682
   %i.te = and i64 %.unshifted6.i.i53, 4294966784
   %i.tf = icmp eq i64 %i.te, 0
   %i.tg = and i64 %storemerge5.i.i52, -4294966785
   %storemerge7.i.i54 = select i1 %i.tf, i64 %i.tg, i64 %storemerge5.i.i52 ; 3 uses
-  %.unshifted.i.i55 = xor i64 %storemerge7.i.i54, %.sroa.11.0424559
+  %.unshifted.i.i55 = xor i64 %storemerge7.i.i54, %.sroa.11.0424559682
   %i.th = icmp ult i64 %.unshifted.i.i55, 4294967296
   %i.ti = and i64 %storemerge7.i.i54, 4294967295
   %spec.select456 = select i1 %i.th, i64 %i.ti, i64 %storemerge7.i.i54
@@ -1078,27 +1087,37 @@ bb.cs:                                            ; preds = %_ZN5clang10Qualifie
 
 _ZN5clang10QualifiersmIES0_.exit58:               ; preds = %bb.cs, %bb.cr
   %i.tj = phi i64 [ %spec.select456, %bb.cs ], [ %i.ss, %bb.cr ] ; 3 uses
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds i8, ptr %i.rr, i64 -8
+  %44 = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %indvars.iv680
+  %45 = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %indvars.iv558683
+  %.sroa.2.0..sroa_idx.i = getelementptr inbounds i8, ptr %45, i64 -8
   %.sroa.2.0.copyload.i59 = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !656 ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv558, -1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
-  store i32 %indvars, ptr %i.aa, align 8, !tbaa !657
-  %.sroa.2.0..sroa_idx.i63 = getelementptr inbounds i8, ptr %i.ru, i64 -8
+  %indvars.iv.next = add nsw i64 %indvars.iv558683, -1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 3 uses
+  %.sroa.2.0..sroa_idx.i63 = getelementptr inbounds i8, ptr %44, i64 -8
   %.sroa.2.0.copyload.i64 = load i64, ptr %.sroa.2.0..sroa_idx.i63, align 8, !tbaa !656 ; 3 uses
-  %38 = add i32 %36, -1                           ; 3 uses
-  store i32 %38, ptr %i.bg, align 8, !tbaa !657
-  %.not.i47.a = icmp eq i32 %indvars, 0
-  br i1 %.not.i47.a, label %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge, label %33, !llvm.loop !3308
+  %indvars.iv.next588 = add nsw i64 %indvars.iv680, -1 ; 3 uses
+  %indvars589 = trunc i64 %indvars.iv.next588 to i32 ; 3 uses
+  %.not.i47 = icmp eq i32 %indvars, 0
+  %.not.i47.a = icmp eq i32 %indvars589, 0
+  %or.cond694 = select i1 %.not.i47, i1 true, i1 %.not.i47.a
+  br i1 %or.cond694, label %..critedge.loopexit.loopexit_crit_edge, label %bb.cn, !llvm.loop !3308
 
-_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge: ; preds = %_ZN5clang10QualifiersmIES0_.exit58
+..critedge.loopexit.loopexit_crit_edge:           ; preds = %_ZN5clang10QualifiersmIES0_.exit58
+  store i32 %indvars, ptr %i.aa, align 8, !tbaa !657
+  store i32 %indvars589, ptr %i.bg, align 8, !tbaa !657
   br label %.critedge.loopexit, !llvm.loop !3308
 
-.critedge.loopexit:                               ; preds = %33, %bb.cn, %.lr.ph, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge, %.preheader
-  %.lcssa420 = phi i64 [ %.promoted419, %.preheader ], [ %.promoted419, %.lr.ph ], [ %i.tj, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ], [ %34, %bb.cn ], [ %i.tj, %33 ]
-  %.lcssa = phi i64 [ %.promoted418, %.preheader ], [ %.promoted418, %.lr.ph ], [ %i.sq, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ], [ %35, %bb.cn ], [ %i.sq, %33 ]
-  %.sroa.18.0.lcssa = phi i64 [ %.sroa.18.4, %.preheader ], [ %.sroa.18.4, %.lr.ph ], [ %.sroa.2.0.copyload.i59, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ], [ %.sroa.18.0422561, %bb.cn ], [ %.sroa.2.0.copyload.i59, %33 ]
-  %.sroa.0340.0.lcssa = phi ptr [ %.sroa.0340.5, %.preheader ], [ %.sroa.0340.5, %.lr.ph ], [ %i.rt, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ], [ %.sroa.0340.0423560, %bb.cn ], [ %i.rt, %33 ]
-  %.sroa.11.0.lcssa = phi i64 [ %.sroa.11.4, %.preheader ], [ %.sroa.11.4, %.lr.ph ], [ %.sroa.2.0.copyload.i64, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ], [ %.sroa.11.0424559, %bb.cn ], [ %.sroa.2.0.copyload.i64, %33 ]
+_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge: ; preds = %bb.cn
+  store i32 %indvars, ptr %i.aa, align 8, !tbaa !657
+  store i32 %indvars589, ptr %i.bg, align 8, !tbaa !657
+  br label %.critedge.loopexit
+
+.critedge.loopexit:                               ; preds = %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge, %.lr.ph562.a, %..critedge.loopexit.loopexit_crit_edge, %.lr.ph, %.preheader
+  %.lcssa420 = phi i64 [ %.promoted419, %.preheader ], [ %.promoted419, %.lr.ph ], [ %i.tj, %..critedge.loopexit.loopexit_crit_edge ], [ %.promoted419, %.lr.ph562.a ], [ %i.tj, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ]
+  %.lcssa = phi i64 [ %.promoted418, %.preheader ], [ %.promoted418, %.lr.ph ], [ %i.sq, %..critedge.loopexit.loopexit_crit_edge ], [ %.promoted418, %.lr.ph562.a ], [ %i.sq, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ]
+  %.sroa.18.0.lcssa = phi i64 [ %.sroa.18.4, %.preheader ], [ %.sroa.18.4, %.lr.ph ], [ %.sroa.2.0.copyload.i59, %..critedge.loopexit.loopexit_crit_edge ], [ %.sroa.18.4, %.lr.ph562.a ], [ %.sroa.2.0.copyload.i59, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ]
+  %.sroa.0340.0.lcssa = phi ptr [ %.sroa.0340.5, %.preheader ], [ %.sroa.0340.5, %.lr.ph ], [ %41, %..critedge.loopexit.loopexit_crit_edge ], [ %.sroa.0340.5, %.lr.ph562.a ], [ %41, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ]
+  %.sroa.11.0.lcssa = phi i64 [ %.sroa.11.4, %.preheader ], [ %.sroa.11.4, %.lr.ph ], [ %.sroa.2.0.copyload.i64, %..critedge.loopexit.loopexit_crit_edge ], [ %.sroa.11.4, %.lr.ph562.a ], [ %.sroa.2.0.copyload.i64, %_ZN5clang10QualifiersmIES0_.exit58..critedge.loopexit.loopexit_crit_edge ]
   store i64 %.lcssa, ptr %27, align 8
   store i64 %.lcssa420, ptr %28, align 8
   br label %.critedge
@@ -1153,11 +1172,11 @@ bb.cx:                                            ; preds = %thread-pre-split.i
 thread-pre-split.thread.i:                        ; preds = %thread-pre-split.i, %bb.cu
   %i.tv = phi i64 [ %.pre.i, %thread-pre-split.i ], [ %.pre58.i, %bb.cu ] ; 3 uses
   %.sroa.041.059.i = phi i64 [ %.sroa.041.0.i, %thread-pre-split.i ], [ 0, %bb.cu ]
-  %i.tw = phi i64 [ %i.ts, %thread-pre-split.i ], [ %i.tk, %bb.cu ] ; 2 uses
+  %i.tw = phi i64 [ %i.ts, %thread-pre-split.i ], [ %i.tk, %bb.cu ] ; 4 uses
   %i.tx = and i64 %i.tv, 7
   %i.ty = and i64 %i.tx, %i.tw                    ; 3 uses
   %i.tz = or i64 %i.ty, %.sroa.041.059.i          ; 2 uses
-  %i.ua = xor i64 %i.ty, %i.tw                    ; 3 uses
+  %i.ua = xor i64 %i.ty, %i.tw                    ; 2 uses
   %i.ub = xor i64 %i.ty, %i.tv                    ; 3 uses
   store i64 %i.ub, ptr %28, align 8, !tbaa !1130
   %i.uc = trunc i64 %i.ua to i32                  ; 2 uses
@@ -1174,16 +1193,14 @@ bb.cy:                                            ; preds = %thread-pre-split.th
   %i.uk = shl nuw nsw i32 %i.ue, 4
   %i.ul = zext nneg i32 %i.uk to i64
   %i.um = or disjoint i64 %i.uj, %i.ul
-  %39 = and i64 %i.ua, -49                        ; 2 uses
   %i.un = and i64 %i.ub, -49                      ; 2 uses
   store i64 %i.un, ptr %28, align 8, !tbaa !1130
-  %.pre52.i = trunc i64 %39 to i32
+  %.pre52.i = trunc i64 %i.ua to i32
   br label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy, %thread-pre-split.thread.i
   %.pre-phi.i = phi i32 [ %.pre52.i, %bb.cy ], [ %i.uc, %thread-pre-split.thread.i ]
   %i.uo = phi i64 [ %i.un, %bb.cy ], [ %i.ub, %thread-pre-split.thread.i ] ; 3 uses
-  %40 = phi i64 [ %39, %bb.cy ], [ %i.ua, %thread-pre-split.thread.i ] ; 2 uses
   %.sroa.041.1.i = phi i64 [ %i.um, %bb.cy ], [ %i.tz, %thread-pre-split.thread.i ] ; 2 uses
   %i.up = lshr i32 %.pre-phi.i, 6
   %i.uq = and i32 %i.up, 7                        ; 2 uses
@@ -1198,23 +1215,21 @@ bb.da:                                            ; preds = %bb.cz
   %i.uw = shl nuw nsw i32 %i.uq, 6
   %i.ux = zext nneg i32 %i.uw to i64
   %i.uy = or disjoint i64 %i.uv, %i.ux
-  %41 = and i64 %40, -449
   %i.uz = and i64 %i.uo, -449                     ; 2 uses
   store i64 %i.uz, ptr %28, align 8, !tbaa !1130
   br label %bb.db
 
 bb.db:                                            ; preds = %bb.da, %bb.cz
   %i.va = phi i64 [ %i.uz, %bb.da ], [ %i.uo, %bb.cz ] ; 2 uses
-  %42 = phi i64 [ %41, %bb.da ], [ %40, %bb.cz ]  ; 2 uses
   %.sroa.041.2.i = phi i64 [ %i.uy, %bb.da ], [ %.sroa.041.1.i, %bb.cz ] ; 2 uses
-  %.unshifted48.i = xor i64 %42, %i.va
+  %.unshifted48.i = xor i64 %i.tw, %i.va
   %i.vb = and i64 %.unshifted48.i, 4294966784
   %i.vc = icmp eq i64 %i.vb, 0
   br i1 %i.vc, label %bb.dc, label %_ZN5clang10Qualifiers22removeCommonQualifiersERS0_S1_.exit
 
 bb.dc:                                            ; preds = %bb.db
   %i.vd = and i64 %.sroa.041.2.i, -4294966785
-  %i.ve = and i64 %42, 4294966784
+  %i.ve = and i64 %i.tw, 4294966784
   %i.vf = or disjoint i64 %i.vd, %i.ve
   br label %.sink.split.i
 
@@ -1222,7 +1237,7 @@ bb.dc:                                            ; preds = %bb.db
   %i.vg = phi i64 [ %i.va, %bb.dc ], [ %.pre.i, %bb.cx ]
   %.sink62.i = phi i64 [ -4294966785, %bb.dc ], [ %i.tu, %bb.cx ]
   %.sroa.041.3.ph.i = phi i64 [ %i.vf, %bb.dc ], [ %i.tt, %bb.cx ]
-  %i.vh = and i64 %i.vg, %.sink62.i
+  %i.vh = and i64 %.sink62.i, %i.vg
   store i64 %i.vh, ptr %28, align 8, !tbaa !1130
   br label %_ZN5clang10Qualifiers22removeCommonQualifiersERS0_S1_.exit
 
@@ -1305,7 +1320,7 @@ bb.dj:                                            ; preds = %thread-pre-split.i7
   br label %_ZN5clang10Qualifiers22removeCommonQualifiersERS0_S1_.exit97
 
 thread-pre-split.thread.i79:                      ; preds = %thread-pre-split.i73, %bb.dg
-  %.sroa.11.6 = phi i64 [ %.sroa.11.5, %thread-pre-split.i73 ], [ %.sroa.11.2449, %bb.dg ] ; 4 uses
+  %.sroa.11.6 = phi i64 [ %.sroa.11.5, %thread-pre-split.i73 ], [ %.sroa.11.2449, %bb.dg ] ; 3 uses
   %.sroa.041.059.i81 = phi i64 [ %.sroa.041.0.i75, %thread-pre-split.i73 ], [ 0, %bb.dg ]
   %i.wo = phi i64 [ %i.wm, %thread-pre-split.i73 ], [ %.sroa.18.2447, %bb.dg ] ; 5 uses
   %i.wp = and i64 %.sroa.11.6, 7
@@ -1315,7 +1330,7 @@ thread-pre-split.thread.i79:                      ; preds = %thread-pre-split.i7
   %i.wt = trunc i64 %i.ws to i32                  ; 2 uses
   %i.wu = lshr i32 %i.wt, 4
   %i.wv = and i32 %i.wu, 3                        ; 2 uses
-  %i.ww = trunc i64 %.sroa.11.6 to i32
+  %i.ww = trunc i64 %.sroa.11.6 to i32            ; 2 uses
   %i.wx = lshr i32 %i.ww, 4
   %i.wy = and i32 %i.wx, 3
   %i.wz = icmp eq i32 %i.wv, %i.wy                ; 2 uses
@@ -1328,8 +1343,7 @@ thread-pre-split.thread.i79:                      ; preds = %thread-pre-split.i7
   %.sroa.041.1.i83 = select i1 %i.wz, i64 %i.xd, i64 %i.wr ; 2 uses
   %i.xe = lshr i32 %.pre-phi.i82, 6
   %i.xf = and i32 %i.xe, 7                        ; 2 uses
-  %43 = trunc i64 %.sroa.11.6 to i32
-  %i.xg = lshr i32 %43, 6
+  %i.xg = lshr i32 %i.ww, 6
   %i.xh = and i32 %i.xg, 7
   %i.xi = icmp eq i32 %i.xf, %i.xh
   %i.xj = and i64 %.sroa.041.1.i83, -449
@@ -1641,7 +1655,7 @@ _ZL13getCommonDeclIN5clang12TemplateDeclETnNSt9enable_ifIXsr3stdE12is_base_of_vI
   br label %bb.eh
 
 _ZL13getCommonDeclIN5clang12TemplateDeclETnNSt9enable_ifIXsr3stdE12is_base_of_vINS0_4DeclET_EEbE4typeELb1EEPS4_S7_S7_.exit.thread383: ; preds = %select.unfold.i.i293, %.lr.ph.i290, %bb.ef
-  %.3.i.i288386 = phi ptr [ %i.abz, %bb.ef ], [ %i.abz, %select.unfold.i.i293 ], [ %i.acb, %.lr.ph.i290 ]
+  %.3.i.i288386 = phi ptr [ %i.abz, %bb.ef ], [ %i.acb, %.lr.ph.i290 ], [ %i.abz, %select.unfold.i.i293 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   store ptr %i.vj, ptr %4, align 8, !tbaa !655
   store i32 0, ptr %i.vk, align 8, !tbaa !657
@@ -1850,7 +1864,7 @@ select.unfold.i:                                  ; preds = %.lr.ph442
   br i1 %i.agq, label %_ZL13getCommonDeclPN5clang4DeclES1_.exit, label %.lr.ph442
 
 _ZL13getCommonDeclPN5clang4DeclES1_.exit:         ; preds = %select.unfold.i, %.lr.ph442, %bb.ew
-  %.3.i = phi ptr [ %i.aft, %bb.ew ], [ %i.aft, %select.unfold.i ], [ %i.afv, %.lr.ph442 ]
+  %.3.i = phi ptr [ %i.aft, %bb.ew ], [ %i.afv, %.lr.ph442 ], [ %i.aft, %select.unfold.i ]
   %i.agr = load i64, ptr %i.yc, align 16          ; 3 uses
   %i.ags = lshr i64 %i.agr, 32
   %i.agt = trunc nuw i64 %i.ags to i32
@@ -2085,7 +2099,7 @@ select.unfold.i.i251:                             ; preds = %.lr.ph.i248
   br i1 %i.akc, label %_ZL13getCommonDeclIN5clang15TypedefNameDeclETnNSt9enable_ifIXsr3stdE12is_base_of_vINS0_4DeclET_EEbE4typeELb1EEPS4_S7_S7_.exit.thread391, label %.lr.ph.i248
 
 _ZL13getCommonDeclIN5clang15TypedefNameDeclETnNSt9enable_ifIXsr3stdE12is_base_of_vINS0_4DeclET_EEbE4typeELb1EEPS4_S7_S7_.exit.thread391: ; preds = %select.unfold.i.i251, %.lr.ph.i248, %bb.ft
-  %.3.i.i246394 = phi ptr [ %i.ajf, %bb.ft ], [ %i.ajh, %.lr.ph.i248 ], [ %i.ajf, %select.unfold.i.i251 ]
+  %.3.i.i246394 = phi ptr [ %i.ajf, %bb.ft ], [ %i.ajf, %select.unfold.i.i251 ], [ %i.ajh, %.lr.ph.i248 ]
   %.val319.i = load i32, ptr %i.yc, align 16      ; 2 uses
   %.val320.i = load i32, ptr %i.ye, align 16      ; 2 uses
   %i.akd = lshr i32 %.val319.i, 19                ; 2 uses
@@ -2331,7 +2345,7 @@ select.unfold.i.i:                                ; preds = %.lr.ph.i229
   br i1 %i.aoe, label %_ZL13getCommonDeclIN5clang15UsingShadowDeclETnNSt9enable_ifIXsr3stdE12is_base_of_vINS0_4DeclET_EEbE4typeELb1EEPS4_S7_S7_.exit.thread397, label %.lr.ph.i229
 
 _ZL13getCommonDeclIN5clang15UsingShadowDeclETnNSt9enable_ifIXsr3stdE12is_base_of_vINS0_4DeclET_EEbE4typeELb1EEPS4_S7_S7_.exit.thread397: ; preds = %select.unfold.i.i, %.lr.ph.i229, %bb.gp
-  %.3.i.i400 = phi ptr [ %i.anh, %bb.gp ], [ %i.anj, %.lr.ph.i229 ], [ %i.anh, %select.unfold.i.i ]
+  %.3.i.i400 = phi ptr [ %i.anh, %bb.gp ], [ %i.anh, %select.unfold.i.i ], [ %i.anj, %.lr.ph.i229 ]
   %.val321.i = load i32, ptr %i.yc, align 16      ; 2 uses
   %.val322.i = load i32, ptr %i.ye, align 16      ; 2 uses
   %i.aof = lshr i32 %.val321.i, 19                ; 2 uses
@@ -2647,7 +2661,7 @@ _ZN5clang10QualifiersmIES0_.exit121:              ; preds = %.sink.split.i.i119,
   br i1 %.not.i68, label %.critedge2, label %bb.de
 
 .critedge2:                                       ; preds = %bb.de, %_ZN5clang10QualifiersmIES0_.exit121, %_ZNK5clang8QualType16getTypePtrOrNullEv.exit, %_ZL22getCommonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeES5_NS_13SplitQualTypeE.exit, %bb.dd, %_ZL22getCommonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeES5_NS_13SplitQualTypeE.exit.thread
-  %.sroa.0340.2416 = phi ptr [ %.sroa.0340.2448, %_ZL22getCommonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeES5_NS_13SplitQualTypeE.exit.thread ], [ %.sroa.0340.1, %bb.dd ], [ %.sroa.0340.2448, %bb.de ], [ %i.arm, %_ZN5clang10QualifiersmIES0_.exit121 ], [ %.sroa.0340.2448, %_ZNK5clang8QualType16getTypePtrOrNullEv.exit ], [ %.sroa.0340.2448, %_ZL22getCommonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeES5_NS_13SplitQualTypeE.exit ] ; 2 uses
+  %.sroa.0340.2416 = phi ptr [ %.sroa.0340.2448, %_ZL22getCommonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeES5_NS_13SplitQualTypeE.exit.thread ], [ %.sroa.0340.1, %bb.dd ], [ %.sroa.0340.2448, %_ZL22getCommonSugarTypeNodeRKN5clang10ASTContextEPKNS_4TypeES5_NS_13SplitQualTypeE.exit ], [ %.sroa.0340.2448, %_ZNK5clang8QualType16getTypePtrOrNullEv.exit ], [ %i.arm, %_ZN5clang10QualifiersmIES0_.exit121 ], [ %.sroa.0340.2448, %bb.de ] ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %27, align 8, !tbaa !656 ; 3 uses
   %i.asi = icmp ugt i64 %.sroa.0.0.copyload, 7
   br i1 %i.asi, label %bb.hu, label %bb.ht
@@ -2655,7 +2669,7 @@ _ZN5clang10QualifiersmIES0_.exit121:              ; preds = %.sink.split.i.i119,
 bb.ht:                                            ; preds = %.critedge2
   %i.asj = ptrtoint ptr %.sroa.0340.2416 to i64
   %i.ask = and i64 %i.asj, -8
-  %i.asl = or disjoint i64 %.sroa.0.0.copyload, %i.ask
+  %i.asl = or disjoint i64 %i.ask, %.sroa.0.0.copyload
   br label %_ZNK5clang10ASTContext16getQualifiedTypeEPKNS_4TypeENS_10QualifiersE.exit
 
 bb.hu:                                            ; preds = %.critedge2
@@ -3058,9 +3072,9 @@ begin_hunk_2_@llvm.vector.reduce.add.v8i64
 !3322 = distinct !{null, null}
 !3323 = !{!3289}
 !3324 = !{!3291}
-!3325 = !{!3305}
-!3326 = !{!"_ZTSN5clang13SplitQualTypeE", !717, i64 0, !1129, i64 8}
-!3327 = !{!3326, !717, i64 0}
+!3325 = !{!"_ZTSN5clang13SplitQualTypeE", !717, i64 0, !1129, i64 8}
+!3326 = !{!3325, !717, i64 0}
+!3327 = !{!3305}
 !3328 = !{!"_ZTSN5clang14BTFTypeTagAttrE", !1225, i64 0, !103, i64 40, !272, i64 48}
 !3329 = !{!3328, !272, i64 48}
 !3330 = !{!3328, !103, i64 40}

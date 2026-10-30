@@ -129,9 +129,9 @@ bb.f:                                             ; preds = %bb.d, %_ZNSt6vector
   %.sroa.098.0 = extractvalue { double, double } %.pn224, 0 ; 3 uses
   %.sroa.6.0 = extractvalue { double, double } %.pn224, 1 ; 3 uses
   %i.ai = fmul double %.sroa.6.0, %.sroa.6.0
-  %i.aj = call double @llvm.fmuladd.f64(double %.sroa.098.0, double %.sroa.098.0, double %i.ai)
-  %i.ak = call noundef double @sqrt(double noundef %i.aj) #16 ; 3 uses
-  %i.al = fcmp une double %i.ak, 0.000000e+00     ; 2 uses
+  %i.aj = call double @llvm.fmuladd.f64(double %.sroa.098.0, double %.sroa.098.0, double %i.ai) ; 2 uses
+  %i.ak = call noundef double @llvm.sqrt.f64(double %i.aj) ; 2 uses
+  %i.al = fcmp une double %i.aj, 0.000000e+00     ; 2 uses
   %i.am = fdiv double %.sroa.098.0, %i.ak
   %i.an = fdiv double %.sroa.6.0, %i.ak
   %.sroa.3.1.i = select i1 %i.al, double %i.an, double 1.000000e+00 ; 2 uses
@@ -150,9 +150,9 @@ bb.h:                                             ; preds = %bb.g
   %i.at = extractvalue { double, double } %i.as, 0 ; 3 uses
   %i.au = extractvalue { double, double } %i.as, 1 ; 3 uses
   %i.av = fmul double %i.au, %i.au
-  %i.aw = call double @llvm.fmuladd.f64(double %i.at, double %i.at, double %i.av)
-  %i.ax = call noundef double @sqrt(double noundef %i.aw) #16 ; 3 uses
-  %i.ay = fcmp une double %i.ax, 0.000000e+00     ; 2 uses
+  %i.aw = call double @llvm.fmuladd.f64(double %i.at, double %i.at, double %i.av) ; 2 uses
+  %i.ax = call noundef double @llvm.sqrt.f64(double %i.aw) ; 2 uses
+  %i.ay = fcmp une double %i.aw, 0.000000e+00     ; 2 uses
   %i.az = fdiv double %i.at, %i.ax
   %i.ba = fdiv double %i.au, %i.ax
   %.sroa.3.1.i70 = select i1 %i.ay, double %i.ba, double 1.000000e+00 ; 2 uses
@@ -555,9 +555,9 @@ bb.f:                                             ; preds = %bb.d, %_ZNSt6vector
   %.sroa.0167.0 = extractvalue { double, double } %.pn315, 0 ; 3 uses
   %.sroa.6168.0 = extractvalue { double, double } %.pn315, 1 ; 3 uses
   %i.ai = fmul double %.sroa.6168.0, %.sroa.6168.0
-  %i.aj = call double @llvm.fmuladd.f64(double %.sroa.0167.0, double %.sroa.0167.0, double %i.ai)
-  %i.ak = call noundef double @sqrt(double noundef %i.aj) #16 ; 3 uses
-  %i.al = fcmp une double %i.ak, 0.000000e+00     ; 2 uses
+  %i.aj = call double @llvm.fmuladd.f64(double %.sroa.0167.0, double %.sroa.0167.0, double %i.ai) ; 2 uses
+  %i.ak = call noundef double @llvm.sqrt.f64(double %i.aj) ; 2 uses
+  %i.al = fcmp une double %i.aj, 0.000000e+00     ; 2 uses
   %i.am = fdiv double %.sroa.0167.0, %i.ak
   %i.an = fdiv double %.sroa.6168.0, %i.ak
   %.sroa.3.1.i = select i1 %i.al, double %i.an, double 1.000000e+00 ; 2 uses
@@ -576,9 +576,9 @@ bb.h:                                             ; preds = %bb.g
   %i.at = extractvalue { double, double } %i.as, 0 ; 3 uses
   %i.au = extractvalue { double, double } %i.as, 1 ; 3 uses
   %i.av = fmul double %i.au, %i.au
-  %i.aw = call double @llvm.fmuladd.f64(double %i.at, double %i.at, double %i.av)
-  %i.ax = call noundef double @sqrt(double noundef %i.aw) #16 ; 3 uses
-  %i.ay = fcmp une double %i.ax, 0.000000e+00     ; 2 uses
+  %i.aw = call double @llvm.fmuladd.f64(double %i.at, double %i.at, double %i.av) ; 2 uses
+  %i.ax = call noundef double @llvm.sqrt.f64(double %i.aw) ; 2 uses
+  %i.ay = fcmp une double %i.aw, 0.000000e+00     ; 2 uses
   %i.az = fdiv double %i.at, %i.ax
   %i.ba = fdiv double %i.au, %i.ax
   %.sroa.3.1.i121 = select i1 %i.ay, double %i.ba, double 1.000000e+00 ; 2 uses
@@ -695,15 +695,6 @@ bb.o:                                             ; preds = %bb.n
           to label %.noexc128 unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp, !inline_history !58 ; 2 uses
 
 .noexc128:                                        ; preds = %.noexc127
-  %4 = extractvalue { double, double } %i.cb, 1
-  %5 = extractvalue { double, double } %i.cb, 0
-  %6 = extractvalue { double, double } %i.cf, 0   ; 2 uses
-  %7 = extractvalue { double, double } %i.cf, 1   ; 2 uses
-  %8 = fsub double %6, %5                         ; 2 uses
-  %9 = fsub double %7, %4                         ; 2 uses
-  %10 = fmul double %9, %9
-  %11 = call double @llvm.fmuladd.f64(double %8, double %8, double %10)
-  %12 = call noundef double @sqrt(double noundef %11) #16
   %i.cg = load ptr, ptr %i.bx, align 8, !tbaa !18
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 40
   %i.ci = load ptr, ptr %i.ch, align 8
@@ -711,13 +702,6 @@ bb.o:                                             ; preds = %bb.n
           to label %.noexc129 unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp, !inline_history !58 ; 2 uses
 
 .noexc129:                                        ; preds = %.noexc128
-  %13 = extractvalue { double, double } %i.cj, 0  ; 2 uses
-  %14 = extractvalue { double, double } %i.cj, 1  ; 2 uses
-  %15 = fsub double %13, %6                       ; 2 uses
-  %16 = fsub double %14, %7                       ; 2 uses
-  %17 = fmul double %16, %16
-  %18 = call double @llvm.fmuladd.f64(double %15, double %15, double %17)
-  %19 = call noundef double @sqrt(double noundef %18) #16
   %i.ck = load ptr, ptr %i.bx, align 8, !tbaa !18
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 40
   %i.cm = load ptr, ptr %i.cl, align 8
@@ -725,13 +709,6 @@ bb.o:                                             ; preds = %bb.n
           to label %.noexc130 unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp, !inline_history !58 ; 2 uses
 
 .noexc130:                                        ; preds = %.noexc129
-  %20 = extractvalue { double, double } %i.cn, 0  ; 2 uses
-  %21 = extractvalue { double, double } %i.cn, 1  ; 2 uses
-  %22 = fsub double %20, %13                      ; 2 uses
-  %23 = fsub double %21, %14                      ; 2 uses
-  %24 = fmul double %23, %23
-  %25 = call double @llvm.fmuladd.f64(double %22, double %22, double %24)
-  %26 = call noundef double @sqrt(double noundef %25) #16
   %i.co = load ptr, ptr %i.bx, align 8, !tbaa !18
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 40
   %i.cq = load ptr, ptr %i.cp, align 8
@@ -739,17 +716,41 @@ bb.o:                                             ; preds = %bb.n
           to label %bb.p unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp, !inline_history !58 ; 2 uses
 
 bb.p:                                             ; preds = %.noexc130
-  %27 = fadd double %12, 0.000000e+00
-  %28 = fadd double %27, %19
-  %29 = fadd double %28, %26
+  %4 = extractvalue { double, double } %i.cf, 0
+  %5 = extractvalue { double, double } %i.cb, 0
+  %6 = extractvalue { double, double } %i.cf, 1
+  %7 = extractvalue { double, double } %i.cb, 1
+  %8 = extractvalue { double, double } %i.cj, 0
+  %9 = extractvalue { double, double } %i.cj, 1
+  %10 = extractvalue { double, double } %i.cn, 0
+  %11 = extractvalue { double, double } %i.cn, 1
   %i.cs = extractvalue { double, double } %i.cr, 0
   %i.ct = extractvalue { double, double } %i.cr, 1
-  %30 = fsub double %i.cs, %20                    ; 2 uses
-  %31 = fsub double %i.ct, %21                    ; 2 uses
-  %32 = fmul double %31, %31
-  %33 = call double @llvm.fmuladd.f64(double %30, double %30, double %32)
-  %34 = call noundef double @sqrt(double noundef %33) #16
-  %i.cu = fadd double %29, %34
+  %12 = insertelement <4 x double> poison, double %4, i64 0
+  %13 = insertelement <4 x double> %12, double %8, i64 1
+  %14 = insertelement <4 x double> %13, double %10, i64 2 ; 2 uses
+  %15 = insertelement <4 x double> %14, double %i.cs, i64 3
+  %16 = insertelement <4 x double> poison, double %5, i64 0
+  %17 = shufflevector <4 x double> %16, <4 x double> %14, <4 x i32> <i32 0, i32 4, i32 5, i32 6>
+  %18 = fsub <4 x double> %15, %17                ; 2 uses
+  %19 = insertelement <4 x double> poison, double %6, i64 0
+  %20 = insertelement <4 x double> %19, double %9, i64 1
+  %21 = insertelement <4 x double> %20, double %11, i64 2 ; 2 uses
+  %22 = insertelement <4 x double> %21, double %i.ct, i64 3
+  %23 = insertelement <4 x double> poison, double %7, i64 0
+  %24 = shufflevector <4 x double> %23, <4 x double> %21, <4 x i32> <i32 0, i32 4, i32 5, i32 6>
+  %25 = fsub <4 x double> %22, %24                ; 2 uses
+  %26 = fmul <4 x double> %25, %25
+  %27 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %18, <4 x double> %18, <4 x double> %26)
+  %28 = call <4 x double> @llvm.sqrt.v4f64(<4 x double> %27) ; 4 uses
+  %29 = extractelement <4 x double> %28, i64 0
+  %30 = fadd double %29, 0.000000e+00
+  %31 = extractelement <4 x double> %28, i64 1
+  %32 = fadd double %30, %31
+  %33 = extractelement <4 x double> %28, i64 2
+  %34 = fadd double %32, %33
+  %35 = extractelement <4 x double> %28, i64 3
+  %i.cu = fadd double %34, %35
   %i.cv = fadd double %.196, %i.cu                ; 2 uses
   %i.cw = invoke noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0162.0316)
           to label %bb.q unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp ; 2 uses
@@ -1152,9 +1153,9 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   %.sroa.0529.0 = extractvalue { double, double } %.pn6911268, 0 ; 3 uses
   %.sroa.6.0 = extractvalue { double, double } %.pn6911268, 1 ; 3 uses
   %i.bn = fmul double %.sroa.6.0, %.sroa.6.0
-  %i.bo = call double @llvm.fmuladd.f64(double %.sroa.0529.0, double %.sroa.0529.0, double %i.bn)
-  %i.bp = call noundef double @sqrt(double noundef %i.bo) #16 ; 3 uses
-  %i.bq = fcmp une double %i.bp, 0.000000e+00     ; 2 uses
+  %i.bo = call double @llvm.fmuladd.f64(double %.sroa.0529.0, double %.sroa.0529.0, double %i.bn) ; 2 uses
+  %i.bp = call noundef double @llvm.sqrt.f64(double %i.bo) ; 2 uses
+  %i.bq = fcmp une double %i.bo, 0.000000e+00     ; 2 uses
   %i.br = fdiv double %.sroa.0529.0, %i.bp
   %i.bs = fdiv double %.sroa.6.0, %i.bp
   %.sroa.3.1.i = select i1 %i.bq, double %i.bs, double 1.000000e+00 ; 2 uses
@@ -1173,9 +1174,9 @@ bb.o:                                             ; preds = %bb.n
   %i.by = extractvalue { double, double } %i.bx, 0 ; 3 uses
   %i.bz = extractvalue { double, double } %i.bx, 1 ; 3 uses
   %i.ca = fmul double %i.bz, %i.bz
-  %i.cb = call double @llvm.fmuladd.f64(double %i.by, double %i.by, double %i.ca)
-  %i.cc = call noundef double @sqrt(double noundef %i.cb) #16 ; 3 uses
-  %i.cd = fcmp une double %i.cc, 0.000000e+00     ; 2 uses
+  %i.cb = call double @llvm.fmuladd.f64(double %i.by, double %i.by, double %i.ca) ; 2 uses
+  %i.cc = call noundef double @llvm.sqrt.f64(double %i.cb) ; 2 uses
+  %i.cd = fcmp une double %i.cb, 0.000000e+00     ; 2 uses
   %i.ce = fdiv double %i.by, %i.cc
   %i.cf = fdiv double %i.bz, %i.cc
   %.sroa.3.1.i203 = select i1 %i.cd, double %i.cf, double 1.000000e+00 ; 2 uses
@@ -1578,7 +1579,7 @@ bb.du:                                            ; preds = %.noexc352
   %i.vq = fsub double %i.vl, %i.vo                ; 2 uses
   %i.vr = fmul double %i.vq, %i.vq
   %i.vs = call double @llvm.fmuladd.f64(double %i.vp, double %i.vp, double %i.vr)
-  %i.vt = call noundef double @sqrt(double noundef %i.vs) #16
+  %i.vt = call noundef double @llvm.sqrt.f64(double %i.vs)
   br label %bb.dv
 
 bb.dv:                                            ; preds = %.noexc356, %.noexc354
@@ -1980,9 +1981,6 @@ declare double @llvm.fabs.f64(double) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #8
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN7msdfgenL20uncolorSameNeighborsERSt5queueIiSt5dequeIiSaIiEEEPiPKPKiii(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr nofree noundef nonnull captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef %3, i32 noundef range(i32 -2147483648, 2147483647) %4) unnamed_addr #0 {
@@ -2386,6 +2384,9 @@ declare void @_ZN7msdfgen10EdgeHolderC1EOS0_(ptr noundef nonnull align 8 derefer
 declare void @_ZN7msdfgen10EdgeHolderC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2396,6 +2397,12 @@ declare void @llvm.assume(i1 noundef) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x double> @llvm.sqrt.v4f64(<4 x double>) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

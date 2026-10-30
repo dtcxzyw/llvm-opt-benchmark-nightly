@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ch = fmul nnan double %i.cf, %i.cf
   %i.ci = tail call double @llvm.fmuladd.f64(double %i.ce, double %i.ce, double %i.ch)
   %i.cj = tail call double @llvm.fmuladd.f64(double %i.cg, double %i.cg, double %i.ci)
-  %i.ck = tail call noundef double @sqrt(double noundef %i.cj) #28
+  %i.ck = tail call noundef double @llvm.sqrt.f64(double %i.cj)
   %i.cl = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.077.0.lcssa, i1 true) ; 4 uses
   %i.cm = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.8.0.lcssa, i1 true) ; 4 uses
   %i.cn = tail call noundef i64 @llvm.abs.i64(i64 %.sroa.13.0.lcssa, i1 true) ; 4 uses
@@ -607,6 +607,9 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #26

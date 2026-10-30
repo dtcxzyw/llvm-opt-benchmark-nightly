@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %_ZN6casadi11casadi_
 
 bb.e:                                             ; preds = %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380, %.preheader415
   %.0250 = phi double [ %.1251, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ 0.000000e+00, %.preheader415 ] ; 4 uses
-  %.0249 = phi double [ %5, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ 0.000000e+00, %.preheader415 ]
+  %.0249 = phi double [ %12, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ 0.000000e+00, %.preheader415 ]
   %.0246 = phi double [ %i.wc, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ 0.000000e+00, %.preheader415 ]
-  %.0245 = phi double [ %13, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ -1.000000e+00, %.preheader415 ]
+  %.0245 = phi double [ %16, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ -1.000000e+00, %.preheader415 ]
   %.0244 = phi double [ %i.xr, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ 0.000000e+00, %.preheader415 ]
   %.1242 = phi double [ %.2243, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ %.0241401, %.preheader415 ] ; 5 uses
   %.0240 = phi double [ %i.sk, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380 ], [ %.0241401, %.preheader415 ] ; 3 uses
@@ -501,7 +501,7 @@ scalar.ph666:                                     ; preds = %scalar.ph666.prehea
   %i.mx = tail call double @llvm.fmuladd.f64(double %.0250, double %.0250, double %i.mw)
   %i.my = tail call double @llvm.fmuladd.f64(double %i.mk, double %i.mk, double %i.mx)
   %i.mz = fadd double %i.my, 0.000000e+00
-  %i.na = tail call double @sqrt(double noundef %i.mz) #24 ; 3 uses
+  %i.na = tail call double @llvm.sqrt.f64(double %i.mz) ; 3 uses
   br i1 %i.ia, label %.lr.ph436, label %._crit_edge437
 
 .lr.ph436:                                        ; preds = %._crit_edge433
@@ -904,31 +904,31 @@ _ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380.loopexit.unr-lcssa: ; preds = %.lr
 _ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380:    ; preds = %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380.loopexit.unr-lcssa, %.lr.ph.i.i375.epil, %_ZN6casadi21casadi_lsqr_sym_orthoIdEEvT_S1_PS1_S2_S2_.exit
   %.0.lcssa.i.i374 = phi double [ 0.000000e+00, %_ZN6casadi21casadi_lsqr_sym_orthoIdEEvT_S1_PS1_S2_S2_.exit ], [ %i.vl, %_ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380.loopexit.unr-lcssa ], [ %i.vo, %.lr.ph.i.i375.epil ]
   %i.vp = tail call noundef double @sqrt(double noundef %.0.lcssa.i.i374) #24 ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.vp, double %i.vp, double %.0249) ; 2 uses
   %i.vq = fneg double %.0245
   %i.vr = fmul double %.sink.i, %i.vq             ; 3 uses
   %i.vs = fneg double %.sink.i
   %i.vt = fmul double %.0244, %i.vs
   %i.vu = fmul double %i.si, %i.si
-  %6 = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %7 = insertelement <2 x double> %6, double %i.vu, i64 1
-  %8 = tail call double @llvm.fmuladd.f64(double %i.vt, double %.0246, double %i.sl) ; 2 uses
-  %9 = fdiv double %8, %i.vr
-  %10 = insertelement <2 x double> poison, double %9, i64 0
-  %i.vv = insertelement <2 x double> %10, double %i.vr, i64 1 ; 2 uses
-  %i.vw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.vv, <2 x double> %i.vv, <2 x double> %7) ; 2 uses
+  %5 = tail call double @llvm.fmuladd.f64(double %i.vt, double %.0246, double %i.sl) ; 2 uses
+  %6 = fdiv double %5, %i.vr
+  %7 = insertelement <2 x double> poison, double %6, i64 0
+  %8 = insertelement <2 x double> %7, double %i.vr, i64 1 ; 2 uses
+  %9 = shufflevector <2 x double> %i.it, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.vv = insertelement <2 x double> %9, double %i.vu, i64 1
+  %i.vw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %8, <2 x double> %i.vv) ; 2 uses
   %i.vx = extractelement <2 x double> %i.vw, i64 0
   %i.vy = tail call double @sqrt(double noundef %i.vx) #24 ; 2 uses
-  %11 = extractelement <2 x double> %i.vw, i64 1
-  %12 = tail call double @sqrt(double noundef %11) #24 ; 2 uses
-  %13 = fdiv double %i.vr, %12
-  %i.vz = insertelement <2 x double> poison, double %8, i64 0
-  %14 = insertelement <2 x double> %i.vz, double %i.si, i64 1
-  %15 = insertelement <2 x double> poison, double %12, i64 0
-  %i.wa = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.wb = fdiv <2 x double> %14, %i.wa            ; 3 uses
+  %10 = insertelement <2 x double> poison, double %5, i64 0
+  %11 = insertelement <2 x double> %10, double %i.si, i64 1
+  %12 = tail call double @llvm.fmuladd.f64(double %i.vp, double %i.vp, double %.0249) ; 2 uses
+  %13 = shufflevector <2 x double> %i.vw, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.vz = insertelement <2 x double> %13, double %12, i64 1
+  %14 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.vz) ; 3 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %16 = fdiv double %i.vr, %15
+  %i.wa = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.wb = fdiv <2 x double> %11, %i.wa            ; 3 uses
   %i.wc = extractelement <2 x double> %i.wb, i64 0
-  %sqrt409 = tail call double @llvm.sqrt.f64(double %5)
   %i.wd = fmul double %i.sm, %i.sm
   %i.we = shufflevector <2 x double> %i.wb, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.wf = insertelement <2 x double> %i.we, double %i.rh, i64 0 ; 2 uses
@@ -937,7 +937,8 @@ _ZN6casadi13casadi_norm_2IdEET_xPKS1_.exit380:    ; preds = %_ZN6casadi13casadi_
   %i.wi = fadd double %i.wh, %i.wd
   %i.wj = tail call double @sqrt(double noundef %i.wi) #24 ; 2 uses
   %i.wk = tail call double @llvm.fabs.f64(double %i.sn)
-  %i.wl = fmul double %.1251, %sqrt409
+  %17 = extractelement <2 x double> %14, i64 1
+  %i.wl = fmul double %.1251, %17
   %i.wm = fdiv double 1.000000e+00, %i.wl         ; 2 uses
   %i.wn = fmul double %.1251, %i.vy
   %i.wo = fdiv double %i.wn, %i.hz
@@ -1134,6 +1135,9 @@ declare i64 @llvm.smin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.sqrt.v2f64(<2 x double>) #19
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: write, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

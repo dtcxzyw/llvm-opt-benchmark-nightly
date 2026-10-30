@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bf = extractelement <2 x float> %i.bd, i64 0 ; 2 uses
   %i.bg = call float @llvm.fmuladd.f32(float %i.bf, float %i.bf, float %i.be)
   %i.bh = call noundef float @llvm.fmuladd.f32(float %i.ap, float %i.ap, float %i.bg)
-  %i.bi = call noundef float @sqrtf(float noundef %i.bh) #14, !tbaa !7
+  %i.bi = call noundef float @llvm.sqrt.f32(float %i.bh)
   %i.bj = fdiv float 1.000000e+00, %i.bi          ; 2 uses
   %i.bk = insertelement <2 x float> poison, float %i.bj, i64 0
   %i.bl = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> zeroinitializer
@@ -607,7 +607,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ab, label %bb.g, label %bb.l
 
 bb.g:                                             ; preds = %bb.f
-  %i.ac = call noundef float @sqrtf(float noundef %i.x) #14, !tbaa !7
+  %i.ac = call noundef float @llvm.sqrt.f32(float %i.x)
   %i.ad = fdiv float 1.000000e+00, %i.ac          ; 3 uses
   %i.ae = fmul float %i.q, %i.ad
   store float %i.ae, ptr %i.p, align 8, !tbaa !47
@@ -1010,7 +1010,7 @@ bb.a:
   %i.ac = extractelement <2 x float> %i.aa, i64 0 ; 2 uses
   %i.ad = tail call float @llvm.fmuladd.f32(float %i.ac, float %i.ac, float %i.ab)
   %i.ae = tail call noundef float @llvm.fmuladd.f32(float %i.w, float %i.w, float %i.ad)
-  %i.af = tail call noundef float @sqrtf(float noundef %i.ae) #14, !tbaa !7
+  %i.af = tail call noundef float @llvm.sqrt.f32(float %i.ae)
   %i.ag = fdiv float 1.000000e+00, %i.af          ; 2 uses
   %i.ah = insertelement <2 x float> poison, float %i.ag, i64 0
   %i.ai = shufflevector <2 x float> %i.ah, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1243,7 +1243,7 @@ bb.d:                                             ; preds = %bb.c
   %i.cg = extractelement <2 x float> %i.ce, i64 0 ; 3 uses
   %i.ch = call float @llvm.fmuladd.f32(float %i.cg, float %i.cg, float %i.cf)
   %i.ci = call noundef float @llvm.fmuladd.f32(float %i.ca, float %i.ca, float %i.ch)
-  %i.cj = call noundef float @sqrtf(float noundef %i.ci) #14, !tbaa !7
+  %i.cj = call noundef float @llvm.sqrt.f32(float %i.ci)
   %i.ck = fdiv float 1.000000e+00, %i.cj          ; 2 uses
   %i.cl = insertelement <2 x float> poison, float %i.ck, i64 0
   %i.cm = shufflevector <2 x float> %i.cl, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1646,7 +1646,7 @@ bb.a:
   %i.eu = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.ev = load float, ptr %i.eu, align 4, !tbaa !47 ; 3 uses
   %i.ew = call noundef float @llvm.fmuladd.f32(float %i.ev, float %i.ev, float %i.et)
-  %i.ex = call noundef float @sqrtf(float noundef %i.ew) #14, !tbaa !7
+  %i.ex = call noundef float @llvm.sqrt.f32(float %i.ew)
   %i.ey = fdiv float 1.000000e+00, %i.ex          ; 4 uses
   %i.ez = fmul float %i.em, %i.ey                 ; 3 uses
   %i.fa = fmul float %i.eo, %i.ey                 ; 3 uses
@@ -1664,7 +1664,7 @@ bb.a:
   br i1 %i.fi, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.fj = call noundef float @sqrtf(float noundef %i.fh) #14, !tbaa !7
+  %i.fj = call float @llvm.sqrt.f32(float %i.fh)
   %i.fk = fdiv float 1.000000e+00, %i.fj          ; 3 uses
   %i.fl = fmul float %i.ez, %i.fk
   %i.fm = fmul float %i.fa, %i.fk
@@ -1846,6 +1846,9 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #6
 
 declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11

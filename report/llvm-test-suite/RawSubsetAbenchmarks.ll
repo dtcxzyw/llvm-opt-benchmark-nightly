@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.am
   %i.bv = extractelement <4 x double> %i.bo, i64 3 ; 2 uses
   %i.bw = call double @llvm.fmuladd.f64(double %i.bv, double %i.bv, double %i.bu)
   %i.bx = fadd double %i.bw, f0x38E09D8792FB4C49
-  %i.by = call double @sqrt(double noundef %i.bx) #9, !tbaa !8 ; 2 uses
+  %i.by = call double @llvm.sqrt.f64(double %i.bx) ; 2 uses
   %i.bz = fmul double %i.by, 2.080000e-01
   %i.ca = fmul double %i.bz, 5.000000e-01         ; 2 uses
   %i.cb = call double @sin(double noundef %i.ca) #9, !tbaa !8
@@ -226,9 +226,9 @@ bb.f:                                             ; preds = %.lr.ph, %bb.am
   %i.cq = extractelement <2 x double> %i.cm, i64 1
   %i.cr = call double @llvm.fmuladd.f64(double %i.cp, double %i.cp, double %i.cq) ; 2 uses
   %i.cs = shufflevector <4 x double> %i.cj, <4 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.ct = fmul <2 x double> %i.cs, %i.ce          ; 2 uses
+  %i.ct = fmul <2 x double> %i.ce, %i.cs          ; 2 uses
   %i.cu = shufflevector <4 x double> %i.cj, <4 x double> poison, <2 x i32> <i32 2, i32 2> ; 2 uses
-  %i.cv = fmul <2 x double> %i.cu, %i.ce
+  %i.cv = fmul <2 x double> %i.ce, %i.cu
   %i.cw = shufflevector <2 x double> %i.cv, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.cx = fsub <2 x double> %i.ct, %i.cw          ; 2 uses
   %i.cy = fadd <2 x double> %i.ct, %i.cw          ; 2 uses
@@ -376,8 +376,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   %i.gq = insertelement <2 x double> poison, double %i.gp, i64 0
   %i.gr = shufflevector <2 x double> %i.gq, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gs = fmul <2 x double> %i.gr, %i.go
-  %i.gt = fmul <2 x double> %i.cs, %i.cd          ; 2 uses
-  %i.gu = fmul <2 x double> %i.cu, %i.cd
+  %i.gt = fmul <2 x double> %i.cd, %i.cs          ; 2 uses
+  %i.gu = fmul <2 x double> %i.cd, %i.cu
   %i.gv = shufflevector <2 x double> %i.gu, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.gw = fadd <2 x double> %i.gt, %i.gv          ; 2 uses
   %i.gx = fsub <2 x double> %i.gt, %i.gv          ; 2 uses
@@ -485,8 +485,8 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.ad
   %i.jl = phi <2 x double> [ %i.jb, %bb.ad ], [ %i.jb, %bb.ae ], [ %i.jk, %bb.af ]
   %i.jm = fmul <2 x double> %i.gr, %i.jl
-  %i.jn = fmul <2 x double> %i.dn, %i.cd          ; 2 uses
-  %i.jo = fmul <2 x double> %i.dp, %i.cd
+  %i.jn = fmul <2 x double> %i.cd, %i.dn          ; 2 uses
+  %i.jo = fmul <2 x double> %i.cd, %i.dp
   %i.jp = shufflevector <2 x double> %i.jo, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.jq = fadd <2 x double> %i.jn, %i.jp          ; 2 uses
   %i.jr = fsub <2 x double> %i.jn, %i.jp          ; 2 uses
@@ -515,7 +515,7 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %i.kf = fmul <2 x double> %i.en, %i.ke          ; 4 uses
   %i.kg = insertelement <2 x double> poison, double %i.ii, i64 0
   %i.kh = shufflevector <2 x double> %i.kg, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ki = fmul <2 x double> %i.kh, %i.cf
+  %i.ki = fmul <2 x double> %i.cf, %i.kh
   %i.kj = fadd <2 x double> %i.ki, %i.jm
   %i.kk = fmul <2 x double> %i.kf, zeroinitializer ; 2 uses
   %i.kl = shufflevector <2 x double> %i.kf, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
@@ -916,6 +916,9 @@ __cxx_global_var_init.10.exit:                    ; preds = %bb.ap, %_ZNKSt7__cx
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5
