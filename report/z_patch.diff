@@ -1,0 +1,572 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index f204f3f1d47d2f..33852764b7d555 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -1625,8 +1625,12 @@ class ScalarEvolution {
+       return Guards;
+     }
+ 
+-    /// Try to apply the collected loop guards to \p Expr.
+-    LLVM_ABI const SCEV *rewrite(const SCEV *Expr) const;
++    /// Try to apply the collected loop guards to \p Expr. If \p BeforeUse is
++    /// set, it is called with each expression whose rewrite is about to be
++    /// used, and may update that rewrite.
++    LLVM_ABI const SCEV *
++    rewrite(const SCEV *Expr,
++            function_ref<void(const SCEV *)> BeforeUse = nullptr) const;
+   };
+ 
+   /// Try to apply information from loop guards for \p L to \p Expr.
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index c44becb8e95645..ecf9a4c92c7780 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16169,17 +16169,33 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+ 
+   // Now that all rewrite information is collect, rewrite the collected
+   // expressions with the information in the map. This applies information to
+-  // sub-expressions.
++  // sub-expressions. The rewriter uses the rewrite of a collected expression
++  // as is, so finalize it before its first use. An expression is removed from
++  // the map while it is finalized, so its rewrite is not applied to itself. If
++  // rewrites depend on each other in a cycle, the rewriter thus does not see
++  // the one being finalized, and rewrites its sub-expressions instead.
+   if (ExprsToRewrite.size() > 1) {
+-    for (const SCEV *Expr : ExprsToRewrite) {
++    // Bound the recursion. Beyond MaxDepth, rewrites are used unfinalized.
++    constexpr unsigned MaxDepth = 16;
++    unsigned FinalizeDepth = 0;
++    SmallPtrSet<const SCEV *, 16> ToFinalize(llvm::from_range, ExprsToRewrite);
++    std::function<void(const SCEV *)> Finalize = [&](const SCEV *Expr) {
++      if (FinalizeDepth == MaxDepth || !ToFinalize.erase(Expr))
++        return;
+       const SCEV *RewriteTo = Guards.RewriteMap[Expr];
+       Guards.RewriteMap.erase(Expr);
+-      Guards.RewriteMap.insert({Expr, Guards.rewrite(RewriteTo)});
+-    }
++      ++FinalizeDepth;
++      RewriteTo = Guards.rewrite(RewriteTo, Finalize);
++      --FinalizeDepth;
++      Guards.RewriteMap[Expr] = RewriteTo;
++    };
++    for (const SCEV *Expr : ExprsToRewrite)
++      Finalize(Expr);
+   }
+ }
+ 
+-const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
++const SCEV *ScalarEvolution::LoopGuards::rewrite(
++    const SCEV *Expr, function_ref<void(const SCEV *)> BeforeUse) const {
+   /// A rewriter to replace SCEV expressions in Map with the corresponding entry
+   /// in the map. It skips AddRecExpr because we cannot guarantee that the
+   /// replacement is loop invariant in the loop of the AddRec.
+@@ -16187,14 +16203,22 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+       : public SCEVRewriteVisitor<SCEVLoopGuardRewriter> {
+     const DenseMap<const SCEV *, const SCEV *> &Map;
+     const SmallDenseSet<std::pair<const SCEV *, const SCEV *>> &NotEqual;
++    function_ref<void(const SCEV *)> BeforeUse;
+ 
+     SCEVFlags FlagMask = SCEV::FlagNone;
+ 
++    const SCEV *lookup(const SCEV *Key) {
++      if (BeforeUse && Map.contains(Key))
++        BeforeUse(Key);
++      return Map.lookup(Key);
++    }
++
+   public:
+     SCEVLoopGuardRewriter(ScalarEvolution &SE,
+-                          const ScalarEvolution::LoopGuards &Guards)
++                          const ScalarEvolution::LoopGuards &Guards,
++                          function_ref<void(const SCEV *)> BeforeUse)
+         : SCEVRewriteVisitor(SE), Map(Guards.RewriteMap),
+-          NotEqual(Guards.NotEqual) {
++          NotEqual(Guards.NotEqual), BeforeUse(BeforeUse) {
+       if (Guards.PreserveNUW)
+         FlagMask = ScalarEvolution::setFlags(FlagMask, SCEV::FlagNUW);
+       if (Guards.PreserveNSW)
+@@ -16204,18 +16228,19 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+     const SCEV *visitAddRecExpr(const SCEVAddRecExpr *Expr) { return Expr; }
+ 
+     const SCEV *visitUnknown(const SCEVUnknown *Expr) {
+-      return Map.lookup_or(Expr, Expr);
++      const SCEV *S = lookup(Expr);
++      return S ? S : Expr;
+     }
+ 
+     const SCEV *visitPtrToAddrExpr(const SCEVPtrToAddrExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitPtrToAddrExpr(
+           Expr);
+     }
+ 
+     const SCEV *visitZeroExtendExpr(const SCEVZeroExtendExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+ 
+       // If we didn't find the extact ZExt expr in the map, check if there's
+@@ -16227,7 +16252,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+              Bitwidth > Op->getType()->getScalarSizeInBits()) {
+         Type *NarrowTy = IntegerType::get(SE.getContext(), Bitwidth);
+         auto *NarrowExt = SE.getZeroExtendExpr(Op, NarrowTy);
+-        if (const SCEV *S = Map.lookup(NarrowExt))
++        if (const SCEV *S = lookup(NarrowExt))
+           return SE.getZeroExtendExpr(S, Ty);
+         Bitwidth = Bitwidth / 2;
+       }
+@@ -16237,26 +16262,26 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+     }
+ 
+     const SCEV *visitSignExtendExpr(const SCEVSignExtendExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitSignExtendExpr(
+           Expr);
+     }
+ 
+     const SCEV *visitUMinExpr(const SCEVUMinExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitUMinExpr(Expr);
+     }
+ 
+     const SCEV *visitSMinExpr(const SCEVSMinExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+       return SCEVRewriteVisitor<SCEVLoopGuardRewriter>::visitSMinExpr(Expr);
+     }
+ 
+     const SCEV *visitAddExpr(const SCEVAddExpr *Expr) {
+-      if (const SCEV *S = Map.lookup(Expr))
++      if (const SCEV *S = lookup(Expr))
+         return S;
+ 
+       // Helper to check if S is a subtraction (A - B) where A != B, and if so,
+@@ -16291,7 +16316,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+             return SE.getAddExpr(
+                 Expr->getOperand(0), Rewritten,
+                 ScalarEvolution::maskFlags(Expr->getNoWrapFlags(), FlagMask));
+-          if (const SCEV *S = Map.lookup(Add))
++          if (const SCEV *S = lookup(Add))
+             return SE.getAddExpr(Expr->getOperand(0), S);
+         }
+ 
+@@ -16303,11 +16328,11 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+           const SCEV *S = nullptr;
+           // Handle (-1 + 1 + A) without constructing SCEVs.
+           if (match(Expr->getOperand(0), m_scev_AllOnes())) {
+-            S = Map.lookup(Expr->getOperand(1));
++            S = lookup(Expr->getOperand(1));
+           } else {
+             const SCEV *NewC =
+                 SE.getAddExpr(Expr->getOperand(0), SE.getOne(Expr->getType()));
+-            S = Map.lookup(SE.getAddExpr(NewC, Expr->getOperand(1)));
++            S = lookup(SE.getAddExpr(NewC, Expr->getOperand(1)));
+           }
+           if (S)
+             return SE.getAddExpr(S, SE.getMinusOne(Expr->getType()));
+@@ -16348,7 +16373,7 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+   if (RewriteMap.empty() && NotEqual.empty())
+     return Expr;
+ 
+-  SCEVLoopGuardRewriter Rewriter(SE, *this);
++  SCEVLoopGuardRewriter Rewriter(SE, *this, BeforeUse);
+   return Rewriter.visit(Expr);
+ }
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll b/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll
+new file mode 100644
+index 00000000000000..c72a3b826d99ac
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/guards-rewrite-order.ll
+@@ -0,0 +1,384 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output "-passes=print<scalar-evolution>" -scalar-evolution-classify-expressions=0 < %s 2>&1 | FileCheck %s
++
++; Test that the rewrites of collected guard expressions are finalized after
++; the rewrites of the expressions they contain. Here, the guard on
++; umin(%n, zext(64 - %k)) also rewrites its operand zext(64 - %k), whose operand
++; %k is bounded by the assume.
++
++define void @umin_uge_16(i64 %n, i8 %k) {
++; CHECK-LABEL: 'umin_uge_16'
++; CHECK-NEXT:  Determining loop execution counts for: @umin_uge_16
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %k.ule.64 = icmp ule i8 %k, 64
++  call void @llvm.assume(i1 %k.ule.64)
++  %sub = sub i8 64, %k
++  %sub.ext = zext i8 %sub to i64
++  %tc = call i64 @llvm.umin.i64(i64 %n, i64 %sub.ext)
++  %tc.ult.16 = icmp ult i64 %tc, 16
++  br i1 %tc.ult.16, label %exit, label %ph
++
++ph:
++  %n.vec = and i64 %tc, 112
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 16
++  %ec = icmp eq i64 %iv.next, %n.vec
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @umin_ne_0_then_uge_16(i64 %n, i8 %k) {
++; CHECK-LABEL: 'umin_ne_0_then_uge_16'
++; CHECK-NEXT:  Determining loop execution counts for: @umin_ne_0_then_uge_16
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %k.ule.64 = icmp ule i8 %k, 64
++  call void @llvm.assume(i1 %k.ule.64)
++  %sub = sub i8 64, %k
++  %sub.ext = zext i8 %sub to i64
++  %tc = call i64 @llvm.umin.i64(i64 %n, i64 %sub.ext)
++  %tc.eq.0 = icmp eq i64 %tc, 0
++  br i1 %tc.eq.0, label %exit, label %check
++
++check:
++  %tc.ult.16 = icmp ult i64 %tc, 16
++  br i1 %tc.ult.16, label %exit, label %ph
++
++ph:
++  %n.vec = and i64 %tc, 112
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 16
++  %ec = icmp eq i64 %iv.next, %n.vec
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; Same with smin and a signed bound on %k.
++define void @smin_sge_16(i64 %n, i8 %k) {
++; CHECK-LABEL: 'smin_sge_16'
++; CHECK-NEXT:  Determining loop execution counts for: @smin_sge_16
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((sext i8 (64 + (-1 * %k)) to i64) smin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((sext i8 (64 + (-1 * %k)) to i64) smin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %k.sge.0 = icmp sge i8 %k, 0
++  call void @llvm.assume(i1 %k.sge.0)
++  %k.sle.64 = icmp sle i8 %k, 64
++  call void @llvm.assume(i1 %k.sle.64)
++  %sub = sub i8 64, %k
++  %sub.ext = sext i8 %sub to i64
++  %tc = call i64 @llvm.smin.i64(i64 %n, i64 %sub.ext)
++  %tc.slt.16 = icmp slt i64 %tc, 16
++  br i1 %tc.slt.16, label %exit, label %ph
++
++ph:
++  %n.vec = and i64 %tc, 112
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 16
++  %ec = icmp eq i64 %iv.next, %n.vec
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The rewrite of %x contains the larger expression zext(64 - %k), whose
++; rewrite must be finalized first. Finalizing smaller expressions first would
++; lose the bound.
++define void @rhs_contains_rewritten_expr(i64 %n, i8 %k, i64 %x) {
++; CHECK-LABEL: 'rhs_contains_rewritten_expr'
++; CHECK-NEXT:  Determining loop execution counts for: @rhs_contains_rewritten_expr
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (%x /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (%x /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %k.ule.64 = icmp ule i8 %k, 64
++  call void @llvm.assume(i1 %k.ule.64)
++  %sub = sub i8 64, %k
++  %sub.ext = zext i8 %sub to i64
++  %tc = call i64 @llvm.umin.i64(i64 %n, i64 %sub.ext)
++  %k32.ule = icmp ule i64 %x, %sub.ext
++  call void @llvm.assume(i1 %k32.ule)
++  %x.uge = icmp uge i64 %x, 16
++  call void @llvm.assume(i1 %x.uge)
++  %tc.ult.16 = icmp ult i64 %tc, 16
++  br i1 %tc.ult.16, label %exit, label %ph
++
++ph:
++  %n.vec = and i64 %x, 112
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 16
++  %ec = icmp eq i64 %iv.next, %n.vec
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; Chain %n <= zext(%x) <= %m + 1 <= 8, where the rewrite of %n contains the
++; larger expression zext(%x). Finalizing smaller expressions first would lose
++; the bound.
++define void @rhs_chain_through_zext(i64 %n, i64 %m, i32 %x) {
++; CHECK-LABEL: 'rhs_chain_through_zext'
++; CHECK-NEXT:  Determining loop execution counts for: @rhs_chain_through_zext
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 7
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %m.ule.7 = icmp ule i64 %m, 7
++  br i1 %m.ule.7, label %check.x, label %exit
++
++check.x:
++  %x.ext = zext i32 %x to i64
++  %m.1 = add i64 %m, 1
++  %k32.ule = icmp ule i64 %x.ext, %m.1
++  br i1 %k32.ule, label %check.n, label %exit
++
++check.n:
++  %n.ule = icmp ule i64 %n, %x.ext
++  br i1 %n.ule, label %check.n.0, label %exit
++
++check.n.0:
++  %n.eq.0 = icmp eq i64 %n, 0
++  br i1 %n.eq.0, label %exit, label %loop
++
++loop:
++  %iv = phi i64 [ 0, %check.n.0 ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The rewrites of %tc and %c contain each other. Rewriting %c with the not yet
++; finalized rewrite of %tc would lose the bound on %j. While %tc is finalized,
++; %c is finalized without the rewrite of %tc, applying the bound on %j to the
++; operands of %tc instead.
++define void @cycle_keeps_order(i64 %c, i8 %j) {
++; CHECK-LABEL: 'cycle_keeps_order'
++; CHECK-NEXT:  Determining loop execution counts for: @cycle_keeps_order
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (15 + (zext i8 %j to i64))<nuw><nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 23
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (15 + (zext i8 %j to i64))<nuw><nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %j.ule.8 = icmp ule i8 %j, 8
++  call void @llvm.assume(i1 %j.ule.8)
++  %j.ext = zext i8 %j to i64
++  %tc = add i64 %j.ext, 16
++  %c.smax = call i64 @llvm.smax.i64(i64 %c, i64 0)
++  %tc.slt = icmp slt i64 %tc, %c.smax
++  br i1 %tc.slt, label %guard, label %exit
++
++guard:
++  %c.sge = icmp sge i64 %c, %tc
++  call void @llvm.assume(i1 %c.sge)
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %guard ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, %tc
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; Same as @umin_uge_16, but with the cycle from @cycle_keeps_order in the same
++; block. The cycle does not prevent picking up the bound on %k.
++define void @umin_plus_unrelated_cycle(i64 %n, i8 %k, i64 %c, i8 %j) {
++; CHECK-LABEL: 'umin_plus_unrelated_cycle'
++; CHECK-NEXT:  Determining loop execution counts for: @umin_plus_unrelated_cycle
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-16 + (16 * (zext i3 (trunc i64 (((zext i8 (64 + (-1 * %k)) to i64) umin %n) /u 16) to i3) to i64))<nuw><nsw>)<nsw> /u 16)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %k.ule.64 = icmp ule i8 %k, 64
++  call void @llvm.assume(i1 %k.ule.64)
++  %j.ule.8 = icmp ule i8 %j, 8
++  call void @llvm.assume(i1 %j.ule.8)
++  %j.ext = zext i8 %j to i64
++  %tc2 = add i64 %j.ext, 16
++  %c.smax = call i64 @llvm.smax.i64(i64 %c, i64 0)
++  %tc2.slt = icmp slt i64 %tc2, %c.smax
++  br i1 %tc2.slt, label %guard, label %exit
++
++guard:
++  %c.sge = icmp sge i64 %c, %tc2
++  call void @llvm.assume(i1 %c.sge)
++  %sub = sub i8 64, %k
++  %sub.ext = zext i8 %sub to i64
++  %tc = call i64 @llvm.umin.i64(i64 %n, i64 %sub.ext)
++  %tc.ult.16 = icmp ult i64 %tc, 16
++  br i1 %tc.ult.16, label %exit, label %ph
++
++ph:
++  %n.vec = and i64 %tc, 112
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %ph ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 16
++  %ec = icmp eq i64 %iv.next, %n.vec
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The rewriter uses the rewrite of zext(%k) to i32 for zext(%k) to i64, so the
++; former must be finalized first, even though it is not a sub-expression.
++define void @narrow_zext_dep(i64 %n, i32 %m, i8 %k) {
++; CHECK-LABEL: 'narrow_zext_dep'
++; CHECK-NEXT:  Determining loop execution counts for: @narrow_zext_dep
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 10
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %m.ule = icmp ule i32 %m, 10
++  br i1 %m.ule, label %guard.k64, label %exit
++
++guard.k64:
++  %k64 = zext i8 %k to i64
++  %n.ule = icmp ule i64 %n, %k64
++  br i1 %n.ule, label %guard.k32, label %exit
++
++guard.k32:
++  %k32 = zext i8 %k to i32
++  %m1 = add i32 %m, 1
++  %k32.ule = icmp ule i32 %k32, %m1
++  br i1 %k32.ule, label %guard.ne, label %exit
++
++guard.ne:
++  %n.ne = icmp ne i64 %n, 0
++  br i1 %n.ne, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %guard.ne ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 1
++  %ec = icmp ne i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Same, but the bound is on zext(%k) to i64 itself. Not finalizing
++; zext(%k) to i32 first would lose the bound on %m.
++define void @narrow_zext_dep_k64_ne_0(i64 %n, i32 %m, i8 %k) {
++; CHECK-LABEL: 'narrow_zext_dep_k64_ne_0'
++; CHECK-NEXT:  Determining loop execution counts for: @narrow_zext_dep_k64_ne_0
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (zext i8 %k to i64))<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 10
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (zext i8 %k to i64))<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %m.ule = icmp ule i32 %m, 10
++  br i1 %m.ule, label %guard.k64, label %exit
++
++guard.k64:
++  %k64 = zext i8 %k to i64
++  %n.ule = icmp ule i64 %n, %k64
++  br i1 %n.ule, label %guard.k32, label %exit
++
++guard.k32:
++  %k32 = zext i8 %k to i32
++  %m1 = add i32 %m, 1
++  %k32.ule = icmp ule i32 %k32, %m1
++  br i1 %k32.ule, label %guard.ne, label %exit
++
++guard.ne:
++  %k.ne = icmp ne i64 %k64, 0
++  br i1 %k.ne, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %guard.ne ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 1
++  %ec = icmp ne i64 %iv.next, %k64
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The rewrite of %n contains %k64 + %j64, whose rewrite uses the rewrite of the
++; narrower zext(%k) to i32. Finalizing it first must not lose the range of %k.
++define void @rewritten_zext_range(i64 %n, i32 %m, i8 %k, i8 %j) {
++; CHECK-LABEL: 'rewritten_zext_range'
++; CHECK-NEXT:  Determining loop execution counts for: @rewritten_zext_range
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 509
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %n)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %k32 = zext i8 %k to i32
++  %m1 = add i32 %m, 1
++  %k.ugt = icmp ugt i32 %k32, %m1
++  br i1 %k.ugt, label %guard.n, label %exit
++
++guard.n:
++  %k64 = zext i8 %k to i64
++  %j64 = zext i8 %j to i64
++  %kj = add i64 %k64, %j64
++  %n.sle = icmp sle i64 %n, %kj
++  br i1 %n.sle, label %guard.n.pos, label %exit
++
++guard.n.pos:
++  %n.sgt = icmp sgt i64 %n, 0
++  br i1 %n.sgt, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %guard.n.pos ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, 1
++  %ec = icmp ne i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++declare i64 @llvm.umin.i64(i64, i64)
++declare i64 @llvm.smin.i64(i64, i64)
++declare i64 @llvm.smax.i64(i64, i64)
++declare void @llvm.assume(i1)
