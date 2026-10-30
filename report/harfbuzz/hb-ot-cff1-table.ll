@@ -204,7 +204,7 @@ define linkonce_odr hidden void @_ZN3CFF12path_procs_tI22cff1_path_procs_path_tN
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !109  ; 2 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !109  ; 3 uses
   %i.d = icmp ult i32 %i.c, 8
   br i1 %i.d, label %bb.aa, label %.lr.ph, !prof !56
 
@@ -215,7 +215,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.k = zext i32 %i.e to i64                     ; 2 uses
+  %i.k = zext i32 %i.e to i64
   %i.l = load <2 x double>, ptr %i.f, align 8, !tbaa !113
   %i.m = bitcast i64 %i.g to double
   br label %bb.b
@@ -316,14 +316,13 @@ _ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !233
 
 ._crit_edge:                                      ; preds = %_ZN22cff1_path_procs_path_t4lineERN3CFF20cff1_cs_interp_env_tER17cff1_path_param_tRKNS0_7point_tE.exit
-  %2 = and i64 %i.k, 4294967294                   ; 3 uses
-  %3 = trunc nuw i64 %2 to i32                    ; 5 uses
-  %4 = trunc nuw i64 %2 to i32
-  %i.ax = add i32 %4, 2                           ; 2 uses
+  %2 = and i32 %i.c, -2                           ; 5 uses
+  %3 = add i32 %2, -4                             ; 2 uses
+  %i.ax = add i32 %2, -6                          ; 3 uses
   %.pre78 = load i32, ptr %i.b, align 4, !tbaa !109 ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 4448
   %.sroa.758.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4456
-  %.not.i.i33 = icmp ugt i32 %.pre78, %3
+  %.not.i.i33 = icmp ult i32 %i.ax, %.pre78
   br i1 %.not.i.i33, label %bb.l, label %bb.k, !prof !58
 
 bb.k:                                             ; preds = %._crit_edge
@@ -334,12 +333,13 @@ bb.k:                                             ; preds = %._crit_edge
 
 bb.l:                                             ; preds = %._crit_edge
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %2
+  %4 = zext i32 %i.ax to i64
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %4
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit35
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit35: ; preds = %bb.k, %bb.l
   %.0.i.i34 = phi ptr [ @_hb_CrapPool, %bb.k ], [ %i.bb, %bb.l ]
-  %i.bc = or disjoint i32 %3, 1                   ; 2 uses
+  %i.bc = or disjoint i32 %i.ax, 1                ; 2 uses
   %.not.i.i36 = icmp ult i32 %i.bc, %.pre78
   br i1 %.not.i.i36, label %bb.n, label %bb.m, !prof !58
 
@@ -364,7 +364,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit38: ; preds = %bb.m, %bb.n
   %i.bl = fadd double %i.bk, %i.bj                ; 2 uses
   %i.bm = extractelement <2 x double> %i.x, i64 1
   %i.bn = fadd double %i.bm, %i.bi                ; 2 uses
-  %.not.i.i39 = icmp ult i32 %i.ax, %.pre78
+  %.not.i.i39 = icmp ult i32 %3, %.pre78
   br i1 %.not.i.i39, label %bb.p, label %bb.o, !prof !58
 
 bb.o:                                             ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit38
@@ -375,13 +375,13 @@ bb.o:                                             ; preds = %_ZN3CFF12interp_env
 
 bb.p:                                             ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit38
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.bq = zext i32 %i.ax to i64
+  %i.bq = zext i32 %3 to i64
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.bq
   br label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit41
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit41: ; preds = %bb.o, %bb.p
   %.0.i.i40 = phi ptr [ @_hb_CrapPool, %bb.o ], [ %i.br, %bb.p ]
-  %i.bs = add nuw i32 %3, 3                       ; 2 uses
+  %i.bs = add i32 %2, -3                          ; 2 uses
   %.not.i.i42 = icmp ult i32 %i.bs, %.pre78
   br i1 %.not.i.i42, label %bb.r, label %bb.q, !prof !58
 
@@ -404,7 +404,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit44: ; preds = %bb.q, %bb.r
   %i.bz = load double, ptr %.0.i.i40, align 8, !tbaa !25
   %i.ca = fadd double %i.bl, %i.bz                ; 2 uses
   %i.cb = fadd double %i.bn, %i.by                ; 2 uses
-  %i.cc = add nuw i32 %3, 4                       ; 2 uses
+  %i.cc = add i32 %2, -2                          ; 2 uses
   %.not.i.i45 = icmp ult i32 %i.cc, %.pre78
   br i1 %.not.i.i45, label %bb.t, label %bb.s, !prof !58
 
@@ -422,7 +422,7 @@ bb.t:                                             ; preds = %_ZN3CFF12interp_env
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit47: ; preds = %bb.s, %bb.t
   %.0.i.i46 = phi ptr [ @_hb_CrapPool, %bb.s ], [ %i.cg, %bb.t ]
-  %i.ch = add nuw i32 %3, 5                       ; 2 uses
+  %i.ch = add i32 %2, -1                          ; 2 uses
   %.not.i.i48 = icmp ult i32 %i.ch, %.pre78
   br i1 %.not.i.i48, label %bb.v, label %bb.u, !prof !58
 

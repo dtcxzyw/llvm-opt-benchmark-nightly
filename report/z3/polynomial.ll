@@ -205,8 +205,8 @@ _ZN6vectorIPN11upolynomial21scoped_numeral_vectorELb1EjE9push_backEOS2_.exit85: 
   %i.hp = add i32 %i.hk, 1
   store i32 %i.hp, ptr %i.hm, align 4, !tbaa !70
   %i.hq = add nuw i32 %.0133, 1
-  %.not54.not = icmp ult i32 %.0133, %4
-  br i1 %.not54.not, label %.critedge61.preheader, label %bb.aj, !llvm.loop !778
+  %exitcond = icmp eq i32 %.0133, %4
+  br i1 %exitcond, label %bb.aj, label %.critedge61.preheader, !llvm.loop !778
 
 _ZN13mpzzp_manager3setER3mpzRKS0_.exit:           ; preds = %_ZN11mpz_managerILb0EE3setER3mpzRKS1_.exit.i76, %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #29
