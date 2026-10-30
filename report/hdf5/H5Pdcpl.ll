@@ -205,9 +205,10 @@ bb.gv:                                            ; preds = %bb.gu, %bb.gt
   call void @free(ptr noundef %.pre2768) #14
   %i.bmk = load ptr, ptr %i.bid, align 8, !tbaa !46 ; 6 uses
   %i.bml = getelementptr inbounds nuw i8, ptr %i.bmk, i64 8 ; 2 uses
-  %i.bmm = load <2 x i32>, ptr %i.bml, align 8, !tbaa !28 ; 2 uses
-  %i.bmn = insertelement <2 x i32> %i.bmm, i32 1, i64 1
-  %i.bmo = add <2 x i32> %i.bmm, %i.bmn
+  %i.bmm = load <2 x i32>, ptr %i.bml, align 8, !tbaa !28
+  %7 = freeze <2 x i32> %i.bmm                    ; 2 uses
+  %i.bmn = insertelement <2 x i32> %7, i32 1, i64 1
+  %i.bmo = add <2 x i32> %7, %i.bmn
   store <2 x i32> %i.bmo, ptr %i.bml, align 8, !tbaa !28
   store ptr %calloc2963, ptr %i.bmk, align 8, !tbaa !51
   %i.bmp = getelementptr inbounds nuw i8, ptr %i.bmk, i64 44
@@ -610,9 +611,10 @@ bb.js:                                            ; preds = %bb.jr, %bb.jq
   call void @free(ptr noundef %.pre2774) #14
   %i.chj = load ptr, ptr %i.cdb, align 8, !tbaa !58 ; 6 uses
   %i.chk = getelementptr inbounds nuw i8, ptr %i.chj, i64 8 ; 2 uses
-  %i.chl = load <2 x i32>, ptr %i.chk, align 8, !tbaa !28 ; 2 uses
-  %i.chm = insertelement <2 x i32> %i.chl, i32 1, i64 1
-  %i.chn = add <2 x i32> %i.chl, %i.chm
+  %i.chl = load <2 x i32>, ptr %i.chk, align 8, !tbaa !28
+  %8 = freeze <2 x i32> %i.chl                    ; 2 uses
+  %i.chm = insertelement <2 x i32> %8, i32 1, i64 1
+  %i.chn = add <2 x i32> %8, %i.chm
   store <2 x i32> %i.chn, ptr %i.chk, align 8, !tbaa !28
   store ptr %calloc, ptr %i.chj, align 8, !tbaa !51
   %i.cho = getelementptr inbounds nuw i8, ptr %i.chj, i64 44

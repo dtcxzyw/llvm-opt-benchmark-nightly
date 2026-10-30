@@ -204,7 +204,8 @@ bb.aax:                                           ; preds = %bb.aas
   store i8 0, ptr %i.ech, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ane)
   %i.eci = shufflevector <2 x i64> %i.ebt, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ecj = insertelement <4 x i64> poison, i64 %.sroa.4.0.copyload, i64 0
+  %3 = freeze i64 %.sroa.4.0.copyload
+  %i.ecj = insertelement <4 x i64> poison, i64 %3, i64 0
   %i.eck = shufflevector <4 x i64> %i.ecj, <4 x i64> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
   %i.ecl = shufflevector <4 x i64> %i.eci, <4 x i64> %i.eck, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   br label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit550.thread
