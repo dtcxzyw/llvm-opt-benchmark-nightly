@@ -205,7 +205,8 @@ begin_hunk_0_@opj_dwt_decode:bb.a
   %i.asy = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.asx ; 4 uses
   %i.asz = load <2 x i32>, ptr %i.asy, align 4, !tbaa !46
   %i.ata = load <2 x i32>, ptr %.in315.us370.i.i, align 4, !tbaa !46
-  %i.atb = shl <2 x i32> %i.ata, splat (i32 1)
+  %5 = freeze <2 x i32> %i.ata
+  %i.atb = shl <2 x i32> %5, splat (i32 1)
   %i.atc = ashr exact <2 x i32> %i.atb, splat (i32 1)
   %i.atd = add <2 x i32> %i.atc, %i.asz
   store <2 x i32> %i.atd, ptr %i.asy, align 4, !tbaa !46

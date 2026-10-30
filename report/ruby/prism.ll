@@ -205,9 +205,10 @@ bb.hj:                                            ; preds = %.sink.split5579, %b
   %i.yz = add i32 %i.yt, 1
   store i32 %i.yz, ptr %i.ys, align 8, !tbaa !166
   %i.za = getelementptr i8, ptr %0, i64 16        ; 2 uses
-  %i.zb = load <2 x i32>, ptr %i.za, align 8, !tbaa !31 ; 2 uses
-  %i.zc = insertelement <2 x i32> %i.zb, i32 1, i64 0
-  %i.zd = add <2 x i32> %i.zb, %i.zc
+  %i.zb = load <2 x i32>, ptr %i.za, align 8, !tbaa !31
+  %8 = freeze <2 x i32> %i.zb                     ; 2 uses
+  %i.zc = insertelement <2 x i32> %8, i32 1, i64 0
+  %i.zd = add <2 x i32> %8, %i.zc
   store <2 x i32> %i.zd, ptr %i.za, align 8, !tbaa !31
   store i32 %.01892, ptr %i.c, align 8, !tbaa !156
   %i.ze = load ptr, ptr %i.ab, align 8, !tbaa !157 ; 3 uses
