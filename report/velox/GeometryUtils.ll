@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c
   %foldExtExtBinop = fadd <2 x double> %i.q, %shift
   %i.r = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.s = fmul double %.0.lcssa, %.0.lcssa
-  %i.t = fadd double %i.r, %i.s
-  %6 = call double @sqrt(double noundef %i.t) #26 ; 3 uses
-  %i.u = fcmp oeq double %6, 0.000000e+00
+  %i.t = fadd double %i.r, %i.s                   ; 2 uses
+  %i.u = fcmp oeq double %i.t, 0.000000e+00
   br i1 %i.u, label %bb.f, label %bb.k, !prof !56
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
@@ -304,11 +303,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %bb.
   resume { ptr, i32 } %.pn
 
 bb.k:                                             ; preds = %._crit_edge
+  %sqrt = call double @llvm.sqrt.f64(double %i.t) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  %i.bb = insertelement <2 x double> poison, double %6, i64 0
+  %i.bb = insertelement <2 x double> poison, double %sqrt, i64 0
   %i.bc = shufflevector <2 x double> %i.bb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bd = fdiv <2 x double> %i.p, %i.bc           ; 2 uses
-  %i.be = fdiv double %.0.lcssa, %6
+  %i.be = fdiv double %.0.lcssa, %sqrt
   %i.bf = extractelement <2 x double> %i.bd, i64 0
   %i.bg = extractelement <2 x double> %i.bd, i64 1
   call void @_ZN8facebook5velox9functions10geospatial14CartesianPointC1Eddd(ptr noundef nonnull align 8 dereferenceable(24) %5, double noundef %i.bf, double noundef %i.bg, double noundef %i.be)
@@ -339,11 +339,8 @@ bb.l:                                             ; preds = %bb.k, %bb.d
   ret { double, double } %.fca.1.insert
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #11
-
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
-define { double, double } @_ZNK8facebook5velox9functions10geospatial14CartesianPoint16toSphericalPointEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #12 align 2 {
+define { double, double } @_ZNK8facebook5velox9functions10geospatial14CartesianPoint16toSphericalPointEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #11 align 2 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !124 ; 3 uses
   %i.b = fmul double %i.a, %i.a
@@ -369,7 +366,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, errnomem: write) uwtable
-define void @_ZN8facebook5velox9functions10geospatial14CartesianPointC2Edd(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2) unnamed_addr #13 align 2 {
+define void @_ZN8facebook5velox9functions10geospatial14CartesianPointC2Edd(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2) unnamed_addr #12 align 2 {
 bb.a:
   %i.a = fsub double 9.000000e+01, %2
   %i.b = insertelement <2 x double> poison, double %i.a, i64 0
@@ -395,10 +392,10 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #11
+declare double @sin(double noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #11
+declare double @cos(double noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN8facebook5velox9functions10geospatial14CartesianPointC2Eddd(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, double noundef %1, double noundef %2, double noundef %3) unnamed_addr #14 align 2 {
@@ -412,7 +409,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @atan2(double noundef, double noundef) local_unnamed_addr #11
+declare double @atan2(double noundef, double noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress uwtable
 define noundef double @_ZN8facebook5velox9functions10geospatial18getSphericalLengthERKN4geos4geom10LineStringE(ptr noundef nonnull align 8 dereferenceable(48) %0) local_unnamed_addr #0 {
@@ -815,10 +812,10 @@ bb.k:                                             ; preds = %._crit_edge._crit_e
 declare double @llvm.fabs.f64(double) #20
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @tan(double noundef) local_unnamed_addr #11
+declare double @tan(double noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @fmod(double noundef, double noundef) local_unnamed_addr #11
+declare double @fmod(double noundef, double noundef) local_unnamed_addr #13
 
 declare void @_ZN8facebook5velox6StatusC1ENS0_10StatusCodeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(8), i8 noundef signext, ptr noundef align 8) unnamed_addr #5
 
@@ -1221,9 +1218,9 @@ attributes #7 = { cold noreturn }
 attributes #8 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #9 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #12 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #13 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #11 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #12 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #14 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #15 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #16 = { cold nofree noreturn }

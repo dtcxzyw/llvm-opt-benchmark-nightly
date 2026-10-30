@@ -107,11 +107,16 @@ bb.a:
   %i.k = load double, ptr %i.j, align 8, !tbaa !22 ; 6 uses
   %i.l = fmul double %i.i, %i.i
   %i.m = call double @llvm.fmuladd.f64(double %i.g, double %i.g, double %i.l)
-  %i.n = call double @llvm.fmuladd.f64(double %i.k, double %i.k, double %i.m)
-  %i.o = call double @sqrt(double noundef %i.n) #6 ; 3 uses
+  %i.n = call double @llvm.fmuladd.f64(double %i.k, double %i.k, double %i.m) ; 2 uses
+  %i.o = call double @llvm.sqrt.f64(double %i.n)
   store double %i.o, ptr %2, align 8, !tbaa !18
-  %i.p = fcmp oeq double %i.o, 0.000000e+00
-  br i1 %i.p, label %.thread34, label %bb.b
+  %i.p = fcmp oeq double %i.n, 0.000000e+00
+  br i1 %i.p, label %.thread, label %bb.b
+
+.thread:                                          ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  br label %QuantizeToSector.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.q = fcmp oeq double %i.k, 0.000000e+00
@@ -137,15 +142,15 @@ _cmsAtan2.exit.i:                                 ; preds = %.lr.ph.i.i, %bb.c, 
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   store double %.09.i.i, ptr %i.y, align 8, !tbaa !20
   %i.z = fmul double %i.k, %i.k
-  %i.aa = call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.z)
-  %4 = call double @sqrt(double noundef %i.aa) #6 ; 2 uses
+  %i.aa = call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.z) ; 2 uses
   %i.ab = fcmp oeq double %i.g, 0.000000e+00
-  %i.ac = fcmp oeq double %4, 0.000000e+00
+  %i.ac = fcmp oeq double %i.aa, 0.000000e+00
   %or.cond.i22.i = and i1 %i.ab, %i.ac
   br i1 %or.cond.i22.i, label %ToSpherical.exit, label %bb.d
 
 bb.d:                                             ; preds = %_cmsAtan2.exit.i
-  %i.ad = call double @atan2(double noundef %4, double noundef %i.g) #6
+  %sqrt27.i = call double @llvm.sqrt.f64(double %i.aa)
+  %i.ad = call double @atan2(double noundef %sqrt27.i, double noundef %i.g) #6
   %i.ae = fmul double %i.ad, 1.800000e+02
   %i.af = fdiv double %i.ae, f0x400921FB54442D18  ; 3 uses
   %i.ag = fcmp olt double %i.af, 0.000000e+00
@@ -161,27 +166,20 @@ ToSpherical.exit:                                 ; preds = %.lr.ph.i24.i, %_cms
   %.09.i23.i = phi double [ 0.000000e+00, %_cmsAtan2.exit.i ], [ %i.af, %bb.d ], [ %i.ah, %.lr.ph.i24.i ] ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double %.09.i23.i, ptr %i.aj, align 8, !tbaa !21
-  %5 = fcmp olt double %i.o, 0.000000e+00
   %i.ak = fcmp olt double %.09.i.i, 0.000000e+00
-  %or.cond = or i1 %5, %i.ak
   %i.al = fcmp olt double %.09.i23.i, 0.000000e+00
-  %or.cond36 = or i1 %or.cond, %i.al
+  %or.cond36 = or i1 %i.ak, %i.al
   %i.am = insertelement <2 x double> poison, double %.09.i23.i, i64 0
   %i.an = insertelement <2 x double> %i.am, double %.09.i.i, i64 1
   br i1 %or.cond36, label %bb.e, label %QuantizeToSector.exit
-
-.thread34:                                        ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
-  br label %QuantizeToSector.exit
 
 bb.e:                                             ; preds = %ToSpherical.exit
   %i.ao = load ptr, ptr %0, align 8, !tbaa !13
   call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef %i.ao, i32 noundef 2, ptr noundef nonnull @.str) #6
   br label %bb.h
 
-QuantizeToSector.exit:                            ; preds = %ToSpherical.exit, %.thread34
-  %i.ap = phi <2 x double> [ zeroinitializer, %.thread34 ], [ %i.an, %ToSpherical.exit ]
+QuantizeToSector.exit:                            ; preds = %ToSpherical.exit, %.thread
+  %i.ap = phi <2 x double> [ zeroinitializer, %.thread ], [ %i.an, %ToSpherical.exit ]
   %i.aq = fmul <2 x double> %i.ap, splat (double 1.600000e+01)
   %i.ar = fdiv <2 x double> %i.aq, <double 1.800000e+02, double 3.600000e+02>
   %i.as = call <2 x double> @llvm.floor.v2f64(<2 x double> %i.ar)
@@ -566,9 +564,9 @@ ClosestLineToLine.exit:                           ; preds = %bb.j, %bb.k, %bb.l,
   %i.em = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.en = call double @llvm.fmuladd.f64(double %i.ef, double %i.ef, double %i.em)
   %i.eo = extractelement <2 x double> %i.ek, i64 1 ; 5 uses
-  %i.ep = call double @llvm.fmuladd.f64(double %i.eo, double %i.eo, double %i.en)
-  %i.eq = call double @sqrt(double noundef %i.ep) #6 ; 3 uses
-  %i.er = fcmp oeq double %i.eq, 0.000000e+00
+  %i.ep = call double @llvm.fmuladd.f64(double %i.eo, double %i.eo, double %i.en) ; 2 uses
+  %i.eq = call double @llvm.sqrt.f64(double %i.ep) ; 2 uses
+  %i.er = fcmp oeq double %i.ep, 0.000000e+00
   br i1 %i.er, label %ToSpherical.exit, label %bb.o
 
 bb.o:                                             ; preds = %ClosestLineToLine.exit
@@ -593,15 +591,15 @@ bb.p:                                             ; preds = %bb.o
 _cmsAtan2.exit.i:                                 ; preds = %.lr.ph.i.i, %bb.p, %bb.o
   %.09.i.i = phi double [ 0.000000e+00, %bb.o ], [ %i.ex, %bb.p ], [ %i.ez, %.lr.ph.i.i ] ; 3 uses
   %i.fb = fmul double %i.eo, %i.eo
-  %i.fc = call double @llvm.fmuladd.f64(double %i.el, double %i.el, double %i.fb)
-  %7 = call double @sqrt(double noundef %i.fc) #6 ; 2 uses
+  %i.fc = call double @llvm.fmuladd.f64(double %i.el, double %i.el, double %i.fb) ; 2 uses
   %i.fd = fcmp oeq double %i.ef, 0.000000e+00
-  %i.fe = fcmp oeq double %7, 0.000000e+00
+  %i.fe = fcmp oeq double %i.fc, 0.000000e+00
   %or.cond.i22.i = and i1 %i.fd, %i.fe
   br i1 %or.cond.i22.i, label %ToSpherical.exit, label %bb.q
 
 bb.q:                                             ; preds = %_cmsAtan2.exit.i
-  %i.ff = call double @atan2(double noundef %7, double noundef %i.ef) #6
+  %sqrt27.i = call double @llvm.sqrt.f64(double %i.fc)
+  %i.ff = call double @atan2(double noundef %sqrt27.i, double noundef %i.ef) #6
   %i.fg = fmul double %i.ff, 1.800000e+02
   %i.fh = fdiv double %i.fg, f0x400921FB54442D18  ; 3 uses
   %i.fi = fcmp olt double %i.fh, 0.000000e+00
@@ -659,45 +657,45 @@ declare void @_cmsVEC3init(ptr noundef, double noundef, double noundef, double n
 
 declare void @cmsSignalError(ptr noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #3
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #4
+declare double @llvm.fmuladd.f64(double, double, double) #3
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @atan2(double noundef, double noundef) local_unnamed_addr #3
+declare double @atan2(double noundef, double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #3
+declare double @sin(double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #3
+declare double @cos(double noundef) local_unnamed_addr #4
 
 declare void @_cmsVEC3minus(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare double @_cmsVEC3dot(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fabs.f64(double) #4
+declare double @llvm.fabs.f64(double) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.floor.v2f64(<2 x double>) #4
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #4
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { nounwind }
 

@@ -56,7 +56,7 @@ bb.a:
   br i1 %i.a, label %_ZN4geos9algorithm17InteriorPointLine11addInteriorEPKNS_4geom18CoordinateSequenceE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom10LineStringE, i64 0) #8 ; 4 uses
+  %i.b = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom10LineStringE, i64 0) #7 ; 4 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.g, label %bb.c
 
@@ -96,7 +96,7 @@ bb.e:                                             ; preds = %_ZN4geos9algorithm1
   %shift = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.x, %shift
   %i.y = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.z = tail call noundef double @sqrt(double noundef %i.y) #8 ; 2 uses
+  %i.z = tail call noundef double @llvm.sqrt.f64(double %i.y) ; 2 uses
   %i.aa = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.ab = trunc nuw i8 %i.aa to i1
   %i.ac = load double, ptr %i.o, align 8
@@ -116,7 +116,7 @@ _ZN4geos9algorithm17InteriorPointLine3addERKNS_4geom10CoordinateE.exit.i: ; pred
   br i1 %exitcond.not.i, label %_ZN4geos9algorithm17InteriorPointLine11addInteriorEPKNS_4geom18CoordinateSequenceE.exit, label %bb.e, !llvm.loop !0
 
 bb.g:                                             ; preds = %bb.b
-  %i.af = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #8 ; 5 uses
+  %i.af = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #7 ; 5 uses
   %.not15 = icmp eq ptr %i.af, null
   br i1 %.not15, label %_ZN4geos9algorithm17InteriorPointLine11addInteriorEPKNS_4geom18CoordinateSequenceE.exit, label %bb.h
 
@@ -150,7 +150,7 @@ bb.a:
   br i1 %i.a, label %_ZN4geos9algorithm17InteriorPointLine12addEndpointsEPKNS_4geom18CoordinateSequenceE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom10LineStringE, i64 0) #8 ; 2 uses
+  %i.b = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom10LineStringE, i64 0) #7 ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.h, label %bb.c
 
@@ -176,7 +176,7 @@ bb.d:                                             ; preds = %bb.c
   %shift = shufflevector <2 x double> %i.p, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.p, %shift
   %i.q = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.r = tail call noundef double @sqrt(double noundef %i.q) #8 ; 2 uses
+  %i.r = tail call noundef double @llvm.sqrt.f64(double %i.q) ; 2 uses
   %i.s = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.t = trunc nuw i8 %i.s to i1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
@@ -209,7 +209,7 @@ bb.f:                                             ; preds = %_ZN4geos9algorithm1
   %shift26 = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop27 = fadd <2 x double> %i.ag, %shift26
   %i.ah = extractelement <2 x double> %foldExtExtBinop27, i64 0
-  %i.ai = tail call noundef double @sqrt(double noundef %i.ah) #8 ; 2 uses
+  %i.ai = tail call noundef double @llvm.sqrt.f64(double %i.ah) ; 2 uses
   %i.aj = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.ak = trunc nuw i8 %i.aj to i1
   %i.al = load double, ptr %i.u, align 8
@@ -225,7 +225,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN4geos9algorithm17InteriorPointLine12addEndpointsEPKNS_4geom18CoordinateSequenceE.exit
 
 bb.h:                                             ; preds = %bb.b
-  %i.ao = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #8 ; 5 uses
+  %i.ao = tail call ptr @__dynamic_cast(ptr nonnull %1, ptr nonnull @_ZTIN4geos4geom8GeometryE, ptr nonnull @_ZTIN4geos4geom18GeometryCollectionE, i64 0) #7 ; 5 uses
   %.not14 = icmp eq ptr %i.ao, null
   br i1 %.not14, label %_ZN4geos9algorithm17InteriorPointLine12addEndpointsEPKNS_4geom18CoordinateSequenceE.exit, label %bb.i
 
@@ -288,7 +288,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4geos9a
   %shift = shufflevector <2 x double> %i.q, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.q, %shift
   %i.r = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.s = tail call noundef double @sqrt(double noundef %i.r) #8 ; 2 uses
+  %i.s = tail call noundef double @llvm.sqrt.f64(double %i.r) ; 2 uses
   %i.t = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.u = trunc nuw i8 %i.t to i1
   %i.v = load double, ptr %i.h, align 8
@@ -310,7 +310,7 @@ _ZN4geos9algorithm17InteriorPointLine3addERKNS_4geom10CoordinateE.exit: ; preds 
 
 declare noundef ptr @_ZNK4geos4geom10LineString16getCoordinatesROEv(ptr noundef nonnull align 8 dereferenceable(48)) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4geos9algorithm17InteriorPointLine3addERKNS_4geom10CoordinateE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -321,7 +321,7 @@ bb.a:
   %shift = shufflevector <2 x double> %i.e, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.e, %shift
   %i.f = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.g = tail call noundef double @sqrt(double noundef %i.f) #8 ; 2 uses
+  %i.g = tail call noundef double @llvm.sqrt.f64(double %i.f) ; 2 uses
   %i.h = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -364,7 +364,7 @@ bb.b:                                             ; preds = %bb.a
   %shift = shufflevector <2 x double> %i.m, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.m, %shift
   %i.n = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.o = tail call noundef double @sqrt(double noundef %i.n) #8 ; 2 uses
+  %i.o = tail call noundef double @llvm.sqrt.f64(double %i.n) ; 2 uses
   %i.p = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
@@ -397,7 +397,7 @@ bb.d:                                             ; preds = %_ZN4geos9algorithm1
   %shift10 = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop11 = fadd <2 x double> %i.ad, %shift10
   %i.ae = extractelement <2 x double> %foldExtExtBinop11, i64 0
-  %i.af = tail call noundef double @sqrt(double noundef %i.ae) #8 ; 2 uses
+  %i.af = tail call noundef double @llvm.sqrt.f64(double %i.ae) ; 2 uses
   %i.ag = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.ah = trunc nuw i8 %i.ag to i1
   %i.ai = load double, ptr %i.r, align 8
@@ -420,7 +420,7 @@ _ZN4geos9algorithm17InteriorPointLine3addERKNS_4geom10CoordinateE.exit8: ; preds
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define noundef zeroext i1 @_ZNK4geos9algorithm17InteriorPointLine16getInteriorPointERNS_4geom10CoordinateE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #5 align 2 {
+define noundef zeroext i1 @_ZNK4geos9algorithm17InteriorPointLine16getInteriorPointERNS_4geom10CoordinateE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load i8, ptr %0, align 8, !tbaa !14, !range !17, !noundef !18
   %i.b = trunc nuw i8 %i.a to i1                  ; 2 uses
@@ -435,21 +435,20 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret i1 %i.b
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #6
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn memory(read) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nounwind }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

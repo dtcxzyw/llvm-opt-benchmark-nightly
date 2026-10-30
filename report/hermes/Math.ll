@@ -205,17 +205,16 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph85.prol:                                    ; preds = %.lr.ph85.preheader
   %i.be = load double, ptr %i.ay, align 8, !tbaa !84
   %i.bf = fdiv double %i.be, %.sroa.speculated    ; 2 uses
-  %i.bg = fmul double %i.bf, %i.bf                ; 2 uses
-  %5 = fadd double %i.bg, 0.000000e+00            ; 3 uses
-  %i.bh = fsub double %5, %i.bg
+  %i.bg = fmul double %i.bf, %i.bf                ; 4 uses
+  %i.bh = fsub double %i.bg, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   br label %.lr.ph85.prol.loopexit
 
 .lr.ph85.prol.loopexit:                           ; preds = %.lr.ph85.prol, %.lr.ph85.preheader
-  %.lcssa.unr = phi double [ poison, %.lr.ph85.preheader ], [ %5, %.lr.ph85.prol ]
+  %.lcssa.unr = phi double [ poison, %.lr.ph85.preheader ], [ %i.bg, %.lr.ph85.prol ]
   %.04283.unr = phi ptr [ %i.ay, %.lr.ph85.preheader ], [ %i.bi, %.lr.ph85.prol ]
   %.04382.unr = phi double [ 0.000000e+00, %.lr.ph85.preheader ], [ %i.bh, %.lr.ph85.prol ]
-  %.04481.unr = phi double [ 0.000000e+00, %.lr.ph85.preheader ], [ %5, %.lr.ph85.prol ]
+  %.04481.unr = phi double [ 0.000000e+00, %.lr.ph85.preheader ], [ %i.bg, %.lr.ph85.prol ]
   %i.bj = icmp eq i64 %i.bc, 0
   br i1 %i.bj, label %._crit_edge86, label %.lr.ph85
 
@@ -237,16 +236,16 @@ bb.h:                                             ; preds = %bb.g
   %i.bq = fmul double %i.bp, %i.bp
   %i.br = fsub double %i.bq, %.04382              ; 2 uses
   %i.bs = fadd double %.04481, %i.br              ; 3 uses
-  %6 = fsub double %i.bs, %.04481
-  %7 = fsub double %6, %i.br
   %i.bt = getelementptr inbounds nuw i8, ptr %.04283, i64 8
   %i.bu = load double, ptr %i.bt, align 8, !tbaa !84
   %i.bv = fdiv double %i.bu, %.sroa.speculated    ; 2 uses
   %i.bw = fmul double %i.bv, %i.bv
-  %i.bx = fsub double %i.bw, %7                   ; 2 uses
-  %i.by = fadd double %i.bs, %i.bx                ; 3 uses
+  %i.bx = fsub double %.04481, %i.bs
+  %5 = fadd double %i.br, %i.bx
+  %6 = fadd double %i.bw, %5                      ; 2 uses
+  %i.by = fadd double %i.bs, %6                   ; 3 uses
   %i.bz = fsub double %i.by, %i.bs
-  %i.ca = fsub double %i.bz, %i.bx
+  %i.ca = fsub double %i.bz, %6
   %i.cb = getelementptr inbounds nuw i8, ptr %.04283, i64 16 ; 2 uses
   %.not.1 = icmp eq ptr %i.cb, %i.bb
   br i1 %.not.1, label %._crit_edge86, label %.lr.ph85

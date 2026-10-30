@@ -21,23 +21,23 @@ bb.a:
   %.sroa.3.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.3.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
-  %i.c = tail call ptr @b3GetWorld(i32 noundef %i.b) #9
+  %i.c = tail call ptr @b3GetWorld(i32 noundef %i.b) #8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4736
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !67   ; 2 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   store i64 %0, ptr %2, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   store float %1, ptr %i.f, align 8, !tbaa !70
-  call void @b3RecWrite_ParallelJointSetSpringHertz(ptr noundef nonnull %i.e, ptr noundef nonnull %2) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  call void @b3RecWrite_ParallelJointSetSpringHertz(ptr noundef nonnull %i.e, ptr noundef nonnull %2) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #9
+  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 184
   store float %1, ptr %i.h, align 4, !tbaa !71
   ret void
@@ -61,7 +61,7 @@ declare ptr @b3GetJointSimCheckType(i64, i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define float @b3ParallelJoint_GetSpringHertz(i64 %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #9
+  %i.a = tail call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 184
   %i.c = load float, ptr %i.b, align 4, !tbaa !71
   ret float %i.c
@@ -74,23 +74,23 @@ bb.a:
   %.sroa.3.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.3.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
-  %i.c = tail call ptr @b3GetWorld(i32 noundef %i.b) #9
+  %i.c = tail call ptr @b3GetWorld(i32 noundef %i.b) #8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4736
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !67   ; 2 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   store i64 %0, ptr %2, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   store float %1, ptr %i.f, align 8, !tbaa !70
-  call void @b3RecWrite_ParallelJointSetSpringDampingRatio(ptr noundef nonnull %i.e, ptr noundef nonnull %2) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  call void @b3RecWrite_ParallelJointSetSpringDampingRatio(ptr noundef nonnull %i.e, ptr noundef nonnull %2) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #9
+  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 188
   store float %1, ptr %i.h, align 4, !tbaa !71
   ret void
@@ -101,7 +101,7 @@ declare void @b3RecWrite_ParallelJointSetSpringDampingRatio(ptr noundef, ptr nou
 ; Function Attrs: nounwind uwtable
 define float @b3ParallelJoint_GetSpringDampingRatio(i64 %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #9
+  %i.a = tail call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 188
   %i.c = load float, ptr %i.b, align 4, !tbaa !71
   ret float %i.c
@@ -114,23 +114,23 @@ bb.a:
   %.sroa.3.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.3.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
-  %i.c = tail call ptr @b3GetWorld(i32 noundef %i.b) #9
+  %i.c = tail call ptr @b3GetWorld(i32 noundef %i.b) #8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4736
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !67   ; 2 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   store i64 %0, ptr %2, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   store float %1, ptr %i.f, align 8, !tbaa !70
-  call void @b3RecWrite_ParallelJointSetMaxTorque(ptr noundef nonnull %i.e, ptr noundef nonnull %2) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  call void @b3RecWrite_ParallelJointSetMaxTorque(ptr noundef nonnull %i.e, ptr noundef nonnull %2) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #9
+  %i.g = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 192
   store float %1, ptr %i.h, align 4, !tbaa !71
   ret void
@@ -141,7 +141,7 @@ declare void @b3RecWrite_ParallelJointSetMaxTorque(ptr noundef, ptr noundef) loc
 ; Function Attrs: nounwind uwtable
 define float @b3ParallelJoint_GetMaxTorque(i64 %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #9
+  %i.a = tail call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 0) #8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   %i.c = load float, ptr %i.b, align 4, !tbaa !71
   ret float %i.c
@@ -544,7 +544,7 @@ bb.a:
   %i.h = load <2 x float>, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !72
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 148
   %.sroa.11.0.copyload = load float, ptr %.sroa.11.0..sroa_idx, align 4, !tbaa !72
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %2, i8 0, i64 56, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 48
   store float 1.000000e+00, ptr %i.i, align 4
@@ -657,7 +657,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   ret void
 }
 
@@ -692,7 +692,7 @@ bb.a:
   %i.h = load <2 x float>, ptr %.sroa.10509.0..sroa_idx, align 4, !tbaa !72 ; 3 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 148
   %.sroa.12.0.copyload = load float, ptr %.sroa.12.0..sroa_idx, align 4, !tbaa !72 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %2, i8 0, i64 56, i1 false)
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 48
   store float 1.000000e+00, ptr %i.i, align 4
@@ -1065,7 +1065,7 @@ b3Solve2.exit:                                    ; preds = %bb.g, %bb.h
 
 bb.i:                                             ; preds = %b3Solve2.exit
   %.sroa.247.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %i.kq = tail call float @sqrtf(float noundef %i.kn) #9
+  %i.kq = tail call float @llvm.sqrt.f32(float %i.kn)
   %i.kr = fdiv float %i.iq, %i.kq                 ; 2 uses
   %i.ks = fmul float %i.kr, %.sroa.01.0.vec.extract.i.i
   %i.kt = extractelement <2 x float> %i.kl, i64 1
@@ -1166,7 +1166,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   ret void
 }
 
@@ -1292,7 +1292,7 @@ bb.a:
   %i.ck = fadd float %i.be, %i.ci
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !134
-  tail call void %i.l(<2 x float> %i.bd, float %i.be, <2 x float> %i.cj, float %i.ck, i32 noundef 32768, ptr noundef %i.cm) #9
+  tail call void %i.l(<2 x float> %i.bd, float %i.be, <2 x float> %i.cj, float %i.ck, i32 noundef 32768, ptr noundef %i.cm) #8
   %i.cn = getelementptr inbounds nuw i8, ptr %1, i64 44
   %.sroa.0155.0.copyload = load <2 x float>, ptr %i.cn, align 4, !tbaa !72 ; 4 uses
   %.sroa.4156.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 52
@@ -1407,15 +1407,15 @@ bb.a:
   %i.fs = fadd <2 x float> %i.eo, %i.fq
   %i.ft = fadd float %i.ep, %i.fr
   %i.fu = load ptr, ptr %i.cl, align 8, !tbaa !134
-  tail call void %i.cw(<2 x float> %i.eo, float %i.ep, <2 x float> %i.fs, float %i.ft, i32 noundef 255, ptr noundef %i.fu) #9
+  tail call void %i.cw(<2 x float> %i.eo, float %i.ep, <2 x float> %i.fs, float %i.ft, i32 noundef 255, ptr noundef %i.fu) #8
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #7
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.sqrt.f32(float) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #8
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1424,9 +1424,8 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { nounwind uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nounwind }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

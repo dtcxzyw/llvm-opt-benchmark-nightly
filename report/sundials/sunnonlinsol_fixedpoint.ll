@@ -163,7 +163,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.p = load ptr, ptr %0, align 8, !tbaa !13     ; 15 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 48
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !22   ; 19 uses
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !22   ; 18 uses
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %bb.c, label %bb.d
 
@@ -271,7 +271,7 @@ bb.k:                                             ; preds = %bb.f
   br i1 %i.bs, label %.lr.ph16.preheader.i, label %._crit_edge21.split.thread.i
 
 .lr.ph16.preheader.i:                             ; preds = %.preheader5.i
-  %i.bt = zext nneg i32 %i.r to i64               ; 9 uses
+  %i.bt = zext nneg i32 %i.r to i64               ; 10 uses
   %wide.trip.count63.i = zext i32 %i.br to i64    ; 5 uses
   %i.bu = add nsw i64 %i.bt, -3
   br label %.lr.ph16.i
@@ -344,7 +344,6 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
 .lr.ph16.i:                                       ; preds = %._crit_edge14.i, %.lr.ph16.preheader.i
   %indvars.iv60.i = phi i64 [ 0, %.lr.ph16.preheader.i ], [ %indvars.iv.next61.i, %._crit_edge14.i ] ; 6 uses
   %indvars.iv53.i = phi i64 [ 2, %.lr.ph16.preheader.i ], [ %indvars.iv.next54.i, %._crit_edge14.i ] ; 4 uses
-  %7 = sub nsw i64 %i.bt, %indvars.iv60.i
   %indvars.iv.next61.i = add nuw nsw i64 %indvars.iv60.i, 1 ; 4 uses
   %indvars.i = trunc i64 %indvars.iv.next61.i to i32
   %i.cv = mul nuw nsw i32 %i.r, %indvars.i
@@ -357,28 +356,22 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
   %i.db = extractelement <2 x double> %i.cz, i64 0 ; 2 uses
   %i.dc = tail call double @llvm.fmuladd.f64(double %i.db, double %i.db, double %i.da) ; 2 uses
   %i.dd = fcmp ugt double %i.dc, 0.000000e+00
-  br i1 %i.dd, label %8, label %10
+  %sqrt.i = tail call double @llvm.sqrt.f64(double %i.dc)
+  %7 = select i1 %i.dd, double %sqrt.i, double 0.000000e+00 ; 2 uses
+  %8 = insertelement <2 x double> poison, double %7, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = fdiv <2 x double> %i.cz, %9               ; 8 uses
+  %11 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %7, i64 0
+  store <2 x double> %11, ptr %i.cy, align 8, !tbaa !68
+  %12 = add nuw nsw i64 %indvars.iv60.i, 2
+  %13 = icmp samesign ult i64 %12, %i.bt
+  %14 = extractelement <2 x double> %10, i64 1    ; 2 uses
+  %15 = fneg double %14                           ; 4 uses
+  br i1 %13, label %.lr.ph13.i.preheader, label %._crit_edge14.i
 
-8:                                                ; preds = %.lr.ph16.i
-  %9 = tail call double @sqrt(double noundef %i.dc) #15
-  br label %10
-
-10:                                               ; preds = %8, %.lr.ph16.i
-  %11 = phi double [ %9, %8 ], [ 0.000000e+00, %.lr.ph16.i ] ; 2 uses
-  %12 = insertelement <2 x double> poison, double %11, i64 0
-  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
-  %14 = fdiv <2 x double> %i.cz, %13              ; 8 uses
-  %15 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %11, i64 0
-  store <2 x double> %15, ptr %i.cy, align 8, !tbaa !68
-  %16 = trunc i64 %indvars.iv60.i to i32
-  %17 = add i32 %16, 2
-  %18 = icmp slt i32 %17, %i.r
-  %19 = extractelement <2 x double> %14, i64 1    ; 2 uses
-  %20 = fneg double %19                           ; 4 uses
-  br i1 %18, label %.lr.ph13.i.preheader, label %._crit_edge14.i
-
-.lr.ph13.i.preheader:                             ; preds = %10
-  %xtraiter = and i64 %7, 1
+.lr.ph13.i.preheader:                             ; preds = %.lr.ph16.i
+  %16 = sub nsw i64 %i.bt, %indvars.iv60.i
+  %xtraiter = and i64 %16, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph13.i.prol.loopexit, label %.lr.ph13.i.prol
 
@@ -387,9 +380,9 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
   %gep134.i.prol = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.de ; 2 uses
   %i.df = load <2 x double>, ptr %gep134.i.prol, align 8, !tbaa !68 ; 2 uses
   %i.dg = shufflevector <2 x double> %i.df, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.dh = fmul <2 x double> %14, %i.dg
-  %i.di = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.dj = insertelement <2 x double> %i.di, double %20, i64 0
+  %i.dh = fmul <2 x double> %10, %i.dg
+  %i.di = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %i.dj = insertelement <2 x double> %i.di, double %15, i64 0
   %i.dk = shufflevector <2 x double> %i.df, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dl = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dj, <2 x double> %i.dk, <2 x double> %i.dh)
   %i.dm = shufflevector <2 x double> %i.dl, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -403,10 +396,10 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
   br i1 %i.dn, label %._crit_edge14.i, label %.lr.ph13.i.preheader.new
 
 .lr.ph13.i.preheader.new:                         ; preds = %.lr.ph13.i.prol.loopexit
-  %i.do = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.dp = insertelement <2 x double> %i.do, double %20, i64 0
-  %i.dq = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.dr = insertelement <2 x double> %i.dq, double %20, i64 0
+  %i.do = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %i.dp = insertelement <2 x double> %i.do, double %15, i64 0
+  %i.dq = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %i.dr = insertelement <2 x double> %i.dq, double %15, i64 0
   br label %.lr.ph13.i
 
 .lr.ph13.i:                                       ; preds = %.lr.ph13.i, %.lr.ph13.i.preheader.new
@@ -415,7 +408,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
   %gep134.i = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.ds ; 2 uses
   %i.dt = load <2 x double>, ptr %gep134.i, align 8, !tbaa !68 ; 2 uses
   %i.du = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.dv = fmul <2 x double> %14, %i.du
+  %i.dv = fmul <2 x double> %10, %i.du
   %i.dw = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dp, <2 x double> %i.dw, <2 x double> %i.dv)
   %i.dy = shufflevector <2 x double> %i.dx, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -425,7 +418,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
   %gep134.i.1 = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.dz ; 2 uses
   %i.ea = load <2 x double>, ptr %gep134.i.1, align 8, !tbaa !68 ; 2 uses
   %i.eb = shufflevector <2 x double> %i.ea, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.ec = fmul <2 x double> %14, %i.eb
+  %i.ec = fmul <2 x double> %10, %i.eb
   %i.ed = shufflevector <2 x double> %i.ea, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ee = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dr, <2 x double> %i.ed, <2 x double> %i.ec)
   %i.ef = shufflevector <2 x double> %i.ee, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -434,16 +427,16 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.thre
   %exitcond59.not.i.1 = icmp eq i64 %indvars.iv.next56.i.1, %i.bt
   br i1 %exitcond59.not.i.1, label %._crit_edge14.i, label %.lr.ph13.i
 
-._crit_edge14.i:                                  ; preds = %.lr.ph13.i.prol.loopexit, %.lr.ph13.i, %10
+._crit_edge14.i:                                  ; preds = %.lr.ph13.i.prol.loopexit, %.lr.ph13.i, %.lr.ph16.i
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv60.i ; 3 uses
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !67
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv.next61.i ; 2 uses
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !67
-  %i.ek = extractelement <2 x double> %14, i64 0  ; 2 uses
-  tail call void @N_VLinearSum(double noundef %i.ek, ptr noundef %i.eh, double noundef %19, ptr noundef %i.ej, ptr noundef %2) #15
+  %i.ek = extractelement <2 x double> %10, i64 0  ; 2 uses
+  tail call void @N_VLinearSum(double noundef %i.ek, ptr noundef %i.eh, double noundef %14, ptr noundef %i.ej, ptr noundef %2) #15
   %i.el = load ptr, ptr %i.eg, align 8, !tbaa !67
   %i.em = load ptr, ptr %i.ei, align 8, !tbaa !67 ; 2 uses
-  tail call void @N_VLinearSum(double noundef %20, ptr noundef %i.el, double noundef %i.ek, ptr noundef %i.em, ptr noundef %i.em) #15
+  tail call void @N_VLinearSum(double noundef %15, ptr noundef %i.el, double noundef %i.ek, ptr noundef %i.em, ptr noundef %i.em) #15
   %i.en = load ptr, ptr %i.eg, align 8, !tbaa !67
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %2, ptr noundef %i.en) #15
   %indvars.iv.next54.i = add nuw nsw i64 %indvars.iv53.i, 1
@@ -845,6 +838,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #12
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #14

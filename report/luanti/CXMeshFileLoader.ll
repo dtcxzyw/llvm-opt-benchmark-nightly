@@ -205,7 +205,7 @@ _ZN4core10quaternionaSERKNS_8CMatrix4IfEE.exit.us: ; preds = %bb.af, %bb.ae, %bb
   %i.ih = extractelement <4 x float> %i.ib, i64 0 ; 2 uses
   %i.ii = call float @llvm.fmuladd.f32(float %i.ih, float %i.ih, float %i.ig)
   %i.ij = fpext float %i.ii to double
-  %i.ik = call double @sqrt(double noundef %i.ij) #28
+  %i.ik = call double @llvm.sqrt.f64(double %i.ij)
   %i.il = fdiv double 1.000000e+00, %i.ik
   %i.im = fptrunc double %i.il to float
   %i.in = shufflevector <4 x float> %i.ib, <4 x float> poison, <2 x i32> <i32 1, i32 2>
@@ -606,9 +606,6 @@ _ZNSt12_Vector_baseIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESt6vectorIS8_SaIS8_EEEENS1_IPS8_SD_EEET0_T_SI_SH_.exit: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %_ZNSt12_Vector_baseIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS6_EE13_M_deallocateEPS6_m.exit, %bb.a
   ret void
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #24
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @sqrtf(float noundef) local_unnamed_addr #24
