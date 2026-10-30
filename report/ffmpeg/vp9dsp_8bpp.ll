@@ -205,7 +205,7 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   %.scalar81 = add nuw nsw i16 %.scalar, 2
   %i.v = insertelement <8 x i16> <i16 poison, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1>, i16 %.scalar81, i64 0
   %i.w = load <8 x i8>, ptr %i.o, align 1, !tbaa !26
-  %i.x = zext <8 x i8> %i.w to <8 x i16>          ; 10 uses
+  %i.x = zext <8 x i8> %i.w to <8 x i16>          ; 9 uses
   %i.y = extractelement <8 x i16> %i.x, i64 4
   %i.z = extractelement <8 x i16> %i.x, i64 5     ; 2 uses
   %i.aa = zext i8 %i.f to i16
@@ -223,13 +223,13 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   %i.am = shufflevector <8 x i16> %i.x, <8 x i16> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 2, i32 3, i32 4, i32 5> ; 2 uses
   %i.an = insertelement <8 x i16> %i.am, i16 %i.q, i64 0
   %i.ao = insertelement <8 x i16> %i.an, i16 %i.ac, i64 1
-  %i.ap = insertelement <8 x i16> %i.ao, i16 %i.al, i64 2 ; 2 uses
+  %i.ap = insertelement <8 x i16> %i.ao, i16 %i.al, i64 2
   %i.aq = shl nuw nsw <8 x i16> %i.x, <i16 poison, i16 1, i16 1, i16 1, i16 1, i16 poison, i16 poison, i16 poison>
   %i.ar = shufflevector <8 x i16> %i.aq, <8 x i16> poison, <8 x i32> <i32 1, i32 2, i32 3, i32 4, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.as = shufflevector <8 x i16> %i.ap, <8 x i16> %i.ar, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %4 = shufflevector <8 x i16> %i.ap, <8 x i16> %i.x, <8 x i32> <i32 0, i32 1, i32 2, i32 8, i32 poison, i32 poison, i32 poison, i32 poison>
+  %4 = freeze <8 x i16> %i.as                     ; 2 uses
   %i.at = shufflevector <8 x i16> %4, <8 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 2, i16 2, i16 2, i16 2>, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %i.au = add nuw nsw <8 x i16> %i.as, %i.at
+  %i.au = add nuw nsw <8 x i16> %4, %i.at
   %i.av = insertelement <8 x i16> %i.am, i16 %i.ab, i64 0
   %i.aw = insertelement <8 x i16> %i.av, i16 %i.ag, i64 1
   %i.ax = insertelement <8 x i16> %i.aw, i16 %i.ak, i64 2
@@ -632,7 +632,8 @@ bb.a:
   %i.x = shl nuw nsw i16 %i.r, 1
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.z = load i8, ptr %i.y, align 1, !tbaa !26
-  %i.aa = zext i8 %i.z to i16                     ; 2 uses
+  %.fr = freeze i8 %i.z
+  %i.aa = zext i8 %.fr to i16                     ; 2 uses
   %i.ab = add nuw nsw i16 %i.i, 2
   %i.ac = add nuw nsw i16 %i.ab, %i.x
   %i.ad = add nuw nsw i16 %i.ac, %i.aa
@@ -827,7 +828,8 @@ bb.a:
   %i.br = load <8 x i8>, ptr %2, align 1, !tbaa !26
   %i.bs = load <8 x i8>, ptr %i.aj, align 1, !tbaa !26 ; 2 uses
   %i.bt = load <2 x i8>, ptr %i.am, align 1, !tbaa !26
-  %i.bu = load i8, ptr %3, align 1, !tbaa !26     ; 2 uses
+  %i.bu = load i8, ptr %3, align 1, !tbaa !26
+  %.fr39 = freeze i8 %i.bu                        ; 2 uses
   %i.bv = shufflevector <2 x i8> %i.bt, <2 x i8> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.bw = shufflevector <8 x i8> %i.bs, <8 x i8> %i.bv, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 7>
   %i.bx = shufflevector <8 x i8> %i.br, <8 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -836,9 +838,9 @@ bb.a:
   %i.ca = shufflevector <8 x i8> %i.bs, <8 x i8> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.cb = shufflevector <16 x i8> %i.by, <16 x i8> %i.ca, <16 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 22, i32 22, i32 14> ; 2 uses
   %i.cc = zext <16 x i8> %i.cb to <16 x i16>
-  %i.cd = zext i8 %i.bu to i16
+  %i.cd = zext i8 %.fr39 to i16
   %i.ce = shufflevector <16 x i8> %i.cb, <16 x i8> %i.by, <16 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 31, i32 31, i32 poison>
-  %i.cf = insertelement <16 x i8> %i.ce, i8 %i.bu, i64 15
+  %i.cf = insertelement <16 x i8> %i.ce, i8 %.fr39, i64 15
   %i.cg = zext <16 x i8> %i.cf to <16 x i16>
   %i.ch = shl nuw nsw <16 x i16> %i.cc, <i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 0, i16 1>
   %i.ci = shl nuw nsw <16 x i16> %i.cg, <i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 0, i16 1, i16 0>
@@ -1202,9 +1204,6 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %i.dd = add nuw nsw i16 %i.dc, 2
   %i.de = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.df = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 5
   %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 6
   %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 14
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !26
@@ -1242,82 +1241,71 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %i.dy = add nuw nsw i16 %i.dx, %i.cc
   %i.dz = lshr i16 %i.dy, 2
   %i.ea = trunc nuw i16 %i.dz to i8               ; 6 uses
-  %7 = shl nuw nsw i16 %i.dv, 1
-  %8 = add nuw nsw i16 %7, 2
-  %9 = add nuw nsw i16 %8, %i.cl
-  %10 = load <8 x i8>, ptr %i.dg, align 1, !tbaa !26
-  %11 = zext <8 x i8> %10 to <8 x i16>            ; 5 uses
-  %12 = extractelement <8 x i16> %11, i64 7
-  %13 = shufflevector <8 x i16> %11, <8 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison> ; 2 uses
-  %14 = insertelement <16 x i16> %13, i16 %i.da, i64 0
-  %i.eb = add nuw nsw i16 %i.dp, %12
-  %15 = lshr i16 %i.eb, 2
-  %16 = trunc nuw i16 %15 to i8
-  %17 = zext i8 %i.cw to i16                      ; 3 uses
-  %i.ec = add nuw nsw i16 %9, %17
+  %.fr = freeze i8 %i.cw
+  %4 = zext i8 %.fr to i16                        ; 3 uses
+  %5 = shl nuw nsw i16 %i.dv, 1
+  %i.eb = add nuw nsw i16 %5, 2
+  %6 = add nuw nsw i16 %i.eb, %i.cl
+  %i.ec = add nuw nsw i16 %6, %4
   %i.ed = lshr i16 %i.ec, 2
   %i.ee = trunc nuw i16 %i.ed to i8               ; 6 uses
   %i.ef = load i8, ptr %i.db, align 1, !tbaa !26
-  %i.eg = add nuw nsw i16 %i.dd, %17
+  %i.eg = add nuw nsw i16 %i.dd, %4
   %i.eh = load i8, ptr %3, align 1, !tbaa !26
   %i.ei = load i8, ptr %i.de, align 1, !tbaa !26
-  %18 = load i8, ptr %i.df, align 1, !tbaa !26
-  %19 = load i8, ptr %4, align 1, !tbaa !26
-  %20 = load i8, ptr %5, align 1, !tbaa !26
-  %21 = load i8, ptr %6, align 1, !tbaa !26
-  %22 = zext i8 %i.ef to i16                      ; 4 uses
-  %23 = zext i8 %i.eh to i16                      ; 3 uses
-  %24 = zext i8 %i.ei to i16                      ; 4 uses
-  %25 = zext i8 %18 to i16                        ; 3 uses
-  %26 = zext i8 %19 to i16                        ; 3 uses
-  %i.ej = zext i8 %20 to i16                      ; 3 uses
-  %27 = zext i8 %21 to i16                        ; 3 uses
-  %28 = insertelement <8 x i16> poison, i16 %17, i64 0
-  %29 = insertelement <8 x i16> %28, i16 %22, i64 1
-  %30 = insertelement <8 x i16> %29, i16 %23, i64 2
-  %31 = insertelement <8 x i16> %30, i16 %24, i64 3
-  %32 = insertelement <8 x i16> %31, i16 %25, i64 4
-  %33 = insertelement <8 x i16> %32, i16 %26, i64 5
-  %i.ek = insertelement <8 x i16> %33, i16 %i.ej, i64 6
-  %i.el = insertelement <8 x i16> %i.ek, i16 %27, i64 7
-  %34 = add nuw nsw i16 %i.eg, %22
-  %35 = lshr i16 %34, 2
-  %36 = trunc nuw i16 %35 to i8                   ; 7 uses
-  %37 = shufflevector <8 x i16> %11, <8 x i16> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison>
-  %38 = insertelement <16 x i16> %37, i16 %22, i64 0
-  %39 = insertelement <16 x i16> %38, i16 %23, i64 1
-  %i.em = insertelement <16 x i16> %39, i16 %24, i64 2
-  %i.en = insertelement <16 x i16> %i.em, i16 %25, i64 3
-  %i.eo = insertelement <16 x i16> %i.en, i16 %26, i64 4
-  %40 = insertelement <16 x i16> %i.eo, i16 %i.ej, i64 5
-  %41 = insertelement <16 x i16> %40, i16 %27, i64 6 ; 2 uses
-  %i.ep = insertelement <16 x i16> %41, i16 %i.dj, i64 15
+  %7 = load <8 x i8>, ptr %i.dg, align 1, !tbaa !26
+  %8 = zext <8 x i8> %7 to <8 x i16>              ; 5 uses
+  %9 = extractelement <8 x i16> %8, i64 7
+  %10 = shufflevector <8 x i16> %8, <8 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison> ; 2 uses
+  %11 = insertelement <16 x i16> %10, i16 %i.da, i64 0
+  %12 = add nuw nsw i16 %i.dp, %9
+  %13 = lshr i16 %12, 2
+  %14 = trunc nuw i16 %13 to i8
+  %.fr84 = freeze i8 %i.ef
+  %i.ej = zext i8 %.fr84 to i16                   ; 4 uses
+  %15 = add nuw nsw i16 %i.eg, %i.ej
+  %16 = lshr i16 %15, 2
+  %17 = trunc nuw i16 %16 to i8                   ; 7 uses
+  %18 = zext i8 %i.eh to i16                      ; 3 uses
+  %19 = zext i8 %i.ei to i16                      ; 4 uses
+  %20 = load <4 x i8>, ptr %i.df, align 1, !tbaa !26
+  %21 = zext <4 x i8> %20 to <4 x i16>            ; 2 uses
+  %i.ek = insertelement <8 x i16> poison, i16 %4, i64 0
+  %i.el = insertelement <8 x i16> %i.ek, i16 %i.ej, i64 1
+  %22 = insertelement <8 x i16> %i.el, i16 %18, i64 2
+  %23 = insertelement <8 x i16> %22, i16 %19, i64 3
+  %24 = shufflevector <4 x i16> %21, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %25 = shufflevector <8 x i16> %23, <8 x i16> %24, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %26 = shufflevector <8 x i16> %8, <8 x i16> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison>
+  %i.em = insertelement <16 x i16> %26, i16 %i.ej, i64 0
+  %i.en = insertelement <16 x i16> %i.em, i16 %18, i64 1
+  %i.eo = insertelement <16 x i16> %i.en, i16 %19, i64 2
+  %27 = shufflevector <4 x i16> %21, <4 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
+  %28 = shufflevector <16 x i16> %i.eo, <16 x i16> %27, <16 x i32> <i32 0, i32 1, i32 2, i32 16, i32 17, i32 18, i32 19, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 poison> ; 2 uses
+  %i.ep = insertelement <16 x i16> %28, i16 %i.dj, i64 15
   %i.eq = add nuw nsw <16 x i16> %i.ep, splat (i16 1)
-  %i.er = shufflevector <8 x i16> %11, <8 x i16> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison>
-  %i.es = shufflevector <16 x i16> %i.er, <16 x i16> %41, <16 x i32> <i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 poison, i32 poison>
+  %i.er = shufflevector <8 x i16> %8, <8 x i16> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison>
+  %i.es = shufflevector <16 x i16> %i.er, <16 x i16> %28, <16 x i32> <i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 poison, i32 poison>
   %i.et = insertelement <16 x i16> %i.es, i16 %i.dj, i64 14
   %i.eu = insertelement <16 x i16> %i.et, i16 %i.dm, i64 15
   %i.ev = add nuw nsw <16 x i16> %i.eq, %i.eu
   %i.ew = lshr <16 x i16> %i.ev, splat (i16 1)    ; 3 uses
   %i.ex = trunc <16 x i16> %i.ew to <16 x i8>     ; 14 uses
-  %i.ey = shufflevector <8 x i16> %i.el, <8 x i16> %11, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.ey = shufflevector <8 x i16> %25, <8 x i16> %8, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.ez = shl nuw nsw <16 x i16> %i.ey, <i16 0, i16 0, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1> ; 2 uses
   %i.fa = shufflevector <16 x i16> %i.ez, <16 x i16> <i16 poison, i16 poison, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2, i16 2>, <16 x i32> <i32 0, i32 1, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
   %i.fb = add nuw nsw <16 x i16> %i.ez, %i.fa
-  %42 = insertelement <16 x i16> %14, i16 %24, i64 2
-  %43 = insertelement <16 x i16> %42, i16 %25, i64 3
-  %44 = insertelement <16 x i16> %43, i16 %26, i64 4
-  %i.fc = insertelement <16 x i16> %44, i16 %i.ej, i64 5
-  %45 = insertelement <16 x i16> %i.fc, i16 %27, i64 6
-  %i.fd = shufflevector <16 x i16> %45, <16 x i16> %13, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 16, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 poison> ; 2 uses
+  %i.fc = insertelement <16 x i16> %11, i16 %19, i64 2
+  %29 = shufflevector <16 x i16> %i.fc, <16 x i16> %27, <16 x i32> <i32 0, i32 1, i32 2, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 poison>
+  %i.fd = shufflevector <16 x i16> %29, <16 x i16> %10, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 16, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 poison> ; 2 uses
   %i.fe = insertelement <16 x i16> %i.fd, i16 %i.dj, i64 15
   %i.ff = shufflevector <16 x i16> %i.fe, <16 x i16> poison, <16 x i32> <i32 0, i32 0, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.fg = add nuw nsw <16 x i16> %i.fb, %i.ff
   %i.fh = shufflevector <16 x i16> %i.fd, <16 x i16> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13>
   %i.fi = insertelement <16 x i16> %i.fh, i16 %i.dv, i64 0
-  %i.fj = insertelement <16 x i16> %i.fi, i16 %23, i64 1
-  %i.fk = insertelement <16 x i16> %i.fj, i16 %22, i64 2
-  %i.fl = insertelement <16 x i16> %i.fk, i16 %24, i64 4
+  %i.fj = insertelement <16 x i16> %i.fi, i16 %18, i64 1
+  %i.fk = insertelement <16 x i16> %i.fj, i16 %i.ej, i64 2
+  %i.fl = insertelement <16 x i16> %i.fk, i16 %19, i64 4
   %i.fm = shufflevector <16 x i16> %i.fl, <16 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 1, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.fn = add nuw nsw <16 x i16> %i.fg, %i.fm
   %i.fo = lshr <16 x i16> %i.fn, splat (i16 2)    ; 4 uses
@@ -1347,8 +1335,8 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   store i8 %i.ge, ptr %.sroa.30.7..sroa_idx, align 1
   %i.gf = extractelement <16 x i8> %i.fp, i64 15
   store i8 %i.gf, ptr %.sroa.31.7..sroa_idx, align 1
-  store i8 %16, ptr %.sroa.32.7..sroa_idx, align 1
-  store i8 %36, ptr %i.ds, align 1
+  store i8 %14, ptr %.sroa.32.7..sroa_idx, align 1
+  store i8 %17, ptr %i.ds, align 1
   %i.gg = extractelement <16 x i8> %i.ex, i64 0   ; 7 uses
   store i8 %i.gg, ptr %.sroa.1668.6..sroa_idx, align 1
   %i.gh = extractelement <16 x i8> %i.ex, i64 1   ; 7 uses
@@ -1376,7 +1364,7 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %i.gv = getelementptr inbounds i8, ptr %0, i64 %i.gu ; 9 uses
   store i8 %i.ee, ptr %i.gv, align 1
   %.sroa.1467.5..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gv, i64 1
-  store i8 %36, ptr %.sroa.1467.5..sroa_idx, align 1
+  store i8 %17, ptr %.sroa.1467.5..sroa_idx, align 1
   %.sroa.1668.5..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gv, i64 2
   store i8 %i.gg, ptr %.sroa.1668.5..sroa_idx, align 1
   %.sroa.1869.5..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gv, i64 3
@@ -1421,7 +1409,7 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %.sroa.1266.4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.he, i64 1
   store i8 %i.ee, ptr %.sroa.1266.4..sroa_idx, align 1
   %.sroa.1467.4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.he, i64 2
-  store i8 %36, ptr %.sroa.1467.4..sroa_idx, align 1
+  store i8 %17, ptr %.sroa.1467.4..sroa_idx, align 1
   %.sroa.1668.4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.he, i64 3
   store i8 %i.gg, ptr %.sroa.1668.4..sroa_idx, align 1
   %.sroa.1869.4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.he, i64 4
@@ -1480,7 +1468,7 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %.sroa.1266.3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hl, i64 2
   store i8 %i.ee, ptr %.sroa.1266.3..sroa_idx, align 1
   %.sroa.1467.3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hl, i64 3
-  store i8 %36, ptr %.sroa.1467.3..sroa_idx, align 1
+  store i8 %17, ptr %.sroa.1467.3..sroa_idx, align 1
   %.sroa.1668.3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hl, i64 4
   store i8 %i.gg, ptr %.sroa.1668.3..sroa_idx, align 1
   %.sroa.1869.3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hl, i64 5
@@ -1542,7 +1530,7 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %.sroa.1266.2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hp, i64 3
   store i8 %i.ee, ptr %.sroa.1266.2..sroa_idx, align 1
   %.sroa.1467.2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hp, i64 4
-  store i8 %36, ptr %.sroa.1467.2..sroa_idx, align 1
+  store i8 %17, ptr %.sroa.1467.2..sroa_idx, align 1
   %.sroa.1668.2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hp, i64 5
   store i8 %i.gg, ptr %.sroa.1668.2..sroa_idx, align 1
   %.sroa.1869.2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hp, i64 6
@@ -1610,7 +1598,7 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %.sroa.1266.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ht, i64 4
   store i8 %i.ee, ptr %.sroa.1266.1..sroa_idx, align 1
   %.sroa.1467.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ht, i64 5
-  store i8 %36, ptr %.sroa.1467.1..sroa_idx, align 1
+  store i8 %17, ptr %.sroa.1467.1..sroa_idx, align 1
   %.sroa.1668.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ht, i64 6
   store i8 %i.gg, ptr %.sroa.1668.1..sroa_idx, align 1
   %.sroa.1869.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ht, i64 7
@@ -1678,7 +1666,7 @@ define internal void @vert_right_16x16_c(ptr nofree noundef writeonly captures(n
   %.sroa.1266.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hx, i64 5
   store i8 %i.ee, ptr %.sroa.1266.0..sroa_idx, align 1
   %.sroa.1467.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hx, i64 6
-  store i8 %36, ptr %.sroa.1467.0..sroa_idx, align 1
+  store i8 %17, ptr %.sroa.1467.0..sroa_idx, align 1
   %.sroa.1668.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hx, i64 7
   store i8 %i.gg, ptr %.sroa.1668.0..sroa_idx, align 1
   %.sroa.1869.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hx, i64 8
