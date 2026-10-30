@@ -205,8 +205,7 @@ _ZN5boost13re_detail_60012perl_matcherIPKcSaINS_9sub_matchIS3_EEENS_12regex_trai
   %i.r = trunc nuw i8 %i.q to i1
   store i8 %i.d, ptr %i.e, align 4, !tbaa !586
   store i8 0, ptr %i.f, align 1, !tbaa !587
-  store i8 0, ptr %i.g, align 2, !tbaa !588
-  br i1 %i.r, label %.critedge.a, label %.preheader
+  br i1 %i.r, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph, %.preheader
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !589
@@ -225,7 +224,11 @@ _ZN5boost13re_detail_60012perl_matcherIPKcSaINS_9sub_matchIS3_EEENS_12regex_trai
   %.0.in.not = icmp eq ptr %.0.in.in, null
   br i1 %.0.in.not, label %.critedge5, label %.lr.ph, !llvm.loop !1744
 
-.critedge.a:                                      ; preds = %.lr.ph, %.critedge.a
+.critedge:                                        ; preds = %.lr.ph
+  store i8 0, ptr %i.g, align 2, !tbaa !588
+  br label %.critedge.a
+
+.critedge.a:                                      ; preds = %.critedge.a, %.critedge
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !589
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !84
   %i.ac = zext i32 %i.ab to i64
@@ -628,8 +631,7 @@ _ZN5boost13re_detail_60012perl_matcherIPKwSaINS_9sub_matchIS3_EEENS_12regex_trai
   %i.r = trunc nuw i8 %i.q to i1
   store i8 %i.d, ptr %i.e, align 4, !tbaa !683
   store i8 0, ptr %i.f, align 1, !tbaa !684
-  store i8 0, ptr %i.g, align 2, !tbaa !685
-  br i1 %i.r, label %.critedge.a, label %.preheader
+  br i1 %i.r, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph, %.preheader
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !686
@@ -648,7 +650,11 @@ _ZN5boost13re_detail_60012perl_matcherIPKwSaINS_9sub_matchIS3_EEENS_12regex_trai
   %.0.in.not = icmp eq ptr %.0.in.in, null
   br i1 %.0.in.not, label %.critedge5, label %.lr.ph, !llvm.loop !1825
 
-.critedge.a:                                      ; preds = %.lr.ph, %.critedge.a
+.critedge:                                        ; preds = %.lr.ph
+  store i8 0, ptr %i.g, align 2, !tbaa !685
+  br label %.critedge.a
+
+.critedge.a:                                      ; preds = %.critedge.a, %.critedge
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !686
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !84
   %i.ac = zext i32 %i.ab to i64

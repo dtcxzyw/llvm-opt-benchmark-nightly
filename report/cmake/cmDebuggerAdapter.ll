@@ -204,16 +204,16 @@ bb.d:                                             ; preds = %bb.a, %bb.c
           to label %bb.e unwind label %bb.ag
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !54, !range !55, !noundef !56
   %i.q = trunc nuw i8 %i.p to i1                  ; 2 uses
-  store i8 0, ptr %i.o, align 8, !tbaa !54
   br i1 %i.f, label %.critedge20, label %.critedge
 
 .critedge:                                        ; preds = %bb.e
   br i1 %i.q, label %bb.f, label %_ZNSt14_Optional_baseISt10shared_ptrIN3dap6WriterEELb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %.critedge
+  store i8 0, ptr %i.o, align 8, !tbaa !54
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !39   ; 8 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.s, null
@@ -321,6 +321,7 @@ _ZNSt12__shared_ptrIN3dap12ReaderWriterELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit:
   br i1 %i.q, label %bb.s, label %_ZNSt14_Optional_baseISt10shared_ptrIN3dap6WriterEELb0ELb0EED2Ev.exit27
 
 bb.s:                                             ; preds = %.critedge20
+  store i8 0, ptr %i.o, align 8, !tbaa !54
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !39 ; 8 uses
   %.not.i.i.i.i.i.i23 = icmp eq ptr %i.ba, null
@@ -723,10 +724,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !54, !range !55, !noundef !56
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !54
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadISt10shared_ptrIN3dap6WriterEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !54
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !39   ; 8 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.e, null
@@ -1129,10 +1130,10 @@ bb.c:                                             ; preds = %.noexc, %bb.b, %_ZN
 bb.d:                                             ; preds = %_ZN3dap7Session4sendINS_12StoppedEventEvEEvRKT_.exit
   %.pre = load i8, ptr %i.c, align 8, !tbaa !195, !range !55
   %i.u = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !195
   br i1 %i.u, label %bb.e, label %_ZNSt14_Optional_baseIN3dap12StoppedEventELb0ELb0EED2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr %i.c, align 8, !tbaa !195
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 120
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !48   ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 136 ; 2 uses
@@ -1199,10 +1200,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !195, !range !55, !noundef !56
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !195
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN3dap12StoppedEventELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !195
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !48   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
@@ -1501,10 +1502,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !438, !range !55, !noundef !56
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !438
   br i1 %i.d, label %bb.b, label %_ZNSt14_Optional_baseIN10cmDebugger19cmDebuggerExceptionELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.b, align 8, !tbaa !438
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !48   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
@@ -1907,10 +1908,10 @@ bb.i:                                             ; preds = %bb.f
 bb.j:                                             ; preds = %_ZN3dap5ErrorD2Ev.exit.i.i.i.i, %_ZN3dap15ResponseOrErrorINS_18StackTraceResponseEEC2ERKS1_.exit.i.i.i.i
   %i.al = load i8, ptr %i.h, align 8, !tbaa !309, !range !55, !noalias !526, !noundef !56
   %i.am = trunc nuw i8 %i.al to i1
-  store i8 0, ptr %i.h, align 8, !tbaa !309, !noalias !526
   br i1 %i.am, label %bb.k, label %"_ZZN10cmDebugger17cmDebuggerAdapterC1ESt10shared_ptrINS_20cmDebuggerConnectionEESt8optionalIS1_IN3dap6WriterEEEENK3$_4clERKNS5_17StackTraceRequestE.exit.i.i.i"
 
 bb.k:                                             ; preds = %bb.j
+  store i8 0, ptr %i.h, align 8, !tbaa !309, !noalias !526
   %i.an = load ptr, ptr %4, align 8, !tbaa !312, !noalias !526 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !313, !noalias !526 ; 2 uses
@@ -2165,10 +2166,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !309, !range !55, !noundef !56
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !309
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN3dap18StackTraceResponseELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !309
   %i.d = load ptr, ptr %0, align 8, !tbaa !312    ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !313  ; 2 uses

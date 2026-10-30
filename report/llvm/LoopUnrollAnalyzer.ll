@@ -191,14 +191,16 @@ bb.m:                                             ; preds = %bb.j, %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   %.pre = load i8, ptr %i.ax, align 8, !tbaa !89, !range !90
   %i.bq = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.ax, align 8, !tbaa !89
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = load i32, ptr %4, align 8
-  %6 = icmp ugt i32 %5, 64
-  %or.cond.i.i.i = select i1 %i.bq, i1 %6, i1 false
-  br i1 %or.cond.i.i.i, label %bb.n, label %_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit
+  br i1 %i.bq, label %4, label %_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit
 
-bb.n:                                             ; preds = %bb.m
+4:                                                ; preds = %bb.m
+  store i8 0, ptr %i.ax, align 8, !tbaa !89
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %6 = load i32, ptr %5, align 8, !tbaa !33
+  %7 = icmp ugt i32 %6, 64
+  br i1 %7, label %bb.n, label %_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit
+
+bb.n:                                             ; preds = %4
   %i.br = load ptr, ptr %2, align 8, !tbaa !34    ; 2 uses
   %i.bs = icmp eq ptr %i.br, null
   br i1 %i.bs, label %_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit, label %bb.o
@@ -207,7 +209,7 @@ bb.o:                                             ; preds = %bb.n
   call void @_ZdaPv(ptr noundef nonnull %i.br) #10
   br label %_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit: ; preds = %bb.i, %bb.m, %bb.n, %bb.o
+_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit: ; preds = %bb.i, %bb.m, %4, %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   br label %bb.p
 

@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !96, !range !54, !noundef !55
   %i.e = trunc nuw i8 %i.d to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !96
   br i1 %i.e, label %bb.c, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14IncludeOptions12IndexOptionsEEaSESt9nullopt_t.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.c, align 8, !tbaa !96
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !30   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -243,10 +243,10 @@ bb.f:                                             ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.u = load i8, ptr %i.t, align 8, !tbaa !96, !range !54, !noundef !55
   %i.v = trunc nuw i8 %i.u to i1
-  store i8 0, ptr %i.t, align 8, !tbaa !96
   br i1 %i.v, label %bb.g, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14IncludeOptions12IndexOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS3_DpT_EERS3_E4typeEDpOS7_.exit
 
 bb.g:                                             ; preds = %bb.f
+  store i8 0, ptr %i.t, align 8, !tbaa !96
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !30   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
@@ -649,16 +649,16 @@ bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !103    ; 2 uses
   %i.b = load ptr, ptr %3, align 8, !tbaa !105
   %.not.i = icmp eq ptr %i.a, null
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 4 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !267, !range !54, !noundef !55
   %i.e = trunc nuw i8 %i.d to i1                  ; 2 uses
-  store i8 0, ptr %i.c, align 8, !tbaa !267
   br i1 %.not.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_ZZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset13OutputOptionsENS_6ObjectIS3_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_ENKUlRS7_IS3_ESE_SG_E_clESL_SE_SG_.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.c, align 8, !tbaa !267
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !30   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
@@ -688,6 +688,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.e, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset13OutputOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr %i.c, align 8, !tbaa !267
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !30   ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
@@ -1090,16 +1091,16 @@ bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !103    ; 2 uses
   %i.b = load ptr, ptr %3, align 8, !tbaa !105
   %.not.i = icmp eq ptr %i.a, null
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 4 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !96, !range !54, !noundef !55
   %i.e = trunc nuw i8 %i.d to i1                  ; 2 uses
-  store i8 0, ptr %i.c, align 8, !tbaa !96
   br i1 %.not.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_ZZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14IncludeOptions12IndexOptionsENS_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_ENKUlRS8_IS4_ESF_SH_E_clESM_SF_SH_.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.c, align 8, !tbaa !96
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !30   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
@@ -1131,6 +1132,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.f, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14IncludeOptions12IndexOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS3_DpT_EERS3_E4typeEDpOS7_.exit.i
 
 bb.f:                                             ; preds = %bb.e
+  store i8 0, ptr %i.c, align 8, !tbaa !96
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !30   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
@@ -1533,17 +1535,17 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !290, !range !54, !noundef !55
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !290
   br i1 %i.c, label %bb.b, label %_ZNSt22_Optional_payload_baseIN19cmCMakePresetsGraph10TestPreset14IncludeOptionsEE10_M_destroyEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !290
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !96, !range !54, !noundef !55
   %i.f = trunc nuw i8 %i.e to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !96
   br i1 %i.f, label %bb.c, label %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset14IncludeOptions12IndexOptionsELb0ELb0EED2Ev.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.d, align 8, !tbaa !96
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !30   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
@@ -1946,16 +1948,16 @@ _ZNSt14_Function_base13_Base_managerIZN19cmJSONHelperBuilder8OptionalIN19cmCMake
 define linkonce_odr dso_local noundef zeroext i1 @_ZZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptions15FixturesOptionsENS_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_ENKUlRS8_IS4_ESF_SH_E_clESM_SF_SH_(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not = icmp eq ptr %2, null
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 4 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !292, !range !54, !noundef !55
   %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
-  store i8 0, ptr %i.a, align 8, !tbaa !292
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptions15FixturesOptionsEE5resetEv.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.a, align 8, !tbaa !292
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !30   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
@@ -1997,6 +1999,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.e, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptions15FixturesOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS3_DpT_EERS3_E4typeEDpOS7_.exit
 
 bb.e:                                             ; preds = %bb.d
+  store i8 0, ptr %i.a, align 8, !tbaa !292
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !30   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
@@ -2399,20 +2402,16 @@ bb.a:
   %i.b = load ptr, ptr %2, align 8, !tbaa !103    ; 2 uses
   %i.c = load ptr, ptr %3, align 8, !tbaa !105
   %.not.i.i.i = icmp eq ptr %i.b, null
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !294, !range !54, !noundef !55
   %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
   br i1 %.not.i.i.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %i.f, label %bb.c, label %4
+  br i1 %i.f, label %bb.c, label %_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZNSt22_Optional_payload_baseIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(176) %1) #22
-  br label %_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit
-
-4:                                                ; preds = %bb.b
-  store i8 0, ptr %i.d, align 8, !tbaa !294
   br label %_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -2435,8 +2434,8 @@ _ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEE7emplaceIJEEE
   %i.k = tail call noundef zeroext i1 @_ZNK19cmJSONHelperBuilder6ObjectIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEEclERS3_PKN4Json5ValueEP11cmJSONState(ptr noundef nonnull align 8 dereferenceable(72) %i.a, ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull %i.b, ptr noundef %i.c)
   br label %_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit
 
-_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit: ; preds = %bb.c, %4, %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i.i
-  %.0.i.i.i = phi i1 [ %i.k, %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i.i ], [ true, %bb.c ], [ true, %4 ]
+_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit: ; preds = %bb.b, %bb.c, %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i.i
+  %.0.i.i.i = phi i1 [ %i.k, %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset14ExcludeOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i.i ], [ true, %bb.b ], [ true, %bb.c ]
   ret i1 %.0.i.i.i
 }
 
@@ -2839,10 +2838,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !292, !range !54, !noundef !55
   %i.e = trunc nuw i8 %i.d to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !292
   br i1 %i.e, label %bb.b, label %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset14ExcludeOptions15FixturesOptionsELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.c, align 8, !tbaa !292
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !30   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
@@ -3245,16 +3244,16 @@ _ZNSt14_Function_base13_Base_managerIZN19cmJSONHelperBuilder8OptionalIN19cmCMake
 define linkonce_odr dso_local noundef zeroext i1 @_ZZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset16ExecutionOptionsENS_6ObjectIS3_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_ENKUlRS7_IS3_ESE_SG_E_clESL_SE_SG_(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not = icmp eq ptr %2, null
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 4 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !296, !range !54, !noundef !55
   %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
-  store i8 0, ptr %i.a, align 8, !tbaa !296
   br i1 %.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset16ExecutionOptionsEE5resetEv.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.a, align 8, !tbaa !296
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !271  ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -3315,6 +3314,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.f, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset16ExecutionOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit
 
 bb.f:                                             ; preds = %bb.e
+  store i8 0, ptr %i.a, align 8, !tbaa !296
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !271 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -3717,16 +3717,16 @@ bb.a:
   %i.b = load ptr, ptr %2, align 8, !tbaa !103    ; 2 uses
   %i.c = load ptr, ptr %3, align 8, !tbaa !105
   %.not.i.i.i = icmp eq ptr %i.b, null
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 344 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 344 ; 4 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !298, !range !54, !noundef !55
   %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
-  store i8 0, ptr %i.d, align 8, !tbaa !298
   br i1 %.not.i.i.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %_ZSt10__invoke_rIbRZN19cmJSONHelperBuilder8OptionalIN19cmCMakePresetsGraph10TestPreset13FilterOptionsENS0_6ObjectIS4_EEEESt8functionIFbRSt8optionalIT_EPKN4Json5ValueEP11cmJSONStateEET0_EUlRS8_IS4_ESF_SH_E_JSM_SF_SH_EENSt9enable_ifIX16is_invocable_r_vIS9_SK_DpT1_EES9_E4typeEOSK_DpOSQ_.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.d, align 8, !tbaa !298
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.h = load i8, ptr %i.g, align 8, !tbaa !294, !range !54, !noundef !55
   %i.i = trunc nuw i8 %i.h to i1
@@ -3745,6 +3745,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.f, label %_ZNSt8optionalIN19cmCMakePresetsGraph10TestPreset13FilterOptionsEE7emplaceIJEEENSt9enable_ifIX18is_constructible_vIS2_DpT_EERS2_E4typeEDpOS6_.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.e
+  store i8 0, ptr %i.d, align 8, !tbaa !298
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.l = load i8, ptr %i.k, align 8, !tbaa !294, !range !54, !noundef !55
   %i.m = trunc nuw i8 %i.l to i1
@@ -4147,10 +4148,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 952 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !296, !range !54, !noundef !55
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !296
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset16ExecutionOptionsELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !296
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 928 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !271  ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 936
@@ -4212,10 +4213,10 @@ _ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset16ExecutionOptionsELb0EL
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 824 ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !298, !range !54, !noundef !55
   %i.ac = trunc nuw i8 %i.ab to i1
-  store i8 0, ptr %i.aa, align 8, !tbaa !298
   br i1 %i.ac, label %bb.d, label %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset13FilterOptionsELb0ELb0EED2Ev.exit
 
 bb.d:                                             ; preds = %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset16ExecutionOptionsELb0ELb0EED2Ev.exit
+  store i8 0, ptr %i.aa, align 8, !tbaa !298
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 816
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !294, !range !54, !noundef !55
   %i.af = trunc nuw i8 %i.ae to i1
@@ -4234,10 +4235,10 @@ _ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset13FilterOptionsELb0ELb0E
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
   %i.ai = load i8, ptr %i.ah, align 8, !tbaa !267, !range !54, !noundef !55
   %i.aj = trunc nuw i8 %i.ai to i1
-  store i8 0, ptr %i.ah, align 8, !tbaa !267
   br i1 %i.aj, label %bb.f, label %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset13OutputOptionsELb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %_ZNSt14_Optional_baseIN19cmCMakePresetsGraph10TestPreset13FilterOptionsELb0ELb0EED2Ev.exit
+  store i8 0, ptr %i.ah, align 8, !tbaa !267
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 400
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !30 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
@@ -4551,11 +4552,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %.07, i64 96 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !752, !range !54, !noundef !55
   %i.h = trunc nuw i8 %i.g to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !752
   br i1 %i.h, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i.i
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.07, i64 64
+  store i8 0, ptr %i.f, align 8, !tbaa !752
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !30   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.07, i64 80 ; 2 uses
   %i.l = icmp eq ptr %i.j, %i.k

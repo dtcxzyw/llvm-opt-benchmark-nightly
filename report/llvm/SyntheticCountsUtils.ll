@@ -204,17 +204,19 @@ _ZNSt4pairISt8optionalIN4llvm14WeakTrackingVHEEPNS1_13CallGraphNodeEEC2ERKS6_.ex
   %i.ac = call noundef ptr %.sroa.2.0.copyload.i(ptr nofree noundef nonnull align 8 dereferenceable(40) %1) #17, !inline_history !492 ; 3 uses
   %i.ad = load i8, ptr %i.i, align 8, !tbaa !503, !range !93, !noundef !89
   %i.ae = trunc nuw i8 %i.ad to i1
-  store i8 0, ptr %i.i, align 8, !tbaa !503
-  %2 = load ptr, ptr %i.k, align 8
-  %.not.i.i.i.i.i.i.i.i = icmp ne ptr %2, null
-  %or.cond.not.i.i.i.i.i.i = select i1 %i.ae, i1 %.not.i.i.i.i.i.i.i.i, i1 false
-  br i1 %or.cond.not.i.i.i.i.i.i, label %bb.e, label %_ZNK4llvm15mapped_iteratorIN9__gnu_cxx17__normal_iteratorIPKSt4pairISt8optionalINS_14WeakTrackingVHEEPNS_13CallGraphNodeEESt6vectorIS9_SaIS9_EEEEPFPKS7_S9_ESH_EdeEv.exit
+  br i1 %i.ae, label %2, label %_ZNK4llvm15mapped_iteratorIN9__gnu_cxx17__normal_iteratorIPKSt4pairISt8optionalINS_14WeakTrackingVHEEPNS_13CallGraphNodeEESt6vectorIS9_SaIS9_EEEEPFPKS7_S9_ESH_EdeEv.exit
 
-bb.e:                                             ; preds = %_ZNSt4pairISt8optionalIN4llvm14WeakTrackingVHEEPNS1_13CallGraphNodeEEC2ERKS6_.exit.i.i
+2:                                                ; preds = %_ZNSt4pairISt8optionalIN4llvm14WeakTrackingVHEEPNS1_13CallGraphNodeEEC2ERKS6_.exit.i.i
+  store i8 0, ptr %i.i, align 8, !tbaa !503
+  %3 = load ptr, ptr %i.k, align 8, !tbaa !510
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %3, null
+  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNK4llvm15mapped_iteratorIN9__gnu_cxx17__normal_iteratorIPKSt4pairISt8optionalINS_14WeakTrackingVHEEPNS_13CallGraphNodeEESt6vectorIS9_SaIS9_EEEEPFPKS7_S9_ESH_EdeEv.exit, label %bb.e
+
+bb.e:                                             ; preds = %2
   call void @_ZN4llvm15ValueHandleBase17RemoveFromUseListEv(ptr noundef nonnull align 8 dereferenceable(40) %1) #17
   br label %_ZNK4llvm15mapped_iteratorIN9__gnu_cxx17__normal_iteratorIPKSt4pairISt8optionalINS_14WeakTrackingVHEEPNS_13CallGraphNodeEESt6vectorIS9_SaIS9_EEEEPFPKS7_S9_ESH_EdeEv.exit
 
-_ZNK4llvm15mapped_iteratorIN9__gnu_cxx17__normal_iteratorIPKSt4pairISt8optionalINS_14WeakTrackingVHEEPNS_13CallGraphNodeEESt6vectorIS9_SaIS9_EEEEPFPKS7_S9_ESH_EdeEv.exit: ; preds = %_ZNSt4pairISt8optionalIN4llvm14WeakTrackingVHEEPNS1_13CallGraphNodeEEC2ERKS6_.exit.i.i, %bb.e
+_ZNK4llvm15mapped_iteratorIN9__gnu_cxx17__normal_iteratorIPKSt4pairISt8optionalINS_14WeakTrackingVHEEPNS_13CallGraphNodeEESt6vectorIS9_SaIS9_EEEEPFPKS7_S9_ESH_EdeEv.exit: ; preds = %_ZNSt4pairISt8optionalIN4llvm14WeakTrackingVHEEPNS1_13CallGraphNodeEEC2ERKS6_.exit.i.i, %2, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.af = load ptr, ptr %i.m, align 8, !tbaa !49, !noalias !511 ; 3 uses
   %i.ag = load ptr, ptr %i.n, align 8, !tbaa !172, !noalias !511 ; 2 uses
