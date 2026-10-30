@@ -1,0 +1,15 @@
+diff --git a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+index e81cce2b9299f..c07f4f891a990 100644
+--- a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+@@ -2347,7 +2347,9 @@ bool DSEState::storeIsNoop(MemoryDef *Def, const Value *DefUO) {
+     return false;
+ 
+   if (auto *LoadI = dyn_cast<LoadInst>(Store->getOperand(0))) {
+-    if (LoadI->getPointerOperand() == Store->getOperand(1)) {
++    if (LoadI->getPointerOperand() == Store->getOperand(1) ||
++        BatchAA.isMustAlias(MemoryLocation::get(LoadI),
++                            MemoryLocation::get(Store))) {
+       // Get the defining access for the load.
+       auto *LoadAccess = MSSA.getMemoryAccess(LoadI)->getDefiningAccess();
+       // Fast path: the defining accesses are the same.
