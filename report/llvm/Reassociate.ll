@@ -205,7 +205,7 @@ _ZSt13move_backwardIPN4llvm11reassociate6FactorES3_ET0_T_S5_S4_.exit.i.i: ; pred
   %.val.i.1.pre.i = load i32, ptr %i.h, align 8, !tbaa !218
   br label %"_ZSt25__unguarded_linear_insertIPN4llvm11reassociate6FactorEN9__gnu_cxx5__ops14_Val_comp_iterIZL22collectMultiplyFactorsRNS0_15SmallVectorImplINS1_10ValueEntryEEERNS7_IS2_EEE3$_0EEEvT_T0_.exit.i.i"
 
-"_ZSt25__unguarded_linear_insertIPN4llvm11reassociate6FactorEN9__gnu_cxx5__ops14_Val_comp_iterIZL22collectMultiplyFactorsRNS0_15SmallVectorImplINS1_10ValueEntryEEERNS7_IS2_EEE3$_0EEEvT_T0_.exit.i.i": ; preds = %.lr.ph.i, %_ZSt13move_backwardIPN4llvm11reassociate6FactorES3_ET0_T_S5_S4_.exit.i.i
+"_ZSt25__unguarded_linear_insertIPN4llvm11reassociate6FactorEN9__gnu_cxx5__ops14_Val_comp_iterIZL22collectMultiplyFactorsRNS0_15SmallVectorImplINS1_10ValueEntryEEERNS7_IS2_EEE3$_0EEEvT_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIPN4llvm11reassociate6FactorES3_ET0_T_S5_S4_.exit.i.i, %.lr.ph.i
   %.val.i.1.i = phi i32 [ %.val.i.1.pre.i, %_ZSt13move_backwardIPN4llvm11reassociate6FactorES3_ET0_T_S5_S4_.exit.i.i ], [ %.val.i.i, %.lr.ph.i ]
   %.019.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.031.i, i64 32 ; 6 uses
   %i.s = getelementptr i8, ptr %.031.i, i64 40    ; 2 uses

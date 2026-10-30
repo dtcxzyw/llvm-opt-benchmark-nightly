@@ -205,7 +205,7 @@ _ZSt13move_backwardIPN12_GLOBAL__N_119SynthesizeIvarChunkES2_ET0_T_S4_S3_.exit.i
   %.val.i.1.pre.i = load i64, ptr %.030.i, align 8, !tbaa !666
   br label %_ZSt25__unguarded_linear_insertIPN12_GLOBAL__N_119SynthesizeIvarChunkEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i.i
 
-_ZSt25__unguarded_linear_insertIPN12_GLOBAL__N_119SynthesizeIvarChunkEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i.i: ; preds = %.lr.ph.i, %_ZSt13move_backwardIPN12_GLOBAL__N_119SynthesizeIvarChunkES2_ET0_T_S4_S3_.exit.i.i
+_ZSt25__unguarded_linear_insertIPN12_GLOBAL__N_119SynthesizeIvarChunkEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i.i: ; preds = %_ZSt13move_backwardIPN12_GLOBAL__N_119SynthesizeIvarChunkES2_ET0_T_S4_S3_.exit.i.i, %.lr.ph.i
   %.val.i.1.i = phi i64 [ %.val.i.1.pre.i, %_ZSt13move_backwardIPN12_GLOBAL__N_119SynthesizeIvarChunkES2_ET0_T_S4_S3_.exit.i.i ], [ %.val.i.i, %.lr.ph.i ]
   %.019.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.030.i, i64 32 ; 8 uses
   %.0.val.i.1.i = load i64, ptr %.019.i.ptr.1.i, align 8, !tbaa !666 ; 4 uses
