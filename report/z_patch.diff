@@ -1,0 +1,303 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+index 815059762bfe3f..841bc7d19d147c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+@@ -1420,31 +1420,51 @@ Value *InstCombinerImpl::foldAndOrOfICmpsUsingRanges(
+   return Builder.CreateICmp(NewPred, NewV, ConstantInt::get(Ty, NewC));
+ }
+ 
+-/// Matches canonical form of isnan, fcmp ord x, 0
++/// Matches canonical form of !isnan, fcmp ord x, 0
+ static bool matchIsNotNaN(FCmpInst::Predicate P, Value *LHS, Value *RHS) {
+   return P == FCmpInst::FCMP_ORD && match(RHS, m_AnyZeroFP());
+ }
+ 
+-/// Matches fcmp u__ x, +/-inf
+-static bool matchUnorderedInfCompare(FCmpInst::Predicate P, Value *LHS,
+-                                     Value *RHS) {
+-  return FCmpInst::isUnordered(P) && match(RHS, m_Inf());
++/// Matches canonical form of isnan, fcmp uno x, 0
++static bool matchIsNaN(FCmpInst::Predicate P, Value *LHS, Value *RHS) {
++  return P == FCmpInst::FCMP_UNO && match(RHS, m_AnyZeroFP());
+ }
+ 
+-/// and (fcmp ord x, 0), (fcmp u* x, inf) -> fcmp o* x, inf
++/// Matches fcmp u__ x, C where C is a constant that is not NaN.
++static bool matchUnorderedNonNaNCompare(FCmpInst::Predicate P, Value *LHS,
++                                        Value *RHS) {
++  return FCmpInst::isUnordered(P) && match(RHS, m_NonNaN());
++}
++
++/// Matches fcmp o__ x, C where C is a constant that is not NaN.
++static bool matchOrderedNonNaNCompare(FCmpInst::Predicate P, Value *LHS,
++                                      Value *RHS) {
++  return FCmpInst::isOrdered(P) && match(RHS, m_NonNaN());
++}
++
++/// and (fcmp ord x, 0), (fcmp u* x, C) -> fcmp o* x, C
++/// or  (fcmp uno x, 0), (fcmp o* x, C) -> fcmp u* x, C
++/// where C is a constant that is not NaN.
+ ///
+-/// Clang emits this pattern for doing an isfinite check in __builtin_isnormal.
+-static Value *matchIsFiniteTest(InstCombiner::BuilderTy &Builder, FCmpInst *LHS,
+-                                FCmpInst *RHS) {
++/// Clang emits the 'and' pattern with C = inf for doing an isfinite check in
++/// __builtin_isnormal.
++static Value *foldNaNTestWithFCmp(InstCombiner::BuilderTy &Builder,
++                                  FCmpInst *LHS, FCmpInst *RHS, bool IsAnd) {
+   Value *LHS0 = LHS->getOperand(0), *LHS1 = LHS->getOperand(1);
+   Value *RHS0 = RHS->getOperand(0), *RHS1 = RHS->getOperand(1);
+   FCmpInst::Predicate PredL = LHS->getPredicate(), PredR = RHS->getPredicate();
+ 
+-  if (!matchIsNotNaN(PredL, LHS0, LHS1) ||
+-      !matchUnorderedInfCompare(PredR, RHS0, RHS1))
++  FCmpInst::Predicate NewPred;
++  if (IsAnd && matchIsNotNaN(PredL, LHS0, LHS1) &&
++      matchUnorderedNonNaNCompare(PredR, RHS0, RHS1))
++    NewPred = FCmpInst::getOrderedPredicate(PredR);
++  else if (!IsAnd && matchIsNaN(PredL, LHS0, LHS1) &&
++           matchOrderedNonNaNCompare(PredR, RHS0, RHS1))
++    NewPred = FCmpInst::getUnorderedPredicate(PredR);
++  else
+     return nullptr;
+ 
+-  return Builder.CreateFCmpFMF(FCmpInst::getOrderedPredicate(PredR), RHS0, RHS1,
++  return Builder.CreateFCmpFMF(NewPred, RHS0, RHS1,
+                                FMFSource::intersect(LHS, RHS));
+ }
+ 
+@@ -1508,13 +1528,15 @@ Value *InstCombinerImpl::foldLogicOfFCmps(FCmpInst *LHS, FCmpInst *RHS,
+   }
+ 
+   // This transform is not valid for a logical select.
+-  if (!IsLogicalSelect && IsAnd &&
++  if (!IsLogicalSelect &&
+       stripSignOnlyFPOps(LHS0) == stripSignOnlyFPOps(RHS0)) {
+-    // and (fcmp ord x, 0), (fcmp u* x, inf) -> fcmp o* x, inf
+-    // and (fcmp ord x, 0), (fcmp u* fabs(x), inf) -> fcmp o* x, inf
+-    if (Value *Left = matchIsFiniteTest(Builder, LHS, RHS))
++    // and (fcmp ord x, 0), (fcmp u* x, C) -> fcmp o* x, C
++    // and (fcmp ord x, 0), (fcmp u* fabs(x), C) -> fcmp o* fabs(x), C
++    // or  (fcmp uno x, 0), (fcmp o* x, C) -> fcmp u* x, C
++    // or  (fcmp uno x, 0), (fcmp o* fabs(x), C) -> fcmp u* fabs(x), C
++    if (Value *Left = foldNaNTestWithFCmp(Builder, LHS, RHS, IsAnd))
+       return Left;
+-    if (Value *Right = matchIsFiniteTest(Builder, RHS, LHS))
++    if (Value *Right = foldNaNTestWithFCmp(Builder, RHS, LHS, IsAnd))
+       return Right;
+   }
+ 
+diff --git a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll
+index 5113fb42b7bfc9..33a8f603ce165f 100644
+--- a/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll
++++ b/llvm/test/CodeGen/AMDGPU/amdgpu-simplify-libcall-powr.ll
+@@ -795,7 +795,7 @@ define <2 x float> @test_powr_afn_v2f32_0.0(<2 x float> %x) {
+ ; NOPRELINK-NEXT:    [[TMP4:%.*]] = call afn <2 x float> @llvm.log2.v2f32(<2 x float> [[TMP3]])
+ ; NOPRELINK-NEXT:    [[TMP5:%.*]] = fmul afn <2 x float> [[TMP4]], zeroinitializer
+ ; NOPRELINK-NEXT:    [[TMP6:%.*]] = call afn <2 x float> @llvm.exp2.v2f32(<2 x float> [[TMP5]])
+-; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp ueq <2 x float> [[TMP2]], zeroinitializer
++; NOPRELINK-NEXT:    [[TMP7:%.*]] = fcmp afn ueq <2 x float> [[TMP2]], zeroinitializer
+ ; NOPRELINK-NEXT:    [[TMP8:%.*]] = select afn <2 x i1> [[TMP7]], <2 x float> splat (float +qnan), <2 x float> [[TMP6]]
+ ; NOPRELINK-NEXT:    ret <2 x float> [[TMP8]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/and-fcmp.ll b/llvm/test/Transforms/InstCombine/and-fcmp.ll
+index c6f1e635ce5ce7..8d483ef587ba9f 100644
+--- a/llvm/test/Transforms/InstCombine/and-fcmp.ll
++++ b/llvm/test/Transforms/InstCombine/and-fcmp.ll
+@@ -4904,13 +4904,10 @@ define i1 @clang_builtin_isnormal_inf_check_neg_inf(half %x) {
+   ret i1 %and
+ }
+ 
+-; Negative test
+ define i1 @clang_builtin_isnormal_inf_check_not_inf(half %x) {
+ ; CHECK-LABEL: @clang_builtin_isnormal_inf_check_not_inf(
+ ; CHECK-NEXT:    [[FABS_X:%.*]] = call half @llvm.fabs.f16(half [[X:%.*]])
+-; CHECK-NEXT:    [[ORD:%.*]] = fcmp ord half [[X]], 0.000000e+00
+-; CHECK-NEXT:    [[UEQ:%.*]] = fcmp uge half [[FABS_X]], 6.550400e+04
+-; CHECK-NEXT:    [[AND:%.*]] = and i1 [[ORD]], [[UEQ]]
++; CHECK-NEXT:    [[AND:%.*]] = fcmp oge half [[FABS_X]], 6.550400e+04
+ ; CHECK-NEXT:    ret i1 [[AND]]
+ ;
+   %fabs.x = call half @llvm.fabs.f16(half %x)
+@@ -5116,6 +5113,52 @@ define i1 @and_fcmp_reassoc4(i1 %x, double %a, double %b) {
+   ret i1 %retval
+ }
+ 
++define i1 @and_ord_ult_nonnan_const(double %x) {
++; CHECK-LABEL: @and_ord_ult_nonnan_const(
++; CHECK-NEXT:    [[R:%.*]] = fcmp olt double [[X:%.*]], f0x43E0000000000000
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %ord = fcmp ord double %x, 0.0
++  %lt = fcmp ult double %x, 0x43E0000000000000   ; 2^63
++  %r = and i1 %ord, %lt
++  ret i1 %r
++}
++
++define <2 x i1> @and_ord_uge_nonnan_const_vec_poison(<2 x double> %x) {
++; CHECK-LABEL: @and_ord_uge_nonnan_const_vec_poison(
++; CHECK-NEXT:    [[R:%.*]] = fcmp oge <2 x double> [[X:%.*]], <double 2.000000e+00, double poison>
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %ord = fcmp ord <2 x double> %x, zeroinitializer
++  %ge = fcmp uge <2 x double> %x, <double 2.0, double poison>
++  %r = and <2 x i1> %ord, %ge
++  ret <2 x i1> %r
++}
++
++define <2 x i1> @and_ord_ult_nonnan_const_vec_nonsplat(<2 x double> %x) {
++; CHECK-LABEL: @and_ord_ult_nonnan_const_vec_nonsplat(
++; CHECK-NEXT:    [[R:%.*]] = fcmp olt <2 x double> [[X:%.*]], <double 2.000000e+00, double 1.000000e+00>
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %ord = fcmp ord <2 x double> %x, zeroinitializer
++  %lt = fcmp ult <2 x double> %x, <double 2.0, double 1.0>
++  %r = and <2 x i1> %ord, %lt
++  ret <2 x i1> %r
++}
++
++define <2 x i1> @and_ord_ult_nan_const_vec(<2 x double> %x) {
++; CHECK-LABEL: @and_ord_ult_nan_const_vec(
++; CHECK-NEXT:    [[ORD:%.*]] = fcmp ord <2 x double> [[X:%.*]], zeroinitializer
++; CHECK-NEXT:    [[LT:%.*]] = fcmp ult <2 x double> [[X]], <double 2.000000e+00, double +qnan>
++; CHECK-NEXT:    [[R:%.*]] = and <2 x i1> [[ORD]], [[LT]]
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %ord = fcmp ord <2 x double> %x, zeroinitializer
++  %lt = fcmp ult <2 x double> %x, <double 2.0, double 0x7FF8000000000000>   ; one NaN lane
++  %r = and <2 x i1> %ord, %lt
++  ret <2 x i1> %r
++}
++
+ declare half @llvm.fabs.f16(half)
+ declare <2 x half> @llvm.fabs.v2f16(<2 x half>)
+ declare half @llvm.copysign.f16(half, half)
+diff --git a/llvm/test/Transforms/InstCombine/create-class-from-logic-fcmp.ll b/llvm/test/Transforms/InstCombine/create-class-from-logic-fcmp.ll
+index 5986a56dd7b2f4..5c85b5d1276e22 100644
+--- a/llvm/test/Transforms/InstCombine/create-class-from-logic-fcmp.ll
++++ b/llvm/test/Transforms/InstCombine/create-class-from-logic-fcmp.ll
+@@ -963,7 +963,8 @@ define i1 @not_isnormalinf_or_ord(half %x) #0 {
+ ; -> subnormal | zero
+ define i1 @not_isnormalinf_and_ord(half %x) #0 {
+ ; CHECK-LABEL: @not_isnormalinf_and_ord(
+-; CHECK-NEXT:    [[AND:%.*]] = call i1 @llvm.is.fpclass.f16(half [[X:%.*]], /* (zero sub) */ i32 240)
++; CHECK-NEXT:    [[FABS:%.*]] = call half @llvm.fabs.f16(half [[X:%.*]])
++; CHECK-NEXT:    [[AND:%.*]] = fcmp olt half [[FABS]], 6.103520e-05
+ ; CHECK-NEXT:    ret i1 [[AND]]
+ ;
+   %fabs = call half @llvm.fabs.f16(half %x)
+@@ -1068,7 +1069,7 @@ define i1 @olt_smallest_normal_or_ord(half %x) #0 {
+ ; -> ~pinf
+ define i1 @olt_smallest_normal_or_uno(half %x) #0 {
+ ; CHECK-LABEL: @olt_smallest_normal_or_uno(
+-; CHECK-NEXT:    [[CLASS:%.*]] = call i1 @llvm.is.fpclass.f16(half [[X:%.*]], /* (nan ninf zero sub nnorm) */ i32 255)
++; CHECK-NEXT:    [[CLASS:%.*]] = fcmp ult half [[X:%.*]], 6.103520e-05
+ ; CHECK-NEXT:    ret i1 [[CLASS]]
+ ;
+   %uno = fcmp uno half %x, 0.0
+diff --git a/llvm/test/Transforms/InstCombine/or-fcmp.ll b/llvm/test/Transforms/InstCombine/or-fcmp.ll
+index 99f8b687fd6038..a4598f1fc45cec 100644
+--- a/llvm/test/Transforms/InstCombine/or-fcmp.ll
++++ b/llvm/test/Transforms/InstCombine/or-fcmp.ll
+@@ -4653,3 +4653,101 @@ define i1 @or_fcmp_reassoc4(i1 %x, double %a, double %b) {
+   %retval = or i1 %cmp1, %or
+   ret i1 %retval
+ }
++
++define i1 @or_uno_olt_nonnan_const(double %x) {
++; CHECK-LABEL: @or_uno_olt_nonnan_const(
++; CHECK-NEXT:    [[R:%.*]] = fcmp ult double [[X:%.*]], f0x43E0000000000000
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %uno = fcmp uno double %x, 0.0
++  %lt = fcmp olt double %x, 0x43E0000000000000    ; 2^63
++  %r = or i1 %uno, %lt
++  ret i1 %r
++}
++
++define i1 @or_uno_oge_nonnan_const_commute(double %x) {
++; CHECK-LABEL: @or_uno_oge_nonnan_const_commute(
++; CHECK-NEXT:    [[R:%.*]] = fcmp uge double [[X:%.*]], f0x43E0000000000000
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %uno = fcmp uno double %x, 0.0
++  %ge = fcmp oge double %x, 0x43E0000000000000    ; 2^63
++  %r = or i1 %ge, %uno
++  ret i1 %r
++}
++
++define i1 @or_uno_olt_nonnan_const_fmf(double %x) {
++; CHECK-LABEL: @or_uno_olt_nonnan_const_fmf(
++; CHECK-NEXT:    [[R:%.*]] = fcmp nsz ult double [[X:%.*]], 2.000000e+00
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %uno = fcmp nsz uno double %x, 0.0
++  %lt  = fcmp nnan nsz olt double %x, 2.0
++  %r = or i1 %uno, %lt
++  ret i1 %r
++}
++
++define <2 x i1> @or_uno_olt_nonnan_const_vec_poison(<2 x double> %x) {
++; CHECK-LABEL: @or_uno_olt_nonnan_const_vec_poison(
++; CHECK-NEXT:    [[R:%.*]] = fcmp ult <2 x double> [[X:%.*]], <double 2.000000e+00, double poison>
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %uno = fcmp uno <2 x double> %x, zeroinitializer
++  %lt = fcmp olt <2 x double> %x, <double 2.0, double poison>
++  %r = or <2 x i1> %uno, %lt
++  ret <2 x i1> %r
++}
++
++define i1 @or_uno_olt_fabs_nonnan_const(double %x) {
++; CHECK-LABEL: @or_uno_olt_fabs_nonnan_const(
++; CHECK-NEXT:    [[FABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[R:%.*]] = fcmp ult double [[FABS]], 2.000000e+00
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %fabs = call double @llvm.fabs.f64(double %x)
++  %uno = fcmp uno double %x, 0.0
++  %lt = fcmp olt double %fabs, 2.0
++  %r = or i1 %uno, %lt
++  ret i1 %r
++}
++
++define <2 x i1> @or_uno_olt_nan_const_vec(<2 x double> %x) {
++; CHECK-LABEL: @or_uno_olt_nan_const_vec(
++; CHECK-NEXT:    [[UNO:%.*]] = fcmp uno <2 x double> [[X:%.*]], zeroinitializer
++; CHECK-NEXT:    [[LT:%.*]] = fcmp olt <2 x double> [[X]], <double 2.000000e+00, double +qnan>
++; CHECK-NEXT:    [[R:%.*]] = or <2 x i1> [[UNO]], [[LT]]
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %uno = fcmp uno <2 x double> %x, zeroinitializer
++  %lt = fcmp olt <2 x double> %x, <double 2.0, double 0x7FF8000000000000>   ; one NaN lane
++  %r = or <2 x i1> %uno, %lt
++  ret <2 x i1> %r
++}
++
++define i1 @or_uno_olt_nonnan_const_different_x(double %x, double %y) {
++; CHECK-LABEL: @or_uno_olt_nonnan_const_different_x(
++; CHECK-NEXT:    [[UNO:%.*]] = fcmp uno double [[X:%.*]], 0.000000e+00
++; CHECK-NEXT:    [[LT:%.*]] = fcmp olt double [[Y:%.*]], 2.000000e+00
++; CHECK-NEXT:    [[R:%.*]] = or i1 [[UNO]], [[LT]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %uno = fcmp uno double %x, 0.0
++  %lt = fcmp olt double %y, 2.0
++  %r = or i1 %uno, %lt
++  ret i1 %r
++}
++
++define i1 @or_uno_olt_nonnan_const_logical_select(double %x, double %y) {
++; CHECK-LABEL: @or_uno_olt_nonnan_const_logical_select(
++; CHECK-NEXT:    [[CS:%.*]] = call double @llvm.copysign.f64(double [[X:%.*]], double [[Y:%.*]])
++; CHECK-NEXT:    [[UNO:%.*]] = fcmp uno double [[X]], 0.000000e+00
++; CHECK-NEXT:    [[LT:%.*]] = fcmp olt double [[CS]], 2.000000e+00
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[UNO]], i1 true, i1 [[LT]]
++; CHECK-NEXT:    ret i1 [[R]]
++;
++  %cs = call double @llvm.copysign.f64(double %x, double %y)
++  %uno = fcmp uno double %x, 0.0
++  %lt = fcmp olt double %cs, 2.0
++  %r = select i1 %uno, i1 true, i1 %lt
++  ret i1 %r
++}
