@@ -204,17 +204,18 @@ bb.g:                                             ; preds = %bb.f
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.ax = load float, ptr %i.aw, align 4, !tbaa !90
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  %i.az = load <2 x i32>, ptr %i.as, align 8, !tbaa !14 ; 3 uses
-  %5 = sitofp <2 x i32> %i.az to <2 x float>      ; 7 uses
-  %6 = extractelement <2 x float> %5, i64 0
-  %7 = extractelement <2 x float> %5, i64 1
-  %8 = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %6, float %7)
+  %i.az = load <2 x i32>, ptr %i.as, align 8, !tbaa !14 ; 5 uses
+  %5 = extractelement <2 x i32> %i.az, i64 0
+  %6 = extractelement <2 x i32> %i.az, i64 1
+  %7 = tail call i32 @llvm.smin.i32(i32 %5, i32 %6)
+  %8 = sitofp i32 %7 to float
   %i.ba = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %8 ; 2 uses
   %i.bb = fmul reassoc nsz arcp contract afn float %i.ba, %i.au ; 2 uses
   store float %i.bb, ptr %i.av, align 4, !tbaa !69
   %i.bc = fmul reassoc nsz arcp contract afn float %i.ax, %i.ba ; 2 uses
   store float %i.bc, ptr %i.ay, align 4, !tbaa !70
-  %i.bd = fmul reassoc nnan nsz arcp contract afn <2 x float> %5, splat (float 5.000000e-01) ; 6 uses
+  %9 = sitofp <2 x i32> %i.az to <2 x float>      ; 5 uses
+  %i.bd = fmul reassoc nnan nsz arcp contract afn <2 x float> %9, splat (float 5.000000e-01) ; 6 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
@@ -222,7 +223,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.ar ; 2 uses
   %invariant.op = fmul reassoc nsz arcp contract afn float %i.bj, %i.bc
-  %i.bk = shufflevector <2 x float> %i.bd, <2 x float> %5, <2 x i32> <i32 0, i32 2>
+  %i.bk = shufflevector <2 x float> %i.bd, <2 x float> %9, <2 x i32> <i32 0, i32 2>
   %i.bl = fmul reassoc nnan arcp contract afn <2 x float> %i.bk, <float 1.000000e+00, float -5.000000e-01> ; 2 uses
   %i.bm = insertelement <2 x float> poison, float %.sroa.9344.0, i64 0
   %i.bn = shufflevector <2 x float> %i.bm, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -232,7 +233,7 @@ bb.g:                                             ; preds = %bb.f
   %i.br = shufflevector <2 x float> %i.bl, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.bs = shufflevector <2 x float> %i.bq, <2 x float> poison, <4 x i32> zeroinitializer
   %i.bt = fmul reassoc nsz arcp contract afn <4 x float> %i.br, %i.bs
-  %i.bu = shufflevector <2 x float> %i.bd, <2 x float> %5, <2 x i32> <i32 1, i32 3>
+  %i.bu = shufflevector <2 x float> %i.bd, <2 x float> %9, <2 x i32> <i32 1, i32 3>
   %i.bv = fmul reassoc nnan arcp contract afn <2 x float> %i.bu, <float 1.000000e+00, float -5.000000e-01> ; 2 uses
   %i.bw = insertelement <2 x float> poison, float %.sroa.5343.0, i64 0
   %i.bx = shufflevector <2 x float> %i.bv, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
@@ -395,7 +396,7 @@ bb.x:                                             ; preds = %bb.w
   store i32 0, ptr %i.bf, align 4, !tbaa !71
   %i.es = insertelement <2 x float> poison, float %.2.1.3, i64 0
   %i.et = shufflevector <2 x float> %i.es, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.eu = fmul reassoc nsz arcp contract afn <2 x float> %i.et, %5 ; 2 uses
+  %i.eu = fmul reassoc nsz arcp contract afn <2 x float> %i.et, %9 ; 2 uses
   %i.ev = load <2 x float>, ptr %i.bg, align 4, !tbaa !13
   %i.ew = load <2 x float>, ptr %i.bh, align 4, !tbaa !13 ; 2 uses
   %i.ex = fsub reassoc nsz arcp contract afn <2 x float> %i.ev, %i.ew
@@ -521,7 +522,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.ga = fsub reassoc nsz arcp contract afn <2 x float> %i.fy, %i.fz
   %i.gb = insertelement <2 x float> poison, float %.2.1.3.1, i64 0
   %i.gc = shufflevector <2 x float> %i.gb, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.gd = fmul reassoc nsz arcp contract afn <2 x float> %i.gc, %5 ; 2 uses
+  %i.gd = fmul reassoc nsz arcp contract afn <2 x float> %i.gc, %9 ; 2 uses
   %i.ge = shufflevector <2 x float> %i.bd, <2 x float> %i.gd, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
   %i.gf = shufflevector <2 x float> %i.ga, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
   %i.gg = shufflevector <2 x float> %i.gd, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
@@ -924,10 +925,10 @@ declare i64 @strtol(ptr noundef readonly, ptr noundef captures(none), i32 nounde
 declare i32 @gtk_accelerator_get_default_mod_mask() local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
+declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #9
+declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { float, float } @llvm.sincos.f32(float) #16

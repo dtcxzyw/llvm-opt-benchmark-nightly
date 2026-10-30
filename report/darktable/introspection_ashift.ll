@@ -205,10 +205,9 @@ gamma_correct.exit.i.i:                           ; preds = %gamma_correct.exit.
   br i1 %.not185.i.i, label %detail_enhance.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %gamma_correct.exit.i.i
-  %4 = sitofp reassoc nsz arcp contract afn i32 %i.aa to float
-  %i.cz = sitofp reassoc nsz arcp contract afn i32 %i.z to float
-  %5 = tail call reassoc nnan nsz arcp contract afn float @llvm.minnum.f32(float %4, float %i.cz)
-  %i.da = fmul reassoc nnan nsz arcp contract afn float %5, 2.000000e-02
+  %4 = tail call i32 @llvm.smin.i32(i32 %i.aa, i32 %i.z)
+  %i.cz = sitofp i32 %4 to float
+  %i.da = fmul reassoc nnan nsz arcp contract afn float %i.cz, 2.000000e-02
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %dt_XYZ_to_Lab.exit.i.i.i, %bb.g
@@ -610,6 +609,9 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.b
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { float, float } @llvm.sincos.f32(float) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { double, double } @llvm.sincos.f64(double) #11
