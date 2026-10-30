@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not212, label %bb.bc, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %i.av = tail call noalias ptr @strdup(ptr noundef nonnull %0) #23 ; 9 uses
+  %i.av = tail call noalias ptr @strdup(ptr noundef nonnull %0) #23 ; 8 uses
   %.not220 = icmp eq ptr %i.av, null
   br i1 %.not220, label %bb.bp, label %.preheader252
 
@@ -280,7 +280,7 @@ bb.x:                                             ; preds = %.lr.ph269, %bb.w
 
 ._crit_edge:                                      ; preds = %bb.x, %middle.block
   %.1169.lcssa = phi i32 [ %i.bj, %middle.block ], [ %.1169, %bb.x ]
-  %i.bn = add i32 %.1169.lcssa, 1                 ; 3 uses
+  %i.bn = add i32 %.1169.lcssa, 1                 ; 2 uses
   %.not222280 = icmp ult i32 %i.bn, 2
   br i1 %.not222280, label %.loopexit.sink.split, label %.lr.ph291
 
@@ -478,9 +478,8 @@ bb.bb:                                            ; preds = %bb.an, %bb.ar, %bb.
   %.2182 = phi ptr [ %i.ch, %bb.ar ], [ %i.ch, %bb.ba ], [ %.2185, %bb.an ]
   %.2167 = phi i32 [ %i.cl, %bb.ar ], [ %.1166, %bb.ba ], [ 0, %bb.an ]
   %.2 = phi i32 [ %i.cl, %bb.ar ], [ %.1, %bb.ba ], [ 0, %bb.an ]
-  %i.cy = add i32 %.2174287, 1                    ; 2 uses
-  %.not222 = icmp ugt i32 %i.cy, %i.bn
-  br i1 %.not222, label %.loopexit.sink.split, label %.lr.ph291
+  %i.cy = add nuw i32 %.2174287, 1
+  br label %.lr.ph291
 
 .loopexit251.sink.split:                          ; preds = %bb.ba, %bb.ax, %bb.ay, %bb.at, %bb.au
   %.lcssa377.sink = phi ptr [ %i.cs, %bb.ax ], [ %i.cn, %bb.at ], [ %i.cn, %bb.au ], [ %i.cs, %bb.ay ], [ %i.cx, %bb.ba ]
@@ -623,8 +622,8 @@ bb.bo:                                            ; preds = %bb.bn
   tail call void (i32, ptr, ...) @mprintf(i32 noundef 4, ptr noundef nonnull @.str.481) #23
   br label %.loopexit.sink.split
 
-.loopexit.sink.split:                             ; preds = %bb.bb, %bb.al, %._crit_edge, %.preheader252, %bb.bn, %bb.bo
-  %.sink = phi ptr [ %i.dy, %bb.bn ], [ %i.dy, %bb.bo ], [ %i.av, %.preheader252 ], [ %i.av, %._crit_edge ], [ %i.av, %bb.al ], [ %i.av, %bb.bb ]
+.loopexit.sink.split:                             ; preds = %bb.al, %._crit_edge, %.preheader252, %bb.bn, %bb.bo
+  %.sink = phi ptr [ %i.dy, %bb.bn ], [ %i.dy, %bb.bo ], [ %i.av, %._crit_edge ], [ %i.av, %.preheader252 ], [ %i.av, %bb.al ]
   tail call void @free(ptr noundef %.sink) #23
   br label %.loopexit
 

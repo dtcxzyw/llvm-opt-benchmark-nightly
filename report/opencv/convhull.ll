@@ -205,30 +205,29 @@ middle.block716:                                  ; preds = %vector.body709
 
 .lr.ph507.preheader:                              ; preds = %._crit_edge504
   %i.ln = zext nneg i32 %i.o to i64               ; 2 uses
+  %17 = zext i32 %.3284.lcssa to i64
+  %18 = zext nneg i32 %.3284.lcssa to i64
   br label %.lr.ph507
 
 .lr.ph507:                                        ; preds = %.lr.ph507.preheader, %.loopexit
-  %.7506 = phi i32 [ %19, %.loopexit ], [ 0, %.lr.ph507.preheader ] ; 4 uses
-  %i.lo = icmp eq i32 %.7506, 0
-  %17 = select i1 %i.lo, i32 %.3284.lcssa, i32 %.7506
-  %18 = zext nneg i32 %17 to i64
-  %i.lp = getelementptr [4 x i8], ptr %i.bf, i64 %18
+  %indvars.iv577 = phi i64 [ 0, %.lr.ph507.preheader ], [ %indvars.iv.next578, %.loopexit ] ; 4 uses
+  %i.lo = icmp eq i64 %indvars.iv577, 0
+  %19 = select i1 %i.lo, i64 %18, i64 %indvars.iv577
+  %i.lp = getelementptr [4 x i8], ptr %i.bf, i64 %19
   %i.lq = getelementptr i8, ptr %i.lp, i64 -4
   %i.lr = load i32, ptr %i.lq, align 4, !tbaa !41
   %i.ls = sext i32 %i.lr to i64
   %i.lt = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %i.ls
   %i.lu = load ptr, ptr %i.lt, align 8, !tbaa !31 ; 4 uses
-  %19 = add nuw i32 %.7506, 1                     ; 3 uses
-  %.not621 = icmp eq i32 %19, %.3284.lcssa        ; 2 uses
-  %20 = select i1 %.not621, i32 0, i32 %19
-  %21 = sext i32 %20 to i64
-  %i.lv = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %21
+  %indvars.iv.next578 = add nuw nsw i64 %indvars.iv577, 1 ; 3 uses
+  %.not621 = icmp eq i64 %indvars.iv.next578, %17 ; 2 uses
+  %20 = select i1 %.not621, i64 0, i64 %indvars.iv.next578
+  %i.lv = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %20
   %i.lw = load i32, ptr %i.lv, align 4, !tbaa !41
   %i.lx = sext i32 %i.lw to i64
   %i.ly = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %i.lx
   %i.lz = load ptr, ptr %i.ly, align 8, !tbaa !31 ; 4 uses
-  %22 = sext i32 %.7506 to i64
-  %i.ma = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %22 ; 2 uses
+  %i.ma = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv577 ; 2 uses
   %i.mb = load i32, ptr %i.ma, align 4, !tbaa !41
   %i.mc = sext i32 %i.mb to i64                   ; 2 uses
   %i.md = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %i.mc
@@ -287,12 +286,12 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph640, %bb.bn, %.preheader466, %bb.bq, %.lr.ph507, %bb.bm
-  br i1 %.not621, label %.lr.ph510, label %.lr.ph507, !llvm.loop !77
+  br i1 %.not621, label %.loopexit468, label %.lr.ph507, !llvm.loop !77
 
-.loopexit468:                                     ; preds = %._crit_edge504
+.loopexit468:                                     ; preds = %.loopexit, %._crit_edge504
   br i1 %i.lm, label %._crit_edge511.thread, label %.lr.ph510
 
-.lr.ph510:                                        ; preds = %.loopexit, %.loopexit468
+.lr.ph510:                                        ; preds = %.loopexit468
   %i.my = ptrtoint ptr %i.bk to i64               ; 3 uses
   %wide.trip.count581 = zext i32 %.3284.lcssa to i64 ; 2 uses
   %xtraiter753 = and i64 %wide.trip.count581, 1

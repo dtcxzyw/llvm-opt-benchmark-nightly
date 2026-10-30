@@ -203,21 +203,20 @@ bytestream2_init.exit135.i:                       ; preds = %bb.x
   %i.fw = getelementptr inbounds i8, ptr %i.eh, i64 %i.fv
   %or.cond.i.i.i = icmp ugt i32 %i.fu, 268435455
   %i.fx = shl nuw nsw i32 %i.fu, 3
-  %i.fy = select i1 %or.cond.i.i.i, i32 -8, i32 %i.fx ; 2 uses
-  %or.cond.i.i.i.i = icmp ugt i32 %i.fy, 2147483134 ; 2 uses
-  %.013.i.i.i.i = select i1 %or.cond.i.i.i.i, i32 0, i32 %i.fy ; 2 uses
-  br i1 %or.cond.i.i.i.i, label %.thread, label %.preheader.i.i
+  %i.fy = select i1 %or.cond.i.i.i, i32 -8, i32 %i.fx ; 3 uses
+  %or.cond.i.i.i.i = icmp ult i32 %i.fy, 2147483135
+  br i1 %or.cond.i.i.i.i, label %.preheader.i.i, label %.thread
 
 .preheader.i.i:                                   ; preds = %bytestream2_init.exit135.i
   %.not51.i.i = icmp eq i8 %i.fn, 0
   br i1 %.not51.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.preheader.i.i
-  %exitcond.not.i.i259 = icmp eq i32 %.013.i.i.i.i, 0
+  %exitcond.not.i.i259 = icmp eq i32 %i.fy, 0
   br i1 %exitcond.not.i.i259, label %.thread, label %.lr.ph263
 
 .lr.ph.i.i:                                       ; preds = %bb.ab
-  %exitcond.not.i.i = icmp eq i32 %spec.select.i.i.i, %.013.i.i.i.i
+  %exitcond.not.i.i = icmp eq i32 %spec.select.i.i.i, %i.fy
   br i1 %exitcond.not.i.i, label %.thread, label %.lr.ph263, !llvm.loop !44
 
 .lr.ph263:                                        ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i

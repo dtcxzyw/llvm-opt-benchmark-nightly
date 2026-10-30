@@ -204,11 +204,7 @@ bb.ar:                                            ; preds = %.lr.ph85, %bb.aq
 
 .preheader13:                                     ; preds = %._crit_edge89
   %.not419118 = icmp eq i32 %.2383.lcssa, 0
-  br i1 %.not419118, label %._crit_edge120, label %.preheader12.preheader
-
-.preheader12.preheader:                           ; preds = %.preheader13
-  %wide.trip.count191 = zext i32 %.56.val.0.val to i64
-  br label %.preheader12
+  br i1 %.not419118, label %._crit_edge120, label %.preheader12
 
 bb.as:                                            ; preds = %bb.as, %.lr.ph88.new
   %indvars.iv168 = phi i64 [ 0, %.lr.ph88.new ], [ %indvars.iv.next169.3, %bb.as ] ; 5 uses
@@ -265,8 +261,8 @@ bb.at:                                            ; preds = %bb.at, %.epil.prehe
   %exitcond177.not = icmp eq i64 %indvars.iv.next174, %wide.trip.count176
   br i1 %exitcond177.not, label %.preheader13, label %.preheader14, !llvm.loop !147
 
-.preheader12:                                     ; preds = %.preheader12.preheader, %hwloc_cache_type_by_depth_type.exit.thread.thread
-  %.4119 = phi i32 [ %i.mx, %hwloc_cache_type_by_depth_type.exit.thread.thread ], [ %.2383.lcssa, %.preheader12.preheader ] ; 8 uses
+.preheader12:                                     ; preds = %.preheader13, %hwloc_cache_type_by_depth_type.exit.thread.thread
+  %.4119 = phi i32 [ %i.mx, %hwloc_cache_type_by_depth_type.exit.thread.thread ], [ %.2383.lcssa, %.preheader13 ] ; 8 uses
   %i.ia = icmp ult i32 %.4119, 6
   %i.ib = add nuw nsw i32 %.4119, 3
   %i.ic = icmp ult i32 %.4119, 4
@@ -517,7 +513,8 @@ bb.bo:                                            ; preds = %bb.bn
 
 bb.bp:                                            ; preds = %.sink.split258, %bb.bm, %bb.bn
   %indvars.iv.next189 = add nuw nsw i64 %indvars.iv188, 1 ; 2 uses
-  %exitcond192.not = icmp eq i64 %indvars.iv.next189, %wide.trip.count191
+  %lftr.wideiv191 = trunc i64 %indvars.iv.next189 to i32
+  %exitcond192.not = icmp eq i32 %.56.val.0.val, %lftr.wideiv191
   br i1 %exitcond192.not, label %._crit_edge115, label %.preheader, !llvm.loop !152
 
 ._crit_edge115:                                   ; preds = %bb.bp, %.loopexit
