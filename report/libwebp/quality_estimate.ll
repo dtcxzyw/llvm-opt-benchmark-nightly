@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %.preheader.i296
 GetBit.exit308:                                   ; preds = %bb.ab, %GetBit.exit294, %.preheader.i296
   %.14 = phi i64 [ %i.rk, %.preheader.i296 ], [ %spec.select608, %bb.ab ], [ -9223372036854775808, %GetBit.exit294 ] ; 5 uses
   %.not.i309.not = icmp ult i64 %.14, %i.u
-  br i1 %.not.i309.not, label %.preheader.i310, label %.critedge
+  br i1 %.not.i309.not, label %.preheader.i310, label %GetBit.exit322
 
 .preheader.i310:                                  ; preds = %GetBit.exit308
   %i.ru = add nuw i64 %.14, 1
@@ -222,10 +222,11 @@ GetBit.exit308:                                   ; preds = %bb.ab, %GetBit.exit
 bb.ac:                                            ; preds = %.preheader.i310
   %i.sd = add nuw i64 %.14, 6                     ; 2 uses
   %.not.i316 = icmp ugt i64 %i.sd, %i.u
-  br i1 %.not.i316, label %.critedge, label %GetBit.exit322
+  %spec.select607 = select i1 %.not.i316, i64 -9223372036854775808, i64 %i.sd
+  br label %GetBit.exit322
 
-GetBit.exit322:                                   ; preds = %bb.ac, %.preheader.i310
-  %.15 = phi i64 [ %i.ru, %.preheader.i310 ], [ %i.sd, %bb.ac ]
+GetBit.exit322:                                   ; preds = %bb.ac, %GetBit.exit308, %.preheader.i310
+  %.15 = phi i64 [ %i.ru, %.preheader.i310 ], [ %spec.select607, %bb.ac ], [ -9223372036854775808, %GetBit.exit308 ]
   %i.se = icmp eq i64 %.15, -9223372036854775808
   br i1 %i.se, label %.critedge, label %bb.ad
 
@@ -248,8 +249,8 @@ bb.ae:                                            ; preds = %bb.ad
   %i.so = fptosi double %i.sn to i32
   br label %.critedge
 
-.critedge:                                        ; preds = %.preheader400, %GetBit.exit308, %bb.ac, %bb.ad, %bb.ae, %GetBit.exit322, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.0101 = phi i32 [ -1, %bb.d ], [ -1, %bb.a ], [ -1, %bb.b ], [ 101, %bb.c ], [ -1, %GetBit.exit308 ], [ -1, %bb.e ], [ -1, %GetBit.exit322 ], [ %.zext, %bb.ad ], [ %i.so, %bb.ae ], [ -1, %bb.ac ], [ -1, %.preheader400 ]
+.critedge:                                        ; preds = %.preheader400, %bb.ad, %bb.ae, %GetBit.exit322, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.0101 = phi i32 [ -1, %bb.d ], [ -1, %bb.a ], [ -1, %bb.b ], [ 101, %bb.c ], [ %i.so, %bb.ae ], [ -1, %bb.e ], [ -1, %GetBit.exit322 ], [ %.zext, %bb.ad ], [ -1, %.preheader400 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #4
   ret i32 %.0101
 }

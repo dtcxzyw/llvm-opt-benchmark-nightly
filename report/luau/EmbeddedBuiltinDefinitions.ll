@@ -202,11 +202,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i11.invoke
   store i64 0, ptr %i.b, align 8, !tbaa !18
   store i8 0, ptr %i.a, align 8, !tbaa !17
   %i.c = load i8, ptr @_ZN5FFlag23LuauUdtfTypeIsSubtypeOfE, align 8, !tbaa !22, !range !23, !noundef !24
-  %i.d = trunc nuw i8 %i.c to i1                  ; 2 uses
-  %i.e = load i8, ptr @_ZN5FFlag16LuauIntegerType2E, align 8, !tbaa !22, !range !23, !noundef !24
-  %i.f = trunc nuw i8 %i.e to i1                  ; 4 uses
-  %spec.select = select i1 %i.f, ptr @.str.71, ptr @.str.72
-  %spec.select24 = select i1 %i.f, i64 2138, i64 2126
+  %i.d = trunc nuw i8 %i.c to i1                  ; 3 uses
+  %i.e = load i8, ptr @_ZN5FFlag16LuauIntegerType2E, align 8, !range !23
+  %i.f = trunc nuw i8 %i.e to i1                  ; 3 uses
+  %or.cond = select i1 %i.d, i1 %i.f, i1 false    ; 2 uses
+  %spec.select = select i1 %or.cond, ptr @.str.71, ptr @.str.72
+  %spec.select24 = select i1 %or.cond, i64 2138, i64 2126
   %.str.73..str.74 = select i1 %i.f, ptr @.str.73, ptr @.str.74
   %. = select i1 %i.f, i64 2085, i64 2073
   %i.g = select i1 %i.d, ptr %spec.select, ptr %.str.73..str.74

@@ -111,7 +111,7 @@ switch.edge.i:                                    ; preds = %bb.c, %bb.b
   call void @_ZN3gmx11make_at2conERK13gmx_moltype_tNS_8ArrayRefIK9t_iparamsEENS_27FlexibleConstraintTreatmentE(ptr dead_on_unwind nonnull writable sret(%"class.gmx::ListOfLists") align 8 %3, ptr noundef nonnull align 8 dereferenceable(2408) %.sroa.015.023, ptr %i.x, ptr %i.ac, i32 noundef %i.at)
   %i.au = load i32, ptr %i.k, align 8, !tbaa !146 ; 2 uses
   %i.av = add nsw i32 %i.au, 1                    ; 2 uses
-  %i.aw = sext i32 %i.av to i64                   ; 3 uses
+  %i.aw = sext i32 %i.av to i64                   ; 4 uses
   %i.ax = icmp slt i32 %i.au, -1
   br i1 %i.ax, label %bb.d, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
 
@@ -124,7 +124,11 @@ bb.d:                                             ; preds = %switch.edge.i
 
 _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %switch.edge.i
   %.not.i.i.i.i.i = icmp eq i32 %i.av, 0
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i, label %bb.e
+  br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.i.thread.i, label %bb.e
+
+_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.i.thread.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
+  %7 = getelementptr inbounds nuw [4 x i8], ptr null, i64 %i.aw
+  br label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i
 
 bb.e:                                             ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.ay = shl nuw nsw i64 %i.aw, 2
@@ -145,10 +149,10 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc67.i
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx.i.i.i.i.i.i.i.i
   br label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i
 
-_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i:             ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc67.i, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %.sroa.14.0.i = phi ptr [ %i.ba, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.ba, %.noexc67.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
-  %.sroa.074.0.i = phi ptr [ %i.az, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.az, %.noexc67.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 8 uses
-  %.0.i.i.i.i.i.i = phi ptr [ %i.be, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.bb, %.noexc67.i ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i:             ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc67.i, %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.i.thread.i
+  %.sroa.14.0.i = phi ptr [ %7, %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.i.thread.i ], [ %i.ba, %.noexc67.i ], [ %i.ba, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ]
+  %.sroa.074.0.i = phi ptr [ null, %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.i.thread.i ], [ %i.az, %.noexc67.i ], [ %i.az, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ] ; 8 uses
+  %.0.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.i.thread.i ], [ %i.bb, %.noexc67.i ], [ %i.be, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ]
   %i.bf = load i32, ptr %i.k, align 8, !tbaa !146 ; 2 uses
   %.not89.i = icmp slt i32 %i.bf, 0
   br i1 %.not89.i, label %._crit_edge.i, label %.lr.ph.preheader.i

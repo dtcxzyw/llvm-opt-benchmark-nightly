@@ -96,7 +96,7 @@ declare zeroext i1 @SDL_AddHintCallback_REAL(ptr noundef, ptr noundef, ptr nound
 ; Function Attrs: nounwind uwtable
 define internal void @MainCallbackRateHintChanged(ptr nofree readnone captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2, ptr noundef %3) #0 {
 bb.a:
-  %.not = icmp eq ptr %3, null
+  %.not = icmp eq ptr %3, null                    ; 2 uses
   br i1 %.not, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -104,18 +104,21 @@ bb.b:                                             ; preds = %bb.a
   %i.b = icmp eq i32 %i.a, 0                      ; 2 uses
   %i.c = zext i1 %i.b to i8
   store i8 %i.c, ptr @iterate_after_waitevent, align 1
-  br i1 %i.b, label %bb.e, label %bb.c
+  br i1 %i.b, label %bb.e, label %4
 
 .thread:                                          ; preds = %bb.a
   store i8 0, ptr @iterate_after_waitevent, align 1
-  br label %bb.d
+  br label %4
 
-bb.c:                                             ; preds = %bb.b
+4:                                                ; preds = %.thread, %bb.b
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %4
   %i.d = tail call double @SDL_atof_REAL(ptr noundef nonnull %3) #2
   br label %bb.d
 
-bb.d:                                             ; preds = %.thread, %bb.c
-  %i.e = phi double [ %i.d, %bb.c ], [ 0.000000e+00, %.thread ] ; 2 uses
+bb.d:                                             ; preds = %4, %bb.c
+  %i.e = phi double [ %i.d, %bb.c ], [ 0.000000e+00, %4 ] ; 2 uses
   %i.f = fcmp ogt double %i.e, 0.000000e+00
   %i.g = fdiv double 1.000000e+09, %i.e
   %i.h = fptoui double %i.g to i64

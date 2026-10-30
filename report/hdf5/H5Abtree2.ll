@@ -200,14 +200,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %2, align 8, !tbaa !29
   %i.i = tail call ptr @H5O_msg_decode(ptr noundef %i.h, ptr noundef null, i32 noundef 12, i64 noundef %1, ptr noundef %0) #8 ; 5 uses
-  %i.j = icmp eq ptr %i.i, null
+  %i.j = icmp eq ptr %i.i, null                   ; 2 uses
   br i1 %i.j, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.b
   %i.k = load i64, ptr @H5E_OHDR_g, align 8, !tbaa !34
   %i.l = load i64, ptr @H5E_CANTDECODE_g, align 8, !tbaa !34
   %i.m = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5A__dense_fh_name_cmp, i32 noundef 154, i64 noundef %i.k, i64 noundef %i.l, ptr noundef nonnull @.str.4) #8 ; 0 uses
-  br label %bb.k
+  br label %bb.i
 
 bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -266,18 +266,19 @@ bb.h:                                             ; preds = %bb.g
   %i.as = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5A__dense_fh_name_cmp, i32 noundef 170, i64 noundef %i.aq, i64 noundef %i.ar, ptr noundef nonnull @.str.5) #8 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.c, %bb.d, %bb.g, %bb.h
-  %.0 = phi i32 [ 0, %bb.c ], [ -1, %bb.h ], [ 0, %bb.g ], [ 0, %bb.d ] ; 2 uses
+bb.i:                                             ; preds = %bb.c, %bb.d, %bb.g, %bb.h, %.thread
+  %.0 = phi i32 [ -1, %.thread ], [ -1, %bb.h ], [ 0, %bb.g ], [ 0, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %i.at = load i8, ptr %i.a, align 1, !range !10
   %i.au = trunc nuw i8 %i.at to i1
-  br i1 %i.au, label %bb.k, label %bb.j
+  %or.cond = select i1 %i.j, i1 true, i1 %i.au
+  br i1 %or.cond, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.av = call ptr @H5O_msg_free(i32 noundef 12, ptr noundef nonnull %i.i) #8 ; 0 uses
   br label %bb.k
 
-bb.k:                                             ; preds = %.thread, %bb.i, %bb.j, %bb.a
-  %.1 = phi i32 [ %.0, %bb.i ], [ %.0, %bb.j ], [ 0, %bb.a ], [ -1, %.thread ]
+bb.k:                                             ; preds = %bb.i, %bb.j, %bb.a
+  %.1 = phi i32 [ %.0, %bb.i ], [ %.0, %bb.j ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.1
 }

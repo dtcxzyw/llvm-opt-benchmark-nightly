@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %.lr.ph
 bb.at:                                            ; preds = %bb.aq
   %i.hc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL12override_LUTB5cxx11, i64 16), align 8, !tbaa !16 ; 2 uses
   %.not10.i.i.i = icmp eq ptr %i.hc, null
-  br i1 %.not10.i.i.i, label %.critedge, label %.lr.ph.i.i.i
+  br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.at
   %i.hd = getelementptr inbounds nuw i8, ptr %.sroa.0204.0267, i64 8
@@ -247,7 +247,7 @@ _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exi
 
 _ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_14OverrideTargetESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i
   %i.ho = icmp eq ptr %.19.i.i.i, getelementptr inbounds nuw (i8, ptr @_ZL12override_LUTB5cxx11, i64 8)
-  br i1 %i.ho, label %.critedge, label %bb.av
+  br i1 %i.ho, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit, label %bb.av
 
 bb.av:                                            ; preds = %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_14OverrideTargetESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i
   %i.hp = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 40
@@ -273,17 +273,23 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.hu, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
   %i.hw = icmp slt i32 %.0.i.i.i.i.i, 0
-  br i1 %i.hw, label %.critedge, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit.a
+  %spec.select = select i1 %i.hw, ptr getelementptr inbounds nuw (i8, ptr @_ZL12override_LUTB5cxx11, i64 8), ptr %.19.i.i.i
+  br label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit
 
-_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit.a: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i
-  %i.hx = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 64
+_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit: ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_14OverrideTargetESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i, %bb.at
+  %.sroa.0.0.i.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZL12override_LUTB5cxx11, i64 8), %bb.at ], [ getelementptr inbounds nuw (i8, ptr @_ZL12override_LUTB5cxx11, i64 8), %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_14OverrideTargetESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i ], [ %spec.select, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i ] ; 2 uses
+  %.not244 = icmp eq ptr %.sroa.0.0.i.i, getelementptr inbounds nuw (i8, ptr @_ZL12override_LUTB5cxx11, i64 8)
+  br i1 %.not244, label %.critedge, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit.a
+
+_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit.a: ; preds = %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit
+  %i.hx = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 64
   %i.hy = load i32, ptr %i.hx, align 8, !tbaa !51
   %i.hz = load i32, ptr %i.ac, align 8, !tbaa !47
   %i.ia = or i32 %i.hz, %i.hy
   store i32 %i.ia, ptr %i.ac, align 8, !tbaa !47
   br label %_ZN11StreamProxylsEPFRSoS0_E.exit103
 
-.critedge:                                        ; preds = %bb.aq, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i, %bb.ar, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.a, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_14OverrideTargetESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i, %bb.at
+.critedge:                                        ; preds = %bb.ar, %bb.aq, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.a, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit
   br i1 %.not.i68, label %_ZTW13warningstream.exit69, label %bb.aw
 
 bb.aw:                                            ; preds = %.critedge
@@ -603,7 +609,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i193: ; preds = %.noexc196, %
   %i.md = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.mc)
           to label %_ZN11StreamProxylsEPFRSoS0_E.exit103 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
-_ZN11StreamProxylsEPFRSoS0_E.exit103:             ; preds = %_ZN11StreamProxylsEPKc.exit78, %_ZN11StreamProxylsEPKc.exit78.thread, %.noexc73, %bb.ba, %_ZN11StreamProxylsEPKc.exit85.thread, %_ZN11StreamProxylsEPKc.exit85, %_ZN11StreamProxylsEPKc.exit92, %_ZN11StreamProxylsEPKc.exit92.thread, %_ZN11StreamProxylsEPKc.exit98, %.noexc198, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+_ZN11StreamProxylsEPFRSoS0_E.exit103:             ; preds = %_ZN11StreamProxylsEPKc.exit85, %_ZN11StreamProxylsEPKc.exit78.thread, %_ZN11StreamProxylsEPKc.exit78, %.noexc73, %bb.ba, %_ZN11StreamProxylsEPKc.exit85.thread, %_ZN11StreamProxylsEPKc.exit92, %_ZN11StreamProxylsEPKc.exit92.thread, %_ZN11StreamProxylsEPKc.exit98, %.noexc198, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE14OverrideTargetSt4lessIS5_ESaISt4pairIKS5_S6_EEE4findERSA_.exit.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %i.me = load ptr, ptr %7, align 8, !tbaa !40    ; 3 uses
   %i.mf = load ptr, ptr %i.af, align 8, !tbaa !39 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.me, %i.mf

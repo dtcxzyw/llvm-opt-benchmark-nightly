@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.d, %bb.e, %bb.e
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(110) %2, i8 0, i64 110, i1 false)
   %i.n = call i32 @uv__getsockpeername(ptr noundef nonnull %0, ptr noundef nonnull @getsockname, ptr noundef nonnull %2, ptr noundef nonnull %i.a) #11 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
-  br i1 %i.o, label %uv_pipe_getsockname.exit, label %bb.h
+  br i1 %i.o, label %bb.n, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 4 uses
@@ -229,43 +229,47 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.j, %bb.i
   %storemerge.in.i.i = phi i64 [ %i.aa, %bb.j ], [ %i.u, %bb.i ]
   %.019.i.i = phi i64 [ 1, %bb.j ], [ 0, %bb.i ]
-  %i.ab = and i64 %storemerge.in.i.i, 4294967295  ; 4 uses
-  %i.ac = add nuw nsw i64 %i.ab, %.019.i.i
-  %3 = icmp samesign ugt i64 %i.ac, 4097
-  br i1 %3, label %uv_pipe_getsockname.exit, label %bb.l
+  %i.ab = and i64 %storemerge.in.i.i, 4294967295  ; 5 uses
+  %i.ac = add nuw nsw i64 %i.ab, %.019.i.i        ; 2 uses
+  %3 = icmp samesign ult i64 %i.ac, 4098          ; 2 uses
+  br i1 %3, label %bb.l, label %uv_pipe_getsockname.exit
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.b, ptr nonnull align 2 %i.p, i64 %i.ab, i1 false)
   %i.ad = load i8, ptr %i.b, align 16
   %.not.i.i = icmp eq i8 %i.ad, 0
-  br i1 %.not.i.i, label %bb.n, label %bb.m
+  br i1 %.not.i.i, label %uv_pipe_getsockname.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ab
   store i8 0, ptr %i.ae, align 1
-  br label %bb.n
+  br label %uv_pipe_getsockname.exit
 
-uv_pipe_getsockname.exit:                         ; preds = %bb.k, %bb.g
-  %.020.i.i = phi i32 [ %i.n, %bb.g ], [ -105, %bb.k ]
+uv_pipe_getsockname.exit:                         ; preds = %bb.k, %bb.l, %bb.m
+  %.039 = phi i64 [ %i.ab, %bb.m ], [ %i.ab, %bb.l ], [ %i.ac, %bb.k ]
+  %.020.i.i = phi i32 [ 0, %bb.m ], [ 0, %bb.l ], [ -105, %bb.k ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  br i1 %3, label %4, label %bb.r
+
+bb.n:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   br label %bb.r
 
-bb.n:                                             ; preds = %bb.l, %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
-  %4 = icmp eq i64 %i.ab, 0
-  br i1 %4, label %bb.o, label %bb.p
+4:                                                ; preds = %uv_pipe_getsockname.exit
+  %5 = icmp eq i64 %.039, 0
+  br i1 %5, label %bb.o, label %bb.p
 
-bb.o:                                             ; preds = %bb.n
+bb.o:                                             ; preds = %4
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
   %.not34 = icmp eq ptr %i.ag, null
   %spec.select36 = select i1 %.not34, ptr %i.b, ptr %i.ag
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.n
-  %.0 = phi ptr [ %i.b, %bb.n ], [ %spec.select36, %bb.o ]
+bb.p:                                             ; preds = %bb.o, %4
+  %.0 = phi ptr [ %i.b, %4 ], [ %spec.select36, %bb.o ]
   %i.ah = call i32 @chmod(ptr noundef nonnull %.0, i32 noundef %.1) #11
   %.not35 = icmp eq i32 %i.ah, 0
   br i1 %.not35, label %bb.r, label %bb.q
@@ -276,8 +280,8 @@ bb.q:                                             ; preds = %bb.p
   %i.ak = sub nsw i32 0, %i.aj
   br label %bb.r
 
-bb.r:                                             ; preds = %uv_pipe_getsockname.exit, %bb.p, %bb.c, %bb.b, %bb.a, %bb.q, %bb.f
-  %.023 = phi i32 [ %.020.i.i, %uv_pipe_getsockname.exit ], [ -9, %bb.a ], [ -9, %bb.b ], [ %i.m, %bb.f ], [ -22, %bb.c ], [ %i.ak, %bb.q ], [ 0, %bb.p ]
+bb.r:                                             ; preds = %bb.n, %bb.p, %uv_pipe_getsockname.exit, %bb.c, %bb.b, %bb.a, %bb.q, %bb.f
+  %.023 = phi i32 [ %.020.i.i, %uv_pipe_getsockname.exit ], [ -9, %bb.a ], [ -9, %bb.b ], [ %i.m, %bb.f ], [ -22, %bb.c ], [ %i.ak, %bb.q ], [ 0, %bb.p ], [ %i.n, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   ret i32 %.023
 }

@@ -33,7 +33,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = trunc nuw nsw i64 %i.e to i32
-  %i.h = tail call ptr @alloc(i32 noundef %i.g, i32 noundef 16, ptr noundef nonnull @.str) #4 ; 4 uses
+  %i.h = tail call ptr @alloc(i32 noundef %i.g, i32 noundef 16, ptr noundef nonnull @.str) #4 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %make_array.exit.thread, label %bb.d
 
@@ -47,12 +47,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not11, label %make_array.exit.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
+  %1 = load ptr, ptr %0, align 8, !tbaa !11       ; 2 uses
   %xtraiter = and i16 %i.j, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i16 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader, %.lr.ph.prol
-  %.013.prol = phi ptr [ %i.m, %.lr.ph.prol ], [ %i.h, %.lr.ph.preheader ] ; 2 uses
+  %.013.prol = phi ptr [ %i.m, %.lr.ph.prol ], [ %1, %.lr.ph.preheader ] ; 2 uses
   %.0712.prol = phi i16 [ %i.l, %.lr.ph.prol ], [ %i.j, %.lr.ph.preheader ]
   %prol.iter = phi i16 [ %prol.iter.next, %.lr.ph.prol ], [ 0, %.lr.ph.preheader ]
   %i.l = add i16 %.0712.prol, -1                  ; 2 uses
@@ -64,7 +65,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !17
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.013.unr = phi ptr [ %i.h, %.lr.ph.preheader ], [ %i.m, %.lr.ph.prol ]
+  %.013.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %i.m, %.lr.ph.prol ]
   %.0712.unr = phi i16 [ %i.j, %.lr.ph.preheader ], [ %i.l, %.lr.ph.prol ]
   %i.o = icmp ult i16 %i.j, 8
   br i1 %i.o, label %make_array.exit.thread, label %.lr.ph
@@ -93,8 +94,8 @@ bb.d:                                             ; preds = %bb.c
   %.not.7 = icmp eq i16 %i.w, 0
   br i1 %.not.7, label %make_array.exit.thread, label %.lr.ph, !llvm.loop !18
 
-make_array.exit.thread:                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d, %bb.c, %bb.b, %bb.a
-  %.08 = phi i32 [ -20, %bb.a ], [ -25, %bb.c ], [ -15, %bb.b ], [ 0, %bb.d ], [ 0, %.lr.ph ], [ 0, %.lr.ph.prol.loopexit ]
+make_array.exit.thread:                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.c, %bb.b, %bb.a, %bb.d
+  %.08 = phi i32 [ -15, %bb.b ], [ 0, %bb.d ], [ -25, %bb.c ], [ -20, %bb.a ], [ 0, %.lr.ph ], [ 0, %.lr.ph.prol.loopexit ]
   ret i32 %.08
 }
 

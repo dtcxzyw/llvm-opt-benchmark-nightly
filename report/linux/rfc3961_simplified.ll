@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = icmp eq ptr %i.ab, inttoptr (i64 -2 to ptr)
   %i.af = trunc i64 %i.ad to i32
-  br i1 %i.ae, label %rfc3961_calc_E.exit, label %rfc3961_calc_H.exit
+  %spec.select = select i1 %i.ae, i32 -65, i32 %i.af
+  br label %rfc3961_calc_H.exit
 
 _kzalloc_noprof.exit.i:                           ; preds = %bb.b
   %i.ag = getelementptr i8, ptr %i.ab, i64 24     ; 2 uses
@@ -260,7 +261,7 @@ bb.h:                                             ; preds = %bb.g, %_kzalloc_nop
 rfc3961_calc_H.exit:                              ; preds = %bb.c, %bb.h
   %.sroa.040.1 = phi i32 [ %i.l, %bb.c ], [ %.sroa.040.0, %bb.h ]
   %.sroa.843.1 = phi ptr [ %i.w, %bb.c ], [ %.sroa.843.0, %bb.h ]
-  %.0.i = phi i32 [ %i.af, %bb.c ], [ %.2.i, %bb.h ] ; 2 uses
+  %.0.i = phi i32 [ %spec.select, %bb.c ], [ %.2.i, %bb.h ] ; 2 uses
   %i.av = icmp slt i32 %.0.i, 0
   br i1 %i.av, label %rfc3961_calc_E.exit, label %bb.i
 
@@ -370,8 +371,8 @@ bb.q:                                             ; preds = %rfc3961_do_encrypt.
   call void @crypto_destroy_tfm(ptr noundef %i.bb, ptr noundef %i.ch) #13
   br label %rfc3961_calc_E.exit
 
-rfc3961_calc_E.exit:                              ; preds = %bb.c, %bb.q, %bb.k, %bb.i, %rfc3961_calc_H.exit
-  %.028 = phi i32 [ %.0.i, %rfc3961_calc_H.exit ], [ %i.ay, %bb.i ], [ %spec.select.i38, %bb.k ], [ %.0.i36, %bb.q ], [ -65, %bb.c ]
+rfc3961_calc_E.exit:                              ; preds = %bb.q, %bb.k, %bb.i, %rfc3961_calc_H.exit
+  %.028 = phi i32 [ %.0.i, %rfc3961_calc_H.exit ], [ %i.ay, %bb.i ], [ %.0.i36, %bb.q ], [ %spec.select.i38, %bb.k ]
   call void @kfree_sensitive(ptr noundef nonnull %i.w) #13
   br label %bb.r
 

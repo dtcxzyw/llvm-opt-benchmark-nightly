@@ -204,18 +204,23 @@ bb.a:
 
 _ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit: ; preds = %bb.a
   %.not.i = icmp eq ptr %i.b, null
-  br i1 %.not.i, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.a, label %bb.b
+  br i1 %.not.i, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit
   %i.e = load i32, ptr %i.b, align 4, !tbaa !30
-  %i.f = icmp eq i32 %i.e, 0                      ; 2 uses
+  %i.f = icmp eq i32 %i.e, 0
   %spec.select = select i1 %i.f, ptr %i.b, ptr null
-  %spec.select5 = zext i1 %i.f to i8
+  br label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit
+
+_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit: ; preds = %bb.b, %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit
+  %2 = phi ptr [ null, %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit ], [ %spec.select, %bb.b ] ; 2 uses
+  %.not = icmp ne ptr %2, null
+  %spec.select5 = zext i1 %.not to i8
   br label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.a
 
-_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.a: ; preds = %bb.b, %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit, %bb.a
-  %.sroa.03.1 = phi ptr [ undef, %bb.a ], [ %spec.select, %bb.b ], [ null, %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit ]
-  %.sroa.2.1 = phi i8 [ 0, %bb.a ], [ %spec.select5, %bb.b ], [ 0, %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit ]
+_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.a: ; preds = %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit, %bb.a
+  %.sroa.03.1 = phi ptr [ undef, %bb.a ], [ %2, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit ]
+  %.sroa.2.1 = phi i8 [ 0, %bb.a ], [ %spec.select5, %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.03.1, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.2.1, 1
   ret { ptr, i8 } %.fca.1.insert

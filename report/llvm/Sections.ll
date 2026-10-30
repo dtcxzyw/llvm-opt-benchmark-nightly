@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZN3lld5macho8sections13isCodeSectionEN4llvm9StringRefES3_j(ptr nofree readonly captures(none) %0, i64 %1, ptr nofree readonly captures(none) %2, i64 %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %.fr23 = freeze i64 %1                          ; 2 uses
+  %.fr23 = freeze i64 %1                          ; 3 uses
   %i.a = trunc i32 %4 to i8
   switch i8 %i.a, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread21 [
     i8 11, label %bb.b
@@ -58,9 +58,13 @@ _ZN4llvmneENS_9StringRefES0_.exit.i.i:            ; preds = %.lr.ph.split.i.preh
   %i.s = icmp ne i64 %i.r, 0
   %i.t = zext i1 %i.s to i32
   %.not.i.i = icmp eq i32 %i.t, 0
-  br i1 %.not.i.i, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread21, label %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1
+  br i1 %.not.i.i, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread21, label %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i
 
-_ZN4llvmneENS_9StringRefES0_.exit.i.i.1:          ; preds = %.lr.ph.split.i.preheader
+_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i: ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.i.i
+  %.not.i.i.i.i.1 = icmp eq i64 %.fr23, 12
+  br i1 %.not.i.i.i.i.1, label %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, label %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1
+
+_ZN4llvmneENS_9StringRefES0_.exit.i.i.1:          ; preds = %.lr.ph.split.i.preheader, %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i
   %i.u = load i64, ptr %0, align 1
   %i.v = xor i64 %i.u, 7163384644221755231
   %i.w = getelementptr i8, ptr %0, i64 8
@@ -73,10 +77,10 @@ _ZN4llvmneENS_9StringRefES0_.exit.i.i.1:          ; preds = %.lr.ph.split.i.preh
   %.not.i.i.1 = icmp eq i32 %i.ac, 0
   br i1 %.not.i.i.1, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread21, label %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1
 
-_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1: ; preds = %.lr.ph.split.i.preheader, %_ZN4llvmneENS_9StringRefES0_.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1
+_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1: ; preds = %.lr.ph.split.i.preheader, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i
   br label %_ZN4llvmeqENS_9StringRefES0_.exit.thread21
 
-_ZN4llvmeqENS_9StringRefES0_.exit.thread21:       ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1, %bb.c, %bb.b, %_ZN4llvmeqENS_9StringRefES0_.exit.a, %bb.a
+_ZN4llvmeqENS_9StringRefES0_.exit.thread21:       ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1, %bb.c, %_ZN4llvmeqENS_9StringRefES0_.exit.a, %bb.b, %bb.a
   %.1 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ false, %bb.c ], [ false, %_ZN4llvmeqENS_9StringRefES0_.exit.a ], [ true, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1 ], [ true, %_ZN4llvmneENS_9StringRefES0_.exit.i.i ], [ false, %_ZN4llvm12StringSwitchIbbE8CaseImplENS_13StringLiteralERb.exit.i.1 ]
   ret i1 %.1
 }

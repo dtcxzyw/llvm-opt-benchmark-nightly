@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.ag = extractvalue { i32, i8 } %i.af, 1       ; 2 uses
-  %.not6.not = icmp eq i8 %i.ag, -1
+  %.not6.not = icmp eq i8 %i.ag, -1               ; 2 uses
   br i1 %.not6.not, label %.thread, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -212,23 +212,26 @@ bb.u:                                             ; preds = %bb.t
 
 .thread:                                          ; preds = %bb.t
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %0, ptr noundef nonnull align 8 dereferenceable(224) %i.i, i64 224, i1 false)
-  br label %.invoke
+  br label %4
 
 bb.v:                                             ; preds = %bb.u
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 -1, ptr %i.ai, align 8
-  br label %.invoke10
+  br label %4
+
+4:                                                ; preds = %bb.v, %.thread
+  br i1 %.not6.not, label %.invoke, label %.invoke10
 
 bb.w:                                             ; preds = %.invoke
   call void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsgFSQ9XOTBNe_3syn6buffer11TokenBufferEBF_(ptr nonnull align 8 %i.m)
   ret void
 
-.invoke10:                                        ; preds = %bb.q, %bb.v
+.invoke10:                                        ; preds = %bb.q, %4
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTNtNtCsgFSQ9XOTBNe_3syn4path4PathNtNtBG_4expr4ExprEECsKXd8SJXguA_12salsa_macros(ptr nonnull align 8 %i.i)
           to label %.invoke unwind label %bb.i
 
-.invoke:                                          ; preds = %.invoke10, %bb.l, %.thread
+.invoke:                                          ; preds = %.invoke10, %bb.l, %4
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsgFSQ9XOTBNe_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.j)
           to label %bb.w unwind label %bb.c
 

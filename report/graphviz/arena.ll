@@ -18,7 +18,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 2 uses
   %i.d = icmp ult i64 %i.c, %2
-  br i1 %i.d, label %alloc.exit.thread, label %bb.c
+  br i1 %i.d, label %alloc.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load ptr, ptr %0, align 8, !tbaa !12
@@ -27,19 +27,23 @@ bb.c:                                             ; preds = %bb.b
   %i.h = sub nuw i64 %i.c, %2
   %i.i = add i64 %i.h, %i.g
   %i.j = sub i64 0, %1
-  %i.k = and i64 %i.i, %i.j                       ; 4 uses
+  %i.k = and i64 %i.i, %i.j                       ; 3 uses
   %i.l = icmp ult i64 %i.k, %i.g
-  br i1 %i.l, label %alloc.exit.thread, label %alloc.exit.a
+  br i1 %i.l, label %alloc.exit, label %alloc.exit.a
 
 alloc.exit.a:                                     ; preds = %bb.c
   %reass.sub = sub i64 %i.k, %i.f
   %i.m = add i64 %reass.sub, -8
   store i64 %i.m, ptr %i.b, align 8, !tbaa !15
   %i.n = inttoptr i64 %i.k to ptr
-  %3 = icmp eq i64 %i.k, 0
+  br label %alloc.exit
+
+alloc.exit:                                       ; preds = %bb.b, %bb.c, %alloc.exit.a
+  %.1.i = phi ptr [ null, %bb.b ], [ %i.n, %alloc.exit.a ], [ null, %bb.c ] ; 2 uses
+  %3 = icmp eq ptr %.1.i, null
   br i1 %3, label %alloc.exit.thread, label %alloc.exit17
 
-alloc.exit.thread:                                ; preds = %bb.c, %bb.b, %alloc.exit.a
+alloc.exit.thread:                                ; preds = %alloc.exit
   %i.o = add i64 %1, -1
   %i.p = add i64 %i.o, %2
   %spec.select.i = tail call i64 @llvm.umax.i64(i64 %i.p, i64 16376) ; 4 uses
@@ -81,8 +85,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = inttoptr i64 %i.ad to ptr
   br label %alloc.exit17
 
-alloc.exit17:                                     ; preds = %bb.f, %bb.e, %more_core.exit, %alloc.exit.a, %bb.a
-  %.012 = phi ptr [ null, %bb.a ], [ %i.n, %alloc.exit.a ], [ null, %more_core.exit ], [ %i.ag, %bb.f ], [ null, %bb.e ]
+alloc.exit17:                                     ; preds = %bb.f, %bb.e, %more_core.exit, %alloc.exit, %bb.a
+  %.012 = phi ptr [ null, %bb.a ], [ %.1.i, %alloc.exit ], [ null, %more_core.exit ], [ %i.ag, %bb.f ], [ null, %bb.e ]
   ret ptr %.012
 }
 

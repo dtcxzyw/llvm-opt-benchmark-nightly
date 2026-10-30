@@ -34,31 +34,33 @@ bb.d:                                             ; preds = %bb.c
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %.not14 = icmp eq ptr %i.d, null
-  br i1 %.not14, label %.thread, label %bb.e
+  br i1 %.not14, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
   %.not15 = icmp eq ptr %i.f, null
-  br i1 %.not15, label %.thread, label %bb.f
+  br i1 %.not15, label %bb.f, label %1
 
-bb.f:                                             ; preds = %bb.e
-  %1 = tail call i32 %i.f(ptr noundef nonnull %0) #6 ; 3 uses
-  %i.g = icmp sgt i32 %1, -1
+1:                                                ; preds = %bb.e
+  %2 = tail call i32 %i.f(ptr noundef nonnull %0) #6
+  br label %bb.f
+
+bb.f:                                             ; preds = %1, %bb.e, %bb.d
+  %.0 = phi i32 [ %2, %1 ], [ 0, %bb.e ], [ 0, %bb.d ] ; 2 uses
+  %i.g = icmp sgt i32 %.0, -1
   br i1 %i.g, label %.thread, label %bb.g
 
-.thread:                                          ; preds = %bb.d, %bb.e, %bb.f
-  %.018 = phi i32 [ %1, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ]
+.thread:                                          ; preds = %bb.f
   tail call void @inode_release(ptr noundef nonnull %i.b) #6
   br label %bb.g
 
 bb.g:                                             ; preds = %.thread, %bb.f
-  %.017 = phi i32 [ %.018, %.thread ], [ %1, %bb.f ]
   store ptr null, ptr %i.a, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.c
-  %.1 = phi i32 [ %.017, %bb.g ], [ 0, %bb.c ]
+  %.1 = phi i32 [ %.0, %bb.g ], [ 0, %bb.c ]
   ret i32 %.1
 }
 

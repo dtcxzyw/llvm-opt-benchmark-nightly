@@ -202,18 +202,24 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @_RINvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB5_9EnumerateINtNtNtBb_5slice4iter4IterNtNtCs5YNYYMCeUDn_8protobuf10descriptor19EnumDescriptorProtoEENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNtB7_3map12map_try_foldTjRB1y_ENtNtNtB1C_7reflect5enums14EnumDescriptoruINtNtNtBb_3ops12control_flow11ControlFlowB3Q_ENCNvMs1_NtB3U_4fileNtB5n_14FileDescriptor5enums0NCINvNvB2y_4find5checkB3Q_NCNvCs63vnYBEjbPn_12yara_x_proto16get_field_format0E0E0B4v_EB6v_(ptr nonnull sret([24 x i8]) align 8 %i.a, ptr align 8 %1, ptr align 8 %2, ptr nonnull align 8 %i.b) #15
   %i.c = load i64, ptr %i.a, align 8
-  %.not = icmp eq i64 %i.c, 2
-  br i1 %.not, label %bb.d, label %bb.b
+  %.not = icmp eq i64 %i.c, 2                     ; 2 uses
+  br i1 %.not, label %3, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
-  br label %bb.c
+  br label %4
 
-bb.c:                                             ; preds = %bb.b, %bb.d
+3:                                                ; preds = %bb.a
+  store i64 2, ptr %0, align 8
+  br label %4
+
+4:                                                ; preds = %3, %bb.b
+  br i1 %.not, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %4
   ret void
 
-bb.d:                                             ; preds = %bb.a
-  store i64 2, ptr %0, align 8
+bb.d:                                             ; preds = %4
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCs5YNYYMCeUDn_8protobuf7reflect5enums14EnumDescriptorEECs63vnYBEjbPn_12yara_x_proto(ptr nonnull align 8 %i.a)
   br label %bb.c
 }

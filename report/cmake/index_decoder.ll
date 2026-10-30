@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.u = icmp eq ptr %i.s, null
   br i1 %i.u, label %bb.l, label %bb.m
 
-bb.l:                                             ; preds = %bb.k, %bb.h, %bb.f
+bb.l:                                             ; preds = %bb.f, %bb.h, %bb.k
   %.1.i.ph = phi i32 [ 5, %bb.k ], [ 5, %bb.h ], [ 11, %bb.f ]
   tail call void @lzma_end(ptr noundef nonnull %0) #6
   br label %bb.n
@@ -238,7 +238,7 @@ declare void @lzma_end(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 2, 1) i32 @lzma_index_buffer_decode(ptr noundef %0, ptr nofree noundef captures(address_is_null) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i64 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = alloca %struct.lzma_index_coder, align 8   ; 10 uses
+  %6 = alloca %struct.lzma_index_coder, align 8   ; 11 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %.thread, label %bb.b
 
@@ -273,7 +273,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1)
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 %i.k, ptr %i.l, align 8, !tbaa !25
-  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 32
   store i64 0, ptr %i.m, align 8, !tbaa !26
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 56
   store i64 0, ptr %i.n, align 8, !tbaa !27
@@ -294,7 +294,8 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = load i64, ptr %i.m, align 8, !tbaa !26
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.t = load i64, ptr %7, align 8, !tbaa !26
   %i.u = call i64 @lzma_index_memusage(i64 noundef 1, i64 noundef %i.t) #6
   store i64 %i.u, ptr %1, align 8, !tbaa !29
   br label %index_decoder_reset.exit

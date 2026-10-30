@@ -36,7 +36,8 @@ bb.b:                                             ; preds = %bb.a
   %i.s = zext nneg i32 %i.r to i64
   %i.t = getelementptr inbounds nuw [4 x i8], ptr @OnigUnicodeFolds2, i64 %i.s
   %i.u = tail call i32 @onig_codes_cmp(ptr noundef %0, ptr noundef nonnull %i.t, i32 noundef 2) #2
-  %.not = icmp eq i32 %i.u, 0
+  %.fr = freeze i32 %i.u
+  %.not = icmp eq i32 %.fr, 0
   %spec.select = select i1 %.not, i32 %i.r, i32 -1
   br label %select.unfold
 

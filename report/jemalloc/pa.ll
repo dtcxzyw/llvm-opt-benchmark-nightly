@@ -183,30 +183,34 @@ declare void @je_hpa_shard_destroy(ptr noundef, ptr noundef) local_unnamed_addr 
 ; Function Attrs: nounwind uwtable
 define hidden noundef ptr @je_pa_alloc(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i1 noundef zeroext %4, i32 noundef %5, i1 noundef zeroext %6, i1 noundef zeroext %7, ptr noundef %8) local_unnamed_addr #0 {
 tsdn_witness_tsdp_get.exit:
-  br i1 %7, label %.thread.a, label %bb.a
+  br i1 %7, label %9, label %bb.a
 
 bb.a:                                             ; preds = %tsdn_witness_tsdp_get.exit
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load atomic i8, ptr %i.a monotonic, align 1, !range !58, !noundef !59
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %bb.b, label %.thread.a
+  br i1 %i.c, label %bb.b, label %9
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 62272 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !65
-  %i.f = tail call ptr %i.e(ptr noundef %0, ptr noundef nonnull %i.d, i64 noundef %2, i64 noundef %3, i1 noundef zeroext %6, i1 noundef zeroext false, i1 noundef zeroext %4, ptr noundef %8) #4, !inline_history !64 ; 2 uses
-  %9 = icmp eq ptr %i.f, null
-  br i1 %9, label %.thread.a, label %.thread39
+  %i.f = tail call ptr %i.e(ptr noundef %0, ptr noundef nonnull %i.d, i64 noundef %2, i64 noundef %3, i1 noundef zeroext %6, i1 noundef zeroext false, i1 noundef zeroext %4, ptr noundef %8) #4, !inline_history !64
+  br label %9
 
-.thread.a:                                        ; preds = %bb.a, %tsdn_witness_tsdp_get.exit, %bb.b
+9:                                                ; preds = %bb.b, %bb.a, %tsdn_witness_tsdp_get.exit
+  %.0 = phi ptr [ null, %tsdn_witness_tsdp_get.exit ], [ %i.f, %bb.b ], [ null, %bb.a ] ; 2 uses
+  %10 = icmp eq ptr %.0, null
+  br i1 %10, label %.thread.a, label %.thread39
+
+.thread.a:                                        ; preds = %9
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !65
   %i.i = tail call ptr %i.h(ptr noundef %0, ptr noundef nonnull %i.g, i64 noundef %2, i64 noundef %3, i1 noundef zeroext %6, i1 noundef zeroext %7, i1 noundef zeroext %4, ptr noundef %8) #4, !inline_history !64 ; 2 uses
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %bb.d, label %.thread39
 
-.thread39:                                        ; preds = %bb.b, %.thread.a
-  %.142 = phi ptr [ %i.i, %.thread.a ], [ %i.f, %bb.b ] ; 6 uses
+.thread39:                                        ; preds = %9, %.thread.a
+  %.142 = phi ptr [ %i.i, %.thread.a ], [ %.0, %9 ] ; 6 uses
   %i.j = lshr i64 %2, 12
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = atomicrmw add ptr %i.k, i64 %i.j monotonic, align 8 ; 0 uses

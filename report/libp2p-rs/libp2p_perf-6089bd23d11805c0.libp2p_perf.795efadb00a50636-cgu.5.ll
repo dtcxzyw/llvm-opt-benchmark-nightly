@@ -202,7 +202,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i8, ptr %i.a, align 8, !range !13, !alias.scope !96, !noundef !5
   %.not.i = icmp eq i8 %i.b, 2
-  br i1 %.not.i, label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a, label %bb.b
+  br i1 %.not.i, label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
@@ -210,15 +210,26 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.e = load atomic i64, ptr %i.d seq_cst, align 8, !noalias !99
   %.not.i.i = icmp sgt i64 %i.e, -1
-  br i1 %.not.i.i, label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a, label %bb.c
+  br i1 %.not.i.i, label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call fastcc noundef zeroext i1 @_RNvMsg_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_18BoundedSenderInnerNtCsaq3pFONu668_11libp2p_perf12IntermediateE13poll_unparkedB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) dereferenceable_or_null(32) %1)
   %spec.select = select i1 %i.f, i8 -1, i8 2
+  br label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit
+
+_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit: ; preds = %bb.c, %bb.a, %bb.b
+  %.sroa.0.0.i = phi i8 [ 1, %bb.a ], [ 1, %bb.b ], [ %spec.select, %bb.c ] ; 4 uses
+  switch i8 %.sroa.0.0.i, label %2 [
+    i8 -1, label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a
+    i8 2, label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a
+  ]
+
+2:                                                ; preds = %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit
+  %spec.store.select = shl nuw nsw i8 %.sroa.0.0.i, 1
   br label %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a
 
-_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a: ; preds = %bb.b, %bb.a, %bb.c
-  %.sroa.01.0 = phi i8 [ %spec.select, %bb.c ], [ 2, %bb.a ], [ 2, %bb.b ]
+_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit.a: ; preds = %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit, %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit, %2
+  %.sroa.01.0 = phi i8 [ %.sroa.0.0.i, %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit ], [ %spec.store.select, %2 ], [ %.sroa.0.0.i, %_RNvMsh_NtCsgV0iE8Xkxiy_15futures_channel4mpscINtB5_6SenderNtCsaq3pFONu668_11libp2p_perf12IntermediateE10poll_readyBW_.exit ]
   ret i8 %.sroa.01.0
 }
 

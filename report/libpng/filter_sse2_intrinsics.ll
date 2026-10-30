@@ -204,37 +204,38 @@ bb.a:
   store i24 %.0.extract.trunc.i, ptr %.082, align 1
   %i.ag = getelementptr inbounds nuw i8, ptr %.07081, i64 3 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.082, i64 3 ; 2 uses
-  %i.ai = add i64 %.07180, -3                     ; 2 uses
+  %i.ai = add i64 %.07180, -3                     ; 3 uses
   %i.aj = icmp ugt i64 %i.ai, 3
   br i1 %i.aj, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !16
 
 ._crit_edge.thread:                               ; preds = %.lr.ph
   %i.ak = bitcast <16 x i8> %i.f to <8 x i16>
   %i.al = bitcast <16 x i8> %i.aa to <8 x i16>
-  br label %bb.b
+  br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.a
-  %.not = icmp eq i64 %i.b, 0
+._crit_edge:                                      ; preds = %._crit_edge.thread, %bb.a
+  %.073.lcssa = phi <8 x i16> [ zeroinitializer, %bb.a ], [ %i.al, %._crit_edge.thread ] ; 2 uses
+  %.072.lcssa = phi <8 x i16> [ zeroinitializer, %bb.a ], [ %i.ak, %._crit_edge.thread ] ; 3 uses
+  %.071.lcssa = phi i64 [ %i.b, %bb.a ], [ %i.ai, %._crit_edge.thread ]
+  %.070.lcssa = phi ptr [ %2, %bb.a ], [ %i.ag, %._crit_edge.thread ]
+  %.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.ah, %._crit_edge.thread ] ; 2 uses
+  %.not = icmp eq i64 %.071.lcssa, 0
   br i1 %.not, label %bb.c, label %bb.b
 
-bb.b:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %.0.lcssa101 = phi ptr [ %i.ah, %._crit_edge.thread ], [ %1, %._crit_edge ] ; 2 uses
-  %.070.lcssa100 = phi ptr [ %i.ag, %._crit_edge.thread ], [ %2, %._crit_edge ]
-  %.072.lcssa99 = phi <8 x i16> [ %i.ak, %._crit_edge.thread ], [ zeroinitializer, %._crit_edge ] ; 3 uses
-  %.073.lcssa98 = phi <8 x i16> [ %i.al, %._crit_edge.thread ], [ zeroinitializer, %._crit_edge ] ; 2 uses
-  %.070.val75 = load i24, ptr %.070.lcssa100, align 1
+bb.b:                                             ; preds = %._crit_edge
+  %.070.val75 = load i24, ptr %.070.lcssa, align 1
   %.0.insert.ext.i = zext i24 %.070.val75 to i32
   %i.am = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %.0.insert.ext.i, i64 0
   %i.an = bitcast <4 x i32> %i.am to <16 x i8>
   %i.ao = shufflevector <16 x i8> %i.an, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
-  %.0.val74 = load i24, ptr %.0.lcssa101, align 1
+  %.0.val74 = load i24, ptr %.0.lcssa, align 1
   %.0.insert.ext.i76 = zext i24 %.0.val74 to i32
   %i.ap = insertelement <4 x i32> poison, i32 %.0.insert.ext.i76, i64 0
   %i.aq = bitcast <4 x i32> %i.ap to <16 x i8>
   %i.ar = shufflevector <16 x i8> %i.aq, <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.as = bitcast <16 x i8> %i.ao to <8 x i16>    ; 2 uses
-  %i.at = sub nsw <8 x i16> %i.as, %.072.lcssa99  ; 2 uses
-  %i.au = sub <8 x i16> %.073.lcssa98, %.072.lcssa99 ; 2 uses
+  %i.at = sub nsw <8 x i16> %i.as, %.072.lcssa    ; 2 uses
+  %i.au = sub <8 x i16> %.073.lcssa, %.072.lcssa  ; 2 uses
   %i.av = add <8 x i16> %i.at, %i.au
   %i.aw = tail call <8 x i16> @llvm.abs.v8i16(<8 x i16> %i.at, i1 false) ; 2 uses
   %i.ax = tail call <8 x i16> @llvm.abs.v8i16(<8 x i16> %i.au, i1 false) ; 2 uses
@@ -243,8 +244,8 @@ bb.b:                                             ; preds = %._crit_edge.thread,
   %i.ba = tail call <8 x i16> @llvm.smin.v8i16(<8 x i16> %i.ay, <8 x i16> %i.az) ; 2 uses
   %i.bb = icmp eq <8 x i16> %i.ba, %i.aw
   %i.bc = icmp eq <8 x i16> %i.ba, %i.ax
-  %i.bd = select <8 x i1> %i.bc, <8 x i16> %i.as, <8 x i16> %.072.lcssa99
-  %i.be = select <8 x i1> %i.bb, <8 x i16> %.073.lcssa98, <8 x i16> %i.bd
+  %i.bd = select <8 x i1> %i.bc, <8 x i16> %i.as, <8 x i16> %.072.lcssa
+  %i.be = select <8 x i1> %i.bb, <8 x i16> %.073.lcssa, <8 x i16> %i.bd
   %i.bf = bitcast <8 x i16> %i.be to <16 x i8>
   %i.bg = add <16 x i8> %i.ar, %i.bf
   %i.bh = bitcast <16 x i8> %i.bg to <8 x i16>
@@ -252,7 +253,7 @@ bb.b:                                             ; preds = %._crit_edge.thread,
   %i.bj = bitcast <16 x i8> %i.bi to <4 x i32>
   %i.bk = extractelement <4 x i32> %i.bj, i64 0
   %.0.extract.trunc.i77 = trunc i32 %i.bk to i24
-  store i24 %.0.extract.trunc.i77, ptr %.0.lcssa101, align 1
+  store i24 %.0.extract.trunc.i77, ptr %.0.lcssa, align 1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge

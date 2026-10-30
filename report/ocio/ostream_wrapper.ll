@@ -204,8 +204,7 @@ bb.a:
 
 _ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit.a: ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef %1, i64 noundef %2) ; 0 uses
-  %.not18 = icmp eq i64 %2, 0
-  br i1 %.not18, label %._crit_edge, label %.lr.ph
+  br label %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -237,7 +236,7 @@ _ZNSt6vectorIcSaIcEE6resizeEm.exit:               ; preds = %bb.b, %bb.c
 
 bb.d:                                             ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.r, ptr align 1 %1, i64 %2, i1 false)
-  br label %.lr.ph
+  br label %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit
 
 bb.e:                                             ; preds = %_ZNSt6vectorIcSaIcEE6resizeEm.exit
   switch i64 %2, label %.lr.ph [
@@ -248,9 +247,13 @@ bb.e:                                             ; preds = %_ZNSt6vectorIcSaIcE
 bb.f:                                             ; preds = %bb.e
   %i.t = load i8, ptr %1, align 1, !tbaa !25
   store i8 %i.t, ptr %i.r, align 1, !tbaa !25
-  br label %.lr.ph
+  br label %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit
 
-.lr.ph:                                           ; preds = %bb.e, %bb.d, %bb.f, %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit.a
+_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit: ; preds = %bb.f, %bb.d, %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit.a
+  %.not18 = icmp eq i64 %2, 0
+  br i1 %.not18, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.e, %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -259,7 +262,7 @@ bb.f:                                             ; preds = %bb.e
   %.promoted17 = load i64, ptr %i.v, align 8, !tbaa !26
   br label %bb.g
 
-._crit_edge:                                      ; preds = %_ZN4YAML15ostream_wrapper10update_posEc.exit, %bb.e, %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit.a
+._crit_edge:                                      ; preds = %_ZN4YAML15ostream_wrapper10update_posEc.exit, %bb.e, %_ZSt4copyIPKcN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEET0_T_SA_S9_.exit
   ret void
 
 bb.g:                                             ; preds = %.lr.ph, %_ZN4YAML15ostream_wrapper10update_posEc.exit

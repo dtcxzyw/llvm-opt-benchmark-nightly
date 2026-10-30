@@ -20,12 +20,12 @@ bb.a:
   %i.d = sext i32 %narrow to i64
   %i.e = getelementptr inbounds [8 x i8], ptr %4, i64 %i.d
   store i32 0, ptr %6, align 4, !tbaa !9
-  %i.f = load i32, ptr %0, align 4, !tbaa !9      ; 3 uses
+  %i.f = load i32, ptr %0, align 4, !tbaa !9      ; 2 uses
   %i.g = icmp slt i32 %i.f, 0
   br i1 %i.g, label %.thread.a, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load i32, ptr %1, align 4, !tbaa !9      ; 2 uses
+  %i.h = load i32, ptr %1, align 4, !tbaa !9
   %i.i = icmp slt i32 %i.h, 0
   br i1 %i.i, label %.thread.a, label %bb.c
 
@@ -44,11 +44,13 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = icmp eq i32 %i.f, 0
+  %7 = load i32, ptr %0, align 4, !tbaa !9
+  %i.m = icmp eq i32 %7, 0
   br i1 %i.m, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  switch i32 %i.h, label %bb.f [
+  %8 = load i32, ptr %1, align 4, !tbaa !9
+  switch i32 %8, label %bb.f [
     i32 0, label %.loopexit
     i32 1, label %.thread68
   ]

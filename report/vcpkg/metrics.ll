@@ -202,15 +202,24 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %.sroa.0.0.copyload.i8.i = load ptr, ptr %1, align 8, !tbaa !45
   %.sroa.2.0..sroa_idx.i9.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.2.0.copyload.i10.i = load i64, ptr %.sroa.2.0..sroa_idx.i9.i, align 8, !tbaa !46
-  %i.j = tail call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr %.sroa.01.0.copyload.i5.i, i64 %.sroa.22.0.copyload.i7.i, ptr %.sroa.0.0.copyload.i8.i, i64 %.sroa.2.0.copyload.i10.i) #17
-  br i1 %i.j, label %select.unfold, label %bb.f
+  %i.j = tail call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr %.sroa.01.0.copyload.i5.i, i64 %.sroa.22.0.copyload.i7.i, ptr %.sroa.0.0.copyload.i8.i, i64 %.sroa.2.0.copyload.i10.i) #17 ; 2 uses
+  %spec.select = select i1 %i.j, ptr null, ptr %.sroa.011.0.i
+  %spec.select18 = select i1 %i.j, ptr %.025.lcssa34.i, ptr null
+  br label %select.unfold
 
 select.unfold:                                    ; preds = %bb.d, %._crit_edge.thread.i
-  %.sroa.4.0.i.ph = phi ptr [ %.025.lcssa35.i, %._crit_edge.thread.i ], [ %.025.lcssa34.i, %bb.d ] ; 4 uses
-  %i.k = icmp eq ptr %.sroa.4.0.i.ph, %i.b
-  br i1 %i.k, label %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit, label %bb.e
+  %.sroa.024.0.i = phi ptr [ %spec.select, %bb.d ], [ null, %._crit_edge.thread.i ] ; 2 uses
+  %.sroa.4.0.i.ph = phi ptr [ %spec.select18, %bb.d ], [ %.025.lcssa35.i, %._crit_edge.thread.i ] ; 5 uses
+  %i.k = icmp eq ptr %.sroa.4.0.i.ph, null
+  br i1 %i.k, label %bb.f, label %2
 
-bb.e:                                             ; preds = %select.unfold
+2:                                                ; preds = %select.unfold
+  %.not.i5 = icmp ne ptr %.sroa.024.0.i, null
+  %3 = icmp eq ptr %.sroa.4.0.i.ph, %i.b
+  %or.cond.i = select i1 %.not.i5, i1 true, i1 %3
+  br i1 %or.cond.i, label %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit, label %bb.e
+
+bb.e:                                             ; preds = %2
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph, i64 32
   %.sroa.01.0.copyload.i.i6 = load ptr, ptr %1, align 8, !tbaa !45
   %.sroa.22.0..sroa_idx.i.i7 = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -221,8 +230,8 @@ bb.e:                                             ; preds = %select.unfold
   %i.m = tail call noundef zeroext i1 @_ZN5vcpkgltENS_10StringViewES0_(ptr %.sroa.01.0.copyload.i.i6, i64 %.sroa.22.0.copyload.i.i8, ptr %.sroa.0.0.copyload.i.i9, i64 %.sroa.2.0.copyload.i.i11) #17
   br label %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit
 
-_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit: ; preds = %select.unfold, %bb.e
-  %i.n = phi i1 [ %i.m, %bb.e ], [ true, %select.unfold ]
+_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit: ; preds = %2, %bb.e
+  %i.n = phi i1 [ %i.m, %bb.e ], [ true, %2 ]
   %i.o = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #21 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !338
@@ -233,9 +242,9 @@ _ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_
   store i64 %i.s, ptr %i.q, align 8, !tbaa !78
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit
-  %.sroa.016.0 = phi ptr [ %i.o, %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit ], [ %.sroa.011.0.i, %bb.d ]
-  %.sroa.3.0 = phi i8 [ 1, %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit ], [ 0, %bb.d ]
+bb.f:                                             ; preds = %select.unfold, %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit
+  %.sroa.016.0 = phi ptr [ %i.o, %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit ], [ %.sroa.024.0.i, %select.unfold ]
+  %.sroa.3.0 = phi i8 [ 1, %_ZNSt8_Rb_treeIN5vcpkg10StringViewES1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE10_M_insert_IRKS1_NS7_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS1_EPSt18_Rb_tree_node_baseSF_OT_RT0_.exit ], [ 0, %select.unfold ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.016.0, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.3.0, 1
   ret { ptr, i8 } %.fca.1.insert

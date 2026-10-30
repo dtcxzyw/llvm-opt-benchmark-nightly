@@ -143,13 +143,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %.not50 = icmp eq i32 %1, -2147483648
-  br i1 %.not50, label %.thread, label %bb.e
+  br i1 %.not50, label %bb.o, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.d = sub nsw i32 0, %1
+  %i.d = sub nsw i32 0, %1                        ; 2 uses
   %i.e = udiv i32 %0, %i.d
   %i.f = sub nsw i32 0, %i.e
-  br label %.thread
+  %2 = urem i32 %0, %i.d
+  br label %bb.o
 
 bb.f:                                             ; preds = %bb.a
   %.not = icmp eq i32 %0, -2147483648
@@ -164,17 +165,23 @@ bb.h:                                             ; preds = %bb.g
   %i.i = udiv i32 %i.h, %1
   %i.j = sub nsw i32 0, %i.i
   %i.k = urem i32 %i.h, %1
+  %3 = sub nsw i32 0, %i.k
   br label %bb.o
 
 bb.i:                                             ; preds = %bb.g
   %.not49 = icmp eq i32 %1, -2147483648
-  br i1 %.not49, label %.thread, label %bb.j
+  br i1 %.not49, label %5, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.l = sub nsw i32 0, %0                        ; 2 uses
   %i.m = sub nsw i32 0, %1                        ; 2 uses
   %i.n = udiv i32 %i.l, %i.m
   %i.o = urem i32 %i.l, %i.m
+  %4 = sub nsw i32 0, %i.o
+  br label %bb.o
+
+5:                                                ; preds = %bb.i
+  %6 = and i32 %0, 2147483647
   br label %bb.o
 
 bb.k:                                             ; preds = %bb.f
@@ -185,11 +192,12 @@ bb.l:                                             ; preds = %bb.k
   %i.q = udiv i32 %i.p, %1
   %i.r = xor i32 %i.q, -1
   %i.s = urem i32 %i.p, %1
+  %7 = sub nsw i32 0, %i.s
   br label %bb.o
 
 bb.m:                                             ; preds = %bb.k
   %.not48 = icmp eq i32 %1, -2147483648
-  br i1 %.not48, label %.thread, label %bb.n
+  br i1 %.not48, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %.neg = and i32 %1, 2147483647                  ; 2 uses
@@ -197,13 +205,14 @@ bb.n:                                             ; preds = %bb.m
   %i.u = udiv i32 %.neg, %i.t
   %i.v = add nuw nsw i32 %i.u, 1
   %i.w = urem i32 %.neg, %i.t
+  %8 = sub nsw i32 0, %i.w
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.j, %bb.h, %bb.n, %bb.l
-  %.043 = phi i32 [ %i.v, %bb.n ], [ %i.r, %bb.l ], [ %i.j, %bb.h ], [ %i.n, %bb.j ] ; 2 uses
-  %.pn = phi i32 [ %i.w, %bb.n ], [ %i.s, %bb.l ], [ %i.k, %bb.h ], [ %i.o, %bb.j ]
-  %2 = icmp eq i32 %.pn, 0
-  br i1 %2, label %.thread, label %bb.p
+bb.o:                                             ; preds = %bb.m, %bb.d, %bb.j, %5, %bb.h, %bb.n, %bb.l, %bb.e
+  %.043 = phi i32 [ %i.f, %bb.e ], [ 0, %bb.d ], [ %i.j, %bb.h ], [ %i.n, %bb.j ], [ 1, %5 ], [ %i.r, %bb.l ], [ %i.v, %bb.n ], [ 1, %bb.m ] ; 2 uses
+  %.0 = phi i32 [ %2, %bb.e ], [ %0, %bb.d ], [ %3, %bb.h ], [ %4, %bb.j ], [ %6, %5 ], [ %7, %bb.l ], [ %8, %bb.n ], [ 0, %bb.m ]
+  %9 = icmp sgt i32 %.0, -1
+  br i1 %9, label %.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %.inv = icmp slt i32 %1, 1
@@ -211,8 +220,8 @@ bb.p:                                             ; preds = %bb.o
   %i.y = add nsw i32 %.043, %i.x
   br label %.thread
 
-.thread:                                          ; preds = %bb.i, %bb.m, %bb.d, %bb.e, %bb.o, %bb.p, %bb.c
-  %.044 = phi i32 [ %i.c, %bb.c ], [ %i.y, %bb.p ], [ %.043, %bb.o ], [ 1, %bb.m ], [ %i.f, %bb.e ], [ 0, %bb.d ], [ 1, %bb.i ]
+.thread:                                          ; preds = %bb.o, %bb.p, %bb.c
+  %.044 = phi i32 [ %i.c, %bb.c ], [ %i.y, %bb.p ], [ %.043, %bb.o ]
   ret i32 %.044
 }
 

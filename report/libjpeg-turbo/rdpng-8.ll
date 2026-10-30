@@ -203,18 +203,19 @@ bb.ag:                                            ; preds = %bb.af
   store ptr @get_raw_row, ptr %i.do, align 8, !tbaa !80
   br label %bb.ao
 
-bb.ah:                                            ; preds = %bb.af, %bb.ae
-  %.pr = load i32, ptr %i.cv, align 4, !tbaa !48  ; 2 uses
-  %3 = icmp eq i32 %.pr, 2
-  br i1 %3, label %bb.ai, label %.thread.a
+bb.ah:                                            ; preds = %bb.ae, %bb.af
+  %.pr = load i32, ptr %i.cv, align 4, !tbaa !48
+  br label %.thread.a
 
-.thread.a:                                        ; preds = %bb.ag, %bb.ah
-  %i.dp = phi i32 [ %.pr, %bb.ah ], [ %i.dn, %bb.ag ] ; 2 uses
+.thread.a:                                        ; preds = %bb.ah, %bb.ag
+  %i.dp = phi i32 [ %.pr, %bb.ah ], [ %i.dn, %bb.ag ] ; 3 uses
+  %3 = icmp eq i32 %i.dp, 2
   %i.dq = add i32 %i.dp, -6
   %or.cond232 = icmp ult i32 %i.dq, 10
-  br i1 %or.cond232, label %bb.ai, label %bb.aj
+  %or.cond235 = or i1 %3, %or.cond232
+  br i1 %or.cond235, label %bb.ai, label %bb.aj
 
-bb.ai:                                            ; preds = %.thread.a, %bb.ah
+bb.ai:                                            ; preds = %.thread.a
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr @get_rgb_row, ptr %i.dr, align 8, !tbaa !80
   br label %bb.am

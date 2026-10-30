@@ -200,7 +200,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #8 ; 2 uses
   %.not18 = icmp eq i64 %i.b, 0
-  br i1 %.not18, label %.critedge2, label %.lr.ph
+  br i1 %.not18, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
   %.019 = phi i64 [ %i.g, %bb.c ], [ %i.b, %bb.b ] ; 3 uses
@@ -208,15 +208,20 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %i.c, i64 -1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !11
   %i.f = icmp eq i8 %i.e, 47
-  br i1 %i.f, label %bb.c, label %.lr.ph24
+  br i1 %i.f, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %.lr.ph
   %i.g = add i64 %.019, -1                        ; 2 uses
   %.not = icmp eq i64 %i.g, 0
-  br i1 %.not, label %.critedge2, label %.lr.ph, !llvm.loop !16
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !16
 
-.lr.ph24:                                         ; preds = %.lr.ph, %bb.d
-  %.123 = phi i64 [ %i.k, %bb.d ], [ %.019, %.lr.ph ] ; 3 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.c, %bb.b
+  %.0.lcssa = phi i64 [ 0, %bb.b ], [ 0, %bb.c ], [ %.019, %.lr.ph ] ; 2 uses
+  %.not1622 = icmp eq i64 %.0.lcssa, 0
+  br i1 %.not1622, label %.critedge2, label %.lr.ph24
+
+.lr.ph24:                                         ; preds = %.critedge, %bb.d
+  %.123 = phi i64 [ %i.k, %bb.d ], [ %.0.lcssa, %.critedge ] ; 3 uses
   %i.h = getelementptr i8, ptr %0, i64 %.123
   %i.i = getelementptr i8, ptr %i.h, i64 -1
   %i.j = load i8, ptr %i.i, align 1, !tbaa !11
@@ -228,8 +233,8 @@ bb.d:                                             ; preds = %.lr.ph24
   %.not16 = icmp eq i64 %i.k, 0
   br i1 %.not16, label %.critedge2, label %.lr.ph24, !llvm.loop !17
 
-.critedge2:                                       ; preds = %bb.c, %.lr.ph24, %bb.d, %bb.b
-  %.1.lcssa = phi i64 [ 0, %bb.b ], [ 0, %bb.d ], [ %.123, %.lr.ph24 ], [ 0, %bb.c ]
+.critedge2:                                       ; preds = %.lr.ph24, %bb.d, %.critedge
+  %.1.lcssa = phi i64 [ 0, %.critedge ], [ 0, %bb.d ], [ %.123, %.lr.ph24 ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %.1.lcssa
   br label %bb.e
 

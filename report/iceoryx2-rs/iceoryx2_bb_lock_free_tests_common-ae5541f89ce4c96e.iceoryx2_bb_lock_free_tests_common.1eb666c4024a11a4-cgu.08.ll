@@ -193,7 +193,7 @@ bb.a:
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
   %i.h = alloca [8 x i8], align 8                 ; 4 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
-  %i.j = alloca [16 x i8], align 8                ; 5 uses
+  %i.j = alloca [16 x i8], align 8                ; 6 uses
   %i.k = alloca [64 x i8], align 8                ; 10 uses
   %i.l = alloca [16 x i8], align 8                ; 4 uses
   %i.m = alloca [16 x i8], align 8                ; 4 uses
@@ -263,7 +263,7 @@ bb.e:                                             ; preds = %.preheader, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.aj = load i64, ptr %i.ad, align 8, !noundef !4 ; 3 uses
   %i.ak = icmp eq i64 %i.aj, 0
-  br i1 %i.ak, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit, label %bb.f
+  br i1 %i.ak, label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.critedge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.al = add nsw i64 %i.aj, -1                   ; 3 uses
@@ -278,12 +278,16 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !4, !align !8, !noundef !4
   %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.at = load i32, ptr %i.as, align 8, !noundef !4
-  store ptr %i.ar, ptr %i.j, align 8
   store i32 %i.at, ptr %i.af, align 8
+  store ptr %i.ar, ptr %i.j, align 8
   call void @_RNvXs0_NtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_setNtB5_11UniqueIndexNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.j) #9
   br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit
 
-_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit: ; preds = %bb.e, %bb.f
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.critedge: ; preds = %bb.e
+  store ptr null, ptr %i.j, align 8
+  br label %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit
+
+_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit: ; preds = %_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4mpmc16unique_index_set11UniqueIndexEECs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.critedge, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)

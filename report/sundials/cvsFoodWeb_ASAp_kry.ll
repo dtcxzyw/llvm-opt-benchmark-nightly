@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph115.ne
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @CbInit(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [6 x double], align 16            ; 24 uses
+  %i.a = alloca [6 x double], align 16            ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = tail call ptr @N_VGetArrayPointer(ptr noundef %0) #10 ; 20 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.d = load i32, ptr %i.c, align 8, !tbaa !24   ; 4 uses
   %.not27 = icmp slt i32 %i.d, 1
-  br i1 %.not27, label %.split38, label %.split.preheader
+  br i1 %.not27, label %.split38.critedge, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 68
@@ -313,7 +313,12 @@ bb.a:
   %exitcond.not = icmp eq i64 %indvar.next, 20
   br i1 %exitcond.not, label %.split38, label %.split
 
-.split38:                                         ; preds = %.split, %bb.a
+.split38.critedge:                                ; preds = %bb.a
+  %.40..40..sroa_idx1 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  store double 1.000000e+00, ptr %.40..40..sroa_idx1, align 8, !tbaa !22
+  br label %.split38
+
+.split38:                                         ; preds = %.split, %.split38.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }

@@ -151,7 +151,7 @@ bb.h:                                             ; preds = %.noexc.i32
 bb.i:                                             ; preds = %bb.f, %.critedge30
   %indvars.iv = phi i64 [ 0, %bb.f ], [ %indvars.iv.next, %.critedge30 ] ; 2 uses
   %i.ao = load i8, ptr %i.ak, align 8, !tbaa !49, !range !23, !noundef !24
-  %i.ap = trunc nuw i8 %i.ao to i1
+  %i.ap = trunc nuw i8 %i.ao to i1                ; 2 uses
   br i1 %i.ap, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.a, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -218,23 +218,26 @@ bb.p:                                             ; preds = %bb.o
   store i8 %i.be, ptr %i.ak, align 8, !tbaa !49
   %i.bf = load ptr, ptr %5, align 8, !tbaa !45    ; 2 uses
   %i.bg = icmp eq ptr %i.bf, %i.al
-  br i1 %i.bg, label %.critedge28, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  br i1 %i.bg, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.p
   %i.bh = load i64, ptr %i.al, align 8, !tbaa !47
   %i.bi = add i64 %i.bh, 1
   call void @_ZdlPvm(ptr noundef %i.bf, i64 noundef %i.bi) #16
-  br label %.critedge28
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.a: ; preds = %bb.i
   store i8 1, ptr %i.ak, align 8, !tbaa !49
-  br label %.critedge30
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-.critedge28:                                      ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.a
+  br i1 %i.ap, label %.critedge30, label %.critedge28
+
+.critedge28:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %.critedge30
 
-.critedge30:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.a, %.critedge28
+.critedge30:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %.critedge28
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 82
   br i1 %exitcond.not, label %bb.g, label %bb.i, !llvm.loop !43

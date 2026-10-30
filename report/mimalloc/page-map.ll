@@ -28,7 +28,7 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden noundef zeroext i1 @_mi_page_map_init() local_unnamed_addr #0 {
 bb.a:
   %0 = alloca %struct.mi_memid_s, align 8         ; 8 uses
-  %i.a = alloca i8, align 1                       ; 4 uses
+  %i.a = alloca i8, align 1                       ; 3 uses
   %i.b = tail call zeroext i1 @_mi_atomic_once_enter(ptr noundef nonnull @_mi_page_map_init._mi_once) #9
   br i1 %i.b, label %.lr.ph, label %bb.b
 
@@ -156,8 +156,13 @@ bb.s:                                             ; preds = %bb.q
 _mi_align_up.exit58.i:                            ; preds = %bb.s, %bb.r
   %.0.i57.i = phi i64 [ %i.aq, %bb.r ], [ %i.as, %bb.s ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  %i.at = call zeroext i1 @_mi_os_commit(ptr noundef %i.z, ptr noundef nonnull %i.aa, i64 noundef %.0.i57.i, ptr noundef nonnull %i.a) #9
-  br i1 %i.at, label %.thread.i, label %bb.t
+  %i.at = call zeroext i1 @_mi_os_commit(ptr noundef %i.z, ptr noundef nonnull %i.aa, i64 noundef %.0.i57.i, ptr noundef nonnull %i.a) #9 ; 2 uses
+  br i1 %i.at, label %.thread.i, label %1
+
+1:                                                ; preds = %_mi_align_up.exit58.i
+  call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.3) #9
+  call void @_mi_os_free(ptr noundef %i.z, ptr noundef nonnull %i.aa, i64 noundef %i.t, ptr noundef nonnull byval(%struct.mi_memid_s) align 8 %0) #9
+  br label %bb.t
 
 .thread.i:                                        ; preds = %_mi_align_up.exit58.i
   %i.au = icmp ult i64 %.0.i57.i, 88
@@ -165,17 +170,15 @@ _mi_align_up.exit58.i:                            ; preds = %bb.s, %bb.r
   %i.aw = lshr i64 %i.av, 3
   %i.ax = add nuw nsw i64 %i.aw, 1
   %i.ay = select i1 %i.au, i64 0, i64 %i.ax
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  br label %bb.u
+  br label %bb.t
 
-bb.t:                                             ; preds = %_mi_align_up.exit58.i
-  call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.3) #9
-  call void @_mi_os_free(ptr noundef %i.z, ptr noundef nonnull %i.aa, i64 noundef %i.t, ptr noundef nonnull byval(%struct.mi_memid_s) align 8 %0) #9
+bb.t:                                             ; preds = %.thread.i, %1
+  %.053.i = phi i64 [ %i.ay, %.thread.i ], [ undef, %1 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  br label %mi_page_map_init_once.exit
+  br i1 %i.at, label %bb.u, label %mi_page_map_init_once.exit
 
-bb.u:                                             ; preds = %.thread.i, %bb.p
-  %.154.i = phi i64 [ %i.an, %bb.p ], [ %i.ay, %.thread.i ]
+bb.u:                                             ; preds = %bb.t, %bb.p
+  %.154.i = phi i64 [ %i.an, %bb.p ], [ %.053.i, %bb.t ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.0.i.i ; 5 uses
   %i.ba = load i8, ptr %i.c, align 1, !tbaa !34, !range !35, !noundef !36
   %i.bb = trunc nuw i8 %i.ba to i1

@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
   br i1 %i.hk, label %.lr.ph.preheader.i, label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.q
-  %i.hl = zext nneg i32 %.pr.i to i64             ; 2 uses
+  %i.hl = zext nneg i32 %.pr.i to i64
   %indvars.iv.next.i120143 = add nsw i64 %i.hl, -1 ; 3 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv.next.i120143
   %i.hn = load i8, ptr %i.hm, align 1, !tbaa !11
@@ -221,8 +221,8 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
   br label %.lr.ph.i118, !llvm.loop !13
 
 .lr.ph.i118:                                      ; preds = %.lr.ph.i118.lr.ph, %.lr.ph
-  %i.hq = phi i32 [ %i.hp, %.lr.ph.i118.lr.ph ], [ %i.hu, %.lr.ph ]
-  %indvars.iv.next.i120145172 = phi i64 [ %indvars.iv.next.i120143, %.lr.ph.i118.lr.ph ], [ %indvars.iv.next.i120, %.lr.ph ] ; 4 uses
+  %i.hq = phi i32 [ %i.hp, %.lr.ph.i118.lr.ph ], [ %i.hu, %.lr.ph ] ; 2 uses
+  %indvars.iv.next.i120145172 = phi i64 [ %indvars.iv.next.i120143, %.lr.ph.i118.lr.ph ], [ %indvars.iv.next.i120, %.lr.ph ] ; 3 uses
   %indvars.iv.next.i120 = add nsw i64 %indvars.iv.next.i120145172, -1 ; 3 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv.next.i120
   %i.hs = load i8, ptr %i.hr, align 1, !tbaa !11
@@ -240,39 +240,41 @@ bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p,
   br i1 %i.hw, label %.lr.ph30.i.preheader, label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit
 
 .lr.ph30.i.preheader:                             ; preds = %.lr.ph.preheader.i, %.critedge.i
-  %indvars.iv.i119.lcssa161 = phi i64 [ %indvars.iv.next.i120145172, %.critedge.i ], [ %i.hl, %.lr.ph.preheader.i ] ; 2 uses
-  %.lcssa139160 = phi i32 [ %i.hq, %.critedge.i ], [ %.pr.i, %.lr.ph.preheader.i ] ; 3 uses
+  %.lcssa26.i165 = phi i32 [ %i.hq, %.critedge.i ], [ %.pr.i, %.lr.ph.preheader.i ] ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %.lcssa26.i165 to i64
   br label %.lr.ph30.i
 
-.lr.ph30.i:                                       ; preds = %.lr.ph30.i.preheader, %bb.r
-  %indvars.iv39.i = phi i64 [ %indvars.iv.next40.i, %bb.r ], [ 0, %.lr.ph30.i.preheader ] ; 3 uses
+.lr.ph30.i:                                       ; preds = %bb.r, %.lr.ph30.i.preheader
+  %indvars.iv39.i = phi i64 [ 0, %.lr.ph30.i.preheader ], [ %indvars.iv.next40.i, %bb.r ] ; 3 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv39.i
   %i.hy = load i8, ptr %i.hx, align 1, !tbaa !11
   %i.hz = icmp eq i8 %i.hy, 48
-  br i1 %i.hz, label %bb.r, label %.critedge2.i
+  br i1 %i.hz, label %bb.r, label %.critedge2.split.loop.exit.i
 
 bb.r:                                             ; preds = %.lr.ph30.i
   %indvars.iv.next40.i = add nuw nsw i64 %indvars.iv39.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next40.i, %indvars.iv.i119.lcssa161
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next40.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %.critedge2.i, label %.lr.ph30.i, !llvm.loop !14
 
-.critedge2.i:                                     ; preds = %.lr.ph30.i, %bb.r
-  %.020.lcssa.in.i = phi i64 [ %indvars.iv.i119.lcssa161, %bb.r ], [ %indvars.iv39.i, %.lr.ph30.i ] ; 2 uses
-  %.020.lcssa.i = trunc i64 %.020.lcssa.in.i to i32 ; 4 uses
+.critedge2.split.loop.exit.i:                     ; preds = %.lr.ph30.i
+  %6 = trunc nuw nsw i64 %indvars.iv39.i to i32
+  br label %.critedge2.i
+
+.critedge2.i:                                     ; preds = %bb.r, %.critedge2.split.loop.exit.i
+  %.020.lcssa.i = phi i32 [ %6, %.critedge2.split.loop.exit.i ], [ %.lcssa26.i165, %bb.r ] ; 5 uses
   %.not.i121 = icmp eq i32 %.020.lcssa.i, 0
   br i1 %.not.i121, label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.critedge2.i
-  %6 = icmp sgt i32 %.lcssa139160, %.020.lcssa.i
-  br i1 %6, label %.lr.ph35.preheader.i, label %._crit_edge.i122
+  %7 = icmp slt i32 %.020.lcssa.i, %.lcssa26.i165
+  br i1 %7, label %.lr.ph35.preheader.i, label %._crit_edge.i122
 
 .lr.ph35.preheader.i:                             ; preds = %.preheader.i
-  %sext.i = shl i64 %.020.lcssa.in.i, 32
-  %7 = ashr exact i64 %sext.i, 32                 ; 2 uses
+  %8 = sext i32 %.020.lcssa.i to i64              ; 2 uses
   br label %.lr.ph35.i
 
 ._crit_edge.i122:                                 ; preds = %.lr.ph35.i, %.preheader.i
-  %.lcssa.i = phi i32 [ %.lcssa139160, %.preheader.i ], [ %i.ih, %.lr.ph35.i ]
+  %.lcssa.i = phi i32 [ %.lcssa26.i165, %.preheader.i ], [ %i.ih, %.lr.ph35.i ]
   %i.ia = sub nsw i32 %.lcssa.i, %.020.lcssa.i
   store i32 %i.ia, ptr %4, align 4, !tbaa !10
   %i.ib = load i32, ptr %5, align 4, !tbaa !10
@@ -282,10 +284,10 @@ bb.r:                                             ; preds = %.lr.ph30.i
   br label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit
 
 .lr.ph35.i:                                       ; preds = %.lr.ph35.i, %.lr.ph35.preheader.i
-  %indvars.iv42.i = phi i64 [ %7, %.lr.ph35.preheader.i ], [ %indvars.iv.next43.i, %.lr.ph35.i ] ; 3 uses
+  %indvars.iv42.i = phi i64 [ %8, %.lr.ph35.preheader.i ], [ %indvars.iv.next43.i, %.lr.ph35.i ] ; 3 uses
   %i.id = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv42.i
   %i.ie = load i8, ptr %i.id, align 1, !tbaa !11
-  %i.if = sub nuw nsw i64 %indvars.iv42.i, %7
+  %i.if = sub nuw nsw i64 %indvars.iv42.i, %8
   %i.ig = getelementptr inbounds i8, ptr %2, i64 %i.if
   store i8 %i.ie, ptr %i.ig, align 1, !tbaa !11
   %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
@@ -298,7 +300,7 @@ bb.r:                                             ; preds = %.lr.ph30.i
   br label %_ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit, !llvm.loop !13
 
 _ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit: ; preds = %.lr.ph.preheader, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge, %bb.q, %.critedge.i, %.critedge2.i, %._crit_edge.i122
-  %i.ik = phi i32 [ %.pre154, %._crit_edge.i122 ], [ %.pr.i, %bb.q ], [ 0, %.critedge.i ], [ %.lcssa139160, %.critedge2.i ], [ %i.hu, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge ], [ %i.hp, %.lr.ph.preheader ]
+  %i.ik = phi i32 [ %i.hq, %.critedge.i ], [ %.lcssa26.i165, %.critedge2.i ], [ %.pre154, %._crit_edge.i122 ], [ %.pr.i, %bb.q ], [ %i.hu, %.lr.ph._ZN17double_conversionL9TrimZerosENS_6VectorIcEEPiS2_.exit.loopexit_crit_edge ], [ %i.hp, %.lr.ph.preheader ]
   %i.il = sext i32 %i.ik to i64
   %i.im = getelementptr inbounds i8, ptr %2, i64 %i.il
   store i8 0, ptr %i.im, align 1, !tbaa !11

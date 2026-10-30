@@ -205,12 +205,13 @@ bb.a:
   %8 = alloca %"class.Eigen::Block.71", align 8   ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !13
-  %i.c = icmp eq i64 %i.b, %1
-  br i1 %i.c, label %bb.b, label %bb.f
+  %9 = icmp eq i64 %i.b, %1                       ; 2 uses
+  %i.c = icmp eq i64 %2, 3
+  %or.cond = and i1 %i.c, %9
+  br i1 %or.cond, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %9 = icmp eq i64 %2, 3
-  br i1 %9, label %bb.k, label %bb.c
+  br i1 %9, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.d = icmp eq i64 %1, 0
@@ -234,7 +235,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit: ; pr
   tail call void @_ZN5Eigen12DenseStorageIdLin1ELin1ELi3ELi0EE18conservativeResizeElll(ptr noundef nonnull align 8 dereferenceable(16) %0, i64 noundef %i.i, i64 noundef %1, i64 noundef %2)
   br label %bb.k
 
-bb.f:                                             ; preds = %bb.a
+bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %7, i64 noundef %1, i64 noundef %2)
@@ -319,7 +320,7 @@ bb.j:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   br label %common.resume
 
-bb.k:                                             ; preds = %bb.b, %bb.i, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit
+bb.k:                                             ; preds = %bb.a, %bb.i, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit
   ret void
 }
 

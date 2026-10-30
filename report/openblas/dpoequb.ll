@@ -21,7 +21,7 @@ bb.a:
   %i.d = getelementptr inbounds [8 x i8], ptr %1, i64 %i.c ; 5 uses
   %i.e = getelementptr inbounds i8, ptr %3, i64 -8 ; 6 uses
   store i32 0, ptr %6, align 4, !tbaa !12
-  %i.f = load i32, ptr %0, align 4, !tbaa !12     ; 3 uses
+  %i.f = load i32, ptr %0, align 4, !tbaa !12     ; 2 uses
   %i.g = icmp slt i32 %i.f, 0
   br i1 %i.g, label %.thread, label %bb.b
 
@@ -32,15 +32,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.b, %bb.a
-  %i.j = phi i32 [ -1, %bb.a ], [ -3, %bb.b ]     ; 2 uses
+  %i.j = phi i32 [ -1, %bb.a ], [ -3, %bb.b ]
+  %.neg103 = phi i32 [ 1, %bb.a ], [ 3, %bb.b ]
   store i32 %i.j, ptr %6, align 4, !tbaa !12
-  %7 = sub nsw i32 0, %i.j
-  store i32 %7, ptr %i.a, align 4, !tbaa !12
+  store i32 %.neg103, ptr %i.a, align 4, !tbaa !12
   %i.k = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 7) #7 ; 0 uses
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = icmp eq i32 %i.f, 0
+  %7 = load i32, ptr %0, align 4, !tbaa !12
+  %i.l = icmp eq i32 %7, 0
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c

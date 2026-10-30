@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.az, %.lr.ph.i
 bb.p:                                             ; preds = %bb.o
   %i.ar = load i32, ptr %i.e, align 4, !tbaa !77  ; 3 uses
   %i.as = add nsw i32 %i.ar, 1                    ; 2 uses
-  %i.at = sext i32 %i.as to i64                   ; 3 uses
+  %i.at = sext i32 %i.as to i64                   ; 4 uses
   %i.au = icmp slt i32 %i.ar, -1
   br i1 %i.au, label %bb.q, label %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i
 
@@ -217,7 +217,11 @@ bb.q:                                             ; preds = %bb.p
 
 _ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.p
   %.not.i.i.i.i.i = icmp eq i32 %i.as, 0
-  br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit.i, label %bb.r
+  br i1 %.not.i.i.i.i.i, label %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread.i, label %bb.r
+
+_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread.i: ; preds = %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i
+  %11 = getelementptr i8, ptr null, i64 %i.at
+  br label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit.i
 
 bb.r:                                             ; preds = %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.av = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #19
@@ -235,9 +239,9 @@ bb.s:                                             ; preds = %.noexc77.i
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.az, i8 0, i64 %i.ax, i1 false)
   br label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit.i
 
-_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit.i:             ; preds = %bb.s, %.noexc77.i, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %.sroa.16.0.i = phi ptr [ %i.aw, %bb.s ], [ %i.aw, %.noexc77.i ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 4 uses
-  %.sroa.0117.0.i = phi ptr [ %i.av, %bb.s ], [ %i.av, %.noexc77.i ], [ null, %_ZNSt6vectorIcSaIcEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 15 uses
+_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit.i:             ; preds = %bb.s, %.noexc77.i, %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread.i
+  %.sroa.16.0.i = phi ptr [ %11, %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread.i ], [ %i.aw, %bb.s ], [ %i.aw, %.noexc77.i ] ; 4 uses
+  %.sroa.0117.0.i = phi ptr [ null, %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread.i ], [ %i.av, %bb.s ], [ %i.av, %.noexc77.i ] ; 15 uses
   %i.ba = sext i32 %i.ar to i64
   %i.bb = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %.sroa.0117.0.i, i64 noundef %i.ba)
           to label %bb.t unwind label %.loopexit.split-lp136.i.loopexit.split-lp.loopexit.split-lp ; 0 uses

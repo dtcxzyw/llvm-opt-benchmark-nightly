@@ -171,7 +171,7 @@ bb.d:                                             ; preds = %bb.c
   store i8 %i.i, ptr %.sroa.29.0..sroa_idx.i, align 8, !alias.scope !9
   br label %"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17had707ba8f215656eE.exit"
 
-"_ZN4core3ptr116drop_in_place$LT$core..option..Option$LT$$LP$syn..lit..LitStr$C$$RF$syn..path..Path$C$proc_macro2..Ident$RP$$GT$$GT$17h3e4ea589f665ac26E.exit.i": ; preds = %_ZN4core4iter8adapters7flatten17and_then_or_clear17h77ba100c09537fd9E.exit.thread12.i, %bb.b
+"_ZN4core3ptr116drop_in_place$LT$core..option..Option$LT$$LP$syn..lit..LitStr$C$$RF$syn..path..Path$C$proc_macro2..Ident$RP$$GT$$GT$17h3e4ea589f665ac26E.exit.i": ; preds = %bb.b, %_ZN4core4iter8adapters7flatten17and_then_or_clear17h77ba100c09537fd9E.exit.thread12.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !9
   call void @"_ZN107_$LT$core..iter..adapters..fuse..Fuse$LT$I$GT$$u20$as$u20$core..iter..adapters..fuse..FuseImpl$LT$I$GT$$GT$4next17h5206d0139d0d550bE"(ptr nonnull sret([88 x i8]) align 8 %i.e, ptr nonnull align 8 %i.g), !noalias !9
   %i.j = load i64, ptr %i.e, align 8, !noalias !9
@@ -240,18 +240,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.f, %bb.a
   %i.e = load i64, ptr %0, align 8
   %.not.i.i = icmp eq i64 %i.e, 2
-  br i1 %.not.i.i, label %bb.e, label %bb.c
+  br i1 %.not.i.i, label %_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = call align 8 ptr @"_ZN106_$LT$core..iter..adapters..chain..Chain$LT$A$C$B$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h8972a83757728a98E"(ptr nonnull align 8 %0) ; 2 uses
   %.not6.i.i = icmp eq ptr %i.f, null
-  br i1 %.not6.i.i, label %bb.d, label %"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h1281628d91f08701E.exit"
+  br i1 %.not6.i.i, label %bb.d, label %_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i
 
 bb.d:                                             ; preds = %bb.c
   store i64 2, ptr %0, align 8
-  br label %bb.e
+  br label %_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i
 
-bb.e:                                             ; preds = %bb.d, %bb.b
+_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i: ; preds = %bb.d, %bb.c, %bb.b
+  %.sroa.0.0.i.i = phi ptr [ null, %bb.b ], [ %i.f, %bb.c ], [ null, %bb.d ] ; 2 uses
+  %.not.i = icmp eq ptr %.sroa.0.0.i.i, null
+  br i1 %.not.i, label %bb.e, label %"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h1281628d91f08701E.exit"
+
+bb.e:                                             ; preds = %_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i
   call void @"_ZN107_$LT$core..iter..adapters..fuse..Fuse$LT$I$GT$$u20$as$u20$core..iter..adapters..fuse..FuseImpl$LT$I$GT$$GT$4next17hd5b280fe604af824E"(ptr nonnull sret([80 x i8]) align 8 %i.c, ptr nonnull align 8 %i.d)
   %i.g = load i64, ptr %i.c, align 8
   %.not1.i = icmp eq i64 %i.g, 2
@@ -278,8 +283,8 @@ bb.i:                                             ; preds = %bb.h
   store i64 2, ptr %i.h, align 8
   br label %"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h1281628d91f08701E.exit"
 
-"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h1281628d91f08701E.exit": ; preds = %bb.c, %bb.g, %bb.h, %bb.i
-  %.sroa.0.0.i = phi ptr [ null, %bb.i ], [ null, %bb.g ], [ %i.j, %bb.h ], [ %i.f, %bb.c ]
+"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h1281628d91f08701E.exit": ; preds = %_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i, %bb.g, %bb.h, %bb.i
+  %.sroa.0.0.i = phi ptr [ null, %bb.i ], [ null, %bb.g ], [ %i.j, %bb.h ], [ %.sroa.0.0.i.i, %_ZN4core4iter8adapters7flatten17and_then_or_clear17haa607f2419fe8e59E.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -682,7 +687,7 @@ bb.do:                                            ; preds = %.invoke77
           to label %.thread unwind label %bb.be
 
 .thread:                                          ; preds = %bb.bt, %bb.aw, %bb.bj, %.thread49
-  %.pn2543 = phi { ptr, i32 } [ %.pn2352, %.thread49 ], [ %.pn, %bb.aw ], [ %.pn12, %bb.bj ], [ %lpad.thr_comm.split-lp56, %bb.bt ]
+  %.pn2543 = phi { ptr, i32 } [ %.pn12, %bb.bj ], [ %.pn, %bb.aw ], [ %.pn2352, %.thread49 ], [ %lpad.thr_comm.split-lp56, %bb.bt ]
   invoke void @"_ZN4core3ptr47drop_in_place$LT$syn..lookahead..Lookahead1$GT$17h20e4c0e67402e795E"(ptr nonnull align 8 %i.ar) #15
           to label %bb.b unwind label %bb.be
 

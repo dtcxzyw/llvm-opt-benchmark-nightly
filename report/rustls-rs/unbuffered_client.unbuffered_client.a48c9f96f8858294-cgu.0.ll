@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.j, ptr %i.k, align 8
   store i32 1, ptr %0, align 8
-  br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit21
+  br label %bb.m
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
@@ -238,7 +238,7 @@ bb.f:                                             ; preds = %bb.g
 
 _RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsj6eKBz9Db1c_4core3net11socket_addr10SocketAddrENtNtNtNtB12_4iter6traits8iterator8Iterator4nextCse7TjioWD9Jw_17unbuffered_client.exit: ; preds = %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsj6eKBz9Db1c_4core3net11socket_addr10SocketAddrENtNtNtNtB12_4iter6traits8iterator8Iterator4nextCse7TjioWD9Jw_17unbuffered_client.exit.lr.ph, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit
   %i.r = phi ptr [ %i.j, %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsj6eKBz9Db1c_4core3net11socket_addr10SocketAddrENtNtNtNtB12_4iter6traits8iterator8Iterator4nextCse7TjioWD9Jw_17unbuffered_client.exit.lr.ph ], [ %i.ao, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit ] ; 3 uses
-  %.sroa.0.235 = phi ptr [ null, %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsj6eKBz9Db1c_4core3net11socket_addr10SocketAddrENtNtNtNtB12_4iter6traits8iterator8Iterator4nextCse7TjioWD9Jw_17unbuffered_client.exit.lr.ph ], [ %i.w, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit ] ; 11 uses
+  %.sroa.0.235 = phi ptr [ null, %_RNvXs4_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsj6eKBz9Db1c_4core3net11socket_addr10SocketAddrENtNtNtNtB12_4iter6traits8iterator8Iterator4nextCse7TjioWD9Jw_17unbuffered_client.exit.lr.ph ], [ %i.w, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !114)
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   store ptr %i.s, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !114
@@ -270,7 +270,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_ite
   store i32 1, ptr %0, align 8
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit21
 
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit21: ; preds = %.thread, %bb.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECse7TjioWD9Jw_17unbuffered_client.exit.i18, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtB4_3net11socket_addr10SocketAddrEECse7TjioWD9Jw_17unbuffered_client.exit15
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit21: ; preds = %bb.m, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECse7TjioWD9Jw_17unbuffered_client.exit.i18, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtB4_3net11socket_addr10SocketAddrEECse7TjioWD9Jw_17unbuffered_client.exit15
   call void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCse7TjioWD9Jw_17unbuffered_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
   ret void
 
@@ -325,16 +325,20 @@ bb.l:                                             ; preds = %_RNvYNvNvMs3_NtNtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.825)
   invoke void @_RNvXse_NtNtCs4wP2HXfJTCR_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCsj6eKBz9Db1c_4core3net11socket_addr10SocketAddrENtNtNtB12_3ops4drop4Drop4dropCse7TjioWD9Jw_17unbuffered_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.d)
-          to label %bb.m unwind label %bb.b
+          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtB4_3net11socket_addr10SocketAddrEECse7TjioWD9Jw_17unbuffered_client.exit17 unwind label %bb.b
 
-bb.m:                                             ; preds = %bb.l
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtB4_3net11socket_addr10SocketAddrEECse7TjioWD9Jw_17unbuffered_client.exit17: ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %i.ae = icmp eq ptr %.sroa.0.235, null
+  br label %bb.m
+
+bb.m:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtB4_3net11socket_addr10SocketAddrEECse7TjioWD9Jw_17unbuffered_client.exit17, %.thread
+  %.sroa.0.4 = phi ptr [ null, %.thread ], [ %.sroa.0.235, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtB4_3net11socket_addr10SocketAddrEECse7TjioWD9Jw_17unbuffered_client.exit17 ] ; 4 uses
+  %i.ae = icmp eq ptr %.sroa.0.4, null
   br i1 %i.ae, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECse7TjioWD9Jw_17unbuffered_client.exit21, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.af = ptrtoint ptr %.sroa.0.235 to i64        ; 2 uses
+  %i.af = ptrtoint ptr %.sroa.0.4 to i64          ; 2 uses
   %i.ag = and i64 %i.af, 3
   switch i64 %i.ag, label %default.unreachable [
     i64 2, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECse7TjioWD9Jw_17unbuffered_client.exit.i18
@@ -344,7 +348,7 @@ bb.n:                                             ; preds = %bb.m
   ], !prof !8
 
 bb.o:                                             ; preds = %bb.n
-  %i.ah = icmp ult ptr %.sroa.0.235, inttoptr (i64 188978561024 to ptr)
+  %i.ah = icmp ult ptr %.sroa.0.4, inttoptr (i64 188978561024 to ptr)
   %i.ai = and i64 %i.af, 1095216660480
   %i.aj = icmp ne i64 %i.ai, 1095216660480
   call void @llvm.assume(i1 %i.ah)
@@ -352,7 +356,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECse7TjioWD9Jw_17unbuffered_client.exit.i18
 
 bb.p:                                             ; preds = %bb.n
-  %i.ak = getelementptr i8, ptr %.sroa.0.235, i64 -1 ; 2 uses
+  %i.ak = getelementptr i8, ptr %.sroa.0.4, i64 -1 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store ptr %i.ak, ptr %i.al, align 8, !alias.scope !117
@@ -472,10 +476,10 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCse7TjioWD9Jw_17unbuffered_
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCse7TjioWD9Jw_17unbuffered_client.exit.i, %._crit_edge.thread.i
-  %.sroa.0.0.lcssa28.i = phi ptr [ %scevgep.i, %._crit_edge.thread.i ], [ %i.m, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCse7TjioWD9Jw_17unbuffered_client.exit.i ]
-  %storemerge.lcssa27.i = phi i64 [ %i.p, %._crit_edge.thread.i ], [ %i.i, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCse7TjioWD9Jw_17unbuffered_client.exit.i ]
-  store i8 %2, ptr %.sroa.0.0.lcssa28.i, align 1
-  %i.q = add i64 %storemerge.lcssa27.i, 1
+  %storemerge.lcssa.i = phi i64 [ %i.i, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCse7TjioWD9Jw_17unbuffered_client.exit.i ], [ %i.p, %._crit_edge.thread.i ]
+  %.sroa.0.0.lcssa.i = phi ptr [ %i.m, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE7reserveCse7TjioWD9Jw_17unbuffered_client.exit.i ], [ %scevgep.i, %._crit_edge.thread.i ]
+  store i8 %2, ptr %.sroa.0.0.lcssa.i, align 1
+  %i.q = add i64 %storemerge.lcssa.i, 1
   br label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE8truncateCse7TjioWD9Jw_17unbuffered_client.exit
 
 _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE8truncateCse7TjioWD9Jw_17unbuffered_client.exit: ; preds = %._crit_edge.i, %bb.a

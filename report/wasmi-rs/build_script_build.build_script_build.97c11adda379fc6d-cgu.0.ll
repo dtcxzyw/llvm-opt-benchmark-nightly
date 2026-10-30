@@ -202,19 +202,25 @@ _RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapNtNtCsG258MDvU3F_3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !39
   %i.ah = load i64, ptr %i.j, align 8, !noalias !38
-  %.not.i = icmp eq i64 %i.ah, -1
+  %.not.i = icmp eq i64 %i.ah, -1                 ; 2 uses
   br i1 %.not.i, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2x_4find5checkNtNtB11_4path7PathBufQNCB1v_s_0E0INtNtNtBc_3ops12control_flow11ControlFlowB3B_EEB1x_.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false)
-  br label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator4findQNCB1p_s_0EB1r_.exit
+  br label %2
 
 bb.u:                                             ; preds = %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB2x_4find5checkNtNtB11_4path7PathBufQNCB1v_s_0E0INtNtNtBc_3ops12control_flow11ControlFlowB3B_EEB1x_.exit.i
   store i64 -1, ptr %0, align 8, !alias.scope !38
+  br label %2
+
+2:                                                ; preds = %bb.u, %bb.t
+  br i1 %.not.i, label %3, label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator4findQNCB1p_s_0EB1r_.exit
+
+3:                                                ; preds = %2
   call void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtCsG258MDvU3F_3std4path7PathBufEECs4CTAXW4af7w_15find_msvc_tools(ptr nonnull align 8 %i.j), !noalias !38
   br label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator4findQNCB1p_s_0EB1r_.exit
 
-_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator4findQNCB1p_s_0EB1r_.exit: ; preds = %bb.t, %bb.u
+_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapNtNtCsG258MDvU3F_3std2fs7ReadDirNCNvCsd1MEfrgau3F_18build_script_build24build_and_link_libfuzzer0ENtNtNtBa_6traits8iterator8Iterator4findQNCB1p_s_0EB1r_.exit: ; preds = %2, %3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   ret void
 }

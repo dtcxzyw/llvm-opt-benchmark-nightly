@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.experimental.noalias.scope.decl(metadata !78)
   call void @llvm.experimental.noalias.scope.decl(metadata !79)
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 240
-  %i.k = load i64, ptr %i.j, align 8, !alias.scope !80, !noundef !4 ; 4 uses
+  %i.k = load i64, ptr %i.j, align 8, !alias.scope !80, !noundef !4 ; 3 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjxhXpl572Cv_7sysinfo6common6system6SystemECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit, label %bb.b
 
@@ -390,16 +390,16 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsG258MDvU3F_3
   br i1 %or.cond.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsG258MDvU3F_3std11collections4hash3set7HashSetNtNtNtCsjxhXpl572Cv_7sysinfo6common6system3PidEEECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit.i.i.i.i.i.i.i.i.i.i.i, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsG258MDvU3F_3std4path7PathBufEECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit59.i.i.i.i.i.i.i.i.i.i.i
-  %2 = shl i64 %.val32.i.i.i.i.i.i.i.i.i.i.i, 2
   %i.br = icmp slt i64 %.val32.i.i.i.i.i.i.i.i.i.i.i, 4611686018427387900
   call void @llvm.assume(i1 %i.br)
+  %2 = shl i64 %.val32.i.i.i.i.i.i.i.i.i.i.i, 2
   %i.bs = and i64 %2, -16                         ; 2 uses
   %i.bt = add i64 %i.bs, 16                       ; 2 uses
   %i.bu = add nsw i64 %.val32.i.i.i.i.i.i.i.i.i.i.i, 17
   %i.bv = add i64 %i.bu, %i.bt                    ; 4 uses
   %i.bw = icmp uge i64 %i.bv, %i.bt
-  %3 = icmp ult i64 %i.bv, 9223372036854775793
   call void @llvm.assume(i1 %i.bw)
+  %3 = icmp ult i64 %i.bv, 9223372036854775793
   call void @llvm.assume(i1 %3)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val31.i.i.i.i.i.i.i.i.i.i.i) ]
   %i.bx = icmp eq i64 %i.bv, 0
@@ -459,17 +459,18 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtCsjxhXpl572Cv_7sysinfo6common6sys
   br i1 %i.cm, label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCsjxhXpl572Cv_7sysinfo6common6system3PidNtB1c_7ProcessEECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit.i.i.i.i.i.i.i, label %bb.d
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtNtCsjxhXpl572Cv_7sysinfo6common6system3PidNtB1c_7ProcessEECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit.i.i.i.i.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtCsjxhXpl572Cv_7sysinfo6common6system3PidNtBE_7ProcessEECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit.i.i.i.i.i.i.i.i, %bb.b
-  %i.cn = mul i64 %i.k, 408
-  %4 = icmp slt i64 %i.k, 45212608023797920
-  call void @llvm.assume(i1 %4)
+  %i.cn = mul i64 %i.k, 408                       ; 2 uses
+  %4 = add i64 %i.cn, 408
+  %5 = icmp ult i64 %4, -15
+  call void @llvm.assume(i1 %5)
   %i.co = and i64 %i.cn, -16                      ; 2 uses
   %i.cp = add i64 %i.co, 416                      ; 2 uses
-  %i.cq = add nsw i64 %i.k, 17
+  %i.cq = add i64 %i.k, 17
   %i.cr = add i64 %i.cq, %i.cp                    ; 4 uses
   %i.cs = icmp uge i64 %i.cr, %i.cp
-  %5 = icmp ult i64 %i.cr, 9223372036854775793
   call void @llvm.assume(i1 %i.cs)
-  call void @llvm.assume(i1 %5)
+  %6 = icmp ult i64 %i.cr, 9223372036854775793
+  call void @llvm.assume(i1 %6)
   %i.ct = icmp eq i64 %i.cr, 0
   br i1 %i.ct, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjxhXpl572Cv_7sysinfo6common6system6SystemECsl1EC4Y8FHbU_31libp2p_memory_connection_limits.exit, label %bb.q
 

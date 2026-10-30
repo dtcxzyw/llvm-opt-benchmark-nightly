@@ -202,7 +202,7 @@ bb.a:
   %i.f = load i64, ptr @expand_bucket, align 8, !tbaa !25
   %i.g = trunc i64 %i.f to i32
   %i.h = tail call ptr @item_trylock(i32 noundef %i.g) #17 ; 2 uses
-  %.not16 = icmp eq ptr %i.h, null
+  %.not16 = icmp eq ptr %i.h, null                ; 2 uses
   br i1 %.not16, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph23
@@ -264,7 +264,7 @@ bb.b:                                             ; preds = %.lr.ph23
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = shl nuw i64 1, %i.ao
   %i.aq = icmp eq i64 %i.am, %i.ap
-  br i1 %i.aq, label %bb.c, label %bb.e
+  br i1 %i.aq, label %bb.c, label %1
 
 bb.c:                                             ; preds = %._crit_edge
   store i1 false, ptr @expanding, align 1
@@ -281,22 +281,25 @@ bb.c:                                             ; preds = %._crit_edge
   tail call void @STATS_UNLOCK() #17
   %i.aw = load i32, ptr getelementptr inbounds nuw (i8, ptr @settings, i64 32), align 8, !tbaa !49
   %i.ax = icmp sgt i32 %i.aw, 1
-  br i1 %i.ax, label %bb.d, label %bb.e
+  br i1 %i.ax, label %bb.d, label %1
 
 bb.d:                                             ; preds = %bb.c
   %i.ay = load ptr, ptr @stderr, align 8, !tbaa !18
   %fwrite = tail call i64 @fwrite(ptr nonnull @.str.6, i64 26, i64 1, ptr %i.ay) #15 ; 0 uses
-  br label %bb.e
+  br label %1
 
 .thread:                                          ; preds = %.lr.ph23
   %i.az = tail call i32 @usleep(i32 noundef 9999) #17 ; 0 uses
-  br label %bb.f
+  br label %1
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %._crit_edge
+1:                                                ; preds = %._crit_edge, %bb.d, %bb.c, %.thread
+  br i1 %.not16, label %bb.f, label %bb.e
+
+bb.e:                                             ; preds = %1
   tail call void @item_trylock_unlock(ptr noundef nonnull %i.h) #17
   br label %bb.f
 
-bb.f:                                             ; preds = %.thread, %bb.e
+bb.f:                                             ; preds = %bb.e, %1
   %i.ba = add nuw nsw i32 %.01322, 1              ; 2 uses
   %i.bb = load i32, ptr @hash_bulk_move, align 4, !tbaa !12
   %i.bc = icmp slt i32 %i.ba, %i.bb

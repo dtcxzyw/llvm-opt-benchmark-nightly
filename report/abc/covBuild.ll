@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !47   ; 4 uses
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !49   ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !49   ; 7 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !49   ; 8 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !49   ; 8 uses
   %.not92 = icmp eq ptr %i.l, null                ; 3 uses
-  %.not97 = icmp eq ptr %i.n, null                ; 3 uses
+  %.not97 = icmp eq ptr %i.n, null                ; 2 uses
   br i1 %.not92, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -260,9 +260,10 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not97, label %bb.g, label %bb.f
 
 .thread208:                                       ; preds = %Min_CoverCountCubes.exit136
-  br i1 %.not97, label %.thread212.thread, label %.lr.ph.i138.preheader
+  %.not97225 = icmp eq ptr %i.n, null
+  br i1 %.not97225, label %.thread212.thread, label %.lr.ph.i138.preheader
 
-.lr.ph.i138.preheader:                            ; preds = %Min_CoverCountCubes.exit122, %.thread208
+.lr.ph.i138.preheader:                            ; preds = %.thread208, %Min_CoverCountCubes.exit122
   br label %.lr.ph.i138
 
 .lr.ph.i138:                                      ; preds = %.lr.ph.i138.preheader, %.lr.ph.i138

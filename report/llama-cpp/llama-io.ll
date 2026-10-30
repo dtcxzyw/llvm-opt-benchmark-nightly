@@ -45,9 +45,13 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8
   call void %i.d(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef 4)
   %i.e = load i32, ptr %i.a, align 4, !tbaa !14   ; 2 uses
-  %i.f = zext i32 %i.e to i64                     ; 4 uses
+  %i.f = zext i32 %i.e to i64                     ; 5 uses
   %.not.i.i.i.i = icmp eq i32 %i.e, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit, label %.noexc
+  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread, label %.noexc
+
+_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread: ; preds = %bb.a
+  %2 = getelementptr i8, ptr null, i64 %i.f
+  br label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit
 
 .noexc:                                           ; preds = %bb.a
   %i.g = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #7 ; 5 uses
@@ -62,9 +66,9 @@ bb.b:                                             ; preds = %.noexc
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.k, i8 0, i64 %i.i, i1 false)
   br label %_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit
 
-_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit:               ; preds = %bb.b, %.noexc, %bb.a
-  %.sroa.11.0 = phi ptr [ %i.h, %bb.b ], [ %i.h, %.noexc ], [ null, %bb.a ] ; 2 uses
-  %.sroa.08.0 = phi ptr [ %i.g, %bb.b ], [ %i.g, %.noexc ], [ null, %bb.a ] ; 8 uses
+_ZNSt6vectorIcSaIcEEC2EmRKS0_.exit:               ; preds = %bb.b, %.noexc, %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread
+  %.sroa.11.0 = phi ptr [ %2, %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread ], [ %i.h, %bb.b ], [ %i.h, %.noexc ] ; 2 uses
+  %.sroa.08.0 = phi ptr [ null, %_ZNSt12_Vector_baseIcSaIcEEC2EmRKS0_.exit.i.thread ], [ %i.g, %bb.b ], [ %i.g, %.noexc ] ; 8 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !16
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8

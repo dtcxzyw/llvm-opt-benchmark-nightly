@@ -204,7 +204,7 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit: ; pr
   %.sroa.033.0 = phi ptr [ null, %_ZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEv.exit ], [ @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, %bb.d ], [ @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i.i ] ; 2 uses
   %i.q = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 24), align 8, !tbaa !23 ; 2 uses
   %.not10.i.i.i = icmp eq ptr %i.q, null
-  br i1 %.not10.i.i.i, label %select.unfold, label %.lr.ph.i.i.i
+  br i1 %.not10.i.i.i, label %.noexc18.a, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit, %.noexc
   %.012.i.i.i = phi ptr [ %.1.i.i.i, %.noexc ], [ %i.q, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit ] ; 3 uses
@@ -223,17 +223,23 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit: ; pr
 
 _ZNSt8_Rb_treeISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ES0_IKS7_PFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSB_8MetadataEEESt10_Select1stISK_ESt4lessIS7_ESaISK_EE14_M_lower_boundEPSt13_Rb_tree_nodeISK_EPSt18_Rb_tree_node_baseRS8_.exit.i.i: ; preds = %.noexc
   %i.t = icmp eq ptr %.19.i.i.i, getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16)
-  br i1 %i.t, label %select.unfold, label %bb.g
+  br i1 %i.t, label %.noexc18.a, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt8_Rb_treeISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ES0_IKS7_PFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSB_8MetadataEEESt10_Select1stISK_ESt4lessIS7_ESaISK_EE14_M_lower_boundEPSt13_Rb_tree_nodeISK_EPSt18_Rb_tree_node_baseRS8_.exit.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %i.v = invoke noundef zeroext i1 @_ZNKSt4lessISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EEclERKS7_SA_(ptr noundef nonnull align 8 dereferenceable(48) getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 8), ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %i.u)
-          to label %.noexc18.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc18 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.noexc18.a:                                       ; preds = %bb.g
-  br i1 %i.v, label %select.unfold, label %_ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE4findERSL_.exit
+.noexc18:                                         ; preds = %bb.g
+  %spec.select = select i1 %i.v, ptr getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16), ptr %.19.i.i.i
+  br label %.noexc18.a
 
-select.unfold:                                    ; preds = %.noexc18.a, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit, %_ZNSt8_Rb_treeISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ES0_IKS7_PFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSB_8MetadataEEESt10_Select1stISK_ESt4lessIS7_ESaISK_EE14_M_lower_boundEPSt13_Rb_tree_nodeISK_EPSt18_Rb_tree_node_baseRS8_.exit.i.i
+.noexc18.a:                                       ; preds = %.noexc18, %_ZNSt8_Rb_treeISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ES0_IKS7_PFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSB_8MetadataEEESt10_Select1stISK_ESt4lessIS7_ESaISK_EE14_M_lower_boundEPSt13_Rb_tree_nodeISK_EPSt18_Rb_tree_node_baseRS8_.exit.i.i, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit
+  %.sroa.0.0.i.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16), %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEE7acquireERS3_.exit ], [ getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16), %_ZNSt8_Rb_treeISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ES0_IKS7_PFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSB_8MetadataEEESt10_Select1stISK_ESt4lessIS7_ESaISK_EE14_M_lower_boundEPSt13_Rb_tree_nodeISK_EPSt18_Rb_tree_node_baseRS8_.exit.i.i ], [ %spec.select, %.noexc18 ] ; 2 uses
+  %10 = icmp eq ptr %.sroa.0.0.i.i, getelementptr inbounds nuw (i8, ptr @_ZZN7openvdb5v13_06points12_GLOBAL__N_120getAttributeRegistryEvE8registry, i64 16)
+  br i1 %10, label %select.unfold, label %_ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE4findERSL_.exit
+
+select.unfold:                                    ; preds = %.noexc18.a
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   %i.w = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   store ptr %i.w, ptr %7, align 8, !tbaa !61
@@ -350,7 +356,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27: ; preds = %bb.
   br label %.loopexit.split-lp
 
 _ZNSt3mapISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_EPFSt10shared_ptrIN7openvdb5v13_06points14AttributeArrayEEjjbPKNSA_8MetadataEESt4lessIS7_ESaIS0_IKS7_SI_EEE4findERSL_.exit: ; preds = %.noexc18.a
-  %i.az = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 96
+  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 96
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !67
   invoke void %i.ba(ptr dead_on_unwind writable sret(%"class.std::shared_ptr.4") align 8 %0, i32 noundef %2, i32 noundef %3, i1 noundef zeroext %4, ptr noundef %5)
           to label %bb.q unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

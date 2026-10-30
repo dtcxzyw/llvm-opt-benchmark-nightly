@@ -202,16 +202,16 @@ bb.d:                                             ; preds = %bb.c
   %i.e = icmp slt i64 %.sroa.06.0.i, 0
   br i1 %i.e, label %1, label %bb.e, !prof !4
 
-1:                                                ; preds = %bb.d
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc4sync18panic_arc_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28) #25
-  unreachable
-
 bb.e:                                             ; preds = %bb.d
   %i.f = add nuw i64 %.sroa.06.0.i, 1
   %i.g = cmpxchg weak ptr %i.a, i64 %.sroa.06.0.i, i64 %i.f acquire monotonic, align 8 ; 2 uses
   %i.h = extractvalue { i64, i1 } %i.g, 1
   %i.i = extractvalue { i64, i1 } %i.g, 0
   br i1 %i.h, label %_RINvMs16_NtNtCskKLDkoKarTP_4core4sync6atomicINtB7_6AtomicjE10try_updateNvNvMsK_NtCsexYYUdYSQU6_5alloc4syncINtB1f_4WeakppE7upgrade17checked_incrementECsarFSTFZzLuM_11xet_runtime.exit, label %bb.c
+
+1:                                                ; preds = %bb.d
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc4sync18panic_arc_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28) #25
+  unreachable
 
 _RINvMs16_NtNtCskKLDkoKarTP_4core4sync6atomicINtB7_6AtomicjE10try_updateNvNvMsK_NtCsexYYUdYSQU6_5alloc4syncINtB1f_4WeakppE7upgrade17checked_incrementECsarFSTFZzLuM_11xet_runtime.exit: ; preds = %bb.c, %bb.e, %bb.a
   %.sroa.0.0 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ %i.a, %bb.e ]
@@ -615,7 +615,7 @@ bb.b:                                             ; preds = %bb.a
 .noexc:                                           ; preds = %bb.b
   %i.ac = extractvalue { ptr, i64 } %i.ab, 1
   %i.ad = icmp eq i64 %i.ac, 0
-  br i1 %i.ad, label %select.unfold.a, label %bb.c
+  br i1 %i.ad, label %select.unfold, label %bb.c
 
 bb.c:                                             ; preds = %.noexc
   %i.ae = invoke { i32, i32 } @_RNvXNtNtCsarFSTFZzLuM_11xet_runtime5utils19configuration_utilsmNtB2_19ParsableConfigValue16parse_user_valueB6_(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.y, i64 noundef %i.aa)
@@ -623,9 +623,11 @@ bb.c:                                             ; preds = %.noexc
 
 .noexc104:                                        ; preds = %bb.c
   %i.af = extractvalue { i32, i32 } %i.ae, 0
-  %i.ag = trunc i32 %i.af to i1
+  %i.ag = trunc i32 %i.af to i1                   ; 2 uses
   %i.ah = extractvalue { i32, i32 } %i.ae, 1
-  br i1 %i.ag, label %select.unfold.a, label %bb.j
+  %spec.select = select i1 %i.ag, i32 %i.ah, i32 undef
+  %spec.select115 = select i1 %i.ag, i32 1, i32 2
+  br label %select.unfold
 
 bb.d:                                             ; preds = %bb.a
   %i.ai = load atomic i64, ptr @_RNvNtCs94TQx44N27d_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
@@ -694,7 +696,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d,
   %i.av = insertvalue { i32, i32 } %i.au, i32 %.sroa.4.0, 1
   ret { i32, i32 } %i.av
 
-bb.j:                                             ; preds = %.noexc104
+select.unfold:                                    ; preds = %.noexc104, %.noexc
+  %.sroa.4.1.i = phi i32 [ undef, %.noexc ], [ %spec.select, %.noexc104 ] ; 5 uses
+  %.sroa.0.1.i = phi i32 [ 0, %.noexc ], [ %spec.select115, %.noexc104 ] ; 6 uses
+  %.not102 = icmp eq i32 %.sroa.0.1.i, 2
+  br i1 %.not102, label %bb.j, label %select.unfold.a
+
+bb.j:                                             ; preds = %select.unfold
   %i.aw = load atomic i64, ptr @_RNvNtCs94TQx44N27d_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
   %i.ax = icmp ult i64 %i.aw, 4
   br i1 %i.ax, label %bb.k, label %bb.r
@@ -861,13 +869,11 @@ bb.ac:                                            ; preds = %bb.c, %bb.b, %bb.l,
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef align 8 dereferenceable(24) %i.r) #22
           to label %common.resume unwind label %bb.an
 
-select.unfold.a:                                  ; preds = %.noexc104, %.noexc
-  %.sroa.4.1.i.ph = phi i32 [ undef, %.noexc ], [ %i.ah, %.noexc104 ] ; 5 uses
-  %.sroa.0.1.i.ph = phi i32 [ 0, %.noexc ], [ 1, %.noexc104 ] ; 5 uses
+select.unfold.a:                                  ; preds = %select.unfold
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  store i32 %.sroa.0.1.i.ph, ptr %i.q, align 4
+  store i32 %.sroa.0.1.i, ptr %i.q, align 4
   %i.bz = getelementptr inbounds nuw i8, ptr %i.q, i64 4 ; 2 uses
-  store i32 %.sroa.4.1.i.ph, ptr %i.bz, align 4
+  store i32 %.sroa.4.1.i, ptr %i.bz, align 4
   %i.ca = load atomic i64, ptr @_RNvNtCs94TQx44N27d_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
   %i.cb = icmp ult i64 %i.ca, 3
   br i1 %i.cb, label %bb.ad, label %bb.ai
@@ -898,8 +904,8 @@ bb.ah:                                            ; preds = %bb.af
   br i1 %i.cf, label %bb.al, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ad, %select.unfold.a, %bb.am, %bb.ah
-  %i.ch = phi i32 [ %.sroa.4.1.i.ph, %bb.ag ], [ %.sroa.4.1.i.ph, %bb.ad ], [ %.sroa.4.1.i.ph, %select.unfold.a ], [ %.pre112, %bb.am ], [ %.sroa.4.1.i.ph, %bb.ah ]
-  %i.ci = phi i32 [ %.sroa.0.1.i.ph, %bb.ag ], [ %.sroa.0.1.i.ph, %bb.ad ], [ %.sroa.0.1.i.ph, %select.unfold.a ], [ %.pre, %bb.am ], [ %.sroa.0.1.i.ph, %bb.ah ]
+  %i.ch = phi i32 [ %.sroa.4.1.i, %bb.ag ], [ %.sroa.4.1.i, %bb.ad ], [ %.sroa.4.1.i, %select.unfold.a ], [ %.pre112, %bb.am ], [ %.sroa.4.1.i, %bb.ah ]
+  %i.ci = phi i32 [ %.sroa.0.1.i, %bb.ag ], [ %.sroa.0.1.i, %bb.ad ], [ %.sroa.0.1.i, %select.unfold.a ], [ %.pre, %bb.am ], [ %.sroa.0.1.i, %bb.ah ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.r)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsarFSTFZzLuM_11xet_runtime.exit106 unwind label %bb.aj

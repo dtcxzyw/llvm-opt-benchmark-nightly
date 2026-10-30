@@ -75,12 +75,12 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load i8, ptr %i.o, align 8, !tbaa !51, !range !52, !noundef !53
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !32   ; 3 uses
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !32   ; 4 uses
   br i1 %i.q, label %bb.c, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread
 
 bb.c:                                             ; preds = %bb.b
   %.not.i = icmp eq i32 %i.s, 0
-  br i1 %.not.i, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread.thread, label %_ZNK4ncnn3Mat8elembitsEv.exit
+  br i1 %.not.i, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread, label %_ZNK4ncnn3Mat8elembitsEv.exit
 
 _ZNK4ncnn3Mat8elembitsEv.exit:                    ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -95,10 +95,11 @@ bb.d:                                             ; preds = %_ZNK4ncnn3Mat8elemb
   %i.y = tail call noundef i32 @_ZNK4ncnn18Dropout_x86_avx51221forward_inplace_bf16sERNS_3MatERKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(212) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(64) %2) ; 0 uses
   br label %bb.af
 
-_ZNK4ncnn3Mat8elembitsEv.exit.thread:             ; preds = %bb.b, %_ZNK4ncnn3Mat8elembitsEv.exit
+_ZNK4ncnn3Mat8elembitsEv.exit.thread:             ; preds = %bb.b, %bb.c, %_ZNK4ncnn3Mat8elembitsEv.exit
+  %4 = phi i32 [ %i.s, %_ZNK4ncnn3Mat8elembitsEv.exit ], [ 0, %bb.c ], [ %i.s, %bb.b ]
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !54  ; 4 uses
-  switch i32 %i.s, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread.thread [
+  switch i32 %4, label %_ZNK4ncnn3Mat8elembitsEv.exit.thread.thread [
     i32 16, label %bb.e
     i32 8, label %bb.v
     i32 4, label %bb.aa
@@ -336,7 +337,7 @@ bb.ae:                                            ; preds = %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #7
   br label %bb.af
 
-_ZNK4ncnn3Mat8elembitsEv.exit.thread.thread:      ; preds = %bb.c, %_ZNK4ncnn3Mat8elembitsEv.exit.thread
+_ZNK4ncnn3Mat8elembitsEv.exit.thread.thread:      ; preds = %_ZNK4ncnn3Mat8elembitsEv.exit.thread
   %i.cp = tail call noundef i32 @_ZNK4ncnn7Dropout15forward_inplaceERNS_3MatERKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(212) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(64) %2)
   br label %bb.af
 

@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.a, %_ZN7meshoptL
 
 bb.g:                                             ; preds = %.lr.ph103.a, %select.unfold
   %.066101 = phi i64 [ 0, %.lr.ph103.a ], [ %i.eo, %select.unfold ] ; 4 uses
-  %.06799 = phi i64 [ 0, %.lr.ph103.a ], [ %.2, %select.unfold ] ; 8 uses
-  %.06897 = phi i64 [ 0, %.lr.ph103.a ], [ %.270, %select.unfold ] ; 10 uses
+  %.06799 = phi i64 [ 0, %.lr.ph103.a ], [ %.2, %select.unfold ] ; 5 uses
+  %.06897 = phi i64 [ 0, %.lr.ph103.a ], [ %.270, %select.unfold ] ; 7 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %.066101
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !24  ; 4 uses
   %i.aj = zext i8 %i.ai to i32
@@ -224,7 +224,7 @@ bb.g:                                             ; preds = %.lr.ph103.a, %selec
   %i.av = and i32 %i.v, %i.au                     ; 3 uses
   %i.aw = xor i32 %i.av, -1                       ; 4 uses
   %i.ax = icmp eq i8 %i.ai, 0
-  br i1 %i.ax, label %select.unfold, label %bb.h
+  br i1 %i.ax, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ay = icmp eq i8 %i.ai, 1
@@ -236,17 +236,18 @@ bb.i:                                             ; preds = %bb.h
   %i.ba = xor i32 %i.az, %i.au
   %i.bb = and i32 %i.ba, 15
   %i.bc = icmp eq i32 %i.bb, 0
-  br i1 %i.bc, label %select.unfold, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit.a
+  %spec.select = select i1 %i.bc, i32 %i.aw, i32 0
+  br label %_ZN7meshoptL15getSpecialIndexEPKhii.exit
 
 bb.j:                                             ; preds = %bb.h
   %i.bd = mul nuw nsw i32 %i.av, %i.w
   %.not2627.not.i = icmp eq i32 %i.ar, 0
-  br i1 %.not2627.not.i, label %select.unfold, label %.lr.ph.i
+  br i1 %.not2627.not.i, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit, label %.lr.ph.i
 
 bb.k:                                             ; preds = %.lr.ph.i
   %i.be = add nuw i64 %.028.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.be, %i.as
-  br i1 %exitcond.not.i, label %select.unfold, label %.lr.ph.i, !llvm.loop !45
+  br i1 %exitcond.not.i, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit, label %.lr.ph.i, !llvm.loop !45
 
 .lr.ph.i:                                         ; preds = %bb.j, %bb.k
   %.028.i = phi i64 [ %i.be, %bb.k ], [ 0, %bb.j ] ; 2 uses
@@ -254,9 +255,14 @@ bb.k:                                             ; preds = %.lr.ph.i
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !24
   %i.bh = zext i8 %i.bg to i32
   %.not.i = icmp eq i32 %i.bd, %i.bh
-  br i1 %.not.i, label %bb.k, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit.a
+  br i1 %.not.i, label %bb.k, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit
 
-_ZN7meshoptL15getSpecialIndexEPKhii.exit.a:       ; preds = %.lr.ph.i, %bb.i
+_ZN7meshoptL15getSpecialIndexEPKhii.exit:         ; preds = %bb.k, %.lr.ph.i, %bb.i, %bb.g, %bb.j
+  %.2.i = phi i32 [ %i.aw, %bb.g ], [ %spec.select, %bb.i ], [ %i.aw, %bb.j ], [ 0, %.lr.ph.i ], [ %i.aw, %bb.k ] ; 2 uses
+  %9 = icmp slt i32 %.2.i, 0
+  br i1 %9, label %select.unfold, label %_ZN7meshoptL15getSpecialIndexEPKhii.exit.a
+
+_ZN7meshoptL15getSpecialIndexEPKhii.exit.a:       ; preds = %_ZN7meshoptL15getSpecialIndexEPKhii.exit
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 %.06799
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bi, ptr nonnull align 1 %i.an, i64 %i.as, i1 false)
   %i.bj = trunc i64 %.06799 to i32
@@ -395,10 +401,10 @@ _ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread: ; p
   %i.em = add i64 %.06799, %i.as
   br label %select.unfold
 
-select.unfold:                                    ; preds = %bb.k, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread, %bb.j, %bb.g, %bb.i
-  %.sink = phi i32 [ %i.aw, %bb.j ], [ %.pr, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i ], [ %i.aw, %bb.i ], [ %i.aw, %bb.g ], [ %i.bm, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread ], [ %i.aw, %bb.k ]
-  %.270 = phi i64 [ %.06897, %bb.j ], [ %.06897, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i ], [ %.06897, %bb.i ], [ %.06897, %bb.g ], [ %i.el, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread ], [ %.06897, %bb.k ] ; 2 uses
-  %.2 = phi i64 [ %.06799, %bb.j ], [ %.06799, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i ], [ %.06799, %bb.i ], [ %.06799, %bb.g ], [ %i.em, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread ], [ %.06799, %bb.k ]
+select.unfold:                                    ; preds = %_ZNK7meshopt9OMMHasher5equalEjj.exit.i, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread, %_ZN7meshoptL15getSpecialIndexEPKhii.exit
+  %.sink = phi i32 [ %.2.i, %_ZN7meshoptL15getSpecialIndexEPKhii.exit ], [ %i.bm, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread ], [ %.pr, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i ]
+  %.270 = phi i64 [ %.06897, %_ZN7meshoptL15getSpecialIndexEPKhii.exit ], [ %i.el, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread ], [ %.06897, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i ] ; 2 uses
+  %.2 = phi i64 [ %.06799, %_ZN7meshoptL15getSpecialIndexEPKhii.exit ], [ %i.em, %_ZN7meshoptL11hashLookup3IjNS_9OMMHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread ], [ %.06799, %_ZNK7meshopt9OMMHasher5equalEjj.exit.i ]
   %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.066101
   store i32 %.sink, ptr %i.en, align 4, !tbaa !21
   %i.eo = add nuw i64 %.066101, 1                 ; 2 uses

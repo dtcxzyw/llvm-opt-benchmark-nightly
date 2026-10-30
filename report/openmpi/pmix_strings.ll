@@ -200,17 +200,18 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 .thread:                                          ; preds = %bb.g
   %i.j = getelementptr inbounds nuw i8, ptr @answer, i64 %.2
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.j, ptr noundef nonnull align 1 dereferenceable(9) @.str.91, i64 9, i1 false) #9
-  br label %bb.j
+  br label %bb.h
 
-bb.h:                                             ; preds = %bb.g
-  %i.k = icmp eq i64 %.2, 0
+bb.h:                                             ; preds = %.thread, %bb.g
+  %.3 = phi i64 [ 1, %.thread ], [ %.2, %bb.g ]
+  %i.k = icmp eq i64 %.3, 0
   br i1 %i.k, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(5) @answer, ptr noundef nonnull align 1 dereferenceable(5) @.str.92, i64 5, i1 false) #9
   br label %bb.j
 
-bb.j:                                             ; preds = %.thread, %bb.i, %bb.h
+bb.j:                                             ; preds = %bb.i, %bb.h
   ret ptr @answer
 }
 

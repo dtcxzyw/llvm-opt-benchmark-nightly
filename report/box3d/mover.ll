@@ -10,8 +10,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define { <2 x float>, i64 } @b3SolvePlanes(<2 x float> %0, float %1, ptr nofree noundef captures(none) %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = icmp sgt i32 %3, 0
-  br i1 %i.a, label %.lr.ph.preheader, label %.split
+  %i.a = icmp sgt i32 %3, 0                       ; 2 uses
+  br i1 %i.a, label %.lr.ph.preheader, label %.preheader.us.preheader.a
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %3 to i64      ; 2 uses
@@ -44,16 +44,19 @@ bb.a:
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.preheader.us.preheader.a, label %.lr.ph.epil, !llvm.loop !15
 
-.preheader.us.preheader.a:                        ; preds = %.lr.ph.epil, %.preheader.us.preheader.unr-lcssa
+.preheader.us.preheader.a:                        ; preds = %.preheader.us.preheader.unr-lcssa, %.lr.ph.epil, %bb.a
   %i.e = tail call float @b3GetLengthUnitsPerMeter() #4
-  %i.f = fmul float %i.e, 5.000000e-03
+  %i.f = fmul float %i.e, 5.000000e-03            ; 2 uses
+  br i1 %i.a, label %.preheader.us.preheader, label %.split
+
+.preheader.us.preheader:                          ; preds = %.preheader.us.preheader.a
   %wide.trip.count75 = zext nneg i32 %3 to i64
   br label %.preheader.us
 
-.preheader.us:                                    ; preds = %.preheader.us.preheader.a, %bb.c
-  %.sroa.7.063.us = phi float [ %i.ah, %bb.c ], [ %1, %.preheader.us.preheader.a ]
-  %.sroa.028.062.us = phi <2 x float> [ %i.af, %bb.c ], [ %0, %.preheader.us.preheader.a ]
-  %.04861.us = phi i32 [ %i.am, %bb.c ], [ 0, %.preheader.us.preheader.a ] ; 2 uses
+.preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.c
+  %.sroa.7.063.us = phi float [ %i.ah, %bb.c ], [ %1, %.preheader.us.preheader ]
+  %.sroa.028.062.us = phi <2 x float> [ %i.af, %bb.c ], [ %0, %.preheader.us.preheader ]
+  %.04861.us = phi i32 [ %i.am, %bb.c ], [ 0, %.preheader.us.preheader ] ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %bb.b
@@ -113,10 +116,8 @@ bb.c:                                             ; preds = %._crit_edge58.us
   %i.an = fcmp olt float %i.al, %i.f
   br i1 %i.an, label %.split65.us.loopexit, label %bb.c
 
-.split:                                           ; preds = %bb.a
-  %4 = tail call float @b3GetLengthUnitsPerMeter() #4
-  %5 = fmul float %4, 5.000000e-03
-  %i.ao = fcmp ogt float %5, 0.000000e+00
+.split:                                           ; preds = %.preheader.us.preheader.a
+  %i.ao = fcmp ogt float %i.f, 0.000000e+00
   %spec.select = select i1 %i.ao, i64 0, i64 85899345920
   br label %.split65.us
 

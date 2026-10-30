@@ -202,7 +202,7 @@ bb.fk:                                            ; preds = %bb.fj
   br label %bb.fb
 
 .thread:                                          ; preds = %bb.ex, %bb.fh, %.thread16
-  %.pn715 = phi { ptr, i32 } [ %.pn9.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.i, %bb.ex ], [ %.pn719, %.thread16 ], [ %.pn.ph, %bb.fh ]
+  %.pn715 = phi { ptr, i32 } [ %.pn.ph, %bb.fh ], [ %.pn719, %.thread16 ], [ %.pn9.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.i, %bb.ex ]
   resume { ptr, i32 } %.pn715
 
 .thread16:                                        ; preds = %bb.fi, %.thread21
@@ -605,7 +605,7 @@ bb.ed:                                            ; preds = %bb.ec
   br label %bb.du
 
 bb.ee:                                            ; preds = %bb.e, %bb.ea
-  %.pn.ph = phi { ptr, i32 } [ %i.bb, %bb.e ], [ %i.ez, %bb.ea ]
+  %.pn.ph = phi { ptr, i32 } [ %i.ez, %bb.ea ], [ %i.bb, %bb.e ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaC8UfsfJL0H_18foundations_macros7span_fn4ArgsEBF_(ptr nonnull align 8 %i.av) #19
           to label %.thread unwind label %bb.dv
 
@@ -628,7 +628,7 @@ bb.eh:                                            ; preds = %bb.eg
   br label %bb.du
 
 .thread:                                          ; preds = %bb.dq, %bb.ee, %.thread12
-  %.pn711 = phi { ptr, i32 } [ %.pn4.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.i, %bb.dq ], [ %.pn715, %.thread12 ], [ %.pn.ph, %bb.ee ]
+  %.pn711 = phi { ptr, i32 } [ %.pn.ph, %bb.ee ], [ %.pn715, %.thread12 ], [ %.pn4.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.i, %bb.dq ]
   resume { ptr, i32 } %.pn711
 
 .thread12:                                        ; preds = %bb.ef, %.thread17
@@ -1031,7 +1031,7 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.aw = load i64, ptr %i.o, align 8
-  %i.ax = trunc nuw i64 %i.aw to i1
+  %i.ax = trunc nuw i64 %i.aw to i1               ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   br i1 %i.ax, label %.thread41, label %bb.u
 
@@ -1039,7 +1039,7 @@ bb.t:                                             ; preds = %bb.s
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.az, ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i64 24, i1 false)
   store i64 -1, ptr %0, align 8
-  br label %bb.an
+  br label %2
 
 bb.u:                                             ; preds = %bb.t
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.p, ptr noundef nonnull align 8 dereferenceable(32) %i.ay, i64 32, i1 false)
@@ -1137,7 +1137,10 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %.invoke50
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs6bAnw1I7Lci_3syn10punctuated10PunctuatedNtNtCsaC8UfsfJL0H_18foundations_macros11info_metric5FieldNtNtBG_5token5CommaEEB1q_(ptr nonnull align 8 %i.n)
-          to label %bb.ao unwind label %.thread38
+          to label %2 unwind label %.thread38
+
+2:                                                ; preds = %bb.ak, %.thread41
+  br i1 %i.ax, label %bb.an, label %bb.ao
 
 bb.al:                                            ; preds = %bb.y, %bb.b, %bb.d, %bb.aq
   ret void
@@ -1148,11 +1151,11 @@ bb.am:                                            ; preds = %bb.at, %bb.ar, %.th
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #20
   unreachable
 
-bb.an:                                            ; preds = %.thread41, %bb.ao
+bb.an:                                            ; preds = %bb.ao, %2
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCse4VeaA6Ikg_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.s)
           to label %bb.ap unwind label %bb.k
 
-bb.ao:                                            ; preds = %bb.ak
+bb.ao:                                            ; preds = %2
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs6bAnw1I7Lci_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.p)
           to label %bb.an unwind label %.thread47
 

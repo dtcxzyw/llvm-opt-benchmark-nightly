@@ -94,7 +94,7 @@ bb.f:                                             ; preds = %bb.e
   %i.am = call ptr @fftw_mkproblem_rdft_1_d(ptr noundef %i.ad, ptr noundef %i.ah, ptr noundef %i.w, ptr noundef %i.al, i32 noundef 0) #4
   %i.an = call ptr @fftw_mkplan_d(ptr noundef nonnull %2, ptr noundef %i.am) #4 ; 3 uses
   %.not50 = icmp eq ptr %i.an, null
-  br i1 %.not50, label %bb.h, label %bb.g
+  br i1 %.not50, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @fftw_ifree(ptr noundef %i.w) #4
@@ -136,14 +136,15 @@ bb.g:                                             ; preds = %bb.f
   call void @fftw_ops_madd2(i64 noundef %i.bj, ptr noundef nonnull %i.bk, ptr noundef nonnull %i.bf) #4
   br label %bb.i
 
-.thread:                                          ; preds = %bb.e, %applicable.exit, %bb.a, %bb.d, %bb.c, %bb.b
-  %.0.ph = phi ptr [ %i.w, %bb.e ], [ null, %applicable.exit ], [ null, %bb.a ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ]
-  tail call void @fftw_ifree0(ptr noundef %.0.ph) #4
-  br label %bb.i
+.thread:                                          ; preds = %bb.a, %bb.d, %bb.c, %bb.b, %bb.f, %bb.e, %applicable.exit
+  %.045 = phi ptr [ %i.aa, %bb.f ], [ null, %bb.e ], [ null, %applicable.exit ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.a ] ; 2 uses
+  %.0 = phi ptr [ %i.w, %bb.f ], [ %i.w, %bb.e ], [ null, %applicable.exit ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.a ]
+  call void @fftw_ifree0(ptr noundef %.0) #4
+  %.not51 = icmp eq ptr %.045, null
+  br i1 %.not51, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.f
-  call void @fftw_ifree0(ptr noundef %i.w) #4
-  call void @fftw_plan_destroy_internal(ptr noundef nonnull %i.aa) #4
+bb.h:                                             ; preds = %.thread
+  call void @fftw_plan_destroy_internal(ptr noundef nonnull %.045) #4
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread, %bb.h, %bb.g

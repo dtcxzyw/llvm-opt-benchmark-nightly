@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.b, %bb.d
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXs4_NtNtNtCskQDtHcQtBkN_5tokio7runtime4task4joinINtB5_10JoinHandleINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB2j_5error5ErrorEENtNtNtB1a_6future6future6Future4pollCsfY7SmN0bPrO_14deltalake_test(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([96 x i8]) align 16 captures(none) dereferenceable(96) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %1, ptr noalias noundef align 8 dereferenceable(32) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [3 x i8], align 4                 ; 4 uses
+  %i.a = alloca [3 x i8], align 4                 ; 5 uses
   %i.b = alloca [2 x i8], align 1                 ; 8 uses
   %i.c = alloca [96 x i8], align 16               ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -212,11 +212,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT0023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 72
-  %i.f = load i8, ptr %i.e, align 8, !range !17, !noalias !915, !noundef !4
+  %i.f = load i8, ptr %i.e, align 8, !range !17, !noalias !915, !noundef !4 ; 2 uses
   switch i8 %i.f, label %default.unreachable [
     i8 0, label %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.i
     i8 1, label %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.thread2.i
-    i8 2, label %.thread31.a
+    i8 2, label %bb.f
   ], !prof !916
 
 default.unreachable:                              ; preds = %bb.a
@@ -228,7 +228,7 @@ _RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lg
 
 .noexc:                                           ; preds = %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.i
   %i.h = icmp eq ptr %i.g, null
-  br i1 %i.h, label %.thread31.a, label %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.thread2.i
+  br i1 %i.h, label %bb.f, label %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.thread2.i
 
 _RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.thread2.i: ; preds = %.noexc, %bb.a
   %.sroa.0.0.i.i4.i = phi ptr [ %i.g, %.noexc ], [ %i.d, %bb.a ] ; 2 uses
@@ -245,7 +245,7 @@ bb.b:                                             ; preds = %_RNvYNCNKNvNtNtCskQ
 
 bb.c:                                             ; preds = %bb.b
   invoke void @_RNvNtNtCskQDtHcQtBkN_5tokio4task4coop14register_waker(ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
-          to label %bb.f unwind label %.thread28
+          to label %_RNCINvNtNtCskQDtHcQtBkN_5tokio7runtime7context6budgetINtNtNtCsbvkFyIu7lgC_4core4task4poll4PollNtNtNtB8_4task4coop16RestoreOnPendingENCNvB1w_12poll_proceed0E0CsfY7SmN0bPrO_14deltalake_test.exit.i unwind label %.thread28
 
 bb.d:                                             ; preds = %bb.b
   %i.n = add i8 %i.m, -1
@@ -254,25 +254,46 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d, %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.thread2.i
   %.sroa.33.0.i.i.i = phi i8 [ %i.n, %bb.d ], [ %i.m, %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.thread2.i ]
   store i8 %.sroa.33.0.i.i.i, ptr %i.l, align 1, !noalias !917
+  %3 = zext i8 %i.m to i16
+  %4 = shl nuw i16 %3, 8
+  br label %_RNCINvNtNtCskQDtHcQtBkN_5tokio7runtime7context6budgetINtNtNtCsbvkFyIu7lgC_4core4task4poll4PollNtNtNtB8_4task4coop16RestoreOnPendingENCNvB1w_12poll_proceed0E0CsfY7SmN0bPrO_14deltalake_test.exit.i
+
+_RNCINvNtNtCskQDtHcQtBkN_5tokio7runtime7context6budgetINtNtNtCsbvkFyIu7lgC_4core4task4poll4PollNtNtNtB8_4task4coop16RestoreOnPendingENCNvB1w_12poll_proceed0E0CsfY7SmN0bPrO_14deltalake_test.exit.i: ; preds = %bb.c, %bb.e
+  %.sroa.4.0.i.i.i = phi i16 [ %4, %bb.e ], [ 0, %bb.c ]
+  %.sroa.0.0.i.i9.i = phi i8 [ 0, %bb.e ], [ 1, %bb.c ]
+  %.sroa.3.0.insert.ext.i.i.i = zext nneg i8 %i.j to i16
+  %.sroa.3.0.insert.insert.i.i.i = or disjoint i16 %.sroa.4.0.i.i.i, %.sroa.3.0.insert.ext.i.i.i
   br label %bb.f
 
-.thread28:                                        ; preds = %bb.f, %bb.c, %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.i
+.thread28:                                        ; preds = %6, %bb.c, %_RNvYNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT00INtNtNtCsbvkFyIu7lgC_4core3ops8function6FnOnceTINtNtB13_6option6OptionQIB1I_NtB8_7ContextEEEE9call_onceCsfY7SmN0bPrO_14deltalake_test.exit.i
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   br label %.thread
 
-bb.f:                                             ; preds = %bb.c, %bb.e
-  %.sroa.4.0.i.i.i = phi i8 [ %i.m, %bb.e ], [ 0, %bb.c ]
-  %.sroa.0.0.i.i9.i = phi i1 [ false, %bb.e ], [ true, %bb.c ]
+bb.f:                                             ; preds = %_RNCINvNtNtCskQDtHcQtBkN_5tokio7runtime7context6budgetINtNtNtCsbvkFyIu7lgC_4core4task4poll4PollNtNtNtB8_4task4coop16RestoreOnPendingENCNvB1w_12poll_proceed0E0CsfY7SmN0bPrO_14deltalake_test.exit.i, %.noexc, %bb.a
+  %.sroa.3.0.i = phi i16 [ %.sroa.3.0.insert.insert.i.i.i, %_RNCINvNtNtCskQDtHcQtBkN_5tokio7runtime7context6budgetINtNtNtCsbvkFyIu7lgC_4core4task4poll4PollNtNtNtB8_4task4coop16RestoreOnPendingENCNvB1w_12poll_proceed0E0CsfY7SmN0bPrO_14deltalake_test.exit.i ], [ undef, %.noexc ], [ undef, %bb.a ] ; 2 uses
+  %.sroa.0.0.i = phi i8 [ %.sroa.0.0.i.i9.i, %_RNCINvNtNtCskQDtHcQtBkN_5tokio7runtime7context6budgetINtNtNtCsbvkFyIu7lgC_4core4task4poll4PollNtNtNtB8_4task4coop16RestoreOnPendingENCNvB1w_12poll_proceed0E0CsfY7SmN0bPrO_14deltalake_test.exit.i ], [ 2, %.noexc ], [ %i.f, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i24 0, ptr %i.a, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  invoke void @_RNvXs4_NtNtCskQDtHcQtBkN_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop(ptr noalias noundef nonnull dereferenceable(2) %3)
+  %5 = icmp eq i8 %.sroa.0.0.i, 2
+  br i1 %5, label %.thread31, label %6
+
+.thread31:                                        ; preds = %bb.f
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  br label %.thread31.a
+
+6:                                                ; preds = %bb.f
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  invoke void @_RNvXs4_NtNtCskQDtHcQtBkN_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4drop(ptr noalias noundef nonnull dereferenceable(2) %7)
           to label %bb.g unwind label %.thread28
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br i1 %.sroa.0.0.i.i9.i, label %bb.h, label %.thread31.a
+  %8 = trunc nuw i8 %.sroa.0.0.i to i1
+  %extract.t = trunc i16 %.sroa.3.0.i to i8
+  %9 = lshr i16 %.sroa.3.0.i, 8
+  %extract.t35 = trunc nuw i16 %9 to i8
+  br i1 %8, label %bb.h, label %.thread31.a
 
 bb.h:                                             ; preds = %bb.g
   store i64 -9223372036854775741, ptr %0, align 16
@@ -285,9 +306,9 @@ bb.i:                                             ; preds = %bb.h
   call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultIBH_INtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB1I_5error5ErrorENtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorEECsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull align 16 dereferenceable(96) %i.c)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultIB16_INtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCs8ulvy0Wg6Ot_12delta_kernel8snapshot8SnapshotENtNtB28_5error5ErrorENtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorEEECsfY7SmN0bPrO_14deltalake_test.exit
 
-.thread31.a:                                      ; preds = %bb.a, %.noexc, %bb.g
-  %.sroa.03.011.i33.off8 = phi i8 [ %i.j, %bb.g ], [ 0, %.noexc ], [ 0, %bb.a ]
-  %.sroa.03.011.i33.off16 = phi i8 [ %.sroa.4.0.i.i.i, %bb.g ], [ 0, %.noexc ], [ 0, %bb.a ]
+.thread31.a:                                      ; preds = %.thread31, %bb.g
+  %.sroa.03.011.i33.off8 = phi i8 [ 0, %.thread31 ], [ %extract.t, %bb.g ]
+  %.sroa.03.011.i33.off16 = phi i8 [ 0, %.thread31 ], [ %extract.t35, %bb.g ]
   store i8 %.sroa.03.011.i33.off8, ptr %i.b, align 1
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %.sroa.03.011.i33.off16, ptr %i.p, align 1

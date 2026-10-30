@@ -185,30 +185,36 @@ bb.u:                                             ; preds = %bb.t
   %i.bp = load i32, ptr %i.bo, align 8
   %i.bq = call ptr @SDL_GetStringProperty_REAL(i32 noundef %i.bp, ptr noundef nonnull @.str.2, ptr noundef null) #3 ; 3 uses
   %.not88 = icmp eq ptr %i.bq, null
-  br i1 %.not88, label %.critedge.a, label %bb.v
+  br i1 %.not88, label %.critedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.br = call i64 @SDL_strlen_REAL(ptr noundef nonnull %i.bq) #3
   %i.bs = add i64 %i.br, 10                       ; 3 uses
   %i.bt = call noalias ptr @SDL_malloc_REAL(i64 noundef %i.bs) #3 ; 3 uses
   store ptr %i.bt, ptr %2, align 8
-  %.not89.not = icmp eq ptr %i.bt, null
+  %.not89.not = icmp eq ptr %i.bt, null           ; 2 uses
   br i1 %.not89.not, label %.thread, label %bb.w
 
 .thread:                                          ; preds = %bb.v
   %i.bu = load ptr, ptr %1, align 8
   call void @SDL_free_REAL(ptr noundef %i.bu) #3
   store ptr null, ptr %1, align 8
-  br label %.critedge.a
+  br label %4
 
 bb.w:                                             ; preds = %bb.v
   %i.bv = call i64 @SDL_strlcpy_REAL(ptr noundef nonnull %i.bt, ptr noundef nonnull @.str.3, i64 noundef %i.bs) #3 ; 0 uses
   %i.bw = load ptr, ptr %2, align 8
   %i.bx = call i64 @SDL_strlcat_REAL(ptr noundef %i.bw, ptr noundef nonnull %i.bq, i64 noundef %i.bs) #3 ; 0 uses
+  br label %4
+
+4:                                                ; preds = %bb.w, %.thread
+  br i1 %.not89.not, label %.critedge.a, label %.critedge
+
+.critedge:                                        ; preds = %4, %bb.u
   br label %.critedge.a
 
-.critedge.a:                                      ; preds = %bb.u, %bb.w, %.thread, %._crit_edge, %bb.f, %bb.t, %bb.a
-  %.6 = phi i1 [ false, %bb.a ], [ false, %.thread ], [ false, %bb.f ], [ false, %._crit_edge ], [ true, %bb.t ], [ true, %bb.w ], [ true, %bb.u ]
+.critedge.a:                                      ; preds = %._crit_edge, %bb.f, %4, %.critedge, %bb.t, %bb.a
+  %.6 = phi i1 [ false, %bb.a ], [ false, %4 ], [ false, %bb.f ], [ false, %._crit_edge ], [ true, %.critedge ], [ true, %bb.t ]
   ret i1 %.6
 }
 

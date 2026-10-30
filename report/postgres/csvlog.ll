@@ -200,11 +200,11 @@ bb.ae:                                            ; preds = %bb.ad
   %.not57 = icmp eq ptr %i.bv, null
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.pre = load ptr, ptr %.phi.trans.insert, align 8 ; 3 uses
-  %.not59 = icmp eq ptr %.pre, null               ; 2 uses
   br i1 %.not57, label %bb.ah, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  br i1 %.not59, label %.thread, label %bb.ag
+  %.not58 = icmp eq ptr %.pre, null
+  br i1 %.not58, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -212,16 +212,18 @@ bb.ag:                                            ; preds = %bb.af
   call void (ptr, ptr, ...) @appendStringInfo(ptr noundef nonnull %3, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.bv, ptr noundef nonnull %.pre, i32 noundef %i.bx) #4
   br label %.thread
 
-bb.ah:                                            ; preds = %bb.ae
+bb.ah:                                            ; preds = %bb.ae, %bb.af
+  %4 = phi ptr [ null, %bb.af ], [ %.pre, %bb.ae ] ; 2 uses
+  %.not59 = icmp eq ptr %4, null
   br i1 %.not59, label %.thread, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bz = load i32, ptr %i.by, align 8
-  call void (ptr, ptr, ...) @appendStringInfo(ptr noundef nonnull %3, ptr noundef nonnull @.str.6, ptr noundef nonnull %.pre, i32 noundef %i.bz) #4
+  call void (ptr, ptr, ...) @appendStringInfo(ptr noundef nonnull %3, ptr noundef nonnull @.str.6, ptr noundef nonnull %4, i32 noundef %i.bz) #4
   br label %.thread
 
-.thread:                                          ; preds = %bb.af, %bb.ah, %bb.ai, %bb.ag
+.thread:                                          ; preds = %bb.ah, %bb.ai, %bb.ag
   %i.ca = load ptr, ptr %3, align 8
   call fastcc void @appendCSVLiteral(ptr noundef %1, ptr noundef %i.ca)
   %i.cb = load ptr, ptr %3, align 8

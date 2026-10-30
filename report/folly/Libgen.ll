@@ -12,7 +12,7 @@ bb.a:
   br i1 %i.a, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %strcmpload = load i8, ptr %0, align 1
+  %strcmpload = load i8, ptr %0, align 1          ; 2 uses
   switch i8 %strcmpload, label %.tail29.thread [
     i8 0, label %bb.h
     i8 47, label %.tail
@@ -23,15 +23,19 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.c = load i8, ptr %i.b, align 1
   %i.d = icmp eq i8 %i.c, 0
-  br i1 %i.d, label %bb.h, label %.tail29.thread
+  br i1 %i.d, label %bb.h, label %sub_030
 
-.tail29:                                          ; preds = %bb.b
+sub_030:                                          ; preds = %.tail
+  %.not34 = icmp eq i8 %strcmpload, 92
+  br i1 %.not34, label %.tail29, label %.tail29.thread
+
+.tail29:                                          ; preds = %bb.b, %sub_030
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.f = load i8, ptr %i.e, align 1
   %i.g = icmp eq i8 %i.f, 0
   br i1 %i.g, label %bb.h, label %.tail29.thread
 
-.tail29.thread:                                   ; preds = %bb.b, %.tail, %.tail29
+.tail29.thread:                                   ; preds = %bb.b, %sub_030, %.tail29
   %i.h = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #2
   %i.i = getelementptr i8, ptr %0, i64 %i.h
   %i.j = getelementptr i8, ptr %i.i, i64 -1       ; 2 uses

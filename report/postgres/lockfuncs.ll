@@ -205,15 +205,18 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   %i.id = zext nneg i32 %i.ic to i64
   %i.ie = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   store i64 %i.id, ptr %i.ie, align 16
-  br label %bb.ad
+  br label %1
 
 bb.ac:                                            ; preds = %bb.ab
   %i.if = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   store i8 1, ptr %i.if, align 4
-  %1 = icmp eq i32 %i.hn, 1
-  br i1 %1, label %bb.ad, label %bb.ae
+  br label %1
 
-bb.ad:                                            ; preds = %.thread159, %bb.ac
+1:                                                ; preds = %bb.ac, %.thread159
+  %.not190 = icmp eq i32 %i.hn, 0
+  br i1 %.not190, label %bb.ae, label %bb.ad
+
+bb.ad:                                            ; preds = %1
   %i.ig = getelementptr inbounds nuw i8, ptr %i.hc, i64 8
   %i.ih = load i32, ptr %i.ig, align 4
   %i.ii = zext i32 %i.ih to i64
@@ -221,7 +224,7 @@ bb.ad:                                            ; preds = %.thread159, %bb.ac
   store i64 %i.ii, ptr %i.ij, align 8
   br label %bb.af
 
-bb.ae:                                            ; preds = %bb.ac
+bb.ae:                                            ; preds = %1
   %i.ik = getelementptr inbounds nuw i8, ptr %i.h, i64 3
   store i8 1, ptr %i.ik, align 1
   br label %bb.af

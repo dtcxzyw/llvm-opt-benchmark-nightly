@@ -205,12 +205,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.l = load i8, ptr %i.k, align 8, !tbaa !25
   %i.m = and i8 %i.l, 15
-  %.not17 = icmp eq i8 %i.m, 4
-  br i1 %.not17, label %bb.e, label %..thread_crit_edge
-
-..thread_crit_edge:                               ; preds = %bb.d
-  %.pre = load i8, ptr %i.a, align 8, !tbaa !25
-  br label %.thread
+  %.not17 = icmp eq i8 %i.m, 4                    ; 2 uses
+  br i1 %.not17, label %bb.e, label %2
 
 bb.e:                                             ; preds = %bb.d
   %i.n = load ptr, ptr %i.j, align 8, !tbaa !30   ; 2 uses
@@ -218,14 +214,22 @@ bb.e:                                             ; preds = %bb.d
   %i.p = load i8, ptr %i.o, align 1, !tbaa !34
   %i.q = icmp sgt i8 %i.p, -1
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
-  br i1 %i.q, label %.thread18, label %bb.f
+  br i1 %i.q, label %2, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !35
-  br label %.thread18
+  br label %2
 
-.thread:                                          ; preds = %..thread_crit_edge, %bb.a, %bb.b, %bb.c
-  %i.t = phi i8 [ %.pre, %..thread_crit_edge ], [ %i.b, %bb.a ], [ 69, %bb.b ], [ 71, %bb.c ]
+2:                                                ; preds = %bb.e, %bb.d, %bb.f
+  %.013 = phi ptr [ %i.s, %bb.f ], [ undef, %bb.d ], [ %i.r, %bb.e ]
+  br i1 %.not17, label %.thread18, label %._crit_edge
+
+._crit_edge:                                      ; preds = %2
+  %.pre = load i8, ptr %i.a, align 8, !tbaa !25
+  br label %.thread
+
+.thread:                                          ; preds = %._crit_edge, %bb.b, %bb.a, %bb.c
+  %i.t = phi i8 [ %.pre, %._crit_edge ], [ 69, %bb.b ], [ %i.b, %bb.a ], [ 71, %bb.c ]
   %i.u = and i8 %i.t, 15
   %i.v = zext nneg i8 %i.u to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr @luaT_typenames_, i64 %i.v
@@ -233,8 +237,8 @@ bb.f:                                             ; preds = %bb.e
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !45
   br label %.thread18
 
-.thread18:                                        ; preds = %bb.e, %bb.f, %.thread
-  %.1 = phi ptr [ %i.y, %.thread ], [ %i.s, %bb.f ], [ %i.r, %bb.e ]
+.thread18:                                        ; preds = %2, %.thread
+  %.1 = phi ptr [ %i.y, %.thread ], [ %.013, %2 ]
   ret ptr %.1
 }
 

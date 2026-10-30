@@ -46,14 +46,15 @@ bb.d:                                             ; preds = %bb.b
   %i.q = sext i32 %5 to i64
   %i.r = tail call fastcc i32 @sbc_parse_header(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %4, i64 noundef %i.q) ; 2 uses
   %.not29 = icmp slt i32 %i.r, %5
-  br i1 %.not29, label %select.unfold, label %.thread
+  %spec.select = select i1 %.not29, i32 %i.r, i32 -1
+  br label %select.unfold
 
 select.unfold:                                    ; preds = %bb.d, %bb.c
-  %.0 = phi i32 [ %i.p, %bb.c ], [ %i.r, %bb.d ]  ; 2 uses
+  %.0 = phi i32 [ %i.p, %bb.c ], [ %spec.select, %bb.d ] ; 2 uses
   %i.s = icmp slt i32 %.0, 0
   br i1 %i.s, label %.thread, label %bb.e
 
-.thread:                                          ; preds = %bb.d, %select.unfold
+.thread:                                          ; preds = %select.unfold
   %i.t = tail call i32 @llvm.umin.i32(i32 %5, i32 3) ; 2 uses
   store i32 %i.t, ptr %i.g, align 4, !tbaa !20
   %i.u = getelementptr inbounds nuw i8, ptr %i.c, i64 48
@@ -186,7 +187,7 @@ bb.f:                                             ; preds = %bb.b
   store i32 %.sink40, ptr %i.ax, align 8, !tbaa !43
   br label %.thread
 
-.thread:                                          ; preds = %.thread.sink.split, %bb.b, %bb.c, %bb.d, %bb.a
+.thread:                                          ; preds = %.thread.sink.split, %bb.c, %bb.d, %bb.b, %bb.a
   %.0 = phi i32 [ -2, %bb.d ], [ -2, %bb.c ], [ -1, %bb.a ], [ -2, %bb.b ], [ %.0.ph, %.thread.sink.split ]
   ret i32 %.0
 }

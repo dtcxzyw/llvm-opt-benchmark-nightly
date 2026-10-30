@@ -148,16 +148,22 @@ bb.a:
   %i.c = tail call noundef i64 @_RINvYINtNtCskKLDkoKarTP_4core4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherENtB6_11BuildHasher8hash_oneRINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG1pxJcRFT5_4raft(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2), !noalias !39
   call void @_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTINtNtCsexYYUdYSQU6_5alloc3vec3VechENtNtCsfG1pxJcRFT5_4raft9read_only15ReadIndexStatusEE12remove_entryNCINvNtB8_3map14equivalent_keyBQ_BQ_B1p_E0EB1t_(ptr noalias nofree noundef nonnull sret([256 x i8]) align 8 captures(none) dereferenceable(256) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, i64 noundef %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2)
   %i.d = load i64, ptr %i.a, align 8, !range !40, !noundef !5
-  %.not = icmp eq i64 %i.d, -1
-  br i1 %.not, label %.thread, label %bb.b
+  %.not = icmp eq i64 %i.d, -1                    ; 2 uses
+  br i1 %.not, label %.thread, label %3
+
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %0, ptr noundef nonnull align 8 dereferenceable(232) %4, i64 232, i1 false)
+  br label %5
 
 .thread:                                          ; preds = %bb.a
   store i64 -1, ptr %0, align 8
-  br label %bb.e
+  br label %5
 
-bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(232) %0, ptr noundef nonnull align 8 dereferenceable(232) %3, i64 232, i1 false)
+5:                                                ; preds = %.thread, %3
+  br i1 %.not, label %bb.e, label %bb.b
+
+bb.b:                                             ; preds = %5
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsfG1pxJcRFT5_4raft(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG1pxJcRFT5_4raft.exit unwind label %bb.c
 
@@ -180,7 +186,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG
   call void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsfG1pxJcRFT5_4raft(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
   br label %bb.e
 
-bb.e:                                             ; preds = %.thread, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG1pxJcRFT5_4raft.exit
+bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG1pxJcRFT5_4raft.exit, %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
@@ -583,7 +589,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG
 bb.l:                                             ; preds = %bb.m, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsfG1pxJcRFT5_4raft.exit
   ret void
 
-bb.m:                                             ; preds = %bb.h, %bb.g
+bb.m:                                             ; preds = %bb.g, %bb.h
   %.sroa.3.0.i.ph.i = phi i64 [ %i.ao, %bb.h ], [ %.sroa.4.121.i.i, %bb.g ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
@@ -748,7 +754,7 @@ bb.i:                                             ; preds = %.noexc6
 bb.j:                                             ; preds = %bb.k, %bb.i
   ret void
 
-bb.k:                                             ; preds = %bb.h, %bb.g
+bb.k:                                             ; preds = %bb.g, %bb.h
   %.sroa.3.0.i.ph.i = phi i64 [ %i.ao, %bb.h ], [ %.sroa.4.121.i.i, %bb.g ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !192)
   %i.as = load ptr, ptr %1, align 8, !alias.scope !192, !nonnull !5, !noundef !5 ; 3 uses
@@ -889,7 +895,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.assume(i1 %.not.i23.i.i)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.3.0.i.ph.i = phi i64 [ %i.ao, %bb.g ], [ %.sroa.4.121.i.i, %bb.f ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !207)
   %i.ap = load ptr, ptr %0, align 8, !alias.scope !207, !nonnull !5, !noundef !5 ; 3 uses

@@ -205,15 +205,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.m = icmp eq i32 %.pre, 8
-  br i1 %i.m, label %.thread, label %bb.g
+  br i1 %i.m, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %bb.d
-  switch i32 %.pre, label %bb.g [
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %3 = phi i32 [ 8, %bb.e ], [ %.pre, %bb.d ]
+  switch i32 %3, label %bb.g [
     i32 8, label %.thread
     i32 10, label %.thread
   ]
 
-.thread:                                          ; preds = %bb.e, %bb.f, %bb.f
+.thread:                                          ; preds = %bb.f, %bb.f
   %i.n = call i32 @ff_add_format(ptr noundef nonnull %i.a, i64 noundef %indvars.iv) #12 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
   br i1 %i.o, label %.loopexit, label %bb.g

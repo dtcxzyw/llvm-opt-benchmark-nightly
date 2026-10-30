@@ -128,7 +128,7 @@ bb.a:
   %4 = alloca %"class.icu_78::UnicodeString", align 8 ; 11 uses
   %i.a = load i32, ptr %3, align 4, !tbaa !22
   %i.b = icmp sgt i32 %i.a, 0
-  br i1 %i.b, label %.thread.a, label %bb.b
+  br i1 %i.b, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -142,7 +142,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call noundef i32 %i.h(ptr noundef nonnull align 8 dereferenceable(272) %1)
   %i.j = icmp eq i32 %i.d, %i.i
-  br i1 %i.j, label %bb.d, label %.thread.a
+  br i1 %i.j, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
@@ -218,14 +218,18 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   resume { ptr, i32 } %i.aw
 
-.thread.sink.split:                               ; preds = %bb.h, %bb.f, %.split, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit
-  %.3.ph = phi ptr [ null, %bb.f ], [ null, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit ], [ null, %.split ], [ %i.av, %bb.h ]
+.thread.sink.split:                               ; preds = %bb.f, %bb.h, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit, %.split
+  %5 = phi i1 [ false, %bb.h ], [ true, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit ], [ true, %.split ], [ true, %bb.f ]
+  %.3.ph = phi ptr [ %i.av, %bb.h ], [ undef, %_ZNK6icu_7813UnicodeStringeqERKS0_.exit ], [ undef, %.split ], [ undef, %bb.f ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  br i1 %5, label %.thread, label %.thread.a
+
+.thread:                                          ; preds = %bb.c, %.thread.sink.split, %bb.a
   br label %.thread.a
 
-.thread.a:                                        ; preds = %.thread.sink.split, %bb.c, %bb.a
-  %.3 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ %.3.ph, %.thread.sink.split ]
+.thread.a:                                        ; preds = %.thread.sink.split, %.thread
+  %.3 = phi ptr [ null, %.thread ], [ %.3.ph, %.thread.sink.split ]
   ret ptr %.3
 }
 

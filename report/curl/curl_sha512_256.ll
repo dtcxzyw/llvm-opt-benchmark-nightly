@@ -11,20 +11,24 @@ target triple = "x86_64-pc-linux-gnu"
 define range(i32 0, 44) i32 @Curl_sha512_256it(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @EVP_MD_CTX_new() #2       ; 6 uses
-  %.not.i = icmp eq ptr %i.a, null
-  br i1 %.not.i, label %Curl_sha512_256_init.exit.thread, label %bb.b
+  %.not.i = icmp eq ptr %i.a, null                ; 2 uses
+  br i1 %.not.i, label %Curl_sha512_256_init.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @EVP_sha512_256() #2
   %i.c = tail call i32 @EVP_DigestInit_ex(ptr noundef nonnull %i.a, ptr noundef %i.b, ptr noundef null) #2
   %.not6.i = icmp eq i32 %i.c, 0
-  br i1 %.not6.i, label %bb.c, label %Curl_sha512_256_init.exit.a
+  br i1 %.not6.i, label %bb.c, label %Curl_sha512_256_init.exit
 
 bb.c:                                             ; preds = %bb.b
   tail call void @EVP_MD_CTX_free(ptr noundef nonnull %i.a) #2
   br label %Curl_sha512_256_init.exit.thread
 
-Curl_sha512_256_init.exit.a:                      ; preds = %bb.b
+Curl_sha512_256_init.exit:                        ; preds = %bb.a, %bb.b
+  %.0.i = phi i32 [ 27, %bb.a ], [ 0, %bb.b ]
+  br i1 %.not.i, label %Curl_sha512_256_init.exit.thread, label %Curl_sha512_256_init.exit.a
+
+Curl_sha512_256_init.exit.a:                      ; preds = %Curl_sha512_256_init.exit
   %i.d = tail call i32 @EVP_DigestUpdate(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef %2) #2
   %.not.i11.not = icmp eq i32 %i.d, 0
   %i.e = tail call i32 @EVP_DigestFinal_ex(ptr noundef nonnull %i.a, ptr noundef %0, ptr noundef null) #2
@@ -34,8 +38,8 @@ Curl_sha512_256_init.exit.a:                      ; preds = %bb.b
   %. = select i1 %i.f, i32 43, i32 0
   br label %Curl_sha512_256_init.exit.thread
 
-Curl_sha512_256_init.exit.thread:                 ; preds = %bb.c, %bb.a, %Curl_sha512_256_init.exit.a
-  %.0 = phi i32 [ %., %Curl_sha512_256_init.exit.a ], [ 2, %bb.c ], [ 27, %bb.a ]
+Curl_sha512_256_init.exit.thread:                 ; preds = %bb.c, %Curl_sha512_256_init.exit.a, %Curl_sha512_256_init.exit
+  %.0 = phi i32 [ %.0.i, %Curl_sha512_256_init.exit ], [ %., %Curl_sha512_256_init.exit.a ], [ 2, %bb.c ]
   ret i32 %.0
 }
 

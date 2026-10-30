@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(276) %1, i8 0, i64 276, i1 false)
-  %.not87 = icmp eq i32 %0, 0                     ; 30 uses
+  %.not87 = icmp eq i32 %0, 0                     ; 31 uses
   br i1 %.not87, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -420,7 +420,7 @@ bb.aa:                                            ; preds = %.critedge97
 bb.ab:                                            ; preds = %bb.aa
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 3
-  br i1 %exitcond.not, label %.loopexit.a, label %.backedge.backedge
+  br i1 %exitcond.not, label %.loopexit, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.ab, %.thread161
   %indvars.iv.be = phi i64 [ %indvars.iv.next, %bb.ab ], [ %indvars.iv.next162, %.thread161 ]
@@ -430,14 +430,20 @@ bb.ab:                                            ; preds = %bb.aa
   %puts84 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.13) ; 0 uses
   %indvars.iv.next162 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not163 = icmp eq i64 %indvars.iv.next162, 3
-  br i1 %exitcond.not163, label %bb.ac, label %.backedge.backedge
+  br i1 %exitcond.not163, label %2, label %.backedge.backedge
 
-bb.ac:                                            ; preds = %.thread161
+2:                                                ; preds = %.thread161
   %putchar62 = tail call i32 @putchar(i32 10)     ; 0 uses
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.ab, %2
+  br i1 %.not87, label %.loopexit.a, label %bb.ac
+
+bb.ac:                                            ; preds = %.loopexit
   %i.br = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.7, i32 noundef 128) ; 0 uses
   br label %.loopexit.a
 
-.loopexit.a:                                      ; preds = %bb.ab, %bb.ac
+.loopexit.a:                                      ; preds = %.loopexit, %bb.ac
   %i.bs = call i32 @mbedtls_aria_setkey_enc(ptr noundef nonnull %1, ptr noundef nonnull @aria_test2_key, i32 noundef 128) ; 0 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.c, ptr noundef nonnull align 16 dereferenceable(16) @aria_test2_iv, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.b, i8 85, i64 48, i1 false)

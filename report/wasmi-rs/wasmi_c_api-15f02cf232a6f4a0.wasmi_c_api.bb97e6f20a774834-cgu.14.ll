@@ -204,22 +204,30 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 5 uses
   %i.d = icmp eq i64 %i.c, 0
-  br i1 %i.d, label %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE17clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit, label %bb.b
+  br i1 %i.d, label %1, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #17, !noalias !379
   %i.e = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 1, -9223372036854775808) %i.c, i64 noundef range(i64 1, 9) 1) #17, !noalias !379 ; 2 uses
   %i.f = icmp eq ptr %i.e, null
-  br i1 %i.f, label %bb.c, label %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE17clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit
+  br i1 %i.f, label %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE21try_clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit.i, label %1
 
-bb.c:                                             ; preds = %bb.b
+1:                                                ; preds = %bb.b, %bb.a
+  %.sroa.01.0.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.a ], [ %i.e, %bb.b ] ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.01.0.i.i, ptr nonnull readonly align 1 %i.a, i64 range(i64 0, -9223372036854775808) %i.c, i1 false)
+  br label %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE21try_clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit.i
+
+_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE21try_clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit.i: ; preds = %1, %bb.b
+  %.sroa.0.0.i.i = phi ptr [ %.sroa.01.0.i.i, %1 ], [ null, %bb.b ] ; 2 uses
+  %2 = icmp eq ptr %.sroa.0.0.i.i, null
+  br i1 %2, label %bb.c, label %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE17clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit, !prof !7
+
+bb.c:                                             ; preds = %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE21try_clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit.i
   tail call void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 1, i64 noundef range(i64 0, -9223372036854775808) %i.c) #18, !noalias !380
   unreachable
 
-_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE17clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit: ; preds = %bb.a, %bb.b
-  %.sroa.01.0.i.i = phi ptr [ inttoptr (i64 1 to ptr), %bb.a ], [ %i.e, %bb.b ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.01.0.i.i, ptr nonnull readonly align 1 %i.a, i64 range(i64 0, -9223372036854775808) %i.c, i1 false)
-  %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.01.0.i.i, 0
+_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE17clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit: ; preds = %_RNvMs1_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxShE21try_clone_from_ref_inCsg6ypMx2A1Am_11wasmi_c_api.exit.i
+  %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0.i.i, 0
   %i.h = insertvalue { ptr, i64 } %i.g, i64 %i.c, 1
   ret { ptr, i64 } %i.h
 }

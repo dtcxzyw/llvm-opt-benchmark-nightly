@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ap = tail call i32 @llvm.umin.i32(i32 %.0, i32 %i.ao)
   %i.aq = zext i32 %i.ap to i64                   ; 2 uses
   %i.ar = lshr i32 %i.d, 12
-  %i.as = and i32 %i.ar, 15                       ; 3 uses
+  %i.as = and i32 %i.ar, 15                       ; 4 uses
   %i.at = icmp samesign ult i32 %i.as, 4
   br i1 %i.at, label %board_processor_id.exit, label %bb.i
 
@@ -230,11 +230,12 @@ bb.j:                                             ; preds = %board_processor_id.
   br i1 %.not.i45, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %board_processor_id.exit
-  %write_smpboot64.sink.i = phi ptr [ @write_smpboot, %bb.j ], [ @write_smpboot64, %board_processor_id.exit ]
   %i.bb = getelementptr inbounds nuw i8, ptr %i.au, i64 480
   store i64 768, ptr %i.bb, align 8
+  %2 = icmp eq i32 %i.as, 1
+  %spec.select.i = select i1 %2, ptr @write_smpboot, ptr @write_smpboot64
   %i.bc = getelementptr inbounds nuw i8, ptr %i.au, i64 520
-  store ptr %write_smpboot64.sink.i, ptr %i.bc, align 8
+  store ptr %spec.select.i, ptr %i.bc, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.au, i64 528
   store ptr @reset_secondary, ptr %i.bd, align 8
   br label %bb.l

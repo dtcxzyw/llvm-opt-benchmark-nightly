@@ -145,18 +145,21 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %.lr.ph
   %i.j = icmp ne i16 %i.i, 11822
   %i.k = zext i1 %i.j to i32
   %i.l = icmp eq i32 %i.k, 0
-  br i1 %i.l, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, label %bb.c, !llvm.loop !26
+  br i1 %i.l, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i12, label %bb.c, !llvm.loop !26
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10: ; preds = %.lr.ph
   %lhsc = load i8, ptr %i.g, align 1
   %i.m = icmp eq i8 %lhsc, 46
-  br i1 %i.m, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, label %bb.c, !llvm.loop !26
+  br i1 %i.m, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i12, label %bb.c, !llvm.loop !26
+
+_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i12: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10
+  br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, !llvm.loop !26
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %.lr.ph, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10
   tail call void %3(ptr %2, i64 %i.h, ptr nonnull %i.g), !inline_history !27
   br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i10, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.c
+_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i12, %bb.c
   %i.n = tail call ptr @readdir(ptr noundef nonnull %i.c) ; 2 uses
   %.not = icmp eq ptr %i.n, null
   br i1 %.not, label %._crit_edge, label %.lr.ph

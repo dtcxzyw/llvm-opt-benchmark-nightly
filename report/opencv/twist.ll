@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
   %i.bu = call float @llvm.fmuladd.f32(float %i.az, float %i.bg, float %i.bt)
   %i.bv = extractelement <2 x float> %i.bo, i64 1
   %i.bw = call float @llvm.fmuladd.f32(float %i.bv, float %i.bu, float %i.br) ; 2 uses
-  %i.bx = fcmp une float %i.bw, 0.000000e+00
+  %i.bx = fcmp une float %i.bw, 0.000000e+00      ; 4 uses
   br i1 %i.bx, label %bb.v, label %_ZNK2cv4MatxIfLi3ELi3EE3invEiPb.exit
 
 bb.v:                                             ; preds = %bb.u
@@ -234,6 +234,9 @@ _ZNK2cv4MatxIfLi3ELi3EE3invEiPb.exit:             ; preds = %bb.u, %bb.v
   %i.cs = phi <2 x float> [ %i.cr, %bb.v ], [ zeroinitializer, %bb.u ]
   %i.ct = phi <2 x float> [ %i.cq, %bb.v ], [ zeroinitializer, %bb.u ]
   %i.cu = phi <2 x float> [ %i.cp, %bb.v ], [ zeroinitializer, %bb.u ]
+  %18 = select i1 %i.bx, <2 x float> %i.cs, <2 x float> zeroinitializer
+  %19 = select i1 %i.bx, <2 x float> %i.ct, <2 x float> zeroinitializer
+  %20 = select i1 %i.bx, <2 x float> %i.cu, <2 x float> zeroinitializer
   %i.cv = load i32, ptr %i.b, align 4, !tbaa !16  ; 2 uses
   %i.cw = icmp sgt i32 %i.cv, 0
   br i1 %i.cw, label %.lr.ph, label %._crit_edge
@@ -345,11 +348,11 @@ bb.ae:                                            ; preds = %_ZNK2cv3Mat2atIfEER
   %i.ff = shufflevector <2 x float> %i.fb, <2 x float> %i.ez, <4 x i32> <i32 1, i32 3, i32 1, i32 3>
   %i.fg = insertelement <2 x float> poison, float %i.eu, i64 0
   %i.fh = shufflevector <2 x float> %i.fg, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.fi = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cu, <2 x float> %i.fh, <2 x float> zeroinitializer)
+  %i.fi = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %20, <2 x float> %i.fh, <2 x float> zeroinitializer)
   %i.fj = insertelement <2 x float> poison, float %i.ey, i64 0
   %i.fk = shufflevector <2 x float> %i.fj, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.fl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ct, <2 x float> %i.fk, <2 x float> %i.fi)
-  %i.fm = fadd <2 x float> %i.cs, %i.fl           ; 6 uses
+  %i.fl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %i.fk, <2 x float> %i.fi)
+  %i.fm = fadd <2 x float> %18, %i.fl             ; 6 uses
   %i.fn = extractelement <2 x float> %i.fm, i64 0 ; 3 uses
   %i.fo = fdiv float %i.fn, %i.eo                 ; 2 uses
   %i.fp = extractelement <2 x float> %i.fm, i64 1 ; 2 uses

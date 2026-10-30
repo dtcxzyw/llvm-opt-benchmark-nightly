@@ -114,7 +114,7 @@ bb.h:                                             ; preds = %bb.f
     i32 1, label %.loopexit.loopexit107
   ]
 
-bb.i:                                             ; preds = %bb.h, %bb.c, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.d, %bb.e
+bb.i:                                             ; preds = %bb.c, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %switch.early.test, %bb.d, %bb.e, %bb.h
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.a
   br i1 %exitcond.not, label %._crit_edge, label %bb.c
@@ -229,17 +229,18 @@ bb.f:                                             ; preds = %bb.e
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = sub i64 %i.u, %i.b
   %i.w = trunc i64 %i.v to i32
-  %i.x = icmp ult i32 %2, %i.w
+  %i.x = icmp ult i32 %2, %i.w                    ; 2 uses
   br i1 %i.x, label %yc_bounds_check.exit159.thread, label %yc_bounds_check.exit159
 
 yc_bounds_check.exit159.thread:                   ; preds = %bb.f
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.6) #3
   %i.y = tail call i32 @cli_append_potentially_unwanted(ptr noundef %0, ptr noundef nonnull @.str.7) #3 ; 0 uses
-  br label %.loopexit
+  br label %yc_bounds_check.exit159
 
-yc_bounds_check.exit159:                          ; preds = %bb.f
+yc_bounds_check.exit159:                          ; preds = %bb.f, %yc_bounds_check.exit159.thread
   %.not154 = icmp eq i32 %.1237, 0
-  br i1 %.not154, label %.loopexit, label %bb.g
+  %or.cond = select i1 %i.x, i1 true, i1 %.not154
+  br i1 %or.cond, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %yc_bounds_check.exit159
   %i.z = add i32 %.1237, -1
@@ -426,8 +427,8 @@ bb.ac:                                            ; preds = %bb.ab
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.b
 
-.loopexit:                                        ; preds = %bb.ac, %yc_bounds_check.exit159, %bb.a, %yc_bounds_check.exit173, %yc_bounds_check.exit171, %yc_bounds_check.exit169, %yc_bounds_check.exit167, %yc_bounds_check.exit165, %yc_bounds_check.exit163, %yc_bounds_check.exit161, %yc_bounds_check.exit159.thread, %yc_bounds_check.exit157, %yc_bounds_check.exit, %yc_bounds_check.exit175
-  %.0143 = phi i32 [ 2, %yc_bounds_check.exit159.thread ], [ 2, %yc_bounds_check.exit ], [ 2, %yc_bounds_check.exit173 ], [ 1, %yc_bounds_check.exit175 ], [ 2, %yc_bounds_check.exit157 ], [ 2, %yc_bounds_check.exit171 ], [ 0, %bb.a ], [ 2, %yc_bounds_check.exit161 ], [ 2, %yc_bounds_check.exit163 ], [ 2, %yc_bounds_check.exit165 ], [ 2, %yc_bounds_check.exit167 ], [ 2, %yc_bounds_check.exit169 ], [ 2, %yc_bounds_check.exit159 ], [ 0, %bb.ac ]
+.loopexit:                                        ; preds = %bb.ac, %yc_bounds_check.exit159, %bb.a, %yc_bounds_check.exit173, %yc_bounds_check.exit171, %yc_bounds_check.exit169, %yc_bounds_check.exit167, %yc_bounds_check.exit165, %yc_bounds_check.exit163, %yc_bounds_check.exit161, %yc_bounds_check.exit157, %yc_bounds_check.exit, %yc_bounds_check.exit175
+  %.0143 = phi i32 [ 2, %yc_bounds_check.exit171 ], [ 2, %yc_bounds_check.exit ], [ 2, %yc_bounds_check.exit173 ], [ 1, %yc_bounds_check.exit175 ], [ 2, %yc_bounds_check.exit157 ], [ 2, %yc_bounds_check.exit169 ], [ 0, %bb.a ], [ 2, %yc_bounds_check.exit161 ], [ 2, %yc_bounds_check.exit163 ], [ 2, %yc_bounds_check.exit165 ], [ 2, %yc_bounds_check.exit167 ], [ 2, %yc_bounds_check.exit159 ], [ 0, %bb.ac ]
   ret i32 %.0143
 }
 

@@ -125,18 +125,22 @@ FormatterPos.exit23.i:                            ; preds = %.fold.split24.i19.i
 
 _cmsGetFormatterAlpha.exit.thread:                ; preds = %FormatterPos.exit23.i
   tail call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef %i.aa, i32 noundef 8, ptr noundef nonnull @.str) #7
-  br label %.loopexit
+  br label %_cmsGetFormatterAlpha.exit
 
 _cmsGetFormatterAlpha.exit.a:                     ; preds = %FormatterPos.exit23.i
   %i.ag = zext nneg i32 %.0.i.i to i64
   %i.ah = getelementptr inbounds nuw [48 x i8], ptr @_cmsGetFormatterAlpha.FormattersAlpha, i64 %i.ag
   %i.ai = zext nneg i32 %.0.i18.i to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.ai
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !37 ; 3 uses
-  %6 = icmp eq ptr %i.ak, null
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !37
+  br label %_cmsGetFormatterAlpha.exit
+
+_cmsGetFormatterAlpha.exit:                       ; preds = %_cmsGetFormatterAlpha.exit.thread, %_cmsGetFormatterAlpha.exit.a
+  %.0.i = phi ptr [ null, %_cmsGetFormatterAlpha.exit.thread ], [ %i.ak, %_cmsGetFormatterAlpha.exit.a ] ; 3 uses
+  %6 = icmp eq ptr %.0.i, null
   br i1 %6, label %.loopexit, label %bb.k
 
-bb.k:                                             ; preds = %_cmsGetFormatterAlpha.exit.a
+bb.k:                                             ; preds = %_cmsGetFormatterAlpha.exit
   %i.al = icmp eq i32 %i.p, 1
   br i1 %i.al, label %.preheader, label %bb.m
 
@@ -171,7 +175,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %.071108 = phi ptr [ %i.ay, %.lr.ph ], [ %i.ba, %bb.l ] ; 2 uses
   %.072107 = phi ptr [ %i.ax, %.lr.ph ], [ %i.az, %bb.l ] ; 2 uses
   %.074106 = phi i32 [ 0, %.lr.ph ], [ %i.bb, %bb.l ]
-  tail call void %i.ak(ptr noundef %.071108, ptr noundef %.072107) #7
+  tail call void %.0.i(ptr noundef %.071108, ptr noundef %.072107) #7
   %i.az = getelementptr inbounds nuw i8, ptr %.072107, i64 %i.at
   %i.ba = getelementptr inbounds nuw i8, ptr %.071108, i64 %i.av
   %i.bb = add nuw i32 %.074106, 1                 ; 2 uses
@@ -350,7 +354,7 @@ bb.n:                                             ; preds = %.preheader84.us, %b
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !41 ; 2 uses
   %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv122 ; 2 uses
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !41 ; 2 uses
-  tail call void %i.ak(ptr noundef %i.en, ptr noundef %i.ep) #7
+  tail call void %.0.i(ptr noundef %i.en, ptr noundef %i.ep) #7
   %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv122
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !10
   %i.es = zext i32 %i.er to i64
@@ -658,7 +662,7 @@ bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge, %.preheader, %.lr.ph112, %_cmsGetFormatterAlpha.exit.thread, %._crit_edge96, %_cmsGetFormatterAlpha.exit.a, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+.loopexit:                                        ; preds = %._crit_edge, %.preheader, %.lr.ph112, %._crit_edge96, %_cmsGetFormatterAlpha.exit, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7

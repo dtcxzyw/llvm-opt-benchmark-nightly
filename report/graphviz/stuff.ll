@@ -204,7 +204,7 @@ declare ptr @agget(ptr noundef, ptr noundef) local_unnamed_addr #6
 ; Function Attrs: nounwind uwtable
 define internal fastcc double @setEdgeLen(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2) unnamed_addr #4 {
 bb.a:
-  %i.a = alloca double, align 8                   ; 5 uses
+  %i.a = alloca double, align 8                   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.b = tail call ptr @agfstout(ptr noundef %0, ptr noundef nonnull %1) #22 ; 3 uses
   %.not19 = icmp eq ptr %i.b, null
@@ -240,7 +240,7 @@ bb.b:                                             ; preds = %.lr.ph.split
   br i1 %i.m, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = load double, ptr %i.a, align 8, !tbaa !18 ; 3 uses
+  %i.n = load double, ptr %i.a, align 8, !tbaa !18 ; 2 uses
   %i.o = fcmp olt double %i.n, 0.000000e+00
   br i1 %i.o, label %bb.e, label %bb.d
 
@@ -249,20 +249,24 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load i32, ptr @Nop, align 4
   %i.r = icmp ne i32 %i.q, 0
   %or.cond.i = select i1 %i.p, i1 true, i1 %i.r
-  br i1 %or.cond.i, label %lenattr.exit.thread17, label %bb.e
+  br i1 %or.cond.i, label %lenattr.exit._crit_edge, label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
+bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.19, ptr noundef nonnull %i.i) #22
   %i.s = call ptr @agnameof(ptr noundef %0) #22
   %i.t = call i32 (i32, ptr, ...) @agerr(i32 noundef 3, ptr noundef nonnull @.str.17, ptr noundef %i.s, double noundef 1.000000e+00) #22 ; 0 uses
   br label %lenattr.exit.thread
 
+lenattr.exit._crit_edge:                          ; preds = %bb.d
+  %.pre = load double, ptr %i.a, align 8, !tbaa !18
+  br label %lenattr.exit.thread17
+
 lenattr.exit.thread:                              ; preds = %.lr.ph.split, %bb.e
   store double 1.000000e+00, ptr %i.a, align 8, !tbaa !18
   br label %lenattr.exit.thread17
 
-lenattr.exit.thread17:                            ; preds = %bb.d, %lenattr.exit.thread
-  %i.u = phi double [ %i.n, %bb.d ], [ 1.000000e+00, %lenattr.exit.thread ] ; 2 uses
+lenattr.exit.thread17:                            ; preds = %lenattr.exit._crit_edge, %lenattr.exit.thread
+  %i.u = phi double [ %.pre, %lenattr.exit._crit_edge ], [ 1.000000e+00, %lenattr.exit.thread ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.01320, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !35
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 184

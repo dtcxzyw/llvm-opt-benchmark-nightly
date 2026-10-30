@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.a
   %i.n = sext i32 %3 to i64
   %i.o = shl nsw i64 %i.n, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %4, ptr readonly align 4 %2, i64 %i.o, i1 false)
-  %i.p = icmp sgt i32 %3, 0                       ; 2 uses
+  %i.p = icmp sgt i32 %3, 0
   br i1 %i.p, label %.lr.ph.preheader.i.i, label %PaletteHasNonMonotonousDeltas.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.e
@@ -343,7 +343,7 @@ bb.f:                                             ; preds = %PaletteHasNonMonoto
 bb.g:                                             ; preds = %bb.f
   %i.cu = load i32, ptr %4, align 4, !tbaa !9
   %i.cv = icmp eq i32 %i.cu, 0
-  br i1 %i.cv, label %bb.h, label %.preheader.preheader.i
+  br i1 %i.cv, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.cw = add nsw i32 %3, -1                      ; 2 uses
@@ -352,14 +352,15 @@ bb.h:                                             ; preds = %bb.g
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !9
   store i32 0, ptr %i.cy, align 4, !tbaa !9
   store i32 %i.cz, ptr %4, align 4, !tbaa !9
-  br label %.preheader.preheader.i
+  br label %bb.i
 
-bb.i:                                             ; preds = %bb.f
-  br i1 %i.p, label %.preheader.preheader.i, label %PaletteSortMinimizeDeltas.exit
+bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
+  %.036.i = phi i32 [ %i.cw, %bb.h ], [ %3, %bb.g ], [ %3, %bb.f ] ; 2 uses
+  %6 = icmp sgt i32 %.036.i, 0
+  br i1 %6, label %.preheader.preheader.i, label %PaletteSortMinimizeDeltas.exit
 
-.preheader.preheader.i:                           ; preds = %bb.i, %bb.h, %bb.g
-  %.03654.i = phi i32 [ %3, %bb.i ], [ %3, %bb.g ], [ %i.cw, %bb.h ]
-  %wide.trip.count51.i = zext nneg i32 %.03654.i to i64 ; 2 uses
+.preheader.preheader.i:                           ; preds = %bb.i
+  %wide.trip.count51.i = zext nneg i32 %.036.i to i64 ; 2 uses
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.k, %.preheader.preheader.i

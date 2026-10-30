@@ -202,7 +202,7 @@ bb.bl:                                            ; preds = %bb.bk
   %spec.select = zext i1 %cond.fr to i32
   br label %.critedge230
 
-.critedge230:                                     ; preds = %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.at, %bb.ax, %bb.av, %bb.aw, %bb.ah, %bb.ag, %bb.y, %bb.x, %bb.w, %bb.bl, %.loopexit, %bb.bk, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.bj, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.f, %bb.e, %bb.b, %bb.a, %bb.bi
+.critedge230:                                     ; preds = %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.at, %bb.ax, %bb.av, %bb.aw, %bb.ah, %bb.ag, %bb.y, %bb.x, %bb.w, %bb.bl, %bb.bk, %.loopexit, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.bj, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.f, %bb.e, %bb.b, %bb.a, %bb.bi
   %.7 = phi i32 [ 0, %bb.b ], [ 0, %bb.bj ], [ 0, %bb.bh ], [ 0, %bb.bd ], [ 0, %bb.q ], [ 0, %bb.n ], [ 0, %bb.p ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.f ], [ 0, %bb.r ], [ 0, %bb.t ], [ 0, %bb.s ], [ 0, %.loopexit ], [ %spec.select, %bb.bl ], [ 0, %bb.u ], [ 0, %bb.bf ], [ 0, %bb.ae ], [ 0, %bb.ad ], [ 0, %bb.aa ], [ 0, %bb.bk ], [ 0, %bb.ac ], [ 0, %bb.ab ], [ 0, %bb.bg ], [ 0, %bb.al ], [ 0, %bb.ak ], [ 0, %bb.aj ], [ 0, %bb.ai ], [ 0, %bb.ah ], [ 0, %bb.bi ], [ 0, %bb.e ], [ 0, %bb.a ], [ 0, %bb.am ], [ 0, %bb.be ], [ 0, %bb.y ], [ 0, %bb.ax ], [ 0, %bb.ay ], [ 0, %bb.az ], [ 0, %bb.ba ], [ 0, %bb.bb ], [ 0, %bb.bc ], [ 0, %bb.w ], [ 0, %bb.x ], [ 0, %bb.ag ], [ 0, %bb.aw ], [ 0, %bb.av ], [ 0, %bb.at ], [ 0, %bb.an ], [ 0, %bb.ao ], [ 0, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ]
   ret i32 %.7
 }
@@ -605,7 +605,7 @@ bb.g:                                             ; preds = %._crit_edge
   br i1 %switch.i, label %bb.h, label %add_entropy_coding_method_.exit.thread33
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !10
   %i.ad = load i32, ptr @FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ORDER_LEN, align 4, !tbaa !9
   %i.ae = tail call i32 @FLAC__bitwriter_write_raw_uint32(ptr noundef %4, i32 noundef %i.ac, i32 noundef %i.ad) #5
@@ -621,12 +621,13 @@ bb.i:                                             ; preds = %add_entropy_coding_
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !58
   %i.ah = load i32, ptr %i.b, align 8, !tbaa !56
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !10 ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !18
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !19
-  %i.an = load i32, ptr %i.ab, align 8, !tbaa !10
+  %i.an = load i32, ptr %5, align 8, !tbaa !10
   %i.ao = icmp eq i32 %.pr, 1
   %i.ap = zext i1 %i.ao to i32
   %i.aq = tail call fastcc i32 @add_residual_partitioned_rice_(ptr noundef %4, ptr noundef %i.ag, i32 noundef %1, i32 noundef %i.ah, ptr noundef %i.ak, ptr noundef %i.am, i32 noundef %i.an, i32 noundef %i.ap)
@@ -896,7 +897,7 @@ bb.j:                                             ; preds = %._crit_edge53
   br i1 %switch.i, label %bb.k, label %add_entropy_coding_method_.exit.thread47
 
 bb.k:                                             ; preds = %bb.j
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.av = load i32, ptr %i.au, align 8, !tbaa !10
   %i.aw = load i32, ptr @FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ORDER_LEN, align 4, !tbaa !9
   %i.ax = tail call i32 @FLAC__bitwriter_write_raw_uint32(ptr noundef %4, i32 noundef %i.av, i32 noundef %i.aw) #5
@@ -912,12 +913,13 @@ bb.l:                                             ; preds = %add_entropy_coding_
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 424
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !69
   %i.ba = load i32, ptr %i.b, align 8, !tbaa !65
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !10 ; 2 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !18
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !19
-  %i.bg = load i32, ptr %i.au, align 8, !tbaa !10
+  %i.bg = load i32, ptr %5, align 8, !tbaa !10
   %i.bh = icmp eq i32 %.pr, 1
   %i.bi = zext i1 %i.bh to i32
   %i.bj = tail call fastcc i32 @add_residual_partitioned_rice_(ptr noundef %4, ptr noundef %i.az, i32 noundef %1, i32 noundef %i.ba, ptr noundef %i.bd, ptr noundef %i.bf, i32 noundef %i.bg, i32 noundef %i.bi)

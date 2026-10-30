@@ -202,16 +202,22 @@ _ZN11AstCoverInc14toggleCovExprpEP11AstNodeExpr.exit: ; preds = %_ZN11AstCoverIn
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !94
   %i.ab = call noundef ptr @_ZNK12AstNodeDType12skipRefIterpEbbb(ptr noundef nonnull align 8 dereferenceable(162) %i.aa, i1 noundef zeroext true, i1 noundef zeroext true, i1 noundef zeroext true) ; 3 uses
   %.not.i = icmp eq ptr %i.ab, null
-  br i1 %.not.i, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.thread, label %bb.g
+  br i1 %.not.i, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN11AstCoverInc14toggleCovExprpEP11AstNodeExpr.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 64
   %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.ac, align 8, !tbaa !114
   %i.ad = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 74
-  br i1 %i.ad, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.thread
+  %spec.select = select i1 %i.ad, ptr %i.ab, ptr null
+  br label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit
 
-_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a: ; preds = %bb.g
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 164
+_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit: ; preds = %bb.g, %_ZN11AstCoverInc14toggleCovExprpEP11AstNodeExpr.exit
+  %3 = phi ptr [ null, %_ZN11AstCoverInc14toggleCovExprpEP11AstNodeExpr.exit ], [ %spec.select, %bb.g ] ; 2 uses
+  %.not = icmp eq ptr %3, null
+  br i1 %.not, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.thread, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a
+
+_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a: ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit
+  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 164
   %.sroa.0.0.copyload.i.i = load i8, ptr %i.ae, align 4, !tbaa !116
   switch i8 %.sroa.0.0.copyload.i.i, label %_ZNK13AstBasicDType8isOpaqueEv.exit [
     i8 5, label %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.thread
@@ -317,7 +323,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef 160) #22
   br label %bb.v
 
-_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.thread: ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %bb.g, %_ZN11AstCoverInc14toggleCovExprpEP11AstNodeExpr.exit
+_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.thread: ; preds = %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit.a, %_ZN7AstNode4castI13AstBasicDType12AstNodeDTypeEEPT_PT0_.exit
   %i.au = call noundef ptr @_ZN6AstNeq8newTypedEP8FileLineP11AstNodeExprS3_(ptr noundef %i.y, ptr noundef nonnull %i.f, ptr noundef nonnull %i.l)
   br label %bb.p
 

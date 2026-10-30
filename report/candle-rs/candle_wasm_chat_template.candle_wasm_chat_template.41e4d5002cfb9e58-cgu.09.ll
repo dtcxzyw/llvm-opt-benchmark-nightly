@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr %i.r, ptr %i.h, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 3 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 %i.s, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 24
@@ -223,7 +223,7 @@ bb.e:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.p
   %i.aj = phi ptr [ %i.ak, %bb.p ], [ %i.r, %bb.d ] ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4 ; 5 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4 ; 6 uses
   %i.al = load i32, ptr %i.aj, align 4, !noalias !154, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -231,6 +231,8 @@ bb.e:                                             ; preds = %.lr.ph
           to label %bb.g unwind label %bb.e
 
 _RNvXse_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtCsej0D7ZFyXq_12wasm_bindgen7JsValueENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCs5EKAXG1naGG_25candle_wasm_chat_template.exit.i: ; preds = %bb.p, %bb.d
+  %.lcssa = phi ptr [ undef, %bb.d ], [ %i.ak, %bb.p ]
+  store ptr %.lcssa, ptr %.sroa.4.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !155
   store i64 %i.s, ptr %i.b, align 8, !noalias !155
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -335,10 +337,10 @@ bb.r:                                             ; preds = %bb.c
   unreachable
 
 .thread:                                          ; preds = %.thread21, %bb.s
-  %.pn916 = phi { ptr, i32 } [ %i.bf, %bb.s ], [ %.pn25, %.thread21 ]
+  %.pn916 = phi { ptr, i32 } [ %.pn25, %.thread21 ], [ %i.bf, %bb.s ]
   resume { ptr, i32 } %.pn916
 
-bb.s:                                             ; preds = %bb.c, %bb.a
+bb.s:                                             ; preds = %bb.a, %bb.c
   %i.bf = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtCsej0D7ZFyXq_12wasm_bindgen7JsValueEECs5EKAXG1naGG_25candle_wasm_chat_template(ptr noalias nofree noundef align 8 dereferenceable(24) %i.j) #16
@@ -442,14 +444,14 @@ bb.e:                                             ; preds = %bb.g
 bb.f:                                             ; preds = %._crit_edge
   %i.t = landingpad { ptr, i32 }
           cleanup
-  %.val6 = load ptr, ptr %1, align 8, !nonnull !4, !align !9, !noundef !4
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val7 = load i64, ptr %i.u, align 8, !noundef !4
+  %.val7 = load i64, ptr %i.u, align 8
+  %.val6 = load ptr, ptr %1, align 8, !nonnull !4, !align !9, !noundef !4
   store i64 %.val7, ptr %.val6, align 8
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtCs5EKAXG1naGG_25candle_wasm_chat_template7MessageEEB1r_.exit
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtCs5EKAXG1naGG_25candle_wasm_chat_template7MessageEEB1r_.exit: ; preds = %bb.g, %bb.f
-  %.pn10 = phi { ptr, i32 } [ %i.v, %bb.g ], [ %i.t, %bb.f ]
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtCs5EKAXG1naGG_25candle_wasm_chat_template7MessageEEB1r_.exit: ; preds = %bb.f, %bb.g
+  %.pn10 = phi { ptr, i32 } [ %i.t, %bb.f ], [ %i.v, %bb.g ]
   resume { ptr, i32 } %.pn10
 
 bb.g:                                             ; preds = %bb.b

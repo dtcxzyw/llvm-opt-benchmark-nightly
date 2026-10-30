@@ -89,7 +89,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
 _lv_tree_class_create_node.exit.a:                ; preds = %get_instance_size.exit.i, %_lv_tree_class_create_node.exit.a
   br label %_lv_tree_class_create_node.exit.a
 
-bb.g:                                             ; preds = %bb.c, %bb.f
+bb.g:                                             ; preds = %bb.f, %bb.c
   %i.ac = load ptr, ptr %i.h, align 8, !tbaa !17
   tail call fastcc void @_lv_tree_node_construct(ptr noundef %i.ac, ptr noundef %i.f)
   ret ptr %i.f
@@ -288,9 +288,13 @@ bb.h:                                             ; preds = %.lr.ph, %bb.g
 ._crit_edge:                                      ; preds = %bb.g, %bb.f
   %i.p = icmp ne ptr %4, null                     ; 2 uses
   %or.cond3 = and i1 %i.c, %i.p
-  br i1 %or.cond3, label %.loopexit.sink.split, label %bb.i
+  br i1 %or.cond3, label %6, label %bb.i
 
-bb.i:                                             ; preds = %._crit_edge
+6:                                                ; preds = %._crit_edge
+  tail call void %4(ptr noundef nonnull %0, ptr noundef %5) #2
+  br label %bb.i
+
+bb.i:                                             ; preds = %6, %._crit_edge
   %i.q = icmp eq i8 %1, 1
   br i1 %i.q, label %bb.j, label %.loopexit
 
@@ -307,11 +311,11 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %brmerge.not = and i1 %i.p, %i.s
   br i1 %brmerge.not, label %.loopexit.sink.split, label %.loopexit
 
-.loopexit.sink.split:                             ; preds = %bb.l, %._crit_edge
+.loopexit.sink.split:                             ; preds = %bb.l
   tail call void %4(ptr noundef nonnull %0, ptr noundef %5) #2
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.h, %.loopexit.sink.split, %bb.l, %bb.a, %bb.i, %bb.k, %bb.e, %bb.d
+.loopexit:                                        ; preds = %bb.h, %bb.l, %bb.a, %bb.i, %.loopexit.sink.split, %bb.k, %bb.e, %bb.d
   %.1 = phi i1 [ %i.s, %bb.l ], [ false, %bb.k ], [ false, %bb.e ], [ true, %bb.a ], [ true, %.loopexit.sink.split ], [ false, %bb.d ], [ true, %bb.i ], [ false, %bb.h ]
   ret i1 %.1
 }

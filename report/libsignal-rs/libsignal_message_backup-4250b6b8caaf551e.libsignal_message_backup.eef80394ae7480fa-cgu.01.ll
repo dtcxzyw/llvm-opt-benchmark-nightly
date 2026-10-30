@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.c
   br i1 %.not9.i, label %bb.aa, label %bb.v
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = load i8, ptr %i.h, align 1, !alias.scope !1269, !noundef !4 ; 3 uses
+  %i.i = load i8, ptr %i.h, align 1, !alias.scope !1269, !noundef !4 ; 4 uses
   %i.j = icmp sgt i8 %i.i, -1
   br i1 %i.j, label %bb.x, label %bb.b
 
@@ -218,6 +218,7 @@ bb.e:                                             ; preds = %bb.t
   br i1 %i.l, label %bb.y, label %bb.u
 
 bb.f:                                             ; preds = %bb.v
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1270)
   %i.m = icmp samesign eq i64 %i.g, 2
   br i1 %i.m, label %bb.aa, label %bb.g
 
@@ -225,14 +226,16 @@ bb.g:                                             ; preds = %bb.f
   %i.n = and i8 %i.bz, 127
   %i.o = zext nneg i8 %i.n to i64
   %i.p = shl nuw nsw i64 %i.o, 7
+  %1 = and i8 %i.i, 127
+  %2 = zext nneg i8 %1 to i64
+  %3 = or disjoint i64 %i.p, %2
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 2
   %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 3
   %i.s = load i8, ptr %i.q, align 1, !alias.scope !1271, !noundef !4 ; 2 uses
   %i.t = and i8 %i.s, 127
   %i.u = zext nneg i8 %i.t to i64
   %i.v = shl nuw nsw i64 %i.u, 14
-  %1 = or disjoint i64 %i.v, %i.p
-  %i.w = or disjoint i64 %1, %3                   ; 2 uses
+  %i.w = or disjoint i64 %i.v, %3                 ; 2 uses
   %i.x = icmp sgt i8 %i.s, -1
   br i1 %i.x, label %bb.z, label %bb.h
 
@@ -334,14 +337,14 @@ bb.v:                                             ; preds = %bb.b
   %i.by = getelementptr inbounds nuw i8, ptr %i.h, i64 1
   %i.bz = load i8, ptr %i.by, align 1, !alias.scope !1269, !noundef !4 ; 3 uses
   %i.ca = icmp sgt i8 %i.bz, -1
-  %2 = and i8 %i.i, 127
-  %3 = zext nneg i8 %2 to i64                     ; 2 uses
   br i1 %i.ca, label %bb.w, label %bb.f
 
 bb.w:                                             ; preds = %bb.v
+  %4 = and i8 %i.i, 127
+  %5 = zext nneg i8 %4 to i64
   %i.cb = zext nneg i8 %i.bz to i64
   %i.cc = shl nuw nsw i64 %i.cb, 7
-  %i.cd = or disjoint i64 %i.cc, %3
+  %i.cd = or disjoint i64 %i.cc, %5
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.c
@@ -356,14 +359,14 @@ bb.y:                                             ; preds = %bb.e
   %i.cg = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.cf, 1
   br label %bb.af
 
-bb.z:                                             ; preds = %bb.g, %bb.i, %bb.k, %bb.m, %bb.o, %bb.q, %bb.s, %bb.w, %bb.x, %bb.u
-  %.sroa.17.0.ph.ph = phi i64 [ 10, %bb.u ], [ 1, %bb.x ], [ 2, %bb.w ], [ 9, %bb.s ], [ 8, %bb.q ], [ 3, %bb.g ], [ 4, %bb.i ], [ 5, %bb.k ], [ 6, %bb.m ], [ 7, %bb.o ] ; 2 uses
-  %.sroa.10.0.ph.ph = phi i64 [ %i.bx, %bb.u ], [ %i.ce, %bb.x ], [ %i.cd, %bb.w ], [ %i.bs, %bb.s ], [ %i.bk, %bb.q ], [ %i.w, %bb.g ], [ %i.ae, %bb.i ], [ %i.am, %bb.k ], [ %i.au, %bb.m ], [ %i.bc, %bb.o ]
-  %i.ch = inttoptr i64 %.sroa.10.0.ph.ph to ptr
-  %.not = icmp ugt i64 %.sroa.17.0.ph.ph, %i.g
+bb.z:                                             ; preds = %bb.g, %bb.i, %bb.k, %bb.m, %bb.o, %bb.q, %bb.s, %bb.x, %bb.w, %bb.u
+  %.sroa.17.0.ph.ph = phi i64 [ %i.bx, %bb.u ], [ %i.ce, %bb.x ], [ %i.cd, %bb.w ], [ %i.bs, %bb.s ], [ %i.bk, %bb.q ], [ %i.am, %bb.k ], [ %i.ae, %bb.i ], [ %i.w, %bb.g ], [ %i.bc, %bb.o ], [ %i.au, %bb.m ]
+  %.sroa.10.0.ph.ph = phi i64 [ 10, %bb.u ], [ 1, %bb.x ], [ 2, %bb.w ], [ 9, %bb.s ], [ 8, %bb.q ], [ 5, %bb.k ], [ 4, %bb.i ], [ 3, %bb.g ], [ 7, %bb.o ], [ 6, %bb.m ] ; 2 uses
+  %i.ch = inttoptr i64 %.sroa.17.0.ph.ph to ptr
+  %.not = icmp ugt i64 %.sroa.10.0.ph.ph, %i.g
   br i1 %.not, label %bb.ab, label %bb.ac, !prof !1273
 
-bb.aa:                                            ; preds = %bb.d, %bb.f, %bb.h, %bb.j, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %bb.b
+bb.aa:                                            ; preds = %bb.f, %bb.h, %bb.j, %bb.b, %bb.t, %bb.r, %bb.p, %bb.n, %bb.l, %bb.d
   %i.ci = tail call { i64, ptr } @_RNvMNtCsh1373Z0TDxr_8protobuf18coded_input_streamNtB2_16CodedInputStream22read_raw_varint64_slow(ptr noalias nofree noundef nonnull align 8 dereferenceable(112) %0)
   br label %bb.af
 
@@ -372,7 +375,7 @@ bb.ab:                                            ; preds = %bb.z
   unreachable
 
 bb.ac:                                            ; preds = %bb.z
-  %i.cj = add i64 %i.d, %.sroa.17.0.ph.ph         ; 2 uses
+  %i.cj = add i64 %i.d, %.sroa.10.0.ph.ph         ; 2 uses
   %i.ck = icmp ult i64 %i.cj, %i.d
   br i1 %i.ck, label %bb.ae, label %bb.ad
 
@@ -775,5 +778,5 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !1270 = !{!1266}
 !1271 = !{!1266, !1264}
 !1272 = !{!1268, !1266, !1267, !1264}
-!1273 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!1273 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
 end_hunk_1

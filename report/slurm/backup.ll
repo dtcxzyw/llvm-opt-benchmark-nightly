@@ -68,7 +68,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i8 1, ptr @primary_resumed, align 1
   call void @shutdown_threads() #4
   store i8 0, ptr @have_control, align 1
-  br label %.thread
+  br label %bb.j
 
 bb.e:                                             ; preds = %.preheader
   %i.t = icmp sgt i32 %i.n, 0                     ; 2 uses
@@ -79,11 +79,11 @@ bb.f:                                             ; preds = %bb.e
   store i8 1, ptr @have_control, align 1
   %i.u = call i32 @get_log_level() #4
   %i.v = icmp sgt i32 %i.u, 2
-  br i1 %i.v, label %bb.g, label %.thread
+  br i1 %i.v, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
   call void (i32, ptr, ...) @log_var(i32 noundef 3, ptr noundef nonnull @.str.2) #4
-  br label %.thread
+  br label %bb.j
 
 bb.h:                                             ; preds = %bb.e
   %i.w = call i32 @sleep(i32 noundef 1) #4        ; 0 uses
@@ -93,12 +93,14 @@ bb.i:                                             ; preds = %bb.h
   %i.x = call i32 @slurm_persist_conn_reopen(ptr noundef nonnull %0) #4 ; 0 uses
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.h, %bb.i
+bb.j:                                             ; preds = %bb.h, %bb.i, %bb.f, %bb.g, %bb.d
+  %1 = phi i1 [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.g ], [ true, %bb.i ], [ true, %bb.h ]
   %i.y = load i64, ptr @shutdown_time, align 8
   %.not7 = icmp eq i64 %i.y, 0
-  br i1 %.not7, label %.preheader, label %.thread
+  %or.cond9 = select i1 %1, i1 %.not7, i1 false
+  br i1 %or.cond9, label %.preheader, label %.thread
 
-.thread:                                          ; preds = %bb.j, %bb.g, %bb.f, %bb.d, %bb.a
+.thread:                                          ; preds = %bb.j, %bb.a
   call void @slurm_persist_conn_close(ptr noundef nonnull %0) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #4
   ret void

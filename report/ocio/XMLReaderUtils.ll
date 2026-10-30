@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .preheader:                                       ; preds = %bb.b, %bb.e
   %i.b = phi i8 [ %.pr, %bb.e ], [ %i.a, %bb.b ]
   %.08.i = phi ptr [ %i.d, %bb.e ], [ %0, %bb.b ]
-  %.0.i = phi i64 [ %i.e, %bb.e ], [ 0, %bb.b ]   ; 4 uses
+  %.0.i = phi i64 [ %i.e, %bb.e ], [ 0, %bb.b ]   ; 3 uses
   switch i8 %i.b, label %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit [
     i8 32, label %bb.d
     i8 13, label %bb.d
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.preheader, %.preheader, %.preheader, %.preheader, %.preheader, %.preheader
   %i.c = icmp eq i64 %.0.i, %1
-  br i1 %i.c, label %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit.thread, label %bb.e
+  br i1 %i.c, label %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %.08.i, i64 1 ; 2 uses
@@ -222,12 +222,13 @@ bb.e:                                             ; preds = %bb.d
   %.pr = load i8, ptr %i.d, align 1, !tbaa !13
   br label %.preheader, !llvm.loop !32
 
-_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit: ; preds = %.preheader
-  store i64 %.0.i, ptr %2, align 8, !tbaa !34
-  %i.f = icmp eq i64 %.0.i, %1
+_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit: ; preds = %.preheader, %bb.d
+  %.09.i = phi i64 [ %1, %bb.d ], [ %.0.i, %.preheader ] ; 2 uses
+  store i64 %.09.i, ptr %2, align 8, !tbaa !34
+  %i.f = icmp eq i64 %.09.i, %1
   br i1 %i.f, label %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit.thread, label %bb.f
 
-_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit.thread: ; preds = %bb.d, %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit
+_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit.thread: ; preds = %_ZN16OpenColorIO_v2_522FindFirstNonWhiteSpaceEPKcm.exit
   store i64 0, ptr %2, align 8, !tbaa !34
   br label %_ZN16OpenColorIO_v2_57IsSpaceEc.exit.thread.sink.split
 

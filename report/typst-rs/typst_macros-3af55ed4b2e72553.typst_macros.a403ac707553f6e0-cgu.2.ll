@@ -202,7 +202,7 @@ bb.ax:                                            ; preds = %bb.aw
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECscIE41xXMWxr_4heck(ptr nonnull align 8 %i.aa) #25
           to label %.thread unwind label %bb.al
 
-.thread:                                          ; preds = %bb.j, %bb.f, %.thread20, %bb.c, %bb.b
+.thread:                                          ; preds = %bb.f, %bb.j, %.thread20, %bb.c, %bb.b
   %.sroa.0.019 = phi i8 [ 0, %bb.b ], [ 1, %bb.f ], [ 0, %bb.j ], [ 1, %.thread20 ], [ %.sroa.0.1, %bb.c ]
   %.pn1118 = phi { ptr, i32 } [ %.pn7, %bb.b ], [ %i.ag, %bb.f ], [ %lpad.thr_comm.split-lp, %bb.j ], [ %.pn923, %.thread20 ], [ %i.ae, %bb.c ]
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1xwejQucwHj_5alloc6string6StringEECsjMPGGl8VONr_3syn(ptr align 8 %2) #25
@@ -605,10 +605,10 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 5 uses
   %i.h = alloca [56 x i8], align 8                ; 3 uses
-  %i.i = alloca [32 x i8], align 8                ; 8 uses
+  %i.i = alloca [32 x i8], align 8                ; 7 uses
   call void @_RNvNtCsjMPGGl8VONr_3syn5group14parse_brackets(ptr nonnull sret([56 x i8]) align 8 %i.h, ptr align 8 %1)
   %i.j = load i64, ptr %i.h, align 8
-  %i.k = trunc nuw i64 %i.j to i1
+  %i.k = trunc nuw i64 %i.j to i1                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   br i1 %i.k, label %.thread17, label %bb.b
 
@@ -647,8 +647,7 @@ bb.f:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
   store i64 0, ptr %0, align 8
-  call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsjMPGGl8VONr_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.i)
-  br label %bb.s
+  br label %bb.t
 
 bb.g:                                             ; preds = %bb.e
   invoke void @_RNvXsp_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtCsjMPGGl8VONr_3syn3lit6LitStrNtNtBO_5error5ErrorENtNtNtB7_3ops9try_trait3Try6branchBO_(ptr nonnull sret([24 x i8]) align 8 %i.f, ptr nonnull align 8 %i.e)
@@ -709,7 +708,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.invoke
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsjMPGGl8VONr_3syn3lit6LitStrEECse52LceO7DeS_12typst_macros(ptr nonnull align 8 %i.g)
-          to label %bb.t unwind label %.thread14
+          to label %bb.s unwind label %.thread14
 
 bb.r:                                             ; preds = %.thread, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
   %i.w = landingpad { ptr, i32 }
@@ -717,12 +716,15 @@ bb.r:                                             ; preds = %.thread, %.loopexit
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #26
   unreachable
 
-bb.s:                                             ; preds = %.thread17, %bb.t, %bb.f
-  ret void
+bb.s:                                             ; preds = %bb.q, %.thread17
+  br i1 %i.k, label %2, label %bb.t
 
-bb.t:                                             ; preds = %bb.q
+bb.t:                                             ; preds = %bb.s, %bb.f
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsjMPGGl8VONr_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.i)
-  br label %bb.s
+  br label %2
+
+2:                                                ; preds = %bb.t, %bb.s
+  ret void
 
 bb.u:                                             ; preds = %.thread
   resume { ptr, i32 } %.pn813

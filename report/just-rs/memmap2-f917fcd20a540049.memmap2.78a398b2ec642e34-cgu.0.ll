@@ -202,17 +202,29 @@ bb.a:
   %i.b = trunc nuw i64 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8
-  %.sroa.0.0 = select i1 %i.b, i64 %i.d, i64 0    ; 3 uses
-  %i.e = icmp slt i64 %.sroa.0.0, 0
+  %.sroa.0.0 = select i1 %i.b, i64 %i.d, i64 0    ; 2 uses
+  %i.e = icmp slt i64 %.sroa.0.0, 0               ; 2 uses
+  br i1 %i.e, label %4, label %2
+
+2:                                                ; preds = %bb.a
+  %3 = inttoptr i64 %.sroa.0.0 to ptr
+  br label %_RNvMs0_Csam9QwBXndzI_7memmap2NtB5_11MmapOptions12validate_len.exit
+
+4:                                                ; preds = %bb.a
+  %5 = tail call noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 21, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 33) #16
+  br label %_RNvMs0_Csam9QwBXndzI_7memmap2NtB5_11MmapOptions12validate_len.exit
+
+_RNvMs0_Csam9QwBXndzI_7memmap2NtB5_11MmapOptions12validate_len.exit: ; preds = %2, %4
+  %.sroa.3.0.i = phi ptr [ %5, %4 ], [ %3, %2 ]   ; 2 uses
   br i1 %i.e, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %bb.a
-  %2 = tail call noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 21, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 33) #16
+bb.b:                                             ; preds = %_RNvMs0_Csam9QwBXndzI_7memmap2NtB5_11MmapOptions12validate_len.exit
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %2, ptr %i.f, align 8
+  store ptr %.sroa.3.0.i, ptr %i.f, align 8
   br label %bb.h
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %_RNvMs0_Csam9QwBXndzI_7memmap2NtB5_11MmapOptions12validate_len.exit
+  %6 = ptrtoint ptr %.sroa.3.0.i to i64           ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 26
   %i.h = load i8, ptr %i.g, align 2, !range !57, !noundef !4
   %i.i = trunc nuw i8 %i.h to i1
@@ -252,7 +264,7 @@ bb.d:                                             ; preds = %_RNvNtCsam9QwBXndzI
   unreachable
 
 _RNvNtCsam9QwBXndzI_7memmap22os9page_size.exit.thread.i.i: ; preds = %_RNvNtCsam9QwBXndzI_7memmap22os9page_size.exit.i.i, %bb.c
-  %..i.i.i.i = tail call noundef range(i64 1, 0) i64 @llvm.umax.i64(i64 %.sroa.0.0, i64 1)
+  %..i.i.i.i = tail call noundef range(i64 1, 0) i64 @llvm.umax.i64(i64 %6, i64 1)
   %i.af = tail call noundef ptr @mmap64(ptr noundef null, i64 noundef %..i.i.i.i, i32 noundef 3, i32 noundef range(i32 1, -66584576) %i.aa, i32 noundef -1, i64 noundef 0) #14, !noalias !58 ; 2 uses
   %i.ag = icmp eq ptr %i.af, inttoptr (i64 -1 to ptr)
   br i1 %i.ag, label %bb.e, label %_RNvMNtCsam9QwBXndzI_7memmap22osNtB2_9MmapInner8map_anon.exit
@@ -281,7 +293,7 @@ _RNvMNtCsam9QwBXndzI_7memmap22osNtB2_9MmapInner8map_anon.exit: ; preds = %_RNvNt
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.af, ptr %i.ap, align 8
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0.0, ptr %i.aq, align 8
+  store i64 %6, ptr %i.aq, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_RNvMNtCsam9QwBXndzI_7memmap22osNtB2_9MmapInner8map_anon.exit, %bb.b

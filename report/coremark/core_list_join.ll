@@ -201,12 +201,12 @@ core_list_mergesort.exit:                         ; preds = %._crit_edge80.i, %.
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 2
   %i.eh = load i16, ptr %i.eg, align 2, !tbaa !33
   %.not17.i77 = icmp eq i16 %i.eh, %.sroa.6.0.lcssa
-  br i1 %.not17.i77, label %.lr.ph155, label %bb.ae
+  br i1 %.not17.i77, label %core_list_find.exit79, label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph27.i75
   %i.ei = load ptr, ptr %.01426.i76, align 8, !tbaa !37 ; 2 uses
   %.not16.i78 = icmp eq ptr %i.ei, null
-  br i1 %.not16.i78, label %core_list_find.exit79.a, label %.lr.ph27.i75, !llvm.loop !0
+  br i1 %.not16.i78, label %core_list_find.exit79, label %.lr.ph27.i75, !llvm.loop !0
 
 .lr.ph.i69:                                       ; preds = %core_list_mergesort.exit, %bb.af
   %.122.i70 = phi ptr [ %i.en, %bb.af ], [ %.149, %core_list_mergesort.exit ] ; 3 uses
@@ -215,25 +215,30 @@ bb.ae:                                            ; preds = %.lr.ph27.i75
   %i.el = load i16, ptr %i.ek, align 2, !tbaa !32
   %i.em = and i16 %i.el, 255
   %.not15.i71 = icmp eq i16 %i.em, %.sroa.0.0.lcssa
-  br i1 %.not15.i71, label %.lr.ph155, label %bb.af
+  br i1 %.not15.i71, label %core_list_find.exit79, label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph.i69
   %i.en = load ptr, ptr %.122.i70, align 8, !tbaa !37 ; 2 uses
   %.not.i72 = icmp eq ptr %i.en, null
-  br i1 %.not.i72, label %core_list_find.exit79.a, label %.lr.ph.i69, !llvm.loop !1
+  br i1 %.not.i72, label %core_list_find.exit79, label %.lr.ph.i69, !llvm.loop !1
 
-core_list_find.exit79.a:                          ; preds = %bb.af, %bb.ae
+core_list_find.exit79:                            ; preds = %.lr.ph.i69, %bb.af, %.lr.ph27.i75, %bb.ae
+  %.0.i73 = phi ptr [ %.01426.i76, %.lr.ph27.i75 ], [ null, %bb.ae ], [ %.122.i70, %.lr.ph.i69 ], [ null, %bb.af ] ; 2 uses
+  %.not = icmp eq ptr %.0.i73, null
+  br i1 %.not, label %core_list_find.exit79.a, label %.lr.ph155
+
+core_list_find.exit79.a:                          ; preds = %core_list_find.exit79
   %i.eo = load ptr, ptr %.149, align 8, !tbaa !37 ; 2 uses
   %.not61152 = icmp eq ptr %i.eo, null
   br i1 %.not61152, label %._crit_edge156, label %.lr.ph155
 
-.lr.ph155:                                        ; preds = %.lr.ph.i69, %.lr.ph27.i75, %core_list_find.exit79.a
-  %.047188 = phi ptr [ %i.eo, %core_list_find.exit79.a ], [ %.01426.i76, %.lr.ph27.i75 ], [ %.122.i70, %.lr.ph.i69 ]
+.lr.ph155:                                        ; preds = %core_list_find.exit79, %core_list_find.exit79.a
+  %.047184 = phi ptr [ %i.eo, %core_list_find.exit79.a ], [ %.0.i73, %core_list_find.exit79 ]
   %i.ep = getelementptr inbounds nuw i8, ptr %.149, i64 8
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph155, %bb.ag
-  %.1154 = phi ptr [ %.047188, %.lr.ph155 ], [ %i.et, %bb.ag ]
+  %.1154 = phi ptr [ %.047184, %.lr.ph155 ], [ %i.et, %bb.ag ]
   %.3153 = phi i16 [ %i.as, %.lr.ph155 ], [ %i.es, %bb.ag ]
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !36
   %i.er = load i16, ptr %i.eq, align 2, !tbaa !32

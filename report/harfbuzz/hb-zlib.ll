@@ -53,18 +53,20 @@ _ZL29hb_gzip_get_uncompressed_sizePKcjPj.exit.thread: ; preds = %bb.c, %_ZL29hb_
 
 bb.d:                                             ; preds = %_ZL29hb_gzip_get_uncompressed_sizePKcjPj.exit, %_ZL29hb_gzip_get_uncompressed_sizePKcjPj.exit.thread
   %i.o = phi i32 [ 4096, %_ZL29hb_gzip_get_uncompressed_sizePKcjPj.exit.thread ], [ %.fr, %_ZL29hb_gzip_get_uncompressed_sizePKcjPj.exit ]
-  %i.p = zext i32 %1 to i64                       ; 3 uses
+  %i.p = zext i32 %1 to i64                       ; 4 uses
   %i.q = call i32 @llvm.umin.i32(i32 %i.o, i32 %1)
   %.sroa.speculated59 = zext i32 %i.q to i64      ; 2 uses
-  %i.r = call ptr @hb_malloc(i64 noundef %.sroa.speculated59) #5 ; 2 uses
+  %i.r = call ptr @hb_malloc(i64 noundef %.sroa.speculated59) #5 ; 3 uses
   %.not44 = icmp eq ptr %i.r, null
   br i1 %.not44, label %"_ZN16hb_scope_guard_tIZ23hb_blob_decompress_gzipP9hb_blob_tjE3$_0ED2Ev.exit", label %.preheader
 
 .preheader:                                       ; preds = %bb.d
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  br label %bb.e
+  %3 = load i64, ptr %i.s, align 8, !tbaa !16
+  %4 = icmp ult i64 %3, %i.p
+  br i1 %4, label %bb.e, label %.thread80, !prof !17
 
 bb.e:                                             ; preds = %.preheader, %bb.j
   %i.v = phi ptr [ %i.ab, %bb.j ], [ %i.r, %.preheader ] ; 5 uses
@@ -124,9 +126,9 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = call ptr @hb_blob_create_or_fail(ptr noundef %i.ab, i32 noundef %i.an, i32 noundef 2, ptr noundef %i.ab, ptr noundef nonnull @hb_free) #5
   br label %"_ZN16hb_scope_guard_tIZ23hb_blob_decompress_gzipP9hb_blob_tjE3$_0ED2Ev.exit"
 
-.thread80:                                        ; preds = %bb.h, %bb.g, %bb.j, %bb.e, %bb.k
-  %.093 = phi ptr [ %i.ab, %bb.k ], [ %i.v, %bb.h ], [ %i.v, %bb.g ], [ %i.ab, %bb.j ], [ %i.v, %bb.e ]
-  call void @hb_free(ptr noundef %.093) #5
+.thread80:                                        ; preds = %bb.g, %bb.e, %bb.h, %bb.j, %.preheader, %bb.k
+  %.088 = phi ptr [ %i.ab, %bb.k ], [ %i.r, %.preheader ], [ %i.v, %bb.g ], [ %i.v, %bb.e ], [ %i.v, %bb.h ], [ %i.ab, %bb.j ]
+  call void @hb_free(ptr noundef %.088) #5
   br label %"_ZN16hb_scope_guard_tIZ23hb_blob_decompress_gzipP9hb_blob_tjE3$_0ED2Ev.exit"
 
 "_ZN16hb_scope_guard_tIZ23hb_blob_decompress_gzipP9hb_blob_tjE3$_0ED2Ev.exit": ; preds = %.thread80, %bb.l, %bb.d

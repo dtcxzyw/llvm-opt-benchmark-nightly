@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 sub_0:                                            ; preds = %bb.a
-  %i.c = load i8, ptr %1, align 1
+  %i.c = load i8, ptr %1, align 1                 ; 2 uses
   switch i8 %i.c, label %.tail9.thread [
     i8 51, label %.tail
     i8 52, label %.tail9
@@ -212,7 +212,7 @@ sub_0:                                            ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.e = load i8, ptr %i.d, align 1
   %i.f = icmp eq i8 %i.e, 0
-  br i1 %i.f, label %bb.c, label %.tail9.thread
+  br i1 %i.f, label %bb.c, label %sub_010
 
 bb.c:                                             ; preds = %.tail
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -220,7 +220,11 @@ bb.c:                                             ; preds = %.tail
   store i32 3, ptr %i.h, align 4, !tbaa !24
   br label %bb.e
 
-.tail9:                                           ; preds = %sub_0
+sub_010:                                          ; preds = %.tail
+  %.not14 = icmp eq i8 %i.c, 52
+  br i1 %.not14, label %.tail9, label %.tail9.thread
+
+.tail9:                                           ; preds = %sub_0, %sub_010
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.j = load i8, ptr %i.i, align 1
   %i.k = icmp eq i8 %i.j, 0
@@ -232,7 +236,7 @@ bb.d:                                             ; preds = %.tail9
   store i32 4, ptr %i.m, align 4, !tbaa !24
   br label %bb.e
 
-.tail9.thread:                                    ; preds = %sub_0, %.tail, %.tail9
+.tail9.thread:                                    ; preds = %sub_0, %sub_010, %.tail9
   %i.n = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.100, ptr noundef nonnull @.str.101, ptr noundef nonnull %1) #13 ; 0 uses
   br label %bb.e
 

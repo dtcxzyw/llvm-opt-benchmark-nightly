@@ -202,7 +202,7 @@ define void @_Z35internal_applyAllTrotterRepetitions5QuregPiS0_i11PauliStrSumSt7
 bb.a:
   %10 = alloca %"class.std::vector", align 8      ; 12 uses
   %11 = alloca %"class.std::vector", align 8      ; 10 uses
-  %12 = alloca %"class.std::vector", align 8      ; 7 uses
+  %12 = alloca %"class.std::vector", align 8      ; 8 uses
   %13 = alloca %"class.std::vector", align 8      ; 9 uses
   %i.a = fcmp oeq double %5, 0.000000e+00
   %i.b = fcmp oeq double %6, 0.000000e+00
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #11
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i32, ptr %i.d, align 8, !tbaa !36
-  %.not.not = icmp eq i32 %i.e, 0
+  %.not.not = icmp eq i32 %i.e, 0                 ; 2 uses
   br i1 %.not.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -259,7 +259,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i..noexc22_crit_edge: ; preds
   store ptr %i.o, ptr %12, align 8, !tbaa !21
   %i.p = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.k
-  %i.r = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
   store ptr %i.q, ptr %i.r, align 8, !tbaa !24
   %i.s = sub i64 %.pre-phi, %.pre-phi43           ; 4 uses
   %i.t = icmp sgt i64 %i.s, 4
@@ -282,26 +282,30 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.w = getelementptr inbounds i8, ptr %i.o, i64 %i.s
   store ptr %i.w, ptr %i.p, align 8, !tbaa !20
   invoke void @_Z17util_getBraQubitsSt6vectorIiSaIiEE5Qureg(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %11, ptr nofree noundef nonnull align 8 dereferenceable(24) %12, ptr noundef nonnull byval(%struct.Qureg) align 8 %0)
-          to label %bb.i unwind label %bb.p
+          to label %14 unwind label %bb.p
 
 .thread:                                          ; preds = %bb.b
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false)
-  br label %_ZNSt6vectorIiSaIiEED2Ev.exit
+  br label %14
 
-bb.i:                                             ; preds = %bb.h
+14:                                               ; preds = %bb.h, %.thread
+  br i1 %.not.not, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.i
+
+bb.i:                                             ; preds = %14
   %i.x = load ptr, ptr %12, align 8, !tbaa !21    ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.x, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.y = load ptr, ptr %i.r, align 8, !tbaa !24
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.y = load ptr, ptr %15, align 8, !tbaa !24
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = ptrtoint ptr %i.x to i64
   %i.ab = sub i64 %i.z, %i.aa
   call void @_ZdlPvm(ptr noundef nonnull %i.x, i64 noundef %i.ab) #14
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
-_ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.j, %bb.i, %.thread
+_ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.j, %bb.i, %14
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #11
   invoke void @_Z14util_getVectorPii(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %13, ptr noundef %2, i32 noundef %3)
           to label %bb.k unwind label %bb.r

@@ -66,7 +66,7 @@ bb.a:
   %i.d = tail call ptr @u_getDataDirectory_78() #8
   store ptr %i.d, ptr getelementptr inbounds nuw (i8, ptr @options, i64 88), align 8, !tbaa !17
   %i.e = tail call i32 @u_parseArgs(i32 noundef %0, ptr noundef %1, i32 noundef 5, ptr noundef nonnull @options) #8 ; 3 uses
-  %i.f = icmp slt i32 %i.e, 0
+  %i.f = icmp slt i32 %i.e, 0                     ; 2 uses
   br i1 %i.f, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %bb.a
@@ -76,17 +76,18 @@ bb.a:
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !20
   %i.l = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.g, ptr noundef nonnull @.str, ptr noundef %i.k) #9 ; 0 uses
-  br label %bb.c
+  br label %bb.b
 
-bb.b:                                             ; preds = %bb.a
+bb.b:                                             ; preds = %.thread, %bb.a
   %i.m = load i8, ptr getelementptr inbounds nuw (i8, ptr @options, i64 34), align 2
   %i.n = icmp ne i8 %i.m, 0
+  %or.cond = select i1 %i.f, i1 true, i1 %i.n
   %i.o = load i8, ptr getelementptr inbounds nuw (i8, ptr @options, i64 74), align 2
   %i.p = icmp ne i8 %i.o, 0
-  %or.cond5 = select i1 %i.n, i1 true, i1 %i.p
+  %or.cond5 = select i1 %or.cond, i1 true, i1 %i.p
   br i1 %or.cond5, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %.thread, %bb.b
+bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr @stderr, align 8, !tbaa !19
   %i.r = load ptr, ptr %1, align 8, !tbaa !20
   %i.s = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.q, ptr noundef nonnull @.str.1, ptr noundef %i.r) #9 ; 0 uses

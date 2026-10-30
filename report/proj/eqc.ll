@@ -92,12 +92,12 @@ bb.f:                                             ; preds = %bb.e
   %i.z = tail call noundef ptr @_Z7pj_enfnd(double noundef %i.y) ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !41
-  %.not = icmp eq ptr %i.z, null
+  %.not = icmp eq ptr %i.z, null                  ; 2 uses
   br i1 %.not, label %.thread, label %bb.g
 
 .thread:                                          ; preds = %bb.f
   %i.ab = tail call noundef ptr @_Z21pj_default_destructorP8PJconstsi(ptr noundef nonnull %0, i32 noundef 4096)
-  br label %bb.i
+  br label %1
 
 bb.g:                                             ; preds = %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 448
@@ -111,7 +111,11 @@ bb.g:                                             ; preds = %bb.f
   store ptr @_ZL13eqc_e_inverse5PJ_XYP8PJconsts, ptr %i.ai, align 8, !tbaa !54
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr @_ZL13eqc_e_forward5PJ_LPP8PJconsts, ptr %i.aj, align 8, !tbaa !55
-  br label %bb.i
+  br label %1
+
+1:                                                ; preds = %bb.g, %.thread
+  %.0 = phi ptr [ %i.ab, %.thread ], [ undef, %bb.g ]
+  br i1 %.not, label %bb.i, label %2
 
 bb.h:                                             ; preds = %bb.e
   store double %i.k, ptr %i.a, align 8, !tbaa !40
@@ -121,10 +125,13 @@ bb.h:                                             ; preds = %bb.e
   store ptr @_ZL13eqc_s_inverse5PJ_XYP8PJconsts, ptr %i.al, align 8, !tbaa !54
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr @_ZL13eqc_s_forward5PJ_LPP8PJconsts, ptr %i.am, align 8, !tbaa !55
+  br label %2
+
+2:                                                ; preds = %1, %bb.h
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g, %.thread, %bb.d, %bb.b
-  %.2 = phi ptr [ %i.c, %bb.b ], [ %i.m, %bb.d ], [ %i.ab, %.thread ], [ %0, %bb.g ], [ %0, %bb.h ]
+bb.i:                                             ; preds = %bb.d, %2, %1, %bb.b
+  %.2 = phi ptr [ %i.c, %bb.b ], [ %i.m, %bb.d ], [ %0, %2 ], [ %.0, %1 ]
   ret ptr %.2
 }
 

@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f
   br label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1E_zENCNvNtNtCscOzg5arm0FQ_17build_script_main5build4core12build_c_codes0_0NCINvNtB1J_16in_place_collect24write_in_place_with_dropB15_E0E0B3g_.exit
 
 bb.i:                                             ; preds = %bb.j
-  br i1 %.sroa.02.0.ph.i, label %bb.l, label %.body.thread.thread
+  br i1 %.sroa.02.0.ph.i, label %bb.l, label %.body.thread
 
 bb.j:                                             ; preds = %bb.f, %bb.d
   %.sroa.02.0.ph.i = phi i1 [ true, %bb.d ], [ false, %bb.f ]
@@ -219,7 +219,7 @@ bb.k:                                             ; preds = %bb.l, %bb.j
 
 bb.l:                                             ; preds = %bb.i
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec13in_place_drop11InPlaceDropNtNtCsaL1QbXo9JQH_3std4path7PathBufEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.b) #23
-          to label %.body.thread.thread unwind label %bb.k
+          to label %.body.thread unwind label %bb.k
 
 _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1E_zENCNvNtNtCscOzg5arm0FQ_17build_script_main5build4core12build_c_codes0_0NCINvNtB1J_16in_place_collect24write_in_place_with_dropB15_E0E0B3g_.exit: ; preds = %bb.g, %bb.h
   %.pn6.i = phi { ptr, ptr } [ %i.s, %bb.g ], [ %i.o, %bb.h ]
@@ -231,8 +231,10 @@ bb.m:                                             ; preds = %bb.c
   tail call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr align 8 %3)
   br label %bb.n
 
-.body.thread:                                     ; preds = %bb.o
-  br i1 %.sroa.02.0.ph, label %bb.q, label %.body.thread.thread
+.body.thread:                                     ; preds = %bb.l, %bb.i, %bb.o
+  %.pn = phi { ptr, i32 } [ %lpad.thr_comm, %bb.o ], [ %lpad.thr_comm.i, %bb.l ], [ %lpad.thr_comm.i, %bb.i ]
+  %.sroa.02.1 = phi i1 [ %.sroa.02.0.ph, %bb.o ], [ false, %bb.l ], [ false, %bb.i ]
+  br i1 %.sroa.02.1, label %bb.q, label %.body.thread.thread
 
 bb.n:                                             ; preds = %bb.m, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1E_zENCNvNtNtCscOzg5arm0FQ_17build_script_main5build4core12build_c_codes0_0NCINvNtB1J_16in_place_collect24write_in_place_with_dropB15_E0E0B3g_.exit
   %.pn6 = phi { ptr, ptr } [ %i.h, %bb.m ], [ %.pn6.i, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters6filter15filter_try_foldNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1E_zENCNvNtNtCscOzg5arm0FQ_17build_script_main5build4core12build_c_codes0_0NCINvNtB1J_16in_place_collect24write_in_place_with_dropB15_E0E0B3g_.exit ]
@@ -241,7 +243,7 @@ bb.n:                                             ; preds = %bb.m, %_RNCINvNtNtN
 bb.o:                                             ; preds = %bb.c, %bb.a
   %.sroa.02.0.ph = phi i1 [ true, %bb.a ], [ false, %bb.c ]
   %lpad.thr_comm = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs3U9i7nQCKwt_15find_msvc_tools(ptr align 8 %3) #23
           to label %.body.thread unwind label %bb.p
 
@@ -251,9 +253,8 @@ bb.p:                                             ; preds = %bb.q, %bb.o
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #24
   unreachable
 
-.body.thread.thread:                              ; preds = %bb.l, %bb.i, %bb.q, %.body.thread
-  %.pn20 = phi { ptr, i32 } [ %lpad.thr_comm, %.body.thread ], [ %lpad.thr_comm, %bb.q ], [ %lpad.thr_comm.i, %bb.l ], [ %lpad.thr_comm.i, %bb.i ]
-  resume { ptr, i32 } %.pn20
+.body.thread.thread:                              ; preds = %bb.q, %.body.thread
+  resume { ptr, i32 } %.pn
 
 bb.q:                                             ; preds = %.body.thread
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec13in_place_drop11InPlaceDropNtNtCsaL1QbXo9JQH_3std4path7PathBufEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.d) #23

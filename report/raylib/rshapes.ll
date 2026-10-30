@@ -204,6 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %.split137.
   %.0122151 = phi float [ 0.000000e+00, %.lr.ph ], [ %.us-phi143, %.split137.us ]
   %.0123150 = phi float [ 0.000000e+00, %.lr.ph ], [ %.us-phi142, %.split137.us ] ; 2 uses
   %.0125149 = phi float [ 0.000000e+00, %.lr.ph ], [ %.us-phi141, %.split137.us ] ; 2 uses
+  %5 = phi <4 x float> [ zeroinitializer, %.lr.ph ], [ %i.ce, %.split137.us ]
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv171 ; 3 uses
   %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 1 ; 3 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next172
@@ -230,8 +231,12 @@ bb.b:                                             ; preds = %.lr.ph, %.split137.
   %i.aa = shufflevector <2 x float> %i.z, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ab = fdiv <4 x float> %i.aa, splat (float 6.000000e+00) ; 5 uses
   %i.ac = shufflevector <4 x float> %i.ab, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 5 uses
-  %i.ad = icmp eq i64 %indvars.iv171, 0
-  br i1 %i.ad, label %.split.peel.next, label %.split.us.preheader
+  %i.ad = icmp eq i64 %indvars.iv171, 0           ; 2 uses
+  br i1 %i.ad, label %6, label %.split.us.preheader
+
+6:                                                ; preds = %bb.b
+  tail call void @DrawCircleSector(<2 x float> %i.ac, float noundef %i.c, float noundef 0.000000e+00, float noundef 3.600000e+02, i32 noundef 36, i32 %3)
+  br label %7
 
 .split.us.preheader:                              ; preds = %bb.b
   %i.ae = fneg float %.0123150
@@ -245,10 +250,13 @@ bb.b:                                             ; preds = %.lr.ph, %.split137.
   %i.am = shufflevector <2 x float> %i.al, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
   %i.an = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aj, <4 x float> %i.am, <4 x float> %i.ab) ; 2 uses
   store <4 x float> %i.an, ptr %4, align 16
-  br label %.split.us
+  br label %7
 
-.split.peel.next:                                 ; preds = %bb.b
-  tail call void @DrawCircleSector(<2 x float> %i.ac, float noundef %i.c, float noundef 0.000000e+00, float noundef 3.600000e+02, i32 noundef 36, i32 %3)
+7:                                                ; preds = %6, %.split.us.preheader
+  %8 = phi <4 x float> [ %5, %6 ], [ %i.an, %.split.us.preheader ]
+  br i1 %i.ad, label %.split.peel.next, label %.split.us
+
+.split.peel.next:                                 ; preds = %7
   %i.ao = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.v, <2 x float> splat (float f0x3D2AAAAB), <2 x float> %i.w)
   %i.ap = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ao, <2 x float> splat (float f0x3D2AAAAB), <2 x float> %i.x)
   %i.aq = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ap, <2 x float> splat (float f0x3D2AAAAB), <2 x float> %i.ac) ; 2 uses
@@ -273,9 +281,9 @@ bb.b:                                             ; preds = %.lr.ph, %.split137.
   store <4 x float> %i.bg, ptr %i.d, align 16
   br label %bb.c
 
-.split.us:                                        ; preds = %.split.us.preheader, %.split.us
-  %indvars.iv = phi i64 [ 1, %.split.us.preheader ], [ %indvars.iv.next, %.split.us ] ; 3 uses
-  %.sroa.048.1128.us = phi <2 x float> [ %i.ac, %.split.us.preheader ], [ %i.bp, %.split.us ]
+.split.us:                                        ; preds = %7, %.split.us
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.split.us ], [ 1, %7 ] ; 3 uses
+  %.sroa.048.1128.us = phi <2 x float> [ %i.bp, %.split.us ], [ %i.ac, %7 ]
   %i.bh = trunc nuw nsw i64 %indvars.iv to i32
   %i.bi = uitofp nneg i32 %i.bh to float
   %i.bj = fdiv float %i.bi, 2.400000e+01
@@ -310,7 +318,7 @@ bb.b:                                             ; preds = %.lr.ph, %.split137.
   %.us-phi142 = phi float [ %i.cs, %bb.c ], [ %i.bu, %.split.us ]
   %.us-phi143 = phi float [ %i.cv, %bb.c ], [ %i.bx, %.split.us ]
   %.us-phi144 = phi <2 x float> [ %i.cn, %bb.c ], [ %i.bp, %.split.us ]
-  %i.ce = phi <4 x float> [ %i.bf, %bb.c ], [ %i.an, %.split.us ]
+  %i.ce = phi <4 x float> [ %i.bf, %bb.c ], [ %8, %.split.us ] ; 2 uses
   store <4 x float> %i.ce, ptr %4, align 16
   call void @DrawTriangleStrip(ptr noundef nonnull %4, i32 noundef 50, i32 %3)
   %exitcond174.not = icmp eq i64 %indvars.iv.next172, %wide.trip.count

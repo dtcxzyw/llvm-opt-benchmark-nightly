@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %_RINvNtCs8Chj7Szqq0
 
 .thread40:                                        ; preds = %.noexc23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !24
-  br label %.loopexit45
+  br label %4
 
 bb.m:                                             ; preds = %.noexc23
   %i.ab = load ptr, ptr %i.z, align 8, !noalias !25, !nonnull !5, !align !6, !noundef !5
@@ -275,10 +275,8 @@ bb.u:                                             ; preds = %bb.p
   %i.ak = load i64, ptr %.sroa.531.0..sroa_idx, align 8, !noalias !25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !24
-  switch i64 %.sroa.029.0.copyload, label %bb.v [
-    i64 -2, label %.loopexit44
-    i64 -1, label %.loopexit45
-  ]
+  %3 = icmp eq i64 %.sroa.029.0.copyload, -2
+  br i1 %3, label %.loopexit44, label %4
 
 .loopexit44:                                      ; preds = %bb.u, %.thread
   %.sroa.9.034 = phi ptr [ %.sroa.9.0.ph, %.thread ], [ %.sroa.430.0.copyload, %bb.u ]
@@ -287,18 +285,25 @@ bb.u:                                             ; preds = %bb.p
   store i8 -1, ptr %0, align 8
   br label %bb.z
 
-bb.v:                                             ; preds = %bb.u
+4:                                                ; preds = %.thread40, %bb.u
+  %.sroa.13.sroa.0.0 = phi i64 [ %i.ak, %bb.u ], [ undef, %.thread40 ]
+  %.sroa.0.039 = phi i64 [ %.sroa.029.0.copyload, %bb.u ], [ -1, %.thread40 ] ; 2 uses
+  %.sroa.9.038 = phi ptr [ %.sroa.430.0.copyload, %bb.u ], [ undef, %.thread40 ]
+  %.not21 = icmp eq i64 %.sroa.0.039, -1
+  br i1 %.not21, label %.loopexit45, label %bb.v
+
+bb.v:                                             ; preds = %4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  store i64 %.sroa.029.0.copyload, ptr %i.f, align 8
-  store ptr %.sroa.430.0.copyload, ptr %.sroa.36.0..sroa_idx7, align 8
-  store i64 %i.ak, ptr %.sroa.36.sroa.2.0..sroa.36.0..sroa_idx7.sroa_idx, align 8
+  store i64 %.sroa.0.039, ptr %i.f, align 8
+  store ptr %.sroa.9.038, ptr %.sroa.36.0..sroa_idx7, align 8
+  store i64 %.sroa.13.sroa.0.0, ptr %.sroa.36.sroa.2.0..sroa.36.0..sroa_idx7.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.e, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.13.sroa.7, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   invoke void @_RNvMsi_NtNtNtCsbqH9stoieM8_5alloc11collections5btree3mapINtB5_8BTreeMapNtNtBb_6string6StringNtNtCs8ZPNfZ0ciAA_10serde_json5value5ValueE6insertB1w_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.e)
           to label %bb.w unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit45:                                      ; preds = %bb.u, %.thread40
+.loopexit45:                                      ; preds = %4
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %.sroa.4.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.4.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false)
@@ -701,18 +706,6 @@ bb.d:                                             ; preds = %.lr.ph.split.i.i.i.
   %i.af = trunc nuw i64 %i.ad to i1
   br i1 %i.af, label %.loopexit.i.i.i.i, label %.loopexit15.i.i.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %.preheader.i.i.i.i.i, %5
-  %.sroa.04.011.i.i.i.i.i = phi i64 [ %6, %5 ], [ 0, %.preheader.i.i.i.i.i ] ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.sroa.04.011.i.i.i.i.i
-  %3 = load i8, ptr %2, align 1, !alias.scope !155, !noalias !154, !noundef !5
-  %4 = icmp eq i8 %3, %.pre.i.i.i.i
-  br i1 %4, label %.loopexit.i.i.i.i, label %5
-
-5:                                                ; preds = %.lr.ph.i.i.i.i.i
-  %6 = add nuw nsw i64 %.sroa.04.011.i.i.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i.i.i = icmp eq i64 %6, %i.z
-  br i1 %exitcond.not.i.i.i.i.i, label %.loopexit15.i.i.i.i, label %.lr.ph.i.i.i.i.i
-
 .loopexit.i.i.i.i:                                ; preds = %.lr.ph.i.i.i.i.i, %bb.d
   %.sroa.5.0.i.i.i.i.i = phi i64 [ %i.ae, %bb.d ], [ %.sroa.04.011.i.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %i.ag = icmp ult i64 %.sroa.5.0.i.i.i.i.i, %i.z
@@ -724,6 +717,18 @@ bb.d:                                             ; preds = %.lr.ph.split.i.i.i.
   %.not12.i.i.i.i = icmp ugt i64 %i.ai, %.val1.i.i.i
   %or.cond.i.i.i.i = or i1 %.not11.i.i.i.i, %.not12.i.i.i.i
   br i1 %or.cond.i.i.i.i, label %bb.e, label %bb.f
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.preheader.i.i.i.i.i, %5
+  %.sroa.04.011.i.i.i.i.i = phi i64 [ %6, %5 ], [ 0, %.preheader.i.i.i.i.i ] ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.sroa.04.011.i.i.i.i.i
+  %3 = load i8, ptr %2, align 1, !alias.scope !155, !noalias !154, !noundef !5
+  %4 = icmp eq i8 %3, %.pre.i.i.i.i
+  br i1 %4, label %.loopexit.i.i.i.i, label %5
+
+5:                                                ; preds = %.lr.ph.i.i.i.i.i
+  %6 = add nuw nsw i64 %.sroa.04.011.i.i.i.i.i, 1 ; 2 uses
+  %exitcond.not.i.i.i.i.i = icmp eq i64 %6, %i.z
+  br i1 %exitcond.not.i.i.i.i.i, label %.loopexit15.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
 .loopexit15.i.i.i.i:                              ; preds = %bb.d, %.preheader.i.i.i.i.i, %5
   store i64 %i.f, ptr %i.d, align 8, !alias.scope !153

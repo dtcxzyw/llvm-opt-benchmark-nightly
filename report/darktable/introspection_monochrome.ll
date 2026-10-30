@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a, %.preheader.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define ptr @get_p(ptr nofree noundef readnone captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #15 {
 sub_0:
-  %i.a = load i8, ptr %1, align 1
+  %i.a = load i8, ptr %1, align 1                 ; 2 uses
   switch i8 %i.a, label %.tail13.thread [
     i8 97, label %.tail
     i8 98, label %.tail13
@@ -214,9 +214,13 @@ sub_0:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.c = load i8, ptr %i.b, align 1
   %i.d = icmp eq i8 %i.c, 0
-  br i1 %i.d, label %bb.d, label %.tail13.thread
+  br i1 %i.d, label %bb.d, label %sub_014
 
-.tail13:                                          ; preds = %sub_0
+sub_014:                                          ; preds = %.tail
+  %.not18 = icmp eq i8 %i.a, 98
+  br i1 %.not18, label %.tail13, label %.tail13.thread
+
+.tail13:                                          ; preds = %sub_0, %sub_014
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.f = load i8, ptr %i.e, align 1
   %i.g = icmp eq i8 %i.f, 0
@@ -226,7 +230,7 @@ bb.a:                                             ; preds = %.tail13
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
   br label %bb.d
 
-.tail13.thread:                                   ; preds = %sub_0, %.tail, %.tail13
+.tail13.thread:                                   ; preds = %sub_0, %sub_014, %.tail13
   %i.i = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(5) @.str.22) #22
   %.not11 = icmp eq i32 %i.i, 0
   br i1 %.not11, label %bb.b, label %bb.c

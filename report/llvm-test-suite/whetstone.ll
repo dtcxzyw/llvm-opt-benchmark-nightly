@@ -66,7 +66,7 @@ sub_0:                                            ; preds = %sub_0.preheader, %b
   %.0142184 = phi i64 [ 100000, %sub_0.preheader ], [ %.1143, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !22   ; 3 uses
-  %i.o = load i8, ptr %i.n, align 1
+  %i.o = load i8, ptr %i.n, align 1               ; 2 uses
   switch i8 %i.o, label %.thread [
     i8 45, label %.tail
     i8 99, label %bb.c
@@ -75,10 +75,12 @@ sub_0:                                            ; preds = %sub_0.preheader, %b
 .tail:                                            ; preds = %sub_0
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 1
   %i.q = load i8, ptr %i.p, align 1
-  %i.r = icmp eq i8 %i.q, 99
-  br i1 %i.r, label %bb.c, label %.thread
+  %2 = icmp eq i8 %i.q, 99
+  %i.r = icmp eq i8 %i.o, 99
+  %or.cond = or i1 %2, %i.r
+  br i1 %or.cond, label %bb.c, label %.thread
 
-.thread:                                          ; preds = %sub_0, %.tail
+.thread:                                          ; preds = %.tail, %sub_0
   %i.s = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.n, ptr noundef null, i32 noundef 10) #12, !inline_history !10 ; 2 uses
   %i.t = icmp sgt i64 %i.s, 0
   br i1 %i.t, label %bb.c, label %bb.b

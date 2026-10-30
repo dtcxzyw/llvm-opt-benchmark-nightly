@@ -86,11 +86,9 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  switch i32 %0, label %bb.k [
+  switch i32 %0, label %select.unfold [
     i32 393221, label %bb.d
     i32 393216, label %bb.e
-    i32 393219, label %.preheader44.preheader.thread
-    i32 393220, label %.preheader44.preheader.thread.fold.split
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -100,7 +98,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.c = tail call ptr @getenv(ptr noundef nonnull @.str.1) #5 ; 3 uses
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %.preheader.preheader, label %bb.f
+  br i1 %.not, label %select.unfold, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.d = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(8) @.str.2) #6
@@ -115,14 +113,23 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.g = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(4) @.str.4) #6
   %i.h = icmp eq i32 %i.g, 0
-  br i1 %i.h, label %bb.i, label %.preheader.preheader
+  br i1 %i.h, label %bb.i, label %select.unfold
 
 bb.i:                                             ; preds = %bb.h
   %i.i = tail call ptr @getenv(ptr noundef nonnull @.str.5) #5
   %.not42 = icmp eq ptr %i.i, null
-  br i1 %.not42, label %.preheader.preheader, label %.preheader44.preheader.thread
+  %spec.select = select i1 %.not42, i32 393216, i32 393220
+  br label %select.unfold
 
-.preheader.preheader:                             ; preds = %bb.i, %bb.e, %bb.h
+select.unfold:                                    ; preds = %bb.i, %bb.e, %bb.h, %bb.c
+  %.138 = phi i32 [ %0, %bb.c ], [ 393216, %bb.e ], [ 393216, %bb.h ], [ %spec.select, %bb.i ] ; 3 uses
+  switch i32 %.138, label %bb.k [
+    i32 393216, label %.preheader.preheader
+    i32 393219, label %.preheader44.preheader.thread
+    i32 393220, label %.preheader44.preheader.thread.fold.split
+  ]
+
+.preheader.preheader:                             ; preds = %select.unfold
   %i.j = tail call i32 @_glfwConnectWayland(i32 noundef 393216, ptr noundef %1) #5
   %.not43 = icmp eq i32 %i.j, 0
   br i1 %.not43, label %.preheader.1, label %.loopexit
@@ -136,19 +143,19 @@ bb.j:                                             ; preds = %.preheader.1
   tail call void (i32, ptr, ...) @_glfwInputError(i32 noundef 65550, ptr noundef nonnull @.str.6) #5
   br label %.loopexit
 
-bb.k:                                             ; preds = %bb.c
+bb.k:                                             ; preds = %select.unfold
   tail call void (i32, ptr, ...) @_glfwInputError(i32 noundef 65550, ptr noundef nonnull @.str.7) #5
   br label %.loopexit
 
-.preheader44.preheader.thread.fold.split:         ; preds = %bb.c
+.preheader44.preheader.thread.fold.split:         ; preds = %select.unfold
   br label %.preheader44.preheader.thread
 
-.preheader44.preheader.thread:                    ; preds = %bb.c, %.preheader44.preheader.thread.fold.split, %bb.i, %bb.g
-  %.13851 = phi i32 [ %0, %bb.c ], [ 393220, %bb.i ], [ 393219, %bb.g ], [ %0, %.preheader44.preheader.thread.fold.split ]
-  %.lcssa = phi ptr [ @supportedPlatforms, %bb.c ], [ getelementptr inbounds nuw (i8, ptr @supportedPlatforms, i64 16), %bb.i ], [ @supportedPlatforms, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @supportedPlatforms, i64 16), %.preheader44.preheader.thread.fold.split ]
+.preheader44.preheader.thread:                    ; preds = %select.unfold, %.preheader44.preheader.thread.fold.split, %bb.g
+  %.1385052 = phi i32 [ %.138, %select.unfold ], [ 393219, %bb.g ], [ %.138, %.preheader44.preheader.thread.fold.split ]
+  %.lcssa = phi ptr [ @supportedPlatforms, %select.unfold ], [ @supportedPlatforms, %bb.g ], [ getelementptr inbounds nuw (i8, ptr @supportedPlatforms, i64 16), %.preheader44.preheader.thread.fold.split ]
   %i.l = getelementptr inbounds nuw i8, ptr %.lcssa, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !10
-  %i.n = tail call i32 %i.m(i32 noundef %.13851, ptr noundef %1) #5
+  %i.n = tail call i32 %i.m(i32 noundef %.1385052, ptr noundef %1) #5
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.preheader, %.preheader.1, %bb.j, %bb.k, %.preheader44.preheader.thread, %bb.d, %bb.b

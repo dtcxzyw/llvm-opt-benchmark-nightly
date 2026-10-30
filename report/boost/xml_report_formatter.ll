@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.a, %bb.b, %bb.d
   %i.m = load i8, ptr %.sroa.028.033, align 1, !tbaa !12 ; 4 uses
   %i.n = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test5utils13print_escapedERSoNS0_13basic_cstringIKcEEE9char_type, i64 16), align 8, !tbaa !87 ; 2 uses
   %.not10.i.i.i = icmp eq ptr %i.n, null
-  br i1 %.not10.i.i.i, label %select.unfold, label %.lr.ph.i.i.i
+  br i1 %.not10.i.i.i, label %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %.1.i.i.i, %.lr.ph.i.i.i ], [ %i.n, %.lr.ph ] ; 3 uses
@@ -219,15 +219,21 @@ bb.f:                                             ; preds = %bb.a, %bb.b, %bb.d
 
 _ZNKSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS3_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i: ; preds = %.lr.ph.i.i.i
   %i.r = icmp eq ptr %.19.i.i.i, getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test5utils13print_escapedERSoNS0_13basic_cstringIKcEEE9char_type, i64 8)
-  br i1 %i.r, label %select.unfold, label %bb.g
+  br i1 %i.r, label %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZNKSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS3_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %i.t = load i8, ptr %i.s, align 1, !tbaa !12
   %i.u = icmp slt i8 %i.m, %i.t
-  br i1 %i.u, label %select.unfold, label %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit.a
+  %spec.select = select i1 %i.u, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test5utils13print_escapedERSoNS0_13basic_cstringIKcEEE9char_type, i64 8), ptr %.19.i.i.i
+  br label %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit
 
-_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit.a: ; preds = %bb.g
+_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit: ; preds = %bb.g, %.lr.ph, %_ZNKSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS3_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i
+  %.sroa.0.0.i.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test5utils13print_escapedERSoNS0_13basic_cstringIKcEEE9char_type, i64 8), %.lr.ph ], [ getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test5utils13print_escapedERSoNS0_13basic_cstringIKcEEE9char_type, i64 8), %_ZNKSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS3_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i ], [ %spec.select, %bb.g ] ; 2 uses
+  %.not32 = icmp eq ptr %.sroa.0.0.i.i, getelementptr inbounds nuw (i8, ptr @_ZZN5boost9unit_test5utils13print_escapedERSoNS0_13basic_cstringIKcEEE9char_type, i64 8)
+  br i1 %.not32, label %select.unfold, label %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit.a
+
+_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit.a: ; preds = %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 38, ptr %i.c, align 1, !tbaa !12
   %i.v = load ptr, ptr %0, align 8, !tbaa !14
@@ -250,7 +256,7 @@ bb.i:                                             ; preds = %_ZNKSt3mapIcPKcSt4l
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit: ; preds = %bb.h, %bb.i
   %.0.i = phi ptr [ %i.ab, %bb.h ], [ %0, %bb.i ] ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %i.ad = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 40
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 40
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !103 ; 3 uses
   %.not.i12 = icmp eq ptr %i.ae, null
   br i1 %.not.i12, label %bb.j, label %bb.k
@@ -295,7 +301,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit15: ; preds = %bb.l, %
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.p
 
-select.unfold:                                    ; preds = %bb.g, %.lr.ph, %_ZNKSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS3_EPKSt18_Rb_tree_node_baseRS1_.exit.i.i
+select.unfold:                                    ; preds = %_ZNKSt3mapIcPKcSt4lessIcESaISt4pairIS0_S1_EEE4findERS0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 %i.m, ptr %i.a, align 1, !tbaa !12
   %i.aw = load ptr, ptr %0, align 8, !tbaa !14
@@ -410,7 +416,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   br i1 %i.u, label %select.unfold, label %_ZNSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE17_M_insert_unique_IRKS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_ESt23_Rb_tree_const_iteratorIS3_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
-  %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
+  %.sroa.12.2.i.ph = phi ptr [ %i.g, %bb.b ], [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
   %i.v = icmp eq ptr %.sroa.12.2.i.ph, %i.a
   br i1 %i.v, label %_ZNSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE10_M_insert_IRKS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit.i.i, label %bb.g
 
@@ -436,7 +442,7 @@ _ZNSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE10_M_insert_
   br label %_ZNSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE17_M_insert_unique_IRKS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_ESt23_Rb_tree_const_iteratorIS3_EOT_RT0_.exit.i
 
 _ZNSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE17_M_insert_unique_IRKS3_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS3_ESt23_Rb_tree_const_iteratorIS3_EOT_RT0_.exit.i: ; preds = %bb.f, %.noexc6
-  %.pr = phi i64 [ %.pr20, %bb.f ], [ %i.ae, %.noexc6 ]
+  %.pr = phi i64 [ %i.ae, %.noexc6 ], [ %.pr20, %bb.f ]
   %i.af = getelementptr inbounds nuw i8, ptr %.08.i, i64 16 ; 2 uses
   %.not.i = icmp eq ptr %i.af, %i.f
   br i1 %.not.i, label %_ZNSt8_Rb_treeIcSt4pairIKcPS1_ESt10_Select1stIS3_ESt4lessIcESaIS3_EE22_M_insert_range_uniqueIPKS3_EENSt9enable_ifIXsr17__same_value_typeIT_EE5valueEvE4typeESE_SE_.exit, label %.lr.ph.i, !llvm.loop !106
