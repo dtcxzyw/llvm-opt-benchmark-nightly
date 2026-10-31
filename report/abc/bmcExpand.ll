@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 define i32 @Abc_ObjExpandCubesTry(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
-  %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 4 uses
+  %.val = load ptr, ptr %i.a, align 8, !tbaa !11  ; 5 uses
   %i.b = tail call i32 @Abc_SopGetCubeNum(ptr noundef %.val) #8
   %i.c = tail call i32 @Abc_SopGetVarNum(ptr noundef %.val) #8 ; 9 uses
   %i.d = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #9 ; 7 uses
@@ -58,16 +58,18 @@ Vec_IntAlloc.exit49:                              ; preds = %Vec_IntAlloc.exit, 
   br i1 %.not58, label %._crit_edge61, label %.lr.ph60
 
 .lr.ph60:                                         ; preds = %Vec_IntAlloc.exit49
-  %i.t = sext i32 %i.c to i64                     ; 2 uses
+  %i.t = sext i32 %i.c to i64                     ; 3 uses
   %i.u = shl nsw i64 %i.t, 2                      ; 2 uses
   %i.v = icmp sgt i32 %i.c, 0
   %i.w = zext i32 %i.c to i64                     ; 2 uses
   %i.x = shl nuw nsw i64 %i.w, 2
   %i.y = getelementptr i8, ptr %2, i64 8
+  %3 = add nsw i64 %i.t, 3
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph60, %.critedge
-  %.03859 = phi ptr [ %.val, %.lr.ph60 ], [ %i.dj, %.critedge ] ; 13 uses
+  %indvar = phi i64 [ 0, %.lr.ph60 ], [ %indvar.next, %.critedge ] ; 2 uses
+  %.03859 = phi ptr [ %.val, %.lr.ph60 ], [ %i.dj, %.critedge ] ; 12 uses
   %i.z = load i32, ptr %i.d, align 8, !tbaa !15
   %.not.i.i = icmp slt i32 %i.z, %i.c
   br i1 %.not.i.i, label %bb.e, label %Vec_IntGrow.exit.i
@@ -143,7 +145,9 @@ bb.j:                                             ; preds = %.lr.ph, %bb.i
   br i1 %min.iters.check, label %.lr.ph57.preheader87, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph57.preheader
-  %scevgep = getelementptr i8, ptr %.03859, i64 %i.ar
+  %4 = mul i64 %indvar, %3
+  %5 = getelementptr i8, ptr %.val, i64 %4
+  %scevgep = getelementptr i8, ptr %5, i64 %i.ar
   %i.as = shl nuw nsw i64 %i.ar, 2
   %scevgep71 = getelementptr i8, ptr %.val42.pre, i64 %i.as
   %bound0 = icmp ult ptr %.03859, %scevgep71
@@ -311,6 +315,7 @@ bb.l:                                             ; preds = %.lr.ph57, %bb.k
   %i.dj = getelementptr i8, ptr %i.di, i64 3      ; 2 uses
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !17
   %.not = icmp eq i8 %i.dk, 0
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not, label %._crit_edge61.loopexit, label %bb.d, !llvm.loop !28
 
 ._crit_edge61.loopexit:                           ; preds = %.critedge

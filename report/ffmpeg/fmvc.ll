@@ -203,7 +203,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !39 ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  %i.fo = load i64, ptr %i.fn, align 8, !tbaa !34 ; 3 uses
+  %i.fo = load i64, ptr %i.fn, align 8, !tbaa !34 ; 4 uses
   %i.fp = load i32, ptr %i.fm, align 8, !tbaa !35 ; 3 uses
   %i.fq = icmp sgt i32 %i.fp, 0
   br i1 %i.fq, label %.lr.ph256.split.preheader, label %._crit_edge257
@@ -211,8 +211,9 @@ bb.z:                                             ; preds = %bb.y
 .lr.ph256.split.preheader:                        ; preds = %.lr.ph256
   %i.fr = load ptr, ptr %i.dc, align 8, !tbaa !50
   %i.fs = load ptr, ptr %i.fg, align 8, !tbaa !49
-  %i.ft = shl i64 %i.fo, 2                        ; 2 uses
-  %stride.check = icmp slt i64 %i.ft, 0
+  %i.ft = shl i64 %i.fo, 2
+  %.mask = and i64 %i.fo, 2305843009213693952
+  %stride.check = icmp ne i64 %.mask, 0
   br label %.lr.ph256.split
 
 .lr.ph256.split:                                  ; preds = %.lr.ph256.split.preheader, %._crit_edge247
@@ -251,15 +252,15 @@ bb.z:                                             ; preds = %bb.y
   br i1 %or.cond302, label %.preheader.us.preheader, label %.loopexit216
 
 .preheader.us.preheader:                          ; preds = %.lr.ph246
-  %scevgep = getelementptr i8, ptr %.1242, i64 4
-  %4 = add nsw i32 %i.gh, -1
+  %4 = add nsw i32 %i.gf, -1
   %5 = zext i32 %4 to i64
-  %6 = mul i64 %i.ft, %5
-  %i.gm = add nsw i32 %i.gf, -1
+  %6 = shl nuw nsw i64 %5, 2                      ; 2 uses
+  %scevgep = getelementptr i8, ptr %.1242, i64 4
+  %i.gm = add nsw i32 %i.gh, -1
   %i.gn = zext i32 %i.gm to i64
-  %7 = shl nuw nsw i64 %i.gn, 2                   ; 2 uses
-  %i.go = getelementptr i8, ptr %scevgep, i64 %6
-  %scevgep308 = getelementptr i8, ptr %i.go, i64 %7
+  %7 = mul i64 %i.ft, %i.gn
+  %i.go = getelementptr i8, ptr %scevgep, i64 %7
+  %scevgep308 = getelementptr i8, ptr %i.go, i64 %6
   %i.gp = zext nneg i32 %i.gf to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %i.gf, 8
   %n.vec = and i64 %i.gp, 2147483640              ; 4 uses
@@ -275,8 +276,8 @@ bb.z:                                             ; preds = %bb.y
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.us
-  %scevgep309 = getelementptr i8, ptr %.2149236.us, i64 4
-  %scevgep310 = getelementptr i8, ptr %scevgep309, i64 %7
+  %scevgep309 = getelementptr i8, ptr %.2149236.us, i64 %6
+  %scevgep310 = getelementptr i8, ptr %scevgep309, i64 4
   %bound0 = icmp ult ptr %.1242, %scevgep310
   %bound1 = icmp ult ptr %.2149236.us, %scevgep308
   %found.conflict = and i1 %bound0, %bound1

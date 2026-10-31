@@ -204,12 +204,11 @@ vector.memcheck30:                                ; preds = %load_block.exit17.i
   %i.ht = zext i32 %i.hs to i64                   ; 2 uses
   %i.hu = getelementptr [1024 x i8], ptr %i.hq, i64 %i.ht ; 68 uses
   %i.hv = ptrtoaddr ptr %i.hq to i64
-  %3 = sub i64 %i.hv, %i.b
   %i.hw = shl nuw nsw i64 %i.ht, 10
-  %i.hx = add i64 %3, %i.hw
-  %4 = add i64 %i.hx, -1
-  %diff.check31 = icmp ult i64 %4, 31
-  br i1 %diff.check31, label %scalar.ph32, label %vector.body34
+  %i.hx = add i64 %i.hw, %i.hv
+  %3 = sub i64 %i.b, %i.hx
+  %diff.check34 = icmp ugt i64 %3, -32
+  br i1 %diff.check34, label %scalar.ph32, label %vector.body34
 
 vector.body34:                                    ; preds = %vector.memcheck30
   %wide.load36 = load <2 x i64>, ptr %i.a, align 16
@@ -446,11 +445,10 @@ load_block.exit.i:                                ; preds = %scalar.ph32, %vecto
   %i.lg = zext i32 %i.lf to i64                   ; 2 uses
   %i.lh = getelementptr [1024 x i8], ptr %i.lc, i64 %i.lg ; 68 uses
   %i.li = ptrtoaddr ptr %i.lc to i64
-  %5 = sub i64 %i.li, %i.b
   %i.lj = shl nuw nsw i64 %i.lg, 10
-  %i.lk = add i64 %5, %i.lj
-  %6 = add i64 %i.lk, -1
-  %diff.check = icmp ult i64 %6, 31
+  %i.lk = add i64 %i.lj, %i.li
+  %4 = sub i64 %i.b, %i.lk
+  %diff.check = icmp ugt i64 %4, -32
   br i1 %diff.check, label %scalar.ph, label %vector.body
 
 vector.body:                                      ; preds = %load_block.exit.i

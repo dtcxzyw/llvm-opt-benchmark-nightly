@@ -205,18 +205,17 @@ bb.y:                                             ; preds = %bb.x
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i190
-  %scevgep281 = getelementptr i8, ptr %i.md, i64 4
   %i.mh = zext nneg i32 %smax.i to i64
-  %i.mi = shl nuw nsw i64 %i.mh, 2                ; 2 uses
-  %scevgep282 = getelementptr i8, ptr %scevgep281, i64 %i.mi ; 2 uses
-  %scevgep283 = getelementptr i8, ptr %.061, i64 4
-  %scevgep284 = getelementptr i8, ptr %scevgep283, i64 %i.mi
+  %i.mi = shl nuw nsw i64 %i.mh, 2
+  %7 = add nuw nsw i64 %i.mi, 4                   ; 2 uses
+  %scevgep283 = getelementptr i8, ptr %i.md, i64 %7 ; 2 uses
+  %scevgep284 = getelementptr i8, ptr %.061, i64 %7
   %scevgep285 = getelementptr i8, ptr %i.lt, i64 624
   %bound0 = icmp ult ptr %i.md, %scevgep284
-  %bound1 = icmp ult ptr %.061, %scevgep282
+  %bound1 = icmp ult ptr %.061, %scevgep283
   %found.conflict = and i1 %bound0, %bound1
   %bound0286 = icmp ult ptr %i.md, %scevgep285
-  %bound1287 = icmp ult ptr %i.me, %scevgep282
+  %bound1287 = icmp ult ptr %i.me, %scevgep283
   %found.conflict288 = and i1 %bound0286, %bound1287
   %conflict.rdx = or i1 %found.conflict, %found.conflict288
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph

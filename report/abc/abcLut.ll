@@ -204,20 +204,21 @@ Extra_TruthClear.exit.i.i:                        ; preds = %._crit_edge.i.i, %s
   br i1 %i.ri, label %.lr.ph318.i.i, label %._crit_edge319.i.i
 
 .lr.ph318.i.i:                                    ; preds = %Extra_TruthClear.exit.i.i
-  %i.rj = zext i32 %spec.select.i.i.i304307 to i64 ; 15 uses
+  %i.rj = zext i32 %spec.select.i.i.i304307 to i64 ; 16 uses
   %wide.trip.count396.i.i = zext nneg i32 %.0.lcssa450.i.i309 to i64
   %wide.trip.count391.i.i = zext nneg i32 %i.rf to i64
   %i.rk = load ptr, ptr %i.ab, align 8, !tbaa !44
   br i1 %i.rh, label %.lr.ph315.preheader.i.i.preheader, label %._crit_edge319.i.i
 
 .lr.ph315.preheader.i.i.preheader:                ; preds = %.lr.ph318.i.i
+  %4 = shl nuw nsw i64 %i.rj, 2                   ; 4 uses
   %.not573 = icmp eq i32 %spec.select.i.i.i304307, 0
   %i.rl = select i1 %.not573, i64 0, i64 4        ; 2 uses
-  %scevgep447 = getelementptr i8, ptr %scevgep446, i64 %i.rl
-  %4 = shl nuw nsw i64 %i.rj, 2                   ; 5 uses
-  %scevgep448 = getelementptr i8, ptr %i.gp, i64 %4
+  %scevgep447 = getelementptr i8, ptr %i.gp, i64 %4
+  %scevgep448 = getelementptr i8, ptr %scevgep446, i64 %i.rl
   %.not574 = icmp eq i32 %spec.select.i.i.i304307, 0
   %i.rm = select i1 %.not574, i64 0, i64 4        ; 2 uses
+  %5 = shl nuw nsw i64 %i.rj, 2                   ; 2 uses
   %.not575 = icmp eq i32 %spec.select.i.i.i304307, 0
   %i.rn = select i1 %.not575, i64 0, i64 4        ; 2 uses
   %i.ro = icmp ne i32 %spec.select.i.i.i304307, 0
@@ -249,11 +250,12 @@ Extra_TruthClear.exit.i.i:                        ; preds = %._crit_edge.i.i, %s
   %i.sa = add nsw i32 %i.rg, %i.rz
   %i.sb = sext i32 %i.sa to i64
   %i.sc = getelementptr inbounds [8 x i8], ptr %i.kq, i64 %i.sb
-  %i.sd = load ptr, ptr %i.sc, align 8, !tbaa !46 ; 10 uses
+  %i.sd = load ptr, ptr %i.sc, align 8, !tbaa !46 ; 11 uses
   %i.se = trunc nuw nsw i64 %indvars.iv393.i.i to i32
+  %scevgep503 = getelementptr i8, ptr %i.sd, i64 %4
   %scevgep470 = getelementptr i8, ptr %i.sd, i64 -4 ; 2 uses
   %scevgep472 = getelementptr i8, ptr %scevgep470, i64 %i.rm
-  %scevgep473 = getelementptr i8, ptr %i.sd, i64 %4 ; 2 uses
+  %scevgep473 = getelementptr i8, ptr %i.sd, i64 %5
   %scevgep496 = getelementptr i8, ptr %scevgep470, i64 %i.rn
   br label %.lr.ph315.i.us.i
 
@@ -274,9 +276,9 @@ select.unfold.i229.i.us.i.preheader:              ; preds = %.lr.ph315.i.us.i
   br i1 %min.iters.check481, label %select.unfold.i229.i.us.i.preheader592, label %vector.memcheck494
 
 vector.memcheck494:                               ; preds = %select.unfold.i229.i.us.i.preheader
-  %scevgep497 = getelementptr i8, ptr %i.sm, i64 -4
-  %scevgep498 = getelementptr i8, ptr %scevgep497, i64 %i.rn
-  %scevgep499 = getelementptr i8, ptr %i.sm, i64 %4
+  %scevgep497 = getelementptr i8, ptr %i.sm, i64 %i.rn
+  %scevgep498 = getelementptr i8, ptr %scevgep497, i64 -4
+  %scevgep499 = getelementptr i8, ptr %i.sm, i64 %5
   %bound0500 = icmp ult ptr %scevgep496, %scevgep499
   %bound1501 = icmp ult ptr %scevgep498, %scevgep473
   %found.conflict502 = and i1 %bound0500, %bound1501
@@ -315,11 +317,11 @@ select.unfold.i234.i.us.i.preheader:              ; preds = %.lr.ph315.i.us.i
   br i1 %min.iters.check481, label %select.unfold.i234.i.us.i.preheader591, label %vector.memcheck469
 
 vector.memcheck469:                               ; preds = %select.unfold.i234.i.us.i.preheader
-  %scevgep474 = getelementptr i8, ptr %i.sm, i64 -4
-  %scevgep475 = getelementptr i8, ptr %scevgep474, i64 %i.rm
+  %scevgep474 = getelementptr i8, ptr %i.sm, i64 %i.rm
+  %scevgep475 = getelementptr i8, ptr %scevgep474, i64 -4
   %scevgep476 = getelementptr i8, ptr %i.sm, i64 %4
   %bound0477 = icmp ult ptr %scevgep472, %scevgep476
-  %bound1478 = icmp ult ptr %scevgep475, %scevgep473
+  %bound1478 = icmp ult ptr %scevgep475, %scevgep503
   %found.conflict479 = and i1 %bound0477, %bound1478
   br i1 %found.conflict479, label %select.unfold.i234.i.us.i.preheader591, label %vector.body484
 
@@ -388,11 +390,11 @@ select.unfold.i239.i.i.preheader:                 ; preds = %Extra_TruthAnd.exit
   br i1 %min.iters.check456, label %select.unfold.i239.i.i.preheader598, label %vector.memcheck445
 
 vector.memcheck445:                               ; preds = %select.unfold.i239.i.i.preheader
-  %scevgep449 = getelementptr i8, ptr %i.sd, i64 -4
-  %scevgep450 = getelementptr i8, ptr %scevgep449, i64 %i.rl
+  %scevgep449 = getelementptr i8, ptr %i.sd, i64 %i.rl
+  %scevgep450 = getelementptr i8, ptr %scevgep449, i64 -4
   %scevgep451 = getelementptr i8, ptr %i.sd, i64 %4
-  %bound0452 = icmp ult ptr %scevgep447, %scevgep451
-  %bound1453 = icmp ult ptr %scevgep450, %scevgep448
+  %bound0452 = icmp ult ptr %scevgep448, %scevgep451
+  %bound1453 = icmp ult ptr %scevgep450, %scevgep447
   %found.conflict454 = and i1 %bound0452, %bound1453
   br i1 %found.conflict454, label %select.unfold.i239.i.i.preheader598, label %vector.body459
 

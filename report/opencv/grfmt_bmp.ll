@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %_ZN2cv10AutoBufferI
   br label %_ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit314
 
 _ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit314:  ; preds = %.noexc313, %_ZN2cv10AutoBufferIhLm1032EE10deallocateEv.exit.i312, %bb.n, %_ZN2cv10AutoBufferIhLm1032EE8allocateEm.exit
-  %i.bi = load ptr, ptr %2, align 8, !tbaa !150   ; 40 uses
+  %i.bi = load ptr, ptr %2, align 8, !tbaa !150   ; 41 uses
   %i.bj = load ptr, ptr %3, align 8, !tbaa !150   ; 2 uses
   %i.bk = load i64, ptr %i.w, align 8, !tbaa !65
   invoke void @_ZN2cv11RBaseStream6setPosEl(ptr noundef nonnull align 8 dereferenceable(65) %i.z, i64 noundef %i.bk)
@@ -607,16 +607,12 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm, %bb.
   %i.lm = getelementptr inbounds nuw i8, ptr %0, i64 1848
   %i.ln = getelementptr inbounds nuw i8, ptr %0, i64 1880
   %i.lo = sext i32 %.0239 to i64                  ; 4 uses
-  %scevgep558 = getelementptr i8, ptr %i.bi, i64 4 ; 2 uses
   %scevgep560 = getelementptr inbounds nuw i8, ptr %0, i64 1880 ; 2 uses
   br i1 %i.m, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit.us
   %indvar554 = phi i64 [ %indvar.next555, %_ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit.us ], [ 0, %.lr.ph ] ; 2 uses
   %.24410.us = phi ptr [ %i.qf, %_ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit.us ], [ %.0232, %.lr.ph ] ; 10 uses
-  %13 = mul i64 %indvar554, %i.lo
-  %14 = getelementptr i8, ptr %.0232, i64 %13
-  %scevgep556 = getelementptr i8, ptr %14, i64 3
   %i.lp = invoke noundef i32 @_ZN2cv12RLByteStream8getBytesEPvi(ptr noundef nonnull align 8 dereferenceable(65) %i.z, ptr noundef %i.bi, i32 noundef %i.t)
           to label %bb.dp unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -721,12 +717,16 @@ bb.dx:                                            ; preds = %bb.dv
   br i1 %min.iters.check569, label %.lr.ph.split.i.us.preheader622, label %vector.memcheck553
 
 vector.memcheck553:                               ; preds = %.lr.ph.split.i.us.preheader
+  %13 = mul i64 %indvar554, %i.lo
   %i.no = add nsw i32 %i.nl, -1
   %i.np = zext i32 %i.no to i64                   ; 2 uses
   %i.nq = mul nuw nsw i64 %i.np, 3
-  %scevgep557 = getelementptr i8, ptr %scevgep556, i64 %i.nq ; 2 uses
+  %14 = getelementptr i8, ptr %.0232, i64 %13
+  %15 = getelementptr i8, ptr %14, i64 3
+  %scevgep557 = getelementptr i8, ptr %15, i64 %i.nq ; 2 uses
   %i.nr = shl nuw nsw i64 %i.np, 2
-  %scevgep559 = getelementptr i8, ptr %scevgep558, i64 %i.nr
+  %16 = getelementptr i8, ptr %i.bi, i64 %i.nr
+  %scevgep559 = getelementptr i8, ptr %16, i64 4
   %bound0561 = icmp ult ptr %.24410.us, %scevgep559
   %bound1562 = icmp ult ptr %i.bi, %scevgep557
   %found.conflict563 = and i1 %bound0561, %bound1562
@@ -856,9 +856,6 @@ _ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit.us: ; preds = %bb.du, %.lr.ph.spl
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit
   %indvar = phi i64 [ %indvar.next, %_ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit ], [ 0, %.lr.ph ] ; 2 uses
   %.24410 = phi ptr [ %i.tl, %_ZN2cv10BmpDecoder14maskBGRAtoGrayEPhPKhi.exit ], [ %.0232, %.lr.ph ] ; 8 uses
-  %15 = mul i64 %indvar, %i.lo
-  %16 = getelementptr i8, ptr %.0232, i64 %15
-  %scevgep = getelementptr i8, ptr %16, i64 1
   %i.qi = invoke noundef i32 @_ZN2cv12RLByteStream8getBytesEPvi(ptr noundef nonnull align 8 dereferenceable(65) %i.z, ptr noundef %i.bi, i32 noundef %i.t)
           to label %bb.dy unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -876,11 +873,15 @@ bb.dz:                                            ; preds = %bb.dy
   br i1 %min.iters.check, label %.lr.ph.i.preheader627, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
+  %17 = mul i64 %indvar, %i.lo
   %i.qm = add nsw i32 %i.qj, -1
   %i.qn = zext i32 %i.qm to i64                   ; 2 uses
-  %scevgep527 = getelementptr i8, ptr %scevgep, i64 %i.qn ; 2 uses
+  %18 = getelementptr i8, ptr %.0232, i64 %17
+  %19 = getelementptr i8, ptr %18, i64 1
+  %scevgep527 = getelementptr i8, ptr %19, i64 %i.qn ; 2 uses
   %i.qo = shl nuw nsw i64 %i.qn, 2
-  %scevgep529 = getelementptr i8, ptr %scevgep558, i64 %i.qo
+  %20 = getelementptr i8, ptr %i.bi, i64 %i.qo
+  %scevgep529 = getelementptr i8, ptr %20, i64 4
   %bound0 = icmp ult ptr %.24410, %scevgep529
   %bound1 = icmp ult ptr %i.bi, %scevgep527
   %found.conflict = and i1 %bound0, %bound1

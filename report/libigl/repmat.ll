@@ -204,8 +204,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 
 bb.d:                                             ; preds = %.preheader, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS1_IdLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit ] ; 4 uses
-  %4 = shl nuw nsw i64 %indvars.iv, 3
-  %5 = shl nuw nsw i64 %indvars.iv, 3
   %i.q = load i64, ptr %i.b, align 8, !tbaa !41   ; 15 uses
   %i.r = mul nsw i64 %i.q, %indvars.iv32
   %i.s = load ptr, ptr %3, align 8, !tbaa !43, !noalias !143 ; 2 uses
@@ -230,10 +228,11 @@ bb.d:                                             ; preds = %.preheader, %_ZN5Ei
   br i1 %min.iters.check47, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.preheader59, label %vector.memcheck44
 
 vector.memcheck44:                                ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.ad = mul i64 %i.o, %i.q
-  %6 = add i64 %i.ad, %i.t
+  %i.ad = mul i64 %i.q, %i.o
+  %4 = shl nuw nsw i64 %indvars.iv, 3
   %i.ae = mul i64 %i.v, %4
-  %i.af = add i64 %6, %i.ae
+  %5 = add i64 %i.ad, %i.t
+  %i.af = add i64 %5, %i.ae
   %i.ag = sub i64 %i.z, %i.af
   %diff.check45 = icmp ugt i64 %i.ag, -32
   br i1 %diff.check45, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.preheader59, label %vector.ph48
@@ -339,9 +338,10 @@ middle.block55:                                   ; preds = %vector.body50
   br i1 %min.iters.check, label %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader58, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.bu = mul i64 %i.p, %i.q
+  %i.bu = mul i64 %i.q, %i.p
+  %6 = shl nuw nsw i64 %indvars.iv, 3
+  %i.bv = mul i64 %i.v, %6
   %7 = add i64 %i.bu, %i.t
-  %i.bv = mul i64 %i.v, %5
   %i.bw = add i64 %7, %i.bv
   %i.bx = sub i64 %i.z, %i.bw
   %diff.check = icmp ugt i64 %i.bx, -32
@@ -439,8 +439,6 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELin1ELb0EEaSIS2_EERS3_RKNS_9DenseBaseIT_EE.exit
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELin1ELin1ELb0EEaSIS2_EERS3_RKNS_9DenseBaseIT_EE.exit ] ; 4 uses
-  %4 = shl nuw nsw i64 %indvars.iv, 3
-  %5 = shl nuw nsw i64 %indvars.iv, 3
   %i.k = load i64, ptr %i.b, align 8, !tbaa !41   ; 15 uses
   %i.l = mul nsw i64 %i.k, %indvars.iv32
   %i.m = load ptr, ptr %3, align 8, !tbaa !45, !noalias !154 ; 2 uses
@@ -465,10 +463,11 @@ bb.b:                                             ; preds = %.preheader, %_ZN5Ei
   br i1 %min.iters.check46, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.preheader58, label %vector.memcheck43
 
 vector.memcheck43:                                ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.x = mul i64 %i.i, %i.k
-  %6 = add i64 %i.x, %i.n
+  %i.x = mul i64 %i.k, %i.i
+  %4 = shl nuw nsw i64 %indvars.iv, 3
   %i.y = mul i64 %i.p, %4
-  %i.z = add i64 %6, %i.y
+  %5 = add i64 %i.x, %i.n
+  %i.z = add i64 %5, %i.y
   %i.aa = sub i64 %i.t, %i.z
   %diff.check44 = icmp ugt i64 %i.aa, -32
   br i1 %diff.check44, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.preheader58, label %vector.ph47
@@ -574,9 +573,10 @@ middle.block54:                                   ; preds = %vector.body49
   br i1 %min.iters.check, label %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader57, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph49.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.bo = mul i64 %i.j, %i.k
+  %i.bo = mul i64 %i.k, %i.j
+  %6 = shl nuw nsw i64 %indvars.iv, 3
+  %i.bp = mul i64 %i.p, %6
   %7 = add i64 %i.bo, %i.n
-  %i.bp = mul i64 %i.p, %5
   %i.bq = add i64 %7, %i.bp
   %i.br = sub i64 %i.t, %i.bq
   %diff.check = icmp ugt i64 %i.br, -32
@@ -787,18 +787,18 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond, label %.preheader.i.i.preheader, label %_ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEEENS3_IS6_EENS0_9assign_opIddEELi0EEELi4ELi0EE3runERSC_.exit
 
 .preheader.i.i.preheader:                         ; preds = %bb.e
-  %4 = mul i64 %i.s, %i.x
-  %i.an = mul i64 %i.z, %i.v
-  %5 = add i64 %i.an, -8
-  %i.ao = mul i64 %i.ae, %5
-  %6 = getelementptr i8, ptr %i.ab, i64 %4
-  %scevgep = getelementptr i8, ptr %6, i64 %i.ao
-  %7 = shl i64 %i.z, 3
-  %8 = mul i64 %7, %i.x
-  %scevgep72 = getelementptr i8, ptr %i.ah, i64 %8
+  %4 = shl i64 %i.z, 3
+  %i.an = mul i64 %4, %i.x
+  %scevgep = getelementptr i8, ptr %i.ah, i64 %i.an
+  %i.ao = mul i64 %i.s, %i.x
+  %5 = mul i64 %i.z, %i.v
+  %6 = add i64 %5, -8
+  %7 = mul i64 %i.ae, %6
+  %8 = getelementptr i8, ptr %i.ab, i64 %i.ao
+  %scevgep72 = getelementptr i8, ptr %8, i64 %7
   %min.iters.check75 = icmp ult i64 %i.x, 8
-  %bound0 = icmp ult ptr %i.ag, %scevgep72
-  %bound1 = icmp ult ptr %i.ah, %scevgep
+  %bound0 = icmp ult ptr %i.ag, %scevgep
+  %bound1 = icmp ult ptr %i.ah, %scevgep72
   %found.conflict = and i1 %bound0, %bound1
   %i.ap = or i64 %i.x, %i.ae
   %i.aq = and i64 %i.ap, 1152921504606846976
@@ -897,24 +897,23 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i: ; preds = %bb.d
   %i.bv = lshr exact i64 %i.aj, 3
   %i.bw = and i64 %i.bv, 1
   %i.bx = tail call i64 @llvm.smin.i64(i64 %i.bw, i64 %i.x)
+  %9 = sub i64 %i.ae, %i.x
+  %10 = shl i64 %9, 3
   %i.by = mul i64 %i.ae, %i.z
   %i.bz = mul i64 %i.by, %i.w
   %i.ca = add i64 %i.bz, %i.ac
   %i.cb = mul i64 %i.t, %i.x
   %i.cc = add i64 %i.ca, %i.cb
-  %9 = sub i64 %i.cc, %i.ai
-  %i.cd = sub i64 %i.ae, %i.x
-  %10 = shl i64 %i.cd, 3
-  %invariant.op = add i64 %9, -1
+  %i.cd = sub i64 %i.cc, %i.ai
+  %invariant.op = add i64 %i.cd, -1
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.i, %.lr.ph54.i
   %.03453.i = phi i64 [ 0, %.lr.ph54.i ], [ %i.dj, %._crit_edge.i ] ; 8 uses
   %.03552.i = phi i64 [ %i.bx, %.lr.ph54.i ], [ %.sroa.speculated.i, %._crit_edge.i ] ; 6 uses
-  %11 = mul i64 %10, %.03453.i
   %i.ce = sub i64 %i.x, %.03552.i                 ; 2 uses
   %i.cf = and i64 %i.ce, -2                       ; 2 uses
-  %i.cg = add nsw i64 %i.cf, %.03552.i            ; 5 uses
+  %i.cg = add nsw i64 %i.cf, %.03552.i            ; 6 uses
   %i.ch = icmp sgt i64 %.03552.i, 0
   br i1 %i.ch, label %.preheader43.loopexit.i, label %.preheader43.i
 
@@ -949,13 +948,16 @@ bb.f:                                             ; preds = %._crit_edge.i, %.lr
   %invariant.gep50.i = getelementptr [8 x i8], ptr %i.ah, i64 %i.ct ; 2 uses
   %i.cu = add i64 %.03552.i, %i.cf
   %i.cv = sub i64 %i.x, %i.cu                     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.cv, 4
-  %.reass = add i64 %11, %invariant.op
-  %diff.check.a = icmp ult i64 %.reass, 31
-  %or.cond87 = select i1 %min.iters.check, i1 true, i1 %diff.check.a
-  br i1 %or.cond87, label %scalar.ph.preheader, label %vector.ph
+  %diff.check.a = icmp ult i64 %i.cv, 4
+  br i1 %diff.check.a, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.ph:                                        ; preds = %.lr.ph49.i
+vector.memcheck:                                  ; preds = %.lr.ph49.i
+  %11 = mul i64 %.03453.i, %10
+  %.reass = add i64 %11, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.cv, -4                      ; 3 uses
   %i.cw = add i64 %i.cg, %n.vec
   br label %vector.body
@@ -979,8 +981,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.cv, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph49.i, %middle.block
-  %.048.i.ph = phi i64 [ %i.cg, %.lr.ph49.i ], [ %i.cw, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph49.i, %middle.block
+  %.048.i.ph = phi i64 [ %i.cg, %vector.memcheck ], [ %i.cg, %.lr.ph49.i ], [ %i.cw, %middle.block ]
   br label %scalar.ph
 
 .lr.ph47.i:                                       ; preds = %.lr.ph47.i.preheader, %.lr.ph47.i

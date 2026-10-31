@@ -204,17 +204,17 @@ _ZN5Ipopt14DenseGenMatrix6ValuesEv.exit58:        ; preds = %bb.h
 .preheader109.preheader:                          ; preds = %_ZN5Ipopt14DenseGenMatrix6ValuesEv.exit58
   %i.y = zext nneg i32 %.049 to i64               ; 11 uses
   %i.z = zext nneg i32 %i.h to i64                ; 2 uses
-  %4 = add nuw nsw i64 %i.y, 2305843009213693951
-  %5 = mul i64 %4, %i.z
-  %6 = add i64 %5, %i.y
-  %7 = shl i64 %6, 3
-  %scevgep171 = getelementptr i8, ptr %i.s, i64 %7
-  %8 = mul nuw nsw i64 %i.y, %i.y
+  %4 = mul nuw nsw i64 %i.y, %i.y
+  %5 = shl i64 %4, 3
+  %scevgep173 = getelementptr i8, ptr %i.w, i64 %5
+  %6 = add nuw nsw i64 %i.y, 2305843009213693951
+  %7 = mul i64 %6, %i.z
+  %8 = add i64 %7, %i.y
   %i.aa = shl i64 %8, 3
-  %scevgep172 = getelementptr i8, ptr %i.w, i64 %i.aa
+  %scevgep172 = getelementptr i8, ptr %i.s, i64 %i.aa
   %min.iters.check = icmp ult i32 %.049, 4
-  %bound0 = icmp ult ptr %i.s, %scevgep172
-  %bound1 = icmp ult ptr %i.w, %scevgep171
+  %bound0 = icmp ult ptr %i.s, %scevgep173
+  %bound1 = icmp ult ptr %i.w, %scevgep172
   %found.conflict = and i1 %bound0, %bound1
   %n.vec = and i64 %i.y, 2147483644               ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %i.y
@@ -617,16 +617,13 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50:        ; preds = %bb.h
   br i1 %i.x, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %_ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50
-  %i.y = zext nneg i32 %.041 to i64               ; 8 uses
-  %i.z = zext nneg i32 %i.h to i64                ; 3 uses
-  %i.aa = shl nuw nsw i64 %i.z, 3
+  %i.y = zext nneg i32 %.041 to i64               ; 7 uses
+  %i.z = zext nneg i32 %i.h to i64                ; 2 uses
+  %i.aa = shl nuw nsw i64 %i.y, 3                 ; 3 uses
   %i.ab = add nuw nsw i64 %i.aa, 8
-  %3 = shl nuw nsw i64 %i.y, 3                    ; 3 uses
-  %i.ac = shl nuw nsw i64 %i.z, 3
-  %i.ad = add nuw nsw i64 %3, 8
-  %4 = shl nuw nsw i64 %i.y, 3
-  %5 = getelementptr i8, ptr %i.w, i64 %3
-  %i.ae = getelementptr i8, ptr %i.s, i64 %3
+  %i.ac = shl nuw nsw i64 %i.z, 3                 ; 2 uses
+  %i.ad = add nuw nsw i64 %i.ac, 8
+  %i.ae = getelementptr i8, ptr %i.s, i64 %i.aa
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit159
@@ -640,16 +637,17 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50:        ; preds = %bb.h
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader
-  %i.ai = mul i64 %4, %indvars.iv
-  %scevgep157 = getelementptr i8, ptr %5, i64 %i.ai
-  %i.aj = mul i64 %i.ad, %indvars.iv
-  %scevgep156 = getelementptr i8, ptr %i.w, i64 %i.aj
-  %i.ak = mul i64 %i.ac, %indvars.iv
-  %scevgep155 = getelementptr i8, ptr %i.ae, i64 %i.ak
-  %i.al = mul i64 %i.ab, %indvars.iv
-  %scevgep = getelementptr i8, ptr %i.s, i64 %i.al
-  %bound0 = icmp ult ptr %scevgep, %scevgep157
-  %bound1 = icmp ult ptr %scevgep156, %scevgep155
+  %i.ai = mul i64 %indvars.iv, %i.ad
+  %scevgep157 = getelementptr i8, ptr %i.s, i64 %i.ai
+  %i.aj = mul nuw nsw i64 %indvars.iv, %i.ac
+  %scevgep156 = getelementptr i8, ptr %i.ae, i64 %i.aj
+  %i.ak = mul i64 %indvars.iv, %i.ab
+  %scevgep155 = getelementptr i8, ptr %i.w, i64 %i.ak
+  %3 = add nuw i64 %indvars.iv, 1
+  %i.al = mul i64 %i.aa, %3
+  %scevgep = getelementptr i8, ptr %i.w, i64 %i.al
+  %bound0 = icmp ult ptr %scevgep157, %scevgep
+  %bound1 = icmp ult ptr %scevgep155, %scevgep156
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -1052,16 +1050,13 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50:        ; preds = %bb.h
   br i1 %i.x, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %_ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50
-  %i.y = zext nneg i32 %.041 to i64               ; 8 uses
-  %i.z = zext nneg i32 %i.h to i64                ; 3 uses
-  %i.aa = shl nuw nsw i64 %i.z, 3
+  %i.y = zext nneg i32 %.041 to i64               ; 7 uses
+  %i.z = zext nneg i32 %i.h to i64                ; 2 uses
+  %i.aa = shl nuw nsw i64 %i.y, 3                 ; 3 uses
   %i.ab = add nuw nsw i64 %i.aa, 8
-  %4 = shl nuw nsw i64 %i.y, 3                    ; 3 uses
-  %i.ac = shl nuw nsw i64 %i.z, 3
-  %i.ad = add nuw nsw i64 %4, 8
-  %5 = shl nuw nsw i64 %i.y, 3
-  %6 = getelementptr i8, ptr %i.w, i64 %4
-  %i.ae = getelementptr i8, ptr %i.s, i64 %4
+  %i.ac = shl nuw nsw i64 %i.z, 3                 ; 2 uses
+  %i.ad = add nuw nsw i64 %i.ac, 8
+  %i.ae = getelementptr i8, ptr %i.s, i64 %i.aa
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit159
@@ -1075,16 +1070,17 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50:        ; preds = %bb.h
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader
-  %i.ai = mul i64 %5, %indvars.iv
-  %scevgep157 = getelementptr i8, ptr %6, i64 %i.ai
-  %i.aj = mul i64 %i.ad, %indvars.iv
-  %scevgep156 = getelementptr i8, ptr %i.w, i64 %i.aj
-  %i.ak = mul i64 %i.ac, %indvars.iv
-  %scevgep155 = getelementptr i8, ptr %i.ae, i64 %i.ak
-  %i.al = mul i64 %i.ab, %indvars.iv
-  %scevgep = getelementptr i8, ptr %i.s, i64 %i.al
-  %bound0 = icmp ult ptr %scevgep, %scevgep157
-  %bound1 = icmp ult ptr %scevgep156, %scevgep155
+  %i.ai = mul i64 %indvars.iv, %i.ad
+  %scevgep157 = getelementptr i8, ptr %i.s, i64 %i.ai
+  %i.aj = mul nuw nsw i64 %indvars.iv, %i.ac
+  %scevgep156 = getelementptr i8, ptr %i.ae, i64 %i.aj
+  %i.ak = mul i64 %indvars.iv, %i.ab
+  %scevgep155 = getelementptr i8, ptr %i.w, i64 %i.ak
+  %4 = add nuw i64 %indvars.iv, 1
+  %i.al = mul i64 %i.aa, %4
+  %scevgep = getelementptr i8, ptr %i.w, i64 %i.al
+  %bound0 = icmp ult ptr %scevgep157, %scevgep
+  %bound1 = icmp ult ptr %scevgep155, %scevgep156
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

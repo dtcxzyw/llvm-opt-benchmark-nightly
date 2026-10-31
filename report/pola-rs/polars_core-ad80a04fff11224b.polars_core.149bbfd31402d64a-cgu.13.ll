@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %.val23, i64 40, !dbg !61564
   %i.ar = load ptr, ptr %i.aq, align 8, !dbg !61564, !nonnull !3467, !noundef !3467 ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.val23, i64 48, !dbg !61565
-  %i.at = load i64, ptr %i.as, align 8, !dbg !61565, !noundef !3467 ; 5 uses
+  %i.at = load i64, ptr %i.as, align 8, !dbg !61565, !noundef !3467 ; 4 uses
   %.idx = shl i64 %i.at, 2, !dbg !61566           ; 2 uses
   %i.au = getelementptr i8, ptr %i.ar, i64 %.idx, !dbg !61566 ; 2 uses
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullmEEE7reserveBP_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.at)
@@ -220,16 +220,18 @@ bb.i:                                             ; preds = %bb.f
 .lr.ph.i:                                         ; preds = %.noexc
   %i.ay = load ptr, ptr %i.aj, align 8, !dbg !61573, !alias.scope !61481, !nonnull !3467, !noundef !3467 ; 2 uses
   %i.az = getelementptr [8 x i8], ptr %i.ay, i64 %i.av, !dbg !61574 ; 6 uses
-  %i.ba = add i64 %.idx, -4, !dbg !61572          ; 2 uses
+  %i.ba = add i64 %.idx, -4, !dbg !61572          ; 3 uses
   %i.bb = lshr exact i64 %i.ba, 2, !dbg !61572
   %i.bc = add nuw nsw i64 %i.bb, 1, !dbg !61572   ; 2 uses
   %min.iters.check = icmp ult i64 %i.ba, 28, !dbg !61572
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !61572
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
-  %5 = add i64 %i.at, %i.av, !dbg !61572
-  %i.bd = shl i64 %5, 3, !dbg !61572
-  %scevgep62 = getelementptr i8, ptr %i.ay, i64 %i.bd, !dbg !61572
+  %5 = shl nuw nsw i64 %i.av, 3, !dbg !61572
+  %i.bd = shl i64 %i.ba, 1, !dbg !61572
+  %6 = getelementptr i8, ptr %i.ay, i64 %5, !dbg !61572
+  %7 = getelementptr i8, ptr %6, i64 %i.bd, !dbg !61572
+  %scevgep62 = getelementptr i8, ptr %7, i64 8, !dbg !61572
   %bound0 = icmp ult ptr %i.az, %i.au, !dbg !61572
   %bound1 = icmp ult ptr %i.ar, %scevgep62, !dbg !61572
   %found.conflict = and i1 %bound0, %bound1, !dbg !61572
@@ -632,7 +634,7 @@ bb.i:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %.val23, i64 40, !dbg !62859
   %i.ar = load ptr, ptr %i.aq, align 8, !dbg !62859, !nonnull !3467, !noundef !3467 ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.val23, i64 48, !dbg !62860
-  %i.at = load i64, ptr %i.as, align 8, !dbg !62860, !noundef !3467 ; 5 uses
+  %i.at = load i64, ptr %i.as, align 8, !dbg !62860, !noundef !3467 ; 4 uses
   %.idx = shl i64 %i.at, 2, !dbg !62861           ; 2 uses
   %i.au = getelementptr i8, ptr %i.ar, i64 %.idx, !dbg !62861 ; 2 uses
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNullfEEE7reserveBP_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.at)
@@ -648,16 +650,18 @@ bb.i:                                             ; preds = %bb.f
 .lr.ph.i:                                         ; preds = %.noexc
   %i.ay = load ptr, ptr %i.aj, align 8, !dbg !62868, !alias.scope !62778, !nonnull !3467, !noundef !3467 ; 2 uses
   %i.az = getelementptr [8 x i8], ptr %i.ay, i64 %i.av, !dbg !62869 ; 6 uses
-  %i.ba = add i64 %.idx, -4, !dbg !62867          ; 2 uses
+  %i.ba = add i64 %.idx, -4, !dbg !62867          ; 3 uses
   %i.bb = lshr exact i64 %i.ba, 2, !dbg !62867
   %i.bc = add nuw nsw i64 %i.bb, 1, !dbg !62867   ; 2 uses
   %min.iters.check = icmp ult i64 %i.ba, 28, !dbg !62867
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !62867
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
-  %5 = add i64 %i.at, %i.av, !dbg !62867
-  %i.bd = shl i64 %5, 3, !dbg !62867
-  %scevgep65 = getelementptr i8, ptr %i.ay, i64 %i.bd, !dbg !62867
+  %5 = shl nuw nsw i64 %i.av, 3, !dbg !62867
+  %i.bd = shl i64 %i.ba, 1, !dbg !62867
+  %6 = getelementptr i8, ptr %i.ay, i64 %5, !dbg !62867
+  %7 = getelementptr i8, ptr %6, i64 %i.bd, !dbg !62867
+  %scevgep65 = getelementptr i8, ptr %7, i64 8, !dbg !62867
   %bound0 = icmp ult ptr %i.az, %i.au, !dbg !62867
   %bound1 = icmp ult ptr %i.ar, %scevgep65, !dbg !62867
   %found.conflict = and i1 %bound0, %bound1, !dbg !62867
@@ -1060,7 +1064,7 @@ bb.i:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %.val23, i64 40, !dbg !64996
   %i.ar = load ptr, ptr %i.aq, align 8, !dbg !64996, !nonnull !3467, !noundef !3467 ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.val23, i64 48, !dbg !64997
-  %i.at = load i64, ptr %i.as, align 8, !dbg !64997, !noundef !3467 ; 5 uses
+  %i.at = load i64, ptr %i.as, align 8, !dbg !64997, !noundef !3467 ; 4 uses
   %.idx = shl i64 %i.at, 2, !dbg !64998           ; 2 uses
   %i.au = getelementptr i8, ptr %i.ar, i64 %.idx, !dbg !64998 ; 2 uses
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecTmINtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops13compare_inner7NonNulllEEE7reserveBP_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %i.at)
@@ -1076,16 +1080,18 @@ bb.i:                                             ; preds = %bb.f
 .lr.ph.i:                                         ; preds = %.noexc
   %i.ay = load ptr, ptr %i.aj, align 8, !dbg !65005, !alias.scope !64913, !nonnull !3467, !noundef !3467 ; 2 uses
   %i.az = getelementptr [8 x i8], ptr %i.ay, i64 %i.av, !dbg !65006 ; 6 uses
-  %i.ba = add i64 %.idx, -4, !dbg !65004          ; 2 uses
+  %i.ba = add i64 %.idx, -4, !dbg !65004          ; 3 uses
   %i.bb = lshr exact i64 %i.ba, 2, !dbg !65004
   %i.bc = add nuw nsw i64 %i.bb, 1, !dbg !65004   ; 2 uses
   %min.iters.check = icmp ult i64 %i.ba, 28, !dbg !65004
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !65004
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
-  %5 = add i64 %i.at, %i.av, !dbg !65004
-  %i.bd = shl i64 %5, 3, !dbg !65004
-  %scevgep62 = getelementptr i8, ptr %i.ay, i64 %i.bd, !dbg !65004
+  %5 = shl nuw nsw i64 %i.av, 3, !dbg !65004
+  %i.bd = shl i64 %i.ba, 1, !dbg !65004
+  %6 = getelementptr i8, ptr %i.ay, i64 %5, !dbg !65004
+  %7 = getelementptr i8, ptr %6, i64 %i.bd, !dbg !65004
+  %scevgep62 = getelementptr i8, ptr %7, i64 8, !dbg !65004
   %bound0 = icmp ult ptr %i.az, %i.au, !dbg !65004
   %bound1 = icmp ult ptr %i.ar, %scevgep62, !dbg !65004
   %found.conflict = and i1 %bound0, %bound1, !dbg !65004

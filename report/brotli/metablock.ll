@@ -205,13 +205,12 @@ bb.ad:                                            ; preds = %bb.ac, %._crit_edge
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %middle.block
-  %.01821.i = phi i64 [ %i.nc, %middle.block ], [ 0, %.lr.ph.i.preheader ] ; 4 uses
+  %.01821.i = phi i64 [ %i.nc, %middle.block ], [ 0, %.lr.ph.i.preheader ] ; 3 uses
   %i.la = mul i64 %.01821.i, %7
   %i.lb = trunc i64 %i.la to i32                  ; 5 uses
-  %.idx.i = shl i64 %.01821.i, 8
+  %.idx.i = shl i64 %.01821.i, 8                  ; 2 uses
   %i.lc = getelementptr inbounds nuw i8, ptr %i.kh, i64 %.idx.i ; 20 uses
-  %12 = shl i64 %.01821.i, 8
-  %.reass = add i64 %12, %invariant.op
+  %.reass = add i64 %.idx.i, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph, label %vector.body
 
@@ -614,12 +613,12 @@ bb.i:                                             ; preds = %bb.h
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.bo = mul i64 %i.f, 1040                      ; 2 uses
+  %i.bo = mul i64 %i.f, 2080
   %scevgep.a = getelementptr i8, ptr %i.bk, i64 %i.bo
-  %3 = mul i64 %i.f, 2080
-  %4 = getelementptr i8, ptr %i.bk, i64 %3
-  %scevgep259 = getelementptr i8, ptr %4, i64 -16
-  %i.bp = getelementptr i8, ptr %i.bk, i64 %i.bo
+  %scevgep = getelementptr i8, ptr %scevgep.a, i64 -16
+  %3 = mul i64 %i.f, 1040                         ; 2 uses
+  %scevgep259 = getelementptr i8, ptr %i.bk, i64 %3
+  %i.bp = getelementptr i8, ptr %i.bk, i64 %3
   %scevgep264 = getelementptr i8, ptr %i.bp, i64 -16
   br label %vector.memcheck263
 
@@ -735,8 +734,8 @@ HistogramAddHistogramLiteral.exit:                ; preds = %vector.body270, %sc
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !59
   %i.ed = add i64 %i.ec, %i.ea
   store i64 %i.ed, ptr %i.eb, align 8, !tbaa !59
-  %bound0 = icmp ult ptr %scevgep.a, %i.dz
-  %bound1 = icmp ult ptr %gep.1, %scevgep259
+  %bound0 = icmp ult ptr %scevgep259, %i.dz
+  %bound1 = icmp ult ptr %gep.1, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph, label %vector.body
 

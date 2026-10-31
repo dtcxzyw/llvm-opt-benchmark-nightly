@@ -204,11 +204,11 @@ middle.block276:                                  ; preds = %vector.body269
 bb.j:                                             ; preds = %bb.i, %.loopexit314
   %.1127 = phi ptr [ %i.en, %.loopexit314 ], [ %0, %bb.i ] ; 16 uses
   %.2124 = phi i32 [ %.1123.lcssa, %.loopexit314 ], [ %1, %bb.i ] ; 3 uses
+  %.1127288 = ptrtoaddr ptr %.1127 to i64
   %i.eo = icmp slt i32 %3, %.2124
   br i1 %i.eo, label %.loopexit186.sink.split, label %.preheader185
 
 .preheader185:                                    ; preds = %bb.j
-  %.1127281 = ptrtoaddr ptr %.1127 to i64
   %i.ep = trunc i16 %4 to i1
   %i.eq = and i32 %i.b, 2
   %.not161 = icmp eq i32 %i.eq, 0
@@ -372,7 +372,7 @@ iter.check298:                                    ; preds = %bb.z
 
 vector.memcheck280:                               ; preds = %iter.check298
   %i.hb = shl nsw i64 %i.gz, 1
-  %i.hc = add i64 %i.hb, %.1127281
+  %i.hc = add i64 %i.hb, %.1127288
   %i.hd = sub i64 %i.hc, %.5134282
   %diff.check283 = icmp ugt i64 %i.hd, -32
   br i1 %diff.check283, label %.lr.ph.preheader, label %vector.main.loop.iter.check286

@@ -205,8 +205,6 @@ bb.k:                                             ; preds = %bb.i, %.lr.ph194.pr
   %indvar = phi i64 [ 0, %.lr.ph189.preheader ], [ %indvar.next, %.loopexit ] ; 3 uses
   %.5187 = phi ptr [ %.4, %.lr.ph189.preheader ], [ %i.ia, %.loopexit ] ; 7 uses
   %.5125186 = phi ptr [ %.4124, %.lr.ph189.preheader ], [ %.10, %.loopexit ] ; 3 uses
-  %1 = mul nsw i64 %indvar, -16
-  %.reass404 = add i64 %1, %invariant.op403
   %i.en = load <2 x i64>, ptr %.5187, align 1, !tbaa !32 ; 2 uses
   %i.eo = bitcast <2 x i64> %i.en to <16 x i8>
   %i.ep = tail call <16 x i8> @llvm.x86.sse42.pcmpestrm128(<16 x i8> <i8 39, i8 34, i8 92, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, i32 4, <16 x i8> %i.eo, i32 16, i8 0)
@@ -400,7 +398,9 @@ vector.scevcheck309:                              ; preds = %iter.check328
   br i1 %i.hf, label %.lr.ph184.preheader, label %vector.memcheck310
 
 vector.memcheck310:                               ; preds = %vector.scevcheck309
-  %i.hg = add i64 %.reass404, %.7.lcssa312.le
+  %1 = mul nsw i64 %indvar, -16
+  %.reass412 = add i64 %1, %invariant.op403
+  %i.hg = add i64 %.reass412, %.7.lcssa312.le
   %i.hh = sub i64 %i.gk, %i.hg
   %diff.check313 = icmp ugt i64 %i.hh, -32
   br i1 %diff.check313, label %.lr.ph184.preheader, label %vector.main.loop.iter.check316
@@ -803,15 +803,12 @@ select.unfold.preheader:                          ; preds = %.critedge266
   %or.cond267 = icmp ult i8 %i.af, 27
   %i.ag = add i64 %.fr, -1                        ; 4 uses
   %spec.select = select i1 %or.cond267, i64 2, i64 1
-  %scevgep475 = getelementptr i8, ptr %i.k, i64 24
-  %scevgep477 = getelementptr i8, ptr %i.k, i64 23
-  %2 = add i64 %i.l, 24
   br label %select.unfold
 
 select.unfold:                                    ; preds = %select.unfold.preheader, %.loopexit
-  %.0228 = phi i64 [ %.4232, %.loopexit ], [ 0, %select.unfold.preheader ] ; 4 uses
+  %.0228 = phi i64 [ %.4232, %.loopexit ], [ 0, %select.unfold.preheader ] ; 3 uses
   %.1226 = phi i64 [ %.2227, %.loopexit ], [ %spec.select, %select.unfold.preheader ]
-  %.0204 = phi i64 [ %.pre-phi, %.loopexit ], [ 0, %select.unfold.preheader ] ; 14 uses
+  %.0204 = phi i64 [ %.pre-phi, %.loopexit ], [ 0, %select.unfold.preheader ] ; 12 uses
   %.0199 = phi ptr [ %.4203, %.loopexit ], [ %i.m, %select.unfold.preheader ] ; 2 uses
   %.0 = phi ptr [ %.3, %.loopexit ], [ %i.ad, %select.unfold.preheader ] ; 30 uses
   %.0535 = ptrtoaddr ptr %.0 to i64
@@ -819,7 +816,7 @@ select.unfold:                                    ; preds = %select.unfold.prehe
   br i1 %i.ah, label %.preheader334, label %.preheader336
 
 .preheader334:                                    ; preds = %select.unfold, %bb.i
-  %indvar = phi i64 [ %indvar.next, %bb.i ], [ 0, %select.unfold ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.i ], [ 0, %select.unfold ] ; 2 uses
   %.1229 = phi i64 [ %i.at, %bb.i ], [ %.0228, %select.unfold ] ; 7 uses
   %.1200 = phi ptr [ %i.ai, %bb.i ], [ %.0199, %select.unfold ] ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.1200, i64 1 ; 2 uses
@@ -866,27 +863,23 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 .lr.ph353.preheader:                              ; preds = %.critedge
   %i.av = add i64 %.0228, 2
   %i.aw = add i64 %i.av, %indvar
-  %i.ax = add i64 %.0204, 2
-  %i.ay = call i64 @llvm.umax.i64(i64 %i.aw, i64 %i.ax)
+  %i.ax = add i64 %.0204, 2                       ; 2 uses
+  %i.ay = call i64 @llvm.umax.i64(i64 %i.aw, i64 %i.ax) ; 3 uses
   %i.az = xor i64 %.0204, -1
   %i.ba = add i64 %i.ay, %i.az                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.ba, 16
   br i1 %min.iters.check, label %.lr.ph353.preheader603, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph353.preheader
-  %scevgep = getelementptr i8, ptr %.0, i64 2
-  %scevgep472 = getelementptr i8, ptr %scevgep, i64 %.0204
-  %3 = add i64 %.0228, 2
-  %4 = add i64 %3, %indvar
-  %5 = add i64 %.0204, 2
-  %umax = call i64 @llvm.umax.i64(i64 %4, i64 %5) ; 2 uses
-  %6 = sub i64 0, %umax
-  %scevgep473 = getelementptr i8, ptr %scevgep472, i64 %6
-  %scevgep474 = getelementptr i8, ptr %.0, i64 1
-  %scevgep476 = getelementptr i8, ptr %scevgep475, i64 %.0204
-  %scevgep478 = getelementptr i8, ptr %scevgep477, i64 %umax
-  %bound0 = icmp ult ptr %scevgep473, %scevgep478
-  %bound1 = icmp ult ptr %scevgep476, %scevgep474
+  %2 = sub i64 %i.ax, %i.ay
+  %scevgep472 = getelementptr i8, ptr %.0, i64 %2
+  %3 = getelementptr i8, ptr %.0, i64 1
+  %scevgep473 = getelementptr i8, ptr %i.k, i64 %.0204
+  %scevgep474 = getelementptr i8, ptr %scevgep473, i64 24
+  %scevgep476 = getelementptr i8, ptr %i.k, i64 %i.ay
+  %scevgep478 = getelementptr i8, ptr %scevgep476, i64 23
+  %bound0 = icmp ult ptr %scevgep472, %scevgep478
+  %bound1 = icmp ult ptr %scevgep474, %3
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph353.preheader603, label %vector.ph
 
@@ -1248,9 +1241,10 @@ iter.check:                                       ; preds = %.critedge4
   br i1 %min.iters.check538, label %.lr.ph.preheader, label %vector.memcheck534
 
 vector.memcheck534:                               ; preds = %iter.check
-  %i.eu = add i64 %2, %.3231.lcssa
-  %i.ev = sub i64 %.0535, %i.eu
-  %diff.check = icmp ugt i64 %i.ev, -32
+  %i.eu = add i64 %.3231.lcssa, %i.l
+  %i.ev = sub i64 %i.eu, %.0535
+  %4 = add i64 %i.ev, 23
+  %diff.check = icmp ult i64 %4, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck534

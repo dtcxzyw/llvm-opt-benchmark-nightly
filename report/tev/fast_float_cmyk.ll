@@ -115,7 +115,7 @@ declare void @cmsPipelineFree(ptr noundef) local_unnamed_addr #2
 define internal void @FloatCMYKCLUTEval(ptr noundef %0, ptr nofree noundef readonly captures(address) %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly captures(none) %5) #0 {
 bb.a:
   %i.a = alloca [16 x float], align 16            ; 9 uses
-  %i.b = ptrtoaddr ptr %i.a to i64                ; 3 uses
+  %i.b = ptrtoaddr ptr %i.a to i64
   %i.c = alloca [16 x float], align 16            ; 6 uses
   %i.d = alloca [16 x ptr], align 16              ; 12 uses
   %i.e = alloca [16 x i32], align 16              ; 8 uses
@@ -320,7 +320,7 @@ bb.e:                                             ; preds = %.preheader559.us, %
   %.0503571.us = phi ptr [ %i.cf, %.preheader559.us ], [ %i.dl, %bb.ad ] ; 2 uses
   %.1505570.us = phi i32 [ 0, %.preheader559.us ], [ %i.sd, %bb.ad ]
   %.1508569.us = phi ptr [ %.0507579.us, %.preheader559.us ], [ %i.mr, %bb.ad ] ; 25 uses
-  %.1508569.us663 = ptrtoaddr ptr %.1508569.us to i64 ; 3 uses
+  %.1508569.us663 = ptrtoaddr ptr %.1508569.us to i64
   %i.db = load float, ptr %.0503571.us, align 4, !tbaa !48 ; 4 uses
   %i.dc = fcmp olt float %i.db, f0x3089705F
   %i.dd = fcmp uno float %i.db, 0.000000e+00
@@ -450,9 +450,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph562.split.us5
   br i1 %i.he, label %.lr.ph562.split.us587.preheader719, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %6 = sub i64 %i.b, %.1508569.us663              ; 2 uses
   %i.hf = zext i32 %i.gf to i64
   %i.hg = shl nuw nsw i64 %i.hf, 2
+  %6 = sub i64 %i.b, %.1508569.us663              ; 4 uses
   %i.hh = sub i64 %i.hg, %6
   %diff.check = icmp ugt i64 %i.hh, -16
   %i.hi = zext i32 %i.ge to i64
@@ -462,14 +462,12 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %conflict.rdx = or i1 %diff.check, %diff.check664
   %i.hl = zext i32 %i.gc to i64
   %i.hm = shl nuw nsw i64 %i.hl, 2
-  %7 = add i64 %i.hm, %.1508569.us663
-  %i.hn = sub i64 %7, %i.b
+  %i.hn = sub i64 %i.hm, %6
   %diff.check665 = icmp ugt i64 %i.hn, -16
   %conflict.rdx666 = or i1 %conflict.rdx, %diff.check665
   %i.ho = zext i32 %i.fv to i64
   %i.hp = shl nuw nsw i64 %i.ho, 2
-  %8 = add i64 %i.hp, %.1508569.us663
-  %i.hq = sub i64 %8, %i.b
+  %i.hq = sub i64 %i.hp, %6
   %diff.check667 = icmp ugt i64 %i.hq, -16
   %conflict.rdx668 = or i1 %conflict.rdx666, %diff.check667
   br i1 %conflict.rdx668, label %.lr.ph562.split.us587.preheader719, label %vector.ph

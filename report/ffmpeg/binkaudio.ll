@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [25 x float], align 16            ; 7 uses
   %i.b = alloca [4098 x float], align 16          ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !28   ; 22 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !28   ; 24 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 6696 ; 4 uses
   %i.f = getelementptr i8, ptr %i.d, i64 12       ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 5 uses
@@ -322,7 +322,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.bh, label %.lr.ph220.i, label %.loopexit
 
 .lr.ph220.i:                                      ; preds = %bb.n
-  %i.bi = sext i32 %i.bb to i64                   ; 6 uses
+  %i.bi = sext i32 %i.bb to i64                   ; 7 uses
   %wide.trip.count245.i = zext nneg i32 %spec.select to i64
   %invariant.gep.sink.i = getelementptr [8 x i8], ptr %i.aw, i64 %i.bi
   br label %bb.o
@@ -725,6 +725,7 @@ bb.ak:                                            ; preds = %._crit_edge217.i, %
   br i1 %exitcond246.not.i, label %.preheader178.i, label %bb.o, !llvm.loop !76
 
 .preheader178.i:                                  ; preds = %bb.ak
+  %2 = shl nsw i64 %i.bi, 10                      ; 2 uses
   %i.kv = load i32, ptr %i.x, align 4, !tbaa !42  ; 6 uses
   %i.kw = mul nuw nsw i32 %i.kv, %spec.select     ; 5 uses
   %i.kx = load i32, ptr %i.y, align 4, !tbaa !51
@@ -739,7 +740,7 @@ bb.ak:                                            ; preds = %._crit_edge217.i, %
   br label %.loopexit.i
 
 .lr.ph223.i:                                      ; preds = %.preheader178.i
-  %i.kz = getelementptr inbounds [1024 x i8], ptr %i.z, i64 %i.bi ; 6 uses
+  %i.kz = getelementptr inbounds [1024 x i8], ptr %i.z, i64 %i.bi ; 5 uses
   %i.la = getelementptr inbounds [8 x i8], ptr %i.aw, i64 %i.bi
   %i.lb = load ptr, ptr %i.la, align 8, !tbaa !99 ; 9 uses
   %i.lc = sitofp nsz i32 %i.kw to float           ; 4 uses
@@ -749,10 +750,12 @@ bb.ak:                                            ; preds = %._crit_edge217.i, %
 
 vector.memcheck:                                  ; preds = %.lr.ph223.i
   %i.ld = shl nuw nsw i64 %wide.trip.count250.i, 2 ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.lb, i64 %i.ld
-  %scevgep97 = getelementptr i8, ptr %i.kz, i64 %i.ld
+  %3 = getelementptr i8, ptr %i.lb, i64 %i.ld
+  %4 = getelementptr i8, ptr %i.d, i64 %2
+  %scevgep = getelementptr i8, ptr %4, i64 164
+  %scevgep97 = getelementptr i8, ptr %scevgep, i64 %i.ld
   %bound0 = icmp ult ptr %i.lb, %scevgep97
-  %bound1 = icmp ult ptr %i.kz, %scevgep
+  %bound1 = icmp ult ptr %i.kz, %3
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -886,7 +889,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br label %.loopexit.i.1
 
 .lr.ph223.i.1:                                    ; preds = %.preheader178.i.1
-  %i.nn = getelementptr inbounds [1024 x i8], ptr %i.z, i64 %i.nm ; 6 uses
+  %i.nn = getelementptr inbounds [1024 x i8], ptr %i.z, i64 %i.nm ; 5 uses
   %i.no = getelementptr inbounds [8 x i8], ptr %i.aw, i64 %i.nm
   %i.np = load ptr, ptr %i.no, align 8, !tbaa !99 ; 9 uses
   %i.nq = sitofp nsz i32 %i.nj to float           ; 4 uses
@@ -896,10 +899,12 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 vector.memcheck.1:                                ; preds = %.lr.ph223.i.1
   %i.nr = shl nuw nsw i64 %wide.trip.count250.i.1, 2 ; 2 uses
-  %scevgep.1 = getelementptr i8, ptr %i.np, i64 %i.nr
-  %scevgep97.1 = getelementptr i8, ptr %i.nn, i64 %i.nr
+  %5 = getelementptr i8, ptr %i.np, i64 %i.nr
+  %6 = getelementptr i8, ptr %i.d, i64 %2
+  %scevgep.1 = getelementptr i8, ptr %6, i64 1188
+  %scevgep97.1 = getelementptr i8, ptr %scevgep.1, i64 %i.nr
   %bound0.1 = icmp ult ptr %i.np, %scevgep97.1
-  %bound1.1 = icmp ult ptr %i.nn, %scevgep.1
+  %bound1.1 = icmp ult ptr %i.nn, %5
   %found.conflict.1 = and i1 %bound0.1, %bound1.1
   br i1 %found.conflict.1, label %scalar.ph.preheader.1, label %vector.ph.1
 

@@ -206,12 +206,12 @@ bb.cm:                                            ; preds = %bb.cd
   %i.aal = zext i32 %i.aak to i64
   %i.aam = add nuw nsw i64 %i.aai, %i.aal
   %i.aan = call fastcc ptr @sqlite3Malloc(i64 noundef %i.aam), !inline_history !4284 ; 15 uses
+  %6 = ptrtoaddr ptr %i.aan to i64
   store ptr %i.aan, ptr %i.ap, align 8, !tbaa !1857
   %i.aao = icmp eq ptr %i.aan, null
   br i1 %i.aao, label %sqlite3DbFree.exit.i, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  %6 = ptrtoaddr ptr %i.aan to i64
   %i.aap = getelementptr inbounds nuw [8 x i8], ptr %i.aan, i64 %i.aah ; 14 uses
   store ptr %i.aap, ptr %i.aq, align 8, !tbaa !1858
   %i.aaq = getelementptr inbounds nuw [2 x i8], ptr %i.aap, i64 %i.aah ; 2 uses
@@ -228,7 +228,6 @@ bb.cn:                                            ; preds = %bb.cm
   %i.aba = icmp ne i8 %i.aax, 0                   ; 7 uses
   %i.abb = zext nneg i16 %i.aav to i64
   %wide.trip.count940.i = zext nneg i32 %i.uy to i64 ; 2 uses
-  %7 = add i64 %6, -40
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cy, %bb.cn
@@ -331,9 +330,10 @@ bb.cs:                                            ; preds = %bb.cr
 
 vector.memcheck:                                  ; preds = %.preheader727.i
   %i.act = shl nsw i64 %.pre-phi.i, 3
-  %i.acu = add i64 %7, %i.act
-  %i.acv = sub i64 %i.abe, %i.acu
-  %diff.check = icmp ugt i64 %i.acv, -32
+  %i.acu = add i64 %i.act, %6
+  %i.acv = sub i64 %i.acu, %i.abe
+  %7 = add i64 %i.acv, -41
+  %diff.check = icmp ult i64 %7, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

@@ -203,9 +203,9 @@ bb.e:                                             ; preds = %bb.c, %bb.c
   %i.r = zext nneg i32 %i.l to i64                ; 11 uses
   %wide.trip.count = zext i32 %i.o to i64         ; 15 uses
   %wide.trip.count48 = zext nneg i32 %i.o to i64
-  %min.iters.check80 = icmp ult i32 %i.o, 4
-  %ident.check77.not = icmp ne i32 %i.l, 1
-  %or.cond108.not110 = select i1 %min.iters.check80, i1 true, i1 %ident.check77.not
+  %min.iters.check80 = icmp ugt i32 %i.o, 3
+  %ident.check77.not = icmp eq i32 %i.l, 1
+  %or.cond108.not110 = select i1 %min.iters.check80, i1 %ident.check77.not, i1 false
   %invariant.op = sub i64 ptrtoaddr (ptr @out to i64), %i.a
   %min.iters.check82 = icmp ult i32 %i.o, 16
   %i.s = and i64 %wide.trip.count, 12
@@ -236,7 +236,7 @@ bb.e:                                             ; preds = %bb.c, %bb.c
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv50 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next51, %._crit_edge ] ; 4 uses
   %i.v = icmp eq i64 %indvars.iv50, 0
-  br i1 %i.v, label %iter.check, label %iter.check92
+  br i1 %i.v, label %iter.check, label %iter.check94
 
 iter.check:                                       ; preds = %.preheader
   br i1 %or.cond107, label %.lr.ph.split.us.preheader, label %vector.main.loop.iter.check
@@ -304,13 +304,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.aj = icmp ugt i64 %i.ai, -4
   br i1 %i.aj, label %._crit_edge, label %.lr.ph.split.us
 
-iter.check92:                                     ; preds = %.preheader
-  %i.ak = shl nuw i64 %indvars.iv50, 1
+iter.check94:                                     ; preds = %.preheader
   %invariant.gep = getelementptr inbounds nuw [2 x i8], ptr @out, i64 %indvars.iv50 ; 7 uses
+  br i1 %or.cond108.not110, label %iter.check92, label %.lr.ph.split.preheader
+
+iter.check92:                                     ; preds = %iter.check94
+  %i.ak = shl nuw i64 %indvars.iv50, 1
   %.reass = add i64 %i.ak, %invariant.op
   %diff.check79 = icmp ugt i64 %.reass, -32
-  %or.cond109 = select i1 %or.cond108.not110, i1 true, i1 %diff.check79
-  br i1 %or.cond109, label %.lr.ph.split.preheader, label %vector.main.loop.iter.check81
+  br i1 %diff.check79, label %.lr.ph.split.preheader, label %vector.main.loop.iter.check81
 
 vector.main.loop.iter.check81:                    ; preds = %iter.check92
   br i1 %min.iters.check82, label %vec.epilog.ph96, label %vector.body85
@@ -352,8 +354,8 @@ vec.epilog.vector.body99:                         ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block103:                       ; preds = %vec.epilog.vector.body99
   br i1 %cmp.n104, label %._crit_edge, label %.lr.ph.split.preheader
 
-.lr.ph.split.preheader:                           ; preds = %iter.check92, %vec.epilog.iter.check93, %vec.epilog.middle.block103
-  %indvars.iv.ph = phi i64 [ 0, %iter.check92 ], [ %n.vec84, %vec.epilog.iter.check93 ], [ %n.vec98, %vec.epilog.middle.block103 ] ; 3 uses
+.lr.ph.split.preheader:                           ; preds = %iter.check94, %iter.check92, %vec.epilog.iter.check93, %vec.epilog.middle.block103
+  %indvars.iv.ph = phi i64 [ 0, %iter.check94 ], [ 0, %iter.check92 ], [ %n.vec84, %vec.epilog.iter.check93 ], [ %n.vec98, %vec.epilog.middle.block103 ] ; 3 uses
   br i1 %lcmp.mod.not, label %.lr.ph.split.prol.loopexit, label %.lr.ph.split.prol
 
 .lr.ph.split.prol:                                ; preds = %.lr.ph.split.preheader, %.lr.ph.split.prol
@@ -482,9 +484,9 @@ bb.b:                                             ; preds = %bb.a
   %i.m = zext nneg i32 %i.g to i64                ; 11 uses
   %wide.trip.count = zext nneg i32 %i.i to i64    ; 15 uses
   %wide.trip.count33 = zext nneg i32 %i.i to i64
-  %min.iters.check54 = icmp ult i32 %i.i, 4
-  %ident.check51.not = icmp ne i32 %i.g, 1
-  %or.cond82.not84 = or i1 %min.iters.check54, %ident.check51.not
+  %min.iters.check54 = icmp ugt i32 %i.i, 3
+  %ident.check51.not = icmp eq i32 %i.g, 1
+  %or.cond84 = and i1 %min.iters.check54, %ident.check51.not
   %invariant.op = sub i64 ptrtoaddr (ptr @out to i64), %i.a
   %min.iters.check56 = icmp ult i32 %i.i, 16
   %i.n = and i64 %wide.trip.count, 12
@@ -521,7 +523,7 @@ bb.c:                                             ; preds = %bb.b
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv35 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next36, %._crit_edge ] ; 4 uses
   %i.r = icmp eq i64 %indvars.iv35, 0
-  br i1 %i.r, label %iter.check, label %iter.check66
+  br i1 %i.r, label %iter.check, label %iter.check68
 
 iter.check:                                       ; preds = %.preheader
   br i1 %or.cond81, label %.lr.ph.split.us.preheader, label %vector.main.loop.iter.check
@@ -589,13 +591,15 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.af = icmp ugt i64 %i.ae, -4
   br i1 %i.af, label %._crit_edge, label %.lr.ph.split.us
 
-iter.check66:                                     ; preds = %.preheader
-  %i.ag = shl nuw i64 %indvars.iv35, 1
+iter.check68:                                     ; preds = %.preheader
   %invariant.gep = getelementptr inbounds nuw [2 x i8], ptr @out, i64 %indvars.iv35 ; 7 uses
+  br i1 %or.cond84, label %iter.check66, label %.lr.ph.split.preheader
+
+iter.check66:                                     ; preds = %iter.check68
+  %i.ag = shl nuw i64 %indvars.iv35, 1
   %.reass = add i64 %i.ag, %invariant.op
   %diff.check53 = icmp ugt i64 %.reass, -32
-  %or.cond83 = select i1 %or.cond82.not84, i1 true, i1 %diff.check53
-  br i1 %or.cond83, label %.lr.ph.split.preheader, label %vector.main.loop.iter.check55
+  br i1 %diff.check53, label %.lr.ph.split.preheader, label %vector.main.loop.iter.check55
 
 vector.main.loop.iter.check55:                    ; preds = %iter.check66
   br i1 %min.iters.check56, label %vec.epilog.ph70, label %vector.body59
@@ -637,8 +641,8 @@ vec.epilog.vector.body73:                         ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block77:                        ; preds = %vec.epilog.vector.body73
   br i1 %cmp.n78, label %._crit_edge, label %.lr.ph.split.preheader
 
-.lr.ph.split.preheader:                           ; preds = %iter.check66, %vec.epilog.iter.check67, %vec.epilog.middle.block77
-  %indvars.iv.ph = phi i64 [ 0, %iter.check66 ], [ %n.vec58, %vec.epilog.iter.check67 ], [ %n.vec72, %vec.epilog.middle.block77 ] ; 3 uses
+.lr.ph.split.preheader:                           ; preds = %iter.check68, %iter.check66, %vec.epilog.iter.check67, %vec.epilog.middle.block77
+  %indvars.iv.ph = phi i64 [ 0, %iter.check68 ], [ 0, %iter.check66 ], [ %n.vec58, %vec.epilog.iter.check67 ], [ %n.vec72, %vec.epilog.middle.block77 ] ; 3 uses
   br i1 %lcmp.mod.not, label %.lr.ph.split.prol.loopexit, label %.lr.ph.split.prol
 
 .lr.ph.split.prol:                                ; preds = %.lr.ph.split.preheader, %.lr.ph.split.prol

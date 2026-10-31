@@ -205,8 +205,8 @@ bb.db:                                            ; preds = %.lr.ph
 
 bb.dc:                                            ; preds = %.lr.ph
   %i.acu = load ptr, ptr %i.b, align 8, !tbaa !308 ; 10 uses
-  %i.acv = ptrtoint ptr %i.acq to i64             ; 3 uses
-  %i.acw = ptrtoint ptr %i.acu to i64             ; 3 uses
+  %i.acv = ptrtoint ptr %i.acq to i64             ; 2 uses
+  %i.acw = ptrtoint ptr %i.acu to i64             ; 2 uses
   %i.acx = sub i64 %i.acv, %i.acw                 ; 4 uses
   %i.acy = icmp eq i64 %i.acx, 9223372036854775800
   br i1 %i.acy, label %bb.dd, label %_ZNKSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14ModuleInstanceESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i533
@@ -240,22 +240,19 @@ _ZNKSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance14ModuleInstanceESt14def
 
 .lr.ph.i.i.i.i537.preheader:                      ; preds = %.noexc552
   %i.adi = add i64 %i.acv, -8
-  %i.adj = sub i64 %i.adi, %i.acw                 ; 2 uses
+  %i.adj = sub i64 %i.adi, %i.acw                 ; 3 uses
   %i.adk = lshr i64 %i.adj, 3
   %i.adl = add nuw nsw i64 %i.adk, 1              ; 2 uses
   %min.iters.check1132 = icmp ult i64 %i.adj, 56
   br i1 %min.iters.check1132, label %.lr.ph.i.i.i.i537.preheader1147, label %vector.memcheck1123
 
 vector.memcheck1123:                              ; preds = %.lr.ph.i.i.i.i537.preheader
-  %scevgep1124 = getelementptr i8, ptr %i.adf, i64 8
-  %39 = add i64 %i.acv, -8
-  %40 = sub i64 %39, %i.acw
-  %i.adm = and i64 %40, -8                        ; 2 uses
-  %scevgep1125 = getelementptr i8, ptr %scevgep1124, i64 %i.adm
-  %scevgep1126 = getelementptr i8, ptr %i.acu, i64 8
-  %scevgep1127 = getelementptr i8, ptr %scevgep1126, i64 %i.adm
+  %i.adm = and i64 %i.adj, -8
+  %39 = add i64 %i.adm, 8                         ; 2 uses
+  %scevgep1126 = getelementptr i8, ptr %i.adf, i64 %39
+  %scevgep1127 = getelementptr i8, ptr %i.acu, i64 %39
   %bound01128 = icmp ult ptr %i.adf, %scevgep1127
-  %bound11129 = icmp ult ptr %i.acu, %scevgep1125
+  %bound11129 = icmp ult ptr %i.acu, %scevgep1126
   %found.conflict1130 = and i1 %bound01128, %bound11129
   br i1 %found.conflict1130, label %.lr.ph.i.i.i.i537.preheader1147, label %vector.ph1133
 
@@ -366,8 +363,8 @@ _ZNSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance17ComponentInstanceESt14d
 
 bb.df:                                            ; preds = %.lr.ph676
   %i.aem = load ptr, ptr %i.wq, align 8, !tbaa !305 ; 10 uses
-  %i.aen = ptrtoint ptr %i.aei to i64             ; 3 uses
-  %i.aeo = ptrtoint ptr %i.aem to i64             ; 3 uses
+  %i.aen = ptrtoint ptr %i.aei to i64             ; 2 uses
+  %i.aeo = ptrtoint ptr %i.aem to i64             ; 2 uses
   %i.aep = sub i64 %i.aen, %i.aeo                 ; 4 uses
   %i.aeq = icmp eq i64 %i.aep, 9223372036854775800
   br i1 %i.aeq, label %bb.dg, label %_ZNKSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance17ComponentInstanceESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -400,22 +397,19 @@ _ZNKSt6vectorISt10unique_ptrIN8WasmEdge7Runtime8Instance17ComponentInstanceESt14
 
 .lr.ph.i.i.i.i557.preheader:                      ; preds = %.noexc570
   %i.aez = add i64 %i.aen, -8
-  %i.afa = sub i64 %i.aez, %i.aeo                 ; 2 uses
+  %i.afa = sub i64 %i.aez, %i.aeo                 ; 3 uses
   %i.afb = lshr i64 %i.afa, 3
   %i.afc = add nuw nsw i64 %i.afb, 1              ; 2 uses
   %min.iters.check1109 = icmp ult i64 %i.afa, 56
   br i1 %min.iters.check1109, label %.lr.ph.i.i.i.i557.preheader1146, label %vector.memcheck1101
 
 vector.memcheck1101:                              ; preds = %.lr.ph.i.i.i.i557.preheader
-  %scevgep = getelementptr i8, ptr %i.aex, i64 8
-  %41 = add i64 %i.aen, -8
-  %42 = sub i64 %41, %i.aeo
-  %i.afd = and i64 %42, -8                        ; 2 uses
-  %scevgep1102 = getelementptr i8, ptr %scevgep, i64 %i.afd
-  %scevgep1103 = getelementptr i8, ptr %i.aem, i64 8
-  %scevgep1104 = getelementptr i8, ptr %scevgep1103, i64 %i.afd
+  %i.afd = and i64 %i.afa, -8
+  %40 = add i64 %i.afd, 8                         ; 2 uses
+  %scevgep1103 = getelementptr i8, ptr %i.aex, i64 %40
+  %scevgep1104 = getelementptr i8, ptr %i.aem, i64 %40
   %bound01105 = icmp ult ptr %i.aex, %scevgep1104
-  %bound11106 = icmp ult ptr %i.aem, %scevgep1102
+  %bound11106 = icmp ult ptr %i.aem, %scevgep1103
   %found.conflict1107 = and i1 %bound01105, %bound11106
   br i1 %found.conflict1107, label %.lr.ph.i.i.i.i557.preheader1146, label %vector.ph1110
 

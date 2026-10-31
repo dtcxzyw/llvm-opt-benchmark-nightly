@@ -205,7 +205,7 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.a
   %i.ad = trunc i64 %i.ac to i32
   %i.ae = and i32 %i.ad, 15
   %i.af = mul nuw nsw i32 %i.ae, %i.y             ; 3 uses
-  %i.ag = zext nneg i32 %i.af to i64              ; 14 uses
+  %i.ag = zext nneg i32 %i.af to i64              ; 13 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
   %i.ai = icmp sgt i32 %i.u, 0
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.s
@@ -220,6 +220,7 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.a
   %i.ao = and i64 %i.ag, 4092                     ; 2 uses
   %i.ap = zext i32 %i.ak to i64
   %.not108 = icmp eq i64 %i.ao, %i.ag
+  %6 = sub nsw i64 0, %i.ag                       ; 2 uses
   %.not.i.us128 = icmp samesign ult i32 %i.af, 4
   %i.aq = add nsw i64 %i.ag, -4                   ; 2 uses
   %i.ar = lshr i64 %i.aq, 2
@@ -351,13 +352,18 @@ _ZNK2cv9SparseMat4hashEPKi.exit.us:               ; preds = %_ZNK2cv9SparseMat4h
   %.010.i38.us = phi i64 [ 0, %_ZN2cvL10isZeroElemEPKhm.exit.us ], [ %i.be, %bb.g ], [ %i.ch, %_ZNK2cv9SparseMat4hashEPKi.exit.us.loopexit.unr-lcssa ], [ %i.cm, %.lr.ph.i39.us.epil ]
   %i.cn = call noundef ptr @_ZN2cv9SparseMat7newNodeEPKim(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.a, i64 noundef %.010.i38.us) ; 10 uses
   %i.co = ptrtoaddr ptr %i.cn to i64              ; 2 uses
-  br i1 %.not14.i, label %.preheader.i43.us, label %.lr.ph.i41.us.preheader.a
+  br i1 %.not14.i, label %.preheader.i43.us, label %.lr.ph.i41.us.preheader
 
-.lr.ph.i41.us.preheader.a:                        ; preds = %_ZNK2cv9SparseMat4hashEPKi.exit.us
-  %i.cp = sub i64 %9, %i.co
-  %diff.check139 = icmp ugt i64 %i.cp, -32
-  %or.cond = select i1 %min.iters.check140, i1 true, i1 %diff.check139
-  br i1 %or.cond, label %.lr.ph.i41.us.preheader153, label %vector.body143
+.lr.ph.i41.us.preheader:                          ; preds = %_ZNK2cv9SparseMat4hashEPKi.exit.us
+  br i1 %min.iters.check140, label %.lr.ph.i41.us.preheader153, label %.lr.ph.i41.us.preheader.a
+
+.lr.ph.i41.us.preheader.a:                        ; preds = %.lr.ph.i41.us.preheader
+  %7 = mul nsw i64 %indvar, %6
+  %i.cp = sub i64 %7, %.035.us130
+  %8 = add i64 %i.cp, %i.co
+  %9 = add i64 %8, -1
+  %diff.check143 = icmp ult i64 %9, 31
+  br i1 %diff.check143, label %.lr.ph.i41.us.preheader153, label %vector.body143
 
 vector.body143:                                   ; preds = %.lr.ph.i41.us.preheader.a, %vector.body143
   %index144 = phi i64 [ %index.next147, %vector.body143 ], [ 0, %.lr.ph.i41.us.preheader.a ] ; 2 uses
@@ -377,9 +383,9 @@ vector.body143:                                   ; preds = %.lr.ph.i41.us.prehe
 middle.block148:                                  ; preds = %vector.body143
   br i1 %cmp.n149, label %.preheader.i43.us, label %.lr.ph.i41.us.preheader153
 
-.lr.ph.i41.us.preheader153:                       ; preds = %.lr.ph.i41.us.preheader.a, %middle.block148
-  %.ph = phi i64 [ 4, %.lr.ph.i41.us.preheader.a ], [ %i.au, %middle.block148 ]
-  %.015.i.us.ph = phi i64 [ 0, %.lr.ph.i41.us.preheader.a ], [ %i.at, %middle.block148 ]
+.lr.ph.i41.us.preheader153:                       ; preds = %.lr.ph.i41.us.preheader.a, %.lr.ph.i41.us.preheader, %middle.block148
+  %.ph = phi i64 [ 4, %.lr.ph.i41.us.preheader.a ], [ 4, %.lr.ph.i41.us.preheader ], [ %i.au, %middle.block148 ]
+  %.015.i.us.ph = phi i64 [ 0, %.lr.ph.i41.us.preheader.a ], [ 0, %.lr.ph.i41.us.preheader ], [ %i.at, %middle.block148 ]
   br label %.lr.ph.i41.us
 
 .lr.ph.i41.us:                                    ; preds = %.lr.ph.i41.us.preheader153, %.lr.ph.i41.us
@@ -394,25 +400,30 @@ middle.block148:                                  ; preds = %vector.body143
   br i1 %.not.i42.us, label %.preheader.i43.us, label %.lr.ph.i41.us, !llvm.loop !90
 
 .preheader.i43.us:                                ; preds = %.lr.ph.i41.us, %middle.block148, %_ZNK2cv9SparseMat4hashEPKi.exit.us
-  %.0.lcssa.i.us = phi i64 [ 0, %_ZNK2cv9SparseMat4hashEPKi.exit.us ], [ %i.at, %middle.block148 ], [ %i.cw, %.lr.ph.i41.us ] ; 7 uses
+  %.0.lcssa.i.us = phi i64 [ 0, %_ZNK2cv9SparseMat4hashEPKi.exit.us ], [ %i.at, %middle.block148 ], [ %i.cw, %.lr.ph.i41.us ] ; 8 uses
   %i.db = icmp samesign ult i64 %.0.lcssa.i.us, %i.ag
-  br i1 %i.db, label %iter.check.a, label %_ZN2cvL8copyElemEPKhPhm.exit.us
+  br i1 %i.db, label %iter.check, label %_ZN2cvL8copyElemEPKhPhm.exit.us
 
-iter.check.a:                                     ; preds = %.preheader.i43.us
-  %6 = sub nuw i64 %i.ag, %.0.lcssa.i.us          ; 7 uses
-  %min.iters.check = icmp samesign ult i64 %6, 8
-  %7 = sub i64 %11, %i.co
-  %diff.check = icmp ugt i64 %7, -32
-  %or.cond152 = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond152, label %.lr.ph17.i.us.preheader, label %vector.main.loop.iter.check
+iter.check:                                       ; preds = %.preheader.i43.us
+  %10 = sub nuw i64 %i.ag, %.0.lcssa.i.us         ; 7 uses
+  %min.iters.check = icmp samesign ult i64 %10, 8
+  br i1 %min.iters.check, label %.lr.ph17.i.us.preheader, label %iter.check.a
+
+iter.check.a:                                     ; preds = %iter.check
+  %11 = mul i64 %indvar, %6
+  %12 = sub i64 %11, %.035.us130
+  %13 = add i64 %12, %i.co
+  %14 = add i64 %13, -1
+  %diff.check = icmp ult i64 %14, 31
+  br i1 %diff.check, label %.lr.ph17.i.us.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check.a
-  %min.iters.check131 = icmp samesign ult i64 %6, 32
+  %min.iters.check131 = icmp samesign ult i64 %10, 32
   br i1 %min.iters.check131, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.dc = and i64 %6, 24
-  %n.vec = and i64 %6, 4064                       ; 4 uses
+  %i.dc = and i64 %10, 24
+  %n.vec = and i64 %10, 4064                      ; 4 uses
   %i.dd = add i64 %.0.lcssa.i.us, %n.vec
   br label %vector.body
 
@@ -432,7 +443,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.dj, label %middle.block, label %vector.body, !llvm.loop !91
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %10, %n.vec
   br i1 %cmp.n, label %_ZN2cvL8copyElemEPKhPhm.exit.us, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -441,7 +452,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec133 = and i64 %6, 4088                    ; 3 uses
+  %n.vec133 = and i64 %10, 4088                   ; 3 uses
   %i.dk = add i64 %.0.lcssa.i.us, %n.vec133
   br label %vec.epilog.vector.body
 
@@ -457,11 +468,11 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.do, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !92
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n137 = icmp eq i64 %6, %n.vec133
+  %cmp.n137 = icmp eq i64 %10, %n.vec133
   br i1 %cmp.n137, label %_ZN2cvL8copyElemEPKhPhm.exit.us, label %.lr.ph17.i.us.preheader
 
-.lr.ph17.i.us.preheader:                          ; preds = %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.116.i44.us.ph = phi i64 [ %.0.lcssa.i.us, %iter.check.a ], [ %i.dd, %vec.epilog.iter.check ], [ %i.dk, %vec.epilog.middle.block ] ; 4 uses
+.lr.ph17.i.us.preheader:                          ; preds = %iter.check, %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.116.i44.us.ph = phi i64 [ %.0.lcssa.i.us, %iter.check ], [ %.0.lcssa.i.us, %iter.check.a ], [ %i.dd, %vec.epilog.iter.check ], [ %i.dk, %vec.epilog.middle.block ] ; 4 uses
   %i.dp = sub i64 %i.ag, %.116.i44.us.ph
   %xtraiter165 = and i64 %i.dp, 3                 ; 2 uses
   %lcmp.mod166.not = icmp eq i64 %xtraiter165, 0
@@ -553,10 +564,6 @@ bb.i:                                             ; preds = %_ZNK2cv8MatShapeixE
   %indvar = phi i64 [ 0, %.preheader.lr.ph.us ], [ %indvar.next, %_ZN2cvL8copyElemEPKhPhm.exit.us ] ; 3 uses
   %.066.us = phi i32 [ 0, %.preheader.lr.ph.us ], [ %i.em, %_ZN2cvL8copyElemEPKhPhm.exit.us ] ; 2 uses
   %.13665.us = phi ptr [ %.035.us, %.preheader.lr.ph.us ], [ %i.en, %_ZN2cvL8copyElemEPKhPhm.exit.us ] ; 12 uses
-  %8 = mul i64 %indvar, %i.ag
-  %9 = add i64 %8, %.035.us130
-  %10 = mul i64 %indvar, %i.ag
-  %11 = add i64 %10, %.035.us130
   br i1 %.not.i.us128, label %.preheader.i.us, label %.lr.ph
 
 ._crit_edge.us:                                   ; preds = %_ZN2cvL8copyElemEPKhPhm.exit.us

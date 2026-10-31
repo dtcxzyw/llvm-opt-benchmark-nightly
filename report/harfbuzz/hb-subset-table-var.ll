@@ -205,10 +205,8 @@ bb.a:
 
 .lr.ph127:                                        ; preds = %bb.a
   %i.a = and i64 %1, 4294967295                   ; 4 uses
-  %scevgep240 = getelementptr i8, ptr %2, i64 1
   %scevgep242 = getelementptr i8, ptr %2, i64 65
-  %scevgep245 = getelementptr i8, ptr %0, i64 256
-  %scevgep287 = getelementptr i8, ptr %0, i64 256
+  %scevgep287 = getelementptr i8, ptr %2, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph127, %_ZN2OT11TupleValues26encode_value_run_as_zeroesERjPh10hb_array_tIKiE.exit
@@ -336,14 +334,14 @@ bb.e:                                             ; preds = %.lr.ph114
   br i1 %i.am, label %.lr.ph61.i.preheader, label %._crit_edge.i48
 
 .lr.ph61.i.preheader:                             ; preds = %.thread.i
-  %scevgep241 = getelementptr i8, ptr %scevgep240, i64 %i.z
   %i.an = add i32 %.5.ph, -64
   %i.ao = sub i32 %i.an, %.083125
   %i.ap = lshr i32 %i.ao, 6
   %i.aq = zext nneg i32 %i.ap to i64
   %i.ar = mul nuw nsw i64 %i.aq, 65
-  %i.as = getelementptr i8, ptr %scevgep242, i64 %i.ar
-  %scevgep243 = getelementptr i8, ptr %i.as, i64 %i.z
+  %3 = getelementptr i8, ptr %scevgep242, i64 %i.ar
+  %i.as = getelementptr i8, ptr %3, i64 %i.z
+  %scevgep243 = getelementptr i8, ptr %scevgep287, i64 %i.z
   br label %.lr.ph61.i
 
 .lr.ph61.i:                                       ; preds = %.lr.ph61.i.preheader, %middle.block257
@@ -362,10 +360,11 @@ scalar.ph250.preheader:                           ; preds = %vector.memcheck239,
 vector.memcheck239:                               ; preds = %.lr.ph61.i
   %i.av = zext i32 %.04758.i to i64
   %i.aw = shl nuw nsw i64 %i.av, 2                ; 2 uses
-  %scevgep246 = getelementptr i8, ptr %scevgep245, i64 %i.aw
-  %scevgep244 = getelementptr i8, ptr %0, i64 %i.aw
-  %bound0247 = icmp ult ptr %scevgep241, %scevgep246
-  %bound1248 = icmp ult ptr %scevgep244, %scevgep243
+  %4 = getelementptr i8, ptr %0, i64 %i.aw
+  %scevgep246 = getelementptr i8, ptr %0, i64 %i.aw
+  %scevgep244 = getelementptr i8, ptr %scevgep246, i64 256
+  %bound0247 = icmp ult ptr %scevgep243, %scevgep244
+  %bound1248 = icmp ult ptr %4, %i.as
   %found.conflict249 = and i1 %bound0247, %bound1248
   br i1 %found.conflict249, label %scalar.ph250.preheader, label %vector.body252
 
@@ -542,8 +541,8 @@ vector.scevcheck:                                 ; preds = %bb.f
   br i1 %i.ew, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %scevgep = getelementptr i8, ptr %.048.lcssa.i, i64 1
-  %scevgep234 = getelementptr i8, ptr %scevgep, i64 %wide.trip.count77.i
+  %scevgep = getelementptr i8, ptr %.048.lcssa.i, i64 %wide.trip.count77.i
+  %scevgep234 = getelementptr i8, ptr %scevgep, i64 1
   %i.ex = zext i32 %.047.lcssa.i to i64           ; 2 uses
   %i.ey = shl nuw nsw i64 %i.ex, 2
   %scevgep235 = getelementptr i8, ptr %0, i64 %i.ey
@@ -727,13 +726,14 @@ scalar.ph292.preheader:                           ; preds = %vector.memcheck284,
   br label %scalar.ph292
 
 vector.memcheck284:                               ; preds = %.lr.ph69.i
+  %5 = getelementptr i8, ptr %.068.i, i64 129
   %i.hu = zext i32 %.04767.i to i64
   %i.hv = shl nuw nsw i64 %i.hu, 2                ; 2 uses
-  %scevgep288 = getelementptr i8, ptr %scevgep287, i64 %i.hv
+  %scevgep288 = getelementptr i8, ptr %0, i64 %i.hv
   %scevgep286 = getelementptr i8, ptr %0, i64 %i.hv
-  %scevgep285 = getelementptr i8, ptr %.068.i, i64 129
-  %bound0289 = icmp ult ptr %i.hs, %scevgep288
-  %bound1290 = icmp ult ptr %scevgep286, %scevgep285
+  %scevgep285 = getelementptr i8, ptr %scevgep286, i64 256
+  %bound0289 = icmp ult ptr %i.hs, %scevgep285
+  %bound1290 = icmp ult ptr %scevgep288, %5
   %found.conflict291 = and i1 %bound0289, %bound1290
   br i1 %found.conflict291, label %scalar.ph292.preheader, label %vector.body294
 
@@ -959,10 +959,11 @@ bb.i:                                             ; preds = %._crit_edge.i56
   br i1 %min.iters.check268, label %.lr.ph77.i.preheader, label %vector.memcheck259
 
 vector.memcheck259:                               ; preds = %.lr.ph77.preheader.i
-  %scevgep260 = getelementptr i8, ptr %.0.lcssa.i58, i64 1
-  %3 = sub nsw i64 %i.mk, %i.mj
-  %4 = shl nsw i64 %3, 1
-  %scevgep261 = getelementptr i8, ptr %scevgep260, i64 %4
+  %6 = shl nuw nsw i64 %i.mk, 1
+  %7 = shl nuw nsw i64 %i.mj, 1
+  %8 = or disjoint i64 %6, 1
+  %9 = sub nsw i64 %8, %7
+  %scevgep261 = getelementptr i8, ptr %.0.lcssa.i58, i64 %9
   %i.mm = shl nuw nsw i64 %i.mj, 2
   %scevgep262 = getelementptr i8, ptr %0, i64 %i.mm
   %i.mn = shl nuw nsw i64 %i.mk, 2
@@ -1365,7 +1366,6 @@ bb.o:                                             ; preds = %bb.i
   %.sroa.0183.3.ph507 = phi i32 [ %.sroa.0183.0, %bb.o ], [ %i.cr, %bb.n ], [ %i.cr, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i ], [ %i.cr, %bb.m ] ; 6 uses
   %.sroa.12189.3.ph509649 = ptrtoaddr ptr %.sroa.12189.3.ph509 to i64
   %.pre462 = load ptr, ptr %i.a, align 8, !tbaa !796
-  %13 = add i64 %.sroa.12189.3.ph509649, -1
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.12189.3.ph509, i64 32
   %i.dg = getelementptr inbounds nuw i8, ptr %.sroa.12189.3.ph509, i64 64
   %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.12189.3.ph509, i64 96
@@ -1551,10 +1551,11 @@ bb.u:                                             ; preds = %bb.q
 
 vector.memcheck648:                               ; preds = %.lr.ph333
   %i.gs = shl nuw nsw i64 %i.gp, 2
-  %i.gt = add i64 %13, %i.gs
-  %i.gu = sub i64 %i.dn, %i.gt
-  %diff.check650 = icmp ugt i64 %i.gu, -32
-  br i1 %diff.check650, label %scalar.ph651.preheader, label %vector.ph653
+  %i.gt = add i64 %i.gs, %.sroa.12189.3.ph509649
+  %i.gu = sub i64 %i.gt, %i.dn
+  %13 = add i64 %i.gu, -2
+  %diff.check656 = icmp ult i64 %13, 31
+  br i1 %diff.check656, label %scalar.ph651.preheader, label %vector.ph653
 
 vector.ph653:                                     ; preds = %vector.memcheck648
   %n.vec654 = and i64 %i.gr, 120                  ; 10 uses
@@ -1900,12 +1901,11 @@ _ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_triviall
 bb.af:                                            ; preds = %bb.z, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i109, %bb.ae, %bb.ad
   %.sroa.0.4.ph = phi i32 [ %.sroa.0.0, %bb.z ], [ %i.ld, %bb.ad ], [ %i.ld, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i109 ], [ %i.ld, %bb.ae ] ; 7 uses
   %.sroa.12.4.ph = phi ptr [ %.sroa.12.0, %bb.z ], [ %i.lj, %bb.ad ], [ %i.lp, %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i109 ], [ %i.lj, %bb.ae ] ; 30 uses
+  %.sroa.12.4.ph606 = ptrtoaddr ptr %.sroa.12.4.ph to i64
   br i1 %.not383513, label %_ZN2OT11TupleValues9decompileIiEEbRPKNS_7NumTypeILb1EhLj1EEER11hb_vector_tIT_Lb0EES5_bj.exit64, label %.lr.ph375.preheader
 
 .lr.ph375.preheader:                              ; preds = %bb.af
-  %.sroa.12.4.ph605 = ptrtoaddr ptr %.sroa.12.4.ph to i64
   %.pre464 = load ptr, ptr %i.a, align 8, !tbaa !796
-  %14 = add i64 %.sroa.12.4.ph605, -1
   %i.lr = getelementptr inbounds nuw i8, ptr %.sroa.12.4.ph, i64 32
   %i.ls = getelementptr inbounds nuw i8, ptr %.sroa.12.4.ph, i64 64
   %i.lt = getelementptr inbounds nuw i8, ptr %.sroa.12.4.ph, i64 96
@@ -2091,9 +2091,10 @@ bb.al:                                            ; preds = %bb.ah
 
 vector.memcheck:                                  ; preds = %.lr.ph360
   %i.pe = shl nuw nsw i64 %i.pb, 2
-  %i.pf = add i64 %14, %i.pe
-  %i.pg = sub i64 %i.lz, %i.pf
-  %diff.check = icmp ugt i64 %i.pg, -32
+  %i.pf = add i64 %i.pe, %.sroa.12.4.ph606
+  %i.pg = sub i64 %i.pf, %i.lz
+  %14 = add i64 %i.pg, -2
+  %diff.check = icmp ult i64 %14, 31
   br i1 %diff.check, label %scalar.ph606.preheader, label %vector.ph608
 
 vector.ph608:                                     ; preds = %vector.memcheck

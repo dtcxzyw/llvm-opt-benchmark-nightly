@@ -205,12 +205,12 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_siz
 
 .lr.ph.i.i.preheader.i:                           ; preds = %.thread.i.i, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit
   %i.ia = phi ptr [ %spec.select1.i, %.thread.i.i ], [ %i.an, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit ] ; 2 uses
-  %.sink.i.pre-phi.i1620.i10.i = phi i64 [ %.pre65.i.i.i, %.thread.i.i ], [ 2, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit ] ; 4 uses
+  %.sink.i.pre-phi.i1620.i10.i = phi i64 [ %.pre65.i.i.i, %.thread.i.i ], [ 2, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit ] ; 3 uses
   %i.ib = phi ptr [ %spec.select.i, %.thread.i.i ], [ %i.j, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit ] ; 5 uses
-  %i.ic = phi i64 [ %i.hy, %.thread.i.i ], [ 0, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit ] ; 7 uses
+  %i.ic = phi i64 [ %i.hy, %.thread.i.i ], [ 0, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit ] ; 6 uses
   %i.id = and i64 %.sink9.i.i73, 2305843009213693951
   %i.ie = xor i64 %i.ic, -1
-  %i.if = add nsw i64 %.sink.i.pre-phi.i1620.i10.i, %i.ie
+  %i.if = add nsw i64 %.sink.i.pre-phi.i1620.i10.i, %i.ie ; 2 uses
   %i.ig = call i64 @llvm.umin.i64(i64 %i.id, i64 %i.if) ; 2 uses
   %i.ih = add nuw nsw i64 %i.ig, 1                ; 2 uses
   %min.iters.check152 = icmp samesign ult i64 %i.ig, 8
@@ -223,18 +223,16 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_siz
 
 vector.memcheck141:                               ; preds = %.lr.ph.i.i.preheader.i
   %i.ii = shl nuw nsw i64 %i.ic, 3                ; 2 uses
-  %scevgep142 = getelementptr i8, ptr %i.ib, i64 %i.ii
-  %scevgep143 = getelementptr i8, ptr %i.ib, i64 8
+  %scevgep143 = getelementptr i8, ptr %i.ib, i64 %i.ii
   %i.ij = and i64 %.sink9.i.i73, 2305843009213693951
-  %3 = xor i64 %i.ic, -1
-  %4 = add nsw i64 %.sink.i.pre-phi.i1620.i10.i, %3
-  %umin144 = call i64 @llvm.umin.i64(i64 %i.ij, i64 %4)
-  %5 = shl nuw i64 %umin144, 3                    ; 2 uses
-  %i.ik = getelementptr i8, ptr %scevgep143, i64 %i.ii
-  %scevgep145 = getelementptr i8, ptr %i.ik, i64 %5
-  %scevgep146 = getelementptr i8, ptr %.sink10.i.i72, i64 8
-  %scevgep147 = getelementptr i8, ptr %scevgep146, i64 %5
-  %bound0148 = icmp ult ptr %scevgep142, %scevgep147
+  %3 = call i64 @llvm.umin.i64(i64 %i.ij, i64 %i.if)
+  %4 = shl nuw i64 %3, 3                          ; 2 uses
+  %5 = getelementptr i8, ptr %i.ib, i64 %i.ii
+  %i.ik = getelementptr i8, ptr %5, i64 %4
+  %scevgep145 = getelementptr i8, ptr %i.ik, i64 8
+  %scevgep146 = getelementptr i8, ptr %.sink10.i.i72, i64 %4
+  %scevgep147 = getelementptr i8, ptr %scevgep146, i64 8
+  %bound0148 = icmp ult ptr %scevgep143, %scevgep147
   %bound1149 = icmp ult ptr %.sink10.i.i72, %scevgep145
   %found.conflict150 = and i1 %bound0148, %bound1149
   br i1 %found.conflict150, label %.lr.ph.i.i.i.preheader, label %vector.ph153
@@ -548,12 +546,12 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_siz
 
 .lr.ph.i.i.preheader.i81:                         ; preds = %.thread.i.i111, %.loopexit40
   %i.lf = phi ptr [ %spec.select1.i117, %.thread.i.i111 ], [ %i.as, %.loopexit40 ] ; 2 uses
-  %.sink.i.pre-phi.i1620.i10.i82 = phi i64 [ %.pre65.i.i.i114, %.thread.i.i111 ], [ 2, %.loopexit40 ] ; 4 uses
+  %.sink.i.pre-phi.i1620.i10.i82 = phi i64 [ %.pre65.i.i.i114, %.thread.i.i111 ], [ 2, %.loopexit40 ] ; 3 uses
   %i.lg = phi ptr [ %spec.select.i116, %.thread.i.i111 ], [ %i.g, %.loopexit40 ] ; 5 uses
-  %i.lh = phi i64 [ %i.ld, %.thread.i.i111 ], [ 0, %.loopexit40 ] ; 7 uses
+  %i.lh = phi i64 [ %i.ld, %.thread.i.i111 ], [ 0, %.loopexit40 ] ; 6 uses
   %i.li = and i64 %.sink9.i.i79, 2305843009213693951
   %i.lj = xor i64 %i.lh, -1
-  %i.lk = add nsw i64 %.sink.i.pre-phi.i1620.i10.i82, %i.lj
+  %i.lk = add nsw i64 %.sink.i.pre-phi.i1620.i10.i82, %i.lj ; 2 uses
   %i.ll = call i64 @llvm.umin.i64(i64 %i.li, i64 %i.lk) ; 2 uses
   %i.lm = add nuw nsw i64 %i.ll, 1                ; 2 uses
   %min.iters.check122 = icmp samesign ult i64 %i.ll, 8
@@ -566,18 +564,16 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_siz
 
 vector.memcheck111:                               ; preds = %.lr.ph.i.i.preheader.i81
   %i.ln = shl nuw nsw i64 %i.lh, 3                ; 2 uses
-  %scevgep112 = getelementptr i8, ptr %i.lg, i64 %i.ln
-  %scevgep113 = getelementptr i8, ptr %i.lg, i64 8
+  %scevgep113 = getelementptr i8, ptr %i.lg, i64 %i.ln
   %i.lo = and i64 %.sink9.i.i79, 2305843009213693951
-  %6 = xor i64 %i.lh, -1
-  %7 = add nsw i64 %.sink.i.pre-phi.i1620.i10.i82, %6
-  %umin114 = call i64 @llvm.umin.i64(i64 %i.lo, i64 %7)
-  %8 = shl nuw i64 %umin114, 3                    ; 2 uses
-  %i.lp = getelementptr i8, ptr %scevgep113, i64 %i.ln
-  %scevgep115 = getelementptr i8, ptr %i.lp, i64 %8
-  %scevgep116 = getelementptr i8, ptr %.sink10.i.i78, i64 8
-  %scevgep117 = getelementptr i8, ptr %scevgep116, i64 %8
-  %bound0118 = icmp ult ptr %scevgep112, %scevgep117
+  %6 = call i64 @llvm.umin.i64(i64 %i.lo, i64 %i.lk)
+  %7 = shl nuw i64 %6, 3                          ; 2 uses
+  %8 = getelementptr i8, ptr %i.lg, i64 %i.ln
+  %i.lp = getelementptr i8, ptr %8, i64 %7
+  %scevgep115 = getelementptr i8, ptr %i.lp, i64 8
+  %scevgep116 = getelementptr i8, ptr %.sink10.i.i78, i64 %7
+  %scevgep117 = getelementptr i8, ptr %scevgep116, i64 8
+  %bound0118 = icmp ult ptr %scevgep113, %scevgep117
   %bound1119 = icmp ult ptr %.sink10.i.i78, %scevgep115
   %found.conflict120 = and i1 %bound0118, %bound1119
   br i1 %found.conflict120, label %.lr.ph.i.i.i83.preheader, label %vector.ph123
@@ -980,12 +976,12 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_siz
 
 .lr.ph.i.i.preheader.i150:                        ; preds = %.thread.i.i180, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146
   %i.qt = phi ptr [ %spec.select1.i186, %.thread.i.i180 ], [ %i.bw, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146 ] ; 2 uses
-  %.sink.i.pre-phi.i1620.i10.i151 = phi i64 [ %.pre65.i.i.i183, %.thread.i.i180 ], [ 2, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146 ] ; 4 uses
+  %.sink.i.pre-phi.i1620.i10.i151 = phi i64 [ %.pre65.i.i.i183, %.thread.i.i180 ], [ 2, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146 ] ; 3 uses
   %i.qu = phi ptr [ %spec.select.i185, %.thread.i.i180 ], [ %i.f, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146 ] ; 5 uses
-  %i.qv = phi i64 [ %.pre.i187, %.thread.i.i180 ], [ 0, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146 ] ; 7 uses
+  %i.qv = phi i64 [ %.pre.i187, %.thread.i.i180 ], [ 0, %_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsEhZmuQNqkz_11ruff_linter.exit146 ] ; 6 uses
   %i.qw = and i64 %.sink9.i.i148, 2305843009213693951
   %i.qx = xor i64 %i.qv, -1
-  %i.qy = add i64 %.sink.i.pre-phi.i1620.i10.i151, %i.qx
+  %i.qy = add i64 %.sink.i.pre-phi.i1620.i10.i151, %i.qx ; 2 uses
   %i.qz = call i64 @llvm.umin.i64(i64 %i.qw, i64 %i.qy) ; 2 uses
   %i.ra = add nuw nsw i64 %i.qz, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.qz, 8
@@ -998,18 +994,16 @@ _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs2MoD74u7shA_14ruff_text_siz
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader.i150
   %i.rb = shl i64 %i.qv, 3                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.qu, i64 %i.rb
-  %scevgep100 = getelementptr i8, ptr %i.qu, i64 8
+  %scevgep100 = getelementptr i8, ptr %i.qu, i64 %i.rb
   %i.rc = and i64 %.sink9.i.i148, 2305843009213693951
-  %9 = xor i64 %i.qv, -1
-  %10 = add i64 %.sink.i.pre-phi.i1620.i10.i151, %9
-  %umin = call i64 @llvm.umin.i64(i64 %i.rc, i64 %10)
-  %11 = shl nuw i64 %umin, 3                      ; 2 uses
-  %i.rd = getelementptr i8, ptr %scevgep100, i64 %i.rb
-  %scevgep101 = getelementptr i8, ptr %i.rd, i64 %11
-  %scevgep102 = getelementptr i8, ptr %.sink10.i.i147, i64 8
-  %scevgep103 = getelementptr i8, ptr %scevgep102, i64 %11
-  %bound0 = icmp ult ptr %scevgep, %scevgep103
+  %9 = call i64 @llvm.umin.i64(i64 %i.rc, i64 %i.qy)
+  %10 = shl nuw i64 %9, 3                         ; 2 uses
+  %11 = getelementptr i8, ptr %i.qu, i64 %i.rb
+  %i.rd = getelementptr i8, ptr %11, i64 %10
+  %scevgep101 = getelementptr i8, ptr %i.rd, i64 8
+  %scevgep102 = getelementptr i8, ptr %.sink10.i.i147, i64 %10
+  %scevgep103 = getelementptr i8, ptr %scevgep102, i64 8
+  %bound0 = icmp ult ptr %scevgep100, %scevgep103
   %bound1 = icmp ult ptr %.sink10.i.i147, %scevgep101
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i152.preheader, label %vector.ph

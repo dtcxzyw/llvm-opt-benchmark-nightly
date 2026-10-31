@@ -205,14 +205,11 @@ iter.check:                                       ; preds = %XorWords.exit33.i.u
   br i1 %min.iters.check, label %.lr.ph56.i.us.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %.123.i.us, i64 1
-  %11 = add i32 %.126.i.us, -1
-  %i.bu = zext i32 %11 to i64                     ; 2 uses
-  %scevgep194 = getelementptr i8, ptr %scevgep, i64 %i.bu
-  %scevgep195 = getelementptr i8, ptr %.1.i.us, i64 1
-  %scevgep196 = getelementptr i8, ptr %scevgep195, i64 %i.bu
+  %i.bu = zext i32 %.126.i.us to i64              ; 2 uses
+  %scevgep195 = getelementptr i8, ptr %.123.i.us, i64 %i.bu
+  %scevgep196 = getelementptr i8, ptr %.1.i.us, i64 %i.bu
   %bound0 = icmp ult ptr %.123.i.us, %scevgep196
-  %bound1 = icmp ult ptr %.1.i.us, %scevgep194
+  %bound1 = icmp ult ptr %.1.i.us, %scevgep195
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph56.i.us.preheader, label %vector.main.loop.iter.check
 

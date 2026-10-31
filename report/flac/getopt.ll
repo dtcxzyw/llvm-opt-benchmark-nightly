@@ -141,8 +141,6 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph67.preheader.i:                             ; preds = %bb.r
   %i.v = sext i32 %i.m to i64                     ; 2 uses
   %invariant.gep79.i = getelementptr [8 x i8], ptr %1, i64 %i.v ; 5 uses
-  %6 = shl nsw i64 %i.v, 3
-  %scevgep477 = getelementptr i8, ptr %1, i64 %6
   br label %.lr.ph67.i
 
 .lr.ph67.i:                                       ; preds = %._crit_edge63.i, %.lr.ph67.preheader.i
@@ -165,11 +163,12 @@ bb.r:                                             ; preds = %bb.q
   br i1 %min.iters.check483, label %.lr.ph.i.preheader, label %vector.memcheck475
 
 vector.memcheck475:                               ; preds = %.lr.ph.preheader.i
-  %7 = shl nuw nsw i64 %wide.trip.count.i, 3
   %i.ab = add nsw i64 %i.aa, %wide.trip.count.i
   %i.ac = shl nsw i64 %i.ab, 3
   %scevgep476 = getelementptr i8, ptr %1, i64 %i.ac
-  %scevgep478 = getelementptr i8, ptr %scevgep477, i64 %7
+  %6 = add nsw i64 %i.v, %wide.trip.count.i
+  %7 = shl nsw i64 %6, 3
+  %scevgep478 = getelementptr i8, ptr %1, i64 %7
   %bound0479 = icmp ult ptr %invariant.gep.i, %scevgep478
   %bound1480 = icmp ult ptr %invariant.gep79.i, %scevgep476
   %found.conflict481 = and i1 %bound0479, %bound1480
@@ -444,8 +443,6 @@ bb.x:                                             ; preds = %bb.w
 .lr.ph67.preheader.i267:                          ; preds = %bb.x
   %i.cu = sext i32 %i.ce to i64                   ; 2 uses
   %invariant.gep79.i268 = getelementptr [8 x i8], ptr %1, i64 %i.cu ; 5 uses
-  %8 = shl nsw i64 %i.cu, 3
-  %scevgep518 = getelementptr i8, ptr %1, i64 %8
   br label %.lr.ph67.i269
 
 .lr.ph67.i269:                                    ; preds = %._crit_edge63.i274, %.lr.ph67.preheader.i267
@@ -468,11 +465,12 @@ bb.x:                                             ; preds = %bb.w
   br i1 %min.iters.check524, label %.lr.ph.i280.preheader, label %vector.memcheck516
 
 vector.memcheck516:                               ; preds = %.lr.ph.preheader.i277
-  %9 = shl nuw nsw i64 %wide.trip.count.i278, 3
   %i.da = add nsw i64 %i.cz, %wide.trip.count.i278
   %i.db = shl nsw i64 %i.da, 3
   %scevgep517 = getelementptr i8, ptr %1, i64 %i.db
-  %scevgep519 = getelementptr i8, ptr %scevgep518, i64 %9
+  %8 = add nsw i64 %i.cu, %wide.trip.count.i278
+  %9 = shl nsw i64 %8, 3
+  %scevgep519 = getelementptr i8, ptr %1, i64 %9
   %bound0520 = icmp ult ptr %invariant.gep.i279, %scevgep519
   %bound1521 = icmp ult ptr %invariant.gep79.i268, %scevgep517
   %found.conflict522 = and i1 %bound0520, %bound1521

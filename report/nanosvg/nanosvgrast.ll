@@ -205,12 +205,12 @@ bb.bb:                                            ; preds = %bb.ba
   %i.ps = select i1 %i.pr, float 2.550000e+02, float %i.po
   %i.pt = select i1 %i.pq, float 0.000000e+00, float %i.ps
   %i.pu = fptosi float %i.pt to i32
-  %6 = sext i32 %i.pu to i64
+  %6 = zext nneg i32 %i.pu to i64
   br label %nsvg__clampf.exit169.i
 
 nsvg__clampf.exit169.i:                           ; preds = %bb.bb, %bb.ba
   %.0.i168.i = phi i64 [ %6, %bb.bb ], [ 0, %bb.ba ]
-  %i.pv = getelementptr inbounds [4 x i8], ptr %i.u, i64 %.0.i168.i
+  %i.pv = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %.0.i168.i
   %i.pw = load i32, ptr %i.pv, align 4, !tbaa !133 ; 4 uses
   %i.px = and i32 %i.pw, 255
   %i.py = lshr i32 %i.pw, 8

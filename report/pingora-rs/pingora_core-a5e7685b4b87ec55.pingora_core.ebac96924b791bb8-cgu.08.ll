@@ -205,12 +205,12 @@ bb.v:                                             ; preds = %bb.s
   %i.bh = tail call i64 @llvm.usub.sat.i64(i64 %i.ba, i64 %i.g)
   %i.bi = tail call i64 @llvm.usub.sat.i64(i64 26, i64 %i.g)
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.bk = mul i64 %i.g, 1040                      ; 2 uses
+  %i.bk = mul i64 %i.g, 2080
   %scevgep.a = getelementptr i8, ptr %i.az, i64 %i.bk
-  %7 = mul i64 %i.g, 2080
-  %8 = getelementptr i8, ptr %i.az, i64 %7
-  %scevgep466 = getelementptr i8, ptr %8, i64 -16
-  %i.bl = getelementptr i8, ptr %i.az, i64 %i.bk
+  %scevgep = getelementptr i8, ptr %scevgep.a, i64 -16
+  %7 = mul i64 %i.g, 1040                         ; 2 uses
+  %scevgep466 = getelementptr i8, ptr %i.az, i64 %7
+  %i.bl = getelementptr i8, ptr %i.az, i64 %7
   %scevgep471 = getelementptr i8, ptr %i.bl, i64 -16
   br label %bb.w
 
@@ -613,8 +613,8 @@ bb.ck:                                            ; preds = %bb.cj
   %i.mb = load i64, ptr %i.ma, align 8, !alias.scope !776, !noundef !10
   %i.mc = add i64 %i.mb, %i.lz
   store i64 %i.mc, ptr %i.ly, align 8, !alias.scope !777
-  %bound0 = icmp ult ptr %scevgep.a, %i.ma
-  %bound1 = icmp ult ptr %i.lx, %scevgep466
+  %bound0 = icmp ult ptr %scevgep466, %i.ma
+  %bound1 = icmp ult ptr %i.lx, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph, label %vector.body
 

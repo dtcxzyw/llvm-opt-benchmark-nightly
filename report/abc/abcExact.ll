@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %.loopexit.i, %.lr.p
   %i.cr = shl i32 %.sink111.i, 2
   %i.cs = sext i32 %i.cr to i64                   ; 4 uses
   %i.ct = getelementptr [8 x i8], ptr %.sink108.i, i64 %i.cs ; 15 uses
-  %.idx.i = shl nuw nsw i64 %indvars.iv93.i, 5
-  %i.cu = getelementptr i8, ptr %i.bo, i64 %.idx.i ; 22 uses
+  %.idx.i = shl nuw nsw i64 %indvars.iv93.i, 5    ; 4 uses
+  %i.cu = getelementptr i8, ptr %i.bo, i64 %.idx.i ; 19 uses
   %i.cv = and i8 %i.cc, 1
   %.not.i50 = icmp eq i8 %i.cv, 0
   br i1 %.not.i50, label %.loopexit73.i, label %.preheader72.i
@@ -223,7 +223,9 @@ bb.r:                                             ; preds = %.loopexit.i, %.lr.p
 
 vector.memcheck163:                               ; preds = %.lr.ph.preheader.i
   %i.cy = shl nuw nsw i64 %wide.trip.count.i, 3
-  %scevgep164 = getelementptr i8, ptr %i.cu, i64 %i.cy ; 2 uses
+  %3 = getelementptr i8, ptr %0, i64 %.idx.i
+  %4 = getelementptr i8, ptr %3, i64 248
+  %scevgep164 = getelementptr i8, ptr %4, i64 %i.cy ; 2 uses
   %i.cz = add nsw i64 %i.cn, %wide.trip.count.i
   %i.da = shl nsw i64 %i.cz, 3
   %scevgep165 = getelementptr i8, ptr %.sink.i, i64 %i.da
@@ -343,7 +345,9 @@ middle.block187:                                  ; preds = %vector.body178
 
 vector.memcheck136:                               ; preds = %.lr.ph76.preheader.i
   %i.ew = shl nuw nsw i64 %wide.trip.count86.i, 3
-  %scevgep137 = getelementptr i8, ptr %i.cu, i64 %i.ew ; 2 uses
+  %5 = getelementptr i8, ptr %0, i64 %.idx.i
+  %6 = getelementptr i8, ptr %5, i64 248
+  %scevgep137 = getelementptr i8, ptr %6, i64 %i.ew ; 2 uses
   %i.ex = add nsw i64 %i.cn, %wide.trip.count86.i
   %i.ey = shl nsw i64 %i.ex, 3
   %scevgep138 = getelementptr i8, ptr %.sink.i, i64 %i.ey
@@ -463,7 +467,9 @@ middle.block160:                                  ; preds = %vector.body151
 
 vector.memcheck113:                               ; preds = %.lr.ph78.preheader.i
   %i.gu = shl nuw nsw i64 %wide.trip.count91.i, 3
-  %scevgep = getelementptr i8, ptr %i.cu, i64 %i.gu ; 2 uses
+  %7 = getelementptr i8, ptr %0, i64 %.idx.i
+  %8 = getelementptr i8, ptr %7, i64 248
+  %scevgep = getelementptr i8, ptr %8, i64 %i.gu  ; 2 uses
   %i.gv = add nsw i64 %i.cn, %wide.trip.count91.i
   %i.gw = shl nsw i64 %i.gv, 3
   %scevgep114 = getelementptr i8, ptr %.sink.i, i64 %i.gw

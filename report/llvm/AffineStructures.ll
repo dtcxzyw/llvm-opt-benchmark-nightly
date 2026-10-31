@@ -204,9 +204,9 @@ _ZN4llvm11SmallVectorIlLj8EEC2Em.exit:            ; preds = %._crit_edge, %.sink
   %i.az = add nsw i64 %i.ay, %wide.trip.count57   ; 2 uses
   %i.ba = add i32 %i.o, %i.d
   %i.bb = add i32 %i.ba, %i.f                     ; 2 uses
-  %7 = zext i32 %i.bb to i64
-  %8 = sub nsw i64 %7, %i.ax
-  %i.bc = shl nsw i64 %8, 3
+  %7 = shl nuw nsw i64 %i.ax, 3
+  %8 = zext i32 %i.bb to i64
+  %i.bc = shl nuw nsw i64 %8, 3
   %min.iters.check90 = icmp ult i32 %i.g, 4
   %n.vec92 = and i64 %i.ax, 4294967292            ; 3 uses
   %cmp.n99 = icmp eq i64 %n.vec92, %i.ax
@@ -473,7 +473,8 @@ scalar.ph89.prol.loopexit:                        ; preds = %scalar.ph89.prol, %
 
 vector.memcheck:                                  ; preds = %.lr.ph45
   %i.er = add i64 %i.bc, %i.dv
-  %i.es = sub i64 %i.eq, %i.er
+  %9 = add i64 %7, %i.eq
+  %i.es = sub i64 %9, %i.er
   %diff.check = icmp ugt i64 %i.es, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 

@@ -204,9 +204,6 @@ bb.s:                                             ; preds = %.loopexit.i, %.lr.p
   %i.ei = phi ptr [ %i.ku, %.loopexit.i ], [ %.pre11.i, %.lr.ph.i80 ] ; 7 uses
   %i.ej = phi ptr [ %i.kv, %.loopexit.i ], [ %.pre.i, %.lr.ph.i80 ] ; 6 uses
   %.0649.i = phi i64 [ %i.kw, %.loopexit.i ], [ %i.dm, %.lr.ph.i80 ] ; 10 uses
-  %10 = sub i32 %i.dz, %indvar
-  %11 = zext i32 %10 to i64
-  %12 = shl nuw nsw i64 %11, 2
   %i.ek = add i64 %.0649.i, %i.di                 ; 3 uses
   %i.el = and i64 %i.ek, 4294967295
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %i.el
@@ -448,6 +445,9 @@ vector.scevcheck:                                 ; preds = %._crit_edge.i.i
   br i1 %i.ix, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
+  %10 = sub i32 %i.dz, %indvar
+  %11 = zext i32 %10 to i64
+  %12 = shl nuw nsw i64 %11, 2
   %i.iy = add i64 %12, %i.iq
   %i.iz = sub i64 %i.it, %i.iy
   %diff.check = icmp ugt i64 %i.iz, -32

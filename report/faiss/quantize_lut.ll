@@ -204,16 +204,16 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc294
   %.0270 = select i1 %i.ak, float %.sroa.speculated571, float 0.000000e+00 ; 7 uses
   %.not.i303 = icmp eq i64 %2, 0
   %or.cond = or i1 %.not.i.i.i.i, %.not.i303
-  %i.al = mul i64 %2, %1                          ; 2 uses
-  %12 = getelementptr i8, ptr %6, i64 %i.al       ; 2 uses
+  %i.al = mul i64 %2, %1                          ; 3 uses
   br i1 %or.cond, label %._crit_edge739.split, label %.lr.ph.i304.preheader.preheader
 
 .lr.ph.i304.preheader.preheader:                  ; preds = %._crit_edge732
   %i.am = shl i64 %i.al, 2
-  %scevgep1054 = getelementptr i8, ptr %4, i64 %i.am
+  %scevgep1072 = getelementptr i8, ptr %4, i64 %i.am
+  %scevgep1054 = getelementptr i8, ptr %6, i64 %i.al
   %min.iters.check1061 = icmp ult i64 %2, 4
-  %bound01055 = icmp ult ptr %6, %scevgep1054
-  %bound11056 = icmp ult ptr %4, %12
+  %bound01055 = icmp ult ptr %6, %scevgep1072
+  %bound11056 = icmp ult ptr %4, %scevgep1054
   %found.conflict1057 = and i1 %bound01055, %bound11056
   %i.an = and i64 %2, -6917529027641081856
   %i.ao = icmp ne i64 %i.an, 0
@@ -362,6 +362,7 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit: ; preds = %_ZN5faiss12q
   br i1 %exitcond795.not, label %._crit_edge732.loopexit, label %bb.l, !llvm.loop !52
 
 ._crit_edge739.split:                             ; preds = %._crit_edge732
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 %i.al
   %i.cn = sub i64 %7, %1
   %i.co = mul i64 %i.cn, %2
   tail call void @llvm.memset.p0.i64(ptr align 1 %12, i8 0, i64 %i.co, i1 false)
@@ -666,12 +667,12 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit330: ; preds = %_ZN5faiss
 
 .lr.ph.i356.preheader.preheader:                  ; preds = %._crit_edge
   %i.gw = mul i64 %2, %1                          ; 2 uses
-  %scevgep = getelementptr i8, ptr %6, i64 %i.gw
   %13 = shl i64 %i.gw, 2
-  %scevgep943 = getelementptr i8, ptr %4, i64 %13
+  %scevgep = getelementptr i8, ptr %4, i64 %13
+  %scevgep943 = getelementptr i8, ptr %6, i64 %i.gw
   %min.iters.check = icmp ult i64 %2, 4
-  %bound0 = icmp ult ptr %6, %scevgep943
-  %bound1 = icmp ult ptr %4, %scevgep
+  %bound0 = icmp ult ptr %6, %scevgep
+  %bound1 = icmp ult ptr %4, %scevgep943
   %found.conflict = and i1 %bound0, %bound1
   %i.gx = and i64 %2, -6917529027641081856
   %i.gy = icmp ne i64 %i.gx, 0
@@ -1074,11 +1075,11 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i371: ; preds = %.noexc376
   %.not.i417 = icmp eq i64 %2, 0
   %i.nk = sub i64 %7, %1                          ; 2 uses
   %i.nl = mul i64 %i.nk, %2
-  %i.nm = shl i64 %2, 2                           ; 2 uses
+  %i.nm = shl i64 %2, 2
   %min.iters.check973 = icmp ult i64 %2, 4
-  %14 = or i64 %i.nm, %2
-  %15 = icmp slt i64 %14, 0
-  %n.vec975 = and i64 %2, -4                      ; 3 uses
+  %14 = and i64 %2, -6917529027641081856
+  %15 = icmp ne i64 %14, 0
+  %n.vec975 = and i64 %2, 6917529027641081852     ; 3 uses
   %broadcast.splatinsert978 = insertelement <4 x float> poison, float %.2272, i64 0
   %broadcast.splat979 = shufflevector <4 x float> %broadcast.splatinsert978, <4 x float> poison, <4 x i32> zeroinitializer
   %cmp.n985 = icmp eq i64 %2, %n.vec975
@@ -1322,19 +1323,19 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit406.loopexit: ; preds = %
   br i1 %.not.i417, label %_ZN5faiss12quantize_lut12_GLOBAL__N_19round_tabIhEEvPKfmffPT_.exit421.us.preheader, label %.lr.ph.i418.preheader.preheader
 
 .lr.ph.i418.preheader.preheader:                  ; preds = %.lr.ph671
-  %16 = mul i64 %2, %.0247678
-  %scevgep963 = getelementptr i8, ptr %6, i64 %16
-  %17 = add i64 %1, %.0247678
+  %16 = add i64 %1, %.2253677
+  %17 = shl i64 %16, 2
   %i.qt = mul i64 %2, %17
-  %scevgep964 = getelementptr i8, ptr %6, i64 %i.qt
+  %scevgep964 = getelementptr i8, ptr %4, i64 %i.qt
   %i.qu = mul i64 %i.nm, %.2253677
   %scevgep965 = getelementptr i8, ptr %4, i64 %i.qu
-  %i.qv = add i64 %1, %.2253677
-  %18 = shl i64 %i.qv, 2
-  %i.qw = mul i64 %2, %18
-  %scevgep966 = getelementptr i8, ptr %4, i64 %i.qw
-  %bound0967 = icmp ult ptr %scevgep963, %scevgep966
-  %bound1968 = icmp ult ptr %scevgep965, %scevgep964
+  %i.qv = add i64 %1, %.0247678
+  %18 = mul i64 %2, %i.qv
+  %scevgep976 = getelementptr i8, ptr %6, i64 %18
+  %i.qw = mul i64 %2, %.0247678
+  %scevgep966 = getelementptr i8, ptr %6, i64 %i.qw
+  %bound0967 = icmp ult ptr %scevgep966, %scevgep964
+  %bound1968 = icmp ult ptr %scevgep965, %scevgep976
   %found.conflict969 = and i1 %bound0967, %bound1968
   %i.qx = or i1 %found.conflict969, %15
   br label %.lr.ph.i418.preheader
@@ -1737,12 +1738,12 @@ _ZN5faiss12quantize_lut12_GLOBAL__N_17tab_minEPKfm.exit80.thread.us.epil.prehead
 
 .lr.ph.i94.preheader.preheader:                   ; preds = %._crit_edge
   %i.cc = mul i64 %2, %1                          ; 2 uses
-  %scevgep = getelementptr i8, ptr %7, i64 %i.cc
   %12 = shl i64 %i.cc, 2
-  %scevgep148 = getelementptr i8, ptr %3, i64 %12
+  %scevgep = getelementptr i8, ptr %3, i64 %12
+  %scevgep148 = getelementptr i8, ptr %7, i64 %i.cc
   %min.iters.check = icmp ult i64 %2, 4
-  %bound0 = icmp ult ptr %7, %scevgep148
-  %bound1 = icmp ult ptr %3, %scevgep
+  %bound0 = icmp ult ptr %7, %scevgep
+  %bound1 = icmp ult ptr %3, %scevgep148
   %found.conflict = and i1 %bound0, %bound1
   %i.cd = and i64 %2, -6917529027641081856
   %i.ce = icmp ne i64 %i.cd, 0

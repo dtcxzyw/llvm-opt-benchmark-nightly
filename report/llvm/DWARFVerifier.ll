@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZN4llvm15IntervalM
 
 .lr.ph156:                                        ; preds = %.preheader115, %bb.b
   %indvars.iv.next126155.in = phi i64 [ %indvars.iv.next126155, %bb.b ], [ %indvars.iv123, %.preheader115 ]
-  %i.l = phi i32 [ %i.hs, %bb.b ], [ %i.e, %.preheader115 ] ; 11 uses
+  %i.l = phi i32 [ %i.hs, %bb.b ], [ %i.e, %.preheader115 ] ; 12 uses
   %i.m = phi i32 [ %i.ht, %bb.b ], [ %i.g, %.preheader115 ]
   %indvars.iv.next126155 = add nsw i64 %indvars.iv.next126155.in, -1 ; 4 uses
   %i.n = load ptr, ptr %i.i, align 8, !tbaa !698  ; 32 uses
@@ -234,10 +234,11 @@ bb.b:                                             ; preds = %_ZN4llvm15IntervalM
   br i1 %or.cond315, label %scalar.ph172.preheader, label %vector.memcheck168
 
 vector.memcheck168:                               ; preds = %.lr.ph.i.i21.i
-  %i.aa = add i32 %i.l, -1                        ; 2 uses
+  %i.aa = add i32 %i.l, -1
   %i.ab = zext i32 %i.aa to i64
   %i.ac = shl nuw nsw i64 %i.ab, 3                ; 3 uses
-  %i.ad = add i32 %i.aa, %.sroa.speculated46.i
+  %4 = add i32 %i.l, %.sroa.speculated46.i
+  %i.ad = add i32 %4, -1
   %i.ae = zext i32 %i.ad to i64
   %i.af = shl nuw nsw i64 %i.ae, 3                ; 3 uses
   %i.ag = sub nsw i64 %i.af, %i.ac
@@ -370,17 +371,17 @@ _ZN4llvm15IntervalMapImpl8NodeBaseINS0_7NodeRefEmLj12EE9moveRightEjjj.exit.i.i: 
   br i1 %or.cond317, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i7.i.i
-  %scevgep = getelementptr i8, ptr %i.n, i64 104
   %i.cq = add nsw i32 %.sroa.speculated46.i, -1
   %i.cr = zext i32 %i.cq to i64
   %i.cs = shl nuw nsw i64 %i.cr, 3                ; 2 uses
-  %scevgep161 = getelementptr i8, ptr %scevgep, i64 %i.cs
+  %5 = getelementptr i8, ptr %i.n, i64 %i.cs
+  %scevgep161 = getelementptr i8, ptr %5, i64 104
   %i.ct = zext i32 %i.ci to i64
   %i.cu = shl nuw nsw i64 %i.ct, 3                ; 2 uses
   %scevgep162 = getelementptr i8, ptr %i.p, i64 %i.cu
-  %scevgep163 = getelementptr i8, ptr %i.p, i64 104
-  %i.cv = getelementptr i8, ptr %scevgep163, i64 %i.cu
-  %scevgep164 = getelementptr i8, ptr %i.cv, i64 %i.cs
+  %scevgep163 = getelementptr i8, ptr %i.p, i64 %i.cu
+  %i.cv = getelementptr i8, ptr %scevgep163, i64 %i.cs
+  %scevgep164 = getelementptr i8, ptr %i.cv, i64 104
   %bound0 = icmp ult ptr %i.n, %scevgep164
   %bound1 = icmp ult ptr %scevgep162, %scevgep161
   %found.conflict = and i1 %bound0, %bound1
@@ -495,15 +496,15 @@ vector.scevcheck205:                              ; preds = %.lr.ph.i.i30.i
   br i1 %i.er, label %scalar.ph215.preheader, label %vector.memcheck206
 
 vector.memcheck206:                               ; preds = %vector.scevcheck205
-  %scevgep207 = getelementptr i8, ptr %i.n, i64 96
-  %4 = shl nuw nsw i64 %i.el, 3                   ; 2 uses
-  %scevgep208 = getelementptr i8, ptr %scevgep207, i64 %4
+  %6 = shl nuw nsw i64 %i.el, 3                   ; 2 uses
+  %7 = getelementptr i8, ptr %i.n, i64 %6
+  %scevgep208 = getelementptr i8, ptr %7, i64 96
   %i.es = zext i32 %i.r to i64
   %i.et = shl nuw nsw i64 %i.es, 3                ; 2 uses
   %scevgep209 = getelementptr i8, ptr %i.p, i64 %i.et
-  %scevgep210 = getelementptr i8, ptr %i.p, i64 96
-  %i.eu = getelementptr i8, ptr %scevgep210, i64 %4
-  %scevgep211 = getelementptr i8, ptr %i.eu, i64 %i.et
+  %scevgep210 = getelementptr i8, ptr %i.p, i64 %6
+  %i.eu = getelementptr i8, ptr %scevgep210, i64 %i.et
+  %scevgep211 = getelementptr i8, ptr %i.eu, i64 96
   %bound0212 = icmp ult ptr %i.n, %scevgep211
   %bound1213 = icmp ult ptr %scevgep209, %scevgep208
   %found.conflict214 = and i1 %bound0212, %bound1213
@@ -743,7 +744,7 @@ bb.c:                                             ; preds = %_ZN4llvm15IntervalM
   %i.ie = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.id
   %i.if = load ptr, ptr %i.ie, align 8, !tbaa !698 ; 32 uses
   %i.ig = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.id ; 3 uses
-  %i.ih = load i32, ptr %i.ig, align 4, !tbaa !77 ; 10 uses
+  %i.ih = load i32, ptr %i.ig, align 4, !tbaa !77 ; 11 uses
   %i.ii = load ptr, ptr %i.hz, align 8, !tbaa !698 ; 14 uses
   %i.ij = sub i32 %i.ib, %i.ic                    ; 4 uses
   %i.ik = icmp sgt i32 %i.ij, 0
@@ -766,10 +767,11 @@ bb.c:                                             ; preds = %_ZN4llvm15IntervalM
   br i1 %or.cond319, label %scalar.ph258.preheader, label %vector.memcheck252.a
 
 vector.memcheck252.a:                             ; preds = %.lr.ph.i.i21.i100
-  %i.ir = add i32 %i.ih, -1                       ; 2 uses
+  %i.ir = add i32 %i.ih, -1
   %i.is = zext i32 %i.ir to i64
   %i.it = shl nuw nsw i64 %i.is, 3                ; 3 uses
-  %i.iu = add i32 %i.ir, %.sroa.speculated46.i98
+  %8 = add i32 %i.ih, %.sroa.speculated46.i98
+  %i.iu = add i32 %8, -1
   %i.iv = zext i32 %i.iu to i64
   %i.iw = shl nuw nsw i64 %i.iv, 3                ; 3 uses
   %i.ix = sub nsw i64 %i.iw, %i.it
@@ -902,17 +904,17 @@ _ZN4llvm15IntervalMapImpl8NodeBaseINS0_7NodeRefEmLj12EE9moveRightEjjj.exit.i.i10
   br i1 %or.cond321, label %scalar.ph238.preheader, label %vector.memcheck229
 
 vector.memcheck229:                               ; preds = %.lr.ph.i7.i.i107
-  %scevgep230 = getelementptr i8, ptr %i.if, i64 104
   %i.lh = add nsw i32 %.sroa.speculated46.i98, -1
   %i.li = zext i32 %i.lh to i64
   %i.lj = shl nuw nsw i64 %i.li, 3                ; 2 uses
-  %scevgep231 = getelementptr i8, ptr %scevgep230, i64 %i.lj
+  %9 = getelementptr i8, ptr %i.if, i64 %i.lj
+  %scevgep231 = getelementptr i8, ptr %9, i64 104
   %i.lk = zext i32 %i.kz to i64
   %i.ll = shl nuw nsw i64 %i.lk, 3                ; 2 uses
   %scevgep232 = getelementptr i8, ptr %i.ii, i64 %i.ll
-  %scevgep233 = getelementptr i8, ptr %i.ii, i64 104
-  %i.lm = getelementptr i8, ptr %scevgep233, i64 %i.ll
-  %scevgep234 = getelementptr i8, ptr %i.lm, i64 %i.lj
+  %scevgep233 = getelementptr i8, ptr %i.ii, i64 %i.ll
+  %i.lm = getelementptr i8, ptr %scevgep233, i64 %i.lj
+  %scevgep234 = getelementptr i8, ptr %i.lm, i64 104
   %bound0235 = icmp ult ptr %i.if, %scevgep234
   %bound1236 = icmp ult ptr %scevgep232, %scevgep231
   %found.conflict237 = and i1 %bound0235, %bound1236
@@ -1027,15 +1029,15 @@ vector.scevcheck291:                              ; preds = %.lr.ph.i.i30.i82
   br i1 %i.ni, label %scalar.ph301.preheader, label %vector.memcheck292
 
 vector.memcheck292:                               ; preds = %vector.scevcheck291
-  %scevgep293 = getelementptr i8, ptr %i.if, i64 96
-  %5 = shl nuw nsw i64 %i.nc, 3                   ; 2 uses
-  %scevgep294 = getelementptr i8, ptr %scevgep293, i64 %5
+  %10 = shl nuw nsw i64 %i.nc, 3                  ; 2 uses
+  %11 = getelementptr i8, ptr %i.if, i64 %10
+  %scevgep294 = getelementptr i8, ptr %11, i64 96
   %i.nj = zext i32 %i.ib to i64
   %i.nk = shl nuw nsw i64 %i.nj, 3                ; 2 uses
   %scevgep295 = getelementptr i8, ptr %i.ii, i64 %i.nk
-  %scevgep296 = getelementptr i8, ptr %i.ii, i64 96
-  %i.nl = getelementptr i8, ptr %scevgep296, i64 %5
-  %scevgep297 = getelementptr i8, ptr %i.nl, i64 %i.nk
+  %scevgep296 = getelementptr i8, ptr %i.ii, i64 %10
+  %i.nl = getelementptr i8, ptr %scevgep296, i64 %i.nk
+  %scevgep297 = getelementptr i8, ptr %i.nl, i64 96
   %bound0298 = icmp ult ptr %i.if, %scevgep297
   %bound1299 = icmp ult ptr %scevgep295, %scevgep294
   %found.conflict300 = and i1 %bound0298, %bound1299

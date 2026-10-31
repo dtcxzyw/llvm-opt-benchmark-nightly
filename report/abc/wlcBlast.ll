@@ -205,9 +205,8 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i5
 
 .preheader75:                                     ; preds = %.preheader75.preheader, %._crit_edge84
   %indvars.iv94 = phi i64 [ 1, %.preheader75.preheader ], [ %indvars.iv.next95, %._crit_edge84 ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.preheader75.preheader ], [ %indvars.iv.next, %._crit_edge84 ] ; 13 uses
+  %indvars.iv = phi i64 [ 0, %.preheader75.preheader ], [ %indvars.iv.next, %._crit_edge84 ] ; 14 uses
   %.07286 = phi i32 [ 1, %.preheader75.preheader ], [ %.274, %._crit_edge84 ] ; 3 uses
-  %5 = shl i64 %indvars.iv, 2
   %i.an = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.an, label %.preheader.thread, label %.preheader
 
@@ -227,13 +226,16 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i5
   %i.as = icmp eq i64 %indvars.iv, 0
   %i.at = select i1 %i.as, i64 1, i64 %i.ar
   %i.au = sub nsw i64 %i.at, %indvars.iv          ; 3 uses
-  %min.iters.check = icmp ult i64 %i.au, 8
-  %.reass = add i64 %5, %invariant.op
-  %diff.check.a = icmp ult i64 %.reass, 31
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check.a
-  br i1 %or.cond, label %.lr.ph78.preheader110, label %vector.ph
+  %diff.check.a = icmp ult i64 %i.au, 8
+  br i1 %diff.check.a, label %.lr.ph78.preheader110, label %vector.memcheck
 
-vector.ph:                                        ; preds = %.lr.ph78.preheader
+vector.memcheck:                                  ; preds = %.lr.ph78.preheader
+  %5 = shl i64 %indvars.iv, 2
+  %.reass = add i64 %5, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
+  br i1 %diff.check, label %.lr.ph78.preheader110, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.au, -8                      ; 3 uses
   %i.av = add i64 %indvars.iv, %n.vec             ; 2 uses
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %indvars.iv
@@ -257,8 +259,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.au, %n.vec
   br i1 %cmp.n, label %.lr.ph83.loopexit, label %.lr.ph78.preheader110
 
-.lr.ph78.preheader110:                            ; preds = %.lr.ph78.preheader, %middle.block
-  %indvars.iv91.ph = phi i64 [ %indvars.iv, %.lr.ph78.preheader ], [ %i.av, %middle.block ]
+.lr.ph78.preheader110:                            ; preds = %vector.memcheck, %.lr.ph78.preheader, %middle.block
+  %indvars.iv91.ph = phi i64 [ %indvars.iv, %vector.memcheck ], [ %indvars.iv, %.lr.ph78.preheader ], [ %i.av, %middle.block ]
   br label %.lr.ph78
 
 .lr.ph78:                                         ; preds = %.lr.ph78.preheader110, %.lr.ph78

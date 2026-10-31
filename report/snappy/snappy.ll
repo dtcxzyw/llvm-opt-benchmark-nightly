@@ -205,7 +205,7 @@ _ZN6snappy17SnappyIOVecWriter13AppendNoCheckEPKcm.exit: ; preds = %bb.f, %bb.h, 
   br label %.outer
 
 .lr.ph101:                                        ; preds = %.lr.ph88.split, %bb.v
-  %i.aq = phi i64 [ %i.eb, %bb.v ], [ %.promoted102, %.lr.ph88.split ] ; 7 uses
+  %i.aq = phi i64 [ %i.eb, %bb.v ], [ %.promoted102, %.lr.ph88.split ] ; 6 uses
   %i.ar = phi ptr [ %i.at, %bb.v ], [ %.promoted, %.lr.ph88.split ] ; 2 uses
   %i.as = icmp eq i64 %i.aq, 0
   br i1 %i.as, label %bb.i, label %.split94.us
@@ -223,7 +223,7 @@ bb.i:                                             ; preds = %.lr.ph101
   %i.ax = load ptr, ptr %i.t, align 8, !tbaa !61  ; 10 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 %spec.select57 ; 8 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.aq ; 2 uses
-  %i.ba = ptrtoint ptr %i.ax to i64               ; 4 uses
+  %i.ba = ptrtoint ptr %i.ax to i64               ; 3 uses
   %i.bb = ptrtoint ptr %i.aw to i64
   %i.bc = sub i64 %i.ba, %i.bb                    ; 3 uses
   %i.bd = icmp ult i64 %i.bc, 8
@@ -321,7 +321,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 bb.k:                                             ; preds = %._crit_edge.i, %.split94.us
   %.157.i = phi ptr [ %i.bm, %._crit_edge.i ], [ %i.ax, %.split94.us ] ; 16 uses
-  %.157.i219 = ptrtoaddr ptr %.157.i to i64       ; 2 uses
+  %.157.i219 = ptrtoaddr ptr %.157.i to i64
   %i.bs = add nsw i64 %i.aq, -15
   %.not68.i = icmp sgt i64 %spec.select57, %i.bs
   br i1 %.not68.i, label %bb.r, label %bb.l, !prof !29
@@ -385,7 +385,7 @@ bb.r:                                             ; preds = %bb.k
 .lr.ph90.i.preheader:                             ; preds = %bb.r
   %i.cm = add i64 %i.aq, %i.ba
   %i.cn = add i64 %i.cm, -17
-  %i.co = sub i64 %i.cn, %.157.i219               ; 3 uses
+  %i.co = sub i64 %i.cn, %.157.i219               ; 4 uses
   %i.cp = lshr i64 %i.co, 4
   %min.iters.check224 = icmp ult i64 %i.co, 80
   br i1 %min.iters.check224, label %.lr.ph90.i.preheader242, label %vector.memcheck218
@@ -394,15 +394,12 @@ bb.r:                                             ; preds = %bb.k
   br label %.lr.ph90.i
 
 vector.memcheck218:                               ; preds = %.lr.ph90.i.preheader
-  %scevgep = getelementptr i8, ptr %.157.i, i64 16
-  %4 = add i64 %i.ba, -17
-  %5 = sub i64 %4, %.157.i219
-  %6 = add i64 %5, %i.aq
-  %7 = and i64 %6, -16                            ; 2 uses
-  %scevgep220 = getelementptr i8, ptr %scevgep, i64 %7
-  %scevgep221 = getelementptr i8, ptr %i.av, i64 16
-  %scevgep222 = getelementptr i8, ptr %scevgep221, i64 %.2.ph107
-  %scevgep223 = getelementptr i8, ptr %scevgep222, i64 %7
+  %4 = and i64 %i.co, -16                         ; 2 uses
+  %5 = getelementptr i8, ptr %.157.i, i64 %4
+  %scevgep220 = getelementptr i8, ptr %5, i64 16
+  %scevgep221 = getelementptr i8, ptr %i.av, i64 %.2.ph107
+  %scevgep222 = getelementptr i8, ptr %scevgep221, i64 %4
+  %scevgep223 = getelementptr i8, ptr %scevgep222, i64 16
   %bound0 = icmp ult ptr %.157.i, %scevgep223
   %bound1 = icmp ult ptr %i.aw, %scevgep220
   %found.conflict = and i1 %bound0, %bound1
@@ -465,12 +462,12 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.de, label %iter.check201, label %.thread71
 
 iter.check201:                                    ; preds = %bb.u
-  %.155.i186 = ptrtoaddr ptr %.155.i to i64
-  %.3.i185 = ptrtoaddr ptr %.3.i to i64           ; 2 uses
-  %i.df = sub i64 %i.ba, %.3.i185
+  %.155.i186 = ptrtoaddr ptr %.3.i to i64         ; 2 uses
+  %.3.i185 = ptrtoaddr ptr %.155.i to i64
+  %i.df = sub i64 %i.ba, %.155.i186
   %i.dg = add i64 %i.df, %spec.select57           ; 7 uses
   %min.iters.check188 = icmp ult i64 %i.dg, 4
-  %i.dh = sub i64 %.155.i186, %.3.i185
+  %i.dh = sub i64 %.3.i185, %.155.i186
   %diff.check187 = icmp ugt i64 %i.dh, -16
   %or.cond240 = select i1 %min.iters.check188, i1 true, i1 %diff.check187
   br i1 %or.cond240, label %.lr.ph.i79.i.preheader, label %vector.main.loop.iter.check189

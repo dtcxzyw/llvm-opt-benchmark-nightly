@@ -11,8 +11,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 5 uses
-  %4 = add nuw i64 %3, %i.b                       ; 2 uses
-  %i.d = add i64 %i.a, 1
+  %i.d = add nuw i64 %3, %i.b                     ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
@@ -31,7 +30,7 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
 
 .lr.ph:                                           ; preds = %.preheader73
   %i.g = load i8, ptr %.063, align 1, !tbaa !11
-  %scevgep = getelementptr i8, ptr %.pn, i64 %4
+  %scevgep = getelementptr i8, ptr %.pn, i64 %i.d
   %i.h = sub i64 0, %.pn100
   %scevgep101 = getelementptr i8, ptr %scevgep, i64 %i.h ; 2 uses
   br label %bb.c
@@ -65,7 +64,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %.lr.ph85.preheader, label %.critedge2
 
 .lr.ph85.preheader:                               ; preds = %.preheader
-  %scevgep102 = getelementptr i8, ptr %.160.lcssa119, i64 %4
+  %scevgep102 = getelementptr i8, ptr %.160.lcssa119, i64 %i.d
   %i.o = sub i64 0, %.160.lcssa103120
   %scevgep104 = getelementptr i8, ptr %scevgep102, i64 %i.o ; 2 uses
   br label %.lr.ph85
@@ -138,9 +137,9 @@ iter.check:                                       ; preds = %.critedge2
   br i1 %min.iters.check, label %.lr.ph97.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ag = add i64 %i.d, %.057
-  %i.ah = sub i64 %.063109, %i.ag
-  %diff.check = icmp ugt i64 %i.ah, -32
+  %i.ag = add i64 %.057, %i.a
+  %i.ah = sub i64 %i.ag, %.063109
+  %diff.check = icmp ult i64 %i.ah, 31
   br i1 %diff.check, label %.lr.ph97.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -348,9 +347,8 @@ reorder_and_predict.exit:                         ; preds = %.lr.ph39.i, %middle
   %i.au = load ptr, ptr %i.c, align 8, !tbaa !33  ; 4 uses
   %i.av = ptrtoaddr ptr %i.au to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.b ; 5 uses
-  %1 = add i64 %i.b, %i.av                        ; 3 uses
-  %i.ax = add i64 %1, 254
-  %i.ay = add i64 %i.ar, 1
+  %i.ax = add i64 %i.b, %i.av                     ; 3 uses
+  %i.ay = add i64 %i.ax, 254
   br label %bb.e
 
 bb.e:                                             ; preds = %.loopexit.i, %reorder_and_predict.exit
@@ -369,10 +367,10 @@ bb.e:                                             ; preds = %.loopexit.i, %reord
 
 .lr.ph.i28:                                       ; preds = %.preheader73.i
   %i.bb = load i8, ptr %.063.i, align 1, !tbaa !11
-  %scevgep.i = getelementptr i8, ptr %.pn.i, i64 %1
+  %scevgep.i = getelementptr i8, ptr %.pn.i, i64 %i.ax
   %i.bc = sub i64 0, %.pn100.i
   %scevgep101.i = getelementptr i8, ptr %scevgep.i, i64 %i.bc ; 2 uses
-  %i.bd = sub i64 %i.ax, %.pn100.i
+  %i.bd = sub i64 %i.ay, %.pn100.i
   %i.be = trunc i64 %i.bd to i8
   %i.bf = add i8 %i.be, 1
   br label %bb.f
@@ -406,7 +404,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bl, label %.lr.ph85.preheader.i, label %.critedge2.i
 
 .lr.ph85.preheader.i:                             ; preds = %.preheader.i
-  %scevgep102.i = getelementptr i8, ptr %.160.lcssa119.i, i64 %1
+  %scevgep102.i = getelementptr i8, ptr %.160.lcssa119.i, i64 %i.ax
   %i.bm = sub i64 0, %.160.lcssa103120.i
   %scevgep104.i = getelementptr i8, ptr %scevgep102.i, i64 %i.bm ; 2 uses
   br label %.lr.ph85.i
@@ -479,9 +477,9 @@ iter.check:                                       ; preds = %.critedge2.i
   br i1 %min.iters.check42, label %.lr.ph97.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ce = add i64 %i.ay, %.057.i
-  %i.cf = sub i64 %.063109.i, %i.ce
-  %diff.check = icmp ugt i64 %i.cf, -32
+  %i.ce = add i64 %.057.i, %i.ar
+  %i.cf = sub i64 %i.ce, %.063109.i
+  %diff.check = icmp ult i64 %i.cf, 31
   br i1 %diff.check, label %.lr.ph97.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

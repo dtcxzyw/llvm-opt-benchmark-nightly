@@ -202,7 +202,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !30 ; 2 uses
   %i.bl = load i64, ptr %6, align 8, !tbaa !29    ; 2 uses
   %i.bm = add i64 %i.bk, 1
-  %i.bn = add i64 %i.bm, %i.bl                    ; 4 uses
+  %i.bn = add i64 %i.bm, %i.bl                    ; 5 uses
   %..i = tail call i64 @llvm.smin.i64(i64 %i.bn, i64 %.pre.i) ; 2 uses
   %.not175191.i = icmp slt i64 %..i, 1
   br i1 %.not175191.i, label %.loopexit, label %.lr.ph194.i
@@ -217,12 +217,12 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge190.i, %.lr.ph194.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge190.i ], [ 0, %.lr.ph194.i ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge190.i ], [ 0, %.lr.ph194.i ] ; 3 uses
   %i.bu = phi i64 [ %i.gk, %._crit_edge190.i ], [ %.pre.i, %.lr.ph194.i ] ; 4 uses
   %.0150192.i = phi i64 [ %i.gl, %._crit_edge190.i ], [ 1, %.lr.ph194.i ] ; 5 uses
   %i.bv = mul i64 %indvar, -8                     ; 2 uses
-  %i.bw = sub i64 %i.bv, %i.ar
-  %i.bx = sub i64 %i.bv, %i.al
+  %i.bw = sub i64 %i.bv, %i.al
+  %i.bx = sub i64 %i.bv, %i.ar
   %i.by = add nsw i64 %.0150192.i, -1             ; 3 uses
   %.not197.i = icmp sgt i64 %.0150192.i, %i.bu
   br i1 %.not197.i, label %._crit_edge.i, label %.lr.ph.i
@@ -320,11 +320,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s,
   br i1 %.not198.i, label %._crit_edge190.i, label %.lr.ph189.i
 
 .lr.ph189.i:                                      ; preds = %.preheader.i, %._crit_edge187.i
-  %indvar77 = phi i64 [ %indvar.next78, %._crit_edge187.i ], [ 0, %.preheader.i ] ; 2 uses
+  %indvar77 = phi i64 [ %indvar.next78, %._crit_edge187.i ], [ 0, %.preheader.i ] ; 3 uses
   %.1188.i = phi i64 [ %i.gi, %._crit_edge187.i ], [ %i.by, %.preheader.i ] ; 10 uses
-  %7 = mul i64 %i.bt, %indvar77                   ; 2 uses
-  %8 = add i64 %i.bw, %7
-  %9 = add i64 %i.bx, %7
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %.1188.i ; 2 uses
   %i.dw = load double, ptr %i.dv, align 8, !tbaa !98 ; 3 uses
   %i.dx = getelementptr inbounds [8 x i8], ptr %i.ap, i64 %.1188.i
@@ -379,28 +376,39 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %.lr.ph189.i
   %.1152.i = phi double [ %i.er, %bb.y ], [ %.181.i, %bb.x ], [ %i.ew, %bb.ab ], [ %.181.i, %bb.aa ], [ %.181.i, %bb.z ], [ %.181.i, %.lr.ph189.i ]
   %i.ex = fdiv double 1.000000e+00, %.1152.i      ; 2 uses
-  %i.ey = load i64, ptr %i.bp, align 8, !tbaa !31
+  %i.ey = load i64, ptr %i.bp, align 8, !tbaa !31 ; 2 uses
   %i.ez = sub nsw i64 %.1188.i, %i.ey
-  %spec.select.i = tail call i64 @llvm.smax.i64(i64 %i.ez, i64 0) ; 6 uses
-  %i.fa = load i64, ptr %i.bq, align 8, !tbaa !32
+  %spec.select.i = tail call i64 @llvm.smax.i64(i64 %i.ez, i64 0) ; 5 uses
+  %i.fa = load i64, ptr %i.bq, align 8, !tbaa !32 ; 2 uses
   %i.fb = add nsw i64 %i.fa, %.1188.i
   %i.fc = load i64, ptr %i.ab, align 8, !tbaa !43 ; 3 uses
-  %i.fd = add nsw i64 %i.fc, -1
-  %i.fe = tail call i64 @llvm.smin.i64(i64 %i.fb, i64 %i.fd) ; 3 uses
+  %i.fd = add nsw i64 %i.fc, -1                   ; 2 uses
+  %i.fe = tail call i64 @llvm.smin.i64(i64 %i.fb, i64 %i.fd) ; 2 uses
   %.not178183.i = icmp sgt i64 %spec.select.i, %i.fe
   br i1 %.not178183.i, label %._crit_edge187.i, label %.lr.ph186.i.preheader
 
 .lr.ph186.i.preheader:                            ; preds = %bb.ac
-  %i.ff = add i64 %i.fe, 1
-  %i.fg = sub i64 %i.ff, %spec.select.i           ; 3 uses
+  %7 = mul i64 %indvar77, %i.bn
+  %8 = add i64 %indvar, %7                        ; 2 uses
+  %9 = add nsw i64 %i.fa, %8
+  %10 = tail call i64 @llvm.smin.i64(i64 %9, i64 %i.fd)
+  %11 = sub i64 %8, %i.ey                         ; 2 uses
+  %12 = tail call i64 @llvm.smax.i64(i64 %10, i64 %11)
+  %13 = tail call i64 @llvm.smax.i64(i64 %12, i64 0)
+  %14 = tail call i64 @llvm.smax.i64(i64 %11, i64 0)
+  %i.ff = add nuw i64 %13, 1
+  %i.fg = sub i64 %i.ff, %14                      ; 3 uses
   %min.iters.check = icmp ult i64 %i.fg, 4
   br i1 %min.iters.check, label %.lr.ph186.i.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph186.i.preheader
-  %i.fh = add i64 %8, %i.ea
+  %15 = mul i64 %indvar77, %i.bt                  ; 2 uses
+  %16 = add i64 %i.bx, %15
+  %i.fh = add i64 %16, %i.ea
   %i.fi = add i64 %i.fh, -1
   %diff.check = icmp ult i64 %i.fi, 31
-  %i.fj = add i64 %9, %i.ea
+  %17 = add i64 %i.bw, %15
+  %i.fj = add i64 %17, %i.ea
   %i.fk = add i64 %i.fj, -1
   %diff.check79 = icmp ult i64 %i.fk, 31
   %conflict.rdx = or i1 %diff.check, %diff.check79

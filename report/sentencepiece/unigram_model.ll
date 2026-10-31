@@ -205,8 +205,8 @@ bb.av:                                            ; preds = %bb.au
   %i.ma = phi i64 [ 0, %bb.av ], [ %i.lx, %bb.au ] ; 3 uses
   %i.mb = phi i64 [ %i.lz, %bb.av ], [ %.pre.i, %bb.au ] ; 7 uses
   %.val3.i = load ptr, ptr %i.cx, align 8, !tbaa !125 ; 6 uses
-  %i.mc = ptrtoint ptr %.val3.i to i64            ; 3 uses
-  %i.md = ptrtoint ptr %.val.i237775795 to i64    ; 3 uses
+  %i.mc = ptrtoint ptr %.val3.i to i64            ; 2 uses
+  %i.md = ptrtoint ptr %.val.i237775795 to i64    ; 2 uses
   %i.me = sub i64 %i.mc, %i.md                    ; 4 uses
   %i.mf = ashr exact i64 %i.me, 3
   %i.mg = icmp eq i64 %i.mb, %i.mf
@@ -269,22 +269,19 @@ _ZNKSt6vectorISt10unique_ptrIA_N13sentencepiece7unigram12_GLOBAL__N_110Hypothesi
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %.noexc7.i
   %i.mz = add i64 %i.mc, -8
-  %i.na = sub i64 %i.mz, %i.md                    ; 2 uses
+  %i.na = sub i64 %i.mz, %i.md                    ; 3 uses
   %i.nb = lshr i64 %i.na, 3
   %i.nc = add nuw nsw i64 %i.nb, 1                ; 2 uses
   %min.iters.check1738 = icmp ult i64 %i.na, 56
   br i1 %min.iters.check1738, label %.lr.ph.i.i.i.i.i.i.i.preheader1753, label %vector.memcheck1729
 
 vector.memcheck1729:                              ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
-  %scevgep1730 = getelementptr i8, ptr %i.mw, i64 8
-  %23 = add i64 %i.mc, -8
-  %24 = sub i64 %23, %i.md
-  %i.nd = and i64 %24, -8                         ; 2 uses
-  %scevgep1731 = getelementptr i8, ptr %scevgep1730, i64 %i.nd
-  %scevgep1732 = getelementptr i8, ptr %.val.i237775795, i64 8
-  %scevgep1733 = getelementptr i8, ptr %scevgep1732, i64 %i.nd
+  %i.nd = and i64 %i.na, -8
+  %23 = add i64 %i.nd, 8                          ; 2 uses
+  %scevgep1732 = getelementptr i8, ptr %i.mw, i64 %23
+  %scevgep1733 = getelementptr i8, ptr %.val.i237775795, i64 %23
   %bound01734 = icmp ult ptr %i.mw, %scevgep1733
-  %bound11735 = icmp ult ptr %.val.i237775795, %scevgep1731
+  %bound11735 = icmp ult ptr %.val.i237775795, %scevgep1732
   %found.conflict1736 = and i1 %bound01734, %bound11735
   br i1 %found.conflict1736, label %.lr.ph.i.i.i.i.i.i.i.preheader1753, label %vector.ph1739
 
@@ -687,7 +684,7 @@ bb.cx:                                            ; preds = %bb.dr, %.lr.ph.i
   %.val.i366803 = phi ptr [ %.promoted801, %.lr.ph.i ], [ %.val.i366802, %bb.dr ] ; 17 uses
   %.0641.i = phi ptr [ %i.a, %.lr.ph.i ], [ %i.za, %bb.dr ] ; 2 uses
   %.02040.i = phi ptr [ %i.tq, %.lr.ph.i ], [ %i.yz, %bb.dr ] ; 9 uses
-  %i.tt = ptrtoaddr ptr %i.tr to i64              ; 2 uses
+  %i.tt = ptrtoaddr ptr %i.tr to i64
   %i.tu = and i64 %.val.i.i293, 254
   %i.tv = icmp eq i64 %i.tu, 0
   br i1 %i.tv, label %bb.cy, label %bb.da
@@ -810,7 +807,7 @@ bb.df:                                            ; preds = %bb.de
   %.pre.i3641051 = phi i64 [ %i.vn, %bb.df ], [ %.pre.i364, %bb.de ] ; 7 uses
   %i.vo = phi i64 [ 0, %bb.df ], [ %i.ts, %bb.de ] ; 3 uses
   %i.vp = ptrtoint ptr %.val3.i367 to i64
-  %i.vq = ptrtoint ptr %.val.i366803 to i64       ; 3 uses
+  %i.vq = ptrtoint ptr %.val.i366803 to i64       ; 2 uses
   %i.vr = sub i64 %i.vp, %i.vq                    ; 4 uses
   %i.vs = ashr exact i64 %i.vr, 3
   %i.vt = icmp eq i64 %.pre.i3641051, %i.vs
@@ -865,22 +862,19 @@ _ZNKSt6vectorISt10unique_ptrIA_N13sentencepiece7unigram12_GLOBAL__N_110Hypothesi
 
 .lr.ph.i.i.i.i.i.i.i376.preheader:                ; preds = %.noexc7.i375
   %i.wh = add i64 %i.tt, -8
-  %i.wi = sub i64 %i.wh, %i.vq                    ; 2 uses
+  %i.wi = sub i64 %i.wh, %i.vq                    ; 3 uses
   %i.wj = lshr i64 %i.wi, 3
   %i.wk = add nuw nsw i64 %i.wj, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.wi, 56
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i376.preheader1752, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i376.preheader
-  %scevgep = getelementptr i8, ptr %i.we, i64 8
-  %25 = add i64 %i.tt, -8
-  %26 = sub i64 %25, %i.vq
-  %i.wl = and i64 %26, -8                         ; 2 uses
-  %scevgep1723 = getelementptr i8, ptr %scevgep, i64 %i.wl
-  %scevgep1724 = getelementptr i8, ptr %.val.i366803, i64 8
-  %scevgep1725 = getelementptr i8, ptr %scevgep1724, i64 %i.wl
+  %i.wl = and i64 %i.wi, -8
+  %24 = add i64 %i.wl, 8                          ; 2 uses
+  %scevgep1724 = getelementptr i8, ptr %i.we, i64 %24
+  %scevgep1725 = getelementptr i8, ptr %.val.i366803, i64 %24
   %bound0 = icmp ult ptr %i.we, %scevgep1725
-  %bound1 = icmp ult ptr %.val.i366803, %scevgep1723
+  %bound1 = icmp ult ptr %.val.i366803, %scevgep1724
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.i.i376.preheader1752, label %vector.ph
 

@@ -204,9 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt7rever
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %4, align 8, !tbaa !251    ; 9 uses
-  %5 = ptrtoaddr ptr %i.f to i64                  ; 6 uses
   %i.g = load ptr, ptr %i.c, align 8, !tbaa !251  ; 5 uses
-  %6 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
   %i.h = icmp ne ptr %i.f, %i.g
   %.sroa.0.08.i.i = getelementptr inbounds i8, ptr %i.g, i64 -4 ; 5 uses
   %i.i = icmp ult ptr %i.f, %.sroa.0.08.i.i
@@ -214,14 +212,16 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond.i.i, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.c
-  %i.j = add i64 %6, -8
-  %i.k = add i64 %5, 4
+  %5 = ptrtoaddr ptr %i.g to i64
+  %6 = ptrtoaddr ptr %i.f to i64                  ; 3 uses
+  %i.j = add i64 %5, -8
+  %i.k = add i64 %6, 4
   %i.l = call i64 @llvm.umax.i64(i64 %i.j, i64 %i.k)
   %i.m = add i64 %i.l, -4                         ; 2 uses
-  %i.n = icmp ne i64 %i.m, %5
-  %i.o = zext i1 %i.n to i64                      ; 2 uses
-  %i.p = add i64 %5, %i.o
-  %i.q = sub i64 %i.m, %i.p
+  %i.n = icmp ne i64 %i.m, %6
+  %i.o = zext i1 %i.n to i64                      ; 3 uses
+  %i.p = add i64 %6, %i.o
+  %i.q = sub i64 %i.m, %i.p                       ; 2 uses
   %i.r = lshr i64 %i.q, 3
   %i.s = add nuw nsw i64 %i.r, %i.o               ; 2 uses
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
@@ -229,24 +229,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader42, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %scevgep = getelementptr i8, ptr %i.f, i64 4
-  %7 = add i64 %6, -8
-  %8 = add i64 %5, 4
-  %umax = call i64 @llvm.umax.i64(i64 %7, i64 %8)
-  %9 = add i64 %umax, -4                          ; 2 uses
-  %10 = icmp ne i64 %9, %5
-  %umin = zext i1 %10 to i64                      ; 2 uses
-  %11 = add i64 %5, %umin
-  %12 = sub i64 %9, %11
-  %i.u = lshr i64 %12, 3
-  %i.v = add nuw nsw i64 %i.u, %umin              ; 2 uses
-  %i.w = shl nuw i64 %i.v, 2
-  %scevgep35 = getelementptr i8, ptr %scevgep, i64 %i.w
-  %scevgep36 = getelementptr i8, ptr %i.g, i64 -4
-  %13 = mul nsw i64 %i.v, -4
-  %scevgep37 = getelementptr i8, ptr %scevgep36, i64 %13
+  %i.u = lshr i64 %i.q, 3
+  %i.v = add nuw nsw i64 %i.u, %i.o
+  %i.w = shl nuw i64 %i.v, 2                      ; 2 uses
+  %scevgep35 = getelementptr i8, ptr %i.f, i64 %i.w
+  %scevgep36 = getelementptr i8, ptr %scevgep35, i64 4
+  %7 = sub nuw nsw i64 -4, %i.w
+  %scevgep37 = getelementptr i8, ptr %i.g, i64 %7
   %bound0 = icmp ult ptr %i.f, %i.g
-  %bound1 = icmp ult ptr %scevgep37, %scevgep35
+  %bound1 = icmp ult ptr %scevgep37, %scevgep36
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.preheader42, label %vector.ph
 

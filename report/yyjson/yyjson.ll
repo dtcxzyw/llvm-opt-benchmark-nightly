@@ -205,10 +205,10 @@ middle.block5183:                                 ; preds = %vector.body5176
   br i1 %.not.i802402, label %write_str.exit407, label %iter.check
 
 iter.check:                                       ; preds = %.preheader1400
-  %.119.i75.lcssa5156 = ptrtoaddr ptr %.119.i75.lcssa to i64
-  %.122.i74.lcssa5155 = ptrtoaddr ptr %.122.i74.lcssa to i64
+  %.119.i75.lcssa5156 = ptrtoaddr ptr %.122.i74.lcssa to i64
+  %.122.i74.lcssa5155 = ptrtoaddr ptr %.119.i75.lcssa to i64
   %min.iters.check = icmp ult i64 %.1.i76.lcssa, 4
-  %i.bvp = sub i64 %.119.i75.lcssa5156, %.122.i74.lcssa5155
+  %i.bvp = sub i64 %.122.i74.lcssa5155, %.119.i75.lcssa5156
   %diff.check = icmp ugt i64 %i.bvp, -32
   %or.cond5313 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond5313, label %.lr.ph2406.preheader, label %vector.main.loop.iter.check
@@ -611,10 +611,10 @@ middle.block5240:                                 ; preds = %vector.body5233
   br i1 %.not.i702520, label %write_str.exit209, label %iter.check5207
 
 iter.check5207:                                   ; preds = %.preheader1366
-  %.119.i.lcssa5190 = ptrtoaddr ptr %.119.i.lcssa to i64
-  %.122.i.lcssa5189 = ptrtoaddr ptr %.122.i.lcssa to i64
+  %.119.i.lcssa5190 = ptrtoaddr ptr %.122.i.lcssa to i64
+  %.122.i.lcssa5189 = ptrtoaddr ptr %.119.i.lcssa to i64
   %min.iters.check5193 = icmp ult i64 %.1.i68.lcssa, 4
-  %i.eab = sub i64 %.119.i.lcssa5190, %.122.i.lcssa5189
+  %i.eab = sub i64 %.122.i.lcssa5189, %.119.i.lcssa5190
   %diff.check5191 = icmp ugt i64 %i.eab, -32
   %or.cond5315 = select i1 %min.iters.check5193, i1 true, i1 %diff.check5191
   br i1 %or.cond5315, label %.lr.ph2524.preheader, label %vector.main.loop.iter.check5194
@@ -1017,10 +1017,10 @@ middle.block4846:                                 ; preds = %vector.body4839
   br i1 %.not.i.i952055, label %write_str.exit744.i, label %iter.check
 
 iter.check:                                       ; preds = %.preheader1051
-  %.119.i.i90.lcssa4819 = ptrtoaddr ptr %.119.i.i90.lcssa to i64
-  %.122.i.i89.lcssa4818 = ptrtoaddr ptr %.122.i.i89.lcssa to i64
+  %.119.i.i90.lcssa4819 = ptrtoaddr ptr %.122.i.i89.lcssa to i64
+  %.122.i.i89.lcssa4818 = ptrtoaddr ptr %.119.i.i90.lcssa to i64
   %min.iters.check = icmp ult i64 %.1.i.i91.lcssa, 4
-  %i.bvq = sub i64 %.119.i.i90.lcssa4819, %.122.i.i89.lcssa4818
+  %i.bvq = sub i64 %.122.i.i89.lcssa4818, %.119.i.i90.lcssa4819
   %diff.check = icmp ugt i64 %i.bvq, -32
   %or.cond4976 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond4976, label %.lr.ph2059.preheader, label %vector.main.loop.iter.check
@@ -1423,10 +1423,10 @@ middle.block4903:                                 ; preds = %vector.body4896
   br i1 %.not.i.i2722173, label %write_str.exit581.i, label %iter.check4870
 
 iter.check4870:                                   ; preds = %.preheader1017
-  %.119.i.i267.lcssa4853 = ptrtoaddr ptr %.119.i.i267.lcssa to i64
-  %.122.i.i266.lcssa4852 = ptrtoaddr ptr %.122.i.i266.lcssa to i64
+  %.119.i.i267.lcssa4853 = ptrtoaddr ptr %.122.i.i266.lcssa to i64
+  %.122.i.i266.lcssa4852 = ptrtoaddr ptr %.119.i.i267.lcssa to i64
   %min.iters.check4856 = icmp ult i64 %.1.i.i268.lcssa, 4
-  %i.eam = sub i64 %.119.i.i267.lcssa4853, %.122.i.i266.lcssa4852
+  %i.eam = sub i64 %.122.i.i266.lcssa4852, %.119.i.i267.lcssa4853
   %diff.check4854 = icmp ugt i64 %i.eam, -32
   %or.cond4978 = select i1 %min.iters.check4856, i1 true, i1 %diff.check4854
   br i1 %or.cond4978, label %.lr.ph2177.preheader, label %vector.main.loop.iter.check4857

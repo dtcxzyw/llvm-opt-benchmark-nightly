@@ -205,15 +205,14 @@ iter.check:                                       ; preds = %.noexc471
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %i.ji, i64 8
   %i.jo = add i64 %i.iy, -8
   %i.jp = sub i64 %i.jo, %i.iz
-  %i.jq = and i64 %i.jp, -8                       ; 2 uses
-  %scevgep2474 = getelementptr i8, ptr %scevgep, i64 %i.jq
-  %scevgep2475 = getelementptr i8, ptr %i.ix, i64 8
-  %scevgep2476 = getelementptr i8, ptr %scevgep2475, i64 %i.jq
+  %i.jq = and i64 %i.jp, -8
+  %72 = add i64 %i.jq, 8                          ; 2 uses
+  %scevgep2475 = getelementptr i8, ptr %i.ji, i64 %72
+  %scevgep2476 = getelementptr i8, ptr %i.ix, i64 %72
   %bound0 = icmp ult ptr %i.ji, %scevgep2476
-  %bound1 = icmp ult ptr %i.ix, %scevgep2474
+  %bound1 = icmp ult ptr %i.ix, %scevgep2475
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -616,12 +615,13 @@ bb.a:
   br i1 %.not10.i.i, label %_ZSt12__relocate_aIPN7rocksdb19SuperVersionContextES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %_ZSt19__relocate_object_aIN7rocksdb19SuperVersionContextES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i
+  %indvar = phi i64 [ %indvar.next, %_ZSt19__relocate_object_aIN7rocksdb19SuperVersionContextES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i ], [ 0, %bb.a ] ; 2 uses
   %.012.i.i = phi ptr [ %i.cb, %_ZSt19__relocate_object_aIN7rocksdb19SuperVersionContextES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i ], [ %2, %bb.a ] ; 9 uses
   %.0911.i.i = phi ptr [ %i.ca, %_ZSt19__relocate_object_aIN7rocksdb19SuperVersionContextES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i ], [ %0, %bb.a ] ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2494)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2495)
   %i.a = getelementptr inbounds nuw i8, ptr %.012.i.i, i64 80
-  %i.b = getelementptr i8, ptr %.012.i.i, i64 8   ; 14 uses
+  %i.b = getelementptr i8, ptr %.012.i.i, i64 8   ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.012.i.i, i64 72
   store ptr %i.b, ptr %i.c, align 8, !tbaa !1147, !alias.scope !2494
   %i.d = getelementptr inbounds nuw i8, ptr %.0911.i.i, i64 80 ; 3 uses
@@ -646,8 +646,11 @@ iter.check:                                       ; preds = %.lr.ph.i.i
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %4 = mul i64 %indvar, 536
   %i.m = shl i64 %i.j, 3                          ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.b, i64 %i.m
+  %5 = getelementptr i8, ptr %2, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 8
+  %scevgep = getelementptr i8, ptr %6, i64 %i.m
   %scevgep8 = getelementptr i8, ptr %i.l, i64 %i.m
   %bound0 = icmp ult ptr %i.b, %scevgep8
   %bound1 = icmp ult ptr %i.l, %scevgep
@@ -843,6 +846,7 @@ _ZSt19__relocate_object_aIN7rocksdb19SuperVersionContextES1_SaIS1_EEvPT_PT0_RT1_
   %i.ca = getelementptr inbounds nuw i8, ptr %.0911.i.i, i64 536 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.012.i.i, i64 536 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ca, %1
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i.i, label %_ZSt12__relocate_aIPN7rocksdb19SuperVersionContextES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i, !llvm.loop !2493
 
 _ZSt12__relocate_aIPN7rocksdb19SuperVersionContextES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %_ZSt19__relocate_object_aIN7rocksdb19SuperVersionContextES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i, %bb.a

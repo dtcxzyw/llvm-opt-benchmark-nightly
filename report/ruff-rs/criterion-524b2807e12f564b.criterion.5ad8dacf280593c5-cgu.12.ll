@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.i = fdiv nnan double %1, 1.000000e+02
   %i.j = uitofp i64 %i.g to double
   %i.k = fmul double %i.i, %i.j                   ; 2 uses
-  %i.l = tail call noundef double @llvm.floor.f64(double %i.k) ; 6 uses
+  %i.l = tail call noundef double @llvm.floor.f64(double %i.k) ; 5 uses
   %i.m = fsub double %i.k, %i.l
   %i.n = fcmp uno double %i.l, 0.000000e+00
   br i1 %i.n, label %bb.i, label %bb.g
@@ -217,20 +217,16 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.p = fcmp ogt double %i.l, f0x43EFFFFFFFFFFFFF
-  br i1 %i.p, label %bb.i, label %2
+  br i1 %i.p, label %bb.i, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultjNtCsfpDJYaEmhVs_4cast5ErrorE6unwrapCs7NzLGBMhIGf_9criterion.exit.i
 
-2:                                                ; preds = %bb.h
-  %3 = fcmp ugt double %i.l, -1.000000e+00
-  br i1 %3, label %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultjNtCsfpDJYaEmhVs_4cast5ErrorE6unwrapCs7NzLGBMhIGf_9criterion.exit.i, label %bb.i
-
-bb.i:                                             ; preds = %2, %bb.h, %bb.g, %bb.f
-  %.sroa.4.0.ph.i = phi i8 [ 3, %2 ], [ 0, %bb.g ], [ 1, %bb.f ], [ 2, %bb.h ]
+bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
+  %.sroa.4.0.ph.i = phi i8 [ 2, %bb.h ], [ 0, %bb.g ], [ 1, %bb.f ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !548
   store i8 %.sroa.4.0.ph.i, ptr %i.a, align 1, !noalias !548
   call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @22, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @21, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #19, !noalias !548
   unreachable
 
-_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultjNtCsfpDJYaEmhVs_4cast5ErrorE6unwrapCs7NzLGBMhIGf_9criterion.exit.i: ; preds = %2
+_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultjNtCsfpDJYaEmhVs_4cast5ErrorE6unwrapCs7NzLGBMhIGf_9criterion.exit.i: ; preds = %bb.h
   %i.q = tail call i64 @llvm.fptoui.sat.i64.f64(double %i.l) ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %i.q
   %i.s = load double, ptr %i.r, align 8, !noundef !4 ; 2 uses

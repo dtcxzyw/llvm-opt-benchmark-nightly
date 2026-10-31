@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %.lr.ph20, %_ZNSt7__
   %i.as = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ar, ptr noundef nonnull @.str.15, i64 noundef 2) #13 ; 0 uses
   %i.at = load ptr, ptr %i.a, align 8, !nonnull !9, !align !11
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
-  %.idx = shl i64 %.sroa.5.0.copyload, 2          ; 3 uses
+  %.idx = shl i64 %.sroa.5.0.copyload, 2          ; 2 uses
   %i.au = getelementptr i8, ptr %.sroa.010.0.copyload, i64 %.idx ; 2 uses
   store ptr %i.ao, ptr %5, align 8
   store i64 0, ptr %i.ap, align 8
@@ -230,17 +230,16 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i.i.preheader:                           ; preds = %._crit_edge.i.i.thread, %._crit_edge.i.i
   %i.az = phi ptr [ %i.ay, %._crit_edge.i.i.thread ], [ %i.ao, %._crit_edge.i.i ] ; 6 uses
-  %i.ba = add i64 %.idx, -4                       ; 2 uses
+  %i.ba = add i64 %.idx, -4                       ; 3 uses
   %i.bb = lshr exact i64 %i.ba, 2
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ba, 28
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader36, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %scevgep = getelementptr i8, ptr %i.az, i64 1
-  %6 = add i64 %.idx, -4
-  %7 = lshr exact i64 %6, 2
-  %scevgep32 = getelementptr i8, ptr %scevgep, i64 %7
+  %6 = lshr exact i64 %i.ba, 2
+  %7 = getelementptr i8, ptr %i.az, i64 %6
+  %scevgep32 = getelementptr i8, ptr %7, i64 1
   %bound0 = icmp ult ptr %i.az, %i.au
   %bound1 = icmp ult ptr %.sroa.010.0.copyload, %scevgep32
   %found.conflict = and i1 %bound0, %bound1

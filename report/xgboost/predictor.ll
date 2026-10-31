@@ -205,28 +205,30 @@ bb.ae:                                            ; preds = %bb.z
   %i.dj = load i64, ptr %10, align 8, !tbaa !30   ; 6 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !145 ; 7 uses
-  %14 = ptrtoaddr ptr %i.dl to i64
-  %15 = sub i64 %.sroa.5.0.i95, %14
-  %16 = shl nuw nsw i64 %i.bt, 2
-  %min.iters.check102 = icmp ult i32 %i.bf, 8
-  %ident.check98.not = icmp ne i64 %i.dj, 1
-  %or.cond113.not118 = select i1 %min.iters.check102, i1 true, i1 %ident.check98.not
-  %invariant.op124 = add i64 %15, -1
+  %14 = shl nuw nsw i64 %i.bt, 2
+  %15 = ptrtoaddr ptr %i.dl to i64
+  %16 = sub i64 %.sroa.5.0.i95, %15
+  %min.iters.check103 = icmp ugt i32 %i.bf, 7
+  %ident.check99.not = icmp eq i64 %i.dj, 1
+  %or.cond113.not118 = select i1 %min.iters.check103, i1 %ident.check99.not, i1 false
+  %invariant.op124 = add i64 %16, -1
   %n.vec104 = and i64 %i.bt, 4294967288           ; 3 uses
   %cmp.n111 = icmp eq i64 %n.vec104, %i.bt
   %xtraiter120 = and i64 %i.bt, 3                 ; 2 uses
   %lcmp.mod121.not = icmp eq i64 %xtraiter120, 0
-  br label %.lr.ph.i.i.i.a
+  br label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i.a:                                   ; preds = %"_ZZNK7xgboost9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEENK3$_0clImEEDaT_.exit.loopexit.i.i", %.lr.ph135.split.i.i
+.lr.ph.i.i.i:                                     ; preds = %"_ZZNK7xgboost9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEENK3$_0clImEEDaT_.exit.loopexit.i.i", %.lr.ph135.split.i.i
   %.0134.i.i = phi i64 [ 0, %.lr.ph135.split.i.i ], [ %i.et, %"_ZZNK7xgboost9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEENK3$_0clImEEDaT_.exit.loopexit.i.i" ] ; 3 uses
-  %17 = mul i64 %16, %.0134.i.i
-  %i.dm = mul i64 %.0134.i.i, %i.bt
-  %18 = getelementptr [4 x i8], ptr %.sroa.5.0.i, i64 %i.dm ; 6 uses
-  %.reass125 = add i64 %17, %invariant.op124
+  %17 = mul i64 %.0134.i.i, %i.bt
+  %18 = getelementptr [4 x i8], ptr %.sroa.5.0.i, i64 %17 ; 6 uses
+  br i1 %or.cond113.not118, label %.lr.ph.i.i.i.a, label %scalar.ph101.preheader
+
+.lr.ph.i.i.i.a:                                   ; preds = %.lr.ph.i.i.i
+  %i.dm = mul i64 %.0134.i.i, %14
+  %.reass125 = add i64 %i.dm, %invariant.op124
   %diff.check100 = icmp ult i64 %.reass125, 31
-  %or.cond114 = select i1 %or.cond113.not118, i1 true, i1 %diff.check100
-  br i1 %or.cond114, label %scalar.ph101.preheader, label %vector.body105
+  br i1 %diff.check100, label %scalar.ph101.preheader, label %vector.body105
 
 vector.body105:                                   ; preds = %.lr.ph.i.i.i.a, %vector.body105
   %index106 = phi i64 [ %index.next109, %vector.body105 ], [ 0, %.lr.ph.i.i.i.a ] ; 3 uses
@@ -245,8 +247,8 @@ vector.body105:                                   ; preds = %.lr.ph.i.i.i.a, %ve
 middle.block110:                                  ; preds = %vector.body105
   br i1 %cmp.n111, label %"_ZZNK7xgboost9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEENK3$_0clImEEDaT_.exit.loopexit.i.i", label %scalar.ph101.preheader
 
-scalar.ph101.preheader:                           ; preds = %.lr.ph.i.i.i.a, %middle.block110
-  %.05.i.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.i.a ], [ %n.vec104, %middle.block110 ] ; 3 uses
+scalar.ph101.preheader:                           ; preds = %.lr.ph.i.i.i.a, %.lr.ph.i.i.i, %middle.block110
+  %.05.i.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.i.a ], [ 0, %.lr.ph.i.i.i ], [ %n.vec104, %middle.block110 ] ; 3 uses
   br i1 %lcmp.mod121.not, label %scalar.ph101.prol.loopexit, label %scalar.ph101.prol
 
 scalar.ph101.prol:                                ; preds = %scalar.ph101.preheader, %scalar.ph101.prol
@@ -300,7 +302,7 @@ scalar.ph101:                                     ; preds = %scalar.ph101.prol.l
 "_ZZNK7xgboost9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEENK3$_0clImEEDaT_.exit.loopexit.i.i": ; preds = %scalar.ph101.prol.loopexit, %scalar.ph101, %middle.block110
   %i.et = add nuw i64 %.0134.i.i, 1               ; 2 uses
   %exitcond154.not.i.i = icmp eq i64 %i.et, %i.dg
-  br i1 %exitcond154.not.i.i, label %"_ZN7xgboost6common11ParallelForImZNKS_9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEE3$_0EEvT_iOT0_.exit", label %.lr.ph.i.i.i.a, !llvm.loop !72
+  br i1 %exitcond154.not.i.i, label %"_ZN7xgboost6common11ParallelForImZNKS_9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEE3$_0EEvT_iOT0_.exit", label %.lr.ph.i.i.i, !llvm.loop !72
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
@@ -412,28 +414,30 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.fl = load i64, ptr %10, align 8, !tbaa !30   ; 6 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !145 ; 7 uses
-  %19 = ptrtoaddr ptr %i.fn to i64
-  %20 = sub i64 %.sroa.5.0.i95, %19
-  %21 = shl nuw nsw i64 %i.bt, 2
-  %min.iters.check = icmp ult i32 %i.bf, 8
-  %ident.check.not = icmp ne i64 %i.fl, 1
-  %or.cond115.not117 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
-  %invariant.op = add i64 %20, -1
+  %19 = shl nuw nsw i64 %i.bt, 2
+  %20 = ptrtoaddr ptr %i.fn to i64
+  %21 = sub i64 %.sroa.5.0.i95, %20
+  %min.iters.check = icmp ugt i32 %i.bf, 7
+  %ident.check.not = icmp eq i64 %i.fl, 1
+  %or.cond115.not117 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
+  %invariant.op = add i64 %21, -1
   %n.vec = and i64 %i.bt, 4294967288              ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %i.bt
   %xtraiter = and i64 %i.bt, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br label %.lr.ph.i.i89.i.i.a
+  br label %.lr.ph.i.i89.i.i
 
-.lr.ph.i.i89.i.i.a:                               ; preds = %"_ZN4dmlc12OMPException3RunIZNK7xgboost9Predictor18InitOutPredictionsERKNS2_8MetaInfoEPNS2_16HostDeviceVectorIfEERKNS2_3gbm11GBTreeModelEE3$_0JmEEEvT_DpT0_.exit92.loopexit.i.i", %.lr.ph127.split.i.i
+.lr.ph.i.i89.i.i:                                 ; preds = %"_ZN4dmlc12OMPException3RunIZNK7xgboost9Predictor18InitOutPredictionsERKNS2_8MetaInfoEPNS2_16HostDeviceVectorIfEERKNS2_3gbm11GBTreeModelEE3$_0JmEEEvT_DpT0_.exit92.loopexit.i.i", %.lr.ph127.split.i.i
   %.060126.i.i = phi i64 [ 0, %.lr.ph127.split.i.i ], [ %i.gv, %"_ZN4dmlc12OMPException3RunIZNK7xgboost9Predictor18InitOutPredictionsERKNS2_8MetaInfoEPNS2_16HostDeviceVectorIfEERKNS2_3gbm11GBTreeModelEE3$_0JmEEEvT_DpT0_.exit92.loopexit.i.i" ] ; 3 uses
-  %22 = mul i64 %21, %.060126.i.i
-  %i.fo = mul i64 %.060126.i.i, %i.bt
-  %23 = getelementptr [4 x i8], ptr %.sroa.5.0.i, i64 %i.fo ; 6 uses
-  %.reass = add i64 %22, %invariant.op
+  %22 = mul i64 %.060126.i.i, %i.bt
+  %23 = getelementptr [4 x i8], ptr %.sroa.5.0.i, i64 %22 ; 6 uses
+  br i1 %or.cond115.not117, label %.lr.ph.i.i89.i.i.a, label %scalar.ph.preheader
+
+.lr.ph.i.i89.i.i.a:                               ; preds = %.lr.ph.i.i89.i.i
+  %i.fo = mul i64 %.060126.i.i, %19
+  %.reass = add i64 %i.fo, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
-  %or.cond116 = select i1 %or.cond115.not117, i1 true, i1 %diff.check
-  br i1 %or.cond116, label %scalar.ph.preheader, label %vector.body
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.i.i89.i.i.a, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph.i.i89.i.i.a ] ; 3 uses
@@ -452,8 +456,8 @@ vector.body:                                      ; preds = %.lr.ph.i.i89.i.i.a,
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %"_ZN4dmlc12OMPException3RunIZNK7xgboost9Predictor18InitOutPredictionsERKNS2_8MetaInfoEPNS2_16HostDeviceVectorIfEERKNS2_3gbm11GBTreeModelEE3$_0JmEEEvT_DpT0_.exit92.loopexit.i.i", label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph.i.i89.i.i.a, %middle.block
-  %.05.i.i90.i.i.ph = phi i64 [ 0, %.lr.ph.i.i89.i.i.a ], [ %n.vec, %middle.block ] ; 3 uses
+scalar.ph.preheader:                              ; preds = %.lr.ph.i.i89.i.i.a, %.lr.ph.i.i89.i.i, %middle.block
+  %.05.i.i90.i.i.ph = phi i64 [ 0, %.lr.ph.i.i89.i.i.a ], [ 0, %.lr.ph.i.i89.i.i ], [ %n.vec, %middle.block ] ; 3 uses
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
@@ -507,7 +511,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 "_ZN4dmlc12OMPException3RunIZNK7xgboost9Predictor18InitOutPredictionsERKNS2_8MetaInfoEPNS2_16HostDeviceVectorIfEERKNS2_3gbm11GBTreeModelEE3$_0JmEEEvT_DpT0_.exit92.loopexit.i.i": ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %i.gv = add nuw i64 %.060126.i.i, 1             ; 2 uses
   %exitcond150.not.i.i = icmp eq i64 %i.gv, %i.dg
-  br i1 %exitcond150.not.i.i, label %"_ZN7xgboost6common11ParallelForImZNKS_9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEE3$_0EEvT_iOT0_.exit", label %.lr.ph.i.i89.i.i.a, !llvm.loop !78
+  br i1 %exitcond150.not.i.i, label %"_ZN7xgboost6common11ParallelForImZNKS_9Predictor18InitOutPredictionsERKNS_8MetaInfoEPNS_16HostDeviceVectorIfEERKNS_3gbm11GBTreeModelEE3$_0EEvT_iOT0_.exit", label %.lr.ph.i.i89.i.i, !llvm.loop !78
 
 bb.am:                                            ; preds = %bb.ai
   %i.gw = landingpad { ptr, i32 }

@@ -205,14 +205,14 @@ _RINvNtNtCskKLDkoKarTP_4core5slice6rotate18ptr_rotate_memmovehECskm6LeB9lWb4_9wa
   br label %_RINvNtNtCskKLDkoKarTP_4core5slice6rotate10ptr_rotatehECskm6LeB9lWb4_9wasm_ping.exit
 
 .preheader.i:                                     ; preds = %bb.d, %.loopexit.i.i
-  %.sroa.016.0.i.i = phi i64 [ %.sroa.016.2.i.i, %.loopexit.i.i ], [ %2, %bb.d ] ; 26 uses
+  %.sroa.016.0.i.i = phi i64 [ %.sroa.016.2.i.i, %.loopexit.i.i ], [ %2, %bb.d ] ; 24 uses
   %.sroa.010.0.i.i = phi ptr [ %.sroa.010.2.i.i, %.loopexit.i.i ], [ %i.c, %bb.d ] ; 10 uses
   %.sroa.0.0.i.i = phi i64 [ %.sroa.0.1.i.i, %.loopexit.i.i ], [ %i.b, %bb.d ] ; 18 uses
   %.not.i2.i = icmp ult i64 %.sroa.0.0.i.i, %.sroa.016.0.i.i
   br i1 %.not.i2.i, label %.preheader.i.i, label %.preheader54.i.i
 
 .preheader54.i.i:                                 ; preds = %.preheader.i
-  %i.i = sub i64 0, %.sroa.016.0.i.i              ; 3 uses
+  %i.i = sub i64 0, %.sroa.016.0.i.i              ; 5 uses
   %i.j = lshr i64 %.sroa.016.0.i.i, 3             ; 9 uses
   %i.k = and i64 %.sroa.016.0.i.i, 7              ; 2 uses
   %.not.i37.i.i = icmp eq i64 %i.j, 0             ; 2 uses
@@ -227,7 +227,10 @@ _RINvNtNtCskKLDkoKarTP_4core5slice6rotate18ptr_rotate_memmovehECskm6LeB9lWb4_9wa
 
 .preheader54.split.i.i.preheader:                 ; preds = %.preheader54.i.i
   %i.r = and i64 %.sroa.016.0.i.i, -8             ; 2 uses
+  %3 = sub i64 %i.r, %.sroa.016.0.i.i
   %min.iters.check91 = icmp ult i64 %.sroa.016.0.i.i, 32
+  %4 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %3
+  %5 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.r
   %n.vec93 = and i64 %i.j, 2305843009213693948    ; 3 uses
   %cmp.n102 = icmp eq i64 %i.j, %n.vec93
   %i.s = and i64 %.sroa.016.0.i.i, 8
@@ -239,6 +242,7 @@ _RINvNtNtCskKLDkoKarTP_4core5slice6rotate18ptr_rotate_memmovehECskm6LeB9lWb4_9wa
 
 .preheader.i38.preheader.us.i.i.preheader:        ; preds = %.preheader54.split.us.i.i
   %min.iters.check69 = icmp ult i64 %.sroa.016.0.i.i, 32
+  %6 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %.sroa.016.0.i.i
   %n.vec71 = and i64 %i.j, 2305843009213693948    ; 3 uses
   %cmp.n80 = icmp eq i64 %i.j, %n.vec71
   %i.t = and i64 %.sroa.016.0.i.i, 8
@@ -261,13 +265,11 @@ _RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping
   br i1 %min.iters.check69, label %.preheader.i38.us.i.i.preheader, label %vector.memcheck60
 
 vector.memcheck60:                                ; preds = %.preheader.i38.preheader.us.i.i
-  %i.y = mul i64 %.sroa.016.0.i.i, %indvar61      ; 2 uses
-  %3 = sub i64 %.sroa.016.0.i.i, %i.y
-  %scevgep64 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %3
-  %4 = sub i64 0, %i.y
-  %scevgep63 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %4
-  %bound065 = icmp ult ptr %i.x, %scevgep64
-  %bound166 = icmp ult ptr %.sroa.010.3.us.i.i, %scevgep63
+  %i.y = mul i64 %indvar61, %i.i                  ; 2 uses
+  %scevgep64 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.y
+  %scevgep63 = getelementptr i8, ptr %6, i64 %i.y
+  %bound065 = icmp ult ptr %i.x, %scevgep63
+  %bound166 = icmp ult ptr %.sroa.010.3.us.i.i, %scevgep64
   %found.conflict67 = and i1 %bound065, %bound166
   br i1 %found.conflict67, label %.preheader.i38.us.i.i.preheader, label %vector.body72
 
@@ -358,9 +360,9 @@ _RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping
   %i.ax = and i64 %.sroa.0.0.i.i, 1
   %i.ay = icmp eq i64 %i.ax, 0
   %i.az = sub i64 %i.at, %.sroa.0.0.i.i
-  %5 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.az
-  %i.ba = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.at
   %min.iters.check = icmp ult i64 %.sroa.0.0.i.i, 32
+  %i.ba = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.az
+  %7 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %i.at
   %n.vec = and i64 %i.ar, 2305843009213693948     ; 3 uses
   %cmp.n = icmp eq i64 %i.ar, %n.vec
   %i.bb = and i64 %.sroa.0.0.i.i, 8
@@ -371,9 +373,6 @@ _RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping
   %indvar = phi i64 [ 0, %.preheader.i.i ], [ %indvar.next, %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit.i.i ] ; 2 uses
   %.sroa.016.1.i.i = phi i64 [ %.sroa.016.0.i.i, %.preheader.i.i ], [ %i.ca, %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit.i.i ]
   %.sroa.010.1.i.i = phi ptr [ %.sroa.010.0.i.i, %.preheader.i.i ], [ %i.bz, %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit.i.i ] ; 8 uses
-  %6 = mul i64 %.sroa.0.0.i.i, %indvar            ; 2 uses
-  %scevgep = getelementptr i8, ptr %5, i64 %6
-  %scevgep56 = getelementptr i8, ptr %i.ba, i64 %6
   %i.bc = getelementptr i8, ptr %.sroa.010.1.i.i, i64 %i.aq ; 6 uses
   br i1 %.not.i.i.i, label %_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECskm6LeB9lWb4_9wasm_ping.exit.i.i.i, label %.preheader.i.i.i.preheader
 
@@ -381,8 +380,11 @@ _RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping
   br i1 %min.iters.check, label %.preheader.i.i.i.preheader104, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.i.i.i.preheader
-  %bound0 = icmp ult ptr %i.bc, %scevgep56
-  %bound1 = icmp ult ptr %.sroa.010.1.i.i, %scevgep
+  %8 = mul i64 %indvar, %.sroa.0.0.i.i            ; 2 uses
+  %9 = getelementptr i8, ptr %i.ba, i64 %8
+  %10 = getelementptr i8, ptr %7, i64 %8
+  %bound0 = icmp ult ptr %i.bc, %10
+  %bound1 = icmp ult ptr %.sroa.010.1.i.i, %9
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.preheader.i.i.i.preheader104, label %vector.body
 
@@ -522,12 +524,6 @@ _RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit.i.i: ; preds = %bb
   %indvar83 = phi i64 [ 0, %.preheader54.split.i.i.preheader ], [ %indvar.next84, %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit53.i.i ] ; 2 uses
   %.sroa.010.3.i.i = phi ptr [ %.sroa.010.0.i.i, %.preheader54.split.i.i.preheader ], [ %i.ce, %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit53.i.i ] ; 7 uses
   %.sroa.0.2.i.i = phi i64 [ %.sroa.0.0.i.i, %.preheader54.split.i.i.preheader ], [ %i.db, %_RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit53.i.i ]
-  %7 = mul i64 %.sroa.016.0.i.i, %indvar83        ; 2 uses
-  %8 = add i64 %.sroa.016.0.i.i, %7
-  %9 = sub i64 %i.r, %8
-  %scevgep85 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %9
-  %10 = sub i64 %i.r, %7
-  %scevgep86 = getelementptr i8, ptr %.sroa.010.0.i.i, i64 %10
   %i.ce = getelementptr i8, ptr %.sroa.010.3.i.i, i64 %i.i ; 8 uses
   br i1 %.not.i37.i.i, label %_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECskm6LeB9lWb4_9wasm_ping.exit.i43.i.i, label %.preheader.i38.i.i.preheader
 
@@ -535,8 +531,11 @@ _RNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes.exit.i.i: ; preds = %bb
   br i1 %min.iters.check91, label %.preheader.i38.i.i.preheader105, label %vector.memcheck82
 
 vector.memcheck82:                                ; preds = %.preheader.i38.i.i.preheader
-  %bound087 = icmp ult ptr %i.ce, %scevgep86
-  %bound188 = icmp ult ptr %.sroa.010.3.i.i, %scevgep85
+  %11 = mul i64 %indvar83, %i.i                   ; 2 uses
+  %12 = getelementptr i8, ptr %4, i64 %11
+  %13 = getelementptr i8, ptr %5, i64 %11
+  %bound087 = icmp ult ptr %i.ce, %13
+  %bound188 = icmp ult ptr %.sroa.010.3.i.i, %12
   %found.conflict89 = and i1 %bound087, %bound188
   br i1 %found.conflict89, label %.preheader.i38.i.i.preheader105, label %vector.body94
 

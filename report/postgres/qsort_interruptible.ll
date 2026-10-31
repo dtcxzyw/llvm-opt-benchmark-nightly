@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @qsort_interruptible(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sub i64 0, %2                            ; 5 uses
+  %i.a = sub i64 0, %2                            ; 7 uses
   %.not.i214 = icmp eq i64 %2, 0                  ; 4 uses
   %min.iters.check532 = icmp ult i64 %2, 4
   %min.iters.check534 = icmp ult i64 %2, 32
@@ -366,9 +366,6 @@ bb.o:                                             ; preds = %qsort_interruptible
   %indvar492 = phi i64 [ %indvar.next493, %bb.t ], [ 0, %bb.o ] ; 2 uses
   %.1189259 = phi ptr [ %i.do, %bb.t ], [ %.0188, %bb.o ] ; 9 uses
   %.1191258 = phi ptr [ %.2192, %bb.t ], [ %.0190, %bb.o ] ; 10 uses
-  %5 = add i64 %indvar492, 1
-  %6 = mul i64 %2, %5
-  %scevgep494 = getelementptr i8, ptr %.0188, i64 %6
   %i.cm = tail call i32 %3(ptr noundef %.1189259, ptr noundef %.0193.ph, ptr noundef %4) #4 ; 2 uses
   %i.cn = icmp slt i32 %i.cm, 1
   br i1 %i.cn, label %bb.p, label %.critedge2
@@ -385,7 +382,10 @@ iter.check512:                                    ; preds = %bb.q
 
 vector.memcheck490:                               ; preds = %iter.check512
   %scevgep491 = getelementptr i8, ptr %.1191258, i64 %2
-  %bound0495 = icmp ult ptr %.1191258, %scevgep494
+  %5 = add i64 %indvar492, 1
+  %6 = mul i64 %2, %5
+  %7 = getelementptr i8, ptr %.0188, i64 %6
+  %bound0495 = icmp ult ptr %.1191258, %7
   %bound1496 = icmp ult ptr %.1189259, %scevgep491
   %found.conflict497 = and i1 %bound0495, %bound1496
   br i1 %found.conflict497, label %.lr.ph.i220.preheader, label %vector.main.loop.iter.check499
@@ -499,15 +499,16 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %.1191.lcssa = phi ptr [ %.0190, %bb.o ], [ %.2192, %bb.t ], [ %.1191258, %.lr.ph261 ] ; 2 uses
   %.1189.lcssa = phi ptr [ %.0188, %bb.o ], [ %i.do, %bb.t ], [ %.1189259, %.lr.ph261 ] ; 20 uses
   %.not208266 = icmp ugt ptr %.1189.lcssa, %.0186
-  br i1 %.not208266, label %.critedge2._crit_edge, label %.lr.ph270
+  br i1 %.not208266, label %.critedge2._crit_edge, label %.lr.ph270.preheader
 
-.lr.ph270:                                        ; preds = %.critedge2, %bb.y
-  %indvar = phi i64 [ %indvar.next, %bb.y ], [ 0, %.critedge2 ] ; 3 uses
-  %.1184269 = phi ptr [ %.2185, %bb.y ], [ %.0183, %.critedge2 ] ; 10 uses
-  %.1187267 = phi ptr [ %i.es, %bb.y ], [ %.0186, %.critedge2 ] ; 15 uses
-  %7 = sub i64 1, %indvar
-  %8 = mul i64 %2, %7
-  %scevgep456 = getelementptr i8, ptr %.0186, i64 %8
+.lr.ph270.preheader:                              ; preds = %.critedge2
+  %8 = getelementptr i8, ptr %.0186, i64 %2
+  br label %.lr.ph270
+
+.lr.ph270:                                        ; preds = %.lr.ph270.preheader, %bb.y
+  %indvar = phi i64 [ %indvar.next, %bb.y ], [ 0, %.lr.ph270.preheader ] ; 3 uses
+  %.1184269 = phi ptr [ %.2185, %bb.y ], [ %.0183, %.lr.ph270.preheader ] ; 10 uses
+  %.1187267 = phi ptr [ %i.es, %bb.y ], [ %.0186, %.lr.ph270.preheader ] ; 15 uses
   %i.dq = tail call i32 %3(ptr noundef %.1187267, ptr noundef %.0193.ph, ptr noundef %4) #4 ; 2 uses
   %i.dr = icmp sgt i32 %i.dq, -1
   br i1 %i.dr, label %bb.u, label %.critedge4
@@ -523,9 +524,11 @@ iter.check475:                                    ; preds = %bb.v
   br i1 %min.iters.check461, label %.lr.ph.i225.preheader, label %vector.memcheck455
 
 vector.memcheck455:                               ; preds = %iter.check475
+  %9 = mul i64 %indvar, %i.a
+  %10 = getelementptr i8, ptr %8, i64 %9
   %scevgep457 = getelementptr i8, ptr %.1184269, i64 %2
   %bound0458 = icmp ult ptr %.1187267, %scevgep457
-  %bound1459 = icmp ult ptr %.1184269, %scevgep456
+  %bound1459 = icmp ult ptr %.1184269, %10
   %found.conflict460 = and i1 %bound0458, %bound1459
   br i1 %found.conflict460, label %.lr.ph.i225.preheader, label %vector.main.loop.iter.check462
 
@@ -642,9 +645,9 @@ iter.check440:                                    ; preds = %.critedge4
 
 vector.memcheck420:                               ; preds = %iter.check440
   %scevgep421 = getelementptr i8, ptr %.1189.lcssa, i64 %2
-  %9 = sub i64 1, %indvar
-  %10 = mul i64 %2, %9
-  %scevgep422 = getelementptr i8, ptr %.0186, i64 %10
+  %11 = mul i64 %indvar, %i.a
+  %12 = getelementptr i8, ptr %.0186, i64 %2
+  %scevgep422 = getelementptr i8, ptr %12, i64 %11
   %bound0423 = icmp ult ptr %.1189.lcssa, %scevgep422
   %bound1424 = icmp ult ptr %.1187267, %scevgep421
   %found.conflict425 = and i1 %bound0423, %bound1424

@@ -204,10 +204,10 @@ bb.w:                                             ; preds = %bb.v, %bb.r
   br i1 %.not, label %._crit_edge, label %iter.check236
 
 iter.check236:                                    ; preds = %bb.w
-  %.079.i222 = ptrtoaddr ptr %.079.i to i64
-  %.389.i221 = ptrtoaddr ptr %.389.i to i64
+  %.079.i222 = ptrtoaddr ptr %.389.i to i64
+  %.389.i221 = ptrtoaddr ptr %.079.i to i64
   %min.iters.check224 = icmp ult i64 %.2.i, 4
-  %i.eq = sub i64 %.079.i222, %.389.i221
+  %i.eq = sub i64 %.389.i221, %.079.i222
   %diff.check223 = icmp ugt i64 %i.eq, -32
   %or.cond278 = select i1 %min.iters.check224, i1 true, i1 %diff.check223
   br i1 %or.cond278, label %.lr.ph.preheader, label %vector.main.loop.iter.check225
@@ -465,10 +465,10 @@ bb.ak:                                            ; preds = %bb.aj, %bb.af
   br i1 %.not.i70, label %._crit_edge.i73, label %iter.check
 
 iter.check:                                       ; preds = %bb.ak
-  %.079.i.i212 = ptrtoaddr ptr %.079.i.i to i64
-  %.389.i.i211 = ptrtoaddr ptr %.389.i.i to i64
+  %.079.i.i212 = ptrtoaddr ptr %.389.i.i to i64
+  %.389.i.i211 = ptrtoaddr ptr %.079.i.i to i64
   %min.iters.check = icmp ult i64 %.2.i.i, 4
-  %i.ii = sub i64 %.079.i.i212, %.389.i.i211
+  %i.ii = sub i64 %.389.i.i211, %.079.i.i212
   %diff.check = icmp ugt i64 %i.ii, -32
   %or.cond279 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond279, label %.lr.ph.i71.preheader, label %vector.main.loop.iter.check
@@ -871,10 +871,10 @@ bb.v:                                             ; preds = %bb.u, %bb.q
   br i1 %.not.i21, label %._crit_edge.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.v
-  %.079.i.i114 = ptrtoaddr ptr %.079.i.i to i64
-  %.389.i.i113 = ptrtoaddr ptr %.389.i.i to i64
+  %.079.i.i114 = ptrtoaddr ptr %.389.i.i to i64
+  %.389.i.i113 = ptrtoaddr ptr %.079.i.i to i64
   %min.iters.check = icmp ult i64 %.2.i.i, 4
-  %i.ei = sub i64 %.079.i.i114, %.389.i.i113
+  %i.ei = sub i64 %.389.i.i113, %.079.i.i114
   %diff.check = icmp ugt i64 %i.ei, -32
   %or.cond151 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond151, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

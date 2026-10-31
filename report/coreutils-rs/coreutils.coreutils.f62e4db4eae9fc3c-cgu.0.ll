@@ -205,11 +205,10 @@ _RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecyE7reserveCsl8pJiQOn4hA_9coreutils.ex
 
 vector.memcheck:                                  ; preds = %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecyE7reserveCsl8pJiQOn4hA_9coreutils.exit.thread20.i.i.i.i
   %i.abf = ptrtoaddr ptr %i.abe to i64
-  %3 = sub i64 %i.abf, %.8.val1612
   %i.abg = shl i64 %i.abd, 3
-  %i.abh = add i64 %3, %i.abg
-  %4 = add i64 %i.abh, -1
-  %diff.check = icmp ult i64 %4, 31
+  %i.abh = add i64 %i.abg, %i.abf
+  %3 = sub i64 %.8.val1612, %i.abh
+  %diff.check = icmp ugt i64 %3, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

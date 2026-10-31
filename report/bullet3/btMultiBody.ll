@@ -205,8 +205,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph143, %bb.j
   %indvars.iv151 = phi i64 [ 0, %.lr.ph143 ], [ %indvars.iv.next152, %bb.j ] ; 6 uses
   %.0116140 = phi ptr [ %i.bx, %.lr.ph143 ], [ %i.kv, %bb.j ] ; 48 uses
-  %3 = mul nsw i64 %indvars.iv151, -216
-  %4 = add i64 %i.ca, %3
   %i.cb = load ptr, ptr %i.bz, align 8, !tbaa !47 ; 2 uses
   %i.cc = ptrtoaddr ptr %i.cb to i64
   %i.cd = getelementptr inbounds nuw [688 x i8], ptr %i.cb, i64 %indvars.iv151 ; 44 uses
@@ -392,12 +390,16 @@ bb.e:                                             ; preds = %.lr.ph143, %bb.j
   %i.he = getelementptr inbounds nuw i8, ptr %.0116140, i64 336 ; 6 uses
   %wide.trip.count149 = zext nneg i32 %i.cl to i64 ; 5 uses
   %min.iters.check = icmp ult i32 %i.cl, 8
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph139
+  %3 = mul nsw i64 %indvars.iv151, -216
+  %4 = add i64 %i.ca, %3
   %5 = sub i64 %i.cc, %4
   %diff.check = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
-vector.ph:                                        ; preds = %.lr.ph139
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count149, 2147483640 ; 3 uses
   br label %vector.body
 
@@ -419,8 +421,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count149
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph139, %middle.block
-  %indvars.iv146.ph = phi i64 [ 0, %.lr.ph139 ], [ %n.vec, %middle.block ] ; 3 uses
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph139, %middle.block
+  %indvars.iv146.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph139 ], [ %n.vec, %middle.block ] ; 3 uses
   %xtraiter = and i64 %wide.trip.count149, 3      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

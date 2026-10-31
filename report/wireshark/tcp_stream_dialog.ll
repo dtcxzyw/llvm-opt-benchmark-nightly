@@ -205,16 +205,16 @@ bb.bo:                                            ; preds = %.lr.ph.i
   br i1 %.not143.i, label %.loopexit152.i, label %.lr.ph.i, !llvm.loop !123
 
 .loopexit152.i:                                   ; preds = %bb.bo, %bb.bn, %bb.bm
-  %i.mn = phi ptr [ %i.mc, %bb.bm ], [ %.pre741, %bb.bn ], [ %i.mc, %bb.bo ] ; 19 uses
+  %i.mn = phi ptr [ %i.mc, %bb.bm ], [ %.pre741, %bb.bn ], [ %i.mc, %bb.bo ] ; 21 uses
   %.2 = phi i32 [ %.1, %bb.bm ], [ %i.mk, %bb.bn ], [ %i.ml, %bb.bo ] ; 3 uses
   %.sroa.0133.0163.i = phi ptr [ %.sroa.0133.0165.i, %bb.bm ], [ %.sroa.0133.0165.i, %bb.bn ], [ %i.md, %bb.bo ] ; 6 uses
   %.not144.i = icmp eq ptr %.sroa.0133.0163.i, %i.mn
   br i1 %.not144.i, label %_ZNSt6vectorISt4pairIjjESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit.i, label %bb.bp
 
 bb.bp:                                            ; preds = %.loopexit152.i
-  %i.mo = ptrtoint ptr %i.mn to i64               ; 2 uses
-  %i.mp = ptrtoint ptr %.sroa.0133.0163.i to i64  ; 4 uses
-  %i.mq = sub i64 %i.mp, %i.mo                    ; 2 uses
+  %i.mo = ptrtoint ptr %i.mn to i64               ; 3 uses
+  %i.mp = ptrtoint ptr %.sroa.0133.0163.i to i64  ; 5 uses
+  %i.mq = sub i64 %i.mp, %i.mo
   %i.mr = getelementptr i8, ptr %i.mn, i64 %i.mq  ; 8 uses
   %i.ms = load ptr, ptr %i.et, align 8            ; 5 uses
   %.not11.i.i.i = icmp eq ptr %.sroa.0133.0163.i, %i.ms
@@ -248,13 +248,16 @@ vector.scevcheck905:                              ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.ng, label %.lr.ph.i.i.i.i.i.i.i.i.preheader964, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck905
-  %scevgep910 = getelementptr i8, ptr %i.mn, i64 -4 ; 2 uses
-  %scevgep911 = getelementptr i8, ptr %scevgep910, i64 %i.mu ; 3 uses
-  %scevgep912 = getelementptr i8, ptr %i.mn, i64 4 ; 4 uses
+  %scevgep910 = getelementptr i8, ptr %i.mn, i64 %i.mu
+  %scevgep911 = getelementptr i8, ptr %scevgep910, i64 -4 ; 3 uses
+  %scevgep912 = getelementptr i8, ptr %i.mn, i64 4 ; 3 uses
   %scevgep913 = getelementptr i8, ptr %i.mn, i64 %i.mu ; 3 uses
-  %i.nh = sub i64 %i.mt, %i.mo
-  %scevgep914 = getelementptr i8, ptr %scevgep910, i64 %i.nh ; 2 uses
-  %scevgep915 = getelementptr i8, ptr %scevgep912, i64 %i.mq ; 2 uses
+  %19 = add i64 %i.mt, -4
+  %i.nh = sub i64 %19, %i.mo
+  %scevgep914 = getelementptr i8, ptr %i.mn, i64 %i.nh ; 2 uses
+  %20 = add i64 %i.mp, 4
+  %21 = sub i64 %20, %i.mo
+  %scevgep915 = getelementptr i8, ptr %i.mn, i64 %21 ; 2 uses
   %bound0 = icmp ult ptr %i.mn, %scevgep913
   %bound1 = icmp ult ptr %scevgep912, %scevgep911
   %found.conflict = and i1 %bound0, %bound1

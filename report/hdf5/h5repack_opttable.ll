@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l
 vector.memcheck188:                               ; preds = %.lr.ph.i
   %i.at = sub i64 %.pre.pre189, %i.a
   %i.au = mul nuw nsw i64 %indvars.iv, 6776
-  %i.av = add i64 %i.au, %i.at
+  %i.av = add i64 %i.at, %i.au
   %i.aw = add i64 %i.av, -1
   %diff.check190 = icmp ult i64 %i.aw, 31
   br i1 %diff.check190, label %scalar.ph191.preheader, label %vector.ph193
@@ -328,12 +328,11 @@ bb.s:                                             ; preds = %bb.q
   br i1 %min.iters.check177, label %scalar.ph176.preheader, label %vector.memcheck173
 
 vector.memcheck173:                               ; preds = %.lr.ph.i81
-  %4 = sub i64 %.val79174, %i.a
   %i.cj = mul nuw nsw i64 %i.bv, 6776
-  %i.ck = add i64 %4, %i.cj
-  %5 = add i64 %i.ck, -1
-  %diff.check175 = icmp ult i64 %5, 31
-  br i1 %diff.check175, label %scalar.ph176.preheader, label %vector.ph178
+  %i.ck = add i64 %i.cj, %.val79174
+  %4 = sub i64 %i.a, %i.ck
+  %diff.check181 = icmp ugt i64 %4, -32
+  br i1 %diff.check181, label %scalar.ph176.preheader, label %vector.ph178
 
 vector.ph178:                                     ; preds = %vector.memcheck173
   %n.vec179 = and i64 %wide.trip.count.i82, 2147483644 ; 3 uses
@@ -453,11 +452,10 @@ bb.w:                                             ; preds = %bb.u
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i87
-  %6 = sub i64 %.val78171, %i.a
   %i.ea = mul nuw nsw i64 %i.dn, 6776
-  %i.eb = add i64 %6, %i.ea
-  %7 = add i64 %i.eb, -1
-  %diff.check = icmp ult i64 %7, 31
+  %i.eb = add i64 %i.ea, %.val78171
+  %5 = sub i64 %i.a, %i.eb
+  %diff.check = icmp ugt i64 %5, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -593,12 +591,11 @@ bb.aa:                                            ; preds = %bb.y
   br i1 %min.iters.check209, label %scalar.ph208.preheader, label %vector.memcheck205
 
 vector.memcheck205:                               ; preds = %.lr.ph.i93
-  %8 = sub i64 %.val206, %i.a
   %i.fr = mul nuw nsw i64 %i.fc, 6776
-  %i.fs = add i64 %8, %i.fr
-  %9 = add i64 %i.fs, -1
-  %diff.check207 = icmp ult i64 %9, 31
-  br i1 %diff.check207, label %scalar.ph208.preheader, label %vector.ph210
+  %i.fs = add i64 %i.fr, %.val206
+  %6 = sub i64 %i.a, %i.fs
+  %diff.check219 = icmp ugt i64 %6, -32
+  br i1 %diff.check219, label %scalar.ph208.preheader, label %vector.ph210
 
 vector.ph210:                                     ; preds = %vector.memcheck205
   %n.vec211 = and i64 %wide.trip.count.i94, 2147483644 ; 3 uses

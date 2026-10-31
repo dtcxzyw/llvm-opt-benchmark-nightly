@@ -205,8 +205,8 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
   %i.mw = getelementptr inbounds nuw i8, ptr %.sroa.05.013.i, i64 16
   %i.mx = load ptr, ptr %i.mw, align 8, !tbaa !746 ; 3 uses
   %i.my = load ptr, ptr %i.mv, align 8, !tbaa !319 ; 8 uses
-  %i.mz = ptrtoint ptr %i.mx to i64               ; 3 uses
-  %i.na = ptrtoint ptr %i.my to i64               ; 3 uses
+  %i.mz = ptrtoint ptr %i.mx to i64               ; 2 uses
+  %i.na = ptrtoint ptr %i.my to i64               ; 2 uses
   %i.nb = sub i64 %i.mz, %i.na
   %i.nc = lshr exact i64 %i.nb, 2
   %i.nd = trunc i64 %i.nc to i16
@@ -217,20 +217,18 @@ _ZNK6google8protobuf10Reflection26PopulateTcParseFastEntriesERKNS0_8internal17Ta
 
 .lr.ph.i101.preheader:                            ; preds = %.lr.ph16.i
   %i.nf = add i64 %i.mz, -4
-  %i.ng = sub i64 %i.nf, %i.na                    ; 2 uses
+  %i.ng = sub i64 %i.nf, %i.na                    ; 3 uses
   %i.nh = lshr i64 %i.ng, 2
   %i.ni = add nuw nsw i64 %i.nh, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ng, 28
   br i1 %min.iters.check, label %.lr.ph.i101.preheader297, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i101.preheader
-  %scevgep = getelementptr i8, ptr %.014.i, i64 10
-  %7 = add i64 %i.mz, -4
-  %8 = sub i64 %7, %i.na
-  %9 = and i64 %8, -4                             ; 2 uses
-  %scevgep287 = getelementptr i8, ptr %scevgep, i64 %9
-  %scevgep288 = getelementptr i8, ptr %i.my, i64 4
-  %scevgep289 = getelementptr i8, ptr %scevgep288, i64 %9
+  %7 = and i64 %i.ng, -4                          ; 2 uses
+  %8 = getelementptr i8, ptr %.014.i, i64 %7
+  %scevgep287 = getelementptr i8, ptr %8, i64 10
+  %scevgep288 = getelementptr i8, ptr %i.my, i64 %7
+  %scevgep289 = getelementptr i8, ptr %scevgep288, i64 4
   %bound0 = icmp ult ptr %i.ne, %scevgep289
   %bound1 = icmp ult ptr %i.my, %scevgep287
   %found.conflict = and i1 %bound0, %bound1

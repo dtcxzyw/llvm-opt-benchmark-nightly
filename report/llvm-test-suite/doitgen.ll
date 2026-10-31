@@ -141,7 +141,6 @@ bb.a:
 
 .preheader36.us.us.us.us:                         ; preds = %._crit_edge.us45.us.us.us, %.preheader37.us.us
   %indvars.iv74 = phi i64 [ %indvars.iv.next75, %._crit_edge.us45.us.us.us ], [ 0, %.preheader37.us.us ] ; 3 uses
-  %6 = mul nuw nsw i64 %indvars.iv74, 1280
   %i.j = getelementptr inbounds nuw [1280 x i8], ptr %i.i, i64 %indvars.iv74 ; 9 uses
   br label %.lr.ph.us.us.us.us.us
 
@@ -192,13 +191,16 @@ bb.a:
 ._crit_edge.us.us.us.us.us:                       ; preds = %._crit_edge.us.us.us.us.us.unr-lcssa, %.epil.preheader
   %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1 ; 2 uses
   %exitcond68.not = icmp eq i64 %indvars.iv.next65, %wide.trip.count67
-  br i1 %exitcond68.not, label %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, label %.lr.ph.us.us.us.us.us, !llvm.loop !1
+  br i1 %exitcond68.not, label %..preheader_crit_edge.split.us.us.us.us.us.preheader, label %.lr.ph.us.us.us.us.us, !llvm.loop !1
 
-..preheader_crit_edge.split.us.us.us.us.us.preheader.a: ; preds = %._crit_edge.us.us.us.us.us
+..preheader_crit_edge.split.us.us.us.us.us.preheader: ; preds = %._crit_edge.us.us.us.us.us
+  br i1 %min.iters.check, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87, label %..preheader_crit_edge.split.us.us.us.us.us.preheader.a
+
+..preheader_crit_edge.split.us.us.us.us.us.preheader.a: ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader
+  %6 = mul nuw nsw i64 %indvars.iv74, 1280
   %.reass = add i64 %6, %invariant.op.reass
   %diff.check = icmp ult i64 %.reass, 31
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87, label %vector.body
+  br i1 %diff.check, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87, label %vector.body
 
 vector.body:                                      ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader.a ] ; 3 uses
@@ -217,8 +219,8 @@ vector.body:                                      ; preds = %..preheader_crit_ed
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.us45.us.us.us, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87
 
-..preheader_crit_edge.split.us.us.us.us.us.preheader87: ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, %middle.block
-  %indvars.iv69.ph = phi i64 [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader.a ], [ %n.vec, %middle.block ] ; 3 uses
+..preheader_crit_edge.split.us.us.us.us.us.preheader87: ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, %..preheader_crit_edge.split.us.us.us.us.us.preheader, %middle.block
+  %indvars.iv69.ph = phi i64 [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader.a ], [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader ], [ %n.vec, %middle.block ] ; 3 uses
   br i1 %lcmp.mod90.not, label %..preheader_crit_edge.split.us.us.us.us.us.prol.loopexit, label %..preheader_crit_edge.split.us.us.us.us.us.prol
 
 ..preheader_crit_edge.split.us.us.us.us.us.prol:  ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader87, %..preheader_crit_edge.split.us.us.us.us.us.prol
@@ -322,7 +324,6 @@ bb.a:
 
 .preheader36.us.us.us.us:                         ; preds = %._crit_edge.us45.us.us.us, %.preheader37.us.us
   %indvars.iv74 = phi i64 [ %indvars.iv.next75, %._crit_edge.us45.us.us.us ], [ 0, %.preheader37.us.us ] ; 3 uses
-  %6 = mul nuw nsw i64 %indvars.iv74, 1280
   %i.j = getelementptr inbounds nuw [1280 x i8], ptr %i.i, i64 %indvars.iv74 ; 9 uses
   br label %.lr.ph.us.us.us.us.us
 
@@ -376,13 +377,16 @@ bb.a:
 ._crit_edge.us.us.us.us.us:                       ; preds = %._crit_edge.us.us.us.us.us.unr-lcssa, %.epil.preheader
   %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1 ; 2 uses
   %exitcond68.not = icmp eq i64 %indvars.iv.next65, %wide.trip.count67
-  br i1 %exitcond68.not, label %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, label %.lr.ph.us.us.us.us.us, !llvm.loop !5
+  br i1 %exitcond68.not, label %..preheader_crit_edge.split.us.us.us.us.us.preheader, label %.lr.ph.us.us.us.us.us, !llvm.loop !5
 
-..preheader_crit_edge.split.us.us.us.us.us.preheader.a: ; preds = %._crit_edge.us.us.us.us.us
+..preheader_crit_edge.split.us.us.us.us.us.preheader: ; preds = %._crit_edge.us.us.us.us.us
+  br i1 %min.iters.check, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87, label %..preheader_crit_edge.split.us.us.us.us.us.preheader.a
+
+..preheader_crit_edge.split.us.us.us.us.us.preheader.a: ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader
+  %6 = mul nuw nsw i64 %indvars.iv74, 1280
   %.reass = add i64 %6, %invariant.op.reass
   %diff.check = icmp ult i64 %.reass, 31
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87, label %vector.body
+  br i1 %diff.check, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87, label %vector.body
 
 vector.body:                                      ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader.a ] ; 3 uses
@@ -401,8 +405,8 @@ vector.body:                                      ; preds = %..preheader_crit_ed
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.us45.us.us.us, label %..preheader_crit_edge.split.us.us.us.us.us.preheader87
 
-..preheader_crit_edge.split.us.us.us.us.us.preheader87: ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, %middle.block
-  %indvars.iv69.ph = phi i64 [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader.a ], [ %n.vec, %middle.block ] ; 3 uses
+..preheader_crit_edge.split.us.us.us.us.us.preheader87: ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader.a, %..preheader_crit_edge.split.us.us.us.us.us.preheader, %middle.block
+  %indvars.iv69.ph = phi i64 [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader.a ], [ 0, %..preheader_crit_edge.split.us.us.us.us.us.preheader ], [ %n.vec, %middle.block ] ; 3 uses
   br i1 %lcmp.mod90.not, label %..preheader_crit_edge.split.us.us.us.us.us.prol.loopexit, label %..preheader_crit_edge.split.us.us.us.us.us.prol
 
 ..preheader_crit_edge.split.us.us.us.us.us.prol:  ; preds = %..preheader_crit_edge.split.us.us.us.us.us.preheader87, %..preheader_crit_edge.split.us.us.us.us.us.prol
@@ -724,7 +728,6 @@ middle.block114:                                  ; preds = %vector.body109
 
 .preheader36.us.us.us.us.i:                       ; preds = %._crit_edge.us45.us.us.us.i, %.preheader37.us.us.i
   %indvars.iv74.i = phi i64 [ %indvars.iv.next75.i, %._crit_edge.us45.us.us.us.i ], [ 0, %.preheader37.us.us.i ] ; 3 uses
-  %2 = mul nuw nsw i64 %indvars.iv74.i, 1280
   %i.ei = getelementptr inbounds nuw [1280 x i8], ptr %i.eh, i64 %indvars.iv74.i ; 87 uses
   br label %.lr.ph.us.us.us.us.us.i
 
@@ -761,6 +764,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.us.us
   br i1 %exitcond68.not.i, label %vector.memcheck115, label %.lr.ph.us.us.us.us.us.i, !llvm.loop !1
 
 vector.memcheck115:                               ; preds = %._crit_edge.us.us.us.us.us.i
+  %2 = mul nuw nsw i64 %indvars.iv74.i, 1280
   %.reass = add i64 %2, %invariant.op.reass
   %diff.check116 = icmp ult i64 %.reass, 31
   br i1 %diff.check116, label %..preheader_crit_edge.split.us.us.us.us.us.i, label %vector.body119
@@ -1140,7 +1144,6 @@ vector.body119:                                   ; preds = %vector.memcheck115
 
 .preheader36.us.us.us.us.i45:                     ; preds = %._crit_edge.us45.us.us.us.i61, %.preheader37.us.us.i43
   %indvars.iv74.i46 = phi i64 [ %indvars.iv.next75.i62, %._crit_edge.us45.us.us.us.i61 ], [ 0, %.preheader37.us.us.i43 ] ; 3 uses
-  %3 = mul nuw nsw i64 %indvars.iv74.i46, 1280
   %i.ln = getelementptr inbounds nuw [1280 x i8], ptr %i.lm, i64 %indvars.iv74.i46 ; 87 uses
   br label %.lr.ph.us.us.us.us.us.i47
 
@@ -1179,6 +1182,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us.us
   br i1 %exitcond68.not.i56, label %vector.memcheck124, label %.lr.ph.us.us.us.us.us.i47, !llvm.loop !5
 
 vector.memcheck124:                               ; preds = %._crit_edge.us.us.us.us.us.i54
+  %3 = mul nuw nsw i64 %indvars.iv74.i46, 1280
   %.reass147 = add i64 %3, %invariant.op.reass149
   %diff.check125 = icmp ult i64 %.reass147, 31
   br i1 %diff.check125, label %..preheader_crit_edge.split.us.us.us.us.us.i57, label %vector.body128

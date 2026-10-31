@@ -202,8 +202,8 @@ bb.ab:                                            ; preds = %bb.aa
   br label %.thread
 
 .lr.ph118:                                        ; preds = %bb.aa, %bb.ae
-  %indvar180 = phi i64 [ %indvar.next181, %bb.ae ], [ 0, %bb.aa ] ; 4 uses
-  %indvar176 = phi i35 [ %indvar.next177, %bb.ae ], [ 0, %bb.aa ] ; 2 uses
+  %indvar180 = phi i64 [ %indvar.next181, %bb.ae ], [ 0, %bb.aa ] ; 2 uses
+  %indvar176 = phi i35 [ %indvar.next177, %bb.ae ], [ 0, %bb.aa ] ; 3 uses
   %indvar = phi i32 [ %indvar.next, %bb.ae ], [ 0, %bb.aa ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ae ], [ %i.bq, %bb.aa ] ; 4 uses
   %i.cc = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv
@@ -219,7 +219,7 @@ bb.ac:                                            ; preds = %.lr.ph118
   br i1 %.not95, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.ci = trunc i64 %indvar180 to i32
+  %i.ci = trunc i35 %indvar176 to i32
   %i.cj = trunc nsw i64 %indvars.iv to i32        ; 3 uses
   store i32 %i.cj, ptr @optind, align 4, !tbaa !12
   %i.ck = tail call i32 @my_getopt(i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2) ; 2 uses
@@ -232,15 +232,16 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cn = xor i32 %i.k, -1
   %i.co = sub i32 %i.cn, %indvar
   %i.cp = add i32 %optind.promoted, %i.co
-  %3 = zext i32 %i.k to i35
-  %i.cq = add i35 %indvar176, %3
-  %i.cr = shl i35 %i.cq, 3
-  %i.cs = add i35 %i.cr, -8
-  %4 = add i64 %indvar180, %i.bq
-  %5 = zext i32 %i.k to i64
-  %6 = add i64 %indvar180, %5
-  %7 = shl i64 %6, 32
-  %i.ct = add i64 %7, -4294967296
+  %3 = sext i32 %i.k to i35
+  %4 = shl nsw i35 %3, 3
+  %i.cq = add i35 %4, -8
+  %i.cr = shl nuw i35 %indvar176, 3               ; 2 uses
+  %i.cs = add i35 %i.cr, %i.cq
+  %5 = sext i32 %i.k to i35
+  %6 = shl nsw i35 %5, 3
+  %7 = add i35 %6, -8
+  %8 = add i35 %i.cr, %7
+  %i.ct = add i64 %indvar180, %i.bq
   %i.cu = xor i32 %i.k, -1
   %i.cv = sub i32 %i.cu, %i.ci
   %i.cw = add i32 %optind.promoted, %i.cv         ; 2 uses
@@ -254,17 +255,11 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.lr.ph126
 
 .lr.ph126:                                        ; preds = %.lr.ph126.preheader, %._crit_edge122
-  %indvar182 = phi i64 [ 0, %.lr.ph126.preheader ], [ %indvar.next183, %._crit_edge122 ] ; 4 uses
-  %indvar178 = phi i35 [ 0, %.lr.ph126.preheader ], [ %indvar.next179, %._crit_edge122 ] ; 2 uses
+  %indvar182 = phi i64 [ 0, %.lr.ph126.preheader ], [ %indvar.next183, %._crit_edge122 ] ; 3 uses
+  %indvar178 = phi i35 [ 0, %.lr.ph126.preheader ], [ %indvar.next179, %._crit_edge122 ] ; 3 uses
   %indvars.iv143 = phi i64 [ %i.cm, %.lr.ph126.preheader ], [ %indvars.iv.next144, %._crit_edge122 ] ; 3 uses
   %indvars.iv134 = phi i64 [ %indvars.iv, %.lr.ph126.preheader ], [ %indvars.iv.next135, %._crit_edge122 ] ; 6 uses
   %i.da = trunc i64 %indvar182 to i32
-  %8 = sub i64 %indvar182, %4
-  %9 = shl i64 %8, 3
-  %10 = shl i64 %indvar182, 32
-  %11 = sub i64 %i.ct, %10
-  %12 = ashr exact i64 %11, 29
-  %13 = add i64 %9, %12
   %i.db = shl i35 %indvar178, 3
   %i.dc = sub i35 %i.cs, %i.db                    ; 2 uses
   %indvars.iv.next135 = add nsw i64 %indvars.iv134, -1 ; 8 uses
@@ -275,15 +270,21 @@ bb.ad:                                            ; preds = %bb.ac
 
 .lr.ph121.preheader:                              ; preds = %.lr.ph126
   %i.dg = trunc i64 %indvars.iv143 to i32         ; 2 uses
-  br i1 %min.iters.check, label %.lr.ph121.preheader186, label %vector.scevcheck
+  %9 = add i35 %i.dc, %mul
+  %10 = icmp slt i35 %9, %i.dc
+  %or.cond = select i1 %min.iters.check, i1 true, i1 %10
+  br i1 %or.cond, label %.lr.ph121.preheader186, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph121.preheader
-  %14 = add i35 %i.dc, %mul
-  %15 = icmp slt i35 %14, %i.dc
-  %i.dh = add i64 %13, -1
-  %diff.check = icmp ult i64 %i.dh, 31
-  %or.cond = select i1 %15, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph121.preheader186, label %vector.ph
+  %11 = sub i64 %indvar182, %i.ct
+  %12 = shl i64 %11, 3
+  %13 = shl i35 %indvar178, 3
+  %14 = sub i35 %8, %13
+  %15 = sext i35 %14 to i64
+  %i.dh = add i64 %12, %15
+  %16 = add i64 %i.dh, -1
+  %diff.check = icmp ult i64 %16, 31
+  br i1 %diff.check, label %.lr.ph121.preheader186, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
   %i.di = add i64 %indvars.iv134, %n.vec
@@ -312,8 +313,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge122, label %.lr.ph121.preheader186
 
 .lr.ph121.preheader186:                           ; preds = %vector.scevcheck, %.lr.ph121.preheader, %middle.block
-  %indvars.iv136.ph = phi i64 [ %indvars.iv134, %vector.scevcheck ], [ %indvars.iv134, %.lr.ph121.preheader ], [ %i.di, %middle.block ] ; 3 uses
-  %.0119.in.ph = phi i64 [ %indvars.iv.next135, %vector.scevcheck ], [ %indvars.iv.next135, %.lr.ph121.preheader ], [ %i.dj, %middle.block ] ; 2 uses
+  %indvars.iv136.ph = phi i64 [ %indvars.iv134, %vector.scevcheck ], [ %i.di, %middle.block ], [ %indvars.iv134, %.lr.ph121.preheader ] ; 3 uses
+  %.0119.in.ph = phi i64 [ %indvars.iv.next135, %vector.scevcheck ], [ %i.dj, %middle.block ], [ %indvars.iv.next135, %.lr.ph121.preheader ] ; 2 uses
   %i.dt = trunc i64 %indvars.iv136.ph to i32      ; 2 uses
   %i.du = sub i32 %i.dg, %i.dt
   %xtraiter = and i32 %i.du, 3                    ; 2 uses
@@ -526,8 +527,8 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.av
 
 .lr.ph274:                                        ; preds = %bb.j, %bb.n
-  %indvar343 = phi i64 [ %indvar.next344, %bb.n ], [ 0, %bb.j ] ; 4 uses
-  %indvar339 = phi i35 [ %indvar.next340, %bb.n ], [ 0, %bb.j ] ; 2 uses
+  %indvar343 = phi i64 [ %indvar.next344, %bb.n ], [ 0, %bb.j ] ; 2 uses
+  %indvar339 = phi i35 [ %indvar.next340, %bb.n ], [ 0, %bb.j ] ; 3 uses
   %indvar = phi i32 [ %indvar.next, %bb.n ], [ 0, %bb.j ] ; 2 uses
   %indvars.iv294 = phi i64 [ %indvars.iv.next295, %bb.n ], [ %i.k, %bb.j ] ; 4 uses
   %i.x = getelementptr inbounds [8 x i8], ptr %1, i64 %indvars.iv294
@@ -543,7 +544,7 @@ bb.l:                                             ; preds = %.lr.ph274
   br i1 %.not224, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ad = trunc i64 %indvar343 to i32
+  %i.ad = trunc i35 %indvar339 to i32
   %i.ae = trunc nsw i64 %indvars.iv294 to i32     ; 2 uses
   store i32 %i.ae, ptr @optind, align 4, !tbaa !12
   %i.af = tail call fastcc i32 @_getopt_internal(i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef %5) ; 2 uses
@@ -556,15 +557,16 @@ bb.m:                                             ; preds = %bb.l
   %i.ai = xor i32 %i.j, -1
   %i.aj = sub i32 %i.ai, %indvar
   %i.ak = add i32 %optind.promoted, %i.aj
-  %6 = zext i32 %i.j to i35
-  %i.al = add i35 %indvar339, %6
-  %i.am = shl i35 %i.al, 3
-  %i.an = add i35 %i.am, -8
-  %7 = add i64 %indvar343, %i.k
-  %8 = zext i32 %i.j to i64
-  %9 = add i64 %indvar343, %8
-  %10 = shl i64 %9, 32
-  %i.ao = add i64 %10, -4294967296
+  %6 = sext i32 %i.j to i35
+  %7 = shl nsw i35 %6, 3
+  %i.al = add i35 %7, -8
+  %i.am = shl nuw i35 %indvar339, 3               ; 2 uses
+  %i.an = add i35 %i.am, %i.al
+  %8 = sext i32 %i.j to i35
+  %9 = shl nsw i35 %8, 3
+  %10 = add i35 %9, -8
+  %11 = add i35 %i.am, %10
+  %i.ao = add i64 %indvar343, %i.k
   %i.ap = xor i32 %i.j, -1
   %i.aq = sub i32 %i.ap, %i.ad
   %i.ar = add i32 %optind.promoted, %i.aq         ; 2 uses
@@ -578,17 +580,11 @@ bb.m:                                             ; preds = %bb.l
   br label %.lr.ph282
 
 .lr.ph282:                                        ; preds = %.lr.ph282.preheader, %._crit_edge278
-  %indvar345 = phi i64 [ 0, %.lr.ph282.preheader ], [ %indvar.next346, %._crit_edge278 ] ; 4 uses
-  %indvar341 = phi i35 [ 0, %.lr.ph282.preheader ], [ %indvar.next342, %._crit_edge278 ] ; 2 uses
+  %indvar345 = phi i64 [ 0, %.lr.ph282.preheader ], [ %indvar.next346, %._crit_edge278 ] ; 3 uses
+  %indvar341 = phi i35 [ 0, %.lr.ph282.preheader ], [ %indvar.next342, %._crit_edge278 ] ; 3 uses
   %indvars.iv307 = phi i64 [ %i.ah, %.lr.ph282.preheader ], [ %indvars.iv.next308, %._crit_edge278 ] ; 3 uses
   %indvars.iv298 = phi i64 [ %indvars.iv294, %.lr.ph282.preheader ], [ %indvars.iv.next299, %._crit_edge278 ] ; 6 uses
   %i.av = trunc i64 %indvar345 to i32
-  %11 = sub i64 %indvar345, %7
-  %12 = shl i64 %11, 3
-  %13 = shl i64 %indvar345, 32
-  %14 = sub i64 %i.ao, %13
-  %15 = ashr exact i64 %14, 29
-  %16 = add i64 %12, %15
   %i.aw = shl i35 %indvar341, 3
   %i.ax = sub i35 %i.an, %i.aw                    ; 2 uses
   %indvars.iv.next299 = add nsw i64 %indvars.iv298, -1 ; 7 uses
@@ -599,15 +595,21 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph277.preheader:                              ; preds = %.lr.ph282
   %i.bb = trunc i64 %indvars.iv307 to i32         ; 2 uses
-  br i1 %min.iters.check, label %.lr.ph277.preheader349, label %vector.scevcheck
+  %12 = add i35 %i.ax, %mul
+  %13 = icmp slt i35 %12, %i.ax
+  %or.cond = select i1 %min.iters.check, i1 true, i1 %13
+  br i1 %or.cond, label %.lr.ph277.preheader349, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph277.preheader
-  %17 = add i35 %i.ax, %mul
-  %18 = icmp slt i35 %17, %i.ax
-  %i.bc = add i64 %16, -1
-  %diff.check = icmp ult i64 %i.bc, 31
-  %or.cond = select i1 %18, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph277.preheader349, label %vector.ph
+  %14 = sub i64 %indvar345, %i.ao
+  %15 = shl i64 %14, 3
+  %16 = shl i35 %indvar341, 3
+  %17 = sub i35 %11, %16
+  %18 = sext i35 %17 to i64
+  %i.bc = add i64 %15, %18
+  %19 = add i64 %i.bc, -1
+  %diff.check = icmp ult i64 %19, 31
+  br i1 %diff.check, label %.lr.ph277.preheader349, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
   %i.bd = add i64 %indvars.iv298, %n.vec
@@ -636,8 +638,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge278, label %.lr.ph277.preheader349
 
 .lr.ph277.preheader349:                           ; preds = %vector.scevcheck, %.lr.ph277.preheader, %middle.block
-  %indvars.iv300.ph = phi i64 [ %indvars.iv298, %vector.scevcheck ], [ %indvars.iv298, %.lr.ph277.preheader ], [ %i.bd, %middle.block ] ; 3 uses
-  %.0167275.in.ph = phi i64 [ %indvars.iv.next299, %vector.scevcheck ], [ %indvars.iv.next299, %.lr.ph277.preheader ], [ %i.be, %middle.block ] ; 2 uses
+  %indvars.iv300.ph = phi i64 [ %indvars.iv298, %vector.scevcheck ], [ %i.bd, %middle.block ], [ %indvars.iv298, %.lr.ph277.preheader ] ; 3 uses
+  %.0167275.in.ph = phi i64 [ %indvars.iv.next299, %vector.scevcheck ], [ %i.be, %middle.block ], [ %indvars.iv.next299, %.lr.ph277.preheader ] ; 2 uses
   %i.bo = trunc i64 %indvars.iv300.ph to i32      ; 2 uses
   %i.bp = sub i32 %i.bb, %i.bo
   %xtraiter = and i32 %i.bp, 3                    ; 2 uses

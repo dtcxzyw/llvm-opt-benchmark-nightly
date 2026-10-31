@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
-  %i.d = alloca [48 x i8], align 8                ; 8 uses
+  %i.d = alloca [48 x i8], align 8                ; 7 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
   %i.f = alloca [24 x i8], align 8                ; 8 uses
   %i.g = alloca [24 x i8], align 8                ; 8 uses
@@ -607,11 +607,11 @@ _RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecAyj4_E6tripleCs3v5ql5U6hxj_6fontir
 
 .noexc172:                                        ; preds = %_RNvMsd_CsgkGe90ZnUBq_8smallvecINtB5_8SmallVecAyj4_E6tripleCs3v5ql5U6hxj_6fontir.exit.i167
   %i.vz = load i64, ptr %i.kw, align 8, !noalias !1176, !noundef !4 ; 2 uses
-  %i.wa = icmp ugt i64 %i.vz, 4                   ; 3 uses
-  %i.wb = load ptr, ptr %i.ky, align 8, !nonnull !4 ; 2 uses
+  %i.wa = icmp ugt i64 %i.vz, 4                   ; 2 uses
+  %i.wb = load ptr, ptr %i.ky, align 8, !nonnull !4
   %.pre.i171 = load i64, ptr %i.kx, align 8
   %i.wc = select i1 %i.wa, i64 %.pre.i171, i64 %i.vz ; 2 uses
-  %.sink12.i10.i = select i1 %i.wa, ptr %i.wb, ptr %i.kx ; 2 uses
+  %.sink12.i10.i = select i1 %i.wa, ptr %i.wb, ptr %i.kx ; 3 uses
   %i.wd = select i1 %i.vy, i64 %i.vv, i64 %i.vs   ; 2 uses
   %i.we = icmp ugt i64 %i.wd, 4
   br i1 %i.we, label %bb.gy, label %bb.gz
@@ -638,13 +638,13 @@ bb.ha:                                            ; preds = %bb.gz, %bb.gy
   br i1 %or.cond37.i, label %.loopexit335, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.ha
-  %.idx40.i = shl i64 %.sink12.i13.i, 3           ; 4 uses
+  %.idx40.i = shl i64 %.sink12.i13.i, 3           ; 2 uses
   %i.wj = getelementptr i8, ptr %.sink13.i12.i, i64 %.idx40.i ; 5 uses
-  %.idx.i169 = shl i64 %i.wc, 3                   ; 4 uses
+  %.idx.i169 = shl i64 %i.wc, 3                   ; 2 uses
   %i.wk = getelementptr i8, ptr %.sink12.i10.i, i64 %.idx.i169 ; 5 uses
-  %i.wl = add i64 %.idx40.i, -8
+  %i.wl = add i64 %.idx40.i, -8                   ; 3 uses
   %i.wm = lshr exact i64 %i.wl, 3
-  %i.wn = add i64 %.idx.i169, -8
+  %i.wn = add i64 %.idx.i169, -8                  ; 3 uses
   %i.wo = lshr exact i64 %i.wn, 3
   %i.wp = call i64 @llvm.umin.i64(i64 %i.wm, i64 %i.wo) ; 2 uses
   %i.wq = add nuw nsw i64 %i.wp, 1                ; 2 uses
@@ -652,20 +652,15 @@ bb.ha:                                            ; preds = %bb.gz, %bb.gy
   br i1 %min.iters.check, label %.lr.ph.i170.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
-  %.sroa.gep = getelementptr i8, ptr %i.wb, i64 -8
-  %.sink12.i10.i.sroa.sel = select i1 %i.wa, ptr %.sroa.gep, ptr %i.d
-  %2 = add i64 %.idx40.i, -8
-  %i.wr = lshr exact i64 %2, 3
-  %3 = add i64 %.idx.i169, -8
-  %i.ws = lshr exact i64 %3, 3
+  %i.wr = lshr exact i64 %i.wl, 3
+  %i.ws = lshr exact i64 %i.wn, 3
   %umin = call i64 @llvm.umin.i64(i64 %i.wr, i64 %i.ws)
   %i.wt = shl nuw i64 %umin, 3                    ; 2 uses
-  %i.wu = sub i64 %.idx.i169, %i.wt
-  %scevgep939 = getelementptr i8, ptr %.sink12.i10.i.sroa.sel, i64 %i.wu
-  %scevgep940 = getelementptr i8, ptr %.sink13.i12.i, i64 -8
-  %i.wv = sub i64 %.idx40.i, %i.wt
-  %scevgep941 = getelementptr i8, ptr %scevgep940, i64 %i.wv
-  %bound0 = icmp ult ptr %scevgep939, %i.wj
+  %i.wu = sub i64 %i.wn, %i.wt
+  %scevgep940 = getelementptr i8, ptr %.sink12.i10.i, i64 %i.wu
+  %i.wv = sub i64 %i.wl, %i.wt
+  %scevgep941 = getelementptr i8, ptr %.sink13.i12.i, i64 %i.wv
+  %bound0 = icmp ult ptr %scevgep940, %i.wj
   %bound1 = icmp ult ptr %scevgep941, %i.wk
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i170.preheader, label %vector.ph

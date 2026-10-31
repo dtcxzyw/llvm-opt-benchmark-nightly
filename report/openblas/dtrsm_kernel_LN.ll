@@ -28,6 +28,7 @@ bb.a:
   %.idx196 = mul i64 %2, -128
   %.idx197 = shl nsw i64 %2, 4
   %.idx198 = shl i64 %7, 4
+  %9 = shl i64 %2, 3
   %i.k = shl i64 %2, 3
   br label %bb.b
 
@@ -38,8 +39,8 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit2
   br i1 %.not191, label %.loopexit283, label %.preheader282
 
 .preheader282:                                    ; preds = %bb.b, %solve.exit
-  %.0298 = phi i64 [ %.1, %solve.exit ], [ %i.c, %bb.b ] ; 6 uses
-  %.0169297 = phi i64 [ %i.fw, %solve.exit ], [ 1, %bb.b ] ; 14 uses
+  %.0298 = phi i64 [ %.1, %solve.exit ], [ %i.c, %bb.b ] ; 7 uses
+  %.0169297 = phi i64 [ %i.fw, %solve.exit ], [ 1, %bb.b ] ; 16 uses
   %i.l = and i64 %.0169297, %0
   %.not199 = icmp eq i64 %i.l, 0
   br i1 %.not199, label %solve.exit, label %bb.c
@@ -47,7 +48,7 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit2
 bb.c:                                             ; preds = %.preheader282
   %i.m = sub nsw i64 0, %.0169297                 ; 2 uses
   %i.n = and i64 %0, %i.m
-  %i.o = sub i64 %i.n, %.0169297                  ; 3 uses
+  %i.o = sub i64 %i.n, %.0169297                  ; 4 uses
   %i.p = mul nsw i64 %i.o, %2
   %i.q = getelementptr inbounds [8 x i8], ptr %4, i64 %i.p ; 2 uses
   %i.r = getelementptr [8 x i8], ptr %.0176302, i64 %i.o ; 18 uses
@@ -81,12 +82,20 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.us.i.preheader.preheader:                  ; preds = %.lr.ph.i
   %invariant.gep.us.i.1 = getelementptr [8 x i8], ptr %i.r, i64 %7 ; 12 uses
+  %10 = shl nuw nsw i64 %.0169297, 3
+  %11 = sub nuw nsw i64 -8, %10
   %i.ai = shl i64 %.0298, 3
   %i.aj = mul i64 %i.ai, %.0169297
-  %i.ak = mul i64 %i.k, %i.o
+  %i.ak = mul i64 %9, %i.o
   %i.al = shl nuw nsw i64 %.0169297, 3
   %i.am = sub nuw nsw i64 -8, %i.al
+  %12 = shl i64 %.0298, 3
+  %13 = mul i64 %12, %.0169297
+  %14 = mul i64 %i.k, %i.o
   %i.an = add nsw i64 %.0169297, -2
+  %15 = getelementptr i8, ptr %4, i64 %13
+  %16 = getelementptr i8, ptr %15, i64 -8
+  %17 = getelementptr i8, ptr %16, i64 %14
   %i.ao = getelementptr i8, ptr %4, i64 %i.aj
   %i.ap = getelementptr i8, ptr %i.ao, i64 -8
   %i.aq = getelementptr i8, ptr %i.ap, i64 %i.ak
@@ -108,14 +117,12 @@ bb.d:                                             ; preds = %bb.c
   br label %solve.exit
 
 iter.check404:                                    ; preds = %.lr.ph.us.i.preheader.preheader, %._crit_edge.us.i.1
-  %indvar = phi i64 [ 0, %.lr.ph.us.i.preheader.preheader ], [ %indvar.next, %._crit_edge.us.i.1 ] ; 3 uses
+  %indvar = phi i64 [ 0, %.lr.ph.us.i.preheader.preheader ], [ %indvar.next, %._crit_edge.us.i.1 ] ; 4 uses
   %i.ax = phi double [ %i.ah, %.lr.ph.us.i.preheader.preheader ], [ %i.fv, %._crit_edge.us.i.1 ] ; 2 uses
   %.04452.i294 = phi ptr [ %i.ad, %.lr.ph.us.i.preheader.preheader ], [ %i.ft, %._crit_edge.us.i.1 ] ; 3 uses
   %.04353.i293 = phi ptr [ %i.af, %.lr.ph.us.i.preheader.preheader ], [ %i.fs, %._crit_edge.us.i.1 ] ; 25 uses
   %indvars.iv65.i292 = phi i64 [ %i.z, %.lr.ph.us.i.preheader.preheader ], [ %indvars.iv.next66.i, %._crit_edge.us.i.1 ] ; 20 uses
   %i.ay = sub i64 %i.an, %indvar                  ; 2 uses
-  %9 = mul i64 %i.am, %indvar
-  %scevgep = getelementptr i8, ptr %i.aq, i64 %9  ; 2 uses
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv65.i292 ; 4 uses
   %i.ba = load double, ptr %i.az, align 8, !tbaa !30
   %i.bb = fmul double %i.ax, %i.ba                ; 3 uses
@@ -126,7 +133,9 @@ iter.check404:                                    ; preds = %.lr.ph.us.i.prehead
   br i1 %min.iters.check384, label %vec.epilog.scalar.ph406.preheader, label %vector.memcheck380
 
 vector.memcheck380:                               ; preds = %iter.check404
-  %bound0381 = icmp ult ptr %i.r, %scevgep
+  %18 = mul nsw i64 %indvar, %i.am
+  %19 = getelementptr i8, ptr %17, i64 %18
+  %bound0381 = icmp ult ptr %i.r, %19
   %bound1382 = icmp ult ptr %.04353.i293, %i.az
   %found.conflict383 = and i1 %bound0381, %bound1382
   br i1 %found.conflict383, label %vec.epilog.scalar.ph406.preheader, label %vector.main.loop.iter.check385
@@ -303,7 +312,9 @@ iter.check:                                       ; preds = %vec.epilog.scalar.p
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %bound0 = icmp ult ptr %invariant.gep.us.i.1, %scevgep
+  %20 = mul nsw i64 %indvar, %11
+  %21 = getelementptr i8, ptr %i.aq, i64 %20
+  %bound0 = icmp ult ptr %invariant.gep.us.i.1, %21
   %bound1 = icmp ult ptr %.04353.i293, %i.dj
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

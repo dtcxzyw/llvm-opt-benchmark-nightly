@@ -15,8 +15,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dstein_(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6, ptr noundef %7, ptr nofree noundef readonly captures(none) %8, ptr noundef %9, ptr noundef %10, ptr nofree noundef writeonly captures(none) %11, ptr nofree noundef captures(none) initializes((0, 4)) %12) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %9 to i64
-  %i.b = ptrtoaddr ptr %7 to i64
+  %i.a = ptrtoaddr ptr %7 to i64
+  %i.b = ptrtoaddr ptr %9 to i64
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 13 uses
   %i.e = alloca [4 x i32], align 16               ; 4 uses
@@ -171,9 +171,7 @@ bb.k:                                             ; preds = %bb.i
   %i.br = shl nsw i64 %i.r, 3                     ; 2 uses
   %scevgep = getelementptr i8, ptr %7, i64 %i.br
   %i.bs = zext nneg i32 %i.bb to i64
-  %13 = add i64 %i.br, %i.b
-  %14 = sub i64 %13, %i.a
-  %invariant.op502 = add i64 %14, -1
+  %invariant.op502 = add i64 %i.a, %i.br
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph377, %._crit_edge360
@@ -357,10 +355,6 @@ bb.q:                                             ; preds = %.lr.ph359, %._crit_
   %.1357 = phi double [ %.0375, %.lr.ph359 ], [ %i.pw, %._crit_edge351 ] ; 6 uses
   %.2287356 = phi i32 [ %.1286, %.lr.ph359 ], [ %.7, %._crit_edge351 ] ; 3 uses
   %i.fz = trunc i64 %indvars.iv413 to i32
-  %15 = mul i32 %i.q, %i.fz
-  %16 = add i32 %15, %i.fx
-  %17 = sext i32 %16 to i64
-  %18 = shl nsw i64 %17, 3
   %i.ga = trunc i64 %indvars.iv413 to i32
   %i.gb = mul i32 %i.q, %i.ga
   %i.gc = add i32 %i.gb, %i.fx                    ; 2 uses
@@ -378,7 +372,7 @@ bb.q:                                             ; preds = %.lr.ph359, %._crit_
   br i1 %.not312, label %bb.r, label %._crit_edge360
 
 bb.r:                                             ; preds = %bb.q
-  %indvars.iv.next414 = add nuw nsw i64 %indvars.iv413, 1 ; 2 uses
+  %indvars.iv.next414 = add nuw i64 %indvars.iv413, 1 ; 2 uses
   %i.gm = getelementptr inbounds [8 x i8], ptr %i.n, i64 %indvars.iv411
   %i.gn = load double, ptr %i.gm, align 8, !tbaa !19 ; 3 uses
   store double %i.gn, ptr %i.g, align 8, !tbaa !19
@@ -727,12 +721,19 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.mr = icmp slt i32 %i.mq, %i.gc
   %i.ms = icmp ugt i64 %i.mo, 4294967295
   %i.mt = or i1 %i.mr, %i.ms
-  %.reass503 = add i64 %18, %invariant.op502
-  %diff.check = icmp ult i64 %.reass503, 127
-  %or.cond479 = select i1 %i.mt, i1 true, i1 %diff.check
-  br i1 %or.cond479, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %i.mt, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
-vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %vector.scevcheck
+  %13 = mul i32 %i.q, %i.fz
+  %14 = add i32 %i.fx, %13
+  %15 = sext i32 %14 to i64
+  %16 = shl nsw i64 %15, 3
+  %.reass502 = add i64 %16, %invariant.op502
+  %17 = sub i64 %i.b, %.reass502
+  %diff.check = icmp ugt i64 %17, -128
+  br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+
+vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   %min.iters.check470 = icmp ult i32 %i.mi, 16
   br i1 %min.iters.check470, label %vec.epilog.ph, label %vector.ph
 
@@ -800,11 +801,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n478 = icmp eq i64 %n.vec474, %i.mn
   br i1 %cmp.n478, label %._crit_edge351, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv406.ph = phi i64 [ 1, %vector.scevcheck ], [ 1, %iter.check ], [ %i.mv, %vec.epilog.iter.check ], [ %i.nj, %vec.epilog.middle.block ] ; 4 uses
-  %i.nr = sub nsw i64 %wide.trip.count409, %indvars.iv406.ph
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv406.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.scevcheck ], [ 1, %vector.memcheck ], [ %i.mv, %vec.epilog.iter.check ], [ %i.nj, %vec.epilog.middle.block ] ; 4 uses
+  %i.nr = sub i64 %wide.trip.count409, %indvars.iv406.ph
   %i.ns = zext nneg i32 %i.mi to i64
-  %i.nt = sub nsw i64 %i.ns, %indvars.iv406.ph
+  %i.nt = sub i64 %i.ns, %indvars.iv406.ph
   %xtraiter491 = and i64 %i.nr, 7                 ; 2 uses
   %lcmp.mod492.not = icmp eq i64 %xtraiter491, 0
   br i1 %lcmp.mod492.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol

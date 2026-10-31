@@ -204,11 +204,6 @@ cdce.call:                                        ; preds = %._crit_edge83.threa
   %indvars.iv244 = phi i64 [ %indvars.iv.next245, %.loopexit ], [ %i.gw, %.preheader.preheader.i ] ; 6 uses
   %indvars.iv102.i = phi i64 [ %indvars.iv.next103.i, %.loopexit ], [ 0, %.preheader.preheader.i ] ; 10 uses
   %.087.i = phi float [ %i.iv, %.loopexit ], [ %i.gv, %.preheader.preheader.i ] ; 5 uses
-  %9 = shl nuw nsw i64 %indvars.iv102.i, 2
-  %scevgep = getelementptr i8, ptr %.062.lcssa.i160, i64 %9
-  %10 = sub nsw i64 %i.gw, %indvars.iv102.i
-  %11 = shl i64 %10, 2
-  %scevgep14 = getelementptr i8, ptr %.064.lcssa.i159, i64 %11
   %min.iters.check = icmp ult i64 %indvars.iv244, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
@@ -222,12 +217,19 @@ vector.scevcheck:                                 ; preds = %.preheader.i
   %i.hf = icmp slt i34 %i.he, %i.hb
   %i.hg = icmp ugt i64 %i.hc, 4294967295
   %i.hh = or i1 %i.hf, %i.hg
-  %bound0 = icmp ult ptr %scevgep, %scevgep14
-  %found.conflict = and i1 %bound0, %bound1
-  %or.cond64 = select i1 %i.hh, i1 true, i1 %found.conflict
-  br i1 %or.cond64, label %scalar.ph.preheader, label %vector.ph
+  br i1 %i.hh, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.ph:                                        ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %vector.scevcheck
+  %9 = shl nuw nsw i64 %indvars.iv102.i, 2
+  %10 = getelementptr i8, ptr %.062.lcssa.i160, i64 %9
+  %11 = sub nsw i64 %i.gw, %indvars.iv102.i
+  %12 = shl i64 %11, 2
+  %13 = getelementptr i8, ptr %.064.lcssa.i159, i64 %12
+  %bound0 = icmp ult ptr %10, %13
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %indvars.iv244, -8             ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %.087.i, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -258,8 +260,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %indvars.iv244, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.preheader.i, %middle.block
-  %indvars.iv99.i.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %vector.scevcheck ], [ 0, %.preheader.i ] ; 5 uses
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.preheader.i, %middle.block
+  %indvars.iv99.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.preheader.i ], [ %n.vec, %middle.block ] ; 5 uses
   %i.hs = add i64 %indvars.iv102.i, %indvars.iv99.i.ph
   %xtraiter41 = and i64 %indvars.iv244, 1
   %lcmp.mod42.not = icmp eq i64 %xtraiter41, 0

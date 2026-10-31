@@ -86,10 +86,6 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.y = add i32 %i.c, 1                          ; 3 uses
   %i.z = sext i32 %i.g to i64                     ; 6 uses
-  %scevgep647 = getelementptr i8, ptr %6, i64 -8  ; 2 uses
-  %scevgep649 = getelementptr i8, ptr %6, i64 -16 ; 2 uses
-  %scevgep651 = getelementptr i8, ptr %6, i64 -8  ; 2 uses
-  %scevgep653 = getelementptr i8, ptr %6, i64 -16 ; 2 uses
   br i1 %.not, label %.lr.ph554.preheader, label %.lr.ph545.preheader
 
 .lr.ph545.preheader:                              ; preds = %bb.i
@@ -250,16 +246,20 @@ bb.r:                                             ; preds = %._crit_edge570, %bb
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.db = shl nuw nsw i64 %i.cx, 3                ; 2 uses
-  %scevgep630 = getelementptr i8, ptr %scevgep647, i64 %i.db
+  %9 = getelementptr i8, ptr %6, i64 %i.db
+  %scevgep630 = getelementptr i8, ptr %9, i64 -8
   %i.dc = shl nuw nsw i64 %wide.trip.count, 3     ; 2 uses
-  %i.dd = getelementptr i8, ptr %scevgep649, i64 %i.db
-  %scevgep632 = getelementptr i8, ptr %i.dd, i64 %i.dc
+  %10 = getelementptr i8, ptr %6, i64 %i.db
+  %i.dd = getelementptr i8, ptr %10, i64 %i.dc
+  %scevgep632 = getelementptr i8, ptr %i.dd, i64 -16
   %i.de = shl nuw nsw i64 %i.cy, 3                ; 2 uses
-  %scevgep634 = getelementptr i8, ptr %scevgep651, i64 %i.de
-  %i.df = getelementptr i8, ptr %scevgep653, i64 %i.de
-  %scevgep636 = getelementptr i8, ptr %i.df, i64 %i.dc
+  %11 = getelementptr i8, ptr %6, i64 %i.de
+  %12 = getelementptr i8, ptr %11, i64 -8
+  %scevgep634 = getelementptr i8, ptr %6, i64 %i.de
+  %i.df = getelementptr i8, ptr %scevgep634, i64 %i.dc
+  %scevgep636 = getelementptr i8, ptr %i.df, i64 -16
   %bound0 = icmp ult ptr %scevgep630, %scevgep636
-  %bound1 = icmp ult ptr %scevgep634, %scevgep632
+  %bound1 = icmp ult ptr %12, %scevgep632
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader682, label %vector.ph
 
@@ -662,16 +662,20 @@ bb.ap:                                            ; preds = %._crit_edge572, %bb
 
 vector.memcheck646:                               ; preds = %.lr.ph551.preheader
   %i.lg = shl nsw i64 %i.ho, 3                    ; 2 uses
-  %scevgep648 = getelementptr i8, ptr %scevgep647, i64 %i.lg
+  %13 = getelementptr i8, ptr %6, i64 %i.lg
+  %scevgep648 = getelementptr i8, ptr %13, i64 -8
   %i.lh = shl nuw nsw i64 %wide.trip.count563, 3  ; 2 uses
-  %i.li = getelementptr i8, ptr %scevgep649, i64 %i.lg
-  %scevgep650 = getelementptr i8, ptr %i.li, i64 %i.lh
+  %14 = getelementptr i8, ptr %6, i64 %i.lg
+  %i.li = getelementptr i8, ptr %14, i64 %i.lh
+  %scevgep650 = getelementptr i8, ptr %i.li, i64 -16
   %i.lj = shl nsw i64 %i.ja, 3                    ; 2 uses
-  %scevgep652 = getelementptr i8, ptr %scevgep651, i64 %i.lj
-  %i.lk = getelementptr i8, ptr %scevgep653, i64 %i.lj
-  %scevgep654 = getelementptr i8, ptr %i.lk, i64 %i.lh
+  %15 = getelementptr i8, ptr %6, i64 %i.lj
+  %16 = getelementptr i8, ptr %15, i64 -8
+  %scevgep652 = getelementptr i8, ptr %6, i64 %i.lj
+  %i.lk = getelementptr i8, ptr %scevgep652, i64 %i.lh
+  %scevgep654 = getelementptr i8, ptr %i.lk, i64 -16
   %bound0655 = icmp ult ptr %scevgep648, %scevgep654
-  %bound1656 = icmp ult ptr %scevgep652, %scevgep650
+  %bound1656 = icmp ult ptr %16, %scevgep650
   %found.conflict657 = and i1 %bound0655, %bound1656
   br i1 %found.conflict657, label %.lr.ph551.preheader680, label %vector.ph660
 

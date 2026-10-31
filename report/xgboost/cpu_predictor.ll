@@ -205,7 +205,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.m = load i64, ptr %i.l, align 8              ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.o = load i64, ptr %i.n, align 8              ; 8 uses
+  %i.o = load i64, ptr %i.n, align 8              ; 9 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.q = load i64, ptr %i.p, align 8              ; 3 uses
   %i.r = icmp eq i64 %i.q, 0
@@ -222,9 +222,6 @@ bb.a:
   %i.aa = load ptr, ptr %.in.i.i, align 8         ; 3 uses
   %i.ab = icmp ne ptr %i.aa, null
   %i.ac = icmp eq i64 %i.o, 0
-  %9 = shl i64 %i.o, 2                            ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.aa, i64 %9
-  %scevgep66 = getelementptr i8, ptr %i.s, i64 %9
   %min.iters.check = icmp ult i64 %i.o, 8
   %ident.check = icmp ne i64 %i.w, 1
   %ident.check64 = icmp ne i64 %i.m, 1
@@ -383,10 +380,12 @@ _ZNK7xgboost6linalg10TensorViewIfLi2EE5SliceIJmNS0_6detail6AllTagEEEEDaDpOT_.exi
   br i1 %brmerge, label %.lr.ph.split.preheader71, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.preheader
-  %i.cm = shl i64 %i.ci, 2
-  %scevgep65 = getelementptr i8, ptr %scevgep, i64 %i.cm
-  %i.cn = shl i64 %i.cc, 2
-  %scevgep67 = getelementptr i8, ptr %scevgep66, i64 %i.cn
+  %9 = add i64 %i.ci, %i.o
+  %i.cm = shl i64 %9, 2
+  %scevgep65 = getelementptr i8, ptr %i.aa, i64 %i.cm
+  %10 = add i64 %i.cc, %i.o
+  %i.cn = shl i64 %10, 2
+  %scevgep67 = getelementptr i8, ptr %i.s, i64 %i.cn
   %bound0 = icmp ult ptr %i.cl, %scevgep67
   %bound1 = icmp ult ptr %i.cf, %scevgep65
   %found.conflict = and i1 %bound0, %bound1
@@ -789,7 +788,6 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph199, %_ZZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS_6common4SpanIKNS_16HostDeviceVectorIiEELm18446744073709551615EEENS3_IPKNS_7RegTreeELm18446744073709551615EEENS_6linalg10TensorViewIfLi2EEEENKUlmE0_clEm.exit
   %.049198 = phi i64 [ 0, %.lr.ph199 ], [ %i.cc, %_ZZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS_6common4SpanIKNS_16HostDeviceVectorIiEELm18446744073709551615EEENS3_IPKNS_7RegTreeELm18446744073709551615EEENS_6linalg10TensorViewIfLi2EEEENKUlmE0_clEm.exit ] ; 5 uses
-  %7 = shl i64 %.049198, 2
   %exitcond224.not = icmp eq i64 %.049198, %i.e
   br i1 %exitcond224.not, label %bb.c, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i, !prof !173
 
@@ -855,6 +853,7 @@ vector.scevcheck389:                              ; preds = %.lr.ph.i
   br i1 %i.as, label %scalar.ph398.preheader, label %vector.memcheck392
 
 vector.memcheck392:                               ; preds = %vector.scevcheck389
+  %7 = shl i64 %.049198, 2
   %i.at = mul i64 %i.an, %7
   %i.au = shl nuw nsw i64 %wide.trip.count.i, 2
   %i.av = getelementptr i8, ptr %i.aq, i64 %i.at
@@ -1101,7 +1100,6 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 
 bb.n:                                             ; preds = %.lr.ph197, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit
   %.044196 = phi i64 [ 0, %.lr.ph197 ], [ %i.fu, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit ] ; 5 uses
-  %8 = shl i64 %.044196, 2
   %exitcond222.not = icmp eq i64 %.044196, %i.dc
   br i1 %exitcond222.not, label %bb.o, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i.i, !prof !173
 
@@ -1167,6 +1165,7 @@ vector.scevcheck366:                              ; preds = %.lr.ph.i.i
   br i1 %i.ek, label %scalar.ph375.preheader, label %vector.memcheck369
 
 vector.memcheck369:                               ; preds = %vector.scevcheck366
+  %8 = shl i64 %.044196, 2
   %i.el = mul i64 %i.ef, %8
   %i.em = shl nuw nsw i64 %wide.trip.count.i.i, 2
   %i.en = getelementptr i8, ptr %i.ei, i64 %i.el
@@ -1308,7 +1307,6 @@ bb.s:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.t:                                             ; preds = %.lr.ph195, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit76
   %.043194 = phi i64 [ 0, %.lr.ph195 ], [ %i.iw, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit76 ] ; 5 uses
-  %9 = shl i64 %.043194, 2
   %exitcond220.not = icmp eq i64 %.043194, %i.ge
   br i1 %exitcond220.not, label %bb.u, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i.i65, !prof !173
 
@@ -1374,6 +1372,7 @@ vector.scevcheck343:                              ; preds = %.lr.ph.i.i71
   br i1 %i.hm, label %scalar.ph352.preheader, label %vector.memcheck346
 
 vector.memcheck346:                               ; preds = %vector.scevcheck343
+  %9 = shl i64 %.043194, 2
   %i.hn = mul i64 %i.hh, %9
   %i.ho = shl nuw nsw i64 %wide.trip.count.i.i72, 2
   %i.hp = getelementptr i8, ptr %i.hk, i64 %i.hn
@@ -1466,7 +1465,6 @@ _ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafI
 
 bb.y:                                             ; preds = %.lr.ph193, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit88
   %.042192 = phi i64 [ 0, %.lr.ph193 ], [ %i.lh, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit88 ] ; 5 uses
-  %10 = shl i64 %.042192, 2
   %exitcond218.not = icmp eq i64 %.042192, %i.fw
   br i1 %exitcond218.not, label %bb.z, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i.i77, !prof !173
 
@@ -1532,6 +1530,7 @@ vector.scevcheck320:                              ; preds = %.lr.ph.i.i83
   br i1 %i.jx, label %scalar.ph329.preheader, label %vector.memcheck323
 
 vector.memcheck323:                               ; preds = %vector.scevcheck320
+  %10 = shl i64 %.042192, 2
   %i.jy = mul i64 %i.js, %10
   %i.jz = shl nuw nsw i64 %wide.trip.count.i.i84, 2
   %i.ka = getelementptr i8, ptr %i.jv, i64 %i.jy
@@ -1673,7 +1672,6 @@ bb.ad:                                            ; preds = %_ZNSt10unique_ptrIN
 
 bb.ae:                                            ; preds = %.lr.ph191, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit100
   %.041190 = phi i64 [ 0, %.lr.ph191 ], [ %i.oj, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit100 ] ; 5 uses
-  %11 = shl i64 %.041190, 2
   %exitcond216.not = icmp eq i64 %.041190, %i.lr
   br i1 %exitcond216.not, label %bb.af, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i.i89, !prof !173
 
@@ -1739,6 +1737,7 @@ vector.scevcheck297:                              ; preds = %.lr.ph.i.i95
   br i1 %i.mz, label %scalar.ph306.preheader, label %vector.memcheck300
 
 vector.memcheck300:                               ; preds = %vector.scevcheck297
+  %11 = shl i64 %.041190, 2
   %i.na = mul i64 %i.mu, %11
   %i.nb = shl nuw nsw i64 %wide.trip.count.i.i96, 2
   %i.nc = getelementptr i8, ptr %i.mx, i64 %i.na
@@ -1831,7 +1830,6 @@ _ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafI
 
 bb.aj:                                            ; preds = %.lr.ph189, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit112
   %.040188 = phi i64 [ 0, %.lr.ph189 ], [ %i.qu, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit112 ] ; 5 uses
-  %12 = shl i64 %.040188, 2
   %exitcond214.not = icmp eq i64 %.040188, %i.lj
   br i1 %exitcond214.not, label %bb.ak, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i.i101, !prof !173
 
@@ -1897,6 +1895,7 @@ vector.scevcheck274:                              ; preds = %.lr.ph.i.i107
   br i1 %i.pk, label %scalar.ph283.preheader, label %vector.memcheck277
 
 vector.memcheck277:                               ; preds = %vector.scevcheck274
+  %12 = shl i64 %.040188, 2
   %i.pl = mul i64 %i.pf, %12
   %i.pm = shl nuw nsw i64 %wide.trip.count.i.i108, 2
   %i.pn = getelementptr i8, ptr %i.pi, i64 %i.pl
@@ -1989,7 +1988,6 @@ _ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafI
 
 bb.ao:                                            ; preds = %.lr.ph, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit124
   %.0187 = phi i64 [ 0, %.lr.ph ], [ %i.tf, %_ZN4dmlc12OMPException3RunIZNK7xgboost9predictor12CPUPredictor18PredictFromLeafIdsENS2_6common4SpanIKNS2_16HostDeviceVectorIiEELm18446744073709551615EEENS6_IPKNS2_7RegTreeELm18446744073709551615EEENS2_6linalg10TensorViewIfLi2EEEEUlmE0_JmEEEvT_DpT0_.exit124 ] ; 5 uses
-  %13 = shl i64 %.0187, 2
   %exitcond.not = icmp eq i64 %.0187, %i.cu
   br i1 %exitcond.not, label %bb.ap, label %_ZNK7xgboost6common4SpanIKiLm18446744073709551615EEixEm.exit.i.i113, !prof !173
 
@@ -2055,6 +2053,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i119
   br i1 %i.rv, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
+  %13 = shl i64 %.0187, 2
   %i.rw = mul i64 %i.rq, %13
   %i.rx = shl nuw nsw i64 %wide.trip.count.i.i120, 2
   %i.ry = getelementptr i8, ptr %i.rt, i64 %i.rw

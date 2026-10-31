@@ -205,15 +205,11 @@ bb.fh:                                            ; preds = %bb.e
   %i.agu = getelementptr inbounds nuw i8, ptr %.pre.pre584.i, i64 8
   %i.agv = load i32, ptr %i.agu, align 8
   %i.agw = icmp sgt i32 %i.agv, 0
-  br i1 %i.agw, label %.lr.ph.i69.i.i.preheader, label %stbi__decode_jpeg_image.exit.i
+  br i1 %i.agw, label %.lr.ph.i69.i.i, label %stbi__decode_jpeg_image.exit.i
 
-.lr.ph.i69.i.i.preheader:                         ; preds = %.preheader35.i.i.i
-  %scevgep358 = getelementptr i8, ptr %i.d, i64 13576
-  br label %.lr.ph.i69.i.i
-
-.lr.ph.i69.i.i:                                   ; preds = %.lr.ph.i69.i.i.preheader, %._crit_edge38.split.i.i.i
-  %i.agx = phi ptr [ %i.aka, %._crit_edge38.split.i.i.i ], [ %.pre.pre584.i, %.lr.ph.i69.i.i.preheader ] ; 2 uses
-  %indvars.iv42.i.i.i = phi i64 [ %indvars.iv.next43.i.i.i, %._crit_edge38.split.i.i.i ], [ 0, %.lr.ph.i69.i.i.preheader ] ; 2 uses
+.lr.ph.i69.i.i:                                   ; preds = %.preheader35.i.i.i, %._crit_edge38.split.i.i.i
+  %i.agx = phi ptr [ %i.aka, %._crit_edge38.split.i.i.i ], [ %.pre.pre584.i, %.preheader35.i.i.i ] ; 2 uses
+  %indvars.iv42.i.i.i = phi i64 [ %indvars.iv.next43.i.i.i, %._crit_edge38.split.i.i.i ], [ 0, %.preheader35.i.i.i ] ; 2 uses
   %i.agy = getelementptr inbounds nuw [96 x i8], ptr %i.k, i64 %indvars.iv42.i.i.i ; 7 uses
   %i.agz = getelementptr inbounds nuw i8, ptr %i.agy, i64 28
   %i.aha = load i32, ptr %i.agz, align 4
@@ -257,11 +253,12 @@ vector.memcheck:                                  ; preds = %stbi__jpeg_dequanti
   %i.ahx = load i32, ptr %i.ahl, align 4
   %i.ahy = sext i32 %i.ahx to i64                 ; 2 uses
   %i.ahz = getelementptr inbounds [128 x i8], ptr %i.ao, i64 %i.ahy ; 13 uses
-  %scevgep = getelementptr i8, ptr %i.ahp, i64 128
   %7 = shl nsw i64 %i.ahv, 1
-  %scevgep357 = getelementptr i8, ptr %scevgep, i64 %7
+  %8 = getelementptr i8, ptr %i.ahp, i64 %7
+  %scevgep357 = getelementptr i8, ptr %8, i64 128
   %i.aia = shl nsw i64 %i.ahy, 7
-  %scevgep359 = getelementptr i8, ptr %scevgep358, i64 %i.aia
+  %9 = getelementptr i8, ptr %i.d, i64 %i.aia
+  %scevgep359 = getelementptr i8, ptr %9, i64 13576
   %bound0 = icmp ult ptr %i.ahw, %scevgep359
   %bound1 = icmp ult ptr %i.ahz, %scevgep357
   %found.conflict = and i1 %bound0, %bound1
@@ -664,8 +661,6 @@ bb.l:                                             ; preds = %bb.j
   %wide.trip.count434 = zext nneg i32 %spec.select to i64
   %wide.trip.count444 = zext i32 %i.av to i64     ; 8 uses
   %i.bl = shl nuw nsw i64 %i.bf, 1
-  %8 = getelementptr i8, ptr %i.as, i64 %i.bf
-  %scevgep505 = getelementptr i8, ptr %8, i64 1
   %i.bm = sub nsw i64 %i.ba, %i.aw                ; 28 uses
   %i.bn = add i32 %i.z, -1                        ; 3 uses
   %i.bo = add nuw nsw i64 %i.bf, 1
@@ -771,6 +766,7 @@ bb.l:                                             ; preds = %bb.j
   %i.cr = icmp eq i32 %.030.i305, 0
   %i.cs = zext nneg i32 %4 to i64                 ; 2 uses
   %min.iters.check = icmp ult i32 %4, 8
+  %invariant.gep = getelementptr i8, ptr %i.as, i64 %i.bf
   %n.vec = and i64 %i.cs, 2147483640              ; 3 uses
   %i.ct = sub nsw i64 %i.bf, %n.vec
   %cmp.n = icmp eq i64 %n.vec, %i.cs
@@ -1173,11 +1169,12 @@ bb.af:                                            ; preds = %bb.ad
 
 vector.memcheck:                                  ; preds = %.lr.ph32.i314.preheader
   %i.uz = getelementptr i8, ptr %i.dl, i64 %i.bl
-  %scevgep = getelementptr i8, ptr %i.uz, i64 2
-  %scevgep504 = getelementptr i8, ptr %scevgep, i64 %i.dn
-  %scevgep506 = getelementptr i8, ptr %scevgep505, i64 %i.de
+  %8 = getelementptr i8, ptr %i.uz, i64 %i.dn
+  %scevgep = getelementptr i8, ptr %8, i64 2
+  %scevgep504 = getelementptr i8, ptr %invariant.gep, i64 %i.de
+  %scevgep506 = getelementptr i8, ptr %scevgep504, i64 1
   %bound0 = icmp ult ptr %i.do, %scevgep506
-  %bound1 = icmp ult ptr %i.df, %scevgep504
+  %bound1 = icmp ult ptr %i.df, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph32.i314.preheader737, label %vector.body
 

@@ -204,13 +204,13 @@ bb.mb:                                            ; preds = %bb.ma
   br i1 %min.iters.check, label %.lr.ph12255.preheader14977, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph12255.preheader
-  %7 = add i64 %i.bcu, 80
   %i.bcz = select i1 %i.bcb, i64 8, i64 0
-  %8 = add i64 %7, %i.bcz
-  %9 = shl nsw i64 %i.bcr, 3
-  %i.bda = add i64 %9, %.4.val1028714960
-  %i.bdb = sub i64 %i.bda, %8
-  %diff.check = icmp ugt i64 %i.bdb, -32
+  %7 = shl nsw i64 %i.bcr, 3
+  %8 = add i64 %i.bcz, %i.bcu
+  %i.bda = add i64 %7, %.4.val1028714960
+  %i.bdb = sub i64 %8, %i.bda
+  %9 = add i64 %i.bdb, 79
+  %diff.check = icmp ult i64 %9, 31
   br i1 %diff.check, label %.lr.ph12255.preheader14977, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -613,14 +613,14 @@ _PyFrame_PushUnchecked.exit10826:                 ; preds = %.lr.ph.i.i10823, %_
   br i1 %min.iters.check14966, label %.lr.ph12251.preheader14978, label %vector.memcheck14962
 
 vector.memcheck14962:                             ; preds = %.lr.ph12251.preheader
-  %10 = add i64 %i.dcg, 80
   %i.ddw = select i1 %i.dbx, i64 8, i64 0
-  %11 = add i64 %10, %i.ddw
-  %12 = shl nsw i64 %i.dcn, 3
-  %i.ddx = add i64 %12, %.4.val100611164114963
-  %i.ddy = sub i64 %i.ddx, %11
-  %diff.check14964 = icmp ugt i64 %i.ddy, -32
-  br i1 %diff.check14964, label %.lr.ph12251.preheader14978, label %vector.ph14967
+  %10 = shl nsw i64 %i.dcn, 3
+  %11 = add i64 %i.ddw, %i.dcg
+  %i.ddx = add i64 %10, %.4.val100611164114963
+  %i.ddy = sub i64 %11, %i.ddx
+  %12 = add i64 %i.ddy, 79
+  %diff.check14970 = icmp ult i64 %12, 31
+  br i1 %diff.check14970, label %.lr.ph12251.preheader14978, label %vector.ph14967
 
 vector.ph14967:                                   ; preds = %vector.memcheck14962
   %n.vec14968 = and i64 %wide.trip.count, 2147483644 ; 3 uses

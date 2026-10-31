@@ -205,9 +205,9 @@ iter.check:                                       ; preds = %bb.bb, %bb.ba
   %.8 = phi i64 [ %i.cu, %bb.ba ], [ %i.ky, %bb.bb ] ; 2 uses
   %.0226 = phi ptr [ %i.cv, %bb.ba ], [ %i.la, %bb.bb ] ; 6 uses
   %.0225 = phi ptr [ %i.cw, %bb.ba ], [ %i.kz, %bb.bb ] ; 6 uses
-  %.0225438 = ptrtoaddr ptr %.0225 to i64
-  %.0226437 = ptrtoaddr ptr %.0226 to i64
-  %i.jg = sub i64 %.0225438, %.0226437
+  %.0225438 = ptrtoaddr ptr %.0226 to i64
+  %.0226437 = ptrtoaddr ptr %.0225 to i64
+  %i.jg = sub i64 %.0226437, %.0225438
   %diff.check = icmp ugt i64 %i.jg, -32
   %or.cond555 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond555, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

@@ -205,8 +205,6 @@ _ZNSt12__shared_ptrI20colvar_grid_gradientLN9__gnu_cxx12_Lock_policyE2EED2Ev.exi
 .lr.ph:                                           ; preds = %.preheader
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ij, i64 %i.ie ; 6 uses
   %i.iz = add i64 %i.ik, %i.ic
-  %18 = sub i64 %i.id, %i.iz
-  %invariant.op = add i64 %18, -1
   br label %bb.bg
 
 bb.bg:                                            ; preds = %.lr.ph, %_ZN11colvar_gridImE11raw_data_inEPKm.exit
@@ -387,13 +385,16 @@ _ZN11colvar_gridIdE11raw_data_inEPKd.exit:        ; preds = %.lr.ph.i.prol.loope
   %i.ln = ptrtoint ptr %i.ll to i64               ; 2 uses
   %i.lo = sub i64 %i.lm, %i.ln
   %i.lp = ashr exact i64 %i.lo, 3                 ; 6 uses
-  %min.iters.check416 = icmp ult i64 %i.lp, 4
-  %.reass = add i64 %i.ln, %invariant.op
-  %diff.check414 = icmp ult i64 %.reass, 31
-  %or.cond530 = or i1 %min.iters.check416, %diff.check414
-  br i1 %or.cond530, label %.lr.ph.i159.preheader, label %vector.ph417
+  %diff.check414 = icmp ult i64 %i.lp, 4
+  br i1 %diff.check414, label %.lr.ph.i159.preheader, label %vector.memcheck417
 
-vector.ph417:                                     ; preds = %.lr.ph.preheader.i158
+vector.memcheck417:                               ; preds = %.lr.ph.preheader.i158
+  %18 = add i64 %i.ln, %i.id
+  %19 = sub i64 %i.iz, %18
+  %diff.check418 = icmp ugt i64 %19, -32
+  br i1 %diff.check418, label %.lr.ph.i159.preheader, label %vector.ph417
+
+vector.ph417:                                     ; preds = %vector.memcheck417
   %n.vec418 = and i64 %i.lp, -4                   ; 3 uses
   br label %vector.body419
 
@@ -415,8 +416,8 @@ middle.block424:                                  ; preds = %vector.body419
   %cmp.n425 = icmp eq i64 %i.lp, %n.vec418
   br i1 %cmp.n425, label %_ZN11colvar_gridImE11raw_data_inEPKm.exit, label %.lr.ph.i159.preheader
 
-.lr.ph.i159.preheader:                            ; preds = %.lr.ph.preheader.i158, %middle.block424
-  %.05.i160.ph = phi i64 [ %n.vec418, %middle.block424 ], [ 0, %.lr.ph.preheader.i158 ] ; 3 uses
+.lr.ph.i159.preheader:                            ; preds = %vector.memcheck417, %.lr.ph.preheader.i158, %middle.block424
+  %.05.i160.ph = phi i64 [ 0, %vector.memcheck417 ], [ 0, %.lr.ph.preheader.i158 ], [ %n.vec418, %middle.block424 ] ; 3 uses
   %xtraiter514 = and i64 %i.lp, 3                 ; 2 uses
   %lcmp.mod515.not = icmp eq i64 %xtraiter514, 0
   br i1 %lcmp.mod515.not, label %.lr.ph.i159.prol.loopexit, label %.lr.ph.i159.prol
@@ -819,8 +820,6 @@ _ZNSt12__shared_ptrI20colvar_grid_gradientLN9__gnu_cxx12_Lock_policyE2EED2Ev.exi
   %i.ix = getelementptr inbounds nuw i8, ptr %0, i64 2112 ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.au ; 6 uses
   %i.iz = add i64 %i.ba, %i.as
-  %13 = sub i64 %i.at, %i.iz
-  %invariant.op = add i64 %13, -1
   br label %bb.bu
 
 bb.bu:                                            ; preds = %.lr.ph, %_ZN11colvar_gridImE11raw_data_inEPKm.exit
@@ -999,13 +998,16 @@ _ZN11colvar_gridIdE11raw_data_inEPKd.exit:        ; preds = %.lr.ph.i.prol.loope
   %i.lm = ptrtoint ptr %i.lk to i64               ; 2 uses
   %i.ln = sub i64 %i.ll, %i.lm
   %i.lo = ashr exact i64 %i.ln, 3                 ; 6 uses
-  %min.iters.check211 = icmp ult i64 %i.lo, 4
-  %.reass = add i64 %i.lm, %invariant.op
-  %diff.check209 = icmp ult i64 %.reass, 31
-  %or.cond249 = or i1 %min.iters.check211, %diff.check209
-  br i1 %or.cond249, label %.lr.ph.i117.preheader, label %vector.ph212
+  %diff.check209 = icmp ult i64 %i.lo, 4
+  br i1 %diff.check209, label %.lr.ph.i117.preheader, label %vector.memcheck212
 
-vector.ph212:                                     ; preds = %.lr.ph.preheader.i116
+vector.memcheck212:                               ; preds = %.lr.ph.preheader.i116
+  %13 = add i64 %i.lm, %i.at
+  %14 = sub i64 %i.iz, %13
+  %diff.check213 = icmp ugt i64 %14, -32
+  br i1 %diff.check213, label %.lr.ph.i117.preheader, label %vector.ph212
+
+vector.ph212:                                     ; preds = %vector.memcheck212
   %n.vec213 = and i64 %i.lo, -4                   ; 3 uses
   br label %vector.body214
 
@@ -1027,8 +1029,8 @@ middle.block219:                                  ; preds = %vector.body214
   %cmp.n220 = icmp eq i64 %i.lo, %n.vec213
   br i1 %cmp.n220, label %_ZN11colvar_gridImE11raw_data_inEPKm.exit, label %.lr.ph.i117.preheader
 
-.lr.ph.i117.preheader:                            ; preds = %.lr.ph.preheader.i116, %middle.block219
-  %.05.i118.ph = phi i64 [ %n.vec213, %middle.block219 ], [ 0, %.lr.ph.preheader.i116 ] ; 3 uses
+.lr.ph.i117.preheader:                            ; preds = %vector.memcheck212, %.lr.ph.preheader.i116, %middle.block219
+  %.05.i118.ph = phi i64 [ 0, %vector.memcheck212 ], [ 0, %.lr.ph.preheader.i116 ], [ %n.vec213, %middle.block219 ] ; 3 uses
   %xtraiter243 = and i64 %i.lo, 3                 ; 2 uses
   %lcmp.mod244.not = icmp eq i64 %xtraiter243, 0
   br i1 %lcmp.mod244.not, label %.lr.ph.i117.prol.loopexit, label %.lr.ph.i117.prol
@@ -1431,10 +1433,10 @@ scalar.ph1350.prol.loopexit:                      ; preds = %scalar.ph1350.prol,
   %.sroa.0623.096797799410141027 = phi ptr [ %i.rw, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i290 ], [ %i.rw, %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit309 ], [ %i.rw, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i300 ], [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i280 ], [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i270 ], [ %i.rw, %middle.block1371 ], [ %i.rw, %scalar.ph1350 ], [ %i.rw, %scalar.ph1350.prol.loopexit ] ; 17 uses
   %.sroa.0632.094995396497899110151026 = phi ptr [ %i.rq, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i290 ], [ %i.rq, %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit309 ], [ %i.rq, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i300 ], [ %i.rq, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i280 ], [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i270 ], [ %i.rq, %middle.block1371 ], [ %i.rq, %scalar.ph1350 ], [ %i.rq, %scalar.ph1350.prol.loopexit ] ; 17 uses
   %.sroa.14640.094695496197998810161025 = phi i64 [ %i.rs, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i290 ], [ %i.rs, %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit309 ], [ %i.rs, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i300 ], [ %i.rs, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i280 ], [ 0, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i270 ], [ %i.rs, %middle.block1371 ], [ %i.rs, %scalar.ph1350 ], [ %i.rs, %scalar.ph1350.prol.loopexit ] ; 3 uses
-  %.sroa.0623.0967977994101410271558 = ptrtoaddr ptr %.sroa.0623.096797799410141027 to i64 ; 4 uses
-  %.sroa.0632.0949953964978991101510261559 = ptrtoaddr ptr %.sroa.0632.094995396497899110151026 to i64 ; 4 uses
-  %.sroa.0582.010311561 = ptrtoaddr ptr %.sroa.0582.01031 to i64 ; 4 uses
-  %.sroa.0600.01000101210291564 = ptrtoaddr ptr %.sroa.0600.0100010121029 to i64 ; 3 uses
+  %.sroa.0623.0967977994101410271558 = ptrtoaddr ptr %.sroa.0582.01031 to i64 ; 4 uses
+  %.sroa.0632.0949953964978991101510261559 = ptrtoaddr ptr %.sroa.0600.0100010121029 to i64 ; 3 uses
+  %.sroa.0582.010311561 = ptrtoaddr ptr %.sroa.0623.096797799410141027 to i64 ; 4 uses
+  %.sroa.0600.01000101210291564 = ptrtoaddr ptr %.sroa.0632.094995396497899110151026 to i64 ; 4 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 3 uses
   %i.ts = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 9 uses
   %i.tt = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
@@ -1459,21 +1461,21 @@ scalar.ph1350.prol.loopexit:                      ; preds = %scalar.ph1350.prol,
   %i.um = getelementptr inbounds nuw i8, ptr %0, i64 848
   %i.un = getelementptr inbounds nuw i8, ptr %0, i64 792
   %i.uo = getelementptr inbounds nuw i8, ptr %0, i64 824
-  %i.up = sub i64 %.sroa.0632.0949953964978991101510261559, %.sroa.0623.0967977994101410271558
+  %i.up = sub i64 %.sroa.0600.01000101210291564, %.sroa.0582.010311561
   %diff.check1560 = icmp ugt i64 %i.up, -16
-  %i.uq = sub i64 %.sroa.0632.0949953964978991101510261559, %.sroa.0582.010311561
+  %i.uq = sub i64 %.sroa.0600.01000101210291564, %.sroa.0623.0967977994101410271558
   %diff.check1562 = icmp ugt i64 %i.uq, -16
   %conflict.rdx1563 = or i1 %diff.check1560, %diff.check1562
-  %i.ur = sub i64 %.sroa.0632.0949953964978991101510261559, %.sroa.0600.01000101210291564
+  %i.ur = sub i64 %.sroa.0600.01000101210291564, %.sroa.0632.0949953964978991101510261559
   %diff.check1565 = icmp ugt i64 %i.ur, -16
   %conflict.rdx1566 = or i1 %conflict.rdx1563, %diff.check1565
-  %i.us = sub i64 %.sroa.0623.0967977994101410271558, %.sroa.0582.010311561
+  %i.us = sub i64 %.sroa.0582.010311561, %.sroa.0623.0967977994101410271558
   %diff.check1569 = icmp ugt i64 %i.us, -16
   %invariant.op = or i1 %conflict.rdx1566, %diff.check1569
-  %i.ut = sub i64 %.sroa.0623.0967977994101410271558, %.sroa.0600.01000101210291564
+  %i.ut = sub i64 %.sroa.0582.010311561, %.sroa.0632.0949953964978991101510261559
   %diff.check1571 = icmp ugt i64 %i.ut, -16
   %invariant.op1789 = or i1 %invariant.op, %diff.check1571
-  %i.uu = sub i64 %.sroa.0600.01000101210291564, %.sroa.0582.010311561
+  %i.uu = sub i64 %.sroa.0632.0949953964978991101510261559, %.sroa.0623.0967977994101410271558
   %diff.check1575 = icmp ugt i64 %i.uu, -16
   br label %.preheader668
 
@@ -1535,14 +1537,14 @@ _ZNSt6vectorIdSaIdEED2Ev.exit530.thread:          ; preds = %bb.as, %bb.at
 
 vector.memcheck1557:                              ; preds = %.lr.ph740
   %i.vq = ptrtoaddr ptr %i.vp to i64              ; 3 uses
-  %i.vr = sub i64 %.sroa.0632.0949953964978991101510261559, %i.vq
+  %i.vr = sub i64 %.sroa.0600.01000101210291564, %i.vq
   %diff.check1567 = icmp ugt i64 %i.vr, -16
   %conflict.rdx1572.reass = or i1 %diff.check1567, %invariant.op1789
-  %i.vs = sub i64 %.sroa.0623.0967977994101410271558, %i.vq
+  %i.vs = sub i64 %.sroa.0582.010311561, %i.vq
   %diff.check1573 = icmp ugt i64 %i.vs, -16
   %conflict.rdx1574 = or i1 %conflict.rdx1572.reass, %diff.check1573
   %conflict.rdx1576 = or i1 %conflict.rdx1574, %diff.check1575
-  %i.vt = sub i64 %i.vq, %.sroa.0582.010311561
+  %i.vt = sub i64 %i.vq, %.sroa.0623.0967977994101410271558
   %diff.check1577 = icmp ugt i64 %i.vt, -16
   %conflict.rdx1578 = or i1 %conflict.rdx1576, %diff.check1577
   br i1 %conflict.rdx1578, label %scalar.ph1579.preheader, label %vector.ph1581

@@ -204,10 +204,6 @@ bb.c:                                             ; preds = %.lr.ph115, %.loopex
   %.076112 = phi i32 [ 0, %.lr.ph115 ], [ %.177, %.loopexit ] ; 8 uses
   %.078111 = phi i32 [ %2, %.lr.ph115 ], [ %.2, %.loopexit ] ; 6 uses
   %.080110 = phi i32 [ 0, %.lr.ph115 ], [ %.282, %.loopexit ] ; 6 uses
-  %7 = add i64 %indvars.iv134, %i.l
-  %8 = shl i64 %7, 2                              ; 2 uses
-  %scevgep = getelementptr i8, ptr %4, i64 %8     ; 2 uses
-  %scevgep148 = getelementptr i8, ptr %5, i64 %8  ; 2 uses
   %i.by = add nsw i64 %indvars.iv134, %i.bt       ; 9 uses
   %i.bz = load i32, ptr %i.bp, align 8, !tbaa !56 ; 4 uses
   %i.ca = icmp sgt i32 %i.bz, 0
@@ -334,11 +330,16 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %.lr.ph109
-  %i.ep = shl nuw nsw i64 %wide.trip.count132, 2  ; 2 uses
-  %scevgep147 = getelementptr i8, ptr %scevgep, i64 %i.ep
-  %scevgep149 = getelementptr i8, ptr %scevgep148, i64 %i.ep
-  %bound0 = icmp ult ptr %scevgep, %scevgep149
-  %bound1 = icmp ult ptr %scevgep148, %scevgep147
+  %7 = add i64 %indvars.iv134, %i.l               ; 2 uses
+  %8 = shl i64 %7, 2                              ; 2 uses
+  %9 = getelementptr i8, ptr %4, i64 %8
+  %10 = add i64 %7, %wide.trip.count132
+  %i.ep = shl i64 %10, 2                          ; 2 uses
+  %11 = getelementptr i8, ptr %4, i64 %i.ep
+  %scevgep147 = getelementptr i8, ptr %5, i64 %8
+  %scevgep149 = getelementptr i8, ptr %5, i64 %i.ep
+  %bound0 = icmp ult ptr %9, %scevgep149
+  %bound1 = icmp ult ptr %scevgep147, %11
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

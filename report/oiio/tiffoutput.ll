@@ -205,14 +205,15 @@ bb.a:
   br i1 %brmerge, label %._crit_edge32.split, label %.preheader26.preheader
 
 .preheader26.preheader:                           ; preds = %.preheader26.lr.ph
-  %i.n = zext nneg i32 %i.j to i64                ; 13 uses
+  %i.n = zext nneg i32 %i.j to i64                ; 14 uses
   %i.o = zext nneg i32 %1 to i64                  ; 3 uses
-  %i.p = zext nneg i32 %2 to i64                  ; 4 uses
-  %5 = add nsw i64 %i.p, -1
-  %i.q = mul nsw i64 %5, %i.o
-  %i.r = add i64 %i.q, 1
-  %i.s = mul nuw nsw i64 %i.p, %i.n               ; 2 uses
-  %i.t = getelementptr i8, ptr %3, i64 %i.s
+  %i.p = zext nneg i32 %2 to i64                  ; 5 uses
+  %5 = mul nuw nsw i64 %i.p, %i.n
+  %i.q = mul nuw nsw i64 %i.p, %i.n
+  %i.r = add nsw i64 %i.p, -1
+  %i.s = mul nsw i64 %i.r, %i.o
+  %6 = add i64 %i.s, 1
+  %i.t = getelementptr i8, ptr %3, i64 %5
   %min.iters.check = icmp ult i32 %i.j, 4
   %min.iters.check54 = icmp ult i32 %i.j, 32
   %i.u = and i64 %i.n, 28
@@ -227,17 +228,17 @@ bb.a:
 
 .preheader26:                                     ; preds = %.preheader26.preheader, %._crit_edge29
   %indvars.iv42 = phi i64 [ 0, %.preheader26.preheader ], [ %indvars.iv.next43, %._crit_edge29 ] ; 6 uses
-  %i.v = mul i64 %indvars.iv42, %i.n
-  %scevgep = getelementptr i8, ptr %4, i64 %i.v
-  %6 = add i64 %i.r, %indvars.iv42
-  %i.w = mul i64 %6, %i.n
-  %scevgep51 = getelementptr i8, ptr %4, i64 %i.w
-  %i.x = mul i64 %i.s, %indvars.iv42              ; 2 uses
-  %scevgep52 = getelementptr i8, ptr %3, i64 %i.x
-  %scevgep53 = getelementptr i8, ptr %i.t, i64 %i.x
+  %i.v = mul i64 %i.q, %indvars.iv42              ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.t, i64 %i.v
+  %scevgep54 = getelementptr i8, ptr %3, i64 %i.v
+  %i.w = mul i64 %indvars.iv42, %i.n
+  %7 = add i64 %6, %indvars.iv42
+  %i.x = mul i64 %7, %i.n
+  %scevgep52 = getelementptr i8, ptr %4, i64 %i.x
+  %scevgep53 = getelementptr i8, ptr %4, i64 %i.w
   %i.y = mul nuw nsw i64 %indvars.iv42, %i.p
-  %bound0 = icmp ult ptr %scevgep, %scevgep53
-  %bound1 = icmp ult ptr %scevgep52, %scevgep51
+  %bound0 = icmp ult ptr %scevgep53, %scevgep
+  %bound1 = icmp ult ptr %scevgep54, %scevgep52
   %found.conflict = and i1 %bound0, %bound1
   br label %iter.check
 
@@ -640,14 +641,15 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %._
   br i1 %brmerge.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.preheader.i
 
 .preheader26.preheader.i:                         ; preds = %.preheader26.lr.ph.i
-  %i.cx = zext nneg i32 %i.ct to i64              ; 13 uses
+  %i.cx = zext nneg i32 %i.ct to i64              ; 14 uses
   %i.cy = zext nneg i32 %i.cm to i64              ; 3 uses
-  %i.cz = zext nneg i32 %i.cl to i64              ; 4 uses
-  %12 = add nsw i64 %i.cz, -1
-  %i.da = mul nsw i64 %12, %i.cy
-  %i.db = add i64 %i.da, 1
-  %i.dc = mul nuw nsw i64 %i.cz, %i.cx            ; 2 uses
-  %i.dd = getelementptr i8, ptr %.142, i64 %i.dc
+  %i.cz = zext nneg i32 %i.cl to i64              ; 5 uses
+  %12 = mul nuw nsw i64 %i.cz, %i.cx
+  %i.da = mul nuw nsw i64 %i.cz, %i.cx
+  %i.db = add nsw i64 %i.cz, -1
+  %i.dc = mul nsw i64 %i.db, %i.cy
+  %13 = add i64 %i.dc, 1
+  %i.dd = getelementptr i8, ptr %.142, i64 %12
   %min.iters.check = icmp ult i32 %i.ct, 4
   %min.iters.check120 = icmp ult i32 %i.ct, 32
   %i.de = and i64 %i.cx, 28
@@ -662,17 +664,17 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %._
 
 .preheader26.i:                                   ; preds = %._crit_edge29.i, %.preheader26.preheader.i
   %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next43.i, %._crit_edge29.i ] ; 6 uses
-  %i.df = mul i64 %indvars.iv42.i, %i.cx
-  %scevgep = getelementptr i8, ptr %.031, i64 %i.df
-  %13 = add i64 %i.db, %indvars.iv42.i
-  %i.dg = mul i64 %13, %i.cx
-  %scevgep117 = getelementptr i8, ptr %.031, i64 %i.dg
-  %i.dh = mul i64 %i.dc, %indvars.iv42.i          ; 2 uses
-  %scevgep118 = getelementptr i8, ptr %.142, i64 %i.dh
-  %scevgep119 = getelementptr i8, ptr %i.dd, i64 %i.dh
+  %i.df = mul i64 %i.da, %indvars.iv42.i          ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.dd, i64 %i.df
+  %scevgep120 = getelementptr i8, ptr %.142, i64 %i.df
+  %i.dg = mul i64 %indvars.iv42.i, %i.cx
+  %14 = add i64 %13, %indvars.iv42.i
+  %i.dh = mul i64 %14, %i.cx
+  %scevgep118 = getelementptr i8, ptr %.031, i64 %i.dh
+  %scevgep119 = getelementptr i8, ptr %.031, i64 %i.dg
   %i.di = mul nuw nsw i64 %indvars.iv42.i, %i.cz
-  %bound0 = icmp ult ptr %scevgep, %scevgep119
-  %bound1 = icmp ult ptr %scevgep118, %scevgep117
+  %bound0 = icmp ult ptr %scevgep119, %scevgep
+  %bound1 = icmp ult ptr %scevgep120, %scevgep118
   %found.conflict = and i1 %bound0, %bound1
   br label %iter.check
 
@@ -1075,14 +1077,15 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %._
   br i1 %brmerge.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.preheader.i
 
 .preheader26.preheader.i:                         ; preds = %.preheader26.lr.ph.i
-  %i.dz = zext nneg i32 %i.dv to i64              ; 13 uses
+  %i.dz = zext nneg i32 %i.dv to i64              ; 14 uses
   %i.ea = and i64 %i.cz, 2147483647               ; 3 uses
-  %i.eb = zext nneg i32 %i.dn to i64              ; 4 uses
-  %15 = add nsw i64 %i.eb, -1
-  %i.ec = mul nsw i64 %15, %i.ea
-  %i.ed = add nsw i64 %i.ec, 1
-  %i.ee = mul nuw nsw i64 %i.eb, %i.dz            ; 2 uses
-  %i.ef = getelementptr i8, ptr %.168, i64 %i.ee
+  %i.eb = zext nneg i32 %i.dn to i64              ; 5 uses
+  %15 = mul nuw nsw i64 %i.eb, %i.dz
+  %i.ec = mul nuw nsw i64 %i.eb, %i.dz
+  %i.ed = add nsw i64 %i.eb, -1
+  %i.ee = mul nsw i64 %i.ed, %i.ea
+  %16 = add nsw i64 %i.ee, 1
+  %i.ef = getelementptr i8, ptr %.168, i64 %15
   %min.iters.check = icmp ult i32 %i.dv, 4
   %min.iters.check151 = icmp ult i32 %i.dv, 32
   %i.eg = and i64 %i.dz, 28
@@ -1097,17 +1100,17 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %._
 
 .preheader26.i:                                   ; preds = %._crit_edge29.i, %.preheader26.preheader.i
   %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next43.i, %._crit_edge29.i ] ; 6 uses
-  %i.eh = mul i64 %indvars.iv42.i, %i.dz
-  %scevgep = getelementptr i8, ptr %.057, i64 %i.eh
-  %16 = add i64 %i.ed, %indvars.iv42.i
-  %i.ei = mul i64 %16, %i.dz
-  %scevgep148 = getelementptr i8, ptr %.057, i64 %i.ei
-  %i.ej = mul i64 %i.ee, %indvars.iv42.i          ; 2 uses
-  %scevgep149 = getelementptr i8, ptr %.168, i64 %i.ej
-  %scevgep150 = getelementptr i8, ptr %i.ef, i64 %i.ej
+  %i.eh = mul i64 %i.ec, %indvars.iv42.i          ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.ef, i64 %i.eh
+  %scevgep151 = getelementptr i8, ptr %.168, i64 %i.eh
+  %i.ei = mul i64 %indvars.iv42.i, %i.dz
+  %17 = add i64 %16, %indvars.iv42.i
+  %i.ej = mul i64 %17, %i.dz
+  %scevgep149 = getelementptr i8, ptr %.057, i64 %i.ej
+  %scevgep150 = getelementptr i8, ptr %.057, i64 %i.ei
   %i.ek = mul nuw nsw i64 %indvars.iv42.i, %i.eb
-  %bound0 = icmp ult ptr %scevgep, %scevgep150
-  %bound1 = icmp ult ptr %scevgep149, %scevgep148
+  %bound0 = icmp ult ptr %scevgep150, %scevgep
+  %bound1 = icmp ult ptr %scevgep151, %scevgep149
   %found.conflict = and i1 %bound0, %bound1
   br label %iter.check
 
@@ -1510,9 +1513,9 @@ iter.check:                                       ; preds = %bb.j
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bk = add i64 %.026.i.i.i, %i.bi
-  %i.bl = add i64 %.02732.i.i.idx.i, %i.at
-  %i.bm = sub i64 %i.bl, %i.bk
+  %i.bk = add i64 %.02732.i.i.idx.i, %i.at
+  %i.bl = add i64 %.026.i.i.i, %i.bi
+  %i.bm = sub i64 %i.bk, %i.bl
   %diff.check = icmp ugt i64 %i.bm, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 

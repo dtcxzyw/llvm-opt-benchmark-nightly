@@ -205,9 +205,8 @@ iter.check263:                                    ; preds = %bb.ai
 
 vector.memcheck247:                               ; preds = %iter.check263
   %i.qd = or disjoint i64 %i.pq, %i.pu
-  %i.qe = or disjoint i64 %i.qd, 1
-  %6 = add nuw nsw i64 %i.qe, %i.px
-  %diff.check248 = icmp samesign ult i64 %6, 32
+  %i.qe = or disjoint i64 %i.qd, %i.px
+  %diff.check248 = icmp samesign ult i64 %i.qe, 31
   br i1 %diff.check248, label %.preheader.i76.i.i.preheader, label %vector.main.loop.iter.check250
 
 vector.main.loop.iter.check250:                   ; preds = %vector.memcheck247
@@ -455,9 +454,8 @@ iter.check297:                                    ; preds = %bb.ak
 
 vector.memcheck281:                               ; preds = %iter.check297
   %i.tv = or disjoint i64 %i.ti, %i.tm
-  %i.tw = or disjoint i64 %i.tv, 1
-  %7 = add nuw nsw i64 %i.tw, %i.tp
-  %diff.check282 = icmp samesign ult i64 %7, 32
+  %i.tw = or disjoint i64 %i.tv, %i.tp
+  %diff.check282 = icmp samesign ult i64 %i.tw, 31
   br i1 %diff.check282, label %.preheader.i82.i.i.preheader, label %vector.main.loop.iter.check284
 
 vector.main.loop.iter.check284:                   ; preds = %vector.memcheck281

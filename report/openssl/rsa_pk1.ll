@@ -205,7 +205,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.e = zext nneg i32 %4 to i64                  ; 4 uses
-  %i.f = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.e, ptr noundef nonnull @.str, i32 noundef 193) #6 ; 2 uses
+  %i.f = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.e, ptr noundef nonnull @.str, i32 noundef 193) #6 ; 6 uses
+  %5 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.g, label %.lr.ph.preheader
 
@@ -262,9 +263,9 @@ bb.d:                                             ; preds = %bb.b
   br label %.lr.ph117.preheader
 
 .lr.ph117.preheader:                              ; preds = %.lr.ph117.preheader.unr-lcssa, %.lr.ph.epil.preheader
-  %.090112.lcssa = phi ptr [ %i.w, %.lr.ph117.preheader.unr-lcssa ], [ %i.v, %.lr.ph.epil.preheader ] ; 2 uses
+  %.090112.lcssa = phi ptr [ %i.w, %.lr.ph117.preheader.unr-lcssa ], [ %i.v, %.lr.ph.epil.preheader ] ; 4 uses
   %.lcssa171 = phi i8 [ %i.u, %.lr.ph117.preheader.unr-lcssa ], [ %i.aa, %.lr.ph.epil.preheader ]
-  %.lcssa170 = phi ptr [ %i.v, %.lr.ph117.preheader.unr-lcssa ], [ %i.ab, %.lr.ph.epil.preheader ] ; 11 uses
+  %.lcssa170 = phi ptr [ %i.v, %.lr.ph117.preheader.unr-lcssa ], [ %i.ab, %.lr.ph.epil.preheader ] ; 9 uses
   %i.ac = icmp ne i8 %.lcssa171, 0
   %i.ad = load i8, ptr %.090112.lcssa, align 1, !tbaa !8
   %i.ae = icmp ne i8 %i.ad, 2
@@ -322,7 +323,16 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph126:                                        ; preds = %._crit_edge118
   %i.bn = add i32 %i.aq, -10
-  %i.bo = getelementptr i8, ptr %.090112.lcssa, i64 10 ; 2 uses
+  %6 = ptrtoaddr ptr %.090112.lcssa to i64
+  %reass.sub = sub i64 %6, %5
+  %7 = xor i64 %5, -1
+  %8 = ptrtoaddr ptr %.090112.lcssa to i64
+  %9 = add i64 %8, %7                             ; 2 uses
+  %i.bo = getelementptr i8, ptr %.090112.lcssa, i64 10
+  %10 = getelementptr i8, ptr %i.f, i64 %9
+  %11 = getelementptr i8, ptr %i.f, i64 %reass.sub
+  %12 = getelementptr i8, ptr %11, i64 10
+  %13 = getelementptr i8, ptr %i.f, i64 %9
   br label %bb.e
 
 .preheader:                                       ; preds = %._crit_edge123, %._crit_edge118
@@ -355,9 +365,9 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %.lcssa170, i64 %wide.trip.count136
-  %scevgep154 = getelementptr i8, ptr %i.bo, i64 %i.by
-  %i.ca = getelementptr i8, ptr %.lcssa170, i64 %i.by
+  %scevgep = getelementptr i8, ptr %10, i64 %wide.trip.count136
+  %scevgep154 = getelementptr i8, ptr %12, i64 %i.by
+  %i.ca = getelementptr i8, ptr %13, i64 %i.by
   %scevgep155 = getelementptr i8, ptr %i.ca, i64 %wide.trip.count136
   %bound0 = icmp ult ptr %i.bo, %scevgep155
   %bound1 = icmp ult ptr %scevgep154, %scevgep

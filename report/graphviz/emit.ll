@@ -205,17 +205,16 @@ bb.kw:                                            ; preds = %bb.kv, %bb.ku, %.lr
   br i1 %min.iters.check, label %.lr.ph611.i.preheader350, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph611.i.preheader
-  %scevgep = getelementptr i8, ptr %i.any, i64 -8
-  %i.aod = shl i64 %i.aoc, 4                      ; 4 uses
-  %scevgep328 = getelementptr i8, ptr %scevgep, i64 %i.aod
-  %scevgep329 = getelementptr i8, ptr %i.aoa, i64 -8
-  %scevgep330 = getelementptr i8, ptr %scevgep329, i64 %i.aod
+  %i.aod = shl i64 %i.aoc, 4                      ; 3 uses
+  %19 = add i64 %i.aod, -8                        ; 2 uses
+  %scevgep329 = getelementptr i8, ptr %i.any, i64 %19
+  %scevgep330 = getelementptr i8, ptr %i.aoa, i64 %19
   %scevgep331 = getelementptr i8, ptr %i.any, i64 8
   %scevgep332 = getelementptr i8, ptr %i.any, i64 %i.aod
   %scevgep333 = getelementptr i8, ptr %i.aoa, i64 8
   %scevgep334 = getelementptr i8, ptr %i.aoa, i64 %i.aod
   %bound0 = icmp ult ptr %i.any, %scevgep330
-  %bound1 = icmp ult ptr %i.aoa, %scevgep328
+  %bound1 = icmp ult ptr %i.aoa, %scevgep329
   %found.conflict = and i1 %bound0, %bound1
   %bound0335 = icmp ult ptr %scevgep331, %scevgep334
   %bound1336 = icmp ult ptr %scevgep333, %scevgep332
