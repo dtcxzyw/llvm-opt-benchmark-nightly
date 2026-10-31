@@ -205,7 +205,8 @@ bb.a:
   br i1 %i.v, label %.lr.ph.preheader, label %._crit_edge38.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph37
-  %i.w = zext nneg i32 %i.s to i64                ; 2 uses
+  %4 = add nsw i32 %i.s, -1
+  %i.w = zext i32 %4 to i64                       ; 2 uses
   %i.x = zext nneg i32 %i.s to i64                ; 5 uses
   %min.iters.check = icmp ult i32 %i.s, 4
   %min.iters.check46 = icmp ult i32 %i.s, 16
@@ -246,12 +247,14 @@ iter.check:                                       ; preds = %.lr.ph.preheader, %
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %i.ac, i64 %i.w
-  %scevgep43 = getelementptr i8, ptr %scevgep, i64 %i.ag
-  %scevgep44 = getelementptr i8, ptr %i.aj, i64 %i.w
-  %scevgep45 = getelementptr i8, ptr %scevgep44, i64 %i.an
+  %5 = getelementptr i8, ptr %i.ac, i64 %i.ag
+  %6 = getelementptr i8, ptr %5, i64 %i.w
+  %scevgep = getelementptr i8, ptr %6, i64 1
+  %scevgep43 = getelementptr i8, ptr %i.aj, i64 %i.an
+  %scevgep44 = getelementptr i8, ptr %scevgep43, i64 %i.w
+  %scevgep45 = getelementptr i8, ptr %scevgep44, i64 1
   %bound0 = icmp ult ptr %i.ah, %scevgep45
-  %bound1 = icmp ult ptr %i.ao, %scevgep43
+  %bound1 = icmp ult ptr %i.ao, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

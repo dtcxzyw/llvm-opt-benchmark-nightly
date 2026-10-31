@@ -201,10 +201,9 @@ middle.block126:                                  ; preds = %vector.body119
   %umax105 = tail call i64 @llvm.umax.i64(i64 %i.au, i64 %i.av)
   %i.aw = xor i64 %i.c, -1
   %i.ax = add i64 %umax105, %i.aw
-  %i.ay = and i64 %i.ax, -4
-  %2 = add i64 %i.ay, 4                           ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %i.b, i64 %2
-  %scevgep106 = getelementptr i8, ptr %i.at, i64 %2
+  %i.ay = and i64 %i.ax, -4                       ; 2 uses
+  %scevgep.a = getelementptr i8, ptr %i.b, i64 %i.ay
+  %scevgep106 = getelementptr i8, ptr %scevgep.a, i64 4
   %i.az = add i64 %.idx, %i.c
   %i.ba = add i64 %i.c, 4
   %i.bb = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %i.ba)
@@ -213,6 +212,7 @@ middle.block126:                                  ; preds = %vector.body119
   %i.be = lshr i64 %i.bd, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bd, 28
+  %2 = getelementptr i8, ptr %i.at, i64 %i.ay
   %n.vec = and i64 %i.bf, 9223372036854775800     ; 3 uses
   %i.bg = shl i64 %n.vec, 2                       ; 2 uses
   %i.bh = getelementptr i8, ptr %i.b, i64 %i.bg
@@ -239,9 +239,10 @@ middle.block126:                                  ; preds = %vector.body119
 
 vector.memcheck:                                  ; preds = %.lr.ph64.us
   %i.bs = shl nsw i64 %i.bq, 2
-  %scevgep107 = getelementptr i8, ptr %scevgep106, i64 %i.bs
+  %3 = getelementptr i8, ptr %2, i64 %i.bs
+  %scevgep107 = getelementptr i8, ptr %3, i64 4
   %bound0 = icmp ult ptr %i.b, %scevgep107
-  %bound1 = icmp ult ptr %i.br, %scevgep.a
+  %bound1 = icmp ult ptr %i.br, %scevgep106
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 

@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %i.an = load i64, ptr %i.am, align 8, !tbaa !27 ; 2 uses
   %i.ao = load i64, ptr %5, align 8, !tbaa !26    ; 2 uses
   %i.ap = add i64 %i.an, 1
-  %i.aq = add i64 %i.ap, %i.ao                    ; 3 uses
+  %i.aq = add i64 %i.ap, %i.ao                    ; 4 uses
   %i.ar = load i64, ptr %i.ae, align 8, !tbaa !35 ; 2 uses
   %..i = tail call i64 @llvm.smin.i64(i64 %i.aq, i64 %i.ar) ; 2 uses
   %.not203217.i = icmp slt i64 %..i, 1
@@ -218,7 +218,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge216.i, %.lr.ph220.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge216.i ], [ 0, %.lr.ph220.i ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge216.i ], [ 0, %.lr.ph220.i ] ; 3 uses
   %i.ay = phi i64 [ %i.hg, %._crit_edge216.i ], [ %i.ar, %.lr.ph220.i ] ; 2 uses
   %.0181218.i = phi i64 [ %i.hh, %._crit_edge216.i ], [ 1, %.lr.ph220.i ] ; 5 uses
   %i.az = add nsw i64 %.0181218.i, -1             ; 2 uses
@@ -348,10 +348,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p,
   br i1 %.not225.i, label %._crit_edge216.i, label %.lr.ph215.i
 
 .lr.ph215.i:                                      ; preds = %.preheader.i, %._crit_edge213.i
-  %indvar50 = phi i64 [ %indvar.next51, %._crit_edge213.i ], [ 0, %.preheader.i ] ; 2 uses
+  %indvar50 = phi i64 [ %indvar.next51, %._crit_edge213.i ], [ 0, %.preheader.i ] ; 3 uses
   %.1214.i = phi i64 [ %i.he, %._crit_edge213.i ], [ %i.az, %.preheader.i ] ; 12 uses
-  %9 = mul i64 %i.ax, %indvar50
-  %10 = sub i64 %9, %indvar
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.h, i64 %.1214.i
   %i.dm = load double, ptr %i.dl, align 8, !tbaa !81 ; 7 uses
   %i.dn = getelementptr inbounds [8 x i8], ptr %i.r, i64 %.1214.i
@@ -453,39 +451,46 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !86
   %i.fn = getelementptr inbounds [8 x i8], ptr %i.fm, i64 %.1214.i
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !87 ; 2 uses
-  %i.fp = ptrtoaddr ptr %i.fo to i64              ; 2 uses
+  %i.fp = ptrtoaddr ptr %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fk, i64 48
   %i.fr = load i64, ptr %i.fq, align 8, !tbaa !88 ; 2 uses
   %i.fs = getelementptr inbounds [8 x i8], ptr %i.fo, i64 %i.fr ; 2 uses
-  %i.ft = load i64, ptr %i.au, align 8, !tbaa !28
+  %i.ft = load i64, ptr %i.au, align 8, !tbaa !28 ; 2 uses
   %i.fu = sub nsw i64 %.1214.i, %i.ft
-  %spec.select.i = tail call i64 @llvm.smax.i64(i64 %i.fu, i64 0) ; 6 uses
-  %i.fv = load i64, ptr %i.av, align 8, !tbaa !29
+  %spec.select.i = tail call i64 @llvm.smax.i64(i64 %i.fu, i64 0) ; 5 uses
+  %i.fv = load i64, ptr %i.av, align 8, !tbaa !29 ; 2 uses
   %i.fw = add nsw i64 %i.fv, %.1214.i
   %i.fx = load i64, ptr %i.ae, align 8, !tbaa !35 ; 3 uses
-  %i.fy = add nsw i64 %i.fx, -1
-  %i.fz = tail call i64 @llvm.smin.i64(i64 %i.fw, i64 %i.fy) ; 3 uses
+  %i.fy = add nsw i64 %i.fx, -1                   ; 2 uses
+  %i.fz = tail call i64 @llvm.smin.i64(i64 %i.fw, i64 %i.fy) ; 2 uses
   %.not206209.i = icmp sgt i64 %spec.select.i, %i.fz
   br i1 %.not206209.i, label %._crit_edge213.i, label %.lr.ph212.i.preheader
 
 .lr.ph212.i.preheader:                            ; preds = %bb.ae
-  %i.ga = add i64 %i.fz, 1
-  %i.gb = sub i64 %i.ga, %spec.select.i           ; 3 uses
+  %9 = mul i64 %indvar50, %i.aq
+  %10 = add i64 %indvar, %9                       ; 2 uses
+  %11 = add nsw i64 %i.fv, %10
+  %12 = tail call i64 @llvm.smin.i64(i64 %11, i64 %i.fy)
+  %13 = sub i64 %10, %i.ft                        ; 2 uses
+  %14 = tail call i64 @llvm.smax.i64(i64 %12, i64 %13)
+  %15 = tail call i64 @llvm.smax.i64(i64 %14, i64 0)
+  %16 = tail call i64 @llvm.smax.i64(i64 %13, i64 0)
+  %i.ga = add nuw i64 %15, 1
+  %i.gb = sub i64 %i.ga, %16                      ; 3 uses
   %min.iters.check = icmp ult i64 %i.gb, 6
   br i1 %min.iters.check, label %.lr.ph212.i.preheader56, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph212.i.preheader
-  %i.gc = sub i64 %i.fp, %i.k
-  %i.gd = add i64 %i.fr, %10
-  %i.ge = shl i64 %i.gd, 3                        ; 2 uses
-  %11 = add i64 %i.gc, %i.ge
-  %i.gf = add i64 %11, -1
-  %diff.check = icmp ult i64 %i.gf, 31
-  %i.gg = sub i64 %i.fp, %i.u
-  %12 = add i64 %i.gg, %i.ge
-  %13 = add i64 %12, -1
-  %diff.check52 = icmp ult i64 %13, 31
-  %conflict.rdx = or i1 %diff.check, %diff.check52
+  %17 = mul i64 %indvar50, %i.ax
+  %i.gc = sub i64 %17, %indvar
+  %i.gd = add i64 %i.fr, %i.gc
+  %i.ge = shl i64 %i.gd, 3
+  %i.gf = add i64 %i.ge, %i.fp                    ; 2 uses
+  %i.gg = sub i64 %i.k, %i.gf
+  %diff.check = icmp ugt i64 %i.gg, -32
+  %18 = sub i64 %i.u, %i.gf
+  %diff.check55 = icmp ugt i64 %18, -32
+  %conflict.rdx = or i1 %diff.check, %diff.check55
   br i1 %conflict.rdx, label %.lr.ph212.i.preheader56, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

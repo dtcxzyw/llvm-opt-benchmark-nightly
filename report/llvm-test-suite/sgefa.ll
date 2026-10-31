@@ -32,7 +32,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph108:                                        ; preds = %.lr.ph108.preheader, %.loopexit
   %indvar.a = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvar.next.a, %.loopexit ] ; 5 uses
-  %indvars.iv124 = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvars.iv.next125.pre-phi, %.loopexit ] ; 9 uses
+  %indvar = phi i32 [ 0, %.lr.ph108.preheader ], [ %indvar.next, %.loopexit ] ; 2 uses
+  %indvars.iv124 = phi i64 [ 0, %.lr.ph108.preheader ], [ %indvars.iv.next125.pre-phi, %.loopexit ] ; 8 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph108.preheader ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %.084107 = phi i32 [ 0, %.lr.ph108.preheader ], [ %.185, %.loopexit ] ; 2 uses
   %.090105 = phi ptr [ %1, %.lr.ph108.preheader ], [ %i.ex, %.loopexit ] ; 2 uses
@@ -43,7 +44,6 @@ bb.b:                                             ; preds = %bb.a
   %i.q = zext i32 %i.p to i64
   %i.r = shl nuw nsw i64 %i.q, 2
   %i.s = add i64 %i.n, %i.r                       ; 2 uses
-  %2 = trunc i64 %indvars.iv124 to i32
   %i.t = shl nuw nsw i64 %indvar.a, 2             ; 2 uses
   %i.u = add nuw i64 %i.t, 8
   %i.v = trunc i64 %indvar.a to i32
@@ -147,7 +147,7 @@ middle.block182:                                  ; preds = %vector.body176
 
 .lr.ph102.us.us.preheader:                        ; preds = %.lr.ph104
   %scevgep136 = getelementptr i8, ptr %i.ab, i64 %i.z
-  %i.bm = sub i32 %i.l, %2                        ; 2 uses
+  %i.bm = sub i32 %i.l, %indvar                   ; 2 uses
   %i.bn = zext i32 %i.bm to i64
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.bm, 7
@@ -412,6 +412,7 @@ scalar.ph150:                                     ; preds = %scalar.ph150.prol.l
   %i.ex = getelementptr inbounds nuw i8, ptr %.090105, i64 4 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond128.not = icmp eq i64 %indvars.iv.next125.pre-phi, %wide.trip.count127
+  %indvar.next = add i32 %indvar, 1
   %indvar.next.a = add i64 %indvar.a, 1
   br i1 %exitcond128.not, label %.loopexit96, label %.lr.ph108, !llvm.loop !23
 

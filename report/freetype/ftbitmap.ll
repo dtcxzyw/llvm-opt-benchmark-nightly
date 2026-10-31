@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.ft = icmp eq i32 %.0106, 0
   %i.fu = zext i32 %.0107144 to i64
   %brmerge = select i1 %.not128152, i1 true, i1 %i.ft
-  %wide.trip.count = zext nneg i32 %.0106 to i64  ; 9 uses
+  %wide.trip.count = zext nneg i32 %.0106 to i64  ; 10 uses
   %min.iters.check = icmp ult i32 %.0106, 4
   %min.iters.check225 = icmp ult i32 %.0106, 32
   %i.fv = and i64 %wide.trip.count, 28
@@ -220,7 +220,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 .preheader136:                                    ; preds = %.preheader136.lr.ph, %._crit_edge155.split
   %.0105158 = phi i32 [ 0, %.preheader136.lr.ph ], [ %i.kc, %._crit_edge155.split ]
-  %.1111156 = phi ptr [ %.0110, %.preheader136.lr.ph ], [ %i.kb, %._crit_edge155.split ] ; 15 uses
+  %.1111156 = phi ptr [ %.0110, %.preheader136.lr.ph ], [ %i.kb, %._crit_edge155.split ] ; 16 uses
   br i1 %.not217, label %._crit_edge155.split, label %.lr.ph149
 
 .lr.ph149:                                        ; preds = %.preheader136
@@ -230,7 +230,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br i1 %brmerge, label %._crit_edge155.split, label %.lr.ph151.preheader
 
 .lr.ph151.preheader:                              ; preds = %.preheader
-  %scevgep = getelementptr i8, ptr %.1111156, i64 %wide.trip.count ; 2 uses
+  %scevgep = getelementptr i8, ptr %.1111156, i64 %wide.trip.count
   br label %iter.check
 
 .lr.ph:                                           ; preds = %.lr.ph149, %.loopexit
@@ -369,13 +369,14 @@ iter.check:                                       ; preds = %.lr.ph151.preheader
   %.1153 = phi i32 [ %i.jy, %._crit_edge ], [ 1, %.lr.ph151.preheader ] ; 3 uses
   %i.ih = load i32, ptr %i.bm, align 8, !tbaa !13
   %i.ii = mul nsw i32 %i.ih, %.1153
-  %i.ij = sext i32 %i.ii to i64
-  %i.ik = sub nsw i64 0, %i.ij                    ; 2 uses
+  %i.ij = sext i32 %i.ii to i64                   ; 2 uses
+  %i.ik = sub nsw i64 0, %i.ij
   %i.il = getelementptr inbounds i8, ptr %.1111156, i64 %i.ik ; 8 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep224 = getelementptr i8, ptr %scevgep, i64 %i.ik
+  %5 = sub nsw i64 %wide.trip.count, %i.ij
+  %scevgep224 = getelementptr i8, ptr %.1111156, i64 %5
   %bound0 = icmp ult ptr %i.il, %scevgep
   %bound1 = icmp ult ptr %.1111156, %scevgep224
   %found.conflict = and i1 %bound0, %bound1
@@ -778,7 +779,7 @@ bb.ag:                                            ; preds = %.lr.ph267, %bb.ai
   %.0181265 = phi i32 [ %i.gf, %.lr.ph267 ], [ %i.jd, %bb.ai ]
   %.4264 = phi ptr [ %.0191, %.lr.ph267 ], [ %i.iz, %bb.ai ] ; 10 uses
   %.4206263 = phi ptr [ %.0202, %.lr.ph267 ], [ %i.jc, %bb.ai ] ; 11 uses
-  %i.gi = lshr i32 %i.gh, 1                       ; 7 uses
+  %i.gi = lshr i32 %i.gh, 1                       ; 8 uses
   %.not223254 = icmp eq i32 %i.gi, 0
   br i1 %.not223254, label %._crit_edge260, label %iter.check
 
@@ -788,15 +789,15 @@ iter.check:                                       ; preds = %bb.ag
   br i1 %min.iters.check, label %.lr.ph259.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %.4206263, i64 2
   %i.gk = add nsw i32 %i.gi, -1
-  %i.gl = zext i32 %i.gk to i64                   ; 2 uses
+  %i.gl = zext i32 %i.gk to i64
   %i.gm = shl nuw nsw i64 %i.gl, 1
-  %scevgep369 = getelementptr i8, ptr %scevgep, i64 %i.gm
-  %scevgep370 = getelementptr i8, ptr %.4264, i64 1
-  %scevgep371 = getelementptr i8, ptr %scevgep370, i64 %i.gl
+  %scevgep369 = getelementptr i8, ptr %.4206263, i64 %i.gm
+  %scevgep370 = getelementptr i8, ptr %scevgep369, i64 2
+  %4 = zext nneg i32 %i.gi to i64
+  %scevgep371 = getelementptr i8, ptr %.4264, i64 %4
   %bound0 = icmp ult ptr %.4206263, %scevgep371
-  %bound1 = icmp ult ptr %.4264, %scevgep369
+  %bound1 = icmp ult ptr %.4264, %scevgep370
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph259.preheader, label %vector.main.loop.iter.check
 

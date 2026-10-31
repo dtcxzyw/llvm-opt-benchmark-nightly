@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.t
   br label %_ZN6embree13FastAllocator11ThreadLocal6mallocEPS0_mm.exit.i
 
 _ZN6embree13FastAllocator11ThreadLocal6mallocEPS0_mm.exit.i: ; preds = %bb.x, %bb.r, %bb.p
-  %.1.i.i = phi ptr [ %i.dk, %bb.p ], [ %i.dp, %bb.r ], [ %.0.i.i, %bb.x ] ; 2 uses
+  %.1.i.i = phi ptr [ %i.dk, %bb.p ], [ %i.dp, %bb.r ], [ %.0.i.i, %bb.x ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not = icmp eq i32 %.055.i.lcssa, 0
   br i1 %.not, label %_ZNK6embree4sse214CreateLeafGridILi4ENS_12SubGridQBVHNILi4EEEEclEPKNS_7PrimRefERKNS_5rangeImEERKNS_13FastAllocator15CachedAllocatorE.exit, label %.lr.ph297
@@ -220,13 +220,11 @@ _ZN6embree13FastAllocator11ThreadLocal6mallocEPS0_mm.exit.i: ; preds = %bb.x, %b
   %i.em = insertelement <4 x ptr> %i.el, ptr %i.e, i64 2
   %i.en = insertelement <4 x ptr> %i.em, ptr %i.f, i64 3
   %i.eo = getelementptr inbounds nuw i8, <4 x ptr> %i.en, <4 x i64> <i64 32, i64 0, i64 0, i64 0>
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 5 uses
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 112 ; 4 uses
-  %i.ep = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 4 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 4 uses
-  %scevgep352 = getelementptr inbounds nuw i8, ptr %4, i64 112
-  %scevgep357 = getelementptr i8, ptr %7, i64 -4
-  %i.er = insertelement <4 x ptr> poison, ptr %8, i64 0
+  %i.ep = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 5 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %4, i64 112 ; 4 uses
+  %scevgep352 = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 4 uses
+  %scevgep357 = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 4 uses
+  %i.er = insertelement <4 x ptr> poison, ptr %i.ep, i64 0
   %i.es = shufflevector <4 x ptr> %i.er, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.et = insertelement <4 x ptr> poison, ptr %i.d, i64 0
   %i.eu = insertelement <4 x ptr> %i.et, ptr %i.e, i64 1
@@ -269,7 +267,7 @@ bb.y:                                             ; preds = %.lr.ph
   br i1 %exitcond302.not, label %._crit_edge, label %.lr.ph.preheader, !llvm.loop !249
 
 .preheader273:                                    ; preds = %.lr.ph297, %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit
-  %.051.i296 = phi i64 [ 0, %.lr.ph297 ], [ %i.rl, %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit ] ; 3 uses
+  %.051.i296 = phi i64 [ 0, %.lr.ph297 ], [ %i.rl, %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #22
@@ -280,7 +278,7 @@ bb.y:                                             ; preds = %.lr.ph
 
 ._crit_edge282:                                   ; preds = %bb.aa, %.preheader273
   %.050.i.lcssa = phi i32 [ 0, %.preheader273 ], [ %.1.i, %bb.aa ] ; 3 uses
-  %i.fi = getelementptr inbounds nuw [88 x i8], ptr %.1.i.i, i64 %.051.i296 ; 37 uses
+  %i.fi = getelementptr inbounds nuw [88 x i8], ptr %.1.i.i, i64 %.051.i296 ; 36 uses
   store <4 x i64> splat (i64 -4294967296), ptr %i.fi, align 8
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 32 ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fi, i64 48 ; 2 uses
@@ -308,10 +306,10 @@ bb.y:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store <4 x float> splat (float +inf), ptr %i.ei, align 32
   store <4 x float> splat (float +inf), ptr %i.ej, align 64
-  store <4 x float> splat (float +inf), ptr %8, align 32
-  store <4 x float> splat (float -inf), ptr %9, align 16
-  store <4 x float> splat (float -inf), ptr %i.ep, align 16
+  store <4 x float> splat (float +inf), ptr %i.ep, align 32
   store <4 x float> splat (float -inf), ptr %i.eq, align 16
+  store <4 x float> splat (float -inf), ptr %scevgep352, align 16
+  store <4 x float> splat (float -inf), ptr %scevgep357, align 16
   %i.gc = zext i32 %.050.i.lcssa to i64           ; 5 uses
   %.not299 = icmp eq i32 %.050.i.lcssa, 0
   br i1 %.not299, label %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader
@@ -321,15 +319,19 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader: ; pre
   br i1 %min.iters.check, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader474, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader
+  %8 = mul nuw nsw i64 %.051.i296, 88
   %i.gd = shl nuw nsw i64 %i.gc, 3
-  %scevgep = getelementptr i8, ptr %i.fi, i64 %i.gd ; 2 uses
+  %9 = getelementptr i8, ptr %.1.i.i, i64 %8
+  %scevgep = getelementptr i8, ptr %9, i64 %i.gd  ; 2 uses
   %i.ge = shl nuw nsw i64 %i.gc, 2                ; 4 uses
-  %scevgep353 = getelementptr i8, ptr %scevgep352, i64 %i.ge
+  %10 = getelementptr i8, ptr %4, i64 %i.ge
+  %scevgep353 = getelementptr i8, ptr %10, i64 112
   %scevgep354 = getelementptr i8, ptr %i.d, i64 %i.ge ; 2 uses
   %scevgep355 = getelementptr i8, ptr %i.e, i64 %i.ge ; 2 uses
   %scevgep356 = getelementptr i8, ptr %i.f, i64 %i.ge ; 2 uses
   %i.gf = shl nuw nsw i64 %i.gc, 5
-  %scevgep358 = getelementptr i8, ptr %scevgep357, i64 %i.gf ; 2 uses
+  %11 = getelementptr i8, ptr %7, i64 %i.gf
+  %scevgep358 = getelementptr i8, ptr %11, i64 -4 ; 2 uses
   %i.gg = insertelement <4 x ptr> poison, ptr %i.fi, i64 0
   %i.gh = shufflevector <4 x ptr> %i.gg, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.gi = insertelement <4 x ptr> poison, ptr %scevgep353, i64 0 ; 2 uses
@@ -387,7 +389,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.hr = load float, ptr %i.hp, align 16, !alias.scope !290
   %i.hs = insertelement <2 x float> poison, float %i.hq, i64 0
   %i.ht = insertelement <2 x float> %i.hs, float %i.hr, i64 1
-  %i.hu = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %index
+  %i.hu = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %index
   store <2 x float> %i.ht, ptr %i.hu, align 8, !alias.scope !291, !noalias !292
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hn, i64 4
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ho, i64 36
@@ -411,7 +413,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.im = load float, ptr %i.ik, align 16, !alias.scope !290
   %i.in = insertelement <2 x float> poison, float %i.il, i64 0
   %i.io = insertelement <2 x float> %i.in, float %i.im, i64 1
-  %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.eq, i64 %index
+  %i.ip = getelementptr inbounds nuw [4 x i8], ptr %scevgep357, i64 %index
   store <2 x float> %i.io, ptr %i.ip, align 8, !alias.scope !291, !noalias !292
   %i.iq = getelementptr inbounds nuw i8, ptr %i.hn, i64 20
   %i.ir = getelementptr inbounds nuw i8, ptr %i.ho, i64 52
@@ -419,7 +421,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.it = load float, ptr %i.ir, align 4, !alias.scope !290
   %i.iu = insertelement <2 x float> poison, float %i.is, i64 0
   %i.iv = insertelement <2 x float> %i.iu, float %i.it, i64 1
-  %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %index
+  %i.iw = getelementptr inbounds nuw [4 x i8], ptr %scevgep352, i64 %index
   store <2 x float> %i.iv, ptr %i.iw, align 8, !alias.scope !291, !noalias !292
   %i.ix = getelementptr inbounds nuw i8, ptr %i.hn, i64 24
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ho, i64 56
@@ -427,7 +429,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ja = load float, ptr %i.iy, align 8, !alias.scope !290
   %i.jb = insertelement <2 x float> poison, float %i.iz, i64 0
   %i.jc = insertelement <2 x float> %i.jb, float %i.ja, i64 1
-  %i.jd = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %index
+  %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.eq, i64 %index
   store <2 x float> %i.jc, ptr %i.jd, align 8, !alias.scope !291, !noalias !292
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.je = icmp eq i64 %index.next, %n.vec
@@ -456,7 +458,7 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit: ; preds = %_ZN6
   store i64 %.sroa.039.0.insert.insert, ptr %i.jl, align 8
   %i.jo = getelementptr inbounds nuw [32 x i8], ptr %7, i64 %.0.i7288 ; 6 uses
   %i.jp = load float, ptr %i.jo, align 16
-  %i.jq = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %.0.i7288
+  %i.jq = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %.0.i7288
   store float %i.jp, ptr %i.jq, align 4
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jo, i64 4
   %i.js = load float, ptr %i.jr, align 4
@@ -468,23 +470,23 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit: ; preds = %_ZN6
   store float %i.jv, ptr %i.jw, align 4
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jo, i64 16
   %i.jy = load float, ptr %i.jx, align 16
-  %i.jz = getelementptr inbounds nuw [4 x i8], ptr %i.eq, i64 %.0.i7288
+  %i.jz = getelementptr inbounds nuw [4 x i8], ptr %scevgep357, i64 %.0.i7288
   store float %i.jy, ptr %i.jz, align 4
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jo, i64 20
   %i.kb = load float, ptr %i.ka, align 4
-  %i.kc = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %.0.i7288
+  %i.kc = getelementptr inbounds nuw [4 x i8], ptr %scevgep352, i64 %.0.i7288
   store float %i.kb, ptr %i.kc, align 4
   %i.kd = getelementptr inbounds nuw i8, ptr %i.jo, i64 24
   %i.ke = load float, ptr %i.kd, align 8
-  %i.kf = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %.0.i7288
+  %i.kf = getelementptr inbounds nuw [4 x i8], ptr %i.eq, i64 %.0.i7288
   store float %i.ke, ptr %i.kf, align 4
   %i.kg = add nuw nsw i64 %.0.i7288, 1            ; 2 uses
   %exitcond308.not = icmp eq i64 %i.kg, %i.gc
   br i1 %exitcond308.not, label %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit.loopexit, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit, !llvm.loop !258
 
 _ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit.loopexit: ; preds = %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit
-  %.pre339 = load <4 x float>, ptr %8, align 32, !noalias !295
-  %.pre340 = load <4 x float>, ptr %i.eq, align 16, !noalias !296
+  %.pre339 = load <4 x float>, ptr %i.ep, align 32, !noalias !295
+  %.pre340 = load <4 x float>, ptr %scevgep357, align 16, !noalias !296
   br label %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit
 
 _ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit: ; preds = %_ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit.loopexit, %._crit_edge282
@@ -581,7 +583,7 @@ _ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit: ; pre
   %i.mz = shufflevector <4 x float> %i.my, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.na = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.mz, <4 x float> %i.my) ; 3 uses
   %i.nb = extractelement <4 x float> %i.na, i64 0
-  %i.nc = load <4 x float>, ptr %i.ep, align 16, !noalias !298 ; 4 uses
+  %i.nc = load <4 x float>, ptr %scevgep352, align 16, !noalias !298 ; 4 uses
   %i.nd = shufflevector <4 x float> %i.nc, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
   %i.ne = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.nd, <4 x float> %i.nc) ; 2 uses
   %i.nf = shufflevector <4 x float> %i.ne, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
@@ -661,7 +663,7 @@ _ZN6embree12SubGridQBVHNILi4EEC2EPKjS3_S3_PKNS_4BBoxINS_6Vec3faEEEjj.exit: ; pre
   %i.ph = shufflevector <4 x float> %i.pg, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.pi = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.ph, <4 x float> %i.pg) ; 3 uses
   %i.pj = extractelement <4 x float> %i.pi, i64 0
-  %i.pk = load <4 x float>, ptr %9, align 16, !noalias !300 ; 4 uses
+  %i.pk = load <4 x float>, ptr %i.eq, align 16, !noalias !300 ; 4 uses
   %i.pl = shufflevector <4 x float> %i.pk, <4 x float> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
   %i.pm = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.pl, <4 x float> %i.pk) ; 2 uses
   %i.pn = shufflevector <4 x float> %i.pm, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>

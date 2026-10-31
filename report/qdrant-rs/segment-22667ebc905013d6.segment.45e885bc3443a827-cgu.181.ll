@@ -202,20 +202,23 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.bg = shl i64 %index, 4                       ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.ag, i64 %i.bg ; 2 uses
   %next.gep.a = getelementptr i8, ptr %i.ag, i64 %i.bg ; 2 uses
-  %i.bh = getelementptr i8, ptr %i.ag, i64 %i.bg
+  %i.bh = getelementptr i8, ptr %next.gep.a, i64 16
   call void @llvm.experimental.noalias.scope.decl(metadata !527)
   call void @llvm.experimental.noalias.scope.decl(metadata !528)
-  %i.bi = getelementptr inbounds nuw i8, ptr %next.gep.a, i64 8
-  %i.bj = getelementptr i8, ptr %i.bh, i64 24
+  %i.bi = getelementptr inbounds nuw i8, ptr %next.gep, i64 8
+  %i.bj = getelementptr i8, ptr %next.gep.a, i64 24
   %i.bk = load float, ptr %i.bi, align 8, !alias.scope !529, !noalias !530
   %i.bl = load float, ptr %i.bj, align 8, !alias.scope !529, !noalias !530
   %i.bm = insertelement <2 x float> poison, float %i.bk, i64 0
   %i.bn = insertelement <2 x float> %i.bm, float %i.bl, i64 1
-  %wide.vec = load <4 x i64>, ptr %next.gep.a, align 8, !alias.scope !529, !noalias !530
-  %strided.vec = shufflevector <4 x i64> %wide.vec, <4 x i64> poison, <2 x i32> <i32 0, i32 2>
+  %2 = load i64, ptr %next.gep, align 8, !alias.scope !529, !noalias !530
+  %3 = load i64, ptr %i.bh, align 8, !alias.scope !529, !noalias !530
+  %4 = insertelement <2 x i64> poison, i64 %2, i64 0
+  %5 = insertelement <2 x i64> %4, i64 %3, i64 1
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %index
-  store <2 x i64> %strided.vec, ptr %i.bo, align 8, !alias.scope !531, !noalias !532
+  store <2 x i64> %5, ptr %i.bo, align 8, !alias.scope !531, !noalias !532
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %index
   store <2 x float> %i.bn, ptr %i.bp, align 4, !alias.scope !533, !noalias !529
   %index.next = add nuw i64 %index, 2             ; 2 uses

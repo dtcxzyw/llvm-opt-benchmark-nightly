@@ -205,10 +205,11 @@ iter.check:                                       ; preds = %bb.m
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.cj = add i64 %i.g, add (i64 ptrtoaddr (ptr @test_heap to i64), i64 24)
+  %i.cj = add i64 %i.g, ptrtoaddr (ptr @test_heap to i64)
   %i.ck = add i64 %i.cj, %i.n
-  %i.cl = sub i64 %i.bx, %i.ck
-  %diff.check = icmp ugt i64 %i.cl, -32
+  %i.cl = sub i64 %i.ck, %i.bx
+  %6 = add i64 %i.cl, 23
+  %diff.check = icmp ult i64 %6, 31
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

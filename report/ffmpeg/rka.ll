@@ -135,7 +135,7 @@ bb.h:                                             ; preds = %bb.d, %bb.b, %bb.a,
 define internal i32 @rka_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 151 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 152 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !100  ; 5 uses
@@ -538,7 +538,6 @@ bb.af:                                            ; preds = %bb.ae
   %i.og = getelementptr inbounds nuw i8, ptr %i.b, i64 13160 ; 4 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %i.b, i64 1095328 ; 4 uses
   %scevgep360 = getelementptr i8, ptr %i.b, i64 23400 ; 2 uses
-  %scevgep361 = getelementptr i8, ptr %i.b, i64 1105568
   %i.oi = sub i64 %i.oc, %i.ob
   %diff.check = icmp ugt i64 %i.oi, -8
   br label %bb.ag
@@ -594,7 +593,8 @@ vector.memcheck356:                               ; preds = %.lr.ph219.preheader
   %scevgep358 = getelementptr i8, ptr %i.ny, i64 %i.ow ; 2 uses
   %scevgep359 = getelementptr i8, ptr %i.ny, i64 %i.ox ; 2 uses
   %i.oy = shl nuw nsw i64 %wide.trip.count, 2
-  %scevgep362 = getelementptr i8, ptr %scevgep361, i64 %i.oy ; 2 uses
+  %4 = getelementptr i8, ptr %i.b, i64 %i.oy
+  %scevgep362 = getelementptr i8, ptr %4, i64 1105568 ; 2 uses
   %bound0 = icmp ult ptr %scevgep, %scevgep359
   %bound1 = icmp ult ptr %scevgep358, %scevgep357
   %found.conflict = and i1 %bound0, %bound1
@@ -784,9 +784,6 @@ bb.an:                                            ; preds = %bb.ad
 
 .lr.ph229:                                        ; preds = %.lr.ph229.preheader, %.loopexit
   %indvars.iv266 = phi i64 [ 0, %.lr.ph229.preheader ], [ %indvars.iv.next267, %.loopexit ] ; 4 uses
-  %4 = mul nuw nsw i64 %indvars.iv266, 1082168
-  %5 = getelementptr i8, ptr %i.b, i64 %4
-  %scevgep397 = getelementptr i8, ptr %5, i64 23400 ; 2 uses
   %i.sc = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv266
   %i.sd = load ptr, ptr %i.sc, align 8, !tbaa !49 ; 3 uses
   %i.se = getelementptr inbounds nuw [1082168 x i8], ptr %i.rw, i64 %indvars.iv266 ; 9 uses
@@ -818,12 +815,16 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %min.iters.check403, label %.lr.ph225.preheader416, label %vector.memcheck394
 
 vector.memcheck394:                               ; preds = %.lr.ph225.preheader
-  %scevgep395 = getelementptr i8, ptr %i.sd, i64 %i.sb
-  %scevgep396 = getelementptr i8, ptr %scevgep395, i64 %wide.trip.count259
+  %5 = getelementptr i8, ptr %i.sd, i64 %wide.trip.count259
+  %scevgep395 = getelementptr i8, ptr %5, i64 %i.sb
+  %6 = mul nuw nsw i64 %indvars.iv266, 1082168
+  %7 = add nuw i64 %6, 23400                      ; 2 uses
+  %scevgep396 = getelementptr i8, ptr %i.b, i64 %7
   %i.sm = shl nuw nsw i64 %wide.trip.count259, 2
-  %scevgep398 = getelementptr i8, ptr %scevgep397, i64 %i.sm
+  %8 = getelementptr i8, ptr %i.b, i64 %7
+  %scevgep398 = getelementptr i8, ptr %8, i64 %i.sm
   %bound0399 = icmp ult ptr %invariant.gep, %scevgep398
-  %bound1400 = icmp ult ptr %scevgep397, %scevgep396
+  %bound1400 = icmp ult ptr %scevgep396, %scevgep395
   %found.conflict401 = and i1 %bound0399, %bound1400
   br i1 %found.conflict401, label %.lr.ph225.preheader416, label %vector.ph404
 

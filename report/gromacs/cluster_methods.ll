@@ -204,9 +204,8 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = zext nneg i32 %i.b to i64                ; 3 uses
   %wide.trip.count208 = zext nneg i32 %i.b to i64 ; 5 uses
-  %scevgep = getelementptr i8, ptr %i.g, i64 8
-  %i.k = mul nuw nsw i64 %wide.trip.count208, 12
   %8 = shl nuw nsw i64 %wide.trip.count208, 2
+  %i.k = mul nuw nsw i64 %wide.trip.count208, 12
   %i.l = getelementptr i8, ptr %i.g, i64 %i.k
   %i.m = getelementptr i8, ptr %i.l, i64 -12
   br label %bb.b
@@ -226,9 +225,6 @@ bb.b:                                             ; preds = %.lr.ph173, %.loopex
   %indvars.iv205 = phi i64 [ 0, %.lr.ph173 ], [ %indvars.iv.next206, %.loopexit168 ] ; 6 uses
   %indvars.iv198 = phi i64 [ 1, %.lr.ph173 ], [ %indvars.iv.next199, %.loopexit168 ] ; 6 uses
   %.089172 = phi i32 [ 0, %.lr.ph173 ], [ %.190.lcssa, %.loopexit168 ] ; 2 uses
-  %9 = mul nsw i64 %indvars.iv205, -12
-  %scevgep256 = getelementptr i8, ptr %i.m, i64 %9
-  %10 = shl nuw nsw i64 %indvars.iv205, 2
   %indvars.iv.next206 = add nuw nsw i64 %indvars.iv205, 1 ; 3 uses
   %i.o = icmp samesign ult i64 %indvars.iv.next206, %i.j
   br i1 %i.o, label %.lr.ph, label %.loopexit168
@@ -246,12 +242,16 @@ bb.b:                                             ; preds = %.lr.ph173, %.loopex
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.w = mul nsw i64 %i.s, 12                     ; 2 uses
-  %scevgep255 = getelementptr i8, ptr %scevgep, i64 %i.w
-  %scevgep257 = getelementptr i8, ptr %scevgep256, i64 %i.w
-  %i.x = getelementptr nuw i8, ptr %i.r, i64 %10
+  %9 = getelementptr i8, ptr %i.g, i64 %i.w
+  %10 = getelementptr i8, ptr %9, i64 8
+  %11 = mul nsw i64 %indvars.iv205, -12
+  %scevgep255 = getelementptr i8, ptr %i.m, i64 %11
+  %scevgep257 = getelementptr i8, ptr %scevgep255, i64 %i.w
+  %12 = shl nuw nsw i64 %indvars.iv205, 2
+  %i.x = getelementptr nuw i8, ptr %i.r, i64 %12
   %scevgep258 = getelementptr nuw i8, ptr %i.x, i64 4
   %scevgep259 = getelementptr i8, ptr %i.r, i64 %8
-  %bound0 = icmp ult ptr %scevgep255, %scevgep259
+  %bound0 = icmp ult ptr %10, %scevgep259
   %bound1 = icmp ult ptr %scevgep258, %scevgep257
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
@@ -654,7 +654,7 @@ bb.a:
   %spec.store.select = select i1 %i.b, float 1.000000e+04, float %4 ; 2 uses
   %i.c = sext i32 %0 to i64                       ; 9 uses
   %i.d = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.35, ptr noundef nonnull @.str.27, i32 noundef 352, i64 noundef range(i64 -2147483648, 2147483648) %i.c, i64 noundef 8) ; 8 uses
-  %i.e = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.36, ptr noundef nonnull @.str.27, i32 noundef 353, i64 noundef range(i64 -2147483648, 2147483648) %i.c, i64 noundef 12) ; 29 uses
+  %i.e = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.36, ptr noundef nonnull @.str.27, i32 noundef 353, i64 noundef range(i64 -2147483648, 2147483648) %i.c, i64 noundef 12) ; 30 uses
   %i.f = icmp sgt i32 %0, 0                       ; 6 uses
   br i1 %i.f, label %.preheader274.lr.ph, label %._crit_edge293
 
@@ -668,15 +668,16 @@ bb.a:
   %i.l = icmp samesign ugt i32 %0, 16
   %.017.i18.i = getelementptr i8, ptr %i.e, i64 12 ; 2 uses
   %.not18.i.i = icmp eq i32 %0, 1
-  %i.m = getelementptr i8, ptr %i.e, i64 8        ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 192
   %i.o = icmp sgt i32 %2, 0
   %i.p = add nuw nsw i32 %2, 1
   %i.q = zext nneg i32 %i.p to i64
   %wide.trip.count350 = zext nneg i32 %0 to i64   ; 9 uses
+  %8 = shl nuw nsw i64 %wide.trip.count350, 2
   %i.r = mul nuw nsw i64 %wide.trip.count350, 12
   %scevgep438 = getelementptr i8, ptr %i.e, i64 %i.r
-  %8 = shl nuw nsw i64 %wide.trip.count350, 2
+  %scevgep441 = getelementptr i8, ptr %i.e, i64 8
   %min.iters.check = icmp ult i32 %0, 8
   %n.vec = and i64 %wide.trip.count350, 2147483640 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count350
@@ -692,7 +693,7 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %scevgep439 = getelementptr i8, ptr %i.t, i64 %8
-  %bound0 = icmp ult ptr %i.m, %scevgep439
+  %bound0 = icmp ult ptr %scevgep441, %scevgep439
   %bound1 = icmp ult ptr %i.t, %scevgep438
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body

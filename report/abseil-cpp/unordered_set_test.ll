@@ -205,7 +205,7 @@ _ZNSt6vectorIcSaIcEE9push_backEOc.exit:           ; preds = %_ZNSt6vectorIcSaIcE
   %i.cd = ptrtoint ptr %i.ca to i64
   %i.ce = ptrtoint ptr %i.bz to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 24                ; 4 uses
+  %i.cg = sdiv exact i64 %i.cf, 24                ; 3 uses
   store i64 %.024.lcssa, ptr %0, align 8, !tbaa !197
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.cg, ptr %i.ch, align 8, !tbaa !198
@@ -268,21 +268,22 @@ bb.t:                                             ; preds = %.noexc43, %_ZNSt6ve
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge116
   %i.cw = phi ptr [ %.pre145, %.preheader.lr.ph ], [ %i.dy, %._crit_edge116 ]
-  %.018120 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.dz, %._crit_edge116 ] ; 3 uses
-  %.sroa.048.0119 = phi ptr [ %.sroa.050.0.lcssa, %.preheader.lr.ph ], [ %.sroa.048.1.lcssa, %._crit_edge116 ] ; 7 uses
+  %.018120 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.dz, %._crit_edge116 ] ; 2 uses
+  %.sroa.048.0119 = phi ptr [ %.sroa.050.0.lcssa, %.preheader.lr.ph ], [ %.sroa.048.1.lcssa, %._crit_edge116 ] ; 8 uses
+  %.sroa.048.0119214 = ptrtoaddr ptr %.sroa.048.0119 to i64
   %.not25112 = icmp eq ptr %i.cw, %.pre146
-  br i1 %.not25112, label %._crit_edge116, label %iter.check.a
+  br i1 %.not25112, label %._crit_edge116, label %iter.check
 
-iter.check.a:                                     ; preds = %.preheader
-  %.sroa.048.0119213 = ptrtoaddr ptr %.sroa.048.0119 to i64
-  %9 = mul i64 %i.cg, %.018120
+iter.check:                                       ; preds = %.preheader
+  %9 = mul i64 %.018120, %i.cg                    ; 2 uses
+  %10 = getelementptr i8, ptr %i.co, i64 %9       ; 7 uses
+  br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %iter.check.a
+
+iter.check.a:                                     ; preds = %iter.check
   %i.cx = add i64 %9, %i.cp
-  %10 = mul i64 %.018120, %i.cg
-  %11 = getelementptr i8, ptr %i.co, i64 %10      ; 7 uses
-  %i.cy = sub i64 %.sroa.048.0119213, %i.cx
+  %i.cy = sub i64 %.sroa.048.0119214, %i.cx
   %diff.check = icmp ugt i64 %i.cy, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check.a
   br i1 %min.iters.check214, label %vec.epilog.ph, label %vector.ph
@@ -301,7 +302,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.dc = icmp ne <16 x i8> %wide.load215, zeroinitializer
   %i.dd = zext <16 x i1> %i.db to <16 x i8>
   %i.de = zext <16 x i1> %i.dc to <16 x i8>
-  %i.df = getelementptr i8, ptr %11, i64 %index   ; 2 uses
+  %i.df = getelementptr i8, ptr %10, i64 %index   ; 2 uses
   %i.dg = getelementptr i8, ptr %i.df, i64 16
   store <16 x i8> %i.dd, ptr %i.df, align 1, !tbaa !72
   store <16 x i8> %i.de, ptr %i.dg, align 1, !tbaa !72
@@ -326,7 +327,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %wide.load219 = load <4 x i8>, ptr %next.gep218, align 1, !tbaa !72
   %i.dj = icmp ne <4 x i8> %wide.load219, zeroinitializer
   %i.dk = zext <4 x i1> %i.dj to <4 x i8>
-  %i.dl = getelementptr i8, ptr %11, i64 %index217
+  %i.dl = getelementptr i8, ptr %10, i64 %index217
   store <4 x i8> %i.dk, ptr %i.dl, align 1, !tbaa !72
   %index.next220 = add nuw i64 %index217, 4       ; 2 uses
   %i.dm = icmp eq i64 %index.next220, %n.vec216
@@ -335,9 +336,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n221, label %._crit_edge116, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.0114.ph = phi i64 [ 0, %iter.check.a ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec216, %vec.epilog.middle.block ] ; 3 uses
-  %.sroa.048.1113.ph = phi ptr [ %.sroa.048.0119, %iter.check.a ], [ %i.cz, %vec.epilog.iter.check ], [ %i.di, %vec.epilog.middle.block ] ; 2 uses
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.0114.ph = phi i64 [ 0, %iter.check ], [ 0, %iter.check.a ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec216, %vec.epilog.middle.block ] ; 3 uses
+  %.sroa.048.1113.ph = phi ptr [ %.sroa.048.0119, %iter.check ], [ %.sroa.048.0119, %iter.check.a ], [ %i.cz, %vec.epilog.iter.check ], [ %i.di, %vec.epilog.middle.block ] ; 2 uses
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
@@ -348,7 +349,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.do = load i8, ptr %.sroa.048.1113.prol, align 1, !tbaa !72
   %i.dp = icmp ne i8 %i.do, 0
   %i.dq = zext i1 %i.dp to i8
-  %i.dr = getelementptr i8, ptr %11, i64 %.0114.prol
+  %i.dr = getelementptr i8, ptr %10, i64 %.0114.prol
   store i8 %i.dq, ptr %i.dr, align 1, !tbaa !72
   %i.ds = add i64 %.0114.prol, 1                  ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -392,27 +393,27 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.eb = load i8, ptr %.sroa.048.1113, align 1, !tbaa !72
   %i.ec = icmp ne i8 %i.eb, 0
   %i.ed = zext i1 %i.ec to i8
-  %i.ee = getelementptr i8, ptr %11, i64 %.0114
+  %i.ee = getelementptr i8, ptr %10, i64 %.0114
   store i8 %i.ed, ptr %i.ee, align 1, !tbaa !72
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.048.1113, i64 2
   %i.eg = load i8, ptr %i.ea, align 1, !tbaa !72
   %i.eh = icmp ne i8 %i.eg, 0
   %i.ei = zext i1 %i.eh to i8
-  %i.ej = getelementptr i8, ptr %11, i64 %.0114
+  %i.ej = getelementptr i8, ptr %10, i64 %.0114
   %i.ek = getelementptr i8, ptr %i.ej, i64 1
   store i8 %i.ei, ptr %i.ek, align 1, !tbaa !72
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.048.1113, i64 3
   %i.em = load i8, ptr %i.ef, align 1, !tbaa !72
   %i.en = icmp ne i8 %i.em, 0
   %i.eo = zext i1 %i.en to i8
-  %i.ep = getelementptr i8, ptr %11, i64 %.0114
+  %i.ep = getelementptr i8, ptr %10, i64 %.0114
   %i.eq = getelementptr i8, ptr %i.ep, i64 2
   store i8 %i.eo, ptr %i.eq, align 1, !tbaa !72
   %i.er = getelementptr inbounds nuw i8, ptr %.sroa.048.1113, i64 4 ; 2 uses
   %i.es = load i8, ptr %i.el, align 1, !tbaa !72
   %i.et = icmp ne i8 %i.es, 0
   %i.eu = zext i1 %i.et to i8
-  %i.ev = getelementptr i8, ptr %11, i64 %.0114
+  %i.ev = getelementptr i8, ptr %10, i64 %.0114
   %i.ew = getelementptr i8, ptr %i.ev, i64 3
   store i8 %i.eu, ptr %i.ew, align 1, !tbaa !72
   %i.ex = add i64 %.0114, 4                       ; 2 uses
@@ -815,7 +816,7 @@ _ZNSt6vectorIcSaIcEE9push_backEOc.exit:           ; preds = %_ZNSt6vectorIcSaIcE
   %i.cc = ptrtoint ptr %i.bz to i64
   %i.cd = ptrtoint ptr %i.by to i64
   %i.ce = sub i64 %i.cc, %i.cd
-  %i.cf = sdiv exact i64 %i.ce, 24                ; 4 uses
+  %i.cf = sdiv exact i64 %i.ce, 24                ; 3 uses
   store i64 %.024.lcssa, ptr %0, align 8, !tbaa !197
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.cf, ptr %i.cg, align 8, !tbaa !198
@@ -878,21 +879,22 @@ bb.s:                                             ; preds = %.noexc43, %_ZNSt6ve
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge116
   %i.cv = phi ptr [ %.pre145, %.preheader.lr.ph ], [ %i.dy, %._crit_edge116 ]
-  %.018120 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.dz, %._crit_edge116 ] ; 3 uses
-  %.sroa.048.0119 = phi ptr [ %.sroa.050.0.lcssa, %.preheader.lr.ph ], [ %.sroa.048.1.lcssa, %._crit_edge116 ] ; 7 uses
+  %.018120 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.dz, %._crit_edge116 ] ; 2 uses
+  %.sroa.048.0119 = phi ptr [ %.sroa.050.0.lcssa, %.preheader.lr.ph ], [ %.sroa.048.1.lcssa, %._crit_edge116 ] ; 8 uses
+  %.sroa.048.0119214 = ptrtoaddr ptr %.sroa.048.0119 to i64
   %.not25112 = icmp eq ptr %i.cv, %.pre146
-  br i1 %.not25112, label %._crit_edge116, label %iter.check.a
+  br i1 %.not25112, label %._crit_edge116, label %iter.check
 
-iter.check.a:                                     ; preds = %.preheader
-  %.sroa.048.0119213 = ptrtoaddr ptr %.sroa.048.0119 to i64
-  %9 = mul i64 %i.cf, %.018120
+iter.check:                                       ; preds = %.preheader
+  %9 = mul i64 %.018120, %i.cf                    ; 2 uses
+  %10 = getelementptr i8, ptr %i.cn, i64 %9       ; 7 uses
+  br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %iter.check.a
+
+iter.check.a:                                     ; preds = %iter.check
   %i.cw = add i64 %9, %i.co
-  %10 = mul i64 %.018120, %i.cf
-  %11 = getelementptr i8, ptr %i.cn, i64 %10      ; 7 uses
-  %i.cx = sub i64 %.sroa.048.0119213, %i.cw
+  %i.cx = sub i64 %.sroa.048.0119214, %i.cw
   %diff.check = icmp ugt i64 %i.cx, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check.a
   br i1 %min.iters.check214, label %vec.epilog.ph, label %vector.ph
@@ -911,7 +913,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.db = icmp ne <16 x i8> %wide.load215, zeroinitializer
   %i.dc = zext <16 x i1> %i.da to <16 x i8>
   %i.dd = zext <16 x i1> %i.db to <16 x i8>
-  %i.de = getelementptr i8, ptr %11, i64 %index   ; 2 uses
+  %i.de = getelementptr i8, ptr %10, i64 %index   ; 2 uses
   %i.df = getelementptr i8, ptr %i.de, i64 16
   store <16 x i8> %i.dc, ptr %i.de, align 1, !tbaa !72
   store <16 x i8> %i.dd, ptr %i.df, align 1, !tbaa !72
@@ -936,7 +938,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %wide.load219 = load <4 x i8>, ptr %next.gep218, align 1, !tbaa !72
   %i.di = icmp ne <4 x i8> %wide.load219, zeroinitializer
   %i.dj = zext <4 x i1> %i.di to <4 x i8>
-  %i.dk = getelementptr i8, ptr %11, i64 %index217
+  %i.dk = getelementptr i8, ptr %10, i64 %index217
   store <4 x i8> %i.dj, ptr %i.dk, align 1, !tbaa !72
   %index.next220 = add nuw i64 %index217, 4       ; 2 uses
   %i.dl = icmp eq i64 %index.next220, %n.vec216
@@ -945,9 +947,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n221, label %._crit_edge116, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.0114.ph = phi i64 [ 0, %iter.check.a ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec216, %vec.epilog.middle.block ] ; 3 uses
-  %.sroa.048.1113.ph = phi ptr [ %.sroa.048.0119, %iter.check.a ], [ %i.cy, %vec.epilog.iter.check ], [ %i.dh, %vec.epilog.middle.block ] ; 2 uses
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.0114.ph = phi i64 [ 0, %iter.check ], [ 0, %iter.check.a ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec216, %vec.epilog.middle.block ] ; 3 uses
+  %.sroa.048.1113.ph = phi ptr [ %.sroa.048.0119, %iter.check ], [ %.sroa.048.0119, %iter.check.a ], [ %i.cy, %vec.epilog.iter.check ], [ %i.dh, %vec.epilog.middle.block ] ; 2 uses
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
@@ -958,7 +960,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.dn = load i8, ptr %.sroa.048.1113.prol, align 1, !tbaa !72
   %i.do = icmp ne i8 %i.dn, 0
   %i.dp = zext i1 %i.do to i8
-  %i.dq = getelementptr i8, ptr %11, i64 %.0114.prol
+  %i.dq = getelementptr i8, ptr %10, i64 %.0114.prol
   store i8 %i.dp, ptr %i.dq, align 1, !tbaa !72
   %i.dr = add i64 %.0114.prol, 1                  ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -1007,27 +1009,27 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.eb = load i8, ptr %.sroa.048.1113, align 1, !tbaa !72
   %i.ec = icmp ne i8 %i.eb, 0
   %i.ed = zext i1 %i.ec to i8
-  %i.ee = getelementptr i8, ptr %11, i64 %.0114
+  %i.ee = getelementptr i8, ptr %10, i64 %.0114
   store i8 %i.ed, ptr %i.ee, align 1, !tbaa !72
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.048.1113, i64 2
   %i.eg = load i8, ptr %i.ea, align 1, !tbaa !72
   %i.eh = icmp ne i8 %i.eg, 0
   %i.ei = zext i1 %i.eh to i8
-  %i.ej = getelementptr i8, ptr %11, i64 %.0114
+  %i.ej = getelementptr i8, ptr %10, i64 %.0114
   %i.ek = getelementptr i8, ptr %i.ej, i64 1
   store i8 %i.ei, ptr %i.ek, align 1, !tbaa !72
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.048.1113, i64 3
   %i.em = load i8, ptr %i.ef, align 1, !tbaa !72
   %i.en = icmp ne i8 %i.em, 0
   %i.eo = zext i1 %i.en to i8
-  %i.ep = getelementptr i8, ptr %11, i64 %.0114
+  %i.ep = getelementptr i8, ptr %10, i64 %.0114
   %i.eq = getelementptr i8, ptr %i.ep, i64 2
   store i8 %i.eo, ptr %i.eq, align 1, !tbaa !72
   %i.er = getelementptr inbounds nuw i8, ptr %.sroa.048.1113, i64 4 ; 2 uses
   %i.es = load i8, ptr %i.el, align 1, !tbaa !72
   %i.et = icmp ne i8 %i.es, 0
   %i.eu = zext i1 %i.et to i8
-  %i.ev = getelementptr i8, ptr %11, i64 %.0114
+  %i.ev = getelementptr i8, ptr %10, i64 %.0114
   %i.ew = getelementptr i8, ptr %i.ev, i64 3
   store i8 %i.eu, ptr %i.ew, align 1, !tbaa !72
   %i.ex = add i64 %.0114, 4                       ; 2 uses

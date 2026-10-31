@@ -204,8 +204,6 @@ _ZN4Luau7CodeGen6IrInstC2EOS1_.exit:              ; preds = %bb.c, %.lr.ph.prehe
   %indvar = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %indvar.next, %_ZSt19__relocate_object_aIN4Luau7CodeGen6IrInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 2 uses
   %.012.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.ci, %_ZSt19__relocate_object_aIN4Luau7CodeGen6IrInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 7 uses
   %.0911.i.i.i = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.ch, %_ZSt19__relocate_object_aIN4Luau7CodeGen6IrInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 8 uses
-  %3 = shl nuw i64 %indvar, 6
-  %4 = add i64 %i.bb, %3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !276)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !277)
   %i.bc = load i8, ptr %.0911.i.i.i, align 8, !tbaa !163, !alias.scope !277
@@ -216,9 +214,9 @@ _ZN4Luau7CodeGen6IrInstC2EOS1_.exit:              ; preds = %bb.c, %.lr.ph.prehe
   store i32 0, ptr %i.bf, align 8, !tbaa !170, !alias.scope !276
   %i.bg = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 20
   store i32 6, ptr %i.bg, align 4, !tbaa !171, !alias.scope !276
-  %i.bh = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24 ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24 ; 5 uses
   store ptr %i.bh, ptr %i.bd, align 8, !tbaa !172, !alias.scope !276
-  %i.bi = load ptr, ptr %i.be, align 8, !tbaa !172, !alias.scope !277 ; 7 uses
+  %i.bi = load ptr, ptr %i.be, align 8, !tbaa !172, !alias.scope !277 ; 8 uses
   %i.bj = ptrtoaddr ptr %i.bi to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i16 = icmp eq ptr %i.bi, %i.bk
@@ -238,12 +236,16 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.bq = lshr exact i64 %i.bp, 2
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
   %min.iters.check66 = icmp ult i64 %i.bp, 28
-  %5 = sub i64 %i.bj, %4
-  %diff.check64 = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check66, i1 true, i1 %diff.check64
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102, label %vector.ph67
+  br i1 %min.iters.check66, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102, label %vector.memcheck67
 
-vector.ph67:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+vector.memcheck67:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+  %3 = shl nuw i64 %indvar, 6
+  %4 = add i64 %i.bb, %3
+  %5 = sub i64 %i.bj, %4
+  %diff.check68 = icmp ugt i64 %5, -32
+  br i1 %diff.check68, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102, label %vector.ph67
+
+vector.ph67:                                      ; preds = %vector.memcheck67
   %n.vec68 = and i64 %i.br, 9223372036854775800   ; 3 uses
   %i.bs = shl i64 %n.vec68, 2                     ; 2 uses
   %i.bt = getelementptr i8, ptr %i.bh, i64 %i.bs
@@ -269,9 +271,9 @@ middle.block76:                                   ; preds = %vector.body69
   %cmp.n77 = icmp eq i64 %i.br, %n.vec68
   br i1 %cmp.n77, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102:          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block76
-  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bh, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bt, %middle.block76 ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bi, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bu, %middle.block76 ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102:          ; preds = %vector.memcheck67, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block76
+  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bh, %vector.memcheck67 ], [ %i.bh, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bt, %middle.block76 ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bi, %vector.memcheck67 ], [ %i.bi, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bu, %middle.block76 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader102, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -325,8 +327,6 @@ _ZNSt6vectorIN4Luau7CodeGen6IrInstESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; 
   %indvar82 = phi i64 [ 0, %.lr.ph.i.i.i18.preheader ], [ %indvar.next83, %_ZSt19__relocate_object_aIN4Luau7CodeGen6IrInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i23 ] ; 2 uses
   %.012.i.i.i19 = phi ptr [ %i.cj, %.lr.ph.i.i.i18.preheader ], [ %i.dr, %_ZSt19__relocate_object_aIN4Luau7CodeGen6IrInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i23 ] ; 7 uses
   %.0911.i.i.i20 = phi ptr [ %1, %.lr.ph.i.i.i18.preheader ], [ %i.dq, %_ZSt19__relocate_object_aIN4Luau7CodeGen6IrInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i23 ] ; 8 uses
-  %6 = shl nuw i64 %indvar82, 6
-  %7 = add i64 %i.ck, %6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !279)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !280)
   %i.cl = load i8, ptr %.0911.i.i.i20, align 8, !tbaa !163, !alias.scope !280
@@ -337,9 +337,9 @@ _ZNSt6vectorIN4Luau7CodeGen6IrInstESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; 
   store i32 0, ptr %i.co, align 8, !tbaa !170, !alias.scope !279
   %i.cp = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 20
   store i32 6, ptr %i.cp, align 4, !tbaa !171, !alias.scope !279
-  %i.cq = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 24 ; 4 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 24 ; 5 uses
   store ptr %i.cq, ptr %i.cm, align 8, !tbaa !172, !alias.scope !279
-  %i.cr = load ptr, ptr %i.cn, align 8, !tbaa !172, !alias.scope !280 ; 7 uses
+  %i.cr = load ptr, ptr %i.cn, align 8, !tbaa !172, !alias.scope !280 ; 8 uses
   %i.cs = ptrtoaddr ptr %i.cr to i64
   %i.ct = getelementptr inbounds nuw i8, ptr %.0911.i.i.i20, i64 24 ; 2 uses
   %.not.i.i.i.i.i.i21 = icmp eq ptr %i.cr, %i.ct
@@ -359,12 +359,16 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i18
   %i.cz = lshr exact i64 %i.cy, 2
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %min.iters.check86 = icmp ult i64 %i.cy, 28
-  %8 = sub i64 %i.cs, %7
-  %diff.check84 = icmp ugt i64 %8, -32
-  %or.cond100 = select i1 %min.iters.check86, i1 true, i1 %diff.check84
-  br i1 %or.cond100, label %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101, label %vector.ph87
+  br i1 %min.iters.check86, label %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101, label %vector.memcheck92
 
-vector.ph87:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader
+vector.memcheck92:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader
+  %6 = shl nuw i64 %indvar82, 6
+  %7 = add i64 %i.ck, %6
+  %8 = sub i64 %i.cs, %7
+  %diff.check93 = icmp ugt i64 %8, -32
+  br i1 %diff.check93, label %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101, label %vector.ph87
+
+vector.ph87:                                      ; preds = %vector.memcheck92
   %n.vec88 = and i64 %i.da, 9223372036854775800   ; 3 uses
   %i.db = shl i64 %n.vec88, 2                     ; 2 uses
   %i.dc = getelementptr i8, ptr %i.cq, i64 %i.db
@@ -390,9 +394,9 @@ middle.block96:                                   ; preds = %vector.body89
   %cmp.n97 = icmp eq i64 %i.da, %n.vec88
   br i1 %cmp.n97, label %.lr.ph.preheader.i.i.i.i.i.i.i32, label %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101:        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader, %middle.block96
-  %.013.i.i.i.i.i.i.i.i.i.i29.ph = phi ptr [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader ], [ %i.dc, %middle.block96 ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i30.ph = phi ptr [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader ], [ %i.dd, %middle.block96 ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101:        ; preds = %vector.memcheck92, %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader, %middle.block96
+  %.013.i.i.i.i.i.i.i.i.i.i29.ph = phi ptr [ %i.cq, %vector.memcheck92 ], [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader ], [ %i.dc, %middle.block96 ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i30.ph = phi ptr [ %i.cr, %vector.memcheck92 ], [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader ], [ %i.dd, %middle.block96 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i28
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i28:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i28.preheader101, %.lr.ph.i.i.i.i.i.i.i.i.i.i28

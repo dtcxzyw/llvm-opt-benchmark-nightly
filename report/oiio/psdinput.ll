@@ -205,27 +205,29 @@ bb.o:                                             ; preds = %bb.n
 .lr.ph.preheader.i:                               ; preds = %bb.o
   %i.ca = zext nneg i32 %i.bx to i64              ; 6 uses
   %wide.trip.count.i = zext nneg i32 %i.bv to i64 ; 5 uses
-  %min.iters.check353 = icmp ult i32 %i.bv, 8
-  %ident.check350.not = icmp ne i32 %i.bx, 1
-  %or.cond395.not402 = select i1 %min.iters.check353, i1 true, i1 %ident.check350.not
+  %min.iters.check353 = icmp ugt i32 %i.bv, 7
+  %ident.check350.not = icmp eq i32 %i.bx, 1
+  %or.cond395.not402 = select i1 %min.iters.check353, i1 %ident.check350.not, i1 false
   %n.vec355 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
   %cmp.n362 = icmp eq i64 %n.vec355, %wide.trip.count.i
   %xtraiter426 = and i64 %wide.trip.count.i, 3    ; 2 uses
   %lcmp.mod427.not = icmp eq i64 %xtraiter426, 0
-  br label %.lr.ph.i.a
+  br label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %._crit_edge.i, %.lr.ph.preheader.i
+.lr.ph.i:                                         ; preds = %._crit_edge.i, %.lr.ph.preheader.i
   %indvars.iv20.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next21.i, %._crit_edge.i ] ; 4 uses
-  %i.cb = shl nuw nsw i64 %indvars.iv20.i, 2
-  %i.cc = add i64 %i.cb, %i.a
   %7 = getelementptr inbounds nuw [24 x i8], ptr %i.bn, i64 %indvars.iv20.i
   %8 = load ptr, ptr %7, align 8, !tbaa !280      ; 7 uses
-  %9 = ptrtoaddr ptr %8 to i64
   %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv20.i ; 6 uses
+  br i1 %or.cond395.not402, label %.lr.ph.i.a, label %scalar.ph.preheader
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
+  %9 = ptrtoaddr ptr %8 to i64
+  %i.cb = shl nuw nsw i64 %indvars.iv20.i, 2
+  %i.cc = add nuw i64 %i.cb, %i.a
   %i.cd = sub i64 %9, %i.cc
   %diff.check352 = icmp ugt i64 %i.cd, -32
-  %or.cond396 = select i1 %or.cond395.not402, i1 true, i1 %diff.check352
-  br i1 %or.cond396, label %scalar.ph.preheader, label %vector.body356
+  br i1 %diff.check352, label %scalar.ph.preheader, label %vector.body356
 
 vector.body356:                                   ; preds = %.lr.ph.i.a, %vector.body356
   %index357 = phi i64 [ %index.next360, %vector.body356 ], [ 0, %.lr.ph.i.a ] ; 3 uses
@@ -244,8 +246,8 @@ vector.body356:                                   ; preds = %.lr.ph.i.a, %vector
 middle.block361:                                  ; preds = %vector.body356
   br i1 %cmp.n362, label %._crit_edge.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph.i.a, %middle.block361
-  %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i.a ], [ %n.vec355, %middle.block361 ] ; 3 uses
+scalar.ph.preheader:                              ; preds = %.lr.ph.i.a, %.lr.ph.i, %middle.block361
+  %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i.a ], [ 0, %.lr.ph.i ], [ %n.vec355, %middle.block361 ] ; 3 uses
   br i1 %lcmp.mod427.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
@@ -270,7 +272,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 ._crit_edge.i:                                    ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block361
   %indvars.iv.next21.i = add nuw nsw i64 %indvars.iv20.i, 1 ; 2 uses
   %exitcond24.not.i = icmp eq i64 %indvars.iv.next21.i, %i.ca
-  br i1 %exitcond24.not.i, label %_ZN11OpenImageIO4v3_18PSDInput14interleave_rowIfEEvPT_NS0_4spanIKSt6vectorIhSaIhEELm18446744073709551615EEEii.exit, label %.lr.ph.i.a, !llvm.loop !514
+  br i1 %exitcond24.not.i, label %_ZN11OpenImageIO4v3_18PSDInput14interleave_rowIfEEvPT_NS0_4spanIKSt6vectorIhSaIhEELm18446744073709551615EEEii.exit, label %.lr.ph.i, !llvm.loop !514
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %scalar.ph ], [ %indvars.iv.i.unr, %scalar.ph.prol.loopexit ] ; 6 uses
@@ -307,9 +309,9 @@ bb.p:                                             ; preds = %bb.n
 .lr.ph.preheader.i148:                            ; preds = %bb.p
   %i.da = zext nneg i32 %i.bx to i64              ; 6 uses
   %wide.trip.count.i149 = zext nneg i32 %i.bv to i64 ; 8 uses
-  %min.iters.check = icmp ult i32 %i.bv, 4
-  %ident.check.not = icmp ne i32 %i.bx, 1
-  %or.cond397.not401 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
+  %min.iters.check = icmp ugt i32 %i.bv, 3
+  %ident.check.not = icmp eq i32 %i.bx, 1
+  %or.cond397.not401 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   %min.iters.check342 = icmp ult i32 %i.bv, 16
   %i.db = and i64 %wide.trip.count.i149, 12
   %n.vec = and i64 %wide.trip.count.i149, 2147483632 ; 4 uses
@@ -319,20 +321,22 @@ bb.p:                                             ; preds = %bb.n
   %cmp.n348 = icmp eq i64 %n.vec344, %wide.trip.count.i149
   %xtraiter424 = and i64 %wide.trip.count.i149, 3 ; 2 uses
   %lcmp.mod425.not = icmp eq i64 %xtraiter424, 0
-  br label %iter.check.a
+  br label %iter.check
 
-iter.check.a:                                     ; preds = %._crit_edge.i157, %.lr.ph.preheader.i148
+iter.check:                                       ; preds = %._crit_edge.i157, %.lr.ph.preheader.i148
   %indvars.iv20.i151 = phi i64 [ 0, %.lr.ph.preheader.i148 ], [ %indvars.iv.next21.i158, %._crit_edge.i157 ] ; 4 uses
-  %i.dc = shl nuw nsw i64 %indvars.iv20.i151, 1
-  %i.dd = add i64 %i.dc, %i.a
   %10 = getelementptr inbounds nuw [24 x i8], ptr %i.bn, i64 %indvars.iv20.i151
   %11 = load ptr, ptr %10, align 8, !tbaa !280    ; 8 uses
-  %12 = ptrtoaddr ptr %11 to i64
   %invariant.gep.i152 = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv20.i151 ; 7 uses
+  br i1 %or.cond397.not401, label %iter.check.a, label %vec.epilog.scalar.ph.preheader
+
+iter.check.a:                                     ; preds = %iter.check
+  %12 = ptrtoaddr ptr %11 to i64
+  %i.dc = shl nuw nsw i64 %indvars.iv20.i151, 1
+  %i.dd = add nuw i64 %i.dc, %i.a
   %i.de = sub i64 %12, %i.dd
   %diff.check = icmp ugt i64 %i.de, -32
-  %or.cond398 = select i1 %or.cond397.not401, i1 true, i1 %diff.check
-  br i1 %or.cond398, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check.a
   br i1 %min.iters.check342, label %vec.epilog.ph, label %vector.body
@@ -374,8 +378,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   br i1 %cmp.n348, label %._crit_edge.i157, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.i153.ph = phi i64 [ 0, %iter.check.a ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec344, %vec.epilog.middle.block ] ; 3 uses
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %iter.check.a, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv.i153.ph = phi i64 [ 0, %iter.check ], [ 0, %iter.check.a ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec344, %vec.epilog.middle.block ] ; 3 uses
   br i1 %lcmp.mod425.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
@@ -400,7 +404,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 ._crit_edge.i157:                                 ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next21.i158 = add nuw nsw i64 %indvars.iv20.i151, 1 ; 2 uses
   %exitcond24.not.i159 = icmp eq i64 %indvars.iv.next21.i158, %i.da
-  br i1 %exitcond24.not.i159, label %_ZN11OpenImageIO4v3_18PSDInput14interleave_rowIfEEvPT_NS0_4spanIKSt6vectorIhSaIhEELm18446744073709551615EEEii.exit, label %iter.check.a, !llvm.loop !519
+  br i1 %exitcond24.not.i159, label %_ZN11OpenImageIO4v3_18PSDInput14interleave_rowIfEEvPT_NS0_4spanIKSt6vectorIhSaIhEELm18446744073709551615EEEii.exit, label %iter.check, !llvm.loop !519
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv.i153 = phi i64 [ %indvars.iv.next.i155.3, %vec.epilog.scalar.ph ], [ %indvars.iv.i153.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
@@ -437,9 +441,9 @@ bb.q:                                             ; preds = %bb.n
 .lr.ph.preheader.i161:                            ; preds = %bb.q
   %i.ee = zext nneg i32 %i.bx to i64              ; 6 uses
   %wide.trip.count.i162 = zext nneg i32 %i.bv to i64 ; 8 uses
-  %min.iters.check369 = icmp ult i32 %i.bv, 4
-  %ident.check365.not = icmp ne i32 %i.bx, 1
-  %or.cond399.not403 = select i1 %min.iters.check369, i1 true, i1 %ident.check365.not
+  %min.iters.check371 = icmp ugt i32 %i.bv, 3
+  %ident.check367.not = icmp eq i32 %i.bx, 1
+  %or.cond399.not403 = select i1 %min.iters.check371, i1 %ident.check367.not, i1 false
   %min.iters.check371.a = icmp ult i32 %i.bv, 32
   %i.ef = and i64 %wide.trip.count.i162, 28
   %n.vec373 = and i64 %wide.trip.count.i162, 2147483616 ; 4 uses
@@ -453,17 +457,19 @@ bb.q:                                             ; preds = %bb.n
 
 iter.check381:                                    ; preds = %._crit_edge.i170, %.lr.ph.preheader.i161
   %indvars.iv20.i164 = phi i64 [ 0, %.lr.ph.preheader.i161 ], [ %indvars.iv.next21.i171, %._crit_edge.i170 ] ; 4 uses
-  %13 = add i64 %indvars.iv20.i164, %i.a
   %i.eg = getelementptr inbounds nuw [24 x i8], ptr %i.bn, i64 %indvars.iv20.i164
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !280 ; 8 uses
-  %14 = ptrtoaddr ptr %i.eh to i64
   %invariant.gep.i165 = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv20.i164 ; 7 uses
-  %15 = sub i64 %14, %13
-  %diff.check367 = icmp ugt i64 %15, -32
-  %or.cond400 = select i1 %or.cond399.not403, i1 true, i1 %diff.check367
-  br i1 %or.cond400, label %vec.epilog.scalar.ph383.preheader, label %vector.main.loop.iter.check370
+  br i1 %or.cond399.not403, label %vector.memcheck372, label %vec.epilog.scalar.ph383.preheader
 
-vector.main.loop.iter.check370:                   ; preds = %iter.check381
+vector.memcheck372:                               ; preds = %iter.check381
+  %13 = ptrtoaddr ptr %i.eh to i64
+  %14 = add nuw i64 %indvars.iv20.i164, %i.a
+  %15 = sub i64 %13, %14
+  %diff.check373 = icmp ugt i64 %15, -32
+  br i1 %diff.check373, label %vec.epilog.scalar.ph383.preheader, label %vector.main.loop.iter.check370
+
+vector.main.loop.iter.check370:                   ; preds = %vector.memcheck372
   br i1 %min.iters.check371.a, label %vec.epilog.ph385, label %vector.body374
 
 vector.body374:                                   ; preds = %vector.main.loop.iter.check370, %vector.body374
@@ -503,8 +509,8 @@ vec.epilog.vector.body388:                        ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block392:                       ; preds = %vec.epilog.vector.body388
   br i1 %cmp.n393, label %._crit_edge.i170, label %vec.epilog.scalar.ph383.preheader
 
-vec.epilog.scalar.ph383.preheader:                ; preds = %iter.check381, %vec.epilog.iter.check382, %vec.epilog.middle.block392
-  %indvars.iv.i166.ph = phi i64 [ 0, %iter.check381 ], [ %n.vec373, %vec.epilog.iter.check382 ], [ %n.vec387, %vec.epilog.middle.block392 ] ; 3 uses
+vec.epilog.scalar.ph383.preheader:                ; preds = %iter.check381, %vector.memcheck372, %vec.epilog.iter.check382, %vec.epilog.middle.block392
+  %indvars.iv.i166.ph = phi i64 [ 0, %iter.check381 ], [ 0, %vector.memcheck372 ], [ %n.vec373, %vec.epilog.iter.check382 ], [ %n.vec387, %vec.epilog.middle.block392 ] ; 3 uses
   br i1 %lcmp.mod430.not, label %vec.epilog.scalar.ph383.prol.loopexit, label %vec.epilog.scalar.ph383.prol
 
 vec.epilog.scalar.ph383.prol:                     ; preds = %vec.epilog.scalar.ph383.preheader, %vec.epilog.scalar.ph383.prol
@@ -907,9 +913,9 @@ iter.check:                                       ; preds = %bb.j
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bk = add i64 %.026.i.i.i, %i.bi
-  %i.bl = add i64 %.02732.i.i.idx.i, %i.at
-  %i.bm = sub i64 %i.bl, %i.bk
+  %i.bk = add i64 %.02732.i.i.idx.i, %i.at
+  %i.bl = add i64 %.026.i.i.i, %i.bi
+  %i.bm = sub i64 %i.bk, %i.bl
   %diff.check = icmp ugt i64 %i.bm, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 

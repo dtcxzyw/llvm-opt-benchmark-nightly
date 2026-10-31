@@ -154,7 +154,7 @@ bb.a:
   %i.g = alloca [80 x float], align 16            ; 7 uses
   %i.h = alloca [80 x float], align 16            ; 35 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !28   ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !28   ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !88   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -256,9 +256,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ca
   %indvars.iv279 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next280, %bb.ca ] ; 6 uses
   %.0179253 = phi i32 [ %i.n, %.lr.ph ], [ %.1180, %bb.ca ] ; 3 uses
   %.0181252 = phi ptr [ %i.l, %.lr.ph ], [ %.1182, %bb.ca ] ; 4 uses
-  %i.cs = mul nuw nsw i64 %indvars.iv279, 4696
-  %4 = getelementptr i8, ptr %i.j, i64 %i.cs
-  %scevgep374 = getelementptr i8, ptr %4, i64 2984 ; 2 uses
+  %i.cs = mul nuw nsw i64 %indvars.iv279, 4696    ; 2 uses
+  %4 = add nuw i64 %i.cs, 2984                    ; 2 uses
+  %scevgep374 = getelementptr i8, ptr %i.j, i64 %4
   %i.ct = mul nuw nsw i64 %indvars.iv279, 4696
   %i.cu = getelementptr i8, ptr %i.j, i64 %i.ct
   %scevgep356 = getelementptr i8, ptr %i.cu, i64 3028
@@ -661,7 +661,7 @@ bb.s:                                             ; preds = %bb.r
   %i.we = getelementptr inbounds nuw i8, ptr %i.cv, i64 1209 ; 2 uses
   %i.wf = getelementptr inbounds nuw i8, ptr %i.cv, i64 4648
   %i.wg = getelementptr i8, ptr %i.cv, i64 2472   ; 9 uses
-  %i.wh = getelementptr i8, ptr %i.cv, i64 2728   ; 29 uses
+  %i.wh = getelementptr i8, ptr %i.cv, i64 2728   ; 28 uses
   %i.wi = getelementptr inbounds nuw i8, ptr %i.cv, i64 3032 ; 3 uses
   %i.wj = getelementptr inbounds nuw i8, ptr %i.cv, i64 3000 ; 10 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %i.cv, i64 4688 ; 11 uses
@@ -699,6 +699,8 @@ bb.s:                                             ; preds = %bb.r
   %i.xq = getelementptr inbounds nuw i8, ptr %i.cv, i64 3720
   %i.xr = getelementptr inbounds nuw i8, ptr %i.cv, i64 4040
   %scevgep = getelementptr i8, ptr %i.cy, i64 1280
+  %5 = getelementptr i8, ptr %i.j, i64 %i.cs
+  %6 = getelementptr i8, ptr %5, i64 2728
   %bound1377 = icmp ult ptr %i.wh, %scevgep374
   %i.xs = getelementptr i8, ptr %i.cv, i64 2488
   %i.xt = getelementptr i8, ptr %i.cv, i64 2504
@@ -1101,16 +1103,16 @@ bb.aw:                                            ; preds = %bb.au
   br i1 %i.bbp, label %.lr.ph.preheader.i, label %pitch_sharpening.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.aw
-  %i.bbq = zext nneg i8 %i.bbo to i64             ; 10 uses
+  %i.bbq = zext nneg i8 %i.bbo to i64             ; 9 uses
   %i.bbr = sub nuw nsw i64 64, %i.bbq             ; 2 uses
   %min.iters.check = icmp ugt i8 %i.bbo, 60
   br i1 %min.iters.check, label %.lr.ph.i201.preheader, label %vector.memcheck372
 
 vector.memcheck372:                               ; preds = %.lr.ph.preheader.i
-  %i.bbs = shl nuw nsw i64 %i.bbq, 2
-  %scevgep373 = getelementptr i8, ptr %i.wh, i64 %i.bbs
-  %5 = mul nsw i64 %i.bbq, -4
-  %scevgep375 = getelementptr i8, ptr %scevgep374, i64 %5
+  %i.bbs = shl nuw nsw i64 %i.bbq, 2              ; 2 uses
+  %scevgep373 = getelementptr i8, ptr %6, i64 %i.bbs
+  %7 = sub nuw i64 %4, %i.bbs
+  %scevgep375 = getelementptr i8, ptr %i.j, i64 %7
   %bound0376 = icmp ult ptr %scevgep373, %scevgep375
   %found.conflict378 = and i1 %bound0376, %bound1377
   br i1 %found.conflict378, label %.lr.ph.i201.preheader, label %vector.ph380

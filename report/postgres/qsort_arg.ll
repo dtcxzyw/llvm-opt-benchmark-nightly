@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @qsort_arg(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sub i64 0, %2                            ; 7 uses
+  %i.a = sub i64 0, %2                            ; 8 uses
   %i.b = icmp ult i64 %1, 7
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph284.lr.ph
 
@@ -357,9 +357,6 @@ bb.i:                                             ; preds = %qsort_arg_swapn.exi
   %indvar553 = phi i64 [ %indvar.next554, %bb.k ], [ 0, %.lr.ph256 ] ; 2 uses
   %.1189254 = phi ptr [ %i.do, %bb.k ], [ %.0188, %.lr.ph256 ] ; 9 uses
   %.1191253 = phi ptr [ %.2192, %bb.k ], [ %.0190, %.lr.ph256 ] ; 10 uses
-  %5 = add i64 %indvar553, 1
-  %6 = mul i64 %2, %5
-  %scevgep555 = getelementptr i8, ptr %.0188, i64 %6
   %i.cm = tail call i32 %3(ptr noundef %.1189254, ptr noundef %.0193.ph290, ptr noundef %4) #3 ; 2 uses
   %i.cn = icmp slt i32 %i.cm, 1
   br i1 %i.cn, label %bb.j, label %.critedge2
@@ -373,7 +370,10 @@ iter.check573:                                    ; preds = %bb.j
 
 vector.memcheck551:                               ; preds = %iter.check573
   %scevgep552 = getelementptr i8, ptr %.1191253, i64 %2
-  %bound0556 = icmp ult ptr %.1191253, %scevgep555
+  %5 = add i64 %indvar553, 1
+  %6 = mul i64 %2, %5
+  %7 = getelementptr i8, ptr %.0188, i64 %6
+  %bound0556 = icmp ult ptr %.1191253, %7
   %bound1557 = icmp ult ptr %.1189254, %scevgep552
   %found.conflict558 = and i1 %bound0556, %bound1557
   br i1 %found.conflict558, label %.lr.ph.i215.preheader, label %vector.main.loop.iter.check560
@@ -481,7 +481,11 @@ bb.k:                                             ; preds = %qsort_arg_swapn.exi
   br i1 %.not205264, label %.critedge2._crit_edge, label %.lr.ph268
 
 .lr.ph268:                                        ; preds = %.critedge2
-  br i1 %.not.i209, label %.lr.ph268.split.us, label %.lr.ph268.split
+  br i1 %.not.i209, label %.lr.ph268.split.us, label %.lr.ph268.split.preheader
+
+.lr.ph268.split.preheader:                        ; preds = %.lr.ph268
+  %8 = getelementptr i8, ptr %.0186, i64 %2
+  br label %.lr.ph268.split
 
 .lr.ph268.split.us:                               ; preds = %.lr.ph268, %qsort_arg_swapn.exit223.us
   %.1184267.us = phi ptr [ %spec.select300, %qsort_arg_swapn.exit223.us ], [ %.0183, %.lr.ph268 ] ; 2 uses
@@ -498,13 +502,10 @@ qsort_arg_swapn.exit223.us:                       ; preds = %.lr.ph268.split.us
   %.not205.us = icmp ugt ptr %.1189.lcssa, %i.ds
   br i1 %.not205.us, label %.critedge2._crit_edge, label %.lr.ph268.split.us, !llvm.loop !23
 
-.lr.ph268.split:                                  ; preds = %.lr.ph268, %bb.m
-  %indvar = phi i64 [ %indvar.next, %bb.m ], [ 0, %.lr.ph268 ] ; 2 uses
-  %.1184267 = phi ptr [ %.2185, %bb.m ], [ %.0183, %.lr.ph268 ] ; 10 uses
-  %.1187265 = phi ptr [ %i.ev, %bb.m ], [ %.0186, %.lr.ph268 ] ; 9 uses
-  %7 = sub i64 1, %indvar
-  %8 = mul i64 %2, %7
-  %scevgep517 = getelementptr i8, ptr %.0186, i64 %8
+.lr.ph268.split:                                  ; preds = %.lr.ph268.split.preheader, %bb.m
+  %indvar = phi i64 [ %indvar.next, %bb.m ], [ 0, %.lr.ph268.split.preheader ] ; 2 uses
+  %.1184267 = phi ptr [ %.2185, %bb.m ], [ %.0183, %.lr.ph268.split.preheader ] ; 10 uses
+  %.1187265 = phi ptr [ %i.ev, %bb.m ], [ %.0186, %.lr.ph268.split.preheader ] ; 9 uses
   %i.dt = tail call i32 %3(ptr noundef %.1187265, ptr noundef %.0193.ph290, ptr noundef %4) #3 ; 2 uses
   %i.du = icmp sgt i32 %i.dt, -1
   br i1 %i.du, label %bb.l, label %.critedge4
@@ -517,9 +518,11 @@ iter.check536:                                    ; preds = %bb.l
   br i1 %min.iters.check522, label %.lr.ph.i220.preheader, label %vector.memcheck516
 
 vector.memcheck516:                               ; preds = %iter.check536
+  %9 = mul i64 %indvar, %i.a
+  %10 = getelementptr i8, ptr %8, i64 %9
   %scevgep518 = getelementptr i8, ptr %.1184267, i64 %2
   %bound0519 = icmp ult ptr %.1187265, %scevgep518
-  %bound1520 = icmp ult ptr %.1184267, %scevgep517
+  %bound1520 = icmp ult ptr %.1184267, %10
   %found.conflict521 = and i1 %bound0519, %bound1520
   br i1 %found.conflict521, label %.lr.ph.i220.preheader, label %vector.main.loop.iter.check523
 

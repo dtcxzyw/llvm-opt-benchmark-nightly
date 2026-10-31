@@ -186,7 +186,7 @@ vector.body:                                      ; preds = %vector.body, %.preh
 define internal i32 @bonk_decode(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 32 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 33 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !81   ; 2 uses
   %.not = icmp eq i32 %i.d, 0
@@ -434,11 +434,11 @@ bb.p:                                             ; preds = %._crit_edge, %bb.o
 
 bb.q:                                             ; preds = %.lr.ph253, %._crit_edge250
   %i.du = phi i32 [ %i.bz, %.lr.ph253 ], [ %i.fd, %._crit_edge250 ] ; 4 uses
-  %indvars.iv281 = phi i64 [ 0, %.lr.ph253 ], [ %indvars.iv.next282, %._crit_edge250 ] ; 3 uses
+  %indvars.iv281 = phi i64 [ 0, %.lr.ph253 ], [ %indvars.iv.next282, %._crit_edge250 ] ; 4 uses
   %i.dv = load i32, ptr %i.ay, align 8, !tbaa !39 ; 4 uses
   %i.dw = load i32, ptr %i.ba, align 4, !tbaa !38
   %i.dx = mul i32 %i.dw, %i.dv                    ; 4 uses
-  %i.dy = getelementptr [8192 x i8], ptr %i.dr, i64 %indvars.iv281 ; 12 uses
+  %i.dy = getelementptr [8192 x i8], ptr %i.dr, i64 %indvars.iv281 ; 11 uses
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.ds, i64 %indvars.iv281 ; 2 uses
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !43
   %i.eb = icmp sgt i32 %i.du, 1
@@ -514,7 +514,7 @@ predictor_init_state.exit:                        ; preds = %._crit_edge.i.loope
   br i1 %i.fb, label %.lr.ph242, label %._crit_edge243
 
 ._crit_edge246:                                   ; preds = %predictor_calc_error.exit, %.preheader233
-  %i.fc = load ptr, ptr %i.dz, align 8, !tbaa !43 ; 3 uses
+  %i.fc = load ptr, ptr %i.dz, align 8, !tbaa !43 ; 4 uses
   %i.fd = load i32, ptr %i.bv, align 8, !tbaa !37 ; 4 uses
   %i.fe = icmp sgt i32 %i.fd, 0
   br i1 %i.fe, label %.lr.ph249.preheader, label %._crit_edge250
@@ -535,17 +535,20 @@ vector.scevcheck:                                 ; preds = %.lr.ph249.preheader
   br i1 %i.fm, label %.lr.ph249.preheader389, label %vector.memcheck355
 
 vector.memcheck355:                               ; preds = %vector.scevcheck
+  %4 = shl nuw nsw i64 %indvars.iv281, 13
   %i.fn = shl nuw nsw i64 %i.ff, 2                ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.dy, i64 %i.fn
-  %scevgep356 = getelementptr i8, ptr %i.fc, i64 4 ; 2 uses
+  %5 = getelementptr i8, ptr %i.b, i64 %4
+  %scevgep = getelementptr i8, ptr %5, i64 84
+  %scevgep356 = getelementptr i8, ptr %scevgep, i64 %i.fn
   %i.fo = add i32 %i.dx, -1
   %i.fp = sext i32 %i.fo to i64
-  %i.fq = shl nsw i64 %i.fp, 2                    ; 2 uses
-  %i.fr = sub nsw i64 %i.fq, %i.fn
-  %scevgep357 = getelementptr i8, ptr %scevgep356, i64 %i.fr
-  %scevgep358 = getelementptr i8, ptr %scevgep356, i64 %i.fq
+  %i.fq = shl nsw i64 %i.fp, 2
+  %6 = add nsw i64 %i.fq, 4                       ; 2 uses
+  %i.fr = sub nsw i64 %6, %i.fn
+  %scevgep357 = getelementptr i8, ptr %i.fc, i64 %i.fr
+  %scevgep358 = getelementptr i8, ptr %i.fc, i64 %6
   %bound0359 = icmp ult ptr %i.dy, %scevgep358
-  %bound1360 = icmp ult ptr %scevgep357, %scevgep
+  %bound1360 = icmp ult ptr %scevgep357, %scevgep356
   %found.conflict361 = and i1 %bound0359, %bound1360
   br i1 %found.conflict361, label %.lr.ph249.preheader389, label %vector.ph364
 

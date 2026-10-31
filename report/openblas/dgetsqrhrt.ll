@@ -202,16 +202,9 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %.lr.ph208, %bb.r
   %indvar = phi i64 [ 0, %.lr.ph208 ], [ %indvar.next, %bb.r ] ; 6 uses
-  %indvars.iv = phi i64 [ 1, %.lr.ph208 ], [ %indvars.iv.next, %bb.r ] ; 12 uses
-  %12 = sub i64 1, %indvar                        ; 7 uses
-  %13 = shl nuw nsw i64 %indvar, 4
+  %indvars.iv = phi i64 [ 1, %.lr.ph208 ], [ %indvars.iv.next, %bb.r ] ; 13 uses
   %indvar.tr.a = trunc i64 %indvar to i32
-  %14 = shl i32 %indvar.tr.a, 1
-  %15 = add i32 %14, %i.cu
-  %16 = sext i32 %15 to i64
-  %17 = shl nsw i64 %16, 3
-  %18 = add i64 %i.cv, %13
-  %19 = add i64 %17, %i.a
+  %12 = sub i64 1, %indvar                        ; 7 uses
   %indvar.tr231 = trunc i64 %indvar to i32
   %i.cw = shl i32 %indvar.tr231, 1
   %i.cx = add i32 %i.cw, %i.cu                    ; 2 uses
@@ -250,12 +243,21 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.do = or i1 %i.dm, %i.dn
   %i.dp = or i1 %ident.check, %ident.check221
   %i.dq = or i1 %i.dp, %i.do
+  br i1 %i.dq, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
+  %13 = shl nuw nsw i64 %indvar, 4
+  %14 = shl i32 %indvar.tr.a, 1
+  %15 = add i32 %i.cu, %14
+  %16 = sext i32 %15 to i64
+  %17 = shl nsw i64 %16, 3
+  %18 = add i64 %i.cv, %13
+  %19 = add i64 %17, %i.a
   %20 = sub i64 %19, %18
   %diff.check = icmp ugt i64 %20, -128
-  %or.cond233 = select i1 %i.dq, i1 true, i1 %diff.check
-  br i1 %or.cond233, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
-vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
+vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   %min.iters.check222 = icmp ult i64 %12, 16
   br i1 %min.iters.check222, label %vec.epilog.ph, label %vector.ph
 
@@ -330,8 +332,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n230 = icmp eq i64 %12, %n.vec226
   br i1 %cmp.n230, label %.loopexit, label %vec.epilog.scalar.ph.preheader
 
-vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv210.ph = phi i64 [ %indvars.iv, %vector.scevcheck ], [ %indvars.iv, %iter.check ], [ %i.ds, %vec.epilog.iter.check ], [ %i.ej, %vec.epilog.middle.block ] ; 4 uses
+vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv210.ph = phi i64 [ %indvars.iv, %iter.check ], [ %indvars.iv, %vector.scevcheck ], [ %indvars.iv, %vector.memcheck ], [ %i.ds, %vec.epilog.iter.check ], [ %i.ej, %vec.epilog.middle.block ] ; 4 uses
   %i.er = sub i64 %wide.trip.count, %indvars.iv210.ph
   %xtraiter = and i64 %i.er, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

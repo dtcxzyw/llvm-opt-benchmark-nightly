@@ -204,10 +204,10 @@ declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr nounde
 define linkonce_odr dso_local void @_ZN5Eigen8internal26call_dense_assignment_loopINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEENS_7ReverseIS3_Li1EEENS0_9assign_opIiiEEEEvRT_RKT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #18 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !219, !nonnull !19, !align !20 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !87   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !87   ; 5 uses
   %i.c = ptrtoaddr ptr %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !88   ; 11 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !88   ; 12 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.g = load i64, ptr %i.f, align 8, !tbaa !89   ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -244,9 +244,9 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i, %bb.a
-  %i.r = phi i64 [ %.pre, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i ], [ %i.e, %bb.a ] ; 10 uses
+  %i.r = phi i64 [ %.pre, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i ], [ %i.e, %bb.a ] ; 11 uses
   %i.s = phi i64 [ %.pr, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i ], [ %i.g, %bb.a ] ; 2 uses
-  %i.t = load ptr, ptr %0, align 8, !tbaa !87     ; 4 uses
+  %i.t = load ptr, ptr %0, align 8, !tbaa !87     ; 5 uses
   %i.u = sub i64 0, %i.r
   %i.v = and i64 %i.u, 3
   %i.w = icmp sgt i64 %i.s, 0
@@ -254,42 +254,48 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
 
 .lr.ph54.i.preheader:                             ; preds = %bb.d
   %i.x = ptrtoaddr ptr %i.t to i64
+  %3 = add i64 %i.r, %i.e
+  %4 = shl i64 %3, 2
   %i.y = add i64 %i.g, 4611686018427387903
   %i.z = mul i64 %i.e, %i.y
-  %i.aa = shl i64 %i.z, 2
+  %i.aa = shl i64 %i.z, 2                         ; 2 uses
   %i.ab = add i64 %i.aa, %i.c
   %i.ac = sub i64 %i.x, %i.ab
-  %3 = add i64 %i.r, %i.e
-  %i.ad = shl i64 %3, 2
+  %5 = mul i64 %i.e, -4
+  %i.ad = shl i64 %i.r, 2
+  %6 = getelementptr i8, ptr %i.b, i64 %i.aa
   %invariant.op = add i64 %i.ac, -1
   br label %.lr.ph54.i
 
 .lr.ph54.i:                                       ; preds = %.lr.ph54.i.preheader, %._crit_edge.i
-  %.03152.i = phi i64 [ %i.cc, %._crit_edge.i ], [ 0, %.lr.ph54.i.preheader ] ; 8 uses
+  %.03152.i = phi i64 [ %i.cc, %._crit_edge.i ], [ 0, %.lr.ph54.i.preheader ] ; 10 uses
   %.03251.i = phi i64 [ %.sroa.speculated.i, %._crit_edge.i ], [ 0, %.lr.ph54.i.preheader ] ; 13 uses
-  %4 = mul i64 %i.ad, %.03152.i
   %i.ae = sub i64 %i.r, %.03251.i                 ; 2 uses
   %i.af = and i64 %i.ae, -4                       ; 2 uses
-  %i.ag = add nsw i64 %i.af, %.03251.i            ; 5 uses
+  %i.ag = add nsw i64 %i.af, %.03251.i            ; 6 uses
   %i.ah = icmp sgt i64 %.03251.i, 0
   br i1 %i.ah, label %.lr.ph.i, label %.preheader39.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph54.i
   %i.ai = mul nsw i64 %.03152.i, %i.r
-  %invariant.gep.i = getelementptr [4 x i8], ptr %i.t, i64 %i.ai ; 8 uses
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.t, i64 %i.ai ; 7 uses
   %i.aj = xor i64 %.03152.i, -1
   %i.ak = add i64 %i.g, %i.aj
   %i.al = mul nsw i64 %i.ak, %i.e
-  %invariant.gep41.i = getelementptr [4 x i8], ptr %i.b, i64 %i.al ; 8 uses
+  %invariant.gep41.i = getelementptr [4 x i8], ptr %i.b, i64 %i.al ; 7 uses
   %min.iters.check44 = icmp ult i64 %.03251.i, 8
   br i1 %min.iters.check44, label %scalar.ph43.preheader, label %vector.memcheck41
 
 vector.memcheck41:                                ; preds = %.lr.ph.i
+  %7 = mul i64 %.03152.i, %i.ad
   %i.am = shl i64 %.03251.i, 2                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %invariant.gep.i, i64 %i.am
-  %scevgep42 = getelementptr i8, ptr %invariant.gep41.i, i64 %i.am
+  %8 = getelementptr i8, ptr %i.t, i64 %7
+  %9 = getelementptr i8, ptr %8, i64 %i.am
+  %10 = mul i64 %.03152.i, %5
+  %scevgep = getelementptr i8, ptr %6, i64 %10
+  %scevgep42 = getelementptr i8, ptr %scevgep, i64 %i.am
   %bound0 = icmp ult ptr %invariant.gep.i, %scevgep42
-  %bound1 = icmp ult ptr %invariant.gep41.i, %scevgep
+  %bound1 = icmp ult ptr %invariant.gep41.i, %9
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph43.preheader, label %vector.ph45
 
@@ -390,13 +396,16 @@ scalar.ph43:                                      ; preds = %scalar.ph43.prol.lo
   %invariant.gep49.i = getelementptr [4 x i8], ptr %i.b, i64 %i.bn ; 2 uses
   %i.bo = add i64 %.03251.i, %i.af
   %i.bp = sub i64 %i.r, %i.bo                     ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bp, 8
-  %.reass = add i64 %4, %invariant.op
-  %diff.check.a = icmp ult i64 %.reass, 31
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check.a
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
+  %diff.check.a = icmp ult i64 %i.bp, 8
+  br i1 %diff.check.a, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.ph:                                        ; preds = %.lr.ph46.i
+vector.memcheck:                                  ; preds = %.lr.ph46.i
+  %11 = mul i64 %.03152.i, %4
+  %.reass = add i64 %11, %invariant.op
+  %diff.check = icmp ult i64 %.reass, 31
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.bp, -8                      ; 3 uses
   %i.bq = add i64 %i.ag, %n.vec
   br label %vector.body
@@ -420,8 +429,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.bp, %n.vec
   br i1 %cmp.n, label %._crit_edge.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph46.i, %middle.block
-  %.045.i.ph = phi i64 [ %i.ag, %.lr.ph46.i ], [ %i.bq, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph46.i, %middle.block
+  %.045.i.ph = phi i64 [ %i.ag, %vector.memcheck ], [ %i.ag, %.lr.ph46.i ], [ %i.bq, %middle.block ]
   br label %scalar.ph
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph44.i

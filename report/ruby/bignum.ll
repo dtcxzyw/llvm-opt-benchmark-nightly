@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %.0110223 = phi i32 [ %i.in, %bb.ac ], [ 0, %.preheader203 ]
   %.0118222 = phi ptr [ %.0119221, %bb.ac ], [ %i.k, %.preheader203 ] ; 8 uses
   %.0119221 = phi ptr [ %.0118222, %bb.ac ], [ %i.j, %.preheader203 ] ; 6 uses
-  %.0120220 = phi i64 [ %i.ay, %bb.ac ], [ 2, %.preheader203 ] ; 17 uses
+  %.0120220 = phi i64 [ %i.ay, %bb.ac ], [ 2, %.preheader203 ] ; 16 uses
   %.0121219 = phi i64 [ %i.io, %bb.ac ], [ %.1.i, %.preheader203 ]
   %.0118222284 = ptrtoaddr ptr %.0118222 to i64   ; 2 uses
   %i.ay = shl i64 %.0120220, 1                    ; 13 uses
@@ -214,8 +214,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %i.bb = getelementptr i8, ptr %i.az, i64 24     ; 2 uses
   %i.bc = icmp sgt i64 %.0120220, 0
   %.not.i.i142 = icmp eq i64 %i.ay, 0
-  %7 = shl i64 %.0120220, 3
-  %i.bd = shl i64 %.0120220, 3
+  %i.bd = shl i64 %.0120220, 3                    ; 2 uses
   %i.be = mul i64 %.0120220, -2
   br label %bb.m
 
@@ -230,10 +229,6 @@ bb.m:                                             ; preds = %.preheader202, %bar
   %i.bf = mul i64 %i.be, %indvar.a
   %i.bg = add i64 %4, %i.bf
   %umin = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bg)
-  %8 = mul i64 %i.bd, %indvar.a
-  %9 = add i64 %8, %.0118222284
-  %10 = mul i64 %7, %indvar.a
-  %11 = add i64 %10, %.0118222284
   %i.bh = sub nuw i64 %4, %.2217                  ; 10 uses
   %.not136 = icmp ugt i64 %i.ay, %i.bh
   br i1 %.not136, label %bb.t, label %bb.n
@@ -352,26 +347,30 @@ bb.s:                                             ; preds = %.lr.ph83.i.i
   br i1 %exitcond102.not.i.i, label %.preheader70.i.i, label %.lr.ph83.i.i, !llvm.loop !4
 
 .loopexit71.i.i:                                  ; preds = %.lr.ph83.i.i, %bb.r, %.lr.ph88.preheader.i.i
-  %.3.i.i = phi i64 [ %i.cv, %bb.r ], [ %.1.lcssa.i.i, %.lr.ph88.preheader.i.i ], [ %.182.i.i, %.lr.ph83.i.i ] ; 6 uses
+  %.3.i.i = phi i64 [ %i.cv, %bb.r ], [ %.1.lcssa.i.i, %.lr.ph88.preheader.i.i ], [ %.182.i.i, %.lr.ph83.i.i ] ; 7 uses
   %i.df = icmp eq ptr %.063.i.i262, %i.bi
   %i.dg = icmp eq i64 %.062.i.i264, %i.ay
   %or.cond.i.i = and i1 %i.df, %i.dg
-  br i1 %or.cond.i.i, label %bary_add.exit, label %.preheader69.i.i.a
+  br i1 %or.cond.i.i, label %bary_add.exit, label %.preheader69.i.i
 
-.preheader69.i.i.a:                               ; preds = %.loopexit71.i.i
-  %i.dh = icmp ult i64 %.3.i.i, %.062.i.i264
-  br i1 %i.dh, label %.lr.ph91.i.i.preheader, label %.preheader.i.i
+.preheader69.i.i:                                 ; preds = %.loopexit71.i.i
+  %7 = icmp ult i64 %.3.i.i, %.062.i.i264
+  br i1 %7, label %.preheader69.i.i.a, label %.preheader.i.i
+
+.preheader69.i.i.a:                               ; preds = %.preheader69.i.i
+  %8 = sub nuw i64 %.062.i.i264, %.3.i.i          ; 3 uses
+  %i.dh = icmp ult i64 %8, 8
+  br i1 %i.dh, label %.lr.ph91.i.i.preheader309, label %.lr.ph91.i.i.preheader
 
 .lr.ph91.i.i.preheader:                           ; preds = %.preheader69.i.i.a
-  %12 = sub nuw i64 %.062.i.i264, %.3.i.i         ; 3 uses
-  %min.iters.check294 = icmp ult i64 %12, 8
-  %i.di = sub i64 %.063.i.i262291, %9
+  %9 = mul i64 %indvar.a, %i.bd
+  %10 = add i64 %9, %.0118222284
+  %i.di = sub i64 %.063.i.i262291, %10
   %diff.check292 = icmp ugt i64 %i.di, -32
-  %or.cond305 = select i1 %min.iters.check294, i1 true, i1 %diff.check292
-  br i1 %or.cond305, label %.lr.ph91.i.i.preheader309, label %vector.ph295
+  br i1 %diff.check292, label %.lr.ph91.i.i.preheader309, label %vector.ph295
 
 vector.ph295:                                     ; preds = %.lr.ph91.i.i.preheader
-  %n.vec296 = and i64 %12, -8                     ; 3 uses
+  %n.vec296 = and i64 %8, -8                      ; 3 uses
   %i.dj = add i64 %.3.i.i, %n.vec296
   br label %vector.body297
 
@@ -391,11 +390,11 @@ vector.body297:                                   ; preds = %vector.body297, %ve
   br i1 %i.dp, label %middle.block302, label %vector.body297, !llvm.loop !245
 
 middle.block302:                                  ; preds = %vector.body297
-  %cmp.n303 = icmp eq i64 %12, %n.vec296
+  %cmp.n303 = icmp eq i64 %8, %n.vec296
   br i1 %cmp.n303, label %.preheader.i.i, label %.lr.ph91.i.i.preheader309
 
-.lr.ph91.i.i.preheader309:                        ; preds = %.lr.ph91.i.i.preheader, %middle.block302
-  %.490.i.i.ph = phi i64 [ %.3.i.i, %.lr.ph91.i.i.preheader ], [ %i.dj, %middle.block302 ] ; 4 uses
+.lr.ph91.i.i.preheader309:                        ; preds = %.lr.ph91.i.i.preheader, %.preheader69.i.i.a, %middle.block302
+  %.490.i.i.ph = phi i64 [ %.3.i.i, %.lr.ph91.i.i.preheader ], [ %.3.i.i, %.preheader69.i.i.a ], [ %i.dj, %middle.block302 ] ; 4 uses
   %i.dq = sub i64 %.062.i.i264, %.490.i.i.ph
   %xtraiter = and i64 %i.dq, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -419,8 +418,8 @@ middle.block302:                                  ; preds = %vector.body297
   %i.dw = icmp ugt i64 %i.dv, -4
   br i1 %i.dw, label %.preheader.i.i, label %.lr.ph91.i.i
 
-.preheader.i.i:                                   ; preds = %.lr.ph91.i.i.prol.loopexit, %.lr.ph91.i.i, %middle.block302, %.preheader69.i.i.a
-  %.4.lcssa.i.i = phi i64 [ %.3.i.i, %.preheader69.i.i.a ], [ %.062.i.i264, %middle.block302 ], [ %.062.i.i264, %.lr.ph91.i.i ], [ %.062.i.i264, %.lr.ph91.i.i.prol.loopexit ] ; 3 uses
+.preheader.i.i:                                   ; preds = %.lr.ph91.i.i.prol.loopexit, %.lr.ph91.i.i, %middle.block302, %.preheader69.i.i
+  %.4.lcssa.i.i = phi i64 [ %.3.i.i, %.preheader69.i.i ], [ %.062.i.i264, %middle.block302 ], [ %.062.i.i264, %.lr.ph91.i.i ], [ %.062.i.i264, %.lr.ph91.i.i.prol.loopexit ] ; 3 uses
   %i.dx = icmp ult i64 %.4.lcssa.i.i, %i.ay
   br i1 %i.dx, label %.lr.ph94.preheader.i.i, label %bary_add.exit
 
@@ -575,7 +574,7 @@ bb.y:                                             ; preds = %bb.x, %BIGNUM_LEN.e
 
 .lr.ph83.i.i180:                                  ; preds = %.preheader72.i.i159, %bb.z
   %indvar286 = phi i64 [ %indvar.next287.a, %bb.z ], [ 0, %.preheader72.i.i159 ] ; 2 uses
-  %.182.i.i181 = phi i64 [ %i.gy, %bb.z ], [ %.064.i.i150, %.preheader72.i.i159 ] ; 7 uses
+  %.182.i.i181 = phi i64 [ %i.gy, %bb.z ], [ %.064.i.i150, %.preheader72.i.i159 ] ; 8 uses
   %.15981.i.i182 = phi i64 [ %i.gx, %bb.z ], [ %.058.lcssa.i.i160, %.preheader72.i.i159 ]
   %i.gq = icmp eq i64 %.15981.i.i182, 0
   br i1 %i.gq, label %.loopexit71.i.i169, label %bb.z
@@ -600,19 +599,23 @@ bb.z:                                             ; preds = %.lr.ph83.i.i180
   %or.cond.i.i171.not275 = or i1 %i.gz, %i.ha
   %i.hb = icmp ult i64 %.182.i.i181, %.062.i.i152
   %or.cond = and i1 %or.cond.i.i171.not275, %i.hb
-  br i1 %or.cond, label %.lr.ph91.i.i177.preheader.a, label %bary_add.exit
+  br i1 %or.cond, label %.lr.ph91.i.i177.preheader, label %bary_add.exit
 
-.lr.ph91.i.i177.preheader.a:                      ; preds = %.loopexit71.i.i169
-  %13 = add i64 %.064.i.i150, %indvar286
-  %14 = sub i64 %.062.i.i152, %13                 ; 3 uses
-  %min.iters.check = icmp ult i64 %14, 8
-  %i.hc = sub i64 %.063.i.i151285, %11
+.lr.ph91.i.i177.preheader:                        ; preds = %.loopexit71.i.i169
+  %11 = add i64 %.064.i.i150, %indvar286
+  %12 = sub i64 %.062.i.i152, %11                 ; 3 uses
+  %min.iters.check = icmp ult i64 %12, 8
+  br i1 %min.iters.check, label %.lr.ph91.i.i177.preheader307, label %.lr.ph91.i.i177.preheader.a
+
+.lr.ph91.i.i177.preheader.a:                      ; preds = %.lr.ph91.i.i177.preheader
+  %13 = mul i64 %indvar.a, %i.bd
+  %14 = add i64 %13, %.0118222284
+  %i.hc = sub i64 %.063.i.i151285, %14
   %diff.check = icmp ugt i64 %i.hc, -32
-  %or.cond306 = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond306, label %.lr.ph91.i.i177.preheader307, label %vector.ph
+  br i1 %diff.check, label %.lr.ph91.i.i177.preheader307, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph91.i.i177.preheader.a
-  %n.vec = and i64 %14, -8                        ; 3 uses
+  %n.vec = and i64 %12, -8                        ; 3 uses
   %i.hd = add i64 %.182.i.i181, %n.vec
   br label %vector.body
 
@@ -632,11 +635,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.hj, label %middle.block, label %vector.body, !llvm.loop !248
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %14, %n.vec
+  %cmp.n = icmp eq i64 %12, %n.vec
   br i1 %cmp.n, label %bary_add.exit, label %.lr.ph91.i.i177.preheader307
 
-.lr.ph91.i.i177.preheader307:                     ; preds = %.lr.ph91.i.i177.preheader.a, %middle.block
-  %.490.i.i178.ph = phi i64 [ %.182.i.i181, %.lr.ph91.i.i177.preheader.a ], [ %i.hd, %middle.block ] ; 4 uses
+.lr.ph91.i.i177.preheader307:                     ; preds = %.lr.ph91.i.i177.preheader.a, %.lr.ph91.i.i177.preheader, %middle.block
+  %.490.i.i178.ph = phi i64 [ %.182.i.i181, %.lr.ph91.i.i177.preheader.a ], [ %.182.i.i181, %.lr.ph91.i.i177.preheader ], [ %i.hd, %middle.block ] ; 4 uses
   %i.hk = sub i64 %.062.i.i152, %.490.i.i178.ph
   %xtraiter322 = and i64 %i.hk, 3                 ; 2 uses
   %lcmp.mod323.not = icmp eq i64 %xtraiter322, 0

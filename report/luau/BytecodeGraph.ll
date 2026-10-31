@@ -204,8 +204,6 @@ _ZNSt12_Vector_baseIN4Luau8Bytecode6BcInstESaIS2_EE11_M_allocateEm.exit: ; preds
   %indvar = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %indvar.next, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 2 uses
   %.012.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.preheader ], [ %i.bg, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 9 uses
   %.0911.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.bf, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 10 uses
-  %2 = mul i64 %indvar, 80
-  %3 = add i64 %i.s, %2
   tail call void @llvm.experimental.noalias.scope.decl(metadata !597)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !598)
   %i.t = load i64, ptr %.0911.i.i.i, align 8, !alias.scope !598
@@ -216,9 +214,9 @@ _ZNSt12_Vector_baseIN4Luau8Bytecode6BcInstESaIS2_EE11_M_allocateEm.exit: ; preds
   store i32 0, ptr %i.w, align 8, !tbaa !239, !alias.scope !597
   %i.x = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 20
   store i32 4, ptr %i.x, align 4, !tbaa !240, !alias.scope !597
-  %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24 ; 4 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24 ; 5 uses
   store ptr %i.y, ptr %i.u, align 8, !tbaa !241, !alias.scope !597
-  %i.z = load ptr, ptr %i.v, align 8, !tbaa !241, !alias.scope !598 ; 9 uses
+  %i.z = load ptr, ptr %i.v, align 8, !tbaa !241, !alias.scope !598 ; 10 uses
   %i.aa = ptrtoaddr ptr %i.z to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 4 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.z, %i.ab
@@ -238,12 +236,16 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i
   %i.ah = lshr exact i64 %i.ag, 2
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ag, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+  %2 = mul i64 %indvar, 80
+  %3 = add i64 %i.s, %2
   %4 = sub i64 %i.aa, %3
   %diff.check = icmp ugt i64 %4, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21, label %vector.ph
+  br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21, label %vector.ph
 
-vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ai, 9223372036854775800     ; 3 uses
   %i.aj = shl i64 %n.vec, 2                       ; 2 uses
   %i.ak = getelementptr i8, ptr %i.y, i64 %i.aj
@@ -269,9 +271,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ai, %n.vec
   br i1 %cmp.n, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21:           ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block
-  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ak, %middle.block ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.z, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.al, %middle.block ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21:           ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block
+  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.y, %vector.memcheck ], [ %i.y, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ak, %middle.block ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.z, %vector.memcheck ], [ %i.z, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.al, %middle.block ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader21, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -674,17 +676,15 @@ _ZN4Luau8Bytecode5BcPhiC2EOS1_.exit:              ; preds = %bb.c, %.lr.ph.prehe
   %indvar = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %indvar.next, %_ZSt19__relocate_object_aIN4Luau8Bytecode5BcPhiES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 2 uses
   %.012.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.cl, %_ZSt19__relocate_object_aIN4Luau8Bytecode5BcPhiES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 8 uses
   %.0911.i.i.i = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.ck, %_ZSt19__relocate_object_aIN4Luau8Bytecode5BcPhiES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 9 uses
-  %3 = mul i64 %indvar, 56
-  %4 = add i64 %i.bc, %3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !681)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !682)
   %i.bd = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 3 uses
   store i32 0, ptr %i.bd, align 8, !tbaa !239, !alias.scope !681
   %i.be = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 12
   store i32 4, ptr %i.be, align 4, !tbaa !240, !alias.scope !681
-  %i.bf = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 16 ; 4 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 16 ; 5 uses
   store ptr %i.bf, ptr %.012.i.i.i, align 8, !tbaa !241, !alias.scope !681
-  %i.bg = load ptr, ptr %.0911.i.i.i, align 8, !tbaa !241, !alias.scope !682 ; 9 uses
+  %i.bg = load ptr, ptr %.0911.i.i.i, align 8, !tbaa !241, !alias.scope !682 ; 10 uses
   %i.bh = ptrtoaddr ptr %i.bg to i64
   %i.bi = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 16 ; 4 uses
   %.not.i.i.i.i.i.i16 = icmp eq ptr %i.bg, %i.bi
@@ -704,12 +704,16 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.bo = lshr exact i64 %i.bn, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check69 = icmp ult i64 %i.bn, 28
-  %5 = sub i64 %i.bh, %4
-  %diff.check67 = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check69, i1 true, i1 %diff.check67
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, label %vector.ph70
+  br i1 %min.iters.check69, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, label %vector.memcheck70
 
-vector.ph70:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+vector.memcheck70:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+  %3 = mul i64 %indvar, 56
+  %4 = add i64 %i.bc, %3
+  %5 = sub i64 %i.bh, %4
+  %diff.check71 = icmp ugt i64 %5, -32
+  br i1 %diff.check71, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, label %vector.ph70
+
+vector.ph70:                                      ; preds = %vector.memcheck70
   %n.vec71 = and i64 %i.bp, 9223372036854775800   ; 3 uses
   %i.bq = shl i64 %n.vec71, 2                     ; 2 uses
   %i.br = getelementptr i8, ptr %i.bf, i64 %i.bq
@@ -735,9 +739,9 @@ middle.block79:                                   ; preds = %vector.body72
   %cmp.n80 = icmp eq i64 %i.bp, %n.vec71
   br i1 %cmp.n80, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105:          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block79
-  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.br, %middle.block79 ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bg, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bs, %middle.block79 ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105:          ; preds = %vector.memcheck70, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block79
+  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bf, %vector.memcheck70 ], [ %i.bf, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.br, %middle.block79 ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bg, %vector.memcheck70 ], [ %i.bg, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bs, %middle.block79 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -806,17 +810,15 @@ _ZNSt6vectorIN4Luau8Bytecode5BcPhiESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; 
   %indvar85 = phi i64 [ 0, %.lr.ph.i.i.i18.preheader ], [ %indvar.next86, %_ZSt19__relocate_object_aIN4Luau8Bytecode5BcPhiES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i24 ] ; 2 uses
   %.012.i.i.i19 = phi ptr [ %i.cm, %.lr.ph.i.i.i18.preheader ], [ %i.dw, %_ZSt19__relocate_object_aIN4Luau8Bytecode5BcPhiES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i24 ] ; 8 uses
   %.0911.i.i.i20 = phi ptr [ %1, %.lr.ph.i.i.i18.preheader ], [ %i.dv, %_ZSt19__relocate_object_aIN4Luau8Bytecode5BcPhiES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i24 ] ; 9 uses
-  %6 = mul i64 %indvar85, 56
-  %7 = add i64 %i.cn, %6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !683)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !684)
   %i.co = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 8 ; 3 uses
   store i32 0, ptr %i.co, align 8, !tbaa !239, !alias.scope !683
   %i.cp = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 12
   store i32 4, ptr %i.cp, align 4, !tbaa !240, !alias.scope !683
-  %i.cq = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 16 ; 4 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 16 ; 5 uses
   store ptr %i.cq, ptr %.012.i.i.i19, align 8, !tbaa !241, !alias.scope !683
-  %i.cr = load ptr, ptr %.0911.i.i.i20, align 8, !tbaa !241, !alias.scope !684 ; 9 uses
+  %i.cr = load ptr, ptr %.0911.i.i.i20, align 8, !tbaa !241, !alias.scope !684 ; 10 uses
   %i.cs = ptrtoaddr ptr %i.cr to i64
   %i.ct = getelementptr inbounds nuw i8, ptr %.0911.i.i.i20, i64 16 ; 4 uses
   %.not.i.i.i.i.i.i21 = icmp eq ptr %i.cr, %i.ct
@@ -836,12 +838,16 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i18
   %i.cz = lshr exact i64 %i.cy, 2
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %min.iters.check89 = icmp ult i64 %i.cy, 28
-  %8 = sub i64 %i.cs, %7
-  %diff.check87 = icmp ugt i64 %8, -32
-  %or.cond103 = select i1 %min.iters.check89, i1 true, i1 %diff.check87
-  br i1 %or.cond103, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, label %vector.ph90
+  br i1 %min.iters.check89, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, label %vector.memcheck95
 
-vector.ph90:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader
+vector.memcheck95:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader
+  %6 = mul i64 %indvar85, 56
+  %7 = add i64 %i.cn, %6
+  %8 = sub i64 %i.cs, %7
+  %diff.check96 = icmp ugt i64 %8, -32
+  br i1 %diff.check96, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, label %vector.ph90
+
+vector.ph90:                                      ; preds = %vector.memcheck95
   %n.vec91 = and i64 %i.da, 9223372036854775800   ; 3 uses
   %i.db = shl i64 %n.vec91, 2                     ; 2 uses
   %i.dc = getelementptr i8, ptr %i.cq, i64 %i.db
@@ -867,9 +873,9 @@ middle.block99:                                   ; preds = %vector.body92
   %cmp.n100 = icmp eq i64 %i.da, %n.vec91
   br i1 %cmp.n100, label %.lr.ph.preheader.i.i.i.i.i.i.i33, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104:        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader, %middle.block99
-  %.013.i.i.i.i.i.i.i.i.i.i30.ph = phi ptr [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dc, %middle.block99 ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i31.ph = phi ptr [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dd, %middle.block99 ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104:        ; preds = %vector.memcheck95, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader, %middle.block99
+  %.013.i.i.i.i.i.i.i.i.i.i30.ph = phi ptr [ %i.cq, %vector.memcheck95 ], [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dc, %middle.block99 ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i31.ph = phi ptr [ %i.cr, %vector.memcheck95 ], [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dd, %middle.block99 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i29
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i29:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, %.lr.ph.i.i.i.i.i.i.i.i.i.i29
@@ -1272,8 +1278,6 @@ _ZN4Luau8Bytecode6BcInstC2EOS1_.exit:             ; preds = %bb.c, %.lr.ph.prehe
   %indvar = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %indvar.next, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 2 uses
   %.012.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.cv, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 9 uses
   %.0911.i.i.i = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.cu, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ] ; 10 uses
-  %3 = mul i64 %indvar, 80
-  %4 = add i64 %i.bh, %3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !713)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !714)
   %i.bi = load i64, ptr %.0911.i.i.i, align 8, !alias.scope !714
@@ -1284,9 +1288,9 @@ _ZN4Luau8Bytecode6BcInstC2EOS1_.exit:             ; preds = %bb.c, %.lr.ph.prehe
   store i32 0, ptr %i.bl, align 8, !tbaa !239, !alias.scope !713
   %i.bm = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 20
   store i32 4, ptr %i.bm, align 4, !tbaa !240, !alias.scope !713
-  %i.bn = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24 ; 4 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 24 ; 5 uses
   store ptr %i.bn, ptr %i.bj, align 8, !tbaa !241, !alias.scope !713
-  %i.bo = load ptr, ptr %i.bk, align 8, !tbaa !241, !alias.scope !714 ; 9 uses
+  %i.bo = load ptr, ptr %i.bk, align 8, !tbaa !241, !alias.scope !714 ; 10 uses
   %i.bp = ptrtoaddr ptr %i.bo to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24 ; 4 uses
   %.not.i.i.i.i.i.i16 = icmp eq ptr %i.bo, %i.bq
@@ -1306,12 +1310,16 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.bw = lshr exact i64 %i.bv, 2
   %i.bx = add nuw nsw i64 %i.bw, 1                ; 2 uses
   %min.iters.check69 = icmp ult i64 %i.bv, 28
-  %5 = sub i64 %i.bp, %4
-  %diff.check67 = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check69, i1 true, i1 %diff.check67
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, label %vector.ph70
+  br i1 %min.iters.check69, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, label %vector.memcheck70
 
-vector.ph70:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+vector.memcheck70:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
+  %3 = mul i64 %indvar, 80
+  %4 = add i64 %i.bh, %3
+  %5 = sub i64 %i.bp, %4
+  %diff.check71 = icmp ugt i64 %5, -32
+  br i1 %diff.check71, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, label %vector.ph70
+
+vector.ph70:                                      ; preds = %vector.memcheck70
   %n.vec71 = and i64 %i.bx, 9223372036854775800   ; 3 uses
   %i.by = shl i64 %n.vec71, 2                     ; 2 uses
   %i.bz = getelementptr i8, ptr %i.bn, i64 %i.by
@@ -1337,9 +1345,9 @@ middle.block79:                                   ; preds = %vector.body72
   %cmp.n80 = icmp eq i64 %i.bx, %n.vec71
   br i1 %cmp.n80, label %.lr.ph.preheader.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105:          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block79
-  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bz, %middle.block79 ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bo, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ca, %middle.block79 ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105:          ; preds = %vector.memcheck70, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %middle.block79
+  %.013.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bn, %vector.memcheck70 ], [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bz, %middle.block79 ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.bo, %vector.memcheck70 ], [ %i.bo, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.ca, %middle.block79 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader105, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -1411,8 +1419,6 @@ _ZNSt6vectorIN4Luau8Bytecode6BcInstESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ;
   %indvar85 = phi i64 [ 0, %.lr.ph.i.i.i18.preheader ], [ %indvar.next86, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i24 ] ; 2 uses
   %.012.i.i.i19 = phi ptr [ %i.cw, %.lr.ph.i.i.i18.preheader ], [ %i.el, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i24 ] ; 9 uses
   %.0911.i.i.i20 = phi ptr [ %1, %.lr.ph.i.i.i18.preheader ], [ %i.ek, %_ZSt19__relocate_object_aIN4Luau8Bytecode6BcInstES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i24 ] ; 10 uses
-  %6 = mul i64 %indvar85, 80
-  %7 = add i64 %i.cx, %6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !716)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !717)
   %i.cy = load i64, ptr %.0911.i.i.i20, align 8, !alias.scope !717
@@ -1423,9 +1429,9 @@ _ZNSt6vectorIN4Luau8Bytecode6BcInstESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ;
   store i32 0, ptr %i.db, align 8, !tbaa !239, !alias.scope !716
   %i.dc = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 20
   store i32 4, ptr %i.dc, align 4, !tbaa !240, !alias.scope !716
-  %i.dd = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 24 ; 4 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 24 ; 5 uses
   store ptr %i.dd, ptr %i.cz, align 8, !tbaa !241, !alias.scope !716
-  %i.de = load ptr, ptr %i.da, align 8, !tbaa !241, !alias.scope !717 ; 9 uses
+  %i.de = load ptr, ptr %i.da, align 8, !tbaa !241, !alias.scope !717 ; 10 uses
   %i.df = ptrtoaddr ptr %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %.0911.i.i.i20, i64 24 ; 4 uses
   %.not.i.i.i.i.i.i21 = icmp eq ptr %i.de, %i.dg
@@ -1445,12 +1451,16 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i18
   %i.dm = lshr exact i64 %i.dl, 2
   %i.dn = add nuw nsw i64 %i.dm, 1                ; 2 uses
   %min.iters.check89 = icmp ult i64 %i.dl, 28
-  %8 = sub i64 %i.df, %7
-  %diff.check87 = icmp ugt i64 %8, -32
-  %or.cond103 = select i1 %min.iters.check89, i1 true, i1 %diff.check87
-  br i1 %or.cond103, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, label %vector.ph90
+  br i1 %min.iters.check89, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, label %vector.memcheck95
 
-vector.ph90:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader
+vector.memcheck95:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader
+  %6 = mul i64 %indvar85, 80
+  %7 = add i64 %i.cx, %6
+  %8 = sub i64 %i.df, %7
+  %diff.check96 = icmp ugt i64 %8, -32
+  br i1 %diff.check96, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, label %vector.ph90
+
+vector.ph90:                                      ; preds = %vector.memcheck95
   %n.vec91 = and i64 %i.dn, 9223372036854775800   ; 3 uses
   %i.do = shl i64 %n.vec91, 2                     ; 2 uses
   %i.dp = getelementptr i8, ptr %i.dd, i64 %i.do
@@ -1476,9 +1486,9 @@ middle.block99:                                   ; preds = %vector.body92
   %cmp.n100 = icmp eq i64 %i.dn, %n.vec91
   br i1 %cmp.n100, label %.lr.ph.preheader.i.i.i.i.i.i.i33, label %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104:        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader, %middle.block99
-  %.013.i.i.i.i.i.i.i.i.i.i30.ph = phi ptr [ %i.dd, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dp, %middle.block99 ]
-  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i31.ph = phi ptr [ %i.de, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dq, %middle.block99 ]
+.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104:        ; preds = %vector.memcheck95, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader, %middle.block99
+  %.013.i.i.i.i.i.i.i.i.i.i30.ph = phi ptr [ %i.dd, %vector.memcheck95 ], [ %i.dd, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dp, %middle.block99 ]
+  %.sroa.08.012.i.i.i.i.i.i.i.i.i.i31.ph = phi ptr [ %i.de, %vector.memcheck95 ], [ %i.de, %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader ], [ %i.dq, %middle.block99 ]
   br label %.lr.ph.i.i.i.i.i.i.i.i.i.i29
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i29:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i29.preheader104, %.lr.ph.i.i.i.i.i.i.i.i.i.i29

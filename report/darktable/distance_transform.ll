@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader85.us.us.preheader:                     ; preds = %.preheader85.lr.ph
   %i.cq = sub i64 %i.a, %i.cn
-  %min.iters.check183 = icmp ult i64 %3, 4
-  %ident.check180.not = icmp ne i64 %2, 1
-  %or.cond211.not215 = or i1 %min.iters.check183, %ident.check180.not
+  %min.iters.check185 = icmp ugt i64 %3, 3
+  %ident.check182.not = icmp eq i64 %2, 1
+  %or.cond215 = and i1 %min.iters.check185, %ident.check182.not
   %invariant.op = sub i64 %i.a, %i.cj
   %min.iters.check185.a = icmp ult i64 %3, 32
   %i.cr = and i64 %3, 28
@@ -215,9 +215,9 @@ bb.b:                                             ; preds = %bb.a
   %min.epilog.iters.check200 = icmp eq i64 %i.cr, 0
   %n.vec203 = and i64 %3, -4                      ; 3 uses
   %cmp.n209 = icmp eq i64 %3, %n.vec203
-  %min.iters.check151 = icmp ult i64 %3, 4
-  %ident.check.not = icmp ne i64 %2, 1
-  %or.cond213.not216 = or i1 %min.iters.check151, %ident.check.not
+  %min.iters.check151 = icmp ugt i64 %3, 3
+  %ident.check.not = icmp eq i64 %2, 1
+  %or.cond216 = and i1 %min.iters.check151, %ident.check.not
   %invariant.op235 = add i64 %i.cq, -1
   %min.iters.check153 = icmp ult i64 %3, 32
   %i.cs = and i64 %3, 28
@@ -226,17 +226,18 @@ bb.b:                                             ; preds = %bb.a
   %min.epilog.iters.check168 = icmp eq i64 %i.cs, 0
   %n.vec171 = and i64 %3, -4                      ; 3 uses
   %cmp.n177 = icmp eq i64 %3, %n.vec171
-  br label %iter.check197
+  br label %iter.check201
 
-iter.check197:                                    ; preds = %.preheader85.us.us.preheader, %._crit_edge95.us.us
+iter.check201:                                    ; preds = %.preheader85.us.us.preheader, %._crit_edge95.us.us
   %.07996.us.us = phi i64 [ %i.gs, %._crit_edge95.us.us ], [ 0, %.preheader85.us.us.preheader ] ; 4 uses
-  %6 = shl i64 %.07996.us.us, 2
-  %i.ct = shl i64 %.07996.us.us, 2
   %invariant.gep.us.us = getelementptr [4 x i8], ptr %1, i64 %.07996.us.us ; 22 uses
-  %.reass = add i64 %6, %invariant.op
+  br i1 %or.cond215, label %iter.check197, label %vec.epilog.scalar.ph199.preheader
+
+iter.check197:                                    ; preds = %iter.check201
+  %i.ct = shl i64 %.07996.us.us, 2
+  %.reass = add i64 %i.ct, %invariant.op
   %diff.check182 = icmp ugt i64 %.reass, -128
-  %or.cond212 = select i1 %or.cond211.not215, i1 true, i1 %diff.check182
-  br i1 %or.cond212, label %vec.epilog.scalar.ph199.preheader, label %vector.main.loop.iter.check184
+  br i1 %diff.check182, label %vec.epilog.scalar.ph199.preheader, label %vector.main.loop.iter.check184
 
 vector.main.loop.iter.check184:                   ; preds = %iter.check197
   br i1 %min.iters.check185.a, label %vec.epilog.ph201, label %vector.body188
@@ -264,7 +265,7 @@ vector.body188:                                   ; preds = %vector.main.loop.it
   br i1 %i.dc, label %middle.block195, label %vector.body188, !llvm.loop !17
 
 middle.block195:                                  ; preds = %vector.body188
-  br i1 %cmp.n196, label %iter.check165, label %vec.epilog.iter.check198
+  br i1 %cmp.n196, label %iter.check167, label %vec.epilog.iter.check198
 
 vec.epilog.iter.check198:                         ; preds = %middle.block195
   br i1 %min.epilog.iters.check200, label %vec.epilog.scalar.ph199.preheader, label %vec.epilog.ph201, !prof !28
@@ -284,10 +285,10 @@ vec.epilog.vector.body204:                        ; preds = %vec.epilog.vector.b
   br i1 %i.df, label %vec.epilog.middle.block208, label %vec.epilog.vector.body204, !llvm.loop !18
 
 vec.epilog.middle.block208:                       ; preds = %vec.epilog.vector.body204
-  br i1 %cmp.n209, label %iter.check165, label %vec.epilog.scalar.ph199.preheader
+  br i1 %cmp.n209, label %iter.check167, label %vec.epilog.scalar.ph199.preheader
 
-vec.epilog.scalar.ph199.preheader:                ; preds = %iter.check197, %vec.epilog.iter.check198, %vec.epilog.middle.block208
-  %.07888.us.us.ph = phi i64 [ 0, %iter.check197 ], [ %n.vec187, %vec.epilog.iter.check198 ], [ %n.vec203, %vec.epilog.middle.block208 ] ; 4 uses
+vec.epilog.scalar.ph199.preheader:                ; preds = %iter.check201, %iter.check197, %vec.epilog.iter.check198, %vec.epilog.middle.block208
+  %.07888.us.us.ph = phi i64 [ 0, %iter.check201 ], [ 0, %iter.check197 ], [ %n.vec187, %vec.epilog.iter.check198 ], [ %n.vec203, %vec.epilog.middle.block208 ] ; 4 uses
   %i.dg = sub i64 %3, %.07888.us.us.ph
   %xtraiter219 = and i64 %i.dg, 7                 ; 2 uses
   %lcmp.mod220.not = icmp eq i64 %xtraiter219, 0
@@ -310,7 +311,7 @@ vec.epilog.scalar.ph199.prol.loopexit:            ; preds = %vec.epilog.scalar.p
   %.07888.us.us.unr = phi i64 [ %.07888.us.us.ph, %vec.epilog.scalar.ph199.preheader ], [ %i.dk, %vec.epilog.scalar.ph199.prol ]
   %i.dl = sub i64 %.07888.us.us.ph, %3
   %i.dm = icmp ugt i64 %i.dl, -8
-  br i1 %i.dm, label %iter.check165, label %vec.epilog.scalar.ph199
+  br i1 %i.dm, label %iter.check167, label %vec.epilog.scalar.ph199
 
 vec.epilog.scalar.ph199:                          ; preds = %vec.epilog.scalar.ph199.prol.loopexit, %vec.epilog.scalar.ph199
   %.07888.us.us = phi i64 [ %i.es, %vec.epilog.scalar.ph199 ], [ %.07888.us.us.unr, %vec.epilog.scalar.ph199.prol.loopexit ] ; 10 uses
@@ -363,14 +364,17 @@ vec.epilog.scalar.ph199:                          ; preds = %vec.epilog.scalar.p
   store float %i.eq, ptr %i.er, align 4, !tbaa !12
   %i.es = add nuw i64 %.07888.us.us, 8            ; 2 uses
   %exitcond119.not.7 = icmp eq i64 %i.es, %3
-  br i1 %exitcond119.not.7, label %iter.check165, label %vec.epilog.scalar.ph199, !llvm.loop !20
+  br i1 %exitcond119.not.7, label %iter.check167, label %vec.epilog.scalar.ph199, !llvm.loop !20
 
-iter.check165:                                    ; preds = %vec.epilog.scalar.ph199.prol.loopexit, %vec.epilog.scalar.ph199, %vec.epilog.middle.block208, %middle.block195
+iter.check167:                                    ; preds = %vec.epilog.scalar.ph199.prol.loopexit, %vec.epilog.scalar.ph199, %vec.epilog.middle.block208, %middle.block195
   tail call fastcc void @_image_distance_transform(ptr noundef nonnull %i.ci, ptr noundef %i.cl, ptr noundef %i.cm, ptr noundef %i.co, i32 noundef %i.cp)
-  %.reass236 = add i64 %i.ct, %invariant.op235
+  br i1 %or.cond216, label %iter.check165, label %vec.epilog.scalar.ph167.preheader
+
+iter.check165:                                    ; preds = %iter.check167
+  %6 = shl i64 %.07996.us.us, 2
+  %.reass236 = add i64 %6, %invariant.op235
   %diff.check150 = icmp ult i64 %.reass236, 127
-  %or.cond214 = select i1 %or.cond213.not216, i1 true, i1 %diff.check150
-  br i1 %or.cond214, label %vec.epilog.scalar.ph167.preheader, label %vector.main.loop.iter.check152
+  br i1 %diff.check150, label %vec.epilog.scalar.ph167.preheader, label %vector.main.loop.iter.check152
 
 vector.main.loop.iter.check152:                   ; preds = %iter.check165
   br i1 %min.iters.check153, label %vec.epilog.ph169, label %vector.body156
@@ -420,8 +424,8 @@ vec.epilog.vector.body172:                        ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block176:                       ; preds = %vec.epilog.vector.body172
   br i1 %cmp.n177, label %._crit_edge95.us.us, label %vec.epilog.scalar.ph167.preheader
 
-vec.epilog.scalar.ph167.preheader:                ; preds = %iter.check165, %vec.epilog.iter.check166, %vec.epilog.middle.block176
-  %.07792.us.us.ph = phi i64 [ 0, %iter.check165 ], [ %n.vec155, %vec.epilog.iter.check166 ], [ %n.vec171, %vec.epilog.middle.block176 ] ; 4 uses
+vec.epilog.scalar.ph167.preheader:                ; preds = %iter.check167, %iter.check165, %vec.epilog.iter.check166, %vec.epilog.middle.block176
+  %.07792.us.us.ph = phi i64 [ 0, %iter.check167 ], [ 0, %iter.check165 ], [ %n.vec155, %vec.epilog.iter.check166 ], [ %n.vec171, %vec.epilog.middle.block176 ] ; 4 uses
   %i.ff = sub i64 %3, %.07792.us.us.ph
   %xtraiter222 = and i64 %i.ff, 7                 ; 2 uses
   %lcmp.mod223.not = icmp eq i64 %xtraiter222, 0
@@ -502,7 +506,7 @@ vec.epilog.scalar.ph167:                          ; preds = %vec.epilog.scalar.p
 ._crit_edge95.us.us:                              ; preds = %vec.epilog.scalar.ph167.prol.loopexit, %vec.epilog.scalar.ph167, %vec.epilog.middle.block176, %middle.block163
   %i.gs = add nuw i64 %.07996.us.us, 1            ; 2 uses
   %exitcond121.not = icmp eq i64 %i.gs, %2
-  br i1 %exitcond121.not, label %.lr.ph106.us.preheader, label %iter.check197
+  br i1 %exitcond121.not, label %.lr.ph106.us.preheader, label %iter.check201
 
 .preheader85:                                     ; preds = %.preheader85.lr.ph, %.preheader85
   %.07996 = phi i64 [ %i.gt, %.preheader85 ], [ 0, %.preheader85.lr.ph ]

@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %.sink.split.1, %sca
   %i.bs = zext nneg i32 %i.b to i64
   %i.bt = icmp slt i32 %i.bc, 1
   %wide.trip.count86 = zext nneg i32 %i.bc to i64
-  %3 = sub i64 %i.bg, %i.bn                       ; 2 uses
-  %4 = mul nsw i64 %i.bp, -4
+  %3 = mul nsw i64 %i.bp, -4
+  %4 = sub i64 %i.bg, %i.bn                       ; 2 uses
   %i.bu = add nsw i64 %wide.trip.count81, -1      ; 2 uses
   %i.bv = sext i32 %i.bo to i64
   %i.bw = shl nsw i64 %i.bv, 2
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %.sink.split.1, %sca
   %i.bz = icmp slt i32 %i.by, %i.bo
   %i.ca = icmp ugt i64 %i.bu, 4294967295
   %i.cb = or i1 %i.bz, %i.ca
-  %i.cc = sub i64 %i.bw, %3
+  %i.cc = sub i64 %i.bw, %4
   %diff.check136 = icmp ugt i64 %i.cc, -32
   %or.cond = select i1 %i.cb, i1 true, i1 %diff.check136
   %n.vec140 = and i64 %wide.trip.count81, 2147483640 ; 3 uses
@@ -223,7 +223,7 @@ bb.b:                                             ; preds = %.sink.split.1, %sca
   %xtraiter153 = and i64 %wide.trip.count81, 3    ; 2 uses
   %lcmp.mod154.not = icmp eq i64 %xtraiter153, 0
   %min.iters.check124 = icmp ult i32 %i.bc, 8
-  %invariant.op165 = add i64 %3, -1
+  %invariant.op165 = add i64 %4, -1
   %n.vec126 = and i64 %wide.trip.count81, 2147483640 ; 3 uses
   %cmp.n133 = icmp eq i64 %n.vec126, %wide.trip.count81
   %xtraiter155 = and i64 %wide.trip.count81, 3    ; 2 uses
@@ -342,15 +342,17 @@ middle.block146:                                  ; preds = %vector.body141
   %i.dp = icmp sge i64 %indvars.iv91, %indvars.iv.next89
   %or.cond.not104 = select i1 %.not57, i1 true, i1 %i.dp
   %brmerge = or i1 %or.cond.not104, %i.bt
-  br i1 %brmerge, label %.loopexit, label %.lr.ph70.preheader.a
+  br i1 %brmerge, label %.loopexit, label %.lr.ph70.preheader
 
-.lr.ph70.preheader.a:                             ; preds = %.lr.ph72
-  %i.dq = mul i64 %4, %indvar
+.lr.ph70.preheader:                               ; preds = %.lr.ph72
   %invariant.gep = getelementptr [4 x i8], ptr %i.bm, i64 %indvars.iv88 ; 6 uses
+  br i1 %min.iters.check124, label %.lr.ph70.preheader150, label %.lr.ph70.preheader.a
+
+.lr.ph70.preheader.a:                             ; preds = %.lr.ph70.preheader
+  %i.dq = mul i64 %indvar, %3
   %.reass166 = add i64 %i.dq, %invariant.op165
   %diff.check = icmp ult i64 %.reass166, 31
-  %or.cond149 = select i1 %min.iters.check124, i1 true, i1 %diff.check
-  br i1 %or.cond149, label %.lr.ph70.preheader150, label %vector.body127
+  br i1 %diff.check, label %.lr.ph70.preheader150, label %vector.body127
 
 vector.body127:                                   ; preds = %.lr.ph70.preheader.a, %vector.body127
   %index128 = phi i64 [ %index.next131, %vector.body127 ], [ 0, %.lr.ph70.preheader.a ] ; 3 uses
@@ -369,8 +371,8 @@ vector.body127:                                   ; preds = %.lr.ph70.preheader.
 middle.block132:                                  ; preds = %vector.body127
   br i1 %cmp.n133, label %.loopexit, label %.lr.ph70.preheader150
 
-.lr.ph70.preheader150:                            ; preds = %.lr.ph70.preheader.a, %middle.block132
-  %indvars.iv83.ph = phi i64 [ 0, %.lr.ph70.preheader.a ], [ %n.vec126, %middle.block132 ] ; 3 uses
+.lr.ph70.preheader150:                            ; preds = %.lr.ph70.preheader.a, %.lr.ph70.preheader, %middle.block132
+  %indvars.iv83.ph = phi i64 [ 0, %.lr.ph70.preheader.a ], [ 0, %.lr.ph70.preheader ], [ %n.vec126, %middle.block132 ] ; 3 uses
   br i1 %lcmp.mod156.not, label %.lr.ph70.prol.loopexit, label %.lr.ph70.prol
 
 .lr.ph70.prol:                                    ; preds = %.lr.ph70.preheader150, %.lr.ph70.prol

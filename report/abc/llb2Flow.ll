@@ -204,14 +204,10 @@ Vec_PtrPush.exit87:                               ; preds = %bb.a, %bb.b
 .lr.ph.preheader:                                 ; preds = %Vec_PtrPush.exit87, %._crit_edge
   %indvar = phi i64 [ 0, %Vec_PtrPush.exit87 ], [ %indvar.next, %._crit_edge ] ; 5 uses
   %i.r = phi i32 [ 100, %Vec_PtrPush.exit87 ], [ %i.ci, %._crit_edge ] ; 3 uses
-  %indvars.iv137 = phi i64 [ 2, %Vec_PtrPush.exit87 ], [ %indvars.iv.next138, %._crit_edge ] ; 19 uses
+  %indvars.iv137 = phi i64 [ 2, %Vec_PtrPush.exit87 ], [ %indvars.iv.next138, %._crit_edge ] ; 20 uses
   %storemerge126 = phi ptr [ %i.l, %Vec_PtrPush.exit87 ], [ %storemerge127, %._crit_edge ] ; 8 uses
   %.060 = phi ptr [ null, %Vec_PtrPush.exit87 ], [ %.3, %._crit_edge ]
-  %6 = shl i64 %indvar, 3
-  %7 = shl i64 %indvar, 32
-  %8 = add i64 %7, 12884901888
-  %9 = ashr exact i64 %8, 29
-  %reass.sub = sub i64 %9, %6
+  %6 = trunc i64 %indvar to i35
   %i.s = add i64 %indvar, 1
   %i.t = shl i64 %indvar, 3
   %i.u = add i64 %i.t, 24
@@ -412,7 +408,7 @@ Vec_PtrGrow.exit12.sink.split.i91:                ; preds = %bb.i, %bb.k
 Vec_PtrPush.exit95:                               ; preds = %bb.h, %bb.j, %Vec_PtrGrow.exit12.sink.split.i91
   %i.ci = phi i32 [ %i.r, %bb.h ], [ %i.r, %bb.j ], [ %spec.select.sink.i92, %Vec_PtrGrow.exit12.sink.split.i91 ]
   %storemerge127 = phi ptr [ %storemerge126, %bb.h ], [ %storemerge126, %bb.j ], [ %i.ch, %Vec_PtrGrow.exit12.sink.split.i91 ] ; 7 uses
-  %indvars.iv.next138 = add nuw i64 %indvars.iv137, 1 ; 5 uses
+  %indvars.iv.next138 = add nuw i64 %indvars.iv137, 1 ; 6 uses
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %storemerge127, i64 %indvars.iv137
   store ptr null, ptr %i.cj, align 8, !tbaa !27
   %i.ck = shl i64 %.058112.in, 32
@@ -433,12 +429,19 @@ vector.scevcheck:                                 ; preds = %.lr.ph125.preheader
   %i.cr = icmp sgt i35 %i.cq, %i.v
   %i.cs = icmp ugt i64 %i.co, 4294967295
   %i.ct = or i1 %i.cr, %i.cs
-  %10 = add i64 %reass.sub, -33
-  %diff.check = icmp ult i64 %10, 31
-  %or.cond = select i1 %i.ct, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph125.preheader160, label %vector.ph
+  br i1 %i.ct, label %.lr.ph125.preheader160, label %vector.memcheck
 
-vector.ph:                                        ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %vector.scevcheck
+  %7 = shl i64 %indvar, 3
+  %8 = shl i35 %6, 3
+  %9 = add i35 %8, 24
+  %10 = sext i35 %9 to i64
+  %reass.sub = sub i64 %10, %7
+  %11 = add i64 %reass.sub, -33
+  %diff.check = icmp ult i64 %11, 31
+  br i1 %diff.check, label %.lr.ph125.preheader160, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.cn, -4                      ; 4 uses
   %i.cu = sub i64 %indvars.iv137, %n.vec
   %i.cv = sub i64 %indvars.iv.next138, %n.vec
@@ -468,9 +471,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.cn, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph125.preheader160
 
-.lr.ph125.preheader160:                           ; preds = %vector.scevcheck, %.lr.ph125.preheader, %middle.block
-  %indvars.iv139.ph = phi i64 [ %indvars.iv137, %vector.scevcheck ], [ %indvars.iv137, %.lr.ph125.preheader ], [ %i.cu, %middle.block ]
-  %.0.in123.in.ph = phi i64 [ %indvars.iv.next138, %vector.scevcheck ], [ %indvars.iv.next138, %.lr.ph125.preheader ], [ %i.cv, %middle.block ]
+.lr.ph125.preheader160:                           ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph125.preheader, %middle.block
+  %indvars.iv139.ph = phi i64 [ %indvars.iv137, %vector.memcheck ], [ %indvars.iv137, %vector.scevcheck ], [ %indvars.iv137, %.lr.ph125.preheader ], [ %i.cu, %middle.block ]
+  %.0.in123.in.ph = phi i64 [ %indvars.iv.next138, %vector.memcheck ], [ %indvars.iv.next138, %vector.scevcheck ], [ %indvars.iv.next138, %.lr.ph125.preheader ], [ %i.cv, %middle.block ]
   br label %.lr.ph125
 
 .lr.ph125:                                        ; preds = %.lr.ph125.preheader160, %.lr.ph125

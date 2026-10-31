@@ -204,12 +204,12 @@ bb.a:
   %i.k = load i32, ptr %i.j, align 4
   %i.l = load i32, ptr %0, align 4
   %i.m = shl i32 %i.l, 2
-  %i.n = sext i32 %i.m to i64                     ; 2 uses
+  %i.n = sext i32 %i.m to i64                     ; 3 uses
   %i.o = getelementptr i8, ptr %.24.val, i64 %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = mul i32 %i.q, %.16.val
-  %i.s = sext i32 %i.r to i64                     ; 2 uses
+  %i.s = sext i32 %i.r to i64                     ; 3 uses
   %i.t = getelementptr i8, ptr %i.o, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.v = load i32, ptr %i.u, align 4              ; 4 uses
@@ -262,17 +262,15 @@ bb.a:
   %i.bb = add i32 %i.ad, -1
   %i.bc = zext i32 %i.bb to i64
   %i.bd = shl nuw nsw i64 %i.bc, 2
-  %2 = add nsw i64 %i.s, %i.n
-  %3 = add nsw i64 %2, 4                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %.24.val, i64 %3
-  %scevgep5 = getelementptr i8, ptr %.24.val, i64 %3
-  %4 = zext i32 %i.ad to i64                      ; 2 uses
+  %2 = zext i32 %i.ad to i64                      ; 2 uses
   %min.iters.check = icmp eq i32 %i.ad, 1
-  %n.vec = and i64 %4, 4294967294                 ; 4 uses
+  %scevgep3 = getelementptr i8, ptr %.24.val, i64 %i.s
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.n
+  %n.vec = and i64 %2, 4294967294                 ; 4 uses
   %i.be = trunc nuw i64 %n.vec to i32
   %i.bf = sub i32 %i.ad, %i.be
   %i.bg = shl nuw nsw i64 %n.vec, 2
-  %cmp.n = icmp eq i64 %n.vec, %4
+  %cmp.n = icmp eq i64 %n.vec, %2
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.i, %.lr.ph85.i
@@ -329,15 +327,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.cm = getelementptr i8, ptr %.083.i, i64 %i.bd
-  %scevgep = getelementptr i8, ptr %i.cm, i64 4   ; 2 uses
-  %i.cn = getelementptr i8, ptr %scevgep3, i64 %i.bv
-  %scevgep4 = getelementptr i8, ptr %i.cn, i64 %i.bz
+  %3 = getelementptr i8, ptr %i.cm, i64 4         ; 2 uses
+  %4 = getelementptr i8, ptr %.24.val, i64 %i.bv
+  %5 = getelementptr i8, ptr %4, i64 %i.bz
+  %scevgep = getelementptr i8, ptr %5, i64 %i.s
+  %i.cn = getelementptr i8, ptr %scevgep, i64 %i.n
+  %scevgep4 = getelementptr i8, ptr %i.cn, i64 4
   %scevgep6 = getelementptr i8, ptr %scevgep5, i64 %i.bz
+  %6 = getelementptr i8, ptr %scevgep6, i64 4
   %bound0 = icmp ult ptr %.083.i, %scevgep4
-  %bound1 = icmp ult ptr %i.cb, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %3
   %found.conflict = and i1 %bound0, %bound1
-  %bound07 = icmp ult ptr %.083.i, %scevgep6
-  %bound18 = icmp ult ptr %i.ca, %scevgep
+  %bound07 = icmp ult ptr %.083.i, %6
+  %bound18 = icmp ult ptr %i.ca, %3
   %found.conflict9 = and i1 %bound07, %bound18
   %conflict.rdx = or i1 %found.conflict, %found.conflict9
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph

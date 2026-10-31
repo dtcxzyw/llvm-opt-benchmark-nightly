@@ -205,7 +205,7 @@ _ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit: ; preds
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 176
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #28 ; 5 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #28 ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 11 uses
   %i.r = load i8, ptr %2, align 1, !tbaa !177, !range !174, !noundef !175
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 2 uses
@@ -232,6 +232,7 @@ _ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit: ; preds
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i
+  %indvar = phi i64 [ %indvar.next, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ 0, %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   %.012.i.i.i = phi ptr [ %i.du, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.p, %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit ] ; 14 uses
   %.0911.i.i.i = phi ptr [ %i.dt, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit ] ; 17 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1152)
@@ -305,7 +306,7 @@ _ZN7rocksdb12KeyRangeInfoC2EOS0_.exit.i.i.i.i.i.i: ; preds = %_ZNKSt7__cxx1112ba
   %i.bc = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 64
   %i.bd = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 64 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 144
-  %i.bf = getelementptr i8, ptr %.012.i.i.i, i64 72 ; 14 uses
+  %i.bf = getelementptr i8, ptr %.012.i.i.i, i64 72 ; 13 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 136
   store ptr %i.bf, ptr %i.bg, align 8, !tbaa !541, !alias.scope !1152
   %i.bh = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 144 ; 2 uses
@@ -329,8 +330,11 @@ iter.check:                                       ; preds = %_ZN7rocksdb12KeyRan
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %3 = mul nuw i64 %indvar, 176
   %i.bp = shl i64 %i.bm, 3                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.bf, i64 %i.bp
+  %4 = getelementptr i8, ptr %i.p, i64 %3
+  %5 = getelementptr i8, ptr %4, i64 72
+  %scevgep = getelementptr i8, ptr %5, i64 %i.bp
   %scevgep77 = getelementptr i8, ptr %i.bo, i64 %i.bp
   %bound0 = icmp ult ptr %i.bf, %scevgep77
   %bound1 = icmp ult ptr %i.bo, %scevgep
@@ -487,15 +491,17 @@ _ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.
   %i.dt = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 176 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 176 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.dt, %1
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i, !llvm.loop !1141
 
 _ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i, %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit
-  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit ], [ %i.du, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE12_M_check_lenEmPKc.exit ], [ %i.du, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ] ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 176 ; 2 uses
   %.not10.i.i.i26 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i26, label %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit45, label %.lr.ph.i.i.i27
 
 .lr.ph.i.i.i27:                                   ; preds = %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i42
+  %indvar92 = phi i64 [ %indvar.next93, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i42 ], [ 0, %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ] ; 2 uses
   %.012.i.i.i28 = phi ptr [ %i.ho, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i42 ], [ %i.dv, %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ] ; 14 uses
   %.0911.i.i.i29 = phi ptr [ %i.hn, %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i42 ], [ %1, %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ] ; 17 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1159)
@@ -569,7 +575,7 @@ _ZN7rocksdb12KeyRangeInfoC2EOS0_.exit.i.i.i.i.i.i37: ; preds = %_ZNKSt7__cxx1112
   %i.ew = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 64
   %i.ex = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 64 ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 144
-  %i.ez = getelementptr i8, ptr %.012.i.i.i28, i64 72 ; 14 uses
+  %i.ez = getelementptr i8, ptr %.012.i.i.i28, i64 72 ; 13 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 136
   store ptr %i.ez, ptr %i.fa, align 8, !tbaa !541, !alias.scope !1159
   %i.fb = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 144 ; 2 uses
@@ -593,8 +599,11 @@ iter.check107:                                    ; preds = %_ZN7rocksdb12KeyRan
   br i1 %min.iters.check93, label %vec.epilog.scalar.ph109.preheader, label %vector.memcheck87
 
 vector.memcheck87:                                ; preds = %iter.check107
+  %6 = mul nuw i64 %indvar92, 176
   %i.fj = shl i64 %i.fg, 3                        ; 2 uses
-  %scevgep88 = getelementptr i8, ptr %i.ez, i64 %i.fj
+  %7 = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 %6
+  %8 = getelementptr i8, ptr %7, i64 248
+  %scevgep88 = getelementptr i8, ptr %8, i64 %i.fj
   %scevgep89 = getelementptr i8, ptr %i.fi, i64 %i.fj
   %bound090 = icmp ult ptr %i.ez, %scevgep89
   %bound191 = icmp ult ptr %i.fi, %scevgep88
@@ -751,6 +760,7 @@ _ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.
   %i.hn = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 176 ; 2 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 176 ; 2 uses
   %.not.i.i.i43 = icmp eq ptr %i.hn, %i.b
+  %indvar.next93 = add i64 %indvar92, 1
   br i1 %.not.i.i.i43, label %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit45, label %.lr.ph.i.i.i27, !llvm.loop !1141
 
 _ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit45: ; preds = %_ZSt19__relocate_object_aIN7rocksdb13FileBatchInfoES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i42, %_ZNSt6vectorIN7rocksdb13FileBatchInfoESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
