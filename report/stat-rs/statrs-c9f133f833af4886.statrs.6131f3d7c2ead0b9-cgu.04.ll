@@ -204,18 +204,18 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %brmerge.i, label %_RINvMs6_NtNtCsbADZB03g5jP_8nalgebra4base6matrixINtB6_6MatrixdNtNtB8_9dimension3DynBX_INtNtB8_11vec_storage10VecStoragedBX_BX_EE19transpose_to_uninitNtNtB8_6uninit6UninitBX_BX_IB1m_INtNtNtCs3oUPovFnLWP_4core3mem12maybe_uninit11MaybeUninitdEBX_BX_EECs8lmMd0ZksV9_6statrs.exit.i.i, label %.lr.ph.i.i34.i.preheader
 
 .lr.ph.i.i34.i.preheader:                         ; preds = %.preheader.i.i.i
-  %4 = mul i64 %.val1.i.i.i22.i, %.val.i.i.i23.i
+  %4 = add i64 %.val1.i.i.i22.i, %.val.i.i.i23.i
   %i.ef = shl i64 %4, 3
-  %scevgep.a = getelementptr i8, ptr %.sroa.0.sroa.4.0.copyload.i.i, i64 %i.ef
-  %5 = add i64 %.val1.i.i.i22.i, %.val.i.i.i23.i
+  %scevgep.a = getelementptr i8, ptr %.sroa.4.0.copyload.i26.i, i64 %i.ef
+  %scevgep = getelementptr i8, ptr %scevgep.a, i64 -8
+  %5 = mul i64 %.val1.i.i.i22.i, %.val.i.i.i23.i
   %6 = shl i64 %5, 3
-  %7 = getelementptr i8, ptr %.sroa.4.0.copyload.i26.i, i64 %6
-  %scevgep65 = getelementptr i8, ptr %7, i64 -8
+  %scevgep65 = getelementptr i8, ptr %.sroa.0.sroa.4.0.copyload.i.i, i64 %6
   %min.iters.check = icmp ugt i64 %.val.i.i.i23.i, 7
   %ident.check.not = icmp eq i64 %.val1.i.i.i22.i, 1
   %or.cond = and i1 %min.iters.check, %ident.check.not
-  %bound0 = icmp ult ptr %.sroa.0.sroa.4.0.copyload.i.i, %scevgep65
-  %bound1 = icmp ult ptr %.sroa.4.0.copyload.i26.i, %scevgep.a
+  %bound0 = icmp ult ptr %.sroa.0.sroa.4.0.copyload.i.i, %scevgep
+  %bound1 = icmp ult ptr %.sroa.4.0.copyload.i26.i, %scevgep65
   %found.conflict = and i1 %bound0, %bound1
   %.mask = and i64 %.val.i.i.i23.i, 1152921504606846976
   %stride.check = icmp ne i64 %.mask, 0

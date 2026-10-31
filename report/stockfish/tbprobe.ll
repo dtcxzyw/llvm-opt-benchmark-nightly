@@ -205,7 +205,6 @@ bb.ap:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.jb = add nuw nsw i8 %i.it, 1                 ; 5 uses
   %wide.trip.count187.i.i.i = zext nneg i8 %i.jb to i64
   %i.jc = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 256
-  %17 = add i64 %.0.val.i.i281, 184
   br label %.preheader137.i.i.i
 
 .preheader137.i.i.i:                              ; preds = %_ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i.i, %bb.ap
@@ -303,10 +302,11 @@ iter.check:                                       ; preds = %bb.au
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ky = mul i64 %i.km, 240
-  %i.kz = add i64 %17, %i.ky
-  %i.la = add i64 %i.kh, %.078159.i.i.i282
+  %i.kz = add i64 %i.kh, %.078159.i.i.i282
+  %i.la = add i64 %i.ky, %.0.val.i.i281
   %i.lb = sub i64 %i.la, %i.kz
-  %diff.check = icmp ugt i64 %i.lb, -256
+  %17 = add i64 %i.lb, 183
+  %diff.check = icmp ult i64 %17, 255
   br i1 %diff.check, label %.preheader135.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -709,8 +709,6 @@ bb.af:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.hq = select i1 %i.hf, i8 4, i8 1             ; 11 uses
   %wide.trip.count197.i.i = zext nneg i8 %i.hq to i64 ; 5 uses
   %wide.trip.count192.i.i = zext nneg i32 %i.hc to i64
-  %12 = add i64 %.0.val.i24, 184
-  %scevgep = getelementptr i8, ptr %.0.val.i, i64 1144
   br label %.preheader141.i.i
 
 .preheader141.i.i:                                ; preds = %bb.ao, %bb.af
@@ -835,8 +833,9 @@ iter.check53:                                     ; preds = %.preheader139.prehe
 
 vector.memcheck37:                                ; preds = %iter.check53
   %i.ju = mul nuw nsw i64 %i.jp, 240
-  %i.jv = getelementptr i8, ptr %scevgep, i64 %i.ju
-  %scevgep38 = getelementptr i8, ptr %i.jv, i64 %wide.trip.count.i.i
+  %12 = getelementptr i8, ptr %.0.val.i, i64 %i.ju
+  %i.jv = getelementptr i8, ptr %12, i64 %wide.trip.count.i.i
+  %scevgep38 = getelementptr i8, ptr %i.jv, i64 1144
   %i.jw = getelementptr i8, ptr %.087150.i.i, i64 %i.ji
   %scevgep39 = getelementptr i8, ptr %i.jw, i64 %wide.trip.count.i.i
   %bound0 = icmp ult ptr %i.jr, %scevgep39
@@ -939,10 +938,11 @@ iter.check:                                       ; preds = %.preheader139.prehe
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.kt = mul nuw nsw i64 %i.jp, 240
-  %i.ku = add i64 %12, %i.kt
-  %i.kv = add i64 %i.ji, %.087150.i.i25
+  %i.ku = add i64 %i.ji, %.087150.i.i25
+  %i.kv = add i64 %i.kt, %.0.val.i24
   %i.kw = sub i64 %i.kv, %i.ku
-  %diff.check = icmp ugt i64 %i.kw, -256
+  %13 = add i64 %i.kw, 183
+  %diff.check = icmp ult i64 %13, 255
   br i1 %diff.check, label %.preheader139.preheader.i.split.us.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

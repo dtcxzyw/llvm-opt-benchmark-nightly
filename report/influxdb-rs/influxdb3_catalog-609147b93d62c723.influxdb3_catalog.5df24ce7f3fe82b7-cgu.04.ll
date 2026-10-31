@@ -205,9 +205,9 @@ iter.check:                                       ; preds = %.lr.ph.i.lr.ph, %._
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.0.013, i64 %.sroa.0.0.i.i ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2724)
   %min.iters.check = icmp ult i64 %.sroa.5.012, 8
-  %.sroa.0.01334 = ptrtoaddr ptr %.sroa.0.013 to i64 ; 3 uses
-  %.promoted.i1433 = ptrtoaddr ptr %.promoted.i14 to i64
-  %i.bn = sub i64 %.sroa.0.01334, %.promoted.i1433
+  %.sroa.0.01334 = ptrtoaddr ptr %.promoted.i14 to i64
+  %.promoted.i1433 = ptrtoaddr ptr %.sroa.0.013 to i64 ; 3 uses
+  %i.bn = sub i64 %.promoted.i1433, %.sroa.0.01334
   %diff.check = icmp ugt i64 %i.bn, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -273,10 +273,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi ptr [ %.promoted.i14, %iter.check ], [ %i.bp, %vec.epilog.iter.check ], [ %i.bw, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.0.06.i.ph = phi ptr [ %.sroa.0.013, %iter.check ], [ %i.bq, %vec.epilog.iter.check ], [ %i.bx, %vec.epilog.middle.block ] ; 3 uses
-  %i.bz = add i64 %.sroa.0.0.i.i, %.sroa.0.01334
+  %i.bz = add i64 %.sroa.0.0.i.i, %.promoted.i1433
   %.sroa.0.06.i.ph47 = ptrtoaddr ptr %.sroa.0.06.i.ph to i64 ; 2 uses
   %i.ca = sub i64 %i.bz, %.sroa.0.06.i.ph47
-  %i.cb = add i64 %.sroa.0.01334, -1
+  %i.cb = add i64 %.promoted.i1433, -1
   %i.cc = add i64 %i.cb, %.sroa.0.0.i.i
   %i.cd = sub i64 %i.cc, %.sroa.0.06.i.ph47
   %xtraiter = and i64 %i.ca, 7                    ; 2 uses

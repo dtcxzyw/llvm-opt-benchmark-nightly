@@ -205,9 +205,9 @@ iter.check:                                       ; preds = %bb.j
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bk = add i64 %.026.i.i.i, %i.bi
-  %i.bl = add i64 %.02732.i.i.idx.i, %i.at
-  %i.bm = sub i64 %i.bl, %i.bk
+  %i.bk = add i64 %.02732.i.i.idx.i, %i.at
+  %i.bl = add i64 %.026.i.i.i, %i.bi
+  %i.bm = sub i64 %i.bk, %i.bl
   %diff.check = icmp ugt i64 %i.bm, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 

@@ -205,11 +205,11 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.bs = load i64, ptr %i.br, align 8            ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = mul i64 %i.d, 1040                         ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.10.0.i.i.i, i64 %6
-  %7 = getelementptr i8, ptr %.sroa.10.0.i.i.i, i64 %i.ay
-  %scevgep328 = getelementptr i8, ptr %7, i64 -16
-  %i.bv = getelementptr i8, ptr %.sroa.10.0.i.i.i, i64 %6
+  %6 = getelementptr i8, ptr %.sroa.10.0.i.i.i, i64 %i.ay
+  %scevgep = getelementptr i8, ptr %6, i64 -16
+  %7 = mul i64 %i.d, 1040                         ; 2 uses
+  %scevgep328 = getelementptr i8, ptr %.sroa.10.0.i.i.i, i64 %7
+  %i.bv = getelementptr i8, ptr %.sroa.10.0.i.i.i, i64 %7
   %scevgep333 = getelementptr i8, ptr %i.bv, i64 -16
   br label %bb.z
 
@@ -612,8 +612,8 @@ bb.ck:                                            ; preds = %bb.cj
   %i.nl = load i64, ptr %i.nk, align 8, !alias.scope !38019, !noundef !45
   %i.nm = add i64 %i.nl, %i.nj
   store i64 %i.nm, ptr %i.ni, align 8, !alias.scope !38020
-  %bound0 = icmp ult ptr %scevgep, %i.nk
-  %bound1 = icmp ult ptr %i.nh, %scevgep328
+  %bound0 = icmp ult ptr %scevgep328, %i.nk
+  %bound1 = icmp ult ptr %i.nh, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph, label %vector.body
 

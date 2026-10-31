@@ -22,17 +22,17 @@ bb.a:
 
 .preheader.preheader:                             ; preds = %.preheader80
   %i.c = add nsw i64 %2, -1                       ; 2 uses
-  %i.d = mul i64 %4, %i.c
+  %i.d = mul i64 %3, %i.c
   %i.e = add i64 %i.d, %5
   %i.f = shl i64 %i.e, 3
-  %scevgep = getelementptr i8, ptr %1, i64 %i.f
-  %i.g = mul i64 %3, %i.c
+  %scevgep = getelementptr i8, ptr %0, i64 %i.f
+  %i.g = mul i64 %4, %i.c
   %i.h = add i64 %i.g, %5
   %i.i = shl i64 %i.h, 3
-  %scevgep113 = getelementptr i8, ptr %0, i64 %i.i
+  %scevgep113 = getelementptr i8, ptr %1, i64 %i.i
   %min.iters.check = icmp ult i64 %5, 8
-  %bound0 = icmp ult ptr %1, %scevgep113
-  %bound1 = icmp ult ptr %0, %scevgep
+  %bound0 = icmp ult ptr %1, %scevgep
+  %bound1 = icmp ult ptr %0, %scevgep113
   %found.conflict = and i1 %bound0, %bound1
   %i.j = or i64 %3, %4
   %i.k = and i64 %i.j, 1152921504606846976
