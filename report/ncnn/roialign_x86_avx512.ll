@@ -150,7 +150,7 @@ bb.d:                                             ; preds = %.thread, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
   %i.bm = load <2 x i32>, ptr %i.w, align 8, !tbaa !16 ; 5 uses
-  %i.bn = sitofp <2 x i32> %i.bm to <2 x float>
+  %i.bn = sitofp fast <2 x i32> %i.bm to <2 x float>
   %i.bo = fdiv fast <2 x float> %i.bl, %i.bn      ; 3 uses
   %i.bp = extractelement <2 x float> %i.bo, i64 0 ; 4 uses
   store float %i.bp, ptr %i.f, align 4, !tbaa !36
@@ -553,7 +553,7 @@ bb.b:                                             ; preds = %bb.a
   %i.as = add nuw nsw i32 %.064164, 1             ; 3 uses
   %i.at = insertelement <2 x i32> poison, i32 %i.as, i64 0
   %i.au = insertelement <2 x i32> %i.at, i32 %.064164, i64 1
-  %i.av = uitofp nneg <2 x i32> %i.au to <2 x float>
+  %i.av = uitofp ninf nsz nneg <2 x i32> %i.au to <2 x float>
   br label %bb.c
 
 ._crit_edge165:                                   ; preds = %._crit_edge
@@ -587,7 +587,7 @@ bb.c:                                             ; preds = %.preheader147, %._c
   %i.bk = insertelement <2 x i32> poison, i32 %i.bj, i64 0
   %i.bl = trunc i64 %indvars.iv176 to i32
   %i.bm = insertelement <2 x i32> %i.bk, i32 %i.bl, i64 1
-  %i.bn = uitofp <2 x i32> %i.bm to <2 x float>
+  %i.bn = uitofp ninf nsz nneg <2 x i32> %i.bm to <2 x float>
   %i.bo = insertelement <2 x float> poison, float %i.ba, i64 0
   %i.bp = shufflevector <2 x float> %i.bo, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bq = fmul fast <2 x float> %i.bp, %i.bn

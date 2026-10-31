@@ -185,7 +185,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = call ptr @cairo_create(ptr noundef %i.w) #6 ; 20 uses
   %i.ab = call ptr @gtk_widget_get_style_context(ptr noundef %0) #6 ; 2 uses
   %i.ac = load <2 x i32>, ptr %i.g, align 4, !tbaa !64
-  %i.ad = sitofp <2 x i32> %i.ac to <2 x double>  ; 2 uses
+  %i.ad = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ac to <2 x double> ; 2 uses
   %i.ae = extractelement <2 x double> %i.ad, i64 0
   %i.af = extractelement <2 x double> %i.ad, i64 1
   call void @gtk_render_background(ptr noundef %i.ab, ptr noundef %i.aa, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef %i.ae, double noundef %i.af) #6
@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = insertelement <2 x double> poison, double %i.j, i64 0
   %i.al = shufflevector <2 x double> %i.ak, <2 x double> poison, <4 x i32> zeroinitializer
   %i.am = fmul reassoc nnan nsz arcp contract afn <4 x double> %i.al, <double 5.000000e-01, double 2.000000e-01, double 5.000000e-01, double 2.000000e-01> ; 2 uses
-  %i.an = fptrunc <4 x double> %i.am to <4 x float> ; 6 uses
+  %i.an = fptrunc reassoc nsz arcp contract afn <4 x double> %i.am to <4 x float> ; 6 uses
   %i.ao = extractelement <4 x float> %i.an, i64 1 ; 6 uses
   %i.ap = extractelement <4 x float> %i.an, i64 0 ; 10 uses
   %foldExtExtBinop = fsub reassoc nsz arcp contract afn <4 x float> %i.an, %i.an
@@ -261,7 +261,7 @@ bb.d:                                             ; preds = %bb.b, %bb.h
   %i.cd = insertelement <4 x float> poison, float %i.cc, i64 0
   %i.ce = shufflevector <4 x float> %i.cd, <4 x float> poison, <4 x i32> zeroinitializer
   %i.cf = fadd reassoc nsz arcp contract afn <4 x float> %i.ax, %i.ce
-  %i.cg = fpext <4 x float> %i.cf to <4 x double> ; 4 uses
+  %i.cg = fpext reassoc nsz arcp contract afn <4 x float> %i.cf to <4 x double> ; 4 uses
   %i.ch = extractelement <4 x double> %i.cg, i64 0
   call void @cairo_move_to(ptr noundef %i.aa, double noundef %i.ch, double noundef %i.ar) #6
   %i.ci = extractelement <4 x double> %i.cg, i64 1
@@ -279,13 +279,13 @@ bb.d:                                             ; preds = %bb.b, %bb.h
   %i.cp = insertelement <2 x float> poison, float %i.cc, i64 0
   %i.cq = shufflevector <2 x float> %i.cp, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.cr = fsub reassoc nsz arcp contract afn <2 x float> %i.cq, %i.bi
-  %i.cs = fpext <2 x float> %i.cr to <2 x double> ; 2 uses
+  %i.cs = fpext reassoc nsz arcp contract afn <2 x float> %i.cr to <2 x double> ; 2 uses
   %i.ct = extractelement <2 x double> %i.cs, i64 0
   call void @cairo_line_to(ptr noundef %i.aa, double noundef %i.ct, double noundef %i.bk) #6
   %i.cu = extractelement <2 x double> %i.cs, i64 1
   call void @cairo_line_to(ptr noundef %i.aa, double noundef %i.cu, double noundef %i.bn) #6
   %i.cv = fsub reassoc nsz arcp contract afn <2 x float> %i.cq, %i.bq
-  %i.cw = fpext <2 x float> %i.cv to <2 x double> ; 2 uses
+  %i.cw = fpext reassoc nsz arcp contract afn <2 x float> %i.cv to <2 x double> ; 2 uses
   %i.cx = extractelement <2 x double> %i.cw, i64 0
   call void @cairo_line_to(ptr noundef %i.aa, double noundef %i.cx, double noundef %i.bp) #6
   %i.cy = extractelement <2 x double> %i.cw, i64 1

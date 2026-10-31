@@ -204,9 +204,9 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %.sink.split.i.i, %bb.bq
   %i.md = load <4 x i8>, ptr %i.iv, align 2, !tbaa !96
-  %i.me = uitofp <4 x i8> %i.md to <4 x float>
+  %i.me = uitofp nsz <4 x i8> %i.md to <4 x float>
   %i.mf = fdiv nsz <4 x float> %i.me, splat (float 2.550000e+02)
-  %i.mg = fpext <4 x float> %i.mf to <4 x double> ; 4 uses
+  %i.mg = fpext nsz <4 x float> %i.mf to <4 x double> ; 4 uses
   %i.mh = extractelement <4 x double> %i.mg, i64 0
   %i.mi = extractelement <4 x double> %i.mg, i64 1
   %i.mj = extractelement <4 x double> %i.mg, i64 2

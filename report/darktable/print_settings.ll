@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.dr = shufflevector <2 x float> %i.do, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ds = fmul reassoc nsz arcp contract afn <4 x float> %i.dq, %i.dr
   %i.dt = fmul reassoc nsz arcp contract afn <4 x float> %i.ds, %i.ab
-  %i.du = fpext <4 x float> %i.dt to <4 x double>
+  %i.du = fpext reassoc nsz arcp contract afn <4 x float> %i.dt to <4 x double>
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.f = insertelement <2 x double> poison, double %1, i64 0
   %i.g = insertelement <2 x double> %i.f, double %2, i64 1
-  %i.h = fptrunc <2 x double> %i.g to <2 x float>
+  %i.h = fptrunc reassoc nsz arcp contract afn <2 x double> %i.g to <2 x float>
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 3412 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 3416
   store <2 x float> %i.h, ptr %i.i, align 4, !tbaa !33
@@ -631,11 +631,11 @@ bb.f:                                             ; preds = %.thread112, %bb.e
   %i.p = getelementptr [96 x i8], ptr %i.b, i64 %i.o ; 12 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 3432
   %i.r = load <2 x float>, ptr %i.q, align 8, !tbaa !33
-  %i.s = fpext <2 x float> %i.r to <2 x double>
+  %i.s = fpext reassoc nsz arcp contract afn <2 x float> %i.r to <2 x double>
   %i.t = insertelement <2 x double> poison, double %1, i64 0
   %i.u = insertelement <2 x double> %i.t, double %2, i64 1
   %i.v = fsub reassoc nsz arcp contract afn <2 x double> %i.u, %i.s
-  %i.w = fptrunc <2 x double> %i.v to <2 x float> ; 6 uses
+  %i.w = fptrunc reassoc nsz arcp contract afn <2 x double> %i.v to <2 x float> ; 6 uses
   %i.x = getelementptr i8, ptr %i.p, i64 1416     ; 7 uses
   %i.y = getelementptr i8, ptr %i.p, i64 1424
   %i.z = load float, ptr %i.y, align 8, !tbaa !110 ; 5 uses
@@ -1038,7 +1038,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !88   ; 18 uses
   %i.c = insertelement <2 x double> poison, double %1, i64 0
   %i.d = insertelement <2 x double> %i.c, double %2, i64 1
-  %i.e = fptrunc <2 x double> %i.d to <2 x float> ; 3 uses
+  %i.e = fptrunc reassoc nsz arcp contract afn <2 x double> %i.d to <2 x float> ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 3432
   store <2 x float> %i.e, ptr %i.f, align 8, !tbaa !33
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 3424 ; 3 uses
@@ -1441,7 +1441,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.i
   call void @cairo_save(ptr noundef %1) #19
   %i.et = load <2 x float>, ptr %6, align 8, !tbaa !33
-  %i.eu = fpext <2 x float> %i.et to <2 x double> ; 2 uses
+  %i.eu = fpext reassoc nsz arcp contract afn <2 x float> %i.et to <2 x double> ; 2 uses
   %i.ev = extractelement <2 x double> %i.eu, i64 0
   %i.ew = extractelement <2 x double> %i.eu, i64 1
   call void @cairo_translate(ptr noundef %1, double noundef %i.ev, double noundef %i.ew) #19
@@ -1548,7 +1548,7 @@ bb.x:                                             ; preds = %bb.w
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef 6.000000e-01, double noundef 6.000000e-01, double noundef 6.000000e-01, double noundef 1.000000e+00) #19
   %i.gn = getelementptr inbounds nuw i8, ptr %i.ef, i64 56
   %i.go = load <4 x float>, ptr %i.gn, align 8, !tbaa !33
-  %i.gp = fpext <4 x float> %i.go to <4 x double> ; 4 uses
+  %i.gp = fpext reassoc nsz arcp contract afn <4 x float> %i.go to <4 x double> ; 4 uses
   %i.gq = extractelement <4 x double> %i.gp, i64 0
   %i.gr = extractelement <4 x double> %i.gp, i64 1
   %i.gs = extractelement <4 x double> %i.gp, i64 2
@@ -1568,7 +1568,7 @@ bb.z:                                             ; preds = %bb.y
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef 2.000000e-01, double noundef 2.000000e-01, double noundef 2.000000e-01, double noundef 1.000000e+00) #19
   %i.gx = getelementptr inbounds nuw i8, ptr %i.ef, i64 56
   %i.gy = load <4 x float>, ptr %i.gx, align 8, !tbaa !33
-  %i.gz = fpext <4 x float> %i.gy to <4 x double> ; 4 uses
+  %i.gz = fpext reassoc nsz arcp contract afn <4 x float> %i.gy to <4 x double> ; 4 uses
   %i.ha = extractelement <4 x double> %i.gz, i64 0
   %i.hb = extractelement <4 x double> %i.gz, i64 1
   %i.hc = extractelement <4 x double> %i.gz, i64 2
@@ -1971,7 +1971,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   %i.uf = fptrunc reassoc nsz arcp contract afn double %i.ue to float ; 2 uses
   %i.ug = fsub reassoc nsz arcp contract afn double %.4, %i.ku
   %i.uh = fptrunc reassoc nsz arcp contract afn double %i.ug to float
-  %i.ui = fpext <2 x float> %i.jw to <2 x double> ; 2 uses
+  %i.ui = fpext reassoc nsz arcp contract afn <2 x float> %i.jw to <2 x double> ; 2 uses
   %i.uj = extractelement <2 x double> %i.ui, i64 0
   %i.uk = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.d, i64 noundef 16, ptr noundef %i.le, double noundef %i.uj) #19 ; 0 uses
   call void @pango_layout_set_text(ptr noundef %i.kp, ptr noundef nonnull %i.d, i32 noundef -1) #19
@@ -2333,7 +2333,7 @@ _get_profiles.exit:                               ; preds = %bb.c, %bb.a
   %i.bu = insertelement <4 x float> poison, float %i.bk, i64 0
   %i.bv = shufflevector <4 x float> %i.bu, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bw = fdiv reassoc nsz arcp contract afn <4 x float> %i.bt, %i.bv
-  %i.bx = fpext <4 x float> %i.bw to <4 x double>
+  %i.bx = fpext reassoc nsz arcp contract afn <4 x float> %i.bw to <4 x double>
   store <4 x double> %i.bx, ptr %i.bm, align 8, !tbaa !31
   %i.by = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.bk
   %i.bz = tail call reassoc nsz arcp contract afn float @llvm.log10.f32(float %i.by)
@@ -2736,9 +2736,9 @@ bb.r:                                             ; preds = %bb.p
   %i.dr = insertelement <2 x double> poison, double %.sink.in.i, i64 0
   %i.ds = insertelement <2 x double> %i.dr, double %storemerge.in.i, i64 1
   %i.dt = fptrunc <2 x double> %i.ds to <2 x float>
-  %i.du = fpext <2 x float> %i.dt to <2 x double>
+  %i.du = fpext reassoc nsz arcp contract afn <2 x float> %i.dt to <2 x double>
   %i.dv = fmul reassoc nsz arcp contract afn <2 x double> %i.du, splat (double f0x4006AD5AB56AD5AB)
-  %i.dw = fptrunc <2 x double> %i.dv to <2 x float> ; 2 uses
+  %i.dw = fptrunc reassoc nsz arcp contract afn <2 x double> %i.dv to <2 x float> ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dq, i64 3072
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dq, i64 136 ; 2 uses

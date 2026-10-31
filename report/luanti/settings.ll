@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN11BasicStrfndIcED2Ev.exit:                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i36
   %i.bb = insertelement <2 x double> poison, double %i.z, i64 0
   %i.bc = insertelement <2 x double> %i.bb, double %i.an, i64 1
-  %i.bd = fptrunc <2 x double> %i.bc to <2 x float>
+  %i.bd = fptrunc nsz <2 x double> %i.bc to <2 x float>
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   ret <2 x float> %i.bd
 

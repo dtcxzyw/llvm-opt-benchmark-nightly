@@ -204,7 +204,7 @@ _ZNK14NodeDefManager3getERK7MapNode.exit112:      ; preds = %bb.l, %bb.m
 
 bb.n:                                             ; preds = %_ZNK14NodeDefManager3getERK7MapNode.exit112
   %i.cz = insertelement <2 x i16> %i.bx, i16 %i.ca, i64 1
-  %i.da = sitofp <2 x i16> %i.cz to <2 x float>
+  %i.da = sitofp nsz <2 x i16> %i.cz to <2 x float>
   %i.db = fmul nnan nsz <2 x float> %i.da, splat (float 1.000000e+01) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
@@ -607,11 +607,11 @@ bb.b:                                             ; preds = %bb.a
   %i.i = fpext nsz float %i.g to double
   %i.j = tail call nsz double @llvm.sqrt.f64(double %i.i)
   %i.k = fdiv nsz double 1.000000e+00, %i.j       ; 2 uses
-  %i.l = fpext <2 x float> %i.a to <2 x double>
+  %i.l = fpext nsz <2 x float> %i.a to <2 x double>
   %i.m = insertelement <2 x double> poison, double %i.k, i64 0
   %i.n = shufflevector <2 x double> %i.m, <2 x double> poison, <2 x i32> zeroinitializer
   %i.o = fmul nsz <2 x double> %i.n, %i.l
-  %i.p = fptrunc <2 x double> %i.o to <2 x float>
+  %i.p = fptrunc nsz <2 x double> %i.o to <2 x float>
   store <2 x float> %i.p, ptr %0, align 4, !tbaa !35
   %i.q = fpext nsz float %i.f to double
   %i.r = fmul nsz double %i.k, %i.q
@@ -825,7 +825,7 @@ bb.b:                                             ; preds = %bb.a
   %i.am = shufflevector <2 x double> %i.al, <2 x double> poison, <2 x i32> zeroinitializer
   %i.an = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.ao = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.am, <2 x double> %i.an, <2 x double> %i.ak)
-  %i.ap = fptrunc <2 x double> %i.ao to <2 x float>
+  %i.ap = fptrunc nsz <2 x double> %i.ao to <2 x float>
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -861,11 +861,11 @@ bb.f:                                             ; preds = %bb.e
   %i.bi = fdiv nsz double 1.000000e+00, %i.bh     ; 2 uses
   %i.bj = shufflevector <2 x float> %i.ax, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.bk = insertelement <2 x float> %i.bj, float %i.as, i64 0
-  %i.bl = fpext <2 x float> %i.bk to <2 x double>
+  %i.bl = fpext nsz <2 x float> %i.bk to <2 x double>
   %i.bm = insertelement <2 x double> poison, double %i.bi, i64 0
   %i.bn = shufflevector <2 x double> %i.bm, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bo = fmul nsz <2 x double> %i.bn, %i.bl
-  %i.bp = fptrunc <2 x double> %i.bo to <2 x float>
+  %i.bp = fptrunc nsz <2 x double> %i.bo to <2 x float>
   %i.bq = fpext nsz float %i.ba to double
   %i.br = fmul nsz double %i.bi, %i.bq
   %i.bs = fptrunc nsz double %i.br to float
@@ -937,7 +937,7 @@ bb.n:                                             ; preds = %bb.m
   %i.cw = shufflevector <2 x double> %i.cv, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cx = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.cy = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cw, <2 x double> %i.cx, <2 x double> %i.cu)
-  %i.cz = fptrunc <2 x double> %i.cy to <2 x float>
+  %i.cz = fptrunc nsz <2 x double> %i.cy to <2 x float>
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -960,7 +960,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.dn = shufflevector <2 x double> %i.dm, <2 x double> poison, <2 x i32> zeroinitializer
   %i.do = shufflevector <2 x double> %i.di, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.dp = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dn, <2 x double> %i.do, <2 x double> %i.dl)
-  %i.dq = fptrunc <2 x double> %i.dp to <2 x float> ; 2 uses
+  %i.dq = fptrunc nsz <2 x double> %i.dp to <2 x float> ; 2 uses
   %i.dr = extractelement <2 x float> %i.dq, i64 1
   %i.ds = fadd nsz float %.sroa.0101.0.copyload, %i.dr
   store float %i.ds, ptr %i.e, align 8, !tbaa !80

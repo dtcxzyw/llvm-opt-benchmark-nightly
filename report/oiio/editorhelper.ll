@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bv = fmul contract double %i.bk, %i.bk
   %i.bw = fmul contract double %i.bk, %i.bv       ; 2 uses
   %i.bx = shufflevector <2 x float> %.fca.0.extract14, <2 x float> %.fca.0.extract8, <2 x i32> <i32 0, i32 2>
-  %i.by = fpext <2 x float> %i.bx to <2 x double>
+  %i.by = fpext contract <2 x float> %i.bx to <2 x double>
   %i.bz = fmul contract <2 x double> %i.br, %i.by ; 2 uses
   %shift = shufflevector <2 x double> %i.bz, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd contract <2 x double> %i.bz, %shift
@@ -223,13 +223,13 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %.fca.1.extract = extractvalue { <2 x float>, float } %i.bg, 1
   %i.ch = insertelement <2 x float> %.fca.0.extract8, float %.fca.1.extract15, i64 0
-  %i.ci = fpext <2 x float> %i.ch to <2 x double>
+  %i.ci = fpext contract <2 x float> %i.ch to <2 x double>
   %i.cj = insertelement <2 x float> %.fca.0.extract14, float %.fca.1.extract9, i64 0
-  %i.ck = fpext <2 x float> %i.cj to <2 x double>
+  %i.ck = fpext contract <2 x float> %i.cj to <2 x double>
   %i.cl = insertelement <2 x float> %.fca.0.extract2, float %.fca.1.extract3, i64 0
-  %i.cm = fpext <2 x float> %i.cl to <2 x double>
+  %i.cm = fpext contract <2 x float> %i.cl to <2 x double>
   %i.cn = insertelement <2 x float> %.fca.0.extract, float %.fca.1.extract, i64 0
-  %i.co = fpext <2 x float> %i.cn to <2 x double>
+  %i.co = fpext contract <2 x float> %i.cn to <2 x double>
   %i.cp = fmul contract <2 x double> %i.br, %i.ci
   %i.cq = shufflevector <2 x double> %i.br, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.cr = fmul contract <2 x double> %i.cq, %i.ck
@@ -243,7 +243,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cz = fmul contract <2 x double> %i.cy, %i.co
   %i.da = fadd contract <2 x double> %i.cw, %i.cz
   %i.db = shufflevector <2 x double> %i.da, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.dc = fptrunc <2 x double> %i.db to <2 x float>
+  %i.dc = fptrunc contract <2 x double> %i.db to <2 x float>
   store <2 x float> %i.dc, ptr %i.ac, align 4, !tbaa !10
   br label %bb.l
 

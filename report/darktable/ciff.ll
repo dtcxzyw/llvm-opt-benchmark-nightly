@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.j
 
 .preheader383.preheader:                          ; preds = %.loopexit386
   %i.jh = load <4 x i32>, ptr %i.ar, align 8, !tbaa !124
-  %i.ji = sitofp <4 x i32> %i.jh to <4 x float>
+  %i.ji = sitofp reassoc nsz arcp contract afn <4 x i32> %i.jh to <4 x float>
   store <4 x float> %i.ji, ptr %i.al, align 4, !tbaa !123
   br label %.loopexit384
 
@@ -254,7 +254,7 @@ bb.ab:                                            ; preds = %.loopexit384
 
 .preheader375.preheader:                          ; preds = %bb.ab
   %i.ka = load <4 x i32>, ptr %i.ar, align 8, !tbaa !124
-  %i.kb = sitofp <4 x i32> %i.ka to <4 x float>
+  %i.kb = sitofp reassoc nsz arcp contract afn <4 x i32> %i.ka to <4 x float>
   store <4 x float> %i.kb, ptr %i.al, align 4, !tbaa !123
   br label %.loopexit374
 
@@ -325,7 +325,7 @@ bb.ak:                                            ; preds = %.preheader373
   %i.la = sext i32 %i.kz to i64
   %i.lb = getelementptr inbounds [16 x i8], ptr %i.an, i64 %i.la
   %i.lc = load <2 x i32>, ptr %i.lb, align 8, !tbaa !124
-  %i.ld = sitofp <2 x i32> %i.lc to <2 x float>
+  %i.ld = sitofp reassoc nsz arcp contract afn <2 x i32> %i.lc to <2 x float>
   store <2 x float> %i.ld, ptr %i.al, align 4, !tbaa !123
   %i.le = sext i32 %i.kz to i64
   %i.lf = getelementptr inbounds [16 x i8], ptr %i.an, i64 %i.le
@@ -348,7 +348,7 @@ _ZNK21libraw_static_table_tixEj.exit.3:           ; preds = %bb.ak, %bb.aj, %bb.
 
 .preheader379.preheader:                          ; preds = %.preheader382.preheader
   %i.lp = load <4 x i32>, ptr %i.ar, align 8, !tbaa !124
-  %i.lq = sitofp <4 x i32> %i.lp to <4 x float>
+  %i.lq = sitofp reassoc nsz arcp contract afn <4 x i32> %i.lp to <4 x float>
   store <4 x float> %i.lq, ptr %i.al, align 4, !tbaa !123
   br label %.loopexit374
 
@@ -419,7 +419,7 @@ bb.at:                                            ; preds = %.preheader377
   %i.mp = sext i32 %i.mo to i64
   %i.mq = getelementptr inbounds [16 x i8], ptr %i.an, i64 %i.mp
   %i.mr = load <2 x i32>, ptr %i.mq, align 8, !tbaa !124
-  %i.ms = sitofp <2 x i32> %i.mr to <2 x float>
+  %i.ms = sitofp reassoc nsz arcp contract afn <2 x i32> %i.mr to <2 x float>
   store <2 x float> %i.ms, ptr %i.al, align 4, !tbaa !123
   %i.mt = sext i32 %i.mo to i64
   %i.mu = getelementptr inbounds [16 x i8], ptr %i.an, i64 %i.mt
@@ -822,7 +822,7 @@ _ZNK21libraw_static_table_tixEj.exit320:          ; preds = %_ZNK21libraw_static
   %i.ur = sext i32 %i.uq to i64
   %i.us = getelementptr inbounds [16 x i8], ptr %i.an, i64 %i.ur
   %i.ut = load <4 x i32>, ptr %i.us, align 8, !tbaa !124
-  %i.uu = sitofp <4 x i32> %i.ut to <4 x float>
+  %i.uu = sitofp reassoc nsz arcp contract afn <4 x i32> %i.ut to <4 x float>
   store <4 x float> %i.uu, ptr %i.al, align 4, !tbaa !123
   br label %.loopexit371
 

@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p, %bb.k
   %i.fb = getelementptr inbounds nuw i8, ptr %i.z, i64 88
   %i.fc = getelementptr inbounds nuw i8, ptr %i.z, i64 32
   %i.fd = shufflevector <2 x i32> %i.ab, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
-  %i.fe = sitofp <2 x i32> %i.fd to <2 x double>  ; 3 uses
+  %i.fe = sitofp nsz <2 x i32> %i.fd to <2 x double> ; 3 uses
   %i.ff = sub nsw i32 0, %i.ac
   %i.fg = getelementptr inbounds nuw i8, ptr %i.z, i64 20 ; 6 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.z, i64 36
@@ -337,19 +337,19 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.ac
 
 bb.aa:                                            ; preds = %bb.y
-  %i.ic = fpext <2 x float> %i.ho to <2 x double>
+  %i.ic = fpext nsz <2 x float> %i.ho to <2 x double>
   %i.id = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ic, <2 x double> %i.fo, <2 x double> splat (double 1.000000e+00))
   %i.ie = fmul nsz <2 x double> %i.id, %i.fe
   br label %bb.ac
 
 bb.ab:                                            ; preds = %bb.y
-  %i.if = fpext <2 x float> %i.ho to <2 x double>
+  %i.if = fpext nsz <2 x float> %i.ho to <2 x double>
   %i.ig = fmul nsz <2 x double> %i.fo, %i.if
-  %i.ih = fptrunc <2 x double> %i.ig to <2 x float> ; 2 uses
-  %i.ii = fpext <2 x float> %i.ih to <2 x double> ; 2 uses
+  %i.ih = fptrunc nsz <2 x double> %i.ig to <2 x float> ; 2 uses
+  %i.ii = fpext nsz <2 x float> %i.ih to <2 x double> ; 2 uses
   %i.ij = fmul nsz <2 x double> %i.ii, splat (double -5.000000e-01)
   %i.ik = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ij, <2 x double> %i.ii, <2 x double> splat (double 1.000000e+00))
-  %i.il = fptrunc <2 x double> %i.ik to <2 x float>
+  %i.il = fptrunc nsz <2 x double> %i.ik to <2 x float>
   %i.im = call nsz <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.il)
   %i.in = shufflevector <2 x float> %i.ih, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.io = fmul nsz <2 x float> %i.im, %i.in       ; 2 uses

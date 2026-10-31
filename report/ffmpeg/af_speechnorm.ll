@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.y = getelementptr inbounds [24 x i8], ptr %i.e, i64 %i.u ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load <2 x double>, ptr %i.z, align 8, !tbaa !67 ; 2 uses
-  %i.ab = fptrunc <2 x double> %i.aa to <2 x float>
+  %i.ab = fptrunc nsz <2 x double> %i.aa to <2 x float>
   store i32 %i.t, ptr %1, align 8, !tbaa !60
   %i.ac = extractelement <2 x double> %i.aa, i64 0
   %i.ad = fcmp nsz ult double %i.ac, f0x3EFFFFFFF0000000
@@ -231,7 +231,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.am = fpext <2 x float> %i.ab to <2 x double> ; 2 uses
+  %i.am = fpext nsz <2 x float> %i.ab to <2 x double> ; 2 uses
   %i.an = sext i32 %spec.store.select to i64      ; 2 uses
   %i.ao = getelementptr inbounds [24 x i8], ptr %i.e, i64 %i.an
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
@@ -312,7 +312,7 @@ bb.l:                                             ; preds = %.preheader
   %.2.ph = phi i32 [ %i.br, %bb.l ], [ %i.bk, %bb.k ]
   %i.bs = insertelement <2 x float> poison, float %.2104.ph, i64 0
   %i.bt = insertelement <2 x float> %i.bs, float %.2101.ph, i64 1
-  %i.bu = fpext <2 x float> %i.bt to <2 x double>
+  %i.bu = fpext nsz <2 x float> %i.bt to <2 x double>
   store <2 x double> %i.bu, ptr %i.az, align 8, !tbaa !67
   store i32 %.2.ph, ptr %i.ay, align 8, !tbaa !66
   br label %._crit_edge
@@ -325,7 +325,7 @@ bb.l:                                             ; preds = %.preheader
   %i.bv = trunc nsw i64 %indvars.iv.lcssa.sink to i32
   %i.bw = insertelement <2 x float> poison, float %.2104, i64 0
   %i.bx = insertelement <2 x float> %i.bw, float %.2101, i64 1
-  %i.by = fpext <2 x float> %i.bx to <2 x double>
+  %i.by = fpext nsz <2 x float> %i.bx to <2 x double>
   store <2 x double> %i.by, ptr %i.az, align 8, !tbaa !67
   store i32 %.2, ptr %i.ay, align 8, !tbaa !66
   %i.bz = icmp sgt i32 %3, %i.bv

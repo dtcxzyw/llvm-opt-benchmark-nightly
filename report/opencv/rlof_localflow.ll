@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.thread
 
 bb.ad:                                            ; preds = %bb.x
-  %i.ey = uitofp <2 x i32> %i.ef to <2 x float>
+  %i.ey = uitofp nneg <2 x i32> %i.ef to <2 x float>
   %i.ez = fsub <2 x float> %i.dy, %i.ey           ; 3 uses
   %i.fa = fsub <2 x float> splat (float 1.000000e+00), %i.ez ; 3 uses
   %i.fb = extractelement <2 x float> %i.fa, i64 0
@@ -321,7 +321,7 @@ bb.ak:                                            ; preds = %bb.r
   br label %bb.bm
 
 bb.al:                                            ; preds = %bb.ag
-  %i.hn = uitofp <2 x i32> %i.gy to <2 x float>
+  %i.hn = uitofp nneg <2 x i32> %i.gy to <2 x float>
   %i.ho = fsub <2 x float> %.sroa.0678.1944, %i.hn ; 3 uses
   %i.hp = fsub <2 x float> splat (float 1.000000e+00), %i.ho ; 3 uses
   %i.hq = extractelement <2 x float> %i.hp, i64 0
@@ -724,7 +724,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.bp
 
 bb.ad:                                            ; preds = %bb.x
-  %i.fh = uitofp <2 x i32> %i.eo to <2 x float>
+  %i.fh = uitofp nneg <2 x i32> %i.eo to <2 x float>
   %i.fi = fsub <2 x float> %i.eh, %i.fh           ; 3 uses
   %i.fj = fsub <2 x float> splat (float 1.000000e+00), %i.fi ; 3 uses
   %i.fk = extractelement <2 x float> %i.fj, i64 0
@@ -877,7 +877,7 @@ bb.ag:                                            ; preds = %.lr.ph, %bb.bo
   br i1 %or.cond2074, label %bb.ah, label %._crit_edge1911
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.ip = uitofp <2 x i32> %i.id to <2 x float>
+  %i.ip = uitofp nneg <2 x i32> %i.id to <2 x float>
   %i.iq = fsub <2 x float> %.sroa.01032.11688, %i.ip ; 3 uses
   %i.ir = extractelement <2 x float> %i.iq, i64 1 ; 2 uses
   %i.is = extractelement <2 x float> %i.iq, i64 0 ; 2 uses
@@ -960,7 +960,7 @@ bb.aq:                                            ; preds = %thread-pre-split
 bb.ar:                                            ; preds = %bb.aj
   %i.jt = insertelement <2 x i32> poison, i32 %.pre1913, i64 0
   %i.ju = insertelement <2 x i32> %i.jt, i32 %i.iz, i64 1 ; 3 uses
-  %i.jv = uitofp <2 x i32> %i.ju to <2 x float>
+  %i.jv = uitofp nneg <2 x i32> %i.ju to <2 x float>
   %i.jw = fsub <2 x float> %.sroa.01032.11688, %i.jv ; 4 uses
   %i.jx = extractelement <2 x float> %i.jw, i64 1 ; 3 uses
   %i.jy = extractelement <2 x float> %i.jw, i64 0 ; 3 uses
@@ -1363,7 +1363,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.at
 
 bb.v:                                             ; preds = %bb.p
-  %i.en = uitofp <2 x i32> %i.du to <2 x float>
+  %i.en = uitofp nneg <2 x i32> %i.du to <2 x float>
   %i.eo = fsub <2 x float> %i.dn, %i.en           ; 3 uses
   %i.ep = fsub <2 x float> splat (float 1.000000e+00), %i.eo ; 3 uses
   %i.eq = extractelement <2 x float> %i.ep, i64 0
@@ -1526,7 +1526,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %.thread
 
 bb.aj:                                            ; preds = %bb.af
-  %i.hw = uitofp <2 x i32> %i.hi to <2 x float>
+  %i.hw = uitofp nneg <2 x i32> %i.hi to <2 x float>
   %i.hx = fsub <2 x float> %.sroa.0241.1354, %i.hw ; 3 uses
   %i.hy = fsub <2 x float> splat (float 1.000000e+00), %i.hx ; 3 uses
   %i.hz = extractelement <2 x float> %i.hy, i64 0
@@ -1929,7 +1929,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.ba
 
 bb.v:                                             ; preds = %bb.p
-  %i.en = uitofp <2 x i32> %i.du to <2 x float>
+  %i.en = uitofp nneg <2 x i32> %i.du to <2 x float>
   %i.eo = fsub <2 x float> %i.dn, %i.en           ; 3 uses
   %i.ep = fsub <2 x float> splat (float 1.000000e+00), %i.eo ; 3 uses
   %i.eq = extractelement <2 x float> %i.ep, i64 0
@@ -2332,7 +2332,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.cf
 
 bb.y:                                             ; preds = %bb.s
-  %i.fh = uitofp <2 x i32> %i.eo to <2 x float>
+  %i.fh = uitofp nneg <2 x i32> %i.eo to <2 x float>
   %i.fi = fsub <2 x float> %i.eh, %i.fh           ; 3 uses
   %i.fj = fsub <2 x float> splat (float 1.000000e+00), %i.fi ; 3 uses
   %i.fk = extractelement <2 x float> %i.fj, i64 0
@@ -2497,7 +2497,7 @@ bb.aj:                                            ; preds = %thread-pre-split
   br label %.thread919
 
 bb.ak:                                            ; preds = %bb.ac
-  %i.id = uitofp <2 x i32> %i.hh to <2 x float>
+  %i.id = uitofp nneg <2 x i32> %i.hh to <2 x float>
   %i.ie = fsub <2 x float> %.sroa.0810.11029, %i.id ; 3 uses
   %i.if = fsub <2 x float> splat (float 1.000000e+00), %i.ie ; 3 uses
   %i.ig = extractelement <2 x float> %i.if, i64 0
@@ -2900,7 +2900,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.cn
 
 bb.ad:                                            ; preds = %bb.x
-  %i.ft = uitofp <2 x i32> %i.fa to <2 x float>
+  %i.ft = uitofp nneg <2 x i32> %i.fa to <2 x float>
   %i.fu = fsub <2 x float> %i.et, %i.ft           ; 3 uses
   %i.fv = fsub <2 x float> splat (float 1.000000e+00), %i.fu ; 3 uses
   %i.fw = extractelement <2 x float> %i.fv, i64 0
@@ -3048,7 +3048,7 @@ bb.ag:                                            ; preds = %.lr.ph1919, %bb.cm
   br i1 %or.cond2379, label %bb.ah, label %._crit_edge2168
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.it = uitofp <2 x i32> %i.ih to <2 x float>
+  %i.it = uitofp nneg <2 x i32> %i.ih to <2 x float>
   %i.iu = fsub <2 x float> %.sroa.01198.11878, %i.it ; 3 uses
   %i.iv = extractelement <2 x float> %i.iu, i64 1 ; 2 uses
   %i.iw = extractelement <2 x float> %i.iu, i64 0 ; 2 uses
@@ -3130,7 +3130,7 @@ bb.aq:                                            ; preds = %thread-pre-split
 bb.ar:                                            ; preds = %bb.aj
   %i.jx = insertelement <2 x i32> poison, i32 %.pre2170, i64 0
   %i.jy = insertelement <2 x i32> %i.jx, i32 %i.jd, i64 1 ; 3 uses
-  %i.jz = uitofp <2 x i32> %i.jy to <2 x float>
+  %i.jz = uitofp nneg <2 x i32> %i.jy to <2 x float>
   %i.ka = fsub <2 x float> %.sroa.01198.11878, %i.jz ; 5 uses
   %i.kb = extractelement <2 x float> %i.ka, i64 1 ; 4 uses
   %i.kc = extractelement <2 x float> %i.ka, i64 0 ; 4 uses
@@ -3533,7 +3533,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.bz
 
 bb.v:                                             ; preds = %bb.p
-  %i.fb = uitofp <2 x i32> %i.ei to <2 x float>
+  %i.fb = uitofp nneg <2 x i32> %i.ei to <2 x float>
   %i.fc = fsub <2 x float> %i.eb, %i.fb           ; 3 uses
   %i.fd = fsub <2 x float> splat (float 1.000000e+00), %i.fc ; 3 uses
   %i.fe = extractelement <2 x float> %i.fd, i64 0
@@ -3688,7 +3688,7 @@ bb.ag:                                            ; preds = %thread-pre-split
   br label %.thread
 
 bb.ah:                                            ; preds = %bb.z
-  %i.hp = uitofp <2 x i32> %i.gv to <2 x float>
+  %i.hp = uitofp nneg <2 x i32> %i.gv to <2 x float>
   %i.hq = fsub <2 x float> %.sroa.0425.1567, %i.hp ; 3 uses
   %i.hr = fsub <2 x float> splat (float 1.000000e+00), %i.hq ; 3 uses
   %i.hs = extractelement <2 x float> %i.hr, i64 0
@@ -4091,7 +4091,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.cl
 
 bb.ad:                                            ; preds = %bb.x
-  %i.fl = uitofp <2 x i32> %i.es to <2 x float>
+  %i.fl = uitofp nneg <2 x i32> %i.es to <2 x float>
   %i.fm = fsub <2 x float> %i.el, %i.fl           ; 3 uses
   %i.fn = fsub <2 x float> splat (float 1.000000e+00), %i.fm ; 3 uses
   %i.fo = extractelement <2 x float> %i.fn, i64 0

@@ -204,11 +204,11 @@ bb.m:                                             ; preds = %_ZN9LuaHelper9readP
   %i.ao = fpext nsz float %i.am to double
   %i.ap = call nsz double @llvm.sqrt.f64(double %i.ao)
   %i.aq = fdiv nsz double 1.000000e+00, %i.ap     ; 2 uses
-  %i.ar = fpext <2 x float> %.fca.0.extract6 to <2 x double>
+  %i.ar = fpext nsz <2 x float> %.fca.0.extract6 to <2 x double>
   %i.as = insertelement <2 x double> poison, double %i.aq, i64 0
   %i.at = shufflevector <2 x double> %i.as, <2 x double> poison, <2 x i32> zeroinitializer
   %i.au = fmul nsz <2 x double> %i.at, %i.ar
-  %i.av = fptrunc <2 x double> %i.au to <2 x float>
+  %i.av = fptrunc nsz <2 x double> %i.au to <2 x float>
   %i.aw = fpext nsz float %.fca.1.extract7 to double
   %i.ax = fmul nsz double %i.aq, %i.aw
   %i.ay = fptrunc nsz double %i.ax to float
@@ -611,7 +611,7 @@ bb.t:                                             ; preds = %bb.s
   store <2 x float> %i.bl, ptr %i.as, align 4, !tbaa !160
   %i.bm = extractelement <2 x float> %i.bk, i64 1
   store float %i.bm, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !160
-  %i.bn = fpext <2 x float> %i.bk to <2 x double>
+  %i.bn = fpext nsz <2 x float> %i.bk to <2 x double>
   %i.bo = fmul nsz <2 x double> %i.bn, splat (double 5.000000e-01)
   %i.bp = call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.bo) ; 2 uses
   %i.bq = extractvalue { <2 x double>, <2 x double> } %i.bp, 0 ; 3 uses
@@ -636,7 +636,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cj = fmul nsz <4 x double> %i.cd, %i.ci
   %i.ck = shufflevector <4 x double> %i.cc, <4 x double> poison, <4 x i32> <i32 1, i32 0, i32 0, i32 0>
   %i.cl = call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ck, <4 x double> %i.by, <4 x double> %i.cj)
-  %i.cm = fptrunc <4 x double> %i.cl to <4 x float> ; 6 uses
+  %i.cm = fptrunc nsz <4 x double> %i.cl to <4 x float> ; 6 uses
   %foldExtExtBinop = fmul nsz <4 x float> %i.cm, %i.cm
   %i.cn = extractelement <4 x float> %foldExtExtBinop, i64 1
   %i.co = extractelement <4 x float> %i.cm, i64 0 ; 2 uses
@@ -1039,7 +1039,7 @@ bb.x:                                             ; preds = %bb.w
   %sin.i.i = extractvalue { double, double } %sincos.i.i, 0
   %cos.i.i = extractvalue { double, double } %sincos.i.i, 1
   %i.ar = insertelement <2 x float> %.fca.0.extract1, float %.fca.1.extract2, i64 0
-  %i.as = fpext <2 x float> %i.ar to <2 x double>
+  %i.as = fpext nsz <2 x float> %i.ar to <2 x double>
   %i.at = fmul nsz <2 x double> %i.as, splat (double 5.000000e-01)
   %i.au = call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.at) ; 2 uses
   %i.av = extractvalue { <2 x double>, <2 x double> } %i.au, 0 ; 3 uses
@@ -1064,7 +1064,7 @@ bb.x:                                             ; preds = %bb.w
   %i.bo = shufflevector <2 x double> %i.bd, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.bp = shufflevector <4 x double> %i.bn, <4 x double> %i.bo, <4 x i32> <i32 0, i32 5, i32 2, i32 0>
   %i.bq = call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.bl, <4 x double> %i.bp, <4 x double> %i.bk)
-  %i.br = fptrunc <4 x double> %i.bq to <4 x float> ; 6 uses
+  %i.br = fptrunc nsz <4 x double> %i.bq to <4 x float> ; 6 uses
   %foldExtExtBinop = fmul nsz <4 x float> %i.br, %i.br
   %i.bs = extractelement <4 x float> %foldExtExtBinop, i64 1
   %i.bt = extractelement <4 x float> %i.br, i64 0 ; 2 uses
@@ -1467,7 +1467,7 @@ bb.c:                                             ; preds = %_ZN9ObjectRef9getpl
   tail call void @lua_pushboolean(ptr noundef %0, i32 noundef %i.ar)
   tail call void @lua_setfield(ptr noundef %0, i32 noundef -2, ptr noundef nonnull @.str.41)
   %i.as = tail call nsz <2 x float> @_ZNK13PlayerControl11getMovementEv(ptr noundef nonnull align 4 dereferenceable(24) %i.q)
-  %i.at = fpext <2 x float> %i.as to <2 x double> ; 2 uses
+  %i.at = fpext nsz <2 x float> %i.as to <2 x double> ; 2 uses
   %i.au = extractelement <2 x double> %i.at, i64 0
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.au)
   tail call void @lua_setfield(ptr noundef %0, i32 noundef -2, ptr noundef nonnull @.str.42)

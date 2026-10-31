@@ -107,12 +107,12 @@ bb.a:
   store float %4, ptr %i.d, align 8, !tbaa !24
   %i.e = insertelement <2 x float> poison, float %4, i64 0
   %i.f = insertelement <2 x float> %i.e, float %2, i64 1
-  %i.g = fpext <2 x float> %i.f to <2 x double>
+  %i.g = fpext reassoc nsz arcp contract afn <2 x float> %i.f to <2 x double>
   %i.h = fpext reassoc nsz arcp contract afn float %3 to double
   %i.i = fmul reassoc nsz arcp contract afn double %i.h, 1.000000e-02
   %i.j = fptrunc reassoc nsz arcp contract afn double %i.i to float
   %i.k = fmul reassoc nsz arcp contract afn <2 x double> %i.g, splat (double 1.000000e-02)
-  %i.l = fptrunc <2 x double> %i.k to <2 x float>
+  %i.l = fptrunc reassoc nsz arcp contract afn <2 x double> %i.k to <2 x float>
   switch i32 %1, label %.preheader [
     i32 5, label %bb.c
     i32 6, label %bb.b
@@ -515,7 +515,7 @@ bb.n:                                             ; preds = %bb.m
   %i.em = insertelement <4 x double> poison, double %i.eb, i64 0
   %i.en = insertelement <4 x double> %i.em, double %i.ef, i64 1
   %i.eo = shufflevector <4 x double> %i.en, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.ep = fptrunc <4 x double> %i.eo to <4 x float> ; 4 uses
+  %i.ep = fptrunc reassoc nsz arcp contract afn <4 x double> %i.eo to <4 x float> ; 4 uses
   %i.eq = select <4 x i1> %i.el, <4 x float> %i.au, <4 x float> %i.ei ; 3 uses
   %i.er = insertelement <4 x float> poison, float %i.ct, i64 0
   %i.es = insertelement <4 x float> %i.er, float %i.dd, i64 1

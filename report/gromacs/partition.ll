@@ -205,7 +205,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.prol, %sc
   %i.ix = trunc nsw i64 %indvars.iv.next20.prol to i32
   %i.iy = insertelement <2 x i32> poison, i32 %i.iw, i64 0
   %i.iz = insertelement <2 x i32> %i.iy, i32 %i.ix, i64 1
-  %i.ja = uitofp <2 x i32> %i.iz to <2 x float>
+  %i.ja = uitofp nneg <2 x i32> %i.iz to <2 x float>
   %i.jb = fdiv <2 x float> %i.ja, %i.it           ; 2 uses
   %i.jc = extractelement <2 x float> %i.jb, i64 0
   store float %i.jc, ptr %i.iu, align 4, !tbaa !211
@@ -247,7 +247,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.jt = trunc nsw i64 %indvars.iv.next20 to i32
   %i.ju = insertelement <2 x i32> poison, i32 %i.js, i64 0
   %i.jv = insertelement <2 x i32> %i.ju, i32 %i.jt, i64 1
-  %i.jw = uitofp <2 x i32> %i.jv to <2 x float>
+  %i.jw = uitofp nneg <2 x i32> %i.jv to <2 x float>
   %i.jx = fdiv <2 x float> %i.jw, %i.jg           ; 2 uses
   %i.jy = extractelement <2 x float> %i.jx, i64 0
   store float %i.jy, ptr %i.jq, align 4, !tbaa !211
@@ -259,7 +259,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.kc = trunc nsw i64 %indvars.iv.next20.1 to i32
   %i.kd = insertelement <2 x i32> poison, i32 %i.kb, i64 0
   %i.ke = insertelement <2 x i32> %i.kd, i32 %i.kc, i64 1
-  %i.kf = uitofp <2 x i32> %i.ke to <2 x float>
+  %i.kf = uitofp nneg <2 x i32> %i.ke to <2 x float>
   %i.kg = fdiv <2 x float> %i.kf, %i.ji           ; 2 uses
   %i.kh = extractelement <2 x float> %i.kg, i64 0
   store float %i.kh, ptr %i.jz, align 4, !tbaa !211
@@ -271,7 +271,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.kl = trunc nsw i64 %indvars.iv.next20.2 to i32
   %i.km = insertelement <2 x i32> poison, i32 %i.kk, i64 0
   %i.kn = insertelement <2 x i32> %i.km, i32 %i.kl, i64 1
-  %i.ko = uitofp <2 x i32> %i.kn to <2 x float>
+  %i.ko = uitofp nneg <2 x i32> %i.kn to <2 x float>
   %i.kp = fdiv <2 x float> %i.ko, %i.jk           ; 2 uses
   %i.kq = extractelement <2 x float> %i.kp, i64 0
   store float %i.kq, ptr %i.ki, align 4, !tbaa !211
@@ -283,7 +283,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
   %i.ku = trunc nsw i64 %indvars.iv.next20.3 to i32
   %i.kv = insertelement <2 x i32> poison, i32 %i.kt, i64 0
   %i.kw = insertelement <2 x i32> %i.kv, i32 %i.ku, i64 1
-  %i.kx = uitofp <2 x i32> %i.kw to <2 x float>
+  %i.kx = uitofp nneg <2 x i32> %i.kw to <2 x float>
   %i.ky = fdiv <2 x float> %i.kx, %i.jm           ; 2 uses
   %i.kz = extractelement <2 x float> %i.ky, i64 0
   store float %i.kz, ptr %i.kr, align 4, !tbaa !211

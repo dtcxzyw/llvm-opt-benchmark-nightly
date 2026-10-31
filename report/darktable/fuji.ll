@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %.loopexit621
   %i.gm = getelementptr inbounds [16 x i8], ptr %i.bx, i64 %i.gl ; 2 uses
   %i.gn = call <3 x i32> @llvm.masked.load.v3i32.p0(ptr nonnull align 8 %i.gm, <3 x i1> <i1 true, i1 false, i1 true>, <3 x i32> poison), !tbaa !97
   %i.go = shufflevector <3 x i32> %i.gn, <3 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %i.gp = sitofp <2 x i32> %i.go to <2 x double>
+  %i.gp = sitofp reassoc nsz arcp contract afn <2 x i32> %i.go to <2 x double>
   %i.gq = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.i, %i.gp
   %i.gr = shufflevector <2 x double> %i.gq, <2 x double> poison, <3 x i32> <i32 0, i32 poison, i32 1>
   %i.gs = fptosi <3 x double> %i.gr to <3 x i32>
@@ -446,7 +446,7 @@ bb.bb:                                            ; preds = %.loopexit646
   %i.ks = insertelement <4 x i32> %i.kr, i32 %i.ko, i64 2
   %i.kt = shufflevector <3 x i32> %i.kq, <3 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 2, i32 poison>
   %i.ku = shufflevector <4 x i32> %i.kt, <4 x i32> %i.ks, <4 x i32> <i32 4, i32 0, i32 6, i32 2>
-  %i.kv = sitofp <4 x i32> %i.ku to <4 x float>
+  %i.kv = sitofp reassoc nsz arcp contract afn <4 x i32> %i.ku to <4 x float>
   store <4 x float> %i.kv, ptr %i.bw, align 4, !tbaa !98
   br label %.thread
 
@@ -849,7 +849,7 @@ bb.md:                                            ; preds = %bb.mc
   %i.zf = insertelement <4 x i32> %i.ze, i32 %i.yt, i64 1
   %i.zg = insertelement <4 x i32> %i.zf, i32 %i.yv, i64 2
   %i.zh = insertelement <4 x i32> %i.zg, i32 %i.za, i64 3
-  %i.zi = sitofp <4 x i32> %i.zh to <4 x float>
+  %i.zi = sitofp reassoc nsz arcp contract afn <4 x i32> %i.zh to <4 x float>
   %i.zj = sext i32 %.0305693 to i64
   %i.zk = getelementptr inbounds [20 x i8], ptr %i.ce, i64 %i.zj ; 2 uses
   store <4 x float> %i.zi, ptr %i.zk, align 4, !tbaa !98
@@ -1252,7 +1252,7 @@ bb.ab:                                            ; preds = %.loopexit246
   %i.gi = insertelement <4 x i32> %i.gh, i32 %i.ge, i64 2
   %i.gj = shufflevector <3 x i32> %i.gg, <3 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 2, i32 poison>
   %i.gk = shufflevector <4 x i32> %i.gj, <4 x i32> %i.gi, <4 x i32> <i32 4, i32 0, i32 6, i32 2>
-  %i.gl = sitofp <4 x i32> %i.gk to <4 x float>
+  %i.gl = sitofp reassoc nsz arcp contract afn <4 x i32> %i.gk to <4 x float>
   store <4 x float> %i.gl, ptr %i.af, align 4, !tbaa !98
   br label %.thread.thread
 
@@ -1509,7 +1509,7 @@ bb.an:                                            ; preds = %.loopexit239
   %i.lm = getelementptr inbounds [16 x i8], ptr %i.ap, i64 %i.ll ; 2 uses
   %i.ln = call <3 x i32> @llvm.masked.load.v3i32.p0(ptr nonnull align 8 %i.lm, <3 x i1> <i1 true, i1 false, i1 true>, <3 x i32> poison), !tbaa !97
   %i.lo = shufflevector <3 x i32> %i.ln, <3 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %i.lp = sitofp <2 x i32> %i.lo to <2 x double>
+  %i.lp = sitofp reassoc nsz arcp contract afn <2 x i32> %i.lo to <2 x double>
   %i.lq = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.x, %i.lp
   %i.lr = shufflevector <2 x double> %i.lq, <2 x double> poison, <3 x i32> <i32 0, i32 poison, i32 1>
   %i.ls = fptosi <3 x double> %i.lr to <3 x i32>
@@ -1591,7 +1591,7 @@ bb.ap:                                            ; preds = %.loopexit
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 188664 ; 2 uses
   %i.nh = call <3 x i32> @llvm.masked.load.v3i32.p0(ptr nonnull align 8 %i.ng, <3 x i1> <i1 true, i1 false, i1 true>, <3 x i32> poison), !tbaa !97
   %i.ni = shufflevector <3 x i32> %i.nh, <3 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %i.nj = sitofp <2 x i32> %i.ni to <2 x double>
+  %i.nj = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ni to <2 x double>
   %i.nk = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.x, %i.nj
   %i.nl = shufflevector <2 x double> %i.nk, <2 x double> poison, <3 x i32> <i32 0, i32 poison, i32 1>
   %i.nm = fptosi <3 x double> %i.nl to <3 x i32>
@@ -1763,7 +1763,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.qh = insertelement <4 x i32> %i.qg, i32 %i.pz, i64 1
   %i.qi = insertelement <4 x i32> %i.qh, i32 %i.qa, i64 2
   %i.qj = insertelement <4 x i32> %i.qi, i32 %i.qd, i64 3
-  %i.qk = sitofp <4 x i32> %i.qj to <4 x float>
+  %i.qk = sitofp reassoc nsz arcp contract afn <4 x i32> %i.qj to <4 x float>
   %i.ql = sext i32 %.0184265 to i64
   %i.qm = getelementptr inbounds [20 x i8], ptr %i.ao, i64 %i.ql ; 2 uses
   store <4 x float> %i.qk, ptr %i.qm, align 4, !tbaa !98

@@ -186,7 +186,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = fmul reassoc nsz arcp contract afn <4 x double> %i.q, %i.r
   %i.t = shufflevector <2 x double> %i.p, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.u = shufflevector <4 x double> %i.t, <4 x double> %i.s, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.v = fptrunc <4 x double> %i.u to <4 x float> ; 3 uses
+  %i.v = fptrunc reassoc nsz arcp contract afn <4 x double> %i.u to <4 x float> ; 3 uses
   store <4 x float> %i.v, ptr %i.a, align 4, !tbaa !13
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.x = load i32, ptr %i.w, align 4, !tbaa !121
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.ah = load <2 x double>, ptr %i.af, align 8, !tbaa !120
-  %i.ai = fptrunc <2 x double> %i.ah to <2 x float>
+  %i.ai = fptrunc reassoc nsz arcp contract afn <2 x double> %i.ah to <2 x float>
   store <2 x float> %i.ai, ptr %i.ag, align 4, !tbaa !13
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i32 1, ptr %i.aj, align 4, !tbaa !126
@@ -577,12 +577,12 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = insertelement <2 x double> poison, double %i.e, i64 0
   %i.af = shufflevector <2 x double> %i.ae, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ag = fdiv reassoc nsz arcp contract afn <2 x double> %i.ad, %i.af
-  %i.ah = fptrunc <2 x double> %i.ag to <2 x float> ; 6 uses
+  %i.ah = fptrunc reassoc nsz arcp contract afn <2 x double> %i.ag to <2 x float> ; 6 uses
   %i.ai = icmp eq i32 %5, 1
   br i1 %i.ai, label %.thread, label %bb.i
 
 .thread:                                          ; preds = %bb.h
-  %i.aj = fpext <2 x float> %i.ah to <2 x double> ; 2 uses
+  %i.aj = fpext reassoc nsz arcp contract afn <2 x float> %i.ah to <2 x double> ; 2 uses
   %i.ak = extractelement <2 x double> %i.aj, i64 0
   tail call void @cairo_arc(ptr noundef %0, double noundef 0.000000e+00, double noundef 0.000000e+00, double noundef %i.ak, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #18
   tail call void @cairo_stroke(ptr noundef %0) #18
@@ -985,17 +985,17 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.k = load float, ptr %i.j, align 4, !tbaa !166
   %i.l = load <2 x i32>, ptr %i.h, align 16, !tbaa !17 ; 5 uses
-  %i.m = sitofp <2 x i32> %i.l to <2 x float>     ; 4 uses
+  %i.m = sitofp reassoc nsz arcp contract afn <2 x i32> %i.l to <2 x float> ; 4 uses
   %i.n = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.m, splat (float 5.000000e-01)
-  %i.o = fpext nnan <2 x float> %i.n to <2 x double>
+  %i.o = fpext reassoc nnan nsz arcp contract afn <2 x float> %i.n to <2 x double>
   %i.p = load <2 x float>, ptr %i.i, align 4, !tbaa !13
   %i.q = fmul reassoc nsz arcp contract afn <2 x float> %i.p, %i.m
-  %i.r = fpext <2 x float> %i.q to <2 x double>
+  %i.r = fpext reassoc nsz arcp contract afn <2 x float> %i.q to <2 x double>
   %i.s = fmul reassoc nsz arcp contract afn <2 x double> %i.r, splat (double 5.000000e-01)
   %i.t = fadd reassoc nsz arcp contract afn <2 x double> %i.s, %i.o
-  %i.u = fptrunc <2 x double> %i.t to <2 x float>
+  %i.u = fptrunc reassoc nsz arcp contract afn <2 x double> %i.t to <2 x float>
   %i.v = load <2 x i32>, ptr %4, align 4, !tbaa !17
-  %i.w = sitofp <2 x i32> %i.v to <2 x float>
+  %i.w = sitofp reassoc nsz arcp contract afn <2 x i32> %i.v to <2 x float>
   %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.y = load i32, ptr %i.x, align 4, !tbaa !111
   %.not169 = icmp eq i32 %i.y, 0

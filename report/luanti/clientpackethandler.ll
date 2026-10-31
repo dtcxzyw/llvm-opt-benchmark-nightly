@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.22.0.copyload = load float, ptr %.sroa.22.0..sroa_idx, align 4, !tbaa !283
   %i.j = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull @.str.113, i64 noundef 1) ; 0 uses
-  %i.k = fpext <2 x float> %.sroa.01.0.copyload to <2 x double> ; 2 uses
+  %i.k = fpext nsz <2 x float> %.sroa.01.0.copyload to <2 x double> ; 2 uses
   %i.l = extractelement <2 x double> %i.k, i64 0
   %i.m = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.i, double noundef %i.l) ; 2 uses
   %i.n = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.m, ptr noundef nonnull @.str.50, i64 noundef 1) ; 0 uses
@@ -607,7 +607,7 @@ bb.p:                                             ; preds = %bb.m
 
 bb.q:                                             ; preds = %bb.p
   %i.ai = load <2 x i32>, ptr %11, align 8, !tbaa !79
-  %i.aj = sitofp <2 x i32> %i.ai to <2 x float>
+  %i.aj = sitofp nsz <2 x i32> %i.ai to <2 x float>
   store <2 x float> %i.aj, ptr %9, align 8, !tbaa !283
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #28
   br label %bb.s
@@ -1007,7 +1007,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.u = load <2 x i32>, ptr %5, align 8, !tbaa !79
-  %i.v = sitofp <2 x i32> %i.u to <2 x float>
+  %i.v = sitofp nsz <2 x i32> %i.u to <2 x float>
   store <2 x float> %i.v, ptr %3, align 8, !tbaa !283
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
   br label %bb.m
@@ -1410,7 +1410,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 0, ptr %i.d, align 4, !tbaa !448
   %i.i = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN13NetworkPacketrsERN4core8vector2dIiEE(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 4 dereferenceable(8) %2) ; 0 uses
   %i.j = load <2 x i32>, ptr %2, align 8, !tbaa !79
-  %i.k = sitofp <2 x i32> %i.j to <2 x float>
+  %i.k = sitofp nsz <2 x i32> %i.j to <2 x float>
   store <2 x float> %i.k, ptr %i.e, align 8, !tbaa !283
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   br label %bb.d
@@ -1426,7 +1426,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 0, ptr %i.d, align 4, !tbaa !448
   %i.n = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN13NetworkPacketrsERN4core8vector2dIiEE(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 4 dereferenceable(8) %2) ; 0 uses
   %i.o = load <2 x i32>, ptr %2, align 8, !tbaa !79
-  %i.p = sitofp <2 x i32> %i.o to <2 x float>
+  %i.p = sitofp nsz <2 x i32> %i.o to <2 x float>
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   store <2 x float> %i.p, ptr %i.q, align 8, !tbaa !283
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
@@ -1448,7 +1448,7 @@ bb.h:                                             ; preds = %bb.g
   store i32 0, ptr %i.d, align 4, !tbaa !448
   %i.v = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN13NetworkPacketrsERN4core8vector2dIiEE(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 4 dereferenceable(8) %2) ; 0 uses
   %i.w = load <2 x i32>, ptr %2, align 8, !tbaa !79
-  %i.x = sitofp <2 x i32> %i.w to <2 x float>
+  %i.x = sitofp nsz <2 x i32> %i.w to <2 x float>
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   store <2 x float> %i.x, ptr %i.y, align 8, !tbaa !283
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
@@ -1470,7 +1470,7 @@ bb.k:                                             ; preds = %bb.j
   store i32 0, ptr %i.d, align 4, !tbaa !448
   %i.ad = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN13NetworkPacketrsERN4core8vector2dIiEE(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull align 4 dereferenceable(8) %2) ; 0 uses
   %i.ae = load <2 x i32>, ptr %2, align 8, !tbaa !79
-  %i.af = sitofp <2 x i32> %i.ae to <2 x float>
+  %i.af = sitofp nsz <2 x i32> %i.ae to <2 x float>
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 160
   store <2 x float> %i.af, ptr %i.ag, align 8, !tbaa !283
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28

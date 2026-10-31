@@ -205,9 +205,9 @@ _ZNK9hb_face_t8get_upemEv.exit.i50.us:            ; preds = %_ZNK9hb_face_t9load
   store <2 x float> %i.ct, ptr %i.p, align 8, !tbaa !304
   %i.cu = icmp slt <2 x i32> %i.cp, zeroinitializer
   %i.cv = sub nsw <2 x i32> zeroinitializer, %i.cp
-  %i.cw = zext <2 x i32> %i.cv to <2 x i64>
+  %i.cw = zext nneg <2 x i32> %i.cv to <2 x i64>
   %i.cx = mul nsw <2 x i64> %i.cw, splat (i64 -65536)
-  %i.cy = zext <2 x i32> %i.cp to <2 x i64>
+  %i.cy = zext nneg <2 x i32> %i.cp to <2 x i64>
   %i.cz = shl nuw nsw <2 x i64> %i.cy, splat (i64 16)
   %i.da = select <2 x i1> %i.cu, <2 x i64> %i.cx, <2 x i64> %i.cz
   %i.db = sitofp <2 x i64> %i.da to <2 x float>
@@ -567,9 +567,9 @@ _ZNK9hb_face_t8get_upemEv.exit.i:                 ; preds = %_ZNK9hb_face_t9load
   store <2 x float> %i.ha, ptr %i.p, align 8, !tbaa !304
   %i.hb = icmp slt <2 x i32> %i.gw, zeroinitializer
   %i.hc = sub nsw <2 x i32> zeroinitializer, %i.gw
-  %i.hd = zext <2 x i32> %i.hc to <2 x i64>
+  %i.hd = zext nneg <2 x i32> %i.hc to <2 x i64>
   %i.he = mul nsw <2 x i64> %i.hd, splat (i64 -65536)
-  %i.hf = zext <2 x i32> %i.gw to <2 x i64>
+  %i.hf = zext nneg <2 x i32> %i.gw to <2 x i64>
   %i.hg = shl nuw nsw <2 x i64> %i.hf, splat (i64 16)
   %i.hh = select <2 x i1> %i.hb, <2 x i64> %i.he, <2 x i64> %i.hg
   %i.hi = sitofp <2 x i64> %i.hh to <2 x float>
@@ -972,9 +972,9 @@ _ZNK9hb_face_t8get_upemEv.exit:                   ; preds = %bb.a, %bb.b
   store <2 x float> %i.o, ptr %i.h, align 8, !tbaa !304
   %i.p = icmp slt <2 x i32> %i.k, zeroinitializer
   %i.q = sub nsw <2 x i32> zeroinitializer, %i.k
-  %i.r = zext <2 x i32> %i.q to <2 x i64>
+  %i.r = zext nneg <2 x i32> %i.q to <2 x i64>
   %i.s = mul nsw <2 x i64> %i.r, splat (i64 -65536)
-  %i.t = zext <2 x i32> %i.k to <2 x i64>
+  %i.t = zext nneg <2 x i32> %i.k to <2 x i64>
   %i.u = shl nuw nsw <2 x i64> %i.t, splat (i64 16)
   %i.v = select <2 x i1> %i.p, <2 x i64> %i.s, <2 x i64> %i.u
   %i.w = sitofp <2 x i64> %i.v to <2 x float>

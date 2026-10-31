@@ -205,7 +205,7 @@ bb.a:
   %i.by = fadd reassoc nsz arcp contract afn float %i.bu, %i.bx
   %i.bz = insertelement <2 x float> poison, float %i.bw, i64 0
   %i.ca = insertelement <2 x float> %i.bz, float %i.by, i64 1
-  %i.cb = fpext <2 x float> %i.ca to <2 x double>
+  %i.cb = fpext reassoc nsz arcp contract afn <2 x float> %i.ca to <2 x double>
   store <2 x double> %i.cb, ptr %i.at, align 8, !tbaa !193
   %i.cc = load ptr, ptr %i.au, align 8, !tbaa !97
   call void @cmsDoTransform(ptr noundef %i.cc, ptr noundef nonnull %4, ptr noundef nonnull %i.a, i32 noundef 1) #21
@@ -232,7 +232,7 @@ bb.a:
   %i.co = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.bn, i64 1
   %i.cp = fmul reassoc nsz arcp contract afn <2 x float> %i.cn, %i.co
   %i.cq = fadd reassoc nsz arcp contract afn <2 x float> %i.cp, %i.cm
-  %i.cr = fpext <2 x float> %i.cq to <2 x double>
+  %i.cr = fpext reassoc nsz arcp contract afn <2 x float> %i.cq to <2 x double>
   store <2 x double> %i.cr, ptr %i.at, align 8, !tbaa !193
   %i.cs = load ptr, ptr %i.au, align 8, !tbaa !97
   call void @cmsDoTransform(ptr noundef %i.cs, ptr noundef nonnull %4, ptr noundef nonnull %i.a, i32 noundef 1) #21
@@ -261,7 +261,7 @@ bb.a:
   %i.dg = insertelement <2 x float> poison, float %i.dc, i64 0
   %i.dh = insertelement <2 x float> %i.dg, float %i.de, i64 1
   %i.di = fadd reassoc nsz arcp contract afn <2 x float> %i.dh, %i.df
-  %i.dj = fpext <2 x float> %i.di to <2 x double>
+  %i.dj = fpext reassoc nsz arcp contract afn <2 x float> %i.di to <2 x double>
   store <2 x double> %i.dj, ptr %i.at, align 8, !tbaa !193
   %i.dk = load ptr, ptr %i.au, align 8, !tbaa !97
   call void @cmsDoTransform(ptr noundef %i.dk, ptr noundef nonnull %4, ptr noundef nonnull %i.a, i32 noundef 1) #21

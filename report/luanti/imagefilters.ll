@@ -204,10 +204,10 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load <2 x i32>, ptr %i.i, align 4, !tbaa !16
   %i.k = sub nsw <2 x i32> %i.j, %i.b
-  %i.l = sitofp <2 x i32> %i.k to <2 x float>     ; 3 uses
+  %i.l = sitofp nsz <2 x i32> %i.k to <2 x float> ; 3 uses
   %i.m = extractelement <2 x i32> %i.g, i64 0     ; 2 uses
   %.not160 = icmp eq i32 %i.m, 0
-  %i.n = uitofp <2 x i32> %i.g to <2 x float>     ; 3 uses
+  %i.n = uitofp nsz <2 x i32> %i.g to <2 x float> ; 3 uses
   %i.o = extractelement <2 x float> %i.l, i64 0   ; 2 uses
   %i.p = fadd nsz float %i.o, %i.d                ; 4 uses
   %i.q = extractelement <2 x float> %i.l, i64 1   ; 2 uses

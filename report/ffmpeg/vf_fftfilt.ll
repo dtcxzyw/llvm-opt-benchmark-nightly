@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph.split
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !51 ; 2 uses
   %i.bz = insertelement <2 x i64> poison, i64 %i.bw, i64 0
   %i.ca = insertelement <2 x i64> %i.bz, i64 %i.by, i64 1
-  %i.cb = uitofp <2 x i64> %i.ca to <2 x double>
+  %i.cb = uitofp nsz <2 x i64> %i.ca to <2 x double>
   store <2 x double> %i.cb, ptr %i.ap, align 8, !tbaa !50
   %.not.i = icmp eq i64 %i.bw, 0
   br i1 %.not.i, label %do_eval.exit, label %.lr.ph4.i
@@ -608,7 +608,7 @@ bb.k:                                             ; preds = %bb.j
   %i.gc = load i64, ptr %i.bs, align 8, !tbaa !51 ; 2 uses
   %i.gd = insertelement <2 x i64> poison, i64 %i.gb, i64 0
   %i.ge = insertelement <2 x i64> %i.gd, i64 %i.gc, i64 1
-  %i.gf = uitofp <2 x i64> %i.ge to <2 x double>
+  %i.gf = uitofp nsz <2 x i64> %i.ge to <2 x double>
   store <2 x double> %i.gf, ptr %i.bz, align 8, !tbaa !50
   %.not.i178 = icmp eq i64 %i.gb, 0
   %.not6.i = icmp eq i64 %i.gc, 0
@@ -691,7 +691,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ho = load i64, ptr %i.gz, align 8, !tbaa !51 ; 2 uses
   %i.hp = insertelement <2 x i64> poison, i64 %i.hn, i64 0
   %i.hq = insertelement <2 x i64> %i.hp, i64 %i.ho, i64 1
-  %i.hr = uitofp <2 x i64> %i.hq to <2 x double>
+  %i.hr = uitofp nsz <2 x i64> %i.hq to <2 x double>
   store <2 x double> %i.hr, ptr %i.bz, align 8, !tbaa !50
   %.not.i178.1 = icmp eq i64 %i.hn, 0
   br i1 %.not.i178.1, label %do_eval.exit.1, label %.lr.ph4.i.1
@@ -777,7 +777,7 @@ bb.q:                                             ; preds = %bb.p
   %i.jb = load i64, ptr %i.im, align 8, !tbaa !51 ; 2 uses
   %i.jc = insertelement <2 x i64> poison, i64 %i.ja, i64 0
   %i.jd = insertelement <2 x i64> %i.jc, i64 %i.jb, i64 1
-  %i.je = uitofp <2 x i64> %i.jd to <2 x double>
+  %i.je = uitofp nsz <2 x i64> %i.jd to <2 x double>
   store <2 x double> %i.je, ptr %i.bz, align 8, !tbaa !50
   %.not.i178.2 = icmp eq i64 %i.ja, 0
   br i1 %.not.i178.2, label %do_eval.exit.2, label %.lr.ph4.i.2

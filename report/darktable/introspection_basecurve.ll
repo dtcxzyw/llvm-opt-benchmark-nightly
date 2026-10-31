@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .lr.ph248:                                        ; preds = %bb.m
   %i.of = insertelement <2 x i32> poison, i32 %i.kr, i64 0
   %i.og = insertelement <2 x i32> %i.of, i32 %i.ks, i64 1
-  %i.oh = sitofp <2 x i32> %i.og to <2 x float>
+  %i.oh = sitofp reassoc nsz arcp contract afn <2 x i32> %i.og to <2 x float>
   %wide.trip.count261 = zext nneg i32 %i.g to i64
   br label %bb.n
 
@@ -258,7 +258,7 @@ bb.o:                                             ; preds = %bb.n
 to_log.exit199:                                   ; preds = %to_log.exit, %bb.o
   %i.pk = phi <2 x float> [ %i.pj, %bb.o ], [ %i.ou, %to_log.exit ]
   %i.pl = fmul reassoc nsz arcp contract afn <2 x float> %i.pk, %i.oh
-  %i.pm = fpext <2 x float> %i.pl to <2 x double> ; 2 uses
+  %i.pm = fpext reassoc nsz arcp contract afn <2 x float> %i.pl to <2 x double> ; 2 uses
   %i.pn = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !161
   %i.po = getelementptr inbounds nuw i8, ptr %i.pn, i64 1432
   %i.pp = load double, ptr %i.po, align 8, !tbaa !167
@@ -661,13 +661,13 @@ bb.a:
   store double %i.ab, ptr %i.n, align 8, !tbaa !368
   %i.ac = extractelement <2 x double> %i.aa, i64 1 ; 3 uses
   store double %i.ac, ptr %i.p, align 8, !tbaa !369
-  %i.ad = sitofp <2 x i32> %i.w to <2 x double>   ; 5 uses
+  %i.ad = sitofp reassoc nsz arcp contract afn <2 x i32> %i.w to <2 x double> ; 5 uses
   %i.ae = fcmp reassoc nsz arcp contract afn ogt <2 x double> %i.aa, %i.ad
   %i.af = fcmp reassoc nsz arcp contract afn olt <2 x double> %i.aa, zeroinitializer
   %i.ag = select <2 x i1> %i.af, <2 x double> zeroinitializer, <2 x double> %i.aa
   %i.ah = select <2 x i1> %i.ae, <2 x double> %i.ad, <2 x double> %i.ag
-  %i.ai = sitofp <2 x i32> %i.w to <2 x float>
-  %i.aj = fpext <2 x float> %i.ai to <2 x double>
+  %i.ai = sitofp reassoc nsz arcp contract afn <2 x i32> %i.w to <2 x float>
+  %i.aj = fpext reassoc nsz arcp contract afn <2 x float> %i.ai to <2 x double>
   %i.ak = fdiv reassoc nsz arcp contract afn <2 x double> %i.ah, %i.aj ; 2 uses
   %i.al = extractelement <2 x double> %i.ak, i64 0
   %i.am = fptrunc reassoc nsz arcp contract afn double %i.al to float ; 10 uses

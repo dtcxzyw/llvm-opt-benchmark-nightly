@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.g
   %i.al = extractelement <2 x double> %i.ke, i64 1
   tail call void @cairo_mesh_pattern_line_to(ptr noundef %i.aa, double noundef %i.ak, double noundef %i.al) #18
   %i.am = load <2 x float>, ptr %i.aj, align 64, !tbaa !111
-  %i.an = fpext <2 x float> %i.am to <2 x double> ; 2 uses
+  %i.an = fpext reassoc nsz arcp contract afn <2 x float> %i.am to <2 x double> ; 2 uses
   %i.ao = extractelement <2 x double> %i.an, i64 0
   %i.ap = extractelement <2 x double> %i.an, i64 1
   tail call void @cairo_mesh_pattern_line_to(ptr noundef %i.aa, double noundef %i.ao, double noundef %i.ap) #18
@@ -567,9 +567,9 @@ _ryb2rgb.exit.i:                                  ; preds = %bb.w, %bb.v, %bb.u,
   %cos.i = extractvalue { float, float } %sincos.i, 1
   %i.it = insertelement <2 x float> poison, float %cos.i, i64 0
   %i.iu = insertelement <2 x float> %i.it, float %sin.i, i64 1
-  %i.iv = fpext <2 x float> %i.iu to <2 x double>
+  %i.iv = fpext reassoc nsz arcp contract afn <2 x float> %i.iu to <2 x double>
   %i.iw = fmul reassoc nsz arcp contract afn <2 x double> %i.iv, splat (double 1.000000e-02)
-  %i.ix = fptrunc <2 x double> %i.iw to <2 x float>
+  %i.ix = fptrunc reassoc nsz arcp contract afn <2 x double> %i.iw to <2 x float>
   br label %bb.y
 
 bb.x:                                             ; preds = %bb.h
@@ -600,7 +600,7 @@ bb.y:                                             ; preds = %_ryb2rgb.exit.i, %b
   br i1 %or.cond.i, label %.preheader167.preheader.i, label %bb.z
 
 .preheader167.preheader.i:                        ; preds = %bb.y
-  %i.jm = fpext <2 x float> %i.iy to <2 x double>
+  %i.jm = fpext reassoc nsz arcp contract afn <2 x float> %i.iy to <2 x double>
   br label %.loopexit168.i
 
 bb.z:                                             ; preds = %bb.y
@@ -617,7 +617,7 @@ bb.z:                                             ; preds = %bb.y
   %.sroa.5.1.i = select nsz i1 %i.jn, float %i.ja, float %i.jr
   %i.jt = insertelement <2 x float> poison, float %.sroa.5.1.i, i64 0
   %i.ju = insertelement <2 x float> %i.jt, float %.sroa.14.1.i, i64 1
-  %i.jv = fpext <2 x float> %i.ju to <2 x double> ; 3 uses
+  %i.jv = fpext reassoc nsz arcp contract afn <2 x float> %i.ju to <2 x double> ; 3 uses
   %i.jw = extractelement <2 x double> %i.jv, i64 0
   %i.jx = extractelement <2 x double> %i.jv, i64 1
   tail call void @cairo_mesh_pattern_line_to(ptr noundef %i.aa, double noundef %i.jw, double noundef %i.jx) #18
@@ -1020,7 +1020,7 @@ bb.f:                                             ; preds = %bb.f, %.preheader34
   %indvars.iv.1 = phi i64 [ 0, %.preheader345.1 ], [ %indvars.iv.next.1, %bb.f ] ; 2 uses
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %indvars.iv.1
   %i.cu = load <2 x float>, ptr %i.ct, align 8, !tbaa !111
-  %i.cv = fpext <2 x float> %i.cu to <2 x double>
+  %i.cv = fpext reassoc nsz arcp contract afn <2 x float> %i.cu to <2 x double>
   %i.cw = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.cv ; 2 uses
   %i.cx = extractelement <2 x double> %i.cw, i64 0
   %i.cy = extractelement <2 x double> %i.cw, i64 1
@@ -1037,7 +1037,7 @@ bb.g:                                             ; preds = %bb.g, %.preheader34
   %indvars.iv.2 = phi i64 [ 0, %.preheader345.2 ], [ %indvars.iv.next.2, %bb.g ] ; 2 uses
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %indvars.iv.2
   %i.db = load <2 x float>, ptr %i.da, align 8, !tbaa !111
-  %i.dc = fpext <2 x float> %i.db to <2 x double>
+  %i.dc = fpext reassoc nsz arcp contract afn <2 x float> %i.db to <2 x double>
   %i.dd = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.dc ; 2 uses
   %i.de = extractelement <2 x double> %i.dd, i64 0
   %i.df = extractelement <2 x double> %i.dd, i64 1
@@ -1054,7 +1054,7 @@ bb.h:                                             ; preds = %bb.h, %.preheader34
   %indvars.iv.3 = phi i64 [ 0, %.preheader345.3 ], [ %indvars.iv.next.3, %bb.h ] ; 2 uses
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %indvars.iv.3
   %i.di = load <2 x float>, ptr %i.dh, align 8, !tbaa !111
-  %i.dj = fpext <2 x float> %i.di to <2 x double>
+  %i.dj = fpext reassoc nsz arcp contract afn <2 x float> %i.di to <2 x double>
   %i.dk = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.dj ; 2 uses
   %i.dl = extractelement <2 x double> %i.dk, i64 0
   %i.dm = extractelement <2 x double> %i.dk, i64 1
@@ -1071,7 +1071,7 @@ bb.i:                                             ; preds = %bb.i, %.preheader34
   %indvars.iv.4 = phi i64 [ 0, %.preheader345.4 ], [ %indvars.iv.next.4, %bb.i ] ; 2 uses
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %indvars.iv.4
   %i.dp = load <2 x float>, ptr %i.do, align 8, !tbaa !111
-  %i.dq = fpext <2 x float> %i.dp to <2 x double>
+  %i.dq = fpext reassoc nsz arcp contract afn <2 x float> %i.dp to <2 x double>
   %i.dr = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.dq ; 2 uses
   %i.ds = extractelement <2 x double> %i.dr, i64 0
   %i.dt = extractelement <2 x double> %i.dr, i64 1
@@ -1088,7 +1088,7 @@ bb.j:                                             ; preds = %bb.j, %.preheader34
   %indvars.iv.5 = phi i64 [ 0, %.preheader345.5 ], [ %indvars.iv.next.5, %bb.j ] ; 2 uses
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %indvars.iv.5
   %i.dw = load <2 x float>, ptr %i.dv, align 8, !tbaa !111
-  %i.dx = fpext <2 x float> %i.dw to <2 x double>
+  %i.dx = fpext reassoc nsz arcp contract afn <2 x float> %i.dw to <2 x double>
   %i.dy = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.dx ; 2 uses
   %i.dz = extractelement <2 x double> %i.dy, i64 0
   %i.ea = extractelement <2 x double> %i.dy, i64 1
@@ -1248,7 +1248,7 @@ bb.l:                                             ; preds = %._crit_edge, %bb.l
   %indvars.iv = phi i64 [ 0, %._crit_edge ], [ %indvars.iv.next, %bb.l ] ; 2 uses
   %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %indvars.iv
   %i.go = load <2 x float>, ptr %i.gn, align 8, !tbaa !111
-  %i.gp = fpext <2 x float> %i.go to <2 x double>
+  %i.gp = fpext reassoc nsz arcp contract afn <2 x float> %i.go to <2 x double>
   %i.gq = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.gp ; 2 uses
   %i.gr = extractelement <2 x double> %i.gq, i64 0
   %i.gs = extractelement <2 x double> %i.gq, i64 1
@@ -1651,7 +1651,7 @@ bb.ap:                                            ; preds = %bb.ao
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef %.sroa.0328.0.copyload, double noundef %.sroa.4329.0.copyload, double noundef %.sroa.5330.0.copyload, double noundef %.sroa.6331.0.copyload) #18
   %i.oe = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.of = load <2 x float>, ptr %i.oe, align 16, !tbaa !111
-  %i.og = fpext <2 x float> %i.of to <2 x double> ; 2 uses
+  %i.og = fpext reassoc nsz arcp contract afn <2 x float> %i.of to <2 x double> ; 2 uses
   %i.oh = extractelement <2 x double> %i.og, i64 0
   %i.oi = fmul reassoc nsz arcp contract afn double %i.t, %i.oh
   %i.oj = extractelement <2 x double> %i.og, i64 1
@@ -1696,7 +1696,7 @@ bb.as:                                            ; preds = %bb.ar
   %.sroa.6335.0.copyload = load double, ptr %.sroa.6335.0..sroa_idx, align 8
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef %.sroa.0332.0.copyload, double noundef %.sroa.4333.0.copyload, double noundef %.sroa.5334.0.copyload, double noundef %.sroa.6335.0.copyload) #18
   %i.ov = load <2 x float>, ptr %i.oq, align 4, !tbaa !111
-  %i.ow = fpext <2 x float> %i.ov to <2 x double>
+  %i.ow = fpext reassoc nsz arcp contract afn <2 x float> %i.ov to <2 x double>
   %i.ox = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.ow ; 2 uses
   %i.oy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !137
   %i.oz = getelementptr inbounds nuw i8, ptr %i.oy, i64 1432
@@ -1719,7 +1719,7 @@ bb.at:                                            ; preds = %bb.ar
   %.sroa.6339.0.copyload = load double, ptr %.sroa.6339.0..sroa_idx, align 8
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef %.sroa.0336.0.copyload, double noundef %.sroa.4337.0.copyload, double noundef %.sroa.5338.0.copyload, double noundef %.sroa.6339.0.copyload) #18
   %i.pf = load <2 x float>, ptr %i.oq, align 4, !tbaa !111
-  %i.pg = fpext <2 x float> %i.pf to <2 x double>
+  %i.pg = fpext reassoc nsz arcp contract afn <2 x float> %i.pf to <2 x double>
   %i.ph = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, %i.pg ; 2 uses
   %i.pi = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !137
   %i.pj = getelementptr inbounds nuw i8, ptr %i.pi, i64 1432
@@ -2122,9 +2122,9 @@ dt_RGB_2_HCV.exit:                                ; preds = %_rgb2ryb.exit, %_dt
   %i.jc = insertelement <2 x float> poison, float %.017.i, i64 0
   %i.jd = shufflevector <2 x float> %i.jc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.je = fmul reassoc nsz arcp contract afn <2 x float> %i.jb, %i.jd
-  %i.jf = fpext <2 x float> %i.je to <2 x double>
+  %i.jf = fpext reassoc nsz arcp contract afn <2 x float> %i.je to <2 x double>
   %i.jg = fmul reassoc nsz arcp contract afn <2 x double> %i.jf, splat (double 1.000000e-02)
-  %i.jh = fptrunc <2 x double> %i.jg to <2 x float>
+  %i.jh = fptrunc reassoc nsz arcp contract afn <2 x double> %i.jg to <2 x float>
   store <2 x float> %i.jh, ptr %i.iz, align 4, !tbaa !111
   br label %bb.w
 

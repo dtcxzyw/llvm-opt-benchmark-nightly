@@ -204,7 +204,7 @@ bb.a:
   %i.o = insertelement <2 x double> %i.n, double %cos51, i64 1
   %i.p = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.m, <2 x double> %i.o, <2 x double> %i.k) ; 2 uses
   %i.q = insertelement <2 x double> %i.p, double %i.e, i64 1
-  %i.r = fptrunc <2 x double> %i.q to <2 x float>
+  %i.r = fptrunc nsz <2 x double> %i.q to <2 x float>
   store <2 x float> %i.r, ptr %0, align 4, !tbaa !10
   %i.s = extractelement <2 x double> %i.p, i64 1
   %i.t = fptrunc nsz double %i.s to float
@@ -225,7 +225,7 @@ bb.a:
   %i.ah = insertelement <2 x double> %i.ag, double %cos51, i64 1
   %i.ai = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.af, <2 x double> %i.ah, <2 x double> %i.ad) ; 2 uses
   %i.aj = insertelement <2 x double> %i.ai, double %i.y, i64 1
-  %i.ak = fptrunc <2 x double> %i.aj to <2 x float>
+  %i.ak = fptrunc nsz <2 x double> %i.aj to <2 x float>
   store <2 x float> %i.ak, ptr %i.x, align 4, !tbaa !10
   %i.al = extractelement <2 x double> %i.ai, i64 1
   %i.am = fptrunc nsz double %i.al to float
@@ -284,16 +284,16 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ab = load <2 x float>, ptr %i.aa, align 4
   %i.ac = insertelement <2 x float> %i.z, float %i.w, i64 1
-  %i.ad = fpext <2 x float> %i.ac to <2 x double>
+  %i.ad = fpext nsz <2 x float> %i.ac to <2 x double>
   %i.ae = insertelement <2 x float> %i.ab, float %i.y, i64 1
-  %i.af = fpext <2 x float> %i.ae to <2 x double>
+  %i.af = fpext nsz <2 x float> %i.ae to <2 x double>
   %i.ag = fneg nsz <2 x double> %i.af
   %i.ah = insertelement <2 x double> poison, double %sin, i64 0
   %i.ai = insertelement <2 x double> %i.ah, double %cos, i64 1 ; 2 uses
   %i.aj = fmul nsz <2 x double> %i.ai, %i.ag
   %i.ak = shufflevector <2 x double> %i.ai, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.al = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ak, <2 x double> %i.ad, <2 x double> %i.aj)
-  %i.am = fptrunc <2 x double> %i.al to <2 x float> ; 2 uses
+  %i.am = fptrunc nsz <2 x double> %i.al to <2 x float> ; 2 uses
   %i.an = extractelement <2 x float> %i.am, i64 0
   %i.ao = extractelement <2 x float> %i.am, i64 1
   %i.ap = tail call nsz float @llvm.atan2.f32(float %i.ao, float %i.an)

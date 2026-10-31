@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.fl = fsub reassoc nsz arcp contract afn <2 x float> %i.fj, %i.fk
   %i.fm = fadd reassoc nsz arcp contract afn <2 x float> %i.fj, %i.fk
   %i.fn = shufflevector <2 x float> %i.fl, <2 x float> %i.fm, <2 x i32> <i32 0, i32 3>
-  %i.fo = fpext <2 x float> %i.fn to <2 x double> ; 2 uses
+  %i.fo = fpext reassoc nsz arcp contract afn <2 x float> %i.fn to <2 x double> ; 2 uses
   %i.fp = extractelement <2 x double> %i.fo, i64 0
   %i.fq = extractelement <2 x double> %i.fo, i64 1
   tail call void @cairo_line_to(ptr noundef %1, double noundef %i.fp, double noundef %i.fq) #19
@@ -308,7 +308,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 164
   %i.k = load <2 x i32>, ptr %i.j, align 4, !tbaa !122
-  %i.l = sitofp <2 x i32> %i.k to <2 x float>     ; 8 uses
+  %i.l = sitofp reassoc nsz arcp contract afn <2 x i32> %i.k to <2 x float> ; 8 uses
   %i.m = extractelement <2 x float> %i.l, i64 0   ; 5 uses
   %i.n = fcmp reassoc nsz arcp contract afn oeq float %sin, 0.000000e+00
   br i1 %i.n, label %bb.c, label %bb.f
@@ -421,7 +421,7 @@ bb.j:                                             ; preds = %bb.f
   %i.cb = fsub reassoc nsz arcp contract afn float %i.bz, %i.ca
   %i.cc = fpext reassoc nsz arcp contract afn float %i.cb to double
   %i.cd = fmul reassoc nsz arcp contract afn double %i.cc, 1.000000e-01
-  %i.ce = fpext <2 x float> %i.bx to <2 x double> ; 2 uses
+  %i.ce = fpext reassoc nsz arcp contract afn <2 x float> %i.bx to <2 x double> ; 2 uses
   %i.cf = extractelement <2 x double> %i.ce, i64 0
   %i.cg = fsub reassoc nsz arcp contract afn double %i.cf, %i.cd
   %i.ch = fptrunc reassoc nsz arcp contract afn double %i.cg to float ; 7 uses

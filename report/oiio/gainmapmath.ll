@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
 define { <2 x float>, float } @_ZN8ultrahdr9pqInvOetfENS_5ColorE(<2 x float> %0, float %1) local_unnamed_addr #7 {
 bb.a:
-  %i.a = fpext <2 x float> %0 to <2 x double>     ; 2 uses
+  %i.a = fpext contract <2 x float> %0 to <2 x double> ; 2 uses
   %i.b = extractelement <2 x double> %i.a, i64 0
   %i.c = tail call contract double @pow(double noundef %i.b, double noundef f0x3F89F9B580000000) #35, !tbaa !9
   %i.d = fptrunc contract double %i.c to float    ; 2 uses
@@ -229,7 +229,7 @@ bb.a:
   %i.u = tail call contract double @pow(double noundef %i.t, double noundef f0x40191C0D60000000) #35, !tbaa !9
   %i.v = insertelement <2 x double> poison, double %i.k, i64 0
   %i.w = insertelement <2 x double> %i.v, double %i.u, i64 1
-  %i.x = fptrunc <2 x double> %i.w to <2 x float>
+  %i.x = fptrunc contract <2 x double> %i.w to <2 x float>
   %i.y = fpext contract float %1 to double
   %i.z = tail call contract double @pow(double noundef %i.y, double noundef f0x3F89F9B580000000) #35, !tbaa !9
   %i.aa = fptrunc contract double %i.z to float   ; 2 uses
@@ -632,17 +632,17 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.be = shufflevector <2 x float> %.sroa.026.1, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.bf = insertelement <2 x float> %i.be, float %.sroa.9.0, i64 1 ; 2 uses
   %i.bg = fsub contract <2 x float> splat (float 1.000000e+00), %i.bf
-  %i.bh = fpext <2 x float> %i.bg to <2 x double>
+  %i.bh = fpext contract <2 x float> %i.bg to <2 x double>
   %i.bi = insertelement <2 x double> poison, double %i.ap, i64 0
   %i.bj = insertelement <2 x double> %i.bi, double %i.ax, i64 1
   %i.bk = fmul contract <2 x double> %i.bj, %i.bh
-  %i.bl = fpext <2 x float> %i.bf to <2 x double>
+  %i.bl = fpext contract <2 x float> %i.bf to <2 x double>
   %i.bm = insertelement <2 x double> poison, double %i.at, i64 0
   %i.bn = insertelement <2 x double> %i.bm, double %i.bb, i64 1
   %i.bo = fmul contract <2 x double> %i.bn, %i.bl
   %i.bp = fadd contract <2 x double> %i.bk, %i.bo
-  %i.bq = fptrunc <2 x double> %i.bp to <2 x float>
-  %i.br = fpext <2 x float> %i.bq to <2 x double> ; 2 uses
+  %i.bq = fptrunc contract <2 x double> %i.bp to <2 x float>
+  %i.br = fpext contract <2 x float> %i.bq to <2 x double> ; 2 uses
   %i.bs = extractelement <2 x double> %i.br, i64 0
   %i.bt = tail call contract double @exp2(double noundef %i.bs) #35, !tbaa !9
   %i.bu = extractelement <2 x double> %i.br, i64 1
@@ -652,7 +652,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.by = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.bz = insertelement <2 x double> poison, double %i.bd, i64 0
   %i.ca = insertelement <2 x double> %i.bz, double %i.bt, i64 1
-  %i.cb = fptrunc <2 x double> %i.ca to <2 x float>
+  %i.cb = fptrunc contract <2 x double> %i.ca to <2 x float>
   %i.cc = load <2 x float>, ptr %i.bx, align 4, !tbaa !14
   %i.cd = fadd contract <2 x float> %0, %i.cc
   %i.ce = fmul contract <2 x float> %i.cd, %i.cb
@@ -782,7 +782,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cb = getelementptr inbounds nuw i8, ptr %4, i64 48
   %i.cc = insertelement <2 x double> poison, double %i.bs, i64 0
   %i.cd = insertelement <2 x double> %i.cc, double %i.bv, i64 1
-  %i.ce = fptrunc <2 x double> %i.cd to <2 x float>
+  %i.ce = fptrunc contract <2 x double> %i.cd to <2 x float>
   %i.cf = load <2 x float>, ptr %i.ca, align 4, !tbaa !14
   %i.cg = fadd contract <2 x float> %0, %i.cf
   %i.ch = fmul contract <2 x float> %i.cg, %i.ce
@@ -945,7 +945,7 @@ bb.a:
   %i.aj = insertelement <2 x float> poison, float %i.ah, i64 0
   %i.ak = insertelement <2 x float> %i.aj, float %i.ai, i64 1
   %i.al = fsub contract <2 x float> %i.n, %i.ak
-  %i.am = fpext <2 x float> %i.al to <2 x double> ; 2 uses
+  %i.am = fpext contract <2 x float> %i.al to <2 x double> ; 2 uses
   %i.an = extractelement <2 x double> %i.am, i64 0 ; 2 uses
   %i.ao = tail call contract double @pow(double noundef %i.an, double noundef 2.000000e+00) #35, !tbaa !9
   %i.ap = extractelement <2 x double> %i.am, i64 1 ; 2 uses
@@ -1201,7 +1201,7 @@ bb.a:
   %i.ci = insertelement <2 x float> poison, float %i.cg, i64 0
   %i.cj = insertelement <2 x float> %i.ci, float %i.ch, i64 1
   %i.ck = fsub contract <2 x float> %i.o, %i.cj
-  %i.cl = fpext <2 x float> %i.ck to <2 x double> ; 2 uses
+  %i.cl = fpext contract <2 x float> %i.ck to <2 x double> ; 2 uses
   %i.cm = extractelement <2 x double> %i.cl, i64 0 ; 2 uses
   %i.cn = tail call contract double @pow(double noundef %i.cm, double noundef 2.000000e+00) #35, !tbaa !9
   %i.co = extractelement <2 x double> %i.cl, i64 1 ; 2 uses

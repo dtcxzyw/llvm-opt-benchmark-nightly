@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.eh = bitcast <2 x i32> %i.eg to <4 x i16>
   %i.ei = extractelement <4 x i16> %i.eh, i64 0
   store i16 %i.ei, ptr %gep, align 2, !tbaa !90
-  %i.ej = sitofp <2 x i32> %i.eg to <2 x double>  ; 2 uses
+  %i.ej = sitofp nsz <2 x i32> %i.eg to <2 x double> ; 2 uses
   %i.ek = bitcast <2 x i32> %i.eg to <4 x i16>
   %i.el = extractelement <4 x i16> %i.ek, i64 2
   store i16 %i.el, ptr %gep339.1, align 2, !tbaa !90
@@ -213,11 +213,11 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %gep339.3 = getelementptr inbounds nuw i8, ptr %gep, i64 38400
   %i.en = load <2 x i32>, ptr %i.ck, align 8, !tbaa !79 ; 6 uses
   %i.eo = shufflevector <2 x i32> %i.eg, <2 x i32> %i.en, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.ep = sitofp <4 x i32> %i.eo to <4 x float>
+  %i.ep = sitofp nsz <4 x i32> %i.eo to <4 x float>
   %i.eq = bitcast <2 x i32> %i.en to <4 x i16>
   %i.er = extractelement <4 x i16> %i.eq, i64 0
   store i16 %i.er, ptr %gep339.2, align 2, !tbaa !90
-  %i.es = sitofp <2 x i32> %i.en to <2 x double>  ; 2 uses
+  %i.es = sitofp nsz <2 x i32> %i.en to <2 x double> ; 2 uses
   %i.et = bitcast <2 x i32> %i.en to <4 x i16>
   %i.eu = extractelement <4 x i16> %i.et, i64 2
   store i16 %i.eu, ptr %gep339.3, align 2, !tbaa !90
@@ -452,7 +452,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.kw = uitofp <2 x i16> %i.kv to <2 x float>
   %i.kx = fsub nsz <2 x float> %i.kw, %i.ji       ; 2 uses
   %i.ky = fmul nsz <2 x float> %i.kx, %i.kx
-  %i.kz = fpext <2 x float> %i.ky to <2 x double>
+  %i.kz = fpext nsz <2 x float> %i.ky to <2 x double>
   %i.la = fadd nsz <2 x double> %i.kq, %i.kz      ; 4 uses
   %gep348.2 = getelementptr inbounds nuw i8, ptr %gep353, i64 25600
   %i.lb = load i16, ptr %gep348.2, align 2, !tbaa !90
@@ -463,7 +463,7 @@ bb.l:                                             ; preds = %.lr.ph, %bb.l
   %i.lf = uitofp <2 x i16> %i.le to <2 x float>
   %i.lg = fsub nsz <2 x float> %i.lf, %i.jp       ; 2 uses
   %i.lh = fmul nsz <2 x float> %i.lg, %i.lg
-  %i.li = fpext <2 x float> %i.lh to <2 x double>
+  %i.li = fpext nsz <2 x float> %i.lh to <2 x double>
   %i.lj = fadd nsz <2 x double> %i.kr, %i.li      ; 3 uses
   %indvars.iv.next373 = add nuw nsw i64 %indvars.iv372, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next373, %wide.trip.count
@@ -866,7 +866,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.ba, ptr %i.bb, align 4, !tbaa !105
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.bd = load <2 x i32>, ptr %i.bc, align 8, !tbaa !79
-  %i.be = sitofp <2 x i32> %i.bd to <2 x double>  ; 2 uses
+  %i.be = sitofp nsz <2 x i32> %i.bd to <2 x double> ; 2 uses
   %i.bf = extractelement <2 x double> %i.be, i64 0
   %i.bg = extractelement <2 x double> %i.be, i64 1
   %i.bh = call nsz double @hypot(double noundef %i.bf, double noundef %i.bg) #16
@@ -1269,7 +1269,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %.72.val, i64 8
   %i.v = getelementptr inbounds nuw i8, ptr %.72.val, i64 60
   %i.w = load <2 x i32>, ptr %i.m, align 8, !tbaa !79 ; 4 uses
-  %i.x = sitofp <2 x i32> %i.w to <2 x double>    ; 2 uses
+  %i.x = sitofp nsz <2 x i32> %i.w to <2 x double> ; 2 uses
   %i.y = extractelement <2 x double> %i.x, i64 0
   %i.z = extractelement <2 x double> %i.x, i64 1
   %i.aa = call nsz double @hypot(double noundef %i.y, double noundef %i.z) #16
@@ -1279,13 +1279,13 @@ bb.a:
   %i.ae = fptosi float %i.ad to i32
   %i.af = load <2 x float>, ptr %i.u, align 8, !tbaa !92
   %i.ag = add nsw <2 x i32> %i.w, splat (i32 -1)
-  %i.ah = sitofp <2 x i32> %i.ag to <2 x float>
+  %i.ah = sitofp nsz <2 x i32> %i.ag to <2 x float>
   %i.ai = fmul nsz <2 x float> %i.af, %i.ah
   %i.aj = fptosi <2 x float> %i.ai to <2 x i32>
   %i.ak = sitofp nsz i32 %i.ae to double
   %i.al = fmul nnan nsz double %i.ak, 5.000000e-01 ; 2 uses
   %i.am = fneg nsz double %i.al
-  %i.an = sitofp <2 x i32> %i.aj to <2 x double>
+  %i.an = sitofp nsz <2 x i32> %i.aj to <2 x double>
   %i.ao = shufflevector <2 x double> %i.an, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ap = insertelement <4 x double> poison, double %i.am, i64 0
   %i.aq = insertelement <4 x double> %i.ap, double %i.al, i64 2
@@ -1300,13 +1300,13 @@ bb.a:
   %i.ay = getelementptr inbounds nuw i8, ptr %.72.val, i64 76
   %i.az = load <2 x float>, ptr %i.k, align 8, !tbaa !92
   %i.ba = shufflevector <2 x float> %i.az, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.bb = sitofp <2 x i32> %i.w to <2 x float>
+  %i.bb = sitofp nsz <2 x i32> %i.w to <2 x float>
   %i.bc = fmul nsz <2 x float> %i.ba, %i.bb
   %i.bd = fptosi <2 x float> %i.bc to <2 x i32>   ; 2 uses
   %i.be = shufflevector <2 x i32> %i.bd, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.be, ptr %i.l, align 4, !tbaa !79
   %i.bf = sub nsw <2 x i32> %i.w, %i.bd
-  %i.bg = sitofp <2 x i32> %i.bf to <2 x float>
+  %i.bg = sitofp nsz <2 x i32> %i.bf to <2 x float>
   %i.bh = load <2 x float>, ptr %i.ax, align 8, !tbaa !92
   %i.bi = fmul nsz <2 x float> %i.bh, %i.bg
   %i.bj = fptosi <2 x float> %i.bi to <2 x i32>

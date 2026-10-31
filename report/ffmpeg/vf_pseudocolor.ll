@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.ay, ptr %i.av, align 8, !tbaa !40
   %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 80 ; 2 uses
   %i.bb = load <2 x i32>, ptr %i.w, align 8, !tbaa !40
-  %i.bc = sitofp <2 x i32> %i.bb to <2 x double>
+  %i.bc = sitofp nsz <2 x i32> %i.bb to <2 x double>
   store <2 x double> %i.bc, ptr %i.ba, align 8, !tbaa !70
   %i.bd = add nsw i32 %i.m, -8                    ; 3 uses
   %i.be = shl i32 16, %i.bd
@@ -386,7 +386,7 @@ bb.m:                                             ; preds = %.lr.ph325
   %i.es = load <2 x float>, ptr %.sroa.4.0..sroa_idx, align 4 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.er, i64 12
   %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !48
-  %i.et = fpext <2 x float> %i.es to <2 x double> ; 2 uses
+  %i.et = fpext nsz <2 x float> %i.es to <2 x double> ; 2 uses
   %i.eu = fpext nsz float %.sroa.0.0.copyload to double ; 2 uses
   %i.ev = fpext nsz float %.sroa.6.0.copyload to double
   %i.ew = extractelement <2 x float> %i.es, i64 0
@@ -430,7 +430,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.m
   %.0279 = phi nsz double [ %i.ff, %bb.n ], [ %i.fw, %bb.o ], [ %i.eu, %bb.m ]
   %i.fx = phi <2 x double> [ %i.fe, %bb.n ], [ %i.fs, %bb.o ], [ %i.et, %bb.m ]
   %i.fy = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %indvars.iv339
-  %i.fz = fptrunc <2 x double> %i.fx to <2 x float> ; 2 uses
+  %i.fz = fptrunc nsz <2 x double> %i.fx to <2 x float> ; 2 uses
   %i.ga = extractelement <2 x float> %i.fz, i64 0
   store float %i.ga, ptr %i.fy, align 4, !tbaa !47
   %i.gb = getelementptr inbounds [4 x i8], ptr %i.di, i64 %indvars.iv339
@@ -610,7 +610,7 @@ bb.u:                                             ; preds = %.thread, %bb.t, %bb
   %i.kp = fptrunc nsz double %.1271 to float
   %i.kq = getelementptr inbounds [4 x i8], ptr %i.di, i64 %indvars.iv339
   store float %i.kp, ptr %i.kq, align 4, !tbaa !47
-  %i.kr = fptrunc <2 x double> %i.kn to <2 x float> ; 2 uses
+  %i.kr = fptrunc nsz <2 x double> %i.kn to <2 x float> ; 2 uses
   %i.ks = extractelement <2 x float> %i.kr, i64 1
   store float %i.ks, ptr %i.ko, align 4, !tbaa !47
   %i.kt = getelementptr inbounds [4 x i8], ptr %i.dj, i64 %indvars.iv339

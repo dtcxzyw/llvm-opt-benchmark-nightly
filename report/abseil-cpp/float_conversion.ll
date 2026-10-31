@@ -205,7 +205,7 @@ _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_115BinaryToDecimal13Adva
   %i.fc = shufflevector <4 x i8> %i.eu, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.fd = shufflevector <8 x i8> %i.fb, <8 x i8> %i.fc, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
   %i.fe = shufflevector <2 x i16> %i.ez, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.ff = trunc <8 x i16> %i.fe to <8 x i8>
+  %i.ff = trunc nuw nsw <8 x i16> %i.fe to <8 x i8>
   %i.fg = shufflevector <8 x i8> %i.fd, <8 x i8> %i.ff, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
   %i.fh = or disjoint <8 x i8> %i.fg, splat (i8 48)
   store <8 x i8> %i.fh, ptr %i.da, align 8, !tbaa !25
@@ -290,7 +290,7 @@ _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_115BinaryToDecimal13Adva
   %i.he = shufflevector <4 x i8> %i.gw, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.hf = shufflevector <8 x i8> %i.hd, <8 x i8> %i.he, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
   %i.hg = shufflevector <2 x i16> %i.hb, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.hh = trunc <8 x i16> %i.hg to <8 x i8>
+  %i.hh = trunc nuw nsw <8 x i16> %i.hg to <8 x i8>
   %i.hi = shufflevector <8 x i8> %i.hf, <8 x i8> %i.hh, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
   %i.hj = or disjoint <8 x i8> %i.hi, splat (i8 48)
   store <8 x i8> %i.hj, ptr %i.da, align 8, !tbaa !25
@@ -693,7 +693,7 @@ _ZN4absl12lts_2026052619str_format_internal12_GLOBAL__N_115BinaryToDecimal13Adva
   %i.ah = shufflevector <4 x i8> %i.z, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ai = shufflevector <8 x i8> %i.ag, <8 x i8> %i.ah, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
   %i.aj = shufflevector <2 x i16> %i.ae, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.ak = trunc <8 x i16> %i.aj to <8 x i8>
+  %i.ak = trunc nuw nsw <8 x i16> %i.aj to <8 x i8>
   %i.al = shufflevector <8 x i8> %i.ai, <8 x i8> %i.ak, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
   %i.am = or disjoint <8 x i8> %i.al, splat (i8 48)
   store <8 x i8> %i.am, ptr %i.l, align 8, !tbaa !25
@@ -760,7 +760,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ca = shufflevector <4 x i8> %i.bs, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.cb = shufflevector <8 x i8> %i.bz, <8 x i8> %i.ca, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
   %i.cc = shufflevector <2 x i16> %i.bx, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.cd = trunc <8 x i16> %i.cc to <8 x i8>
+  %i.cd = trunc nuw nsw <8 x i16> %i.cc to <8 x i8>
   %i.ce = shufflevector <8 x i8> %i.cb, <8 x i8> %i.cd, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
   %i.cf = or disjoint <8 x i8> %i.ce, splat (i8 48)
   store <8 x i8> %i.cf, ptr %i.be, align 8, !tbaa !25
@@ -836,7 +836,7 @@ bb.f:                                             ; preds = %bb.e
   %i.du = shufflevector <4 x i8> %i.dm, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dv = shufflevector <8 x i8> %i.dt, <8 x i8> %i.du, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11>
   %i.dw = shufflevector <2 x i16> %i.dr, <2 x i16> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.dx = trunc <8 x i16> %i.dw to <8 x i8>
+  %i.dx = trunc nuw nsw <8 x i16> %i.dw to <8 x i8>
   %i.dy = shufflevector <8 x i8> %i.dv, <8 x i8> %i.dx, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 4, i32 5, i32 6, i32 7>
   %i.dz = or disjoint <8 x i8> %i.dy, splat (i8 48)
   store <8 x i8> %i.dz, ptr %i.cn, align 8, !tbaa !25

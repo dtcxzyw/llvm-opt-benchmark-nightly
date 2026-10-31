@@ -204,7 +204,7 @@ bb.a:
   %i.h = insertelement <2 x double> poison, double %cos41.i, i64 0
   %i.i = insertelement <2 x double> %i.h, double %sin40.i, i64 1 ; 2 uses
   %i.j = fmul nsz <2 x double> %i.g, %i.i
-  %i.k = fptrunc <2 x double> %i.j to <2 x float> ; 7 uses
+  %i.k = fptrunc nsz <2 x double> %i.j to <2 x float> ; 7 uses
   %i.l = fptrunc nsz double %sin37.i to float     ; 3 uses
   %i.m = fneg nsz float %i.l                      ; 2 uses
   %i.n = fmul nsz double %sin.i, %sin37.i
@@ -217,7 +217,7 @@ bb.a:
   %i.u = insertelement <2 x double> poison, double %i.n, i64 0
   %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer
   %i.w = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.v, <2 x double> %i.i, <2 x double> %i.t)
-  %i.x = fptrunc <2 x double> %i.w to <2 x float> ; 6 uses
+  %i.x = fptrunc nsz <2 x double> %i.w to <2 x float> ; 6 uses
   %i.y = fmul nsz double %sin.i, %cos38.i
   %i.z = fptrunc nsz double %i.y to float         ; 4 uses
   %i.aa = fmul nsz double %cos.i, %cos38.i
@@ -241,7 +241,7 @@ bb.a:
   %i.as = insertelement <2 x double> poison, double %cos41.i, i64 0
   %i.at = insertelement <2 x double> %i.as, double %sin40.i, i64 1
   %i.au = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ar, <2 x double> %i.at, <2 x double> %i.ap)
-  %i.av = fptrunc <2 x double> %i.au to <2 x float> ; 8 uses
+  %i.av = fptrunc nsz <2 x double> %i.au to <2 x float> ; 8 uses
   %i.aw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.av, <2 x float> zeroinitializer, <2 x float> %i.ak) ; 4 uses
   %i.ax = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.av, <2 x float> zeroinitializer, <2 x float> %i.ah) ; 4 uses
   %foldExtExtBinop = fmul nsz <2 x float> %i.aw, %i.aw
@@ -299,15 +299,15 @@ bb.b:                                             ; preds = %bb.a
   %i.ct = tail call nsz <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.cs) ; 2 uses
   %i.cu = tail call nsz <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ct)
   %i.cv = fcmp nsz ole <2 x float> %i.cu, splat (float f0x358637BD)
-  %i.cw = fpext <2 x float> %i.ct to <2 x double>
+  %i.cw = fpext nsz <2 x float> %i.ct to <2 x double>
   %i.cx = fdiv nsz <2 x double> splat (double 1.000000e+00), %i.cw
   %i.cy = select <2 x i1> %i.cv, <2 x double> splat (double f0x37F0000010000010), <2 x double> %i.cx
-  %i.cz = fpext <2 x float> %i.cb to <2 x double>
+  %i.cz = fpext nsz <2 x float> %i.cb to <2 x double>
   %i.da = fmul nsz <2 x double> %i.cy, %i.cz      ; 2 uses
   %i.db = extractelement <2 x double> %i.da, i64 0
   %i.dc = extractelement <2 x double> %i.da, i64 1
   %i.dd = tail call nsz double @llvm.atan2.f64(double %i.db, double %i.dc)
-  %i.de = fpext <2 x float> %i.aw to <2 x double>
+  %i.de = fpext nsz <2 x float> %i.aw to <2 x double>
   %i.df = insertelement <2 x double> poison, double %i.bh, i64 0
   %i.dg = shufflevector <2 x double> %i.df, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dh = fmul nsz <2 x double> %i.dg, %i.de      ; 2 uses
@@ -710,7 +710,7 @@ bb.a:
   %i.ab = insertelement <2 x double> poison, double %cos41.i.i.i.i, i64 0
   %i.ac = insertelement <2 x double> %i.ab, double %sin40.i.i.i.i, i64 1
   %i.ad = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aa, <2 x double> %i.ac, <2 x double> %i.y)
-  %i.ae = fptrunc <2 x double> %i.ad to <2 x float>
+  %i.ae = fptrunc nsz <2 x double> %i.ad to <2 x float>
   store <2 x float> %i.ae, ptr %i.t, align 4, !tbaa !19
   %i.af = fmul nsz double %sin.i.i.i.i, %cos38.i.i.i.i
   %i.ag = fptrunc nsz double %i.af to float
@@ -728,7 +728,7 @@ bb.a:
   %i.ar = insertelement <2 x double> poison, double %cos41.i.i.i.i, i64 0
   %i.as = insertelement <2 x double> %i.ar, double %sin40.i.i.i.i, i64 1
   %i.at = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aq, <2 x double> %i.as, <2 x double> %i.ao)
-  %i.au = fptrunc <2 x double> %i.at to <2 x float>
+  %i.au = fptrunc nsz <2 x double> %i.at to <2 x float>
   store <2 x float> %i.au, ptr %i.ai, align 4, !tbaa !19
   %i.av = fmul nsz double %cos.i.i.i.i, %cos38.i.i.i.i
   %i.aw = fptrunc nsz double %i.av to float

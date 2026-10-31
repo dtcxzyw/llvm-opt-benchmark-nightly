@@ -82,7 +82,7 @@ _bm_new.exit:                                     ; preds = %bb.a, %bb.b, %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 1396 ; 4 uses
   %i.aa = insertelement <2 x i32> poison, i32 %1, i64 0
   %i.ab = insertelement <2 x i32> %i.aa, i32 %2, i64 1
-  %i.ac = sitofp <2 x i32> %i.ab to <2 x float>   ; 5 uses
+  %i.ac = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ab to <2 x float> ; 5 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 1380 ; 6 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 1404 ; 6 uses
   %.not166 = icmp eq ptr %7, null
@@ -182,7 +182,7 @@ bb.i:                                             ; preds = %.lr.ph206, %bb.aa
 
 .split152:                                        ; preds = %bb.i
   %i.bz = shufflevector <2 x double> %i.bt, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.ca = fptrunc <4 x double> %i.bz to <4 x float> ; 2 uses
+  %i.ca = fptrunc reassoc nsz arcp contract afn <4 x double> %i.bz to <4 x float> ; 2 uses
   %i.cb = tail call noalias dereferenceable_or_null(36) ptr @calloc(i64 noundef 1, i64 noundef 36) #5 ; 3 uses
   store <4 x float> %i.ca, ptr %i.cb, align 4, !tbaa !29
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
@@ -192,15 +192,15 @@ bb.i:                                             ; preds = %.lr.ph206, %bb.aa
 
 _add_point.exit:                                  ; preds = %bb.i
   %i.ce = load <2 x i32>, ptr %i.z, align 4, !tbaa !38
-  %i.cf = sitofp <2 x i32> %i.ce to <2 x float>   ; 2 uses
+  %i.cf = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ce to <2 x float> ; 2 uses
   %i.cg = fmul reassoc nsz arcp contract afn <2 x float> %i.cf, %i.af
   %i.ch = tail call noalias dereferenceable_or_null(36) ptr @calloc(i64 noundef 1, i64 noundef 36) #5 ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %i.cj = fptrunc <2 x double> %i.bt to <2 x float>
+  %i.cj = fptrunc reassoc nsz arcp contract afn <2 x double> %i.bt to <2 x float>
   %i.ck = load <2 x i32>, ptr %i.ad, align 4, !tbaa !38
-  %i.cl = sitofp <2 x i32> %i.ck to <2 x float>
+  %i.cl = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ck to <2 x float>
   %i.cm = load <2 x i32>, ptr %i.ae, align 4, !tbaa !38
-  %i.cn = sitofp <2 x i32> %i.cm to <2 x float>
+  %i.cn = sitofp reassoc nsz arcp contract afn <2 x i32> %i.cm to <2 x float>
   %i.co = fmul reassoc nsz arcp contract afn <2 x float> %i.cf, %i.cj
   %i.cp = fmul reassoc nsz arcp contract afn <2 x float> %i.co, %i.ag
   %i.cq = fadd reassoc nsz arcp contract afn <2 x float> %i.cp, %i.cn
@@ -249,7 +249,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.q
 bb.l:                                             ; preds = %bb.k
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 32
   %i.dk = load <2 x double>, ptr %i.dj, align 8, !tbaa !37
-  %i.dl = fptrunc <2 x double> %i.dk to <2 x float> ; 3 uses
+  %i.dl = fptrunc reassoc nsz arcp contract afn <2 x double> %i.dk to <2 x float> ; 3 uses
   %i.dm = tail call noalias dereferenceable_or_null(36) ptr @calloc(i64 noundef 1, i64 noundef 36) #5 ; 6 uses
   %i.dn = shufflevector <2 x float> %i.dl, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   store <4 x float> %i.dn, ptr %i.dm, align 4, !tbaa !29
@@ -259,11 +259,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.dp = load <2 x i32>, ptr %i.ad, align 4, !tbaa !38
-  %i.dq = sitofp <2 x i32> %i.dp to <2 x float>
+  %i.dq = sitofp reassoc nsz arcp contract afn <2 x i32> %i.dp to <2 x float>
   %i.dr = load <2 x i32>, ptr %i.z, align 4, !tbaa !38
-  %i.ds = sitofp <2 x i32> %i.dr to <2 x float>
+  %i.ds = sitofp reassoc nsz arcp contract afn <2 x i32> %i.dr to <2 x float>
   %i.dt = load <2 x i32>, ptr %i.ae, align 4, !tbaa !38
-  %i.du = sitofp <2 x i32> %i.dt to <2 x float>
+  %i.du = sitofp reassoc nsz arcp contract afn <2 x i32> %i.dt to <2 x float>
   %i.dv = fmul reassoc nsz arcp contract afn <2 x float> %i.ds, %i.dl
   %i.dw = fmul reassoc nsz arcp contract afn <2 x float> %i.dv, %i.aj
   %i.dx = fadd reassoc nsz arcp contract afn <2 x float> %i.dw, %i.du
@@ -286,7 +286,7 @@ bb.n:                                             ; preds = %bb.k
   %i.ee = getelementptr inbounds nuw i8, ptr %i.di, i64 32
   %i.ef = load <2 x double>, ptr %i.ee, align 8, !tbaa !37
   %i.eg = load <2 x double>, ptr %i.ed, align 8, !tbaa !37
-  %i.eh = fptrunc <2 x double> %i.eg to <2 x float> ; 3 uses
+  %i.eh = fptrunc reassoc nsz arcp contract afn <2 x double> %i.eg to <2 x float> ; 3 uses
   %i.ei = tail call noalias dereferenceable_or_null(36) ptr @calloc(i64 noundef 1, i64 noundef 36) #5 ; 6 uses
   %i.ej = shufflevector <2 x float> %i.eh, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   store <4 x float> %i.ej, ptr %i.ei, align 4, !tbaa !29
@@ -296,11 +296,11 @@ bb.n:                                             ; preds = %bb.k
 
 bb.o:                                             ; preds = %bb.n
   %i.el = load <2 x i32>, ptr %i.ad, align 4, !tbaa !38
-  %i.em = sitofp <2 x i32> %i.el to <2 x float>
+  %i.em = sitofp reassoc nsz arcp contract afn <2 x i32> %i.el to <2 x float>
   %i.en = load <2 x i32>, ptr %i.z, align 4, !tbaa !38
-  %i.eo = sitofp <2 x i32> %i.en to <2 x float>
+  %i.eo = sitofp reassoc nsz arcp contract afn <2 x i32> %i.en to <2 x float>
   %i.ep = load <2 x i32>, ptr %i.ae, align 4, !tbaa !38
-  %i.eq = sitofp <2 x i32> %i.ep to <2 x float>
+  %i.eq = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ep to <2 x float>
   %i.er = fmul reassoc nsz arcp contract afn <2 x float> %i.eo, %i.eh
   %i.es = fmul reassoc nsz arcp contract afn <2 x float> %i.er, %i.ah
   %i.et = fadd reassoc nsz arcp contract afn <2 x float> %i.es, %i.eq
@@ -317,7 +317,7 @@ _add_point.exit177:                               ; preds = %bb.n, %bb.o
   store <2 x float> zeroinitializer, ptr %i.ex, align 4, !tbaa !29
   %i.ey = tail call ptr @g_list_append(ptr noundef %i.dc, ptr noundef nonnull %i.ei) #6 ; 2 uses
   store ptr %i.ey, ptr %i.bu, align 8, !tbaa !44
-  %i.ez = fptrunc <2 x double> %i.ef to <2 x float> ; 3 uses
+  %i.ez = fptrunc reassoc nsz arcp contract afn <2 x double> %i.ef to <2 x float> ; 3 uses
   %i.fa = tail call noalias dereferenceable_or_null(36) ptr @calloc(i64 noundef 1, i64 noundef 36) #5 ; 6 uses
   %i.fb = shufflevector <2 x float> %i.ez, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   store <4 x float> %i.fb, ptr %i.fa, align 4, !tbaa !29
@@ -327,11 +327,11 @@ _add_point.exit177:                               ; preds = %bb.n, %bb.o
 
 bb.p:                                             ; preds = %_add_point.exit177
   %i.fd = load <2 x i32>, ptr %i.ad, align 4, !tbaa !38
-  %i.fe = sitofp <2 x i32> %i.fd to <2 x float>
+  %i.fe = sitofp reassoc nsz arcp contract afn <2 x i32> %i.fd to <2 x float>
   %i.ff = load <2 x i32>, ptr %i.z, align 4, !tbaa !38
-  %i.fg = sitofp <2 x i32> %i.ff to <2 x float>
+  %i.fg = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ff to <2 x float>
   %i.fh = load <2 x i32>, ptr %i.ae, align 4, !tbaa !38
-  %i.fi = sitofp <2 x i32> %i.fh to <2 x float>
+  %i.fi = sitofp reassoc nsz arcp contract afn <2 x i32> %i.fh to <2 x float>
   %i.fj = fmul reassoc nsz arcp contract afn <2 x float> %i.fg, %i.ez
   %i.fk = fmul reassoc nsz arcp contract afn <2 x float> %i.fj, %i.ai
   %i.fl = fadd reassoc nsz arcp contract afn <2 x float> %i.fk, %i.fi
@@ -376,15 +376,15 @@ bb.s:                                             ; preds = %bb.r
   %i.fz = load ptr, ptr %.0144195, align 8, !tbaa !47
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 16 ; 2 uses
   %i.gb = load <2 x double>, ptr %i.fw, align 8, !tbaa !37
-  %i.gc = fptrunc <2 x double> %i.gb to <2 x float> ; 2 uses
+  %i.gc = fptrunc reassoc nsz arcp contract afn <2 x double> %i.gb to <2 x float> ; 2 uses
   store <2 x float> %i.gc, ptr %i.ga, align 4, !tbaa !29
   br i1 %.not165, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.gd = load <2 x i32>, ptr %i.ae, align 4, !tbaa !38
-  %i.ge = sitofp <2 x i32> %i.gd to <2 x float>
+  %i.ge = sitofp reassoc nsz arcp contract afn <2 x i32> %i.gd to <2 x float>
   %i.gf = load <2 x i32>, ptr %i.ad, align 4, !tbaa !38
-  %i.gg = sitofp <2 x i32> %i.gf to <2 x float>
+  %i.gg = sitofp reassoc nsz arcp contract afn <2 x i32> %i.gf to <2 x float>
   %i.gh = fmul reassoc nsz arcp contract afn <2 x float> %i.ct, %i.gc
   %i.gi = fadd reassoc nsz arcp contract afn <2 x float> %i.gh, %i.ge
   %i.gj = fdiv reassoc nsz arcp contract afn <2 x float> %i.gi, %i.gg
@@ -397,7 +397,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.not171 = icmp eq ptr %i.gl, null
   %spec.select = select i1 %.not171, ptr %storemerge188, ptr %i.gl ; 3 uses
   %i.gm = load ptr, ptr %spec.select, align 8, !tbaa !47
-  %i.gn = fptrunc <2 x double> %i.fy to <2 x float> ; 2 uses
+  %i.gn = fptrunc reassoc nsz arcp contract afn <2 x double> %i.fy to <2 x float> ; 2 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.gm, i64 8 ; 2 uses
   store <2 x float> %i.gn, ptr %i.go, align 4, !tbaa !29
   br i1 %.not165, label %bb.y, label %bb.v
@@ -405,9 +405,9 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 bb.v:                                             ; preds = %bb.u
   %i.gp = fmul reassoc nsz arcp contract afn <2 x float> %i.ct, %i.gn
   %i.gq = load <2 x i32>, ptr %i.ae, align 4, !tbaa !38
-  %i.gr = sitofp <2 x i32> %i.gq to <2 x float>
+  %i.gr = sitofp reassoc nsz arcp contract afn <2 x i32> %i.gq to <2 x float>
   %i.gs = load <2 x i32>, ptr %i.ad, align 4, !tbaa !38
-  %i.gt = sitofp <2 x i32> %i.gs to <2 x float>
+  %i.gt = sitofp reassoc nsz arcp contract afn <2 x i32> %i.gs to <2 x float>
   %i.gu = fadd reassoc nsz arcp contract afn <2 x float> %i.gp, %i.gr
   %i.gv = fdiv reassoc nsz arcp contract afn <2 x float> %i.gu, %i.gt
   store <2 x float> %i.gv, ptr %i.go, align 4, !tbaa !29

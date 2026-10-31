@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1980: ; preds = %b
   %i.ckk = load ptr, ptr %3, align 8, !tbaa !62   ; 2 uses
   %i.ckl = getelementptr inbounds nuw i8, ptr %i.ckk, i64 12
   %i.ckm = load <2 x i32>, ptr %i.ckl, align 4, !tbaa !108 ; 3 uses
-  %i.ckn = uitofp <2 x i32> %i.ckm to <2 x float>
+  %i.ckn = uitofp nsz <2 x i32> %i.ckm to <2 x float>
   %i.cko = insertelement <2 x float> poison, float %i.cke, i64 0
   %i.ckp = shufflevector <2 x float> %i.cko, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ckq = fdiv nsz <2 x float> %i.ckp, %i.ckn    ; 2 uses
@@ -608,7 +608,7 @@ bb.a:
   %i.b = insertelement <2 x i32> %i.a, i32 %5, i64 1
   %i.c = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.b, <2 x i32> splat (i32 -100))
   %i.d = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.c, <2 x i32> <i32 1000, i32 100>)
-  %i.e = sitofp <2 x i32> %i.d to <2 x float>
+  %i.e = sitofp nsz <2 x i32> %i.d to <2 x float>
   %i.f = fdiv nsz <2 x float> %i.e, splat (float 1.000000e+02) ; 2 uses
   br i1 %6, label %bb.b, label %bb.c
 
@@ -973,7 +973,7 @@ bb.b:                                             ; preds = %.preheader, %bb.k
   %i.w = insertelement <4 x i32> %i.v, i32 %i.m, i64 2
   %i.x = insertelement <4 x i32> %i.w, i32 %i.t, i64 3
   %i.y = and <4 x i32> %i.x, splat (i32 255)
-  %i.z = uitofp nneg <4 x i32> %i.y to <4 x float>
+  %i.z = uitofp nsz nneg <4 x i32> %i.y to <4 x float>
   %i.aa = fdiv nsz <4 x float> %i.z, splat (float 2.550000e+02) ; 7 uses
   %i.ab = lshr i32 %i.q, 8
   %i.ac = and i32 %i.ab, 255
@@ -1090,7 +1090,7 @@ bb.a:
   %i.f = tail call noundef i32 @llvm.smin.i32(i32 %i.e, i32 127)
   %i.g = insertelement <2 x i32> poison, i32 %i.f, i64 0
   %i.h = insertelement <2 x i32> %i.g, i32 %3, i64 1
-  %i.i = sitofp <2 x i32> %i.h to <2 x float>
+  %i.i = sitofp nsz <2 x i32> %i.h to <2 x float>
   %i.j = fmul nnan nsz <2 x float> %i.i, <float 1.000000e+00, float 1.275000e+02>
   %i.k = fdiv nsz <2 x float> %i.j, splat (float 1.270000e+02) ; 3 uses
   %i.l = extractelement <2 x float> %i.k, i64 0

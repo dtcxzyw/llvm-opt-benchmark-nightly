@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %.preheader.us, %bb.
   br i1 %i.ab, label %.preheader.us, label %.loopexit, !llvm.loop !615
 
 bb.e:                                             ; preds = %bb.b
-  %i.ac = uitofp <2 x i32> %i.e to <2 x float>
-  %i.ad = uitofp <2 x i32> %i.i to <2 x float>    ; 2 uses
+  %i.ac = uitofp nsz <2 x i32> %i.e to <2 x float>
+  %i.ad = uitofp nsz <2 x i32> %i.i to <2 x float> ; 2 uses
   %i.ae = fdiv nsz <2 x float> %i.ac, %i.ad       ; 3 uses
   %i.af = shufflevector <2 x float> %i.ae, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.ag = extractelement <2 x float> %i.ae, i64 0
@@ -387,7 +387,7 @@ bb.d:                                             ; preds = %bb.c
   %i.au = insertelement <2 x i32> %i.at, i32 %i.am, i64 1 ; 2 uses
   %i.av = add nsw <2 x i32> %i.as, %i.au          ; 4 uses
   store <2 x i32> %i.av, ptr %i.x, align 4, !tbaa !150
-  %i.aw = sitofp <2 x i32> %i.au to <2 x float>   ; 2 uses
+  %i.aw = sitofp nsz <2 x i32> %i.au to <2 x float> ; 2 uses
   %i.ax = insertelement <2 x float> poison, float %i.aa, i64 0
   %i.ay = insertelement <2 x float> %i.ax, float %i.ab, i64 1
   %i.az = fdiv nsz <2 x float> %i.ay, %i.aw       ; 2 uses
@@ -402,7 +402,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.bg = add nsw <2 x i32> %i.av, %i.as
-  %i.bh = sitofp <2 x i32> %i.as to <2 x float>
+  %i.bh = sitofp nsz <2 x i32> %i.as to <2 x float>
   %i.bi = sdiv <2 x i32> %i.bg, splat (i32 2)
   %i.bj = insertelement <2 x float> poison, float %.sroa.speculated, i64 0
   %i.bk = shufflevector <2 x float> %i.bj, <2 x float> poison, <2 x i32> zeroinitializer

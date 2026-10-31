@@ -204,7 +204,7 @@ _ZNK21libraw_static_table_tixEj.exit.lr.ph:       ; preds = %bb.ap
   %i.gn = getelementptr inbounds nuw i8, ptr %0, i64 188536
   %i.go = getelementptr inbounds nuw i8, ptr %0, i64 153252
   %i.gp = load <4 x i32>, ptr %i.gn, align 8, !tbaa !102
-  %i.gq = sitofp <4 x i32> %i.gp to <4 x float>
+  %i.gq = sitofp reassoc nsz arcp contract afn <4 x i32> %i.gp to <4 x float>
   store <4 x float> %i.gq, ptr %i.go, align 4, !tbaa !101
   br label %.thread595
 
@@ -410,13 +410,13 @@ _ZNK21libraw_static_table_tixEj.exit559.thread:   ; preds = %_ZNK21libraw_static
   %i.jm = sext i32 %i.jl to i64
   %i.jn = getelementptr inbounds [16 x i8], ptr %i.gj, i64 %i.jm
   %i.jo = load <4 x i32>, ptr %i.jn, align 8, !tbaa !102
-  %i.jp = sitofp <4 x i32> %i.jo to <4 x float>
+  %i.jp = sitofp reassoc nsz arcp contract afn <4 x i32> %i.jo to <4 x float>
   store <4 x float> %i.jp, ptr %i.gl, align 4, !tbaa !101
   br label %.loopexit
 
 _ZNK21libraw_static_table_tixEj.exit563.us677.preheader: ; preds = %.preheader601
   %i.jq = load <4 x i32>, ptr %i.gj, align 8, !tbaa !102
-  %i.jr = sitofp <4 x i32> %i.jq to <4 x float>
+  %i.jr = sitofp reassoc nsz arcp contract afn <4 x i32> %i.jq to <4 x float>
   store <4 x float> %i.jr, ptr %i.gl, align 4, !tbaa !101
   br label %.loopexit
 
@@ -426,7 +426,7 @@ _ZNK21libraw_static_table_tixEj.exit563.us677.preheader: ; preds = %.preheader60
 
 _ZNK21libraw_static_table_tixEj.exit563.us680.preheader: ; preds = %.preheader601.split.split
   %i.js = load <4 x i32>, ptr %i.gj, align 8, !tbaa !102
-  %i.jt = sitofp <4 x i32> %i.js to <4 x float>
+  %i.jt = sitofp reassoc nsz arcp contract afn <4 x i32> %i.js to <4 x float>
   store <4 x float> %i.jt, ptr %i.gl, align 4, !tbaa !101
   br label %.loopexit
 
@@ -435,7 +435,7 @@ _ZNK21libraw_static_table_tixEj.exit563.us680.preheader: ; preds = %.preheader60
   %i.jv = sext i32 %i.ju to i64
   %i.jw = getelementptr inbounds [16 x i8], ptr %i.gj, i64 %i.jv
   %i.jx = load <4 x i32>, ptr %i.jw, align 8, !tbaa !102
-  %i.jy = sitofp <4 x i32> %i.jx to <4 x float>
+  %i.jy = sitofp reassoc nsz arcp contract afn <4 x i32> %i.jx to <4 x float>
   store <4 x float> %i.jy, ptr %i.gl, align 4, !tbaa !101
   br label %.loopexit
 
@@ -838,7 +838,7 @@ bb.da:                                            ; preds = %bb.cw, %bb.cw, %bb.
   %i.agi = load <4 x i16>, ptr %i.afv, align 2
   %i.agj = insertelement <4 x i16> %i.agi, i16 %i.agg, i64 2
   %i.agk = insertelement <4 x i16> %i.agj, i16 %i.agh, i64 3
-  %i.agl = uitofp <4 x i16> %i.agk to <4 x float> ; 2 uses
+  %i.agl = uitofp reassoc nsz arcp contract afn <4 x i16> %i.agk to <4 x float> ; 2 uses
   %i.agm = extractelement <4 x float> %i.agl, i64 2 ; 2 uses
   %i.agn = fcmp reassoc nsz arcp contract afn olt float %spec.select.2, %i.agm
   %spec.select.3 = select nsz i1 %i.agn, float %i.agm, float %spec.select.2
@@ -1186,7 +1186,7 @@ bb.di:                                            ; preds = %bb.cw, %bb.cw
   %i.aqc = load <4 x i16>, ptr %i.app, align 2
   %i.aqd = insertelement <4 x i16> %i.aqc, i16 %i.aqa, i64 2
   %i.aqe = insertelement <4 x i16> %i.aqd, i16 %i.aqb, i64 3
-  %i.aqf = uitofp <4 x i16> %i.aqe to <4 x float> ; 2 uses
+  %i.aqf = uitofp reassoc nsz arcp contract afn <4 x i16> %i.aqe to <4 x float> ; 2 uses
   %i.aqg = extractelement <4 x float> %i.aqf, i64 2 ; 2 uses
   %i.aqh = fcmp reassoc nsz arcp contract afn olt float %spec.select535.2, %i.aqg
   %spec.select535.3 = select nsz i1 %i.aqh, float %i.aqg, float %spec.select535.2
@@ -1304,7 +1304,7 @@ bb.dj:                                            ; preds = %bb.cw, %bb.cw, %bb.
   %i.atq = load <4 x i16>, ptr %i.atd, align 2
   %i.atr = insertelement <4 x i16> %i.atq, i16 %i.ato, i64 2
   %i.ats = insertelement <4 x i16> %i.atr, i16 %i.atp, i64 3
-  %i.att = uitofp <4 x i16> %i.ats to <4 x float> ; 2 uses
+  %i.att = uitofp reassoc nsz arcp contract afn <4 x i16> %i.ats to <4 x float> ; 2 uses
   %i.atu = extractelement <4 x float> %i.att, i64 2 ; 2 uses
   %i.atv = fcmp reassoc nsz arcp contract afn olt float %spec.select536.2, %i.atu
   %spec.select536.3 = select nsz i1 %i.atv, float %i.atu, float %spec.select536.2
@@ -1434,7 +1434,7 @@ bb.dm:                                            ; preds = %bb.cw, %bb.cw, %bb.
   %i.axh = load <4 x i16>, ptr %i.awu, align 2
   %i.axi = insertelement <4 x i16> %i.axh, i16 %i.axf, i64 2
   %i.axj = insertelement <4 x i16> %i.axi, i16 %i.axg, i64 3
-  %i.axk = uitofp <4 x i16> %i.axj to <4 x float> ; 2 uses
+  %i.axk = uitofp reassoc nsz arcp contract afn <4 x i16> %i.axj to <4 x float> ; 2 uses
   %i.axl = extractelement <4 x float> %i.axk, i64 2 ; 2 uses
   %i.axm = fcmp reassoc nsz arcp contract afn olt float %spec.select537.2, %i.axl
   %spec.select537.3 = select nsz i1 %i.axm, float %i.axl, float %spec.select537.2

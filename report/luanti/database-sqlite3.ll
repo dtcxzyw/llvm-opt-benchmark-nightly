@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ak = tail call i32 @sqlite3_bind_double(ptr noundef %i.ag, i32 noundef 3, double noundef %i.aj)
   tail call void @_ZNK16Database_SQLite312sqlite3_vrfyEiSt17basic_string_viewIcSt11char_traitsIcEEi(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef %i.ak, i64 0, ptr nonnull @.str.70, i32 noundef 0)
   %i.al = load ptr, ptr %i.v, align 8, !tbaa !85
-  %i.am = fpext <2 x float> %.sroa.01.0.copyload.i to <2 x double> ; 2 uses
+  %i.am = fpext nsz <2 x float> %.sroa.01.0.copyload.i to <2 x double> ; 2 uses
   %i.an = extractelement <2 x double> %i.am, i64 0
   %i.ao = tail call i32 @sqlite3_bind_double(ptr noundef %i.al, i32 noundef 4, double noundef %i.an)
   tail call void @_ZNK16Database_SQLite312sqlite3_vrfyEiSt17basic_string_viewIcSt11char_traitsIcEEi(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef %i.ao, i64 0, ptr nonnull @.str.70, i32 noundef 0)
@@ -245,7 +245,7 @@ bb.e:                                             ; preds = %bb.c
   %i.br = tail call i32 @sqlite3_bind_double(ptr noundef %i.bn, i32 noundef 2, double noundef %i.bq)
   tail call void @_ZNK16Database_SQLite312sqlite3_vrfyEiSt17basic_string_viewIcSt11char_traitsIcEEi(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef %i.br, i64 0, ptr nonnull @.str.70, i32 noundef 0)
   %i.bs = load ptr, ptr %i.bh, align 8, !tbaa !86
-  %i.bt = fpext <2 x float> %.sroa.01.0.copyload.i to <2 x double> ; 2 uses
+  %i.bt = fpext nsz <2 x float> %.sroa.01.0.copyload.i to <2 x double> ; 2 uses
   %i.bu = extractelement <2 x double> %i.bt, i64 0
   %i.bv = tail call i32 @sqlite3_bind_double(ptr noundef %i.bs, i32 noundef 3, double noundef %i.bu)
   tail call void @_ZNK16Database_SQLite312sqlite3_vrfyEiSt17basic_string_viewIcSt11char_traitsIcEEi(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef %i.bv, i64 0, ptr nonnull @.str.70, i32 noundef 0)
@@ -648,7 +648,7 @@ bb.c:                                             ; preds = %bb.a
   %i.z = tail call nsz double @sqlite3_column_double(ptr noundef %i.x, i32 noundef 3)
   %i.aa = insertelement <2 x double> poison, double %i.y, i64 0
   %i.ab = insertelement <2 x double> %i.aa, double %i.z, i64 1
-  %i.ac = fptrunc <2 x double> %i.ab to <2 x float>
+  %i.ac = fptrunc nsz <2 x double> %i.ab to <2 x float>
   %i.ad = tail call nsz double @sqlite3_column_double(ptr noundef %i.x, i32 noundef 4)
   %i.ae = fptrunc nsz double %i.ad to float
   tail call void @_ZN9PlayerSAO15setBasePositionEN4core8vector3dIfEE(ptr noundef nonnull align 8 dereferenceable(1226) %2, <2 x float> %i.ac, float %i.ae)

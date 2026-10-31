@@ -145,7 +145,7 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %3, i64 20, i1 false), !tbaa.struct !43
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.d = load <2 x i32>, ptr %i.c, align 4, !tbaa !41
-  %i.e = sitofp <2 x i32> %i.d to <2 x float>
+  %i.e = sitofp reassoc nsz arcp contract afn <2 x i32> %i.d to <2 x float>
   %i.f = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.e, splat (float f0x3C23D70A)
   %i.g = shufflevector <2 x float> %i.f, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.h = load <4 x float>, ptr %i.b, align 4, !tbaa !42
@@ -263,7 +263,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.0 = phi nsz float [ %i.u, %bb.d ], [ 0.000000e+00, %bb.c ]
   %i.v = sub nsw <2 x i32> %i.g, %i.h
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.x = sitofp <2 x i32> %i.v to <2 x float>
+  %i.x = sitofp reassoc nsz arcp contract afn <2 x i32> %i.v to <2 x float>
   %i.y = insertelement <2 x float> poison, float %i.f, i64 0
   %i.z = shufflevector <2 x float> %i.y, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.aa = fmul reassoc nsz arcp contract afn <2 x float> %i.z, %i.x
@@ -274,7 +274,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.af = load <2 x i32>, ptr %2, align 4, !tbaa !41
   %i.ag = sub nsw <2 x i32> %i.af, %i.ae          ; 2 uses
   %i.ah = icmp sgt <2 x i32> %i.ag, zeroinitializer
-  %i.ai = sitofp <2 x i32> %i.ag to <2 x float>
+  %i.ai = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ag to <2 x float>
   %i.aj = fptosi <2 x float> %i.ai to <2 x i32>
   %i.ak = select <2 x i1> %i.ah, <2 x i32> %i.aj, <2 x i32> zeroinitializer ; 2 uses
   store <2 x i32> %i.ak, ptr %3, align 4, !tbaa !41
@@ -283,20 +283,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.an = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.am, <2 x i32> zeroinitializer)
   %i.ao = uitofp nneg <2 x i32> %i.an to <2 x float>
   %i.ap = load <2 x i32>, ptr %i.w, align 4, !tbaa !41
-  %i.aq = sitofp <2 x i32> %i.ap to <2 x float>
+  %i.aq = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ap to <2 x float>
   %i.ar = fsub reassoc nsz arcp contract afn <2 x float> %i.aq, %i.ao
   %i.as = fptosi <2 x float> %i.ar to <2 x i32>   ; 3 uses
   store <2 x i32> %i.as, ptr %i.w, align 4, !tbaa !41
   %i.at = load <2 x i32>, ptr %i.d, align 16, !tbaa !41
-  %i.au = sitofp <2 x i32> %i.at to <2 x float>
+  %i.au = sitofp reassoc nsz arcp contract afn <2 x i32> %i.at to <2 x float>
   %i.av = fmul reassoc nsz arcp contract afn <2 x float> %i.z, %i.au ; 3 uses
   %i.aw = add nsw <2 x i32> %i.ak, %i.as
-  %i.ax = sitofp <2 x i32> %i.aw to <2 x float>
+  %i.ax = sitofp reassoc nsz arcp contract afn <2 x i32> %i.aw to <2 x float>
   %i.ay = fsub reassoc nsz arcp contract afn <2 x float> %i.ax, %i.av
   %i.az = tail call reassoc nsz arcp contract afn <2 x float> @llvm.round.v2f32(<2 x float> %i.ay) ; 2 uses
   %i.ba = fcmp reassoc nsz arcp contract afn ogt <2 x float> %i.az, zeroinitializer
   %i.bb = select <2 x i1> %i.ba, <2 x float> %i.az, <2 x float> zeroinitializer
-  %i.bc = sitofp <2 x i32> %i.as to <2 x float>
+  %i.bc = sitofp reassoc nsz arcp contract afn <2 x i32> %i.as to <2 x float>
   %i.bd = fsub reassoc nsz arcp contract afn <2 x float> %i.bc, %i.bb
   %i.be = fptosi <2 x float> %i.bd to <2 x i32>
   %i.bf = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.be, <2 x i32> splat (i32 1))
@@ -345,7 +345,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.029 = phi nsz float [ %i.t, %bb.d ], [ 0.000000e+00, %bb.c ]
-  %i.u = sitofp <2 x i32> %i.g to <2 x float>
+  %i.u = sitofp reassoc nsz arcp contract afn <2 x i32> %i.g to <2 x float>
   %i.v = insertelement <2 x float> poison, float %.030, i64 0
   %i.w = insertelement <2 x float> %i.v, float %.029, i64 1
   %i.x = fmul reassoc nsz arcp contract afn <2 x float> %i.w, %i.u
@@ -363,7 +363,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %i.ad = sitofp <2 x i32> %i.y to <2 x float>    ; 5 uses
+  %i.ad = sitofp reassoc nsz arcp contract afn <2 x i32> %i.y to <2 x float> ; 5 uses
   %i.ae = add i64 %i.ac, -2                       ; 3 uses
   %i.af = lshr exact i64 %i.ae, 1
   %i.ag = add nuw i64 %i.af, 1                    ; 5 uses
@@ -499,7 +499,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.029 = phi nsz float [ %i.t, %bb.d ], [ 0.000000e+00, %bb.c ]
-  %i.u = sitofp <2 x i32> %i.g to <2 x float>
+  %i.u = sitofp reassoc nsz arcp contract afn <2 x i32> %i.g to <2 x float>
   %i.v = insertelement <2 x float> poison, float %.030, i64 0
   %i.w = insertelement <2 x float> %i.v, float %.029, i64 1
   %i.x = fmul reassoc nsz arcp contract afn <2 x float> %i.w, %i.u
@@ -517,7 +517,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %i.ad = sitofp <2 x i32> %i.y to <2 x float>    ; 5 uses
+  %i.ad = sitofp reassoc nsz arcp contract afn <2 x i32> %i.y to <2 x float> ; 5 uses
   %i.ae = add i64 %i.ac, -2                       ; 3 uses
   %i.af = lshr exact i64 %i.ae, 1
   %i.ag = add nuw i64 %i.af, 1                    ; 5 uses

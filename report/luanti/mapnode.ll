@@ -205,35 +205,35 @@ bb.v:                                             ; preds = %_ZNK7MapNode8getLev
   ]
 
 bb.w:                                             ; preds = %bb.v
-  %i.dq = fpext <2 x float> %i.dn to <2 x double> ; 2 uses
-  %i.dr = fpext <2 x float> %i.dp to <2 x double> ; 2 uses
+  %i.dq = fpext nsz <2 x float> %i.dn to <2 x double> ; 2 uses
+  %i.dr = fpext nsz <2 x float> %i.dp to <2 x double> ; 2 uses
   %i.ds = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dq, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.dr)
-  %i.dt = fptrunc <2 x double> %i.ds to <2 x float>
+  %i.dt = fptrunc nsz <2 x double> %i.ds to <2 x float>
   %i.du = fmul nsz <2 x double> %i.dr, splat (double f0x3C91A62633145C07)
   %i.dv = fsub nsz <2 x double> %i.du, %i.dq
-  %i.dw = fptrunc <2 x double> %i.dv to <2 x float>
+  %i.dw = fptrunc nsz <2 x double> %i.dv to <2 x float>
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.v
-  %i.dx = fpext <2 x float> %i.dn to <2 x double> ; 2 uses
-  %i.dy = fpext <2 x float> %i.dp to <2 x double> ; 2 uses
+  %i.dx = fpext nsz <2 x float> %i.dn to <2 x double> ; 2 uses
+  %i.dy = fpext nsz <2 x float> %i.dp to <2 x double> ; 2 uses
   %i.dz = fmul nsz <2 x double> %i.dy, splat (double f0xBCA1A62633145C07)
   %i.ea = fsub nsz <2 x double> %i.dz, %i.dx
-  %i.eb = fptrunc <2 x double> %i.ea to <2 x float>
+  %i.eb = fptrunc nsz <2 x double> %i.ea to <2 x float>
   %i.ec = fneg nsz <2 x double> %i.dy
   %i.ed = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> splat (double f0x3CA1A62633145C07), <2 x double> %i.ec)
-  %i.ee = fptrunc <2 x double> %i.ed to <2 x float>
+  %i.ee = fptrunc nsz <2 x double> %i.ed to <2 x float>
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.v
-  %i.ef = fpext <2 x float> %i.dn to <2 x double> ; 2 uses
-  %i.eg = fpext <2 x float> %i.dp to <2 x double> ; 2 uses
+  %i.ef = fpext nsz <2 x float> %i.dn to <2 x double> ; 2 uses
+  %i.eg = fpext nsz <2 x float> %i.dp to <2 x double> ; 2 uses
   %i.eh = fneg nsz <2 x double> %i.eg
   %i.ei = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ef, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.eh)
-  %i.ej = fptrunc <2 x double> %i.ei to <2 x float>
+  %i.ej = fptrunc nsz <2 x double> %i.ei to <2 x float>
   %i.ek = fmul nsz <2 x double> %i.eg, splat (double f0x3C91A62633145C07)
   %i.el = fadd nsz <2 x double> %i.ek, %i.ef
-  %i.em = fptrunc <2 x double> %i.el to <2 x float>
+  %i.em = fptrunc nsz <2 x double> %i.el to <2 x float>
   br label %bb.z
 
 .unreachabledefault:                              ; preds = %bb.v
@@ -255,56 +255,56 @@ bb.z:                                             ; preds = %bb.v, %bb.x, %bb.y,
   ]
 
 bb.aa:                                            ; preds = %bb.z
-  %i.eq = fpext <2 x float> %i.ep to <2 x double> ; 2 uses
-  %i.er = fpext <2 x float> %i.eo to <2 x double> ; 2 uses
+  %i.eq = fpext nsz <2 x float> %i.ep to <2 x double> ; 2 uses
+  %i.er = fpext nsz <2 x float> %i.eo to <2 x double> ; 2 uses
   %i.es = fneg nsz <2 x double> %i.er
   %i.et = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eq, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.es)
-  %i.eu = fptrunc <2 x double> %i.et to <2 x float>
+  %i.eu = fptrunc nsz <2 x double> %i.et to <2 x float>
   %i.ev = fmul nsz <2 x double> %i.er, splat (double f0x3C91A62633145C07)
   %i.ew = fadd nsz <2 x double> %i.ev, %i.eq
-  %i.ex = fptrunc <2 x double> %i.ew to <2 x float>
+  %i.ex = fptrunc nsz <2 x double> %i.ew to <2 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ab:                                            ; preds = %bb.z
-  %i.ey = fpext <2 x float> %i.ep to <2 x double> ; 2 uses
-  %i.ez = fpext <2 x float> %i.eo to <2 x double> ; 2 uses
+  %i.ey = fpext nsz <2 x float> %i.ep to <2 x double> ; 2 uses
+  %i.ez = fpext nsz <2 x float> %i.eo to <2 x double> ; 2 uses
   %i.fa = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ey, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.ez)
-  %i.fb = fptrunc <2 x double> %i.fa to <2 x float>
+  %i.fb = fptrunc nsz <2 x double> %i.fa to <2 x float>
   %i.fc = fmul nsz <2 x double> %i.ez, splat (double f0x3C91A62633145C07)
   %i.fd = fsub nsz <2 x double> %i.fc, %i.ey
-  %i.fe = fptrunc <2 x double> %i.fd to <2 x float>
+  %i.fe = fptrunc nsz <2 x double> %i.fd to <2 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ac:                                            ; preds = %bb.z
-  %i.ff = fpext <2 x float> %i.en to <2 x double> ; 2 uses
-  %i.fg = fpext <2 x float> %i.ep to <2 x double> ; 2 uses
+  %i.ff = fpext nsz <2 x float> %i.en to <2 x double> ; 2 uses
+  %i.fg = fpext nsz <2 x float> %i.ep to <2 x double> ; 2 uses
   %i.fh = fmul nsz <2 x double> %i.fg, splat (double f0x3C91A62633145C07)
   %i.fi = fsub nsz <2 x double> %i.fh, %i.ff
   %i.fj = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ff, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.fg)
-  %i.fk = fptrunc <2 x double> %i.fj to <2 x float>
-  %i.fl = fptrunc <2 x double> %i.fi to <2 x float>
+  %i.fk = fptrunc nsz <2 x double> %i.fj to <2 x float>
+  %i.fl = fptrunc nsz <2 x double> %i.fi to <2 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ad:                                            ; preds = %bb.z
-  %i.fm = fpext <2 x float> %i.en to <2 x double> ; 2 uses
-  %i.fn = fpext <2 x float> %i.ep to <2 x double> ; 2 uses
+  %i.fm = fpext nsz <2 x float> %i.en to <2 x double> ; 2 uses
+  %i.fn = fpext nsz <2 x float> %i.ep to <2 x double> ; 2 uses
   %i.fo = fmul nsz <2 x double> %i.fn, splat (double f0x3C91A62633145C07)
   %i.fp = fadd nsz <2 x double> %i.fo, %i.fm
   %i.fq = fneg nsz <2 x double> %i.fn
   %i.fr = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fm, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.fq)
-  %i.fs = fptrunc <2 x double> %i.fr to <2 x float>
-  %i.ft = fptrunc <2 x double> %i.fp to <2 x float>
+  %i.fs = fptrunc nsz <2 x double> %i.fr to <2 x float>
+  %i.ft = fptrunc nsz <2 x double> %i.fp to <2 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ae:                                            ; preds = %bb.z
-  %i.fu = fpext <2 x float> %i.en to <2 x double> ; 2 uses
-  %i.fv = fpext <2 x float> %i.ep to <2 x double> ; 2 uses
+  %i.fu = fpext nsz <2 x float> %i.en to <2 x double> ; 2 uses
+  %i.fv = fpext nsz <2 x float> %i.ep to <2 x double> ; 2 uses
   %i.fw = fneg nsz <2 x double> %i.fv
   %i.fx = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fu, <2 x double> splat (double f0xBCA1A62633145C07), <2 x double> %i.fw)
   %i.fy = fmul nsz <2 x double> %i.fv, splat (double f0x3CA1A62633145C07)
   %i.fz = fsub nsz <2 x double> %i.fy, %i.fu
-  %i.ga = fptrunc <2 x double> %i.fz to <2 x float>
-  %i.gb = fptrunc <2 x double> %i.fx to <2 x float>
+  %i.ga = fptrunc nsz <2 x double> %i.fz to <2 x float>
+  %i.gb = fptrunc nsz <2 x double> %i.fx to <2 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 _ZN4core8aabbox3dIfE6repairEv.exit:               ; preds = %bb.z, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
@@ -573,19 +573,19 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit: ; preds = %bb.ax
   %i.je = load <2 x float>, ptr %i.jc, align 4
   %i.jf = shufflevector <1 x float> %i.jd, <1 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.jg = insertelement <2 x float> %i.jf, float %.sroa.18639.12.copyload, i64 0
-  %i.jh = fpext <2 x float> %i.jg to <2 x double> ; 2 uses
+  %i.jh = fpext nsz <2 x float> %i.jg to <2 x double> ; 2 uses
   %i.ji = fneg nsz <2 x double> %i.jh
   %i.jj = fcmp nsz ogt float %.sroa.17638.12.copyload, %.sroa.7634.0.copyload
   %.sroa.14397.0 = select nsz i1 %i.jj, float %.sroa.17638.12.copyload, float %.sroa.7634.0.copyload ; 2 uses
   %i.jk = fcmp nsz olt float %.sroa.17638.12.copyload, %.sroa.7634.0.copyload
   %.sroa.7384.0 = select nsz i1 %i.jk, float %.sroa.17638.12.copyload, float %.sroa.7634.0.copyload ; 2 uses
   %i.jl = insertelement <2 x float> %i.je, float %.sroa.0633.0.copyload, i64 1
-  %i.jm = fpext <2 x float> %i.jl to <2 x double> ; 2 uses
+  %i.jm = fpext nsz <2 x float> %i.jl to <2 x double> ; 2 uses
   %i.jn = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jm, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.ji)
-  %i.jo = fptrunc <2 x double> %i.jn to <2 x float> ; 2 uses
+  %i.jo = fptrunc nsz <2 x double> %i.jn to <2 x float> ; 2 uses
   %i.jp = fmul nsz <2 x double> %i.jh, splat (double f0x3C91A62633145C07)
   %i.jq = fadd nsz <2 x double> %i.jp, %i.jm
-  %i.jr = fptrunc <2 x double> %i.jq to <2 x float> ; 4 uses
+  %i.jr = fptrunc nsz <2 x double> %i.jq to <2 x float> ; 4 uses
   %i.js = extractelement <2 x float> %i.jo, i64 0 ; 4 uses
   %i.jt = extractelement <2 x float> %i.jo, i64 1 ; 4 uses
   %i.ju = fcmp nsz ogt float %i.js, %i.jt
@@ -784,18 +784,18 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit228: ; preds = %bb
   %i.mf = load <2 x float>, ptr %i.md, align 4
   %i.mg = shufflevector <1 x float> %i.me, <1 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.mh = insertelement <2 x float> %i.mg, float %.sroa.18.12.copyload, i64 0
-  %i.mi = fpext <2 x float> %i.mh to <2 x double> ; 2 uses
+  %i.mi = fpext nsz <2 x float> %i.mh to <2 x double> ; 2 uses
   %i.mj = fcmp nsz ogt float %.sroa.17631.12.copyload, %.sroa.7.0.copyload
   %.sroa.14367.0 = select nsz i1 %i.mj, float %.sroa.17631.12.copyload, float %.sroa.7.0.copyload ; 2 uses
   %i.mk = fcmp nsz olt float %.sroa.17631.12.copyload, %.sroa.7.0.copyload
   %.sroa.7354.0 = select nsz i1 %i.mk, float %.sroa.17631.12.copyload, float %.sroa.7.0.copyload ; 2 uses
   %i.ml = insertelement <2 x float> %i.mf, float %.sroa.0628.0.copyload, i64 1
-  %i.mm = fpext <2 x float> %i.ml to <2 x double> ; 2 uses
+  %i.mm = fpext nsz <2 x float> %i.ml to <2 x double> ; 2 uses
   %i.mn = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mm, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.mi)
-  %i.mo = fptrunc <2 x double> %i.mn to <2 x float> ; 2 uses
+  %i.mo = fptrunc nsz <2 x double> %i.mn to <2 x float> ; 2 uses
   %i.mp = fmul nsz <2 x double> %i.mi, splat (double f0x3C91A62633145C07)
   %i.mq = fsub nsz <2 x double> %i.mp, %i.mm
-  %i.mr = fptrunc <2 x double> %i.mq to <2 x float> ; 4 uses
+  %i.mr = fptrunc nsz <2 x double> %i.mq to <2 x float> ; 4 uses
   %i.ms = extractelement <2 x float> %i.mo, i64 0 ; 4 uses
   %i.mt = extractelement <2 x float> %i.mo, i64 1 ; 4 uses
   %i.mu = fcmp nsz ogt float %i.ms, %i.mt
@@ -998,13 +998,13 @@ _ZNK4core8vector3dIsEeqERKS1_.exit227.thread.split.us: ; preds = %_ZNK4core8vect
   br i1 %or.cond583, label %_ZNK4core8vector3dIsEeqERKS1_.exit275.thread.us.preheader, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit257
 
 _ZNK4core8vector3dIsEeqERKS1_.exit275.thread.us.preheader: ; preds = %_ZNK4core8vector3dIsEeqERKS1_.exit227.thread.split.us
-  %i.pi = fpext <2 x float> %i.ph to <2 x double> ; 2 uses
-  %i.pj = fpext <2 x float> %i.pf to <2 x double> ; 2 uses
+  %i.pi = fpext nsz <2 x float> %i.ph to <2 x double> ; 2 uses
+  %i.pj = fpext nsz <2 x float> %i.pf to <2 x double> ; 2 uses
   %i.pk = fmul nsz <2 x double> %i.pj, zeroinitializer
   %i.pl = fsub nsz <2 x double> %i.pi, %i.pk
-  %i.pm = fptrunc <2 x double> %i.pl to <2 x float>
+  %i.pm = fptrunc nsz <2 x double> %i.pl to <2 x float>
   %i.pn = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pi, <2 x double> zeroinitializer, <2 x double> %i.pj)
-  %i.po = fptrunc <2 x double> %i.pn to <2 x float>
+  %i.po = fptrunc nsz <2 x double> %i.pn to <2 x float>
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit257
 
 _ZNK4core8vector3dIsEeqERKS1_.exit227.thread.split.us596: ; preds = %_ZNK4core8vector3dIsEeqERKS1_.exit227.thread
@@ -1015,14 +1015,14 @@ _ZNK4core8vector3dIsEeqERKS1_.exit227.thread.split.us596: ; preds = %_ZNK4core8v
   br i1 %or.cond583, label %_ZNK4core8vector3dIsEeqERKS1_.exit275.thread.us599.preheader, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit257
 
 _ZNK4core8vector3dIsEeqERKS1_.exit275.thread.us599.preheader: ; preds = %_ZNK4core8vector3dIsEeqERKS1_.exit227.thread.split.us596
-  %i.pt = fpext <2 x float> %i.ps to <2 x double> ; 2 uses
-  %i.pu = fpext <2 x float> %i.pq to <2 x double> ; 2 uses
+  %i.pt = fpext nsz <2 x float> %i.ps to <2 x double> ; 2 uses
+  %i.pu = fpext nsz <2 x float> %i.pq to <2 x double> ; 2 uses
   %i.pv = fmul nsz <2 x double> %i.pu, splat (double f0xBCA1A62633145C07)
   %i.pw = fsub nsz <2 x double> %i.pv, %i.pt
-  %i.px = fptrunc <2 x double> %i.pw to <2 x float>
+  %i.px = fptrunc nsz <2 x double> %i.pw to <2 x float>
   %i.py = fneg nsz <2 x double> %i.pu
   %i.pz = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pt, <2 x double> splat (double f0x3CA1A62633145C07), <2 x double> %i.py)
-  %i.qa = fptrunc <2 x double> %i.pz to <2 x float>
+  %i.qa = fptrunc nsz <2 x double> %i.pz to <2 x float>
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit257
 
 _ZNK4core8vector3dIsEeqERKS1_.exit227.thread.split: ; preds = %_ZNK4core8vector3dIsEeqERKS1_.exit227.thread
@@ -1148,24 +1148,24 @@ _ZNSt6vectorIN4core8aabbox3dIfEESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cx
   br label %_ZNSt6vectorIN4core8aabbox3dIfEESaIS2_EE9push_backERKS2_.exit226
 
 _ZNK4core8vector3dIsEeqERKS1_.exit275.thread.thread: ; preds = %_ZNK4core8vector3dIsEeqERKS1_.exit274.preheader
-  %i.rq = fpext <2 x float> %i.qe to <2 x double> ; 2 uses
-  %i.rr = fpext <2 x float> %i.qc to <2 x double> ; 2 uses
+  %i.rq = fpext nsz <2 x float> %i.qe to <2 x double> ; 2 uses
+  %i.rr = fpext nsz <2 x float> %i.qc to <2 x double> ; 2 uses
   %i.rs = fneg nsz <2 x double> %i.rr
   %i.rt = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.rq, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.rs)
-  %i.ru = fptrunc <2 x double> %i.rt to <2 x float>
+  %i.ru = fptrunc nsz <2 x double> %i.rt to <2 x float>
   %i.rv = fmul nsz <2 x double> %i.rr, splat (double f0x3C91A62633145C07)
   %i.rw = fadd nsz <2 x double> %i.rv, %i.rq
-  %i.rx = fptrunc <2 x double> %i.rw to <2 x float>
+  %i.rx = fptrunc nsz <2 x double> %i.rw to <2 x float>
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit257
 
 _ZNK4core8vector3dIsEeqERKS1_.exit275.thread.thread709: ; preds = %_ZNK4core8vector3dIsEeqERKS1_.exit274.preheader
-  %i.ry = fpext <2 x float> %i.qe to <2 x double> ; 2 uses
-  %i.rz = fpext <2 x float> %i.qc to <2 x double> ; 2 uses
+  %i.ry = fpext nsz <2 x float> %i.qe to <2 x double> ; 2 uses
+  %i.rz = fpext nsz <2 x float> %i.qc to <2 x double> ; 2 uses
   %i.sa = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ry, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.rz)
-  %i.sb = fptrunc <2 x double> %i.sa to <2 x float>
+  %i.sb = fptrunc nsz <2 x double> %i.sa to <2 x float>
   %i.sc = fmul nsz <2 x double> %i.rz, splat (double f0x3C91A62633145C07)
   %i.sd = fsub nsz <2 x double> %i.sc, %i.ry
-  %i.se = fptrunc <2 x double> %i.sd to <2 x float>
+  %i.se = fptrunc nsz <2 x double> %i.sd to <2 x float>
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit257
 
 bb.bv:                                            ; preds = %bb.a

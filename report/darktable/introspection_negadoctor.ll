@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ar = getelementptr inbounds nuw i8, ptr %.val.i, i64 4
   %i.as = load <2 x float>, ptr %i.ar, align 4, !tbaa !12
-  %i.at = fpext <2 x float> %i.as to <2 x double>
+  %i.at = fpext reassoc nsz arcp contract afn <2 x float> %i.as to <2 x double>
   store <2 x double> %i.at, ptr %5, align 16, !tbaa !108
   %i.au = getelementptr inbounds nuw i8, ptr %.val.i, i64 12
   %i.av = load float, ptr %i.au, align 4, !tbaa !12
@@ -340,7 +340,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ep = shufflevector <2 x float> %i.eo, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eq = fdiv reassoc nsz arcp contract afn <2 x float> %i.ej, %i.ep
   %i.er = fdiv reassoc nsz arcp contract afn float %i.eh, %i.en
-  %i.es = fpext <2 x float> %i.eq to <2 x double>
+  %i.es = fpext reassoc nsz arcp contract afn <2 x float> %i.eq to <2 x double>
   store <2 x double> %i.es, ptr %4, align 16, !tbaa !108
   %i.et = fpext reassoc nsz arcp contract afn float %i.er to double
   %i.eu = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -558,7 +558,7 @@ bb.r:                                             ; preds = %bb.q
   %i.kz = shufflevector <2 x float> %i.ky, <2 x float> poison, <2 x i32> zeroinitializer
   %i.la = fdiv reassoc nsz arcp contract afn <2 x float> %i.kt, %i.kz
   %i.lb = fdiv reassoc nsz arcp contract afn float %i.kr, %i.kx
-  %i.lc = fpext <2 x float> %i.la to <2 x double>
+  %i.lc = fpext reassoc nsz arcp contract afn <2 x float> %i.la to <2 x double>
   store <2 x double> %i.lc, ptr %3, align 16, !tbaa !108
   %i.ld = fpext reassoc nsz arcp contract afn float %i.lb to double
   %i.le = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -961,7 +961,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.j = load <2 x double>, ptr %3, align 16, !tbaa !108
-  %i.k = fptrunc <2 x double> %i.j to <2 x float>
+  %i.k = fptrunc reassoc nsz arcp contract afn <2 x double> %i.j to <2 x float>
   store <2 x float> %i.k, ptr %i.h, align 4, !tbaa !12
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.m = load double, ptr %i.l, align 16, !tbaa !109
@@ -1000,7 +1000,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.ag = getelementptr inbounds nuw i8, ptr %.val, i64 4
   %i.ah = load <2 x float>, ptr %i.ag, align 4, !tbaa !12
-  %i.ai = fpext <2 x float> %i.ah to <2 x double>
+  %i.ai = fpext reassoc nsz arcp contract afn <2 x float> %i.ah to <2 x double>
   store <2 x double> %i.ai, ptr %2, align 16, !tbaa !108
   %i.aj = getelementptr inbounds nuw i8, ptr %.val, i64 12
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !12
@@ -1076,7 +1076,7 @@ bb.b:                                             ; preds = %bb.a
   call void @gtk_color_chooser_get_rgba(ptr noundef %0, ptr noundef nonnull %3) #20
   %i.h = load <2 x double>, ptr %3, align 16, !tbaa !108
   %i.i = fsub reassoc nsz arcp contract afn <2 x double> splat (double 2.000000e+00), %i.h
-  %i.j = fptrunc <2 x double> %i.i to <2 x float> ; 3 uses
+  %i.j = fptrunc reassoc nsz arcp contract afn <2 x double> %i.i to <2 x float> ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.l = load double, ptr %i.k, align 16, !tbaa !109
   %i.m = fsub reassoc nsz arcp contract afn double 2.000000e+00, %i.l
@@ -1132,7 +1132,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bd = fdiv reassoc nsz arcp contract afn <2 x float> %i.aw, %i.bc
   %i.be = fdiv reassoc nsz arcp contract afn float %i.au, %i.ba
-  %i.bf = fpext <2 x float> %i.bd to <2 x double>
+  %i.bf = fpext reassoc nsz arcp contract afn <2 x float> %i.bd to <2 x double>
   store <2 x double> %i.bf, ptr %2, align 16, !tbaa !108
   %i.bg = fpext reassoc nsz arcp contract afn float %i.be to double
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1172,7 +1172,7 @@ bb.b:                                             ; preds = %bb.a
   call void @gtk_color_chooser_get_rgba(ptr noundef %0, ptr noundef nonnull %3) #20
   %i.h = load <2 x double>, ptr %3, align 16, !tbaa !108
   %i.i = fsub reassoc nsz arcp contract afn <2 x double> splat (double 2.000000e+00), %i.h
-  %i.j = fptrunc <2 x double> %i.i to <2 x float> ; 3 uses
+  %i.j = fptrunc reassoc nsz arcp contract afn <2 x double> %i.i to <2 x float> ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.l = load double, ptr %i.k, align 16, !tbaa !109
   %i.m = fsub reassoc nsz arcp contract afn double 2.000000e+00, %i.l
@@ -1228,7 +1228,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bd = fdiv reassoc nsz arcp contract afn <2 x float> %i.aw, %i.bc
   %i.be = fdiv reassoc nsz arcp contract afn float %i.au, %i.ba
-  %i.bf = fpext <2 x float> %i.bd to <2 x double>
+  %i.bf = fpext reassoc nsz arcp contract afn <2 x float> %i.bd to <2 x double>
   store <2 x double> %i.bf, ptr %2, align 16, !tbaa !108
   %i.bg = fpext reassoc nsz arcp contract afn float %i.be to double
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1325,7 +1325,7 @@ toggle_stock_controls.exit:                       ; preds = %bb.d, %bb.e, %bb.f
 bb.g:                                             ; preds = %toggle_stock_controls.exit
   %i.x = getelementptr inbounds nuw i8, ptr %.val42, i64 4
   %i.y = load <2 x float>, ptr %i.x, align 4, !tbaa !12
-  %i.z = fpext <2 x float> %i.y to <2 x double>
+  %i.z = fpext reassoc nsz arcp contract afn <2 x float> %i.y to <2 x double>
   store <2 x double> %i.z, ptr %6, align 16, !tbaa !108
   %i.aa = getelementptr inbounds nuw i8, ptr %.val42, i64 12
   %i.ab = load float, ptr %i.aa, align 4, !tbaa !12
@@ -1393,7 +1393,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %.thread
   %i.bd = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.be = load <2 x float>, ptr %i.bd, align 4, !tbaa !12
-  %i.bf = fpext <2 x float> %i.be to <2 x double>
+  %i.bf = fpext reassoc nsz arcp contract afn <2 x float> %i.be to <2 x double>
   store <2 x double> %i.bf, ptr %5, align 16, !tbaa !108
   %i.bg = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !12
@@ -1478,7 +1478,7 @@ bb.u:                                             ; preds = %bb.r, %.thread51, %
   %i.ct = shufflevector <2 x float> %i.cs, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cu = fdiv reassoc nsz arcp contract afn <2 x float> %i.cn, %i.ct
   %i.cv = fdiv reassoc nsz arcp contract afn float %i.cl, %i.cr
-  %i.cw = fpext <2 x float> %i.cu to <2 x double>
+  %i.cw = fpext reassoc nsz arcp contract afn <2 x float> %i.cu to <2 x double>
   store <2 x double> %i.cw, ptr %4, align 16, !tbaa !108
   %i.cx = fpext reassoc nsz arcp contract afn float %i.cv to double
   %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1527,7 +1527,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %.thre
   %i.dw = shufflevector <2 x float> %i.dv, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dx = fdiv reassoc nsz arcp contract afn <2 x float> %i.dq, %i.dw
   %i.dy = fdiv reassoc nsz arcp contract afn float %i.do, %i.du
-  %i.dz = fpext <2 x float> %i.dx to <2 x double>
+  %i.dz = fpext reassoc nsz arcp contract afn <2 x float> %i.dx to <2 x double>
   store <2 x double> %i.dz, ptr %3, align 16, !tbaa !108
   %i.ea = fpext reassoc nsz arcp contract afn float %i.dy to double
   %i.eb = getelementptr inbounds nuw i8, ptr %3, i64 16

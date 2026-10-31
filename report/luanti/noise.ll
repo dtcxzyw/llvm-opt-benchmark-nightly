@@ -204,7 +204,7 @@ bb.a:
   %i.d = fptosi <2 x float> %i.b to <2 x i32>
   %i.e = sext <2 x i1> %i.c to <2 x i32>
   %i.f = add nsw <2 x i32> %i.e, %i.d             ; 3 uses
-  %i.g = sitofp <2 x i32> %i.f to <2 x float>
+  %i.g = sitofp nsz <2 x i32> %i.f to <2 x float>
   %i.h = fsub nsz <2 x float> %i.b, %i.g          ; 6 uses
   br i1 %3, label %bb.b, label %_Z21biLinearInterpolationffffffb.exit
 
@@ -303,7 +303,7 @@ bb.a:
   %i.h = add nsw i32 %i.g, %i.f                   ; 2 uses
   %i.i = sext <2 x i1> %i.c to <2 x i32>
   %i.j = add nsw <2 x i32> %i.i, %i.d             ; 3 uses
-  %i.k = sitofp <2 x i32> %i.j to <2 x float>
+  %i.k = sitofp nsz <2 x i32> %i.j to <2 x float>
   %i.l = fsub nsz <2 x float> %i.b, %i.k          ; 6 uses
   %i.m = sitofp nsz i32 %i.h to float
   %i.n = fsub nsz float %2, %i.m                  ; 6 uses
@@ -706,7 +706,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.w = load float, ptr %i.v, align 8, !tbaa !80 ; 2 uses
   %i.x = fdiv nsz float %i.u, %i.w                ; 2 uses
   %i.y = load <2 x i32>, ptr %i.o, align 4, !tbaa !36
-  %i.z = uitofp <2 x i32> %i.y to <2 x float>
+  %i.z = uitofp nsz <2 x i32> %i.y to <2 x float>
   %i.aa = insertelement <2 x float> poison, float %i.n, i64 0
   %i.ab = shufflevector <2 x float> %i.aa, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ac = fmul nsz <2 x float> %i.ab, %i.z
@@ -1109,10 +1109,10 @@ bb.a:
   %i.f = tail call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.e)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.h = fptosi <2 x float> %i.f to <2 x i32>     ; 4 uses
-  %i.i = sitofp <2 x i32> %i.h to <2 x float>
+  %i.i = sitofp nsz <2 x i32> %i.h to <2 x float>
   %i.j = fsub nsz <2 x float> %i.e, %i.i          ; 4 uses
   %i.k = load <2 x i32>, ptr %i.g, align 4, !tbaa !36 ; 3 uses
-  %i.l = uitofp <2 x i32> %i.k to <2 x float>
+  %i.l = uitofp nsz <2 x i32> %i.k to <2 x float>
   %i.m = insertelement <2 x float> poison, float %3, i64 0
   %i.n = insertelement <2 x float> %i.m, float %4, i64 1
   %i.o = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.l, <2 x float> %i.n, <2 x float> %i.j) ; 2 uses
@@ -1453,10 +1453,10 @@ bb.a:
   %i.j = fsub nsz float %3, %i.i                  ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.l = fptosi <2 x float> %i.f to <2 x i32>     ; 4 uses
-  %i.m = sitofp <2 x i32> %i.l to <2 x float>
+  %i.m = sitofp nsz <2 x i32> %i.l to <2 x float>
   %i.n = fsub nsz <2 x float> %i.e, %i.m          ; 3 uses
   %i.o = load <2 x i32>, ptr %i.k, align 4, !tbaa !36 ; 3 uses
-  %i.p = uitofp <2 x i32> %i.o to <2 x float>
+  %i.p = uitofp nsz <2 x i32> %i.o to <2 x float>
   %i.q = insertelement <2 x float> poison, float %4, i64 0
   %i.r = insertelement <2 x float> %i.q, float %5, i64 1
   %i.s = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.p, <2 x float> %i.r, <2 x float> %i.n)

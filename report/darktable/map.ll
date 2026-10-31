@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.u = load float, ptr %i.b, align 4, !tbaa !107 ; 2 uses
   %i.v = insertelement <2 x float> poison, float %i.u, i64 0
   %i.w = insertelement <2 x float> %i.v, float %i.r, i64 1
-  %i.x = fpext <2 x float> %i.w to <2 x double>
+  %i.x = fpext reassoc nsz arcp contract afn <2 x float> %i.w to <2 x double>
   store <2 x double> %i.x, ptr %i.t, align 8, !tbaa !135
   %i.y = getelementptr inbounds nuw i8, ptr %i.f, i64 208 ; 2 uses
   %i.z = load double, ptr %i.y, align 8, !tbaa !210
@@ -302,7 +302,7 @@ bb.l:                                             ; preds = %bb.c
   %i.bh = load float, ptr %i.d, align 4, !tbaa !107
   %i.bi = insertelement <2 x float> poison, float %i.bg, i64 0
   %i.bj = insertelement <2 x float> %i.bi, float %i.bh, i64 1
-  %i.bk = fpext <2 x float> %i.bj to <2 x double>
+  %i.bk = fpext reassoc nsz arcp contract afn <2 x float> %i.bj to <2 x double>
   store <2 x double> %i.bk, ptr %8, align 16, !tbaa !135
   %i.bl = getelementptr inbounds nuw i8, ptr %8, i64 16
   store double +qnan, ptr %i.bl, align 16, !tbaa !211
@@ -705,7 +705,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   %i.ax = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !117
   %i.az = shufflevector <2 x double> %i.w, <2 x double> %i.ab, <4 x i32> <i32 1, i32 3, i32 2, i32 0>
-  %i.ba = fptrunc <4 x double> %i.az to <4 x float> ; 4 uses
+  %i.ba = fptrunc reassoc nsz arcp contract afn <4 x double> %i.az to <4 x float> ; 4 uses
   %i.bb = extractelement <4 x float> %i.ba, i64 0
   %i.bc = extractelement <4 x float> %i.ba, i64 1
   %i.bd = extractelement <4 x float> %i.ba, i64 2
@@ -754,7 +754,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ce = fadd reassoc nsz arcp contract afn <4 x float> %i.cb, %i.cd
   %i.cf = fsub reassoc nsz arcp contract afn <4 x float> %i.cb, %i.cd
   %i.cg = shufflevector <4 x float> %i.ce, <4 x float> %i.cf, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.ch = fpext <4 x float> %i.cg to <4 x double>
+  %i.ch = fpext reassoc nsz arcp contract afn <4 x float> %i.cg to <4 x double>
   %i.ci = fmul reassoc nsz arcp contract afn <4 x double> %i.ch, splat (double 5.000000e-01)
   store <4 x double> %i.ci, ptr %i.bh, align 8, !tbaa !135
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
@@ -770,7 +770,7 @@ bb.m:                                             ; preds = %bb.k
   %i.cm = load float, ptr %i.f, align 4, !tbaa !107 ; 4 uses
   %i.cn = insertelement <2 x float> poison, float %i.cl, i64 0
   %i.co = insertelement <2 x float> %i.cn, float %i.cm, i64 1
-  %i.cp = fpext <2 x float> %i.co to <2 x double>
+  %i.cp = fpext reassoc nsz arcp contract afn <2 x float> %i.co to <2 x double>
   store <2 x double> %i.cp, ptr %i.bh, align 8, !tbaa !135
   %i.cq = call ptr @osm_gps_map_point_new_degrees(float noundef %i.cm, float noundef %i.cl) #23 ; 2 uses
   %i.cr = call ptr @osm_gps_map_point_new_degrees(float noundef 0.000000e+00, float noundef 0.000000e+00) #23 ; 3 uses
@@ -1097,7 +1097,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !117
   %i.o = load <2 x double>, ptr %3, align 16, !tbaa !135
-  %i.p = fptrunc <2 x double> %i.o to <2 x float> ; 2 uses
+  %i.p = fptrunc reassoc nsz arcp contract afn <2 x double> %i.o to <2 x float> ; 2 uses
   %i.q = extractelement <2 x float> %i.p, i64 0
   %i.r = extractelement <2 x float> %i.p, i64 1
   call void @osm_gps_map_set_center_and_zoom(ptr noundef %i.n, float noundef %i.r, float noundef %i.q, i32 noundef %i.k) #23
@@ -1500,8 +1500,8 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   br label %vec.epilog.scalar.ph
 
 ._crit_edge.i.i.i:                                ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %i.gq = fpext <2 x float> %i.gk to <2 x double>
-  %i.gr = fpext <2 x float> %i.gm to <2 x double>
+  %i.gq = fpext reassoc nsz arcp contract afn <2 x float> %i.gk to <2 x double>
+  %i.gr = fpext reassoc nsz arcp contract afn <2 x float> %i.gm to <2 x double>
   %i.gs = fmul reassoc nsz arcp contract afn <2 x double> %i.gq, splat (double f0x3F91DF46A2529D39)
   %i.gt = shufflevector <2 x double> %i.gs, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 5 uses
   %i.gu = fmul reassoc nsz arcp contract afn <2 x double> %i.gr, splat (double f0x3F91DF46A2529D39)
@@ -1904,7 +1904,7 @@ bb.d:                                             ; preds = %.thread
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !117
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load <2 x double>, ptr %i.x, align 8, !tbaa !135
-  %i.z = fptrunc <2 x double> %i.y to <2 x float> ; 2 uses
+  %i.z = fptrunc reassoc nsz arcp contract afn <2 x double> %i.y to <2 x float> ; 2 uses
   %i.aa = extractelement <2 x float> %i.z, i64 0
   %i.ab = extractelement <2 x float> %i.z, i64 1
   %i.ac = tail call ptr @osm_gps_map_image_add_with_alignment(ptr noundef %i.w, float noundef %i.aa, float noundef %i.ab, ptr noundef nonnull %i.t, float noundef 0.000000e+00, float noundef 1.000000e+00) #23
@@ -2025,7 +2025,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bd = sitofp reassoc nsz arcp contract afn i32 %.090 to double
   %i.be = sitofp reassoc nsz arcp contract afn i32 %.089 to double ; 2 uses
   %i.bf = load <2 x i32>, ptr %i.s, align 8, !tbaa !131
-  %i.bg = sitofp <2 x i32> %i.bf to <2 x double>
+  %i.bg = sitofp reassoc nsz arcp contract afn <2 x i32> %i.bf to <2 x double>
   %i.bh = insertelement <2 x double> poison, double %i.bd, i64 0
   %i.bi = insertelement <2 x double> %i.bh, double %i.be, i64 1
   %i.bj = fdiv reassoc nsz arcp contract afn <2 x double> %i.bi, %i.bg ; 2 uses
@@ -2265,7 +2265,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !117
   %i.l = load <2 x double>, ptr %i.f, align 8, !tbaa !135
-  %i.m = fptrunc <2 x double> %i.l to <2 x float> ; 2 uses
+  %i.m = fptrunc reassoc nsz arcp contract afn <2 x double> %i.l to <2 x float> ; 2 uses
   %i.n = extractelement <2 x float> %i.m, i64 0
   %i.o = extractelement <2 x float> %i.m, i64 1
   %i.p = tail call ptr @osm_gps_map_image_add_with_alignment(ptr noundef %i.k, float noundef %i.o, float noundef %i.n, ptr noundef nonnull %i.i, float noundef 5.000000e-01, float noundef 5.000000e-01) #23
@@ -2668,7 +2668,7 @@ bb.e:                                             ; preds = %bb.a
   call void @cairo_line_to(ptr noundef %i.ds, double noundef %i.dv, double noundef %i.dy) #23
   call void @cairo_line_to(ptr noundef %i.ds, double noundef %i.db, double noundef %i.dy) #23
   call void @cairo_line_to(ptr noundef %i.ds, double noundef %i.db, double noundef %i.db) #23
-  %i.dz = sitofp <2 x i32> %i.do to <2 x double>  ; 2 uses
+  %i.dz = sitofp reassoc nsz arcp contract afn <2 x i32> %i.do to <2 x double> ; 2 uses
   %i.ea = extractelement <2 x double> %i.dz, i64 0
   %i.eb = fmul reassoc nnan nsz arcp contract afn double %i.ea, 5.000000e-01 ; 5 uses
   %i.ec = fadd reassoc nsz arcp contract afn double %i.eb, %i.cz ; 2 uses
@@ -3071,7 +3071,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 100
   %i.ao = select <4 x i1> %i.aj, <4 x double> <double -1.800000e+02, double -1.800000e+02, double -9.000000e+01, double -9.000000e+01>, <4 x double> %i.ah
   %i.ap = select <4 x i1> %i.ai, <4 x double> <double 1.800000e+02, double 1.800000e+02, double 9.000000e+01, double 9.000000e+01>, <4 x double> %i.ao ; 3 uses
-  %i.aq = fptrunc <4 x double> %i.ap to <4 x float> ; 4 uses
+  %i.aq = fptrunc reassoc nsz arcp contract afn <4 x double> %i.ap to <4 x float> ; 4 uses
   %i.ar = extractelement <4 x float> %i.aq, i64 0
   %i.as = extractelement <4 x float> %i.aq, i64 1
   %i.at = extractelement <4 x float> %i.aq, i64 2
@@ -3079,7 +3079,7 @@ bb.g:                                             ; preds = %bb.f
   call void @osm_gps_map_zoom_fit_bbox(ptr noundef %i.am, float noundef %i.au, float noundef %i.at, float noundef %i.as, float noundef %i.ar) #23
   %i.av = load <2 x float>, ptr %i.an, align 4, !tbaa !107
   %i.aw = shufflevector <2 x float> %i.av, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
-  %i.ax = fpext <4 x float> %i.aw to <4 x double>
+  %i.ax = fpext reassoc nsz arcp contract afn <4 x float> %i.aw to <4 x double>
   %i.ay = fmul reassoc nsz arcp contract afn <4 x double> %i.ax, <double 1.000000e+00, double 2.000000e-01, double 1.000000e+00, double 2.000000e-01> ; 2 uses
   %i.az = fadd reassoc nsz arcp contract afn <4 x double> %i.ap, %i.ay
   %i.ba = fsub reassoc nsz arcp contract afn <4 x double> %i.ap, %i.ay
@@ -3091,7 +3091,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bg = fcmp reassoc nsz arcp contract afn olt <4 x double> %i.bb, <double -1.800000e+02, double -1.800000e+02, double -9.000000e+01, double -9.000000e+01>
   %i.bh = select <4 x i1> %i.bg, <4 x double> <double -1.800000e+02, double -1.800000e+02, double -9.000000e+01, double -9.000000e+01>, <4 x double> %i.bb
   %i.bi = select <4 x i1> %i.bc, <4 x double> <double 1.800000e+02, double 1.800000e+02, double 9.000000e+01, double 9.000000e+01>, <4 x double> %i.bh
-  %i.bj = fptrunc <4 x double> %i.bi to <4 x float> ; 4 uses
+  %i.bj = fptrunc reassoc nsz arcp contract afn <4 x double> %i.bi to <4 x float> ; 4 uses
   %i.bk = extractelement <4 x float> %i.bj, i64 0
   %i.bl = extractelement <4 x float> %i.bj, i64 1
   %i.bm = extractelement <4 x float> %i.bj, i64 2

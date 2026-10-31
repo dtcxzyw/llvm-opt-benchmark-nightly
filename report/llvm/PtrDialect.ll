@@ -206,7 +206,7 @@ _ZN4llvm10hash_valueIlEENS_9hash_codeERKSt8optionalIT_E.exit: ; preds = %bb.a, %
   store i64 %.sroa.0.0.i, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ai = load <4 x i8>, ptr %i.t, align 8, !tbaa !126
-  %i.aj = trunc <4 x i8> %i.ai to <4 x i1>
+  %i.aj = trunc nuw <4 x i8> %i.ai to <4 x i1>
   %i.ak = select <4 x i1> %i.aj, <4 x i64> splat (i64 -1012210448320248773), <4 x i64> splat (i64 3646684832232758914) ; 2 uses
   %i.al = lshr <4 x i64> %i.ak, splat (i64 27)
   %i.am = xor <4 x i64> %i.al, %i.ak

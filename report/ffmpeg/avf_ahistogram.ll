@@ -205,14 +205,14 @@ bb.t:                                             ; preds = %bb.s
   %i.ls = insertelement <2 x double> poison, double %i.lo, i64 0
   %i.lt = shufflevector <2 x double> %i.ls, <2 x double> poison, <2 x i32> zeroinitializer
   %i.lu = fmul nsz <2 x double> %i.lr, %i.lt
-  %i.lv = fptrunc <2 x double> %i.lu to <2 x float> ; 2 uses
+  %i.lv = fptrunc nsz <2 x double> %i.lu to <2 x float> ; 2 uses
   %i.lw = insertelement <2 x float> poison, float %i.lf, i64 0
   %i.lx = shufflevector <2 x float> %i.lw, <2 x float> %i.lv, <2 x i32> <i32 0, i32 2>
   %i.ly = fptosi float %i.lf to i32
   %i.lz = call i32 @llvm.smax.i32(i32 %i.ly, i32 0)
   %i.ma = call i32 @llvm.umin.i32(i32 %i.lz, i32 255)
   %i.mb = trunc nuw i32 %i.ma to i8
-  %i.mc = fpext <2 x float> %i.lx to <2 x double>
+  %i.mc = fpext nsz <2 x float> %i.lx to <2 x double>
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -466,11 +466,11 @@ bb.ai:                                            ; preds = %bb.ah
 
 ._crit_edge474.i:                                 ; preds = %bb.ai, %bb.ah, %bb.ag
   %i.ry = load <2 x float>, ptr %i.qc, align 4, !tbaa !88
-  %i.rz = fpext <2 x float> %i.ry to <2 x double>
+  %i.rz = fpext nsz <2 x float> %i.ry to <2 x double>
   %i.sa = insertelement <2 x double> poison, double %.0377.i, i64 0
   %i.sb = shufflevector <2 x double> %i.sa, <2 x double> poison, <2 x i32> zeroinitializer
   %i.sc = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.sb, <2 x double> %i.md, <2 x double> %i.rz)
-  %i.sd = fptrunc <2 x double> %i.sc to <2 x float>
+  %i.sd = fptrunc nsz <2 x double> %i.sc to <2 x float>
   store <2 x float> %i.sd, ptr %i.qc, align 4, !tbaa !88
   %i.se = getelementptr inbounds nuw i8, ptr %i.qc, i64 8 ; 2 uses
   %i.sf = load float, ptr %i.se, align 4, !tbaa !88

@@ -204,9 +204,9 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph278.i
 
 ._crit_edge279.i:                                 ; preds = %bb.n
   %i.id = load <2 x float>, ptr %i.eg, align 4, !tbaa !33
-  %i.ie = fpext <2 x float> %i.id to <2 x double>
+  %i.ie = fpext nsz <2 x float> %i.id to <2 x double>
   %i.if = call nsz <2 x double> @llvm.exp.v2f64(<2 x double> %i.ie)
-  %i.ig = fptrunc <2 x double> %i.if to <2 x float>
+  %i.ig = fptrunc nsz <2 x double> %i.if to <2 x float>
   store <2 x float> %i.ig, ptr %i.eg, align 4, !tbaa !33
   br i1 %i.hh, label %.lr.ph282.preheader.i, label %._crit_edge283.i
 
@@ -278,9 +278,9 @@ middle.block255:                                  ; preds = %vector.body251
 
 ._crit_edge283.i.critedge:                        ; preds = %._crit_edge275.i
   %i.jh = load <2 x float>, ptr %i.eg, align 4, !tbaa !33
-  %i.ji = fpext <2 x float> %i.jh to <2 x double>
+  %i.ji = fpext nsz <2 x float> %i.jh to <2 x double>
   %i.jj = call nsz <2 x double> @llvm.exp.v2f64(<2 x double> %i.ji)
-  %i.jk = fptrunc <2 x double> %i.jj to <2 x float>
+  %i.jk = fptrunc nsz <2 x double> %i.jj to <2 x float>
   store <2 x float> %i.jk, ptr %i.eg, align 4, !tbaa !33
   br label %._crit_edge283.i
 
