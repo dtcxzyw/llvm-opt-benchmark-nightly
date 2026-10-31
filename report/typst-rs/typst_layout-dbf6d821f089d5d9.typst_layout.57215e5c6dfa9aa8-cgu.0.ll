@@ -205,10 +205,9 @@ middle.block1588:                                 ; preds = %vector.body1583
   br i1 %min.iters.check1565, label %.preheader679.preheader1707, label %vector.memcheck1563
 
 vector.memcheck1563:                              ; preds = %.preheader679.preheader
-  %8 = sub i64 %i.yx, %i.bk
-  %i.aad = add i64 %8, %.idx26.i
-  %9 = add i64 %i.aad, -1
-  %diff.check = icmp ult i64 %9, 31
+  %i.aad = add i64 %.idx26.i, %i.yx
+  %8 = sub i64 %i.bk, %i.aad
+  %diff.check = icmp ugt i64 %8, -32
   br i1 %diff.check, label %.preheader679.preheader1707, label %vector.ph1566
 
 vector.ph1566:                                    ; preds = %vector.memcheck1563
@@ -460,8 +459,8 @@ vector.memcheck:                                  ; preds = %bb.eh
   %i.aci = shl nuw nsw i64 %i.ach, 3
   %scevgep = getelementptr i8, ptr %.sroa.4280.0.copyload, i64 %i.aci
   %scevgep1560 = getelementptr i8, ptr %i.acd, i64 32
-  %scevgep1561 = getelementptr i8, ptr %i.acd, i64 -8
-  %scevgep1562 = getelementptr i8, ptr %scevgep1561, i64 %i.acg
+  %scevgep1561 = getelementptr i8, ptr %i.acd, i64 %i.acg
+  %scevgep1562 = getelementptr i8, ptr %scevgep1561, i64 -8
   %bound0 = icmp ult ptr %.sroa.4280.0.copyload, %scevgep1562
   %bound1 = icmp ult ptr %scevgep1560, %scevgep
   %found.conflict = and i1 %bound0, %bound1

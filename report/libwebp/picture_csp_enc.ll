@@ -204,10 +204,8 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge
 
 .lr.ph107.preheader:                              ; preds = %.lr.ph110
   %wide.trip.count = zext nneg i32 %i.t to i64    ; 7 uses
-  %1 = shl nuw nsw i64 %wide.trip.count, 2
-  %scevgep = getelementptr i8, ptr %i.bk, i64 %1
-  %scevgep127 = getelementptr i8, ptr %i.bm, i64 %wide.trip.count
   %min.iters.check = icmp ult i32 %i.t, 8
+  %scevgep127 = getelementptr i8, ptr %i.bm, i64 %wide.trip.count
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   %xtraiter = and i64 %wide.trip.count, 1
@@ -228,8 +226,9 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph107
-  %i.by = shl nsw i64 %i.bs, 2
-  %scevgep126 = getelementptr i8, ptr %scevgep, i64 %i.by
+  %1 = add nsw i64 %i.bs, %wide.trip.count
+  %i.by = shl nsw i64 %1, 2
+  %scevgep126 = getelementptr i8, ptr %i.bk, i64 %i.by
   %scevgep128 = getelementptr i8, ptr %scevgep127, i64 %i.bw
   %bound0 = icmp ult ptr %i.bt, %scevgep128
   %bound1 = icmp ult ptr %i.bx, %scevgep126

@@ -205,7 +205,7 @@ bb.a:
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8 ; 3 uses
   %i.a = load ptr, ptr %0, align 8, !nonnull !5, !align !18, !noundef !5 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37572)
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !37572, !nonnull !5, !align !18, !noundef !5
@@ -215,7 +215,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !37572, !nonnull !5, !align !18, !noundef !5 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8, !noalias !37573, !noundef !5 ; 4 uses
   %i.h = mul i64 %i.g, %i.d
-  %i.i = mul i64 %i.g, %.sroa.0.0.copyload        ; 4 uses
+  %i.i = mul i64 %i.g, %.sroa.0.0.copyload        ; 3 uses
   %.not.i = icmp eq i64 %i.c, 0
   br i1 %.not.i, label %_RNCNvXs0_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models16segment_anything13image_encoderNtB7_4Add3NtNtCsltEA4u8Pgfu_11candle_core9custom_op9CustomOp37cpu_fwd0Bd_.exit, label %.lr.ph71.i
 
@@ -229,31 +229,26 @@ bb.a:
   %i.p = load ptr, ptr %i.o, align 8, !alias.scope !37572, !nonnull !5, !align !26 ; 4 uses
   %i.q = load ptr, ptr %i.n, align 8, !alias.scope !37572, !nonnull !5, !align !26 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %i.s = load i64, ptr %i.r, align 8, !alias.scope !37572 ; 4 uses
+  %i.s = load i64, ptr %i.r, align 8, !alias.scope !37572 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.u = load ptr, ptr %i.t, align 8, !alias.scope !37572, !nonnull !5, !align !26 ; 4 uses
   %.not72.i = icmp eq i64 %i.g, 0
   br i1 %.not72.i, label %_RNCNvXs0_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models16segment_anything13image_encoderNtB7_4Add3NtNtCsltEA4u8Pgfu_11candle_core9custom_op9CustomOp37cpu_fwd0Bd_.exit, label %.lr.ph71.split.i.preheader
 
 .lr.ph71.split.i.preheader:                       ; preds = %.lr.ph71.i
-  %scevgep87 = getelementptr i8, ptr %.sroa.2.0.copyload, i64 4
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.s, i64 %i.i)
-  %scevgep94 = getelementptr i8, ptr %i.p, i64 4
-  %i.v = mul i64 %i.c, %.sroa.0.0.copyload
-  %i.w = shl i64 %i.v, 2
-  %scevgep96 = getelementptr i8, ptr %i.q, i64 %i.w
+  %i.v = mul i64 %i.g, %.sroa.0.0.copyload
+  %i.w = shl i64 %i.v, 2                          ; 2 uses
+  %scevgep96 = getelementptr i8, ptr %i.u, i64 %i.w
   %i.x = shl i64 %.sroa.0.0.copyload, 2
   %i.y = add i64 %i.x, 4
   %i.z = mul i64 %i.c, %i.y
   %scevgep97 = getelementptr i8, ptr %i.q, i64 %i.z
-  %i.aa = mul i64 %i.g, %.sroa.0.0.copyload
-  %i.ab = shl i64 %i.aa, 2                        ; 2 uses
-  %scevgep98 = getelementptr i8, ptr %i.u, i64 %i.ab
-  %3 = getelementptr i8, ptr %i.u, i64 %i.ab
-  %scevgep99 = getelementptr i8, ptr %3, i64 4
+  %i.aa = mul i64 %i.c, %.sroa.0.0.copyload
+  %i.ab = shl i64 %i.aa, 2
+  %scevgep99 = getelementptr i8, ptr %i.q, i64 %i.ab
   %i.ac = tail call i64 @llvm.usub.sat.i64(i64 %i.s, i64 %i.i)
-  %i.ad = freeze i64 %i.ac
-  %4 = freeze i64 %2
+  %i.ad = freeze i64 %i.ac                        ; 2 uses
+  %2 = getelementptr i8, ptr %i.u, i64 %i.w
   %invariant.gep149 = getelementptr [4 x i8], ptr %i.u, i64 %i.i
   br label %.lr.ph71.split.i
 
@@ -263,10 +258,9 @@ bb.a:
 
 .lr.ph71.split.i:                                 ; preds = %.lr.ph71.split.i.preheader, %.loopexit.i
   %.sroa.03.070.i = phi i64 [ %i.ae, %.loopexit.i ], [ 0, %.lr.ph71.split.i.preheader ] ; 6 uses
-  %5 = shl i64 %.sroa.03.070.i, 2
   %i.ae = add nuw i64 %.sroa.03.070.i, 1          ; 2 uses
-  %i.af = load i64, ptr %i.f, align 8, !noalias !37573, !noundef !5 ; 8 uses
-  %i.ag = mul i64 %i.af, %.sroa.03.070.i          ; 5 uses
+  %i.af = load i64, ptr %i.f, align 8, !noalias !37573, !noundef !5 ; 7 uses
+  %i.ag = mul i64 %i.af, %.sroa.03.070.i          ; 4 uses
   %i.ah = add i64 %i.ag, %i.h                     ; 7 uses
   %.not73.i = icmp eq i64 %i.af, 0
   br i1 %.not73.i, label %.loopexit.i, label %.lr.ph.i
@@ -279,10 +273,10 @@ bb.a:
   br i1 %.fr.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
-  %i.al = tail call i64 @llvm.umax.i64(i64 %.sroa.3.0.copyload, i64 %i.ag)
+  %i.al = tail call i64 @llvm.umax.i64(i64 %.sroa.3.0.copyload, i64 %i.ag) ; 2 uses
   %i.am = mul i64 %.sroa.03.070.i, %i.af
   %i.an = sub i64 %i.al, %i.am
-  %i.ao = add i64 %i.af, -1
+  %i.ao = add i64 %i.af, -1                       ; 2 uses
   %.fr = freeze i64 %i.an
   %i.ap = tail call i64 @llvm.umin.i64(i64 %.fr, i64 %i.ao)
   %i.aq = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.ah)
@@ -293,34 +287,36 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.split.us.i.preheader110, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.i.preheader
-  %6 = mul i64 %i.af, %5                          ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.2.0.copyload, i64 %6 ; 3 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.3.0.copyload, i64 %i.ag)
+  %3 = shl i64 %.sroa.03.070.i, 2
+  %4 = mul i64 %i.af, %3                          ; 2 uses
+  %5 = getelementptr i8, ptr %.sroa.2.0.copyload, i64 %4 ; 3 uses
   %i.au = mul i64 %.sroa.03.070.i, %i.af
-  %i.av = sub i64 %umax, %i.au
-  %7 = add i64 %i.af, -1
+  %i.av = sub i64 %i.al, %i.au
   %.fr109 = freeze i64 %i.av
-  %umin = tail call i64 @llvm.umin.i64(i64 %.fr109, i64 %7)
-  %umin89 = tail call i64 @llvm.umin.i64(i64 %umin, i64 %4)
-  %i.aw = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.ah)
-  %umin91 = tail call i64 @llvm.umin.i64(i64 %umin89, i64 %i.aw)
+  %umin = tail call i64 @llvm.umin.i64(i64 %.fr109, i64 %i.ao)
+  %umin89 = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.ah)
+  %i.aw = tail call i64 @llvm.umin.i64(i64 %umin, i64 %i.ad)
+  %umin91 = tail call i64 @llvm.umin.i64(i64 %i.aw, i64 %umin89)
   %i.ax = shl i64 %umin91, 2                      ; 3 uses
-  %i.ay = getelementptr i8, ptr %scevgep87, i64 %6
-  %scevgep92 = getelementptr i8, ptr %i.ay, i64 %i.ax ; 3 uses
+  %6 = getelementptr i8, ptr %.sroa.2.0.copyload, i64 %4
+  %i.ay = getelementptr i8, ptr %6, i64 %i.ax
+  %scevgep92 = getelementptr i8, ptr %i.ay, i64 4 ; 3 uses
   %i.az = shl i64 %i.ah, 2                        ; 2 uses
-  %scevgep93 = getelementptr i8, ptr %i.p, i64 %i.az
-  %i.ba = getelementptr i8, ptr %scevgep94, i64 %i.ax
-  %scevgep95 = getelementptr i8, ptr %i.ba, i64 %i.az
-  %scevgep100 = getelementptr i8, ptr %scevgep99, i64 %i.ax
-  %bound0 = icmp ult ptr %scevgep, %scevgep95
-  %bound1 = icmp ult ptr %scevgep93, %scevgep92
+  %7 = getelementptr i8, ptr %i.p, i64 %i.az
+  %8 = getelementptr i8, ptr %i.p, i64 %i.ax
+  %scevgep93 = getelementptr i8, ptr %8, i64 %i.az
+  %i.ba = getelementptr i8, ptr %scevgep93, i64 4
+  %scevgep95 = getelementptr i8, ptr %2, i64 %i.ax
+  %scevgep100 = getelementptr i8, ptr %scevgep95, i64 4
+  %bound0 = icmp ult ptr %5, %i.ba
+  %bound1 = icmp ult ptr %7, %scevgep92
   %found.conflict = and i1 %bound0, %bound1
-  %bound0101 = icmp ult ptr %scevgep, %scevgep97
-  %bound1102 = icmp ult ptr %scevgep96, %scevgep92
+  %bound0101 = icmp ult ptr %5, %scevgep97
+  %bound1102 = icmp ult ptr %scevgep99, %scevgep92
   %found.conflict103 = and i1 %bound0101, %bound1102
   %conflict.rdx = or i1 %found.conflict, %found.conflict103
-  %bound0104 = icmp ult ptr %scevgep, %scevgep100
-  %bound1105 = icmp ult ptr %scevgep98, %scevgep92
+  %bound0104 = icmp ult ptr %5, %scevgep100
+  %bound1105 = icmp ult ptr %scevgep96, %scevgep92
   %found.conflict106 = and i1 %bound0104, %bound1105
   %conflict.rdx107 = or i1 %conflict.rdx, %found.conflict106
   br i1 %conflict.rdx107, label %.lr.ph.split.us.i.preheader110, label %vector.ph

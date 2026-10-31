@@ -204,15 +204,14 @@ iter.check263:                                    ; preds = %.noexc65
   br i1 %min.iters.check247, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck239
 
 vector.memcheck239:                               ; preds = %iter.check263
-  %scevgep240 = getelementptr i8, ptr %i.cp, i64 8
   %i.cv = add i64 %i.cf, -8
   %i.cw = sub i64 %i.cv, %i.cg
-  %i.cx = and i64 %i.cw, -8                       ; 2 uses
-  %scevgep241 = getelementptr i8, ptr %scevgep240, i64 %i.cx
-  %scevgep242 = getelementptr i8, ptr %i.ce, i64 8
-  %scevgep243 = getelementptr i8, ptr %scevgep242, i64 %i.cx
+  %i.cx = and i64 %i.cw, -8
+  %6 = add i64 %i.cx, 8                           ; 2 uses
+  %scevgep242 = getelementptr i8, ptr %i.cp, i64 %6
+  %scevgep243 = getelementptr i8, ptr %i.ce, i64 %6
   %bound0244 = icmp ult ptr %i.cp, %scevgep243
-  %bound1245 = icmp ult ptr %i.ce, %scevgep241
+  %bound1245 = icmp ult ptr %i.ce, %scevgep242
   %found.conflict246 = and i1 %bound0244, %bound1245
   br i1 %found.conflict246, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check248
 
@@ -432,15 +431,14 @@ iter.check:                                       ; preds = %.noexc82
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i69.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %i.fd, i64 8
   %i.fj = add i64 %i.et, -8
   %i.fk = sub i64 %i.fj, %i.eu
-  %i.fl = and i64 %i.fk, -8                       ; 2 uses
-  %scevgep223 = getelementptr i8, ptr %scevgep, i64 %i.fl
-  %scevgep224 = getelementptr i8, ptr %i.es, i64 8
-  %scevgep225 = getelementptr i8, ptr %scevgep224, i64 %i.fl
+  %i.fl = and i64 %i.fk, -8
+  %7 = add i64 %i.fl, 8                           ; 2 uses
+  %scevgep224 = getelementptr i8, ptr %i.fd, i64 %7
+  %scevgep225 = getelementptr i8, ptr %i.es, i64 %7
   %bound0 = icmp ult ptr %i.fd, %scevgep225
-  %bound1 = icmp ult ptr %i.es, %scevgep223
+  %bound1 = icmp ult ptr %i.es, %scevgep224
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i69.preheader, label %vector.main.loop.iter.check
 

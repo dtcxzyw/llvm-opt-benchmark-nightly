@@ -204,7 +204,7 @@ zend_arena_alloc.exit:                            ; preds = %bb.d, %bb.e
   store i32 %.fr430, ptr %5, align 8, !tbaa !159
   %i.an = zext i32 %.fr430 to i64
   %i.ao = add nuw nsw i64 %i.an, 63               ; 2 uses
-  %i.ap = lshr i64 %i.ao, 6                       ; 27 uses
+  %i.ap = lshr i64 %i.ao, 6                       ; 28 uses
   %i.aq = trunc nuw nsw i64 %i.ap to i32          ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !70
@@ -607,14 +607,9 @@ place_essa_pis.exit:                              ; preds = %.critedge.i, %bb.j
 
 .lr.ph413.us.preheader:                           ; preds = %place_essa_pis.exit
   %wide.trip.count442 = zext nneg i32 %i.e to i64
-  %i.we = shl nuw nsw i64 %i.ap, 3                ; 7 uses
-  %scevgep = getelementptr i8, ptr %i.bn, i64 %i.we
-  %scevgep522 = getelementptr i8, ptr %i.bp, i64 %i.we
-  %scevgep528 = getelementptr i8, ptr %i.bp, i64 %i.we
-  %scevgep530 = getelementptr i8, ptr %i.bn, i64 %i.we
-  %scevgep532 = getelementptr i8, ptr %i.bo, i64 %i.we
-  %scevgep557 = getelementptr i8, ptr %i.bp, i64 %i.we
-  %scevgep559 = getelementptr i8, ptr %i.bo, i64 %i.we
+  %i.we = shl nuw nsw i64 %i.ap, 3                ; 2 uses
+  %scevgep557 = getelementptr i8, ptr %i.bo, i64 %i.we
+  %scevgep559 = getelementptr i8, ptr %i.bp, i64 %i.we
   %min.iters.check565 = icmp ult i32 %.fr430, 193
   %n.vec567 = and i64 %i.ap, 134217724            ; 3 uses
   %cmp.n576 = icmp eq i64 %i.ap, %n.vec567
@@ -633,25 +628,15 @@ place_essa_pis.exit:                              ; preds = %.critedge.i, %bb.j
   br label %.lr.ph413.us
 
 .lr.ph413.us:                                     ; preds = %.lr.ph413.us.backedge, %.lr.ph413.us.preheader
-  %indvars.iv439 = phi i64 [ 0, %.lr.ph413.us.preheader ], [ %indvars.iv439.be, %.lr.ph413.us.backedge ] ; 6 uses
+  %indvars.iv439 = phi i64 [ 0, %.lr.ph413.us.preheader ], [ %indvars.iv439.be, %.lr.ph413.us.backedge ] ; 4 uses
   %.0315412.us = phi i32 [ 0, %.lr.ph413.us.preheader ], [ %.0315412.us.be, %.lr.ph413.us.backedge ] ; 5 uses
-  %6 = mul i64 %i.ap, %indvars.iv439
-  %7 = shl i64 %6, 3
-  %8 = and i64 %7, 34359738360                    ; 2 uses
-  %scevgep558 = getelementptr i8, ptr %scevgep557, i64 %8
-  %scevgep560 = getelementptr i8, ptr %scevgep559, i64 %8
-  %9 = mul i64 %i.ap, %indvars.iv439
-  %10 = shl i64 %9, 3
-  %11 = and i64 %10, 34359738360                  ; 2 uses
-  %scevgep529 = getelementptr i8, ptr %scevgep528, i64 %11 ; 2 uses
-  %scevgep533 = getelementptr i8, ptr %scevgep532, i64 %11
   %i.wg = mul i64 %i.ap, %indvars.iv439
   %i.wh = shl i64 %i.wg, 3
   %i.wi = and i64 %i.wh, 34359738360              ; 2 uses
-  %scevgep521 = getelementptr i8, ptr %scevgep, i64 %i.wi
-  %scevgep523 = getelementptr i8, ptr %scevgep522, i64 %i.wi
+  %scevgep521 = getelementptr i8, ptr %scevgep557, i64 %i.wi
+  %scevgep523 = getelementptr i8, ptr %scevgep559, i64 %i.wi ; 2 uses
   %i.wj = mul i64 %indvars.iv439, %i.ap
-  %i.wk = and i64 %i.wj, 4294967295               ; 4 uses
+  %i.wk = and i64 %i.wj, 4294967295               ; 6 uses
   %i.wl = getelementptr [8 x i8], ptr %i.bn, i64 %i.wk ; 8 uses
   %i.wm = getelementptr [8 x i8], ptr %i.bp, i64 %i.wk ; 21 uses
   %i.wn = getelementptr inbounds nuw [64 x i8], ptr %i.d, i64 %indvars.iv439 ; 4 uses
@@ -679,8 +664,12 @@ bb.em:                                            ; preds = %bb.el
   br i1 %min.iters.check565, label %.lr.ph.i362.us.preheader593, label %vector.memcheck556
 
 vector.memcheck556:                               ; preds = %.lr.ph.i362.us.preheader
-  %bound0561 = icmp ult ptr %i.wm, %scevgep560
-  %bound1562 = icmp ult ptr %i.wv, %scevgep558
+  %6 = add nuw nsw i64 %i.ap, %i.wk
+  %7 = shl nuw nsw i64 %6, 3                      ; 2 uses
+  %8 = getelementptr i8, ptr %i.bp, i64 %7
+  %9 = getelementptr i8, ptr %i.bo, i64 %7
+  %bound0561 = icmp ult ptr %i.wm, %9
+  %bound1562 = icmp ult ptr %i.wv, %8
   %found.conflict563 = and i1 %bound0561, %bound1562
   br i1 %found.conflict563, label %.lr.ph.i362.us.preheader593, label %vector.body568
 
@@ -774,8 +763,8 @@ middle.block575:                                  ; preds = %vector.body568
   %i.yj = sext i32 %i.yi to i64
   %wide.trip.count = zext nneg i32 %i.ws to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.yg, i64 %i.yj
-  %bound0537 = icmp ult ptr %i.wm, %scevgep533
-  %bound1538 = icmp ult ptr %i.yf, %scevgep529
+  %bound0537 = icmp ult ptr %i.wm, %scevgep521
+  %bound1538 = icmp ult ptr %i.yf, %scevgep523
   %found.conflict539 = and i1 %bound0537, %bound1538
   br label %.lr.ph410.split.us414
 
@@ -802,10 +791,11 @@ bb.en:                                            ; preds = %zend_bitset_union_w
   br i1 %min.iters.check541, label %.lr.ph.i369.us.preheader, label %vector.memcheck527
 
 vector.memcheck527:                               ; preds = %.lr.ph.i369.preheader.us
-  %i.yo = shl nuw nsw i64 %i.ym, 3
-  %scevgep531 = getelementptr i8, ptr %scevgep530, i64 %i.yo
+  %10 = add nuw nsw i64 %i.ap, %i.ym
+  %i.yo = shl nuw nsw i64 %10, 3
+  %scevgep531 = getelementptr i8, ptr %i.bn, i64 %i.yo
   %bound0534 = icmp ult ptr %i.wm, %scevgep531
-  %bound1535 = icmp ult ptr %i.yn, %scevgep529
+  %bound1535 = icmp ult ptr %i.yn, %scevgep523
   %found.conflict536 = and i1 %bound0534, %bound1535
   %conflict.rdx = or i1 %found.conflict536, %found.conflict539
   br i1 %conflict.rdx, label %.lr.ph.i369.us.preheader, label %vector.body544
@@ -916,8 +906,12 @@ zend_bitset_union_with_intersection.exit.loopexit.us: ; preds = %.lr.ph.i369.us.
   br i1 %min.iters.check, label %.lr.ph.i383.us.preheader591, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i383.us.preheader
-  %bound0 = icmp ult ptr %i.wl, %scevgep523
-  %bound1 = icmp ult ptr %i.wm, %scevgep521
+  %11 = add nuw nsw i64 %i.ap, %i.wk
+  %12 = shl nuw nsw i64 %11, 3                    ; 2 uses
+  %13 = getelementptr i8, ptr %i.bn, i64 %12
+  %14 = getelementptr i8, ptr %i.bp, i64 %12
+  %bound0 = icmp ult ptr %i.wl, %14
+  %bound1 = icmp ult ptr %i.wm, %13
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i383.us.preheader591, label %vector.body
 

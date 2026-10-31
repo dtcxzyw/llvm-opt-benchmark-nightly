@@ -205,15 +205,14 @@ iter.check:                                       ; preds = %.noexc20
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %i.bs, i64 8
   %i.by = add i64 %i.bi, -8
   %i.bz = sub i64 %i.by, %i.bj
-  %i.ca = and i64 %i.bz, -8                       ; 2 uses
-  %scevgep48 = getelementptr i8, ptr %scevgep, i64 %i.ca
-  %scevgep49 = getelementptr i8, ptr %i.bh, i64 8
-  %scevgep50 = getelementptr i8, ptr %scevgep49, i64 %i.ca
+  %i.ca = and i64 %i.bz, -8
+  %3 = add i64 %i.ca, 8                           ; 2 uses
+  %scevgep49 = getelementptr i8, ptr %i.bs, i64 %3
+  %scevgep50 = getelementptr i8, ptr %i.bh, i64 %3
   %bound0 = icmp ult ptr %i.bs, %scevgep50
-  %bound1 = icmp ult ptr %i.bh, %scevgep48
+  %bound1 = icmp ult ptr %i.bh, %scevgep49
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 

@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden range(i32 -1, 1) i32 @escrypt_kdf_nosse(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6, i32 noundef %7, ptr noundef %8, i64 noundef %9) local_unnamed_addr #0 {
 bb.a:
   %i.a = zext i32 %6 to i64                       ; 13 uses
-  %i.b = zext i32 %7 to i64                       ; 6 uses
+  %i.b = zext i32 %7 to i64                       ; 7 uses
   %i.c = icmp ugt i64 %9, 137438953440
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -132,14 +132,11 @@ bb.t:                                             ; preds = %bb.s
   %i.at = add nsw i64 %5, -1                      ; 2 uses
   %i.au = getelementptr i8, ptr %i.ap, i64 %i.v
   %i.av = getelementptr i8, ptr %i.au, i64 -64
-  %10 = shl nuw nsw i64 %i.b, 7                   ; 2 uses
   %i.aw = add nuw nsw i64 %5, %i.b
   %i.ax = shl nuw nsw i64 %i.aw, 7
   %i.ay = add nuw nsw i64 %i.ax, 256
   %i.az = mul i64 %i.ay, %i.a
   %scevgep = getelementptr i8, ptr %i.al, i64 %i.az
-  %11 = add nuw nsw i64 %10, 128
-  %12 = add nuw nsw i64 %10, 128
   br label %vector.memcheck107
 
 vector.memcheck107:                               ; preds = %.lr.ph, %smix.exit
@@ -184,8 +181,9 @@ vector.body111:                                   ; preds = %vector.body111, %ve
   %i.bq = and i64 %i.bp, %i.at                    ; 2 uses
   %i.br = mul i64 %i.bq, %i.ao
   %i.bs = getelementptr [4 x i8], ptr %i.am, i64 %i.br ; 6 uses
-  %i.bt = shl i64 %i.bq, 7
-  %i.bu = add i64 %12, %i.bt
+  %10 = add i64 %i.bq, %i.b
+  %i.bt = shl i64 %10, 7
+  %i.bu = add i64 %i.bt, 128
   %i.bv = mul i64 %i.bu, %i.a
   %scevgep90 = getelementptr i8, ptr %i.al, i64 %i.bv
   %bound091 = icmp ult ptr %i.an, %scevgep90
@@ -250,8 +248,9 @@ blkxor.exit.i:                                    ; preds = %vector.body97, %sca
   %i.dc = and i64 %i.db, %i.at                    ; 2 uses
   %i.dd = mul i64 %i.dc, %i.ao
   %i.de = getelementptr [4 x i8], ptr %i.am, i64 %i.dd ; 6 uses
-  %i.df = shl i64 %i.dc, 7
-  %i.dg = add i64 %11, %i.df
+  %11 = add i64 %i.dc, %i.b
+  %i.df = shl i64 %11, 7
+  %i.dg = add i64 %i.df, 128
   %i.dh = mul i64 %i.dg, %i.a
   %scevgep85 = getelementptr i8, ptr %i.al, i64 %i.dh
   %bound0 = icmp ult ptr %i.ap, %scevgep85

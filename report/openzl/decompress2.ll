@@ -205,23 +205,22 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i
   br i1 %i.cl, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %scevgep = getelementptr i8, ptr %i.bx, i64 8
   %i.cm = add i32 %i.bz, -1
-  %i.cn = zext i32 %i.cm to i64                   ; 2 uses
+  %i.cn = zext i32 %i.cm to i64
   %i.co = shl nuw nsw i64 %i.cn, 3
-  %16 = sub nsw i64 %i.cn, %wide.trip.count.i.i
-  %17 = shl nsw i64 %16, 3
-  %scevgep523 = getelementptr i8, ptr %scevgep, i64 %17
-  %scevgep524 = getelementptr i8, ptr %i.bx, i64 8
-  %scevgep525 = getelementptr i8, ptr %scevgep524, i64 %i.co
+  %16 = shl nuw nsw i64 %wide.trip.count.i.i, 3
+  %17 = add nuw nsw i64 %i.co, 8                  ; 2 uses
+  %18 = sub nsw i64 %17, %16
+  %scevgep524 = getelementptr i8, ptr %i.bx, i64 %18
+  %scevgep525 = getelementptr i8, ptr %i.bx, i64 %17
   %i.cp = zext i32 %i.cb to i64                   ; 2 uses
   %i.cq = mul nuw nsw i64 %i.cp, 24
   %scevgep526 = getelementptr i8, ptr %i.cc, i64 %i.cq
-  %scevgep527 = getelementptr i8, ptr %i.cc, i64 -16
-  %18 = add nuw nsw i64 %i.cp, %wide.trip.count.i.i
-  %19 = mul nuw nsw i64 %18, 24
-  %scevgep528 = getelementptr i8, ptr %scevgep527, i64 %19
-  %bound0 = icmp ult ptr %scevgep523, %scevgep528
+  %19 = add nuw nsw i64 %i.cp, %wide.trip.count.i.i
+  %20 = mul nuw nsw i64 %19, 24
+  %21 = getelementptr i8, ptr %i.cc, i64 %20
+  %scevgep528 = getelementptr i8, ptr %21, i64 -16
+  %bound0 = icmp ult ptr %scevgep524, %scevgep528
   %bound1 = icmp ult ptr %scevgep526, %scevgep525
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph

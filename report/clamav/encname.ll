@@ -36,19 +36,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .lr.ph108:                                        ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %invariant.umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %2) ; 8 uses
+  %invariant.umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %2) ; 6 uses
   %.pre = load i32, ptr %i.h, align 4, !tbaa !23
-  %scevgep130 = getelementptr i8, ptr %5, i64 4
-  %scevgep133 = getelementptr i8, ptr %1, i64 1
-  %scevgep139 = getelementptr i8, ptr %5, i64 4
-  %scevgep143 = getelementptr i8, ptr %1, i64 1
   %broadcast.splatinsert152 = insertelement <4 x i32> poison, i32 %i.d, i64 0
   %broadcast.splat153 = shufflevector <4 x i32> %broadcast.splatinsert152, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph108, %.critedge2
   %i.i = phi i32 [ %.pre, %.lr.ph108 ], [ %i.o, %.critedge2 ] ; 2 uses
-  %.074107 = phi i64 [ 0, %.lr.ph108 ], [ %.5, %.critedge2 ] ; 35 uses
+  %.074107 = phi i64 [ 0, %.lr.ph108 ], [ %.5, %.critedge2 ] ; 33 uses
   %.177106 = phi i64 [ %.076, %.lr.ph108 ], [ %.581, %.critedge2 ] ; 3 uses
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %bb.e, label %._crit_edge115
@@ -134,7 +130,7 @@ bb.m:                                             ; preds = %bb.f
 bb.n:                                             ; preds = %bb.m
   %i.aq = add nuw i64 %.278, 1                    ; 6 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 %.278
-  %i.as = load i8, ptr %i.ar, align 1, !tbaa !22  ; 6 uses
+  %i.as = load i8, ptr %i.ar, align 1, !tbaa !22  ; 4 uses
   %i.at = zext i8 %i.as to i32                    ; 2 uses
   %.not88 = icmp sgt i8 %i.as, -1
   br i1 %.not88, label %bb.q, label %bb.o
@@ -158,7 +154,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bc = and i8 %i.as, 127
   %narrow = add nuw i8 %i.bc, 1
   %i.bd = zext i8 %narrow to i64
-  %i.be = tail call i64 @llvm.umin.i64(i64 %i.bb, i64 %i.bd) ; 2 uses
+  %i.be = tail call i64 @llvm.umin.i64(i64 %i.bb, i64 %i.bd) ; 4 uses
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check149 = icmp samesign ult i64 %i.be, 7
   br i1 %min.iters.check149, label %.lr.ph.preheader167, label %vector.memcheck137
@@ -166,20 +162,16 @@ bb.p:                                             ; preds = %bb.o
 vector.memcheck137:                               ; preds = %.lr.ph.preheader
   %i.bg = shl i64 %.074107, 2
   %scevgep138 = getelementptr i8, ptr %5, i64 %i.bg
-  %7 = xor i64 %.074107, -1
-  %i.bh = add i64 %invariant.umin, %7
-  %8 = and i8 %i.as, 127
-  %narrow163 = add nuw i8 %8, 1
-  %9 = zext i8 %narrow163 to i64
-  %umin140 = tail call i64 @llvm.umin.i64(i64 %i.bh, i64 %9) ; 2 uses
-  %10 = add i64 %.074107, %umin140
-  %11 = shl i64 %10, 2
-  %scevgep141 = getelementptr i8, ptr %scevgep139, i64 %11
+  %i.bh = add i64 %.074107, %i.be
+  %7 = shl i64 %i.bh, 2
+  %8 = getelementptr i8, ptr %5, i64 %7
+  %9 = getelementptr i8, ptr %8, i64 4
+  %scevgep141 = getelementptr i8, ptr %1, i64 %.074107
   %scevgep142 = getelementptr i8, ptr %1, i64 %.074107
-  %i.bi = getelementptr i8, ptr %scevgep143, i64 %.074107
-  %scevgep144 = getelementptr i8, ptr %i.bi, i64 %umin140
+  %i.bi = getelementptr i8, ptr %scevgep142, i64 %i.be
+  %scevgep144 = getelementptr i8, ptr %i.bi, i64 1
   %bound0145 = icmp ult ptr %scevgep138, %scevgep144
-  %bound1146 = icmp ult ptr %scevgep142, %scevgep141
+  %bound1146 = icmp ult ptr %scevgep141, %9
   %found.conflict147 = and i1 %bound0145, %bound1146
   br i1 %found.conflict147, label %.lr.ph.preheader167, label %vector.ph150
 
@@ -249,7 +241,7 @@ bb.q:                                             ; preds = %bb.n
   %i.ck = add i64 %invariant.umin, %i.cj
   %narrow164 = add nuw i8 %i.as, 1
   %i.cl = zext i8 %narrow164 to i64
-  %i.cm = tail call i64 @llvm.umin.i64(i64 %i.ck, i64 %i.cl) ; 2 uses
+  %i.cm = tail call i64 @llvm.umin.i64(i64 %i.ck, i64 %i.cl) ; 4 uses
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.cm, 7
   br i1 %min.iters.check, label %.lr.ph104.preheader166, label %vector.memcheck
@@ -257,19 +249,16 @@ bb.q:                                             ; preds = %bb.n
 vector.memcheck:                                  ; preds = %.lr.ph104.preheader
   %i.co = shl i64 %.074107, 2
   %scevgep = getelementptr i8, ptr %5, i64 %i.co
-  %12 = xor i64 %.074107, -1
-  %i.cp = add i64 %invariant.umin, %12
-  %narrow165 = add nuw i8 %i.as, 1
-  %13 = zext i8 %narrow165 to i64
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.cp, i64 %13) ; 2 uses
-  %14 = add i64 %.074107, %umin
-  %15 = shl i64 %14, 2
-  %scevgep131 = getelementptr i8, ptr %scevgep130, i64 %15
+  %i.cp = add i64 %.074107, %i.cm
+  %10 = shl i64 %i.cp, 2
+  %11 = getelementptr i8, ptr %5, i64 %10
+  %12 = getelementptr i8, ptr %11, i64 4
+  %scevgep131 = getelementptr i8, ptr %1, i64 %.074107
   %scevgep132 = getelementptr i8, ptr %1, i64 %.074107
-  %i.cq = getelementptr i8, ptr %scevgep133, i64 %.074107
-  %scevgep134 = getelementptr i8, ptr %i.cq, i64 %umin
+  %i.cq = getelementptr i8, ptr %scevgep132, i64 %i.cm
+  %scevgep134 = getelementptr i8, ptr %i.cq, i64 1
   %bound0 = icmp ult ptr %scevgep, %scevgep134
-  %bound1 = icmp ult ptr %scevgep132, %scevgep131
+  %bound1 = icmp ult ptr %scevgep131, %12
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph104.preheader166, label %vector.ph
 

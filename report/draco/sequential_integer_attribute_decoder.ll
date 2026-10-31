@@ -205,7 +205,7 @@ _ZN5draco23PredictionSchemeDecoderIiNS_37PredictionSchemeWrapDecodingTransformIi
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN5draco56MeshPredictionSchemeConstrainedMultiParallelogramDecoderIiNS_37PredictionSchemeWrapDecodingTransformIiiEENS_24MeshPredictionSchemeDataINS_24MeshAttributeCornerTableEEEE21ComputeOriginalValuesEPKiPiiiPKNS_9IndexTypeIjNS_20PointIndex_tag_type_EEE(ptr noundef nonnull align 8 dereferenceable(260) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64
   %6 = alloca [4 x %"class.std::vector.10"], align 16 ; 32 uses
   %i.b = alloca i32, align 4                      ; 17 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
@@ -597,7 +597,7 @@ bb.ah:                                            ; preds = %.lr.ph, %_ZNK5draco
   %i.ed = sext i32 %.085252 to i64
   %i.ee = getelementptr inbounds [24 x i8], ptr %6, i64 %i.ed
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !58 ; 5 uses
-  %i.eg = ptrtoaddr ptr %i.ef to i64              ; 2 uses
+  %i.eg = ptrtoaddr ptr %i.ef to i64
   %i.eh = lshr i32 %.sroa.0198.0251, 6
   %.zext.i.i.i = zext nneg i32 %i.eh to i64
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %i.dt, i64 %.zext.i.i.i
@@ -677,17 +677,16 @@ bb.ai:                                            ; preds = %_ZN5draco23GetParal
   br i1 %min.iters.check396, label %.lr.ph.i138.preheader, label %vector.memcheck391
 
 vector.memcheck391:                               ; preds = %.lr.ph.preheader.i
-  %7 = sub i64 %i.eg, %i.a                        ; 2 uses
-  %8 = shl nsw i64 %i.gh, 2
-  %i.gi = sub i64 %8, %7
+  %7 = shl nsw i64 %i.gh, 2
+  %8 = sub i64 %i.eg, %i.a                        ; 3 uses
+  %i.gi = sub i64 %7, %8
   %diff.check = icmp ugt i64 %i.gi, -32
   %i.gj = shl nsw i64 %i.gg, 2
-  %i.gk = sub i64 %i.gj, %7
+  %i.gk = sub i64 %i.gj, %8
   %diff.check392 = icmp ugt i64 %i.gk, -32
   %conflict.rdx = or i1 %diff.check, %diff.check392
   %i.gl = shl nsw i64 %i.gf, 2
-  %9 = add i64 %i.gl, %i.a
-  %i.gm = sub i64 %9, %i.eg
+  %i.gm = sub i64 %i.gl, %8
   %diff.check393 = icmp ugt i64 %i.gm, -32
   %conflict.rdx394 = or i1 %conflict.rdx, %diff.check393
   br i1 %conflict.rdx394, label %.lr.ph.i138.preheader, label %vector.body399
@@ -1090,7 +1089,7 @@ _ZN5draco23PredictionSchemeDecoderIiNS_37PredictionSchemeWrapDecodingTransformIi
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN5draco56MeshPredictionSchemeConstrainedMultiParallelogramDecoderIiNS_37PredictionSchemeWrapDecodingTransformIiiEENS_24MeshPredictionSchemeDataINS_11CornerTableEEEE21ComputeOriginalValuesEPKiPiiiPKNS_9IndexTypeIjNS_20PointIndex_tag_type_EEE(ptr noundef nonnull align 8 dereferenceable(260) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64
   %6 = alloca [4 x %"class.std::vector.10"], align 16 ; 32 uses
   %i.b = alloca i32, align 4                      ; 17 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 10 uses
@@ -1476,7 +1475,7 @@ _ZNK5draco11CornerTable8OppositeENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.ex
   %i.dy = sext i32 %.085245 to i64
   %i.dz = getelementptr inbounds [24 x i8], ptr %6, i64 %i.dy
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !58 ; 5 uses
-  %i.eb = ptrtoaddr ptr %i.ea to i64              ; 2 uses
+  %i.eb = ptrtoaddr ptr %i.ea to i64
   %i.ec = zext i32 %.sroa.0191.0244 to i64
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.ds, i64 %i.ec
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !185, !noalias !715 ; 7 uses
@@ -1562,17 +1561,16 @@ bb.ak:                                            ; preds = %_ZN5draco23GetParal
   br i1 %min.iters.check390, label %.lr.ph.i137.preheader, label %vector.memcheck385
 
 vector.memcheck385:                               ; preds = %.lr.ph.preheader.i
-  %7 = sub i64 %i.eb, %i.a                        ; 2 uses
-  %8 = shl nsw i64 %i.ft, 2
-  %i.fu = sub i64 %8, %7
+  %7 = shl nsw i64 %i.ft, 2
+  %8 = sub i64 %i.eb, %i.a                        ; 3 uses
+  %i.fu = sub i64 %7, %8
   %diff.check = icmp ugt i64 %i.fu, -32
   %i.fv = shl nsw i64 %i.fs, 2
-  %i.fw = sub i64 %i.fv, %7
+  %i.fw = sub i64 %i.fv, %8
   %diff.check386 = icmp ugt i64 %i.fw, -32
   %conflict.rdx = or i1 %diff.check, %diff.check386
   %i.fx = shl nsw i64 %i.fr, 2
-  %9 = add i64 %i.fx, %i.a
-  %i.fy = sub i64 %9, %i.eb
+  %i.fy = sub i64 %i.fx, %8
   %diff.check387 = icmp ugt i64 %i.fy, -32
   %conflict.rdx388 = or i1 %conflict.rdx, %diff.check387
   br i1 %conflict.rdx388, label %.lr.ph.i137.preheader, label %vector.body393

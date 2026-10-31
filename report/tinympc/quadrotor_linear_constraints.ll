@@ -205,8 +205,6 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %.preheader, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS5_INS6_17scalar_product_opIddEEKNS_14CwiseNullaryOpINS6_18scalar_constant_opIdEEKNS1_IdLi12ELi1ELi0ELi12ELi1EEEEESF_EESJ_EEEERS3_RKNS_9DenseBaseIT_EE.exit
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS5_INS6_17scalar_product_opIddEEKNS_14CwiseNullaryOpINS6_18scalar_constant_opIdEEKNS1_IdLi12ELi1ELi0ELi12ELi1EEEEESF_EESJ_EEEERS3_RKNS_9DenseBaseIT_EE.exit ] ; 5 uses
-  %24 = shl nuw nsw i64 %indvars.iv, 3
-  %25 = shl nuw nsw i64 %indvars.iv, 3
   %i.ft = add nuw nsw i64 %indvars.iv, %indvars.iv718
   %i.fu = trunc nuw nsw i64 %i.ft to i32
   %i.fv = uitofp nneg i32 %i.fu to double
@@ -246,12 +244,12 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
   br i1 %min.iters.check763, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader782, label %vector.memcheck760
 
 vector.memcheck760:                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
-  %26 = sub i64 %i.fz, %i.b
+  %24 = shl nuw nsw i64 %indvars.iv, 3
   %i.go = mul i64 %i.ga, %24
-  %i.gp = add i64 %26, %i.go
-  %27 = add i64 %i.gp, -1
-  %diff.check761 = icmp ult i64 %27, 31
-  br i1 %diff.check761, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader782, label %vector.ph764
+  %i.gp = add i64 %i.go, %i.fz
+  %25 = sub i64 %i.b, %i.gp
+  %diff.check765 = icmp ugt i64 %25, -32
+  br i1 %diff.check765, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader782, label %vector.ph764
 
 vector.ph764:                                     ; preds = %vector.memcheck760
   %n.vec765 = and i64 %.0.i.i.i.i.i.i.i.i.i.i.i, 9223372036854775804 ; 3 uses
@@ -359,11 +357,11 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader781, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
-  %28 = sub i64 %i.fz, %i.b
-  %i.il = mul i64 %i.ga, %25
-  %i.im = add i64 %28, %i.il
-  %29 = add i64 %i.im, -1
-  %diff.check = icmp ult i64 %29, 31
+  %26 = shl nuw nsw i64 %indvars.iv, 3
+  %i.il = mul i64 %i.ga, %26
+  %i.im = add i64 %i.il, %i.fz
+  %27 = sub i64 %i.b, %i.im
+  %diff.check = icmp ugt i64 %27, -32
   br i1 %diff.check, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader781, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

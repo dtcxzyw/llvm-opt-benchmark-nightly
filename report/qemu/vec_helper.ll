@@ -205,8 +205,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
-  %.045 = phi i64 [ %i.i, %bb.a ], [ %i.df, %.loopexit ] ; 4 uses
-  %.0 = phi i64 [ 0, %bb.a ], [ %.lcssa, %.loopexit ] ; 11 uses
+  %.045 = phi i64 [ %i.i, %bb.a ], [ %i.df, %.loopexit ] ; 3 uses
+  %.0 = phi i64 [ 0, %bb.a ], [ %.lcssa, %.loopexit ] ; 10 uses
   %.idx47 = shl i64 %.0, 3                        ; 7 uses
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 %.idx47 ; 4 uses
   %i.n = load i16, ptr %i.m, align 2
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   %i.w = load i16, ptr %i.v, align 2
   %i.x = zext i16 %i.w to i64                     ; 2 uses
   %i.y = add nsw i64 %.0, 1
-  %i.z = tail call i64 @llvm.smax.i64(i64 %.045, i64 %i.y)
+  %i.z = tail call i64 @llvm.smax.i64(i64 %.045, i64 %i.y) ; 2 uses
   %i.aa = sub i64 %i.z, %.0                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.aa, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
@@ -249,9 +249,7 @@ vector.scevcheck:                                 ; preds = %bb.b
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep56 = getelementptr i8, ptr %0, i64 %.idx47 ; 2 uses
-  %5 = add nsw i64 %.0, 1
-  %smax57 = tail call i64 @llvm.smax.i64(i64 %.045, i64 %5)
-  %i.an = shl i64 %smax57, 3                      ; 3 uses
+  %i.an = shl i64 %i.z, 3                         ; 3 uses
   %scevgep58 = getelementptr i8, ptr %0, i64 %i.an ; 2 uses
   %scevgep59 = getelementptr i8, ptr %3, i64 %.idx47
   %scevgep60 = getelementptr i8, ptr %3, i64 %i.an
@@ -654,8 +652,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
-  %.035 = phi i64 [ %i.i, %bb.a ], [ %i.be, %.loopexit ] ; 4 uses
-  %.0 = phi i64 [ 0, %bb.a ], [ %.lcssa, %.loopexit ] ; 11 uses
+  %.035 = phi i64 [ %i.i, %bb.a ], [ %i.be, %.loopexit ] ; 3 uses
+  %.0 = phi i64 [ 0, %bb.a ], [ %.lcssa, %.loopexit ] ; 10 uses
   %.idx37 = shl i64 %.0, 2                        ; 5 uses
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 %.idx37 ; 2 uses
   %i.n = load i16, ptr %i.m, align 2
@@ -664,7 +662,7 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   %i.q = load i16, ptr %i.p, align 2
   %i.r = sext i16 %i.q to i32                     ; 2 uses
   %i.s = add nsw i64 %.0, 1
-  %i.t = tail call i64 @llvm.smax.i64(i64 %.035, i64 %i.s)
+  %i.t = tail call i64 @llvm.smax.i64(i64 %.035, i64 %i.s) ; 2 uses
   %i.u = sub i64 %i.t, %.0                        ; 3 uses
   %min.iters.check = icmp ult i64 %i.u, 20
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
@@ -684,9 +682,7 @@ vector.scevcheck:                                 ; preds = %bb.b
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep42 = getelementptr i8, ptr %0, i64 %.idx37 ; 2 uses
-  %5 = add nsw i64 %.0, 1
-  %smax43 = tail call i64 @llvm.smax.i64(i64 %.035, i64 %5)
-  %i.ab = shl i64 %smax43, 2                      ; 3 uses
+  %i.ab = shl i64 %i.t, 2                         ; 3 uses
   %scevgep44 = getelementptr i8, ptr %0, i64 %i.ab ; 2 uses
   %scevgep45 = getelementptr i8, ptr %3, i64 %.idx37
   %scevgep46 = getelementptr i8, ptr %3, i64 %i.ab
@@ -810,8 +806,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit, %bb.a
-  %.035 = phi i64 [ %i.i, %bb.a ], [ %i.bh, %.loopexit ] ; 4 uses
-  %.0 = phi i64 [ 0, %bb.a ], [ %.lcssa, %.loopexit ] ; 11 uses
+  %.035 = phi i64 [ %i.i, %bb.a ], [ %i.bh, %.loopexit ] ; 3 uses
+  %.0 = phi i64 [ 0, %bb.a ], [ %.lcssa, %.loopexit ] ; 10 uses
   %.idx37 = shl i64 %.0, 2                        ; 5 uses
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 %.idx37 ; 2 uses
   %i.n = load i16, ptr %i.m, align 2
@@ -820,7 +816,7 @@ bb.b:                                             ; preds = %.loopexit, %bb.a
   %i.q = load i16, ptr %i.p, align 2
   %i.r = zext i16 %i.q to i32                     ; 2 uses
   %i.s = add nsw i64 %.0, 1
-  %i.t = tail call i64 @llvm.smax.i64(i64 %.035, i64 %i.s)
+  %i.t = tail call i64 @llvm.smax.i64(i64 %.035, i64 %i.s) ; 2 uses
   %i.u = sub i64 %i.t, %.0                        ; 3 uses
   %min.iters.check = icmp ult i64 %i.u, 20
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
@@ -840,9 +836,7 @@ vector.scevcheck:                                 ; preds = %bb.b
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep42 = getelementptr i8, ptr %0, i64 %.idx37 ; 2 uses
-  %5 = add nsw i64 %.0, 1
-  %smax43 = tail call i64 @llvm.smax.i64(i64 %.035, i64 %5)
-  %i.ab = shl i64 %smax43, 2                      ; 3 uses
+  %i.ab = shl i64 %i.t, 2                         ; 3 uses
   %scevgep44 = getelementptr i8, ptr %0, i64 %i.ab ; 2 uses
   %scevgep45 = getelementptr i8, ptr %3, i64 %.idx37
   %scevgep46 = getelementptr i8, ptr %3, i64 %i.ab

@@ -202,7 +202,6 @@ _ZNK6hermes2vm9ArrayImpl2atERNS0_7RuntimeEj.exit: ; preds = %_ZN6hermes2vm13Muta
   %i.go = icmp sgt i64 %i.ai, 1
   %i.gp = icmp eq i64 %i.ai, 1
   %i.gq = trunc i64 %i.ai to i32
-  %7 = shl i64 %i.ai, 1
   %scevgep176 = getelementptr i8, ptr %i.ah, i64 %i.ai
   %min.iters.check = icmp ult i64 %i.ai, 4
   %min.iters.check177 = icmp ult i64 %i.ai, 16
@@ -312,9 +311,9 @@ iter.check:                                       ; preds = %_ZN6hermes2vm15Stri
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %scevgep = getelementptr i8, ptr %.0.i4.i, i64 %7
-  %i.ia = shl nuw nsw i64 %i.hy, 1
-  %scevgep175 = getelementptr i8, ptr %scevgep, i64 %i.ia
+  %7 = add nuw i64 %i.ai, %i.hy
+  %i.ia = shl i64 %7, 1
+  %scevgep175 = getelementptr i8, ptr %.0.i4.i, i64 %i.ia
   %bound0 = icmp ult ptr %i.hz, %scevgep176
   %bound1 = icmp ult ptr %i.ah, %scevgep175
   %found.conflict = and i1 %bound0, %bound1

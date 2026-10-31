@@ -205,7 +205,7 @@ _ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.ex
   %.sroa.0118.1 = phi i32 [ %i.ei, %bb.o ], [ %.sroa.0118.0, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit.preheader ] ; 7 uses
   %.sroa.17.2 = phi ptr [ %.sroa.17.5, %bb.o ], [ %.sroa.17.1222, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit.preheader ] ; 6 uses
   %.sroa.10.2 = phi ptr [ %.sroa.10.6, %bb.o ], [ %spec.select, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit.preheader ] ; 8 uses
-  %.sroa.0136.2 = phi ptr [ %.sroa.0136.5, %bb.o ], [ %.sroa.0136.1224, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit.preheader ] ; 19 uses
+  %.sroa.0136.2 = phi ptr [ %.sroa.0136.5, %bb.o ], [ %.sroa.0136.1224, %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit.preheader ] ; 20 uses
   %i.ay = lshr i32 %.sroa.0118.1, 6
   %.zext181 = zext nneg i32 %i.ay to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0149.0, i64 %.zext181 ; 2 uses
@@ -342,8 +342,8 @@ bb.j:                                             ; preds = %_ZNK5draco11CornerT
   br label %bb.n
 
 bb.k:                                             ; preds = %_ZNK5draco11CornerTable8PreviousENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.exit61
-  %i.cx = ptrtoint ptr %.sroa.17.2 to i64         ; 3 uses
-  %i.cy = ptrtoint ptr %.sroa.0136.2 to i64       ; 3 uses
+  %i.cx = ptrtoint ptr %.sroa.17.2 to i64         ; 2 uses
+  %i.cy = ptrtoint ptr %.sroa.0136.2 to i64       ; 2 uses
   %i.cz = sub i64 %i.cx, %i.cy                    ; 5 uses
   %i.da = icmp eq i64 %i.cz, 9223372036854775800
   br i1 %i.da, label %bb.l, label %_ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1_21CornerIndex_tag_type_EEEESaIS7_EE12_M_check_lenEmPKc.exit.i
@@ -378,30 +378,27 @@ _ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc74
   %i.dk = add i64 %i.cx, -8
-  %i.dl = sub i64 %i.dk, %i.cy                    ; 2 uses
+  %i.dl = sub i64 %i.dk, %i.cy                    ; 3 uses
   %i.dm = lshr i64 %i.dl, 3
   %i.dn = add nuw nsw i64 %i.dm, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dl, 88
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader391, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %scevgep = getelementptr i8, ptr %i.dh, i64 4
-  %1 = add i64 %i.cx, -8
-  %2 = sub i64 %1, %i.cy
-  %i.do = and i64 %2, -8                          ; 4 uses
-  %scevgep371 = getelementptr i8, ptr %scevgep, i64 %i.do
-  %scevgep372 = getelementptr i8, ptr %.sroa.0136.2, i64 4 ; 2 uses
-  %scevgep373 = getelementptr i8, ptr %scevgep372, i64 %i.do
+  %i.do = and i64 %i.dl, -8                       ; 2 uses
+  %1 = or disjoint i64 %i.do, 4                   ; 2 uses
+  %scevgep372 = getelementptr i8, ptr %i.dh, i64 %1
+  %scevgep373 = getelementptr i8, ptr %.sroa.0136.2, i64 %1
   %scevgep374 = getelementptr i8, ptr %i.dh, i64 4
-  %scevgep375 = getelementptr i8, ptr %i.dh, i64 8
-  %scevgep376 = getelementptr i8, ptr %scevgep375, i64 %i.do
-  %scevgep377 = getelementptr i8, ptr %.sroa.0136.2, i64 8
-  %scevgep378 = getelementptr i8, ptr %scevgep377, i64 %i.do
+  %2 = add i64 %i.do, 8                           ; 2 uses
+  %scevgep376 = getelementptr i8, ptr %i.dh, i64 %2
+  %scevgep377 = getelementptr i8, ptr %.sroa.0136.2, i64 4
+  %scevgep378 = getelementptr i8, ptr %.sroa.0136.2, i64 %2
   %bound0 = icmp ult ptr %i.dh, %scevgep373
-  %bound1 = icmp ult ptr %.sroa.0136.2, %scevgep371
+  %bound1 = icmp ult ptr %.sroa.0136.2, %scevgep372
   %found.conflict = and i1 %bound0, %bound1
   %bound0379 = icmp ult ptr %scevgep374, %scevgep378
-  %bound1380 = icmp ult ptr %scevgep372, %scevgep376
+  %bound1380 = icmp ult ptr %scevgep377, %scevgep376
   %found.conflict381 = and i1 %bound0379, %bound1380
   %conflict.rdx = or i1 %found.conflict, %found.conflict381
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.i.i.i.preheader391, label %vector.ph

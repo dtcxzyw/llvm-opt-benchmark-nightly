@@ -204,8 +204,8 @@ bb.a:
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !18  ; 2 uses
   %i.ab = sext i32 %i.x to i64
   %i.ac = icmp sgt i32 %3, 0
-  %wide.trip.count.i = zext i32 %3 to i64         ; 15 uses
-  %i.ad = sext i32 %4 to i64                      ; 5 uses
+  %wide.trip.count.i = zext i32 %3 to i64         ; 14 uses
+  %i.ad = sext i32 %4 to i64                      ; 4 uses
   %i.ae = sext i32 %i.y to i64
   br i1 %i.ac, label %.lr.ph.preheader.i.us.preheader, label %._crit_edge67
 
@@ -213,11 +213,9 @@ bb.a:
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !19
   %.not4259.us = icmp eq i32 %4, %i.x
-  %i.ah = shl nuw nsw i64 %wide.trip.count.i, 2
-  %scevgep = getelementptr i8, ptr %i.c, i64 %i.ah
-  %5 = add nsw i64 %i.ad, %wide.trip.count.i
-  %i.ai = shl nsw i64 %5, 2
-  %6 = shl nsw i64 %i.ad, 2
+  %i.ah = shl nsw i64 %i.ad, 2                    ; 2 uses
+  %i.ai = shl nuw nsw i64 %wide.trip.count.i, 2   ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.c, i64 %i.ai
   %min.iters.check92 = icmp ult i32 %3, 8
   %n.vec94 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
   %cmp.n103 = icmp eq i64 %n.vec94, %wide.trip.count.i
@@ -326,7 +324,8 @@ _ZN4Ptex4v2_49PtexUtils8VecMultNIfEclEPfPKfif.exit.loopexit.us: ; preds = %.lr.p
 
 .lr.ph.preheader.i43.us.us.preheader:             ; preds = %_ZN4Ptex4v2_49PtexUtils8VecMultNIfEclEPfPKfif.exit.loopexit.us
   %.158.us = getelementptr inbounds [4 x i8], ptr %.04064.us, i64 %i.ad
-  %i.bq = getelementptr i8, ptr %.04064.us, i64 %i.ai
+  %5 = getelementptr i8, ptr %.04064.us, i64 %i.ah
+  %i.bq = getelementptr i8, ptr %5, i64 %i.ai
   br label %.lr.ph.preheader.i43.us.us
 
 .lr.ph.preheader.i43.us.us:                       ; preds = %.lr.ph.preheader.i43.us.us.preheader, %_ZN4Ptex4v2_49PtexUtils9VecAccumNIfEclEPfPKfif.exit.loopexit.us.us
@@ -338,7 +337,7 @@ _ZN4Ptex4v2_49PtexUtils8VecMultNIfEclEPfPKfif.exit.loopexit.us: ; preds = %.lr.p
   br i1 %min.iters.check74, label %.lr.ph.i45.us.us.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i43.us.us
-  %i.bs = mul i64 %6, %indvar
+  %i.bs = mul i64 %indvar, %i.ah
   %scevgep72 = getelementptr i8, ptr %i.bq, i64 %i.bs
   %bound0 = icmp ult ptr %i.c, %scevgep72
   %bound1 = icmp ult ptr %.161.us.us, %scevgep

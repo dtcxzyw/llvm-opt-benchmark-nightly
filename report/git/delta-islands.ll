@@ -204,8 +204,7 @@ bb.r:                                             ; preds = %bb.p
   br i1 %.not5286, label %._crit_edge89, label %.lr.ph88
 
 .lr.ph88:                                         ; preds = %bb.r
-  %9 = getelementptr i8, ptr %i.bw, i64 4         ; 7 uses
-  %scevgep151 = getelementptr i8, ptr %i.bw, i64 4
+  %scevgep151 = getelementptr i8, ptr %i.bw, i64 4 ; 7 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph88, %set_island_marks.exit
@@ -446,12 +445,12 @@ bb.af:                                            ; preds = %island_bitmap_new.e
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i
-  %scevgep = getelementptr i8, ptr %.0.i59, i64 4
-  %10 = shl nuw nsw i64 %wide.trip.count.i.i, 2   ; 2 uses
-  %scevgep150 = getelementptr i8, ptr %scevgep, i64 %10
-  %scevgep152 = getelementptr i8, ptr %scevgep151, i64 %10
+  %9 = shl nuw nsw i64 %wide.trip.count.i.i, 2
+  %10 = add nuw nsw i64 %9, 4                     ; 2 uses
+  %scevgep150 = getelementptr i8, ptr %.0.i59, i64 %10
+  %scevgep152 = getelementptr i8, ptr %i.bw, i64 %10
   %bound0 = icmp ult ptr %i.gy, %scevgep152
-  %bound1 = icmp ult ptr %9, %scevgep150
+  %bound1 = icmp ult ptr %scevgep151, %scevgep150
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -461,7 +460,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.gz = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %index ; 2 uses
+  %i.gz = getelementptr inbounds nuw [4 x i8], ptr %scevgep151, i64 %index ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 16
   %wide.load = load <4 x i32>, ptr %i.gz, align 4, !tbaa !25, !alias.scope !90
   %wide.load153 = load <4 x i32>, ptr %i.ha, align 4, !tbaa !25, !alias.scope !90
@@ -490,7 +489,7 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv.i.i.prol = phi i64 [ %indvars.iv.next.i.i.prol, %scalar.ph.prol ], [ %indvars.iv.i.i.ph, %scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %i.hg = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %indvars.iv.i.i.prol
+  %i.hg = getelementptr inbounds nuw [4 x i8], ptr %scevgep151, i64 %indvars.iv.i.i.prol
   %i.hh = load i32, ptr %i.hg, align 4, !tbaa !25
   %i.hi = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %indvars.iv.i.i.prol ; 2 uses
   %i.hj = load i32, ptr %i.hi, align 4, !tbaa !25
@@ -509,28 +508,28 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.3, %scalar.ph ], [ %indvars.iv.i.i.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %indvars.iv.i.i
+  %i.hn = getelementptr inbounds nuw [4 x i8], ptr %scevgep151, i64 %indvars.iv.i.i
   %i.ho = load i32, ptr %i.hn, align 4, !tbaa !25
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %indvars.iv.i.i ; 2 uses
   %i.hq = load i32, ptr %i.hp, align 4, !tbaa !25
   %i.hr = or i32 %i.hq, %i.ho
   store i32 %i.hr, ptr %i.hp, align 4, !tbaa !25
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %i.hs = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %indvars.iv.next.i.i
+  %i.hs = getelementptr inbounds nuw [4 x i8], ptr %scevgep151, i64 %indvars.iv.next.i.i
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !25
   %i.hu = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i ; 2 uses
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !25
   %i.hw = or i32 %i.hv, %i.ht
   store i32 %i.hw, ptr %i.hu, align 4, !tbaa !25
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
-  %i.hx = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %indvars.iv.next.i.i.1
+  %i.hx = getelementptr inbounds nuw [4 x i8], ptr %scevgep151, i64 %indvars.iv.next.i.i.1
   %i.hy = load i32, ptr %i.hx, align 4, !tbaa !25
   %i.hz = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i.1 ; 2 uses
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !25
   %i.ib = or i32 %i.ia, %i.hy
   store i32 %i.ib, ptr %i.hz, align 4, !tbaa !25
   %indvars.iv.next.i.i.2 = add nuw nsw i64 %indvars.iv.i.i, 3 ; 2 uses
-  %i.ic = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %indvars.iv.next.i.i.2
+  %i.ic = getelementptr inbounds nuw [4 x i8], ptr %scevgep151, i64 %indvars.iv.next.i.i.2
   %i.id = load i32, ptr %i.ic, align 4, !tbaa !25
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %indvars.iv.next.i.i.2 ; 2 uses
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !25
@@ -933,8 +932,7 @@ set_island_marks.exit:                            ; preds = %scalar.ph.prol.loop
   br i1 %.not32, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %set_island_marks.exit
-  %6 = getelementptr i8, ptr %i.as, i64 4         ; 7 uses
-  %scevgep58 = getelementptr i8, ptr %i.as, i64 4
+  %scevgep58 = getelementptr i8, ptr %i.as, i64 4 ; 7 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %set_island_marks.exit25
@@ -1005,12 +1003,12 @@ bb.m:                                             ; preds = %island_bitmap_new.e
   br i1 %min.iters.check64, label %scalar.ph63.preheader, label %vector.memcheck56
 
 vector.memcheck56:                                ; preds = %.lr.ph.i.i18
-  %scevgep = getelementptr i8, ptr %.0.i16, i64 4
-  %7 = shl nuw nsw i64 %wide.trip.count.i.i19, 2  ; 2 uses
-  %scevgep57 = getelementptr i8, ptr %scevgep, i64 %7
-  %scevgep59 = getelementptr i8, ptr %scevgep58, i64 %7
+  %6 = shl nuw nsw i64 %wide.trip.count.i.i19, 2
+  %7 = add nuw nsw i64 %6, 4                      ; 2 uses
+  %scevgep57 = getelementptr i8, ptr %.0.i16, i64 %7
+  %scevgep59 = getelementptr i8, ptr %i.as, i64 %7
   %bound060 = icmp ult ptr %i.eu, %scevgep59
-  %bound161 = icmp ult ptr %6, %scevgep57
+  %bound161 = icmp ult ptr %scevgep58, %scevgep57
   %found.conflict62 = and i1 %bound060, %bound161
   br i1 %found.conflict62, label %scalar.ph63.preheader, label %vector.ph65
 
@@ -1020,7 +1018,7 @@ vector.ph65:                                      ; preds = %vector.memcheck56
 
 vector.body67:                                    ; preds = %vector.body67, %vector.ph65
   %index68 = phi i64 [ 0, %vector.ph65 ], [ %index.next73, %vector.body67 ] ; 3 uses
-  %i.ev = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %index68 ; 2 uses
+  %i.ev = getelementptr inbounds nuw [4 x i8], ptr %scevgep58, i64 %index68 ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 16
   %wide.load69 = load <4 x i32>, ptr %i.ev, align 4, !tbaa !25, !alias.scope !144
   %wide.load70 = load <4 x i32>, ptr %i.ew, align 4, !tbaa !25, !alias.scope !144
@@ -1049,7 +1047,7 @@ scalar.ph63.preheader:                            ; preds = %vector.memcheck56, 
 scalar.ph63.prol:                                 ; preds = %scalar.ph63.preheader, %scalar.ph63.prol
   %indvars.iv.i.i20.prol = phi i64 [ %indvars.iv.next.i.i21.prol, %scalar.ph63.prol ], [ %indvars.iv.i.i20.ph, %scalar.ph63.preheader ] ; 3 uses
   %prol.iter83 = phi i64 [ %prol.iter83.next, %scalar.ph63.prol ], [ 0, %scalar.ph63.preheader ]
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.i.i20.prol
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %scevgep58, i64 %indvars.iv.i.i20.prol
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !25
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %indvars.iv.i.i20.prol ; 2 uses
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !25
@@ -1068,28 +1066,28 @@ scalar.ph63.prol.loopexit:                        ; preds = %scalar.ph63.prol, %
 
 scalar.ph63:                                      ; preds = %scalar.ph63.prol.loopexit, %scalar.ph63
   %indvars.iv.i.i20 = phi i64 [ %indvars.iv.next.i.i21.3, %scalar.ph63 ], [ %indvars.iv.i.i20.unr, %scalar.ph63.prol.loopexit ] ; 6 uses
-  %i.fj = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.i.i20
+  %i.fj = getelementptr inbounds nuw [4 x i8], ptr %scevgep58, i64 %indvars.iv.i.i20
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !25
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %indvars.iv.i.i20 ; 2 uses
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !25
   %i.fn = or i32 %i.fm, %i.fk
   store i32 %i.fn, ptr %i.fl, align 4, !tbaa !25
   %indvars.iv.next.i.i21 = add nuw nsw i64 %indvars.iv.i.i20, 1 ; 2 uses
-  %i.fo = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.next.i.i21
+  %i.fo = getelementptr inbounds nuw [4 x i8], ptr %scevgep58, i64 %indvars.iv.next.i.i21
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !25
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %indvars.iv.next.i.i21 ; 2 uses
   %i.fr = load i32, ptr %i.fq, align 4, !tbaa !25
   %i.fs = or i32 %i.fr, %i.fp
   store i32 %i.fs, ptr %i.fq, align 4, !tbaa !25
   %indvars.iv.next.i.i21.1 = add nuw nsw i64 %indvars.iv.i.i20, 2 ; 2 uses
-  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.next.i.i21.1
+  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %scevgep58, i64 %indvars.iv.next.i.i21.1
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !25
   %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %indvars.iv.next.i.i21.1 ; 2 uses
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !25
   %i.fx = or i32 %i.fw, %i.fu
   store i32 %i.fx, ptr %i.fv, align 4, !tbaa !25
   %indvars.iv.next.i.i21.2 = add nuw nsw i64 %indvars.iv.i.i20, 3 ; 2 uses
-  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.next.i.i21.2
+  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %scevgep58, i64 %indvars.iv.next.i.i21.2
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !25
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.eu, i64 %indvars.iv.next.i.i21.2 ; 2 uses
   %i.gb = load i32, ptr %i.ga, align 4, !tbaa !25

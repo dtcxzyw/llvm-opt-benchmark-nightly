@@ -205,7 +205,6 @@ bb.x:                                             ; preds = %bb.w
   %.sroa.4.0..sroa_idx1334.i = getelementptr inbounds nuw i8, ptr %0, i64 280
   %.sroa.28.0..sroa_idx1359.i = getelementptr inbounds nuw i8, ptr %0, i64 284
   %.sroa.36.0..sroa_idx1361.i = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %scevgep = getelementptr i8, ptr %0, i64 1578
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %.thread301
@@ -262,7 +261,7 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
   store i16 %i.gm, ptr %i.dh, align 4
   store ptr null, ptr %i.di, align 8, !tbaa !309
   store i32 %i.gk, ptr %i.dj, align 4, !tbaa !51
-  %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !67 ; 54 uses
+  %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !67 ; 53 uses
   %.sroa.28.0.copyload.i = load i32, ptr %.sroa.28.0..sroa_idx.i, align 4, !tbaa !51 ; 7 uses
   %.not646.i = icmp eq i32 %.sroa.28.0.copyload.i, 1413563465
   br i1 %.not646.i, label %bb.ac, label %bb.ah
@@ -665,7 +664,7 @@ bb.dd:                                            ; preds = %bb.dc
   br i1 %.not699.i, label %.preheader.i, label %read_non_idat_chunks.exit.thread
 
 .preheader.i:                                     ; preds = %bb.dd
-  %i.uo = zext nneg i32 %i.um to i64              ; 5 uses
+  %i.uo = zext nneg i32 %i.um to i64              ; 6 uses
   %.not1291.i = icmp eq i32 %i.um, 0
   br i1 %.not1291.i, label %._crit_edge1007.i, label %.lr.ph1006.i.preheader
 
@@ -674,10 +673,10 @@ bb.dd:                                            ; preds = %bb.dc
   br i1 %min.iters.check, label %.lr.ph1006.i.preheader416, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph1006.i.preheader
-  %3 = and i32 %.sroa.4.0.copyload.i, -2
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %scevgep414 = getelementptr i8, ptr %scevgep, i64 %4
-  %scevgep415 = getelementptr i8, ptr %i.hp, i64 %4
+  %3 = shl nuw nsw i64 %i.uo, 1                   ; 2 uses
+  %4 = getelementptr i8, ptr %0, i64 %3
+  %scevgep414 = getelementptr i8, ptr %4, i64 1578
+  %scevgep415 = getelementptr i8, ptr %i.hp, i64 %3
   %bound0 = icmp ult ptr %i.et, %scevgep415
   %bound1 = icmp ult ptr %i.hp, %scevgep414
   %found.conflict = and i1 %bound0, %bound1

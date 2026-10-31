@@ -205,7 +205,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !984
   %i.c = load i32, ptr %2, align 8, !tbaa !982    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !983  ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !983  ; 3 uses
   %i.f = sub i32 %i.c, %i.e
   %i.g = zext i32 %i.f to i64
   %i.h = icmp ult i64 %i.b, %i.g
@@ -235,13 +235,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
-  %indvar78 = phi i32 [ %indvar.next79, %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %indvars.iv.i.i.i.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.i.i.i, %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i ], [ %i.s, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
-  %6 = add i32 %i.e, %indvar78
-  %7 = mul i32 %6, 7
-  %8 = zext i32 %7 to i64
+  %indvars.iv.i.i.i.i.i.i = phi i64 [ %i.s, %.lr.ph.i.i.i.i.i.i ], [ %indvars.iv.next.i.i.i.i.i.i, %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i ] ; 3 uses
   %i.t = mul i64 %indvars.iv.i.i.i.i.i.i, 7
-  %i.u = and i64 %i.t, 4294967295
+  %i.u = and i64 %i.t, 4294967295                 ; 2 uses
   %i.v = getelementptr [8 x i8], ptr %i.o, i64 %i.u ; 7 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv.i.i.i.i.i.i
   %i.x = load i32, ptr %i.w, align 4, !tbaa !913  ; 3 uses
@@ -254,7 +250,7 @@ bb.d:                                             ; preds = %_ZN7openvdb5v13_04m
   br i1 %min.iters.check86, label %scalar.ph85.preheader, label %vector.memcheck77
 
 vector.memcheck77:                                ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %i.z = add nuw nsw i64 %wide.trip.count.i.i.i.i.i.i.i, %8
+  %i.z = add nuw nsw i64 %i.u, %wide.trip.count.i.i.i.i.i.i.i
   %i.aa = shl nuw nsw i64 %i.z, 3
   %scevgep80 = getelementptr i8, ptr %i.o, i64 %i.aa
   %bound082 = icmp ult ptr %i.v, %scevgep81
@@ -343,7 +339,6 @@ scalar.ph85:                                      ; preds = %scalar.ph85.prol.lo
 _ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i: ; preds = %scalar.ph85.prol.loopexit, %scalar.ph85, %middle.block96, %bb.d
   %indvars.iv.next.i.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i.i.i, %wide.trip.count.i.i.i.i.i.i
-  %indvar.next79 = add i32 %indvar78, 1
   br i1 %exitcond.not.i.i.i.i.i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE10RowScaleOpIdEEKNS1_16auto_partitionerEE8run_bodyERS4_.exit, label %bb.d, !llvm.loop !16695
 
 bb.e:                                             ; preds = %bb.b
@@ -746,7 +741,7 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
   %.pre-phi = phi i64 [ %.pre, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE13split_to_fillEh.exit._ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exit.thread_crit_edge ], [ %i.lz, %bb.x ], [ %i.lz, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exit ]
   %i.mo = getelementptr inbounds nuw [16 x i8], ptr %i.bh, i64 %.pre-phi ; 2 uses
   %i.mp = getelementptr inbounds nuw i8, ptr %i.mo, i64 4
-  %i.mq = load i32, ptr %i.mp, align 4, !tbaa !983 ; 3 uses
+  %i.mq = load i32, ptr %i.mp, align 4, !tbaa !983 ; 2 uses
   %i.mr = load i32, ptr %i.mo, align 8, !tbaa !982 ; 2 uses
   %i.ms = icmp ult i32 %i.mq, %i.mr
   br i1 %i.ms, label %.lr.ph.i.i.i.i.i.i15, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE10RowScaleOpIdEEKNS1_16auto_partitionerEE8run_bodyERS4_.exit26
@@ -762,13 +757,9 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i18, %.lr.ph.i.i.i.i.i.i15
-  %indvar = phi i32 [ %indvar.next, %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i18 ], [ 0, %.lr.ph.i.i.i.i.i.i15 ] ; 2 uses
-  %indvars.iv.i.i.i.i.i.i17 = phi i64 [ %indvars.iv.next.i.i.i.i.i.i19, %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i18 ], [ %i.my, %.lr.ph.i.i.i.i.i.i15 ] ; 3 uses
-  %9 = add i32 %i.mq, %indvar
-  %10 = mul i32 %9, 7
-  %11 = zext i32 %10 to i64
+  %indvars.iv.i.i.i.i.i.i17 = phi i64 [ %i.my, %.lr.ph.i.i.i.i.i.i15 ], [ %indvars.iv.next.i.i.i.i.i.i19, %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i18 ] ; 3 uses
   %i.mz = mul i64 %indvars.iv.i.i.i.i.i.i17, 7
-  %i.na = and i64 %i.mz, 4294967295
+  %i.na = and i64 %i.mz, 4294967295               ; 2 uses
   %i.nb = getelementptr [8 x i8], ptr %i.mv, i64 %i.na ; 7 uses
   %i.nc = getelementptr inbounds nuw [4 x i8], ptr %i.mx, i64 %indvars.iv.i.i.i.i.i.i17
   %i.nd = load i32, ptr %i.nc, align 4, !tbaa !913 ; 3 uses
@@ -781,7 +772,7 @@ bb.y:                                             ; preds = %_ZN7openvdb5v13_04m
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i21
-  %i.nf = add nuw nsw i64 %wide.trip.count.i.i.i.i.i.i.i22, %11
+  %i.nf = add nuw nsw i64 %i.na, %wide.trip.count.i.i.i.i.i.i.i22
   %i.ng = shl nuw nsw i64 %i.nf, 3
   %scevgep = getelementptr i8, ptr %i.mv, i64 %i.ng
   %bound0 = icmp ult ptr %i.nb, %i.bi
@@ -870,7 +861,6 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 _ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i18: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.y
   %indvars.iv.next.i.i.i.i.i.i19 = add nuw nsw i64 %indvars.iv.i.i.i.i.i.i17, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i20 = icmp eq i64 %indvars.iv.next.i.i.i.i.i.i19, %wide.trip.count.i.i.i.i.i.i16
-  %indvar.next = add i32 %indvar, 1
   br i1 %exitcond.not.i.i.i.i.i.i20, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE10RowScaleOpIdEEKNS1_16auto_partitionerEE8run_bodyERS4_.exit26, label %bb.y, !llvm.loop !16695
 
 _ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE10RowScaleOpIdEEKNS1_16auto_partitionerEE8run_bodyERS4_.exit26: ; preds = %_ZN7openvdb5v13_04math3pcg19SparseStencilMatrixIdLj7EE9RowEditor5scaleIdEEvRKT_.exit.i.i.i.i.i.i18, %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exit.thread

@@ -205,19 +205,16 @@ iter.check:                                       ; preds = %bb.ab
   %i.en = add nsw i32 %smax.i, -2
   %i.eo = lshr exact i32 %i.en, 1
   %i.ep = add nuw nsw i32 %i.eo, 1
-  %wide.trip.count.i = zext nneg i32 %i.ep to i64 ; 6 uses
+  %wide.trip.count.i = zext nneg i32 %i.ep to i64 ; 7 uses
   %min.iters.check = icmp slt i32 %i.el, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.eq = zext nneg i32 %smax.i to i64            ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.ej, i64 %i.eq
-  %scevgep41 = getelementptr i8, ptr %i.em, i64 1
-  %11 = add nsw i64 %i.eq, -2
-  %12 = lshr exact i64 %11, 1
-  %scevgep42 = getelementptr i8, ptr %scevgep41, i64 %12
+  %i.eq = zext nneg i32 %smax.i to i64
+  %scevgep41 = getelementptr i8, ptr %i.ej, i64 %i.eq
+  %scevgep42 = getelementptr i8, ptr %i.em, i64 %wide.trip.count.i
   %bound0 = icmp ult ptr %i.ej, %scevgep42
-  %bound1 = icmp ult ptr %i.em, %scevgep
+  %bound1 = icmp ult ptr %i.em, %scevgep41
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

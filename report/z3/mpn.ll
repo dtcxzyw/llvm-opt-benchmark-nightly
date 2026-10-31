@@ -204,7 +204,7 @@ _ZN6bufferIjLb0ELj16EE6resizeEjRKj.exit:          ; preds = %_ZN6bufferIjLb0ELj1
 
 .lr.ph112:                                        ; preds = %_ZN6bufferIjLb0ELj16EE6resizeEjRKj.exit
   %i.ay = xor i32 %i.d, -1
-  %i.az = add i32 %i.b, %i.ay                     ; 2 uses
+  %i.az = add i32 %i.b, %i.ay
   %i.ba = add i32 %i.d, -1
   %i.bb = zext i32 %i.ba to i64
   %i.bc = add i32 %i.d, -2
@@ -239,11 +239,7 @@ _ZN6bufferIjLb0ELj16EE6resizeEjRKj.exit:          ; preds = %_ZN6bufferIjLb0ELj1
   ret i1 true
 
 bb.f:                                             ; preds = %.lr.ph112, %.loopexit
-  %indvar = phi i32 [ 0, %.lr.ph112 ], [ %indvar.next, %.loopexit ] ; 2 uses
-  %indvars.iv116 = phi i64 [ %i.bj, %.lr.ph112 ], [ %indvars.iv.next117, %.loopexit ] ; 13 uses
-  %7 = sub i32 %i.az, %indvar
-  %8 = zext i32 %7 to i64
-  %9 = shl nuw nsw i64 %8, 2
+  %indvars.iv116 = phi i64 [ %i.bj, %.lr.ph112 ], [ %indvars.iv.next117, %.loopexit ] ; 14 uses
   %i.bo = trunc nuw i64 %indvars.iv116 to i32     ; 2 uses
   %i.bp = add i32 %i.d, %i.bo                     ; 3 uses
   %i.bq = load ptr, ptr %1, align 8, !tbaa !21    ; 4 uses
@@ -603,7 +599,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.hh, label %.lr.ph.preheader172, label %vector.memcheck142
 
 vector.memcheck142:                               ; preds = %vector.scevcheck
-  %i.hi = add i64 %9, %i.ha
+  %7 = shl nuw nsw i64 %indvars.iv116, 2
+  %i.hi = add i64 %7, %i.ha
   %i.hj = sub i64 %i.hd, %i.hi
   %diff.check143 = icmp ugt i64 %i.hj, -32
   br i1 %diff.check143, label %.lr.ph.preheader172, label %vector.body148
@@ -722,7 +719,6 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 .loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block153, %._crit_edge.i.loopexit, %_ZNK11mpn_manager3subEPKjjS1_jPjS2_.exit.thread, %_ZNK11mpn_manager3subEPKjjS1_jPjS2_.exit
   %indvars.iv.next117 = add nsw i64 %indvars.iv116, -1
   %.not = icmp eq i64 %indvars.iv116, 0
-  %indvar.next = add i32 %indvar, 1
   br i1 %.not, label %._crit_edge, label %bb.f, !llvm.loop !73
 }
 
