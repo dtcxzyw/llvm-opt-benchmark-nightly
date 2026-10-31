@@ -42,7 +42,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ad = load <2 x float>, ptr %0, align 4, !tbaa !12
-  %i.ae = fpext <2 x float> %i.ad to <2 x double> ; 3 uses
+  %i.ae = fpext reassoc nsz arcp contract afn <2 x float> %i.ad to <2 x double> ; 3 uses
   %i.af = fneg reassoc nsz arcp contract afn <2 x double> %i.ae ; 2 uses
   store <2 x double> %i.af, ptr %i.a, align 16, !tbaa !33
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -76,7 +76,7 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 144 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   %i.bb = load <2 x float>, ptr %i.c, align 4, !tbaa !12
-  %i.bc = fpext <2 x float> %i.bb to <2 x double> ; 3 uses
+  %i.bc = fpext reassoc nsz arcp contract afn <2 x float> %i.bb to <2 x double> ; 3 uses
   %i.bd = fneg reassoc nsz arcp contract afn <2 x double> %i.bc ; 2 uses
   store <2 x double> %i.bd, ptr %i.az, align 16, !tbaa !33
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 160 ; 2 uses
@@ -113,7 +113,7 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 288 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.a, i64 296
   %i.cc = load <2 x float>, ptr %i.d, align 4, !tbaa !12
-  %i.cd = fpext <2 x float> %i.cc to <2 x double> ; 3 uses
+  %i.cd = fpext reassoc nsz arcp contract afn <2 x float> %i.cc to <2 x double> ; 3 uses
   %i.ce = fneg reassoc nsz arcp contract afn <2 x double> %i.cd ; 2 uses
   store <2 x double> %i.ce, ptr %i.ca, align 16, !tbaa !33
   %i.cf = getelementptr inbounds nuw i8, ptr %i.a, i64 304 ; 2 uses
@@ -150,7 +150,7 @@ bb.a:
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 432 ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 440
   %i.dd = load <2 x float>, ptr %i.e, align 4, !tbaa !12
-  %i.de = fpext <2 x float> %i.dd to <2 x double> ; 3 uses
+  %i.de = fpext reassoc nsz arcp contract afn <2 x float> %i.dd to <2 x double> ; 3 uses
   %i.df = fneg reassoc nsz arcp contract afn <2 x double> %i.de ; 2 uses
   store <2 x double> %i.df, ptr %i.db, align 16, !tbaa !33
   %i.dg = getelementptr inbounds nuw i8, ptr %i.a, i64 448 ; 2 uses
@@ -553,7 +553,7 @@ begin_hunk_1_@get_homography:bb.a
   %i.vp = insertelement <8 x double> %i.vo, double %i.tv, i64 5
   %i.vq = shufflevector <2 x double> %i.vj, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.vr = shufflevector <8 x double> %i.vp, <8 x double> %i.vq, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %i.vs = fptrunc <8 x double> %i.vr to <8 x float>
+  %i.vs = fptrunc reassoc nsz arcp contract afn <8 x double> %i.vr to <8 x float>
   store <8 x float> %i.vs, ptr %2, align 4, !tbaa !12
   %i.vt = load double, ptr %i.el, align 16, !tbaa !33
   %i.vu = fptrunc reassoc nsz arcp contract afn double %i.vt to float

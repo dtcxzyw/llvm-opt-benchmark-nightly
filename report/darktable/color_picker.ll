@@ -205,14 +205,14 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144
   %i.g = load <2 x i32>, ptr %i.f, align 16, !tbaa !49 ; 2 uses
   %i.h = shufflevector <2 x i32> %i.g, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
-  %i.i = sitofp <8 x i32> %i.h to <8 x float>
+  %i.i = sitofp reassoc nsz arcp contract afn <8 x i32> %i.h to <8 x float>
   %.not = icmp eq i32 %4, 0
   br i1 %.not, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 156
   %i.k = load <2 x i32>, ptr %i.j, align 4, !tbaa !49
-  %i.l = sitofp <2 x i32> %i.k to <2 x float>
+  %i.l = sitofp reassoc nsz arcp contract afn <2 x i32> %i.k to <2 x float>
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
@@ -455,7 +455,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = load ptr, ptr %i.f, align 16, !tbaa !48
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 144
   %i.i = load <2 x i32>, ptr %i.h, align 16, !tbaa !49
-  %i.j = sitofp <2 x i32> %i.i to <2 x float>     ; 4 uses
+  %i.j = sitofp reassoc nsz arcp contract afn <2 x i32> %i.i to <2 x float> ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load i32, ptr %i.k, align 4, !tbaa !91   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -678,9 +678,9 @@ bb.b:                                             ; preds = %bb.a
   %i.q = load <2 x i64>, ptr %11, align 16, !tbaa !149 ; 2 uses
   %i.r = shufflevector <2 x i64> %i.q, <2 x i64> poison, <2 x i32> <i32 poison, i32 0>
   %i.s = insertelement <2 x i64> %i.r, i64 %i.m, i64 0
-  %i.t = sitofp <2 x i64> %i.s to <2 x double>
+  %i.t = sitofp reassoc nsz arcp contract afn <2 x i64> %i.s to <2 x double>
   %i.u = insertelement <2 x i64> %i.q, i64 %i.o, i64 0
-  %i.v = sitofp <2 x i64> %i.u to <2 x double>
+  %i.v = sitofp reassoc nsz arcp contract afn <2 x i64> %i.u to <2 x double>
   %i.w = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.v, splat (double f0x3EB0C6F7A0B5ED8D)
   %i.x = fadd reassoc nsz arcp contract afn <2 x double> %i.w, %i.t
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
@@ -1083,7 +1083,7 @@ _color_picker_work_1ch.exit:                      ; preds = %._crit_edge.i172.sp
   %i.oz = load <2 x i32>, ptr %i.ow, align 4, !tbaa !49 ; 2 uses
   %i.pa = icmp eq <2 x i32> %i.oz, zeroinitializer
   %i.pb = load <2 x float>, ptr %i.ox, align 4
-  %i.pc = uitofp <2 x i32> %i.oz to <2 x float>
+  %i.pc = uitofp reassoc nsz arcp contract afn <2 x i32> %i.oz to <2 x float>
   %i.pd = fdiv reassoc nsz arcp contract afn <2 x float> %i.pb, %i.pc
   %i.pe = select <2 x i1> %i.pa, <2 x float> zeroinitializer, <2 x float> %i.pd
   store <2 x float> %i.pe, ptr %i.oy, align 4, !tbaa !50
@@ -1218,7 +1218,7 @@ _color_picker_work_1ch.exit184:                   ; preds = %._crit_edge.thread.
   %i.rt = load <2 x i32>, ptr %i.rq, align 4, !tbaa !49 ; 2 uses
   %i.ru = icmp eq <2 x i32> %i.rt, zeroinitializer
   %i.rv = load <2 x float>, ptr %i.rr, align 4
-  %i.rw = uitofp <2 x i32> %i.rt to <2 x float>
+  %i.rw = uitofp reassoc nsz arcp contract afn <2 x i32> %i.rt to <2 x float>
   %i.rx = fdiv reassoc nsz arcp contract afn <2 x float> %i.rv, %i.rw
   %i.ry = select <2 x i1> %i.ru, <2 x float> zeroinitializer, <2 x float> %i.rx
   store <2 x float> %i.ry, ptr %i.rs, align 4, !tbaa !50
@@ -1272,9 +1272,9 @@ bb.am:                                            ; preds = %bb.al
   %i.sy = load <2 x i64>, ptr %9, align 16, !tbaa !149 ; 2 uses
   %i.sz = shufflevector <2 x i64> %i.sy, <2 x i64> poison, <2 x i32> <i32 poison, i32 0>
   %i.ta = insertelement <2 x i64> %i.sz, i64 %i.su, i64 0
-  %i.tb = sitofp <2 x i64> %i.ta to <2 x double>
+  %i.tb = sitofp reassoc nsz arcp contract afn <2 x i64> %i.ta to <2 x double>
   %i.tc = insertelement <2 x i64> %i.sy, i64 %i.sw, i64 0
-  %i.td = sitofp <2 x i64> %i.tc to <2 x double>
+  %i.td = sitofp reassoc nsz arcp contract afn <2 x i64> %i.tc to <2 x double>
   %i.te = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.td, splat (double f0x3EB0C6F7A0B5ED8D)
   %i.tf = fadd reassoc nsz arcp contract afn <2 x double> %i.te, %i.tb
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14

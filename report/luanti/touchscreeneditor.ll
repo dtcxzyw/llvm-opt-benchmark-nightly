@@ -205,9 +205,9 @@ _ZNSt13unordered_mapI19touch_gui_button_idN4core8vector2dIiEESt4hashIS0_ESt8equa
   %i.ap = load i64, ptr %i.ao, align 4, !tbaa !124 ; 3 uses
   %i.aq = bitcast i64 %i.ap to <2 x i32>
   %i.ar = bitcast i64 %.sroa.0.0.copyload.i to <2 x i32> ; 2 uses
-  %i.as = sitofp <2 x i32> %i.ar to <2 x float>   ; 3 uses
+  %i.as = sitofp nsz <2 x i32> %i.ar to <2 x float> ; 3 uses
   %i.at = bitcast i64 %i.ap to <2 x i32>
-  %i.au = sitofp <2 x i32> %i.at to <2 x float>   ; 5 uses
+  %i.au = sitofp nsz <2 x i32> %i.at to <2 x float> ; 5 uses
   br i1 %i.p, label %bb.k, label %bb.u
 
 bb.k:                                             ; preds = %_ZNSt13unordered_mapI19touch_gui_button_idN4core8vector2dIiEESt4hashIS0_ESt8equal_toIS0_ESaISt4pairIKS0_S3_EEE2atERS9_.exit
@@ -222,11 +222,11 @@ bb.k:                                             ; preds = %_ZNSt13unordered_ma
   br i1 %i.az, label %bb.l, label %bb.u
 
 bb.l:                                             ; preds = %bb.k
-  %i.ba = fpext <2 x float> %i.au to <2 x double>
-  %i.bb = fpext nnan ninf <2 x float> %i.as to <2 x double>
+  %i.ba = fpext nsz <2 x float> %i.au to <2 x double>
+  %i.bb = fpext nnan ninf nsz <2 x float> %i.as to <2 x double>
   %i.bc = fmul nnan nsz <2 x double> %i.bb, splat (double 5.000000e-01)
   %i.bd = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ba, <2 x double> splat (double 5.000000e-01), <2 x double> %i.bc)
-  %i.be = fptrunc <2 x double> %i.bd to <2 x float>
+  %i.be = fptrunc nsz <2 x double> %i.bd to <2 x float>
   %i.bf = fadd nsz <2 x float> %i.be, splat (float 5.000000e-01)
   %i.bg = tail call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.bf)
   %i.bh = fptosi <2 x float> %i.bg to <2 x i32>   ; 4 uses

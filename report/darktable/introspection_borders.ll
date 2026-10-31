@@ -204,7 +204,7 @@ bb.a:
   %i.i = load <2 x i32>, ptr %i.c, align 4, !tbaa !14
   %i.j = load <2 x i32>, ptr %i.d, align 16, !tbaa !14
   %i.k = sub nsw <2 x i32> %i.i, %i.j
-  %i.l = sitofp <2 x i32> %i.k to <2 x float>
+  %i.l = sitofp reassoc nsz arcp contract afn <2 x i32> %i.k to <2 x float>
   %i.m = insertelement <2 x float> poison, float %i.h, i64 0
   %i.n = insertelement <2 x float> %i.m, float %i.f, i64 1
   %i.o = fmul reassoc nsz arcp contract afn <2 x float> %i.n, %i.l
@@ -222,7 +222,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.u = sitofp <2 x i32> %i.p to <2 x float>     ; 5 uses
+  %i.u = sitofp reassoc nsz arcp contract afn <2 x i32> %i.p to <2 x float> ; 5 uses
   %i.v = add i64 %i.t, -2                         ; 3 uses
   %i.w = lshr exact i64 %i.v, 1
   %i.x = add nuw i64 %i.w, 1                      ; 5 uses
@@ -335,7 +335,7 @@ bb.a:
   %i.i = load <2 x i32>, ptr %i.c, align 4, !tbaa !14
   %i.j = load <2 x i32>, ptr %i.d, align 16, !tbaa !14
   %i.k = sub nsw <2 x i32> %i.i, %i.j
-  %i.l = sitofp <2 x i32> %i.k to <2 x float>
+  %i.l = sitofp reassoc nsz arcp contract afn <2 x i32> %i.k to <2 x float>
   %i.m = insertelement <2 x float> poison, float %i.h, i64 0
   %i.n = insertelement <2 x float> %i.m, float %i.f, i64 1
   %i.o = fmul reassoc nsz arcp contract afn <2 x float> %i.n, %i.l
@@ -353,7 +353,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.u = sitofp <2 x i32> %i.p to <2 x float>     ; 5 uses
+  %i.u = sitofp reassoc nsz arcp contract afn <2 x i32> %i.p to <2 x float> ; 5 uses
   %i.v = add i64 %i.t, -2                         ; 3 uses
   %i.w = lshr exact i64 %i.v, 1
   %i.x = add nuw i64 %i.w, 1                      ; 5 uses
@@ -598,7 +598,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.aq = load <2 x i32>, ptr %i.ao, align 4, !tbaa !14
-  %i.ar = sitofp <2 x i32> %i.aq to <2 x float>   ; 2 uses
+  %i.ar = sitofp reassoc nsz arcp contract afn <2 x i32> %i.aq to <2 x float> ; 2 uses
   %shift = shufflevector <2 x float> %i.ar, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fdiv reassoc nsz arcp contract afn <2 x float> %i.ar, %shift
   %i.as = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 8 uses
@@ -766,12 +766,12 @@ bb.a:
   %i.l = load <2 x i32>, ptr %i.c, align 4, !tbaa !14
   %i.m = load <2 x i32>, ptr %i.d, align 16, !tbaa !14
   %i.n = sub nsw <2 x i32> %i.l, %i.m
-  %i.o = sitofp <2 x i32> %i.n to <2 x float>
+  %i.o = sitofp reassoc nsz arcp contract afn <2 x i32> %i.n to <2 x float>
   %i.p = insertelement <2 x float> poison, float %i.f, i64 0
   %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.r = fmul reassoc nsz arcp contract afn <2 x float> %i.q, %i.o
   %i.s = load <2 x i32>, ptr %2, align 4, !tbaa !14
-  %i.t = sitofp <2 x i32> %i.s to <2 x float>
+  %i.t = sitofp reassoc nsz arcp contract afn <2 x i32> %i.s to <2 x float>
   %i.u = insertelement <2 x float> poison, float %i.h, i64 0
   %i.v = insertelement <2 x float> %i.u, float %i.j, i64 1
   %i.w = fmul reassoc nsz arcp contract afn <2 x float> %i.r, %i.v ; 2 uses
@@ -782,26 +782,26 @@ bb.a:
   %i.ab = fptosi <2 x float> %i.aa to <2 x i32>   ; 2 uses
   store <2 x i32> %i.ab, ptr %3, align 4, !tbaa !14
   %i.ac = load <2 x i32>, ptr %2, align 4, !tbaa !14
-  %i.ad = sitofp <2 x i32> %i.ac to <2 x float>
+  %i.ad = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ac to <2 x float>
   %i.ae = fsub reassoc nsz arcp contract afn <2 x float> %i.w, %i.ad
   %i.af = tail call reassoc nsz arcp contract afn <2 x float> @llvm.round.v2f32(<2 x float> %i.ae) ; 2 uses
   %i.ag = fcmp reassoc nsz arcp contract afn ogt <2 x float> %i.af, zeroinitializer
   %i.ah = select <2 x i1> %i.ag, <2 x float> %i.af, <2 x float> zeroinitializer
   %i.ai = load <2 x i32>, ptr %i.k, align 4, !tbaa !14
-  %i.aj = sitofp <2 x i32> %i.ai to <2 x float>
+  %i.aj = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ai to <2 x float>
   %i.ak = fsub reassoc nsz arcp contract afn <2 x float> %i.aj, %i.ah
   %i.al = fptosi <2 x float> %i.ak to <2 x i32>   ; 3 uses
   store <2 x i32> %i.al, ptr %i.k, align 4, !tbaa !14
   %i.am = load <2 x i32>, ptr %i.d, align 16, !tbaa !14
-  %i.an = sitofp <2 x i32> %i.am to <2 x float>
+  %i.an = sitofp reassoc nsz arcp contract afn <2 x i32> %i.am to <2 x float>
   %i.ao = fmul reassoc nsz arcp contract afn <2 x float> %i.q, %i.an ; 3 uses
   %i.ap = add nsw <2 x i32> %i.al, %i.ab
-  %i.aq = sitofp <2 x i32> %i.ap to <2 x float>
+  %i.aq = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ap to <2 x float>
   %i.ar = fsub reassoc nsz arcp contract afn <2 x float> %i.aq, %i.ao
   %i.as = tail call reassoc nsz arcp contract afn <2 x float> @llvm.round.v2f32(<2 x float> %i.ar) ; 2 uses
   %i.at = fcmp reassoc nsz arcp contract afn ogt <2 x float> %i.as, zeroinitializer
   %i.au = select <2 x i1> %i.at, <2 x float> %i.as, <2 x float> zeroinitializer
-  %i.av = sitofp <2 x i32> %i.al to <2 x float>
+  %i.av = sitofp reassoc nsz arcp contract afn <2 x i32> %i.al to <2 x float>
   %i.aw = fsub reassoc nsz arcp contract afn <2 x float> %i.av, %i.au
   %i.ax = fptosi <2 x float> %i.aw to <2 x i32>
   %i.ay = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.ax, <2 x i32> splat (i32 1))
@@ -992,7 +992,7 @@ bb.g:                                             ; preds = %._crit_edge, %bb.f,
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   %i.as = insertelement <2 x float> poison, float %i.g, i64 0
   %i.at = insertelement <2 x float> %i.as, float %i.ar, i64 1
-  %i.au = fpext <2 x float> %i.at to <2 x double>
+  %i.au = fpext reassoc nsz arcp contract afn <2 x float> %i.at to <2 x double>
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 516
   store <2 x double> %i.au, ptr %3, align 16, !tbaa !65
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -1305,7 +1305,7 @@ bb.a:
   tail call void @gui_changed(ptr noundef %0, ptr noundef null, ptr poison)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
   %i.e = load <2 x float>, ptr %i.d, align 4, !tbaa !13
-  %i.f = fpext <2 x float> %i.e to <2 x double>
+  %i.f = fpext reassoc nsz arcp contract afn <2 x float> %i.e to <2 x double>
   store <2 x double> %i.f, ptr %1, align 16, !tbaa !65
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -1320,7 +1320,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 100
   %i.o = load <2 x float>, ptr %i.n, align 4, !tbaa !13
-  %i.p = fpext <2 x float> %i.o to <2 x double>
+  %i.p = fpext reassoc nsz arcp contract afn <2 x float> %i.o to <2 x double>
   store <2 x double> %i.p, ptr %2, align 16, !tbaa !65
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 108
@@ -1445,7 +1445,7 @@ _iop_gui_alloc.exit:                              ; preds = %bb.a, %bb.b
   call void @gtk_widget_set_tooltip_text(ptr noundef %i.bh, ptr noundef %i.bi) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
   %i.bj = load <2 x float>, ptr %i.m, align 4, !tbaa !13
-  %i.bk = fpext <2 x float> %i.bj to <2 x double>
+  %i.bk = fpext reassoc nsz arcp contract afn <2 x float> %i.bj to <2 x double>
   store <2 x double> %i.bk, ptr %1, align 16, !tbaa !65
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bm = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -1457,7 +1457,7 @@ _iop_gui_alloc.exit:                              ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.bq = getelementptr inbounds nuw i8, ptr %i.m, i64 100
   %i.br = load <2 x float>, ptr %i.bq, align 4, !tbaa !13
-  %i.bs = fpext <2 x float> %i.br to <2 x double>
+  %i.bs = fpext reassoc nsz arcp contract afn <2 x float> %i.br to <2 x double>
   store <2 x double> %i.bs, ptr %2, align 16, !tbaa !65
   %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bu = getelementptr inbounds nuw i8, ptr %i.m, i64 108
@@ -1685,7 +1685,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   call void @gtk_color_chooser_get_rgba(ptr noundef %0, ptr noundef nonnull %2) #22
   %i.f = load <2 x double>, ptr %2, align 16, !tbaa !65
-  %i.g = fptrunc <2 x double> %i.f to <2 x float>
+  %i.g = fptrunc reassoc nsz arcp contract afn <2 x double> %i.f to <2 x float>
   store <2 x float> %i.g, ptr %i.e, align 4, !tbaa !13
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.i = load double, ptr %i.h, align 16, !tbaa !67
@@ -1725,7 +1725,7 @@ bb.b:                                             ; preds = %bb.a
   call void @gtk_color_chooser_get_rgba(ptr noundef %0, ptr noundef nonnull %2) #22
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 100
   %i.g = load <2 x double>, ptr %2, align 16, !tbaa !65
-  %i.h = fptrunc <2 x double> %i.g to <2 x float>
+  %i.h = fptrunc reassoc nsz arcp contract afn <2 x double> %i.g to <2 x float>
   store <2 x float> %i.h, ptr %i.f, align 4, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.j = load double, ptr %i.i, align 16, !tbaa !67

@@ -77,7 +77,7 @@ bb.a:
   %i.b = fpext reassoc nsz arcp contract afn float %.sroa.0.4.vec.extract to double ; 2 uses
   %i.c = fpext reassoc nsz arcp contract afn float %.sroa.0.0.vec.extract to double ; 2 uses
   %i.d = fadd reassoc nsz arcp contract afn <4 x float> %i.a, <float -1.000000e+01, float 1.000000e+01, float -1.000000e+01, float 1.000000e+01>
-  %i.e = fpext <4 x float> %i.d to <4 x double>   ; 4 uses
+  %i.e = fpext reassoc nsz arcp contract afn <4 x float> %i.d to <4 x double> ; 4 uses
   %i.f = extractelement <4 x double> %i.e, i64 0
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.f, double noundef %i.b) #8
   %i.g = extractelement <4 x double> %i.e, i64 1
@@ -152,7 +152,7 @@ define dso_local void @center_image(ptr noundef %0, ptr nofree noundef readonly 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.b = load <2 x i32>, ptr %i.a, align 4, !tbaa !14
-  %i.c = sitofp <2 x i32> %i.b to <2 x double>    ; 2 uses
+  %i.c = sitofp reassoc nsz arcp contract afn <2 x i32> %i.b to <2 x double> ; 2 uses
   %i.d = extractelement <2 x double> %i.c, i64 0
   %i.e = extractelement <2 x double> %i.c, i64 1
   tail call void @cairo_translate(ptr noundef %0, double noundef %i.d, double noundef %i.e) #8
@@ -251,7 +251,7 @@ bb.a:
   %i.e = fpext reassoc nsz arcp contract afn float %.sroa.0.4.vec.extract.i to double ; 2 uses
   %i.f = fpext reassoc nsz arcp contract afn float %.sroa.0.0.vec.extract.i to double ; 2 uses
   %i.g = fadd reassoc nsz arcp contract afn <4 x float> %i.d, <float -1.000000e+01, float 1.000000e+01, float -1.000000e+01, float 1.000000e+01>
-  %i.h = fpext <4 x float> %i.g to <4 x double>   ; 4 uses
+  %i.h = fpext reassoc nsz arcp contract afn <4 x float> %i.g to <4 x double> ; 4 uses
   %i.i = extractelement <4 x double> %i.h, i64 0
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.i, double noundef %i.e) #8
   %i.j = extractelement <4 x double> %i.h, i64 1
@@ -269,7 +269,7 @@ bb.a:
   %i.q = fpext reassoc nsz arcp contract afn float %.sroa.0.4.vec.extract.i.1 to double ; 2 uses
   %i.r = fpext reassoc nsz arcp contract afn float %.sroa.0.0.vec.extract.i.1 to double ; 2 uses
   %i.s = fadd reassoc nsz arcp contract afn <4 x float> %i.p, <float -1.000000e+01, float 1.000000e+01, float -1.000000e+01, float 1.000000e+01>
-  %i.t = fpext <4 x float> %i.s to <4 x double>   ; 4 uses
+  %i.t = fpext reassoc nsz arcp contract afn <4 x float> %i.s to <4 x double> ; 4 uses
   %i.u = extractelement <4 x double> %i.t, i64 0
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.u, double noundef %i.q) #8
   %i.v = extractelement <4 x double> %i.t, i64 1
@@ -287,7 +287,7 @@ bb.a:
   %i.ac = fpext reassoc nsz arcp contract afn float %.sroa.0.4.vec.extract.i.2 to double ; 2 uses
   %i.ad = fpext reassoc nsz arcp contract afn float %.sroa.0.0.vec.extract.i.2 to double ; 2 uses
   %i.ae = fadd reassoc nsz arcp contract afn <4 x float> %i.ab, <float -1.000000e+01, float 1.000000e+01, float -1.000000e+01, float 1.000000e+01>
-  %i.af = fpext <4 x float> %i.ae to <4 x double> ; 4 uses
+  %i.af = fpext reassoc nsz arcp contract afn <4 x float> %i.ae to <4 x double> ; 4 uses
   %i.ag = extractelement <4 x double> %i.af, i64 0
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.ag, double noundef %i.ac) #8
   %i.ah = extractelement <4 x double> %i.af, i64 1
@@ -305,7 +305,7 @@ bb.a:
   %i.ao = fpext reassoc nsz arcp contract afn float %.sroa.0.4.vec.extract.i.3 to double ; 2 uses
   %i.ap = fpext reassoc nsz arcp contract afn float %.sroa.0.0.vec.extract.i.3 to double ; 2 uses
   %i.aq = fadd reassoc nsz arcp contract afn <4 x float> %i.an, <float -1.000000e+01, float 1.000000e+01, float -1.000000e+01, float 1.000000e+01>
-  %i.ar = fpext <4 x float> %i.aq to <4 x double> ; 4 uses
+  %i.ar = fpext reassoc nsz arcp contract afn <4 x float> %i.aq to <4 x double> ; 4 uses
   %i.as = extractelement <4 x double> %i.ar, i64 0
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.as, double noundef %i.ao) #8
   %i.at = extractelement <4 x double> %i.ar, i64 1
@@ -430,7 +430,7 @@ bb.a:
   br i1 %.not33, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.o = fpext <2 x float> %i.j to <2 x double>
+  %i.o = fpext reassoc nsz arcp contract afn <2 x float> %i.j to <2 x double>
   %i.p = fmul reassoc nsz arcp contract afn <2 x double> %i.o, splat (double 2.000000e+00)
   %.not22 = icmp eq i32 %5, 0
   br label %bb.b
@@ -441,9 +441,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.r = load <2 x float>, ptr %i.q, align 16, !tbaa !13
   %i.s = fadd reassoc nsz arcp contract afn <2 x float> %i.r, %i.j ; 5 uses
   %i.t = load <2 x float>, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !13
-  %i.u = fpext <2 x float> %i.t to <2 x double>
+  %i.u = fpext reassoc nsz arcp contract afn <2 x float> %i.t to <2 x double>
   %i.v = fsub reassoc nsz arcp contract afn <2 x double> %i.u, %i.p
-  %i.w = fptrunc <2 x double> %i.v to <2 x float> ; 2 uses
+  %i.w = fptrunc reassoc nsz arcp contract afn <2 x double> %i.v to <2 x float> ; 2 uses
   %foldExtExtBinop = fadd reassoc nsz arcp contract afn <2 x float> %i.s, %i.w ; 2 uses
   %.sroa.7.8.vec.insert.i = shufflevector <2 x float> %foldExtExtBinop, <2 x float> %i.s, <2 x i32> <i32 0, i32 3>
   %foldExtExtBinop35 = fadd reassoc nsz arcp contract afn <2 x float> %i.s, %i.w ; 2 uses
@@ -482,7 +482,7 @@ bb.c:                                             ; preds = %bb.b
   %i.al = fpext reassoc nsz arcp contract afn float %i.ak to double
   %i.am = getelementptr inbounds nuw i8, ptr %i.q, i64 52
   %i.an = load <2 x float>, ptr %i.am, align 4, !tbaa !13
-  %i.ao = fpext <2 x float> %i.an to <2 x double> ; 2 uses
+  %i.ao = fpext reassoc nsz arcp contract afn <2 x float> %i.an to <2 x double> ; 2 uses
   %i.ap = extractelement <2 x double> %i.ao, i64 0
   %i.aq = extractelement <2 x double> %i.ao, i64 1
   call void @cairo_set_source_rgb(ptr noundef %0, double noundef %i.al, double noundef %i.ap, double noundef %i.aq) #8
@@ -534,7 +534,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.d = load <2 x i32>, ptr %i.c, align 8, !tbaa !14
-  %i.e = sitofp <2 x i32> %i.d to <2 x float>
+  %i.e = sitofp reassoc nsz arcp contract afn <2 x i32> %i.d to <2 x float>
   %i.f = insertelement <2 x float> poison, float %1, i64 0
   %i.g = insertelement <2 x float> %i.f, float %2, i64 1 ; 2 uses
   %i.h = fdiv reassoc nsz arcp contract afn <2 x float> %i.e, %i.g ; 2 uses
@@ -551,12 +551,12 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load float, ptr %i.m, align 8, !tbaa !37
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.r = load <2 x i32>, ptr %i.c, align 8, !tbaa !14
-  %i.s = sitofp <2 x i32> %i.r to <2 x float>
+  %i.s = sitofp reassoc nsz arcp contract afn <2 x i32> %i.r to <2 x float>
   %i.t = insertelement <2 x float> poison, float %i.p, i64 0
   %i.u = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> zeroinitializer
   %i.v = fdiv reassoc nsz arcp contract afn <2 x float> %i.s, %i.u
   %i.w = fsub reassoc nsz arcp contract afn <2 x float> %i.g, %i.v
-  %i.x = fpext <2 x float> %i.w to <2 x double>
+  %i.x = fpext reassoc nsz arcp contract afn <2 x float> %i.w to <2 x double>
   %i.y = fmul reassoc nsz arcp contract afn <2 x double> %i.x, splat (double 5.000000e-01)
   %i.z = fadd reassoc nsz arcp contract afn <2 x double> %i.y, splat (double 5.000000e-01)
   %i.aa = fptosi <2 x double> %i.z to <2 x i32>

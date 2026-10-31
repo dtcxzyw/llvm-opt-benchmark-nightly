@@ -161,7 +161,7 @@ bb.d:                                             ; preds = %.thread, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
   %i.bk = load <2 x i32>, ptr %i.w, align 8, !tbaa !35
-  %i.bl = sitofp <2 x i32> %i.bk to <2 x float>
+  %i.bl = sitofp fast <2 x i32> %i.bk to <2 x float>
   %i.bm = fdiv fast <2 x float> %i.bj, %i.bl      ; 3 uses
   %i.bn = extractelement <2 x float> %i.bm, i64 0
   store float %i.bn, ptr %i.f, align 4, !tbaa !39
@@ -325,7 +325,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = load i32, ptr %11, align 4, !tbaa !35   ; 5 uses
   %i.af = insertelement <2 x i32> poison, i32 %i.ae, i64 0
   %i.ag = insertelement <2 x i32> %i.af, i32 %i.ad, i64 1
-  %i.ah = sitofp <2 x i32> %i.ag to <2 x float>   ; 2 uses
+  %i.ah = sitofp fast <2 x i32> %i.ag to <2 x float> ; 2 uses
   %i.ai = load i32, ptr %i.y, align 4, !tbaa !30  ; 2 uses
   %i.aj = icmp sgt i32 %i.ai, 0
   %i.ak = uitofp nneg i32 %i.ai to float
@@ -419,7 +419,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.lr.ph149.split.us, label %._crit_edge150
 
 .lr.ph149.split.us:                               ; preds = %bb.e
-  %i.cm = uitofp <2 x i32> %i.by to <2 x float>   ; 2 uses
+  %i.cm = uitofp nneg <2 x i32> %i.by to <2 x float> ; 2 uses
   %i.cn = extractelement <2 x float> %i.cm, i64 1
   %i.co = fdiv fast float 1.000000e+00, %i.cn
   %i.cp = extractelement <2 x float> %i.cm, i64 0

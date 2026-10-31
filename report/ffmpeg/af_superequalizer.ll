@@ -205,7 +205,7 @@ bb.a:
   %i.i = tail call nsz double @llvm.pow.f64(double %i.b, double 4.000000e+00)
   %i.j = tail call nsz double @llvm.pow.f64(double %i.b, double 5.000000e+00)
   %i.k = load <4 x float>, ptr %i.g, align 4, !tbaa !21
-  %i.l = fpext <4 x float> %i.k to <4 x double>
+  %i.l = fpext nsz <4 x float> %i.k to <4 x double>
   %i.m = insertelement <4 x double> poison, double %i.i, i64 0
   %i.n = insertelement <4 x double> %i.m, double %i.j, i64 1
   %i.o = insertelement <4 x double> poison, double %square, i64 0
@@ -230,7 +230,7 @@ bb.a:
   %i.ah = tail call nsz double @llvm.pow.f64(double %i.b, double 8.000000e+00)
   %i.ai = tail call nsz double @llvm.pow.f64(double %i.b, double 9.000000e+00)
   %i.aj = load <4 x float>, ptr %i.ae, align 4, !tbaa !21
-  %i.ak = fpext <4 x float> %i.aj to <4 x double>
+  %i.ak = fpext nsz <4 x float> %i.aj to <4 x double>
   %i.al = insertelement <4 x double> poison, double %i.af, i64 0
   %i.am = insertelement <4 x double> %i.al, double %i.ag, i64 1
   %i.an = insertelement <4 x double> %i.am, double %i.ah, i64 2
@@ -254,7 +254,7 @@ bb.a:
   %i.bf = tail call nsz double @llvm.pow.f64(double %i.b, double 1.200000e+01)
   %i.bg = tail call nsz double @llvm.pow.f64(double %i.b, double 1.300000e+01)
   %i.bh = load <4 x float>, ptr %i.bc, align 4, !tbaa !21
-  %i.bi = fpext <4 x float> %i.bh to <4 x double>
+  %i.bi = fpext nsz <4 x float> %i.bh to <4 x double>
   %i.bj = insertelement <4 x double> poison, double %i.bd, i64 0
   %i.bk = insertelement <4 x double> %i.bj, double %i.be, i64 1
   %i.bl = insertelement <4 x double> %i.bk, double %i.bf, i64 2
@@ -276,7 +276,7 @@ bb.a:
   %i.cb = tail call nsz double @llvm.pow.f64(double %i.b, double 1.400000e+01)
   %i.cc = tail call nsz double @llvm.pow.f64(double %i.b, double 1.500000e+01)
   %i.cd = load <2 x float>, ptr %i.ca, align 4, !tbaa !21
-  %i.ce = fpext <2 x float> %i.cd to <2 x double>
+  %i.ce = fpext nsz <2 x float> %i.cd to <2 x double>
   %i.cf = insertelement <2 x double> poison, double %i.cb, i64 0
   %i.cg = insertelement <2 x double> %i.cf, double %i.cc, i64 1
   %i.ch = fdiv nsz <2 x double> %i.cg, %i.ce      ; 2 uses

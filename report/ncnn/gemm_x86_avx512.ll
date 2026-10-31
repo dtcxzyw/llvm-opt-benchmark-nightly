@@ -205,7 +205,7 @@ bb.nq:                                            ; preds = %bb.no, %bb.nm, %bb.
   %.342993919 = phi i32 [ %i.fda, %.thread3626 ], [ %.24298.lcssa, %.lr.ph3922.preheader ]
   %.743243918 = phi ptr [ %i.fcy, %.thread3626 ], [ %.54322.lcssa, %.lr.ph3922.preheader ] ; 4 uses
   %i.fbv = load <4 x i32>, ptr %.2242353920, align 4, !tbaa !51
-  %i.fbw = sitofp <4 x i32> %i.fbv to <4 x float>
+  %i.fbw = sitofp fast <4 x i32> %i.fbv to <4 x float>
   %i.fbx = fmul fast <4 x float> %i.esr, %i.fbw   ; 6 uses
   %.not4492 = icmp eq ptr %.853921, null
   br i1 %.not4492, label %.thread3626, label %bb.nr
@@ -281,7 +281,7 @@ bb.nx:                                            ; preds = %.lr.ph3931, %bb.od
   %.443003928 = phi i32 [ %.34299.lcssa, %.lr.ph3931 ], [ %i.fef, %bb.od ]
   %.943263927 = phi ptr [ %.74324.lcssa, %.lr.ph3931 ], [ %.104327, %bb.od ] ; 5 uses
   %i.fdd = load <2 x i32>, ptr %.2342363929, align 4, !tbaa !51
-  %i.fde = sitofp <2 x i32> %i.fdd to <2 x float>
+  %i.fde = sitofp fast <2 x i32> %i.fdd to <2 x float>
   %i.fdf = fmul fast <2 x float> %i.esq, %i.fde   ; 3 uses
   %.not4491 = icmp eq ptr %.883930, null
   br i1 %.not4491, label %bb.oa, label %bb.ny
@@ -684,7 +684,7 @@ bb.py:                                            ; preds = %.lr.ph3979, %bb.qe
   %.1013976 = phi ptr [ %.99.lcssa, %.lr.ph3979 ], [ %.102, %bb.qe ] ; 4 uses
   %.2842413975 = phi ptr [ %.274240.lcssa, %.lr.ph3979 ], [ %i.fjp, %bb.qe ] ; 2 uses
   %i.fiz = load <2 x i32>, ptr %.2842413975, align 4, !tbaa !51
-  %i.fja = sitofp <2 x i32> %i.fiz to <2 x float>
+  %i.fja = sitofp fast <2 x i32> %i.fiz to <2 x float>
   %i.fjb = fmul fast <2 x float> %i.fie, %i.fja   ; 3 uses
   %.not4469 = icmp eq ptr %.1013976, null
   br i1 %.not4469, label %bb.qb, label %bb.pz

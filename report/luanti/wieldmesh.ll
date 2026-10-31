@@ -204,14 +204,14 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.s = load <2 x float>, ptr %i.e, align 4, !tbaa !88
   %i.t = fmul nsz <2 x float> %i.s, splat (float f0x3C8EFA35)
-  %i.u = fpext <2 x float> %i.t to <2 x double>
+  %i.u = fpext nsz <2 x float> %i.t to <2 x double>
   %i.v = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.u) ; 2 uses
   %i.w = extractvalue { <2 x double>, <2 x double> } %i.v, 0 ; 5 uses
   %i.x = extractvalue { <2 x double>, <2 x double> } %i.v, 1 ; 5 uses
   %i.y = extractelement <2 x double> %i.x, i64 0  ; 2 uses
   %i.z = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.aa = fmul nsz <2 x double> %i.z, %i.k
-  %i.ab = fptrunc <2 x double> %i.aa to <2 x float> ; 5 uses
+  %i.ab = fptrunc nsz <2 x double> %i.aa to <2 x float> ; 5 uses
   store <2 x float> %i.ab, ptr %0, align 4, !tbaa !88
   %i.ac = extractelement <2 x double> %i.w, i64 1
   %i.ad = fptrunc nsz double %i.ac to float
@@ -240,10 +240,10 @@ bb.a:
   %i.ax = shufflevector <2 x double> %i.x, <2 x double> %i.w, <2 x i32> <i32 1, i32 2>
   %i.ay = fmul nsz <2 x double> %i.x, %i.ax       ; 2 uses
   %i.az = shufflevector <2 x double> %i.aw, <2 x double> %i.ay, <2 x i32> <i32 0, i32 3>
-  %i.ba = fptrunc <2 x double> %i.az to <2 x float> ; 4 uses
+  %i.ba = fptrunc nsz <2 x double> %i.az to <2 x float> ; 4 uses
   store <2 x float> %i.ba, ptr %i.d, align 4, !tbaa !88
   %i.bb = shufflevector <2 x double> %i.aw, <2 x double> %i.ay, <2 x i32> <i32 1, i32 2>
-  %i.bc = fptrunc <2 x double> %i.bb to <2 x float> ; 4 uses
+  %i.bc = fptrunc nsz <2 x double> %i.bb to <2 x float> ; 4 uses
   store <2 x float> %i.bc, ptr %i.r, align 4, !tbaa !88
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
@@ -646,7 +646,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
   %i.au = insertelement <2 x i32> poison, i32 %0, i64 0
   %i.av = insertelement <2 x i32> %i.au, i32 %1, i64 1
-  %i.aw = sitofp <2 x i32> %i.av to <2 x float>
+  %i.aw = sitofp nsz <2 x i32> %i.av to <2 x float>
   %i.ax = fdiv nsz <2 x float> splat (float 1.000000e+00), %i.aw ; 2 uses
   %i.ay = icmp sgt i32 %0, 0
   br i1 %i.ay, label %.lr.ph, label %.preheader

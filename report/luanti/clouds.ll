@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.ef = fadd nsz float %.scalar, %i.ed
   %i.eg = load <3 x i16>, ptr %i.bx, align 4, !tbaa !115
   %i.eh = shufflevector <3 x i16> %i.eg, <3 x i16> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %i.ei = sitofp <4 x i16> %i.eh to <4 x float>
+  %i.ei = sitofp nsz <4 x i16> %i.eh to <4 x float>
   %i.ej = fmul nnan nsz <4 x float> %i.ei, splat (float 1.000000e+01) ; 2 uses
   %i.ek = fsub nsz <4 x float> %i.ee, %i.ej
   store <4 x float> %i.ek, ptr %i.bu, align 8, !tbaa !24
@@ -607,7 +607,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.du = fadd nsz float %.scalar, %i.ds
   %i.dv = load <3 x i16>, ptr %i.bm, align 4, !tbaa !115
   %i.dw = shufflevector <3 x i16> %i.dv, <3 x i16> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %i.dx = sitofp <4 x i16> %i.dw to <4 x float>
+  %i.dx = sitofp nsz <4 x i16> %i.dw to <4 x float>
   %i.dy = fmul nnan nsz <4 x float> %i.dx, splat (float 1.000000e+01) ; 2 uses
   %i.dz = fsub nsz <4 x float> %i.dt, %i.dy
   store <4 x float> %i.dz, ptr %i.bj, align 8, !tbaa !24
@@ -1010,7 +1010,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ah = fmul nnan nsz float %i.ag, 1.000000e+01
   %i.ai = bitcast i48 %.sroa.05.0.copyload to <3 x i16>
   %i.aj = shufflevector <3 x i16> %i.ai, <3 x i16> poison, <2 x i32> <i32 0, i32 1>
-  %i.ak = sitofp <2 x i16> %i.aj to <2 x float>
+  %i.ak = sitofp nsz <2 x i16> %i.aj to <2 x float>
   %i.al = fmul nnan nsz <2 x float> %i.ak, <float 1.000000e+01, float 1.000000e+00> ; 2 uses
   %i.am = insertelement <2 x float> <float poison, float -1.000000e+01>, float %i.y, i64 0 ; 2 uses
   %i.an = fsub nsz <2 x float> %i.am, %i.al
@@ -1275,7 +1275,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bx = fadd nsz <2 x float> %i.bw, splat (float 5.000000e-01)
   %i.by = tail call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.bx)
   %i.bz = fptosi <2 x float> %i.by to <2 x i32>
-  %i.ca = sitofp <2 x i32> %i.bz to <2 x float>
+  %i.ca = sitofp nsz <2 x i32> %i.bz to <2 x float>
   %i.cb = fmul nnan nsz <2 x float> %i.ca, splat (float 3.200000e-01) ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 412
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !83
@@ -1678,14 +1678,14 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.s = load <2 x float>, ptr %i.e, align 4, !tbaa !24
   %i.t = fmul nsz <2 x float> %i.s, splat (float f0x3C8EFA35)
-  %i.u = fpext <2 x float> %i.t to <2 x double>
+  %i.u = fpext nsz <2 x float> %i.t to <2 x double>
   %i.v = tail call nsz { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double> %i.u) ; 2 uses
   %i.w = extractvalue { <2 x double>, <2 x double> } %i.v, 0 ; 5 uses
   %i.x = extractvalue { <2 x double>, <2 x double> } %i.v, 1 ; 5 uses
   %i.y = extractelement <2 x double> %i.x, i64 0  ; 2 uses
   %i.z = shufflevector <2 x double> %i.x, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.aa = fmul nsz <2 x double> %i.z, %i.k
-  %i.ab = fptrunc <2 x double> %i.aa to <2 x float> ; 5 uses
+  %i.ab = fptrunc nsz <2 x double> %i.aa to <2 x float> ; 5 uses
   store <2 x float> %i.ab, ptr %0, align 4, !tbaa !24
   %i.ac = extractelement <2 x double> %i.w, i64 1
   %i.ad = fptrunc nsz double %i.ac to float
@@ -1714,10 +1714,10 @@ bb.a:
   %i.ax = shufflevector <2 x double> %i.x, <2 x double> %i.w, <2 x i32> <i32 1, i32 2>
   %i.ay = fmul nsz <2 x double> %i.x, %i.ax       ; 2 uses
   %i.az = shufflevector <2 x double> %i.aw, <2 x double> %i.ay, <2 x i32> <i32 0, i32 3>
-  %i.ba = fptrunc <2 x double> %i.az to <2 x float> ; 4 uses
+  %i.ba = fptrunc nsz <2 x double> %i.az to <2 x float> ; 4 uses
   store <2 x float> %i.ba, ptr %i.d, align 4, !tbaa !24
   %i.bb = shufflevector <2 x double> %i.aw, <2 x double> %i.ay, <2 x i32> <i32 1, i32 2>
-  %i.bc = fptrunc <2 x double> %i.bb to <2 x float> ; 4 uses
+  %i.bc = fptrunc nsz <2 x double> %i.bb to <2 x float> ; 4 uses
   store <2 x float> %i.bc, ptr %i.r, align 4, !tbaa !24
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses

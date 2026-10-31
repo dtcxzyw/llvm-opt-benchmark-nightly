@@ -204,7 +204,7 @@ bb.a:
   %i.ao = sitofp reassoc nsz arcp contract afn i32 %i.an to double
   call void @cairo_translate(ptr noundef %i.aj, double noundef 0.000000e+00, double noundef %i.ao) #16
   call void @cairo_scale(ptr noundef %i.aj, double noundef 1.000000e+00, double noundef -1.000000e+00) #16
-  %i.ap = sitofp <2 x i32> %i.am to <2 x float>   ; 4 uses
+  %i.ap = sitofp reassoc nsz arcp contract afn <2 x i32> %i.am to <2 x float> ; 4 uses
   %i.aq = extractelement <2 x float> %i.ap, i64 0
   %i.ar = fmul reassoc nnan nsz arcp contract afn float %i.aq, 1.250000e-01
   %i.as = fpext reassoc nsz arcp contract afn float %i.ar to double
@@ -410,20 +410,20 @@ bb.a:
   %i.ac = fadd reassoc nsz arcp contract afn <2 x double> %i.z, %i.ab
   %i.ad = fsub reassoc nsz arcp contract afn <2 x double> %i.z, %i.ab
   %i.ae = shufflevector <2 x double> %i.ad, <2 x double> %i.ac, <2 x i32> <i32 0, i32 3> ; 3 uses
-  %i.af = sitofp <2 x i32> %i.t to <2 x double>   ; 3 uses
+  %i.af = sitofp reassoc nsz arcp contract afn <2 x i32> %i.t to <2 x double> ; 3 uses
   %i.ag = fcmp reassoc nsz arcp contract afn ogt <2 x double> %i.ae, %i.af
   %i.ah = fcmp reassoc nsz arcp contract afn olt <2 x double> %i.ae, zeroinitializer
   %i.ai = select <2 x i1> %i.ah, <2 x double> zeroinitializer, <2 x double> %i.ae
   %i.aj = select <2 x i1> %i.ag, <2 x double> %i.af, <2 x double> %i.ai
-  %i.ak = fptrunc <2 x double> %i.aj to <2 x float>
-  %i.al = fpext <2 x float> %i.ak to <2 x double>
+  %i.ak = fptrunc reassoc nsz arcp contract afn <2 x double> %i.aj to <2 x float>
+  %i.al = fpext reassoc nsz arcp contract afn <2 x float> %i.ak to <2 x double>
   %i.am = fmul reassoc nsz arcp contract afn <2 x double> %i.al, splat (double 2.000000e+00)
   %i.an = fsub reassoc nsz arcp contract afn <2 x double> %i.am, %i.af
   %i.ao = fmul reassoc nsz arcp contract afn <2 x double> %i.an, splat (double 4.000000e+01)
-  %i.ap = sitofp <2 x i32> %i.t to <2 x float>
-  %i.aq = fpext <2 x float> %i.ap to <2 x double>
+  %i.ap = sitofp reassoc nsz arcp contract afn <2 x i32> %i.t to <2 x float>
+  %i.aq = fpext reassoc nsz arcp contract afn <2 x float> %i.ap to <2 x double>
   %i.ar = fdiv reassoc nsz arcp contract afn <2 x double> %i.ao, %i.aq
-  %i.as = fptrunc <2 x double> %i.ar to <2 x float> ; 4 uses
+  %i.as = fptrunc reassoc nsz arcp contract afn <2 x double> %i.ar to <2 x float> ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.au = load i32, ptr %i.at, align 8, !tbaa !151
   %i.av = and i32 %i.au, 256

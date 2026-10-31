@@ -204,7 +204,7 @@ bb.cy:                                            ; preds = %bb.cx
   store <8 x float> %i.gn, ptr %10, align 8, !tbaa !179
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
   %i.go = shufflevector <8 x float> %i.gn, <8 x float> poison, <2 x i32> <i32 0, i32 1>
-  %i.gp = fpext <2 x float> %i.go to <2 x double>
+  %i.gp = fpext reassoc nsz arcp contract afn <2 x float> %i.go to <2 x double>
   store <2 x double> %i.gp, ptr %15, align 16, !tbaa !192
   %i.gq = getelementptr inbounds nuw i8, ptr %15, i64 16
   store double 1.000000e+00, ptr %i.gq, align 16, !tbaa !194
@@ -215,7 +215,7 @@ bb.cy:                                            ; preds = %bb.cx
 bb.cz:                                            ; preds = %bb.cy
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #19
   %i.gr = load <2 x float>, ptr %i.gk, align 8, !tbaa !179
-  %i.gs = fpext <2 x float> %i.gr to <2 x double>
+  %i.gs = fpext reassoc nsz arcp contract afn <2 x float> %i.gr to <2 x double>
   store <2 x double> %i.gs, ptr %17, align 16, !tbaa !192
   %i.gt = getelementptr inbounds nuw i8, ptr %17, i64 16
   store double 1.000000e+00, ptr %i.gt, align 16, !tbaa !194
@@ -226,7 +226,7 @@ bb.cz:                                            ; preds = %bb.cy
 bb.da:                                            ; preds = %bb.cz
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #19
   %i.gu = load <2 x float>, ptr %i.gl, align 8, !tbaa !179
-  %i.gv = fpext <2 x float> %i.gu to <2 x double>
+  %i.gv = fpext reassoc nsz arcp contract afn <2 x float> %i.gu to <2 x double>
   store <2 x double> %i.gv, ptr %19, align 16, !tbaa !192
   %i.gw = getelementptr inbounds nuw i8, ptr %19, i64 16
   store double 1.000000e+00, ptr %i.gw, align 16, !tbaa !194
@@ -237,7 +237,7 @@ bb.da:                                            ; preds = %bb.cz
 bb.db:                                            ; preds = %bb.da
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #19
   %i.gx = load <2 x float>, ptr %i.gm, align 8, !tbaa !179
-  %i.gy = fpext <2 x float> %i.gx to <2 x double>
+  %i.gy = fpext reassoc nsz arcp contract afn <2 x float> %i.gx to <2 x double>
   store <2 x double> %i.gy, ptr %21, align 16, !tbaa !192
   %i.gz = getelementptr inbounds nuw i8, ptr %21, i64 16
   store double 1.000000e+00, ptr %i.gz, align 16, !tbaa !194
@@ -273,21 +273,21 @@ bb.dg:                                            ; preds = %bb.df
 
 bb.dh:                                            ; preds = %bb.dg
   %i.hd = load <2 x double>, ptr %15, align 16, !tbaa !192
-  %i.he = fptrunc <2 x double> %i.hd to <2 x float>
+  %i.he = fptrunc reassoc nsz arcp contract afn <2 x double> %i.hd to <2 x float>
   store <2 x float> %i.he, ptr %10, align 8, !tbaa !179
   invoke void @cmsXYZ2xyY(ptr noundef nonnull %17, ptr noundef nonnull %26)
           to label %bb.di unwind label %bb.dt
 
 bb.di:                                            ; preds = %bb.dh
   %i.hf = load <2 x double>, ptr %17, align 16, !tbaa !192
-  %i.hg = fptrunc <2 x double> %i.hf to <2 x float>
+  %i.hg = fptrunc reassoc nsz arcp contract afn <2 x double> %i.hf to <2 x float>
   store <2 x float> %i.hg, ptr %i.gk, align 8, !tbaa !179
   invoke void @cmsXYZ2xyY(ptr noundef nonnull %19, ptr noundef nonnull %27)
           to label %bb.dj unwind label %bb.dt
 
 bb.dj:                                            ; preds = %bb.di
   %i.hh = load <2 x double>, ptr %19, align 16, !tbaa !192
-  %i.hi = fptrunc <2 x double> %i.hh to <2 x float>
+  %i.hi = fptrunc reassoc nsz arcp contract afn <2 x double> %i.hh to <2 x float>
   store <2 x float> %i.hi, ptr %i.gl, align 8, !tbaa !179
   store <2 x float> <float 3.127000e-01, float 3.290000e-01>, ptr %i.gm, align 8, !tbaa !179
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #19

@@ -205,7 +205,7 @@ bb.a:
   %i.g = or disjoint <4 x i16> %i.e, splat (i16 48)
   %i.h = add nuw nsw <4 x i16> %i.e, splat (i16 87)
   %i.i = select <4 x i1> %i.f, <4 x i16> %i.g, <4 x i16> %i.h
-  %i.j = trunc <4 x i16> %i.i to <4 x i8>
+  %i.j = trunc nuw nsw <4 x i16> %i.i to <4 x i8>
   store <4 x i8> %i.j, ptr %1, align 1, !tbaa !20
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i8 58, ptr %i.k, align 1, !tbaa !20
@@ -221,7 +221,7 @@ bb.a:
   %i.t = or disjoint <4 x i16> %i.r, splat (i16 48)
   %i.u = add nuw nsw <4 x i16> %i.r, splat (i16 87)
   %i.v = select <4 x i1> %i.s, <4 x i16> %i.t, <4 x i16> %i.u
-  %i.w = trunc <4 x i16> %i.v to <4 x i8>
+  %i.w = trunc nuw nsw <4 x i16> %i.v to <4 x i8>
   store <4 x i8> %i.w, ptr %i.l, align 1, !tbaa !20
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 9
   store i8 58, ptr %i.x, align 1, !tbaa !20
@@ -237,7 +237,7 @@ bb.a:
   %i.ag = or disjoint <4 x i16> %i.ae, splat (i16 48)
   %i.ah = add nuw nsw <4 x i16> %i.ae, splat (i16 87)
   %i.ai = select <4 x i1> %i.af, <4 x i16> %i.ag, <4 x i16> %i.ah
-  %i.aj = trunc <4 x i16> %i.ai to <4 x i8>
+  %i.aj = trunc nuw nsw <4 x i16> %i.ai to <4 x i8>
   store <4 x i8> %i.aj, ptr %i.y, align 1, !tbaa !20
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 14
   store i8 58, ptr %i.ak, align 1, !tbaa !20
@@ -253,7 +253,7 @@ bb.a:
   %i.at = or disjoint <4 x i16> %i.ar, splat (i16 48)
   %i.au = add nuw nsw <4 x i16> %i.ar, splat (i16 87)
   %i.av = select <4 x i1> %i.as, <4 x i16> %i.at, <4 x i16> %i.au
-  %i.aw = trunc <4 x i16> %i.av to <4 x i8>
+  %i.aw = trunc nuw nsw <4 x i16> %i.av to <4 x i8>
   store <4 x i8> %i.aw, ptr %i.al, align 1, !tbaa !20
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 19
   store i8 58, ptr %i.ax, align 1, !tbaa !20
@@ -269,7 +269,7 @@ bb.a:
   %i.bg = or disjoint <4 x i16> %i.be, splat (i16 48)
   %i.bh = add nuw nsw <4 x i16> %i.be, splat (i16 87)
   %i.bi = select <4 x i1> %i.bf, <4 x i16> %i.bg, <4 x i16> %i.bh
-  %i.bj = trunc <4 x i16> %i.bi to <4 x i8>
+  %i.bj = trunc nuw nsw <4 x i16> %i.bi to <4 x i8>
   store <4 x i8> %i.bj, ptr %i.ay, align 1, !tbaa !20
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i8 58, ptr %i.bk, align 1, !tbaa !20
@@ -285,7 +285,7 @@ bb.a:
   %i.bt = or disjoint <4 x i16> %i.br, splat (i16 48)
   %i.bu = add nuw nsw <4 x i16> %i.br, splat (i16 87)
   %i.bv = select <4 x i1> %i.bs, <4 x i16> %i.bt, <4 x i16> %i.bu
-  %i.bw = trunc <4 x i16> %i.bv to <4 x i8>
+  %i.bw = trunc nuw nsw <4 x i16> %i.bv to <4 x i8>
   store <4 x i8> %i.bw, ptr %i.bl, align 1, !tbaa !20
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 29
   store i8 58, ptr %i.bx, align 1, !tbaa !20
@@ -301,7 +301,7 @@ bb.a:
   %i.cg = or disjoint <4 x i16> %i.ce, splat (i16 48)
   %i.ch = add nuw nsw <4 x i16> %i.ce, splat (i16 87)
   %i.ci = select <4 x i1> %i.cf, <4 x i16> %i.cg, <4 x i16> %i.ch
-  %i.cj = trunc <4 x i16> %i.ci to <4 x i8>
+  %i.cj = trunc nuw nsw <4 x i16> %i.ci to <4 x i8>
   store <4 x i8> %i.cj, ptr %i.by, align 1, !tbaa !20
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 34
   store i8 58, ptr %i.ck, align 1, !tbaa !20
@@ -317,7 +317,7 @@ bb.a:
   %i.ct = or disjoint <4 x i16> %i.cr, splat (i16 48)
   %i.cu = add nuw nsw <4 x i16> %i.cr, splat (i16 87)
   %i.cv = select <4 x i1> %i.cs, <4 x i16> %i.ct, <4 x i16> %i.cu
-  %i.cw = trunc <4 x i16> %i.cv to <4 x i8>
+  %i.cw = trunc nuw nsw <4 x i16> %i.cv to <4 x i8>
   store <4 x i8> %i.cw, ptr %i.cl, align 1, !tbaa !20
   ret i64 39
 }

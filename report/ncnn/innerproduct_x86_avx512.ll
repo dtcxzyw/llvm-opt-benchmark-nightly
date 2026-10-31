@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ej = insertelement <4 x i32> %i.ei, i32 %.lcssa239, i64 1
   %i.ek = insertelement <4 x i32> %i.ej, i32 %.lcssa, i64 2
   %i.el = insertelement <4 x i32> %i.ek, i32 %.lcssa238, i64 3
-  %i.em = sitofp <4 x i32> %i.el to <4 x float>
+  %i.em = sitofp fast <4 x i32> %i.el to <4 x float>
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c

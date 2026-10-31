@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.af = fmul <2 x double> %i.ae, splat (double f0x3F91DF46A2529D39)
   %i.ag = fmul <2 x double> %.cast, splat (double f0x3F91DF46A2529D39) ; 2 uses
   %i.ah = add nsw <2 x i32> %.cast61, splat (i32 -1)
-  %i.ai = uitofp <2 x i32> %i.ah to <2 x double>
+  %i.ai = uitofp nneg <2 x i32> %i.ah to <2 x double>
   %i.aj = insertelement <2 x double> %.fr62, double %.049, i64 1
   %i.ak = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %.cast, <2 x double> %i.ai, <2 x double> %i.aj)
   %i.al = fmul <2 x double> %i.ak, splat (double f0x3F91DF46A2529D39)
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.ab = add nsw <2 x i32> %i.x, splat (i32 -1)
-  %i.ac = uitofp <2 x i32> %i.ab to <2 x double>
+  %i.ac = uitofp nneg <2 x i32> %i.ab to <2 x double>
   %i.ad = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ae = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ac, <2 x double> %i.ad, <2 x double> %i.i)
   %i.af = fdiv <2 x double> splat (double 1.000000e+00), %i.k

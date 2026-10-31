@@ -204,7 +204,7 @@ begin_hunk_0_@_ZN13TestCollision24testAxisAlignedCollisionEv:bb.a
   %i.gp = insertelement <2 x double> poison, double %i.gc, i64 0
   %i.gq = shufflevector <2 x double> %i.gp, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gr = fadd nsz <2 x double> %i.gq, <double 2.300000e+00, double -2.300000e+00>
-  %i.gs = fptrunc <2 x double> %i.gr to <2 x float> ; 2 uses
+  %i.gs = fptrunc nsz <2 x double> %i.gr to <2 x float> ; 2 uses
   %i.gt = fadd nsz double %i.gc, -2.290000e+00
   %i.gu = fptrunc nsz double %i.gt to float       ; 2 uses
   %i.gv = extractelement <2 x float> %i.gs, i64 0
@@ -239,7 +239,7 @@ bb.b:                                             ; preds = %bb.c
   %i.hr = insertelement <2 x double> poison, double %i.hb, i64 0
   %i.hs = shufflevector <2 x double> %i.hr, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ht = fadd nsz <2 x double> %i.hs, <double 2.300000e+00, double -2.300000e+00>
-  %i.hu = fptrunc <2 x double> %i.ht to <2 x float> ; 2 uses
+  %i.hu = fptrunc nsz <2 x double> %i.ht to <2 x float> ; 2 uses
   %i.hv = extractelement <2 x float> %i.hu, i64 0
   %i.hw = extractelement <2 x float> %i.hu, i64 1
   br label %bb.e

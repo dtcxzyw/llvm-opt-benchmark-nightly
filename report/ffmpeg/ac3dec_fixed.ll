@@ -205,7 +205,7 @@ scalar.ph1224:                                    ; preds = %scalar.ph1224.prehe
   %i.any = insertelement <2 x float> poison, float %i.anu, i64 0
   %i.anz = insertelement <2 x float> %i.any, float %i.anx, i64 1
   %i.aoa = fmul nsz <2 x float> %i.anz, splat (float 4.096000e+03)
-  %i.aob = fpext <2 x float> %i.aoa to <2 x double>
+  %i.aob = fpext nsz <2 x float> %i.aoa to <2 x double>
   %i.aoc = fadd nsz <2 x double> %i.aob, splat (double 5.000000e-01)
   %i.aod = fptosi <2 x double> %i.aoc to <2 x i32>
   %i.aoe = trunc <2 x i32> %i.aod to <2 x i16>    ; 2 uses
@@ -608,7 +608,7 @@ bb.lq:                                            ; preds = %bb.lp
   %i.dri = load <3 x float>, ptr %i.drb, align 4, !tbaa !29 ; 2 uses
   %i.drj = shufflevector <3 x float> %i.dri, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
   %i.drk = load <4 x i32>, ptr %i.drh, align 4, !tbaa !43
-  %i.drl = sitofp <4 x i32> %i.drk to <4 x float>
+  %i.drl = sitofp nsz <4 x i32> %i.drk to <4 x float>
   %i.drm = fmul nsz <4 x float> %i.drj, %i.drl
   %i.drn = fptosi <4 x float> %i.drm to <4 x i32>
   store <4 x i32> %i.drn, ptr %i.drh, align 4, !tbaa !43
@@ -1011,7 +1011,7 @@ bb.op:                                            ; preds = %bb.oo, %switch.look
   %i.epf = load float, ptr %i.epe, align 4, !tbaa !29
   %i.epg = insertelement <2 x float> poison, float %i.epa, i64 0
   %i.eph = insertelement <2 x float> %i.epg, float %i.epf, i64 1
-  %i.epi = fpext <2 x float> %i.eph to <2 x double>
+  %i.epi = fpext nsz <2 x float> %i.eph to <2 x double>
   store <2 x double> %i.epi, ptr %i.epb, align 8, !tbaa !290
   %i.epj = load i32, ptr %i.bq, align 4, !tbaa !192
   %i.epk = sext i32 %i.epj to i64
@@ -1024,7 +1024,7 @@ bb.op:                                            ; preds = %bb.oo, %switch.look
   %i.epr = load float, ptr %i.epq, align 4, !tbaa !29
   %i.eps = insertelement <2 x float> poison, float %i.epm, i64 0
   %i.ept = insertelement <2 x float> %i.eps, float %i.epr, i64 1
-  %i.epu = fpext <2 x float> %i.ept to <2 x double>
+  %i.epu = fpext nsz <2 x float> %i.ept to <2 x double>
   store <2 x double> %i.epu, ptr %i.epn, align 8, !tbaa !290
   %i.epv = load i32, ptr %i.bt, align 4, !tbaa !195
   %.not451 = icmp eq i32 %i.epv, 0

@@ -202,7 +202,7 @@ bb.a:
   %i.h = call i32 @gdk_window_get_origin(ptr noundef %i.f, ptr noundef nonnull %3, ptr noundef nonnull %i.g) #26 ; 0 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.j = load <2 x i32>, ptr %3, align 8, !tbaa !80
-  %i.k = sitofp <2 x i32> %i.j to <2 x double>
+  %i.k = sitofp reassoc nsz arcp contract afn <2 x i32> %i.j to <2 x double>
   %i.l = load <2 x double>, ptr %i.i, align 8, !tbaa !87
   %i.m = fsub reassoc nsz arcp contract afn <2 x double> %i.l, %i.k ; 2 uses
   %i.n = extractelement <2 x double> %i.m, i64 0
@@ -605,7 +605,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   tail call void @gdk_event_free(ptr noundef %i.fh) #26
   %i.fk = insertelement <2 x double> poison, double %2, i64 0
   %i.fl = insertelement <2 x double> %i.fk, double %3, i64 1
-  %i.fm = fptrunc <2 x double> %i.fl to <2 x float>
+  %i.fm = fptrunc reassoc nsz arcp contract afn <2 x double> %i.fl to <2 x float>
   %i.fn = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   store <2 x float> %i.fm, ptr %i.fn, align 8, !tbaa !150
   tail call fastcc void @_popup_show(ptr noundef nonnull %4)

@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u
   %cos41.i.i = extractvalue { double, double } %sincos39.i.i, 1 ; 3 uses
   %i.hb = insertelement <2 x double> poison, double %cos41.i.i, i64 0
   %i.hc = insertelement <2 x double> %i.hb, double %sin40.i.i, i64 1 ; 2 uses
-  %i.hd = fptrunc <2 x double> %i.hc to <2 x float>
+  %i.hd = fptrunc nsz <2 x double> %i.hc to <2 x float>
   store <2 x float> %i.hd, ptr %14, align 8, !tbaa !195
   %i.he = getelementptr inbounds nuw i8, ptr %14, i64 8
   store float -0.000000e+00, ptr %i.he, align 8, !tbaa !195
@@ -214,7 +214,7 @@ bb.v:                                             ; preds = %bb.u
   %i.hh = insertelement <2 x double> poison, double %i.hf, i64 0
   %i.hi = insertelement <2 x double> %i.hh, double %cos41.i.i, i64 1
   %i.hj = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hc, <2 x double> zeroinitializer, <2 x double> %i.hi)
-  %i.hk = fptrunc <2 x double> %i.hj to <2 x float>
+  %i.hk = fptrunc nsz <2 x double> %i.hj to <2 x float>
   store <2 x float> %i.hk, ptr %i.hg, align 8, !tbaa !195
   %i.hl = getelementptr inbounds nuw i8, ptr %14, i64 24
   store float 0.000000e+00, ptr %i.hl, align 8, !tbaa !195
@@ -224,7 +224,7 @@ bb.v:                                             ; preds = %bb.u
   %i.hp = fmul nsz <2 x double> %i.ho, <double 0.000000e+00, double -0.000000e+00>
   %i.hq = shufflevector <2 x double> %i.ho, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.hr = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hq, <2 x double> zeroinitializer, <2 x double> %i.hp)
-  %i.hs = fptrunc <2 x double> %i.hr to <2 x float>
+  %i.hs = fptrunc nsz <2 x double> %i.hr to <2 x float>
   store <2 x float> %i.hs, ptr %i.hm, align 8, !tbaa !195
   store float 1.000000e+00, ptr %i.eq, align 8, !tbaa !195
   br label %bb.w
@@ -294,13 +294,13 @@ bb.y:                                             ; preds = %bb.w
   %i.ji = insertelement <2 x double> poison, double %i.jf, i64 0
   %i.jj = insertelement <2 x double> %i.ji, double %cos41.i.i114, i64 1
   %i.jk = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jh, <2 x double> zeroinitializer, <2 x double> %i.jj)
-  %i.jl = fptrunc <2 x double> %i.jk to <2 x float>
+  %i.jl = fptrunc nsz <2 x double> %i.jk to <2 x float>
   %i.jm = insertelement <2 x double> poison, double %sin40.i.i113, i64 0
   %i.jn = insertelement <2 x double> %i.jm, double %cos41.i.i114, i64 1 ; 2 uses
   %i.jo = fmul nsz <2 x double> %i.jn, <double 0.000000e+00, double -0.000000e+00>
   %i.jp = shufflevector <2 x double> %i.jn, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.jq = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jp, <2 x double> zeroinitializer, <2 x double> %i.jo)
-  %i.jr = fptrunc <2 x double> %i.jq to <2 x float>
+  %i.jr = fptrunc nsz <2 x double> %i.jq to <2 x float>
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
@@ -385,7 +385,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.lt = fptosi float %i.ls to i32
   %i.lu = fneg nsz float %sin
   %i.lv = sitofp nsz i32 %i.lt to float
-  %i.lw = sitofp <2 x i32> %i.kz to <2 x float>
+  %i.lw = sitofp nsz <2 x i32> %i.kz to <2 x float>
   %i.lx = insertelement <2 x float> poison, float %i.lu, i64 0
   %i.ly = insertelement <2 x float> %i.lx, float %cos, i64 1
   %i.lz = insertelement <4 x float> poison, float %i.lv, i64 0
@@ -425,7 +425,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.mo = load <2 x i32>, ptr %i.e, align 8, !tbaa !196
   %i.mp = load <2 x i32>, ptr %4, align 8, !tbaa !196
   %i.mq = sub nsw <2 x i32> %i.mo, %i.mp
-  %i.mr = sitofp <2 x i32> %i.mq to <2 x float>
+  %i.mr = sitofp nsz <2 x i32> %i.mq to <2 x float>
   %i.ms = fmul nsz <2 x float> %i.mn, %i.mr
   %i.mt = fadd nsz <2 x float> %i.ms, %i.lw
   %i.mu = shufflevector <2 x float> %i.mt, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
@@ -484,7 +484,7 @@ _ZNSt6vectorIN4core8vector2dIfEESaIS2_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_D
   %i.m = insertelement <2 x i16> poison, i16 %i.l, i64 0
   %i.n = trunc nuw i48 %.sroa.3.0.extract.shift.i to i16
   %i.o = insertelement <2 x i16> %i.m, i16 %i.n, i64 1
-  %i.p = sitofp <2 x i16> %i.o to <2 x float>
+  %i.p = sitofp nsz <2 x i16> %i.o to <2 x float>
   %i.q = fmul nnan nsz float %i.k, 1.000000e+01
   %i.r = fmul nnan nsz <2 x float> %i.p, splat (float 1.000000e+01)
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses

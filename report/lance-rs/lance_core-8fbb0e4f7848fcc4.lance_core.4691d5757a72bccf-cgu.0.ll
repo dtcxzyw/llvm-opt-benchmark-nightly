@@ -205,7 +205,7 @@ _RINvXs8_NtCsfKiFC1ztrmh_9hashbrown3setINtB6_7HashSetlNtNtNtCsgczF5crJ4sT_3std4h
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.ex = load <4 x i8>, ptr %i.ev, align 8
-  %i.ey = trunc <4 x i8> %i.ex to <4 x i1>
+  %i.ey = trunc nuw <4 x i8> %i.ex to <4 x i1>
   %i.ez = load <4 x i8>, ptr %i.ew, align 8
   %i.fa = select <4 x i1> %i.ey, <4 x i8> splat (i8 1), <4 x i8> %i.ez
   store <4 x i8> %i.fa, ptr %i.ev, align 8
@@ -608,7 +608,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std11collections
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.cw = load <4 x i8>, ptr %i.cu, align 8
-  %i.cx = trunc <4 x i8> %i.cw to <4 x i1>
+  %i.cx = trunc nuw <4 x i8> %i.cw to <4 x i1>
   %i.cy = load <4 x i8>, ptr %i.cv, align 8
   %i.cz = xor <4 x i8> %i.cy, splat (i8 1)
   %i.da = select <4 x i1> %i.cx, <4 x i8> %i.cz, <4 x i8> zeroinitializer
@@ -1011,7 +1011,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std11collections
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.co = load <4 x i8>, ptr %i.cm, align 8
-  %i.cp = trunc <4 x i8> %i.co to <4 x i1>
+  %i.cp = trunc nuw <4 x i8> %i.co to <4 x i1>
   %i.cq = load <4 x i8>, ptr %i.cn, align 8
   %i.cr = select <4 x i1> %i.cp, <4 x i8> %i.cq, <4 x i8> zeroinitializer
   store <4 x i8> %i.cr, ptr %i.cm, align 8

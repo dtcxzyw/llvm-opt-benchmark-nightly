@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %.split, %bb.u
   %i.ca = call reassoc nsz arcp contract afn double @g_ascii_strtod(ptr noundef %i.bz, ptr noundef nonnull %i.b) #12
   %i.cb = insertelement <2 x double> poison, double %i.ca, i64 0
   %i.cc = insertelement <2 x double> %i.cb, double %i.by, i64 1
-  %i.cd = fptrunc <2 x double> %i.cc to <2 x float>
+  %i.cd = fptrunc reassoc nsz arcp contract afn <2 x double> %i.cc to <2 x float>
   %i.ce = load ptr, ptr %i.b, align 8, !tbaa !109
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !75
   %i.cg = icmp eq i8 %i.cf, 41
@@ -505,7 +505,7 @@ bb.ap:                                            ; preds = %.thread311
 bb.aq:                                            ; preds = %.critedge
   %i.gp = insertelement <2 x double> poison, double %i.ef, i64 0
   %i.gq = insertelement <2 x double> %i.gp, double %i.ed, i64 1
-  %i.gr = fptrunc <2 x double> %i.gq to <2 x float>
+  %i.gr = fptrunc reassoc nsz arcp contract afn <2 x double> %i.gq to <2 x float>
   %i.gs = icmp sgt i32 %.0226.ph, %i.p
   br i1 %i.gs, label %.loopexit397, label %bb.ar
 
@@ -752,7 +752,7 @@ _lib_location_place_get_zoom.exit:                ; preds = %bb.e, %switch.looku
   %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 80), align 8, !tbaa !73
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.r = load <2 x float>, ptr %i.q, align 8, !tbaa !82
-  %i.s = fpext <2 x float> %i.r to <2 x double>   ; 2 uses
+  %i.s = fpext reassoc nsz arcp contract afn <2 x float> %i.r to <2 x double> ; 2 uses
   %i.t = extractelement <2 x double> %i.s, i64 0
   %i.u = extractelement <2 x double> %i.s, i64 1
   tail call void @dt_view_map_center_on_location(ptr noundef %i.p, double noundef %i.t, double noundef %i.u, double noundef %.0.i) #12

@@ -158,7 +158,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.cv = load <2 x float>, ptr %i.c, align 16, !tbaa !22
   %i.cw = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.cv)
-  %i.cx = fpext <2 x float> %i.cw to <2 x double> ; 2 uses
+  %i.cx = fpext nsz <2 x float> %i.cw to <2 x double> ; 2 uses
   store <2 x double> %i.cx, ptr %i.d, align 16, !tbaa !11
   %i.cy = load <2 x double>, ptr %i.cu, align 8, !tbaa !11
   %i.cz = fadd nsz <2 x double> %i.cy, %i.cx
@@ -168,7 +168,7 @@ bb.a:
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.dd = load <2 x float>, ptr %i.ao, align 8, !tbaa !22
   %i.de = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.dd)
-  %i.df = fpext <2 x float> %i.de to <2 x double> ; 2 uses
+  %i.df = fpext nsz <2 x float> %i.de to <2 x double> ; 2 uses
   store <2 x double> %i.df, ptr %i.cm, align 16, !tbaa !11
   %i.dg = load <2 x double>, ptr %i.db, align 8, !tbaa !11
   %i.dh = fadd nsz <2 x double> %i.dg, %i.df
@@ -178,7 +178,7 @@ bb.a:
   %i.dk = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.dl = load <2 x float>, ptr %i.aq, align 16, !tbaa !22
   %i.dm = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.dl)
-  %i.dn = fpext <2 x float> %i.dm to <2 x double> ; 2 uses
+  %i.dn = fpext nsz <2 x float> %i.dm to <2 x double> ; 2 uses
   store <2 x double> %i.dn, ptr %i.cn, align 16, !tbaa !11
   %i.do = load <2 x double>, ptr %i.dj, align 8, !tbaa !11
   %i.dp = fadd nsz <2 x double> %i.do, %i.dn
@@ -188,7 +188,7 @@ bb.a:
   %i.ds = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.dt = load <2 x float>, ptr %i.at, align 8, !tbaa !22
   %i.du = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.dt)
-  %i.dv = fpext <2 x float> %i.du to <2 x double> ; 2 uses
+  %i.dv = fpext nsz <2 x float> %i.du to <2 x double> ; 2 uses
   store <2 x double> %i.dv, ptr %i.co, align 16, !tbaa !11
   %i.dw = load <2 x double>, ptr %i.dr, align 8, !tbaa !11
   %i.dx = fadd nsz <2 x double> %i.dw, %i.dv
@@ -198,7 +198,7 @@ bb.a:
   %i.ea = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.eb = load <2 x float>, ptr %i.aw, align 16, !tbaa !22
   %i.ec = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.eb)
-  %i.ed = fpext <2 x float> %i.ec to <2 x double> ; 2 uses
+  %i.ed = fpext nsz <2 x float> %i.ec to <2 x double> ; 2 uses
   store <2 x double> %i.ed, ptr %i.cp, align 16, !tbaa !11
   %i.ee = load <2 x double>, ptr %i.dz, align 8, !tbaa !11
   %i.ef = fadd nsz <2 x double> %i.ee, %i.ed
@@ -208,7 +208,7 @@ bb.a:
   %i.ei = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %i.ej = load <2 x float>, ptr %i.ax, align 8, !tbaa !22
   %i.ek = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.ej)
-  %i.el = fpext <2 x float> %i.ek to <2 x double> ; 2 uses
+  %i.el = fpext nsz <2 x float> %i.ek to <2 x double> ; 2 uses
   store <2 x double> %i.el, ptr %i.cq, align 16, !tbaa !11
   %i.em = load <2 x double>, ptr %i.eh, align 8, !tbaa !11
   %i.en = fadd nsz <2 x double> %i.em, %i.el
@@ -218,7 +218,7 @@ bb.a:
   %i.eq = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.er = load <2 x float>, ptr %i.ba, align 16, !tbaa !22
   %i.es = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.er)
-  %i.et = fpext <2 x float> %i.es to <2 x double> ; 2 uses
+  %i.et = fpext nsz <2 x float> %i.es to <2 x double> ; 2 uses
   store <2 x double> %i.et, ptr %i.cr, align 16, !tbaa !11
   %i.eu = load <2 x double>, ptr %i.ep, align 8, !tbaa !11
   %i.ev = fadd nsz <2 x double> %i.eu, %i.et
@@ -228,7 +228,7 @@ bb.a:
   %i.ey = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.ez = load <2 x float>, ptr %i.bb, align 8, !tbaa !22
   %i.fa = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.ez)
-  %i.fb = fpext <2 x float> %i.fa to <2 x double> ; 2 uses
+  %i.fb = fpext nsz <2 x float> %i.fa to <2 x double> ; 2 uses
   store <2 x double> %i.fb, ptr %i.cs, align 16, !tbaa !11
   %i.fc = load <2 x double>, ptr %i.ex, align 8, !tbaa !11
   %i.fd = fadd nsz <2 x double> %i.fc, %i.fb

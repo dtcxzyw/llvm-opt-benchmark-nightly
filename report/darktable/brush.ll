@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.lr.ph, %_brush_fal
 .lr.ph.i:                                         ; preds = %bb.l
   %i.gq = load i32, ptr %7, align 4, !tbaa !106
   %i.gr = load i32, ptr %6, align 4, !tbaa !106
-  %i.gs = sitofp <2 x i32> %i.gh to <2 x float>
+  %i.gs = sitofp reassoc nsz arcp contract afn <2 x i32> %i.gh to <2 x float>
   %i.gt = sub nsw i32 %i.gm, %i.gp
   %i.gu = extractelement <2 x i32> %i.ge, i64 0
   %i.gv = sub i32 %i.gu, %i.gr
@@ -429,7 +429,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .lr.ph:                                           ; preds = %bb.g
   %i.az = load ptr, ptr %i.b, align 8, !tbaa !134 ; 8 uses
-  %i.ba = sitofp <2 x i32> %i.r to <2 x float>    ; 7 uses
+  %i.ba = sitofp reassoc nsz arcp contract afn <2 x i32> %i.r to <2 x float> ; 7 uses
   %i.bb = sext i32 %i.aw to i64                   ; 7 uses
   %wide.trip.count = sext i32 %i.ax to i64        ; 5 uses
   %i.bc = sub nsw i64 %wide.trip.count, %i.bb     ; 3 uses
@@ -534,7 +534,7 @@ scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loop
   br i1 %i.co, label %.lr.ph123, label %._crit_edge
 
 .lr.ph123:                                        ; preds = %.preheader111
-  %i.cp = sitofp <2 x i32> %i.r to <2 x float>    ; 7 uses
+  %i.cp = sitofp reassoc nsz arcp contract afn <2 x i32> %i.r to <2 x float> ; 7 uses
   %i.cq = sext i32 %i.aw to i64                   ; 9 uses
   %wide.trip.count140 = sext i32 %i.cn to i64     ; 7 uses
   %i.cr = sub nsw i64 %wide.trip.count140, %i.cq  ; 5 uses
@@ -879,7 +879,7 @@ bb.h:                                             ; preds = %_brush_bounding_box
 bb.i:                                             ; preds = %bb.h, %_brush_bounding_box_raw.exit
   %.1102 = phi nsz double [ %.0101, %_brush_bounding_box_raw.exit ], [ %i.jq, %bb.h ]
   %i.js = shufflevector <2 x i32> %i.t, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.jt = sitofp <4 x i32> %i.js to <4 x float>
+  %i.jt = sitofp reassoc nsz arcp contract afn <4 x i32> %i.js to <4 x float>
   %i.ju = shufflevector <4 x float> %i.jt, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.jv = fcmp reassoc nsz arcp contract afn ult <4 x float> %i.il, %i.ju
   %i.jw = fcmp reassoc nsz arcp contract afn uge <4 x float> %i.il, %i.ju
@@ -961,7 +961,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ll = uitofp nsz nneg i32 %i.lk to float      ; 2 uses
   %i.lm = fmul reassoc nsz arcp contract afn float %i.la, %i.ll
   %i.ln = fptosi float %i.lm to i32               ; 2 uses
-  %i.lo = sitofp <2 x i32> %i.le to <2 x float>
+  %i.lo = sitofp reassoc nsz arcp contract afn <2 x i32> %i.le to <2 x float>
   %i.lp = insertelement <2 x float> poison, float %i.ll, i64 0
   %i.lq = shufflevector <2 x float> %i.lp, <2 x float> poison, <2 x i32> zeroinitializer
   %i.lr = fdiv reassoc nsz arcp contract afn <2 x float> %i.lo, %i.lq ; 3 uses
@@ -978,7 +978,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not12.i, label %_brush_falloff_roi.exit, label %.lr.ph.i86
 
 .lr.ph.i86:                                       ; preds = %bb.m
-  %i.mb = sitofp <2 x i32> %i.km to <2 x float>
+  %i.mb = sitofp reassoc nsz arcp contract afn <2 x i32> %i.km to <2 x float>
   %i.mc = mul nsw i32 %i.lx, %i.kb
   %i.md = sext i32 %i.lu to i64
   %i.me = sext i32 %i.mc to i64
@@ -1203,7 +1203,7 @@ dt_masks_get_image_size.exit:                     ; preds = %bb.d, %bb.g, %bb.h
   %.sink.i = phi float [ %i.y, %bb.d ], [ %i.ap, %bb.h ], [ %i.aj, %bb.g ] ; 7 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.o, i64 144
   %i.ar = load <2 x i32>, ptr %i.aq, align 16, !tbaa !106
-  %i.as = sitofp <2 x i32> %i.ar to <2 x float>   ; 8 uses
+  %i.as = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ar to <2 x float> ; 8 uses
   %i.at = getelementptr inbounds nuw i8, ptr %8, i64 172
   %i.au = load i32, ptr %i.at, align 4, !tbaa !18
   %.not320 = icmp eq i32 %i.au, 0
@@ -1606,7 +1606,7 @@ dt_masks_get_image_size.exit:                     ; preds = %bb.e, %bb.h, %bb.i
   %.sink.i = phi float [ %i.q, %bb.e ], [ %i.ah, %bb.i ], [ %i.ab, %bb.h ] ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.g, i64 144
   %i.aj = load <2 x i32>, ptr %i.ai, align 16, !tbaa !106
-  %i.ak = sitofp <2 x i32> %i.aj to <2 x float>
+  %i.ak = sitofp reassoc nsz arcp contract afn <2 x i32> %i.aj to <2 x float>
   %i.al = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
   %i.am = load i32, ptr %i.al, align 8, !tbaa !95
   %i.an = and i32 %i.am, 136
@@ -2009,7 +2009,7 @@ dt_masks_get_image_size.exit:                     ; preds = %bb.d, %bb.g, %bb.h
   %.sink.i = phi float [ %i.s, %bb.d ], [ %i.aj, %bb.h ], [ %i.ad, %bb.g ] ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.i, i64 144
   %i.al = load <2 x i32>, ptr %i.ak, align 16, !tbaa !106
-  %i.am = sitofp <2 x i32> %i.al to <2 x float>   ; 8 uses
+  %i.am = sitofp reassoc nsz arcp contract afn <2 x i32> %i.al to <2 x float> ; 8 uses
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 10 uses
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !95
   %i.ap = and i32 %i.ao, 136
@@ -2412,7 +2412,7 @@ dt_masks_get_image_size.exit:                     ; preds = %bb.b
   br i1 %.not347, label %bb.ae, label %bb.c
 
 bb.c:                                             ; preds = %dt_masks_get_image_size.exit
-  %i.v = sitofp <2 x i32> %i.p to <2 x float>     ; 2 uses
+  %i.v = sitofp reassoc nsz arcp contract afn <2 x i32> %i.p to <2 x float> ; 2 uses
   %i.w = extractelement <2 x float> %i.v, i64 0   ; 2 uses
   %i.x = extractelement <2 x float> %i.v, i64 1   ; 2 uses
   %i.y = fcmp reassoc nsz arcp contract afn olt float %i.w, %i.x
@@ -2584,7 +2584,7 @@ bb.r:                                             ; preds = %bb.l, %bb.q, %bb.p,
   tail call void @dt_gui_gtk_set_source_rgba(ptr noundef %0, i32 noundef 8, float noundef %.0333) #18
   %i.db = getelementptr inbounds nuw i8, ptr %.val363, i64 4
   %i.dc = load <2 x float>, ptr %.val363, align 4, !tbaa !102
-  %i.dd = fpext <2 x float> %i.dc to <2 x double> ; 2 uses
+  %i.dd = fpext reassoc nsz arcp contract afn <2 x float> %i.dc to <2 x double> ; 2 uses
   %i.de = extractelement <2 x double> %i.dd, i64 0
   %i.df = extractelement <2 x double> %i.dd, i64 1
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.de, double noundef %i.df) #18
@@ -2602,7 +2602,7 @@ bb.r:                                             ; preds = %bb.l, %bb.q, %bb.p,
   %.idx = shl nuw nsw i64 %indvars.iv, 3
   %i.di = getelementptr inbounds nuw i8, ptr %.val363, i64 %.idx ; 2 uses
   %i.dj = load <2 x float>, ptr %i.di, align 4, !tbaa !102
-  %i.dk = fpext <2 x float> %i.dj to <2 x double> ; 2 uses
+  %i.dk = fpext reassoc nsz arcp contract afn <2 x float> %i.dj to <2 x double> ; 2 uses
   %i.dl = extractelement <2 x double> %i.dk, i64 0
   %i.dm = extractelement <2 x double> %i.dk, i64 1
   tail call void @cairo_line_to(ptr noundef %0, double noundef %i.dl, double noundef %i.dm) #18
@@ -2670,7 +2670,7 @@ bb.y:                                             ; preds = %bb.x
   tail call void @cairo_set_line_width(ptr noundef %0, double noundef %i.eo) #18
   tail call void @dt_gui_gtk_set_source_rgba(ptr noundef %0, i32 noundef 8, float noundef %.1334) #18
   %i.ep = load <2 x float>, ptr %i.di, align 4, !tbaa !102
-  %i.eq = fpext <2 x float> %i.ep to <2 x double> ; 2 uses
+  %i.eq = fpext reassoc nsz arcp contract afn <2 x float> %i.ep to <2 x double> ; 2 uses
   %i.er = extractelement <2 x double> %i.eq, i64 0
   %i.es = extractelement <2 x double> %i.eq, i64 1
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.er, double noundef %i.es) #18
@@ -2786,7 +2786,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.gz = sext i32 %i.gy to i64
   %i.ha = getelementptr inbounds [4 x i8], ptr %i.gx, i64 %i.gz
   %i.hb = load <2 x float>, ptr %i.ha, align 4, !tbaa !102
-  %i.hc = fpext <2 x float> %i.hb to <2 x double> ; 2 uses
+  %i.hc = fpext reassoc nsz arcp contract afn <2 x float> %i.hb to <2 x double> ; 2 uses
   %i.hd = extractelement <2 x double> %i.hc, i64 0
   %i.he = extractelement <2 x double> %i.hc, i64 1
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.hd, double noundef %i.he) #18
@@ -2804,7 +2804,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.an
   %i.hl = shl nsw i64 %indvars.iv402, 1           ; 4 uses
   %i.hm = getelementptr inbounds [4 x i8], ptr %i.hk, i64 %i.hl
   %i.hn = load <2 x float>, ptr %i.hm, align 4, !tbaa !102
-  %i.ho = fpext <2 x float> %i.hn to <2 x double> ; 2 uses
+  %i.ho = fpext reassoc nsz arcp contract afn <2 x float> %i.hn to <2 x double> ; 2 uses
   %i.hp = extractelement <2 x double> %i.ho, i64 0
   %i.hq = extractelement <2 x double> %i.ho, i64 1
   tail call void @cairo_line_to(ptr noundef %0, double noundef %i.hp, double noundef %i.hq) #18
@@ -2858,7 +2858,7 @@ bb.am:                                            ; preds = %bb.aj, %bb.ak, %bb.
   %i.ir = load ptr, ptr %i.k, align 8, !tbaa !114
   %i.is = getelementptr inbounds [4 x i8], ptr %i.ir, i64 %i.hl
   %i.it = load <2 x float>, ptr %i.is, align 4, !tbaa !102
-  %i.iu = fpext <2 x float> %i.it to <2 x double> ; 2 uses
+  %i.iu = fpext reassoc nsz arcp contract afn <2 x float> %i.it to <2 x double> ; 2 uses
   %i.iv = extractelement <2 x double> %i.iu, i64 0
   %i.iw = extractelement <2 x double> %i.iu, i64 1
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.iv, double noundef %i.iw) #18
@@ -2998,7 +2998,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.ll = sext i32 %i.lk to i64
   %i.lm = getelementptr inbounds [4 x i8], ptr %i.lj, i64 %i.ll
   %i.ln = load <2 x float>, ptr %i.lm, align 4, !tbaa !102
-  %i.lo = fpext <2 x float> %i.ln to <2 x double> ; 2 uses
+  %i.lo = fpext reassoc nsz arcp contract afn <2 x float> %i.ln to <2 x double> ; 2 uses
   %i.lp = extractelement <2 x double> %i.lo, i64 0
   %i.lq = extractelement <2 x double> %i.lo, i64 1
   tail call void @cairo_move_to(ptr noundef %0, double noundef %i.lp, double noundef %i.lq) #18
@@ -3023,7 +3023,7 @@ bb.ay:                                            ; preds = %bb.ax
   %.idx427 = shl nsw i64 %indvars.iv408, 3
   %i.lx = getelementptr inbounds i8, ptr %i.lw, i64 %.idx427
   %i.ly = load <2 x float>, ptr %i.lx, align 4, !tbaa !102
-  %i.lz = fpext <2 x float> %i.ly to <2 x double> ; 2 uses
+  %i.lz = fpext reassoc nsz arcp contract afn <2 x float> %i.ly to <2 x double> ; 2 uses
   %i.ma = extractelement <2 x double> %i.lz, i64 0
   %i.mb = extractelement <2 x double> %i.lz, i64 1
   tail call void @cairo_line_to(ptr noundef %0, double noundef %i.ma, double noundef %i.mb) #18
@@ -3136,8 +3136,8 @@ _brush_bounding_box.exit:                         ; preds = %.lr.ph.split.us.i.i
   %i.oc = fptosi <2 x float> %i.ob to <2 x i32>
   %i.od = fadd reassoc nsz arcp contract afn <2 x float> %.lcssa445, splat (float -2.000000e+00)
   %i.oe = fptosi <2 x float> %i.od to <2 x i32>
-  %i.of = sitofp <2 x i32> %i.oe to <2 x float>
-  %i.og = sitofp <2 x i32> %i.oc to <2 x float>
+  %i.of = sitofp reassoc nsz arcp contract afn <2 x i32> %i.oe to <2 x float>
+  %i.og = sitofp reassoc nsz arcp contract afn <2 x i32> %i.oc to <2 x float>
   %i.oh = fmul reassoc nnan nsz arcp contract afn <2 x float> %i.og, splat (float 5.000000e-01)
   %i.oi = fadd reassoc nsz arcp contract afn <2 x float> %i.oh, %i.of ; 2 uses
   %i.oj = load i32, ptr %i.gs, align 8, !tbaa !112
@@ -3161,7 +3161,7 @@ _brush_bounding_box.exit:                         ; preds = %.lr.ph.split.us.i.i
   %i.ox = sext i32 %i.ow to i64                   ; 2 uses
   %i.oy = getelementptr inbounds [4 x i8], ptr %i.ov, i64 %i.ox
   %i.oz = load <2 x float>, ptr %i.oy, align 4, !tbaa !102
-  %i.pa = fpext <2 x float> %i.oz to <2 x double> ; 2 uses
+  %i.pa = fpext reassoc nsz arcp contract afn <2 x float> %i.oz to <2 x double> ; 2 uses
   %i.pb = extractelement <2 x double> %i.pa, i64 0
   %i.pc = extractelement <2 x double> %i.pa, i64 1
   call void @cairo_move_to(ptr noundef %0, double noundef %i.pb, double noundef %i.pc) #18
@@ -3173,7 +3173,7 @@ _brush_bounding_box.exit:                         ; preds = %.lr.ph.split.us.i.i
   %i.pf = load ptr, ptr %i.mj, align 8, !tbaa !115
   %i.pg = getelementptr inbounds [4 x i8], ptr %i.pf, i64 %i.ox
   %i.ph = load <2 x float>, ptr %i.pg, align 4, !tbaa !102
-  %i.pi = fpext <2 x float> %i.ph to <2 x double> ; 2 uses
+  %i.pi = fpext reassoc nsz arcp contract afn <2 x float> %i.ph to <2 x double> ; 2 uses
   %i.pj = extractelement <2 x double> %i.pi, i64 0
   %i.pk = extractelement <2 x double> %i.pi, i64 1
   call void @cairo_line_to(ptr noundef %0, double noundef %i.pj, double noundef %i.pk) #18
@@ -3187,7 +3187,7 @@ _brush_bounding_box.exit:                         ; preds = %.lr.ph.split.us.i.i
   %.idx428 = shl nsw i64 %indvars.iv411, 3
   %i.po = getelementptr inbounds i8, ptr %i.pn, i64 %.idx428
   %i.pp = load <2 x float>, ptr %i.po, align 4, !tbaa !102
-  %i.pq = fpext <2 x float> %i.pp to <2 x double> ; 2 uses
+  %i.pq = fpext reassoc nsz arcp contract afn <2 x float> %i.pp to <2 x double> ; 2 uses
   %i.pr = extractelement <2 x double> %i.pq, i64 0
   %i.ps = extractelement <2 x double> %i.pq, i64 1
   call void @cairo_line_to(ptr noundef %0, double noundef %i.pr, double noundef %i.ps) #18
@@ -3307,7 +3307,7 @@ dt_get_debug_wtime.exit:                          ; preds = %bb.a, %bb.b
   %i.w = phi reassoc nsz arcp contract afn double [ %i.v, %bb.b ], [ 0.000000e+00, %bb.a ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 144
   %i.y = load <2 x i32>, ptr %i.x, align 16, !tbaa !106
-  %i.z = sitofp <2 x i32> %i.y to <2 x float>     ; 9 uses
+  %i.z = sitofp reassoc nsz arcp contract afn <2 x i32> %i.y to <2 x float> ; 9 uses
   %i.aa = shufflevector <2 x float> %i.z, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ab = extractelement <2 x float> %i.z, i64 1  ; 6 uses
   %i.ac = extractelement <2 x float> %i.z, i64 0  ; 6 uses

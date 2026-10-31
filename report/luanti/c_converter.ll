@@ -127,7 +127,7 @@ $_ZTV13BaseException = comdat any
 define dso_local void @_Z8push_v3fP9lua_StateN4core8vector3dIfEE(ptr noundef %0, <2 x float> %1, float %2) local_unnamed_addr #0 {
 bb.a:
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef -10000, i32 noundef 8)
-  %i.a = fpext <2 x float> %1 to <2 x double>     ; 2 uses
+  %i.a = fpext nsz <2 x float> %1 to <2 x double> ; 2 uses
   %i.b = extractelement <2 x double> %i.a, i64 0
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.b)
   %i.c = extractelement <2 x double> %i.a, i64 1
@@ -151,7 +151,7 @@ declare void @lua_call(ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr
 define dso_local void @_Z8push_v2fP9lua_StateN4core8vector2dIfEE(ptr noundef %0, <2 x float> %1) local_unnamed_addr #0 {
 bb.a:
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef -10000, i32 noundef 10)
-  %i.a = fpext <2 x float> %1 to <2 x double>     ; 2 uses
+  %i.a = fpext nsz <2 x float> %1 to <2 x double> ; 2 uses
   %i.b = extractelement <2 x double> %i.a, i64 0
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.b)
   %i.c = extractelement <2 x double> %i.a, i64 1
@@ -554,7 +554,7 @@ bb.u:                                             ; preds = %bb.k, %_ZNSt7__cxx1
   %i.dx = call nsz double @lua_tonumber(ptr noundef %0, i32 noundef -1)
   %i.dy = insertelement <2 x double> poison, double %i.dw, i64 0
   %i.dz = insertelement <2 x double> %i.dy, double %i.dx, i64 1
-  %i.ea = fptrunc <2 x double> %i.dz to <2 x float>
+  %i.ea = fptrunc nsz <2 x double> %i.dz to <2 x float>
   call void @lua_settop(ptr noundef %0, i32 noundef -3)
   ret <2 x float> %i.ea
 
@@ -957,7 +957,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call fastcc void @_ZL8read_v3dP9lua_Statei(ptr dead_on_unwind noalias writable align 8 %2, ptr noundef %0, i32 noundef %1)
   %i.a = load <2 x double>, ptr %2, align 16, !tbaa !22
-  %i.b = fptrunc <2 x double> %i.a to <2 x float>
+  %i.b = fptrunc nsz <2 x double> %i.a to <2 x float>
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.d = load double, ptr %i.c, align 16, !tbaa !24
   %i.e = fptrunc nsz double %i.d to float
@@ -1360,7 +1360,7 @@ bb.a:
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef -10000, i32 noundef 8)
   %i.e = fpext nsz float %i.a to double
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.e)
-  %i.f = fpext <2 x float> %i.d to <2 x double>   ; 2 uses
+  %i.f = fpext nsz <2 x float> %i.d to <2 x double> ; 2 uses
   %i.g = extractelement <2 x double> %i.f, i64 0
   tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.g)
   %i.h = extractelement <2 x double> %i.f, i64 1

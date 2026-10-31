@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.preheader15.i
   %i.hf = fadd nsz float %i.hb, %i.he
   %i.hg = insertelement <2 x float> poison, float %i.gy, i64 0
   %i.hh = insertelement <2 x float> %i.hg, float %i.hf, i64 1
-  %i.hi = fpext <2 x float> %i.hh to <2 x double>
+  %i.hi = fpext nsz <2 x float> %i.hh to <2 x double>
   store <2 x double> %i.hi, ptr %i.dm, align 8, !tbaa !44
   store double 1.000000e+00, ptr %i.do, align 8, !tbaa !44
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %i.gw
@@ -217,7 +217,7 @@ bb.n:                                             ; preds = %.preheader15.i
   %i.hp = fadd nsz float %i.hm, %i.ho
   %i.hq = insertelement <2 x float> poison, float %i.hk, i64 0
   %i.hr = insertelement <2 x float> %i.hq, float %i.hp, i64 1
-  %i.hs = fpext <2 x float> %i.hr to <2 x double>
+  %i.hs = fpext nsz <2 x float> %i.hr to <2 x double>
   store <2 x double> %i.hs, ptr %i.dp, align 16, !tbaa !44
   store double 1.000000e+00, ptr %i.dr, align 16, !tbaa !44
   %i.ht = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %i.gw
@@ -229,7 +229,7 @@ bb.n:                                             ; preds = %.preheader15.i
   %i.hz = fadd nsz float %i.hw, %i.hy
   %i.ia = insertelement <2 x float> poison, float %i.hu, i64 0
   %i.ib = insertelement <2 x float> %i.ia, float %i.hz, i64 1
-  %i.ic = fpext <2 x float> %i.ib to <2 x double>
+  %i.ic = fpext nsz <2 x float> %i.ib to <2 x double>
   store <2 x double> %i.ic, ptr %i.ds, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
   %i.id = getelementptr inbounds nuw [4 x i8], ptr %i.dc, i64 %indvars.iv129.i
@@ -242,7 +242,7 @@ bb.n:                                             ; preds = %.preheader15.i
   %i.ij = load float, ptr %i.ii, align 4, !tbaa !40
   %i.ik = insertelement <2 x float> poison, float %i.ih, i64 0
   %i.il = insertelement <2 x float> %i.ik, float %i.ij, i64 1
-  %i.im = fpext <2 x float> %i.il to <2 x double>
+  %i.im = fpext nsz <2 x float> %i.il to <2 x double>
   store <2 x double> %i.im, ptr %i.du, align 8, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.a, i8 0, i64 12, i1 false)
@@ -336,28 +336,28 @@ bb.p:                                             ; preds = %.preheader15.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #12
   store double 1.000000e+00, ptr %i.g, align 16, !tbaa !44
   %i.ku = load <2 x float>, ptr %i.cg, align 8, !tbaa !40
-  %i.kv = fpext <2 x float> %i.ku to <2 x double>
+  %i.kv = fpext nsz <2 x float> %i.ku to <2 x double>
   store <2 x double> %i.kv, ptr %i.cf, align 8, !tbaa !44
   %i.kw = load float, ptr %i.cj, align 8, !tbaa !40
   %i.kx = fpext nsz float %i.kw to double
   store double %i.kx, ptr %i.ci, align 8, !tbaa !44
   store double 1.000000e+00, ptr %i.ck, align 16, !tbaa !44
   %i.ky = load <2 x float>, ptr %i.cm, align 8, !tbaa !40
-  %i.kz = fpext <2 x float> %i.ky to <2 x double>
+  %i.kz = fpext nsz <2 x float> %i.ky to <2 x double>
   store <2 x double> %i.kz, ptr %i.cl, align 8, !tbaa !44
   %i.la = load float, ptr %i.cp, align 8, !tbaa !40
   %i.lb = fpext nsz float %i.la to double
   store double %i.lb, ptr %i.co, align 8, !tbaa !44
   store double 1.000000e+00, ptr %i.cq, align 16, !tbaa !44
   %i.lc = load <2 x float>, ptr %i.cs, align 8, !tbaa !40
-  %i.ld = fpext <2 x float> %i.lc to <2 x double>
+  %i.ld = fpext nsz <2 x float> %i.lc to <2 x double>
   store <2 x double> %i.ld, ptr %i.cr, align 8, !tbaa !44
   %i.le = load float, ptr %i.cv, align 8, !tbaa !40
   %i.lf = fpext nsz float %i.le to double
   store double %i.lf, ptr %i.cu, align 8, !tbaa !44
   store double 1.000000e+00, ptr %i.cw, align 16, !tbaa !44
   %i.lg = load <2 x float>, ptr %i.cy, align 8, !tbaa !40
-  %i.lh = fpext <2 x float> %i.lg to <2 x double>
+  %i.lh = fpext nsz <2 x float> %i.lg to <2 x double>
   store <2 x double> %i.lh, ptr %i.cx, align 8, !tbaa !44
   %i.li = load float, ptr %i.db, align 8, !tbaa !40
   %i.lj = fpext nsz float %i.li to double
@@ -373,7 +373,7 @@ bb.p:                                             ; preds = %.preheader15.i
   %i.lq = load float, ptr %i.lp, align 4, !tbaa !40
   %i.lr = insertelement <2 x float> poison, float %i.lo, i64 0
   %i.ls = insertelement <2 x float> %i.lr, float %i.lq, i64 1
-  %i.lt = fpext <2 x float> %i.ls to <2 x double>
+  %i.lt = fpext nsz <2 x float> %i.ls to <2 x double>
   store <2 x double> %i.lt, ptr %i.dd, align 8, !tbaa !44
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.di, i64 %indvars.iv129.i
   %i.lv = load float, ptr %i.lu, align 4, !tbaa !40
@@ -776,14 +776,14 @@ bb.ac:                                            ; preds = %bb.ac, %.epil.prehe
   %i.wl = phi i64 [ %i.tn, %gauss_solve_triangular.exit333.thread.i ], [ %i.tx, %gauss_solve_triangular.exit333.i ], [ %i.tx, %bb.ac ], [ %i.tx, %.preheader7.i.loopexit.unr-lcssa ]
   %i.wm = getelementptr inbounds [8 x i8], ptr %i.eb, i64 %i.wl ; 2 uses
   %i.wn = load <2 x double>, ptr %i.wm, align 8, !tbaa !44
-  %i.wo = fptrunc <2 x double> %i.wn to <2 x float> ; 2 uses
+  %i.wo = fptrunc nsz <2 x double> %i.wn to <2 x float> ; 2 uses
   %i.wp = extractelement <2 x float> %i.wo, i64 0
   store float %i.wp, ptr %invariant.gep22.i, align 4, !tbaa !40
   %i.wq = extractelement <2 x float> %i.wo, i64 1
   store float %i.wq, ptr %gep23.1.i, align 4, !tbaa !40
   %i.wr = getelementptr i8, ptr %i.wm, i64 16
   %i.ws = load <2 x double>, ptr %i.wr, align 8, !tbaa !44
-  %i.wt = fptrunc <2 x double> %i.ws to <2 x float> ; 2 uses
+  %i.wt = fptrunc nsz <2 x double> %i.ws to <2 x float> ; 2 uses
   %i.wu = extractelement <2 x float> %i.wt, i64 0
   store float %i.wu, ptr %gep23.2.i, align 4, !tbaa !40
   %i.wv = extractelement <2 x float> %i.wt, i64 1

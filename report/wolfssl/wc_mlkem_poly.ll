@@ -204,11 +204,11 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
   %i.go = insertelement <8 x i8> %i.gn, i8 %i.ge, i64 6
   %i.gp = insertelement <8 x i8> %i.go, i8 %i.gh, i64 7
   %i.gq = and <8 x i8> %i.gp, <i8 31, i8 31, i8 31, i8 31, i8 31, i8 31, i8 31, i8 -1>
-  %i.gr = zext <8 x i8> %i.gq to <8 x i32>
+  %i.gr = zext nneg <8 x i8> %i.gq to <8 x i32>
   %i.gs = mul nuw nsw <8 x i32> %i.gr, splat (i32 3329)
   %i.gt = add nuw nsw <8 x i32> %i.gs, splat (i32 16)
   %i.gu = lshr <8 x i32> %i.gt, splat (i32 5)
-  %i.gv = trunc nuw <8 x i32> %i.gu to <8 x i16>
+  %i.gv = trunc nuw nsw <8 x i32> %i.gu to <8 x i16>
   store <8 x i16> %i.gv, ptr %i.gg, align 2, !tbaa !10
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 8
   %i.gw = icmp samesign ult i64 %indvars.iv.i, 248

@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   %i.an = insertelement <2 x double> poison, double %cos, i64 0
   %i.ao = insertelement <2 x double> %i.an, double %sin, i64 1
   %i.ap = fmul nsz <2 x double> %i.ag, %i.ao
-  %i.aq = fptrunc <2 x double> %i.ap to <2 x float>
+  %i.aq = fptrunc nsz <2 x double> %i.ap to <2 x float>
   store <2 x float> %i.aq, ptr %gep, align 4, !tbaa !24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.preheader.us, %bb.
   %i.p = fptrunc nsz double %sin.us to float
   %i.q = insertelement <2 x double> poison, double %cos.us, i64 0
   %i.r = insertelement <2 x double> %i.q, double %sin.us, i64 1
-  %i.s = fptrunc <2 x double> %i.r to <2 x float> ; 2 uses
+  %i.s = fptrunc nsz <2 x double> %i.r to <2 x float> ; 2 uses
   %i.t = load <2 x float>, ptr %i.o, align 4, !tbaa !24 ; 2 uses
   %i.u = fneg nsz float %i.p
   %i.v = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -735,7 +735,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.q
   %i.s = insertelement <2 x double> poison, double %cos, i64 0
   %i.t = insertelement <2 x double> %i.s, double %sin, i64 1
-  %i.u = fptrunc <2 x double> %i.t to <2 x float>
+  %i.u = fptrunc nsz <2 x double> %i.t to <2 x float>
   store <2 x float> %i.u, ptr %i.r, align 4, !tbaa !24
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count31
@@ -1138,7 +1138,7 @@ bb.a:
   %i.u = add i32 %invariant.op, %i.t
   %i.v = insertelement <2 x i32> poison, i32 %i.u, i64 0
   %i.w = insertelement <2 x i32> %i.v, i32 %i.s, i64 1
-  %i.x = sitofp <2 x i32> %i.w to <2 x double>
+  %i.x = sitofp nsz <2 x i32> %i.w to <2 x double>
   %i.y = fmul nnan nsz <2 x double> %i.o, %i.x
   br label %bb.b
 
@@ -1399,7 +1399,7 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.y = insertelement <2 x double> poison, double %i.v, i64 0
   %i.z = shufflevector <2 x double> %i.y, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.aa = fptrunc <2 x double> %i.z to <2 x float>
+  %i.aa = fptrunc nsz <2 x double> %i.z to <2 x float>
   store <2 x float> %i.aa, ptr %i.o, align 4, !tbaa !24
   %i.ab = fptrunc nsz double %i.w to float        ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 12
@@ -1435,7 +1435,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aq = insertelement <2 x double> poison, double %i.w, i64 0
   %i.ar = shufflevector <2 x double> %i.aq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.as = fmul nsz <2 x double> %i.ap, %i.ar
-  %i.at = fptrunc <2 x double> %i.as to <2 x float>
+  %i.at = fptrunc nsz <2 x double> %i.as to <2 x float>
   store <2 x float> %i.at, ptr %.061, align 4, !tbaa !24
   %i.au = icmp sgt i32 %i.c, 0
   br i1 %i.au, label %.lr.ph.preheader, label %.loopexit

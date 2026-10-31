@@ -205,21 +205,21 @@ bb.h:                                             ; preds = %.loopexit207
   %i.fk = sitofp <4 x i16> %i.fj to <4 x double>
   %i.fl = fmul nnan nsz <4 x double> %i.fk, splat (double f0x3FCF400000000000)
   %i.fm = call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.fl, <4 x double> splat (double 6.500000e-01), <4 x double> <double f0x40751E4180000000, double f0x407FB147A0000000, double f0x408A17B020000000, double f0x40937C47A0000000>)
-  %i.fn = fptrunc <4 x double> %i.fm to <4 x float>
+  %i.fn = fptrunc nsz <4 x double> %i.fm to <4 x float>
   store <4 x float> %i.fn, ptr %i.j, align 16, !tbaa !44
   %i.fo = getelementptr inbounds nuw i8, ptr %i.bp, i64 128
   %i.fp = load <4 x i16>, ptr %i.fo, align 4, !tbaa !43
   %i.fq = sitofp <4 x i16> %i.fp to <4 x double>
   %i.fr = fmul nnan nsz <4 x double> %i.fq, splat (double f0x3FCF400000000000)
   %i.fs = call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.fr, <4 x double> splat (double 6.500000e-01), <4 x double> <double 1.646000e+03, double f0x409EFBA3E0000000, double f0x40A2CFEB80000000, double f0x40A5280520000000>)
-  %i.ft = fptrunc <4 x double> %i.fs to <4 x float>
+  %i.ft = fptrunc nsz <4 x double> %i.fs to <4 x float>
   store <4 x float> %i.ft, ptr %i.ae, align 16, !tbaa !44
   %i.fu = getelementptr inbounds nuw i8, ptr %i.bp, i64 136
   %i.fv = load <2 x i16>, ptr %i.fu, align 4, !tbaa !43
   %i.fw = sitofp <2 x i16> %i.fv to <2 x double>
   %i.fx = fmul nnan nsz <2 x double> %i.fw, splat (double f0x3FCF400000000000)
   %i.fy = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fx, <2 x double> splat (double 6.500000e-01), <2 x double> <double 3.104000e+03, double f0x40AA21F0A0000000>)
-  %i.fz = fptrunc <2 x double> %i.fy to <2 x float>
+  %i.fz = fptrunc nsz <2 x double> %i.fy to <2 x float>
   store <2 x float> %i.fz, ptr %i.af, align 16, !tbaa !44
   %i.ga = getelementptr inbounds nuw i8, ptr %i.bp, i64 144
   %i.gb = getelementptr inbounds nuw i8, ptr %i.bp, i64 224 ; 2 uses
@@ -343,9 +343,9 @@ bb.i:                                             ; preds = %.loopexit207
   %i.jp = load <4 x i16>, ptr %i.jg, align 4, !tbaa !43
   %i.jq = sitofp <4 x i16> %i.jp to <4 x float>
   %i.jr = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.jq, <4 x float> <float 2.916260e-01, float 3.286440e-01, float 3.836360e-01, float 4.056400e-01>, <4 x float> %i.jo)
-  %i.js = fpext <4 x float> %i.jr to <4 x double>
+  %i.js = fpext nsz <4 x float> %i.jr to <4 x double>
   %i.jt = call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.js, <4 x double> splat (double f0x3F00000000000000), <4 x double> <double f0x3FA827FE56041894, double f0x3FB1C0010624DD2F, double f0x3FBD83FF5C28F5C3, double f0x3FC56FFC083126EA>)
-  %i.ju = fptrunc <4 x double> %i.jt to <4 x float>
+  %i.ju = fptrunc nsz <4 x double> %i.jt to <4 x float>
   store <4 x float> %i.ju, ptr %i.i, align 16, !tbaa !44
   %i.jv = getelementptr inbounds nuw i8, ptr %i.bp, i64 128 ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.bp, i64 130
@@ -363,9 +363,9 @@ bb.i:                                             ; preds = %.loopexit207
   %i.kd = load <4 x i16>, ptr %i.jv, align 4, !tbaa !43
   %i.ke = sitofp <4 x i16> %i.kd to <4 x float>
   %i.kf = call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ke, <4 x float> <float 4.388730e-01, float 3.555600e-01, float 3.231200e-01, float 2.980650e-01>, <4 x float> %i.kc)
-  %i.kg = fpext <4 x float> %i.kf to <4 x double>
+  %i.kg = fpext nsz <4 x float> %i.kf to <4 x double>
   %i.kh = call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.kg, <4 x double> splat (double f0x3F00000000000000), <4 x double> <double f0x3FCB3C01A9FBE76D, double f0x3FD05F01BA5E3540, double f0x3FD39F7F7CED9169, double f0x3FD5EE828F5C28F6>)
-  %i.ki = fptrunc <4 x double> %i.kh to <4 x float>
+  %i.ki = fptrunc nsz <4 x double> %i.kh to <4 x float>
   store <4 x float> %i.ki, ptr %i.y, align 16, !tbaa !44
   %i.kj = getelementptr inbounds nuw i8, ptr %i.bp, i64 136
   %i.kk = bitcast i64 %i.jf to <4 x i16>
@@ -374,9 +374,9 @@ bb.i:                                             ; preds = %.loopexit207
   %i.kn = load <2 x i16>, ptr %i.kj, align 4, !tbaa !43
   %i.ko = sitofp <2 x i16> %i.kn to <2 x float>
   %i.kp = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ko, <2 x float> <float 2.622380e-01, float 1.978760e-01>, <2 x float> %i.km)
-  %i.kq = fpext <2 x float> %i.kp to <2 x double>
+  %i.kq = fpext nsz <2 x float> %i.kp to <2 x double>
   %i.kr = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.kq, <2 x double> splat (double f0x3F00000000000000), <2 x double> <double f0x3FD8EF00624DD2F2, double f0x3FDAC8FD916872B0>)
-  %i.ks = fptrunc <2 x double> %i.kr to <2 x float>
+  %i.ks = fptrunc nsz <2 x double> %i.kr to <2 x float>
   store <2 x float> %i.ks, ptr %i.z, align 16, !tbaa !44
   call void @ff_set_min_dist_lsf(ptr noundef nonnull %i.i, double noundef 6.256100e-03, i32 noundef 10) #7
   %i.kt = getelementptr inbounds nuw i8, ptr %i.bp, i64 2360 ; 4 uses
@@ -779,7 +779,7 @@ begin_hunk_1_@amrnb_decode_frame:bb.a
   %i.alz = fsub nsz <8 x float> %i.alx, %i.aly
   %i.ama = call nsz <8 x float> @llvm.fabs.v8f32(<8 x float> %i.alz)
   %i.amb = fpext <8 x float> %i.ama to <8 x double>
-  %i.amc = fpext <8 x float> %i.alx to <8 x double>
+  %i.amc = fpext nsz <8 x float> %i.alx to <8 x double>
   %i.amd = fdiv nsz <8 x double> %i.amb, %i.amc   ; 8 uses
   %op.rdx218 = fadd nsz double %i.alu, %i.alv
   %i.ame = fptrunc nsz double %op.rdx218 to float
@@ -913,7 +913,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .preheader.preheader.i:                           ; preds = %bb.ap, %bb.ao
   %i.aox = load <4 x float>, ptr %i.ok, align 8, !tbaa !44
-  %i.aoy = fpext <4 x float> %i.aox to <4 x double>
+  %i.aoy = fpext nsz <4 x float> %i.aox to <4 x double>
   %i.aoz = fcmp nsz olt <4 x double> %i.aoy, splat (double 6.000000e-01)
   %i.apa = zext i1 %i.aon to i32
   %i.apb = bitcast <4 x i1> %i.aoz to i4
@@ -1316,10 +1316,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ab = insertelement <4 x i16> %i.aa, i16 %.sroa.6.sroa.5.0.extract.trunc, i64 3
   %i.ac = sitofp <4 x i16> %i.ab to <4 x double>
   %i.ad = load <4 x float>, ptr %2, align 4, !tbaa !44
-  %i.ae = fpext <4 x float> %i.ad to <4 x double>
+  %i.ae = fpext nsz <4 x float> %i.ad to <4 x double>
   %i.af = fmul nsz <4 x double> %i.ae, splat (double 1.250000e-04)
   %i.ag = tail call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ac, <4 x double> splat (double f0x3F00000000000000), <4 x double> %i.af)
-  %i.ah = fptrunc <4 x double> %i.ag to <4 x float>
+  %i.ah = fptrunc nsz <4 x double> %i.ag to <4 x float>
   store <4 x float> %i.ah, ptr %i.a, align 16, !tbaa !44
   %i.ai = insertelement <4 x i16> poison, i16 %.sroa.9.sroa.0.0, i64 0
   %i.aj = insertelement <4 x i16> %i.ai, i16 %.sroa.9.sroa.7.0, i64 1
@@ -1329,20 +1329,20 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.ap = load <4 x float>, ptr %i.an, align 4, !tbaa !44
-  %i.aq = fpext <4 x float> %i.ap to <4 x double>
+  %i.aq = fpext nsz <4 x float> %i.ap to <4 x double>
   %i.ar = fmul nsz <4 x double> %i.aq, splat (double 1.250000e-04)
   %i.as = tail call nsz <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.am, <4 x double> splat (double f0x3F00000000000000), <4 x double> %i.ar)
-  %i.at = fptrunc <4 x double> %i.as to <4 x float>
+  %i.at = fptrunc nsz <4 x double> %i.as to <4 x float>
   store <4 x float> %i.at, ptr %i.ao, align 16, !tbaa !44
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.aw = bitcast i32 %i.u to <2 x i16>
   %i.ax = sitofp <2 x i16> %i.aw to <2 x double>
   %i.ay = load <2 x float>, ptr %i.au, align 4, !tbaa !44
-  %i.az = fpext <2 x float> %i.ay to <2 x double>
+  %i.az = fpext nsz <2 x float> %i.ay to <2 x double>
   %i.ba = fmul nsz <2 x double> %i.az, splat (double 1.250000e-04)
   %i.bb = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ax, <2 x double> splat (double f0x3F00000000000000), <2 x double> %i.ba)
-  %i.bc = fptrunc <2 x double> %i.bb to <2 x float>
+  %i.bc = fptrunc nsz <2 x double> %i.bb to <2 x float>
   store <2 x float> %i.bc, ptr %i.av, align 16, !tbaa !44
   call void @ff_set_min_dist_lsf(ptr noundef nonnull %i.a, double noundef 6.256100e-03, i32 noundef 10) #7
   br i1 %.not18, label %bb.e, label %bb.d

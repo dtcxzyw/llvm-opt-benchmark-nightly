@@ -204,7 +204,7 @@ bb.a:
   %i.as = load <2 x i16>, ptr %i.ar, align 2, !tbaa !23
   %i.at = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.aq, i64 0
   %i.au = shufflevector <2 x i16> %i.as, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.av = sitofp <4 x i16> %i.au to <4 x float>
+  %i.av = sitofp reassoc nsz arcp contract afn <4 x i16> %i.au to <4 x float>
   %i.aw = shufflevector <4 x float> %i.at, <4 x float> %i.av, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.ax = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.u, %i.aw
   store <4 x float> %i.ax, ptr %.04456.us59.us, align 4, !tbaa !75
@@ -216,7 +216,7 @@ bb.a:
   %i.bd = load <2 x i16>, ptr %i.bc, align 2, !tbaa !23
   %i.be = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.bb, i64 0
   %i.bf = shufflevector <2 x i16> %i.bd, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.bg = sitofp <4 x i16> %i.bf to <4 x float>
+  %i.bg = sitofp reassoc nsz arcp contract afn <4 x i16> %i.bf to <4 x float>
   %i.bh = shufflevector <4 x float> %i.be, <4 x float> %i.bg, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.bi = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.v, %i.bh
   store <4 x float> %i.bi, ptr %i.az, align 4, !tbaa !75
@@ -228,7 +228,7 @@ bb.a:
   %i.bo = load <2 x i16>, ptr %i.bn, align 2, !tbaa !23
   %i.bp = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.bm, i64 0
   %i.bq = shufflevector <2 x i16> %i.bo, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.br = sitofp <4 x i16> %i.bq to <4 x float>
+  %i.br = sitofp reassoc nsz arcp contract afn <4 x i16> %i.bq to <4 x float>
   %i.bs = shufflevector <4 x float> %i.bp, <4 x float> %i.br, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.bt = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.w, %i.bs
   store <4 x float> %i.bt, ptr %i.bk, align 4, !tbaa !75
@@ -240,7 +240,7 @@ bb.a:
   %i.bz = load <2 x i16>, ptr %i.by, align 2, !tbaa !23
   %i.ca = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.bx, i64 0
   %i.cb = shufflevector <2 x i16> %i.bz, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.cc = sitofp <4 x i16> %i.cb to <4 x float>
+  %i.cc = sitofp reassoc nsz arcp contract afn <4 x i16> %i.cb to <4 x float>
   %i.cd = shufflevector <4 x float> %i.ca, <4 x float> %i.cc, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.ce = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.x, %i.cd
   store <4 x float> %i.ce, ptr %i.bv, align 4, !tbaa !75
@@ -348,7 +348,7 @@ bb.a:
   %i.dt = load <2 x i16>, ptr %i.ds, align 2, !tbaa !23
   %i.du = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.dr, i64 0
   %i.dv = shufflevector <2 x i16> %i.dt, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.dw = sitofp <4 x i16> %i.dv to <4 x float>
+  %i.dw = sitofp reassoc nsz arcp contract afn <4 x i16> %i.dv to <4 x float>
   %i.dx = shufflevector <4 x float> %i.du, <4 x float> %i.dw, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.dy = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.y, %i.dx
   store <4 x float> %i.dy, ptr %.04456.us59.us.epil, align 4, !tbaa !75
@@ -468,7 +468,7 @@ bb.a:
   %i.fz = load <2 x i16>, ptr %i.fy, align 2, !tbaa !23
   %i.ga = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.fx, i64 0
   %i.gb = shufflevector <2 x i16> %i.fz, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.gc = uitofp <4 x i16> %i.gb to <4 x float>
+  %i.gc = uitofp reassoc nsz arcp contract afn <4 x i16> %i.gb to <4 x float>
   %i.gd = shufflevector <4 x float> %i.ga, <4 x float> %i.gc, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.ge = fmul reassoc nnan arcp contract afn <4 x float> %i.p, %i.gd
   %i.gf = fadd reassoc nsz arcp contract afn <4 x float> %i.ge, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
@@ -481,7 +481,7 @@ bb.a:
   %i.gl = load <2 x i16>, ptr %i.gk, align 2, !tbaa !23
   %i.gm = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.gj, i64 0
   %i.gn = shufflevector <2 x i16> %i.gl, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.go = uitofp <4 x i16> %i.gn to <4 x float>
+  %i.go = uitofp reassoc nsz arcp contract afn <4 x i16> %i.gn to <4 x float>
   %i.gp = shufflevector <4 x float> %i.gm, <4 x float> %i.go, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.gq = fmul reassoc nnan arcp contract afn <4 x float> %i.q, %i.gp
   %i.gr = fadd reassoc nsz arcp contract afn <4 x float> %i.gq, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
@@ -494,7 +494,7 @@ bb.a:
   %i.gx = load <2 x i16>, ptr %i.gw, align 2, !tbaa !23
   %i.gy = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.gv, i64 0
   %i.gz = shufflevector <2 x i16> %i.gx, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ha = uitofp <4 x i16> %i.gz to <4 x float>
+  %i.ha = uitofp reassoc nsz arcp contract afn <4 x i16> %i.gz to <4 x float>
   %i.hb = shufflevector <4 x float> %i.gy, <4 x float> %i.ha, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.hc = fmul reassoc nnan arcp contract afn <4 x float> %i.r, %i.hb
   %i.hd = fadd reassoc nsz arcp contract afn <4 x float> %i.hc, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
@@ -507,7 +507,7 @@ bb.a:
   %i.hj = load <2 x i16>, ptr %i.hi, align 2, !tbaa !23
   %i.hk = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.hh, i64 0
   %i.hl = shufflevector <2 x i16> %i.hj, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.hm = uitofp <4 x i16> %i.hl to <4 x float>
+  %i.hm = uitofp reassoc nsz arcp contract afn <4 x i16> %i.hl to <4 x float>
   %i.hn = shufflevector <4 x float> %i.hk, <4 x float> %i.hm, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.ho = fmul reassoc nnan arcp contract afn <4 x float> %i.s, %i.hn
   %i.hp = fadd reassoc nsz arcp contract afn <4 x float> %i.ho, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
@@ -568,7 +568,7 @@ bb.a:
   %i.ic = load <2 x i16>, ptr %i.ib, align 2, !tbaa !23
   %i.id = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.ia, i64 0
   %i.ie = shufflevector <2 x i16> %i.ic, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.if = uitofp <4 x i16> %i.ie to <4 x float>
+  %i.if = uitofp reassoc nsz arcp contract afn <4 x i16> %i.ie to <4 x float>
   %i.ig = shufflevector <4 x float> %i.id, <4 x float> %i.if, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.ih = fmul reassoc nnan arcp contract afn <4 x float> %i.t, %i.ig
   %i.ii = fadd reassoc nsz arcp contract afn <4 x float> %i.ih, <float -0.000000e+00, float -1.280000e+02, float -1.280000e+02, float 0.000000e+00>
@@ -971,7 +971,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ax = load <2 x i16>, ptr %i.aw, align 2, !tbaa !23
   %i.ay = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.av, i64 0
   %i.az = shufflevector <2 x i16> %i.ax, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ba = uitofp <4 x i16> %i.az to <4 x float>
+  %i.ba = uitofp reassoc nsz arcp contract afn <4 x i16> %i.az to <4 x float>
   %i.bb = shufflevector <4 x float> %i.ay, <4 x float> %i.ba, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.bc = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.bb, <float f0x37800080, float f0x37800080, float f0x37800080, float 0.000000e+00>
   store <4 x float> %i.bc, ptr %.02937, align 4, !tbaa !75
@@ -983,7 +983,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bi = load <2 x i16>, ptr %i.bh, align 2, !tbaa !23
   %i.bj = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.bg, i64 0
   %i.bk = shufflevector <2 x i16> %i.bi, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.bl = uitofp <4 x i16> %i.bk to <4 x float>
+  %i.bl = uitofp reassoc nsz arcp contract afn <4 x i16> %i.bk to <4 x float>
   %i.bm = shufflevector <4 x float> %i.bj, <4 x float> %i.bl, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.bn = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.bm, <float f0x37800080, float f0x37800080, float f0x37800080, float 0.000000e+00>
   store <4 x float> %i.bn, ptr %i.be, align 4, !tbaa !75
@@ -995,7 +995,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bt = load <2 x i16>, ptr %i.bs, align 2, !tbaa !23
   %i.bu = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.br, i64 0
   %i.bv = shufflevector <2 x i16> %i.bt, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.bw = uitofp <4 x i16> %i.bv to <4 x float>
+  %i.bw = uitofp reassoc nsz arcp contract afn <4 x i16> %i.bv to <4 x float>
   %i.bx = shufflevector <4 x float> %i.bu, <4 x float> %i.bw, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.by = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.bx, <float f0x37800080, float f0x37800080, float f0x37800080, float 0.000000e+00>
   store <4 x float> %i.by, ptr %i.bp, align 4, !tbaa !75
@@ -1007,7 +1007,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ce = load <2 x i16>, ptr %i.cd, align 2, !tbaa !23
   %i.cf = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.cc, i64 0
   %i.cg = shufflevector <2 x i16> %i.ce, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ch = uitofp <4 x i16> %i.cg to <4 x float>
+  %i.ch = uitofp reassoc nsz arcp contract afn <4 x i16> %i.cg to <4 x float>
   %i.ci = shufflevector <4 x float> %i.cf, <4 x float> %i.ch, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.cj = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.ci, <float f0x37800080, float f0x37800080, float f0x37800080, float 0.000000e+00>
   store <4 x float> %i.cj, ptr %i.ca, align 4, !tbaa !75
@@ -1065,7 +1065,7 @@ bb.c:                                             ; preds = %bb.b
   %i.cv = load <2 x i16>, ptr %i.cu, align 2, !tbaa !23
   %i.cw = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.ct, i64 0
   %i.cx = shufflevector <2 x i16> %i.cv, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.cy = uitofp <4 x i16> %i.cx to <4 x float>
+  %i.cy = uitofp reassoc nsz arcp contract afn <4 x i16> %i.cx to <4 x float>
   %i.cz = shufflevector <4 x float> %i.cw, <4 x float> %i.cy, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.da = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.cz, <float f0x37800080, float f0x37800080, float f0x37800080, float 0.000000e+00>
   store <4 x float> %i.da, ptr %.02937.epil, align 4, !tbaa !75
@@ -1216,7 +1216,7 @@ bb.c:                                             ; preds = %bb.b
   %.03036 = phi ptr [ %i.h, %.lr.ph.split.preheader.new ], [ %i.da, %.lr.ph.split ] ; 3 uses
   %niter = phi i32 [ 0, %.lr.ph.split.preheader.new ], [ %niter.next.3, %.lr.ph.split ]
   %i.bs = load <2 x half>, ptr %.03036, align 2, !tbaa !23
-  %i.bt = fpext <2 x half> %i.bs to <2 x float>
+  %i.bt = fpext reassoc nsz arcp contract afn <2 x half> %i.bs to <2 x float>
   store <2 x float> %i.bt, ptr %.02937, align 4, !tbaa !75
   %i.bu = getelementptr inbounds nuw i8, ptr %.03036, i64 4
   %i.bv = load half, ptr %i.bu, align 2, !tbaa !23
@@ -1228,7 +1228,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bz = getelementptr inbounds nuw [2 x i8], ptr %.03036, i64 %i.t ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.02937, i64 16
   %i.cb = load <2 x half>, ptr %i.bz, align 2, !tbaa !23
-  %i.cc = fpext <2 x half> %i.cb to <2 x float>
+  %i.cc = fpext reassoc nsz arcp contract afn <2 x half> %i.cb to <2 x float>
   store <2 x float> %i.cc, ptr %i.ca, align 4, !tbaa !75
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 4
   %i.ce = load half, ptr %i.cd, align 2, !tbaa !23
@@ -1240,7 +1240,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ci = getelementptr inbounds nuw [2 x i8], ptr %i.bz, i64 %i.t ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.02937, i64 32
   %i.ck = load <2 x half>, ptr %i.ci, align 2, !tbaa !23
-  %i.cl = fpext <2 x half> %i.ck to <2 x float>
+  %i.cl = fpext reassoc nsz arcp contract afn <2 x half> %i.ck to <2 x float>
   store <2 x float> %i.cl, ptr %i.cj, align 4, !tbaa !75
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
   %i.cn = load half, ptr %i.cm, align 2, !tbaa !23
@@ -1252,7 +1252,7 @@ bb.c:                                             ; preds = %bb.b
   %i.cr = getelementptr inbounds nuw [2 x i8], ptr %i.ci, i64 %i.t ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.02937, i64 48
   %i.ct = load <2 x half>, ptr %i.cr, align 2, !tbaa !23
-  %i.cu = fpext <2 x half> %i.ct to <2 x float>
+  %i.cu = fpext reassoc nsz arcp contract afn <2 x half> %i.ct to <2 x float>
   store <2 x float> %i.cu, ptr %i.cs, align 4, !tbaa !75
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cr, i64 4
   %i.cw = load half, ptr %i.cv, align 2, !tbaa !23
@@ -1309,7 +1309,7 @@ bb.c:                                             ; preds = %bb.b
   %.03036.epil = phi ptr [ %i.dp, %.lr.ph.split.epil ], [ %.03036.epil.init, %.lr.ph.split.epil.preheader ] ; 3 uses
   %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.split.epil ], [ 0, %.lr.ph.split.epil.preheader ]
   %i.di = load <2 x half>, ptr %.03036.epil, align 2, !tbaa !23
-  %i.dj = fpext <2 x half> %i.di to <2 x float>
+  %i.dj = fpext reassoc nsz arcp contract afn <2 x half> %i.di to <2 x float>
   store <2 x float> %i.dj, ptr %.02937.epil, align 4, !tbaa !75
   %i.dk = getelementptr inbounds nuw i8, ptr %.03036.epil, i64 4
   %i.dl = load half, ptr %i.dk, align 2, !tbaa !23

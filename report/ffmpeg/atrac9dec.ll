@@ -205,9 +205,9 @@ bb.q:                                             ; preds = %.lr.ph, %bb.q
   %i.ca = insertelement <2 x float> %i.bz, float %i.by, i64 1
   %i.cb = fadd nsz <2 x float> %i.ca, <float 5.000000e-01, float -5.000000e-01>
   %i.cc = fdiv nsz <2 x float> %i.cb, %i.bt
-  %i.cd = fpext <2 x float> %i.cc to <2 x double>
+  %i.cd = fpext nsz <2 x float> %i.cc to <2 x double>
   %i.ce = call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cd, <2 x double> splat (double f0x400921FB54442D18), <2 x double> splat (double f0xBFF921FB54442D18))
-  %i.cf = fptrunc <2 x double> %i.ce to <2 x float> ; 2 uses
+  %i.cf = fptrunc nsz <2 x double> %i.ce to <2 x float> ; 2 uses
   %i.cg = extractelement <2 x float> %i.cf, i64 0
   %i.ch = call nsz float @llvm.sin.f32(float %i.cg)
   %i.ci = call nsz float @llvm.fmuladd.f32(float %i.ch, float 5.000000e-01, float 5.000000e-01) ; 3 uses
@@ -610,7 +610,7 @@ bb.cq:                                            ; preds = %bb.cq, %.lr.ph.i.i5
   call void @av_bmg_get(ptr noundef nonnull %i.af, ptr noundef nonnull %i.b) #9
   %gep.i.i59 = getelementptr [4 x i8], ptr %invariant.gep.i.i, i64 %indvars.iv.i.i58
   %i.biy = load <2 x double>, ptr %i.b, align 16, !tbaa !186 ; 4 uses
-  %i.biz = fptrunc <2 x double> %i.biy to <2 x float>
+  %i.biz = fptrunc nsz <2 x double> %i.biy to <2 x float>
   store <2 x float> %i.biz, ptr %gep.i.i59, align 4, !tbaa !44
   %i.bja = fcmp nsz oge <2 x double> %i.biy, zeroinitializer
   %i.bjb = fneg nsz <2 x double> %i.biy
@@ -770,7 +770,7 @@ bb.cs:                                            ; preds = %bb.cs, %.lr.ph.i112
   call void @av_bmg_get(ptr noundef nonnull %i.af, ptr noundef nonnull %i.a) #9
   %gep.i116.i = getelementptr [4 x i8], ptr %invariant.gep.i113.i, i64 %indvars.iv.i114.i
   %i.bko = load <2 x double>, ptr %i.a, align 16, !tbaa !186 ; 4 uses
-  %i.bkp = fptrunc <2 x double> %i.bko to <2 x float>
+  %i.bkp = fptrunc nsz <2 x double> %i.bko to <2 x float>
   store <2 x float> %i.bkp, ptr %gep.i116.i, align 4, !tbaa !44
   %i.bkq = fcmp nsz oge <2 x double> %i.bko, zeroinitializer
   %i.bkr = fneg nsz <2 x double> %i.bko

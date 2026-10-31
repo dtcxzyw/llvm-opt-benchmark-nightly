@@ -202,7 +202,7 @@ paper_exists.exit:                                ; preds = %.critedge.i, %.preh
   %i.an = call i64 @g_strlcpy(ptr noundef nonnull %i.am, ptr noundef nonnull %i.d, i64 noundef 128) #16 ; 0 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 256 ; 2 uses
   %i.ap = load <2 x i32>, ptr %i.l, align 4, !tbaa !27
-  %i.aq = sitofp <2 x i32> %i.ap to <2 x double>
+  %i.aq = sitofp reassoc nsz arcp contract afn <2 x i32> %i.ap to <2 x double>
   %i.ar = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.aq, splat (double 1.000000e-02)
   store <2 x double> %i.ar, ptr %i.ao, align 8, !tbaa !26
   %i.as = call ptr @g_list_append(ptr noundef %.070100, ptr noundef %i.ak) #16
@@ -319,7 +319,7 @@ paper_exists.exit95:                              ; preds = %.critedge.i92, %.pr
   %i.cb = call i64 @g_strlcpy(ptr noundef nonnull %i.ca, ptr noundef nonnull %i.br, i64 noundef 128) #16 ; 0 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.by, i64 256 ; 2 uses
   %i.cd = load <2 x float>, ptr %i.bl, align 4, !tbaa !80
-  %i.ce = fpext <2 x float> %i.cd to <2 x double>
+  %i.ce = fpext reassoc nsz arcp contract afn <2 x float> %i.cd to <2 x double>
   %i.cf = fmul reassoc nsz arcp contract afn <2 x double> %i.ce, splat (double f0x3FD693E93E93E93E)
   store <2 x double> %i.cf, ptr %i.cc, align 8, !tbaa !26
   %i.cg = call ptr @g_list_append(ptr noundef %.4103, ptr noundef %i.by) #16 ; 2 uses
@@ -722,10 +722,10 @@ define void @dt_get_print_layout(ptr nofree noundef readonly captures(none) %0, 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 728
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !26
-  %i.c = fptrunc <2 x double> %i.b to <2 x float> ; 2 uses
+  %i.c = fptrunc reassoc nsz arcp contract afn <2 x double> %i.b to <2 x float> ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.e = load <4 x double>, ptr %i.d, align 8, !tbaa !26
-  %i.f = fptrunc <4 x double> %i.e to <4 x float> ; 2 uses
+  %i.f = fptrunc reassoc nsz arcp contract afn <4 x double> %i.e to <4 x float> ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.h = load i32, ptr %i.g, align 8, !tbaa !81
   %.not = icmp eq i32 %i.h, 0                     ; 2 uses
@@ -776,7 +776,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ag = load float, ptr %5, align 4, !tbaa !80  ; 2 uses
   %i.ah = load float, ptr %4, align 4, !tbaa !80
   %i.ai = load <4 x double>, ptr %i.ae, align 8, !tbaa !26
-  %i.aj = fptrunc <4 x double> %i.ai to <4 x float> ; 4 uses
+  %i.aj = fptrunc reassoc nsz arcp contract afn <4 x double> %i.ai to <4 x float> ; 4 uses
   %i.ak = shufflevector <4 x float> %i.aj, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 1, i32 0>
   %i.al = fcmp reassoc nsz arcp contract afn ogt <4 x float> %spec.select, %i.ak
   %i.am = freeze <4 x i1> %i.al

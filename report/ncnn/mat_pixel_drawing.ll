@@ -202,8 +202,8 @@ bb.a:
   %i.s = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.t = insertelement <2 x i32> %i.s, i32 %5, i64 1 ; 2 uses
   %i.u = sub nsw <2 x i32> %i.r, %i.t             ; 3 uses
-  %i.v = sitofp <2 x i32> %i.t to <2 x float>
-  %i.w = sitofp <2 x i32> %i.u to <2 x float>
+  %i.v = sitofp fast <2 x i32> %i.t to <2 x float>
+  %i.w = sitofp fast <2 x i32> %i.u to <2 x float>
   %.fr = freeze i1 %i.p
   br i1 %.fr, label %.lr.ph77.split.us.preheader, label %._crit_edge
 
@@ -335,8 +335,8 @@ bb.a:
   %i.s = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.t = insertelement <2 x i32> %i.s, i32 %5, i64 1 ; 2 uses
   %i.u = sub nsw <2 x i32> %i.r, %i.t             ; 3 uses
-  %i.v = sitofp <2 x i32> %i.t to <2 x float>
-  %i.w = sitofp <2 x i32> %i.u to <2 x float>
+  %i.v = sitofp fast <2 x i32> %i.t to <2 x float>
+  %i.w = sitofp fast <2 x i32> %i.u to <2 x float>
   %i.x = trunc i32 %8 to i16
   %.fr = freeze i1 %i.p
   br i1 %.fr, label %.lr.ph80.split.us.preheader, label %._crit_edge
@@ -475,8 +475,8 @@ bb.a:
   %i.s = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.t = insertelement <2 x i32> %i.s, i32 %5, i64 1 ; 2 uses
   %i.u = sub nsw <2 x i32> %i.r, %i.t             ; 3 uses
-  %i.v = sitofp <2 x i32> %i.t to <2 x float>
-  %i.w = sitofp <2 x i32> %i.u to <2 x float>
+  %i.v = sitofp fast <2 x i32> %i.t to <2 x float>
+  %i.w = sitofp fast <2 x i32> %i.u to <2 x float>
   %.fr = freeze i1 %i.p
   br i1 %.fr, label %.lr.ph83.split.us.preheader, label %._crit_edge
 
@@ -613,8 +613,8 @@ bb.a:
   %i.s = insertelement <2 x i32> poison, i32 %4, i64 0
   %i.t = insertelement <2 x i32> %i.s, i32 %5, i64 1 ; 2 uses
   %i.u = sub nsw <2 x i32> %i.r, %i.t             ; 3 uses
-  %i.v = sitofp <2 x i32> %i.t to <2 x float>
-  %i.w = sitofp <2 x i32> %i.u to <2 x float>
+  %i.v = sitofp fast <2 x i32> %i.t to <2 x float>
+  %i.w = sitofp fast <2 x i32> %i.u to <2 x float>
   %.fr = freeze i1 %i.p
   br i1 %.fr, label %.lr.ph86.split.us.preheader, label %._crit_edge
 

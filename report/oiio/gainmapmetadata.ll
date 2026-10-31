@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.q
   %i.fq = insertelement <4 x double> %i.fp, double %i.ec, i64 1
   %i.fr = insertelement <4 x double> %i.fq, double %i.fo, i64 2
   %i.fs = insertelement <4 x double> %i.fr, double %i.db, i64 3
-  %i.ft = fptrunc <4 x double> %i.fs to <4 x float>
+  %i.ft = fptrunc contract <4 x double> %i.fs to <4 x float>
   store <4 x float> %i.ft, ptr %2, align 8, !tbaa !31
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !6
@@ -216,7 +216,7 @@ bb.ab:                                            ; preds = %bb.q
   %i.gb = tail call contract double @exp2(double noundef %i.ga) #17, !tbaa !6
   %i.gc = insertelement <2 x double> poison, double %i.ej, i64 0
   %i.gd = insertelement <2 x double> %i.gc, double %i.gb, i64 1
-  %i.ge = fptrunc <2 x double> %i.gd to <2 x float>
+  %i.ge = fptrunc contract <2 x double> %i.gd to <2 x float>
   store <2 x float> %i.ge, ptr %i.dk, align 8, !tbaa !31
   %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.gg = load i32, ptr %i.gf, align 4, !tbaa !6
@@ -266,7 +266,7 @@ bb.ab:                                            ; preds = %bb.q
   %i.hv = getelementptr inbounds nuw i8, ptr %2, i64 60
   %i.hw = insertelement <2 x double> poison, double %i.hu, i64 0
   %i.hx = insertelement <2 x double> %i.hw, double %i.hm, i64 1
-  %i.hy = fptrunc <2 x double> %i.hx to <2 x float>
+  %i.hy = fptrunc contract <2 x double> %i.hx to <2 x float>
   store <2 x float> %i.hy, ptr %i.hv, align 4, !tbaa !31
   %i.hz = getelementptr inbounds nuw i8, ptr %1, i64 137
   %i.ia = load i8, ptr %i.hz, align 1, !tbaa !22, !range !23, !noundef !24

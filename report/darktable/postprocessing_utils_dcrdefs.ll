@@ -205,9 +205,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.nb = load float, ptr %gep.1, align 4, !tbaa !81
   %i.nc = insertelement <2 x float> poison, float %i.na, i64 0
   %i.nd = insertelement <2 x float> %i.nc, float %i.nb, i64 1
-  %i.ne = fpext <2 x float> %i.nd to <2 x double>
+  %i.ne = fpext reassoc nsz arcp contract afn <2 x float> %i.nd to <2 x double>
   %i.nf = fmul reassoc nsz arcp contract afn <2 x double> %i.mi, %i.ne
-  %i.ng = fptrunc <2 x double> %i.nf to <2 x float>
+  %i.ng = fptrunc reassoc nsz arcp contract afn <2 x double> %i.nf to <2 x float>
   %gep.2 = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 32
   %i.nh = load float, ptr %gep.2, align 4, !tbaa !81
   %i.ni = fpext reassoc nsz arcp contract afn float %i.nh to double
@@ -278,9 +278,9 @@ scalar.ph197:                                     ; preds = %scalar.ph197.prehea
   %i.oh = load float, ptr %gep.1.1, align 4, !tbaa !81
   %i.oi = insertelement <2 x float> poison, float %i.og, i64 0
   %i.oj = insertelement <2 x float> %i.oi, float %i.oh, i64 1
-  %i.ok = fpext <2 x float> %i.oj to <2 x double>
+  %i.ok = fpext reassoc nsz arcp contract afn <2 x float> %i.oj to <2 x double>
   %i.ol = fmul reassoc nsz arcp contract afn <2 x double> %i.no, %i.ok
-  %i.om = fptrunc <2 x double> %i.ol to <2 x float>
+  %i.om = fptrunc reassoc nsz arcp contract afn <2 x double> %i.ol to <2 x float>
   %gep.2.1 = getelementptr inbounds nuw i8, ptr %invariant.gep.1, i64 32
   %i.on = load float, ptr %gep.2.1, align 4, !tbaa !81
   %i.oo = fpext reassoc nsz arcp contract afn float %i.on to double
@@ -351,9 +351,9 @@ scalar.ph216:                                     ; preds = %scalar.ph216.prehea
   %i.pn = load float, ptr %gep.1.2, align 4, !tbaa !81
   %i.po = insertelement <2 x float> poison, float %i.pm, i64 0
   %i.pp = insertelement <2 x float> %i.po, float %i.pn, i64 1
-  %i.pq = fpext <2 x float> %i.pp to <2 x double>
+  %i.pq = fpext reassoc nsz arcp contract afn <2 x float> %i.pp to <2 x double>
   %i.pr = fmul reassoc nsz arcp contract afn <2 x double> %i.ou, %i.pq
-  %i.ps = fptrunc <2 x double> %i.pr to <2 x float>
+  %i.ps = fptrunc reassoc nsz arcp contract afn <2 x double> %i.pr to <2 x float>
   %gep.2.2 = getelementptr inbounds nuw i8, ptr %invariant.gep.2, i64 32
   %i.pt = load float, ptr %gep.2.2, align 4, !tbaa !81
   %i.pu = fpext reassoc nsz arcp contract afn float %i.pt to double
@@ -756,7 +756,7 @@ bb.u:                                             ; preds = %bb.t
 
 ..preheader214_crit_edge.split.us:                ; preds = %._crit_edge.us
   %i.ij = load <8 x i32>, ptr %i.a, align 16, !tbaa !80
-  %i.ik = uitofp <8 x i32> %i.ij to <8 x double>
+  %i.ik = uitofp reassoc nsz arcp contract afn <8 x i32> %i.ij to <8 x double>
   %i.il = fadd reassoc nsz arcp contract afn <8 x double> %i.bx, %i.ik
   br label %.loopexit215.us
 
@@ -1016,9 +1016,9 @@ bb.av:                                            ; preds = %bb.at
 .preheader206:                                    ; preds = %bb.av
   %i.nn = getelementptr inbounds nuw i8, ptr %0, i64 153268
   %i.no = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.np = uitofp <4 x i32> %.fr to <4 x float>
+  %i.np = uitofp reassoc nsz arcp contract afn <4 x i32> %.fr to <4 x float>
   %i.nq = load <4 x i32>, ptr %i.no, align 16, !tbaa !80
-  %i.nr = uitofp <4 x i32> %i.nq to <4 x float>
+  %i.nr = uitofp reassoc nsz arcp contract afn <4 x i32> %i.nq to <4 x float>
   %i.ns = fdiv reassoc nsz arcp contract afn <4 x float> %i.nr, %i.np
   store <4 x float> %i.ns, ptr %i.nn, align 4, !tbaa !81
   br label %.thread193

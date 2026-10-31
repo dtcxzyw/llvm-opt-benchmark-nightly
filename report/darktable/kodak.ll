@@ -77,7 +77,7 @@ bb.a:
   %i.j = fmul reassoc nsz arcp contract afn float %i.e, %i.e
   %i.k = insertelement <2 x double> poison, double %i.a, i64 0
   %i.l = insertelement <2 x double> %i.k, double %i.f, i64 1 ; 2 uses
-  %i.m = fptrunc <2 x double> %i.l to <2 x float>
+  %i.m = fptrunc reassoc nsz arcp contract afn <2 x double> %i.l to <2 x float>
   %i.n = fcmp reassoc nsz arcp contract afn ole <2 x double> %i.l, splat (double f0x3F50624DEFFFFFFF)
   %i.o = select <2 x i1> %i.n, <2 x float> splat (float 1.000000e+00), <2 x float> %i.m
   %i.p = insertelement <2 x float> poison, float %i.j, i64 0
@@ -179,11 +179,11 @@ bb.a:
 
 .preheader38.preheader:                           ; preds = %.preheader41.preheader
   %i.az = shufflevector <3 x i32> %i.t, <3 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 2, i32 2>
-  %i.ba = uitofp <8 x i32> %i.az to <8 x float>
+  %i.ba = uitofp nneg <8 x i32> %i.az to <8 x float>
   %i.bb = shufflevector <3 x i32> %i.l, <3 x i32> %i.o, <8 x i32> <i32 0, i32 3, i32 poison, i32 1, i32 4, i32 poison, i32 2, i32 5>
   %i.bc = insertelement <8 x i32> %i.bb, i32 %i.c, i64 2
   %i.bd = insertelement <8 x i32> %i.bc, i32 %i.f, i64 5
-  %i.be = sitofp <8 x i32> %i.bd to <8 x float>
+  %i.be = sitofp reassoc nsz arcp contract afn <8 x i32> %i.bd to <8 x float>
   %i.bf = uitofp nneg i32 %i.u to float
   %i.bg = fdiv reassoc nsz arcp contract afn <8 x float> %i.be, %i.ba
   store <8 x float> %i.bg, ptr %2, align 4, !tbaa !13

@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %.critedge218, %.cri
   store float %i.ad, ptr %i.ip, align 4, !tbaa !115
   %i.iq = getelementptr inbounds nuw i8, ptr %i.d, i64 352
   %i.ir = load <4 x float>, ptr %i.f, align 4, !tbaa !12
-  %i.is = fpext <4 x float> %i.ir to <4 x double>
+  %i.is = fpext reassoc nsz arcp contract afn <4 x float> %i.ir to <4 x double>
   store <4 x double> %i.is, ptr %i.iq, align 8, !tbaa !116
   br label %bb.ad
 
@@ -318,7 +318,7 @@ define internal fastcc void @_mul2temp(ptr nofree readonly captures(none) %.704.
 bb.a:
   %3 = alloca %struct.cmsCIEXYZ, align 8          ; 6 uses
   %i.a = load <4 x float>, ptr %0, align 4, !tbaa !12, !noalias !218 ; 5 uses
-  %i.b = fpext <4 x float> %i.a to <4 x double>
+  %i.b = fpext reassoc nsz arcp contract afn <4 x float> %i.a to <4 x double>
   %i.c = extractelement <4 x float> %i.a, i64 0
   %i.d = fcmp reassoc nsz arcp contract afn ogt float %i.c, 0.000000e+00
   %i.e = fdiv reassoc nsz arcp contract afn <4 x double> splat (double 1.000000e+00), %i.b ; 4 uses
@@ -581,7 +581,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.5.0..sroa_idx.i107 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0..sroa_idx.i111 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bs = fptrunc <2 x double> %i.bp to <2 x float> ; 3 uses
+  %i.bs = fptrunc reassoc nsz arcp contract afn <2 x double> %i.bp to <2 x float> ; 3 uses
   %i.bt = extractelement <2 x float> %i.bs, i64 0 ; 2 uses
   %i.bu = extractelement <2 x float> %i.bs, i64 1 ; 2 uses
   %i.bv = fdiv reassoc nsz arcp contract afn double 1.000000e+00, %i.bj
@@ -675,7 +675,7 @@ bb.c:                                             ; preds = %.preheader134, %.lo
   %i.em = insertelement <2 x double> poison, double %i.el, i64 0
   %i.en = insertelement <2 x double> %i.em, double %i.ej, i64 1
   %i.eo = fdiv reassoc nsz arcp contract afn <2 x double> splat (double 1.000000e+00), %i.en
-  %i.ep = fptrunc <2 x double> %i.eo to <2 x float> ; 4 uses
+  %i.ep = fptrunc reassoc nsz arcp contract afn <2 x double> %i.eo to <2 x float> ; 4 uses
   %i.eq = fdiv reassoc nsz arcp contract afn double %i.dt, %i.ci ; 2 uses
   %i.er = load <2 x double>, ptr %i.du, align 8, !tbaa !116 ; 2 uses
   %i.es = fmul reassoc nsz arcp contract afn double %i.eb, %i.eq
@@ -702,7 +702,7 @@ bb.c:                                             ; preds = %.preheader134, %.lo
   %i.fn = shufflevector <2 x double> %i.fm, <2 x double> poison, <2 x i32> zeroinitializer
   %i.fo = fmul reassoc nsz arcp contract afn <2 x double> %i.fk, %i.fn
   %i.fp = fdiv reassoc nsz arcp contract afn <2 x double> %i.bc, %i.fo
-  %i.fq = fptrunc <2 x double> %i.fp to <2 x float> ; 4 uses
+  %i.fq = fptrunc reassoc nsz arcp contract afn <2 x double> %i.fp to <2 x float> ; 4 uses
   %i.fr = extractelement <2 x float> %i.ep, i64 0
   %i.fs = shufflevector <2 x float> %i.ep, <2 x float> %i.fq, <2 x i32> <i32 1, i32 3>
   %i.ft = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.fs, <2 x float> %i.bs) ; 2 uses
@@ -778,14 +778,14 @@ bb.d:                                             ; preds = %.preheader128, %.lo
   %i.hk = load double, ptr %i.ca, align 8, !tbaa !166
   %i.hl = insertelement <2 x double> poison, double %i.he, i64 0
   %i.hm = insertelement <2 x double> %i.hl, double %i.hh, i64 1
-  %i.hn = fptrunc <2 x double> %i.hm to <2 x float> ; 4 uses
+  %i.hn = fptrunc reassoc nsz arcp contract afn <2 x double> %i.hm to <2 x float> ; 4 uses
   %i.ho = fmul reassoc nsz arcp contract afn <2 x float> %i.hn, <float f0x3FF0211F, float 5.564340e-02>
   %i.hp = fmul reassoc nsz arcp contract afn <2 x float> %i.hn, <float f0x3E50EC2A, float f0x3F7821D1>
   %i.hq = shufflevector <2 x float> %i.hp, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.hr = fsub reassoc nsz arcp contract afn <2 x float> %i.ho, %i.hq
   %i.hs = insertelement <2 x double> poison, double %i.hg, i64 0
   %i.ht = insertelement <2 x double> %i.hs, double %i.hj, i64 1
-  %i.hu = fptrunc <2 x double> %i.ht to <2 x float> ; 4 uses
+  %i.hu = fptrunc reassoc nsz arcp contract afn <2 x double> %i.ht to <2 x float> ; 4 uses
   %i.hv = shufflevector <2 x float> %i.hn, <2 x float> %i.hu, <2 x i32> <i32 1, i32 3>
   %i.hw = fmul reassoc nsz arcp contract afn <2 x float> %i.hv, splat (float f0x404F639A)
   %i.hx = shufflevector <2 x float> %i.hn, <2 x float> %i.hu, <2 x i32> <i32 0, i32 2>
@@ -797,7 +797,7 @@ bb.d:                                             ; preds = %.preheader128, %.lo
   %i.id = fsub reassoc nsz arcp contract afn <2 x float> %i.ia, %i.ic
   %i.ie = insertelement <2 x double> poison, double %i.hi, i64 0
   %i.if = insertelement <2 x double> %i.ie, double %i.hk, i64 1
-  %i.ig = fptrunc <2 x double> %i.if to <2 x float> ; 3 uses
+  %i.ig = fptrunc reassoc nsz arcp contract afn <2 x double> %i.if to <2 x float> ; 3 uses
   %i.ih = shufflevector <2 x float> %i.ig, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ii = fmul reassoc nsz arcp contract afn <2 x float> %i.ih, <float 4.155600e-02, float f0x3F875328>
   %i.ij = fadd reassoc nsz arcp contract afn <2 x float> %i.hr, %i.ii ; 4 uses
@@ -1146,15 +1146,15 @@ bb.d:                                             ; preds = %bb.c
   %i.bb = shufflevector <4 x double> %i.aw, <4 x double> poison, <2 x i32> <i32 1, i32 3>
   %i.bc = tail call reassoc nsz arcp contract afn <2 x double> @llvm.maxnum.v2f64(<2 x double> %i.bb, <2 x double> %i.aq)
   %i.bd = tail call reassoc nsz arcp contract afn <2 x double> @llvm.maxnum.v2f64(<2 x double> %i.bc, <2 x double> %i.ba)
-  %i.be = fptrunc <2 x double> %i.bd to <2 x float>
-  %i.bf = fpext <2 x float> %i.be to <2 x double> ; 2 uses
+  %i.be = fptrunc reassoc nsz arcp contract afn <2 x double> %i.bd to <2 x float>
+  %i.bf = fpext reassoc nsz arcp contract afn <2 x float> %i.be to <2 x double> ; 2 uses
   %i.bg = shufflevector <2 x double> %i.bf, <2 x double> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.bh = fdiv reassoc nsz arcp contract afn <4 x double> %i.aw, %i.bg
   %i.bi = shufflevector <2 x double> %i.aq, <2 x double> %i.ba, <2 x i32> <i32 1, i32 3>
   %i.bj = shufflevector <2 x double> %i.bf, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bk = fdiv reassoc nsz arcp contract afn <2 x double> %i.bi, %i.bj
-  %i.bl = fptrunc <4 x double> %i.bh to <4 x float>
-  %i.bm = fptrunc <2 x double> %i.bk to <2 x float> ; 2 uses
+  %i.bl = fptrunc reassoc nsz arcp contract afn <4 x double> %i.bh to <4 x float>
+  %i.bm = fptrunc reassoc nsz arcp contract afn <2 x double> %i.bk to <2 x float> ; 2 uses
   %i.bn = extractelement <2 x float> %i.bm, i64 0
   %i.bo = extractelement <2 x float> %i.bm, i64 1
   br label %bb.e
@@ -1261,7 +1261,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.c, ptr noundef nonnull align 16 dereferenceable(32) @__const.reload_defaults.as_shot, i64 32, i1 false)
   %i.am = load <4 x float>, ptr %i.h, align 4, !tbaa !12
-  %i.an = fpext <4 x float> %i.am to <4 x double> ; 2 uses
+  %i.an = fpext reassoc nsz arcp contract afn <4 x float> %i.am to <4 x double> ; 2 uses
   %i.ao = load ptr, ptr %i.q, align 8, !tbaa !47
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 112
   %i.aq = tail call i32 @dt_image_is_matrix_correction_supported(ptr noundef nonnull %i.ap) #21
@@ -1488,7 +1488,7 @@ _calculate_bogus_daylight_wb.exit139:             ; preds = %bb.x
   %i.ei = fptrunc reassoc nsz arcp contract afn double %i.cn to float
   store float %i.ei, ptr %i.h, align 4, !tbaa !12
   store float 1.000000e+00, ptr %i.n, align 4, !tbaa !12
-  %i.ej = fptrunc <2 x double> %i.co to <2 x float>
+  %i.ej = fptrunc reassoc nsz arcp contract afn <2 x double> %i.co to <2 x float>
   store <2 x float> %i.ej, ptr %i.o, align 4, !tbaa !12
   store i32 4, ptr %i.dd, align 4, !tbaa !86
   store i32 4, ptr %i.m, align 4, !tbaa !86
@@ -1511,7 +1511,7 @@ bb.y:                                             ; preds = %.critedge148, %bb.v
   %i.er = insertelement <2 x double> poison, double %i.em, i64 0
   %i.es = shufflevector <2 x double> %i.er, <2 x double> poison, <2 x i32> zeroinitializer
   %i.et = fdiv reassoc nsz arcp contract afn <2 x double> %i.eq, %i.es
-  %i.eu = fptrunc <2 x double> %i.et to <2 x float>
+  %i.eu = fptrunc reassoc nsz arcp contract afn <2 x double> %i.et to <2 x float>
   store <2 x float> %i.eu, ptr %i.o, align 4, !tbaa !12
   store float 1.000000e+00, ptr %i.n, align 4, !tbaa !12
   br label %bb.z
@@ -1551,7 +1551,7 @@ bb.ab:                                            ; preds = %bb.aa
   call void @dt_bauhaus_slider_set_default(ptr noundef %i.fl, float noundef %i.fm) #21
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ew, i64 352
   %i.fo = load <4 x float>, ptr %i.h, align 4, !tbaa !12
-  %i.fp = fpext <4 x float> %i.fo to <4 x double>
+  %i.fp = fpext reassoc nsz arcp contract afn <4 x float> %i.fo to <4 x double>
   store <4 x double> %i.fp, ptr %i.fn, align 8, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #21
@@ -1881,12 +1881,12 @@ bb.b:                                             ; preds = %bb.e, %bb.d
 
 .preheader:                                       ; preds = %bb.b
   %i.i = load <2 x float>, ptr %i.f, align 4, !tbaa !12
-  %i.j = fpext <2 x float> %i.i to <2 x double>
+  %i.j = fpext reassoc nsz arcp contract afn <2 x float> %i.i to <2 x double>
   store <2 x double> %i.j, ptr %1, align 8, !tbaa !116
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 1896
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.m = load <2 x float>, ptr %i.k, align 4, !tbaa !12
-  %i.n = fpext <2 x float> %i.m to <2 x double>   ; 2 uses
+  %i.n = fpext reassoc nsz arcp contract afn <2 x float> %i.m to <2 x double> ; 2 uses
   %i.o = extractelement <2 x double> %i.n, i64 0
   store double %i.o, ptr %i.l, align 8, !tbaa !116
   %i.p = extractelement <2 x double> %i.n, i64 1
@@ -2172,7 +2172,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !88   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 352
   %i.f = load <4 x float>, ptr %i.d, align 4, !tbaa !12
-  %i.g = fpext <4 x float> %i.f to <4 x double>
+  %i.g = fpext reassoc nsz arcp contract afn <4 x float> %i.f to <4 x double>
   store <4 x double> %i.g, ptr %i.e, align 8, !tbaa !116
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 384
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 388
@@ -2575,7 +2575,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 2448
   %i.am = load <4 x double>, ptr %i.al, align 16, !tbaa !116
-  %i.an = fptrunc <4 x double> %i.am to <4 x float>
+  %i.an = fptrunc reassoc nsz arcp contract afn <4 x double> %i.am to <4 x float>
   store <4 x float> %i.an, ptr %i.j, align 4, !tbaa !12
   br label %.critedge2.thread
 
@@ -2596,21 +2596,21 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.d
   %i.as = getelementptr inbounds nuw i8, ptr %i.h, i64 352
   %i.at = load <4 x double>, ptr %i.as, align 8, !tbaa !116
-  %i.au = fptrunc <4 x double> %i.at to <4 x float>
+  %i.au = fptrunc reassoc nsz arcp contract afn <4 x double> %i.at to <4 x float>
   store <4 x float> %i.au, ptr %i.j, align 4, !tbaa !12
   br label %.critedge2.thread
 
 bb.i:                                             ; preds = %bb.d
   %i.av = getelementptr inbounds nuw i8, ptr %i.ai, i64 2416
   %i.aw = load <4 x double>, ptr %i.av, align 16, !tbaa !116
-  %i.ax = fptrunc <4 x double> %i.aw to <4 x float>
+  %i.ax = fptrunc reassoc nsz arcp contract afn <4 x double> %i.aw to <4 x float>
   store <4 x float> %i.ax, ptr %i.j, align 4, !tbaa !12
   br label %.critedge2.thread
 
 bb.j:                                             ; preds = %bb.d
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ai, i64 2448
   %i.az = load <4 x double>, ptr %i.ay, align 16, !tbaa !116
-  %i.ba = fptrunc <4 x double> %i.az to <4 x float>
+  %i.ba = fptrunc reassoc nsz arcp contract afn <4 x double> %i.az to <4 x float>
   store <4 x float> %i.ba, ptr %i.j, align 4, !tbaa !12
   br label %.critedge2.thread
 
@@ -2671,7 +2671,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ce = tail call ptr @dt_wb_preset(i32 noundef %.0110147) #21
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 32
   %i.cg = load <4 x double>, ptr %i.cf, align 8, !tbaa !116
-  %i.ch = fptrunc <4 x double> %i.cg to <4 x float>
+  %i.ch = fptrunc reassoc nsz arcp contract afn <4 x double> %i.cg to <4 x float>
   store <4 x float> %i.ch, ptr %i.j, align 4, !tbaa !12
   br label %bb.v
 
@@ -2755,7 +2755,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   call void @dt_wb_preset_interpolate(ptr noundef %i.du, ptr noundef %i.dv, ptr noundef nonnull %2) #21
   %i.dw = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.dx = load <4 x double>, ptr %i.dw, align 8, !tbaa !116
-  %i.dy = fptrunc <4 x double> %i.dx to <4 x float>
+  %i.dy = fptrunc reassoc nsz arcp contract afn <4 x double> %i.dx to <4 x float>
   store <4 x float> %i.dy, ptr %i.j, align 4, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br label %bb.v
