@@ -203,9 +203,9 @@ bb.o:                                             ; preds = %bb.n
 .lr.ph248.preheader:                              ; preds = %._crit_edge, %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m
   %.ph = phi i32 [ %i.am, %bb.m ], [ %i.am, %bb.l ], [ %i.am, %bb.k ], [ %i.am, %bb.j ], [ %i.am, %bb.i ], [ %i.am, %bb.h ], [ %i.am, %bb.g ], [ %i.am, %bb.f ], [ %i.am, %bb.e ], [ %i.am, %bb.d ], [ %i.am, %bb.c ], [ %i.am, %bb.b ], [ %i.am, %bb.a ], [ %i.al, %._crit_edge ]
   %.ph320 = phi i16 [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.a ], [ %.pre, %._crit_edge ] ; 2 uses
-  %.0196245.lcssa.ph = phi i32 [ 2, %bb.m ], [ 3, %bb.l ], [ 4, %bb.k ], [ 5, %bb.j ], [ 6, %bb.i ], [ 7, %bb.h ], [ 8, %bb.g ], [ 9, %bb.f ], [ 10, %bb.e ], [ 11, %bb.d ], [ 12, %bb.c ], [ 13, %bb.b ], [ 14, %bb.a ], [ 15, %._crit_edge ] ; 6 uses
-  %spec.select322 = tail call i32 @llvm.umin.i32(i32 %.ph, i32 %.0196245.lcssa.ph)
-  %wide.trip.count282 = zext nneg i32 %.0196245.lcssa.ph to i64
+  %.0196245.lcssa.wide.ph = phi i64 [ 2, %bb.m ], [ 3, %bb.l ], [ 4, %bb.k ], [ 5, %bb.j ], [ 6, %bb.i ], [ 7, %bb.h ], [ 8, %bb.g ], [ 9, %bb.f ], [ 10, %bb.e ], [ 11, %bb.d ], [ 12, %bb.c ], [ 13, %bb.b ], [ 14, %bb.a ], [ 15, %._crit_edge ] ; 2 uses
+  %6 = trunc nuw nsw i64 %.0196245.lcssa.wide.ph to i32 ; 5 uses
+  %spec.select327 = tail call i32 @llvm.umin.i32(i32 %.ph, i32 %6)
   br label %.lr.ph248
 
 .lr.ph248:                                        ; preds = %.lr.ph248.preheader, %bb.p
@@ -217,20 +217,20 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %.lr.ph248
   %indvars.iv.next280 = add nuw nsw i64 %indvars.iv279, 1 ; 2 uses
-  %exitcond283.not = icmp eq i64 %indvars.iv.next280, %wide.trip.count282
+  %exitcond283.not = icmp eq i64 %indvars.iv.next280, %.0196245.lcssa.wide.ph
   br i1 %exitcond283.not, label %._crit_edge249, label %.lr.ph248, !llvm.loop !11
 
 ._crit_edge249.loopexit.split.loop.exit:          ; preds = %.lr.ph248
   %i.bv = trunc nuw nsw i64 %indvars.iv279 to i32 ; 2 uses
-  %i.bw = tail call i32 @llvm.umax.i32(i32 %spec.select322, i32 %i.bv)
+  %i.bw = tail call i32 @llvm.umax.i32(i32 %spec.select327, i32 %i.bv)
   br label %._crit_edge249
 
 ._crit_edge249:                                   ; preds = %bb.p, %bb.n, %._crit_edge249.loopexit.split.loop.exit
-  %spec.select325 = phi i32 [ 1, %bb.n ], [ %i.bw, %._crit_edge249.loopexit.split.loop.exit ], [ %.0196245.lcssa.ph, %bb.p ] ; 8 uses
-  %.0196245.lcssa323 = phi i32 [ 1, %bb.n ], [ %.0196245.lcssa.ph, %._crit_edge249.loopexit.split.loop.exit ], [ %.0196245.lcssa.ph, %bb.p ] ; 4 uses
+  %spec.select325 = phi i32 [ 1, %bb.n ], [ %i.bw, %._crit_edge249.loopexit.split.loop.exit ], [ %6, %bb.p ] ; 8 uses
+  %.0196245.lcssa323 = phi i32 [ 1, %bb.n ], [ %6, %._crit_edge249.loopexit.split.loop.exit ], [ %6, %bb.p ] ; 4 uses
   %i.bx = phi i1 [ false, %bb.n ], [ true, %._crit_edge249.loopexit.split.loop.exit ], [ true, %bb.p ]
   %i.by = phi i16 [ 0, %bb.n ], [ %.ph320, %._crit_edge249.loopexit.split.loop.exit ], [ %.ph320, %bb.p ]
-  %.0197.lcssa = phi i32 [ 1, %bb.n ], [ %i.bv, %._crit_edge249.loopexit.split.loop.exit ], [ %.0196245.lcssa.ph, %bb.p ]
+  %.0197.lcssa = phi i32 [ 1, %bb.n ], [ %i.bv, %._crit_edge249.loopexit.split.loop.exit ], [ %6, %bb.p ]
   %i.bz = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.ca = load i16, ptr %i.bz, align 2, !tbaa !17 ; 4 uses
   %i.cb = icmp ugt i16 %i.ca, 2

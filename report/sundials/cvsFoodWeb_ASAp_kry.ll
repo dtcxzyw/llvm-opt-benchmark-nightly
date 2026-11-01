@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   br i1 %min.iters.check267, label %.lr.ph.i.preheader283, label %vector.memcheck268
 
 vector.memcheck268:                               ; preds = %.lr.ph.i.preheader
-  %i.cy = mul i64 %indvars.iv93, %i.af
+  %i.cy = mul nuw nsw i64 %indvars.iv93, %i.af
   %op.rdx281.reass = add i64 %i.cy, %invariant.op
   %diff.check = icmp ult i64 %op.rdx281.reass, 31
   br i1 %diff.check, label %.lr.ph.i.preheader283, label %vector.ph269

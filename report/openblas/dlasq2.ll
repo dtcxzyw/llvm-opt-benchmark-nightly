@@ -203,7 +203,7 @@ bb.bx:                                            ; preds = %.lr.ph726
   store double %.sink, ptr %i.yb, align 8, !tbaa !35
   %indvars.iv.next786 = add nuw nsw i64 %indvars.iv785, 1 ; 4 uses
   %i.yc = trunc nuw nsw i64 %indvars.iv.next786 to i32
-  %i.yd = shl i32 %i.yc, 2
+  %i.yd = shl nuw i32 %i.yc, 2
   %i.ye = sext i32 %i.yd to i64
   %i.yf = getelementptr [8 x i8], ptr %i.u, i64 %i.ye ; 2 uses
   %i.yg = getelementptr i8, ptr %i.yf, i64 -24
