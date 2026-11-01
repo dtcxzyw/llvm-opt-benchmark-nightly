@@ -205,7 +205,7 @@ bb.a:
   %.054.lcssa = phi float [ 0.000000e+00, %._crit_edge ], [ %i.ca, %.lr.ph89 ] ; 4 uses
   %i.at = phi <4 x float> [ zeroinitializer, %._crit_edge ], [ %i.cf, %.lr.ph89 ] ; 10 uses
   %i.au = phi <2 x float> [ zeroinitializer, %._crit_edge ], [ %i.cd, %.lr.ph89 ] ; 2 uses
-  %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %i.av = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.aw = extractelement <4 x float> %i.at, i64 0 ; 2 uses
   %i.ax = fmul float %i.aw, %.054.lcssa
   %i.ay = extractelement <4 x float> %i.at, i64 3 ; 4 uses
@@ -225,7 +225,7 @@ bb.a:
   %i.bm = tail call float @llvm.fmuladd.f32(float %i.bl, float %i.ay, float %i.bk)
   %i.bn = fneg <4 x float> %i.at
   %i.bo = shufflevector <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float poison>, <4 x float> %i.bn, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
-  %i.bp = fmul <4 x float> %i.av, %i.bo           ; 2 uses
+  %i.bp = fmul <4 x float> %i.av, %i.bo           ; 3 uses
   %i.bq = extractelement <4 x float> %i.bp, i64 3
   %i.br = tail call noundef float @llvm.fmuladd.f32(float %i.bq, float %i.bg, float %i.bm) ; 2 uses
   %i.bs = fcmp oeq float %i.br, 0.000000e+00
@@ -277,7 +277,7 @@ _ZN12aiMatrix3x3tIfE7InverseEv.exit:              ; preds = %._crit_edge90
   %i.cv = shufflevector <4 x float> %i.ct, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.cw = fmul <4 x float> %i.cu, %i.cv
   store <4 x float> %i.cw, ptr %3, align 16
-  %i.cx = shufflevector <4 x float> %i.av, <4 x float> %i.at, <4 x i32> <i32 1, i32 1, i32 4, i32 6>
+  %i.cx = shufflevector <4 x float> %i.bp, <4 x float> %i.at, <4 x i32> <i32 1, i32 1, i32 4, i32 6>
   %i.cy = insertelement <4 x float> poison, float %i.cj, i64 0
   %i.cz = insertelement <4 x float> %i.cy, float %i.bi, i64 1
   %i.da = shufflevector <4 x float> %i.cz, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0>

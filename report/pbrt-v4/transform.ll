@@ -204,7 +204,7 @@ _ZN4pbrt5SlerpEfNS_10QuaternionES0_.exit:         ; preds = %_ZN4pbrt9SinXOverXE
   %i.fd = shufflevector <4 x float> %i.ey, <4 x float> poison, <2 x i32> <i32 poison, i32 1>
   %i.fe = insertelement <2 x float> %i.fd, float %i.en, i64 0
   %i.ff = fadd <2 x float> %i.el, %i.fe
-  %9 = shufflevector <4 x float> %i.fc, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
+  %9 = shufflevector <4 x float> %i.fc, <4 x float> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.fg = shufflevector <2 x float> %i.ff, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.fh = shufflevector <4 x float> %i.fc, <4 x float> %i.fg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
   %i.fi = shufflevector <8 x float> %i.fh, <8 x float> <float poison, float poison, float poison, float 1.000000e+00, float poison, float poison, float poison, float 1.000000e+00>, <8 x i32> <i32 0, i32 1, i32 4, i32 11, i32 5, i32 2, i32 3, i32 15>
@@ -215,7 +215,7 @@ _ZN4pbrt5SlerpEfNS_10QuaternionES0_.exit:         ; preds = %_ZN4pbrt9SinXOverXE
   %i.fm = fsub float %i.fl, %i.en
   %i.fn = fmul float %i.fm, 2.000000e+00          ; 2 uses
   store float %i.fn, ptr %i.dk, align 4, !tbaa !11
-  %10 = shufflevector <8 x float> %i.fj, <8 x float> %9, <2 x i32> <i32 1, i32 10>
+  %10 = shufflevector <8 x float> %i.fj, <8 x float> poison, <2 x i32> <i32 1, i32 5>
   store <2 x float> %10, ptr %i.dl, align 4, !tbaa !11
   %i.fo = fadd float %i.em, %i.eq
   %i.fp = fmul float %i.fo, 2.000000e+00          ; 2 uses
