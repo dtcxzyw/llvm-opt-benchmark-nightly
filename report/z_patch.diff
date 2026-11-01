@@ -1,0 +1,33 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index e64b2411ee775..faa91becc90b0 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -8501,6 +8501,28 @@ ScalarEvolution::getBackedgeTakenInfo(const Loop *L) {
+   if (!Pair.second)
+     return Pair.first->second;
+ 
++  // Proving a guard may need the backedge-taken count of a loop exited on the
++  // path to the guarded block, whose own guards need those of earlier loops.
++  // When asked from such a proof, compute the earlier loops first, starting
++  // from the furthest, to avoid recursing through all of them.
++  if (!PendingLoopPredicates.empty()) {
++    SmallVector<const Loop *> Preceding;
++    for (const BasicBlock *PredBB =
++             getPredecessorWithUniqueSuccessorForBB(L->getHeader()).first;
++         PredBB;
++         PredBB = getPredecessorWithUniqueSuccessorForBB(PredBB).first) {
++      const Loop *PredL = LI.getLoopFor(PredBB);
++      if (!PredL || PredL->contains(L) ||
++          (!Preceding.empty() && Preceding.back() == PredL))
++        continue;
++      if (BackedgeTakenCounts.contains(PredL))
++        break;
++      Preceding.push_back(PredL);
++    }
++    for (const Loop *PredL : reverse(Preceding))
++      getBackedgeTakenInfo(PredL);
++  }
++
+   // computeBackedgeTakenCount may allocate memory for its result. Inserting it
+   // into the BackedgeTakenCounts map transfers ownership. Otherwise, the result
+   // must be cleared in this scope.
