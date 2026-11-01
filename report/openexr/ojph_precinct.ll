@@ -205,18 +205,17 @@ _ZN4ojph5local8tag_tree4initEPhPjjNS_4sizeEi.exit276: ; preds = %bb.ai, %_ZN4ojp
   br i1 %exitcond556.not, label %._crit_edge525.split, label %.preheader480.lr.ph, !llvm.loop !136
 
 bb.aj:                                            ; preds = %.preheader480, %.thread443
-  %indvars.iv = phi i64 [ %wide.trip.count40.i, %.preheader480 ], [ %indvars.iv.next, %.thread443 ] ; 2 uses
-  %12 = trunc nuw i64 %indvars.iv to i32
-  %13 = add nsw i32 %12, -1                       ; 7 uses
-  %i.mx = lshr i32 %.0208522, %13                 ; 2 uses
-  %i.my = lshr i32 %.0210524, %13                 ; 2 uses
-  %14 = zext i32 %13 to i64                       ; 2 uses
-  %i.mz = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %14
+  %indvars.iv = phi i64 [ %wide.trip.count40.i, %.preheader480 ], [ %indvars.iv.next, %.thread443 ]
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 5 uses
+  %12 = trunc nuw i64 %indvars.iv.next to i32     ; 5 uses
+  %i.mx = lshr i32 %.0208522, %12                 ; 2 uses
+  %i.my = lshr i32 %.0210524, %12                 ; 2 uses
+  %i.mz = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv.next
   %i.na = load ptr, ptr %i.mz, align 8, !tbaa !36
-  %notmask.i278 = shl nsw i32 -1, %13
+  %notmask.i278 = shl nsw i32 -1, %12
   %i.nb = xor i32 %notmask.i278, -1               ; 2 uses
   %i.nc = add i32 %i.ee, %i.nb
-  %i.nd = lshr i32 %i.nc, %13
+  %i.nd = lshr i32 %i.nc, %12
   %i.ne = mul i32 %i.nd, %i.my
   %i.nf = add i32 %i.ne, %i.mx
   %i.ng = zext i32 %i.nf to i64
@@ -226,10 +225,10 @@ bb.aj:                                            ; preds = %.preheader480, %.th
   br i1 %i.nj, label %.thread447, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.nk = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %14
+  %i.nk = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %indvars.iv.next
   %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !36
   %i.nm = add i32 %i.gi, %i.nb
-  %i.nn = lshr i32 %i.nm, %13
+  %i.nn = lshr i32 %i.nm, %12
   %i.no = mul i32 %i.nn, %i.my
   %i.np = add i32 %i.no, %i.mx
   %i.nq = zext i32 %i.np to i64
@@ -313,8 +312,7 @@ bb.ar:                                            ; preds = %bb.ap, %._ZN4ojph5l
   br i1 %i.oq, label %.thread443, label %.thread447
 
 .thread443:                                       ; preds = %bb.ak, %bb.ar
-  %.not218 = icmp eq i32 %13, 0
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not218 = icmp eq i64 %indvars.iv.next, 0
   br i1 %.not218, label %.preheader479, label %bb.aj, !llvm.loop !137
 
 bb.as:                                            ; preds = %bb.ba

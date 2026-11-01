@@ -201,8 +201,8 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.cn = phi ptr [ %i.cj, %bb.aq ], [ %i.cl, %bb.ar ]
   %i.co = load double, ptr %i.cn, align 8
   %i.cp = zext nneg i8 %spec.store.select15 to i32
-  %i.cq = call i32 @__dtoa_engine(double noundef %i.co, ptr noundef nonnull %3, i32 noundef %i.cp, i32 noundef %.0421) #11 ; 2 uses
-  %i.cr = trunc i32 %i.cq to i8                   ; 3 uses
+  %i.cq = call i32 @__dtoa_engine(double noundef %i.co, ptr noundef nonnull %3, i32 noundef %i.cp, i32 noundef %.0421) #11 ; 3 uses
+  %i.cr = trunc i32 %i.cq to i8                   ; 2 uses
   %i.cs = load i32, ptr %3, align 4               ; 11 uses
   %i.ct = load i8, ptr %i.g, align 4              ; 2 uses
   %i.cu = and i8 %i.ct, 1
@@ -297,24 +297,33 @@ bb.ba:                                            ; preds = %bb.av
 bb.bb:                                            ; preds = %bb.ba
   %i.dx = and i32 %i.cq, 255
   %.not57095 = icmp eq i8 %i.cr, 0
-  br i1 %.not57095, label %.critedge, label %.lr.ph97
+  br i1 %.not57095, label %.critedge, label %.lr.ph97.preheader
 
-.lr.ph97:                                         ; preds = %bb.bb, %bb.bc
-  %.296 = phi i8 [ %5, %bb.bc ], [ %i.cr, %bb.bb ] ; 3 uses
-  %4 = zext i8 %.296 to i64
-  %i.dy = getelementptr i8, ptr %3, i64 %4
+.lr.ph97.preheader:                               ; preds = %bb.bb
+  %.mask = and i32 %i.cq, 255
+  %4 = zext nneg i32 %.mask to i64
+  br label %.lr.ph97
+
+.lr.ph97:                                         ; preds = %.lr.ph97.preheader, %bb.bc
+  %indvars.iv166 = phi i64 [ %4, %.lr.ph97.preheader ], [ %indvars.iv.next167, %bb.bc ] ; 3 uses
+  %i.dy = getelementptr i8, ptr %3, i64 %indvars.iv166
   %i.dz = getelementptr i8, ptr %i.dy, i64 4
   %i.ea = load i8, ptr %i.dz, align 1
   %i.eb = icmp eq i8 %i.ea, 48
-  br i1 %i.eb, label %bb.bc, label %.critedge
+  br i1 %i.eb, label %bb.bc, label %.critedge.loopexit.split.loop.exit267
 
 bb.bc:                                            ; preds = %.lr.ph97
-  %5 = add i8 %.296, -1                           ; 2 uses
-  %.not570 = icmp eq i8 %5, 0
+  %indvars.iv.next167 = add nsw i64 %indvars.iv166, -1 ; 2 uses
+  %5 = and i64 %indvars.iv.next167, 255
+  %.not570 = icmp eq i64 %5, 0
   br i1 %.not570, label %.critedge, label %.lr.ph97, !llvm.loop !10
 
-.critedge:                                        ; preds = %.lr.ph97, %bb.bc, %bb.bb
-  %.2.lcssa94 = phi i8 [ 0, %bb.bb ], [ 0, %bb.bc ], [ %.296, %.lr.ph97 ] ; 4 uses
+.critedge.loopexit.split.loop.exit267:            ; preds = %.lr.ph97
+  %6 = trunc nuw i64 %indvars.iv166 to i8
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.bc, %.critedge.loopexit.split.loop.exit267, %bb.bb
+  %.2.lcssa94 = phi i8 [ 0, %bb.bb ], [ %6, %.critedge.loopexit.split.loop.exit267 ], [ 0, %bb.bc ] ; 4 uses
   %i.ec = zext i8 %.2.lcssa94 to i32              ; 3 uses
   %i.ed = icmp sgt i32 %i.cs, -5
   %i.ee = icmp slt i32 %i.cs, %i.dx
