@@ -1,0 +1,47 @@
+ncnn/convolution_x86_fma.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution_x86_fma.bc?download=true
+ncnn/convolution_x86_avx.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution_x86_avx.bc?download=true
+ncnn/deconvolution_x86_fma.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/deconvolution_x86_fma.bc?download=true
+ncnn/deconvolution_x86_avx.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/deconvolution_x86_avx.bc?download=true
+ncnn/deformableconv2d_x86_fma.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/deformableconv2d_x86_fma.bc?download=true
+ncnn/deformableconv2d_x86_avx.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/deformableconv2d_x86_avx.bc?download=true
+
+Reproduce first opt error with backtrace: ncnn/convolution_x86_fma.bc: failed to run opt
+Command: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/ncnn/original/convolution_x86_fma.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/ncnn-s-convolution_x86_fma.bc
+Exit code: -6
+Stderr:
+opt: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-project/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp:2565: void llvm::SCEVExpanderCleaner::cleanup(): Assertion `all_of(I->users(), [&InsertedSet](Value *U) { return InsertedSet.contains(cast<Instruction>(U)); }) && "removed instruction should only be used by instructions inserted " "during expansion"' failed.
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and instructions to reproduce the bug.
+Stack dump:
+0.	Program arguments: /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt -O3 /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/ncnn/original/convolution_x86_fma.bc --stats --stats-json -o /opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/opt-out/ncnn-s-convolution_x86_fma.bc
+1.	Running pass "function<eager-inv>(drop-unnecessary-assumes,float2int,lower-constant-intrinsics,chr,loop(loop-rotate<header-duplication;no-prepare-for-lto;check-exit-count>,loop-deletion,loop-interchange),loop-distribute,inject-tli-mappings,loop-vectorize<no-interleave-forced-only;no-vectorize-forced-only;>,drop-unnecessary-assumes<drop-deref>,infer-alignment,loop-load-elim,instcombine<max-iterations=1;no-verify-fixpoint>,simplifycfg<bonus-inst-threshold=1;forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;switch-to-lookup;no-keep-loops;hoist-common-insts;no-hoist-loads-stores-with-cond-faulting;sink-common-insts;speculate-blocks;simplify-cond-branch;no-speculate-unpredictables>,slp-vectorizer,vector-combine,instcombine<max-iterations=1;no-verify-fixpoint>,loop-unroll<O3>,transform-warning,sroa<preserve-cfg;aggregate-to-vector>,infer-alignment,instcombine<max-iterations=1;no-verify-fixpoint>,loop-mssa(licm<allowspeculation>),alignment-from-assumptions,loop-sink,instsimplify,div-rem-pairs,mergeicmps,expand-memcmp,tailcallelim,simplifycfg<bonus-inst-threshold=1;no-forward-switch-cond;switch-range-to-icmp;switch-to-arithmetic;no-switch-to-lookup;keep-loops;no-hoist-common-insts;hoist-loads-stores-with-cond-faulting;no-sink-common-insts;speculate-blocks;simplify-cond-branch;speculate-unpredictables>)" on module "/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/data/ncnn/original/convolution_x86_fma.bc"
+2.	Running pass "loop-vectorize<no-interleave-forced-only;no-vectorize-forced-only;>" on function "_ZN4ncnn19Convolution_x86_fma15create_pipelineERKNS_6OptionE"
+ #0 0x00005555559508bb llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3fc8bb)
+ #1 0x000055555594d691 llvm::sys::RunSignalHandlers() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3f9691)
+ #2 0x000055555595161b SignalHandler(int, siginfo_t*, void*) Signals.cpp:0:0
+ #3 0x00007ffff7a3a330 (/lib/x86_64-linux-gnu/libc.so.6+0x45330)
+ #4 0x00007ffff7a93c0c pthread_kill (/lib/x86_64-linux-gnu/libc.so.6+0x9ec0c)
+ #5 0x00007ffff7a3a27e raise (/lib/x86_64-linux-gnu/libc.so.6+0x4527e)
+ #6 0x00007ffff7a1d8ff abort (/lib/x86_64-linux-gnu/libc.so.6+0x288ff)
+ #7 0x00007ffff7a1d81b (/lib/x86_64-linux-gnu/libc.so.6+0x2881b)
+ #8 0x00007ffff7a30517 (/lib/x86_64-linux-gnu/libc.so.6+0x3b517)
+ #9 0x000055555790d7bc llvm::SCEVExpanderCleaner::cleanup() (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x23b97bc)
+#10 0x000055555649cc5a (anonymous namespace)::GeneratedRTChecks::~GeneratedRTChecks() LoopVectorize.cpp:0:0
+#11 0x0000555556494e08 llvm::LoopVectorizePass::processLoop(llvm::Loop*) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0xf40e08)
+#12 0x000055555649d20b llvm::LoopVectorizePass::runImpl(llvm::Function&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0xf4920b)
+#13 0x000055555649e078 llvm::LoopVectorizePass::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0xf4a078)
+#14 0x000055555829ac93 llvm::PassManager<llvm::Function, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d46c93)
+#15 0x000055555829e25d llvm::ModuleToFunctionPassAdaptor::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d4a25d)
+#16 0x0000555558299fed llvm::PassManager<llvm::Module, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x2d45fed)
+#17 0x0000555555a00428 llvm::runPassPipeline(llvm::StringRef, llvm::Module&, llvm::TargetMachine*, llvm::TargetLibraryInfoImpl*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::ToolOutputFile*, llvm::StringRef, llvm::ArrayRef<llvm::PassPluginLibraryInfo>, llvm::ArrayRef<std::function<void (llvm::PassBuilder&)>>, llvm::opt_tool::OutputKind, llvm::opt_tool::VerifierKind, bool, bool, bool, bool, bool, bool, bool, bool) (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4ac428)
+#18 0x00005555559f7104 optMain (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x4a3104)
+#19 0x0000555555936a23 main (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3e2a23)
+#20 0x00007ffff7a1f1ca (/lib/x86_64-linux-gnu/libc.so.6+0x2a1ca)
+#21 0x00007ffff7a1f28b __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28b)
+#22 0x0000555555936915 _start (/opt-bench/work/_work/llvm-opt-benchmark-nightly/llvm-opt-benchmark-nightly/work/llvm-build/bin/opt+0x3e2915)
+
