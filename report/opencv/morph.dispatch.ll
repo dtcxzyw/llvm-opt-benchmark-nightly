@@ -205,7 +205,7 @@ iter.check271:                                    ; preds = %.preheader.preheade
 
 vector.memcheck258:                               ; preds = %iter.check271
   %i.gb = ptrtoaddr ptr %i.ga to i64
-  %i.gc = mul i64 %indvar254, %i.eq
+  %i.gc = mul nsw i64 %indvar254, %i.eq
   %i.gd = add i64 %i.gc, %.065.lcssa256
   %i.ge = sub i64 %i.gb, %i.gd
   %diff.check259 = icmp ugt i64 %i.ge, -32
@@ -608,7 +608,7 @@ iter.check271:                                    ; preds = %.preheader.preheade
 
 vector.memcheck258:                               ; preds = %iter.check271
   %i.gb = ptrtoaddr ptr %i.ga to i64
-  %i.gc = mul i64 %indvar254, %i.eq
+  %i.gc = mul nsw i64 %indvar254, %i.eq
   %i.gd = add i64 %i.gc, %.065.lcssa256
   %i.ge = sub i64 %i.gb, %i.gd
   %diff.check259 = icmp ugt i64 %i.ge, -32
@@ -1011,7 +1011,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 vector.memcheck251:                               ; preds = %.preheader
   %i.el = ptrtoaddr ptr %i.ek to i64
-  %i.em = mul i64 %indvar246, %i.dj
+  %i.em = mul nsw i64 %indvar246, %i.dj
   %i.en = add i64 %i.em, %.065.lcssa248
   %i.eo = sub i64 %i.el, %i.en
   %diff.check252 = icmp ugt i64 %i.eo, -32
@@ -1414,7 +1414,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 vector.memcheck251:                               ; preds = %.preheader
   %i.el = ptrtoaddr ptr %i.ek to i64
-  %i.em = mul i64 %indvar246, %i.dj
+  %i.em = mul nsw i64 %indvar246, %i.dj
   %i.en = add i64 %i.em, %.065.lcssa248
   %i.eo = sub i64 %i.el, %i.en
   %diff.check252 = icmp ugt i64 %i.eo, -32
@@ -1817,7 +1817,7 @@ iter.check271:                                    ; preds = %.preheader.preheade
 
 vector.memcheck258:                               ; preds = %iter.check271
   %i.gb = ptrtoaddr ptr %i.ga to i64
-  %i.gc = mul i64 %indvar254, %i.eq
+  %i.gc = mul nsw i64 %indvar254, %i.eq
   %i.gd = add i64 %i.gc, %.065.lcssa256
   %i.ge = sub i64 %i.gb, %i.gd
   %diff.check259 = icmp ugt i64 %i.ge, -32
@@ -2220,7 +2220,7 @@ iter.check271:                                    ; preds = %.preheader.preheade
 
 vector.memcheck258:                               ; preds = %iter.check271
   %i.gb = ptrtoaddr ptr %i.ga to i64
-  %i.gc = mul i64 %indvar254, %i.eq
+  %i.gc = mul nsw i64 %indvar254, %i.eq
   %i.gd = add i64 %i.gc, %.065.lcssa256
   %i.ge = sub i64 %i.gb, %i.gd
   %diff.check259 = icmp ugt i64 %i.ge, -32
@@ -2623,7 +2623,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 vector.memcheck251:                               ; preds = %.preheader
   %i.el = ptrtoaddr ptr %i.ek to i64
-  %i.em = mul i64 %indvar246, %i.dj
+  %i.em = mul nsw i64 %indvar246, %i.dj
   %i.en = add i64 %i.em, %.065.lcssa248
   %i.eo = sub i64 %i.el, %i.en
   %diff.check252 = icmp ugt i64 %i.eo, -32
@@ -3026,7 +3026,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 vector.memcheck251:                               ; preds = %.preheader
   %i.el = ptrtoaddr ptr %i.ek to i64
-  %i.em = mul i64 %indvar246, %i.dj
+  %i.em = mul nsw i64 %indvar246, %i.dj
   %i.en = add i64 %i.em, %.065.lcssa248
   %i.eo = sub i64 %i.el, %i.en
   %diff.check252 = icmp ugt i64 %i.eo, -32
@@ -3429,7 +3429,7 @@ iter.check153:                                    ; preds = %.preheader56.us.us7
 
 vector.memcheck140:                               ; preds = %iter.check153
   %i.da = ptrtoaddr ptr %i.cv to i64
-  %i.db = mul i64 %indvar137, %i.w
+  %i.db = mul nsw i64 %indvar137, %i.w
   %i.dc = add i64 %i.db, %i.a
   %i.dd = add i64 %i.da, %i.cy
   %i.de = sub i64 %i.dd, %i.dc
@@ -3538,7 +3538,7 @@ iter.check:                                       ; preds = %.preheader56.us.pre
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ei = mul i64 %indvar, %i.w
+  %i.ei = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.ei, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -3941,7 +3941,7 @@ iter.check148:                                    ; preds = %.preheader56.us.us7
 
 vector.memcheck135:                               ; preds = %iter.check148
   %i.da = ptrtoaddr ptr %i.cy to i64
-  %i.db = mul i64 %indvar132, %i.w
+  %i.db = mul nsw i64 %indvar132, %i.w
   %i.dc = add i64 %i.db, %i.a
   %i.dd = add i64 %i.cv, %i.da
   %i.de = sub i64 %i.dd, %i.dc
@@ -4068,7 +4068,7 @@ iter.check:                                       ; preds = %._crit_edge63.split
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.em = mul i64 %indvar, %i.w
+  %i.em = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.em, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -4471,7 +4471,7 @@ iter.check148:                                    ; preds = %.preheader56.us.us7
 
 vector.memcheck135:                               ; preds = %iter.check148
   %i.da = ptrtoaddr ptr %i.cy to i64
-  %i.db = mul i64 %indvar132, %i.w
+  %i.db = mul nsw i64 %indvar132, %i.w
   %i.dc = add i64 %i.db, %i.a
   %i.dd = add i64 %i.cv, %i.da
   %i.de = sub i64 %i.dd, %i.dc
@@ -4598,7 +4598,7 @@ iter.check:                                       ; preds = %._crit_edge63.split
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.em = mul i64 %indvar, %i.w
+  %i.em = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.em, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -5001,7 +5001,7 @@ _ZN2cv10AutoBufferIPKfLm136EEC2Em.exit:           ; preds = %.noexc, %bb.a
 
 vector.memcheck131:                               ; preds = %..preheader_crit_edge.us.us77
   %i.cr = ptrtoaddr ptr %i.cp to i64
-  %i.cs = mul i64 %indvar127, %i.w
+  %i.cs = mul nsw i64 %indvar127, %i.w
   %i.ct = add i64 %i.cs, %i.a
   %i.cu = add i64 %i.cn, %i.cr
   %i.cv = sub i64 %i.cu, %i.ct
@@ -5100,7 +5100,7 @@ scalar.ph129:                                     ; preds = %scalar.ph129.prol.l
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader56.us
-  %i.dz = mul i64 %indvar, %i.w
+  %i.dz = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.dz, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
@@ -5503,7 +5503,7 @@ _ZN2cv10AutoBufferIPKdLm136EEC2Em.exit:           ; preds = %.noexc, %bb.a
 
 vector.memcheck131:                               ; preds = %..preheader_crit_edge.us.us77
   %i.cr = ptrtoaddr ptr %i.cp to i64
-  %i.cs = mul i64 %indvar127, %i.w
+  %i.cs = mul nsw i64 %indvar127, %i.w
   %i.ct = add i64 %i.cs, %i.a
   %i.cu = add i64 %i.cn, %i.cr
   %i.cv = sub i64 %i.cu, %i.ct
@@ -5602,7 +5602,7 @@ scalar.ph129:                                     ; preds = %scalar.ph129.prol.l
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader56.us
-  %i.dz = mul i64 %indvar, %i.w
+  %i.dz = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.dz, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
@@ -6005,7 +6005,7 @@ iter.check153:                                    ; preds = %.preheader56.us.us7
 
 vector.memcheck140:                               ; preds = %iter.check153
   %i.da = ptrtoaddr ptr %i.cv to i64
-  %i.db = mul i64 %indvar137, %i.w
+  %i.db = mul nsw i64 %indvar137, %i.w
   %i.dc = add i64 %i.db, %i.a
   %i.dd = add i64 %i.da, %i.cy
   %i.de = sub i64 %i.dd, %i.dc
@@ -6114,7 +6114,7 @@ iter.check:                                       ; preds = %.preheader56.us.pre
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ei = mul i64 %indvar, %i.w
+  %i.ei = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.ei, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -6517,7 +6517,7 @@ iter.check148:                                    ; preds = %.preheader56.us.us7
 
 vector.memcheck135:                               ; preds = %iter.check148
   %i.da = ptrtoaddr ptr %i.cy to i64
-  %i.db = mul i64 %indvar132, %i.w
+  %i.db = mul nsw i64 %indvar132, %i.w
   %i.dc = add i64 %i.db, %i.a
   %i.dd = add i64 %i.cv, %i.da
   %i.de = sub i64 %i.dd, %i.dc
@@ -6644,7 +6644,7 @@ iter.check:                                       ; preds = %._crit_edge63.split
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.em = mul i64 %indvar, %i.w
+  %i.em = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.em, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -7047,7 +7047,7 @@ iter.check148:                                    ; preds = %.preheader56.us.us7
 
 vector.memcheck135:                               ; preds = %iter.check148
   %i.da = ptrtoaddr ptr %i.cy to i64
-  %i.db = mul i64 %indvar132, %i.w
+  %i.db = mul nsw i64 %indvar132, %i.w
   %i.dc = add i64 %i.db, %i.a
   %i.dd = add i64 %i.cv, %i.da
   %i.de = sub i64 %i.dd, %i.dc
@@ -7174,7 +7174,7 @@ iter.check:                                       ; preds = %._crit_edge63.split
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.em = mul i64 %indvar, %i.w
+  %i.em = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.em, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -7577,7 +7577,7 @@ _ZN2cv10AutoBufferIPKfLm136EEC2Em.exit:           ; preds = %.noexc, %bb.a
 
 vector.memcheck131:                               ; preds = %..preheader_crit_edge.us.us77
   %i.cr = ptrtoaddr ptr %i.cp to i64
-  %i.cs = mul i64 %indvar127, %i.w
+  %i.cs = mul nsw i64 %indvar127, %i.w
   %i.ct = add i64 %i.cs, %i.a
   %i.cu = add i64 %i.cn, %i.cr
   %i.cv = sub i64 %i.cu, %i.ct
@@ -7676,7 +7676,7 @@ scalar.ph129:                                     ; preds = %scalar.ph129.prol.l
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader56.us
-  %i.dz = mul i64 %indvar, %i.w
+  %i.dz = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.dz, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
@@ -8079,7 +8079,7 @@ _ZN2cv10AutoBufferIPKdLm136EEC2Em.exit:           ; preds = %.noexc, %bb.a
 
 vector.memcheck131:                               ; preds = %..preheader_crit_edge.us.us77
   %i.cr = ptrtoaddr ptr %i.cp to i64
-  %i.cs = mul i64 %indvar127, %i.w
+  %i.cs = mul nsw i64 %indvar127, %i.w
   %i.ct = add i64 %i.cs, %i.a
   %i.cu = add i64 %i.cn, %i.cr
   %i.cv = sub i64 %i.cu, %i.ct
@@ -8178,7 +8178,7 @@ scalar.ph129:                                     ; preds = %scalar.ph129.prol.l
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader56.us
-  %i.dz = mul i64 %indvar, %i.w
+  %i.dz = mul nsw i64 %indvar, %i.w
   %.reass = add i64 %i.dz, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body

@@ -203,7 +203,7 @@ iter.check861:                                    ; preds = %.preheader380
   br i1 %min.iters.check843, label %.lr.ph498.preheader, label %vector.memcheck844
 
 vector.memcheck844:                               ; preds = %iter.check861
-  %i.pb = mul i64 %indvar, %i.mg
+  %i.pb = mul nsw i64 %indvar, %i.mg
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.pb
   %i.pc = getelementptr i8, ptr %.5344508, i64 1
   %i.pd = getelementptr i8, ptr %.5344508, i64 %i.mh
@@ -606,7 +606,7 @@ iter.check963:                                    ; preds = %.preheader393
   br i1 %min.iters.check949, label %.lr.ph438.preheader, label %vector.memcheck950
 
 vector.memcheck950:                               ; preds = %iter.check963
-  %i.fq = mul i64 %indvar944, %i.ek
+  %i.fq = mul nsw i64 %indvar944, %i.ek
   %.reass1642 = add i64 %i.fq, %invariant.op1641
   %diff.check951 = icmp ult i64 %.reass1642, 31
   br i1 %diff.check951, label %.lr.ph438.preheader, label %vector.main.loop.iter.check952
@@ -1009,7 +1009,7 @@ vector.scevcheck:                                 ; preds = %iter.check1216
   br i1 %i.ud, label %vec.epilog.scalar.ph1218.preheader, label %vector.memcheck1203
 
 vector.memcheck1203:                              ; preds = %vector.scevcheck
-  %i.ue = mul i64 %indvar1200, %i.ox              ; 2 uses
+  %i.ue = mul nsw i64 %indvar1200, %i.ox          ; 2 uses
   %i.uf = shl nsw i64 %i.tt, 1
   %i.ug = getelementptr i8, ptr %.7, i64 %i.ue
   %i.uh = getelementptr i8, ptr %i.ug, i64 %i.uf

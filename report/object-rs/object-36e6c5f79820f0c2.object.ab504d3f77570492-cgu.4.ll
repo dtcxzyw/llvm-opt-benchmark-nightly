@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.e
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %.sroa.02.033 = phi i64 [ 0, %.lr.ph ], [ %i.o, %bb.b ]
-  %.sroa.05.032 = phi i32 [ 0, %.lr.ph ], [ %i.p, %bb.b ] ; 3 uses
+  %.sroa.05.032 = phi i32 [ 0, %.lr.ph ], [ %i.p, %bb.b ] ; 4 uses
   %i.d = phi i64 [ %.promoted, %.lr.ph ], [ %i.f, %bb.b ]
   %i.e = phi ptr [ %.promoted21, %.lr.ph ], [ %i.g, %bb.b ] ; 2 uses
   %i.f = add nsw i64 %i.d, -1                     ; 5 uses
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.c
   %i.m = zext nneg i32 %i.l to i64
   %i.n = shl i64 %i.k, %i.m
   %i.o = or i64 %i.n, %.sroa.02.033               ; 2 uses
-  %i.p = add i32 %.sroa.05.032, 7                 ; 3 uses
+  %i.p = add nuw nsw i32 %.sroa.05.032, 7         ; 2 uses
   %i.q = icmp sgt i8 %i.h, -1
   br i1 %i.q, label %bb.f, label %bb.b
 
@@ -245,7 +245,7 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   store ptr %i.g, ptr %0, align 8
   store i64 %i.f, ptr %i.a, align 8
-  %1 = icmp sgt i32 %i.p, 63
+  %1 = icmp samesign ugt i32 %.sroa.05.032, 56
   %i.t = icmp samesign ult i8 %i.h, 64
   %or.cond = or i1 %1, %i.t
   %i.u = and i32 %i.p, 63
@@ -269,7 +269,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.d
-  %i.c = add i32 %.sroa.03.013, 7
+  %i.c = add nuw nsw i32 %.sroa.03.013, 7
   %i.d = icmp eq i64 %i.g, 0
   br i1 %i.d, label %._crit_edge.loopexit, label %bb.c
 

@@ -134,7 +134,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.m
 
 bb.e:                                             ; preds = %.preheader64
-  %indvars.iv77 = add i32 %indvars.iv77.in, 1     ; 2 uses
+  %indvars.iv77 = add nuw nsw i32 %indvars.iv77.in, 1 ; 2 uses
   %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %1
   br i1 %exitcond.not, label %bb.f, label %.preheader64, !llvm.loop !13
@@ -165,7 +165,7 @@ up_irq_restore.exit61:                            ; preds = %bb.g, %bb.h
   br i1 %.not5866, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %up_irq_restore.exit61
-  %wide.trip.count = zext i32 %indvars.iv77 to i64
+  %wide.trip.count = zext nneg i32 %indvars.iv77 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

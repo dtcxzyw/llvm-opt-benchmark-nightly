@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !808)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !809)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !104, !noalias !810 ; 10 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !104, !noalias !810 ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !66, !noalias !810 ; 2 uses
   %.not1519.not.i.i.i = icmp eq i64 %i.d, 0
@@ -218,6 +218,7 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8, !tbaa !66, !noalias !810 ; 2 uses
   %i.i = load ptr, ptr %2, align 8, !noalias !810
   %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.b) ; 2 uses
+  %3 = sub nuw i64 %umax.i.i.i, %i.b
   %exitcond.not.i.i.i3.not = icmp ult i64 %i.b, %i.h
   br i1 %exitcond.not.i.i.i3.not, label %.lr.ph.preheader, label %._crit_edge
 
@@ -226,7 +227,7 @@ bb.a:
   br label %.lr.ph
 
 bb.b:                                             ; preds = %bb.f
-  %exitcond.not.i.i.i = icmp eq i64 %i.w, %umax.i.i.i
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %3
   br i1 %exitcond.not.i.i.i, label %._crit_edge, label %.lr.ph, !llvm.loop !806
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph.i.i.i
@@ -251,8 +252,7 @@ bb.d:                                             ; preds = %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %.01220.i.i.i5 = phi i64 [ %i.w, %bb.b ], [ %i.b, %.lr.ph.preheader ] ; 2 uses
-  %.01121.i.i.i4 = phi i32 [ %3, %bb.b ], [ 0, %.lr.ph.preheader ]
-  %i.p = phi i64 [ %4, %bb.b ], [ 0, %.lr.ph.preheader ]
+  %i.p = phi i64 [ %indvars.iv.next.i.i.i, %bb.b ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 %.01220.i.i.i5
   %i.r = load i8, ptr %i.q, align 1, !tbaa !81, !noalias !810
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.p
@@ -269,9 +269,9 @@ bb.e:                                             ; preds = %.lr.ph
   br label %_ZSt8__invokeIR15parser_executorJRK25common_peg_literal_parserEENSt15__invoke_resultIT_JDpT0_EE4typeEOS6_DpOS7_.exit
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.w = add nuw i64 %.01220.i.i.i5, 1            ; 3 uses
-  %3 = add i32 %.01121.i.i.i4, 1                  ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.w = add nuw i64 %.01220.i.i.i5, 1            ; 2 uses
+  %indvars.iv.next.i.i.i = add i64 %i.p, 1        ; 3 uses
+  %4 = and i64 %indvars.iv.next.i.i.i, 4294967295
   %.not15.i.i.i = icmp ugt i64 %i.d, %4
   br i1 %.not15.i.i.i, label %bb.b, label %.critedge.i.i.i, !llvm.loop !806
 

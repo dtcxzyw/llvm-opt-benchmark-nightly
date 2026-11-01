@@ -205,25 +205,25 @@ bb.ai:                                            ; preds = %bb.ah
   %indvars.iv83.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next84.i.3, %.lr.ph.i16 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.3, %.lr.ph.i16 ]
   %i.ep = trunc nuw nsw i64 %indvars.iv83.i to i32 ; 2 uses
-  %i.eq = shl i32 %i.ep, 4
+  %i.eq = shl nsw i32 %i.ep, 4
   %i.er = or i32 %i.eq, %i.ep
   %i.es = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv83.i
   store i32 %i.er, ptr %i.es, align 16
   %indvars.iv.next84.i = or disjoint i64 %indvars.iv83.i, 1 ; 2 uses
   %i.et = trunc nuw nsw i64 %indvars.iv.next84.i to i32 ; 2 uses
-  %i.eu = shl i32 %i.et, 4
+  %i.eu = shl nsw i32 %i.et, 4
   %i.ev = or i32 %i.eu, %i.et
   %i.ew = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv.next84.i
   store i32 %i.ev, ptr %i.ew, align 4
   %indvars.iv.next84.i.1 = or disjoint i64 %indvars.iv83.i, 2 ; 2 uses
   %i.ex = trunc nuw nsw i64 %indvars.iv.next84.i.1 to i32 ; 2 uses
-  %i.ey = shl i32 %i.ex, 4
+  %i.ey = shl nsw i32 %i.ex, 4
   %i.ez = or i32 %i.ey, %i.ex
   %i.fa = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv.next84.i.1
   store i32 %i.ez, ptr %i.fa, align 8
   %indvars.iv.next84.i.2 = or disjoint i64 %indvars.iv83.i, 3 ; 2 uses
   %i.fb = trunc nuw nsw i64 %indvars.iv.next84.i.2 to i32 ; 2 uses
-  %i.fc = shl i32 %i.fb, 4
+  %i.fc = shl nsw i32 %i.fb, 4
   %i.fd = or i32 %i.fc, %i.fb
   %i.fe = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv.next84.i.2
   store i32 %i.fd, ptr %i.fe, align 4
