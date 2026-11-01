@@ -205,8 +205,8 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 4 ; 2 uses
   store i32 0, ptr %i.o, align 4, !tbaa !30
   %i.p = getelementptr inbounds [4 x i8], ptr %0, i64 %i.m ; 11 uses
-  %i.q = load i8, ptr %i.p, align 1, !tbaa !24    ; 4 uses
-  %i.r = zext i8 %i.q to i32                      ; 3 uses
+  %i.q = load i8, ptr %i.p, align 1, !tbaa !24    ; 5 uses
+  %i.r = zext i8 %i.q to i32                      ; 2 uses
   %i.s = icmp ugt i8 %i.q, 7
   br i1 %i.s, label %GetLength_ex.exit.thread, label %bb.b
 
@@ -609,17 +609,21 @@ bb.cc:                                            ; preds = %bb.ca, %bb.cb
   %.not = icmp ne i32 %3, 0
   %i.op = icmp samesign ult i32 %.0145324, %i.r
   %or.cond = select i1 %.not, i1 %i.op, i1 false
-  br i1 %or.cond, label %.lr.ph330, label %.loopexit
+  br i1 %or.cond, label %.lr.ph330.preheader, label %.loopexit
+
+.lr.ph330.preheader:                              ; preds = %._crit_edge
+  %7 = zext nneg i8 %i.q to i64
+  %8 = zext nneg i32 %spec.select to i64
+  br label %.lr.ph330
 
 bb.cd:                                            ; preds = %.lr.ph330
-  %7 = add nsw i32 %.2151329, -1                  ; 2 uses
-  %i.oq = icmp sgt i32 %7, %spec.select
+  %indvars.iv.next392 = add nsw i64 %indvars.iv391, -1 ; 2 uses
+  %i.oq = icmp sgt i64 %indvars.iv.next392, %8
   br i1 %i.oq, label %.lr.ph330, label %.loopexit, !llvm.loop !154
 
-.lr.ph330:                                        ; preds = %._crit_edge, %bb.cd
-  %.2151329 = phi i32 [ %7, %bb.cd ], [ %i.r, %._crit_edge ] ; 2 uses
-  %8 = zext nneg i32 %.2151329 to i64
-  %i.or = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %8
+.lr.ph330:                                        ; preds = %.lr.ph330.preheader, %bb.cd
+  %indvars.iv391 = phi i64 [ %7, %.lr.ph330.preheader ], [ %indvars.iv.next392, %bb.cd ] ; 2 uses
+  %i.or = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv391
   %i.os = load i32, ptr %i.or, align 4, !tbaa !26
   %i.ot = icmp ult i32 %.2234, %i.os
   br i1 %i.ot, label %GetLength_ex.exit.thread, label %bb.cd
@@ -1022,17 +1026,20 @@ bb.f:                                             ; preds = %.lr.ph98, %.loopexi
   %.06597 = phi i32 [ %.162, %.lr.ph98 ], [ %i.bb, %.loopexit ] ; 3 uses
   %.06796 = phi i32 [ %spec.select, %.lr.ph98 ], [ %i.ba, %.loopexit ] ; 4 uses
   %i.aa = icmp slt i32 %.06796, 1
-  br i1 %i.aa, label %.critedge, label %.preheader90
+  br i1 %i.aa, label %.critedge, label %5
 
-.preheader90:                                     ; preds = %bb.f, %bb.h
-  %.016.i = phi i32 [ %.1.i, %bb.h ], [ 0, %bb.f ] ; 2 uses
-  %.01115.i = phi i32 [ %6, %bb.h ], [ %.06796, %bb.f ] ; 4 uses
-  %5 = zext nneg i32 %.01115.i to i64
-  %i.ab = getelementptr i8, ptr %0, i64 %5
+5:                                                ; preds = %bb.f
+  %6 = zext nneg i32 %.06796 to i64
+  br label %.preheader90
+
+.preheader90:                                     ; preds = %bb.h, %5
+  %indvars.iv.i = phi i64 [ %6, %5 ], [ %indvars.iv.next.i, %bb.h ] ; 4 uses
+  %.01115.i = phi i32 [ 0, %5 ], [ %.1.i, %bb.h ] ; 2 uses
+  %i.ab = getelementptr i8, ptr %0, i64 %indvars.iv.i
   %i.ac = getelementptr i8, ptr %i.ab, i64 -1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !15
   switch i8 %i.ad, label %bb.h [
-    i8 46, label %PrevDnsLabel.exit
+    i8 46, label %.critedge.split.loop.exit.i
     i8 42, label %bb.g
   ]
 
@@ -1040,37 +1047,45 @@ bb.g:                                             ; preds = %.preheader90
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.preheader90
-  %.1.i = phi i32 [ 1, %bb.g ], [ %.016.i, %.preheader90 ] ; 2 uses
-  %6 = add nsw i32 %.01115.i, -1
-  %i.ae = icmp sgt i32 %.01115.i, 1
+  %.1.i = phi i32 [ 1, %bb.g ], [ %.01115.i, %.preheader90 ] ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ae = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ae, label %.preheader90, label %PrevDnsLabel.exit, !llvm.loop !235
 
-PrevDnsLabel.exit:                                ; preds = %.preheader90, %bb.h
-  %.011.lcssa.i = phi i32 [ %.01115.i, %.preheader90 ], [ 0, %bb.h ] ; 5 uses
-  %.0.lcssa.i = phi i32 [ %.016.i, %.preheader90 ], [ %.1.i, %bb.h ]
+.critedge.split.loop.exit.i:                      ; preds = %.preheader90
+  %7 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %PrevDnsLabel.exit
+
+PrevDnsLabel.exit:                                ; preds = %bb.h, %.critedge.split.loop.exit.i
+  %.011.lcssa.i = phi i32 [ %7, %.critedge.split.loop.exit.i ], [ 0, %bb.h ] ; 5 uses
+  %.0.lcssa.i = phi i32 [ %.01115.i, %.critedge.split.loop.exit.i ], [ %.1.i, %bb.h ]
+  %8 = zext nneg i32 %.06597 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.j, %PrevDnsLabel.exit
-  %.01115.i79 = phi i32 [ %.06597, %PrevDnsLabel.exit ], [ %8, %bb.j ] ; 4 uses
-  %7 = zext nneg i32 %.01115.i79 to i64
-  %i.af = getelementptr i8, ptr %.060, i64 %7
+  %indvars.iv.i78 = phi i64 [ %8, %PrevDnsLabel.exit ], [ %indvars.iv.next.i81, %bb.j ] ; 4 uses
+  %i.af = getelementptr i8, ptr %.060, i64 %indvars.iv.i78
   %i.ag = getelementptr i8, ptr %i.af, i64 -1
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !15
   %cond = icmp eq i8 %i.ah, 46
-  br i1 %cond, label %PrevDnsLabel.exit83, label %bb.j
+  br i1 %cond, label %.critedge.split.loop.exit.i84, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %8 = add nsw i32 %.01115.i79, -1
-  %i.ai = icmp sgt i32 %.01115.i79, 1
+  %indvars.iv.next.i81 = add nsw i64 %indvars.iv.i78, -1
+  %i.ai = icmp sgt i64 %indvars.iv.i78, 1
   br i1 %i.ai, label %bb.i, label %PrevDnsLabel.exit83, !llvm.loop !235
 
-PrevDnsLabel.exit83:                              ; preds = %bb.i, %bb.j
-  %.011.lcssa.i81 = phi i32 [ %.01115.i79, %bb.i ], [ 0, %bb.j ] ; 5 uses
+.critedge.split.loop.exit.i84:                    ; preds = %bb.i
+  %9 = trunc nuw nsw i64 %indvars.iv.i78 to i32
+  br label %PrevDnsLabel.exit83
+
+PrevDnsLabel.exit83:                              ; preds = %bb.j, %.critedge.split.loop.exit.i84
+  %.011.lcssa.i81 = phi i32 [ %9, %.critedge.split.loop.exit.i84 ], [ 0, %bb.j ] ; 5 uses
   %i.aj = sub nsw i32 %.06796, %.011.lcssa.i      ; 3 uses
   %i.ak = sub i32 %.06597, %.011.lcssa.i81
   %i.al = icmp eq i32 %.06796, %.011.lcssa.i
   %i.am = icmp eq i32 %.06597, %.011.lcssa.i81
-  %or.cond9 = or i1 %i.al, %i.am
+  %or.cond9 = select i1 %i.al, i1 true, i1 %i.am
   br i1 %or.cond9, label %.critedge, label %bb.k
 
 bb.k:                                             ; preds = %PrevDnsLabel.exit83
@@ -1127,7 +1142,7 @@ bb.o:                                             ; preds = %.lr.ph, %bb.n
 ._crit_edge:                                      ; preds = %.loopexit
   %i.bd = icmp sgt i32 %.011.lcssa.i, 0
   %not. = xor i1 %i.v, true
-  %or.cond11 = or i1 %i.bd, %not.
+  %or.cond11 = select i1 %not., i1 true, i1 %i.bd
   %. = zext i1 %or.cond11 to i32
   br label %.critedge
 

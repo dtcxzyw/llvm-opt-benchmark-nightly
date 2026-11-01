@@ -200,20 +200,23 @@ bb.a:
   %i.b = trunc i64 %i.a to i32
   %.06 = add i32 %i.b, -1                         ; 2 uses
   %i.c = icmp sgt i32 %.06, 0
-  br i1 %i.c, label %.lr.ph, label %.critedge
+  br i1 %i.c, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.07 = phi i32 [ %.0, %bb.b ], [ %.06, %bb.a ]  ; 3 uses
-  %1 = zext nneg i32 %.07 to i64
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = zext nneg i32 %.06 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
   %i.e = load i8, ptr %i.d, align 1
   %i.f = icmp eq i8 %i.e, 47
   br i1 %i.f, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
   store i8 0, ptr %i.d, align 1
-  %.0 = add nsw i32 %.07, -1
-  %i.g = icmp sgt i32 %.07, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.g = icmp sgt i64 %indvars.iv, 1
   br i1 %i.g, label %.lr.ph, label %.critedge, !llvm.loop !11
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a

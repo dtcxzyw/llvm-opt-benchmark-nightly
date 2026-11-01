@@ -140,23 +140,24 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph99
   %i.e = load ptr, ptr @num_blocks, align 8, !tbaa !10
+  %1 = zext nneg i32 %i.c to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %.06494 = phi i32 [ %i.c, %.lr.ph ], [ %2, %bb.d ] ; 4 uses
-  %1 = zext nneg i32 %.06494 to i64
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %1
+  %indvars.iv = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv
   %i.g = load i32, ptr %i.f, align 4, !tbaa !7
   %.not89 = icmp eq i32 %i.g, 0
   br i1 %.not89, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 %.06494, ptr @cur_max_level, align 4, !tbaa !7
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
+  store i32 %2, ptr @cur_max_level, align 4, !tbaa !7
   br label %.loopexit92
 
 bb.d:                                             ; preds = %bb.b
-  %2 = add nsw i32 %.06494, -1
-  %i.h = icmp sgt i32 %.06494, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.h = icmp sgt i64 %indvars.iv, 0
   br i1 %i.h, label %bb.b, label %.loopexit92, !llvm.loop !25
 
 .loopexit92:                                      ; preds = %bb.d, %.lr.ph99, %bb.c

@@ -28,6 +28,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph29, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit21
   %indvars.iv.a = phi i64 [ 0, %.lr.ph29 ], [ %indvars.iv.next.a, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit21 ] ; 3 uses
+  %indvars.iv = phi i32 [ -1, %.lr.ph29 ], [ %indvars.iv.next, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit21 ] ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.a ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !15
   switch i8 %i.f, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit [
@@ -39,14 +40,17 @@ bb.b:                                             ; preds = %.lr.ph29, %_ZN4llvm
 
 bb.c:                                             ; preds = %bb.b, %bb.b
   %i.g = trunc nuw i64 %indvars.iv.a to i32
-  %.024 = add i32 %i.g, -1                        ; 2 uses
+  %.024 = add i32 %i.g, -1
   %i.h = icmp sgt i32 %.024, -1
-  br i1 %i.h, label %.lr.ph, label %.critedge
+  br i1 %i.h, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.c, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit15
-  %.025 = phi i32 [ %.0, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit15 ], [ %.024, %bb.c ] ; 3 uses
-  %3 = zext nneg i32 %.025 to i64
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %3
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %3 = zext i32 %indvars.iv to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit15
+  %indvars.iv30 = phi i64 [ %indvars.iv.next31, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit15 ], [ %3, %.lr.ph.preheader ] ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv30
   %i.j = load i8, ptr %i.i, align 1, !tbaa !15
   %i.k = icmp eq i8 %i.j, 92
   br i1 %i.k, label %bb.f, label %.critedge
@@ -90,8 +94,8 @@ bb.h:                                             ; preds = %bb.f
   br label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit15
 
 _ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit15: ; preds = %bb.g, %bb.h
-  %.0 = add nsw i32 %.025, -1
-  %i.x = icmp sgt i32 %.025, 0
+  %indvars.iv.next31 = add nsw i64 %indvars.iv30, -1
+  %i.x = icmp sgt i64 %indvars.iv30, 0
   br i1 %i.x, label %.lr.ph, label %.critedge, !llvm.loop !13
 
 bb.i:                                             ; preds = %bb.b
@@ -155,6 +159,7 @@ bb.p:                                             ; preds = %_ZN4llvm23SmallVect
 _ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit21: ; preds = %bb.o, %bb.p
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
   %.not = icmp eq i64 %indvars.iv.next.a, %i.d
+  %indvars.iv.next = add i32 %indvars.iv, 1
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !14
 }
 

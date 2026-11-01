@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = load i8, ptr %i.m, align 1
   %i.o = and i8 %i.n, 32
   %.not28 = icmp eq i8 %i.o, 0
-  br i1 %.not28, label %.lr.ph37, label %bb.c
+  br i1 %.not28, label %.lr.ph37.preheader, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.p = add nsw i32 %.02630, -1
@@ -210,10 +210,13 @@ bb.c:                                             ; preds = %.lr.ph
   %i.r = icmp sgt i32 %.02630, 1
   br i1 %i.r, label %.lr.ph, label %.critedge2, !llvm.loop !120
 
-.lr.ph37:                                         ; preds = %.lr.ph, %bb.d
-  %.136 = phi i32 [ %4, %bb.d ], [ %.02630, %.lr.ph ] ; 4 uses
-  %3 = zext nneg i32 %.136 to i64
-  %i.s = getelementptr i8, ptr %.02531, i64 %3
+.lr.ph37.preheader:                               ; preds = %.lr.ph
+  %3 = zext nneg i32 %.02630 to i64
+  br label %.lr.ph37
+
+.lr.ph37:                                         ; preds = %.lr.ph37.preheader, %bb.d
+  %indvars.iv = phi i64 [ %3, %.lr.ph37.preheader ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %i.s = getelementptr i8, ptr %.02531, i64 %indvars.iv
   %i.t = getelementptr i8, ptr %i.s, i64 -1
   %i.u = load i8, ptr %i.t, align 1
   %i.v = zext i8 %i.u to i64
@@ -221,16 +224,20 @@ bb.c:                                             ; preds = %.lr.ph
   %i.x = load i8, ptr %i.w, align 1
   %i.y = and i8 %i.x, 32
   %.not29 = icmp eq i8 %i.y, 0
-  br i1 %.not29, label %.critedge2, label %bb.d
+  br i1 %.not29, label %.critedge2.loopexit.split.loop.exit50, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph37
-  %4 = add nsw i32 %.136, -1
-  %i.z = icmp sgt i32 %.136, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.z = icmp sgt i64 %indvars.iv, 1
   br i1 %i.z, label %.lr.ph37, label %.critedge2, !llvm.loop !121
 
-.critedge2:                                       ; preds = %bb.c, %.lr.ph37, %bb.d, %bb.b
-  %.025.lcssa45 = phi ptr [ %.02531, %.lr.ph37 ], [ %i.f, %bb.b ], [ %.02531, %bb.d ], [ %scevgep, %bb.c ]
-  %.1.lcssa = phi i32 [ %.136, %.lr.ph37 ], [ %i.e, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
+.critedge2.loopexit.split.loop.exit50:            ; preds = %.lr.ph37
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge2
+
+.critedge2:                                       ; preds = %bb.c, %bb.d, %.critedge2.loopexit.split.loop.exit50, %bb.b
+  %.025.lcssa45 = phi ptr [ %.02531, %.critedge2.loopexit.split.loop.exit50 ], [ %i.f, %bb.b ], [ %.02531, %bb.d ], [ %scevgep, %bb.c ]
+  %.1.lcssa = phi i32 [ %4, %.critedge2.loopexit.split.loop.exit50 ], [ %i.e, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %i.aa = add i32 %.1.lcssa, 1
   %i.ab = sext i32 %i.aa to i64
   %i.ac = icmp ult i64 %2, %i.ab

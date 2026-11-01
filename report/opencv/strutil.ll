@@ -179,15 +179,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit: ; preds = %
 
 .lr.ph45:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit, %bb.d
   %.027 = phi i32 [ %i.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit ], [ %i.c, %bb.d ]
-  %i.m = add nsw i32 %.027, -1                    ; 2 uses
+  %i.m = add i32 %.027, -1                        ; 2 uses
   %i.n = load i64, ptr %i.a, align 8, !tbaa !23   ; 4 uses
+  %1 = zext nneg i32 %i.m to i64                  ; 3 uses
+  %.not.i29.first_iter = icmp ugt i64 %i.n, %1
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph45, %bb.g
-  %.044 = phi i32 [ %i.m, %.lr.ph45 ], [ %2, %bb.g ] ; 5 uses
-  %1 = zext nneg i32 %.044 to i64                 ; 3 uses
-  %.not.i29 = icmp ugt i64 %i.n, %1
-  br i1 %.not.i29, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, label %bb.f
+  %indvars.iv54 = phi i64 [ %1, %.lr.ph45 ], [ %indvars.iv.next55, %bb.g ] ; 5 uses
+  br i1 %.not.i29.first_iter, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.48, i64 noundef %1, i64 noundef %i.n) #28
@@ -195,7 +195,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30: ; preds = %bb.e
   %i.o = load ptr, ptr %0, align 8, !tbaa !20     ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %1
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %indvars.iv54
   %i.q = load i8, ptr %i.p, align 1, !tbaa !21
   switch i8 %i.q, label %.critedge2 [
     i8 32, label %bb.g
@@ -207,17 +207,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30: ; preds = %bb
   ]
 
 bb.g:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30
-  %2 = add nsw i32 %.044, -1
-  %i.r = icmp sgt i32 %.044, 0
+  %indvars.iv.next55 = add nsw i64 %indvars.iv54, -1
+  %i.r = icmp sgt i64 %indvars.iv54, 0
   br i1 %i.r, label %bb.e, label %.critedge2.thread, !llvm.loop !44
 
 .critedge2:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm.exit30
-  %.not34 = icmp eq i32 %.044, %i.m
+  %2 = trunc nuw nsw i64 %indvars.iv54 to i32
+  %.not34 = icmp eq i32 %i.m, %2
   br i1 %.not34, label %.critedge2.thread, label %bb.h
 
 bb.h:                                             ; preds = %.critedge2
-  %3 = add nuw nsw i32 %.044, 1
-  %4 = zext nneg i32 %3 to i64                    ; 4 uses
+  %3 = add nuw nsw i64 %indvars.iv54, 1
+  %4 = and i64 %3, 4294967295                     ; 4 uses
   %i.s = icmp ult i64 %i.n, %4
   br i1 %i.s, label %bb.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit32
 

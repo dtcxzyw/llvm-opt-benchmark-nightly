@@ -202,19 +202,19 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.lr.ph39
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.025.037, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !147
+  %2 = zext nneg i32 %.01317.i to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge.i, %.lr.ph.i
-  %.01318.i = phi i32 [ %.01317.i, %.lr.ph.i ], [ %.013.i, %.backedge.i ] ; 4 uses
-  %2 = zext nneg i32 %.01318.i to i64
-  %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %2 ; 2 uses
+  %indvars.iv.i = phi i64 [ %2, %.lr.ph.i ], [ %indvars.iv.next.i, %.backedge.i ] ; 4 uses
+  %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %indvars.iv.i ; 2 uses
   %i.v = load i8, ptr %i.u, align 8, !tbaa !223   ; 2 uses
   %i.w = icmp eq i8 %i.v, 6
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.y = load ptr, ptr %i.x, align 8
   %i.z = icmp eq ptr %i.y, null
   %i.aa = select i1 %i.w, i1 %i.z, i1 false
-  br i1 %i.aa, label %_ZN4llvm4bolt6MCPlus19getNumPrimeOperandsERKNS_6MCInstE.exit, label %bb.c
+  br i1 %i.aa, label %.thread.loopexit.split.loop.exit24.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   switch i8 %i.v, label %_ZN4llvm4bolt6MCPlus19getNumPrimeOperandsERKNS_6MCInstE.exit [
@@ -223,12 +223,16 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 .backedge.i:                                      ; preds = %bb.c, %bb.c
-  %.013.i = add nsw i32 %.01318.i, -1
-  %i.ab = icmp sgt i32 %.01318.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ab = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.ab, label %bb.b, label %_ZN4llvm4bolt6MCPlus19getNumPrimeOperandsERKNS_6MCInstE.exit
 
-_ZN4llvm4bolt6MCPlus19getNumPrimeOperandsERKNS_6MCInstE.exit: ; preds = %bb.b, %bb.c, %.backedge.i, %.lr.ph39
-  %.1.i = phi i32 [ %i.q, %.lr.ph39 ], [ %i.q, %.backedge.i ], [ %i.q, %bb.c ], [ %.01318.i, %bb.b ] ; 2 uses
+.thread.loopexit.split.loop.exit24.i:             ; preds = %bb.b
+  %3 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %_ZN4llvm4bolt6MCPlus19getNumPrimeOperandsERKNS_6MCInstE.exit
+
+_ZN4llvm4bolt6MCPlus19getNumPrimeOperandsERKNS_6MCInstE.exit: ; preds = %bb.c, %.backedge.i, %.lr.ph39, %.thread.loopexit.split.loop.exit24.i
+  %.1.i = phi i32 [ %i.q, %.lr.ph39 ], [ %3, %.thread.loopexit.split.loop.exit24.i ], [ %i.q, %.backedge.i ], [ %i.q, %bb.c ] ; 2 uses
   %.not34 = icmp eq i32 %.1.i, 0
   br i1 %.not34, label %._crit_edge, label %.lr.ph
 

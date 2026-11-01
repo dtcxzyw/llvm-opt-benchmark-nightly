@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %bb.bb, %.thread19.i
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bn, %bb.bc
-  %.020.i = phi i32 [ 18, %bb.bc ], [ %5, %bb.bn ] ; 4 uses
+  %indvars.iv.i52 = phi i64 [ 18, %bb.bc ], [ %indvars.iv.next.i55, %bb.bn ] ; 5 uses
   br i1 %i.e, label %bb.bf, label %bb.be, !prof !14, !nosanitize !13
 
 bb.be:                                            ; preds = %bb.bd
@@ -212,9 +212,8 @@ bb.be:                                            ; preds = %bb.bd
   br label %bb.bf, !nosanitize !13
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd
-  %4 = zext nneg i32 %.020.i to i64               ; 2 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr @bl_order, i64 %4
-  %i.cn = add i64 %4, ptrtoint (ptr @bl_order to i64), !nosanitize !13 ; 2 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr @bl_order, i64 %indvars.iv.i52
+  %i.cn = add i64 %indvars.iv.i52, ptrtoint (ptr @bl_order to i64), !nosanitize !13 ; 2 uses
   %.not.i52 = icmp ult i64 %i.cn, ptrtoint (ptr @bl_order to i64), !nosanitize !13
   br i1 %.not.i52, label %bb.bg, label %bb.bh, !prof !30, !nosanitize !13
 
@@ -260,15 +259,19 @@ bb.bm:                                            ; preds = %bb.bl
 .critedge.i53:                                    ; preds = %bb.bm, %bb.bl
   %i.da = load i16, ptr %i.cw, align 2, !tbaa !31
   %.not18.i = icmp eq i16 %i.da, 0
-  br i1 %.not18.i, label %bb.bn, label %bb.bo
+  br i1 %.not18.i, label %bb.bn, label %.split.loop.exit.i
 
 bb.bn:                                            ; preds = %.critedge.i53
-  %5 = add nsw i32 %.020.i, -1
-  %i.db = icmp samesign ugt i32 %.020.i, 3
+  %indvars.iv.next.i55 = add nsw i64 %indvars.iv.i52, -1
+  %i.db = icmp samesign ugt i64 %indvars.iv.i52, 3
   br i1 %i.db, label %bb.bd, label %bb.bo, !llvm.loop !59
 
-bb.bo:                                            ; preds = %bb.bn, %.critedge.i53
-  %.0.lcssa.i = phi i32 [ %.020.i, %.critedge.i53 ], [ 2, %bb.bn ] ; 3 uses
+.split.loop.exit.i:                               ; preds = %.critedge.i53
+  %4 = trunc nuw nsw i64 %indvars.iv.i52 to i32
+  br label %bb.bo
+
+bb.bo:                                            ; preds = %bb.bn, %.split.loop.exit.i
+  %.0.lcssa.i = phi i32 [ %4, %.split.loop.exit.i ], [ 2, %bb.bn ] ; 3 uses
   %i.dc = sext i32 %.0.lcssa.i to i64             ; 2 uses
   %i.dd = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.dc, i64 1), !nosanitize !13 ; 2 uses
   %i.de = extractvalue { i64, i1 } %i.dd, 0, !nosanitize !13 ; 2 uses
