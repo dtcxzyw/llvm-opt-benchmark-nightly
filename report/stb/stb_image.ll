@@ -204,32 +204,33 @@ stbi__get8.exit:                                  ; preds = %bb.aq, %bb.ar, %stb
   %.idx = shl nuw nsw i64 %indvars.iv283, 3
   %i.gz = getelementptr inbounds nuw i8, ptr %.0195, i64 %.idx ; 4 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 6
-  %i.hb = load i16, ptr %i.ha, align 2, !tbaa !74 ; 2 uses
+  %i.hb = load i16, ptr %i.ha, align 2, !tbaa !74
   %.off = add i16 %i.hb, -1
   %switch = icmp ult i16 %.off, -2
   br i1 %switch, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %.lr.ph259
-  %7 = uitofp i16 %i.hb to float
-  %8 = fdiv float %7, 6.553500e+04
-  %9 = fdiv float 1.000000e+00, %8                ; 3 uses
-  %10 = fsub nnan float 1.000000e+00, %9
-  %11 = fmul nnan float %10, 6.553500e+04         ; 2 uses
-  %12 = load <2 x i16>, ptr %i.gz, align 2, !tbaa !74
-  %13 = uitofp <2 x i16> %12 to <2 x float>
-  %i.hc = insertelement <2 x float> poison, float %9, i64 0
+  %7 = load <2 x i16>, ptr %i.gz, align 2, !tbaa !74
+  %8 = uitofp <2 x i16> %7 to <2 x float>
+  %9 = getelementptr inbounds nuw i8, ptr %i.gz, i64 4 ; 2 uses
+  %10 = load <2 x i16>, ptr %9, align 2, !tbaa !74
+  %11 = uitofp <2 x i16> %10 to <2 x float>       ; 2 uses
+  %12 = extractelement <2 x float> %11, i64 1
+  %13 = fdiv float %12, 6.553500e+04
+  %14 = fdiv float 1.000000e+00, %13              ; 3 uses
+  %15 = fsub nnan float 1.000000e+00, %14
+  %16 = fmul nnan float %15, 6.553500e+04         ; 2 uses
+  %i.hc = insertelement <2 x float> poison, float %14, i64 0
   %i.hd = shufflevector <2 x float> %i.hc, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.he = insertelement <2 x float> poison, float %11, i64 0
+  %i.he = insertelement <2 x float> poison, float %16, i64 0
   %i.hf = shufflevector <2 x float> %i.he, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.hg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> %i.hd, <2 x float> %i.hf)
+  %i.hg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %8, <2 x float> %i.hd, <2 x float> %i.hf)
   %i.hh = fptoui <2 x float> %i.hg to <2 x i16>
   store <2 x i16> %i.hh, ptr %i.gz, align 2, !tbaa !74
-  %14 = getelementptr inbounds nuw i8, ptr %i.gz, i64 4 ; 2 uses
-  %15 = load i16, ptr %14, align 2, !tbaa !74
-  %16 = uitofp i16 %15 to float
-  %i.hi = tail call float @llvm.fmuladd.f32(float %16, float %9, float %11)
+  %17 = extractelement <2 x float> %11, i64 0
+  %i.hi = tail call float @llvm.fmuladd.f32(float %17, float %14, float %16)
   %i.hj = fptoui float %i.hi to i16
-  store i16 %i.hj, ptr %14, align 2, !tbaa !74
+  store i16 %i.hj, ptr %9, align 2, !tbaa !74
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph259, %bb.av

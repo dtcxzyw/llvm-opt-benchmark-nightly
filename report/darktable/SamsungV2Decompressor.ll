@@ -204,8 +204,8 @@ bb.a:
   %.sroa.0.i.i.i49 = alloca i32, align 4          ; 5 uses
   %.sroa.0.i.i.i = alloca i32, align 4            ; 5 uses
   %2 = alloca %"struct.std::array.65", align 8    ; 5 uses
-  %3 = alloca %"struct.std::array.66", align 2    ; 13 uses
-  %.sroa.0 = alloca <16 x i16>, align 2           ; 15 uses
+  %3 = alloca %"struct.std::array.66", align 8    ; 17 uses
+  %.sroa.0 = alloca <16 x i16>, align 16          ; 15 uses
   %4 = alloca %"struct.std::array.60", align 2    ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -285,14 +285,17 @@ bb.e:                                             ; preds = %bb.d
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 30
   %.not32.i = trunc i32 %1 to i1                  ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 10
-  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 14
-  %i.as = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.at = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %i.au = getelementptr inbounds nuw i8, ptr %3, i64 10
-  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 14
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 14
+  %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 28
+  %i.as = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.at = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.au = getelementptr inbounds nuw i8, ptr %3, i64 14
+  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 28
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 30
   %spec.select = select i1 %.not32.i, i64 0, i64 2 ; 4 uses
@@ -321,14 +324,14 @@ bb.e:                                             ; preds = %bb.d
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %.022.ptr, i64 %spec.select654
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.022.ptr, i64 %spec.select654 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 4 ; 2 uses
-  %.sroa.0.28..sroa_idx697 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 28
-  %.sroa.0.2..sroa_idx690 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  %.sroa.0.18..sroa_idx693 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 18
+  %.sroa.0.28..sroa_idx697 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
+  %.sroa.0.2..sroa_idx690 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 28
+  %.sroa.0.18..sroa_idx693 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
   %.sroa.0.26..sroa_idx695 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 26
-  %.sroa.0.2..sroa_idx691 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
+  %.sroa.0.2..sroa_idx691 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 26
   %.sroa.0.30..sroa_idx699 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 30
-  %.sroa.0.4..sroa_idx692 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
-  %.sroa.0.20..sroa_idx694 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 20
+  %.sroa.0.4..sroa_idx692 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  %.sroa.0.20..sroa_idx694 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %.preheader
@@ -731,13 +734,12 @@ _ZN8rawspeed21SamsungV2Decompressor17decodeDiffLengthsERNS_16BitStreamerMSB32Ei.
   %.sroa.0174.9 = phi i64 [ %.sroa.0174.8.3, %bb.di ], [ %i.ln, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit127 ]
   %.sroa.0486.sroa.0.0.insert.insert = phi i64 [ %i.tf, %bb.di ], [ 0, %_ZN8rawspeed11BitStreamerINS_16BitStreamerMSB32ENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit127 ]
   store i64 %.sroa.0486.sroa.0.0.insert.insert, ptr %2, align 8, !noalias !152
-  store i64 %.sroa.14491.0, ptr %i.ao, align 8, !noalias !152
+  store i64 %.sroa.14491.0, ptr %5, align 8, !noalias !152
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15, !noalias !152
   br label %bb.dx
 
 bb.dw:                                            ; preds = %_ZN8rawspeed21SamsungV2Decompressor7getDiffERNS_16BitStreamerMSB32Ej.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  %5 = load i16, ptr %3, align 2, !tbaa !151, !noalias !152 ; 2 uses
   br i1 %.not32.i, label %bb.ee, label %bb.ef
 
 bb.dx:                                            ; preds = %_ZN8rawspeed21SamsungV2Decompressor17decodeDiffLengthsERNS_16BitStreamerMSB32Ei.exit, %_ZN8rawspeed21SamsungV2Decompressor7getDiffERNS_16BitStreamerMSB32Ej.exit
@@ -835,30 +837,37 @@ _ZN8rawspeed21SamsungV2Decompressor7getDiffERNS_16BitStreamerMSB32Ej.exit: ; pre
   br i1 %exitcond447.not, label %bb.dw, label %bb.dx, !llvm.loop !141
 
 bb.ee:                                            ; preds = %bb.dw
-  store i16 %5, ptr %.sroa.0.2..sroa_idx691, align 2, !tbaa !151, !noalias !152
-  %i.wa = load i16, ptr %i.ar, align 2, !tbaa !151, !noalias !152
+  %8 = load i16, ptr %i.ao, align 4, !tbaa !151, !noalias !152
+  store i16 %8, ptr %.sroa.0.2..sroa_idx691, align 2, !tbaa !151, !noalias !152
+  %i.wa = load i16, ptr %i.ap, align 2, !tbaa !151, !noalias !152
   store i16 %i.wa, ptr %.sroa.0.30..sroa_idx699, align 2, !tbaa !151, !noalias !152
-  %6 = load i16, ptr %i.as, align 2, !tbaa !151, !noalias !152
-  store i16 %6, ptr %.sroa.0, align 2, !tbaa !151, !noalias !152
-  %7 = load <12 x i16>, ptr %i.ap, align 2, !tbaa !151, !noalias !152
-  %8 = shufflevector <12 x i16> %7, <12 x i16> poison, <8 x i32> <i32 8, i32 0, i32 9, i32 1, i32 10, i32 2, i32 11, i32 3>
-  store <8 x i16> %8, ptr %.sroa.0.4..sroa_idx692, align 2, !tbaa !151, !noalias !152
-  %i.wb = load <10 x i16>, ptr %i.aq, align 2, !tbaa !151, !noalias !152
+  %9 = load <2 x i16>, ptr %3, align 8, !tbaa !151, !noalias !152
+  %10 = load <2 x i16>, ptr %i.aq, align 8, !tbaa !151, !noalias !152
+  %11 = load <10 x i16>, ptr %6, align 4, !tbaa !151, !noalias !152
+  %12 = shufflevector <2 x i16> %10, <2 x i16> %9, <8 x i32> <i32 0, i32 2, i32 1, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %13 = shufflevector <10 x i16> %11, <10 x i16> poison, <8 x i32> <i32 8, i32 0, i32 9, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <8 x i16> %12, <8 x i16> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  store <8 x i16> %14, ptr %.sroa.0, align 16, !tbaa !151, !noalias !152
+  %i.wb = load <10 x i16>, ptr %7, align 8, !tbaa !151, !noalias !152
   %i.wc = shufflevector <10 x i16> %i.wb, <10 x i16> poison, <4 x i32> <i32 8, i32 0, i32 9, i32 1>
-  store <4 x i16> %i.wc, ptr %.sroa.0.20..sroa_idx694, align 2, !tbaa !151, !noalias !152
+  store <4 x i16> %i.wc, ptr %.sroa.0.4..sroa_idx692, align 16, !tbaa !151, !noalias !152
+  %15 = load i16, ptr %i.ar, align 4, !tbaa !151, !noalias !152
+  store i16 %15, ptr %.sroa.0.20..sroa_idx694, align 8, !tbaa !151, !noalias !152
   br label %.preheader
 
 bb.ef:                                            ; preds = %bb.dw
-  store i16 %5, ptr %.sroa.0, align 2, !tbaa !151, !noalias !152
-  %i.wd = load i16, ptr %i.av, align 2, !tbaa !151, !noalias !152
-  store i16 %i.wd, ptr %.sroa.0.28..sroa_idx697, align 2, !tbaa !151, !noalias !152
-  %9 = load <11 x i16>, ptr %i.at, align 2, !tbaa !151, !noalias !152
-  %10 = shufflevector <11 x i16> %9, <11 x i16> poison, <8 x i32> <i32 7, i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3>
-  store <8 x i16> %10, ptr %.sroa.0.2..sroa_idx690, align 2, !tbaa !151, !noalias !152
-  %11 = load <9 x i16>, ptr %i.au, align 2, !tbaa !151, !noalias !152
-  %12 = shufflevector <9 x i16> %11, <9 x i16> poison, <4 x i32> <i32 7, i32 0, i32 8, i32 1>
-  store <4 x i16> %12, ptr %.sroa.0.18..sroa_idx693, align 2, !tbaa !151, !noalias !152
-  %i.we = load i16, ptr %i.aw, align 2, !tbaa !151, !noalias !152
+  %16 = load i16, ptr %i.at, align 4, !tbaa !151, !noalias !152
+  store i16 %16, ptr %.sroa.0.28..sroa_idx697, align 8, !tbaa !151, !noalias !152
+  %i.wd = load i16, ptr %i.au, align 2, !tbaa !151, !noalias !152
+  store i16 %i.wd, ptr %.sroa.0.2..sroa_idx690, align 4, !tbaa !151, !noalias !152
+  %17 = load <4 x i16>, ptr %3, align 8, !tbaa !151, !noalias !152
+  %18 = load <4 x i16>, ptr %i.av, align 8, !tbaa !151, !noalias !152
+  %19 = shufflevector <4 x i16> %17, <4 x i16> %18, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x i16> %19, ptr %.sroa.0, align 16, !tbaa !151, !noalias !152
+  %20 = load <10 x i16>, ptr %i.as, align 8, !tbaa !151, !noalias !152
+  %21 = shufflevector <10 x i16> %20, <10 x i16> poison, <4 x i32> <i32 0, i32 8, i32 1, i32 9>
+  store <4 x i16> %21, ptr %.sroa.0.18..sroa_idx693, align 16, !tbaa !151, !noalias !152
+  %i.we = load i16, ptr %i.aw, align 4, !tbaa !151, !noalias !152
   store i16 %i.we, ptr %.sroa.0.26..sroa_idx695, align 2, !tbaa !151, !noalias !152
   br label %.preheader
 
@@ -877,7 +886,7 @@ bb.ef:                                            ; preds = %bb.dw
   %i.wn = icmp samesign ult i64 %indvars.iv.next461.14, %i.wl
   %i.wo = shl nsw i32 %i.wg, 1
   %i.wp = or disjoint i32 %i.wo, 1
-  %.sroa.0.0..sroa.0.0. = load <16 x i16>, ptr %.sroa.0, align 2, !tbaa !151
+  %.sroa.0.0..sroa.0.0. = load <16 x i16>, ptr %.sroa.0, align 16, !tbaa !151
   %i.wq = sext <16 x i16> %.sroa.0.0..sroa.0.0. to <16 x i32>
   %i.wr = insertelement <16 x i32> poison, i32 %i.wp, i64 0
   %i.ws = shufflevector <16 x i32> %i.wr, <16 x i32> poison, <16 x i32> zeroinitializer

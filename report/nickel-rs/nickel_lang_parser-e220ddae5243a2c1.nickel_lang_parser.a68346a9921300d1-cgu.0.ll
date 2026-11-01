@@ -205,13 +205,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.s
 
 bb.c:                                             ; preds = %bb.a
-  %i.af = load i32, ptr %i.j, align 8, !range !53, !noalias !10090, !noundef !19 ; 3 uses
+  %i.af = load i32, ptr %i.j, align 8, !range !53, !noalias !10090, !noundef !19 ; 2 uses
   %.not.i.i.i.i = icmp eq i32 %i.af, 4
   br i1 %.not.i.i.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.5.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  %.sroa.5.0.copyload.i.i.i.i = load i32, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 4, !noalias !10090
+  %6 = load <2 x i32>, ptr %i.j, align 8, !noalias !10090
   %.sroa.54.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %.sroa.54.0.copyload.i.i.i.i = load i64, ptr %.sroa.54.0..sroa_idx.i.i.i.i, align 8, !noalias !10090 ; 3 uses
   %.sroa.6.0..sroa_idx7.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
@@ -269,15 +268,13 @@ bb.i:                                             ; preds = %bb.h, %bb.d
   unreachable
 
 bb.j:                                             ; preds = %bb.h, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i
-  %.sroa.10.0.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i ], [ %i.ap, %bb.h ] ; 7 uses
+  %.sroa.10.0.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i ], [ %i.ap, %bb.h ] ; 6 uses
   %.sroa.4.0.i.i.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %bb.h ] ; 2 uses
   %i.ar = icmp ule i64 %.sroa.0.0.i.i.i.i.i, %.sroa.4.0.i.i.i.i.i
   tail call void @llvm.assume(i1 %i.ar)
   %.sroa.715.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i.i.i.i, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.715.0..sroa_idx.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7.0..sroa_idx.i.i.i.i, i64 32, i1 false), !noalias !10090
-  store i32 %i.af, ptr %.sroa.10.0.i.i.i.i.i, align 8, !noalias !10090
-  %.sroa.4.0..sroa_idx12.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i.i.i.i, i64 4
-  store i32 %.sroa.5.0.copyload.i.i.i.i, ptr %.sroa.4.0..sroa_idx12.i.i.i.i, align 4, !noalias !10090
+  store <2 x i32> %6, ptr %.sroa.10.0.i.i.i.i.i, align 8, !noalias !10090
   %.sroa.513.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i.i.i.i, i64 8
   store i64 %.sroa.54.0.copyload.i.i.i.i, ptr %.sroa.513.0..sroa_idx.i.i.i.i, align 8, !noalias !10090
   %.sroa.614.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.10.0.i.i.i.i.i, i64 16
@@ -292,7 +289,6 @@ bb.j:                                             ; preds = %bb.h, %_ZN4core5all
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10095)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10096)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !10097
-  %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %.sroa.54.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %.sroa.7.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
@@ -316,12 +312,12 @@ bb.l:                                             ; preds = %bb.k
   br label %"_ZN4core3ptr93drop_in_place$LT$nickel_lang_parser..ast..StringChunk$LT$nickel_lang_parser..ast..Ast$GT$$GT$17h5f08c58e7a279702E.exit.i.i.i.i.i.i"
 
 bb.m:                                             ; preds = %bb.k
-  %i.av = load i32, ptr %i.g, align 8, !range !53, !noalias !10099, !noundef !19 ; 3 uses
+  %i.av = load i32, ptr %i.g, align 8, !range !53, !noalias !10099, !noundef !19 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i32 %i.av, 4
   br i1 %.not.i.i.i.i.i.i, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %.sroa.5.0.copyload.i.i.i.i.i.i = load i32, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i.i, align 4, !noalias !10099
+  %7 = load <2 x i32>, ptr %i.g, align 8, !noalias !10099
   %.sroa.54.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.54.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !10099 ; 3 uses
   %.sroa.6.0.copyload.i.i.i.i.i.i = load ptr, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !10099 ; 3 uses
   %i.aw = icmp samesign ult i64 %i.at, 164703072086692426
@@ -345,12 +341,10 @@ bb.o:                                             ; preds = %bb.n
 
 "_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6c6131c6a09591a9E.exit.i.i.i.i.i.i": ; preds = %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6c6131c6a09591a9E.exit.i.i_crit_edge.i.i.i.i", %bb.n
   %i.bb = phi ptr [ %.pre.i.i.i.i, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6c6131c6a09591a9E.exit.i.i_crit_edge.i.i.i.i" ], [ %i.as, %bb.n ] ; 2 uses
-  %i.bc = getelementptr inbounds nuw [56 x i8], ptr %i.bb, i64 %i.at ; 5 uses
+  %i.bc = getelementptr inbounds nuw [56 x i8], ptr %i.bb, i64 %i.at ; 4 uses
   %.sroa.713.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.713.0..sroa_idx.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7.0..sroa_idx.i.i.i.i.i.i, i64 32, i1 false), !noalias !10099
-  store i32 %i.av, ptr %i.bc, align 8, !noalias !10099
-  %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 4
-  store i32 %.sroa.5.0.copyload.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 4, !noalias !10099
+  store <2 x i32> %7, ptr %i.bc, align 8, !noalias !10099
   %.sroa.511.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store i64 %.sroa.54.0.copyload.i.i.i.i.i.i, ptr %.sroa.511.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !10099
   %.sroa.612.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
@@ -753,13 +747,12 @@ bb.au:                                            ; preds = %bb.ar
   %i.ie = sub i64 %i.ic, %i.id                    ; 6 uses
   %i.if = udiv i64 %i.ie, 280                     ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !494803
-  %i.ig = load i32, ptr %i.v, align 8, !range !30, !noalias !494802, !noundef !19 ; 2 uses
+  %i.ig = load i32, ptr %i.v, align 8, !range !30, !noalias !494802, !noundef !19
   %.not.not.i.i.i = icmp eq i32 %i.ig, 25
   br i1 %.not.not.i.i.i, label %.noexc123, label %bb.av
 
 bb.av:                                            ; preds = %.loopexit.i.i.i
-  %.sroa.6203.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 4
-  %.sroa.6203.0.copyload = load i32, ptr %.sroa.6203.0..sroa_idx, align 4, !noalias !494886
+  %3 = load <2 x i32>, ptr %i.v, align 8, !noalias !494886
   %.sroa.7204.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %.sroa.7204.0.copyload = load i64, ptr %.sroa.7204.0..sroa_idx, align 8, !noalias !494886
   %.sroa.9205.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 16
@@ -794,9 +787,7 @@ bb.ax:                                            ; preds = %.body.i.i.i.i.i.i.i
 
 .thread303:                                       ; preds = %bb.aw, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0066114c2075a720E.exit.i.i.i.i"
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !494802
-  store i32 %i.ig, ptr %0, align 8
-  %.sroa.294.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.6203.0.copyload, ptr %.sroa.294.0..sroa_idx, align 4
+  store <2 x i32> %3, ptr %0, align 8
   %.sroa.294.sroa.2.0..sroa.294.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.7204.0.copyload, ptr %.sroa.294.sroa.2.0..sroa.294.0..sroa_idx.sroa_idx, align 8
   %.sroa.294.sroa.3.0..sroa.294.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

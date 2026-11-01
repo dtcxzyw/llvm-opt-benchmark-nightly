@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ac = load ptr, ptr %i.j, align 8             ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null
   %i.ae = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.af = load i64, ptr %i.ae, align 8            ; 2 uses
+  %i.af = load i64, ptr %i.ae, align 8
   br i1 %i.ad, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCscdodAO9FK5_5alloc5alloc6GlobalECshVzvyy7iigg_12salsa_macros.exit.i, label %bb.e
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc, %.lr.ph.i, %bb.g, %_RNCINvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB8_8RawTableTNtCsRujiHMkeh3_11proc_macro25IdentuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCs2AWtUsOyxgP_3std4hash6random11RandomStateE0E0CshVzvyy7iigg_12salsa_macros.exit, %._crit_edge, %bb.e
@@ -213,7 +213,6 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %3 = load i64, ptr %i.ag, align 8
   %.sroa.455.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %.sroa.455.0.copyload.i.i = load i64, ptr %.sroa.455.0..sroa_idx.i.i, align 8
   store ptr %i.n, ptr %i.k, align 8
@@ -224,9 +223,9 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 9 uses
   store ptr %i.ac, ptr %.sroa.4.0..sroa_idx.i.i, align 8
   %.sroa.4.sroa.2.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 4 uses
-  store i64 %3, ptr %.sroa.4.sroa.2.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
-  %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 3 uses
-  store i64 %i.af, ptr %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
+  %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
+  %3 = load <2 x i64>, ptr %i.ag, align 8
+  store <2 x i64> %3, ptr %.sroa.4.sroa.2.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   store i64 %.sroa.455.0.copyload.i.i, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
   %i.ah = load ptr, ptr %0, align 8               ; 2 uses
@@ -495,7 +494,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ac = load ptr, ptr %i.j, align 8             ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null
   %i.ae = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.af = load i64, ptr %i.ae, align 8            ; 2 uses
+  %i.af = load i64, ptr %i.ae, align 8
   br i1 %i.ad, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCscdodAO9FK5_5alloc5alloc6GlobalECshVzvyy7iigg_12salsa_macros.exit.i, label %bb.e
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc, %.lr.ph.i, %bb.g, %_RNCINvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB8_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCs2AWtUsOyxgP_3std4hash6random11RandomStateE0E0CshVzvyy7iigg_12salsa_macros.exit, %._crit_edge, %bb.e
@@ -506,7 +505,6 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %2 = load i64, ptr %i.ag, align 8
   %.sroa.455.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %.sroa.455.0.copyload.i.i = load i64, ptr %.sroa.455.0..sroa_idx.i.i, align 8
   store ptr %i.n, ptr %i.k, align 8
@@ -517,9 +515,9 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 9 uses
   store ptr %i.ac, ptr %.sroa.4.0..sroa_idx.i.i, align 8
   %.sroa.4.sroa.2.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 4 uses
-  store i64 %2, ptr %.sroa.4.sroa.2.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
-  %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 3 uses
-  store i64 %i.af, ptr %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
+  %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
+  %2 = load <2 x i64>, ptr %i.ag, align 8
+  store <2 x i64> %2, ptr %.sroa.4.sroa.2.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   store i64 %.sroa.455.0.copyload.i.i, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i, align 8
   %i.ah = load ptr, ptr %0, align 8               ; 2 uses

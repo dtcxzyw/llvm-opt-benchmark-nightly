@@ -204,9 +204,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %.not147 = icmp eq ptr %3, null                 ; 3 uses
   %i.i = getelementptr i8, ptr %3, i64 24         ; 2 uses
   %i.j = getelementptr i8, ptr %3, i64 9          ; 2 uses
-  %i.k = getelementptr i8, ptr %1, i64 2072
-  %4 = getelementptr i8, ptr %1, i64 2076
-  %5 = getelementptr i8, ptr %1, i64 2084
+  %i.k = getelementptr i8, ptr %1, i64 2072       ; 2 uses
   %i.l = getelementptr i8, ptr %0, i64 20         ; 3 uses
   br label %bb.e
 
@@ -315,19 +313,14 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.aw = tail call ptr @wmem_file_scope()
-  %i.ax = tail call noalias dereferenceable_or_null(16) ptr @wmem_alloc0(ptr noundef %i.aw, i64 noundef 16) #13 ; 5 uses
-  %i.ay = load i32, ptr %i.k, align 8             ; 2 uses
+  %i.ax = tail call noalias dereferenceable_or_null(16) ptr @wmem_alloc0(ptr noundef %i.aw, i64 noundef 16) #13 ; 3 uses
+  %i.ay = load i32, ptr %i.k, align 8
   %.not154 = icmp eq i32 %i.ay, 0
   br i1 %.not154, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  store i32 %i.ay, ptr %i.ax, align 4
-  %6 = getelementptr i8, ptr %i.ax, i64 4
-  %7 = load <2 x i32>, ptr %4, align 4
-  store <2 x i32> %7, ptr %6, align 4
-  %8 = load i32, ptr %5, align 4
-  %9 = getelementptr i8, ptr %i.ax, i64 12
-  store i32 %8, ptr %9, align 4
+  %4 = load <4 x i32>, ptr %i.k, align 8
+  store <4 x i32> %4, ptr %i.ax, align 4
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s

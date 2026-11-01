@@ -202,7 +202,7 @@ define void @_RNvMs0_NtNtNtCs5XgW7KoffLW_12opendal_core5types7context5writeINtB5
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [32 x i8], align 8                ; 7 uses
+  %i.c = alloca [32 x i8], align 16               ; 7 uses
   %i.d = alloca [200 x i8], align 8               ; 15 uses
   %i.e = alloca [88 x i8], align 8                ; 8 uses
   %i.f = alloca [16 x i8], align 8                ; 6 uses
@@ -211,14 +211,14 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   store i64 %5, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.j = load ptr, ptr %i.i, align 8, !noundef !7 ; 7 uses
+  %i.j = load ptr, ptr %i.i, align 8, !noundef !7 ; 6 uses
   %.not = icmp eq ptr %i.j, null
   br i1 %.not, label %bb.c, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 56 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 56 ; 3 uses
   %.not41 = icmp eq ptr %4, null
   br i1 %.not41, label %bb.g, label %bb.f
 
@@ -306,16 +306,15 @@ bb.m:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.experimental.noalias.scope.decl(metadata !1660)
   call void @llvm.experimental.noalias.scope.decl(metadata !1661)
-  %i.ak = load ptr, ptr %i.k, align 8, !alias.scope !1661, !nonnull !7, !noundef !7 ; 2 uses
+  %i.ak = load ptr, ptr %i.k, align 8, !alias.scope !1661, !nonnull !7, !noundef !7
   %i.al = atomicrmw add ptr %i.ak, i64 1 monotonic, align 8, !noalias !1662
   %i.am = icmp slt i64 %i.al, 0
   br i1 %i.am, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 64
+  %7 = load <2 x ptr>, ptr %i.k, align 8, !alias.scope !1661
   %i.an = getelementptr inbounds nuw i8, ptr %i.j, i64 72
-  %i.ao = load ptr, ptr %i.an, align 8, !alias.scope !1661, !nonnull !7, !noundef !7
-  %8 = load <2 x ptr>, ptr %7, align 8, !alias.scope !1661
+  %i.ao = load ptr, ptr %i.an, align 8, !alias.scope !1661, !nonnull !7, !noundef !7 ; 2 uses
   %i.ap = atomicrmw add ptr %i.ao, i64 1 monotonic, align 8, !noalias !1662
   %i.aq = icmp slt i64 %i.ap, 0
   br i1 %i.aq, label %bb.p, label %bb.q
@@ -331,9 +330,9 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.n
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 80
   %i.as = load ptr, ptr %i.ar, align 8, !alias.scope !1661, !nonnull !7, !align !9, !noundef !7
-  store ptr %i.ak, ptr %i.c, align 8, !alias.scope !1660
-  %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store <2 x ptr> %8, ptr %i.at, align 8, !alias.scope !1660
+  store <2 x ptr> %7, ptr %i.c, align 16, !alias.scope !1660
+  %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store ptr %i.ao, ptr %i.at, align 16, !alias.scope !1660
   %i.au = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %i.as, ptr %i.au, align 8, !alias.scope !1660
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -393,7 +392,7 @@ bb.y:                                             ; preds = %bb.z, %bb.x
   %i.bm = load ptr, ptr %i.g, align 8, !noundef !7
   %i.bn = load i64, ptr %i.h, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.d, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bo, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bo, ptr noundef nonnull align 16 dereferenceable(32) %i.c, i64 32, i1 false)
   %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   store ptr %i.ay, ptr %i.bp, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %i.d, i64 112

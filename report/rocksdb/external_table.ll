@@ -204,8 +204,8 @@ bb.p:                                             ; preds = %_ZNSt7__cxx1112basi
 define internal void @_ZNK7rocksdb12_GLOBAL__N_127ExternalTableBuilderAdapter6statusEv(ptr dead_on_unwind noalias writable sret(%"class.rocksdb::Status") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(856) %1) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::unique_ptr.13", align 8 ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !213   ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !213
   %i.c = icmp eq i8 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -219,11 +219,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
-  store i8 %i.b, ptr %0, align 8, !tbaa !213
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 9
-  %3 = load <4 x i8>, ptr %i.j, align 1, !tbaa !29
-  store <4 x i8> %3, ptr %i.i, align 1, !tbaa !29
+  %3 = load <4 x i8>, ptr %i.a, align 8, !tbaa !29
+  store <4 x i8> %3, ptr %0, align 8, !tbaa !29
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %4 = load i8, ptr %i.j, align 4, !tbaa !215, !range !280, !noundef !79
+  store i8 %4, ptr %i.i, align 4, !tbaa !215
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 13
   %i.m = load i8, ptr %i.l, align 1, !tbaa !216

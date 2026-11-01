@@ -205,7 +205,7 @@ _ZNSt3__16vectorINS0_IN3jxl5TokenENS_9allocatorIS2_EEEENS3_IS5_EEE6resizeEm.exit
   %i.qf = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.qg = call i32 @_ZN3jxl12TokenizeTreeERKNSt3__16vectorINS_20PropertyDecisionNodeENS0_9allocatorIS2_EEEEPNS1_INS_5TokenENS3_IS8_EEEEPS5_(ptr noundef nonnull align 8 dereferenceable(24) %i.qf, ptr noundef nonnull %i.qc, ptr noundef nonnull %13) #25 ; 2 uses
   %i.qh = icmp eq i32 %i.qg, 0
-  %.pr.pre = load ptr, ptr %13, align 16, !tbaa !244 ; 6 uses
+  %.pr.pre = load ptr, ptr %13, align 16, !tbaa !244 ; 5 uses
   br i1 %i.qh, label %bb.bv, label %thread-pre-split
 
 bb.bv:                                            ; preds = %_ZNSt3__16vectorINS0_IN3jxl5TokenENS_9allocatorIS2_EEEENS3_IS5_EEE6resizeEm.exit
@@ -216,7 +216,7 @@ bb.bv:                                            ; preds = %_ZNSt3__16vectorINS
   %i.qm = ptrtoint ptr %i.qk to i64               ; 2 uses
   %i.qn = sub i64 %i.ql, %i.qm
   %i.qo = getelementptr inbounds nuw i8, ptr %13, i64 8
-  %i.qp = load ptr, ptr %i.qo, align 8, !tbaa !245 ; 2 uses
+  %i.qp = load ptr, ptr %i.qo, align 8, !tbaa !245
   %i.qq = ptrtoint ptr %i.qp to i64
   %i.qr = ptrtoint ptr %.pr.pre to i64
   %i.qs = sub i64 %i.qq, %i.qr
@@ -225,8 +225,6 @@ bb.bv:                                            ; preds = %_ZNSt3__16vectorINS
 
 bb.bw:                                            ; preds = %bb.bv
   %.not.i.i.i139 = icmp eq ptr %i.qk, null
-  %14 = insertelement <2 x ptr> poison, ptr %.pr.pre, i64 0
-  %15 = insertelement <2 x ptr> %14, ptr %i.qp, i64 1
   br i1 %.not.i.i.i139, label %thread-pre-split.thread, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
@@ -236,12 +234,11 @@ bb.bx:                                            ; preds = %bb.bw
   %i.qw = ptrtoint ptr %i.qv to i64
   %i.qx = sub i64 %i.qw, %i.qm
   call void @_ZdlPvm(ptr noundef nonnull %i.qk, i64 noundef %i.qx) #27
-  %16 = load <2 x ptr>, ptr %13, align 16, !tbaa !428
   br label %thread-pre-split.thread
 
 thread-pre-split.thread:                          ; preds = %bb.bx, %bb.bw
-  %17 = phi <2 x ptr> [ %15, %bb.bw ], [ %16, %bb.bx ]
-  store <2 x ptr> %17, ptr %i.qf, align 8, !tbaa !428
+  %14 = load <2 x ptr>, ptr %13, align 16, !tbaa !428
+  store <2 x ptr> %14, ptr %i.qf, align 8, !tbaa !428
   %i.qy = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.qz = load ptr, ptr %i.qy, align 16, !tbaa !428
   %i.ra = getelementptr inbounds nuw i8, ptr %0, i64 144

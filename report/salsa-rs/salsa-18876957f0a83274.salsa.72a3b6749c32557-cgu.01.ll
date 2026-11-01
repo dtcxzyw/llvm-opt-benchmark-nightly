@@ -202,21 +202,19 @@ bb.f:                                             ; preds = %bb.c
 define hidden void @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvMs6_NtCsC8CapfvpQ1_5salsa11zalsa_localNtBW_14QueryOriginRef6inputs0INtB7_5FnMutTNtBW_9QueryEdgeEE8call_mutBY_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([12 x i8]) align 4 captures(none) dereferenceable(12) initializes((0, 4)) %0, ptr noalias nofree noundef readnone align 8 captures(none) dereferenceable(8) %1, ptr noalias nofree noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %2) unnamed_addr #8 {
 bb.a:
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 4 ; 2 uses
+  %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 4
   %i.a = icmp sgt i32 %.sroa.3.0.copyload, -1
   br i1 %i.a, label %bb.b, label %_RNCNvMs6_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB7_14QueryOriginRef6inputs0B9_.exit
 
 bb.b:                                             ; preds = %bb.a
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 4
   %.sroa.0.0.copyload = load i32, ptr %2, align 4
   %i.b = add i32 %.sroa.0.0.copyload, 1           ; 2 uses
   %i.c = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %i.c)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.2.0.copyload, ptr %.sroa.4.0..sroa_idx.i, align 4, !alias.scope !448
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.3.0.copyload, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !448
+  %3 = load <2 x i32>, ptr %.sroa.2.0..sroa_idx, align 4
+  store <2 x i32> %3, ptr %.sroa.4.0..sroa_idx.i, align 4, !alias.scope !448
   br label %_RNCNvMs6_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB7_14QueryOriginRef6inputs0B9_.exit
 
 _RNCNvMs6_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB7_14QueryOriginRef6inputs0B9_.exit: ; preds = %bb.a, %bb.b

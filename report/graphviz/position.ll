@@ -204,7 +204,7 @@ set_xcoords.exit:                                 ; preds = %._crit_edge.i38, %b
 
 bb.bs:                                            ; preds = %set_xcoords.exit
   %i.adk = getelementptr inbounds nuw i8, ptr %i.adg, i64 16
-  %i.adl = load ptr, ptr %i.adk, align 8, !tbaa !147 ; 9 uses
+  %i.adl = load ptr, ptr %i.adk, align 8, !tbaa !147 ; 8 uses
   %i.adm = getelementptr inbounds nuw i8, ptr %i.adl, i64 84
   %i.adn = load i32, ptr %i.adm, align 4, !tbaa !149 ; 2 uses
   %.not.i44 = icmp eq i32 %i.adn, 0
@@ -311,17 +311,14 @@ bb.ca:                                            ; preds = %bb.by
   br label %bb.ch
 
 bb.cb:                                            ; preds = %bb.bt
-  %i.afu = getelementptr inbounds nuw i8, ptr %i.adl, i64 64
-  %i.afv = load double, ptr %i.afu, align 8, !tbaa !151 ; 2 uses
+  %i.afu = getelementptr inbounds nuw i8, ptr %i.adl, i64 64 ; 2 uses
+  %i.afv = load double, ptr %i.afu, align 8, !tbaa !151
   %i.afw = fcmp ugt double %i.afv, 0.000000e+00
   br i1 %i.afw, label %bb.cc, label %set_aspect.exit
 
 bb.cc:                                            ; preds = %bb.cb
-  %1 = getelementptr inbounds nuw i8, ptr %i.adl, i64 72
-  %2 = load double, ptr %1, align 8, !tbaa !152
-  %3 = insertelement <2 x double> poison, double %i.afv, i64 0
-  %4 = insertelement <2 x double> %3, double %2, i64 1
-  %i.afx = fdiv <2 x double> %4, %i.adq           ; 3 uses
+  %1 = load <2 x double>, ptr %i.afu, align 8, !tbaa !80
+  %i.afx = fdiv <2 x double> %1, %i.adq           ; 3 uses
   %i.afy = fcmp ogt <2 x double> %i.afx, splat (double 1.000000e+00) ; 2 uses
   %i.afz = extractelement <2 x i1> %i.afy, i64 0
   %i.aga = extractelement <2 x i1> %i.afy, i64 1

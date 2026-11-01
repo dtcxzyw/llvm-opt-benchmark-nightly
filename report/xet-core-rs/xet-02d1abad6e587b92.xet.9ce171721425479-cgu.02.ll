@@ -204,7 +204,7 @@ bb.a:
   %.sroa.6.i = alloca [48 x i8], align 8          ; 5 uses
   %.val = load ptr, ptr %1, align 8               ; 6 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.bf, align 8           ; 69 uses
+  %.val1 = load ptr, ptr %i.bf, align 8           ; 68 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8193)
   %i.bg = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCsUrhh0HcRih_5tokio7runtime7context7CONTEXT0023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 72
@@ -251,11 +251,10 @@ _RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyNtNtNtCsUrhh0HcRih_5to
   %i.by = getelementptr inbounds nuw i8, ptr %.val1, i64 656 ; 7 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.val1, i64 592 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.val1, i64 752 ; 2 uses
-  %i.cb = getelementptr inbounds nuw i8, ptr %.val1, i64 760
+  %i.cb = getelementptr inbounds nuw i8, ptr %.val1, i64 760 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.val1, i64 776 ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %.val1, i64 736 ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.val1, i64 768
-  %i.ce = getelementptr inbounds nuw i8, ptr %.val1, i64 744 ; 5 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %.val1, i64 744 ; 4 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.val1, i64 584 ; 6 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
   %i.ch = getelementptr inbounds nuw i8, ptr %.val1, i64 569 ; 5 uses
@@ -658,7 +657,7 @@ bb.iw:                                            ; preds = %bb.ih, %_RINvNtCskK
   br label %.body70.i.i.i
 
 _RNvXsF_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_8IntoIterNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtNtCsQbU2fm3lSD_3xet11xet_session20file_download_handle15XetFileDownloadENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB25_.exit.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsQbU2fm3lSD_3xet11xet_session20file_download_handle15XetFileDownloadEBH_.exit.i.i.i
-  %i.ow = load ptr, ptr %i.cb, align 8, !noalias !8201, !noundef !10 ; 2 uses
+  %i.ow = load ptr, ptr %i.cb, align 8, !noalias !8201, !noundef !10
   %.not.i.i.i = icmp eq ptr %i.ow, null
   br i1 %.not.i.i.i, label %bb.ix, label %.thread141.i.i.i
 
@@ -701,9 +700,8 @@ bb.iz:                                            ; preds = %bb.iy
 .thread141.i.i.i:                                 ; preds = %_RNvXsF_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_8IntoIterNtNtNtCsarFSTFZzLuM_11xet_runtime5utils9unique_id8UniqueIdNtNtNtCsQbU2fm3lSD_3xet11xet_session20file_download_handle15XetFileDownloadENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextB25_.exit.i.i.i
   %i.pa = load i64, ptr %i.ca, align 8, !noalias !8201, !noundef !10
   store i64 %i.pa, ptr %i.cc, align 8, !noalias !8201
-  %4 = load ptr, ptr %3, align 8, !noalias !8201, !nonnull !10, !noundef !10
-  store ptr %i.ow, ptr %i.cd, align 8, !noalias !8201
-  store ptr %4, ptr %i.ce, align 8, !noalias !8201
+  %3 = load <2 x ptr>, ptr %i.cb, align 8, !noalias !8201
+  store <2 x ptr> %3, ptr %i.cd, align 8, !noalias !8201
   store ptr %i.cd, ptr %.phi.trans.insert15.i.i, align 8, !noalias !8201
   store i8 0, ptr %.phi.trans.insert.i.i.i, align 1, !noalias !8201
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.996.i.i.i)

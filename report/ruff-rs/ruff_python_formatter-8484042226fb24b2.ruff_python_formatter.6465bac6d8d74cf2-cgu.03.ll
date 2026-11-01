@@ -204,9 +204,9 @@ bb.a:
   %i.h = alloca [24 x i8], align 8                ; 7 uses
   %i.i = alloca [24 x i8], align 8                ; 6 uses
   %i.j = alloca [8 x i8], align 8                 ; 7 uses
-  %i.k = alloca [32 x i8], align 8                ; 6 uses
+  %i.k = alloca [32 x i8], align 16               ; 6 uses
   %i.l = alloca [24 x i8], align 8                ; 7 uses
-  %i.m = load ptr, ptr %1, align 8, !nonnull !5, !align !6, !noundef !5 ; 2 uses
+  %i.m = load ptr, ptr %1, align 8, !nonnull !5, !align !6, !noundef !5
   %i.n = load i32, ptr %i.m, align 8, !range !18, !noundef !5
   %.not = icmp eq i32 %i.n, -1
   br i1 %.not, label %bb.c, label %.lr.ph.i
@@ -214,13 +214,14 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %3 = load ptr, ptr %i.o, align 8, !nonnull !5, !align !8, !noundef !5
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.q = load i64, ptr %i.p, align 8, !noundef !5
-  store ptr %i.m, ptr %i.k, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %3 = load <2 x ptr>, ptr %i.o, align 8
-  store <2 x ptr> %3, ptr %.sroa.4.0..sroa_idx, align 8
+  %4 = load <2 x ptr>, ptr %1, align 8
+  store <2 x ptr> %4, ptr %i.k, align 16
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 16
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store i64 %i.q, ptr %.sroa.6.0..sroa_idx, align 8
   store ptr %i.k, ptr %i.l, align 8

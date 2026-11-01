@@ -205,15 +205,15 @@ bb.a:
   store i32 %spec.select211, ptr %i.ac, align 4, !tbaa !32
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   store i32 %.0178, ptr %i.ad, align 4, !tbaa !32
-  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 11 uses
   store i32 %spec.select212, ptr %i.ae, align 4, !tbaa !49
-  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 5 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
   store i32 %.2, ptr %i.af, align 4, !tbaa !50
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   store i32 %spec.select212, ptr %i.ag, align 4, !tbaa !51
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 8 uses
   store i32 0, ptr %i.ah, align 4, !tbaa !49
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 5 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   store i32 -1, ptr %i.ai, align 4, !tbaa !50
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 3 uses
   store i32 0, ptr %i.aj, align 4, !tbaa !51
@@ -330,15 +330,14 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e
   br i1 %or.cond, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %i.bl = load i32, ptr %i.ae, align 4, !tbaa !49 ; 3 uses
+  %i.bl = load i32, ptr %i.ae, align 4, !tbaa !49 ; 2 uses
   %i.bm = icmp slt i32 %.0170.lcssa, %i.bl
   br i1 %i.bm, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   store i32 %i.bl, ptr %i.aj, align 4, !tbaa !51
-  store i32 %i.bl, ptr %i.ah, align 4, !tbaa !49
-  %2 = load i32, ptr %i.af, align 4, !tbaa !50
-  store i32 %2, ptr %i.ai, align 4, !tbaa !50
+  %2 = load <2 x i32>, ptr %i.ae, align 4, !tbaa !32
+  store <2 x i32> %2, ptr %i.ah, align 4, !tbaa !32
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j

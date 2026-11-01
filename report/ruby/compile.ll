@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.outer, %.thread296
   %i.v = load ptr, ptr %i.f, align 8, !tbaa !380  ; 2 uses
   %i.w = getelementptr [8 x i8], ptr %i.v, i64 %.0212274
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !335  ; 8 uses
-  %i.y = load i16, ptr %i.x, align 8, !tbaa !331  ; 2 uses
+  %i.y = load i16, ptr %i.x, align 8, !tbaa !331
   switch i16 %i.y, label %bb.y [
     i16 139, label %bb.g
     i16 90, label %bb.p
@@ -376,11 +376,8 @@ bb.x:                                             ; preds = %bb.w
   br label %.sink.split375
 
 bb.y:                                             ; preds = %bb.f
-  %7 = getelementptr i8, ptr %i.x, i64 2
-  %8 = load i16, ptr %7, align 2, !tbaa !378
-  %9 = insertelement <2 x i16> poison, i16 %i.y, i64 0
-  %10 = insertelement <2 x i16> %9, i16 %8, i64 1
-  %i.ch = and <2 x i16> %10, <i16 -1, i16 2>
+  %7 = load <2 x i16>, ptr %i.x, align 8, !tbaa !105
+  %i.ch = and <2 x i16> %7, <i16 -1, i16 2>
   %i.ci = shufflevector <2 x i16> %i.ch, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 0>
   %.fr = freeze <4 x i16> %i.ci
   %i.cj = icmp eq <4 x i16> %.fr, <i16 6, i16 0, i16 65, i16 122>

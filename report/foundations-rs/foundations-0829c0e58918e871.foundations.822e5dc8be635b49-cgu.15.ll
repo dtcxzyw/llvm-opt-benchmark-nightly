@@ -204,7 +204,7 @@ bb.a:
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
   %i.h = alloca [8 x i8], align 8                 ; 4 uses
-  %i.i = alloca [24 x i8], align 8                ; 9 uses
+  %i.i = alloca [24 x i8], align 8                ; 8 uses
   %i.j = alloca [24 x i8], align 8                ; 16 uses
   %i.k = alloca [32 x i8], align 8                ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !4303
@@ -560,8 +560,8 @@ bb.au:                                            ; preds = %bb.y
   br i1 %i.cn, label %bb.aw, label %bb.av, !dbg !4414
 
 bb.av:                                            ; preds = %bb.au
-  %i.co = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !4415
-  %i.cp = load ptr, ptr %i.co, align 8, !dbg !4415, !alias.scope !4286, !nonnull !263, !noundef !263 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !4415 ; 2 uses
+  %i.cp = load ptr, ptr %i.co, align 8, !dbg !4415, !alias.scope !4286, !nonnull !263, !noundef !263
   %i.cq = atomicrmw add ptr %i.cp, i64 1 monotonic, align 8, !dbg !4416, !noalias !4292
   %i.cr = icmp slt i64 %i.cq, 0, !dbg !4417
   br i1 %i.cr, label %bb.ax, label %bb.az, !dbg !4417
@@ -590,14 +590,11 @@ bb.ay:                                            ; preds = %bb.y, %bb.bn
           to label %.body unwind label %bb.bo, !dbg !4365
 
 bb.az:                                            ; preds = %bb.av
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !4415
-  %3 = load ptr, ptr %2, align 8, !dbg !4423, !alias.scope !4286, !nonnull !263, !align !265, !noundef !263
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !4424
-  store ptr %i.ba, ptr %i.i, align 8, !dbg !4424
-  %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8, !dbg !4424
-  store ptr %i.cp, ptr %.sroa.424.0..sroa_idx, align 8, !dbg !4424
-  %.sroa.525.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16, !dbg !4424
-  store ptr %3, ptr %.sroa.525.0..sroa_idx, align 8, !dbg !4424
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !4423
+  store ptr %i.ba, ptr %i.i, align 8, !dbg !4423
+  %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8, !dbg !4423
+  %2 = load <2 x ptr>, ptr %i.co, align 8, !dbg !4424, !alias.scope !4286
+  store <2 x ptr> %2, ptr %.sroa.424.0..sroa_idx, align 8, !dbg !4423
   %i.cu = invoke noundef nonnull align 8 ptr @_RNvMNtNtNtCsbaWXNhtWAp9_11foundations9telemetry7tracing4initNtB2_14TracingHarness3get()
           to label %bb.ba unwind label %bb.bl, !dbg !4425, !noalias !4294
 
@@ -822,8 +819,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.m, label %bb.k, label %bb.j, !dbg !4529
 
 bb.j:                                             ; preds = %bb.i
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !4530
-  %i.o = load ptr, ptr %i.n, align 8, !dbg !4530, !alias.scope !4510, !nonnull !263, !noundef !263 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !4530 ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8, !dbg !4530, !alias.scope !4510, !nonnull !263, !noundef !263
   %i.p = atomicrmw add ptr %i.o, i64 1 monotonic, align 8, !dbg !4531, !noalias !4511
   %i.q = icmp slt i64 %i.p, 0, !dbg !4532
   br i1 %i.q, label %bb.l, label %bb.n, !dbg !4532
@@ -837,8 +834,7 @@ bb.l:                                             ; preds = %bb.j
   unreachable, !dbg !4534
 
 bb.m:                                             ; preds = %bb.g, %bb.n
-  %.sroa.5.sroa.4.0 = phi ptr [ undef, %bb.g ], [ %3, %bb.n ], !dbg !4535
-  %.sroa.5.sroa.0.0 = phi ptr [ undef, %bb.g ], [ %i.o, %bb.n ], !dbg !4535
+  %2 = phi <2 x ptr> [ undef, %bb.g ], [ %3, %bb.n ], !dbg !4535
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !4536
   store ptr %i.a, ptr %i.r, align 8, !dbg !4536
   store i64 %i.b, ptr %0, align 8, !dbg !4536
@@ -849,14 +845,11 @@ bb.m:                                             ; preds = %bb.g, %bb.n
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !4536
   store ptr %i.i, ptr %i.s, align 8, !dbg !4536
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !4536
-  store ptr %.sroa.5.sroa.0.0, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !4536
-  %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !4536
-  store ptr %.sroa.5.sroa.4.0, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, align 8, !dbg !4536
+  store <2 x ptr> %2, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !4536
   ret void, !dbg !4537
 
 bb.n:                                             ; preds = %bb.j
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !4530
-  %3 = load ptr, ptr %2, align 8, !dbg !4538, !alias.scope !4510, !nonnull !263, !align !265, !noundef !263
+  %3 = load <2 x ptr>, ptr %i.n, align 8, !dbg !4538, !alias.scope !4510
   br label %bb.m, !dbg !4539
 }
 
@@ -1259,8 +1252,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !4420 = !DILocation(line: 0, scope: !4188, inlinedAt: !4293)
 !4421 = !DILocation(line: 189, column: 9, scope: !3979)
 !4422 = !DILocation(line: 209, column: 6, scope: !3979)
-!4423 = !DILocation(line: 2498, column: 38, scope: !202, inlinedAt: !4183)
-!4424 = !DILocation(line: 1163, column: 18, scope: !4188, inlinedAt: !4293)
+!4423 = !DILocation(line: 1163, column: 18, scope: !4188, inlinedAt: !4293)
+!4424 = !DILocation(line: 2498, column: 38, scope: !202, inlinedAt: !4183)
 !4425 = !DILocation(line: 158, column: 33, scope: !4191, inlinedAt: !4194)
 !4426 = !DILocation(line: 158, column: 32, scope: !4191, inlinedAt: !4194)
 !4427 = !DILocation(line: 158, column: 80, scope: !4191, inlinedAt: !4194)

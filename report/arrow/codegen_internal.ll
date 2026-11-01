@@ -204,15 +204,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.d = load i32, ptr %i.c, align 8, !tbaa !87
   %i.e = icmp eq i32 %i.d, 0
-  %2 = load ptr, ptr %0, align 8, !tbaa !90       ; 2 uses
   br i1 %i.e, label %bb.b, label %bb.m
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %2, ptr %i.a, align 8, !tbaa !90
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !70
-  store ptr %5, ptr %3, align 8, !tbaa !70
+  %2 = load <2 x ptr>, ptr %0, align 8, !tbaa !66
+  store <2 x ptr> %2, ptr %i.a, align 8, !tbaa !66
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !36   ; 4 uses
@@ -295,7 +291,8 @@ _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.
   br label %_ZN5arrow10TypeHolderaSERKS0_.exit
 
 bb.m:                                             ; preds = %bb.a
-  %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 40
+  %3 = load ptr, ptr %0, align 8, !tbaa !90
+  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.af = load i32, ptr %i.ae, align 8, !tbaa !87
   %i.ag = icmp eq i32 %i.af, 0
   br i1 %i.ag, label %bb.n, label %_ZN5arrow10TypeHolderaSERKS0_.exit

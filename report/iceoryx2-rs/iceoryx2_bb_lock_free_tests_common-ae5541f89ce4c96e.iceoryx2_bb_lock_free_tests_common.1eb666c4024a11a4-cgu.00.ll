@@ -205,7 +205,9 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !31, !nonnull !5, !align !6, !noundef !5
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load <2 x ptr>, ptr %i.cc, align 8, !alias.scope !31
+  %1 = load ptr, ptr %i.cc, align 8, !alias.scope !31, !nonnull !5, !align !6, !noundef !5
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %3 = load ptr, ptr %2, align 8, !alias.scope !31, !nonnull !5, !align !6, !noundef !5
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 1078
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bq, i64 1077
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
@@ -228,6 +230,8 @@ bb.a:
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bq, i64 1048 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.11.sroa.5.0..sroa.11.8..sroa_idx3.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
+  %4 = insertelement <2 x ptr> poison, ptr %i.bx, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %1, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread22ScopedThreadSpawnErrorE6expectCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.i, %.lr.ph.i
@@ -630,9 +634,9 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(24) %i.cu, i64 24, i1 false), !noalias !40
   store ptr %i.cb, ptr %i.fj, align 8, !noalias !39
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
-  store ptr %i.bx, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !39
-  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 16
-  store <2 x ptr> %1, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !39
+  store <2 x ptr> %5, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !39
+  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
+  store ptr %3, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !39
   %.sroa.7.0..sroa_idx16.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx16.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, i64 24, i1 false), !noalias !39
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
@@ -1035,7 +1039,9 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !56, !nonnull !5, !align !6, !noundef !5
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load <2 x ptr>, ptr %i.cc, align 8, !alias.scope !56
+  %1 = load ptr, ptr %i.cc, align 8, !alias.scope !56, !nonnull !5, !align !6, !noundef !5
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %3 = load ptr, ptr %2, align 8, !alias.scope !56, !nonnull !5, !align !6, !noundef !5
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 1078
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bq, i64 1077
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
@@ -1058,6 +1064,8 @@ bb.a:
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bq, i64 1048 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.11.sroa.5.0..sroa.11.8..sroa_idx3.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
+  %4 = insertelement <2 x ptr> poison, ptr %i.bx, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %1, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread22ScopedThreadSpawnErrorE6expectCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.i, %.lr.ph.i
@@ -1460,9 +1468,9 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(24) %i.cu, i64 24, i1 false), !noalias !65
   store ptr %i.cb, ptr %i.fj, align 8, !noalias !64
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
-  store ptr %i.bx, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !64
-  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 16
-  store <2 x ptr> %1, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !64
+  store <2 x ptr> %5, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !64
+  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
+  store ptr %3, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !64
   %.sroa.7.0..sroa_idx16.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx16.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, i64 24, i1 false), !noalias !64
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
@@ -1865,7 +1873,9 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !81, !nonnull !5, !align !6, !noundef !5
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load <2 x ptr>, ptr %i.cc, align 8, !alias.scope !81
+  %1 = load ptr, ptr %i.cc, align 8, !alias.scope !81, !nonnull !5, !align !6, !noundef !5
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %3 = load ptr, ptr %2, align 8, !alias.scope !81, !nonnull !5, !align !6, !noundef !5
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 1078
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bq, i64 1077
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
@@ -1888,6 +1898,8 @@ bb.a:
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bq, i64 1048 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.11.sroa.5.0..sroa.11.8..sroa_idx3.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
+  %4 = insertelement <2 x ptr> poison, ptr %i.bx, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %1, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread22ScopedThreadSpawnErrorE6expectCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.i, %.lr.ph.i
@@ -2290,9 +2302,9 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(24) %i.cu, i64 24, i1 false), !noalias !90
   store ptr %i.cb, ptr %i.fj, align 8, !noalias !89
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
-  store ptr %i.bx, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !89
-  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 16
-  store <2 x ptr> %1, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !89
+  store <2 x ptr> %5, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !89
+  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
+  store ptr %3, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !89
   %.sroa.7.0..sroa_idx16.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx16.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, i64 24, i1 false), !noalias !89
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
@@ -2695,7 +2707,9 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8, !alias.scope !106, !nonnull !5, !align !6, !noundef !5
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %1 = load <2 x ptr>, ptr %i.cc, align 8, !alias.scope !106
+  %1 = load ptr, ptr %i.cc, align 8, !alias.scope !106, !nonnull !5, !align !6, !noundef !5
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %3 = load ptr, ptr %2, align 8, !alias.scope !106, !nonnull !5, !align !6, !noundef !5
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bq, i64 1078
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bq, i64 1077
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
@@ -2718,6 +2732,8 @@ bb.a:
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bq, i64 1048 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.11.sroa.5.0..sroa.11.8..sroa_idx3.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
+  %4 = insertelement <2 x ptr> poison, ptr %i.bx, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %1, i64 1
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultuNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread22ScopedThreadSpawnErrorE6expectCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common.exit.i, %.lr.ph.i
@@ -3120,9 +3136,9 @@ bb.ag:                                            ; preds = %._crit_edge.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(24) %i.cu, i64 24, i1 false), !noalias !115
   store ptr %i.cb, ptr %i.fj, align 8, !noalias !114
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
-  store ptr %i.bx, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !114
-  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 16
-  store <2 x ptr> %1, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !114
+  store <2 x ptr> %5, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !114
+  %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
+  store ptr %3, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !114
   %.sroa.7.0..sroa_idx16.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx16.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, i64 24, i1 false), !noalias !114
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)

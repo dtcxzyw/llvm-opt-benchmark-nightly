@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 228
-  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
@@ -214,13 +214,14 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %12, i64 40 ; 3 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %12, i64 44 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 44 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %12, i64 44
+  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 44
   %i.aj = getelementptr inbounds nuw i8, ptr %12, i64 48
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.al = getelementptr inbounds nuw i8, ptr %12, i64 52
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52
-  %i.an = getelementptr inbounds nuw i8, ptr %12, i64 56 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 56 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 56
   %i.ao = getelementptr inbounds nuw i8, ptr %12, i64 64 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 64 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
@@ -311,7 +312,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
 
 bb.d:                                             ; preds = %.noexc29
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #9
-  %i.cn = load i32, ptr %i.x, align 8, !tbaa !103 ; 2 uses
+  %i.cn = load i32, ptr %i.x, align 8, !tbaa !103
   %i.co = icmp eq i32 %i.cn, 3
   br i1 %i.co, label %_ZN4ncnn3Mat7channelEi.exit, label %bb.e
 
@@ -336,7 +337,7 @@ _ZN4ncnn3Mat7channelEi.exit:                      ; preds = %bb.d
   store i32 %i.cp, ptr %i.ah, align 4, !tbaa !71
   store i32 %i.cq, ptr %i.aj, align 16, !tbaa !70
   store i32 1, ptr %i.al, align 4, !tbaa !105
-  store i32 %i.cr, ptr %i.an, align 8, !tbaa !56
+  store i32 %i.cr, ptr %15, align 8, !tbaa !56
   %i.da = sext i32 %i.cp to i64
   %i.db = sext i32 %i.cq to i64
   %i.dc = mul nsw i64 %i.db, %i.da
@@ -358,9 +359,10 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.dk, ptr %i.ac, align 8, !tbaa !55
   %i.dl = load ptr, ptr %i.af, align 8, !tbaa !19
   store ptr %i.dl, ptr %i.ae, align 16, !tbaa !19
-  store i32 %i.cn, ptr %i.ag, align 8, !tbaa !103
-  %15 = load <4 x i32>, ptr %i.ai, align 4, !tbaa !24
-  store <4 x i32> %15, ptr %i.ah, align 4, !tbaa !24
+  %16 = load <4 x i32>, ptr %i.x, align 8, !tbaa !24
+  store <4 x i32> %16, ptr %i.ag, align 8, !tbaa !24
+  %17 = load i32, ptr %i.an, align 8, !tbaa !56
+  store i32 %17, ptr %15, align 8, !tbaa !56
   %i.dm = load i64, ptr %i.ap, align 8, !tbaa !21
   store i64 %i.dm, ptr %i.ao, align 16, !tbaa !21
   %.not.i78 = icmp eq ptr %i.dh, null
@@ -390,7 +392,7 @@ bb.f:                                             ; preds = %_ZN4ncnn3Mat6addref
   %i.dy = load <4 x i32>, ptr %i.ag, align 8, !tbaa !24
   store <4 x i32> %i.dy, ptr %i.dx, align 8, !tbaa !24
   %i.dz = getelementptr inbounds nuw i8, ptr %.pre120, i64 56
-  %i.ea = load i32, ptr %i.an, align 8, !tbaa !56
+  %i.ea = load i32, ptr %15, align 8, !tbaa !56
   store i32 %i.ea, ptr %i.dz, align 8, !tbaa !56
   %i.eb = getelementptr inbounds nuw i8, ptr %.pre120, i64 64
   %i.ec = load i64, ptr %i.ao, align 16, !tbaa !21

@@ -130,25 +130,23 @@ bb.a:
 define void @_RINvMsg_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB6_13FlattenCompatINtNtB8_3map3MapINtNtB8_10filter_map9FilterMapINtNtCshx33xqnyVJN_3syn10punctuated7IterMutNtNtB21_4path11PathSegmentENCNvNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_params16replace_lifetime0ENCB36_s_0EIB1X_NtB2F_15GenericArgumentEE9iter_folduNCINvNvXsi_B6_IBS_ppENtNtNtBa_6traits8iterator8Iterator4fold7flattenB4t_uNCINvNvB5t_8for_each4callQB4y_NCB36_s0_0E0E0EB3c_(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1                 ; 3 uses
-  %i.b = alloca [16 x i8], align 8                ; 7 uses
-  %i.c = alloca [16 x i8], align 8                ; 7 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
+  %i.b = alloca [16 x i8], align 16               ; 7 uses
+  %i.c = alloca [16 x i8], align 16               ; 7 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %2 = load ptr, ptr %1, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %i.e, ptr %i.c, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store ptr %2, ptr %3, align 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %2 = load <2 x ptr>, ptr %i.d, align 8
+  store <2 x ptr> %2, ptr %i.c, align 16
   br label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callQNtNtCshx33xqnyVJN_3syn4path15GenericArgumentNCNvNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_params16replace_lifetimes0_0E0INtB7_5FnMutTuB1O_EE8call_mutB2F_.exit.i.i
 
 _RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callQNtNtCshx33xqnyVJN_3syn4path15GenericArgumentNCNvNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_params16replace_lifetimes0_0E0INtB7_5FnMutTuB1O_EE8call_mutB2F_.exit.i.i: ; preds = %bb.d, %bb.b
-  %i.f = load ptr, ptr %i.c, align 8
-  %i.g = load ptr, ptr %3, align 8
+  %i.f = load ptr, ptr %i.c, align 16
+  %i.g = load ptr, ptr %1, align 8
   %i.h = invoke { ptr, ptr } @_RNvXs0_NtCshx33xqnyVJN_3syn5dropsINtB5_6NoDropDINtNtB7_10punctuated12IterMutTraitNtNtB7_4path15GenericArgumentEp4ItemQB1h_EL_ENtNtNtCskKLDkoKarTP_4core3ops5deref8DerefMut9deref_mutCs2SM5xCHwwDm_13logos_codegen(ptr %i.f, ptr align 8 %i.g)
           to label %.noexc.i.i unwind label %bb.c ; 2 uses
 
@@ -211,23 +209,21 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %.body.thread30
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.t = load ptr, ptr %i.s, align 8              ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.t = load ptr, ptr %i.s, align 8
   %.not8 = icmp eq ptr %i.t, null
   br i1 %.not8, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %5 = load ptr, ptr %4, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %i.t, ptr %i.b, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  store ptr %5, ptr %6, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %4 = load <2 x ptr>, ptr %i.s, align 8
+  store <2 x ptr> %4, ptr %i.b, align 16
   br label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callQNtNtCshx33xqnyVJN_3syn4path15GenericArgumentNCNvNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_params16replace_lifetimes0_0E0INtB7_5FnMutTuB1O_EE8call_mutB2F_.exit.i.i9
 
 _RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator8for_each4callQNtNtCshx33xqnyVJN_3syn4path15GenericArgumentNCNvNtNtCs2SM5xCHwwDm_13logos_codegen6parser11type_params16replace_lifetimes0_0E0INtB7_5FnMutTuB1O_EE8call_mutB2F_.exit.i.i9: ; preds = %bb.k, %bb.i
-  %i.u = load ptr, ptr %i.b, align 8
-  %i.v = load ptr, ptr %6, align 8
+  %i.u = load ptr, ptr %i.b, align 16
+  %i.v = load ptr, ptr %3, align 8
   %i.w = invoke { ptr, ptr } @_RNvXs0_NtCshx33xqnyVJN_3syn5dropsINtB5_6NoDropDINtNtB7_10punctuated12IterMutTraitNtNtB7_4path15GenericArgumentEp4ItemQB1h_EL_ENtNtNtCskKLDkoKarTP_4core3ops5deref8DerefMut9deref_mutCs2SM5xCHwwDm_13logos_codegen(ptr %i.u, ptr align 8 %i.v)
           to label %.noexc.i.i10 unwind label %bb.j ; 2 uses
 

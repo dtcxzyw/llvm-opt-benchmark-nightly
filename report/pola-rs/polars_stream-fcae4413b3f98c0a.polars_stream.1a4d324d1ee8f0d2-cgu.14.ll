@@ -203,7 +203,6 @@ bb.af:                                            ; preds = %bb.ad
   %i.ei = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 3 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.el = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.em = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.en = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
@@ -412,12 +411,12 @@ bb.az:                                            ; preds = %.backedge.i.i, %bb.
           to label %bb.ba unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !140297, !noalias !139892
 
 bb.ba:                                            ; preds = %bb.az
-  %i.gy = load i32, ptr %i.z, align 8, !dbg !140297, !noalias !139891, !noundef !3769 ; 2 uses
+  %i.gy = load i32, ptr %i.z, align 8, !dbg !140297, !noalias !139891, !noundef !3769
   %.not.i.i = icmp eq i32 %i.gy, 0, !dbg !140297
   br i1 %.not.i.i, label %_RNvNtCs2g09Ig8GZd6_13polars_stream7execute31find_runnable_pipeline_blockers.exit.i, label %bb.bb, !dbg !140297
 
 bb.bb:                                            ; preds = %bb.ba
-  %4 = load i32, ptr %3, align 4, !dbg !140298, !noalias !139891, !noundef !3769
+  %3 = load <2 x i32>, ptr %i.z, align 8, !dbg !140298, !noalias !139891
   %i.gz = load ptr, ptr %i.el, align 8, !dbg !140299, !noalias !139891, !nonnull !3769, !align !3958, !noundef !3769 ; 4 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 32, !dbg !140300
   %i.hb = load ptr, ptr %i.ha, align 8, !dbg !140300, !noalias !139892, !nonnull !3769, !noundef !3769 ; 2 uses
@@ -502,10 +501,8 @@ bb.bd:                                            ; preds = %_RINvXs2J_NtNtCscgR
 
 _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyE8push_mutBJ_.exit.i.i: ; preds = %bb.bd, %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvNtBU_7execute31find_runnable_pipeline_blockerss_0EBU_.exit.i.i
   %i.ih = load ptr, ptr %i.ej, align 8, !dbg !140328, !alias.scope !139907, !noalias !139891, !nonnull !3769, !noundef !3769
-  %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %i.ie, !dbg !140329 ; 2 uses
-  store i32 %i.gy, ptr %i.ii, align 4, !dbg !140330, !noalias !139892
-  %5 = getelementptr inbounds nuw i8, ptr %i.ii, i64 4, !dbg !140330
-  store i32 %4, ptr %5, align 4, !dbg !140330, !noalias !139892
+  %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.ih, i64 %i.ie, !dbg !140329
+  store <2 x i32> %3, ptr %i.ii, align 4, !dbg !140330, !noalias !139892
   %i.ij = add i64 %i.ie, 1, !dbg !140331
   store i64 %i.ij, ptr %i.ek, align 8, !dbg !140331, !alias.scope !139907, !noalias !139891
   br label %.backedge.i.i, !dbg !140332

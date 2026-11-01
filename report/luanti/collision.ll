@@ -202,22 +202,19 @@ bb.ce:                                            ; preds = %bb.cc, %.thread801,
   %i.pf = phi ptr [ %i.oc, %bb.cc ], [ %i.go, %.thread801 ], [ %i.oc, %_ZN11StreamProxylsEPFRSoS0_E.exit505 ]
   %.promoted883 = phi i8 [ %i.od, %bb.cc ], [ %i.gn, %.thread801 ], [ %i.od, %_ZN11StreamProxylsEPFRSoS0_E.exit505 ] ; 2 uses
   %.promoted881 = phi i8 [ %i.oe, %bb.cc ], [ %i.gm, %.thread801 ], [ %i.oe, %_ZN11StreamProxylsEPFRSoS0_E.exit505 ] ; 2 uses
-  %i.pg = load float, ptr %i.dd, align 4, !tbaa !37 ; 3 uses
+  %i.pg = load float, ptr %i.dd, align 4, !tbaa !37 ; 2 uses
   %.val423 = load ptr, ptr %i.cx, align 8, !tbaa !70 ; 2 uses
   %.val = load ptr, ptr %i.cz, align 8, !tbaa !70 ; 2 uses
   %.not816885 = icmp eq ptr %.val423, %.val
   br i1 %.not816885, label %.critedge417.critedge, label %.lr.ph893.preheader
 
 .lr.ph893.preheader:                              ; preds = %bb.ce
-  %16 = load float, ptr %6, align 4, !tbaa !35
   %.sroa.29.0.copyload = load float, ptr %i.dk, align 4, !tbaa !19
   %i.ph = fadd nsz float %.sroa.29.0.copyload, %i.pg
-  %17 = load float, ptr %i.dc, align 4, !tbaa !36 ; 2 uses
   %i.pi = load <4 x float>, ptr %3, align 4, !tbaa !19
-  %18 = insertelement <4 x float> poison, float %16, i64 0
-  %19 = insertelement <4 x float> %18, float %17, i64 1
-  %20 = insertelement <4 x float> %19, float %i.pg, i64 2
-  %i.pj = shufflevector <4 x float> %20, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
+  %16 = load float, ptr %i.dc, align 4, !tbaa !36
+  %17 = load <3 x float>, ptr %6, align 4, !tbaa !19
+  %i.pj = shufflevector <3 x float> %17, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
   %i.pk = fadd nsz <4 x float> %i.pi, %i.pj
   br label %.lr.ph893
 
@@ -232,7 +229,7 @@ bb.ce:                                            ; preds = %bb.cc, %.thread801,
   br label %.critedge417
 
 .lr.ph893:                                        ; preds = %.lr.ph893.preheader, %bb.cm
-  %i.pn = phi float [ %i.rc, %bb.cm ], [ %17, %.lr.ph893.preheader ] ; 6 uses
+  %i.pn = phi float [ %i.rc, %bb.cm ], [ %16, %.lr.ph893.preheader ] ; 6 uses
   %.sroa.0620.0891 = phi ptr [ %i.rg, %bb.cm ], [ %.val423, %.lr.ph893.preheader ] ; 9 uses
   %.sroa.29.0886 = phi float [ %.sroa.29.2, %bb.cm ], [ %i.ph, %.lr.ph893.preheader ] ; 6 uses
   %i.po = phi i8 [ %i.re, %bb.cm ], [ %.promoted881, %.lr.ph893.preheader ] ; 5 uses

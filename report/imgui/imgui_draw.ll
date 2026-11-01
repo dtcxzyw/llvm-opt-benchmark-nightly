@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bz
-  %.0273.i38 = phi ptr [ %i.km, %bb.bg ], [ %.2275.i, %bb.bz ] ; 9 uses
+  %.0273.i38 = phi ptr [ %i.km, %bb.bg ], [ %.2275.i, %bb.bz ] ; 6 uses
   %.0278.i37 = phi ptr [ null, %bb.bg ], [ %.1279.i, %bb.bz ] ; 6 uses
   %.6.i36 = phi i32 [ 0, %bb.bg ], [ %.7.i, %bb.bz ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #38
@@ -221,7 +221,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bz
   %i.ks = shl nuw nsw i32 %i.kr, 8
   %i.kt = zext i8 %.val391.i to i32
   %i.ku = or disjoint i32 %i.ks, %i.kt
-  %i.kv = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 4 ; 2 uses
+  %i.kv = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 4 ; 4 uses
   %i.kw = and i32 %i.ko, 2
   %.not342.i = icmp eq i32 %i.kw, 0
   br i1 %.not342.i, label %bb.bl, label %bb.bi
@@ -229,31 +229,26 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bz
 bb.bi:                                            ; preds = %bb.bh
   %i.kx = and i32 %i.ko, 1
   %.not343.i = icmp eq i32 %i.kx, 0
-  %5 = load i8, ptr %i.kv, align 1, !tbaa !50     ; 2 uses
   br i1 %.not343.i, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  %6 = getelementptr i8, ptr %.0273.i38, i64 5
-  %7 = getelementptr i8, ptr %.0273.i38, i64 7
-  %.val387.i = load i8, ptr %7, align 1, !tbaa !50
-  %8 = load <2 x i8>, ptr %6, align 1, !tbaa !50
-  %9 = shufflevector <2 x i8> %8, <2 x i8> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.ky = insertelement <2 x i8> %9, i8 %5, i64 1
+  %.val387.i = load i8, ptr %i.kv, align 1, !tbaa !50
+  %5 = load <4 x i8>, ptr %i.kv, align 1, !tbaa !50 ; 2 uses
+  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <2 x i32> <i32 2, i32 poison>
+  %i.ky = insertelement <2 x i8> %6, i8 %.val387.i, i64 1
   %i.kz = zext <2 x i8> %i.ky to <2 x i16>
   %i.la = shl nuw <2 x i16> %i.kz, splat (i16 8)
-  %10 = insertelement <2 x i8> %9, i8 %.val387.i, i64 0
-  %i.lb = zext <2 x i8> %10 to <2 x i16>
+  %7 = shufflevector <4 x i8> %5, <4 x i8> poison, <2 x i32> <i32 3, i32 1>
+  %i.lb = zext <2 x i8> %7 to <2 x i16>
   %i.lc = or disjoint <2 x i16> %i.la, %i.lb
   %i.ld = sitofp <2 x i16> %i.lc to <2 x float>
   %i.le = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 8
   br label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bi
-  %11 = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 5
-  %12 = load i8, ptr %11, align 1, !tbaa !50
-  %13 = insertelement <2 x i8> poison, i8 %12, i64 0
-  %14 = insertelement <2 x i8> %13, i8 %5, i64 1
-  %i.lf = sitofp <2 x i8> %14 to <2 x float>
+  %8 = load <2 x i8>, ptr %i.kv, align 1, !tbaa !50
+  %9 = shufflevector <2 x i8> %8, <2 x i8> poison, <2 x i32> <i32 1, i32 0>
+  %i.lf = sitofp <2 x i8> %9 to <2 x float>
   %i.lg = getelementptr inbounds nuw i8, ptr %.0273.i38, i64 6
   br label %bb.bl
 

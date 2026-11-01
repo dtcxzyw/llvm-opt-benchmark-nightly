@@ -205,7 +205,7 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs14kW
 
 bb.c:                                             ; preds = %.lr.ph.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !40162)
-  %i.r = load ptr, ptr %.sroa.012.034.i, align 8, !alias.scope !40163, !nonnull !108, !noundef !108 ; 2 uses
+  %i.r = load ptr, ptr %.sroa.012.034.i, align 8, !alias.scope !40163, !nonnull !108, !noundef !108
   %i.s = atomicrmw add ptr %i.r, i64 1 monotonic, align 8, !noalias !40164
   %i.t = icmp slt i64 %i.s, 0
   br i1 %i.t, label %bb.d, label %bb.e
@@ -217,14 +217,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.u = add nuw nsw i64 %.sroa.7.033.i, 1
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.012.034.i, i64 24
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.012.034.i, i64 8
-  %3 = load ptr, ptr %2, align 8, !alias.scope !40163, !noundef !108
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.034.i, i64 16
   %i.x = load i64, ptr %i.w, align 8, !alias.scope !40163, !noundef !108
-  %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.7.033.i ; 3 uses
-  store ptr %i.r, ptr %i.y, align 8, !noalias !40161
-  %.sroa.423.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store ptr %3, ptr %.sroa.423.0..sroa_idx.i, align 8, !noalias !40161
+  %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.7.033.i ; 2 uses
+  %2 = load <2 x ptr>, ptr %.sroa.012.034.i, align 8, !alias.scope !40163
+  store <2 x ptr> %2, ptr %i.y, align 8, !noalias !40161
   %.sroa.524.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store i64 %i.x, ptr %.sroa.524.0..sroa_idx.i, align 8, !noalias !40161
   %i.z = icmp eq i64 %i.p, 0

@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph, %.loopexit
   %.041 = phi i64 [ 0, %.lr.ph ], [ %i.ai, %.loopexit ] ; 2 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %.041 ; 2 uses
-  %i.aa = load i32, ptr %i.z, align 4             ; 3 uses
+  %i.aa = load i32, ptr %i.z, align 4             ; 2 uses
   %i.ab = icmp sgt i32 %i.aa, 6
   br i1 %i.ab, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 4
-  %6 = load i32, ptr %5, align 4
+  %5 = load <2 x i32>, ptr %i.z, align 4
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.i
@@ -223,10 +222,8 @@ bb.g:                                             ; preds = %bb.f, %bb.i
   br i1 %i.af, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.02940 ; 2 uses
-  store i32 %i.aa, ptr %i.ag, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
-  store i32 %6, ptr %7, align 4
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.02940
+  store <2 x i32> %5, ptr %i.ag, align 8
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.g

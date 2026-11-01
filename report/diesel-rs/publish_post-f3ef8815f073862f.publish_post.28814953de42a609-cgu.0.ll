@@ -202,12 +202,12 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvXs0_NtNtCsjRvGck33osM_6diesel10connection15statement_cacheINtNtCscI6d9CVNmLh_4core6result6ResultNtNtNtNtBa_5mysql10connection4stmt9StatementNtNtBa_6result5ErrorEINtB6_27StatementCallbackReturnTypeB1A_RNtNtB1E_3raw13RawConnectionE14register_cacheNCINvMB6_INtB6_14StatementCacheNtNtB1G_7backend5MysqlB1A_E33cached_statement_non_generic_implBY_B3g_NCINvB44_28cached_statement_non_genericBY_B3g_E0E0ECs3tBEscNKhHV_12publish_post(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(40) initializes((0, 24)) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(40) %1, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(64) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [80 x i8], align 8                ; 10 uses
+  %i.a = alloca [80 x i8], align 8                ; 9 uses
   %.sroa.0.0.copyload = load i64, ptr %2, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 3 uses
   %.sroa.78.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.78.0.copyload = load i64, ptr %.sroa.78.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.78.0.copyload = load i64, ptr %.sroa.78.0..sroa_idx, align 8 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8 ; 3 uses
   %i.b = load i64, ptr %1, align 8, !range !6, !noundef !4
@@ -246,7 +246,6 @@ bb.e:                                             ; preds = %bb.a
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
   %.sroa.9.0.copyload = load i64, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !376
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false)
@@ -254,9 +253,8 @@ bb.e:                                             ; preds = %bb.a
   %.sroa.6.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %.sroa.6.0.copyload, ptr %.sroa.6.0..sroa_idx4, align 8, !noalias !377
   %.sroa.7.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 %.sroa.7.0.copyload, ptr %.sroa.7.0..sroa_idx6, align 8, !noalias !377
-  %.sroa.78.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i64 %.sroa.78.0.copyload, ptr %.sroa.78.0..sroa_idx9, align 8, !noalias !377
+  %3 = load <2 x i64>, ptr %.sroa.7.0..sroa_idx, align 8
+  store <2 x i64> %3, ptr %.sroa.7.0..sroa_idx6, align 8, !noalias !377
   %.sroa.8.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store ptr %.sroa.8.0.copyload, ptr %.sroa.8.0..sroa_idx11, align 8, !noalias !377
   %.sroa.9.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %i.a, i64 40

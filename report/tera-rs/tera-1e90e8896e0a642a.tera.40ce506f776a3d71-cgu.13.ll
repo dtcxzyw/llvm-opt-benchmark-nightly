@@ -204,7 +204,7 @@ define hidden void @_RNvMsi_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree3mapINt
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 12 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
-  %i.c = alloca [24 x i8], align 8                ; 6 uses
+  %i.c = alloca [24 x i8], align 8                ; 5 uses
     #dbg_value(ptr poison, !22373, !DIExpression(), !21951)
   %i.d = alloca [24 x i8], align 8                ; 7 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
@@ -607,7 +607,6 @@ bb.ai:                                            ; preds = %bb.aj, %bb.ah, %bb.
   %i.cj = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.cl = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.cm = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   %i.cn = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %i.co = getelementptr inbounds nuw i8, ptr %i.s, i64 32
@@ -867,31 +866,31 @@ bb.bb:                                            ; preds = %bb.ba
 .noexc105.i:                                      ; preds = %bb.bb
   %i.dk = load ptr, ptr %i.d, align 8, !dbg !22933, !noalias !22760, !noundef !1328 ; 2 uses
   %i.dl = icmp eq ptr %i.dk, null, !dbg !22933
-  %3 = load i64, ptr %i.ck, align 8, !dbg !22935, !noalias !22760 ; 6 uses
-  br i1 %i.dl, label %bb.bc, label %bb.bd, !dbg !22936
+  br i1 %i.dl, label %bb.bc, label %bb.bd, !dbg !22935
 
 bb.bc:                                            ; preds = %.noexc105.i
+  %2 = load i64, ptr %i.ck, align 8, !dbg !22936, !noalias !22760 ; 5 uses
   %i.dm = load ptr, ptr %i.cj, align 8, !dbg !22937, !noalias !22760, !nonnull !1328, !noundef !1328 ; 3 uses
     #dbg_value(ptr %i.dm, !22404, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !22287)
-    #dbg_value(i64 %3, !22404, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22287)
+    #dbg_value(i64 %2, !22404, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22287)
     #dbg_value(ptr %i.dm, !5321, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !22289)
-    #dbg_value(i64 %3, !5321, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22289)
-    #dbg_value(i64 %3, !5326, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22290)
-    #dbg_value(i64 %3, !5335, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22292)
+    #dbg_value(i64 %2, !5321, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22289)
+    #dbg_value(i64 %2, !5326, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22290)
+    #dbg_value(i64 %2, !5335, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22292)
     #dbg_value(ptr %i.dm, !5326, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !22290)
     #dbg_value(ptr %i.dm, !5335, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !22292)
     #dbg_value(ptr %i.dm, !5352, !DIExpression(), !22294)
-  %i.dn = icmp eq i64 %3, 0, !dbg !22938
+  %i.dn = icmp eq i64 %2, 0, !dbg !22938
   br i1 %i.dn, label %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtBb_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueNtB1k_14LeafOrInternalE14last_leaf_edgeB20_.exit.i.i.i, label %.lr.ph.i.i.i.i.preheader, !dbg !22938
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.bc
-  %xtraiter = and i64 %3, 7, !dbg !22938          ; 2 uses
+  %xtraiter = and i64 %2, 7, !dbg !22938          ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !22938
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol, !dbg !22938
 
 .lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i.prol
   %.sroa.03.019.i.i.i.i.prol = phi ptr [ %i.du, %.lr.ph.i.i.i.i.prol ], [ %i.dm, %.lr.ph.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.05.018.i.i.i.i.prol = phi i64 [ %i.dv, %.lr.ph.i.i.i.i.prol ], [ %3, %.lr.ph.i.i.i.i.preheader ]
+  %.sroa.05.018.i.i.i.i.prol = phi i64 [ %i.dv, %.lr.ph.i.i.i.i.prol ], [ %2, %.lr.ph.i.i.i.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.preheader ]
     #dbg_value(ptr %.sroa.03.019.i.i.i.i.prol, !5352, !DIExpression(), !22294)
     #dbg_value(i64 %.sroa.05.018.i.i.i.i.prol, !5335, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22292)
@@ -933,8 +932,8 @@ bb.bc:                                            ; preds = %.noexc105.i
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.preheader ], [ %i.du, %.lr.ph.i.i.i.i.prol ]
   %.sroa.03.019.i.i.i.i.unr = phi ptr [ %i.dm, %.lr.ph.i.i.i.i.preheader ], [ %i.du, %.lr.ph.i.i.i.i.prol ]
-  %.sroa.05.018.i.i.i.i.unr = phi i64 [ %3, %.lr.ph.i.i.i.i.preheader ], [ %i.dv, %.lr.ph.i.i.i.i.prol ]
-  %i.dw = icmp ult i64 %3, 8, !dbg !22938
+  %.sroa.05.018.i.i.i.i.unr = phi i64 [ %2, %.lr.ph.i.i.i.i.preheader ], [ %i.dv, %.lr.ph.i.i.i.i.prol ]
+  %i.dw = icmp ult i64 %2, 8, !dbg !22938
   br i1 %i.dw, label %_RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtBb_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueNtB1k_14LeafOrInternalE14last_leaf_edgeB20_.exit.i.i.i, label %.lr.ph.i.i.i.i, !dbg !22938
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
@@ -1202,14 +1201,13 @@ _RNvMsn_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree8navigateINtNtB7_4node7Node
 
 bb.bd:                                            ; preds = %.noexc105.i
     #dbg_value(ptr %i.dk, !22399, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !22320)
-  %.sroa.4.0.copyload.i.i = load i64, ptr %i.cj, align 8, !dbg !22952, !noalias !22760
-    #dbg_value(i64 %.sroa.4.0.copyload.i.i, !22399, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22320)
-    #dbg_value(i64 %3, !22399, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !22320)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22953, !noalias !22760
+    #dbg_value(i64 poison, !22399, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22320)
+    #dbg_value(i64 %2, !22399, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !22320)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22952, !noalias !22760
     #dbg_value(ptr undef, !22373, !DIExpression(), !21951)
-  store ptr %i.dk, ptr %i.c, align 8, !dbg !22954, !noalias !22760
-  store i64 %.sroa.4.0.copyload.i.i, ptr %i.cl, align 8, !dbg !22954, !noalias !22760
-  store i64 %3, ptr %2, align 8, !dbg !22954, !noalias !22760
+  store ptr %i.dk, ptr %i.c, align 8, !dbg !22953, !noalias !22760
+  %3 = load <2 x i64>, ptr %i.cj, align 8, !dbg !22954, !noalias !22760
+  store <2 x i64> %3, ptr %i.cl, align 8, !dbg !22953, !noalias !22760
   %i.gg = invoke { ptr, ptr } @_RNvMsQ_NtNtNtCsgCecv3eZDcN_5alloc11collections5btree4nodeINtB5_6HandleINtB5_7NodeRefNtNtB5_6marker3MutINtNtBb_6borrow3CoweENtNtCs5yXxDE1DkoT_4tera5value5ValueNtB1m_14LeafOrInternalENtB1m_2KVE11into_kv_mutB21_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c)
           to label %.noexc106.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !22955, !noalias !22465 ; 0 uses
 
@@ -1612,8 +1610,8 @@ begin_hunk_2_@llvm.memset.p0.i64
 !22932 = !DILocation(line: 3349, column: 23, scope: !21921, inlinedAt: !21949)
 !22933 = !DILocation(line: 3350, column: 15, scope: !21922, inlinedAt: !21949)
 !22934 = !DILocation(line: 3350, column: 23, scope: !21922, inlinedAt: !21949)
-!22935 = !DILocation(line: 0, scope: !21922, inlinedAt: !21949)
-!22936 = !DILocation(line: 3350, column: 9, scope: !21922, inlinedAt: !21949)
+!22935 = !DILocation(line: 3350, column: 9, scope: !21922, inlinedAt: !21949)
+!22936 = !DILocation(line: 0, scope: !21922, inlinedAt: !21949)
 !22937 = !DILocation(line: 3361, column: 17, scope: !21922, inlinedAt: !21949)
 !22938 = !DILocation(line: 751, column: 12, scope: !1037, inlinedAt: !22291)
 !22939 = !DILocation(line: 291, column: 30, scope: !1043, inlinedAt: !22299)
@@ -1629,9 +1627,9 @@ begin_hunk_2_@llvm.memset.p0.i64
 !22949 = !DILocation(line: 154, column: 17, scope: !1044, inlinedAt: !22319)
 !22950 = !DILocation(line: 3362, column: 17, scope: !21916, inlinedAt: !21949)
 !22951 = !DILocation(line: 3364, column: 13, scope: !21922, inlinedAt: !21949)
-!22952 = !DILocation(line: 3351, column: 16, scope: !21922, inlinedAt: !21949)
-!22953 = !DILocation(line: 3355, column: 39, scope: !21923, inlinedAt: !21949)
-!22954 = !DILocation(line: 870, column: 9, scope: !21910, inlinedAt: !21950)
+!22952 = !DILocation(line: 3355, column: 39, scope: !21923, inlinedAt: !21949)
+!22953 = !DILocation(line: 870, column: 9, scope: !21910, inlinedAt: !21950)
+!22954 = !DILocation(line: 3351, column: 16, scope: !21922, inlinedAt: !21949)
 !22955 = !DILocation(line: 3355, column: 57, scope: !21923, inlinedAt: !21949)
 !22956 = !DILocation(line: 3355, column: 69, scope: !21923, inlinedAt: !21949)
 !22957 = !DILocation(line: 3357, column: 32, scope: !21917, inlinedAt: !21949)

@@ -205,8 +205,8 @@ _RNvXsH_CsfnXyRYRFu3h_8smallvecINtB5_8IntoIterATINtNtNtCskTBvlRM5ILY_4moka6commo
   %.sink12.i.i.i.i = phi ptr [ %i.aqt, %bb.kr ], [ %i.aqu, %bb.ks ]
   %i.azr = getelementptr inbounds nuw [32 x i8], ptr %.sink12.i.i.i.i, i64 %i.aqj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aql, ptr noundef nonnull align 8 dereferenceable(32) %i.azr, i64 32, i1 false)
-  %.phi.trans.insert527.i.i = getelementptr inbounds nuw i8, ptr %0, i64 656
-  %.pre528.i.i = load i64, ptr %.phi.trans.insert527.i.i, align 8, !range !40, !noalias !10731 ; 2 uses
+  %.phi.trans.insert527.i.i = getelementptr inbounds nuw i8, ptr %0, i64 656 ; 2 uses
+  %.pre528.i.i = load i64, ptr %.phi.trans.insert527.i.i, align 8, !range !40, !noalias !10731
   %.not.i.i212 = icmp eq i64 %.pre528.i.i, -1
   br i1 %.not.i.i212, label %bb.no, label %bb.nm
 
@@ -215,11 +215,8 @@ bb.nm:                                            ; preds = %_RNvXsH_CsfnXyRYRFu
   %i.azt = getelementptr inbounds nuw i8, ptr %0, i64 648
   %i.azu = load i64, ptr %i.azt, align 8, !noalias !10731, !noundef !23
   %i.azv = getelementptr inbounds nuw i8, ptr %0, i64 1024
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 664
-  %3 = load i64, ptr %2, align 8, !noalias !10731
-  store i64 %.pre528.i.i, ptr %i.azv, align 8, !noalias !10731
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1032
-  store i64 %3, ptr %4, align 8, !noalias !10731
+  %2 = load <2 x i64>, ptr %.phi.trans.insert527.i.i, align 8, !noalias !10731
+  store <2 x i64> %2, ptr %i.azv, align 8, !noalias !10731
   %i.azw = getelementptr inbounds nuw i8, ptr %0, i64 1096
   store ptr %i.azs, ptr %i.azw, align 8, !noalias !10731
   %i.azx = getelementptr inbounds nuw i8, ptr %0, i64 1104
@@ -622,8 +619,8 @@ bb.a:
   %i.r = alloca [24 x i8], align 8                ; 7 uses
   %.sroa.3.i.i.i.i.i = alloca [16 x i8], align 8  ; 7 uses
   %i.s = alloca [24 x i8], align 8                ; 7 uses
-  %i.t = alloca [32 x i8], align 8                ; 8 uses
-  %i.u = alloca [40 x i8], align 8                ; 12 uses
+  %i.t = alloca [32 x i8], align 8                ; 7 uses
+  %i.u = alloca [40 x i8], align 8                ; 11 uses
   %.sroa.15.i.i.i.i.i.i.i = alloca [16 x i8], align 8 ; 5 uses
   %i.v = alloca [40 x i8], align 8                ; 10 uses
   %i.w = alloca [8 x i8], align 8                 ; 7 uses
@@ -1026,12 +1023,10 @@ bb.cv:                                            ; preds = %bb.cq
   store ptr %.val133.i.i.i.i, ptr %i.qn, align 8, !noalias !11891
   store i64 0, ptr %i.v, align 8, !noalias !11891
   %i.qo = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 4 uses
-  %.sroa.729.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 24 ; 2 uses
-  %.sroa.830.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 32
+  %.sroa.729.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 24 ; 3 uses
   %.sroa.7.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
   %.sroa.7.8..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.sroa.729.8..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   br label %.backedge.i.i.i.i.i.i.i
 
@@ -1137,7 +1132,6 @@ bb.dg:                                            ; preds = %bb.df
   br i1 %i.ro, label %_RNvXs8_NtCscI6d9CVNmLh_4core5tupleTINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs63DIHKhvmTb_10lance_core5cache3key16InternalCacheKeyENtNtB7_3any6TypeIdENtNtB7_3cmp9PartialEq2neB1b_.exit.i.i.i.i.i.i.i.i, label %_RNvXsQ_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtNtCs63DIHKhvmTb_10lance_core5cache3key16InternalCacheKeyENtNtCscI6d9CVNmLh_4core3cmp9PartialEq2neBM_.exit.i.i.i.i.i.i.i.i.i
 
 bb.dh:                                            ; preds = %bb.dv, %bb.df
-  %.sroa.729.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.729.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !alias.scope !11895, !noalias !11891 ; 3 uses
   switch i64 %.sroa.045.0.copyload46.pre167.i.i.i.i.i.i.i, label %default.unreachable19.i.i.i.i.i.i.i.i.i [
     i64 0, label %bb.di
     i64 1, label %_RNvMs5_NtNtNtCskTBvlRM5ILY_4moka3cht3map6bucketINtB5_19InsertOrModifyStateTINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs63DIHKhvmTb_10lance_core5cache3key16InternalCacheKeyENtNtCscI6d9CVNmLh_4core3any6TypeIdEINtNtNtNtBb_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock6rwlock6RwLockINtNtNtBb_6future17value_initializer11WaiterValueNtNtB1N_4moka14MokaCacheEntryEEENCNvMs_NtB9_7segmentINtB67_7HashMapB1a_B3h_E21insert_if_not_present0E18into_insert_bucketB1P_.exit.i.i.i.i.i.i.i.i
@@ -1148,13 +1142,12 @@ default.unreachable19.i.i.i.i.i.i.i.i.i:          ; preds = %bb.dh
   unreachable
 
 bb.di:                                            ; preds = %bb.dh
-  %.sroa.830.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.830.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !alias.scope !11895, !noalias !11891, !nonnull !23, !noundef !23
   %.sroa.7.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !alias.scope !11895, !noalias !11891
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !11900
   store i64 %.sroa.4.0.copyload.pre.i.i.i.i.i.i.i.i, ptr %i.t, align 8, !noalias !11901
   store i64 %.sroa.7.0.copyload.i.i.i.i.i.i.i.i, ptr %.sroa.7.8..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11901
-  store ptr %.sroa.729.0.copyload.i.i.i.i.i.i.i.i, ptr %.sroa.729.8..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11901
-  store ptr %.sroa.830.0.copyload.i.i.i.i.i.i.i.i, ptr %3, align 8, !noalias !11900
+  %3 = load <2 x ptr>, ptr %.sroa.729.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !alias.scope !11895, !noalias !11891
+  store <2 x ptr> %3, ptr %.sroa.729.8..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !11901
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #65, !noalias !11902
   %i.rp = call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef range(i64 1, -9223372036854775807) 8) #65, !noalias !11902 ; 3 uses
   %i.rq = icmp eq ptr %i.rp, null
@@ -1187,7 +1180,7 @@ _RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxINtNtNtNtCskTBvlRM5ILY_4moka3cht3map6
   br label %_RNvMs5_NtNtNtCskTBvlRM5ILY_4moka3cht3map6bucketINtB5_19InsertOrModifyStateTINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtNtCs63DIHKhvmTb_10lance_core5cache3key16InternalCacheKeyENtNtCscI6d9CVNmLh_4core3any6TypeIdEINtNtNtNtBb_6common10concurrent3arc7MiniArcINtNtCsjMQ83FLvXnF_10async_lock6rwlock6RwLockINtNtNtBb_6future17value_initializer11WaiterValueNtNtB1N_4moka14MokaCacheEntryEEENCNvMs_NtB9_7segmentINtB67_7HashMapB1a_B3h_E21insert_if_not_present0E18into_insert_bucketB1P_.exit.i.i.i.i.i.i.i.i
 
 bb.dm:                                            ; preds = %bb.dh
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.729.0.copyload.i.i.i.i.i.i.i.i) ]
+  %.sroa.729.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.729.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !alias.scope !11895, !noalias !11891, !nonnull !23, !noundef !23
   %i.rw = and i64 %.sroa.4.0.copyload.pre.i.i.i.i.i.i.i.i, -8
   %i.rx = inttoptr i64 %i.rw to ptr
   %i.ry = getelementptr inbounds nuw i8, ptr %i.rx, i64 24 ; 2 uses

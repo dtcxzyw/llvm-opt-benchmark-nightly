@@ -206,17 +206,17 @@ bb.ay:                                            ; preds = %bb.ax
 define internal fastcc void @"_ZN135_$LT$clap_builder..builder..value_parser..EnumValueParser$LT$E$GT$$u20$as$u20$clap_builder..builder..value_parser..TypedValueParser$GT$9parse_ref28_$u7b$$u7b$closure$u7d$$u7d$17hf5c0e168f0b2d628E"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 10 uses
-  %i.b = alloca [16 x i8], align 8                ; 6 uses
+  %i.b = alloca [16 x i8], align 16               ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
-  %i.e = alloca [16 x i8], align 8                ; 6 uses
+  %i.e = alloca [16 x i8], align 16               ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7890)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7891)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7892)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7893)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !7894
-  store ptr inttoptr (i64 1 to ptr), ptr %i.e, align 8, !noalias !7895
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  store ptr inttoptr (i64 1 to ptr), ptr %i.e, align 16, !noalias !7895
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr inttoptr (i64 1 to ptr), ptr %i.f, align 8, !noalias !7895
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !7895
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !7895
@@ -250,7 +250,6 @@ bb.e:                                             ; preds = %bb.a
   %.sroa.5.0.copyload.i.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 8, !noalias !7895 ; 3 uses
   %.sroa.6.0..sroa_idx4.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %.sroa.6.0.copyload.i.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx4.i.i.i.i, align 8, !noalias !7895
-  %.val.i.i.i.i = load ptr, ptr %i.f, align 8, !noalias !7895, !noundef !23
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #45, !noalias !7897
   %i.l = tail call noundef align 8 dereferenceable_or_null(96) ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef 96, i64 noundef range(i64 1, 9) 8) #45, !noalias !7897 ; 6 uses
   %i.m = icmp eq ptr %i.l, null
@@ -275,13 +274,11 @@ bb.g:                                             ; preds = %bb.e
   %.sroa.6.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   store i64 1, ptr %.sroa.6.0..sroa_idx.i.i.i.i, align 8, !noalias !7895
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !7895
-  %1 = load ptr, ptr %i.e, align 8, !noalias !7895, !nonnull !23, !noundef !23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7898)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7899)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !7900
-  store ptr %1, ptr %i.b, align 8, !noalias !7901
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %.val.i.i.i.i, ptr %2, align 8, !noalias !7901
+  %1 = load <2 x ptr>, ptr %i.e, align 16, !noalias !7895
+  store <2 x ptr> %1, ptr %i.b, align 16, !noalias !7901
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !7901
   invoke fastcc void @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h6c8d926d3c98decbE"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef align 8 dereferenceable(16) %i.b)
           to label %.noexc5.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !7895

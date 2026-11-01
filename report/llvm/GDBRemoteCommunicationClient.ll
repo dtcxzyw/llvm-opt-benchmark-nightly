@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -246,8 +246,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.ab = load i64, ptr %i.c, align 8, !tbaa !258
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   %i.ae = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #27 ; 8 uses
   store i64 %i.ab, ptr %i.ae, align 8, !tbaa !28
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
@@ -340,17 +340,18 @@ bb.m:                                             ; preds = %_ZNK4llvm9StringRef
   %i.bs = load i64, ptr %i.n, align 8
   %i.bt = icmp eq i64 %i.bs, 0
   %or.cond = select i1 %i.br, i1 %i.bt, i1 false
-  %.pr.pre.pre79 = load ptr, ptr %i.i, align 8, !tbaa !139 ; 2 uses
+  %.pr.pre.pre79 = load ptr, ptr %i.i, align 8, !tbaa !139
   br i1 %or.cond, label %bb.n, label %thread-pre-split
 
 bb.n:                                             ; preds = %bb.m
   %i.bu = load i8, ptr %3, align 8, !tbaa !1031, !range !137, !noundef !138
   store i8 %i.bu, ptr %0, align 8, !tbaa !1031
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.pr.pre.pre79, ptr %i.bv, align 8, !tbaa !139
-  %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %5 = load <2 x ptr>, ptr %i.ac, align 8, !tbaa !37
-  store <2 x ptr> %5, ptr %i.bw, align 8, !tbaa !37
+  %5 = load <2 x ptr>, ptr %i.i, align 8, !tbaa !37
+  store <2 x ptr> %5, ptr %i.bv, align 8, !tbaa !37
+  %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %6 = load ptr, ptr %i.ad, align 8, !tbaa !140
+  store ptr %6, ptr %i.bw, align 8, !tbaa !140
   br label %thread-pre-split.thread
 
 bb.o:                                             ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit.i
@@ -381,8 +382,8 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.ce = load i64, ptr %i.a, align 8, !tbaa !258
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.cf = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.cf = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.ch = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #27 ; 6 uses
   store i64 %i.ce, ptr %i.ch, align 8, !tbaa !28
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8 ; 4 uses
@@ -430,17 +431,18 @@ bb.u:                                             ; preds = %_ZNK4llvm9StringRef
   %i.db = load i64, ptr %i.n, align 8
   %i.dc = icmp eq i64 %i.db, 0
   %or.cond77 = select i1 %i.da, i1 %i.dc, i1 false
-  %.pr.pre.pre = load ptr, ptr %i.i, align 8, !tbaa !139 ; 2 uses
+  %.pr.pre.pre = load ptr, ptr %i.i, align 8, !tbaa !139
   br i1 %or.cond77, label %bb.v, label %thread-pre-split
 
 bb.v:                                             ; preds = %bb.u
   %i.dd = load i8, ptr %3, align 8, !tbaa !1031, !range !137, !noundef !138
   store i8 %i.dd, ptr %0, align 8, !tbaa !1031
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.pr.pre.pre, ptr %i.de, align 8, !tbaa !139
-  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %6 = load <2 x ptr>, ptr %i.cf, align 8, !tbaa !37
-  store <2 x ptr> %6, ptr %i.df, align 8, !tbaa !37
+  %7 = load <2 x ptr>, ptr %i.i, align 8, !tbaa !37
+  store <2 x ptr> %7, ptr %i.de, align 8, !tbaa !37
+  %i.df = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %8 = load ptr, ptr %i.cg, align 8, !tbaa !140
+  store ptr %8, ptr %i.df, align 8, !tbaa !140
   br label %thread-pre-split.thread
 
 thread-pre-split.thread:                          ; preds = %bb.k, %bb.v, %bb.s, %bb.n, %bb.g, %bb.q

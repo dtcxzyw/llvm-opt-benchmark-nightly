@@ -205,7 +205,7 @@ bb.a:
     #dbg_value(ptr poison, !10534, !DIExpression(), !10537)
   %i.e = alloca [8 x i8], align 8                 ; 15 uses
   %i.f = alloca [8 x i8], align 8                 ; 15 uses
-  %i.g = alloca [16 x i8], align 8                ; 7 uses
+  %i.g = alloca [16 x i8], align 16               ; 7 uses
     #dbg_value(ptr %3, !10487, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10538)
     #dbg_value(i64 %4, !10487, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10538)
     #dbg_value(i1 %5, !10488, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !10538)
@@ -287,7 +287,7 @@ bb.f:                                             ; preds = %bb.c, %bb.e
   %i.ac = load i8, ptr %i.ab, align 1, !dbg !10895, !range !6234, !noundef !2385
   %i.ad = trunc nuw i8 %i.ac to i1, !dbg !10895
   call void @_RNvMs0_NtCs3f36owOmepS_6quiche6streamNtB5_9StreamMap13get_or_createCsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(328) %i.z, i64 noundef %2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(256) %i.aa, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(256) %1, i1 noundef zeroext true, i1 noundef zeroext %i.ad), !dbg !10896
-  %i.ae = load i64, ptr %i.g, align 8, !dbg !10892, !range !6701, !noundef !2385 ; 2 uses
+  %i.ae = load i64, ptr %i.g, align 16, !dbg !10892, !range !6701, !noundef !2385
   switch i64 %i.ae, label %bb.ce [
     i64 -1, label %bb.g
     i64 11, label %bb.cd
@@ -690,13 +690,10 @@ bb.cd:                                            ; preds = %bb.f
   br i1 %i.hl, label %bb.cg, label %bb.cf, !dbg !11098
 
 bb.ce:                                            ; preds = %bb.f
-  %6 = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !10892
-  %7 = load i64, ptr %6, align 8, !dbg !11099
     #dbg_value(i64 %i.ae, !10496, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10880)
-    #dbg_value(i64 %7, !10496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10880)
-  store i64 %i.ae, ptr %0, align 8, !dbg !11100
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !11100
-  store i64 %7, ptr %8, align 8, !dbg !11100
+    #dbg_value(i64 poison, !10496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10880)
+  %6 = load <2 x i64>, ptr %i.g, align 16, !dbg !11099
+  store <2 x i64> %6, ptr %0, align 8, !dbg !11100
   br label %bb.ch, !dbg !11101
 
 bb.cf:                                            ; preds = %.sink.split, %bb.cg, %bb.cd

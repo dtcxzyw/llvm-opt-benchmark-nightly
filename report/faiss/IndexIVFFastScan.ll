@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.w, %.lr.ph.i.i.i
   %.pn18.i.i.i.i = phi ptr [ %.val.pre, %.lr.ph.i.i.i.i ], [ %.sroa.0.019.i.ptr.i.i.i, %bb.w ] ; 4 uses
   %.sroa.0.019.i.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %.val.pre, i64 %.sroa.0.019.i.idx.i.i.i ; 5 uses
   %i.by = getelementptr i8, ptr %.pn18.i.i.i.i, i64 16
-  %.val2.i.i.i.i.i = load i32, ptr %i.by, align 4, !tbaa !145 ; 4 uses
+  %.val2.i.i.i.i.i = load i32, ptr %i.by, align 4, !tbaa !145 ; 3 uses
   %.val3.i.i.i.i.i = load i32, ptr %i.bx, align 4, !tbaa !145
   %i.bz = icmp slt i32 %.val2.i.i.i.i.i, %.val3.i.i.i.i.i
   br i1 %i.bz, label %bb.s, label %bb.v
@@ -229,7 +229,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan1
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.r
-  %.sroa.06.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.0.019.i.ptr.i.i.i, align 4, !tbaa !100
+  %19 = load <2 x i32>, ptr %.sroa.0.019.i.ptr.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val3.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pn18.i.i.i.i, i64 20
   %.sroa.5.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.5.0..val3.sroa_idx.i.i.i.i.i, align 4, !tbaa !100
   %i.cc = getelementptr i8, ptr %.pn18.i.i.i.i, i64 4
@@ -247,10 +247,8 @@ bb.v:                                             ; preds = %bb.r
   br i1 %i.cf, label %.lr.ph.i.i.i.i.i, label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_14ElS5_lS6_S7_SA_iSD_SG_E3$_0EEEvT_T0_.exit.i.i.i.i", !llvm.loop !254
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_14ElS5_lS6_S7_SA_iSD_SG_E3$_0EEEvT_T0_.exit.i.i.i.i": ; preds = %.lr.ph.i.i.i.i.i, %bb.v
-  %.sroa.010.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i, %bb.v ], [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 3 uses
-  store i32 %.sroa.06.0.copyload.i.i.i.i.i, ptr %.sroa.010.0.lcssa.i.i.i.i.i, align 4, !tbaa !100
-  %.sroa.4.0..val.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i.i.i.i, i64 4
-  store i32 %.val2.i.i.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i.i.i.i, align 4, !tbaa !100
+  %.sroa.010.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i, %bb.v ], [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
+  store <2 x i32> %19, ptr %.sroa.010.0.lcssa.i.i.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i.i.i.i, i64 8
   store i32 %.sroa.5.0.copyload.i.i.i.i.i, ptr %.sroa.5.0..val.sroa_idx.i.i.i.i.i, align 4, !tbaa !100
   br label %bb.w
@@ -308,7 +306,7 @@ bb.x:                                             ; preds = %bb.ad, %.lr.ph.i30.
   %.sroa.0.019.i31.i.i.i = phi ptr [ %.sroa.0.017.i29.i.i.i, %.lr.ph.i30.i.i.i ], [ %.sroa.0.0.i43.i.i.i, %bb.ad ] ; 7 uses
   %.pn18.i32.i.i.i = phi ptr [ %.val.pre, %.lr.ph.i30.i.i.i ], [ %.sroa.0.019.i31.i.i.i, %bb.ad ] ; 5 uses
   %i.cs = getelementptr i8, ptr %.pn18.i32.i.i.i, i64 16
-  %.val2.i.i33.i.i.i = load i32, ptr %i.cs, align 4, !tbaa !145 ; 4 uses
+  %.val2.i.i33.i.i.i = load i32, ptr %i.cs, align 4, !tbaa !145 ; 3 uses
   %.val3.i.i34.i.i.i = load i32, ptr %i.cr, align 4, !tbaa !145
   %i.ct = icmp slt i32 %.val2.i.i33.i.i.i, %.val3.i.i34.i.i.i
   br i1 %i.ct, label %bb.y, label %bb.ac
@@ -342,7 +340,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan1
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.x
-  %.sroa.06.0.copyload.i.i35.i.i.i = load i32, ptr %.sroa.0.019.i31.i.i.i, align 4, !tbaa !100
+  %20 = load <2 x i32>, ptr %.sroa.0.019.i31.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val3.sroa_idx.i.i36.i.i.i = getelementptr inbounds nuw i8, ptr %.pn18.i32.i.i.i, i64 20
   %.sroa.5.0.copyload.i.i37.i.i.i = load i32, ptr %.sroa.5.0..val3.sroa_idx.i.i36.i.i.i, align 4, !tbaa !100
   %i.db = getelementptr i8, ptr %.pn18.i32.i.i.i, i64 4
@@ -360,10 +358,8 @@ bb.ac:                                            ; preds = %bb.x
   br i1 %i.de, label %.lr.ph.i.i44.i.i.i, label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_14ElS5_lS6_S7_SA_iSD_SG_E3$_0EEEvT_T0_.exit.i39.i.i.i", !llvm.loop !254
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_14ElPKflPfPlRKNS3_15CoarseQuantizedEiRKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFEE2QCSt6vectorISH_SaISH_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_14ElS5_lS6_S7_SA_iSD_SG_E3$_0EEEvT_T0_.exit.i39.i.i.i": ; preds = %.lr.ph.i.i44.i.i.i, %bb.ac
-  %.sroa.010.0.lcssa.i.i40.i.i.i = phi ptr [ %.sroa.0.019.i31.i.i.i, %bb.ac ], [ %.sroa.0.0.i.i46.i.i.i, %.lr.ph.i.i44.i.i.i ] ; 3 uses
-  store i32 %.sroa.06.0.copyload.i.i35.i.i.i, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, align 4, !tbaa !100
-  %.sroa.4.0..val.sroa_idx.i.i41.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, i64 4
-  store i32 %.val2.i.i33.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i41.i.i.i, align 4, !tbaa !100
+  %.sroa.010.0.lcssa.i.i40.i.i.i = phi ptr [ %.sroa.0.019.i31.i.i.i, %bb.ac ], [ %.sroa.0.0.i.i46.i.i.i, %.lr.ph.i.i44.i.i.i ] ; 2 uses
+  store <2 x i32> %20, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val.sroa_idx.i.i42.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, i64 8
   store i32 %.sroa.5.0.copyload.i.i37.i.i.i, ptr %.sroa.5.0..val.sroa_idx.i.i42.i.i.i, align 4, !tbaa !100
   br label %bb.ad
@@ -766,7 +762,7 @@ bb.w:                                             ; preds = %bb.ab, %.lr.ph.i.i.
   %.pn18.i.i.i.i = phi ptr [ %.sroa.0291.2.us, %.lr.ph.i.i.i.i ], [ %.sroa.0.019.i.ptr.i.i.i, %bb.ab ] ; 4 uses
   %.sroa.0.019.i.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0291.2.us, i64 %.sroa.0.019.i.idx.i.i.i ; 5 uses
   %i.ce = getelementptr i8, ptr %.pn18.i.i.i.i, i64 16
-  %.val2.i.i.i.i.i = load i32, ptr %i.ce, align 4, !tbaa !158 ; 4 uses
+  %.val2.i.i.i.i.i = load i32, ptr %i.ce, align 4, !tbaa !158 ; 3 uses
   %.val3.i.i.i.i.i = load i32, ptr %i.cd, align 4, !tbaa !158
   %i.cf = icmp slt i32 %.val2.i.i.i.i.i, %.val3.i.i.i.i.i
   br i1 %i.cf, label %bb.x, label %bb.aa
@@ -790,7 +786,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan1
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.w
-  %.sroa.06.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.0.019.i.ptr.i.i.i, align 4, !tbaa !100
+  %14 = load <2 x i32>, ptr %.sroa.0.019.i.ptr.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val3.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pn18.i.i.i.i, i64 20
   %.sroa.5.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.5.0..val3.sroa_idx.i.i.i.i.i, align 4, !tbaa !100
   %i.ci = getelementptr i8, ptr %.pn18.i.i.i.i, i64 4
@@ -808,10 +804,8 @@ bb.aa:                                            ; preds = %bb.w
   br i1 %i.cl, label %.lr.ph.i.i.i.i.i, label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_12ElPKfRNS2_24SIMDResultHandlerToFloatERKNS3_15CoarseQuantizedEPmSB_RKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFERNS2_19FastScanCodeScannerEE2QCSt6vectorISK_SaISK_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_12ElS5_S7_SA_SB_SB_SE_SH_SJ_E3$_0EEEvT_T0_.exit.i.i.i.i", !llvm.loop !268
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_12ElPKfRNS2_24SIMDResultHandlerToFloatERKNS3_15CoarseQuantizedEPmSB_RKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFERNS2_19FastScanCodeScannerEE2QCSt6vectorISK_SaISK_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_12ElS5_S7_SA_SB_SB_SE_SH_SJ_E3$_0EEEvT_T0_.exit.i.i.i.i": ; preds = %.lr.ph.i.i.i.i.i, %bb.aa
-  %.sroa.010.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i, %bb.aa ], [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 3 uses
-  store i32 %.sroa.06.0.copyload.i.i.i.i.i, ptr %.sroa.010.0.lcssa.i.i.i.i.i, align 4, !tbaa !100
-  %.sroa.4.0..val.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i.i.i.i, i64 4
-  store i32 %.val2.i.i.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i.i.i.i, align 4, !tbaa !100
+  %.sroa.010.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i, %bb.aa ], [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
+  store <2 x i32> %14, ptr %.sroa.010.0.lcssa.i.i.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i.i.i.i, i64 8
   store i32 %.sroa.5.0.copyload.i.i.i.i.i, ptr %.sroa.5.0..val.sroa_idx.i.i.i.i.i, align 4, !tbaa !100
   br label %bb.ab
@@ -869,7 +863,7 @@ bb.ac:                                            ; preds = %bb.ai, %.lr.ph.i30.
   %.sroa.0.019.i31.i.i.i = phi ptr [ %.sroa.0.017.i29.i.i.i, %.lr.ph.i30.i.i.i ], [ %.sroa.0.0.i43.i.i.i, %bb.ai ] ; 7 uses
   %.pn18.i32.i.i.i = phi ptr [ %.sroa.0291.2.us, %.lr.ph.i30.i.i.i ], [ %.sroa.0.019.i31.i.i.i, %bb.ai ] ; 5 uses
   %i.cy = getelementptr i8, ptr %.pn18.i32.i.i.i, i64 16
-  %.val2.i.i33.i.i.i = load i32, ptr %i.cy, align 4, !tbaa !158 ; 4 uses
+  %.val2.i.i33.i.i.i = load i32, ptr %i.cy, align 4, !tbaa !158 ; 3 uses
   %.val3.i.i34.i.i.i = load i32, ptr %i.cx, align 4, !tbaa !158
   %i.cz = icmp slt i32 %.val2.i.i33.i.i.i, %.val3.i.i34.i.i.i
   br i1 %i.cz, label %bb.ad, label %bb.ah
@@ -903,7 +897,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan1
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ac
-  %.sroa.06.0.copyload.i.i35.i.i.i = load i32, ptr %.sroa.0.019.i31.i.i.i, align 4, !tbaa !100
+  %15 = load <2 x i32>, ptr %.sroa.0.019.i31.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val3.sroa_idx.i.i36.i.i.i = getelementptr inbounds nuw i8, ptr %.pn18.i32.i.i.i, i64 20
   %.sroa.5.0.copyload.i.i37.i.i.i = load i32, ptr %.sroa.5.0..val3.sroa_idx.i.i36.i.i.i, align 4, !tbaa !100
   %i.dh = getelementptr i8, ptr %.pn18.i32.i.i.i, i64 4
@@ -921,10 +915,8 @@ bb.ah:                                            ; preds = %bb.ac
   br i1 %i.dk, label %.lr.ph.i.i44.i.i.i, label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_12ElPKfRNS2_24SIMDResultHandlerToFloatERKNS3_15CoarseQuantizedEPmSB_RKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFERNS2_19FastScanCodeScannerEE2QCSt6vectorISK_SaISK_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_12ElS5_S7_SA_SB_SB_SE_SH_SJ_E3$_0EEEvT_T0_.exit.i39.i.i.i", !llvm.loop !268
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZNK5faiss16IndexIVFFastScan16search_implem_12ElPKfRNS2_24SIMDResultHandlerToFloatERKNS3_15CoarseQuantizedEPmSB_RKNS2_30FastScanDistancePostProcessingEPKNS2_19SearchParametersIVFERNS2_19FastScanCodeScannerEE2QCSt6vectorISK_SaISK_EEEENS0_5__ops14_Val_comp_iterIZNKS3_16search_implem_12ElS5_S7_SA_SB_SB_SE_SH_SJ_E3$_0EEEvT_T0_.exit.i39.i.i.i": ; preds = %.lr.ph.i.i44.i.i.i, %bb.ah
-  %.sroa.010.0.lcssa.i.i40.i.i.i = phi ptr [ %.sroa.0.019.i31.i.i.i, %bb.ah ], [ %.sroa.0.0.i.i46.i.i.i, %.lr.ph.i.i44.i.i.i ] ; 3 uses
-  store i32 %.sroa.06.0.copyload.i.i35.i.i.i, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, align 4, !tbaa !100
-  %.sroa.4.0..val.sroa_idx.i.i41.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, i64 4
-  store i32 %.val2.i.i33.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i41.i.i.i, align 4, !tbaa !100
+  %.sroa.010.0.lcssa.i.i40.i.i.i = phi ptr [ %.sroa.0.019.i31.i.i.i, %bb.ah ], [ %.sroa.0.0.i.i46.i.i.i, %.lr.ph.i.i44.i.i.i ] ; 2 uses
+  store <2 x i32> %15, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, align 4, !tbaa !100
   %.sroa.5.0..val.sroa_idx.i.i42.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.010.0.lcssa.i.i40.i.i.i, i64 8
   store i32 %.sroa.5.0.copyload.i.i37.i.i.i, ptr %.sroa.5.0..val.sroa_idx.i.i42.i.i.i, align 4, !tbaa !100
   br label %bb.ai

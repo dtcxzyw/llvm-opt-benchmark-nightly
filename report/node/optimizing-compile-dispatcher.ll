@@ -204,21 +204,18 @@ bb.a:
   %9 = alloca %"struct.std::_Deque_iterator", align 8 ; 7 uses
   %10 = alloca %"struct.std::_Deque_iterator", align 8 ; 7 uses
   %11 = alloca %"struct.std::_Deque_iterator", align 8 ; 3 uses
-  %i.a = load ptr, ptr %2, align 8                ; 6 uses
+  %i.a = load ptr, ptr %2, align 8                ; 5 uses
   %i.b = load ptr, ptr %3, align 8                ; 6 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.a, ptr %0, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load <2 x ptr>, ptr %13, align 8
-  store <2 x ptr> %i.d, ptr %12, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %14 = load ptr, ptr %i.f, align 8
-  store ptr %14, ptr %i.e, align 8
+  %i.d = load <2 x ptr>, ptr %2, align 8
+  store <2 x ptr> %i.d, ptr %0, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %12 = load <2 x ptr>, ptr %i.f, align 8
+  store <2 x ptr> %12, ptr %i.e, align 8
   br label %bb.t
 
 bb.c:                                             ; preds = %bb.a

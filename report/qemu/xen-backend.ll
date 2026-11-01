@@ -22,7 +22,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @xen_backend_register(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(24) ptr @g_malloc0(i64 noundef 24) #9 ; 4 uses
+  %i.a = tail call noalias dereferenceable_or_null(24) ptr @g_malloc0(i64 noundef 24) #9 ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.b, label %bb.c, !prof !8
@@ -54,8 +54,8 @@ bb.e:                                             ; preds = %xen_backend_table_l
   unreachable
 
 bb.f:                                             ; preds = %xen_backend_table_lookup.exit
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8
   %.not28 = icmp eq ptr %i.j, null
   %i.k = load ptr, ptr %0, align 8                ; 3 uses
   br i1 %.not28, label %bb.g, label %bb.h
@@ -68,11 +68,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   store ptr %i.k, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %i.j, ptr %i.l, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = load ptr, ptr %1, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %2, ptr %3, align 8
+  %1 = load <2 x ptr>, ptr %i.i, align 8
+  store <2 x ptr> %1, ptr %i.l, align 8
   %i.m = load ptr, ptr @xen_backend_table_get.table, align 8 ; 2 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.i, label %xen_backend_table_add.exit

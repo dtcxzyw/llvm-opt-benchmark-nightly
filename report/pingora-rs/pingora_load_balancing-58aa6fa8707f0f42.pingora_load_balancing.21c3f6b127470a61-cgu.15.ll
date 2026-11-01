@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge, %.crit
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtNtCs84JG9zk80ZV_4http6header5valueNtB3_11HeaderValue27from_maybe_shared_uncheckedNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECs2TJrahNLnPN_22pingora_load_balancing(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.016.0.copyload = load ptr, ptr %1, align 8 ; 2 uses
+  %.sroa.016.0.copyload = load ptr, ptr %1, align 8
   %.not = icmp eq ptr %.sroa.016.0.copyload, null
   br i1 %.not, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEECs2TJrahNLnPN_22pingora_load_balancing.exit10, !prof !10
 
@@ -214,11 +214,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs1eA6bChxBZF_
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.518.0.copyload = load i64, ptr %.sroa.518.0..sroa_idx, align 8
-  %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.417.0.copyload = load ptr, ptr %.sroa.417.0..sroa_idx, align 8
-  store ptr %.sroa.016.0.copyload, ptr %0, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.417.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
+  %2 = load <2 x ptr>, ptr %1, align 8
+  store <2 x ptr> %2, ptr %0, align 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.518.0.copyload, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

@@ -163,7 +163,7 @@ bb.m:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMCsdBFbsshtEF1_4slogINtB3_6LoggerINtNtCsexYYUdYSQU6_5alloc4sync3ArcDNtB3_26SendSyncRefUnwindSafeDrainp3Errzp2OkuEL_EE3newTINtB3_8SingleKVNtNtBE_6string6StringEuEECsfG1pxJcRFT5_4raft(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [72 x i8], align 8                ; 8 uses
+  %i.a = alloca [72 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.val = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 4 uses
@@ -182,15 +182,13 @@ bb.c:                                             ; preds = %bb.a
   store ptr %.val, ptr %i.b, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %.val6, ptr %i.f, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !noundef !5 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !noundef !5
   %i.i = atomicrmw add ptr %i.h, i64 1 monotonic, align 8
   %i.j = icmp slt i64 %i.i, 0
   br i1 %i.j, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %4 = load ptr, ptr %3, align 8, !nonnull !5, !align !6, !noundef !5
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.k, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false)
@@ -198,9 +196,8 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %i.l, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store ptr %i.h, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store ptr %4, ptr %.sroa.5.0..sroa_idx, align 8
+  %3 = load <2 x ptr>, ptr %i.g, align 8
+  store <2 x ptr> %3, ptr %.sroa.4.0..sroa_idx, align 8
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #19, !noalias !45
   %i.m = tail call noundef align 8 dereferenceable_or_null(72) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 16, 185) 72, i64 noundef 8) #19, !noalias !45 ; 3 uses
   %i.n = icmp eq ptr %i.m, null
@@ -265,7 +262,7 @@ bb.k:                                             ; preds = %bb.i
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMCsdBFbsshtEF1_4slogINtB3_6LoggerINtNtCsexYYUdYSQU6_5alloc4sync3ArcDNtB3_26SendSyncRefUnwindSafeDrainp3Errzp2OkuEL_EE3newuECsfG1pxJcRFT5_4raft(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.val = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5 ; 3 uses
@@ -284,23 +281,20 @@ _RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcDNtCsdBFbsshtEF1_4slog26SendSyncRef
   store ptr %.val, ptr %i.b, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %.val4, ptr %i.f, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !noundef !5 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.i = atomicrmw add ptr %i.h, i64 1 monotonic, align 8
   %i.j = icmp slt i64 %i.i, 0
   br i1 %i.j, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXsu_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcDNtCsdBFbsshtEF1_4slog26SendSyncRefUnwindSafeDrainp3Errzp2OkuEL_ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsfG1pxJcRFT5_4raft.exit
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %3 = load ptr, ptr %2, align 8, !nonnull !5, !align !6, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 1, ptr %i.a, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  store ptr %i.h, ptr %i.l, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr %3, ptr %4, align 8
+  %2 = load <2 x ptr>, ptr %i.g, align 8
+  store <2 x ptr> %2, ptr %i.l, align 8
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #19, !noalias !61
   %i.m = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 16, 185) 32, i64 noundef 8) #19, !noalias !61 ; 3 uses
   %i.n = icmp eq ptr %i.m, null

@@ -203,21 +203,19 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dw = ptrtoint ptr %.1196 to i64
   %i.dx = sub i64 %i.dv, %i.dw                    ; 2 uses
   %i.dy = trunc i64 %i.dx to i32                  ; 3 uses
-  %i.dz = load i32, ptr %i.a, align 16            ; 2 uses
+  %i.dz = load i32, ptr %i.a, align 16
   %i.ea = icmp sgt i32 %i.dz, %i.dy
   %i.eb = load i32, ptr %.3200.sroa.gep301, align 8 ; 3 uses
   br i1 %i.ea, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   store i32 %i.eb, ptr %.3200.sroa.gep302, align 16
-  %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.ed = load i32, ptr %i.ec, align 4
   %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store i32 %i.ed, ptr %i.ee, align 4
-  store i32 %i.dz, ptr %.3200.sroa.gep301, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %4 = load i32, ptr %3, align 4
-  store i32 %4, ptr %i.ec, align 4
+  %3 = load <2 x i32>, ptr %i.a, align 16
+  store <2 x i32> %3, ptr %.3200.sroa.gep301, align 8
   br label %bb.ai
 
 bb.ad:                                            ; preds = %bb.ab

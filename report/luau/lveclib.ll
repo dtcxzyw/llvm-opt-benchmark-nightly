@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZL12vector_clampP9lua_State(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
+  %i.a = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
   %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 3 uses
   %i.c = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 3) ; 3 uses
   %i.d = load float, ptr %i.b, align 4, !tbaa !10 ; 3 uses
@@ -215,10 +215,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.h = load float, ptr %i.g, align 4, !tbaa !10 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %i.j = load float, ptr %i.i, align 4, !tbaa !10 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %i.h = load float, ptr %i.g, align 4, !tbaa !10
+  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
+  %i.j = load float, ptr %i.i, align 4, !tbaa !10
   %i.k = fcmp ugt float %i.h, %i.j
   br i1 %i.k, label %bb.d, label %bb.e
 
@@ -228,10 +228,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = load float, ptr %i.l, align 4, !tbaa !10   ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.m = load float, ptr %2, align 4, !tbaa !10   ; 3 uses
-  %i.n = fcmp ugt float %1, %i.m
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %2 = load float, ptr %i.l, align 4, !tbaa !10
+  %i.m = load float, ptr %1, align 4, !tbaa !10
+  %i.n = fcmp ugt float %2, %i.m
   br i1 %i.n, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -239,24 +239,22 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 bb.g:                                             ; preds = %bb.e
+  %3 = load <2 x float>, ptr %i.i, align 4, !tbaa !10 ; 2 uses
+  %4 = load <2 x float>, ptr %i.g, align 4, !tbaa !10 ; 2 uses
   %i.o = load float, ptr %i.a, align 4, !tbaa !10 ; 2 uses
   %i.p = fcmp olt float %i.o, %i.d
   %i.q = select i1 %i.p, float %i.d, float %i.o   ; 2 uses
   %i.r = fcmp ogt float %i.q, %i.e
   %i.s = select i1 %i.r, float %i.e, float %i.q
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %3 = load float, ptr %i.t, align 4, !tbaa !10   ; 2 uses
-  %4 = fcmp olt float %3, %i.h
-  %5 = select i1 %4, float %i.h, float %3         ; 2 uses
-  %6 = fcmp ogt float %5, %i.j
-  %7 = select i1 %6, float %i.j, float %5
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %9 = load float, ptr %8, align 4, !tbaa !10     ; 2 uses
-  %10 = fcmp olt float %9, %1
-  %11 = select i1 %10, float %1, float %9         ; 2 uses
-  %12 = fcmp ogt float %11, %i.m
-  %13 = select i1 %12, float %i.m, float %11
-  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.s, float noundef %7, float noundef %13)
+  %5 = load <2 x float>, ptr %i.t, align 4, !tbaa !10 ; 2 uses
+  %6 = fcmp olt <2 x float> %5, %4
+  %7 = select <2 x i1> %6, <2 x float> %4, <2 x float> %5 ; 2 uses
+  %8 = fcmp ogt <2 x float> %7, %3
+  %9 = select <2 x i1> %8, <2 x float> %3, <2 x float> %7 ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %11 = extractelement <2 x float> %9, i64 1
+  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %i.s, float noundef %10, float noundef %11)
   ret i32 1
 }
 

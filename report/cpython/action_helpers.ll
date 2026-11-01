@@ -205,24 +205,17 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %1, i64 8
   %i.g = getelementptr [8 x i8], ptr %i.f, i64 %i.d
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !220  ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !220
   %i.i = getelementptr i8, ptr %0, i64 156        ; 2 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !221
-  %i.k = getelementptr i8, ptr %i.h, i64 64
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !71   ; 2 uses
+  %i.k = getelementptr i8, ptr %i.h, i64 64       ; 2 uses
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !71
   %i.m = icmp sgt i32 %i.j, %i.l
   br i1 %i.m, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i32 %i.l, ptr %i.i, align 4, !tbaa !221
-  %2 = getelementptr i8, ptr %i.h, i64 68
-  %3 = getelementptr i8, ptr %0, i64 160
-  %4 = load <2 x i32>, ptr %2, align 4, !tbaa !15
-  store <2 x i32> %4, ptr %3, align 4, !tbaa !15
-  %5 = getelementptr i8, ptr %i.h, i64 76
-  %6 = load i32, ptr %5, align 4, !tbaa !74
-  %7 = getelementptr i8, ptr %0, i64 168
-  store i32 %6, ptr %7, align 4, !tbaa !222
+  %2 = load <4 x i32>, ptr %i.k, align 8, !tbaa !15
+  store <4 x i32> %2, ptr %i.i, align 4, !tbaa !15
   br label %.thread
 
 .thread:                                          ; preds = %bb.b, %bb.c, %bb.d, %bb.a
@@ -529,5 +522,4 @@ attributes #15 = { nounwind willreturn memory(read) }
 !219 = !{!"p1 _ZTS5_stmt", !16, i64 0}
 !220 = !{!219, !219, i64 0}
 !221 = !{!26, !14, i64 156}
-!222 = !{!26, !14, i64 168}
 end_hunk_0

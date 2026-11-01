@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10261
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 40
   %i.as = load ptr, ptr %i.ar, align 8, !alias.scope !10262, !nonnull !4, !noundef !4 ; 4 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 48
-  %i.au = load i64, ptr %i.at, align 8, !alias.scope !10262, !noundef !4 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 48 ; 2 uses
+  %i.au = load i64, ptr %i.at, align 8, !alias.scope !10262, !noundef !4
   %i.av = atomicrmw add ptr %i.as, i64 1 monotonic, align 8, !noalias !10261
   %i.aw = icmp slt i64 %i.av, 0
   br i1 %i.aw, label %bb.l, label %bb.i
@@ -217,8 +217,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.g
   store ptr %i.as, ptr %i.b, align 8, !noalias !10261
   store i64 %i.au, ptr %i.w, align 8, !noalias !10261
-  %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 56
-  %2 = load <2 x i64>, ptr %i.ax, align 8, !alias.scope !10262
+  %2 = load <2 x i64>, ptr %i.at, align 8, !alias.scope !10262
+  %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 64
+  %3 = load i64, ptr %i.ax, align 8, !alias.scope !10262, !noundef !4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10263)
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 16
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.012.062.i, i64 8
@@ -311,7 +312,7 @@ bb.q:                                             ; preds = %bb.e
   unreachable
 
 _RNvXs1J_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_13NodeCatalogOpNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i: ; preds = %bb.p, %_RNvXs1T_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i
-  %.sroa.14.0.i = phi i64 [ undef, %bb.p ], [ %i.au, %_RNvXs1T_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
+  %.sroa.14.0.i = phi i64 [ undef, %bb.p ], [ %3, %_RNvXs1T_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
   %.sroa.13.0.i = phi ptr [ %.sroa.13.32.copyload.i, %bb.p ], [ %i.as, %_RNvXs1T_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
   %.sroa.11.0.i = phi i64 [ %.sroa.11.32.copyload.i, %bb.p ], [ %i.ao, %_RNvXs1T_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
   %.sroa.9.0.i = phi i64 [ %i.br, %bb.p ], [ %i.bp, %_RNvXs1T_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
@@ -334,9 +335,9 @@ _RNvXs1J_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v3NtB6_13NodeCatal
   %.sroa.838.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 40
   store ptr %.sroa.13.0.i, ptr %.sroa.838.0..sroa_idx.i, align 8, !noalias !10255
   %.sroa.939.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
-  store i64 %.sroa.14.0.i, ptr %.sroa.939.0..sroa_idx.i, align 8, !noalias !10255
-  %.sroa.1040.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 56
-  store <2 x i64> %i.bt, ptr %.sroa.1040.0..sroa_idx.i, align 8, !noalias !10255
+  store <2 x i64> %i.bt, ptr %.sroa.939.0..sroa_idx.i, align 8, !noalias !10255
+  %.sroa.1040.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 64
+  store i64 %.sroa.14.0.i, ptr %.sroa.1040.0..sroa_idx.i, align 8, !noalias !10255
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17.i)
   %i.bv = icmp eq i64 %i.z, 0
   br i1 %i.bv, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v313NodeCatalogOpNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBR_.exit, label %bb.c
@@ -739,8 +740,8 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !10724
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.012.097.i, i64 88
   %i.ay = load ptr, ptr %i.ax, align 8, !alias.scope !10725, !nonnull !4, !noundef !4 ; 4 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.012.097.i, i64 96
-  %i.ba = load i64, ptr %i.az, align 8, !alias.scope !10725, !noundef !4 ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.012.097.i, i64 96 ; 2 uses
+  %i.ba = load i64, ptr %i.az, align 8, !alias.scope !10725, !noundef !4
   %i.bb = atomicrmw add ptr %i.ay, i64 1 monotonic, align 8, !noalias !10726
   %i.bc = icmp slt i64 %i.bb, 0
   br i1 %i.bc, label %bb.l, label %bb.i
@@ -752,8 +753,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.g
   store ptr %i.ay, ptr %i.f, align 8, !noalias !10724
   store i64 %i.ba, ptr %i.aa, align 8, !noalias !10724
-  %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.012.097.i, i64 104
-  %2 = load <2 x i64>, ptr %i.bd, align 8, !alias.scope !10725
+  %2 = load <2 x i64>, ptr %i.az, align 8, !alias.scope !10725
+  %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.012.097.i, i64 112
+  %3 = load i64, ptr %i.bd, align 8, !alias.scope !10725, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !10724
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10727)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10728)
@@ -922,7 +924,7 @@ bb.z:                                             ; preds = %bb.e
 
 bb.aa:                                            ; preds = %bb.y, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i
   %.sroa.18.0.i = phi i64 [ undef, %bb.y ], [ %i.ce, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
-  %.sroa.14.0.i = phi i64 [ undef, %bb.y ], [ %i.ba, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
+  %.sroa.14.0.i = phi i64 [ undef, %bb.y ], [ %3, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
   %.sroa.13.0.i = phi ptr [ undef, %bb.y ], [ %i.ay, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
   %.sroa.12.0.i = phi i64 [ undef, %bb.y ], [ %i.au, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
   %.sroa.11.0.i = phi ptr [ undef, %bb.y ], [ %i.as, %_RNvXs2B_NtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v4NtB6_15RegisterNodeLogNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone.exit.i.i ]
@@ -956,9 +958,9 @@ bb.aa:                                            ; preds = %bb.y, %_RNvXs2B_NtN
   %.sroa.1260.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cj, i64 88
   store ptr %.sroa.13.0.i, ptr %.sroa.1260.0..sroa_idx.i, align 8, !noalias !10718
   %.sroa.1361.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cj, i64 96
-  store i64 %.sroa.14.0.i, ptr %.sroa.1361.0..sroa_idx.i, align 8, !noalias !10718
-  %.sroa.1462.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cj, i64 104
-  store <2 x i64> %i.ci, ptr %.sroa.1462.0..sroa_idx.i, align 8, !noalias !10718
+  store <2 x i64> %i.ci, ptr %.sroa.1361.0..sroa_idx.i, align 8, !noalias !10718
+  %.sroa.1462.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cj, i64 112
+  store i64 %.sroa.14.0.i, ptr %.sroa.1462.0..sroa_idx.i, align 8, !noalias !10718
   %.sroa.1765.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cj, i64 136
   store i64 %.sroa.18.0.i, ptr %.sroa.1765.0..sroa_idx.i, align 8, !noalias !10718
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)

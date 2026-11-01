@@ -55,7 +55,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: noredzone nounwind optsize uwtable
 define dso_local range(i32 -2147483648, 1) i32 @parse_block_partition(ptr noundef %0, ptr nofree noundef readnone captures(none) %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = alloca %struct.partition_state_s, align 8  ; 10 uses
+  %3 = alloca %struct.partition_state_s, align 8  ; 9 uses
   %4 = alloca %struct.mtd_geometry_s, align 4     ; 6 uses
   %5 = alloca %struct.geometry, align 4           ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
@@ -124,7 +124,7 @@ bb.g:                                             ; preds = %._crit_edge, %bb.b
 
 bb.h:                                             ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.ad = load i32, ptr %i.ac, align 4            ; 3 uses
+  %i.ad = load i32, ptr %i.ac, align 4            ; 2 uses
   %.not13 = icmp eq i32 %i.ad, 0
   br i1 %.not13, label %bb.i, label %bb.j, !prof !7
 
@@ -133,15 +133,13 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 bb.j:                                             ; preds = %bb.h
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store i32 %i.ad, ptr %6, align 4
   %i.ae = sext i32 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 %i.ae, ptr %i.af, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %7 = load i32, ptr %i.ag, align 4
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store i32 %7, ptr %8, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %7 = load <2 x i32>, ptr %i.ag, align 4
+  store <2 x i32> %7, ptr %6, align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.g, %bb.j, %bb.f

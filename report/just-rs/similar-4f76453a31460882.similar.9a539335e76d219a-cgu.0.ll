@@ -205,12 +205,12 @@ begin_hunk_0
 define internal fastcc void @_RINvMs1_NtCsdftwklc2oBO_7similar5typesNtB6_6DiffOp13apply_to_hookINtNtNtB8_10algorithms7replace7ReplaceNtNtB16_7capture7CaptureEEB8_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(120) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !4, !noundef !5
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load i64, ptr %i.d, align 8, !noundef !5 ; 5 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !5 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.g = load i64, ptr %i.f, align 8, !noundef !5 ; 4 uses
+  %i.g = load i64, ptr %i.f, align 8, !noundef !5 ; 3 uses
   switch i64 %i.a, label %default.unreachable41 [
     i64 0, label %bb.b
     i64 1, label %bb.c
@@ -365,8 +365,7 @@ _RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7replaceINtB5_7ReplaceNtNtB7_7capt
   br label %bb.o
 
 bb.k:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %3 = load i64, ptr %2, align 8, !noundef !5
+  %2 = load <4 x i64>, ptr %i.b, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74)
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
@@ -426,16 +425,10 @@ _RNvXs1_NtNtCsdftwklc2oBO_7similar10algorithms7replaceINtB5_7ReplaceNtNtB7_7capt
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.bf = load ptr, ptr %i.be, align 8, !alias.scope !76, !nonnull !5, !noundef !5
-  %i.bg = getelementptr inbounds nuw [40 x i8], ptr %i.bf, i64 %i.az ; 5 uses
+  %i.bg = getelementptr inbounds nuw [40 x i8], ptr %i.bf, i64 %i.az ; 2 uses
   store i64 3, ptr %i.bg, align 8, !noalias !76
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  store i64 %i.c, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !76
-  %.sroa.5.0..sroa_idx.i34 = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
-  store i64 %i.e, ptr %.sroa.5.0..sroa_idx.i34, align 8, !noalias !76
-  %.sroa.6.0..sroa_idx.i35 = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
-  store i64 %i.g, ptr %.sroa.6.0..sroa_idx.i35, align 8, !noalias !76
-  %.sroa.7.0..sroa_idx.i36 = getelementptr inbounds nuw i8, ptr %i.bg, i64 32
-  store i64 %3, ptr %.sroa.7.0..sroa_idx.i36, align 8, !noalias !76
+  %.sroa.7.0..sroa_idx.i36 = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
+  store <4 x i64> %2, ptr %.sroa.7.0..sroa_idx.i36, align 8, !noalias !76
   %i.bh = add i64 %i.az, 1
   store i64 %i.bh, ptr %i.bd, align 8, !alias.scope !76
   br label %bb.o
@@ -838,9 +831,8 @@ define internal fastcc void @_RNvMNtNtCsdftwklc2oBO_7similar10algorithms7replace
 bb.a:
   %.sroa.0.0.copyload = load i64, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %1 = load <2 x i64>, ptr %.sroa.6.0..sroa_idx, align 8
+  %1 = load <2 x i64>, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
   %i.a = trunc nuw i64 %.sroa.0.0.copyload to i1
@@ -880,14 +872,11 @@ bb.e:                                             ; preds = %bb.d
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsdftwklc2oBO_7similar5types6DiffOpE8push_mutBJ_.exit: ; preds = %bb.d, %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !9267, !nonnull !5, !noundef !5
-  %i.n = getelementptr inbounds nuw [40 x i8], ptr %i.m, i64 %i.i ; 4 uses
+  %i.n = getelementptr inbounds nuw [40 x i8], ptr %i.m, i64 %i.i ; 2 uses
   store i64 3, ptr %i.n, align 8, !noalias !9267
-  %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  store i64 %.sroa.5.0.copyload, ptr %.sroa.429.0..sroa_idx, align 8, !noalias !9267
-  %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  store i64 %.sroa.6.0.copyload, ptr %.sroa.530.0..sroa_idx, align 8, !noalias !9267
-  %.sroa.631.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 24
-  store <2 x i64> %i.c, ptr %.sroa.631.0..sroa_idx, align 8, !noalias !9267
+  %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 8
+  %2 = shufflevector <2 x i64> %1, <2 x i64> %i.c, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %2, ptr %.sroa.530.0..sroa_idx, align 8, !noalias !9267
   %i.o = add i64 %i.i, 1
   store i64 %i.o, ptr %i.f, align 8, !alias.scope !9267
   br label %bb.h
@@ -909,9 +898,9 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsdftwklc2oBO_7similar5types6Dif
   %i.u = getelementptr inbounds nuw [40 x i8], ptr %i.t, i64 %i.p ; 3 uses
   store i64 1, ptr %i.u, align 8, !noalias !9269
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store i64 %.sroa.5.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !9269
-  %.sroa.5.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  store <2 x i64> %1, ptr %.sroa.5.0..sroa_idx17, align 8, !noalias !9269
+  store <2 x i64> %1, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !9269
+  %.sroa.5.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.u, i64 24
+  store i64 %.sroa.6.0.copyload, ptr %.sroa.5.0..sroa_idx17, align 8, !noalias !9269
   %i.v = add i64 %i.p, 1
   store i64 %i.v, ptr %i.f, align 8, !alias.scope !9269
   br label %bb.h

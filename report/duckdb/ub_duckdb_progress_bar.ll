@@ -204,10 +204,9 @@ bb.bk:                                            ; preds = %bb.bj
 bb.bl:                                            ; preds = %.preheader363.split.us.split.us.preheader.1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
-  %i.ns = getelementptr inbounds nuw i8, ptr %i.nn, i64 8 ; 2 uses
-  %20 = load double, ptr %i.ns, align 8, !tbaa !83
+  %i.ns = getelementptr inbounds nuw i8, ptr %i.nn, i64 8
   %i.nt = load ptr, ptr %i.cw, align 8, !tbaa !90
-  %i.nu = load ptr, ptr %i.cu, align 8, !tbaa !88 ; 3 uses
+  %i.nu = load ptr, ptr %i.cu, align 8, !tbaa !88 ; 2 uses
   %i.nv = ptrtoint ptr %i.nt to i64
   %i.nw = ptrtoint ptr %i.nu to i64
   %i.nx = sub i64 %i.nv, %i.nw
@@ -222,13 +221,11 @@ bb.bl:                                            ; preds = %.preheader363.split
 bb.bm:                                            ; preds = %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab)
-  %21 = getelementptr inbounds nuw i8, ptr %i.nu, i64 8
-  %22 = load double, ptr %21, align 8, !tbaa !83
-  %23 = fsub double %20, %22
+  %20 = load <2 x double>, ptr %i.nn, align 8, !tbaa !83
+  %21 = load <2 x double>, ptr %i.nu, align 8, !tbaa !83
+  %22 = fsub <2 x double> %20, %21                ; 2 uses
+  %23 = extractelement <2 x double> %22, i64 1
   %24 = fmul double %i.nl, %23
-  %25 = load double, ptr %i.nn, align 8, !tbaa !83
-  %26 = load double, ptr %i.nu, align 8, !tbaa !83
-  %27 = fsub double %25, %26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   store i64 1, ptr %i.u, align 8, !tbaa !35
@@ -258,7 +255,8 @@ bb.bo:                                            ; preds = %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   %i.oh = load double, ptr %i.oc, align 8, !tbaa !83
-  %i.oi = call double @llvm.fmuladd.f64(double %24, double %27, double %i.oh)
+  %25 = extractelement <2 x double> %22, i64 0
+  %i.oi = call double @llvm.fmuladd.f64(double %24, double %25, double %i.oh)
   store double %i.oi, ptr %i.oc, align 8, !tbaa !83
   %i.oj = load double, ptr %i.kl, align 8, !tbaa !83
   %i.ok = load double, ptr %i.ns, align 8, !tbaa !83

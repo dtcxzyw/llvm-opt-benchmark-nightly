@@ -205,7 +205,7 @@ bb.a:
   %2 = alloca %"struct.boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>::const_iterator::increment", align 8 ; 4 uses
   %3 = alloca %"struct.boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>::const_iterator::dereference", align 8 ; 4 uses
   %4 = alloca %"struct.boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>::const_iterator::dereference", align 8 ; 4 uses
-  %5 = alloca %"class.boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>>::const_iterator", align 8 ; 12 uses
+  %5 = alloca %"class.boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>>::const_iterator", align 16 ; 10 uses
   %6 = alloca %"class.boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>>::const_iterator", align 8 ; 7 uses
   %7 = alloca %"class.boost::beast::detail::buffers_range_adaptor<const boost::beast::buffers_suffix<boost::beast::buffers_cat_view<boost::asio::const_buffer, boost::asio::const_buffer>> &>::const_iterator", align 8 ; 19 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -217,9 +217,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !282)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !283)
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !94, !noalias !284 ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !94, !noalias !284 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !116, !noalias !284 ; 2 uses
   switch i8 %i.g, label %bb.b [
@@ -230,36 +230,32 @@ bb.a:
   ]
 
 _ZN5boost5beast16buffers_cat_viewIJNS_4asio12const_bufferES3_EE14const_iteratorC2ERKS5_.exit.thread.i.i.i.i: ; preds = %bb.a
-  store ptr %i.d, ptr %5, align 8, !tbaa !94, !alias.scope !284
+  store ptr %i.d, ptr %5, align 16, !tbaa !94, !alias.scope !284
   br label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES7_EEEEEvEEmRKT_.exit
 
 bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %8 = load ptr, ptr %i.e, align 8, !tbaa !95, !noalias !284
-  store ptr %i.d, ptr %5, align 8, !tbaa !94, !alias.scope !284
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %8, ptr %9, align 8, !tbaa !95, !alias.scope !284
+  %8 = load <2 x ptr>, ptr %i.c, align 8, !tbaa !42, !noalias !284
+  store <2 x ptr> %8, ptr %5, align 16, !tbaa !42, !alias.scope !284
   br label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES7_EEEEEvEEmRKT_.exit
 
 bb.d:                                             ; preds = %bb.a
-  %10 = load ptr, ptr %i.e, align 8, !tbaa !95, !noalias !284
-  store ptr %i.d, ptr %5, align 8, !tbaa !94, !alias.scope !284
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %10, ptr %11, align 8, !tbaa !95, !alias.scope !284
+  %9 = load <2 x ptr>, ptr %i.c, align 8, !tbaa !42, !noalias !284
+  store <2 x ptr> %9, ptr %5, align 16, !tbaa !42, !alias.scope !284
   br label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES7_EEEEEvEEmRKT_.exit
 
 bb.e:                                             ; preds = %bb.a
   %i.h = load i8, ptr %i.e, align 8, !tbaa !21, !noalias !284
-  store ptr %i.d, ptr %5, align 8, !tbaa !94, !alias.scope !284
+  store ptr %i.d, ptr %5, align 16, !tbaa !94, !alias.scope !284
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i8 %i.h, ptr %i.i, align 8, !tbaa !21, !alias.scope !284
   br label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES7_EEEEEvEEmRKT_.exit
 
 _ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_16buffers_cat_viewIJNS_4asio12const_bufferES7_EEEEEvEEmRKT_.exit: ; preds = %_ZN5boost5beast16buffers_cat_viewIJNS_4asio12const_bufferES3_EE14const_iteratorC2ERKS5_.exit.thread.i.i.i.i, %bb.c, %bb.d, %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store i8 %i.g, ptr %i.j, align 8, !tbaa !116, !alias.scope !284
+  store i8 %i.g, ptr %i.j, align 16, !tbaa !116, !alias.scope !284
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 24
   store ptr %1, ptr %i.k, align 8, !tbaa !119, !alias.scope !284
   store ptr %1, ptr %6, align 8, !tbaa !94, !alias.scope !285

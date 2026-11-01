@@ -205,15 +205,16 @@ bb.gf:                                            ; preds = %.noexc291, %.noexc2
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.gx
   %.0138807 = phi i64 [ %i.ayt, %bb.gx ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %.1145806 = phi i32 [ %i.ays, %bb.gx ], [ %.0144809, %.lr.ph.preheader ] ; 2 uses
-  %i.aws = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.0138807 ; 7 uses
-  %i.awt = load double, ptr %i.aws, align 8, !tbaa !701 ; 2 uses
+  %i.aws = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.0138807 ; 8 uses
+  %i.awt = load double, ptr %i.aws, align 8, !tbaa !701
   %i.awu = call double @llvm.fabs.f64(double %i.awt)
   %i.awv = fcmp ueq double %i.awu, +inf
   br i1 %i.awv, label %bb.gi, label %bb.gg
 
 bb.gg:                                            ; preds = %.lr.ph
   %i.aww = getelementptr inbounds nuw i8, ptr %i.aws, i64 8
-  %i.awx = load double, ptr %i.aww, align 8, !tbaa !701 ; 2 uses
+  %i.awx = load double, ptr %i.aww, align 8, !tbaa !701
+  %24 = load <2 x double>, ptr %i.aws, align 8, !tbaa !701
   %i.awy = call double @llvm.fabs.f64(double %i.awx)
   %i.awz = fcmp ueq double %i.awy, +inf
   br i1 %i.awz, label %bb.gi, label %bb.gh
@@ -318,9 +319,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit295: ; preds = %bb
   br label %.body244
 
 bb.gs:                                            ; preds = %bb.gh
-  %24 = insertelement <2 x double> poison, double %i.awt, i64 0
-  %25 = insertelement <2 x double> %24, double %i.awx, i64 1
-  %i.axx = fadd <2 x double> %25, %i.awq
+  %i.axx = fadd <2 x double> %24, %i.awq
   store <2 x double> %i.axx, ptr %i.aws, align 8, !tbaa !701
   %i.axy = fadd double %i.axb, %i.awr
   store double %i.axy, ptr %i.axa, align 8, !tbaa !701
@@ -723,15 +722,16 @@ bb.gf:                                            ; preds = %.noexc291, %.noexc2
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.gx
   %.0138807 = phi i64 [ %i.azr, %bb.gx ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %.1145806 = phi i32 [ %i.azq, %bb.gx ], [ %.0144809, %.lr.ph.preheader ] ; 2 uses
-  %i.axq = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.0138807 ; 7 uses
-  %i.axr = load double, ptr %i.axq, align 8, !tbaa !701 ; 2 uses
+  %i.axq = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.0138807 ; 8 uses
+  %i.axr = load double, ptr %i.axq, align 8, !tbaa !701
   %i.axs = call double @llvm.fabs.f64(double %i.axr)
   %i.axt = fcmp ueq double %i.axs, +inf
   br i1 %i.axt, label %bb.gi, label %bb.gg
 
 bb.gg:                                            ; preds = %.lr.ph
   %i.axu = getelementptr inbounds nuw i8, ptr %i.axq, i64 8
-  %i.axv = load double, ptr %i.axu, align 8, !tbaa !701 ; 2 uses
+  %i.axv = load double, ptr %i.axu, align 8, !tbaa !701
+  %24 = load <2 x double>, ptr %i.axq, align 8, !tbaa !701
   %i.axw = call double @llvm.fabs.f64(double %i.axv)
   %i.axx = fcmp ueq double %i.axw, +inf
   br i1 %i.axx, label %bb.gi, label %bb.gh
@@ -836,9 +836,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit295: ; preds = %bb
   br label %.body244
 
 bb.gs:                                            ; preds = %bb.gh
-  %24 = insertelement <2 x double> poison, double %i.axr, i64 0
-  %25 = insertelement <2 x double> %24, double %i.axv, i64 1
-  %i.ayv = fadd <2 x double> %25, %i.axo
+  %i.ayv = fadd <2 x double> %24, %i.axo
   store <2 x double> %i.ayv, ptr %i.axq, align 8, !tbaa !701
   %i.ayw = fadd double %i.axz, %i.axp
   store double %i.ayw, ptr %i.axy, align 8, !tbaa !701

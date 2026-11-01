@@ -205,7 +205,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %i.km = phi i32 [ %.pre123.i, %bb.bm ], [ %i.kd, %bb.bl ] ; 2 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 5 uses
   store i32 1, ptr %i.kn, align 8, !tbaa !55
-  %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 316 ; 6 uses
+  %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 316 ; 4 uses
   store i32 1, ptr %i.ko, align 4, !tbaa !56
   %i.kp = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.kq = icmp sgt i32 %i.km, 0
@@ -217,19 +217,18 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
 
 .lr.ph.i:                                         ; preds = %bb.bq, %.lr.ph.preheader.i
   %i.ks = phi i32 [ %i.ld, %bb.bq ], [ %i.km, %.lr.ph.preheader.i ]
-  %2 = phi i32 [ %7, %bb.bq ], [ 1, %.lr.ph.preheader.i ]
-  %i.kt = phi i32 [ %..i, %bb.bq ], [ 1, %.lr.ph.preheader.i ]
-  %.0116.i = phi ptr [ %i.lf, %bb.bq ], [ %i.kr, %.lr.ph.preheader.i ] ; 4 uses
-  %.099115.i = phi i32 [ %i.le, %bb.bq ], [ 0, %.lr.ph.preheader.i ]
+  %.0116.i = phi ptr [ %i.lf, %bb.bq ], [ %i.kr, %.lr.ph.preheader.i ] ; 3 uses
+  %i.kt = phi i32 [ %i.le, %bb.bq ], [ 0, %.lr.ph.preheader.i ]
+  %2 = phi <2 x i32> [ %6, %bb.bq ], [ splat (i32 1), %.lr.ph.preheader.i ]
   %i.ku = getelementptr inbounds nuw i8, ptr %.0116.i, i64 8 ; 2 uses
-  %i.kv = load i32, ptr %i.ku, align 8, !tbaa !51 ; 2 uses
+  %i.kv = load i32, ptr %i.ku, align 8, !tbaa !51
   %i.kw = add i32 %i.kv, -5
   %or.cond113.i = icmp ult i32 %i.kw, -4
   br i1 %or.cond113.i, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %.lr.ph.i
   %i.kx = getelementptr inbounds nuw i8, ptr %.0116.i, i64 12
-  %i.ky = load i32, ptr %i.kx, align 4, !tbaa !50 ; 2 uses
+  %i.ky = load i32, ptr %i.kx, align 4, !tbaa !50
   %i.kz = add i32 %i.ky, -5
   %or.cond114.i = icmp ult i32 %i.kz, -4
   br i1 %or.cond114.i, label %bb.bp, label %bb.bq
@@ -240,31 +239,24 @@ bb.bp:                                            ; preds = %bb.bo, %.lr.ph.i
   store i32 18, ptr %i.lb, align 8, !tbaa !36
   %i.lc = load ptr, ptr %i.la, align 8, !tbaa !38
   tail call void %i.lc(ptr noundef nonnull %0) #7, !inline_history !83
-  %.pre124.i = load i32, ptr %i.kn, align 8, !tbaa !55
-  %.pre125.i = load i32, ptr %i.ku, align 8, !tbaa !51
-  %.pre126.i = load i32, ptr %i.ko, align 4, !tbaa !56
-  %.phi.trans.insert127.i = getelementptr inbounds nuw i8, ptr %.0116.i, i64 12
-  %.pre128.i = load i32, ptr %.phi.trans.insert127.i, align 4, !tbaa !50
+  %3 = load <2 x i32>, ptr %i.kn, align 8, !tbaa !42
   %.pre129.i = load i32, ptr %i.kc, align 4, !tbaa !41
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %i.ld = phi i32 [ %i.ks, %bb.bo ], [ %.pre129.i, %bb.bp ] ; 3 uses
-  %3 = phi i32 [ %i.ky, %bb.bo ], [ %.pre128.i, %bb.bp ]
-  %4 = phi i32 [ %2, %bb.bo ], [ %.pre126.i, %bb.bp ]
-  %5 = phi i32 [ %i.kv, %bb.bo ], [ %.pre125.i, %bb.bp ]
-  %6 = phi i32 [ %i.kt, %bb.bo ], [ %.pre124.i, %bb.bp ]
-  %..i = tail call i32 @llvm.smax.i32(i32 %6, i32 %5) ; 2 uses
-  store i32 %..i, ptr %i.kn, align 8, !tbaa !55
-  %7 = tail call i32 @llvm.smax.i32(i32 %4, i32 %3) ; 3 uses
-  store i32 %7, ptr %i.ko, align 4, !tbaa !56
-  %i.le = add nuw nsw i32 %.099115.i, 1           ; 2 uses
+  %4 = phi <2 x i32> [ %2, %bb.bo ], [ %3, %bb.bp ]
+  %5 = load <2 x i32>, ptr %i.ku, align 8, !tbaa !42
+  %6 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %4, <2 x i32> %5) ; 3 uses
+  store <2 x i32> %6, ptr %i.kn, align 8, !tbaa !42
+  %i.le = add nuw nsw i32 %i.kt, 1                ; 2 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %.0116.i, i64 96
   %i.lg = icmp slt i32 %i.le, %i.ld
   br i1 %i.lg, label %.lr.ph.i, label %._crit_edge.i67, !llvm.loop !84
 
 ._crit_edge.i67:                                  ; preds = %bb.bq
   %i.lh = icmp sgt i32 %i.ld, 0
+  %7 = extractelement <2 x i32> %6, i64 1
   br i1 %i.lh, label %.lr.ph120.i, label %._crit_edge.._crit_edge121_crit_edge.i
 
 ._crit_edge.._crit_edge121_crit_edge.i:           ; preds = %._crit_edge.i67, %bb.bn
@@ -667,7 +659,7 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.h = load i32, ptr %i.g, align 4              ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.h = load i32, ptr %i.g, align 4              ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.j = load i32, ptr %i.i, align 4
   %i.k = icmp eq i32 %i.h, %i.j
@@ -210,23 +210,24 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.m = load i32, ptr %i.l, align 4              ; 3 uses
+  %i.m = load i32, ptr %i.l, align 4              ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.o = load i32, ptr %i.n, align 8
   %i.p = icmp eq i32 %i.m, %i.o
   br i1 %i.p, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
+  %4 = load <2 x i32>, ptr %i.g, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = mul nsw i32 %i.m, %i.h
   %i.t = sext i32 %i.s to i64
-  %4 = add nsw i32 %i.m, 1
-  %5 = sdiv i32 %4, 2
-  %6 = add nsw i32 %i.h, 1
-  %7 = sdiv i32 %6, 2
+  %5 = add nsw <2 x i32> %4, splat (i32 1)
+  %6 = sdiv <2 x i32> %5, splat (i32 2)           ; 2 uses
+  %7 = extractelement <2 x i32> %6, i64 0
   %8 = shl nsw i32 %7, 1
-  %i.u = mul i32 %8, %5
+  %9 = extractelement <2 x i32> %6, i64 1
+  %i.u = mul i32 %8, %9
   %i.v = sext i32 %i.u to i64
   %i.w = add nsw i64 %i.v, %i.t
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.r, ptr align 1 %2, i64 %i.w, i1 false)
@@ -436,8 +437,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.fg, label %bb.o, label %bb.r
 
 bb.o:                                             ; preds = %bb.n
-  %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.fi = load i32, ptr %i.fh, align 4            ; 3 uses
+  %i.fh = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.fi = load i32, ptr %i.fh, align 4            ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.fk = load i32, ptr %i.fj, align 4
   %i.fl = icmp eq i32 %i.fi, %i.fk
@@ -445,23 +446,24 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.fn = load i32, ptr %i.fm, align 4            ; 3 uses
+  %i.fn = load i32, ptr %i.fm, align 4            ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fp = load i32, ptr %i.fo, align 8
   %i.fq = icmp eq i32 %i.fn, %i.fp
   br i1 %i.fq, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
+  %10 = load <2 x i32>, ptr %i.fh, align 4
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.fs = load ptr, ptr %i.fr, align 8
   %i.ft = mul nsw i32 %i.fn, %i.fi
   %i.fu = sext i32 %i.ft to i64
-  %9 = add nsw i32 %i.fn, 1
-  %10 = sdiv i32 %9, 2
-  %11 = add nsw i32 %i.fi, 1
-  %12 = sdiv i32 %11, 2
-  %13 = shl nsw i32 %12, 1
-  %i.fv = mul i32 %13, %10
+  %11 = add nsw <2 x i32> %10, splat (i32 1)
+  %12 = sdiv <2 x i32> %11, splat (i32 2)         ; 2 uses
+  %13 = extractelement <2 x i32> %12, i64 0
+  %14 = shl nsw i32 %13, 1
+  %15 = extractelement <2 x i32> %12, i64 1
+  %i.fv = mul i32 %14, %15
   %i.fw = sext i32 %i.fv to i64
   %i.fx = add nsw i64 %i.fw, %i.fu
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.fs, ptr align 1 %2, i64 %i.fx, i1 false)

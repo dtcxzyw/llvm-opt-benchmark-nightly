@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !891, !noalias !5618
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !5620, !noalias !5618, !nonnull !264
-  %i.l = tail call noalias noundef dereferenceable_or_null(272) ptr @_ZnamRKSt9nothrow_t(i64 noundef 272, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #55, !noalias !5618, !inline_history !5599 ; 13 uses
+  %i.l = tail call noalias noundef dereferenceable_or_null(272) ptr @_ZnamRKSt9nothrow_t(i64 noundef 272, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #55, !noalias !5618, !inline_history !5599 ; 11 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %bb.c, label %.from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i.i
 
@@ -220,12 +220,12 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.k, ptr %.spill.addr244.i.i, align 8, !noalias !5618
   %.spill.addr241.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 240
   store ptr %i.i, ptr %.spill.addr241.i.i, align 8, !noalias !5618
-  %.spill.addr229.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 224
-  store <2 x ptr> %i.e, ptr %.spill.addr229.i.i, align 8, !noalias !5618
-  %.spill.addr226.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 216
-  store ptr %i.b, ptr %.spill.addr226.i.i, align 8, !noalias !5618
-  %.spill.addr.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 208
-  store ptr %i.c, ptr %.spill.addr.i.i, align 8, !noalias !5618
+  %.spill.addr229.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 208
+  %3 = insertelement <4 x ptr> poison, ptr %i.c, i64 0
+  %4 = insertelement <4 x ptr> %3, ptr %i.b, i64 1
+  %5 = shufflevector <2 x ptr> %i.e, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x ptr> %4, <4 x ptr> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %6, ptr %.spill.addr229.i.i, align 8, !noalias !5618
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.reload.addr253.i.i, i8 0, i64 24, i1 false), !noalias !5618
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 80
   store i8 0, ptr %i.o, align 8, !tbaa !2050, !noalias !5618
@@ -255,7 +255,7 @@ bb.e:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !891, !noalias !5623
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !5620, !noalias !5623, !nonnull !264
-  %i.aa = tail call noalias noundef dereferenceable_or_null(272) ptr @_ZnamRKSt9nothrow_t(i64 noundef 272, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #55, !noalias !5623, !inline_history !5606 ; 13 uses
+  %i.aa = tail call noalias noundef dereferenceable_or_null(272) ptr @_ZnamRKSt9nothrow_t(i64 noundef 272, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #55, !noalias !5623, !inline_history !5606 ; 11 uses
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %bb.f, label %.from._ZN12async_simple4coro6detail16PromiseAllocatorIvLb1EEnwEm.exit.i.i14
 
@@ -270,12 +270,12 @@ bb.e:                                             ; preds = %bb.d
   store ptr %i.z, ptr %.spill.addr244.i.i7, align 8, !noalias !5623
   %.spill.addr241.i.i8 = getelementptr inbounds nuw i8, ptr %i.aa, i64 240
   store ptr %i.x, ptr %.spill.addr241.i.i8, align 8, !noalias !5623
-  %.spill.addr229.i.i10 = getelementptr inbounds nuw i8, ptr %i.aa, i64 224
-  store <2 x ptr> %i.t, ptr %.spill.addr229.i.i10, align 8, !noalias !5623
-  %.spill.addr226.i.i11 = getelementptr inbounds nuw i8, ptr %i.aa, i64 216
-  store ptr %i.q, ptr %.spill.addr226.i.i11, align 8, !noalias !5623
-  %.spill.addr.i.i12 = getelementptr inbounds nuw i8, ptr %i.aa, i64 208
-  store ptr %i.r, ptr %.spill.addr.i.i12, align 8, !noalias !5623
+  %.spill.addr229.i.i10 = getelementptr inbounds nuw i8, ptr %i.aa, i64 208
+  %7 = insertelement <4 x ptr> poison, ptr %i.r, i64 0
+  %8 = insertelement <4 x ptr> %7, ptr %i.q, i64 1
+  %9 = shufflevector <2 x ptr> %i.t, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x ptr> %8, <4 x ptr> %9, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  store <4 x ptr> %10, ptr %.spill.addr229.i.i10, align 8, !noalias !5623
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.reload.addr253.i.i6, i8 0, i64 24, i1 false), !noalias !5623
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 80
   store i8 0, ptr %i.ad, align 8, !tbaa !2050, !noalias !5623
@@ -678,26 +678,24 @@ bb.aw:                                            ; preds = %_ZN7easylog8record_
 bb.ax:                                            ; preds = %_ZNR2tl8expectedINS0_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8coro_rpc9rpc_errorEEESt4errcE5valueIS9_TnPNSt9enable_ifIXntsr3std7is_voidIT_EE5valueEvE4typeELPv0EEERSE_v.exit
   %.sroa.0136.0265.reload.addr664 = getelementptr inbounds nuw i8, ptr %0, i64 264
   %.sroa.0136.0265.reload665 = load i64, ptr %.sroa.0136.0265.reload.addr664, align 8, !tbaa !2977
-  %.sroa.18.0266.reload.addr652 = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
+  %.sroa.18.0266.reload.addr652 = getelementptr inbounds nuw i8, ptr %0, i64 256
   %.sroa.18.0266.reload653 = load ptr, ptr %.sroa.18.0266.reload.addr652, align 8, !tbaa !2977
-  %.sroa.12.0267.reload.addr622 = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
+  %.sroa.12.0267.reload.addr622 = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 4 uses
   %.sroa.12.0267.reload623 = load ptr, ptr %.sroa.12.0267.reload.addr622, align 8, !tbaa !2977
   %i.gs = atomicrmw add ptr @qps, i32 1 release, align 4 ; 0 uses
   %i.gt = tail call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #40 ; 3 uses
   %i.gu = sub nsw i64 %i.gt, %.sroa.0136.0265.reload665
   %i.gv = sdiv i64 %i.gu, 1000                    ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.12.0267.reload623, %.sroa.18.0266.reload653
-  %.sroa.12.0267.reload621 = load ptr, ptr %.sroa.12.0267.reload.addr622, align 8, !tbaa !2977 ; 4 uses
+  %.sroa.12.0267.reload621 = load ptr, ptr %.sroa.12.0267.reload.addr622, align 8, !tbaa !2977 ; 3 uses
   br i1 %.not.i.i, label %bb.ay, label %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from.
 
 _ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from.: ; preds = %bb.ax
   store i64 %i.gv, ptr %.sroa.12.0267.reload621, align 8, !tbaa !253
-  %1 = getelementptr inbounds nuw i8, ptr %.sroa.12.0267.reload621, i64 8
-  %.sroa.18.0266.reload649 = load ptr, ptr %.sroa.18.0266.reload.addr652, align 8, !tbaa !2977
+  %1 = load <2 x ptr>, ptr %.sroa.12.0267.reload.addr622, align 8, !tbaa !2977
+  %2 = getelementptr inbounds nuw i8, <2 x ptr> %1, <2 x i64> <i64 8, i64 0>
   %.sroa.0138.0268.reload.addr592 = getelementptr inbounds nuw i8, ptr %0, i64 240
   %.sroa.0138.0268.reload593 = load ptr, ptr %.sroa.0138.0268.reload.addr592, align 8, !tbaa !2977
-  %2 = insertelement <2 x ptr> poison, ptr %1, i64 0
-  %3 = insertelement <2 x ptr> %2, ptr %.sroa.18.0266.reload649, i64 1
   br label %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit
 
 bb.ay:                                            ; preds = %bb.ax
@@ -751,7 +749,7 @@ _ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEO
   %.sroa.0136.1 = phi i64 [ %.sroa.0136.0265.reload, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit ], [ %.sroa.0136.0265.reload661, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit114 ], [ %.sroa.0136.0265.reload659, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit80 ], [ %.sroa.0136.0265.reload663, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit73 ], [ %.sroa.0136.0265.reload655, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit ], [ %.sroa.0136.0265.reload657, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit ], [ %i.gt, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ %i.gt, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from. ]
   %.sroa.0138.1 = phi ptr [ %.sroa.0138.0268.reload, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit ], [ %.sroa.0138.0268.reload589, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit114 ], [ %.sroa.0138.0268.reload587, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit80 ], [ %.sroa.0138.0268.reload591, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit73 ], [ %.sroa.0138.0268.reload583, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit ], [ %.sroa.0138.0268.reload585, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit ], [ %i.hg, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ %.sroa.0138.0268.reload593, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from. ] ; 2 uses
   %i.hn = phi i1 [ false, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit ], [ true, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit114 ], [ true, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit80 ], [ true, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit73 ], [ false, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit ], [ false, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit ], [ false, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ false, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from. ]
-  %i.ho = phi <2 x ptr> [ %i.am, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit ], [ %i.gq, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit114 ], [ %i.ew, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit80 ], [ %i.eh, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit73 ], [ %i.dp, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit ], [ %i.bb, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit ], [ %i.hm, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ %3, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from. ] ; 3 uses
+  %i.ho = phi <2 x ptr> [ %i.am, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit ], [ %i.gq, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit114 ], [ %i.ew, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit80 ], [ %i.eh, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8instanceEv.exit73 ], [ %i.dp, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog8record_tD2Ev.exit ], [ %i.bb, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZN7easylog6loggerILm0EE8check_tmENSt6chrono10time_pointINS2_3_V212system_clockENS2_8durationIlSt5ratioILl1ELl1000000000EEEEEE.exit ], [ %i.hm, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from._ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i ], [ %2, %_ZNSt6vectorINSt6chrono8durationIlSt5ratioILl1ELl1000000EEEESaIS4_EE9push_backEOS4_.exit.from. ] ; 3 uses
   %i.hp = load i8, ptr %i.ac, align 8, !tbaa !262, !range !263, !noundef !264
   %i.hq = trunc nuw i8 %i.hp to i1
   br i1 %i.hq, label %bb.bb, label %_ZN2tl6detail21expected_storage_baseINS_8expectedINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8coro_rpc9rpc_errorEEESt4errcLb0ELb1EED2Ev.exit

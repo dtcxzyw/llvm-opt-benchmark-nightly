@@ -205,7 +205,7 @@ define internal fastcc range(i32 -205, 1) i32 @and_cclass(ptr nofree noundef non
 bb.a:
   %i.a = alloca ptr, align 8                      ; 12 uses
   %i.b = alloca [8 x i32], align 16               ; 5 uses
-  %i.c = alloca [8 x i32], align 16               ; 7 uses
+  %i.c = alloca [8 x i32], align 16               ; 5 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
@@ -221,7 +221,7 @@ bb.a:
   %i.m = load i32, ptr %i.l, align 8, !tbaa !153  ; 2 uses
   %i.n = trunc i32 %i.m to i1                     ; 2 uses
   %i.o = and i32 %i.m, 1                          ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !105  ; 7 uses
   br i1 %i.g, label %bb.b, label %bb.c
@@ -243,23 +243,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.n, label %bb.d, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
-  %3 = xor i32 %i.y, -1                           ; 2 uses
-  store i32 %3, ptr %i.c, align 16, !tbaa !26
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %i.z = load <4 x i32>, ptr %4, align 8, !tbaa !26
+  %i.z = load <4 x i32>, ptr %i.p, align 4, !tbaa !26
   %i.aa = xor <4 x i32> %i.z, splat (i32 -1)
-  store <4 x i32> %i.aa, ptr %5, align 4, !tbaa !26
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 20
-  %8 = load <2 x i32>, ptr %6, align 8, !tbaa !26
-  %9 = xor <2 x i32> %8, splat (i32 -1)
-  store <2 x i32> %9, ptr %7, align 4, !tbaa !26
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %10 = load i32, ptr %i.ab, align 8, !tbaa !26
-  %11 = xor i32 %10, -1
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 28
-  store i32 %11, ptr %12, align 4, !tbaa !26
+  %3 = xor i32 %i.y, -1
+  store <4 x i32> %i.aa, ptr %i.c, align 16, !tbaa !26
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 36
+  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %5 = load <4 x i32>, ptr %i.ab, align 4, !tbaa !26
+  %6 = xor <4 x i32> %5, splat (i32 -1)
+  store <4 x i32> %6, ptr %4, align 16, !tbaa !26
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.d

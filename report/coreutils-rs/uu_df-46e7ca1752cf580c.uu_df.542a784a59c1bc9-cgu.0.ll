@@ -205,7 +205,7 @@ bb.a:
   %i.m = alloca [224 x i8], align 16              ; 4 uses
   %i.n = alloca [24 x i8], align 8                ; 6 uses
   %i.o = alloca [24 x i8], align 8                ; 7 uses
-  %i.p = alloca [232 x i8], align 8               ; 19 uses
+  %i.p = alloca [232 x i8], align 8               ; 18 uses
   %i.q = alloca [224 x i8], align 16              ; 25 uses
   %i.r = alloca [24 x i8], align 8                ; 6 uses
   %i.s = alloca [224 x i8], align 16              ; 18 uses
@@ -608,7 +608,7 @@ _RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCss03989lGqH_5u
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 81
   %i.dt = load i8, ptr %i.ds, align 1, !range !14
   %i.du = trunc nuw i8 %i.dt to i1
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.p, i64 184
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.p, i64 184 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.p, i64 152
   %i.dx = getelementptr inbounds nuw i8, ptr %i.p, i64 160
   %.sroa.692.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 48
@@ -617,9 +617,8 @@ _RNvXs4_NtNtCs7tKScEop1B6_5alloc3vec9into_iterINtB5_8IntoIterNtNtCss03989lGqH_5u
   %.sroa.1095.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 120
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 128
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 176
-  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 192
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 200
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 208
+  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 208 ; 2 uses
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 216
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 72
   %.val23 = load i64, ptr %i.dy, align 8
@@ -669,7 +668,7 @@ bb.ap:                                            ; preds = %_RNvXs4_NtNtCs7tKSc
   %.sroa.7.0..sroa.485.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.485.0116, i64 8
   store i64 %.sroa.087.0.copyload88, ptr %i.p, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(224) %.sroa.7.0..sroa.485.8..sroa_idx, i64 224, i1 false)
-  %i.fh = load i64, ptr %i.dv, align 8            ; 3 uses
+  %i.fh = load i64, ptr %i.dv, align 8            ; 2 uses
   %i.fi = icmp ne i64 %i.fh, 0                    ; 2 uses
   %or.cond = select i1 %i.du, i1 true, i1 %i.fi
   br i1 %or.cond, label %bb.bg, label %bb.bk
@@ -949,27 +948,27 @@ bb.bg:                                            ; preds = %bb.ap
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.eb, ptr noundef nonnull align 8 dereferenceable(24) %i.fa, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ec, ptr noundef nonnull align 8 dereferenceable(24) %i.fb, i64 24, i1 false)
   %.sroa.0.0.i50 = zext i1 %i.fi to i64
-  %.sroa.15.0.copyload = load i64, ptr %.sroa.15.0..sroa_idx, align 8
-  %.sroa.17.0.copyload = load i64, ptr %.sroa.17.0..sroa_idx, align 8 ; 4 uses
-  %.sroa.18.0.copyload = load i64, ptr %.sroa.18.0..sroa_idx, align 8 ; 2 uses
-  %3 = call i64 @llvm.usub.sat.i64(i64 %i.fh, i64 %.sroa.15.0.copyload) ; 3 uses
-  %4 = call i64 @llvm.usub.sat.i64(i64 %.sroa.17.0.copyload, i64 %.sroa.18.0.copyload) ; 2 uses
-  %5 = add i64 %3, %.sroa.16.0.copyload
-  %6 = uitofp i64 %5 to double
-  %7 = icmp ne i64 %.sroa.17.0.copyload, 0
-  %8 = insertelement <2 x i64> poison, i64 %3, i64 0
-  %9 = insertelement <2 x i64> %8, i64 %4, i64 1
-  %i.id = uitofp <2 x i64> %9 to <2 x double>
-  %10 = uitofp i64 %.sroa.17.0.copyload to double
-  %11 = insertelement <2 x double> poison, double %6, i64 0
-  %12 = insertelement <2 x double> %11, double %10, i64 1
+  %3 = load <2 x i64>, ptr %i.dv, align 8         ; 2 uses
+  %4 = load <2 x i64>, ptr %.sroa.17.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.18.0.copyload = load i64, ptr %.sroa.18.0..sroa_idx, align 8
+  %.sroa.17.0.copyload = load i64, ptr %.sroa.17.0..sroa_idx, align 8 ; 2 uses
+  %5 = shufflevector <2 x i64> %3, <2 x i64> %4, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %6 = shufflevector <2 x i64> %3, <2 x i64> %4, <2 x i32> <i32 1, i32 3>
+  %7 = call <2 x i64> @llvm.usub.sat.v2i64(<2 x i64> %5, <2 x i64> %6) ; 3 uses
+  %8 = extractelement <2 x i64> %7, i64 0         ; 2 uses
+  %9 = add i64 %8, %.sroa.16.0.copyload
+  %10 = icmp ne i64 %.sroa.17.0.copyload, 0
+  %i.id = uitofp <2 x i64> %7 to <2 x double>
+  %11 = insertelement <2 x i64> %5, i64 %9, i64 0
+  %12 = uitofp <2 x i64> %11 to <2 x double>
   %i.ie = fdiv <2 x double> %i.id, %12            ; 2 uses
-  %.sroa.01.0.i = zext i1 %7 to i64
+  %.sroa.01.0.i = zext i1 %10 to i64
   %i.if = zext i64 %.sroa.18.0.copyload to i128
-  %i.ig = zext i64 %4 to i128
+  %13 = extractelement <2 x i64> %7, i64 1
+  %i.ig = zext i64 %13 to i128
   %i.ih = zext i64 %.sroa.17.0.copyload to i128
   %i.ii = mul i64 %.sroa.16.0.copyload, %.sroa.13.0.copyload ; 2 uses
-  %i.ij = mul i64 %3, %.sroa.13.0.copyload        ; 2 uses
+  %i.ij = mul i64 %8, %.sroa.13.0.copyload        ; 2 uses
   %i.ik = insertelement <2 x i64> poison, i64 %i.ii, i64 0
   %i.il = insertelement <2 x i64> %i.ik, i64 %i.ij, i64 1
   %i.im = uitofp <2 x i64> %i.il to <2 x double>
@@ -1371,6 +1370,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i64> @llvm.usub.sat.v2i64(<2 x i64>, <2 x i64>) #20
 
 attributes #0 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold noinline nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

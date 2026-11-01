@@ -204,8 +204,8 @@ bb.a:
   %i.cq = alloca [40 x i8], align 8               ; 8 uses
   %i.cr = alloca [40 x i8], align 8               ; 8 uses
   %i.cs = alloca [32 x i8], align 8               ; 7 uses
-  %i.ct = alloca [16 x i8], align 8               ; 5 uses
-  %i.cu = alloca [16 x i8], align 8               ; 5 uses
+  %i.ct = alloca [16 x i8], align 16              ; 4 uses
+  %i.cu = alloca [16 x i8], align 16              ; 5 uses
   %i.cv = alloca [64 x i8], align 4               ; 5 uses
   %i.cw = alloca [32 x i8], align 8               ; 7 uses
   %i.cx = alloca [24 x i8], align 8               ; 2 uses
@@ -608,8 +608,6 @@ _RNvXsG_NtNtCsjfnSKV9Rz3v_3h3i7actions2h3NtB5_10WaitingForNtNtCskKLDkoKarTP_4cor
   %i.sd = getelementptr inbounds nuw i8, ptr %i.es, i64 8
   %i.se = getelementptr inbounds nuw i8, ptr %i.cz, i64 8 ; 2 uses
   %i.sf = getelementptr inbounds nuw i8, ptr %i.cv, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %.sroa.4189.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.sg = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %.sroa.4193.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 24
@@ -1012,7 +1010,7 @@ bb.ma:                                            ; preds = %bb.ly
           to label %bb.gi unwind label %.loopexit.split-lp1103.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !18060
 
 bb.mb:                                            ; preds = %bb.lz
-  %i.adn = load i64, ptr %i.cu, align 8, !dbg !18057, !range !16635, !noundef !1750 ; 2 uses
+  %i.adn = load i64, ptr %i.cu, align 16, !dbg !18057, !range !16635, !noundef !1750
   %.not719 = icmp eq i64 %i.adn, -1, !dbg !18057
   br i1 %.not719, label %.backedge, label %bb.mc, !dbg !18061
 
@@ -1023,9 +1021,8 @@ bb.mb:                                            ; preds = %bb.lz
 
 bb.mc:                                            ; preds = %bb.mb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ct), !dbg !18064
-  %7 = load i64, ptr %5, align 8, !dbg !18064
-  store i64 %i.adn, ptr %i.ct, align 8, !dbg !18064
-  store i64 %7, ptr %6, align 8, !dbg !18064
+  %5 = load <2 x i64>, ptr %i.cu, align 16, !dbg !18064
+  store <2 x i64> %5, ptr %i.ct, align 16, !dbg !18064
     #dbg_value(i64 4, !14098, !DIExpression(), !17175)
     #dbg_value(ptr poison, !14842, !DIExpression(), !17176)
     #dbg_value(ptr poison, !14842, !DIExpression(), !17177)

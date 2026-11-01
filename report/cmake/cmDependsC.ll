@@ -204,15 +204,15 @@ bb.a:
   store i8 0, ptr %i.f, align 8, !tbaa !22
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 2528
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 9 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 392
-  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 14 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 6 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 12 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 8 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 400
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 9 uses
@@ -330,13 +330,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i: ; 
   %i.az = phi ptr [ %i.j, %_ZNK5cmsys17RegularExpression5matchB5cxx11Ei.exit.thread ], [ %.pre, %_ZNK5cmsys17RegularExpression5matchB5cxx11Ei.exit ]
   %i.ba = load ptr, ptr %6, align 8, !tbaa !23    ; 3 uses
   %i.bb = icmp eq ptr %i.ba, %i.q
-  %.pre58 = load i64, ptr %i.r, align 8, !tbaa !21 ; 2 uses
+  %.pre58 = load i64, ptr %i.r, align 8, !tbaa !21
   br i1 %i.bb, label %bb.l, label %.thread.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i: ; preds = %_ZNK5cmsys17RegularExpression5matchB5cxx11Ei.exit
   %i.bc = load ptr, ptr %6, align 8, !tbaa !23    ; 3 uses
   %i.bd = icmp eq ptr %i.bc, %i.q
-  %.pre57 = load i64, ptr %i.r, align 8, !tbaa !21 ; 2 uses
+  %.pre57 = load i64, ptr %i.r, align 8, !tbaa !21
   br i1 %i.bd, label %bb.l, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i
 
 bb.l:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
@@ -370,17 +370,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; p
 
 .thread.i:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i
   store ptr %i.ba, ptr %5, align 8, !tbaa !23
-  store i64 %.pre58, ptr %i.k, align 8, !tbaa !21
-  %9 = load i64, ptr %i.q, align 8, !tbaa !22
-  store i64 %9, ptr %i.j, align 8, !tbaa !22
+  %9 = load <2 x i64>, ptr %i.r, align 8, !tbaa !22
+  store <2 x i64> %9, ptr %i.k, align 8, !tbaa !22
   br label %bb.p
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
   %i.bm = load i64, ptr %i.j, align 8, !tbaa !22
   store ptr %i.bc, ptr %5, align 8, !tbaa !23
-  store i64 %.pre57, ptr %i.k, align 8, !tbaa !21
-  %10 = load i64, ptr %i.q, align 8, !tbaa !22
-  store i64 %10, ptr %i.j, align 8, !tbaa !22
+  %10 = load <2 x i64>, ptr %i.r, align 8, !tbaa !22
+  store <2 x i64> %10, ptr %i.k, align 8, !tbaa !22
   %.not.i = icmp eq ptr %.pre, null
   br i1 %.not.i, label %bb.p, label %bb.o
 

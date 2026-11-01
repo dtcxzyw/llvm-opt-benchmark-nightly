@@ -202,10 +202,10 @@ bb.a:
   %.sroa.5.i.i.i.i = alloca [16 x i8], align 8    ; 4 uses
   %i.ah = alloca [24 x i8], align 8               ; 6 uses
   %i.ai = alloca [24 x i8], align 8               ; 6 uses
-  %i.aj = alloca [64 x i8], align 8               ; 39 uses
+  %i.aj = alloca [64 x i8], align 8               ; 38 uses
   %i.ak = alloca [64 x i8], align 8               ; 35 uses
   %i.al = alloca [32 x i8], align 8               ; 6 uses
-  %i.am = load ptr, ptr %1, align 8, !nonnull !7, !align !11, !noundef !7 ; 66 uses
+  %i.am = load ptr, ptr %1, align 8, !nonnull !7, !align !11, !noundef !7 ; 65 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !327)
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 831 ; 2 uses
   %i.ao = load i8, ptr %i.an, align 1, !range !12, !alias.scope !327, !noundef !7
@@ -608,19 +608,16 @@ bb.ed:                                            ; preds = %bb.c
   br label %_RNvXsj_NtCs7ZUl82OSlxp_6rustls5errorNtB5_5ErrorNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i
 
 bb.ee:                                            ; preds = %bb.c
-  %i.rg = getelementptr inbounds nuw i8, ptr %i.am, i64 904
-  %i.rh = load ptr, ptr %i.rg, align 8, !alias.scope !334, !nonnull !7, !noundef !7 ; 2 uses
+  %i.rg = getelementptr inbounds nuw i8, ptr %i.am, i64 904 ; 2 uses
+  %i.rh = load ptr, ptr %i.rg, align 8, !alias.scope !334, !nonnull !7, !noundef !7
   %i.ri = atomicrmw add ptr %i.rh, i64 1 monotonic, align 8, !noalias !461
   %i.rj = icmp slt i64 %i.ri, 0
   br i1 %i.rj, label %bb.eg, label %bb.ef
 
 bb.ef:                                            ; preds = %bb.ee
-  %6 = getelementptr inbounds nuw i8, ptr %i.am, i64 912
-  %7 = load ptr, ptr %6, align 8, !alias.scope !334, !nonnull !7, !align !11, !noundef !7
   %i.rk = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  store ptr %i.rh, ptr %i.rk, align 8, !alias.scope !332, !noalias !331
-  %8 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  store ptr %7, ptr %8, align 8, !alias.scope !332, !noalias !331
+  %6 = load <2 x ptr>, ptr %i.rg, align 8, !alias.scope !334
+  store <2 x ptr> %6, ptr %i.rk, align 8, !alias.scope !332, !noalias !331
   br label %_RNvXsj_NtCs7ZUl82OSlxp_6rustls5errorNtB5_5ErrorNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i
 
 bb.eg:                                            ; preds = %bb.ee

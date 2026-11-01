@@ -202,20 +202,22 @@ bb.b:                                             ; preds = %.lr.ph, %.thread
   br i1 %.not1189, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 104 ; 19 uses
-  %i.l = load double, ptr %i.k, align 8, !tbaa !12 ; 15 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 104 ; 20 uses
+  %i.l = load double, ptr %i.k, align 8, !tbaa !12 ; 12 uses
   %i.m = fcmp olt double %i.l, 0.000000e+00
   br i1 %i.m, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 112
-  %i.o = load double, ptr %i.n, align 8, !tbaa !12 ; 14 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 112 ; 2 uses
+  %i.o = load double, ptr %i.n, align 8, !tbaa !12 ; 9 uses
+  %1 = load <2 x double>, ptr %i.k, align 8, !tbaa !12 ; 3 uses
   %i.p = fcmp olt double %i.o, 0.000000e+00
   br i1 %i.p, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 120
-  %i.r = load double, ptr %i.q, align 8, !tbaa !12 ; 18 uses
+  %i.r = load double, ptr %i.q, align 8, !tbaa !12 ; 16 uses
+  %2 = load <2 x double>, ptr %i.n, align 8, !tbaa !12 ; 2 uses
   %i.s = fcmp olt double %i.r, 0.000000e+00
   br i1 %i.s, label %.thread, label %bb.f
 
@@ -497,14 +499,17 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.en, label %bb.bd, label %.thread
 
 bb.av:                                            ; preds = %bb.at
-  %1 = fdiv double %i.el, %i.o                    ; 2 uses
   %i.eo = zext nneg i32 %.1 to i64
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.eo
   %i.eq = load double, ptr %i.ep, align 8, !tbaa !12
   %i.er = fsub double %i.eq, %i.du
-  %2 = fdiv double %i.er, %i.r                    ; 2 uses
-  %3 = fmul double %2, %2
-  %i.es = tail call double @llvm.fmuladd.f64(double %1, double %1, double %3)
+  %3 = insertelement <2 x double> poison, double %i.el, i64 0
+  %4 = insertelement <2 x double> %3, double %i.er, i64 1
+  %5 = fdiv <2 x double> %4, %2                   ; 3 uses
+  %foldExtExtBinop = fmul <2 x double> %5, %5
+  %6 = extractelement <2 x double> %foldExtExtBinop, i64 1
+  %7 = extractelement <2 x double> %5, i64 0      ; 2 uses
+  %i.es = tail call double @llvm.fmuladd.f64(double %7, double %7, double %6)
   %i.et = fcmp olt double %i.es, 1.000000e+00
   br i1 %i.et, label %bb.bd, label %.thread
 
@@ -536,14 +541,17 @@ bb.az:                                            ; preds = %bb.ax
   br i1 %i.fi, label %bb.bd, label %.thread
 
 bb.ba:                                            ; preds = %bb.aw
-  %4 = fdiv double %i.ex, %i.l                    ; 2 uses
   %i.fj = zext nneg i32 %.1912 to i64
   %i.fk = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.fj
   %i.fl = load double, ptr %i.fk, align 8, !tbaa !12
   %i.fm = fsub double %i.fl, %i.dl
-  %5 = fdiv double %i.fm, %i.o                    ; 2 uses
-  %6 = fmul double %5, %5
-  %i.fn = tail call double @llvm.fmuladd.f64(double %4, double %4, double %6) ; 2 uses
+  %8 = insertelement <2 x double> poison, double %i.ex, i64 0
+  %9 = insertelement <2 x double> %8, double %i.fm, i64 1
+  %10 = fdiv <2 x double> %9, %1                  ; 3 uses
+  %foldExtExtBinop1191 = fmul <2 x double> %10, %10
+  %11 = extractelement <2 x double> %foldExtExtBinop1191, i64 1
+  %12 = extractelement <2 x double> %10, i64 0    ; 2 uses
+  %i.fn = tail call double @llvm.fmuladd.f64(double %12, double %12, double %11) ; 2 uses
   br i1 %.not987, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
@@ -574,9 +582,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.
   %i.gg = insertelement <2 x double> poison, double %i.dc, i64 0
   %i.gh = insertelement <2 x double> %i.gg, double %i.dl, i64 1
   %i.gi = fsub <2 x double> %i.gf, %i.gh
-  %7 = insertelement <2 x double> poison, double %i.l, i64 0
-  %8 = insertelement <2 x double> %7, double %i.o, i64 1
-  %i.gj = fdiv <2 x double> %i.gi, %8             ; 3 uses
+  %i.gj = fdiv <2 x double> %i.gi, %1             ; 3 uses
   %foldExtExtBinop.a = fmul <2 x double> %i.gj, %i.gj
   %i.gk = extractelement <2 x double> %foldExtExtBinop.a, i64 1
   %i.gl = extractelement <2 x double> %i.gj, i64 0 ; 2 uses
@@ -712,14 +718,17 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.cg
 
 bb.by:                                            ; preds = %bb.bw
-  %9 = fdiv double %i.ie, %i.o                    ; 2 uses
   %i.ih = sext i32 %.2 to i64
   %i.ii = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.ih
   %i.ij = load double, ptr %i.ii, align 8, !tbaa !12
   %i.ik = fsub double %i.ij, %i.hq
-  %10 = fdiv double %i.ik, %i.r                   ; 2 uses
-  %11 = fmul double %10, %10
-  %i.il = tail call double @llvm.fmuladd.f64(double %9, double %9, double %11)
+  %13 = insertelement <2 x double> poison, double %i.ie, i64 0
+  %14 = insertelement <2 x double> %13, double %i.ik, i64 1
+  %15 = fdiv <2 x double> %14, %2                 ; 3 uses
+  %foldExtExtBinop1195 = fmul <2 x double> %15, %15
+  %16 = extractelement <2 x double> %foldExtExtBinop1195, i64 1
+  %17 = extractelement <2 x double> %15, i64 0    ; 2 uses
+  %i.il = tail call double @llvm.fmuladd.f64(double %17, double %17, double %16)
   %i.im = fcmp olt double %i.il, 1.000000e+00
   br label %bb.cg
 
@@ -751,14 +760,17 @@ bb.cc:                                            ; preds = %bb.ca
   br label %bb.cg
 
 bb.cd:                                            ; preds = %bb.bz
-  %12 = fdiv double %i.iq, %i.l                   ; 2 uses
   %i.jc = sext i32 %.2913 to i64
   %i.jd = getelementptr inbounds [8 x i8], ptr %i.e, i64 %i.jc
   %i.je = load double, ptr %i.jd, align 8, !tbaa !12
   %i.jf = fsub double %i.je, %i.hk
-  %13 = fdiv double %i.jf, %i.o                   ; 2 uses
-  %14 = fmul double %13, %13
-  %i.jg = tail call double @llvm.fmuladd.f64(double %12, double %12, double %14) ; 2 uses
+  %18 = insertelement <2 x double> poison, double %i.iq, i64 0
+  %19 = insertelement <2 x double> %18, double %i.jf, i64 1
+  %20 = fdiv <2 x double> %19, %1                 ; 3 uses
+  %foldExtExtBinop1197 = fmul <2 x double> %20, %20
+  %21 = extractelement <2 x double> %foldExtExtBinop1197, i64 1
+  %22 = extractelement <2 x double> %20, i64 0    ; 2 uses
+  %i.jg = tail call double @llvm.fmuladd.f64(double %22, double %22, double %21) ; 2 uses
   br i1 %.not1004, label %bb.cf, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd

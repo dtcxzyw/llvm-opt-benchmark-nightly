@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   %i.d = alloca [24 x i8], align 8                ; 5 uses
-  %i.e = alloca [16 x i8], align 8                ; 5 uses
+  %i.e = alloca [16 x i8], align 16               ; 4 uses
   %i.f = alloca [56 x i8], align 8                ; 5 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [48 x i8], align 8                ; 5 uses
@@ -238,8 +238,6 @@ bb.d:                                             ; preds = %bb.c
   %i.s = load i64, ptr %i.g, align 8, !range !5, !noundef !6
   %i.t = trunc nuw i64 %i.s to i1
   %i.u = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %3 = load i64, ptr %2, align 8                  ; 2 uses
   br i1 %i.t, label %bb.f, label %bb.n
 
 bb.e:                                             ; preds = %bb.c
@@ -251,11 +249,9 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.w, label %bb.q, label %bb.r, !prof !4
 
 bb.f:                                             ; preds = %bb.d
-  %4 = load i64, ptr %i.u, align 8, !range !5, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store i64 %4, ptr %i.e, align 8, !noalias !113
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i64 %3, ptr %5, align 8, !noalias !113
+  %2 = load <2 x i64>, ptr %i.u, align 8
+  store <2 x i64> %2, ptr %i.e, align 16, !noalias !113
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !114
   store i64 0, ptr %i.c, align 8, !noalias !114
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -343,11 +339,13 @@ _RNCNvXs3_NtNtNtCsdc6yCHiM2ZJ_4pyo311conversions3std7cstringRNtNtNtCskKLDkoKarTP
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %4 = load i64, ptr %3, align 8
   %i.ah = load ptr, ptr %i.u, align 8, !nonnull !6, !noundef !6
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ah, ptr %i.ai, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %i.aj, align 8
+  store i64 %4, ptr %i.aj, align 8
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_RNCNvXs3_NtNtNtCsdc6yCHiM2ZJ_4pyo311conversions3std7cstringRNtNtNtCskKLDkoKarTP_4core3ffi5c_str4CStrNtNtBd_10conversion12FromPyObject7extract0Bd_.exit

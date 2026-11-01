@@ -202,11 +202,11 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 2 uses
   %i.c = alloca [32 x i8], align 8                ; 2 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
-  %i.e = alloca [32 x i8], align 8                ; 5 uses
+  %i.e = alloca [32 x i8], align 8                ; 4 uses
   %i.f = alloca [16 x i8], align 8                ; 7 uses
-  %i.g = alloca [32 x i8], align 8                ; 5 uses
+  %i.g = alloca [32 x i8], align 8                ; 4 uses
   %i.h = alloca [16 x i8], align 8                ; 5 uses
-  %i.i = alloca [32 x i8], align 8                ; 5 uses
+  %i.i = alloca [32 x i8], align 8                ; 4 uses
   %i.j = alloca [16 x i8], align 8                ; 5 uses
   %i.k = alloca [32 x i8], align 8                ; 5 uses
   %i.l = alloca [16 x i8], align 8                ; 5 uses
@@ -383,28 +383,25 @@ bb.aa:                                            ; preds = %bb.z
   %.not.i47 = icmp eq i64 %i.bf, -2
   %i.bg = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.bh = load ptr, ptr %i.bg, align 8            ; 2 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %1 = load i64, ptr %i.bi, align 8               ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   br i1 %.not.i47, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %.sroa.890.0..sroa_idx91 = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %.sroa.890.0.copyload92 = load i64, ptr %.sroa.890.0..sroa_idx91, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bf, ptr %i.bj, align 8
   %.sroa.2136.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.bh, ptr %.sroa.2136.0..sroa_idx, align 8
   %.sroa.3137.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %1, ptr %.sroa.3137.0..sroa_idx, align 8
-  %.sroa.4138.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.890.0.copyload92, ptr %.sroa.4138.0..sroa_idx, align 8
+  %1 = load <2 x i64>, ptr %i.bi, align 8
+  store <2 x i64> %1, ptr %.sroa.3137.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
   br label %bb.bk
 
 bb.ac:                                            ; preds = %bb.aa
+  %2 = load i64, ptr %i.bi, align 8
   store ptr %i.bh, ptr %i.j, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
-  store i64 %1, ptr %i.bk, align 8
+  store i64 %2, ptr %i.bk, align 8
   %i.bl = invoke { ptr, i64 } @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsiHivYpkJ4Hu_2cc6target10TargetInfoE3mapReNCNvMNtBL_6parserNtB1z_21TargetInfoParserInner32from_cargo_environment_variabless1_0EBN_(ptr align 8 %i.aq)
           to label %bb.af unwind label %bb.ae     ; 2 uses
 
@@ -429,28 +426,25 @@ bb.ag:                                            ; preds = %bb.af
   %.not.i49 = icmp eq i64 %i.bp, -2
   %i.bq = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.br = load ptr, ptr %i.bq, align 8            ; 2 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %2 = load i64, ptr %i.bs, align 8               ; 2 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   br i1 %.not.i49, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %.sroa.8105.0..sroa_idx106 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %.sroa.8105.0.copyload107 = load i64, ptr %.sroa.8105.0..sroa_idx106, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bp, ptr %i.bt, align 8
   %.sroa.2132.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.br, ptr %.sroa.2132.0..sroa_idx, align 8
   %.sroa.3133.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %2, ptr %.sroa.3133.0..sroa_idx, align 8
-  %.sroa.4134.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.8105.0.copyload107, ptr %.sroa.4134.0..sroa_idx, align 8
+  %3 = load <2 x i64>, ptr %i.bs, align 8
+  store <2 x i64> %3, ptr %.sroa.3133.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
   br label %bb.bj
 
 bb.ai:                                            ; preds = %bb.ag
+  %4 = load i64, ptr %i.bs, align 8
   store ptr %i.br, ptr %i.h, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  store i64 %2, ptr %i.bu, align 8
+  store i64 %4, ptr %i.bu, align 8
   %i.bv = invoke { ptr, i64 } @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsiHivYpkJ4Hu_2cc6target10TargetInfoE3mapReNCNvMNtBL_6parserNtB1z_21TargetInfoParserInner32from_cargo_environment_variabless2_0EBN_(ptr align 8 %i.aq)
           to label %bb.al unwind label %bb.ak     ; 2 uses
 
@@ -475,14 +469,14 @@ bb.am:                                            ; preds = %bb.al
   %.not.i51 = icmp eq i64 %i.bz, -2
   %i.ca = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8            ; 2 uses
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %3 = load i64, ptr %i.cc, align 8               ; 2 uses
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   br i1 %.not.i51, label %bb.an, label %bb.bi
 
 bb.an:                                            ; preds = %bb.am
+  %5 = load i64, ptr %i.cc, align 8
   store ptr %i.cb, ptr %i.f, align 8
   %i.cd = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 4 uses
-  store i64 %3, ptr %i.cd, align 8
+  store i64 %5, ptr %i.cd, align 8
   %i.ce = invoke { ptr, i64 } @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsiHivYpkJ4Hu_2cc6target10TargetInfoE3mapReNCNvMNtBL_6parserNtB1z_21TargetInfoParserInner32from_cargo_environment_variabless3_0EBN_(ptr align 8 %i.aq)
           to label %bb.aq unwind label %bb.ap     ; 2 uses
 
@@ -624,16 +618,13 @@ bb.bh:                                            ; preds = %bb.at, %bb.ao, %bb.
   unreachable
 
 bb.bi:                                            ; preds = %bb.am
-  %.sroa.8120.0..sroa_idx121 = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %.sroa.8120.0.copyload122 = load i64, ptr %.sroa.8120.0..sroa_idx121, align 8
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.bz, ptr %i.dk, align 8
   %.sroa.2128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.cb, ptr %.sroa.2128.0..sroa_idx, align 8
   %.sroa.3129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %3, ptr %.sroa.3129.0..sroa_idx, align 8
-  %.sroa.4130.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.8120.0.copyload122, ptr %.sroa.4130.0..sroa_idx, align 8
+  %6 = load <2 x i64>, ptr %i.cc, align 8
+  store <2 x i64> %6, ptr %.sroa.3129.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxeEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.h)
           to label %bb.bj unwind label %bb.ae

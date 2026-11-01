@@ -202,8 +202,8 @@ bb.a:
   %i.ac = alloca [48 x i8], align 8               ; 10 uses
   %i.ad = alloca [64 x i8], align 8               ; 8 uses
   %i.ae = alloca [48 x i8], align 8               ; 10 uses
-  %i.af = alloca [48 x i8], align 8               ; 11 uses
-  %i.ag = alloca [48 x i8], align 8               ; 8 uses
+  %i.af = alloca [48 x i8], align 8               ; 10 uses
+  %i.ag = alloca [48 x i8], align 8               ; 7 uses
   %i.ah = alloca [48 x i8], align 8               ; 12 uses
   %i.ai = alloca [40 x i8], align 8               ; 8 uses
   %i.aj = alloca [48 x i8], align 8               ; 12 uses
@@ -380,16 +380,14 @@ bb.e:                                             ; preds = %_RNvNtCsexYYUdYSQU6
   %.sroa.9292.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 36
   %.sroa.10293.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   %.sroa.11294.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 44
-  %i.ca = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
+  %i.ca = getelementptr inbounds nuw i8, ptr %i.ag, i64 32 ; 2 uses
   %.sroa.6298.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %.sroa.6298.sroa.5.0..sroa.6298.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  %.sroa.7303.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 36
   %.sroa.7303.sroa.5.0..sroa.7303.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %.sroa.7303.sroa.6.0..sroa.7303.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 41
   %.sroa.2330.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %.sroa.4331.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 32
-  %.sroa.5332.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 36
   %.sroa.6333.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 40
   %.sroa.7334.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 41
   %.sroa.6363.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ae, i64 2
@@ -792,14 +790,14 @@ bb.hr:                                            ; preds = %bb.iu, %bb.hq
           to label %bb.hs unwind label %.body1307.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.hs:                                            ; preds = %bb.hr
-  %i.sl = load i32, ptr %i.ca, align 8, !range !259, !noundef !5 ; 3 uses
+  %i.sl = load i32, ptr %i.ca, align 8, !range !259, !noundef !5 ; 2 uses
   %.not1123 = icmp eq i32 %i.sl, -2
   br i1 %.not1123, label %bb.hu, label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs
   %.sroa.0296.0.copyload = load ptr, ptr %i.ag, align 8 ; 5 uses
   %.sroa.6298.sroa.0.0.copyload = load i64, ptr %.sroa.6298.0..sroa_idx, align 8
-  %.sroa.7303.sroa.0.0.copyload = load i32, ptr %.sroa.7303.0..sroa_idx, align 4
+  %3 = load <2 x i32>, ptr %i.ca, align 8
   %.sroa.7303.sroa.5.0.copyload = load i8, ptr %.sroa.7303.sroa.5.0..sroa.7303.0..sroa_idx.sroa_idx, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af)
   %i.sm = icmp eq i32 %i.sl, -1
@@ -846,8 +844,7 @@ bb.ia:                                            ; preds = %bb.ht
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7334.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7303.sroa.6.0..sroa.7303.0..sroa_idx.sroa_idx, i64 7, i1 false)
   store ptr %.sroa.0296.0.copyload, ptr %i.af, align 8
   store i64 %.sroa.6298.sroa.0.0.copyload, ptr %.sroa.2330.0..sroa_idx, align 8
-  store i32 %i.sl, ptr %.sroa.4331.0..sroa_idx, align 8
-  store i32 %.sroa.7303.sroa.0.0.copyload, ptr %.sroa.5332.0..sroa_idx, align 4
+  store <2 x i32> %3, ptr %.sroa.4331.0..sroa_idx, align 8
   store i8 %.sroa.7303.sroa.5.0.copyload, ptr %.sroa.6333.0..sroa_idx, align 8
   %i.sr = trunc nuw i8 %.sroa.7303.sroa.5.0.copyload to i1
   br i1 %i.sr, label %bb.ic, label %bb.ib

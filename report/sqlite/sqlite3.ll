@@ -206,8 +206,8 @@ bb.ax:                                            ; preds = %bb.av
   br label %sqlite3AppendOneUtf8Character.exit
 
 bb.ay:                                            ; preds = %bb.ad
-  %i.mc = getelementptr inbounds nuw i8, ptr %i.cj, i64 2
-  %i.md = load i8, ptr %i.mc, align 1, !tbaa !731 ; 2 uses
+  %i.mc = getelementptr inbounds nuw i8, ptr %i.cj, i64 2 ; 2 uses
+  %i.md = load i8, ptr %i.mc, align 1, !tbaa !731
   %i.me = zext i8 %i.md to i64
   %i.mf = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.me
   %i.mg = load i8, ptr %i.mf, align 1, !tbaa !731
@@ -217,7 +217,8 @@ bb.ay:                                            ; preds = %bb.ad
 
 bb.az:                                            ; preds = %bb.ay
   %i.mi = getelementptr inbounds nuw i8, ptr %i.cj, i64 3
-  %i.mj = load i8, ptr %i.mi, align 1, !tbaa !731 ; 2 uses
+  %i.mj = load i8, ptr %i.mi, align 1, !tbaa !731
+  %3 = load <2 x i8>, ptr %i.mc, align 1, !tbaa !731
   %i.mk = zext i8 %i.mj to i64
   %i.ml = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.mk
   %i.mm = load i8, ptr %i.ml, align 1, !tbaa !731
@@ -226,8 +227,8 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %.not.i121.1, label %isNHex.exit.thread, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.mo = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
-  %i.mp = load i8, ptr %i.mo, align 1, !tbaa !731 ; 2 uses
+  %i.mo = getelementptr inbounds nuw i8, ptr %i.cj, i64 4 ; 2 uses
+  %i.mp = load i8, ptr %i.mo, align 1, !tbaa !731
   %i.mq = zext i8 %i.mp to i64
   %i.mr = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.mq
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !731
@@ -237,7 +238,8 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba
   %i.mu = getelementptr inbounds nuw i8, ptr %i.cj, i64 5
-  %i.mv = load i8, ptr %i.mu, align 1, !tbaa !731 ; 2 uses
+  %i.mv = load i8, ptr %i.mu, align 1, !tbaa !731
+  %4 = load <2 x i8>, ptr %i.mo, align 1, !tbaa !731
   %i.mw = zext i8 %i.mv to i64
   %i.mx = getelementptr inbounds nuw i8, ptr @sqlite3CtypeMap, i64 %i.mw
   %i.my = load i8, ptr %i.mx, align 1, !tbaa !731
@@ -286,14 +288,11 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not.i121.7, label %isNHex.exit.thread, label %isNHex.exit126
 
 isNHex.exit126:                                   ; preds = %bb.bf
-  %3 = insertelement <4 x i8> poison, i8 %i.mj, i64 0
-  %4 = insertelement <4 x i8> %3, i8 %i.md, i64 1
-  %5 = insertelement <4 x i8> %4, i8 %i.mp, i64 2
-  %6 = insertelement <4 x i8> %5, i8 %i.mv, i64 3 ; 2 uses
-  %i.ny = and <4 x i8> %6, splat (i8 64)
+  %5 = shufflevector <2 x i8> %3, <2 x i8> %4, <4 x i32> <i32 1, i32 0, i32 2, i32 3> ; 2 uses
+  %i.ny = and <4 x i8> %5, splat (i8 64)
   %i.nz = icmp eq <4 x i8> %i.ny, zeroinitializer
   %i.oa = select <4 x i1> %i.nz, <4 x i8> zeroinitializer, <4 x i8> splat (i8 9)
-  %i.ob = add <4 x i8> %i.oa, %6
+  %i.ob = add <4 x i8> %i.oa, %5
   %i.oc = and <4 x i8> %i.ob, splat (i8 15)
   %i.od = zext nneg <4 x i8> %i.oc to <4 x i32>
   %i.oe = shl nuw nsw <4 x i32> %i.od, <i32 8, i32 12, i32 4, i32 0>

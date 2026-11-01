@@ -202,19 +202,20 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.m = load i8, ptr %i.l, align 8, !tbaa !71, !range !49, !noundef !50
   %i.n = trunc nuw i8 %i.m to i1
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.p = load double, ptr %i.o, align 8, !tbaa !51 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
+  %i.p = load double, ptr %i.o, align 8, !tbaa !51 ; 2 uses
   br i1 %i.n, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store double %i.p, ptr %i.q, align 8, !tbaa !72
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %6 = load <2 x double>, ptr %i.r, align 8, !tbaa !52
-  store <2 x double> %6, ptr %5, align 8, !tbaa !52
+  %5 = load <2 x double>, ptr %i.o, align 8, !tbaa !52
+  store <2 x double> %5, ptr %i.q, align 8, !tbaa !52
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %6 = load double, ptr %i.r, align 8, !tbaa !53
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  store double %6, ptr %7, align 8, !tbaa !72
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.t = load double, ptr %i.s, align 8, !tbaa !53
+  %i.t = load double, ptr %i.s, align 8, !tbaa !54
   br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
@@ -223,34 +224,34 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store double %i.p, ptr %i.v, align 8, !tbaa !72
+  store double %i.p, ptr %i.v, align 8, !tbaa !73
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.x = load double, ptr %i.w, align 8, !tbaa !54 ; 2 uses
+  %i.x = load double, ptr %i.w, align 8, !tbaa !55 ; 2 uses
   %i.y = fcmp ogt double %i.x, 0.000000e+00
   br i1 %i.y, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store double %i.x, ptr %i.z, align 8, !tbaa !73
+  store double %i.x, ptr %i.z, align 8, !tbaa !74
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ab = load double, ptr %i.aa, align 8, !tbaa !55 ; 2 uses
+  %i.ab = load double, ptr %i.aa, align 8, !tbaa !53 ; 2 uses
   %i.ac = fcmp ogt double %i.ab, 0.000000e+00
   br i1 %i.ac, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store double %i.ab, ptr %i.ad, align 8, !tbaa !74
+  store double %i.ab, ptr %i.ad, align 8, !tbaa !72
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.af = load double, ptr %i.ae, align 8, !tbaa !53 ; 2 uses
+  %i.af = load double, ptr %i.ae, align 8, !tbaa !54 ; 2 uses
   %i.ag = fcmp ogt double %i.af, 0.000000e+00
   br i1 %i.ag, label %.sink.split, label %bb.l
 
@@ -337,7 +338,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %.thre
 .thread33:                                        ; preds = %bb.s, %.thread, %bb.t
   %.sink42 = phi double [ f0x3D19000000000000, %.thread ], [ %i.bi, %bb.t ], [ 0.000000e+00, %bb.s ] ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store double %.sink42, ptr %i.bv, align 8, !tbaa !55
+  store double %.sink42, ptr %i.bv, align 8, !tbaa !53
   store double %.sink42, ptr %3, align 8, !tbaa !52
   %i.bw = load ptr, ptr %i.a, align 8, !tbaa !21  ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 2192
@@ -346,7 +347,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %.thre
   store double %.sink42, ptr %i.bz, align 8, !tbaa !77
   %i.ca = load double, ptr %3, align 8, !tbaa !52 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  store double %i.ca, ptr %i.cb, align 8, !tbaa !53
+  store double %i.ca, ptr %i.cb, align 8, !tbaa !54
   store double %i.ca, ptr %4, align 8, !tbaa !52
   %i.cc = load i32, ptr %i.ai, align 4, !tbaa !56
   %i.cd = icmp eq i32 %i.cc, 2
@@ -374,12 +375,12 @@ bb.w:                                             ; preds = %._crit_edge, %bb.v
   store double %i.ch, ptr %i.ci, align 8, !tbaa !51
   %i.cj = load double, ptr %2, align 8, !tbaa !52
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store double %i.cj, ptr %i.ck, align 8, !tbaa !54
+  store double %i.cj, ptr %i.ck, align 8, !tbaa !55
   %i.cl = load double, ptr %3, align 8, !tbaa !52
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store double %i.cl, ptr %i.cm, align 8, !tbaa !55
+  store double %i.cl, ptr %i.cm, align 8, !tbaa !53
   %i.cn = load double, ptr %4, align 8, !tbaa !52
-  store double %i.cn, ptr %i.cb, align 8, !tbaa !53
+  store double %i.cn, ptr %i.cb, align 8, !tbaa !54
   %i.co = load double, ptr %1, align 8, !tbaa !52
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cg, i64 120
   store double %i.co, ptr %i.cp, align 8, !tbaa !64
@@ -439,9 +440,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.q = tail call noundef double @_ZN5Ipopt21PDPerturbationHandler8delta_cdEv(ptr noundef nonnull align 8 dereferenceable(217) %0) ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store double %i.q, ptr %i.r, align 8, !tbaa !55
+  store double %i.q, ptr %i.r, align 8, !tbaa !53
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store double %i.q, ptr %i.s, align 8, !tbaa !53
+  store double %i.q, ptr %i.s, align 8, !tbaa !54
   store i32 2, ptr %i.i, align 8, !tbaa !63
   br label %bb.t
 
@@ -463,9 +464,9 @@ bb.g:                                             ; preds = %bb.b
   %i.aa = fcmp olt double %i.u, %i.z
   %.sroa.speculated.i = select i1 %i.aa, double %i.z, double %i.u ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store double %.sroa.speculated.i, ptr %i.ab, align 8, !tbaa !55
+  store double %.sroa.speculated.i, ptr %i.ab, align 8, !tbaa !53
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store double %.sroa.speculated.i, ptr %i.ac, align 8, !tbaa !53
+  store double %.sroa.speculated.i, ptr %i.ac, align 8, !tbaa !54
   %i.ad = tail call noundef double @_ZN5Ipopt21PDPerturbationHandler8delta_cdEv(ptr noundef nonnull align 8 dereferenceable(217) %0)
   %i.ae = fcmp olt double %.sroa.speculated.i, %i.ad
   %. = select i1 %i.ae, i32 3, i32 4
@@ -487,9 +488,9 @@ bb.i:                                             ; preds = %bb.b
   %i.am = fcmp olt double %i.ag, %i.al
   %.sroa.speculated.i50 = select i1 %i.am, double %i.al, double %i.ag ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store double %.sroa.speculated.i50, ptr %i.an, align 8, !tbaa !55
+  store double %.sroa.speculated.i50, ptr %i.an, align 8, !tbaa !53
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store double %.sroa.speculated.i50, ptr %i.ao, align 8, !tbaa !53
+  store double %.sroa.speculated.i50, ptr %i.ao, align 8, !tbaa !54
   %i.ap = tail call noundef zeroext i1 @_ZN5Ipopt21PDPerturbationHandler28get_deltas_for_wrong_inertiaERdS1_S1_S1_(ptr noundef nonnull align 8 dereferenceable(217) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4)
   br i1 %i.ap, label %bb.j, label %bb.u
 
@@ -503,7 +504,7 @@ bb.k:                                             ; preds = %bb.b
 
 bb.l:                                             ; preds = %bb.a
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
-  %i.as = load double, ptr %i.ar, align 8, !tbaa !55
+  %i.as = load double, ptr %i.ar, align 8, !tbaa !53
   %i.at = fcmp ogt double %i.as, 0.000000e+00
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.av = load i8, ptr %i.au, align 8, !range !49
@@ -520,7 +521,7 @@ bb.n:                                             ; preds = %bb.m
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !65 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !51
-  %i.bc = load double, ptr %i.ar, align 8, !tbaa !55
+  %i.bc = load double, ptr %i.ar, align 8, !tbaa !53
   %i.bd = load ptr, ptr %i.az, align 8, !tbaa !9
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %i.bf = load ptr, ptr %i.be, align 8
@@ -529,9 +530,9 @@ bb.n:                                             ; preds = %bb.m
 
 ._crit_edge.i.i:                                  ; preds = %bb.l
   %i.bg = tail call noundef double @_ZN5Ipopt21PDPerturbationHandler8delta_cdEv(ptr noundef nonnull align 8 dereferenceable(217) %0) ; 2 uses
-  store double %i.bg, ptr %i.ar, align 8, !tbaa !55
+  store double %i.bg, ptr %i.ar, align 8, !tbaa !53
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  store double %i.bg, ptr %i.bh, align 8, !tbaa !53
+  store double %i.bg, ptr %i.bh, align 8, !tbaa !54
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !21 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
@@ -620,8 +621,8 @@ bb.p:                                             ; preds = %_ZNSt7__cxx1112basi
   %.sroa.speculated.i55 = select i1 %i.dd, double %i.dc, double %i.db ; 2 uses
   %i.de = fcmp ogt double %.sroa.speculated.i55, f0x3D4F400000000000
   %.sroa.speculated.i56 = select i1 %i.de, double %.sroa.speculated.i55, double f0x3D4F400000000000 ; 2 uses
-  store double %.sroa.speculated.i56, ptr %i.ar, align 8, !tbaa !55
-  store double %.sroa.speculated.i56, ptr %i.bh, align 8, !tbaa !53
+  store double %.sroa.speculated.i56, ptr %i.ar, align 8, !tbaa !53
+  store double %.sroa.speculated.i56, ptr %i.bh, align 8, !tbaa !54
   %i.df = load ptr, ptr %i.bi, align 8, !tbaa !21 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   %i.dg = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 7 uses
@@ -702,13 +703,13 @@ bb.t:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ed = load double, ptr %i.ec, align 8, !tbaa !51
   store double %i.ed, ptr %1, align 8, !tbaa !52
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.ef = load double, ptr %i.ee, align 8, !tbaa !54
+  %i.ef = load double, ptr %i.ee, align 8, !tbaa !55
   store double %i.ef, ptr %2, align 8, !tbaa !52
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.eh = load double, ptr %i.eg, align 8, !tbaa !55
+  %i.eh = load double, ptr %i.eg, align 8, !tbaa !53
   store double %i.eh, ptr %3, align 8, !tbaa !52
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.ej = load double, ptr %i.ei, align 8, !tbaa !53
+  %i.ej = load double, ptr %i.ei, align 8, !tbaa !54
   store double %i.ej, ptr %4, align 8, !tbaa !52
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !21
@@ -1014,9 +1015,9 @@ attributes #12 = { noreturn nounwind }
 !50 = !{}
 !51 = !{!48, !30, i64 88}
 !52 = !{!30, !30, i64 0}
-!53 = !{!48, !30, i64 112}
-!54 = !{!48, !30, i64 96}
-!55 = !{!48, !30, i64 104}
+!53 = !{!48, !30, i64 104}
+!54 = !{!48, !30, i64 112}
+!55 = !{!48, !30, i64 96}
 !56 = !{!48, !46, i64 124}
 !57 = !{!48, !46, i64 128}
 !58 = !{!44, !43, i64 0}
@@ -1033,9 +1034,9 @@ attributes #12 = { noreturn nounwind }
 !69 = !{!31, !5, i64 44}
 !70 = !{!38, !5, i64 68}
 !71 = !{!48, !29, i64 208}
-!72 = !{!48, !30, i64 56}
-!73 = !{!48, !30, i64 64}
-!74 = !{!48, !30, i64 72}
+!72 = !{!48, !30, i64 72}
+!73 = !{!48, !30, i64 56}
+!74 = !{!48, !30, i64 64}
 !75 = !{!48, !30, i64 80}
 !76 = !{!48, !29, i64 216}
 !77 = !{!31, !30, i64 88}

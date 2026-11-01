@@ -202,7 +202,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4pbrt13ParallelFor2DERKNS_7Bounds2IiEESt8functionIFvS1_EE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, ptr nofree noundef align 8 dereferenceable(32) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.pbrt::Bounds2", align 8     ; 5 uses
+  %2 = alloca %"class.pbrt::Bounds2", align 16    ; 4 uses
   %3 = alloca %"class.pbrt::ParallelForLoop2D", align 8 ; 20 uses
   %.sroa.0 = alloca %"class.std::_Function_base", align 8 ; 3 uses
   %4 = alloca %"class.std::unique_lock", align 8  ; 8 uses
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = load i32, ptr %0, align 4, !tbaa !88
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i32, ptr %i.c, align 4, !tbaa !88   ; 2 uses
   %.not.i = icmp sge i32 %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -228,7 +228,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.u, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.0.0.copyload.i = load i64, ptr %0, align 4 ; 3 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %0, align 4 ; 2 uses
   %.sroa.0.0.extract.trunc.i.i = trunc i64 %.sroa.0.0.copyload.i to i32
   %.sroa.2.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i, 32
   %.sroa.2.0.extract.trunc.i.i = trunc nuw i64 %.sroa.2.0.extract.shift.i.i to i32
@@ -239,11 +239,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %bb.e, label %_ZN4pbrt14RunningThreadsEv.exit
 
 bb.e:                                             ; preds = %bb.d
-  %.sroa.2.0.copyload = load i64, ptr %i.c, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  store i64 %.sroa.0.0.copyload.i, ptr %2, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %.sroa.2.0.copyload, ptr %5, align 8
+  %5 = load <2 x i64>, ptr %0, align 4
+  store <2 x i64> %5, ptr %2, align 16
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !72
   %.not.i.i = icmp eq ptr %i.p, null

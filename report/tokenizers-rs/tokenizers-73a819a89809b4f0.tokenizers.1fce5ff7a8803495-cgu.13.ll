@@ -204,13 +204,13 @@ bb.d:                                             ; preds = %bb.c
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvYINtNtNtCsgbNVBrIJ05E_5rayon5slice6chunks14ChunksProducerTNtNtCscdodAO9FK5_5alloc6string6StringmEENtNtNtBa_4iter8plumbing8Producer9fold_withINtNtB1G_3map9MapFolderINtNtB1G_6reduce12ReduceFolderNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB3g_14UnigramTrainer10run_e_steps1_0TdmINtNtB12_3vec3VecdEEENCB3b_s_0EEB3m_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([56 x i8]) align 8 captures(none) dereferenceable(56) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(56) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
   %i.c = alloca [56 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %2, i64 56, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1753, !noundef !3 ; 2 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1753, !noundef !3
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c, !prof !7
 
@@ -223,7 +223,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load i64, ptr %i.g, align 8, !alias.scope !1753, !noundef !3
   %i.h = load ptr, ptr %1, align 8, !alias.scope !1753, !nonnull !3, !align !4, !noundef !3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1754)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1755)
@@ -235,9 +234,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1757)
   store ptr %i.h, ptr %i.a, align 8, !alias.scope !1758, !noalias !1759
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1758, !noalias !1759
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 %i.e, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !1758, !noalias !1759
+  %3 = load <2 x i64>, ptr %i.g, align 8, !alias.scope !1753
+  store <2 x i64> %3, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1758, !noalias !1759
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr %i.j, ptr %i.k, align 8, !alias.scope !1760, !noalias !1756
   call void @_RINvXs3_NtNtCsgbNVBrIJ05E_5rayon4iter6reduceINtB6_12ReduceFolderNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB17_14UnigramTrainer10run_e_steps1_0TdmINtNtCscdodAO9FK5_5alloc3vec3VecdEEEINtNtB8_8plumbing6FolderB2C_E12consume_iterINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB45_5slice4iter6ChunksTNtNtB2K_6string6StringmEERNCB12_s_0EEB1d_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.a)
@@ -266,13 +264,13 @@ bb.f:                                             ; preds = %bb.e
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvYINtNtNtCsgbNVBrIJ05E_5rayon5slice6chunks14ChunksProducerTjRTNtNtCscdodAO9FK5_5alloc6string6StringmEEENtNtNtBa_4iter8plumbing8Producer9fold_withINtNtB1K_3map9MapFolderINtNtB1K_6reduce12ReduceFolderNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB3k_14UnigramTrainer21prune_sentence_piecess0_0TdINtNtB15_3vec3VecdEIB53_IB53_jEEEENCB3f_0EEB3q_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(72) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [64 x i8], align 8                ; 4 uses
   %i.c = alloca [72 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.c, ptr noundef nonnull align 8 dereferenceable(72) %2, i64 72, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1770, !noundef !3 ; 2 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1770, !noundef !3
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c, !prof !7
 
@@ -285,7 +283,6 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %3 = load i64, ptr %i.g, align 8, !alias.scope !1770, !noundef !3
   %i.h = load ptr, ptr %1, align 8, !alias.scope !1770, !nonnull !3, !align !4, !noundef !3
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1771)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1772)
@@ -297,9 +294,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1774)
   store ptr %i.h, ptr %i.a, align 8, !alias.scope !1775, !noalias !1776
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1775, !noalias !1776
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 %i.e, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !1775, !noalias !1776
+  %3 = load <2 x i64>, ptr %i.g, align 8, !alias.scope !1770
+  store <2 x i64> %3, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !1775, !noalias !1776
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr %i.j, ptr %i.k, align 8, !alias.scope !1777, !noalias !1773
   call void @_RINvXs3_NtNtCsgbNVBrIJ05E_5rayon4iter6reduceINtB6_12ReduceFolderNCNvMs_NtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7trainerNtB17_14UnigramTrainer21prune_sentence_piecess0_0TdINtNtCscdodAO9FK5_5alloc3vec3VecdEIB2Q_IB2Q_jEEEEINtNtB8_8plumbing6FolderB2N_E12consume_iterINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtB4s_5slice4iter6ChunksTjRTNtNtB2U_6string6StringmEEERNCB12_0EEB1d_(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.c, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(64) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.a)

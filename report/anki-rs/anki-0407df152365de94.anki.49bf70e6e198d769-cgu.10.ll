@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 define void @"_ZN90_$LT$anki..storage..card..data..CardData$u20$as$u20$rusqlite..types..from_sql..FromSql$GT$13column_result17h6dc0d8c54fc83e5bE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([80 x i8]) align 8 captures(none) dereferenceable(80) initializes((0, 8), (16, 44), (48, 52), (56, 60), (64, 68), (72, 76)) %0, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
-  %i.b = alloca [80 x i8], align 8                ; 11 uses
+  %i.b = alloca [80 x i8], align 16               ; 12 uses
   %i.c = load i64, ptr %1, align 8, !range !29, !noundef !12
   %i.d = icmp eq i64 %i.c, 3
   br i1 %i.d, label %bb.b, label %bb.e
@@ -224,17 +224,18 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZN10serde_json2de10from_trait17he6640c105dba7fe6E(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(address) dereferenceable(80) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.experimental.noalias.scope.decl(metadata !11322)
-  %i.k = load i64, ptr %i.b, align 8, !range !35, !alias.scope !11323, !noundef !12 ; 2 uses
+  %i.k = load i64, ptr %i.b, align 16, !range !35, !alias.scope !11323, !noundef !12
   %i.l = icmp eq i64 %i.k, 2
   br i1 %i.l, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.sroa.5.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = load <2 x i64>, ptr %.sroa.5.0..sroa_idx9, align 8, !alias.scope !11324
+  %2 = load <2 x i64>, ptr %i.b, align 16, !alias.scope !11324
+  %.sroa.5.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %.sroa.511.0.copyload13 = load i64, ptr %.sroa.5.0..sroa_idx9, align 16, !alias.scope !11324
   %.sroa.6.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %.sroa.6.0.copyload16 = load ptr, ptr %.sroa.6.0..sroa_idx15, align 8, !alias.scope !11324
   %.sroa.7.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.7.0.copyload18 = load i64, ptr %.sroa.7.0..sroa_idx17, align 8, !alias.scope !11324
+  %.sroa.7.0.copyload18 = load i64, ptr %.sroa.7.0..sroa_idx17, align 16, !alias.scope !11324
   %.sroa.8.0..sroa_idx20 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.m = load <4 x i32>, ptr %.sroa.8.0..sroa_idx20, align 8, !alias.scope !11324
   %.sroa.1030.0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
@@ -250,15 +251,15 @@ bb.d:                                             ; preds = %bb.b
 "_ZN4core6result19Result$LT$T$C$E$GT$17unwrap_or_default17ha94a2c2d85500448E.exit": ; preds = %bb.c, %bb.d
   %.sroa.7.0 = phi i64 [ 0, %bb.d ], [ %.sroa.7.0.copyload18, %bb.c ]
   %.sroa.6.0 = phi ptr [ inttoptr (i64 1 to ptr), %bb.d ], [ %.sroa.6.0.copyload16, %bb.c ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ %i.k, %bb.c ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ %.sroa.511.0.copyload13, %bb.c ]
   %i.p = phi <4 x i32> [ <i32 0, i32 undef, i32 0, i32 undef>, %bb.d ], [ %i.m, %bb.c ]
   %i.q = phi <4 x i32> [ <i32 0, i32 undef, i32 0, i32 undef>, %bb.d ], [ %i.n, %bb.c ]
   %i.r = phi <2 x i32> [ <i32 0, i32 undef>, %bb.d ], [ %i.o, %bb.c ]
-  %i.s = phi <2 x i64> [ <i64 undef, i64 0>, %bb.d ], [ %2, %bb.c ]
+  %i.s = phi <2 x i64> [ <i64 0, i64 undef>, %bb.d ], [ %2, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  store i64 %.sroa.0.0, ptr %0, align 8
-  %.sroa.5.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x i64> %i.s, ptr %.sroa.5.0..sroa_idx8, align 8
+  store <2 x i64> %i.s, ptr %0, align 8
+  %.sroa.5.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.0.0, ptr %.sroa.5.0..sroa_idx8, align 8
   %.sroa.6.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.6.0, ptr %.sroa.6.0..sroa_idx14, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32

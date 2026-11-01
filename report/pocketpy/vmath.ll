@@ -204,30 +204,29 @@ bb.a:
 define void @c11_color32_premult(ptr nofree noundef captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !13    ; 2 uses
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !13
   %i.c = icmp eq i8 %i.b, -1
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = uitofp i8 %i.b to float
-  %2 = fdiv float %1, 2.550000e+02                ; 3 uses
-  %3 = load i8, ptr %0, align 4, !tbaa !13
-  %4 = uitofp i8 %3 to float
-  %5 = fmul float %2, %4
-  %6 = fptoui float %5 to i8
-  store i8 %6, ptr %0, align 4, !tbaa !13
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %8 = load i8, ptr %7, align 1, !tbaa !13
-  %9 = uitofp i8 %8 to float
-  %i.d = fmul float %2, %9
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %3 = load <4 x i8>, ptr %0, align 4, !tbaa !13
+  %4 = uitofp <4 x i8> %3 to <4 x float>          ; 4 uses
+  %5 = extractelement <4 x float> %4, i64 3
+  %6 = fdiv float %5, 2.550000e+02                ; 3 uses
+  %7 = extractelement <4 x float> %4, i64 0
+  %8 = fmul float %6, %7
+  %9 = fptoui float %8 to i8
+  store i8 %9, ptr %0, align 4, !tbaa !13
+  %10 = extractelement <4 x float> %4, i64 1
+  %i.d = fmul float %6, %10
   %i.e = fptoui float %i.d to i8
-  store i8 %i.e, ptr %7, align 1, !tbaa !13
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %11 = load i8, ptr %10, align 2, !tbaa !13
-  %12 = uitofp i8 %11 to float
-  %i.f = fmul float %2, %12
+  store i8 %i.e, ptr %1, align 1, !tbaa !13
+  %11 = extractelement <4 x float> %4, i64 2
+  %i.f = fmul float %6, %11
   %i.g = fptoui float %i.f to i8
-  store i8 %i.g, ptr %10, align 2, !tbaa !13
+  store i8 %i.g, ptr %2, align 2, !tbaa !13
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b

@@ -205,18 +205,19 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  %i.ad = load i8, ptr %0, align 8, !tbaa !179    ; 2 uses
+  %i.ad = load i8, ptr %0, align 8, !tbaa !179
   %i.ae = icmp eq i8 %i.ad, 0
   %.not.i = icmp eq ptr %i.a, %0
   %or.cond = select i1 %i.ae, i1 true, i1 %.not.i
   br i1 %or.cond, label %_ZN7rocksdb6StatusaSERKS0_.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  store i8 %i.ad, ptr %i.a, align 8, !tbaa !179
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 57
-  %10 = load <4 x i8>, ptr %i.af, align 1, !tbaa !19
-  store <4 x i8> %10, ptr %9, align 1, !tbaa !19
+  %9 = load <4 x i8>, ptr %0, align 8, !tbaa !19
+  store <4 x i8> %9, ptr %i.a, align 8, !tbaa !19
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %10 = load i8, ptr %i.af, align 4, !tbaa !49, !range !39, !noundef !40
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 60
+  store i8 %10, ptr %11, align 4, !tbaa !49
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !50
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 61

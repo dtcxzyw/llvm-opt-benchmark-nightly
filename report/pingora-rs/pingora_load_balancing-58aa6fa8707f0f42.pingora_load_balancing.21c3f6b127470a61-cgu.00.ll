@@ -203,8 +203,8 @@ bb.fi:                                            ; preds = %bb.fg
   store i64 %i.qb, ptr %i.e, align 8, !noalias !1267
   %.sroa.442.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %.sroa.3.0.copyload.i.i.i.i, ptr %.sroa.442.0..sroa_idx.i.i.i.i, align 8, !noalias !1267
-  %i.qi = getelementptr inbounds nuw i8, ptr %0, i64 816
-  %i.qj = load ptr, ptr %i.qi, align 8, !noalias !1267, !nonnull !7, !align !6, !noundef !7 ; 2 uses
+  %i.qi = getelementptr inbounds nuw i8, ptr %0, i64 816 ; 2 uses
+  %i.qj = load ptr, ptr %i.qi, align 8, !noalias !1267, !nonnull !7, !align !6, !noundef !7
   %i.qk = getelementptr i8, ptr %i.qj, i64 416
   %.val.i.i.i.i = load i64, ptr %i.qk, align 8, !noalias !1268, !noundef !7 ; 2 uses
   %i.ql = icmp sgt i64 %.val.i.i.i.i, -1
@@ -269,14 +269,11 @@ bb.fo:                                            ; preds = %bb.gf, %bb.fn
   %i.qv = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
   %.sroa.044.344..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.044.i.i.i.i, i64 344
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.044.344..sroa_idx.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.qv, i64 32, i1 false), !noalias !1267
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 824
-  %3 = load ptr, ptr %2, align 8, !noalias !1267, !nonnull !7, !noundef !7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(376) %i.qv, ptr noundef nonnull align 8 dereferenceable(376) %.sroa.044.i.i.i.i, i64 376, i1 false), !noalias !1267
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.044.i.i.i.i)
   %.sroa.650.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1216
-  store ptr %i.qj, ptr %.sroa.650.0..sroa_idx.i.i.i.i, align 8, !noalias !1267
-  %.sroa.751.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1224
-  store ptr %3, ptr %.sroa.751.0..sroa_idx.i.i.i.i, align 8, !noalias !1267
+  %2 = load <2 x ptr>, ptr %i.qi, align 8, !noalias !1267
+  store <2 x ptr> %2, ptr %.sroa.650.0..sroa_idx.i.i.i.i, align 8, !noalias !1267
   %.sroa.852.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1232
   store i8 0, ptr %.sroa.852.0..sroa_idx.i.i.i.i, align 8, !noalias !1267
   br label %bb.fu

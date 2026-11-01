@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZN10ImDrawList10Pa
 define void @_ZN5ImGui26TabItemLabelAndCloseButtonEP10ImDrawListRK6ImRecti6ImVec2PKcjjbPbS8_(ptr noundef %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, i32 noundef %2, <2 x float> %3, ptr noundef %4, i32 noundef %5, i32 noundef %6, i1 noundef zeroext %7, ptr nofree noundef writeonly captures(address_is_null) %8, ptr nofree noundef writeonly captures(address_is_null) %9) local_unnamed_addr #0 {
 bb.a:
   %10 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %11 = alloca %struct.ImRect, align 4            ; 7 uses
+  %11 = alloca %struct.ImRect, align 8            ; 6 uses
   %12 = alloca %struct.ImVec2, align 4            ; 5 uses
   %13 = alloca %struct.ImGuiLastItemData, align 4 ; 4 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !29 ; 7 uses
@@ -214,7 +214,6 @@ bb.a:
   %i.c = tail call <2 x float> @_ZN5ImGui12CalcTextSizeEPKcS1_bf(ptr noundef %4, ptr noundef %i.b, i1 noundef zeroext false, float noundef -1.000000e+00) ; 2 uses
   store <2 x float> %i.c, ptr %10, align 8
   %.not = icmp eq ptr %8, null                    ; 2 uses
-  %14 = extractelement <2 x float> %i.c, i64 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -232,34 +231,30 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load float, ptr %i.d, align 4, !tbaa !238 ; 4 uses
-  %i.f = load float, ptr %1, align 4, !tbaa !237  ; 4 uses
+  %i.f = load float, ptr %1, align 4, !tbaa !237  ; 3 uses
   %i.g = fsub float %i.e, %i.f                    ; 3 uses
   %i.h = fcmp ugt float %i.g, 1.000000e+00
   br i1 %i.h, label %bb.f, label %bb.v
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #41
-  %.sroa.073.0.vec.extract = extractelement <2 x float> %3, i64 0 ; 2 uses
-  %15 = fadd float %.sroa.073.0.vec.extract, %i.f ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %17 = load float, ptr %16, align 4, !tbaa !195
-  %.sroa.073.4.vec.extract = extractelement <2 x float> %3, i64 1
-  %18 = fadd float %.sroa.073.4.vec.extract, %17  ; 3 uses
+  %.sroa.073.0.vec.extract = extractelement <2 x float> %3, i64 0
   %i.i = fsub float %i.e, %.sroa.073.0.vec.extract ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.k = load float, ptr %i.j, align 4, !tbaa !196
-  store float %15, ptr %11, align 4, !tbaa !194
-  %19 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  store float %18, ptr %19, align 4, !tbaa !197
+  %14 = load <2 x float>, ptr %1, align 4, !tbaa !190
+  %15 = fadd <2 x float> %3, %14                  ; 3 uses
+  store <2 x float> %15, ptr %11, align 8, !tbaa !190
   %i.l = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
-  store float %i.i, ptr %i.l, align 4, !tbaa !194
+  store float %i.i, ptr %i.l, align 8, !tbaa !194
   %i.m = getelementptr inbounds nuw i8, ptr %11, i64 12
   store float %i.k, ptr %i.m, align 4, !tbaa !197
   br i1 %.not91, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %20 = fadd float %15, %14
-  %i.n = fcmp ogt float %20, %i.i
+  %foldExtExtBinop = fadd <2 x float> %15, %i.c
+  %16 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.n = fcmp ogt float %16, %i.i
   %i.o = zext i1 %i.n to i8
   store i8 %i.o, ptr %9, align 1, !tbaa !231
   br label %bb.h
@@ -273,7 +268,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.t = select i1 %i.s, float %i.f, float %i.r   ; 4 uses
   store float %i.t, ptr %12, align 4, !tbaa !194
   %i.u = getelementptr inbounds nuw i8, ptr %12, i64 4
-  store float %18, ptr %i.u, align 4, !tbaa !197
+  %17 = extractelement <2 x float> %15, i64 1     ; 2 uses
+  store float %17, ptr %i.u, align 4, !tbaa !197
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 5404
   %i.w = load i32, ptr %i.v, align 4, !tbaa !527  ; 2 uses
   %i.x = icmp eq i32 %i.w, %5
@@ -349,7 +345,7 @@ bb.q:                                             ; preds = %bb.p
 .thread116:                                       ; preds = %.thread, %bb.q
   %i.aw = fmul float %i.q, 5.000000e-01           ; 2 uses
   %i.ax = fadd float %i.aw, %i.t
-  %i.ay = fadd float %18, %i.aw
+  %i.ay = fadd float %17, %i.aw
   %.sroa.0.0.vec.insert.i102 = insertelement <2 x float> poison, float %i.ax, i64 0
   %.sroa.0.4.vec.insert.i103 = insertelement <2 x float> %.sroa.0.0.vec.insert.i102, float %i.ay, i64 1
   %i.az = tail call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 56, float noundef 1.000000e+00)
@@ -395,7 +391,7 @@ bb.s:                                             ; preds = %.thread105
   %.sink = phi float [ %i.bi, %.critedge ], [ %i.r, %.thread112 ]
   %.2110.ph = phi i8 [ %.2111115, %.critedge ], [ %i.be, %.thread112 ]
   %.1.ph = phi float [ %i.bi, %.critedge ], [ %i.i, %.thread112 ]
-  store float %.sink, ptr %i.l, align 4, !tbaa !238
+  store float %.sink, ptr %i.l, align 8, !tbaa !238
   br label %.thread138
 
 .thread138:                                       ; preds = %.thread138.sink.split, %.thread, %bb.r

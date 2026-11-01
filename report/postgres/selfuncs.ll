@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.a
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 8 uses
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 4 uses
-  %.promoted = load double, ptr %i.az, align 8    ; 3 uses
   br i1 %.not43, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %.promoted = load double, ptr %i.az, align 8    ; 2 uses
   %wide.trip.count = zext nneg i32 %i.as to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.ba = icmp eq i32 %i.as, 1
@@ -219,9 +219,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
-  %.promoted48 = load double, ptr %i.ay, align 8
-  %6 = insertelement <2 x double> poison, double %.promoted48, i64 0
-  %7 = insertelement <2 x double> %6, double %.promoted, i64 1 ; 2 uses
+  %6 = load <2 x double>, ptr %i.ay, align 8      ; 2 uses
   %xtraiter58 = and i32 %i.as, 7                  ; 3 uses
   %i.bb = icmp ult i32 %i.as, 8
   br i1 %i.bb, label %.epil.preheader, label %.lr.ph.split.us.new
@@ -231,7 +229,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.split.us.new
-  %i.bc = phi <2 x double> [ %7, %.lr.ph.split.us.new ], [ %i.bk, %bb.d ]
+  %i.bc = phi <2 x double> [ %6, %.lr.ph.split.us.new ], [ %i.bk, %bb.d ]
   %niter65 = phi i32 [ 0, %.lr.ph.split.us.new ], [ %niter65.next.7, %bb.d ]
   %i.bd = fadd <2 x double> %i.bc, splat (double 1.000000e+00)
   %i.be = fadd <2 x double> %i.bd, splat (double 1.000000e+00)
@@ -250,7 +248,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.split
   br i1 %lcmp.mod61.not, label %._crit_edge.split.us, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.split.us.unr-lcssa, %.lr.ph.split.us
-  %.epil.init60 = phi <2 x double> [ %7, %.lr.ph.split.us ], [ %i.bk, %._crit_edge.split.us.unr-lcssa ]
+  %.epil.init60 = phi <2 x double> [ %6, %.lr.ph.split.us ], [ %i.bk, %._crit_edge.split.us.unr-lcssa ]
   %lcmp.mod63 = icmp ne i32 %xtraiter58, 0
   call void @llvm.assume(i1 %lcmp.mod63)
   br label %bb.e

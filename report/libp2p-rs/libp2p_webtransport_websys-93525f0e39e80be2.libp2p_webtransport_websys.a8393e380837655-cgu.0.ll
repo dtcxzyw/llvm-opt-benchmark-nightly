@@ -204,7 +204,7 @@ bb.a:
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 8 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
-  %i.g = alloca [24 x i8], align 8                ; 9 uses
+  %i.g = alloca [24 x i8], align 16               ; 9 uses
   %.sroa.458 = alloca [80 x i8], align 8          ; 2 uses
   %i.h = alloca [88 x i8], align 8                ; 9 uses
   %i.i = alloca [80 x i8], align 8                ; 5 uses
@@ -216,9 +216,9 @@ bb.a:
   %i.o = alloca [88 x i8], align 8                ; 13 uses
   %i.p = alloca [16 x i8], align 8                ; 6 uses
   %i.q = alloca [48 x i8], align 8                ; 12 uses
-  %i.r = alloca [24 x i8], align 8                ; 32 uses
+  %i.r = alloca [24 x i8], align 16               ; 33 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
-  store i64 -1, ptr %i.r, align 8
+  store i64 -1, ptr %i.r, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   %i.s = invoke { i64, i64 } @_RINvMs2_NtNtCsG258MDvU3F_3std6thread5localINtB6_8LocalKeyINtNtCskKLDkoKarTP_4core4cell4CellTyyEEE4withNCNvMNtNtBa_4hash6randomNtB1H_11RandomState3new0B20_ECsTXRW1w2lWz_26libp2p_webtransport_websys(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) @12)
           to label %bb.b unwind label %.thread    ; 2 uses
@@ -258,8 +258,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.ai = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %.sroa.5131.0..sroa_idx132 = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 3 uses
-  %.sroa.6134.0..sroa_idx135 = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
+  %.sroa.5131.0..sroa_idx132 = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 2 uses
+  %.sroa.6134.0..sroa_idx135 = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.al = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 1
@@ -340,7 +340,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %.sroa.077.0.copyload = load i64, ptr %i.r, align 8 ; 2 uses
+  %.sroa.077.0.copyload = load i64, ptr %i.r, align 16
   %.not202 = icmp eq i64 %.sroa.077.0.copyload, -1
   br i1 %.not202, label %bb.k, label %bb.j
 
@@ -349,10 +349,11 @@ bb.i:                                             ; preds = %bb.bz, %bb.g
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3set7HashSetINtNtCsgW4lhAJgVdS_9multihash9multihash9MultihashKj40_EEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit220 unwind label %.thread
 
 bb.j:                                             ; preds = %bb.h
-  store i64 %.sroa.077.0.copyload, ptr %i.g, align 8
-  %.sroa.4156.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %2 = load <2 x i64>, ptr %.sroa.5131.0..sroa_idx132, align 8
-  store <2 x i64> %2, ptr %.sroa.4156.0..sroa_idx, align 8
+  %.sroa.679.sroa.5.0.copyload = load i64, ptr %.sroa.6134.0..sroa_idx135, align 16
+  %2 = load <2 x i64>, ptr %i.r, align 16
+  store <2 x i64> %2, ptr %i.g, align 16
+  %.sroa.5157.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  store i64 %.sroa.679.sroa.5.0.copyload, ptr %.sroa.5157.0..sroa_idx, align 16
   %i.av = trunc nuw i16 %.sroa.028.0 to i1
   br i1 %i.av, label %bb.l, label %bb.m
 
@@ -374,7 +375,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
 
 bb.l:                                             ; preds = %bb.j
   %.sroa.5110.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5110.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5110.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(24) %i.g, i64 24, i1 false)
   %.sroa.6111.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.6111.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %i.q, i64 48, i1 false)
   %.sroa.4109.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -451,14 +452,14 @@ bb.t:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   %i.bc = load i32, ptr %i.ab, align 1
   store i32 %i.bc, ptr %i.n, align 4
-  %i.bd = load i64, ptr %i.r, align 8, !range !6, !noundef !7
+  %i.bd = load i64, ptr %i.r, align 16, !range !6, !noundef !7
   %.not206 = icmp eq i64 %i.bd, -1
   br i1 %.not206, label %bb.av, label %bb.az
 
 bb.u:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.l, ptr noundef nonnull align 1 dereferenceable(16) %i.am, i64 16, i1 false)
-  %i.be = load i64, ptr %i.r, align 8, !range !6, !noundef !7
+  %i.be = load i64, ptr %i.r, align 16, !range !6, !noundef !7
   %.not205 = icmp eq i64 %i.be, -1
   br i1 %.not205, label %bb.bf, label %bb.bj
 
@@ -473,7 +474,7 @@ bb.w:                                             ; preds = %bb.e
   br i1 %i.bg, label %bb.bu, label %bb.bt
 
 bb.x:                                             ; preds = %bb.e, %bb.e
-  %i.bh = load i64, ptr %i.r, align 8, !range !6, !noundef !7
+  %i.bh = load i64, ptr %i.r, align 16, !range !6, !noundef !7
   %.not203 = icmp ne i64 %i.bh, -1
   %.not204 = icmp eq i16 %.sroa.028.0, 1
   %or.cond219 = select i1 %.not203, i1 %.not204, i1 false
@@ -567,7 +568,7 @@ bb.ai:                                            ; preds = %bb.ag
   br i1 %.not208, label %bb.aj, label %bb.an
 
 bb.aj:                                            ; preds = %bb.an, %bb.ai
-  %i.by = load i64, ptr %i.r, align 8, !range !6, !alias.scope !183, !noundef !7
+  %i.by = load i64, ptr %i.r, align 16, !range !6, !alias.scope !183, !noundef !7
   %i.bz = icmp eq i64 %i.by, -1
   br i1 %i.bz, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit, label %bb.ak
 
@@ -602,15 +603,15 @@ bb.ao:                                            ; preds = %_RINvNtCskKLDkoKarT
 
 .body226:                                         ; preds = %bb.al, %bb.ao
   %eh.lpad-body227 = phi { ptr, i32 } [ %i.cc, %bb.ao ], [ %i.ca, %bb.al ]
-  store i64 %i.bu, ptr %i.r, align 8
+  store i64 %i.bu, ptr %i.r, align 16
   store ptr %i.bw, ptr %.sroa.5131.0..sroa_idx132, align 8
-  store i64 %i.bm, ptr %.sroa.6134.0..sroa_idx135, align 8
+  store i64 %i.bm, ptr %.sroa.6134.0..sroa_idx135, align 16
   br label %.loopexit.split-lp277
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit: ; preds = %bb.aj, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsTXRW1w2lWz_26libp2p_webtransport_websys.exit.i225
-  store i64 %i.bu, ptr %i.r, align 8
+  store i64 %i.bu, ptr %i.r, align 16
   store ptr %i.bw, ptr %.sroa.5131.0..sroa_idx132, align 8
-  store i64 %i.bm, ptr %.sroa.6134.0..sroa_idx135, align 8
+  store i64 %i.bm, ptr %.sroa.6134.0..sroa_idx135, align 16
   %i.cd = load i64, ptr %i.j, align 8, !range !6, !alias.scope !184, !noundef !7
   %i.ce = icmp eq i64 %i.cd, -1
   br i1 %i.ce, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit234, label %bb.ap
@@ -721,7 +722,7 @@ bb.ba:                                            ; preds = %bb.aw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !185
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !185
-  %i.cn = load i64, ptr %i.r, align 8, !range !6, !alias.scope !187, !noundef !7
+  %i.cn = load i64, ptr %i.r, align 16, !range !6, !alias.scope !187, !noundef !7
   %i.co = icmp eq i64 %i.cn, -1
   br i1 %i.co, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit242, label %bb.bb
 
@@ -752,11 +753,11 @@ bb.be:                                            ; preds = %_RINvNtCskKLDkoKarT
 
 .body239:                                         ; preds = %bb.bc, %bb.be
   %eh.lpad-body240 = phi { ptr, i32 } [ %i.cr, %bb.be ], [ %i.cp, %bb.bc ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
   br label %.body222
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit242: ; preds = %bb.ba, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsTXRW1w2lWz_26libp2p_webtransport_websys.exit.i238
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br label %bb.p
@@ -811,7 +812,7 @@ bb.bk:                                            ; preds = %bb.bg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !188
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !188
-  %i.cv = load i64, ptr %i.r, align 8, !range !6, !alias.scope !190, !noundef !7
+  %i.cv = load i64, ptr %i.r, align 16, !range !6, !alias.scope !190, !noundef !7
   %i.cw = icmp eq i64 %i.cv, -1
   br i1 %i.cw, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit253, label %bb.bl
 
@@ -842,11 +843,11 @@ bb.bo:                                            ; preds = %_RINvNtCskKLDkoKarT
 
 .body250:                                         ; preds = %bb.bm, %bb.bo
   %eh.lpad-body251 = phi { ptr, i32 } [ %i.cz, %bb.bo ], [ %i.cx, %bb.bm ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   br label %.body222
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit253: ; preds = %bb.bk, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsTXRW1w2lWz_26libp2p_webtransport_websys.exit.i249
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %bb.p
@@ -933,7 +934,7 @@ bb.bz:                                            ; preds = %bb.au, %.thread626
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3set7HashSetINtNtCsgW4lhAJgVdS_9multihash9multihash9MultihashKj40_EEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit220: ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
-  %i.dh = load i64, ptr %i.r, align 8, !range !6, !alias.scope !191, !noundef !7
+  %i.dh = load i64, ptr %i.r, align 16, !range !6, !alias.scope !191, !noundef !7
   %i.di = icmp eq i64 %i.dh, -1
   br i1 %i.di, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsexYYUdYSQU6_5alloc6string6StringEECsTXRW1w2lWz_26libp2p_webtransport_websys.exit256, label %bb.ca
 

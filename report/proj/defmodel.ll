@@ -205,14 +205,15 @@ _ZN12_GLOBAL__N_17GridSet6gridAtEdd.exit:         ; preds = %_ZNSt3mapIPKN5osgeo
   br i1 %i.jc, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread, label %bb.az
 
 bb.az:                                            ; preds = %_ZN12_GLOBAL__N_17GridSet6gridAtEdd.exit
-  %i.jd = getelementptr inbounds nuw i8, ptr %.val15.i, i64 32
-  %i.je = load i32, ptr %i.jd, align 8, !tbaa !531 ; 3 uses
+  %i.jd = getelementptr inbounds nuw i8, ptr %.val15.i, i64 32 ; 2 uses
+  %i.je = load i32, ptr %i.jd, align 8, !tbaa !531 ; 2 uses
   %i.jf = icmp slt i32 %i.je, 2
   br i1 %i.jf, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit.thread, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   %i.jg = getelementptr inbounds nuw i8, ptr %.val15.i, i64 36
-  %i.jh = load i32, ptr %i.jg, align 4, !tbaa !532 ; 3 uses
+  %i.jh = load i32, ptr %i.jg, align 4, !tbaa !532 ; 2 uses
+  %16 = load <2 x i32>, ptr %i.jd, align 8, !tbaa !34
   %i.ji = icmp slt i32 %i.jh, 2
   br i1 %i.ji, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit.thread, label %bb.bb
 
@@ -224,7 +225,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.jn = insertelement <2 x double> %i.jm, double %.sroa.speculated464, i64 1
   %i.jo = fsub <2 x double> %i.jn, %i.jl
   %i.jp = load <2 x double>, ptr %i.jj, align 8, !tbaa !59
-  %i.jq = fdiv <2 x double> %i.jo, %i.jp          ; 3 uses
+  %i.jq = fdiv <2 x double> %i.jo, %i.jp          ; 6 uses
   %i.jr = fcmp olt <2 x double> %i.jq, %i.ci      ; 2 uses
   %i.js = extractelement <2 x i1> %i.jr, i64 0
   %i.jt = extractelement <2 x i1> %i.jr, i64 1
@@ -232,7 +233,7 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %or.cond, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.ju = extractelement <2 x double> %i.jq, i64 0 ; 3 uses
+  %i.ju = extractelement <2 x double> %i.jq, i64 0
   %i.jv = fadd double %i.ju, 1.000000e+00
   %i.jw = uitofp nneg i32 %i.je to double
   %i.jx = fadd double %i.ai, %i.jw
@@ -240,7 +241,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.jy, label %bb.bd, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.jz = extractelement <2 x double> %i.jq, i64 1 ; 3 uses
+  %i.jz = extractelement <2 x double> %i.jq, i64 1
   %i.ka = fadd double %i.jz, 1.000000e+00
   %i.kb = uitofp nneg i32 %i.jh to double
   %i.kc = fadd double %i.ai, %i.kb
@@ -248,24 +249,24 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.kd, label %bb.be, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread
 
 bb.be:                                            ; preds = %bb.bd
-  %16 = fptosi double %i.ju to i32
-  %17 = add nsw i32 %i.je, -2
-  %.sroa.speculated432 = call i32 @llvm.smin.i32(i32 %17, i32 %16) ; 13 uses
-  %18 = fptosi double %i.jz to i32
-  %19 = add nsw i32 %i.jh, -2
-  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %19, i32 %18) ; 13 uses
-  %i.ke = add nsw i32 %.sroa.speculated432, 1     ; 10 uses
-  %20 = add nsw i32 %.sroa.speculated, 1          ; 10 uses
-  %21 = sitofp i32 %.sroa.speculated432 to double
-  %22 = fsub double %i.ju, %21                    ; 4 uses
-  %23 = sitofp i32 %.sroa.speculated to double
-  %24 = fsub double %i.jz, %23                    ; 3 uses
-  %i.kf = fsub double 1.000000e+00, %22           ; 2 uses
-  %i.kg = fsub double 1.000000e+00, %24           ; 2 uses
+  %17 = add nsw <2 x i32> %16, splat (i32 -2)
+  %18 = fptosi <2 x double> %i.jq to <2 x i32>
+  %19 = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %17, <2 x i32> %18) ; 3 uses
+  %20 = extractelement <2 x i32> %19, i64 1       ; 12 uses
+  %21 = extractelement <2 x i32> %19, i64 0       ; 12 uses
+  %22 = add nsw i32 %21, 1                        ; 10 uses
+  %i.ke = add nsw i32 %20, 1                      ; 10 uses
+  %23 = sitofp <2 x i32> %19 to <2 x double>      ; 2 uses
+  %foldExtExtBinop = fsub <2 x double> %i.jq, %23
+  %24 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 4 uses
+  %foldExtExtBinop764 = fsub <2 x double> %i.jq, %23
+  %25 = extractelement <2 x double> %foldExtExtBinop764, i64 1 ; 3 uses
+  %i.kf = fsub double 1.000000e+00, %24           ; 2 uses
+  %i.kg = fsub double 1.000000e+00, %25           ; 2 uses
   %i.kh = fmul double %i.kf, %i.kg                ; 6 uses
-  %i.ki = fmul double %22, %i.kg                  ; 6 uses
-  %i.kj = fmul double %i.kf, %24                  ; 6 uses
-  %i.kk = fmul double %22, %24                    ; 6 uses
+  %i.ki = fmul double %24, %i.kg                  ; 6 uses
+  %i.kj = fmul double %i.kf, %25                  ; 6 uses
+  %i.kk = fmul double %24, %25                    ; 6 uses
   %.val355 = load ptr, ptr %.sroa.0492.0679, align 8, !tbaa !166
   %i.kl = getelementptr inbounds nuw i8, ptr %.val355, i64 12
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !183 ; 2 uses
@@ -281,19 +282,19 @@ bb.bf:                                            ; preds = %bb.be
   store double 0.000000e+00, ptr %i.c, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #37
   store double 0.000000e+00, ptr %i.d, align 8, !tbaa !59
-  %i.ko = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
+  %i.ko = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
   br i1 %i.ko, label %bb.bg, label %.thread
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.kp = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
+  %i.kp = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
   br i1 %i.kp, label %bb.bh, label %.thread
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.kq = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
+  %i.kq = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   br i1 %i.kq, label %bb.bi, label %.thread
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.kr = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
+  %i.kr = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid10getZOffsetEiiRd(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   br i1 %i.kr, label %bb.bj, label %.thread
 
 .thread:                                          ; preds = %bb.bi, %bb.bh, %bb.bg, %bb.bf
@@ -345,19 +346,19 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.ld, label %bb.bm, label %bb.bq
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.le = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f)
+  %i.le = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f)
   br i1 %i.le, label %bb.bn, label %.thread546
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.lf = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
+  %i.lf = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j)
   br i1 %i.lf, label %bb.bo, label %.thread546
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.lg = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h)
+  %i.lg = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h)
   br i1 %i.lg, label %bb.bp, label %.thread546
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.lh = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull align 8 dereferenceable(8) %i.l)
+  %i.lh = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid16getLongLatOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull align 8 dereferenceable(8) %i.l)
   br i1 %i.lh, label %bb.bv, label %.thread546
 
 bb.bq:                                            ; preds = %bb.bl
@@ -369,19 +370,19 @@ bb.bq:                                            ; preds = %bb.bl
   store double 0.000000e+00, ptr %i.o, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #37
   store double 0.000000e+00, ptr %i.p, align 8, !tbaa !59
-  %i.li = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.m)
+  %i.li = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.m)
   br i1 %i.li, label %bb.br, label %.thread542
 
 bb.br:                                            ; preds = %bb.bq
-  %i.lj = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull align 8 dereferenceable(8) %i.o)
+  %i.lj = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.j, ptr noundef nonnull align 8 dereferenceable(8) %i.o)
   br i1 %i.lj, label %bb.bs, label %.thread542
 
 bb.bs:                                            ; preds = %bb.br
-  %i.lk = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.n)
+  %i.lk = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %i.n)
   br i1 %i.lk, label %bb.bt, label %.thread542
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.ll = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull align 8 dereferenceable(8) %i.l, ptr noundef nonnull align 8 dereferenceable(8) %i.p)
+  %i.ll = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid17getLongLatZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull align 8 dereferenceable(8) %i.l, ptr noundef nonnull align 8 dereferenceable(8) %i.p)
   br i1 %i.ll, label %bb.bu, label %.thread542
 
 .thread542:                                       ; preds = %bb.bt, %bb.bs, %bb.br, %bb.bq
@@ -481,19 +482,19 @@ bb.bw:                                            ; preds = %bb.bk
   br i1 %i.ld, label %bb.bx, label %bb.cb
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.na = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %i.r)
+  %i.na = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %i.r)
   br i1 %i.na, label %bb.by, label %.thread558
 
 bb.by:                                            ; preds = %bb.bx
-  %i.nb = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.v)
+  %i.nb = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.v)
   br i1 %i.nb, label %bb.bz, label %.thread558
 
 bb.bz:                                            ; preds = %bb.by
-  %i.nc = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %i.nc = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
   br i1 %i.nc, label %bb.ca, label %.thread558
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.nd = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %i.x)
+  %i.nd = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid24getEastingNorthingOffsetEiiRdS1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %i.x)
   br i1 %i.nd, label %bb.cg, label %.thread558
 
 bb.cb:                                            ; preds = %bb.bw
@@ -505,19 +506,19 @@ bb.cb:                                            ; preds = %bb.bw
   store double 0.000000e+00, ptr %i.aa, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #37
   store double 0.000000e+00, ptr %i.ab, align 8, !tbaa !59
-  %i.ne = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %i.r, ptr noundef nonnull align 8 dereferenceable(8) %i.y)
+  %i.ne = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %i.r, ptr noundef nonnull align 8 dereferenceable(8) %i.y)
   br i1 %i.ne, label %bb.cc, label %.thread552
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.nf = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %.sroa.speculated, ptr noundef nonnull align 8 dereferenceable(8) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.v, ptr noundef nonnull align 8 dereferenceable(8) %i.aa)
+  %i.nf = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.v, ptr noundef nonnull align 8 dereferenceable(8) %i.aa)
   br i1 %i.nf, label %bb.cd, label %.thread552
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.ng = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %.sroa.speculated432, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef nonnull align 8 dereferenceable(8) %i.t, ptr noundef nonnull align 8 dereferenceable(8) %i.z)
+  %i.ng = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %21, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.s, ptr noundef nonnull align 8 dereferenceable(8) %i.t, ptr noundef nonnull align 8 dereferenceable(8) %i.z)
   br i1 %i.ng, label %bb.ce, label %.thread552
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.nh = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %i.ke, i32 noundef %20, ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %i.x, ptr noundef nonnull align 8 dereferenceable(8) %i.ab)
+  %i.nh = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14Grid25getEastingNorthingZOffsetEiiRdS1_S1_(ptr noundef nonnull align 8 dereferenceable(72) %.val15.i, i32 noundef %22, i32 noundef %i.ke, ptr noundef nonnull align 8 dereferenceable(8) %i.w, ptr noundef nonnull align 8 dereferenceable(8) %i.x, ptr noundef nonnull align 8 dereferenceable(8) %i.ab)
   br i1 %i.nh, label %bb.cf, label %.thread552
 
 .thread552:                                       ; preds = %bb.ce, %bb.cd, %bb.cc, %bb.cb
@@ -655,7 +656,7 @@ bb.cj:                                            ; preds = %_ZNSt3mapIPKN12_GLO
   %i.pz = load double, ptr %i.v, align 8, !tbaa !59
   %i.qa = load double, ptr %i.w, align 8, !tbaa !59
   %i.qb = load double, ptr %i.x, align 8, !tbaa !59
-  call fastcc void @_ZN16DeformationModel6GridExIN12_GLOBAL__N_14GridEE21getBilinearGeocentricEiiddddddddddddRdS4_S4_(ptr noundef nonnull align 8 dereferenceable(184) %i.pt, i32 noundef %.sroa.speculated432, i32 noundef %.sroa.speculated, double noundef %i.pu, double noundef %i.pv, double noundef %i.pw, double noundef %i.px, double noundef %i.py, double noundef %i.pz, double noundef %i.qa, double noundef %i.qb, double noundef %i.kh, double noundef %i.kj, double noundef %i.ki, double noundef %i.kk, ptr noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noundef nonnull align 8 dereferenceable(8) %i.ad, ptr noundef nonnull align 8 dereferenceable(8) %i.ae)
+  call fastcc void @_ZN16DeformationModel6GridExIN12_GLOBAL__N_14GridEE21getBilinearGeocentricEiiddddddddddddRdS4_S4_(ptr noundef nonnull align 8 dereferenceable(184) %i.pt, i32 noundef %21, i32 noundef %20, double noundef %i.pu, double noundef %i.pv, double noundef %i.pw, double noundef %i.px, double noundef %i.py, double noundef %i.pz, double noundef %i.qa, double noundef %i.qb, double noundef %i.kh, double noundef %i.kj, double noundef %i.ki, double noundef %i.kk, ptr noundef nonnull align 8 dereferenceable(8) %i.ac, ptr noundef nonnull align 8 dereferenceable(8) %i.ad, ptr noundef nonnull align 8 dereferenceable(8) %i.ae)
   %i.qc = trunc nuw i8 %.0299684 to i1
   br i1 %i.qc, label %bb.cl, label %bb.ck
 
@@ -667,7 +668,7 @@ bb.ck:                                            ; preds = %bb.cj
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %.1325 = phi double [ %.0324682, %bb.cj ], [ %i.qe, %bb.ck ] ; 2 uses
   %.1312 = phi double [ %.0311683, %bb.cj ], [ %i.qd, %bb.ck ] ; 2 uses
-  %i.qf = fadd double %22, -5.000000e-01
+  %i.qf = fadd double %24, -5.000000e-01
   %i.qg = load double, ptr %i.jj, align 8, !tbaa !533
   %i.qh = fmul double %i.qf, %i.qg                ; 5 uses
   %i.qi = getelementptr inbounds nuw i8, ptr %.sroa.0426.0, i64 48
@@ -1070,10 +1071,10 @@ declare i64 @llvm.smin.i64(i64, i64) #18
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #18
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #18
+declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

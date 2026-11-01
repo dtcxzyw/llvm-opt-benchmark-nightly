@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN3gui9CGUIImage4drawEv(ptr noundef nonnull align 8 dereferenceable(361) %0) unnamed_addr #0 align 2 {
 bb.a:
-  %1 = alloca %"class.core::rect", align 16       ; 10 uses
+  %1 = alloca %"class.core::rect", align 16       ; 11 uses
   %2 = alloca [4 x %"class.video::SColor"], align 16 ; 4 uses
   %3 = alloca %"class.core::rect", align 16       ; 6 uses
   %4 = alloca %"class.core::rect", align 16       ; 9 uses
@@ -236,23 +236,21 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 328
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.q, i64 16, i1 false), !tbaa.struct !62
-  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !63   ; 2 uses
-  %i.t = load i32, ptr %1, align 16, !tbaa !64    ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !63
+  %i.t = load i32, ptr %1, align 16, !tbaa !64
   %i.u = icmp eq i32 %i.s, %i.t
   br i1 %i.u, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %7 = load i32, ptr %i.v, align 4, !tbaa !65     ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !66   ; 2 uses
-  %8 = icmp eq i32 %7, %i.x
-  %9 = insertelement <2 x i32> poison, i32 %i.s, i64 0
-  %10 = insertelement <2 x i32> %9, i32 %7, i64 1
-  %11 = insertelement <2 x i32> poison, i32 %i.t, i64 0
-  %12 = insertelement <2 x i32> %11, i32 %i.x, i64 1
-  br i1 %8, label %bb.e, label %bb.f
+  %i.x = load i32, ptr %i.v, align 4, !tbaa !65
+  %7 = load <2 x i32>, ptr %i.r, align 8, !tbaa !57
+  %8 = load i32, ptr %i.w, align 4, !tbaa !66
+  %9 = load <2 x i32>, ptr %1, align 16, !tbaa !57
+  %10 = icmp eq i32 %i.x, %8
+  br i1 %10, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 72
@@ -263,8 +261,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.ac = phi <2 x i32> [ %i.z, %bb.e ], [ %10, %bb.d ]
-  %i.ad = phi <2 x i32> [ zeroinitializer, %bb.e ], [ %12, %bb.d ]
+  %i.ac = phi <2 x i32> [ %i.z, %bb.e ], [ %7, %bb.d ]
+  %i.ad = phi <2 x i32> [ zeroinitializer, %bb.e ], [ %9, %bb.d ]
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 325
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !51, !range !59, !noundef !60
   %i.ag = trunc nuw i8 %i.af to i1

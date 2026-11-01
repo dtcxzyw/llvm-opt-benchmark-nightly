@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.as, label %.lr.ph, label %.critedge.preheader
 
 .lr.ph:                                           ; preds = %.loopexit304
-  %i.au = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   br label %bb.o
 
 .critedge.preheader:                              ; preds = %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIlPN9grpc_core8channelz8BaseNodeESt4lessIlESaISt4pairIKlS8_EELi256ELb0EEEEERSD_PSD_EppEv.exit, %.loopexit304.thread, %.loopexit304
@@ -302,7 +302,7 @@ bb.r:                                             ; preds = %.loopexit.split-lp3
   br label %_ZN9grpc_core17WeakRefCountedPtrINS_8channelz8BaseNodeEED2Ev.exit
 
 bb.s:                                             ; preds = %_ZN9grpc_core14DualRefCountedINS_8channelz8BaseNodeENS_19PolymorphicRefCountENS_11UnrefDeleteEE16WeakRefIfNonZeroEv.exit
-  %i.cg = load ptr, ptr %i.au, align 8, !tbaa !79 ; 7 uses
+  %i.cg = load ptr, ptr %i.au, align 8, !tbaa !79 ; 6 uses
   %i.ch = load ptr, ptr %8, align 16, !tbaa !80   ; 11 uses
   %i.ci = ptrtoint ptr %i.cg to i64               ; 2 uses
   %i.cj = ptrtoint ptr %i.ch to i64               ; 3 uses
@@ -505,10 +505,8 @@ bb.ab:                                            ; preds = %bb.s
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ch, ptr %i.ey, align 8, !tbaa !80
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.cg, ptr %i.ez, align 8, !tbaa !79
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %12 = load ptr, ptr %i.av, align 16, !tbaa !69
-  store ptr %12, ptr %11, align 8, !tbaa !69
+  %11 = load <2 x ptr>, ptr %i.au, align 8, !tbaa !67
+  store <2 x ptr> %11, ptr %i.ez, align 8, !tbaa !67
   br label %.loopexit297.sink.split
 
 .critedge:                                        ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit132

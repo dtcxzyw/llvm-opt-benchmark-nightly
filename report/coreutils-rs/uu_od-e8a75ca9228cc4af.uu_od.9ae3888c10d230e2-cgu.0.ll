@@ -205,9 +205,9 @@ bb.a:
   %i.z = alloca [32 x i8], align 8                ; 7 uses
   %i.aa = alloca [24 x i8], align 8               ; 6 uses
   %i.ab = alloca [32 x i8], align 8               ; 7 uses
-  %i.ac = alloca [24 x i8], align 8               ; 7 uses
+  %i.ac = alloca [24 x i8], align 8               ; 6 uses
   %i.ad = alloca [24 x i8], align 8               ; 5 uses
-  %i.ae = alloca [24 x i8], align 8               ; 6 uses
+  %i.ae = alloca [24 x i8], align 8               ; 5 uses
   %i.af = alloca [32 x i8], align 8               ; 7 uses
   %i.ag = alloca [24 x i8], align 8               ; 6 uses
   %i.ah = alloca [24 x i8], align 8               ; 5 uses
@@ -610,8 +610,8 @@ bb.ai:                                            ; preds = %bb.ad
   %i.hw = load i64, ptr %i.hv, align 8, !alias.scope !1538, !noalias !1536, !noundef !5
   call fastcc void @_RNvNtCsdit6BuOJVAc_5uu_od12parse_inputs20parse_offset_operand(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.ad, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hu, i64 noundef %i.hw) #29, !noalias !1539
   %.sroa.0183.0.copyload.i.i = load i64, ptr %i.ae, align 8, !noalias !1539 ; 2 uses
-  %.sroa.5185.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
-  %.sroa.5185.0.copyload.i.i = load i64, ptr %.sroa.5185.0..sroa_idx.i.i, align 8, !noalias !1539 ; 2 uses
+  %.sroa.5185.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
+  %.sroa.5185.0.copyload.i.i = load i64, ptr %.sroa.5185.0..sroa_idx.i.i, align 8, !noalias !1539
   %.sroa.6191.24.copyload.i.i = load i64, ptr %i.ad, align 8, !noalias !1539 ; 4 uses
   %.sroa.11194.24..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 8 ; 2 uses
   %i.hx = load <2 x i64>, ptr %.sroa.11194.24..sroa_idx.i.i, align 8, !noalias !1539
@@ -839,14 +839,11 @@ bb.bc:                                            ; preds = %_RNvXs_NtCs7tKScEop
   br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsdit6BuOJVAc_5uu_od.exit151.thread248.i.i
 
 .split118.i.i:                                    ; preds = %bb.ai
-  %.sroa.6188.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
-  %.sroa.6188.0.copyload.i.i = load i64, ptr %.sroa.6188.0..sroa_idx.i.i, align 8, !noalias !1539
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !1539
   store i64 %.sroa.0183.0.copyload.i.i, ptr %i.ac, align 8, !noalias !1539
   %.sroa.5185.0..sroa_idx186.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
-  store i64 %.sroa.5185.0.copyload.i.i, ptr %.sroa.5185.0..sroa_idx186.i.i, align 8, !noalias !1539
-  %.sroa.6188.0..sroa_idx189.i.i = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
-  store i64 %.sroa.6188.0.copyload.i.i, ptr %.sroa.6188.0..sroa_idx189.i.i, align 8, !noalias !1539
+  %4 = load <2 x i64>, ptr %.sroa.5185.0..sroa_idx.i.i, align 8, !noalias !1539
+  store <2 x i64> %4, ptr %.sroa.5185.0..sroa_idx186.i.i, align 8, !noalias !1539
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !1539
   store ptr %i.hp, ptr %i.ab, align 8, !noalias !1539
   %.sroa.491.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 8

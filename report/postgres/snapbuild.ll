@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef zeroext i1 @SnapBuildRestore(ptr nofree noundef captures(none) %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.SnapBuildOnDisk, align 8    ; 13 uses
+  %2 = alloca %struct.SnapBuildOnDisk, align 8    ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   %i.a = load i32, ptr %0, align 8
   %i.b = icmp eq i32 %i.a, 2
@@ -221,8 +221,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.n, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.j = load i32, ptr %i.i, align 8              ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8              ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = load i32, ptr %i.k, align 8              ; 3 uses
   %i.m = icmp ugt i32 %i.j, 2
@@ -238,11 +238,9 @@ bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 0, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store i32 %i.j, ptr %i.s, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %2, i64 36
-  %3 = load i32, ptr %i.t, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  store i32 %3, ptr %4, align 4
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %3 = load <2 x i32>, ptr %i.i, align 8
+  store <2 x i32> %3, ptr %i.s, align 8
   store i32 %i.g, ptr %0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
   %i.v = load i64, ptr %i.u, align 8              ; 2 uses
@@ -323,7 +321,7 @@ SnapBuildSnapDecRefcount.exit:                    ; preds = %SnapBuildFreeSnapsh
   %i.bb = load i32, ptr %i.s, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
   store i32 %i.bb, ptr %i.bc, align 4
-  %i.bd = load i32, ptr %4, align 4
+  %i.bd = load i32, ptr %i.t, align 4
   %i.be = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store i32 %i.bd, ptr %i.be, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ba, i64 104 ; 3 uses

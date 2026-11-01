@@ -204,7 +204,7 @@ bb.a:
   %i.bw = alloca [40 x i8], align 8               ; 4 uses
   %i.bx = alloca [24 x i8], align 8               ; 6 uses
   %i.by = alloca [24 x i8], align 8               ; 6 uses
-  %i.bz = alloca [24 x i8], align 8               ; 8 uses
+  %i.bz = alloca [24 x i8], align 8               ; 7 uses
   %i.ca = alloca [24 x i8], align 8               ; 6 uses
   %i.cb = alloca [24 x i8], align 8               ; 4 uses
   %i.cc = alloca [24 x i8], align 8               ; 6 uses
@@ -607,7 +607,7 @@ bb.cj:                                            ; preds = %bb.ci
 
 bb.ck:                                            ; preds = %bb.ci
   %i.lc = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
-  %i.ld = load ptr, ptr %i.lc, align 8, !noalias !50 ; 4 uses
+  %i.ld = load ptr, ptr %i.lc, align 8, !noalias !50 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !56)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !noalias !50
@@ -616,8 +616,8 @@ bb.ck:                                            ; preds = %bb.ci
   br i1 %i.lf, label %bb.cl, label %bb.cm
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.lg = getelementptr inbounds nuw i8, ptr %i.ld, i64 32 ; 2 uses
-  %i.lh = load ptr, ptr %i.lg, align 8, !noalias !57 ; 2 uses
+  %i.lg = getelementptr inbounds nuw i8, ptr %i.ld, i64 32 ; 3 uses
+  %i.lh = load ptr, ptr %i.lg, align 8, !noalias !57
   %i.li = load i64, ptr %i.lh, align 8, !noalias !57
   %i.lj = icmp eq i64 %i.li, -9223372036854775806
   br i1 %i.lj, label %bb.cn, label %bb.co
@@ -631,13 +631,10 @@ bb.cm:                                            ; preds = %bb.ck
   br label %bb.cp
 
 bb.cn:                                            ; preds = %bb.cl
-  %5 = getelementptr inbounds nuw i8, ptr %i.lh, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %i.ld, i64 40
-  %7 = load ptr, ptr %6, align 8, !noalias !57
   %i.lk = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
-  store ptr %5, ptr %i.lk, align 8, !alias.scope !56, !noalias !50
-  %8 = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
-  store ptr %7, ptr %8, align 8, !alias.scope !56, !noalias !50
+  %5 = load <2 x ptr>, ptr %i.lg, align 8, !noalias !57
+  %6 = getelementptr inbounds nuw i8, <2 x ptr> %5, <2 x i64> <i64 48, i64 0>
+  store <2 x ptr> %6, ptr %i.lk, align 8, !alias.scope !56, !noalias !50
   store i64 -1, ptr %i.bz, align 8, !alias.scope !56, !noalias !50
   br label %bb.cp
 

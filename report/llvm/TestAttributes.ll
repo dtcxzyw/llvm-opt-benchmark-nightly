@@ -205,10 +205,10 @@ _ZN4mlir9AsmParser12parseIntegerImEEN4llvm11ParseResultERT_.exit: ; preds = %bb.
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4mlir11FieldParserISt6vectorIiSaIiEES3_E5parseERNS_9AsmParserE(ptr dead_on_unwind noalias writable sret(%"class.llvm::FailureOr.377") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %2 = alloca %"class.std::vector.384", align 8   ; 7 uses
+  %2 = alloca %"class.std::vector.384", align 16  ; 8 uses
   %3 = alloca %class.anon.1065, align 8           ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   store ptr %1, ptr %3, align 8, !tbaa !230
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -219,15 +219,16 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = call i8 %i.e(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef 0, ptr nonnull @_ZN4llvm12function_refIFNS_11ParseResultEvEE11callback_fnIZN4mlir11FieldParserISt6vectorIiSaIiEES9_E5parseERNS5_9AsmParserEEUlvE_EES1_l, i64 %i.b, ptr null, i64 0) #22, !inline_history !19
   %i.g = trunc nuw i8 %i.f to i1
-  %i.h = load ptr, ptr %2, align 8, !tbaa !232    ; 4 uses
+  %i.h = load ptr, ptr %2, align 16, !tbaa !232   ; 3 uses
   br i1 %i.g, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %bb.a
-  store ptr %i.h, ptr %0, align 8, !tbaa !232
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %4 = load <2 x ptr>, ptr %i.j, align 8, !tbaa !83
-  store <2 x ptr> %4, ptr %i.i, align 8, !tbaa !83
+  %4 = load <2 x ptr>, ptr %2, align 16, !tbaa !83
+  store <2 x ptr> %4, ptr %0, align 8, !tbaa !83
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %5 = load ptr, ptr %i.j, align 16, !tbaa !233
+  store ptr %5, ptr %i.i, align 8, !tbaa !233
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.k, align 8, !tbaa !225
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
@@ -242,7 +243,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !233
+  %i.n = load ptr, ptr %i.m, align 16, !tbaa !233
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = ptrtoint ptr %i.h to i64
   %i.q = sub i64 %i.o, %i.p

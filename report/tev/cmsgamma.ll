@@ -205,14 +205,15 @@ bb.bk:                                            ; preds = %bb.bi
   br label %bb.bz
 
 bb.bl:                                            ; preds = %bb.a
-  %i.hp = load double, ptr %1, align 8, !tbaa !49 ; 2 uses
+  %i.hp = load double, ptr %1, align 8, !tbaa !49
   %i.hq = tail call double @llvm.fabs.f64(double %i.hp)
   %i.hr = fcmp olt double %i.hq, 1.000000e-04
   br i1 %i.hr, label %bb.bz, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
   %i.hs = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ht = load double, ptr %i.hs, align 8, !tbaa !49 ; 2 uses
+  %i.ht = load double, ptr %i.hs, align 8, !tbaa !49
+  %3 = load <2 x double>, ptr %1, align 8, !tbaa !49
   %i.hu = tail call double @llvm.fabs.f64(double %i.ht)
   %i.hv = fcmp olt double %i.hu, 1.000000e-04
   br i1 %i.hv, label %bb.bz, label %bb.bn
@@ -228,14 +229,16 @@ bb.bo:                                            ; preds = %bb.bn
   %i.ia = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ib = load double, ptr %i.ia, align 8, !tbaa !49
   %i.ic = fsub double %2, %i.ib
-  %3 = fdiv double %i.ic, %i.ht
-  %4 = tail call double @pow(double noundef 1.000000e+01, double noundef %3) #11
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.id = load double, ptr %5, align 8, !tbaa !49
-  %i.ie = fsub double %4, %i.id
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %5 = insertelement <2 x double> <double 1.000000e+00, double poison>, double %i.ic, i64 1
+  %6 = fdiv <2 x double> %5, %3                   ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 1
+  %8 = tail call double @pow(double noundef 1.000000e+01, double noundef %7) #11
+  %i.id = load double, ptr %4, align 8, !tbaa !49
+  %i.ie = fsub double %8, %i.id
   %i.if = fdiv double %i.ie, %i.hx
-  %6 = fdiv double 1.000000e+00, %i.hp
-  %i.ig = tail call double @pow(double noundef %i.if, double noundef %6) #11
+  %9 = extractelement <2 x double> %6, i64 0
+  %i.ig = tail call double @pow(double noundef %i.if, double noundef %9) #11
   br label %bb.bz
 
 bb.bp:                                            ; preds = %bb.a

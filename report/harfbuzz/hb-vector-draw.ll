@@ -205,25 +205,24 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load float, ptr %i.b, align 4, !tbaa !92 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.c = load float, ptr %i.b, align 4, !tbaa !92
   %i.d = fcmp oeq float %i.c, 0.000000e+00
   br i1 %i.d, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.f = load float, ptr %i.e, align 4, !tbaa !93 ; 2 uses
+  %i.f = load float, ptr %i.e, align 4, !tbaa !93
   %i.g = fcmp oeq float %i.f, 0.000000e+00
   br i1 %i.g, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %2 = load <2 x float>, ptr %i.b, align 4, !tbaa !16
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.i = load <2 x float>, ptr %1, align 4, !tbaa !16
   %i.j = load <2 x float>, ptr %i.h, align 4, !tbaa !16 ; 2 uses
   %i.k = fdiv <2 x float> %i.i, %i.j              ; 4 uses
-  %2 = insertelement <2 x float> poison, float %i.c, i64 0
-  %3 = insertelement <2 x float> %2, float %i.f, i64 1
-  %i.l = fdiv <2 x float> %3, %i.j
+  %i.l = fdiv <2 x float> %2, %i.j
   %i.m = fadd <2 x float> %i.k, %i.l              ; 3 uses
   %i.n = fcmp ole <2 x float> %i.k, %i.m
   %i.o = select <2 x i1> %i.n, <2 x float> %i.k, <2 x float> %i.m ; 4 uses

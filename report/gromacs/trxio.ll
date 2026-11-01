@@ -204,7 +204,7 @@ declare noundef zeroext i1 @_ZN3gmx4H5md13readNextFrameEP10t_trxframeRKNSt7__cxx
 define internal fastcc noundef zeroext i1 @_ZL10pdb_next_xP11t_trxstatusP8_IO_FILEP10t_trxframe(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef initializes((16, 24), (56, 57), (60, 65), (112, 113), (152, 153), (156, 160)) %2) unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.t_atoms, align 8            ; 7 uses
-  %i.a = alloca [3 x [3 x float]], align 16       ; 6 uses
+  %i.a = alloca [3 x [3 x float]], align 16       ; 7 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = alloca [4096 x i8], align 16             ; 7 uses
@@ -256,7 +256,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store float 1.000000e+04, ptr %i.z, align 4, !tbaa !61
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i8 1, ptr %i.aa, align 8, !tbaa !50
-  %i.ab = load float, ptr %i.a, align 16, !tbaa !70 ; 2 uses
+  %i.ab = load float, ptr %i.a, align 16, !tbaa !70
   %i.ac = fcmp une float %i.ab, 0.000000e+00      ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 112
   %i.ae = zext i1 %i.ac to i8
@@ -265,11 +265,12 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 116
-  store float %i.ab, ptr %i.af, align 4, !tbaa !70
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 120
-  %6 = load <8 x float>, ptr %i.ag, align 4, !tbaa !70
-  store <8 x float> %6, ptr %5, align 8, !tbaa !70
+  %5 = load <8 x float>, ptr %i.a, align 16, !tbaa !70
+  store <8 x float> %5, ptr %i.af, align 4, !tbaa !70
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %6 = load float, ptr %i.ag, align 16, !tbaa !70
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 148
+  store float %6, ptr %7, align 4, !tbaa !70
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c

@@ -205,7 +205,7 @@ bb.a:
     #dbg_value(ptr %0, !20564, !DIExpression(), !20567)
     #dbg_declare(ptr %1, !20565, !DIExpression(), !20568)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8), !dbg !20637
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 448, !dbg !20637 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 448, !dbg !20637 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20569), !dbg !20638
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20570), !dbg !20638
     #dbg_declare(ptr poison, !20571, !DIExpression(DW_OP_LLVM_fragment, 200, 56), !20471)
@@ -266,7 +266,7 @@ bb.d:                                             ; preds = %bb.c
     #dbg_value(i8 0, !20623, !DIExpression(), !20516)
     #dbg_value(ptr %i.a, !20618, !DIExpression(), !20517)
     #dbg_value(ptr %i.a, !20625, !DIExpression(), !20520)
-  %i.j = load ptr, ptr %i.a, align 8, !dbg !20655, !alias.scope !20627, !nonnull !1173, !noundef !1173 ; 2 uses
+  %i.j = load ptr, ptr %i.a, align 8, !dbg !20655, !alias.scope !20627, !nonnull !1173, !noundef !1173
     #dbg_value(ptr %i.j, !20615, !DIExpression(), !20523)
     #dbg_value(ptr %i.j, !20622, !DIExpression(), !20516)
   %i.k = atomicrmw add ptr %i.j, i64 1 monotonic, align 8, !dbg !20656, !noalias !20628
@@ -279,17 +279,14 @@ bb.e:                                             ; preds = %bb.d
   unreachable, !dbg !20658
 
 _RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util9prefilterNtB5_9PrefilterNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i: ; preds = %bb.d
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 456, !dbg !20655
-  %3 = load ptr, ptr %2, align 8, !dbg !20659, !alias.scope !20627, !nonnull !1173, !align !3098, !noundef !1173
+  %2 = load <2 x ptr>, ptr %i.a, align 8, !dbg !20659, !alias.scope !20627
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 464, !dbg !20660
   %i.n = load i64, ptr %i.m, align 8, !dbg !20660, !alias.scope !20627, !noundef !1173
-  %4 = insertelement <2 x ptr> poison, ptr %i.j, i64 0
-  %5 = insertelement <2 x ptr> %4, ptr %3, i64 1
   br label %_RNvMNtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson6pikevmNtB2_6Config9overwrite.exit.thread, !dbg !20661
 
 _RNvMNtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson6pikevmNtB2_6Config9overwrite.exit.thread: ; preds = %bb.c, %_RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util9prefilterNtB5_9PrefilterNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i
   %.sroa.6.1.i.ph = phi i64 [ %i.n, %_RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util9prefilterNtB5_9PrefilterNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i ], [ undef, %bb.c ]
-  %i.o = phi <2 x ptr> [ %5, %_RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util9prefilterNtB5_9PrefilterNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i ], [ undef, %bb.c ]
+  %i.o = phi <2 x ptr> [ %2, %_RNvXs1_NtNtCs9GYDdpCSJ4S_14regex_automata4util9prefilterNtB5_9PrefilterNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i.i.i ], [ undef, %bb.c ]
   %.not.i18 = icmp eq i8 %i.c, 2, !dbg !20648
   %spec.store.select.i19 = select i1 %.not.i18, i8 %i.e, i8 %i.c, !dbg !20649
     #dbg_value(i8 %spec.store.select.i19, !20594, !DIExpression(), !20477)

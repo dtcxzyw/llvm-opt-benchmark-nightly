@@ -160,69 +160,77 @@ bb.t:                                             ; preds = %bb.s
 
 _ZN2v88internal8temporal14DurationRecord4SignERKS2_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t
   %.1.i = phi i32 [ 1, %bb.f ], [ -1, %bb.a ], [ 1, %bb.b ], [ -1, %bb.c ], [ 1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.s ], [ -1, %bb.g ], [ 1, %bb.h ], [ -1, %bb.i ], [ 1, %bb.j ], [ -1, %bb.k ], [ 1, %bb.l ], [ -1, %bb.m ], [ 1, %bb.n ], [ -1, %bb.o ], [ 1, %bb.p ], [ -1, %bb.q ], [ 1, %bb.r ], [ %..i, %bb.t ] ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.an = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ao = tail call double @llvm.fabs.f64(double %i.a) ; 4 uses
   %i.ap = fcmp ueq double %i.ao, +inf
   br i1 %i.ap, label %bb.al, label %bb.u
 
 bb.u:                                             ; preds = %_ZN2v88internal8temporal14DurationRecord4SignERKS2_.exit
-  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ar = load double, ptr %i.aq, align 8         ; 3 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.ar = load double, ptr %i.aq, align 8         ; 2 uses
   %i.as = tail call double @llvm.fabs.f64(double %i.ar) ; 4 uses
   %i.at = fcmp ueq double %i.as, +inf
   br i1 %i.at, label %bb.al, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.av = load double, ptr %i.au, align 8         ; 3 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.av = load double, ptr %i.au, align 8
+  %2 = load <2 x double>, ptr %i.aq, align 8
   %i.aw = tail call double @llvm.fabs.f64(double %i.av) ; 4 uses
   %i.ax = fcmp ueq double %i.aw, +inf
   br i1 %i.ax, label %bb.al, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.ay = load double, ptr %i.an, align 8         ; 4 uses
+  %i.ay = load double, ptr %i.an, align 8         ; 2 uses
+  %3 = load <2 x double>, ptr %i.au, align 8
   %i.az = tail call double @llvm.fabs.f64(double %i.ay)
   %i.ba = fcmp ueq double %i.az, +inf
   br i1 %i.ba, label %bb.al, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.bc = load double, ptr %i.bb, align 8         ; 4 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %i.bc = load double, ptr %i.bb, align 8         ; 2 uses
+  %4 = load <2 x double>, ptr %i.an, align 8
   %i.bd = tail call double @llvm.fabs.f64(double %i.bc)
   %i.be = fcmp ueq double %i.bd, +inf
   br i1 %i.be, label %bb.al, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.bg = load double, ptr %i.bf, align 8         ; 4 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.bg = load double, ptr %i.bf, align 8         ; 2 uses
+  %5 = load <2 x double>, ptr %i.bb, align 8
   %i.bh = tail call double @llvm.fabs.f64(double %i.bg)
   %i.bi = fcmp ueq double %i.bh, +inf
   br i1 %i.bi, label %bb.al, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.bk = load double, ptr %i.bj, align 8         ; 4 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  %i.bk = load double, ptr %i.bj, align 8         ; 2 uses
+  %6 = load <2 x double>, ptr %i.bf, align 8
   %i.bl = tail call double @llvm.fabs.f64(double %i.bk)
   %i.bm = fcmp ueq double %i.bl, +inf
   br i1 %i.bm, label %bb.al, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.bo = load double, ptr %i.bn, align 8         ; 5 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %i.bo = load double, ptr %i.bn, align 8         ; 2 uses
+  %7 = load <2 x double>, ptr %i.bj, align 8
   %i.bp = tail call double @llvm.fabs.f64(double %i.bo)
   %i.bq = fcmp ueq double %i.bp, +inf
   br i1 %i.bq, label %bb.al, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.br = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.bs = load double, ptr %i.br, align 8         ; 5 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %i.bs = load double, ptr %i.br, align 8         ; 2 uses
+  %8 = load <2 x double>, ptr %i.bn, align 8      ; 2 uses
   %i.bt = tail call double @llvm.fabs.f64(double %i.bs)
   %i.bu = fcmp ueq double %i.bt, +inf
   br i1 %i.bu, label %bb.al, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.bw = load double, ptr %i.bv, align 8         ; 5 uses
+  %i.bw = load double, ptr %i.bv, align 8         ; 4 uses
+  %9 = load <2 x double>, ptr %i.br, align 8
   %i.bx = tail call double @llvm.fabs.f64(double %i.bw)
   %i.by = fcmp ueq double %i.bx, +inf
   br i1 %i.by, label %bb.al, label %bb.ad
@@ -232,15 +240,12 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.bz, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %2 = insertelement <8 x double> poison, double %i.ar, i64 0
-  %3 = insertelement <8 x double> %2, double %i.av, i64 1
-  %4 = insertelement <8 x double> %3, double %i.ay, i64 2
-  %5 = insertelement <8 x double> %4, double %i.bc, i64 3
-  %6 = insertelement <8 x double> %5, double %i.bg, i64 4
-  %7 = insertelement <8 x double> %6, double %i.bk, i64 5
-  %8 = insertelement <8 x double> %7, double %i.bo, i64 6
-  %9 = insertelement <8 x double> %8, double %i.bs, i64 7
-  %.fr126 = freeze <8 x double> %9
+  %10 = shufflevector <2 x double> %2, <2 x double> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %11 = shufflevector <2 x double> %6, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <8 x double> %10, <8 x double> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
+  %13 = shufflevector <2 x double> %8, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <8 x double> %12, <8 x double> %13, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
+  %.fr126 = freeze <8 x double> %14
   %i.ca = fcmp uge double %i.bw, 0.000000e+00
   %.old = fcmp ult double %i.ao, f0x41F0000000000000
   %i.cb = fcmp ult double %i.as, f0x41F0000000000000
@@ -262,17 +267,16 @@ bb.af:                                            ; preds = %bb.ad
 bb.ag:                                            ; preds = %bb.af
   %i.ch = insertelement <8 x double> poison, double %i.a, i64 0
   %i.ci = insertelement <8 x double> %i.ch, double %i.ar, i64 1
-  %10 = insertelement <8 x double> %i.ci, double %i.av, i64 2
-  %11 = insertelement <8 x double> %10, double %i.ay, i64 3
-  %12 = insertelement <8 x double> %11, double %i.bc, i64 4
-  %13 = insertelement <8 x double> %12, double %i.bg, i64 5
-  %14 = insertelement <8 x double> %13, double %i.bk, i64 6
-  %15 = insertelement <8 x double> %14, double %i.bo, i64 7
-  %.fr = freeze <8 x double> %15
+  %15 = shufflevector <2 x double> %3, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %16 = shufflevector <8 x double> %i.ci, <8 x double> %15, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison>
+  %17 = shufflevector <2 x double> %5, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %18 = shufflevector <8 x double> %16, <8 x double> %17, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
+  %19 = shufflevector <2 x double> %7, <2 x double> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %20 = shufflevector <8 x double> %18, <8 x double> %19, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
+  %.fr = freeze <8 x double> %20
   %i.cj = fcmp ule <8 x double> %.fr, zeroinitializer ; 2 uses
-  %16 = insertelement <4 x double> poison, double %i.bs, i64 0
-  %17 = insertelement <4 x double> %16, double %i.bw, i64 1
-  %i.ck = insertelement <4 x double> %17, double %i.ao, i64 2
+  %21 = shufflevector <2 x double> %9, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.ck = insertelement <4 x double> %21, double %i.ao, i64 2
   %i.cl = insertelement <4 x double> %i.ck, double %i.as, i64 3 ; 2 uses
   %i.cm = fcmp ule <4 x double> %i.cl, <double 0.000000e+00, double 0.000000e+00, double f0x41F0000000000000, double f0x41F0000000000000>
   %i.cn = fcmp ult <4 x double> %i.cl, <double 0.000000e+00, double 0.000000e+00, double f0x41F0000000000000, double f0x41F0000000000000>
@@ -308,9 +312,7 @@ bb.ah:                                            ; preds = %bb.ae, %bb.ag, %.th
 bb.ai:                                            ; preds = %bb.ah
   %i.dc = fsub double f0x4340000000000000, %i.da
   %i.dd = fptosi double %i.dc to i64
-  %18 = insertelement <2 x double> poison, double %i.bo, i64 0
-  %19 = insertelement <2 x double> %18, double %i.bs, i64 1
-  %i.de = fdiv <2 x double> %19, <double 1.000000e+03, double 1.000000e+06>
+  %i.de = fdiv <2 x double> %8, <double 1.000000e+03, double 1.000000e+06>
   %i.df = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.de)
   %i.dg = tail call <2 x double> @llvm.floor.v2f64(<2 x double> %i.df) ; 2 uses
   %shift = shufflevector <2 x double> %i.dg, <2 x double> poison, <2 x i32> <i32 1, i32 poison>

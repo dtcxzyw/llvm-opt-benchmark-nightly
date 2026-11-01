@@ -205,15 +205,12 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !401    ; 10 uses
   %i.b = load ptr, ptr %2, align 8, !tbaa !401    ; 6 uses
   %i.c = icmp eq ptr %i.a, %i.b
-  %i.d = load ptr, ptr %3, align 8, !tbaa !401    ; 9 uses
+  %i.d = load ptr, ptr %3, align 8, !tbaa !401    ; 8 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.d, ptr %0, align 8, !tbaa !401
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %6 = load ptr, ptr %5, align 8, !tbaa !491
-  store ptr %6, ptr %4, align 8, !tbaa !491
+  %4 = load <2 x ptr>, ptr %3, align 8, !tbaa !399
+  store <2 x ptr> %4, ptr %0, align 8, !tbaa !399
   br label %_ZN5boost20adl_move_swap_rangesINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEES4_EET0_T_S6_S5_.exit
 
 bb.c:                                             ; preds = %bb.a
