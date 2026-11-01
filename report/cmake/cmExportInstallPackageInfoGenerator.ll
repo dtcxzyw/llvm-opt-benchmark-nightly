@@ -204,9 +204,9 @@ bb.s:                                             ; preds = %bb.r
   %i.ao = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 5 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 12 uses
   %i.av = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 6 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 6 uses
@@ -487,7 +487,7 @@ _Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit: ; preds = %_ZNSt7_
   %i.dq = ptrtoint ptr %i.dm to i64
   %i.dr = sub i64 %i.dp, %i.dq
   %i.ds = ashr exact i64 %i.dr, 5
-  %i.dt = load ptr, ptr %i.ar, align 8, !tbaa !59 ; 3 uses
+  %i.dt = load ptr, ptr %i.ar, align 8, !tbaa !59 ; 2 uses
   %i.du = load ptr, ptr %11, align 8, !tbaa !27   ; 3 uses
   %i.dv = ptrtoint ptr %i.dt to i64
   %i.dw = ptrtoint ptr %i.du to i64
@@ -506,19 +506,17 @@ bb.ak:                                            ; preds = %.lr.ph53.i.i.i.i
   br label %.body108
 
 _ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit: ; preds = %.noexc168
-  %.pre230 = load ptr, ptr %i.at, align 8, !tbaa !26
+  %15 = load <2 x ptr>, ptr %i.ar, align 8, !tbaa !24
   br label %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit
 
 _ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit: ; preds = %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit, %_Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit
-  %15 = phi ptr [ %.pre230, %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit ], [ null, %_Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit ]
-  %i.ed = phi ptr [ %i.dt, %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit ], [ null, %_Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit ]
-  %16 = phi ptr [ %i.du, %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit ], [ null, %_Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit ]
+  %i.ed = phi ptr [ %i.du, %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit ], [ null, %_Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit ]
+  %16 = phi <2 x ptr> [ %15, %_ZN6cmListC2IN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS8_SaIS8_EEEEEET_SE_NS_14ExpandElementsENS_13EmptyElementsE.exit.loopexit ], [ splat (ptr null), %_Z18cmRemoveDuplicatesB5cxx11I6cmListENT_8iteratorERS1_.exit ]
   %i.ee = load ptr, ptr %9, align 8, !tbaa !27    ; 5 uses
   %i.ef = load ptr, ptr %i.aq, align 8, !tbaa !59 ; 2 uses
   %i.eg = load ptr, ptr %i.as, align 8, !tbaa !26
-  store ptr %16, ptr %9, align 8, !tbaa !27
-  store ptr %i.ed, ptr %i.aq, align 8, !tbaa !59
-  store ptr %15, ptr %i.as, align 8, !tbaa !26
+  store ptr %i.ed, ptr %9, align 8, !tbaa !27
+  store <2 x ptr> %16, ptr %i.aq, align 8, !tbaa !24
   %.not4.i.i.i.i.i.i = icmp eq ptr %i.ee, %i.ef
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, i8 0, i64 24, i1 false)
   br i1 %.not4.i.i.i.i.i.i, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i

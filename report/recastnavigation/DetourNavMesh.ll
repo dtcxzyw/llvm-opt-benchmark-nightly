@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.d,
 define void @_ZN9dtNavMesh22connectExtOffMeshLinksEP10dtMeshTileS1_i(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(100) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca [3 x float], align 4              ; 6 uses
-  %i.b = alloca [3 x float], align 4              ; 6 uses
+  %i.b = alloca [3 x float], align 8              ; 6 uses
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -229,7 +229,6 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
@@ -277,11 +276,11 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not68, label %_Z9allocLinkP10dtMeshTile.exit72.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.at = load float, ptr %i.b, align 4, !tbaa !33 ; 2 uses
+  %i.at = load float, ptr %i.b, align 8, !tbaa !33
   %i.au = load float, ptr %i.ar, align 4, !tbaa !33
   %i.av = fsub float %i.at, %i.au                 ; 2 uses
   %i.aw = fmul float %i.av, %i.av
-  %i.ax = load float, ptr %i.q, align 4, !tbaa !33 ; 2 uses
+  %i.ax = load float, ptr %i.q, align 8, !tbaa !33 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ad, i64 20
   %i.az = load float, ptr %i.ay, align 4, !tbaa !33
   %i.ba = fsub float %i.ax, %i.az                 ; 2 uses
@@ -298,11 +297,9 @@ bb.g:                                             ; preds = %bb.f
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !68
   %i.bj = zext i16 %i.bi to i64
   %.idx = mul nuw nsw i64 %i.bj, 12
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.idx ; 3 uses
-  store float %i.at, ptr %i.bk, align 4, !tbaa !33
-  %5 = load float, ptr %4, align 4, !tbaa !33
-  %6 = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
-  store float %5, ptr %6, align 4, !tbaa !33
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.idx ; 2 uses
+  %4 = load <2 x float>, ptr %i.b, align 8, !tbaa !33
+  store <2 x float> %4, ptr %i.bk, align 4, !tbaa !33
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store float %i.ax, ptr %i.bl, align 4, !tbaa !33
   %i.bm = load i32, ptr %i.s, align 4, !tbaa !62  ; 3 uses
@@ -628,7 +625,7 @@ _Z9allocLinkP10dtMeshTile.exit.thread:            ; preds = %bb.e, %bb.f, %bb.d
 define void @_ZN9dtNavMesh16baseOffMeshLinksEP10dtMeshTile(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(100) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca [3 x float], align 4              ; 6 uses
-  %i.b = alloca [3 x float], align 4              ; 6 uses
+  %i.b = alloca [3 x float], align 8              ; 6 uses
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %.loopexit, label %_ZNK9dtNavMesh14getPolyRefBaseEPK10dtMeshTile.exit
 
@@ -663,7 +660,6 @@ _ZNK9dtNavMesh14getPolyRefBaseEPK10dtMeshTile.exit: ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 32
   br label %bb.b
@@ -692,11 +688,11 @@ bb.b:                                             ; preds = %.lr.ph, %_Z9allocLi
   br i1 %.not58, label %_Z9allocLinkP10dtMeshTile.exit61, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.as = load float, ptr %i.b, align 4, !tbaa !33 ; 2 uses
+  %i.as = load float, ptr %i.b, align 8, !tbaa !33
   %i.at = load float, ptr %i.ah, align 4, !tbaa !33
   %i.au = fsub float %i.as, %i.at                 ; 2 uses
   %i.av = fmul float %i.au, %i.au
-  %i.aw = load float, ptr %i.ab, align 4, !tbaa !33 ; 2 uses
+  %i.aw = load float, ptr %i.ab, align 8, !tbaa !33 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !33
   %i.az = fsub float %i.aw, %i.ay                 ; 2 uses
@@ -713,11 +709,9 @@ bb.d:                                             ; preds = %bb.c
   %i.bh = load i16, ptr %i.bg, align 4, !tbaa !68
   %i.bi = zext i16 %i.bh to i64
   %.idx = mul nuw nsw i64 %i.bi, 12
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 %.idx ; 3 uses
-  store float %i.as, ptr %i.bj, align 4, !tbaa !33
-  %3 = load float, ptr %2, align 4, !tbaa !33
-  %4 = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
-  store float %3, ptr %4, align 4, !tbaa !33
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 %.idx ; 2 uses
+  %2 = load <2 x float>, ptr %i.b, align 8, !tbaa !33
+  store <2 x float> %2, ptr %i.bj, align 4, !tbaa !33
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store float %i.aw, ptr %i.bk, align 4, !tbaa !33
   %i.bl = load i32, ptr %i.ad, align 4, !tbaa !62 ; 3 uses

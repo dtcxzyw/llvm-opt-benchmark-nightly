@@ -205,13 +205,13 @@ bb.s:                                             ; preds = %bb.f, %bb.e, %bb.c,
 define hidden void @"_ZN98_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter..SpecFromIter$LT$T$C$I$GT$$GT$9from_iter17hee2fd16440dbe98fE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %i.b = alloca [24 x i8], align 16               ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14161)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !14162
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val.i = load i64, ptr %i.e, align 8, !alias.scope !14163, !noundef !14 ; 2 uses
+  %.val.i = load i64, ptr %i.e, align 8, !alias.scope !14163, !noundef !14
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val3.i = load i64, ptr %i.f, align 8, !alias.scope !14164, !noundef !14 ; 2 uses
   %spec.select.i.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.val3.i, i64 %.val.i) ; 2 uses
@@ -239,13 +239,11 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.m, ptr %i.o, align 8, !noalias !14162
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   store i64 0, ptr %i.p, align 8, !noalias !14162
-  %.sroa.05.0.copyload.i = load i64, ptr %1, align 8, !alias.scope !14161
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !14165
-  store i64 %.sroa.05.0.copyload.i, ptr %i.b, align 8, !noalias !14166
-  %.sroa.4.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i64 %.val.i, ptr %.sroa.4.0..sroa_idx7.i, align 8, !noalias !14166
+  %2 = load <2 x i64>, ptr %1, align 8, !alias.scope !14161
+  store <2 x i64> %2, ptr %i.b, align 16, !noalias !14166
   %.sroa.59.0..sroa_idx10.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 %.val3.i, ptr %.sroa.59.0..sroa_idx10.i, align 8, !noalias !14166
+  store i64 %.val3.i, ptr %.sroa.59.0..sroa_idx10.i, align 16, !noalias !14166
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !14167
   store ptr %i.p, ptr %i.a, align 8, !noalias !14168
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8

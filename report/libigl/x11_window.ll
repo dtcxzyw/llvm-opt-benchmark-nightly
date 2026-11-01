@@ -205,17 +205,16 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.af
-  %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ez = load i32, ptr %i.ey, align 8, !tbaa !152 ; 2 uses
+  %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
+  %i.ez = load i32, ptr %i.ey, align 8, !tbaa !152
   %.not41.i.i = icmp eq i32 %i.ez, -1
   br i1 %.not41.i.i, label %updateNormalHints.exit.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 108
-  %i.fb = load i32, ptr %i.fa, align 4, !tbaa !153 ; 2 uses
+  %i.fb = load i32, ptr %i.fa, align 4, !tbaa !153
+  %11 = load <2 x i32>, ptr %i.ey, align 8, !tbaa !87
   %.not42.i.i = icmp eq i32 %i.fb, -1
-  %11 = insertelement <2 x i32> poison, i32 %i.ez, i64 0
-  %12 = insertelement <2 x i32> %11, i32 %i.fb, i64 1
   br i1 %.not42.i.i, label %updateNormalHints.exit.i, label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.aj, %bb.ab
@@ -224,7 +223,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.sink55.i.i = phi i64 [ 48, %bb.aj ], [ 24, %bb.ab ]
   %.sink52.i.i = phi i64 [ 60, %bb.aj ], [ 36, %bb.ab ]
   %.sink49.i.i = phi i64 [ 52, %bb.aj ], [ 28, %bb.ab ]
-  %i.fc = phi <2 x i32> [ %12, %bb.aj ], [ %i.an, %bb.ab ] ; 2 uses
+  %i.fc = phi <2 x i32> [ %11, %bb.aj ], [ %i.an, %bb.ab ] ; 2 uses
   %i.fd = load i64, ptr %i.ed, align 8, !tbaa !145
   %i.fe = or i64 %i.fd, %.sink61.i.i
   store i64 %i.fe, ptr %i.ed, align 8, !tbaa !145

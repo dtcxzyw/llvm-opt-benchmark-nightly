@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %bb.h
 
 bb.n:                                             ; preds = %bb.h
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.070.i.i, i64 32
-  %.val.i.i.i.i = load ptr, ptr %i.af, align 8, !alias.scope !14659, !noalias !14657 ; 33 uses
+  %.val.i.i.i.i = load ptr, ptr %i.af, align 8, !alias.scope !14659, !noalias !14657 ; 32 uses
   tail call void @_RNvCsh0WfaQiVYm0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !14660
-  %i.ag = tail call noalias noundef align 16 dereferenceable_or_null(832) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef 832, i64 noundef range(i64 1, -9223372036854775807) 16) #30, !noalias !14660 ; 38 uses
+  %i.ag = tail call noalias noundef align 16 dereferenceable_or_null(832) ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef 832, i64 noundef range(i64 1, -9223372036854775807) 16) #30, !noalias !14660 ; 37 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %bb.o, label %_RNvMs_NtCsgCecv3eZDcN_5alloc5boxedINtB4_3BoxNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env5field12MatchPatternE13new_uninit_inCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i, !prof !23
 
@@ -370,15 +370,14 @@ _RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clon
   br i1 %.not.i.i.i.i.i.i.i.i, label %_RNvXsD_NtNtCsb6671No4yaL_14regex_automata3dfa5denseINtB5_3DFAINtNtCsgCecv3eZDcN_5alloc3vec3VecmEENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit38.i.i.i.i.i.i.i.i
-  %i.cj = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 80
-  %i.ck = load ptr, ptr %i.cj, align 16, !alias.scope !14664, !noalias !14660, !nonnull !14, !noundef !14 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 80 ; 2 uses
+  %i.ck = load ptr, ptr %i.cj, align 16, !alias.scope !14664, !noalias !14660, !nonnull !14, !noundef !14
   %i.cl = atomicrmw add ptr %i.ck, i64 1 monotonic, align 8, !noalias !14680
   %i.cm = icmp slt i64 %i.cl, 0
   br i1 %i.cm, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %2 = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 88
-  %3 = load ptr, ptr %2, align 8, !alias.scope !14664, !noalias !14660, !nonnull !14, !align !27, !noundef !14
+  %2 = load <2 x ptr>, ptr %i.cj, align 16, !alias.scope !14664, !noalias !14660
   %i.cn = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 96
   %i.co = load i64, ptr %i.cn, align 16, !alias.scope !14664, !noalias !14660, !noundef !14
   br label %_RNvXsD_NtNtCsb6671No4yaL_14regex_automata3dfa5denseINtB5_3DFAINtNtCsgCecv3eZDcN_5alloc3vec3VecmEENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i.i.i
@@ -389,8 +388,7 @@ bb.ag:                                            ; preds = %bb.ae
 
 _RNvXsD_NtNtCsb6671No4yaL_14regex_automata3dfa5denseINtB5_3DFAINtNtCsgCecv3eZDcN_5alloc3vec3VecmEENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i.i.i.i.i: ; preds = %bb.af, %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit38.i.i.i.i.i.i.i.i
   %.sroa.05.sroa.5.0.i.i.i.i.i.i.i.i = phi i64 [ %i.co, %bb.af ], [ undef, %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit38.i.i.i.i.i.i.i.i ]
-  %.sroa.05.sroa.4.0.i.i.i.i.i.i.i.i = phi ptr [ %3, %bb.af ], [ undef, %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit38.i.i.i.i.i.i.i.i ]
-  %.sroa.05.sroa.0.0.i.i.i.i.i.i.i.i = phi ptr [ %i.ck, %bb.af ], [ undef, %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit38.i.i.i.i.i.i.i.i ]
+  %3 = phi <2 x ptr> [ %2, %bb.af ], [ undef, %_RNvXsb_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecmENtNtCsf3Ta7LF998c_4core5clone5Clone5cloneCsat9HgdBb3qc_16shadowsocks_rust.exit38.i.i.i.i.i.i.i.i ]
   %i.cp = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %.sroa.01.32..sroa_idx.i.i.i.i.i.i.i, ptr noundef nonnull readonly align 16 dereferenceable(32) %i.cp, i64 32, i1 false), !noalias !14681
   %i.cq = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 808
@@ -429,9 +427,7 @@ _RNvXsd_NtCsgCecv3eZDcN_5alloc5boxedINtB5_3BoxNtNtNtNtCslHe4oyxs8Ro_18tracing_su
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   store i64 %i.dc, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !14684
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 80
-  store ptr %.sroa.05.sroa.0.0.i.i.i.i.i.i.i.i, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i, align 16, !noalias !14684
-  %.sroa.7.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 88
-  store ptr %.sroa.05.sroa.4.0.i.i.i.i.i.i.i.i, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !14684
+  store <2 x ptr> %3, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i, align 16, !noalias !14684
   %.sroa.8.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 96
   store i64 %.sroa.05.sroa.5.0.i.i.i.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i.i, align 16, !noalias !14684
   %.sroa.9.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 104

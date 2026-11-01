@@ -204,7 +204,7 @@ bb.a:
   %i.m = alloca [136 x i8], align 8               ; 12 uses
   %i.n = alloca [136 x i8], align 8               ; 7 uses
   %.sroa.19.i.i = alloca [12 x i8], align 8       ; 8 uses
-  %i.o = alloca [48 x i8], align 8                ; 10 uses
+  %i.o = alloca [48 x i8], align 8                ; 9 uses
   %i.p = alloca [24 x i8], align 8                ; 8 uses
   %.sroa.3.sroa.8.i.i = alloca [40 x i8], align 8 ; 9 uses
   %.sroa.869.sroa.11.i.i = alloca [24 x i8], align 8 ; 7 uses
@@ -607,16 +607,13 @@ bb.abj:                                           ; preds = %bb.abg, %.sink.spli
   br label %.body29.i.i
 
 bb.abk:                                           ; preds = %bb.abd
-  %3 = load <2 x i64>, ptr %.sroa.877.sroa.8.0..sroa_idx123.i.i, align 8, !alias.scope !10939, !noalias !10919
-  %.sroa.1079.0..sroa_idx80.i.i = getelementptr inbounds nuw i8, ptr %i.o, i64 32
-  %4 = load <2 x i64>, ptr %.sroa.1079.0..sroa_idx80.i.i, align 8, !alias.scope !10939, !noalias !10919
-  %5 = shufflevector <2 x i64> %3, <2 x i64> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %3 = load <4 x i64>, ptr %.sroa.877.sroa.8.0..sroa_idx123.i.i, align 8, !alias.scope !10939, !noalias !10919
   br label %bb.abl
 
 bb.abl:                                           ; preds = %bb.abm, %bb.abk
   %.sroa.10106.2.i.i = phi ptr [ %.sroa.877.sroa.0.0.copyload121.i.i, %bb.abk ], [ %.sroa.792.0.copyload.i.i, %bb.abm ]
   %.sroa.6104.2.i.i = phi i64 [ %i.cfk, %bb.abk ], [ -9223372036854775797, %bb.abm ]
-  %i.cfy = phi <4 x i64> [ %5, %bb.abk ], [ %i.cfz, %bb.abm ]
+  %i.cfy = phi <4 x i64> [ %3, %bb.abk ], [ %i.cfz, %bb.abm ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !10919
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !10919
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs20yfr1g8LCf_12object_store10ObjectMetaECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef align 8 dereferenceable(96) %i.r)

@@ -205,22 +205,19 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal noundef ptr @_RNvYNCNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers10byte_level2RE0INtNtNtCs4NRVxsYgnAr_4core3ops8function6FnOnceuE9call_onceBa_() unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 5 uses
-  %i.b = alloca [16 x i8], align 8                ; 6 uses
+  %i.a = alloca [16 x i8], align 16               ; 4 uses
+  %i.b = alloca [16 x i8], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMNtNtCs2JiOgHzbbc7_10tokenizers5utils4onigNtB2_8SysRegex3new(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) @82, i64 noundef 74)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1380)
-  %i.c = load ptr, ptr %i.b, align 8, !alias.scope !1380, !noundef !5 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 16, !alias.scope !1380, !noundef !5
   %.not.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i, label %_RNCNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers10byte_level2RE0B7_.exit, label %bb.b, !prof !30
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1380
-  %0 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %1 = load ptr, ptr %0, align 8, !alias.scope !1380, !nonnull !5, !align !7, !noundef !5
-  store ptr %i.c, ptr %i.a, align 8, !noalias !1380
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %1, ptr %2, align 8, !noalias !1380
+  %0 = load <2 x ptr>, ptr %i.b, align 16, !alias.scope !1380
+  store <2 x ptr> %0, ptr %i.a, align 16, !noalias !1380
   invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @85, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @86, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @83) #25
           to label %bb.d unwind label %bb.c, !noalias !1380
 

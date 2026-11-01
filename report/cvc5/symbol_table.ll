@@ -204,8 +204,8 @@ _ZN4cvc54TermC2ERKS0_.exit20:                     ; preds = %_ZNKSt3mapIN4cvc54S
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK4cvc58internal6parser18OverloadedTypeTrie23getOverloadedFunctionAtEPKNS2_11TypeArgTrieEb(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.cvc5::Term") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(89) %1, ptr nofree noundef readonly captures(address) %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.cvc5::Term", align 16       ; 12 uses
-  %5 = alloca %"class.cvc5::Term", align 16       ; 12 uses
+  %4 = alloca %"class.cvc5::Term", align 16       ; 11 uses
+  %5 = alloca %"class.cvc5::Term", align 16       ; 13 uses
   %6 = alloca %"class.cvc5::Term", align 16       ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   call void @_ZN4cvc54TermC1Ev(ptr noundef nonnull align 8 dereferenceable(24) %4)
@@ -216,12 +216,11 @@ bb.a:
   br i1 %.not54, label %.critedge12, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   br label %bb.b
 
@@ -385,15 +384,14 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bb, label %bb.p, label %bb.ag
 
 bb.p:                                             ; preds = %bb.o
-  %8 = load ptr, ptr %5, align 16, !tbaa !68      ; 2 uses
   br i1 %3, label %bb.v, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  store ptr %8, ptr %0, align 8, !tbaa !68
-  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.bd = load ptr, ptr %i.e, align 16, !tbaa !70 ; 2 uses
-  %9 = load <2 x ptr>, ptr %i.d, align 8, !tbaa !73
-  store <2 x ptr> %9, ptr %i.bc, align 8, !tbaa !73
+  %7 = load <2 x ptr>, ptr %5, align 16, !tbaa !73
+  store <2 x ptr> %7, ptr %0, align 8, !tbaa !73
+  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.bd = load ptr, ptr %i.e, align 16, !tbaa !70 ; 3 uses
+  store ptr %i.bd, ptr %i.bc, align 8, !tbaa !70
   %.not.i.i.i.i18 = icmp eq ptr %i.bd, null
   br i1 %.not.i.i.i.i18, label %.critedge, label %bb.r
 
@@ -425,9 +423,8 @@ bb.u:                                             ; preds = %bb.n
   br label %bb.ak
 
 bb.v:                                             ; preds = %bb.p
-  store ptr %8, ptr %4, align 16, !tbaa !68
-  %10 = load ptr, ptr %i.d, align 8, !tbaa !69
-  store ptr %10, ptr %7, align 8, !tbaa !69
+  %8 = load <2 x ptr>, ptr %5, align 16, !tbaa !73
+  store <2 x ptr> %8, ptr %4, align 16, !tbaa !73
   %i.bk = load ptr, ptr %i.e, align 16, !tbaa !70 ; 4 uses
   %i.bl = load ptr, ptr %i.i, align 16, !tbaa !70 ; 3 uses
   %.not.i.i.i.i21 = icmp eq ptr %i.bk, %i.bl

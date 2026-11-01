@@ -153,19 +153,17 @@ bb.a:
   %i.a = alloca double, align 8                   ; 4 uses
   %i.b = alloca double, align 8                   ; 3 uses
   %i.c = alloca double, align 8                   ; 3 uses
-  %i.d = load double, ptr %1, align 8, !tbaa !38  ; 2 uses
+  %i.d = load double, ptr %1, align 8, !tbaa !38
   %i.e = fcmp oeq double %i.d, +inf
-  %i.f = load double, ptr %2, align 8             ; 2 uses
+  %i.f = load double, ptr %2, align 8
   %i.g = fcmp oeq double %i.f, +inf
   %or.cond = select i1 %i.e, i1 true, i1 %i.g
   br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.04.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.h = load <2 x double>, ptr %.sroa.04.sroa.2.0..sroa_idx, align 8
+  %i.h = load <2 x double>, ptr %1, align 8
   %.sroa.04.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.i = load <2 x double>, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8
+  %i.i = load <2 x double>, ptr %2, align 8
   %.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
@@ -176,17 +174,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %proj_lp_dist.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = insertelement <2 x double> %i.h, double %i.d, i64 1
-  %i.l = fmul <2 x double> %3, splat (double 1.800000e+02)
+  %i.l = fmul <2 x double> %i.h, splat (double 1.800000e+02)
   %i.m = fdiv <2 x double> %i.l, splat (double f0x400921FB54442D18) ; 2 uses
-  %4 = insertelement <2 x double> %i.i, double %i.f, i64 1
-  %i.n = fmul <2 x double> %4, splat (double 1.800000e+02)
+  %i.n = fmul <2 x double> %i.i, splat (double 1.800000e+02)
   %i.o = fdiv <2 x double> %i.n, splat (double f0x400921FB54442D18) ; 2 uses
   %i.p = extractelement <2 x double> %i.m, i64 0
   %i.q = extractelement <2 x double> %i.m, i64 1
   %i.r = extractelement <2 x double> %i.o, i64 0
   %i.s = extractelement <2 x double> %i.o, i64 1
-  call void @geod_inverse(ptr noundef nonnull %i.k, double noundef %i.p, double noundef %i.q, double noundef %i.r, double noundef %i.s, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c)
+  call void @geod_inverse(ptr noundef nonnull %i.k, double noundef %i.q, double noundef %i.p, double noundef %i.s, double noundef %i.r, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c)
   %i.t = load double, ptr %i.a, align 8, !tbaa !39
   br label %proj_lp_dist.exit
 

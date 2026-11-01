@@ -80,9 +80,9 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define dso_local i32 @slurm_delta_tv(ptr nofree noundef captures(none) %0) local_unnamed_addr #5 {
 bb.a:
-  %1 = alloca %struct.timeval, align 8            ; 6 uses
+  %1 = alloca %struct.timeval, align 16           ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   %i.a = call i32 @gettimeofday(ptr noundef nonnull %1, ptr noundef null) #14
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.b, label %bb.e
@@ -90,21 +90,20 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load i64, ptr %0, align 8                ; 2 uses
   %i.c = icmp eq i64 %i.b, 0
-  %2 = load i64, ptr %1, align 8                  ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br i1 %i.c, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  store i64 %2, ptr %0, align 8
-  %5 = load i64, ptr %3, align 8
-  store i64 %5, ptr %4, align 8
+  %2 = load <2 x i64>, ptr %1, align 16
+  store <2 x i64> %2, ptr %0, align 8
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.d = sub nsw i64 %2, %i.b
-  %i.e = load i64, ptr %3, align 8
-  %i.f = load i64, ptr %4, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = load i64, ptr %1, align 16
+  %i.d = sub nsw i64 %5, %i.b
+  %i.e = load i64, ptr %4, align 8
+  %i.f = load i64, ptr %3, align 8
   %i.g = sub i64 %i.e, %i.f
   %i.h = mul i64 %i.d, 1000000
   %i.i = add i64 %i.g, %i.h

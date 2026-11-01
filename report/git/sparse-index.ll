@@ -202,20 +202,19 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.g = getelementptr inbounds [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !63   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 56
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !59   ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !59
   %i.k = and i32 %i.j, 12288
   %.not65 = icmp eq i32 %i.k, 0
   br i1 %.not65, label %bb.c, label %.preheader
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 52
-  %8 = load i32, ptr %i.l, align 4, !tbaa !59
-  %9 = and i32 %8, 61440
-  %10 = icmp eq i32 %9, 57344
-  %11 = and i32 %i.j, 1073741824
-  %.not66 = icmp eq i32 %11, 0
-  %or.cond = or i1 %.not66, %10
-  br i1 %or.cond, label %.preheader, label %bb.d
+  %8 = load <2 x i32>, ptr %i.l, align 4, !tbaa !59
+  %9 = and <2 x i32> %8, <i32 61440, i32 1073741824>
+  %10 = icmp eq <2 x i32> %9, <i32 57344, i32 0>
+  %11 = bitcast <2 x i1> %10 to i2
+  %.not66 = icmp eq i2 %11, 0
+  br i1 %.not66, label %bb.d, label %.preheader
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses

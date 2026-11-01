@@ -204,32 +204,29 @@ bb.a:
     #dbg_value(ptr %0, !5990, !DIExpression(), !5892)
     #dbg_declare(ptr poison, !5991, !DIExpression(), !5893)
     #dbg_declare(ptr poison, !5992, !DIExpression(), !5894)
-  %.promoted.i.i = load i32, ptr %0, align 4, !alias.scope !6000 ; 2 uses
+  %.promoted.i.i = load i32, ptr %0, align 4, !alias.scope !6000
     #dbg_value(ptr %0, !6001, !DIExpression(), !5899)
   %.not11.i.i = icmp eq i32 %.promoted.i.i, -1, !dbg !6067
   br i1 %.not11.i.i, label %_RINvXs2_NtNtNtCsj6eKBz9Db1c_4core4iter6traits8iteratorQINtNtNtBa_7sources4once4OnceNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeENtB6_15IteratorRefSpec9spec_folduNCINvNvNtB6_8Iterator8for_each4callB1j_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB3w_3VecB1j_E14extend_trustedBQ_E0E0EB1n_.exit, label %.lr.ph.split.us.i.i, !dbg !6068
 
 .lr.ph.split.us.i.i:                              ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %3 = load i32, ptr %2, align 4, !alias.scope !6000
     #dbg_value(i32 %.promoted.i.i, !5993, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !5900)
-    #dbg_value(i32 %3, !5993, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5900)
+    #dbg_value(i32 poison, !5993, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5900)
     #dbg_value(ptr poison, !6005, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !5903)
     #dbg_declare(ptr poison, !6009, !DIExpression(), !5904)
     #dbg_value(i32 %.promoted.i.i, !6010, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !5903)
-    #dbg_value(i32 %3, !6010, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5903)
+    #dbg_value(i32 poison, !6010, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5903)
     #dbg_value(ptr poison, !6012, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !5907)
     #dbg_declare(ptr poison, !6017, !DIExpression(), !5908)
     #dbg_value(i32 %.promoted.i.i, !6016, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !5907)
-    #dbg_value(i32 %3, !6016, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5907)
+    #dbg_value(i32 poison, !6016, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5907)
     #dbg_value(ptr poison, !6021, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16), !5911)
     #dbg_value(ptr poison, !6026, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !5911)
     #dbg_value(i32 %.promoted.i.i, !6025, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !5911)
-    #dbg_value(i32 %3, !6025, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5911)
-  %i.a = getelementptr inbounds nuw [8 x i8], ptr %.sroa.5.0.copyload.i, i64 %.sroa.4.0.copyload.i, !dbg !6069 ; 2 uses
-  store i32 %.promoted.i.i, ptr %i.a, align 4, !dbg !6070, !noalias !6030
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 4, !dbg !6070
-  store i32 %3, ptr %4, align 4, !dbg !6070, !noalias !6030
+    #dbg_value(i32 poison, !6025, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !5911)
+  %i.a = getelementptr inbounds nuw [8 x i8], ptr %.sroa.5.0.copyload.i, i64 %.sroa.4.0.copyload.i, !dbg !6069
+  %2 = load <2 x i32>, ptr %0, align 4, !alias.scope !6000
+  store <2 x i32> %2, ptr %i.a, align 4, !dbg !6070, !noalias !6030
   %i.b = add i64 %.sroa.4.0.copyload.i, 1, !dbg !6071
     #dbg_value(ptr %0, !6001, !DIExpression(), !5899)
   br label %_RINvXs2_NtNtNtCsj6eKBz9Db1c_4core4iter6traits8iteratorQINtNtNtBa_7sources4once4OnceNtNtCs3roNzt6HBWW_12regex_syntax3hir17ClassUnicodeRangeENtB6_15IteratorRefSpec9spec_folduNCINvNvNtB6_8Iterator8for_each4callB1j_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB3w_3VecB1j_E14extend_trustedBQ_E0E0EB1n_.exit, !dbg !6068

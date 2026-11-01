@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %.body
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvMs0_NtNtCs7gfv9tzbXmh_6yara_x5types9structureNtB5_6Struct10enum_value(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 16               ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5766)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -251,15 +251,14 @@ _RNvMs0_NtNtCsg2CeFYmfPbl_8protobuf7reflect5enumsNtB5_19EnumValueDescriptor5prot
   %.not = icmp eq ptr %i.y, null
   %_RNvNvXs1s_NtCsg2CeFYmfPbl_8protobuf10descriptorNtB8_16EnumValueOptionsNtNtBa_7message7Message16default_instance8instance. = select i1 %.not, ptr @_RNvNvXs1s_NtCsg2CeFYmfPbl_8protobuf10descriptorNtB8_16EnumValueOptionsNtNtBa_7message7Message16default_instance8instance, ptr %i.y
   call void @_RNvMs_NtCsg2CeFYmfPbl_8protobuf3extINtB4_16ExtFieldOptionalNtNtB6_10descriptor16EnumValueOptionsNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos4yara16EnumValueOptionsE3getB1E_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.a, ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8) @216, ptr noundef nonnull align 8 %_RNvNvXs1s_NtCsg2CeFYmfPbl_8protobuf10descriptorNtB8_16EnumValueOptionsNtNtBa_7message7Message16default_instance8instance.)
-  %i.z = load i64, ptr %i.a, align 8, !range !23, !noundef !4 ; 3 uses
+  %i.z = load i64, ptr %i.a, align 16, !range !23, !noundef !4 ; 2 uses
   %.not5 = icmp eq i64 %i.z, -1
   br i1 %.not5, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %_RNvMs0_NtNtCsg2CeFYmfPbl_8protobuf7reflect5enumsNtB5_19EnumValueDescriptor5proto.exit
-  %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.411.0.copyload = load i64, ptr %.sroa.411.0..sroa_idx, align 8
+  %2 = load <2 x i64>, ptr %i.a, align 16
   %.sroa.512.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.512.0.copyload = load ptr, ptr %.sroa.512.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.512.0.copyload = load ptr, ptr %.sroa.512.0..sroa_idx, align 16 ; 4 uses
   %i.aa = icmp eq ptr %.sroa.512.0.copyload, null
   br i1 %i.aa, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos4yara16EnumValueOptionsEBJ_.exit, label %bb.f
 
@@ -295,9 +294,7 @@ bb.i:                                             ; preds = %bb.h, %_RINvNtCskKL
   br label %bb.k
 
 bb.j:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs7gfv9tzbXmh_6yara_x7modules6protos4yara16EnumValueOptionsEBJ_.exit
-  store i64 %i.z, ptr %0, align 8
-  %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.411.0.copyload, ptr %.sroa.5.0..sroa_idx2, align 8
+  store <2 x i64> %2, ptr %0, align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i

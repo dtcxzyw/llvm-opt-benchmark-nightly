@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.y
   %.028 = phi ptr [ %.025, %.lr.ph ], [ %.0, %bb.y ] ; 7 uses
   %.pn27 = phi ptr [ %0, %.lr.ph ], [ %.028, %bb.y ] ; 7 uses
   %i.g = getelementptr i8, ptr %.pn27, i64 56
-  %.0.val = load ptr, ptr %i.g, align 8, !tbaa !88 ; 3 uses
+  %.0.val = load ptr, ptr %i.g, align 8, !tbaa !88 ; 2 uses
   %.val = load ptr, ptr %i.b, align 8, !tbaa !88
   %.0.val.val = load i32, ptr %.0.val, align 4, !tbaa !39 ; 2 uses
   %.val.val = load i32, ptr %.val, align 4, !tbaa !39
@@ -281,7 +281,7 @@ _ZN3euf12dependent_eqD2Ev.exit:                   ; preds = %bb.i, %bb.h, %bb.g
   br label %bb.y
 
 bb.k:                                             ; preds = %bb.b
-  %.sroa.0.0.copyload.i = load ptr, ptr %.028, align 8
+  %2 = load <2 x ptr>, ptr %.028, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %.pn27, i64 64 ; 3 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !89
   store ptr null, ptr %i.ah, align 8, !tbaa !89
@@ -295,7 +295,7 @@ bb.k:                                             ; preds = %bb.b
   br i1 %i.am, label %.lr.ph.i, label %._crit_edge.thread.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %_ZN3euf12dependent_eqaSEOS0_.exit.i
-  %.0921.i = phi ptr [ %.022.i, %_ZN3euf12dependent_eqaSEOS0_.exit.i ], [ %.028, %bb.k ] ; 11 uses
+  %.0921.i = phi ptr [ %.022.i, %_ZN3euf12dependent_eqaSEOS0_.exit.i ], [ %.028, %bb.k ] ; 10 uses
   %.022.i = getelementptr inbounds i8, ptr %.0921.i, i64 -48 ; 6 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.0921.i, ptr noundef nonnull align 8 dereferenceable(48) %.022.i, i64 16, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %.0921.i, i64 16 ; 2 uses
@@ -372,9 +372,7 @@ _ZN3euf12dependent_eqaSEOS0_.exit.i:              ; preds = %bb.q, %bb.p, %bb.o
 
 ._crit_edge.i:                                    ; preds = %_ZN3euf12dependent_eqaSEOS0_.exit.i
   %.pre.i = load ptr, ptr %i.ao, align 8, !tbaa !89 ; 3 uses
-  store ptr %.sroa.0.0.copyload.i, ptr %.022.i, align 8
-  %.sroa.4.0..09.lcssa.sroa_idx.i = getelementptr inbounds i8, ptr %.0921.i, i64 -40
-  store ptr %.0.val, ptr %.sroa.4.0..09.lcssa.sroa_idx.i, align 8
+  store <2 x ptr> %2, ptr %.022.i, align 8
   %.not.i.i.i10.i = icmp eq ptr %.pre.i, null
   br i1 %.not.i.i.i10.i, label %._crit_edge.thread.i, label %bb.s
 

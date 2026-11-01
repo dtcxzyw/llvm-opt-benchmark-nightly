@@ -204,16 +204,14 @@ bb.u:                                             ; preds = %bb.t, %bb.r, %bb.q,
 
 bb.v:                                             ; preds = %bb.u
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !27 ; 3 uses
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !27 ; 2 uses
   %.not66 = icmp eq ptr %i.bb, null
   br i1 %.not66, label %bb.aa, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !49 ; 2 uses
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !49
   %i.be = icmp ugt ptr %i.bd, %i.bb
-  %3 = insertelement <2 x ptr> poison, ptr %i.bb, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.bd, i64 1
   br i1 %i.be, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
@@ -225,14 +223,13 @@ bb.y:                                             ; preds = %bb.x
   %i.bh = load i32, ptr %1, align 4, !tbaa !40
   %i.bi = or i32 %i.bh, 4                         ; 2 uses
   store i32 %i.bi, ptr %1, align 4, !tbaa !40
-  %5 = load <2 x ptr>, ptr %i.ba, align 8, !tbaa !43
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.w
   %i.bj = phi i32 [ %i.bi, %bb.y ], [ %i.ax, %bb.w ]
-  %6 = phi <2 x ptr> [ %5, %bb.y ], [ %4, %bb.w ]
+  %3 = load <2 x ptr>, ptr %i.ba, align 8, !tbaa !43
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store <2 x ptr> %6, ptr %i.bk, align 8, !tbaa !43
+  store <2 x ptr> %3, ptr %i.bk, align 8, !tbaa !43
   br label %bb.ac
 
 bb.aa:                                            ; preds = %bb.v
@@ -635,16 +632,14 @@ bb.u:                                             ; preds = %bb.t, %bb.r, %bb.q,
 
 bb.v:                                             ; preds = %bb.u
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !58 ; 3 uses
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !58 ; 2 uses
   %.not66 = icmp eq ptr %i.bb, null
   br i1 %.not66, label %bb.aa, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !74 ; 2 uses
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !74
   %i.be = icmp ugt ptr %i.bd, %i.bb
-  %3 = insertelement <2 x ptr> poison, ptr %i.bb, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.bd, i64 1
   br i1 %i.be, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
@@ -656,14 +651,13 @@ bb.y:                                             ; preds = %bb.x
   %i.bh = load i32, ptr %1, align 4, !tbaa !40
   %i.bi = or i32 %i.bh, 4                         ; 2 uses
   store i32 %i.bi, ptr %1, align 4, !tbaa !40
-  %5 = load <2 x ptr>, ptr %i.ba, align 8, !tbaa !71
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.w
   %i.bj = phi i32 [ %i.bi, %bb.y ], [ %i.ax, %bb.w ]
-  %6 = phi <2 x ptr> [ %5, %bb.y ], [ %4, %bb.w ]
+  %3 = load <2 x ptr>, ptr %i.ba, align 8, !tbaa !71
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store <2 x ptr> %6, ptr %i.bk, align 8, !tbaa !71
+  store <2 x ptr> %3, ptr %i.bk, align 8, !tbaa !71
   br label %bb.ac
 
 bb.aa:                                            ; preds = %bb.v

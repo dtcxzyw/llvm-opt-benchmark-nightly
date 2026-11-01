@@ -202,10 +202,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.g, %.lr.ph.i
   %.sroa.0.019.i.idx = phi i64 [ 16, %.lr.ph.i ], [ %.sroa.0.019.i.add, %bb.g ] ; 4 uses
-  %.pn18.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.019.i.ptr, %bb.g ] ; 4 uses
+  %.pn18.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.019.i.ptr, %bb.g ] ; 3 uses
   %.sroa.0.019.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.019.i.idx ; 5 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 24
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !281  ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 24 ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !281  ; 3 uses
   %i.h = load i32, ptr %i.e, align 8, !tbaa !281
   %i.i = icmp ult i32 %i.g, %i.h
   br i1 %i.i, label %bb.c, label %bb.f
@@ -232,8 +232,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceD
 
 bb.f:                                             ; preds = %bb.b
   %.sroa.03.0.copyload.i.i = load ptr, ptr %.sroa.0.019.i.ptr, align 8, !tbaa !147
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 28
-  %.sroa.5.0.copyload.i.i = load i32, ptr %.sroa.5.0..sroa_idx.i.i, align 4, !tbaa !117
+  %4 = load <2 x i32>, ptr %i.f, align 8, !tbaa !117
   %i.l = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !281
   %i.n = icmp ult i32 %i.g, %i.m
@@ -249,12 +248,10 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.q, label %.lr.ph.i.i, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_.exit.i, !llvm.loop !563
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_.exit.i: ; preds = %.lr.ph.i.i, %bb.f
-  %.sroa.09.0.lcssa.i.i = phi ptr [ %.sroa.0.019.i.ptr, %bb.f ], [ %.sroa.0.0.i.i, %.lr.ph.i.i ] ; 3 uses
+  %.sroa.09.0.lcssa.i.i = phi ptr [ %.sroa.0.019.i.ptr, %bb.f ], [ %.sroa.0.0.i.i, %.lr.ph.i.i ] ; 2 uses
   store ptr %.sroa.03.0.copyload.i.i, ptr %.sroa.09.0.lcssa.i.i, align 8, !tbaa !147
-  %.sroa.4.0..sroa_idx5.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i, i64 8
-  store i32 %i.g, ptr %.sroa.4.0..sroa_idx5.i.i, align 8, !tbaa !117
-  %.sroa.5.0..sroa_idx7.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i, i64 12
-  store i32 %.sroa.5.0.copyload.i.i, ptr %.sroa.5.0..sroa_idx7.i.i, align 4, !tbaa !117
+  %.sroa.5.0..sroa_idx7.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i, i64 8
+  store <2 x i32> %4, ptr %.sroa.5.0..sroa_idx7.i.i, align 8, !tbaa !117
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_.exit.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i
@@ -311,9 +308,9 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.o, %.lr.ph.i27
   %.sroa.0.019.i28 = phi ptr [ %.sroa.0.016.i25, %.lr.ph.i27 ], [ %.sroa.0.0.i37, %bb.o ] ; 7 uses
-  %.pn18.i29 = phi ptr [ %0, %.lr.ph.i27 ], [ %.sroa.0.019.i28, %bb.o ] ; 5 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %.pn18.i29, i64 24
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !281 ; 4 uses
+  %.pn18.i29 = phi ptr [ %0, %.lr.ph.i27 ], [ %.sroa.0.019.i28, %bb.o ] ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.pn18.i29, i64 24 ; 2 uses
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !281 ; 3 uses
   %i.ae = load i32, ptr %i.ab, align 8, !tbaa !281
   %i.af = icmp ult i32 %i.ad, %i.ae
   br i1 %i.af, label %bb.j, label %bb.n
@@ -350,8 +347,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceD
 
 bb.n:                                             ; preds = %bb.i
   %.sroa.03.0.copyload.i.i30 = load ptr, ptr %.sroa.0.019.i28, align 8, !tbaa !147
-  %.sroa.5.0..sroa_idx.i.i31 = getelementptr inbounds nuw i8, ptr %.pn18.i29, i64 28
-  %.sroa.5.0.copyload.i.i32 = load i32, ptr %.sroa.5.0..sroa_idx.i.i31, align 4, !tbaa !117
+  %5 = load <2 x i32>, ptr %i.ac, align 8, !tbaa !117
   %i.ap = getelementptr inbounds nuw i8, ptr %.pn18.i29, i64 8
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !281
   %i.ar = icmp ult i32 %i.ad, %i.aq
@@ -367,12 +363,10 @@ bb.n:                                             ; preds = %bb.i
   br i1 %i.au, label %.lr.ph.i.i39, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_.exit.i33, !llvm.loop !563
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_.exit.i33: ; preds = %.lr.ph.i.i39, %bb.n
-  %.sroa.09.0.lcssa.i.i34 = phi ptr [ %.sroa.0.019.i28, %bb.n ], [ %.sroa.0.0.i.i41, %.lr.ph.i.i39 ] ; 3 uses
+  %.sroa.09.0.lcssa.i.i34 = phi ptr [ %.sroa.0.019.i28, %bb.n ], [ %.sroa.0.0.i.i41, %.lr.ph.i.i39 ] ; 2 uses
   store ptr %.sroa.03.0.copyload.i.i30, ptr %.sroa.09.0.lcssa.i.i34, align 8, !tbaa !147
-  %.sroa.4.0..sroa_idx5.i.i35 = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i34, i64 8
-  store i32 %i.ad, ptr %.sroa.4.0..sroa_idx5.i.i35, align 8, !tbaa !117
-  %.sroa.5.0..sroa_idx7.i.i36 = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i34, i64 12
-  store i32 %.sroa.5.0.copyload.i.i32, ptr %.sroa.5.0..sroa_idx7.i.i36, align 4, !tbaa !117
+  %.sroa.5.0..sroa_idx7.i.i36 = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i34, i64 8
+  store <2 x i32> %5, ptr %.sroa.5.0..sroa_idx7.i.i36, align 8, !tbaa !117
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIZNS3_5visitES5_EUlRKS6_SF_E_EEEvT_T0_.exit.i33, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN16V3DfgBreakCycles11TraceDriver5visitEP15DfgSplicePackedE6DriverSt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit.i42

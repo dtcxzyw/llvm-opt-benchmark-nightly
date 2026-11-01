@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   %i.dt = phi <2 x double> [ splat (double f0x7FEFFFFFFFFFFFFF), %bb.y ], [ %i.ei, %bb.af ] ; 2 uses
   %i.du = load ptr, ptr %i.l, align 8, !tbaa !14  ; 3 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 24
-  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !54 ; 3 uses
+  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !54 ; 2 uses
   %.not189 = icmp eq ptr %i.dw, null
   br i1 %.not189, label %bb.ak, label %bb.ag
 
@@ -309,19 +309,16 @@ bb.af:                                            ; preds = %bb.ac, %indent.exit
   br i1 %i.gb, label %bb.z, label %._crit_edge324, !llvm.loop !75
 
 bb.ag:                                            ; preds = %._crit_edge324
-  %i.gc = getelementptr inbounds nuw i8, ptr %i.dw, i64 40
-  %.sroa.049.0.copyload = load double, ptr %i.gc, align 8, !tbaa !44 ; 2 uses
+  %i.gc = getelementptr inbounds nuw i8, ptr %i.dw, i64 40 ; 2 uses
+  %.sroa.049.0.copyload = load double, ptr %i.gc, align 8, !tbaa !44
   br i1 %i.w, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dw, i64 48
-  %.sroa.5.0.copyload = load double, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !44
-  %6 = insertelement <2 x double> poison, double %.sroa.049.0.copyload, i64 0
-  %7 = insertelement <2 x double> %6, double %.sroa.5.0.copyload, i64 1
+  %6 = load <2 x double>, ptr %i.gc, align 8, !tbaa !44
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %i.gd = phi <2 x double> [ %7, %bb.ah ], [ %i.ds, %bb.ag ] ; 4 uses
+  %i.gd = phi <2 x double> [ %6, %bb.ah ], [ %i.ds, %bb.ag ] ; 4 uses
   %i.ge = phi <2 x double> [ zeroinitializer, %bb.ah ], [ %i.dt, %bb.ag ] ; 4 uses
   %foldExtExtBinop = fsub <2 x double> %i.gd, %i.ge
   %i.gf = extractelement <2 x double> %foldExtExtBinop, i64 0

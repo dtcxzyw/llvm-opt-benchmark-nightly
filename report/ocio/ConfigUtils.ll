@@ -204,7 +204,7 @@ _ZNSt12__shared_ptrIN16OpenColorIO_v2_59TransformELN9__gnu_cxx12_Lock_policyE2EE
 define hidden void @_ZN16OpenColorIO_v2_511ConfigUtils18getTransformForDirERKSt10shared_ptrIKNS_10ColorSpaceEENS_19ColorSpaceDirectionE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::shared_ptr.4") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, i32 noundef %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::shared_ptr.19", align 16 ; 5 uses
-  %4 = alloca %"class.std::shared_ptr.4", align 8 ; 8 uses
+  %4 = alloca %"class.std::shared_ptr.4", align 16 ; 8 uses
   %5 = alloca %"class.std::shared_ptr.4", align 8 ; 7 uses
   %i.a = alloca [16 x double], align 16           ; 5 uses
   %i.b = alloca [4 x double], align 16            ; 5 uses
@@ -212,16 +212,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.c = load ptr, ptr %1, align 8, !tbaa !30
   call void @_ZNK16OpenColorIO_v2_510ColorSpace12getTransformENS_19ColorSpaceDirectionE(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.4") align 8 %4, ptr noundef nonnull align 8 dereferenceable(8) %i.c, i32 noundef %2) #21
-  %i.d = load ptr, ptr %4, align 8, !tbaa !54     ; 2 uses
+  %i.d = load ptr, ptr %4, align 16, !tbaa !54
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.b, label %.thread
 
 .thread:                                          ; preds = %bb.a
-  store ptr %i.d, ptr %0, align 8, !tbaa !54
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %9 = load ptr, ptr %8, align 8, !tbaa !37
-  store ptr %9, ptr %7, align 8, !tbaa !37
+  %7 = load <2 x ptr>, ptr %4, align 16, !tbaa !55
+  store <2 x ptr> %7, ptr %0, align 8, !tbaa !55
   br label %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_59TransformELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21
 
 bb.b:                                             ; preds = %bb.a

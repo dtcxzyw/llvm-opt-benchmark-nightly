@@ -204,12 +204,12 @@ declare void @_ZN4geos5index7strtree13SimpleSTRnode12addChildNodeEPS2_(ptr nound
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos5index7strtree13SimpleSTRtree18createHigherLevelsERSt6vectorIPNS1_13SimpleSTRnodeESaIS5_EEi(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(136) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i32 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::vector", align 8       ; 8 uses
+  %4 = alloca %"class.std::vector", align 8       ; 7 uses
   %i.a = add nsw i32 %3, 1                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   call void @_ZN4geos5index7strtree13SimpleSTRtree17createParentNodesERSt6vectorIPNS1_13SimpleSTRnodeESaIS5_EEi(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %4, ptr noundef nonnull align 8 dereferenceable(136) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, i32 noundef %i.a)
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !41   ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !41
   %i.d = load ptr, ptr %4, align 8, !tbaa !40     ; 6 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
@@ -220,11 +220,8 @@ bb.a:
 thread-pre-split.thread:                          ; preds = %bb.a
   store ptr %i.d, ptr %0, align 8, !tbaa !40
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.c, ptr %i.i, align 8, !tbaa !41
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !42
-  store ptr %7, ptr %5, align 8, !tbaa !42
+  %5 = load <2 x ptr>, ptr %i.b, align 8, !tbaa !48
+  store <2 x ptr> %5, ptr %i.i, align 8, !tbaa !48
   br label %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EED2Ev.exit7
 
 bb.b:                                             ; preds = %bb.a

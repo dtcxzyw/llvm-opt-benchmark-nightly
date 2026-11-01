@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %bb.aa
   %i.ef = load i32, ptr %i.ee, align 4
   %i.eg = and i32 %i.ef, 1                        ; 2 uses
   %.not75 = icmp eq i32 %i.eg, 0                  ; 2 uses
-  %i.eh = load ptr, ptr @conf, align 8            ; 44 uses
+  %i.eh = load ptr, ptr @conf, align 8            ; 42 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 4593
   %i.ej = load i8, ptr %i.ei, align 1             ; 2 uses
   %i.ek = icmp eq i8 %i.ej, 1
@@ -262,17 +262,14 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ag, %bb.af, %bb.ae, %bb.ad
   %i.fh = icmp eq i8 %i.ej, 2
-  %i.fi = getelementptr inbounds nuw i8, ptr %i.eh, i64 4186
-  %i.fj = load i16, ptr %i.fi, align 2            ; 5 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %i.eh, i64 4186 ; 2 uses
+  %i.fj = load i16, ptr %i.fi, align 2            ; 4 uses
   br i1 %i.fh, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
   %i.fk = getelementptr inbounds nuw i8, ptr %i.eh, i64 4152
-  store i16 %i.fj, ptr %i.fk, align 8
-  %0 = getelementptr inbounds nuw i8, ptr %i.eh, i64 4188
-  %1 = load i16, ptr %0, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %i.eh, i64 4154
-  store i16 %1, ptr %2, align 2
+  %0 = load <2 x i16>, ptr %i.fi, align 2
+  store <2 x i16> %0, ptr %i.fk, align 8
   %i.fl = getelementptr inbounds nuw i8, ptr %i.eh, i64 4156
   store i16 %i.em, ptr %i.fl, align 4
   %i.fm = getelementptr inbounds nuw i8, ptr %i.eh, i64 4192

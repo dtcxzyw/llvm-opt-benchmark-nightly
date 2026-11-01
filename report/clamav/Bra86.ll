@@ -83,34 +83,22 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.e, %bb.f
   %.286 = phi i32 [ 0, %bb.f ], [ 0, %bb.e ], [ %i.v, %bb.g ] ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.081123, i64 4 ; 2 uses
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !9   ; 2 uses
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !9
   %.off = add i8 %i.al, -1
   %switch = icmp ult i8 %.off, -2
   br i1 %switch, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %5 = zext i8 %i.al to i32
-  %6 = shl nuw i32 %5, 24
-  %i.am = getelementptr inbounds nuw i8, ptr %.081123, i64 3 ; 2 uses
-  %7 = load i8, ptr %i.am, align 1, !tbaa !9
-  %8 = zext i8 %7 to i32
-  %9 = shl nuw nsw i32 %8, 16
-  %10 = or disjoint i32 %9, %6
-  %i.an = getelementptr inbounds nuw i8, ptr %.081123, i64 2 ; 2 uses
-  %11 = load i8, ptr %i.an, align 1, !tbaa !9
-  %12 = zext i8 %11 to i32
-  %13 = shl nuw nsw i32 %12, 8
-  %14 = or disjoint i32 %10, %13
+  %i.am = getelementptr inbounds nuw i8, ptr %.081123, i64 3
+  %i.an = getelementptr inbounds nuw i8, ptr %.081123, i64 2
   %i.ao = getelementptr inbounds nuw i8, ptr %.081123, i64 1 ; 2 uses
-  %15 = load i8, ptr %i.ao, align 1, !tbaa !9
-  %16 = zext i8 %15 to i32
-  %17 = or disjoint i32 %14, %16
+  %5 = load i32, ptr %i.ao, align 1, !tbaa !9
   %i.ap = trunc i64 %i.p to i32
   %i.aq = add i32 %i.d, %i.ap                     ; 2 uses
   %i.ar = sub i32 0, %i.aq
   %.0.p = select i1 %.not103, i32 %i.ar, i32 %i.aq ; 2 uses
   %i.as = icmp eq i32 %.286, 0
-  %.0130 = add i32 %17, %.0.p                     ; 4 uses
+  %.0130 = add i32 %5, %.0.p                      ; 4 uses
   br i1 %i.as, label %._crit_edge136, label %.lr.ph133
 
 .lr.ph133:                                        ; preds = %bb.i

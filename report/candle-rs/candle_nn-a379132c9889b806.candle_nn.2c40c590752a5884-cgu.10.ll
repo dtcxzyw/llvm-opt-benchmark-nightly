@@ -204,7 +204,7 @@ bb.a:
   %i.h = alloca [80 x i8], align 8                ; 7 uses
   %i.i = alloca [8 x i8], align 8                 ; 8 uses
   %i.j = alloca [80 x i8], align 8                ; 8 uses
-  %i.k = alloca [80 x i8], align 8                ; 9 uses
+  %i.k = alloca [80 x i8], align 16               ; 10 uses
   %i.l = alloca [32 x i8], align 8                ; 8 uses
   %i.m = alloca [80 x i8], align 8                ; 8 uses
   %i.n = alloca [8 x i8], align 8                 ; 11 uses
@@ -458,26 +458,22 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6T
           to label %bb.w unwind label %bb.v
 
 bb.w:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs3NyA1pFSltE_9candle_nn.exit267
-  %i.bu = load i64, ptr %i.k, align 8, !range !5, !noundef !4 ; 2 uses
+  %i.bu = load i64, ptr %i.k, align 16, !range !5, !noundef !4
   %.not240 = icmp eq i64 %i.bu, -1
-  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %.sroa.0147.0.copyload = load i64, ptr %3, align 8 ; 2 uses
   br i1 %.not240, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
+  %3 = load <2 x i64>, ptr %i.k, align 16
   %.sroa.5159.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %.sroa.7161.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 32
-  %.sroa.7161.0.copyload = load i64, ptr %.sroa.7161.0..sroa_idx, align 8
+  %.sroa.7161.0.copyload = load i64, ptr %.sroa.7161.0..sroa_idx, align 16
   %.sroa.8162.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   %.sroa.8168.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8168.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8162.0..sroa_idx, i64 40, i1 false)
-  %.sroa.4164.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.5165.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bv = load <2 x i64>, ptr %.sroa.5159.0..sroa_idx, align 8
+  %i.bv = load <2 x i64>, ptr %.sroa.5159.0..sroa_idx, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  store i64 %i.bu, ptr %0, align 8
-  store i64 %.sroa.0147.0.copyload, ptr %.sroa.4164.0..sroa_idx, align 8
-  store <2 x i64> %i.bv, ptr %.sroa.5165.0..sroa_idx, align 8
+  %4 = shufflevector <2 x i64> %3, <2 x i64> %i.bv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %4, ptr %0, align 8
   %.sroa.7167.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %.sroa.7161.0.copyload, ptr %.sroa.7167.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
@@ -485,6 +481,8 @@ bb.x:                                             ; preds = %bb.w
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs3NyA1pFSltE_9candle_nn.exit273.sink.split
 
 bb.y:                                             ; preds = %bb.w
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %.sroa.0147.0.copyload = load i64, ptr %5, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   store i64 %.sroa.0147.0.copyload, ptr %i.l, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.l, i64 8

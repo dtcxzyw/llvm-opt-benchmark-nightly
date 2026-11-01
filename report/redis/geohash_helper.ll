@@ -73,17 +73,15 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load double, ptr %i.e, align 8, !tbaa !18
   %i.g = load i32, ptr %0, align 8, !tbaa !19
   %i.h = icmp eq i32 %i.g, 1
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.j = load double, ptr %i.i, align 8, !tbaa !20
   %i.k = insertelement <2 x double> poison, double %i.j, i64 0
-  %i.l = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.l = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
   br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %3 = load double, ptr %2, align 8, !tbaa !20
-  %4 = insertelement <2 x double> %i.l, double %3, i64 1
-  %i.m = fmul <2 x double> %4, splat (double 5.000000e-01)
+  %2 = load <2 x double>, ptr %i.i, align 8, !tbaa !20
+  %i.m = fmul <2 x double> %2, splat (double 5.000000e-01)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
@@ -150,17 +148,15 @@ bb.a:
   %i.g = load double, ptr %i.f, align 8, !tbaa !18 ; 2 uses
   %i.h = load i32, ptr %1, align 8, !tbaa !19
   %i.i = icmp eq i32 %i.h, 1
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.k = load double, ptr %i.j, align 8, !tbaa !20 ; 3 uses
   %i.l = insertelement <2 x double> poison, double %i.k, i64 0
-  %i.m = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.m = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> zeroinitializer
   br i1 %i.i, label %geohashBoundingBox.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %12 = load double, ptr %11, align 8, !tbaa !20
-  %13 = insertelement <2 x double> %i.m, double %12, i64 1
-  %i.n = fmul <2 x double> %13, splat (double 5.000000e-01)
+  %11 = load <2 x double>, ptr %i.j, align 8, !tbaa !20
+  %i.n = fmul <2 x double> %11, splat (double 5.000000e-01)
   br label %geohashBoundingBox.exit
 
 geohashBoundingBox.exit:                          ; preds = %bb.a, %bb.b

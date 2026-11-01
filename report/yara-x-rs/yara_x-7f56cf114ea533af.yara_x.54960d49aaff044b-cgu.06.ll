@@ -205,7 +205,7 @@ bb.a:
   %i.el = alloca [32 x i8], align 8               ; 6 uses
   %i.em = alloca [8 x i8], align 8                ; 4 uses
   %i.en = alloca [24 x i8], align 8               ; 4 uses
-  %i.eo = alloca [16 x i8], align 8               ; 5 uses
+  %i.eo = alloca [16 x i8], align 16              ; 4 uses
   %i.ep = alloca [80 x i8], align 8               ; 4 uses
   %i.eq = alloca [80 x i8], align 8               ; 13 uses
   %i.er = alloca [80 x i8], align 8               ; 4 uses
@@ -608,7 +608,6 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs7gfv9tzbXmh_6yara_x8compiler7con
   %i.aat = getelementptr inbounds nuw i8, ptr %0, i64 2008 ; 3 uses
   %i.aau = getelementptr inbounds nuw i8, ptr %0, i64 1984
   %i.aav = getelementptr inbounds nuw i8, ptr %0, i64 2784 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
   %i.aaw = getelementptr inbounds nuw i8, ptr %0, i64 2016
   %i.aax = getelementptr inbounds nuw i8, ptr %0, i64 2088
   %i.aay = getelementptr inbounds nuw i8, ptr %0, i64 2064
@@ -754,8 +753,8 @@ bb.fr:                                            ; preds = %_RNvMs4_NtCs7gfv9tz
 bb.fs:                                            ; preds = %bb.fr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eo), !noalias !4361
   %i.acq = load <2 x i32>, ptr %i.aav, align 8, !noalias !4361
-  store <2 x i32> %i.acq, ptr %i.eo, align 8, !noalias !4361
-  store <2 x i32> %i.acj, ptr %2, align 8, !noalias !4361
+  %2 = shufflevector <2 x i32> %i.acq, <2 x i32> %i.acj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %2, ptr %i.eo, align 16, !noalias !4361
   call void @llvm.lifetime.start.p0(ptr nonnull %i.en), !noalias !4361
   store i64 -1, ptr %i.en, align 8, !noalias !4361
   %i.acr = invoke fastcc ptr @_RNvMs1p_NtNtCs7gfv9tzbXmh_6yara_x8compiler8warningsNtB6_11SlowPattern5build(ptr noundef nonnull align 8 %i.yz, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable(16) %i.eo, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.en)

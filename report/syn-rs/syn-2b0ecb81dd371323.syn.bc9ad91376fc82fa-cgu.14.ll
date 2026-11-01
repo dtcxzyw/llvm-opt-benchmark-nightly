@@ -204,13 +204,13 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit: ; preds = %bb.e, %bb.a
   %i.o = phi i32 [ %i.a, %bb.a ], [ %i.k, %bb.e ]
-  %.sroa.0.1 = phi ptr [ %1, %bb.a ], [ %.sroa.0.0.i, %bb.e ] ; 4 uses
+  %.sroa.0.1 = phi ptr [ %1, %bb.a ], [ %.sroa.0.0.i, %bb.e ] ; 3 uses
   %i.p = icmp eq i32 %i.o, 3
   br i1 %i.p, label %bb.f, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread
 
 bb.f:                                             ; preds = %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 4
-  %i.r = load i32, ptr %i.q, align 4, !range !26, !noundef !9 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 4 ; 2 uses
+  %i.r = load i32, ptr %i.q, align 4, !range !26, !noundef !9
   %i.s = icmp eq i32 %i.r, 39
   br i1 %i.s, label %_RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread, label %bb.g
 
@@ -221,8 +221,7 @@ _RNvMs_NtCsgbWeKYPjk8w_3syn6bufferNtB4_6Cursor11ignore_none.exit.thread: ; preds
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 12
   %i.u = load i8, ptr %i.t, align 4, !range !27, !noundef !9
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 8
-  %4 = load i32, ptr %3, align 4, !noundef !9
+  %3 = load <2 x i32>, ptr %i.q, align 4
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %bb.g
@@ -235,9 +234,7 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   br i1 %or.cond, label %bb.i, label %bb.h
 
 bb.i:                                             ; preds = %bb.h
-  store i32 %i.r, ptr %0, align 8
-  %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %4, ptr %.sroa.0.sroa.4.0..sroa_idx, align 4
+  store <2 x i32> %3, ptr %0, align 8
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.u, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

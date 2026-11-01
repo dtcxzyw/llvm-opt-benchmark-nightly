@@ -205,8 +205,8 @@ bb.t:                                             ; preds = %bb.s
 ma_calculate_angular_gain.exit:                   ; preds = %ma_spatializer_get_cone.exit, %bb.r, %bb.s, %bb.t
   %.0.i291 = phi float [ %i.ds, %bb.s ], [ 1.000000e+00, %bb.r ], [ %i.er, %bb.t ], [ 1.000000e+00, %ma_spatializer_get_cone.exit ]
   %i.es = fmul float %.0239, %.0.i291             ; 2 uses
-  %i.et = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.eu = load float, ptr %i.et, align 4, !tbaa !486 ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
+  %i.eu = load float, ptr %i.et, align 4, !tbaa !486
   %i.ev = fcmp olt float %i.eu, f0x40C90FDA
   br i1 %i.ev, label %bb.u, label %ma_spatializer_get_max_gain.exit
 
@@ -215,19 +215,17 @@ bb.u:                                             ; preds = %ma_calculate_angula
   %i.ex = load i32, ptr %i.ew, align 8, !tbaa !483
   %i.ey = icmp eq i32 %i.ex, 0
   %.sroa.5.0 = select i1 %i.ey, float -1.000000e+00, float 1.000000e+00
-  %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.fa = load float, ptr %i.ez, align 8, !tbaa !487
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %8 = load float, ptr %7, align 4, !tbaa !488    ; 2 uses
-  %9 = fmul nnan float %i.eu, 5.000000e-01
-  %10 = fpext float %9 to double
-  %11 = fsub double f0x3FF921FB54442D18, %10
+  %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 28
+  %i.fa = load float, ptr %i.ez, align 4, !tbaa !488 ; 2 uses
+  %7 = load <2 x float>, ptr %i.et, align 4, !tbaa !349
+  %8 = fmul <2 x float> %7, splat (float 5.000000e-01)
+  %9 = fpext <2 x float> %8 to <2 x double>
+  %10 = fsub <2 x double> splat (double f0x3FF921FB54442D18), %9 ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
   %i.fb = call double @sin(double noundef %11) #55
   %i.fc = fptrunc double %i.fb to float           ; 2 uses
-  %12 = fmul float %i.fa, 5.000000e-01
-  %13 = fpext float %12 to double
-  %14 = fsub double f0x3FF921FB54442D18, %13
-  %i.fd = call double @sin(double noundef %14) #55
+  %12 = extractelement <2 x double> %10, i64 1
+  %i.fd = call double @sin(double noundef %12) #55
   %i.fe = fptrunc double %i.fd to float           ; 3 uses
   %i.ff = fmul float %i.dj, 0.000000e+00
   %i.fg = call float @llvm.fmuladd.f32(float %i.di, float 0.000000e+00, float %i.ff)
@@ -244,11 +242,11 @@ bb.w:                                             ; preds = %bb.v
   %i.fl = fsub float %i.fc, %i.fe
   %i.fm = fdiv float %i.fk, %i.fl                 ; 2 uses
   %i.fn = fsub float 1.000000e+00, %i.fm
-  %i.fo = call float @llvm.fmuladd.f32(float %8, float %i.fn, float %i.fm)
+  %i.fo = call float @llvm.fmuladd.f32(float %i.fa, float %i.fn, float %i.fm)
   br label %ma_calculate_angular_gain.exit297
 
 ma_calculate_angular_gain.exit297:                ; preds = %bb.u, %bb.v, %bb.w
-  %.0.i292 = phi float [ %8, %bb.v ], [ 1.000000e+00, %bb.u ], [ %i.fo, %bb.w ]
+  %.0.i292 = phi float [ %i.fa, %bb.v ], [ 1.000000e+00, %bb.u ], [ %i.fo, %bb.w ]
   %i.fp = fmul float %i.es, %.0.i292
   br label %ma_spatializer_get_max_gain.exit
 
@@ -651,7 +649,7 @@ define internal fastcc ptr @ma_dr_flac_open_with_metadata_private(ptr noundef %0
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
   %8 = alloca %struct.ma_dr_flac_metadata, align 8 ; 31 uses
-  %i.b = alloca [4 x i8], align 1                 ; 9 uses
+  %i.b = alloca [4 x i8], align 4                 ; 10 uses
   %i.c = alloca [6 x i8], align 1                 ; 6 uses
   %9 = alloca %struct.ma_dr_flac_init_info, align 8 ; 32 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #55
@@ -722,12 +720,12 @@ bb.d:                                             ; preds = %bb.g, %.lr.ph.i
   %i.ad = load i64, ptr %i.y, align 8, !tbaa !1095
   %i.ae = add i64 %i.ad, 4
   store i64 %i.ae, ptr %i.y, align 8, !tbaa !1095
-  %i.af = load i8, ptr %i.b, align 1, !tbaa !119  ; 3 uses
+  %i.af = load i8, ptr %i.b, align 4, !tbaa !119
   %i.ag = icmp eq i8 %i.af, 73
-  %i.ah = load i8, ptr %i.z, align 1              ; 3 uses
+  %i.ah = load i8, ptr %i.z, align 1
   %i.ai = icmp eq i8 %i.ah, 68
   %or.cond7.i = select i1 %i.ag, i1 %i.ai, i1 false
-  %i.aj = load i8, ptr %i.aa, align 1             ; 3 uses
+  %i.aj = load i8, ptr %i.aa, align 2
   %i.ak = icmp eq i8 %i.aj, 51
   %or.cond11.i = select i1 %or.cond7.i, i1 %i.ak, i1 false
   br i1 %or.cond11.i, label %bb.e, label %bb.h
@@ -774,30 +772,22 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i, label %bb.d, label %ma_dr_flac__init_private.exit.thread
 
 bb.h:                                             ; preds = %bb.d
-  %10 = icmp eq i8 %i.af, 102
-  %11 = icmp eq i8 %i.ah, 76
-  %or.cond15.i = select i1 %10, i1 %11, i1 false
-  %12 = icmp eq i8 %i.aj, 97
-  %or.cond19.i = select i1 %or.cond15.i, i1 %12, i1 false
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %14 = load i8, ptr %13, align 1                 ; 2 uses
-  %i.bh = icmp eq i8 %14, 67
-  %or.cond23.i = select i1 %or.cond19.i, i1 %i.bh, i1 false
-  br i1 %or.cond23.i, label %bb.i, label %bb.j
+  %10 = load <4 x i8>, ptr %i.b, align 4
+  %.fr = freeze <4 x i8> %10
+  %.fr.scalar = bitcast <4 x i8> %.fr to i32
+  %i.bh = icmp eq i32 %.fr.scalar, 1130450022
+  br i1 %i.bh, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.bi = call fastcc i32 @ma_dr_flac__init_private__native(ptr noundef nonnull %9, ptr noundef %0, ptr noundef %3, ptr noundef %5, ptr noundef %6, i32 noundef %i.w)
   br label %ma_dr_flac__init_private.exit
 
 bb.j:                                             ; preds = %bb.h
-  %15 = icmp eq i8 %i.af, 79
-  %16 = icmp eq i8 %i.ah, 103
-  %or.cond27.i = select i1 %15, i1 %16, i1 false
-  %17 = icmp eq i8 %i.aj, 103
-  %or.cond31.i = select i1 %or.cond27.i, i1 %17, i1 false
-  %i.bj = icmp eq i8 %14, 83
-  %or.cond35.i = select i1 %or.cond31.i, i1 %i.bj, i1 false
-  br i1 %or.cond35.i, label %bb.k, label %bb.l
+  %11 = load <4 x i8>, ptr %i.b, align 4
+  %.fr739 = freeze <4 x i8> %11
+  %.fr739.scalar = bitcast <4 x i8> %.fr739 to i32
+  %i.bj = icmp eq i32 %.fr739.scalar, 1399285583
+  br i1 %i.bj, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.bk = call fastcc i32 @ma_dr_flac__init_private__ogg(ptr noundef nonnull %9, ptr noundef %0, ptr noundef %1, ptr noundef %3, ptr noundef %5, ptr noundef %6)

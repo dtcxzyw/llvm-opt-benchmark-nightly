@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i.i
   %.pn18.i.i.i.i = phi ptr [ %.sroa.043.1, %.lr.ph.i.i.i.i ], [ %.sroa.0.019.i.ptr.i.i.i, %bb.h ] ; 3 uses
   %.sroa.0.019.i.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.043.1, i64 %.sroa.0.019.i.idx.i.i.i ; 5 uses
   %i.m = getelementptr i8, ptr %.pn18.i.i.i.i, i64 24
-  %.val2.i.i.i.i.i = load i64, ptr %i.m, align 8, !tbaa !830 ; 4 uses
+  %.val2.i.i.i.i.i = load i64, ptr %i.m, align 8, !tbaa !830 ; 3 uses
   %.val3.i.i.i.i.i = load i64, ptr %i.l, align 8, !tbaa !830
   %i.n = icmp ult i64 %.val2.i.i.i.i.i, %.val3.i.i.i.i.i
   br i1 %i.n, label %bb.d, label %bb.g
@@ -229,7 +229,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeurist
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.c
-  %.sroa.06.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.0.019.i.ptr.i.i.i, align 8, !tbaa !270
+  %2 = load <2 x i64>, ptr %.sroa.0.019.i.ptr.i.i.i, align 8, !tbaa !270
   %i.q = getelementptr i8, ptr %.pn18.i.i.i.i, i64 8
   %.val2.i10.i.i.i.i.i = load i64, ptr %i.q, align 8, !tbaa !830
   %i.r = icmp ult i64 %.val2.i.i.i.i.i, %.val2.i10.i.i.i.i.i
@@ -245,10 +245,8 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.t, label %.lr.ph.i.i.i.i.i, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.i.i.i, !llvm.loop !2438
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i, %bb.g
-  %.sroa.09.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i, %bb.g ], [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  store i64 %.sroa.06.0.copyload.i.i.i.i.i, ptr %.sroa.09.0.lcssa.i.i.i.i.i, align 8, !tbaa !270
-  %.sroa.4.0..val.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i.i.i.i, i64 8
-  store i64 %.val2.i.i.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i.i.i.i, align 8, !tbaa !270
+  %.sroa.09.0.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i, %bb.g ], [ %.sroa.0.0.i.i.i.i.i, %.lr.ph.i.i.i.i.i ]
+  store <2 x i64> %2, ptr %.sroa.09.0.lcssa.i.i.i.i.i, align 8, !tbaa !270
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.i.i.i.i
@@ -299,7 +297,7 @@ bb.i:                                             ; preds = %bb.o, %.lr.ph.i23.i
   %.pn18.i25.i.i.i = phi ptr [ %.sroa.043.1, %.lr.ph.i23.i.i.i ], [ %.sroa.0.019.i24.i.i.i, %bb.o ] ; 5 uses
   %.sroa.0.019.i24.i.i.i = getelementptr inbounds nuw i8, ptr %.pn18.i25.i.i.i, i64 16 ; 7 uses
   %i.ac = getelementptr i8, ptr %.pn18.i25.i.i.i, i64 24
-  %.val2.i.i26.i.i.i = load i64, ptr %i.ac, align 8, !tbaa !830 ; 4 uses
+  %.val2.i.i26.i.i.i = load i64, ptr %i.ac, align 8, !tbaa !830 ; 3 uses
   %.val3.i.i27.i.i.i = load i64, ptr %i.ab, align 8, !tbaa !830
   %i.ad = icmp ult i64 %.val2.i.i26.i.i.i, %.val3.i.i27.i.i.i
   br i1 %i.ad, label %bb.j, label %bb.n
@@ -333,7 +331,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeurist
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.i
-  %.sroa.06.0.copyload.i.i28.i.i.i = load i64, ptr %.sroa.0.019.i24.i.i.i, align 8, !tbaa !270
+  %3 = load <2 x i64>, ptr %.sroa.0.019.i24.i.i.i, align 8, !tbaa !270
   %i.an = getelementptr i8, ptr %.pn18.i25.i.i.i, i64 8
   %.val2.i10.i.i29.i.i.i = load i64, ptr %i.an, align 8, !tbaa !830
   %i.ao = icmp ult i64 %.val2.i.i26.i.i.i, %.val2.i10.i.i29.i.i.i
@@ -349,10 +347,8 @@ bb.n:                                             ; preds = %bb.i
   br i1 %i.aq, label %.lr.ph.i.i35.i.i.i, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i30.i.i.i, !llvm.loop !2438
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i30.i.i.i: ; preds = %.lr.ph.i.i35.i.i.i, %bb.n
-  %.sroa.09.0.lcssa.i.i31.i.i.i = phi ptr [ %.sroa.0.019.i24.i.i.i, %bb.n ], [ %.sroa.0.0.i.i37.i.i.i, %.lr.ph.i.i35.i.i.i ] ; 2 uses
-  store i64 %.sroa.06.0.copyload.i.i28.i.i.i, ptr %.sroa.09.0.lcssa.i.i31.i.i.i, align 8, !tbaa !270
-  %.sroa.4.0..val.sroa_idx.i.i32.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.0.lcssa.i.i31.i.i.i, i64 8
-  store i64 %.val2.i.i26.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i32.i.i.i, align 8, !tbaa !270
+  %.sroa.09.0.lcssa.i.i31.i.i.i = phi ptr [ %.sroa.0.019.i24.i.i.i, %bb.n ], [ %.sroa.0.0.i.i37.i.i.i, %.lr.ph.i.i35.i.i.i ]
+  store <2 x i64> %3, ptr %.sroa.09.0.lcssa.i.i31.i.i.i, align 8, !tbaa !270
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i30.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN6duckdb20ExpressionHeuristics15GetInitialOrderERKNS2_14TableFilterSetEE10FilterCostSt6vectorIS7_SaIS7_EEEESC_ET0_T_SE_SD_.exit.i39.i.i.i

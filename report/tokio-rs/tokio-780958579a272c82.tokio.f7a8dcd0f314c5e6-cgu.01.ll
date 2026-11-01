@@ -202,7 +202,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCslghKHtsL3a4_5tokio7runtime4task
 define void @_RNvXNtNtNtCslghKHtsL3a4_5tokio3net4addr6sealedNtB2_10MaybeReadyNtNtNtCs3oUPovFnLWP_4core6future6future6Future4poll(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) initializes((0, 4)) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [40 x i8], align 8                ; 9 uses
+  %i.b = alloca [40 x i8], align 8                ; 8 uses
   %i.c = load i16, ptr %1, align 8, !range !1667, !noundef !8
   %i.d = icmp eq i16 %i.c, -1
   br i1 %i.d, label %bb.b, label %bb.c
@@ -234,12 +234,12 @@ bb.f:                                             ; preds = %bb.b
   %.sroa.2.sroa.0.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8 ; 3 uses
   %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.2.sroa.3.0.copyload = load ptr, ptr %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx, align 8 ; 4 uses
-  %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %.sroa.2.sroa.4.0.copyload = load i64, ptr %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx, align 8 ; 2 uses
+  %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.h = trunc nuw i64 %i.f to i1
   br i1 %i.h, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %.sroa.2.sroa.4.0.copyload = load i64, ptr %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.sroa.2.sroa.0.0.copyload, ptr %i.a, align 8
   %.sroa.431.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -254,8 +254,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f
-  %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.2.sroa.5.0.copyload = load i64, ptr %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx, align 8
+  %3 = load <2 x i64>, ptr %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx, align 8
   %i.j = icmp eq ptr %.sroa.2.sroa.0.0.copyload, null
   br i1 %i.j, label %bb.i, label %bb.j
 
@@ -267,8 +266,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %.sroa.39.0 = phi ptr [ %.sroa.2.sroa.3.0.copyload, %bb.i ], [ %.sroa.2.sroa.0.0.copyload, %bb.h ]
   %.sroa.05.0 = phi i32 [ 2, %bb.i ], [ 1, %bb.h ]
   %.sroa.412.sroa.0.0 = phi ptr [ undef, %bb.i ], [ %.sroa.2.sroa.3.0.copyload, %bb.h ]
-  %.sroa.412.sroa.2.0 = phi i64 [ undef, %bb.i ], [ %.sroa.2.sroa.4.0.copyload, %bb.h ]
-  %.sroa.412.sroa.3.0 = phi i64 [ undef, %bb.i ], [ %.sroa.2.sroa.5.0.copyload, %bb.h ]
+  %4 = phi <2 x i64> [ undef, %bb.i ], [ %3, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   store i32 %.sroa.05.0, ptr %0, align 8
   %.sroa.39.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -276,9 +274,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %.sroa.412.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.412.sroa.0.0, ptr %.sroa.412.0..sroa_idx13, align 8
   %.sroa.412.sroa.2.0..sroa.412.0..sroa_idx13.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.412.sroa.2.0, ptr %.sroa.412.sroa.2.0..sroa.412.0..sroa_idx13.sroa_idx, align 8
-  %.sroa.412.sroa.3.0..sroa.412.0..sroa_idx13.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.412.sroa.3.0, ptr %.sroa.412.sroa.3.0..sroa.412.0..sroa_idx13.sroa_idx, align 8
+  store <2 x i64> %4, ptr %.sroa.412.sroa.2.0..sroa.412.0..sroa_idx13.sroa_idx, align 8
   br label %bb.d
 
 bb.k:                                             ; preds = %bb.g, %bb.e

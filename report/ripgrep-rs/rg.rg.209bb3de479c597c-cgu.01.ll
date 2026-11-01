@@ -204,9 +204,9 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %i.d = alloca [24 x i8], align 8                ; 8 uses
+  %i.d = alloca [24 x i8], align 16               ; 7 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
-  %i.f = alloca [24 x i8], align 8                ; 8 uses
+  %i.f = alloca [24 x i8], align 16               ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [64 x i8], align 8                ; 11 uses
   %i.i = alloca [24 x i8], align 8                ; 7 uses
@@ -254,13 +254,11 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Nzv
   %.sroa.622.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 3 uses
   %.sroa.723.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 48
-  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 17
   %i.af = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %.sroa.718.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 56 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.ai = getelementptr inbounds nuw i8, ptr %i.f, i64 17
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -268,7 +266,7 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2Nzv
   br label %bb.c, !dbg !14907
 
 bb.c:                                             ; preds = %_RNvXsx_Cs8XVSHBVmna6_7globsetNtB5_20GlobSetMatchStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %.lr.ph.i
-  %.sroa.016.069.i = phi ptr [ %i.l, %.lr.ph.i ], [ %i.an, %_RNvXsx_Cs8XVSHBVmna6_7globsetNtB5_20GlobSetMatchStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ] ; 23 uses
+  %.sroa.016.069.i = phi ptr [ %i.l, %.lr.ph.i ], [ %i.an, %_RNvXsx_Cs8XVSHBVmna6_7globsetNtB5_20GlobSetMatchStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ] ; 21 uses
   %.sroa.7.068.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ao, %_RNvXsx_Cs8XVSHBVmna6_7globsetNtB5_20GlobSetMatchStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ] ; 3 uses
   %.sroa.10.067.i = phi i64 [ %i.q, %.lr.ph.i ], [ %i.al, %_RNvXsx_Cs8XVSHBVmna6_7globsetNtB5_20GlobSetMatchStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
   %i.al = add i64 %.sroa.10.067.i, -1, !dbg !14908 ; 2 uses
@@ -308,22 +306,20 @@ default.unreachable:                              ; preds = %bb.d
 bb.e:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14840), !dbg !14917
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !14918, !noalias !14841
-  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 32, !dbg !14919
-  %i.as = load ptr, ptr %i.ar, align 8, !dbg !14919, !alias.scope !14847, !nonnull !640, !noundef !640 ; 3 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 32, !dbg !14919 ; 2 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !dbg !14919, !alias.scope !14847, !nonnull !640, !noundef !640 ; 2 uses
   %i.at = atomicrmw add ptr %i.as, i64 1 monotonic, align 8, !dbg !14920, !noalias !14848
   %i.au = icmp slt i64 %i.at, 0, !dbg !14921
   br i1 %i.au, label %bb.i, label %bb.f, !dbg !14921
 
 bb.f:                                             ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 40, !dbg !14919
-  %5 = load ptr, ptr %4, align 8, !dbg !14922, !alias.scope !14847, !nonnull !640, !align !783, !noundef !640
-  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 48, !dbg !14923
-  %i.aw = load i8, ptr %i.av, align 8, !dbg !14923, !range !14851, !alias.scope !14847, !noundef !640
-  %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 49, !dbg !14924
-  %i.ay = load i8, ptr %i.ax, align 1, !dbg !14924, !range !14851, !alias.scope !14847, !noundef !640
-  store ptr %i.as, ptr %i.f, align 8, !dbg !14925, !noalias !14841
-  store ptr %5, ptr %3, align 8, !dbg !14925, !noalias !14841
-  store i8 %i.aw, ptr %i.ah, align 8, !dbg !14925, !noalias !14841
+  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 48, !dbg !14922
+  %i.aw = load i8, ptr %i.av, align 8, !dbg !14922, !range !14851, !alias.scope !14847, !noundef !640
+  %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 49, !dbg !14923
+  %i.ay = load i8, ptr %i.ax, align 1, !dbg !14923, !range !14851, !alias.scope !14847, !noundef !640
+  %2 = load <2 x ptr>, ptr %i.ar, align 8, !dbg !14924, !alias.scope !14847
+  store <2 x ptr> %2, ptr %i.f, align 16, !dbg !14925, !noalias !14841
+  store i8 %i.aw, ptr %i.ah, align 16, !dbg !14925, !noalias !14841
   store i8 %i.ay, ptr %i.ai, align 1, !dbg !14925, !noalias !14841
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14857), !dbg !14926
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 24, !dbg !14927
@@ -386,7 +382,7 @@ bb.k:                                             ; preds = %bb.j
 _RNvXsF_Cs8XVSHBVmna6_7globsetNtB5_14PrefixStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i: ; preds = %bb.h, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2NzvFoTxuAy_2rg.exit.i.i.i.i.i
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 56, !dbg !14948
   %i.bo = load i64, ptr %i.bn, align 8, !dbg !14948, !alias.scope !14847, !noundef !640
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.622.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !dbg !14947, !noalias !14862
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.622.0..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(24) %i.f, i64 24, i1 false), !dbg !14947, !noalias !14862
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !14949, !noalias !14841
   store i64 %i.bf, ptr %i.ac, align 8, !dbg !14950, !alias.scope !14834, !noalias !14831
   store ptr %i.bh, ptr %.sroa.420.0..sroa_idx.i.i, align 8, !dbg !14950, !alias.scope !14834, !noalias !14831
@@ -397,22 +393,20 @@ _RNvXsF_Cs8XVSHBVmna6_7globsetNtB5_14PrefixStrategyNtNtCskKLDkoKarTP_4core5clone
 bb.l:                                             ; preds = %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14863), !dbg !14952
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !14953, !noalias !14864
-  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 32, !dbg !14954
-  %i.bq = load ptr, ptr %i.bp, align 8, !dbg !14954, !alias.scope !14866, !nonnull !640, !noundef !640 ; 3 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 32, !dbg !14954 ; 2 uses
+  %i.bq = load ptr, ptr %i.bp, align 8, !dbg !14954, !alias.scope !14866, !nonnull !640, !noundef !640 ; 2 uses
   %i.br = atomicrmw add ptr %i.bq, i64 1 monotonic, align 8, !dbg !14955, !noalias !14867
   %i.bs = icmp slt i64 %i.br, 0, !dbg !14956
   br i1 %i.bs, label %bb.p, label %bb.m, !dbg !14956
 
 bb.m:                                             ; preds = %bb.l
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 40, !dbg !14954
-  %7 = load ptr, ptr %6, align 8, !dbg !14957, !alias.scope !14866, !nonnull !640, !align !783, !noundef !640
-  %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 48, !dbg !14958
-  %i.bu = load i8, ptr %i.bt, align 8, !dbg !14958, !range !14851, !alias.scope !14866, !noundef !640
-  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 49, !dbg !14959
-  %i.bw = load i8, ptr %i.bv, align 1, !dbg !14959, !range !14851, !alias.scope !14866, !noundef !640
-  store ptr %i.bq, ptr %i.d, align 8, !dbg !14960, !noalias !14864
-  store ptr %7, ptr %2, align 8, !dbg !14960, !noalias !14864
-  store i8 %i.bu, ptr %i.ad, align 8, !dbg !14960, !noalias !14864
+  %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 48, !dbg !14957
+  %i.bu = load i8, ptr %i.bt, align 8, !dbg !14957, !range !14851, !alias.scope !14866, !noundef !640
+  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 49, !dbg !14958
+  %i.bw = load i8, ptr %i.bv, align 1, !dbg !14958, !range !14851, !alias.scope !14866, !noundef !640
+  %3 = load <2 x ptr>, ptr %i.bp, align 8, !dbg !14959, !alias.scope !14866
+  store <2 x ptr> %3, ptr %i.d, align 16, !dbg !14960, !noalias !14864
+  store i8 %i.bu, ptr %i.ad, align 16, !dbg !14960, !noalias !14864
   store i8 %i.bw, ptr %i.ae, align 1, !dbg !14960, !noalias !14864
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14870), !dbg !14961
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 24, !dbg !14962
@@ -475,7 +469,7 @@ bb.r:                                             ; preds = %bb.q
 _RNvXsH_Cs8XVSHBVmna6_7globsetNtB5_14SuffixStrategyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i: ; preds = %bb.o, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2NzvFoTxuAy_2rg.exit.i.i.i3.i.i
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.016.069.i, i64 56, !dbg !14983
   %i.cm = load i64, ptr %i.cl, align 8, !dbg !14983, !alias.scope !14866, !noundef !640
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.622.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !dbg !14982, !noalias !14862
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.622.0..sroa_idx.i.i, ptr noundef nonnull align 16 dereferenceable(24) %i.d, i64 24, i1 false), !dbg !14982, !noalias !14862
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !14984, !noalias !14864
   store i64 %i.cd, ptr %i.ac, align 8, !dbg !14985, !alias.scope !14834, !noalias !14831
   store ptr %i.cf, ptr %.sroa.420.0..sroa_idx.i.i, align 8, !dbg !14985, !alias.scope !14834, !noalias !14831
@@ -878,9 +872,9 @@ begin_hunk_1_@llvm.umax.i64
 !14919 = !DILocation(line: 454, column: 20, scope: !14643, inlinedAt: !14650)
 !14920 = !DILocation(line: 4036, column: 24, scope: !14651, inlinedAt: !14654)
 !14921 = !DILocation(line: 2493, column: 12, scope: !14655, inlinedAt: !14648)
-!14922 = !DILocation(line: 2497, column: 38, scope: !14655, inlinedAt: !14648)
-!14923 = !DILocation(line: 2626, column: 10, scope: !14656, inlinedAt: !14657)
-!14924 = !DILocation(line: 1132, column: 10, scope: !14658, inlinedAt: !14659)
+!14922 = !DILocation(line: 2626, column: 10, scope: !14656, inlinedAt: !14657)
+!14923 = !DILocation(line: 1132, column: 10, scope: !14658, inlinedAt: !14659)
+!14924 = !DILocation(line: 2497, column: 38, scope: !14655, inlinedAt: !14648)
 !14925 = !DILocation(line: 176, column: 10, scope: !14646, inlinedAt: !14647)
 !14926 = !DILocation(line: 820, column: 5, scope: !14641, inlinedAt: !14642)
 !14927 = !DILocation(line: 621, column: 9, scope: !587, inlinedAt: !14665)
@@ -913,9 +907,9 @@ begin_hunk_1_@llvm.umax.i64
 !14954 = !DILocation(line: 454, column: 20, scope: !14703, inlinedAt: !14710)
 !14955 = !DILocation(line: 4036, column: 24, scope: !14711, inlinedAt: !14714)
 !14956 = !DILocation(line: 2493, column: 12, scope: !14715, inlinedAt: !14708)
-!14957 = !DILocation(line: 2497, column: 38, scope: !14715, inlinedAt: !14708)
-!14958 = !DILocation(line: 2626, column: 10, scope: !14716, inlinedAt: !14717)
-!14959 = !DILocation(line: 1132, column: 10, scope: !14718, inlinedAt: !14719)
+!14957 = !DILocation(line: 2626, column: 10, scope: !14716, inlinedAt: !14717)
+!14958 = !DILocation(line: 1132, column: 10, scope: !14718, inlinedAt: !14719)
+!14959 = !DILocation(line: 2497, column: 38, scope: !14715, inlinedAt: !14708)
 !14960 = !DILocation(line: 176, column: 10, scope: !14706, inlinedAt: !14707)
 !14961 = !DILocation(line: 865, column: 5, scope: !14701, inlinedAt: !14702)
 !14962 = !DILocation(line: 621, column: 9, scope: !587, inlinedAt: !14725)

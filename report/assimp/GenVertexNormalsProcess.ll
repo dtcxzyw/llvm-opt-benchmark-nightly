@@ -204,16 +204,13 @@ bb.t:                                             ; preds = %.lr.ph245, %bb.v
   %i.fu = load i32, ptr %i.ft, align 4
   %i.fv = zext i32 %i.fu to i64
   %i.fw = getelementptr inbounds nuw [12 x i8], ptr %i.fe, i64 %i.fv ; 3 uses
-  %i.fx = load float, ptr %i.fw, align 4          ; 2 uses
+  %i.fx = load float, ptr %i.fw, align 4
   %i.fy = fcmp ord float %i.fx, 0.000000e+00
   br i1 %i.fy, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %5 = getelementptr inbounds nuw i8, ptr %i.fw, i64 4
-  %6 = load float, ptr %5, align 4
-  %7 = insertelement <2 x float> poison, float %i.fx, i64 0
-  %8 = insertelement <2 x float> %7, float %6, i64 1
-  %i.fz = fadd <2 x float> %i.fs, %8
+  %5 = load <2 x float>, ptr %i.fw, align 4
+  %i.fz = fadd <2 x float> %i.fs, %5
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
   %i.gb = load float, ptr %i.ga, align 4
   %i.gc = fadd float %.sroa.14182.0241, %i.gb

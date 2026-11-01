@@ -202,7 +202,7 @@ bb.a:
   %i.q = alloca [24 x i8], align 8                ; 14 uses
   %i.r = alloca [8 x i8], align 8                 ; 8 uses
   %i.s = alloca [24 x i8], align 8                ; 16 uses
-  %i.t = alloca [56 x i8], align 8                ; 9 uses
+  %i.t = alloca [56 x i8], align 8                ; 8 uses
   %i.u = alloca [56 x i8], align 8                ; 12 uses
   %i.v = alloca [8 x i8], align 8                 ; 5 uses
   store ptr %1, ptr %i.v, align 8
@@ -560,37 +560,31 @@ bb.an:                                            ; preds = %bb.al
 bb.ao:                                            ; preds = %bb.ak
   %i.cv = load i64, ptr %i.t, align 8, !range !6, !noundef !4
   %i.cw = trunc nuw i64 %i.cv to i1
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %.sroa.090.0.copyload = load i64, ptr %i.cx, align 8 ; 2 uses
-  %.sroa.491.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %.sroa.491.0.copyload = load i64, ptr %.sroa.491.0..sroa_idx, align 8 ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   br i1 %i.cw, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread436, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread435
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread436: ; preds = %bb.ao
+  %6 = load <2 x i64>, ptr %i.cx, align 8
   %.sroa.592.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %.sroa.794.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 40
   %.sroa.799.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.799.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.794.0..sroa_idx, i64 16, i1 false)
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.496.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.597.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cz = load <2 x i64>, ptr %.sroa.592.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
-  store i64 %.sroa.090.0.copyload, ptr %i.cy, align 8
-  store i64 %.sroa.491.0.copyload, ptr %.sroa.496.0..sroa_idx, align 8
-  store <2 x i64> %i.cz, ptr %.sroa.597.0..sroa_idx, align 8
+  %7 = shufflevector <2 x i64> %6, <2 x i64> %i.cz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i64> %7, ptr %i.cy, align 8
   store i64 1, ptr %0, align 8
   br label %bb.v
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread435: ; preds = %bb.ao
+  %8 = load <2 x i64>, ptr %i.cx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   %i.da = add nuw nsw i64 %2, 1
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 1, ptr %i.db, align 8
   %.sroa.029.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.090.0.copyload, ptr %.sroa.029.sroa.4.0..sroa_idx, align 8
-  %.sroa.029.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.491.0.copyload, ptr %.sroa.029.sroa.5.0..sroa_idx, align 8
+  store <2 x i64> %8, ptr %.sroa.029.sroa.4.0..sroa_idx, align 8
   %.sroa.430.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.da, ptr %.sroa.430.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8

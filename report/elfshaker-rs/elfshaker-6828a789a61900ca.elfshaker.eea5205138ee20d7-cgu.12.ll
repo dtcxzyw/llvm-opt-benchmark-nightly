@@ -202,27 +202,25 @@ bb.w:                                             ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !1272
   %i.cm = load i64, ptr %i.t, align 8, !range !6, !noalias !1272, !noundef !5 ; 2 uses
   %i.cn = icmp eq i64 %i.cm, -1
-  %i.co = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %4 = load ptr, ptr %i.co, align 8, !noalias !1272, !nonnull !5, !noundef !5 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   br i1 %i.cn, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %6 = load ptr, ptr %5, align 8, !noalias !1272, !nonnull !5, !align !7, !noundef !5
-  %7 = insertelement <2 x ptr> poison, ptr %4, i64 0
-  %8 = insertelement <2 x ptr> %7, ptr %6, i64 1
+  %4 = load <2 x ptr>, ptr %i.co, align 8, !noalias !1272
   br label %_RNvXsl_NtNtCs3oUPovFnLWP_4core5panic11unwind_safeINtB5_16AssertUnwindSafeNCINvNtCs1ftIqucrW6Z_15crossbeam_utils6thread5scopeNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRSmINtNtB9_6result6ResultTyINtNtCs1xwejQucwHj_5alloc3vec3VechEENtNtNtB9_2io5error5ErrorENCNvMs0_NtB25_10repositoryNtB4u_10Repository11create_pack0INtNtB3q_9into_iter8IntoIterB2W_EE0IB30_IB3o_B2Z_EINtNtB3s_5boxed3BoxDNtNtB9_3any3AnyNtNtB9_6marker4SendEL_EEE0EINtNtNtB9_3ops8function6FnOnceuE9call_onceB27_.exit.i.i
 
 bb.y:                                             ; preds = %bb.w
+  %5 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
+  %6 = load ptr, ptr %i.co, align 8, !noalias !1272, !nonnull !5, !noundef !5 ; 3 uses
   %i.cp = load i64, ptr %5, align 8, !noalias !1272, !noundef !5 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1272
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1272
   %i.cq = icmp ult i64 %i.cp, 384307168202282326
   call void @llvm.assume(i1 %i.cq)
-  %i.cr = getelementptr inbounds nuw [24 x i8], ptr %4, i64 %i.cp
-  store ptr %4, ptr %i.q, align 8, !noalias !1272
+  %i.cr = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %i.cp
+  store ptr %6, ptr %i.q, align 8, !noalias !1272
   %.sroa.016.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store ptr %4, ptr %.sroa.016.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1272
+  store ptr %6, ptr %.sroa.016.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1272
   %.sroa.016.sroa.5.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store i64 %i.cm, ptr %.sroa.016.sroa.5.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1272
   %.sroa.016.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
@@ -625,7 +623,7 @@ bb.cp:                                            ; preds = %bb.cn
 
 _RNvXsl_NtNtCs3oUPovFnLWP_4core5panic11unwind_safeINtB5_16AssertUnwindSafeNCINvNtCs1ftIqucrW6Z_15crossbeam_utils6thread5scopeNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelRSmINtNtB9_6result6ResultTyINtNtCs1xwejQucwHj_5alloc3vec3VechEENtNtNtB9_2io5error5ErrorENCNvMs0_NtB25_10repositoryNtB4u_10Repository11create_pack0INtNtB3q_9into_iter8IntoIterB2W_EE0IB30_IB3o_B2Z_EINtNtB3s_5boxed3BoxDNtNtB9_3any3AnyNtNtB9_6marker4SendEL_EEE0EINtNtNtB9_3ops8function6FnOnceuE9call_onceB27_.exit.i.i: ; preds = %bb.z, %bb.x
   %.sroa.01.0.i.i = phi i64 [ -1, %bb.x ], [ %.sroa.01.0.copyload2.i.i, %bb.z ]
-  %i.gl = phi <2 x ptr> [ %8, %bb.x ], [ %i.cs, %bb.z ]
+  %i.gl = phi <2 x ptr> [ %4, %bb.x ], [ %i.cs, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !1272
   invoke void @_RNvXse_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterRSmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bb)
           to label %bb.cs unwind label %bb.cq, !noalias !1270
@@ -1028,27 +1026,25 @@ bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !1477
   %i.cn = load i64, ptr %i.t, align 8, !range !6, !noalias !1477, !noundef !5 ; 2 uses
   %i.co = icmp eq i64 %i.cn, -1
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %5 = load ptr, ptr %i.cp, align 8, !noalias !1477, !nonnull !5, !noundef !5 ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   br i1 %i.co, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %7 = load ptr, ptr %6, align 8, !noalias !1477, !nonnull !5, !align !7, !noundef !5
-  %8 = insertelement <2 x ptr> poison, ptr %5, i64 0
-  %9 = insertelement <2 x ptr> %8, ptr %7, i64 1
+  %5 = load <2 x ptr>, ptr %i.cp, align 8, !noalias !1477
   br label %bb.ac
 
 bb.aa:                                            ; preds = %bb.y
+  %6 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
+  %7 = load ptr, ptr %i.cp, align 8, !noalias !1477, !nonnull !5, !noundef !5 ; 3 uses
   %i.cq = load i64, ptr %6, align 8, !noalias !1477, !noundef !5 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1477
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1477
   %i.cr = icmp ult i64 %i.cq, 384307168202282326
   call void @llvm.assume(i1 %i.cr)
-  %i.cs = getelementptr inbounds nuw [24 x i8], ptr %5, i64 %i.cq
-  store ptr %5, ptr %i.q, align 8, !noalias !1477
+  %i.cs = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %i.cq
+  store ptr %7, ptr %i.q, align 8, !noalias !1477
   %.sroa.016.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store ptr %5, ptr %.sroa.016.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1477
+  store ptr %7, ptr %.sroa.016.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1477
   %.sroa.016.sroa.5.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store i64 %i.cn, ptr %.sroa.016.sroa.5.0..sroa_idx.i.i.i.i.i, align 8, !noalias !1477
   %.sroa.016.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
@@ -1070,7 +1066,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.z
   %.sroa.01.0.i.i = phi i64 [ -1, %bb.z ], [ %.sroa.01.0.copyload2.i.i, %bb.ab ]
-  %i.cu = phi <2 x ptr> [ %9, %bb.z ], [ %i.ct, %bb.ab ]
+  %i.cu = phi <2 x ptr> [ %5, %bb.z ], [ %i.ct, %bb.ab ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !1477
   invoke void @_RNvXse_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack10PackReaderINtB7_3VecNtNtB13_7packidx9FileEntryEEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropB13_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bd)
           to label %_RNvXsl_NtNtCs3oUPovFnLWP_4core5panic11unwind_safeINtB5_16AssertUnwindSafeNCINvNtCs1ftIqucrW6Z_15crossbeam_utils6thread5scopeNCINvNtNtCskuiImRAV2ip_9elfshaker4repo4algo15run_in_parallelTNtNtB25_4pack10PackReaderINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtB27_7packidx9FileEntryEEINtNtB9_6result6ResultNtB2Z_12ExtractStatsNtNtB25_5error5ErrorENCINvMsa_B2Z_NtB2Z_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathEs0_0INtNtB3p_9into_iter8IntoIterB2W_EE0IB4m_IB3n_B4l_EINtNtB3r_5boxed3BoxDNtNtB9_3any3AnyNtNtB9_6marker4SendEL_EEE0EINtNtNtB9_3ops8function6FnOnceuE9call_onceB27_.exit.i.i unwind label %bb.ad, !noalias !1479

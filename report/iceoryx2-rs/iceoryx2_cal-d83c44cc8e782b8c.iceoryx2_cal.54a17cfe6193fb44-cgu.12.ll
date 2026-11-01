@@ -202,7 +202,7 @@ define void @_RNvXs0_NtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor5epollNtNtCsd8n3bqk
   %i.a = alloca [136 x i8], align 8               ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
-  %i.d = alloca [8 x i8], align 4                 ; 5 uses
+  %i.d = alloca [8 x i8], align 8                 ; 4 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [24 x i8], align 8                ; 7 uses
@@ -231,7 +231,7 @@ define void @_RNvXs0_NtNtCs7gufeB8TUC6_12iceoryx2_cal7reactor5epollNtNtCsd8n3bqk
   br i1 %i.n, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.split
-  %i.o = load i32, ptr %i.g, align 8, !range !11, !noundef !5 ; 2 uses
+  %i.o = load i32, ptr %i.g, align 8, !range !11, !noundef !5
   %switch = icmp samesign ult i32 %i.o, 3
   br i1 %switch, label %bb.e, label %bb.d
 
@@ -248,12 +248,9 @@ bb.c:                                             ; preds = %bb.f, %bb.b
   ret void
 
 bb.d:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %3 = load i32, ptr %2, align 4
-  store i32 %i.o, ptr %i.d, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  store i32 %3, ptr %4, align 4
+  %2 = load <2 x i32>, ptr %i.g, align 8
+  store <2 x i32> %2, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %i.i, ptr %i.c, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8

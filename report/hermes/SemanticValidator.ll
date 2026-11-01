@@ -205,7 +205,7 @@ _ZNK4llvh12DenseMapBaseINS_13SmallDenseMapIPN6hermes12UniqueStringEPNS2_6ESTree1
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4llvh13SmallDenseMapIPN6hermes12UniqueStringEPNS1_6ESTree14IdentifierNodeELj8ENS_12DenseMapInfoIS3_EENS_6detail12DenseMapPairIS3_S6_EEE4growEj(ptr noundef nonnull align 8 dereferenceable(136) %0, i32 noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %2 = alloca %"struct.llvh::AlignedCharArrayUnion.244", align 8 ; 8 uses
+  %2 = alloca %"struct.llvh::AlignedCharArrayUnion.244", align 16 ; 7 uses
   %i.a = icmp ugt i32 %1, 7
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -240,8 +240,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !284  ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !284
   %magicptr = ptrtoint ptr %i.t to i64
   switch i64 %magicptr, label %bb.f [
     i64 -8, label %bb.g
@@ -249,18 +249,15 @@ bb.e:                                             ; preds = %bb.d
   ]
 
 bb.f:                                             ; preds = %bb.e
-  store ptr %i.t, ptr %2, align 8, !tbaa !284
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %5 = load ptr, ptr %4, align 8, !tbaa !179
-  store ptr %5, ptr %3, align 8, !tbaa !179
+  %3 = load <2 x ptr>, ptr %i.s, align 8, !tbaa !228
+  store <2 x ptr> %3, ptr %2, align 16, !tbaa !228
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.e, %bb.f
-  %.1 = phi ptr [ %2, %bb.e ], [ %2, %bb.e ], [ %i.u, %bb.f ] ; 5 uses
-  %.0.ptr38.1 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.v = load ptr, ptr %.0.ptr38.1, align 8, !tbaa !284 ; 2 uses
+  %.1 = phi ptr [ %2, %bb.e ], [ %2, %bb.e ], [ %i.u, %bb.f ] ; 4 uses
+  %.0.ptr38.1 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.v = load ptr, ptr %.0.ptr38.1, align 8, !tbaa !284
   %magicptr.1 = ptrtoint ptr %i.v to i64
   switch i64 %magicptr.1, label %bb.h [
     i64 -8, label %bb.i
@@ -268,11 +265,8 @@ bb.g:                                             ; preds = %bb.e, %bb.e, %bb.f
   ]
 
 bb.h:                                             ; preds = %bb.g
-  store ptr %i.v, ptr %.1, align 8, !tbaa !284
-  %6 = getelementptr inbounds nuw i8, ptr %.1, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %8 = load ptr, ptr %7, align 8, !tbaa !179
-  store ptr %8, ptr %6, align 8, !tbaa !179
+  %4 = load <2 x ptr>, ptr %.0.ptr38.1, align 8, !tbaa !228
+  store <2 x ptr> %4, ptr %.1, align 8, !tbaa !228
   %i.w = getelementptr inbounds nuw i8, ptr %.1, i64 16
   br label %bb.i
 

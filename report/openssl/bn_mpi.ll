@@ -9,7 +9,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define range(i32 -2147483644, -2147483648) i32 @BN_bn2mpi(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @BN_num_bits(ptr noundef %0) #2 ; 3 uses
+  %i.a = tail call i32 @BN_num_bits(ptr noundef %0) #3 ; 3 uses
   %i.b = add nsw i32 %i.a, 7
   %i.c = sdiv i32 %i.b, 8                         ; 2 uses
   %i.d = icmp sgt i32 %i.a, 0
@@ -47,7 +47,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = zext i1 %narrow to i64
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 %i.t
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %i.w = tail call i32 @BN_bn2bin(ptr noundef %0, ptr noundef nonnull %i.v) #2 ; 2 uses
+  %i.w = tail call i32 @BN_bn2bin(ptr noundef %0, ptr noundef nonnull %i.v) #3 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.y = load i32, ptr %i.x, align 8, !tbaa !12
   %.not29 = icmp eq i32 %i.y, 0
@@ -78,42 +78,29 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load i8, ptr %0, align 1, !tbaa !8       ; 2 uses
+  %i.b = load i8, ptr %0, align 1, !tbaa !8
   %.not = icmp sgt i8 %i.b, -1
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  tail call void @ERR_new() #2
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 49, ptr noundef nonnull @__func__.BN_mpi2bn) #2
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 3, i32 noundef 106, ptr noundef null) #2
+  tail call void @ERR_new() #3
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 49, ptr noundef nonnull @__func__.BN_mpi2bn) #3
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 3, i32 noundef 106, ptr noundef null) #3
   br label %bb.n
 
 bb.d:                                             ; preds = %bb.b
-  %3 = zext nneg i8 %i.b to i64
-  %4 = shl nuw nsw i64 %3, 24
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %6 = load i8, ptr %5, align 1, !tbaa !8
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %7, 16
-  %9 = or disjoint i64 %8, %4
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %11 = load i8, ptr %10, align 1, !tbaa !8
-  %12 = zext i8 %11 to i64
-  %13 = shl nuw nsw i64 %12, 8
-  %14 = or disjoint i64 %9, %13
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %16 = load i8, ptr %15, align 1, !tbaa !8
-  %i.c = zext i8 %16 to i64
-  %17 = or disjoint i64 %14, %i.c                 ; 3 uses
-  %i.d = add nuw nsw i64 %17, 4
+  %3 = load i32, ptr %0, align 1, !tbaa !8        ; 2 uses
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)      ; 2 uses
+  %i.c = zext i32 %4 to i64
+  %i.d = add nuw nsw i64 %i.c, 4
   %i.e = zext nneg i32 %1 to i64
   %.not33 = icmp eq i64 %i.d, %i.e
   br i1 %.not33, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @ERR_new() #2
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 54, ptr noundef nonnull @__func__.BN_mpi2bn) #2
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 3, i32 noundef 104, ptr noundef null) #2
+  tail call void @ERR_new() #3
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 54, ptr noundef nonnull @__func__.BN_mpi2bn) #3
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 3, i32 noundef 104, ptr noundef null) #3
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.d
@@ -121,13 +108,13 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.f, label %bb.g, label %.thread
 
 bb.g:                                             ; preds = %bb.f
-  %i.g = tail call ptr @BN_new() #2               ; 2 uses
+  %i.g = tail call ptr @BN_new() #3               ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.n, label %.thread
 
 .thread:                                          ; preds = %bb.f, %bb.g
   %.037 = phi ptr [ %i.g, %bb.g ], [ %2, %bb.f ]  ; 10 uses
-  %i.i = icmp eq i64 %17, 0
+  %i.i = icmp eq i32 %3, 0
   br i1 %i.i, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.thread
@@ -140,8 +127,7 @@ bb.h:                                             ; preds = %.thread
 bb.i:                                             ; preds = %.thread
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !8     ; 2 uses
-  %18 = trunc nuw nsw i64 %17 to i32
-  %i.n = tail call ptr @BN_bin2bn(ptr noundef nonnull %i.l, i32 noundef %18, ptr noundef nonnull %.037) #2
+  %i.n = tail call ptr @BN_bin2bn(ptr noundef nonnull %i.l, i32 noundef %4, ptr noundef nonnull %.037) #3
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.j, label %bb.l
 
@@ -149,7 +135,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.f, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @BN_free(ptr noundef nonnull %.037) #2
+  tail call void @BN_free(ptr noundef nonnull %.037) #3
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.i
@@ -161,9 +147,9 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not34, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.q = tail call i32 @BN_num_bits(ptr noundef nonnull %.037) #2
+  %i.q = tail call i32 @BN_num_bits(ptr noundef nonnull %.037) #3
   %i.r = add nsw i32 %i.q, -1
-  %i.s = tail call i32 @BN_clear_bit(ptr noundef nonnull %.037, i32 noundef %i.r) #2 ; 0 uses
+  %i.s = tail call i32 @BN_clear_bit(ptr noundef nonnull %.037, i32 noundef %i.r) #3 ; 0 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %bb.j, %bb.k, %bb.g, %bb.h, %bb.e, %bb.c
@@ -185,9 +171,13 @@ declare void @BN_free(ptr noundef) local_unnamed_addr #1
 
 declare i32 @BN_clear_bit(ptr noundef, i32 noundef) local_unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #2
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nounwind }
+attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

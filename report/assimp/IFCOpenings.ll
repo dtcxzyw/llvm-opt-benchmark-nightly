@@ -205,24 +205,23 @@ bb.k:                                             ; preds = %bb.j
 define hidden void @_ZN6Assimp3IFC23FindLikelyCrossingLinesEN9__gnu_cxx17__normal_iteratorIPNS0_22ProjectedWindowContourESt6vectorIS3_SaIS3_EEEE(ptr nofree readonly captures(none) %0) local_unnamed_addr #11 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.b = load ptr, ptr %0, align 8                ; 7 uses
+  %i.b = load ptr, ptr %0, align 8                ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = ptrtoint ptr %i.b to i64
   %.not38 = icmp eq ptr %i.b, %i.d
-  %.pre46 = load double, ptr %i.b, align 8        ; 4 uses
+  %.pre46 = load double, ptr %i.b, align 8        ; 3 uses
   br i1 %.not38, label %._crit_edge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.sroa.6.0..sroa.019.0.20.sroa_idx.peel.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.6.0.copyload.peel.pre = load double, ptr %.sroa.6.0..sroa.019.0.20.sroa_idx.peel.phi.trans.insert, align 8 ; 2 uses
+  %.sroa.6.0.copyload.peel.pre = load double, ptr %.sroa.6.0..sroa.019.0.20.sroa_idx.peel.phi.trans.insert, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %.not.peel = icmp eq ptr %i.f, %i.d
   br i1 %.not.peel, label %._crit_edge, label %.lr.ph.peel.next.preheader
 
 .lr.ph.peel.next.preheader:                       ; preds = %bb.b
-  %1 = insertelement <2 x double> poison, double %.pre46, i64 0
-  %2 = insertelement <2 x double> %1, double %.sroa.6.0.copyload.peel.pre, i64 1
+  %1 = load <2 x double>, ptr %i.b, align 8
   br label %.lr.ph.peel.next
 
 ._crit_edge.loopexit.loopexit:                    ; preds = %bb.d
@@ -251,7 +250,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.peel.next:                                 ; preds = %.lr.ph.peel.next.preheader, %bb.d
   %.sroa.019.039 = phi ptr [ %i.at, %bb.d ], [ %i.f, %.lr.ph.peel.next.preheader ] ; 4 uses
-  %i.u = phi <2 x double> [ %i.as, %bb.d ], [ %2, %.lr.ph.peel.next.preheader ]
+  %i.u = phi <2 x double> [ %i.as, %bb.d ], [ %1, %.lr.ph.peel.next.preheader ]
   %i.v = load <2 x double>, ptr %.sroa.019.039, align 8
   %i.w = fsub <2 x double> %i.v, %i.u
   %i.x = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.w) ; 2 uses

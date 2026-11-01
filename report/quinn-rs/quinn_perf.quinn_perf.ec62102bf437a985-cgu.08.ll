@@ -202,10 +202,10 @@ bb.j:                                             ; preds = %bb.e
 bb.k:                                             ; preds = %bb.e
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.035.0207.i, i64 32, !dbg !16351
     #dbg_value(ptr %i.bt, !15817, !DIExpression(), !15376)
-  %.val.i.i.i = load ptr, ptr %i.bt, align 8, !dbg !16352, !alias.scope !16085 ; 33 uses
+  %.val.i.i.i = load ptr, ptr %i.bt, align 8, !dbg !16352, !alias.scope !16085 ; 32 uses
     #dbg_value(ptr poison, !15789, !DIExpression(), !15377)
   %i.bu = invoke noundef nonnull align 16 ptr @_RNvMs_NtCsexYYUdYSQU6_5alloc5boxedINtB4_3BoxNtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env5field12MatchPatternE13new_uninit_inCskigd7sy4fqX_10quinn_perf()
-          to label %.noexc.i.i unwind label %bb.ae, !dbg !16353, !noalias !16089 ; 17 uses
+          to label %.noexc.i.i unwind label %bb.ae, !dbg !16353, !noalias !16089 ; 16 uses
 
 .noexc.i.i:                                       ; preds = %bb.k
     #dbg_value(ptr %i.bu, !15791, !DIExpression(), !15378)
@@ -608,12 +608,12 @@ _RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clon
   br i1 %.not.i.i.i.i.i.i.i, label %_RNvXsD_NtNtCskZzsEQPwaY5_14regex_automata3dfa5denseINtB5_3DFAINtNtCsexYYUdYSQU6_5alloc3vec3VecmEENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit.i.i.i.i.i.i, label %bb.x, !dbg !16446
 
 bb.x:                                             ; preds = %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit41.i.i.i.i.i.i.i
-  %i.er = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 80, !dbg !16445
+  %i.er = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 80, !dbg !16445 ; 2 uses
     #dbg_value(ptr %i.bv, !16135, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !15642)
     #dbg_value(ptr %i.bv, !16128, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !15643)
     #dbg_value(ptr %i.bv, !16120, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !15644)
     #dbg_value(ptr %i.bv, !16239, !DIExpression(DW_OP_plus_uconst, 64, DW_OP_stack_value), !15647)
-  %i.es = load ptr, ptr %i.er, align 16, !dbg !16447, !alias.scope !16143, !noalias !16088, !nonnull !1736, !noundef !1736 ; 2 uses
+  %i.es = load ptr, ptr %i.er, align 16, !dbg !16447, !alias.scope !16143, !noalias !16088, !nonnull !1736, !noundef !1736
     #dbg_value(ptr %i.es, !16115, !DIExpression(), !15650)
     #dbg_value(ptr %i.es, !16138, !DIExpression(), !15416)
   %i.et = atomicrmw add ptr %i.es, i64 1 monotonic, align 8, !dbg !16448, !noalias !16183
@@ -622,8 +622,7 @@ bb.x:                                             ; preds = %_RNvXsb_NtCsexYYUdY
   br i1 %i.eu, label %bb.z, label %bb.y, !dbg !16449
 
 bb.y:                                             ; preds = %bb.x
-  %2 = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 88, !dbg !16447
-  %3 = load ptr, ptr %2, align 8, !dbg !16450, !alias.scope !16143, !noalias !16088, !nonnull !1736, !align !2656, !noundef !1736
+  %2 = load <2 x ptr>, ptr %i.er, align 16, !dbg !16450, !alias.scope !16143, !noalias !16088
   %i.ev = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 96, !dbg !16451
   %i.ew = load i64, ptr %i.ev, align 16, !dbg !16451, !alias.scope !16143, !noalias !16088, !noundef !1736
   br label %_RNvXsD_NtNtCskZzsEQPwaY5_14regex_automata3dfa5denseINtB5_3DFAINtNtCsexYYUdYSQU6_5alloc3vec3VecmEENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit.i.i.i.i.i.i, !dbg !16452
@@ -640,8 +639,7 @@ bb.aa:                                            ; preds = %.loopexit.split-lp8
 
 _RNvXsD_NtNtCskZzsEQPwaY5_14regex_automata3dfa5denseINtB5_3DFAINtNtCsexYYUdYSQU6_5alloc3vec3VecmEENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit.i.i.i.i.i.i: ; preds = %bb.y, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit41.i.i.i.i.i.i.i
   %.sroa.0.sroa.5.0.i.i.i.i.i.i.i = phi i64 [ %i.ew, %bb.y ], [ undef, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit41.i.i.i.i.i.i.i ], !dbg !16455
-  %.sroa.0.sroa.4.0.i.i.i.i.i.i.i = phi ptr [ %3, %bb.y ], [ undef, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit41.i.i.i.i.i.i.i ], !dbg !16455
-  %.sroa.0.sroa.0.0.i.i.i.i.i.i.i = phi ptr [ %i.es, %bb.y ], [ undef, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit41.i.i.i.i.i.i.i ], !dbg !16455
+  %3 = phi <2 x ptr> [ %2, %bb.y ], [ undef, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCskigd7sy4fqX_10quinn_perf.exit41.i.i.i.i.i.i.i ], !dbg !16455
     #dbg_value(ptr %i.bv, !16242, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value), !15654)
   %i.ey = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 48, !dbg !16456
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %.sroa.09.32..sroa_idx.i.i.i.i.i.i, ptr noundef nonnull readonly align 16 dereferenceable(32) %i.ey, i64 32, i1 false), !dbg !16456, !noalias !16247
@@ -705,8 +703,8 @@ _RNvXsd_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxNtNtNtNtCs7n8GKOt6esj_18tracing_su
   %i.fg = load i64, ptr %i.ff, align 8, !dbg !16465, !alias.scope !16264, !noalias !16088, !noundef !1736
   %.sroa.5.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 16, !dbg !16466
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %.sroa.5.0..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(64) %.sroa.09.i.i.i.i.i.i, i64 64, i1 false), !dbg !16467, !noalias !16288
-    #dbg_value(ptr %.sroa.0.sroa.0.0.i.i.i.i.i.i.i, !16092, !DIExpression(DW_OP_LLVM_fragment, 640, 64), !15386)
-    #dbg_value(ptr %.sroa.0.sroa.4.0.i.i.i.i.i.i.i, !16092, !DIExpression(DW_OP_LLVM_fragment, 704, 64), !15386)
+    #dbg_value(ptr poison, !16092, !DIExpression(DW_OP_LLVM_fragment, 640, 64), !15386)
+    #dbg_value(ptr poison, !16092, !DIExpression(DW_OP_LLVM_fragment, 704, 64), !15386)
     #dbg_value(i64 %.sroa.0.sroa.5.0.i.i.i.i.i.i.i, !16092, !DIExpression(DW_OP_LLVM_fragment, 768, 64), !15386)
     #dbg_value(i8 %i.eq, !16092, !DIExpression(DW_OP_LLVM_fragment, 832, 8), !15386)
   %.sroa.10.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 105, !dbg !16466
@@ -732,9 +730,7 @@ _RNvXsd_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxNtNtNtNtCs7n8GKOt6esj_18tracing_su
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 8, !dbg !16466
   store i64 %i.fg, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !dbg !16466, !noalias !16288
   %.sroa.6.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 80, !dbg !16466
-  store ptr %.sroa.0.sroa.0.0.i.i.i.i.i.i.i, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i, align 16, !dbg !16466, !noalias !16288
-  %.sroa.7.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 88, !dbg !16466
-  store ptr %.sroa.0.sroa.4.0.i.i.i.i.i.i.i, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i, align 8, !dbg !16466, !noalias !16288
+  store <2 x ptr> %3, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i, align 16, !dbg !16466, !noalias !16288
   %.sroa.8.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 96, !dbg !16466
   store i64 %.sroa.0.sroa.5.0.i.i.i.i.i.i.i, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 16, !dbg !16466, !noalias !16288
   %.sroa.9.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 104, !dbg !16466

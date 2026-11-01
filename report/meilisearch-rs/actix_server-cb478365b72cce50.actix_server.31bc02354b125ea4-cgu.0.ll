@@ -205,9 +205,9 @@ bb.a:
   %i.n = alloca [24 x i8], align 8                ; 4 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = alloca [24 x i8], align 8                ; 4 uses
-  %i.q = alloca [24 x i8], align 8                ; 7 uses
+  %i.q = alloca [24 x i8], align 8                ; 6 uses
   %i.r = alloca [16 x i8], align 8                ; 5 uses
-  %i.s = alloca [16 x i8], align 8                ; 7 uses
+  %i.s = alloca [16 x i8], align 8                ; 8 uses
   %i.t = alloca [48 x i8], align 8                ; 8 uses
   %i.u = alloca [16 x i8], align 8                ; 5 uses
   %i.v = alloca [32 x i8], align 8                ; 7 uses
@@ -610,7 +610,6 @@ bb.cd:                                            ; preds = %"_ZN5tokio4sync4mps
   %i.vh = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.vi = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.vj = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %2 = getelementptr inbounds nuw i8, ptr %i.q, i64 20
   br label %bb.cg
 
 bb.ce:                                            ; preds = %bb.cd
@@ -661,7 +660,7 @@ bb.ci:                                            ; preds = %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call fastcc void @"_ZN5tokio4sync4mpsc4chan15Rx$LT$T$C$S$GT$4recv17h64bdd3fab52bf741E"(ptr noalias noundef align 8 captures(address) dereferenceable(16) %i.s, ptr noalias noundef align 8 dereferenceable(8) %i.vc, ptr noalias noundef align 8 dereferenceable(32) %1)
-  %i.wg = load i32, ptr %i.s, align 8, !range !47, !noundef !12 ; 3 uses
+  %i.wg = load i32, ptr %i.s, align 8, !range !47, !noundef !12 ; 2 uses
   %i.wh = icmp eq i32 %i.wg, 3                    ; 2 uses
   br i1 %i.wh, label %bb.cw, label %bb.ct
 
@@ -800,7 +799,8 @@ bb.cs:                                            ; preds = %bb.cr, %._crit_edge
   br label %bb.bb
 
 bb.ct:                                            ; preds = %bb.ci
-  %.sroa.393.sroa.0.0.copyload = load i32, ptr %.sroa.393.0..sroa_idx, align 4 ; 2 uses
+  %.sroa.393.sroa.0.0.copyload = load i32, ptr %.sroa.393.0..sroa_idx, align 4
+  %2 = load <2 x i32>, ptr %i.s, align 8
   %.sroa.393.sroa.2.0.copyload = load i64, ptr %.sroa.393.sroa.2.0..sroa.393.0..sroa_idx.sroa_idx, align 8 ; 3 uses
   %.not232 = icmp eq i32 %i.wg, 2
   br i1 %.not232, label %bb.cw, label %bb.cu
@@ -842,8 +842,7 @@ bb.cy:                                            ; preds = %bb.cx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   store ptr %i.xv, ptr %i.q, align 8
   store i64 %i.xu, ptr %i.vi, align 8
-  store i32 %i.wg, ptr %i.vj, align 8
-  store i32 %.sroa.393.sroa.0.0.copyload, ptr %2, align 4
+  store <2 x i32> %2, ptr %i.vj, align 8
   %i.yg = getelementptr inbounds nuw i8, ptr %i.yf, i64 32
   %i.yh = load ptr, ptr %i.yg, align 8, !invariant.load !12, !nonnull !12
   %i.yi = call noundef i8 %i.yh(ptr noundef nonnull align 1 %i.yd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.q)

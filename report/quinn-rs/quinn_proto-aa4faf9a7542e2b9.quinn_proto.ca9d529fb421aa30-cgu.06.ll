@@ -204,8 +204,8 @@ bb.ak:                                            ; preds = %bb.o
     #dbg_value(ptr %i.ay, !28028, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !27804)
     #dbg_value(ptr %i.ay, !28025, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !27805)
     #dbg_value(ptr %i.ay, !28059, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !27809)
-  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !28177
-  %i.by = load ptr, ptr %i.bx, align 8, !dbg !28177, !alias.scope !27994, !nonnull !2834, !noundef !2834 ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !28177 ; 2 uses
+  %i.by = load ptr, ptr %i.bx, align 8, !dbg !28177, !alias.scope !27994, !nonnull !2834, !noundef !2834
     #dbg_value(ptr %i.by, !28022, !DIExpression(), !27812)
     #dbg_value(ptr %i.by, !28031, !DIExpression(), !27767)
   %i.bz = atomicrmw add ptr %i.by, i64 1 monotonic, align 8, !dbg !28178, !noalias !28042
@@ -360,11 +360,8 @@ bb.bd:                                            ; preds = %bb.bb
   br label %_RNvXsG_NtCsjx2R6KBUtVL_6rustls5errorNtB5_16CertificateErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit, !dbg !28161
 
 bb.be:                                            ; preds = %bb.ak
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !28177
-  %3 = load ptr, ptr %2, align 8, !dbg !28197, !alias.scope !27994, !nonnull !2834, !align !4917, !noundef !2834
-  %4 = insertelement <2 x ptr> poison, ptr %i.by, i64 0, !dbg !28198
-  %5 = insertelement <2 x ptr> %4, ptr %3, i64 1, !dbg !28198
-  %i.cw = ptrtoint <2 x ptr> %5 to <2 x i64>, !dbg !28198
+  %2 = load <2 x ptr>, ptr %i.bx, align 8, !dbg !28197, !alias.scope !27994
+  %i.cw = ptrtoint <2 x ptr> %2 to <2 x i64>, !dbg !28198
   br label %_RNvXsG_NtCsjx2R6KBUtVL_6rustls5errorNtB5_16CertificateErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit, !dbg !28161
 
 bb.bf:                                            ; preds = %bb.ak
@@ -442,8 +439,8 @@ bb.bj:                                            ; preds = %bb.bg
     #dbg_value(ptr %i.cz, !28109, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !27853)
     #dbg_value(ptr %i.cz, !28106, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !27854)
     #dbg_value(ptr %i.cz, !28118, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !27857)
-  %i.df = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !28213
-  %i.dg = load ptr, ptr %i.df, align 8, !dbg !28213, !alias.scope !28091, !nonnull !2834, !noundef !2834 ; 2 uses
+  %i.df = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !28213 ; 2 uses
+  %i.dg = load ptr, ptr %i.df, align 8, !dbg !28213, !alias.scope !28091, !nonnull !2834, !noundef !2834
     #dbg_value(ptr %i.dg, !28103, !DIExpression(), !27860)
     #dbg_value(ptr %i.dg, !28112, !DIExpression(), !27848)
   %i.dh = atomicrmw add ptr %i.dg, i64 1 monotonic, align 8, !dbg !28214, !noalias !28116
@@ -488,10 +485,7 @@ bb.bo:                                            ; preds = %bb.bi
   br label %_RNvXsN_NtCsjx2R6KBUtVL_6rustls5errorNtB5_23CertRevocationListErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit, !dbg !28218
 
 bb.bp:                                            ; preds = %bb.bj
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !28213
-  %7 = load ptr, ptr %6, align 8, !dbg !28221, !alias.scope !28091, !nonnull !2834, !align !4917, !noundef !2834
-  %8 = insertelement <2 x ptr> poison, ptr %i.dg, i64 0, !dbg !28203
-  %9 = insertelement <2 x ptr> %8, ptr %7, i64 1, !dbg !28203
+  %3 = load <2 x ptr>, ptr %i.df, align 8, !dbg !28221, !alias.scope !28091
   br label %_RNvXsN_NtCsjx2R6KBUtVL_6rustls5errorNtB5_23CertRevocationListErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit, !dbg !28218
 
 bb.bq:                                            ; preds = %bb.bj
@@ -500,7 +494,7 @@ bb.bq:                                            ; preds = %bb.bj
 
 _RNvXsN_NtCsjx2R6KBUtVL_6rustls5errorNtB5_23CertRevocationListErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit: ; preds = %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bl, %bb.bo, %bb.bp
   %.sroa.21.sroa.0.0 = phi i64 [ %i.dl, %bb.bl ], [ %i.dp, %bb.bo ], [ undef, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], !dbg !28203
-  %i.dq = phi <2 x ptr> [ %i.dk, %bb.bl ], [ %i.do, %bb.bo ], [ %9, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], !dbg !28203
+  %i.dq = phi <2 x ptr> [ %i.dk, %bb.bl ], [ %i.do, %bb.bo ], [ %3, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], !dbg !28203
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !28223
   store i64 %i.da, ptr %i.dr, align 8, !dbg !28223
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !28223

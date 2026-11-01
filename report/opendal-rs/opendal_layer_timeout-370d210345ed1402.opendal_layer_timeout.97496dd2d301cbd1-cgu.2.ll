@@ -202,11 +202,11 @@ define hidden { ptr, i64 } @_RNvXs1h_NtCs6i54tJFfzR_5alloc4syncINtNtNtNtCsgxBkk5
 bb.a:
   %.sroa.512.i.i.i.i.i.i = alloca i64, align 8    ; 3 uses
   %.sroa.713.i.i.i.i.i.i = alloca i64, align 8    ; 3 uses
-  %i.a = alloca [32 x i8], align 8                ; 8 uses
+  %i.a = alloca [32 x i8], align 16               ; 8 uses
   %i.b = alloca [136 x i8], align 8               ; 17 uses
   %.sroa.516.i.i.i.i = alloca i64, align 8        ; 3 uses
   %.sroa.717.i.i.i.i = alloca i64, align 8        ; 3 uses
-  %i.c = alloca [32 x i8], align 8                ; 8 uses
+  %i.c = alloca [32 x i8], align 16               ; 8 uses
   %i.d = alloca [24 x i8], align 8                ; 10 uses
   %i.e = alloca [136 x i8], align 8               ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !589
@@ -224,15 +224,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.ak
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = load ptr, ptr %i.c, align 8, !noalias !594, !noundef !5 ; 3 uses
+  %i.g = load ptr, ptr %i.c, align 16, !noalias !594, !noundef !5 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.i.i, label %bb.m, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.5.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %.sroa.5.0.copyload.i.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 8, !noalias !594 ; 2 uses
+  %1 = load <2 x ptr>, ptr %i.c, align 16, !noalias !594 ; 2 uses
   %.sroa.6.0..sroa_idx9.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %.sroa.6.0.copyload.i.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx9.i.i.i.i, align 8, !noalias !594 ; 2 uses
+  %.sroa.6.0.copyload.i.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx9.i.i.i.i, align 16, !noalias !594 ; 2 uses
   %.sroa.7.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %.sroa.7.0.copyload.i.i.i.i = load ptr, ptr %.sroa.7.0..sroa_idx.i.i.i.i, align 8, !noalias !594 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.516.i.i.i.i)
@@ -324,7 +323,8 @@ bb.n:                                             ; preds = %bb.p
           cleanup
   %i.ao = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.ap = load ptr, ptr %i.ao, align 8, !noalias !603, !nonnull !5, !noundef !5
-  invoke void %i.ap(ptr noundef %.sroa.7.0.copyload.i.i.i.i, ptr noundef %.sroa.5.0.copyload.i.i.i.i, i64 noundef %.sroa.6.0.copyload.i.i.i.i)
+  %2 = extractelement <2 x ptr> %1, i64 1
+  invoke void %i.ap(ptr noundef %.sroa.7.0.copyload.i.i.i.i, ptr noundef %2, i64 noundef %.sroa.6.0.copyload.i.i.i.i)
           to label %bb.ak unwind label %bb.ai, !noalias !595, !inline_history !0
 
 bb.o:                                             ; preds = %bb.l, %bb.k
@@ -343,7 +343,7 @@ bb.o:                                             ; preds = %bb.l, %bb.k
 
 _RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %bb.o
   call void @_RNvCs1njKG4L9aB3_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #19, !noalias !605
-  %i.at = call noundef align 8 ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef %i.ar, i64 noundef range(i64 1, 9) 8) #19, !noalias !605 ; 7 uses
+  %i.at = call noundef align 8 ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef %i.ar, i64 noundef range(i64 1, 9) 8) #19, !noalias !605 ; 6 uses
   %i.au = icmp eq ptr %i.at, null
   br i1 %i.au, label %bb.p, label %bb.q
 
@@ -356,9 +356,7 @@ bb.p:                                             ; preds = %_RNvXs_NtCs6i54tJFf
   unreachable
 
 bb.q:                                             ; preds = %_RNvXs_NtCs6i54tJFfzR_5alloc5allocNtB4_6GlobalNtNtCsgxBkk5gSRhY_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
-  store ptr %i.g, ptr %i.at, align 8, !noalias !595
-  %.sroa.4.0..sroa_idx19.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  store ptr %.sroa.5.0.copyload.i.i.i.i, ptr %.sroa.4.0..sroa_idx19.i.i.i.i, align 8, !noalias !595
+  store <2 x ptr> %1, ptr %i.at, align 8, !noalias !595
   %.sroa.520.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   store i64 %.sroa.6.0.copyload.i.i.i.i, ptr %.sroa.520.0..sroa_idx.i.i.i.i, align 8, !noalias !595
   %.sroa.621.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.at, i64 24
@@ -375,7 +373,6 @@ bb.q:                                             ; preds = %_RNvXs_NtCs6i54tJFf
   call void @llvm.experimental.noalias.scope.decl(metadata !607)
   call void @llvm.experimental.noalias.scope.decl(metadata !608)
   call void @llvm.experimental.noalias.scope.decl(metadata !609)
-  %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.7.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -408,13 +405,13 @@ bb.s:                                             ; preds = %bb.r
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i.i.i.i.i
 
 bb.t:                                             ; preds = %bb.r
-  %i.bh = load ptr, ptr %i.a, align 8, !noalias !610, !noundef !5 ; 3 uses
+  %i.bh = load ptr, ptr %i.a, align 16, !noalias !610, !noundef !5 ; 2 uses
   %.not.i.i4.i.i.i.i = icmp eq ptr %i.bh, null
   br i1 %.not.i.i4.i.i.i.i, label %_RINvMsj_NtCs6i54tJFfzR_5alloc3vecINtB6_3VecNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesE16extend_desugaredINtNtNtNtCsgxBkk5gSRhY_4core4iter8adapters7inspect7InspectINtNtB1D_7flatten7FlattenINtNtB6_9into_iter8IntoIterNtNtNtCs5XgW7KoffLW_12opendal_core5types6buffer6BufferEENCINvXsa_B3m_B3k_INtNtNtB1F_6traits7collect12FromIteratorBF_E9from_iterB2u_E0EECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %.sroa.5.0.copyload.i.i.i.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !610 ; 2 uses
-  %.sroa.6.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !610 ; 2 uses
+  %3 = load <2 x ptr>, ptr %i.a, align 16, !noalias !610 ; 2 uses
+  %.sroa.6.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i, align 16, !noalias !610 ; 2 uses
   %.sroa.7.0.copyload.i.i.i.i.i.i = load ptr, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !610 ; 2 uses
   %i.bi = icmp samesign ult i64 %.sroa.7.0.copyload, 288230376151711744
   call void @llvm.assume(i1 %i.bi)
@@ -491,10 +488,8 @@ bb.ad:                                            ; preds = %bb.ac, %_RINvMNtCsg
 
 _RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesE7reserveCscZimOjL3zu7_21opendal_layer_timeout.exit.i.i.i.i.i.i: ; preds = %._RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesE7reserveCscZimOjL3zu7_21opendal_layer_timeout.exit.i.i_crit_edge.i.i.i.i, %bb.u
   %i.cf = phi ptr [ %.pre.i.i.i.i, %._RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VecNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesE7reserveCscZimOjL3zu7_21opendal_layer_timeout.exit.i.i_crit_edge.i.i.i.i ], [ %i.bf, %bb.u ] ; 2 uses
-  %i.cg = getelementptr inbounds nuw [32 x i8], ptr %i.cf, i64 %.sroa.7.0.copyload ; 4 uses
-  store ptr %i.bh, ptr %i.cg, align 8, !noalias !611
-  %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
-  store ptr %.sroa.5.0.copyload.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !611
+  %i.cg = getelementptr inbounds nuw [32 x i8], ptr %i.cf, i64 %.sroa.7.0.copyload ; 3 uses
+  store <2 x ptr> %3, ptr %i.cg, align 8, !noalias !611
   %.sroa.515.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   store i64 %.sroa.6.0.copyload.i.i.i.i.i.i, ptr %.sroa.515.0..sroa_idx.i.i.i.i.i.i, align 8, !noalias !611
   %.sroa.616.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cg, i64 24
@@ -509,7 +504,8 @@ bb.ae:                                            ; preds = %bb.af
           cleanup
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bh, i64 32
   %i.ck = load ptr, ptr %i.cj, align 8, !noalias !620, !nonnull !5, !noundef !5
-  invoke void %i.ck(ptr noundef %.sroa.7.0.copyload.i.i.i.i.i.i, ptr noundef %.sroa.5.0.copyload.i.i.i.i.i.i, i64 noundef %.sroa.6.0.copyload.i.i.i.i.i.i)
+  %4 = extractelement <2 x ptr> %3, i64 1
+  invoke void %i.ck(ptr noundef %.sroa.7.0.copyload.i.i.i.i.i.i, ptr noundef %4, i64 noundef %.sroa.6.0.copyload.i.i.i.i.i.i)
           to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsk2Y6yuwWMc1_5bytes5bytes5BytesECscZimOjL3zu7_21opendal_layer_timeout.exit.i.i.i.i.i.i unwind label %bb.ag, !noalias !611, !inline_history !0
 
 bb.af:                                            ; preds = %bb.ad, %bb.ac

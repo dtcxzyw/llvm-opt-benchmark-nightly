@@ -202,7 +202,7 @@ bb.aij:                                           ; preds = %_ZNSt10unique_ptrIN
   %i.eva = getelementptr inbounds nuw i8, ptr %i.euz, i64 136 ; 5 uses
   %i.evb = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.evc = getelementptr inbounds nuw i8, ptr %i.euz, i64 144 ; 2 uses
-  %i.evd = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %i.evd = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.eve = load <2 x i64>, ptr %i.eva, align 8, !tbaa !69
   %i.evf = load i64, ptr %i.eva, align 8, !tbaa !262
   store <2 x i64> %i.eve, ptr %i.evb, align 8, !tbaa !69
@@ -605,13 +605,12 @@ bb.aks:                                           ; preds = %bb.akr
   %i.fdh = getelementptr inbounds nuw i8, ptr %i.fdg, i64 8
   %i.fdi = load i8, ptr %i.fdh, align 8, !tbaa !107
   %i.fdj = icmp eq i8 %i.fdi, 78
-  %.pre3972 = load i64, ptr %i.evc, align 8, !tbaa !873 ; 2 uses
+  %.pre3972 = load i64, ptr %i.evc, align 8, !tbaa !873
   br i1 %i.fdj, label %bb.akt, label %bb.ala
 
 bb.akt:                                           ; preds = %bb.aks
-  %197 = load i64, ptr %i.eva, align 8, !tbaa !262
-  store i64 %197, ptr %i.evb, align 8, !tbaa !690
-  store i64 %.pre3972, ptr %i.evd, align 8, !tbaa !691
+  %197 = load <2 x i64>, ptr %i.eva, align 8, !tbaa !69
+  store <2 x i64> %197, ptr %i.evb, align 8, !tbaa !69
   br label %bb.ala
 
 bb.aku:                                           ; preds = %bb.ajv, %bb.ajz, %bb.ajy, %bb.ajx, %bb.ajw

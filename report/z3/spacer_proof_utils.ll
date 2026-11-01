@@ -204,7 +204,7 @@ _ZNK10arith_util10is_numeralEPK4expr.exit.thread: ; preds = %bb.e, %_ZNK10arith_
   %.151 = phi ptr [ %.050, %bb.k ], [ %spec.select, %_ZNK10arith_util10is_numeralEPK4expr.exit ], [ %.056, %bb.d ], [ %.056, %bb.j ], [ %.056, %_ZNK11ast_manager5is_eqEPK4expr.exit.i ], [ %.050, %_ZNK17arith_recognizers5is_leEPK4exprRPS0_S4_.exit ], [ %.056, %bb.e ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   store ptr null, ptr %4, align 16, !tbaa !156
-  %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store ptr %i.b, ptr %i.cj, align 8, !tbaa !154
   %i.ck = getelementptr inbounds nuw i8, ptr %.151, i64 4
   %i.cl = load i32, ptr %i.ck, align 4
@@ -234,14 +234,11 @@ _ZNK17arith_recognizers6is_addEPK4expr.exit.thread: ; preds = %bb.l, %_ZNK10arit
           to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.m:                                             ; preds = %_ZNK17arith_recognizers6is_addEPK4expr.exit.thread
-  %.pr.pre96 = load ptr, ptr %4, align 16, !tbaa !156 ; 2 uses
   br i1 %i.cy, label %bb.n, label %.loopexit
 
 bb.n:                                             ; preds = %bb.m
-  store ptr %.pr.pre96, ptr %0, align 8, !tbaa !156
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = load ptr, ptr %i.cj, align 8, !tbaa !167, !nonnull !74, !align !75
-  store ptr %6, ptr %5, align 8, !tbaa !154
+  %5 = load <2 x ptr>, ptr %4, align 16, !tbaa !355
+  store <2 x ptr> %5, ptr %0, align 8, !tbaa !355
   br label %_ZN7obj_refI4expr11ast_managerED2Ev.exit
 
 bb.o:                                             ; preds = %_ZNK17arith_recognizers6is_addEPK4expr.exit
@@ -263,7 +260,7 @@ bb.o:                                             ; preds = %_ZNK17arith_recogni
 bb.p:                                             ; preds = %.critedge
   %i.df = getelementptr inbounds nuw i8, ptr %.094, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.df, %i.dd
-  br i1 %.not, label %.loopexit.loopexit, label %.lr.ph
+  br i1 %.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.o, %bb.p
   %.094 = phi ptr [ %i.df, %bb.p ], [ %i.cz, %bb.o ] ; 2 uses
@@ -287,12 +284,8 @@ bb.q:                                             ; preds = %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   resume { ptr, i32 } %lpad.loopexit.split-lp110
 
-.loopexit.loopexit:                               ; preds = %bb.p
-  %.pr.pre = load ptr, ptr %4, align 16, !tbaa !156
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.m
-  %.pr = phi ptr [ %.pr.pre, %.loopexit.loopexit ], [ %.pr.pre96, %bb.m ] ; 3 uses
+.loopexit:                                        ; preds = %bb.p, %bb.m
+  %.pr = load ptr, ptr %4, align 16, !tbaa !156   ; 3 uses
   store ptr null, ptr %0, align 8, !tbaa !156
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.b, ptr %i.dj, align 8, !tbaa !154

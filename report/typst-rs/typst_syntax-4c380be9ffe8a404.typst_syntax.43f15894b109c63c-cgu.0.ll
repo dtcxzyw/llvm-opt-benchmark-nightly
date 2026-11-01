@@ -205,9 +205,8 @@ select.unfold:                                    ; preds = %_RNvMsf_NtNtCs3oUPo
 
 bb.r:                                             ; preds = %bb.l, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store <2 x i32> %i.aa, ptr %i.bq, align 4
-  %.sroa.533.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store <2 x i32> %i.ag, ptr %.sroa.533.0..sroa_idx, align 4
+  %3 = shufflevector <2 x i32> %i.aa, <2 x i32> %i.ag, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %3, ptr %i.bq, align 4
   %.sroa.735.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.q, ptr %.sroa.735.0..sroa_idx, align 4
   store i32 0, ptr %0, align 8

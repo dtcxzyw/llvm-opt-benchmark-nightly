@@ -205,23 +205,22 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.y = phi i32 [ %.pre, %bb.c ], [ %i.v, %bb.d ]
   %i.z = phi i32 [ %i.p, %bb.c ], [ %i.x, %bb.d ]
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 3 uses
   %i.ab = load i32, ptr %i.aa, align 8
   tail call void %i.k(i32 noundef %i.l, i32 noundef %i.z, i32 noundef %i.ab, i32 noundef %i.y) #10
-  %i.ac = load i32, ptr %i.aa, align 8            ; 2 uses
+  %i.ac = load i32, ptr %i.aa, align 8
   %.not105 = icmp eq i32 %i.ac, 0
   br i1 %.not105, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 612
-  %i.ae = load i32, ptr %i.ad, align 4            ; 2 uses
+  %i.ae = load i32, ptr %i.ad, align 4
   %.not106 = icmp eq i32 %i.ae, 0
   br i1 %.not106, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %4 = insertelement <2 x i32> poison, i32 %i.ac, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.ae, i64 1
-  %i.af = sitofp <2 x i32> %5 to <2 x float>
+  %4 = load <2 x i32>, ptr %i.aa, align 8
+  %i.af = sitofp <2 x i32> %4 to <2 x float>
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 712
   %i.ah = load ptr, ptr %i.m, align 8
   %.not107 = icmp eq ptr %i.ah, null              ; 2 uses

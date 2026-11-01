@@ -205,12 +205,12 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
 define void @WaveCopy(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.Wave) align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly byval(%struct.Wave) align 8 captures(none) %1) local_unnamed_addr #50 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 16, i1 false)
-  %i.a = load i32, ptr %1, align 8                ; 2 uses
+  %i.a = load i32, ptr %1, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.c = load i32, ptr %i.b, align 4              ; 2 uses
+  %i.c = load i32, ptr %i.b, align 4
   %i.d = mul i32 %i.c, %i.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load i32, ptr %i.e, align 8              ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8
   %i.g = mul i32 %i.d, %i.f
   %i.h = lshr i32 %i.g, 3
   %i.i = zext nneg i32 %i.h to i64                ; 2 uses
@@ -224,15 +224,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.m = load ptr, ptr %i.l, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.j, ptr align 1 %i.m, i64 %i.i, i1 false)
-  store i32 %i.a, ptr %0, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %3 = load i32, ptr %2, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %3, ptr %4, align 4
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.f, ptr %5, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.c, ptr %6, align 4
+  %2 = load <4 x i32>, ptr %1, align 8
+  store <4 x i32> %2, ptr %0, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

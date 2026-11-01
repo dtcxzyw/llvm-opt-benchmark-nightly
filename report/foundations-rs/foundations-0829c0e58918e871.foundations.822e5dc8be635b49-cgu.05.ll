@@ -205,7 +205,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcINtNtC
 define hidden noundef nonnull ptr @_RNvNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log8internal8fork_log() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !8551 {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 8 uses
-  %i.b = alloca [40 x i8], align 8                ; 9 uses
+  %i.b = alloca [40 x i8], align 16               ; 9 uses
   %i.c = alloca [8 x i8], align 8                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !8664
   %i.d = tail call noundef nonnull align 8 ptr @_RNvMNtNtNtCsbaWXNhtWAp9_11foundations9telemetry3log4initNtB2_10LogHarness3get(), !dbg !8665 ; 2 uses
@@ -230,7 +230,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable, !dbg !8675
 
 .noexc:                                           ; preds = %bb.c, %bb.a
-  %.sroa.0.0.i7 = phi ptr [ %i.k, %bb.c ], [ %i.f, %bb.a ], !dbg !8676 ; 8 uses
+  %.sroa.0.0.i7 = phi ptr [ %i.k, %bb.c ], [ %i.f, %bb.a ], !dbg !8676 ; 7 uses
   store ptr %.sroa.0.0.i7, ptr %i.c, align 8, !dbg !8677
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !8678
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 16, !dbg !8679 ; 5 uses
@@ -271,19 +271,18 @@ _RNvMs8_NtCsix9GtmFTcQ_11parking_lot10raw_rwlockNtB5_9RawRwLock20try_lock_shared
           to label %bb.g unwind label %bb.f, !dbg !8693 ; 0 uses
 
 bb.g:                                             ; preds = %_RNvMs8_NtCsix9GtmFTcQ_11parking_lot10raw_rwlockNtB5_9RawRwLock20try_lock_shared_fast.exit.thread, %_RNvMs8_NtCsix9GtmFTcQ_11parking_lot10raw_rwlockNtB5_9RawRwLock20try_lock_shared_fast.exit
-  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 24, !dbg !8694
+  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 24, !dbg !8694 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8649), !dbg !8695
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8650), !dbg !8695
-  %i.y = load ptr, ptr %i.x, align 8, !dbg !8696, !alias.scope !8650, !nonnull !494, !noundef !494 ; 2 uses
+  %i.y = load ptr, ptr %i.x, align 8, !dbg !8696, !alias.scope !8650, !nonnull !494, !noundef !494
   %i.z = atomicrmw add ptr %i.y, i64 1 monotonic, align 8, !dbg !8697, !noalias !8656
   %i.aa = icmp slt i64 %i.z, 0, !dbg !8698
   br i1 %i.aa, label %bb.i, label %bb.h, !dbg !8698
 
 bb.h:                                             ; preds = %bb.g
-  %0 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 32, !dbg !8696
-  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 40, !dbg !8699
-  %i.ac = load ptr, ptr %i.ab, align 8, !dbg !8699, !alias.scope !8650, !nonnull !494, !noundef !494
-  %1 = load <2 x ptr>, ptr %0, align 8, !dbg !8700, !alias.scope !8650
+  %0 = load <2 x ptr>, ptr %i.x, align 8, !dbg !8699, !alias.scope !8650
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 40, !dbg !8700
+  %i.ac = load ptr, ptr %i.ab, align 8, !dbg !8700, !alias.scope !8650, !nonnull !494, !noundef !494 ; 2 uses
   %i.ad = atomicrmw add ptr %i.ac, i64 1 monotonic, align 8, !dbg !8701, !noalias !8656
   %i.ae = icmp slt i64 %i.ad, 0, !dbg !8702
   br i1 %i.ae, label %bb.j, label %bb.k, !dbg !8702
@@ -297,19 +296,19 @@ bb.j:                                             ; preds = %bb.h
   unreachable, !dbg !8704
 
 bb.k:                                             ; preds = %bb.h
-  %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 48, !dbg !8699
+  %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 48, !dbg !8700
   %i.ag = load ptr, ptr %i.af, align 8, !dbg !8705, !alias.scope !8650, !nonnull !494, !align !513, !noundef !494
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 56, !dbg !8706
   %i.ai = load i32, ptr %i.ah, align 8, !dbg !8706, !alias.scope !8650, !noundef !494
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7, i64 60, !dbg !8707
   %i.ak = load i8, ptr %i.aj, align 4, !dbg !8707, !range !515, !alias.scope !8650, !noundef !494
-  store ptr %i.y, ptr %i.b, align 8, !dbg !8708, !alias.scope !8649
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !8708
-  store <2 x ptr> %1, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !8708, !alias.scope !8649
+  store <2 x ptr> %0, ptr %i.b, align 16, !dbg !8708, !alias.scope !8649
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !8708
+  store ptr %i.ac, ptr %.sroa.4.0..sroa_idx.i, align 16, !dbg !8708, !alias.scope !8649
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24, !dbg !8708
   store ptr %i.ag, ptr %.sroa.6.0..sroa_idx.i, align 8, !dbg !8708, !alias.scope !8649
   %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 32, !dbg !8708
-  store i32 %i.ai, ptr %i.al, align 8, !dbg !8708, !alias.scope !8649
+  store i32 %i.ai, ptr %i.al, align 16, !dbg !8708, !alias.scope !8649
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 36, !dbg !8708 ; 2 uses
   store i8 %i.ak, ptr %i.am, align 4, !dbg !8708, !alias.scope !8649
   %i.an = atomicrmw add ptr %i.l, i64 -16 release, align 8, !dbg !8709
@@ -325,7 +324,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs7hp7eIiX3bT_8lock_api6rwlock15RwL
   store i8 0, ptr %i.am, align 4, !dbg !8712
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !8713
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !8713
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %i.b, i64 40, i1 false), !dbg !8714
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(40) %i.b, i64 40, i1 false), !dbg !8714
   store i64 1, ptr %i.a, align 8, !dbg !8713
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !8713
   store i64 1, ptr %i.aq, align 8, !dbg !8713
@@ -728,8 +727,8 @@ begin_hunk_1_@llvm.fshl.v8i32
 !8696 = !DILocation(line: 454, column: 20, scope: !8586, inlinedAt: !8595)
 !8697 = !DILocation(line: 4033, column: 24, scope: !8596, inlinedAt: !8599)
 !8698 = !DILocation(line: 2494, column: 12, scope: !8600, inlinedAt: !8593)
-!8699 = !DILocation(line: 454, column: 20, scope: !8601, inlinedAt: !8608)
-!8700 = !DILocation(line: 2498, column: 38, scope: !8600, inlinedAt: !8593)
+!8699 = !DILocation(line: 2498, column: 38, scope: !8600, inlinedAt: !8593)
+!8700 = !DILocation(line: 454, column: 20, scope: !8601, inlinedAt: !8608)
 !8701 = !DILocation(line: 4033, column: 24, scope: !8596, inlinedAt: !8610)
 !8702 = !DILocation(line: 2494, column: 12, scope: !8611, inlinedAt: !8606)
 !8703 = !DILocation(line: 2495, column: 13, scope: !8600, inlinedAt: !8593)

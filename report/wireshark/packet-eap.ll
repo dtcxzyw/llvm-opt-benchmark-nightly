@@ -202,7 +202,7 @@ declare ptr @register_dissector(ptr noundef, ptr noundef, i32 noundef) local_unn
 define internal i32 @dissect_eap(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #1 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
-  %4 = alloca %struct._address, align 8           ; 13 uses
+  %4 = alloca %struct._address, align 8           ; 12 uses
   %5 = alloca %struct._address, align 8           ; 12 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %i.c = alloca i8, align 1                       ; 5 uses
@@ -240,8 +240,8 @@ bb.a:
   %i.ad = load i32, ptr %i.ac, align 8            ; 2 uses
   %i.ae = getelementptr i8, ptr %1, i64 292
   %i.af = load i32, ptr %i.ae, align 4            ; 2 uses
-  %i.ag = getelementptr i8, ptr %1, i64 208
-  %i.ah = load i32, ptr %i.ag, align 8            ; 2 uses
+  %i.ag = getelementptr i8, ptr %1, i64 208       ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8
   %i.ai = icmp eq i32 %i.ah, 1
   br i1 %i.ai, label %bb.b, label %bb.e
 
@@ -278,13 +278,10 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
-  %6 = getelementptr i8, ptr %1, i64 212
-  %7 = load i32, ptr %6, align 4
   %i.aq = getelementptr i8, ptr %1, i64 216
   %i.ar = load ptr, ptr %i.aq, align 8
-  store i32 %i.ah, ptr %4, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %7, ptr %8, align 4
+  %6 = load <2 x i32>, ptr %i.ag, align 8
+  store <2 x i32> %6, ptr %4, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %i.ar, ptr %i.as, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 16

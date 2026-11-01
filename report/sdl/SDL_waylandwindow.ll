@@ -204,17 +204,15 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.k = load i8, ptr %i.j, align 8, !range !38, !noundef !39
   %i.l = trunc nuw i8 %i.k to i1
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
-  %i.n = load i32, ptr %i.m, align 8              ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 3 uses
+  %i.n = load i32, ptr %i.m, align 8              ; 2 uses
   br i1 %i.l, label %bb.f, label %bb.o
 
 bb.f:                                             ; preds = %bb.e
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 328
-  store i32 %i.n, ptr %i.o, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 300 ; 2 uses
-  %2 = load i32, ptr %i.p, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 332
-  store i32 %2, ptr %3, align 4
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 300
+  %2 = load <2 x i32>, ptr %i.m, align 8
+  store <2 x i32> %2, ptr %i.o, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.r = load i32, ptr %i.q, align 8              ; 2 uses
   %.not.i = icmp eq i32 %i.r, 0

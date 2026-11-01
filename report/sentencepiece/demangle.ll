@@ -204,11 +204,11 @@ _ZNK4absl12lts_2026052618debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 ; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internalL20ParseUnqualifiedNameEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 48 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 49 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !31   ; 2 uses
   %i.c = add nsw i32 %i.b, 1                      ; 2 uses
   store i32 %i.c, ptr %i.a, align 4, !tbaa !31
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 21 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 20 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !29   ; 2 uses
   %i.f = add nsw i32 %i.e, 1
   store i32 %i.f, ptr %i.d, align 8, !tbaa !29
@@ -421,12 +421,13 @@ _ZN4absl12lts_2026052618debugging_internalL17ParseOneCharTokenEPNS1_5StateEc.exi
   %storemerge.in = phi i32 [ %i.ca, %_ZN4absl12lts_2026052618debugging_internalL17ParseOneCharTokenEPNS1_5StateEc.exit.thread ], [ %.pre80, %bb.d ]
   store i32 %storemerge.in, ptr %i.a, align 4, !tbaa !31
   %i.cb = tail call fastcc noundef zeroext i1 @_ZN4absl12lts_2026052618debugging_internalL15ParseSourceNameEPNS1_5StateE(ptr noundef nonnull %0)
-  %.pre79 = load i32, ptr %i.a, align 4, !tbaa !31 ; 7 uses
+  %.pre79 = load i32, ptr %i.a, align 4, !tbaa !31 ; 6 uses
   br i1 %i.cb, label %bb.z, label %bb.u
 
 bb.u:                                             ; preds = %.thread
   %i.cc = add nsw i32 %.pre79, 1                  ; 2 uses
-  %i.cd = load i32, ptr %i.d, align 8, !tbaa !29  ; 4 uses
+  %i.cd = load i32, ptr %i.d, align 8, !tbaa !29  ; 3 uses
+  %1 = load <2 x i32>, ptr %i.a, align 4, !tbaa !33
   %i.ce = add nsw i32 %i.cd, 1
   store i32 %i.ce, ptr %i.d, align 8, !tbaa !29
   %i.cf = icmp sgt i32 %.pre79, 255
@@ -437,10 +438,8 @@ bb.u:                                             ; preds = %.thread
 bb.v:                                             ; preds = %bb.u
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 4 uses
   %.sroa.0127.0.copyload = load <4 x i32>, ptr %i.ch, align 4
-  %1 = add nsw i32 %.pre79, 2
-  store i32 %1, ptr %i.a, align 4, !tbaa !31
-  %2 = add nsw i32 %i.cd, 2
-  store i32 %2, ptr %i.d, align 8, !tbaa !29
+  %2 = add nsw <2 x i32> %1, splat (i32 2)
+  store <2 x i32> %2, ptr %i.a, align 4, !tbaa !33
   %i.ci = icmp sgt i32 %.pre79, 254
   %i.cj = icmp sgt i32 %i.cd, 131070
   %or.cond.i.i = select i1 %i.ci, i1 true, i1 %i.cj

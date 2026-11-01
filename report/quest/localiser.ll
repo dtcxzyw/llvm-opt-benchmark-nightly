@@ -205,7 +205,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define void @_Z27getQubitsSwappedToMaxSuffix5QuregSt6vectorIiSaIiEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector") align 8 captures(none) %0, ptr nofree noundef readonly byval(%struct.Qureg) align 8 captures(none) %1, ptr nofree noundef align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::vector", align 8       ; 8 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 2 uses
   %i.c = load ptr, ptr %2, align 8, !tbaa !18     ; 3 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
@@ -346,14 +346,11 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.p, %bb.q
-  %i.ak = load ptr, ptr %2, align 8, !tbaa !18    ; 6 uses
+  %i.ak = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
   br i1 %.0.i22, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit
-  store ptr %i.ak, ptr %0, align 8, !tbaa !18
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = load ptr, ptr %i.a, align 8, !tbaa !17
-  store ptr %5, ptr %4, align 8, !tbaa !17
+  %4 = load <2 x ptr>, ptr %2, align 8, !tbaa !15
   br label %bb.y
 
 bb.s:                                             ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i, %.noexc.i.i.i
@@ -374,7 +371,8 @@ _ZNSt6vectorIiSaIiEED2Ev.exit25:                  ; preds = %.body, %bb.t
   resume { ptr, i32 } %eh.lpad-body
 
 bb.u:                                             ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit
-  %i.am = load ptr, ptr %i.a, align 8, !tbaa !17  ; 3 uses
+  %i.am = load ptr, ptr %i.a, align 8, !tbaa !17  ; 2 uses
+  %5 = load <2 x ptr>, ptr %2, align 8, !tbaa !15
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = ptrtoint ptr %i.ak to i64
   %i.ap = sub i64 %i.an, %i.ao
@@ -451,17 +449,10 @@ bb.v:                                             ; preds = %bb.v, %_Z10getBitMa
 
 _Z27getIndOfNextLeftmostZeroBitxi.exit19.preheader: ; preds = %bb.v
   %.not31 = icmp eq ptr %i.am, %i.ak
-  %6 = insertelement <2 x ptr> poison, ptr %i.ak, i64 0
-  %7 = insertelement <2 x ptr> %6, ptr %i.am, i64 1
-  br i1 %.not31, label %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge, label %.lr.ph34
+  br i1 %.not31, label %bb.y, label %.lr.ph34
 
 _Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge.loopexit: ; preds = %_Z27getIndOfNextLeftmostZeroBitxi.exit
   %i.bo = load <2 x ptr>, ptr %2, align 8, !tbaa !15
-  br label %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge
-
-_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge: ; preds = %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge.loopexit, %_Z27getIndOfNextLeftmostZeroBitxi.exit19.preheader
-  %8 = phi <2 x ptr> [ %i.bo, %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge.loopexit ], [ %7, %_Z27getIndOfNextLeftmostZeroBitxi.exit19.preheader ]
-  store <2 x ptr> %8, ptr %0, align 8, !tbaa !15
   br label %bb.y
 
 .lr.ph34:                                         ; preds = %_Z27getIndOfNextLeftmostZeroBitxi.exit19.preheader, %_Z27getIndOfNextLeftmostZeroBitxi.exit
@@ -502,7 +493,9 @@ _Z27getIndOfNextLeftmostZeroBitxi.exit:           ; preds = %bb.x, %.lr.ph34
   %.not = icmp eq i64 %i.bp, 0
   br i1 %.not, label %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge.loopexit, label %.lr.ph34
 
-bb.y:                                             ; preds = %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge, %bb.r
+bb.y:                                             ; preds = %_Z27getIndOfNextLeftmostZeroBitxi.exit19.preheader, %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge.loopexit, %bb.r
+  %storemerge = phi <2 x ptr> [ %4, %bb.r ], [ %i.bo, %_Z27getIndOfNextLeftmostZeroBitxi.exit19._crit_edge.loopexit ], [ %5, %_Z27getIndOfNextLeftmostZeroBitxi.exit19.preheader ]
+  store <2 x ptr> %storemerge, ptr %0, align 8, !tbaa !15
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !20

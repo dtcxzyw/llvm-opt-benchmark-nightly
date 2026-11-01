@@ -202,19 +202,16 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef zeroext i1 @_ZNK4geos4geom8Envelope6centreERNS0_10CoordinateE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #7 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load double, ptr %i.a, align 8, !tbaa !14 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = load double, ptr %i.a, align 8, !tbaa !14
   %i.c = fcmp ord double %i.b, 0.000000e+00       ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = load <1 x double>, ptr %2, align 8, !tbaa !31
+  %2 = load <2 x double>, ptr %i.a, align 8, !tbaa !31
   %i.d = load <4 x double>, ptr %0, align 8, !tbaa !31
   %i.e = shufflevector <4 x double> %i.d, <4 x double> poison, <2 x i32> <i32 0, i32 3>
-  %4 = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %5 = insertelement <2 x double> %4, double %i.b, i64 0
-  %i.f = fadd <2 x double> %5, %i.e
+  %i.f = fadd <2 x double> %2, %i.e
   %i.g = fmul <2 x double> %i.f, splat (double 5.000000e-01)
   store <2 x double> %i.g, ptr %1, align 8, !tbaa !31
   br label %bb.c
