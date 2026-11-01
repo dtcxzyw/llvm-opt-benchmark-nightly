@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph784:                                        ; preds = %.lr.ph784.preheader, %bb.j
   %.1604783 = phi i64 [ %i.ej, %bb.j ], [ 0, %.lr.ph784.preheader ] ; 2 uses
-  %.0607782 = phi ptr [ %i.gb, %bb.j ], [ %i.as, %.lr.ph784.preheader ] ; 10 uses
+  %.0607782 = phi ptr [ %i.gb, %bb.j ], [ %i.as, %.lr.ph784.preheader ] ; 9 uses
   %.0610781 = phi i64 [ %i.en, %bb.j ], [ %i.z, %.lr.ph784.preheader ] ; 3 uses
   %i.ej = add nuw nsw i64 %.1604783, 1            ; 4 uses
   %i.ek = icmp eq i64 %i.ej, %i.h                 ; 2 uses
@@ -260,7 +260,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph784
   %i.fu = getelementptr inbounds nuw i8, ptr %.0607782, i64 6
   store i16 %i.fs, ptr %i.fu, align 2, !tbaa !106
   %i.fv = getelementptr inbounds nuw i8, ptr %.0607782, i64 8
-  %i.fw = trunc i64 %i.en to i16                  ; 2 uses
+  %i.fw = trunc i64 %i.en to i16
   store i16 %i.fw, ptr %.0607782, align 2, !tbaa !106
   %i.fx = add <4 x i16> %i.fp, <i16 2, i16 0, i16 1, i16 1> ; 2 uses
   store <4 x i16> %i.fx, ptr %i.fv, align 2, !tbaa !106
@@ -269,10 +269,8 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph784
   %i.fz = getelementptr inbounds nuw i8, ptr %.0607782, i64 18
   store i16 %i.fq, ptr %i.fz, align 2, !tbaa !106
   %i.ga = getelementptr inbounds nuw i8, ptr %.0607782, i64 20
-  store i16 %i.fw, ptr %i.ga, align 2, !tbaa !106
-  %7 = getelementptr inbounds nuw i8, ptr %.0607782, i64 22
-  %8 = extractelement <4 x i16> %i.fx, i64 2
-  store i16 %8, ptr %7, align 2, !tbaa !106
+  %7 = shufflevector <4 x i16> %i.fx, <4 x i16> poison, <2 x i32> <i32 1, i32 2>
+  store <2 x i16> %7, ptr %i.ga, align 2, !tbaa !106
   %i.gb = getelementptr inbounds nuw i8, ptr %.0607782, i64 24
   %exitcond804.not = icmp eq i64 %i.ej, %.0
   br i1 %exitcond804.not, label %.lr.ph787, label %.lr.ph784, !llvm.loop !735

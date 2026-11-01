@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
-  %i.bx = phi <4 x i32> [ %i.bw, %bb.n ], [ %i.bn, %bb.m ] ; 2 uses
-  %i.by = add nsw <4 x i32> %i.bx, <i32 0, i32 0, i32 1, i32 1>
+  %i.bx = phi <4 x i32> [ %i.bw, %bb.n ], [ %i.bn, %bb.m ]
+  %i.by = add nsw <4 x i32> %i.bx, <i32 0, i32 0, i32 1, i32 1> ; 2 uses
   %i.bz = getelementptr i8, ptr %i.ay, i64 4
   %i.ca = load float, ptr %i.bz, align 4, !tbaa !61
   %i.cb = fptosi float %i.ca to i32
@@ -279,8 +279,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %bb.p, %_ZNSt6vector
   br i1 %.not.i.i202, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
-  %71 = add nsw <4 x i32> %i.bx, <i32 0, i32 0, i32 1, i32 1>
-  store <4 x i32> %71, ptr %i.cz, align 4, !tbaa !67
+  store <4 x i32> %i.by, ptr %i.cz, align 4, !tbaa !67
   %i.db = getelementptr inbounds nuw i8, ptr %i.cz, i64 16
   store ptr %i.db, ptr %i.z, align 8, !tbaa !111
   br label %_ZNSt6vectorIN2cv5Rect_IiEESaIS2_EE9push_backEOS2_.exit
