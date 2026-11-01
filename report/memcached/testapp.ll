@@ -204,7 +204,7 @@ arithmetic_command.exit:                          ; preds = %bb.a
   br i1 %i.t, label %.split.us.i.preheader.us, label %.split.us.i
 
 .split.us.i.preheader.us:                         ; preds = %arithmetic_command.exit, %bb.g
-  %.023.us = phi i32 [ %5, %bb.g ], [ 9, %arithmetic_command.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 9, %arithmetic_command.exit ] ; 3 uses
   br label %.split.us.i.us
 
 .split.us.i.us:                                   ; preds = %bb.e, %.split.us.i.preheader.us
@@ -255,13 +255,12 @@ safe_recv_packet.exit.us:                         ; preds = %bb.f, %safe_send.ex
   call fastcc void @validate_response_header(ptr noundef %3, i8 noundef zeroext 6, i16 noundef zeroext 0)
   %i.aq = load i64, ptr %i.x, align 8, !tbaa !16
   %i.ar = call i64 @ntohll(i64 noundef %i.aq) #21
-  %4 = zext nneg i32 %.023.us to i64
-  %i.as = icmp eq i64 %i.ar, %4
+  %i.as = icmp eq i64 %i.ar, %indvars.iv
   br i1 %i.as, label %bb.g, label %.split.us
 
 bb.g:                                             ; preds = %safe_recv_packet.exit.us
-  %5 = add nsw i32 %.023.us, -1
-  %.not = icmp eq i32 %.023.us, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not = icmp eq i64 %indvars.iv, 0
   br i1 %.not, label %.split.us.i12.preheader, label %.split.us.i.preheader.us, !llvm.loop !83
 
 .split.us.i12.preheader:                          ; preds = %bb.ak, %bb.g
