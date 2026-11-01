@@ -205,8 +205,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep117 = getelementptr i8, ptr %i.ab, i64 %i.ap
   %next.gep118 = getelementptr i8, ptr %i.p, i64 %i.ao
   %next.gep119 = getelementptr i8, ptr %i.p, i64 %i.ap
-  %wide.load = load <2 x i64>, ptr %next.gep118, align 8, !alias.scope !1007
-  %wide.load120 = load <2 x i64>, ptr %next.gep119, align 8, !alias.scope !1007
+  %wide.load = load <2 x i64>, ptr %next.gep118, align 4, !alias.scope !1007
+  %wide.load120 = load <2 x i64>, ptr %next.gep119, align 4, !alias.scope !1007
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !alias.scope !1008, !noalias !1007
   store <2 x i64> %wide.load120, ptr %next.gep117, align 8, !alias.scope !1008, !noalias !1007
   %index.next = add nuw i64 %index, 2             ; 2 uses
@@ -609,8 +609,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep49 = getelementptr i8, ptr %i.u, i64 %i.ap
   %next.gep50 = getelementptr i8, ptr %i.d, i64 %i.ao
   %next.gep51 = getelementptr i8, ptr %i.d, i64 %i.ap
-  %wide.load = load <2 x i64>, ptr %next.gep50, align 8, !alias.scope !1431
-  %wide.load52 = load <2 x i64>, ptr %next.gep51, align 8, !alias.scope !1431
+  %wide.load = load <2 x i64>, ptr %next.gep50, align 4, !alias.scope !1431
+  %wide.load52 = load <2 x i64>, ptr %next.gep51, align 4, !alias.scope !1431
   store <2 x i64> %wide.load, ptr %next.gep, align 8, !alias.scope !1432, !noalias !1431
   store <2 x i64> %wide.load52, ptr %next.gep49, align 8, !alias.scope !1432, !noalias !1431
   %index.next = add nuw i64 %index, 2             ; 2 uses
@@ -680,8 +680,8 @@ vector.body67:                                    ; preds = %vector.body67, %vec
   %next.gep70 = getelementptr i8, ptr %i.ay, i64 %i.bn
   %next.gep71 = getelementptr i8, ptr %1, i64 %i.bm
   %next.gep72 = getelementptr i8, ptr %1, i64 %i.bn
-  %wide.load73 = load <2 x i64>, ptr %next.gep71, align 8, !alias.scope !1433
-  %wide.load74 = load <2 x i64>, ptr %next.gep72, align 8, !alias.scope !1433
+  %wide.load73 = load <2 x i64>, ptr %next.gep71, align 4, !alias.scope !1433
+  %wide.load74 = load <2 x i64>, ptr %next.gep72, align 4, !alias.scope !1433
   store <2 x i64> %wide.load73, ptr %next.gep69, align 8, !alias.scope !1434, !noalias !1433
   store <2 x i64> %wide.load74, ptr %next.gep70, align 8, !alias.scope !1434, !noalias !1433
   %index.next75 = add nuw i64 %index68, 2         ; 2 uses
