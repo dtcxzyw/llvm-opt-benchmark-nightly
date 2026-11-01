@@ -205,10 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.lr.ph.1, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
-  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
-  %5 = shl nuw i32 %indvars.iv.tr, 1
-  %6 = sext i32 %5 to i64
-  %i.ah = getelementptr inbounds [8 x i8], ptr %4, i64 %6
+  %5 = shl nuw i64 %indvars.iv, 1
+  %6 = and i64 %5, 4294967292
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %6
   %i.ai = load <2 x double>, ptr %i.ah, align 8, !tbaa !125
   %i.aj = fsub <2 x double> %i.ag, %i.ai          ; 2 uses
   store <2 x double> %i.aj, ptr %i.z, align 8, !tbaa !125
@@ -221,10 +220,9 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not.1, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.1
-  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
-  %7 = shl nuw i32 %indvars.iv.tr.1, 1
-  %8 = sext i32 %7 to i64
-  %i.al = getelementptr inbounds [8 x i8], ptr %4, i64 %8
+  %7 = shl nuw i64 %indvars.iv.next, 1
+  %8 = and i64 %7, 4294967294
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %8
   %i.am = load <2 x double>, ptr %i.al, align 8, !tbaa !125
   %i.an = fsub <2 x double> %i.ak, %i.am          ; 2 uses
   store <2 x double> %i.an, ptr %i.z, align 8, !tbaa !125

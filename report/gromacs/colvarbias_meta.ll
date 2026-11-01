@@ -204,7 +204,7 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !226, !alias.scope !415
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 %i.bf, i1 false), !tbaa !194, !noalias !415
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bf
-  %.pre.i = load i64, ptr %i.bc, align 8, !tbaa !224, !noalias !413 ; 6 uses
+  %.pre.i = load i64, ptr %i.bc, align 8, !tbaa !224, !noalias !413 ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.bj, ptr %i.bk, align 8, !tbaa !227, !alias.scope !415
   %.not.i = icmp eq i64 %.pre.i, 0
@@ -216,13 +216,11 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !228, !noalias !413 ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bb, i64 424
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !100, !noalias !413 ; 2 uses
-  %min.iters.check = icmp ne i64 %.pre.i, 1
-  %.not350 = icmp ult i64 %.pre.i, 2147483649
-  %or.cond = and i1 %min.iters.check, %.not350
-  br i1 %or.cond, label %vector.ph, label %scalar.ph.preheader
+  %min.iters.check = icmp eq i64 %.pre.i, 1
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %.pre.i, 4294967294            ; 3 uses
+  %n.vec = and i64 %.pre.i, -2                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -625,7 +623,7 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.bi, ptr %i.bj, align 8, !tbaa !226, !alias.scope !440
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bh, i8 0, i64 %i.bg, i1 false), !tbaa !194, !noalias !440
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bg
-  %.pre.i = load i64, ptr %i.bd, align 8, !tbaa !224, !noalias !438 ; 6 uses
+  %.pre.i = load i64, ptr %i.bd, align 8, !tbaa !224, !noalias !438 ; 5 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.bk, ptr %i.bl, align 8, !tbaa !227, !alias.scope !440
   %.not.i = icmp eq i64 %.pre.i, 0
@@ -637,13 +635,11 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !228, !noalias !438 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bc, i64 424
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !100, !noalias !438 ; 2 uses
-  %min.iters.check = icmp ne i64 %.pre.i, 1
-  %.not302 = icmp ult i64 %.pre.i, 2147483649
-  %or.cond = and i1 %min.iters.check, %.not302
-  br i1 %or.cond, label %vector.ph, label %scalar.ph.preheader
+  %min.iters.check = icmp eq i64 %.pre.i, 1
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %.pre.i, 4294967294            ; 3 uses
+  %n.vec = and i64 %.pre.i, -2                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1046,7 +1042,7 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !400 = distinct !{!400, i1 true, !"_ZNK11colvar_gridIdE9new_indexEv"}
 !401 = distinct !{!401, !400, !"_ZNK11colvar_gridIdE9new_indexEv: argument 0"}
 !402 = distinct !{!402, !180, !230, !231}
-!403 = distinct !{!403, !180, !230}
+!403 = distinct !{!403, !180, !231, !230}
 !404 = distinct !{!404, i1 true, !"_ZNK11colvar_gridIdE17get_colvars_indexEv"}
 !405 = distinct !{!405, !404, !"_ZNK11colvar_gridIdE17get_colvars_indexEv: argument 0"}
 !406 = distinct !{!406, i1 true, !"_ZNK11colvar_gridIdE9new_indexEv"}
@@ -1069,7 +1065,7 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !423 = distinct !{!423, i1 true, !"_ZNK11colvar_gridIdE9new_indexEv"}
 !424 = distinct !{!424, !423, !"_ZNK11colvar_gridIdE9new_indexEv: argument 0"}
 !425 = distinct !{!425, !180, !230, !231}
-!426 = distinct !{!426, !180, !230}
+!426 = distinct !{!426, !180, !231, !230}
 !427 = distinct !{!427, i1 true, !"_ZNK11colvar_gridIdE17get_colvars_indexEv"}
 !428 = distinct !{!428, !427, !"_ZNK11colvar_gridIdE17get_colvars_indexEv: argument 0"}
 !429 = distinct !{!429, i1 true, !"_ZNK11colvar_gridIdE9new_indexEv"}
