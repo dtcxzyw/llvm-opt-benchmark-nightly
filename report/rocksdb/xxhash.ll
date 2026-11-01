@@ -205,55 +205,49 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 -31
-  %3 = insertelement <2 x i64> poison, i64 %2, i64 0
-  %4 = shufflevector <2 x i64> %3, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %5 = add <2 x i64> %4, <i64 6983438078262162902, i64 -4417276706812531889>
-  %6 = add <2 x i64> %4, <i64 0, i64 7046029288634856825>
+  %3 = insertelement <4 x i64> poison, i64 %2, i64 0
+  %4 = shufflevector <4 x i64> %3, <4 x i64> poison, <4 x i32> zeroinitializer
+  %5 = add <4 x i64> %4, <i64 6983438078262162902, i64 -4417276706812531889, i64 0, i64 7046029288634856825>
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.050.i = phi ptr [ %0, %bb.c ], [ %i.e, %bb.d ] ; 3 uses
-  %7 = phi <2 x i64> [ %5, %bb.c ], [ %13, %bb.d ]
-  %8 = phi <2 x i64> [ %6, %bb.c ], [ %19, %bb.d ]
-  %9 = load <2 x i64>, ptr %.050.i, align 1, !tbaa !27
-  %10 = mul <2 x i64> %9, splat (i64 -4417276706812531889)
-  %11 = add <2 x i64> %10, %7                     ; 2 uses
-  %12 = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %11, <2 x i64> %11, <2 x i64> splat (i64 31)) ; 3 uses
-  %13 = mul <2 x i64> %12, splat (i64 -7046029288634856825) ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %.050.i, i64 16
-  %15 = load <2 x i64>, ptr %14, align 1, !tbaa !27
-  %16 = mul <2 x i64> %15, splat (i64 -4417276706812531889)
-  %17 = add <2 x i64> %16, %8                     ; 2 uses
-  %18 = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %17, <2 x i64> %17, <2 x i64> splat (i64 31)) ; 2 uses
-  %19 = mul <2 x i64> %18, splat (i64 -7046029288634856825) ; 3 uses
+  %.050.i = phi ptr [ %0, %bb.c ], [ %i.e, %bb.d ] ; 2 uses
+  %6 = phi <4 x i64> [ %5, %bb.c ], [ %11, %bb.d ]
+  %7 = load <4 x i64>, ptr %.050.i, align 1, !tbaa !27
+  %8 = mul <4 x i64> %7, splat (i64 -4417276706812531889)
+  %9 = add <4 x i64> %8, %6                       ; 2 uses
+  %10 = tail call <4 x i64> @llvm.fshl.v4i64(<4 x i64> %9, <4 x i64> %9, <4 x i64> splat (i64 31)) ; 4 uses
+  %11 = mul <4 x i64> %10, splat (i64 -7046029288634856825) ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.050.i, i64 32 ; 3 uses
   %i.f = icmp ult ptr %i.e, %i.d
   br i1 %i.f, label %bb.d, label %_ZL18XXH64_endian_alignPKhmm13XXH_alignment.exit.thread, !llvm.loop !48
 
 _ZL18XXH64_endian_alignPKhmm13XXH_alignment.exit.thread: ; preds = %bb.d
-  %i.g = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %13, <2 x i64> %13, <2 x i64> <i64 1, i64 7>)
+  %12 = shufflevector <4 x i64> %11, <4 x i64> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
+  %i.g = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %12, <2 x i64> %12, <2 x i64> <i64 1, i64 7>)
   %i.h = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.g)
-  %i.i = extractelement <2 x i64> %19, i64 0      ; 2 uses
+  %i.i = extractelement <4 x i64> %11, i64 2      ; 2 uses
   %i.j = tail call i64 @llvm.fshl.i64(i64 %i.i, i64 %i.i, i64 12)
   %i.k = add i64 %i.h, %i.j
-  %i.l = extractelement <2 x i64> %19, i64 1      ; 2 uses
+  %i.l = extractelement <4 x i64> %11, i64 3      ; 2 uses
   %i.m = tail call i64 @llvm.fshl.i64(i64 %i.l, i64 %i.l, i64 18)
   %i.n = add i64 %i.k, %i.m
-  %i.o = extractelement <2 x i64> %12, i64 0
+  %i.o = extractelement <4 x i64> %10, i64 0
   %i.p = mul i64 %i.o, -2381459717836149591       ; 2 uses
   %i.q = tail call i64 @llvm.fshl.i64(i64 %i.p, i64 %i.p, i64 31)
   %i.r = mul i64 %i.q, -7046029288634856825
   %i.s = xor i64 %i.n, %i.r
   %i.t = mul i64 %i.s, -7046029288634856825
   %i.u = add i64 %i.t, -8796714831421723037
-  %i.v = extractelement <2 x i64> %12, i64 1
+  %i.v = extractelement <4 x i64> %10, i64 1
   %i.w = mul i64 %i.v, -2381459717836149591       ; 2 uses
   %i.x = tail call i64 @llvm.fshl.i64(i64 %i.w, i64 %i.w, i64 31)
   %i.y = mul i64 %i.x, -7046029288634856825
   %i.z = xor i64 %i.u, %i.y
   %i.aa = mul i64 %i.z, -7046029288634856825
   %i.ab = add i64 %i.aa, -8796714831421723037
-  %i.ac = mul <2 x i64> %18, splat (i64 -2381459717836149591) ; 2 uses
+  %13 = shufflevector <4 x i64> %10, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  %i.ac = mul <2 x i64> %13, splat (i64 -2381459717836149591) ; 2 uses
   %i.ad = tail call <2 x i64> @llvm.fshl.v2i64(<2 x i64> %i.ac, <2 x i64> %i.ac, <2 x i64> splat (i64 31)) ; 2 uses
   %i.ae = extractelement <2 x i64> %i.ad, i64 0
   %i.af = mul i64 %i.ae, -7046029288634856825
@@ -656,13 +650,13 @@ declare <4 x i32> @llvm.fshl.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #10
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i64> @llvm.fshl.v4i64(<4 x i64>, <4 x i64>, <4 x i64>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.fshl.v2i64(<2 x i64>, <2 x i64>, <2 x i64>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i64> @llvm.fshl.v4i64(<4 x i64>, <4 x i64>, <4 x i64>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #10

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %.thread22.i.i, %bb.t
   %indvars.iv.i.i = phi i64 [ 0, %bb.t ], [ %indvars.iv.next.i.i, %.thread22.i.i ] ; 2 uses
-  %i.dh = getelementptr inbounds nuw [76 x i8], ptr %7, i64 %indvars.iv.i.i ; 31 uses
+  %i.dh = getelementptr inbounds nuw [76 x i8], ptr %7, i64 %indvars.iv.i.i ; 34 uses
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !140 ; 6 uses
   %i.dj = icmp eq i32 %i.di, 0
   br i1 %i.dj, label %bb.bp, label %bb.v
@@ -608,6 +608,9 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.rg = fpext reassoc nsz arcp contract afn float %.sroa.3.12.vec.extract.i630.i.i to double
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef %i.rd, double noundef %i.re, double noundef %i.rf, double noundef %i.rg) #30
   %i.rh = getelementptr inbounds nuw i8, ptr %i.dh, i64 60
+  %9 = load float, ptr %i.rh, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %i.dh, i64 64
+  %11 = load float, ptr %10, align 4
   %i.ri = load float, ptr getelementptr inbounds nuw (i8, ptr @dt_liquify_ui_widths, i64 16), align 16, !tbaa !13
   %i.rj = fpext reassoc nsz arcp contract afn float %i.ri to double
   %i.rk = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !126
@@ -617,14 +620,12 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.ro = fmul reassoc nsz arcp contract afn double %i.rn, %i.rm
   %i.rp = fptrunc reassoc nsz arcp contract afn double %i.ro to float
   %i.rq = fpext reassoc nsz arcp contract afn float %i.rp to double
-  %9 = load <2 x float>, ptr %i.rh, align 4
-  %10 = fpext reassoc nsz arcp contract afn <2 x float> %9 to <2 x double> ; 2 uses
+  %12 = fpext reassoc nsz arcp contract afn float %9 to double
+  %13 = fpext reassoc nsz arcp contract afn float %11 to double
   call void @cairo_save(ptr noundef %1) #30
   call void @cairo_new_sub_path(ptr noundef %1) #30
   %i.rr = fmul reassoc nsz arcp contract afn double %i.rq, 5.000000e-01
-  %11 = extractelement <2 x double> %10, i64 0
-  %12 = extractelement <2 x double> %10, i64 1
-  call void @cairo_arc(ptr noundef %1, double noundef %11, double noundef %12, double noundef %i.rr, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #30
+  call void @cairo_arc(ptr noundef %1, double noundef %12, double noundef %13, double noundef %i.rr, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #30
   call void @cairo_restore(ptr noundef %1) #30
   call void @cairo_fill_preserve(ptr noundef %1) #30
   %.sroa.0.0.vec.extract.i633.i.i = extractelement <2 x float> %.sroa.0278.1.i.i, i64 0
@@ -670,6 +671,9 @@ bb.bd:                                            ; preds = %bb.bc
   %i.so = fpext reassoc nsz arcp contract afn float %.sroa.3.12.vec.extract.i641.i.i to double
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef %i.sl, double noundef %i.sm, double noundef %i.sn, double noundef %i.so) #30
   %i.sp = getelementptr inbounds nuw i8, ptr %i.dh, i64 68
+  %14 = load float, ptr %i.sp, align 4
+  %15 = getelementptr inbounds nuw i8, ptr %i.dh, i64 72
+  %16 = load float, ptr %15, align 4
   %i.sq = load float, ptr getelementptr inbounds nuw (i8, ptr @dt_liquify_ui_widths, i64 16), align 16, !tbaa !13
   %i.sr = fpext reassoc nsz arcp contract afn float %i.sq to double
   %i.ss = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !126
@@ -679,14 +683,12 @@ bb.bd:                                            ; preds = %bb.bc
   %i.sw = fmul reassoc nsz arcp contract afn double %i.sv, %i.su
   %i.sx = fptrunc reassoc nsz arcp contract afn double %i.sw to float
   %i.sy = fpext reassoc nsz arcp contract afn float %i.sx to double
-  %13 = load <2 x float>, ptr %i.sp, align 4
-  %14 = fpext reassoc nsz arcp contract afn <2 x float> %13 to <2 x double> ; 2 uses
+  %17 = fpext reassoc nsz arcp contract afn float %14 to double
+  %18 = fpext reassoc nsz arcp contract afn float %16 to double
   call void @cairo_save(ptr noundef %1) #30
   call void @cairo_new_sub_path(ptr noundef %1) #30
   %i.sz = fmul reassoc nsz arcp contract afn double %i.sy, 5.000000e-01
-  %15 = extractelement <2 x double> %14, i64 0
-  %16 = extractelement <2 x double> %14, i64 1
-  call void @cairo_arc(ptr noundef %1, double noundef %15, double noundef %16, double noundef %i.sz, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #30
+  call void @cairo_arc(ptr noundef %1, double noundef %17, double noundef %18, double noundef %i.sz, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #30
   call void @cairo_restore(ptr noundef %1) #30
   call void @cairo_fill_preserve(ptr noundef %1) #30
   %.sroa.0.0.vec.extract.i644.i.i = extractelement <2 x float> %.sroa.0278.1.i.i, i64 0
@@ -791,6 +793,9 @@ bb.bf:                                            ; preds = %.thread.i.i
   %i.vn = fpext reassoc nsz arcp contract afn float %.sroa.3.12.vec.extract.i664.i.i to double
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef %i.vk, double noundef %i.vl, double noundef %i.vm, double noundef %i.vn) #30
   %i.vo = getelementptr inbounds nuw i8, ptr %i.dh, i64 36
+  %19 = load float, ptr %i.vo, align 4
+  %20 = getelementptr inbounds nuw i8, ptr %i.dh, i64 40
+  %21 = load float, ptr %20, align 4
   %i.vp = load float, ptr getelementptr inbounds nuw (i8, ptr @dt_liquify_ui_widths, i64 16), align 16, !tbaa !13
   %i.vq = fpext reassoc nsz arcp contract afn float %i.vp to double
   %i.vr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !126
@@ -800,14 +805,12 @@ bb.bf:                                            ; preds = %.thread.i.i
   %i.vv = fmul reassoc nsz arcp contract afn double %i.vu, %i.vt
   %i.vw = fptrunc reassoc nsz arcp contract afn double %i.vv to float
   %i.vx = fpext reassoc nsz arcp contract afn float %i.vw to double
-  %17 = load <2 x float>, ptr %i.vo, align 4
-  %18 = fpext reassoc nsz arcp contract afn <2 x float> %17 to <2 x double> ; 2 uses
+  %22 = fpext reassoc nsz arcp contract afn float %19 to double
+  %23 = fpext reassoc nsz arcp contract afn float %21 to double
   call void @cairo_save(ptr noundef %1) #30
   call void @cairo_new_sub_path(ptr noundef %1) #30
   %i.vy = fmul reassoc nsz arcp contract afn double %i.vx, 5.000000e-01
-  %19 = extractelement <2 x double> %18, i64 0
-  %20 = extractelement <2 x double> %18, i64 1
-  call void @cairo_arc(ptr noundef %1, double noundef %19, double noundef %20, double noundef %i.vy, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #30
+  call void @cairo_arc(ptr noundef %1, double noundef %22, double noundef %23, double noundef %i.vy, double noundef 0.000000e+00, double noundef f0x401921FB54442D18) #30
   call void @cairo_restore(ptr noundef %1) #30
   call void @cairo_fill_preserve(ptr noundef %1) #30
   %.sroa.0.0.vec.extract.i667.i.i = extractelement <2 x float> %.sroa.0278.1.i.i, i64 0

@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.co = fsub nsz <2 x float> %i.ck, %i.cn
   store <2 x float> %i.co, ptr %i.bj, align 4, !tbaa !24
   %i.cp = fadd nsz <2 x float> %i.ck, %i.cn
-  store <2 x float> %i.cp, ptr %i.bo, align 4, !tbaa !24
   %3 = fsub nsz <2 x float> %i.ci, %i.cj
   store <2 x float> %3, ptr %i.ba, align 4, !tbaa !24
+  store <2 x float> %i.cp, ptr %i.bo, align 4, !tbaa !24
   %i.cq = fadd nsz <2 x float> %i.ci, %i.cj
   store <2 x float> %i.cq, ptr %i.bn, align 4, !tbaa !24
   %i.cr = getelementptr i8, ptr %i.j, i64 32      ; 2 uses
@@ -252,9 +252,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ef = fsub nsz <2 x float> %i.eb, %i.ee
   store <2 x float> %i.ef, ptr %i.da, align 4, !tbaa !24
   %i.eg = fadd nsz <2 x float> %i.eb, %i.ee
-  store <2 x float> %i.eg, ptr %i.df, align 4, !tbaa !24
   %4 = fsub nsz <2 x float> %i.dz, %i.ea
   store <2 x float> %4, ptr %i.cr, align 4, !tbaa !24
+  store <2 x float> %i.eg, ptr %i.df, align 4, !tbaa !24
   %i.eh = fadd nsz <2 x float> %i.dz, %i.ea
   store <2 x float> %i.eh, ptr %i.de, align 4, !tbaa !24
   %i.ei = getelementptr i8, ptr %i.j, i64 48      ; 2 uses
@@ -300,9 +300,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.fw = fsub nsz <2 x float> %i.fs, %i.fv
   store <2 x float> %i.fw, ptr %i.er, align 4, !tbaa !24
   %i.fx = fadd nsz <2 x float> %i.fs, %i.fv
+  store <2 x float> %i.fx, ptr %i.ew, align 4, !tbaa !24
   %5 = fsub nsz <2 x float> %i.fq, %i.fr
   store <2 x float> %5, ptr %i.ei, align 4, !tbaa !24
-  store <2 x float> %i.fx, ptr %i.ew, align 4, !tbaa !24
   %i.fy = fadd nsz <2 x float> %i.fq, %i.fr
   store <2 x float> %i.fy, ptr %i.ev, align 4, !tbaa !24
   %i.fz = getelementptr i8, ptr %i.j, i64 8       ; 2 uses
@@ -348,9 +348,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.hn = fsub nsz <2 x float> %i.hj, %i.hm
   store <2 x float> %i.hn, ptr %i.gi, align 4, !tbaa !24
   %i.ho = fadd nsz <2 x float> %i.hj, %i.hm
-  store <2 x float> %i.ho, ptr %i.gn, align 4, !tbaa !24
   %6 = fsub nsz <2 x float> %i.hh, %i.hi
   store <2 x float> %6, ptr %i.fz, align 4, !tbaa !24
+  store <2 x float> %i.ho, ptr %i.gn, align 4, !tbaa !24
   %i.hp = fadd nsz <2 x float> %i.hh, %i.hi
   store <2 x float> %i.hp, ptr %i.gm, align 4, !tbaa !24
   %i.hq = getelementptr i8, ptr %i.j, i64 24      ; 2 uses

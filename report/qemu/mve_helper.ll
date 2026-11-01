@@ -204,44 +204,11 @@ mve_advance_vpt.exit:                             ; preds = %mve_eci_mask.exit.i
 define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #0 {
 .preheader.preheader:
   %i.a = tail call fastcc zeroext i16 @mve_element_mask(ptr noundef %0) ; 8 uses
-  %4 = load i16, ptr %2, align 2
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %6 = load i16, ptr %5, align 2
-  %7 = sub i16 %4, %6
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %9 = load i16, ptr %8, align 2
-  %10 = load i16, ptr %3, align 2
-  %11 = add i16 %10, %9
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %13 = load i16, ptr %12, align 2
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  %15 = load i16, ptr %14, align 2
-  %16 = sub i16 %13, %15
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %18 = load i16, ptr %17, align 2
-  %19 = getelementptr i8, ptr %3, i64 4
-  %20 = load i16, ptr %19, align 2
-  %21 = add i16 %20, %18
-  %22 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %23 = load i16, ptr %22, align 2
-  %24 = getelementptr inbounds nuw i8, ptr %3, i64 10
-  %25 = load i16, ptr %24, align 2
-  %26 = sub i16 %23, %25
-  %27 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  %28 = load i16, ptr %27, align 2
-  %29 = getelementptr i8, ptr %3, i64 8
-  %30 = load i16, ptr %29, align 2
-  %31 = add i16 %30, %28
-  %32 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %33 = load i16, ptr %32, align 2
-  %34 = getelementptr inbounds nuw i8, ptr %3, i64 14
-  %35 = load i16, ptr %34, align 2
-  %36 = sub i16 %33, %35
-  %37 = getelementptr i8, ptr %3, i64 12
-  %38 = load i16, ptr %37, align 2
-  %39 = getelementptr inbounds nuw i8, ptr %2, i64 14
-  %40 = load i16, ptr %39, align 2
-  %41 = add i16 %38, %40
+  %4 = load <8 x i16>, ptr %3, align 2
+  %5 = shufflevector <8 x i16> %4, <8 x i16> poison, <8 x i32> <i32 1, i32 0, i32 3, i32 2, i32 5, i32 4, i32 7, i32 6> ; 2 uses
+  %6 = load <8 x i16>, ptr %2, align 2            ; 2 uses
+  %7 = sub <8 x i16> %6, %5                       ; 4 uses
+  %8 = add <8 x i16> %6, %5                       ; 4 uses
   %i.b = and i16 %i.a, 255
   %i.c = zext nneg i16 %i.b to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr @expand_pred_b_data, i64 %i.c
@@ -250,7 +217,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.g = load i16, ptr %1, align 2
   %i.h = xor i16 %i.f, -1
   %i.i = and i16 %i.g, %i.h
-  %i.j = and i16 %7, %i.f
+  %9 = extractelement <8 x i16> %7, i64 0
+  %i.j = and i16 %9, %i.f
   %i.k = or i16 %i.i, %i.j
   store i16 %i.k, ptr %1, align 2
   %i.l = lshr i16 %i.a, 2
@@ -263,7 +231,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.s = load i16, ptr %i.m, align 2
   %i.t = xor i16 %i.r, -1
   %i.u = and i16 %i.s, %i.t
-  %i.v = and i16 %11, %i.r
+  %10 = extractelement <8 x i16> %8, i64 1
+  %i.v = and i16 %10, %i.r
   %i.w = or i16 %i.u, %i.v
   store i16 %i.w, ptr %i.m, align 2
   %i.x = lshr i16 %i.a, 4
@@ -276,7 +245,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.ae = load i16, ptr %i.y, align 2
   %i.af = xor i16 %i.ad, -1
   %i.ag = and i16 %i.ae, %i.af
-  %i.ah = and i16 %16, %i.ad
+  %11 = extractelement <8 x i16> %7, i64 2
+  %i.ah = and i16 %11, %i.ad
   %i.ai = or i16 %i.ag, %i.ah
   store i16 %i.ai, ptr %i.y, align 2
   %i.aj = lshr i16 %i.a, 6
@@ -289,7 +259,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.aq = load i16, ptr %i.ak, align 2
   %i.ar = xor i16 %i.ap, -1
   %i.as = and i16 %i.aq, %i.ar
-  %i.at = and i16 %21, %i.ap
+  %12 = extractelement <8 x i16> %8, i64 3
+  %i.at = and i16 %12, %i.ap
   %i.au = or i16 %i.as, %i.at
   store i16 %i.au, ptr %i.ak, align 2
   %i.av = lshr i16 %i.a, 8
@@ -301,7 +272,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.bb = load i16, ptr %i.aw, align 2
   %i.bc = xor i16 %i.ba, -1
   %i.bd = and i16 %i.bb, %i.bc
-  %i.be = and i16 %26, %i.ba
+  %13 = extractelement <8 x i16> %7, i64 4
+  %i.be = and i16 %13, %i.ba
   %i.bf = or i16 %i.bd, %i.be
   store i16 %i.bf, ptr %i.aw, align 2
   %i.bg = lshr i16 %i.a, 10
@@ -313,7 +285,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.bm = load i16, ptr %i.bh, align 2
   %i.bn = xor i16 %i.bl, -1
   %i.bo = and i16 %i.bm, %i.bn
-  %i.bp = and i16 %31, %i.bl
+  %14 = extractelement <8 x i16> %8, i64 5
+  %i.bp = and i16 %14, %i.bl
   %i.bq = or i16 %i.bo, %i.bp
   store i16 %i.bq, ptr %i.bh, align 2
   %i.br = lshr i16 %i.a, 12
@@ -325,7 +298,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.bx = load i16, ptr %i.bs, align 2
   %i.by = xor i16 %i.bw, -1
   %i.bz = and i16 %i.bx, %i.by
-  %i.ca = and i16 %36, %i.bw
+  %15 = extractelement <8 x i16> %7, i64 6
+  %i.ca = and i16 %15, %i.bw
   %i.cb = or i16 %i.bz, %i.ca
   store i16 %i.cb, ptr %i.bs, align 2
   %i.cc = lshr i16 %i.a, 14
@@ -337,7 +311,8 @@ define dso_local void @helper_mve_vcadd90h(ptr nofree noundef captures(none) %0,
   %i.ci = load i16, ptr %i.cd, align 2
   %i.cj = xor i16 %i.ch, -1
   %i.ck = and i16 %i.ci, %i.cj
-  %i.cl = and i16 %41, %i.ch
+  %16 = extractelement <8 x i16> %8, i64 7
+  %i.cl = and i16 %16, %i.ch
   %i.cm = or i16 %i.ck, %i.cl
   store i16 %i.cm, ptr %i.cd, align 2
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
@@ -740,44 +715,11 @@ mve_advance_vpt.exit:                             ; preds = %mve_eci_mask.exit.i
 define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #0 {
 .preheader.preheader:
   %i.a = tail call fastcc zeroext i16 @mve_element_mask(ptr noundef %0) ; 8 uses
-  %4 = load i16, ptr %2, align 2
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  %6 = load i16, ptr %5, align 2
-  %7 = add i16 %6, %4
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %9 = load i16, ptr %8, align 2
-  %10 = load i16, ptr %3, align 2
-  %11 = sub i16 %9, %10
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %13 = load i16, ptr %12, align 2
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  %15 = load i16, ptr %14, align 2
-  %16 = add i16 %15, %13
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %18 = load i16, ptr %17, align 2
-  %19 = getelementptr i8, ptr %3, i64 4
-  %20 = load i16, ptr %19, align 2
-  %21 = sub i16 %18, %20
-  %22 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %23 = load i16, ptr %22, align 2
-  %24 = getelementptr inbounds nuw i8, ptr %3, i64 10
-  %25 = load i16, ptr %24, align 2
-  %26 = add i16 %25, %23
-  %27 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  %28 = load i16, ptr %27, align 2
-  %29 = getelementptr i8, ptr %3, i64 8
-  %30 = load i16, ptr %29, align 2
-  %31 = sub i16 %28, %30
-  %32 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %33 = load i16, ptr %32, align 2
-  %34 = getelementptr inbounds nuw i8, ptr %3, i64 14
-  %35 = load i16, ptr %34, align 2
-  %36 = add i16 %35, %33
-  %37 = getelementptr inbounds nuw i8, ptr %2, i64 14
-  %38 = load i16, ptr %37, align 2
-  %39 = getelementptr i8, ptr %3, i64 12
-  %40 = load i16, ptr %39, align 2
-  %41 = sub i16 %38, %40
+  %4 = load <8 x i16>, ptr %2, align 2            ; 2 uses
+  %5 = load <8 x i16>, ptr %3, align 2
+  %6 = shufflevector <8 x i16> %5, <8 x i16> poison, <8 x i32> <i32 1, i32 0, i32 3, i32 2, i32 5, i32 4, i32 7, i32 6> ; 2 uses
+  %7 = add <8 x i16> %4, %6                       ; 4 uses
+  %8 = sub <8 x i16> %4, %6                       ; 4 uses
   %i.b = and i16 %i.a, 255
   %i.c = zext nneg i16 %i.b to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr @expand_pred_b_data, i64 %i.c
@@ -786,7 +728,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.g = load i16, ptr %1, align 2
   %i.h = xor i16 %i.f, -1
   %i.i = and i16 %i.g, %i.h
-  %i.j = and i16 %7, %i.f
+  %9 = extractelement <8 x i16> %7, i64 0
+  %i.j = and i16 %9, %i.f
   %i.k = or i16 %i.i, %i.j
   store i16 %i.k, ptr %1, align 2
   %i.l = lshr i16 %i.a, 2
@@ -799,7 +742,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.s = load i16, ptr %i.m, align 2
   %i.t = xor i16 %i.r, -1
   %i.u = and i16 %i.s, %i.t
-  %i.v = and i16 %11, %i.r
+  %10 = extractelement <8 x i16> %8, i64 1
+  %i.v = and i16 %10, %i.r
   %i.w = or i16 %i.u, %i.v
   store i16 %i.w, ptr %i.m, align 2
   %i.x = lshr i16 %i.a, 4
@@ -812,7 +756,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.ae = load i16, ptr %i.y, align 2
   %i.af = xor i16 %i.ad, -1
   %i.ag = and i16 %i.ae, %i.af
-  %i.ah = and i16 %16, %i.ad
+  %11 = extractelement <8 x i16> %7, i64 2
+  %i.ah = and i16 %11, %i.ad
   %i.ai = or i16 %i.ag, %i.ah
   store i16 %i.ai, ptr %i.y, align 2
   %i.aj = lshr i16 %i.a, 6
@@ -825,7 +770,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.aq = load i16, ptr %i.ak, align 2
   %i.ar = xor i16 %i.ap, -1
   %i.as = and i16 %i.aq, %i.ar
-  %i.at = and i16 %21, %i.ap
+  %12 = extractelement <8 x i16> %8, i64 3
+  %i.at = and i16 %12, %i.ap
   %i.au = or i16 %i.as, %i.at
   store i16 %i.au, ptr %i.ak, align 2
   %i.av = lshr i16 %i.a, 8
@@ -837,7 +783,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.bb = load i16, ptr %i.aw, align 2
   %i.bc = xor i16 %i.ba, -1
   %i.bd = and i16 %i.bb, %i.bc
-  %i.be = and i16 %26, %i.ba
+  %13 = extractelement <8 x i16> %7, i64 4
+  %i.be = and i16 %13, %i.ba
   %i.bf = or i16 %i.bd, %i.be
   store i16 %i.bf, ptr %i.aw, align 2
   %i.bg = lshr i16 %i.a, 10
@@ -849,7 +796,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.bm = load i16, ptr %i.bh, align 2
   %i.bn = xor i16 %i.bl, -1
   %i.bo = and i16 %i.bm, %i.bn
-  %i.bp = and i16 %31, %i.bl
+  %14 = extractelement <8 x i16> %8, i64 5
+  %i.bp = and i16 %14, %i.bl
   %i.bq = or i16 %i.bo, %i.bp
   store i16 %i.bq, ptr %i.bh, align 2
   %i.br = lshr i16 %i.a, 12
@@ -861,7 +809,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.bx = load i16, ptr %i.bs, align 2
   %i.by = xor i16 %i.bw, -1
   %i.bz = and i16 %i.bx, %i.by
-  %i.ca = and i16 %36, %i.bw
+  %15 = extractelement <8 x i16> %7, i64 6
+  %i.ca = and i16 %15, %i.bw
   %i.cb = or i16 %i.bz, %i.ca
   store i16 %i.cb, ptr %i.bs, align 2
   %i.cc = lshr i16 %i.a, 14
@@ -873,7 +822,8 @@ define dso_local void @helper_mve_vcadd270h(ptr nofree noundef captures(none) %0
   %i.ci = load i16, ptr %i.cd, align 2
   %i.cj = xor i16 %i.ch, -1
   %i.ck = and i16 %i.ci, %i.cj
-  %i.cl = and i16 %41, %i.ch
+  %16 = extractelement <8 x i16> %8, i64 7
+  %i.cl = and i16 %16, %i.ch
   %i.cm = or i16 %i.ck, %i.cl
   store i16 %i.cm, ptr %i.cd, align 2
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses

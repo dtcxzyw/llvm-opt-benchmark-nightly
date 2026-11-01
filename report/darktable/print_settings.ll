@@ -205,50 +205,50 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as, %bb.ar
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
-  %9 = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00 ; 3 uses
-  %10 = fmul reassoc nsz arcp contract afn double %i.ks, 1.500000e+01 ; 2 uses
-  %11 = fcmp reassoc nsz arcp contract afn olt double %10, %i.lf
-  %12 = fsub reassoc nsz arcp contract afn double %i.lf, %9
-  %13 = fadd reassoc nsz arcp contract afn double %i.kt, %i.lf
-  %14 = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01 ; 4 uses
-  %15 = fsub reassoc nsz arcp contract afn double %13, %14
-  %.4 = select nsz i1 %11, double %12, double %15 ; 2 uses
-  %i.tw = fmul reassoc nsz arcp contract afn double %i.ks, 3.000000e+01
-  %16 = fptrunc reassoc nsz arcp contract afn double %i.tw to float ; 2 uses
-  %i.tx = fsub reassoc nsz arcp contract afn double %.4, %i.ku
-  %17 = fptrunc reassoc nsz arcp contract afn double %i.tx to float
-  %18 = fpext reassoc nsz arcp contract afn <2 x float> %i.jw to <2 x double> ; 2 uses
-  %19 = extractelement <2 x double> %18, i64 0
-  %20 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.d, i64 noundef 16, ptr noundef %i.le, double noundef %19) #19 ; 0 uses
+  %8 = fpext reassoc nsz arcp contract afn <2 x float> %i.jw to <2 x double> ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.d, i64 noundef 16, ptr noundef %i.le, double noundef %9) #19 ; 0 uses
   call void @pango_layout_set_text(ptr noundef %i.kp, ptr noundef nonnull %i.d, i32 noundef -1) #19
   call void @pango_layout_get_pixel_extents(ptr noundef %i.kp, ptr noundef null, ptr noundef nonnull %7) #19
-  %21 = load i32, ptr %8, align 4, !tbaa !217
-  %22 = sitofp reassoc nsz arcp contract afn i32 %21 to float
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
+  %12 = load i32, ptr %11, align 4, !tbaa !217
+  %13 = sitofp reassoc nsz arcp contract afn i32 %12 to float
+  %14 = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00 ; 3 uses
+  %i.tw = fmul reassoc nsz arcp contract afn double %i.ks, 1.500000e+01 ; 2 uses
+  %15 = fcmp reassoc nsz arcp contract afn olt double %i.tw, %i.lf
+  %i.tx = fsub reassoc nsz arcp contract afn double %i.lf, %14
+  %16 = fadd reassoc nsz arcp contract afn double %i.kt, %i.lf
+  %17 = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01 ; 4 uses
+  %18 = fsub reassoc nsz arcp contract afn double %16, %17
+  %.4 = select nsz i1 %15, double %i.tx, double %18 ; 2 uses
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef 5.000000e-01, double noundef 5.000000e-01, double noundef 5.000000e-01, double noundef 9.000000e-01) #19
-  %23 = load i32, ptr %8, align 4, !tbaa !217
-  %24 = sitofp reassoc nsz arcp contract afn i32 %23 to double
-  %25 = fadd reassoc nsz arcp contract afn double %14, %24
+  %19 = load i32, ptr %11, align 4, !tbaa !217
+  %20 = sitofp reassoc nsz arcp contract afn i32 %19 to double
+  %21 = fadd reassoc nsz arcp contract afn double %17, %20
+  %22 = fptrunc reassoc nsz arcp contract afn double %21 to float
+  %23 = fmul reassoc nsz arcp contract afn double %i.ks, 3.000000e+01
+  %24 = fptrunc reassoc nsz arcp contract afn double %23 to float ; 2 uses
+  %25 = fsub reassoc nsz arcp contract afn double %.4, %i.ku
   %i.ty = fptrunc reassoc nsz arcp contract afn double %25 to float
-  %i.tz = fcmp reassoc nsz arcp contract afn olt double %10, %i.pg
-  %i.ua = fsub reassoc nsz arcp contract afn double %i.pg, %9
+  %i.tz = fcmp reassoc nsz arcp contract afn olt double %i.tw, %i.pg
+  %i.ua = fsub reassoc nsz arcp contract afn double %i.pg, %14
   %i.ub = fadd reassoc nsz arcp contract afn double %i.kt, %i.pg
-  %i.uc = fsub reassoc nsz arcp contract afn double %i.ub, %14
+  %i.uc = fsub reassoc nsz arcp contract afn double %i.ub, %17
   %.4481 = select nsz i1 %i.tz, double %i.ua, double %i.uc ; 2 uses
   %i.ud = shufflevector <4 x float> %i.jv, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.ue = shufflevector <4 x float> %i.jv, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.uf = fadd reassoc nsz arcp contract afn <2 x float> %i.ud, %i.ue ; 2 uses
   %i.ug = extractelement <2 x float> %i.uf, i64 0
-  %i.uh = fsub reassoc nsz arcp contract afn float %i.ug, %22
+  %i.uh = fsub reassoc nsz arcp contract afn float %i.ug, %13
   %i.ui = fpext reassoc nsz arcp contract afn float %i.uh to double
   %i.uj = fmul reassoc nsz arcp contract afn double %i.ui, 5.000000e-01 ; 2 uses
   %i.uk = fsub reassoc nsz arcp contract afn double %i.uj, %i.ku
   %i.ul = fptrunc reassoc nsz arcp contract afn double %i.uk to float
-  call void @dt_gui_draw_rounded_rectangle(ptr noundef %1, float noundef %i.ty, float noundef %16, float noundef %i.ul, float noundef %17) #19
+  call void @dt_gui_draw_rounded_rectangle(ptr noundef %1, float noundef %22, float noundef %24, float noundef %i.ul, float noundef %i.ty) #19
   call void @cairo_set_source_rgb(ptr noundef %1, double noundef 8.000000e-01, double noundef 8.000000e-01, double noundef 8.000000e-01) #19
   call void @cairo_move_to(ptr noundef %1, double noundef %i.uj, double noundef %.4) #19
   call void @pango_cairo_show_layout(ptr noundef %1, ptr noundef %i.kp) #19
-  %i.um = extractelement <2 x double> %18, i64 1
+  %i.um = extractelement <2 x double> %8, i64 1
   %i.un = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.d, i64 noundef 16, ptr noundef %i.le, double noundef %i.um) #19 ; 0 uses
   call void @pango_layout_set_text(ptr noundef %i.kp, ptr noundef nonnull %i.d, i32 noundef -1) #19
   call void @pango_layout_get_pixel_extents(ptr noundef %i.kp, ptr noundef null, ptr noundef nonnull %7) #19
@@ -256,9 +256,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   %i.up = fpext reassoc nsz arcp contract afn float %i.uo to double
   %i.uq = fmul reassoc nsz arcp contract afn double %i.up, 5.000000e-01 ; 2 uses
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef 5.000000e-01, double noundef 5.000000e-01, double noundef 5.000000e-01, double noundef 9.000000e-01) #19
-  %i.ur = load i32, ptr %8, align 4, !tbaa !217
+  %i.ur = load i32, ptr %11, align 4, !tbaa !217
   %i.us = sitofp reassoc nsz arcp contract afn i32 %i.ur to double ; 2 uses
-  %i.ut = fadd reassoc nsz arcp contract afn double %14, %i.us
+  %i.ut = fadd reassoc nsz arcp contract afn double %17, %i.us
   %i.uu = fptrunc reassoc nsz arcp contract afn double %i.ut to float
   %i.uv = fsub reassoc nsz arcp contract afn double %.4481, %i.ku
   %i.uw = fptrunc reassoc nsz arcp contract afn double %i.uv to float
@@ -266,13 +266,13 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   %.neg568 = fsub reassoc nsz arcp contract afn double %i.uq, %i.ku
   %i.ux = fadd reassoc nsz arcp contract afn double %.neg568, %.neg567
   %i.uy = fptrunc reassoc nsz arcp contract afn double %i.ux to float
-  call void @dt_gui_draw_rounded_rectangle(ptr noundef %1, float noundef %16, float noundef %i.uu, float noundef %i.uw, float noundef %i.uy) #19
+  call void @dt_gui_draw_rounded_rectangle(ptr noundef %1, float noundef %24, float noundef %i.uu, float noundef %i.uw, float noundef %i.uy) #19
   call void @cairo_set_source_rgb(ptr noundef %1, double noundef 8.000000e-01, double noundef 8.000000e-01, double noundef 8.000000e-01) #19
-  %i.uz = fadd reassoc nsz arcp contract afn double %.4481, %9
+  %i.uz = fadd reassoc nsz arcp contract afn double %.4481, %14
   call void @cairo_move_to(ptr noundef %1, double noundef %i.uz, double noundef %i.uq) #19
   call void @cairo_save(ptr noundef %1) #19
   call void @cairo_rotate(ptr noundef %1, double noundef f0xBFF921FB54442D18) #19
-  %i.va = load i32, ptr %8, align 4, !tbaa !217
+  %i.va = load i32, ptr %11, align 4, !tbaa !217
   %i.vb = sitofp reassoc nsz arcp contract afn i32 %i.va to double
   %i.vc = fmul reassoc nnan nsz arcp contract afn double %i.vb, -5.000000e-01
   %i.vd = fmul reassoc nsz arcp contract afn double %i.ks, -9.000000e+00

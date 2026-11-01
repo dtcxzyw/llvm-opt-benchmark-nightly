@@ -122,45 +122,46 @@ _ZL16calc_x_av_stddeviPA3_fPfS1_.exit.loopexit.unr-lcssa: ; preds = %.preheader.
   br i1 %epil.iter.cmp.not, label %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit, label %.preheader.i.epil, !llvm.loop !10
 
 _ZL16calc_x_av_stddeviPA3_fPfS1_.exit:            ; preds = %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit.loopexit.unr-lcssa, %.preheader.i.epil, %bb.b
-  %i.bn = phi <4 x double> [ zeroinitializer, %bb.b ], [ %i.av, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit.loopexit.unr-lcssa ], [ %i.bi, %.preheader.i.epil ] ; 3 uses
-  %i.bo = phi <2 x double> [ zeroinitializer, %bb.b ], [ %i.az, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit.loopexit.unr-lcssa ], [ %i.bm, %.preheader.i.epil ]
+  %i.bn = phi <4 x double> [ zeroinitializer, %bb.b ], [ %i.av, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit.loopexit.unr-lcssa ], [ %i.bi, %.preheader.i.epil ] ; 4 uses
+  %i.bo = phi <2 x double> [ zeroinitializer, %bb.b ], [ %i.az, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit.loopexit.unr-lcssa ], [ %i.bm, %.preheader.i.epil ] ; 2 uses
   %i.bp = sitofp i32 %6 to double
-  %i.bq = fdiv double 1.000000e+00, %i.bp         ; 3 uses
+  %i.bq = fdiv double 1.000000e+00, %i.bp         ; 6 uses
   %i.br = extractelement <4 x double> %i.bn, i64 0
   %i.bs = fmul double %i.bq, %i.br                ; 3 uses
-  %i.bt = extractelement <4 x double> %i.bn, i64 3
-  %i.bu = fmul double %i.bq, %i.bt
-  %10 = fptrunc double %i.bs to float
-  %11 = fneg double %i.bs
-  %12 = tail call double @llvm.fmuladd.f64(double %11, double %i.bs, double %i.bu)
-  %13 = tail call double @sqrt(double noundef %12) #5
-  %14 = fptrunc double %13 to float
-  %15 = insertelement <2 x double> poison, double %i.bq, i64 0
-  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %17 = shufflevector <4 x double> %i.bn, <4 x double> poison, <2 x i32> <i32 1, i32 2>
-  %18 = fmul <2 x double> %16, %17                ; 4 uses
-  %19 = fmul <2 x double> %16, %i.bo
-  %20 = extractelement <2 x double> %18, i64 0
-  %i.bv = fptrunc double %20 to float
-  %21 = fneg <2 x double> %18
-  %22 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %21, <2 x double> %18, <2 x double> %19) ; 2 uses
-  %23 = extractelement <2 x double> %22, i64 0
-  %i.bw = tail call double @sqrt(double noundef %23) #5
+  %i.bt = extractelement <4 x double> %i.bn, i64 1
+  %i.bu = fmul double %i.bq, %i.bt                ; 3 uses
+  %10 = extractelement <4 x double> %i.bn, i64 2
+  %11 = fmul double %i.bq, %10                    ; 3 uses
+  %12 = extractelement <4 x double> %i.bn, i64 3
+  %13 = fmul double %i.bq, %12
+  %14 = extractelement <2 x double> %i.bo, i64 0
+  %15 = fmul double %i.bq, %14
+  %16 = extractelement <2 x double> %i.bo, i64 1
+  %17 = fmul double %i.bq, %16
+  %18 = fptrunc double %i.bs to float
+  %19 = fneg double %i.bs
+  %20 = tail call double @llvm.fmuladd.f64(double %19, double %i.bs, double %13)
+  %21 = tail call double @sqrt(double noundef %20) #5
+  %i.bv = fptrunc double %21 to float
+  %22 = fptrunc double %i.bu to float
+  %23 = fneg double %i.bu
+  %24 = tail call double @llvm.fmuladd.f64(double %23, double %i.bu, double %15)
+  %i.bw = tail call double @sqrt(double noundef %24) #5
   %i.bx = fptrunc double %i.bw to float
-  %24 = extractelement <2 x double> %18, i64 1
-  %25 = fptrunc double %24 to float
-  %26 = extractelement <2 x double> %22, i64 1
-  %i.by = tail call double @sqrt(double noundef %26) #5
+  %25 = fptrunc double %11 to float
+  %26 = fneg double %11
+  %27 = tail call double @llvm.fmuladd.f64(double %26, double %11, double %17)
+  %i.by = tail call double @sqrt(double noundef %27) #5
   %i.bz = fptrunc double %i.by to float
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit, %bb.a
   %.sroa.8102.0 = phi float [ %25, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
-  %.sroa.5100.0 = phi float [ %i.bv, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
-  %.sroa.098.0 = phi float [ %10, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
+  %.sroa.5100.0 = phi float [ %22, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
+  %.sroa.098.0 = phi float [ %18, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
   %.sroa.8.0 = phi float [ %i.bz, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
   %.sroa.5.0 = phi float [ %i.bx, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
-  %.sroa.0.0 = phi float [ %14, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
+  %.sroa.0.0 = phi float [ %i.bv, %_ZL16calc_x_av_stddeviPA3_fPfS1_.exit ], [ undef, %bb.a ] ; 4 uses
   %i.ca = icmp eq ptr %3, null
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 20
@@ -562,9 +563,6 @@ declare double @llvm.fmuladd.f64(double, double, double) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4

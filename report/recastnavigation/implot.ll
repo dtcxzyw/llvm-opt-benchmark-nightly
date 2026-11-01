@@ -205,7 +205,7 @@ bb.by:                                            ; preds = %.lr.ph1095, %bb.cn
   %indvars.iv1147 = phi i64 [ 0, %.lr.ph1095 ], [ %indvars.iv.next1148, %bb.cn ] ; 2 uses
   %i.or = load ptr, ptr %i.lg, align 8, !tbaa !627
   %i.os = load ptr, ptr %i.lh, align 8, !tbaa !440
-  %i.ot = getelementptr inbounds nuw [32 x i8], ptr %i.os, i64 %indvars.iv1147 ; 11 uses
+  %i.ot = getelementptr inbounds nuw [32 x i8], ptr %i.os, i64 %indvars.iv1147 ; 10 uses
   %i.ou = getelementptr inbounds nuw i8, ptr %i.ot, i64 24
   %i.ov = load i32, ptr %i.ou, align 4, !tbaa !629
   %i.ow = sext i32 %i.ov to i64
@@ -328,8 +328,7 @@ bb.cl:                                            ; preds = %bb.ck
 bb.cm:                                            ; preds = %bb.cl, %bb.ck
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #32
   store <2 x float> %.sroa.0.0.copyload.i681, ptr %19, align 16
-  %i.qr = load <4 x float>, ptr %18, align 16     ; 7 uses
-  %.sroa.0.0.vec.insert.i682 = shufflevector <4 x float> %i.qr, <4 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.qr = load <4 x float>, ptr %18, align 16     ; 5 uses
   %.sroa.0.4.vec.insert.i683 = shufflevector <4 x float> %i.qr, <4 x float> poison, <2 x i32> <i32 2, i32 1>
   store <2 x float> %.sroa.0.4.vec.insert.i683, ptr %i.lk, align 8
   %bc = bitcast <4 x float> %i.qr to <2 x i64>
@@ -337,38 +336,29 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
   store i64 %i.qs, ptr %i.ll, align 16
   %.sroa.0.4.vec.insert.i686 = shufflevector <4 x float> %i.qr, <4 x float> poison, <2 x i32> <i32 0, i32 3>
   store <2 x float> %.sroa.0.4.vec.insert.i686, ptr %i.lm, align 8
-  %50 = getelementptr inbounds nuw i8, ptr %i.ot, i64 4
-  %51 = shufflevector <2 x float> %.sroa.0.0.copyload.i681, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %52 = shufflevector <4 x float> %51, <4 x float> %i.qr, <2 x i32> <i32 0, i32 6>
-  %53 = shufflevector <4 x float> %51, <4 x float> %i.qr, <2 x i32> <i32 1, i32 5>
-  %54 = trunc i64 %i.qs to i32
-  %55 = load float, ptr %i.ot, align 4, !tbaa !172
-  %56 = load float, ptr %50, align 4, !tbaa !173
-  %57 = insertelement <2 x float> poison, float %55, i64 0
-  %58 = shufflevector <2 x float> %57, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %59 = fsub <2 x float> %58, %52                 ; 2 uses
-  %60 = insertelement <2 x float> poison, float %56, i64 0
-  %61 = shufflevector <2 x float> %60, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %62 = fsub <2 x float> %61, %53                 ; 2 uses
-  %63 = fmul <2 x float> %62, %62
-  %64 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %59, <2 x float> %59, <2 x float> %63) ; 2 uses
-  %i.qt = extractelement <2 x float> %64, i64 0   ; 2 uses
+  %50 = trunc i64 %i.qs to i32
+  %51 = load <2 x float>, ptr %i.ot, align 4, !tbaa !41 ; 2 uses
+  %52 = bitcast i32 %50 to float
+  %53 = shufflevector <2 x float> %51, <2 x float> poison, <4 x i32> zeroinitializer
+  %54 = shufflevector <2 x float> %.sroa.0.0.copyload.i681, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
+  %55 = shufflevector <4 x float> %54, <4 x float> %i.qr, <4 x i32> <i32 0, i32 6, i32 poison, i32 4>
+  %56 = insertelement <4 x float> %55, float %52, i64 2
+  %57 = fsub <4 x float> %53, %56                 ; 2 uses
+  %58 = shufflevector <2 x float> %51, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %59 = shufflevector <4 x float> %54, <4 x float> %i.qr, <4 x i32> <i32 1, i32 5, i32 7, i32 7>
+  %60 = fsub <4 x float> %58, %59                 ; 2 uses
+  %61 = fmul <4 x float> %60, %60
+  %62 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %57, <4 x float> %57, <4 x float> %61) ; 4 uses
+  %i.qt = extractelement <4 x float> %62, i64 0   ; 2 uses
   %i.qu = fcmp olt float %i.qt, f0x7F7FFFFF
   %.1 = select i1 %i.qu, float %i.qt, float f0x7F7FFFFF ; 2 uses
-  %i.qv = extractelement <2 x float> %64, i64 1   ; 2 uses
+  %i.qv = extractelement <4 x float> %62, i64 1   ; 2 uses
   %i.qw = fcmp olt float %i.qv, %.1               ; 2 uses
   %.1.1 = select i1 %i.qw, float %i.qv, float %.1 ; 2 uses
-  %65 = bitcast i32 %54 to float
-  %66 = insertelement <2 x float> %.sroa.0.0.vec.insert.i682, float %65, i64 0
-  %67 = fsub <2 x float> %58, %66                 ; 2 uses
-  %68 = shufflevector <4 x float> %i.qr, <4 x float> poison, <2 x i32> <i32 3, i32 3>
-  %69 = fsub <2 x float> %61, %68                 ; 2 uses
-  %70 = fmul <2 x float> %69, %69
-  %71 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %67, <2 x float> %67, <2 x float> %70) ; 2 uses
-  %i.qx = extractelement <2 x float> %71, i64 0   ; 2 uses
+  %i.qx = extractelement <4 x float> %62, i64 2   ; 2 uses
   %i.qy = fcmp olt float %i.qx, %.1.1             ; 2 uses
   %.1.2 = select i1 %i.qy, float %i.qx, float %.1.1
-  %i.qz = extractelement <2 x float> %71, i64 1
+  %i.qz = extractelement <4 x float> %62, i64 3
   %i.ra = fcmp olt float %i.qz, %.1.2
   %i.rb = zext i1 %i.qw to i64
   %i.rc = select i1 %i.qy, i64 2, i64 %i.rb
@@ -770,6 +760,9 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #31
