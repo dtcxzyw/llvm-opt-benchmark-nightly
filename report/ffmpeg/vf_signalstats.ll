@@ -204,30 +204,31 @@ bb.a:
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 64
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !26
   %i.ad = sdiv i32 %i.ac, 2                       ; 2 uses
-  %i.ae = load ptr, ptr %1, align 8, !tbaa !46    ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 68
-  %4 = load <2 x i32>, ptr %i.af, align 4, !tbaa !26
-  %5 = sdiv <2 x i32> %4, splat (i32 2)           ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !54 ; 2 uses
-  %6 = icmp sgt i32 %i.ah, 0
-  %7 = extractelement <2 x i32> %5, i64 0         ; 2 uses
-  %8 = sext i32 %7 to i64
-  %9 = extractelement <2 x i32> %5, i64 1         ; 2 uses
-  %i.ai = sext i32 %9 to i64
+  %i.ae = load ptr, ptr %1, align 8, !tbaa !46    ; 4 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 72
+  %4 = load i32, ptr %i.af, align 8, !tbaa !26
+  %5 = sdiv i32 %4, 2                             ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 68
+  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !26
+  %6 = sdiv i32 %i.ah, 2                          ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %8 = load i32, ptr %7, align 4, !tbaa !54       ; 2 uses
+  %9 = icmp sgt i32 %8, 0
+  %10 = sext i32 %6 to i64
+  %i.ai = sext i32 %5 to i64
   %i.aj = sext i32 %i.ad to i64
   %i.ak = sext i32 %i.y to i64
-  br i1 %6, label %.preheader.preheader, label %._crit_edge69.split
+  br i1 %9, label %.preheader.preheader, label %._crit_edge69.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.al = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !51
-  %i.an = mul nsw i32 %7, %i.n
+  %i.an = mul nsw i32 %6, %i.n
   %i.ao = sext i32 %i.an to i64
   %i.ap = getelementptr inbounds [2 x i8], ptr %i.am, i64 %i.ao
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !51
-  %i.as = mul nsw i32 %9, %i.n
+  %i.as = mul nsw i32 %5, %i.n
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr inbounds [2 x i8], ptr %i.ar, i64 %i.at
   %i.av = load ptr, ptr %i.aa, align 8, !tbaa !51
@@ -238,7 +239,7 @@ bb.a:
   %i.ba = mul nsw i32 %i.y, %i.n
   %i.bb = sext i32 %i.ba to i64
   %i.bc = getelementptr inbounds [2 x i8], ptr %i.az, i64 %i.bb
-  %wide.trip.count = zext nneg i32 %i.ah to i64
+  %wide.trip.count = zext nneg i32 %8 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -279,7 +280,7 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !97
 
 ._crit_edge:                                      ; preds = %bb.b
-  %i.by = getelementptr inbounds [2 x i8], ptr %.06264, i64 %8
+  %i.by = getelementptr inbounds [2 x i8], ptr %.06264, i64 %10
   %i.bz = getelementptr inbounds [2 x i8], ptr %.06165, i64 %i.ai
   %i.ca = getelementptr inbounds [2 x i8], ptr %.06066, i64 %i.aj
   %i.cb = getelementptr inbounds [2 x i8], ptr %.05967, i64 %i.ak

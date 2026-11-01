@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJRKiEESA_IJEEEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairISB_iEPSJ_EESM_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJRKiEESA_IJEEEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairISB_iEPSJ_EESM_DpOT_ENKUlhE_clEh.exit ], [ %.pre16, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJEEEE19transfer_n_backwardEmmmPS5_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -252,10 +252,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.cu = zext i8 %i.cn to i64                    ; 4 uses
   %i.cv = zext nneg i32 %i.cr to i64
-  %i.cw = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %7 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cw = xor i64 %7, -1
   %i.cx = add nsw i64 %i.cw, %i.cu
   %i.cy = add nsw i64 %i.cu, -2
-  %i.cz = sub nsw i64 %i.cy, %i.cb
+  %i.cz = sub nsw i64 %i.cy, %7
   %xtraiter24 = and i64 %i.cx, 3                  ; 2 uses
   %lcmp.mod25.not = icmp eq i64 %xtraiter24, 0
   br i1 %lcmp.mod25.not, label %.prol.loopexit, label %.prol.preheader
@@ -658,13 +660,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESA_IJEEEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIKiiEPSJ_EESM_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESA_IJEEEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIKiiEPSJ_EESM_DpOT_ENKUlhE_clEh.exit ], [ %.pre16, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJEEEE19transfer_n_backwardEmmmPS5_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -705,10 +707,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.cu = zext i8 %i.cn to i64                    ; 4 uses
   %i.cv = zext nneg i32 %i.cr to i64
-  %i.cw = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %7 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cw = xor i64 %7, -1
   %i.cx = add nsw i64 %i.cw, %i.cu
   %i.cy = add nsw i64 %i.cu, -2
-  %i.cz = sub nsw i64 %i.cy, %i.cb
+  %i.cz = sub nsw i64 %i.cy, %7
   %xtraiter24 = and i64 %i.cx, 3                  ; 2 uses
   %lcmp.mod25.not = icmp eq i64 %xtraiter24, 0
   br i1 %lcmp.mod25.not, label %.prol.loopexit, label %.prol.preheader
@@ -1111,13 +1115,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJSt4pairIKiiEEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERS9_PS9_EESF_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJSt4pairIKiiEEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERS9_PS9_EESF_DpOT_ENKUlhE_clEh.exit ], [ %.pre14, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJEEEE19transfer_n_backwardEmmmPS5_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -1158,10 +1162,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.cu = zext i8 %i.cn to i64                    ; 4 uses
   %i.cv = zext nneg i32 %i.cr to i64
-  %i.cw = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %5 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cw = xor i64 %5, -1
   %i.cx = add nsw i64 %i.cw, %i.cu
   %i.cy = add nsw i64 %i.cu, -2
-  %i.cz = sub nsw i64 %i.cy, %i.cb
+  %i.cz = sub nsw i64 %i.cy, %5
   %xtraiter22 = and i64 %i.cx, 3                  ; 2 uses
   %lcmp.mod23.not = icmp eq i64 %xtraiter22, 0
   br i1 %lcmp.mod23.not, label %.prol.loopexit, label %.prol.preheader
@@ -1564,13 +1570,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJSt4lessIiESaISt4pairIKiiEESt17integral_constantIiLi256EESA_IbLb1EEEEEE16internal_emplaceIJS8_EEENS1_14btree_iteratorINS1_10btree_nodeISD_EERS8_PS8_EESL_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJSt4lessIiESaISt4pairIKiiEESt17integral_constantIiLi256EESA_IbLb1EEEEEE16internal_emplaceIJS8_EEENS1_14btree_iteratorINS1_10btree_nodeISD_EERS8_PS8_EESL_DpOT_ENKUlhE_clEh.exit ], [ %.pre14, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1204 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1204 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJSt4lessIiESaISt4pairIKiiEESt17integral_constantIiLi256EESA_IbLb1EEEEEE19transfer_n_backwardEmmmPSE_PS9_.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -1611,10 +1617,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.cu = zext i8 %i.cn to i64                    ; 4 uses
   %i.cv = zext nneg i32 %i.cr to i64
-  %i.cw = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %5 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cw = xor i64 %5, -1
   %i.cx = add nsw i64 %i.cw, %i.cu
   %i.cy = add nsw i64 %i.cu, -2
-  %i.cz = sub nsw i64 %i.cy, %i.cb
+  %i.cz = sub nsw i64 %i.cy, %5
   %xtraiter22 = and i64 %i.cx, 3                  ; 2 uses
   %lcmp.mod23.not = icmp eq i64 %xtraiter22, 0
   br i1 %lcmp.mod23.not, label %.prol.loopexit, label %.prol.preheader
@@ -2017,13 +2025,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %"_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJNS1_12_GLOBAL__N_125CheckedCompareOptedOutCmpIZNS4_34Btree_TryEmplaceWithHintWorks_Test8TestBodyEvE3$_0EEEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESH_EEENS1_14btree_iteratorINS1_10btree_nodeIS9_EERSt4pairIKiiEPSN_EESQ_DpOT_ENKUlhE_clEh.exit", %bb.e, %bb.b
   %i.bd = load ptr, ptr %5, align 8, !tbaa !2055  ; 6 uses
-  %i.be = load i32, ptr %i.a, align 8, !tbaa !2054 ; 3 uses
+  %i.be = load i32, ptr %i.a, align 8, !tbaa !2054 ; 4 uses
   %i.bf = trunc i32 %i.be to i8                   ; 2 uses
   %i.bg = and i32 %i.be, 255                      ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bd, i64 10     ; 3 uses
   %.val23.i = load i8, ptr %i.bh, align 1, !tbaa !813 ; 3 uses
   %i.bi = icmp ugt i8 %.val23.i, %i.bf
-  %i.bj = zext nneg i32 %i.bg to i64              ; 4 uses
+  %i.bj = zext nneg i32 %i.bg to i64              ; 2 uses
   br i1 %i.bi, label %.lr.ph.preheader.i.i, label %"_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJNS1_12_GLOBAL__N_125CheckedCompareOptedOutCmpIZNS4_34Btree_TryEmplaceWithHintWorks_Test8TestBodyEvE3$_0EEEEEE19transfer_n_backwardEmmmPSA_PSaISt4pairIKiiEE.exit.i"
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -2067,10 +2075,12 @@ bb.g:                                             ; preds = %"_ZN4absl12lts_2026
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bd, i64 256 ; 10 uses
   %i.cb = zext i8 %i.bv to i64                    ; 4 uses
   %i.cc = zext nneg i32 %i.by to i64
-  %i.cd = xor i64 %i.bj, -1
+  %.mask = and i32 %i.be, 255
+  %6 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cd = xor i64 %6, -1
   %i.ce = add nsw i64 %i.cd, %i.cb
   %i.cf = add nsw i64 %i.cb, -2
-  %i.cg = sub nsw i64 %i.cf, %i.bj
+  %i.cg = sub nsw i64 %i.cf, %6
   %xtraiter10 = and i64 %i.ce, 3                  ; 2 uses
   %lcmp.mod11.not = icmp eq i64 %xtraiter10, 0
   br i1 %lcmp.mod11.not, label %.prol.loopexit, label %.prol.preheader
@@ -2421,13 +2431,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %"_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJNS1_12_GLOBAL__N_125CheckedCompareOptedOutCmpIZNS4_34Btree_TryEmplaceWithHintWorks_Test8TestBodyEvE3$_0EEEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJRKiEESF_IJRiEEEEENS1_14btree_iteratorINS1_10btree_nodeIS9_EERSt4pairISG_iEPSP_EESS_DpOT_ENKUlhE_clEh.exit", %bb.e, %bb.b
   %i.bd = load ptr, ptr %5, align 8, !tbaa !2055  ; 6 uses
-  %i.be = load i32, ptr %i.a, align 8, !tbaa !2054 ; 3 uses
+  %i.be = load i32, ptr %i.a, align 8, !tbaa !2054 ; 4 uses
   %i.bf = trunc i32 %i.be to i8                   ; 2 uses
   %i.bg = and i32 %i.be, 255                      ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bd, i64 10     ; 3 uses
   %.val23.i = load i8, ptr %i.bh, align 1, !tbaa !813 ; 3 uses
   %i.bi = icmp ugt i8 %.val23.i, %i.bf
-  %i.bj = zext nneg i32 %i.bg to i64              ; 4 uses
+  %i.bj = zext nneg i32 %i.bg to i64              ; 2 uses
   br i1 %i.bi, label %.lr.ph.preheader.i.i, label %"_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJNS1_12_GLOBAL__N_125CheckedCompareOptedOutCmpIZNS4_34Btree_TryEmplaceWithHintWorks_Test8TestBodyEvE3$_0EEEEEE19transfer_n_backwardEmmmPSA_PSaISt4pairIKiiEE.exit.i"
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -2471,10 +2481,12 @@ bb.g:                                             ; preds = %"_ZN4absl12lts_2026
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bd, i64 256 ; 10 uses
   %i.cb = zext i8 %i.bv to i64                    ; 4 uses
   %i.cc = zext nneg i32 %i.by to i64
-  %i.cd = xor i64 %i.bj, -1
+  %.mask = and i32 %i.be, 255
+  %6 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cd = xor i64 %6, -1
   %i.ce = add nsw i64 %i.cd, %i.cb
   %i.cf = add nsw i64 %i.cb, -2
-  %i.cg = sub nsw i64 %i.cf, %i.bj
+  %i.cg = sub nsw i64 %i.cf, %6
   %xtraiter10 = and i64 %i.ce, 3                  ; 2 uses
   %lcmp.mod11.not = icmp eq i64 %xtraiter10, 0
   br i1 %lcmp.mod11.not, label %.prol.loopexit, label %.prol.preheader
@@ -2877,13 +2889,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESC_EEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIKiiEPSI_EESL_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESC_EEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIKiiEPSI_EESL_DpOT_ENKUlhE_clEh.exit ], [ %.pre16, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJEEEE19transfer_n_backwardEmmmPS5_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -2927,10 +2939,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.cw = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.cx = zext i8 %i.cq to i64                    ; 4 uses
   %i.cy = zext nneg i32 %i.cu to i64
-  %i.cz = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %7 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cz = xor i64 %7, -1
   %i.da = add nsw i64 %i.cz, %i.cx
   %i.db = add nsw i64 %i.cx, -2
-  %i.dc = sub nsw i64 %i.db, %i.cb
+  %i.dc = sub nsw i64 %i.db, %7
   %xtraiter24 = and i64 %i.da, 3                  ; 2 uses
   %lcmp.mod25.not = icmp eq i64 %xtraiter24, 0
   br i1 %lcmp.mod25.not, label %.prol.loopexit, label %.prol.preheader
@@ -3333,13 +3347,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJiiEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIKiiEPSC_EESF_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJiiEEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIKiiEPSC_EESF_DpOT_ENKUlhE_clEh.exit ], [ %.pre15, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJEEEE19transfer_n_backwardEmmmPS5_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -3379,10 +3393,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.ct = zext i8 %i.cm to i64                    ; 4 uses
   %i.cu = zext nneg i32 %i.cq to i64
-  %i.cv = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %6 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cv = xor i64 %6, -1
   %i.cw = add nsw i64 %i.cv, %i.ct
   %i.cx = add nsw i64 %i.ct, -2
-  %i.cy = sub nsw i64 %i.cx, %i.cb
+  %i.cy = sub nsw i64 %i.cx, %6
   %xtraiter23 = and i64 %i.cw, 3                  ; 2 uses
   %lcmp.mod24.not = icmp eq i64 %xtraiter23, 0
   br i1 %lcmp.mod24.not, label %.prol.loopexit, label %.prol.preheader
@@ -3785,13 +3801,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKiS8_EEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIS7_iEPSD_EESG_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bu = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJEEEE16internal_emplaceIJRKiS8_EEENS1_14btree_iteratorINS1_10btree_nodeIS4_EERSt4pairIS7_iEPSD_EESG_DpOT_ENKUlhE_clEh.exit ], [ %.pre15, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 2 uses
+  %i.bv = load i32, ptr %i.a, align 8, !tbaa !1025 ; 3 uses
   %i.bw = trunc i32 %i.bv to i8                   ; 2 uses
   %i.bx = and i32 %i.bv, 255                      ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bu, i64 10 ; 3 uses
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !813 ; 3 uses
   %i.ca = icmp ugt i8 %i.bz, %i.bw
-  %i.cb = zext nneg i32 %i.bx to i64              ; 4 uses
+  %i.cb = zext nneg i32 %i.bx to i64              ; 2 uses
   br i1 %i.ca, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJEEEE19transfer_n_backwardEmmmPS5_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -3831,10 +3847,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bu, i64 256 ; 10 uses
   %i.ct = zext i8 %i.cm to i64                    ; 4 uses
   %i.cu = zext nneg i32 %i.cq to i64
-  %i.cv = xor i64 %i.cb, -1
+  %.mask = and i32 %i.bv, 255
+  %6 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cv = xor i64 %6, -1
   %i.cw = add nsw i64 %i.cv, %i.ct
   %i.cx = add nsw i64 %i.ct, -2
-  %i.cy = sub nsw i64 %i.cx, %i.cb
+  %i.cy = sub nsw i64 %i.cx, %6
   %xtraiter23 = and i64 %i.cw, 3                  ; 2 uses
   %lcmp.mod24.not = icmp eq i64 %xtraiter23, 0
   br i1 %lcmp.mod24.not, label %.prol.loopexit, label %.prol.preheader
@@ -4237,13 +4255,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implINS1_12_GLOBAL__N_118ConstructorCountedEiJNS4_25ConstructorCountedCompareEEEEE16internal_emplaceIJRKSt4pairIiiEEEENS1_14btree_iteratorINS1_10btree_nodeIS7_EERSA_IKS5_iEPSI_EESL_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bd = load ptr, ptr %4, align 8, !tbaa !2323  ; 5 uses
-  %i.be = load i32, ptr %i.a, align 8, !tbaa !2322 ; 2 uses
+  %i.be = load i32, ptr %i.a, align 8, !tbaa !2322 ; 3 uses
   %i.bf = trunc i32 %i.be to i8                   ; 2 uses
   %i.bg = and i32 %i.be, 255                      ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bd, i64 10     ; 3 uses
   %.val21.i = load i8, ptr %i.bh, align 1, !tbaa !813 ; 2 uses
   %i.bi = icmp ugt i8 %.val21.i, %i.bf
-  %i.bj = zext nneg i32 %i.bg to i64              ; 4 uses
+  %i.bj = zext nneg i32 %i.bg to i64              ; 2 uses
   br i1 %i.bi, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implINS1_12_GLOBAL__N_118ConstructorCountedEiJNS4_25ConstructorCountedCompareEEEEE19transfer_n_backwardEmmmPS8_PSaISt4pairIKS5_iEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -4286,10 +4304,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bd, i64 256 ; 10 uses
   %i.ca = zext i8 %i.bu to i64                    ; 4 uses
   %i.cb = zext nneg i32 %i.bx to i64
-  %i.cc = xor i64 %i.bj, -1
+  %5 = and i32 %i.be, 255
+  %6 = zext nneg i32 %5 to i64                    ; 2 uses
+  %i.cc = xor i64 %6, -1
   %i.cd = add nsw i64 %i.cc, %i.ca
   %i.ce = add nsw i64 %i.ca, -2
-  %i.cf = sub nsw i64 %i.ce, %i.bj
+  %i.cf = sub nsw i64 %i.ce, %6
   %xtraiter1 = and i64 %i.cd, 3                   ; 2 uses
   %lcmp.mod2.not = icmp eq i64 %xtraiter1, 0
   br i1 %lcmp.mod2.not, label %.prol.loopexit, label %.prol.preheader
@@ -4692,13 +4712,13 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJPFbiiEEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESC_IJEEEEENS1_14btree_iteratorINS1_10btree_nodeIS6_EERSt4pairIKiiEPSL_EESO_DpOT_ENKUlhE_clEh.exit, %bb.e, %bb.b
   %i.bv = phi ptr [ %i.af, %_ZZN4absl12lts_2026052618container_internal5btreeINS1_15map_params_implIiiJPFbiiEEEEE16internal_emplaceIJRKSt21piecewise_construct_tSt5tupleIJOiEESC_IJEEEEENS1_14btree_iteratorINS1_10btree_nodeIS6_EERSt4pairIKiiEPSL_EESO_DpOT_ENKUlhE_clEh.exit ], [ %.pre16, %bb.e ], [ %i.v, %bb.b ] ; 5 uses
-  %i.bw = load i32, ptr %i.a, align 8, !tbaa !2439 ; 2 uses
+  %i.bw = load i32, ptr %i.a, align 8, !tbaa !2439 ; 3 uses
   %i.bx = trunc i32 %i.bw to i8                   ; 2 uses
   %i.by = and i32 %i.bw, 255                      ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bv, i64 10 ; 3 uses
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !813 ; 3 uses
   %i.cb = icmp ugt i8 %i.ca, %i.bx
-  %i.cc = zext nneg i32 %i.by to i64              ; 4 uses
+  %i.cc = zext nneg i32 %i.by to i64              ; 2 uses
   br i1 %i.cb, label %.lr.ph.preheader.i.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15map_params_implIiiJPFbiiEEEEE19transfer_n_backwardEmmmPS7_PSaISt4pairIKiiEE.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
@@ -4739,10 +4759,12 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   %i.cu = getelementptr inbounds nuw i8, ptr %i.bv, i64 256 ; 10 uses
   %i.cv = zext i8 %i.co to i64                    ; 4 uses
   %i.cw = zext nneg i32 %i.cs to i64
-  %i.cx = xor i64 %i.cc, -1
+  %.mask = and i32 %i.bw, 255
+  %7 = zext nneg i32 %.mask to i64                ; 2 uses
+  %i.cx = xor i64 %7, -1
   %i.cy = add nsw i64 %i.cx, %i.cv
   %i.cz = add nsw i64 %i.cv, -2
-  %i.da = sub nsw i64 %i.cz, %i.cc
+  %i.da = sub nsw i64 %i.cz, %7
   %xtraiter24 = and i64 %i.cy, 3                  ; 2 uses
   %lcmp.mod25.not = icmp eq i64 %xtraiter24, 0
   br i1 %lcmp.mod25.not, label %.prol.loopexit, label %.prol.preheader

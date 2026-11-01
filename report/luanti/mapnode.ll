@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.bx = phi ptr [ %i.bs, %.lr.ph ], [ %i.gq, %_ZNSt6vectorIN4core8aabbox3dIfEESaIS2_EE9push_backERKS2_.exit ] ; 8 uses
   %.sroa.0562.0604 = phi ptr [ %i.bu, %.lr.ph ], [ %i.gr, %_ZNSt6vectorIN4core8aabbox3dIfEESaIS2_EE9push_backERKS2_.exit ] ; 5 uses
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0562.0604, i64 4
-  %i.by = load <4 x float>, ptr %.sroa.0562.0604, align 4, !tbaa !71
-  %i.bz = load <2 x float>, ptr %.sroa.25.0..sroa_idx, align 4, !tbaa !71 ; 2 uses
+  %i.by = load <4 x float>, ptr %.sroa.0562.0604, align 4, !tbaa !71 ; 2 uses
+  %i.bz = load <2 x float>, ptr %.sroa.25.0..sroa_idx, align 4, !tbaa !71 ; 4 uses
   %.sroa.79.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0562.0604, i64 16
   %.sroa.79.0.copyload = load float, ptr %.sroa.79.0..sroa_idx, align 4, !tbaa !71
   %.sroa.97.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0562.0604, i64 20
@@ -292,7 +292,7 @@ _ZNK7MapNode8getLevelEPK14NodeDefManager.exit:    ; preds = %_ZNK14NodeDefManage
   br label %bb.v
 
 bb.v:                                             ; preds = %_ZNK7MapNode8getLevelEPK14NodeDefManager.exit, %bb.k
-  %.sroa.79.0 = phi nsz float [ %i.dm, %_ZNK7MapNode8getLevelEPK14NodeDefManager.exit ], [ %.sroa.79.0.copyload, %bb.k ]
+  %.sroa.79.0 = phi nsz float [ %i.dm, %_ZNK7MapNode8getLevelEPK14NodeDefManager.exit ], [ %.sroa.79.0.copyload, %bb.k ] ; 4 uses
   %i.dn = shufflevector <4 x float> %i.by, <4 x float> poison, <2 x i32> <i32 0, i32 3> ; 4 uses
   %i.do = shufflevector <2 x float> %i.bz, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.dp = insertelement <2 x float> %i.do, float %.sroa.97.0.copyload, i64 1 ; 4 uses
@@ -342,9 +342,11 @@ default.unreachable:                              ; preds = %_ZNK7MapNode14getWa
   unreachable
 
 bb.z:                                             ; preds = %bb.v, %bb.x, %bb.y, %bb.w
-  %i.en = phi <2 x float> [ %i.dt, %bb.w ], [ %i.eb, %bb.x ], [ %i.ej, %bb.y ], [ %i.dn, %bb.v ] ; 6 uses
+  %i.en = phi <2 x float> [ %i.dt, %bb.w ], [ %i.eb, %bb.x ], [ %i.ej, %bb.y ], [ %i.dn, %bb.v ] ; 4 uses
   %i.eo = phi <2 x float> [ %i.dw, %bb.w ], [ %i.ee, %bb.x ], [ %i.em, %bb.y ], [ %i.dp, %bb.v ] ; 6 uses
-  %5 = insertelement <2 x float> %i.bz, float %.sroa.79.0, i64 1 ; 6 uses
+  %5 = shufflevector <2 x float> %i.en, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x float> %i.by, <4 x float> %5, <4 x i32> <i32 1, i32 poison, i32 4, i32 5> ; 3 uses
+  %7 = insertelement <4 x float> %6, float %.sroa.79.0, i64 1 ; 3 uses
   switch i8 %i.ah, label %_ZN4core8aabbox3dIfE6repairEv.exit [
     i8 5, label %bb.ae
     i8 1, label %bb.aa
@@ -354,7 +356,8 @@ bb.z:                                             ; preds = %bb.v, %bb.x, %bb.y,
   ]
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ep = fpext nsz <2 x float> %5 to <2 x double> ; 2 uses
+  %8 = insertelement <2 x float> %i.bz, float %.sroa.79.0, i64 1
+  %i.ep = fpext nsz <2 x float> %8 to <2 x double> ; 2 uses
   %i.eq = fpext nsz <2 x float> %i.eo to <2 x double> ; 2 uses
   %i.er = fneg nsz <2 x double> %i.eq
   %i.es = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ep, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.er)
@@ -362,61 +365,68 @@ bb.aa:                                            ; preds = %bb.z
   %i.eu = fmul nsz <2 x double> %i.eq, splat (double f0x3C91A62633145C07)
   %i.ev = fadd nsz <2 x double> %i.eu, %i.ep
   %i.ew = fptrunc nsz <2 x double> %i.ev to <2 x float>
+  %9 = shufflevector <2 x float> %i.et, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x float> %9, <4 x float> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ab:                                            ; preds = %bb.z
-  %i.ex = fpext nsz <2 x float> %5 to <2 x double> ; 2 uses
+  %11 = insertelement <2 x float> %i.bz, float %.sroa.79.0, i64 1
+  %i.ex = fpext nsz <2 x float> %11 to <2 x double> ; 2 uses
   %i.ey = fpext nsz <2 x float> %i.eo to <2 x double> ; 2 uses
   %i.ez = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ex, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.ey)
   %i.fa = fptrunc nsz <2 x double> %i.ez to <2 x float>
   %i.fb = fmul nsz <2 x double> %i.ey, splat (double f0x3C91A62633145C07)
   %i.fc = fsub nsz <2 x double> %i.fb, %i.ex
   %i.fd = fptrunc nsz <2 x double> %i.fc to <2 x float>
+  %12 = shufflevector <2 x float> %i.fa, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x float> %12, <4 x float> %6, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ac:                                            ; preds = %bb.z
   %i.fe = fpext nsz <2 x float> %i.en to <2 x double> ; 2 uses
-  %i.ff = fpext nsz <2 x float> %5 to <2 x double> ; 2 uses
-  %6 = fmul nsz <2 x double> %i.ff, splat (double f0x3C91A62633145C07)
-  %7 = fsub nsz <2 x double> %6, %i.fe
-  %8 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fe, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.ff)
-  %9 = fptrunc nsz <2 x double> %8 to <2 x float>
-  %10 = fptrunc nsz <2 x double> %7 to <2 x float>
+  %14 = insertelement <2 x float> %i.bz, float %.sroa.79.0, i64 1
+  %i.ff = fpext nsz <2 x float> %14 to <2 x double> ; 2 uses
+  %15 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fe, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %i.ff)
+  %16 = fmul nsz <2 x double> %i.ff, splat (double f0x3C91A62633145C07)
+  %17 = fsub nsz <2 x double> %16, %i.fe
+  %18 = shufflevector <2 x double> %17, <2 x double> %15, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %19 = fptrunc nsz <4 x double> %18 to <4 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ad:                                            ; preds = %bb.z
   %i.fg = fpext nsz <2 x float> %i.en to <2 x double> ; 2 uses
-  %i.fh = fpext nsz <2 x float> %5 to <2 x double> ; 2 uses
-  %11 = fmul nsz <2 x double> %i.fh, splat (double f0x3C91A62633145C07)
-  %12 = fadd nsz <2 x double> %11, %i.fg
-  %13 = fneg nsz <2 x double> %i.fh
-  %14 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fg, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %13)
-  %15 = fptrunc nsz <2 x double> %14 to <2 x float>
-  %16 = fptrunc nsz <2 x double> %12 to <2 x float>
+  %20 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.fh = fpext nsz <2 x float> %20 to <2 x double> ; 2 uses
+  %21 = fneg nsz <2 x double> %i.fh
+  %22 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fg, <2 x double> splat (double f0x3C91A62633145C07), <2 x double> %21)
+  %23 = fmul nsz <2 x double> %i.fh, splat (double f0x3C91A62633145C07)
+  %24 = fadd nsz <2 x double> %23, %i.fg
+  %25 = shufflevector <2 x double> %24, <2 x double> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %26 = fptrunc nsz <4 x double> %25 to <4 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 bb.ae:                                            ; preds = %bb.z
   %i.fi = fpext nsz <2 x float> %i.en to <2 x double> ; 2 uses
-  %i.fj = fpext nsz <2 x float> %5 to <2 x double> ; 2 uses
-  %17 = fneg nsz <2 x double> %i.fj
-  %18 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> splat (double f0xBCA1A62633145C07), <2 x double> %17)
-  %19 = fmul nsz <2 x double> %i.fj, splat (double f0x3CA1A62633145C07)
-  %20 = fsub nsz <2 x double> %19, %i.fi
-  %21 = fptrunc nsz <2 x double> %20 to <2 x float>
-  %22 = fptrunc nsz <2 x double> %18 to <2 x float>
+  %27 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.fj = fpext nsz <2 x float> %27 to <2 x double> ; 2 uses
+  %28 = fmul nsz <2 x double> %i.fj, splat (double f0x3CA1A62633145C07)
+  %29 = fsub nsz <2 x double> %28, %i.fi
+  %30 = fneg nsz <2 x double> %i.fj
+  %31 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> splat (double f0xBCA1A62633145C07), <2 x double> %30)
+  %32 = shufflevector <2 x double> %31, <2 x double> %29, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %33 = fptrunc nsz <4 x double> %32 to <4 x float>
   br label %_ZN4core8aabbox3dIfE6repairEv.exit
 
 _ZN4core8aabbox3dIfE6repairEv.exit:               ; preds = %bb.z, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  %23 = phi <2 x float> [ %i.en, %bb.z ], [ %21, %bb.ae ], [ %i.en, %bb.aa ], [ %i.en, %bb.ab ], [ %9, %bb.ac ], [ %15, %bb.ad ] ; 2 uses
+  %34 = phi <4 x float> [ %7, %bb.z ], [ %33, %bb.ae ], [ %10, %bb.aa ], [ %13, %bb.ab ], [ %19, %bb.ac ], [ %26, %bb.ad ] ; 4 uses
   %i.fk = phi <2 x float> [ %i.eo, %bb.z ], [ %i.eo, %bb.ae ], [ %i.ew, %bb.aa ], [ %i.fd, %bb.ab ], [ %i.eo, %bb.ac ], [ %i.eo, %bb.ad ] ; 2 uses
-  %24 = phi <2 x float> [ %5, %bb.z ], [ %22, %bb.ae ], [ %i.et, %bb.aa ], [ %i.fa, %bb.ab ], [ %10, %bb.ac ], [ %16, %bb.ad ] ; 2 uses
-  %i.fl = extractelement <2 x float> %23, i64 0   ; 3 uses
-  %i.fm = extractelement <2 x float> %23, i64 1   ; 3 uses
+  %i.fl = extractelement <4 x float> %34, i64 2   ; 3 uses
+  %i.fm = extractelement <4 x float> %34, i64 3   ; 3 uses
   %i.fn = fcmp nsz ogt float %i.fl, %i.fm         ; 2 uses
   %.sroa.0506.2 = select nsz i1 %i.fn, float %i.fm, float %i.fl ; 2 uses
   %.sroa.59.2 = select nsz i1 %i.fn, float %i.fl, float %i.fm ; 2 uses
-  %i.fo = extractelement <2 x float> %24, i64 0   ; 3 uses
-  %i.fp = extractelement <2 x float> %24, i64 1   ; 3 uses
+  %i.fo = extractelement <4 x float> %34, i64 0   ; 3 uses
+  %i.fp = extractelement <4 x float> %34, i64 1   ; 3 uses
   %i.fq = fcmp nsz ogt float %i.fo, %i.fp         ; 2 uses
   %.sroa.25.1 = select nsz i1 %i.fq, float %i.fp, float %i.fo ; 2 uses
   %.sroa.79.2 = select nsz i1 %i.fq, float %i.fo, float %i.fp ; 2 uses
