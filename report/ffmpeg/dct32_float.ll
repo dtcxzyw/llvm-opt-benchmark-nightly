@@ -149,7 +149,7 @@ bb.a:
   %i.ej = shufflevector <2 x float> %i.di, <2 x float> %i.da, <4 x i32> <i32 2, i32 poison, i32 poison, i32 1>
   %i.ek = insertelement <4 x float> %i.ej, float %i.bs, i64 1
   %i.el = insertelement <4 x float> %i.ek, float %i.ef, i64 2 ; 2 uses
-  %i.em = fadd nsz <4 x float> %i.ei, %i.el       ; 2 uses
+  %i.em = fadd nsz <4 x float> %i.ei, %i.el
   %i.en = fsub nsz <4 x float> %i.ei, %i.el
   %i.eo = shufflevector <4 x float> %i.em, <4 x float> %i.en, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 3 uses
   %i.ep = insertelement <4 x float> poison, float %i.cn, i64 0
@@ -160,7 +160,7 @@ bb.a:
   %i.eu = shufflevector <4 x float> %i.et, <4 x float> %i.ea, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
   %i.ev = shufflevector <4 x float> %i.eu, <4 x float> %i.eo, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
   %i.ew = insertelement <4 x float> %i.ev, float %i.bg, i64 3 ; 2 uses
-  %i.ex = fadd nsz <4 x float> %i.es, %i.ew       ; 2 uses
+  %i.ex = fadd nsz <4 x float> %i.es, %i.ew
   %i.ey = fsub nsz <4 x float> %i.es, %i.ew
   %i.ez = shufflevector <4 x float> %i.ex, <4 x float> %i.ey, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.fa = fadd nsz float %i.k, %i.q               ; 2 uses
@@ -201,7 +201,7 @@ bb.a:
   %i.gg = extractelement <4 x float> %foldExtExtBinop631, i64 1
   %i.gh = fmul nsz float %i.gg, f0xBFDC7926       ; 2 uses
   %i.gi = insertelement <4 x float> %i.dz, float %i.gh, i64 3 ; 2 uses
-  %i.gj = fadd nsz <4 x float> %i.gi, %i.ed       ; 2 uses
+  %i.gj = fadd nsz <4 x float> %i.gi, %i.ed
   %i.gk = fsub nsz <4 x float> %i.gi, %i.ed
   %i.gl = shufflevector <4 x float> %i.gj, <4 x float> %i.gk, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %foldExtExtBinop633 = fsub nsz <4 x float> %i.gl, %i.ez
@@ -244,8 +244,8 @@ bb.a:
   %i.hv = shufflevector <4 x float> %i.ht, <4 x float> %i.hu, <4 x i32> <i32 0, i32 5, i32 6, i32 3> ; 3 uses
   %i.hw = extractelement <4 x float> %i.ht, i64 0
   %i.hx = fadd nsz float %i.hw, %i.fd             ; 2 uses
-  %2 = shufflevector <4 x float> %i.fb, <4 x float> %i.gj, <2 x i32> <i32 2, i32 5>
-  %3 = shufflevector <4 x float> %i.ha, <4 x float> %i.ex, <2 x i32> <i32 2, i32 5>
+  %2 = shufflevector <4 x float> %i.ha, <4 x float> poison, <2 x i32> <i32 2, i32 1>
+  %3 = shufflevector <4 x float> %i.fb, <4 x float> poison, <2 x i32> <i32 2, i32 1>
   %i.hy = fadd nsz <2 x float> %2, %3             ; 2 uses
   %i.hz = fadd nsz float %i.hf, %i.hx             ; 2 uses
   %i.ia = fsub nsz float %i.hf, %i.hx
@@ -282,9 +282,9 @@ bb.a:
   %i.jd = insertelement <2 x float> %i.jc, float %i.ff, i64 1
   %i.je = shufflevector <4 x float> %i.fk, <4 x float> %i.hn, <2 x i32> <i32 2, i32 5>
   %i.jf = fadd nsz <2 x float> %i.jd, %i.je       ; 2 uses
-  %i.jg = shufflevector <4 x float> %i.fs, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %i.jg = shufflevector <4 x float> %i.hs, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.jh = insertelement <2 x float> %i.jg, float %i.fl, i64 1
-  %4 = shufflevector <4 x float> %i.hs, <4 x float> %i.em, <2 x i32> <i32 2, i32 5>
+  %4 = shufflevector <4 x float> %i.fs, <4 x float> poison, <2 x i32> <i32 2, i32 1>
   %i.ji = fadd nsz <2 x float> %i.jh, %4          ; 2 uses
   %i.jj = fadd nsz float %i.jb, %i.fw             ; 2 uses
   %i.jk = fsub nsz float %i.jb, %i.fw

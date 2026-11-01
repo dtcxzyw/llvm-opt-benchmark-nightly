@@ -60,7 +60,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.p = load i64, ptr %i.o, align 8, !tbaa !13   ; 4 uses
   %.idx21 = shl i64 %i.p, 4                       ; 3 uses
-  %min.iters.check = icmp ult i64 %i.k, 12
+  %min.iters.check = icmp ult i64 %i.k, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph

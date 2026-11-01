@@ -204,8 +204,8 @@ bb.a:
   %i.bj = extractelement <2 x double> %i.bf, i64 1
   %i.bk = shufflevector <2 x double> %i.ba, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.bl = load <2 x double>, ptr %i.b, align 8, !tbaa !12 ; 5 uses
-  %i.bm = fmul <2 x double> %i.bl, <double 1.000000e+00, double 2.000000e+00> ; 2 uses
-  %i.bn = extractelement <2 x double> %i.bl, i64 0 ; 2 uses
+  %i.bm = fmul <2 x double> %i.bl, <double 1.000000e+00, double 2.000000e+00> ; 3 uses
+  %i.bn = extractelement <2 x double> %i.bl, i64 0
   %i.bo = fneg double %i.bn
   %shift = shufflevector <2 x double> %i.bm, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fmul <2 x double> %shift, %i.bf ; 2 uses
@@ -225,7 +225,8 @@ bb.a:
   %i.cb = fadd <2 x double> %i.aj, %i.ca
   store <2 x double> %i.cb, ptr %i.ai, align 8, !tbaa !12
   %i.cc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bu, <2 x double> %i.bg, <2 x double> %i.bi) ; 2 uses
-  %i.cd = tail call double @llvm.fmuladd.f64(double %i.bn, double %i.bj, double %i.bp)
+  %9 = extractelement <2 x double> %i.bm, i64 0
+  %i.cd = tail call double @llvm.fmuladd.f64(double %9, double %i.bj, double %i.bp)
   %i.ce = fneg double %i.cd
   %i.cf = extractelement <2 x double> %i.cc, i64 1
   %i.cg = tail call double @llvm.fmuladd.f64(double %i.ce, double %i.p, double %i.cf)

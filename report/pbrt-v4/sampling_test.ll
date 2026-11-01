@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %_ZNK4pbrt16Bounds2i
 
 _ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i:   ; preds = %bb.q, %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit
   %.0.i.i = phi float [ %i.hu, %bb.q ], [ 0.000000e+00, %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit ]
-  %i.hv = add nsw <2 x i32> %i.gy, <i32 1, i32 0> ; 2 uses
+  %i.hv = add nsw <2 x i32> %i.gy, <i32 1, i32 0> ; 3 uses
   %i.hw = extractelement <2 x i32> %i.hv, i64 0   ; 2 uses
   %i.hx = icmp eq i32 %i.hw, 0                    ; 2 uses
   %or.cond.i28.i = or i1 %i.hx, %i.hb
@@ -235,7 +235,7 @@ bb.r:                                             ; preds = %_ZNK4pbrt15SummedAr
 
 _ZNK4pbrt15SummedAreaTable9LookupIntEii.exit31.i: ; preds = %bb.r, %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i
   %.0.i30.i = phi float [ %i.ip, %bb.r ], [ 0.000000e+00, %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit.i ]
-  %i.iq = extractelement <2 x i32> %i.gy, i64 1   ; 2 uses
+  %i.iq = extractelement <2 x i32> %i.gy, i64 1
   %i.ir = icmp eq i32 %i.iq, -1                   ; 2 uses
   %or.cond.i32.i = or i1 %i.ha, %i.ir
   br i1 %or.cond.i32.i, label %_ZNK4pbrt15SummedAreaTable9LookupIntEii.exit35.i, label %bb.s
@@ -247,7 +247,8 @@ bb.s:                                             ; preds = %_ZNK4pbrt15SummedAr
   %i.iv = extractelement <2 x i32> %i.gu, i64 1   ; 2 uses
   %i.iw = xor i32 %i.iv, -1
   %i.ix = add i32 %i.gs, %i.iw
-  %.sroa.speculated.i33.i = call i32 @llvm.smin.i32(i32 %i.ix, i32 %i.iq)
+  %7 = extractelement <2 x i32> %i.hv, i64 1
+  %.sroa.speculated.i33.i = call i32 @llvm.smin.i32(i32 %i.ix, i32 %7)
   %i.iy = extractelement <2 x i32> %i.gu, i64 0
   %i.iz = xor i32 %i.iy, -1
   %i.ja = add i32 %i.iu, %i.iz

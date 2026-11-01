@@ -205,9 +205,7 @@ bb.aa:                                            ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #19
   %i.my = getelementptr inbounds nuw i8, ptr %23, i64 4
   %i.mz = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %i.na = load <2 x float>, ptr %i.mr, align 4, !noalias !744 ; 7 uses
-  %31 = shufflevector <2 x float> %i.na, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %32 = shufflevector <2 x float> %i.na, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %i.na = load <2 x float>, ptr %i.mr, align 4, !noalias !744 ; 5 uses
   %i.nb = extractelement <2 x float> %i.na, i64 1
   %i.nc = extractelement <2 x float> %i.na, i64 0
   store float %i.nc, ptr %i.mw, align 4
@@ -226,7 +224,7 @@ bb.aa:                                            ; preds = %bb.j
   %i.nl = shufflevector <2 x float> %i.ms, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 3 uses
   %i.nm = shufflevector <2 x float> %i.nk, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.nn = shufflevector <2 x float> %i.ms, <2 x float> %i.nk, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.no = fmul <4 x float> %i.nn, <float 1.000000e+00, float 1.000000e+00, float 5.000000e-01, float 5.000000e-01> ; 9 uses
+  %i.no = fmul <4 x float> %i.nn, <float 1.000000e+00, float 1.000000e+00, float 5.000000e-01, float 5.000000e-01> ; 10 uses
   %i.np = shufflevector <4 x float> %i.y, <4 x float> %i.nm, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.nq = fmul <4 x float> %i.np, <float 1.000000e+00, float 1.000000e+00, float 5.000000e-01, float 5.000000e-01>
   %i.nr = extractelement <4 x float> %i.no, i64 2 ; 4 uses
@@ -254,14 +252,14 @@ bb.aa:                                            ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #19
   call void @llvm.experimental.noalias.scope.decl(metadata !746)
   %i.nz = load <4 x float>, ptr %3, align 4, !noalias !746 ; 3 uses
-  %33 = shufflevector <4 x float> %i.no, <4 x float> %i.nl, <4 x i32> <i32 2, i32 5, i32 poison, i32 3> ; 2 uses
-  %34 = shufflevector <4 x float> %33, <4 x float> %32, <4 x i32> <i32 0, i32 1, i32 4, i32 3>
-  %i.oa = fcmp olt <4 x float> %34, %i.nz
-  %35 = shufflevector <2 x float> %i.na, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
-  %36 = shufflevector <4 x float> %35, <4 x float> %i.no, <4 x i32> <i32 poison, i32 poison, i32 0, i32 7>
-  %37 = shufflevector <4 x float> %i.nz, <4 x float> %36, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.ob = shufflevector <4 x float> %33, <4 x float> %i.nz, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.oc = select <4 x i1> %i.oa, <4 x float> %37, <4 x float> %i.ob
+  %31 = shufflevector <2 x float> %i.na, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 5 uses
+  %32 = shufflevector <4 x float> %i.no, <4 x float> %31, <4 x i32> <i32 2, i32 1, i32 4, i32 3>
+  %i.oa = fcmp olt <4 x float> %32, %i.nz
+  %33 = shufflevector <4 x float> %31, <4 x float> %i.no, <4 x i32> <i32 poison, i32 poison, i32 0, i32 7>
+  %34 = shufflevector <4 x float> %i.nz, <4 x float> %33, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %35 = shufflevector <4 x float> %i.no, <4 x float> %i.nl, <4 x i32> <i32 2, i32 5, i32 poison, i32 poison>
+  %i.ob = shufflevector <4 x float> %35, <4 x float> %i.nz, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.oc = select <4 x i1> %i.oa, <4 x float> %34, <4 x float> %i.ob
   store <4 x float> %i.oc, ptr %26, align 16, !alias.scope !746
   %i.od = call noundef zeroext i1 @_ZN6embree4sse213PatchEvalGrid4evalENS_6PatchTINS_6Vec3faES3_E3RefERKNS_4BBoxINS_4Vec2IfEEEESB_j(ptr noundef nonnull align 8 dereferenceable(108) %0, i64 %.sroa.02.0.copyload, ptr noundef nonnull align 4 dereferenceable(16) %22, ptr noundef nonnull align 4 dereferenceable(16) %26, i32 noundef %i.nw) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #19
@@ -270,9 +268,9 @@ bb.aa:                                            ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #19
   call void @llvm.experimental.noalias.scope.decl(metadata !747)
   %i.of = load <4 x float>, ptr %3, align 4, !noalias !747 ; 3 uses
-  %i.og = shufflevector <4 x float> %i.no, <4 x float> %35, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
+  %i.og = shufflevector <4 x float> %i.no, <4 x float> %31, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
   %i.oh = fcmp olt <4 x float> %i.og, %i.of
-  %i.oi = shufflevector <4 x float> %35, <4 x float> %i.of, <4 x i32> <i32 4, i32 5, i32 0, i32 1>
+  %i.oi = shufflevector <4 x float> %31, <4 x float> %i.of, <4 x i32> <i32 4, i32 5, i32 0, i32 1>
   %i.oj = shufflevector <4 x float> %i.no, <4 x float> %i.of, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
   %i.ok = select <4 x i1> %i.oh, <4 x float> %i.oi, <4 x float> %i.oj
   store <4 x float> %i.ok, ptr %27, align 16, !alias.scope !747
@@ -283,13 +281,12 @@ bb.aa:                                            ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #19
   call void @llvm.experimental.noalias.scope.decl(metadata !748)
   %i.on = load <4 x float>, ptr %3, align 4, !noalias !748 ; 3 uses
-  %38 = shufflevector <4 x float> %i.nl, <4 x float> %i.no, <4 x i32> <i32 0, i32 7, i32 6, i32 poison> ; 2 uses
-  %39 = shufflevector <4 x float> %38, <4 x float> %31, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %i.oo = fcmp olt <4 x float> %39, %i.on
-  %40 = shufflevector <4 x float> %i.no, <4 x float> %35, <4 x i32> <i32 poison, i32 poison, i32 2, i32 5>
-  %41 = shufflevector <4 x float> %i.on, <4 x float> %40, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %36 = shufflevector <4 x float> %i.no, <4 x float> %31, <4 x i32> <i32 0, i32 3, i32 2, i32 5> ; 2 uses
+  %i.oo = fcmp olt <4 x float> %36, %i.on
+  %37 = shufflevector <4 x float> %i.on, <4 x float> %36, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %38 = shufflevector <4 x float> %i.nl, <4 x float> %i.no, <4 x i32> <i32 0, i32 7, i32 poison, i32 poison>
   %i.op = shufflevector <4 x float> %38, <4 x float> %i.on, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.oq = select <4 x i1> %i.oo, <4 x float> %41, <4 x float> %i.op
+  %i.oq = select <4 x i1> %i.oo, <4 x float> %37, <4 x float> %i.op
   store <4 x float> %i.oq, ptr %28, align 16, !alias.scope !748
   %i.or = call noundef zeroext i1 @_ZN6embree4sse213PatchEvalGrid4evalENS_6PatchTINS_6Vec3faES3_E3RefERKNS_4BBoxINS_4Vec2IfEEEESB_j(ptr noundef nonnull align 8 dereferenceable(108) %0, i64 %.sroa.0.0.copyload, ptr noundef nonnull align 4 dereferenceable(16) %24, ptr noundef nonnull align 4 dereferenceable(16) %28, i32 noundef %i.nw) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #19

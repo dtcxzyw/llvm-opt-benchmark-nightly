@@ -15,43 +15,43 @@ bb.a:
   %i.a = alloca [2 x [3 x [8 x [2 x i16]]]], align 16 ; 16 uses
   %i.b = alloca i32, align 4                      ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !31   ; 23 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !30   ; 23 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 2172
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !64
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !63
   %i.g = add nsw i32 %i.f, -8                     ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 3288
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !65
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !64
   %i.j = shl i32 %i.i, 1                          ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !66   ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !65   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 847
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !82
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !81
   %i.o = zext i8 %i.n to i32
   %i.p = add nsw i32 %i.g, %i.o                   ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 2168
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !83   ; 5 uses
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !82   ; 5 uses
   %i.s = icmp ne i32 %i.r, 3
   %i.t = zext i1 %i.s to i32                      ; 3 uses
   %i.u = icmp eq i32 %i.r, 2
   %i.v = zext i1 %i.u to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr @dav1d_cdef_brow_16bpc.uv_dirs, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 3088
-  %i.y = load ptr, ptr %i.x, align 16, !tbaa !84
+  %i.y = load ptr, ptr %i.x, align 16, !tbaa !83
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 24
-  %i.aa = load i32, ptr %i.z, align 8, !tbaa !98
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !97
   %i.ab = icmp ult i32 %i.aa, 2                   ; 7 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.l, i64 236
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !99
+  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !98
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 240
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !99
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !98
   %.not = icmp eq i32 %i.ad, %i.af                ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 2144 ; 7 uses
-  %i.ah = load i64, ptr %i.ag, align 16, !tbaa !100 ; 4 uses
+  %i.ah = load i64, ptr %i.ag, align 16, !tbaa !99 ; 4 uses
   %i.ai = and i64 %i.ah, 1
   %.not.i = icmp eq i64 %i.ai, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 2152 ; 7 uses
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !100 ; 2 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !99 ; 2 uses
   %i.al = and i64 %i.ak, 1
   %.not.i364 = icmp eq i64 %i.al, 0
   tail call void @llvm.assume(i1 %.not.i364)
@@ -62,21 +62,21 @@ bb.a:
   %i.an = ashr exact i64 %i.ak, 1                 ; 7 uses
   %i.ao = ashr exact i64 %i.ah, 1                 ; 6 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !101
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !100
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 392
-  %i.as = load i8, ptr %i.ar, align 4, !tbaa !103
+  %i.as = load i8, ptr %i.ar, align 4, !tbaa !102
   %i.at = zext i8 %i.as to i32                    ; 2 uses
   %i.au = icmp eq i32 %i.r, 1                     ; 6 uses
   %i.av = sub i32 3, %i.r
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !104
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !103
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !104
-  %i.ba = load ptr, ptr %1, align 8, !tbaa !104
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !103
+  %i.ba = load ptr, ptr %1, align 8, !tbaa !103
   %i.bb = icmp sgt i32 %3, 0
   %i.bc = select i1 %i.bb, i32 12, i32 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 3112
-  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !105 ; 2 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !tbaa !104 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 258544 ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.d, i64 3284
   %i.bh = icmp ne i32 %5, 0                       ; 3 uses
@@ -143,7 +143,7 @@ bb.a:
   %i.dl = lshr exact i32 64, %i.t
   %i.dm = zext nneg i32 %i.dl to i64              ; 2 uses
   %i.dn = zext i1 %i.au to i64
-  %.pre = load i32, ptr %i.bf, align 16, !tbaa !106
+  %.pre = load i32, ptr %i.bf, align 16, !tbaa !105
   %i.do = getelementptr inbounds nuw i8, ptr %i.d, i64 4992
   %i.dp = getelementptr inbounds nuw i8, ptr %i.d, i64 5016
   %i.dq = getelementptr inbounds nuw i8, ptr %i.d, i64 4992
@@ -170,7 +170,7 @@ bb.b:                                             ; preds = %.lr.ph470, %._crit_
   %i.dy = lshr i32 %.0323466, 1
   %i.dz = and i32 %i.dy, 15
   %i.ea = add nsw i32 %.0323466, 2                ; 3 uses
-  %i.eb = load i32, ptr %i.bg, align 4, !tbaa !107
+  %i.eb = load i32, ptr %i.bg, align 4, !tbaa !106
   %.not334 = icmp slt i32 %i.ea, %i.eb
   %i.ec = and i32 %.0303468, -9
   %spec.select = select i1 %.not334, i32 %.0303468, i32 %i.ec ; 2 uses
@@ -185,13 +185,13 @@ bb.c:                                             ; preds = %bb.b
   %.not337 = icmp eq i32 %i.dx, 0
   %i.ef = zext i1 %.not337 to i64
   %i.eg = getelementptr inbounds nuw [24 x i8], ptr %i.bi, i64 %i.ef ; 3 uses
-  %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !104
+  %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !103
   %i.ei = getelementptr inbounds [2 x i8], ptr %i.eh, i64 %i.bm ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eg, i64 8
-  %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !104
+  %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !103
   %i.el = getelementptr inbounds [2 x i8], ptr %i.ek, i64 %i.bp ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.eg, i64 16
-  %i.en = load ptr, ptr %i.em, align 8, !tbaa !104
+  %i.en = load ptr, ptr %i.em, align 8, !tbaa !103
   %i.eo = getelementptr inbounds [2 x i8], ptr %i.en, i64 %i.bp ; 2 uses
   %i.ep = ashr exact i64 %i.dw, 1                 ; 4 uses
   %i.eq = icmp slt i64 %i.ep, 0
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not.i365, label %backup2lines.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ew = load i64, ptr %i.aj, align 8, !tbaa !100 ; 5 uses
+  %i.ew = load i64, ptr %i.aj, align 8, !tbaa !99 ; 5 uses
   %i.ex = and i64 %i.ew, 1
   %.not.i41.i = icmp eq i64 %i.ex, 0
   call void @llvm.assume(i1 %.not.i41.i)
@@ -269,13 +269,13 @@ backup2lines.exit:                                ; preds = %bb.i, %bb.h, %bb.f,
   %.1325.lcssa = phi i32 [ %.0324465, %backup2lines.exit ], [ %.4328, %.loopexit434 ]
   %.1312.lcssa = phi i32 [ %.0311467, %backup2lines.exit ], [ %.5316, %.loopexit434 ]
   %.2.lcssa = phi i32 [ %i.fl, %backup2lines.exit ], [ %i.rz, %.loopexit434 ]
-  %i.fw = load i64, ptr %i.ag, align 16, !tbaa !100 ; 3 uses
+  %i.fw = load i64, ptr %i.ag, align 16, !tbaa !99 ; 3 uses
   %i.fx = and i64 %i.fw, 1
   %.not.i366 = icmp eq i64 %i.fx, 0
   call void @llvm.assume(i1 %.not.i366)
   %.idx = shl nsw i64 %i.fw, 3
   %i.fy = getelementptr inbounds i8, ptr %.sroa.0421.0464, i64 %.idx
-  %i.fz = load i64, ptr %i.aj, align 8, !tbaa !100 ; 2 uses
+  %i.fz = load i64, ptr %i.aj, align 8, !tbaa !99 ; 2 uses
   %i.ga = and i64 %i.fz, 1
   %.not.i367 = icmp eq i64 %i.ga, 0
   call void @llvm.assume(i1 %.not.i367)
@@ -283,9 +283,9 @@ backup2lines.exit:                                ; preds = %bb.i, %bb.h, %bb.f,
   %i.gc = ashr exact i64 %i.gb, %i.dn             ; 2 uses
   %i.gd = getelementptr inbounds [2 x i8], ptr %.sroa.8.0463, i64 %i.gc
   %i.ge = getelementptr inbounds [2 x i8], ptr %.sroa.14.0462, i64 %i.gc
-  %i.gf = load i32, ptr %i.bf, align 16, !tbaa !106
+  %i.gf = load i32, ptr %i.bf, align 16, !tbaa !105
   %i.gg = xor i32 %i.gf, 1                        ; 2 uses
-  store i32 %i.gg, ptr %i.bf, align 16, !tbaa !106
+  store i32 %i.gg, ptr %i.bf, align 16, !tbaa !105
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   %i.gh = or i32 %.2.lcssa, 4
   br i1 %i.ed, label %bb.b, label %._crit_edge471
@@ -309,20 +309,20 @@ bb.j:                                             ; preds = %.lr.ph458, %.loopex
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 1280
   %i.gp = zext nneg i32 %i.gl to i64
   %i.gq = getelementptr inbounds nuw i8, ptr %i.go, i64 %i.gp
-  %i.gr = load i8, ptr %i.gq, align 1, !tbaa !108 ; 2 uses
+  %i.gr = load i8, ptr %i.gq, align 1, !tbaa !107 ; 2 uses
   %i.gs = icmp eq i8 %i.gr, -1
   br i1 %i.gs, label %.loopexit434, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.gt = load ptr, ptr %i.k, align 8, !tbaa !66  ; 2 uses
+  %i.gt = load ptr, ptr %i.k, align 8, !tbaa !65  ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 849
   %i.gv = sext i8 %i.gr to i64                    ; 2 uses
   %i.gw = getelementptr inbounds i8, ptr %i.gu, i64 %i.gv
-  %i.gx = load i8, ptr %i.gw, align 1, !tbaa !108 ; 2 uses
+  %i.gx = load i8, ptr %i.gw, align 1, !tbaa !107 ; 2 uses
   %.not338 = icmp ne i8 %i.gx, 0                  ; 3 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.gt, i64 857
   %.phi.trans.insert501 = getelementptr inbounds i8, ptr %.phi.trans.insert, i64 %i.gv
-  %.pre502 = load i8, ptr %.phi.trans.insert501, align 1, !tbaa !108 ; 3 uses
+  %.pre502 = load i8, ptr %.phi.trans.insert501, align 1, !tbaa !107 ; 3 uses
   %.not339 = icmp ne i8 %.pre502, 0
   %or.cond526.not = select i1 %.not338, i1 true, i1 %.not339
   br i1 %or.cond526.not, label %._crit_edge500, label %.loopexit434
@@ -351,7 +351,7 @@ bb.k:                                             ; preds = %bb.j
   %i.hr = shl i32 %i.hq, %i.g                     ; 2 uses
   %i.hs = shl i32 %.0318455, 4                    ; 2 uses
   %i.ht = add i32 %i.hs, 16                       ; 2 uses
-  %i.hu = load i32, ptr %i.bt, align 16, !tbaa !109 ; 2 uses
+  %i.hu = load i32, ptr %i.bt, align 16, !tbaa !108 ; 2 uses
   %i.hv = call noundef i32 @llvm.smin.i32(i32 %i.ht, i32 %i.hu)
   %i.hw = icmp slt i32 %i.hs, %i.hv
   br i1 %i.hw, label %.lr.ph, label %.loopexit434
@@ -406,7 +406,7 @@ bb.n:                                             ; preds = %bb.m
   %i.im = getelementptr i8, ptr %.sroa.0.0392436, i64 -4
   %i.in = load i32, ptr %i.im, align 2
   store i32 %i.in, ptr %i.ik, align 16
-  %i.io = load i64, ptr %i.ag, align 16, !tbaa !100 ; 5 uses
+  %i.io = load i64, ptr %i.ag, align 16, !tbaa !99 ; 5 uses
   %i.ip = and i64 %i.io, 1
   %.not.i.i370 = icmp eq i64 %i.ip, 0
   call void @llvm.assume(i1 %.not.i.i370)
@@ -460,7 +460,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %.loopexit35.i
   %i.jx = getelementptr inbounds nuw i8, ptr %i.ik, i64 32 ; 3 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.ik, i64 64 ; 3 uses
-  %.pre503 = load i64, ptr %i.aj, align 8, !tbaa !100 ; 3 uses
+  %.pre503 = load i64, ptr %i.aj, align 8, !tbaa !99 ; 3 uses
   %i.jz = and i64 %.pre503, 1
   %.not.i34.i = icmp eq i64 %i.jz, 0
   call void @llvm.assume(i1 %.not.i34.i)
@@ -549,7 +549,7 @@ bb.p:                                             ; preds = %backup2x8.exit
   %i.lw = getelementptr i8, ptr %.sroa.0.0392436, i64 12
   %i.lx = load i32, ptr %i.lw, align 2
   store i32 %i.lx, ptr %.sroa.sel.idx.sroa.sel.idx.sroa.sel, align 16
-  %i.ly = load i64, ptr %i.ag, align 16, !tbaa !100 ; 5 uses
+  %i.ly = load i64, ptr %i.ag, align 16, !tbaa !99 ; 5 uses
   %i.lz = and i64 %i.ly, 1
   %.not.i.i373 = icmp eq i64 %i.lz, 0
   call void @llvm.assume(i1 %.not.i.i373)
@@ -610,7 +610,7 @@ scalar.ph:                                        ; preds = %.loopexit35.i381
   %.sroa.sel.sroa.sel398.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel.sroa.sel398.v.sroa.sel.v.sroa.sel.v ; 2 uses
   %.sroa.sel.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not346, i64 160, i64 64
   %.sroa.sel.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.sel.sroa.sel.v.sroa.sel.v.sroa.sel.v ; 2 uses
-  %.pre504 = load i64, ptr %i.aj, align 8, !tbaa !100 ; 2 uses
+  %.pre504 = load i64, ptr %i.aj, align 8, !tbaa !99 ; 2 uses
   %i.na = and i64 %.pre504, 1
   %.not.i34.i388 = icmp eq i64 %i.na, 0
   call void @llvm.assume(i1 %.not.i34.i388)
@@ -643,15 +643,15 @@ bb.q:                                             ; preds = %bb.q, %scalar.ph
   %indvars.iv.next.i387.1 = add nuw nsw i64 %indvars.iv.i385, 2 ; 2 uses
   %i.nr = add nsw i64 %i.nb, %i.nj
   %exitcond.not.i389.1 = icmp eq i64 %indvars.iv.next.i387.1, %wide.trip.count.i
-  br i1 %exitcond.not.i389.1, label %backup2x8.exit390, label %bb.q, !llvm.loop !10
+  br i1 %exitcond.not.i389.1, label %backup2x8.exit390, label %bb.q
 
 backup2x8.exit390:                                ; preds = %bb.q, %.loopexit35.i381, %backup2x8.exit
   br i1 %or.cond3, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %backup2x8.exit390
-  %i.ns = load ptr, ptr %i.bz, align 8, !tbaa !120
-  %i.nt = load i64, ptr %i.ag, align 16, !tbaa !100
-  %i.nu = load i32, ptr %i.ca, align 4, !tbaa !121
+  %i.ns = load ptr, ptr %i.bz, align 8, !tbaa !119
+  %i.nt = load i64, ptr %i.ag, align 16, !tbaa !99
+  %i.nu = load i32, ptr %i.ca, align 4, !tbaa !120
   %i.nv = call i32 %i.ns(ptr noundef %.sroa.0.0392436, i64 noundef %i.nt, ptr noundef nonnull %i.b, i32 noundef %i.nu) #5
   br label %bb.s
 
@@ -660,7 +660,7 @@ bb.s:                                             ; preds = %backup2x8.exit390, 
   br i1 %i.ab, label %._crit_edge505, label %bb.t
 
 ._crit_edge505:                                   ; preds = %bb.s
-  %.pre506 = load ptr, ptr %i.fr, align 8, !tbaa !104
+  %.pre506 = load ptr, ptr %i.fr, align 8, !tbaa !103
   br label %bb.ac
 
 bb.t:                                             ; preds = %bb.s
@@ -672,12 +672,12 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.ny = load ptr, ptr %i.ch, align 8, !tbaa !104
+  %i.ny = load ptr, ptr %i.ch, align 8, !tbaa !103
   %i.nz = getelementptr [2 x i8], ptr %i.ny, i64 %i.cs
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.u
-  %i.oa = load ptr, ptr %i.cp, align 16, !tbaa !104
+  %i.oa = load ptr, ptr %i.cp, align 16, !tbaa !103
   %i.ob = getelementptr [2 x i8], ptr %i.oa, i64 %i.cv
   br label %bb.x
 
@@ -688,7 +688,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %bb.ad
 
 bb.y:                                             ; preds = %bb.t
-  %.pre507 = load ptr, ptr %i.fr, align 8, !tbaa !104 ; 2 uses
+  %.pre507 = load ptr, ptr %i.fr, align 8, !tbaa !103 ; 2 uses
   br i1 %or.cond359, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -699,13 +699,13 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.oi = load ptr, ptr %i.ch, align 8, !tbaa !104
+  %i.oi = load ptr, ptr %i.ch, align 8, !tbaa !103
   %i.oj = getelementptr [2 x i8], ptr %i.oi, i64 %i.cg
   %i.ok = getelementptr [2 x i8], ptr %i.oj, i64 %i.of
   br label %bb.ad
 
 bb.ab:                                            ; preds = %bb.z
-  %i.ol = load ptr, ptr %i.cp, align 16, !tbaa !104
+  %i.ol = load ptr, ptr %i.cp, align 16, !tbaa !103
   %i.om = getelementptr [2 x i8], ptr %i.ol, i64 %i.co
   %i.on = getelementptr [2 x i8], ptr %i.om, i64 %i.of
   br label %bb.ad
@@ -725,7 +725,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.
   br i1 %i.hx, label %bb.ae, label %bb.aj
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ou = load i32, ptr %i.b, align 4, !tbaa !99  ; 2 uses
+  %i.ou = load i32, ptr %i.b, align 4, !tbaa !98  ; 2 uses
   %.not.i391 = icmp eq i32 %i.ou, 0
   br i1 %.not.i391, label %adjust_strength.exit, label %bb.af
 
@@ -755,11 +755,11 @@ adjust_strength.exit:                             ; preds = %bb.ae, %bb.ah
   br i1 %or.cond5, label %bb.ai, label %bb.al
 
 bb.ai:                                            ; preds = %adjust_strength.exit
-  %i.pf = load ptr, ptr %i.cx, align 8, !tbaa !122
-  %i.pg = load i64, ptr %i.ag, align 16, !tbaa !100
+  %i.pf = load ptr, ptr %i.cx, align 8, !tbaa !121
+  %i.pg = load i64, ptr %i.ag, align 16, !tbaa !99
   %i.ph = zext nneg i32 %.2326439 to i64
   %i.pi = getelementptr inbounds nuw [96 x i8], ptr %i.a, i64 %i.ph
-  %i.pj = load i32, ptr %i.ca, align 4, !tbaa !121
+  %i.pj = load i32, ptr %i.ca, align 4, !tbaa !120
   call void %i.pf(ptr noundef %.sroa.0.0392436, i64 noundef %i.pg, ptr noundef nonnull %i.pi, ptr noundef %.1308, ptr noundef %.0304, i32 noundef %.0.i, i32 noundef %i.hl, i32 noundef %.3314, i32 noundef %i.p, i32 noundef %spec.select354, i32 noundef %i.pj) #5
   br label %bb.al
 
@@ -767,11 +767,11 @@ bb.aj:                                            ; preds = %bb.ad
   br i1 %.not350, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.pk = load ptr, ptr %i.cx, align 8, !tbaa !122
-  %i.pl = load i64, ptr %i.ag, align 16, !tbaa !100
+  %i.pk = load ptr, ptr %i.cx, align 8, !tbaa !121
+  %i.pl = load i64, ptr %i.ag, align 16, !tbaa !99
   %i.pm = zext nneg i32 %.2326439 to i64
   %i.pn = getelementptr inbounds nuw [96 x i8], ptr %i.a, i64 %i.pm
-  %i.po = load i32, ptr %i.ca, align 4, !tbaa !121
+  %i.po = load i32, ptr %i.ca, align 4, !tbaa !120
   call void %i.pk(ptr noundef %.sroa.0.0392436, i64 noundef %i.pl, ptr noundef nonnull %i.pn, ptr noundef %.1308, ptr noundef %.0304, i32 noundef 0, i32 noundef %i.hl, i32 noundef 0, i32 noundef %i.p, i32 noundef %spec.select354, i32 noundef %i.po) #5
   br label %bb.al
 
@@ -785,7 +785,7 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.pp = sext i32 %.3314 to i64
   %i.pq = getelementptr inbounds i8, ptr %i.w, i64 %i.pp
-  %i.pr = load i8, ptr %i.pq, align 1, !tbaa !108
+  %i.pr = load i8, ptr %i.pq, align 1, !tbaa !107
   %i.ps = zext i8 %i.pr to i32
   br label %bb.ao
 
@@ -805,12 +805,12 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.pz = load ptr, ptr %i.dq, align 16, !tbaa !104
+  %i.pz = load ptr, ptr %i.dq, align 16, !tbaa !103
   %i.qa = getelementptr [2 x i8], ptr %i.pz, i64 %i.dg
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.aq
-  %i.qb = load ptr, ptr %i.dr, align 8, !tbaa !104
+  %i.qb = load ptr, ptr %i.dr, align 8, !tbaa !103
   %i.qc = getelementptr [2 x i8], ptr %i.qb, i64 %i.dh
   br label %bb.at
 
@@ -824,18 +824,18 @@ bb.au:                                            ; preds = %bb.ap
   br i1 %or.cond359, label %bb.az, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.qe = load ptr, ptr %i.fs, align 8, !tbaa !104
+  %i.qe = load ptr, ptr %i.fs, align 8, !tbaa !103
   %i.qf = getelementptr [2 x i8], ptr %i.qe, i64 %i.dd
   %i.qg = getelementptr [2 x i8], ptr %i.qf, i64 %i.py
   br i1 %.not, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.qh = load ptr, ptr %i.do, align 16, !tbaa !104
+  %i.qh = load ptr, ptr %i.do, align 16, !tbaa !103
   %i.qi = getelementptr [2 x i8], ptr %i.qh, i64 %i.de
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.av
-  %i.qj = load ptr, ptr %i.dp, align 8, !tbaa !104
+  %i.qj = load ptr, ptr %i.dp, align 8, !tbaa !103
   %i.qk = getelementptr [2 x i8], ptr %i.qj, i64 %i.df
   br label %bb.ay
 
@@ -845,7 +845,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   br label %bb.ba
 
 bb.az:                                            ; preds = %bb.au, %bb.ao
-  %i.ql = load ptr, ptr %i.ft, align 8, !tbaa !104
+  %i.ql = load ptr, ptr %i.ft, align 8, !tbaa !103
   %i.qm = getelementptr [2 x i8], ptr %i.ql, i64 %i.dk
   %i.qn = getelementptr [2 x i8], ptr %i.qm, i64 %i.py
   %i.qo = getelementptr inbounds [2 x i8], ptr %.sroa.2.0, i64 %i.dj
@@ -854,10 +854,10 @@ bb.az:                                            ; preds = %bb.au, %bb.ao
 bb.ba:                                            ; preds = %bb.ay, %bb.az, %bb.at
   %.3310 = phi ptr [ %.2309, %bb.at ], [ %i.qn, %bb.az ], [ %i.qg, %bb.ay ]
   %.2306 = phi ptr [ %i.qd, %bb.at ], [ %i.qo, %bb.az ], [ %.1305, %bb.ay ]
-  %i.qp = load ptr, ptr %i.cz, align 8, !tbaa !122
-  %i.qq = load i64, ptr %i.aj, align 8, !tbaa !100
+  %i.qp = load ptr, ptr %i.cz, align 8, !tbaa !121
+  %i.qq = load i64, ptr %i.aj, align 8, !tbaa !99
   %i.qr = getelementptr inbounds nuw i8, ptr %i.pv, i64 32
-  %i.qs = load i32, ptr %i.ca, align 4, !tbaa !121
+  %i.qs = load i32, ptr %i.ca, align 4, !tbaa !120
   call void %i.qp(ptr noundef %.sroa.2.0, i64 noundef %i.qq, ptr noundef nonnull %i.qr, ptr noundef %.3310, ptr noundef %.2306, i32 noundef %i.hn, i32 noundef %i.hr, i32 noundef %i.pt, i32 noundef %i.da, i32 noundef %spec.select354, i32 noundef %i.qs) #5
   br i1 %i.ab, label %bb.bl, label %bb.bb
 
@@ -868,18 +868,18 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %or.cond359, label %bb.bl, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.qt = load ptr, ptr %i.fu, align 8, !tbaa !104
+  %i.qt = load ptr, ptr %i.fu, align 8, !tbaa !103
   %i.qu = getelementptr [2 x i8], ptr %i.qt, i64 %i.dd
   %i.qv = getelementptr [2 x i8], ptr %i.qu, i64 %i.py
   br i1 %.not, label %bb.bf, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.qw = load ptr, ptr %i.ds, align 8, !tbaa !104
+  %i.qw = load ptr, ptr %i.ds, align 8, !tbaa !103
   %i.qx = getelementptr [2 x i8], ptr %i.qw, i64 %i.de
   br label %bb.bg
 
 bb.bf:                                            ; preds = %bb.bd
-  %i.qy = load ptr, ptr %i.dt, align 16, !tbaa !104
+  %i.qy = load ptr, ptr %i.dt, align 16, !tbaa !103
   %i.qz = getelementptr [2 x i8], ptr %i.qy, i64 %i.df
   br label %bb.bg
 
@@ -892,12 +892,12 @@ bb.bh:                                            ; preds = %bb.bb
   br i1 %.not, label %bb.bj, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.ra = load ptr, ptr %i.du, align 8, !tbaa !104
+  %i.ra = load ptr, ptr %i.du, align 8, !tbaa !103
   %i.rb = getelementptr [2 x i8], ptr %i.ra, i64 %i.dg
   br label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bh
-  %i.rc = load ptr, ptr %i.dv, align 16, !tbaa !104
+  %i.rc = load ptr, ptr %i.dv, align 16, !tbaa !103
   %i.rd = getelementptr [2 x i8], ptr %i.rc, i64 %i.dh
   br label %bb.bk
 
@@ -908,7 +908,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   br label %.loopexit.loopexit
 
 bb.bl:                                            ; preds = %bb.bc, %bb.ba
-  %i.rf = load ptr, ptr %i.fv, align 8, !tbaa !104
+  %i.rf = load ptr, ptr %i.fv, align 8, !tbaa !103
   %i.rg = getelementptr [2 x i8], ptr %i.rf, i64 %i.dk
   %i.rh = getelementptr [2 x i8], ptr %i.rg, i64 %i.py
   %i.ri = getelementptr inbounds [2 x i8], ptr %.sroa.7.0, i64 %i.dj
@@ -917,16 +917,16 @@ bb.bl:                                            ; preds = %bb.bc, %bb.ba
 .loopexit.loopexit:                               ; preds = %bb.bl, %bb.bk, %bb.bg
   %.3310.1 = phi ptr [ %.2309.1, %bb.bk ], [ %i.rh, %bb.bl ], [ %i.qv, %bb.bg ]
   %.2306.1 = phi ptr [ %i.re, %bb.bk ], [ %i.ri, %bb.bl ], [ %.1305.1, %bb.bg ]
-  %i.rj = load ptr, ptr %i.cz, align 8, !tbaa !122
-  %i.rk = load i64, ptr %i.aj, align 8, !tbaa !100
+  %i.rj = load ptr, ptr %i.cz, align 8, !tbaa !121
+  %i.rk = load i64, ptr %i.aj, align 8, !tbaa !99
   %i.rl = getelementptr inbounds nuw i8, ptr %i.pv, i64 64
-  %i.rm = load i32, ptr %i.ca, align 4, !tbaa !121
+  %i.rm = load i32, ptr %i.ca, align 4, !tbaa !120
   call void %i.rj(ptr noundef %.sroa.7.0, i64 noundef %i.rk, ptr noundef nonnull %i.rl, ptr noundef %.3310.1, ptr noundef %.2306.1, i32 noundef %i.hn, i32 noundef %i.hr, i32 noundef %i.pt, i32 noundef %i.da, i32 noundef %spec.select354, i32 noundef %i.rm) #5
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.al
   %i.rn = xor i32 %.2326439, 1
-  %.pre508 = load i32, ptr %i.bt, align 16, !tbaa !109
+  %.pre508 = load i32, ptr %i.bt, align 16, !tbaa !108
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.l, %.loopexit
@@ -997,119 +997,118 @@ attributes #5 = { nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!"__libc_errno", !5, i64 0}
 !7 = !{!6, !5, i64 0}
-!8 = distinct !{!8, !110, !111}
-!9 = distinct !{!9, !110}
-!10 = distinct !{!10, !110}
-!11 = !{!"any pointer", !4, i64 0}
-!12 = !{!"p1 _ZTS12Dav1dContext", !11, i64 0}
-!13 = !{!"p1 _ZTS17Dav1dFrameContext", !11, i64 0}
-!14 = !{!"p1 _ZTS14Dav1dTileState", !11, i64 0}
-!15 = !{!"BlockContext", !4, i64 0, !4, i64 32, !4, i64 64, !4, i64 128, !4, i64 160, !4, i64 192, !4, i64 224, !4, i64 256, !4, i64 288, !4, i64 352, !4, i64 416, !4, i64 448, !4, i64 480, !4, i64 512, !4, i64 544, !4, i64 560, !4, i64 592}
-!16 = !{!"p1 _ZTS12BlockContext", !11, i64 0}
-!17 = !{!"p1 _ZTS12refmvs_frame", !11, i64 0}
-!18 = !{!"p1 _ZTS21refmvs_temporal_block", !11, i64 0}
-!19 = !{!"", !5, i64 0, !5, i64 4}
-!20 = !{!"refmvs_tile", !17, i64 0, !4, i64 8, !18, i64 304, !19, i64 312, !19, i64 320}
-!21 = !{!"Dav1dWarpedMotionParams", !5, i64 0, !4, i64 4, !4, i64 28}
-!22 = !{!"p1 _ZTS9Av1Filter", !11, i64 0}
-!23 = !{!"p1 omnipotent char", !11, i64 0}
-!24 = !{!"", !5, i64 0}
-!25 = !{!"long", !4, i64 0}
-!26 = !{!"thread_data", !25, i64 0, !4, i64 8, !4, i64 56, !5, i64 96}
-!27 = !{!"p1 _ZTS14TaskThreadData", !11, i64 0}
-!28 = !{!"p1 _ZTS19FrameTileThreadData", !11, i64 0}
-!29 = !{!"", !26, i64 0, !27, i64 104, !28, i64 112, !5, i64 120, !5, i64 124}
-!30 = !{!"Dav1dTaskContext", !12, i64 0, !13, i64 8, !14, i64 16, !5, i64 24, !5, i64 28, !15, i64 32, !16, i64 656, !20, i64 664, !4, i64 1024, !4, i64 5120, !4, i64 8192, !4, i64 8256, !21, i64 258496, !22, i64 258536, !5, i64 258544, !23, i64 258552, !5, i64 258560, !24, i64 258564, !29, i64 258568}
-!31 = !{!30, !13, i64 8}
-!32 = !{!"p1 _ZTS8Dav1dRef", !11, i64 0}
-!33 = !{!"p1 _ZTS19Dav1dSequenceHeader", !11, i64 0}
-!34 = !{!"p1 _ZTS16Dav1dFrameHeader", !11, i64 0}
-!35 = !{!"Dav1dPictureParameters", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12}
-!36 = !{!"Dav1dUserData", !23, i64 0, !32, i64 8}
-!37 = !{!"Dav1dDataProps", !25, i64 0, !25, i64 8, !25, i64 16, !25, i64 24, !36, i64 32}
-!38 = !{!"p1 _ZTS22Dav1dContentLightLevel", !11, i64 0}
-!39 = !{!"p1 _ZTS21Dav1dMasteringDisplay", !11, i64 0}
-!40 = !{!"p1 _ZTS12Dav1dITUTT35", !11, i64 0}
-!41 = !{!"Dav1dPicture", !33, i64 0, !34, i64 8, !4, i64 16, !4, i64 40, !35, i64 56, !37, i64 72, !38, i64 120, !39, i64 128, !40, i64 136, !25, i64 144, !4, i64 152, !32, i64 184, !32, i64 192, !32, i64 200, !32, i64 208, !32, i64 216, !4, i64 224, !32, i64 256, !11, i64 264}
-!42 = !{!"Dav1dThreadPicture", !41, i64 0, !5, i64 272, !5, i64 276, !5, i64 280, !11, i64 288}
-!43 = !{!"CdfThreadContext", !32, i64 0, !4, i64 8, !11, i64 16}
-!44 = !{!"p1 _ZTS14Dav1dTileGroup", !11, i64 0}
-!45 = !{!"p1 _ZTS15Dav1dDSPContext", !11, i64 0}
-!46 = !{!"", !11, i64 0, !11, i64 8, !11, i64 16, !11, i64 24, !11, i64 32, !11, i64 40, !11, i64 48, !11, i64 56, !11, i64 64, !11, i64 72, !11, i64 80, !11, i64 88, !11, i64 96, !11, i64 104}
-!47 = !{!"any p2 pointer", !11, i64 0}
-!48 = !{!"p2 _ZTS21refmvs_temporal_block", !47, i64 0}
-!49 = !{!"p1 _ZTS12refmvs_block", !11, i64 0}
-!50 = !{!"refmvs_frame", !34, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !4, i64 32, !4, i64 39, !4, i64 46, !4, i64 53, !4, i64 56, !4, i64 59, !5, i64 80, !5, i64 84, !18, i64 88, !48, i64 96, !18, i64 104, !25, i64 112, !49, i64 120, !5, i64 128, !5, i64 132}
-!51 = !{!"p1 _ZTS8Av1Block", !11, i64 0}
-!52 = !{!"p1 short", !11, i64 0}
-!53 = !{!"p1 int", !11, i64 0}
-!54 = !{!"", !4, i64 0, !4, i64 8, !4, i64 12, !11, i64 16, !11, i64 24, !51, i64 32, !52, i64 40, !52, i64 48, !23, i64 56, !53, i64 64, !5, i64 72, !5, i64 76, !5, i64 80, !5, i64 84, !5, i64 88, !53, i64 96}
-!55 = !{!"p1 _ZTS14Av1Restoration", !11, i64 0}
-!56 = !{!"Av1FilterLUT", !4, i64 0, !4, i64 64, !4, i64 128}
-!57 = !{!"", !23, i64 0, !22, i64 8, !55, i64 16, !5, i64 24, !5, i64 28, !4, i64 32, !5, i64 40, !4, i64 44, !5, i64 52, !56, i64 64, !4, i64 208, !5, i64 720, !4, i64 728, !23, i64 744, !23, i64 752, !4, i64 760, !4, i64 808, !4, i64 832, !23, i64 856, !5, i64 864, !5, i64 868, !4, i64 872, !4, i64 896, !5, i64 920}
-!58 = !{!"p1 _ZTS9Dav1dTask", !11, i64 0}
-!59 = !{!"Dav1dTask", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !58, i64 24}
-!60 = !{!"", !4, i64 0, !4, i64 8, !58, i64 48, !58, i64 56}
-!61 = !{!"", !4, i64 0, !4, i64 40, !27, i64 88, !58, i64 96, !4, i64 104, !59, i64 120, !5, i64 152, !5, i64 156, !4, i64 160, !4, i64 164, !5, i64 172, !5, i64 176, !4, i64 180, !4, i64 184, !58, i64 192, !58, i64 200, !58, i64 208, !60, i64 216}
-!62 = !{!"FrameTileThreadData", !53, i64 0, !5, i64 8}
-!63 = !{!"Dav1dFrameContext", !32, i64 0, !33, i64 8, !32, i64 16, !34, i64 24, !4, i64 32, !41, i64 2104, !42, i64 2376, !32, i64 2672, !18, i64 2680, !4, i64 2688, !4, i64 2744, !32, i64 2800, !32, i64 2808, !23, i64 2816, !23, i64 2824, !4, i64 2832, !4, i64 2839, !4, i64 2888, !43, i64 2896, !43, i64 2920, !44, i64 2944, !5, i64 2952, !5, i64 2956, !4, i64 2960, !4, i64 3072, !4, i64 3080, !12, i64 3088, !14, i64 3096, !5, i64 3104, !45, i64 3112, !46, i64 3120, !5, i64 3232, !4, i64 3240, !25, i64 3264, !5, i64 3272, !5, i64 3276, !5, i64 3280, !5, i64 3284, !5, i64 3288, !5, i64 3292, !5, i64 3296, !5, i64 3300, !5, i64 3304, !5, i64 3308, !4, i64 3312, !4, i64 3408, !16, i64 3864, !5, i64 3872, !50, i64 3880, !4, i64 4016, !5, i64 4068, !54, i64 4072, !57, i64 4176, !61, i64 5104, !62, i64 5384}
-!64 = !{!63, !5, i64 2172}
-!65 = !{!63, !5, i64 3288}
-!66 = !{!63, !34, i64 24}
-!67 = !{!"Dav1dFilmGrainData", !5, i64 0, !5, i64 4, !4, i64 8, !5, i64 36, !4, i64 40, !4, i64 48, !5, i64 88, !5, i64 92, !4, i64 96, !4, i64 120, !25, i64 176, !5, i64 184, !4, i64 188, !4, i64 196, !4, i64 204, !5, i64 212, !5, i64 216}
-!68 = !{!"", !67, i64 0, !4, i64 224, !4, i64 225}
-!69 = !{!"", !4, i64 0, !4, i64 1}
-!70 = !{!"short", !4, i64 0}
-!71 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 3, !4, i64 4, !4, i64 5, !4, i64 6, !4, i64 7, !4, i64 8, !4, i64 9, !4, i64 10, !4, i64 140, !70, i64 270}
-!72 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 3, !4, i64 4, !4, i64 5, !4, i64 6, !4, i64 7, !4, i64 8, !4, i64 9}
-!73 = !{!"Dav1dSegmentationDataSet", !4, i64 0, !4, i64 80, !4, i64 81}
-!74 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 3, !73, i64 4, !4, i64 86, !4, i64 94}
-!75 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2}
-!76 = !{!"", !69, i64 0, !75, i64 2}
-!77 = !{!"Dav1dLoopfilterModeRefDeltas", !4, i64 0, !4, i64 2}
-!78 = !{!"", !4, i64 0, !4, i64 2, !4, i64 3, !4, i64 4, !4, i64 5, !77, i64 6, !4, i64 16}
-!79 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 10}
-!80 = !{!"", !4, i64 0, !4, i64 12}
-!81 = !{!"Dav1dFrameHeader", !68, i64 0, !5, i64 232, !4, i64 236, !5, i64 244, !4, i64 248, !4, i64 249, !4, i64 250, !4, i64 251, !4, i64 252, !5, i64 256, !5, i64 260, !4, i64 264, !4, i64 265, !4, i64 266, !4, i64 267, !4, i64 268, !4, i64 269, !4, i64 270, !4, i64 271, !4, i64 272, !4, i64 276, !4, i64 404, !5, i64 408, !5, i64 412, !69, i64 416, !4, i64 418, !4, i64 419, !4, i64 420, !4, i64 421, !4, i64 428, !5, i64 432, !4, i64 436, !4, i64 437, !4, i64 438, !71, i64 440, !72, i64 712, !74, i64 722, !76, i64 824, !4, i64 829, !78, i64 830, !79, i64 847, !80, i64 868, !5, i64 884, !4, i64 888, !4, i64 889, !4, i64 890, !4, i64 891, !4, i64 893, !4, i64 894, !4, i64 896}
-!82 = !{!81, !4, i64 847}
-!83 = !{!63, !5, i64 2168}
-!84 = !{!63, !12, i64 3088}
-!85 = !{!"p1 _ZTS16Dav1dTaskContext", !11, i64 0}
-!86 = !{!"p1 _ZTS12Dav1dMemPool", !11, i64 0}
-!87 = !{!"Dav1dData", !23, i64 0, !25, i64 8, !32, i64 16, !37, i64 24}
-!88 = !{!"p1 _ZTS18Dav1dThreadPicture", !11, i64 0}
-!89 = !{!"", !88, i64 0, !5, i64 8}
-!90 = !{!"p1 _ZTS12Dav1dPicture", !11, i64 0}
-!91 = !{!"", !5, i64 0, !5, i64 4, !4, i64 8, !90, i64 56, !90, i64 64, !5, i64 72, !4, i64 76, !4, i64 128}
-!92 = !{!"TaskThreadData", !4, i64 0, !4, i64 40, !4, i64 88, !5, i64 92, !4, i64 96, !4, i64 100, !91, i64 128, !5, i64 48960}
-!93 = !{!"Dav1dPalDSPContext", !11, i64 0}
-!94 = !{!"Dav1dRefmvsDSPContext", !11, i64 0, !11, i64 8, !11, i64 16}
-!95 = !{!"Dav1dPicAllocator", !11, i64 0, !11, i64 8, !11, i64 16}
-!96 = !{!"Dav1dLogger", !11, i64 0, !11, i64 8}
-!97 = !{!"Dav1dContext", !13, i64 0, !5, i64 8, !85, i64 16, !5, i64 24, !44, i64 32, !5, i64 40, !5, i64 44, !5, i64 48, !86, i64 56, !32, i64 64, !33, i64 72, !86, i64 80, !32, i64 88, !34, i64 96, !32, i64 104, !38, i64 112, !32, i64 120, !39, i64 128, !32, i64 136, !40, i64 144, !5, i64 152, !87, i64 160, !42, i64 232, !42, i64 528, !4, i64 824, !11, i64 832, !89, i64 840, !92, i64 896, !86, i64 49920, !86, i64 49928, !4, i64 49936, !86, i64 52496, !4, i64 52504, !4, i64 52696, !93, i64 62800, !94, i64 62808, !95, i64 62832, !5, i64 62856, !5, i64 62860, !5, i64 62864, !5, i64 62868, !5, i64 62872, !5, i64 62876, !5, i64 62880, !5, i64 62884, !5, i64 62888, !5, i64 62892, !5, i64 62896, !5, i64 62900, !5, i64 62904, !37, i64 62912, !5, i64 62960, !96, i64 62968, !86, i64 62984, !86, i64 62992}
-!98 = !{!97, !5, i64 24}
-!99 = !{!5, !5, i64 0}
-!100 = !{!25, !25, i64 0}
-!101 = !{!63, !33, i64 8}
-!102 = !{!"Dav1dSequenceHeader", !4, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !4, i64 32, !4, i64 33, !4, i64 34, !4, i64 36, !4, i64 356, !4, i64 357, !4, i64 358, !5, i64 360, !5, i64 364, !4, i64 368, !5, i64 372, !4, i64 376, !4, i64 377, !5, i64 380, !4, i64 384, !4, i64 385, !4, i64 386, !4, i64 387, !4, i64 388, !4, i64 389, !4, i64 390, !4, i64 391, !4, i64 392, !4, i64 393, !4, i64 394, !4, i64 395, !4, i64 396, !4, i64 397, !4, i64 398, !4, i64 399, !4, i64 400, !4, i64 401, !5, i64 404, !5, i64 408, !4, i64 412, !4, i64 413, !4, i64 414, !4, i64 415, !4, i64 416, !4, i64 417, !4, i64 418, !4, i64 419, !4, i64 420, !4, i64 421, !4, i64 424}
-!103 = !{!102, !4, i64 392}
-!104 = !{!52, !52, i64 0}
-!105 = !{!63, !45, i64 3112}
-!106 = !{!30, !5, i64 258544}
-!107 = !{!63, !5, i64 3284}
-!108 = !{!4, !4, i64 0}
-!109 = !{!63, !5, i64 3280}
-!110 = !{!"llvm.loop.isvectorized", i32 1}
-!111 = !{!"llvm.loop.unroll.runtime.disable"}
-!112 = !{!"Dav1dFilmGrainDSPContext", !11, i64 0, !4, i64 8, !11, i64 32, !4, i64 40}
-!113 = !{!"Dav1dIntraPredDSPContext", !4, i64 0, !4, i64 112, !4, i64 136, !11, i64 184}
-!114 = !{!"Dav1dMCDSPContext", !4, i64 0, !4, i64 80, !4, i64 160, !4, i64 240, !11, i64 320, !11, i64 328, !11, i64 336, !4, i64 344, !11, i64 368, !11, i64 376, !11, i64 384, !11, i64 392, !11, i64 400, !11, i64 408, !11, i64 416}
-!115 = !{!"Dav1dInvTxfmDSPContext", !4, i64 0}
-!116 = !{!"Dav1dLoopFilterDSPContext", !4, i64 0}
-!117 = !{!"Dav1dCdefDSPContext", !11, i64 0, !4, i64 8}
-!118 = !{!"Dav1dLoopRestorationDSPContext", !4, i64 0, !4, i64 16}
-!119 = !{!"Dav1dDSPContext", !112, i64 0, !113, i64 64, !114, i64 256, !115, i64 680, !116, i64 3264, !117, i64 3296, !118, i64 3328}
-!120 = !{!119, !11, i64 3296}
-!121 = !{!63, !5, i64 4068}
-!122 = !{!11, !11, i64 0}
+!8 = distinct !{!8, !109, !110}
+!9 = distinct !{!9, !109}
+!10 = !{!"any pointer", !4, i64 0}
+!11 = !{!"p1 _ZTS12Dav1dContext", !10, i64 0}
+!12 = !{!"p1 _ZTS17Dav1dFrameContext", !10, i64 0}
+!13 = !{!"p1 _ZTS14Dav1dTileState", !10, i64 0}
+!14 = !{!"BlockContext", !4, i64 0, !4, i64 32, !4, i64 64, !4, i64 128, !4, i64 160, !4, i64 192, !4, i64 224, !4, i64 256, !4, i64 288, !4, i64 352, !4, i64 416, !4, i64 448, !4, i64 480, !4, i64 512, !4, i64 544, !4, i64 560, !4, i64 592}
+!15 = !{!"p1 _ZTS12BlockContext", !10, i64 0}
+!16 = !{!"p1 _ZTS12refmvs_frame", !10, i64 0}
+!17 = !{!"p1 _ZTS21refmvs_temporal_block", !10, i64 0}
+!18 = !{!"", !5, i64 0, !5, i64 4}
+!19 = !{!"refmvs_tile", !16, i64 0, !4, i64 8, !17, i64 304, !18, i64 312, !18, i64 320}
+!20 = !{!"Dav1dWarpedMotionParams", !5, i64 0, !4, i64 4, !4, i64 28}
+!21 = !{!"p1 _ZTS9Av1Filter", !10, i64 0}
+!22 = !{!"p1 omnipotent char", !10, i64 0}
+!23 = !{!"", !5, i64 0}
+!24 = !{!"long", !4, i64 0}
+!25 = !{!"thread_data", !24, i64 0, !4, i64 8, !4, i64 56, !5, i64 96}
+!26 = !{!"p1 _ZTS14TaskThreadData", !10, i64 0}
+!27 = !{!"p1 _ZTS19FrameTileThreadData", !10, i64 0}
+!28 = !{!"", !25, i64 0, !26, i64 104, !27, i64 112, !5, i64 120, !5, i64 124}
+!29 = !{!"Dav1dTaskContext", !11, i64 0, !12, i64 8, !13, i64 16, !5, i64 24, !5, i64 28, !14, i64 32, !15, i64 656, !19, i64 664, !4, i64 1024, !4, i64 5120, !4, i64 8192, !4, i64 8256, !20, i64 258496, !21, i64 258536, !5, i64 258544, !22, i64 258552, !5, i64 258560, !23, i64 258564, !28, i64 258568}
+!30 = !{!29, !12, i64 8}
+!31 = !{!"p1 _ZTS8Dav1dRef", !10, i64 0}
+!32 = !{!"p1 _ZTS19Dav1dSequenceHeader", !10, i64 0}
+!33 = !{!"p1 _ZTS16Dav1dFrameHeader", !10, i64 0}
+!34 = !{!"Dav1dPictureParameters", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12}
+!35 = !{!"Dav1dUserData", !22, i64 0, !31, i64 8}
+!36 = !{!"Dav1dDataProps", !24, i64 0, !24, i64 8, !24, i64 16, !24, i64 24, !35, i64 32}
+!37 = !{!"p1 _ZTS22Dav1dContentLightLevel", !10, i64 0}
+!38 = !{!"p1 _ZTS21Dav1dMasteringDisplay", !10, i64 0}
+!39 = !{!"p1 _ZTS12Dav1dITUTT35", !10, i64 0}
+!40 = !{!"Dav1dPicture", !32, i64 0, !33, i64 8, !4, i64 16, !4, i64 40, !34, i64 56, !36, i64 72, !37, i64 120, !38, i64 128, !39, i64 136, !24, i64 144, !4, i64 152, !31, i64 184, !31, i64 192, !31, i64 200, !31, i64 208, !31, i64 216, !4, i64 224, !31, i64 256, !10, i64 264}
+!41 = !{!"Dav1dThreadPicture", !40, i64 0, !5, i64 272, !5, i64 276, !5, i64 280, !10, i64 288}
+!42 = !{!"CdfThreadContext", !31, i64 0, !4, i64 8, !10, i64 16}
+!43 = !{!"p1 _ZTS14Dav1dTileGroup", !10, i64 0}
+!44 = !{!"p1 _ZTS15Dav1dDSPContext", !10, i64 0}
+!45 = !{!"", !10, i64 0, !10, i64 8, !10, i64 16, !10, i64 24, !10, i64 32, !10, i64 40, !10, i64 48, !10, i64 56, !10, i64 64, !10, i64 72, !10, i64 80, !10, i64 88, !10, i64 96, !10, i64 104}
+!46 = !{!"any p2 pointer", !10, i64 0}
+!47 = !{!"p2 _ZTS21refmvs_temporal_block", !46, i64 0}
+!48 = !{!"p1 _ZTS12refmvs_block", !10, i64 0}
+!49 = !{!"refmvs_frame", !33, i64 0, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !4, i64 32, !4, i64 39, !4, i64 46, !4, i64 53, !4, i64 56, !4, i64 59, !5, i64 80, !5, i64 84, !17, i64 88, !47, i64 96, !17, i64 104, !24, i64 112, !48, i64 120, !5, i64 128, !5, i64 132}
+!50 = !{!"p1 _ZTS8Av1Block", !10, i64 0}
+!51 = !{!"p1 short", !10, i64 0}
+!52 = !{!"p1 int", !10, i64 0}
+!53 = !{!"", !4, i64 0, !4, i64 8, !4, i64 12, !10, i64 16, !10, i64 24, !50, i64 32, !51, i64 40, !51, i64 48, !22, i64 56, !52, i64 64, !5, i64 72, !5, i64 76, !5, i64 80, !5, i64 84, !5, i64 88, !52, i64 96}
+!54 = !{!"p1 _ZTS14Av1Restoration", !10, i64 0}
+!55 = !{!"Av1FilterLUT", !4, i64 0, !4, i64 64, !4, i64 128}
+!56 = !{!"", !22, i64 0, !21, i64 8, !54, i64 16, !5, i64 24, !5, i64 28, !4, i64 32, !5, i64 40, !4, i64 44, !5, i64 52, !55, i64 64, !4, i64 208, !5, i64 720, !4, i64 728, !22, i64 744, !22, i64 752, !4, i64 760, !4, i64 808, !4, i64 832, !22, i64 856, !5, i64 864, !5, i64 868, !4, i64 872, !4, i64 896, !5, i64 920}
+!57 = !{!"p1 _ZTS9Dav1dTask", !10, i64 0}
+!58 = !{!"Dav1dTask", !5, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !57, i64 24}
+!59 = !{!"", !4, i64 0, !4, i64 8, !57, i64 48, !57, i64 56}
+!60 = !{!"", !4, i64 0, !4, i64 40, !26, i64 88, !57, i64 96, !4, i64 104, !58, i64 120, !5, i64 152, !5, i64 156, !4, i64 160, !4, i64 164, !5, i64 172, !5, i64 176, !4, i64 180, !4, i64 184, !57, i64 192, !57, i64 200, !57, i64 208, !59, i64 216}
+!61 = !{!"FrameTileThreadData", !52, i64 0, !5, i64 8}
+!62 = !{!"Dav1dFrameContext", !31, i64 0, !32, i64 8, !31, i64 16, !33, i64 24, !4, i64 32, !40, i64 2104, !41, i64 2376, !31, i64 2672, !17, i64 2680, !4, i64 2688, !4, i64 2744, !31, i64 2800, !31, i64 2808, !22, i64 2816, !22, i64 2824, !4, i64 2832, !4, i64 2839, !4, i64 2888, !42, i64 2896, !42, i64 2920, !43, i64 2944, !5, i64 2952, !5, i64 2956, !4, i64 2960, !4, i64 3072, !4, i64 3080, !11, i64 3088, !13, i64 3096, !5, i64 3104, !44, i64 3112, !45, i64 3120, !5, i64 3232, !4, i64 3240, !24, i64 3264, !5, i64 3272, !5, i64 3276, !5, i64 3280, !5, i64 3284, !5, i64 3288, !5, i64 3292, !5, i64 3296, !5, i64 3300, !5, i64 3304, !5, i64 3308, !4, i64 3312, !4, i64 3408, !15, i64 3864, !5, i64 3872, !49, i64 3880, !4, i64 4016, !5, i64 4068, !53, i64 4072, !56, i64 4176, !60, i64 5104, !61, i64 5384}
+!63 = !{!62, !5, i64 2172}
+!64 = !{!62, !5, i64 3288}
+!65 = !{!62, !33, i64 24}
+!66 = !{!"Dav1dFilmGrainData", !5, i64 0, !5, i64 4, !4, i64 8, !5, i64 36, !4, i64 40, !4, i64 48, !5, i64 88, !5, i64 92, !4, i64 96, !4, i64 120, !24, i64 176, !5, i64 184, !4, i64 188, !4, i64 196, !4, i64 204, !5, i64 212, !5, i64 216}
+!67 = !{!"", !66, i64 0, !4, i64 224, !4, i64 225}
+!68 = !{!"", !4, i64 0, !4, i64 1}
+!69 = !{!"short", !4, i64 0}
+!70 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 3, !4, i64 4, !4, i64 5, !4, i64 6, !4, i64 7, !4, i64 8, !4, i64 9, !4, i64 10, !4, i64 140, !69, i64 270}
+!71 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 3, !4, i64 4, !4, i64 5, !4, i64 6, !4, i64 7, !4, i64 8, !4, i64 9}
+!72 = !{!"Dav1dSegmentationDataSet", !4, i64 0, !4, i64 80, !4, i64 81}
+!73 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 3, !72, i64 4, !4, i64 86, !4, i64 94}
+!74 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2}
+!75 = !{!"", !68, i64 0, !74, i64 2}
+!76 = !{!"Dav1dLoopfilterModeRefDeltas", !4, i64 0, !4, i64 2}
+!77 = !{!"", !4, i64 0, !4, i64 2, !4, i64 3, !4, i64 4, !4, i64 5, !76, i64 6, !4, i64 16}
+!78 = !{!"", !4, i64 0, !4, i64 1, !4, i64 2, !4, i64 10}
+!79 = !{!"", !4, i64 0, !4, i64 12}
+!80 = !{!"Dav1dFrameHeader", !67, i64 0, !5, i64 232, !4, i64 236, !5, i64 244, !4, i64 248, !4, i64 249, !4, i64 250, !4, i64 251, !4, i64 252, !5, i64 256, !5, i64 260, !4, i64 264, !4, i64 265, !4, i64 266, !4, i64 267, !4, i64 268, !4, i64 269, !4, i64 270, !4, i64 271, !4, i64 272, !4, i64 276, !4, i64 404, !5, i64 408, !5, i64 412, !68, i64 416, !4, i64 418, !4, i64 419, !4, i64 420, !4, i64 421, !4, i64 428, !5, i64 432, !4, i64 436, !4, i64 437, !4, i64 438, !70, i64 440, !71, i64 712, !73, i64 722, !75, i64 824, !4, i64 829, !77, i64 830, !78, i64 847, !79, i64 868, !5, i64 884, !4, i64 888, !4, i64 889, !4, i64 890, !4, i64 891, !4, i64 893, !4, i64 894, !4, i64 896}
+!81 = !{!80, !4, i64 847}
+!82 = !{!62, !5, i64 2168}
+!83 = !{!62, !11, i64 3088}
+!84 = !{!"p1 _ZTS16Dav1dTaskContext", !10, i64 0}
+!85 = !{!"p1 _ZTS12Dav1dMemPool", !10, i64 0}
+!86 = !{!"Dav1dData", !22, i64 0, !24, i64 8, !31, i64 16, !36, i64 24}
+!87 = !{!"p1 _ZTS18Dav1dThreadPicture", !10, i64 0}
+!88 = !{!"", !87, i64 0, !5, i64 8}
+!89 = !{!"p1 _ZTS12Dav1dPicture", !10, i64 0}
+!90 = !{!"", !5, i64 0, !5, i64 4, !4, i64 8, !89, i64 56, !89, i64 64, !5, i64 72, !4, i64 76, !4, i64 128}
+!91 = !{!"TaskThreadData", !4, i64 0, !4, i64 40, !4, i64 88, !5, i64 92, !4, i64 96, !4, i64 100, !90, i64 128, !5, i64 48960}
+!92 = !{!"Dav1dPalDSPContext", !10, i64 0}
+!93 = !{!"Dav1dRefmvsDSPContext", !10, i64 0, !10, i64 8, !10, i64 16}
+!94 = !{!"Dav1dPicAllocator", !10, i64 0, !10, i64 8, !10, i64 16}
+!95 = !{!"Dav1dLogger", !10, i64 0, !10, i64 8}
+!96 = !{!"Dav1dContext", !12, i64 0, !5, i64 8, !84, i64 16, !5, i64 24, !43, i64 32, !5, i64 40, !5, i64 44, !5, i64 48, !85, i64 56, !31, i64 64, !32, i64 72, !85, i64 80, !31, i64 88, !33, i64 96, !31, i64 104, !37, i64 112, !31, i64 120, !38, i64 128, !31, i64 136, !39, i64 144, !5, i64 152, !86, i64 160, !41, i64 232, !41, i64 528, !4, i64 824, !10, i64 832, !88, i64 840, !91, i64 896, !85, i64 49920, !85, i64 49928, !4, i64 49936, !85, i64 52496, !4, i64 52504, !4, i64 52696, !92, i64 62800, !93, i64 62808, !94, i64 62832, !5, i64 62856, !5, i64 62860, !5, i64 62864, !5, i64 62868, !5, i64 62872, !5, i64 62876, !5, i64 62880, !5, i64 62884, !5, i64 62888, !5, i64 62892, !5, i64 62896, !5, i64 62900, !5, i64 62904, !36, i64 62912, !5, i64 62960, !95, i64 62968, !85, i64 62984, !85, i64 62992}
+!97 = !{!96, !5, i64 24}
+!98 = !{!5, !5, i64 0}
+!99 = !{!24, !24, i64 0}
+!100 = !{!62, !32, i64 8}
+!101 = !{!"Dav1dSequenceHeader", !4, i64 0, !5, i64 4, !5, i64 8, !5, i64 12, !5, i64 16, !5, i64 20, !5, i64 24, !5, i64 28, !4, i64 32, !4, i64 33, !4, i64 34, !4, i64 36, !4, i64 356, !4, i64 357, !4, i64 358, !5, i64 360, !5, i64 364, !4, i64 368, !5, i64 372, !4, i64 376, !4, i64 377, !5, i64 380, !4, i64 384, !4, i64 385, !4, i64 386, !4, i64 387, !4, i64 388, !4, i64 389, !4, i64 390, !4, i64 391, !4, i64 392, !4, i64 393, !4, i64 394, !4, i64 395, !4, i64 396, !4, i64 397, !4, i64 398, !4, i64 399, !4, i64 400, !4, i64 401, !5, i64 404, !5, i64 408, !4, i64 412, !4, i64 413, !4, i64 414, !4, i64 415, !4, i64 416, !4, i64 417, !4, i64 418, !4, i64 419, !4, i64 420, !4, i64 421, !4, i64 424}
+!102 = !{!101, !4, i64 392}
+!103 = !{!51, !51, i64 0}
+!104 = !{!62, !44, i64 3112}
+!105 = !{!29, !5, i64 258544}
+!106 = !{!62, !5, i64 3284}
+!107 = !{!4, !4, i64 0}
+!108 = !{!62, !5, i64 3280}
+!109 = !{!"llvm.loop.isvectorized", i32 1}
+!110 = !{!"llvm.loop.unroll.runtime.disable"}
+!111 = !{!"Dav1dFilmGrainDSPContext", !10, i64 0, !4, i64 8, !10, i64 32, !4, i64 40}
+!112 = !{!"Dav1dIntraPredDSPContext", !4, i64 0, !4, i64 112, !4, i64 136, !10, i64 184}
+!113 = !{!"Dav1dMCDSPContext", !4, i64 0, !4, i64 80, !4, i64 160, !4, i64 240, !10, i64 320, !10, i64 328, !10, i64 336, !4, i64 344, !10, i64 368, !10, i64 376, !10, i64 384, !10, i64 392, !10, i64 400, !10, i64 408, !10, i64 416}
+!114 = !{!"Dav1dInvTxfmDSPContext", !4, i64 0}
+!115 = !{!"Dav1dLoopFilterDSPContext", !4, i64 0}
+!116 = !{!"Dav1dCdefDSPContext", !10, i64 0, !4, i64 8}
+!117 = !{!"Dav1dLoopRestorationDSPContext", !4, i64 0, !4, i64 16}
+!118 = !{!"Dav1dDSPContext", !111, i64 0, !112, i64 64, !113, i64 256, !114, i64 680, !115, i64 3264, !116, i64 3296, !117, i64 3328}
+!119 = !{!118, !10, i64 3296}
+!120 = !{!62, !5, i64 4068}
+!121 = !{!10, !10, i64 0}
 end_hunk_0

@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   store i32 3, ptr %i.fk, align 4, !tbaa !51
   %i.fl = load <2 x float>, ptr %20, align 16, !tbaa !37 ; 4 uses
   %i.fm = load float, ptr %.sroa.7326.0..sroa_idx327, align 4, !tbaa !37 ; 3 uses
-  %i.fn = extractelement <2 x float> %i.fl, i64 0 ; 2 uses
+  %i.fn = extractelement <2 x float> %i.fl, i64 0
   %i.fo = insertelement <2 x float> %i.fl, float %i.fm, i64 1
   %i.fp = fsub <2 x float> %i.el, %i.fo
   store <2 x float> %i.fp, ptr %22, align 16
@@ -220,7 +220,7 @@ bb.i:                                             ; preds = %bb.h
   %i.fv = shufflevector <4 x float> %i.fu, <4 x float> %i.ft, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
   %i.fw = shufflevector <4 x float> %i.fu, <4 x float> <float 0.000000e+00, float poison, float poison, float poison>, <4 x i32> <i32 4, i32 poison, i32 0, i32 1>
   %i.fx = insertelement <4 x float> %i.fw, float %i.ej, i64 1
-  %i.fy = fsub <4 x float> %i.fv, %i.fx           ; 3 uses
+  %i.fy = fsub <4 x float> %i.fv, %i.fx           ; 4 uses
   %i.fz = fneg <4 x float> %i.fy
   %i.ga = shufflevector <4 x float> %i.fz, <4 x float> poison, <2 x i32> <i32 1, i32 2>
   %i.gb = shufflevector <3 x float> %i.am, <3 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 1>
@@ -246,7 +246,8 @@ bb.i:                                             ; preds = %bb.h
   %i.gt = fmul float %i.gl, %i.gr                 ; 2 uses
   %i.gu = fmul float %i.gp, %i.gr                 ; 2 uses
   %i.gv = fmul float %i.fm, %i.gt
-  %i.gw = tail call float @llvm.fmuladd.f32(float %i.gs, float %i.fn, float %i.gv)
+  %29 = extractelement <4 x float> %i.fy, i64 0
+  %i.gw = tail call float @llvm.fmuladd.f32(float %i.gs, float %29, float %i.gv)
   %i.gx = tail call noundef float @llvm.fmuladd.f32(float %i.gu, float %i.ej, float %i.gw)
   %i.gy = fneg float %i.gx
   %i.gz = getelementptr inbounds nuw i8, ptr %23, i64 64

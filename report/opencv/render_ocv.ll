@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.db = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.da, <2 x double> <double 2.990000e-01, double -1.687360e-01>, <2 x double> %i.cy)
   %i.dc = insertelement <2 x double> poison, double %i.cq, i64 0
   %i.dd = shufflevector <2 x double> %i.dc, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.de = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dd, <2 x double> <double 1.140000e-01, double 5.000000e-01>, <2 x double> %i.db) ; 2 uses
+  %i.de = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dd, <2 x double> <double 1.140000e-01, double 5.000000e-01>, <2 x double> %i.db)
   %i.df = fmul double %i.cu, -4.186880e-01
   %i.dg = call double @llvm.fmuladd.f64(double %i.cv, double 5.000000e-01, double %i.df)
   %i.dh = call double @llvm.fmuladd.f64(double %i.cq, double -8.131200e-02, double %i.dg)
@@ -220,8 +220,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %.sroa.030.0.copyload = load i64, ptr %i.aj, align 8, !tbaa !23
   %i.dk = load i32, ptr %i.aq, align 8, !tbaa !43
   %i.dl = load double, ptr %i.ar, align 8, !tbaa !44
-  %30 = shufflevector <2 x double> %i.de, <2 x double> %i.dj, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %30, ptr %11, align 16, !tbaa !18
+  store <2 x double> %i.dj, ptr %11, align 16, !tbaa !18
   store double %i.di, ptr %i.as, align 16, !tbaa !18
   store double 0.000000e+00, ptr %i.at, align 8, !tbaa !18
   %i.dm = load i32, ptr %i.an, align 8, !tbaa !45

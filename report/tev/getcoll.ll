@@ -203,7 +203,7 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph103.split.split.us.preheader:               ; preds = %.lr.ph103.split
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %6, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
+  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert238 = insertelement <8 x i8> poison, i8 %6, i64 0
   %broadcast.splat239 = shufflevector <8 x i8> %broadcast.splatinsert238, <8 x i8> poison, <8 x i32> zeroinitializer
   br label %.lr.ph103.split.split.us.outer
@@ -240,12 +240,12 @@ iter.check:                                       ; preds = %.lr.ph103.split.spl
   br i1 %min.iters.check, label %.lr.ph.us110.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check233 = icmp ult i64 %i.ck, 16
+  %min.iters.check233 = icmp ult i64 %i.ck, 32
   br i1 %min.iters.check233, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.cu = and i64 %i.ck, 8
-  %n.vec = and i64 %i.ck, 9223372036854775792     ; 6 uses
+  %i.cu = and i64 %i.ck, 24
+  %n.vec = and i64 %i.ck, 9223372036854775776     ; 6 uses
   %i.cv = getelementptr i8, ptr %i.p, i64 %n.vec
   %i.cw = add i64 %.074102.us107, %n.vec          ; 2 uses
   %i.cx = getelementptr i8, ptr %7, i64 %.074102.us107
@@ -253,19 +253,31 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep.a = getelementptr i8, ptr %i.p, i64 %index
+  %next.gep = getelementptr i8, ptr %i.p, i64 %index ; 2 uses
+  %next.gep.a = getelementptr i8, ptr %next.gep, i64 16
+  %wide.load = load <16 x i8>, ptr %next.gep, align 16, !tbaa !13 ; 5 uses
   %wide.load.a = load <16 x i8>, ptr %next.gep.a, align 16, !tbaa !13 ; 5 uses
-  %i.cy = getelementptr i8, ptr %i.cx, i64 %index
-  %i.cz = icmp eq <16 x i8> %wide.load.a, splat (i8 84)
-  %i.da = icmp eq <16 x i8> %wide.load.a, splat (i8 70)
-  %i.db = icmp eq <16 x i8> %wide.load.a, zeroinitializer
+  %i.cy = getelementptr i8, ptr %i.cx, i64 %index ; 2 uses
+  %11 = icmp eq <16 x i8> %wide.load, splat (i8 84)
+  %12 = icmp eq <16 x i8> %wide.load.a, splat (i8 84)
+  %13 = icmp eq <16 x i8> %wide.load, splat (i8 70)
+  %14 = icmp eq <16 x i8> %wide.load.a, splat (i8 70)
+  %i.cz = icmp eq <16 x i8> %wide.load, zeroinitializer
+  %i.da = icmp eq <16 x i8> %wide.load.a, zeroinitializer
+  %i.db = icmp eq <16 x i8> %wide.load, splat (i8 1)
   %i.dc = icmp eq <16 x i8> %wide.load.a, splat (i8 1)
+  %predphi = select <16 x i1> %i.db, <16 x i8> splat (i8 49), <16 x i8> %wide.load
+  %predphi235 = select <16 x i1> %11, <16 x i8> splat (i8 1), <16 x i8> %predphi
+  %predphi236 = select <16 x i1> %13, <16 x i8> zeroinitializer, <16 x i8> %predphi235
+  %predphi237 = select <16 x i1> %i.cz, <16 x i8> %broadcast.splat, <16 x i8> %predphi236
   %predphi.a = select <16 x i1> %i.dc, <16 x i8> splat (i8 49), <16 x i8> %wide.load.a
-  %predphi234 = select <16 x i1> %i.cz, <16 x i8> splat (i8 1), <16 x i8> %predphi.a
-  %predphi235.a = select <16 x i1> %i.da, <16 x i8> zeroinitializer, <16 x i8> %predphi234
-  %predphi236.a = select <16 x i1> %i.db, <16 x i8> %broadcast.splat, <16 x i8> %predphi235.a
-  store <16 x i8> %predphi236.a, ptr %i.cy, align 1, !tbaa !13
-  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %predphi234 = select <16 x i1> %12, <16 x i8> splat (i8 1), <16 x i8> %predphi.a
+  %predphi235.a = select <16 x i1> %14, <16 x i8> zeroinitializer, <16 x i8> %predphi234
+  %predphi236.a = select <16 x i1> %i.da, <16 x i8> %broadcast.splat, <16 x i8> %predphi235.a
+  %15 = getelementptr inbounds nuw i8, ptr %i.cy, i64 16
+  store <16 x i8> %predphi237, ptr %i.cy, align 1, !tbaa !13
+  store <16 x i8> %predphi236.a, ptr %15, align 1, !tbaa !13
+  %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.dd = icmp eq i64 %index.next, %n.vec
   br i1 %i.dd, label %middle.block, label %vector.body, !llvm.loop !37
 
@@ -668,7 +680,7 @@ attributes #6 = { nounwind }
 !40 = !{!10, !10, i64 0}
 !41 = !{!"llvm.loop.isvectorized", i32 1}
 !42 = !{!"llvm.loop.unroll.runtime.disable"}
-!43 = !{!"branch_weights", i32 8, i32 8}
+!43 = !{!"branch_weights", i32 8, i32 24}
 !44 = distinct !{!44, !49}
 !45 = distinct !{!45, !49}
 !46 = !{!26, !10, i64 968}
