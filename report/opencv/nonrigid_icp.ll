@@ -205,7 +205,7 @@ bb.ee:                                            ; preds = %bb.ea, %bb.ec, %bb.
   %i.aba = insertelement <4 x float> %i.aaz, float -0.000000e+00, i64 3
   %i.abb = fadd <4 x float> %i.aay, %i.aba
   %i.abc = fsub <4 x float> %i.aav, %i.abb        ; 7 uses
-  %i.abd = extractelement <4 x float> %i.abc, i64 1 ; 3 uses
+  %i.abd = extractelement <4 x float> %i.abc, i64 1 ; 2 uses
   %i.abe = fpext float %i.abd to double           ; 2 uses
   %i.abf = call double @llvm.fmuladd.f64(double %i.abe, double %i.abe, double 0.000000e+00)
   %i.abg = extractelement <4 x float> %i.abc, i64 2 ; 7 uses
@@ -530,7 +530,7 @@ bb.fn:                                            ; preds = %bb.fh, %bb.fj, %bb.
   %i.aik = shufflevector <4 x float> %i.aii, <4 x float> %i.aij, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.ail = fmul <4 x float> %i.aih, %i.aik
   %i.aim = shufflevector <4 x float> %i.aay, <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, <4 x i32> <i32 2, i32 0, i32 1, i32 7>
-  %i.ain = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aim, <4 x float> %i.abc, <4 x float> %i.ail) ; 4 uses
+  %i.ain = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aim, <4 x float> %i.abc, <4 x float> %i.ail) ; 5 uses
   br i1 %i.acv, label %bb.gn, label %bb.fo
 
 bb.fo:                                            ; preds = %bb.fn
@@ -701,7 +701,8 @@ bb.gh:                                            ; preds = %bb.gf
 bb.gi:                                            ; preds = %bb.gh, %bb.gg, %bb.ge
   %.0.i.i856.ph = phi ptr [ %i.ama, %bb.gh ], [ %i.alr, %bb.gg ], [ %i.all, %bb.ge ] ; 2 uses
   %i.amb = load float, ptr %.0.i.i856.ph, align 4, !tbaa !24
-  %i.amc = call float @llvm.fmuladd.f32(float %i.acs, float %i.abd, float %i.amb)
+  %68 = extractelement <4 x float> %i.ain, i64 3
+  %i.amc = call float @llvm.fmuladd.f32(float %i.acs, float %68, float %i.amb)
   store float %i.amc, ptr %.0.i.i856.ph, align 4, !tbaa !24
   %i.amd = add nsw i32 %i.aig, 4                  ; 4 uses
   %i.ame = load i32, ptr %i.vt, align 4

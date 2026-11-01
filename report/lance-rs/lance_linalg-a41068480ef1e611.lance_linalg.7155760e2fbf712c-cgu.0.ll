@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 5334
 inline.NumDeleted: 2333
 loop-unroll.NumCompletelyUnrolled: 56
-loop-unroll.NumRuntimeUnrolled: 90
-loop-unroll.NumUnrolled: 146
+loop-unroll.NumRuntimeUnrolled: 91
+loop-unroll.NumUnrolled: 147
 begin_hunk_0_@_RNvNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance3dot3x8621dot_batch_f32_avx_fma:bb.a
   br i1 %exitcond.not.i.i.i.i.i.i.4, label %_RNvNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance3dot3x8615dot_f32_avx_fma.exit.loopexit, label %.lr.ph.i.i.i.i.i.i.5
 
@@ -205,11 +205,48 @@ bb.c:                                             ; preds = %.lr.ph112
 define internal fastcc noundef i32 @_RNvNtNtNtCs9JgWGBoX3PY_12lance_linalg8distance5l2_u83x8617l2_u8_avx512_vnni(ptr noalias noundef nonnull readonly captures(none) %0, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias noundef nonnull readonly captures(none) %2, i64 noundef range(i64 0, -9223372036854775808) %3) unnamed_addr #31 {
 bb.a:
   %.not69 = icmp samesign ult i64 %1, 64
-  br i1 %.not69, label %._crit_edge, label %.lr.ph
+  br i1 %.not69, label %._crit_edge, label %.lr.ph.preheader
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %4 = add nsw i64 %1, -64                        ; 2 uses
+  %5 = lshr i64 %4, 6                             ; 2 uses
+  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
+  %7 = icmp eq i64 %5, 0
+  br i1 %7, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %6, 576460752303423486
+  br label %.lr.ph
+
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
+  %8 = and i64 %4, 64
+  %lcmp.mod.not.not = icmp eq i64 %8, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.epil.preheader, label %._crit_edge.loopexit
+
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.sroa.02.070.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %31, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.epil.init108 = phi <16 x i32> [ zeroinitializer, %.lr.ph.preheader ], [ %i.bm, %._crit_edge.loopexit.unr-lcssa ]
+  %lcmp.mod110 = trunc i64 %6 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod110)
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.02.070.epil.init
+  %.val1365.epil = load <64 x i8>, ptr %9, align 1, !noalias !52 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.02.070.epil.init
+  %.val1266.epil = load <64 x i8>, ptr %10, align 1, !noalias !52 ; 2 uses
+  %11 = tail call <64 x i8> @llvm.usub.sat.v64i8(<64 x i8> %.val1365.epil, <64 x i8> %.val1266.epil)
+  %12 = tail call <64 x i8> @llvm.usub.sat.v64i8(<64 x i8> %.val1266.epil, <64 x i8> %.val1365.epil)
+  %13 = or <64 x i8> %12, %11                     ; 2 uses
+  %14 = shufflevector <64 x i8> %13, <64 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <64 x i32> <i32 0, i32 64, i32 1, i32 65, i32 2, i32 66, i32 3, i32 67, i32 4, i32 68, i32 5, i32 69, i32 6, i32 70, i32 7, i32 71, i32 16, i32 80, i32 17, i32 81, i32 18, i32 82, i32 19, i32 83, i32 20, i32 84, i32 21, i32 85, i32 22, i32 86, i32 23, i32 87, i32 32, i32 96, i32 33, i32 97, i32 34, i32 98, i32 35, i32 99, i32 36, i32 100, i32 37, i32 101, i32 38, i32 102, i32 39, i32 103, i32 48, i32 112, i32 49, i32 113, i32 50, i32 114, i32 51, i32 115, i32 52, i32 116, i32 53, i32 117, i32 54, i32 118, i32 55, i32 119>
+  %15 = shufflevector <64 x i8> %13, <64 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <64 x i32> <i32 8, i32 72, i32 9, i32 73, i32 10, i32 74, i32 11, i32 75, i32 12, i32 76, i32 13, i32 77, i32 14, i32 78, i32 15, i32 79, i32 24, i32 88, i32 25, i32 89, i32 26, i32 90, i32 27, i32 91, i32 28, i32 92, i32 29, i32 93, i32 30, i32 94, i32 31, i32 95, i32 40, i32 104, i32 41, i32 105, i32 42, i32 106, i32 43, i32 107, i32 44, i32 108, i32 45, i32 109, i32 46, i32 110, i32 47, i32 111, i32 56, i32 120, i32 57, i32 121, i32 58, i32 122, i32 59, i32 123, i32 60, i32 124, i32 61, i32 125, i32 62, i32 126, i32 63, i32 127>
+  %16 = bitcast <64 x i8> %14 to <32 x i16>       ; 2 uses
+  %17 = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %.epil.init108, <32 x i16> %16, <32 x i16> %16)
+  %18 = bitcast <64 x i8> %15 to <32 x i16>       ; 2 uses
+  %19 = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %17, <32 x i16> %18, <32 x i16> %18)
+  br label %._crit_edge.loopexit
+
+._crit_edge.loopexit:                             ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader
+  %.lcssa106 = phi <16 x i32> [ %i.bm, %._crit_edge.loopexit.unr-lcssa ], [ %19, %.lr.ph.epil.preheader ]
   %i.a = and i64 %1, 9223372036854775744
-  %i.b = tail call i32 @llvm.vector.reduce.add.v16i32(<16 x i32> %i.bm)
+  %i.b = tail call i32 @llvm.vector.reduce.add.v16i32(<16 x i32> %.lcssa106)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
@@ -304,13 +341,28 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.02.172.ph = phi i64 [ %.sroa.02.0.lcssa, %.lr.ph75.preheader ], [ %i.l, %middle.block ]
   br label %.lr.ph75
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %i.ba = phi i64 [ %i.bn, %.lr.ph ], [ 64, %bb.a ] ; 2 uses
-  %.sroa.02.070 = phi i64 [ %i.ba, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
-  %i.bb = phi <16 x i32> [ %i.bm, %.lr.ph ], [ zeroinitializer, %bb.a ]
-  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.02.070
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %i.ba = phi i64 [ 64, %.lr.ph.preheader.new ], [ %32, %.lr.ph ] ; 4 uses
+  %.sroa.02.070 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %31, %.lr.ph ] ; 2 uses
+  %i.bb = phi <16 x i32> [ zeroinitializer, %.lr.ph.preheader.new ], [ %i.bm, %.lr.ph ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.bn, %.lr.ph ]
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.02.070
+  %.val1365 = load <64 x i8>, ptr %20, align 1, !noalias !52 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.02.070
+  %.val1266 = load <64 x i8>, ptr %21, align 1, !noalias !52 ; 2 uses
+  %22 = tail call <64 x i8> @llvm.usub.sat.v64i8(<64 x i8> %.val1365, <64 x i8> %.val1266)
+  %23 = tail call <64 x i8> @llvm.usub.sat.v64i8(<64 x i8> %.val1266, <64 x i8> %.val1365)
+  %24 = or <64 x i8> %23, %22                     ; 2 uses
+  %25 = shufflevector <64 x i8> %24, <64 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <64 x i32> <i32 0, i32 64, i32 1, i32 65, i32 2, i32 66, i32 3, i32 67, i32 4, i32 68, i32 5, i32 69, i32 6, i32 70, i32 7, i32 71, i32 16, i32 80, i32 17, i32 81, i32 18, i32 82, i32 19, i32 83, i32 20, i32 84, i32 21, i32 85, i32 22, i32 86, i32 23, i32 87, i32 32, i32 96, i32 33, i32 97, i32 34, i32 98, i32 35, i32 99, i32 36, i32 100, i32 37, i32 101, i32 38, i32 102, i32 39, i32 103, i32 48, i32 112, i32 49, i32 113, i32 50, i32 114, i32 51, i32 115, i32 52, i32 116, i32 53, i32 117, i32 54, i32 118, i32 55, i32 119>
+  %26 = shufflevector <64 x i8> %24, <64 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <64 x i32> <i32 8, i32 72, i32 9, i32 73, i32 10, i32 74, i32 11, i32 75, i32 12, i32 76, i32 13, i32 77, i32 14, i32 78, i32 15, i32 79, i32 24, i32 88, i32 25, i32 89, i32 26, i32 90, i32 27, i32 91, i32 28, i32 92, i32 29, i32 93, i32 30, i32 94, i32 31, i32 95, i32 40, i32 104, i32 41, i32 105, i32 42, i32 106, i32 43, i32 107, i32 44, i32 108, i32 45, i32 109, i32 46, i32 110, i32 47, i32 111, i32 56, i32 120, i32 57, i32 121, i32 58, i32 122, i32 59, i32 123, i32 60, i32 124, i32 61, i32 125, i32 62, i32 126, i32 63, i32 127>
+  %27 = bitcast <64 x i8> %25 to <32 x i16>       ; 2 uses
+  %28 = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %i.bb, <32 x i16> %27, <32 x i16> %27)
+  %29 = bitcast <64 x i8> %26 to <32 x i16>       ; 2 uses
+  %30 = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %28, <32 x i16> %29, <32 x i16> %29)
+  %31 = add nuw i64 %i.ba, 64                     ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 %i.ba
   %.val1365.a = load <64 x i8>, ptr %i.bc, align 1, !noalias !52 ; 2 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.02.070
+  %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 %i.ba
   %.val1266.a = load <64 x i8>, ptr %i.bd, align 1, !noalias !52 ; 2 uses
   %i.be = tail call <64 x i8> @llvm.usub.sat.v64i8(<64 x i8> %.val1365.a, <64 x i8> %.val1266.a)
   %i.bf = tail call <64 x i8> @llvm.usub.sat.v64i8(<64 x i8> %.val1266.a, <64 x i8> %.val1365.a)
@@ -318,12 +370,13 @@ middle.block:                                     ; preds = %vector.body
   %i.bh = shufflevector <64 x i8> %i.bg, <64 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <64 x i32> <i32 0, i32 64, i32 1, i32 65, i32 2, i32 66, i32 3, i32 67, i32 4, i32 68, i32 5, i32 69, i32 6, i32 70, i32 7, i32 71, i32 16, i32 80, i32 17, i32 81, i32 18, i32 82, i32 19, i32 83, i32 20, i32 84, i32 21, i32 85, i32 22, i32 86, i32 23, i32 87, i32 32, i32 96, i32 33, i32 97, i32 34, i32 98, i32 35, i32 99, i32 36, i32 100, i32 37, i32 101, i32 38, i32 102, i32 39, i32 103, i32 48, i32 112, i32 49, i32 113, i32 50, i32 114, i32 51, i32 115, i32 52, i32 116, i32 53, i32 117, i32 54, i32 118, i32 55, i32 119>
   %i.bi = shufflevector <64 x i8> %i.bg, <64 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <64 x i32> <i32 8, i32 72, i32 9, i32 73, i32 10, i32 74, i32 11, i32 75, i32 12, i32 76, i32 13, i32 77, i32 14, i32 78, i32 15, i32 79, i32 24, i32 88, i32 25, i32 89, i32 26, i32 90, i32 27, i32 91, i32 28, i32 92, i32 29, i32 93, i32 30, i32 94, i32 31, i32 95, i32 40, i32 104, i32 41, i32 105, i32 42, i32 106, i32 43, i32 107, i32 44, i32 108, i32 45, i32 109, i32 46, i32 110, i32 47, i32 111, i32 56, i32 120, i32 57, i32 121, i32 58, i32 122, i32 59, i32 123, i32 60, i32 124, i32 61, i32 125, i32 62, i32 126, i32 63, i32 127>
   %i.bj = bitcast <64 x i8> %i.bh to <32 x i16>   ; 2 uses
-  %i.bk = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %i.bb, <32 x i16> %i.bj, <32 x i16> %i.bj)
+  %i.bk = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %30, <32 x i16> %i.bj, <32 x i16> %i.bj)
   %i.bl = bitcast <64 x i8> %i.bi to <32 x i16>   ; 2 uses
-  %i.bm = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %i.bk, <32 x i16> %i.bl, <32 x i16> %i.bl) ; 2 uses
-  %i.bn = add nuw i64 %i.ba, 64                   ; 2 uses
-  %.not = icmp ugt i64 %i.bn, %1
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  %i.bm = tail call <16 x i32> @llvm.x86.avx512.vpdpwssd.512(<16 x i32> %i.bk, <32 x i16> %i.bl, <32 x i16> %i.bl) ; 3 uses
+  %32 = add nuw i64 %i.ba, 128
+  %i.bn = add i64 %niter, 2                       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %i.bn, %unroll_iter
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
 ._crit_edge76:                                    ; preds = %bb.b, %._crit_edge
   %.sroa.0.0.lcssa = phi i32 [ %.lcssa, %._crit_edge ], [ %i.bx, %bb.b ]

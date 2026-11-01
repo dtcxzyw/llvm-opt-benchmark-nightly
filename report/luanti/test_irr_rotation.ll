@@ -204,19 +204,20 @@ bb.a:
   %i.ct = fmul nsz float %i.cf, %i.co             ; 3 uses
   %i.cu = fmul nsz float %i.cs, 2.000000e+00      ; 4 uses
   %i.cv = fneg nsz float %i.cu                    ; 2 uses
-  %i.cw = extractelement <2 x float> %i.cr, i64 1 ; 5 uses
+  %i.cw = extractelement <2 x float> %i.cr, i64 1 ; 3 uses
   %i.cx = fmul nsz float %i.cw, 2.000000e+00      ; 2 uses
   %i.cy = fneg nsz float %i.cx                    ; 2 uses
   %i.cz = tail call nsz float @llvm.fmuladd.f32(float %i.cy, float %i.cw, float 1.000000e+00)
   %i.da = tail call nsz float @llvm.fmuladd.f32(float %i.cv, float %i.cs, float %i.cz)
-  %i.db = fmul <2 x float> %i.cr, <float 2.000000e+00, float 1.000000e+00> ; 2 uses
+  %i.db = fmul <2 x float> %i.cr, <float 2.000000e+00, float 1.000000e+00> ; 3 uses
   %i.dc = extractelement <2 x float> %i.db, i64 0 ; 5 uses
   %i.dd = fmul nsz float %i.ct, %i.cu             ; 2 uses
   %i.de = fmul nsz float %i.ct, %i.cx             ; 2 uses
   %i.df = fneg nsz float %i.de
   %i.dg = tail call nsz float @llvm.fmuladd.f32(float %i.dc, float %i.cs, float %i.df)
   %i.dh = fneg nsz float %i.dd
-  %i.di = tail call nsz float @llvm.fmuladd.f32(float %i.dc, float %i.cw, float %i.dh)
+  %5 = extractelement <2 x float> %i.db, i64 1    ; 2 uses
+  %i.di = tail call nsz float @llvm.fmuladd.f32(float %i.dc, float %5, float %i.dh)
   %i.dj = fneg nsz float %i.dc
   %i.dk = fmul nsz float %i.ct, %i.dc             ; 2 uses
   %i.dl = insertelement <2 x float> poison, float %i.dj, i64 0
@@ -231,7 +232,7 @@ bb.a:
   %i.du = insertelement <2 x float> poison, float %i.de, i64 0
   %i.dv = insertelement <2 x float> %i.du, float %i.dr, i64 1
   %i.dw = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dt, <2 x float> %i.db, <2 x float> %i.dv) ; 2 uses
-  %i.dx = tail call nsz float @llvm.fmuladd.f32(float %i.cy, float %i.cw, float %i.dp)
+  %i.dx = tail call nsz float @llvm.fmuladd.f32(float %i.cy, float %5, float %i.dp)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   store ptr @.str, ptr %4, align 8, !tbaa !16
