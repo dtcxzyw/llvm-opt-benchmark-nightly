@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %.thread341, %vc1_lu
 define void @ff_vc1_mc_4mv_chroma4(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 10 uses
-  %i.b = alloca [4 x i32], align 16               ; 9 uses
+  %i.b = alloca [4 x i32], align 16               ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 9896
@@ -237,7 +237,7 @@ bb.a:
   %i.ab = ashr i32 %i.aa, 1
   store i32 %i.ab, ptr %i.a, align 16, !tbaa !50
   %i.ac = getelementptr inbounds nuw i8, ptr %i.v, i64 4
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !50 ; 3 uses
+  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !50 ; 4 uses
   br i1 %.not, label %.split.us.preheader, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.a
@@ -316,6 +316,12 @@ bb.a:
   br label %.preheader255
 
 .split.us.preheader:                              ; preds = %bb.a
+  %4 = and i32 %i.ad, 3
+  %5 = icmp eq i32 %4, 3
+  %6 = zext i1 %5 to i32
+  %7 = add nsw i32 %i.ad, %6
+  %8 = ashr i32 %7, 1
+  store i32 %8, ptr %i.b, align 16, !tbaa !50
   %i.cs = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.ct = load i32, ptr %i.cs, align 8, !tbaa !50 ; 2 uses
   %i.cu = and i32 %i.ct, 3
@@ -326,15 +332,14 @@ bb.a:
   %i.cz = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %i.cy, ptr %i.cz, align 4, !tbaa !50
   %i.da = getelementptr inbounds nuw i8, ptr %i.v, i64 12
-  %i.db = load i32, ptr %i.da, align 4, !tbaa !50
-  %4 = insertelement <2 x i32> poison, i32 %i.ad, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.db, i64 1 ; 2 uses
-  %6 = and <2 x i32> %5, splat (i32 3)
-  %7 = icmp eq <2 x i32> %6, splat (i32 3)
-  %8 = zext <2 x i1> %7 to <2 x i32>
-  %9 = add nsw <2 x i32> %5, %8
-  %10 = ashr <2 x i32> %9, splat (i32 1)
-  store <2 x i32> %10, ptr %i.b, align 16, !tbaa !50
+  %i.db = load i32, ptr %i.da, align 4, !tbaa !50 ; 2 uses
+  %9 = and i32 %i.db, 3
+  %10 = icmp eq i32 %9, 3
+  %11 = zext i1 %10 to i32
+  %12 = add nsw i32 %i.db, %11
+  %13 = ashr i32 %12, 1
+  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  store i32 %13, ptr %14, align 4, !tbaa !50
   %i.dc = sext i32 %2 to i64
   %i.dd = getelementptr inbounds [32 x i8], ptr %i.t, i64 %i.dc ; 4 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 16

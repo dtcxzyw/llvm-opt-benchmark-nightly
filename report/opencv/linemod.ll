@@ -205,7 +205,7 @@ bb.bj:                                            ; preds = %.lr.ph540, %_ZNSt6v
   %indvars.iv673 = phi i64 [ 0, %.lr.ph540 ], [ %indvars.iv.next674, %_ZNSt6vectorIN2cv3MatESaIS1_EED2Ev.exit222 ] ; 5 uses
   %i.iv = load ptr, ptr %i.hg, align 8, !tbaa !176
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.iv, i64 %indvars.iv673
-  %i.ix = load i32, ptr %i.iw, align 4, !tbaa !55 ; 10 uses
+  %i.ix = load i32, ptr %i.iw, align 4, !tbaa !55 ; 9 uses
   %i.iy = load ptr, ptr %38, align 8, !tbaa !216
   %i.iz = getelementptr inbounds nuw [24 x i8], ptr %i.iy, i64 %indvars.iv673
   %.not = icmp eq i64 %indvars.iv673, 0
@@ -265,6 +265,8 @@ bb.bk:                                            ; preds = %.lr.ph527
   %wide.trip.count33.i = zext nneg i32 %i.ix to i64 ; 6 uses
   %i.kf = mul nsw i32 %i.ix, %i.ix
   %i.kg = trunc nuw nsw i64 %indvars.iv673 to i32
+  %47 = insertelement <2 x i32> poison, i32 %i.ix, i64 0
+  %48 = shufflevector <2 x i32> %47, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %bb.br
 
 ._crit_edge535:                                   ; preds = %bb.en, %.loopexit406
@@ -667,10 +669,9 @@ bb.dz:                                            ; preds = %.loopexit392, %_ZN2
   %i.adq = getelementptr inbounds nuw [208 x i8], ptr %.sroa.0295.5, i64 %indvars.iv667 ; 4 uses
   %i.adr = load ptr, ptr %i.ado, align 8, !tbaa !200
   %i.ads = getelementptr inbounds nuw [208 x i8], ptr %i.adr, i64 %indvars.iv667 ; 3 uses
-  %i.adt = getelementptr inbounds nuw i8, ptr %i.adq, i64 8 ; 3 uses
-  %i.adu = load i32, ptr %i.adt, align 8, !tbaa !100 ; 2 uses
+  %i.adt = getelementptr inbounds nuw i8, ptr %i.adq, i64 8 ; 4 uses
+  %i.adu = load i32, ptr %i.adt, align 8, !tbaa !100
   %i.adv = srem i32 %i.adu, %i.ix
-  %47 = sdiv i32 %i.adu, %i.ix
   %i.adw = icmp eq i32 %i.adv, 0
   br i1 %i.adw, label %bb.ed, label %.noexc.i278
 
@@ -725,9 +726,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i195: ; preds = %
 
 bb.ed:                                            ; preds = %bb.dz
   %i.aej = getelementptr inbounds nuw i8, ptr %i.adq, i64 12 ; 3 uses
-  %i.aek = load i32, ptr %i.aej, align 4, !tbaa !101 ; 2 uses
+  %i.aek = load i32, ptr %i.aej, align 4, !tbaa !101
   %i.ael = srem i32 %i.aek, %i.ix
-  %48 = sdiv i32 %i.aek, %i.ix
   %i.aem = icmp eq i32 %i.ael, 0
   br i1 %i.aem, label %bb.eh, label %.noexc.i275
 
@@ -781,7 +781,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit56.i: ; preds = %b
   br label %.body154
 
 bb.eh:                                            ; preds = %bb.ed
-  %i.aez = mul nsw i32 %47, %48
+  %49 = load <2 x i32>, ptr %i.adt, align 8, !tbaa !55
+  %50 = sdiv <2 x i32> %49, %48                   ; 2 uses
+  %51 = extractelement <2 x i32> %50, i64 0
+  %52 = extractelement <2 x i32> %50, i64 1
+  %i.aez = mul nsw i32 %51, %52
   invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.ads, i32 noundef %i.kf, i32 noundef %i.aez, i32 noundef 0)
           to label %.noexc207 unwind label %.loopexit.split-lp381.loopexit.split-lp.loopexit
 

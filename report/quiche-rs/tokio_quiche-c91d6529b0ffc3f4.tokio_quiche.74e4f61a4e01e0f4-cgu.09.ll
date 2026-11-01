@@ -204,8 +204,8 @@ bb.t:                                             ; preds = %bb.s
     #dbg_value(ptr %i.d, !10466, !DIExpression(), !17464)
     #dbg_value(ptr %i.d, !10467, !DIExpression(), !17465)
     #dbg_value(ptr %i.d, !10539, !DIExpression(), !17467)
-  %i.cl = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !17589
-  %.sroa.036.0.copyload.i = load i64, ptr %i.cl, align 8, !dbg !17589, !alias.scope !17531 ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !17589 ; 2 uses
+  %.sroa.036.0.copyload.i = load i64, ptr %i.cl, align 8, !dbg !17589, !alias.scope !17531
     #dbg_value(i64 %.sroa.036.0.copyload.i, !10479, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !17468)
     #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17468)
     #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !17468)
@@ -214,10 +214,11 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not85.i, label %bb.v, label %bb.u, !dbg !17591
 
 bb.u:                                             ; preds = %bb.t
-    #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !17468)
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24, !dbg !17589
-  %i.cm = load <2 x i64>, ptr %.sroa.7.0..sroa_idx.i, align 8, !dbg !17589, !alias.scope !17531
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32, !dbg !17589
+  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.7.0..sroa_idx.i, align 8, !dbg !17589, !alias.scope !17531
+    #dbg_value(i64 %.sroa.8.0.copyload.i, !10479, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !17468)
     #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17468)
+  %i.cm = load <2 x i64>, ptr %i.cl, align 8, !dbg !17589, !alias.scope !17531
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 40, !dbg !17589
   %.sroa.9.0.copyload.i = load i8, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !17589, !alias.scope !17531
     #dbg_value(i8 %.sroa.9.0.copyload.i, !10479, !DIExpression(DW_OP_LLVM_fragment, 192, 8), !17468)
@@ -228,11 +229,11 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
   %.sroa.022.0.i = phi i64 [ %i.bw, %bb.t ], [ 0, %bb.s ], [ %i.bw, %bb.u ], !dbg !17593
   %.sroa.018.0.i = phi i64 [ %i.bu, %bb.t ], [ 0, %bb.s ], [ %i.bu, %bb.u ], !dbg !17593
   %.sroa.0.0.i = phi i16 [ %i.am, %bb.t ], [ 0, %bb.s ], [ %i.am, %bb.u ], !dbg !17593
+  %.sroa.6.sroa.5.1.i = phi i64 [ undef, %bb.t ], [ undef, %bb.s ], [ %.sroa.8.0.copyload.i, %bb.u ], !dbg !17593
   %.sroa.6.sroa.6.1.i = phi i8 [ undef, %bb.t ], [ undef, %bb.s ], [ %.sroa.9.0.copyload.i, %bb.u ], !dbg !17593
-  %.sroa.033.0.i = phi i64 [ 2, %bb.t ], [ 2, %bb.s ], [ %.sroa.036.0.copyload.i, %bb.u ], !dbg !17594
   %.sroa.531.1.i = phi i64 [ %i.ck, %bb.t ], [ undef, %bb.s ], [ %i.ck, %bb.u ], !dbg !17588
   %.sroa.030.1.i = phi i64 [ %i.aj, %bb.t ], [ 0, %bb.s ], [ %i.aj, %bb.u ], !dbg !17588
-  %i.cn = phi <2 x i64> [ undef, %bb.t ], [ undef, %bb.s ], [ %i.cm, %bb.u ], !dbg !17593
+  %i.cn = phi <2 x i64> [ <i64 2, i64 undef>, %bb.t ], [ <i64 2, i64 undef>, %bb.s ], [ %i.cm, %bb.u ], !dbg !17594
   %i.co = getelementptr inbounds nuw i8, ptr %i.d, i64 304, !dbg !17595
     #dbg_value(ptr %i.d, !10504, !DIExpression(DW_OP_plus_uconst, 304, DW_OP_stack_value), !17470)
   %i.cp = load i64, ptr %i.co, align 8, !dbg !17596, !alias.scope !17531, !noundef !2635
@@ -246,9 +247,9 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !17555
   store i64 %.sroa.531.1.i, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !17555
   %.sroa.519.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !17555
-  store i64 %.sroa.033.0.i, ptr %.sroa.519.0..sroa_idx, align 8, !dbg !17555
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !17555
-  store <2 x i64> %i.cn, ptr %.sroa.6.0..sroa_idx, align 8, !dbg !17555
+  store <2 x i64> %i.cn, ptr %.sroa.519.0..sroa_idx, align 8, !dbg !17555
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !17555
+  store i64 %.sroa.6.sroa.5.1.i, ptr %.sroa.6.0..sroa_idx, align 8, !dbg !17555
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 40, !dbg !17555
   store i8 %.sroa.6.sroa.6.1.i, ptr %.sroa.8.0..sroa_idx, align 8, !dbg !17555
   %.sroa.920.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 48, !dbg !17555
@@ -651,8 +652,8 @@ bb.h:                                             ; preds = %bb.g
     #dbg_value(ptr %1, !10466, !DIExpression(), !22657)
     #dbg_value(ptr %1, !10467, !DIExpression(), !22658)
     #dbg_value(ptr %1, !10539, !DIExpression(), !22660)
-  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !22696
-  %.sroa.036.0.copyload = load i64, ptr %i.bc, align 8, !dbg !22696 ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !22696 ; 2 uses
+  %.sroa.036.0.copyload = load i64, ptr %i.bc, align 8, !dbg !22696
     #dbg_value(i64 %.sroa.036.0.copyload, !10479, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !22661)
     #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22661)
     #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !22661)
@@ -661,10 +662,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not85, label %bb.j, label %bb.i, !dbg !22698
 
 bb.i:                                             ; preds = %bb.h
-    #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !22661)
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !22696
-  %i.bd = load <2 x i64>, ptr %.sroa.7.0..sroa_idx, align 8, !dbg !22696
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !22696
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !dbg !22696
+    #dbg_value(i64 %.sroa.8.0.copyload, !10479, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !22661)
     #dbg_value(i64 poison, !10479, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22661)
+  %i.bd = load <2 x i64>, ptr %i.bc, align 8, !dbg !22696
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !22696
   %.sroa.9.0.copyload = load i8, ptr %.sroa.9.0..sroa_idx, align 8, !dbg !22696
     #dbg_value(i8 %.sroa.9.0.copyload, !10479, !DIExpression(DW_OP_LLVM_fragment, 192, 8), !22661)
@@ -675,11 +677,11 @@ bb.j:                                             ; preds = %bb.h, %bb.g, %bb.i
   %.sroa.022.0 = phi i64 [ %i.an, %bb.h ], [ 0, %bb.g ], [ %i.an, %bb.i ], !dbg !22580
   %.sroa.018.0 = phi i64 [ %i.al, %bb.h ], [ 0, %bb.g ], [ %i.al, %bb.i ], !dbg !22580
   %.sroa.0.0 = phi i16 [ %i.d, %bb.h ], [ 0, %bb.g ], [ %i.d, %bb.i ], !dbg !22580
+  %.sroa.6.sroa.5.1 = phi i64 [ undef, %bb.h ], [ undef, %bb.g ], [ %.sroa.8.0.copyload, %bb.i ], !dbg !22580
   %.sroa.6.sroa.6.1 = phi i8 [ undef, %bb.h ], [ undef, %bb.g ], [ %.sroa.9.0.copyload, %bb.i ], !dbg !22580
-  %.sroa.033.0 = phi i64 [ 2, %bb.h ], [ 2, %bb.g ], [ %.sroa.036.0.copyload, %bb.i ], !dbg !22661
   %.sroa.531.1 = phi i64 [ %i.bb, %bb.h ], [ undef, %bb.g ], [ %i.bb, %bb.i ], !dbg !22695
   %.sroa.030.1 = phi i64 [ %i.a, %bb.h ], [ 0, %bb.g ], [ %i.a, %bb.i ], !dbg !22695
-  %i.be = phi <2 x i64> [ undef, %bb.h ], [ undef, %bb.g ], [ %i.bd, %bb.i ], !dbg !22580
+  %i.be = phi <2 x i64> [ <i64 2, i64 undef>, %bb.h ], [ <i64 2, i64 undef>, %bb.g ], [ %i.bd, %bb.i ], !dbg !22661
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 304, !dbg !22700
     #dbg_value(ptr %1, !10504, !DIExpression(DW_OP_plus_uconst, 304, DW_OP_stack_value), !22663)
   %i.bg = load i64, ptr %i.bf, align 8, !dbg !22701, !noundef !2635
@@ -722,9 +724,9 @@ bb.j:                                             ; preds = %bb.h, %bb.g, %bb.i
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !22704
   store i64 %.sroa.531.1, ptr %i.cc, align 8, !dbg !22704
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !22704
-  store i64 %.sroa.033.0, ptr %i.cd, align 8, !dbg !22704
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !22704
-  store <2 x i64> %i.be, ptr %.sroa.6.0..sroa_idx, align 8, !dbg !22704
+  store <2 x i64> %i.be, ptr %i.cd, align 8, !dbg !22704
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !22704
+  store i64 %.sroa.6.sroa.5.1, ptr %.sroa.6.0..sroa_idx, align 8, !dbg !22704
   %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !22704
   store i8 %.sroa.6.sroa.6.1, ptr %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx.sroa_idx, align 8, !dbg !22704
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 184, !dbg !22704

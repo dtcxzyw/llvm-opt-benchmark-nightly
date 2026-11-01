@@ -205,59 +205,60 @@ define internal fastcc i32 @dng_decode_tiles(ptr noundef %0, ptr nofree noundef 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !32   ; 10 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 132524 ; 3 uses
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !71   ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 132524 ; 4 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !71
   %i.e = icmp slt i32 %i.d, 1
   br i1 %i.e, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 132528 ; 3 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !70   ; 4 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !70
   %i.h = icmp slt i32 %i.g, 1
   br i1 %i.h, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 2 uses
-  %4 = load i32, ptr %3, align 8, !tbaa !65       ; 2 uses
-  %5 = srem i32 %4, %i.d
-  %.not = icmp ne i32 %5, 0
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 84 ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !66       ; 2 uses
-  %8 = srem i32 %7, %i.g
-  %.not74.a = icmp ne i32 %8, 0
-  %9 = add nsw i32 %i.d, -1
-  %10 = add i32 %9, %4
-  %11 = sdiv i32 %10, %i.d                        ; 4 uses
-  %12 = add nsw i32 %i.g, -1
-  %13 = add i32 %12, %7
-  %14 = sdiv i32 %13, %i.g                        ; 2 uses
-  %i.i = mul nsw i32 %14, %11                     ; 2 uses
+  %3 = load <2 x i32>, ptr %i.c, align 4, !tbaa !33 ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 84
+  %6 = add nsw <2 x i32> %3, splat (i32 -1)
+  %7 = load <2 x i32>, ptr %4, align 8, !tbaa !33 ; 2 uses
+  %8 = srem <2 x i32> %7, %3                      ; 2 uses
+  %9 = extractelement <2 x i32> %8, i64 0
+  %.not74.a = icmp ne i32 %9, 0
+  %10 = extractelement <2 x i32> %8, i64 1
+  %.not74 = icmp ne i32 %10, 0
+  %11 = add <2 x i32> %6, %7
+  %12 = sdiv <2 x i32> %11, %3                    ; 3 uses
+  %13 = extractelement <2 x i32> %12, i64 0       ; 3 uses
+  %14 = extractelement <2 x i32> %12, i64 1
+  %i.i = mul nsw i32 %14, %13                     ; 2 uses
   %i.j = icmp sgt i32 %i.i, 0
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
-  %15 = add nsw i32 %11, -1
-  %16 = add nsw i32 %14, -1
+  %15 = add nsw <2 x i32> %12, splat (i32 -1)     ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 132520
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 1124 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 132516
+  %16 = extractelement <2 x i32> %15, i64 0
+  %17 = extractelement <2 x i32> %15, i64 1
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.k
   %.085 = phi i32 [ 0, %.lr.ph ], [ %spec.select78, %bb.k ] ; 2 uses
   %.06584 = phi i32 [ 0, %.lr.ph ], [ %spec.select, %bb.k ] ; 2 uses
   %.06983 = phi i32 [ 0, %.lr.ph ], [ %i.bq, %bb.k ] ; 4 uses
-  %i.q = srem i32 %.06983, %11
-  %i.r = sdiv i32 %.06983, %11
-  %i.s = icmp eq i32 %i.q, %15                    ; 3 uses
-  %or.cond = select i1 %.not, i1 %i.s, i1 false
+  %i.q = srem i32 %.06983, %13
+  %i.r = sdiv i32 %.06983, %13
+  %i.s = icmp eq i32 %i.q, %16                    ; 3 uses
+  %or.cond = select i1 %.not74.a, i1 %i.s, i1 false
   br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.t = load i32, ptr %3, align 8, !tbaa !65
+  %i.t = load i32, ptr %4, align 8, !tbaa !65
   %i.u = load i32, ptr %i.c, align 4, !tbaa !71
   %i.v = srem i32 %i.t, %i.u
   br label %bb.g
@@ -268,12 +269,12 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.068 = phi i32 [ %i.v, %bb.e ], [ %i.w, %bb.f ] ; 2 uses
-  %i.x = icmp eq i32 %i.r, %16
-  %or.cond77 = select i1 %.not74.a, i1 %i.x, i1 false
+  %i.x = icmp eq i32 %i.r, %17
+  %or.cond77 = select i1 %.not74, i1 %i.x, i1 false
   br i1 %or.cond77, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.y = load i32, ptr %6, align 4, !tbaa !66
+  %i.y = load i32, ptr %5, align 4, !tbaa !66
   %i.z = load i32, ptr %i.f, align 8, !tbaa !70
   %i.aa = srem i32 %i.y, %i.z
   br label %bb.j

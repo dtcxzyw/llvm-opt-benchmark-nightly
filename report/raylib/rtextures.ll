@@ -205,13 +205,13 @@ bb.a:
   br i1 %i.b, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load i32, ptr %i.c, align 8
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
   %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %bb.e, label %bb.d
@@ -222,22 +222,23 @@ bb.d:                                             ; preds = %bb.c
   %i.k = sext i32 %i.j to i64
   %i.l = shl nsw i64 %i.k, 2
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #53 ; 2 uses
-  %i.n = load i32, ptr %i.c, align 8              ; 2 uses
+  %i.n = load i32, ptr %i.c, align 8
   %i.o = icmp sgt i32 %2, 0
   %i.p = icmp sgt i32 %1, 0
   %or.cond = and i1 %i.o, %i.p
   br i1 %or.cond, label %.preheader.preheader, label %._crit_edge44.split
 
 .preheader.preheader:                             ; preds = %bb.d
-  %3 = load i32, ptr %i.f, align 4
-  %4 = shl i32 %3, 16
-  %5 = sdiv i32 %4, %2
-  %6 = add nsw i32 %5, 1
-  %7 = shl i32 %i.n, 16
-  %8 = sdiv i32 %7, %1
-  %9 = add nsw i32 %8, 1                          ; 3 uses
+  %3 = load <2 x i32>, ptr %i.c, align 8
+  %4 = shl <2 x i32> %3, splat (i32 16)
+  %5 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %2, i64 1
+  %7 = sdiv <2 x i32> %4, %6
+  %8 = add nsw <2 x i32> %7, splat (i32 1)        ; 2 uses
   %i.q = zext nneg i32 %1 to i64                  ; 3 uses
   %wide.trip.count49 = zext nneg i32 %2 to i64
+  %9 = extractelement <2 x i32> %8, i64 1
+  %10 = extractelement <2 x i32> %8, i64 0        ; 3 uses
   %xtraiter = and i64 %i.q, 1
   %i.r = icmp eq i32 %1, 1
   %unroll_iter = and i64 %i.q, 2147483646
@@ -248,7 +249,7 @@ bb.d:                                             ; preds = %bb.c
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv46 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next47, %._crit_edge ] ; 3 uses
   %i.s = trunc i64 %indvars.iv46 to i32
-  %i.t = mul i32 %6, %i.s
+  %i.t = mul i32 %9, %i.s
   %i.u = ashr i32 %i.t, 16
   %i.v = mul nuw nsw i64 %indvars.iv46, %i.q
   %i.w = mul nsw i32 %i.u, %i.n                   ; 3 uses
@@ -275,7 +276,7 @@ bb.d:                                             ; preds = %bb.c
   %indvars.iv.epil.init = phi i64 [ 0, %.preheader ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
   tail call void @llvm.assume(i1 %lcmp.mod52)
   %i.aa = trunc i64 %indvars.iv.epil.init to i32
-  %i.ab = mul i32 %9, %i.aa
+  %i.ab = mul i32 %10, %i.aa
   %i.ac = ashr i32 %i.ab, 16
   %gep.epil = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv.epil.init
   %i.ad = add nsw i32 %i.ac, %i.w
@@ -294,7 +295,7 @@ bb.d:                                             ; preds = %bb.c
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %.preheader.new ], [ 0, %.preheader ] ; 4 uses
   %niter = phi i64 [ %niter.next.1, %.preheader.new ], [ 0, %.preheader ]
   %i.ah = trunc i64 %indvars.iv to i32
-  %i.ai = mul i32 %9, %i.ah
+  %i.ai = mul i32 %10, %i.ah
   %i.aj = ashr i32 %i.ai, 16
   %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.ak = add nsw i32 %i.aj, %i.w
@@ -304,7 +305,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.an, ptr %gep, align 1
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.ao = trunc i64 %indvars.iv.next to i32
-  %i.ap = mul i32 %9, %i.ao
+  %i.ap = mul i32 %10, %i.ao
   %i.aq = ashr i32 %i.ap, 16
   %gep.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv.next
   %i.ar = add nsw i32 %i.aq, %i.w
@@ -707,7 +708,7 @@ bb.d:                                             ; preds = %bb.c
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 3
-  %i.s = load i8, ptr %i.r, align 1               ; 2 uses
+  %i.s = load i8, ptr %i.r, align 1
   switch i8 %i.s, label %bb.f [
     i8 0, label %bb.e
     i8 -1, label %bb.g
@@ -722,26 +723,26 @@ bb.e:                                             ; preds = %.lr.ph
   br label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph
-  %1 = uitofp i8 %i.s to float
-  %2 = fdiv float %1, 2.550000e+02                ; 2 uses
-  %3 = load i8, ptr %i.q, align 1
-  %4 = uitofp i8 %3 to float
-  %5 = fmul float %2, %4
-  %6 = fptoui float %5 to i8
-  store i8 %6, ptr %i.q, align 1
-  %7 = getelementptr inbounds nuw i8, ptr %i.q, i64 1 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.q, i64 2
-  %9 = load <2 x i8>, ptr %7, align 1
-  %10 = uitofp <2 x i8> %9 to <2 x float>
-  %11 = insertelement <2 x float> poison, float %2, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.v = fmul <2 x float> %12, %10                ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.q, i64 1
+  %2 = getelementptr inbounds nuw i8, ptr %i.q, i64 2
+  %3 = load <4 x i8>, ptr %i.q, align 1
+  %4 = uitofp <4 x i8> %3 to <4 x float>          ; 3 uses
+  %5 = extractelement <4 x float> %4, i64 3
+  %6 = fdiv float %5, 2.550000e+02                ; 2 uses
+  %7 = extractelement <4 x float> %4, i64 0
+  %8 = fmul float %6, %7
+  %9 = fptoui float %8 to i8
+  store i8 %9, ptr %i.q, align 1
+  %10 = insertelement <2 x float> poison, float %6, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 1, i32 2>
+  %i.v = fmul <2 x float> %11, %12                ; 2 uses
   %i.w = extractelement <2 x float> %i.v, i64 0
   %i.x = fptoui float %i.w to i8
-  store i8 %i.x, ptr %7, align 1
+  store i8 %i.x, ptr %1, align 1
   %i.y = extractelement <2 x float> %i.v, i64 1
   %i.z = fptoui float %i.y to i8
-  store i8 %i.z, ptr %8, align 1
+  store i8 %i.z, ptr %2, align 1
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.e, %bb.f

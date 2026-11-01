@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.u = load i64, ptr %i.t, align 8, !tbaa !56   ; 6 uses
   %.neg35 = mul i64 %i.u, -3
-  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !56   ; 7 uses
   %i.x = add i64 %i.s, 15
   %i.y = add i64 %i.x, %.neg35
@@ -237,30 +237,31 @@ bb.e:                                             ; preds = %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 96
   store i64 %i.l, ptr %i.ao, align 16, !tbaa !55
   %i.ap = add nsw i64 %i.k, %i.i
+  %5 = trunc i64 %i.ap to i32
   %i.aq = add nsw i64 %i.ab, %i.k
-  %5 = add nsw i64 %i.ab, %i.l
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 104
-  store i64 %i.w, ptr %6, align 8, !tbaa !56
-  %7 = add nsw i64 %i.u, %i.r
-  %8 = add nsw i64 %i.ai, %i.u
-  %9 = add nsw i64 %i.ai, %i.w
-  %10 = trunc i64 %i.ap to i32
-  %11 = trunc i64 %i.aq to i32
-  %12 = trunc i64 %5 to i32
-  %13 = shl i32 %11, 1
-  %op.rdx62 = add i32 %13, %10
-  %op.rdx63 = add i32 %op.rdx62, %12
-  %i.ar = trunc i64 %7 to i32
-  %14 = trunc i64 %8 to i32
-  %i.as = trunc i64 %9 to i32
-  %15 = shl i32 %14, 1
-  %op.rdx = add i32 %15, %i.ar
-  %op.rdx61 = add i32 %op.rdx, %i.as
-  %16 = insertelement <2 x i32> poison, i32 %op.rdx63, i64 0
-  %17 = insertelement <2 x i32> %16, i32 %op.rdx61, i64 1
-  %18 = sdiv <2 x i32> %17, splat (i32 8)
-  %19 = sext <2 x i32> %18 to <2 x i64>
-  store <2 x i64> %19, ptr %i.g, align 16, !tbaa !77
+  %6 = trunc i64 %i.aq to i32                     ; 2 uses
+  %7 = add nsw i64 %i.ab, %i.l
+  %8 = trunc i64 %7 to i32
+  %9 = add nsw i32 %8, %6
+  %10 = add nsw i32 %6, %5
+  %11 = add nsw i32 %10, %9
+  %12 = sdiv i32 %11, 8
+  %13 = sext i32 %12 to i64
+  store i64 %13, ptr %i.g, align 16, !tbaa !55
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 104
+  store i64 %i.w, ptr %14, align 8, !tbaa !56
+  %15 = add nsw i64 %i.u, %i.r
+  %i.ar = trunc i64 %15 to i32
+  %16 = add nsw i64 %i.ai, %i.u
+  %i.as = trunc i64 %16 to i32                    ; 2 uses
+  %17 = add nsw i64 %i.ai, %i.w
+  %18 = trunc i64 %17 to i32
+  %op.rdx61 = add nsw i32 %18, %i.as
+  %19 = add nsw i32 %i.as, %i.ar
+  %20 = add nsw i32 %19, %op.rdx61
+  %21 = sdiv i32 %20, 8
+  %22 = sext i32 %21 to i64
+  store i64 %22, ptr %i.v, align 8, !tbaa !56
   br label %bb.i
 
 bb.f:                                             ; preds = %._crit_edge, %bb.d, %bb.c, %bb.b

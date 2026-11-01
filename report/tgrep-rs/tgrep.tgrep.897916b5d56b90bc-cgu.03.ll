@@ -204,7 +204,7 @@ bb.a:
   %i.av = alloca [24 x i8], align 8               ; 4 uses
   %i.aw = alloca [24 x i8], align 8               ; 9 uses
   %i.ax = alloca [24 x i8], align 8               ; 6 uses
-  %i.ay = alloca [624 x i8], align 8              ; 65 uses
+  %i.ay = alloca [624 x i8], align 8              ; 67 uses
   %i.az = alloca [24 x i8], align 8               ; 9 uses
   %i.ba = alloca [24 x i8], align 8               ; 9 uses
   %i.bb = alloca [48 x i8], align 8               ; 5 uses
@@ -607,12 +607,15 @@ _RNvXs3_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptionsNtNtCsf3Ta7LF998c_4core
   %i.qz = trunc nuw i64 %i.mk to i1
   %.sroa.5.0.i.i = select i1 %i.qz, i64 %i.mm, i64 undef
   %i.ra = getelementptr inbounds nuw i8, ptr %i.ay, i64 610
+  %0 = getelementptr inbounds nuw i8, ptr %i.ay, i64 614
   %i.rb = getelementptr inbounds nuw i8, ptr %i.ay, i64 144
   %i.rc = load i64, ptr %i.rb, align 8, !range !16, !alias.scope !364, !noundef !5 ; 2 uses
   %i.rd = trunc nuw i64 %i.rc to i1
   %i.re = getelementptr inbounds nuw i8, ptr %i.ay, i64 152
   %i.rf = load i64, ptr %i.re, align 8, !alias.scope !364
   %.sroa.521.0.i.i = select i1 %i.rd, i64 %i.rf, i64 undef
+  %1 = getelementptr inbounds nuw i8, ptr %i.ay, i64 617
+  %2 = load i8, ptr %1, align 1, !range !14, !alias.scope !364, !noundef !5
   %i.rg = getelementptr inbounds nuw i8, ptr %i.ac, i64 208
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.rg, ptr noundef nonnull align 8 dereferenceable(24) %i.w, i64 24, i1 false), !noalias !366
   %i.rh = getelementptr inbounds nuw i8, ptr %i.ac, i64 232
@@ -720,16 +723,19 @@ _RNvXs3_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptionsNtNtCsf3Ta7LF998c_4core
   %i.tg = getelementptr inbounds nuw i8, ptr %i.ac, i64 136
   store i64 %.sroa.519.0.i.i, ptr %i.tg, align 8, !alias.scope !360, !noalias !359
   %i.th = getelementptr inbounds nuw i8, ptr %i.ac, i64 609
-  store i8 %i.qm, ptr %i.th, align 1, !alias.scope !360, !noalias !359
   %i.ti = getelementptr inbounds nuw i8, ptr %i.ac, i64 448
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ti, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !noalias !366
-  %0 = getelementptr inbounds nuw i8, ptr %i.ac, i64 610
+  %3 = load <4 x i8>, ptr %i.ra, align 2, !alias.scope !364
+  %4 = load <4 x i8>, ptr %0, align 2
+  %5 = shufflevector <4 x i8> %3, <4 x i8> %4, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
+  %6 = insertelement <8 x i8> %5, i8 %i.qm, i64 0
+  store <8 x i8> %6, ptr %i.th, align 1, !alias.scope !360, !noalias !359
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ac, i64 144
   store i64 %i.rc, ptr %i.tj, align 8, !alias.scope !360, !noalias !359
   %i.tk = getelementptr inbounds nuw i8, ptr %i.ac, i64 152
   store i64 %.sroa.521.0.i.i, ptr %i.tk, align 8, !alias.scope !360, !noalias !359
-  %1 = load <8 x i8>, ptr %i.ra, align 2, !alias.scope !364
-  store <8 x i8> %1, ptr %0, align 2, !alias.scope !360, !noalias !359
+  %7 = getelementptr inbounds nuw i8, ptr %i.ac, i64 617
+  store i8 %2, ptr %7, align 1, !alias.scope !360, !noalias !359
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !362
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !362
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !362

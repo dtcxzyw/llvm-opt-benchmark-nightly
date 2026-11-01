@@ -202,7 +202,7 @@ bb.a:
   %i.t = alloca [32 x i8], align 8                ; 8 uses
   %i.u = alloca [32 x i8], align 16               ; 12 uses
   %i.v = alloca [32 x i8], align 8                ; 4 uses
-  %i.w = alloca [56 x i8], align 8                ; 12 uses
+  %i.w = alloca [56 x i8], align 16               ; 14 uses
   %i.x = alloca [8 x i8], align 8                 ; 4 uses
   %i.y = alloca [16 x i8], align 8                ; 5 uses
   %i.z = alloca [16 x i8], align 8                ; 5 uses
@@ -605,8 +605,7 @@ _RNvXs_NtNtCsdTHTBGblh3Z_11libp2p_core9transport3mapINtB4_3MapINtNtCs5xzCmWPONXx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.v, ptr noundef nonnull align 8 dereferenceable(32) %i.ba, i64 32, i1 false), !noalias !4001
   call void @_RNvXs_NtCs5xzCmWPONXx_11libp2p_quic9transportINtB4_12GenTransportNtNtNtB6_8provider5tokio8ProviderENtNtCsdTHTBGblh3Z_11libp2p_core9transport9Transport9listen_onCsieOd0lErO6i_16autonatv2_client(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.w, ptr noalias nofree noundef nonnull align 8 dereferenceable(528) %i.ho, i64 noundef %2, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.v), !noalias !3999
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !4001
-  %i.hp = load i64, ptr %i.w, align 8, !range !54, !noalias !4001, !noundef !13 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8 ; 2 uses
+  %i.hp = load i64, ptr %i.w, align 16, !range !54, !noalias !4001, !noundef !13
   switch i64 %i.hp, label %bb.cd [
     i64 -1, label %bb.bg
     i64 -2, label %bb.cc
@@ -721,6 +720,7 @@ bb.bf:                                            ; preds = %bb.bw, %bb.bu, %bb.
           to label %bb.ce unwind label %bb.cb, !noalias !3999, !inline_history !0
 
 bb.bg:                                            ; preds = %_RNvXs_NtNtCsdTHTBGblh3Z_11libp2p_core9transport3mapINtB4_3MapINtNtCs5xzCmWPONXx_11libp2p_quic9transport12GenTransportNtNtNtB12_8provider5tokio8ProviderENCINvMs3_NtNtNtCsiw6lwv6qtEL_6libp2p7builder5phase4quicINtB2D_12SwarmBuilderNtNtB2B_8provider5TokioINtB2z_9QuicPhaseIBO_INtNtB6_7upgrade11MultiplexedINtNtB6_8and_then7AndThenIB4Q_INtCs62FBUrD8956_10libp2p_tcp9TransportNtNtNtB5m_8provider5tokio3TcpENCINvMB4p_INtB4p_7BuilderB5j_E12authenticateNtB5Y_9TcpStreamINtNtCshuexzQAPOo_12libp2p_noise2io6OutputINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedB78_EENtB7t_6ConfigNtB7t_5ErrorE0ENCINvMs1_B4p_INtB4p_13AuthenticatedB5e_E9multiplexB7o_INtCs1dRmD0u5Uiv_12libp2p_yamux5MuxerIB85_B7o_EENtBay_6ConfigNtNtNtCskKLDkoKarTP_4core2io5error5ErrorE0EENCINvMs2_NtB2B_3tcpIB3k_B3E_NtBcl_8TcpPhaseE8with_tcpNvMB7t_B9b_3newB7o_B9o_NvYBbh_NtNtBbA_7default7Default7defaultBav_Bbu_E0EEE16with_quic_configINvNtBbA_7convert8identityNtNtB12_6config6ConfigEE0ENtB6_9Transport9listen_onCsieOd0lErO6i_16autonatv2_client.exit.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !4001
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.u, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false), !noalias !4001
   %i.iz = load atomic i64, ptr @_RNvNtCs9Bqz0CSWZZv_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !4001
@@ -850,7 +850,7 @@ bb.bq:                                            ; preds = %bb.bx, %bb.bs, %bb.
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !4001 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !4001
-  %i.kf = load i64, ptr %i.w, align 8, !range !54, !noalias !4001, !noundef !13
+  %i.kf = load i64, ptr %i.w, align 16, !range !54, !noalias !4001, !noundef !13
   %switch145.i = icmp ugt i64 %i.kf, -3
   br i1 %switch145.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsdTHTBGblh3Z_11libp2p_core9transport14TransportErrorNtCs5xzCmWPONXx_11libp2p_quic5ErrorEECsieOd0lErO6i_16autonatv2_client.exit.i, label %bb.bz
 
@@ -981,21 +981,23 @@ bb.cc:                                            ; preds = %_RNvXs_NtNtCsdTHTBG
 
 bb.cd:                                            ; preds = %_RNvXs_NtNtCsdTHTBGblh3Z_11libp2p_core9transport3mapINtB4_3MapINtNtCs5xzCmWPONXx_11libp2p_quic9transport12GenTransportNtNtNtB12_8provider5tokio8ProviderENCINvMs3_NtNtNtCsiw6lwv6qtEL_6libp2p7builder5phase4quicINtB2D_12SwarmBuilderNtNtB2B_8provider5TokioINtB2z_9QuicPhaseIBO_INtNtB6_7upgrade11MultiplexedINtNtB6_8and_then7AndThenIB4Q_INtCs62FBUrD8956_10libp2p_tcp9TransportNtNtNtB5m_8provider5tokio3TcpENCINvMB4p_INtB4p_7BuilderB5j_E12authenticateNtB5Y_9TcpStreamINtNtCshuexzQAPOo_12libp2p_noise2io6OutputINtNtCsbVDXp34Q3tF_18multistream_select10negotiated10NegotiatedB78_EENtB7t_6ConfigNtB7t_5ErrorE0ENCINvMs1_B4p_INtB4p_13AuthenticatedB5e_E9multiplexB7o_INtCs1dRmD0u5Uiv_12libp2p_yamux5MuxerIB85_B7o_EENtBay_6ConfigNtNtNtCskKLDkoKarTP_4core2io5error5ErrorE0EENCINvMs2_NtB2B_3tcpIB3k_B3E_NtBcl_8TcpPhaseE8with_tcpNvMB7t_B9b_3newB7o_B9o_NvYBbh_NtNtBbA_7default7Default7defaultBav_Bbu_E0EEE16with_quic_configINvNtBbA_7convert8identityNtNtB12_6config6ConfigEE0ENtB6_9Transport9listen_onCsieOd0lErO6i_16autonatv2_client.exit.i
   %.sroa.547.sroa.7.0..sroa.547.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 40
-  %.sroa.547.sroa.5.0..sroa.547.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 24
+  %.sroa.547.sroa.6.0..sroa.547.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 32
+  %.sroa.547.sroa.6.0.copyload.i = load i64, ptr %.sroa.547.sroa.6.0..sroa.547.0..sroa_idx.sroa_idx.i, align 16, !noalias !4001
+  %.sroa.547.sroa.5.0..sroa.547.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %.sroa.4202.sroa.6.sroa.6.0..sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4202.sroa.6.sroa.6.0..sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.547.sroa.7.0..sroa.547.0..sroa_idx.sroa_idx.i, i64 16, i1 false), !noalias !4018
   %.sroa.4202.sroa.4.0..sroa.4202.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.hp, ptr %.sroa.4202.sroa.4.0..sroa.4202.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !3999
-  %.sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ll = load <2 x i64>, ptr %4, align 8, !noalias !4001
+  %5 = load <2 x i64>, ptr %i.w, align 16, !noalias !4001
+  store <2 x i64> %5, ptr %.sroa.4202.sroa.4.0..sroa.4202.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !3999
+  %.sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.ll = load <2 x i64>, ptr %.sroa.547.sroa.5.0..sroa.547.0..sroa_idx.sroa_idx.i, align 16, !noalias !4001
   store <2 x i64> %i.ll, ptr %.sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !3999
-  %.sroa.4202.sroa.6.sroa.5.sroa.5.0..sroa.4202.sroa.6.sroa.5.0..sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = load <2 x i64>, ptr %.sroa.547.sroa.5.0..sroa.547.0..sroa_idx.sroa_idx.i, align 8, !noalias !4001
-  store <2 x i64> %5, ptr %.sroa.4202.sroa.6.sroa.5.sroa.5.0..sroa.4202.sroa.6.sroa.5.0..sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.i, align 8, !alias.scope !3999
+  %.sroa.4202.sroa.6.sroa.5.sroa.5.0..sroa.4202.sroa.6.sroa.5.0..sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i64 %.sroa.547.sroa.6.0.copyload.i, ptr %.sroa.4202.sroa.6.sroa.5.sroa.5.0..sroa.4202.sroa.6.sroa.5.0..sroa.4202.sroa.6.0..sroa.4202.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.i, align 8, !alias.scope !3999
   br label %bb.cc
 
 bb.ce:                                            ; preds = %bb.bf
-  %i.lm = load i64, ptr %i.w, align 8, !range !54, !noalias !4001, !noundef !13
+  %i.lm = load i64, ptr %i.w, align 16, !range !54, !noalias !4001, !noundef !13
   %switch147.i = icmp ugt i64 %i.lm, -3
   br i1 %switch147.i, label %.thread.i, label %bb.cf
 

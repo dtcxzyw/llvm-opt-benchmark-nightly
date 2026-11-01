@@ -205,16 +205,17 @@ bb.es:                                            ; preds = %bb.dq
   %i.qb = load i32, ptr %i.qa, align 8, !tbaa !234
   %i.qc = icmp ugt i32 %i.qb, 1                   ; 5 uses
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 92
-  %.sroa.4.0.copyload.i.i.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 4, !tbaa !39 ; 2 uses
+  %.sroa.4.0.copyload.i.i.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 4, !tbaa !39
   %.not.i.i.i.i = icmp eq i32 %.sroa.4.0.copyload.i.i.i.i, 0
   br i1 %.not.i.i.i.i, label %defined_frame_rate.exit.i.i.i, label %bb.et
 
 bb.et:                                            ; preds = %bb.es
   %i.qd = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 88
-  %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.qd, align 8, !tbaa !39
-  %2 = sitofp nsz i32 %.sroa.0.0.copyload.i.i.i.i to double
-  %3 = sitofp nsz i32 %.sroa.4.0.copyload.i.i.i.i to double
-  %i.qe = fdiv nsz double %2, %3
+  %2 = load <2 x i32>, ptr %i.qd, align 8, !tbaa !39
+  %3 = sitofp nsz <2 x i32> %2 to <2 x double>    ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = extractelement <2 x double> %3, i64 1
+  %i.qe = fdiv nsz double %4, %5
   %i.qf = fptosi double %i.qe to i32
   br label %defined_frame_rate.exit.i.i.i
 
@@ -382,16 +383,17 @@ bb.fv:                                            ; preds = %bb.dq
   %i.rg = load i32, ptr %i.rf, align 8, !tbaa !234
   %i.rh = icmp ugt i32 %i.rg, 1                   ; 4 uses
   %.sroa.4.0..sroa_idx.i.i69.i.i = getelementptr inbounds nuw i8, ptr %.val63.i.i, i64 92
-  %.sroa.4.0.copyload.i.i70.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i69.i.i, align 4, !tbaa !39 ; 2 uses
+  %.sroa.4.0.copyload.i.i70.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i69.i.i, align 4, !tbaa !39
   %.not.i.i71.i.i = icmp eq i32 %.sroa.4.0.copyload.i.i70.i.i, 0
   br i1 %.not.i.i71.i.i, label %defined_frame_rate.exit.i73.i.i, label %bb.fw
 
 bb.fw:                                            ; preds = %bb.fv
   %i.ri = getelementptr inbounds nuw i8, ptr %.val63.i.i, i64 88
-  %.sroa.0.0.copyload.i.i72.i.i = load i32, ptr %i.ri, align 8, !tbaa !39
-  %4 = sitofp nsz i32 %.sroa.0.0.copyload.i.i72.i.i to double
-  %5 = sitofp nsz i32 %.sroa.4.0.copyload.i.i70.i.i to double
-  %i.rj = fdiv nsz double %4, %5
+  %6 = load <2 x i32>, ptr %i.ri, align 8, !tbaa !39
+  %7 = sitofp nsz <2 x i32> %6 to <2 x double>    ; 2 uses
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.rj = fdiv nsz double %8, %9
   %i.rk = fptosi double %i.rj to i32
   br label %defined_frame_rate.exit.i73.i.i
 

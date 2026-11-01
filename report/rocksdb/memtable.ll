@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %"class.std::variant", align 16    ; 11 uses
   %14 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %15 = alloca %"class.std::vector.360", align 16 ; 12 uses
-  %16 = alloca %"class.rocksdb::Status", align 8  ; 10 uses
+  %16 = alloca %"class.rocksdb::Status", align 8  ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #35
   %i.a = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 4 uses
   store i8 0, ptr %i.a, align 8, !tbaa !605
@@ -218,16 +218,17 @@ bb.a:
           to label %bb.b unwind label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load i8, ptr %16, align 8, !tbaa !382    ; 2 uses
+  %i.b = load i8, ptr %16, align 8, !tbaa !382
   %i.c = icmp eq i8 %i.b, 0
   br i1 %i.c, label %_ZNSt7variantIJSt9monostateN7rocksdb5SliceESt6vectorINS1_10WideColumnESaIS4_EEEEaSIS6_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS0_S2_S6_EE4typeEE18is_constructible_vISE_SB_E15is_assignable_vIRSE_SB_EERS7_E4typeESC_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i8 %i.b, ptr %0, align 8, !tbaa !382
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %i.e = getelementptr inbounds nuw i8, ptr %16, i64 1
-  %17 = load <4 x i8>, ptr %i.e, align 1, !tbaa !55
-  store <4 x i8> %17, ptr %i.d, align 1, !tbaa !55
+  %17 = load <4 x i8>, ptr %16, align 8, !tbaa !55
+  store <4 x i8> %17, ptr %0, align 8, !tbaa !55
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.e = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %18 = load i8, ptr %i.e, align 4, !tbaa !524, !range !104, !noundef !105
+  store i8 %18, ptr %i.d, align 4, !tbaa !524
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.g = getelementptr inbounds nuw i8, ptr %16, i64 5
   %i.h = load i8, ptr %i.g, align 1, !tbaa !523

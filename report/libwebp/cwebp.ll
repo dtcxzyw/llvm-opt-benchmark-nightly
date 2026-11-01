@@ -204,14 +204,14 @@ bb.fj:                                            ; preds = %bb.fi, %bb.fh
   br i1 %.not.i, label %bb.fs, label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj
-  %i.qt = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 12 uses
-  %i.qu = load i32, ptr %i.qt, align 8, !tbaa !18 ; 3 uses
+  %i.qt = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 13 uses
+  %i.qu = load i32, ptr %i.qt, align 8, !tbaa !18 ; 2 uses
   %i.qv = icmp eq i32 %i.qu, 0
   br i1 %i.qv, label %bb.fm, label %bb.fl
 
 bb.fl:                                            ; preds = %bb.fk
   %i.qw = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  %i.qx = load i32, ptr %i.qw, align 4, !tbaa !19 ; 3 uses
+  %i.qx = load i32, ptr %i.qw, align 4, !tbaa !19 ; 2 uses
   %i.qy = icmp eq i32 %i.qx, 0
   br i1 %i.qy, label %bb.fm, label %bb.fn
 
@@ -225,17 +225,18 @@ bb.fm:                                            ; preds = %bb.fl, %bb.fk
   br label %ReadYUV.exit.i
 
 bb.fn:                                            ; preds = %bb.fl
+  %11 = load <2 x i32>, ptr %i.qt, align 8, !tbaa !12
   %i.rf = load ptr, ptr %i.j, align 8, !tbaa !44  ; 2 uses
   %i.rg = load i64, ptr %i.k, align 8, !tbaa !77  ; 2 uses
   %i.rh = load i32, ptr %2, align 8, !tbaa !76
-  %11 = add nsw i32 %i.qu, 1
-  %12 = sdiv i32 %11, 2                           ; 5 uses
-  %13 = add nsw i32 %i.qx, 1
-  %14 = sdiv i32 %13, 2                           ; 3 uses
-  %15 = mul nsw i32 %i.qx, %i.qu                  ; 2 uses
-  %i.ri = mul nsw i32 %14, %12                    ; 2 uses
+  %12 = add nsw <2 x i32> %11, splat (i32 1)
+  %13 = sdiv <2 x i32> %12, splat (i32 2)         ; 2 uses
+  %14 = mul nsw i32 %i.qx, %i.qu                  ; 2 uses
+  %15 = extractelement <2 x i32> %13, i64 0       ; 5 uses
+  %16 = extractelement <2 x i32> %13, i64 1       ; 3 uses
+  %i.ri = mul nsw i32 %16, %15                    ; 2 uses
   %i.rj = shl nsw i32 %i.ri, 1
-  %i.rk = add nsw i32 %i.rj, %15                  ; 2 uses
+  %i.rk = add nsw i32 %i.rj, %14                  ; 2 uses
   %i.rl = sext i32 %i.rk to i64
   %.not.i.i = icmp eq i64 %i.rg, %i.rl
   br i1 %.not.i.i, label %bb.fp, label %bb.fo
@@ -260,19 +261,19 @@ bb.fq:                                            ; preds = %bb.fp
   %i.ru = load i32, ptr %i.rt, align 8, !tbaa !79
   %i.rv = load i32, ptr %i.qw, align 4, !tbaa !19
   call void @ImgIoUtilCopyPlane(ptr noundef %i.rf, i32 noundef %i.rq, ptr noundef %i.rs, i32 noundef %i.ru, i32 noundef %i.rq, i32 noundef %i.rv) #11
-  %i.rw = sext i32 %15 to i64
+  %i.rw = sext i32 %14 to i64
   %i.rx = getelementptr inbounds i8, ptr %i.rf, i64 %i.rw ; 2 uses
   %i.ry = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.rz = load ptr, ptr %i.ry, align 8, !tbaa !80
   %i.sa = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 2 uses
   %i.sb = load i32, ptr %i.sa, align 4, !tbaa !81
-  call void @ImgIoUtilCopyPlane(ptr noundef nonnull %i.rx, i32 noundef %12, ptr noundef %i.rz, i32 noundef %i.sb, i32 noundef %12, i32 noundef %14) #11
+  call void @ImgIoUtilCopyPlane(ptr noundef nonnull %i.rx, i32 noundef %15, ptr noundef %i.rz, i32 noundef %i.sb, i32 noundef %15, i32 noundef %16) #11
   %i.sc = sext i32 %i.ri to i64
   %i.sd = getelementptr inbounds i8, ptr %i.rx, i64 %i.sc
   %i.se = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !82
   %i.sg = load i32, ptr %i.sa, align 4, !tbaa !81
-  call void @ImgIoUtilCopyPlane(ptr noundef nonnull %i.sd, i32 noundef %12, ptr noundef %i.sf, i32 noundef %i.sg, i32 noundef %12, i32 noundef %14) #11
+  call void @ImgIoUtilCopyPlane(ptr noundef nonnull %i.sd, i32 noundef %15, ptr noundef %i.sf, i32 noundef %i.sg, i32 noundef %15, i32 noundef %16) #11
   %.not40.i.i = icmp eq i32 %i.rh, 0
   br i1 %.not40.i.i, label %bb.ft, label %bb.fr
 

@@ -205,7 +205,7 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
-  %i.f = alloca [24 x i8], align 8                ; 6 uses
+  %i.f = alloca [24 x i8], align 16               ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 4 uses
   %i.h = alloca [24 x i8], align 8                ; 8 uses
   %i.i = alloca [24 x i8], align 8                ; 10 uses
@@ -216,7 +216,7 @@ bb.a:
   %i.n = alloca [16 x i8], align 8                ; 8 uses
   %i.o = alloca [48 x i8], align 8                ; 6 uses
   %i.p = alloca [24 x i8], align 8                ; 5 uses
-  %i.q = alloca [56 x i8], align 8                ; 10 uses
+  %i.q = alloca [56 x i8], align 16               ; 12 uses
   %i.r = alloca [48 x i8], align 8                ; 2 uses
   %i.s = alloca [56 x i8], align 8                ; 3 uses
   %i.t = alloca [4 x i8], align 4                 ; 2 uses
@@ -286,24 +286,26 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.g, !noalias !48
 
 bb.j:                                             ; preds = %bb.i
-  %i.ao = load i64, ptr %i.q, align 8, !noalias !48 ; 2 uses
+  %i.ao = load i64, ptr %i.q, align 16, !noalias !48
   %.not.i.i = icmp eq i64 %i.ao, -2
-  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
   br i1 %.not.i.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ap = load <2 x i64>, ptr %3, align 8
+  %i.ap = load <2 x i64>, ptr %i.q, align 16
+  %.sroa.9.8..sroa_idx28 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %.sroa.9.8.copyload29 = load i64, ptr %.sroa.9.8..sroa_idx28, align 16
   %.sroa.10.8..sroa_idx32 = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %.sroa.10.8.copyload33 = load i64, ptr %.sroa.10.8..sroa_idx32, align 8
   %.sroa.11.8..sroa_idx36 = getelementptr inbounds nuw i8, ptr %i.q, i64 32
-  %.sroa.11.8.copyload37 = load ptr, ptr %.sroa.11.8..sroa_idx36, align 8
+  %.sroa.11.8.copyload37 = load ptr, ptr %.sroa.11.8..sroa_idx36, align 16
   %.sroa.12.8..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.q, i64 40
   %.sroa.12.8.copyload41 = load i64, ptr %.sroa.12.8..sroa_idx40, align 8
   %.sroa.13.8..sroa_idx44 = getelementptr inbounds nuw i8, ptr %i.q, i64 48
-  %.sroa.13.8.copyload45 = load i64, ptr %.sroa.13.8..sroa_idx44, align 8
+  %.sroa.13.8.copyload45 = load i64, ptr %.sroa.13.8..sroa_idx44, align 16
   br label %bb.am
 
 bb.l:                                             ; preds = %bb.j
+  %3 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.o, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false), !noalias !48
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjd0ZH04R2Z3_5gimli(ptr nonnull align 8 %i.aa)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std4path7PathBufECse74NttPwnqL_7walkdir.exit.i.i unwind label %bb.m, !noalias !48
@@ -534,9 +536,9 @@ bb.ah:                                            ; preds = %bb.ag
   unreachable
 
 bb.ai:                                            ; preds = %.noexc15.i.i
-  %.sroa.032.0.copyload.i = load i64, ptr %i.f, align 8, !noalias !49
-  %.sroa.433.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %4 = load <2 x i64>, ptr %.sroa.433.0..sroa_idx.i, align 8, !noalias !49
+  %4 = load <2 x i64>, ptr %i.f, align 16, !noalias !49
+  %.sroa.433.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %.sroa.433.sroa.6.0.copyload.i = load i64, ptr %.sroa.433.0..sroa_idx.i, align 16, !noalias !49
   %i.cf = load i64, ptr %i.e, align 8, !noalias !49
   %.sroa.634.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.634.24.copyload.i = load ptr, ptr %.sroa.634.24..sroa_idx.i, align 8, !noalias !49
@@ -547,12 +549,12 @@ bb.ai:                                            ; preds = %.noexc15.i.i
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ad
-  %.sroa.6.sroa.4.sroa.2.0.i.a = phi i64 [ undef, %bb.ad ], [ %i.cf, %bb.ai ]
-  %.sroa.019.0.i = phi i64 [ -1, %bb.ad ], [ %.sroa.032.0.copyload.i, %bb.ai ] ; 2 uses
+  %.sroa.6.sroa.4.sroa.2.0.i.a = phi i64 [ undef, %bb.ad ], [ %.sroa.433.sroa.6.0.copyload.i, %bb.ai ]
+  %.sroa.019.0.i = phi i64 [ undef, %bb.ad ], [ %i.cf, %bb.ai ]
   %.sroa.9.0.i = phi i64 [ undef, %bb.ad ], [ %.sroa.735.24.copyload.i, %bb.ai ]
   %.sroa.7.0.i = phi ptr [ %i.bu, %bb.ad ], [ %.sroa.634.24.copyload.i, %bb.ai ]
   %.val.val.i10.sink.i.i = phi i64 [ %.val.val.i10.i.i, %bb.ad ], [ %i.by, %bb.ai ]
-  %i.cg = phi <2 x i64> [ <i64 -1, i64 undef>, %bb.ad ], [ %4, %bb.ai ]
+  %i.cg = phi <2 x i64> [ splat (i64 -1), %bb.ad ], [ %4, %bb.ai ] ; 2 uses
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCs75g4Gr1SzEJ_9same_file6HandleEBD_(ptr nonnull align 8 %i.m)
           to label %bb.al unwind label %bb.g, !noalias !48
 
@@ -567,16 +569,17 @@ bb.al:                                            ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !48
-  %.not.i8.i = icmp eq i64 %.sroa.019.0.i, -2
+  %5 = extractelement <2 x i64> %i.cg, i64 0
+  %.not.i8.i = icmp eq i64 %5, -2
   br i1 %.not.i8.i, label %bb.aq, label %bb.am
 
 bb.am:                                            ; preds = %.thread43.i, %bb.al, %bb.k
   %.sroa.13.0 = phi i64 [ %.sroa.13.8.copyload45, %bb.k ], [ %.val.val.i.i.i, %.thread43.i ], [ %.val.val.i10.sink.i.i, %bb.al ]
   %.sroa.12.0 = phi i64 [ %.sroa.12.8.copyload41, %bb.k ], [ undef, %.thread43.i ], [ %.sroa.9.0.i, %bb.al ]
   %.sroa.11.0 = phi ptr [ %.sroa.11.8.copyload37, %bb.k ], [ %i.bb, %.thread43.i ], [ %.sroa.7.0.i, %bb.al ]
-  %.sroa.10.0 = phi i64 [ %.sroa.10.8.copyload33, %bb.k ], [ undef, %.thread43.i ], [ %.sroa.6.sroa.4.sroa.2.0.i.a, %bb.al ]
-  %.sroa.0.0152 = phi i64 [ %i.ao, %bb.k ], [ -1, %.thread43.i ], [ %.sroa.019.0.i, %bb.al ]
-  %i.ci = phi <2 x i64> [ %i.ap, %bb.k ], [ <i64 -1, i64 undef>, %.thread43.i ], [ %i.cg, %bb.al ]
+  %.sroa.10.0 = phi i64 [ %.sroa.10.8.copyload33, %bb.k ], [ undef, %.thread43.i ], [ %.sroa.019.0.i, %bb.al ]
+  %.sroa.0.0152 = phi i64 [ %.sroa.9.8.copyload29, %bb.k ], [ undef, %.thread43.i ], [ %.sroa.6.sroa.4.sroa.2.0.i.a, %bb.al ]
+  %i.ci = phi <2 x i64> [ %i.ap, %bb.k ], [ splat (i64 -1), %.thread43.i ], [ %i.cg, %bb.al ]
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjd0ZH04R2Z3_5gimli(ptr nonnull align 8 %i.aa)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCse74NttPwnqL_7walkdir4dent8DirEntryEBF_.exit11.i unwind label %bb.an, !noalias !48
 
@@ -597,9 +600,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCse74NttPwnqL_7walkdir4dent8DirEntry
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
-  store i64 %.sroa.0.0152, ptr %0, align 8
-  %.sroa.2146.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x i64> %i.ci, ptr %.sroa.2146.0..sroa_idx, align 8
+  store <2 x i64> %i.ci, ptr %0, align 8
+  %.sroa.2146.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.0.0152, ptr %.sroa.2146.0..sroa_idx, align 8
   %.sroa.4148.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.10.0, ptr %.sroa.4148.0..sroa_idx, align 8
   %.sroa.5149.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32

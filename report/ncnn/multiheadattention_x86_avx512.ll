@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %11 = alloca %"class.std::vector.3", align 8    ; 10 uses
-  %12 = alloca %"class.ncnn::Mat", align 16       ; 15 uses
+  %12 = alloca %"class.ncnn::Mat", align 16       ; 14 uses
   %13 = alloca %"class.std::vector.3", align 8    ; 9 uses
   %14 = alloca %"class.ncnn::Option", align 8     ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 212
@@ -243,7 +243,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 228
-  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
@@ -253,11 +253,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %12, i64 32 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %12, i64 40 ; 3 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %12, i64 44
-  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 44 ; 3 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 52
-  %i.al = getelementptr inbounds nuw i8, ptr %12, i64 56 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 44 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 52
+  %i.ak = getelementptr inbounds nuw i8, ptr %12, i64 56 ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 56
   %i.am = getelementptr inbounds nuw i8, ptr %12, i64 64 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 64 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
@@ -348,12 +348,12 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
 
 bb.d:                                             ; preds = %.noexc29
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #9
-  %i.cl = load i32, ptr %i.x, align 8, !tbaa !103 ; 2 uses
+  %i.cl = load i32, ptr %i.x, align 8, !tbaa !103
   %i.cm = icmp eq i32 %i.cl, 3
   br i1 %i.cm, label %_ZN4ncnn3Mat7channelEi.exit, label %bb.e
 
 _ZN4ncnn3Mat7channelEi.exit:                      ; preds = %bb.d
-  %i.cn = load i32, ptr %i.ak, align 4, !tbaa !104, !noalias !105
+  %i.cn = load i32, ptr %i.aj, align 4, !tbaa !104, !noalias !105
   %i.co = load ptr, ptr %6, align 8, !tbaa !20, !noalias !105
   %i.cp = load i64, ptr %i.an, align 8, !tbaa !21, !noalias !105
   %i.cq = mul i64 %i.cp, %indvars.iv
@@ -367,10 +367,10 @@ _ZN4ncnn3Mat7channelEi.exit:                      ; preds = %bb.d
   store i64 %i.cr, ptr %i.aa, align 16, !tbaa !54
   store i32 %i.cu, ptr %i.ac, align 8, !tbaa !55
   store ptr %i.cv, ptr %i.ae, align 16, !tbaa !19
-  store i32 %i.cn, ptr %i.al, align 8, !tbaa !56
-  %i.cw = load <2 x i32>, ptr %i.ai, align 4, !tbaa !24, !noalias !105
-  %i.cx = load i32, ptr %i.aj, align 8, !tbaa !70, !noalias !105
-  %i.cy = load i32, ptr %i.ai, align 4, !tbaa !71, !noalias !105
+  store i32 %i.cn, ptr %i.ak, align 8, !tbaa !56
+  %i.cw = load <2 x i32>, ptr %i.ah, align 4, !tbaa !24, !noalias !105
+  %i.cx = load i32, ptr %i.ai, align 8, !tbaa !70, !noalias !105
+  %i.cy = load i32, ptr %i.ah, align 4, !tbaa !71, !noalias !105
   %i.cz = sext i32 %i.cy to i64
   %i.da = sext i32 %i.cx to i64
   %i.db = mul nsw i64 %i.da, %i.cz
@@ -394,9 +394,10 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.dl, ptr %i.ac, align 8, !tbaa !55
   %i.dm = load ptr, ptr %i.af, align 8, !tbaa !19
   store ptr %i.dm, ptr %i.ae, align 16, !tbaa !19
-  store i32 %i.cl, ptr %i.ag, align 8, !tbaa !103
-  %15 = load <4 x i32>, ptr %i.ai, align 4, !tbaa !24
-  store <4 x i32> %15, ptr %i.ah, align 4, !tbaa !24
+  %15 = load <4 x i32>, ptr %i.x, align 8, !tbaa !24
+  store <4 x i32> %15, ptr %i.ag, align 8, !tbaa !24
+  %16 = load i32, ptr %i.al, align 8, !tbaa !56
+  store i32 %16, ptr %i.ak, align 8, !tbaa !56
   %i.dn = load i64, ptr %i.an, align 8, !tbaa !21
   store i64 %i.dn, ptr %i.am, align 16, !tbaa !21
   %.not.i78 = icmp eq ptr %i.di, null
@@ -426,7 +427,7 @@ bb.f:                                             ; preds = %_ZN4ncnn3Mat6addref
   %i.dz = load <4 x i32>, ptr %i.ag, align 8, !tbaa !24
   store <4 x i32> %i.dz, ptr %i.dy, align 8, !tbaa !24
   %i.ea = getelementptr inbounds nuw i8, ptr %.pre120, i64 56
-  %i.eb = load i32, ptr %i.al, align 8, !tbaa !56
+  %i.eb = load i32, ptr %i.ak, align 8, !tbaa !56
   store i32 %i.eb, ptr %i.ea, align 8, !tbaa !56
   %i.ec = getelementptr inbounds nuw i8, ptr %.pre120, i64 64
   %i.ed = load i64, ptr %i.am, align 16, !tbaa !21

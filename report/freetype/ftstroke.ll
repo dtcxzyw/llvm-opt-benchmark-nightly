@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %ft_stroker_add_reve
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @ft_stroker_cap(ptr nofree noundef nonnull captures(none) %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.FT_Vector_, align 16        ; 7 uses
-  %3 = alloca %struct.FT_Vector_, align 16        ; 7 uses
+  %2 = alloca %struct.FT_Vector_, align 8         ; 7 uses
+  %3 = alloca %struct.FT_Vector_, align 8         ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !32
   %i.c = icmp eq i32 %i.b, 1
@@ -227,10 +227,10 @@ bb.c:                                             ; preds = %bb.a
   %i.h = load i64, ptr %i.g, align 8, !tbaa !31
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   call void @FT_Vector_From_Polar(ptr noundef nonnull %2, i64 noundef %i.h, i64 noundef %1) #10
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.k = load i64, ptr %i.j, align 8              ; 2 uses
-  %i.l = load i64, ptr %2, align 16               ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.l = load i64, ptr %2, align 8                ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.n = load i32, ptr %i.a, align 4, !tbaa !32
   %i.o = icmp eq i32 %i.n, 2
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -252,10 +252,10 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sink = phi i64 [ %i.r, %bb.d ], [ %i.q, %bb.e ] ; 2 uses
   %storemerge = phi i64 [ %i.u, %bb.d ], [ %i.w, %bb.e ] ; 2 uses
-  store i64 %.sink, ptr %2, align 16, !tbaa !40
+  store i64 %.sink, ptr %2, align 8, !tbaa !40
   store i64 %storemerge, ptr %i.j, align 8, !tbaa !42
   %i.x = sub nsw i64 %.sink, %i.k                 ; 2 uses
-  store i64 %i.x, ptr %3, align 16, !tbaa !40
+  store i64 %i.x, ptr %3, align 8, !tbaa !40
   %i.y = add nsw i64 %storemerge, %i.l            ; 2 uses
   store i64 %i.y, ptr %i.m, align 8, !tbaa !42
   %i.z = call fastcc i32 @ft_stroke_border_lineto(ptr noundef %i.i, ptr noundef %3, i8 noundef zeroext 0) ; 2 uses
@@ -263,12 +263,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %4 = load <2 x i64>, ptr %2, align 16, !tbaa !46
-  %5 = shl <2 x i64> %4, splat (i64 1)
-  %6 = insertelement <2 x i64> poison, i64 %i.x, i64 0
-  %7 = insertelement <2 x i64> %6, i64 %i.y, i64 1
-  %8 = sub <2 x i64> %5, %7
-  store <2 x i64> %8, ptr %3, align 16, !tbaa !46
+  %4 = load i64, ptr %2, align 8, !tbaa !40
+  %factor = shl i64 %4, 1
+  %5 = sub i64 %factor, %i.x
+  store i64 %5, ptr %3, align 8, !tbaa !40
+  %6 = load i64, ptr %i.j, align 8, !tbaa !42
+  %factor28 = shl i64 %6, 1
+  %7 = sub i64 %factor28, %i.y
+  store i64 %7, ptr %i.m, align 8, !tbaa !42
   %i.aa = call fastcc i32 @ft_stroke_border_lineto(ptr noundef %i.i, ptr noundef %3, i8 noundef zeroext 0)
   br label %bb.h
 

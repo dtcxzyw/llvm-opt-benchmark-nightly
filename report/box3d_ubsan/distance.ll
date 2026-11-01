@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %bb.ad
   %i.mo = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.mp = getelementptr inbounds nuw i8, ptr %i.h, i64 4 ; 2 uses
   %i.mq = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 2 uses
+  %i.mr = getelementptr inbounds nuw i8, ptr %i.j, i64 4 ; 3 uses
   %.not102.i.i = icmp ugt ptr %i.k, inttoptr (i64 -17 to ptr)
   %.not463.i = icmp eq ptr %i.k, inttoptr (i64 -16 to ptr)
   %i.ms = getelementptr inbounds nuw i8, ptr %i.j, i64 12
@@ -607,7 +607,7 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bn
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0180.i, ptr noundef nonnull align 8 dereferenceable(24) %i.ls, i64 24, i1 false), !tbaa.struct !55
   %.sroa.10181.0.copyload.i = load <2 x float>, ptr %.sroa.10181.0..sroa_idx.i, align 8, !tbaa !19 ; 25 uses
-  %.sroa.17202.0.copyload.i = load float, ptr %.sroa.17202.0..sroa_idx.i, align 8, !tbaa !19 ; 17 uses
+  %.sroa.17202.0.copyload.i = load float, ptr %.sroa.17202.0..sroa_idx.i, align 8, !tbaa !19 ; 18 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.24217.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.24217.0..sroa_idx.i, i64 12, i1 false), !tbaa.struct !56
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0135.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.24172.i)
@@ -1010,47 +1010,48 @@ bb.es:                                            ; preds = %bb.ep, %bb.em, %bb.
   %i.ade = fadd float %i.add, %i.adc              ; 2 uses
   %i.adf = fcmp olt float %i.ade, 0.000000e+00
   %i.adg = select i1 %i.adf, float -1.000000e+00, float 1.000000e+00 ; 2 uses
-  %11 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %12 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10136.0.copyload.i, <4 x i32> <i32 1, i32 0, i32 1, i32 2>
+  %11 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 3, i32 2>
+  %12 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10136.0.copyload.i, <4 x i32> <i32 1, i32 0, i32 2, i32 1>
   %i.adh = fmul <4 x float> %11, %12
-  %13 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
-  %14 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10136.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
+  %13 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 1, i32 0, i32 2, i32 3>
+  %14 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10136.0.copyload.i, <4 x i32> <i32 0, i32 1, i32 3, i32 0>
   %i.adi = fmul <4 x float> %13, %14
-  %15 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10.0.copyload.i, <4 x i32> <i32 1, i32 3, i32 2, i32 1>
+  %15 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10.0.copyload.i, <4 x i32> <i32 1, i32 3, i32 1, i32 2>
   %i.adj = insertelement <4 x float> poison, float %.sroa.17.0.copyload.i, i64 0
   %i.adk = insertelement <4 x float> %i.adj, float %.sroa.17157.0.copyload.i, i64 1
-  %i.adl = insertelement <4 x float> %i.adk, float %.sroa.17202.0.copyload.i, i64 2 ; 2 uses
+  %i.adl = insertelement <4 x float> %i.adk, float %.sroa.17202.0.copyload.i, i64 2
   %i.adm = shufflevector <4 x float> %i.adl, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2> ; 2 uses
   %i.adn = fmul <4 x float> %15, %i.adm
   %i.ado = insertelement <4 x float> poison, float %.sroa.17157.0.copyload.i, i64 0
   %i.adp = insertelement <4 x float> %i.ado, float %.sroa.17.0.copyload.i, i64 1
-  %16 = shufflevector <4 x float> %i.adp, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 0> ; 2 uses
-  %17 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 1, i32 poison, i32 2, i32 3>
+  %16 = shufflevector <4 x float> %i.adp, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
+  %17 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 1, i32 poison, i32 3, i32 2>
   %i.adq = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.adr = shufflevector <4 x float> %17, <4 x float> %i.adq, <4 x i32> <i32 0, i32 5, i32 2, i32 3>
   %i.ads = fmul <4 x float> %16, %i.adr
-  %18 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 0, i32 poison, i32 3, i32 2>
+  %18 = shufflevector <2 x float> %.sroa.10.0.copyload.i, <2 x float> %.sroa.10181.0.copyload.i, <4 x i32> <i32 0, i32 poison, i32 2, i32 3>
   %i.adt = shufflevector <4 x float> %18, <4 x float> %i.adq, <4 x i32> <i32 0, i32 4, i32 2, i32 3>
   %i.adu = fmul <4 x float> %16, %i.adt
-  %19 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10.0.copyload.i, <4 x i32> <i32 0, i32 2, i32 3, i32 0>
+  %19 = shufflevector <2 x float> %.sroa.10136.0.copyload.i, <2 x float> %.sroa.10.0.copyload.i, <4 x i32> <i32 0, i32 2, i32 0, i32 3>
   %i.adv = fmul <4 x float> %19, %i.adm
   %i.adw = fsub <4 x float> %i.adn, %i.ads
   %i.adx = fsub <4 x float> %i.adu, %i.adv
   %i.ady = fsub <4 x float> %i.adh, %i.adi
-  %20 = shufflevector <2 x float> %.sroa.10181.0.copyload.i, <2 x float> %.sroa.10226.0.copyload.i, <4 x i32> <i32 0, i32 2, i32 3, i32 2>
+  %20 = shufflevector <2 x float> %.sroa.10181.0.copyload.i, <2 x float> %.sroa.10226.0.copyload.i, <4 x i32> <i32 0, i32 2, i32 2, i32 3>
   %i.adz = fmul <4 x float> %20, %i.adw
-  %21 = shufflevector <2 x float> %.sroa.10181.0.copyload.i, <2 x float> %.sroa.10226.0.copyload.i, <4 x i32> <i32 1, i32 3, i32 2, i32 3>
+  %21 = shufflevector <2 x float> %.sroa.10181.0.copyload.i, <2 x float> %.sroa.10226.0.copyload.i, <4 x i32> <i32 1, i32 3, i32 3, i32 2>
   %i.aea = fmul <4 x float> %21, %i.adx
   %i.aeb = fadd <4 x float> %i.adz, %i.aea
-  %22 = shufflevector <4 x float> %i.adl, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %23 = insertelement <2 x float> %22, float %.sroa.17247.0.copyload.i, i64 1
-  %i.aec = shufflevector <2 x float> %23, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %22 = insertelement <4 x float> poison, float %.sroa.17202.0.copyload.i, i64 0
+  %23 = insertelement <4 x float> %22, float %.sroa.17247.0.copyload.i, i64 1
+  %i.aec = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.aed = fmul <4 x float> %i.aec, %i.ady
   %i.aee = fadd <4 x float> %i.aed, %i.aeb
   %i.aef = insertelement <4 x float> poison, float %i.adg, i64 0
   %i.aeg = shufflevector <4 x float> %i.aef, <4 x float> poison, <4 x i32> zeroinitializer
   %i.aeh = fmul <4 x float> %i.aee, %i.aeg        ; 6 uses
-  store <4 x float> %i.aeh, ptr %i.k, align 16, !tbaa !19
+  %24 = shufflevector <4 x float> %i.aeh, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 2>
+  store <4 x float> %24, ptr %i.k, align 16, !tbaa !19
   br i1 %.not102.i.i, label %bb.et, label %b3BarycentricCoordsTet.exit.i, !prof !20, !nosanitize !11
 
 bb.et:                                            ; preds = %bb.es
@@ -1061,7 +1062,7 @@ bb.et:                                            ; preds = %bb.es
 
 b3BarycentricCoordsTet.exit.i:                    ; preds = %bb.es
   %i.aek = fmul float %i.ade, %i.adg              ; 2 uses
-  %i.ael = extractelement <4 x float> %i.aeh, i64 3
+  %i.ael = extractelement <4 x float> %i.aeh, i64 2
   %i.aem = fcmp olt float %i.ael, 0.000000e+00
   %i.aen = fcmp ogt float %i.aao, 0.000000e+00
   %or.cond492.i = and i1 %i.aem, %i.aen
@@ -1102,7 +1103,7 @@ bb.ew:                                            ; preds = %bb.ev
   br label %b3SolveSimplex4.exit.thread832
 
 bb.ex:                                            ; preds = %bb.eu, %b3BarycentricCoordsTet.exit.i
-  %i.aew = extractelement <4 x float> %i.aeh, i64 2
+  %i.aew = extractelement <4 x float> %i.aeh, i64 3
   %i.aex = fcmp olt float %i.aew, 0.000000e+00
   %i.aey = fcmp ogt float %i.abu, 0.000000e+00
   %or.cond496.i = and i1 %i.aex, %i.aey
@@ -1187,16 +1188,15 @@ bb.ff:                                            ; preds = %bb.fc, %bb.fb
   %i.afs = extractelement <4 x float> %i.aeh, i64 0
   %i.aft = fcmp olt float %i.afs, 0.000000e+00
   %i.afu = fcmp ogt float %i.abg, 0.000000e+00
-  %or.cond504.i.a = select i1 %i.aft, i1 %i.afu, i1 false
-  br i1 %or.cond504.i.a, label %24, label %bb.fj
-
-24:                                               ; preds = %bb.ff
-  %25 = load float, ptr %i.mr, align 4, !tbaa !19 ; 2 uses
+  %or.cond504.i = select i1 %i.aft, i1 %i.afu, i1 false
+  %25 = load float, ptr %i.mr, align 4
   %26 = fcmp ogt float %25, 0.000000e+00
-  br i1 %26, label %bb.fg, label %bb.fj
+  %or.cond504.i.a = select i1 %or.cond504.i, i1 %26, i1 false
+  br i1 %or.cond504.i.a, label %bb.fg, label %bb.fj
 
-bb.fg:                                            ; preds = %24
-  %i.afv = load float, ptr %i.mq, align 8, !tbaa !19 ; 2 uses
+bb.fg:                                            ; preds = %bb.ff
+  %i.afv = load float, ptr %i.mq, align 8, !tbaa !19
+  %27 = load <2 x float>, ptr %i.mr, align 4, !tbaa !19
   %i.afw = fcmp ogt float %i.afv, 0.000000e+00
   br i1 %i.afw, label %bb.fh, label %bb.fj
 
@@ -1214,20 +1214,23 @@ bb.fh:                                            ; preds = %bb.fg
   store <2 x float> %.sroa.10.0.copyload.i, ptr %.sroa.10136.0..sroa_idx.i, align 8, !tbaa !19
   store float %.sroa.17.0.copyload.i, ptr %.sroa.17157.0..sroa_idx.i, align 8, !tbaa !19
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.24172.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.24.i, i64 12, i1 false), !tbaa.struct !56
-  %i.afx = load float, ptr %i.ms, align 4, !tbaa !19 ; 4 uses
+  %i.afx = load float, ptr %i.ms, align 4, !tbaa !19 ; 3 uses
   %i.afy = fcmp ugt float %i.afx, 0.000000e+00
   br i1 %i.afy, label %bb.fi, label %b3SolveSimplex4.exit
 
 bb.fi:                                            ; preds = %bb.fh
   %i.afz = fdiv float %i.abg, %i.afx              ; 2 uses
   store float %i.afz, ptr %.sroa.24262.0..sroa_idx.i, align 4, !tbaa !26
-  %27 = fdiv float %25, %i.afx
-  store float %27, ptr %.sroa.24217.0..sroa_idx.i, align 4, !tbaa !26
-  %28 = fdiv float %i.afv, %i.afx
-  store float %28, ptr %.sroa.24172.0..sroa_idx.i, align 4, !tbaa !26
+  %28 = insertelement <2 x float> poison, float %i.afx, i64 0
+  %29 = shufflevector <2 x float> %28, <2 x float> poison, <2 x i32> zeroinitializer
+  %30 = fdiv <2 x float> %27, %29                 ; 2 uses
+  %31 = extractelement <2 x float> %30, i64 0
+  store float %31, ptr %.sroa.24217.0..sroa_idx.i, align 4, !tbaa !26
+  %32 = extractelement <2 x float> %30, i64 1
+  store float %32, ptr %.sroa.24172.0..sroa_idx.i, align 4, !tbaa !26
   br label %b3SolveSimplex4.exit.thread832
 
-bb.fj:                                            ; preds = %bb.fg, %24, %bb.ff
+bb.fj:                                            ; preds = %bb.fg, %bb.ff
   br i1 %.not463.i, label %bb.fk, label %bb.fl, !prof !20, !nosanitize !11
 
 bb.fk:                                            ; preds = %bb.fj
@@ -1246,9 +1249,9 @@ bb.fm:                                            ; preds = %bb.fl
   store float %i.age, ptr %.sroa.24262.0..sroa_idx.i, align 4, !tbaa !26
   %i.agf = extractelement <4 x float> %i.agd, i64 1
   store float %i.agf, ptr %.sroa.24217.0..sroa_idx.i, align 4, !tbaa !26
-  %i.agg = extractelement <4 x float> %i.agd, i64 2
+  %i.agg = extractelement <4 x float> %i.agd, i64 3
   store float %i.agg, ptr %.sroa.24172.0..sroa_idx.i, align 4, !tbaa !26
-  %i.agh = extractelement <4 x float> %i.agd, i64 3
+  %i.agh = extractelement <4 x float> %i.agd, i64 2
   store float %i.agh, ptr %.sroa.24.0..sroa_idx.i, align 4, !tbaa !26
   br label %b3SolveSimplex4.exit.thread832
 

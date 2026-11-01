@@ -205,20 +205,21 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.js, label %bb.bz, label %bb.cg
 
 bb.bz:                                            ; preds = %bb.by
-  %i.jt = getelementptr inbounds nuw i8, ptr %0, i64 2094
-  %5 = load i16, ptr %i.jt, align 2               ; 2 uses
+  %i.jt = getelementptr inbounds nuw i8, ptr %0, i64 2094 ; 2 uses
   br i1 %i.gx, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  store i16 %5, ptr %i.jm, align 8
-  %i.ju = getelementptr inbounds nuw i8, ptr %0, i64 3346
-  %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 2096
-  %6 = load <2 x i16>, ptr %i.jv, align 8
-  store <2 x i16> %6, ptr %i.ju, align 2
+  %5 = load <2 x i16>, ptr %i.jt, align 2
+  store <2 x i16> %5, ptr %i.jm, align 8
+  %i.ju = getelementptr inbounds nuw i8, ptr %0, i64 3348
+  %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 2098
+  %6 = load i16, ptr %i.jv, align 2
+  store i16 %6, ptr %i.ju, align 4
   br label %bb.cg
 
 bb.cb:                                            ; preds = %bb.bz
-  %i.jw = zext i16 %5 to i32
+  %7 = load i16, ptr %i.jt, align 2
+  %i.jw = zext i16 %7 to i32
   %i.jx = and i32 %.0410, %i.jw
   %i.jy = trunc i32 %i.jx to i8
   store i8 %i.jy, ptr %i.jm, align 8, !tbaa !51

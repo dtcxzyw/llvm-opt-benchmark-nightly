@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
 define internal fastcc void @quantize_row_iq3_xxs_impl(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree noundef writeonly captures(none) %1, i64 noundef %2, ptr noalias nofree noundef readonly captures(address_is_null) %3) unnamed_addr #6 {
 bb.a:
   %i.a = alloca [8 x float], align 16             ; 6 uses
-  %i.b = alloca [32 x float], align 16            ; 25 uses
+  %i.b = alloca [32 x float], align 16            ; 24 uses
   %i.c = alloca [32 x float], align 16            ; 41 uses
   %i.d = alloca [32 x i8], align 16               ; 70 uses
   %i.e = alloca [32 x i8], align 16               ; 5 uses
@@ -473,7 +473,7 @@ bb.n:                                             ; preds = %bb.k, %bb.al
   %indvars.iv585 = phi i64 [ 0, %bb.k ], [ %indvars.iv.next586, %bb.al ] ; 6 uses
   %.0374485 = phi float [ 0.000000e+00, %bb.k ], [ %.1375, %bb.al ] ; 3 uses
   %i.fa = shl nuw nsw i64 %indvars.iv585, 5       ; 2 uses
-  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %i.fa ; 39 uses
+  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.eg, i64 %i.fa ; 38 uses
   br i1 %.not390, label %.preheader433.preheader, label %.loopexit434.loopexit492
 
 .preheader433.preheader:                          ; preds = %bb.n
@@ -780,10 +780,10 @@ bb.n:                                             ; preds = %bb.k, %bb.al
 
 .preheader427:                                    ; preds = %.loopexit434, %bb.q
   %indvars.iv522 = phi i64 [ 0, %.loopexit434 ], [ %indvars.iv.next523, %bb.q ] ; 3 uses
-  %i.on = shl nuw nsw i64 %indvars.iv522, 3       ; 9 uses
-  %i.oo = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.on
+  %i.on = shl nuw nsw i64 %indvars.iv522, 3       ; 8 uses
+  %i.oo = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.on ; 2 uses
   %i.op = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.on
-  %i.oq = load <4 x float>, ptr %i.oo, align 4, !tbaa !36 ; 4 uses
+  %i.oq = load <4 x float>, ptr %i.oo, align 4, !tbaa !36 ; 3 uses
   %i.or = fcmp ult <4 x float> %i.oq, zeroinitializer ; 5 uses
   %i.os = extractelement <4 x i1> %i.or, i64 0    ; 2 uses
   %.1363 = zext i1 %i.os to i8                    ; 2 uses
@@ -927,20 +927,15 @@ bb.o:                                             ; preds = %bb.q
 
 bb.p:                                             ; preds = %.preheader427
   %i.sh = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.on
-  %4 = load float, ptr %i.sh, align 16, !tbaa !36
-  %5 = extractelement <4 x float> %i.oq, i64 0    ; 2 uses
-  %6 = fmul float %4, %5
-  %7 = fmul float %5, %6                          ; 2 uses
-  %8 = or disjoint i64 %i.on, 1                   ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %8
-  %10 = load float, ptr %9, align 4, !tbaa !36
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %8
-  %12 = load float, ptr %11, align 4, !tbaa !36   ; 2 uses
-  %13 = fmul float %10, %12
-  %14 = fmul float %12, %13                       ; 2 uses
-  %i.si = fcmp olt float %14, %7                  ; 2 uses
+  %4 = load <2 x float>, ptr %i.sh, align 16, !tbaa !36
+  %5 = load <2 x float>, ptr %i.oo, align 4, !tbaa !36 ; 2 uses
+  %6 = fmul <2 x float> %4, %5
+  %7 = fmul <2 x float> %5, %6                    ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0       ; 2 uses
+  %9 = extractelement <2 x float> %7, i64 1       ; 2 uses
+  %i.si = fcmp olt float %9, %8                   ; 2 uses
   %.1360 = zext i1 %i.si to i32
-  %.1358 = select i1 %i.si, float %14, float %7   ; 2 uses
+  %.1358 = select i1 %i.si, float %9, float %8    ; 2 uses
   %i.sj = or disjoint i64 %i.on, 2                ; 2 uses
   %i.sk = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.sj
   %i.sl = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.sj
@@ -1343,7 +1338,7 @@ define i64 @quantize_iq1_m(ptr noalias nofree noundef readonly %0, ptr noalias n
 bb.a:
   %i.a = alloca [16 x float], align 16            ; 6 uses
   %i.b = alloca [16 x float], align 16            ; 16 uses
-  %i.c = alloca [16 x i8], align 16               ; 28 uses
+  %i.c = alloca [16 x i8], align 16               ; 32 uses
   %i.d = alloca [32 x float], align 16            ; 35 uses
   %i.e = alloca [16 x i8], align 16               ; 6 uses
   %i.f = and i64 %3, 255
@@ -1402,10 +1397,13 @@ bb.c:                                             ; preds = %bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %i.d, i64 116
   %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 120
   %i.as = getelementptr inbounds nuw i8, ptr %i.d, i64 124
-  %.phi.trans.insert852.i = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 3 uses
-  %.phi.trans.insert854.i = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 3 uses
+  %.phi.trans.insert852.i = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 2 uses
+  %.phi.trans.insert854.i = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
   %.phi.trans.insert856.i = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   %.phi.trans.insert858.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 3 uses
+  %.phi.trans.insert860.i = getelementptr inbounds nuw i8, ptr %i.c, i64 5
+  %.phi.trans.insert862.i = getelementptr inbounds nuw i8, ptr %i.c, i64 6
+  %.phi.trans.insert864.i = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 4 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.av = mul nsw i64 %i.h, 56
@@ -1808,16 +1806,15 @@ begin_hunk_2_@quantize_iq1_m:bb.a
 
 ._crit_edge.i.us:                                 ; preds = %.lr.ph677.i.us.prol.loopexit, %.lr.ph677.i.us, %.preheader583.i.us
   %i.tn = fcmp olt float %.3532.3.i.us, 0.000000e+00
-  %.pre851.i.us = load i8, ptr %i.c, align 16, !tbaa !34, !noalias !689 ; 2 uses
   br i1 %i.tn, label %.preheader582.preheader.i.us, label %._crit_edge._crit_edge.i.us
 
 ._crit_edge._crit_edge.i.us:                      ; preds = %._crit_edge.i.us
-  %.pre853.i.us = load i8, ptr %.phi.trans.insert852.i, align 1, !tbaa !34, !noalias !689
-  %5 = load <2 x i8>, ptr %.phi.trans.insert854.i, align 2, !tbaa !34, !noalias !689
+  %5 = load <4 x i8>, ptr %i.c, align 16, !tbaa !34, !noalias !689
   %i.to = load <4 x i8>, ptr %.phi.trans.insert858.i, align 4, !tbaa !34, !noalias !689
   br label %bb.ag
 
 .preheader582.preheader.i.us:                     ; preds = %._crit_edge.i.us
+  %.pre851.i.us = load i8, ptr %i.c, align 16, !tbaa !34, !noalias !689
   %i.tp = sub i8 2, %.pre851.i.us                 ; 2 uses
   store i8 %i.tp, ptr %i.c, align 16, !tbaa !34, !noalias !689
   %i.tq = load i8, ptr %.phi.trans.insert852.i, align 1, !tbaa !34, !noalias !689
@@ -1830,8 +1827,15 @@ begin_hunk_2_@quantize_iq1_m:bb.a
   %i.tv = extractelement <2 x i8> %i.tt, i64 1
   store i8 %i.tv, ptr %.phi.trans.insert856.i, align 1, !tbaa !34, !noalias !689
   %i.tw = load <4 x i8>, ptr %.phi.trans.insert858.i, align 4, !tbaa !34, !noalias !689
-  %i.tx = sub <4 x i8> splat (i8 2), %i.tw        ; 2 uses
-  store <4 x i8> %i.tx, ptr %.phi.trans.insert858.i, align 4, !tbaa !34, !noalias !689
+  %i.tx = sub <4 x i8> splat (i8 2), %i.tw        ; 5 uses
+  %6 = extractelement <4 x i8> %i.tx, i64 0
+  store i8 %6, ptr %.phi.trans.insert858.i, align 4, !tbaa !34, !noalias !689
+  %7 = extractelement <4 x i8> %i.tx, i64 1
+  store i8 %7, ptr %.phi.trans.insert860.i, align 1, !tbaa !34, !noalias !689
+  %8 = extractelement <4 x i8> %i.tx, i64 2
+  store i8 %8, ptr %.phi.trans.insert862.i, align 2, !tbaa !34, !noalias !689
+  %9 = extractelement <4 x i8> %i.tx, i64 3
+  store i8 %9, ptr %.phi.trans.insert864.i, align 1, !tbaa !34, !noalias !689
   %i.ty = load <8 x i8>, ptr %i.at, align 8, !tbaa !34, !noalias !689
   %i.tz = sub <8 x i8> splat (i8 2), %i.ty
   store <8 x i8> %i.tz, ptr %i.at, align 8, !tbaa !34, !noalias !689
@@ -1842,26 +1846,24 @@ begin_hunk_2_@quantize_iq1_m:bb.a
   %i.ue = zext i1 %i.ud to i32
   %i.uf = select i1 %i.uc, i32 2, i32 %i.ue
   %i.ug = select i1 %i.ub, i32 3, i32 %i.uf
+  %10 = insertelement <4 x i8> poison, i8 %i.tp, i64 0
+  %11 = insertelement <4 x i8> %10, i8 %i.tr, i64 1
+  %12 = shufflevector <2 x i8> %i.tt, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %13 = shufflevector <4 x i8> %11, <4 x i8> %12, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.preheader582.preheader.i.us, %._crit_edge._crit_edge.i.us
-  %6 = phi i8 [ %i.tr, %.preheader582.preheader.i.us ], [ %.pre853.i.us, %._crit_edge._crit_edge.i.us ]
-  %7 = phi i8 [ %i.tp, %.preheader582.preheader.i.us ], [ %.pre851.i.us, %._crit_edge._crit_edge.i.us ]
   %.4533.i.us = phi float [ %i.ua, %.preheader582.preheader.i.us ], [ %.3532.3.i.us, %._crit_edge._crit_edge.i.us ] ; 4 uses
   %.4.i.us = phi i32 [ %i.ug, %.preheader582.preheader.i.us ], [ %.3.3.i.us, %._crit_edge._crit_edge.i.us ] ; 3 uses
-  %i.uh = phi <4 x i8> [ %i.tx, %.preheader582.preheader.i.us ], [ %i.to, %._crit_edge._crit_edge.i.us ]
-  %8 = phi <2 x i8> [ %i.tt, %.preheader582.preheader.i.us ], [ %5, %._crit_edge._crit_edge.i.us ]
+  %i.uh = phi <4 x i8> [ %13, %.preheader582.preheader.i.us ], [ %5, %._crit_edge._crit_edge.i.us ]
+  %14 = phi <4 x i8> [ %i.tx, %.preheader582.preheader.i.us ], [ %i.to, %._crit_edge._crit_edge.i.us ]
   %i.ui = and i32 %.4.i.us, 1
   %i.uj = icmp eq i32 %i.ui, 0
   %i.uk = select i1 %i.uj, ptr @__const.quantize_row_iq1_m_impl.x_p, ptr @__const.quantize_row_iq1_m_impl.x_m ; 9 uses
   %i.ul = icmp samesign ult i32 %.4.i.us, 2
   %i.um = select i1 %i.ul, ptr @__const.quantize_row_iq1_m_impl.x_p, ptr @__const.quantize_row_iq1_m_impl.x_m ; 9 uses
-  %9 = insertelement <4 x i8> poison, i8 %7, i64 0
-  %10 = insertelement <4 x i8> %9, i8 %6, i64 1
-  %11 = shufflevector <2 x i8> %8, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %12 = shufflevector <4 x i8> %10, <4 x i8> %11, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.un = sext <4 x i8> %12 to <4 x i16>
-  %i.uo = zext <4 x i8> %i.uh to <4 x i16>
+  %i.un = sext <4 x i8> %i.uh to <4 x i16>
+  %i.uo = zext <4 x i8> %14 to <4 x i16>
   %i.up = shufflevector <4 x i16> %i.un, <4 x i16> %i.uo, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.uq = shl <8 x i16> %i.up, <i16 0, i16 2, i16 4, i16 6, i16 8, i16 10, i16 12, i16 14>
   %i.ur = call i16 @llvm.vector.reduce.or.v8i16(<8 x i16> %i.uq)

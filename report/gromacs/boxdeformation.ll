@@ -204,6 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN3gmx14BoxDeformation5applyEPNS_14BasicMatrix3x3IfEEl(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #15 align 2 personality ptr @__gxx_personality_v0 {
 .preheader75:
+  %.sroa.0 = alloca [3 x float], align 8          ; 14 uses
   %.sroa.14 = alloca [3 x float], align 8         ; 16 uses
   %.sroa.26 = alloca [3 x float], align 8         ; 21 uses
   %i.a = add nsw i64 %2, 1
@@ -214,11 +215,10 @@ define void @_ZN3gmx14BoxDeformation5applyEPNS_14BasicMatrix3x3IfEEl(ptr nofree 
   %i.f = load double, ptr %0, align 8, !tbaa !53
   %i.g = fmul double %i.f, %i.e
   %i.h = fptrunc double %i.g to float             ; 9 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.14)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26)
-  %.sroa.0.0.copyload = load float, ptr %1, align 8
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(12) %1, i64 12, i1 false), !tbaa.struct !29
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.14, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.14.0..sroa_idx, i64 12, i1 false), !tbaa.struct !181
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -234,10 +234,10 @@ bb.a:                                             ; preds = %.preheader75
   %i.n = load ptr, ptr %i.k, align 8, !tbaa !27
   %i.o = load float, ptr %i.n, align 4, !tbaa !30
   %i.p = tail call float @llvm.fmuladd.f32(float %i.h, float %i.l, float %i.o)
+  store float %i.p, ptr %.sroa.0, align 8, !tbaa !30
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader75, %bb.a
-  %.sroa.0.0 = phi float [ %i.p, %bb.a ], [ %.sroa.0.0.copyload, %.preheader75 ] ; 7 uses
   %i.q = getelementptr i8, ptr %i.j, i64 4
   %i.r = load float, ptr %i.q, align 4, !tbaa !30 ; 2 uses
   %i.s = fcmp une float %i.r, 0.000000e+00
@@ -248,11 +248,11 @@ bb.c:                                             ; preds = %bb.b
   %i.u = getelementptr i8, ptr %i.t, i64 4
   %i.v = load float, ptr %i.u, align 4, !tbaa !30
   %i.w = tail call float @llvm.fmuladd.f32(float %i.h, float %i.r, float %i.v)
-  %.sroa.6.4.vec.insert = insertelement <2 x float> %.sroa.6.0.copyload, float %i.w, i64 0
+  %.sroa.0.4..sroa_idx259 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  store float %i.w, ptr %.sroa.0.4..sroa_idx259, align 4, !tbaa !30
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.6.0 = phi <2 x float> [ %.sroa.6.4.vec.insert, %bb.c ], [ %.sroa.6.0.copyload, %bb.b ] ; 2 uses
   %i.x = getelementptr i8, ptr %i.j, i64 8
   %i.y = load float, ptr %i.x, align 4, !tbaa !30 ; 2 uses
   %i.z = fcmp une float %i.y, 0.000000e+00
@@ -263,11 +263,11 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = getelementptr i8, ptr %i.aa, i64 8
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !30
   %i.ad = tail call float @llvm.fmuladd.f32(float %i.h, float %i.y, float %i.ac)
-  %.sroa.6.8.vec.insert = insertelement <2 x float> %.sroa.6.0, float %i.ad, i64 1
+  %.sroa.0.8..sroa_idx261 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
+  store float %i.ad, ptr %.sroa.0.8..sroa_idx261, align 8, !tbaa !30
   br label %.preheader75.1
 
 .preheader75.1:                                   ; preds = %bb.e, %bb.d
-  %.sroa.6.1 = phi <2 x float> [ %.sroa.6.8.vec.insert, %bb.e ], [ %.sroa.6.0, %bb.d ] ; 7 uses
   %i.ae = getelementptr i8, ptr %i.j, i64 12
   %i.af = load float, ptr %i.ae, align 4, !tbaa !30 ; 2 uses
   %i.ag = fcmp une float %i.af, 0.000000e+00
@@ -359,11 +359,12 @@ bb.o:                                             ; preds = %bb.n
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !27 ; 3 uses
   %i.bw = getelementptr i8, ptr %i.bv, i64 12     ; 3 uses
-  %i.bx = load float, ptr %i.bw, align 4, !tbaa !30
-  %i.by = fmul float %.sroa.0.0, 5.000000e-01     ; 4 uses
+  %3 = load float, ptr %i.bw, align 4, !tbaa !30
+  %i.bx = load float, ptr %.sroa.0, align 8, !tbaa !30 ; 5 uses
+  %i.by = fmul float %i.bx, 5.000000e-01          ; 4 uses
   %.sroa.14.0..sroa.14.12. = load <2 x float>, ptr %.sroa.14, align 8, !tbaa !30 ; 3 uses
   %i.bz = extractelement <2 x float> %.sroa.14.0..sroa.14.12., i64 0 ; 2 uses
-  %i.ca = fsub float %i.bz, %i.bx                 ; 2 uses
+  %i.ca = fsub float %i.bz, %3                    ; 2 uses
   %i.cb = fcmp ogt float %i.ca, %i.by
   %i.cc = extractelement <2 x float> %.sroa.14.0..sroa.14.12., i64 1
   br i1 %i.cb, label %.lr.ph, label %.preheader
@@ -383,36 +384,34 @@ bb.o:                                             ; preds = %bb.n
   %i.ci = load float, ptr %i.ch, align 4, !tbaa !30
   %i.cj = fmul float %i.cf, 5.000000e-01          ; 2 uses
   %.sroa.26.4..sroa_idx248 = getelementptr inbounds nuw i8, ptr %.sroa.26, i64 4
-  %.sroa.26.4..sroa.26.28..a = load float, ptr %.sroa.26.4..sroa_idx248, align 4, !tbaa !30 ; 3 uses
+  %.sroa.26.4..sroa.26.28..a = load float, ptr %.sroa.26.4..sroa_idx248, align 4, !tbaa !30 ; 2 uses
   %i.ck = fsub float %.sroa.26.4..sroa.26.28..a, %i.ci ; 2 uses
   %i.cl = fcmp ogt float %i.ck, %i.cj
   %.sroa.26.0..sroa.26.24..pre120.pre = load float, ptr %.sroa.26, align 8, !tbaa !30 ; 2 uses
   br i1 %i.cl, label %.lr.ph.1, label %.preheader.1
 
 .lr.ph:                                           ; preds = %.preheader74
-  %.sroa.6.8.vec.extract = extractelement <2 x float> %.sroa.6.1, i64 1
-  %.sroa.14.8..sroa_idx255.a = getelementptr inbounds nuw i8, ptr %.sroa.14, i64 8
+  %.sroa.0.0..sroa.0.0. = load <2 x float>, ptr %.sroa.0, align 8, !tbaa !30
+  %.sroa.14.8..sroa_idx255.a = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
   %.sroa.14.8..sroa.14.20..pre108.a = load float, ptr %.sroa.14.8..sroa_idx255.a, align 8, !tbaa !30
-  %3 = load float, ptr %i.bw, align 4, !tbaa !30
-  %4 = insertelement <2 x float> poison, float %.sroa.0.0, i64 0
-  %5 = shufflevector <2 x float> %4, <2 x float> %.sroa.6.1, <2 x i32> <i32 0, i32 2>
+  %.sroa.14.8..sroa_idx252 = getelementptr inbounds nuw i8, ptr %.sroa.14, i64 8
+  %.sroa.14.8..sroa.14.20..pre108 = load float, ptr %.sroa.14.8..sroa_idx252, align 8, !tbaa !30
+  %4 = load float, ptr %i.bw, align 4, !tbaa !30
   br label %bb.t
 
 .lr.ph.1:                                         ; preds = %.loopexit
   %.sroa.14.8..sroa_idx257 = getelementptr inbounds nuw i8, ptr %.sroa.14, i64 8
   %.sroa.14.8..sroa.14.20..pre115 = load float, ptr %.sroa.14.8..sroa_idx257, align 8, !tbaa !30
-  %.sroa.26.8..sroa_idx249.a = getelementptr inbounds nuw i8, ptr %.sroa.26, i64 8
-  %.sroa.26.8..sroa.26.32..pre116 = load float, ptr %.sroa.26.8..sroa_idx249.a, align 8, !tbaa !30
+  %.sroa.26.8..sroa_idx249.a = getelementptr inbounds nuw i8, ptr %.sroa.26, i64 4
+  %.sroa.26.4..sroa.26.28. = load <2 x float>, ptr %.sroa.26.8..sroa_idx249.a, align 4, !tbaa !30
   %i.cm = load float, ptr %i.ch, align 4, !tbaa !30
-  %6 = insertelement <2 x float> poison, float %.sroa.26.4..sroa.26.28..a, i64 0
-  %7 = insertelement <2 x float> %6, float %.sroa.26.8..sroa.26.32..pre116, i64 1
   %i.cn = insertelement <2 x float> poison, float %i.cf, i64 0
   %i.co = insertelement <2 x float> %i.cn, float %.sroa.14.8..sroa.14.20..pre115, i64 1
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.lr.ph.1
   %i.cp = phi float [ %i.cr, %bb.p ], [ %.sroa.26.0..sroa.26.24..pre120.pre, %.lr.ph.1 ]
-  %i.cq = phi <2 x float> [ %i.cs, %bb.p ], [ %7, %.lr.ph.1 ]
+  %i.cq = phi <2 x float> [ %i.cs, %bb.p ], [ %.sroa.26.4..sroa.26.28., %.lr.ph.1 ]
   %i.cr = fsub float %i.cp, %i.ce                 ; 3 uses
   %i.cs = fsub <2 x float> %i.cq, %i.co           ; 3 uses
   %i.ct = extractelement <2 x float> %i.cs, i64 0 ; 2 uses
@@ -471,6 +470,8 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph94.1
   br i1 %i.dp, label %.lr.ph.1.1, label %.preheader.1.1
 
 .lr.ph.1.1:                                       ; preds = %.loopexit.1
+  %.sroa.0.4..sroa_idx258 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  %.sroa.0.4..sroa.0.4.219 = load <2 x float>, ptr %.sroa.0.4..sroa_idx258, align 4, !tbaa !30
   %.sroa.26.8..sroa_idx251 = getelementptr inbounds nuw i8, ptr %.sroa.26, i64 8
   %.sroa.26.8..sroa.26.32..pre123 = load float, ptr %.sroa.26.8..sroa_idx251, align 8, !tbaa !30
   %i.dq = load float, ptr %i.cg, align 4, !tbaa !30
@@ -481,8 +482,8 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph94.1
 bb.r:                                             ; preds = %bb.r, %.lr.ph.1.1
   %i.dt = phi float [ %i.dv, %bb.r ], [ %i.dm, %.lr.ph.1.1 ]
   %i.du = phi <2 x float> [ %i.dw, %bb.r ], [ %i.ds, %.lr.ph.1.1 ]
-  %i.dv = fsub float %i.dt, %.sroa.0.0            ; 4 uses
-  %i.dw = fsub <2 x float> %i.du, %.sroa.6.1      ; 3 uses
+  %i.dv = fsub float %i.dt, %i.bx                 ; 4 uses
+  %i.dw = fsub <2 x float> %i.du, %.sroa.0.4..sroa.0.4.219 ; 3 uses
   %i.dx = fsub float %i.dv, %i.dq                 ; 2 uses
   %i.dy = fcmp ogt float %i.dx, %i.by
   br i1 %i.dy, label %bb.r, label %.preheader.1.1.loopexit, !llvm.loop !179
@@ -502,21 +503,24 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.1.1
   br i1 %i.ec, label %.lr.ph94.1.1, label %.loopexit.1.1
 
 .lr.ph94.1.1:                                     ; preds = %.preheader.1.1
-  %.sroa.6.8.vec.extract227 = extractelement <2 x float> %.sroa.6.1, i64 1
+  %.sroa.0.4..sroa_idx260 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  %.sroa.0.4..sroa.0.4..pre124 = load float, ptr %.sroa.0.4..sroa_idx260, align 4, !tbaa !30
+  %.sroa.0.8..sroa_idx263 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
+  %.sroa.0.8..sroa.0.8..pre125 = load float, ptr %.sroa.0.8..sroa_idx263, align 8, !tbaa !30
   %.sroa.26.8..sroa_idx252 = getelementptr inbounds nuw i8, ptr %.sroa.26, i64 8
   %.sroa.26.8..sroa.26.32..pre126 = load float, ptr %.sroa.26.8..sroa_idx252, align 8, !tbaa !30
   %i.ed = load float, ptr %i.cg, align 4, !tbaa !30
   %i.ee = insertelement <2 x float> poison, float %i.eb, i64 0
   %i.ef = insertelement <2 x float> %i.ee, float %i.ea, i64 1
-  %i.eg = insertelement <2 x float> poison, float %.sroa.0.0, i64 0
-  %8 = shufflevector <2 x float> %i.eg, <2 x float> %.sroa.6.1, <2 x i32> <i32 0, i32 2>
+  %i.eg = insertelement <2 x float> poison, float %i.bx, i64 0
+  %5 = insertelement <2 x float> %i.eg, float %.sroa.0.4..sroa.0.4..pre124, i64 1
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.s, %.lr.ph94.1.1
   %i.eh = phi float [ %i.ek, %bb.s ], [ %.sroa.26.8..sroa.26.32..pre126, %.lr.ph94.1.1 ]
   %i.ei = phi <2 x float> [ %i.ej, %bb.s ], [ %i.ef, %.lr.ph94.1.1 ]
-  %i.ej = fadd <2 x float> %8, %i.ei              ; 3 uses
-  %i.ek = fadd float %.sroa.6.8.vec.extract227, %i.eh ; 2 uses
+  %i.ej = fadd <2 x float> %5, %i.ei              ; 3 uses
+  %i.ek = fadd float %.sroa.0.8..sroa.0.8..pre125, %i.eh ; 2 uses
   %i.el = extractelement <2 x float> %i.ej, i64 0
   %i.em = fsub float %i.el, %i.ed
   %i.en = fcmp olt float %i.em, %i.eq
@@ -529,14 +533,13 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph94.1.1
   br label %.loopexit.1.1
 
 .loopexit.1.1:                                    ; preds = %.loopexit.1.1.loopexit, %.preheader.1.1
-  store float %.sroa.0.0, ptr %1, align 8
-  %.sroa.6.0..sroa_idx218 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store <2 x float> %.sroa.6.1, ptr %.sroa.6.0..sroa_idx218, align 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %1, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false), !tbaa.struct !29
   %.sroa.14.0..sroa_idx228 = getelementptr inbounds nuw i8, ptr %1, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.14.0..sroa_idx228, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.14, i64 12, i1 false), !tbaa.struct !181
   %.sroa.26.0..sroa_idx235 = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.26.0..sroa_idx235, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.26, i64 12, i1 false), !tbaa.struct !182
   store ptr %1, ptr %i.bu, align 8, !tbaa !183
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.26)
   ret void
@@ -552,11 +555,13 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph94.1.1
   %.pre-phi = phi float [ %i.ca, %.preheader74 ], [ %i.fa, %.preheader.loopexit ]
   %.pre113 = phi float [ %i.cc, %.preheader74 ], [ %i.eo, %.preheader.loopexit ] ; 2 uses
   %i.ep = phi float [ %i.bz, %.preheader74 ], [ %i.ez, %.preheader.loopexit ] ; 2 uses
-  %i.eq = fmul float %.sroa.0.0, -5.000000e-01    ; 4 uses
+  %i.eq = fmul float %i.bx, -5.000000e-01         ; 4 uses
   %i.er = fcmp olt float %.pre-phi, %i.eq
   br i1 %i.er, label %.lr.ph94, label %.loopexit
 
 .lr.ph94:                                         ; preds = %.preheader
+  %.sroa.0.4..sroa_idx257 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
+  %.sroa.0.4..sroa.0.4. = load <2 x float>, ptr %.sroa.0.4..sroa_idx257, align 4, !tbaa !30
   %.sroa.14.8..sroa_idx256 = getelementptr inbounds nuw i8, ptr %.sroa.14, i64 8
   %.sroa.14.8..sroa.14.20..pre112 = load float, ptr %.sroa.14.8..sroa_idx256, align 8, !tbaa !30
   %i.es = load float, ptr %i.bw, align 4, !tbaa !30
@@ -565,20 +570,20 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph94.1.1
   br label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph, %bb.t
-  %i.ev = phi float [ %.sroa.14.8..sroa.14.20..pre108.a, %.lr.ph ], [ %i.ey, %bb.t ]
+  %i.ev = phi float [ %.sroa.14.8..sroa.14.20..pre108, %.lr.ph ], [ %i.ey, %bb.t ]
   %i.ew = phi <2 x float> [ %.sroa.14.0..sroa.14.12., %.lr.ph ], [ %i.ex, %bb.t ]
-  %i.ex = fsub <2 x float> %i.ew, %5              ; 4 uses
-  %i.ey = fsub float %i.ev, %.sroa.6.8.vec.extract ; 2 uses
+  %i.ex = fsub <2 x float> %i.ew, %.sroa.0.0..sroa.0.0. ; 4 uses
+  %i.ey = fsub float %i.ev, %.sroa.14.8..sroa.14.20..pre108.a ; 2 uses
   %i.ez = extractelement <2 x float> %i.ex, i64 0 ; 2 uses
-  %i.fa = fsub float %i.ez, %3                    ; 2 uses
+  %i.fa = fsub float %i.ez, %4                    ; 2 uses
   %i.fb = fcmp ogt float %i.fa, %i.by
   br i1 %i.fb, label %bb.t, label %.preheader.loopexit, !llvm.loop !179
 
 bb.u:                                             ; preds = %.lr.ph94, %bb.u
   %i.fc = phi float [ %i.ep, %.lr.ph94 ], [ %i.fe, %bb.u ]
   %i.fd = phi <2 x float> [ %i.eu, %.lr.ph94 ], [ %i.ff, %bb.u ]
-  %i.fe = fadd float %.sroa.0.0, %i.fc            ; 4 uses
-  %i.ff = fadd <2 x float> %.sroa.6.1, %i.fd      ; 3 uses
+  %i.fe = fadd float %i.bx, %i.fc                 ; 4 uses
+  %i.ff = fadd <2 x float> %.sroa.0.4..sroa.0.4., %i.fd ; 3 uses
   %i.fg = fsub float %i.fe, %i.es
   %i.fh = fcmp olt float %i.fg, %i.eq
   br i1 %i.fh, label %bb.u, label %.loopexit.loopexit, !llvm.loop !180

@@ -202,17 +202,18 @@ bb.a:
   %10 = alloca %"class.cv::_OutputArray", align 8 ; 6 uses
   %11 = alloca %"class.cv::_InputArray", align 8  ; 7 uses
   %12 = alloca %"class.cv::_OutputArray", align 8 ; 6 uses
-  %i.a = load i32, ptr %1, align 8, !tbaa !41     ; 4 uses
+  %i.a = load i32, ptr %1, align 8, !tbaa !41     ; 3 uses
   %i.b = and i32 %i.a, 4095
   %i.c = icmp eq i32 %i.b, %2
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i32 %i.a, ptr %0, align 8, !tbaa !41
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %13 = load <2 x i32>, ptr %i.e, align 4, !tbaa !23
-  store <2 x i32> %13, ptr %i.d, align 4, !tbaa !23
+  %13 = load <2 x i32>, ptr %1, align 8, !tbaa !23
+  store <2 x i32> %13, ptr %0, align 8, !tbaa !23
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %14 = load i32, ptr %i.e, align 8, !tbaa !30
+  store i32 %14, ptr %i.d, align 8, !tbaa !30
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load i64, ptr %i.g, align 8, !tbaa !31

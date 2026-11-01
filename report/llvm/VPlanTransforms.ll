@@ -205,7 +205,7 @@ _ZN4llvm19VPWidenMemoryRecipe7setMaskEPNS_7VPValueE.exit: ; preds = %_ZN4llvm19V
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK16RemoveMask_matchIPN4llvm7VPValueES2_E5matchIS1_EEbPT_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %2 = alloca %"struct.llvm::PatternMatchHelpers::match_combine_or", align 8 ; 8 uses
+  %2 = alloca %"struct.llvm::PatternMatchHelpers::match_combine_or", align 8 ; 11 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !3410   ; 3 uses
   %i.b = icmp eq ptr %1, %i.a
   br i1 %i.b, label %bb.b, label %bb.c
@@ -220,17 +220,21 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !3411, !nonnull !255, !align !432 ; 2 uses
+  %3 = ptrtoint ptr %i.f to i64                   ; 2 uses
+  %4 = ptrtoint ptr %i.a to i64                   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i32 64, ptr %i.g, align 8, !tbaa !392, !alias.scope !3412
   store i64 0, ptr %2, align 8, !tbaa !155, !alias.scope !3412
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i8 0, ptr %i.h, align 8, !tbaa !394, !alias.scope !3412
-  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %3 = insertelement <2 x ptr> poison, ptr %i.f, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %i.a, i64 1
-  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %6 = ptrtoint <4 x ptr> %5 to <4 x i64>
-  store <4 x i64> %6, ptr %i.i, align 8, !alias.scope !3413
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store i8 0, ptr %5, align 8, !tbaa !394, !alias.scope !3412
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24
+  store i64 %3, ptr %i.h, align 8, !tbaa !396, !alias.scope !3412
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store i64 %4, ptr %i.i, align 8, !tbaa !157, !alias.scope !3412
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 40
+  store i64 %3, ptr %6, align 8, !alias.scope !3413
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 48
+  store i64 %4, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !3413
   %i.j = tail call noundef ptr @_ZNK4llvm7VPValue17getDefiningRecipeEv(ptr noundef nonnull align 8 dereferenceable(48) %1) #25 ; 7 uses
   %.not.i = icmp eq ptr %i.j, null
   br i1 %.not.i, label %bb.k, label %bb.d

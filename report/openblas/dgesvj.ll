@@ -202,13 +202,13 @@ bb.ep:                                            ; preds = %bb.gj
   %.315471821 = phi i32 [ %.41548, %bb.ep ], [ 0, %bb.eo ] ; 2 uses
   %indvars.iv.next1960 = add nsw i64 %indvars.iv1959, 1 ; 22 uses
   %i.apy = getelementptr [8 x i8], ptr %7, i64 %indvars.iv1959 ; 6 uses
-  %i.apz = load double, ptr %i.apy, align 8, !tbaa !45 ; 9 uses
+  %i.apz = load double, ptr %i.apy, align 8, !tbaa !45 ; 10 uses
   store double %i.apz, ptr %i.g, align 8, !tbaa !45
   %i.aqa = fcmp ogt double %i.apz, 0.000000e+00
   br i1 %i.aqa, label %bb.eq, label %bb.gg
 
 bb.eq:                                            ; preds = %.lr.ph1831
-  %i.aqb = load double, ptr %i.f, align 8, !tbaa !45 ; 8 uses
+  %i.aqb = load double, ptr %i.f, align 8, !tbaa !45 ; 9 uses
   %i.aqc = fcmp ult double %i.apz, 1.000000e+00
   %i.aqd = fcmp ult double %i.aqb, %i.apz         ; 2 uses
   br i1 %i.aqc, label %bb.eu, label %bb.er
@@ -274,10 +274,11 @@ bb.et:                                            ; preds = %bb.er
 
 bb.eu:                                            ; preds = %bb.eq
   %i.arz = insertelement <2 x double> poison, double %i.apz, i64 0
-  %i.asa = insertelement <2 x double> %i.arz, double %i.aqb, i64 1 ; 2 uses
+  %i.asa = insertelement <2 x double> %i.arz, double %i.aqb, i64 1
   %i.asb = fdiv <2 x double> %i.asa, %i.tf
-  %14 = shufflevector <2 x double> %i.asa, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.asc = fcmp ole <2 x double> %14, %i.asb      ; 2 uses
+  %14 = insertelement <2 x double> poison, double %i.aqb, i64 0
+  %15 = insertelement <2 x double> %14, double %i.apz, i64 1
+  %i.asc = fcmp ole <2 x double> %15, %i.asb      ; 2 uses
   %i.asd = extractelement <2 x i1> %i.asc, i64 0
   %i.ase = extractelement <2 x i1> %i.asc, i64 1
   %.21533.in = select i1 %i.aqd, i1 %i.ase, i1 %i.asd ; 2 uses

@@ -205,9 +205,7 @@ bb.de:                                            ; preds = %bb.dd
   %i.ry = getelementptr inbounds nuw i8, ptr %0, i64 1960 ; 2 uses
   %i.rz = getelementptr inbounds nuw i8, ptr %0, i64 1968 ; 2 uses
   %i.sa = load i32, ptr %i.rz, align 8, !tbaa !2284
-  %2 = sub nuw nsw i32 14, %i.ri
   %i.sb = getelementptr inbounds nuw i8, ptr %0, i64 1948
-  %3 = load i32, ptr %i.sb, align 4, !tbaa !2285
   %i.sc = lshr exact i32 16384, %i.ri             ; 2 uses
   %i.sd = insertelement <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, i32 %i.ri, i64 1
   %i.se = lshr exact <4 x i32> <i32 1, i32 16384, i32 poison, i32 poison>, %i.sd
@@ -220,11 +218,14 @@ bb.de:                                            ; preds = %bb.dd
   store <2 x i32> %i.sk, ptr %i.ry, align 8, !tbaa !2274
   %i.sl = sdiv i32 %i.sa, %i.sc
   store i32 %i.sl, ptr %i.rz, align 8, !tbaa !2284
-  %4 = lshr i32 %i.rp, %2
-  %i.sm = insertelement <4 x i32> poison, i32 %4, i64 0
+  %.scalar = sub nsw i32 14, %i.ri
+  %2 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.scalar, i64 0
+  %3 = load i32, ptr %i.sb, align 4, !tbaa !2285
+  %i.sm = insertelement <4 x i32> poison, i32 %i.rp, i64 0
   %i.sn = insertelement <4 x i32> %i.sm, i32 %3, i64 1
   %i.so = shufflevector <4 x i32> %i.sn, <4 x i32> %i.sg, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.sp = sdiv <4 x i32> %i.so, %i.sf
+  %4 = lshr <4 x i32> %i.so, %2
+  %i.sp = sdiv <4 x i32> %4, %i.sf
   store <4 x i32> %i.sp, ptr %i.ro, align 8, !tbaa !2274
   br label %.thread596
 

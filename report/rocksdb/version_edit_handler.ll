@@ -204,10 +204,10 @@ bb.a:
   %i.at = getelementptr inbounds nuw i8, ptr %9, i64 7424
   %i.au = getelementptr inbounds nuw i8, ptr %9, i64 7360
   %i.av = getelementptr inbounds nuw i8, ptr %9, i64 7432
-  %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 1 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 1 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 2
   %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 7 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 8 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %10, i64 5 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 5 ; 9 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
@@ -610,17 +610,18 @@ bb.aj:                                            ; preds = %bb.g, %bb.c, %bb.f
   br i1 %i.fa, label %bb.ak, label %_ZN7rocksdb6StatusaSERKS0_.exit
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.fb = load i8, ptr %2, align 8, !tbaa !62     ; 2 uses
+  %i.fb = load i8, ptr %2, align 8, !tbaa !62
   %i.fc = icmp eq i8 %i.fb, 0
   %.not.i = icmp eq ptr %8, %2
   %or.cond = or i1 %.not.i, %i.fc
   br i1 %or.cond, label %_ZN7rocksdb6StatusaSERKS0_.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  store i8 %i.fb, ptr %8, align 8, !tbaa !62
-  %i.fd = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %21 = load <4 x i8>, ptr %i.fd, align 1, !tbaa !34
-  store <4 x i8> %21, ptr %i.aw, align 1, !tbaa !34
+  %21 = load <4 x i8>, ptr %2, align 8, !tbaa !34
+  store <4 x i8> %21, ptr %8, align 8, !tbaa !34
+  %i.fd = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %22 = load i8, ptr %i.fd, align 4, !tbaa !128, !range !126, !noundef !127
+  store i8 %22, ptr %i.az, align 4, !tbaa !128
   %i.fe = getelementptr inbounds nuw i8, ptr %2, i64 5
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !129
   store i8 %i.ff, ptr %i.bb, align 1, !tbaa !129

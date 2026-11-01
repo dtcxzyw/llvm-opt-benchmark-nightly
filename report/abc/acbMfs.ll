@@ -205,17 +205,19 @@ Vec_QuePrio.exit.thread.i.i:                      ; preds = %bb.bq
   %i.qu = or disjoint i32 %.049.us.i.i, 1         ; 3 uses
   %i.qv = icmp slt i32 %i.qu, %i.qt
   %i.qw = sext i32 %.049.us.i.i to i64
-  %i.qx = getelementptr inbounds [4 x i8], ptr %i.pw, i64 %i.qw
-  %i.qy = load i32, ptr %i.qx, align 4, !tbaa !30 ; 3 uses
+  %i.qx = getelementptr inbounds [4 x i8], ptr %i.pw, i64 %i.qw ; 2 uses
+  %i.qy = load i32, ptr %i.qx, align 4, !tbaa !30 ; 2 uses
   br i1 %i.qv, label %Vec_QuePrio.exit44.us.i.i, label %Vec_QuePrio.exit46.us.i.i
 
 Vec_QuePrio.exit44.us.i.i:                        ; preds = %.lr.ph.split.us.i.i
-  %3 = sitofp i32 %i.qy to float
   %i.qz = sext i32 %i.qu to i64
   %i.ra = getelementptr inbounds [4 x i8], ptr %i.pw, i64 %i.qz
-  %i.rb = load i32, ptr %i.ra, align 4, !tbaa !30 ; 2 uses
-  %4 = sitofp i32 %i.rb to float
-  %i.rc = fcmp olt float %3, %4                   ; 2 uses
+  %i.rb = load i32, ptr %i.ra, align 4, !tbaa !30
+  %3 = load <2 x i32>, ptr %i.qx, align 4, !tbaa !30
+  %4 = sitofp <2 x i32> %3 to <2 x float>         ; 2 uses
+  %5 = extractelement <2 x float> %4, i64 0
+  %6 = extractelement <2 x float> %4, i64 1
+  %i.rc = fcmp olt float %5, %6                   ; 2 uses
   %spec.select.us.i.i = select i1 %i.rc, i32 %i.qu, i32 %.049.us.i.i
   %i.rd = select i1 %i.rc, i32 %i.rb, i32 %i.qy
   br label %Vec_QuePrio.exit46.us.i.i

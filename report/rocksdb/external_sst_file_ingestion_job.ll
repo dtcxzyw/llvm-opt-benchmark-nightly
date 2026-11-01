@@ -205,7 +205,7 @@ bb.a:
   %73 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %74 = alloca %"struct.rocksdb::ReadOptions", align 8 ; 19 uses
   %75 = alloca %"struct.rocksdb::FileOptions", align 8 ; 28 uses
-  %76 = alloca %"class.rocksdb::IOStatus", align 8 ; 8 uses
+  %76 = alloca %"class.rocksdb::IOStatus", align 8 ; 9 uses
   %77 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %78 = alloca %"class.rocksdb::Status", align 8  ; 6 uses
   %79 = alloca %"class.rocksdb::Slice", align 8   ; 6 uses
@@ -608,8 +608,8 @@ bb.fv:                                            ; preds = %bb.fu
   %i.aiy = getelementptr inbounds nuw i8, ptr %1, i64 9792 ; 4 uses
   %i.aiz = getelementptr inbounds nuw i8, ptr %1, i64 9864
   %i.aja = getelementptr inbounds nuw i8, ptr %1, i64 17456
-  %i.ajb = getelementptr inbounds nuw i8, ptr %76, i64 1
-  %i.ajc = getelementptr inbounds nuw i8, ptr %25, i64 1
+  %i.ajb = getelementptr inbounds nuw i8, ptr %76, i64 4
+  %i.ajc = getelementptr inbounds nuw i8, ptr %25, i64 4
   %i.ajd = getelementptr inbounds nuw i8, ptr %76, i64 5
   %i.aje = getelementptr inbounds nuw i8, ptr %25, i64 5
   %i.ajf = getelementptr inbounds nuw i8, ptr %76, i64 8 ; 3 uses
@@ -857,14 +857,15 @@ _ZNK7rocksdb13FileSystemPtr3getEv.exit575:        ; preds = %_ZNSt7__cxx1112basi
           to label %bb.gk unwind label %bb.gr
 
 bb.gk:                                            ; preds = %_ZNK7rocksdb13FileSystemPtr3getEv.exit575
-  %i.amh = load i8, ptr %76, align 8, !tbaa !190  ; 2 uses
+  %i.amh = load i8, ptr %76, align 8, !tbaa !190
   %i.ami = icmp eq i8 %i.amh, 0                   ; 2 uses
   br i1 %i.ami, label %bb.gu, label %bb.gl
 
 bb.gl:                                            ; preds = %bb.gk
-  store i8 %i.amh, ptr %25, align 8, !tbaa !190
-  %123 = load <4 x i8>, ptr %i.ajb, align 1, !tbaa !45
-  store <4 x i8> %123, ptr %i.ajc, align 1, !tbaa !45
+  %123 = load <4 x i8>, ptr %76, align 8, !tbaa !45
+  store <4 x i8> %123, ptr %25, align 8, !tbaa !45
+  %124 = load i8, ptr %i.ajb, align 4, !tbaa !187, !range !174, !noundef !175
+  store i8 %124, ptr %i.ajc, align 4, !tbaa !187
   %i.amj = load i8, ptr %i.ajd, align 1, !tbaa !188
   store i8 %i.amj, ptr %i.aje, align 1, !tbaa !188
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #27

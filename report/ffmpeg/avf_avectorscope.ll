@@ -204,38 +204,36 @@ bb.ad:                                            ; preds = %bb.ac
   %i.jp = sext i32 %i.jo to i64
   %i.jq = load double, ptr %i.ah, align 8, !tbaa !62
   %i.jr = fcmp nsz ogt double %i.jq, 1.000000e+00
-  %1 = load i32, ptr %i.fg, align 4, !tbaa !48    ; 2 uses
   br i1 %i.jr, label %bb.ae, label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.js = extractelement <2 x i32> %i.jk, i64 0   ; 2 uses
+  %1 = load i32, ptr %i.fg, align 4, !tbaa !48
+  %i.js = extractelement <2 x i32> %i.jk, i64 0
   %.not.i.i = icmp ugt i32 %1, %i.js
   br i1 %.not.i.i, label %bb.af, label %draw_dot.exit.i
 
 bb.af:                                            ; preds = %bb.ae
   %i.jt = load i32, ptr %i.fi, align 8, !tbaa !49
-  %i.ju = extractelement <2 x i32> %i.jk, i64 1   ; 2 uses
+  %i.ju = extractelement <2 x i32> %i.jk, i64 1
   %.not57.i.i = icmp ugt i32 %i.jt, %i.ju
   br i1 %.not57.i.i, label %bb.ah, label %draw_dot.exit.i
 
 bb.ag:                                            ; preds = %bb.ad
-  %2 = add nsw i32 %1, -1
-  %3 = extractelement <2 x i32> %i.jk, i64 0
-  %..i.i = call i32 @llvm.umin.i32(i32 %3, i32 %2)
-  %4 = load i32, ptr %i.fi, align 8, !tbaa !49
-  %5 = add nsw i32 %4, -1
-  %6 = extractelement <2 x i32> %i.jk, i64 1
-  %7 = call i32 @llvm.umin.i32(i32 %6, i32 %5)
+  %2 = load <2 x i32>, ptr %i.fi, align 8, !tbaa !34
+  %3 = add nsw <2 x i32> %2, splat (i32 -1)
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %5 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.jk, <2 x i32> %4)
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %.045.i.i = phi i32 [ %i.js, %bb.af ], [ %..i.i, %bb.ag ]
-  %.0.i.i = phi i32 [ %i.ju, %bb.af ], [ %7, %bb.ag ]
-  %8 = load ptr, ptr %i.jm, align 8, !tbaa !33
-  %i.jv = zext i32 %.045.i.i to i64
+  %6 = phi <2 x i32> [ %i.jk, %bb.af ], [ %5, %bb.ag ] ; 2 uses
+  %7 = load ptr, ptr %i.jm, align 8, !tbaa !33
+  %8 = extractelement <2 x i32> %6, i64 0
+  %i.jv = zext i32 %8 to i64
   %i.jw = mul nsw i64 %i.jv, %i.jp
-  %i.jx = getelementptr inbounds i8, ptr %8, i64 %i.jw
-  %i.jy = shl i32 %.0.i.i, 2
+  %i.jx = getelementptr inbounds i8, ptr %7, i64 %i.jw
+  %9 = extractelement <2 x i32> %6, i64 1
+  %i.jy = shl i32 %9, 2
   %i.jz = zext i32 %i.jy to i64
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jx, i64 %i.jz ; 5 uses
   %i.kb = load i8, ptr %i.ka, align 1, !tbaa !50
@@ -636,6 +634,9 @@ declare <2 x float> @llvm.log.v2f32(<2 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10

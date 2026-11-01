@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %_ZNK12btSolverBody3
   %i.hv = tail call noundef nonnull align 8 dereferenceable(160) ptr @_ZN35btSequentialImpulseConstraintSolver30addTorsionalFrictionConstraintERK9btVector3iiiR15btManifoldPointfS2_S2_P17btCollisionObjectS6_fff(ptr noundef nonnull align 8 dereferenceable(408) %0, ptr noundef nonnull align 4 dereferenceable(16) %i.hd, i32 noundef %i.h, i32 noundef %i.j, i32 noundef %i.cn, ptr nonnull align 8 poison, float noundef %i.hu, ptr nonnull align 4 poison, ptr nonnull align 4 poison, ptr nonnull poison, ptr nonnull poison, float poison, float noundef 0.000000e+00, float noundef 0.000000e+00) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
-  %i.hw = load float, ptr %i.hl, align 8, !tbaa !60 ; 6 uses
+  %i.hw = load float, ptr %i.hl, align 8, !tbaa !60 ; 5 uses
   %i.hx = tail call noundef float @llvm.fabs.f32(float %i.hw)
   %i.hy = fcmp ogt float %i.hx, f0x3F3504F3
   br i1 %i.hy, label %bb.o, label %bb.p
@@ -230,27 +230,28 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.io = load float, ptr %i.hd, align 8, !tbaa !60 ; 3 uses
-  %7 = load float, ptr %i.hf, align 4, !tbaa !60  ; 3 uses
-  %8 = fmul float %7, %7
+  %7 = load <2 x float>, ptr %i.hf, align 4, !tbaa !60 ; 3 uses
+  %foldExtExtBinop322 = fmul <2 x float> %7, %7
+  %8 = extractelement <2 x float> %foldExtExtBinop322, i64 0
   %i.ip = tail call float @llvm.fmuladd.f32(float %i.io, float %i.io, float %8) ; 2 uses
   %sqrt43.i = tail call float @llvm.sqrt.f32(float %i.ip)
   %i.iq = fdiv float 1.000000e+00, %sqrt43.i      ; 3 uses
-  %9 = fneg float %7
-  %10 = fmul float %i.iq, %9                      ; 2 uses
-  %i.ir = fmul float %i.io, %i.iq                 ; 2 uses
-  %11 = fneg float %i.hw
-  %12 = insertelement <2 x float> poison, float %11, i64 0
+  %9 = fneg <2 x float> %7                        ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %i.ir = fmul float %i.iq, %10                   ; 2 uses
+  %11 = fmul float %i.io, %i.iq                   ; 2 uses
+  %12 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.is = insertelement <2 x float> %12, float %i.hw, i64 1
-  %i.it = insertelement <2 x float> poison, float %i.ir, i64 0
-  %i.iu = insertelement <2 x float> %i.it, float %10, i64 1
+  %i.it = insertelement <2 x float> poison, float %11, i64 0
+  %i.iu = insertelement <2 x float> %i.it, float %i.ir, i64 1
   %i.iv = fmul <2 x float> %i.is, %i.iu
   %i.iw = fmul float %i.ip, %i.iq
   %i.ix = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.iw, i64 0
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.iy = phi float [ %i.if, %bb.o ], [ %i.ir, %bb.p ] ; 2 uses
-  %i.iz = phi float [ 0.000000e+00, %bb.o ], [ %10, %bb.p ] ; 2 uses
+  %i.iy = phi float [ %i.if, %bb.o ], [ %11, %bb.p ] ; 2 uses
+  %i.iz = phi float [ 0.000000e+00, %bb.o ], [ %i.ir, %bb.p ] ; 2 uses
   %i.ja = phi <2 x float> [ %i.in, %bb.o ], [ %i.iv, %bb.p ] ; 3 uses
   %i.jb = phi <2 x float> [ %i.ii, %bb.o ], [ %i.ix, %bb.p ] ; 3 uses
   %i.jc = insertelement <2 x float> poison, float %i.iz, i64 0

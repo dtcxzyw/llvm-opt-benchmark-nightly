@@ -205,7 +205,7 @@ bb.a:
   %i.ac = alloca [40 x i8], align 8               ; 8 uses
   %i.ad = alloca [8 x i8], align 8                ; 8 uses
   %i.ae = alloca [8 x i8], align 8                ; 7 uses
-  %i.af = alloca [56 x i8], align 8               ; 18 uses
+  %i.af = alloca [56 x i8], align 8               ; 19 uses
   %i.ag = alloca [1 x i8], align 1                ; 3 uses
   %.sroa.9290 = alloca [40 x i8], align 8         ; 4 uses
   %i.ah = alloca [32 x i8], align 8               ; 5 uses
@@ -428,6 +428,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs
   br i1 %i.ct, label %.loopexit441, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135
+  %3 = getelementptr inbounds nuw i8, ptr %i.af, i64 40
   %i.cu = getelementptr inbounds nuw i8, ptr %i.af, i64 48
   %i.cv = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 1896
@@ -437,33 +438,32 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs
   %i.cz = getelementptr inbounds nuw i8, ptr %i.af, i64 16 ; 3 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 3 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.af, i64 36 ; 2 uses
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 3 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.af, i64 26 ; 4 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 4 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.af, i64 26 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.af, i64 28 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.af, i64 30 ; 2 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.af, i64 32 ; 2 uses
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.af, i64 32 ; 3 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.af, i64 34 ; 3 uses
   %.sroa.15340.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 38
   %i.di = getelementptr inbounds nuw i8, ptr %i.bc, i64 496
   br label %bb.z
 
 bb.z:                                             ; preds = %.noexc136, %.lr.ph.i
-  %.sroa.8305.0 = phi i16 [ 0, %.lr.ph.i ], [ %.sroa.6348.0.copyload, %.noexc136 ]
   %.sroa.7300.0 = phi i64 [ 0, %.lr.ph.i ], [ %i.fb, %.noexc136 ]
   %.sroa.6295.0 = phi ptr [ inttoptr (i64 2 to ptr), %.lr.ph.i ], [ %.sroa.4346.0.copyload, %.noexc136 ]
   %.sroa.0292.0 = phi i64 [ 0, %.lr.ph.i ], [ %.sroa.0345.0.copyload, %.noexc136 ]
   %.sroa.0.010.i = phi ptr [ %i.cp, %.lr.ph.i ], [ %i.dk, %.noexc136 ] ; 7 uses
-  %.sroa.2.09.i = phi i16 [ 0, %.lr.ph.i ], [ %i.gh, %.noexc136 ]
-  %i.dj = phi <8 x i16> [ <i16 undef, i16 0, i16 undef, i16 0, i16 undef, i16 0, i16 undef, i16 0>, %.lr.ph.i ], [ %i.go, %.noexc136 ]
+  %.sroa.2.09.i = phi i16 [ 0, %.lr.ph.i ], [ %i.gh, %.noexc136 ] ; 2 uses
+  %i.dj = phi <8 x i16> [ <i16 0, i16 undef, i16 0, i16 undef, i16 0, i16 undef, i16 0, i16 undef>, %.lr.ph.i ], [ %i.go, %.noexc136 ]
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 32 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !2866
   store i64 %.sroa.0292.0, ptr %i.af, align 8, !noalias !2867
   store ptr %.sroa.6295.0, ptr %i.da, align 8, !noalias !2867
   store i64 %.sroa.7300.0, ptr %i.cz, align 8, !noalias !2867
-  store i16 %.sroa.8305.0, ptr %i.dc, align 8, !noalias !2867
+  store <8 x i16> %i.dj, ptr %i.dc, align 8, !noalias !2867
   call void @llvm.experimental.noalias.scope.decl(metadata !2868)
   call void @llvm.experimental.noalias.scope.decl(metadata !2869)
-  store <8 x i16> %i.dj, ptr %i.dd, align 2, !noalias !2867
+  store i16 %.sroa.2.09.i, ptr %3, align 8, !noalias !2866
   store ptr %.sroa.0.010.i, ptr %i.cu, align 8, !noalias !2866
   call void @llvm.experimental.noalias.scope.decl(metadata !2870)
   call void @llvm.experimental.noalias.scope.decl(metadata !2871)
@@ -669,7 +669,8 @@ _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6ta
   br i1 %.sroa.06.0.i.i.i.i, label %bb.aw, label %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge
 
 _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge: ; preds = %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i
-  %i.fe = load <4 x i16>, ptr %i.dd, align 2, !alias.scope !2904, !noalias !2905
+  %i.fe = load <4 x i16>, ptr %i.dc, align 8, !alias.scope !2904, !noalias !2905
+  %.sroa.10352.0.copyload.pre = load i16, ptr %i.dg, align 8, !alias.scope !2904, !noalias !2905
   %.sroa.11353.0.copyload.pre = load i16, ptr %i.dh, align 2, !alias.scope !2904, !noalias !2905
   br label %_RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i
 
@@ -722,8 +723,8 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %.sroa.315.0.i.i.i.i.i = phi i16 [ %i.fv, %bb.bb ], [ %.sroa.012.0.i.i.i.i.i, %bb.ba ] ; 2 uses
   store i16 1, ptr %i.dg, align 8, !alias.scope !2903, !noalias !2866
   store i16 %.sroa.315.0.i.i.i.i.i, ptr %i.dh, align 2, !alias.scope !2903, !noalias !2866
-  %i.fw = insertelement <4 x i16> <i16 poison, i16 1, i16 poison, i16 1>, i16 %.sroa.3.0.i.i.i.i.i, i64 0
-  %i.fx = insertelement <4 x i16> %i.fw, i16 %.sroa.38.0.i.i.i.i.i, i64 2
+  %i.fw = insertelement <4 x i16> <i16 1, i16 poison, i16 1, i16 poison>, i16 %.sroa.3.0.i.i.i.i.i, i64 1
+  %i.fx = insertelement <4 x i16> %i.fw, i16 %.sroa.38.0.i.i.i.i.i, i64 3
   br label %_RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i
 
 bb.bd:                                            ; preds = %bb.au, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdEBF_.exit.i.i.i.i
@@ -740,8 +741,9 @@ bb.bd:                                            ; preds = %bb.au, %_RINvNtCsf3
 
 _RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i: ; preds = %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge, %bb.bc
   %.sroa.11353.0.copyload = phi i16 [ %.sroa.315.0.i.i.i.i.i, %bb.bc ], [ %.sroa.11353.0.copyload.pre, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge ] ; 2 uses
-  %.sroa.6348.0.copyload = phi i16 [ 1, %bb.bc ], [ %.sroa.6348.0.copyload.pre, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge ] ; 2 uses
-  %i.gc = phi <4 x i16> [ %i.fx, %bb.bc ], [ %i.fe, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge ] ; 5 uses
+  %.sroa.10352.0.copyload = phi i16 [ 1, %bb.bc ], [ %.sroa.10352.0.copyload.pre, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge ] ; 2 uses
+  %.sroa.6348.0.copyload = phi i16 [ 1, %bb.bc ], [ %.sroa.6348.0.copyload.pre, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge ]
+  %i.gc = phi <4 x i16> [ %i.fx, %bb.bc ], [ %i.fe, %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VecNtNtNtCs6WnK4nVnpEz_11write_fonts6tables4hmtx10LongMetricE8push_mutCshxhuDJfZv4T_6fontbe.exit.i.i.i.i.i._RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i_crit_edge ] ; 4 uses
   %.sroa.0345.0.copyload = load i64, ptr %i.af, align 8, !alias.scope !2904, !noalias !2905 ; 2 uses
   %.sroa.4346.0.copyload = load ptr, ptr %i.da, align 8, !alias.scope !2904, !noalias !2905 ; 2 uses
   %.sroa.13355.0.copyload = load i16, ptr %.sroa.15340.0..sroa_idx, align 2, !alias.scope !2904, !noalias !2905 ; 2 uses
@@ -771,12 +773,12 @@ bb.bf:                                            ; preds = %.thread5.i.i.i.i, %
 .noexc136:                                        ; preds = %bb.be, %_RNvMs0_NtCshxhuDJfZv4T_6fontbe18metrics_and_limitsNtB5_14MetricsBuilder6update.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !2873
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !2866
-  %i.gh = add i16 %.sroa.2.09.i, 1                ; 2 uses
+  %i.gh = add i16 %.sroa.2.09.i, 1
   %i.gi = icmp eq ptr %i.dk, %i.cs
-  %i.gj = insertelement <8 x i16> poison, i16 %.sroa.11353.0.copyload, i64 4
-  %i.gk = insertelement <8 x i16> %i.gj, i16 %i.fd, i64 5
-  %i.gl = insertelement <8 x i16> %i.gk, i16 %.sroa.13355.0.copyload, i64 6
-  %i.gm = insertelement <8 x i16> %i.gl, i16 %i.gh, i64 7
+  %i.gj = insertelement <8 x i16> poison, i16 %.sroa.10352.0.copyload, i64 4
+  %i.gk = insertelement <8 x i16> %i.gj, i16 %.sroa.11353.0.copyload, i64 5
+  %i.gl = insertelement <8 x i16> %i.gk, i16 %i.fd, i64 6
+  %i.gm = insertelement <8 x i16> %i.gl, i16 %.sroa.13355.0.copyload, i64 7
   %i.gn = shufflevector <4 x i16> %i.gc, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.go = shufflevector <8 x i16> %i.gn, <8 x i16> %i.gm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
   br i1 %i.gi, label %.loopexit441.loopexit, label %bb.z
@@ -785,17 +787,16 @@ bb.bf:                                            ; preds = %.thread5.i.i.i.i, %
   %i.gp = extractelement <4 x i16> %i.gc, i64 3
   %i.gq = extractelement <4 x i16> %i.gc, i64 2
   %i.gr = extractelement <4 x i16> %i.gc, i64 1
-  %3 = extractelement <4 x i16> %i.gc, i64 0
   br label %.loopexit441
 
 .loopexit441:                                     ; preds = %.loopexit441.loopexit, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135
   %.sroa.15340.1 = phi i16 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %.sroa.13355.0.copyload, %.loopexit441.loopexit ]
   %.sroa.14335.1 = phi i16 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.fd, %.loopexit441.loopexit ]
   %.sroa.13330.1 = phi i16 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %.sroa.11353.0.copyload, %.loopexit441.loopexit ]
-  %.sroa.12325.1 = phi i16 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.gp, %.loopexit441.loopexit ]
-  %.sroa.11320.1 = phi i16 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.gq, %.loopexit441.loopexit ]
-  %.sroa.10315.1 = phi i16 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.gr, %.loopexit441.loopexit ]
-  %.sroa.9310.1 = phi i16 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %3, %.loopexit441.loopexit ]
+  %.sroa.12325.1 = phi i16 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %.sroa.10352.0.copyload, %.loopexit441.loopexit ]
+  %.sroa.11320.1 = phi i16 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.gp, %.loopexit441.loopexit ]
+  %.sroa.10315.1 = phi i16 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.gq, %.loopexit441.loopexit ]
+  %.sroa.9310.1 = phi i16 [ undef, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.gr, %.loopexit441.loopexit ]
   %.sroa.8305.1 = phi i16 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %.sroa.6348.0.copyload, %.loopexit441.loopexit ]
   %.sroa.7300.1 = phi i64 [ 0, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %i.fb, %.loopexit441.loopexit ]
   %.sroa.6295.1 = phi ptr [ inttoptr (i64 2 to ptr), %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc4sync3ArcNtNtCs3v5ql5U6hxj_6fontir2ir13GlobalMetricsEECshxhuDJfZv4T_6fontbe.exit135 ], [ %.sroa.4346.0.copyload, %.loopexit441.loopexit ]

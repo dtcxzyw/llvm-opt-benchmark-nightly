@@ -205,25 +205,30 @@ bb.ak:                                            ; preds = %.thread223.2
   %i.ej = icmp eq i32 %i.bh, 1
   %i.ek = icmp sgt i32 %i.dm, 1
   %or.cond359 = and i1 %i.ej, %i.ek
+  %9 = insertelement <2 x i32> <i32 1, i32 poison>, i32 %7, i64 1
   br i1 %or.cond359, label %bb.an, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.el = icmp eq i32 %i.dm, 1
+  %10 = insertelement <2 x i32> <i32 poison, i32 1>, i32 %7, i64 0
   br i1 %i.el, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.em = srem i32 %7, %i.bh
   %i.en = icmp eq i32 %i.em, 0
   %spec.select = select i1 %i.en, i32 %i.bh, i32 %7
-  %spec.select.fr = freeze i32 %spec.select       ; 3 uses
-  %i.eo = sdiv i32 %7, %spec.select.fr            ; 2 uses
+  %spec.select.fr = freeze i32 %spec.select       ; 4 uses
+  %i.eo = sdiv i32 %7, %spec.select.fr            ; 3 uses
+  %11 = insertelement <2 x i32> poison, i32 %spec.select.fr, i64 0
+  %12 = insertelement <2 x i32> %11, i32 %i.eo, i64 1
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.ak, %bb.al, %bb.am, %.thread223.2
   %spec.select361 = phi i32 [ %i.dm, %.thread223.2 ], [ %7, %bb.ak ], [ %i.eo, %bb.am ], [ 1, %bb.al ]
   %spec.select360 = phi i32 [ %i.bh, %.thread223.2 ], [ 1, %bb.ak ], [ %spec.select.fr, %bb.am ], [ %7, %bb.al ]
-  %.sroa.7.0 = phi i32 [ 1, %.thread223.2 ], [ %7, %bb.ak ], [ %i.eo, %bb.am ], [ 1, %bb.al ] ; 15 uses
-  %.sroa.0.0 = phi i32 [ 1, %.thread223.2 ], [ 1, %bb.ak ], [ %spec.select.fr, %bb.am ], [ %7, %bb.al ] ; 13 uses
+  %.sroa.7.0 = phi i32 [ 1, %.thread223.2 ], [ %7, %bb.ak ], [ %i.eo, %bb.am ], [ 1, %bb.al ] ; 13 uses
+  %.sroa.0.0 = phi i32 [ 1, %.thread223.2 ], [ 1, %bb.ak ], [ %spec.select.fr, %bb.am ], [ %7, %bb.al ] ; 11 uses
+  %13 = phi <2 x i32> [ splat (i32 1), %.thread223.2 ], [ %9, %bb.ak ], [ %12, %bb.am ], [ %10, %bb.al ] ; 2 uses
   switch i32 %.val.i, label %_ZL8usingPmeRK22CoulombInteractionType.exit [
     i32 3, label %_ZL8usingPmeRK22CoulombInteractionType.exit.thread
     i32 14, label %_ZL8usingPmeRK22CoulombInteractionType.exit.thread
@@ -352,7 +357,6 @@ bb.av:                                            ; preds = %.lr.ph254.split.spl
   %i.hc = getelementptr inbounds nuw i8, ptr %5, i64 140 ; 4 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %5, i64 144
   %i.he = getelementptr inbounds nuw i8, ptr %5, i64 152
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 148 ; 2 uses
   %i.hf = load i32, ptr %8, align 4, !tbaa !13    ; 7 uses
   %i.hg = srem i32 %i.hf, %.sroa.0.0
   %.not213 = icmp eq i32 %i.hg, 0
@@ -507,18 +511,20 @@ bb.bi:                                            ; preds = %bb.bh, %_ZSt3gcdIii
 bb.bj:                                            ; preds = %bb.bi, %bb.bd
   %.1191.1 = phi float [ %i.ju, %bb.bi ], [ %.2192, %bb.bd ] ; 2 uses
   %i.jv = icmp sgt i32 %.sroa.7.0, 1
-  %10 = load i32, ptr %i.hd, align 8, !tbaa !13   ; 4 uses
   br i1 %i.jv, label %bb.bk, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.bj
-  %.pre310 = load i32, ptr %9, align 4, !tbaa !296 ; 2 uses
-  %.pre311 = load i32, ptr %i.hc, align 4, !tbaa !139 ; 2 uses
-  %.pre312 = sitofp i32 %.pre311 to float
-  %.pre313 = sitofp i32 %.pre310 to float
+  %14 = load <3 x i32>, ptr %i.hc, align 4, !tbaa !13 ; 3 uses
+  %15 = shufflevector <3 x i32> %14, <3 x i32> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 1>
+  %16 = extractelement <3 x i32> %14, i64 0
+  %.pre312 = sitofp i32 %16 to float
+  %17 = extractelement <3 x i32> %14, i64 2
+  %.pre313 = sitofp i32 %17 to float
   br label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.jw = srem i32 %10, %.sroa.7.0
+  %18 = load i32, ptr %i.hd, align 8, !tbaa !13   ; 2 uses
+  %i.jw = srem i32 %18, %.sroa.7.0
   %i.jx = icmp eq i32 %i.jw, 0
   %i.jy = load i32, ptr %i.he, align 8, !tbaa !295
   %i.jz = sext i1 %i.jx to i32
@@ -526,57 +532,52 @@ bb.bk:                                            ; preds = %bb.bj
   %i.kb = uitofp nneg i32 %.sroa.7.0 to float
   %i.kc = sitofp i32 %i.ka to float
   %i.kd = fmul nnan float %i.kb, %i.kc
-  %11 = load i32, ptr %i.hc, align 4, !tbaa !139  ; 2 uses
-  %12 = sitofp i32 %11 to float                   ; 2 uses
-  %13 = fmul float %i.kd, %12
-  %i.ke = sitofp i32 %10 to float                 ; 2 uses
-  %i.kf = fmul float %13, %i.ke
-  %14 = load i32, ptr %9, align 4, !tbaa !296     ; 2 uses
-  %i.kg = sitofp i32 %14 to float                 ; 2 uses
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = load <3 x i32>, ptr %i.hc, align 4, !tbaa !13 ; 3 uses
+  %21 = shufflevector <3 x i32> %20, <3 x i32> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 1>
+  %22 = extractelement <3 x i32> %20, i64 0
+  %i.ke = sitofp i32 %22 to float                 ; 2 uses
+  %23 = fmul float %i.kd, %i.ke
+  %i.kf = fmul float %23, %19
+  %24 = extractelement <3 x i32> %20, i64 2
+  %i.kg = sitofp i32 %24 to float                 ; 2 uses
   %i.kh = fmul float %i.kf, %i.kg
-  %i.ki = fdiv float %i.kh, %i.ke
+  %i.ki = fdiv float %i.kh, %19
   %i.kj = fadd float %.1191.1, %i.ki
   br label %bb.bl
 
 bb.bl:                                            ; preds = %._crit_edge, %bb.bk
   %.pre-phi314 = phi float [ %.pre313, %._crit_edge ], [ %i.kg, %bb.bk ]
-  %.pre-phi = phi float [ %.pre312, %._crit_edge ], [ %12, %bb.bk ]
-  %15 = phi i32 [ %.pre311, %._crit_edge ], [ %11, %bb.bk ]
-  %16 = phi i32 [ %.pre310, %._crit_edge ], [ %14, %bb.bk ]
+  %.pre-phi = phi float [ %.pre312, %._crit_edge ], [ %i.ke, %bb.bk ]
   %.2192.1 = phi float [ %.1191.1, %._crit_edge ], [ %i.kj, %bb.bk ]
-  %17 = add nsw i32 %.sroa.7.0, -1                ; 3 uses
-  %18 = sitofp i32 %17 to float
-  %19 = sitofp i32 %.sroa.7.0 to float
-  %20 = fmul nnan float %19, %18
-  %21 = add i32 %.sroa.0.0, -1                    ; 3 uses
-  %i.kk = sitofp i32 %21 to float
+  %25 = phi <4 x i32> [ %15, %._crit_edge ], [ %21, %bb.bk ]
+  %26 = add <2 x i32> %13, splat (i32 -1)
+  %27 = shufflevector <2 x i32> %26, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
+  %i.kk = sitofp i32 %.sroa.7.0 to float
   %i.kl = sitofp i32 %.sroa.0.0 to float
-  %22 = fmul nnan float %i.kl, %i.kk
-  %23 = add i32 %10, %17
-  %24 = add i32 %16, %17
-  %25 = add i32 %15, %21
-  %26 = add i32 %10, %21
-  %27 = insertelement <4 x i32> poison, i32 %24, i64 0
-  %28 = insertelement <4 x i32> %27, i32 %25, i64 1
-  %29 = insertelement <4 x i32> %28, i32 %23, i64 2
-  %30 = insertelement <4 x i32> %29, i32 %26, i64 3
-  %31 = insertelement <4 x i32> poison, i32 %.sroa.0.0, i64 0
-  %32 = insertelement <4 x i32> %31, i32 %.sroa.7.0, i64 1
-  %33 = shufflevector <4 x i32> %32, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %34 = sdiv <4 x i32> %30, %33
-  %35 = sitofp <4 x i32> %34 to <4 x float>       ; 4 uses
-  %i.km = extractelement <4 x float> %35, i64 2
-  %i.kn = fmul float %20, %i.km
-  %36 = extractelement <4 x float> %35, i64 0
-  %37 = fmul float %i.kn, %36
-  %38 = fmul float %37, %.pre-phi
-  %39 = fadd float %.2192.1, %38
-  %i.ko = extractelement <4 x float> %35, i64 1
-  %i.kp = fmul float %22, %i.ko
-  %i.kq = extractelement <4 x float> %35, i64 3
+  %28 = add <4 x i32> %25, %27
+  %29 = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
+  %30 = sdiv <4 x i32> %28, %29                   ; 2 uses
+  %31 = shufflevector <4 x i32> %27, <4 x i32> %30, <4 x i32> <i32 0, i32 1, i32 6, i32 4>
+  %32 = sitofp <4 x i32> %31 to <4 x float>       ; 4 uses
+  %33 = extractelement <4 x float> %32, i64 0
+  %34 = fmul nnan float %33, %i.kk
+  %35 = extractelement <4 x float> %32, i64 1
+  %36 = fmul nnan float %35, %i.kl
+  %37 = extractelement <4 x float> %32, i64 2
+  %38 = fmul float %34, %37
+  %i.km = extractelement <4 x float> %32, i64 3
+  %i.kn = fmul float %38, %i.km
+  %39 = fmul float %i.kn, %.pre-phi
+  %40 = fadd float %.2192.1, %39
+  %41 = shufflevector <4 x i32> %30, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
+  %42 = sitofp <2 x i32> %41 to <2 x float>       ; 2 uses
+  %i.ko = extractelement <2 x float> %42, i64 0
+  %i.kp = fmul float %36, %i.ko
+  %i.kq = extractelement <2 x float> %42, i64 1
   %i.kr = fmul float %i.kp, %i.kq
   %i.ks = fmul float %i.kr, %.pre-phi314
-  %i.kt = fadd float %39, %i.ks                   ; 2 uses
+  %i.kt = fadd float %40, %i.ks                   ; 2 uses
   %i.ku = icmp eq i32 %i.hf, 1
   br i1 %i.ku, label %.thread229, label %bb.bm
 

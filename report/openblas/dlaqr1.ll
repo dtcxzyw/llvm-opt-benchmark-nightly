@@ -30,8 +30,8 @@ bb.b:                                             ; preds = %bb.a
   %i.q = fadd double %i.l, %i.p
   %i.r = sext i32 %i.a to i64
   %i.s = getelementptr [8 x i8], ptr %i.c, i64 %i.r ; 2 uses
-  %i.t = getelementptr i8, ptr %i.s, i64 16
-  %i.u = load double, ptr %i.t, align 8, !tbaa !10 ; 5 uses
+  %i.t = getelementptr i8, ptr %i.s, i64 16       ; 2 uses
+  %i.u = load double, ptr %i.t, align 8, !tbaa !10 ; 4 uses
   %i.v = fcmp oge double %i.u, 0.000000e+00
   %i.w = fneg double %i.u
   %i.x = select i1 %i.v, double %i.u, double %i.w
@@ -78,11 +78,11 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.b
   %i.az = getelementptr i8, ptr %i.s, i64 24
-  %i.ba = load double, ptr %i.az, align 8, !tbaa !10 ; 4 uses
+  %i.ba = load double, ptr %i.az, align 8, !tbaa !10 ; 3 uses
   %i.bb = fcmp oge double %i.ba, 0.000000e+00
   %i.bc = fneg double %i.ba
   %i.bd = select i1 %i.bb, double %i.ba, double %i.bc
-  %i.be = fadd double %i.y, %i.bd                 ; 5 uses
+  %i.be = fadd double %i.y, %i.bd                 ; 4 uses
   %i.bf = fcmp oeq double %i.be, 0.000000e+00
   br i1 %i.bf, label %bb.g, label %bb.h
 
@@ -91,8 +91,10 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %8 = fdiv double %i.u, %i.be                    ; 3 uses
-  %9 = fdiv double %i.ba, %i.be                   ; 3 uses
+  %8 = load <2 x double>, ptr %i.t, align 8, !tbaa !10
+  %9 = insertelement <2 x double> poison, double %i.be, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fdiv <2 x double> %8, %10                 ; 2 uses
   %i.bg = load double, ptr %3, align 8, !tbaa !10
   %i.bh = fsub double %i.g, %i.bg
   %i.bi = fdiv double %i.i, %i.be
@@ -105,13 +107,15 @@ bb.h:                                             ; preds = %bb.f
   %i.bp = getelementptr [8 x i8], ptr %i.c, i64 %i.bo ; 3 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 8
   %i.br = load double, ptr %i.bq, align 8, !tbaa !10
-  %i.bs = tail call double @llvm.fmuladd.f64(double %i.br, double %8, double %i.bm)
+  %12 = extractelement <2 x double> %11, i64 0    ; 3 uses
+  %i.bs = tail call double @llvm.fmuladd.f64(double %i.br, double %12, double %i.bm)
   %i.bt = mul nsw i32 %i.a, 3
   %i.bu = sext i32 %i.bt to i64
   %i.bv = getelementptr [8 x i8], ptr %i.c, i64 %i.bu ; 3 uses
   %i.bw = getelementptr i8, ptr %i.bv, i64 8
   %i.bx = load double, ptr %i.bw, align 8, !tbaa !10
-  %i.by = tail call double @llvm.fmuladd.f64(double %i.bx, double %9, double %i.bs)
+  %13 = extractelement <2 x double> %11, i64 1    ; 3 uses
+  %i.by = tail call double @llvm.fmuladd.f64(double %i.bx, double %13, double %i.bs)
   store double %i.by, ptr %7, align 8, !tbaa !10
   %i.bz = load double, ptr %1, align 8, !tbaa !10
   %i.ca = getelementptr i8, ptr %i.bp, i64 16
@@ -123,8 +127,8 @@ bb.h:                                             ; preds = %bb.f
   %i.cg = fsub double %i.ce, %i.cf
   %i.ch = getelementptr i8, ptr %i.bv, i64 16
   %i.ci = load double, ptr %i.ch, align 8, !tbaa !10
-  %i.cj = fmul double %9, %i.ci
-  %i.ck = tail call double @llvm.fmuladd.f64(double %8, double %i.cg, double %i.cj)
+  %i.cj = fmul double %13, %i.ci
+  %i.ck = tail call double @llvm.fmuladd.f64(double %12, double %i.cg, double %i.cj)
   %i.cl = getelementptr inbounds nuw i8, ptr %7, i64 8
   store double %i.ck, ptr %i.cl, align 8, !tbaa !10
   %i.cm = load double, ptr %1, align 8, !tbaa !10
@@ -137,8 +141,8 @@ bb.h:                                             ; preds = %bb.f
   %i.ct = fsub double %i.cr, %i.cs
   %i.cu = getelementptr i8, ptr %i.bp, i64 24
   %i.cv = load double, ptr %i.cu, align 8, !tbaa !10
-  %i.cw = fmul double %8, %i.cv
-  %i.cx = tail call double @llvm.fmuladd.f64(double %9, double %i.ct, double %i.cw)
+  %i.cw = fmul double %12, %i.cv
+  %i.cx = tail call double @llvm.fmuladd.f64(double %13, double %i.ct, double %i.cw)
   %i.cy = getelementptr inbounds nuw i8, ptr %7, i64 16
   store double %i.cx, ptr %i.cy, align 8, !tbaa !10
   br label %bb.i

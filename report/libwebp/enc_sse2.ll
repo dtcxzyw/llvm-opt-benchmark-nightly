@@ -204,40 +204,66 @@ VerticalPred_SSE2.exit:                           ; preds = %DC16Mode_SSE2.exit,
 bb.h:                                             ; preds = %VerticalPred_SSE2.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
+  %3 = load i8, ptr %1, align 1, !tbaa !9, !alias.scope !60
+  %4 = insertelement <16 x i8> poison, i8 %3, i64 0
+  %5 = shufflevector <16 x i8> %4, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %5, ptr %i.bp, align 16, !tbaa !9, !alias.scope !61
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 560
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %7 = load i8, ptr %6, align 1, !tbaa !9, !alias.scope !60
+  %8 = insertelement <16 x i8> poison, i8 %7, i64 0
+  %9 = shufflevector <16 x i8> %8, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %9, ptr %i.bq, align 16, !tbaa !9, !alias.scope !61
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 592
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %11 = load i8, ptr %10, align 1, !tbaa !9, !alias.scope !60
+  %12 = insertelement <16 x i8> poison, i8 %11, i64 0
+  %13 = shufflevector <16 x i8> %12, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %13, ptr %i.br, align 16, !tbaa !9, !alias.scope !61
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 624
-  %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 656
-  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 688
-  %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 720
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 752
-  %4 = load <8 x i8>, ptr %1, align 1, !tbaa !9, !alias.scope !60 ; 9 uses
-  %i.bw = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
-  store <16 x i8> %i.bw, ptr %i.bp, align 16, !tbaa !9, !alias.scope !61
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  store <16 x i8> %5, ptr %i.bq, align 16, !tbaa !9, !alias.scope !61
-  %6 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2> ; 2 uses
-  store <16 x i8> %6, ptr %i.br, align 16, !tbaa !9, !alias.scope !61
-  %7 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3> ; 2 uses
-  store <16 x i8> %7, ptr %i.bs, align 16, !tbaa !9, !alias.scope !61
-  %8 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4> ; 2 uses
-  store <16 x i8> %8, ptr %i.bt, align 16, !tbaa !9, !alias.scope !61
-  %9 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5> ; 2 uses
-  store <16 x i8> %9, ptr %i.bu, align 16, !tbaa !9, !alias.scope !61
-  %10 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6> ; 2 uses
-  store <16 x i8> %10, ptr %i.bv, align 16, !tbaa !9, !alias.scope !61
-  %11 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7, i32 7> ; 2 uses
-  store <16 x i8> %11, ptr %3, align 16, !tbaa !9, !alias.scope !61
+  %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 3
+  %14 = load i8, ptr %i.bt, align 1, !tbaa !9, !alias.scope !60
+  %15 = insertelement <16 x i8> poison, i8 %14, i64 0
+  %16 = shufflevector <16 x i8> %15, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %16, ptr %i.bs, align 16, !tbaa !9, !alias.scope !61
+  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 656
+  %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %17 = load i8, ptr %i.bv, align 1, !tbaa !9, !alias.scope !60
+  %18 = insertelement <16 x i8> poison, i8 %17, i64 0
+  %i.bw = shufflevector <16 x i8> %18, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %i.bw, ptr %i.bu, align 16, !tbaa !9, !alias.scope !61
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 688
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 5
+  %21 = load i8, ptr %20, align 1, !tbaa !9, !alias.scope !60
+  %22 = insertelement <16 x i8> poison, i8 %21, i64 0
+  %23 = shufflevector <16 x i8> %22, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %23, ptr %19, align 16, !tbaa !9, !alias.scope !61
+  %24 = getelementptr inbounds nuw i8, ptr %0, i64 720
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %26 = load i8, ptr %25, align 1, !tbaa !9, !alias.scope !60
+  %27 = insertelement <16 x i8> poison, i8 %26, i64 0
+  %28 = shufflevector <16 x i8> %27, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %28, ptr %24, align 16, !tbaa !9, !alias.scope !61
+  %29 = getelementptr inbounds nuw i8, ptr %0, i64 752
+  %30 = getelementptr inbounds nuw i8, ptr %1, i64 7
+  %31 = load i8, ptr %30, align 1, !tbaa !9, !alias.scope !60
+  %32 = insertelement <16 x i8> poison, i8 %31, i64 0
+  %33 = shufflevector <16 x i8> %32, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %33, ptr %29, align 16, !tbaa !9, !alias.scope !61
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 784
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %34 = load i8, ptr %i.by, align 1, !tbaa !9, !alias.scope !60
+  %35 = insertelement <16 x i8> poison, i8 %34, i64 0
+  %36 = shufflevector <16 x i8> %35, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %36, ptr %i.bx, align 16, !tbaa !9, !alias.scope !61
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 816
-  %12 = load <2 x i8>, ptr %i.by, align 1, !tbaa !9, !alias.scope !60 ; 3 uses
-  %13 = shufflevector <2 x i8> %12, <2 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
-  store <16 x i8> %13, ptr %i.bx, align 16, !tbaa !9, !alias.scope !61
-  %14 = shufflevector <2 x i8> %12, <2 x i8> poison, <16 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
-  store <16 x i8> %14, ptr %i.bz, align 16, !tbaa !9, !alias.scope !61
+  %37 = getelementptr inbounds nuw i8, ptr %1, i64 9
+  %38 = load i8, ptr %37, align 1, !tbaa !9, !alias.scope !60
+  %39 = insertelement <16 x i8> poison, i8 %38, i64 0
+  %40 = shufflevector <16 x i8> %39, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  store <16 x i8> %40, ptr %i.bz, align 16, !tbaa !9, !alias.scope !61
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 848
-  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 2 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !9, !alias.scope !60
   %i.cd = insertelement <16 x i8> poison, i8 %i.cc, i64 0
   %i.ce = shufflevector <16 x i8> %i.cd, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
@@ -261,7 +287,7 @@ bb.h:                                             ; preds = %VerticalPred_SSE2.e
   %i.ct = shufflevector <16 x i8> %i.cs, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   store <16 x i8> %i.ct, ptr %i.cp, align 16, !tbaa !9, !alias.scope !61
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 976
-  %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 14 ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 14
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !9, !alias.scope !60
   %i.cx = insertelement <16 x i8> poison, i8 %i.cw, i64 0
   %i.cy = shufflevector <16 x i8> %i.cx, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
@@ -279,7 +305,6 @@ bb.h:                                             ; preds = %VerticalPred_SSE2.e
   br i1 %.not.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %15 = shufflevector <8 x i8> %4, <8 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !66)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !67)
@@ -306,14 +331,8 @@ bb.i:                                             ; preds = %bb.h
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 464
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 496
-  %16 = load <4 x i8>, ptr %i.cb, align 1, !tbaa !9, !alias.scope !69
-  %17 = load <2 x i8>, ptr %i.cv, align 1, !tbaa !9, !alias.scope !69
-  %18 = shufflevector <2 x i8> %12, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %19 = shufflevector <4 x i8> %18, <4 x i8> %16, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison>
-  %20 = shufflevector <2 x i8> %17, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %21 = shufflevector <16 x i8> %19, <16 x i8> %20, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
-  %22 = shufflevector <16 x i8> %15, <16 x i8> %21, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %i.ec = zext <16 x i8> %22 to <16 x i16>
+  %41 = load <16 x i8>, ptr %1, align 1, !tbaa !9
+  %i.ec = zext <16 x i8> %41 to <16 x i16>
   %i.ed = insertelement <16 x i16> poison, i16 %i.dk, i64 0
   %i.ee = shufflevector <16 x i16> %i.ed, <16 x i16> poison, <16 x i32> zeroinitializer
   %i.ef = sub nsw <16 x i16> %i.ec, %i.ee         ; 16 uses
@@ -400,25 +419,25 @@ bb.i:                                             ; preds = %bb.h
   br label %TrueMotion_SSE2.exit
 
 bb.j:                                             ; preds = %bb.h
-  store <16 x i8> %i.bw, ptr %i.de, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %5, ptr %i.de, align 16, !tbaa !9, !alias.scope !71
   %i.gs = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store <16 x i8> %5, ptr %i.gs, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %9, ptr %i.gs, align 16, !tbaa !9, !alias.scope !71
   %i.gt = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store <16 x i8> %6, ptr %i.gt, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %13, ptr %i.gt, align 16, !tbaa !9, !alias.scope !71
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store <16 x i8> %7, ptr %i.gu, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %16, ptr %i.gu, align 16, !tbaa !9, !alias.scope !71
   %i.gv = getelementptr inbounds nuw i8, ptr %0, i64 144
-  store <16 x i8> %8, ptr %i.gv, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %i.bw, ptr %i.gv, align 16, !tbaa !9, !alias.scope !71
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store <16 x i8> %9, ptr %i.gw, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %23, ptr %i.gw, align 16, !tbaa !9, !alias.scope !71
   %i.gx = getelementptr inbounds nuw i8, ptr %0, i64 208
-  store <16 x i8> %10, ptr %i.gx, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %28, ptr %i.gx, align 16, !tbaa !9, !alias.scope !71
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 240
-  store <16 x i8> %11, ptr %i.gy, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %33, ptr %i.gy, align 16, !tbaa !9, !alias.scope !71
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 272
-  store <16 x i8> %13, ptr %i.gz, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %36, ptr %i.gz, align 16, !tbaa !9, !alias.scope !71
   %i.ha = getelementptr inbounds nuw i8, ptr %0, i64 304
-  store <16 x i8> %14, ptr %i.ha, align 16, !tbaa !9, !alias.scope !71
+  store <16 x i8> %40, ptr %i.ha, align 16, !tbaa !9, !alias.scope !71
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 336
   store <16 x i8> %i.ce, ptr %i.hb, align 16, !tbaa !9, !alias.scope !71
   %i.hc = getelementptr inbounds nuw i8, ptr %0, i64 368
@@ -750,6 +769,7 @@ bb.j:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !150)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !151)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !152)
+  %3 = zext <8 x i8> %i.bl to <8 x i16>
   %i.da = load i64, ptr %2, align 1, !tbaa !9, !alias.scope !153
   %i.db = insertelement <2 x i64> poison, i64 %i.da, i64 0
   %i.dc = bitcast <2 x i64> %i.db to <16 x i8>
@@ -765,7 +785,6 @@ bb.j:                                             ; preds = %bb.h
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 1200
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 1232
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 1264
-  %3 = zext <8 x i8> %i.bl to <8 x i16>
   %i.dp = insertelement <8 x i16> poison, i16 %i.dg, i64 0
   %i.dq = shufflevector <8 x i16> %i.dp, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.dr = sub nsw <8 x i16> %3, %i.dq             ; 8 uses
@@ -1012,6 +1031,7 @@ bb.o:                                             ; preds = %bb.n
   tail call void @llvm.experimental.noalias.scope.decl(metadata !175)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !176)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !177)
+  %4 = zext <8 x i8> %i.ij to <8 x i16>
   %i.jj = load i64, ptr %spec.select53, align 1, !tbaa !9, !alias.scope !178
   %i.jk = insertelement <2 x i64> poison, i64 %i.jj, i64 0
   %i.jl = bitcast <2 x i64> %i.jk to <16 x i8>
@@ -1027,7 +1047,6 @@ bb.o:                                             ; preds = %bb.n
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 1208
   %i.jw = getelementptr inbounds nuw i8, ptr %0, i64 1240
   %i.jx = getelementptr inbounds nuw i8, ptr %0, i64 1272
-  %4 = zext <8 x i8> %i.ij to <8 x i16>
   %i.jy = insertelement <8 x i16> poison, i16 %i.jp, i64 0
   %i.jz = shufflevector <8 x i16> %i.jy, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.ka = sub nsw <8 x i16> %4, %i.jz             ; 8 uses
