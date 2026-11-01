@@ -55,7 +55,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = shl nsw i32 %i.f, 2
   %i.h = sdiv i32 %i.g, 3
   %i.i = add nsw i32 %i.h, 4
-  %i.j = call ptr @py_newbytes(ptr noundef %i.e, i32 noundef %i.i) #3 ; 8 uses
+  %i.j = call ptr @py_newbytes(ptr noundef %i.e, i32 noundef %i.i) #3 ; 9 uses
   %i.k = load i32, ptr %i.a, align 4, !tbaa !8    ; 2 uses
   %.not.i = icmp eq i32 %i.k, 0
   br i1 %.not.i, label %base64_encode.exit, label %.lr.ph.preheader.i
@@ -74,28 +74,26 @@ bb.e:                                             ; preds = %.lr.ph.jt0.i
   %i.r = zext nneg i8 %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr @base64en, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !tbaa !9
-  %2 = or disjoint i32 %.0364558.i, 2             ; 2 uses
-  %3 = zext i32 %4 to i64
+  %2 = or disjoint i64 %indvars.iv.next.jt0.sink.i.a, 2 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 %3
   store i8 %i.t, ptr %i.u, align 1, !tbaa !9
-  %indvars.iv.next.jt2.i = add nuw nsw i64 %indvars.iv.next.jt0.sink.i.a, 2 ; 2 uses
+  %indvars.iv.next.jt2.i = add nuw nsw i64 %indvars.iv.next.jt0.sink.i, 2 ; 2 uses
   %exitcond.not.jt2.i = icmp eq i64 %indvars.iv.next.jt2.i, %wide.trip.count.i
   br i1 %exitcond.not.jt2.i, label %._crit_edge.i, label %bb.f, !llvm.loop !11
 
 .lr.ph.jt0.i:                                     ; preds = %bb.f, %.lr.ph.preheader.i
-  %indvars.iv.next.jt0.sink.i.a = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.jt0.i, %bb.f ] ; 4 uses
-  %.0364558.i = phi i32 [ 0, %.lr.ph.preheader.i ], [ %8, %bb.f ] ; 8 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next.jt0.sink.i.a
+  %indvars.iv.next.jt0.sink.i.a = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %.lr.ph.preheader.i ] ; 8 uses
+  %indvars.iv.next.jt0.sink.i = phi i64 [ %indvars.iv.next.jt0.i, %bb.f ], [ 0, %.lr.ph.preheader.i ] ; 4 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next.jt0.sink.i
   %i.w = load i8, ptr %i.v, align 1, !tbaa !9     ; 3 uses
   %i.x = lshr i8 %i.w, 2
   %i.y = zext nneg i8 %i.x to i64
   %i.z = getelementptr inbounds nuw i8, ptr @base64en, i64 %i.y
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !9
-  %4 = or disjoint i32 %.0364558.i, 1             ; 2 uses
-  %5 = zext i32 %.0364558.i to i64
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %5
+  %3 = or disjoint i64 %indvars.iv.next.jt0.sink.i.a, 1 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv.next.jt0.sink.i.a
   store i8 %i.aa, ptr %i.ab, align 1, !tbaa !9
-  %indvars.iv.next.jt1.i = add nuw nsw i64 %indvars.iv.next.jt0.sink.i.a, 1 ; 2 uses
+  %indvars.iv.next.jt1.i = add nuw nsw i64 %indvars.iv.next.jt0.sink.i, 1 ; 2 uses
   %exitcond.not.jt1.i = icmp eq i64 %indvars.iv.next.jt1.i, %wide.trip.count.i
   br i1 %exitcond.not.jt1.i, label %bb.g, label %bb.e, !llvm.loop !11
 
@@ -111,21 +109,19 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = zext nneg i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw i8, ptr @base64en, i64 %i.ak
   %i.am = load i8, ptr %i.al, align 1, !tbaa !9
-  %6 = or disjoint i32 %.0364558.i, 3
-  %7 = zext i32 %2 to i64
-  %i.an = getelementptr inbounds nuw i8, ptr %i.j, i64 %7
+  %i.an = getelementptr inbounds nuw i8, ptr %i.j, i64 %2
   store i8 %i.am, ptr %i.an, align 1, !tbaa !9
   %i.ao = and i32 %i.ah, 63
   %i.ap = zext nneg i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr @base64en, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !9
-  %8 = add i32 %.0364558.i, 4                     ; 2 uses
-  %9 = zext i32 %6 to i64
-  %i.as = getelementptr inbounds nuw i8, ptr %i.j, i64 %9
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next.jt0.sink.i.a, 4 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv.next.jt0.sink.i.a
+  %i.as = getelementptr inbounds nuw i8, ptr %4, i64 3
   store i8 %i.ar, ptr %i.as, align 1, !tbaa !9
-  %indvars.iv.next.jt0.i = add nuw nsw i64 %indvars.iv.next.jt0.sink.i.a, 3 ; 2 uses
+  %indvars.iv.next.jt0.i = add nuw nsw i64 %indvars.iv.next.jt0.sink.i, 3 ; 2 uses
   %exitcond.not.jt0.i = icmp eq i64 %indvars.iv.next.jt0.i, %wide.trip.count.i
-  br i1 %exitcond.not.jt0.i, label %base64_encode.exit, label %.lr.ph.jt0.i, !llvm.loop !11
+  br i1 %exitcond.not.jt0.i, label %base64_encode.exit.loopexit, label %.lr.ph.jt0.i, !llvm.loop !11
 
 bb.g:                                             ; preds = %.lr.ph.jt0.i
   %i.at = shl i8 %i.w, 4
@@ -133,10 +129,12 @@ bb.g:                                             ; preds = %.lr.ph.jt0.i
   %i.av = zext nneg i8 %i.au to i64
   %i.aw = getelementptr inbounds nuw i8, ptr @base64en, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 16, !tbaa !9
-  %10 = or disjoint i32 %.0364558.i, 2
-  %11 = zext i32 %4 to i64
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.j, i64 %11
-  store i8 %i.ax, ptr %i.ay, align 1, !tbaa !9
+  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 %3
+  store i8 %i.ax, ptr %5, align 1, !tbaa !9
+  %6 = and i64 %indvars.iv.next.jt0.sink.i.a, 4294967292
+  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 %6
+  %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 2
+  store i8 61, ptr %i.ay, align 1, !tbaa !9
   br label %._crit_edge.thread.sink.split.i
 
 ._crit_edge.i:                                    ; preds = %bb.e
@@ -145,23 +143,25 @@ bb.g:                                             ; preds = %.lr.ph.jt0.i
   %i.bb = zext nneg i8 %i.ba to i64
   %i.bc = getelementptr inbounds nuw i8, ptr @base64en, i64 %i.bb
   %i.bd = load i8, ptr %i.bc, align 4, !tbaa !9
+  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 %2
+  store i8 %i.bd, ptr %8, align 1, !tbaa !9
   br label %._crit_edge.thread.sink.split.i
 
 ._crit_edge.thread.sink.split.i:                  ; preds = %._crit_edge.i, %bb.g
-  %.lcssa44.sink = phi i32 [ %2, %._crit_edge.i ], [ %10, %bb.g ]
-  %.sink = phi i8 [ %i.bd, %._crit_edge.i ], [ 61, %bb.g ]
-  %12 = zext i32 %.lcssa44.sink to i64
-  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 %12
-  store i8 %.sink, ptr %13, align 1, !tbaa !9
-  %.2.ph.i = add i32 %.0364558.i, 4
-  %.sink.i = or disjoint i32 %.0364558.i, 3
-  %14 = zext i32 %.sink.i to i64
-  %i.be = getelementptr inbounds nuw i8, ptr %i.j, i64 %14
+  %.0364558.i28 = trunc i64 %indvars.iv.next.jt0.sink.i.a to i32
+  %.2.ph.i = add i32 %.0364558.i28, 4
+  %.sink.i = and i64 %indvars.iv.next.jt0.sink.i.a, 4294967292
+  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink.i
+  %i.be = getelementptr inbounds nuw i8, ptr %9, i64 3
   store i8 61, ptr %i.be, align 1, !tbaa !9
   br label %base64_encode.exit
 
-base64_encode.exit:                               ; preds = %bb.f, %bb.d, %._crit_edge.thread.sink.split.i
-  %.2.i = phi i32 [ 0, %bb.d ], [ %.2.ph.i, %._crit_edge.thread.sink.split.i ], [ %8, %bb.f ] ; 2 uses
+base64_encode.exit.loopexit:                      ; preds = %bb.f
+  %indvars = trunc i64 %indvars.iv.next to i32
+  br label %base64_encode.exit
+
+base64_encode.exit:                               ; preds = %base64_encode.exit.loopexit, %bb.d, %._crit_edge.thread.sink.split.i
+  %.2.i = phi i32 [ 0, %bb.d ], [ %.2.ph.i, %._crit_edge.thread.sink.split.i ], [ %indvars, %base64_encode.exit.loopexit ] ; 2 uses
   %i.bf = zext i32 %.2.i to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.bf
   store i8 0, ptr %i.bg, align 1, !tbaa !9

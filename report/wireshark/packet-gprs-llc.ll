@@ -205,12 +205,12 @@ bb.o:                                             ; preds = %.thread
 .lr.ph:                                           ; preds = %bb.o, %.lr.ph
   %.0532578 = phi i16 [ %i.dy, %.lr.ph ], [ 3, %bb.o ] ; 2 uses
   %.0533577 = phi i32 [ %i.dz, %.lr.ph ], [ 0, %bb.o ]
-  %i.dt = zext i16 %.0532578 to i32               ; 2 uses
+  %i.dt = zext nneg i16 %.0532578 to i32          ; 2 uses
   %i.du = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.dt)
   %i.dv = load i32, ptr @hf_llcgprs_rbyte, align 4
   %i.dw = zext i8 %i.du to i32
   %i.dx = tail call ptr @proto_tree_add_uint(ptr noundef %i.ds, i32 noundef %i.dv, ptr noundef %0, i32 noundef %i.dt, i32 noundef 1, i32 noundef %i.dw) ; 0 uses
-  %i.dy = add i16 %.0532578, 1
+  %i.dy = add nuw nsw i16 %.0532578, 1
   %i.dz = add nuw i32 %.0533577, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.dz, %i.dq
   br i1 %exitcond.not, label %.loopexit576, label %.lr.ph, !llvm.loop !8

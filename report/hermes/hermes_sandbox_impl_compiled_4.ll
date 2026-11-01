@@ -204,7 +204,7 @@ bb.br:                                            ; preds = %bb.bq
   %.0.copyload.i1437 = load i32, ptr %i.nj, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1437) #6, !srcloc !13
   %i.nk = sub nuw i32 %.5, %.0.copyload.i1435     ; 4 uses
-  %i.nl = icmp ult i32 %i.nk, 4096
+  %i.nl = icmp samesign ult i32 %i.nk, 4096
   br i1 %i.nl, label %bb.bs, label %bb.bt
 
 bb.bs:                                            ; preds = %bb.br
@@ -213,7 +213,7 @@ bb.bs:                                            ; preds = %bb.br
   br label %bb.bu
 
 bb.bt:                                            ; preds = %bb.br
-  %i.no = add i32 %i.nk, -4096
+  %i.no = add nsw i32 %i.nk, -4096
   %i.np = lshr i32 %i.no, 8
   %i.nq = and i32 %i.np, 16777212
   %i.nr = add nuw nsw i32 %i.nq, 16392
@@ -253,7 +253,7 @@ bb.bv:                                            ; preds = %bb.bq, %bb.bp, %bb.
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1440) #6, !srcloc !13
   %i.og = and i32 %.0.copyload.i1440, 2147483647
   tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AStringBuilder0x3A0x3AappendStringPrim0x28hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AStringPrimitive0x3E0x2C0x20unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %i.mq, i32 noundef %.11179, i32 noundef %i.og)
-  %i.oh = add nuw i32 %.5, 1                      ; 2 uses
+  %i.oh = add nuw nsw i32 %.5, 1                  ; 2 uses
   %i.oi = icmp ult i32 %i.oh, %i.fi
   br i1 %i.oi, label %bb.bp, label %.loopexit
 

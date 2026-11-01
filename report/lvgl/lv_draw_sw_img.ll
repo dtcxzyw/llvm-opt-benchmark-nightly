@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 vector.memcheck490:                               ; preds = %.preheader283
   %.2263306485 = ptrtoaddr ptr %.2263306 to i64
-  %i.bh = mul i64 %indvar486, %i.bd
+  %i.bh = mul nsw i64 %indvar486, %i.bd
   %i.bi = sub i64 %i.bh, %i.bf
   %i.bj = add i64 %i.bi, %.2263306485
   %i.bk = add i64 %i.bj, -1
@@ -452,7 +452,7 @@ bb.e:                                             ; preds = %bb.d
 
 vector.memcheck:                                  ; preds = %.preheader288
   %.2253293450 = ptrtoaddr ptr %.2253293 to i64
-  %i.fe = mul i64 %indvar, %i.fa
+  %i.fe = mul nsw i64 %indvar, %i.fa
   %i.ff = sub i64 %i.fe, %i.fc
   %i.fg = add i64 %i.ff, %.2253293450
   %i.fh = add i64 %i.fg, -1

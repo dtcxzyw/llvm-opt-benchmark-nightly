@@ -204,7 +204,7 @@ bb.a:
   %i.k = zext nneg i8 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !8
-  %i.n = zext i32 %.018 to i64
+  %i.n = zext nneg i32 %.018 to i64
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.n
   store i8 %i.m, ptr %i.o, align 1, !tbaa !8
   %i.p = load i8, ptr %i.h, align 1, !tbaa !8
@@ -212,9 +212,9 @@ bb.a:
   %i.r = zext nneg i8 %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !tbaa !8
-  %2 = or disjoint i32 %.018, 1
-  %3 = zext i32 %2 to i64
-  %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 %3
+  %2 = zext nneg i32 %.018 to i64
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 %2
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 1
   store i8 %i.t, ptr %i.u, align 1, !tbaa !8
   %i.v = or disjoint i32 %.018, 2
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
@@ -224,7 +224,7 @@ bb.a:
   %i.aa = zext nneg i8 %i.z to i64
   %i.ab = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.aa
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !8
-  %i.ad = zext i32 %i.v to i64
+  %i.ad = zext nneg i32 %i.v to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ad
   store i8 %i.ac, ptr %i.ae, align 1, !tbaa !8
   %i.af = load i8, ptr %i.x, align 1, !tbaa !8
@@ -232,12 +232,12 @@ bb.a:
   %i.ah = zext nneg i8 %i.ag to i64
   %i.ai = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.ah
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !8
-  %4 = or disjoint i32 %.018, 3
-  %5 = zext i32 %4 to i64
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
+  %4 = zext nneg i32 %.018 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 %4
+  %i.ak = getelementptr inbounds nuw i8, ptr %5, i64 3
   store i8 %i.aj, ptr %i.ak, align 1, !tbaa !8
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.al = add i32 %.018, 4                        ; 2 uses
+  %i.al = add nuw nsw i32 %.018, 4                ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph

@@ -202,12 +202,12 @@ bb.i:                                             ; preds = %bb.g
   %i.de = zext nneg i32 %i.m to i64
   %wide.trip.count = zext i32 %i.dc to i64
   %i.df = shl nsw i64 %i.dd, 3
+  %8 = add nsw i64 %i.df, 8
   %i.dg = shl nsw i64 %i.dd, 4
   %i.dh = add i64 %i.dg, %i.b
   %i.di = shl nsw i64 %i.i, 3
   %i.dj = add i64 %i.dh, %i.di
-  %i.dk = add i64 %i.dj, 8
-  %8 = sub i64 %i.dk, %i.a
+  %i.dk = add i64 %i.dj, 32
   %i.dl = add nsw i32 %i.m, -3
   %i.dm = add nuw i32 %i.m, 1
   br label %.lr.ph145
@@ -230,19 +230,18 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not107132.not, label %iter.check226, label %._crit_edge137
 
 iter.check226:                                    ; preds = %.lr.ph145
-  %i.du = sext i32 %indvars.iv176 to i64          ; 7 uses
+  %i.du = sext i32 %indvars.iv176 to i64          ; 6 uses
   %i.dv = sext i32 %.2143 to i64                  ; 7 uses
   %invariant.gep192 = getelementptr [8 x i8], ptr %i.j, i64 %i.dr ; 11 uses
   %min.iters.check210 = icmp ult i32 %i.do, 3
   br i1 %min.iters.check210, label %.lr.ph136.preheader, label %vector.memcheck211
 
 vector.memcheck211:                               ; preds = %iter.check226
-  %i.dw = mul i64 %indvar208, %i.df
-  %9 = add i64 %8, %i.dw
-  %i.dx = shl nsw i64 %i.du, 3
-  %10 = shl nsw i64 %i.dv, 3
-  %i.dy = add i64 %9, %i.dx
-  %i.dz = sub i64 %10, %i.dy
+  %i.dw = mul i64 %indvar208, %8
+  %i.dx = shl nsw i64 %i.dv, 3
+  %9 = add i64 %i.dk, %i.dw
+  %i.dy = add i64 %i.dx, %i.a
+  %i.dz = sub i64 %i.dy, %9
   %diff.check212 = icmp ugt i64 %i.dz, -128
   br i1 %diff.check212, label %.lr.ph136.preheader, label %vector.main.loop.iter.check213
 
@@ -405,7 +404,7 @@ vec.epilog.middle.block237:                       ; preds = %vec.epilog.vector.b
 ._crit_edge137:                                   ; preds = %._crit_edge137.loopexit, %.lr.ph145
   %.3.lcssa = phi i32 [ %.2143, %.lr.ph145 ], [ %i.fw, %._crit_edge137.loopexit ]
   %i.fx = add nsw i32 %.3.lcssa, 2
-  %indvars.iv.next177 = add i32 %indvars.iv176, 1
+  %indvars.iv.next177 = add nuw i32 %indvars.iv176, 1
   %exitcond187.not = icmp eq i64 %indvars.iv.next185, %wide.trip.count
   %indvar.next209 = add i64 %indvar208, 1
   br i1 %exitcond187.not, label %._crit_edge146, label %.lr.ph145, !llvm.loop !17

@@ -205,13 +205,13 @@ begin_hunk_0_@_process_opposed:bb.a
   %i.kg = and i32 %i.kf, 14                       ; 3 uses
   %i.kh = add nuw nsw i64 %i.kb, 1                ; 2 uses
   %i.ki = trunc i64 %i.kh to i32
-  %.tr = trunc nuw i64 %i.kh to i32
-  %i.kj = shl nuw i32 %.tr, 1
+  %.tr = trunc nsw i64 %i.kh to i32
+  %i.kj = shl nsw i32 %.tr, 1
   %i.kk = and i32 %i.kj, 14                       ; 3 uses
   %i.kl = add nuw nsw i64 %i.kb, 2                ; 2 uses
   %i.km = trunc i64 %i.kl to i32
-  %.tr520 = trunc nuw i64 %i.kl to i32
-  %i.kn = shl nuw i32 %.tr520, 1
+  %.tr520 = trunc nsw i64 %i.kl to i32
+  %i.kn = shl nsw i32 %.tr520, 1
   %i.ko = and i32 %i.kn, 14                       ; 3 uses
   br label %.split362.us
 
