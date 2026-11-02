@@ -205,10 +205,10 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i42
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit44: ; preds = %_ZN7testing8internal8EqHelper7CompareINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEA24_wTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSJ_RKSB_RKSC_.exit, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i42
   %i.bw = load i8, ptr %i.bi, align 8, !tbaa !308, !range !169, !noundef !170
   %i.bx = trunc nuw i8 %i.bw to i1
-  store i8 0, ptr %i.bi, align 8, !tbaa !308
   br i1 %i.bx, label %bb.p, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEELb0ELb0EED2Ev.exit
 
 bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit44
+  store i8 0, ptr %i.bi, align 8, !tbaa !308
   %i.by = load ptr, ptr %10, align 8, !tbaa !159  ; 2 uses
   %i.bz = icmp eq ptr %i.by, %i.ba
   br i1 %i.bz, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -274,10 +274,10 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit50: ; preds = %bb.
   %.pn13 = phi { ptr, i32 } [ %i.cl, %bb.s ], [ %i.cm, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i48 ], [ %i.cm, %bb.t ] ; 2 uses
   %i.ct = load i8, ptr %i.bi, align 8, !tbaa !308, !range !169, !noundef !170
   %i.cu = trunc nuw i8 %i.ct to i1
-  store i8 0, ptr %i.bi, align 8, !tbaa !308
   br i1 %i.cu, label %bb.u, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEELb0ELb0EED2Ev.exit53
 
 bb.u:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit50
+  store i8 0, ptr %i.bi, align 8, !tbaa !308
   %i.cv = load ptr, ptr %10, align 8, !tbaa !159  ; 2 uses
   %i.cw = icmp eq ptr %i.cv, %i.ba
   br i1 %i.cw, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEELb0ELb0EED2Ev.exit53, label %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i.i.i51
