@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %"class.mlir::TypeRange", align 8  ; 5 uses
   %14 = alloca %"class.mlir::ValueTypeRange", align 8 ; 4 uses
   %15 = alloca %"class.mlir::OperandRange", align 8 ; 5 uses
-  %16 = alloca %"class.llvm::SmallVector.533", align 8 ; 15 uses
+  %16 = alloca %"class.llvm::SmallVector.533", align 8 ; 16 uses
   %17 = alloca %"class.mlir::sparse_tensor::IterSpaceType", align 8 ; 4 uses
   %18 = alloca %"class.llvm::SmallVector.546", align 8 ; 15 uses
   %19 = alloca %"class.mlir::TypeRange", align 8  ; 3 uses
@@ -410,25 +410,38 @@ _ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i: ; preds = %_ZN4mlir13spars
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i
   %i.cr = ptrtoint ptr %i.cc to i64               ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.ca, 4
+  %min.iters.check = icmp samesign ult i64 %i.ca, 2
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.preheader.i.i.i.i.i
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.cr, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.cs = and i64 %i.ca, 3
-  %n.vec = and i64 %i.ca, 4                       ; 2 uses
-  %22 = shl nuw nsw i64 %n.vec, 3
+  %i.cs = and i64 %i.ca, 6                        ; 4 uses
+  %22 = shl nuw nsw i64 %i.cs, 3
   %23 = getelementptr i8, ptr %i.cd, i64 %22
-  %24 = getelementptr inbounds nuw i8, ptr %16, i64 32
+  %24 = and i64 %i.ca, 1
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.cr, i64 0
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 3 uses
   store <2 x i64> %broadcast.splat, ptr %i.cd, align 8, !tbaa !471
-  store <2 x i64> %broadcast.splat, ptr %24, align 8, !tbaa !471
-  %cmp.n.a = icmp eq i64 %i.ca, %n.vec
-  br i1 %cmp.n.a, label %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit, label %.lr.ph.i.i.i.i.i.preheader
+  %cmp.n.a = icmp eq i64 %i.cs, 2
+  br i1 %cmp.n.a, label %middle.block, label %vector.body.1
 
-.lr.ph.i.i.i.i.i.preheader:                       ; preds = %.lr.ph.preheader.i.i.i.i.i, %vector.body
-  %.09.i.i.i.i.i.ph = phi ptr [ %i.cd, %.lr.ph.preheader.i.i.i.i.i ], [ %23, %vector.body ]
-  %.068.i.i.i.i.i.ph = phi i64 [ %i.ca, %.lr.ph.preheader.i.i.i.i.i ], [ %i.cs, %vector.body ]
+vector.body.1:                                    ; preds = %vector.body
+  %next.gep.1 = getelementptr inbounds nuw i8, ptr %16, i64 32
+  store <2 x i64> %broadcast.splat, ptr %next.gep.1, align 8, !tbaa !471
+  %25 = icmp eq i64 %i.cs, 4
+  br i1 %25, label %middle.block, label %vector.body.2
+
+vector.body.2:                                    ; preds = %vector.body.1
+  %next.gep.2 = getelementptr inbounds nuw i8, ptr %16, i64 48
+  store <2 x i64> %broadcast.splat, ptr %next.gep.2, align 8, !tbaa !471
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body.2, %vector.body.1, %vector.body
+  %cmp.n = icmp eq i64 %i.ca, %i.cs
+  br i1 %cmp.n, label %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit, label %.lr.ph.i.i.i.i.i.preheader
+
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %.lr.ph.preheader.i.i.i.i.i, %middle.block
+  %.09.i.i.i.i.i.ph = phi ptr [ %i.cd, %.lr.ph.preheader.i.i.i.i.i ], [ %23, %middle.block ]
+  %.068.i.i.i.i.i.ph = phi i64 [ %i.ca, %.lr.ph.preheader.i.i.i.i.i ], [ %24, %middle.block ]
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i
@@ -445,8 +458,8 @@ _ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit.loopexit: ; preds = %.lr.p
   %i.cv = zext i32 %.pre to i64
   br label %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit
 
-_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i, %vector.body, %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit.loopexit, %_ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i
-  %i.cw = phi i64 [ 6, %_ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i ], [ %i.cv, %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit.loopexit ], [ 6, %vector.body ], [ 6, %.lr.ph.i.i.i.i.i ]
+_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i, %middle.block, %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit.loopexit, %_ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i
+  %i.cw = phi i64 [ 6, %_ZSt6fill_nIPN4mlir4TypeEmS1_ET_S3_T0_RKT1_.exit.i.i ], [ %i.cv, %_ZN4llvm11SmallVectorIN4mlir4TypeELj6EEC2EmRKS2_.exit.loopexit ], [ 6, %middle.block ], [ 6, %.lr.ph.i.i.i.i.i ]
   store i32 %i.cb, ptr %i.ce, align 8, !tbaa !181
   %.sroa.0.0.copyload.i41 = load i64, ptr %13, align 8
   %i.cx = getelementptr inbounds nuw i8, ptr %13, i64 8
