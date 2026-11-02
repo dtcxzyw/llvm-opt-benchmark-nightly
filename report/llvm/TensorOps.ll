@@ -205,26 +205,24 @@ _ZSt6fill_nIPN4mlir8LocationEmS1_ET_S3_T0_RKT1_.exit.i.i: ; preds = %bb.a
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZSt6fill_nIPN4mlir8LocationEmS1_ET_S3_T0_RKT1_.exit.i.i
   %i.ac = ptrtoint ptr %.sroa.0.0.copyload.i23 to i64 ; 2 uses
-  %min.iters.check = icmp ult i64 %i.k, 4
+  %min.iters.check = icmp ult i64 %i.k, 2
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i.i.i
-  %i.ad = and i64 %i.i, 3                         ; 3 uses
+  %i.ad = and i64 %i.i, 1                         ; 3 uses
   %n.vec = sub nuw nsw i64 %i.k, %i.ad            ; 2 uses
   %i.ae = shl nuw nsw i64 %n.vec, 3
   %i.af = getelementptr i8, ptr %i.o, i64 %i.ae
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ac, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ag = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %i.o, i64 %i.ag ; 2 uses
-  %i.ah = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 8
+  %i.ah = getelementptr i8, ptr %i.o, i64 %i.ag
   store <2 x i64> %broadcast.splat, ptr %i.ah, align 8
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !1129
 
