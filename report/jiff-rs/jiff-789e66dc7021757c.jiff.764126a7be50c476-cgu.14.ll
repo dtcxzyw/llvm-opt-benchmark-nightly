@@ -202,7 +202,6 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNt
   %i.l = tail call noundef ptr @_RNvMs_NtCsa9sSWSfjDbm_4jiff5errorNtB4_5Error12context_impl(ptr noundef %i.e, ptr noundef %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.l, ptr %i.d, align 8
-  store i32 1, ptr %0, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtBa_4util5round9IncrementNtB8_5ErrorEINtB8_12ErrorContextB1b_B1F_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit
@@ -445,7 +444,8 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultlNtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.n, ptr %i.o, align 8
-  br label %.sink.split
+  store i32 1, ptr %0, align 8
+  br label %bb.h
 
 _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit: ; preds = %bb.b
   %.sroa.69.0.extract.trunc = trunc nuw nsw i64 %2 to i32
@@ -453,14 +453,10 @@ _RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6
   store i32 %.sroa.69.0.extract.trunc, ptr %i.p, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %1, ptr %i.q, align 8
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultlNtNtNtBa_4util1b11BoundsErrorEINtB8_12ErrorContextlB1c_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtBa_4util5round9IncrementNtB8_5ErrorEINtB8_12ErrorContextB1b_B1F_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit
-  %.sink = phi i32 [ 1, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtBa_4util5round9IncrementNtB8_5ErrorEINtB8_12ErrorContextB1b_B1F_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit ], [ 0, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit ], [ 1, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultlNtNtNtBa_4util1b11BoundsErrorEINtB8_12ErrorContextlB1c_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit ]
-  store i32 %.sink, ptr %0, align 8
+  store i32 0, ptr %0, align 8
   br label %bb.h
 
-bb.h:                                             ; preds = %.sink.split, %bb.c
+bb.h:                                             ; preds = %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtBa_4util5round9IncrementNtB8_5ErrorEINtB8_12ErrorContextB1b_B1F_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit, %bb.c, %_RINvYNtNtNtCsa9sSWSfjDbm_4jiff4util1b11Increment32NtNtCsb09rMIQFAXO_9jiff_core6bounds6Bounds5checkxEB9_.exit, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultlNtNtNtBa_4util1b11BoundsErrorEINtB8_12ErrorContextlB1c_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit
   ret void
 
 bb.i:                                             ; preds = %bb.c
@@ -497,7 +493,7 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNt
   %i.z = tail call noundef ptr @_RNvMs_NtCsa9sSWSfjDbm_4jiff5errorNtB4_5Error12context_impl(ptr noundef %i.s, ptr noundef %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.z, ptr %i.r, align 8
-  br label %.sink.split
+  br label %bb.h
 }
 
 ; Function Attrs: cold noinline nonlazybind uwtable
@@ -900,7 +896,8 @@ bb.h:                                             ; preds = %_RNCINvXsk_NtCsa9sS
   %.sroa.73.0.ph = phi ptr [ %i.p, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultlNtNtNtBa_4util1b11BoundsErrorEINtB8_12ErrorContextlB1c_E7contextNtNtB8_4util22RoundingIncrementErrorE0Ba_.exit.i ], [ %i.h, %bb.c ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.73.0.ph, ptr %i.q, align 8
-  br label %.sink.split
+  store i64 1, ptr %0, align 8
+  br label %bb.q
 
 bb.i:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 9
@@ -968,13 +965,9 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNt
   %i.ar = tail call noundef ptr @_RNvMs_NtCsa9sSWSfjDbm_4jiff5errorNtB4_5Error12context_impl(ptr noundef %i.ak, ptr noundef %i.al)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %i.ar, ptr %i.aj, align 8
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.h, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E12with_contextNtNtB8_15signed_duration5ErrorNCNvMsl_B1d_NtB1d_19SignedDurationRound5round0E0Ba_.exit
-  store i64 1, ptr %0, align 8
   br label %bb.q
 
-bb.q:                                             ; preds = %.sink.split, %_RNvMNtNtCsa9sSWSfjDbm_4jiff4util5roundNtB2_9Increment5round.exit
+bb.q:                                             ; preds = %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E12with_contextNtNtB8_15signed_duration5ErrorNCNvMsl_B1d_NtB1d_19SignedDurationRound5round0E0Ba_.exit, %_RNvMNtNtCsa9sSWSfjDbm_4jiff4util5roundNtB2_9Increment5round.exit, %bb.h
   ret void
 }
 

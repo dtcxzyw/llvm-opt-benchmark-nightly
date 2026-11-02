@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.d
   %.sroa.014.0.lcssa = phi ptr [ %i.j, %bb.d ], [ %i.o, %bb.e ]
-  store i64 1, ptr %0, align 8
   store ptr %.sroa.014.0.lcssa, ptr %i.d, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   br label %bb.c
@@ -259,7 +258,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.d
   %.sroa.014.0.lcssa = phi ptr [ %i.j, %bb.d ], [ %i.o, %bb.e ]
-  store i64 1, ptr %0, align 8
   store ptr %.sroa.014.0.lcssa, ptr %i.d, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   br label %bb.c
@@ -313,7 +311,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.d
   %.sroa.014.0.lcssa = phi ptr [ %i.j, %bb.d ], [ %i.o, %bb.e ]
-  store i64 1, ptr %0, align 8
   store ptr %.sroa.014.0.lcssa, ptr %i.d, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   br label %bb.c
@@ -716,7 +713,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %.split.i.i.i.i, %bb.m
   %i.bw = icmp samesign eq i64 %i.bq, %.val1.i
-  br i1 %i.bw, label %.sink.split.i, label %bb.q
+  br i1 %i.bw, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.bq
@@ -761,13 +758,13 @@ bb.r:                                             ; preds = %.loopexit19.i
   store i8 1, ptr %i.j, align 2, !alias.scope !12764
   br label %"_ZN80_$LT$core..str..pattern..StrSearcher$u20$as$u20$core..str..pattern..Searcher$GT$4next17h7d9d5b7ab6d32301E.exit.thread7.i.i"
 
-.sink.split.i:                                    ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit12.i.i.i.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit14.i.i.i.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit16.i.i.i.i", %bb.q, %bb.p, %bb.h
-  %.ph.i = phi i64 [ %.val1.i, %bb.p ], [ %.promoted.i.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit16.i.i.i.i" ], [ %i.bq, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit14.i.i.i.i" ], [ %i.bq, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit12.i.i.i.i" ]
+.sink.split.i:                                    ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit12.i.i.i.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit14.i.i.i.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit16.i.i.i.i", %bb.q, %bb.h
+  %.lcssa14.i = phi i64 [ %.promoted.i.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit16.i.i.i.i" ], [ %i.bq, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit14.i.i.i.i" ], [ %i.bq, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc0f6a24730e0911eE.exit12.i.i.i.i" ]
   store i8 0, ptr %i.m, align 8, !alias.scope !12764
   br label %bb.s
 
-bb.s:                                             ; preds = %.sink.split.i, %.loopexit19.i
-  %1 = phi i64 [ %.val1.i, %.loopexit19.i ], [ %.ph.i, %.sink.split.i ] ; 2 uses
+bb.s:                                             ; preds = %.sink.split.i, %.loopexit19.i, %bb.p
+  %1 = phi i64 [ %.lcssa14.i, %.sink.split.i ], [ %.val1.i, %.loopexit19.i ], [ %.val1.i, %bb.p ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.ck, align 8, !alias.scope !12761, !noalias !12760
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 16

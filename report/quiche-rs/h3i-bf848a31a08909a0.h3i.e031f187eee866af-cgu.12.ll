@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.sroa.013.0.lcssa = phi ptr [ %.sroa.013.029, %bb.d ], [ %.sroa.013.0.lcssa35.unr, %.lr.ph.prol.loopexit ], [ %.sroa.013.0.7, %.lr.ph ], !dbg !13440
-  store i64 1, ptr %0, align 8, !dbg !13444
   store ptr %.sroa.013.0.lcssa, ptr %i.c, align 8, !dbg !13444
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false), !dbg !13444
   br label %bb.c, !dbg !13445
@@ -449,7 +448,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.sroa.013.0.lcssa = phi ptr [ %.sroa.013.029, %bb.d ], [ %.sroa.013.0.lcssa35.unr, %.lr.ph.prol.loopexit ], [ %.sroa.013.0.7, %.lr.ph ], !dbg !13518
-  store i64 1, ptr %0, align 8, !dbg !13522
   store ptr %.sroa.013.0.lcssa, ptr %i.c, align 8, !dbg !13522
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false), !dbg !13522
   br label %bb.c, !dbg !13523
@@ -693,7 +691,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.sroa.013.0.lcssa = phi ptr [ %.sroa.013.029, %bb.d ], [ %.sroa.013.0.lcssa35.unr, %.lr.ph.prol.loopexit ], [ %.sroa.013.0.7, %.lr.ph ], !dbg !13596
-  store i64 1, ptr %0, align 8, !dbg !13600
   store ptr %.sroa.013.0.lcssa, ptr %i.c, align 8, !dbg !13600
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false), !dbg !13600
   br label %bb.c, !dbg !13601
@@ -937,7 +934,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.sroa.013.0.lcssa = phi ptr [ %.sroa.013.029, %bb.d ], [ %.sroa.013.0.lcssa35.unr, %.lr.ph.prol.loopexit ], [ %.sroa.013.0.7, %.lr.ph ], !dbg !13674
-  store i64 1, ptr %0, align 8, !dbg !13678
   store ptr %.sroa.013.0.lcssa, ptr %i.c, align 8, !dbg !13678
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false), !dbg !13678
   br label %bb.c, !dbg !13679
@@ -1181,7 +1177,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.sroa.013.0.lcssa = phi ptr [ %.sroa.013.029, %bb.d ], [ %.sroa.013.0.lcssa35.unr, %.lr.ph.prol.loopexit ], [ %.sroa.013.0.7, %.lr.ph ], !dbg !13866
-  store i64 1, ptr %0, align 8, !dbg !13870
   store ptr %.sroa.013.0.lcssa, ptr %i.c, align 8, !dbg !13870
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false), !dbg !13870
   br label %bb.c, !dbg !13871

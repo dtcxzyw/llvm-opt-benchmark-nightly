@@ -203,7 +203,7 @@ bb.ad:                                            ; preds = %bb.w
 
 bb.ae:                                            ; preds = %bb.aa, %bb.ab, %bb.ac, %bb.x
   %i.ci = phi ptr [ %i.bq, %bb.aa ], [ %i.bq, %bb.ab ], [ %i.bq, %bb.ac ], [ %i.bp, %bb.x ] ; 2 uses
-  %i.cj = phi ptr [ %i.br, %bb.aa ], [ %i.br, %bb.ab ], [ %i.br, %bb.ac ], [ %i.bo, %bb.x ] ; 4 uses
+  %i.cj = phi ptr [ %i.br, %bb.aa ], [ %i.br, %bb.ab ], [ %i.br, %bb.ac ], [ %i.bo, %bb.x ] ; 3 uses
   %i.ck = phi ptr [ %i.bs, %bb.aa ], [ %i.bs, %bb.ab ], [ %i.bs, %bb.ac ], [ %i.bn, %bb.x ]
   %i.cl = phi i1 [ true, %bb.aa ], [ true, %bb.ab ], [ false, %bb.ac ], [ false, %bb.x ]
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
@@ -459,7 +459,6 @@ bb.bk:                                            ; preds = %bb.bj
   br label %bb.bn
 
 bb.bl:                                            ; preds = %bb.bj
-  store i8 1, ptr %i.cj, align 1, !tbaa !154
   %i.gz = load i64, ptr %i.fv, align 8, !tbaa !32
   %i.ha = uitofp i64 %i.gz to double
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 524984

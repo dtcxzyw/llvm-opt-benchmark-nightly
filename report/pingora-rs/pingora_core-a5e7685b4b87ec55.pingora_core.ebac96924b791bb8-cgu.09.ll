@@ -204,7 +204,7 @@ bb.ba:                                            ; preds = %bb.bc, %bb.az, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !noalias !384
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !noalias !384
   %i.hm = invoke noundef nonnull align 8 ptr @_RNvXs8_NtNtNtCskxN0Kp1MEon_2h25proto7streams5storeNtB5_3PtrNtNtNtCskKLDkoKarTP_4core3ops5deref8DerefMut9deref_mut(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ba)
-          to label %bb.bd unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !385 ; 5 uses
+          to label %bb.bd unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !385 ; 4 uses
 
 bb.bb:                                            ; preds = %bb.az
   %i.hn = load ptr, ptr @_RNvNvMNtNtNtCskxN0Kp1MEon_2h25proto7streams10prioritizeNtB4_10Prioritize9pop_frames0_10___CALLSITE, align 8, !noalias !384, !nonnull !15, !align !17, !noundef !15 ; 2 uses
@@ -289,7 +289,6 @@ bb.bi:                                            ; preds = %_RNvMs3_Csl6TgSXZDi
   br i1 %.not.i40, label %bb.bo, label %bb.bn, !prof !27
 
 bb.bj:                                            ; preds = %bb.bh
-  store i64 1, ptr %i.hm, align 8, !alias.scope !407, !noalias !385
   store i64 %i.ie, ptr %i.hr, align 8, !alias.scope !407, !noalias !385
   br label %_RINvMs_NtNtNtCskxN0Kp1MEon_2h25proto7streams6bufferNtB5_5Deque9pop_frontNtNtBb_5frame5FrameECskeugdADtBsi_12pingora_core.exit
 
@@ -692,7 +691,6 @@ bb.h:                                             ; preds = %_RNvMs3_Csl6TgSXZDi
   br i1 %.not, label %bb.o, label %bb.n, !prof !27
 
 bb.i:                                             ; preds = %bb.g
-  store i64 1, ptr %1, align 8
   store i64 %i.u, ptr %i.d, align 8
   br label %bb.m
 

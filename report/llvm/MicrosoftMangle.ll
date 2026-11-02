@@ -205,14 +205,16 @@ bb.bj:                                            ; preds = %bb.bi
   call fastcc void @_ZN12_GLOBAL__N_123MicrosoftCXXNameMangler20mangleIntegerLiteralERKN4llvm6APSIntEPKN5clang23NonTypeTemplateParmDeclENS5_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(577) %0, ptr noundef nonnull align 8 dereferenceable(13) %5, ptr noundef %3, i64 %.sroa.0.0.copyload.i115), !inline_history !976
   %.pre = load i8, ptr %i.kj, align 8, !tbaa !985, !range !460
   %i.kn = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.kj, align 8, !tbaa !985
-  %19 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %20 = load i32, ptr %19, align 8
-  %21 = icmp ugt i32 %20, 64
-  %or.cond.i.i.i = select i1 %i.kn, i1 %21, i1 false
-  br i1 %or.cond.i.i.i, label %bb.bk, label %_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread
+  br i1 %i.kn, label %19, label %_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread
 
-bb.bk:                                            ; preds = %bb.bj
+19:                                               ; preds = %bb.bj
+  store i8 0, ptr %i.kj, align 8, !tbaa !985
+  %20 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %21 = load i32, ptr %20, align 8, !tbaa !606
+  %22 = icmp ugt i32 %21, 64
+  br i1 %22, label %bb.bk, label %_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread
+
+bb.bk:                                            ; preds = %19
   %i.ko = load ptr, ptr %5, align 8, !tbaa !465   ; 2 uses
   %i.kp = icmp eq ptr %i.ko, null
   br i1 %i.kp, label %_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread, label %bb.bl
@@ -221,7 +223,7 @@ bb.bl:                                            ; preds = %bb.bk
   call void @_ZdaPv(ptr noundef nonnull %i.ko) #22
   br label %_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread
 
-_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread: ; preds = %bb.bj, %bb.bk, %bb.bl
+_ZNSt14_Optional_baseIN4llvm6APSIntELb0ELb0EED2Ev.exit.thread: ; preds = %bb.bj, %19, %bb.bk, %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   br label %.critedge
 

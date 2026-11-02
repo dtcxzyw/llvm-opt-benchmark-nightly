@@ -205,11 +205,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 88 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !1688, !range !560, !noundef !561
   %i.g = trunc nuw i8 %i.f to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !1688
   br i1 %i.g, label %bb.b, label %_ZSt8_DestroyIN7rocksdb11ScanOptionsEEvPT_.exit.i.i.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 32
+  store i8 0, ptr %i.e, align 8, !tbaa !1688
   tail call void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.h) #41
   br label %_ZSt8_DestroyIN7rocksdb11ScanOptionsEEvPT_.exit.i.i.i
 
@@ -612,11 +612,11 @@ _ZNSt13unordered_mapImN7rocksdb13MultiScanArgsESt4hashImESt8equal_toImESaISt4pai
   %i.ah = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 88 ; 2 uses
   %i.ai = load i8, ptr %i.ah, align 8, !tbaa !1688, !range !560, !noundef !561
   %i.aj = trunc nuw i8 %i.ai to i1
-  store i8 0, ptr %i.ah, align 8, !tbaa !1688
   br i1 %i.aj, label %bb.i, label %_ZSt8_DestroyIN7rocksdb11ScanOptionsEEvPT_.exit.i.i.i.i
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i.i3
   %i.ak = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 32
+  store i8 0, ptr %i.ah, align 8, !tbaa !1688
   call void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.ak) #41
   br label %_ZSt8_DestroyIN7rocksdb11ScanOptionsEEvPT_.exit.i.i.i.i
 
@@ -1019,10 +1019,10 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNSt8optionalISt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_St4hashIS6_ESt8equal_toIS6_ESaISt4pairIKS6_S6_EEEEaSERKSG_.exit
 
 bb.h:                                             ; preds = %bb.f
-  store i8 0, ptr %i.l, align 8, !tbaa !1688
   br i1 %i.n, label %bb.i, label %_ZNSt8optionalISt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_St4hashIS6_ESt8equal_toIS6_ESaISt4pairIKS6_S6_EEEEaSERKSG_.exit
 
 bb.i:                                             ; preds = %bb.h
+  store i8 0, ptr %i.l, align 8, !tbaa !1688
   tail call void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.k) #41
   br label %_ZNSt8optionalISt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_St4hashIS6_ESt8equal_toIS6_ESaISt4pairIKS6_S6_EEEEaSERKSG_.exit
 
@@ -1076,12 +1076,12 @@ _ZNKSt6vectorIN7rocksdb11ScanOptionsESaIS1_EE12_M_check_lenEmPKc.exit: ; preds =
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(96) %.0911.i.i.i, i64 32, i1 false), !tbaa.struct !3206, !alias.scope !3207
   %i.t = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 32 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 32 ; 3 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 88 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 88 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 88 ; 2 uses
   store i8 0, ptr %i.w, align 8, !tbaa !1688, !alias.scope !3204
   %i.x = load i8, ptr %i.v, align 8, !tbaa !1688, !range !560, !alias.scope !3205, !noundef !561
   %i.y = trunc nuw i8 %i.x to i1
-  br i1 %i.y, label %bb.c, label %_ZSt12construct_atIN7rocksdb11ScanOptionsEJS1_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS3_DpOS4_.exit.i.i.i.i
+  br i1 %i.y, label %bb.c, label %_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.z = load ptr, ptr %i.u, align 8, !tbaa !570, !alias.scope !3205 ; 3 uses
@@ -1126,10 +1126,6 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.ad, ptr %i.at, align 8, !tbaa !633, !noalias !3205
   br label %bb.g
 
-_ZSt12construct_atIN7rocksdb11ScanOptionsEJS1_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS3_DpOS4_.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i
-  store i8 0, ptr %i.v, align 8, !tbaa !1688, !alias.scope !3205
-  br label %_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i
-
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.au = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 72
   store i64 0, ptr %i.au, align 8, !tbaa !1077, !alias.scope !3205
@@ -1142,7 +1138,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   tail call void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.u) #41
   br label %_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i
 
-_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i: ; preds = %bb.g, %_ZSt12construct_atIN7rocksdb11ScanOptionsEJS1_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS3_DpOS4_.exit.i.i.i.i
+_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i: ; preds = %bb.g, %.lr.ph.i.i.i
   %i.av = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 96 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.av, %1
@@ -1162,12 +1158,12 @@ _ZNSt6vectorIN7rocksdb11ScanOptionsESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ;
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.012.i.i.i29, ptr noundef nonnull align 8 dereferenceable(96) %.0911.i.i.i30, i64 32, i1 false), !tbaa.struct !3206, !alias.scope !3210
   %i.ay = getelementptr inbounds nuw i8, ptr %.012.i.i.i29, i64 32 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.0911.i.i.i30, i64 32 ; 3 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i30, i64 88 ; 3 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i30, i64 88 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i29, i64 88 ; 2 uses
   store i8 0, ptr %i.bb, align 8, !tbaa !1688, !alias.scope !3208
   %i.bc = load i8, ptr %i.ba, align 8, !tbaa !1688, !range !560, !alias.scope !3209, !noundef !561
   %i.bd = trunc nuw i8 %i.bc to i1
-  br i1 %i.bd, label %bb.h, label %_ZSt12construct_atIN7rocksdb11ScanOptionsEJS1_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS3_DpOS4_.exit.i.i.i.i31
+  br i1 %i.bd, label %bb.h, label %_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i32
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i28
   %i.be = load ptr, ptr %i.az, align 8, !tbaa !570, !alias.scope !3209 ; 3 uses
@@ -1212,10 +1208,6 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.bi, ptr %i.by, align 8, !tbaa !633, !noalias !3209
   br label %bb.l
 
-_ZSt12construct_atIN7rocksdb11ScanOptionsEJS1_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS3_DpOS4_.exit.i.i.i.i31: ; preds = %.lr.ph.i.i.i28
-  store i8 0, ptr %i.ba, align 8, !tbaa !1688, !alias.scope !3209
-  br label %_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i32
-
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bz = getelementptr inbounds nuw i8, ptr %.0911.i.i.i30, i64 72
   store i64 0, ptr %i.bz, align 8, !tbaa !1077, !alias.scope !3209
@@ -1228,7 +1220,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   tail call void @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(64) %i.az) #41
   br label %_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i32
 
-_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i32: ; preds = %bb.l, %_ZSt12construct_atIN7rocksdb11ScanOptionsEJS1_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS3_DpOS4_.exit.i.i.i.i31
+_ZSt19__relocate_object_aIN7rocksdb11ScanOptionsES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i32: ; preds = %bb.l, %.lr.ph.i.i.i28
   %i.ca = getelementptr inbounds nuw i8, ptr %.0911.i.i.i30, i64 96 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.012.i.i.i29, i64 96 ; 2 uses
   %.not.i.i.i33 = icmp eq ptr %i.ca, %i.b

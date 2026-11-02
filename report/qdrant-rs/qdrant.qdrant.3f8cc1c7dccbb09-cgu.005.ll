@@ -204,16 +204,12 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   %i.x = load i64, ptr %0, align 8, !range !28, !noundef !20
   %i.y = trunc nuw i64 %i.x to i1
-  br i1 %i.y, label %3, label %bb.r
+  br i1 %i.y, label %common.ret, label %bb.r
 
-common.ret:                                       ; preds = %bb.r, %3
-  %storemerge = phi i8 [ 3, %3 ], [ 1, %bb.r ]
+common.ret:                                       ; preds = %bb.r, %bb.q
+  %storemerge = phi i8 [ 3, %bb.q ], [ 1, %bb.r ]
   store i8 %storemerge, ptr %i.e, align 8
   ret void
-
-3:                                                ; preds = %bb.q
-  store i64 1, ptr %0, align 8
-  br label %common.ret
 
 bb.r:                                             ; preds = %bb.q
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtNtCsl8OoimOLbh_6qdrant6common9inference16infer_processingNtBG_18BatchAccumInferred12from_objects0EBM_(ptr noundef nonnull align 8 %1)

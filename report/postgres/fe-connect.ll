@@ -204,17 +204,18 @@ bb.j:                                             ; preds = %bb.i
   %i.ak = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #24 ; 2 uses
   %i.al = call i32 @strncmp(ptr noundef nonnull %i.aj, ptr noundef nonnull %1, i64 noundef %i.ak) #24
   %i.am = icmp eq i32 %i.al, 0
-  br i1 %i.am, label %bb.k, label %bb.l
+  br i1 %i.am, label %bb.k, label %.critedge2.thread
 
 bb.k:                                             ; preds = %bb.j
   %i.an = getelementptr i8, ptr %.089138, i64 %i.ak
   %i.ao = getelementptr i8, ptr %i.an, i64 1
   %i.ap = load i8, ptr %i.ao, align 1
   %i.aq = icmp eq i8 %i.ap, 93
-  br i1 %i.aq, label %.critedge2.thread.sink.split, label %bb.l
+  br i1 %i.aq, label %bb.l, label %.critedge2.thread
 
-bb.l:                                             ; preds = %bb.k, %bb.j
-  br label %.critedge2.thread.sink.split
+bb.l:                                             ; preds = %bb.k
+  store i8 1, ptr %4, align 1
+  br label %.critedge2.thread
 
 bb.m:                                             ; preds = %.critedge2
   %i.ar = load i8, ptr %4, align 1, !range !8, !noundef !9
@@ -295,12 +296,7 @@ bb.u:                                             ; preds = %bb.t
   call void (ptr, ptr, ...) @libpq_append_error(ptr noundef %3, ptr noundef nonnull @.str.289, ptr noundef nonnull %0, i32 noundef %i.f) #23
   br label %.thread119.thread
 
-.critedge2.thread.sink.split:                     ; preds = %bb.k, %bb.l
-  %.sink = phi i8 [ 0, %bb.l ], [ 1, %bb.k ]
-  store i8 %.sink, ptr %4, align 1
-  br label %.critedge2.thread
-
-.critedge2.thread:                                ; preds = %bb.h, %.critedge2.thread.sink.split, %.critedge, %.lr.ph142._crit_edge, %bb.t, %bb.m, %.critedge2
+.critedge2.thread:                                ; preds = %bb.h, %bb.j, %bb.k, %.critedge, %.lr.ph142._crit_edge, %bb.t, %bb.l, %bb.m, %.critedge2
   %i.bn = call ptr @fgets(ptr noundef nonnull %i.a, i32 noundef 1024, ptr noundef nonnull %i.b) ; 2 uses
   %.not = icmp eq ptr %i.bn, null
   br i1 %.not, label %.thread119, label %.lr.ph146

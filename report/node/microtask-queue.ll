@@ -183,11 +183,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.l = load i8, ptr %i.k, align 8, !range !7, !noundef !8
   %i.m = trunc nuw i8 %i.l to i1
-  store i8 0, ptr %i.k, align 8
   br i1 %i.m, label %bb.f, label %_ZNSt14_Optional_baseISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EELb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 104
+  store i8 0, ptr %i.k, align 8
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EELb0ELb0EED2Ev.exit, label %bb.g
@@ -255,11 +255,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.l = load i8, ptr %i.k, align 8, !range !7, !noundef !8
   %i.m = trunc nuw i8 %i.l to i1
-  store i8 0, ptr %i.k, align 8
   br i1 %i.m, label %bb.f, label %_ZNSt14_Optional_baseISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EELb0ELb0EED2Ev.exit.i
 
 bb.f:                                             ; preds = %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 104
+  store i8 0, ptr %i.k, align 8
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EELb0ELb0EED2Ev.exit.i, label %bb.g
@@ -662,10 +662,10 @@ bb.b:                                             ; preds = %_ZNSt8optionalIN2v8
   call void @_ZN2v88internal7Isolate16ClearKeptObjectsEv(ptr noundef nonnull align 8 dereferenceable(64320) %1) #14
   %i.f = load i8, ptr %i.a, align 8, !range !7, !noundef !8
   %i.g = trunc nuw i8 %i.f to i1
-  store i8 0, ptr %i.a, align 8
   br i1 %i.g, label %bb.c, label %_ZNSt14_Optional_baseIN2v815MicrotasksScopeELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.a, align 8
   call void @_ZN2v815MicrotasksScopeD1Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(32) %2) #14
   br label %_ZNSt14_Optional_baseIN2v815MicrotasksScopeELb0ELb0EED2Ev.exit
 
@@ -1068,13 +1068,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !range !7, !noundef !8
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %_ZNRSt8optionalISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EEE5valueEv.exit, label %_ZNSt19_Optional_base_implISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EESt14_Optional_baseISA_Lb0ELb0EEE8_M_resetEv.exit.i
 
 _ZNSt19_Optional_base_implISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EESt14_Optional_baseISA_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.b
-  store i8 0, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8              ; 3 uses
   %i.k = load ptr, ptr %i.a, align 8              ; 3 uses
@@ -1228,13 +1227,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !range !7, !noundef !8
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %_ZNRSt8optionalISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EEE5valueEv.exit, label %_ZNSt19_Optional_base_implISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EESt14_Optional_baseISA_Lb0ELb0EEE8_M_resetEv.exit.i
 
 _ZNSt19_Optional_base_implISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EESt14_Optional_baseISA_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.b
-  store i8 0, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8              ; 3 uses
   %i.k = load ptr, ptr %i.a, align 8              ; 3 uses
@@ -1440,10 +1438,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !range !7, !noundef !8
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8
   br i1 %i.c, label %bb.b, label %_ZNSt19_Optional_base_implISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EESt14_Optional_baseISA_Lb0ELb0EEE8_M_resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8
   %i.d = load ptr, ptr %0, align 8                ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.d, null
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt19_Optional_base_implISt6vectorISt4pairIPFvPN2v87IsolateEPvES5_ESaIS8_EESt14_Optional_baseISA_Lb0ELb0EEE8_M_resetEv.exit, label %bb.c
@@ -1517,10 +1515,10 @@ bb.c:                                             ; preds = %_ZNSt8optionalIN2v8
   call void @_ZN2v88internal7Isolate16ClearKeptObjectsEv(ptr noundef nonnull align 8 dereferenceable(64320) %1) #14
   %i.m = load i8, ptr %i.h, align 8, !range !7, !noundef !8
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.h, align 8
   br i1 %i.n, label %bb.d, label %_ZN2v88internal14MicrotaskQueue25PerformCheckpointInternalEPNS_7IsolateE.exit
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.h, align 8
   call void @_ZN2v815MicrotasksScopeD1Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(32) %2) #14
   br label %_ZN2v88internal14MicrotaskQueue25PerformCheckpointInternalEPNS_7IsolateE.exit
 

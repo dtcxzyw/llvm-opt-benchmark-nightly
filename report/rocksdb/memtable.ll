@@ -205,7 +205,7 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit:        ; preds = %bb.b, %.thread.i
 
 bb.c:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store i8 0, ptr %i.an, align 8, !tbaa !526
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 4 uses
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !513, !range !104, !noundef !105
@@ -232,7 +232,6 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt19_Optional_base_implIN7rocksdb8ReadLockESt14_Optional_baseIS1_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.d
   %i.bf = load ptr, ptr %i.ba, align 8, !tbaa !359
-  store i8 0, ptr %i.an, align 8, !tbaa !526
   %i.bg = ptrtoint ptr %i.bc to i64
   %i.bh = ptrtoint ptr %i.bd to i64
   %i.bi = sub i64 %i.bg, %i.bh
@@ -635,10 +634,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !526, !range !104, !noundef !105
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !526
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN7rocksdb8ReadLockELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !526
   %i.d = load ptr, ptr %0, align 8, !tbaa !528
   invoke void @_ZN7rocksdb4port7RWMutex10ReadUnlockEv(ptr noundef nonnull align 8 dereferenceable(56) %i.d)
           to label %_ZNSt17_Optional_payloadIN7rocksdb8ReadLockELb0ELb0ELb0EED2Ev.exit unwind label %bb.c

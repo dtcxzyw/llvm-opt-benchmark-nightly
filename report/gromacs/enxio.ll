@@ -204,7 +204,7 @@ bb.cw:                                            ; preds = %bb.bx
   store i32 %i.iw, ptr %i.g, align 4, !tbaa !57
   %i.ix = load i8, ptr %5, align 1, !tbaa !82, !range !83, !noundef !84
   %i.iy = trunc nuw i8 %i.ix to i1
-  br i1 %i.iy, label %bb.cx, label %.critedge
+  br i1 %i.iy, label %bb.cx, label %bb.cz
 
 bb.cx:                                            ; preds = %bb.cw
   %i.iz = load ptr, ptr %i.i, align 8, !tbaa !63
@@ -219,12 +219,8 @@ bb.cy:                                            ; preds = %bb.cx
   %i.je = zext i1 %i.jd to i8
   br label %bb.cz
 
-.critedge:                                        ; preds = %bb.cw
-  store i8 0, ptr %5, align 1, !tbaa !82
-  br label %bb.cz
-
-bb.cz:                                            ; preds = %.critedge, %bb.cy, %bb.cx
-  %i.jf = phi i8 [ 0, %bb.cx ], [ %i.je, %bb.cy ], [ 0, %.critedge ]
+bb.cz:                                            ; preds = %bb.cw, %bb.cy, %bb.cx
+  %i.jf = phi i8 [ 0, %bb.cx ], [ %i.je, %bb.cy ], [ 0, %bb.cw ]
   store i8 %i.jf, ptr %5, align 1, !tbaa !82
   %i.jg = load i32, ptr %i.g, align 4, !tbaa !57  ; 5 uses
   %i.jh = load ptr, ptr %i.fu, align 8, !tbaa !19

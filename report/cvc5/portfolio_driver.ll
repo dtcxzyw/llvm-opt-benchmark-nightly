@@ -202,11 +202,11 @@ _ZNSt6vectorIN4cvc54SortESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN4cv
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.ac = load i8, ptr %i.ab, align 8, !tbaa !84, !range !85, !noundef !76
   %i.ad = trunc nuw i8 %i.ac to i1
-  store i8 0, ptr %i.ab, align 8, !tbaa !84
   br i1 %i.ad, label %bb.e, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN4cvc54SortESaIS1_EED2Ev.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i8 0, ptr %i.ab, align 8, !tbaa !84
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !83 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ah = icmp eq ptr %i.af, %i.ag

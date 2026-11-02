@@ -204,7 +204,7 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.s
   store <2 x float> %5, ptr %i.cz, align 4, !tbaa !48
   %.sroa.217.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 932
   store float %6, ptr %.sroa.217.0..sroa_idx, align 4, !tbaa !48
-  %i.da = getelementptr inbounds nuw i8, ptr %0, i64 937 ; 3 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %0, i64 937 ; 2 uses
   store i8 %i.e, ptr %i.da, align 1, !tbaa !290
   %i.db = load ptr, ptr %i.f, align 8, !tbaa !187 ; 9 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 232
@@ -434,7 +434,6 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %i.gf = phi i8 [ 1, %bb.ad ], [ %i.ge, %bb.ae ]
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 528
   store i8 %i.gf, ptr %i.gg, align 8, !tbaa !119
-  store i8 0, ptr %i.da, align 1, !tbaa !290
   br label %.critedge.thread
 
 bb.ag:                                            ; preds = %bb.ac
@@ -837,10 +836,10 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt22_Optional_payload_baseI16ToolCapabilitiesE8_M_resetEv.exit
 
 bb.e:                                             ; preds = %bb.c
-  store i8 0, ptr %i.a, align 8, !tbaa !533
   br i1 %i.c, label %bb.f, label %_ZNSt22_Optional_payload_baseI16ToolCapabilitiesE8_M_resetEv.exit
 
 bb.f:                                             ; preds = %bb.e
+  store i8 0, ptr %i.a, align 8, !tbaa !533
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !292
@@ -1243,10 +1242,10 @@ _ZNSt22_Optional_payload_baseI13WearBarParamsE12_M_constructIJRKS0_EEEvDpOT_.exi
   br label %_ZNSt22_Optional_payload_baseI13WearBarParamsE8_M_resetEv.exit
 
 bb.h:                                             ; preds = %bb.c
-  store i8 0, ptr %i.a, align 8, !tbaa !534
   br i1 %i.c, label %bb.i, label %_ZNSt22_Optional_payload_baseI13WearBarParamsE8_M_resetEv.exit
 
 bb.i:                                             ; preds = %bb.h
+  store i8 0, ptr %i.a, align 8, !tbaa !534
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !292
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(57) %0, ptr noundef %i.ac)
@@ -1649,11 +1648,11 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.h = load i8, ptr %i.g, align 8, !tbaa !534, !range !46, !noundef !47
   %i.i = trunc nuw i8 %i.h to i1
-  store i8 0, ptr %i.g, align 8, !tbaa !534
   br i1 %i.i, label %bb.b, label %_ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 192
+  store i8 0, ptr %i.g, align 8, !tbaa !534
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !292
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(64) %i.j, ptr noundef %i.l)
@@ -1670,10 +1669,10 @@ _ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev.exit: ; preds = %bb.a, %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !533, !range !46, !noundef !47
   %i.q = trunc nuw i8 %i.p to i1
-  store i8 0, ptr %i.o, align 8, !tbaa !533
   br i1 %i.q, label %bb.d, label %_ZNSt14_Optional_baseI16ToolCapabilitiesLb0ELb0EED2Ev.exit
 
 bb.d:                                             ; preds = %_ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev.exit
+  store i8 0, ptr %i.o, align 8, !tbaa !533
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !292

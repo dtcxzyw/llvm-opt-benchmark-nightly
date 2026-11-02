@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.d
   %.sroa.013.0.lcssa = phi ptr [ %.sroa.013.029, %bb.d ], [ %.sroa.013.0.lcssa35.unr, %.lr.ph.prol.loopexit ], [ %.sroa.013.0.7, %.lr.ph ], !dbg !16488
-  store i64 1, ptr %0, align 8, !dbg !16492
   store ptr %.sroa.013.0.lcssa, ptr %i.c, align 8, !dbg !16492
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false), !dbg !16492
   br label %bb.c, !dbg !16493
@@ -607,7 +606,6 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
   %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.029.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], !dbg !17379
-  store i64 1, ptr %1, align 8, !dbg !17383, !alias.scope !17291
   store ptr %.sroa.013.0.lcssa.i.i, ptr %i.ai, align 8, !dbg !17383, !alias.scope !17291
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false), !dbg !17383, !alias.scope !17291
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingINtNtBb_3vec3VechENtNtNtCsbxHpS8e17M7_6webpki3crl5types16OwnedRevokedCertE10init_frontCshovLROGBtMy_11quinn_proto.exit.i, !dbg !17384
@@ -1010,7 +1008,6 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
   %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.029.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], !dbg !17823
-  store i64 1, ptr %1, align 8, !dbg !17827, !alias.scope !17735
   store ptr %.sroa.013.0.lcssa.i.i, ptr %i.ai, align 8, !dbg !17827, !alias.scope !17735
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false), !dbg !17827, !alias.scope !17735
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringNtNtCscFTfv2TGtgR_10serde_json5value5ValueE10init_frontCshovLROGBtMy_11quinn_proto.exit.i, !dbg !17828
@@ -1413,7 +1410,6 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
   %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.029.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], !dbg !18254
-  store i64 1, ptr %1, align 8, !dbg !18258, !alias.scope !18166
   store ptr %.sroa.013.0.lcssa.i.i, ptr %i.ai, align 8, !dbg !18258, !alias.scope !18166
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false), !dbg !18258, !alias.scope !18166
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketE10init_frontB1Q_.exit.i, !dbg !18259
@@ -1816,7 +1812,6 @@ bb.g:                                             ; preds = %bb.f
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
   %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.029.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], !dbg !18690
-  store i64 1, ptr %1, align 8, !dbg !18694, !alias.scope !18602
   store ptr %.sroa.013.0.lcssa.i.i, ptr %i.ai, align 8, !dbg !18694, !alias.scope !18602
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false), !dbg !18694, !alias.scope !18602
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingyyE10init_frontCshovLROGBtMy_11quinn_proto.exit.i, !dbg !18695
@@ -2219,7 +2214,6 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.d
   %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.029.i.i, %bb.d ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i ], !dbg !19573
-  store i64 1, ptr %0, align 8, !dbg !19577, !alias.scope !19504
   store ptr %.sroa.013.0.lcssa.i.i, ptr %i.j, align 8, !dbg !19577, !alias.scope !19504
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, i8 0, i64 16, i1 false), !dbg !19577, !alias.scope !19504
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketE10init_frontB1Q_.exit.i, !dbg !19578
@@ -2547,7 +2541,6 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.d
   %.sroa.013.0.lcssa.i = phi ptr [ %.sroa.013.029.i, %bb.d ], [ %.sroa.013.0.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.sroa.013.0.i.7, %.lr.ph.i ], !dbg !19875
-  store i64 1, ptr %0, align 8, !dbg !19879, !alias.scope !19723
   store ptr %.sroa.013.0.lcssa.i, ptr %i.j, align 8, !dbg !19879, !alias.scope !19723
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, i8 0, i64 16, i1 false), !dbg !19879, !alias.scope !19723
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutINtNtBb_3vec3VechENtNtNtCsbxHpS8e17M7_6webpki3crl5types16OwnedRevokedCertE10init_frontCshovLROGBtMy_11quinn_proto.exit, !dbg !19880
@@ -2874,7 +2867,6 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.d
   %.sroa.013.0.lcssa.i = phi ptr [ %.sroa.013.029.i, %bb.d ], [ %.sroa.013.0.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.sroa.013.0.i.7, %.lr.ph.i ], !dbg !20227
-  store i64 1, ptr %0, align 8, !dbg !20231, !alias.scope !20075
   store ptr %.sroa.013.0.lcssa.i, ptr %i.j, align 8, !dbg !20231, !alias.scope !20075
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, i8 0, i64 16, i1 false), !dbg !20231, !alias.scope !20075
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringNtNtCscFTfv2TGtgR_10serde_json5value5ValueE10init_frontCshovLROGBtMy_11quinn_proto.exit, !dbg !20232
@@ -3201,7 +3193,6 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.d
   %.sroa.013.0.lcssa.i = phi ptr [ %.sroa.013.029.i, %bb.d ], [ %.sroa.013.0.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.sroa.013.0.i.7, %.lr.ph.i ], !dbg !20389
-  store i64 1, ptr %0, align 8, !dbg !20393, !alias.scope !20329
   store ptr %.sroa.013.0.lcssa.i, ptr %i.j, align 8, !dbg !20393, !alias.scope !20329
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, i8 0, i64 16, i1 false), !dbg !20393, !alias.scope !20329
   br label %_RNvMsc_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutyyE10init_frontCshovLROGBtMy_11quinn_proto.exit, !dbg !20394
@@ -3458,7 +3449,7 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !20500, !DIExpression(), !20504)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20505), !dbg !20553
     #dbg_value(ptr %0, !20506, !DIExpression(), !20422)
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !20554 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !20554
   %i.i = load i64, ptr %i.h, align 8, !dbg !20554, !range !2453, !alias.scope !20505, !noundef !1631
   %i.j = trunc nuw i64 %i.i to i1, !dbg !20555
   br i1 %i.j, label %bb.c, label %.critedge, !dbg !20555
@@ -3797,7 +3788,6 @@ _RNvMsn_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree8navigateINtNtB7_4node7Node
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.03.0.lcssa.i.i, i64 186, !dbg !20567
   %i.ch = load i16, ptr %i.cg, align 2, !dbg !20567, !noalias !20514, !noundef !1631
   %i.ci = zext i16 %i.ch to i64, !dbg !20568
-  store i64 1, ptr %i.h, align 8, !dbg !20569, !alias.scope !20505
   store ptr %.sroa.03.0.lcssa.i.i, ptr %i.k, align 8, !dbg !20569, !alias.scope !20505
   store i64 0, ptr %i.m, align 8, !dbg !20569, !alias.scope !20505
   store i64 %i.ci, ptr %i.o, align 8, !dbg !20569, !alias.scope !20505
