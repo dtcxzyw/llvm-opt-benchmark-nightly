@@ -205,24 +205,26 @@ bb.a:
 define void @_ZN6icu_788message210data_model7OperandD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) initializes((0, 8)) %0) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN6icu_788message210data_model7OperandE, i64 16), ptr %0, align 8, !tbaa !29
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %1 = load i8, ptr %i.a, align 8, !tbaa !45, !range !24, !noundef !25
-  %2 = trunc nuw i8 %1 to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !45
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.c = load i8, ptr %i.b, align 8
-  %.not.i.i.i.i.i.i = icmp ne i8 %i.c, -1
-  %or.cond.not.i.i.i = select i1 %2, i1 %.not.i.i.i.i.i.i, i1 false, !prof !154
-  br i1 %or.cond.not.i.i.i, label %bb.b, label %_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit, !prof !154
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !45, !range !24, !noundef !25
+  %1 = trunc nuw i8 %i.c to i1
+  br i1 %1, label %2, label %_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit
 
-bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.d = load ptr, ptr %3, align 8, !tbaa !29
+2:                                                ; preds = %bb.a
+  store i8 0, ptr %i.b, align 8, !tbaa !45
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %4 = load i8, ptr %3, align 8, !tbaa !47
+  %.not.i.i.i.i.i.i = icmp eq i8 %4, -1
+  br i1 %.not.i.i.i.i.i.i, label %_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit, label %bb.b, !prof !48
+
+bb.b:                                             ; preds = %2
+  %i.d = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.e = load ptr, ptr %i.d, align 8
-  tail call void %i.e(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(96) %3) #18, !inline_history !153
+  tail call void %i.e(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(96) %i.a) #18, !inline_history !153
   br label %_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit: ; preds = %bb.a, %bb.b
+_ZNSt14_Optional_baseISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEELb0ELb0EED2Ev.exit: ; preds = %bb.a, %2, %bb.b
   tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #18
   ret void
 }
@@ -334,11 +336,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !23, !range !24, !noundef !25
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !23
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN6icu_788message210data_model7LiteralELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.a, align 8, !tbaa !23
   tail call void @_ZN6icu_788message210data_model7LiteralD1Ev(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(88) %i.d) #18
   br label %_ZNSt14_Optional_baseIN6icu_788message210data_model7LiteralELb0ELb0EED2Ev.exit
 
@@ -448,7 +450,7 @@ _ZN6icu_788message210data_model6OptionaSES2_.exit.i: ; preds = %.noexc9
   call void @_ZN6icu_788message210data_model6OptionD1Ev(ptr noundef nonnull align 8 dead_on_return(176) dereferenceable(176) %3) #18
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.e, !llvm.loop !155
+  br i1 %exitcond.not.i, label %.loopexit, label %bb.e, !llvm.loop !154
 
 .loopexit.thread:                                 ; preds = %bb.d, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
@@ -626,7 +628,7 @@ _ZN6icu_788message210data_model6OptionaSES2_.exit.i: ; preds = %.noexc
   call void @_ZN6icu_788message210data_model6OptionD1Ev(ptr noundef nonnull align 8 dead_on_return(176) dereferenceable(176) %2) #18
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.f, !llvm.loop !156
+  br i1 %exitcond.not.i, label %.loopexit, label %bb.f, !llvm.loop !155
 
 bb.h:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
@@ -816,7 +818,7 @@ bb.e:                                             ; preds = %.thread.i.i.i
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !29
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8
-  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #18, !inline_history !157
+  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #18, !inline_history !156
   br label %_ZN6icu_788message219createStringUVectorER10UErrorCode.exit
 
 _ZN6icu_788message213createUVectorER10UErrorCode.exit.i: ; preds = %.thread.i.i.i
@@ -871,10 +873,10 @@ define noundef nonnull align 8 dereferenceable(17) ptr @_ZN6icu_788message210dat
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !158
-  %i.d = load ptr, ptr %i.b, align 8, !tbaa !158
-  store ptr %i.d, ptr %i.a, align 8, !tbaa !158
-  store ptr %i.c, ptr %i.b, align 8, !tbaa !158
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !157
+  %i.d = load ptr, ptr %i.b, align 8, !tbaa !157
+  store ptr %i.d, ptr %i.a, align 8, !tbaa !157
+  store ptr %i.c, ptr %i.b, align 8, !tbaa !157
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i8, ptr %i.e, align 8, !tbaa !43, !range !24, !noundef !25
@@ -968,7 +970,7 @@ _ZNK6icu_7813UnicodeStringeqERKS0_.exit.thread.i: ; preds = %_ZNK6icu_7813Unicod
   %i.an = add nuw nsw i32 %.0914.i, 1             ; 2 uses
   %i.ao = load i32, ptr %i.h, align 8, !tbaa !41
   %i.ap = icmp slt i32 %i.an, %i.ao
-  br i1 %i.ap, label %bb.d, label %_ZN6icu_788message210data_modelL14hasOptionNamedERKNS_7UVectorERKNS_13UnicodeStringE.exit.thread, !llvm.loop !159
+  br i1 %i.ap, label %bb.d, label %_ZN6icu_788message210data_modelL14hasOptionNamedERKNS_7UVectorERKNS_13UnicodeStringE.exit.thread, !llvm.loop !158
 
 _ZN6icu_788message210data_modelL14hasOptionNamedERKNS_7UVectorERKNS_13UnicodeStringE.exit: ; preds = %_ZNK6icu_7813UnicodeStringeqERKS0_.exit.i, %.split.i
   store i32 65818, ptr %2, align 4, !tbaa !31
@@ -1232,7 +1234,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !57, !noalias !162
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !57, !noalias !161
   call void @_ZN6icu_788message210data_model9OptionMapC1ERKNS_7UVectorER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(28) %3, ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %2)
   invoke void @_ZN6icu_788message210data_model8OperatorC1ERKNS_13UnicodeStringERKNS1_9OptionMapE(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(64) %i.a, ptr noundef nonnull align 8 dereferenceable(28) %3)
           to label %bb.b unwind label %bb.c
@@ -1394,7 +1396,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i8 0, ptr %i.e, align 8, !tbaa !58, !alias.scope !165
+  store i8 0, ptr %i.e, align 8, !tbaa !58, !alias.scope !164
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i32 3, ptr %i.f, align 8, !tbaa !61
   ret void
@@ -1637,14 +1639,14 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !57, !noalias !170
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !57, !noalias !169
   invoke void @_ZN6icu_788message210data_model9OptionMapC1ERKNS_7UVectorER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(28) %7, ptr noundef nonnull align 8 dereferenceable(40) %i.aa, ptr noundef nonnull align 4 dereferenceable(4) %2)
           to label %_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode.exit unwind label %bb.j
 
 _ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode.exit: ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !57, !noalias !171
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !57, !noalias !170
   invoke void @_ZN6icu_788message210data_model9OptionMapC1ERKNS_7UVectorER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(28) %8, ptr noundef nonnull align 8 dereferenceable(40) %i.ac, ptr noundef nonnull align 4 dereferenceable(4) %2)
           to label %_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode.exit18 unwind label %bb.k
 
@@ -1845,7 +1847,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 240
-  store i8 0, ptr %i.m, align 8, !tbaa !58, !alias.scope !174
+  store i8 0, ptr %i.m, align 8, !tbaa !58, !alias.scope !173
   ret void
 
 bb.c:                                             ; preds = %bb.a
@@ -2052,7 +2054,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 232
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !57, !noalias !177
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !57, !noalias !176
   invoke void @_ZN6icu_788message210data_model9OptionMapC1ERKNS_7UVectorER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(28) %3, ptr noundef nonnull align 8 dereferenceable(40) %i.l, ptr noundef nonnull align 4 dereferenceable(4) %2)
           to label %_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode.exit unwind label %bb.m
 
@@ -2099,18 +2101,21 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.pn.i = phi { ptr, i32 } [ %i.y, %bb.k ], [ %i.x, %bb.j ] ; 2 uses
   %i.z = load i8, ptr %i.u, align 8, !tbaa !74, !range !24, !noundef !25
   %i.aa = trunc nuw i8 %i.z to i1
+  br i1 %i.aa, label %7, label %.body
+
+7:                                                ; preds = %bb.l
   store i8 0, ptr %i.u, align 8, !tbaa !74
-  br i1 %i.aa, label %.body.sink.split, label %.body
+  br label %.body.sink.split
 
 bb.m:                                             ; preds = %bb.f
   %i.ab = landingpad { ptr, i32 }
           cleanup
   br label %bb.u
 
-.body.sink.split:                                 ; preds = %bb.l, %bb.t, %bb.r
-  %.sink19 = phi ptr [ %i.am, %bb.t ], [ %i.ad, %bb.r ], [ %i.t, %bb.l ]
-  %.sink.ph = phi ptr [ %6, %bb.t ], [ %5, %bb.r ], [ %4, %bb.l ]
-  %eh.lpad-body.ph = phi { ptr, i32 } [ %i.ar, %bb.t ], [ %.pn.i10, %bb.r ], [ %.pn.i, %bb.l ]
+.body.sink.split:                                 ; preds = %8, %9, %7
+  %.sink19 = phi ptr [ %i.t, %7 ], [ %i.am, %9 ], [ %i.ad, %8 ]
+  %.sink.ph = phi ptr [ %4, %7 ], [ %6, %9 ], [ %5, %8 ]
+  %eh.lpad-body.ph = phi { ptr, i32 } [ %.pn.i, %7 ], [ %i.ar, %9 ], [ %.pn.i10, %8 ]
   call void @_ZN6icu_788message210data_model8OperatorD1Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(112) %.sink19) #18
   br label %.body
 
@@ -2151,8 +2156,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.pn.i10 = phi { ptr, i32 } [ %i.ai, %bb.q ], [ %i.ah, %bb.p ] ; 2 uses
   %i.aj = load i8, ptr %i.ae, align 8, !tbaa !74, !range !24, !noundef !25
   %i.ak = trunc nuw i8 %i.aj to i1
+  br i1 %i.ak, label %8, label %.body
+
+8:                                                ; preds = %bb.r
   store i8 0, ptr %i.ae, align 8, !tbaa !74
-  br i1 %i.ak, label %.body.sink.split, label %.body
+  br label %.body.sink.split
 
 bb.s:                                             ; preds = %_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode.exit
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -2175,8 +2183,11 @@ bb.t:                                             ; preds = %bb.s
   call void @_ZN6icu_788message210data_model7OperandD1Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.ao) #18
   %i.as = load i8, ptr %i.an, align 8, !tbaa !74, !range !24, !noundef !25
   %i.at = trunc nuw i8 %i.as to i1
+  br i1 %i.at, label %9, label %.body
+
+9:                                                ; preds = %bb.t
   store i8 0, ptr %i.an, align 8, !tbaa !74
-  br i1 %i.at, label %.body.sink.split, label %.body
+  br label %.body.sink.split
 
 _ZN6icu_788message210data_model10ExpressionC2ERKNS1_8OperatorERKNS1_7OperandERKNS1_9OptionMapE.exit: ; preds = %bb.s, %bb.o, %bb.i
   %.sink18 = phi ptr [ %4, %bb.i ], [ %5, %bb.o ], [ %6, %bb.s ] ; 2 uses
@@ -2357,10 +2368,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.pn = phi { ptr, i32 } [ %i.l, %bb.f ], [ %i.k, %bb.e ]
   %i.m = load i8, ptr %i.c, align 8, !tbaa !74, !range !24, !noundef !25
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !74
   br i1 %i.n, label %bb.h, label %_ZNSt14_Optional_baseIN6icu_788message210data_model8OperatorELb0ELb0EED2Ev.exit
 
 bb.h:                                             ; preds = %bb.g
+  store i8 0, ptr %i.c, align 8, !tbaa !74
   tail call void @_ZN6icu_788message210data_model8OperatorD1Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(112) %i.a) #18
   br label %_ZNSt14_Optional_baseIN6icu_788message210data_model8OperatorELb0ELb0EED2Ev.exit
 
@@ -2401,11 +2412,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !74, !range !24, !noundef !25
   %i.e = trunc nuw i8 %i.d to i1
-  store i8 0, ptr %i.c, align 8, !tbaa !74
   br i1 %i.e, label %bb.b, label %_ZNSt14_Optional_baseIN6icu_788message210data_model8OperatorELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.c, align 8, !tbaa !74
   tail call void @_ZN6icu_788message210data_model8OperatorD1Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(112) %i.f) #18
   br label %_ZNSt14_Optional_baseIN6icu_788message210data_model8OperatorELb0ELb0EED2Ev.exit
 
@@ -2701,7 +2712,7 @@ _ZN6icu_788message210data_model11PatternPartaSES2_.exit.i: ; preds = %bb.e, %_ZN
   call void @_ZN6icu_788message210data_model11PatternPartD1Ev(ptr noundef nonnull align 8 dead_on_return(272) dereferenceable(272) %5) #18
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.d, !llvm.loop !178
+  br i1 %exitcond.not.i, label %.loopexit, label %bb.d, !llvm.loop !177
 
 .loopexit:                                        ; preds = %_ZN6icu_788message210data_model11PatternPartaSES2_.exit.i, %.loopexit33.i, %bb.c
   %.pr = load i32, ptr %2, align 4, !tbaa !31
@@ -2922,7 +2933,7 @@ _ZN6icu_788message210data_model11PatternPartaSES2_.exit.i: ; preds = %bb.g, %_ZN
   call void @_ZN6icu_788message210data_model11PatternPartD1Ev(ptr noundef nonnull align 8 dead_on_return(272) dereferenceable(272) %4) #18
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.loopexit, label %bb.f, !llvm.loop !179
+  br i1 %exitcond.not.i, label %.loopexit, label %bb.f, !llvm.loop !178
 
 .loopexit:                                        ; preds = %_ZN6icu_788message210data_model11PatternPartaSES2_.exit.i, %.loopexit32.i, %bb.c
   %.019.i = phi ptr [ null, %bb.c ], [ %.ptr26.i, %.loopexit32.i ], [ %.ptr26.i, %_ZN6icu_788message210data_model11PatternPartaSES2_.exit.i ]
@@ -3325,7 +3336,7 @@ bb.b:                                             ; preds = %bb.a
   %.add.i.epil = add nuw nsw i64 %.idx.i.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !180
+  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !179
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i.epil, %.lr.ph.preheader.i.unr-lcssa
   %wide.trip.count.i = zext nneg i32 %i.h to i64
@@ -3533,7 +3544,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   call void @_ZN6icu_788message210data_model7VariantD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %3) #18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.e, !llvm.loop !181
+  br i1 %exitcond.not, label %.loopexit, label %bb.e, !llvm.loop !180
 
 .loopexit:                                        ; preds = %bb.e, %bb.c, %.loopexit32, %bb.d, %bb.a
   %.019 = phi ptr [ null, %bb.a ], [ null, %bb.d ], [ %.ptr26, %.loopexit32 ], [ %.ptr26, %bb.c ], [ %.ptr26, %bb.e ]
@@ -3936,7 +3947,7 @@ bb.f:                                             ; preds = %bb.e
   %.add.i.epil = add nuw nsw i64 %.idx.i.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !182
+  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !181
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i.epil, %.lr.ph.preheader.i.unr-lcssa
   %wide.trip.count.i = zext nneg i32 %i.z to i64
@@ -4192,7 +4203,7 @@ bb.x:                                             ; preds = %bb.w
   call void @_ZN6icu_788message210data_model7BindingD1Ev(ptr noundef nonnull align 8 dead_on_return(344) dereferenceable(344) %2) #18
   %indvars.iv.next.i59 = add nuw nsw i64 %indvars.iv.i58, 1 ; 2 uses
   %exitcond.not.i60 = icmp eq i64 %indvars.iv.next.i59, %i.co
-  br i1 %exitcond.not.i60, label %.loopexit69, label %.lr.ph.i57, !llvm.loop !183
+  br i1 %exitcond.not.i60, label %.loopexit69, label %.lr.ph.i57, !llvm.loop !182
 
 .loopexit69:                                      ; preds = %.noexc61, %bb.u, %bb.t
   %i.df = phi i32 [ %.pre.pre, %bb.t ], [ 7, %bb.u ], [ %.pre9093, %.noexc61 ]
@@ -4326,7 +4337,7 @@ bb.c:                                             ; preds = %_ZSt26__throw_bad_v
 bb.d:                                             ; preds = %bb.a
   %i.s = load ptr, ptr %0, align 8, !tbaa !29
   %i.t = load ptr, ptr %i.s, align 8
-  tail call void %i.t(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %0) #18, !inline_history !184
+  tail call void %i.t(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %0) #18, !inline_history !183
   store i8 -1, ptr %i.a, align 8, !tbaa !113
   br label %_ZNSt7variantIJN6icu_788message210data_model7MatcherENS2_7PatternEEE7emplaceILm1EJRKS4_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS3_S4_EE4typeEDpT0_EERSC_E4typeEDpOSD_.exit
 
@@ -4433,7 +4444,7 @@ bb.g:                                             ; preds = %_ZSt26__throw_bad_v
 bb.h:                                             ; preds = %bb.a
   %i.ac = load ptr, ptr %0, align 8, !tbaa !29
   %i.ad = load ptr, ptr %i.ac, align 8
-  tail call void %i.ad(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %0) #18, !inline_history !185
+  tail call void %i.ad(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %0) #18, !inline_history !184
   store i8 -1, ptr %i.a, align 8, !tbaa !113
   br label %_ZNSt7variantIJN6icu_788message210data_model7MatcherENS2_7PatternEEE7emplaceILm0EJS3_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS3_S4_EE4typeEDpT0_EERSA_E4typeEDpOSB_.exit
 
@@ -4537,7 +4548,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.t = load ptr, ptr %i.f, align 8, !tbaa !29
   %i.u = load ptr, ptr %i.t, align 8
-  call void %i.u(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.f) #18, !inline_history !186
+  call void %i.u(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.f) #18, !inline_history !185
   store i8 -1, ptr %i.j, align 8, !tbaa !113
   br label %_ZNSt7variantIJN6icu_788message210data_model7MatcherENS2_7PatternEEE7emplaceILm1EJRKS4_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS3_S4_EE4typeEDpT0_EERSC_E4typeEDpOSD_.exit.i
 
@@ -4653,7 +4664,7 @@ bb.h:                                             ; preds = %.noexc21, %.lr.ph.i
   call void @_ZN6icu_788message210data_model7VariantD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %4) #18
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN6icu_7810LocalArrayINS_8message210data_model7VariantEEC2EPS3_R10UErrorCode.exit, label %bb.h, !llvm.loop !187
+  br i1 %exitcond.not.i, label %_ZN6icu_7810LocalArrayINS_8message210data_model7VariantEEC2EPS3_R10UErrorCode.exit, label %bb.h, !llvm.loop !186
 
 _ZN6icu_7810LocalArrayINS_8message210data_model7VariantEEC2EPS3_R10UErrorCode.exit: ; preds = %.noexc21, %bb.g, %.loopexit33.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
@@ -4739,7 +4750,7 @@ bb.j:                                             ; preds = %bb.i
   %.add.i26.epil = add nuw nsw i64 %.idx.i24.epil, 64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !188
+  br i1 %epil.iter.cmp.not, label %.lr.ph.preheader.i, label %.preheader.i.epil, !llvm.loop !187
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i.epil, %.lr.ph.preheader.i.unr-lcssa
   %wide.trip.count.i28 = zext nneg i32 %i.bz to i64
@@ -4763,7 +4774,7 @@ bb.k:                                             ; preds = %bb.i
 .noexc34:                                         ; preds = %.noexc33
   %indvars.iv.next.i31 = add nuw nsw i64 %indvars.iv.i30, 1 ; 2 uses
   %exitcond.not.i32 = icmp eq i64 %indvars.iv.next.i31, %wide.trip.count.i28
-  br i1 %exitcond.not.i32, label %_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit, label %.lr.ph.i29, !llvm.loop !189
+  br i1 %exitcond.not.i32, label %_ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit, label %.lr.ph.i29, !llvm.loop !188
 
 _ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit: ; preds = %.noexc34, %bb.j
   %.pr77 = load i32, ptr %2, align 4, !tbaa !31
@@ -4783,7 +4794,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.da = load ptr, ptr %i.f, align 8, !tbaa !29
   %i.db = load ptr, ptr %i.da, align 8
-  call void %i.db(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.f) #18, !inline_history !190
+  call void %i.db(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.f) #18, !inline_history !189
   store i8 -1, ptr %i.j, align 8, !tbaa !113
   br label %_ZNSt7variantIJN6icu_788message210data_model7MatcherENS2_7PatternEEE7emplaceILm0EJS3_EEENSt9enable_ifIX18is_constructible_vINSt9_Nth_typeIXT_EJS3_S4_EE4typeEDpT0_EERSA_E4typeEDpOSB_.exit.i
 
@@ -4945,7 +4956,7 @@ bb.u:                                             ; preds = %bb.s
   call void @_ZN6icu_788message210data_model7BindingD1Ev(ptr noundef nonnull align 8 dead_on_return(344) dereferenceable(344) %3) #18
   %indvars.iv.next.i56 = add nuw nsw i64 %indvars.iv.i55, 1 ; 2 uses
   %exitcond.not.i57 = icmp eq i64 %indvars.iv.next.i56, %wide.trip.count.i53
-  br i1 %exitcond.not.i57, label %.loopexit90, label %.lr.ph.i54, !llvm.loop !191
+  br i1 %exitcond.not.i57, label %.loopexit90, label %.lr.ph.i54, !llvm.loop !190
 
 .loopexit90:                                      ; preds = %.noexc59, %bb.u, %bb.r
   %.020.i45 = phi ptr [ null, %bb.r ], [ null, %bb.u ], [ %.ptr27.i46, %.noexc59 ]
@@ -5099,7 +5110,7 @@ bb.g:                                             ; preds = %tailrecurse.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   store ptr %.tr.i.i.i, ptr %3, align 8, !tbaa !140
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %.tr6.i.i.i, ptr %i.l, align 8, !tbaa !192
+  store ptr %.tr6.i.i.i, ptr %i.l, align 8, !tbaa !191
   %i.m = icmp eq i8 %i.i, 0
   br i1 %i.m, label %bb.h, label %bb.i
 
@@ -5359,16 +5370,16 @@ bb.e:                                             ; preds = %tailrecurse.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   store ptr %.tr.i.i, ptr %2, align 8, !tbaa !143
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %.tr6.i.i, ptr %i.j, align 8, !tbaa !195
+  store ptr %.tr6.i.i, ptr %i.j, align 8, !tbaa !194
   %i.k = icmp eq i8 %i.g, 0
   br i1 %i.k, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @_ZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEE4swapERS5_ENUlOT_T0_E_clIRS1_St17integral_constantImLm0EEEEDaS8_S9_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(81) %.tr6.i.i), !inline_history !193
+  call void @_ZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEE4swapERS5_ENUlOT_T0_E_clIRS1_St17integral_constantImLm0EEEEDaS8_S9_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(81) %.tr6.i.i), !inline_history !192
   br label %_ZNSt8__detail9__variant15__raw_idx_visitIZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_EUlOT_T0_E_JS9_EEEvSB_DpOT0_.exit.i.i
 
 bb.g:                                             ; preds = %bb.e
-  call void @_ZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEE4swapERS5_ENUlOT_T0_E_clIRS4_St17integral_constantImLm1EEEEDaS8_S9_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(81) %.tr6.i.i), !inline_history !193
+  call void @_ZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEE4swapERS5_ENUlOT_T0_E_clIRS4_St17integral_constantImLm1EEEEDaS8_S9_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(81) %.tr6.i.i), !inline_history !192
   br label %_ZNSt8__detail9__variant15__raw_idx_visitIZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_EUlOT_T0_E_JS9_EEEvSB_DpOT0_.exit.i.i
 
 _ZNSt8__detail9__variant15__raw_idx_visitIZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_EUlOT_T0_E_JS9_EEEvSB_DpOT0_.exit.i.i: ; preds = %bb.g, %bb.f
@@ -5440,7 +5451,7 @@ _ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210da
 bb.l:                                             ; preds = %_ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEESt14_Optional_baseIS6_Lb0ELb0EEE12_M_constructIJS6_EEEvDpOT_.exit
   %i.w = load ptr, ptr %0, align 8, !tbaa !29
   %i.x = load ptr, ptr %i.w, align 8
-  tail call void %i.x(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(89) %0) #18, !inline_history !194
+  tail call void %i.x(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(89) %0) #18, !inline_history !193
   br label %_ZSt4swapIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEENSt9enable_ifIXaafraa23is_move_constructible_vIT_Efraa14is_swappable_vIS6_EEvE4typeERSt7variantIJDpS6_EESC_.exit
 
 bb.m:                                             ; preds = %bb.a
@@ -5500,7 +5511,7 @@ _ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210da
 bb.r:                                             ; preds = %_ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEESt14_Optional_baseIS6_Lb0ELb0EEE12_M_constructIJS6_EEEvDpOT_.exit10
   %i.ai = load ptr, ptr %1, align 8, !tbaa !29
   %i.aj = load ptr, ptr %i.ai, align 8
-  tail call void %i.aj(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(89) %1) #18, !inline_history !194
+  tail call void %i.aj(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(89) %1) #18, !inline_history !193
   br label %_ZSt4swapIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEENSt9enable_ifIXaafraa23is_move_constructible_vIT_Efraa14is_swappable_vIS6_EEvE4typeERSt7variantIJDpS6_EESC_.exit
 
 _ZSt4swapIJN6icu_7813UnicodeStringENS0_8message210data_model7LiteralEEENSt9enable_ifIXaafraa23is_move_constructible_vIT_Efraa14is_swappable_vIS6_EEvE4typeERSt7variantIJDpS6_EESC_.exit: ; preds = %bb.d, %_ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEESt14_Optional_baseIS6_Lb0ELb0EEE12_M_constructIJS6_EEEvDpOT_.exit10.thread, %_ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEESt14_Optional_baseIS6_Lb0ELb0EEE12_M_constructIJS6_EEEvDpOT_.exit.thread, %bb.r, %_ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEESt14_Optional_baseIS6_Lb0ELb0EEE12_M_constructIJS6_EEEvDpOT_.exit10, %bb.l, %_ZNSt19_Optional_base_implISt7variantIJN6icu_7813UnicodeStringENS1_8message210data_model7LiteralEEESt14_Optional_baseIS6_Lb0ELb0EEE12_M_constructIJS6_EEEvDpOT_.exit, %_ZNSt8__detail9__variant15__raw_idx_visitIZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_EUlOT_T0_E_JS9_EEEvSB_DpOT0_.exit.i.i, %bb.m
@@ -5542,7 +5553,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !29
   %i.k = load ptr, ptr %i.j, align 8
-  call void %i.k(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.f) #18, !inline_history !196
+  call void %i.k(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.f) #18, !inline_history !195
   store i8 -1, ptr %i.h, align 8, !tbaa !47
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model7LiteralEEE4swapERSA_ENUlOT_T0_E_clIRS6_St17integral_constantImLm0EEEEDaSD_SE_EUlSD_SE_E_SB_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESL_SB_.exit.i.i
 
@@ -5560,7 +5571,7 @@ bb.e:                                             ; preds = %bb.b
 bb.f:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %i.f, align 8, !tbaa !29
   %i.o = load ptr, ptr %i.n, align 8
-  call void %i.o(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.f) #18, !inline_history !197
+  call void %i.o(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.f) #18, !inline_history !196
   store i8 -1, ptr %i.l, align 8, !tbaa !47
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model7LiteralEEE8_M_resetEv.exit.i.i.i.i.i.i.i
 
@@ -5598,7 +5609,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeString
 bb.h:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_ENUlOT_T0_E_clIRS4_St17integral_constantImLm0EEEEDaSB_SC_EUlSB_SC_E_JS9_EEEvSB_DpOT0_.exit
   %i.v = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.w = load ptr, ptr %i.v, align 8
-  call void %i.w(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.a) #18, !inline_history !198
+  call void %i.w(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.a) #18, !inline_history !197
   store i8 -1, ptr %i.b, align 8, !tbaa !47
   br label %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_ENUlOT_T0_E_clIRS4_St17integral_constantImLm0EEEEDaSB_SC_EUlSB_SC_E_JS9_EEEvSB_DpOT0_.exit.thread
 
@@ -5705,7 +5716,7 @@ bb.d:                                             ; preds = %_ZN6icu_788message2
 bb.e:                                             ; preds = %bb.d
   %i.u = load ptr, ptr %i.q, align 8, !tbaa !29
   %i.v = load ptr, ptr %i.u, align 8
-  call void %i.v(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.q) #18, !inline_history !199
+  call void %i.v(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.q) #18, !inline_history !198
   store i8 -1, ptr %i.s, align 8, !tbaa !47
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model7LiteralEEE4swapERSA_ENUlOT_T0_E_clIRS9_St17integral_constantImLm1EEEEDaSD_SE_EUlSD_SE_E_SB_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESL_SB_.exit.i.i
 
@@ -5723,7 +5734,7 @@ bb.f:                                             ; preds = %_ZN6icu_788message2
 bb.g:                                             ; preds = %bb.f
   %i.y = load ptr, ptr %i.q, align 8, !tbaa !29
   %i.z = load ptr, ptr %i.y, align 8
-  call void %i.z(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.q) #18, !inline_history !200
+  call void %i.z(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.q) #18, !inline_history !199
   store i8 -1, ptr %i.w, align 8, !tbaa !47
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model7LiteralEEE8_M_resetEv.exit.i.i.i.i.i.i.i
 
@@ -5758,7 +5769,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeString
 bb.j:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model7LiteralEEE4swapERS8_ENUlOT_T0_E_clIRS7_St17integral_constantImLm1EEEEDaSB_SC_EUlSB_SC_E_JS9_EEEvSB_DpOT0_.exit
   %i.ag = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.ah = load ptr, ptr %i.ag, align 8
-  call void %i.ah(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.a) #18, !inline_history !201
+  call void %i.ah(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(81) %i.a) #18, !inline_history !200
   store i8 -1, ptr %i.b, align 8, !tbaa !47
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model7LiteralEEE8_M_resetEv.exit.i
 
@@ -5985,7 +5996,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeString
 bb.c:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model10ExpressionENS6_6MarkupEEE4swapERS9_ENUlOT_T0_E_clIRS4_St17integral_constantImLm0EEEEDaSC_SD_EUlSC_SD_E_JSA_EEEvSC_DpOT0_.exit.i
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.i = load ptr, ptr %i.h, align 8
-  call void %i.i(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.a) #18, !inline_history !202
+  call void %i.i(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.a) #18, !inline_history !201
   store i8 -1, ptr %i.b, align 8, !tbaa !76
   br label %bb.d
 
@@ -6021,7 +6032,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !207, !nonnull !25, !align !146 ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !206, !nonnull !25, !align !146 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 256 ; 3 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !76
   %.not.i.i.i.i.i.i = icmp eq i8 %i.e, -1
@@ -6030,7 +6041,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !29
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.c) #18, !inline_history !203
+  tail call void %i.g(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.c) #18, !inline_history !202
   store i8 -1, ptr %i.d, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model10ExpressionENS8_6MarkupEEE4swapERSB_ENUlOT_T0_E_clIRS6_St17integral_constantImLm0EEEEDaSE_SF_EUlSE_SF_E_SC_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESM_SC_.exit
 
@@ -6040,7 +6051,7 @@ _ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %0, align 8, !tbaa !207, !nonnull !25, !align !146 ; 4 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !206, !nonnull !25, !align !146 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 256 ; 3 uses
   %i.j = load i8, ptr %i.i, align 8, !tbaa !76
   %.not.i.i.i.i.i.i10 = icmp eq i8 %i.j, -1
@@ -6049,7 +6060,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.k = load ptr, ptr %i.h, align 8, !tbaa !29
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.h) #18, !inline_history !204
+  tail call void %i.l(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.h) #18, !inline_history !203
   store i8 -1, ptr %i.i, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model10ExpressionENS8_6MarkupEEE4swapERSB_ENUlOT_T0_E_clIRS6_St17integral_constantImLm0EEEEDaSE_SF_EUlSE_SF_E_SC_EJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESM_SC_.exit
 
@@ -6059,7 +6070,7 @@ _ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.a
-  %i.m = load ptr, ptr %0, align 8, !tbaa !207, !nonnull !25, !align !146 ; 9 uses
+  %i.m = load ptr, ptr %0, align 8, !tbaa !206, !nonnull !25, !align !146 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 256 ; 3 uses
   %i.o = load i8, ptr %i.n, align 8, !tbaa !76
   %.not.i.i.i.i.i.i11 = icmp eq i8 %i.o, -1
@@ -6068,7 +6079,7 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.f
   %i.p = load ptr, ptr %i.m, align 8, !tbaa !29
   %i.q = load ptr, ptr %i.p, align 8
-  tail call void %i.q(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.m) #18, !inline_history !205
+  tail call void %i.q(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.m) #18, !inline_history !204
   store i8 -1, ptr %i.n, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model10ExpressionENS5_6MarkupEEE8_M_resetEv.exit.i.i.i.i.i
 
@@ -6251,7 +6262,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeString
 bb.i:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model10ExpressionENS6_6MarkupEEE4swapERS9_ENUlOT_T0_E_clIRS7_St17integral_constantImLm1EEEEDaSC_SD_EUlSC_SD_E_JSA_EEEvSC_DpOT0_.exit
   %i.at = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.au = load ptr, ptr %i.at, align 8
-  call void %i.au(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.a) #18, !inline_history !208
+  call void %i.au(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.a) #18, !inline_history !207
   store i8 -1, ptr %i.b, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model10ExpressionENS5_6MarkupEEE8_M_resetEv.exit.i
 
@@ -6299,7 +6310,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !213, !nonnull !25, !align !146 ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !212, !nonnull !25, !align !146 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 256 ; 3 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !76
   %.not.i.i.i.i.i.i = icmp eq i8 %i.e, -1
@@ -6308,7 +6319,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !29
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.c) #18, !inline_history !209
+  tail call void %i.g(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.c) #18, !inline_history !208
   store i8 -1, ptr %i.d, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model10ExpressionENS8_6MarkupEEE4swapERSB_ENUlOT_T0_E_clIRS9_St17integral_constantImLm1EEEEDaSE_SF_EUlSE_SF_E_SC_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESM_SC_.exit
 
@@ -6318,7 +6329,7 @@ _ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %0, align 8, !tbaa !213, !nonnull !25, !align !146 ; 4 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !212, !nonnull !25, !align !146 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 256 ; 3 uses
   %i.j = load i8, ptr %i.i, align 8, !tbaa !76
   %.not.i.i.i.i.i.i10 = icmp eq i8 %i.j, -1
@@ -6327,7 +6338,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.k = load ptr, ptr %i.h, align 8, !tbaa !29
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.h) #18, !inline_history !210
+  tail call void %i.l(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.h) #18, !inline_history !209
   store i8 -1, ptr %i.i, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model10ExpressionENS8_6MarkupEEE4swapERSB_ENUlOT_T0_E_clIRS9_St17integral_constantImLm1EEEEDaSE_SF_EUlSE_SF_E_SC_EJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESM_SC_.exit
 
@@ -6337,7 +6348,7 @@ _ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.a
-  %i.m = load ptr, ptr %0, align 8, !tbaa !213, !nonnull !25, !align !146 ; 9 uses
+  %i.m = load ptr, ptr %0, align 8, !tbaa !212, !nonnull !25, !align !146 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 256 ; 3 uses
   %i.o = load i8, ptr %i.n, align 8, !tbaa !76
   %.not.i.i.i.i.i.i11 = icmp eq i8 %i.o, -1
@@ -6346,7 +6357,7 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.f
   %i.p = load ptr, ptr %i.m, align 8, !tbaa !29
   %i.q = load ptr, ptr %i.p, align 8
-  tail call void %i.q(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.m) #18, !inline_history !211
+  tail call void %i.q(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.m) #18, !inline_history !210
   store i8 -1, ptr %i.n, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model10ExpressionENS5_6MarkupEEE8_M_resetEv.exit.i.i.i.i.i
 
@@ -6496,7 +6507,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeString
 bb.j:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_7813UnicodeStringENS3_8message210data_model10ExpressionENS6_6MarkupEEE4swapERS9_ENUlOT_T0_E_clIRS8_St17integral_constantImLm2EEEEDaSC_SD_EUlSC_SD_E_JSA_EEEvSC_DpOT0_.exit
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.u = load ptr, ptr %i.t, align 8
-  call void %i.u(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.a) #18, !inline_history !214
+  call void %i.u(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.a) #18, !inline_history !213
   store i8 -1, ptr %i.b, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model10ExpressionENS5_6MarkupEEE8_M_resetEv.exit.i
 
@@ -6770,7 +6781,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !219, !nonnull !25, !align !146 ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !218, !nonnull !25, !align !146 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 256 ; 3 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !76
   %.not.i.i.i.i.i.i = icmp eq i8 %i.e, -1
@@ -6779,7 +6790,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !29
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.c) #18, !inline_history !215
+  tail call void %i.g(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.c) #18, !inline_history !214
   store i8 -1, ptr %i.d, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model10ExpressionENS8_6MarkupEEE4swapERSB_ENUlOT_T0_E_clIRSA_St17integral_constantImLm2EEEEDaSE_SF_EUlSE_SF_E_SC_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESM_SC_.exit
 
@@ -6789,7 +6800,7 @@ _ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %0, align 8, !tbaa !219, !nonnull !25, !align !146 ; 4 uses
+  %i.h = load ptr, ptr %0, align 8, !tbaa !218, !nonnull !25, !align !146 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 256 ; 3 uses
   %i.j = load i8, ptr %i.i, align 8, !tbaa !76
   %.not.i.i.i.i.i.i10 = icmp eq i8 %i.j, -1
@@ -6798,7 +6809,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.k = load ptr, ptr %i.h, align 8, !tbaa !29
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.h) #18, !inline_history !216
+  tail call void %i.l(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.h) #18, !inline_history !215
   store i8 -1, ptr %i.i, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_7813UnicodeStringENS5_8message210data_model10ExpressionENS8_6MarkupEEE4swapERSB_ENUlOT_T0_E_clIRSA_St17integral_constantImLm2EEEEDaSE_SF_EUlSE_SF_E_SC_EJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESM_SC_.exit
 
@@ -6808,7 +6819,7 @@ _ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.a
-  %i.m = load ptr, ptr %0, align 8, !tbaa !219, !nonnull !25, !align !146 ; 9 uses
+  %i.m = load ptr, ptr %0, align 8, !tbaa !218, !nonnull !25, !align !146 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 256 ; 3 uses
   %i.o = load i8, ptr %i.n, align 8, !tbaa !76
   %.not.i.i.i.i.i.i11 = icmp eq i8 %i.o, -1
@@ -6817,7 +6828,7 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.f
   %i.p = load ptr, ptr %i.m, align 8, !tbaa !29
   %i.q = load ptr, ptr %i.p, align 8
-  tail call void %i.q(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.m) #18, !inline_history !217
+  tail call void %i.q(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(257) %i.m) #18, !inline_history !216
   store i8 -1, ptr %i.n, align 8, !tbaa !76
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_7813UnicodeStringENS2_8message210data_model10ExpressionENS5_6MarkupEEE8_M_resetEv.exit.i.i.i.i.i
 
@@ -6959,7 +6970,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.af = load ptr, ptr %i.ab, align 8, !tbaa !29
   %i.ag = load ptr, ptr %i.af, align 8
-  call void %i.ag(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.ab) #18, !inline_history !220
+  call void %i.ag(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.ab) #18, !inline_history !219
   store i8 -1, ptr %i.ad, align 8, !tbaa !113
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_788message210data_model7MatcherENS7_7PatternEEE4swapERSA_ENUlOT_T0_E_clIRS8_St17integral_constantImLm0EEEEDaSD_SE_EUlSD_SE_E_SB_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESL_SB_.exit.i.i
 
@@ -6980,7 +6991,7 @@ bb.i:                                             ; preds = %bb.f
 bb.j:                                             ; preds = %bb.i
   %i.aj = load ptr, ptr %i.ab, align 8, !tbaa !29
   %i.ak = load ptr, ptr %i.aj, align 8
-  call void %i.ak(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.ab) #18, !inline_history !221
+  call void %i.ak(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.ab) #18, !inline_history !220
   store i8 -1, ptr %i.ah, align 8, !tbaa !113
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_788message210data_model7MatcherENS7_7PatternEEE4swapERSA_ENUlOT_T0_E_clIRS8_St17integral_constantImLm0EEEEDaSD_SE_EUlSD_SE_E_SB_EJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESL_SB_.exit.i.i
 
@@ -7003,7 +7014,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_788message210data
 bb.l:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_788message210data_model7MatcherENS5_7PatternEEE4swapERS8_ENUlOT_T0_E_clIRS6_St17integral_constantImLm0EEEEDaSB_SC_EUlSB_SC_E_JS9_EEEvSB_DpOT0_.exit
   %i.al = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.am = load ptr, ptr %i.al, align 8
-  call void %i.am(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.a) #18, !inline_history !222
+  call void %i.am(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.a) #18, !inline_history !221
   store i8 -1, ptr %i.b, align 8, !tbaa !113
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_788message210data_model7MatcherENS4_7PatternEEE8_M_resetEv.exit.i
 
@@ -7080,7 +7091,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.v = load ptr, ptr %i.r, align 8, !tbaa !29
   %i.w = load ptr, ptr %i.v, align 8
-  call void %i.w(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.r) #18, !inline_history !223
+  call void %i.w(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.r) #18, !inline_history !222
   store i8 -1, ptr %i.t, align 8, !tbaa !113
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_788message210data_model7MatcherENS7_7PatternEEE4swapERSA_ENUlOT_T0_E_clIRS9_St17integral_constantImLm1EEEEDaSD_SE_EUlSD_SE_E_SB_EJEEESt16integer_sequenceImJLm0EEEE14__visit_invokeESL_SB_.exit.i.i.i
 
@@ -7101,7 +7112,7 @@ bb.e:                                             ; preds = %bb.b
 bb.f:                                             ; preds = %bb.e
   %i.z = load ptr, ptr %i.r, align 8, !tbaa !29
   %i.aa = load ptr, ptr %i.z, align 8
-  call void %i.aa(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.r) #18, !inline_history !224
+  call void %i.aa(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.r) #18, !inline_history !223
   store i8 -1, ptr %i.x, align 8, !tbaa !113
   br label %_ZNSt8__detail9__variant17__gen_vtable_implINS0_12_Multi_arrayIPFNS0_20__variant_idx_cookieEOZZNSt7variantIJN6icu_788message210data_model7MatcherENS7_7PatternEEE4swapERSA_ENUlOT_T0_E_clIRS9_St17integral_constantImLm1EEEEDaSD_SE_EUlSD_SE_E_SB_EJEEESt16integer_sequenceImJLm1EEEE14__visit_invokeESL_SB_.exit.i.i.i
 
@@ -7124,7 +7135,7 @@ _ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_788message210data
 bb.h:                                             ; preds = %_ZNSt8__detail9__variant15__raw_idx_visitIZZNSt7variantIJN6icu_788message210data_model7MatcherENS5_7PatternEEE4swapERS8_ENUlOT_T0_E_clIRS7_St17integral_constantImLm1EEEEDaSB_SC_EUlSB_SC_E_JS9_EEEvSB_DpOT0_.exit.i
   %i.ab = load ptr, ptr %i.a, align 8, !tbaa !29
   %i.ac = load ptr, ptr %i.ab, align 8
-  call void %i.ac(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.a) #18, !inline_history !225
+  call void %i.ac(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(49) %i.a) #18, !inline_history !224
   store i8 -1, ptr %i.b, align 8, !tbaa !113
   br label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_788message210data_model7MatcherENS4_7PatternEEE8_M_resetEv.exit.i.i
 
@@ -7354,76 +7365,75 @@ attributes #21 = { builtin nounwind }
 !151 = distinct !{!151, !27}
 !152 = distinct !{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
 !153 = distinct !{null, null, null, null, null, null, null}
-!154 = !{!"branch_weights", i32 2000, i32 2002}
+!154 = distinct !{!154, !27}
 !155 = distinct !{!155, !27}
-!156 = distinct !{!156, !27}
-!157 = distinct !{null, null, null, null}
-!158 = !{!32, !32, i64 0}
-!159 = distinct !{!159, !27}
-!160 = distinct !{!160, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
-!161 = distinct !{!161, !160, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
-!162 = !{!161}
-!163 = distinct !{!163, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode"}
-!164 = distinct !{!164, !163, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode: argument 0"}
-!165 = !{!164}
-!166 = distinct !{!166, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
-!167 = distinct !{!167, !166, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
-!168 = distinct !{!168, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
-!169 = distinct !{!169, !168, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
-!170 = !{!167}
-!171 = !{!169}
-!172 = distinct !{!172, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode"}
-!173 = distinct !{!173, !172, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode: argument 0"}
-!174 = !{!173}
-!175 = distinct !{!175, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
-!176 = distinct !{!176, !175, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
-!177 = !{!176}
+!156 = distinct !{null, null, null, null}
+!157 = !{!32, !32, i64 0}
+!158 = distinct !{!158, !27}
+!159 = distinct !{!159, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
+!160 = distinct !{!160, !159, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
+!161 = !{!160}
+!162 = distinct !{!162, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode"}
+!163 = distinct !{!163, !162, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode: argument 0"}
+!164 = !{!163}
+!165 = distinct !{!165, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
+!166 = distinct !{!166, !165, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
+!167 = distinct !{!167, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
+!168 = distinct !{!168, !167, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
+!169 = !{!166}
+!170 = !{!168}
+!171 = distinct !{!171, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode"}
+!172 = distinct !{!172, !171, !"_ZN6icu_788message210data_model9OptionMap7Builder10attributesER10UErrorCode: argument 0"}
+!173 = !{!172}
+!174 = distinct !{!174, i1 true, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode"}
+!175 = distinct !{!175, !174, !"_ZN6icu_788message210data_model9OptionMap7Builder5buildER10UErrorCode: argument 0"}
+!176 = !{!175}
+!177 = distinct !{!177, !27}
 !178 = distinct !{!178, !27}
-!179 = distinct !{!179, !27}
-!180 = distinct !{!180, !111}
-!181 = distinct !{!181, !27}
-!182 = distinct !{!182, !111}
-!183 = distinct !{!183, !27}
+!179 = distinct !{!179, !111}
+!180 = distinct !{!180, !27}
+!181 = distinct !{!181, !111}
+!182 = distinct !{!182, !27}
+!183 = distinct !{null, null, null, null}
 !184 = distinct !{null, null, null, null}
-!185 = distinct !{null, null, null, null}
-!186 = distinct !{null, null, null, null, null}
-!187 = distinct !{!187, !27}
-!188 = distinct !{!188, !111}
-!189 = distinct !{!189, !27}
-!190 = distinct !{null, null, null, null, null}
-!191 = distinct !{!191, !27}
-!192 = !{!138, !138, i64 0}
-!193 = distinct !{null}
-!194 = distinct !{null, null, null, null, null}
-!195 = !{!141, !141, i64 0}
+!185 = distinct !{null, null, null, null, null}
+!186 = distinct !{!186, !27}
+!187 = distinct !{!187, !111}
+!188 = distinct !{!188, !27}
+!189 = distinct !{null, null, null, null, null}
+!190 = distinct !{!190, !27}
+!191 = !{!138, !138, i64 0}
+!192 = distinct !{null}
+!193 = distinct !{null, null, null, null, null}
+!194 = !{!141, !141, i64 0}
+!195 = distinct !{null, null, null, null, null, null, null, null, null}
 !196 = distinct !{null, null, null, null, null, null, null, null, null}
-!197 = distinct !{null, null, null, null, null, null, null, null, null}
-!198 = distinct !{null, null, null}
+!197 = distinct !{null, null, null}
+!198 = distinct !{null, null, null, null, null, null, null, null, null}
 !199 = distinct !{null, null, null, null, null, null, null, null, null}
-!200 = distinct !{null, null, null, null, null, null, null, null, null}
-!201 = distinct !{null, null, null}
-!202 = distinct !{null, null, null, null}
+!200 = distinct !{null, null, null}
+!201 = distinct !{null, null, null, null}
+!202 = distinct !{null, null, null, null, null, null, null}
 !203 = distinct !{null, null, null, null, null, null, null}
 !204 = distinct !{null, null, null, null, null, null, null}
-!205 = distinct !{null, null, null, null, null, null, null}
-!206 = !{!"_ZTSZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model10ExpressionENS3_6MarkupEEE4swapERS6_ENUlOT_T0_E_clIRS1_St17integral_constantImLm0EEEEDaS9_SA_EUlS9_SA_E_", !77, i64 0}
-!207 = !{!206, !77, i64 0}
-!208 = distinct !{null, null, null}
+!205 = !{!"_ZTSZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model10ExpressionENS3_6MarkupEEE4swapERS6_ENUlOT_T0_E_clIRS1_St17integral_constantImLm0EEEEDaS9_SA_EUlS9_SA_E_", !77, i64 0}
+!206 = !{!205, !77, i64 0}
+!207 = distinct !{null, null, null}
+!208 = distinct !{null, null, null, null, null, null, null}
 !209 = distinct !{null, null, null, null, null, null, null}
 !210 = distinct !{null, null, null, null, null, null, null}
-!211 = distinct !{null, null, null, null, null, null, null}
-!212 = !{!"_ZTSZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model10ExpressionENS3_6MarkupEEE4swapERS6_ENUlOT_T0_E_clIRS4_St17integral_constantImLm1EEEEDaS9_SA_EUlS9_SA_E_", !77, i64 0}
-!213 = !{!212, !77, i64 0}
-!214 = distinct !{null, null, null}
+!211 = !{!"_ZTSZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model10ExpressionENS3_6MarkupEEE4swapERS6_ENUlOT_T0_E_clIRS4_St17integral_constantImLm1EEEEDaS9_SA_EUlS9_SA_E_", !77, i64 0}
+!212 = !{!211, !77, i64 0}
+!213 = distinct !{null, null, null}
+!214 = distinct !{null, null, null, null, null, null, null}
 !215 = distinct !{null, null, null, null, null, null, null}
 !216 = distinct !{null, null, null, null, null, null, null}
-!217 = distinct !{null, null, null, null, null, null, null}
-!218 = !{!"_ZTSZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model10ExpressionENS3_6MarkupEEE4swapERS6_ENUlOT_T0_E_clIRS5_St17integral_constantImLm2EEEEDaS9_SA_EUlS9_SA_E_", !77, i64 0}
-!219 = !{!218, !77, i64 0}
+!217 = !{!"_ZTSZZNSt7variantIJN6icu_7813UnicodeStringENS0_8message210data_model10ExpressionENS3_6MarkupEEE4swapERS6_ENUlOT_T0_E_clIRS5_St17integral_constantImLm2EEEEDaS9_SA_EUlS9_SA_E_", !77, i64 0}
+!218 = !{!217, !77, i64 0}
+!219 = distinct !{null, null, null, null, null, null, null, null, null}
 !220 = distinct !{null, null, null, null, null, null, null, null, null}
-!221 = distinct !{null, null, null, null, null, null, null, null, null}
-!222 = distinct !{null, null, null}
+!221 = distinct !{null, null, null}
+!222 = distinct !{null, null, null, null, null, null, null, null, null, null}
 !223 = distinct !{null, null, null, null, null, null, null, null, null, null}
-!224 = distinct !{null, null, null, null, null, null, null, null, null, null}
-!225 = distinct !{null, null, null, null}
+!224 = distinct !{null, null, null, null}
 end_hunk_2

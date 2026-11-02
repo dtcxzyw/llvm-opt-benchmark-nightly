@@ -202,10 +202,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !12, !range !25, !noundef !26
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !12
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN9grpc_core5SliceELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !12
   %i.d = load ptr, ptr %0, align 8, !tbaa !19     ; 4 uses
   %i.e = icmp ugt ptr %i.d, inttoptr (i64 1 to ptr)
   br i1 %i.e, label %bb.c, label %_ZNSt17_Optional_payloadIN9grpc_core5SliceELb0ELb0ELb0EED2Ev.exit
@@ -323,11 +323,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !12, !range !25, !noundef !26
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !12
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i8 0, ptr %i.a, align 8, !tbaa !12
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !19   ; 4 uses
   %i.f = icmp ugt ptr %i.e, inttoptr (i64 1 to ptr)
   br i1 %i.f, label %bb.c, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit
@@ -730,10 +730,10 @@ bb.o:                                             ; preds = %bb.n
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.o, %bb.n, %bb.m
   %i.ah = load i8, ptr %i.e, align 8, !tbaa !74, !range !25, !noundef !26
   %i.ai = trunc nuw i8 %i.ah to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !74
   br i1 %i.ai, label %bb.p, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.p:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.e, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.d, align 8, !tbaa !28
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !81
@@ -865,11 +865,11 @@ _ZN9grpc_core4Fork15DecExecCtxCountEv.exit:       ; preds = %bb.e, %bb.f, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !74, !range !25, !noundef !26
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !74
   br i1 %i.n, label %bb.g, label %_ZNSt14_Optional_baseIN9grpc_core15ScopedTimeCacheELb0ELb0EED2Ev.exit
 
 bb.g:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i8 0, ptr %i.l, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !28
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !81
@@ -1037,10 +1037,10 @@ bb.q:                                             ; preds = %bb.p
   %i.ad = getelementptr inbounds nuw i8, ptr %11, i64 32 ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !12, !range !25, !noundef !26
   %i.af = trunc nuw i8 %i.ae to i1
-  store i8 0, ptr %i.ad, align 8, !tbaa !12
   br i1 %i.af, label %bb.r, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit
 
 bb.r:                                             ; preds = %bb.q
+  store i8 0, ptr %i.ad, align 8, !tbaa !12
   %i.ag = load ptr, ptr %11, align 8, !tbaa !19   ; 4 uses
   %i.ah = icmp ugt ptr %i.ag, inttoptr (i64 1 to ptr)
   br i1 %i.ah, label %bb.s, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit
@@ -1121,10 +1121,10 @@ bb.ac:                                            ; preds = %bb.ab
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.ac, %bb.ab, %bb.aa
   %i.be = load i8, ptr %i.e, align 8, !tbaa !74, !range !25, !noundef !26
   %i.bf = trunc nuw i8 %i.be to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !74
   br i1 %i.bf, label %bb.ad, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.ad:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.e, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.d, align 8, !tbaa !28
   %i.bg = getelementptr inbounds nuw i8, ptr %9, i64 56
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !81
@@ -1347,10 +1347,10 @@ bb.s:                                             ; preds = %bb.r
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.s, %bb.r, %bb.q
   %i.ah = load i8, ptr %i.p, align 8, !tbaa !74, !range !25, !noundef !26
   %i.ai = trunc nuw i8 %i.ah to i1
-  store i8 0, ptr %i.p, align 8, !tbaa !74
   br i1 %i.ai, label %bb.t, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.t:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.p, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !28
   %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 56
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !81
@@ -1594,10 +1594,10 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.l
           cleanup                                 ; 2 uses
   %i.aj = load i8, ptr %i.ac, align 8, !tbaa !74, !range !25, !noundef !26
   %i.ak = trunc nuw i8 %i.aj to i1
-  store i8 0, ptr %i.ac, align 8, !tbaa !74
   br i1 %i.ak, label %bb.q, label %common.resume
 
 bb.q:                                             ; preds = %bb.p
+  store i8 0, ptr %i.ac, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.ab, align 8, !tbaa !28
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !81
@@ -1673,16 +1673,16 @@ bb.y:                                             ; preds = %bb.x
           to label %bb.z unwind label %bb.ay
 
 bb.z:                                             ; preds = %bb.y
-  %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 3 uses
   %i.bj = load i8, ptr %i.bi, align 8, !tbaa !12, !range !25, !noundef !26
   %i.bk = trunc nuw i8 %i.bj to i1                ; 2 uses
-  store i8 0, ptr %i.bi, align 8, !tbaa !12
   br i1 %i.ax, label %.critedge38, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   br i1 %i.bk, label %bb.ab, label %.critedge41
 
 bb.ab:                                            ; preds = %bb.aa
+  store i8 0, ptr %i.bi, align 8, !tbaa !12
   %i.bl = load ptr, ptr %10, align 8, !tbaa !19   ; 4 uses
   %i.bm = icmp ugt ptr %i.bl, inttoptr (i64 1 to ptr)
   br i1 %i.bm, label %bb.ac, label %.critedge41
@@ -1709,6 +1709,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.bk, label %bb.af, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit51
 
 bb.af:                                            ; preds = %.critedge38
+  store i8 0, ptr %i.bi, align 8, !tbaa !12
   %i.bt = load ptr, ptr %10, align 8, !tbaa !19   ; 4 uses
   %i.bu = icmp ugt ptr %i.bt, inttoptr (i64 1 to ptr)
   br i1 %i.bu, label %bb.ag, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit51
@@ -1816,10 +1817,10 @@ bb.at:                                            ; preds = %bb.as
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.at, %bb.as, %bb.ar
   %i.cz = load i8, ptr %i.ac, align 8, !tbaa !74, !range !25, !noundef !26
   %i.da = trunc nuw i8 %i.cz to i1
-  store i8 0, ptr %i.ac, align 8, !tbaa !74
   br i1 %i.da, label %bb.au, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.au:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.ac, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.ab, align 8, !tbaa !28
   %i.db = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !81
@@ -2005,10 +2006,10 @@ bb.g:                                             ; preds = %_ZNSt8optionalIN9gr
 bb.h:                                             ; preds = %bb.g
   %i.s = load i8, ptr %i.k, align 8, !tbaa !12, !range !25, !noundef !26
   %i.t = trunc nuw i8 %i.s to i1
-  store i8 0, ptr %i.k, align 8, !tbaa !12
   br i1 %i.t, label %bb.i, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit
 
 bb.i:                                             ; preds = %bb.h
+  store i8 0, ptr %i.k, align 8, !tbaa !12
   %i.u = load ptr, ptr %11, align 8, !tbaa !19    ; 4 uses
   %i.v = icmp ugt ptr %i.u, inttoptr (i64 1 to ptr)
   br i1 %i.v, label %bb.j, label %_ZNSt14_Optional_baseIN9grpc_core5SliceELb0ELb0EED2Ev.exit
@@ -2089,10 +2090,10 @@ bb.t:                                             ; preds = %bb.s
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.t, %bb.s, %bb.r
   %i.as = load i8, ptr %i.d, align 8, !tbaa !74, !range !25, !noundef !26
   %i.at = trunc nuw i8 %i.as to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !74
   br i1 %i.at, label %bb.u, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.u:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.d, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.c, align 8, !tbaa !28
   %i.au = getelementptr inbounds nuw i8, ptr %9, i64 56
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !81
@@ -2267,10 +2268,10 @@ bb.k:                                             ; preds = %bb.j
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.k, %bb.j, %bb.i
   %i.u = load i8, ptr %i.d, align 8, !tbaa !74, !range !25, !noundef !26
   %i.v = trunc nuw i8 %i.u to i1
-  store i8 0, ptr %i.d, align 8, !tbaa !74
   br i1 %i.v, label %bb.l, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.l:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.d, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.c, align 8, !tbaa !28
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !81
@@ -2424,10 +2425,10 @@ bb.n:                                             ; preds = %bb.m
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.n, %bb.m, %bb.l
   %i.z = load i8, ptr %i.e, align 8, !tbaa !74, !range !25, !noundef !26
   %i.aa = trunc nuw i8 %i.z to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !74
   br i1 %i.aa, label %bb.o, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.o:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.e, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.d, align 8, !tbaa !28
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !81
@@ -2625,10 +2626,10 @@ bb.o:                                             ; preds = %bb.n
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.o, %bb.n, %bb.m
   %i.ad = load i8, ptr %i.f, align 8, !tbaa !74, !range !25, !noundef !26
   %i.ae = trunc nuw i8 %i.ad to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !74
   br i1 %i.ae, label %bb.p, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.p:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.f, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.e, align 8, !tbaa !28
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !81
@@ -2905,10 +2906,10 @@ bb.x:                                             ; preds = %bb.w
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.x, %bb.w, %bb.v
   %i.at = load i8, ptr %i.k, align 8, !tbaa !74, !range !25, !noundef !26
   %i.au = trunc nuw i8 %i.at to i1
-  store i8 0, ptr %i.k, align 8, !tbaa !74
   br i1 %i.au, label %bb.y, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.y:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.k, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.j, align 8, !tbaa !28
   %i.av = getelementptr inbounds nuw i8, ptr %6, i64 56
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !81
@@ -3197,10 +3198,10 @@ bb.ac:                                            ; preds = %bb.ab
 _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.ac, %bb.ab, %bb.aa
   %i.at = load i8, ptr %i.h, align 8, !tbaa !74, !range !25, !noundef !26
   %i.au = trunc nuw i8 %i.at to i1
-  store i8 0, ptr %i.h, align 8, !tbaa !74
   br i1 %i.au, label %bb.ad, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.ad:                                            ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
+  store i8 0, ptr %i.h, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.g, align 8, !tbaa !28
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !81
@@ -3603,11 +3604,11 @@ _ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i:     ; preds = %bb.f, %bb.e, %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !74, !range !25, !noundef !26
   %i.n = trunc nuw i8 %i.m to i1
-  store i8 0, ptr %i.l, align 8, !tbaa !74
   br i1 %i.n, label %bb.g, label %_ZN9grpc_core7ExecCtxD2Ev.exit
 
 bb.g:                                             ; preds = %_ZN9grpc_core4Fork15DecExecCtxCountEv.exit.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i8 0, ptr %i.l, align 8, !tbaa !74
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN9grpc_core9Timestamp12ScopedSourceE, i64 16), ptr %i.o, align 8, !tbaa !28
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !81

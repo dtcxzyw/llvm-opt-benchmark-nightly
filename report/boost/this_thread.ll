@@ -202,21 +202,22 @@ declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #8
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %0) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %2 = load i8, ptr %1, align 8, !tbaa !22, !range !23, !noundef !24
-  %3 = trunc nuw i8 %2 to i1
-  store i8 0, ptr %1, align 8, !tbaa !22
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %3 = load i8, ptr %2, align 8, !tbaa !22, !range !23, !noundef !24
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %_ZNSt17_Optional_payloadIN5boost4asio15any_io_executorELb0ELb0ELb0EED2Ev.exit
+
+bb.a:                                             ; preds = %1
+  store i8 0, ptr %2, align 8, !tbaa !22
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8
-  %4 = icmp ne ptr %i.b, null
-  %or.cond.not.i.i = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond.not.i.i, label %bb.b, label %_ZNSt17_Optional_payloadIN5boost4asio15any_io_executorELb0ELb0ELb0EED2Ev.exit
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29
+  %5 = icmp eq ptr %i.b, null
+  br i1 %5, label %_ZNSt17_Optional_payloadIN5boost4asio15any_io_executorELb0ELb0ELb0EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !29
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !31
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !30
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !32
   invoke void %i.e(ptr noundef nonnull align 8 dereferenceable(57) %0)
           to label %_ZNSt17_Optional_payloadIN5boost4asio15any_io_executorELb0ELb0ELb0EED2Ev.exit unwind label %bb.c
 
@@ -227,7 +228,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void @__clang_call_terminate(ptr %i.g) #26
   unreachable
 
-_ZNSt17_Optional_payloadIN5boost4asio15any_io_executorELb0ELb0ELb0EED2Ev.exit: ; preds = %bb.a, %bb.b
+_ZNSt17_Optional_payloadIN5boost4asio15any_io_executorELb0ELb0ELb0EED2Ev.exit: ; preds = %1, %bb.a, %bb.b
   ret void
 }
 
@@ -239,7 +240,7 @@ define noundef ptr @_ZN5boost6cobalt11this_thread20get_default_resourceEv() loca
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i, !prof !32
+  br i1 %i.b, label %bb.b, label %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i, !prof !33
 
 ._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i: ; preds = %bb.a
   %.pre.i = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
@@ -250,13 +251,13 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE) ; 2 uses
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit
 
 _ZTWN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit: ; preds = %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i, %bb.b
   %.pre-phi.i = phi ptr [ %.pre.i, %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i ], [ %i.e, %bb.b ]
-  %i.g = load ptr, ptr %.pre-phi.i, align 8, !tbaa !34
+  %i.g = load ptr, ptr %.pre-phi.i, align 8, !tbaa !35
   ret ptr %i.g
 }
 
@@ -265,7 +266,7 @@ define weak_odr hidden noundef ptr @_ZTWN5boost6cobalt11this_thread6detail28defa
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge, !prof !32
+  br i1 %i.b, label %bb.b, label %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge, !prof !33
 
 ._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge: ; preds = %bb.a
   %.pre = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
@@ -276,7 +277,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE) ; 2 uses
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit
 
@@ -290,11 +291,11 @@ define noundef ptr @_ZN5boost6cobalt11this_thread20set_default_resourceEPNSt3pmr
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit, label %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit.thread, !prof !32
+  br i1 %i.b, label %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit, label %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit.thread, !prof !33
 
 _ZN5boost6cobalt11this_thread20get_default_resourceEv.exit.thread: ; preds = %bb.a
   %.pre.i.i = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE) ; 2 uses
-  %i.c = load ptr, ptr %.pre.i.i, align 8, !tbaa !34
+  %i.c = load ptr, ptr %.pre.i.i, align 8, !tbaa !35
   br label %_ZTWN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit
 
 _ZN5boost6cobalt11this_thread20get_default_resourceEv.exit: ; preds = %bb.a
@@ -302,10 +303,10 @@ _ZN5boost6cobalt11this_thread20get_default_resourceEv.exit: ; preds = %bb.a
   %i.d = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.e = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.f = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE) ; 5 uses
-  store ptr %i.e, ptr %i.f, align 8, !tbaa !34
+  store ptr %i.e, ptr %i.f, align 8, !tbaa !35
   %i.g = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   %.pr = load i8, ptr @__tls_guard, align 1
-  %i.h = load ptr, ptr %i.f, align 8, !tbaa !34   ; 2 uses
+  %i.h = load ptr, ptr %i.f, align 8, !tbaa !35   ; 2 uses
   %i.i = icmp eq i8 %.pr, 0
   br i1 %i.i, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit, !prof !72
 
@@ -313,14 +314,14 @@ bb.b:                                             ; preds = %_ZN5boost6cobalt11t
   store i8 1, ptr @__tls_guard, align 1
   %i.j = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.k = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
-  store ptr %i.k, ptr %i.f, align 8, !tbaa !34
+  store ptr %i.k, ptr %i.f, align 8, !tbaa !35
   %i.l = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit
 
 _ZTWN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit: ; preds = %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit, %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit.thread, %bb.b
   %i.m = phi ptr [ %i.h, %bb.b ], [ %i.c, %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit.thread ], [ %i.h, %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit ]
   %.pre-phi.i = phi ptr [ %i.f, %bb.b ], [ %.pre.i.i, %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit.thread ], [ %i.f, %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit ]
-  store ptr %0, ptr %.pre-phi.i, align 8, !tbaa !34
+  store ptr %0, ptr %.pre-phi.i, align 8, !tbaa !35
   ret ptr %i.m
 }
 
@@ -329,7 +330,7 @@ define ptr @_ZN5boost6cobalt11this_thread13get_allocatorEv() local_unnamed_addr 
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i.i, !prof !32
+  br i1 %i.b, label %bb.b, label %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i.i, !prof !33
 
 ._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i.i: ; preds = %bb.a
   %.pre.i.i = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
@@ -340,13 +341,13 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE) ; 2 uses
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZN5boost6cobalt11this_thread20get_default_resourceEv.exit
 
 _ZN5boost6cobalt11this_thread20get_default_resourceEv.exit: ; preds = %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i.i, %bb.b
   %.pre-phi.i.i = phi ptr [ %.pre.i.i, %._ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit_crit_edge.i.i ], [ %i.e, %bb.b ]
-  %i.g = load ptr, ptr %.pre-phi.i.i, align 8, !tbaa !34
+  %i.g = load ptr, ptr %.pre-phi.i.i, align 8, !tbaa !35
   ret ptr %i.g
 }
 
@@ -355,14 +356,14 @@ define noundef zeroext i1 @_ZN5boost6cobalt11this_thread12has_executorEv() local
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !32
+  br i1 %i.b, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !33
 
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @__tls_guard, align 1
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
 
@@ -379,14 +380,14 @@ define weak_odr hidden noundef ptr @_ZTWN5boost6cobalt11this_thread6detail8execu
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit, !prof !32
+  br i1 %i.b, label %bb.b, label %_ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit, !prof !33
 
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @__tls_guard, align 1
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE.exit
 
@@ -400,14 +401,14 @@ define noundef nonnull align 8 dereferenceable(56) ptr @_ZN5boost6cobalt11this_t
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !32
+  br i1 %i.b, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !33
 
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @__tls_guard, align 1
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
 
@@ -425,14 +426,14 @@ bb.c:                                             ; preds = %_ZTWN5boost6cobalt1
 bb.d:                                             ; preds = %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
   %i.k = load i8, ptr @__tls_guard, align 1
   %i.l = icmp eq i8 %i.k, 0
-  br i1 %i.l, label %bb.e, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1, !prof !32
+  br i1 %i.l, label %bb.e, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1, !prof !33
 
 bb.e:                                             ; preds = %bb.d
   store i8 1, ptr @__tls_guard, align 1
   %i.m = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.n = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.o = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.n, ptr %i.o, align 8, !tbaa !34
+  store ptr %i.n, ptr %i.o, align 8, !tbaa !35
   %i.p = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1
 
@@ -452,14 +453,14 @@ bb.a:
   %3 = alloca %"struct.boost::asio::execution::context_as_t", align 1 ; 3 uses
   %i.b = load i8, ptr @__tls_guard, align 1
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !32
+  br i1 %i.c, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !33
 
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @__tls_guard, align 1
   %i.d = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.e = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.f = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.e, ptr %i.f, align 8, !tbaa !34
+  store ptr %i.e, ptr %i.f, align 8, !tbaa !35
   %i.g = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
 
@@ -468,20 +469,20 @@ _ZTWN5boost6cobalt11this_thread6detail8executorE.exit: ; preds = %bb.a, %bb.b
   %i.i = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt8optionalIN5boost4asio15any_io_executorEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_(ptr noundef nonnull align 8 dereferenceable(64) %i.h, ptr noundef nonnull align 8 dereferenceable(56) %0) #9 ; 0 uses
   %i.j = load i8, ptr @__tls_guard, align 1
   %i.k = icmp eq i8 %i.j, 0
-  br i1 %i.k, label %bb.c, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1, !prof !32
+  br i1 %i.k, label %bb.c, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1, !prof !33
 
 bb.c:                                             ; preds = %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
   store i8 1, ptr @__tls_guard, align 1
   %i.l = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.m = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.n = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.m, ptr %i.n, align 8, !tbaa !34
+  store ptr %i.m, ptr %i.n, align 8, !tbaa !35
   %i.o = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1
 
 _ZTWN5boost6cobalt11this_thread6detail8executorE.exit1: ; preds = %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !35
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !29
   %.not.i.i = icmp eq ptr %i.q, null
   br i1 %.not.i.i, label %bb.d, label %_ZNK5boost4asio9execution12any_executorIJNS1_12context_as_tIRNS0_17execution_contextEEENS1_6detail8blocking7never_tILi0EEENS1_11prefer_onlyINS8_10possibly_tILi0EEEEENSB_INS7_16outstanding_work9tracked_tILi0EEEEENSB_INSF_11untracked_tILi0EEEEENSB_INS7_12relationship6fork_tILi0EEEEENSB_INSM_14continuation_tILi0EEEEEEE5queryINS7_9context_tILi0EEEEENST_25find_convertible_propertyIT_E17query_result_typeERKSY_PNSt9enable_ifIXaantsr7is_sameIS10_vEE5valuesr12is_referenceIS10_EE5valueEvE4typeE.exit.i
 
@@ -508,7 +509,7 @@ _ZNK5boost4asio9execution12any_executorIJNS1_12context_as_tIRNS0_17execution_con
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !40
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !42
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !29
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !30
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 24
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !43
   %i.z = invoke noundef ptr %i.y(ptr noundef nonnull align 8 dereferenceable(56) %i.h)
@@ -568,42 +569,42 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.e, ptr %i.f, align 8, !tbaa !40
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !35
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !29
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !29
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !31
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !30
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !32
   invoke void %i.l(ptr noundef nonnull align 8 dereferenceable(56) %0)
           to label %bb.e unwind label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !35
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !29
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !29
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !30
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  store ptr %i.q, ptr %i.r, align 8, !tbaa !29
+  store ptr %i.q, ptr %i.r, align 8, !tbaa !30
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !75
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.t, ptr %i.u, align 8, !tbaa !75
-  store ptr null, ptr %i.p, align 8, !tbaa !29
+  store ptr null, ptr %i.p, align 8, !tbaa !30
   store ptr null, ptr %i.s, align 8, !tbaa !75
-  %i.v = load ptr, ptr %i.r, align 8, !tbaa !29
+  %i.v = load ptr, ptr %i.r, align 8, !tbaa !30
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !76
   invoke void %i.x(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %1)
           to label %bb.g unwind label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  store ptr null, ptr %i.m, align 8, !tbaa !35
+  store ptr null, ptr %i.m, align 8, !tbaa !29
   br label %_ZN5boost4asio15any_io_executoraSEOS1_.exit
 
 bb.h:                                             ; preds = %bb.e
@@ -620,29 +621,29 @@ bb.i:                                             ; preds = %bb.f, %bb.d
 
 bb.j:                                             ; preds = %bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !35
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !29
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ac, null
   br i1 %.not.i.i.i.i.i.i, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !29
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !30
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  store ptr %i.ae, ptr %i.af, align 8, !tbaa !29
+  store ptr %i.ae, ptr %i.af, align 8, !tbaa !30
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !75
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !75
-  store ptr null, ptr %i.ad, align 8, !tbaa !29
+  store ptr null, ptr %i.ad, align 8, !tbaa !30
   store ptr null, ptr %i.ag, align 8, !tbaa !75
-  %i.aj = load ptr, ptr %i.af, align 8, !tbaa !29
+  %i.aj = load ptr, ptr %i.af, align 8, !tbaa !30
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !76
   invoke void %i.al(ptr noundef nonnull align 8 dereferenceable(57) %0, ptr noundef nonnull align 8 dereferenceable(56) %1)
           to label %bb.l unwind label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  store ptr null, ptr %i.ab, align 8, !tbaa !35
+  store ptr null, ptr %i.ab, align 8, !tbaa !29
   br label %_ZNSt19_Optional_base_implIN5boost4asio15any_io_executorESt14_Optional_baseIS2_Lb0ELb0EEE12_M_constructIJS2_EEEvDpOT_.exit
 
 bb.m:                                             ; preds = %bb.j
@@ -1045,14 +1046,14 @@ bb.a:
   %2 = alloca %"struct.boost::asio::execution::context_as_t", align 1 ; 3 uses
   %i.b = load i8, ptr @__tls_guard, align 1
   %i.c = icmp eq i8 %i.b, 0
-  br i1 %i.c, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !32
+  br i1 %i.c, label %bb.b, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit, !prof !33
 
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @__tls_guard, align 1
   %i.d = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.e = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.f = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.e, ptr %i.f, align 8, !tbaa !34
+  store ptr %i.e, ptr %i.f, align 8, !tbaa !35
   %i.g = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
 
@@ -1066,20 +1067,20 @@ _ZTWN5boost6cobalt11this_thread6detail8executorE.exit: ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
   %i.l = load i8, ptr @__tls_guard, align 1
   %i.m = icmp eq i8 %i.l, 0
-  br i1 %i.m, label %bb.d, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1, !prof !32
+  br i1 %i.m, label %bb.d, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1, !prof !33
 
 bb.d:                                             ; preds = %bb.c
   store i8 1, ptr @__tls_guard, align 1
   %i.n = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.o = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.p = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.o, ptr %i.p, align 8, !tbaa !34
+  store ptr %i.o, ptr %i.p, align 8, !tbaa !35
   %i.q = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit1
 
 _ZTWN5boost6cobalt11this_thread6detail8executorE.exit1: ; preds = %bb.c, %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !35
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !29
   %.not.i.i = icmp eq ptr %i.s, null
   br i1 %.not.i.i, label %bb.e, label %_ZNK13asio_query_fn4implclIRN5boost4asio15any_io_executorERKNS3_9execution6detail9context_tILi0EEEEENSt9enable_ifIXeqsr11call_traitsIS0_T_FvT0_EEE8overloadLNS_13overload_typeE1EENS_11call_traitsIS0_SD_SF_vvvvE11result_typeEE4typeEOSD_OSE_.exit
 
@@ -1106,7 +1107,7 @@ _ZNK13asio_query_fn4implclIRN5boost4asio15any_io_executorERKNS3_9execution6detai
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !42
   %i.x = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !29
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !30
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !43
   %i.ab = tail call noundef ptr %i.aa(ptr noundef nonnull align 8 dereferenceable(56) %i.h), !inline_history !117
@@ -1123,29 +1124,31 @@ _ZNK13asio_query_fn4implclIRN5boost4asio15any_io_executorERKNS3_9execution6detai
 bb.h:                                             ; preds = %_ZNK13asio_query_fn4implclIRN5boost4asio15any_io_executorERKNS3_9execution6detail9context_tILi0EEEEENSt9enable_ifIXeqsr11call_traitsIS0_T_FvT0_EEE8overloadLNS_13overload_typeE1EENS_11call_traitsIS0_SD_SF_vvvvE11result_typeEE4typeEOSD_OSE_.exit
   %i.ag = load i8, ptr @__tls_guard, align 1
   %i.ah = icmp eq i8 %i.ag, 0
-  br i1 %i.ah, label %bb.i, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a, !prof !32
+  br i1 %i.ah, label %bb.i, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2, !prof !33
 
 bb.i:                                             ; preds = %bb.h
   store i8 1, ptr @__tls_guard, align 1
   %i.ai = call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.aj = call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.ak = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.aj, ptr %i.ak, align 8, !tbaa !34
+  store ptr %i.aj, ptr %i.ak, align 8, !tbaa !35
   %i.al = call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
-  br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a
+  br label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2
 
-_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a: ; preds = %bb.h, %bb.i
+_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2: ; preds = %bb.h, %bb.i
   %3 = load i8, ptr %i.i, align 8, !tbaa !22, !range !23, !noundef !24
   %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a, label %_ZNSt8optionalIN5boost4asio15any_io_executorEE5resetEv.exit
+
+_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a: ; preds = %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2
   store i8 0, ptr %i.i, align 8, !tbaa !22
-  %i.am = load ptr, ptr %i.r, align 8
-  %5 = icmp ne ptr %i.am, null
-  %or.cond.not.i.i.i = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond.not.i.i.i, label %bb.j, label %_ZNSt8optionalIN5boost4asio15any_io_executorEE5resetEv.exit
+  %i.am = load ptr, ptr %i.r, align 8, !tbaa !29
+  %5 = icmp eq ptr %i.am, null
+  br i1 %5, label %_ZNSt8optionalIN5boost4asio15any_io_executorEE5resetEv.exit, label %bb.j
 
 bb.j:                                             ; preds = %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a
-  %i.an = load ptr, ptr %i.x, align 8, !tbaa !29
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !31
+  %i.an = load ptr, ptr %i.x, align 8, !tbaa !30
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !32
   invoke void %i.ao(ptr noundef nonnull align 8 dereferenceable(64) %i.h)
           to label %_ZNSt8optionalIN5boost4asio15any_io_executorEE5resetEv.exit unwind label %bb.k
 
@@ -1156,7 +1159,7 @@ bb.k:                                             ; preds = %bb.j
   call void @__clang_call_terminate(ptr %i.aq) #26
   unreachable
 
-_ZNSt8optionalIN5boost4asio15any_io_executorEE5resetEv.exit: ; preds = %bb.j, %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a, %_ZNK13asio_query_fn4implclIRN5boost4asio15any_io_executorERKNS3_9execution6detail9context_tILi0EEEEENSt9enable_ifIXeqsr11call_traitsIS0_T_FvT0_EEE8overloadLNS_13overload_typeE1EENS_11call_traitsIS0_SD_SF_vvvvE11result_typeEE4typeEOSD_OSE_.exit, %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
+_ZNSt8optionalIN5boost4asio15any_io_executorEE5resetEv.exit: ; preds = %bb.j, %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2.a, %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit2, %_ZNK13asio_query_fn4implclIRN5boost4asio15any_io_executorERKNS3_9execution6detail9context_tILi0EEEEENSt9enable_ifIXeqsr11call_traitsIS0_T_FvT0_EEE8overloadLNS_13overload_typeE1EENS_11call_traitsIS0_SD_SF_vvvvE11result_typeEE4typeEOSD_OSE_.exit, %_ZTWN5boost6cobalt11this_thread6detail8executorE.exit
   ret void
 }
 
@@ -1180,14 +1183,14 @@ define hidden void @_ZTHN5boost6cobalt11this_thread6detail28default_coro_memory_
 bb.a:
   %i.a = load i8, ptr @__tls_guard, align 1
   %i.b = icmp eq i8 %i.a, 0
-  br i1 %i.b, label %bb.b, label %bb.c, !prof !32
+  br i1 %i.b, label %bb.b, label %bb.c, !prof !33
 
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr @__tls_guard, align 1
   %i.c = tail call ptr @llvm.invariant.start.p0(i64 1, ptr nonnull @__tls_guard) ; 0 uses
   %i.d = tail call noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() #9
   %i.e = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN5boost6cobalt11this_thread6detail28default_coro_memory_resourceE)
-  store ptr %i.d, ptr %i.e, align 8, !tbaa !34
+  store ptr %i.d, ptr %i.e, align 8, !tbaa !35
   %i.f = tail call i32 @__cxa_thread_atexit(ptr nonnull @_ZNSt14_Optional_baseIN5boost4asio15any_io_executorELb0ELb0EED2Ev, ptr nonnull @_ZN5boost6cobalt11this_thread6detail8executorE, ptr nonnull @__dso_handle) #9 ; 0 uses
   br label %bb.c
 
@@ -1265,13 +1268,13 @@ attributes #29 = { builtin allocsize(0) }
 !26 = !{!"p1 _ZTSN5boost4asio9execution6detail17any_executor_base10object_fnsE", !12, i64 0}
 !27 = !{!"p1 _ZTSN5boost4asio9execution6detail17any_executor_base10target_fnsE", !12, i64 0}
 !28 = !{!"_ZTSN5boost4asio9execution6detail17any_executor_baseE", !25, i64 0, !26, i64 24, !12, i64 32, !27, i64 40}
-!29 = !{!28, !26, i64 24}
-!30 = !{!"_ZTSN5boost4asio9execution6detail17any_executor_base10object_fnsE", !12, i64 0, !12, i64 8, !12, i64 16, !12, i64 24}
-!31 = !{!30, !12, i64 0}
-!32 = !{!"branch_weights", i32 1, i32 1023}
-!33 = !{!"p1 _ZTSNSt3pmr15memory_resourceE", !12, i64 0}
-!34 = !{!33, !33, i64 0}
-!35 = !{!28, !12, i64 32}
+!29 = !{!28, !12, i64 32}
+!30 = !{!28, !26, i64 24}
+!31 = !{!"_ZTSN5boost4asio9execution6detail17any_executor_base10object_fnsE", !12, i64 0, !12, i64 8, !12, i64 16, !12, i64 24}
+!32 = !{!31, !12, i64 0}
+!33 = !{!"branch_weights", i32 1, i32 1023}
+!34 = !{!"p1 _ZTSNSt3pmr15memory_resourceE", !12, i64 0}
+!35 = !{!34, !34, i64 0}
 !36 = !{!"p1 _ZTSN5boost4asio17execution_contextE", !12, i64 0}
 !37 = !{!36, !36, i64 0}
 !38 = !{!"p1 _ZTSN5boost4asio9execution6detail17any_executor_base8prop_fnsINS1_12any_executorIJNS1_12context_as_tIRNS0_17execution_contextEEENS2_8blocking7never_tILi0EEENS1_11prefer_onlyINSA_10possibly_tILi0EEEEENSD_INS2_16outstanding_work9tracked_tILi0EEEEENSD_INSH_11untracked_tILi0EEEEENSD_INS2_12relationship6fork_tILi0EEEEENSD_INSO_14continuation_tILi0EEEEEEEEEE", !12, i64 0}
@@ -1279,7 +1282,7 @@ attributes #29 = { builtin allocsize(0) }
 !40 = !{!39, !38, i64 48}
 !41 = !{!"_ZTSN5boost4asio9execution6detail17any_executor_base8prop_fnsINS1_12any_executorIJNS1_12context_as_tIRNS0_17execution_contextEEENS2_8blocking7never_tILi0EEENS1_11prefer_onlyINSA_10possibly_tILi0EEEEENSD_INS2_16outstanding_work9tracked_tILi0EEEEENSD_INSH_11untracked_tILi0EEEEENSD_INS2_12relationship6fork_tILi0EEEEENSD_INSO_14continuation_tILi0EEEEEEEEEE", !12, i64 0, !12, i64 8, !12, i64 16}
 !42 = !{!41, !12, i64 0}
-!43 = !{!30, !12, i64 24}
+!43 = !{!31, !12, i64 24}
 !44 = !{!"p1 _ZTSN5boost4asio17execution_context19allocator_impl_baseE", !12, i64 0}
 !45 = !{!"_ZTSN5boost4asio17execution_context18auto_allocator_ptrE", !44, i64 0}
 !46 = !{!"p1 _ZTSN5boost4asio6detail16service_registryE", !12, i64 0}
@@ -1312,7 +1315,7 @@ attributes #29 = { builtin allocsize(0) }
 !73 = distinct !{null}
 !74 = !{!47, !46, i64 8}
 !75 = !{!28, !27, i64 40}
-!76 = !{!30, !12, i64 16}
+!76 = !{!31, !12, i64 16}
 !77 = !{!"_ZTSN5boost6system15error_conditionE", !6, i64 0, !18, i64 8}
 !78 = !{!77, !6, i64 0}
 !79 = !{!77, !18, i64 8}

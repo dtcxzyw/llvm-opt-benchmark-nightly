@@ -204,24 +204,27 @@ bb.q:                                             ; preds = %bb.p, %.lr.ph.i
   %i.do = icmp ult i8 %i.dn, 11
   %spec.select.i.i = select i1 %i.do, ptr %.049.i, ptr null ; 2 uses
   %i.dp = load ptr, ptr %6, align 8, !tbaa !96
-  %i.dq = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %indvars.iv.i ; 3 uses
+  %i.dq = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %indvars.iv.i ; 4 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 8 ; 2 uses
   %i.ds = load i8, ptr %i.dr, align 8, !tbaa !103, !range !104, !noundef !105
   %i.dt = trunc nuw i8 %i.ds to i1
-  br i1 %i.dt, label %bb.r, label %.sink.split.i
+  br i1 %i.dt, label %bb.r, label %9
+
+9:                                                ; preds = %bb.q
+  store ptr %spec.select.i.i, ptr %i.dq, align 8, !tbaa !106
+  store i8 1, ptr %i.dr, align 8, !tbaa !103
+  br label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.du = load ptr, ptr %i.dq, align 8, !tbaa !106
   %.not60.i = icmp eq ptr %i.du, %spec.select.i.i
   br i1 %.not60.i, label %bb.s, label %.sink.split.i
 
-.sink.split.i:                                    ; preds = %bb.r, %bb.q
-  %.sink.i = phi ptr [ %spec.select.i.i, %bb.q ], [ null, %bb.r ]
-  store ptr %.sink.i, ptr %i.dq, align 8, !tbaa !106
-  store i8 1, ptr %i.dr, align 8, !tbaa !103
+.sink.split.i:                                    ; preds = %bb.r
+  store ptr null, ptr %i.dq, align 8, !tbaa !106
   br label %bb.s
 
-bb.s:                                             ; preds = %.sink.split.i, %bb.r
+bb.s:                                             ; preds = %.sink.split.i, %bb.r, %9
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.cj
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !26

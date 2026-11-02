@@ -205,17 +205,19 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit169.
   %.3.i = phi i32 [ 1, %bb.fu ], [ 5, %bb.gd ], [ 5, %bb.ge ]
   %i.akg = load i8, ptr %i.mt, align 8, !tbaa !660, !range !33, !noundef !34
   %i.akh = trunc nuw i8 %i.akg to i1
-  store i8 0, ptr %i.mt, align 8, !tbaa !660
-  %71 = load ptr, ptr %i.ne, align 8
-  %.not.i.i.i.i.i.i.i = icmp ne ptr %71, null
-  %or.cond.not.i.i.i.i = select i1 %i.akh, i1 %.not.i.i.i.i.i.i.i, i1 false
-  br i1 %or.cond.not.i.i.i.i, label %bb.gf, label %bb.gg
+  br i1 %i.akh, label %71, label %bb.gg
 
-bb.gf:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit169.i
+71:                                               ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit169.i
+  store i8 0, ptr %i.mt, align 8, !tbaa !660
+  %72 = load ptr, ptr %i.ne, align 8, !tbaa !204
+  %.not.i.i.i.i.i.i.i = icmp eq ptr %72, null
+  br i1 %.not.i.i.i.i.i.i.i, label %bb.gg, label %bb.gf
+
+bb.gf:                                            ; preds = %71
   call void @_ZN4llvm15ValueHandleBase17RemoveFromUseListEv(ptr noundef nonnull align 8 dereferenceable(64) %61) #20
   br label %bb.gg
 
-bb.gg:                                            ; preds = %bb.gf, %_ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit169.i
+bb.gg:                                            ; preds = %bb.gf, %71, %_ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit169.i
   call void @llvm.lifetime.end.p0(ptr nonnull %61) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #20
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit176.i
