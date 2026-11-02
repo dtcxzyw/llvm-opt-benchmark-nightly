@@ -202,7 +202,7 @@ _ZN4absl12lts_2025051212log_internal10LogMessagelsILi182EEERS2_RAT__Kc.exit: ; p
 _ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit: ; preds = %_ZN4absl12lts_2025051212log_internal10LogMessagelsILi182EEERS2_RAT__Kc.exit
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #11
-  br label %.critedge, !llvm.loop !21
+  br label %.critedge
 
 bb.d:                                             ; preds = %_ZN4absl12lts_2025051212log_internal10LogMessagelsILi182EEERS2_RAT__Kc.exit, %bb.c
   %i.j = landingpad { ptr, i32 }
@@ -239,7 +239,7 @@ _ZN4absl12lts_2025051212log_internal10LogMessagelsILi183EEERS2_RAT__Kc.exit: ; p
 _ZNKO4absl12lts_2025051212log_internal7VoidifyaaIRNS1_10LogMessageEEEvOT_.exit23: ; preds = %_ZN4absl12lts_2025051212log_internal10LogMessagelsILi183EEERS2_RAT__Kc.exit
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
-  br label %.critedge2, !llvm.loop !22
+  br label %.critedge2
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051212log_internal10LogMessagelsILi183EEERS2_RAT__Kc.exit, %bb.f
   %i.p = landingpad { ptr, i32 }
@@ -393,7 +393,4 @@ attributes #15 = { cold nounwind }
 !18 = !{!"p1 _ZTSN4absl12lts_2025051212log_internal10LogMessage14LogMessageDataE", !8, i64 0}
 !19 = !{!18, !18, i64 0}
 !20 = !{!11, !11, i64 0}
-!21 = distinct !{!21, !23}
-!22 = distinct !{!22, !23}
-!23 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

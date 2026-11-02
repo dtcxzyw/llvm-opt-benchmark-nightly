@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_dbus?download=true
 inline.NumInlined: 11
 inline.NumDeleted: 5
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@SDL_DBus_OpenURI:bb.a
   br i1 %i.l, label %bb.e, label %bb.f
 
@@ -204,7 +202,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr getelementptr inbounds nuw (i8, ptr @dbus, i64 264), align 8
   %i.p = call i32 %i.o(ptr noundef nonnull %3, ptr noundef nonnull %4) #6, !inline_history !7
-  %.not18.not.i = icmp eq i32 %i.p, 0
+  %.fr.i = freeze i32 %i.p
+  %.not18.not.i = icmp eq i32 %.fr.i, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #6

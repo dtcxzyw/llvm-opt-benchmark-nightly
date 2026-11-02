@@ -36,9 +36,9 @@ bb.a:
           to label %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader unwind label %bb.b
 
 _ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader: ; preds = %bb.a
-  %i.f = load i64, ptr %i.a, align 8, !tbaa !13   ; 8 uses
+  %i.f = load i64, ptr %i.a, align 8, !tbaa !13   ; 10 uses
   %i.g = icmp sgt i64 %i.f, 0
-  %i.h = load ptr, ptr %5, align 8                ; 8 uses
+  %i.h = load ptr, ptr %5, align 8                ; 7 uses
   br i1 %i.g, label %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader.split.us, label %.preheader87
 
 _ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader.split.us: ; preds = %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader
@@ -71,7 +71,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.f, %n.vec
-  br i1 %cmp.n, label %.preheader87.loopexit, label %scalar.ph.preheader
+  br i1 %cmp.n, label %.preheader87, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader.split.us, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader.split.us ], [ %n.vec, %middle.block ] ; 3 uses
@@ -95,7 +95,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
   %i.u = sub nsw i64 %indvars.iv.ph, %i.f
   %i.v = icmp ugt i64 %i.u, -4
-  br i1 %i.v, label %.preheader87.loopexit, label %scalar.ph
+  br i1 %i.v, label %.preheader87, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 6 uses
@@ -120,7 +120,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   store i32 %i.ag, ptr %i.ah, align 4, !tbaa !28
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %i.f
-  br i1 %exitcond.not.3, label %.preheader87.loopexit, label %scalar.ph, !llvm.loop !19
+  br i1 %exitcond.not.3, label %.preheader87, label %scalar.ph, !llvm.loop !19
 
 common.resume:                                    ; preds = %bb.o, %bb.b
   %common.resume.op = phi { ptr, i32 } [ %i.ai, %bb.b ], [ %.pn68.pn, %bb.o ]
@@ -133,24 +133,20 @@ bb.b:                                             ; preds = %bb.a
   call void @free(ptr noundef %i.aj) #10
   br label %common.resume
 
-.preheader87.loopexit:                            ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
-  %.pre = load ptr, ptr %5, align 8
-  br label %.preheader87
-
-.preheader87:                                     ; preds = %.preheader87.loopexit, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader
-  %8 = phi ptr [ %i.h, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader ], [ %.pre, %.preheader87.loopexit ] ; 7 uses
-  %.us-phi = phi i64 [ 0, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader ], [ %i.f, %.preheader87.loopexit ] ; 5 uses
-  %9 = ptrtoaddr ptr %8 to i64
+.preheader87:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader
+  %.us-phi = phi i64 [ 0, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IliEERKT_RKT0_.exit.preheader ], [ %i.f, %middle.block ], [ %i.f, %scalar.ph ], [ %i.f, %scalar.ph.prol.loopexit ] ; 5 uses
   %i.ak = load i64, ptr %i.c, align 8, !tbaa !13  ; 7 uses
   %i.al = icmp sgt i64 %i.ak, 0
   br i1 %i.al, label %.preheader87.split95, label %.split
 
 .preheader87.split95:                             ; preds = %.preheader87
   %i.am = load ptr, ptr %1, align 8, !tbaa !14    ; 7 uses
+  %8 = load ptr, ptr %5, align 8, !tbaa !14       ; 7 uses
   %min.iters.check129 = icmp ult i64 %i.ak, 12
   br i1 %min.iters.check129, label %scalar.ph128.preheader, label %vector.memcheck130
 
 vector.memcheck130:                               ; preds = %.preheader87.split95
+  %9 = ptrtoaddr ptr %8 to i64
   %i.an = ptrtoaddr ptr %i.am to i64
   %i.ao = shl i64 %.us-phi, 2
   %i.ap = add i64 %i.ao, %9

@@ -120,7 +120,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 idle_task_initialize.exit:                        ; preds = %bb.b, %bb.f
   store ptr @g_idletcb, ptr @g_running_tasks, align 8
-  tail call void asm sideeffect "movq $0, %gs:(${1:c})", "r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @g_idletcb, i64 8) #9, !inline_history !7, !srcloc !9
+  tail call void asm sideeffect "movq $0, %gs:(${1:c})", "r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @g_idletcb, i64 8) #9, !inline_history !7, !srcloc !8
   store volatile i32 2, ptr @g_nx_initstate, align 4
   tail call void @drivers_early_initialize() #8
   tail call void @nxsem_initialize() #8
@@ -135,7 +135,7 @@ idle_task_initialize.exit:                        ; preds = %bb.b, %bb.f
   %i.s = call noalias dereferenceable_or_null(128) ptr @zalloc(i64 noundef 128) #10 ; 3 uses
   store ptr %i.s, ptr @g_pidhash, align 8
   %.not = icmp eq ptr %i.s, null
-  br i1 %.not, label %bb.g, label %bb.h, !prof !10
+  br i1 %.not, label %bb.g, label %bb.h, !prof !9
 
 bb.g:                                             ; preds = %idle_task_initialize.exit
   call void @__assert(ptr noundef nonnull @.str, i32 noundef 605, ptr noundef nonnull @.str.1) #11
@@ -149,7 +149,7 @@ bb.h:                                             ; preds = %idle_task_initializ
   %i.v = trunc i32 %i.u to i8
   %i.w = call i32 @group_allocate(ptr noundef nonnull @g_idletcb, i8 noundef zeroext %i.v) #8
   %i.x = icmp slt i32 %i.w, 0
-  br i1 %i.x, label %bb.i, label %idle_group_initialize.exit, !prof !10
+  br i1 %i.x, label %bb.i, label %idle_group_initialize.exit, !prof !9
 
 bb.i:                                             ; preds = %bb.h
   call void @__assert(ptr noundef nonnull @.str, i32 noundef 448, ptr noundef nonnull @.str.5) #11
@@ -179,17 +179,17 @@ idle_group_initialize.exit:                       ; preds = %bb.h
   store volatile i32 4, ptr @g_nx_initstate, align 4
   %i.ab = call i32 @group_setupidlefiles() #8
   %i.ac = icmp slt i32 %i.ab, 0
-  br i1 %i.ac, label %0, label %bb.j, !prof !10, !llvm.loop !8
+  br i1 %i.ac, label %0, label %bb.j, !prof !9
+
+0:                                                ; preds = %idle_group_initialize.exit
+  call void @__assert(ptr noundef nonnull @.str, i32 noundef 721, ptr noundef nonnull @.str.3) #11
+  unreachable
 
 bb.j:                                             ; preds = %idle_group_initialize.exit
   store volatile i32 5, ptr @g_nx_initstate, align 4
   %i.ad = call i32 @nx_bringup() #8
   %i.ae = icmp slt i32 %i.ad, 0
-  br i1 %i.ae, label %bb.k, label %bb.l, !prof !10
-
-0:                                                ; preds = %idle_group_initialize.exit
-  call void @__assert(ptr noundef nonnull @.str, i32 noundef 721, ptr noundef nonnull @.str.3) #11
-  unreachable
+  br i1 %i.ae, label %bb.k, label %bb.l, !prof !9
 
 bb.k:                                             ; preds = %bb.j
   call void @__assert(ptr noundef nonnull @.str, i32 noundef 747, ptr noundef nonnull @.str.4) #11
@@ -316,8 +316,6 @@ attributes #11 = { noredzone noreturn nounwind optsize }
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !6 = !{!"Ubuntu clang version 24.0.0 (++20260903081701+7ece48b9e5bb-1~exp1~20260903201841.1826)"}
 !7 = distinct !{null}
-!8 = distinct !{!8, !11}
-!9 = !{i64 2149244261}
-!10 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!11 = !{!"llvm.loop.mustprogress"}
+!8 = !{i64 2149244261}
+!9 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_0
