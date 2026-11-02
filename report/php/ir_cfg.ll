@@ -204,12 +204,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %3, align 8, !tbaa !162    ; 3 uses
+  %wide.trip.count = zext i32 %i.f to i64
   br label %.preheader121
 
 .preheader121:                                    ; preds = %bb.b, %.critedge
-  %.0102126 = phi i32 [ 1, %bb.b ], [ %7, %.critedge ] ; 3 uses
-  %.phi.trans.insert = zext i32 %.0102126 to i64
-  %.phi.trans.insert135 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %.phi.trans.insert
+  %indvars.iv = phi i64 [ 1, %bb.b ], [ %indvars.iv.next, %.critedge ] ; 3 uses
+  %.phi.trans.insert135 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv
   %.pre = load i32, ptr %.phi.trans.insert135, align 4, !tbaa !39 ; 2 uses
   %i.i = shl nsw i32 %.pre, 1
   %i.j = sext i32 %i.i to i64
@@ -217,10 +217,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader121, %bb.d
-  %.0101125 = phi i32 [ %.0102126, %.preheader121 ], [ %4, %bb.d ] ; 2 uses
-  %4 = add i32 %.0101125, -1                      ; 3 uses
-  %5 = zext i32 %4 to i64
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %5 ; 2 uses
+  %indvars.iv135 = phi i64 [ %indvars.iv, %.preheader121 ], [ %indvars.iv.next136, %bb.d ] ; 2 uses
+  %indvars.iv.next136 = add nsw i64 %indvars.iv135, -1 ; 3 uses
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.next136 ; 2 uses
   %i.m = load i32, ptr %i.l, align 4, !tbaa !39   ; 2 uses
   %i.n = shl nsw i32 %i.m, 1
   %i.o = sext i32 %i.n to i64
@@ -231,16 +230,15 @@ bb.c:                                             ; preds = %.preheader121, %bb.
   br i1 %i.s, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %6 = zext i32 %.0101125 to i64
-  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %6
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv135
   store i32 %i.m, ptr %i.t, align 4, !tbaa !39
   store i32 %.pre, ptr %i.l, align 4, !tbaa !39
-  %.not112 = icmp eq i32 %4, 0
+  %.not112 = icmp eq i64 %indvars.iv.next136, 0
   br i1 %.not112, label %.critedge, label %bb.c, !llvm.loop !155
 
 .critedge:                                        ; preds = %bb.d, %bb.c
-  %7 = add nuw i32 %.0102126, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %7, %i.f
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit122.loopexit, label %.preheader121, !llvm.loop !156
 
 .loopexit122.loopexit:                            ; preds = %.critedge
