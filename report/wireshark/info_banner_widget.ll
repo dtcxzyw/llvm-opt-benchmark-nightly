@@ -205,6 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
 define void @_ZN16InfoBannerWidget10paintEventEP11QPaintEvent(ptr noundef align 8 dereferenceable_or_null(152) %0, ptr nofree noundef readnone captures(none) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %2 = alloca %class.QPointF, align 8             ; 5 uses
   %3 = alloca %class.QSize, align 8               ; 4 uses
   %4 = alloca %class.QPointF, align 16            ; 4 uses
@@ -439,15 +441,16 @@ _ZN5QListI6QColorEaSERKS1_.exit:                  ; preds = %bb.k, %bb.j, %_ZN17
   %.sroa.12355.0 = phi ptr [ %i.bm, %_ZN17QArrayDataPointerI6QColorED2Ev.exit.i ], [ %i.bd, %bb.j ], [ %i.bd, %bb.k ]
   %.sroa.16.0 = phi i64 [ 2, %_ZN17QArrayDataPointerI6QColorED2Ev.exit.i ], [ %i.bf, %bb.j ], [ %i.bf, %bb.k ] ; 3 uses
   %.sroa.0349.0 = phi ptr [ %i.bn, %_ZN17QArrayDataPointerI6QColorED2Ev.exit.i ], [ null, %bb.j ], [ %i.bb, %bb.k ] ; 6 uses
-  %i.bo = fadd double %i.an, f0xBFF921FB54442D18  ; 2 uses
-  %68 = call noundef double @cos(double noundef %i.bo) #28
-  %69 = call noundef double @sin(double noundef %i.bo) #28
+  %i.bo = fadd double %i.an, f0xBFF921FB54442D18
+  call void @sincos(double %i.bo, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   %i.bp = load <2 x double>, ptr %i.w, align 8    ; 2 uses
   %i.bq = fmul <2 x double> %i.bp, splat (double 5.000000e-01) ; 2 uses
-  %i.br = insertelement <2 x double> poison, double %68, i64 0
-  %i.bs = insertelement <2 x double> %i.br, double %69, i64 1
+  %i.br = insertelement <2 x double> poison, double %cos, i64 0
+  %i.bs = insertelement <2 x double> %i.br, double %sin, i64 1
   %i.bt = fmul <2 x double> %i.bp, %i.bs
   %i.bu = fmul <2 x double> %i.bt, splat (double 5.000000e-01) ; 2 uses
   %i.bv = fsub <2 x double> %i.bq, %i.bu
@@ -850,12 +853,6 @@ _ZN17QArrayDataPointerI7QStringE5derefEv.exit.thread: ; preds = %bb.a, %_ZN9QtPr
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #21
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #21
-
 ; Function Attrs: null_pointer_is_valid
 declare void @_ZN12QPainterPath6moveToERK7QPointF(ptr noundef align 8 dereferenceable_or_null(8), ptr noundef align 8 dereferenceable(16)) local_unnamed_addr #1
 
@@ -878,7 +875,7 @@ declare void @_ZN5QFont9setWeightENS_6WeightE(ptr noundef align 8 dereferenceabl
 declare { double, double } @_ZNK11QEventPoint8positionEv(ptr noundef align 8 dereferenceable_or_null(8)) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.copysign.f64(double, double) #22
+declare double @llvm.copysign.f64(double, double) #21
 
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
 define linkonce_odr void @_ZN4QMapI15BannerSlideTypebE6detachEv(ptr noundef align 8 dereferenceable_or_null(8) %0) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1281,7 +1278,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d,
 declare noalias noundef ptr @_ZN10QArrayData8allocateEPPS_xxxNS_16AllocationOptionE(ptr noundef, i64 noundef, i64 noundef, i64 noundef, i32 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #23
+declare void @llvm.assume(i1 noundef) #22
 
 ; Function Attrs: mustprogress nofree nounwind null_pointer_is_valid willreturn memory(read)
 declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #20
@@ -1684,7 +1681,7 @@ _ZN17QArrayDataPointerI11BannerSlideE8relocateExPPKS0_.exit: ; preds = %_ZN9QtPr
 }
 
 ; Function Attrs: mustprogress noinline null_pointer_is_valid sspstrong uwtable
-define linkonce_odr void @_ZN17QArrayDataPointerI11BannerSlideE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #24 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN17QArrayDataPointerI11BannerSlideE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #23 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %struct.QArrayDataPointer, align 16 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
@@ -2087,7 +2084,7 @@ bb.g:                                             ; preds = %_ZNK17QArrayDataPoi
 }
 
 ; Function Attrs: cold noreturn null_pointer_is_valid
-declare void @_Z9qBadAllocv() local_unnamed_addr #25
+declare void @_Z9qBadAllocv() local_unnamed_addr #24
 
 ; Function Attrs: inlinehint mustprogress nounwind null_pointer_is_valid sspstrong uwtable
 define linkonce_odr void @_ZN11BannerSlideC2ERKS_(ptr noundef align 8 dereferenceable_or_null(248) %0, ptr noundef align 8 dereferenceable(248) %1) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -2490,7 +2487,7 @@ _ZN17QArrayDataPointerI6QColorE8relocateExPPKS0_.exit: ; preds = %_ZN9QtPrivate2
 }
 
 ; Function Attrs: mustprogress noinline null_pointer_is_valid sspstrong uwtable
-define linkonce_odr void @_ZN17QArrayDataPointerI6QColorE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #24 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN17QArrayDataPointerI6QColorE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #23 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %struct.QArrayDataPointer.16, align 16 ; 14 uses
   %i.a = icmp ne i32 %1, 0
@@ -2893,7 +2890,7 @@ _ZN17QArrayDataPointerI15BannerSlideTypeE8relocateExPPKS0_.exit: ; preds = %_ZN9
 }
 
 ; Function Attrs: mustprogress noinline null_pointer_is_valid sspstrong uwtable
-define linkonce_odr void @_ZN17QArrayDataPointerI15BannerSlideTypeE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #24 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN17QArrayDataPointerI15BannerSlideTypeE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #23 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %struct.QArrayDataPointer.20, align 16 ; 13 uses
   %i.a = icmp ne i32 %1, 0
@@ -3296,7 +3293,7 @@ _ZN17QArrayDataPointerI7QStringE8relocateExPPKS0_.exit: ; preds = %_ZN9QtPrivate
 }
 
 ; Function Attrs: mustprogress noinline null_pointer_is_valid sspstrong uwtable
-define linkonce_odr void @_ZN17QArrayDataPointerI7QStringE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #24 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN17QArrayDataPointerI7QStringE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS1_(ptr noundef align 8 dereferenceable_or_null(24) %0, i32 noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #23 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %struct.QArrayDataPointer.32, align 16 ; 13 uses
   %i.a = icmp ne i32 %1, 0
@@ -3699,16 +3696,19 @@ _ZN7QStringD2Ev.exit20:                           ; preds = %bb.h, %_ZN17QArrayD
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #22
+declare i32 @llvm.smax.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #22
+declare i64 @llvm.smax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #26
+declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #22
+declare i64 @llvm.smin.i64(i64, i64) #21
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #4
@@ -3734,12 +3734,12 @@ attributes #17 = { cold nofree noreturn }
 attributes #18 = { noreturn nounwind null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { mustprogress nofree nounwind null_pointer_is_valid willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #21 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #24 = { mustprogress noinline null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #25 = { cold noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #21 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #22 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #23 = { mustprogress noinline null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #24 = { cold noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #26 = { mustprogress nocallback nofree nosync nounwind null_pointer_is_valid willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #27 = { builtin allocsize(0) }
 attributes #28 = { nounwind }
 attributes #29 = { builtin nounwind }
