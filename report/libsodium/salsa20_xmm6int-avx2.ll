@@ -205,7 +205,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.apd = xor i8 %i.apc, %i.apa
   %i.ape = getelementptr i8, ptr %.41708.lcssa, i64 %indvars.iv.prol
   store i8 %i.apd, ptr %i.ape, align 1
-  %indvars.iv.next.prol = add nuw i64 %indvars.iv.prol, 1 ; 2 uses
+  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol, !llvm.loop !11
@@ -225,7 +225,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.apl = xor i8 %i.apk, %i.api
   %i.apm = getelementptr i8, ptr %.41708.lcssa, i64 %indvars.iv
   store i8 %i.apl, ptr %i.apm, align 1
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.apn = getelementptr i8, ptr %.4.lcssa, i64 %indvars.iv.next
   %i.apo = load i8, ptr %i.apn, align 1
   %i.app = getelementptr i8, ptr %i.a, i64 %indvars.iv.next
@@ -233,7 +233,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.apr = xor i8 %i.apq, %i.apo
   %i.aps = getelementptr i8, ptr %.41708.lcssa, i64 %indvars.iv.next
   store i8 %i.apr, ptr %i.aps, align 1
-  %indvars.iv.next.1 = add nuw i64 %indvars.iv, 2 ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.apt = getelementptr i8, ptr %.4.lcssa, i64 %indvars.iv.next.1
   %i.apu = load i8, ptr %i.apt, align 1
   %i.apv = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.1
@@ -241,7 +241,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.apx = xor i8 %i.apw, %i.apu
   %i.apy = getelementptr i8, ptr %.41708.lcssa, i64 %indvars.iv.next.1
   store i8 %i.apx, ptr %i.apy, align 1
-  %indvars.iv.next.2 = add nuw i64 %indvars.iv, 3 ; 3 uses
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 3 uses
   %i.apz = getelementptr i8, ptr %.4.lcssa, i64 %indvars.iv.next.2
   %i.aqa = load i8, ptr %i.apz, align 1
   %i.aqb = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.2
@@ -249,7 +249,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.aqd = xor i8 %i.aqc, %i.aqa
   %i.aqe = getelementptr i8, ptr %.41708.lcssa, i64 %indvars.iv.next.2
   store i8 %i.aqd, ptr %i.aqe, align 1
-  %indvars.iv.next.3 = add nuw i64 %indvars.iv, 4 ; 2 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %.41713.lcssa
   br i1 %exitcond.not.3, label %.loopexit1983, label %vec.epilog.scalar.ph, !llvm.loop !12
 

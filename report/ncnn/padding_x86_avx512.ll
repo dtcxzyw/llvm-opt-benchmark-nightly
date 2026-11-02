@@ -204,7 +204,7 @@ iter.check1052:                                   ; preds = %..preheader8_crit_e
   br i1 %min.iters.check1034, label %.lr.ph15.us.i.preheader, label %vector.memcheck1035
 
 vector.memcheck1035:                              ; preds = %iter.check1052
-  %i.ww = mul i64 %indvar1031, %i.sp
+  %i.ww = mul nsw i64 %indvar1031, %i.sp
   %i.wx = ptrtoaddr ptr %.lcssa257 to i64
   %i.wy = add i64 %i.ww, %i.wx
   %i.wz = sub i64 %i.ss, %i.wy
@@ -487,7 +487,7 @@ iter.check1196:                                   ; preds = %.preheader9.us28.us
   br i1 %min.iters.check1178, label %vec.epilog.scalar.ph1198.preheader, label %vector.memcheck1179
 
 vector.memcheck1179:                              ; preds = %iter.check1196
-  %i.zy = mul i64 %indvar1133, %i.zm
+  %i.zy = mul nsw i64 %indvar1133, %i.zm
   %i.zz = add i64 %.neg1315, %i.zy
   %i.aaa = add i64 %i.zz, %.010023.us30.us.i1135
   %i.aab = add i64 %i.aaa, -1
@@ -641,7 +641,7 @@ vector.memcheck1137:                              ; preds = %iter.check1159
   %reass.sub = sub i64 %i.aby, %.010023.us30.us.i1135 ; 2 uses
   %i.abz = getelementptr i8, ptr %.010023.us30.us.i, i64 %i.zk
   %i.aca = getelementptr i8, ptr %i.abz, i64 %reass.sub
-  %i.acb = mul i64 %indvar1133, %i.zj
+  %i.acb = mul nsw i64 %indvar1133, %i.zj
   %i.acc = getelementptr i8, ptr %i.zu, i64 %i.acb
   %i.acd = getelementptr i8, ptr %i.acc, i64 %reass.sub
   %i.ace = getelementptr i8, ptr %i.acd, i64 -8
@@ -965,7 +965,7 @@ iter.check1295:                                   ; preds = %.preheader9.us52.i.
 
 vector.memcheck1278:                              ; preds = %iter.check1295
   %.010023.us54.i1276 = ptrtoaddr ptr %.010023.us54.i to i64
-  %i.afx = mul i64 %indvar1274, %i.afi
+  %i.afx = mul nsw i64 %indvar1274, %i.afi
   %i.afy = add i64 %.neg1313, %i.afx
   %i.afz = add i64 %i.afy, %.010023.us54.i1276
   %i.aga = add i64 %i.afz, -1
@@ -1368,7 +1368,7 @@ iter.check775:                                    ; preds = %.preheader1.i52
   br i1 %min.iters.check757, label %.lr.ph95.i.preheader, label %vector.memcheck758
 
 vector.memcheck758:                               ; preds = %iter.check775
-  %i.aqj = mul i64 %indvar, %i.aki
+  %i.aqj = mul nsw i64 %indvar, %i.aki
   %i.aqk = add i64 %i.akk, %i.aqj
   %i.aql = add i64 %i.aqk, %.9.lcssa.i53756
   %i.aqm = add i64 %i.aql, -1

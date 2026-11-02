@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %.lr.ph, %bb.at
   %i.ka = zext i16 %i.jy to i64
   %i.kb = getelementptr inbounds nuw [2 x i8], ptr %i.jr, i64 %i.ka ; 2 uses
   %i.kc = load i16, ptr %i.kb, align 2
-  %i.kd = shl i16 %.sroa.7.0573, 1
+  %i.kd = shl nuw nsw i16 %.sroa.7.0573, 1
   %i.ke = and i16 %i.kc, 1
   %i.kf = or disjoint i16 %i.ke, %i.kd
   store i16 %i.kf, ptr %i.kb, align 2
@@ -217,7 +217,7 @@ bb.at:                                            ; preds = %bb.as
   %i.ki = load i16, ptr %i.js, align 2, !tbaa !198
   %i.kj = add i16 %i.ki, -1                       ; 2 uses
   store i16 %i.kj, ptr %i.js, align 2, !tbaa !198
-  %i.kk = add i16 %.sroa.7.0573, 1
+  %i.kk = add nuw nsw i16 %.sroa.7.0573, 1
   %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.0414.0572, i64 8 ; 2 uses
   %.not567 = icmp eq ptr %i.kl, %i.jq
   br i1 %.not567, label %.critedge, label %bb.as

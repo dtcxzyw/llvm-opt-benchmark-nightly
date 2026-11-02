@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %.lr.ph
 
 bb.bg:                                            ; preds = %.lr.ph299
   %i.gd = getelementptr inbounds nuw i8, ptr %.sroa.0204.0298, i64 8, !dbg !129643 ; 2 uses
-  %i.ge = add i32 %.sroa.7206.0297, 1, !dbg !129644
+  %i.ge = add nuw nsw i32 %.sroa.7206.0297, 1, !dbg !129644
   %i.gf = icmp eq ptr %i.gd, %i.ev, !dbg !129603
   br i1 %i.gf, label %.loopexit, label %.lr.ph299, !dbg !129604
 

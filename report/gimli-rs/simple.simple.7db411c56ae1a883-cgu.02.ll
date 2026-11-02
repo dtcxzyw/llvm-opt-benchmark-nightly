@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.z, %bb.u
   %i.bk = phi ptr [ %.promoted38.i.i.i.i.i.i, %bb.u ], [ %i.bp, %bb.z ] ; 3 uses
   %i.bl = phi i64 [ %.promoted.i.i.i.i.i.i, %bb.u ], [ %i.bo, %bb.z ] ; 2 uses
-  %.sroa.04.0.i.i.i.i.i.i = phi i32 [ 0, %bb.u ], [ %i.bx, %bb.z ] ; 3 uses
+  %.sroa.04.0.i.i.i.i.i.i = phi i32 [ 0, %bb.u ], [ %i.bx, %bb.z ] ; 4 uses
   %.sroa.0.0.i.i.i.i.i.i = phi i64 [ 0, %bb.u ], [ %i.bw, %bb.z ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !108
   %i.bm = invoke noundef i8 @_RNvXs14_NtCskKLDkoKarTP_4core5arrayAhj1_NtNtB8_7default7Default7defaultCsaN7cMqnSAH7_6simple()
@@ -245,7 +245,7 @@ bb.z:                                             ; preds = %bb.y, %bb.y, %.noex
   %i.bu = zext nneg i32 %i.bt to i64
   %i.bv = shl i64 %i.bs, %i.bu
   %i.bw = or i64 %i.bv, %.sroa.0.0.i.i.i.i.i.i    ; 2 uses
-  %i.bx = add i32 %.sroa.04.0.i.i.i.i.i.i, 7      ; 3 uses
+  %i.bx = add nuw nsw i32 %.sroa.04.0.i.i.i.i.i.i, 7 ; 2 uses
   %i.by = icmp sgt i8 %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, -1
   br i1 %i.by, label %_RINvMsd_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_22AttributeSpecification5parseINtNtB8_8relocate14RelocateReaderINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianERNtCsaN7cMqnSAH7_6simple13RelocationMapEEB2V_.exit.i.i.i, label %bb.v
 
@@ -293,7 +293,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtC
 _RINvMsd_NtNtCsi68uqYEhoRA_5gimli4read6abbrevNtB6_22AttributeSpecification5parseINtNtB8_8relocate14RelocateReaderINtNtB8_12endian_slice11EndianSliceNtNtBa_9endianity13RunTimeEndianERNtCsaN7cMqnSAH7_6simple13RelocationMapEEB2V_.exit.i.i.i: ; preds = %bb.z
   store ptr %i.bp, ptr %i.af, align 16, !noalias !79
   store i64 %i.bo, ptr %.sroa.43.0..sroa_idx.i.i, align 8, !noalias !79
-  %4 = icmp slt i32 %i.bx, 64
+  %4 = icmp samesign ult i32 %.sroa.04.0.i.i.i.i.i.i, 57
   %i.cd = icmp samesign ugt i8 %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, 63
   %or.cond.i.i.i.i.i.i = and i1 %4, %i.cd
   %i.ce = and i32 %i.bx, 63
@@ -696,7 +696,7 @@ bb.b:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.sroa.0.0.i23 = phi i64 [ %i.q, %bb.b ], [ 0, %bb.a ]
-  %.sroa.04.0.i22 = phi i32 [ %i.r, %bb.b ], [ 0, %bb.a ] ; 3 uses
+  %.sroa.04.0.i22 = phi i32 [ %i.r, %bb.b ], [ 0, %bb.a ] ; 4 uses
   %i.g = phi i64 [ %i.i, %bb.b ], [ %.promoted.i, %bb.a ]
   %i.h = phi ptr [ %i.j, %bb.b ], [ %.promoted38.i, %bb.a ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !268)
@@ -726,7 +726,7 @@ bb.d:                                             ; preds = %bb.c, %bb.c, %.lr.p
   %i.o = zext nneg i32 %i.n to i64
   %i.p = shl i64 %i.m, %i.o
   %i.q = or i64 %i.p, %.sroa.0.0.i23              ; 2 uses
-  %i.r = add i32 %.sroa.04.0.i22, 7               ; 3 uses
+  %i.r = add nuw nsw i32 %.sroa.04.0.i22, 7       ; 2 uses
   %i.s = icmp sgt i8 %.sroa.0.0.copyload.i.i.i, -1
   br i1 %i.s, label %bb.f, label %bb.b
 
@@ -735,7 +735,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_RINvNtNtCsi68uqYEhoRA_5gimli6leb1284read6signedINtNtNtB6_4read8relocate14RelocateReaderINtNtBO_12endian_slice11EndianSliceNtNtB6_9endianity13RunTimeEndianERNtCsaN7cMqnSAH7_6simple13RelocationMapEEB2w_.exit
 
 bb.f:                                             ; preds = %bb.d
-  %2 = icmp slt i32 %i.r, 64
+  %2 = icmp samesign ult i32 %.sroa.04.0.i22, 57
   %i.t = icmp samesign ugt i8 %.sroa.0.0.copyload.i.i.i, 63
   %or.cond.i = and i1 %2, %i.t
   %i.u = and i32 %i.r, 63

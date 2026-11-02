@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %bb.aq
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 4 uses
   %niter794 = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter794.next.1, %.lr.ph.i ]
   %i.ku = trunc nuw i64 %indvars.iv.i to i32
-  %i.kv = shl i32 %i.ku, 2                        ; 2 uses
+  %i.kv = shl nsw i32 %i.ku, 2                    ; 2 uses
   %i.kw = zext i32 %i.kv to i64
   %i.kx = getelementptr inbounds nuw i8, ptr %1, i64 %i.kw
   %i.ky = mul nuw nsw i64 %indvars.iv.i, 3
@@ -218,7 +218,7 @@ bb.as:                                            ; preds = %bb.aq
   store i8 -1, ptr %i.ld, align 1, !tbaa !51
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.le = trunc nuw i64 %indvars.iv.next.i to i32
-  %i.lf = shl i32 %i.le, 2                        ; 2 uses
+  %i.lf = shl nsw i32 %i.le, 2                    ; 2 uses
   %i.lg = zext i32 %i.lf to i64
   %i.lh = getelementptr inbounds nuw i8, ptr %1, i64 %i.lg
   %i.li = mul nuw nsw i64 %indvars.iv.next.i, 3
@@ -621,7 +621,7 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph.i.ne
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.in, i64 %indvars.iv.i ; 3 uses
   %i.iq = load i8, ptr %i.ip, align 4, !tbaa !81
   %i.ir = trunc nuw i64 %indvars.iv.i to i32
-  %i.is = mul i32 %i.ir, 3                        ; 3 uses
+  %i.is = mul nsw i32 %i.ir, 3                    ; 3 uses
   %i.it = zext i32 %i.is to i64
   %i.iu = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.it
   store i8 %i.iq, ptr %i.iu, align 1, !tbaa !51
@@ -633,7 +633,7 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph.i.ne
   store i8 %i.iw, ptr %i.iz, align 1, !tbaa !51
   %i.ja = getelementptr inbounds nuw i8, ptr %i.ip, i64 2
   %i.jb = load i8, ptr %i.ja, align 2, !tbaa !83
-  %i.jc = add i32 %i.is, 2
+  %i.jc = add nuw nsw i32 %i.is, 2
   %i.jd = zext i32 %i.jc to i64
   %i.je = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.jd
   store i8 %i.jb, ptr %i.je, align 1, !tbaa !51
@@ -641,19 +641,19 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph.i.ne
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %i.in, i64 %indvars.iv.next.i ; 3 uses
   %i.jg = load i8, ptr %i.jf, align 4, !tbaa !81
   %i.jh = trunc nuw i64 %indvars.iv.next.i to i32
-  %i.ji = mul i32 %i.jh, 3                        ; 3 uses
+  %i.ji = mul nsw i32 %i.jh, 3                    ; 3 uses
   %i.jj = zext i32 %i.ji to i64
   %i.jk = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.jj
   store i8 %i.jg, ptr %i.jk, align 1, !tbaa !51
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jf, i64 1
   %i.jm = load i8, ptr %i.jl, align 1, !tbaa !82
-  %i.jn = add i32 %i.ji, 1
+  %i.jn = add nsw i32 %i.ji, 1
   %i.jo = zext i32 %i.jn to i64
   %i.jp = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.jo
   store i8 %i.jm, ptr %i.jp, align 1, !tbaa !51
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jf, i64 2
   %i.jr = load i8, ptr %i.jq, align 2, !tbaa !83
-  %i.js = add i32 %i.ji, 2
+  %i.js = add nsw i32 %i.ji, 2
   %i.jt = zext i32 %i.js to i64
   %i.ju = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.jt
   store i8 %i.jr, ptr %i.ju, align 1, !tbaa !51

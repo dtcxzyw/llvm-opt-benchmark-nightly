@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %.loopexit, %.prehea
 
 vector.memcheck1694:                              ; preds = %iter.check
   %.01235.i1689 = ptrtoaddr ptr %.01235.i to i64
-  %i.dln = mul i64 %indvar1690, %i.dkx
+  %i.dln = mul nsw i64 %indvar1690, %i.dkx
   %i.dlo = add i64 %i.dln, %i.djc
   %i.dlp = shl nsw i64 %i.dlm, 1
   %i.dlq = sub i64 %i.dlo, %.01235.i1689          ; 3 uses
@@ -608,7 +608,7 @@ bb.jo:                                            ; preds = %bb.jn
 
 vector.memcheck1596:                              ; preds = %.preheader1200.i
   %.21218.i1593 = ptrtoaddr ptr %.21218.i to i64
-  %i.ebo = mul i64 %indvar1591, %i.ebb
+  %i.ebo = mul nsw i64 %indvar1591, %i.ebb
   %i.ebp = add i64 %i.ebo, %i.djc
   %i.ebq = shl nsw i64 %i.ebn, 1
   %i.ebr = sub i64 %i.ebp, %.21218.i1593          ; 5 uses
@@ -1011,7 +1011,7 @@ bb.kd:                                            ; preds = %bb.kc
 
 vector.memcheck1416:                              ; preds = %.preheader.i257
   %.01235.i2581413 = ptrtoaddr ptr %.01235.i258 to i64
-  %i.fpp = mul i64 %indvar1411, %i.fpi
+  %i.fpp = mul nsw i64 %indvar1411, %i.fpi
   %i.fpq = add i64 %i.fpp, %i.fnn
   %i.fpr = shl nsw i64 %i.fpo, 1
   %i.fps = sub i64 %i.fpq, %.01235.i2581413       ; 3 uses
@@ -1414,7 +1414,7 @@ bb.kj:                                            ; preds = %bb.ki
 
 vector.memcheck1318:                              ; preds = %.preheader1200.i205
   %.21218.i2061315 = ptrtoaddr ptr %.21218.i206 to i64
-  %i.gac = mul i64 %indvar1313, %i.fzp
+  %i.gac = mul nsw i64 %indvar1313, %i.fzp
   %i.gad = add i64 %i.gac, %i.fnn
   %i.gae = shl nsw i64 %i.gab, 1
   %i.gaf = sub i64 %i.gad, %.21218.i2061315       ; 5 uses

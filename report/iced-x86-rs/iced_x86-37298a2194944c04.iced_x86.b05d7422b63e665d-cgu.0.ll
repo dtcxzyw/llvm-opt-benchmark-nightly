@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
   %i.u = and i32 %i.k, 127
   %i.v = shl i32 %i.u, %i.m
   %i.w = or i32 %i.v, %.sroa.0.013
-  %i.x = add i32 %.sroa.02.012, 7
+  %i.x = add nuw nsw i32 %.sroa.02.012, 7
   %exitcond.not = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
 }
@@ -269,7 +269,7 @@ bb.e:                                             ; preds = %bb.b
   %i.t = and i32 %i.k, 127
   %i.u = shl i32 %i.t, %i.m
   %i.v = or i32 %i.u, %.sroa.01.013
-  %i.w = add i32 %.sroa.03.014, 7
+  %i.w = add nuw nsw i32 %.sroa.03.014, 7
   %exitcond.not = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
 }
@@ -476,7 +476,7 @@ bb.q:                                             ; preds = %.lr.ph
   %i.bn = and i32 %.sroa.02.036, 31
   %i.bo = shl i32 %i.bm, %i.bn
   %i.bp = or i32 %i.bo, %.sroa.0.037
-  %i.bq = add i32 %.sroa.02.036, 7
+  %i.bq = add nuw nsw i32 %.sroa.02.036, 7
   %exitcond.not = icmp eq i64 %i.ak, %i.m
   br i1 %exitcond.not, label %.preheader._crit_edge, label %.lr.ph
 }
@@ -598,7 +598,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = and i32 %i.k, 127
   %i.o = shl i32 %i.n, %i.m
   %i.p = or i32 %i.o, %.sroa.0.013.i
-  %i.q = add i32 %.sroa.02.012.i, 7
+  %i.q = add nuw nsw i32 %.sroa.02.012.i, 7
   %exitcond.not.i = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.b
 
@@ -756,7 +756,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = and i32 %i.k, 127
   %i.o = shl i32 %i.n, %i.m
   %i.p = or i32 %i.o, %.sroa.0.013.i
-  %i.q = add i32 %.sroa.02.012.i, 7
+  %i.q = add nuw nsw i32 %.sroa.02.012.i, 7
   %exitcond.not.i = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.b
 
@@ -861,7 +861,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = and i32 %i.k, 127
   %i.o = shl i32 %i.n, %i.m
   %i.p = or i32 %i.o, %.sroa.0.013.i
-  %i.q = add i32 %.sroa.02.012.i, 7
+  %i.q = add nuw nsw i32 %.sroa.02.012.i, 7
   %exitcond.not.i = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.b
 
@@ -1109,7 +1109,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = and i32 %i.k, 127
   %i.o = shl i32 %i.n, %i.m
   %i.p = or i32 %i.o, %.sroa.0.013.i
-  %i.q = add i32 %.sroa.02.012.i, 7
+  %i.q = add nuw nsw i32 %.sroa.02.012.i, 7
   %exitcond.not.i = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.b
 
@@ -1169,7 +1169,7 @@ bb.e:                                             ; preds = %bb.b
   %i.r = and i32 %i.k, 127
   %i.s = shl i32 %i.r, %i.m
   %i.t = or i32 %i.s, %.sroa.0.013
-  %i.u = add i32 %.sroa.02.012, 7
+  %i.u = add nuw nsw i32 %.sroa.02.012, 7
   %exitcond.not = icmp eq i64 %i.j, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
 }
@@ -1572,7 +1572,7 @@ bb.et:                                            ; preds = %.lr.ph.i621
   %i.yh = and i32 %.sroa.02.012.i623, 31
   %i.yi = shl i32 %i.yg, %i.yh
   %i.yj = or i32 %i.yi, %.sroa.0.013.i622
-  %i.yk = add i32 %.sroa.02.012.i623, 7
+  %i.yk = add nuw nsw i32 %.sroa.02.012.i623, 7
   %exitcond.not.i624 = icmp eq i64 %i.yd, 13463
   br i1 %exitcond.not.i624, label %._crit_edge.i625, label %.lr.ph.i621
 
@@ -1752,7 +1752,7 @@ bb.fp:                                            ; preds = %.lr.ph.i644
   %i.zr = and i32 %.sroa.02.012.i646, 31
   %i.zs = shl i32 %i.zq, %i.zr
   %i.zt = or i32 %i.zs, %.sroa.0.013.i645
-  %i.zu = add i32 %.sroa.02.012.i646, 7
+  %i.zu = add nuw nsw i32 %.sroa.02.012.i646, 7
   %exitcond.not.i647 = icmp eq i64 %i.zn, 13463
   br i1 %exitcond.not.i647, label %._crit_edge.i648, label %.lr.ph.i644
 
@@ -2063,7 +2063,7 @@ bb.ha:                                            ; preds = %.lr.ph.i695
   %i.abn = and i32 %.sroa.02.012.i697, 31
   %i.abo = shl i32 %i.abm, %i.abn
   %i.abp = or i32 %i.abo, %.sroa.0.013.i696
-  %i.abq = add i32 %.sroa.02.012.i697, 7
+  %i.abq = add nuw nsw i32 %.sroa.02.012.i697, 7
   %exitcond.not.i698 = icmp eq i64 %i.abj, 13463
   br i1 %exitcond.not.i698, label %._crit_edge.i708.invoke, label %.lr.ph.i695
 
@@ -2098,7 +2098,7 @@ bb.hc:                                            ; preds = %.lr.ph.i704
   %i.acd = and i32 %.sroa.02.012.i706, 31
   %i.ace = shl i32 %i.acc, %i.acd
   %i.acf = or i32 %i.ace, %.sroa.0.013.i705
-  %i.acg = add i32 %.sroa.02.012.i706, 7
+  %i.acg = add nuw nsw i32 %.sroa.02.012.i706, 7
   %exitcond.not.i707 = icmp eq i64 %i.aby, 13463
   br i1 %exitcond.not.i707, label %._crit_edge.i708.invoke, label %.lr.ph.i704
 
@@ -2249,7 +2249,7 @@ bb.hs:                                            ; preds = %.lr.ph.i736
   %i.adf = and i32 %.sroa.02.012.i738, 31
   %i.adg = shl i32 %i.ade, %i.adf
   %i.adh = or i32 %i.adg, %.sroa.0.013.i737
-  %i.adi = add i32 %.sroa.02.012.i738, 7
+  %i.adi = add nuw nsw i32 %.sroa.02.012.i738, 7
   %exitcond.not.i739 = icmp eq i64 %i.adb, 13463
   br i1 %exitcond.not.i739, label %._crit_edge.i740, label %.lr.ph.i736
 
@@ -2529,7 +2529,7 @@ bb.iy:                                            ; preds = %.lr.ph.i790
   %i.aew = and i32 %.sroa.02.012.i792, 31
   %i.aex = shl i32 %i.aev, %i.aew
   %i.aey = or i32 %i.aex, %.sroa.0.013.i791
-  %i.aez = add i32 %.sroa.02.012.i792, 7
+  %i.aez = add nuw nsw i32 %.sroa.02.012.i792, 7
   %exitcond.not.i793 = icmp eq i64 %i.aes, 13463
   br i1 %exitcond.not.i793, label %._crit_edge.i794, label %.lr.ph.i790
 
@@ -2932,7 +2932,7 @@ bb.mi:                                            ; preds = %.lr.ph.i889
   %i.aiw = and i32 %.sroa.02.012.i891, 31
   %i.aix = shl i32 %i.aiv, %i.aiw
   %i.aiy = or i32 %i.aix, %.sroa.0.013.i890
-  %i.aiz = add i32 %.sroa.02.012.i891, 7
+  %i.aiz = add nuw nsw i32 %.sroa.02.012.i891, 7
   %exitcond.not.i892 = icmp eq i64 %i.ais, 13463
   br i1 %exitcond.not.i892, label %._crit_edge.i893, label %.lr.ph.i889
 
@@ -3009,7 +3009,7 @@ bb.mq:                                            ; preds = %.lr.ph.i902
   %i.ajw = and i32 %.sroa.02.012.i904, 31
   %i.ajx = shl i32 %i.ajv, %i.ajw
   %i.ajy = or i32 %i.ajx, %.sroa.0.013.i903
-  %i.ajz = add i32 %.sroa.02.012.i904, 7
+  %i.ajz = add nuw nsw i32 %.sroa.02.012.i904, 7
   %exitcond.not.i905 = icmp eq i64 %i.ajs, 13463
   br i1 %exitcond.not.i905, label %._crit_edge.i906, label %.lr.ph.i902
 
@@ -3282,7 +3282,7 @@ bb.ny:                                            ; preds = %.lr.ph.i972
   %i.ali = and i32 %.sroa.02.012.i974, 31
   %i.alj = shl i32 %i.alh, %i.ali
   %i.alk = or i32 %i.alj, %.sroa.0.013.i973
-  %i.all = add i32 %.sroa.02.012.i974, 7
+  %i.all = add nuw nsw i32 %.sroa.02.012.i974, 7
   %exitcond.not.i975 = icmp eq i64 %i.ale, 13463
   br i1 %exitcond.not.i975, label %._crit_edge.i976, label %.lr.ph.i972
 
@@ -3425,7 +3425,7 @@ bb.oo:                                            ; preds = %.lr.ph.i1006
   %i.amn = and i32 %.sroa.02.012.i1008, 31
   %i.amo = shl i32 %i.amm, %i.amn
   %i.amp = or i32 %i.amo, %.sroa.0.013.i1007
-  %i.amq = add i32 %.sroa.02.012.i1008, 7
+  %i.amq = add nuw nsw i32 %.sroa.02.012.i1008, 7
   %exitcond.not.i1009 = icmp eq i64 %i.amj, 13463
   br i1 %exitcond.not.i1009, label %.invoke13560, label %.lr.ph.i1006
 
@@ -3628,7 +3628,7 @@ bb.pm:                                            ; preds = %.lr.ph.i1039
   %i.aoe = and i32 %.sroa.02.012.i1041, 31
   %i.aof = shl i32 %i.aod, %i.aoe
   %i.aog = or i32 %i.aof, %.sroa.0.013.i1040
-  %i.aoh = add i32 %.sroa.02.012.i1041, 7
+  %i.aoh = add nuw nsw i32 %.sroa.02.012.i1041, 7
   %exitcond.not.i1042 = icmp eq i64 %i.aoa, 13463
   br i1 %exitcond.not.i1042, label %._crit_edge.i1043, label %.lr.ph.i1039
 
@@ -3853,7 +3853,7 @@ bb.qh:                                            ; preds = %.lr.ph.i1065
   %i.apy = and i32 %.sroa.02.012.i1067, 31
   %i.apz = shl i32 %i.apx, %i.apy
   %i.aqa = or i32 %i.apz, %.sroa.0.013.i1066
-  %i.aqb = add i32 %.sroa.02.012.i1067, 7
+  %i.aqb = add nuw nsw i32 %.sroa.02.012.i1067, 7
   %exitcond.not.i1068 = icmp eq i64 %i.apu, 13463
   br i1 %exitcond.not.i1068, label %._crit_edge.i1069, label %.lr.ph.i1065
 
@@ -4067,7 +4067,7 @@ bb.ra:                                            ; preds = %.lr.ph.i1097
   %i.arr = and i32 %.sroa.02.012.i1099, 31
   %i.ars = shl i32 %i.arq, %i.arr
   %i.art = or i32 %i.ars, %.sroa.0.013.i1098
-  %i.aru = add i32 %.sroa.02.012.i1099, 7
+  %i.aru = add nuw nsw i32 %.sroa.02.012.i1099, 7
   %exitcond.not.i1100 = icmp eq i64 %i.arn, 13463
   br i1 %exitcond.not.i1100, label %._crit_edge.i1101, label %.lr.ph.i1097
 
@@ -4196,7 +4196,7 @@ bb.rq:                                            ; preds = %.lr.ph.i1112
   %i.asx = and i32 %.sroa.02.012.i1114, 31
   %i.asy = shl i32 %i.asw, %i.asx
   %i.asz = or i32 %i.asy, %.sroa.0.013.i1113
-  %i.ata = add i32 %.sroa.02.012.i1114, 7
+  %i.ata = add nuw nsw i32 %.sroa.02.012.i1114, 7
   %exitcond.not.i1115 = icmp eq i64 %i.ast, 13463
   br i1 %exitcond.not.i1115, label %._crit_edge.i1116, label %.lr.ph.i1112
 
@@ -4409,7 +4409,7 @@ bb.sl:                                            ; preds = %.lr.ph.i1146
   %i.auk = and i32 %.sroa.02.012.i1148, 31
   %i.aul = shl i32 %i.auj, %i.auk
   %i.aum = or i32 %i.aul, %.sroa.0.013.i1147
-  %i.aun = add i32 %.sroa.02.012.i1148, 7
+  %i.aun = add nuw nsw i32 %.sroa.02.012.i1148, 7
   %exitcond.not.i1149 = icmp eq i64 %i.aug, 13463
   br i1 %exitcond.not.i1149, label %.invoke13560, label %.lr.ph.i1146
 
@@ -4525,7 +4525,7 @@ bb.sv:                                            ; preds = %.lr.ph.i1164
   %i.avs = and i32 %.sroa.02.012.i1166, 31
   %i.avt = shl i32 %i.avr, %i.avs
   %i.avu = or i32 %i.avt, %.sroa.0.013.i1165
-  %i.avv = add i32 %.sroa.02.012.i1166, 7
+  %i.avv = add nuw nsw i32 %.sroa.02.012.i1166, 7
   %exitcond.not.i1167 = icmp eq i64 %i.avn, 13463
   br i1 %exitcond.not.i1167, label %._crit_edge.i1168.invoke, label %.lr.ph.i1164
 
@@ -4556,7 +4556,7 @@ bb.sy:                                            ; preds = %.lr.ph.i1173
   %i.awh = and i32 %.sroa.02.012.i1175, 31
   %i.awi = shl i32 %i.awg, %i.awh
   %i.awj = or i32 %i.awi, %.sroa.0.013.i1174
-  %i.awk = add i32 %.sroa.02.012.i1175, 7
+  %i.awk = add nuw nsw i32 %.sroa.02.012.i1175, 7
   %exitcond.not.i1176 = icmp eq i64 %i.awd, 13463
   br i1 %exitcond.not.i1176, label %._crit_edge.i1168.invoke, label %.lr.ph.i1173
 
@@ -4687,7 +4687,7 @@ bb.tk:                                            ; preds = %.lr.ph.i1195
   %i.axp = and i32 %.sroa.02.012.i1197, 31
   %i.axq = shl i32 %i.axo, %i.axp
   %i.axr = or i32 %i.axq, %.sroa.0.013.i1196
-  %i.axs = add i32 %.sroa.02.012.i1197, 7
+  %i.axs = add nuw nsw i32 %.sroa.02.012.i1197, 7
   %exitcond.not.i1198 = icmp eq i64 %i.axl, 13463
   br i1 %exitcond.not.i1198, label %._crit_edge.i1199, label %.lr.ph.i1195
 
@@ -4764,7 +4764,7 @@ bb.ts:                                            ; preds = %.lr.ph.i1208
   %i.ayq = and i32 %.sroa.02.012.i1210, 31
   %i.ayr = shl i32 %i.ayp, %i.ayq
   %i.ays = or i32 %i.ayr, %.sroa.0.013.i1209
-  %i.ayt = add i32 %.sroa.02.012.i1210, 7
+  %i.ayt = add nuw nsw i32 %.sroa.02.012.i1210, 7
   %exitcond.not.i1211 = icmp eq i64 %i.ayl, 13463
   br i1 %exitcond.not.i1211, label %._crit_edge.i1212.invoke, label %.lr.ph.i1208
 
@@ -4795,7 +4795,7 @@ bb.tv:                                            ; preds = %.lr.ph.i1217
   %i.azf = and i32 %.sroa.02.012.i1219, 31
   %i.azg = shl i32 %i.aze, %i.azf
   %i.azh = or i32 %i.azg, %.sroa.0.013.i1218
-  %i.azi = add i32 %.sroa.02.012.i1219, 7
+  %i.azi = add nuw nsw i32 %.sroa.02.012.i1219, 7
   %exitcond.not.i1220 = icmp eq i64 %i.azb, 13463
   br i1 %exitcond.not.i1220, label %._crit_edge.i1212.invoke, label %.lr.ph.i1217
 
@@ -5001,7 +5001,7 @@ bb.up:                                            ; preds = %.lr.ph.i1244
   %i.bay = and i32 %.sroa.02.012.i1246, 31
   %i.baz = shl i32 %i.bax, %i.bay
   %i.bba = or i32 %i.baz, %.sroa.0.013.i1245
-  %i.bbb = add i32 %.sroa.02.012.i1246, 7
+  %i.bbb = add nuw nsw i32 %.sroa.02.012.i1246, 7
   %exitcond.not.i1247 = icmp eq i64 %i.bat, 13463
   br i1 %exitcond.not.i1247, label %._crit_edge.i1248.invoke, label %.lr.ph.i1244
 
@@ -5033,7 +5033,7 @@ bb.ur:                                            ; preds = %.lr.ph.i1253
   %i.bbo = and i32 %.sroa.02.012.i1255, 31
   %i.bbp = shl i32 %i.bbn, %i.bbo
   %i.bbq = or i32 %i.bbp, %.sroa.0.013.i1254
-  %i.bbr = add i32 %.sroa.02.012.i1255, 7
+  %i.bbr = add nuw nsw i32 %.sroa.02.012.i1255, 7
   %exitcond.not.i1256 = icmp eq i64 %i.bbk, 13463
   br i1 %exitcond.not.i1256, label %._crit_edge.i1248.invoke, label %.lr.ph.i1253
 
@@ -5060,7 +5060,7 @@ bb.ut:                                            ; preds = %.lr.ph.i1262
   %i.bcd = and i32 %.sroa.02.012.i1264, 31
   %i.bce = shl i32 %i.bcc, %i.bcd
   %i.bcf = or i32 %i.bce, %.sroa.0.013.i1263
-  %i.bcg = add i32 %.sroa.02.012.i1264, 7
+  %i.bcg = add nuw nsw i32 %.sroa.02.012.i1264, 7
   %exitcond.not.i1265 = icmp eq i64 %i.bbz, 13463
   br i1 %exitcond.not.i1265, label %._crit_edge.i1248.invoke, label %.lr.ph.i1262
 
@@ -5257,7 +5257,7 @@ bb.vl:                                            ; preds = %.lr.ph.i1289
   %i.bdm = and i32 %.sroa.02.012.i1291, 31
   %i.bdn = shl i32 %i.bdl, %i.bdm
   %i.bdo = or i32 %i.bdn, %.sroa.0.013.i1290
-  %i.bdp = add i32 %.sroa.02.012.i1291, 7
+  %i.bdp = add nuw nsw i32 %.sroa.02.012.i1291, 7
   %exitcond.not.i1292 = icmp eq i64 %i.bdh, 13463
   br i1 %exitcond.not.i1292, label %._crit_edge.i1293.invoke, label %.lr.ph.i1289
 
@@ -5289,7 +5289,7 @@ bb.vn:                                            ; preds = %.lr.ph.i1298
   %i.bec = and i32 %.sroa.02.012.i1300, 31
   %i.bed = shl i32 %i.beb, %i.bec
   %i.bee = or i32 %i.bed, %.sroa.0.013.i1299
-  %i.bef = add i32 %.sroa.02.012.i1300, 7
+  %i.bef = add nuw nsw i32 %.sroa.02.012.i1300, 7
   %exitcond.not.i1301 = icmp eq i64 %i.bdy, 13463
   br i1 %exitcond.not.i1301, label %._crit_edge.i1293.invoke, label %.lr.ph.i1298
 
@@ -5454,7 +5454,7 @@ bb.wb:                                            ; preds = %.lr.ph.i1320
   %i.bfg = and i32 %.sroa.02.012.i1322, 31
   %i.bfh = shl i32 %i.bff, %i.bfg
   %i.bfi = or i32 %i.bfh, %.sroa.0.013.i1321
-  %i.bfj = add i32 %.sroa.02.012.i1322, 7
+  %i.bfj = add nuw nsw i32 %.sroa.02.012.i1322, 7
   %exitcond.not.i1323 = icmp eq i64 %i.bfc, 13463
   br i1 %exitcond.not.i1323, label %._crit_edge.i1324, label %.lr.ph.i1320
 
@@ -5695,7 +5695,7 @@ bb.xc:                                            ; preds = %.lr.ph.i1372
   %i.bgq = and i32 %.sroa.02.012.i1374, 31
   %i.bgr = shl i32 %i.bgp, %i.bgq
   %i.bgs = or i32 %i.bgr, %.sroa.0.013.i1373
-  %i.bgt = add i32 %.sroa.02.012.i1374, 7
+  %i.bgt = add nuw nsw i32 %.sroa.02.012.i1374, 7
   %exitcond.not.i1375 = icmp eq i64 %i.bgm, 13463
   br i1 %exitcond.not.i1375, label %._crit_edge.i1376, label %.lr.ph.i1372
 
@@ -5845,7 +5845,7 @@ bb.xs:                                            ; preds = %.lr.ph.i1404
   %i.bht = and i32 %.sroa.02.012.i1406, 31
   %i.bhu = shl i32 %i.bhs, %i.bht
   %i.bhv = or i32 %i.bhu, %.sroa.0.013.i1405
-  %i.bhw = add i32 %.sroa.02.012.i1406, 7
+  %i.bhw = add nuw nsw i32 %.sroa.02.012.i1406, 7
   %exitcond.not.i1407 = icmp eq i64 %i.bho, 13463
   br i1 %exitcond.not.i1407, label %._crit_edge.i1408.invoke, label %.lr.ph.i1404
 
@@ -5947,7 +5947,7 @@ bb.yd:                                            ; preds = %.lr.ph.i1420
   %i.biw = and i32 %.sroa.02.012.i1422, 31
   %i.bix = shl i32 %i.biv, %i.biw
   %i.biy = or i32 %i.bix, %.sroa.0.013.i1421
-  %i.biz = add i32 %.sroa.02.012.i1422, 7
+  %i.biz = add nuw nsw i32 %.sroa.02.012.i1422, 7
   %exitcond.not.i1423 = icmp eq i64 %i.bir, 13463
   br i1 %exitcond.not.i1423, label %._crit_edge.i1424.invoke, label %.lr.ph.i1420
 
@@ -5989,7 +5989,7 @@ bb.yg:                                            ; preds = %.lr.ph.i1431
   %i.bjo = and i32 %.sroa.02.012.i1433, 31
   %i.bjp = shl i32 %i.bjn, %i.bjo
   %i.bjq = or i32 %i.bjp, %.sroa.0.013.i1432
-  %i.bjr = add i32 %.sroa.02.012.i1433, 7
+  %i.bjr = add nuw nsw i32 %.sroa.02.012.i1433, 7
   %exitcond.not.i1434 = icmp eq i64 %i.bjk, 13463
   br i1 %exitcond.not.i1434, label %._crit_edge.i1424.invoke, label %.lr.ph.i1431
 
@@ -6392,7 +6392,7 @@ bb.in:                                            ; preds = %.lr.ph.i816
   %i.ads = and i32 %.sroa.02.012.i818, 31
   %i.adt = shl i32 %i.adr, %i.ads
   %i.adu = or i32 %i.adt, %.sroa.0.013.i817
-  %i.adv = add i32 %.sroa.02.012.i818, 7
+  %i.adv = add nuw nsw i32 %.sroa.02.012.i818, 7
   %exitcond.not.i819 = icmp eq i64 %i.ado, 10832
   br i1 %exitcond.not.i819, label %._crit_edge.i820, label %.lr.ph.i816
 
@@ -6527,7 +6527,7 @@ bb.ja:                                            ; preds = %.lr.ph.i838
   %i.afa = and i32 %.sroa.02.012.i840, 31
   %i.afb = shl i32 %i.aez, %i.afa
   %i.afc = or i32 %i.afb, %.sroa.0.013.i839
-  %i.afd = add i32 %.sroa.02.012.i840, 7
+  %i.afd = add nuw nsw i32 %.sroa.02.012.i840, 7
   %exitcond.not.i841 = icmp eq i64 %i.aew, 10832
   br i1 %exitcond.not.i841, label %._crit_edge.i842, label %.lr.ph.i838
 
@@ -6604,7 +6604,7 @@ bb.ji:                                            ; preds = %.lr.ph.i851
   %i.aga = and i32 %.sroa.02.012.i853, 31
   %i.agb = shl i32 %i.afz, %i.aga
   %i.agc = or i32 %i.agb, %.sroa.0.013.i852
-  %i.agd = add i32 %.sroa.02.012.i853, 7
+  %i.agd = add nuw nsw i32 %.sroa.02.012.i853, 7
   %exitcond.not.i854 = icmp eq i64 %i.afw, 10832
   br i1 %exitcond.not.i854, label %._crit_edge.i855, label %.lr.ph.i851
 
@@ -6721,7 +6721,7 @@ bb.jv:                                            ; preds = %.lr.ph.i872
   %i.agz = and i32 %.sroa.02.012.i874, 31
   %i.aha = shl i32 %i.agy, %i.agz
   %i.ahb = or i32 %i.aha, %.sroa.0.013.i873
-  %i.ahc = add i32 %.sroa.02.012.i874, 7
+  %i.ahc = add nuw nsw i32 %.sroa.02.012.i874, 7
   %exitcond.not.i875 = icmp eq i64 %i.agv, 10832
   br i1 %exitcond.not.i875, label %._crit_edge.i1300.invoke, label %.lr.ph.i872
 
@@ -6830,7 +6830,7 @@ bb.ke:                                            ; preds = %.lr.ph.i890
   %i.aih = and i32 %.sroa.02.012.i892, 31
   %i.aii = shl i32 %i.aig, %i.aih
   %i.aij = or i32 %i.aii, %.sroa.0.013.i891
-  %i.aik = add i32 %.sroa.02.012.i892, 7
+  %i.aik = add nuw nsw i32 %.sroa.02.012.i892, 7
   %exitcond.not.i893 = icmp eq i64 %i.aic, 10832
   br i1 %exitcond.not.i893, label %._crit_edge.i894.invoke, label %.lr.ph.i890
 
@@ -6861,7 +6861,7 @@ bb.kh:                                            ; preds = %.lr.ph.i899
   %i.aiw = and i32 %.sroa.02.012.i901, 31
   %i.aix = shl i32 %i.aiv, %i.aiw
   %i.aiy = or i32 %i.aix, %.sroa.0.013.i900
-  %i.aiz = add i32 %.sroa.02.012.i901, 7
+  %i.aiz = add nuw nsw i32 %.sroa.02.012.i901, 7
   %exitcond.not.i902 = icmp eq i64 %i.ais, 10832
   br i1 %exitcond.not.i902, label %._crit_edge.i894.invoke, label %.lr.ph.i899
 
@@ -6992,7 +6992,7 @@ bb.kt:                                            ; preds = %.lr.ph.i921
   %i.ake = and i32 %.sroa.02.012.i923, 31
   %i.akf = shl i32 %i.akd, %i.ake
   %i.akg = or i32 %i.akf, %.sroa.0.013.i922
-  %i.akh = add i32 %.sroa.02.012.i923, 7
+  %i.akh = add nuw nsw i32 %.sroa.02.012.i923, 7
   %exitcond.not.i924 = icmp eq i64 %i.aka, 10832
   br i1 %exitcond.not.i924, label %._crit_edge.i925, label %.lr.ph.i921
 
@@ -7069,7 +7069,7 @@ bb.lb:                                            ; preds = %.lr.ph.i934
   %i.alf = and i32 %.sroa.02.012.i936, 31
   %i.alg = shl i32 %i.ale, %i.alf
   %i.alh = or i32 %i.alg, %.sroa.0.013.i935
-  %i.ali = add i32 %.sroa.02.012.i936, 7
+  %i.ali = add nuw nsw i32 %.sroa.02.012.i936, 7
   %exitcond.not.i937 = icmp eq i64 %i.ala, 10832
   br i1 %exitcond.not.i937, label %._crit_edge.i938.invoke, label %.lr.ph.i934
 
@@ -7100,7 +7100,7 @@ bb.le:                                            ; preds = %.lr.ph.i943
   %i.alu = and i32 %.sroa.02.012.i945, 31
   %i.alv = shl i32 %i.alt, %i.alu
   %i.alw = or i32 %i.alv, %.sroa.0.013.i944
-  %i.alx = add i32 %.sroa.02.012.i945, 7
+  %i.alx = add nuw nsw i32 %.sroa.02.012.i945, 7
   %exitcond.not.i946 = icmp eq i64 %i.alq, 10832
   br i1 %exitcond.not.i946, label %._crit_edge.i938.invoke, label %.lr.ph.i943
 
@@ -7301,7 +7301,7 @@ bb.lx:                                            ; preds = %.lr.ph.i973
   %i.anl = and i32 %.sroa.02.012.i975, 31
   %i.anm = shl i32 %i.ank, %i.anl
   %i.ann = or i32 %i.anm, %.sroa.0.013.i974
-  %i.ano = add i32 %.sroa.02.012.i975, 7
+  %i.ano = add nuw nsw i32 %.sroa.02.012.i975, 7
   %exitcond.not.i976 = icmp eq i64 %i.anh, 10832
   br i1 %exitcond.not.i976, label %._crit_edge.i977, label %.lr.ph.i973
 
@@ -7435,7 +7435,7 @@ bb.mk:                                            ; preds = %.lr.ph.i995
   %i.aot = and i32 %.sroa.02.012.i997, 31
   %i.aou = shl i32 %i.aos, %i.aot
   %i.aov = or i32 %i.aou, %.sroa.0.013.i996
-  %i.aow = add i32 %.sroa.02.012.i997, 7
+  %i.aow = add nuw nsw i32 %.sroa.02.012.i997, 7
   %exitcond.not.i998 = icmp eq i64 %i.aop, 10832
   br i1 %exitcond.not.i998, label %._crit_edge.i999, label %.lr.ph.i995
 
@@ -7512,7 +7512,7 @@ bb.ms:                                            ; preds = %.lr.ph.i1008
   %i.apt = and i32 %.sroa.02.012.i1010, 31
   %i.apu = shl i32 %i.aps, %i.apt
   %i.apv = or i32 %i.apu, %.sroa.0.013.i1009
-  %i.apw = add i32 %.sroa.02.012.i1010, 7
+  %i.apw = add nuw nsw i32 %.sroa.02.012.i1010, 7
   %exitcond.not.i1011 = icmp eq i64 %i.app, 10832
   br i1 %exitcond.not.i1011, label %._crit_edge.i1012, label %.lr.ph.i1008
 
@@ -7660,7 +7660,7 @@ bb.nh:                                            ; preds = %.lr.ph.i1033
   %i.arc = and i32 %.sroa.02.012.i1035, 31
   %i.ard = shl i32 %i.arb, %i.arc
   %i.are = or i32 %i.ard, %.sroa.0.013.i1034
-  %i.arf = add i32 %.sroa.02.012.i1035, 7
+  %i.arf = add nuw nsw i32 %.sroa.02.012.i1035, 7
   %exitcond.not.i1036 = icmp eq i64 %i.aqy, 10832
   br i1 %exitcond.not.i1036, label %._crit_edge.i1037, label %.lr.ph.i1033
 
@@ -7818,7 +7818,7 @@ bb.nw:                                            ; preds = %.lr.ph.i1057
   %i.asp = and i32 %.sroa.02.012.i1059, 31
   %i.asq = shl i32 %i.aso, %i.asp
   %i.asr = or i32 %i.asq, %.sroa.0.013.i1058
-  %i.ass = add i32 %.sroa.02.012.i1059, 7
+  %i.ass = add nuw nsw i32 %.sroa.02.012.i1059, 7
   %exitcond.not.i1060 = icmp eq i64 %i.ask, 10832
   br i1 %exitcond.not.i1060, label %._crit_edge.i1061.invoke, label %.lr.ph.i1057
 
@@ -8221,7 +8221,7 @@ bb.sk:                                            ; preds = %.lr.ph.i1196
   %i.ayy = and i32 %.sroa.02.012.i1198, 31
   %i.ayz = shl i32 %i.ayx, %i.ayy
   %i.aza = or i32 %i.ayz, %.sroa.0.013.i1197
-  %i.azb = add i32 %.sroa.02.012.i1198, 7
+  %i.azb = add nuw nsw i32 %.sroa.02.012.i1198, 7
   %exitcond.not.i1199 = icmp eq i64 %i.ayu, 10832
   br i1 %exitcond.not.i1199, label %._crit_edge.i1200, label %.lr.ph.i1196
 
@@ -8298,7 +8298,7 @@ bb.ss:                                            ; preds = %.lr.ph.i1209
   %i.azy = and i32 %.sroa.02.012.i1211, 31
   %i.azz = shl i32 %i.azx, %i.azy
   %i.baa = or i32 %i.azz, %.sroa.0.013.i1210
-  %i.bab = add i32 %.sroa.02.012.i1211, 7
+  %i.bab = add nuw nsw i32 %.sroa.02.012.i1211, 7
   %exitcond.not.i1212 = icmp eq i64 %i.azu, 10832
   br i1 %exitcond.not.i1212, label %._crit_edge.i1213, label %.lr.ph.i1209
 
@@ -8701,7 +8701,7 @@ bb.vo:                                            ; preds = %.lr.ph.i1296
   %i.bdq = and i32 %.sroa.02.012.i1298, 31
   %i.bdr = shl i32 %i.bdp, %i.bdq
   %i.bds = or i32 %i.bdr, %.sroa.0.013.i1297
-  %i.bdt = add i32 %.sroa.02.012.i1298, 7
+  %i.bdt = add nuw nsw i32 %.sroa.02.012.i1298, 7
   %exitcond.not.i1299 = icmp eq i64 %i.bdl, 10832
   br i1 %exitcond.not.i1299, label %._crit_edge.i1300.invoke, label %.lr.ph.i1296
 
@@ -9104,7 +9104,7 @@ bb.hs:                                            ; preds = %.lr.ph.i858
   %i.agx = and i32 %.sroa.02.012.i860, 31
   %i.agy = shl i32 %i.agw, %i.agx
   %i.agz = or i32 %i.agy, %.sroa.0.013.i859
-  %i.aha = add i32 %.sroa.02.012.i860, 7
+  %i.aha = add nuw nsw i32 %.sroa.02.012.i860, 7
   %exitcond.not.i861 = icmp eq i64 %i.agt, 11840
   br i1 %exitcond.not.i861, label %.invoke14249, label %.lr.ph.i858
 
@@ -9368,7 +9368,7 @@ bb.ja:                                            ; preds = %.lr.ph.i901
   %i.aiu = and i32 %.sroa.02.012.i903, 31
   %i.aiv = shl i32 %i.ait, %i.aiu
   %i.aiw = or i32 %i.aiv, %.sroa.0.013.i902
-  %i.aix = add i32 %.sroa.02.012.i903, 7
+  %i.aix = add nuw nsw i32 %.sroa.02.012.i903, 7
   %exitcond.not.i904 = icmp eq i64 %i.aiq, 11840
   br i1 %exitcond.not.i904, label %.invoke14249, label %.lr.ph.i901
 
@@ -9771,7 +9771,7 @@ bb.lz:                                            ; preds = %.lr.ph.i973
   %i.amu = and i32 %.sroa.02.012.i975, 31
   %i.amv = shl i32 %i.amt, %i.amu
   %i.amw = or i32 %i.amv, %.sroa.0.013.i974
-  %i.amx = add i32 %.sroa.02.012.i975, 7
+  %i.amx = add nuw nsw i32 %.sroa.02.012.i975, 7
   %exitcond.not.i976 = icmp eq i64 %i.amq, 11840
   br i1 %exitcond.not.i976, label %._crit_edge.i977, label %.lr.ph.i973
 
@@ -9848,7 +9848,7 @@ bb.mh:                                            ; preds = %.lr.ph.i986
   %i.anu = and i32 %.sroa.02.012.i988, 31
   %i.anv = shl i32 %i.ant, %i.anu
   %i.anw = or i32 %i.anv, %.sroa.0.013.i987
-  %i.anx = add i32 %.sroa.02.012.i988, 7
+  %i.anx = add nuw nsw i32 %.sroa.02.012.i988, 7
   %exitcond.not.i989 = icmp eq i64 %i.anq, 11840
   br i1 %exitcond.not.i989, label %._crit_edge.i990, label %.lr.ph.i986
 
@@ -10121,7 +10121,7 @@ bb.np:                                            ; preds = %.lr.ph.i1056
   %i.apg = and i32 %.sroa.02.012.i1058, 31
   %i.aph = shl i32 %i.apf, %i.apg
   %i.api = or i32 %i.aph, %.sroa.0.013.i1057
-  %i.apj = add i32 %.sroa.02.012.i1058, 7
+  %i.apj = add nuw nsw i32 %.sroa.02.012.i1058, 7
   %exitcond.not.i1059 = icmp eq i64 %i.apc, 11840
   br i1 %exitcond.not.i1059, label %._crit_edge.i1060, label %.lr.ph.i1056
 
@@ -10304,7 +10304,7 @@ bb.ol:                                            ; preds = %.lr.ph.i1092
   %i.aqq = and i32 %.sroa.02.012.i1094, 31
   %i.aqr = shl i32 %i.aqp, %i.aqq
   %i.aqs = or i32 %i.aqr, %.sroa.0.013.i1093
-  %i.aqt = add i32 %.sroa.02.012.i1094, 7
+  %i.aqt = add nuw nsw i32 %.sroa.02.012.i1094, 7
   %exitcond.not.i1095 = icmp eq i64 %i.aqm, 11840
   br i1 %exitcond.not.i1095, label %.invoke14249, label %.lr.ph.i1092
 
@@ -10602,7 +10602,7 @@ bb.pr:                                            ; preds = %.lr.ph.i1138
   %i.ati = and i32 %.sroa.02.012.i1140, 31
   %i.atj = shl i32 %i.ath, %i.ati
   %i.atk = or i32 %i.atj, %.sroa.0.013.i1139
-  %i.atl = add i32 %.sroa.02.012.i1140, 7
+  %i.atl = add nuw nsw i32 %.sroa.02.012.i1140, 7
   %exitcond.not.i1141 = icmp eq i64 %i.ate, 11840
   br i1 %exitcond.not.i1141, label %._crit_edge.i1142, label %.lr.ph.i1138
 
@@ -10745,7 +10745,7 @@ bb.qe:                                            ; preds = %.lr.ph.i1160
   %i.aus = and i32 %.sroa.02.012.i1162, 31
   %i.aut = shl i32 %i.aur, %i.aus
   %i.auu = or i32 %i.aut, %.sroa.0.013.i1161
-  %i.auv = add i32 %.sroa.02.012.i1162, 7
+  %i.auv = add nuw nsw i32 %.sroa.02.012.i1162, 7
   %exitcond.not.i1163 = icmp eq i64 %i.auo, 11840
   br i1 %exitcond.not.i1163, label %._crit_edge.i1164, label %.lr.ph.i1160
 
@@ -10822,7 +10822,7 @@ bb.qm:                                            ; preds = %.lr.ph.i1173
   %i.avs = and i32 %.sroa.02.012.i1175, 31
   %i.avt = shl i32 %i.avr, %i.avs
   %i.avu = or i32 %i.avt, %.sroa.0.013.i1174
-  %i.avv = add i32 %.sroa.02.012.i1175, 7
+  %i.avv = add nuw nsw i32 %.sroa.02.012.i1175, 7
   %exitcond.not.i1176 = icmp eq i64 %i.avo, 11840
   br i1 %exitcond.not.i1176, label %._crit_edge.i1177, label %.lr.ph.i1173
 
@@ -10938,7 +10938,7 @@ bb.qz:                                            ; preds = %.lr.ph.i1194
   %i.awr = and i32 %.sroa.02.012.i1196, 31
   %i.aws = shl i32 %i.awq, %i.awr
   %i.awt = or i32 %i.aws, %.sroa.0.013.i1195
-  %i.awu = add i32 %.sroa.02.012.i1196, 7
+  %i.awu = add nuw nsw i32 %.sroa.02.012.i1196, 7
   %exitcond.not.i1197 = icmp eq i64 %i.awn, 11840
   br i1 %exitcond.not.i1197, label %.invoke14249, label %.lr.ph.i1194
 
@@ -11048,7 +11048,7 @@ bb.ri:                                            ; preds = %.lr.ph.i1212
   %i.axz = and i32 %.sroa.02.012.i1214, 31
   %i.aya = shl i32 %i.axy, %i.axz
   %i.ayb = or i32 %i.aya, %.sroa.0.013.i1213
-  %i.ayc = add i32 %.sroa.02.012.i1214, 7
+  %i.ayc = add nuw nsw i32 %.sroa.02.012.i1214, 7
   %exitcond.not.i1215 = icmp eq i64 %i.axu, 11840
   br i1 %exitcond.not.i1215, label %._crit_edge.i1216.invoke, label %.lr.ph.i1212
 
@@ -11079,7 +11079,7 @@ bb.rl:                                            ; preds = %.lr.ph.i1221
   %i.ayo = and i32 %.sroa.02.012.i1223, 31
   %i.ayp = shl i32 %i.ayn, %i.ayo
   %i.ayq = or i32 %i.ayp, %.sroa.0.013.i1222
-  %i.ayr = add i32 %.sroa.02.012.i1223, 7
+  %i.ayr = add nuw nsw i32 %.sroa.02.012.i1223, 7
   %exitcond.not.i1224 = icmp eq i64 %i.ayk, 11840
   br i1 %exitcond.not.i1224, label %._crit_edge.i1216.invoke, label %.lr.ph.i1221
 
@@ -11211,7 +11211,7 @@ bb.rx:                                            ; preds = %.lr.ph.i1243
   %i.azw = and i32 %.sroa.02.012.i1245, 31
   %i.azx = shl i32 %i.azv, %i.azw
   %i.azy = or i32 %i.azx, %.sroa.0.013.i1244
-  %i.azz = add i32 %.sroa.02.012.i1245, 7
+  %i.azz = add nuw nsw i32 %.sroa.02.012.i1245, 7
   %exitcond.not.i1246 = icmp eq i64 %i.azs, 11840
   br i1 %exitcond.not.i1246, label %._crit_edge.i1247, label %.lr.ph.i1243
 
@@ -11288,7 +11288,7 @@ bb.sf:                                            ; preds = %.lr.ph.i1256
   %i.bax = and i32 %.sroa.02.012.i1258, 31
   %i.bay = shl i32 %i.baw, %i.bax
   %i.baz = or i32 %i.bay, %.sroa.0.013.i1257
-  %i.bba = add i32 %.sroa.02.012.i1258, 7
+  %i.bba = add nuw nsw i32 %.sroa.02.012.i1258, 7
   %exitcond.not.i1259 = icmp eq i64 %i.bas, 11840
   br i1 %exitcond.not.i1259, label %._crit_edge.i1260.invoke, label %.lr.ph.i1256
 
@@ -11319,7 +11319,7 @@ bb.si:                                            ; preds = %.lr.ph.i1265
   %i.bbm = and i32 %.sroa.02.012.i1267, 31
   %i.bbn = shl i32 %i.bbl, %i.bbm
   %i.bbo = or i32 %i.bbn, %.sroa.0.013.i1266
-  %i.bbp = add i32 %.sroa.02.012.i1267, 7
+  %i.bbp = add nuw nsw i32 %.sroa.02.012.i1267, 7
   %exitcond.not.i1268 = icmp eq i64 %i.bbi, 11840
   br i1 %exitcond.not.i1268, label %._crit_edge.i1260.invoke, label %.lr.ph.i1265
 
@@ -11433,7 +11433,7 @@ bb.su:                                            ; preds = %.lr.ph.i1286
   %i.bcl = and i32 %.sroa.02.012.i1288, 31
   %i.bcm = shl i32 %i.bck, %i.bcl
   %i.bcn = or i32 %i.bcm, %.sroa.0.013.i1287
-  %i.bco = add i32 %.sroa.02.012.i1288, 7
+  %i.bco = add nuw nsw i32 %.sroa.02.012.i1288, 7
   %exitcond.not.i1289 = icmp eq i64 %i.bch, 11840
   br i1 %exitcond.not.i1289, label %.invoke14249, label %.lr.ph.i1286
 
@@ -11460,7 +11460,7 @@ bb.sw:                                            ; preds = %.lr.ph.i1295
   %i.bda = and i32 %.sroa.02.012.i1297, 31
   %i.bdb = shl i32 %i.bcz, %i.bda
   %i.bdc = or i32 %i.bdb, %.sroa.0.013.i1296
-  %i.bdd = add i32 %.sroa.02.012.i1297, 7
+  %i.bdd = add nuw nsw i32 %.sroa.02.012.i1297, 7
   %exitcond.not.i1298 = icmp eq i64 %i.bcw, 11840
   br i1 %exitcond.not.i1298, label %.invoke14249, label %.lr.ph.i1295
 
@@ -11570,7 +11570,7 @@ bb.tf:                                            ; preds = %.lr.ph.i1313
   %i.bei = and i32 %.sroa.02.012.i1315, 31
   %i.bej = shl i32 %i.beh, %i.bei
   %i.bek = or i32 %i.bej, %.sroa.0.013.i1314
-  %i.bel = add i32 %.sroa.02.012.i1315, 7
+  %i.bel = add nuw nsw i32 %.sroa.02.012.i1315, 7
   %exitcond.not.i1316 = icmp eq i64 %i.bed, 11840
   br i1 %exitcond.not.i1316, label %._crit_edge.i1317.invoke, label %.lr.ph.i1313
 
@@ -11601,7 +11601,7 @@ bb.ti:                                            ; preds = %.lr.ph.i1322
   %i.bex = and i32 %.sroa.02.012.i1324, 31
   %i.bey = shl i32 %i.bew, %i.bex
   %i.bez = or i32 %i.bey, %.sroa.0.013.i1323
-  %i.bfa = add i32 %.sroa.02.012.i1324, 7
+  %i.bfa = add nuw nsw i32 %.sroa.02.012.i1324, 7
   %exitcond.not.i1325 = icmp eq i64 %i.bet, 11840
   br i1 %exitcond.not.i1325, label %._crit_edge.i1317.invoke, label %.lr.ph.i1322
 
@@ -11628,7 +11628,7 @@ bb.tk:                                            ; preds = %.lr.ph.i1331
   %i.bfm = and i32 %.sroa.02.012.i1333, 31
   %i.bfn = shl i32 %i.bfl, %i.bfm
   %i.bfo = or i32 %i.bfn, %.sroa.0.013.i1332
-  %i.bfp = add i32 %.sroa.02.012.i1333, 7
+  %i.bfp = add nuw nsw i32 %.sroa.02.012.i1333, 7
   %exitcond.not.i1334 = icmp eq i64 %i.bfi, 11840
   br i1 %exitcond.not.i1334, label %._crit_edge.i1317.invoke, label %.lr.ph.i1331
 
@@ -11760,7 +11760,7 @@ bb.tw:                                            ; preds = %.lr.ph.i1353
   %i.bgu = and i32 %.sroa.02.012.i1355, 31
   %i.bgv = shl i32 %i.bgt, %i.bgu
   %i.bgw = or i32 %i.bgv, %.sroa.0.013.i1354
-  %i.bgx = add i32 %.sroa.02.012.i1355, 7
+  %i.bgx = add nuw nsw i32 %.sroa.02.012.i1355, 7
   %exitcond.not.i1356 = icmp eq i64 %i.bgq, 11840
   br i1 %exitcond.not.i1356, label %._crit_edge.i1357, label %.lr.ph.i1353
 
@@ -11837,7 +11837,7 @@ bb.ue:                                            ; preds = %.lr.ph.i1366
   %i.bhv = and i32 %.sroa.02.012.i1368, 31
   %i.bhw = shl i32 %i.bhu, %i.bhv
   %i.bhx = or i32 %i.bhw, %.sroa.0.013.i1367
-  %i.bhy = add i32 %.sroa.02.012.i1368, 7
+  %i.bhy = add nuw nsw i32 %.sroa.02.012.i1368, 7
   %exitcond.not.i1369 = icmp eq i64 %i.bhq, 11840
   br i1 %exitcond.not.i1369, label %._crit_edge.i1370.invoke, label %.lr.ph.i1366
 
@@ -11868,7 +11868,7 @@ bb.uh:                                            ; preds = %.lr.ph.i1375
   %i.bik = and i32 %.sroa.02.012.i1377, 31
   %i.bil = shl i32 %i.bij, %i.bik
   %i.bim = or i32 %i.bil, %.sroa.0.013.i1376
-  %i.bin = add i32 %.sroa.02.012.i1377, 7
+  %i.bin = add nuw nsw i32 %.sroa.02.012.i1377, 7
   %exitcond.not.i1378 = icmp eq i64 %i.big, 11840
   br i1 %exitcond.not.i1378, label %._crit_edge.i1370.invoke, label %.lr.ph.i1375
 
@@ -11895,7 +11895,7 @@ bb.uj:                                            ; preds = %.lr.ph.i1384
   %i.biz = and i32 %.sroa.02.012.i1386, 31
   %i.bja = shl i32 %i.biy, %i.biz
   %i.bjb = or i32 %i.bja, %.sroa.0.013.i1385
-  %i.bjc = add i32 %.sroa.02.012.i1386, 7
+  %i.bjc = add nuw nsw i32 %.sroa.02.012.i1386, 7
   %exitcond.not.i1387 = icmp eq i64 %i.biv, 11840
   br i1 %exitcond.not.i1387, label %._crit_edge.i1370.invoke, label %.lr.ph.i1384
 
@@ -12041,7 +12041,7 @@ bb.ux:                                            ; preds = %.lr.ph.i1409
   %i.bkj = and i32 %.sroa.02.012.i1411, 31
   %i.bkk = shl i32 %i.bki, %i.bkj
   %i.bkl = or i32 %i.bkk, %.sroa.0.013.i1410
-  %i.bkm = add i32 %.sroa.02.012.i1411, 7
+  %i.bkm = add nuw nsw i32 %.sroa.02.012.i1411, 7
   %exitcond.not.i1412 = icmp eq i64 %i.bke, 11840
   br i1 %exitcond.not.i1412, label %._crit_edge.i1413.invoke, label %.lr.ph.i1409
 
@@ -12077,7 +12077,7 @@ bb.va:                                            ; preds = %.lr.ph.i1418
   %i.bky = and i32 %.sroa.02.012.i1420, 31
   %i.bkz = shl i32 %i.bkx, %i.bky
   %i.bla = or i32 %i.bkz, %.sroa.0.013.i1419
-  %i.blb = add i32 %.sroa.02.012.i1420, 7
+  %i.blb = add nuw nsw i32 %.sroa.02.012.i1420, 7
   %exitcond.not.i1421 = icmp eq i64 %i.bku, 11840
   br i1 %exitcond.not.i1421, label %._crit_edge.i1413.invoke, label %.lr.ph.i1418
 
@@ -12344,7 +12344,7 @@ bb.wf:                                            ; preds = %.lr.ph.i1461
   %i.bnc = and i32 %.sroa.02.012.i1463, 31
   %i.bnd = shl i32 %i.bnb, %i.bnc
   %i.bne = or i32 %i.bnd, %.sroa.0.013.i1462
-  %i.bnf = add i32 %.sroa.02.012.i1463, 7
+  %i.bnf = add nuw nsw i32 %.sroa.02.012.i1463, 7
   %exitcond.not.i1464 = icmp eq i64 %i.bmy, 11840
   br i1 %exitcond.not.i1464, label %.invoke14249, label %.lr.ph.i1461
 
@@ -12747,7 +12747,7 @@ bb.im:                                            ; preds = %.lr.ph.i716
   %i.abl = and i32 %.sroa.02.012.i718, 31
   %i.abm = shl i32 %i.abk, %i.abl
   %i.abn = or i32 %i.abm, %.sroa.0.013.i717
-  %i.abo = add i32 %.sroa.02.012.i718, 7
+  %i.abo = add nuw nsw i32 %.sroa.02.012.i718, 7
   %exitcond.not.i719 = icmp eq i64 %i.abh, 10870
   br i1 %exitcond.not.i719, label %._crit_edge.i467.invoke, label %.lr.ph.i716
 
@@ -12965,7 +12965,7 @@ bb.jj:                                            ; preds = %.lr.ph.i750
   %i.adi = and i32 %.sroa.02.012.i752, 31
   %i.adj = shl i32 %i.adh, %i.adi
   %i.adk = or i32 %i.adj, %.sroa.0.013.i751
-  %i.adl = add i32 %.sroa.02.012.i752, 7
+  %i.adl = add nuw nsw i32 %.sroa.02.012.i752, 7
   %exitcond.not.i753 = icmp eq i64 %i.ade, 10870
   br i1 %exitcond.not.i753, label %._crit_edge.i754, label %.lr.ph.i750
 
@@ -13105,7 +13105,7 @@ bb.jx:                                            ; preds = %.lr.ph.i772
   %i.aer = and i32 %.sroa.02.012.i774, 31
   %i.aes = shl i32 %i.aeq, %i.aer
   %i.aet = or i32 %i.aes, %.sroa.0.013.i773
-  %i.aeu = add i32 %.sroa.02.012.i774, 7
+  %i.aeu = add nuw nsw i32 %.sroa.02.012.i774, 7
   %exitcond.not.i775 = icmp eq i64 %i.aen, 10870
   br i1 %exitcond.not.i775, label %._crit_edge.i776, label %.lr.ph.i772
 
@@ -13182,7 +13182,7 @@ bb.kf:                                            ; preds = %.lr.ph.i785
   %i.afr = and i32 %.sroa.02.012.i787, 31
   %i.afs = shl i32 %i.afq, %i.afr
   %i.aft = or i32 %i.afs, %.sroa.0.013.i786
-  %i.afu = add i32 %.sroa.02.012.i787, 7
+  %i.afu = add nuw nsw i32 %.sroa.02.012.i787, 7
   %exitcond.not.i788 = icmp eq i64 %i.afn, 10870
   br i1 %exitcond.not.i788, label %._crit_edge.i789, label %.lr.ph.i785
 
@@ -13298,7 +13298,7 @@ bb.ks:                                            ; preds = %.lr.ph.i806
   %i.agq = and i32 %.sroa.02.012.i808, 31
   %i.agr = shl i32 %i.agp, %i.agq
   %i.ags = or i32 %i.agr, %.sroa.0.013.i807
-  %i.agt = add i32 %.sroa.02.012.i808, 7
+  %i.agt = add nuw nsw i32 %.sroa.02.012.i808, 7
   %exitcond.not.i809 = icmp eq i64 %i.agm, 10870
   br i1 %exitcond.not.i809, label %._crit_edge.i467.invoke, label %.lr.ph.i806
 
@@ -13408,7 +13408,7 @@ bb.lb:                                            ; preds = %.lr.ph.i824
   %i.ahy = and i32 %.sroa.02.012.i826, 31
   %i.ahz = shl i32 %i.ahx, %i.ahy
   %i.aia = or i32 %i.ahz, %.sroa.0.013.i825
-  %i.aib = add i32 %.sroa.02.012.i826, 7
+  %i.aib = add nuw nsw i32 %.sroa.02.012.i826, 7
   %exitcond.not.i827 = icmp eq i64 %i.aht, 10870
   br i1 %exitcond.not.i827, label %._crit_edge.i828.invoke, label %.lr.ph.i824
 
@@ -13439,7 +13439,7 @@ bb.le:                                            ; preds = %.lr.ph.i833
   %i.ain = and i32 %.sroa.02.012.i835, 31
   %i.aio = shl i32 %i.aim, %i.ain
   %i.aip = or i32 %i.aio, %.sroa.0.013.i834
-  %i.aiq = add i32 %.sroa.02.012.i835, 7
+  %i.aiq = add nuw nsw i32 %.sroa.02.012.i835, 7
   %exitcond.not.i836 = icmp eq i64 %i.aij, 10870
   br i1 %exitcond.not.i836, label %._crit_edge.i828.invoke, label %.lr.ph.i833
 
@@ -13589,7 +13589,7 @@ bb.lq:                                            ; preds = %.lr.ph.i855
   %i.ajz = and i32 %.sroa.02.012.i857, 31
   %i.aka = shl i32 %i.ajy, %i.ajz
   %i.akb = or i32 %i.aka, %.sroa.0.013.i856
-  %i.akc = add i32 %.sroa.02.012.i857, 7
+  %i.akc = add nuw nsw i32 %.sroa.02.012.i857, 7
   %exitcond.not.i858 = icmp eq i64 %i.ajv, 10870
   br i1 %exitcond.not.i858, label %._crit_edge.i859, label %.lr.ph.i855
 
@@ -13666,7 +13666,7 @@ bb.ly:                                            ; preds = %.lr.ph.i868
   %i.ala = and i32 %.sroa.02.012.i870, 31
   %i.alb = shl i32 %i.akz, %i.ala
   %i.alc = or i32 %i.alb, %.sroa.0.013.i869
-  %i.ald = add i32 %.sroa.02.012.i870, 7
+  %i.ald = add nuw nsw i32 %.sroa.02.012.i870, 7
   %exitcond.not.i871 = icmp eq i64 %i.akv, 10870
   br i1 %exitcond.not.i871, label %._crit_edge.i872.invoke, label %.lr.ph.i868
 
@@ -13697,7 +13697,7 @@ bb.mb:                                            ; preds = %.lr.ph.i877
   %i.alp = and i32 %.sroa.02.012.i879, 31
   %i.alq = shl i32 %i.alo, %i.alp
   %i.alr = or i32 %i.alq, %.sroa.0.013.i878
-  %i.als = add i32 %.sroa.02.012.i879, 7
+  %i.als = add nuw nsw i32 %.sroa.02.012.i879, 7
   %exitcond.not.i880 = icmp eq i64 %i.all, 10870
   br i1 %exitcond.not.i880, label %._crit_edge.i872.invoke, label %.lr.ph.i877
 
@@ -13811,7 +13811,7 @@ bb.mn:                                            ; preds = %.lr.ph.i898
   %i.amo = and i32 %.sroa.02.012.i900, 31
   %i.amp = shl i32 %i.amn, %i.amo
   %i.amq = or i32 %i.amp, %.sroa.0.013.i899
-  %i.amr = add i32 %.sroa.02.012.i900, 7
+  %i.amr = add nuw nsw i32 %.sroa.02.012.i900, 7
   %exitcond.not.i901 = icmp eq i64 %i.amk, 10870
   br i1 %exitcond.not.i901, label %._crit_edge.i467.invoke, label %.lr.ph.i898
 
@@ -13838,7 +13838,7 @@ bb.mp:                                            ; preds = %.lr.ph.i907
   %i.and = and i32 %.sroa.02.012.i909, 31
   %i.ane = shl i32 %i.anc, %i.and
   %i.anf = or i32 %i.ane, %.sroa.0.013.i908
-  %i.ang = add i32 %.sroa.02.012.i909, 7
+  %i.ang = add nuw nsw i32 %.sroa.02.012.i909, 7
   %exitcond.not.i910 = icmp eq i64 %i.amz, 10870
   br i1 %exitcond.not.i910, label %._crit_edge.i467.invoke, label %.lr.ph.i907
 
@@ -13948,7 +13948,7 @@ bb.my:                                            ; preds = %.lr.ph.i925
   %i.aol = and i32 %.sroa.02.012.i927, 31
   %i.aom = shl i32 %i.aok, %i.aol
   %i.aon = or i32 %i.aom, %.sroa.0.013.i926
-  %i.aoo = add i32 %.sroa.02.012.i927, 7
+  %i.aoo = add nuw nsw i32 %.sroa.02.012.i927, 7
   %exitcond.not.i928 = icmp eq i64 %i.aog, 10870
   br i1 %exitcond.not.i928, label %._crit_edge.i929.invoke, label %.lr.ph.i925
 
@@ -13979,7 +13979,7 @@ bb.nb:                                            ; preds = %.lr.ph.i934
   %i.apa = and i32 %.sroa.02.012.i936, 31
   %i.apb = shl i32 %i.aoz, %i.apa
   %i.apc = or i32 %i.apb, %.sroa.0.013.i935
-  %i.apd = add i32 %.sroa.02.012.i936, 7
+  %i.apd = add nuw nsw i32 %.sroa.02.012.i936, 7
   %exitcond.not.i937 = icmp eq i64 %i.aow, 10870
   br i1 %exitcond.not.i937, label %._crit_edge.i929.invoke, label %.lr.ph.i934
 
@@ -14006,7 +14006,7 @@ bb.nd:                                            ; preds = %.lr.ph.i943
   %i.app = and i32 %.sroa.02.012.i945, 31
   %i.apq = shl i32 %i.apo, %i.app
   %i.apr = or i32 %i.apq, %.sroa.0.013.i944
-  %i.aps = add i32 %.sroa.02.012.i945, 7
+  %i.aps = add nuw nsw i32 %.sroa.02.012.i945, 7
   %exitcond.not.i946 = icmp eq i64 %i.apl, 10870
   br i1 %exitcond.not.i946, label %._crit_edge.i929.invoke, label %.lr.ph.i943
 
@@ -14138,7 +14138,7 @@ bb.np:                                            ; preds = %.lr.ph.i965
   %i.aqx = and i32 %.sroa.02.012.i967, 31
   %i.aqy = shl i32 %i.aqw, %i.aqx
   %i.aqz = or i32 %i.aqy, %.sroa.0.013.i966
-  %i.ara = add i32 %.sroa.02.012.i967, 7
+  %i.ara = add nuw nsw i32 %.sroa.02.012.i967, 7
   %exitcond.not.i968 = icmp eq i64 %i.aqt, 10870
   br i1 %exitcond.not.i968, label %._crit_edge.i969, label %.lr.ph.i965
 
@@ -14215,7 +14215,7 @@ bb.nx:                                            ; preds = %.lr.ph.i978
   %i.ary = and i32 %.sroa.02.012.i980, 31
   %i.arz = shl i32 %i.arx, %i.ary
   %i.asa = or i32 %i.arz, %.sroa.0.013.i979
-  %i.asb = add i32 %.sroa.02.012.i980, 7
+  %i.asb = add nuw nsw i32 %.sroa.02.012.i980, 7
   %exitcond.not.i981 = icmp eq i64 %i.art, 10870
   br i1 %exitcond.not.i981, label %._crit_edge.i982.invoke, label %.lr.ph.i978
 
@@ -14246,7 +14246,7 @@ bb.oa:                                            ; preds = %.lr.ph.i987
   %i.asn = and i32 %.sroa.02.012.i989, 31
   %i.aso = shl i32 %i.asm, %i.asn
   %i.asp = or i32 %i.aso, %.sroa.0.013.i988
-  %i.asq = add i32 %.sroa.02.012.i989, 7
+  %i.asq = add nuw nsw i32 %.sroa.02.012.i989, 7
   %exitcond.not.i990 = icmp eq i64 %i.asj, 10870
   br i1 %exitcond.not.i990, label %._crit_edge.i982.invoke, label %.lr.ph.i987
 
@@ -14273,7 +14273,7 @@ bb.oc:                                            ; preds = %.lr.ph.i996
   %i.atc = and i32 %.sroa.02.012.i998, 31
   %i.atd = shl i32 %i.atb, %i.atc
   %i.ate = or i32 %i.atd, %.sroa.0.013.i997
-  %i.atf = add i32 %.sroa.02.012.i998, 7
+  %i.atf = add nuw nsw i32 %.sroa.02.012.i998, 7
   %exitcond.not.i999 = icmp eq i64 %i.asy, 10870
   br i1 %exitcond.not.i999, label %._crit_edge.i982.invoke, label %.lr.ph.i996
 
@@ -14419,7 +14419,7 @@ bb.oq:                                            ; preds = %.lr.ph.i1021
   %i.aum = and i32 %.sroa.02.012.i1023, 31
   %i.aun = shl i32 %i.aul, %i.aum
   %i.auo = or i32 %i.aun, %.sroa.0.013.i1022
-  %i.aup = add i32 %.sroa.02.012.i1023, 7
+  %i.aup = add nuw nsw i32 %.sroa.02.012.i1023, 7
   %exitcond.not.i1024 = icmp eq i64 %i.auh, 10870
   br i1 %exitcond.not.i1024, label %._crit_edge.i1025.invoke, label %.lr.ph.i1021
 
@@ -14455,7 +14455,7 @@ bb.ot:                                            ; preds = %.lr.ph.i1030
   %i.avb = and i32 %.sroa.02.012.i1032, 31
   %i.avc = shl i32 %i.ava, %i.avb
   %i.avd = or i32 %i.avc, %.sroa.0.013.i1031
-  %i.ave = add i32 %.sroa.02.012.i1032, 7
+  %i.ave = add nuw nsw i32 %.sroa.02.012.i1032, 7
   %exitcond.not.i1033 = icmp eq i64 %i.aux, 10870
   br i1 %exitcond.not.i1033, label %._crit_edge.i1025.invoke, label %.lr.ph.i1030
 
