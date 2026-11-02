@@ -205,7 +205,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairIiiEmNS0_7move_opEE11move_assignINS_9conta
   %i.bd = sub i64 %i.bc, %.015.i133.le            ; 2 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
-  %min.iters.check135 = icmp ult i64 %i.bd, 184
+  %min.iters.check135 = icmp ult i64 %i.bd, 152
   br i1 %min.iters.check135, label %.lr.ph.i.i.i10.preheader202, label %vector.memcheck136
 
 vector.memcheck136:                               ; preds = %.lr.ph.i.i.i10.preheader
@@ -608,7 +608,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairINS_9container4test11movable_intES5_EmNS0_
   %i.bc = sub i64 %i.bb, %.015.i132.le            ; 2 uses
   %i.bd = lshr i64 %i.bc, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check134 = icmp ult i64 %i.bc, 120
+  %min.iters.check134 = icmp ult i64 %i.bc, 104
   br i1 %min.iters.check134, label %.lr.ph.i.i.i10.preheader189, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.i.i.i10.preheader
@@ -1011,7 +1011,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairINS_9container4test12copyable_intES5_EmNS0
   %i.bd = sub i64 %i.bc, %.015.i133.le            ; 2 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
-  %min.iters.check135 = icmp ult i64 %i.bd, 184
+  %min.iters.check135 = icmp ult i64 %i.bd, 152
   br i1 %min.iters.check135, label %.lr.ph.i.i.i10.preheader202, label %vector.memcheck136
 
 vector.memcheck136:                               ; preds = %.lr.ph.i.i.i10.preheader
@@ -1414,7 +1414,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairINS_9container4test24movable_and_copyable_
   %i.bc = sub i64 %i.bb, %.015.i132.le            ; 2 uses
   %i.bd = lshr i64 %i.bc, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check134 = icmp ult i64 %i.bc, 120
+  %min.iters.check134 = icmp ult i64 %i.bc, 104
   br i1 %min.iters.check134, label %.lr.ph.i.i.i10.preheader189, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.i.i.i10.preheader
@@ -1817,7 +1817,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairINS_9container4test24movable_and_copyable_
   %i.bc = sub i64 %i.bb, %.015.i132.le            ; 2 uses
   %i.bd = lshr i64 %i.bc, 3
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check134 = icmp ult i64 %i.bc, 120
+  %min.iters.check134 = icmp ult i64 %i.bc, 104
   br i1 %min.iters.check134, label %.lr.ph.i.i.i10.preheader189, label %vector.memcheck135
 
 vector.memcheck135:                               ; preds = %.lr.ph.i.i.i10.preheader
