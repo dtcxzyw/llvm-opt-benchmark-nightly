@@ -40,6 +40,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress norecurse uwtable
 define hidden noundef range(i32 -1, 1) i32 @main(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -368,26 +370,32 @@ bb.ab:                                            ; preds = %.lr.ph, %bb.ac
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %.030147 ; 2 uses
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !33
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
-  %i.by = load float, ptr %i.bx, align 4, !tbaa !33 ; 2 uses
-  %29 = call noundef float @cosf(float noundef %i.by) #13
-  %30 = call noundef float @sinf(float noundef %i.by) #13
-  %i.bz = fpext float %i.bw to double
-  %i.ca = insertelement <2 x float> poison, float %29, i64 0
-  %i.cb = insertelement <2 x float> %i.ca, float %30, i64 1
-  %i.cc = fpext <2 x float> %i.cb to <2 x double> ; 3 uses
-  %i.cd = insertelement <2 x double> poison, double %i.bz, i64 0
-  %31 = shufflevector <2 x double> %i.cd, <2 x double> poison, <2 x i32> zeroinitializer
-  %32 = fmul <2 x double> %31, %i.cc              ; 2 uses
-  %33 = fneg <2 x double> %i.cc
-  %34 = shufflevector <2 x double> %33, <2 x double> %i.cc, <2 x i32> <i32 1, i32 2> ; 2 uses
-  %35 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %34, <2 x double> splat (double 1.000000e+03), <2 x double> %32) ; 2 uses
-  %i.ce = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %35)
-  %i.cf = shufflevector <2 x double> %35, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %29 = load float, ptr %i.bx, align 4, !tbaa !33
+  call void @sincosf(float %29, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %i.by = load float, ptr %sincos.sin, align 4    ; 2 uses
+  %cos = load float, ptr %sincos.cos, align 4
+  %30 = fpext float %i.bw to double
+  %i.bz = fpext float %i.by to double
+  %i.ca = insertelement <2 x float> poison, float %cos, i64 0
+  %i.cb = insertelement <2 x float> %i.ca, float %i.by, i64 1
+  %i.cc = fpext <2 x float> %i.cb to <2 x double> ; 2 uses
+  %i.cd = insertelement <2 x double> poison, double %30, i64 0
+  %31 = shufflevector <2 x double> %i.cd, <2 x double> poison, <4 x i32> zeroinitializer
+  %32 = shufflevector <2 x double> %i.cc, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %33 = fmul <4 x double> %31, %32
+  %34 = fneg double %i.bz
+  %35 = shufflevector <2 x double> %i.cc, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %36 = insertelement <2 x double> %35, double %34, i64 0
+  %37 = shufflevector <2 x double> %36, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %38 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %37, <4 x double> <double 1.000000e+03, double 1.000000e+03, double -1.000000e+03, double -1.000000e+03>, <4 x double> %33) ; 4 uses
+  %39 = shufflevector <4 x double> %38, <4 x double> poison, <2 x i32> <i32 0, i32 poison>
+  %i.ce = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %39)
+  %i.cf = shufflevector <4 x double> %38, <4 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.cg = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %i.cf)
-  %36 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %34, <2 x double> splat (double -1.000000e+03), <2 x double> %32) ; 2 uses
-  %i.ch = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %36)
-  %37 = shufflevector <2 x double> %36, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.ci = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %37)
+  %40 = shufflevector <4 x double> %38, <4 x double> poison, <2 x i32> <i32 2, i32 poison>
+  %i.ch = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %40)
+  %41 = shufflevector <4 x double> %38, <4 x double> poison, <2 x i32> <i32 3, i32 poison>
+  %i.ci = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %41)
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #13
   store i64 0, ptr %i.bn, align 8
   store i32 50397184, ptr %16, align 8, !tbaa !26
@@ -790,47 +798,44 @@ declare void @_ZN2cv6imshowERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
 
 declare noundef i32 @_ZN2cv7waitKeyEi(i32 noundef) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #5
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #5
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
-declare i32 @llvm.x86.sse2.cvtsd2si(<2 x double>) #6
+declare i32 @llvm.x86.sse2.cvtsd2si(<2 x double>) #5
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #7
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #6
 
 ; Function Attrs: noreturn
-declare void @_ZSt19__throw_logic_errorPKc(ptr noundef) local_unnamed_addr #8
+declare void @_ZSt19__throw_logic_errorPKc(ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #9
+declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #8
 
 declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #10
+declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #12
+declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #12
 
 attributes #0 = { mustprogress norecurse uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #10 = { nofree nounwind }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(none) }
+attributes #6 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #7 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #9 = { nofree nounwind }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { nounwind }
 attributes #14 = { noreturn }

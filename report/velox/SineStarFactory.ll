@@ -43,12 +43,14 @@ module asm(target_features: "+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK4geos4geom4util15SineStarFactory14createSineStarEv(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(104) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %2 = alloca %"class.std::unique_ptr.2", align 8 ; 7 uses
   %3 = alloca %"class.std::vector", align 8       ; 10 uses
   %4 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   %5 = alloca %"class.std::unique_ptr.10", align 8 ; 7 uses
   %6 = alloca %"class.std::unique_ptr.18", align 8 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @_ZNK4geos4util21GeometricShapeFactory10Dimensions11getEnvelopeEv(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.2") align 8 %2, ptr noundef nonnull align 8 dereferenceable(64) %i.a)
   %i.b = load ptr, ptr %2, align 8, !tbaa !15     ; 3 uses
@@ -72,7 +74,7 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.s = load double, ptr %i.r, align 8, !tbaa !26
   %i.t = fadd double %i.s, %i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !27
   %i.w = add i32 %i.v, 1                          ; 3 uses
@@ -86,7 +88,7 @@ bb.a:
 
 _ZNSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EEC2EmRKS3_.exit.i: ; preds = %bb.a
   %i.y = mul nuw nsw i64 %i.x, 24
-  %i.z = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #9
+  %i.z = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #10
           to label %.noexc unwind label %bb.b     ; 6 uses
 
 .noexc:                                           ; preds = %_ZNSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EEC2EmRKS3_.exit.i
@@ -180,7 +182,7 @@ _ZNSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EEC2EmRKS3_.exit.i: ; preds = 
   %.033.lcssa = phi i64 [ 0, %.loopexit ], [ %i.bb, %._crit_edge.loopexit ]
   %i.bd = getelementptr inbounds nuw [24 x i8], ptr %i.bc, i64 %.033.lcssa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.bc, i64 24, i1 false), !tbaa.struct !37
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !38
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 32
@@ -209,21 +211,22 @@ bb.c:                                             ; preds = %.lr.ph, %bb.d
   %i.bt = call double @llvm.floor.f64(double %i.bs)
   %i.bu = fsub double %i.bs, %i.bt
   %i.bv = fmul double %i.bu, f0x401921FB54442D18
-  %i.bw = call double @cos(double noundef %i.bv) #8
+  %i.bw = call double @cos(double noundef %i.bv) #9
   %i.bx = fadd double %i.bw, 1.000000e+00
   %i.by = fmul double %i.bx, 5.000000e-01
   %i.bz = fmul double %i.n, %i.by
   %i.ca = fadd double %i.p, %i.bz                 ; 2 uses
   %i.cb = fdiv nnan double f0x401921FB54442D18, %i.bo
-  %i.cc = fmul double %i.cb, %i.bn                ; 2 uses
-  %7 = call double @cos(double noundef %i.cc) #8
-  %8 = fmul double %7, %i.ca
-  %9 = fadd double %i.q, %8
-  %10 = call double @sin(double noundef %i.cc) #8
-  %i.cd = fmul double %10, %i.ca
+  %i.cc = fmul double %i.cb, %i.bn
+  call void @sincos(double %i.cc, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %7 = fmul double %cos, %i.ca
+  %8 = fadd double %i.q, %7
+  %i.cd = fmul double %sin, %i.ca
   %i.ce = fadd double %i.t, %i.cd
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  invoke void @_ZNK4geos4util21GeometricShapeFactory5coordEdd(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %4, ptr noundef nonnull align 8 dereferenceable(92) %1, double noundef %9, double noundef %i.ce)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  invoke void @_ZNK4geos4util21GeometricShapeFactory5coordEdd(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %4, ptr noundef nonnull align 8 dereferenceable(92) %1, double noundef %8, double noundef %i.ce)
           to label %bb.d unwind label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -231,7 +234,7 @@ bb.d:                                             ; preds = %bb.c
   %indvars = trunc i64 %indvars.iv.next to i32
   %i.cf = getelementptr inbounds nuw [24 x i8], ptr %i.az, i64 %indvars.iv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cf, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !37
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.cg = load i32, ptr %i.u, align 8, !tbaa !27  ; 2 uses
   %i.ch = icmp ugt i32 %i.cg, %indvars
   br i1 %i.ch, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !10
@@ -239,11 +242,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.ci = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   br label %bb.m
 
 bb.f:                                             ; preds = %._crit_edge
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   %i.cj = load ptr, ptr %i.be, align 8, !tbaa !38
   invoke void @_ZNK4geos4geom15GeometryFactory16createLinearRingEOSt10unique_ptrINS0_18CoordinateSequenceESt14default_deleteIS3_EE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.18") align 8 %6, ptr noundef nonnull align 8 dereferenceable(45) %i.cj, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.g unwind label %bb.i
@@ -274,7 +277,7 @@ _ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i: ; preds = %bb.j
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !46
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.cr = load ptr, ptr %i.cq, align 8
-  call void %i.cr(ptr noundef nonnull align 8 dereferenceable(48) %i.co) #8, !inline_history !11
+  call void %i.cr(ptr noundef nonnull align 8 dereferenceable(48) %i.co) #9, !inline_history !11
   br label %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit
 
 bb.k:                                             ; preds = %bb.g
@@ -286,11 +289,11 @@ _ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i48: ; preds = %bb.
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !46
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %i.cv = load ptr, ptr %i.cu, align 8
-  call void %i.cv(ptr noundef nonnull align 8 dereferenceable(48) %i.cs) #8, !inline_history !11
+  call void %i.cv(ptr noundef nonnull align 8 dereferenceable(48) %i.cs) #9, !inline_history !11
   br label %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit49
 
 _ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit49: ; preds = %bb.k, %_ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i48
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   %i.cw = load ptr, ptr %5, align 8, !tbaa !51    ; 3 uses
   %.not.i50 = icmp eq ptr %i.cw, null
   br i1 %.not.i50, label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i
@@ -299,36 +302,36 @@ _ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i: ; preds 
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !46
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.cz = load ptr, ptr %i.cy, align 8
-  call void %i.cz(ptr noundef nonnull align 8 dereferenceable(8) %i.cw) #8, !inline_history !12
+  call void %i.cz(ptr noundef nonnull align 8 dereferenceable(8) %i.cw) #9, !inline_history !12
   br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit49, %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   %i.da = load ptr, ptr %3, align 8, !tbaa !30    ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.da, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit
-  call void @_ZdlPv(ptr noundef nonnull %i.da) #10
+  call void @_ZdlPv(ptr noundef nonnull %i.da) #11
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit, %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   %i.db = load ptr, ptr %2, align 8, !tbaa !15    ; 2 uses
   %.not.i51 = icmp eq ptr %i.db, null
   br i1 %.not.i51, label %_ZNSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN4geos4geom8EnvelopeEEclEPS2_.exit.i
 
 _ZNKSt14default_deleteIN4geos4geom8EnvelopeEEclEPS2_.exit.i: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit
-  call void @_ZdlPv(ptr noundef nonnull %i.db) #10
+  call void @_ZdlPv(ptr noundef nonnull %i.db) #11
   br label %_ZNSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit, %_ZNKSt14default_deleteIN4geos4geom8EnvelopeEEclEPS2_.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   ret void
 
 _ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i, %bb.j, %bb.i
   %.pn = phi { ptr, i32 } [ %i.cm, %bb.i ], [ %i.cn, %bb.j ], [ %i.cn, %_ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   %i.dc = load ptr, ptr %5, align 8, !tbaa !51    ; 3 uses
   %.not.i52 = icmp eq ptr %i.dc, null
   br i1 %.not.i52, label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit54, label %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i53
@@ -337,12 +340,12 @@ _ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i53: ; pred
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !46
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   %i.df = load ptr, ptr %i.de, align 8
-  call void %i.df(ptr noundef nonnull align 8 dereferenceable(8) %i.dc) #8, !inline_history !12
+  call void %i.df(ptr noundef nonnull align 8 dereferenceable(8) %i.dc) #9, !inline_history !12
   br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit54
 
 _ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit54: ; preds = %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i53, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit, %bb.h
   %.pn.pn = phi { ptr, i32 } [ %i.cl, %bb.h ], [ %.pn, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit ], [ %.pn, %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i53 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   %.pre67 = load ptr, ptr %3, align 8, !tbaa !30
   br label %bb.m
 
@@ -353,22 +356,22 @@ bb.m:                                             ; preds = %_ZNSt10unique_ptrIN
   br i1 %.not.i.i.i55, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit56, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  call void @_ZdlPv(ptr noundef nonnull %i.dg) #10
+  call void @_ZdlPv(ptr noundef nonnull %i.dg) #11
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit56
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit56: ; preds = %bb.n, %bb.m, %bb.b
   %.pn43.pn = phi { ptr, i32 } [ %i.bl, %bb.b ], [ %.pn43, %bb.m ], [ %.pn43, %bb.n ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   %i.dh = load ptr, ptr %2, align 8, !tbaa !15    ; 2 uses
   %.not.i57 = icmp eq ptr %i.dh, null
   br i1 %.not.i57, label %_ZNSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EED2Ev.exit59, label %_ZNKSt14default_deleteIN4geos4geom8EnvelopeEEclEPS2_.exit.i58
 
 _ZNKSt14default_deleteIN4geos4geom8EnvelopeEEclEPS2_.exit.i58: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit56
-  call void @_ZdlPv(ptr noundef nonnull %i.dh) #10
+  call void @_ZdlPv(ptr noundef nonnull %i.dh) #11
   br label %_ZNSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EED2Ev.exit59
 
 _ZNSt10unique_ptrIN4geos4geom8EnvelopeESt14default_deleteIS2_EED2Ev.exit59: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit56, %_ZNKSt14default_deleteIN4geos4geom8EnvelopeEEclEPS2_.exit.i58
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   resume { ptr, i32 } %.pn43.pn
 }
 
@@ -388,9 +391,6 @@ declare double @llvm.floor.f64(double) #3
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @cos(double noundef) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #4
-
 declare void @_ZNK4geos4util21GeometricShapeFactory5coordEdd(ptr dead_on_unwind writable sret(%"class.geos::geom::Coordinate") align 8, ptr noundef nonnull align 8 dereferenceable(92), double noundef, double noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -406,8 +406,11 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #5
 ; Function Attrs: nobuiltin allocsize(0)
 declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #6
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #7
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -416,10 +419,11 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #5 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nounwind }
-attributes #9 = { builtin allocsize(0) }
-attributes #10 = { builtin nounwind }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { nounwind }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

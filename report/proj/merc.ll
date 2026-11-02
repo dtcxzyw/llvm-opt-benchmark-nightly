@@ -50,6 +50,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_Z33pj_projection_specific_setup_mercP8PJconsts(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !42
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !47
@@ -62,7 +64,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !tbaa !42
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !47
   %i.h = tail call i64 @_Z8pj_paramP6pj_ctxP8ARG_listPKc(ptr noundef %i.f, ptr noundef %i.g, ptr noundef nonnull @.str.2)
-  %i.i = bitcast i64 %i.h to double               ; 3 uses
+  %i.i = bitcast i64 %i.h to double               ; 2 uses
   %i.j = tail call double @llvm.fabs.f64(double %i.i) ; 2 uses
   %i.k = fcmp ult double %i.j, f0x3FF921FB54442D18
   br i1 %i.k, label %.thread, label %bb.c
@@ -85,11 +87,12 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.r, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %.thread
-  %1 = tail call double @sin(double noundef %i.j) #6
-  %2 = tail call double @cos(double %i.i)
-  %3 = tail call noundef double @_Z7pj_msfnddd(double noundef %1, double noundef %2, double noundef %i.q)
+  call void @sincos(double %i.j, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %1 = call noundef double @_Z7pj_msfnddd(double noundef %sin, double noundef %cos, double noundef %i.q)
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 488
-  store double %3, ptr %i.s, align 8, !tbaa !43
+  store double %1, ptr %i.s, align 8, !tbaa !43
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
@@ -131,9 +134,6 @@ declare noundef ptr @_Z21pj_default_destructorP8PJconstsi(ptr noundef, i32 nound
 declare noundef double @_Z7pj_msfnddd(double noundef, double noundef, double noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #3
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @cos(double noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress uwtable
@@ -143,11 +143,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 488 ; 2 uses
   %i.c = load double, ptr %i.b, align 8, !tbaa !43
   %i.d = fdiv double %1, %i.c
-  %i.e = tail call double @sinh(double noundef %i.d) #6
+  %i.e = tail call double @sinh(double noundef %i.d) #7
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 208
   %i.g = load double, ptr %i.f, align 8, !tbaa !46
   %i.h = tail call noundef double @_Z17pj_sinhpsi2tanphiP6pj_ctxdd(ptr noundef %i.a, double noundef %i.e, double noundef %i.g)
-  %i.i = tail call double @atan(double noundef %i.h) #6
+  %i.i = tail call double @atan(double noundef %i.h) #7
   %i.j = load double, ptr %i.b, align 8, !tbaa !43
   %i.k = fdiv double %0, %i.j
   %.fca.0.insert = insertvalue { double, double } poison, double %i.k, 0
@@ -158,20 +158,23 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
 define internal { double, double } @_ZL14merc_e_forward5PJ_LPP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #4 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 488
   %i.b = load double, ptr %i.a, align 8, !tbaa !43 ; 2 uses
   %i.c = fmul double %0, %i.b
-  %3 = tail call double @sin(double noundef %1) #6 ; 2 uses
-  %4 = tail call double @cos(double noundef %1) #6
-  %i.d = fdiv double %3, %4
-  %5 = tail call double @asinh(double noundef %i.d) #6
+  call void @sincos(double %1, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8    ; 2 uses
+  %cos = load double, ptr %sincos.cos, align 8
+  %i.d = fdiv double %sin, %cos
+  %3 = call double @asinh(double noundef %i.d) #7
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 208
   %i.f = load double, ptr %i.e, align 8, !tbaa !46 ; 2 uses
-  %i.g = fmul double %3, %i.f
-  %6 = tail call double @atanh(double noundef %i.g) #6
+  %i.g = fmul double %sin, %i.f
+  %4 = call double @atanh(double noundef %i.g) #7
   %i.h = fneg double %i.f
-  %7 = tail call double @llvm.fmuladd.f64(double %i.h, double %6, double %5)
-  %i.i = fmul double %i.b, %7
+  %5 = call double @llvm.fmuladd.f64(double %i.h, double %4, double %3)
+  %i.i = fmul double %i.b, %5
   %.fca.0.insert = insertvalue { double, double } poison, double %i.c, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.i, 1
   ret { double, double } %.fca.1.insert
@@ -183,8 +186,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 488
   %i.b = load double, ptr %i.a, align 8, !tbaa !43 ; 2 uses
   %i.c = fdiv double %1, %i.b
-  %i.d = tail call double @sinh(double noundef %i.c) #6
-  %i.e = tail call double @atan(double noundef %i.d) #6
+  %i.d = tail call double @sinh(double noundef %i.c) #7
+  %i.e = tail call double @atan(double noundef %i.d) #7
   %i.f = fdiv double %0, %i.b
   %.fca.0.insert = insertvalue { double, double } poison, double %i.f, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.e, 1
@@ -197,8 +200,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 488
   %i.b = load double, ptr %i.a, align 8, !tbaa !43 ; 2 uses
   %i.c = fmul double %0, %i.b
-  %i.d = tail call double @tan(double noundef %1) #6
-  %i.e = tail call double @asinh(double noundef %i.d) #6
+  %i.d = tail call double @tan(double noundef %1) #7
+  %i.e = tail call double @asinh(double noundef %i.d) #7
   %i.f = fmul double %i.b, %i.e
   %.fca.0.insert = insertvalue { double, double } poison, double %i.c, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.f, 1
@@ -275,13 +278,17 @@ declare double @llvm.fmuladd.f64(double, double, double) #2
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @tan(double noundef) local_unnamed_addr #3
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #6
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nounwind }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

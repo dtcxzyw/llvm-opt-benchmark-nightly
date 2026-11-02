@@ -204,6 +204,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN12_GLOBAL__N_124GeneralizedHoughGuilImpl12processImageEv(ptr noundef nonnull align 8 dereferenceable(1552) %0) unnamed_addr #15 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %2 = alloca %"class.std::allocator.26", align 1 ; 3 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -606,7 +608,7 @@ _ZN12_GLOBAL__N_124GeneralizedHoughGuilImpl9calcScaleEd.exit: ; preds = %._crit_
 
 .lr.ph:                                           ; preds = %_ZN12_GLOBAL__N_124GeneralizedHoughGuilImpl9calcScaleEd.exit
   %i.mp = fmul double %i.gk, f0x400921FB54442D18
-  %i.mq = fdiv double %i.mp, 1.800000e+02         ; 2 uses
+  %i.mq = fdiv double %i.mp, 1.800000e+02
   %i.mr = fptrunc double %i.gk to float           ; 2 uses
   br label %bb.cv
 
@@ -628,6 +630,8 @@ bb.cv:                                            ; preds = %.lr.ph, %_ZN12_GLOB
   %i.nc = load double, ptr %i.nb, align 8, !tbaa !270 ; 5 uses
   %i.nd = getelementptr inbounds nuw i8, ptr %i.nb, i64 8
   %i.ne = load i32, ptr %i.nd, align 8, !tbaa !271 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.nf = load i32, ptr %i.e, align 8, !tbaa !74  ; 2 uses
   %i.ng = icmp sgt i32 %i.nf, 0
   br i1 %i.ng, label %bb.db, label %bb.cw
@@ -854,8 +858,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144.i: ; preds = %
   br label %common.resume
 
 bb.dz:                                            ; preds = %bb.dt
-  %37 = call double @sin(double noundef %i.mq) #31 ; 2 uses
-  %38 = call double @cos(double noundef %i.mq) #31 ; 2 uses
+  call void @sincos(double %i.mq, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8 ; 2 uses
+  %cos.i = load double, ptr %sincos.cos.i, align 8 ; 2 uses
   %i.pf = fdiv double 1.000000e+00, %i.on         ; 3 uses
   %i.pg = load <2 x i32>, ptr %i.fy, align 8, !tbaa !104
   %i.ph = sitofp <2 x i32> %i.pg to <2 x double>
@@ -880,12 +885,10 @@ bb.dz:                                            ; preds = %bb.dt
   %.val130.i = load ptr, ptr %i.o, align 8, !tbaa !121
   %.val129.i = load ptr, ptr %i.d, align 8, !tbaa !121
   %i.pr = sitofp <2 x i32> %i.pm to <2 x double>
-  %i.ps = insertelement <2 x double> poison, double %37, i64 0
-  %i.pt = insertelement <2 x double> %i.ps, double %38, i64 1 ; 2 uses
-  %39 = shufflevector <2 x double> %i.pt, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.pu = insertelement <2 x double> poison, double %38, i64 0
-  %i.pv = insertelement <2 x double> %i.pu, double %37, i64 1 ; 2 uses
-  %40 = shufflevector <2 x double> %i.pv, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.ps = insertelement <2 x double> poison, double %cos.i, i64 0
+  %i.pt = insertelement <2 x double> %i.ps, double %sin.i, i64 1 ; 2 uses
+  %i.pu = insertelement <2 x double> poison, double %sin.i, i64 0
+  %i.pv = insertelement <2 x double> %i.pu, double %cos.i, i64 1 ; 2 uses
   br label %bb.ea
 
 .preheader.i:                                     ; preds = %._crit_edge176.split.i, %bb.dz
@@ -966,17 +969,17 @@ bb.ea:                                            ; preds = %._crit_edge176.spli
   %i.qx = fneg double %i.qu
   %i.qy = insertelement <2 x double> poison, double %i.qx, i64 0
   %i.qz = insertelement <2 x double> %i.qy, double %i.qu, i64 1
-  %i.ra = fmul <2 x double> %i.pt, %i.qz
+  %i.ra = fmul <2 x double> %i.pv, %i.qz
   %i.rb = insertelement <2 x double> poison, double %i.qt, i64 0
   %i.rc = shufflevector <2 x double> %i.rb, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.rd = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %39, <2 x double> %i.rc, <2 x double> %i.ra)
+  %i.rd = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pt, <2 x double> %i.rc, <2 x double> %i.ra)
   %i.re = fneg double %i.qw
   %i.rf = insertelement <2 x double> poison, double %i.qw, i64 0
   %i.rg = insertelement <2 x double> %i.rf, double %i.re, i64 1
-  %i.rh = fmul <2 x double> %i.pv, %i.rg
+  %i.rh = fmul <2 x double> %i.pt, %i.rg
   %i.ri = insertelement <2 x double> poison, double %i.qv, i64 0
   %i.rj = shufflevector <2 x double> %i.ri, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.rk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %40, <2 x double> %i.rj, <2 x double> %i.rh) ; 2 uses
+  %i.rk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.pv, <2 x double> %i.rj, <2 x double> %i.rh) ; 2 uses
   %i.rl = load ptr, ptr %i.ga, align 8
   %i.rm = extractelement <2 x double> %i.rk, i64 0
   %i.rn = extractelement <2 x double> %i.rk, i64 1
@@ -1336,6 +1339,8 @@ _ZNSt6vectorIN2cv3VecIiLi3EEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %bb.eq, %
 _ZN12_GLOBAL__N_124GeneralizedHoughGuilImpl12calcPositionEdidi.exit: ; preds = %..loopexit_crit_edge.i, %.preheader.i, %.lr.ph185.i
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %11) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.xj = add nuw i64 %.013142, 1                 ; 2 uses
   %i.xk = load ptr, ptr %i.fu, align 8, !tbaa !267
   %i.xl = load ptr, ptr %i.ft, align 8, !tbaa !119 ; 2 uses
@@ -1738,19 +1743,13 @@ declare noundef zeroext i1 @_ZN2cveqERKNS_8MatShapeES2_(ptr noundef nonnull alig
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #25
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #26
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #26
-
 declare void @_ZN2cv3MatC1EiiiRKNS_7Scalar_IdEE(ptr noundef nonnull align 8 dereferenceable(208), i32 noundef, i32 noundef, i32 noundef, ptr noundef nonnull align 8 dereferenceable(32)) unnamed_addr #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #27
+declare void @llvm.assume(i1 noundef) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #28
+declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #25
@@ -1760,6 +1759,9 @@ declare i64 @llvm.umin.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #25
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #25
@@ -1799,9 +1801,9 @@ attributes #22 = { nocallback nofree nosync nounwind speculatable willreturn mem
 attributes #23 = { nocallback nofree nosync nounwind willreturn memory(none) }
 attributes #24 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #25 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #26 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #27 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #28 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #27 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #28 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #29 = { builtin allocsize(0) }
 attributes #30 = { builtin nounwind }
 attributes #31 = { nounwind }

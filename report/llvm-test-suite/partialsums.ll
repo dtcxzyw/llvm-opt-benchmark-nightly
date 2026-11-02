@@ -33,25 +33,28 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone captures(none) %1) local_unnamed_addr #1 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
   %.076.int = phi i32 [ 1, %bb.a ], [ %.int, %bb.b ] ; 3 uses
   %i.a = phi <4 x double> [ zeroinitializer, %bb.a ], [ %i.r, %bb.b ]
-  %indvar.conv = uitofp nneg i32 %.076.int to double ; 6 uses
+  %indvar.conv = uitofp nneg i32 %.076.int to double ; 5 uses
   %i.b = add nsw i32 %.076.int, -1
   %i.c = sitofp i32 %i.b to double
-  %2 = tail call double @pow(double noundef f0x3FE5555555555555, double noundef %i.c) #5, !tbaa !7
-  %3 = tail call double @sqrt(double noundef %indvar.conv) #5, !tbaa !7
+  %2 = call double @pow(double noundef f0x3FE5555555555555, double noundef %i.c) #6, !tbaa !7
+  %3 = call double @sqrt(double noundef %indvar.conv) #6, !tbaa !7
   %i.d = fdiv double 1.000000e+00, %3
   %i.e = fmul double %indvar.conv, %indvar.conv
   %i.f = fmul double %i.e, %indvar.conv
-  %4 = tail call double @sin(double noundef %indvar.conv) #5, !tbaa !7
-  %5 = tail call double @cos(double noundef %indvar.conv) #5, !tbaa !7
+  call void @sincos(double %indvar.conv, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
   %i.g = insertelement <2 x double> poison, double %i.f, i64 0
   %i.h = shufflevector <2 x double> %i.g, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.i = insertelement <2 x double> poison, double %5, i64 0
-  %i.j = insertelement <2 x double> %i.i, double %4, i64 1 ; 2 uses
+  %i.i = insertelement <2 x double> poison, double %cos, i64 0
+  %i.j = insertelement <2 x double> %i.i, double %sin, i64 1 ; 2 uses
   %i.k = fmul <2 x double> %i.h, %i.j
   %i.l = fmul <2 x double> %i.j, %i.k
   %i.m = fdiv <2 x double> splat (double 1.000000e+00), %i.l
@@ -82,8 +85,8 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.aa = fadd <2 x double> %.05878, %i.z         ; 2 uses
   %i.ab = fdiv <2 x double> <double 1.000000e+00, double -1.000000e+00>, %.05482
   %i.ac = fadd <2 x double> %.05680, %i.ab        ; 2 uses
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %.05482, <2 x double> splat (double 2.000000e+00), <2 x double> splat (double -1.000000e+00))
-  %i.ad = fdiv <2 x double> <double 1.000000e+00, double -1.000000e+00>, %6
+  %4 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %.05482, <2 x double> splat (double 2.000000e+00), <2 x double> splat (double -1.000000e+00))
+  %i.ad = fdiv <2 x double> <double 1.000000e+00, double -1.000000e+00>, %4
   %i.ae = fadd <2 x double> %.05581, %i.ad        ; 2 uses
   %i.af = fadd <2 x double> %.05482, splat (double 2.000000e+00) ; 2 uses
   %.0.vec.extract = extractelement <2 x double> %i.af, i64 0
@@ -92,23 +95,23 @@ bb.b:                                             ; preds = %bb.a, %bb.b
 
 bb.c:                                             ; preds = %.preheader
   %i.ah = extractelement <4 x double> %i.r, i64 3
-  %7 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.ah, ptr noundef nonnull @.str.1) ; 0 uses
+  %5 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.ah, ptr noundef nonnull @.str.1) ; 0 uses
   %i.ai = extractelement <4 x double> %i.r, i64 2
-  %8 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.ai, ptr noundef nonnull @.str.2) ; 0 uses
-  %9 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.v)
-  %10 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %9, ptr noundef nonnull @.str.3) ; 0 uses
+  %6 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.ai, ptr noundef nonnull @.str.2) ; 0 uses
+  %7 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.v)
+  %8 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %7, ptr noundef nonnull @.str.3) ; 0 uses
   %i.aj = extractelement <4 x double> %i.r, i64 1
-  %11 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.aj, ptr noundef nonnull @.str.4) ; 0 uses
+  %9 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.aj, ptr noundef nonnull @.str.4) ; 0 uses
   %i.ak = extractelement <4 x double> %i.r, i64 0
-  %12 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.ak, ptr noundef nonnull @.str.5) ; 0 uses
-  %13 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.x)
-  %14 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %13, ptr noundef nonnull @.str.6) ; 0 uses
-  %15 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.aa)
-  %16 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %15, ptr noundef nonnull @.str.7) ; 0 uses
-  %17 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ac)
-  %18 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %17, ptr noundef nonnull @.str.8) ; 0 uses
-  %19 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ae)
-  %20 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %19, ptr noundef nonnull @.str.9) ; 0 uses
+  %10 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %i.ak, ptr noundef nonnull @.str.5) ; 0 uses
+  %11 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.x)
+  %12 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %11, ptr noundef nonnull @.str.6) ; 0 uses
+  %13 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.aa)
+  %14 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %13, ptr noundef nonnull @.str.7) ; 0 uses
+  %15 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ac)
+  %16 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %15, ptr noundef nonnull @.str.8) ; 0 uses
+  %17 = call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.ae)
+  %18 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, double noundef %17, ptr noundef nonnull @.str.9) ; 0 uses
   ret i32 0
 }
 
@@ -118,17 +121,14 @@ declare double @pow(double noundef, double noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sqrt(double noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #2
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #2
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #4
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #3
@@ -138,7 +138,8 @@ attributes #1 = { nofree nounwind uwtable "min-legal-vector-width"="128" "no-tra
 attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #4 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

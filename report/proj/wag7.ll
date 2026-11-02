@@ -63,22 +63,25 @@ declare noundef ptr @_Z6pj_newv() local_unnamed_addr #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
 define internal { double, double } @_ZL14wag7_s_forward5PJ_LPP8PJconsts(double %0, double %1, ptr nofree readnone captures(none) %2) #3 {
 bb.a:
-  %i.a = tail call double @sin(double noundef %1) #6
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
+  %i.a = tail call double @sin(double noundef %1) #7
   %i.b = fmul double %i.a, f0x3FED0079302DD767    ; 2 uses
-  %i.c = tail call double @asin(double noundef %i.b) #6
-  %i.d = tail call double @cos(double noundef %i.c) #6 ; 2 uses
-  %i.e = fdiv double %0, 3.000000e+00             ; 2 uses
+  %i.c = tail call double @asin(double noundef %i.b) #7
+  %i.d = tail call double @cos(double noundef %i.c) #7 ; 2 uses
+  %i.e = fdiv double %0, 3.000000e+00
   %i.f = fmul double %i.d, 2.667230e+00
-  %3 = tail call double @sin(double noundef %i.e) #6
-  %4 = fmul double %i.f, %3
-  %5 = tail call double @cos(double noundef %i.e) #6
-  %6 = tail call double @llvm.fmuladd.f64(double %i.d, double %5, double 1.000000e+00)
-  %i.g = fmul double %6, 5.000000e-01
-  %7 = tail call double @sqrt(double noundef %i.g) #6
-  %i.h = fdiv double 1.000000e+00, %7             ; 2 uses
+  call void @sincos(double %i.e, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %3 = fmul double %i.f, %sin
+  %4 = call double @llvm.fmuladd.f64(double %i.d, double %cos, double 1.000000e+00)
+  %i.g = fmul double %4, 5.000000e-01
+  %5 = call double @sqrt(double noundef %i.g) #7
+  %i.h = fdiv double 1.000000e+00, %5             ; 2 uses
   %i.i = fmul double %i.h, 1.241040e+00
   %i.j = fmul double %i.b, %i.i
-  %i.k = fmul double %4, %i.h
+  %i.k = fmul double %3, %i.h
   %.fca.0.insert = insertvalue { double, double } poison, double %i.k, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.j, 1
   ret { double, double } %.fca.1.insert
@@ -99,13 +102,17 @@ declare double @sqrt(double noundef) local_unnamed_addr #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #5
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #6
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nounwind }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

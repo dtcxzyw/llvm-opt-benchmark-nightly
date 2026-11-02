@@ -46,7 +46,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_Z33pj_projection_specific_setup_cconP8PJconsts(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(40) ptr @calloc(i64 noundef 1, i64 noundef 40) #7 ; 8 uses
+  %i.a = tail call noalias dereferenceable_or_null(40) ptr @calloc(i64 noundef 1, i64 noundef 40) #8 ; 8 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -78,7 +78,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !41
-  tail call void @free(ptr noundef %i.p) #8
+  tail call void @free(ptr noundef %i.p) #9
   br label %_ZL18pj_ccon_destructorP8PJconstsi.exit
 
 _ZL18pj_ccon_destructorP8PJconstsi.exit:          ; preds = %bb.d, %bb.e
@@ -102,7 +102,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !41
-  tail call void @free(ptr noundef %i.y) #8
+  tail call void @free(ptr noundef %i.y) #9
   br label %_ZL18pj_ccon_destructorP8PJconstsi.exit28
 
 _ZL18pj_ccon_destructorP8PJconstsi.exit28:        ; preds = %bb.g, %bb.h
@@ -111,10 +111,10 @@ _ZL18pj_ccon_destructorP8PJconstsi.exit28:        ; preds = %bb.g, %bb.h
 
 bb.i:                                             ; preds = %bb.f
   %i.aa = load double, ptr %i.a, align 8, !tbaa !40 ; 2 uses
-  %i.ab = tail call double @sin(double noundef %i.aa) #8 ; 2 uses
+  %i.ab = tail call double @sin(double noundef %i.aa) #9 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store double %i.ab, ptr %i.ac, align 8, !tbaa !42
-  %i.ad = tail call double @cos(double noundef %i.aa) #8 ; 2 uses
+  %i.ad = tail call double @cos(double noundef %i.aa) #9 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store double %i.ad, ptr %i.ae, align 8, !tbaa !53
   %i.af = fdiv double %i.ad, %i.ab
@@ -153,7 +153,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !41
-  tail call void @free(ptr noundef %i.f) #8
+  tail call void @free(ptr noundef %i.f) #9
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.b, %bb.c
@@ -189,11 +189,11 @@ bb.a:
   %i.d = load double, ptr %i.c, align 8, !tbaa !43 ; 2 uses
   %i.e = fsub double %i.d, %1                     ; 2 uses
   %i.f = load double, ptr %i.b, align 8, !tbaa !40
-  %i.g = tail call double @hypot(double noundef %0, double noundef %i.e) #8
+  %i.g = tail call double @hypot(double noundef %0, double noundef %i.e) #9
   %i.h = fsub double %i.g, %i.d
-  %i.i = tail call double @atan(double noundef %i.h) #8
+  %i.i = tail call double @atan(double noundef %i.h) #9
   %i.j = fsub double %i.f, %i.i
-  %i.k = tail call double @atan2(double noundef %0, double noundef %i.e) #8
+  %i.k = tail call double @atan2(double noundef %0, double noundef %i.e) #9
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.m = load double, ptr %i.l, align 8, !tbaa !42
   %i.n = fdiv double %i.k, %i.m
@@ -205,24 +205,27 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable
 define internal { double, double } @_ZL12ccon_forward5PJ_LPP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #5 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !37   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.d = load double, ptr %i.c, align 8, !tbaa !43 ; 2 uses
   %i.e = load double, ptr %i.b, align 8, !tbaa !40
   %i.f = fsub double %1, %i.e
-  %i.g = tail call double @tan(double noundef %i.f) #8
+  %i.g = tail call double @tan(double noundef %i.f) #9
   %i.h = fsub double %i.d, %i.g                   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.j = load double, ptr %i.i, align 8, !tbaa !42
-  %i.k = fmul double %0, %i.j                     ; 2 uses
-  %3 = tail call double @sin(double noundef %i.k) #8
-  %4 = fmul double %i.h, %3
-  %5 = tail call double @cos(double noundef %i.k) #8
+  %i.k = fmul double %0, %i.j
+  call void @sincos(double %i.k, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %3 = fmul double %i.h, %sin
   %i.l = fneg double %i.h
-  %6 = tail call double @llvm.fmuladd.f64(double %i.l, double %5, double %i.d)
-  %.fca.0.insert = insertvalue { double, double } poison, double %4, 0
-  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %6, 1
+  %4 = call double @llvm.fmuladd.f64(double %i.l, double %cos, double %i.d)
+  %.fca.0.insert = insertvalue { double, double } poison, double %3, 0
+  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %4, 1
   ret { double, double } %.fca.1.insert
 }
 
@@ -244,6 +247,9 @@ declare double @tan(double noundef) local_unnamed_addr #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #3
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #7
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -251,8 +257,9 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nounwind allocsize(0,1) }
-attributes #8 = { nounwind }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nounwind allocsize(0,1) }
+attributes #9 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -204,6 +204,8 @@ declare double @llvm.fmuladd.f64(double, double, double) #11
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN2cv7Affine3IdE8rotationERKNS_3MatE(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef nonnull align 8 dereferenceable(208) %1) local_unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca %"class.std::allocator.9", align 1  ; 3 uses
   %4 = alloca %"class.cv::Matx.28", align 16      ; 10 uses
@@ -332,6 +334,8 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #17
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.al = load double, ptr %6, align 8, !tbaa !70 ; 3 uses
   %i.am = call double @llvm.fmuladd.f64(double %i.al, double %i.al, double 0.000000e+00)
   %i.an = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -340,7 +344,7 @@ bb.l:                                             ; preds = %bb.k
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.ar = load double, ptr %i.aq, align 8, !tbaa !70 ; 3 uses
   %i.as = call noundef double @llvm.fmuladd.f64(double %i.ar, double %i.ar, double %i.ap)
-  %sqrt.i.i = call noundef double @llvm.sqrt.f64(double %i.as) ; 4 uses
+  %sqrt.i.i = call noundef double @llvm.sqrt.f64(double %i.as) ; 3 uses
   %i.at = fcmp olt double %sqrt.i.i, f0x3CB0000000000000
   br i1 %i.at, label %bb.m, label %bb.n
 
@@ -350,9 +354,10 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN2cv7Affine3IdE8rotationERKNS_3VecIdLi3EEE.exit
 
 bb.n:                                             ; preds = %bb.l
-  %11 = call double @cos(double noundef %sqrt.i.i) #17 ; 5 uses
-  %12 = call double @sin(double noundef %sqrt.i.i) #17 ; 4 uses
-  %i.av = fsub double 1.000000e+00, %11           ; 6 uses
+  call void @sincos(double %sqrt.i.i, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8 ; 4 uses
+  %cos.i = load double, ptr %sincos.cos.i, align 8 ; 5 uses
+  %i.av = fsub double 1.000000e+00, %cos.i        ; 6 uses
   %i.aw = fdiv double 1.000000e+00, %sqrt.i.i     ; 3 uses
   %i.ax = fmul double %i.al, %i.aw                ; 5 uses
   %i.ay = fmul double %i.ao, %i.aw                ; 5 uses
@@ -363,23 +368,23 @@ bb.n:                                             ; preds = %bb.l
   %i.bd = fmul double %i.ay, %i.ay
   %i.be = fmul double %i.ay, %i.az
   %i.bf = fmul double %i.az, %i.az
-  %i.bg = fmul double %11, 0.000000e+00           ; 3 uses
+  %i.bg = fmul double %cos.i, 0.000000e+00        ; 3 uses
   %i.bh = fmul double %i.ba, %i.av
   %i.bi = fmul double %i.bb, %i.av
   %i.bj = fmul double %i.bc, %i.av
   %i.bk = fmul double %i.bd, %i.av
   %i.bl = fmul double %i.be, %i.av
   %i.bm = fmul double %i.bf, %i.av
-  %i.bn = fadd double %11, %i.bh
+  %i.bn = fadd double %cos.i, %i.bh
   %i.bo = fadd double %i.bg, %i.bi                ; 2 uses
   %i.bp = fadd double %i.bg, %i.bj                ; 2 uses
-  %i.bq = fadd double %11, %i.bk
+  %i.bq = fadd double %cos.i, %i.bk
   %i.br = fadd double %i.bg, %i.bl                ; 2 uses
-  %i.bs = fadd double %11, %i.bm
-  %i.bt = fmul double %12, 0.000000e+00           ; 3 uses
-  %i.bu = fmul double %i.ay, %12                  ; 2 uses
-  %i.bv = fmul double %i.az, %12                  ; 2 uses
-  %i.bw = fmul double %i.ax, %12                  ; 2 uses
+  %i.bs = fadd double %cos.i, %i.bm
+  %i.bt = fmul double %sin.i, 0.000000e+00        ; 3 uses
+  %i.bu = fmul double %i.ay, %sin.i               ; 2 uses
+  %i.bv = fmul double %i.az, %sin.i               ; 2 uses
+  %i.bw = fmul double %i.ax, %sin.i               ; 2 uses
   %i.bx = fadd double %i.bt, %i.bn
   %i.by = fsub double %i.bo, %i.bv
   %i.bz = fadd double %i.bu, %i.bp
@@ -416,6 +421,8 @@ _ZN2cv7Affine3IdE8rotationERKNS_3VecIdLi3EEE.exit: ; preds = %bb.m, %bb.n
   store double %.sink90.i, ptr %i.cm, align 8, !tbaa !70
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 80
   store double %.sink.i, ptr %i.cn, align 8, !tbaa !70
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   br label %bb.t
 
@@ -604,12 +611,6 @@ bb.o:                                             ; preds = %bb.m, %_ZNSt7__cxx1
 
 declare void @_ZNK2cv3Mat7reshapeEii(ptr dead_on_unwind writable sret(%"class.cv::Mat") align 8, ptr noundef nonnull align 8 dereferenceable(208), i32 noundef, i32 noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #15
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #15
-
 declare void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208), ptr noundef nonnull align 8 dereferenceable(208), ptr noundef nonnull align 4 dereferenceable(16)) unnamed_addr #2
 
 declare void @_ZN2cv3MatC1EiiiPvm(ptr noundef nonnull align 8 dereferenceable(208), i32 noundef, i32 noundef, i32 noundef, ptr noundef, i64 noundef) unnamed_addr #2
@@ -622,6 +623,9 @@ declare void @_ZNK2cv3Mat7reshapeEiiPKi(ptr dead_on_unwind writable sret(%"class
 declare void @_ZN2cv3Mat7releaseEv(ptr noundef nonnull align 8 dereferenceable(208)) local_unnamed_addr #2
 
 declare void @_ZN2cv3MatC2Eiii(ptr noundef nonnull align 8 dereferenceable(208), i32 noundef, i32 noundef, i32 noundef) unnamed_addr #2
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
@@ -647,7 +651,7 @@ attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind specu
 attributes #12 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #14 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #15 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #15 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #17 = { nounwind }
 attributes #18 = { builtin nounwind }

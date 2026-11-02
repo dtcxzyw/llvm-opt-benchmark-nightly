@@ -202,6 +202,8 @@ _ZNSt14_Function_base13_Base_managerIZN2cv11xfeatures2d11BEBLID_ImplINS2_17ABWLP
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZZN2cv11xfeatures2d11BEBLID_ImplINS0_17ABWLParamsFloatThEE25computeBoxDiffsDescriptorERKNS_3MatERKSt6vectorINS_8KeyPointESaIS8_EERS4_ENKUlRKNS_5RangeEE_clESG_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(8) %1) local_unnamed_addr #14 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %2 = alloca %"class.std::vector", align 8       ; 16 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !181    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
@@ -292,6 +294,8 @@ bb.b:                                             ; preds = %.lr.ph119, %.loopex
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !79
   %i.as = getelementptr inbounds nuw [28 x i8], ptr %i.ar, i64 %indvars.iv ; 4 uses
   %i.at = load float, ptr %i.ai, align 8, !tbaa !64
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.av = load float, ptr %i.au, align 4, !tbaa !110
   %i.aw = fmul float %i.at, %i.av
@@ -355,11 +359,12 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN2cv11
 
 bb.h:                                             ; preds = %bb.g
   %i.cd = fpext nnan float %i.bs to double
-  %i.ce = fmul nnan double %i.cd, f0x3F91DF46A2529D39 ; 2 uses
-  %3 = call double @cos(double noundef %i.ce) #20
-  %4 = call double @sin(double noundef %i.ce) #20
-  %i.cf = insertelement <2 x double> poison, double %3, i64 0
-  %i.cg = insertelement <2 x double> %i.cf, double %4, i64 1
+  %i.ce = fmul nnan double %i.cd, f0x3F91DF46A2529D39
+  call void @sincos(double %i.ce, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8
+  %cos.i = load double, ptr %sincos.cos.i, align 8
+  %i.cf = insertelement <2 x double> poison, double %cos.i, i64 0
+  %i.cg = insertelement <2 x double> %i.cf, double %sin.i, i64 1
   %i.ch = fptrunc <2 x double> %i.cg to <2 x float>
   br label %.thread.i
 
@@ -669,6 +674,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not.i, label %_ZN2cv11xfeatures2dL11rectifyABWLINS0_17ABWLParamsFloatThEEEvRKSt6vectorIT_SaIS4_EERS6_RKNS_8KeyPointEfRKNS_5Size_IiEE.exit, label %scalar.ph, !llvm.loop !176
 
 _ZN2cv11xfeatures2dL11rectifyABWLINS0_17ABWLParamsFloatThEEEvRKSt6vectorIT_SaIS4_EERS6_RKNS_8KeyPointEfRKNS_5Size_IiEE.exit: ; preds = %scalar.ph, %bb.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.lu = load ptr, ptr %i.ah, align 8, !tbaa !183, !nonnull !55, !align !106
   %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !79
   %i.lw = getelementptr inbounds nuw [28 x i8], ptr %i.lv, i64 %indvars.iv ; 3 uses
@@ -1055,12 +1062,6 @@ _ZNSt6vectorIN2cv11xfeatures2d17ABWLParamsFloatThESaIS2_EED2Ev.exit: ; preds = %
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #16
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #17
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #17
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN2cv11xfeatures2d17ABWLParamsFloatThESaIS2_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1464,6 +1465,8 @@ _ZNSt14_Function_base13_Base_managerIZN2cv11xfeatures2d11BEBLID_ImplINS2_10ABWLP
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZZN2cv11xfeatures2d11BEBLID_ImplINS0_10ABWLParamsEE25computeBoxDiffsDescriptorERKNS_3MatERKSt6vectorINS_8KeyPointESaIS8_EERS4_ENKUlRKNS_5RangeEE_clESG_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(8) %1) local_unnamed_addr #14 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %2 = alloca %"class.std::vector.11", align 8    ; 16 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !226    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
@@ -1554,6 +1557,8 @@ bb.b:                                             ; preds = %.lr.ph119, %.loopex
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !79
   %i.as = getelementptr inbounds nuw [28 x i8], ptr %i.ar, i64 %indvars.iv ; 4 uses
   %i.at = load float, ptr %i.ai, align 8, !tbaa !54
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.av = load float, ptr %i.au, align 4, !tbaa !110
   %i.aw = fmul float %i.at, %i.av
@@ -1617,11 +1622,12 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN2cv11
 
 bb.h:                                             ; preds = %bb.g
   %i.cd = fpext nnan float %i.bs to double
-  %i.ce = fmul nnan double %i.cd, f0x3F91DF46A2529D39 ; 2 uses
-  %3 = call double @cos(double noundef %i.ce) #20
-  %4 = call double @sin(double noundef %i.ce) #20
-  %i.cf = insertelement <2 x double> poison, double %3, i64 0
-  %i.cg = insertelement <2 x double> %i.cf, double %4, i64 1
+  %i.ce = fmul nnan double %i.cd, f0x3F91DF46A2529D39
+  call void @sincos(double %i.ce, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8
+  %cos.i = load double, ptr %sincos.cos.i, align 8
+  %i.cf = insertelement <2 x double> poison, double %cos.i, i64 0
+  %i.cg = insertelement <2 x double> %i.cf, double %sin.i, i64 1
   %i.ch = fptrunc <2 x double> %i.cg to <2 x float>
   br label %.thread.i
 
@@ -1931,6 +1937,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not.i, label %_ZN2cv11xfeatures2dL11rectifyABWLINS0_10ABWLParamsEEEvRKSt6vectorIT_SaIS4_EERS6_RKNS_8KeyPointEfRKNS_5Size_IiEE.exit, label %scalar.ph, !llvm.loop !221
 
 _ZN2cv11xfeatures2dL11rectifyABWLINS0_10ABWLParamsEEEvRKSt6vectorIT_SaIS4_EERS6_RKNS_8KeyPointEfRKNS_5Size_IiEE.exit: ; preds = %scalar.ph, %bb.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.lu = load ptr, ptr %i.ah, align 8, !tbaa !228, !nonnull !55, !align !106
   %i.lv = load ptr, ptr %i.lu, align 8, !tbaa !79
   %i.lw = getelementptr inbounds nuw [28 x i8], ptr %i.lv, i64 %indvars.iv ; 3 uses
@@ -2333,16 +2341,19 @@ bb.j:                                             ; preds = %_ZSt27__uninitializ
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #18
+declare void @llvm.assume(i1 noundef) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #19
+declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #16
@@ -2373,9 +2384,9 @@ attributes #13 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-prote
 attributes #14 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #15 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #19 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #20 = { nounwind }
 attributes #21 = { builtin allocsize(0) }
 attributes #22 = { builtin nounwind }

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bj = load i32, ptr %i.a, align 4, !tbaa !23
   %i.bk = load i32, ptr %i.c, align 4, !tbaa !23
   tail call void (ptr, ...) @b3OutputErrorMessageVarArgsInternal(ptr noundef nonnull @.str.2, i32 noundef %i.bj, i32 noundef %i.bk)
-  tail call void @abort() #15
+  tail call void @abort() #16
   unreachable
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block
@@ -425,7 +425,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bt = load i32, ptr %i.a, align 4, !tbaa !23
   %i.bu = load i32, ptr %i.c, align 4, !tbaa !23
   tail call void (ptr, ...) @b3OutputErrorMessageVarArgsInternal(ptr noundef nonnull @.str.3, i32 noundef %i.bt, i32 noundef %i.bu)
-  tail call void @abort() #15
+  tail call void @abort() #16
   unreachable
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
@@ -628,7 +628,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bt = load i32, ptr %i.a, align 4, !tbaa !23
   %i.bu = load i32, ptr %i.c, align 4, !tbaa !23
   tail call void (ptr, ...) @b3OutputErrorMessageVarArgsInternal(ptr noundef nonnull @.str.3, i32 noundef %i.bt, i32 noundef %i.bu)
-  tail call void @abort() #15
+  tail call void @abort() #16
   unreachable
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
@@ -673,38 +673,44 @@ bb.c:                                             ; preds = %._crit_edge, %.preh
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define dso_local void @_ZN24btInverseDynamicsBullet310transformXERKf(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.btInverseDynamicsBullet3::mat33") align 4 captures(none) initializes((0, 12), (16, 28), (32, 44)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %1) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load float, ptr %1, align 4, !tbaa !10   ; 2 uses
-  %2 = tail call noundef float @cosf(float noundef %i.a) #16 ; 2 uses
-  %3 = tail call noundef float @sinf(float noundef %i.a) #16 ; 2 uses
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
+  %i.a = load float, ptr %1, align 4, !tbaa !10
+  call void @sincosf(float %i.a, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 2 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 2 uses
   store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %0, align 4, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float 0.000000e+00, ptr %i.b, align 4, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   store float 0.000000e+00, ptr %i.c, align 4, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store float %2, ptr %i.d, align 4, !tbaa !10
+  store float %cos, ptr %i.d, align 4, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store float %3, ptr %i.e, align 4, !tbaa !10
+  store float %sin, ptr %i.e, align 4, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   store float 0.000000e+00, ptr %i.f, align 4, !tbaa !10
-  %i.g = fneg float %3
+  %i.g = fneg float %sin
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 36
   store float %i.g, ptr %i.h, align 4, !tbaa !10
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store float %2, ptr %i.i, align 4, !tbaa !10
+  store float %cos, ptr %i.i, align 4, !tbaa !10
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define dso_local void @_ZN24btInverseDynamicsBullet310transformYERKf(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.btInverseDynamicsBullet3::mat33") align 4 captures(none) initializes((0, 12), (16, 28), (32, 44)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %1) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load float, ptr %1, align 4, !tbaa !10   ; 2 uses
-  %2 = tail call noundef float @cosf(float noundef %i.a) #16 ; 2 uses
-  %3 = tail call noundef float @sinf(float noundef %i.a) #16 ; 2 uses
-  store float %2, ptr %0, align 4, !tbaa !10
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
+  %i.a = load float, ptr %1, align 4, !tbaa !10
+  call void @sincosf(float %i.a, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 2 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 2 uses
+  store float %cos, ptr %0, align 4, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   store float 0.000000e+00, ptr %i.b, align 4, !tbaa !10
-  %i.c = fneg float %3
+  %i.c = fneg float %sin
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %i.c, ptr %i.d, align 4, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -712,30 +718,33 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float 0.000000e+00, ptr %i.f, align 4, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store float %3, ptr %i.g, align 4, !tbaa !10
+  store float %sin, ptr %i.g, align 4, !tbaa !10
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 36
   store float 0.000000e+00, ptr %i.h, align 4, !tbaa !10
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store float %2, ptr %i.i, align 4, !tbaa !10
+  store float %cos, ptr %i.i, align 4, !tbaa !10
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define dso_local void @_ZN24btInverseDynamicsBullet310transformZERKf(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.btInverseDynamicsBullet3::mat33") align 4 captures(none) initializes((0, 12), (16, 28), (32, 44)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %1) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load float, ptr %1, align 4, !tbaa !10   ; 2 uses
-  %2 = tail call noundef float @cosf(float noundef %i.a) #16 ; 2 uses
-  %3 = tail call noundef float @sinf(float noundef %i.a) #16 ; 2 uses
-  store float %2, ptr %0, align 4, !tbaa !10
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
+  %i.a = load float, ptr %1, align 4, !tbaa !10
+  call void @sincosf(float %i.a, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 2 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 2 uses
+  store float %cos, ptr %0, align 4, !tbaa !10
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store float %3, ptr %i.b, align 4, !tbaa !10
+  store float %sin, ptr %i.b, align 4, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float 0.000000e+00, ptr %i.c, align 4, !tbaa !10
-  %i.d = fneg float %3
+  %i.d = fneg float %sin
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   store float %i.d, ptr %i.e, align 4, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store float %2, ptr %i.f, align 4, !tbaa !10
+  store float %cos, ptr %i.f, align 4, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   store float 0.000000e+00, ptr %i.g, align 4, !tbaa !10
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -777,115 +786,124 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, errnomem: write) uwtable
 define dso_local void @_ZN24btInverseDynamicsBullet315getVecMatFromDHEffffPNS_4vec3EPNS_5mat33E(float noundef %0, float noundef %1, float noundef %2, float noundef %3, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %4, ptr nofree noundef writeonly captures(none) initializes((0, 12), (16, 28), (32, 44)) %5) local_unnamed_addr #10 {
 bb.a:
-  %6 = tail call noundef float @sinf(float noundef %3) #16 ; 3 uses
-  %7 = tail call noundef float @cosf(float noundef %3) #16 ; 4 uses
-  %8 = tail call noundef float @sinf(float noundef %0) #16 ; 3 uses
-  %9 = tail call noundef float @cosf(float noundef %0) #16 ; 3 uses
+  %sincos.sin33 = alloca float, align 4           ; 2 uses
+  %sincos.cos34 = alloca float, align 4           ; 2 uses
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
+  call void @sincosf(float %3, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 3 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 4 uses
+  call void @sincosf(float %0, ptr nonnull %sincos.sin33, ptr nonnull %sincos.cos34)
+  %sin35 = load float, ptr %sincos.sin33, align 4 ; 3 uses
+  %cos36 = load float, ptr %sincos.cos34, align 4 ; 3 uses
   store float %2, ptr %4, align 4, !tbaa !10
-  %i.a = fneg float %6                            ; 2 uses
+  %i.a = fneg float %sin                          ; 2 uses
   %i.b = fmul float %1, %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 4
   store float %i.b, ptr %i.c, align 4, !tbaa !10
-  %i.d = fmul float %1, %7
+  %i.d = fmul float %1, %cos
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   store float %i.d, ptr %i.e, align 4, !tbaa !10
-  store float %9, ptr %5, align 4, !tbaa !10
-  %i.f = fneg float %8
+  store float %cos36, ptr %5, align 4, !tbaa !10
+  %i.f = fneg float %sin35
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 4
   store float %i.f, ptr %i.g, align 4, !tbaa !10
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8
   store float 0.000000e+00, ptr %i.h, align 4, !tbaa !10
-  %i.i = fmul float %7, %8
+  %i.i = fmul float %cos, %sin35
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
   store float %i.i, ptr %i.j, align 4, !tbaa !10
-  %i.k = fmul float %7, %9
+  %i.k = fmul float %cos, %cos36
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 20
   store float %i.k, ptr %i.l, align 4, !tbaa !10
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 24
   store float %i.a, ptr %i.m, align 4, !tbaa !10
-  %i.n = fmul float %6, %8
+  %i.n = fmul float %sin, %sin35
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 32
   store float %i.n, ptr %i.o, align 4, !tbaa !10
-  %i.p = fmul float %6, %9
+  %i.p = fmul float %sin, %cos36
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 36
   store float %i.p, ptr %i.q, align 4, !tbaa !10
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 40
-  store float %7, ptr %i.r, align 4, !tbaa !10
+  store float %cos, ptr %i.r, align 4, !tbaa !10
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define dso_local void @_ZN24btInverseDynamicsBullet324bodyTParentFromAxisAngleERKNS_4vec3ERKfPNS_5mat33E(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %1, ptr nofree noundef writeonly captures(none) initializes((0, 12), (16, 28), (32, 44)) %2) local_unnamed_addr #9 {
 bb.a:
-  %i.a = load float, ptr %1, align 4, !tbaa !10   ; 2 uses
-  %3 = tail call noundef float @cosf(float noundef %i.a) #16 ; 4 uses
-  %4 = tail call noundef float @sinf(float noundef %i.a) #16 ; 4 uses
-  %i.b = fneg float %4                            ; 3 uses
-  %i.c = fsub float 1.000000e+00, %3              ; 9 uses
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
+  %i.a = load float, ptr %1, align 4, !tbaa !10
+  call void @sincosf(float %i.a, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 4 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 4 uses
+  %i.b = fneg float %sin                          ; 3 uses
+  %i.c = fsub float 1.000000e+00, %cos            ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.f = load float, ptr %0, align 4, !tbaa !10   ; 2 uses
   %i.g = fmul float %i.f, %i.f
-  %5 = tail call float @llvm.fmuladd.f32(float %i.g, float %i.c, float %3)
-  store float %5, ptr %2, align 4, !tbaa !10
+  %3 = call float @llvm.fmuladd.f32(float %i.g, float %i.c, float %cos)
+  store float %3, ptr %2, align 4, !tbaa !10
   %i.h = load float, ptr %0, align 4, !tbaa !10
   %i.i = load float, ptr %i.d, align 4, !tbaa !10
   %i.j = fmul float %i.h, %i.i
   %i.k = load float, ptr %i.e, align 4, !tbaa !10
-  %i.l = fmul float %4, %i.k
-  %6 = tail call float @llvm.fmuladd.f32(float %i.j, float %i.c, float %i.l)
+  %i.l = fmul float %sin, %i.k
+  %4 = call float @llvm.fmuladd.f32(float %i.j, float %i.c, float %i.l)
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store float %6, ptr %i.m, align 4, !tbaa !10
+  store float %4, ptr %i.m, align 4, !tbaa !10
   %i.n = load float, ptr %0, align 4, !tbaa !10
   %i.o = load float, ptr %i.e, align 4, !tbaa !10
   %i.p = fmul float %i.n, %i.o
   %i.q = load float, ptr %i.d, align 4, !tbaa !10
   %i.r = fmul float %i.q, %i.b
-  %7 = tail call float @llvm.fmuladd.f32(float %i.p, float %i.c, float %i.r)
+  %5 = call float @llvm.fmuladd.f32(float %i.p, float %i.c, float %i.r)
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %7, ptr %i.s, align 4, !tbaa !10
+  store float %5, ptr %i.s, align 4, !tbaa !10
   %i.t = load float, ptr %0, align 4, !tbaa !10
   %i.u = load float, ptr %i.d, align 4, !tbaa !10
   %i.v = fmul float %i.t, %i.u
   %i.w = load float, ptr %i.e, align 4, !tbaa !10
   %i.x = fmul float %i.w, %i.b
-  %8 = tail call float @llvm.fmuladd.f32(float %i.v, float %i.c, float %i.x)
+  %6 = call float @llvm.fmuladd.f32(float %i.v, float %i.c, float %i.x)
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store float %8, ptr %i.y, align 4, !tbaa !10
+  store float %6, ptr %i.y, align 4, !tbaa !10
   %i.z = load float, ptr %i.d, align 4, !tbaa !10 ; 2 uses
   %i.aa = fmul float %i.z, %i.z
-  %9 = tail call float @llvm.fmuladd.f32(float %i.aa, float %i.c, float %3)
+  %7 = call float @llvm.fmuladd.f32(float %i.aa, float %i.c, float %cos)
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 20
-  store float %9, ptr %i.ab, align 4, !tbaa !10
+  store float %7, ptr %i.ab, align 4, !tbaa !10
   %i.ac = load float, ptr %i.d, align 4, !tbaa !10
   %i.ad = load float, ptr %i.e, align 4, !tbaa !10
   %i.ae = fmul float %i.ac, %i.ad
   %i.af = load float, ptr %0, align 4, !tbaa !10
-  %i.ag = fmul float %4, %i.af
-  %10 = tail call float @llvm.fmuladd.f32(float %i.ae, float %i.c, float %i.ag)
+  %i.ag = fmul float %sin, %i.af
+  %8 = call float @llvm.fmuladd.f32(float %i.ae, float %i.c, float %i.ag)
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store float %10, ptr %i.ah, align 4, !tbaa !10
+  store float %8, ptr %i.ah, align 4, !tbaa !10
   %i.ai = load float, ptr %0, align 4, !tbaa !10
   %i.aj = load float, ptr %i.e, align 4, !tbaa !10
   %i.ak = fmul float %i.ai, %i.aj
   %i.al = load float, ptr %i.d, align 4, !tbaa !10
-  %i.am = fmul float %4, %i.al
-  %11 = tail call float @llvm.fmuladd.f32(float %i.ak, float %i.c, float %i.am)
+  %i.am = fmul float %sin, %i.al
+  %9 = call float @llvm.fmuladd.f32(float %i.ak, float %i.c, float %i.am)
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store float %11, ptr %i.an, align 4, !tbaa !10
+  store float %9, ptr %i.an, align 4, !tbaa !10
   %i.ao = load float, ptr %i.d, align 4, !tbaa !10
   %i.ap = load float, ptr %i.e, align 4, !tbaa !10
   %i.aq = fmul float %i.ao, %i.ap
   %i.ar = load float, ptr %0, align 4, !tbaa !10
   %i.as = fmul float %i.ar, %i.b
-  %12 = tail call float @llvm.fmuladd.f32(float %i.aq, float %i.c, float %i.as)
+  %10 = call float @llvm.fmuladd.f32(float %i.aq, float %i.c, float %i.as)
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 36
-  store float %12, ptr %i.at, align 4, !tbaa !10
+  store float %10, ptr %i.at, align 4, !tbaa !10
   %i.au = load float, ptr %i.e, align 4, !tbaa !10 ; 2 uses
   %i.av = fmul float %i.au, %i.au
-  %13 = tail call float @llvm.fmuladd.f32(float %i.av, float %i.c, float %3)
+  %11 = call float @llvm.fmuladd.f32(float %i.av, float %i.c, float %cos)
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store float %13, ptr %i.aw, align 4, !tbaa !10
+  store float %11, ptr %i.aw, align 4, !tbaa !10
   ret void
 }
 
@@ -1288,20 +1306,20 @@ bb.a:
   %i.b = load float, ptr %i.a, align 4, !tbaa !10
   %i.c = fneg float %i.b                          ; 2 uses
   %i.d = load float, ptr %0, align 4, !tbaa !10   ; 2 uses
-  %i.e = tail call noundef float @atan2f(float noundef %i.c, float noundef %i.d) #16 ; 2 uses
+  %i.e = tail call noundef float @atan2f(float noundef %i.c, float noundef %i.d) #17 ; 2 uses
   %.sroa.4.8.vec.insert = insertelement <2 x float> <float poison, float undef>, float %i.e, i64 0
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.g = load float, ptr %i.f, align 4, !tbaa !10 ; 2 uses
   %i.h = fneg float %i.g
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load float, ptr %i.i, align 4, !tbaa !10
-  %i.k = tail call noundef float @atan2f(float noundef %i.h, float noundef %i.j) #16 ; 2 uses
+  %i.k = tail call noundef float @atan2f(float noundef %i.h, float noundef %i.j) #17 ; 2 uses
   %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %i.k, i64 0
-  %i.l = tail call noundef float @cosf(float noundef %i.e) #16
-  %i.m = tail call noundef float @sinf(float noundef %i.k) #16
+  %i.l = tail call noundef float @cosf(float noundef %i.e) #17
+  %i.m = tail call noundef float @sinf(float noundef %i.k) #17
   %i.n = fmul float %i.m, %i.c
   %i.o = tail call float @llvm.fmuladd.f32(float %i.l, float %i.d, float %i.n)
-  %i.p = tail call noundef float @atan2f(float noundef %i.g, float noundef %i.o) #16
+  %i.p = tail call noundef float @atan2f(float noundef %i.g, float noundef %i.o) #17
   %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %i.p, i64 1
   %.fca.0.insert = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %.sroa.0.4.vec.insert, 0
   %.fca.1.insert = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert, <2 x float> %.sroa.4.8.vec.insert, 1
@@ -1323,8 +1341,11 @@ declare float @atan2f(float noundef, float noundef) local_unnamed_addr #12
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #14
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+declare void @llvm.assume(i1 noundef) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #8
@@ -1343,9 +1364,10 @@ attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memo
 attributes #11 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #15 = { noreturn nounwind }
-attributes #16 = { nounwind }
+attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #15 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #16 = { noreturn nounwind }
+attributes #17 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

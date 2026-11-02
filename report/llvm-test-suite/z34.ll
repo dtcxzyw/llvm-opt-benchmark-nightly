@@ -8,6 +8,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define dso_local void @RotateSize(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %2, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 8 uses
+  %sincos.cos = alloca double, align 8            ; 8 uses
   %i.a = sitofp i32 %5 to double
   %i.b = fmul nnan double %i.a, 2.000000e+00
   %i.c = fmul nnan double %i.b, f0x400921FB54442D18
@@ -36,7 +38,7 @@ bb.a:
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.y = tail call double @atan2(double noundef %i.m, double noundef %i.i) #3, !tbaa !7
+  %i.y = tail call double @atan2(double noundef %i.m, double noundef %i.i) #4, !tbaa !7
   %i.z = fmul nnan double %i.m, %i.m
   %i.aa = tail call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.z)
   %sqrt = tail call double @llvm.sqrt.f64(double %i.aa)
@@ -45,65 +47,68 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.8.0 = phi double [ %sqrt, %bb.b ], [ 0.000000e+00, %bb.a ] ; 2 uses
   %.sroa.0.0 = phi double [ %i.y, %bb.b ], [ 0.000000e+00, %bb.a ]
-  %i.ab = fadd double %i.d, %.sroa.0.0            ; 2 uses
-  %6 = tail call double @cos(double noundef %i.ab) #3, !tbaa !7
-  %7 = tail call double @sin(double noundef %i.ab) #3, !tbaa !7
+  %i.ab = fadd double %i.d, %.sroa.0.0
+  call void @sincos(double %i.ab, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
   %i.ac = icmp eq i32 %i.n, 0                     ; 2 uses
   %i.ad = icmp eq i32 %i.k, 0
   %or.cond62 = select i1 %i.ac, i1 %i.ad, i1 false
   br i1 %or.cond62, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %8 = tail call double @atan2(double noundef %i.m, double noundef %i.q) #3, !tbaa !7
+  %6 = call double @atan2(double noundef %i.m, double noundef %i.q) #4, !tbaa !7
   %i.ae = fmul nnan double %i.m, %i.m
-  %9 = tail call double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.ae)
-  %sqrt.1 = tail call double @llvm.sqrt.f64(double %9)
+  %7 = call double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.ae)
+  %sqrt.1 = call double @llvm.sqrt.f64(double %7)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.sroa.8.0.1 = phi double [ %sqrt.1, %bb.d ], [ 0.000000e+00, %bb.c ] ; 2 uses
-  %.sroa.0.0.1 = phi double [ %8, %bb.d ], [ 0.000000e+00, %bb.c ]
-  %i.af = fadd double %i.d, %.sroa.0.0.1          ; 2 uses
-  %10 = tail call double @cos(double noundef %i.af) #3, !tbaa !7
-  %11 = tail call double @sin(double noundef %i.af) #3, !tbaa !7
+  %.sroa.0.0.1 = phi double [ %6, %bb.d ], [ 0.000000e+00, %bb.c ]
+  %i.af = fadd double %i.d, %.sroa.0.0.1
+  call void @sincos(double %i.af, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin.1 = load double, ptr %sincos.sin, align 8
+  %cos.1 = load double, ptr %sincos.cos, align 8
   %i.ag = icmp eq i32 %i.s, 0
   %or.cond63 = select i1 %i.ac, i1 %i.ag, i1 false
   br i1 %or.cond63, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %12 = tail call double @atan2(double noundef %i.v, double noundef %i.q) #3, !tbaa !7
+  %8 = call double @atan2(double noundef %i.v, double noundef %i.q) #4, !tbaa !7
   %i.ah = fmul nnan double %i.v, %i.v
-  %13 = tail call double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.ah)
-  %sqrt.2 = tail call double @llvm.sqrt.f64(double %13)
+  %9 = call double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.ah)
+  %sqrt.2 = call double @llvm.sqrt.f64(double %9)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %.sroa.8.0.2 = phi double [ %sqrt.2, %bb.f ], [ 0.000000e+00, %bb.e ] ; 2 uses
-  %.sroa.0.0.2 = phi double [ %12, %bb.f ], [ 0.000000e+00, %bb.e ]
-  %i.ai = fadd double %i.d, %.sroa.0.0.2          ; 2 uses
-  %14 = tail call double @cos(double noundef %i.ai) #3, !tbaa !7
-  %15 = tail call double @sin(double noundef %i.ai) #3, !tbaa !7
+  %.sroa.0.0.2 = phi double [ %8, %bb.f ], [ 0.000000e+00, %bb.e ]
+  %i.ai = fadd double %i.d, %.sroa.0.0.2
+  call void @sincos(double %i.ai, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin.2 = load double, ptr %sincos.sin, align 8
+  %cos.2 = load double, ptr %sincos.cos, align 8
   %i.aj = icmp eq i32 %i.s, 0
   %or.cond64 = select i1 %i.w, i1 %i.aj, i1 false
   br i1 %or.cond64, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %16 = tail call double @atan2(double noundef %i.v, double noundef %i.i) #3, !tbaa !7
+  %10 = call double @atan2(double noundef %i.v, double noundef %i.i) #4, !tbaa !7
   %i.ak = fmul nnan double %i.v, %i.v
-  %17 = tail call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.ak)
-  %sqrt.3 = tail call double @llvm.sqrt.f64(double %17)
+  %11 = call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.ak)
+  %sqrt.3 = call double @llvm.sqrt.f64(double %11)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
   %.sroa.8.0.3 = phi double [ %sqrt.3, %bb.h ], [ 0.000000e+00, %bb.g ] ; 2 uses
-  %.sroa.0.0.3 = phi double [ %16, %bb.h ], [ 0.000000e+00, %bb.g ]
-  %i.al = fmul double %.sroa.8.0, %7              ; 4 uses
+  %.sroa.0.0.3 = phi double [ %10, %bb.h ], [ 0.000000e+00, %bb.g ]
+  %i.al = fmul double %.sroa.8.0, %sin            ; 4 uses
   %i.am = fcmp ogt double %i.al, f0x415FFFFFC0000000
   %i.an = select i1 %i.am, double f0x415FFFFFC0000000, double %i.al ; 2 uses
-  %i.ao = fmul double %.sroa.8.0.1, %11           ; 4 uses
+  %i.ao = fmul double %.sroa.8.0.1, %sin.1        ; 4 uses
   %i.ap = fcmp olt double %i.an, %i.ao
   %i.aq = select i1 %i.ap, double %i.an, double %i.ao ; 2 uses
-  %i.ar = fmul double %.sroa.8.0.2, %15           ; 4 uses
+  %i.ar = fmul double %.sroa.8.0.2, %sin.2        ; 4 uses
   %i.as = fcmp olt double %i.aq, %i.ar
   %i.at = select i1 %i.as, double %i.aq, double %i.ar ; 2 uses
   %i.au = fcmp ogt double %i.al, f0xC15FFFFFC0000000
@@ -112,13 +117,13 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.ax = select i1 %i.aw, double %i.ao, double %i.av ; 2 uses
   %i.ay = fcmp olt double %i.ax, %i.ar
   %i.az = select i1 %i.ay, double %i.ar, double %i.ax ; 2 uses
-  %i.ba = fmul double %.sroa.8.0, %6              ; 4 uses
+  %i.ba = fmul double %.sroa.8.0, %cos            ; 4 uses
   %i.bb = fcmp ogt double %i.ba, f0x415FFFFFC0000000
   %i.bc = select i1 %i.bb, double f0x415FFFFFC0000000, double %i.ba ; 2 uses
-  %i.bd = fmul double %.sroa.8.0.1, %10           ; 4 uses
+  %i.bd = fmul double %.sroa.8.0.1, %cos.1        ; 4 uses
   %i.be = fcmp olt double %i.bc, %i.bd
   %i.bf = select i1 %i.be, double %i.bc, double %i.bd ; 2 uses
-  %i.bg = fmul double %.sroa.8.0.2, %14           ; 4 uses
+  %i.bg = fmul double %.sroa.8.0.2, %cos.2        ; 4 uses
   %i.bh = fcmp olt double %i.bf, %i.bg
   %i.bi = select i1 %i.bh, double %i.bf, double %i.bg ; 2 uses
   %i.bj = fcmp ogt double %i.ba, f0xC15FFFFFC0000000
@@ -127,15 +132,16 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.bm = select i1 %i.bl, double %i.bd, double %i.bk ; 2 uses
   %i.bn = fcmp olt double %i.bm, %i.bg
   %i.bo = select i1 %i.bn, double %i.bg, double %i.bm ; 2 uses
-  %i.bp = fadd double %i.d, %.sroa.0.0.3          ; 2 uses
-  %18 = tail call double @cos(double noundef %i.bp) #3, !tbaa !7
-  %19 = fmul double %.sroa.8.0.3, %18             ; 4 uses
-  %20 = tail call double @sin(double noundef %i.bp) #3, !tbaa !7
-  %i.bq = fmul double %.sroa.8.0.3, %20           ; 4 uses
-  %i.br = fcmp olt double %i.bo, %19
-  %i.bs = select i1 %i.br, double %19, double %i.bo
-  %i.bt = fcmp olt double %i.bi, %19
-  %i.bu = select i1 %i.bt, double %i.bi, double %19
+  %i.bp = fadd double %i.d, %.sroa.0.0.3
+  call void @sincos(double %i.bp, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin.3 = load double, ptr %sincos.sin, align 8
+  %cos.3 = load double, ptr %sincos.cos, align 8
+  %12 = fmul double %.sroa.8.0.3, %cos.3          ; 4 uses
+  %i.bq = fmul double %.sroa.8.0.3, %sin.3        ; 4 uses
+  %i.br = fcmp olt double %i.bo, %12
+  %i.bs = select i1 %i.br, double %12, double %i.bo
+  %i.bt = fcmp olt double %i.bi, %12
+  %i.bu = select i1 %i.bt, double %i.bi, double %12
   %i.bv = fcmp olt double %i.az, %i.bq
   %i.bw = select i1 %i.bv, double %i.bq, double %i.az
   %i.bx = fcmp olt double %i.at, %i.bq
@@ -159,11 +165,8 @@ declare double @atan2(double noundef, double noundef) local_unnamed_addr #1
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #1
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #1
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #2
@@ -171,7 +174,8 @@ declare double @llvm.sqrt.f64(double) #2
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nounwind }
+attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

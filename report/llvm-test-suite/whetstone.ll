@@ -21,6 +21,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @main(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
+  %sincos.sin173 = alloca double, align 8         ; 2 uses
+  %sincos.cos174 = alloca double, align 8         ; 2 uses
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = icmp sgt i32 %0, 1
   br i1 %i.a, label %sub_0.preheader, label %.preheader
 
@@ -79,13 +83,13 @@ sub_0:                                            ; preds = %sub_0.preheader, %b
   br i1 %i.r, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %sub_0, %.tail
-  %i.s = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.n, ptr noundef null, i32 noundef 10) #12, !inline_history !10 ; 2 uses
+  %i.s = tail call i64 @strtol(ptr noundef nonnull captures(none) %i.n, ptr noundef null, i32 noundef 10) #13, !inline_history !10 ; 2 uses
   %i.t = icmp sgt i64 %i.s, 0
   br i1 %i.t, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.thread
   %i.u = load ptr, ptr @stderr, align 8, !tbaa !24
-  %fwrite = tail call i64 @fwrite(ptr nonnull @.str.1, i64 27, i64 1, ptr %i.u) #13 ; 0 uses
+  %fwrite = tail call i64 @fwrite(ptr nonnull @.str.1, i64 27, i64 1, ptr %i.u) #14 ; 0 uses
   br label %.loopexit
 
 bb.c:                                             ; preds = %sub_0, %.thread, %.tail
@@ -96,11 +100,11 @@ bb.c:                                             ; preds = %sub_0, %.thread, %.
   br i1 %exitcond.not, label %.preheader.loopexit, label %sub_0, !llvm.loop !11
 
 .lr.ph:                                           ; preds = %._crit_edge267, %.preheader
-  %2 = tail call i64 @time(ptr noundef null) #12  ; 0 uses
+  %2 = call i64 @time(ptr noundef null) #13       ; 0 uses
   store double 4.999750e-01, ptr @T, align 8, !tbaa !9
   store double 5.002500e-01, ptr @T1, align 8, !tbaa !9
   store double 2.000000e+00, ptr @T2, align 8, !tbaa !9
-  %3 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef 0, i64 noundef 0, i64 noundef 0, double noundef 1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00) ; 0 uses
+  %3 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef 0, i64 noundef 0, i64 noundef 0, double noundef 1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00) ; 0 uses
   %i.v = load double, ptr @T, align 8, !tbaa !9   ; 4 uses
   br label %bb.d
 
@@ -135,7 +139,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   store double %i.ah, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 16), align 16, !tbaa !9
   store double %i.al, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 24), align 8, !tbaa !9
   store double %i.ap, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 32), align 16, !tbaa !9
-  %4 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.c, i64 noundef %i.d, i64 noundef %i.c, double noundef %i.ad, double noundef %i.ah, double noundef %i.al, double noundef %i.ap) ; 0 uses
+  %4 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.c, i64 noundef %i.d, i64 noundef %i.c, double noundef %i.ad, double noundef %i.ah, double noundef %i.al, double noundef %i.ap) ; 0 uses
   %.promoted202.a = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 32), align 16
   %.promoted200.a = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 24), align 8
   %.promoted198 = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 16), align 16
@@ -256,7 +260,7 @@ PA.exit:                                          ; preds = %.lr.ph211, %PA.exit
   store double %i.ec, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 16), align 16, !tbaa !9
   store double %i.eg, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 24), align 8, !tbaa !9
   store double %i.ek, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 32), align 16, !tbaa !9
-  %5 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.d, i64 noundef %i.c, i64 noundef %i.c, double noundef %i.dy, double noundef %i.ec, double noundef %i.eg, double noundef %i.ek) ; 0 uses
+  %5 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.d, i64 noundef %i.c, i64 noundef %i.c, double noundef %i.dy, double noundef %i.ec, double noundef %i.eg, double noundef %i.ek) ; 0 uses
   br i1 %min.iters.check, label %.lr.ph218.preheader330, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph218.preheader, %vector.body
@@ -271,7 +275,7 @@ vector.body:                                      ; preds = %.lr.ph218.preheader
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = xor <4 x i32> %vec.phi329, %vec.phi
-  %6 = tail call i32 @llvm.vector.reduce.xor.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %6 = call i32 @llvm.vector.reduce.xor.v4i32(<4 x i32> %bin.rdx) ; 2 uses
   br i1 %cmp.n, label %.lr.ph224.preheader, label %.lr.ph218.preheader330
 
 .lr.ph218.preheader330:                           ; preds = %.lr.ph218.preheader, %middle.block
@@ -291,7 +295,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge176.lcssa = phi i32 [ %6, %middle.block ], [ %storemerge176, %.lr.ph218 ] ; 2 uses
   store i32 %storemerge176.lcssa, ptr @J, align 4, !tbaa !7
   %i.eq = zext nneg i32 %storemerge176.lcssa to i64 ; 2 uses
-  %7 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.e, i64 noundef %i.eq, i64 noundef %i.eq, double noundef 1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00) ; 0 uses
+  %7 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.e, i64 noundef %i.eq, i64 noundef %i.eq, double noundef 1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00) ; 0 uses
   store <2 x double> splat (double 6.000000e+00), ptr getelementptr inbounds nuw (i8, ptr @E1, i64 8), align 8, !tbaa !9
   store i32 1, ptr @J, align 4, !tbaa !7
   store i32 2, ptr @K, align 4, !tbaa !7
@@ -299,41 +303,43 @@ middle.block:                                     ; preds = %vector.body
   %i.er = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 16), align 16, !tbaa !9
   %i.es = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 24), align 8, !tbaa !9
   %i.et = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 32), align 16, !tbaa !9
-  %8 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.f, i64 noundef 1, i64 noundef 2, double noundef 6.000000e+00, double noundef %i.er, double noundef %i.es, double noundef %i.et) ; 0 uses
+  %8 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.f, i64 noundef 1, i64 noundef 2, double noundef 6.000000e+00, double noundef %i.er, double noundef %i.es, double noundef %i.et) ; 0 uses
   %i.eu = load double, ptr @T, align 8, !tbaa !9  ; 2 uses
   %i.ev = load double, ptr @T2, align 8, !tbaa !9 ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph224.preheader, %bb.e
-  %.0146232 = phi double [ 5.000000e-01, %.lr.ph224.preheader ], [ %i.fj, %bb.e ] ; 6 uses
-  %.0147231 = phi double [ 5.000000e-01, %.lr.ph224.preheader ], [ %i.fc, %bb.e ] ; 4 uses
+  %.0146232 = phi double [ 5.000000e-01, %.lr.ph224.preheader ], [ %i.fj, %bb.e ] ; 5 uses
+  %.0147231 = phi double [ 5.000000e-01, %.lr.ph224.preheader ], [ %i.fc, %bb.e ] ; 3 uses
   %.5230 = phi i64 [ 1, %.lr.ph224.preheader ], [ %i.fk, %bb.e ] ; 2 uses
-  %9 = tail call double @sin(double noundef %.0147231) #12, !tbaa !7
-  %10 = fmul double %i.ev, %9
-  %11 = tail call double @cos(double noundef %.0147231) #12, !tbaa !7
-  %i.ew = fmul double %10, %11
+  call void @sincos(double %.0147231, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %9 = fmul double %i.ev, %sin
+  %i.ew = fmul double %9, %cos
   %i.ex = fadd double %.0147231, %.0146232
-  %12 = tail call double @cos(double noundef %i.ex) #12, !tbaa !7
+  %10 = call double @cos(double noundef %i.ex) #13, !tbaa !7
   %i.ey = fsub double %.0147231, %.0146232
-  %13 = tail call double @cos(double noundef %i.ey) #12, !tbaa !7
-  %i.ez = fadd double %12, %13
+  %11 = call double @cos(double noundef %i.ey) #13, !tbaa !7
+  %i.ez = fadd double %10, %11
   %i.fa = fadd double %i.ez, -1.000000e+00
   %i.fb = fdiv double %i.ew, %i.fa
-  %14 = tail call double @atan(double noundef %i.fb) #12, !tbaa !7
-  %i.fc = fmul double %i.eu, %14                  ; 5 uses
-  %15 = tail call double @sin(double noundef %.0146232) #12, !tbaa !7
-  %16 = fmul double %i.ev, %15
-  %17 = tail call double @cos(double noundef %.0146232) #12, !tbaa !7
-  %i.fd = fmul double %16, %17
+  %12 = call double @atan(double noundef %i.fb) #13, !tbaa !7
+  %i.fc = fmul double %i.eu, %12                  ; 5 uses
+  call void @sincos(double %.0146232, ptr nonnull %sincos.sin173, ptr nonnull %sincos.cos174)
+  %sin175 = load double, ptr %sincos.sin173, align 8
+  %cos176 = load double, ptr %sincos.cos174, align 8
+  %13 = fmul double %i.ev, %sin175
+  %i.fd = fmul double %13, %cos176
   %i.fe = fadd double %.0146232, %i.fc
-  %18 = tail call double @cos(double noundef %i.fe) #12, !tbaa !7
+  %14 = call double @cos(double noundef %i.fe) #13, !tbaa !7
   %i.ff = fsub double %i.fc, %.0146232
-  %19 = tail call double @cos(double noundef %i.ff) #12, !tbaa !7
-  %i.fg = fadd double %18, %19
+  %15 = call double @cos(double noundef %i.ff) #13, !tbaa !7
+  %i.fg = fadd double %14, %15
   %i.fh = fadd double %i.fg, -1.000000e+00
   %i.fi = fdiv double %i.fd, %i.fh
-  %20 = tail call double @atan(double noundef %i.fi) #12, !tbaa !7
-  %i.fj = fmul double %i.eu, %20                  ; 3 uses
+  %16 = call double @atan(double noundef %i.fi) #13, !tbaa !7
+  %i.fj = fmul double %i.eu, %16                  ; 3 uses
   %i.fk = add nuw nsw i64 %.5230, 1
   %exitcond294.not = icmp eq i64 %.5230, %smax293
   br i1 %exitcond294.not, label %.lr.ph257.preheader, label %bb.e, !llvm.loop !16
@@ -343,7 +349,7 @@ bb.e:                                             ; preds = %.lr.ph224.preheader
   %i.fm = sext i32 %i.fl to i64
   %i.fn = load i32, ptr @K, align 4, !tbaa !7
   %i.fo = sext i32 %i.fn to i64
-  %21 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.g, i64 noundef %i.fm, i64 noundef %i.fo, double noundef %i.fc, double noundef %i.fc, double noundef %i.fj, double noundef %i.fj) ; 0 uses
+  %17 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.g, i64 noundef %i.fm, i64 noundef %i.fo, double noundef %i.fc, double noundef %i.fc, double noundef %i.fj, double noundef %i.fj) ; 0 uses
   %i.fp = load double, ptr @T, align 8, !tbaa !9  ; 2 uses
   %i.fq = fmul double %i.fp, 2.000000e+00         ; 2 uses
   %i.fr = fadd double %i.fq, 1.000000e+00
@@ -355,7 +361,7 @@ bb.e:                                             ; preds = %.lr.ph224.preheader
   %i.fx = sext i32 %i.fw to i64
   %i.fy = load i32, ptr @K, align 4, !tbaa !7
   %i.fz = sext i32 %i.fy to i64
-  %22 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.h, i64 noundef %i.fx, i64 noundef %i.fz, double noundef 1.000000e+00, double noundef 1.000000e+00, double noundef %i.fv, double noundef %i.fv) ; 0 uses
+  %18 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.h, i64 noundef %i.fx, i64 noundef %i.fz, double noundef 1.000000e+00, double noundef 1.000000e+00, double noundef %i.fv, double noundef %i.fv) ; 0 uses
   store i32 1, ptr @J, align 4, !tbaa !7
   store i32 2, ptr @K, align 4, !tbaa !7
   store i32 3, ptr @L, align 4, !tbaa !7
@@ -371,7 +377,7 @@ bb.e:                                             ; preds = %.lr.ph224.preheader
   br i1 %lcmp.mod.not, label %.lr.ph266, label %.lr.ph257.epil.preheader
 
 .lr.ph257.epil.preheader:                         ; preds = %.lr.ph266.unr-lcssa, %.lr.ph257.preheader
-  tail call void @llvm.assume(i1 %lcmp.mod348)
+  call void @llvm.assume(i1 %lcmp.mod348)
   br label %.lr.ph257.epil
 
 .lr.ph257.epil:                                   ; preds = %.lr.ph257.epil, %.lr.ph257.epil.preheader
@@ -389,20 +395,20 @@ bb.e:                                             ; preds = %.lr.ph224.preheader
   store double %.lcssa341, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 16), align 16, !tbaa !9
   store double %.lcssa342, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 24), align 8, !tbaa !9
   %i.gc = load double, ptr getelementptr inbounds nuw (i8, ptr @E1, i64 32), align 16, !tbaa !9
-  %23 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.i, i64 noundef 1, i64 noundef 2, double noundef %.lcssa342, double noundef %.lcssa341, double noundef %.lcssa342, double noundef %i.gc) ; 0 uses
+  %19 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.i, i64 noundef 1, i64 noundef 2, double noundef %.lcssa342, double noundef %.lcssa341, double noundef %.lcssa342, double noundef %i.gc) ; 0 uses
   store i32 2, ptr @J, align 4, !tbaa !7
   store i32 3, ptr @K, align 4, !tbaa !7
-  %24 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef 0, i64 noundef 2, i64 noundef 3, double noundef 1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00) ; 0 uses
+  %20 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef 0, i64 noundef 2, i64 noundef 3, double noundef 1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00, double noundef -1.000000e+00) ; 0 uses
   %i.gd = load double, ptr @T1, align 8, !tbaa !9
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph266, %bb.f
-  %.1148264 = phi double [ 7.500000e-01, %.lr.ph266 ], [ %27, %bb.f ]
+  %.1148264 = phi double [ 7.500000e-01, %.lr.ph266 ], [ %23, %bb.f ]
   %.9263 = phi i64 [ 1, %.lr.ph266 ], [ %i.gf, %bb.f ] ; 2 uses
-  %25 = tail call double @log(double noundef %.1148264) #12, !tbaa !7
-  %i.ge = fdiv double %25, %i.gd
-  %26 = tail call double @exp(double noundef %i.ge) #12, !tbaa !7
-  %27 = tail call double @sqrt(double noundef %26) #12, !tbaa !7 ; 5 uses
+  %21 = call double @log(double noundef %.1148264) #13, !tbaa !7
+  %i.ge = fdiv double %21, %i.gd
+  %22 = call double @exp(double noundef %i.ge) #13, !tbaa !7
+  %23 = call double @sqrt(double noundef %22) #13, !tbaa !7 ; 5 uses
   %i.gf = add nuw i64 %.9263, 1
   %exitcond298.not = icmp eq i64 %.9263, %smax297
   br i1 %exitcond298.not, label %._crit_edge267, label %bb.f, !llvm.loop !19
@@ -412,9 +418,9 @@ bb.f:                                             ; preds = %.lr.ph266, %bb.f
   %i.gh = sext i32 %i.gg to i64
   %i.gi = load i32, ptr @K, align 4, !tbaa !7
   %i.gj = sext i32 %i.gi to i64
-  %28 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.j, i64 noundef %i.gh, i64 noundef %i.gj, double noundef %27, double noundef %27, double noundef %27, double noundef %27) ; 0 uses
-  %29 = tail call i64 @time(ptr noundef null) #12 ; 0 uses
-  %putchar = tail call i32 @putchar(i32 10)       ; 0 uses
+  %24 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i64 noundef %i.j, i64 noundef %i.gh, i64 noundef %i.gj, double noundef %23, double noundef %23, double noundef %23, double noundef %23) ; 0 uses
+  %25 = call i64 @time(ptr noundef null) #13      ; 0 uses
+  %putchar = call i32 @putchar(i32 10)            ; 0 uses
   br i1 %.0.lcssa, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %._crit_edge267, %bb.b
@@ -553,9 +559,6 @@ bb.a:
 declare double @atan(double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #4
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @cos(double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: write, inaccessiblemem: none, target_mem: none) uwtable
@@ -612,17 +615,20 @@ declare i64 @strtol(ptr noundef readonly, ptr noundef captures(none), i32 nounde
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #9
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #10
+
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #10
+declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #10
+declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #11
+declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -634,10 +640,11 @@ attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #7 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nofree nounwind }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #12 = { nounwind }
-attributes #13 = { cold }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #13 = { nounwind }
+attributes #14 = { cold }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

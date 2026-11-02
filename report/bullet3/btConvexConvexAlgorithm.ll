@@ -204,6 +204,10 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN23btConvexConvexAlgorithm16processCollisionEPK24btCollisionObjectWrapperS2_RK16btDispatcherInfoP16btManifoldResult(ptr noundef nonnull align 8 dereferenceable(116) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(49) %3, ptr noundef initializes((8, 16)) %4) unnamed_addr #9 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin.i.i331 = alloca float, align 4      ; 4 uses
+  %sincos.cos.i.i332 = alloca float, align 4      ; 4 uses
+  %sincos.sin.i.i = alloca float, align 4         ; 4 uses
+  %sincos.cos.i.i = alloca float, align 4         ; 4 uses
   %5 = alloca %class.btVector3, align 4           ; 9 uses
   %6 = alloca %class.btVector3, align 4           ; 9 uses
   %7 = alloca %"struct.btDiscreteCollisionDetectorInterface::ClosestPointInput", align 8 ; 26 uses
@@ -606,7 +610,7 @@ _Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.cm, %bb.cl
   %i.uf = insertelement <2 x float> poison, float %.sroa.8473.0, i64 0
   %i.ug = insertelement <2 x float> %i.uf, float %i.st, i64 1 ; 2 uses
   %i.uh = fmul <2 x float> %i.ug, %i.ug
-  %i.ui = fmul float %storemerge262, 5.000000e-01 ; 2 uses
+  %i.ui = fmul float %storemerge262, 5.000000e-01
   %i.uj = insertelement <2 x float> %i.sy, float %.sroa.0470.0, i64 0
   %i.uk = insertelement <2 x float> %i.sy, float %.sroa.0470.0, i64 0
   %i.ul = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.uj, <2 x float> %i.uk, <2 x float> %i.uh)
@@ -654,16 +658,25 @@ _Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.cm, %bb.cl
 .lr.ph535.split:                                  ; preds = %.lr.ph535.split.preheader, %bb.cp
   %i.vq = phi i32 [ %i.aib, %bb.cp ], [ %i.uc, %.lr.ph535.split.preheader ]
   %.0185533 = phi i32 [ %i.aia, %bb.cp ], [ 0, %.lr.ph535.split.preheader ] ; 2 uses
-  %24 = call noundef float @sinf(float noundef %i.ui) #21
-  %25 = call noundef float @cosf(float noundef %i.ui) #21 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i)
+  call void @sincosf(float %i.ui, ptr nonnull %sincos.sin.i.i, ptr nonnull %sincos.cos.i.i)
+  %sin.i.i = load float, ptr %sincos.sin.i.i, align 4
+  %cos.i.i = load float, ptr %sincos.cos.i.i, align 4 ; 6 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i)
   %i.vr = uitofp nneg i32 %.0185533 to float
   %i.vs = sitofp i32 %i.vq to float
   %i.vt = fdiv nnan float f0x40C90FDB, %i.vs
   %i.vu = fmul float %i.vt, %i.vr
-  %i.vv = fmul float %i.vu, 5.000000e-01          ; 2 uses
-  %26 = call noundef float @sinf(float noundef %i.vv) #21
-  %i.vw = insertelement <2 x float> poison, float %24, i64 0
-  %i.vx = insertelement <2 x float> %i.vw, float %26, i64 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i331)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i332)
+  %i.vv = fmul float %i.vu, 5.000000e-01
+  call void @sincosf(float %i.vv, ptr nonnull %sincos.sin.i.i331, ptr nonnull %sincos.cos.i.i332)
+  %sin.i.i334 = load float, ptr %sincos.sin.i.i331, align 4
+  %cos.i.i335 = load float, ptr %sincos.cos.i.i332, align 4 ; 10 uses
+  %i.vw = insertelement <2 x float> poison, float %sin.i.i, i64 0
+  %i.vx = insertelement <2 x float> %i.vw, float %sin.i.i334, i64 1
   %i.vy = fdiv <2 x float> %i.vx, %i.ut           ; 4 uses
   %i.vz = extractelement <2 x float> %i.vy, i64 0
   %i.wa = fmul float %.sroa.0470.0, %i.vz         ; 8 uses
@@ -673,7 +686,8 @@ _Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit:   ; preds = %bb.cm, %bb.cl
   %i.we = fmul float %i.st, %i.wd                 ; 12 uses
   %i.wf = shufflevector <2 x float> %i.vy, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.wg = fmul <2 x float> %i.sy, %i.wf           ; 10 uses
-  %27 = call noundef float @cosf(float noundef %i.vv) #21 ; 10 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i331)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i332)
   br i1 %i.tx, label %bb.cn, label %bb.co
 
 bb.cn:                                            ; preds = %.lr.ph535.split
@@ -683,7 +697,7 @@ bb.cn:                                            ; preds = %.lr.ph535.split
   %i.wk = insertelement <2 x float> %i.wj, float %i.we, i64 0 ; 2 uses
   %i.wl = fneg <2 x float> %i.wk                  ; 3 uses
   %i.wm = fmul float %i.wa, %i.wh
-  %i.wn = call float @llvm.fmuladd.f32(float %27, float %25, float %i.wm)
+  %i.wn = call float @llvm.fmuladd.f32(float %cos.i.i335, float %cos.i.i, float %i.wm)
   %i.wo = extractelement <2 x float> %i.wc, i64 0 ; 2 uses
   %i.wp = call float @llvm.fmuladd.f32(float %i.we, float %i.wo, float %i.wn)
   %i.wq = load ptr, ptr %i.gk, align 8, !tbaa !114, !nonnull !37, !align !115 ; 6 uses
@@ -692,12 +706,12 @@ bb.cn:                                            ; preds = %.lr.ph535.split
   %i.wt = getelementptr inbounds nuw i8, ptr %i.wq, i64 4
   %i.wu = getelementptr inbounds nuw i8, ptr %i.wq, i64 36
   %i.wv = getelementptr inbounds nuw i8, ptr %i.wq, i64 24
-  %i.ww = insertelement <2 x float> poison, float %25, i64 0
+  %i.ww = insertelement <2 x float> poison, float %cos.i.i, i64 0
   %i.wx = shufflevector <2 x float> %i.ww, <2 x float> poison, <2 x i32> zeroinitializer
   %i.wy = shufflevector <2 x float> %i.wl, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.wz = insertelement <2 x float> %i.wy, float %i.wi, i64 0
   %i.xa = fmul <2 x float> %i.wx, %i.wz
-  %i.xb = insertelement <2 x float> poison, float %27, i64 0
+  %i.xb = insertelement <2 x float> poison, float %cos.i.i335, i64 0
   %i.xc = shufflevector <2 x float> %i.xb, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.xd = shufflevector <2 x float> %i.wc, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.xe = insertelement <2 x float> %i.xd, float %i.wa, i64 0
@@ -707,15 +721,15 @@ bb.cn:                                            ; preds = %.lr.ph535.split
   %i.xi = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.wg, <2 x float> %i.wc, <2 x float> %i.xh) ; 5 uses
   %i.xj = extractelement <2 x float> %i.xi, i64 1 ; 2 uses
   %i.xk = extractelement <2 x float> %i.wl, i64 1
-  %i.xl = fmul float %25, %i.xk
+  %i.xl = fmul float %cos.i.i, %i.xk
   %i.xm = extractelement <2 x float> %i.wc, i64 1 ; 2 uses
-  %i.xn = call float @llvm.fmuladd.f32(float %27, float %i.xm, float %i.xl)
+  %i.xn = call float @llvm.fmuladd.f32(float %cos.i.i335, float %i.xm, float %i.xl)
   %i.xo = call float @llvm.fmuladd.f32(float %i.wi, float %i.wo, float %i.xn)
   %i.xp = call float @llvm.fmuladd.f32(float %i.we, float %i.wa, float %i.xo) ; 3 uses
   %i.xq = extractelement <2 x float> %i.wg, i64 0 ; 3 uses
   %i.xr = call float @llvm.fmuladd.f32(float %i.xq, float %i.xm, float %i.wp) ; 3 uses
   %i.xs = extractelement <2 x float> %i.xi, i64 0 ; 2 uses
-  %i.xt = fmul float %27, %i.xs
+  %i.xt = fmul float %cos.i.i335, %i.xs
   %i.xu = call float @llvm.fmuladd.f32(float %i.xr, float %i.wh, float %i.xt)
   %i.xv = call float @llvm.fmuladd.f32(float %i.xj, float %i.xq, float %i.xu)
   %i.xw = fneg float %i.xp                        ; 2 uses
@@ -734,7 +748,7 @@ bb.cn:                                            ; preds = %.lr.ph535.split
   %i.yj = fneg float %i.xj
   %i.yk = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.yi, <2 x float> %i.wg, <2 x float> %i.yh) ; 6 uses
   %i.yl = fmul float %i.xs, %i.wi
-  %i.ym = call float @llvm.fmuladd.f32(float %i.xr, float %27, float %i.yl)
+  %i.ym = call float @llvm.fmuladd.f32(float %i.xr, float %cos.i.i335, float %i.yl)
   %i.yn = call float @llvm.fmuladd.f32(float %i.yj, float %i.we, float %i.ym)
   %i.yo = call float @llvm.fmuladd.f32(float %i.xw, float %i.xq, float %i.yn) ; 4 uses
   %foldExtExtBinop597 = fmul <2 x float> %i.yk, %i.yk
@@ -858,7 +872,7 @@ bb.co:                                            ; preds = %.lr.ph535.split
   %i.acj = extractelement <2 x float> %i.wc, i64 1 ; 2 uses
   %i.ack = extractelement <2 x float> %i.wc, i64 0 ; 2 uses
   %i.acl = fmul float %i.wa, %i.ach
-  %i.acm = call float @llvm.fmuladd.f32(float %27, float %25, float %i.acl)
+  %i.acm = call float @llvm.fmuladd.f32(float %cos.i.i335, float %cos.i.i, float %i.acl)
   %i.acn = call float @llvm.fmuladd.f32(float %i.we, float %i.ack, float %i.acm)
   %i.aco = load ptr, ptr %i.gs, align 8, !tbaa !114, !nonnull !37, !align !115 ; 6 uses
   %i.acp = getelementptr inbounds nuw i8, ptr %i.aco, i64 16
@@ -871,12 +885,12 @@ bb.co:                                            ; preds = %.lr.ph535.split
   %i.acw = insertelement <2 x float> %i.acv, float %i.we, i64 0 ; 2 uses
   %i.acx = fneg <2 x float> %i.acw                ; 2 uses
   %i.acy = fneg float %i.aci
-  %i.acz = insertelement <2 x float> poison, float %25, i64 0
+  %i.acz = insertelement <2 x float> poison, float %cos.i.i, i64 0
   %i.ada = shufflevector <2 x float> %i.acz, <2 x float> poison, <2 x i32> zeroinitializer
   %i.adb = shufflevector <2 x float> %i.acx, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.adc = insertelement <2 x float> %i.adb, float %i.acu, i64 0
   %i.add = fmul <2 x float> %i.ada, %i.adc
-  %i.ade = insertelement <2 x float> poison, float %27, i64 0
+  %i.ade = insertelement <2 x float> poison, float %cos.i.i335, i64 0
   %i.adf = shufflevector <2 x float> %i.ade, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.adg = shufflevector <2 x float> %i.wc, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.adh = insertelement <2 x float> %i.adg, float %i.wa, i64 0
@@ -885,13 +899,13 @@ bb.co:                                            ; preds = %.lr.ph535.split
   %i.adk = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.acx, <2 x float> %i.adj, <2 x float> %i.adi)
   %i.adl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.wg, <2 x float> %i.wc, <2 x float> %i.adk) ; 5 uses
   %i.adm = extractelement <2 x float> %i.adl, i64 1 ; 2 uses
-  %i.adn = fmul float %25, %i.acy
-  %i.ado = call float @llvm.fmuladd.f32(float %27, float %i.acj, float %i.adn)
+  %i.adn = fmul float %cos.i.i, %i.acy
+  %i.ado = call float @llvm.fmuladd.f32(float %cos.i.i335, float %i.acj, float %i.adn)
   %i.adp = call float @llvm.fmuladd.f32(float %i.acu, float %i.ack, float %i.ado)
   %i.adq = call float @llvm.fmuladd.f32(float %i.we, float %i.wa, float %i.adp) ; 3 uses
   %i.adr = call float @llvm.fmuladd.f32(float %i.aci, float %i.acj, float %i.acn) ; 3 uses
   %i.ads = extractelement <2 x float> %i.adl, i64 0 ; 2 uses
-  %i.adt = fmul float %27, %i.ads
+  %i.adt = fmul float %cos.i.i335, %i.ads
   %i.adu = call float @llvm.fmuladd.f32(float %i.adr, float %i.ach, float %i.adt)
   %i.adv = call float @llvm.fmuladd.f32(float %i.adm, float %i.aci, float %i.adu)
   %i.adw = fneg float %i.adq                      ; 2 uses
@@ -910,7 +924,7 @@ bb.co:                                            ; preds = %.lr.ph535.split
   %i.aej = fneg float %i.adm
   %i.aek = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aei, <2 x float> %i.wg, <2 x float> %i.aeh) ; 6 uses
   %i.ael = fmul float %i.ads, %i.acu
-  %i.aem = call float @llvm.fmuladd.f32(float %i.adr, float %27, float %i.ael)
+  %i.aem = call float @llvm.fmuladd.f32(float %i.adr, float %cos.i.i335, float %i.ael)
   %i.aen = call float @llvm.fmuladd.f32(float %i.aej, float %i.we, float %i.aem)
   %i.aeo = call float @llvm.fmuladd.f32(float %i.adw, float %i.aci, float %i.aen) ; 4 uses
   %foldExtExtBinop603 = fmul <2 x float> %i.aek, %i.aek
@@ -1312,12 +1326,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #5
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #16
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #16
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN24btPerturbedContactResultD0Ev(ptr noundef nonnull align 8 dereferenceable(272) %0) unnamed_addr #2 comdat align 2 {
@@ -1721,10 +1729,13 @@ bb.k:                                             ; preds = %_ZN20btAlignedObjec
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #15
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #15
@@ -1760,8 +1771,8 @@ attributes #12 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" 
 attributes #13 = { inlinehint mustprogress uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #17 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #19 = { builtin nounwind }
 attributes #20 = { noreturn nounwind }

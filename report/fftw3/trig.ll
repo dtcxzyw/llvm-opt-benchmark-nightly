@@ -8,6 +8,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @fftw_mktriggen(i32 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
+  %sincos.sin.i50 = alloca double, align 8        ; 4 uses
+  %sincos.cos.i51 = alloca double, align 8        ; 4 uses
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %i.a = tail call ptr @fftw_malloc_plain(i64 noundef 72) #9 ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store i64 %1, ptr %i.b, align 8, !tbaa !13
@@ -63,10 +67,10 @@ choose_twshft.exit:                               ; preds = %.lr.ph.i, %bb.b
   br i1 %.not69, label %.preheader, label %.lr.ph
 
 .lr.ph:                                           ; preds = %choose_twshft.exit
-  %2 = load ptr, ptr %i.d, align 8, !tbaa !17
   %i.u = shl nsw i64 %1, 2                        ; 2 uses
   %i.v = sitofp i64 %i.u to double
   %smax = tail call i64 @llvm.smax.i64(i64 %i.j, i64 1)
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !17
   br label %bb.c
 
 .preheader:                                       ; preds = %bb.c, %choose_twshft.exit
@@ -74,32 +78,35 @@ choose_twshft.exit:                               ; preds = %.lr.ph.i, %bb.b
   br i1 %i.w, label %.lr.ph68, label %.loopexit
 
 .lr.ph68:                                         ; preds = %.preheader
-  %3 = load i64, ptr %i.k, align 8, !tbaa !27
   %i.x = shl nsw i64 %1, 2                        ; 3 uses
   %i.y = sitofp i64 %i.x to double
+  %.pre75 = load i64, ptr %i.k, align 8, !tbaa !27
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.066 = phi i64 [ 0, %.lr.ph ], [ %i.am, %bb.c ] ; 3 uses
   %.idx47 = shl nuw nsw i64 %.066, 4
-  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %.idx47 ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.pre, i64 %.idx47 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.aa = shl nuw nsw i64 %.066, 2                ; 3 uses
   %i.ab = sub nsw i64 %i.u, %i.aa                 ; 2 uses
   %.not.i49 = icmp sgt i64 %i.aa, %i.ab
-  %.152.i = tail call i64 @llvm.smin.i64(i64 %i.aa, i64 %i.ab) ; 2 uses
+  %.152.i = call i64 @llvm.smin.i64(i64 %i.aa, i64 %i.ab) ; 2 uses
   %i.ac = sub nsw i64 %.152.i, %1                 ; 2 uses
   %i.ad = icmp slt i64 %i.ac, 1                   ; 3 uses
   %.253.i = select i1 %i.ad, i64 %.152.i, i64 %i.ac ; 3 uses
   %i.ae = sub nsw i64 %1, %.253.i                 ; 2 uses
   %i.af = icmp sgt i64 %.253.i, %i.ae             ; 2 uses
-  %.3.i = tail call i64 @llvm.smin.i64(i64 %.253.i, i64 %i.ae)
+  %.3.i = call i64 @llvm.smin.i64(i64 %.253.i, i64 %i.ae)
   %i.ag = sitofp i64 %.3.i to double
   %i.ah = fmul nnan double %i.ag, f0x401921FB54442D18
-  %i.ai = fdiv double %i.ah, %i.v                 ; 2 uses
-  %4 = tail call double @cos(double noundef %i.ai) #9 ; 2 uses
-  %5 = tail call double @sin(double noundef %i.ai) #9 ; 2 uses
-  %.049.i = select i1 %i.af, double %5, double %4 ; 2 uses
-  %.046.i = select i1 %i.af, double %4, double %5 ; 2 uses
+  %i.ai = fdiv double %i.ah, %i.v
+  call void @sincos(double %i.ai, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8 ; 2 uses
+  %cos.i = load double, ptr %sincos.cos.i, align 8 ; 2 uses
+  %.049.i = select i1 %i.af, double %sin.i, double %cos.i ; 2 uses
+  %.046.i = select i1 %i.af, double %cos.i, double %sin.i ; 2 uses
   %i.aj = fneg double %.046.i
   %.150.i = select i1 %i.ad, double %.049.i, double %i.aj
   %.147.i = select i1 %i.ad, double %.046.i, double %.049.i ; 2 uses
@@ -108,35 +115,40 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store double %.150.i, ptr %i.z, align 8, !tbaa !20
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store double %.248.i, ptr %i.al, align 8, !tbaa !20
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.am = add nuw nsw i64 %.066, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.am, %smax
   br i1 %exitcond.not, label %.preheader, label %bb.c, !llvm.loop !22
 
 bb.d:                                             ; preds = %.lr.ph68, %bb.d
   %.167 = phi i64 [ 0, %.lr.ph68 ], [ %i.bd, %bb.d ] ; 3 uses
-  %i.an = mul nsw i64 %3, %.167                   ; 2 uses
+  %i.an = mul nsw i64 %.pre75, %.167              ; 2 uses
   %.idx = shl nuw nsw i64 %.167, 4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i50)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i51)
   %i.ap = shl nsw i64 %i.an, 2
   %i.aq = icmp slt i64 %i.an, 0
   %i.ar = select i1 %i.aq, i64 %i.x, i64 0
   %spec.select.i = add nsw i64 %i.ar, %i.ap       ; 3 uses
   %i.as = sub nsw i64 %i.x, %spec.select.i        ; 2 uses
   %.not.i50 = icmp sgt i64 %spec.select.i, %i.as
-  %.152.i51 = tail call i64 @llvm.smin.i64(i64 %spec.select.i, i64 %i.as) ; 2 uses
-  %i.at = sub nsw i64 %.152.i51, %1               ; 2 uses
+  %.152.i53 = call i64 @llvm.smin.i64(i64 %spec.select.i, i64 %i.as) ; 2 uses
+  %i.at = sub nsw i64 %.152.i53, %1               ; 2 uses
   %i.au = icmp slt i64 %i.at, 1                   ; 3 uses
-  %.253.i52 = select i1 %i.au, i64 %.152.i51, i64 %i.at ; 3 uses
+  %.253.i52 = select i1 %i.au, i64 %.152.i53, i64 %i.at ; 3 uses
   %i.av = sub nsw i64 %1, %.253.i52               ; 2 uses
   %i.aw = icmp sgt i64 %.253.i52, %i.av           ; 2 uses
-  %.3.i53 = tail call i64 @llvm.smin.i64(i64 %.253.i52, i64 %i.av)
-  %i.ax = sitofp i64 %.3.i53 to double
+  %.3.i55 = call i64 @llvm.smin.i64(i64 %.253.i52, i64 %i.av)
+  %i.ax = sitofp i64 %.3.i55 to double
   %i.ay = fmul nnan double %i.ax, f0x401921FB54442D18
-  %i.az = fdiv double %i.ay, %i.y                 ; 2 uses
-  %6 = tail call double @cos(double noundef %i.az) #9 ; 2 uses
-  %7 = tail call double @sin(double noundef %i.az) #9 ; 2 uses
-  %.049.i54 = select i1 %i.aw, double %7, double %6 ; 2 uses
-  %.046.i55 = select i1 %i.aw, double %6, double %7 ; 2 uses
+  %i.az = fdiv double %i.ay, %i.y
+  call void @sincos(double %i.az, ptr nonnull %sincos.sin.i50, ptr nonnull %sincos.cos.i51)
+  %sin.i56 = load double, ptr %sincos.sin.i50, align 8 ; 2 uses
+  %cos.i57 = load double, ptr %sincos.cos.i51, align 8 ; 2 uses
+  %.049.i54 = select i1 %i.aw, double %sin.i56, double %cos.i57 ; 2 uses
+  %.046.i55 = select i1 %i.aw, double %cos.i57, double %sin.i56 ; 2 uses
   %i.ba = fneg double %.046.i55
   %.150.i56 = select i1 %i.au, double %.049.i54, double %i.ba
   %.147.i57 = select i1 %i.au, double %.046.i55, double %.049.i54 ; 2 uses
@@ -145,6 +157,8 @@ bb.d:                                             ; preds = %.lr.ph68, %bb.d
   store double %.150.i56, ptr %i.ao, align 8, !tbaa !20
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   store double %.248.i58, ptr %i.bc, align 8, !tbaa !20
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i50)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i51)
   %i.bd = add nuw nsw i64 %.167, 1                ; 2 uses
   %exitcond70.not = icmp eq i64 %i.bd, %i.p
   br i1 %exitcond70.not, label %.loopexit, label %bb.d, !llvm.loop !23
@@ -280,8 +294,12 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define internal void @cexpl_sincos(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 16)) %2) #4 {
 bb.a:
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load i64, ptr %i.a, align 8, !tbaa !13   ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.c = shl nsw i64 %i.b, 2                      ; 3 uses
   %i.d = shl nsw i64 %1, 2
   %i.e = icmp slt i64 %1, 0
@@ -299,11 +317,12 @@ bb.a:
   %i.l = sitofp i64 %.3.i to double
   %i.m = fmul nnan double %i.l, f0x401921FB54442D18
   %i.n = sitofp i64 %i.c to double
-  %i.o = fdiv double %i.m, %i.n                   ; 2 uses
-  %3 = tail call double @cos(double noundef %i.o) #9 ; 2 uses
-  %4 = tail call double @sin(double noundef %i.o) #9 ; 2 uses
-  %.049.i = select i1 %i.k, double %4, double %3  ; 2 uses
-  %.046.i = select i1 %i.k, double %3, double %4  ; 2 uses
+  %i.o = fdiv double %i.m, %i.n
+  call void @sincos(double %i.o, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8 ; 2 uses
+  %cos.i = load double, ptr %sincos.cos.i, align 8 ; 2 uses
+  %.049.i = select i1 %i.k, double %sin.i, double %cos.i ; 2 uses
+  %.046.i = select i1 %i.k, double %cos.i, double %sin.i ; 2 uses
   %i.p = fneg double %.046.i
   %.150.i = select i1 %i.i, double %.049.i, double %i.p
   %.147.i = select i1 %i.i, double %.046.i, double %.049.i ; 2 uses
@@ -312,6 +331,8 @@ bb.a:
   store double %.150.i, ptr %2, align 8, !tbaa !20
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   store double %.248.i, ptr %i.r, align 8, !tbaa !20
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   ret void
 }
 
@@ -371,11 +392,8 @@ declare void @fftw_ifree0(ptr noundef) local_unnamed_addr #2
 
 declare void @fftw_ifree(ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #6
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #6
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #7
@@ -395,7 +413,7 @@ attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="icelake-server" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="icelake-server" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="icelake-server" }
-attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="icelake-server" }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="icelake-server" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #9 = { nounwind }

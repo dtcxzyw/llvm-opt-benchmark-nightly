@@ -83,16 +83,22 @@ bb.a:
   %42 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %43 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %44 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
+  %sincos.sin.i13.i.i = alloca double, align 8    ; 4 uses
+  %sincos.cos.i14.i.i = alloca double, align 8    ; 4 uses
   %45 = alloca %"class.cv::Mat", align 16         ; 12 uses
   %46 = alloca %"class.cv::Matx.3", align 8       ; 8 uses
   %47 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %48 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %49 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
+  %sincos.sin.i7.i.i = alloca double, align 8     ; 4 uses
+  %sincos.cos.i8.i.i = alloca double, align 8     ; 4 uses
   %50 = alloca %"class.cv::Mat", align 16         ; 12 uses
   %51 = alloca %"class.cv::Matx.3", align 8       ; 8 uses
   %52 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %53 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %54 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
+  %sincos.sin.i.i.i = alloca double, align 8      ; 4 uses
+  %sincos.cos.i.i.i = alloca double, align 8      ; 4 uses
   %55 = alloca %"class.cv::Mat", align 16         ; 12 uses
   %56 = alloca %"class.cv::Matx.3", align 8       ; 8 uses
   %57 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
@@ -495,7 +501,7 @@ bb.el:                                            ; preds = %bb.eb
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #18
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %125) #18
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %124) #18
-  %i.aev = load double, ptr %122, align 8, !tbaa !11 ; 3 uses
+  %i.aev = load double, ptr %122, align 8, !tbaa !11 ; 2 uses
   %i.aew = fcmp ord double %i.aev, 0.000000e+00
   br i1 %i.aew, label %bb.em, label %bb.fq
 
@@ -543,8 +549,11 @@ bb.er:                                            ; preds = %bb.em
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %59, i8 0, i64 72, i1 false), !tbaa !11
   call void @llvm.lifetime.start.p0(ptr nonnull %60) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %60, i8 0, i64 72, i1 false), !tbaa !11
-  %132 = call double @sin(double noundef %i.aev) #18 ; 2 uses
-  %133 = call double @cos(double noundef %i.aev) #18 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i.i)
+  call void @sincos(double %i.aev, ptr nonnull %sincos.sin.i.i.i, ptr nonnull %sincos.cos.i.i.i)
+  %sin.i.i.i = load double, ptr %sincos.sin.i.i.i, align 8 ; 2 uses
+  %cos.i.i.i = load double, ptr %sincos.cos.i.i.i, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.ll, i8 0, i64 56, i1 false), !tbaa !11, !alias.scope !129
@@ -604,14 +613,19 @@ _ZN2cv12ppf_match_3dL16getUnitXRotationEdRNS_4MatxIdLi3ELi3EEE.exit.i.i: ; preds
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %55) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %55) #18
-  store double %133, ptr %i.lw, align 16, !tbaa !11
-  %i.afj = fneg double %132
+  store double %cos.i.i.i, ptr %i.lw, align 16, !tbaa !11
+  %i.afj = fneg double %sin.i.i.i
   store double %i.afj, ptr %i.lx, align 8, !tbaa !11
-  store double %132, ptr %i.ly, align 8, !tbaa !11
-  store double %133, ptr %i.lz, align 16, !tbaa !11
-  %i.afk = load double, ptr %i.ma, align 8, !tbaa !11 ; 2 uses
-  %134 = call double @sin(double noundef %i.afk) #18 ; 2 uses
-  %135 = call double @cos(double noundef %i.afk) #18 ; 2 uses
+  store double %sin.i.i.i, ptr %i.ly, align 8, !tbaa !11
+  store double %cos.i.i.i, ptr %i.lz, align 16, !tbaa !11
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i.i)
+  %i.afk = load double, ptr %i.ma, align 8, !tbaa !11
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i7.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i8.i.i)
+  call void @sincos(double %i.afk, ptr nonnull %sincos.sin.i7.i.i, ptr nonnull %sincos.cos.i8.i.i)
+  %sin.i9.i.i = load double, ptr %sincos.sin.i7.i.i, align 8 ; 2 uses
+  %cos.i10.i.i = load double, ptr %sincos.cos.i8.i.i, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.mb, i8 0, i64 56, i1 false), !tbaa !11, !alias.scope !131
@@ -671,14 +685,19 @@ _ZN2cv12ppf_match_3dL16getUnitYRotationEdRNS_4MatxIdLi3ELi3EEE.exit.i.i: ; preds
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %50) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #18
-  store double %135, ptr %59, align 16, !tbaa !11
-  store double %134, ptr %i.mm, align 16, !tbaa !11
-  %i.afn = fneg double %134
+  store double %cos.i10.i.i, ptr %59, align 16, !tbaa !11
+  store double %sin.i9.i.i, ptr %i.mm, align 16, !tbaa !11
+  %i.afn = fneg double %sin.i9.i.i
   store double %i.afn, ptr %i.mn, align 16, !tbaa !11
-  store double %135, ptr %i.mo, align 16, !tbaa !11
-  %i.afo = load double, ptr %i.mp, align 8, !tbaa !11 ; 2 uses
-  %136 = call double @sin(double noundef %i.afo) #18 ; 4 uses
-  %137 = call double @cos(double noundef %i.afo) #18 ; 5 uses
+  store double %cos.i10.i.i, ptr %i.mo, align 16, !tbaa !11
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i7.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i8.i.i)
+  %i.afo = load double, ptr %i.mp, align 8, !tbaa !11
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i13.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i14.i.i)
+  call void @sincos(double %i.afo, ptr nonnull %sincos.sin.i13.i.i, ptr nonnull %sincos.cos.i14.i.i)
+  %sin.i15.i.i = load double, ptr %sincos.sin.i13.i.i, align 8 ; 4 uses
+  %cos.i16.i.i = load double, ptr %sincos.cos.i14.i.i, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.mq, i8 0, i64 56, i1 false), !tbaa !11, !alias.scope !132
@@ -738,22 +757,24 @@ _ZN2cv12ppf_match_3dL16getUnitZRotationEdRNS_4MatxIdLi3ELi3EEE.exit.i.i: ; preds
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %45) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #18
-  store double %137, ptr %60, align 8, !tbaa !11
-  %i.afr = fneg double %136                       ; 2 uses
+  store double %cos.i16.i.i, ptr %60, align 8, !tbaa !11
+  %i.afr = fneg double %sin.i15.i.i               ; 2 uses
   store double %i.afr, ptr %i.nb, align 8, !tbaa !11
-  store double %136, ptr %i.nc, align 8, !tbaa !11
-  store double %137, ptr %i.nd, align 8, !tbaa !11
+  store double %sin.i15.i.i, ptr %i.nc, align 8, !tbaa !11
+  store double %cos.i16.i.i, ptr %i.nd, align 8, !tbaa !11
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i13.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i14.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #18
   %i.afs = load double, ptr %i.nf, align 8, !tbaa !11, !noalias !133 ; 2 uses
   %i.aft = load <2 x double>, ptr %59, align 16, !tbaa !11, !noalias !133 ; 5 uses
   %i.afu = insertelement <2 x double> poison, double %i.afs, i64 0
-  %i.afv = insertelement <2 x double> %i.afu, double %137, i64 1 ; 2 uses
+  %i.afv = insertelement <2 x double> %i.afu, double %cos.i16.i.i, i64 1 ; 2 uses
   %i.afw = load double, ptr %i.nh, align 8, !tbaa !11, !noalias !133 ; 2 uses
   %i.afx = load <2 x double>, ptr %i.mm, align 16, !tbaa !11, !noalias !133 ; 5 uses
   %i.afy = shufflevector <2 x double> %i.aft, <2 x double> %i.afx, <2 x i32> <i32 1, i32 2>
   %i.afz = insertelement <2 x double> poison, double %i.afw, i64 0
-  %i.aga = insertelement <2 x double> %i.afz, double %137, i64 1 ; 2 uses
+  %i.aga = insertelement <2 x double> %i.afz, double %cos.i16.i.i, i64 1 ; 2 uses
   %i.agb = load double, ptr %i.ni, align 16, !tbaa !11, !noalias !133 ; 2 uses
   %i.agc = load <2 x double>, ptr %i.nj, align 8, !tbaa !11, !noalias !133 ; 4 uses
   %i.agd = shufflevector <2 x double> %i.aft, <2 x double> %i.afx, <2 x i32> <i32 0, i32 3>
@@ -776,7 +797,7 @@ _ZN2cv12ppf_match_3dL16getUnitZRotationEdRNS_4MatxIdLi3ELi3EEE.exit.i.i: ; preds
   %i.agt = shufflevector <2 x double> %i.agc, <2 x double> %i.aft, <2 x i32> <i32 1, i32 2>
   %i.agu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.agt, <2 x double> %i.afv, <2 x double> zeroinitializer)
   %i.agv = shufflevector <2 x double> %i.agr, <2 x double> %i.aft, <2 x i32> <i32 0, i32 3>
-  %i.agw = insertelement <2 x double> %i.agl, double %136, i64 1
+  %i.agw = insertelement <2 x double> %i.agl, double %sin.i15.i.i, i64 1
   %i.agx = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.agv, <2 x double> %i.agw, <2 x double> %i.agu)
   %i.agy = shufflevector <2 x double> %i.agr, <2 x double> %i.afx, <2 x i32> <i32 1, i32 2>
   %i.agz = insertelement <2 x double> %i.agl, double %i.afw, i64 0
@@ -798,8 +819,8 @@ _ZN2cv12ppf_match_3dL16getUnitZRotationEdRNS_4MatxIdLi3ELi3EEE.exit.i.i: ; preds
   %i.ahp = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.afx, <2 x double> %i.aga, <2 x double> %i.aho) ; 4 uses
   %i.ahq = insertelement <2 x double> poison, double %i.agb, i64 0
   %i.ahr = shufflevector <2 x double> %i.ahq, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ahs = insertelement <2 x double> poison, double %136, i64 0
-  %i.aht = insertelement <2 x double> %i.ahs, double %137, i64 1 ; 2 uses
+  %i.ahs = insertelement <2 x double> poison, double %sin.i15.i.i, i64 0
+  %i.aht = insertelement <2 x double> %i.ahs, double %cos.i16.i.i, i64 1 ; 2 uses
   %i.ahu = shufflevector <2 x double> %i.ahp, <2 x double> %i.ahk, <2 x i32> <i32 1, i32 2>
   %i.ahv = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ahr, <2 x double> %i.aht, <2 x double> %i.ahu)
   %i.ahw = shufflevector <2 x double> %i.agc, <2 x double> poison, <2 x i32> zeroinitializer
@@ -1202,12 +1223,6 @@ declare void @_ZNK2cv3Mat6copyToERKNS_12_OutputArrayE(ptr noundef nonnull align 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #9
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #13
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #13
-
 declare void @_ZN2cv8MatShapeC1EmPKiNS_10DataLayoutEi(ptr noundef nonnull align 4 dereferenceable(52), i64 noundef, ptr noundef, i32 noundef, i32 noundef) unnamed_addr #3
 
 declare void @_ZN2cv3MatC1EiiiPvm(ptr noundef nonnull align 8 dereferenceable(208), i32 noundef, i32 noundef, i32 noundef, ptr noundef, i64 noundef) unnamed_addr #3
@@ -1216,6 +1231,9 @@ declare void @_ZN2cv7vconcatERKNS_11_InputArrayES2_RKNS_12_OutputArrayE(ptr noun
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #9
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
@@ -1248,7 +1266,7 @@ attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(none) }
 attributes #11 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #15 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }

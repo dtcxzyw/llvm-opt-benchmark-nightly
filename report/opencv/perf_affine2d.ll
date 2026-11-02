@@ -204,6 +204,10 @@ bb.a:
   %8 = alloca %"class.cv::_OutputArray", align 8  ; 6 uses
   %9 = alloca %"class.cv::Range", align 8         ; 4 uses
   %10 = alloca %"class.cv::Range", align 4        ; 5 uses
+  %sincos.sin11.i = alloca double, align 8        ; 4 uses
+  %sincos.cos12.i = alloca double, align 8        ; 4 uses
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %i.a = alloca [6 x double], align 16            ; 5 uses
   %11 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %12 = alloca %"class.cv::Mat", align 8          ; 7 uses
@@ -244,6 +248,10 @@ bb.a:
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %.sroa.7.0.copyload = load i32, ptr %.sroa.7.0..sroa_idx, align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #30
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin11.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos12.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.g = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN2cv6theRNGEv(), !noalias !359 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !361, !noalias !359 ; 2 uses
   %i.i = and i64 %i.h, 4294967295
@@ -273,7 +281,7 @@ bb.a:
   %i.ae = fmul nnan <2 x float> %i.ad, splat (float f0x2F800000)
   %i.af = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ae, <2 x float> <float f0x40C90FDB, float 4.000000e+00>, <2 x float> <float 0.000000e+00, float -2.000000e+00>) ; 2 uses
   %i.ag = extractelement <2 x float> %i.af, i64 0
-  %i.ah = fpext float %i.ag to double             ; 3 uses
+  %i.ah = fpext float %i.ag to double             ; 2 uses
   %i.ai = trunc i64 %i.t to i32
   %i.aj = uitofp i32 %i.ai to float
   store i64 %i.z, ptr %i.u, align 8, !tbaa !361, !noalias !359
@@ -294,16 +302,19 @@ bb.a:
   %i.ax = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aw, <2 x float> <float 3.000000e+00, float 4.000000e+00>, <2 x float> <float 0.000000e+00, float -2.000000e+00>)
   %i.ay = fpext <2 x float> %i.ax to <2 x double> ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30, !noalias !359
-  %37 = tail call double @cos(double noundef %i.ah) #30, !noalias !359
-  %38 = tail call double @sin(double noundef %i.ah) #30, !noalias !359 ; 2 uses
-  %i.az = fneg double %38
-  %39 = tail call double @cos(double noundef %i.ah) #30, !noalias !359
+  call void @sincos(double %i.ah, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i), !noalias !359
+  %sin.i = load double, ptr %sincos.sin.i, align 8, !noalias !359
+  %cos.i = load double, ptr %sincos.cos.i, align 8, !noalias !359
+  %i.az = fneg double %sin.i
+  call void @sincos(double %i.ah, ptr nonnull %sincos.sin11.i, ptr nonnull %sincos.cos12.i), !noalias !359
+  %sin13.i = load double, ptr %sincos.sin11.i, align 8, !noalias !359
+  %cos14.i = load double, ptr %sincos.cos12.i, align 8, !noalias !359
   %i.ba = shufflevector <2 x double> %i.ay, <2 x double> poison, <6 x i32> <i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.bb = shufflevector <6 x double> %i.ba, <6 x double> <double poison, double poison, double 1.000000e+00, double poison, double poison, double 1.000000e+00>, <6 x i32> <i32 0, i32 1, i32 8, i32 poison, i32 poison, i32 11>
-  %i.bc = insertelement <6 x double> %i.bb, double %38, i64 3
-  %i.bd = insertelement <6 x double> %i.bc, double %39, i64 4
+  %i.bc = insertelement <6 x double> %i.bb, double %sin13.i, i64 3
+  %i.bd = insertelement <6 x double> %i.bc, double %cos14.i, i64 4
   %i.be = shufflevector <2 x double> %i.ay, <2 x double> poison, <6 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 poison>
-  %i.bf = insertelement <6 x double> %i.be, double %37, i64 0
+  %i.bf = insertelement <6 x double> %i.be, double %cos.i, i64 0
   %i.bg = insertelement <6 x double> %i.bf, double %i.az, i64 1
   %i.bh = insertelement <6 x double> %i.bg, double %i.al, i64 2
   %i.bi = shufflevector <2 x double> %i.ay, <2 x double> poison, <6 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -331,6 +342,10 @@ _ZN11opencv_testL16rngPartialAffMatEv.exit:       ; preds = %bb.a
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %11) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #30, !noalias !359
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30, !noalias !359
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin11.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos12.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.bm = icmp eq i32 %.sroa.5.0.copyload, 4
   %i.bn = mul nsw i32 %.sroa.7.0.copyload, 3
   %i.bo = shl nsw i32 %.sroa.7.0.copyload, 1
@@ -733,12 +748,6 @@ bb.c:                                             ; preds = %bb.a
   resume { ptr, i32 } %i.e
 }
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #22
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #22
-
 declare void @_ZN2cv3MatC1EiiiPvm(ptr noundef nonnull align 8 dereferenceable(208), i32 noundef, i32 noundef, i32 noundef, ptr noundef, i64 noundef) unnamed_addr #2
 
 declare void @_ZNK2cv3Mat5cloneEv(ptr dead_on_unwind writable sret(%"class.cv::Mat") align 8, ptr noundef nonnull align 8 dereferenceable(208)) local_unnamed_addr #2
@@ -936,7 +945,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
 declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #15
 
 ; Function Attrs: cold nofree noreturn nounwind
-declare void @abort() local_unnamed_addr #23
+declare void @abort() local_unnamed_addr #22
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN7testing8internal25ParameterizedTestCaseInfoIN11opencv_test31EstimateAffine_EstimateAffine2DEED2Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %0) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1339,10 +1348,10 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(pt
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef, i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare i32 @isalnum(i32 noundef) local_unnamed_addr #24
+declare i32 @isalnum(i32 noundef) local_unnamed_addr #23
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #24
+declare noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #23
 
 ; Function Attrs: nounwind
 declare void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext, ptr noundef, ptr noundef, ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #9
@@ -1442,7 +1451,7 @@ declare void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) der
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8), double noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare i32 @isspace(i32 noundef) local_unnamed_addr #24
+declare i32 @isspace(i32 noundef) local_unnamed_addr #23
 
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32), i64 noundef, i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #2
 
@@ -1845,7 +1854,7 @@ _ZNSt12_Vector_baseIN7testing8internal25ParameterizedTestCaseInfoIN11opencv_test
 }
 
 ; Function Attrs: uwtable
-define internal void @_GLOBAL__sub_I_perf_affine2d.cpp() #25 section ".text.startup" personality ptr @__gxx_personality_v0 {
+define internal void @_GLOBAL__sub_I_perf_affine2d.cpp() #24 section ".text.startup" personality ptr @__gxx_personality_v0 {
 bb.a:
   %0 = alloca %"struct.testing::internal::ParameterizedTestCaseInfo<opencv_test::EstimateAffine_EstimateAffinePartial2D>::InstantiationInfo", align 8 ; 14 uses
   %i.a = alloca i64, align 8                      ; 6 uses
@@ -2248,7 +2257,10 @@ __cxx_global_var_init.28.exit:                    ; preds = %_ZN7testing8interna
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #26
+declare void @llvm.assume(i1 noundef) #25
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #27
@@ -2293,11 +2305,11 @@ attributes #18 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #19 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #20 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #21 = { mustprogress nofree nounwind willreturn memory(read) }
-attributes #22 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #23 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #24 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #25 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
-attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #22 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #23 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #24 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
+attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #26 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #27 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #28 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #29 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

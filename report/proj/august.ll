@@ -63,19 +63,22 @@ declare noundef ptr @_Z6pj_newv() local_unnamed_addr #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
 define internal { double, double } @_ZL16august_s_forward5PJ_LPP8PJconsts(double %0, double %1, ptr nofree readnone captures(none) %2) #3 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = fmul double %1, 5.000000e-01
-  %i.b = tail call double @tan(double noundef %i.a) #6 ; 3 uses
+  %i.b = tail call double @tan(double noundef %i.a) #7 ; 3 uses
   %i.c = fneg double %i.b
   %i.d = tail call double @llvm.fmuladd.f64(double %i.c, double %i.b, double 1.000000e+00)
-  %i.e = tail call double @sqrt(double noundef %i.d) #6 ; 2 uses
-  %i.f = fmul double %0, 5.000000e-01             ; 2 uses
-  %3 = tail call double @cos(double noundef %i.f) #6
-  %4 = tail call double @llvm.fmuladd.f64(double %i.e, double %3, double 1.000000e+00)
-  %5 = tail call double @sin(double noundef %i.f) #6
-  %i.g = fmul double %i.e, %5
+  %i.e = tail call double @sqrt(double noundef %i.d) #7 ; 2 uses
+  %i.f = fmul double %0, 5.000000e-01
+  call void @sincos(double %i.f, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %3 = call double @llvm.fmuladd.f64(double %i.e, double %cos, double 1.000000e+00)
+  %i.g = fmul double %i.e, %sin
   %i.h = insertelement <2 x double> poison, double %i.g, i64 0
   %i.i = insertelement <2 x double> %i.h, double %i.b, i64 1
-  %i.j = insertelement <2 x double> poison, double %4, i64 0
+  %i.j = insertelement <2 x double> poison, double %3, i64 0
   %i.k = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer
   %i.l = fdiv <2 x double> %i.i, %i.k             ; 3 uses
   %i.m = fmul <2 x double> %i.l, splat (double f0x3FF5555555555554)
@@ -83,10 +86,10 @@ bb.a:
   %i.o = extractelement <2 x double> %i.n, i64 0
   %i.p = fadd double %i.o, 3.000000e+00
   %i.q = insertelement <2 x double> <double 3.000000e+00, double poison>, double %i.p, i64 1
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> <double 3.000000e+00, double -3.000000e+00>, <2 x double> %i.q) ; 2 uses
+  %4 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> <double 3.000000e+00, double -3.000000e+00>, <2 x double> %i.q) ; 2 uses
   %shift = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fsub <2 x double> %6, %shift
-  %i.r = shufflevector <2 x double> %6, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 2>
+  %foldExtExtBinop = fsub <2 x double> %4, %shift
+  %i.r = shufflevector <2 x double> %4, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 2>
   %i.s = fmul <2 x double> %i.m, %i.r             ; 2 uses
   %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x double> %i.s, i64 0
   %i.t = insertvalue { double, double } poison, double %vec2struct.slot.sroa.0.0.vec.extract, 0
@@ -104,11 +107,8 @@ declare double @sqrt(double noundef) local_unnamed_addr #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #5
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #4
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #4
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
@@ -119,7 +119,8 @@ attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nounwind }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

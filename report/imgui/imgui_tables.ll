@@ -205,6 +205,10 @@ bb.ab:                                            ; preds = %_ZN8ImVectorI20ImGu
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5ImGui23TableAngledHeadersRowExEjffPK20ImGuiTableHeaderDatai(i32 noundef %0, float noundef %1, float noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) local_unnamed_addr #3 {
 bb.a:
+  %sincos.sin245 = alloca float, align 4          ; 2 uses
+  %sincos.cos246 = alloca float, align 4          ; 2 uses
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %5 = alloca %struct.ImRect, align 16            ; 8 uses
   %6 = alloca %struct.ImVec2, align 4             ; 5 uses
   %7 = alloca %struct.ImVec2, align 4             ; 5 uses
@@ -322,43 +326,45 @@ _ZN5ImGui33TableGetHeaderAngledMaxLabelWidthEv.exit: ; preds = %bb.k, %bb.d
 bb.l:                                             ; preds = %_ZN5ImGui33TableGetHeaderAngledMaxLabelWidthEv.exit, %bb.c
   %.0169 = phi float [ %i.ax, %_ZN5ImGui33TableGetHeaderAngledMaxLabelWidthEv.exit ], [ %2, %bb.c ] ; 2 uses
   %i.ay = fcmp olt float %1, 0.000000e+00         ; 7 uses
-  %i.az = fadd float %1, f0xBFC90FDB              ; 3 uses
-  %16 = tail call float @cosf(float noundef %i.az) #4 ; 6 uses
-  %17 = tail call float @sinf(float noundef %i.az) #4 ; 7 uses
+  %i.az = fadd float %1, f0xBFC90FDB              ; 2 uses
+  call void @sincosf(float %i.az, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 7 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 6 uses
   br i1 %i.ay, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.ba = fadd float %i.az, f0x40490FDB           ; 2 uses
-  %18 = tail call float @cosf(float noundef %i.ba) #4
-  %19 = tail call float @sinf(float noundef %i.ba) #4
+  %i.ba = fadd float %i.az, f0x40490FDB
+  call void @sincosf(float %i.ba, ptr nonnull %sincos.sin245, ptr nonnull %sincos.cos246)
+  %sin247 = load float, ptr %sincos.sin245, align 4
+  %cos248 = load float, ptr %sincos.cos246, align 4
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  %i.bb = phi float [ %18, %bb.m ], [ %16, %bb.l ]
-  %i.bc = phi float [ %19, %bb.m ], [ %17, %bb.l ]
+  %i.bb = phi float [ %cos248, %bb.m ], [ %cos, %bb.l ]
+  %i.bc = phi float [ %sin247, %bb.m ], [ %sin, %bb.l ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 4568 ; 3 uses
   %i.be = load float, ptr %i.bd, align 8, !tbaa !340
   %i.bf = getelementptr inbounds nuw i8, ptr %i.a, i64 3316 ; 2 uses
   %i.bg = load float, ptr %i.bf, align 4, !tbaa !243
-  %20 = tail call float @llvm.fmuladd.f32(float %i.bg, float 2.000000e+00, float %i.be) ; 2 uses
-  %i.bh = fneg float %20
-  %i.bi = select i1 %i.ay, float %20, float %i.bh
-  %i.bj = fneg float %17                          ; 3 uses
-  %i.bk = fmul float %16, %i.bi
-  %21 = tail call float @llvm.fmuladd.f32(float %.0169, float %17, float %i.bk)
-  %22 = tail call float @llvm.fabs.f32(float %21)
-  %i.bl = fptosi float %22 to i32
+  %16 = call float @llvm.fmuladd.f32(float %i.bg, float 2.000000e+00, float %i.be) ; 2 uses
+  %i.bh = fneg float %16
+  %i.bi = select i1 %i.ay, float %16, float %i.bh
+  %i.bj = fneg float %sin                         ; 3 uses
+  %i.bk = fmul float %cos, %i.bi
+  %17 = call float @llvm.fmuladd.f32(float %.0169, float %sin, float %i.bk)
+  %18 = call float @llvm.fabs.f32(float %17)
+  %i.bl = fptosi float %18 to i32
   %i.bm = uitofp nneg i32 %i.bl to float          ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 232
   store float %i.bm, ptr %i.bn, align 8, !tbaa !259
-  %i.bo = fcmp une float %17, 0.000000e+00
-  %i.bp = fdiv float %16, %17
+  %i.bo = fcmp une float %sin, 0.000000e+00
+  %i.bp = fdiv float %cos, %sin
   %i.bq = select i1 %i.bo, float %i.bp, float 0.000000e+00
   %i.br = getelementptr inbounds nuw i8, ptr %i.c, i64 236
   store float %i.bq, ptr %i.br, align 4, !tbaa !369
   %i.bs = fdiv float %i.bm, %i.bj
-  %i.bt = insertelement <2 x float> poison, float %16, i64 0
-  %i.bu = insertelement <2 x float> %i.bt, float %17, i64 1
+  %i.bt = insertelement <2 x float> poison, float %cos, i64 0
+  %i.bu = insertelement <2 x float> %i.bt, float %sin, i64 1
   %i.bv = insertelement <2 x float> poison, float %i.bs, i64 0
   %i.bw = shufflevector <2 x float> %i.bv, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bx = fmul <2 x float> %i.bu, %i.bw           ; 2 uses
@@ -371,7 +377,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br i1 %i.cd, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @_ZN5ImGui17TableUpdateLayoutEP10ImGuiTable(ptr noundef nonnull %i.ca)
+  call void @_ZN5ImGui17TableUpdateLayoutEP10ImGuiTable(ptr noundef nonnull %i.ca)
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -381,7 +387,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.cg, label %bb.q, label %_ZN5ImGui12TableNextRowEif.exit
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @_ZN5ImGui11TableEndRowEP10ImGuiTable(ptr noundef nonnull %i.ca)
+  call void @_ZN5ImGui11TableEndRowEP10ImGuiTable(ptr noundef nonnull %i.ca)
   br label %_ZN5ImGui12TableNextRowEif.exit
 
 _ZN5ImGui12TableNextRowEif.exit:                  ; preds = %bb.p, %bb.q
@@ -396,22 +402,22 @@ _ZN5ImGui12TableNextRowEif.exit:                  ; preds = %bb.p, %bb.q
   store float %i.cm, ptr %i.cn, align 8, !tbaa !444
   %i.co = getelementptr inbounds nuw i8, ptr %i.ca, i64 132
   store float %i.bm, ptr %i.co, align 4, !tbaa !465
-  tail call void @_ZN5ImGui13TableBeginRowEP10ImGuiTable(ptr noundef nonnull %i.ca)
+  call void @_ZN5ImGui13TableBeginRowEP10ImGuiTable(ptr noundef nonnull %i.ca)
   %i.cp = load float, ptr %i.cn, align 8, !tbaa !444
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ca, i64 128 ; 2 uses
   %i.cr = load float, ptr %i.cq, align 8, !tbaa !253
-  %23 = tail call float @llvm.fmuladd.f32(float %i.cp, float 2.000000e+00, float %i.cr) ; 2 uses
+  %19 = call float @llvm.fmuladd.f32(float %i.cp, float 2.000000e+00, float %i.cr) ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.ca, i64 124
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !254
   %i.cu = fadd float %i.ct, %i.bm                 ; 2 uses
-  %i.cv = fcmp oge float %23, %i.cu
-  %i.cw = select i1 %i.cv, float %23, float %i.cu
+  %i.cv = fcmp oge float %19, %i.cu
+  %i.cw = select i1 %i.cv, float %19, float %i.cu
   store float %i.cw, ptr %i.cq, align 8, !tbaa !253
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ca, i64 392
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !219
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 209
   store i8 1, ptr %i.cz, align 1, !tbaa !174
-  %24 = tail call noundef zeroext i1 @_ZN5ImGui15TableNextColumnEv() ; 0 uses
+  %20 = call noundef zeroext i1 @_ZN5ImGui15TableNextColumnEv() ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #4
   %i.da = getelementptr inbounds nuw i8, ptr %i.c, i64 272
   %i.db = load float, ptr %i.da, align 8, !tbaa !383
@@ -431,7 +437,7 @@ _ZN5ImGui12TableNextRowEif.exit:                  ; preds = %bb.p, %bb.q
   store float %i.di, ptr %i.dl, align 4, !tbaa !229
   %i.dm = getelementptr inbounds nuw i8, ptr %i.c, i64 416
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !211
-  tail call void @_ZN18ImDrawListSplitter17SetCurrentChannelEP10ImDrawListi(ptr noundef nonnull align 8 dereferenceable(24) %i.dn, ptr noundef %i.g, i32 noundef 0)
+  call void @_ZN18ImDrawListSplitter17SetCurrentChannelEP10ImDrawListi(ptr noundef nonnull align 8 dereferenceable(24) %i.dn, ptr noundef %i.g, i32 noundef 0)
   %i.do = load float, ptr %i.dc, align 8, !tbaa !671 ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.c, i64 558 ; 2 uses
   %i.dq = load i16, ptr %i.dp, align 2, !tbaa !370 ; 2 uses
@@ -464,7 +470,7 @@ bb.s:                                             ; preds = %bb.r, %_ZN5ImGui12T
   br i1 %.not.i182, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %25 = tail call noundef zeroext i1 @_ZN5ImGui8ErrorLogEPKc(ptr noundef nonnull @.str.6) ; 0 uses
+  %21 = call noundef zeroext i1 @_ZN5ImGui8ErrorLogEPKc(ptr noundef nonnull @.str.6) ; 0 uses
   br label %_ZN5ImGui15TableSetBgColorEiji.exit
 
 bb.u:                                             ; preds = %bb.s
@@ -482,7 +488,7 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %i.ep = getelementptr inbounds nuw i8, ptr %i.c, i64 312 ; 3 uses
-  tail call void @_ZN5ImGui12PushClipRectERK6ImVec2S2_b(ptr noundef nonnull align 4 dereferenceable(8) %i.dc, ptr noundef nonnull align 4 dereferenceable(8) %i.ep, i1 noundef zeroext false)
+  call void @_ZN5ImGui12PushClipRectERK6ImVec2S2_b(ptr noundef nonnull align 4 dereferenceable(8) %i.dc, ptr noundef nonnull align 4 dereferenceable(8) %i.ep, i1 noundef zeroext false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #4
   %i.eq = load float, ptr %i.dc, align 8, !tbaa !671
   store float %i.eq, ptr %6, align 4, !tbaa !228
@@ -493,8 +499,8 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   store float %i.es, ptr %7, align 4, !tbaa !228
   %i.et = getelementptr inbounds nuw i8, ptr %7, i64 4
   store float %i.di, ptr %i.et, align 4, !tbaa !229
-  %26 = tail call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 46, float noundef 2.500000e-01)
-  call void @_ZN10ImDrawList13AddRectFilledERK6ImVec2S2_jfi(ptr noundef nonnull align 8 dereferenceable(224) %i.g, ptr noundef nonnull align 4 dereferenceable(8) %6, ptr noundef nonnull align 4 dereferenceable(8) %7, i32 noundef %26, float noundef 0.000000e+00, i32 noundef 0)
+  %22 = call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 46, float noundef 2.500000e-01)
+  call void @_ZN10ImDrawList13AddRectFilledERK6ImVec2S2_jfi(ptr noundef nonnull align 8 dereferenceable(224) %i.g, ptr noundef nonnull align 4 dereferenceable(8) %6, ptr noundef nonnull align 4 dereferenceable(8) %7, i32 noundef %22, float noundef 0.000000e+00, i32 noundef 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #4
@@ -545,12 +551,12 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %i.fz = getelementptr inbounds nuw i8, ptr %i.e, i64 620
   %i.ga = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.g, i64 52 ; 2 uses
-  %i.gc = fmul float %16, %.sroa.066.0.copyload
+  %i.gc = fmul float %cos, %.sroa.066.0.copyload
   %i.gd = call float @llvm.fabs.f32(float %i.gc)
   %i.ge = getelementptr inbounds nuw i8, ptr %12, i64 4
   %i.gf = getelementptr inbounds nuw i8, ptr %13, i64 4
-  %i.gg = insertelement <2 x float> poison, float %17, i64 0
-  %i.gh = insertelement <2 x float> %i.gg, float %16, i64 1 ; 2 uses
+  %i.gg = insertelement <2 x float> poison, float %sin, i64 0
+  %i.gh = insertelement <2 x float> %i.gg, float %cos, i64 1 ; 2 uses
   %i.gi = insertelement <2 x float> poison, float %.sroa.5.0.copyload, i64 0
   %i.gj = shufflevector <2 x float> %i.gi, <2 x float> poison, <2 x i32> zeroinitializer
   %i.gk = fmul <2 x float> %i.gh, %i.gj           ; 2 uses
@@ -870,12 +876,6 @@ _ZL23TableGetColumnBorderColP10ImGuiTableii.exit.us: ; preds = %bb.al, %bb.ak, %
 bb.am:                                            ; preds = %.split.us, %bb.b
   ret void
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #17
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #12
@@ -1279,7 +1279,7 @@ bb.f:                                             ; preds = %.critedge, %bb.e, %
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #18 comdat {
+define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #17 comdat {
 bb.a:
   %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #4 ; 0 uses
   tail call void @_ZSt9terminatev() #25
@@ -1289,7 +1289,7 @@ bb.a:
 declare ptr @__cxa_begin_catch(ptr) local_unnamed_addr
 
 ; Function Attrs: cold nofree noreturn
-declare void @_ZSt9terminatev() local_unnamed_addr #19
+declare void @_ZSt9terminatev() local_unnamed_addr #18
 
 declare noundef float @_ZN16ImGuiMenuColumns11DeclColumnsEffff(ptr noundef nonnull align 4 dereferenceable(26), float noundef, float noundef, float noundef, float noundef) local_unnamed_addr #2
 
@@ -1300,10 +1300,10 @@ declare void @_ZN5ImGui15RenderCheckMarkEP10ImDrawList6ImVec2jf(ptr noundef, <2 
 declare void @_ZN5ImGui11EndDisabledEv() local_unnamed_addr #2
 
 ; Function Attrs: nofree
-declare void @qsort(ptr noundef, i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #20
+declare void @qsort(ptr noundef, i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #19
 
 ; Function Attrs: nounwind
-declare i32 @__isoc23_sscanf(ptr noundef, ptr noundef, ...) local_unnamed_addr #21
+declare i32 @__isoc23_sscanf(ptr noundef, ptr noundef, ...) local_unnamed_addr #20
 
 declare noundef ptr @_Z14ImStrSkipBlankPKc(ptr noundef) local_unnamed_addr #2
 
@@ -1316,7 +1316,7 @@ declare noundef i32 @_ZNK12ImGuiStorage6GetIntEji(ptr noundef nonnull align 8 de
 declare noundef ptr @_ZN12ImGuiStorage9GetIntRefEji(ptr noundef nonnull align 8 dereferenceable(16), i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN10ImGuiTableD2Ev(ptr noundef nonnull align 8 dead_on_return(592) dereferenceable(592) %0) unnamed_addr #22 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN10ImGuiTableD2Ev(ptr noundef nonnull align 8 dead_on_return(592) dereferenceable(592) %0) unnamed_addr #21 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !273
@@ -1388,13 +1388,16 @@ bb.i:                                             ; preds = %bb.a
 declare void @_ZN12ImGuiStorage6SetIntEji(ptr noundef nonnull align 8 dereferenceable(16), i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #23
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smax.i16(i16, i16) #12
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #12
@@ -1443,13 +1446,13 @@ attributes #13 = { mustprogress nofree norecurse nosync nounwind willreturn memo
 attributes #14 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #18 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #19 = { cold nofree noreturn }
-attributes #20 = { nofree "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #21 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #22 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #23 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #17 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #18 = { cold nofree noreturn }
+attributes #19 = { nofree "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #20 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #21 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #22 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #23 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #24 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #25 = { noreturn nounwind }
 attributes #26 = { nounwind willreturn memory(read) }
