@@ -205,12 +205,9 @@ scalar.ph97:                                      ; preds = %scalar.ph97.prol.lo
   call void %i.iu(ptr noundef %i.iw, ptr noundef %i.et, ptr noundef %i.ev, i64 noundef %i.ix) #14, !inline_history !116
   %i.iy = load i32, ptr %i.ef, align 8, !tbaa !76 ; 6 uses
   %i.iz = load i32, ptr %i.ed, align 8, !tbaa !72
-  %1 = sitofp nsz i32 %i.iz to double
   %i.ja = load i32, ptr %i.eg, align 4, !tbaa !76
-  %2 = sitofp nsz i32 %i.ja to double
-  %3 = call nsz double @llvm.minnum.f64(double %1, double %2)
-  %4 = fptosi double %3 to i32                    ; 2 uses
-  %.not14.i.i = icmp sgt i32 %i.iy, %4
+  %1 = call i32 @llvm.smin.i32(i32 %i.iz, i32 %i.ja) ; 2 uses
+  %.not14.i.i = icmp sgt i32 %i.iy, %1
   br i1 %.not14.i.i, label %sample_noise_block.exit.i, label %.lr.ph24.i.i
 
 .lr.ph24.i.i:                                     ; preds = %.loopexit.i.i
@@ -237,8 +234,8 @@ bb.s:                                             ; preds = %bb.z, %.lr.ph24.i.i
   %i.jj = phi <2 x double> [ zeroinitializer, %.lr.ph24.i.i ], [ %i.kz, %bb.z ] ; 3 uses
   %indvars47.i.i = trunc i64 %indvars.iv45.i.i to i32 ; 2 uses
   %i.jk = icmp eq i32 %.013020.i.i, %indvars47.i.i
-  %5 = icmp slt i32 %indvars47.i.i, %4            ; 2 uses
-  %or.cond.i.i = and i1 %5, %i.jk
+  %2 = icmp sgt i32 %1, %indvars47.i.i            ; 2 uses
+  %or.cond.i.i = and i1 %2, %i.jk
   br i1 %or.cond.i.i, label %bb.t, label %bb.w
 
 bb.t:                                             ; preds = %bb.s
@@ -320,7 +317,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w
   %i.lb = call nsz double @llvm.maxnum.f64(double %.1143.i.i, double %i.la) ; 2 uses
   %i.lc = fadd nsz double %.1141.i.i, %i.lb       ; 2 uses
   %indvars.iv.next46.i.i = add nsw i64 %indvars.iv45.i.i, 1
-  br i1 %5, label %bb.s, label %._crit_edge.loopexit.i.i, !llvm.loop !117
+  br i1 %2, label %bb.s, label %._crit_edge.loopexit.i.i, !llvm.loop !117
 
 sample_noise_block.exit.i:                        ; preds = %._crit_edge.loopexit.i.i, %.loopexit.i.i
   %.0140.lcssa.i.i = phi double [ 0.000000e+00, %.loopexit.i.i ], [ %i.lc, %._crit_edge.loopexit.i.i ]
@@ -723,10 +720,10 @@ declare double @llvm.fabs.f64(double) #4
 declare void @ff_avfilter_link_set_in_status(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #4
+declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #6

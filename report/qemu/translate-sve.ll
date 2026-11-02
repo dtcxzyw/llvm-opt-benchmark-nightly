@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/translate-sve?download=true
-inline.NumInlined: 12920
+inline.NumInlined: 12924
 inline.NumDeleted: 403
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,6 +204,7 @@ begin_hunk_0
 @helper_info_gvec_fdot_idx_hb = external global %struct.TCGHelperInfo, align 8
 @helper_info_gvec_fmmla_sb = external global %struct.TCGHelperInfo, align 8
 @helper_info_gvec_fmmla_hb = external global %struct.TCGHelperInfo, align 8
+@switch.table.do_insr_i64 = private unnamed_addr constant [4 x ptr] [ptr @helper_info_sve_insr_b, ptr @helper_info_sve_insr_h, ptr @helper_info_sve_insr_s, ptr @helper_info_sve_insr_d], align 8
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef zeroext i1 @disas_sve(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
@@ -606,9 +607,9 @@ declare void @tcg_gen_gvec_dup_mem(i32 noundef, i32 noundef, i32 noundef, i32 no
 define internal fastcc void @do_insr_i64(i32 %.220.val, ptr nofree noundef nonnull readonly captures(none) %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call i32 @simd_desc(i32 noundef %.220.val, i32 noundef %.220.val, i32 noundef 0) #9
-  %i.b = tail call ptr @tcg_constant_i32(i32 noundef %i.a) #9 ; 4 uses
-  %i.c = tail call ptr @tcg_temp_new_ptr() #9     ; 5 uses
-  %i.d = tail call ptr @tcg_temp_new_ptr() #9     ; 5 uses
+  %i.b = tail call ptr @tcg_constant_i32(i32 noundef %i.a) #9
+  %i.c = tail call ptr @tcg_temp_new_ptr() #9     ; 2 uses
+  %i.d = tail call ptr @tcg_temp_new_ptr() #9     ; 2 uses
   %i.e = load ptr, ptr @tcg_env, align 8
   %i.f = load i32, ptr %0, align 4
   %i.g = shl i32 %i.f, 8
@@ -624,101 +625,21 @@ bb.a:
   tail call void @tcg_gen_addi_i64(ptr noundef %i.d, ptr noundef %i.j, i64 noundef range(i64 -2147483648, 2147483648) %i.o) #9
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.q = load i32, ptr %i.p, align 4
-  switch i32 %i.q, label %default.switch.case.unreachable [
-    i32 0, label %call.0
-    i32 1, label %call.1
-    i32 2, label %call.2
-    i32 3, label %call.3
-  ], !prof !20
-
-default.switch.case.unreachable:                  ; preds = %bb.a
-  unreachable
-
-call.0:                                           ; preds = %bb.a
-  tail call fastcc void @gen_helper_sve_insr_b(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %1, ptr noundef %i.b) #9
-  br label %.tail
-
-call.1:                                           ; preds = %bb.a
-  tail call fastcc void @gen_helper_sve_insr_h(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %1, ptr noundef %i.b) #9
-  br label %.tail
-
-call.2:                                           ; preds = %bb.a
-  tail call fastcc void @gen_helper_sve_insr_s(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %1, ptr noundef %i.b) #9
-  br label %.tail
-
-call.3:                                           ; preds = %bb.a
-  tail call fastcc void @gen_helper_sve_insr_d(ptr noundef %i.c, ptr noundef %i.d, ptr noundef %1, ptr noundef %i.b) #9
-  br label %.tail
-
-.tail:                                            ; preds = %call.3, %call.2, %call.1, %call.0
-  ret void
-}
-
-; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @gen_helper_sve_insr_b(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #7 {
-  %5 = load ptr, ptr @helper_info_sve_insr_b, align 8
-  %6 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
-  %7 = load ptr, ptr %6, align 8                  ; 4 uses
-  %8 = ptrtoint ptr %0 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 %8
-  %10 = ptrtoint ptr %1 to i64
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 %10
-  %12 = ptrtoint ptr %2 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 %12
-  %14 = ptrtoint ptr %3 to i64
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 %14
-  tail call void @tcg_gen_call4(ptr noundef %5, ptr noundef nonnull @helper_info_sve_insr_b, ptr noundef null, ptr noundef %9, ptr noundef %11, ptr noundef %13, ptr noundef %15) #9
-  ret void
-}
-
-; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @gen_helper_sve_insr_h(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #7 {
-  %5 = load ptr, ptr @helper_info_sve_insr_h, align 8
-  %6 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
-  %7 = load ptr, ptr %6, align 8                  ; 4 uses
-  %8 = ptrtoint ptr %0 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 %8
-  %10 = ptrtoint ptr %1 to i64
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 %10
-  %12 = ptrtoint ptr %2 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 %12
-  %14 = ptrtoint ptr %3 to i64
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 %14
-  tail call void @tcg_gen_call4(ptr noundef %5, ptr noundef nonnull @helper_info_sve_insr_h, ptr noundef null, ptr noundef %9, ptr noundef %11, ptr noundef %13, ptr noundef %15) #9
-  ret void
-}
-
-; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @gen_helper_sve_insr_s(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #7 {
-  %5 = load ptr, ptr @helper_info_sve_insr_s, align 8
-  %6 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
-  %7 = load ptr, ptr %6, align 8                  ; 4 uses
-  %8 = ptrtoint ptr %0 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 %8
-  %10 = ptrtoint ptr %1 to i64
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 %10
-  %12 = ptrtoint ptr %2 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 %12
-  %14 = ptrtoint ptr %3 to i64
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 %14
-  tail call void @tcg_gen_call4(ptr noundef %5, ptr noundef nonnull @helper_info_sve_insr_s, ptr noundef null, ptr noundef %9, ptr noundef %11, ptr noundef %13, ptr noundef %15) #9
-  ret void
-}
-
-; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc void @gen_helper_sve_insr_d(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #7 {
-  %5 = load ptr, ptr @helper_info_sve_insr_d, align 8
-  %6 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
-  %7 = load ptr, ptr %6, align 8                  ; 4 uses
-  %8 = ptrtoint ptr %0 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 %8
-  %10 = ptrtoint ptr %1 to i64
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 %10
-  %12 = ptrtoint ptr %2 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 %12
-  %14 = ptrtoint ptr %3 to i64
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 %14
-  tail call void @tcg_gen_call4(ptr noundef %5, ptr noundef nonnull @helper_info_sve_insr_d, ptr noundef null, ptr noundef %9, ptr noundef %11, ptr noundef %13, ptr noundef %15) #9
+  %2 = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
+  %3 = load ptr, ptr %2, align 8                  ; 4 uses
+  %4 = zext nneg i32 %i.q to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.do_insr_i64, i64 %4
+  %switch.load = load ptr, ptr %switch.gep, align 8 ; 2 uses
+  %5 = ptrtoint ptr %i.b to i64
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 %5
+  %7 = ptrtoint ptr %1 to i64
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 %7
+  %9 = ptrtoint ptr %i.d to i64
+  %10 = getelementptr inbounds nuw i8, ptr %3, i64 %9
+  %11 = ptrtoint ptr %i.c to i64
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 %11
+  %13 = load ptr, ptr %switch.load, align 8
+  tail call void @tcg_gen_call4(ptr noundef %13, ptr noundef nonnull %switch.load, ptr noundef null, ptr noundef %12, ptr noundef %10, ptr noundef %8, ptr noundef %6) #9
   ret void
 }
 
