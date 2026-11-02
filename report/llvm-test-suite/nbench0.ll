@@ -204,7 +204,7 @@ bb.bz:                                            ; preds = %output_string.exit1
 output_string.exit134:                            ; preds = %output_string.exit131, %bb.bz
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.lr = trunc nuw nsw i64 %indvars.iv189 to i32
-  switch i32 %i.lr, label %show_stats.exit [
+  switch i32 %i.lr, label %default.unreachable [
     i32 0, label %bb.ca
     i32 1, label %bb.cc
     i32 2, label %bb.ce
@@ -382,7 +382,10 @@ output_string.exit3.sink.split.i:                 ; preds = %bb.cp, %bb.co, %out
   %fputs.i44.i = call i32 @fputs(ptr nonnull %i.a, ptr %i.om) ; 0 uses
   br label %show_stats.exit
 
-show_stats.exit:                                  ; preds = %output_string.exit134, %output_string.exit.i, %output_string.exit6.i, %output_string.exit12.i, %output_string.exit18.i, %bb.ci, %bb.cj, %output_string.exit30.i, %output_string.exit36.i, %bb.co, %bb.cp, %output_string.exit3.sink.split.i
+default.unreachable:                              ; preds = %output_string.exit134
+  unreachable
+
+show_stats.exit:                                  ; preds = %output_string.exit.i, %output_string.exit6.i, %output_string.exit12.i, %output_string.exit18.i, %bb.ci, %bb.cj, %output_string.exit30.i, %output_string.exit36.i, %bb.co, %bb.cp, %output_string.exit3.sink.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.on = load ptr, ptr %i.kw, align 8, !tbaa !36
   %i.oo = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) @buffer, ptr noundef nonnull dereferenceable(1) @.str.73, ptr noundef %i.on) #12 ; 0 uses

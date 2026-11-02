@@ -172,7 +172,7 @@ iter.check334:                                    ; preds = %bb.p
   %i.bi = add i32 %i.bf, -2                       ; 3 uses
   %i.bj = zext i32 %i.bi to i64
   %i.bk = add nuw nsw i64 %i.bj, 2                ; 5 uses
-  %min.iters.check318 = icmp ult i32 %i.bi, 6
+  %min.iters.check318 = icmp eq i32 %i.bi, 0
   br i1 %min.iters.check318, label %.preheader.preheader, label %vector.memcheck319
 
 vector.memcheck319:                               ; preds = %iter.check334
@@ -186,7 +186,7 @@ vector.main.loop.iter.check321:                   ; preds = %vector.memcheck319
   br i1 %min.iters.check322, label %vec.epilog.ph338, label %vector.ph323
 
 vector.ph323:                                     ; preds = %vector.main.loop.iter.check321
-  %i.bn = and i64 %i.bk, 8
+  %i.bn = and i64 %i.bk, 12
   %n.vec324 = and i64 %i.bk, 8589934576           ; 5 uses
   %i.bo = shl nuw nsw i64 %n.vec324, 1            ; 2 uses
   %i.bp = getelementptr i8, ptr %i.ao, i64 %i.bo  ; 2 uses
@@ -222,7 +222,7 @@ vec.epilog.iter.check335:                         ; preds = %middle.block332
 
 vec.epilog.ph338:                                 ; preds = %vector.main.loop.iter.check321, %vec.epilog.iter.check335
   %vec.epilog.resume.val339 = phi i64 [ %n.vec324, %vec.epilog.iter.check335 ], [ 0, %vector.main.loop.iter.check321 ]
-  %n.vec340 = and i64 %i.bk, 8589934584           ; 4 uses
+  %n.vec340 = and i64 %i.bk, 8589934588           ; 4 uses
   %i.bz = shl nuw nsw i64 %n.vec340, 1            ; 2 uses
   %i.ca = getelementptr i8, ptr %i.ao, i64 %i.bz  ; 2 uses
   %i.cb = trunc i64 %n.vec340 to i32
@@ -235,10 +235,10 @@ vec.epilog.vector.body341:                        ; preds = %vec.epilog.vector.b
   %i.ce = shl i64 %index342, 1                    ; 2 uses
   %next.gep343 = getelementptr i8, ptr %i.ao, i64 %i.ce
   %next.gep344 = getelementptr i8, ptr %i.bb, i64 %i.ce
-  %wide.load345 = load <8 x i16>, ptr %next.gep343, align 1, !tbaa !36
-  %4 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load345)
-  store <8 x i16> %4, ptr %next.gep344, align 2, !tbaa !66
-  %index.next346 = add nuw i64 %index342, 8       ; 2 uses
+  %wide.load345 = load <4 x i16>, ptr %next.gep343, align 1, !tbaa !36
+  %4 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load345)
+  store <4 x i16> %4, ptr %next.gep344, align 2, !tbaa !66
+  %index.next346 = add nuw i64 %index342, 4       ; 2 uses
   %i.cf = icmp eq i64 %index.next346, %n.vec340
   br i1 %i.cf, label %vec.epilog.middle.block347, label %vec.epilog.vector.body341, !llvm.loop !10
 
@@ -357,16 +357,16 @@ bb.q:                                             ; preds = %bb.o, %bb.o, %bb.o,
   %i.en = add i32 %i.em, -1                       ; 3 uses
   %i.eo = zext i32 %i.en to i64
   %i.ep = add nuw nsw i64 %i.eo, 1                ; 5 uses
-  %min.iters.check = icmp ult i32 %i.en, 7
+  %min.iters.check = icmp ult i32 %i.en, 3
   %min.iters.check304 = icmp ult i32 %i.en, 15
-  %i.eq = and i64 %i.ep, 8
+  %i.eq = and i64 %i.ep, 12
   %n.vec = and i64 %i.ep, 8589934576              ; 5 uses
   %i.er = shl nuw nsw i64 %n.vec, 1               ; 2 uses
   %i.es = trunc i64 %n.vec to i32
   %i.et = sub i32 %i.em, %i.es
   %cmp.n = icmp eq i64 %i.ep, %n.vec
   %min.epilog.iters.check.not.not = icmp eq i64 %i.eq, 0
-  %n.vec307 = and i64 %i.ep, 8589934584           ; 4 uses
+  %n.vec307 = and i64 %i.ep, 8589934588           ; 4 uses
   %i.eu = shl nuw nsw i64 %n.vec307, 1            ; 2 uses
   %i.ev = trunc i64 %n.vec307 to i32
   %i.ew = sub i32 %i.em, %i.ev
@@ -426,10 +426,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.fi = shl i64 %index308, 1                    ; 2 uses
   %next.gep309 = getelementptr i8, ptr %.sroa.0.2, i64 %i.fi
   %next.gep310 = getelementptr i8, ptr %.1102, i64 %i.fi
-  %wide.load311 = load <8 x i16>, ptr %next.gep309, align 1, !tbaa !36
-  %5 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load311)
-  store <8 x i16> %5, ptr %next.gep310, align 2, !tbaa !66
-  %index.next312 = add nuw i64 %index308, 8       ; 2 uses
+  %wide.load311 = load <4 x i16>, ptr %next.gep309, align 1, !tbaa !36
+  %5 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load311)
+  store <4 x i16> %5, ptr %next.gep310, align 2, !tbaa !66
+  %index.next312 = add nuw i64 %index308, 4       ; 2 uses
   %i.fj = icmp eq i64 %index.next312, %n.vec307
   br i1 %i.fj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !15
 
@@ -832,6 +832,9 @@ declare i64 @llvm.smin.i64(i64, i64) #3
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #3
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -912,6 +915,6 @@ attributes #4 = { nounwind }
 !67 = !{!"llvm.loop.mustprogress"}
 !68 = !{!"llvm.loop.isvectorized", i32 1}
 !69 = !{!"llvm.loop.unroll.runtime.disable"}
-!70 = !{!"branch_weights", i32 8, i32 8}
+!70 = !{!"branch_weights", i32 4, i32 12}
 !71 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

@@ -66,7 +66,7 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %conflict.rdx84, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.l, 2147483644               ; 4 uses
+  %n.vec = and i64 %i.l, 2147483640               ; 4 uses
   %i.w = or disjoint i64 %n.vec, 1
   %i.x = trunc nuw nsw i64 %n.vec to i32
   %i.y = or disjoint i32 %i.x, 1
@@ -74,22 +74,41 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
-  %i.z = getelementptr [8 x i8], ptr %1, i64 %index ; 2 uses
-  %wide.load.a = load <4 x double>, ptr %i.z, align 8, !tbaa !17, !alias.scope !18, !noalias !19 ; 2 uses
-  %i.aa = getelementptr [8 x i8], ptr %3, i64 %index ; 2 uses
-  %wide.load85 = load <4 x double>, ptr %i.aa, align 8, !tbaa !17, !alias.scope !20, !noalias !21 ; 2 uses
-  %i.ab = getelementptr [8 x i8], ptr %5, i64 %index
-  %wide.load86.a = load <4 x double>, ptr %i.ab, align 8, !tbaa !17, !alias.scope !22 ; 2 uses
-  %i.ac = getelementptr [8 x i8], ptr %6, i64 %index
-  %wide.load87 = load <4 x double>, ptr %i.ac, align 8, !tbaa !17, !alias.scope !23 ; 2 uses
+  %i.z = getelementptr [8 x i8], ptr %1, i64 %index ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.z, i64 32 ; 2 uses
+  %wide.load = load <4 x double>, ptr %i.z, align 8, !tbaa !17, !alias.scope !18, !noalias !19 ; 2 uses
+  %wide.load.a = load <4 x double>, ptr %8, align 8, !tbaa !17, !alias.scope !18, !noalias !19 ; 2 uses
+  %i.aa = getelementptr [8 x i8], ptr %3, i64 %index ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 2 uses
+  %wide.load86 = load <4 x double>, ptr %i.aa, align 8, !tbaa !17, !alias.scope !20, !noalias !21 ; 2 uses
+  %wide.load85 = load <4 x double>, ptr %9, align 8, !tbaa !17, !alias.scope !20, !noalias !21 ; 2 uses
+  %i.ab = getelementptr [8 x i8], ptr %5, i64 %index ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.ab, i64 32 ; 2 uses
+  %wide.load88 = load <4 x double>, ptr %i.ab, align 8, !tbaa !17, !alias.scope !22
+  %wide.load86.a = load <4 x double>, ptr %10, align 8, !tbaa !17, !alias.scope !22
+  %i.ac = getelementptr [8 x i8], ptr %6, i64 %index ; 3 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.ac, i64 32 ; 2 uses
+  %wide.load90 = load <4 x double>, ptr %i.ac, align 8, !tbaa !17, !alias.scope !23
+  %wide.load87 = load <4 x double>, ptr %11, align 8, !tbaa !17, !alias.scope !23
+  %12 = fmul <4 x double> %wide.load86, %wide.load90
   %i.ad = fmul <4 x double> %wide.load85, %wide.load87
+  %13 = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load88, <4 x double> %wide.load, <4 x double> %12)
   %i.ae = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load86.a, <4 x double> %wide.load.a, <4 x double> %i.ad)
-  store <4 x double> %i.ae, ptr %i.z, align 8, !tbaa !17, !alias.scope !18, !noalias !19
+  store <4 x double> %13, ptr %i.z, align 8, !tbaa !17, !alias.scope !18, !noalias !19
+  store <4 x double> %i.ae, ptr %8, align 8, !tbaa !17, !alias.scope !18, !noalias !19
+  %wide.load92 = load <4 x double>, ptr %i.ab, align 8, !tbaa !17, !alias.scope !22
+  %wide.load93 = load <4 x double>, ptr %10, align 8, !tbaa !17, !alias.scope !22
+  %wide.load94 = load <4 x double>, ptr %i.ac, align 8, !tbaa !17, !alias.scope !23
+  %wide.load95 = load <4 x double>, ptr %11, align 8, !tbaa !17, !alias.scope !23
+  %14 = fneg <4 x double> %wide.load
   %i.af = fneg <4 x double> %wide.load.a
-  %i.ag = fmul <4 x double> %wide.load87, %i.af
-  %i.ah = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load86.a, <4 x double> %wide.load85, <4 x double> %i.ag)
-  store <4 x double> %i.ah, ptr %i.aa, align 8, !tbaa !17, !alias.scope !20, !noalias !21
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %15 = fmul <4 x double> %wide.load94, %14
+  %i.ag = fmul <4 x double> %wide.load95, %i.af
+  %16 = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load92, <4 x double> %wide.load86, <4 x double> %15)
+  %i.ah = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %wide.load93, <4 x double> %wide.load85, <4 x double> %i.ag)
+  store <4 x double> %16, ptr %i.aa, align 8, !tbaa !17, !alias.scope !20, !noalias !21
+  store <4 x double> %i.ah, ptr %9, align 8, !tbaa !17, !alias.scope !20, !noalias !21
+  %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ai = icmp eq i64 %index.next, %n.vec
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !13
 

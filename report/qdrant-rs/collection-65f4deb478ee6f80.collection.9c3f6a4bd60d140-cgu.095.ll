@@ -19,37 +19,38 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueATINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtCsPYQCUnoTxQ_10collection9hash_ring14HashRingRouterEj1_EB1J_(ptr noalias nofree noundef nonnull align 8 dereferenceable(184) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !30, !noundef !8 ; 2 uses
   %i.b = icmp eq i64 %i.a, 2
   br i1 %i.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 23
-  %4 = icmp eq i64 %i.a, 0
-  %i.c = load i8, ptr %3, align 1, !alias.scope !31
+  %1 = icmp eq i64 %i.a, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 23
+  %i.c = load i8, ptr %2, align 1, !alias.scope !31
   %.not.i.i.i.i.i.i.i = icmp sgt i8 %i.c, -1
-  %or.cond.i.i.i.i = select i1 %4, i1 %.not.i.i.i.i.i.i.i, i1 false
+  %or.cond.i.i.i.i = select i1 %1, i1 %.not.i.i.i.i.i.i.i, i1 false
   br i1 %or.cond.i.i.i.i, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
-  invoke void @_RNvXs7_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsPYQCUnoTxQ_10collection(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %1)
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  invoke void @_RNvXs7_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsPYQCUnoTxQ_10collection(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %3)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i unwind label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.d = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsPYQCUnoTxQ_10collection9hash_ring14HashRingRouterEBF_(ptr noalias nofree noundef align 8 dereferenceable(160) %2) #15
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsPYQCUnoTxQ_10collection9hash_ring14HashRingRouterEBF_(ptr noalias nofree noundef align 8 dereferenceable(160) %4) #15
           to label %common.resume.i.i unwind label %bb.h
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i: ; preds = %bb.c, %bb.b, %bb.a
-  %i.e = load i64, ptr %2, align 8, !range !9, !alias.scope !32, !noundef !8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.e = load i64, ptr %5, align 8, !range !9, !alias.scope !32, !noundef !8
   %i.f = icmp eq i64 %i.e, -2
   br i1 %i.f, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtCsPYQCUnoTxQ_10collection9hash_ring14HashRingRouterEEB1J_.exit, label %bb.e
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsPYQCUnoTxQ_10collection9hash_ring8HashRingmEEBG_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %2)
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsPYQCUnoTxQ_10collection9hash_ring8HashRingmEEBG_(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %5)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtCsPYQCUnoTxQ_10collection9hash_ring14HashRingRouterEEB1J_.exit unwind label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -77,7 +78,7 @@ bb.h:                                             ; preds = %bb.d
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSTINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtCsPYQCUnoTxQ_10collection9hash_ring14HashRingRouterEEB1J_.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i, %bb.e
   %.sink1.i.i.i = phi i64 [ 80, %bb.e ], [ 8, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyEECsPYQCUnoTxQ_10collection.exit.i.i ]
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 %.sink1.i.i.i
+  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 %.sink1.i.i.i
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsPYQCUnoTxQ_10collection9hash_ring8HashRingmEEBG_(ptr noalias nofree noundef align 8 dereferenceable(80) %i.k)
   ret void
 }

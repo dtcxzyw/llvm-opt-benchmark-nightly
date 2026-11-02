@@ -202,9 +202,9 @@ bb.am:                                            ; preds = %bb.aj, %bb.ak, %bb.
   %.161.ph222 = phi i32 [ %.666, %.outer ], [ %.060, %.lr.ph.preheader ] ; 3 uses
   %i.ew = call i32 @Curl_poll(ptr noundef nonnull %2, i32 noundef %.058, i64 noundef %.059) #8
   switch i32 %i.ew, label %.loopexit [
-    i32 -1, label %.loopexit139
+    i32 -1, label %..critedge_crit_edge
     i32 0, label %.loopexit.thread
-  ]
+  ], !llvm.loop !93
 
 .loopexit.thread:                                 ; preds = %.lr.ph
   store i16 0, ptr %i.db, align 2, !tbaa !114
@@ -607,7 +607,7 @@ bb.iw:                                            ; preds = %bb.iv, %bb.ir
   %i.wa = getelementptr inbounds nuw i8, ptr %.06379.i.i, i64 8
   %.063.i.i = load ptr, ptr %i.wa, align 8, !tbaa !108 ; 2 uses
   %.not66.i.i = icmp eq ptr %.063.i.i, null
-  br i1 %.not66.i.i, label %._crit_edge.i.i, label %bad_option.exit71.i.i, !llvm.loop !93
+  br i1 %.not66.i.i, label %._crit_edge.i.i, label %bad_option.exit71.i.i, !llvm.loop !94
 
 ._crit_edge.i.i:                                  ; preds = %bb.iw, %bb.iq
   %.060.lcssa.i.i = phi i64 [ %i.vh, %bb.iq ], [ %.3.i.i, %bb.iw ] ; 5 uses
@@ -646,7 +646,7 @@ printoption.exit.i:                               ; preds = %bb.iy, %bb.hx, %bb.
   %.1.i101 = phi i32 [ %.0211.i, %.lr.ph.i100 ], [ %.0211.i, %bb.iy ], [ -1, %bb.as ], [ -1, %bb.at ], [ %spec.select.i, %bb.au ], [ -1, %bb.aw ], [ -1, %bb.ax ], [ %.0211.i, %bb.hx ], [ %.0211.i, %bb.bb ], [ %.0211.i, %bb.bc ], [ %.0211.i, %bb.bd ], [ %.0211.i, %bb.be ], [ %.0211.i, %bb.bf ], [ %spec.select130.i, %bb.az ], [ %spec.select131.i, %bb.bg ], [ %.0211.i, %rec_will.exit.i ], [ %.0211.i, %rec_wont.exit.i ], [ %.0211.i, %rec_do.exit.i ], [ %.0211.i, %rec_dont.exit.i ], [ %.0211.i, %bb.hq ], [ %.0211.i, %bb.hs ], [ %.0211.i, %bb.hr ], [ %.0211.i, %bb.bh ], [ %.0211.i, %bb.bk ], [ %.0211.i, %bb.bl ], [ %.0211.i, %bb.bn ], [ %.0211.i, %bb.bo ] ; 4 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %.not.i102 = icmp eq i64 %i.fc, 0
-  br i1 %.not.i102, label %._crit_edge.i, label %.lr.ph.i100, !llvm.loop !94
+  br i1 %.not.i102, label %._crit_edge.i, label %.lr.ph.i100, !llvm.loop !95
 
 ._crit_edge.i:                                    ; preds = %printoption.exit.i
   %i.wl = icmp sgt i32 %.1.i101, -1
@@ -765,10 +765,13 @@ bb.jo:                                            ; preds = %bb.jn
 .outer:                                           ; preds = %.thread118, %bb.jo, %bb.jn
   %.666 = phi i32 [ %.464, %bb.jn ], [ %i.xl, %bb.jo ], [ 28, %.thread118 ] ; 2 uses
   %.6 = phi i1 [ %.4, %bb.jn ], [ %spec.select98, %bb.jo ], [ false, %.thread118 ]
-  br i1 %.6, label %.lr.ph, label %.loopexit139, !llvm.loop !95
+  br i1 %.6, label %.lr.ph, label %.loopexit139, !llvm.loop !93
 
-.loopexit139:                                     ; preds = %.lr.ph, %.outer, %bb.am
-  %.161.ph.lcssa = phi i32 [ %.060, %bb.am ], [ %.161.ph222, %.lr.ph ], [ %.666, %.outer ]
+..critedge_crit_edge:                             ; preds = %.lr.ph
+  br label %.loopexit139, !llvm.loop !93
+
+.loopexit139:                                     ; preds = %.outer, %..critedge_crit_edge, %bb.am
+  %.161.ph.lcssa = phi i32 [ %.161.ph222, %..critedge_crit_edge ], [ %.060, %bb.am ], [ %.666, %.outer ]
   call void @Curl_xfer_setup_nop(ptr noundef nonnull %0) #8
   br label %check_telnet_options.exit
 

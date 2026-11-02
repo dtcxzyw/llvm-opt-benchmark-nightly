@@ -202,30 +202,76 @@ bb.c:                                             ; preds = %_ZNKSt3__16vectorIN
 _ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEEEDaRT_m.exit.i: ; preds = %_ZNKSt3__16vectorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS2_EEEENS_9allocatorIS5_EEE11__recommendB8ne180100Em.exit
   %i.q = shl nuw i64 %.0.i, 3
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #23 ; 2 uses
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !38  ; 3 uses
-  %.pre8 = load ptr, ptr %0, align 8, !tbaa !54   ; 6 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.g ; 4 uses
+  %.pre = load ptr, ptr %i.b, align 8, !tbaa !38  ; 6 uses
+  %.pre8 = load ptr, ptr %0, align 8, !tbaa !54   ; 7 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.g ; 6 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.0.i ; 2 uses
   %i.u = load ptr, ptr %1, align 8, !tbaa !40
   store ptr null, ptr %1, align 8, !tbaa !40
   store ptr %i.u, ptr %i.s, align 8, !tbaa !33
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 3 uses
   %.not30.i.i = icmp eq ptr %.pre, %.pre8
-  br i1 %.not30.i.i, label %_ZNSt3__114__split_bufferINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS2_EEEERNS_9allocatorIS5_EEE5clearB8ne180100Ev.exit.i.critedge, label %.lr.ph.i.i
+  br i1 %.not30.i.i, label %_ZNSt3__114__split_bufferINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS2_EEEERNS_9allocatorIS5_EEE5clearB8ne180100Ev.exit.i.critedge, label %.lr.ph.i.i.preheader
 
-.lr.ph.i.i:                                       ; preds = %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEEEDaRT_m.exit.i, %.lr.ph.i.i
-  %.sroa.123.031.i.i = phi ptr [ %i.y, %.lr.ph.i.i ], [ %.pre, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEEEDaRT_m.exit.i ]
-  %i.w = phi ptr [ %i.x, %.lr.ph.i.i ], [ %i.s, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEEEDaRT_m.exit.i ]
+.lr.ph.i.i.preheader:                             ; preds = %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEEEDaRT_m.exit.i
+  %.pre813 = ptrtoaddr ptr %.pre8 to i64
+  %.pre14 = ptrtoaddr ptr %.pre to i64
+  %2 = add i64 %.pre14, -8
+  %3 = sub i64 %2, %.pre813                       ; 2 uses
+  %4 = lshr i64 %3, 3
+  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %3, 24
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader18, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
+  %n.vec = and i64 %5, 4611686018427387900        ; 3 uses
+  %6 = mul i64 %n.vec, -8                         ; 2 uses
+  %7 = getelementptr i8, ptr %.pre, i64 %6
+  %8 = getelementptr i8, ptr %i.s, i64 %6         ; 2 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %9 = mul i64 %index, -8                         ; 2 uses
+  %next.gep = getelementptr i8, ptr %.pre, i64 %9 ; 2 uses
+  %next.gep15 = getelementptr i8, ptr %i.s, i64 %9 ; 2 uses
+  %10 = getelementptr inbounds i8, ptr %next.gep, i64 -16 ; 2 uses
+  %11 = getelementptr inbounds i8, ptr %next.gep, i64 -32 ; 2 uses
+  %wide.load = load <2 x ptr>, ptr %10, align 8, !tbaa !40
+  %wide.load16 = load <2 x ptr>, ptr %11, align 8, !tbaa !40
+  store <2 x ptr> splat (ptr null), ptr %10, align 8, !tbaa !40
+  store <2 x ptr> splat (ptr null), ptr %11, align 8, !tbaa !40
+  %12 = getelementptr inbounds i8, ptr %next.gep15, i64 -16
+  %13 = getelementptr inbounds i8, ptr %next.gep15, i64 -32
+  store <2 x ptr> %wide.load, ptr %12, align 8, !tbaa !33
+  store <2 x ptr> %wide.load16, ptr %13, align 8, !tbaa !33
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %14 = icmp eq i64 %index.next, %n.vec
+  br i1 %14, label %middle.block, label %vector.body, !llvm.loop !86
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %5, %n.vec
+  br i1 %cmp.n, label %bb.d, label %.lr.ph.i.i.preheader18
+
+.lr.ph.i.i.preheader18:                           ; preds = %.lr.ph.i.i.preheader, %middle.block
+  %.sroa.123.031.i.i.ph = phi ptr [ %.pre, %.lr.ph.i.i.preheader ], [ %7, %middle.block ]
+  %.ph = phi ptr [ %i.s, %.lr.ph.i.i.preheader ], [ %8, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader18, %.lr.ph.i.i
+  %.sroa.123.031.i.i = phi ptr [ %i.y, %.lr.ph.i.i ], [ %.sroa.123.031.i.i.ph, %.lr.ph.i.i.preheader18 ]
+  %i.w = phi ptr [ %i.x, %.lr.ph.i.i ], [ %.ph, %.lr.ph.i.i.preheader18 ]
   %i.x = getelementptr inbounds i8, ptr %i.w, i64 -8 ; 3 uses
   %i.y = getelementptr inbounds i8, ptr %.sroa.123.031.i.i, i64 -8 ; 4 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !40
   store ptr null, ptr %i.y, align 8, !tbaa !40
   store ptr %i.z, ptr %i.x, align 8, !tbaa !33
   %.not.i.i = icmp eq ptr %i.y, %.pre8
-  br i1 %.not.i.i, label %bb.d, label %.lr.ph.i.i, !llvm.loop !86
+  br i1 %.not.i.i, label %bb.d, label %.lr.ph.i.i, !llvm.loop !87
 
-bb.d:                                             ; preds = %.lr.ph.i.i
-  store ptr %i.x, ptr %0, align 8, !tbaa !39
+bb.d:                                             ; preds = %.lr.ph.i.i, %middle.block
+  %.lcssa = phi ptr [ %8, %middle.block ], [ %i.x, %.lr.ph.i.i ]
+  store ptr %.lcssa, ptr %0, align 8, !tbaa !39
   store ptr %i.v, ptr %i.b, align 8, !tbaa !39
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !39
   store ptr %i.t, ptr %i.a, align 8, !tbaa !39
@@ -243,7 +289,7 @@ _ZNKSt3__114default_deleteI11JpegSegmentEclB8ne180100EPS1_.exit.i.i.i.i.i.i.i.i:
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !42
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ag = load ptr, ptr %i.af, align 8
-  tail call void %i.ag(ptr noundef nonnull align 8 dereferenceable(8) %i.ad) #19, !inline_history !87
+  tail call void %i.ag(ptr noundef nonnull align 8 dereferenceable(8) %i.ad) #19, !inline_history !88
   br label %_ZNSt3__116allocator_traitsINS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEE7destroyB8ne180100IS6_vvEEvRS7_PT_.exit.i.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10unique_ptrI11JpegSegmentNS_14default_deleteIS3_EEEEEEE7destroyB8ne180100IS6_vvEEvRS7_PT_.exit.i.i.i.i: ; preds = %_ZNKSt3__114default_deleteI11JpegSegmentEclB8ne180100EPS1_.exit.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i
@@ -408,6 +454,9 @@ attributes #23 = { builtin allocsize(0) }
 !83 = !{!81, !45, i64 8}
 !84 = !{!52, !51, i64 0}
 !85 = !{!76}
-!86 = distinct !{!86, !50}
-!87 = distinct !{null, null, null, null, null, null, null, null, null}
+!86 = distinct !{!86, !50, !89, !90}
+!87 = distinct !{!87, !50, !90, !89}
+!88 = distinct !{null, null, null, null, null, null, null, null, null}
+!89 = !{!"llvm.loop.isvectorized", i32 1}
+!90 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

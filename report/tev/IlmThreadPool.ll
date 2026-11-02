@@ -202,30 +202,76 @@ _ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exi
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exit.i, %_ZNKSt3__16vectorINS_6threadENS_9allocatorIS1_EEE11__recommendB8ne180100Em.exit
-  %i.v = phi ptr [ %.pre12, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exit.i ], [ %i.j, %_ZNKSt3__16vectorINS_6threadENS_9allocatorIS1_EEE11__recommendB8ne180100Em.exit ] ; 6 uses
-  %i.w = phi ptr [ %.pre, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exit.i ], [ %i.d, %_ZNKSt3__16vectorINS_6threadENS_9allocatorIS1_EEE11__recommendB8ne180100Em.exit ] ; 3 uses
+  %i.v = phi ptr [ %.pre12, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exit.i ], [ %i.j, %_ZNKSt3__16vectorINS_6threadENS_9allocatorIS1_EEE11__recommendB8ne180100Em.exit ] ; 7 uses
+  %i.w = phi ptr [ %.pre, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exit.i ], [ %i.d, %_ZNKSt3__16vectorINS_6threadENS_9allocatorIS1_EEE11__recommendB8ne180100Em.exit ] ; 6 uses
   %storemerge.i = phi ptr [ %i.u, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorINS_6threadEEEEEDaRT_m.exit.i ], [ null, %_ZNKSt3__16vectorINS_6threadENS_9allocatorIS1_EEE11__recommendB8ne180100Em.exit ] ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 %i.l ; 4 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 %i.l ; 6 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %storemerge.i, i64 %.0.i ; 2 uses
   %.idx.i8 = shl i64 %1, 3                        ; 2 uses
   %i.z = getelementptr i8, ptr %i.x, i64 %.idx.i8 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.x, i8 0, i64 %.idx.i8, i1 false), !tbaa !56
   %.not27.i.i = icmp eq ptr %i.w, %i.v
-  br i1 %.not27.i.i, label %_ZNSt3__114__split_bufferINS_6threadERNS_9allocatorIS1_EEE5clearB8ne180100Ev.exit.i.critedge, label %.lr.ph.i.i
+  br i1 %.not27.i.i, label %_ZNSt3__114__split_bufferINS_6threadERNS_9allocatorIS1_EEE5clearB8ne180100Ev.exit.i.critedge, label %.lr.ph.i.i.preheader
 
-.lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
-  %.sroa.120.028.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %i.w, %bb.g ]
-  %i.aa = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %i.x, %bb.g ]
+.lr.ph.i.i.preheader:                             ; preds = %bb.g
+  %2 = ptrtoaddr ptr %i.w to i64
+  %3 = ptrtoaddr ptr %i.v to i64
+  %4 = add i64 %2, -8
+  %5 = sub i64 %4, %3                             ; 2 uses
+  %6 = lshr i64 %5, 3
+  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader19, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
+  %n.vec = and i64 %7, 4611686018427387900        ; 3 uses
+  %8 = mul i64 %n.vec, -8                         ; 2 uses
+  %9 = getelementptr i8, ptr %i.w, i64 %8
+  %10 = getelementptr i8, ptr %i.x, i64 %8        ; 2 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %11 = mul i64 %index, -8                        ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.w, i64 %11 ; 2 uses
+  %next.gep16 = getelementptr i8, ptr %i.x, i64 %11 ; 2 uses
+  %12 = getelementptr inbounds i8, ptr %next.gep, i64 -16 ; 2 uses
+  %13 = getelementptr inbounds i8, ptr %next.gep, i64 -32 ; 2 uses
+  %wide.load = load <2 x i64>, ptr %12, align 8, !tbaa !56
+  %wide.load17 = load <2 x i64>, ptr %13, align 8, !tbaa !56
+  %14 = getelementptr inbounds i8, ptr %next.gep16, i64 -16
+  %15 = getelementptr inbounds i8, ptr %next.gep16, i64 -32
+  store <2 x i64> %wide.load, ptr %14, align 8, !tbaa !56
+  store <2 x i64> %wide.load17, ptr %15, align 8, !tbaa !56
+  store <2 x i64> zeroinitializer, ptr %12, align 8, !tbaa !56
+  store <2 x i64> zeroinitializer, ptr %13, align 8, !tbaa !56
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %16 = icmp eq i64 %index.next, %n.vec
+  br i1 %16, label %middle.block, label %vector.body, !llvm.loop !139
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %7, %n.vec
+  br i1 %cmp.n, label %bb.h, label %.lr.ph.i.i.preheader19
+
+.lr.ph.i.i.preheader19:                           ; preds = %.lr.ph.i.i.preheader, %middle.block
+  %.sroa.120.028.i.i.ph = phi ptr [ %i.w, %.lr.ph.i.i.preheader ], [ %9, %middle.block ]
+  %.ph = phi ptr [ %i.x, %.lr.ph.i.i.preheader ], [ %10, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader19, %.lr.ph.i.i
+  %.sroa.120.028.i.i = phi ptr [ %i.ac, %.lr.ph.i.i ], [ %.sroa.120.028.i.i.ph, %.lr.ph.i.i.preheader19 ]
+  %i.aa = phi ptr [ %i.ab, %.lr.ph.i.i ], [ %.ph, %.lr.ph.i.i.preheader19 ]
   %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 -8 ; 3 uses
   %i.ac = getelementptr inbounds i8, ptr %.sroa.120.028.i.i, i64 -8 ; 4 uses
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !56
   store i64 %i.ad, ptr %i.ab, align 8, !tbaa !56
   store i64 0, ptr %i.ac, align 8, !tbaa !56
   %.not.i.i = icmp eq ptr %i.ac, %i.v
-  br i1 %.not.i.i, label %bb.h, label %.lr.ph.i.i, !llvm.loop !139
+  br i1 %.not.i.i, label %bb.h, label %.lr.ph.i.i, !llvm.loop !140
 
-bb.h:                                             ; preds = %.lr.ph.i.i
-  store ptr %i.ab, ptr %0, align 8, !tbaa !67
+bb.h:                                             ; preds = %.lr.ph.i.i, %middle.block
+  %.lcssa = phi ptr [ %10, %middle.block ], [ %i.ab, %.lr.ph.i.i ]
+  store ptr %.lcssa, ptr %0, align 8, !tbaa !67
   store ptr %i.z, ptr %i.c, align 8, !tbaa !67
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !67
   store ptr %i.y, ptr %i.a, align 8, !tbaa !67
@@ -320,15 +366,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %0, align 8, !tbaa !49
   store ptr null, ptr %0, align 8, !tbaa !49
-  %i.c = load i32, ptr %i.a, align 4, !tbaa !143
+  %i.c = load i32, ptr %i.a, align 4, !tbaa !146
   %i.d = tail call noundef i32 @pthread_setspecific(i32 noundef %i.c, ptr noundef %i.b) #25 ; 0 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %.val.i = load i64, ptr %i.e, align 8, !tbaa !144 ; 3 uses
+  %.val.i = load i64, ptr %i.e, align 8, !tbaa !147 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val3.i = load i64, ptr %i.h, align 8, !tbaa !144
-  %.val4.i = load ptr, ptr %i.f, align 8, !tbaa !145
+  %.val3.i = load i64, ptr %i.h, align 8, !tbaa !147
+  %.val4.i = load ptr, ptr %i.f, align 8, !tbaa !148
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.i = getelementptr inbounds i8, ptr %.val4.i, i64 %.val3.i ; 2 uses
   %i.j = and i64 %.val.i, 1
@@ -371,7 +417,7 @@ bb.h:                                             ; preds = %bb.g
   %i.w = load ptr, ptr %.val6.i.i, align 8, !tbaa !24
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.y = load ptr, ptr %i.x, align 8
-  call void %i.y(ptr noundef nonnull align 8 dereferenceable(24) %.val6.i.i) #25, !inline_history !140
+  call void %i.y(ptr noundef nonnull align 8 dereferenceable(24) %.val6.i.i) #25, !inline_history !143
   call void @_ZNSt3__119__shared_weak_count14__release_weakEv(ptr noundef nonnull align 8 dereferenceable(24) %.val6.i.i) #25
   br label %bb.j
 
@@ -398,7 +444,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ad = load ptr, ptr %.val.i.i.i.i.i, align 8, !tbaa !24
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   %i.af = load ptr, ptr %i.ae, align 8
-  call void %i.af(ptr noundef nonnull align 8 dereferenceable(24) %.val.i.i.i.i.i) #25, !inline_history !141
+  call void %i.af(ptr noundef nonnull align 8 dereferenceable(24) %.val.i.i.i.i.i) #25, !inline_history !144
   call void @_ZNSt3__119__shared_weak_count14__release_weakEv(ptr noundef nonnull align 8 dereferenceable(24) %.val.i.i.i.i.i) #25
   br label %_ZNSt3__112__tuple_leafILm3ENS_10shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEEELb0EED2Ev.exit.i.i.i.i.i
 
@@ -433,8 +479,8 @@ bb.m:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZNSt3__110unique_ptrINS_5tupleIJNS0_INS_15__thread_structENS_14default_deleteIS2_EEEEMN13IlmThread_3_412_GLOBAL__N_125DefaultThreadPoolProviderEFvNS_10shared_ptrINS7_21DefaultThreadPoolDataEEEEPS8_SB_EEENS3_ISF_EEED2B8ne180100Ev(ptr nofree noundef nonnull align 8 captures(none) dead_on_return(8) dereferenceable(8) %0) unnamed_addr #2 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !147    ; 5 uses
-  store ptr null, ptr %0, align 8, !tbaa !147
+  %i.a = load ptr, ptr %0, align 8, !tbaa !150    ; 5 uses
+  store ptr null, ptr %0, align 8, !tbaa !150
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %_ZNSt3__110unique_ptrINS_5tupleIJNS0_INS_15__thread_structENS_14default_deleteIS2_EEEEMN13IlmThread_3_412_GLOBAL__N_125DefaultThreadPoolProviderEFvNS_10shared_ptrINS7_21DefaultThreadPoolDataEEEEPS8_SB_EEENS3_ISF_EEE5resetB8ne180100EPSF_.exit, label %bb.b
 
@@ -454,7 +500,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = load ptr, ptr %.val.i.i.i.i, align 8, !tbaa !24
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8
-  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(24) %.val.i.i.i.i) #25, !inline_history !146
+  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(24) %.val.i.i.i.i) #25, !inline_history !149
   tail call void @_ZNSt3__119__shared_weak_count14__release_weakEv(ptr noundef nonnull align 8 dereferenceable(24) %.val.i.i.i.i) #25
   br label %_ZNSt3__112__tuple_leafILm3ENS_10shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEEELb0EED2Ev.exit.i.i.i.i
 
@@ -692,13 +738,16 @@ attributes #29 = { noreturn }
 !136 = !{!134, !132, !130, !128}
 !137 = !{ptr @_ZNSt3__120__shared_ptr_emplaceIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataENS_9allocatorIS3_EEED2Ev}
 !138 = !{i8 0, i8 2}
-!139 = distinct !{!139, !17}
-!140 = distinct !{null, null, ptr @_ZNSt3__110shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEED2B8ne180100Ev, null, null}
-!141 = distinct !{ptr @_ZNSt3__110unique_ptrINS_5tupleIJNS0_INS_15__thread_structENS_14default_deleteIS2_EEEEMN13IlmThread_3_412_GLOBAL__N_125DefaultThreadPoolProviderEFvNS_10shared_ptrINS7_21DefaultThreadPoolDataEEEEPS8_SB_EEENS3_ISF_EEED2B8ne180100Ev, null, null, null, null, null, ptr @_ZNSt3__110shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEED2B8ne180100Ev, null, null}
-!142 = !{!"_ZTSNSt3__121__thread_specific_ptrINS_15__thread_structEEE", !12, i64 0}
-!143 = !{!142, !12, i64 0}
-!144 = !{!11, !11, i64 0}
-!145 = !{!50, !50, i64 0}
-!146 = distinct !{null, null, null, null, null, ptr @_ZNSt3__110shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEED2B8ne180100Ev, null, null}
-!147 = !{!51, !51, i64 0}
+!139 = distinct !{!139, !17, !141, !142}
+!140 = distinct !{!140, !17, !142, !141}
+!141 = !{!"llvm.loop.isvectorized", i32 1}
+!142 = !{!"llvm.loop.unroll.runtime.disable"}
+!143 = distinct !{null, null, ptr @_ZNSt3__110shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEED2B8ne180100Ev, null, null}
+!144 = distinct !{ptr @_ZNSt3__110unique_ptrINS_5tupleIJNS0_INS_15__thread_structENS_14default_deleteIS2_EEEEMN13IlmThread_3_412_GLOBAL__N_125DefaultThreadPoolProviderEFvNS_10shared_ptrINS7_21DefaultThreadPoolDataEEEEPS8_SB_EEENS3_ISF_EEED2B8ne180100Ev, null, null, null, null, null, ptr @_ZNSt3__110shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEED2B8ne180100Ev, null, null}
+!145 = !{!"_ZTSNSt3__121__thread_specific_ptrINS_15__thread_structEEE", !12, i64 0}
+!146 = !{!145, !12, i64 0}
+!147 = !{!11, !11, i64 0}
+!148 = !{!50, !50, i64 0}
+!149 = distinct !{null, null, null, null, null, ptr @_ZNSt3__110shared_ptrIN13IlmThread_3_412_GLOBAL__N_121DefaultThreadPoolDataEED2B8ne180100Ev, null, null}
+!150 = !{!51, !51, i64 0}
 end_hunk_0

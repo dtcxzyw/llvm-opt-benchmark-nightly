@@ -205,13 +205,18 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN5boost6cobalt2io8read_all8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE.resume(ptr noundef nonnull align 8 dereferenceable(368) %0) #7 align 2 personality ptr @__gxx_personality_v0 {
-resume.0.a:
+resume.0:
   %1 = alloca %"class.boost::asio::any_io_executor", align 8 ; 9 uses
   %.sroa.9 = alloca [12 x i8], align 4            ; 2 uses
   %.reload.addr247 = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 4 uses
   %.reload.addr249 = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   %.reload.addr250 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 6 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !93, !noalias !242 ; 2 uses
+  %.not.i.i3170 = icmp eq ptr %3, null
+  br i1 %.not.i.i3170, label %resume.0.a, label %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i
+
+resume.0.a:                                       ; preds = %resume.0
   %.058.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %.sroa.952.8..sroa_idx217 = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
   %.sroa.9.8..sroa_idx216 = getelementptr inbounds nuw i8, ptr %0, i64 244
@@ -222,10 +227,8 @@ resume.0.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
-  %index.addr252 = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 3 uses
-  %3 = load ptr, ptr %2, align 8, !tbaa !93, !noalias !242 ; 2 uses
-  %.not.i.i3170 = icmp eq ptr %3, null
-  br i1 %.not.i.i3170, label %.lr.ph71, label %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i
+  %index.addr252 = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  br label %.lr.ph71
 
 bb.a:                                             ; preds = %bb.i, %.loopexit, %.critedge.i
   store i64 %i.am, ptr %.058.reload.addr, align 8
@@ -367,8 +370,8 @@ _ZN5boost6cobalt10as_tuple_tINS0_2opIJNS_6system10error_codeEmEE14awaitable_base
   tail call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #25
   br label %_ZN5boost6cobalt10as_tuple_tINS0_2opIJNS_6system10error_codeEmEE14awaitable_baseEED2Ev.exit
 
-_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i: ; preds = %.backedge, %resume.0.a
-  %.lcssa7 = phi ptr [ %3, %resume.0.a ], [ %i.ae, %.backedge ]
+_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i: ; preds = %.backedge, %resume.0
+  %.lcssa7 = phi ptr [ %3, %resume.0 ], [ %i.ae, %.backedge ]
   store ptr %.lcssa7, ptr %.reload.addr250, align 8, !tbaa !93, !noalias !242
   tail call void @_ZNSt15__exception_ptr13exception_ptr9_M_addrefEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr250) #25, !noalias !242
   invoke void @_ZSt17rethrow_exceptionNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 %.reload.addr250) #28
@@ -736,7 +739,8 @@ CoroEnd:                                          ; preds = %bb.e
 
 bb.z:                                             ; preds = %bb.y
   store ptr null, ptr %0, align 8
-  store i8 1, ptr %index.addr252, align 8
+  %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 360
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %i.eu
 
 bb.aa:                                            ; preds = %bb.y
@@ -970,13 +974,18 @@ _ZN5boost6cobalt6detail19composition_promiseIJNS_6system10error_codeEmEEdlEPv.ex
 
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN5boost6cobalt2io11read_all_at8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE.resume(ptr noundef nonnull align 8 dereferenceable(368) %0) #7 align 2 personality ptr @__gxx_personality_v0 {
-resume.0.a:
+resume.0:
   %1 = alloca %"class.boost::asio::any_io_executor", align 8 ; 9 uses
   %.sroa.10 = alloca [12 x i8], align 4           ; 2 uses
   %.reload.addr252 = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 4 uses
   %.reload.addr254 = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   %.reload.addr255 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 6 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !93, !noalias !260 ; 2 uses
+  %.not.i.i3270 = icmp eq ptr %3, null
+  br i1 %.not.i.i3270, label %resume.0.a, label %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i
+
+resume.0.a:                                       ; preds = %resume.0
   %.059.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %.sroa.1053.8..sroa_idx220 = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
   %.sroa.10.8..sroa_idx219 = getelementptr inbounds nuw i8, ptr %0, i64 244
@@ -987,10 +996,8 @@ resume.0.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
-  %index.addr257 = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 3 uses
-  %3 = load ptr, ptr %2, align 8, !tbaa !93, !noalias !260 ; 2 uses
-  %.not.i.i3270 = icmp eq ptr %3, null
-  br i1 %.not.i.i3270, label %.lr.ph71, label %_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i
+  %index.addr257 = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  br label %.lr.ph71
 
 bb.a:                                             ; preds = %bb.i, %.loopexit, %.critedge.i
   %.reload = load ptr, ptr %.reload.addr233, align 8, !tbaa !113 ; 5 uses
@@ -1136,8 +1143,8 @@ _ZN5boost6cobalt10as_tuple_tINS0_2opIJNS_6system10error_codeEmEE14awaitable_base
   tail call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #25
   br label %_ZN5boost6cobalt10as_tuple_tINS0_2opIJNS_6system10error_codeEmEE14awaitable_baseEED2Ev.exit
 
-_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i: ; preds = %.backedge, %resume.0.a
-  %.lcssa7 = phi ptr [ %3, %resume.0.a ], [ %i.ah, %.backedge ]
+_ZNSt15__exception_ptr13exception_ptrC2ERKS0_.exit.i.i: ; preds = %.backedge, %resume.0
+  %.lcssa7 = phi ptr [ %3, %resume.0 ], [ %i.ah, %.backedge ]
   store ptr %.lcssa7, ptr %.reload.addr255, align 8, !tbaa !93, !noalias !260
   tail call void @_ZNSt15__exception_ptr13exception_ptr9_M_addrefEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr255) #25, !noalias !260
   invoke void @_ZSt17rethrow_exceptionNSt15__exception_ptr13exception_ptrE(ptr noundef nonnull align 8 %.reload.addr255) #28
@@ -1505,7 +1512,8 @@ CoroEnd:                                          ; preds = %bb.e
 
 bb.z:                                             ; preds = %bb.y
   store ptr null, ptr %0, align 8
-  store i8 1, ptr %index.addr257, align 8
+  %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 360
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %i.ex
 
 bb.aa:                                            ; preds = %bb.y

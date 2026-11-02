@@ -204,7 +204,7 @@ iter.check:                                       ; preds = %.preheader
   %i.tj = add i32 %.lcssa418, %i.ti               ; 3 uses
   %i.tk = zext i32 %i.tj to i64
   %i.tl = add nuw nsw i64 %i.tk, 1                ; 5 uses
-  %min.iters.check = icmp ult i32 %i.tj, 7
+  %min.iters.check = icmp ult i32 %i.tj, 3
   br i1 %min.iters.check, label %.lr.ph521.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -237,7 +237,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check736, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.ug = and i64 %i.tl, 24
+  %i.ug = and i64 %i.tl, 28
   %n.vec = and i64 %i.tl, 8589934560              ; 5 uses
   %i.uh = trunc i64 %n.vec to i32
   %i.ui = add i32 %.2.lcssa, %i.uh
@@ -299,11 +299,11 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.ug, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph521.preheader, label %vec.epilog.ph, !prof !122
+  br i1 %min.epilog.iters.check, label %.lr.ph521.preheader, label %vec.epilog.ph, !prof !123
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec745 = and i64 %i.tl, 8589934584           ; 4 uses
+  %n.vec745 = and i64 %i.tl, 8589934588           ; 4 uses
   %i.vq = trunc i64 %n.vec745 to i32
   %i.vr = add i32 %.2.lcssa, %i.vq
   %i.vs = shl nuw nsw i64 %n.vec745, 1            ; 6 uses
@@ -324,37 +324,37 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep750 = getelementptr i8, ptr %.2262.lcssa, i64 %i.vz
   %next.gep751 = getelementptr i8, ptr %.2266.lcssa, i64 %i.vz
   %next.gep752 = getelementptr i8, ptr %.2270.lcssa, i64 %i.vz
-  %wide.load753 = load <8 x i16>, ptr %next.gep752, align 2, !tbaa !116
-  %10 = zext <8 x i16> %wide.load753 to <8 x i32>
-  %11 = shl nuw <8 x i32> %10, splat (i32 16)
-  %12 = bitcast <8 x i32> %11 to <8 x float>      ; 2 uses
-  %wide.load754 = load <8 x i16>, ptr %next.gep751, align 2, !tbaa !116
-  %13 = zext <8 x i16> %wide.load754 to <8 x i32>
-  %14 = shl nuw <8 x i32> %13, splat (i32 16)
-  %15 = bitcast <8 x i32> %14 to <8 x float>      ; 2 uses
-  %wide.load755 = load <8 x i16>, ptr %next.gep750, align 2, !tbaa !116
-  %16 = zext <8 x i16> %wide.load755 to <8 x i32>
-  %17 = shl nuw <8 x i32> %16, splat (i32 16)
-  %18 = bitcast <8 x i32> %17 to <8 x float>      ; 2 uses
-  %wide.load756 = load <8 x i16>, ptr %next.gep749, align 2, !tbaa !116
-  %19 = zext <8 x i16> %wide.load756 to <8 x i32>
-  %20 = shl nuw <8 x i32> %19, splat (i32 16)
-  %21 = bitcast <8 x i32> %20 to <8 x float>      ; 2 uses
-  %22 = fmul fast <8 x float> %18, %12
-  %23 = fmul fast <8 x float> %21, %15
-  %24 = fsub fast <8 x float> %22, %23
-  %25 = bitcast <8 x float> %24 to <8 x i32>
-  %26 = lshr <8 x i32> %25, splat (i32 16)
-  %27 = trunc nuw <8 x i32> %26 to <8 x i16>
-  store <8 x i16> %27, ptr %next.gep748, align 2, !tbaa !116
-  %28 = fmul fast <8 x float> %21, %12
-  %29 = fmul fast <8 x float> %18, %15
-  %30 = fadd fast <8 x float> %28, %29
-  %31 = bitcast <8 x float> %30 to <8 x i32>
-  %32 = lshr <8 x i32> %31, splat (i32 16)
-  %33 = trunc nuw <8 x i32> %32 to <8 x i16>
-  store <8 x i16> %33, ptr %next.gep747, align 2, !tbaa !116
-  %index.next757 = add nuw i64 %index746, 8       ; 2 uses
+  %wide.load753 = load <4 x i16>, ptr %next.gep752, align 2, !tbaa !116
+  %10 = zext <4 x i16> %wide.load753 to <4 x i32>
+  %11 = shl nuw <4 x i32> %10, splat (i32 16)
+  %12 = bitcast <4 x i32> %11 to <4 x float>      ; 2 uses
+  %wide.load754 = load <4 x i16>, ptr %next.gep751, align 2, !tbaa !116
+  %13 = zext <4 x i16> %wide.load754 to <4 x i32>
+  %14 = shl nuw <4 x i32> %13, splat (i32 16)
+  %15 = bitcast <4 x i32> %14 to <4 x float>      ; 2 uses
+  %wide.load755 = load <4 x i16>, ptr %next.gep750, align 2, !tbaa !116
+  %16 = zext <4 x i16> %wide.load755 to <4 x i32>
+  %17 = shl nuw <4 x i32> %16, splat (i32 16)
+  %18 = bitcast <4 x i32> %17 to <4 x float>      ; 2 uses
+  %wide.load756 = load <4 x i16>, ptr %next.gep749, align 2, !tbaa !116
+  %19 = zext <4 x i16> %wide.load756 to <4 x i32>
+  %20 = shl nuw <4 x i32> %19, splat (i32 16)
+  %21 = bitcast <4 x i32> %20 to <4 x float>      ; 2 uses
+  %22 = fmul fast <4 x float> %18, %12
+  %23 = fmul fast <4 x float> %21, %15
+  %24 = fsub fast <4 x float> %22, %23
+  %25 = bitcast <4 x float> %24 to <4 x i32>
+  %26 = lshr <4 x i32> %25, splat (i32 16)
+  %27 = trunc nuw <4 x i32> %26 to <4 x i16>
+  store <4 x i16> %27, ptr %next.gep748, align 2, !tbaa !116
+  %28 = fmul fast <4 x float> %21, %12
+  %29 = fmul fast <4 x float> %18, %15
+  %30 = fadd fast <4 x float> %28, %29
+  %31 = bitcast <4 x float> %30 to <4 x i32>
+  %32 = lshr <4 x i32> %31, splat (i32 16)
+  %33 = trunc nuw <4 x i32> %32 to <4 x i16>
+  store <4 x i16> %33, ptr %next.gep747, align 2, !tbaa !116
+  %index.next757 = add nuw i64 %index746, 4       ; 2 uses
   %i.wa = icmp eq i64 %index.next757, %n.vec745
   br i1 %i.wa, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !109
 
@@ -648,4 +648,5 @@ attributes #10 = { builtin nounwind }
 !120 = !{!101}
 !121 = !{!98, !99, !100}
 !122 = !{!"branch_weights", i32 8, i32 24}
+!123 = !{!"branch_weights", i32 4, i32 28}
 end_hunk_0

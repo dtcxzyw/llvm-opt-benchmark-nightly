@@ -202,7 +202,7 @@ _ZSt12construct_atISt10shared_ptrIN7rocksdb14CacheSimulatorEEJRKS3_EEDTgsnwcvPvL
   br label %_ZNSt6vectorISt10shared_ptrIN7rocksdb14CacheSimulatorEESaIS3_EE9push_backERKS3_.exit
 
 bb.ht:                                            ; preds = %_ZNK7rocksdb18CacheConfigurationltERKS0_.exit.thread342
-  %i.abp = load ptr, ptr %i.abb, align 8, !tbaa !128 ; 12 uses
+  %i.abp = load ptr, ptr %i.abb, align 8, !tbaa !128 ; 13 uses
   %i.abq = ptrtoint ptr %i.abd to i64             ; 2 uses
   %i.abr = ptrtoint ptr %i.abp to i64             ; 3 uses
   %i.abs = sub i64 %i.abq, %i.abr                 ; 3 uses
@@ -227,7 +227,7 @@ _ZNKSt6vectorISt10shared_ptrIN7rocksdb14CacheSimulatorEESaIS3_EE12_M_check_lenEm
   call void @llvm.assume(i1 %.not.i.i292)
   %i.abz = shl nuw nsw i64 %i.aby, 4
   %i.aca = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.abz) #24
-          to label %.noexc301 unwind label %.loopexit.split-lp349.loopexit.split-lp.loopexit.split-lp ; 12 uses
+          to label %.noexc301 unwind label %.loopexit.split-lp349.loopexit.split-lp.loopexit.split-lp ; 13 uses
 
 .noexc301:                                        ; preds = %_ZNKSt6vectorISt10shared_ptrIN7rocksdb14CacheSimulatorEESaIS3_EE12_M_check_lenEmPKc.exit.i
   %i.acb = getelementptr inbounds nuw i8, ptr %i.aca, i64 %i.abs
@@ -293,14 +293,20 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.acz = shl i64 %index, 4                      ; 2 uses
-  %next.gep.a = getelementptr i8, ptr %i.aca, i64 %i.acz
-  %next.gep730.a = getelementptr i8, ptr %i.abp, i64 %i.acz ; 2 uses
+  %i.acz = shl i64 %index, 4                      ; 3 uses
+  %36 = or disjoint i64 %i.acz, 32                ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.aca, i64 %i.acz
+  %next.gep730 = getelementptr i8, ptr %i.aca, i64 %36
+  %next.gep.a = getelementptr i8, ptr %i.abp, i64 %i.acz ; 2 uses
+  %next.gep730.a = getelementptr i8, ptr %i.abp, i64 %36 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !221)
   call void @llvm.experimental.noalias.scope.decl(metadata !222)
-  %wide.vec = load <8 x ptr>, ptr %next.gep730.a, align 8, !tbaa !19, !alias.scope !222
-  store <8 x ptr> %wide.vec, ptr %next.gep.a, align 8, !tbaa !19, !alias.scope !221
-  store <8 x ptr> splat (ptr null), ptr %next.gep730.a, align 8, !tbaa !19, !alias.scope !222
+  %wide.vec = load <4 x ptr>, ptr %next.gep.a, align 8, !tbaa !19, !alias.scope !222
+  %wide.vec734 = load <4 x ptr>, ptr %next.gep730.a, align 8, !tbaa !19, !alias.scope !222
+  store <4 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !19, !alias.scope !221
+  store <4 x ptr> %wide.vec734, ptr %next.gep730, align 8, !tbaa !19, !alias.scope !221
+  store <4 x ptr> splat (ptr null), ptr %next.gep.a, align 8, !tbaa !19, !alias.scope !222
+  store <4 x ptr> splat (ptr null), ptr %next.gep730.a, align 8, !tbaa !19, !alias.scope !222
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ada = icmp eq i64 %index.next, %n.vec
   br i1 %i.ada, label %middle.block, label %vector.body, !llvm.loop !190

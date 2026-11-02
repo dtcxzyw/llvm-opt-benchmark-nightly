@@ -108,7 +108,7 @@ define linkonce_odr void @_ZNSt6vectorISt10shared_ptrIN3gmx19IRestraintPotential
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !22     ; 7 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !22     ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -131,7 +131,7 @@ _ZNKSt6vectorISt10shared_ptrIN3gmx19IRestraintPotentialEESaIS3_EE12_M_check_lenE
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #16 ; 7 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #16 ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.s = load <2 x ptr>, ptr %2, align 8, !tbaa !18
@@ -158,14 +158,20 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.prehea
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.aa = shl i64 %index, 4                       ; 2 uses
-  %next.gep.a = getelementptr i8, ptr %i.p, i64 %i.aa
-  %next.gep35.a = getelementptr i8, ptr %i.c, i64 %i.aa ; 2 uses
+  %i.aa = shl i64 %index, 4                       ; 3 uses
+  %3 = or disjoint i64 %i.aa, 32                  ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.p, i64 %i.aa
+  %next.gep35 = getelementptr i8, ptr %i.p, i64 %3
+  %next.gep.a = getelementptr i8, ptr %i.c, i64 %i.aa ; 2 uses
+  %next.gep35.a = getelementptr i8, ptr %i.c, i64 %3 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
-  %wide.vec = load <8 x ptr>, ptr %next.gep35.a, align 8, !tbaa !18, !alias.scope !46
-  store <8 x ptr> %wide.vec, ptr %next.gep.a, align 8, !tbaa !18, !alias.scope !45
-  store <8 x ptr> splat (ptr null), ptr %next.gep35.a, align 8, !tbaa !18, !alias.scope !46
+  %wide.vec = load <4 x ptr>, ptr %next.gep.a, align 8, !tbaa !18, !alias.scope !46
+  %wide.vec39 = load <4 x ptr>, ptr %next.gep35.a, align 8, !tbaa !18, !alias.scope !46
+  store <4 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !18, !alias.scope !45
+  store <4 x ptr> %wide.vec39, ptr %next.gep35, align 8, !tbaa !18, !alias.scope !45
+  store <4 x ptr> splat (ptr null), ptr %next.gep.a, align 8, !tbaa !18, !alias.scope !46
+  store <4 x ptr> splat (ptr null), ptr %next.gep35.a, align 8, !tbaa !18, !alias.scope !46
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !38
@@ -196,7 +202,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZNSt6vectorISt10shared_ptrIN3gmx19IRestraintPotentialEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNKSt6vectorISt10shared_ptrIN3gmx19IRestraintPotentialEESaIS3_EE12_M_check_lenEmPKc.exit
   %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorISt10shared_ptrIN3gmx19IRestraintPotentialEESaIS3_EE12_M_check_lenEmPKc.exit ], [ %i.y, %middle.block ], [ %i.af, %.lr.ph.i.i.i ] ; 4 uses
-  %i.ag = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 16 ; 6 uses
+  %i.ag = getelementptr i8, ptr %.0.lcssa.i.i.i, i64 16 ; 7 uses
   %.not10.i.i.i16 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorISt10shared_ptrIN3gmx19IRestraintPotentialEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22, label %.lr.ph.i.i.i17.preheader
 
@@ -238,14 +244,20 @@ vector.ph51:                                      ; preds = %vector.memcheck
 
 vector.body53:                                    ; preds = %vector.body53, %vector.ph51
   %index54 = phi i64 [ 0, %vector.ph51 ], [ %index.next61, %vector.body53 ] ; 2 uses
-  %i.az = shl i64 %index54, 4                     ; 2 uses
-  %next.gep55 = getelementptr i8, ptr %i.ag, i64 %i.az
-  %next.gep56 = getelementptr i8, ptr %1, i64 %i.az ; 2 uses
+  %i.az = shl i64 %index54, 4                     ; 3 uses
+  %4 = or disjoint i64 %i.az, 32                  ; 2 uses
+  %next.gep61 = getelementptr i8, ptr %i.ag, i64 %i.az
+  %next.gep62 = getelementptr i8, ptr %i.ag, i64 %4
+  %next.gep55 = getelementptr i8, ptr %1, i64 %i.az ; 2 uses
+  %next.gep56 = getelementptr i8, ptr %1, i64 %4  ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
-  %wide.vec57 = load <8 x ptr>, ptr %next.gep56, align 8, !tbaa !18, !alias.scope !50
-  store <8 x ptr> %wide.vec57, ptr %next.gep55, align 8, !tbaa !18, !alias.scope !49
-  store <8 x ptr> splat (ptr null), ptr %next.gep56, align 8, !tbaa !18, !alias.scope !50
+  %wide.vec65 = load <4 x ptr>, ptr %next.gep55, align 8, !tbaa !18, !alias.scope !50
+  %wide.vec68 = load <4 x ptr>, ptr %next.gep56, align 8, !tbaa !18, !alias.scope !50
+  store <4 x ptr> %wide.vec65, ptr %next.gep61, align 8, !tbaa !18, !alias.scope !49
+  store <4 x ptr> %wide.vec68, ptr %next.gep62, align 8, !tbaa !18, !alias.scope !49
+  store <4 x ptr> splat (ptr null), ptr %next.gep55, align 8, !tbaa !18, !alias.scope !50
+  store <4 x ptr> splat (ptr null), ptr %next.gep56, align 8, !tbaa !18, !alias.scope !50
   %index.next61 = add nuw i64 %index54, 4         ; 2 uses
   %i.ba = icmp eq i64 %index.next61, %n.vec52
   br i1 %i.ba, label %middle.block62, label %vector.body53, !llvm.loop !43

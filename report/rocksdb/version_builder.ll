@@ -205,8 +205,8 @@ _ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_M_all
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = sub i64 %i.aa, %i.u
   %i.ac = shl nuw nsw i64 %i.n, 4
-  %i.ad = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ac) #29 ; 6 uses
-  %i.ae = load ptr, ptr %i.o, align 8, !tbaa !1055 ; 8 uses
+  %i.ad = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ac) #29 ; 7 uses
+  %i.ae = load ptr, ptr %i.o, align 8, !tbaa !1055 ; 9 uses
   %i.af = load ptr, ptr %i.y, align 8, !tbaa !1054 ; 3 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.ae, %i.af
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i.i, label %.lr.ph.i.i.i.i.i.preheader
@@ -230,14 +230,20 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.pr
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ap = shl i64 %index, 4                       ; 2 uses
-  %next.gep.a = getelementptr i8, ptr %i.ad, i64 %i.ap
-  %next.gep16.a = getelementptr i8, ptr %i.ae, i64 %i.ap ; 2 uses
+  %i.ap = shl i64 %index, 4                       ; 3 uses
+  %3 = or disjoint i64 %i.ap, 32                  ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.ad, i64 %i.ap
+  %next.gep16 = getelementptr i8, ptr %i.ad, i64 %3
+  %next.gep.a = getelementptr i8, ptr %i.ae, i64 %i.ap ; 2 uses
+  %next.gep16.a = getelementptr i8, ptr %i.ae, i64 %3 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1057)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1058)
-  %wide.vec = load <8 x ptr>, ptr %next.gep16.a, align 8, !tbaa !56, !alias.scope !1058
-  store <8 x ptr> %wide.vec, ptr %next.gep.a, align 8, !tbaa !56, !alias.scope !1057
-  store <8 x ptr> splat (ptr null), ptr %next.gep16.a, align 8, !tbaa !56, !alias.scope !1058
+  %wide.vec = load <4 x ptr>, ptr %next.gep.a, align 8, !tbaa !56, !alias.scope !1058
+  %wide.vec20 = load <4 x ptr>, ptr %next.gep16.a, align 8, !tbaa !56, !alias.scope !1058
+  store <4 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !56, !alias.scope !1057
+  store <4 x ptr> %wide.vec20, ptr %next.gep16, align 8, !tbaa !56, !alias.scope !1057
+  store <4 x ptr> splat (ptr null), ptr %next.gep.a, align 8, !tbaa !56, !alias.scope !1058
+  store <4 x ptr> splat (ptr null), ptr %next.gep16.a, align 8, !tbaa !56, !alias.scope !1058
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aq = icmp eq i64 %index.next, %n.vec
   br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !1052

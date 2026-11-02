@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeANtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayj1_ECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(96) %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !7587 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   invoke void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCs8774dFTUdNv_12polars_arrow9datatypes13ArrowDataTypeECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(96) %0)
           to label %bb.c unwind label %bb.b, !dbg !7607
 
@@ -217,12 +216,13 @@ bb.b:                                             ; preds = %bb.a
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit.i unwind label %bb.g, !dbg !7608
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !7607
   invoke void @_RNvXse_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragehENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.c)
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit2.i unwind label %bb.e, !dbg !7609
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.e, %bb.b
   %.pn.i = phi { ptr, i32 } [ %i.f, %bb.e ], [ %i.a, %bb.b ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !7607 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !dbg !7610, !alias.scope !7605, !noundef !3602
   %i.e = icmp eq ptr %i.d, null, !dbg !7610
   br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapEECs2g09Ig8GZd6_13polars_stream.exit.i, label %bb.d, !dbg !7610
@@ -237,12 +237,13 @@ bb.e:                                             ; preds = %bb.c
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit.i
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit2.i: ; preds = %bb.c
-  %i.g = load ptr, ptr %1, align 8, !dbg !7612, !alias.scope !7606, !noundef !3602
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !7607 ; 2 uses
+  %i.g = load ptr, ptr %2, align 8, !dbg !7612, !alias.scope !7606, !noundef !3602
   %i.h = icmp eq ptr %i.g, null, !dbg !7612
   br i1 %i.h, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayECs2g09Ig8GZd6_13polars_stream.exit, label %bb.f, !dbg !7612
 
 bb.f:                                             ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit2.i
-  tail call void @_RNvXse_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragehENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(32) %1), !dbg !7613
+  tail call void @_RNvXse_NtCsknLZRuU4977_13polars_buffer7storageINtB5_13SharedStoragehENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(32) %2), !dbg !7613
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayECs2g09Ig8GZd6_13polars_stream.exit, !dbg !7612
 
 bb.g:                                             ; preds = %bb.d, %bb.b
@@ -254,7 +255,7 @@ bb.g:                                             ; preds = %bb.d, %bb.b
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapEECs2g09Ig8GZd6_13polars_stream.exit.i: ; preds = %bb.d, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit.i
   resume { ptr, i32 } %.pn.i, !dbg !7607
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayECs2g09Ig8GZd6_13polars_stream.exit: ; preds = %bb.f, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit2.i
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow5array7boolean12BooleanArrayECs2g09Ig8GZd6_13polars_stream.exit: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap9immutable6BitmapECs2g09Ig8GZd6_13polars_stream.exit2.i, %bb.f
   ret void, !dbg !7614
 }
 

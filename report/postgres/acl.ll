@@ -204,17 +204,16 @@ bb.t:                                             ; preds = %list_length.exit.i
   %i.bu = call ptr @bloom_create(i64 noundef 10240, i32 noundef %i.bt, i64 noundef 0) #12 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   store i32 0, ptr %i.d, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %.1122, i64 16
   %i.bv = load i32, ptr %i.bo, align 4
   %i.bw = icmp sgt i32 %i.bv, 0
-  br i1 %i.bw, label %.lr.ph.i, label %.split27.us.i
+  br i1 %i.bw, label %.split27.us.i, label %.critedge.i
 
-.split27.us.i:                                    ; preds = %.lr.ph.i, %bb.t
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
-  br label %list_length.exit.thread.i
+.split27.us.i:                                    ; preds = %bb.t
+  %4 = getelementptr inbounds nuw i8, ptr %.1122, i64 16
+  br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.t, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.t ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.split27.us.i
+  %indvars.iv.i = phi i64 [ 0, %.split27.us.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 2 uses
   %i.bx = load ptr, ptr %4, align 8
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %indvars.iv.i
   %i.bz = load i32, ptr %i.by, align 8
@@ -224,10 +223,14 @@ bb.t:                                             ; preds = %list_length.exit.i
   %i.ca = load i32, ptr %i.bo, align 4
   %i.cb = sext i32 %i.ca to i64
   %i.cc = icmp slt i64 %indvars.iv.next.i, %i.cb
-  br i1 %i.cc, label %.lr.ph.i, label %.split27.us.i, !llvm.loop !29
+  br i1 %i.cc, label %.lr.ph.i, label %.critedge.i, !llvm.loop !29
 
-list_length.exit.thread.i:                        ; preds = %.split27.us.i, %bb.s
-  %.4 = phi ptr [ %.1101121, %bb.s ], [ %i.bu, %.split27.us.i ] ; 2 uses
+.critedge.i:                                      ; preds = %.lr.ph.i, %bb.t
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
+  br label %list_length.exit.thread.i
+
+list_length.exit.thread.i:                        ; preds = %.critedge.i, %bb.s
+  %.4 = phi ptr [ %.1101121, %bb.s ], [ %i.bu, %.critedge.i ] ; 2 uses
   %i.cd = load i32, ptr %i.c, align 4
   %i.ce = call ptr @lappend_oid(ptr noundef %.1122, i32 noundef %i.cd) #12 ; 2 uses
   %.not23.i = icmp eq ptr %.4, null
@@ -303,17 +306,16 @@ bb.z:                                             ; preds = %list_length.exit.i8
   %i.cv = call ptr @bloom_create(i64 noundef 10240, i32 noundef %i.cu, i64 noundef 0) #12 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store i32 0, ptr %i.b, align 4
-  %5 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 16
   %i.cw = load i32, ptr %i.cp, align 4
   %i.cx = icmp sgt i32 %i.cw, 0
-  br i1 %i.cx, label %.lr.ph.i88, label %.split27.us.i87
+  br i1 %i.cx, label %.split27.us.i87, label %.critedge.i87
 
-.split27.us.i87:                                  ; preds = %.lr.ph.i88, %bb.z
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  br label %list_length.exit.thread.i84
+.split27.us.i87:                                  ; preds = %bb.z
+  %5 = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 16
+  br label %.lr.ph.i88
 
-.lr.ph.i88:                                       ; preds = %bb.z, %.lr.ph.i88
-  %indvars.iv.i89 = phi i64 [ %indvars.iv.next.i90, %.lr.ph.i88 ], [ 0, %bb.z ] ; 2 uses
+.lr.ph.i88:                                       ; preds = %.lr.ph.i88, %.split27.us.i87
+  %indvars.iv.i89 = phi i64 [ 0, %.split27.us.i87 ], [ %indvars.iv.next.i90, %.lr.ph.i88 ] ; 2 uses
   %i.cy = load ptr, ptr %5, align 8
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.cy, i64 %indvars.iv.i89
   %i.da = load i32, ptr %i.cz, align 8
@@ -323,10 +325,14 @@ bb.z:                                             ; preds = %list_length.exit.i8
   %i.db = load i32, ptr %i.cp, align 4
   %i.dc = sext i32 %i.db to i64
   %i.dd = icmp slt i64 %indvars.iv.next.i90, %i.dc
-  br i1 %i.dd, label %.lr.ph.i88, label %.split27.us.i87, !llvm.loop !29
+  br i1 %i.dd, label %.lr.ph.i88, label %.critedge.i87, !llvm.loop !29
 
-list_length.exit.thread.i84:                      ; preds = %.split27.us.i87, %bb.y
-  %.6 = phi ptr [ %.1101.lcssa, %bb.y ], [ %i.cv, %.split27.us.i87 ] ; 2 uses
+.critedge.i87:                                    ; preds = %.lr.ph.i88, %bb.z
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  br label %list_length.exit.thread.i84
+
+list_length.exit.thread.i84:                      ; preds = %.critedge.i87, %bb.y
+  %.6 = phi ptr [ %.1101.lcssa, %bb.y ], [ %i.cv, %.critedge.i87 ] ; 2 uses
   %i.de = load i32, ptr %i.a, align 4
   %i.df = call ptr @lappend_oid(ptr noundef %.1.lcssa, i32 noundef %i.de) #12 ; 2 uses
   %.not23.i85 = icmp eq ptr %.6, null

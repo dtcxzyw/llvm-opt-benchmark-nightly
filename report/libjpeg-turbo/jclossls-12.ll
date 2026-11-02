@@ -204,11 +204,11 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.i = zext i32 %i.h to i64                     ; 2 uses
-  %min.iters.check = icmp ult i32 %i.h, 4
+  %min.iters.check = icmp ult i32 %i.h, 8
   br i1 %min.iters.check, label %.lr.ph.preheader46, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.i, 4294967292               ; 5 uses
+  %n.vec = and i64 %i.i, 4294967288               ; 5 uses
   %i.j = trunc nuw i64 %n.vec to i32
   %i.k = sub i32 %i.h, %i.j
   %i.l = shl nuw nsw i64 %n.vec, 2
@@ -225,25 +225,39 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vector.recur = phi <4 x i32> [ %vector.recur.init, %vector.ph ], [ %i.v, %vector.body ]
   %vector.recur37 = phi <4 x i32> [ %vector.recur.init36, %vector.ph ], [ %i.x, %vector.body ]
   %i.q = shl i64 %index, 2
-  %next.gep = getelementptr i8, ptr %4, i64 %i.q
+  %next.gep = getelementptr i8, ptr %4, i64 %i.q  ; 2 uses
   %i.r = shl i64 %index, 1                        ; 2 uses
-  %next.gep38.a = getelementptr i8, ptr %3, i64 %i.r
-  %next.gep39 = getelementptr i8, ptr %2, i64 %i.r
-  %i.s = getelementptr inbounds nuw i8, ptr %next.gep, i64 4
-  %i.t = getelementptr inbounds nuw i8, ptr %next.gep39, i64 2
-  %i.u = getelementptr inbounds nuw i8, ptr %next.gep38.a, i64 2
+  %next.gep38 = getelementptr i8, ptr %3, i64 %i.r ; 2 uses
+  %next.gep38.a = getelementptr i8, ptr %2, i64 %i.r ; 2 uses
+  %next.gep39 = getelementptr inbounds nuw i8, ptr %next.gep, i64 4
+  %i.s = getelementptr inbounds nuw i8, ptr %next.gep38.a, i64 2
+  %i.t = getelementptr inbounds nuw i8, ptr %next.gep38, i64 2
+  %i.u = getelementptr inbounds nuw i8, ptr %next.gep38, i64 10
+  %wide.load = load <4 x i16>, ptr %i.t, align 2, !tbaa !43
   %wide.load.a = load <4 x i16>, ptr %i.u, align 2, !tbaa !43
+  %6 = sext <4 x i16> %wide.load to <4 x i32>     ; 3 uses
   %i.v = sext <4 x i16> %wide.load.a to <4 x i32> ; 4 uses
-  %i.w = shufflevector <4 x i32> %vector.recur, <4 x i32> %i.v, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %wide.load40 = load <4 x i16>, ptr %i.t, align 2, !tbaa !43
+  %7 = shufflevector <4 x i32> %vector.recur, <4 x i32> %6, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %i.w = shufflevector <4 x i32> %6, <4 x i32> %i.v, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %8 = getelementptr inbounds nuw i8, ptr %next.gep38.a, i64 10
+  %wide.load41 = load <4 x i16>, ptr %i.s, align 2, !tbaa !43
+  %wide.load40 = load <4 x i16>, ptr %8, align 2, !tbaa !43
+  %9 = sext <4 x i16> %wide.load41 to <4 x i32>   ; 3 uses
   %i.x = sext <4 x i16> %wide.load40 to <4 x i32> ; 4 uses
-  %i.y = shufflevector <4 x i32> %vector.recur37, <4 x i32> %i.x, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %10 = shufflevector <4 x i32> %vector.recur37, <4 x i32> %9, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %i.y = shufflevector <4 x i32> %9, <4 x i32> %i.x, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %11 = sub nsw <4 x i32> %6, %7
   %i.z = sub nsw <4 x i32> %i.v, %i.w
+  %12 = ashr <4 x i32> %11, splat (i32 1)
   %i.aa = ashr <4 x i32> %i.z, splat (i32 1)
+  %13 = add nsw <4 x i32> %10, %12
   %i.ab = add nsw <4 x i32> %i.y, %i.aa
+  %14 = sub nsw <4 x i32> %9, %13
   %i.ac = sub nsw <4 x i32> %i.x, %i.ab
-  store <4 x i32> %i.ac, ptr %i.s, align 4, !tbaa !40
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %next.gep, i64 20
+  store <4 x i32> %14, ptr %next.gep39, align 4, !tbaa !40
+  store <4 x i32> %i.ac, ptr %15, align 4, !tbaa !40
+  %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !72
 
@@ -333,11 +347,11 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.i = zext i32 %i.h to i64                     ; 2 uses
-  %min.iters.check = icmp ult i32 %i.h, 4
+  %min.iters.check = icmp ult i32 %i.h, 8
   br i1 %min.iters.check, label %.lr.ph.preheader47, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.i, 4294967292               ; 5 uses
+  %n.vec = and i64 %i.i, 4294967288               ; 5 uses
   %i.j = trunc nuw i64 %n.vec to i32
   %i.k = sub i32 %i.h, %i.j
   %i.l = shl nuw nsw i64 %n.vec, 2
@@ -354,25 +368,39 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %vector.recur = phi <4 x i32> [ %vector.recur.init, %vector.ph ], [ %i.v, %vector.body ]
   %vector.recur38 = phi <4 x i32> [ %vector.recur.init37, %vector.ph ], [ %i.x, %vector.body ]
   %i.q = shl i64 %index, 2
-  %next.gep = getelementptr i8, ptr %4, i64 %i.q
+  %next.gep = getelementptr i8, ptr %4, i64 %i.q  ; 2 uses
   %i.r = shl i64 %index, 1                        ; 2 uses
-  %next.gep39.a = getelementptr i8, ptr %3, i64 %i.r
-  %next.gep40 = getelementptr i8, ptr %2, i64 %i.r
-  %i.s = getelementptr inbounds nuw i8, ptr %next.gep, i64 4
-  %i.t = getelementptr inbounds nuw i8, ptr %next.gep40, i64 2
-  %i.u = getelementptr inbounds nuw i8, ptr %next.gep39.a, i64 2
+  %next.gep39 = getelementptr i8, ptr %3, i64 %i.r ; 2 uses
+  %next.gep39.a = getelementptr i8, ptr %2, i64 %i.r ; 2 uses
+  %next.gep40 = getelementptr inbounds nuw i8, ptr %next.gep, i64 4
+  %i.s = getelementptr inbounds nuw i8, ptr %next.gep39.a, i64 2
+  %i.t = getelementptr inbounds nuw i8, ptr %next.gep39, i64 2
+  %i.u = getelementptr inbounds nuw i8, ptr %next.gep39, i64 10
+  %wide.load = load <4 x i16>, ptr %i.t, align 2, !tbaa !43
   %wide.load.a = load <4 x i16>, ptr %i.u, align 2, !tbaa !43
+  %6 = sext <4 x i16> %wide.load to <4 x i32>     ; 3 uses
   %i.v = sext <4 x i16> %wide.load.a to <4 x i32> ; 4 uses
-  %i.w = shufflevector <4 x i32> %vector.recur, <4 x i32> %i.v, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %wide.load41 = load <4 x i16>, ptr %i.t, align 2, !tbaa !43
+  %7 = shufflevector <4 x i32> %vector.recur, <4 x i32> %6, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %i.w = shufflevector <4 x i32> %6, <4 x i32> %i.v, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %8 = getelementptr inbounds nuw i8, ptr %next.gep39.a, i64 10
+  %wide.load42 = load <4 x i16>, ptr %i.s, align 2, !tbaa !43
+  %wide.load41 = load <4 x i16>, ptr %8, align 2, !tbaa !43
+  %9 = sext <4 x i16> %wide.load42 to <4 x i32>   ; 3 uses
   %i.x = sext <4 x i16> %wide.load41 to <4 x i32> ; 4 uses
-  %i.y = shufflevector <4 x i32> %vector.recur38, <4 x i32> %i.x, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %10 = shufflevector <4 x i32> %vector.recur38, <4 x i32> %9, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %i.y = shufflevector <4 x i32> %9, <4 x i32> %i.x, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %11 = sub nsw <4 x i32> %10, %7
   %i.z = sub nsw <4 x i32> %i.y, %i.w
+  %12 = ashr <4 x i32> %11, splat (i32 1)
   %i.aa = ashr <4 x i32> %i.z, splat (i32 1)
+  %13 = add nsw <4 x i32> %12, %6
   %i.ab = add nsw <4 x i32> %i.aa, %i.v
+  %14 = sub nsw <4 x i32> %9, %13
   %i.ac = sub nsw <4 x i32> %i.x, %i.ab
-  store <4 x i32> %i.ac, ptr %i.s, align 4, !tbaa !40
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %next.gep, i64 20
+  store <4 x i32> %14, ptr %next.gep40, align 4, !tbaa !40
+  store <4 x i32> %i.ac, ptr %15, align 4, !tbaa !40
+  %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !74
 

@@ -204,8 +204,8 @@ rcu_segcblist_move_seglen.exit:                   ; preds = %bb.d, %bb.e
   %i.r = getelementptr i8, ptr %0, i64 56
   %i.s = load i64, ptr %i.r, align 8
   %i.t = sub i64 %1, %i.s
-  %i.u = icmp slt i64 %i.t, 0                     ; 2 uses
-  br i1 %i.u, label %.lr.ph48.critedge.critedge, label %bb.f
+  %i.u = icmp slt i64 %i.t, 0                     ; 3 uses
+  br i1 %i.u, label %.lr.ph, label %bb.f
 
 bb.f:                                             ; preds = %rcu_segcblist_move_seglen.exit
   %i.v = getelementptr i8, ptr %0, i64 24
@@ -214,45 +214,47 @@ bb.f:                                             ; preds = %rcu_segcblist_move_
   %i.x = getelementptr i8, ptr %0, i64 96         ; 2 uses
   %i.y = load volatile i64, ptr %i.x, align 8     ; 2 uses
   %.not.i40.1 = icmp eq i64 %i.y, 0
-  br i1 %.not.i40.1, label %.lr.ph, label %bb.g
+  br i1 %.not.i40.1, label %.lr.ph48.critedge.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.z = load i64, ptr %i.g, align 8
   %i.aa = add i64 %i.z, %i.y
   store volatile i64 %i.aa, ptr %i.g, align 8
   store volatile i64 0, ptr %i.x, align 8
-  br label %.lr.ph
+  br label %.lr.ph48.critedge.critedge
 
-.lr.ph48.critedge.critedge:                       ; preds = %rcu_segcblist_move_seglen.exit
+.lr.ph48.critedge.critedge:                       ; preds = %bb.f, %bb.g
   %i.ab = getelementptr i8, ptr %0, i64 16
-  store volatile ptr %i.m, ptr %i.ab, align 8
-  br label %.lr.ph48
+  store volatile ptr %i.w, ptr %i.ab, align 8
+  br i1 %i.u, label %.preheader, label %.lr.ph48
 
-.lr.ph48:                                         ; preds = %.lr.ph, %.lr.ph48.critedge.critedge
-  %2 = getelementptr i8, ptr %0, i64 32
-  %3 = getelementptr i8, ptr %0, i64 96           ; 2 uses
-  %4 = getelementptr i8, ptr %0, i64 56
-  %i.ac = getelementptr i8, ptr %0, i64 16        ; 2 uses
-  %5 = load ptr, ptr %i.ac, align 8
-  %6 = load ptr, ptr %2, align 8
-  %7 = icmp eq ptr %5, %6
-  br i1 %7, label %.loopexit, label %bb.h
+.lr.ph48:                                         ; preds = %.lr.ph48.critedge.critedge
+  %i.ac = getelementptr i8, ptr %0, i64 24
+  store volatile ptr %i.w, ptr %i.ac, align 8
+  br label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.f, %bb.g
+.lr.ph:                                           ; preds = %rcu_segcblist_move_seglen.exit
   %i.ad = getelementptr i8, ptr %0, i64 16
-  store volatile ptr %i.w, ptr %i.ad, align 8
-  br i1 %i.u, label %.lr.ph48, label %.preheader
+  store volatile ptr %i.m, ptr %i.ad, align 8
+  br label %._crit_edge
 
-.preheader:                                       ; preds = %.lr.ph
-  %i.ae = getelementptr i8, ptr %0, i64 24
-  store volatile ptr %i.w, ptr %i.ae, align 8
-  br label %.loopexit
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph48
+  br i1 %i.u, label %.preheader, label %.loopexit
 
-bb.h:                                             ; preds = %.lr.ph48
+.preheader:                                       ; preds = %.lr.ph48.critedge.critedge, %._crit_edge
+  %2 = getelementptr i8, ptr %0, i64 16           ; 2 uses
+  %3 = load ptr, ptr %2, align 8
+  %i.ae = getelementptr i8, ptr %0, i64 32
+  %4 = load ptr, ptr %i.ae, align 8
+  %5 = icmp eq ptr %3, %4
+  br i1 %5, label %.loopexit, label %bb.h
+
+bb.h:                                             ; preds = %.preheader
   %i.af = getelementptr i8, ptr %0, i64 24
   %i.ag = load ptr, ptr %i.af, align 8
-  store volatile ptr %i.ag, ptr %i.ac, align 8
-  %i.ah = load volatile i64, ptr %3, align 8      ; 2 uses
+  store volatile ptr %i.ag, ptr %2, align 8
+  %6 = getelementptr i8, ptr %0, i64 96           ; 2 uses
+  %i.ah = load volatile i64, ptr %6, align 8      ; 2 uses
   %.not.i41 = icmp eq i64 %i.ah, 0
   br i1 %.not.i41, label %rcu_segcblist_move_seglen.exit42, label %bb.i
 
@@ -261,16 +263,17 @@ bb.i:                                             ; preds = %bb.h
   %i.aj = load i64, ptr %i.ai, align 8
   %i.ak = add i64 %i.aj, %i.ah
   store volatile i64 %i.ak, ptr %i.ai, align 8
-  store volatile i64 0, ptr %3, align 8
+  store volatile i64 0, ptr %6, align 8
   br label %rcu_segcblist_move_seglen.exit42
 
 rcu_segcblist_move_seglen.exit42:                 ; preds = %bb.h, %bb.i
-  %i.al = load i64, ptr %4, align 8
+  %7 = getelementptr i8, ptr %0, i64 56
+  %i.al = load i64, ptr %7, align 8
   %i.am = getelementptr i8, ptr %0, i64 48
   store i64 %i.al, ptr %i.am, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader, %.preheader44, %rcu_segcblist_move_seglen.exit42, %.lr.ph48, %bb.c
+.loopexit:                                        ; preds = %.preheader44, %._crit_edge, %.preheader, %rcu_segcblist_move_seglen.exit42, %bb.c
   ret void
 }
 

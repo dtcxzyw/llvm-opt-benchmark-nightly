@@ -202,25 +202,28 @@ define linkonce_odr hidden void @_ZN2cv12BlockStorageINS_6Point_IiEELm1024ELm0EE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, i8 0, i64 40, i1 false)
   %i.c = invoke noalias noundef nonnull dereferenceable(8192) ptr @_Znwm(i64 noundef 8192) #21
           to label %bb.b unwind label %.loopexit.split-lp ; 3 uses
 
+1:                                                ; preds = %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i, %bb.c
+  ret void
+
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(8192) %i.c, i8 0, i64 8192, i1 false), !tbaa !23
-  %i.d = load ptr, ptr %1, align 8, !tbaa !110    ; 3 uses
-  %i.e = load ptr, ptr %2, align 8, !tbaa !106
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !110    ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  %i.e = load ptr, ptr %3, align 8, !tbaa !106
   %.not.i.i = icmp eq ptr %i.d, %i.e
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   store ptr %i.c, ptr %i.d, align 8, !tbaa !104
-  %i.f = load ptr, ptr %1, align 8, !tbaa !110
+  %i.f = load ptr, ptr %2, align 8, !tbaa !110
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store ptr %i.g, ptr %1, align 8, !tbaa !110
-  br label %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE9push_backEOS6_.exit
+  store ptr %i.g, ptr %2, align 8, !tbaa !110
+  br label %1
 
 bb.d:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !105  ; 4 uses
@@ -266,7 +269,7 @@ _ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_E
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i.i
-  %i.w = load ptr, ptr %2, align 8, !tbaa !106
+  %i.w = load ptr, ptr %3, align 8, !tbaa !106
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.j
   tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.y) #20
@@ -274,15 +277,12 @@ bb.g:                                             ; preds = %_ZNSt6vectorIPN2cv1
 
 _ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i: ; preds = %bb.g, %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i.i
   store ptr %i.s, ptr %i.b, align 8, !tbaa !105
-  store ptr %i.v, ptr %1, align 8, !tbaa !110
+  store ptr %i.v, ptr %2, align 8, !tbaa !110
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.q
-  store ptr %i.z, ptr %2, align 8, !tbaa !106
-  br label %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE9push_backEOS6_.exit
+  store ptr %i.z, ptr %3, align 8, !tbaa !106
+  br label %1
 
-_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE9push_backEOS6_.exit: ; preds = %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i, %bb.c
-  ret void
-
-.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.a, %bb.e
+.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.e, %bb.a
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !105 ; 3 uses
@@ -290,7 +290,8 @@ _ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_E
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPN2cv12BlockStorageINS0_6Point_IiEELm1024ELm0EE10block_typeESaIS6_EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp
-  %i.ab = load ptr, ptr %2, align 8, !tbaa !106
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.ab = load ptr, ptr %4, align 8, !tbaa !106
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = sub i64 %i.ac, %i.ad
@@ -306,24 +307,27 @@ define linkonce_odr hidden void @_ZN2cv12BlockStorageIaLm1024ELm0EEC2Ev(ptr noun
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, i8 0, i64 40, i1 false)
   %i.c = invoke noalias noundef nonnull dereferenceable(1024) ptr @_Znwm(i64 noundef 1024) #21
           to label %bb.b unwind label %.loopexit.split-lp ; 2 uses
 
+1:                                                ; preds = %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, %bb.c
+  ret void
+
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %1, align 8, !tbaa !111    ; 3 uses
-  %i.e = load ptr, ptr %2, align 8, !tbaa !103
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !111    ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  %i.e = load ptr, ptr %3, align 8, !tbaa !103
   %.not.i.i = icmp eq ptr %i.d, %i.e
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   store ptr %i.c, ptr %i.d, align 8, !tbaa !104
-  %i.f = load ptr, ptr %1, align 8, !tbaa !111
+  %i.f = load ptr, ptr %2, align 8, !tbaa !111
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store ptr %i.g, ptr %1, align 8, !tbaa !111
-  br label %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE9push_backEOS4_.exit
+  store ptr %i.g, ptr %2, align 8, !tbaa !111
+  br label %1
 
 bb.d:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !102  ; 4 uses
@@ -369,7 +373,7 @@ _ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE11_S_relocate
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
-  %i.w = load ptr, ptr %2, align 8, !tbaa !103
+  %i.w = load ptr, ptr %3, align 8, !tbaa !103
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.j
   tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.y) #20
@@ -377,15 +381,12 @@ bb.g:                                             ; preds = %_ZNSt6vectorIPN2cv1
 
 _ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i: ; preds = %bb.g, %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i.i
   store ptr %i.s, ptr %i.b, align 8, !tbaa !102
-  store ptr %i.v, ptr %1, align 8, !tbaa !111
+  store ptr %i.v, ptr %2, align 8, !tbaa !111
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.q
-  store ptr %i.z, ptr %2, align 8, !tbaa !103
-  br label %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE9push_backEOS4_.exit
+  store ptr %i.z, ptr %3, align 8, !tbaa !103
+  br label %1
 
-_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE9push_backEOS4_.exit: ; preds = %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE17_M_realloc_insertIJS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i, %bb.c
-  ret void
-
-.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.a, %bb.e
+.loopexit.split-lp:                               ; preds = %_ZNKSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i, %bb.e, %bb.a
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !102 ; 3 uses
@@ -393,7 +394,8 @@ _ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EE9push_backEOS
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPN2cv12BlockStorageIaLm1024ELm0EE10block_typeESaIS4_EED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %.loopexit.split-lp
-  %i.ab = load ptr, ptr %2, align 8, !tbaa !103
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.ab = load ptr, ptr %4, align 8, !tbaa !103
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = sub i64 %i.ac, %i.ad

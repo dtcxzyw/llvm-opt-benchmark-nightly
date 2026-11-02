@@ -204,23 +204,64 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.a, align 8
   %i.n = shl nuw i64 8, %i.j
-  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #19 ; 4 uses
-  %i.p = load ptr, ptr %0, align 8                ; 2 uses
-  %i.q = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #19 ; 6 uses
+  %i.p = load ptr, ptr %0, align 8                ; 5 uses
+  %i.q = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.r = icmp eq ptr %i.p, %i.q
-  br i1 %i.r, label %_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit, label %.lr.ph.i.i.i.i
+  br i1 %i.r, label %_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit, label %.lr.ph.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i:                                   ; preds = %bb.e, %.lr.ph.i.i.i.i
-  %.08.i.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i.i ], [ %i.o, %bb.e ] ; 2 uses
-  %.sroa.04.07.i.i.i.i = phi ptr [ %i.t, %.lr.ph.i.i.i.i ], [ %i.p, %bb.e ] ; 2 uses
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
+  %2 = ptrtoaddr ptr %i.q to i64
+  %3 = ptrtoaddr ptr %i.p to i64
+  %4 = add i64 %2, -8
+  %5 = sub i64 %4, %3                             ; 2 uses
+  %6 = lshr i64 %5, 3
+  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 24
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader15, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
+  %n.vec = and i64 %7, 4611686018427387900        ; 3 uses
+  %8 = shl i64 %n.vec, 3                          ; 2 uses
+  %9 = getelementptr i8, ptr %i.o, i64 %8
+  %10 = getelementptr i8, ptr %i.p, i64 %8
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %11 = shl i64 %index, 3                         ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.o, i64 %11 ; 2 uses
+  %next.gep12 = getelementptr i8, ptr %i.p, i64 %11 ; 2 uses
+  %12 = getelementptr i8, ptr %next.gep12, i64 16
+  %wide.load = load <2 x i64>, ptr %next.gep12, align 8
+  %wide.load13 = load <2 x i64>, ptr %12, align 8
+  %13 = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %wide.load, ptr %next.gep, align 8
+  store <2 x i64> %wide.load13, ptr %13, align 8
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %14 = icmp eq i64 %index.next, %n.vec
+  br i1 %14, label %middle.block, label %vector.body, !llvm.loop !34
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %7, %n.vec
+  br i1 %cmp.n, label %_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit, label %.lr.ph.i.i.i.i.preheader15
+
+.lr.ph.i.i.i.i.preheader15:                       ; preds = %.lr.ph.i.i.i.i.preheader, %middle.block
+  %.08.i.i.i.i.ph = phi ptr [ %i.o, %.lr.ph.i.i.i.i.preheader ], [ %9, %middle.block ]
+  %.sroa.04.07.i.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.i.preheader ], [ %10, %middle.block ]
+  br label %.lr.ph.i.i.i.i
+
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader15, %.lr.ph.i.i.i.i
+  %.08.i.i.i.i = phi ptr [ %i.u, %.lr.ph.i.i.i.i ], [ %.08.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader15 ] ; 2 uses
+  %.sroa.04.07.i.i.i.i = phi ptr [ %i.t, %.lr.ph.i.i.i.i ], [ %.sroa.04.07.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader15 ] ; 2 uses
   %i.s = load i64, ptr %.sroa.04.07.i.i.i.i, align 8
   store i64 %i.s, ptr %.08.i.i.i.i, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i, i64 8 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 8
   %i.v = icmp eq ptr %i.t, %i.q
-  br i1 %i.v, label %_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !34
+  br i1 %i.v, label %_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !35
 
-_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit: ; preds = %.lr.ph.i.i.i.i, %bb.e
+_ZSt18uninitialized_moveIPN2v88internal6TaggedINS1_3MapEEES5_ET0_T_S7_S6_.exit: ; preds = %.lr.ph.i.i.i.i, %middle.block, %bb.e
   %i.w = shl nuw i64 1, %i.j
   %i.x = ptrtoint ptr %i.m to i64
   %i.y = sub i64 %i.x, %i.f
@@ -317,5 +358,8 @@ attributes #19 = { builtin nounwind allocsize(0) }
 !31 = !{i64 16933414}
 !32 = distinct !{!32, !11}
 !33 = distinct !{!33, !11}
-!34 = distinct !{!34, !11}
+!34 = distinct !{!34, !11, !36, !37}
+!35 = distinct !{!35, !11, !37, !36}
+!36 = !{!"llvm.loop.isvectorized", i32 1}
+!37 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0

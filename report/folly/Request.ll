@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/Request?download=true
 inline.NumInlined: 3280
 inline.NumDeleted: 1545
-loop-unroll.NumCompletelyUnrolled: 18
+loop-unroll.NumCompletelyUnrolled: 17
 loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 26
+loop-unroll.NumUnrolled: 25
 begin_hunk_0_@_ZN5folly14RequestContextC2ERKS0_:bb.a
   %i.bx = and i32 %i.bu, 16
   %.not.i.i.i.i6 = icmp eq i32 %i.bx, 0
@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"struct.folly::SharedMutexImpl<false>::WaitForever", align 1 ; 3 uses
   %5 = alloca %"class.folly::RequestContext::State::LockGuard", align 8 ; 8 uses
   %6 = alloca %"class.google::LogMessage", align 8 ; 7 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   store ptr %0, ptr %5, align 8, !tbaa !213
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -608,14 +608,7 @@ bb.ba:                                            ; preds = %_ZN5folly14RequestC
 
 _ZN5folly14RequestContext5State9LockGuardD2Ev.exit: ; preds = %bb.av, %bb.aw, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE6unlockEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
-  br i1 %.not, label %.loopexit179, label %.preheader178
-
-.preheader178:                                    ; preds = %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
-  %10 = load atomic i8, ptr @_ZZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEbE26__folly_detail_glog_logged monotonic, align 1, !range !88, !noundef !87
-  %11 = trunc nuw i8 %10 to i1
-  br i1 %11, label %.loopexit179, label %bb.bc, !prof !73
+  br i1 %.not, label %.loopexit179, label %8
 
 bb.bb:                                            ; preds = %.noexc35.thread, %.noexc34, %bb.as, %bb.ar, %.noexc30.thread, %bb.ag, %.noexc17.thread, %bb.k, %bb.j, %bb.c, %.noexc6
   %i.iw = landingpad { ptr, i32 }
@@ -628,7 +621,12 @@ bb.bb:                                            ; preds = %.noexc35.thread, %.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.bq
 
-bb.bc:                                            ; preds = %.preheader178
+8:                                                ; preds = %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit
+  %9 = load atomic i8, ptr @_ZZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEbE26__folly_detail_glog_logged monotonic, align 1, !range !88, !noundef !87
+  %10 = trunc nuw i8 %9 to i1
+  br i1 %10, label %.loopexit179, label %bb.bc, !prof !73
+
+bb.bc:                                            ; preds = %8
   %i.ix = atomicrmw xchg ptr @_ZZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEbE26__folly_detail_glog_logged, i8 1 monotonic, align 1
   %i.iy = trunc i8 %i.ix to i1
   br i1 %i.iy, label %.loopexit179, label %bb.bd
@@ -650,7 +648,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.be
 
 bb.bf:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.jb = load ptr, ptr %7, align 8, !tbaa !71
-  %i.jc = load i64, ptr %8, align 8, !tbaa !68
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.jc = load i64, ptr %11, align 8, !tbaa !68
   %i.jd = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.iz, ptr noundef %i.jb, i64 noundef %i.jc)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit unwind label %bb.bi
 
@@ -660,11 +659,12 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit91: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
   %i.jf = load ptr, ptr %7, align 8, !tbaa !71    ; 2 uses
-  %i.jg = icmp eq ptr %i.jf, %9
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.jg = icmp eq ptr %i.jf, %12
   br i1 %i.jg, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit91
-  %i.jh = load i64, ptr %9, align 8, !tbaa !91
+  %i.jh = load i64, ptr %12, align 8, !tbaa !91
   %i.ji = add i64 %i.jh, 1
   call void @_ZdlPvm(ptr noundef %i.jf, i64 noundef %i.ji) #43
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -689,11 +689,12 @@ bb.bi:                                            ; preds = %_ZStlsIcSt11char_tr
   %i.jl = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.jm = load ptr, ptr %7, align 8, !tbaa !71    ; 2 uses
-  %i.jn = icmp eq ptr %i.jm, %9
+  %13 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.jn = icmp eq ptr %i.jm, %13
   br i1 %i.jn, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i92
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i92: ; preds = %bb.bi
-  %i.jo = load i64, ptr %9, align 8, !tbaa !91
+  %i.jo = load i64, ptr %13, align 8, !tbaa !91
   %i.jp = add i64 %i.jo, 1
   call void @_ZdlPvm(ptr noundef %i.jm, i64 noundef %i.jp) #43
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94
@@ -709,7 +710,7 @@ bb.bj:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   br label %bb.bq
 
-.loopexit179:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.bc, %.preheader178, %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit
+.loopexit179:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.bc, %8, %_ZN5folly14RequestContext5State9LockGuardD2Ev.exit
   br i1 %.not43.i149162, label %_ZN5folly14RequestContext5State16doSetContextDataERKNS_12RequestTokenERSt10unique_ptrINS_11RequestDataESt14default_deleteIS6_EENS0_14DoSetBehaviourEb.exit, label %bb.bk
 
 bb.bk:                                            ; preds = %.loopexit179
