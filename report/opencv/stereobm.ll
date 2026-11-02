@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %_ZNK2cv3Mat8rowRang
   %.val87 = load i64, ptr %i.dd, align 8, !tbaa !84 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.cv, i64 12
   %i.df = load i32, ptr %i.de, align 4, !tbaa !20 ; 7 uses
-  %i.dg = sdiv i32 %i.df, 2                       ; 31 uses
+  %i.dg = sdiv i32 %i.df, 2                       ; 29 uses
   %i.dh = add nsw i32 %i.dg, 1                    ; 12 uses
   %i.di = call i32 @llvm.smin.i32(i32 %i.az, i32 %i.dh) ; 17 uses
   %i.dj = sub i32 0, %i.di                        ; 12 uses
@@ -302,7 +302,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.go = sext i32 %i.gh to i64
   %i.gp = shl nsw i64 %i.go, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.gn, i8 0, i64 %i.gp, i1 false)
-  %i.gq = xor i32 %i.dg, -1                       ; 7 uses
+  %i.gq = xor i32 %i.dg, -1                       ; 6 uses
   %invariant.gep.i = getelementptr i8, ptr %i.fy, i64 %i.ge ; 3 uses
   %i.gr = icmp sgt i32 %i.df, -2                  ; 2 uses
   br i1 %i.gr, label %.lr.ph.i, label %.preheader43.i
@@ -353,6 +353,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.hn = sub i64 %i.hm, %i.gw
   %scevgep668 = getelementptr i8, ptr %.val, i64 %i.hn
   %i.ho = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin669 = sext i32 %i.ho to i64
+  %33 = sext i32 %i.dz to i64
   %i.hp = mul nsw i64 %i.hj, %i.gz
   %i.hq = add i64 %i.hp, %i.fm
   %i.hr = add i64 %i.hq, %wide.trip.count139.i
@@ -375,13 +377,11 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.lr.ph51.us.i
 
 .lr.ph51.us.i:                                    ; preds = %._crit_edge52.split.us.us.i, %.lr.ph51.us.preheader.i
-  %indvar670 = phi i32 [ %indvar.next671, %._crit_edge52.split.us.us.i ], [ 0, %.lr.ph51.us.preheader.i ] ; 3 uses
-  %indvars.iv146.i = phi i64 [ %indvars.iv.next147.i, %._crit_edge52.split.us.us.i ], [ %i.hh, %.lr.ph51.us.preheader.i ] ; 2 uses
-  %33 = add i32 %indvar670, %i.gq
-  %34 = call i32 @llvm.smax.i32(i32 %i.ho, i32 %33)
-  %35 = call i32 @llvm.smin.i32(i32 %34, i32 %i.dz)
-  %smin673 = sext i32 %35 to i64
-  %scevgep674 = getelementptr i8, ptr %scevgep668, i64 %smin673 ; 2 uses
+  %indvar670 = phi i32 [ %indvar.next671, %._crit_edge52.split.us.us.i ], [ 0, %.lr.ph51.us.preheader.i ] ; 2 uses
+  %indvars.iv146.i = phi i64 [ %indvars.iv.next147.i, %._crit_edge52.split.us.us.i ], [ %i.hh, %.lr.ph51.us.preheader.i ] ; 3 uses
+  %smax670 = call i64 @llvm.smax.i64(i64 %smin669, i64 %indvars.iv146.i)
+  %smin671 = call i64 @llvm.smin.i64(i64 %smax670, i64 %33)
+  %scevgep674 = getelementptr i8, ptr %scevgep668, i64 %smin671 ; 2 uses
   %i.ia = mul i32 %i.hy, %indvar670
   %i.ib = sext i32 %i.ia to i64
   %scevgep677 = getelementptr i8, ptr %scevgep676, i64 %i.ib ; 2 uses
@@ -784,7 +784,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.oj = sext i32 %i.dx to i64
   %i.ok = sext i32 %i.gq to i64                   ; 6 uses
   %smax219.i = call i32 @llvm.abs.i32(i32 %i.dg, i1 false)
-  %i.ol = sext i32 %i.dg to i64
+  %i.ol = sext i32 %i.dg to i64                   ; 2 uses
   %i.om = shl i64 %i.ep, 32
   %i.on = ashr exact i64 %i.om, 32                ; 3 uses
   %i.oo = add i32 %i.dy, 1
@@ -824,6 +824,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.pm = sub i64 %i.pl, %i.nk
   %scevgep927 = getelementptr i8, ptr %.val, i64 %i.pm
   %i.pn = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin928 = sext i32 %i.pn to i64
   %i.po = zext nneg i32 %i.dz to i64
   %i.pp = mul i64 %i.pe, %i.no
   %i.pq = add i64 %i.pp, %i.fm
@@ -892,10 +893,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.ad:                                            ; preds = %._crit_edge112.i, %.lr.ph121.i
   %indvars.iv237.i = phi i64 [ 0, %.lr.ph121.i ], [ %indvars.iv.next238.i, %._crit_edge112.i ] ; 4 uses
   %.0418119.i = phi ptr [ %i.ne, %.lr.ph121.i ], [ %i.zy, %._crit_edge112.i ] ; 4 uses
-  %36 = trunc i64 %indvars.iv237.i to i32
-  %37 = add i32 %i.dg, %36
-  %38 = call i32 @llvm.smax.i32(i32 %i.pn, i32 %37)
-  %smax929 = sext i32 %38 to i64
+  %34 = add i64 %indvars.iv237.i, %i.ol
+  %smax929 = call i64 @llvm.smax.i64(i64 %smin928, i64 %34)
   %smin930 = call i64 @llvm.smin.i64(i64 %smax929, i64 %i.po)
   %scevgep931 = getelementptr i8, ptr %scevgep927, i64 %smin930 ; 2 uses
   %i.qk = load ptr, ptr %i.et, align 8, !tbaa !79 ; 2 uses
@@ -1298,7 +1297,7 @@ bb.aq:                                            ; preds = %bb.ab
   %i.acn = sext i32 %i.acg to i64
   %i.aco = shl nsw i64 %i.acn, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.acm, i8 0, i64 %i.aco, i1 false)
-  %i.acp = xor i32 %i.dg, -1                      ; 7 uses
+  %i.acp = xor i32 %i.dg, -1                      ; 6 uses
   %invariant.gep.i101 = getelementptr i8, ptr %i.abx, i64 %i.acd ; 3 uses
   %i.acq = icmp sgt i32 %i.df, -2                 ; 2 uses
   br i1 %i.acq, label %.lr.ph.i266, label %.preheader43.i102
@@ -1349,6 +1348,8 @@ bb.aq:                                            ; preds = %bb.ab
   %i.adm = sub i64 %i.adl, %i.acv
   %scevgep = getelementptr i8, ptr %.val, i64 %i.adm
   %i.adn = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin = sext i32 %i.adn to i64
+  %35 = sext i32 %i.dz to i64
   %i.ado = mul nsw i64 %i.adi, %i.acy
   %i.adp = add i64 %i.ado, %i.abl
   %i.adq = add i64 %i.adp, %wide.trip.count139.i290
@@ -1371,12 +1372,10 @@ bb.aq:                                            ; preds = %bb.ab
   br label %.lr.ph51.us.i291
 
 .lr.ph51.us.i291:                                 ; preds = %._crit_edge52.split.us.us.i312, %.lr.ph51.us.preheader.i285
-  %indvar = phi i32 [ %indvar.next, %._crit_edge52.split.us.us.i312 ], [ 0, %.lr.ph51.us.preheader.i285 ] ; 3 uses
-  %indvars.iv146.i292 = phi i64 [ %indvars.iv.next147.i313, %._crit_edge52.split.us.us.i312 ], [ %i.adg, %.lr.ph51.us.preheader.i285 ] ; 2 uses
-  %39 = add i32 %indvar, %i.acp
-  %40 = call i32 @llvm.smax.i32(i32 %i.adn, i32 %39)
-  %41 = call i32 @llvm.smin.i32(i32 %40, i32 %i.dz)
-  %smin424 = sext i32 %41 to i64
+  %indvar = phi i32 [ %indvar.next, %._crit_edge52.split.us.us.i312 ], [ 0, %.lr.ph51.us.preheader.i285 ] ; 2 uses
+  %indvars.iv146.i292 = phi i64 [ %indvars.iv.next147.i313, %._crit_edge52.split.us.us.i312 ], [ %i.adg, %.lr.ph51.us.preheader.i285 ] ; 3 uses
+  %smax = call i64 @llvm.smax.i64(i64 %smin, i64 %indvars.iv146.i292)
+  %smin424 = call i64 @llvm.smin.i64(i64 %smax, i64 %35)
   %scevgep425 = getelementptr i8, ptr %scevgep, i64 %smin424 ; 2 uses
   %i.adz = mul i32 %i.adx, %indvar
   %i.aea = sext i32 %i.adz to i64
@@ -1779,7 +1778,7 @@ scalar.ph437:                                     ; preds = %scalar.ph437.prehea
   %i.ajw = sext i32 %i.dx to i64
   %i.ajx = sext i32 %i.acp to i64                 ; 6 uses
   %smax219.i112 = call i32 @llvm.abs.i32(i32 %i.dg, i1 false)
-  %i.ajy = sext i32 %i.dg to i64
+  %i.ajy = sext i32 %i.dg to i64                  ; 2 uses
   %i.ajz = shl i64 %i.aao, 32
   %i.aka = ashr exact i64 %i.ajz, 32              ; 3 uses
   %i.akb = add i32 %i.dy, 1
@@ -1819,6 +1818,7 @@ scalar.ph437:                                     ; preds = %scalar.ph437.prehea
   %i.akz = sub i64 %i.aky, %i.aix
   %scevgep599 = getelementptr i8, ptr %.val, i64 %i.akz
   %i.ala = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin600 = sext i32 %i.ala to i64
   %i.alb = zext nneg i32 %i.dz to i64
   %i.alc = mul i64 %i.akr, %i.ajb
   %i.ald = add i64 %i.alc, %i.abl
@@ -1887,10 +1887,8 @@ scalar.ph437:                                     ; preds = %scalar.ph437.prehea
 bb.ar:                                            ; preds = %._crit_edge112.i140, %.lr.ph121.i105
   %indvars.iv237.i123 = phi i64 [ 0, %.lr.ph121.i105 ], [ %indvars.iv.next238.i141, %._crit_edge112.i140 ] ; 4 uses
   %.0418119.i124 = phi ptr [ %i.air, %.lr.ph121.i105 ], [ %i.avf, %._crit_edge112.i140 ] ; 4 uses
-  %42 = trunc i64 %indvars.iv237.i123 to i32
-  %43 = add i32 %i.dg, %42
-  %44 = call i32 @llvm.smax.i32(i32 %i.ala, i32 %43)
-  %smax601 = sext i32 %44 to i64
+  %36 = add i64 %indvars.iv237.i123, %i.ajy
+  %smax601 = call i64 @llvm.smax.i64(i64 %smin600, i64 %36)
   %smin602 = call i64 @llvm.smin.i64(i64 %smax601, i64 %i.alb)
   %scevgep603 = getelementptr i8, ptr %scevgep599, i64 %smin602 ; 2 uses
   %i.alx = load ptr, ptr %i.aas, align 8, !tbaa !79 ; 2 uses
@@ -2292,6 +2290,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #15
