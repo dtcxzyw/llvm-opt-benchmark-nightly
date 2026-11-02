@@ -205,8 +205,7 @@ _ZNK3jxl22YCbCrChromaSubsampling5Is444Ev.exit:    ; preds = %bb.o
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fp, i64 %i.fx ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.fy, i64 64) ]
   %i.fz = getelementptr inbounds nuw [4 x i8], ptr %i.fy, i64 %i.eq
-  %14 = and i64 %.0292417.us.us, 4294967295
-  %.not.not.i.i.us.us = icmp eq i64 %14, 0        ; 2 uses
+  %.not.not.i.i.us.us = icmp eq i64 %.0292417.us.us, 0 ; 2 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZN3jxl16QuantizeGradientEPKimmmmmff.exit.us.us, %.preheader.us.us
@@ -302,8 +301,7 @@ _ZN3jxl16QuantizeGradientEPKimmmmmff.exit.us.us:  ; preds = %bb.t, %_ZN3jxl17Pre
   %i.hq = mul i64 %i.hi, %.0292417.us422
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hh, i64 %i.hq ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.hr, i64 64) ]
-  %15 = and i64 %.0292417.us422, 4294967295
-  %.not.not.i.i313.us = icmp eq i64 %15, 0        ; 2 uses
+  %.not.not.i.i313.us = icmp eq i64 %.0292417.us422, 0 ; 2 uses
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZN3jxl16QuantizeGradientEPKimmmmmff.exit326.us, %.lr.ph414.us

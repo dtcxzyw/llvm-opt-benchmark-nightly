@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %bb.d
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.h = getelementptr [16 x i8], ptr %.0, i64 %indvars.iv ; 2 uses
   %i.i = load i64, ptr %i.h, align 8
-  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
-  %3 = shl nuw i32 %indvars.iv.tr, 1
-  %4 = sext i32 %3 to i64
+  %3 = shl nuw i64 %indvars.iv, 1
+  %4 = and i64 %3, 4294967292
   %i.j = getelementptr [8 x i8], ptr %2, i64 %4   ; 2 uses
   store i64 %i.i, ptr %i.j, align 1
   %i.k = getelementptr i8, ptr %i.h, i64 8
@@ -216,9 +215,8 @@ bb.e:                                             ; preds = %bb.d
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.n = getelementptr [16 x i8], ptr %.0, i64 %indvars.iv.next ; 2 uses
   %i.o = load i64, ptr %i.n, align 8
-  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
-  %5 = shl nuw i32 %indvars.iv.tr.1, 1
-  %6 = sext i32 %5 to i64
+  %5 = shl nuw i64 %indvars.iv.next, 1
+  %6 = and i64 %5, 4294967294
   %i.p = getelementptr [8 x i8], ptr %2, i64 %6   ; 2 uses
   store i64 %i.o, ptr %i.p, align 1
   %i.q = getelementptr i8, ptr %i.n, i64 8
