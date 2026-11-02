@@ -202,12 +202,12 @@ bb.c:                                             ; preds = %.loopexit.i, %.lr.p
 
 .lr.ph67.split.split.i:                           ; preds = %.lr.ph67.split.i
   %i.y = load ptr, ptr %i.w, align 8, !tbaa !44   ; 2 uses
+  %5 = zext i32 %.164.i to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph67.split.split.i
-  %.165.i = phi i32 [ %.164.i, %.lr.ph67.split.split.i ], [ %.1.i, %bb.e ] ; 3 uses
-  %5 = zext nneg i32 %.165.i to i64               ; 2 uses
-  %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %5
+  %indvars.iv93.i = phi i64 [ %5, %.lr.ph67.split.split.i ], [ %indvars.iv.next94.i, %bb.e ] ; 4 uses
+  %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %indvars.iv93.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !46
   %i.ac = zext i8 %i.ab to i32
@@ -220,17 +220,17 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph67.spl
   br label %.split68.i
 
 .split68.i:                                       ; preds = %bb.d, %.split68.loopexit75.i
-  %.pre-phi.i = phi i64 [ %.pre97.i, %.split68.loopexit75.i ], [ %5, %bb.d ]
   %6 = phi ptr [ %.pre96.i, %.split68.loopexit75.i ], [ %i.y, %bb.d ]
+  %.1.lcssa58.split.i = phi i64 [ %.pre97.i, %.split68.loopexit75.i ], [ %indvars.iv93.i, %bb.d ]
   %i.ad = load i64, ptr %i.o, align 8, !tbaa !47
-  %i.ae = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %.pre-phi.i
+  %i.ae = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %.1.lcssa58.split.i
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !48
   %i.ag = add i64 %i.af, %i.ad
   br label %local__find_closest_cue_.exit
 
 bb.e:                                             ; preds = %bb.d
-  %.1.i = add nsw i32 %.165.i, -1
-  %i.ah = icmp sgt i32 %.165.i, 0
+  %indvars.iv.next94.i = add nsw i64 %indvars.iv93.i, -1
+  %i.ah = icmp sgt i64 %indvars.iv93.i, 0
   br i1 %i.ah, label %bb.d, label %.loopexit.i, !llvm.loop !32
 
 local__find_closest_cue_.exit:                    ; preds = %.loopexit.i, %bb.a, %.split68.i, %bb.b
