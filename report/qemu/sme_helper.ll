@@ -205,17 +205,14 @@ vec.epilog.middle.block527:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph215.split.us.preheader:                     ; preds = %.preheader207
   %wide.trip.count260 = zext nneg i32 %i.k to i64
-  %wide.trip.count = zext nneg i32 %i.ag to i64   ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.ag to i64   ; 4 uses
   %wide.trip.count255 = zext nneg i32 %i.l to i64 ; 4 uses
   %i.fg = sub i64 %i.c, %i.a                      ; 2 uses
-  %5 = add nsw i64 %wide.trip.count, -2           ; 2 uses
   %i.fh = add nsw i64 %wide.trip.count, -1        ; 5 uses
   %min.iters.check472 = icmp ult i32 %i.ae, 3
-  %6 = trunc i64 %5 to i32
-  %7 = icmp ugt i64 %5, 4294967295
   %i.fi = add i64 %i.fg, -1
   %diff.check474 = icmp ult i64 %i.fi, 31
-  %invariant.op595 = or i1 %7, %diff.check474
+  %invariant.op595 = or i1 %min.iters.check472, %diff.check474
   %min.iters.check476 = icmp ult i32 %i.ae, 5
   %i.fj = and i64 %i.fh, 12
   %n.vec478 = and i64 %i.fh, -16                  ; 4 uses
@@ -243,22 +240,15 @@ vec.epilog.middle.block527:                       ; preds = %vec.epilog.vector.b
   br i1 %i.fv, label %iter.check486, label %iter.check455
 
 iter.check486:                                    ; preds = %.lr.ph215.split.us, %._crit_edge.us.us
-  %.0168210.us.us = phi i32 [ %i.hu, %._crit_edge.us.us ], [ 0, %.lr.ph215.split.us ] ; 10 uses
+  %.0168210.us.us = phi i32 [ %i.hu, %._crit_edge.us.us ], [ 0, %.lr.ph215.split.us ] ; 9 uses
   %i.fw = zext nneg i32 %.0168210.us.us to i64    ; 2 uses
   %i.fx = getelementptr inbounds nuw [2 x i8], ptr %i.fp, i64 %i.fw
   %i.fy = load i16, ptr %i.fx, align 2
   %i.fz = getelementptr inbounds nuw [2 x i8], ptr %i.fo, i64 %i.fw
   store i16 %i.fy, ptr %i.fz, align 2
-  br i1 %min.iters.check472, label %vec.epilog.scalar.ph488.preheader, label %vector.scevcheck469
+  br i1 %invariant.op595, label %vec.epilog.scalar.ph488.preheader, label %vector.main.loop.iter.check475
 
-vector.scevcheck469:                              ; preds = %iter.check486
-  %8 = add nuw i32 %.0168210.us.us, 1             ; 2 uses
-  %9 = add i32 %8, %6
-  %10 = icmp slt i32 %9, %8
-  %or.cond563.reass = or i1 %10, %invariant.op595
-  br i1 %or.cond563.reass, label %vec.epilog.scalar.ph488.preheader, label %vector.main.loop.iter.check475
-
-vector.main.loop.iter.check475:                   ; preds = %vector.scevcheck469
+vector.main.loop.iter.check475:                   ; preds = %iter.check486
   br i1 %min.iters.check476, label %vec.epilog.ph490, label %vector.body479
 
 vector.body479:                                   ; preds = %vector.main.loop.iter.check475, %vector.body479
@@ -306,8 +296,8 @@ vec.epilog.vector.body493:                        ; preds = %vec.epilog.vector.b
 vec.epilog.middle.block497:                       ; preds = %vec.epilog.vector.body493
   br i1 %cmp.n498, label %._crit_edge.us.us, label %vec.epilog.scalar.ph488.preheader
 
-vec.epilog.scalar.ph488.preheader:                ; preds = %iter.check486, %vector.scevcheck469, %vec.epilog.iter.check487, %vec.epilog.middle.block497
-  %indvars.iv.ph = phi i64 [ 1, %vector.scevcheck469 ], [ 1, %iter.check486 ], [ %i.fk, %vec.epilog.iter.check487 ], [ %i.fl, %vec.epilog.middle.block497 ] ; 4 uses
+vec.epilog.scalar.ph488.preheader:                ; preds = %iter.check486, %vec.epilog.iter.check487, %vec.epilog.middle.block497
+  %indvars.iv.ph = phi i64 [ 1, %iter.check486 ], [ %i.fk, %vec.epilog.iter.check487 ], [ %i.fl, %vec.epilog.middle.block497 ] ; 4 uses
   %i.gq = sub nsw i64 %wide.trip.count, %indvars.iv.ph
   %xtraiter574 = and i64 %i.gq, 3                 ; 2 uses
   %lcmp.mod575.not = icmp eq i64 %xtraiter574, 0

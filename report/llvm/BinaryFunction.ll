@@ -205,7 +205,7 @@ _ZNK4llvm16MCCFIInstruction9getValuesEv.exit.i:   ; preds = %bb.y
   br i1 %i.en, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i, label %.lr.ph, !prof !1421
 
 bb.aa:                                            ; preds = %bb.ac
-  %i.eo = add i32 %.028.i.i152, 7
+  %i.eo = add nuw nsw i32 %.028.i.i152, 7
   %i.ep = icmp eq ptr %i.eu, %i.em
   br i1 %i.ep, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i, label %.lr.ph, !prof !1422, !llvm.loop !1404
 
@@ -213,7 +213,7 @@ bb.aa:                                            ; preds = %bb.ac
   %.028.i.i152 = phi i32 [ %i.eo, %bb.aa ], [ 0, %_ZNK4llvm16MCCFIInstruction9getValuesEv.exit.i ] ; 3 uses
   %.031.i.i151 = phi ptr [ %i.eu, %bb.aa ], [ %i.ek, %_ZNK4llvm16MCCFIInstruction9getValuesEv.exit.i ] ; 3 uses
   %i.eq = load i8, ptr %.031.i.i151, align 1, !tbaa !473, !noalias !1420 ; 2 uses
-  %i.er = icmp ugt i32 %.028.i.i152, 62
+  %i.er = icmp samesign ugt i32 %.028.i.i152, 62
   br i1 %i.er, label %bb.ab, label %bb.ac, !prof !591
 
 bb.ab:                                            ; preds = %.lr.ph

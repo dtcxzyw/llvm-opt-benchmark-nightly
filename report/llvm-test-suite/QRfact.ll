@@ -204,19 +204,17 @@ bb.e:                                             ; preds = %.lr.ph
   %i.kr = fsub double %i.kc, %i.kq
   %i.ks = fsub double %i.jy, %i.kr
   %i.kt = add nsw i64 %i.jo, -1
-  %2 = trunc i64 %i.jo to i32
-  %3 = add nsw i32 %2, 2
+  %2 = add nsw i64 %i.jo, 2
   br label %.lr.ph166
 
 .lr.ph166:                                        ; preds = %.lr.ph166.preheader, %bb.k
-  %indvar = phi i32 [ 0, %.lr.ph166.preheader ], [ %indvar.next, %bb.k ] ; 2 uses
+  %indvar = phi i64 [ 0, %.lr.ph166.preheader ], [ %indvar.next, %bb.k ] ; 2 uses
   %indvars.iv181 = phi i64 [ %i.jo, %.lr.ph166.preheader ], [ %indvars.iv.next182, %bb.k ] ; 11 uses
   %indvars.iv174 = phi i64 [ %i.kt, %.lr.ph166.preheader ], [ %indvars.iv.next175, %bb.k ] ; 6 uses
   %.0132164 = phi double [ %i.jv, %.lr.ph166.preheader ], [ %.1133, %bb.k ] ; 5 uses
   %.0134163 = phi double [ %i.ks, %.lr.ph166.preheader ], [ %.1135, %bb.k ] ; 4 uses
-  %4 = add i32 %3, %indvar
-  %5 = sext i32 %4 to i64
-  %smin = tail call i64 @llvm.smin.i64(i64 %5, i64 %i.je)
+  %3 = add i64 %2, %indvar
+  %smin = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.je)
   %smax = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %smin)
   %smax202 = tail call i64 @llvm.smax.i64(i64 %smax, i64 %indvars.iv174)
   %smax203 = tail call i64 @llvm.smax.i64(i64 %i.jo, i64 %indvars.iv174)
@@ -467,7 +465,7 @@ bb.k:                                             ; preds = %ApplyRGivens.exit, 
   %.1133 = phi double [ %i.qc, %bb.j ], [ %.0132164, %ApplyRGivens.exit ]
   %indvars.iv.next175 = add nsw i64 %indvars.iv174, 1
   %exitcond184.not = icmp eq i64 %indvars.iv.next182, %i.jq
-  %indvar.next = add i32 %indvar, 1
+  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond184.not, label %.backedge, label %.lr.ph166, !llvm.loop !23
 
 .critedge138:                                     ; preds = %.preheader151.49

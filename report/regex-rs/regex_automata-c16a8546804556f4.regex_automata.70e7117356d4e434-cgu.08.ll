@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %.lr.ph.i.i
   %i.am = shl i32 %i.ak, %i.al, !dbg !3819
   %i.an = or i32 %i.am, %.sroa.01.034.i.i, !dbg !3820
     #dbg_value(i32 %i.an, !1448, !DIExpression(), !3611)
-  %i.ao = add i32 %.sroa.03.033.i.i, 7, !dbg !3821
+  %i.ao = add nuw nsw i32 %.sroa.03.033.i.i, 7, !dbg !3821
     #dbg_value(i64 %i.ah, !1450, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !3617)
     #dbg_value(i32 %i.ao, !1449, !DIExpression(), !3612)
     #dbg_value(ptr undef, !1427, !DIExpression(), !3605)
@@ -605,7 +605,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i
   %i.ah = shl i32 %i.af, %i.ag, !dbg !15067
   %i.ai = or i32 %i.ah, %.sroa.01.034.i.i.i, !dbg !15068
     #dbg_value(i32 %i.ai, !1448, !DIExpression(), !14587)
-  %i.aj = add i32 %.sroa.03.033.i.i.i, 7, !dbg !15069
+  %i.aj = add nuw nsw i32 %.sroa.03.033.i.i.i, 7, !dbg !15069
     #dbg_value(i64 %i.ac, !1450, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14593)
     #dbg_value(i32 %i.aj, !1449, !DIExpression(), !14588)
     #dbg_value(ptr undef, !1427, !DIExpression(), !14581)

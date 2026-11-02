@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
 
 proto_item_set_generated.exit:                    ; preds = %bb.j, %bb.k, %bb.l
   %i.ag = load i32, ptr @hf_modbus_bitval, align 4
-  %i.ah = sub nuw nsw i32 %i.t, %indvars.iv
+  %i.ah = sub nuw i32 %i.t, %indvars.iv
   %i.ai = tail call ptr @proto_tree_add_bits_item(ptr noundef %i.y, i32 noundef %i.ag, ptr noundef %i.m, i32 noundef %i.ah, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.aj = add i16 %.1243, 1                       ; 3 uses
   %i.ak = zext i16 %i.aj to i32

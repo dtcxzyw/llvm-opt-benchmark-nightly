@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = and i32 %i.aj, 255
   %.not25.i.i = icmp eq i32 %i.ak, 0
   %indvars.iv.i.tr.i = trunc i64 %indvars.iv.i.i to i32
-  %i.al = shl i32 %indvars.iv.i.tr.i, 2           ; 4 uses
+  %i.al = shl nsw i32 %indvars.iv.i.tr.i, 2       ; 4 uses
   %i.am = or disjoint i32 %i.al, 1
   %.2.i.i = select i1 %.not25.i.i, i32 %.032.i.i, i32 %i.am
   %i.an = and i32 %i.aj, 65280
@@ -233,7 +233,7 @@ bb.f:                                             ; preds = %bb.e
   %i.au = and i32 %i.at, 255
   %.not25.i.i.1 = icmp eq i32 %i.au, 0
   %indvars.iv.i.tr.i.1 = trunc i64 %indvars.iv.next.i.i to i32
-  %i.av = shl i32 %indvars.iv.i.tr.i.1, 2         ; 4 uses
+  %i.av = shl nsw i32 %indvars.iv.i.tr.i.1, 2     ; 4 uses
   %i.aw = or disjoint i32 %i.av, 1
   %.2.i.i.1 = select i1 %.not25.i.i.1, i32 %.3.i.i, i32 %i.aw
   %i.ax = and i32 %i.at, 65280
@@ -245,7 +245,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ba = or disjoint i32 %i.av, 3
   %.2.2.i.i.1 = select i1 %.not25.2.i.i.1, i32 %.2.1.i.i.1, i32 %i.ba
   %.not25.3.i.i.1 = icmp ult i32 %i.at, 16777216
-  %i.bb = add i32 %i.av, 4
+  %i.bb = add nsw i32 %i.av, 4
   %.2.3.i.i.1 = select i1 %.not25.3.i.i.1, i32 %.2.2.i.i.1, i32 %i.bb
   br label %.loopexit.i.i.1
 
@@ -351,7 +351,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bx = and i32 %i.bw, 255
   %.not25.i89.i = icmp eq i32 %i.bx, 0
   %indvars.iv.i85.tr.i = trunc i64 %indvars.iv.i85.i to i32
-  %i.by = shl i32 %indvars.iv.i85.tr.i, 2         ; 4 uses
+  %i.by = shl nsw i32 %indvars.iv.i85.tr.i, 2     ; 4 uses
   %i.bz = or disjoint i32 %i.by, 1
   %.2.i90.i = select i1 %.not25.i89.i, i32 %.032.i86.i, i32 %i.bz
   %i.ca = and i32 %i.bw, 65280
@@ -379,7 +379,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ch = and i32 %i.cg, 255
   %.not25.i89.i.1 = icmp eq i32 %i.ch, 0
   %indvars.iv.i85.tr.i.1 = trunc i64 %indvars.iv.next.i99.i to i32
-  %i.ci = shl i32 %indvars.iv.i85.tr.i.1, 2       ; 4 uses
+  %i.ci = shl nsw i32 %indvars.iv.i85.tr.i.1, 2   ; 4 uses
   %i.cj = or disjoint i32 %i.ci, 1
   %.2.i90.i.1 = select i1 %.not25.i89.i.1, i32 %.3.i98.i, i32 %i.cj
   %i.ck = and i32 %i.cg, 65280
@@ -391,7 +391,7 @@ bb.i:                                             ; preds = %bb.h
   %i.cn = or disjoint i32 %i.ci, 3
   %.2.2.i94.i.1 = select i1 %.not25.2.i93.i.1, i32 %.2.1.i92.i.1, i32 %i.cn
   %.not25.3.i95.i.1 = icmp ult i32 %i.cg, 16777216
-  %i.co = add i32 %i.ci, 4
+  %i.co = add nsw i32 %i.ci, 4
   %.2.3.i96.i.1 = select i1 %.not25.3.i95.i.1, i32 %.2.2.i94.i.1, i32 %i.co
   br label %.loopexit.i97.i.1
 
@@ -794,7 +794,7 @@ bb.b:                                             ; preds = %bb.a
   %.2.2.1 = select i1 %.not25.2.1, i32 %.2.1.1, i32 %i.ai
   %.not25.3.1 = icmp ult i32 %i.y, 16777216
   %i.aj = trunc i64 %i.z to i32
-  %i.ak = add i32 %i.aj, 4
+  %i.ak = add nsw i32 %i.aj, 4
   %.2.3.1 = select i1 %.not25.3.1, i32 %.2.2.1, i32 %i.ak
   br label %.loopexit.1
 

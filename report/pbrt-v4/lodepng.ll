@@ -205,7 +205,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   %indvars.iv131.2.i = phi i64 [ %indvars.iv.next132.2.i.3, %.lr.ph.us104.2.i ], [ 0, %.preheader.us.2.i ] ; 5 uses
   %niter207 = phi i64 [ %niter207.next.3, %.lr.ph.us104.2.i ], [ 0, %.preheader.us.2.i ]
   %i.lu = trunc nuw i64 %indvars.iv131.2.i to i32 ; 2 uses
-  %i.lv = shl i32 %i.lu, 2
+  %i.lv = shl nsw i32 %i.lu, 2
   %i.lw = add i32 %i.lv, %i.ls
   %i.lx = zext i32 %i.lw to i64
   %i.ly = mul nuw nsw i64 %i.lx, %i.ho
@@ -217,7 +217,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.md, ptr align 1 %i.mc, i64 %i.ho, i1 false), !tbaa !29
   %i.me = trunc i64 %indvars.iv131.2.i to i32
   %i.mf = or disjoint i32 %i.me, 1                ; 2 uses
-  %i.mg = shl i32 %i.mf, 2
+  %i.mg = shl nsw i32 %i.mf, 2
   %i.mh = add i32 %i.mg, %i.ls
   %i.mi = zext i32 %i.mh to i64
   %i.mj = mul nuw nsw i64 %i.mi, %i.ho
@@ -229,7 +229,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mo, ptr align 1 %i.mn, i64 %i.ho, i1 false), !tbaa !29
   %i.mp = trunc i64 %indvars.iv131.2.i to i32
   %i.mq = or disjoint i32 %i.mp, 2                ; 2 uses
-  %i.mr = shl i32 %i.mq, 2
+  %i.mr = shl nsw i32 %i.mq, 2
   %i.ms = add i32 %i.mr, %i.ls
   %i.mt = zext i32 %i.ms to i64
   %i.mu = mul nuw nsw i64 %i.mt, %i.ho
@@ -241,7 +241,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mz, ptr align 1 %i.my, i64 %i.ho, i1 false), !tbaa !29
   %i.na = trunc i64 %indvars.iv131.2.i to i32
   %i.nb = or disjoint i32 %i.na, 3                ; 2 uses
-  %i.nc = shl i32 %i.nb, 2
+  %i.nc = shl nsw i32 %i.nb, 2
   %i.nd = add i32 %i.nc, %i.ls
   %i.ne = zext i32 %i.nd to i64
   %i.nf = mul nuw nsw i64 %i.ne, %i.ho
@@ -446,7 +446,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   %indvars.iv131.4.i = phi i64 [ %indvars.iv.next132.4.i.3, %.lr.ph.us104.4.i ], [ 0, %.preheader.us.4.i ] ; 5 uses
   %niter219 = phi i64 [ %niter219.next.3, %.lr.ph.us104.4.i ], [ 0, %.preheader.us.4.i ]
   %i.qp = trunc nuw i64 %indvars.iv131.4.i to i32 ; 2 uses
-  %i.qq = shl i32 %i.qp, 1
+  %i.qq = shl nsw i32 %i.qp, 1
   %i.qr = add i32 %i.qq, %i.qn
   %i.qs = zext i32 %i.qr to i64
   %i.qt = mul nuw nsw i64 %i.qs, %i.ho
@@ -458,7 +458,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.qy, ptr align 1 %i.qx, i64 %i.ho, i1 false), !tbaa !29
   %i.qz = trunc i64 %indvars.iv131.4.i to i32
   %i.ra = or disjoint i32 %i.qz, 1                ; 2 uses
-  %i.rb = shl i32 %i.ra, 1
+  %i.rb = shl nsw i32 %i.ra, 1
   %i.rc = add i32 %i.rb, %i.qn
   %i.rd = zext i32 %i.rc to i64
   %i.re = mul nuw nsw i64 %i.rd, %i.ho
@@ -470,7 +470,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.rj, ptr align 1 %i.ri, i64 %i.ho, i1 false), !tbaa !29
   %i.rk = trunc i64 %indvars.iv131.4.i to i32
   %i.rl = or disjoint i32 %i.rk, 2                ; 2 uses
-  %i.rm = shl i32 %i.rl, 1
+  %i.rm = shl nsw i32 %i.rl, 1
   %i.rn = add i32 %i.rm, %i.qn
   %i.ro = zext i32 %i.rn to i64
   %i.rp = mul nuw nsw i64 %i.ro, %i.ho
@@ -482,7 +482,7 @@ begin_hunk_0_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ru, ptr align 1 %i.rt, i64 %i.ho, i1 false), !tbaa !29
   %i.rv = trunc i64 %indvars.iv131.4.i to i32
   %i.rw = or disjoint i32 %i.rv, 3                ; 2 uses
-  %i.rx = shl i32 %i.rw, 1
+  %i.rx = shl nsw i32 %i.rw, 1
   %i.ry = add i32 %i.rx, %i.qn
   %i.rz = zext i32 %i.ry to i64
   %i.sa = mul nuw nsw i64 %i.rz, %i.ho

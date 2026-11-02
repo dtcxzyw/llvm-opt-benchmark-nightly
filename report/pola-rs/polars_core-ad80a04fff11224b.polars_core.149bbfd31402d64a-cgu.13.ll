@@ -204,7 +204,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = tail call i128 @llvm.smax.i128(i128 %.sroa.0.020.i15, i128 %i.eu), !dbg !246037 ; 2 uses
   %.sroa.01.1.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !246037
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !246075 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !246076 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !246076 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !246030, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !246031     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !246032
@@ -607,7 +607,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = tail call i128 @llvm.smin.i128(i128 %i.eu, i128 %.sroa.0.020.i15), !dbg !246296 ; 2 uses
   %.sroa.01.1.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !246296
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !246334 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !246335 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !246335 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !246289, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !246290     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !246291
@@ -1010,7 +1010,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i16 @llvm.umax.i16(i16 %.sroa.0.020.i15, i16 %i.eu), !dbg !247325 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !247325
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !247361 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !247362 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !247362 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !247318, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !247319     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !247320
@@ -1413,7 +1413,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i16 @llvm.umin.i16(i16 %i.eu, i16 %.sroa.0.020.i15), !dbg !247582 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !247582
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !247618 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !247619 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !247619 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !247575, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !247576     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !247577
@@ -1816,7 +1816,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i32 @llvm.umax.i32(i32 %.sroa.0.020.i15, i32 %i.eu), !dbg !248561 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !248561
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !248597 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !248598 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !248598 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !248554, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !248555     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !248556
@@ -2219,7 +2219,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i32 @llvm.umin.i32(i32 %i.eu, i32 %.sroa.0.020.i15), !dbg !248818 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !248818
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !248854 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !248855 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !248855 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !248811, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !248812     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !248813
@@ -2622,7 +2622,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select28.i = tail call i64 @llvm.umax.i64(i64 %.sroa.0.019.i15, i64 %i.eu), !dbg !249797 ; 2 uses
   %spec.select29.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !249797
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.020.i14, i64 8, !dbg !249833 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !249834 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !249834 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !249790, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !249791     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !249792
@@ -3025,7 +3025,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select28.i = tail call i64 @llvm.umin.i64(i64 %i.eu, i64 %.sroa.0.019.i15), !dbg !250054 ; 2 uses
   %spec.select29.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !250054
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.020.i14, i64 8, !dbg !250090 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !250091 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !250091 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !250047, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !250048     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !250049
@@ -3428,7 +3428,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = select i1 %.not2.i.i.i, float %i.fa, float %.sroa.0.020.i15, !dbg !252331 ; 2 uses
   %.sroa.01.1.i = select i1 %.not2.i.i.i, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !252331
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !252371 ; 2 uses
-  %i.fe = add i32 %.sroa.10.0.i13, 2, !dbg !252372 ; 2 uses
+  %i.fe = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !252372 ; 2 uses
   %i.ff = load i32, ptr %i.eu, align 4, !dbg !252322, !noundef !3467
   %i.fg = zext i32 %i.ff to i64, !dbg !252323     ; 2 uses
   %i.fh = icmp ugt i64 %i.as, %i.fg, !dbg !252324
@@ -3831,7 +3831,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = select i1 %.not2.i.i, float %i.fa, float %.sroa.0.020.i15, !dbg !252596 ; 2 uses
   %.sroa.01.1.i = select i1 %.not2.i.i, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !252596
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !252636 ; 2 uses
-  %i.fe = add i32 %.sroa.10.0.i13, 2, !dbg !252637 ; 2 uses
+  %i.fe = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !252637 ; 2 uses
   %i.ff = load i32, ptr %i.eu, align 4, !dbg !252587, !noundef !3467
   %i.fg = zext i32 %i.ff to i64, !dbg !252588     ; 2 uses
   %i.fh = icmp ugt i64 %i.as, %i.fg, !dbg !252589
@@ -4234,7 +4234,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = select i1 %.not2.i.i.i, double %i.fa, double %.sroa.0.019.i15, !dbg !253575 ; 2 uses
   %.sroa.01.1.i = select i1 %.not2.i.i.i, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !253575
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.01.020.i14, i64 8, !dbg !253615 ; 2 uses
-  %i.fe = add i32 %.sroa.10.0.i13, 2, !dbg !253616 ; 2 uses
+  %i.fe = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !253616 ; 2 uses
   %i.ff = load i32, ptr %i.eu, align 4, !dbg !253566, !noundef !3467
   %i.fg = zext i32 %i.ff to i64, !dbg !253567     ; 2 uses
   %i.fh = icmp ugt i64 %i.as, %i.fg, !dbg !253568
@@ -4637,7 +4637,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = select i1 %.not2.i.i, double %i.fa, double %.sroa.0.019.i15, !dbg !253840 ; 2 uses
   %.sroa.01.1.i = select i1 %.not2.i.i, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !253840
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.01.020.i14, i64 8, !dbg !253880 ; 2 uses
-  %i.fe = add i32 %.sroa.10.0.i13, 2, !dbg !253881 ; 2 uses
+  %i.fe = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !253881 ; 2 uses
   %i.ff = load i32, ptr %i.eu, align 4, !dbg !253831, !noundef !3467
   %i.fg = zext i32 %i.ff to i64, !dbg !253832     ; 2 uses
   %i.fh = icmp ugt i64 %i.as, %i.fg, !dbg !253833
@@ -5040,7 +5040,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = tail call i128 @llvm.umax.i128(i128 %.sroa.0.020.i15, i128 %i.eu), !dbg !254815 ; 2 uses
   %.sroa.01.1.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !254815
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !254853 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !254854 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !254854 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !254808, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !254809     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !254810
@@ -5443,7 +5443,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.1.i = tail call i128 @llvm.umin.i128(i128 %i.eu, i128 %.sroa.0.020.i15), !dbg !255074 ; 2 uses
   %.sroa.01.1.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !255074
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !255112 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !255113 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !255113 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !255067, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !255068     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !255069
@@ -5846,7 +5846,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i8 @llvm.smax.i8(i8 %.sroa.0.020.i15, i8 %i.eu), !dbg !256103 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !256103
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !256139 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !256140 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !256140 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !256096, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !256097     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !256098
@@ -6249,7 +6249,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i8 @llvm.smin.i8(i8 %i.eu, i8 %.sroa.0.020.i15), !dbg !256360 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !256360
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !256396 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !256397 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !256397 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !256353, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !256354     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !256355
@@ -6652,7 +6652,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i16 @llvm.smax.i16(i16 %.sroa.0.020.i15, i16 %i.eu), !dbg !257333 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !257333
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !257369 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !257370 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !257370 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !257326, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !257327     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !257328
@@ -7055,7 +7055,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i16 @llvm.smin.i16(i16 %i.eu, i16 %.sroa.0.020.i15), !dbg !257590 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !257590
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !257626 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !257627 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !257627 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !257583, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !257584     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !257585
@@ -7458,7 +7458,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i32 @llvm.smax.i32(i32 %.sroa.0.020.i15, i32 %i.eu), !dbg !258569 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !258569
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !258605 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !258606 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !258606 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !258562, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !258563     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !258564
@@ -7861,7 +7861,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i32 @llvm.smin.i32(i32 %i.eu, i32 %.sroa.0.020.i15), !dbg !258826 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !258826
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !258862 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !258863 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !258863 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !258819, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !258820     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !258821
@@ -8264,7 +8264,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select28.i = tail call i64 @llvm.smax.i64(i64 %.sroa.0.019.i15, i64 %i.eu), !dbg !259805 ; 2 uses
   %spec.select29.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !259805
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.020.i14, i64 8, !dbg !259841 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !259842 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !259842 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !259798, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !259799     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !259800
@@ -8667,7 +8667,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select28.i = tail call i64 @llvm.smin.i64(i64 %i.eu, i64 %.sroa.0.019.i15), !dbg !260062 ; 2 uses
   %spec.select29.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !260062
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.020.i14, i64 8, !dbg !260098 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !260099 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !260099 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !260055, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !260056     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !260057
@@ -9070,7 +9070,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i8 @llvm.umax.i8(i8 %.sroa.0.020.i15, i8 %i.eu), !dbg !261041 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !261041
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !261077 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !261078 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !261078 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !261034, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !261035     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !261036
@@ -9473,7 +9473,7 @@ _RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %spec.select29.i = tail call i8 @llvm.umin.i8(i8 %i.eu, i8 %.sroa.0.020.i15), !dbg !261298 ; 2 uses
   %spec.select30.i = select i1 %i.ev, i32 %.sroa.10.0.i13, i32 %.sroa.01.0.i16, !dbg !261298
   %i.ew = getelementptr inbounds nuw i8, ptr %.sroa.01.021.i14, i64 8, !dbg !261334 ; 2 uses
-  %i.ex = add i32 %.sroa.10.0.i13, 2, !dbg !261335 ; 2 uses
+  %i.ex = add nuw nsw i32 %.sroa.10.0.i13, 2, !dbg !261335 ; 2 uses
   %i.ey = load i32, ptr %i.eo, align 4, !dbg !261291, !noundef !3467
   %i.ez = zext i32 %i.ey to i64, !dbg !261292     ; 2 uses
   %i.fa = icmp ugt i64 %i.as, %i.ez, !dbg !261293

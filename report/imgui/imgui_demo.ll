@@ -205,31 +205,25 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph176, label %.thread
 
 bb.c:                                             ; preds = %.lr.ph176
-  %indvars.iv.next140 = add i32 %indvars.iv139173, 1 ; 2 uses
+  %indvars.iv.next140 = add i64 %indvars.iv139173, 1 ; 2 uses
   %i.j = icmp ugt ptr %i.k, %i.d
-  br i1 %i.j, label %.lr.ph176, label %.thread.loopexit
+  br i1 %i.j, label %.lr.ph176, label %.thread
 
 .lr.ph176:                                        ; preds = %bb.b, %bb.c
   %.089174 = phi ptr [ %i.k, %bb.c ], [ %i.h, %bb.b ] ; 5 uses
-  %indvars.iv139173 = phi i32 [ %indvars.iv.next140, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %indvars.iv139173 = phi i64 [ %indvars.iv.next140, %bb.c ], [ 0, %bb.b ] ; 5 uses
   %i.k = getelementptr inbounds i8, ptr %.089174, i64 -1 ; 4 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !120
   switch i8 %i.l, label %bb.c [
-    i8 59, label %.thread.loopexit
-    i8 44, label %.thread.loopexit
-    i8 32, label %.thread.loopexit
-    i8 9, label %.thread.loopexit
+    i8 59, label %.thread
+    i8 44, label %.thread
+    i8 32, label %.thread
+    i8 9, label %.thread
   ]
 
-.thread.loopexit:                                 ; preds = %.lr.ph176, %.lr.ph176, %.lr.ph176, %.lr.ph176, %bb.c
-  %indvars.iv139.lcssa.ph = phi i32 [ %indvars.iv.next140, %bb.c ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ]
-  %.089.lcssa.ph = phi ptr [ %i.k, %bb.c ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ]
-  %3 = sext i32 %indvars.iv139.lcssa.ph to i64
-  br label %.thread
-
-.thread:                                          ; preds = %.thread.loopexit, %bb.b
-  %indvars.iv139.lcssa = phi i64 [ 0, %bb.b ], [ %3, %.thread.loopexit ]
-  %.089.lcssa = phi ptr [ %i.h, %bb.b ], [ %.089.lcssa.ph, %.thread.loopexit ] ; 6 uses
+.thread:                                          ; preds = %bb.c, %.lr.ph176, %.lr.ph176, %.lr.ph176, %.lr.ph176, %bb.b
+  %indvars.iv139.lcssa = phi i64 [ 0, %bb.b ], [ %indvars.iv.next140, %bb.c ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ]
+  %.089.lcssa = phi ptr [ %i.h, %bb.b ], [ %i.k, %bb.c ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
