@@ -202,20 +202,23 @@ bb.ar:                                            ; preds = %.tail.thread
   %i.cr = trunc i64 %i.cq to i32
   %.058 = add i32 %i.cr, -1                       ; 2 uses
   %i.cs = icmp sgt i32 %.058, 0
-  br i1 %i.cs, label %.lr.ph, label %._crit_edge
+  br i1 %i.cs, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.ar, %bb.as
-  %.059 = phi i32 [ %.0, %bb.as ], [ %.058, %bb.ar ] ; 3 uses
-  %7 = zext nneg i32 %.059 to i64
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.t, i64 %7 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.ar
+  %7 = zext nneg i32 %.058 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.as
+  %indvars.iv = phi i64 [ %7, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.as ] ; 3 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.t, i64 %indvars.iv ; 2 uses
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !21
   %i.cv = icmp eq i8 %i.cu, 47
   br i1 %i.cv, label %bb.as, label %._crit_edge
 
 bb.as:                                            ; preds = %.lr.ph
   store i8 0, ptr %i.ct, align 1, !tbaa !21
-  %.0 = add nsw i32 %.059, -1
-  %i.cw = icmp sgt i32 %.059, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.cw = icmp sgt i64 %indvars.iv, 1
   br i1 %i.cw, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.as, %.lr.ph, %bb.ar

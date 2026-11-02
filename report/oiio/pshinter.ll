@@ -205,31 +205,31 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 3948
   store i8 %.sink.i, ptr %i.cm, align 4, !tbaa !82
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 3936
-  %i.co = load i32, ptr %i.cn, align 8, !tbaa !189 ; 9 uses
+  %i.co = load i32, ptr %i.cn, align 8, !tbaa !189 ; 4 uses
   %i.cp = icmp sgt i32 %i.co, 0
   %i.cq = shl i64 %2, 32
   %i.cr = ashr exact i64 %i.cq, 32                ; 20 uses
   br i1 %i.cp, label %.lr.ph.i38.preheader, label %..critedge_crit_edge.i
 
 .lr.ph.i38.preheader:                             ; preds = %bb.j
+  %5 = zext nneg i32 %i.co to i64                 ; 6 uses
   %min.iters.check = icmp ult i32 %i.co, 32
   br i1 %min.iters.check, label %.lr.ph.i38.preheader71, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i38.preheader
-  %n.vec = and i32 %i.co, 2147483632              ; 2 uses
-  %5 = and i32 %i.co, 15
+  %n.vec = and i64 %5, 2147483632                 ; 2 uses
+  %6 = and i64 %5, 15
   %broadcast.splatinsert = insertelement <16 x i64> poison, i64 %i.cr, i64 0
   %broadcast.splat = shufflevector <16 x i64> %broadcast.splatinsert, <16 x i64> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert65 = insertelement <16 x i32> poison, i32 %i.co, i64 0
-  %broadcast.splat66 = shufflevector <16 x i32> %broadcast.splatinsert65, <16 x i32> poison, <16 x i32> zeroinitializer
-  %6 = add nsw <16 x i32> %broadcast.splat66, <i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 -8, i32 -9, i32 -10, i32 -11, i32 -12, i32 -13, i32 -14, i32 -15>
+  %broadcast.splatinsert69 = insertelement <16 x i64> poison, i64 %5, i64 0
+  %broadcast.splat70 = shufflevector <16 x i64> %broadcast.splatinsert69, <16 x i64> poison, <16 x i32> zeroinitializer
+  %7 = add nsw <16 x i64> %broadcast.splat70, <i64 0, i64 -1, i64 -2, i64 -3, i64 -4, i64 -5, i64 -6, i64 -7, i64 -8, i64 -9, i64 -10, i64 -11, i64 -12, i64 -13, i64 -14, i64 -15>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body.interim, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ] ; 2 uses
-  %vec.ind = phi <16 x i32> [ %6, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
-  %7 = zext nneg <16 x i32> %vec.ind to <16 x i64>
-  %i.cs = mul nsw <16 x i64> %broadcast.splat, %7 ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ] ; 2 uses
+  %vec.ind = phi <16 x i64> [ %7, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
+  %i.cs = mul nsw <16 x i64> %vec.ind, %broadcast.splat ; 2 uses
   %i.ct = ashr <16 x i64> %i.cs, splat (i64 63)
   %i.cu = add nsw <16 x i64> %i.cs, splat (i64 32768)
   %i.cv = add nsw <16 x i64> %i.cu, %i.ct
@@ -242,45 +242,48 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not68, label %vector.body.interim, label %vector.early.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add nsw <16 x i32> %vec.ind, splat (i32 -16)
-  %index.next = add nuw i32 %index, 16            ; 2 uses
-  %i.da = icmp eq i32 %index.next, %n.vec
+  %vec.ind.next = add nsw <16 x i64> %vec.ind, splat (i64 -16)
+  %index.next = add nuw i64 %index, 16            ; 2 uses
+  %i.da = icmp eq i64 %index.next, %n.vec
   br i1 %i.da, label %middle.block, label %vector.body, !llvm.loop !181
 
 middle.block:                                     ; preds = %vector.body.interim
-  %cmp.n = icmp eq i32 %i.co, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %5
   br i1 %cmp.n, label %..critedge_crit_edge.i, label %.lr.ph.i38.preheader71
 
 .lr.ph.i38.preheader71:                           ; preds = %.lr.ph.i38.preheader, %middle.block
-  %.08294.i.ph = phi i32 [ %i.co, %.lr.ph.i38.preheader ], [ %5, %middle.block ]
+  %indvars.iv.i.ph = phi i64 [ %5, %.lr.ph.i38.preheader ], [ %6, %middle.block ]
   br label %.lr.ph.i38
 
 vector.early.exit:                                ; preds = %vector.body
   %i.db = tail call i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1> %i.cy, i1 false)
-  %8 = trunc i64 %i.db to i32
-  %9 = add i32 %index, %8
-  %10 = sub i32 %i.co, %9
-  br label %..critedge_crit_edge.i
+  %8 = add i64 %index, %i.db
+  %9 = sub i64 %5, %8
+  br label %.loopexit.split.loop.exit.i
 
 .lr.ph.i38:                                       ; preds = %.lr.ph.i38.preheader71, %bb.k
-  %.08294.i = phi i32 [ %12, %bb.k ], [ %.08294.i.ph, %.lr.ph.i38.preheader71 ] ; 4 uses
-  %11 = zext nneg i32 %.08294.i to i64
-  %i.dc = mul nsw i64 %i.cr, %11                  ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.k ], [ %indvars.iv.i.ph, %.lr.ph.i38.preheader71 ] ; 4 uses
+  %i.dc = mul nsw i64 %indvars.iv.i, %i.cr        ; 2 uses
   %i.dd = ashr i64 %i.dc, 63
   %i.de = add nsw i64 %i.dc, 32768
   %i.df = add nsw i64 %i.de, %i.dd
   %i.dg = lshr i64 %i.df, 16
   %i.dh = trunc i64 %i.dg to i32
   %i.di = icmp sgt i32 %i.dh, 32
-  br i1 %i.di, label %bb.k, label %..critedge_crit_edge.i
+  br i1 %i.di, label %bb.k, label %.loopexit.split.loop.exit.i
 
 bb.k:                                             ; preds = %.lr.ph.i38
-  %12 = add nsw i32 %.08294.i, -1
-  %i.dj = icmp sgt i32 %.08294.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.dj = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.dj, label %.lr.ph.i38, label %..critedge_crit_edge.i, !llvm.loop !182
 
-..critedge_crit_edge.i:                           ; preds = %bb.k, %.lr.ph.i38, %middle.block, %vector.early.exit, %bb.j
-  %.082.lcssa.i = phi i32 [ %i.co, %bb.j ], [ 0, %middle.block ], [ %10, %vector.early.exit ], [ 0, %bb.k ], [ %.08294.i, %.lr.ph.i38 ]
+.loopexit.split.loop.exit.i:                      ; preds = %.lr.ph.i38, %vector.early.exit
+  %indvars.iv.i.lcssa = phi i64 [ %9, %vector.early.exit ], [ %indvars.iv.i, %.lr.ph.i38 ]
+  %10 = trunc nuw nsw i64 %indvars.iv.i.lcssa to i32
+  br label %..critedge_crit_edge.i
+
+..critedge_crit_edge.i:                           ; preds = %bb.k, %middle.block, %.loopexit.split.loop.exit.i, %bb.j
+  %.082.lcssa.i = phi i32 [ %i.co, %bb.j ], [ %10, %.loopexit.split.loop.exit.i ], [ 0, %middle.block ], [ 0, %bb.k ]
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 3940
   store i32 %.082.lcssa.i, ptr %i.dk, align 4, !tbaa !83
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 2376

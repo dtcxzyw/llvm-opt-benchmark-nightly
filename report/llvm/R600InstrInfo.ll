@@ -204,8 +204,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZL20NextPossibleSolutionRSt6vectorIN4llvm13R600InstrInfo11BankSwizzleESaIS2_EEj.exit, %bb.a
-  %i.c = tail call noundef i32 @_ZNK4llvm13R600InstrInfo11isLegalUpToERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERKS1_INS0_11BankSwizzleESaISA_EERKS5_SA_(ptr noundef nonnull align 8 dereferenceable(440) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, i32 noundef %4) ; 4 uses
-  %i.d = zext i32 %i.c to i64
+  %i.c = tail call noundef i32 @_ZNK4llvm13R600InstrInfo11isLegalUpToERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERKS1_INS0_11BankSwizzleESaISA_EERKS5_SA_(ptr noundef nonnull align 8 dereferenceable(440) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, i32 noundef %4) ; 3 uses
+  %i.d = zext i32 %i.c to i64                     ; 2 uses
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !360
   %i.f = load ptr, ptr %1, align 8, !tbaa !361
   %i.g = ptrtoint ptr %i.e to i64
@@ -222,20 +222,23 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.l, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
-  %.0191.i = phi i32 [ %6, %bb.d ], [ %i.c, %bb.c ] ; 4 uses
-  %5 = zext nneg i32 %.0191.i to i64
-  %i.m = getelementptr inbounds nuw [4 x i8], ptr %.val, i64 %5
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ %i.d, %bb.c ] ; 4 uses
+  %i.m = getelementptr inbounds nuw [4 x i8], ptr %.val, i64 %indvars.iv.i
   %i.n = load i32, ptr %i.m, align 4, !tbaa !367
   %i.o = icmp eq i32 %i.n, 5
-  br i1 %i.o, label %bb.d, label %.critedge.i
+  br i1 %i.o, label %bb.d, label %.critedge.loopexit.split.loop.exit12.i
 
 bb.d:                                             ; preds = %.lr.ph.i
-  %6 = add nsw i32 %.0191.i, -1
-  %i.p = icmp sgt i32 %.0191.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.p = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.p, label %.lr.ph.i, label %.critedge.i, !llvm.loop !1
 
-.critedge.i:                                      ; preds = %bb.d, %.lr.ph.i, %bb.c
-  %.019.lcssa.i = phi i32 [ %i.c, %bb.c ], [ %.0191.i, %.lr.ph.i ], [ -1, %bb.d ] ; 4 uses
+.critedge.loopexit.split.loop.exit12.i:           ; preds = %.lr.ph.i
+  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.critedge.i
+
+.critedge.i:                                      ; preds = %bb.d, %.critedge.loopexit.split.loop.exit12.i, %bb.c
+  %.019.lcssa.i = phi i32 [ %i.c, %bb.c ], [ %5, %.critedge.loopexit.split.loop.exit12.i ], [ -1, %bb.d ] ; 4 uses
   %i.q = ptrtoint ptr %.val9 to i64
   %i.r = ptrtoint ptr %.val to i64
   %i.s = sub i64 %i.q, %i.r

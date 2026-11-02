@@ -204,24 +204,29 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %.not9297 = icmp eq i32 %i.b, 0
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !25  ; 10 uses
-  br i1 %.not9297, label %.thread91, label %.lr.ph.a
+  br i1 %.not9297, label %.thread91, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %.preheader, %bb.b
-  %.06598 = phi i32 [ %4, %bb.b ], [ %i.b, %.preheader ] ; 6 uses
-  %3 = zext nneg i32 %.06598 to i64               ; 3 uses
-  %i.d = getelementptr i8, ptr %.pre, i64 %3
+.lr.ph:                                           ; preds = %.preheader
+  %3 = zext nneg i32 %i.b to i64
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.b
+  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 9 uses
+  %i.d = getelementptr i8, ptr %.pre, i64 %indvars.iv
   %i.e = getelementptr i8, ptr %i.d, i64 -1
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11
   %i.g = icmp eq i8 %i.f, 0
   br i1 %i.g, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph.a
-  %4 = add nsw i32 %.06598, -1                    ; 2 uses
-  %.not92 = icmp eq i32 %4, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %.not92 = icmp eq i64 %4, 0
   br i1 %.not92, label %.thread91, label %.lr.ph.a, !llvm.loop !53
 
 .critedge:                                        ; preds = %.lr.ph.a
-  %i.h = call ptr @memchr(ptr noundef nonnull readonly dereferenceable(1) %.pre, i32 noundef 0, i64 noundef range(i64 0, 2147483648) %3) #6
+  %5 = trunc nuw i64 %indvars.iv to i32
+  %i.h = call ptr @memchr(ptr noundef nonnull readonly %.pre, i32 noundef 0, i64 noundef range(i64 0, 2147483648) %indvars.iv) #6
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %OPENSSL_memchr.exit.thread, label %bb.c
 
@@ -230,7 +235,7 @@ bb.c:                                             ; preds = %.critedge
   br label %bb.s
 
 OPENSSL_memchr.exit.thread:                       ; preds = %.critedge
-  %i.i = icmp samesign ugt i32 %.06598, 2
+  %i.i = icmp ugt i64 %indvars.iv, 2
   br i1 %i.i, label %bb.d, label %OPENSSL_memchr.exit.thread.thread
 
 bb.d:                                             ; preds = %OPENSSL_memchr.exit.thread
@@ -247,14 +252,13 @@ bb.e:                                             ; preds = %bb.d
 
 OPENSSL_memchr.exit.thread.thread:                ; preds = %bb.e, %bb.d, %OPENSSL_memchr.exit.thread
   %.059 = phi i32 [ 0, %OPENSSL_memchr.exit.thread ], [ %spec.select, %bb.e ], [ 0, %bb.d ] ; 2 uses
-  %i.o = icmp slt i32 %.059, %.06598
+  %i.o = icmp slt i32 %.059, %5
   br i1 %i.o, label %.lr.ph102, label %.thread91
 
 .lr.ph102:                                        ; preds = %OPENSSL_memchr.exit.thread.thread
-  %5 = add nsw i32 %.06598, -1
+  %6 = add i64 %indvars.iv, 4294967295
   %i.p = zext nneg i32 %.059 to i64               ; 3 uses
-  %6 = zext nneg i32 %5 to i64
-  %wide.trip.count = zext nneg i32 %.06598 to i64 ; 2 uses
+  %7 = and i64 %6, 4294967295
   %i.q = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !11    ; 4 uses
   %i.s = and i8 %i.r, -33
@@ -277,7 +281,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f, %.lr.ph102
   %.1.ph.peel = phi i32 [ 1, %bb.g ], [ 0, %bb.f ], [ 0, %.lr.ph102 ]
   %indvars.iv.next.peel = or disjoint i64 %i.p, 1 ; 2 uses
-  %exitcond.peel.not = icmp eq i64 %indvars.iv.next.peel, %wide.trip.count
+  %exitcond.peel.not = icmp eq i64 %indvars.iv.next.peel, %indvars.iv
   br i1 %exitcond.peel.not, label %.thread91, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.h, %bb.o
@@ -305,7 +309,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.ae = icmp samesign ugt i64 %indvars.iv.a, %i.p
-  %i.af = icmp samesign ult i64 %indvars.iv.a, %6
+  %i.af = icmp samesign ult i64 %indvars.iv.a, %7
   %or.cond76 = select i1 %i.ae, i1 %i.af, i1 false
   br i1 %or.cond76, label %bb.l, label %.thread91
 
@@ -333,7 +337,7 @@ bb.o:                                             ; preds = %.peel.next, %bb.j, 
   %.162.ph = phi i32 [ 1, %bb.n ], [ %.06199, %bb.i ], [ %.06199, %bb.l ], [ %.06199, %bb.j ], [ %.06199, %.peel.next ] ; 2 uses
   %.1.ph = phi i32 [ %.060100, %bb.n ], [ %.060100, %bb.i ], [ %.060100, %bb.l ], [ 1, %bb.j ], [ %.060100, %.peel.next ] ; 2 uses
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next.a, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next.a, %indvars.iv
   br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !54
 
 ._crit_edge:                                      ; preds = %bb.o
@@ -351,7 +355,7 @@ bb.q:                                             ; preds = %._crit_edge
 
 bb.r:                                             ; preds = %bb.q
   store ptr %.pre, ptr %1, align 8, !tbaa !25
-  store i64 %3, ptr %2, align 8, !tbaa !26
+  store i64 %indvars.iv, ptr %2, align 8, !tbaa !26
   br label %bb.s
 
 .thread91:                                        ; preds = %bb.b, %bb.k, %bb.n, %bb.m, %bb.l, %.preheader, %OPENSSL_memchr.exit.thread.thread, %bb.h, %bb.g, %bb.q

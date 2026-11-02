@@ -205,12 +205,13 @@ bb.e:                                             ; preds = %._crit_edge85.split
   br label %wavelet_denoise.exit
 
 bb.f:                                             ; preds = %._crit_edge85.split.i, %.preheader.i
-  %.06986.i.a = phi i32 [ 0, %.preheader.i ], [ %i.fd, %._crit_edge85.split.i ] ; 4 uses
-  %6 = and i32 %.06986.i.a, 1                     ; 4 uses
-  %i.ao = zext nneg i32 %6 to i64                 ; 2 uses
-  %i.ap = lshr i32 %.06986.i.a, 1                 ; 4 uses
+  %.06986.i.a = phi i32 [ 0, %.preheader.i ], [ %i.fd, %._crit_edge85.split.i ] ; 2 uses
+  %.06986.i = phi i32 [ 0, %.preheader.i ], [ %9, %._crit_edge85.split.i ] ; 4 uses
+  %i.ao = zext i32 %.06986.i.a to i64             ; 2 uses
+  %6 = and i32 %.06986.i, 1                       ; 3 uses
+  %i.ap = lshr i32 %.06986.i, 1                   ; 4 uses
   %i.aq = zext nneg i32 %i.ap to i64              ; 2 uses
-  %trunc.i = trunc nuw i32 %.06986.i.a to i3
+  %trunc.i = trunc nuw i32 %.06986.i to i3
   %rev.i = call i3 @llvm.bitreverse.i3(i3 %trunc.i)
   %i.ar = zext i3 %rev.i to i32
   %i.as = lshr i32 %i.s, %i.ar
@@ -306,7 +307,6 @@ compute_channel_noise.exit.i:                     ; preds = %.split.preheader.i.
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph74.i
   %i.cw = lshr i32 %i.cu, 1
-  %7 = zext nneg i32 %i.cn to i64
   %wide.trip.count.i = zext nneg i32 %i.cw to i64 ; 5 uses
   %min.iters.check64 = icmp ult i32 %i.cu, 10
   %min.iters.check65 = icmp ult i32 %i.cu, 66
@@ -339,7 +339,6 @@ compute_channel_noise.exit.i:                     ; preds = %.split.preheader.i.
 
 .lr.ph78.preheader.i:                             ; preds = %.lr.ph84.i
   %i.dk = lshr i32 %i.di, 1
-  %8 = zext nneg i32 %i.dd to i64
   %wide.trip.count97.i = zext nneg i32 %i.dk to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %i.di, 16
   %n.vec = and i64 %wide.trip.count97.i, 1073741816 ; 3 uses
@@ -431,8 +430,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 ._crit_edge.i:                                    ; preds = %vec.epilog.scalar.ph
   %indvars.iv.next92.i = add nuw nsw i64 %indvars.iv91.i, 2 ; 2 uses
-  %9 = icmp samesign ult i64 %indvars.iv.next92.i, %7
-  br i1 %9, label %iter.check, label %._crit_edge75.split.i
+  %7 = trunc nuw i64 %indvars.iv.next92.i to i32
+  %8 = icmp sgt i32 %i.cn, %7
+  br i1 %8, label %iter.check, label %._crit_edge75.split.i
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %vec.epilog.scalar.ph ], [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
@@ -450,8 +450,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 ._crit_edge85.split.i:                            ; preds = %._crit_edge79.i, %.lr.ph84.i, %._crit_edge75.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22, !noalias !166
-  %i.fd = add nuw nsw i32 %.06986.i.a, 1          ; 2 uses
-  %exitcond103.not.i = icmp eq i32 %i.fd, 4
+  %9 = add nuw nsw i32 %.06986.i, 1               ; 2 uses
+  %i.fd = add nsw i32 %.06986.i.a, -1
+  %exitcond103.not.i = icmp eq i32 %9, 4
   br i1 %exitcond103.not.i, label %bb.e, label %bb.f
 
 .lr.ph78.i:                                       ; preds = %._crit_edge79.i, %.lr.ph78.preheader.i
@@ -486,8 +487,9 @@ scalar.ph.preheader:                              ; preds = %.lr.ph78.i, %middle
 
 ._crit_edge79.i:                                  ; preds = %scalar.ph, %middle.block
   %indvars.iv.next100.i = add nuw nsw i64 %indvars.iv99.i, 2 ; 2 uses
-  %10 = icmp samesign ult i64 %indvars.iv.next100.i, %8
-  br i1 %10, label %.lr.ph78.i, label %._crit_edge85.split.i
+  %10 = trunc nuw i64 %indvars.iv.next100.i to i32
+  %11 = icmp sgt i32 %i.dd, %10
+  br i1 %11, label %.lr.ph78.i, label %._crit_edge85.split.i
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv94.i = phi i64 [ %indvars.iv.next95.i, %scalar.ph ], [ %indvars.iv94.i.ph, %scalar.ph.preheader ] ; 3 uses

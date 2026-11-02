@@ -202,14 +202,17 @@ bb.bz:                                            ; preds = %bb.by
   %i.hp = trunc i64 %i.ho to i32
   %.01620.i.i = add i32 %i.hp, -1                 ; 2 uses
   %i.hq = icmp sgt i32 %.01620.i.i, -1
-  br i1 %i.hq, label %.lr.ph.i.i62, label %_compute_local_id.exit.i
+  br i1 %i.hq, label %.lr.ph.preheader.i.i, label %_compute_local_id.exit.i
 
-.lr.ph.i.i62:                                     ; preds = %bb.bz, %bb.ca
-  %.01623.i.i = phi i32 [ %.016.i.i, %bb.ca ], [ %.01620.i.i, %bb.bz ] ; 3 uses
-  %.022.i.i = phi i32 [ %i.hy, %bb.ca ], [ 1, %bb.bz ] ; 2 uses
-  %.01521.i.i = phi i32 [ %i.hx, %bb.ca ], [ -1, %bb.bz ] ; 3 uses
-  %5 = zext nneg i32 %.01623.i.i to i64
-  %i.hr = getelementptr inbounds nuw i8, ptr %i.hn, i64 %5
+.lr.ph.preheader.i.i:                             ; preds = %bb.bz
+  %5 = zext nneg i32 %.01620.i.i to i64
+  br label %.lr.ph.i.i62
+
+.lr.ph.i.i62:                                     ; preds = %bb.ca, %.lr.ph.preheader.i.i
+  %indvars.iv.i.i63 = phi i64 [ %5, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i64, %bb.ca ] ; 3 uses
+  %.022.i.i = phi i32 [ 1, %.lr.ph.preheader.i.i ], [ %i.hy, %bb.ca ] ; 2 uses
+  %.01521.i.i = phi i32 [ -1, %.lr.ph.preheader.i.i ], [ %i.hx, %bb.ca ] ; 3 uses
+  %i.hr = getelementptr inbounds nuw i8, ptr %i.hn, i64 %indvars.iv.i.i63
   %i.hs = load i8, ptr %i.hr, align 1             ; 2 uses
   %i.ht = add i8 %i.hs, -58
   %or.cond.i.i = icmp ult i8 %i.ht, -10
@@ -223,8 +226,8 @@ bb.ca:                                            ; preds = %.lr.ph.i.i62
   %i.hw = mul nuw nsw i32 %.022.i.i, %i.hv
   %i.hx = add nsw i32 %i.hw, %spec.store.select.i.i ; 2 uses
   %i.hy = mul nuw nsw i32 %.022.i.i, 10
-  %.016.i.i = add nsw i32 %.01623.i.i, -1
-  %i.hz = icmp sgt i32 %.01623.i.i, 0
+  %indvars.iv.next.i.i64 = add nsw i64 %indvars.iv.i.i63, -1
+  %i.hz = icmp sgt i64 %indvars.iv.i.i63, 0
   br i1 %i.hz, label %.lr.ph.i.i62, label %_compute_local_id.exit.i, !llvm.loop !17
 
 _compute_local_id.exit.i:                         ; preds = %bb.ca, %.lr.ph.i.i62, %bb.bz, %bb.by
