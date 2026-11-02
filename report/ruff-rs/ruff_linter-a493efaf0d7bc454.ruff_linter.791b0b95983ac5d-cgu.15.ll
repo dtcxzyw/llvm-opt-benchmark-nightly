@@ -206,7 +206,6 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif11SarifOutputEBH_(ptr noalias noundef nonnull align 8 dereferenceable(128) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif9SarifRuleENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBK_(ptr noalias noundef nonnull align 8 dereferenceable(96) %0)
           to label %bb.c unwind label %bb.b
 
@@ -233,17 +232,19 @@ bb.e:                                             ; preds = %bb.c
 
 .body.i.i.i.i.i:                                  ; preds = %bb.e, %bb.b
   %eh.lpad-body.i.i.i.i.i = phi { ptr, i32 } [ %i.c, %bb.e ], [ %i.a, %bb.b ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %1) #53
           to label %common.resume.i.i.i.i.i unwind label %bb.h
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif9SarifRuleEEB1d_.exit.i.i.i.i.i: ; preds = %bb.c
-  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif8SarifRunj1_EBI_.exit unwind label %bb.f
 
 bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif9SarifRuleEEB1d_.exit.i.i.i.i.i
   %i.d = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
           to label %common.resume.i.i.i.i.i unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -263,7 +264,7 @@ bb.h:                                             ; preds = %.body.i.i.i.i.i
   unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif8SarifRunj1_EBI_.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsEhZmuQNqkz_11ruff_linter7message5sarif9SarifRuleEEB1d_.exit.i.i.i.i.i
-  tail call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
+  tail call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
   ret void
 }
 
@@ -666,7 +667,7 @@ bb.cu:                                            ; preds = %bb.ct
   unreachable
 
 .body104.i.i.i:                                   ; preds = %bb.dg, %bb.de, %bb.dd, %bb.ct, %.peel.begin.i.i.i
-  %.pn59.i.i.i = phi { ptr, i32 } [ %i.jy, %bb.dd ], [ %i.jz, %bb.de ], [ %i.kb, %bb.dg ], [ %i.jh, %bb.ct ], [ %i.jh, %.peel.begin.i.i.i ]
+  %.pn59.i.i.i = phi { ptr, i32 } [ %i.jy, %bb.dd ], [ %i.jz, %bb.de ], [ %i.kb, %bb.dg ], [ %i.jh, %.peel.begin.i.i.i ], [ %i.jh, %bb.ct ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef align 8 dereferenceable(72) %i.o) #53
           to label %.body65.i.i.i unwind label %bb.az, !noalias !8096
 
@@ -1069,7 +1070,7 @@ _RNCNCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11tryceratops5rules26error_inste
 
 .body.thread.i.i:                                 ; preds = %bb.ag, %.body.thread57.i.i
   %eh.lpad-body56.i.i = phi { ptr, i32 } [ %lpad.thr_comm.i.i, %.body.thread57.i.i ], [ %i.er, %bb.ag ] ; 2 uses
-  %.val14.i.i = load ptr, ptr %i.d, align 8, !noalias !8196 ; 3 uses
+  %.val14.i.i = load ptr, ptr %i.d, align 8, !noalias !8196, !noundef !13 ; 3 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.val15.i.i = load i64, ptr %i.et, align 8, !noalias !8196 ; 2 uses
   %i.eu = icmp eq ptr %.val14.i.i, null

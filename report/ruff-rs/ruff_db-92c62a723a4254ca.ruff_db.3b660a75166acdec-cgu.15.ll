@@ -205,7 +205,6 @@ bb.a:
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtCs2sepWsjoOnX_17annotate_snippets7snippet5Groupj1_ECs56aZGHL6Dc6_7ruff_db(ptr noalias noundef nonnull align 8 dereferenceable(176) %0) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !range !15, !alias.scope !384, !noundef !4
   %i.c = icmp ugt i64 %i.b, -4
   br i1 %i.c, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2sepWsjoOnX_17annotate_snippets5level5LevelECs56aZGHL6Dc6_7ruff_db.exit.i.i, label %bb.b
@@ -237,11 +236,13 @@ bb.e:                                             ; preds = %_RINvNtCs4NRVxsYgnA
 
 .body.i.i:                                        ; preds = %bb.e, %bb.c
   %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.f, %bb.e ], [ %i.d, %bb.c ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2sepWsjoOnX_17annotate_snippets7snippet5TitleEECs56aZGHL6Dc6_7ruff_db(ptr noalias noundef align 8 dereferenceable(112) %1) #32
           to label %bb.f unwind label %bb.k
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2sepWsjoOnX_17annotate_snippets5level5LevelECs56aZGHL6Dc6_7ruff_db.exit.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs56aZGHL6Dc6_7ruff_db.exit.i.i.i.i.i.i, %bb.a
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2sepWsjoOnX_17annotate_snippets7snippet5TitleEECs56aZGHL6Dc6_7ruff_db(ptr noalias noundef align 8 dereferenceable(112) %1)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2sepWsjoOnX_17annotate_snippets7snippet5TitleEECs56aZGHL6Dc6_7ruff_db(ptr noalias noundef align 8 dereferenceable(112) %2)
           to label %bb.h unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.g, %.body.i.i

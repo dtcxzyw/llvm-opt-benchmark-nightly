@@ -206,10 +206,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtCscdodAO9FK5_5alloc6string6StringEC
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueANtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorj1_ECsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(224) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 8 uses
   %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !59, !noundef !5
   %i.b = icmp eq i64 %i.a, 0
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   br i1 %i.b, label %bb.b, label %bb.i
 
 bb.b:                                             ; preds = %bb.a
@@ -219,22 +218,24 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           cleanup
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 200
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageEEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %2) #43
           to label %common.resume.i.i unwind label %bb.h
 
 bb.d:                                             ; preds = %bb.b
-  %i.d = load i64, ptr %2, align 8, !range !8, !alias.scope !60, !noundef !5
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 4 uses
+  %i.d = load i64, ptr %3, align 8, !range !8, !alias.scope !60, !noundef !5
   %i.e = icmp eq i64 %i.d, -1
   br i1 %i.e, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorECsjNt1Wzngcv_9ty_server.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i unwind label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.f = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %3)
           to label %common.resume.i.i unwind label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -265,17 +266,19 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.k = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %2) #43
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 200
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageEECsjNt1Wzngcv_9ty_server(ptr noalias noundef align 8 dereferenceable(24) %4) #43
           to label %common.resume.i.i unwind label %bb.n
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i: ; preds = %bb.j, %bb.i
-  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
+  invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %5)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i unwind label %bb.l
 
 bb.l:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i
   %i.l = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %5)
           to label %common.resume.i.i unwind label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -291,7 +294,8 @@ bb.n:                                             ; preds = %bb.k
   unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i, %bb.e
-  tail call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
+  %.sink.i.i = phi ptr [ %3, %bb.e ], [ %5, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors8NotebookEECsjNt1Wzngcv_9ty_server.exit.i.i.i ]
+  tail call void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures20NotebookCellLanguageENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNt1Wzngcv_9ty_server(ptr noalias noundef nonnull align 8 dereferenceable(24) %.sink.i.i)
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorECsjNt1Wzngcv_9ty_server.exit
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueSNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated8enum_ors16NotebookSelectorECsjNt1Wzngcv_9ty_server.exit: ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsk4T2nMguaqB_13gen_lsp_types9generated10structures34NotebookDocumentFilterWithNotebookECsjNt1Wzngcv_9ty_server.exit.sink.split.i.i

@@ -204,35 +204,80 @@ _ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = 
           to label %.noexc13 unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc13:                                         ; preds = %_ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i, %.lr.ph
-  %i.i = phi ptr [ null, %.lr.ph ], [ %i.h, %_ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i ] ; 5 uses
+  %i.i = phi ptr [ null, %.lr.ph ], [ %i.h, %_ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i ] ; 8 uses
   store ptr %i.i, ptr %.020, align 8, !tbaa !86
   %i.j = getelementptr inbounds nuw i8, ptr %.020, i64 8 ; 2 uses
   store ptr %i.i, ptr %i.j, align 8, !tbaa !88
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %.020, i64 16
   store ptr %i.k, ptr %i.l, align 8, !tbaa !87
-  %i.m = load ptr, ptr %.01219, align 8, !tbaa !167 ; 2 uses
-  %i.n = load ptr, ptr %i.a, align 8, !tbaa !167  ; 2 uses
+  %i.m = load ptr, ptr %.01219, align 8, !tbaa !168 ; 5 uses
+  %i.n = load ptr, ptr %i.a, align 8, !tbaa !168  ; 3 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.m, %i.n
-  br i1 %.not7.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i
+  br i1 %.not7.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.noexc13, %.lr.ph.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i.i.i.i ], [ %i.i, %.noexc13 ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i.i ], [ %i.m, %.noexc13 ] ; 2 uses
+.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %.noexc13
+  %3 = ptrtoaddr ptr %i.m to i64                  ; 2 uses
+  %4 = ptrtoaddr ptr %i.i to i64
+  %5 = ptrtoaddr ptr %i.n to i64
+  %6 = add i64 %5, -8
+  %7 = sub i64 %6, %3                             ; 2 uses
+  %8 = lshr i64 %7, 3
+  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %7, 24
+  %10 = sub i64 %3, %4
+  %diff.check = icmp ugt i64 %10, -32
+  %or.cond = or i1 %min.iters.check, %diff.check
+  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader41, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.preheader
+  %n.vec = and i64 %9, 4611686018427387900        ; 3 uses
+  %11 = shl i64 %n.vec, 3                         ; 2 uses
+  %12 = getelementptr i8, ptr %i.i, i64 %11       ; 2 uses
+  %13 = getelementptr i8, ptr %i.m, i64 %11
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %14 = shl i64 %index, 3                         ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.i, i64 %14 ; 2 uses
+  %next.gep38 = getelementptr i8, ptr %i.m, i64 %14 ; 2 uses
+  %15 = getelementptr i8, ptr %next.gep38, i64 16
+  %wide.load = load <2 x i64>, ptr %next.gep38, align 4, !tbaa !51
+  %wide.load39 = load <2 x i64>, ptr %15, align 4, !tbaa !51
+  %16 = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %wide.load, ptr %next.gep, align 4, !tbaa !51
+  store <2 x i64> %wide.load39, ptr %16, align 4, !tbaa !51
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %17 = icmp eq i64 %index.next, %n.vec
+  br i1 %17, label %middle.block, label %vector.body, !llvm.loop !165
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %9, %n.vec
+  br i1 %cmp.n, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.preheader41
+
+.lr.ph.i.i.i.i.i.i.preheader41:                   ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %middle.block
+  %.09.i.i.i.i.i.i.ph = phi ptr [ %i.i, %.lr.ph.i.i.i.i.i.i.preheader ], [ %12, %middle.block ]
+  %.sroa.04.08.i.i.i.i.i.i.ph = phi ptr [ %i.m, %.lr.ph.i.i.i.i.i.i.preheader ], [ %13, %middle.block ]
+  br label %.lr.ph.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader41, %.lr.ph.i.i.i.i.i.i
+  %.09.i.i.i.i.i.i = phi ptr [ %i.q, %.lr.ph.i.i.i.i.i.i ], [ %.09.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader41 ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.04.08.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.preheader41 ] ; 2 uses
   %i.o = load i64, ptr %.sroa.04.08.i.i.i.i.i.i, align 4, !tbaa !51
   store i64 %i.o, ptr %.09.i.i.i.i.i.i, align 4, !tbaa !51
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.p, %i.n
-  br i1 %.not.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !165
+  br i1 %.not.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !166
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc13
-  %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.i, %.noexc13 ], [ %i.q, %.lr.ph.i.i.i.i.i.i ]
+.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block, %.noexc13
+  %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.i, %.noexc13 ], [ %12, %middle.block ], [ %i.q, %.lr.ph.i.i.i.i.i.i ]
   store ptr %.0.lcssa.i.i.i.i.i.i, ptr %i.j, align 8, !tbaa !88
   %i.r = getelementptr inbounds nuw i8, ptr %.01219, i64 24 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.020, i64 24 ; 2 uses
   %.not = icmp eq ptr %i.r, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !166
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !167
 
 .loopexit.split-lp.loopexit.split-lp:             ; preds = %_ZNSt15__new_allocatorIN2cv6Point_IiEEE8allocateEmPKv.exit.i.i.i.i.i, %.noexc.i.i.i
   %lpad.loopexit.split-lp38 = landingpad { ptr, i32 }
@@ -385,7 +430,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !169  ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !172  ; 3 uses
   %i.e = icmp eq ptr %i.d, @_ZTSSt19_Sp_make_shared_tag
   br i1 %i.e, label %_ZNKSt9type_infoeqERKS_.exit.thread, label %bb.c
 
@@ -612,9 +657,12 @@ attributes #22 = { noreturn }
 !162 = !{!158}
 !163 = !{!160}
 !164 = !{!160, !158}
-!165 = distinct !{!165, !83}
-!166 = distinct !{!166, !83}
-!167 = !{!32, !32, i64 0}
-!168 = !{!"_ZTSSt9type_info", !14, i64 8}
-!169 = !{!168, !14, i64 8}
+!165 = distinct !{!165, !83, !169, !170}
+!166 = distinct !{!166, !83, !169}
+!167 = distinct !{!167, !83}
+!168 = !{!32, !32, i64 0}
+!169 = !{!"llvm.loop.isvectorized", i32 1}
+!170 = !{!"llvm.loop.unroll.runtime.disable"}
+!171 = !{!"_ZTSSt9type_info", !14, i64 8}
+!172 = !{!171, !14, i64 8}
 end_hunk_0

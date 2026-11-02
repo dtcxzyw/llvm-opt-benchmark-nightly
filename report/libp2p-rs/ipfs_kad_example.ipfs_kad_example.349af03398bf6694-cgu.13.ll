@@ -204,12 +204,10 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtNtCs80T0Klmhmtx_12clap_builder7builder9arg_groupNtB3_8ArgGroup4argsNtNtNtB7_4util2id2IdAB1a_j1_ECs4w110Okq5IC_16ipfs_kad_example(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([96 x i8]) align 8 captures(none) dereferenceable(96) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(96) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(16) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [96 x i8], align 8                ; 9 uses
+  %i.a = alloca [96 x i8], align 8                ; 10 uses
   %.sroa.5.sroa.0.0.copyload = load ptr, ptr %2, align 8, !alias.scope !60, !nonnull !8, !noundef !8
   %.sroa.5.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.sroa.4.0.copyload = load i64, ptr %.sroa.5.sroa.4.0..sroa_idx, align 8, !alias.scope !60
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.a, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61)
@@ -225,11 +223,17 @@ bb.b:                                             ; preds = %bb.e, %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = extractvalue { ptr, i64 } %i.b, 0        ; 2 uses
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %bb.g, label %bb.d
+  br i1 %i.e, label %3, label %bb.d
+
+3:                                                ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 0, ptr %4, align 8, !alias.scope !61
+  br label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   %i.f = extractvalue { ptr, i64 } %i.b, 1
-  %i.g = load i64, ptr %3, align 8, !alias.scope !64, !noundef !8 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %i.g = load i64, ptr %5, align 8, !alias.scope !64, !noundef !8 ; 3 uses
   %i.h = load i64, ptr %i.a, align 8, !range !9, !alias.scope !64, !noundef !8
   %i.i = icmp eq i64 %i.g, %i.h
   br i1 %i.i, label %bb.e, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs80T0Klmhmtx_12clap_builder4util2id2IdE8push_mutCs4w110Okq5IC_16ipfs_kad_example.exit.i
@@ -239,12 +243,14 @@ bb.e:                                             ; preds = %bb.d
           to label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs80T0Klmhmtx_12clap_builder4util2id2IdE8push_mutCs4w110Okq5IC_16ipfs_kad_example.exit.i unwind label %bb.b, !noalias !63
 
 _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs80T0Klmhmtx_12clap_builder4util2id2IdE8push_mutCs4w110Okq5IC_16ipfs_kad_example.exit.i: ; preds = %bb.e, %bb.d
-  %i.j = load ptr, ptr %4, align 8, !alias.scope !64, !nonnull !8, !noundef !8
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.j = load ptr, ptr %6, align 8, !alias.scope !64, !nonnull !8, !noundef !8
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %i.j, i64 %i.g ; 2 uses
   store ptr %i.d, ptr %i.k, align 8, !noalias !65
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i64 %i.f, ptr %i.l, align 8, !noalias !63
   %i.m = add i64 %i.g, 1
+  store i64 %i.m, ptr %5, align 8, !alias.scope !64
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -253,9 +259,7 @@ bb.f:                                             ; preds = %bb.b
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #34, !noalias !63
   unreachable
 
-bb.g:                                             ; preds = %bb.c, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs80T0Klmhmtx_12clap_builder4util2id2IdE8push_mutCs4w110Okq5IC_16ipfs_kad_example.exit.i
-  %storemerge = phi i64 [ %i.m, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs80T0Klmhmtx_12clap_builder4util2id2IdE8push_mutCs4w110Okq5IC_16ipfs_kad_example.exit.i ], [ 0, %bb.c ]
-  store i64 %storemerge, ptr %3, align 8, !alias.scope !61
+bb.g:                                             ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs80T0Klmhmtx_12clap_builder4util2id2IdE8push_mutCs4w110Okq5IC_16ipfs_kad_example.exit.i, %3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %1, ptr noundef nonnull align 8 dereferenceable(96) %i.a, i64 96, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false)

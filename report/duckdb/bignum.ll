@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/bignum?download=true
 inline.NumInlined: 162
 inline.NumDeleted: 17
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@mbedtls_mpi_gcd:bb.a
   %i.dd = icmp samesign ugt i64 %i.dc, 10000
   br i1 %i.dd, label %mbedtls_mpi_shift_l.exit.threadthread-pre-split, label %bb.aj
@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %.lr.ph51.i.i, label %bb.c, !llvm.loop !1
 
 .lr.ph51.i.i:                                     ; preds = %bb.d, %bb.c, %bb.b
-  %.035.lcssa.i.i = phi i64 [ 0, %bb.b ], [ %.03545.i.i, %bb.c ], [ 0, %bb.d ] ; 4 uses
+  %.035.lcssa.i.i = phi i64 [ 0, %bb.b ], [ %.03545.i.i, %bb.c ], [ 0, %bb.d ] ; 5 uses
   %.not41.i.i = icmp ne i64 %1, 0
   %spec.select.i = zext i1 %.not41.i.i to i64     ; 3 uses
   %i.j = or i64 %.035.lcssa.i.i, %spec.select.i
@@ -228,13 +228,21 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.q = load i16, ptr %i.p, align 8, !tbaa !20   ; 2 uses
-  %or.cond = icmp slt i16 %i.q, 0
-  %5 = icmp eq i64 %.035.lcssa.i.i, 0
-  %or.cond33 = or i1 %or.cond, %5
-  br i1 %or.cond33, label %_ZL24mbedtls_mpi_resize_clearP11mbedtls_mpim.exit, label %bb.i
+  %i.q = load i16, ptr %i.p, align 8, !tbaa !20   ; 3 uses
+  %5 = icmp sgt i16 %i.q, 0
+  br i1 %5, label %.preheader.preheader.i.i, label %6
 
-bb.i:                                             ; preds = %bb.h
+6:                                                ; preds = %bb.h
+  %7 = icmp ne i16 %i.q, 0
+  %8 = icmp eq i64 %.035.lcssa.i.i, 0
+  %or.cond = or i1 %8, %7
+  br i1 %or.cond, label %_ZL24mbedtls_mpi_resize_clearP11mbedtls_mpim.exit, label %bb.i
+
+.preheader.preheader.i.i:                         ; preds = %bb.h
+  %.old = icmp eq i64 %.035.lcssa.i.i, 0
+  br i1 %.old, label %_ZL24mbedtls_mpi_resize_clearP11mbedtls_mpim.exit, label %bb.i
+
+bb.i:                                             ; preds = %6, %.preheader.preheader.i.i
   %i.r = load ptr, ptr %2, align 8, !tbaa !23
   %i.s = load i64, ptr %i.r, align 8, !tbaa !22
   %i.t = icmp ugt i64 %i.s, %1
@@ -326,8 +334,8 @@ bb.t:                                             ; preds = %bb.m, %bb.o, %bb.s
   %i.au = tail call noundef i32 @_Z23mbedtls_mpi_core_randomPmmPKmmPFiPvPhmES2_(ptr noundef %i.ap, i64 noundef %1, ptr noundef %i.aq, i64 noundef %i.at, ptr noundef %3, ptr noundef %4)
   br label %_ZL24mbedtls_mpi_resize_clearP11mbedtls_mpim.exit
 
-_ZL24mbedtls_mpi_resize_clearP11mbedtls_mpim.exit: ; preds = %bb.i, %bb.g, %bb.h, %.lr.ph51.i.i, %bb.r, %mbedtls_mpi_free.exit12.i, %bb.t, %mbedtls_mpi_cmp_int.exit, %bb.a
-  %.1 = phi i32 [ -4, %mbedtls_mpi_cmp_int.exit ], [ -4, %bb.a ], [ %i.au, %bb.t ], [ -16, %bb.r ], [ -16, %mbedtls_mpi_free.exit12.i ], [ -4, %bb.h ], [ -4, %.lr.ph51.i.i ], [ -4, %bb.g ], [ -4, %bb.i ]
+_ZL24mbedtls_mpi_resize_clearP11mbedtls_mpim.exit: ; preds = %bb.i, %bb.g, %.preheader.preheader.i.i, %.lr.ph51.i.i, %6, %bb.r, %mbedtls_mpi_free.exit12.i, %bb.t, %mbedtls_mpi_cmp_int.exit, %bb.a
+  %.1 = phi i32 [ -4, %mbedtls_mpi_cmp_int.exit ], [ -4, %bb.a ], [ %i.au, %bb.t ], [ -16, %bb.r ], [ -16, %mbedtls_mpi_free.exit12.i ], [ -4, %6 ], [ -4, %.lr.ph51.i.i ], [ -4, %bb.g ], [ -4, %.preheader.preheader.i.i ], [ -4, %bb.i ]
   ret i32 %.1
 }
 
@@ -394,7 +402,7 @@ bb.e:                                             ; preds = %.lr.ph51.i.i
 .preheader.i.i.preheader:                         ; preds = %bb.e
   %i.m = load i64, ptr %i.d, align 8, !tbaa !22
   %i.n = icmp ugt i64 %i.m, 1
-  br i1 %i.n, label %bb.f, label %mbedtls_mpi_cmp_int.exit.thread
+  br i1 %i.n, label %bb.f, label %mbedtls_mpi_cmp_int.exit.thread, !llvm.loop !7
 
 bb.f:                                             ; preds = %.preheader.i.i.preheader
   %i.o = zext nneg i16 %i.k to i32
@@ -502,7 +510,7 @@ bb.m:                                             ; preds = %.preheader.i.i73.pr
 
 bb.n:                                             ; preds = %.preheader.i.i73.preheader
   %i.aw = icmp eq i64 %i.at, 0
-  br i1 %i.aw, label %bb.o, label %mbedtls_mpi_cmp_int.exit77.thread115
+  br i1 %i.aw, label %bb.o, label %mbedtls_mpi_cmp_int.exit77.thread115, !llvm.loop !7
 
 bb.o:                                             ; preds = %bb.n
   %i.ax = zext nneg i16 %i.ar to i32
@@ -510,7 +518,7 @@ bb.o:                                             ; preds = %bb.n
   br label %mbedtls_mpi_cmp_int.exit77
 
 mbedtls_mpi_cmp_int.exit77:                       ; preds = %bb.k, %bb.m, %bb.o
-  %.036.i.i75 = phi i32 [ %i.ay, %bb.o ], [ %i.as, %bb.k ], [ %i.av, %bb.m ]
+  %.036.i.i75 = phi i32 [ %i.av, %bb.m ], [ %i.as, %bb.k ], [ %i.ay, %bb.o ]
   %.not40 = icmp eq i32 %.036.i.i75, 0
   br i1 %.not40, label %mbedtls_mpi_cmp_int.exit77.thread115, label %mbedtls_mpi_cmp_int.exit77.thread
 
@@ -878,7 +886,7 @@ bb.be:                                            ; preds = %mbedtls_mpi_free.ex
   br label %mbedtls_mpi_cmp_int.exit.thread
 
 mbedtls_mpi_cmp_int.exit.thread:                  ; preds = %bb.c, %bb.be, %mbedtls_mpi_free.exit102, %.preheader.i.i.preheader, %bb.e, %bb.a, %mbedtls_mpi_cmp_int.exit
-  %.012 = phi i32 [ -4, %.preheader.i.i.preheader ], [ -4, %mbedtls_mpi_cmp_int.exit ], [ -4, %bb.e ], [ -4, %bb.a ], [ %.0, %bb.be ], [ %.0, %mbedtls_mpi_free.exit102 ], [ -4, %bb.c ]
+  %.012 = phi i32 [ %.0, %bb.be ], [ -4, %mbedtls_mpi_cmp_int.exit ], [ -4, %bb.e ], [ -4, %bb.a ], [ -4, %.preheader.i.i.preheader ], [ %.0, %mbedtls_mpi_free.exit102 ], [ -4, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13

@@ -205,22 +205,20 @@ bb.f:                                             ; preds = %bb.c
 define linkonce_odr dso_local void @_ZN6frozen4bits15make_pmh_tablesILm2ESt4pairIjSt7variantIJN6iguana6detail10pb_field_tIN9pb_sample5rectsESt6vectorINS7_4rectESaISA_EELm1ESC_EEEEELm1ENS_4elsaIjEENS0_6GetKeyENS_26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEENS0_10pmh_tablesIXT_ET2_EERKNS0_6carrayIT0_XT1_EEERKSM_RKT3_T4_(ptr dead_on_unwind noalias writable sret(%"struct.frozen::bits::pmh_tables.668") align 8 %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 1 dereferenceable(1) %3, i64 %4) local_unnamed_addr #12 comdat {
 bb.a:
   %5 = alloca %"struct.frozen::bits::bucket_size_compare", align 1 ; 3 uses
-  %6 = alloca %"struct.frozen::bits::pmh_buckets.693", align 8 ; 8 uses
+  %6 = alloca %"struct.frozen::bits::pmh_buckets.693", align 8 ; 7 uses
   %7 = alloca %"class.frozen::bits::carray.696", align 8 ; 10 uses
   %8 = alloca %"class.frozen::bits::carray.669", align 8 ; 8 uses
   %9 = alloca %"class.frozen::bits::carray.670", align 8 ; 19 uses
   %10 = alloca %"class.frozen::bits::cvector.695", align 8 ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1551)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 40, i1 false), !alias.scope !1551
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %6, i8 0, i64 56, i1 false), !alias.scope !1551
   %i.a = load i32, ptr %1, align 8, !tbaa !164, !noalias !1551
   %i.b = zext i32 %i.a to i64
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  store i64 0, ptr %11, align 8, !tbaa !546, !alias.scope !1551
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %i.c = phi i64 [ %4, %bb.a ], [ %i.e, %bb.b ]
+  %i.c = phi i64 [ %i.e, %bb.b ], [ %4, %bb.a ]
   %i.d = mul i64 %i.c, 48271
   %i.e = urem i64 %i.d, 2147483647                ; 6 uses
   %i.f = xor i64 %i.e, %i.b                       ; 2 uses
@@ -623,22 +621,20 @@ bb.f:                                             ; preds = %bb.c
 define linkonce_odr dso_local void @_ZN6frozen4bits15make_pmh_tablesILm2ESt4pairIjSt7variantIJN6iguana6detail10pb_field_tIN9pb_sample7personsESt6vectorINS7_6personESaISA_EELm1ESC_EEEEELm1ENS_4elsaIjEENS0_6GetKeyENS_26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEENS0_10pmh_tablesIXT_ET2_EERKNS0_6carrayIT0_XT1_EEERKSM_RKT3_T4_(ptr dead_on_unwind noalias writable sret(%"struct.frozen::bits::pmh_tables.668") align 8 %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 1 dereferenceable(1) %3, i64 %4) local_unnamed_addr #12 comdat {
 bb.a:
   %5 = alloca %"struct.frozen::bits::bucket_size_compare", align 1 ; 3 uses
-  %6 = alloca %"struct.frozen::bits::pmh_buckets.693", align 8 ; 8 uses
+  %6 = alloca %"struct.frozen::bits::pmh_buckets.693", align 8 ; 7 uses
   %7 = alloca %"class.frozen::bits::carray.696", align 8 ; 10 uses
   %8 = alloca %"class.frozen::bits::carray.669", align 8 ; 8 uses
   %9 = alloca %"class.frozen::bits::carray.670", align 8 ; 19 uses
   %10 = alloca %"class.frozen::bits::cvector.695", align 8 ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1634)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 40, i1 false), !alias.scope !1634
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %6, i8 0, i64 56, i1 false), !alias.scope !1634
   %i.a = load i32, ptr %1, align 8, !tbaa !164, !noalias !1634
   %i.b = zext i32 %i.a to i64
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  store i64 0, ptr %11, align 8, !tbaa !546, !alias.scope !1634
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %i.c = phi i64 [ %4, %bb.a ], [ %i.e, %bb.b ]
+  %i.c = phi i64 [ %i.e, %bb.b ], [ %4, %bb.a ]
   %i.d = mul i64 %i.c, 48271
   %i.e = urem i64 %i.d, 2147483647                ; 6 uses
   %i.f = xor i64 %i.e, %i.b                       ; 2 uses
@@ -1041,22 +1037,20 @@ bb.f:                                             ; preds = %bb.c
 define linkonce_odr dso_local void @_ZN6frozen4bits15make_pmh_tablesILm2ESt4pairIjSt7variantIJN6iguana6detail10pb_field_tIN9pb_sample8MonstersESt6vectorINS7_7MonsterESaISA_EELm1ESC_EEEEELm1ENS_4elsaIjEENS0_6GetKeyENS_26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEENS0_10pmh_tablesIXT_ET2_EERKNS0_6carrayIT0_XT1_EEERKSM_RKT3_T4_(ptr dead_on_unwind noalias writable sret(%"struct.frozen::bits::pmh_tables.668") align 8 %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 1 dereferenceable(1) %3, i64 %4) local_unnamed_addr #12 comdat {
 bb.a:
   %5 = alloca %"struct.frozen::bits::bucket_size_compare", align 1 ; 3 uses
-  %6 = alloca %"struct.frozen::bits::pmh_buckets.693", align 8 ; 8 uses
+  %6 = alloca %"struct.frozen::bits::pmh_buckets.693", align 8 ; 7 uses
   %7 = alloca %"class.frozen::bits::carray.696", align 8 ; 10 uses
   %8 = alloca %"class.frozen::bits::carray.669", align 8 ; 8 uses
   %9 = alloca %"class.frozen::bits::carray.670", align 8 ; 19 uses
   %10 = alloca %"class.frozen::bits::cvector.695", align 8 ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1840)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %6, i8 0, i64 40, i1 false), !alias.scope !1840
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %6, i8 0, i64 56, i1 false), !alias.scope !1840
   %i.a = load i32, ptr %1, align 8, !tbaa !164, !noalias !1840
   %i.b = zext i32 %i.a to i64
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  store i64 0, ptr %11, align 8, !tbaa !546, !alias.scope !1840
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %i.c = phi i64 [ %4, %bb.a ], [ %i.e, %bb.b ]
+  %i.c = phi i64 [ %i.e, %bb.b ], [ %4, %bb.a ]
   %i.d = mul i64 %i.c, 48271
   %i.e = urem i64 %i.d, 2147483647                ; 6 uses
   %i.f = xor i64 %i.e, %i.b                       ; 2 uses

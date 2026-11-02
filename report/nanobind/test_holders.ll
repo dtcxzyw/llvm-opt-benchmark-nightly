@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanobind/original/test_holders?download=true
 inline.NumInlined: 1757
 inline.NumDeleted: 970
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZL30nanobind_test_holders_ext_execP7_object:bb.a
   store ptr null, ptr %i.ye, align 16, !tbaa !164
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #29
@@ -204,6 +202,7 @@ begin_hunk_0_@_ZL30nanobind_test_holders_ext_execP7_object:bb.a
   %i.abj = getelementptr inbounds nuw i8, ptr %18, i64 88
   %i.abk = getelementptr inbounds nuw i8, ptr %18, i64 112
   store i32 0, ptr %i.abk, align 8
+  %167 = getelementptr inbounds nuw i8, ptr %18, i64 120
   %i.abl = getelementptr inbounds nuw i8, ptr %18, i64 144
   store i32 0, ptr %i.abl, align 8
   %i.abm = getelementptr inbounds nuw i8, ptr %18, i64 56
@@ -213,10 +212,9 @@ begin_hunk_0_@_ZL30nanobind_test_holders_ext_execP7_object:bb.a
   store ptr @.str.37, ptr %i.abo, align 8, !tbaa !173
   store i32 11, ptr %i.abm, align 8, !tbaa !174
   store ptr @.str.38, ptr %i.abj, align 8, !tbaa !193
-  %167 = getelementptr inbounds nuw i8, ptr %18, i64 96
-  %i.abp = getelementptr inbounds nuw i8, ptr %18, i64 120
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %167, i8 0, i64 16, i1 false)
-  store ptr @.str.39, ptr %i.abp, align 8, !tbaa !193
+  %i.abp = getelementptr inbounds nuw i8, ptr %18, i64 96
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.abp, i8 0, i64 16, i1 false)
+  store ptr @.str.39, ptr %167, align 8, !tbaa !193
   %i.abq = getelementptr inbounds nuw i8, ptr %18, i64 128
   store ptr null, ptr %i.abq, align 8, !tbaa !194
   %i.abr = getelementptr inbounds nuw i8, ptr %18, i64 136

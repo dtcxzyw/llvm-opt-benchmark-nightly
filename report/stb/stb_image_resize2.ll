@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.d:                                             ; preds = %._crit_edge297
   %i.bm = sext i32 %i.d to i64                    ; 2 uses
-  %i.bn = getelementptr [8 x i8], ptr %4, i64 %i.bm ; 5 uses
+  %i.bn = getelementptr [8 x i8], ptr %4, i64 %i.bm ; 6 uses
   %i.bo = xor i32 %i.d, -1
   %i.bp = add i32 %3, %i.bo                       ; 2 uses
   %i.bq = zext i32 %i.bp to i64                   ; 2 uses
@@ -238,25 +238,32 @@ vector.memcheck:                                  ; preds = %bb.d
   br i1 %conflict.rdx, label %scalar.ph444.preheader, label %vector.ph449
 
 vector.ph449:                                     ; preds = %vector.memcheck
-  %n.vec450 = and i64 %i.br, 8589934590           ; 4 uses
+  %n.vec450 = and i64 %i.br, 8589934588           ; 4 uses
   %i.cg = shl nuw nsw i64 %n.vec450, 3            ; 2 uses
   %i.ch = getelementptr i8, ptr %i.bn, i64 %i.cg
   %i.ci = getelementptr i8, ptr %4, i64 %i.cg
   %i.cj = trunc i64 %n.vec450 to i32
   %i.ck = add i32 %i.d, %i.cj
-  %broadcast.splatinsert451 = insertelement <2 x i32> poison, i32 %i.f, i64 0
+  %broadcast.splatinsert451 = insertelement <2 x i32> poison, i32 %i.f, i64 0 ; 2 uses
+  %7 = shufflevector <2 x i32> %broadcast.splatinsert451, <2 x i32> poison, <4 x i32> zeroinitializer
   %i.cl = shufflevector <2 x i32> %broadcast.splatinsert451, <2 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body453
 
 vector.body453:                                   ; preds = %vector.body453, %vector.ph449
   %index454 = phi i64 [ 0, %vector.ph449 ], [ %index.next457, %vector.body453 ] ; 2 uses
-  %i.cm = shl i64 %index454, 3                    ; 2 uses
-  %next.gep.a = getelementptr i8, ptr %i.bn, i64 %i.cm
-  %next.gep455.a = getelementptr i8, ptr %4, i64 %i.cm
+  %i.cm = shl i64 %index454, 3                    ; 3 uses
+  %8 = or disjoint i64 %i.cm, 16                  ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.bn, i64 %i.cm
+  %next.gep455 = getelementptr i8, ptr %i.bn, i64 %8
+  %next.gep.a = getelementptr i8, ptr %4, i64 %i.cm
+  %next.gep455.a = getelementptr i8, ptr %4, i64 %8
+  %wide.vec = load <4 x i32>, ptr %next.gep.a, align 4, !tbaa !32
   %wide.vec.a = load <4 x i32>, ptr %next.gep455.a, align 4, !tbaa !32
+  %interleaved.vec = add nsw <4 x i32> %wide.vec, %7
+  store <4 x i32> %interleaved.vec, ptr %next.gep, align 4, !tbaa !32
   %interleaved.vec.a = add nsw <4 x i32> %wide.vec.a, %i.cl
-  store <4 x i32> %interleaved.vec.a, ptr %next.gep.a, align 4, !tbaa !32
-  %index.next457 = add nuw i64 %index454, 2       ; 2 uses
+  store <4 x i32> %interleaved.vec.a, ptr %next.gep455, align 4, !tbaa !32
+  %index.next457 = add nuw i64 %index454, 4       ; 2 uses
   %i.cn = icmp eq i64 %index.next457, %n.vec450
   br i1 %i.cn, label %middle.block458, label %vector.body453, !llvm.loop !193
 

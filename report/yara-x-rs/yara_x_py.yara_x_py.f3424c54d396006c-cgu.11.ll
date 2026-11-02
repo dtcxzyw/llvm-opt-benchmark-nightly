@@ -204,7 +204,7 @@ define hidden void @_RNvMs2_NtNtNtCs6i8zKcEiGNL_14regex_automata4util4pool5inner
 bb.a:
   %i.a = alloca [1400 x i8], align 8              ; 5 uses
   %i.b = alloca [1400 x i8], align 8              ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 7 uses
+  %i.c = alloca [24 x i8], align 8                ; 9 uses
   %i.d = alloca [1400 x i8], align 8              ; 5 uses
   %i.e = icmp eq i64 %3, 0
   br i1 %i.e, label %bb.b, label %bb.c
@@ -263,61 +263,30 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6i8zKcEiGN
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1A_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEECskSRqRFwaW70_9yara_x_py.exit28: ; preds = %bb.v, %_RNvMNtNtCsG258MDvU3F_3std4sync6poisonNtB2_4Flag4done.exit.i.i27, %bb.r, %_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheE3newCskSRqRFwaW70_9yara_x_py.exit9, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEECskSRqRFwaW70_9yara_x_py.exit
   ret void
 
-common.resume:                                    ; preds = %5, %bb.f, %bb.t
-  %common.resume.op = phi { ptr, i32 } [ %i.bq, %bb.t ], [ %i.t, %bb.f ], [ %6, %5 ]
+common.resume:                                    ; preds = %10, %bb.f, %bb.t
+  %common.resume.op = phi { ptr, i32 } [ %i.bq, %bb.t ], [ %i.t, %bb.f ], [ %11, %10 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.g:                                             ; preds = %bb.c
   tail call void @_RNvNtNtCskKLDkoKarTP_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @83) #33
   unreachable
 
-4:                                                ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1W_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEINtB12_12TryLockErrorBX_EEECskSRqRFwaW70_9yara_x_py.exit39
-  invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 1400) #31
-          to label %.noexc21 unwind label %5
-
-.noexc21:                                         ; preds = %4
-  unreachable
-
-5:                                                ; preds = %4
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheECskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull align 8 dereferenceable(1400) %i.a) #28
-          to label %common.resume unwind label %7
-
-7:                                                ; preds = %5
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #29
-  unreachable
-
-_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheE3newCskSRqRFwaW70_9yara_x_py.exit9: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1W_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEINtB12_12TryLockErrorBX_EEECskSRqRFwaW70_9yara_x_py.exit39
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1400) %i.ch, ptr noundef nonnull align 8 dereferenceable(1400) %i.a, i64 1400, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %9, align 8
-  store i64 0, ptr %0, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.ch, ptr %10, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 1, ptr %11, align 8
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1A_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEECskSRqRFwaW70_9yara_x_py.exit28
-
 bb.h:                                             ; preds = %bb.c
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %4 = urem i64 %2, %i.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %14 = urem i64 %2, %i.j
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !5, !noundef !5
-  %i.aa = getelementptr inbounds nuw [64 x i8], ptr %i.z, i64 %14
+  %i.aa = getelementptr inbounds nuw [64 x i8], ptr %i.z, i64 %4
   call void @_RNvMs5_NtNtNtCsG258MDvU3F_3std4sync6poison5mutexINtB5_5MutexINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB11_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEE8try_lockCskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull align 8 %i.aa)
   %i.ab = load i64, ptr %i.c, align 8, !range !12, !noundef !5
   %i.ac = trunc nuw i64 %i.ab to i1
   br i1 %i.ac, label %bb.w, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = load ptr, ptr %12, align 8, !nonnull !5, !align !14, !noundef !5 ; 9 uses
-  %i.ae = load i8, ptr %13, align 8, !range !1221, !noundef !5 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.ad = load ptr, ptr %5, align 8, !nonnull !5, !align !14, !noundef !5 ; 9 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.ae = load i8, ptr %6, align 8, !range !1221, !noundef !5 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 24 ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8, !noundef !5 ; 3 uses
@@ -446,8 +415,10 @@ bb.v:                                             ; preds = %_RINvNtCskKLDkoKarT
 
 bb.w:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1224)
-  %.val.i32 = load ptr, ptr %12, align 8, !alias.scope !1224 ; 4 uses
-  %.val3.i33 = load i8, ptr %13, align 8, !range !1225, !alias.scope !1224, !noundef !5 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %.val.i32 = load ptr, ptr %7, align 8, !alias.scope !1224 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %.val3.i33 = load i8, ptr %8, align 8, !range !1225, !alias.scope !1224, !noundef !5 ; 2 uses
   %.not.i.i34 = icmp eq i8 %.val3.i33, 2
   br i1 %.not.i.i34, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1W_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEINtB12_12TryLockErrorBX_EEECskSRqRFwaW70_9yara_x_py.exit39, label %bb.x
 
@@ -493,7 +464,38 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDv
   call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !1227
   %i.ch = call noundef align 8 dereferenceable_or_null(1400) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef 1400, i64 noundef 8) #30, !noalias !1227 ; 3 uses
   %i.ci = icmp eq ptr %i.ch, null
-  br i1 %i.ci, label %4, label %_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheE3newCskSRqRFwaW70_9yara_x_py.exit9, !prof !4
+  br i1 %i.ci, label %9, label %_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheE3newCskSRqRFwaW70_9yara_x_py.exit9, !prof !4
+
+9:                                                ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1W_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEINtB12_12TryLockErrorBX_EEECskSRqRFwaW70_9yara_x_py.exit39
+  invoke void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 1400) #31
+          to label %.noexc38 unwind label %10
+
+.noexc38:                                         ; preds = %9
+  unreachable
+
+10:                                               ; preds = %9
+  %11 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheECskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull align 8 dereferenceable(1400) %i.a) #28
+          to label %common.resume unwind label %12
+
+12:                                               ; preds = %10
+  %13 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #29
+  unreachable
+
+_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheE3newCskSRqRFwaW70_9yara_x_py.exit9: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1W_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEINtB12_12TryLockErrorBX_EEECskSRqRFwaW70_9yara_x_py.exit39
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1400) %i.ch, ptr noundef nonnull align 8 dereferenceable(1400) %i.a, i64 1400, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %1, ptr %14, align 8
+  store i64 0, ptr %0, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.ch, ptr %15, align 8
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i8 1, ptr %16, align 8
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1A_5boxed3BoxNtNtNtCs6i8zKcEiGNL_14regex_automata4meta5regex5CacheEEEECskSRqRFwaW70_9yara_x_py.exit28
 }
 
 ; Function Attrs: cold noinline nonlazybind uwtable

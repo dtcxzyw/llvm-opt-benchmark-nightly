@@ -204,11 +204,7 @@ bb.e:                                             ; preds = %.loopexit
   %.pre374.pre.i = load i32, ptr %i.i, align 8, !tbaa !86
   br label %.lr.ph366.i.outer
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.outer, %.backedge363.i
-  %1 = phi i1 [ false, %.backedge363.i ], [ %i.bj, %.lr.ph.i.outer ]
-  br i1 %1, label %bb.i, label %bb.f
-
-bb.f:                                             ; preds = %.lr.ph.i
+bb.f:                                             ; preds = %.backedge363.i, %.lr.ph.i.outer
   %i.ag = load i8, ptr %i.j, align 4, !tbaa !87   ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.ph275, i64 24
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !45
@@ -258,9 +254,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.ph276 = phi i32 [ %.pre.pre.i, %.lr.ph.lr.ph.i ], [ %i.at, %bb.h ]
   %i.bj = icmp eq i32 %.ph276, 0
   %i.bk = getelementptr inbounds nuw i8, ptr %.ph275, i64 32
-  br label %.lr.ph.i
+  br i1 %i.bj, label %bb.i, label %bb.f
 
-bb.i:                                             ; preds = %.lr.ph.i
+bb.i:                                             ; preds = %.lr.ph.i.outer
   %i.bl = load i32, ptr %i.l, align 4, !tbaa !89  ; 8 uses
   %i.bm = load i32, ptr %i.m, align 8, !tbaa !90  ; 4 uses
   %i.bn = add nsw i32 %i.bm, 1                    ; 2 uses
@@ -355,7 +351,7 @@ bb.o:                                             ; preds = %bb.n
 .backedge363.i:                                   ; preds = %bb.ad, %bb.y, %bb.w, %bb.t, %bb.r, %bb.o, %bb.m
   %i.dh = load i32, ptr %i.bk, align 8, !tbaa !44
   %i.di = icmp eq i32 %i.dh, 0
-  br i1 %i.di, label %unRLE_obuf_to_output_SMALL.exit, label %.lr.ph.i
+  br i1 %i.di, label %unRLE_obuf_to_output_SMALL.exit, label %bb.f
 
 bb.p:                                             ; preds = %bb.n
   store i32 2, ptr %i.i, align 8, !tbaa !86
@@ -625,11 +621,7 @@ bb.ad:                                            ; preds = %bb.ac, %BZ2_indexIn
   store i32 %i.ir, ptr %i.l, align 4, !tbaa !89
   br label %.backedge363.i
 
-.lr.ph366.i:                                      ; preds = %.lr.ph366.i.outer, %.backedge.i
-  %2 = phi i1 [ false, %.backedge.i ], [ %i.jv, %.lr.ph366.i.outer ]
-  br i1 %2, label %bb.ah, label %bb.ae
-
-bb.ae:                                            ; preds = %.lr.ph366.i
+bb.ae:                                            ; preds = %.backedge.i, %.lr.ph366.i.outer
   %i.is = load i8, ptr %i.j, align 4, !tbaa !87   ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %.ph270, i64 24
   %i.iu = load ptr, ptr %i.it, align 8, !tbaa !45
@@ -679,9 +671,9 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.ph271 = phi i32 [ %.pre374.pre.i, %.lr.ph366.lr.ph.i ], [ %i.jf, %bb.ag ]
   %i.jv = icmp eq i32 %.ph271, 0
   %i.jw = getelementptr inbounds nuw i8, ptr %.ph270, i64 32
-  br label %.lr.ph366.i
+  br i1 %i.jv, label %bb.ah, label %bb.ae
 
-bb.ah:                                            ; preds = %.lr.ph366.i
+bb.ah:                                            ; preds = %.lr.ph366.i.outer
   %i.jx = load i32, ptr %i.l, align 4, !tbaa !89  ; 8 uses
   %i.jy = load i32, ptr %i.m, align 8, !tbaa !90  ; 4 uses
   %i.jz = add nsw i32 %i.jy, 1                    ; 2 uses
@@ -754,7 +746,7 @@ bb.al:                                            ; preds = %bb.ak
 .backedge.i:                                      ; preds = %BZ2_indexIntoF.exit349.i, %bb.ar, %BZ2_indexIntoF.exit335.i, %bb.ao, %BZ2_indexIntoF.exit328.i, %bb.al, %BZ2_indexIntoF.exit321.i
   %i.lh = load i32, ptr %i.jw, align 8, !tbaa !44
   %i.li = icmp eq i32 %i.lh, 0
-  br i1 %i.li, label %unRLE_obuf_to_output_SMALL.exit, label %.lr.ph366.i
+  br i1 %i.li, label %unRLE_obuf_to_output_SMALL.exit, label %bb.ae
 
 bb.am:                                            ; preds = %bb.ak
   store i32 2, ptr %i.i, align 8, !tbaa !86
@@ -958,13 +950,9 @@ bb.at:                                            ; preds = %.loopexit
   %.ph266 = phi i32 [ %.pre.pre.i55, %.lr.ph.lr.ph.i54 ], [ %i.ps, %bb.aw ]
   %i.pd = icmp eq i32 %.ph266, 0
   %i.pe = getelementptr inbounds nuw i8, ptr %.ph, i64 32
-  br label %.lr.ph.i56
+  br i1 %i.pd, label %bb.ax, label %bb.au
 
-.lr.ph.i56:                                       ; preds = %.lr.ph.i56.outer, %.backedge329.i
-  %3 = phi i1 [ false, %.backedge329.i ], [ %i.pd, %.lr.ph.i56.outer ]
-  br i1 %3, label %bb.ax, label %bb.au
-
-bb.au:                                            ; preds = %.lr.ph.i56
+bb.au:                                            ; preds = %.backedge329.i, %.lr.ph.i56.outer
   %i.pf = load i8, ptr %i.j, align 4, !tbaa !87   ; 2 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %.ph, i64 24
   %i.ph = load ptr, ptr %i.pg, align 8, !tbaa !45
@@ -1009,7 +997,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.qh = icmp eq i32 %i.pz, 0
   br i1 %i.qh, label %unRLE_obuf_to_output_SMALL.exit, label %.lr.ph.i56.outer
 
-bb.ax:                                            ; preds = %.lr.ph.i56
+bb.ax:                                            ; preds = %.lr.ph.i56.outer
   %i.qi = load i32, ptr %i.l, align 4, !tbaa !89  ; 8 uses
   %i.qj = load i32, ptr %i.m, align 8, !tbaa !90  ; 4 uses
   %i.qk = add nsw i32 %i.qj, 1                    ; 2 uses
@@ -1077,7 +1065,7 @@ bb.be:                                            ; preds = %bb.bd
 .backedge329.i:                                   ; preds = %bb.bx, %bb.bq, %bb.bo, %bb.bk, %bb.bi, %bb.be, %bb.bc
   %i.rm = load i32, ptr %i.pe, align 8, !tbaa !44
   %i.rn = icmp eq i32 %i.rm, 0
-  br i1 %i.rn, label %unRLE_obuf_to_output_SMALL.exit, label %.lr.ph.i56
+  br i1 %i.rn, label %unRLE_obuf_to_output_SMALL.exit, label %bb.au
 
 bb.bf:                                            ; preds = %bb.bd
   store i32 2, ptr %i.i, align 8, !tbaa !86

@@ -202,9 +202,9 @@ bb.a:
   %i.u = sext i32 %i.l to i64                     ; 2 uses
   %i.v = sext i32 %i.g to i64
   %broadcast.splatinsert197 = insertelement <4 x i32> poison, i32 %i.s, i64 0
-  %broadcast.splat198 = shufflevector <4 x i32> %broadcast.splatinsert197, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat198 = shufflevector <4 x i32> %broadcast.splatinsert197, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert199 = insertelement <4 x i32> poison, i32 %i.t, i64 0
-  %broadcast.splat200 = shufflevector <4 x i32> %broadcast.splatinsert199, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat200 = shufflevector <4 x i32> %broadcast.splatinsert199, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.s, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert174 = insertelement <4 x i32> poison, i32 %i.t, i64 0
@@ -261,7 +261,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.av = zext i32 %i.au to i64                   ; 2 uses
   %i.aw = lshr i64 %i.av, 1
   %i.ax = add nuw nsw i64 %i.aw, 1                ; 2 uses
-  %min.iters.check190 = icmp ult i32 %i.au, 6
+  %min.iters.check190 = icmp ult i32 %i.au, 14
   br i1 %min.iters.check190, label %.lr.ph.preheader214, label %vector.memcheck191
 
 vector.memcheck191:                               ; preds = %.lr.ph.preheader
@@ -277,7 +277,7 @@ vector.memcheck191:                               ; preds = %.lr.ph.preheader
   br i1 %found.conflict194, label %.lr.ph.preheader214, label %vector.ph195
 
 vector.ph195:                                     ; preds = %vector.memcheck191
-  %n.vec196 = and i64 %i.ax, 4294967292           ; 4 uses
+  %n.vec196 = and i64 %i.ax, 4294967288           ; 4 uses
   %i.be = shl nuw nsw i64 %n.vec196, 2            ; 2 uses
   %i.bf = getelementptr i8, ptr %i.aq, i64 %i.be  ; 2 uses
   %i.bg = getelementptr i8, ptr %.1113, i64 %i.be ; 2 uses
@@ -291,22 +291,37 @@ vector.body201:                                   ; preds = %vector.body201, %ve
   %index202 = phi i64 [ 0, %vector.ph195 ], [ %index.next207, %vector.body201 ] ; 2 uses
   %vector.recur = phi <4 x i32> [ %vector.recur.init, %vector.ph195 ], [ %wide.load205.a, %vector.body201 ]
   %i.bk = shl i64 %index202, 2                    ; 2 uses
-  %next.gep203.a = getelementptr i8, ptr %i.aq, i64 %i.bk
-  %next.gep204 = getelementptr i8, ptr %.1113, i64 %i.bk ; 2 uses
-  %wide.load205.a = load <4 x i32>, ptr %next.gep203.a, align 4, !alias.scope !65 ; 4 uses
-  %i.bl = shufflevector <4 x i32> %vector.recur, <4 x i32> %wide.load205.a, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
-  %wide.load206 = load <4 x i32>, ptr %next.gep204, align 4, !alias.scope !66, !noalias !65 ; 2 uses
+  %next.gep203 = getelementptr i8, ptr %i.aq, i64 %i.bk ; 2 uses
+  %next.gep203.a = getelementptr i8, ptr %.1113, i64 %i.bk ; 3 uses
+  %next.gep204 = getelementptr i8, ptr %next.gep203, i64 16
+  %wide.load205 = load <4 x i32>, ptr %next.gep203, align 4, !alias.scope !65 ; 3 uses
+  %wide.load205.a = load <4 x i32>, ptr %next.gep204, align 4, !alias.scope !65 ; 4 uses
+  %2 = shufflevector <4 x i32> %vector.recur, <4 x i32> %wide.load205, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %i.bl = shufflevector <4 x i32> %wide.load205, <4 x i32> %wide.load205.a, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
+  %3 = getelementptr i8, ptr %next.gep203.a, i64 16 ; 2 uses
+  %wide.load207 = load <4 x i32>, ptr %next.gep203.a, align 4, !alias.scope !66, !noalias !65 ; 2 uses
+  %wide.load206 = load <4 x i32>, ptr %3, align 4, !alias.scope !66, !noalias !65 ; 2 uses
+  %4 = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %wide.load205, <4 x i32> %2, <4 x i32> splat (i32 16)) ; 2 uses
   %i.bm = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %wide.load205.a, <4 x i32> %i.bl, <4 x i32> splat (i32 16)) ; 2 uses
+  %5 = and <4 x i32> %4, %broadcast.splat198
   %i.bn = and <4 x i32> %i.bm, %broadcast.splat198
+  %6 = lshr <4 x i32> %5, splat (i32 1)
   %i.bo = lshr <4 x i32> %i.bn, splat (i32 1)
+  %7 = and <4 x i32> %wide.load207, %broadcast.splat198
   %i.bp = and <4 x i32> %wide.load206, %broadcast.splat198
+  %8 = lshr <4 x i32> %7, splat (i32 1)
   %i.bq = lshr <4 x i32> %i.bp, splat (i32 1)
+  %9 = add nuw <4 x i32> %6, %8
   %i.br = add nuw <4 x i32> %i.bo, %i.bq
-  %i.bs = and <4 x i32> %wide.load206, %broadcast.splat200
-  %i.bt = and <4 x i32> %i.bs, %i.bm
+  %10 = and <4 x i32> %wide.load207, %broadcast.splat200
+  %11 = and <4 x i32> %wide.load206, %broadcast.splat200
+  %i.bs = and <4 x i32> %10, %4
+  %i.bt = and <4 x i32> %11, %i.bm
+  %12 = add <4 x i32> %9, %i.bs
   %i.bu = add <4 x i32> %i.br, %i.bt
-  store <4 x i32> %i.bu, ptr %next.gep204, align 4, !alias.scope !66, !noalias !65
-  %index.next207 = add nuw i64 %index202, 4       ; 2 uses
+  store <4 x i32> %12, ptr %next.gep203.a, align 4, !alias.scope !66, !noalias !65
+  store <4 x i32> %i.bu, ptr %3, align 4, !alias.scope !66, !noalias !65
+  %index.next207 = add nuw i64 %index202, 8       ; 2 uses
   %i.bv = icmp eq i64 %index.next207, %n.vec196
   br i1 %i.bv, label %middle.block208, label %vector.body201, !llvm.loop !57
 

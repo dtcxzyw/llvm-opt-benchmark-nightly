@@ -205,20 +205,14 @@ bb.b:                                             ; preds = %bb.a
 
 rcu_read_auto_lock.exit:                          ; preds = %bb.a, %bb.b
   %i.g = getelementptr i8, ptr %0, i64 184        ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 70 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 66
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %.val.i = load i64, ptr %i.g, align 8
   %i.h = and i64 %.val.i, 17179869184
   %.not.i = icmp eq i64 %i.h, 0
   br i1 %.not.i, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %rcu_read_auto_lock.exit
-  %i.i = load atomic ptr, ptr %7 monotonic, align 8 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.i = load atomic ptr, ptr %2 monotonic, align 8 ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !16
   %.not.i.i5 = icmp eq ptr %i.i, null
   br i1 %.not.i.i5, label %virtio_should_notify.exit.thread12, label %bb.d
@@ -229,11 +223,14 @@ bb.d:                                             ; preds = %bb.c
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !17
   fence acquire
   %i.l = tail call fastcc zeroext i16 @virtio_lduw_phys_cached(ptr noundef nonnull readonly %0, ptr noundef nonnull %i.j, i64 noundef 0)
-  %i.m = load i16, ptr %2, align 4
-  %i.n = load i16, ptr %3, align 8                ; 3 uses
-  store i16 %i.n, ptr %2, align 4
-  %i.o = load i8, ptr %4, align 2, !range !13, !noundef !14
-  store i8 1, ptr %4, align 2
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 2 uses
+  %i.m = load i16, ptr %3, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %i.n = load i16, ptr %4, align 8                ; 3 uses
+  store i16 %i.n, ptr %3, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 70 ; 2 uses
+  %i.o = load i8, ptr %5, align 2, !range !13, !noundef !14
+  store i8 1, ptr %5, align 2
   switch i16 %i.k, label %bb.e [
     i16 1, label %virtio_should_notify.exit.thread12
     i16 0, label %virtio_should_notify.exit.thread
@@ -244,7 +241,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.p, label %bb.f, label %virtio_should_notify.exit.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = load i8, ptr %5, align 2, !range !13, !noundef !14
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 66
+  %i.q = load i8, ptr %6, align 2, !range !13, !noundef !14
   %i.r = zext nneg i8 %i.q to i32
   %i.s = zext i16 %i.l to i32                     ; 2 uses
   %i.t = and i32 %i.s, 32767                      ; 2 uses
@@ -275,7 +273,8 @@ bb.h:                                             ; preds = %rcu_read_auto_lock.
   br i1 %.not17.i.i, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = load i32, ptr %6, align 4
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 76
+  %i.ad = load i32, ptr %7, align 4
   %.not.i6.i = icmp eq i32 %i.ad, 0
   br i1 %.not.i6.i, label %bb.j, label %bb.k
 
@@ -295,13 +294,15 @@ bb.k:                                             ; preds = %._crit_edge.i.i, %b
   br i1 %.not18.i.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.ag = load atomic ptr, ptr %7 monotonic, align 8 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.ag = load atomic ptr, ptr %8 monotonic, align 8 ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !16
   %.not.i.i8.i = icmp eq ptr %i.ag, null
   br i1 %.not.i.i8.i, label %virtio_should_notify.exit.thread, label %.split
 
 .split:                                           ; preds = %bb.l
-  %i.ah = load ptr, ptr %8, align 8
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 96
+  %i.ah = load ptr, ptr %9, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 128
   %i.aj = tail call fastcc zeroext i16 @virtio_lduw_phys_cached(ptr noundef %i.ah, ptr noundef %i.ai, i64 noundef 0)
   %i.ak = and i16 %i.aj, 1
@@ -309,17 +310,21 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.al, label %virtio_should_notify.exit.thread, label %virtio_should_notify.exit.thread12
 
 bb.m:                                             ; preds = %bb.k
-  %i.am = load i8, ptr %4, align 2, !range !13, !noundef !14
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 70 ; 2 uses
+  %i.am = load i8, ptr %10, align 2, !range !13, !noundef !14
   %i.an = trunc nuw i8 %i.am to i1
-  store i8 1, ptr %4, align 2
-  %i.ao = load i16, ptr %2, align 4
-  %i.ap = load i16, ptr %3, align 8               ; 3 uses
-  store i16 %i.ap, ptr %2, align 4
+  store i8 1, ptr %10, align 2
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 2 uses
+  %i.ao = load i16, ptr %11, align 4
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %i.ap = load i16, ptr %12, align 8              ; 3 uses
+  store i16 %i.ap, ptr %11, align 4
   br i1 %i.an, label %bb.n, label %virtio_should_notify.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.aq = load i32, ptr %1, align 8
-  %i.ar = load atomic ptr, ptr %7 monotonic, align 8 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.ar = load atomic ptr, ptr %13 monotonic, align 8 ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #25, !srcloc !16
   %.not.i.i.i.i = icmp eq ptr %i.ar, null
   br i1 %.not.i.i.i.i, label %virtio_should_notify.exit, label %bb.o
@@ -328,7 +333,8 @@ bb.o:                                             ; preds = %bb.n
   %i.as = sext i32 %i.aq to i64
   %i.at = shl nsw i64 %i.as, 1
   %i.au = add nsw i64 %i.at, 4
-  %i.av = load ptr, ptr %8, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 96
+  %i.av = load ptr, ptr %14, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ar, i64 128
   %i.ax = tail call fastcc zeroext i16 @virtio_lduw_phys_cached(ptr noundef %i.av, ptr noundef %i.aw, i64 noundef %i.au)
   %i.ay = xor i16 %i.ax, -1
@@ -372,7 +378,7 @@ bb.s:                                             ; preds = %bb.r
   tail call void @qemu_event_set(ptr noundef nonnull @rcu_gp_event) #25
   br label %.critedge
 
-virtio_should_notify.exit.thread12:               ; preds = %virtio_should_notify.exit, %vring_packed_need_event.exit.i.i, %.split, %bb.c, %bb.d
+virtio_should_notify.exit.thread12:               ; preds = %bb.d, %bb.c, %.split, %virtio_should_notify.exit, %vring_packed_need_event.exit.i.i
   %i.bj = tail call ptr @get_ptr_rcu_reader() #25 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 12 ; 2 uses
   %i.bl = load i32, ptr %i.bk, align 4            ; 2 uses
@@ -403,7 +409,7 @@ bb.w:                                             ; preds = %bb.v
   tail call void @qemu_event_set(ptr noundef nonnull @rcu_gp_event) #25
   br label %glib_autoptr_cleanup_RCUReadAuto.exit
 
-.critedge:                                        ; preds = %bb.q, %bb.r, %bb.s
+.critedge:                                        ; preds = %bb.s, %bb.q, %bb.r
   %i.bq = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i9 = icmp eq i32 %i.bq, 0
   br i1 %.not.i9, label %trace_virtio_notify.exit, label %bb.x, !prof !21

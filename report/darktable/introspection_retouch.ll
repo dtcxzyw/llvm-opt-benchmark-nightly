@@ -205,19 +205,16 @@ bb.b:                                             ; preds = %bb.a
   %i.i = fmul reassoc nsz arcp contract afn float %.val30, %i.h ; 2 uses
   %i.j = extractelement <2 x float> %i.g, i64 1
   %i.k = fmul reassoc nsz arcp contract afn float %.val30, %i.j ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.l = load float, ptr %3, align 4, !tbaa !12
   %i.m = fmul reassoc nsz arcp contract afn float %i.i, %i.l
   store float %i.m, ptr %i.a, align 16, !tbaa !12
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.n = load float, ptr %8, align 4, !tbaa !12
   %i.o = fmul reassoc nsz arcp contract afn float %i.n, %i.k
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.q = load float, ptr %4, align 4, !tbaa !12
   %i.r = fmul reassoc nsz arcp contract afn float %i.q, %i.i
   store float %i.r, ptr %i.p, align 8, !tbaa !12
-  %10 = load float, ptr %9, align 4, !tbaa !12
-  %11 = fmul reassoc nsz arcp contract afn float %10, %i.k
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -239,19 +236,19 @@ bb.c:                                             ; preds = %bb.a
   %i.ag = fmul reassoc nsz arcp contract afn float %i.af, %i.x
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store float %i.ag, ptr %i.ah, align 8, !tbaa !12
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %13 = load float, ptr %12, align 4, !tbaa !12
-  %14 = fmul reassoc nsz arcp contract afn float %13, %i.ad
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.ai = phi ptr [ %.val29, %bb.b ], [ %i.u, %bb.c ]
-  %.sink33 = phi float [ %i.o, %bb.b ], [ %i.ae, %bb.c ]
-  %.sink = phi float [ %11, %bb.b ], [ %14, %bb.c ]
+  %.sink35 = phi float [ %i.ad, %bb.c ], [ %i.k, %bb.b ]
+  %i.ai = phi ptr [ %i.u, %bb.c ], [ %.val29, %bb.b ]
+  %.sink33 = phi float [ %i.ae, %bb.c ], [ %i.o, %bb.b ]
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %10 = load float, ptr %9, align 4, !tbaa !12
+  %11 = fmul reassoc nsz arcp contract afn float %10, %.sink35
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
   store float %.sink33, ptr %i.aj, align 4, !tbaa !12
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 3 uses
-  store float %.sink, ptr %i.ak, align 4, !tbaa !12
+  store float %11, ptr %i.ak, align 4, !tbaa !12
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 664
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !118
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 480

@@ -206,8 +206,8 @@ bb.v:                                             ; preds = %bb.p
   %i.bf = icmp ult i64 %i.av, %i.as
   br i1 %i.bf, label %bb.x, label %bb.w
 
-.body:                                            ; preds = %.peel.begin, %bb.ab, %.loopexit.split-lp11.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.y
-  %.pn26 = phi { ptr, i32 } [ %lpad.loopexit.split-lp60, %.loopexit.split-lp11.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.bh, %bb.y ], [ %i.bo, %bb.ab ], [ %i.bo, %.peel.begin ]
+.body:                                            ; preds = %bb.ab, %.peel.begin, %.loopexit.split-lp11.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.y
+  %.pn26 = phi { ptr, i32 } [ %lpad.loopexit.split-lp60, %.loopexit.split-lp11.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.bh, %bb.y ], [ %i.bo, %.peel.begin ], [ %i.bo, %bb.ab ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #35
           to label %.body34 unwind label %bb.ah
 
@@ -610,7 +610,7 @@ define internal fastcc void @_RNvMs2_NtNtCs8n0tpEuULLm_5pcre24pool5innerINtB5_4P
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 5 uses
   %i.b = alloca [64 x i8], align 8                ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 7 uses
+  %i.c = alloca [24 x i8], align 8                ; 9 uses
   %i.d = alloca [64 x i8], align 8                ; 5 uses
   %i.e = icmp eq i64 %3, 0
   br i1 %i.e, label %bb.b, label %bb.c
@@ -664,61 +664,30 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs8n0tpEuULLm
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1B_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2p_15CodeUnitWidth32EEEEECs8frGy5WneL6_4fish.exit23: ; preds = %bb.v, %_RNvMNtNtCsaL1QbXo9JQH_3std4sync6poisonNtB2_4Flag4done.exit.i.i22, %bb.r, %_RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtBH_15CodeUnitWidth32EE3newCs8frGy5WneL6_4fish.exit9, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB10_15CodeUnitWidth32EEECs8frGy5WneL6_4fish.exit
   ret void
 
-common.resume:                                    ; preds = %5, %bb.f, %bb.t
-  %common.resume.op = phi { ptr, i32 } [ %i.bk, %bb.t ], [ %i.q, %bb.f ], [ %6, %5 ]
+common.resume:                                    ; preds = %10, %bb.f, %bb.t
+  %common.resume.op = phi { ptr, i32 } [ %i.bk, %bb.t ], [ %i.q, %bb.f ], [ %11, %10 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.g:                                             ; preds = %bb.c
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @113) #31
   unreachable
 
-4:                                                ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1X_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2L_15CodeUnitWidth32EEEEINtB12_12TryLockErrorBX_EEECs8frGy5WneL6_4fish.exit35
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 64) #34
-          to label %.noexc15 unwind label %5
-
-.noexc15:                                         ; preds = %4
-  unreachable
-
-5:                                                ; preds = %4
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RNvXsd_NtCs8n0tpEuULLm_5pcre23ffiINtB5_9MatchDataNtB5_15CodeUnitWidth32ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.a)
-          to label %common.resume unwind label %7
-
-7:                                                ; preds = %5
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #32
-  unreachable
-
-_RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtBH_15CodeUnitWidth32EE3newCs8frGy5WneL6_4fish.exit9: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1X_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2L_15CodeUnitWidth32EEEEINtB12_12TryLockErrorBX_EEECs8frGy5WneL6_4fish.exit35
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.by, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 64, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %9, align 8
-  store i64 0, ptr %0, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.by, ptr %10, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 1, ptr %11, align 8
-  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1B_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2p_15CodeUnitWidth32EEEEECs8frGy5WneL6_4fish.exit23
-
 bb.h:                                             ; preds = %bb.c
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %4 = urem i64 %2, %i.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %14 = urem i64 %2, %i.j
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !nonnull !5, !noundef !5
-  %i.x = getelementptr inbounds nuw [64 x i8], ptr %i.w, i64 %14
+  %i.x = getelementptr inbounds nuw [64 x i8], ptr %i.w, i64 %4
   call void @_RNvMs5_NtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutexINtB5_5MutexINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB12_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB1Q_15CodeUnitWidth32EEEE8try_lockCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull align 8 %i.x)
   %i.y = load i64, ptr %i.c, align 8, !range !6, !noundef !5
   %i.z = trunc nuw i64 %i.y to i1
   br i1 %i.z, label %bb.w, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.aa = load ptr, ptr %12, align 8, !nonnull !5, !align !19, !noundef !5 ; 9 uses
-  %i.ab = load i8, ptr %13, align 8, !range !4, !noundef !5 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.aa = load ptr, ptr %5, align 8, !nonnull !5, !align !19, !noundef !5 ; 9 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.ab = load i8, ptr %6, align 8, !range !4, !noundef !5 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 24 ; 2 uses
   %i.ad = load i64, ptr %i.ac, align 8, !noundef !5 ; 3 uses
@@ -842,8 +811,10 @@ bb.v:                                             ; preds = %_RINvNtCs3oUPovFnLW
 
 bb.w:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !877)
-  %.val.i28 = load ptr, ptr %12, align 8, !alias.scope !877 ; 4 uses
-  %.val3.i29 = load i8, ptr %13, align 8, !range !7, !alias.scope !877, !noundef !5 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %.val.i28 = load ptr, ptr %7, align 8, !alias.scope !877 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %.val3.i29 = load i8, ptr %8, align 8, !range !7, !alias.scope !877, !noundef !5 ; 2 uses
   %.not.i.i30 = icmp eq i8 %.val3.i29, 2
   br i1 %.not.i.i30, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1X_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2L_15CodeUnitWidth32EEEEINtB12_12TryLockErrorBX_EEECs8frGy5WneL6_4fish.exit35, label %bb.x
 
@@ -884,7 +855,38 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsaL1QbXo
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #33, !noalias !878
   %i.by = call noundef align 8 dereferenceable_or_null(64) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, 9223372036854775805) 64, i64 noundef range(i64 1, 9) 8) #33, !noalias !878 ; 3 uses
   %i.bz = icmp eq ptr %i.by, null
-  br i1 %i.bz, label %4, label %_RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtBH_15CodeUnitWidth32EE3newCs8frGy5WneL6_4fish.exit9, !prof !9
+  br i1 %i.bz, label %9, label %_RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtBH_15CodeUnitWidth32EE3newCs8frGy5WneL6_4fish.exit9, !prof !9
+
+9:                                                ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1X_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2L_15CodeUnitWidth32EEEEINtB12_12TryLockErrorBX_EEECs8frGy5WneL6_4fish.exit35
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 64) #34
+          to label %.noexc32 unwind label %10
+
+.noexc32:                                         ; preds = %9
+  unreachable
+
+10:                                               ; preds = %9
+  %11 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXsd_NtCs8n0tpEuULLm_5pcre23ffiINtB5_9MatchDataNtB5_15CodeUnitWidth32ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.a)
+          to label %common.resume unwind label %12
+
+12:                                               ; preds = %10
+  %13 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #32
+  unreachable
+
+_RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtBH_15CodeUnitWidth32EE3newCs8frGy5WneL6_4fish.exit9: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1X_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2L_15CodeUnitWidth32EEEEINtB12_12TryLockErrorBX_EEECs8frGy5WneL6_4fish.exit35
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.by, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 64, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %1, ptr %14, align 8
+  store i64 0, ptr %0, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.by, ptr %15, align 8
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i8 1, ptr %16, align 8
+  br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtB1B_5boxed3BoxINtNtCs8n0tpEuULLm_5pcre23ffi9MatchDataNtB2p_15CodeUnitWidth32EEEEECs8frGy5WneL6_4fish.exit23
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -1287,7 +1289,7 @@ bb.ab:                                            ; preds = %bb.aa
   unreachable
 
 .body108.i:                                       ; preds = %bb.aa, %.peel.begin.i, %bb.x
-  %.pn.i = phi { ptr, i32 } [ %i.cl, %bb.x ], [ %i.cs, %bb.aa ], [ %i.cs, %.peel.begin.i ]
+  %.pn.i = phi { ptr, i32 } [ %i.cs, %.peel.begin.i ], [ %i.cl, %bb.x ], [ %i.cs, %bb.aa ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i) #35
           to label %.body110.i unwind label %bb.ay, !noalias !960
 
@@ -1690,7 +1692,7 @@ bb.bk:                                            ; preds = %bb.bj
   unreachable
 
 .body.i:                                          ; preds = %bb.ax, %bb.bj, %.peel.begin.i.body
-  %.pn.i = phi { ptr, i32 } [ %eh.lpad-body121, %.peel.begin.i.body ], [ %eh.lpad-body121, %bb.bj ], [ %lpad.loopexit.split-lp477, %bb.ax ]
+  %.pn.i = phi { ptr, i32 } [ %eh.lpad-body121, %bb.bj ], [ %eh.lpad-body121, %.peel.begin.i.body ], [ %lpad.loopexit.split-lp477, %bb.ax ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.w)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8frGy5WneL6_4fish.exit.i113 unwind label %bb.bl
 
@@ -2093,8 +2095,8 @@ bb.i:                                             ; preds = %bb.h
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #32
   unreachable
 
-.body:                                            ; preds = %.peel.begin, %bb.h, %bb.e
-  %.pn = phi { ptr, i32 } [ %i.o, %bb.e ], [ %i.v, %bb.h ], [ %i.v, %.peel.begin ]
+.body:                                            ; preds = %bb.h, %.peel.begin, %bb.e
+  %.pn = phi { ptr, i32 } [ %i.o, %bb.e ], [ %i.v, %.peel.begin ], [ %i.v, %bb.h ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #35
           to label %common.resume unwind label %bb.m
 

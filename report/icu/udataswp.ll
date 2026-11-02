@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 iter.check:                                       ; preds = %bb.e
   %i.k = lshr exact i32 %2, 1                     ; 4 uses
   %i.l = zext nneg i32 %i.k to i64                ; 5 uses
-  %min.iters.check = icmp ult i32 %2, 16
+  %min.iters.check = icmp ult i32 %2, 8
   %i.m = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.m, -32
   %or.cond50 = or i1 %min.iters.check, %diff.check
@@ -215,7 +215,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check38, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.n = and i64 %i.l, 8
+  %i.n = and i64 %i.l, 12
   %n.vec = and i64 %i.l, 1073741808               ; 5 uses
   %i.o = trunc nuw nsw i64 %n.vec to i32
   %i.p = sub nsw i32 %i.k, %i.o
@@ -251,7 +251,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec41 = and i64 %i.l, 1073741816             ; 4 uses
+  %n.vec41 = and i64 %i.l, 1073741820             ; 4 uses
   %i.z = trunc nuw nsw i64 %n.vec41 to i32
   %i.aa = sub nsw i32 %i.k, %i.z
   %i.ab = shl nuw nsw i64 %n.vec41, 1             ; 2 uses
@@ -264,10 +264,10 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ae = shl i64 %index42, 1                     ; 2 uses
   %next.gep43 = getelementptr i8, ptr %3, i64 %i.ae
   %next.gep44 = getelementptr i8, ptr %1, i64 %i.ae
-  %wide.load45 = load <8 x i16>, ptr %next.gep44, align 2, !tbaa !31
-  %5 = tail call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.load45)
-  store <8 x i16> %5, ptr %next.gep43, align 2, !tbaa !31
-  %index.next46 = add nuw i64 %index42, 8         ; 2 uses
+  %wide.load45 = load <4 x i16>, ptr %next.gep44, align 2, !tbaa !31
+  %5 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %wide.load45)
+  store <4 x i16> %5, ptr %next.gep43, align 2, !tbaa !31
+  %index.next46 = add nuw i64 %index42, 4         ; 2 uses
   %i.af = icmp eq i64 %index.next46, %n.vec41
   br i1 %i.af, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !47
 
@@ -621,6 +621,9 @@ declare i64 @llvm.bswap.i64(i64) #10
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #10
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -690,7 +693,7 @@ attributes #12 = { allocsize(0) }
 !46 = distinct !{!46, !15, !33, !34}
 !47 = distinct !{!47, !15, !33, !34}
 !48 = distinct !{!48, !15, !33}
-!49 = !{!"branch_weights", i32 8, i32 8}
+!49 = !{!"branch_weights", i32 4, i32 12}
 !50 = distinct !{!50, !15, !33, !34}
 !51 = distinct !{!51, !15, !33}
 !52 = distinct !{!52, !56}

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/ucnvisci?download=true
 inline.NumInlined: 14
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZL40UConverter_toUnicode_ISCII_OFFSETS_LOGICP23UConverterToUnicodeArgsP10UErrorCode:bb.a
   %i.bm = load ptr, ptr %i.x, align 8             ; 3 uses
   %.not741 = icmp eq ptr %i.bm, null
@@ -204,18 +204,9 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ah, %bb.
     i8 -24, label %bb.ba
     i8 10, label %bb.bc
     i8 13, label %bb.bc
-    i8 -32, label %.preheader.preheader
+    i8 -32, label %2
     i8 -23, label %bb.bd
   ]
-
-.preheader.preheader:                             ; preds = %.loopexit842
-  %2 = and i16 %i.ep, 255
-  %3 = icmp ne i16 %2, 164
-  %4 = load i32, ptr %i.v, align 4                ; 2 uses
-  %5 = and i32 %4, 128
-  %.not693 = icmp eq i32 %5, 0
-  %or.cond996 = select i1 %3, i1 true, i1 %.not693
-  br i1 %or.cond996, label %.loopexit.a, label %.thread813.thread.sink.split
 
 bb.ak:                                            ; preds = %.loopexit842, %.loopexit842, %.loopexit842
   %i.eq = zext i8 %i.en to i16
@@ -370,8 +361,17 @@ bb.bc:                                            ; preds = %.loopexit842, %.loo
   %i.gx = zext nneg i8 %i.en to i16
   br label %bb.cq
 
-.loopexit.a:                                      ; preds = %.preheader.preheader
-  %i.gy = and i32 %4, 135
+2:                                                ; preds = %.loopexit842
+  %3 = and i16 %i.ep, 255
+  %4 = icmp ne i16 %3, 164
+  %.pre908 = load i32, ptr %i.v, align 4          ; 2 uses
+  %5 = and i32 %.pre908, 128
+  %.not693 = icmp eq i32 %5, 0
+  %or.cond979 = select i1 %4, i1 true, i1 %.not693
+  br i1 %or.cond979, label %.loopexit.a, label %.thread813.thread.sink.split, !llvm.loop !7
+
+.loopexit.a:                                      ; preds = %2
+  %i.gy = and i32 %.pre908, 135
   %i.gz = icmp eq i32 %i.gy, 0
   %spec.select875 = select i1 %i.gz, i32 65535, i32 2374
   br label %bb.cq
@@ -774,8 +774,8 @@ bb.ds:                                            ; preds = %bb.dh, %bb.di, %bb.
   %.not727 = icmp eq i32 %.17, 65535
   br i1 %.not727, label %bb.du, label %.thread813.thread
 
-.thread813.thread.sink.split:                     ; preds = %.preheader.preheader, %bb.ay
-  %.17831.ph = phi i32 [ 2405, %bb.ay ], [ 2308, %.preheader.preheader ]
+.thread813.thread.sink.split:                     ; preds = %2, %bb.ay
+  %.17831.ph = phi i32 [ 2405, %bb.ay ], [ 2308, %2 ]
   store i16 -2, ptr %i.m, align 2
   br label %.thread813.thread
 
@@ -1161,7 +1161,7 @@ bb.s:                                             ; preds = %bb.r
   %.0399.be = phi ptr [ %i.cl, %bb.p ], [ %.3402, %bb.r ] ; 2 uses
   %.0392.be = phi ptr [ %.7.ph, %bb.p ], [ %.4396, %bb.r ]
   %i.cv = icmp ult ptr %i.bv, %i.d
-  br i1 %i.cv, label %bb.d, label %.loopexit, !llvm.loop !7
+  br i1 %i.cv, label %bb.d, label %.loopexit, !llvm.loop !8
 
 bb.t:                                             ; preds = %bb.q
   %.not450 = icmp eq i16 %i.by, 0
@@ -1356,7 +1356,7 @@ bb.an:                                            ; preds = %bb.am, %bb.af
   %.0392.ph.be = phi ptr [ %.11, %bb.an ], [ %.16.ph, %bb.be ], [ %.19.ph, %bb.bo ]
   %.0378.ph.be = phi i16 [ %.1379, %bb.an ], [ %.3381, %bb.be ], [ %.3381, %bb.bo ]
   %i.fs = icmp ult ptr %i.bv, %i.d
-  br i1 %i.fs, label %.lr.ph, label %.loopexit, !llvm.loop !7
+  br i1 %i.fs, label %.lr.ph, label %.loopexit, !llvm.loop !8
 
 bb.ao:                                            ; preds = %bb.an, %bb.u
   %.9408 = phi ptr [ %.3402, %bb.u ], [ %.8407, %bb.an ]
@@ -1759,7 +1759,7 @@ bb.c:                                             ; preds = %.split.us
 bb.d:                                             ; preds = %.split.us, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 128
-  br i1 %exitcond.not, label %.split26.us, label %.split.us, !llvm.loop !8
+  br i1 %exitcond.not, label %.split26.us, label %.split.us, !llvm.loop !9
 
 .split:                                           ; preds = %bb.b, %bb.f
   %indvars.iv30 = phi i64 [ %indvars.iv.next31, %bb.f ], [ 0, %bb.b ] ; 4 uses
@@ -1783,12 +1783,12 @@ bb.e:                                             ; preds = %.split
 bb.f:                                             ; preds = %.split, %bb.e
   %indvars.iv.next31 = add nuw nsw i64 %indvars.iv30, 1 ; 2 uses
   %exitcond33.not = icmp eq i64 %indvars.iv.next31, 128
-  br i1 %exitcond33.not, label %.split26.us, label %.split, !llvm.loop !8
+  br i1 %exitcond33.not, label %.split26.us, label %.split, !llvm.loop !9
 
 .split26.us:                                      ; preds = %bb.d, %bb.f
   %indvars.iv.next35 = add nuw nsw i64 %indvars.iv34, 1 ; 2 uses
   %exitcond37.not = icmp eq i64 %indvars.iv.next35, 9
-  br i1 %exitcond37.not, label %bb.g, label %bb.b, !llvm.loop !9
+  br i1 %exitcond37.not, label %bb.g, label %bb.b, !llvm.loop !10
 
 bb.g:                                             ; preds = %.split26.us
   %i.ab = load ptr, ptr %i.d, align 8
@@ -1842,4 +1842,5 @@ attributes #10 = { nounwind willreturn memory(read) }
 !7 = distinct !{!7, !5}
 !8 = distinct !{!8, !5}
 !9 = distinct !{!9, !5}
+!10 = distinct !{!10, !5}
 end_hunk_2

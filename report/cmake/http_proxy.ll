@@ -110,7 +110,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !42
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  store ptr null, ptr %i.b, align 8, !tbaa !102
+  store ptr null, ptr %i.b, align 8, !tbaa !103
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !14   ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 728
@@ -172,10 +172,10 @@ bb.e:                                             ; preds = %Curl_http_proxy_get
 
 bb.f:                                             ; preds = %bb.e
   %i.ac = load ptr, ptr %i.e, align 8, !tbaa !14
-  %i.ad = load ptr, ptr %i.b, align 8, !tbaa !102 ; 2 uses
+  %i.ad = load ptr, ptr %i.b, align 8, !tbaa !103 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 136
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 120
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !106
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !107
   %i.ah = call i32 @Curl_http_output_auth(ptr noundef %2, ptr noundef %i.ac, ptr noundef nonnull %i.ae, i32 noundef 0, ptr noundef %i.ag, i1 noundef zeroext true) #6 ; 2 uses
   %.not44 = icmp eq i32 %i.ah, 0
   br i1 %.not44, label %bb.g, label %dynhds_add_custom.exit
@@ -191,19 +191,19 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not45, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.al = load ptr, ptr %i.b, align 8, !tbaa !102
+  %i.al = load ptr, ptr %i.b, align 8, !tbaa !103
   %i.am = call i32 @Curl_dynhds_cadd(ptr noundef %i.al, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.z) #6 ; 2 uses
   %.not46 = icmp eq i32 %i.am, 0
   br i1 %.not46, label %bb.j, label %dynhds_add_custom.exit
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 392
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !107 ; 2 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !108 ; 2 uses
   %.not47 = icmp eq ptr %i.ao, null
   br i1 %.not47, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ap = load ptr, ptr %i.b, align 8, !tbaa !102
+  %i.ap = load ptr, ptr %i.b, align 8, !tbaa !103
   %i.aq = call i32 @Curl_dynhds_h1_cadd_line(ptr noundef %i.ap, ptr noundef nonnull %i.ao) #6 ; 2 uses
   %.not48 = icmp eq i32 %i.aq, 0
   br i1 %.not48, label %bb.l, label %dynhds_add_custom.exit
@@ -221,12 +221,12 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not50, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !108
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !109
   %.not51 = icmp eq i8 %i.av, 0
   br i1 %.not51, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.aw = load ptr, ptr %i.b, align 8, !tbaa !102
+  %i.aw = load ptr, ptr %i.b, align 8, !tbaa !103
   %i.ax = call i32 @Curl_dynhds_cadd(ptr noundef %i.aw, ptr noundef nonnull @.str.6, ptr noundef nonnull %i.au) #6 ; 2 uses
   %.not52 = icmp eq i32 %i.ax, 0
   br i1 %.not52, label %bb.p, label %dynhds_add_custom.exit
@@ -241,34 +241,37 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not53, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.ba = load ptr, ptr %i.b, align 8, !tbaa !102
+  %i.ba = load ptr, ptr %i.b, align 8, !tbaa !103
   %i.bb = call i32 @Curl_dynhds_cadd(ptr noundef %i.ba, ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8) #6 ; 2 uses
   %.not54 = icmp eq i32 %i.bb, 0
   br i1 %.not54, label %bb.s, label %dynhds_add_custom.exit
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
-  %5 = load i32, ptr %i.d, align 4, !tbaa !91
-  %i.bc = load ptr, ptr %i.b, align 8, !tbaa !102
+  %i.bc = load ptr, ptr %i.b, align 8, !tbaa !103
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 2049
   %i.be = load i32, ptr %i.bd, align 1
   %i.bf = and i32 %i.be, 16
   %.not.i55 = icmp eq i32 %i.bf, 0
   %storemerge.in.v.i = select i1 %.not.i55, i64 736, i64 1152
   %storemerge.in.i = getelementptr inbounds nuw i8, ptr %2, i64 %storemerge.in.v.i
-  %storemerge.i = load ptr, ptr %storemerge.in.i, align 8, !tbaa !109 ; 2 uses
+  %storemerge.i = load ptr, ptr %storemerge.in.i, align 8, !tbaa !110 ; 2 uses
   %.not4364.i = icmp eq ptr %storemerge.i, null
+  br i1 %.not4364.i, label %dynhds_add_custom.exit.thread, label %.lr.ph.i, !llvm.loop !100
+
+.lr.ph.i:                                         ; preds = %bb.s
+  %5 = load i32, ptr %i.d, align 4, !tbaa !91
   %6 = getelementptr inbounds nuw i8, ptr %2, i64 4384
   %7 = getelementptr inbounds nuw i8, ptr %2, i64 4435 ; 2 uses
   %8 = getelementptr inbounds nuw i8, ptr %2, i64 409
   %9 = icmp sgt i32 %5, 19
   %10 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  br i1 %.not4364.i, label %dynhds_add_custom.exit.thread, label %.preheader.i
+  br label %.preheader.i, !llvm.loop !100
 
-.preheader.i:                                     ; preds = %bb.s, %select.unfold.i
-  %.039.in.sroa.speculated65.i = phi ptr [ %.039.in.sroa.speculate.load..i, %select.unfold.i ], [ %storemerge.i, %bb.s ] ; 2 uses
+.preheader.i:                                     ; preds = %select.unfold.i, %.lr.ph.i
+  %.039.in.sroa.speculated65.i = phi ptr [ %storemerge.i, %.lr.ph.i ], [ %.039.in.sroa.speculate.load..i, %select.unfold.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %i.bg = load ptr, ptr %.039.in.sroa.speculated65.i, align 8, !tbaa !111
+  %i.bg = load ptr, ptr %.039.in.sroa.speculated65.i, align 8, !tbaa !113
   store ptr %i.bg, ptr %i.a, align 8, !tbaa !36
   %i.bh = call i32 @curlx_str_cspn(ptr noundef nonnull %i.a, ptr noundef nonnull %4, ptr noundef nonnull @.str.10) #6
   %.not44.i = icmp eq i32 %i.bh, 0
@@ -282,7 +285,7 @@ bb.t:                                             ; preds = %.preheader.i
 bb.u:                                             ; preds = %bb.t
   call void @curlx_str_passblanks(ptr noundef nonnull %i.a) #6
   %i.bj = load ptr, ptr %i.a, align 8, !tbaa !36  ; 3 uses
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !108
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !109
   %.not46.i = icmp eq i8 %i.bk, 0
   br i1 %.not46.i, label %select.unfold.i, label %bb.v
 
@@ -298,14 +301,14 @@ bb.w:                                             ; preds = %bb.t
 bb.x:                                             ; preds = %bb.w
   call void @curlx_str_passblanks(ptr noundef nonnull %i.a) #6
   %i.bn = load ptr, ptr %i.a, align 8, !tbaa !36
-  %i.bo = load i8, ptr %i.bn, align 1, !tbaa !108
+  %i.bo = load i8, ptr %i.bn, align 1, !tbaa !109
   %.not48.i = icmp eq i8 %i.bo, 0
   br i1 %.not48.i, label %bb.y, label %select.unfold.i
 
 bb.y:                                             ; preds = %bb.x, %bb.v
   %.035.i = phi ptr [ %i.bj, %bb.v ], [ @.str.2, %bb.x ]
   %.034.i = phi i64 [ %i.bl, %bb.v ], [ 0, %bb.x ]
-  %i.bp = load ptr, ptr %6, align 8, !tbaa !112
+  %i.bp = load ptr, ptr %6, align 8, !tbaa !114
   %.not49.i = icmp eq ptr %i.bp, null
   br i1 %.not49.i, label %bb.aa, label %bb.z
 
@@ -315,7 +318,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not50.i, label %bb.aa, label %select.unfold.i
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %i.br = load i8, ptr %7, align 1, !tbaa !113    ; 2 uses
+  %i.br = load i8, ptr %7, align 1, !tbaa !115    ; 2 uses
   %i.bs = icmp eq i8 %i.br, 2
   br i1 %i.bs, label %bb.ab, label %bb.ac
 
@@ -325,7 +328,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not51.i, label %thread-pre-split.i, label %select.unfold.i
 
 thread-pre-split.i:                               ; preds = %bb.ab
-  %.pr.i = load i8, ptr %7, align 1, !tbaa !113
+  %.pr.i = load i8, ptr %7, align 1, !tbaa !115
   br label %bb.ac
 
 bb.ac:                                            ; preds = %thread-pre-split.i, %bb.aa
@@ -372,8 +375,8 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %i.cd, label %bb.al, label %select.unfold.i
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
-  %i.ce = load ptr, ptr %4, align 8, !tbaa !115
-  %i.cf = load i64, ptr %10, align 8, !tbaa !116
+  %i.ce = load ptr, ptr %4, align 8, !tbaa !117
+  %i.cf = load i64, ptr %10, align 8, !tbaa !118
   %i.cg = call i32 @Curl_dynhds_add(ptr noundef %i.bc, ptr noundef %i.ce, i64 noundef %i.cf, ptr noundef nonnull %.035.i, i64 noundef %.034.i) #6 ; 2 uses
   %.not58.i = icmp eq i32 %i.cg, 0
   br i1 %.not58.i, label %select.unfold.i, label %bb.am
@@ -387,9 +390,12 @@ select.unfold.i:                                  ; preds = %bb.al, %bb.ak, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   %i.ch = getelementptr inbounds nuw i8, ptr %.039.in.sroa.speculated65.i, i64 8
-  %.039.in.sroa.speculate.load..i = load ptr, ptr %i.ch, align 8, !tbaa !109 ; 2 uses
+  %.039.in.sroa.speculate.load..i = load ptr, ptr %i.ch, align 8, !tbaa !110 ; 2 uses
   %.not43.i = icmp eq ptr %.039.in.sroa.speculate.load..i, null
-  br i1 %.not43.i, label %dynhds_add_custom.exit.thread, label %.preheader.i, !llvm.loop !100
+  br i1 %.not43.i, label %..critedge.loopexit_crit_edge.i, label %.preheader.i, !llvm.loop !101
+
+..critedge.loopexit_crit_edge.i:                  ; preds = %select.unfold.i
+  br label %dynhds_add_custom.exit.thread, !llvm.loop !100
 
 dynhds_add_custom.exit:                           ; preds = %bb.am, %Curl_http_proxy_get_destination.exit, %bb.r, %bb.o, %bb.k, %bb.i, %bb.f, %bb.e
   %.0 = phi i32 [ %i.ab, %bb.e ], [ %i.ah, %bb.f ], [ %i.aq, %bb.k ], [ 27, %Curl_http_proxy_get_destination.exit ], [ %i.bb, %bb.r ], [ %i.ax, %bb.o ], [ %i.am, %bb.i ], [ %i.cg, %bb.am ] ; 2 uses
@@ -399,15 +405,15 @@ dynhds_add_custom.exit:                           ; preds = %bb.am, %Curl_http_p
 
 bb.an:                                            ; preds = %dynhds_add_custom.exit
   call void @Curl_http_req_free(ptr noundef nonnull %i.ci) #6
-  store ptr null, ptr %i.b, align 8, !tbaa !102
+  store ptr null, ptr %i.b, align 8, !tbaa !103
   br label %dynhds_add_custom.exit.thread
 
-dynhds_add_custom.exit.thread:                    ; preds = %select.unfold.i, %bb.s, %bb.an, %dynhds_add_custom.exit
-  %.060 = phi i32 [ %.0, %dynhds_add_custom.exit ], [ %.0, %bb.an ], [ 0, %bb.s ], [ 0, %select.unfold.i ]
+dynhds_add_custom.exit.thread:                    ; preds = %bb.s, %..critedge.loopexit_crit_edge.i, %bb.an, %dynhds_add_custom.exit
+  %.060 = phi i32 [ %.0, %dynhds_add_custom.exit ], [ %.0, %bb.an ], [ 0, %..critedge.loopexit_crit_edge.i ], [ 0, %bb.s ]
   %i.cj = load ptr, ptr @Curl_cfree, align 8, !tbaa !92
   call void %i.cj(ptr noundef %i.z) #6
-  %i.ck = load ptr, ptr %i.b, align 8, !tbaa !102
-  store ptr %i.ck, ptr %0, align 8, !tbaa !102
+  %i.ck = load ptr, ptr %i.b, align 8, !tbaa !103
+  store ptr %i.ck, ptr %0, align 8, !tbaa !103
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   ret i32 %.060
 }
@@ -447,11 +453,11 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !14   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 304
-  %i.d = load i16, ptr %i.c, align 8, !tbaa !118
+  %i.d = load i16, ptr %i.c, align 8, !tbaa !119
   %i.e = zext i16 %i.d to i32
-  store i32 %i.e, ptr %3, align 4, !tbaa !119
+  store i32 %i.e, ptr %3, align 4, !tbaa !120
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 288
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !120
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !121
   store ptr %i.g, ptr %4, align 8, !tbaa !36
   br label %bb.f
 
@@ -468,7 +474,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !94
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 104
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !121
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !122
   %i.m = tail call i32 %i.l(ptr noundef nonnull %i.i, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4) #6
   br label %bb.f
 
@@ -575,7 +581,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !93   ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !94
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !122
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !123
   %i.w = tail call i32 %i.v(ptr noundef nonnull %i.s, ptr noundef %1, ptr noundef %2) #6 ; 2 uses
   %.not116158 = icmp eq i32 %i.w, 0
   br i1 %.not116158, label %.lr.ph, label %.loopexit
@@ -587,7 +593,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   br label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph, %bb.am
-  %i.aa = load i8, ptr %2, align 1, !tbaa !41, !range !123, !noundef !124
+  %i.aa = load i8, ptr %2, align 1, !tbaa !41, !range !124, !noundef !125
   %i.ab = trunc nuw i8 %i.aa to i1
   br i1 %i.ab, label %bb.k, label %.loopexit
 
@@ -818,7 +824,7 @@ bb.am:                                            ; preds = %.thread138, %.crite
   %i.cr = load ptr, ptr %i.r, align 8, !tbaa !93  ; 2 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !94
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 24
-  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !122
+  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !123
   %i.cv = tail call i32 %i.cu(ptr noundef nonnull %i.cr, ptr noundef %1, ptr noundef nonnull %2) #6 ; 2 uses
   %.not116 = icmp eq i32 %i.cv, 0
   br i1 %.not116, label %bb.j, label %.loopexit
@@ -890,7 +896,7 @@ bb.h:                                             ; preds = %bb.a, %bb.b, %bb.d,
 bb.i:                                             ; preds = %bb.h
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !94
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 32
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !125
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !126
   tail call void %i.u(ptr noundef nonnull %i.r, ptr noundef %1) #6
   br label %bb.j
 
@@ -930,7 +936,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not9, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load ptr, ptr %i.a, align 8, !tbaa !126
+  %i.e = load ptr, ptr %i.a, align 8, !tbaa !127
   call void @Curl_conn_cf_insert_after(ptr noundef %0, ptr noundef %i.e) #6
   br label %bb.d
 
@@ -1086,31 +1092,32 @@ attributes #6 = { nounwind }
 !97 = !{!"curl_trc_feat", !20, i64 0, !6, i64 8}
 !98 = !{!97, !6, i64 8}
 !99 = !{!95, !6, i64 12}
-!100 = distinct !{!100, !117}
-!101 = !{!"p1 _ZTS7httpreq", !9, i64 0}
-!102 = !{!101, !101, i64 0}
-!103 = !{!"p2 _ZTS12dynhds_entry", !21, i64 0}
-!104 = !{!"dynhds", !103, i64 0, !19, i64 8, !19, i64 16, !19, i64 24, !19, i64 32, !19, i64 40, !6, i64 48}
-!105 = !{!"httpreq", !104, i64 0, !104, i64 56, !20, i64 112, !20, i64 120, !20, i64 128, !5, i64 136}
-!106 = !{!105, !20, i64 120}
-!107 = !{!89, !20, i64 392}
-!108 = !{!5, !5, i64 0}
-!109 = !{!53, !53, i64 0}
-!110 = !{!"curl_slist", !20, i64 0, !53, i64 8}
-!111 = !{!110, !20, i64 0}
-!112 = !{!89, !20, i64 4384}
-!113 = !{!89, !5, i64 4435}
-!114 = !{!"Curl_str", !20, i64 0, !19, i64 8}
-!115 = !{!114, !20, i64 0}
-!116 = !{!114, !19, i64 8}
-!117 = !{!"llvm.loop.mustprogress"}
-!118 = !{!34, !25, i64 304}
-!119 = !{!6, !6, i64 0}
-!120 = !{!34, !20, i64 288}
-!121 = !{!95, !9, i64 104}
-!122 = !{!95, !9, i64 24}
-!123 = !{i8 0, i8 2}
-!124 = !{}
-!125 = !{!95, !9, i64 32}
-!126 = !{!11, !11, i64 0}
+!100 = distinct !{!100, !111}
+!101 = distinct !{!101, !111}
+!102 = !{!"p1 _ZTS7httpreq", !9, i64 0}
+!103 = !{!102, !102, i64 0}
+!104 = !{!"p2 _ZTS12dynhds_entry", !21, i64 0}
+!105 = !{!"dynhds", !104, i64 0, !19, i64 8, !19, i64 16, !19, i64 24, !19, i64 32, !19, i64 40, !6, i64 48}
+!106 = !{!"httpreq", !105, i64 0, !105, i64 56, !20, i64 112, !20, i64 120, !20, i64 128, !5, i64 136}
+!107 = !{!106, !20, i64 120}
+!108 = !{!89, !20, i64 392}
+!109 = !{!5, !5, i64 0}
+!110 = !{!53, !53, i64 0}
+!111 = !{!"llvm.loop.mustprogress"}
+!112 = !{!"curl_slist", !20, i64 0, !53, i64 8}
+!113 = !{!112, !20, i64 0}
+!114 = !{!89, !20, i64 4384}
+!115 = !{!89, !5, i64 4435}
+!116 = !{!"Curl_str", !20, i64 0, !19, i64 8}
+!117 = !{!116, !20, i64 0}
+!118 = !{!116, !19, i64 8}
+!119 = !{!34, !25, i64 304}
+!120 = !{!6, !6, i64 0}
+!121 = !{!34, !20, i64 288}
+!122 = !{!95, !9, i64 104}
+!123 = !{!95, !9, i64 24}
+!124 = !{i8 0, i8 2}
+!125 = !{}
+!126 = !{!95, !9, i64 32}
+!127 = !{!11, !11, i64 0}
 end_hunk_0

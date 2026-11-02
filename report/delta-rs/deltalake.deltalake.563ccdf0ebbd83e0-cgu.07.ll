@@ -205,7 +205,7 @@ define hidden void @_RNvMs2_NtNtNtCslw7hBPHc6qc_14regex_automata4util4pool5inner
 bb.a:
   %i.a = alloca [1400 x i8], align 8              ; 5 uses
   %i.b = alloca [1400 x i8], align 8              ; 5 uses
-  %i.c = alloca [24 x i8], align 8                ; 7 uses
+  %i.c = alloca [24 x i8], align 8                ; 9 uses
   %i.d = alloca [1400 x i8], align 8              ; 5 uses
   %i.e = icmp eq i64 %3, 0
   br i1 %i.e, label %bb.b, label %bb.c
@@ -259,61 +259,30 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCslw7hB
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB1G_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEECs7p2uQeJxui2_9deltalake.exit22: ; preds = %bb.v, %_RNvMNtNtCs2pqxYH9ZEk8_3std4sync6poisonNtB2_4Flag4done.exit.i.i21, %bb.r, %_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheE3newCs7p2uQeJxui2_9deltalake.exit9, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEECs7p2uQeJxui2_9deltalake.exit
   ret void
 
-common.resume:                                    ; preds = %5, %bb.f, %bb.t
-  %common.resume.op = phi { ptr, i32 } [ %i.bj, %bb.t ], [ %i.p, %bb.f ], [ %6, %5 ]
+common.resume:                                    ; preds = %10, %bb.f, %bb.t
+  %common.resume.op = phi { ptr, i32 } [ %i.bj, %bb.t ], [ %i.p, %bb.f ], [ %11, %10 ]
   resume { ptr, i32 } %common.resume.op
 
 bb.g:                                             ; preds = %bb.c
   tail call void @_RNvNtNtCsbvkFyIu7lgC_4core9panicking11panic_const23panic_const_rem_by_zero(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @277) #36
   unreachable
 
-4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB22_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEINtB17_12TryLockErrorB12_EEECs7p2uQeJxui2_9deltalake.exit32
-  invoke void @_RNvNtCs6Po7BT7Nknu_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 1400) #34
-          to label %.noexc15 unwind label %5
-
-.noexc15:                                         ; preds = %4
-  unreachable
-
-5:                                                ; preds = %4
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(1400) %i.a) #37
-          to label %common.resume unwind label %7
-
-7:                                                ; preds = %5
-  %8 = landingpad { ptr, i32 }
-          filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #33
-  unreachable
-
-_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheE3newCs7p2uQeJxui2_9deltalake.exit9: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB22_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEINtB17_12TryLockErrorB12_EEECs7p2uQeJxui2_9deltalake.exit32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1400) %i.bx, ptr noundef nonnull align 8 dereferenceable(1400) %i.a, i64 1400, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %9, align 8
-  store i64 0, ptr %0, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.bx, ptr %10, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i8 1, ptr %11, align 8
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB1G_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEECs7p2uQeJxui2_9deltalake.exit22
-
 bb.h:                                             ; preds = %bb.c
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  %4 = urem i64 %2, %i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %14 = urem i64 %2, %i.i
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !nonnull !13, !noundef !13
-  %i.w = getelementptr inbounds nuw [64 x i8], ptr %i.v, i64 %14
+  %i.w = getelementptr inbounds nuw [64 x i8], ptr %i.v, i64 %4
   call void @_RNvMs5_NtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutexINtB5_5MutexINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB12_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEE8try_lockCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull align 8 %i.w)
   %i.x = load i64, ptr %i.c, align 8, !range !18, !noundef !13
   %i.y = trunc nuw i64 %i.x to i1
   br i1 %i.y, label %bb.w, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = load ptr, ptr %12, align 8, !nonnull !13, !align !20, !noundef !13 ; 9 uses
-  %i.aa = load i8, ptr %13, align 8, !range !21, !noundef !13 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.z = load ptr, ptr %5, align 8, !nonnull !13, !align !20, !noundef !13 ; 9 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.aa = load i8, ptr %6, align 8, !range !21, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 24 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !noundef !13 ; 3 uses
@@ -437,8 +406,10 @@ bb.v:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 
 bb.w:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11987)
-  %.val.i25 = load ptr, ptr %12, align 8, !alias.scope !11987 ; 4 uses
-  %.val3.i26 = load i8, ptr %13, align 8, !range !26, !alias.scope !11987, !noundef !13 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %.val.i25 = load ptr, ptr %7, align 8, !alias.scope !11987 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %.val3.i26 = load i8, ptr %8, align 8, !range !26, !alias.scope !11987, !noundef !13 ; 2 uses
   %.not.i.i27 = icmp eq i8 %.val3.i26, 2
   br i1 %.not.i.i27, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB22_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEINtB17_12TryLockErrorB12_EEECs7p2uQeJxui2_9deltalake.exit32, label %bb.x
 
@@ -479,7 +450,38 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtNtCs2p
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #27, !noalias !11988
   %i.bx = call noundef align 8 dereferenceable_or_null(1400) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 24, 3025) 1400, i64 noundef range(i64 8, 129) 8) #27, !noalias !11988 ; 3 uses
   %i.by = icmp eq ptr %i.bx, null
-  br i1 %i.by, label %4, label %_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheE3newCs7p2uQeJxui2_9deltalake.exit9, !prof !19
+  br i1 %i.by, label %9, label %_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheE3newCs7p2uQeJxui2_9deltalake.exit9, !prof !19
+
+9:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB22_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEINtB17_12TryLockErrorB12_EEECs7p2uQeJxui2_9deltalake.exit32
+  invoke void @_RNvNtCs6Po7BT7Nknu_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 1400) #34
+          to label %.noexc31 unwind label %10
+
+.noexc31:                                         ; preds = %9
+  unreachable
+
+10:                                               ; preds = %9
+  %11 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheECs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(1400) %i.a) #37
+          to label %common.resume unwind label %12
+
+12:                                               ; preds = %10
+  %13 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #33
+  unreachable
+
+_RNvMNtCs6Po7BT7Nknu_5alloc5boxedINtB2_3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheE3newCs7p2uQeJxui2_9deltalake.exit9: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB22_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEINtB17_12TryLockErrorB12_EEECs7p2uQeJxui2_9deltalake.exit32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1400) %i.bx, ptr noundef nonnull align 8 dereferenceable(1400) %i.a, i64 1400, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %1, ptr %14, align 8
+  store i64 0, ptr %0, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.bx, ptr %15, align 8
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i8 1, ptr %16, align 8
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardINtNtCs6Po7BT7Nknu_5alloc3vec3VecINtNtB1G_5boxed3BoxNtNtNtCslw7hBPHc6qc_14regex_automata4meta5regex5CacheEEEECs7p2uQeJxui2_9deltalake.exit22
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable

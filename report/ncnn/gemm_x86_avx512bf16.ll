@@ -204,7 +204,7 @@ iter.check1285:                                   ; preds = %.preheader384.i
   %i.cca = add i32 %8, %i.cbz                     ; 3 uses
   %i.ccb = zext i32 %i.cca to i64
   %i.ccc = add nuw nsw i64 %i.ccb, 1              ; 5 uses
-  %min.iters.check1247 = icmp ult i32 %i.cca, 7
+  %min.iters.check1247 = icmp ult i32 %i.cca, 3
   %i.ccd = extractelement <4 x float> %i.cbu, i64 0
   %i.cce = extractelement <4 x float> %i.cbu, i64 1
   br i1 %min.iters.check1247, label %.lr.ph1138.i.preheader, label %vector.main.loop.iter.check1248
@@ -214,7 +214,7 @@ vector.main.loop.iter.check1248:                  ; preds = %iter.check1285
   br i1 %min.iters.check1249, label %vec.epilog.ph1289, label %vector.ph1250
 
 vector.ph1250:                                    ; preds = %vector.main.loop.iter.check1248
-  %i.ccf = and i64 %i.ccc, 24
+  %i.ccf = and i64 %i.ccc, 28
   %n.vec1251 = and i64 %i.ccc, 8589934560         ; 5 uses
   %i.ccg = trunc i64 %n.vec1251 to i32
   %i.cch = add i32 %.01633.lcssa.i, %i.ccg
@@ -316,66 +316,65 @@ vec.epilog.iter.check1286:                        ; preds = %middle.block1279
   %i.ces = insertelement <4 x float> %i.cer, float %i.cem, i64 1
   %i.cet = insertelement <4 x float> %i.ces, float %i.cel, i64 2
   %i.ceu = insertelement <4 x float> %i.cet, float %i.ceo, i64 3
-  br i1 %min.epilog.iters.check1288, label %.lr.ph1138.i.preheader, label %vec.epilog.ph1289, !prof !22
+  br i1 %min.epilog.iters.check1288, label %.lr.ph1138.i.preheader, label %vec.epilog.ph1289, !prof !25
 
 vec.epilog.ph1289:                                ; preds = %vector.main.loop.iter.check1248, %vec.epilog.iter.check1286
   %vec.epilog.resume.val1290 = phi i64 [ %n.vec1251, %vec.epilog.iter.check1286 ], [ 0, %vector.main.loop.iter.check1248 ]
-  %i.cev = phi <4 x float> [ %i.ceu, %vec.epilog.iter.check1286 ], [ %i.cbu, %vector.main.loop.iter.check1248 ]
-  %n.vec1295 = and i64 %i.ccc, 8589934584         ; 4 uses
+  %i.cev = phi <4 x float> [ %i.ceu, %vec.epilog.iter.check1286 ], [ %i.cbu, %vector.main.loop.iter.check1248 ] ; 4 uses
+  %n.vec1295 = and i64 %i.ccc, 8589934588         ; 4 uses
   %i.cew = trunc i64 %n.vec1295 to i32
   %i.cex = add i32 %.01633.lcssa.i, %i.cew
   %i.cey = shl nuw nsw i64 %n.vec1295, 2          ; 2 uses
   %i.cez = getelementptr i8, ptr %.01635.lcssa.i, i64 %i.cey
   %i.cfa = getelementptr i8, ptr %.101714.lcssa.i, i64 %i.cey ; 2 uses
-  %9 = shufflevector <4 x float> %i.cev, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison> ; 4 uses
-  %10 = shufflevector <8 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <8 x float> %9, <8 x i32> <i32 10, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %11 = shufflevector <8 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <8 x float> %9, <8 x i32> <i32 9, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %12 = shufflevector <8 x float> %9, <8 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <8 x i32> <i32 0, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %13 = shufflevector <8 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <8 x float> %9, <8 x i32> <i32 11, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %9 = shufflevector <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x float> %i.cev, <4 x i32> <i32 6, i32 1, i32 2, i32 3>
+  %10 = shufflevector <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x float> %i.cev, <4 x i32> <i32 5, i32 1, i32 2, i32 3>
+  %11 = shufflevector <4 x float> %i.cev, <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
+  %12 = shufflevector <4 x float> <float poison, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, <4 x float> %i.cev, <4 x i32> <i32 7, i32 1, i32 2, i32 3>
   br label %vec.epilog.vector.body1296
 
 vec.epilog.vector.body1296:                       ; preds = %vec.epilog.vector.body1296, %vec.epilog.ph1289
   %index1297 = phi i64 [ %vec.epilog.resume.val1290, %vec.epilog.ph1289 ], [ %index.next1310, %vec.epilog.vector.body1296 ] ; 2 uses
-  %vec.phi1298 = phi <8 x float> [ %10, %vec.epilog.ph1289 ], [ %35, %vec.epilog.vector.body1296 ]
-  %vec.phi1299 = phi <8 x float> [ %11, %vec.epilog.ph1289 ], [ %33, %vec.epilog.vector.body1296 ]
-  %vec.phi1300 = phi <8 x float> [ %12, %vec.epilog.ph1289 ], [ %31, %vec.epilog.vector.body1296 ]
-  %vec.phi1301 = phi <8 x float> [ %13, %vec.epilog.ph1289 ], [ %29, %vec.epilog.vector.body1296 ]
+  %vec.phi1298 = phi <4 x float> [ %9, %vec.epilog.ph1289 ], [ %34, %vec.epilog.vector.body1296 ]
+  %vec.phi1299 = phi <4 x float> [ %10, %vec.epilog.ph1289 ], [ %32, %vec.epilog.vector.body1296 ]
+  %vec.phi1300 = phi <4 x float> [ %11, %vec.epilog.ph1289 ], [ %30, %vec.epilog.vector.body1296 ]
+  %vec.phi1301 = phi <4 x float> [ %12, %vec.epilog.ph1289 ], [ %28, %vec.epilog.vector.body1296 ]
   %i.cfb = shl i64 %index1297, 2                  ; 2 uses
   %next.gep1302 = getelementptr i8, ptr %.01635.lcssa.i, i64 %i.cfb
   %next.gep1303 = getelementptr i8, ptr %.101714.lcssa.i, i64 %i.cfb
-  %wide.vec1304 = load <16 x i16>, ptr %next.gep1302, align 2, !tbaa !24
-  %14 = freeze <16 x i16> %wide.vec1304           ; 2 uses
-  %15 = bitcast <16 x i16> %14 to <8 x i32>
-  %16 = bitcast <16 x i16> %14 to <8 x i32>
-  %17 = and <8 x i32> %16, splat (i32 -65536)
-  %18 = shl <8 x i32> %15, splat (i32 16)
-  %19 = bitcast <8 x i32> %18 to <8 x float>      ; 2 uses
-  %20 = bitcast <8 x i32> %17 to <8 x float>      ; 2 uses
-  %wide.vec1307 = load <16 x i16>, ptr %next.gep1303, align 2, !tbaa !24
-  %21 = freeze <16 x i16> %wide.vec1307           ; 2 uses
-  %22 = bitcast <16 x i16> %21 to <8 x i32>
-  %23 = bitcast <16 x i16> %21 to <8 x i32>
-  %24 = and <8 x i32> %23, splat (i32 -65536)
-  %25 = shl <8 x i32> %22, splat (i32 16)
-  %26 = bitcast <8 x i32> %25 to <8 x float>      ; 2 uses
-  %27 = bitcast <8 x i32> %24 to <8 x float>      ; 2 uses
-  %28 = fmul fast <8 x float> %26, %19
-  %29 = fadd fast <8 x float> %28, %vec.phi1301   ; 2 uses
-  %30 = fmul fast <8 x float> %27, %19
-  %31 = fadd fast <8 x float> %30, %vec.phi1300   ; 2 uses
-  %32 = fmul fast <8 x float> %26, %20
-  %33 = fadd fast <8 x float> %32, %vec.phi1299   ; 2 uses
-  %34 = fmul fast <8 x float> %27, %20
-  %35 = fadd fast <8 x float> %34, %vec.phi1298   ; 2 uses
-  %index.next1310 = add nuw i64 %index1297, 8     ; 2 uses
+  %wide.vec1304 = load <8 x i16>, ptr %next.gep1302, align 2, !tbaa !24
+  %13 = freeze <8 x i16> %wide.vec1304            ; 2 uses
+  %14 = bitcast <8 x i16> %13 to <4 x i32>
+  %15 = bitcast <8 x i16> %13 to <4 x i32>
+  %16 = and <4 x i32> %15, splat (i32 -65536)
+  %17 = shl <4 x i32> %14, splat (i32 16)
+  %18 = bitcast <4 x i32> %17 to <4 x float>      ; 2 uses
+  %19 = bitcast <4 x i32> %16 to <4 x float>      ; 2 uses
+  %wide.vec1307 = load <8 x i16>, ptr %next.gep1303, align 2, !tbaa !24
+  %20 = freeze <8 x i16> %wide.vec1307            ; 2 uses
+  %21 = bitcast <8 x i16> %20 to <4 x i32>
+  %22 = bitcast <8 x i16> %20 to <4 x i32>
+  %23 = and <4 x i32> %22, splat (i32 -65536)
+  %24 = shl <4 x i32> %21, splat (i32 16)
+  %25 = bitcast <4 x i32> %24 to <4 x float>      ; 2 uses
+  %26 = bitcast <4 x i32> %23 to <4 x float>      ; 2 uses
+  %27 = fmul fast <4 x float> %25, %18
+  %28 = fadd fast <4 x float> %27, %vec.phi1301   ; 2 uses
+  %29 = fmul fast <4 x float> %26, %18
+  %30 = fadd fast <4 x float> %29, %vec.phi1300   ; 2 uses
+  %31 = fmul fast <4 x float> %25, %19
+  %32 = fadd fast <4 x float> %31, %vec.phi1299   ; 2 uses
+  %33 = fmul fast <4 x float> %26, %19
+  %34 = fadd fast <4 x float> %33, %vec.phi1298   ; 2 uses
+  %index.next1310 = add nuw i64 %index1297, 4     ; 2 uses
   %i.cfc = icmp eq i64 %index.next1310, %n.vec1295
   br i1 %i.cfc, label %vec.epilog.middle.block1311, label %vec.epilog.vector.body1296, !llvm.loop !401
 
 vec.epilog.middle.block1311:                      ; preds = %vec.epilog.vector.body1296
-  %i.cfd = tail call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %35) ; 2 uses
-  %i.cfe = tail call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %33) ; 2 uses
-  %i.cff = tail call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %31) ; 2 uses
-  %i.cfg = tail call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %29) ; 2 uses
+  %i.cfd = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %34) ; 2 uses
+  %i.cfe = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %32) ; 2 uses
+  %i.cff = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %30) ; 2 uses
+  %i.cfg = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %28) ; 2 uses
   %cmp.n1312 = icmp eq i64 %i.ccc, %n.vec1295
   %i.cfh = insertelement <2 x float> poison, float %i.cff, i64 0
   %i.cfi = insertelement <2 x float> %i.cfh, float %i.cfe, i64 1
@@ -777,6 +776,9 @@ declare float @llvm.vector.reduce.fadd.v16f32(float, <16 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v8f32(float, <8 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: read, target_mem: read) uwtable "min-legal-vector-width"="512" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+avx512bf16,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(read) }

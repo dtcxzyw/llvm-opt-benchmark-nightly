@@ -205,6 +205,7 @@ bb.pp:                                            ; preds = %bb.po
 
 bb.pq:                                            ; preds = %bb.po
   %i.cgc = add nsw i32 %.2294582.i, %.121604
+  %9 = and i32 %i.cgc, 1                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.cgd = load i32, ptr %i.ay, align 8, !tbaa !59
   %.not.i.i = icmp eq i32 %i.cgd, 0
@@ -270,23 +271,29 @@ bb.pq:                                            ; preds = %bb.po
   store float %.sink, ptr %i.axr, align 8, !tbaa !62
   store float %i.chx, ptr %i.axt, align 4, !tbaa !62
   %i.chy = icmp sgt i32 %i.cfz, 0                 ; 2 uses
-  %9 = shl i32 %i.cgc, 1
-  %10 = and i32 %9, 2                             ; 2 uses
   br i1 %i.cfu, label %.preheader488.i, label %.preheader489.i
 
 .preheader489.i:                                  ; preds = %.loopexit492.i
-  br i1 %i.chy, label %.preheader475.i, label %dng_blit.exit.i
+  br i1 %i.chy, label %.lr.ph566.i, label %dng_blit.exit.i
+
+.lr.ph566.i:                                      ; preds = %.preheader489.i
+  %10 = shl nuw nsw i32 %9, 1
+  br label %.preheader475.i
 
 .preheader488.i:                                  ; preds = %.loopexit492.i
-  br i1 %i.chy, label %.preheader.i, label %dng_blit.exit.i
+  br i1 %i.chy, label %.lr.ph570.i, label %dng_blit.exit.i
 
-.preheader.i:                                     ; preds = %.preheader488.i, %.preheader.i
-  %.095.i573.i = phi ptr [ %i.chz, %.preheader.i ], [ %.4578.i, %.preheader488.i ] ; 3 uses
-  %.2.i571.i = phi i32 [ %i.cis, %.preheader.i ], [ 0, %.preheader488.i ] ; 2 uses
+.lr.ph570.i:                                      ; preds = %.preheader488.i
+  %11 = shl nuw nsw i32 %9, 1
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i, %.lr.ph570.i
+  %.095.i573.i = phi ptr [ %.4578.i, %.lr.ph570.i ], [ %i.chz, %.preheader.i ] ; 3 uses
+  %.2.i571.i = phi i32 [ 0, %.lr.ph570.i ], [ %i.cis, %.preheader.i ] ; 2 uses
   %i.chz = getelementptr i8, ptr %.095.i573.i, i64 2
   %i.cia = load i16, ptr %.095.i573.i, align 2, !tbaa !60
   %i.cib = and i32 %.2.i571.i, 1
-  %i.cic = or disjoint i32 %i.cib, %10
+  %i.cic = or disjoint i32 %i.cib, %11
   %i.cid = zext nneg i32 %i.cic to i64            ; 2 uses
   %i.cie = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %i.cid
   %i.cif = load float, ptr %i.cie, align 4, !tbaa !62
@@ -310,9 +317,9 @@ bb.pq:                                            ; preds = %bb.po
   %i.cit = icmp slt i32 %i.cis, %i.cfz
   br i1 %i.cit, label %.preheader.i, label %dng_blit.exit.i, !llvm.loop !2
 
-.preheader475.i:                                  ; preds = %.preheader489.i, %.preheader475.i
-  %.0.i569.i = phi ptr [ %i.ciu, %.preheader475.i ], [ %.4578.i, %.preheader489.i ] ; 3 uses
-  %.3.i567.i = phi i32 [ %i.cjp, %.preheader475.i ], [ 0, %.preheader489.i ] ; 2 uses
+.preheader475.i:                                  ; preds = %.preheader475.i, %.lr.ph566.i
+  %.0.i569.i = phi ptr [ %.4578.i, %.lr.ph566.i ], [ %i.ciu, %.preheader475.i ] ; 3 uses
+  %.3.i567.i = phi i32 [ 0, %.lr.ph566.i ], [ %i.cjp, %.preheader475.i ] ; 2 uses
   %i.ciu = getelementptr i8, ptr %.0.i569.i, i64 1
   %i.civ = load i8, ptr %.0.i569.i, align 1, !tbaa !67
   %i.ciw = and i32 %.3.i567.i, 1

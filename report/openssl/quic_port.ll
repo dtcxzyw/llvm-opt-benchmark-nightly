@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/quic_port?download=true
 inline.NumInlined: 87
 inline.NumDeleted: 41
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@port_default_packet_handler:bb.a
   %spec.select72 = select i1 %i.br, ptr null, ptr %i.bf ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 56
@@ -204,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 20, i32 noundef 387, ptr noundef nonnull @.str.3) #9
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader.preheader, %bb.d, %bb.e, %bb.c, %.preheader.1, %bb.b, %bb.a
+.loopexit:                                        ; preds = %bb.d, %bb.e, %bb.c, %.preheader.1, %.preheader.preheader, %bb.b, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9

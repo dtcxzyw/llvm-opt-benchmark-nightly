@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %_ZN4cvc57context10C
   br label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backERKS3_.exit
 
 bb.d:                                             ; preds = %_ZN4cvc57context10ContextObj11makeCurrentEv.exit
-  %i.p = load ptr, ptr %i.i, align 8, !tbaa !64   ; 5 uses
-  %i.q = ptrtoint ptr %i.k to i64
-  %i.r = ptrtoint ptr %i.p to i64                 ; 2 uses
+  %i.p = load ptr, ptr %i.i, align 8, !tbaa !64   ; 7 uses
+  %i.q = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.r = ptrtoint ptr %i.p to i64                 ; 3 uses
   %i.s = sub i64 %i.q, %i.r                       ; 3 uses
   %i.t = icmp eq i64 %i.s, 9223372036854775800
   br i1 %i.t, label %bb.e, label %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -223,25 +223,64 @@ _ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.ex
   %.not.i.i.i = icmp ne i64 %i.y, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.z = shl nuw nsw i64 %i.y, 3
-  %i.aa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #22 ; 5 uses
+  %i.aa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #22 ; 7 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.s
   %i.ac = load ptr, ptr %1, align 8, !tbaa !50
   store ptr %i.ac, ptr %i.ab, align 8, !tbaa !50
   %.not13.i.i.i.i.i.i.i = icmp eq ptr %i.p, %i.k
-  br i1 %.not13.i.i.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i, label %.lr.ph.i.i.i.i.i.i.i
+  br i1 %.not13.i.i.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
-.lr.ph.i.i.i.i.i.i.i:                             ; preds = %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i.i.i
-  %.015.i.i.i.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i.i.i.i ], [ %i.aa, %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  %.01214.i.i.i.i.i.i.i = phi ptr [ %i.ae, %.lr.ph.i.i.i.i.i.i.i ], [ %i.p, %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
+.lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
+  %2 = add i64 %i.q, -8
+  %3 = sub i64 %2, %i.r                           ; 2 uses
+  %4 = lshr i64 %3, 3
+  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %3, 24
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader18, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
+  %n.vec = and i64 %5, 4611686018427387900        ; 3 uses
+  %6 = shl i64 %n.vec, 3                          ; 2 uses
+  %7 = getelementptr i8, ptr %i.aa, i64 %6        ; 2 uses
+  %8 = getelementptr i8, ptr %i.p, i64 %6
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %9 = shl i64 %index, 3                          ; 2 uses
+  %next.gep = getelementptr i8, ptr %i.aa, i64 %9 ; 2 uses
+  %next.gep15 = getelementptr i8, ptr %i.p, i64 %9 ; 2 uses
+  %10 = getelementptr i8, ptr %next.gep15, i64 16
+  %wide.load = load <2 x ptr>, ptr %next.gep15, align 8, !tbaa !50
+  %wide.load16 = load <2 x ptr>, ptr %10, align 8, !tbaa !50
+  %11 = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !50
+  store <2 x ptr> %wide.load16, ptr %11, align 8, !tbaa !50
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %12 = icmp eq i64 %index.next, %n.vec
+  br i1 %12, label %middle.block, label %vector.body, !llvm.loop !100
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %5, %n.vec
+  br i1 %cmp.n, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader18
+
+.lr.ph.i.i.i.i.i.i.i.preheader18:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader, %middle.block
+  %.015.i.i.i.i.i.i.i.ph = phi ptr [ %i.aa, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %7, %middle.block ]
+  %.01214.i.i.i.i.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i.i.i.preheader ], [ %8, %middle.block ]
+  br label %.lr.ph.i.i.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader18, %.lr.ph.i.i.i.i.i.i.i
+  %.015.i.i.i.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i.i.i.i ], [ %.015.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader18 ] ; 2 uses
+  %.01214.i.i.i.i.i.i.i = phi ptr [ %i.ae, %.lr.ph.i.i.i.i.i.i.i ], [ %.01214.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.preheader18 ] ; 2 uses
   %i.ad = load ptr, ptr %.01214.i.i.i.i.i.i.i, align 8, !tbaa !50
   store ptr %i.ad, ptr %.015.i.i.i.i.i.i.i, align 8, !tbaa !50
   %i.ae = getelementptr inbounds nuw i8, ptr %.01214.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ae, %i.k
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !100
+  br i1 %.not.i.i.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !101
 
-_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
-  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.aa, %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.af, %.lr.ph.i.i.i.i.i.i.i ]
+_ZSt34__uninitialized_move_if_noexcept_aIPN4cvc58internal12NodeTemplateILb0EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit34.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block, %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
+  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.aa, %_ZNKSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ], [ %7, %middle.block ], [ %i.af, %.lr.ph.i.i.i.i.i.i.i ]
   %i.ag = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i, i64 8
   %.not.i35.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i35.i.i, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.f
@@ -644,7 +683,7 @@ _ZSt10_ConstructIN4cvc58internal12NodeTemplateILb1EEEJRKS3_EEvPT_DpOT0_.exit: ; 
   %i.n = getelementptr inbounds nuw i8, ptr %.01215, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.016, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.n, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !101
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !104
 
 bb.e:                                             ; preds = %bb.d
   %i.p = landingpad { ptr, i32 }
@@ -1028,6 +1067,9 @@ attributes #23 = { builtin nounwind }
 !97 = !{!86, !84}
 !98 = distinct !{!98, !59}
 !99 = !{!22, !22, i64 0}
-!100 = distinct !{!100, !59}
-!101 = distinct !{!101, !59}
+!100 = distinct !{!100, !59, !102, !103}
+!101 = distinct !{!101, !59, !103, !102}
+!102 = !{!"llvm.loop.isvectorized", i32 1}
+!103 = !{!"llvm.loop.unroll.runtime.disable"}
+!104 = distinct !{!104, !59}
 end_hunk_1

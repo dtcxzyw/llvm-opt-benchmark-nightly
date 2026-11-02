@@ -205,60 +205,56 @@ bb.a:
   %i.k = add nsw i32 %i.d, %1                     ; 4 uses
   %i.l = add nsw i32 %i.d, %2                     ; 6 uses
   %i.m = icmp eq i32 %i.k, 0
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 4 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 4 uses
-  %7 = icmp eq i32 %i.l, 0
-  %or.cond = select i1 %i.m, i1 true, i1 %7
-  %8 = add i32 %i.k, -1
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %4 = icmp eq i32 %i.l, 0
+  %or.cond = select i1 %i.m, i1 true, i1 %4
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %5 = add i32 %i.k, -1
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 184
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 56
   br i1 %or.cond, label %.thread, label %.preheader55.split.split.i
 
 .preheader55.split.split.i:                       ; preds = %bb.a, %_Z27ImFontAtlasTextureMakeSpaceP11ImFontAtlas.exit
   %.04586 = phi i32 [ %i.gh, %_Z27ImFontAtlasTextureMakeSpaceP11ImFontAtlas.exit ], [ 3, %bb.a ] ; 2 uses
-  %i.r = load i32, ptr %i.o, align 8, !tbaa !448  ; 2 uses
-  %i.s = add i32 %8, %i.r                         ; 2 uses
+  %i.r = load i32, ptr %i.n, align 8, !tbaa !448  ; 2 uses
+  %i.s = add i32 %5, %i.r                         ; 2 uses
   %i.t = srem i32 %i.s, %i.r
   %i.u = sub nsw i32 %i.s, %i.t                   ; 11 uses
   %i.v = load i32, ptr %i.b, align 8, !tbaa !449  ; 3 uses
-  %9 = icmp sgt i32 %i.u, %i.v
-  %i.w = icmp sgt i32 %i.u, 0
-  br i1 %9, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %.preheader55.split.split.split.i
+  %i.w = icmp sgt i32 %i.u, %i.v
+  br i1 %i.w, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %.preheader55.split.split.split.i
 
 .preheader55.split.split.split.i:                 ; preds = %.preheader55.split.split.i
-  %i.x = load i32, ptr %4, align 4, !tbaa !450    ; 4 uses
+  %i.x = load i32, ptr %6, align 4, !tbaa !450    ; 4 uses
   %i.y = icmp sgt i32 %i.l, %i.x
   br i1 %i.y, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %.preheader55.split.split.split.split.i
 
-.preheader.i:                                     ; preds = %bb.ae, %.critedge.i.i
-  %10 = icmp eq i32 %.287.i.i.i, 2147483647
-  br i1 %10, label %.preheader.split58.us.i, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit
-
-.preheader.split58.us.i:                          ; preds = %.preheader.i
-  %.not85 = icmp eq i32 %i.di, 2147483647
-  br i1 %.not85, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %.thread
-
 .preheader55.split.split.split.split.i:           ; preds = %.preheader55.split.split.split.i
-  %i.z = load ptr, ptr %5, align 8, !tbaa !451    ; 5 uses
+  %i.z = load ptr, ptr %7, align 8, !tbaa !451    ; 5 uses
   %i.aa = load i32, ptr %i.z, align 8, !tbaa !453 ; 3 uses
   %i.ab = add nsw i32 %i.aa, %i.u                 ; 2 uses
   %.not127.i.i.i = icmp sgt i32 %i.ab, %i.v
-  %.pre.i.i = load i32, ptr %i.n, align 8, !tbaa !454 ; 2 uses
-  br i1 %.not127.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
+  br i1 %.not127.i.i.i, label %.._crit_edge.thread.i_crit_edge.i.i, label %.lr.ph.i.i.i
+
+.._crit_edge.thread.i_crit_edge.i.i:              ; preds = %.preheader55.split.split.split.split.i
+  %.pre.i.i = load i32, ptr %8, align 8, !tbaa !454
+  br label %._crit_edge.thread.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader55.split.split.split.split.i
-  %i.ac = icmp eq i32 %.pre.i.i, 0                ; 2 uses
-  br i1 %i.w, label %.lr.ph.i.preheader.us.i.i.i, label %.lr.ph.split.i.i.i
+  %9 = icmp sgt i32 %i.u, 0
+  %10 = load i32, ptr %8, align 8, !tbaa !454     ; 3 uses
+  %i.ac = icmp eq i32 %10, 0                      ; 2 uses
+  br i1 %9, label %.lr.ph.i.preheader.us.i.i.i, label %.lr.ph.split.i.i.i
 
 .lr.ph.i.preheader.us.i.i.i:                      ; preds = %.lr.ph.i.i.i, %bb.l
   %i.ad = phi i32 [ %i.bl, %bb.l ], [ %i.ab, %.lr.ph.i.i.i ]
   %i.ae = phi i32 [ %i.bk, %bb.l ], [ %i.aa, %.lr.ph.i.i.i ] ; 3 uses
   %.0132.us.i.i.i = phi ptr [ %.1.us.i.i.i, %bb.l ], [ null, %.lr.ph.i.i.i ] ; 3 uses
   %.074131.us.i.i.i = phi ptr [ %i.bj, %bb.l ], [ %i.z, %.lr.ph.i.i.i ] ; 2 uses
-  %.077130.us.i.i.i = phi ptr [ %i.bi, %bb.l ], [ %5, %.lr.ph.i.i.i ] ; 2 uses
+  %.077130.us.i.i.i = phi ptr [ %i.bi, %bb.l ], [ %7, %.lr.ph.i.i.i ] ; 2 uses
   %.080129.us.i.i.i = phi i32 [ %.181.us.i.i.i, %bb.l ], [ 1073741824, %.lr.ph.i.i.i ] ; 6 uses
   %.088128.us.i.i.i = phi i32 [ %.189.us.i.i.i, %bb.l ], [ 1073741824, %.lr.ph.i.i.i ] ; 4 uses
   br label %.lr.ph.i.us.i.i.i
@@ -362,19 +358,20 @@ _ZL25stbrp__skyline_find_min_yP13stbrp_contextP10stbrp_nodeiiPi.exit.loopexit.us
   br i1 %i.bm, label %._crit_edge.thread.i.i.i, label %._crit_edge.thread211.i.i.i
 
 ._crit_edge.thread211.i.i.i:                      ; preds = %._crit_edge.i.i.i, %.lr.ph.split.i.i.i
-  %.0.lcssa217.i.i.i = phi ptr [ %.1.us.i.i.i, %._crit_edge.i.i.i ], [ %5, %.lr.ph.split.i.i.i ] ; 2 uses
+  %.0.lcssa217.i.i.i = phi ptr [ %.1.us.i.i.i, %._crit_edge.i.i.i ], [ %7, %.lr.ph.split.i.i.i ] ; 2 uses
   %.080.lcssa216.i.i.i = phi i32 [ %.181.us.i.i.i, %._crit_edge.i.i.i ], [ 0, %.lr.ph.split.i.i.i ]
   %.088.lcssa215.i.i.i = phi i32 [ %.189.us.i.i.i, %._crit_edge.i.i.i ], [ %spec.select.i.i, %.lr.ph.split.i.i.i ]
   %i.bn = load ptr, ptr %.0.lcssa217.i.i.i, align 8, !tbaa !708
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !453
   br label %._crit_edge.thread.i.i.i
 
-._crit_edge.thread.i.i.i:                         ; preds = %._crit_edge.thread211.i.i.i, %._crit_edge.i.i.i, %.preheader55.split.split.split.split.i
-  %.0.lcssa210.i.i.i = phi ptr [ %.0.lcssa217.i.i.i, %._crit_edge.thread211.i.i.i ], [ null, %._crit_edge.i.i.i ], [ null, %.preheader55.split.split.split.split.i ] ; 2 uses
-  %.080.lcssa209.i.i.i = phi i32 [ %.080.lcssa216.i.i.i, %._crit_edge.thread211.i.i.i ], [ %.181.us.i.i.i, %._crit_edge.i.i.i ], [ 1073741824, %.preheader55.split.split.split.split.i ] ; 2 uses
-  %.088.lcssa208.i.i.i = phi i32 [ %.088.lcssa215.i.i.i, %._crit_edge.thread211.i.i.i ], [ %.189.us.i.i.i, %._crit_edge.i.i.i ], [ 1073741824, %.preheader55.split.split.split.split.i ]
-  %i.bp = phi i32 [ %i.bo, %._crit_edge.thread211.i.i.i ], [ 0, %._crit_edge.i.i.i ], [ 0, %.preheader55.split.split.split.split.i ] ; 2 uses
-  %i.bq = icmp eq i32 %.pre.i.i, 1
+._crit_edge.thread.i.i.i:                         ; preds = %._crit_edge.thread211.i.i.i, %._crit_edge.i.i.i, %.._crit_edge.thread.i_crit_edge.i.i
+  %11 = phi i32 [ %10, %._crit_edge.thread211.i.i.i ], [ %10, %._crit_edge.i.i.i ], [ %.pre.i.i, %.._crit_edge.thread.i_crit_edge.i.i ]
+  %.0.lcssa210.i.i.i = phi ptr [ %.0.lcssa217.i.i.i, %._crit_edge.thread211.i.i.i ], [ null, %._crit_edge.i.i.i ], [ null, %.._crit_edge.thread.i_crit_edge.i.i ] ; 2 uses
+  %.080.lcssa209.i.i.i = phi i32 [ %.080.lcssa216.i.i.i, %._crit_edge.thread211.i.i.i ], [ %.181.us.i.i.i, %._crit_edge.i.i.i ], [ 1073741824, %.._crit_edge.thread.i_crit_edge.i.i ] ; 2 uses
+  %.088.lcssa208.i.i.i = phi i32 [ %.088.lcssa215.i.i.i, %._crit_edge.thread211.i.i.i ], [ %.189.us.i.i.i, %._crit_edge.i.i.i ], [ 1073741824, %.._crit_edge.thread.i_crit_edge.i.i ]
+  %i.bp = phi i32 [ %i.bo, %._crit_edge.thread211.i.i.i ], [ 0, %._crit_edge.i.i.i ], [ 0, %.._crit_edge.thread.i_crit_edge.i.i ] ; 2 uses
+  %i.bq = icmp eq i32 %11, 1
   br i1 %i.bq, label %.preheader126.i.i.i, label %_ZL28stbrp__skyline_find_best_posP13stbrp_contextii.exit.i.i
 
 .preheader126.i.i.i:                              ; preds = %._crit_edge.thread.i.i.i
@@ -397,7 +394,7 @@ _ZL25stbrp__skyline_find_min_yP13stbrp_contextP10stbrp_nodeiiPi.exit.loopexit.us
   %.2180.i.i.i = phi ptr [ %.3.i.i.i, %bb.w ], [ %.0.lcssa210.i.i.i, %.preheader.i.i.i.preheader ] ; 2 uses
   %.173179.i.i.i = phi ptr [ %i.dh, %bb.w ], [ %.173179.i.i.i.ph, %.preheader.i.i.i.preheader ] ; 2 uses
   %.175178.i.i.i = phi ptr [ %.276.i.i.i, %bb.w ], [ %i.z, %.preheader.i.i.i.preheader ]
-  %.178177.i.i.i = phi ptr [ %.279.i.i.i, %bb.w ], [ %5, %.preheader.i.i.i.preheader ]
+  %.178177.i.i.i = phi ptr [ %.279.i.i.i, %bb.w ], [ %7, %.preheader.i.i.i.preheader ]
   %.282176.i.i.i = phi i32 [ %.383.i.i.i, %bb.w ], [ %.080.lcssa209.i.i.i, %.preheader.i.i.i.preheader ] ; 4 uses
   %.085175.i.i.i = phi i32 [ %.186.i.i.i, %bb.w ], [ %i.bp, %.preheader.i.i.i.preheader ] ; 3 uses
   %.290174.i.i.i = phi i32 [ %.391.i.i.i, %bb.w ], [ %.088.lcssa208.i.i.i, %.preheader.i.i.i.preheader ] ; 4 uses
@@ -519,7 +516,7 @@ bb.x:                                             ; preds = %_ZL28stbrp__skyline
   br i1 %i.dl, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.dm = load ptr, ptr %6, align 8, !tbaa !457   ; 6 uses
+  %i.dm = load ptr, ptr %i.o, align 8, !tbaa !457 ; 6 uses
   %i.dn = icmp eq ptr %i.dm, null
   br i1 %i.dn, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %bb.z
 
@@ -529,7 +526,7 @@ bb.z:                                             ; preds = %bb.y
   store i32 %i.dk, ptr %i.do, align 4, !tbaa !455
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dm, i64 8 ; 2 uses
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !456
-  store ptr %i.dq, ptr %6, align 8, !tbaa !457
+  store ptr %i.dq, ptr %i.o, align 8, !tbaa !457
   %i.dr = load ptr, ptr %.4.i.i.i, align 8, !tbaa !708 ; 3 uses
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !453
   %i.dt = icmp slt i32 %i.ds, %.287.i.i.i
@@ -562,9 +559,9 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br i1 %.not44.i.i, label %.critedge.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph.i.i
-  %i.eb = load ptr, ptr %6, align 8, !tbaa !457
+  %i.eb = load ptr, ptr %i.o, align 8, !tbaa !457
   store ptr %i.eb, ptr %i.dz, align 8, !tbaa !456
-  store ptr %.155.i.i, ptr %6, align 8, !tbaa !457
+  store ptr %.155.i.i, ptr %i.o, align 8, !tbaa !457
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dy, i64 8 ; 2 uses
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !456 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ed, null
@@ -575,17 +572,25 @@ bb.ad:                                            ; preds = %.lr.ph.i.i
   store ptr %.1.lcssa.i.i, ptr %i.dp, align 8, !tbaa !456
   %i.ee = load i32, ptr %.1.lcssa.i.i, align 8, !tbaa !453
   %i.ef = icmp slt i32 %i.ee, %.pre58.i.i
-  br i1 %i.ef, label %bb.ae, label %.preheader.i
+  br i1 %i.ef, label %bb.ae, label %.critedge51.i
 
 bb.ae:                                            ; preds = %.critedge.i.i
   store i32 %.pre58.i.i, ptr %.1.lcssa.i.i, align 8, !tbaa !453
-  br label %.preheader.i
+  br label %.critedge51.i
 
-_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit: ; preds = %.preheader.i
+.critedge51.i:                                    ; preds = %bb.ae, %.critedge.i.i
+  %12 = icmp eq i32 %.287.i.i.i, 2147483647
+  br i1 %12, label %.critedge51.split.us.i, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit
+
+.critedge51.split.us.i:                           ; preds = %.critedge51.i
+  %.not85 = icmp eq i32 %i.di, 2147483647
+  br i1 %.not85, label %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread, label %.thread
+
+_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit: ; preds = %.critedge51.i
   %i.eg = trunc i32 %.287.i.i.i to i16
   br label %.thread
 
-_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread: ; preds = %.preheader55.split.split.split.i, %_ZL28stbrp__skyline_find_best_posP13stbrp_contextii.exit.i.i, %bb.x, %bb.y, %.preheader55.split.split.i, %.preheader.split58.us.i
+_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread: ; preds = %.preheader55.split.split.split.i, %_ZL28stbrp__skyline_find_best_posP13stbrp_contextii.exit.i.i, %bb.x, %bb.y, %.preheader55.split.split.i, %.critedge51.split.us.i
   %i.eh = icmp eq i32 %.04586, 0
   br i1 %i.eh, label %bb.ag, label %bb.af
 
@@ -696,9 +701,9 @@ _Z27ImFontAtlasTextureMakeSpaceP11ImFontAtlas.exit: ; preds = %bb.ap, %bb.aq
   %i.gh = add nsw i32 %.04586, -1
   br label %.preheader55.split.split.i
 
-.thread:                                          ; preds = %.preheader.split58.us.i, %bb.a, %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit
-  %.sroa.058.179 = phi i16 [ %i.eg, %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit ], [ 0, %bb.a ], [ -1, %.preheader.split58.us.i ] ; 2 uses
-  %.sroa.6.178.in = phi i32 [ %i.di, %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit ], [ 0, %bb.a ], [ %i.di, %.preheader.split58.us.i ] ; 2 uses
+.thread:                                          ; preds = %.critedge51.split.us.i, %bb.a, %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit
+  %.sroa.058.179 = phi i16 [ %i.eg, %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit ], [ 0, %bb.a ], [ -1, %.critedge51.split.us.i ] ; 2 uses
+  %.sroa.6.178.in = phi i32 [ %i.di, %_ZL16stbrp_pack_rectsP13stbrp_contextP10stbrp_recti.exit.thread66.split.loopexit ], [ 0, %bb.a ], [ %i.di, %.critedge51.split.us.i ] ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.b, i64 176 ; 2 uses
   %i.gj = load i32, ptr %i.gi, align 8, !tbaa !710
   %i.gk = zext i16 %.sroa.058.179 to i32
